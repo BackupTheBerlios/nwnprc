@@ -33,7 +33,7 @@ void KatanaFinesse(object oPC)
 {
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     object oWeap2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-    
+
     int bKatFin = GetHasFeat(FEAT_KATANA_FINESSE, oPC);
     int bStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
     int bDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
@@ -44,24 +44,24 @@ void KatanaFinesse(object oPC)
     if(bKatFin && bKatFinBon && GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
     {
         iUseR = TRUE;
-        if (!GetLocalInt(oPC, "KatanaFinesseOnR")) FloatingTextStringOnCreature("Katana Finesse On -- Main Hand.", oPC);
+        if (!GetLocalInt(oPC, "KatanaFinesseOnR")) SendMessageToPC(oPC, "Katana Finesse On -- Main Hand.");
         SetLocalInt(oPC, "KatanaFinesseOnR", TRUE);
     }
     else
     {
-        if (GetLocalInt(oPC, "KatanaFinesseOnR")) FloatingTextStringOnCreature("Katana Finesse Off -- Main Hand.", oPC);
+        if (GetLocalInt(oPC, "KatanaFinesseOnR")) SendMessageToPC(oPC, "Katana Finesse Off -- Main Hand.");
         DeleteLocalInt(oPC, "KatanaFinesseOnR");
     }
-    
+
     if(bKatFin && bKatFinBon && GetBaseItemType(oWeap2) == BASE_ITEM_KATANA)
     {
         iUseL = TRUE;
-        if (!GetLocalInt(oPC, "KatanaFinesseOnL")) FloatingTextStringOnCreature("Katana Finesse On -- Off Hand.", oPC);
+        if (!GetLocalInt(oPC, "KatanaFinesseOnL")) SendMessageToPC(oPC, "Katana Finesse On -- Off Hand.");
         SetLocalInt(oPC, "KatanaFinesseOnL", TRUE);
     }
     else
     {
-        if (GetLocalInt(oPC, "KatanaFinesseOnL")) FloatingTextStringOnCreature("Katana Finesse Off -- Off Hand.", oPC);
+        if (GetLocalInt(oPC, "KatanaFinesseOnL")) SendMessageToPC(oPC, "Katana Finesse Off -- Off Hand.");
         DeleteLocalInt(oPC, "KatanaFinesseOnL");
     }
 

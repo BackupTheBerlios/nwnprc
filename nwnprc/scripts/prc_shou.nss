@@ -72,7 +72,7 @@ void main()
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
     string nMes = "";
 
-    SendMessageToPC(OBJECT_SELF, "prc_shou is called");
+    //SendMessageToPC(OBJECT_SELF, "prc_shou is called");
 
     if( GetBaseAC(oArmor) > 3 )
     {

@@ -21,9 +21,9 @@ void Grace(object oPC, object oSkin,int bGrace)
    if (GetHasFeat(FEAT_UR_ARMOREDGRACE,oPC)) iMax = 5;
    
    if  (GetBaseAC(oArmor)>iMax ) 
-     SetCompositeBonus(oSkin,"URGrace",0,ITEM_PROPERTY_SAVING_THROW_BONUS,IP_CONST_SAVEBASETYPE_REFLEX);
+     SetCompositeBonus(oSkin,"URGrace",0,ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC,IP_CONST_SAVEBASETYPE_REFLEX);
    else
-     SetCompositeBonus(oSkin,"URGrace",bGrace,ITEM_PROPERTY_SAVING_THROW_BONUS,IP_CONST_SAVEBASETYPE_REFLEX);
+     SetCompositeBonus(oSkin,"URGrace",bGrace,ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC,IP_CONST_SAVEBASETYPE_REFLEX);
 
 }
 

@@ -4,6 +4,7 @@
 
 #include "inc_item_props"
 #include "prc_feat_const"
+#include "prc_class_const"
 
 ///Evil Brand +2 on persuade and intimidate /////////
 void EvilBrand(object oPC,int iEquip ,int iLevel)
@@ -27,9 +28,58 @@ void EvilBrand(object oPC,int iEquip ,int iLevel)
     {
         if (GetBaseItemType(oItem)!=BASE_ITEM_INVALID)
         {
-            RemoveSpecificProperty(oSkin, "EB_I", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
-            RemoveSpecificProperty(oSkin, "EB_I", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
-        DeleteLocalInt(oSkin,"Evilbrand");
+            SetCompositeBonus(oSkin, "EB_I", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
+            SetCompositeBonus(oSkin, "EB_I", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+            DeleteLocalInt(oSkin,"Evilbrand");
+        }
+    }
+    else
+    {
+        if ( !GetLocalInt(oItem,"Evilbrand")&& GetBaseItemType(oItem)==BASE_ITEM_INVALID)
+        {
+        SetCompositeBonus(oSkin, "EB_I", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
+        SetCompositeBonus(oSkin, "EB_I", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+        SetLocalInt(oSkin,"Evilbrand",1);
+    }
+    }
+    }
+
+
+void main()
+{
+//
+// Evil Brand By Zedium
+//
+
+#include "inc_item_props"
+#include "prc_feat_const"
+#include "prc_class_const"
+
+///Evil Brand +2 on persuade and intimidate /////////
+void EvilBrand(object oPC,int iEquip ,int iLevel)
+    {
+    object oItem ;
+    object oSkin = GetPCSkin(OBJECT_SELF);
+
+    if (iEquip==2)
+    {
+        if ( GetLocalInt(oItem,"Evilbrand"))
+        return;
+
+     if (GetBaseItemType(oItem)==BASE_ITEM_INVALID)
+        {
+            SetCompositeBonus(oSkin, "EB_I", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
+            SetCompositeBonus(oSkin, "EB_I", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+            SetLocalInt(oSkin,"Evilbrand",1);
+        }
+    }
+    else if (iEquip==1)
+    {
+        if (GetBaseItemType(oItem)!=BASE_ITEM_INVALID)
+        {
+            SetCompositeBonus(oSkin, "EB_I", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
+            SetCompositeBonus(oSkin, "EB_I", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+            DeleteLocalInt(oSkin,"Evilbrand");
         }
     }
     else
@@ -68,35 +118,35 @@ void main()
     {
     if(bEBHand > 0)
     {
-    oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
-    EvilBrand(oPC, "ONEQUIP", bEBHand);
+    object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
+    EvilBrand(oPC, GetLocalInt(oPC,"ONEQUIP"), 2);
     }
 
     if(bEBHead > 0)
     {
-    oItem=GetItemInSlot(INVENTORY_SLOT_HEAD,oPC);
-    EvilBrand(oPC, "ONEQUIP", bEBHead);
+    object oItem=GetItemInSlot(INVENTORY_SLOT_HEAD,oPC);
+    EvilBrand(oPC, GetLocalInt(oPC,"ONEQUIP"), 2);
     }
     if(bEBChest > 0)
     {
-    oItem=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
-    EvilBrand(oPC, "ONEQUIP", bEBChest);
+    object oItem=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
+    EvilBrand(oPC, GetLocalInt(oPC,"ONEQUIP"), 2);
     }
 
     if(bEBNeck > 0)
     {
-    oItem=GetItemInSlot(INVENTORY_SLOT_CLOAK,oPC);
-    EvilBrand(oPC, "ONEQUIP", bEBNeck);
+    object oItem=GetItemInSlot(INVENTORY_SLOT_CLOAK,oPC);
+    EvilBrand(oPC, GetLocalInt(oPC,"ONEQUIP"), 2);
     }
 
     if(bEBArm > 0)
     {
-    oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
-    EvilBrand(oPC, "ONEQUIP", bEBArm);
+    object oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
+    EvilBrand(oPC, GetLocalInt(oPC,"ONEQUIP"), 2);
     }
     }
     else
     {
-      EvilBrand(oPC, oSkin,0);
+      EvilBrand(oPC, GetLocalInt(oPC,"ONEQUIP"), 0);
     }
 }

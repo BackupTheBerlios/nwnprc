@@ -13,6 +13,7 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_BLACKGUARD:
         case CLASS_TYPE_VASSAL:
         case CLASS_TYPE_SOLDIER_OF_LIGHT:
+        case CLASS_TYPE_KNIGHT_MIDDLECIRCLE:
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_ASSASSIN:
             return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);

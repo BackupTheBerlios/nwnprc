@@ -16,7 +16,6 @@ void main()
 
 
     string sSummon;
-    effect eSummonB== EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
     object oCreature;
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     int nClass = GetLevelByClass(CLASS_TYPE_TRUENECRO, OBJECT_SELF);

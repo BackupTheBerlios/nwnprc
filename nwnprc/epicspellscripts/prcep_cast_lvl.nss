@@ -40,7 +40,7 @@ IsDivineClass(int nClass)
 int
 PractisedSpellCast( int nLevelBonus,int nCastingClass ,object oCaster)
 {
-   int DiffCasterLvl = GetHitDice(oCaster)-(PRCGetCasterLevel(oCaster)+nLevelBonus);
+   int DiffCasterLvl = GetHitDice(oCaster)-(GetCasterLevel(oCaster)+nLevelBonus);
    int nBonus ;
   
    if (DiffCasterLvl)
@@ -48,7 +48,6 @@ PractisedSpellCast( int nLevelBonus,int nCastingClass ,object oCaster)
     	int nFeat;
     	
        	if (nCastingClass == CLASS_TYPE_BARD)           nFeat = FEAT_PRACTISED_SPELLCASTER_BARD;    	
-       	else if (nCastingClass == CLASS_TYPE_BARD)      nFeat = FEAT_PRACTISED_SPELLCASTER_BARD; 
     	else if (nCastingClass == CLASS_TYPE_SORCERER)  nFeat = FEAT_PRACTISED_SPELLCASTER_SORCERER; 
        	else if (nCastingClass == CLASS_TYPE_WIZARD)    nFeat = FEAT_PRACTISED_SPELLCASTER_WIZARD; 
        	else if (nCastingClass == CLASS_TYPE_CLERIC)    nFeat = FEAT_PRACTISED_SPELLCASTER_CLERIC; 
@@ -123,6 +122,7 @@ void main()
 			+ GetLevelByClass(CLASS_TYPE_MAGEKILLER, oCaster)
 			+ GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oCaster)
                         + GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster)
+                        + GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster)
 			+ GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster);
 
 		// This section of code tests for half progression classes.
@@ -194,6 +194,7 @@ void main()
 			+ GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) / 2
 			+ GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) / 2
 			+ GetLevelByClass(CLASS_TYPE_BFZ, oCaster) / 2
+			+ GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster)/2
 			+ GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) / 2;
 
 		//

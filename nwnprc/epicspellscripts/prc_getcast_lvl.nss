@@ -15,6 +15,35 @@ const int  TYPE_DRUID    = 7;
 const int  TYPE_RANGER   = 8;
 const int  TYPE_PALADIN  = 9;
 
+int PractisedSpellGetCast( int nLevelBonus,int nCastingClass ,object oCaster);
+
+int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF);
+
+int
+PractisedSpellGetCast( int nLevelBonus,int nCastingClass ,object oCaster)
+{
+   int DiffCasterLvl = GetHitDice(oCaster)- nLevelBonus;
+   int nBonus ;
+
+   if (DiffCasterLvl)
+   {
+        int nFeat;
+
+        if (nCastingClass == CLASS_TYPE_BARD)           nFeat = FEAT_PRACTISED_SPELLCASTER_BARD;
+        else if (nCastingClass == CLASS_TYPE_SORCERER)  nFeat = FEAT_PRACTISED_SPELLCASTER_SORCERER;
+        else if (nCastingClass == CLASS_TYPE_WIZARD)    nFeat = FEAT_PRACTISED_SPELLCASTER_WIZARD;
+        else if (nCastingClass == CLASS_TYPE_CLERIC)    nFeat = FEAT_PRACTISED_SPELLCASTER_CLERIC;
+        else if (nCastingClass == CLASS_TYPE_DRUID)     nFeat = FEAT_PRACTISED_SPELLCASTER_DRUID;
+
+        if (GetHasFeat(nFeat,oCaster)){
+           nBonus = DiffCasterLvl >4 ? 4:DiffCasterLvl;
+        }
+
+   }
+   return nBonus;
+}
+
+
 int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
 {
 
@@ -28,6 +57,8 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
 
   int nDivine;
   int nArcane;
+  int CastingClassDiv,CastingClassArc;
+
 
   int nDruid=GetLevelByClass(CLASS_TYPE_DRUID, oCaster);
   int nCleric=GetLevelByClass(CLASS_TYPE_CLERIC, oCaster);
@@ -74,12 +105,17 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
   }
   
 
-  nDivine = (nDruid>nCleric)   ? nDruid :  nCleric ;
-  nDivine = (nDivine>nPaladin) ? nDivine :  nPaladin ;
-  nDivine = (nDivine>nRanger)  ? nDivine :  nRanger ;
+  nDivine = nCleric ; CastingClassDiv = CLASS_TYPE_CLERIC;
 
-  nArcane = (nSorcerer>nWizard)? nSorcerer :  nWizard ;
-  nArcane = (nArcane>nBard)    ? nArcane   : nBard ;
+  if (nDruid>nCleric)  { nDivine = nDruid;   CastingClassDiv = CLASS_TYPE_DRUID;}
+  if (nPaladin>nDivine){ nDivine = nPaladin; CastingClassDiv = CLASS_TYPE_PALADIN;}
+  if (nRanger>nDivine) { nDivine = nRanger;  CastingClassDiv = CLASS_TYPE_RANGER;}
+
+  nArcane = nWizard; CastingClassArc = CLASS_TYPE_WIZARD;
+
+  if (nSorcerer>nWizard){ nArcane = nSorcerer; CastingClassArc = CLASS_TYPE_SORCERER;}
+  if (nBard>nArcane)    { nArcane = nBard;     CastingClassArc = CLASS_TYPE_BARD;}
+
 
   int nOozeMLevel = GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster);
   int nFirstClass = GetClassByPosition(1, oCaster);
@@ -104,6 +140,7 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
             GetLevelByClass(CLASS_TYPE_MAGEKILLER, oCaster)+            
             GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oCaster)+            
             GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)+
+            GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster)+
                
             GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) / 2+ 
             GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster)/2+                
@@ -122,6 +159,8 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
 					&& IsArcaneClass(GetClassByPosition(2, oCaster))))
                                          nArcane += nOozeMLevel / 2;
         }
+        
+         nArcane+= PractisedSpellGetCast(nArcane,CastingClassArc,oCaster);
                
         if (GetHasFeat(FEAT_SPELL_POWER_I)){
             nArcane+=1;
@@ -157,8 +196,13 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
 	    GetLevelByClass(CLASS_TYPE_OCULAR, oCaster)/2 +
 	    GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster)/2+
 	    GetLevelByClass(CLASS_TYPE_BFZ, oCaster)/2+
-	    GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster)/2+
+            GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster)/2+
+            GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster)/2+
 	    GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster)/2;
+	    
+          nDivine+= PractisedSpellGetCast(nDivine,CastingClassDiv,oCaster);
+
+
 	    
    
         //class-specific code. Avoid if at all possible

@@ -22,6 +22,14 @@ const int SKILL_JUMP = 28;
 // also handles animations and knockdown
 int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
 {
+     object oArea = GetArea(oPC);
+     // if jumping is disabled in this place.
+     if( GetLocalInt(oArea, "AreaJump") == FALSE )
+     {
+          SendMessageToPC(oPC, "Jumping is not allowed in this area.");
+          return FALSE;
+     }
+
      int bIsRunningJump = FALSE;
      int bPassedJumpCheck = FALSE;
      int iMinJumpDistance = 0;

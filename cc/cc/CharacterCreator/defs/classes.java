@@ -14,6 +14,7 @@ public class classes {
     public classes() {
     }
     
+	public static int Index = 0;
     public static int Label = 1;
     public static int Name = 2;
     public static int Plural = 3;

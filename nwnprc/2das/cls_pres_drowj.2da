@@ -5,7 +5,9 @@
 1          Lore                SKILL     7                4
 2          Base_Attack         BAB       5                ****        
 3          Elf                 RACE      1                ****        
-4          Mobility            FEAT      26               ****
-5          LolthsMeat          FEAT      2441             ****
+4          Drow_male           RACE      164              ****        
+5          Drow_female         RACE      163              ****        
+6          Mobility            FEAT      26               ****
+7          LolthsMeat          FEAT      2441             ****
 8          ScriptVar           VAR       PRC_AllSpell1    0  
-7          ScriptVar           VAR       PRC_AllowDrowJud 0           
+9          ScriptVar           VAR       PRC_AllowDrowJud 0           

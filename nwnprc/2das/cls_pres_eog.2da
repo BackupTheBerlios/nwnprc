@@ -4,6 +4,9 @@
 0          Base_Attack         BAB       6                ****  
 1          Orc                 RACE      14               **** 
 2          Half-orc            RACE      5                **** 
+2          grey_orc            RACE      184              **** 
+2          orog                RACE      187              **** 
+2          tanarukk            RACE      203              **** 
 3          Exotic_Prof         FEAT      44               ****                       
 4          Focus_Orc_axe       FEAT      126              ****   
 5          ScriptVar           VAR       PRC_AllowEoG     0 

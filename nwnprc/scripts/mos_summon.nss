@@ -17,12 +17,24 @@ void main()
     int nClass = GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, OBJECT_SELF);
 
 
-    if ( GetHasFeat(FEAT_MOS_UNDEAD_4) )
-    {
-        if(GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, OBJECT_SELF) >= 11)
-        {
             switch (nClass)
             {
+                case 3:
+                    sSummon = "summonedgreaterw";
+                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
+                    break;
+                case 5:
+                    sSummon = "summonedgreaterw";
+                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
+                    break;
+                case 7:
+                    sSummon = "summonedgreaterw";
+                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
+                    break;
+                case 9:
+                    sSummon = "summonedgreaterw";
+                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
+                    break;
                 case 11:
                     sSummon = "summonedgreaterw";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
@@ -56,28 +68,7 @@ void main()
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
             }
-        }
-        else
-        {
-            sSummon = "prc_mos_spectre2";
-            eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30 );
-        }
-    }
-    else if ( GetHasFeat(FEAT_MOS_UNDEAD_3) )
-    {
-        sSummon = "prc_mos_spectre1";
-        eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_20 );
-    }
-    else if ( GetHasFeat(FEAT_MOS_UNDEAD_2) )
-    {
-        sSummon = "prc_mos_wraith";
-        eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_10 );
-    }
-    else
-    {
-        sSummon = "prc_mos_allip";
-        eSummonB = EffectVisualEffect( VFX_FNF_GAS_EXPLOSION_EVIL );
-    }
+
    effect eSum = EffectSummonCreature(sSummon, VFX_NONE);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummonB, GetSpellTargetLocation());
    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());

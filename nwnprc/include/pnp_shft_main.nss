@@ -304,48 +304,80 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     if (GetIsObjectValid(oWeapCRPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
-                RemoveAllItemProperties(oWeapCRPC);
+		//AssignCommand(oPC,ActionUnequipItem(oWeapCRPC));
 
+        RemoveAllItemProperties(oWeapCRPC);
+		SetIdentified(oWeapCRPC,TRUE);
+		AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
+	}
+	else
+	{
+		oWeapCRPC = CreateItemOnObject("pnp_shft_cweap", oPC);
+	    RemoveAllItemProperties(oWeapCRPC);
+		SetIdentified(oWeapCRPC,TRUE);
+		AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
 	}
     if (GetIsObjectValid(oWeapCR)) //if the target has a weapon
 	{
-			//create a blank creature item (pnp_shft_cweap)
-			//and copy all the traget props over
-			oWeapCRPC = CreateItemOnObject("pnp_shft_cweap", oPC);
-			SetIdentified(oWeapCRPC,TRUE);
-			CopyAllItemProperties(oWeapCRPC,oWeapCR);
-			AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
+		//create a blank creature item (pnp_shft_cweap)
+		//and copy all the traget props over
+		//oWeapCRPC = CreateItemOnObject("pnp_shft_cweap", oPC);
+		//SetIdentified(oWeapCRPC,TRUE);
+		CopyAllItemProperties(oWeapCRPC,oWeapCR);
+		//AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
 	}
 
     //copy targets left c weapons
     if (GetIsObjectValid(oWeapCLPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
-                RemoveAllItemProperties(oWeapCLPC);
+		//AssignCommand(oPC,ActionUnequipItem(oWeapCLPC));
+
+        RemoveAllItemProperties(oWeapCLPC);
+		SetIdentified(oWeapCLPC,TRUE);
+		AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
+	}
+	else
+	{
+		oWeapCLPC = CreateItemOnObject("pnp_shft_cweap", oPC);
+		SetIdentified(oWeapCLPC,TRUE);
+        RemoveAllItemProperties(oWeapCLPC);
+		AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
 	}
     if (GetIsObjectValid(oWeapCL)) //if the target has a weapon
 	{
-			//create a blank creature item (pnp_shft_cweap)
-			//and copy all the traget props over
-			oWeapCLPC = CreateItemOnObject("pnp_shft_cweap", oPC);
-			SetIdentified(oWeapCLPC,TRUE);
-			CopyAllItemProperties(oWeapCLPC,oWeapCL);
-			AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
+		//create a blank creature item (pnp_shft_cweap)
+		//and copy all the traget props over
+		//oWeapCLPC = CreateItemOnObject("pnp_shft_cweap", oPC);
+		//SetIdentified(oWeapCLPC,TRUE);
+		CopyAllItemProperties(oWeapCLPC,oWeapCL);
+		//AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
 	}
     //copy targets special c weapons
     if (GetIsObjectValid(oWeapCBPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
+		//AssignCommand(oPC,ActionUnequipItem(oWeapCBPC));
+
 		RemoveAllItemProperties(oWeapCBPC);
+		SetIdentified(oWeapCBPC,TRUE);
+		AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
+	}
+	else
+	{
+		oWeapCBPC = CreateItemOnObject("pnp_shft_cweap", oPC);
+		SetIdentified(oWeapCBPC,TRUE);
+		RemoveAllItemProperties(oWeapCBPC);
+		AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
 	}
     if (GetIsObjectValid(oWeapCB)) //if the target has a weapon
 	{
-			//create a blank creature item (pnp_shft_cweap)
-			//and copy all the traget props over
-			oWeapCBPC = CreateItemOnObject("pnp_shft_cweap", oPC);
-			SetIdentified(oWeapCBPC,TRUE);
-			CopyAllItemProperties(oWeapCBPC,oWeapCB);
-			AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
+		//create a blank creature item (pnp_shft_cweap)
+		//and copy all the traget props over
+		//oWeapCBPC = CreateItemOnObject("pnp_shft_cweap", oPC);
+		//SetIdentified(oWeapCBPC,TRUE);
+		CopyAllItemProperties(oWeapCBPC,oWeapCB);
+		//AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
 	}
 
     // Get the Targets str, dex, and con
@@ -600,7 +632,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     // Reset any PRC feats that might have been lost from the shift
     DelayCommand(1.0, EvalPRCFeats(oPC));
 
-	DelayCommand(0.5, ClearShifterItems(oPC));
+	DelayCommand(1.5, ClearShifterItems(oPC));
 
 	DelayCommand(3.0, DeleteLocalInt(oPC, "shifting"));
 	SendMessageToPC(oPC, "Finished shifting");
@@ -2083,17 +2115,26 @@ void SetShiftTrueForm(object oPC)
 
     if (GetIsObjectValid(oWeapCR))
     {
-        // Remove all the abilities of the object -- replace with destroy code at 1.64
+        //remove creature weapons
+        //AssignCommand(oPC,ActionUnequipItem(oWeapCR));
+
+        // Remove all abilities of the object
         RemoveAllItemProperties(oWeapCR);
-        AddItemProperty(DURATION_TYPE_PERMANENT, ipUnarmed, oWeapCR);
+       	AddItemProperty(DURATION_TYPE_PERMANENT, ipUnarmed, oWeapCR);
             }
     if (GetIsObjectValid(oWeapCL))
     {
+        //remove creature weapons
+        //AssignCommand(oPC,ActionUnequipItem(oWeapCL));
+
         // Remove all the abilities of the object
         RemoveAllItemProperties(oWeapCL);
     }
     if (GetIsObjectValid(oWeapCB))
     {
+        //remove creature weapons
+        //AssignCommand(oPC,ActionUnequipItem(oWeapCB));
+
         // Remove all abilities of the object
         RemoveAllItemProperties(oWeapCB);
     }

@@ -34,6 +34,6 @@ void main()
 
    float fDelay = 0.0;
    effect eSum = EffectSummonCreature(sSummon, VFX_IMP_NEGATIVE_ENERGY, fDelay);
-   ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
+   ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
 }

@@ -4,4 +4,6 @@
 0     ScriptVar            VAR        PRC_ArcSpell3     0  
 1     Spellcraft           SKILL      16                8           
 3     ScriptVar            VAR        PRC_AllowRedWiz   0    
-4     ScriptVar            VAR        PRC_PrereqRedWiz  0       
+4     ScriptVar            VAR        PRC_PrereqRedWiz  0    
+3          Human               RACE      6                ****        
+3          Deep_Imaskari       RACE      230              ****        

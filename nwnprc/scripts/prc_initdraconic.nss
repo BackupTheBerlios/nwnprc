@@ -152,14 +152,17 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
 
     if (iEquip==2)
     {
-     object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
+     object oItem=GetPCItemLastEquipped();
+     int iType = GetBaseItemType(oItem);
 
-     if ( GetLocalInt(oItem,"IniClaw"))    return;
+     if (iType != BASE_ITEM_GLOVES) return;
+     if ( GetLocalInt(oItem,"IniClaw")) return;
 
      if ( iDmgGlove!= -1 )
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING,iDmgGlove),oItem);
      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh+iKi),oItem);
      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oItem);
+     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackPenalty(Enh+iKi),oItem);
 
      if (GetHasFeat(FEAT_INIDR_STUNSTRIKE,oPC) && !GetLocalInt(oItem,"IniStunStrk"))
      {
@@ -178,6 +181,7 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
 
       if ( iDmgGlove!= -1 )
        RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_SLASHING,GetLocalInt(oItem, "IniClaw"));
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
       RemoveSpecificProperty(oItem,ITEM_PROPERTY_ENHANCEMENT_BONUS,-1,GetLocalInt(oItem, "IniEnh"));
       RemoveSpecificProperty(oItem,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,IP_CONST_DAMAGETYPE_SLASHING,-1);
       DeleteLocalInt(oItem,"IniClaw");
@@ -194,17 +198,22 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
     else
     {
        object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
+       if ( oItem == OBJECT_INVALID) return;
+
        if ( GetLocalInt(oItem,"IniClaw"))
        {
          RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_SLASHING,GetLocalInt(oItem, "IniClaw"));
          RemoveSpecificProperty(oItem,ITEM_PROPERTY_ENHANCEMENT_BONUS,-1,GetLocalInt(oItem, "IniEnh"));
          RemoveSpecificProperty(oItem,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,IP_CONST_DAMAGETYPE_SLASHING,-1);
+         RemoveSpecificProperty(oItem,ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
+
        }
 
         if ( iDmgGlove!= -1 )
             AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING,iDmgGlove),oItem);
          AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh+iKi),oItem);
          AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oItem);
+         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackPenalty(Enh+iKi),oItem);
 
         if (GetHasFeat(FEAT_INIDR_STUNSTRIKE,oPC) && !GetLocalInt(oItem,"IniStunStrk"))
         {
@@ -264,6 +273,7 @@ void StunStrike(object oPC,object oSkin)
     SetLocalInt(oSkin,"IniStunStrk",1);
 
 }
+
 void main()
 {
 
@@ -281,6 +291,7 @@ void main()
    int bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE1,oPC) ? 1:0;
        bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE2,oPC) ? 2:bUnarmedDmg;
 
+
    if (bEnh)ClawDragon(oPC,bUnarmedDmg,bEnh,GetLocalInt(oPC,"ONEQUIP"));
 
    if (GetHasFeat(FEAT_INIDR_SPELLRESISTANCE,oPC)) SpellResistancePC(oPC,oSkin,GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,oPC)+15);
@@ -288,6 +299,5 @@ void main()
 
 
    BonusFeat(oPC,oSkin);
-
 
 }

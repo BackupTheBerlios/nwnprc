@@ -20,21 +20,25 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 
   int iSize = GetCreatureSize(oPC);
 
+  int iDmg = bUnarmedDmg;
 
-  int iDmg = 0;
+  if (iSize == CREATURE_SIZE_SMALL ||iSize== CREATURE_SIZE_TINY)
+      iDmg--;
+
 
   if (iMonk)
   {
     int iLvDmg = iMonk/4+2;
 
-    if (iSize == CREATURE_SIZE_SMALL ||iSize== CREATURE_SIZE_TINY)
-      iLvDmg--;
+    if (iLvDmg> iDmg+bUnarmedDmg)  iDmg =iLvDmg ;
 
-     iDmg =iLvDmg ;
+
 
 
   }
-     iDmg+=bUnarmedDmg;
+
+
+
      switch (iDmg)
      {
         case 0:
@@ -48,15 +52,14 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
         case 4:
           return IP_CONST_MONSTERDAMAGE_1d10;
         case 5:
-          return IP_CONST_MONSTERDAMAGE_2d6;
+          return IP_CONST_MONSTERDAMAGE_1d12;
         case 6:
-          return IP_CONST_MONSTERDAMAGE_2d8;
+          return IP_CONST_MONSTERDAMAGE_1d20;
         case 7:
-          return IP_CONST_MONSTERDAMAGE_2d10;  //20
-       case 8:
-          return IP_CONST_MONSTERDAMAGE_2d10;  //20
-       case 9:
-          return IP_CONST_MONSTERDAMAGE_2d10;  //20
+          return IP_CONST_MONSTERDAMAGE_1d20;
+        case 8:
+          return IP_CONST_MONSTERDAMAGE_1d20;
+
 
       }
 

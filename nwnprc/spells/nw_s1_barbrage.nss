@@ -21,7 +21,7 @@
 #include "prc_class_const"
 void main()
 {
-    if(!GetHasFeatEffect(FEAT_BARBARIAN_RAGE))
+    if(!GetHasFeatEffect(FEAT_BARBARIAN_RAGE) && !GetHasSpellEffect(GetSpellId()))
     {
         //Declare major variables
         int nLevel = GetLevelByClass(CLASS_TYPE_BARBARIAN) + GetLevelByClass(CLASS_TYPE_RUNESCARRED) + GetLevelByClass(CLASS_TYPE_BATTLERAGER) + GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH);

@@ -25,6 +25,15 @@ int CheckMissingPowers(object oPC, int nClass)
 void main()
 {
     object oPC = OBJECT_SELF;
+    if(GetLocalInt(oPC, "nPCShifted"))
+        return;
+    effect eTest = GetFirstEffect(oPC);
+    while(GetIsEffectValid(eTest))
+    {
+        if(GetEffectType(eTest) == EFFECT_TYPE_POLYMORPH)
+            return;
+        eTest = GetNextEffect(oPC);
+    }
     if(CheckMissingPowers(oPC, CLASS_TYPE_PSION))
         return;
     if(CheckMissingPowers(oPC, CLASS_TYPE_WILDER))

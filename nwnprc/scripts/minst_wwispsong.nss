@@ -30,6 +30,7 @@ void main()
     effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eLink = EffectLinkEffects(eBoost, eDur);
+    eLink = ExtraordinaryEffect(eLink);
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     
     int iDontStack;

@@ -7,7 +7,7 @@ void main()
     if (oWeap!= OBJECT_INVALID) return;
 
 
-    int iWis = GetAbilityModifier(ABILITY_DEXTERITY)>0 ? GetAbilityModifier(ABILITY_WISDOM):0 ;
+    int iWis = GetAbilityModifier(ABILITY_WISDOM)>0 ? GetAbilityModifier(ABILITY_WISDOM):0 ;
         iWis+=2;
         iWis = (iWis >35) ? 35 :iWis;
 

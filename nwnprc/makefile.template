@@ -57,8 +57,9 @@ RAR				= $(OUTPATH)\prc_consortium$(PRC_VERSION).rar
 ERF				= $(OUTPATH)\prc_consortium.erf
 HAK				= $(OUTPATH)\prc_consortium.hak
 TLK				= $(TLKPATH)\prc_consortium.tlk
+HIF				= "$(OUTPATH)\PRC Pack.hif"
 README			= prc_consortium.htm
-MISCRESOURCES	= $(OUTPATH)\PRCModuleUpdater.exe "$(OUTPATH)\PRC Pack.hif"
+MISCRESOURCES	= $(OUTPATH)\PRCModuleUpdater.exe 
 # Proposed version 2.0 haks
 SCRIPTSHAK		= $(OUTPATH)\prc_scripts.hak
 2DASHAK			= $(OUTPATH)\prc_2das.hak
@@ -88,6 +89,7 @@ RARCOMPILER		= tools\rar
 ERFCOMPILER 	= tools\erf
 NSSCOMPILER 	= $(NWN_DIR)\utils\clcompile
 NSISCOMPILER	= "$(NSISPATH)\makensis.exe"
+SED				= tools\ssed
 
 
 # Redefine various paths set by the bat file to give them prettier more
@@ -145,7 +147,8 @@ hak110: $(ERF110) $(HAK) install
 
 
 # Rule to build the 2.0 haks
-hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) $(CRAFT2DASHAK) install 
+hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) \
+	$(CRAFT2DASHAK) $(HIF) install 
 
 # Rule to build the NSIS installer.
 nsis:
@@ -190,7 +193,8 @@ installoverrides: $(OVERRIDEFILES)
 
 # This rule builds the 2.0 RAR, commented out for now
 $(RAR): $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(MISCHAK) $(ERF) \
-	$(OVERRIDEFILES) $(TLK) $(README) $(MISCRESOURCES) $(CRAFT2DASHAK)
+	$(OVERRIDEFILES) $(TLK) $(README) $(MISCRESOURCES) $(CRAFT2DASHAK) \
+	$(HIF)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(RARCOMPILER)" a -ep -inul $@ $**
@@ -267,6 +271,12 @@ $(CRAFT2DASHAK): $(CRAFT2DAS)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $**
 
+# Rule to build the HIF file from it's template.
+$(HIF): PRCPackTemplate.hif
+	@echo $(@F)
+	@-del $@ 2>nul
+	type $** | $(SED) -R "s/XXXversionXXX/$(PRC_VERSION)/" >$@
+	
 #
 # Rule to add makefile dependencies.  This will run makedep to build the include
 # file dependencies for all source scripts files that get built to object files

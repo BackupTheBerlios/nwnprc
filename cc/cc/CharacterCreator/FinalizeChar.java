@@ -114,21 +114,16 @@ public class FinalizeChar {
         }
         
         //Spec ability initialization
-        String racefeat = menucreate.MainCharDataAux[1][racialtypes.FeatsTable];
-        String postspec = racefeat.replaceFirst("_feat_","_spec_");
-        if(RESFAC.FileExists("", postspec)) {
-            try {
-                specabilitymap = RESFAC.getResourceAs2DA(postspec);
-                System.out.println(postspec + " exists!");
-                specabilities = true;
-            }
-            catch(IOException err) {
-                JOptionPane.showMessageDialog(null, "Fatal Error - " + postspec + " not found. Your data files might be corrupt.", "Error", 0);
-                System.exit(0);
-            }
-        } else {
-            System.out.println(postspec + " DOES NOT exist!");
-        }
+        String racefeat = menucreate.MainCharDataAux[1][racialtypes.FeatsTable].toUpperCase();
+        String postspec = racefeat.replaceFirst("_FEAT_","_SPEC_");
+		try {
+			specabilitymap = RESFAC.getResourceAs2DA(postspec);
+			if (specabilitymap != null) {
+				System.out.println("Using Race Spec File: " + postspec);
+				specabilities = true;
+			}
+		}
+		catch(Exception e) {}
         //Spec ability end
         
         // Above this is necessary, below this can be handled by other menus

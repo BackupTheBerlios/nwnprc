@@ -4,6 +4,11 @@
 void AnimalCompanion()
 {
 
+   if (GetMaxHenchmen() < 5)
+   {
+      SetMaxHenchmen(5);
+   }
+   
 // add
     location loc = GetLocation(OBJECT_SELF);
     vector vloc = GetPositionFromLocation( loc );

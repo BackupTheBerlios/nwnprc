@@ -69,7 +69,6 @@ void main()
 
   SetLocalInt(OBJECT_SELF,"Stigmata",iStigs-1);
 
-  DelayCommand(220.0,DeleteLocalInt(oPC,"Stigmata"));
 
   effect eff = GetFirstEffect(oTarget);
   while(GetIsEffectValid(eff))

@@ -14,6 +14,7 @@
 #include "x2_inc_itemprop"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "inc_item_props"
 //#include "prc_alterations"
 
 void AddEffectsToWeapon( object oTarget, float fDuration, int iCasterLvl )
@@ -90,7 +91,7 @@ void main()
         int iDuration = iCasterLvl;
         itemproperty ipExoticFeat =
             ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_EXOTIC);
-        object oHide = GetItemInSlot( INVENTORY_SLOT_CARMOUR, oPC );
+        object oHide = GetPCSkin(oPC);
         object oWeapon = OBJECT_INVALID;
 
         /* Boneshank - Not required, since player must already have a hide item.

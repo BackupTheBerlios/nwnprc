@@ -10,6 +10,7 @@
 #include "nw_i0_spells"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
+#include "inc_item_props"
 //#include "prc_alterations"
 
 void main()
@@ -31,8 +32,8 @@ void main()
         effect eImp = EffectVisualEffect(VFX_FNF_ELECTRIC_EXPLOSION);
         effect eDur = EffectVisualEffect(VFX_DUR_SPELLTURNING);
         itemproperty ipImm = ItemPropertyImmunityToSpellLevel(9);
-        EnsurePCHasSkin(oTarget);
-        oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oTarget);
+
+        oSkin = GetPCSkin(oTarget);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eDur), oTarget, RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));

@@ -169,13 +169,14 @@ void main()
     if(GetHasFeat(FEAT_DAM_RED10))
     {
         itemproperty ipIP =ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_1, IP_CONST_DAMAGESOAK_10_HP);
-        IPSafeAddItemProperty(DURATION_TYPE_PERMANENT, ipIP ,oSkin);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+
     }
 
     //damage reduction 15/+1
     if(GetHasFeat(FEAT_DAM_RED15))
     {
         itemproperty ipIP =ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_1, IP_CONST_DAMAGESOAK_15_HP);
-        IPSafeAddItemProperty(DURATION_TYPE_PERMANENT, ipIP ,oSkin);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 }

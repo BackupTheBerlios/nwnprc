@@ -36,7 +36,7 @@ void main()
          (GetHasEffect(EFFECT_TYPE_SANCTUARY,oPC))))
     {
         FloatingTextStringOnCreature("Your target is aware of you, you can not perform a death attack", OBJECT_SELF);
-        DeleteLocalFloat(oPC, "PRC_ASSN_DEATHATTACK_APPLY");
+        DeleteLocalFloat(oPC, "PRC_FH_DEATHATTACK_APPLY");
         return;
     }
     

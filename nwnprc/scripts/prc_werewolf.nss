@@ -19,7 +19,7 @@ void AddLycanthropeSkinProperties(object oPC, object oSkin)
 {
     if (GetLocalInt(oSkin, "WerewolfArmorBonus") == 2) return;
 
-    SetCompositeBonus(oSkin, "WerewolfArmorBonus", 2, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_NATURAL);
+    SetCompositeBonus(oSkin, "WerewolfArmorBonus", 2, ITEM_PROPERTY_AC_BONUS);
     SetCompositeBonus(oSkin, "WerewolfWisBonus", 2, ITEM_PROPERTY_ABILITY_BONUS,IP_CONST_ABILITY_WIS);
 }
 

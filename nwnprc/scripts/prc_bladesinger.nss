@@ -157,7 +157,7 @@ void OnEquip(object oPC,object oSkin)
      {
        RemoveSpellEffectSong(oPC);
      }
-     SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
+     SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS);
      SetCompositeBonus(oSkin, "BladesCon", 0, ITEM_PROPERTY_SKILL_BONUS,SKILL_CONCENTRATION);
      return;
   }
@@ -175,7 +175,7 @@ void OnEquip(object oPC,object oSkin)
          RemoveSpellEffectSong(oPC);
        }
 
-        SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
+        SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS);
         SetCompositeBonus(oSkin, "BladesCon", 0, ITEM_PROPERTY_SKILL_BONUS,SKILL_CONCENTRATION);
         return;
      }
@@ -191,7 +191,7 @@ void OnEquip(object oPC,object oSkin)
          RemoveSpellEffectSong(oPC);
        }
 
-        SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
+        SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS);
         SetCompositeBonus(oSkin, "BladesCon", 0, ITEM_PROPERTY_SKILL_BONUS,SKILL_CONCENTRATION);
         return;
      }
@@ -203,7 +203,7 @@ void OnEquip(object oPC,object oSkin)
    // Bonus Lvl BladeSinger Max Bonus Int
    if ( BladeLv>Intb) BladeLv=Intb;
 
-   SetCompositeBonus(oSkin, "BladesAC", BladeLv, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
+   SetCompositeBonus(oSkin, "BladesAC", BladeLv, ITEM_PROPERTY_AC_BONUS);
 
    if ( GetHasFeat(FEAT_LESSER_SPELLSONG,oPC))
      SetCompositeBonus(oSkin, "BladesCon", 5, ITEM_PROPERTY_SKILL_BONUS,SKILL_CONCENTRATION);
@@ -227,7 +227,7 @@ void  OnUnEquip(object oPC,object oSkin)
          RemoveSpellEffectSong(oPC);
        }
 
-     SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
+     SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS);
      SetCompositeBonus(oSkin, "BladesCon", 0, ITEM_PROPERTY_SKILL_BONUS,SKILL_CONCENTRATION);
      return;
   }
@@ -243,7 +243,7 @@ void  OnUnEquip(object oPC,object oSkin)
          RemoveSpellEffectSong(oPC);
        }
 
-        SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
+        SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS);
         SetCompositeBonus(oSkin, "BladesCon", 0, ITEM_PROPERTY_SKILL_BONUS,SKILL_CONCENTRATION);
         return;
      }
@@ -259,7 +259,7 @@ void  OnUnEquip(object oPC,object oSkin)
          RemoveSpellEffectSong(oPC);
        }
 
-        SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
+        SetCompositeBonus(oSkin, "BladesAC", 0, ITEM_PROPERTY_AC_BONUS);
         SetCompositeBonus(oSkin, "BladesCon", 0, ITEM_PROPERTY_SKILL_BONUS,SKILL_CONCENTRATION);
 
         return;
@@ -273,7 +273,7 @@ void  OnUnEquip(object oPC,object oSkin)
    if ( BladeLv>Intb)
         BladeLv=Intb;
 
-   SetCompositeBonus(oSkin, "BladesAC", BladeLv, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
+   SetCompositeBonus(oSkin, "BladesAC", BladeLv, ITEM_PROPERTY_AC_BONUS);
 
    if ( GetHasFeat(FEAT_LESSER_SPELLSONG,oPC))
      SetCompositeBonus(oSkin, "BladesCon", 5, ITEM_PROPERTY_SKILL_BONUS,SKILL_CONCENTRATION);

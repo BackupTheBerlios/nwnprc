@@ -275,7 +275,7 @@ $(CRAFT2DASHAK): $(CRAFT2DAS)
 $(HIF): PRCPackTemplate.hif
 	@echo $(@F)
 	@-del $@ 2>nul
-	type $** | $(SED) -R "s/XXXversionXXX/$(PRC_VERSION)/" >$@
+	@type $** | $(SED) -R "s/XXXversionXXX/$(PRC_VERSION)/" >$@
 	
 #
 # Rule to add makefile dependencies.  This will run makedep to build the include

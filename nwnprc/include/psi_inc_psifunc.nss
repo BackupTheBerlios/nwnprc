@@ -147,12 +147,12 @@ int GetManifesterDC(object oCaster)
 	
 	if (GetLocalInt(oCaster, "PsionicEndowment") == 1)
 	{
-		nDC += 1;
+		nDC += 2;
 		SetLocalInt(oCaster, "PsionicEndowment", 0);
 	}
 	else if (GetLocalInt(oCaster, "GreaterPsionicEndowment") == 1)
 	{
-		nDC += 2;
+		nDC += 4;
 		SetLocalInt(oCaster, "GreaterPsionicEndowment", 0);
 	}
 	

@@ -1,21 +1,25 @@
-//::///////////////////////////////////////////////
-//:: Dissolving Weapon
-//:: psi_dissolv_wepn.nss
-//:://////////////////////////////////////////////
 /*
-    Make the targeted weapon deal 4d6 + 1d6 per augment acid
-    damage on next successfull hit.
-    
-    Applicable metapsionics:
-    Chained
-    Empowered
-    Maximized
-    
+   ----------------
+   Dissolving Weapon
+   
+   prc_all_disswpn
+   ----------------
+
+   19/1/05 by Ornedan
+
+   Class: Psychic Warrior
+   Power Level: 2
+   Range: Personal
+   Target: One held Weapon
+   Duration: Instantaneous
+   Saving Throw: None
+   Power Resistance: No
+   Power Point Cost: 3
+   
+   Your weapon is corrosive, dealing 4d6 points of acid damage on a successful strike.
+   
+   Augment: For every 2 additional power points spent, this power's damage increases by 1d6. 
 */
-//:://////////////////////////////////////////////
-//:: Created By: Ornedan
-//:: Created On: 17.01.2005
-//:://////////////////////////////////////////////
 
 
 #include "spinc_common"

@@ -1,8 +1,8 @@
 /*
    ----------------
-   Far Hand
+   Psionic Lock
    
-   prc_all_farhand
+   prc_all_lock
    ----------------
 
    7/12/04 by Stratovarius

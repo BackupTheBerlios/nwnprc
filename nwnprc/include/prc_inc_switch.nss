@@ -45,6 +45,16 @@ const string PRC_USE_DEXBASED_WEAPON_POISONING_FAILURE_CHANCE = "PRC_USE_DEXBASE
 const string PRC_USES_PER_WEAPON_POISON_DIE          = "PRC_USES_PER_WEAPON_POISON_DIE";
 const string PRC_USES_PER_WEAPON_POISON_COUNT        = "PRC_USES_PER_WEAPON_POISON_COUNT";
 
+// PRGT system switches
+//these three are strings not switches
+const string PRC_PRGT_XP_SCRIPT_TRIGGERED            = "PRC_PRGT_XP_SCRIPT_TRIGGERED";
+const string PRC_PRGT_XP_SCRIPT_DISARMED             = "PRC_PRGT_XP_SCRIPT_DISARMED";
+const string PRC_PRGT_XP_SCRIPT_RECOVERED            = "PRC_PRGT_XP_SCRIPT_RECOVERED";
+
+const string PRC_PRGT_XP_AWARD_FOR_TRIGGERED         = "PRC_PRGT_XP_AWARD_FOR_TRIGGERED";
+const string PRC_PRGT_XP_AWARD_FOR_RECOVERED         = "PRC_PRGT_XP_AWARD_FOR_RECOVERED";
+const string PRC_PRGT_XP_AWARD_FOR_DISARMED          = "PRC_PRGT_XP_AWARD_FOR_DISARMED";
+
 // Psionics switches
 const string PRC_PSI_ASTRAL_CONSTRUCT_USE_2DA        = "ASTRAL_CONSTRUCT_USE_2DA";
 const string PRC_PNP_RAPID_METABOLISM                = "PRC_PNP_RAPID_METABOLISM";
@@ -84,9 +94,9 @@ const string PRC_DB_SQLLITE                          = "PRC_DB_SQLLITE";
 const string PRC_USE_LETOSCRIPT                      = "PRC_USE_LETOSCRIPT";
 const string PRC_LETOSCRIPT_PHEONIX_SYNTAX           = "PRC_LETOSCRIPT_PHEONIX_SYNTAX";
 const string PRC_LETOSCRIPT_FIX_ABILITIES            = "PRC_LETOSCRIPT_FIX_ABILITIES";
-const string PRC_LETOSCRIPT_NWN_DIR                  = "PRC_LETOSCRIPT_NWN_DIR";
 // letoscript needs a string named PRC_LETOSCRIPT_NWN_DIR set to the directory of NWN
 // if it doesnt work, try different slash options // \\ / \
+const string PRC_LETOSCRIPT_NWN_DIR                  = "PRC_LETOSCRIPT_NWN_DIR";
 
 //ConvoCC switches
 const string PRC_CONVOCC_ENABLE                      = "PRC_CONVOCC_ENABLE";

@@ -2,6 +2,10 @@
 #include "inc_2dacache"
 #include "prc_inc_spells"
 
+int GetECL(object oTarget);
+void GiveXPReward(object oPC, object oTarget, int nCR = 0);
+void GiveXPRewardToParty(object oPC, object oTarget, int nCR = 0);
+
 int GetECL(object oTarget)
 {
     int nLevel;
@@ -34,11 +38,38 @@ int GetECL(object oTarget)
     return nLevel;
 }
 
-void GiveXPReward(object oPC, object oTarget)
+void GiveXPRewardToParty(object oPC, object oTarget, int nCR = 0)
 {
-    int nCR = FloatToInt(GetChallengeRating(oTarget));
-    if(GetPRCSwitch(PRC_XP_USE_ECL_NOT_CR))
-        nCR = GetECL(oTarget);
+    object oTest = GetFirstFactionMember(oPC, !GetPRCSwitch(PRC_XP_GIVE_XP_TO_NPCS));
+    while(GetIsObjectValid(oTest))
+    {
+        float fDistance = GetDistanceToObject(oTest);
+        int nLevelDist = abs(GetECL(oTest)-GetECL(oPC));
+        int bAward = TRUE;
+        if(fDistance < 0.0 && GetPRCSwitch(PRC_XP_MUST_BE_IN_AREA))
+            bAward = FALSE;
+        if(fDistance > IntToFloat(GetPRCSwitch(PRC_XP_MAX_PHYSICAL_DISTANCE)))
+            bAward = FALSE;
+        if(nLevelDist > GetPRCSwitch(PRC_XP_MAX_LEVEL_DIFF) 
+            && GetPRCSwitch(PRC_XP_MAX_LEVEL_DIFF))
+            bAward = FALSE;
+
+        if(bAward)
+            GiveXPReward(oTest, oTarget, nCR);
+
+        oTest = GetNextFactionMember(oPC, !GetPRCSwitch(PRC_XP_GIVE_XP_TO_NPCS));
+    }
+
+}
+
+void GiveXPReward(object oPC, object oTarget, int nCR = 0)
+{
+    if(GetIsObjectValid(oTarget))
+    {
+        nCR = FloatToInt(GetChallengeRating(oTarget));
+        if(GetPRCSwitch(PRC_XP_USE_ECL_NOT_CR))
+            nCR = GetECL(oTarget);
+    }        
     if(nCR < 1)
         nCR = 1;
     if(nCR > 70)

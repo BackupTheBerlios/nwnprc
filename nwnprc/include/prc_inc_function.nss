@@ -432,6 +432,10 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "Dark_Charm_PF");
     DeleteLocalInt(oSkin, "Dark_Charm_PS");
     DeleteLocalInt(oSkin, "Dark_Charm_BL");
+    
+    //Blightlord
+    DeleteLocalInt(oSkin, "WntrHeart");
+    DeleteLocalInt(oSkin, "BlightBlood");
 }
 
 void ScrubPCSkin(object oPC, object oSkin)

@@ -1510,6 +1510,10 @@ int GetCanCastSpell(object oPC, int nSpellDC, string sChool, int nSpellXP)
     nSpellDC -= GetDCSchoolFocusAdjustment(oPC, sChool);
     int nCheck = GetSpellcraftCheck(oPC);
     // Does oPC have any epic spell slots available?
+    if (!GetIsPC(oPC))
+    {
+        return TRUE;
+    }    
     if (!(GetSpellSlots(oPC) >= 1))
     { // No? Cancel spell, then.
         SendMessageToPC(oPC, MES_CANNOT_CAST_SLOTS);

@@ -1,0 +1,32 @@
+2DA V2.0
+
+   Label              Priority 
+0  "Animal Empathy"   1        
+1  "Concentration"    4        
+2  "Disable Trap"     8        
+3  "Discipline"       9        
+4  "Heal"             10       
+5  "Hide"             11       
+6  "Listen"           15       
+7  "Lore"             16       
+8  "Move Silently"    17       
+9  "Open Lock"        18       
+10 "Parry"            19       
+11 "Perform"          20       
+12 "Persuade"         21       
+13 "Pick Pocket"      22       
+14 "Search"           23       
+15 "Set Trap"         24       
+16 "Spellcraft"       25       
+17 "Spot"             26       
+18 "Taunt"            27       
+19 "Use Magic Device" 29       
+20 "Appraise"         2        
+21 "Tumble"           28       
+22 "Craft Trap"       6        
+23 "Bluff"            3        
+24 "Intimidate"       13       
+25 "Craft Armor"      5        
+26 "Craft Weapon"     7        
+27 "Iaijutsu Focus"   12       
+28 "Jump"             14       

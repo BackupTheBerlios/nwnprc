@@ -9,6 +9,7 @@
 
 void main()
 {
+    SetMaxHenchmen(4);
     string sSummon;
     effect eSummonB;
     object oCreature;

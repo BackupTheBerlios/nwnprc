@@ -215,3 +215,5 @@
 211 FEAT_DIVINE_CLEANSING                          3118      0    -1             1      
 212 FEAT_EPIC_DIVINE_RESISTANCE                    3119      0    -1             1      
 213 FEAT_EPIC_DIVINE_MIGHT                         3120      0    -1             1      
+214 FEAT_INVOKE_DIVINE_WRATH                       3114      0    -1             1      
+215 FEAT_DIVINE_VENGEANCE                          3142      0    -1             1      

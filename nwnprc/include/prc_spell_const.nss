@@ -106,6 +106,10 @@ const int SPELL_SHADOWDOUBLE                  = 2128;
 // Nightshade
 const int SPELL_NS_WEB                      = 2130;
 
+// Shadowlord
+const int SHAD_INVISIBILITY_SPHERE         = 2230;
+const int SHAD_DARKNESS                    = 2226;
+
 // Brawler
 const int SPELL_BRAWLER_EXTRA_ATT           = 2161;
 
@@ -181,6 +185,7 @@ const int SPELL_ANTIPAL_INFLICT_LIGHT_WOUNDS       = 2037;
 const int SPELL_ANTIPAL_INFLICT_MODERATE_WOUNDS    = 2048;
 const int SPELL_ANTIPAL_INFLICT_SERIOUS_WOUNDS     = 2054;
 const int SPELL_ANTIPAL_MAGIC_CIRCLE_AGAINST_GOOD  = 2049;
+const int SPELL_ANTIPAL_AURAFEAR                   = 2089;
 						  
 // Spell Feat Generic
 const int SPELL_MANYSHOT2                   = 2246;

@@ -65,4 +65,5 @@ void main()
      // * correctly through EvalPRCFeats
      DuelistRemovePreciseStrike(oItem);
      KnightRemoveDaemonslaying(oItem);
+     RemoveKatanaFinesse(oItem);
 }

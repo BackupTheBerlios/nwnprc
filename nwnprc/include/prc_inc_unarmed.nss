@@ -115,8 +115,15 @@ int FindUnarmedDamage(object oCreature)
 
     // For the creature weapon, we consider only creatures that don't have IoDM levels, for
     // "correctness"
-    if (!GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature))
-        iDamageToUse = (iRacialDamage > iDamageToUse) ? iRacialDamage : iDamageToUse;
+    if (!GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature) && iRacialDamage > iDamageToUse)
+    {
+        iDamageToUse = iRacialDamage;
+        SetLocalInt(oCreature, "UsesRacialAttack", TRUE);
+    }
+    else // this is so that the damage subtype is not added inappropriately.
+    {
+        DeleteLocalInt(oCreature, "UsesRacialAttack");
+    }
 
     // This is where the correct damage dice is calculated
     if (iDamageToUse > 9) iDamageToUse = 9;

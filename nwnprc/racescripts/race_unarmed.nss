@@ -22,15 +22,16 @@ void main ()
          UnarmedFists(OBJECT_SELF);
 
          object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, OBJECT_SELF);
+         int iUseRacial = GetLocalInt(OBJECT_SELF, "UsesRacialAttack");
          
          // The unarmed creature weapon we equip defaults to bludgeoning. (Centaur and Illithid)
+         
          // piercing attacks.
-         if (iRace == RACIAL_TYPE_TANARUKK || iRace == RACIAL_TYPE_MINOTAUR)
+         if ((iRace == RACIAL_TYPE_TANARUKK || iRace == RACIAL_TYPE_MINOTAUR) && iUseRacial)
              AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_PIERCING),oWeapL);
 
-         // These guys have two attacks so I just went with their claws
          // slashing attacks.
-         else if (iRace == RACIAL_TYPE_TROLL || iRace == RACIAL_TYPE_RAKSHASA || iRace == RACIAL_TYPE_LIZARDFOLK) // claws
+         else if ((iRace == RACIAL_TYPE_TROLL || iRace == RACIAL_TYPE_RAKSHASA || iRace == RACIAL_TYPE_LIZARDFOLK) && iUseRacial)
              AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oWeapL);
     }
 }

@@ -9,3 +9,6 @@
 5     FEAT_LARM              2366        3      1                1        
 6     FEAT_RARM              2367        3      1                1        
 7     FEAT_FACE              2368        3      1                1        
+8     FEAT_RIT_SCAR          2369        3      3                0        
+9     FEAT_SPAWNFROST        2371        3      4                0        
+10    FEAT_RIT_DR            2370        3      4                0        

@@ -12,6 +12,8 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 
+void RemoveSacredFlame(object oPC, object oWeap);
+
 void ZealousHeart(object oPC, object oSkin)
 {
     if(GetLocalInt(oSkin, "BFZHeart") == TRUE) return;

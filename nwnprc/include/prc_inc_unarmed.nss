@@ -276,20 +276,6 @@ void UnarmedFists(object oCreature)
     // be equipped on the left hand is if there is a weapon in the right hand.
     if (GetIsObjectValid(oRighthand)) return;
 
-    // Weapon Finesse for the creature item -- remove if weapon finesse for the creature
-    // item ever gets fixed.
-    int iStr = GetAbilityModifier(ABILITY_STRENGTH, oCreature);
-    int iDex = GetAbilityModifier(ABILITY_DEXTERITY, oCreature);
-    int iMod = (iDex > iStr) ? (iDex - iStr) : 0;
-    int iIntuitive = GetLocalInt(oCreature, "IntuitiveAttackR");
-    
-    if (GetHasFeat(FEAT_WEAPON_FINESSE, oCreature) && iMod >= iIntuitive)
-    {
-        SetCompositeAttackBonus(oCreature, "CreatureFinesse", iMod);
-        SetCompositeAttackBonus(oCreature, "IntuitiveAttackR", 0);
-    }
-    // end weapon finesse hack
-
     // Add glove bonuses.
     if (GetIsObjectValid(oItem))
     {

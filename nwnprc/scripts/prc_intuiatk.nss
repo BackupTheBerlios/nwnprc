@@ -60,8 +60,6 @@ void main()
       
       if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD && iMod > iCreature)
       {
-          SetCompositeAttackBonus(oPC, "CreatureFinesse", 0);
-
           if (!GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC))) // unarmed
           {
               SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iMod, ATTACK_BONUS_ONHAND);

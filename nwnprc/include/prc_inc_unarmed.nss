@@ -119,6 +119,10 @@ int FindUnarmedDamage(object oCreature)
     iDamageToUse = (iBrawlerDamage > iDamageToUse) ? iBrawlerDamage : iDamageToUse;
     iDamageToUse = (iShouDamage > iDamageToUse) ? iShouDamage : iDamageToUse;
     
+    // We must assure that the "UseBigMonk" flag is turned off if we're not using
+    // monk damage...
+    if (iDamageToUse != iMonkDamage) iUseBigMonk = FALSE;
+    
     // Future unarmed classes:  if you enhance other classes' damage, add in bonuses here.
     if (iIoDM >= 4) iDamageToUse++;
     if (iIoDM >= 8) iDamageToUse++;

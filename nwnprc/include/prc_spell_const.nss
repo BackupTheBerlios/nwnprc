@@ -12,6 +12,7 @@ const int SPELL_SLIME_WAVE = 2023;
 const int SPELL_BATTLERAGER_DAMAGE	= 2728;
 const int SPELL_HEXTOR_DAMAGE		= 2729;
 const int SPELL_THAYANKNIGHT_DAMAGE	= 2730;
+const int SPELL_DUELIST_DAMAGE		= 2731;
 
 //heartwarder
 const int SPELL_LIPS_RAPTUR      = 2210;

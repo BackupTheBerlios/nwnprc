@@ -26,7 +26,7 @@ void CleanHenchman(object oImage)
         oItem = GetNextItemInInventory(oImage);
      }
      int i;
-     for(i=0;i<14;i++)//equipment
+     for(i=0;i<NUM_INVENTORY_SLOTS;i++)//equipment
      {
         oItem = GetItemInSlot(i, oImage);
         SetDroppableFlag(oItem, FALSE);

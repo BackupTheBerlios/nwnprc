@@ -17,6 +17,7 @@ void main()
     //Declare main variables.
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
+    object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     object oTarget = GetSpellTargetObject();
     int nRace = GetRacialType(oTarget);
     int nClass = GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE, oPC);
@@ -61,8 +62,8 @@ void main()
     }
 
 
-    effect eAttack = EffectAttackIncrease(nAttack);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAttack, oPC, RoundsToSeconds(nDur));
+    itemproperty iAttack = ItemPropertyAttackBonusVsRace(nRace, nAttack);
+    AddItemProperty(DURATION_TYPE_TEMPORARY, iAttack, oWeapon, RoundsToSeconds(nDur));
     itemproperty iAC = ItemPropertyACBonusVsRace(nRace, nAC);
     AddItemProperty(DURATION_TYPE_TEMPORARY, iAC, oSkin, RoundsToSeconds(nDur));
 }

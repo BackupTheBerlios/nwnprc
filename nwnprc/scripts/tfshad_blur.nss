@@ -13,7 +13,7 @@ void main()
    }
    else
    {
-    FloatingTextStringOnCreature("only working in the Night", OBJECT_SELF);
+    FloatingTextStringOnCreature("Only works under ground or at night.", OBJECT_SELF);
     return;
 
    }

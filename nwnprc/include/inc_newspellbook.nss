@@ -2,6 +2,9 @@
 #include "inc_utility"
 #include "inc_item_props"
 #include "prc_inc_spells"
+#include "prc_inc_clsfunc"
+
+void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID);
 
 int GetAbilityForClass(int nClass, object oPC)
 {
@@ -165,4 +168,17 @@ void CheckNewSpellbooks(object oPC)
             DelayCommand(0.01, SetupSpells(oPC, i));
         }
     }
+}
+
+void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
+{
+    //get the level
+    int nLevel = GetNewSpellbookCasterLevel(nClass);
+    //set metamagic
+    SetLocalInt(OBJECT_SELF, "NewSpellMetamagic", nMetamagic);
+    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "NewSpellMetamagic"));
+    //pass in the spell
+    ActionCastSpell(nSpellID, nLevel);
+    //remove it from the spellbook
+    RemoveSpellUse(OBJECT_SELF, GetSpellId(), nClass);
 }

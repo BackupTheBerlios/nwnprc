@@ -36,7 +36,7 @@ void main()
             int iLips=GetAbilityModifier(ABILITY_CHARISMA,oPC)+1;
             if (iLips<2)iLips=1;
                SetLocalInt(oPC,"FEAT_LIPS_RAPTUR",iLips);
-            SendMessageToPC(oPC," Lips of Rapture : use " +IntToString(iLips-1));
+            SendMessageToPC(oPC," Lips of Rapture : use "+IntToString(iLips-1));
          }
       
          if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC)){
@@ -48,7 +48,13 @@ void main()
             effect eHeal = EffectHeal(nHeal);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oFam);
          }
-         
+
+		if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
+				GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC)) {
+			FloatingTextStringOnCreature("*You feel refreshed*", oPC, FALSE);
+			ReplenishSlots(oPC);
+		}
+ 
          
           DelayCommand(1.0,PrcFeats(oPC));
 

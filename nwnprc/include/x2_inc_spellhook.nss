@@ -303,7 +303,7 @@ int X2PreSpellCastCode()
    int nContinue;
    
    DeleteLocalInt(OBJECT_SELF, "SpellConc");
-    nContinue = ExecuteScriptAndReturnInt("prespellcode",OBJECT_SELF);
+    nContinue = !ExecuteScriptAndReturnInt("prespellcode",OBJECT_SELF);
 
     if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
     {

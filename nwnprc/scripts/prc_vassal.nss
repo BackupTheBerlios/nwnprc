@@ -13,7 +13,60 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 
+void CleanExtraArmors(object oPC)
+{
+    // Cleanup routine variables
+    object oChk;
+    int nArmor4 = 0, nArmor6 = 0, nArmor8 = 0;
 
+    // Clean up any extra armors.
+    // This loop counts the armors and destroys any beyond the first one
+    oChk = GetFirstItemInInventory(oPC);
+    while (GetIsObjectValid(oChk))
+    {
+        if (GetTag(oChk) == "PlatinumArmor4")
+        {
+            nArmor4++;
+            if (nArmor4 > 1) DestroyObject(oChk, 0.0);
+        }
+        else if (GetTag(oChk) == "PlatinumArmor6")
+        {
+            nArmor6++;
+            if (nArmor6 > 1) DestroyObject(oChk, 0.0);
+        }
+        else if (GetTag(oChk) == "PlatinumArmor8")
+        {
+            nArmor8++;
+            if (nArmor8 > 1) DestroyObject(oChk, 0.0);
+        }
+        
+        oChk = GetNextItemInInventory(oPC);
+    }
+    // This loop gets rid of any Platinum Armor +6 and +4 if they have any +8
+    if (nArmor8 > 0)
+    {
+        oChk = GetFirstItemInInventory(oPC);
+        while (GetIsObjectValid(oChk))
+        {
+            if (GetTag(oChk) == "PlatinumArmor6") DestroyObject(oChk, 0.0);
+            else if (GetTag(oChk) == "PlatinumArmor4") DestroyObject(oChk, 0.0);
+        
+            oChk = GetNextItemInInventory(oPC);
+        }
+    }
+    // This loop gets rid of any Platinum Armor +4 if they have any +6
+    else if (nArmor6 > 0)
+    {
+        oChk = GetFirstItemInInventory(oPC);
+        while (GetIsObjectValid(oChk))
+        {
+            if (GetTag(oChk) == "PlatinumArmor4") DestroyObject(oChk, 0.0);
+        
+            oChk = GetNextItemInInventory(oPC);
+        }
+    }
+}
+    
 void AddArmorOnhit(object oPC,int iEquip)
     {
     object oItem ;
@@ -141,6 +194,7 @@ void main()
     int nVassal = GetLevelByClass(CLASS_TYPE_VASSAL,OBJECT_SELF);
     object oArmor4 = GetItemPossessedBy(OBJECT_SELF, "PlatinumArmor4");
     object oArmor6 = GetItemPossessedBy(OBJECT_SELF, "PlatinumArmor6");
+    object oArmor8 = GetItemPossessedBy(OBJECT_SELF, "PlatinumArmor8");
     object oItem = GetItemInSlot(INVENTORY_SLOT_CHEST,OBJECT_SELF);
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
@@ -159,4 +213,6 @@ void main()
         DWLeftWeap( oPC,GetLocalInt(oPC,"ONEQUIP"));
     }
 
+    // Clean up any extra armors
+    DelayCommand(3.0, CleanExtraArmors(oPC));
 }

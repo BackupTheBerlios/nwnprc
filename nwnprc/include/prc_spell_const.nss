@@ -38,6 +38,13 @@ const int SPELL_GATHER_HORDE_II    = 2716;
 // Tempest Spells
 const int SPELL_T_TWO_WEAPON_FIGHTING = 2705;
 
+// Duelist
+const int SPELL_ELABORATE_PARRY    = 2722;
+const int SPELL_ELABORATE_PARRY_P  = 2723;
+const int SPELL_ELABORATE_PARRY_FD = 2724;
+const int SPELL_ELABORATE_PARRY_E  = 2725;
+const int SPELL_ELABORATE_PARRY_IE = 2726;
+
 // Master Harper
 const int SPELLABILITY_AURA_LLIIRA = 1509;
 const int SPELLABILITY_LYCANBANE   = 1507;

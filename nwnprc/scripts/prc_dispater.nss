@@ -46,7 +46,7 @@ int IsItemMetal(object oItem)
 ///Device Lore +2 on Search/Disable Device /////////
 void Device_Lore(object oPC ,object oSkin ,int iLevel)
 {
-   if(GetLocalInt(oSkin, "DeviceLore") == iLevel) return;
+   if(GetLocalInt(oSkin, "DeviceSear") == iLevel) return;
 
     SetCompositeBonus(oSkin, "DeviceSear", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_SEARCH);
     SetCompositeBonus(oSkin, "DeviceDisa", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_DISABLE_TRAP);
@@ -56,9 +56,10 @@ void RemoveIronPower(object oPC, object oWeap)
 {
       if (GetLocalInt(oWeap, "DispIronPowerA"))
       {
-         SetCompositeBonus(oWeap, "DispIronPowerA", 0, ITEM_PROPERTY_ATTACK_BONUS);
-         SetCompositeDamageBonus(oWeap, "DispIronPowerD", 0);
-         RemoveSpecificProperty(oWeap, ITEM_PROPERTY_KEEN);
+         SetCompositeBonusT(oWeap, "DispIronPowerA", 0, ITEM_PROPERTY_ATTACK_BONUS);
+         SetCompositeDamageBonusT(oWeap, "DispIronPowerD", 0);
+         RemoveSpecificProperty(oWeap, ITEM_PROPERTY_KEEN,-1,-1, 1,"",-1,DURATION_TYPE_TEMPORARY);
+
       }
 }
 
@@ -77,14 +78,14 @@ void IronPower(object oPC, object oWeap)
          iBonus = 2;
 
       //Stack with Enchantment on Weapon
-      int iEnch = GetWeaponEnhancement(oWeap);
-      iBonus = iBonus + iEnch;
+      //int iEnch = GetWeaponEnhancement(oWeap);
+      iBonus = iBonus ; //+ iEnch;
 
       if ((GetLocalInt(oWeap, "DispIronPowerA") != iBonus) && (iBonus))
       {
-         SetCompositeBonus(oWeap, "DispIronPowerA", iBonus, ITEM_PROPERTY_ATTACK_BONUS);
-         SetCompositeDamageBonus(oWeap, "DispIronPowerD", iBonus);
-         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyKeen(), oWeap);
+         SetCompositeBonusT(oWeap, "DispIronPowerA", iBonus, ITEM_PROPERTY_ATTACK_BONUS);
+         SetCompositeDamageBonusT(oWeap, "DispIronPowerD", iBonus);
+         AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyKeen(), oWeap,9999.0);
       }
    }
 }

@@ -29,12 +29,7 @@ void main()
        break;
        case BASE_ITEM_SHURIKEN:
          if ( GetHasFeat(FEAT_SHURIKENMASTERY, oPC)) 
-         {
-            if (GetItemHasItemProperty(oWeap,ITEM_PROPERTY_ATTACK_BONUS))
                SetCompositeBonusT(oWeap,"WpMasShu",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
-            else
-               SetCompositeBonusT(oWeap,"WpMasShu",iLevel+GetWeaponEnhancement(oWeap),ITEM_PROPERTY_ATTACK_BONUS);
-         }
        break;
 
 

@@ -3,10 +3,11 @@
 
 void main()
 {
+     SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+
      // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
      if (!X2PreSpellCastCode()) return;
-    
-     SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+     
      
      object oTarget = GetSpellTargetObject();
      if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
@@ -23,12 +24,13 @@ void main()
                {
                     // Generate the RTA beam.     
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, 
-                    EffectBeam(VFX_BEAM_ODD, OBJECT_SELF, BODY_NODE_HAND), oTarget, 1.0,FALSE);
+                    EffectBeam(VFX_BEAM_DISINTEGRATE, OBJECT_SELF, BODY_NODE_HAND), oTarget, 1.0,FALSE);
 
                     // Fort save or die time, but we implement death by doing massive damage
                     // since disintegrate works on constructs, undead, etc.  At some point EffectDie()
                     // should be tested to see if it works on non-living targets, and if it does it should
                     // be used instead.
+                    // Test done. Result: It does kill them.
                     int nDamage = 9999;
                     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
                     {
@@ -38,6 +40,10 @@ void main()
                     {
                          // If FB passes saving throw it survives, else it dies
                          DeathlessFrenzyCheck(oTarget);
+                         
+                         // For targets with > 9999 HP. Uncomment if you have such in your module and would like Disintegrate
+                         // to be sure to blast them
+                         //DelayCommand(0.30, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget));
                     }
                     
                     // Apply damage effect and VFX impact, and if the target is dead then apply

@@ -31,7 +31,7 @@ void Sanctify()
      oItem=GetPCItemLastEquipped();
      iType= GetBaseItemType(oItem);
 
-     if ( GetLocalInt(oItem,"SanctMar")&& !GetLocalInt(oPC,"ONREST")) return ;
+     if ( GetLocalInt(oItem,"SanctMar")) return ;
 
      switch (iType)
      {
@@ -166,7 +166,7 @@ void Sanctify()
           break;
      }
 
-     if (Sanctify_Feat(iType) &&  (!GetLocalInt(oItem,"SanctMar") || GetLocalInt(oPC,"ONREST")) )
+     if (Sanctify_Feat(iType) &&  (!GetLocalInt(oItem,"SanctMar")) )
      {
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonusVsRace(IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1d4),oItem,9999.0);
@@ -176,7 +176,7 @@ void Sanctify()
      }
      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
      iType= GetBaseItemType(oItem);
-      if ( Sanctify_Feat(iType) &&  (!GetLocalInt(oItem,"SanctMar")|| !GetLocalInt(oPC,"ONREST")))
+      if ( Sanctify_Feat(iType) &&  (!GetLocalInt(oItem,"SanctMar")))
      {
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonusVsRace(IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1d4),oItem,9999.0);
@@ -295,6 +295,27 @@ void main()
      return;
    }
 
+    if (GetLocalInt(oPC,"ONENTER")|| GetLocalInt(oPC,"ONREST"))
+    {
+      object oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+      DeleteLocalInt(oItem,"SanctMar");
+      DeleteLocalInt(oItem,"MartialStrik");  
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGEBONUS_1d4, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_OUTSIDER,IP_CONST_DAMAGEBONUS_1d4, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_2d6, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+  
+      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
+      DeleteLocalInt(oItem,"SanctMar");
+      DeleteLocalInt(oItem,"MartialStrik"); 
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGEBONUS_1d4, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_OUTSIDER,IP_CONST_DAMAGEBONUS_1d4, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_2d6, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+ 
+    }
    Sanctify();
    MartialStrike();
 

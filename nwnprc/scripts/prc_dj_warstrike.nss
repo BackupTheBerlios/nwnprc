@@ -56,9 +56,11 @@ effect eLink = EffectLinkEffects(eVis, eCon);
      // script now uses combat system to hit and apply effect if appropriate
      string sSuccess = "";
      string sMiss = "";
+     float fDistance = GetDistanceBetween(oPC, oTarget);
+     float fDelay = GetTimeToCloseDistance(fDistance, oPC, TRUE);
         
      // If they are not within 5 ft, they can't do a melee attack.
-     if(!bIsRangedAttack && GetDistanceBetween(oPC, oTarget) >= FeetToMeters(5.0) )
+     if(!bIsRangedAttack &&  fDistance >= FeetToMeters(5.0) )
      {
           SendMessageToPC(oPC,"You are not close enough to your target to attack!");
           return;
@@ -69,7 +71,8 @@ effect eLink = EffectLinkEffects(eVis, eCon);
            AssignCommand(oPC, ActionMoveToLocation(GetLocation(oTarget), TRUE) );
            sSuccess = "*War Strike Hit*";
            sMiss    = "*War Strike Miss*";
+           
      }        
-        
-     PerformAttackRound(oTarget, oPC, eLink, 0.0, 0, 0, 0, FALSE, sSuccess, sMiss);
+     
+     DelayCommand(fDelay, PerformAttackRound(oTarget, oPC, eLink, 0.0, 0, 0, 0, FALSE, sSuccess, sMiss) );
 }

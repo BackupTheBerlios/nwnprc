@@ -12,9 +12,6 @@ The Selvetarm's Wrath feat for the Drow Judicator
 //:: Updated by Oni5115 9/23/2004 to use new combat engine
 //:://////////////////////////////////////////////
 
-//#include "x2_inc_itemprop"
-//#include "prc_class_const"
-//#include "prc_spell_const"
 #include "prc_inc_combat"
 
 void main()
@@ -38,6 +35,8 @@ void main()
      // script now uses combat system to hit and apply effect if appropriate
      string sSuccess = "";
      string sMiss = "";
+     float fDistance = GetDistanceBetween(oPC, oTarget);
+     float fDelay = GetTimeToCloseDistance(fDistance, oPC, TRUE);
      
      if(oPC == oTarget)
      {
@@ -46,7 +45,7 @@ void main()
      }
         
      // If they are not within 5 ft, they can't do a melee attack.
-     if(!bIsRangedAttack && GetDistanceBetween(oPC, oTarget) >= FeetToMeters(5.0) )
+     if(!bIsRangedAttack && fDistance >= FeetToMeters(5.0) )
      {
           SendMessageToPC(oPC,"You are not close enough to your target to attack!");
           return;
@@ -63,5 +62,5 @@ void main()
      effect eVis2 = EffectVisualEffect(VFX_IMP_HARM);
      effect eLink = EffectLinkEffects(eVis1, eVis2);
      
-     PerformAttackRound(oTarget, oPC, eLink, 0.0, 0, iDamageBonus, DAMAGE_TYPE_DIVINE, FALSE, sSuccess, sMiss);
+     DelayCommand(fDelay, PerformAttackRound(oTarget, oPC, eLink, 0.0, 0, iDamageBonus, DAMAGE_TYPE_DIVINE, FALSE, sSuccess, sMiss) );
 }

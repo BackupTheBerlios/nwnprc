@@ -39,12 +39,14 @@
 // #include "prc_alterations"  <-- Inherited
 // #include "X2_I0_SPELLS"     <-- Inherited
 // #include "x2_inc_spellhook" <-- Inherited
-// #include "prc_ipfeat_const" <-- Inherited from "prc_inc_unarmed"
+// #include "prc_ipfeat_const" <-- Inherited
+// #include "nw_i0_generic"    <-- Inherited
 
 #include "x2_inc_itemprop"
 #include "prc_inc_function"
 #include "prc_inc_sneak"
 #include "prc_inc_unarmed"
+#include "prc_inc_util"
 
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions

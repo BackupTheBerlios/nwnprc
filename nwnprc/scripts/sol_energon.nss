@@ -32,7 +32,7 @@ void main()
      {
      	oHench = GetHenchman(OBJECT_SELF, nLoop);
 
-        if (GetResRef(oHench)=="xagya01")
+        if (GetResRef(oHench)=="xagya2")
         {
            RemoveHenchman(OBJECT_SELF,oHench);
            AssignCommand(oHench, SetIsDestroyable(TRUE));
@@ -51,7 +51,7 @@ void main()
 
       if (GetIsObjectValid(oHench))  nCount++;
 
-     if (GetResRef(oHench)=="xagya01")
+     if (GetResRef(oHench)=="xagya2")
      {
         RemoveHenchman(OBJECT_SELF,oHench);
         AssignCommand(oHench, SetIsDestroyable(TRUE));
@@ -63,7 +63,7 @@ void main()
     if (nCount >= GetMaxHenchmen()) return;
 
 
-    oHench = CreateObject(OBJECT_TYPE_CREATURE,"xagya01",GetSpellTargetLocation());
+    oHench = CreateObject(OBJECT_TYPE_CREATURE,"xagya2",GetSpellTargetLocation());
     AddHenchman(OBJECT_SELF,oHench);
 
 

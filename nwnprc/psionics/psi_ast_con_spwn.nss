@@ -19,5 +19,5 @@ void main()
     HandleAstralConstructSpawn(oSpawn);
     
     // Execute other OnSpawn stuff
-    ExecuteScript("x0_ch_hen_spawn", OBJECT_SELF);
+    ExecuteScript("nw_ch_acani9", OBJECT_SELF);
 }

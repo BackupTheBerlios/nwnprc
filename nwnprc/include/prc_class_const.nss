@@ -115,3 +115,7 @@ const int CLASS_TYPE_WARPRIEST				= 56;
 const int CLASS_TYPE_WEREWOLF				= 173;
 const int CLASS_TYPE_WITCH_DOCTOR			= 225;
 const int CLASS_TYPE_XENOWIZARD				= 219;
+const int CLASS_TYPE_PSION				= 145;
+const int CLASS_TYPE_PSYWARRIOR				= 146;
+const int CLASS_TYPE_SOULKNIFE				= 147;
+const int CLASS_TYPE_WILDER				= 148;

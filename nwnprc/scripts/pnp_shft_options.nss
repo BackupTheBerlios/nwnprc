@@ -11,5 +11,5 @@ void main()
 	StoreAppearance(OBJECT_SELF);
 	DeleteLocalInt(OBJECT_SELF, "shifting");
     AssignCommand(OBJECT_SELF, ClearAllActions(TRUE));
-    AssignCommand(OBJECT_SELF, ActionStartConversation(OBJECT_SELF, "pnp_shft_options", FALSE, FALSE));
+    AssignCommand(OBJECT_SELF, ActionStartConversation(OBJECT_SELF, "pnp_shft_options", TRUE, FALSE));
 }

@@ -41,6 +41,21 @@
 //	effect SPEffectHeal(int nAmountToHeal)
 //	effect SPEffectTemporaryHitpoints(int nHitPoints)
 //
+// Must be called for all spell effects.  Takes into account passing the extra spell information
+// required by the PRC apply effect function, trying to keep this as transparent as possible to
+// the spell scripts.
+//		nDurationType - DURATION_TYPE_xxx constant for the duration type.
+//		eEffect - effect to apply
+//		oTarget - object to apply the effect on.
+//		fDuration - duration of the effect, only used for some duration types.
+//		bDispellable - flag to indicate whether spell is dispellable or not, default TRUE.
+//		nSpellID - ID of spell being cast, if -1 GetSpellId() is used.
+//		nCasterLevel - effective caster level, if -1 GetCasterLevel() is used.
+//		oCaster - caster object.
+
+void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
+	int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
+
 ///////////////////////////////////////////////////////////////////////////
 
 #include "X2_I0_SPELLS"

@@ -1,5 +1,11 @@
 #include "prcsp_archmaginc"
 
+
+// Use this function to get the adjustments to a spell or SLAs spell penetration
+// from the various class effects
+// Update this function if any new classes change spell pentration
+int add_spl_pen(object oCaster = OBJECT_SELF);
+
 int GetHeartWarderPene(int spell_id, object oCaster = OBJECT_SELF) {
 	// Guard Expensive Calculations
     if (!GetHasFeat(FEAT_VOICE_SIREN, oCaster)) return 0;

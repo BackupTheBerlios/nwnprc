@@ -10,6 +10,11 @@
 int GetTotalSneakAttackDice(object oPC);
 
 // * Used to find the total rogue sneak dice a character is capable of.
+// -----------------------------------------------------------------------------------------
+// Future PRC's go here.  DO NOT ADD ROGUE/BLACKGUARD/ASSASSIN SNEAK ATTACKS AS CLASS FEATS.
+// Placeholder feats are fine, even encouraged.  Example: "Ranged Sneak Attack +1d6".
+// The feat should do nothing, just show that you have the bonus.
+// -----------------------------------------------------------------------------------------
 int GetRogueSneak(object oPC);
 
 // * Used to find the total blackguard sneak dice a character is capable of.

@@ -1,0 +1,298 @@
+Updated 18/9/04 by Primogenitor
+
+If this is more than 1 month old, prod me to update it!
+
+
+DO NOT RELY ON THIS FILE
+It is a guide only, if in doubt, look at the actual code.
+
+
+
+
+
+inc_item_props
+
+
+
+// * Used to roll bonuses from multiple sources into a single property
+// * Only supports properties which have simple integer CostTableVals.
+// * See the switch for a list of supported types.  Some important properties
+// * that CANNOT be composited are SpellResistance, DamageBonus, DamageReduction
+// * DamageResistance and MassiveCritical, as these use constants instead of
+// * integers for CostTableVals.
+// *
+// * oPC = Object wearing / using the item
+// * oItem = Object to apply bonus to
+// * sBonus = String name of the source for this bonus
+// * iVal = Integer value to set this bonus to
+// * iType: ITEM_PROPERTY_* of bonus
+// * iSubType: IP_CONST_* of bonus SubType if applicable
+// * 
+// * Remeber to add the name of the bonus (sBonus) to the DeletePRCInts()
+// * to make sure it is reapplied properly
+void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSubType = -1);
+void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iSubType = -1); // for temporary bonuses
+
+// * Used to roll bonuses from multiple sources into a single property
+// * Only supports damage bonuses in a linear fashion - +1 through +20.
+// *
+// * oItem = Object to apply bonus to
+// * sBonus = String name of the source for this bonus
+// * iVal = Integer value to set this bonus to (damage +1 through +20)
+// * iSubType: IP_CONST_DAMAGETYPE*  -- leave blank to use the weapon's damage type.
+// * 
+// * Remeber to add the name of the bonus (sBonus) to the DeletePRCInts()
+// * to make sure it is reapplied properly
+void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubType = -1); // for temporary bonuses
+
+// * Keeps track of Attack Bonus effects and stacks them appropriately... you cannot set up
+// * "special" attack bonuses against races or alignments, but it will keep seperate tabs on
+// * on-hand attack bonuses and off-hand attack bonuses.
+// *
+// * NOTE: This attack bonus is an effect on the creature, not an item property.  Item Property
+// * attacks have the downside that they pierce DR, whereas effects do not.
+// *
+// * NOTE: DO *NOT* USE THIS FUNCTION WITH SPELL/SLA EFFECTS.  They stack fine on their own.
+// *
+// * oPC - PC/NPC you wish to apply an attack bonus effect to
+// * sBonus - the unique name you wish to give this attack bonus
+// * iVal - the amount the attack bonus should be (there is a hardcoded limit of 20)
+// * iSubType - ATTACK_BONUS_MISC applies to both hands, ATTACK_BONUS_ONHAND applies to the right (main)
+// *    hand, and ATTACK_BONUS_OFFHAND applies to the left (off) hand
+// * 
+// * Remeber to add the name of the bonus (sBonus) to the DeletePRCInts()
+// * to make sure it is reapplied properly
+void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC);
+
+
+
+
+
+prc_inc_function
+
+
+
+//--------------------------------------------------------------------------
+// This is the "event" that is called to re-evalutate PRC bonuses.  Currently
+// it is fired by OnEquip, OnUnequip and OnLevel.  If you want to move any
+// classes into this event, just copy the format below.  Basically, this function
+// is meant to keep the code looking nice and clean by routing each class's
+// feats to their own self-contained script
+//--------------------------------------------------------------------------
+void EvalPRCFeats(object oPC);
+
+
+
+
+
+prc_add_spell_dc
+
+
+
+// Use this function to get the adjustments to a spell or SLAs saving throw
+// from the various class effects
+// Update this function if any new classes change saving throws
+int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/);
+
+
+
+
+
+prc_add_spell_pen
+
+
+
+// Use this function to get the adjustments to a spell or SLAs spell penetration
+// from the various class effects
+// Update this function if any new classes change spell pentration
+int add_spl_pen(object oCaster = OBJECT_SELF);
+
+
+
+
+
+prc_inc_spells
+
+
+
+//Returns Reflex Adjusted Damage. Is a wrapper function that allows the 
+//DC to be adjusted based on conditions that cannot be done using iprops
+//such as saves vs spellschools, or other adjustments
+int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF);
+
+//Returns 0, 1 or 2 as MySavingThrow does. 0 is a failure, 1 is success, 2 is immune.
+//Is a wrapper function that allows the DC to be adjusted based on conditions 
+//that cannot be done using iprops, such as saves vs spellschool.
+int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
+
+// Returns the caster level when used in spells.  You can use PRCGetCasterLevel()
+// to determine a caster level from within a true spell script.  In spell-like-
+// abilities & items, it will only return GetCasterLevel.
+int PRCGetCasterLevel(object oCaster = OBJECT_SELF);
+
+//Wrapper for The MaximizeOrEmpower function that checks for metamagic feats
+//in channeled spells as well
+int MyMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0);
+
+//This checks if the spell is channeled and if there are multiple spells
+//channeled, which one is it. Then it checks in either case if the spell
+//has the metamagic feat the function gets and returns TRUE or FALSE accordingly
+int CheckMetaMagic(int nMeta,int nMMagic);
+
+//GetNextObjectInShape wrapper for changing the AOE of the channeled spells (Spellsword Channel Spell)
+object MyNextObjectInShape(int nShape, float fSize, location lTarget, int bLineOfSight=FALSE, int nObjectFilter=OBJECT_TYPE_CREATURE, vector vOrigin=[0.0,0.0,0.0]);
+
+
+
+prc_inc_combat
+
+
+
+// Performs a full attack round and can add in bonus damage damage/effects
+// Will perform all attacks and accounts for weapontype, haste, twf, tempest twf, etc.
+//
+// eSpecialEffect -  any special Vfx or other effects the attack should use IF successful.
+// eDuration - Changes the duration of the applied effect(s)
+//           0.0 = DURATION_TYPE_INSTANT, effect lasts 0.0 seconds.
+//          >0.0 = DURATION_TYPE_TEMPORARY, effect lasts the amount of time put in here.
+//          <0.0 = DURATION_TYPE_PERMAMENT!!!!!  Effect lasts until dispelled.  
+// iAttackBonusMod is the attack modifier - Will effect all attacks if bEffectAllAttacks is on
+// iDamageModifier - should be either a DAMAGE_BONUS_* constant or an int of damage.
+//                   Give an int if the attack effects ONLY the first attack!
+// iDamageType = DAMAGE_TYPE_*
+// bEffectAllAttacks - If FALSE will only effect first attack, otherwise effects all attacks.
+// sMessageSuccess - message to display on a successful hit. (i.e. "*Sneak Attack Hit*")
+// sMessageFailure - message to display on a failure to hit. (i.e. "*Sneak Attack Miss*")
+void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "");
+
+
+
+
+
+prc_inc_sneak
+
+
+
+// * Used to find the total rogue sneak dice a character is capable of.
+// -----------------------------------------------------------------------------------------
+// Future PRC's go here.  DO NOT ADD ROGUE/BLACKGUARD/ASSASSIN SNEAK ATTACKS AS CLASS FEATS.
+// Placeholder feats are fine, even encouraged.  Example: "Ranged Sneak Attack +1d6".
+// The feat should do nothing, just show that you have the bonus.
+// -----------------------------------------------------------------------------------------
+int GetRogueSneak(object oPC);
+
+
+
+
+prc_inc_unarmed
+
+
+// Determines the amount of damage a character can do.
+// IoDM: +1 dice at level 4, +2 dice at level 8
+// Sacred Fist: Levels add to monk levels, or stand alone as monk levels.
+// Shou: 1d6 at level 1, 1d8 at level 2, 1d10 at level 3, 2d6 at level 5
+// Monk: 1d6 at level 1, 1d8 at level 4, 1d10 at level 8, 2d6 at level 12, 2d8 at level 16, 2d10 at level 20
+// Brawler: 1d6 at level 1, 1d8 at level 6, 1d10 at level 12, 2d6 at level 18, 2d8 at level 24, 2d10 at level 30, 3d8 at level 36
+int FindUnarmedDamage(object oCreature);
+
+
+
+
+prc_inc_clsfunc
+
+
+
+// Applies a spell's effect immediately by clearing the character's action queue
+// The spell cast can be any spell, but it will not invoke a casting animation and it
+// will automatically be cast upon the caster.  Good for passive abilities
+// which conditionally change with certain actions.
+void ActionCastSpellOnSelf(int iSpell);
+
++lots of class specific functions
+
+
+
+
+prc_alterations
+
+
+
+//function prototypes
+//use this to get class/race adjusted racial type back to one of the bioware bases
+//includes shifter changed forms
+int MyPRCGetRacialType(object oTarget);
+
+
+
+
+prc_ipfeat_const
+prc_feat_const
+prc_racial_const
+prc_class_const
+prc_spell_const
+
+all constant includes
+
+
+
+
+spinc_common
+///////////////////////////////////////////////////////////////////////////
+//
+// Include file for common spell definitions.
+//
+//
+// Functions for time that are missing from BioWare's code, to be used for
+// spell durations.
+//
+// float MinutesToSeconds(int minutes);
+// float TenMinutesToSeconds(int tenMinutes);
+//
+// Numerous wrappers for bioware functions are provided and should be
+// called in place of the bioware functions; these hooks provide
+// support for the PRC class scripts.  Below is a list of the new
+// functions, see their comments for exact descriptions.
+//
+//	int SPResistSpell(object oCaster, object oTarget, float fDelay = 0.0)
+//	int SPGetSpellSaveDC(object oCaster = OBJECT_SELF)
+//	void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
+//		int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
+//	void SPRaiseSpellCastAt(object oTarget, int bHostile = TRUE, int nSpellID = -1, object oCaster = OBJECT_SELF)
+//
+// Functions that have no direct bioware equivalent, but allow for hooks into the spell code.
+//
+//	int SPGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF)
+//	void SPSetSchool(int nSchool = SPELL_SCHOOL_GENERAL)
+//
+// Functions that manipulate metamagic, these have no direct bioware equivalents, but should be called
+// instead of GetMetaMagic() and checking flags.
+//
+//	int SPGetMetaMagic()
+//	int SPGetMetaMagicDamage(int nDamageType, int nDice, int nDieSize, 
+//		int nBonusPerDie = 0, int nBonus = 0, int nMetaMagic = -1)
+//	float SPGetMetaMagicDuration(float fDuration, int nMetaMagic = -1)
+//
+// Functions to return effects, use any here instead of standard EffectXXX() functions.
+//
+//	effect SPEffectDamage(int nDamageAmount, int nDamageType = DAMAGE_TYPE_MAGICAL, 
+//		int nDamagePower = DAMAGE_POWER_NORMAL)
+//	effect SPEffectDamageShield(int nDamageAmount, int nRandomAmount, int nDamageType)
+//	effect SPEffectHeal(int nAmountToHeal)
+//	effect SPEffectTemporaryHitpoints(int nHitPoints)
+//
+///////////////////////////////////////////////////////////////////////////
+
+// Must be called for all spell effects.  Takes into account passing the extra spell information
+// required by the PRC apply effect function, trying to keep this as transparent as possible to
+// the spell scripts.
+//		nDurationType - DURATION_TYPE_xxx constant for the duration type.
+//		eEffect - effect to apply
+//		oTarget - object to apply the effect on.
+//		fDuration - duration of the effect, only used for some duration types.
+//		bDispellable - flag to indicate whether spell is dispellable or not, default TRUE.
+//		nSpellID - ID of spell being cast, if -1 GetSpellId() is used.
+//		nCasterLevel - effective caster level, if -1 GetCasterLevel() is used.
+//		oCaster - caster object.
+/*
+void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
+	int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)

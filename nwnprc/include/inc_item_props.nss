@@ -47,6 +47,9 @@ int TotalAndRemoveProperty(object oItem, int iType, int iSubType = -1);
 // * iVal = Integer value to set this bonus to
 // * iType: ITEM_PROPERTY_* of bonus
 // * iSubType: IP_CONST_* of bonus SubType if applicable
+// * 
+// * Remeber to add the name of the bonus (sBonus) to the DeletePRCInts()
+// * to make sure it is reapplied properly
 void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSubType = -1);
 void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iSubType = -1); // for temporary bonuses
 
@@ -86,6 +89,9 @@ int GetItemDamageType(object oItem);
 // * sBonus = String name of the source for this bonus
 // * iVal = Integer value to set this bonus to (damage +1 through +20)
 // * iSubType: IP_CONST_DAMAGETYPE*  -- leave blank to use the weapon's damage type.
+// * 
+// * Remeber to add the name of the bonus (sBonus) to the DeletePRCInts()
+// * to make sure it is reapplied properly
 void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubType = -1); // for temporary bonuses
 
 // Removes a specific property from an item
@@ -105,6 +111,9 @@ void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCos
 // * iVal - the amount the attack bonus should be (there is a hardcoded limit of 20)
 // * iSubType - ATTACK_BONUS_MISC applies to both hands, ATTACK_BONUS_ONHAND applies to the right (main)
 // *    hand, and ATTACK_BONUS_OFFHAND applies to the left (off) hand
+// * 
+// * Remeber to add the name of the bonus (sBonus) to the DeletePRCInts()
+// * to make sure it is reapplied properly
 void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC);
 
 int GetHasItem(object oPC, string sRes)

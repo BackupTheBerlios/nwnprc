@@ -4,6 +4,13 @@
 //#include "prcsp_archmaginc"
 #include "prc_add_spl_pen"
 
+
+// Use this function to get the adjustments to a spell or SLAs saving throw
+// from the various class effects
+// Update this function if any new classes change saving throws
+int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/);
+
+
 // Check for CLASS_TYPE_HIEROPHANT > 0 in caller
 int GetWasLastSpellHieroSLA(int spell_id, object oCaster = OBJECT_SELF)
 {

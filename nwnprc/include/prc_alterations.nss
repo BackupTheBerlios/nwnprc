@@ -20,6 +20,8 @@
 #include "prcsp_engine"
 
 //function prototypes
+//use this to get class/race adjusted racial type back to one of the bioware bases
+//includes shifter changed forms
 int MyPRCGetRacialType(object oTarget);
 
 // Checks if target is a frenzied Bersker with Deathless Frenzy Active

@@ -22,6 +22,8 @@
 // is meant to keep the code looking nice and clean by routing each class's
 // feats to their own self-contained script
 //--------------------------------------------------------------------------
+void EvalPRCFeats(object oPC);
+
 
 
 #include "prc_alterations"

@@ -11,12 +11,66 @@
 // Last Updated: 03/15/2004, Nron Ksr
 /////////////////////////////////////////////////
 
-#include "X0_I0_SPELLS"
-#include "x2_inc_spellhook"
-// Boneshank - Added below include files for needed functions.
-#include "x2_I0_SPELLS"
+// Current error is caused by the includes...
+// This spell needs several items from x0_i0_spells.
+// x0_i0_spells --> nw_i0_generic.
+// x0_i0_spells --> nw_i0_spells --> inc_dispel --> nw_i0_generic
+// So we have a large repeating chain of includes.
+// prc_alterations is also duplicated similarly.
+// inc_epicspells --> prc_getcast_lvl  --> prc_alterations
+// nw_i0_spells   --> prc_inc_function --> prc_alterations
+
+// If anyone can think of a way to fix it please go ahead...
+// I managed to fix all the other scripts though =)
+
 #include "inc_epicspells"
-#include "prc_alterations"
+   //#include "prc_getcast_lvl"
+      //#include "prc_alterations"***
+      
+#include "x0_i0_spells"
+   //#include "x2_inc_switches"
+   //#include "x2_inc_itemprop"
+   //#include "x0_i0_match"
+
+   //#include "x0_i0_henchman"
+      //#include "x0_i0_common"
+         //#include "x0_i0_partywide"
+            //#include "x0_i0_campaign"
+         //#include "x0_i0_transport"
+      //#include "nw_i0_plot"
+      //#include "nw_i0_generic" *
+         //#include "x0_i0_behavior"
+         //#include "x0_i0_anims"
+            //#include "x0_i0_position"
+            //#include "x0_i0_modes"
+            //#include "x0_i0_voice"
+            //#include "x0_i0_walkway"
+               //#include "x0_o0_spawncond"
+                  //#include "x0_i0_combat"
+                     //#include "x0_i0_talent"
+                        //#include "x0_inc_generic"
+                           //#include "x0_i0_debug"
+                           //#include "x0_i0_equip"
+                              //#include "x0_i0_assoc"
+                              //#include "x0_i0_enemy"
+                                 //#include "x0_i0_match"
+      //#include "nw_i0_spells"
+         //#include "prc_inc_function"
+            //#include "prc_alterations"***
+               //#include "x2_inc_switches"
+               //#include "prc_feat_const"
+               //#include "prc_class_const"
+               //#include "prc_spell_const"
+               //#include "lookup_2da_spell"
+               //#include "prcsp_reputation"
+               //#include "prcsp_archmaginc"
+               //#include "prcsp_spell_adjs"
+               //#include "prcsp_engine"
+         //#include "inc_dispel"
+            //#include "nw_i0_generic" *
+            //#include "prc_feat_const"
+            //#include "lookup_2da_spell"
+            //#include "prcsp_spell_adjs"
 
 void main()
 {
@@ -29,7 +83,7 @@ void main()
     object oTarget;
     float fDelay;
     // Boneshank - Added in the nDC formula.
-    int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +
+    int nDC = /*GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + */
 		GetChangesToSaveDC() +
 		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
     //Declare and assign personal impact visual effect.

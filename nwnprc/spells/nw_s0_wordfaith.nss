@@ -126,7 +126,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         //Apply the appropriate effects based on HD
                         if (nHD >= 12)
                         {
-                            eLink = EffectLinkEffects(eBlind, eDur);
+                            eLink = EffectLinkEffects(eStun, eDur);
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBlind, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl));
                         }
                         else if (nHD >= 8 && nHD < 12)

@@ -4,6 +4,7 @@
 //:://////////////////////////////////////////////
 
 #include "inc_eventhook"
+#include "inc_ecl"
 
 void main()
 {
@@ -15,8 +16,10 @@ void main()
 
     // Execute hooked HB scripts for all players
     object oPC = GetFirstPC();
-    while(GetIsObjectValid(oPC)){
+    while(GetIsObjectValid(oPC))
+    {
         ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONHEARTBEAT);
+        ApplyECLToXP(oPC);
         oPC = GetNextPC();
     }
 }

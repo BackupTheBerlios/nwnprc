@@ -10,14 +10,16 @@ void main()
 {
     ExecuteScript("prc_ondeath", OBJECT_SELF);
     /* Moved to prc_ondeath
-	object oKiller = GetLastKiller();
+    object oKiller = GetLastKiller();
 
     if(GetAbilityScore(OBJECT_SELF, ABILITY_INTELLIGENCE)>4)
     {
-    	LolthMeat(oKiller);
+        LolthMeat(oKiller);
     }
     */
     
+    
+    
     // Execute scripts hooked to this event for the NPC triggering it
-	ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_NPC_ONDEATH);
+    ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_NPC_ONDEATH);
 }

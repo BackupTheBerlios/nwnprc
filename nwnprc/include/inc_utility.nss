@@ -56,13 +56,6 @@ int GetIsValidAlignment( int iLawChaos, int iGoodEvil, int iAlignRestrict, int i
 // http://nwvault.ign.com/Files/scripts/data/1065075424375.shtml
 location GetRandomCircleLocation(location lBase, float fDistance=1.0);
 
-//returns a really random number within set bounds
-//based upon seed set with SeedRealRandom
-int GetRealRand(int nMax, int nMin = 0);
-
-//used to set the seeds for the real random function
-void SeedRealRand(int nSeed);
-
 //taken from homebrew scripts forum sticky
 //credit goes to Pherves
 string FilledIntToString(int nX, int nLength = 4, int nSigned = FALSE);
@@ -121,13 +114,13 @@ int GetIsValidAlignment ( int iLawChaos, int iGoodEvil,int iAlignRestrict, int i
 location GetRandomCircleLocation(location lBase, float fDistance=1.0)
 {
     // Pick a random angle for the location.
-    float fAngle = IntToFloat(GetRealRand(3600)) / 10.0;
+    float fAngle = IntToFloat(Random(3600)) / 10.0;
 
     // Pick a random facing for the location.
-    float fFacing = IntToFloat(GetRealRand(3600)) / 10.0;
+    float fFacing = IntToFloat(Random(3600)) / 10.0;
 
     // Pick a random distance from the base location.
-    float fHowFar = IntToFloat(GetRealRand(FloatToInt(fDistance * 10.0))) / 10.0;
+    float fHowFar = IntToFloat(Random(FloatToInt(fDistance * 10.0))) / 10.0;
 
     // Retreive the position vector from the location.
     vector vPosition = GetPositionFromLocation(lBase);
@@ -138,31 +131,6 @@ location GetRandomCircleLocation(location lBase, float fDistance=1.0)
 
     // Return the new random location.
     return Location(GetAreaFromLocation(lBase), vPosition, fFacing);
-}
-
-void SeedRealRand(int nSeed)
-{
-    if(nSeed < 0)
-        nSeed = -nSeed;
-    if(nSeed > 99)
-        nSeed = nSeed%100;
-    if(GetTimeMillisecond()%2 == 0)
-        SetLocalInt(GetModule(), "LastRow", nSeed);
-    else
-        SetLocalInt(GetModule(), "LastColumn", nSeed);
-}
-
-int GetRealRand(int nMax, int nMin = 0)
-{
-    return Random(nMax-nMin)+nMin;
-
-    int nRow =    GetLocalInt(GetModule(), "LastRow");
-    int nColumn = GetLocalInt(GetModule(), "LastColumn");
-    int nNumber = StringToInt(Get2DACache("RealRandom", IntToString(nColumn%10), nRow%100));
-    SetLocalInt(GetModule(), "LastRow", nNumber);
-    SetLocalInt(GetModule(), "LastColumn", nRow);
-    nNumber = (nNumber%(nMax-nMin))+nMin;
-    return nNumber;
 }
 
 

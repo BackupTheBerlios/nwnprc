@@ -1,5 +1,6 @@
 
 #include "prc_inc_sneak"
+#include "prc_inc_switch"
 
 // return sneak attack damage for a spell
 // requires caster, target, and spell damage type
@@ -28,7 +29,7 @@ int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int 
      if(iAttackRoll == 2)  iDamage *= 2;
      
      // add sneak attack damage if applicable
-     if(bCanSneakAttack)
+     if(bCanSneakAttack && !GetPRCSwitch(PRC_SPELL_SNEAK_DISABLE))
           iDamage += SpellSneakAttackDamage(oCaster, oTarget);
      
      // adds the bonus for spell bretrayal or spell strike for touch spells

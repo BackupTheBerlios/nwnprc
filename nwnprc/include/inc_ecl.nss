@@ -1,5 +1,6 @@
 #include "prc_inc_switch"
 #include "inc_2dacache"
+#include "prc_inc_spells"
 
 int GetECL(object oTarget)
 {
@@ -22,11 +23,153 @@ int GetECL(object oTarget)
   //   level = 0.5 + sqrt(0.25 + (t/500))
   //
     if(GetPRCSwitch(PRC_ECL_USES_XP_NOT_HD)
-        && (GetIsPC(oPC) || GetLocalInt(oPC, "NPC_XP"))))
+        && (GetIsPC(oPC) || GetLocalInt(oPC, "NPC_XP")))
         nLevel = FloatToInt(0.5 + sqrt(0.25 + ( IntToFloat(GetXP(oPC)) / 500 )));
     else
         nLevel = GetHitDice(oTarget);
     int nRace = GetRacialType(oTarget);
     nLevel += StringToInt(Get2DACache("ECL", "LA", nRace));
+    if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA))
+        nLevel += StringToInt(Get2DACache("ECL", "RaceHD", nRace));
     return nLevel;
+}
+
+void GiveXPReward(object oPC, object oTarget)
+{
+    int nCR = FloatToInt(GetChallengeRating(oTarget));
+    if(GetPRCSwitch(PRC_XP_USE_ECL_NOT_CR))
+        nCR = GetECL(oTarget);
+    if(nCR < 1)
+        nCR = 1;
+    if(nCR > 70)
+        nCR = 70;
+    int ECL = GetECL(oPC);
+    if(ECL < 1)
+        ECL = 1;
+    if(ECL > 60)
+        ECL = 60;
+    int nBaseXP = StringToInt(Get2DACache("dmgxp", IntToString(nCR), nECL-1));
+    if(nBaseXP == 0)
+        return;
+    
+    //count the size of the party
+    
+    int nPartyCount;
+    object oTest = GetFirstFactionMemeber(oPC, FALSE);
+    while(GetIsObjectValid(oTest))
+    {
+        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_NONE)
+            fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_PC_PARTY_COUNT_x100))/100.0;
+        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_HENCHMAN)
+            fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_HENCHMAN_PARTY_COUNT_x100))/100.0;
+        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_DOMINATED)
+            fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_DOMINATED_PARTY_COUNT_x100))/100.0;
+        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_ANIMALCOMPANION)
+            fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_ANIMALCOMPANION_PARTY_COUNT_x100))/100.0;
+        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_FAMILIAR)
+            fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_FAMILIAR_PARTY_COUNT_x100))/100.0;
+        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_SUMMONED)
+            fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_SUMMONED_PARTY_COUNT_x100))/100.0;
+        oTest = GetNextFactionMemeber(oPC, FALSE);
+    }
+    //incase something weird is happenening
+    if(fPartyCount == 0.0)
+        return;
+    int nXPAward = FloatToInt(IntToFloat(nBaseXP)/fPartyCount);
+    
+    //now do multiclass penalty
+    
+    int nHighestClassLevel;
+    int i;
+    for(i=1;i<=3;i++)
+    {
+        int nClassLevel = PRCGetLevelByPosition(i,oPC);
+        if(nClassLevel > nHighestClassLevel)
+            nHighestClassLevel = nClassLevel;
+    }
+    float fPenalty;
+    int nRace = GetRacialType(oPC);
+    for(i=1;i<=3;i++)
+    {
+        int nClassLevel = PRCGetLevelByPosition(i,oPC);
+        int nClass = PRCGetClassByPosition(i, oPC);
+        if(nClassLevel > nHighestClassLevel
+            && Get2DACache("classes", "XPPenalty", nClass) != "1"
+            && Get2DACache("racialtypes", "Favored", nClass) != StringToInt(nClass)
+            && Get2DACache("racialtypes", "Favored", nClass) != "")
+             fPenalty += 0.2;
+    }
+    fPenalty = 1.0-fPenalty;
+    nXPAward = FloatToInt(IntToFloat(nXPAward)*fPenalty);
+    
+    //now the module slider
+    nXPAward = FloatToInt(IntToFloat(nXPAward)*IntToFloat(GetPRCSwitch(PRC_XP_SLIDER_x100))/100.0);
+    
+    //actually give the XP
+    
+    if(GetIsPC(oPC))
+    {
+        if(GetPRCSwitch(PRC_XP_USE_SETXP)
+            SetXP(oPC, GetXP(oPC)+nXPAward);
+        else
+            GiveXPToCreature(oPC, nXPAward);
+    }        
+    else if(GetPRCSwitch(PRC_XP_GIVE_XP_TO_NPCS))
+        SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")+nXPAward);
+}
+
+//::///////////////////////////////////////////////
+//:: Effective Character Level Experience Script
+//:: ecl_exp
+//:: Copyright (c) 2004 Theo Brinkman
+//:://////////////////////////////////////////////
+/*
+Call ApplyECLToXP() from applicable heartbeat script(s)
+to cause experience to be adjusted according to ECL.
+*/
+//:://////////////////////////////////////////////
+//:: Created By: Theo Brinkman
+//:: Last Updated On: 2004-07-28
+//:://////////////////////////////////////////////
+// CONSTANTS
+const string sLEVEL_ADJUSTMENT = "ecl_LevelAdjustment";
+const string sXP_AT_LAST_HEARTBEAT = "ecl_LastExperience";
+
+int ApplyECLToXP(object oPC);
+
+int GetXPForLevel(int nLevel)
+{
+    return nLevel*(nLevel-1)*500;
+}    
+
+void ApplyECLToXP(object oPC)
+{
+    if(!GetPRCSwitch(PRC_XP_USE_SIMPLE_LA))
+        return;
+    int nRace = GetRacialType(oPC);
+    int iLvlAdj = StringToInt(Get2DACache("ECL", "LA", nRace));
+    if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA)
+        iLvlAdj += StringToInt(Get2DACache("ECL", "RaceHD", nRace));
+    if(iLvlAdj != 0)
+    {
+        int iCurXP = GetXP(oPC);
+        if(!GetIsPC(oPC))
+            iCurXP = GetLocalInt(oPC, "NPC_XP");
+        int iLastXP = GetLocalInt(oPC, sXP_AT_LAST_HEARTBEAT);
+        if(iLastXP != iCurXP)
+        {
+            int iPCLvl = GetHitDice(oPC);
+            // Get XP Ratio (multiply new XP by this to see what to subtract)
+            float fXPRatio = 1.0 - (IntToFloat(GetXPForLevel(iPCLvl+1))/IntToFloat(GetXPForLevel(iPCLvl+1+iLvlAdj)));
+            float fXPDif = IntToFloat(iCurXP - iLastXP);
+            int iXPDif = FloatToInt(fXPDif * fXPRatio);
+            int newXP = iCurXP - iXPDif;
+            SendMessageToPC(oPC, "Level Adjustment Reducing XP by " + IntToString(iXPDif));
+            if(GetIsPC(oPC))
+                SetXP(oPC, newXP);
+            else
+                SetLocalInt(oPC, "NPC_XP", newXP);
+            SetLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, newXP);
+        }
+    }
 }

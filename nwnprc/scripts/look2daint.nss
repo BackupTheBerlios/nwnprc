@@ -1,6 +1,7 @@
 void main()
 {
 /*
+Removed because no longer needed since move to more general 2da caching
     SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_0", "750");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_0", "Acid");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_0", "6");

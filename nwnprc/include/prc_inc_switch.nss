@@ -52,11 +52,31 @@ const string PRC_PNP_RAPID_METABOLISM                = "PRC_PNP_RAPID_METABOLISM
 const string PRC_PSI_IMP_METAPSIONICS_USE_SUM        = "PRC_PSI_IMP_METAPSIONICS_USE_SUM";
 
 // Combat System Switches 
-const string PRC_PNP_ELEMENTAL_DAMAGE = "PRC_PNP_ELEMENTAL_DAMAGE";
+const string PRC_PNP_ELEMENTAL_DAMAGE                = "PRC_PNP_ELEMENTAL_DAMAGE";
+const string PRC_SPELL_SNEAK_DISABLE                 = "PRC_SPELL_SNEAK_DISABLE";
 
 // Unarmed Damage
-const string PRC_3_5e_FIST_DAMAGE = "PRC_3_5e_FIST_DAMAGE";
-const string PRC_BRAWLER_SIZE = "PRC_BRAWLER_SIZE";
+const string PRC_3_5e_FIST_DAMAGE                    = "PRC_3_5e_FIST_DAMAGE";
+const string PRC_BRAWLER_SIZE                        = "PRC_BRAWLER_SIZE";
+
+// XP system switches 
+const string PRC_XP_USE_SIMPLE_LA                    = "PRC_XP_USE_SIMPLE_LA";
+const string PRC_XP_USE_PNP_XP                       = "PRC_XP_USE_PNP_XP";
+const string PRC_XP_SLIDER_x100                      = "PRC_XP_SLIDER_x100";
+const string PRC_XP_USE_ECL_NOT_CR                   = "PRC_XP_USE_ECL_NOT_CR";
+const string PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA     = "PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA";
+const string PRC_XP_PC_PARTY_COUNT_x100              = "PRC_XP_PC_PARTY_COUNT_x100";
+const string PRC_XP_HENCHMAN_PARTY_COUNT_x100        = "PRC_XP_HENCHMAN_PARTY_COUNT_x100";
+const string PRC_XP_DOMINATED_PARTY_COUNT_x100       = "PRC_XP_DOMINATED_PARTY_COUNT_x100";
+const string PRC_XP_ANIMALCOMPANION_PARTY_COUNT_x100 = "PRC_XP_ANIMALCOMPANION_PARTY_COUNT_x100";
+const string PRC_XP_FAMILIAR_PARTY_COUNT_x100        = "PRC_XP_FAMILIAR_PARTY_COUNT_x100";
+const string PRC_XP_SUMMONED_PARTY_COUNT_x100        = "PRC_XP_SUMMONED_PARTY_COUNT_x100";
+const string PRC_XP_USE_SETXP                        = "PRC_XP_USE_SETXP";
+const string PRC_XP_GIVE_XP_TO_NPCS                  = "PRC_XP_GIVE_XP_TO_NPCS";
+const string PRC_XP_MUST_BE_IN_AREA                  = "PRC_XP_MUST_BE_IN_AREA";
+const string PRC_XP_MAX_PHYSICAL_DISTANCE            = "PRC_XP_MAX_PHYSICAL_DISTANCE";
+const string PRC_XP_MAX_LEVEL_DIFF                   = "PRC_XP_MAX_LEVEL_DIFF";
+const string PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS       = "PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS";
 
 
 //Checks the state of a PRC switch

@@ -61,48 +61,7 @@ int GetManifestingClass(object oCaster)
 	int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oCaster);
 	int nClass;
 	int nLevel;
-	int nLocal = GetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-	
-	if (nLocal > 0)
-	{
-		if (nLocal == 1) 
-		{
-			nClass = CLASS_TYPE_PSION;
-			//FloatingTextStringOnCreature("Manifester Class: Psion", oCaster, FALSE);
-		}
-		else if (nLocal == 2) 
-		{
-			nClass = CLASS_TYPE_WILDER;
-			//FloatingTextStringOnCreature("Manifester Class: Wilder", oCaster, FALSE);
-		}
-		else if (nLocal == 3) 
-		{
-			nClass = CLASS_TYPE_PSYWARRIOR;
-			//FloatingTextStringOnCreature("Manifester Class: Psychic Warrior", oCaster, FALSE);
-		}
-	}
-	else
-	{
-		//Compare the main two Manifester classes
-		if (nPsion >= nWilder) 
-		{
-			nLevel = nPsion;
-			nClass = CLASS_TYPE_PSION;
-			//FloatingTextStringOnCreature("Manifester Class: Psion", oCaster, FALSE);
-		}
-		else if (nWilder > nPsion) 
-		{
-			nLevel = nWilder;
-			nClass = CLASS_TYPE_WILDER;
-			//FloatingTextStringOnCreature("Manifester Class: Wilder", oCaster, FALSE);
-		}
-		//Then compare the Psy Warrior
-		if (nPsychic > nLevel) 
-		{
-			nClass = CLASS_TYPE_PSYWARRIOR;
-			//FloatingTextStringOnCreature("Manifester Class: Psychic Warrior", oCaster, FALSE);
-		}
-	}
+
 
 	return nClass;
 
@@ -111,11 +70,10 @@ int GetManifestingClass(object oCaster)
 int GetManifesterLevel(object oCaster)
 {
 	//Gets the level of the manifesting class
-	int nClass = GetManifestingClass(oCaster);
-	int nLevel = GetLevelByClass(nClass, oCaster);
+	int nLevel = GetCasterLevel(oCaster);
 	int nSurge = GetLocalInt(oCaster, "WildSurge");
 	
-	if (nClass == CLASS_TYPE_WILDER && nSurge > 0) nLevel = nLevel + nSurge;
+	if (nSurge > 0) nLevel = nLevel + nSurge;
 	
 	//FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oCaster, FALSE);
 

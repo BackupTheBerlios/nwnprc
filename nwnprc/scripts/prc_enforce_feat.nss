@@ -15,6 +15,7 @@
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "prc_alterations"
+#include "prc_inc_sneak"
 
 
 // Enforces the proper selection of the Red Wizard feats
@@ -48,6 +49,10 @@ int ElementalSavant(object oPC = OBJECT_SELF);
 
 // Enforces Genasai taking the proper elemental domain
 int GenasaiFocus(object oPC = OBJECT_SELF);
+
+// Prevents a player from taking Lingering Damage without
+// have 8d6 sneak attack
+int LingeringDamage(object oPC = OBJECT_SELF);
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -519,6 +524,19 @@ int LolthsMeat(object oPC)
      return TRUE;
 }
 
+// Prevents a player from taking Lingering Damage without
+// have 8d6 sneak attack
+int LingeringDamage(object oPC = OBJECT_SELF)
+{
+     if( GetTotalSneakAttackDice(oPC) < 8)
+     {
+          FloatingTextStringOnCreature("You must have at least 8d6 sneak attack dice. Please reselect your feats.", oPC, FALSE);
+          return FALSE;          
+     }
+     
+     return TRUE;
+}
+
 void main()
 {
         //Declare Major Variables
@@ -534,7 +552,8 @@ void main()
          || !ElementalSavant(oPC)
          || !GenasaiFocus(oPC)
          || !CheckClericShadowWeave(oPC)
-         || !LolthsMeat(oPC))
+         || !LolthsMeat(oPC)
+         || !LingeringDamage(oPC) )
     {
        int nHD = GetHitDice(oPC);
        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;

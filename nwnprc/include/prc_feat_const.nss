@@ -1,3 +1,6 @@
+// skill based feats
+const int FEAT_JUMP = 2884;
+
 //Passive Feats
 const int FEAT_INTUITIVE_ATTACK                        = 3166;
 const int FEAT_RAVAGEGOLDENICE                         = 3162;

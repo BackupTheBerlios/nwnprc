@@ -16,7 +16,7 @@
 //Modified by WodahsEht -- Item Properties were being removed even if a new property wasn't applied.
 
 #include "x2_inc_craft"
-#include "mh_instr_inc"
+#include "prc_inc_clsfunc"
 
 
 void finish(object oTarget,int iDesactive = FALSE)

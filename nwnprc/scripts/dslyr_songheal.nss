@@ -17,7 +17,7 @@
 //::Aaon Graywolf - Jan 7, 2004
 
 #include "spinc_common"
-#include "minstrelsong"
+#include "prc_inc_clsfunc"
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
 

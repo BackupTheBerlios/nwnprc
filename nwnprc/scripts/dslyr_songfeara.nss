@@ -17,7 +17,7 @@
 // shaken   -2 attack,weapon dmg,save.
 // panicked -2 save + flee away ,50 % drop object holding
 #include "NW_I0_SPELLS"
-#include "minstrelsong"
+#include "prc_inc_clsfunc"
 
 void main()
 {

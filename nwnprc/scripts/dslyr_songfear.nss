@@ -21,7 +21,7 @@ bugfix by Kovi 2002.07.30
 #include "x0_i0_spells"
 #include "spinc_common"
 #include "prc_class_const"
-#include "minstrelsong"
+#include "prc_inc_clsfunc"
 
 void main()
 {

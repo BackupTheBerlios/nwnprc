@@ -1,4 +1,4 @@
-#include "minstrelsong"
+#include "prc_inc_clsfunc"
 #include "prc_spell_const"
 
 void main()

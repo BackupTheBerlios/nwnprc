@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_feat_const"
-#include "prc_wwpoly"
+#include "prc_inc_clsfunc"
 
 void main()
 {

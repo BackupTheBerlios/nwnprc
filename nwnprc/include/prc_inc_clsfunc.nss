@@ -1347,3 +1347,230 @@ void spellsCureMod(int nCasterLvl ,int nDamage, int nMaxExtraDamage, int nMaximi
 }
 
 ////////////////End Soldier of Light Spells//////////////////
+
+////////////////Begin Master Harper Instruments//////////////////
+
+void ActiveModeCIMM(object oTarget)
+{
+    if(!GetLocalInt(oTarget,"use_CIMM") )
+    {
+    string sScript =  GetModuleOverrideSpellscript();
+    if (sScript != "mh_spell_at_inst")
+    {
+        SetLocalString(GetModule(),"temp_spell_at_inst",sScript);
+        SetModuleOverrideSpellscript("mh_spell_at_inst");
+    }
+    SetLocalInt(GetModule(),"nb_spell_at_inst",GetLocalInt(GetModule(),"nb_spell_at_inst")+1);
+    FloatingTextStrRefOnCreature(16825240,oTarget);
+    SetLocalInt(oTarget,"use_CIMM",TRUE);
+    }
+}
+
+void UnactiveModeCIMM(object oTarget)
+{
+    if(GetLocalInt(oTarget,"use_CIMM") )
+    {
+    string sScript =  GetModuleOverrideSpellscript();
+    SetLocalInt(GetModule(),"nb_spell_at_inst",GetLocalInt(GetModule(),"nb_spell_at_inst")-1);
+    if (sScript == "mh_spell_at_inst" && GetLocalInt(GetModule(),"nb_spell_at_inst") == 0)
+    {
+        SetModuleOverrideSpellscript(GetLocalString(GetModule(),"temp_spell_at_inst"));
+        GetLocalString(GetModule(),"temp_spell_at_inst");
+        SetLocalString(GetModule(),"temp_spell_at_inst","");
+    }
+    FloatingTextStrRefOnCreature(16825241,oTarget);
+    SetLocalInt(oTarget,"use_CIMM",FALSE);
+    }
+}
+
+////////////////End Master Harper Instruments//////////////////
+
+////////////////Begin Werewolf//////////////////
+
+// polymorph.2da
+
+const int POLYMORPH_TYPE_WOLF_0                    = 133;
+const int POLYMORPH_TYPE_WOLF_1                    = 134;
+const int POLYMORPH_TYPE_WOLF_2                    = 135;
+const int POLYMORPH_TYPE_WEREWOLF_0                = 136;
+const int POLYMORPH_TYPE_WEREWOLF_1                = 137;
+const int POLYMORPH_TYPE_WEREWOLF_2                = 138;
+
+const int POLYMORPH_TYPE_WOLF_0s                   = 139;
+const int POLYMORPH_TYPE_WOLF_1s                   = 140;
+const int POLYMORPH_TYPE_WOLF_2s                   = 141;
+const int POLYMORPH_TYPE_WEREWOLF_0s               = 142;
+const int POLYMORPH_TYPE_WEREWOLF_1s               = 143;
+const int POLYMORPH_TYPE_WEREWOLF_2s               = 144;
+
+const int POLYMORPH_TYPE_WOLF_0l                   = 145;
+const int POLYMORPH_TYPE_WOLF_1l                   = 146;
+const int POLYMORPH_TYPE_WOLF_2l                   = 147;
+const int POLYMORPH_TYPE_WEREWOLF_0l               = 148;
+const int POLYMORPH_TYPE_WEREWOLF_1l               = 149;
+const int POLYMORPH_TYPE_WEREWOLF_2l               = 150;
+
+// Used to polymorph characters to lycanthrope shapes
+// Merges Weapons, Armors, Items if told to by 2da.
+// - object oPC: Player to Polymorph
+// - int nPoly: POLYMORPH_TYPE_* Constant
+void LycanthropePoly(object oPC, int nPoly);
+
+void LycanthropePoly(object oPC, int nPoly)
+{
+    effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
+    effect ePoly;
+
+    ePoly = EffectPolymorph(nPoly);
+    ePoly = SupernaturalEffect(ePoly);
+
+    int bWeapon = StringToInt(Get2DAString("polymorph","MergeW",nPoly)) == 1;
+    int bArmor  = StringToInt(Get2DAString("polymorph","MergeA",nPoly)) == 1;
+    int bItems  = StringToInt(Get2DAString("polymorph","MergeI",nPoly)) == 1;
+
+    object oWeaponOld = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    object oArmorOld = GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
+    object oRing1Old = GetItemInSlot(INVENTORY_SLOT_LEFTRING,oPC);
+    object oRing2Old = GetItemInSlot(INVENTORY_SLOT_RIGHTRING,oPC);
+    object oAmuletOld = GetItemInSlot(INVENTORY_SLOT_NECK,oPC);
+    object oCloakOld  = GetItemInSlot(INVENTORY_SLOT_CLOAK,oPC);
+    object oBootsOld  = GetItemInSlot(INVENTORY_SLOT_BOOTS,oPC);
+    object oBeltOld = GetItemInSlot(INVENTORY_SLOT_BELT,oPC);
+    object oHelmetOld = GetItemInSlot(INVENTORY_SLOT_HEAD,oPC);
+    object oShield    = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
+    if (GetIsObjectValid(oShield))
+    {
+        if (GetBaseItemType(oShield) !=BASE_ITEM_LARGESHIELD &&
+            GetBaseItemType(oShield) !=BASE_ITEM_SMALLSHIELD &&
+            GetBaseItemType(oShield) !=BASE_ITEM_TOWERSHIELD)
+        {
+            oShield = OBJECT_INVALID;
+        }
+    }
+
+    //Apply the VFX impact and effects
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoly, oPC);
+
+    object oWeaponNewRight = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oPC);
+    object oWeaponNewLeft = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
+    object oWeaponNewBite = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC);
+    object oArmorNew = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
+
+    if (bWeapon)
+    {
+        IPWildShapeCopyItemProperties(oWeaponOld,oWeaponNewLeft, TRUE);
+        IPWildShapeCopyItemProperties(oWeaponOld,oWeaponNewRight, TRUE);
+        IPWildShapeCopyItemProperties(oWeaponOld,oWeaponNewBite, TRUE);
+    }
+    if (bArmor)
+    {
+        IPWildShapeCopyItemProperties(oShield,oArmorNew);
+        IPWildShapeCopyItemProperties(oHelmetOld,oArmorNew);
+        IPWildShapeCopyItemProperties(oArmorOld,oArmorNew);
+    }
+    if (bItems)
+    {
+        IPWildShapeCopyItemProperties(oRing1Old,oArmorNew);
+        IPWildShapeCopyItemProperties(oRing2Old,oArmorNew);
+        IPWildShapeCopyItemProperties(oAmuletOld,oArmorNew);
+        IPWildShapeCopyItemProperties(oCloakOld,oArmorNew);
+        IPWildShapeCopyItemProperties(oBootsOld,oArmorNew);
+        IPWildShapeCopyItemProperties(oBeltOld,oArmorNew);
+    }
+
+}
+
+////////////////End Werewolf//////////////////
+
+////////////////Begin Minstrel of the Edge//////////////////
+
+// Goes a bit further than RemoveSpellEffects -- makes sure to remove ALL effects
+// made by the Singer+Song.
+void RemoveSongEffects(int iSong, object oCaster, object oTarget)
+{
+    effect eCheck = GetFirstEffect(oTarget);
+    while (GetIsEffectValid(eCheck))
+    {
+        if (GetEffectCreator(eCheck) == oCaster && GetEffectSpellId(eCheck) == iSong)
+            RemoveEffect(oTarget, eCheck);
+        eCheck = GetNextEffect(oTarget);
+    }
+}
+
+// Stores a Song recipient to the PC as a local variable, and creates a list by using
+// an index variable.
+void StoreSongRecipient(object oRecipient, object oSinger, int iSongID, int iDuration)
+{
+    int iSlot = GetLocalInt(oSinger, "SONG_SLOT");
+    int iIndex = GetLocalInt(oSinger, "SONG_INDEX_" + IntToString(iSlot)) + 1;
+    string sIndex = "SONG_INDEX_" + IntToString(iSlot);
+    string sRecip = "SONG_RECIPIENT_" + IntToString(iIndex) + "_" + IntToString(iSlot);
+    string sSong = "SONG_IN_USE_" + IntToString(iSlot);
+
+    // Store the recipient into the current used slot
+    SetLocalObject(oSinger, sRecip, oRecipient);
+   
+    // Store the song information
+    SetLocalInt(oSinger, sSong, iSongID);
+   
+    // Store the index of creatures we're on
+    SetLocalInt(oSinger, sIndex, iIndex);
+}
+
+// Removes all effects given by the previous song from all creatures who recieved it.
+// Now allows for two "slots", which means you can perform two songs at a time.
+void RemoveOldSongEffects(object oSinger, int iSongID)
+{
+    object oCreature;
+    int iSlotNow = GetLocalInt(oSinger, "SONG_SLOT");
+    int iSlot;
+    int iNumRecip;
+    int iSongInUse;
+    int iIndex;
+    string sIndex;
+    string sRecip;
+    string sSong;
+    
+    /*
+    // If you use the same song twice in a row you
+    // should deal with the same slot again...
+    if (GetLocalInt(oSinger, "SONG_IN_USE_" + IntToString(iSlotNow)) == iSongID)
+        iSlot = iSlotNow;
+    // Otherwise, we should toggle between slot "1" and slot "0"
+    else
+        iSlot = (iSlotNow == 1) ? 0 : 1;
+    */
+    
+    iSlot = 0;
+    
+    // Save the toggle we're on for later.
+    SetLocalInt(oSinger, "SONG_SLOT", iSlot);
+
+    // Find the proper variable names based on slot     
+    sIndex = "SONG_INDEX_" + IntToString(iSlot);
+    sSong = "SONG_IN_USE_" + IntToString(iSlot);
+    
+    // Store the local variables into script variables
+    iNumRecip = GetLocalInt(oSinger, sIndex);
+    iSongInUse = GetLocalInt(oSinger, sSong);
+    
+    // Reset the local variables
+    SetLocalInt(oSinger, sIndex, 0);
+    SetLocalInt(oSinger, sSong, 0);
+    
+    // Removes any effects from the caster first
+    RemoveSongEffects(iSongInUse, oSinger, oSinger);
+    
+    // Removes any effects from the recipients
+    for (iIndex = 1 ; iIndex <= iNumRecip ; iIndex++)
+    {
+       sRecip = "SONG_RECIPIENT_" + IntToString(iIndex) + "_" + IntToString(iSlot);
+       oCreature = GetLocalObject(oSinger, sRecip);
+
+       RemoveSongEffects(iSongInUse, oSinger, oCreature);
+    }
+}
+
+
+////////////////End Minstrel of the Edge//////////////////

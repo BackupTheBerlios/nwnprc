@@ -1,5 +1,5 @@
 #include "spinc_common"
-#include "minstrelsong"
+#include "prc_inc_clsfunc"
 #include "NW_I0_SPELLS"
 
 void DominatedDuration(object oTarget, object oCaster)

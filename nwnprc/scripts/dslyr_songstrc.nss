@@ -1,7 +1,7 @@
 
 #include "spinc_common"
 #include "NW_I0_SPELLS"
-#include "minstrelsong"
+#include "prc_inc_clsfunc"
 
 void main()
 {

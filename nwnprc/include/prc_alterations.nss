@@ -10,7 +10,7 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
-#include "prc_racialtypes_const"
+#include "prc_racial_const"
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"

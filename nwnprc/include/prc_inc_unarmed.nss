@@ -1,7 +1,7 @@
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
-#include "prc_racialtypes_const"
+#include "prc_racial_const"
 #include "inc_item_props"
 
 const int MONST_DAMAGE_1D3   = 2;

@@ -4,7 +4,7 @@
 // :: Determines the appropriate natural attacks for races.
 
 #include "prc_inc_unarmed"
-#include "prc_racialtypes_const"
+#include "prc_racial_const"
 
 void main ()
 {

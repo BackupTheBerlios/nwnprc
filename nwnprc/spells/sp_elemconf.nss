@@ -1,6 +1,8 @@
 #include "prc_spell_const"
 #include "prc_class_const"
 #include "prc_inc_switch"
+#include "prc_inc_spells"
+//Stormlord Elemental Comflaguration spellscript
 
 void main()
 {
@@ -29,13 +31,25 @@ void main()
         Elemental = "NW_AIRHUGE";
     }
 
-    int Duration=GetLevelByClass(CLASS_TYPE_CLERIC,oTarget)+GetLevelByClass(CLASS_TYPE_DRUID,oTarget)+GetLevelByClass(CLASS_TYPE_STORMLORD,oTarget);
+    int Duration=PRCGetCasterLevel();
 
     effect Summon=EffectSummonCreature(Elemental,VFX_NONE,0.0,1);
     MultisummonPreSummon();
     float fDuration = RoundsToSeconds(Duration);
-        if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
-            fDuration = RoundsToSeconds(Duration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
+    if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
+        fDuration = RoundsToSeconds(Duration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
+    if(GetPRCSwitch(PRC_MUTLISUMMON))
+    {
+        Summon=EffectSummonCreature("NW_FIREHUGE",VFX_NONE,0.0,1);
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, Summon, GetSpellTargetLocation(), fDuration);
+        Summon=EffectSummonCreature("NW_WATERHUGE",VFX_NONE,0.0,1);
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, Summon, GetSpellTargetLocation(), fDuration);
+        Summon=EffectSummonCreature("NW_EARTHHUGE",VFX_NONE,0.0,1);
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, Summon, GetSpellTargetLocation(), fDuration);
+        Summon=EffectSummonCreature("NW_AIRHUGE",VFX_NONE,0.0,1);
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, Summon, GetSpellTargetLocation(), fDuration);
+    }
+    else
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, Summon, GetSpellTargetLocation(), fDuration);
 }
 

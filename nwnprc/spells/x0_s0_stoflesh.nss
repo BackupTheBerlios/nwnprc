@@ -52,15 +52,21 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
         //Search for and remove the above negative effects
         effect eLook = GetFirstEffect(oTarget);
-
+        int bDone = FALSE;
         while(GetIsEffectValid(eLook))
         {
             if(GetEffectType(eLook) == EFFECT_TYPE_PETRIFY)
             {
                 SetCommandable(TRUE, oTarget);
                 RemoveEffect(oTarget, eLook);
+                bDone = TRUE;
             }
             eLook = GetNextEffect(oTarget);
+        }
+        if(bDone && (GetGameDifficulty() == GAME_DIFFICULTY_CORE_RULES
+            || GetGameDifficulty() == GAME_DIFFICULTY_DIFFICULT))
+        {
+            ExecuteScript("prc_pw_unpetrif", oTarget);
         }
 
         //Apply Linked Effect

@@ -10,8 +10,8 @@ void main()
 {
     object oPC = OBJECT_SELF;
     int nValue = GetLocalInt(oPC, "DynConv_Var");
-            array_create(oPC, "ChoiceTokens");
-            array_create(oPC, "ChoiceValues");
+    array_create(oPC, "ChoiceTokens");
+    array_create(oPC, "ChoiceValues");
 
     if(nValue == 0)
         return;
@@ -21,13 +21,10 @@ void main()
 
     if(nValue == -1)
     {
-        ActionPauseConversation();
-        ActionWait(1.0);
-        ActionResumeConversation();
+        //to the header
         SetupStage();
         SetupTokens();
         ExecuteScript("prc_ccc_debug", OBJECT_SELF);
-// END OF INSERT FOR THE HEADER
         return;
     }
     else if(nValue == -2)
@@ -54,6 +51,9 @@ void main()
         AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
         return;
     }
-
-    ChoiceSelected(nValue);
+    else
+    {
+        //selection made
+        ChoiceSelected(nValue);
+    }        
 }

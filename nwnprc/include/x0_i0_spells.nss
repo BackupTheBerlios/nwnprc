@@ -1054,8 +1054,13 @@ void DoPetrification(int nPower, object oSource, object oTarget, int nSpellID, i
                     if (bShowPopup == TRUE)
                     {
                         // * under hardcore rules or higher, this is an instant death
-                        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);                        
                         DelayCommand(2.75, PopUpDeathGUIPanel(oTarget, FALSE , TRUE, 40579));
+                        //run the PRC Ondeath code
+                        //no way to run the normal module ondeath code too
+                        //so a execute script has been added for builders to take advantage of
+                        DelayCommand(2.75, ExecuteScript("prc_ondeath", oTarget));
+                        DelayCommand(2.75, ExecuteScript("prc_pw_petrific", oTarget));
                         // if in hardcore, treat the player as an NPC
                         bIsPC = FALSE;
                         //fDifficulty = TurnsToSeconds(nPower); // One turn per hit-die
@@ -1461,6 +1466,16 @@ int spellsIsImmuneToPetrification(object oCreature)
     case 469: // animated chest
     case 474: // golems
     case 475: // golems
+        bImmune = TRUE;
+    }
+    
+    int nRacialType = MyPRCGetRacialType(oCreature);
+    switch(nRacialType)
+    {
+        case RACIAL_TYPE_ELEMENTAL:
+        case RACIAL_TYPE_CONSTRUCT:
+        case RACIAL_TYPE_OOZE:
+        case RACIAL_TYPE_UNDEAD:
         bImmune = TRUE;
     }
 

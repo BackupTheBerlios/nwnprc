@@ -97,8 +97,13 @@ const int IP_CONST_FEAT_KI_STRIKE = 254;
 
 const int IP_CONST_FEAT_REND         = 255;
 const int IP_CONST_FEAT_SPELL10      = 256;
-const int IP_CONST_FEAT_MOBILITY     = 27; // needed to compile.. removed why?
-const int IP_CONST_FEAT_WHIRLWIND    = 29; // also needed to compile...
+//These are defined by bioware in 1.66
+//so dont compile in 1.65
+//I didnt mean to commit them, honest!
+//Im running the beta at the moment, so they wont compile 
+//for me unless I comment them out.
+//const int IP_CONST_FEAT_MOBILITY     = 27; // needed to compile.. removed why?
+//const int IP_CONST_FEAT_WHIRLWIND    = 29; // also needed to compile...
 const int IP_CONST_FEAT_BLINDFIGHT   = 257;
 const int IP_CONST_FEAT_SPRINGATTACK = 258;
 const int IP_CONST_FEAT_EVASION         = 386;
@@ -165,7 +170,7 @@ const int IP_CONST_ONHIT_SAVEDC_19 = 19;
 // Creature Epic Criticals
 const int IP_CONST_FEAT_DEVCRITICAL_CREATURE    = 271;
 const int IP_CONST_FEAT_OVERCRITICAL_CREATURE   = 272;
-const int IP_CONST_FEAT_WEAPON_PROF_CREATURE  = 38;    // needed for prc_inc_unarmed
+//const int IP_CONST_FEAT_WEAPON_PROF_CREATURE  = 38;    // needed for prc_inc_unarmed
 
 // Epic DR
 const int IP_CONST_FEAT_EPIC_DR_3             = 273;

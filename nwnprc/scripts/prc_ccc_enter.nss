@@ -110,9 +110,7 @@ void main()
         //start the ConvoCC conversation
         SetLocalString(oPC, "DynConv_Script", "prc_ccc");
         AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
-        //blatent advert :)
-        SendMessageToPC(oPC, "Welcome the the ConvoCC by Primogenitor");
-//DISABLE FOR DEBUGGING
+        //DISABLE FOR DEBUGGING
         AssignCommand(oPC, SetCutsceneMode(oPC, TRUE));
         SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
     }

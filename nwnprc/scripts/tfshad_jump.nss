@@ -2,9 +2,6 @@
 #include "inc_item_props"
 #include "inc_combat2"
 
-const int PHS_VFX_IMP_DIMENSION_DOOR_DISS   = 777;
-const int PHS_VFX_IMP_DIMENSION_DOOR_APPR   = 776;
-
 void main()
 {
     // Declare major variables
@@ -18,7 +15,13 @@ void main()
 
     int iFeat=FEAT_SHADOWJUMP-1+GetLevelByClass(CLASS_TYPE_SHADOWLORD,OBJECT_SELF);
 
-
+    object oTarget=GetSpellTargetObject();
+    location lDest;
+    if (GetIsObjectValid(oTarget)) lDest=GetLocation(oTarget);
+    else lDest=GetSpellTargetLocation();
+    effect eVis=EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
+    vector vOrigin=GetPositionFromLocation(GetLocation(oCaster));
+    vector vDest=GetPositionFromLocation(lDest);
 
     while (GetHasFeat(iFeat,OBJECT_SELF))
     {
@@ -49,28 +52,20 @@ void main()
       iDistance--;
     }
 
-    // Duration is 1 turn
-    float fDuration = TurnsToSeconds(1);
 
-    // Declare effects
-    effect eDissappear = EffectVisualEffect(PHS_VFX_IMP_DIMENSION_DOOR_DISS);
-    effect eAppear = EffectVisualEffect(PHS_VFX_IMP_DIMENSION_DOOR_APPR);
 
-    // Duration effect for stopping the caster do anything else
-    effect eDur = EffectCutsceneParalyze();
+    vOrigin=Vector(vOrigin.x+2.0, vOrigin.y-0.2, vOrigin.z);
+    vDest=Vector(vDest.x+2.0, vDest.y-0.2, vDest.z);
 
-        // Jump to the target location with visual effects
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eDissappear, lCaster);
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eAppear, lTarget);
-
-        // Jump
-        DelayCommand(1.0, JumpToLocation(lTarget));
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, Location(GetArea(oCaster), vOrigin, 0.0), 0.8);
+    DelayCommand(0.1, ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, Location(GetArea(oCaster), vDest, 0.0), 0.7));
+    DelayCommand(0.8, AssignCommand(oCaster, JumpToLocation(lDest)));
 
         if (iLevel<4)
         {
            // Caster cannot move for 1 turn now.
-           DelayCommand(1.5, SendMessageToPC(oCaster, "You cannot perform any more actions for 1 turn due to the Shadow Jump"));
-           DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oCaster, fDuration));
+           SendMessageToPC(oCaster, "Shadow Jump complete");
+           //DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oCaster, fDuration));
         }
         else
         {

@@ -147,7 +147,7 @@
 143   FEAT_EPIC_OVERWHELMING_CRITICAL_DWAXE            958         1      -1               0        
 144   FEAT_EPIC_SUPERIOR_INITIATIVE                    753         1      -1               0        
 145   FEAT_EPIC_PROWESS                                584         1      -1               0        
-146   FEAT_EPIC_TERRIFYING_RAGE                        989         3      10               1        
+146   FEAT_EPIC_TERRIFYING_RAGE                        989         3      10               0        
 147   FEAT_EPIC_WEAPON_FOCUS_WHIP                      997         1      -1               0        
 148   FEAT_EPIC_DEVASTATING_CRITICAL_WHIP              996         1      -1               0        
 149   FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP             999         1      -1               0        
@@ -159,6 +159,18 @@
 155   FEAT_BATTLE_RAGE8                                3509        3      15               1
 156   FEAT_BATTLE_RAGE9                                3510        3      17               1
 157   FEAT_BATTLE_RAGE10                               3511        3      19               1
-158   FEAT_FEROCIOUS_PROW                              3512        3      8                1
-159   INTIMIDATING_RAGE                                4312        3      6                1
-160   FEAT_EPIC_SKILL_FOCUS_INTIMIDATE                 918         3      6                1
+158   FEAT_FEROCIOUS_PROW                              3512        3      8                0
+159   INTIMIDATING_RAGE                                4312        3      6                0
+160   FEAT_EPIC_SKILL_FOCUS_INTIMIDATE                 918         3      6                0
+161   FEAT_EPIC_GREAT_STRENGTH_1                       814         1      -1               0
+162   FEAT_EPIC_GREAT_STRENGTH_2                       815         1      -1               0
+163   FEAT_EPIC_GREAT_STRENGTH_3                       816         1      -1               0
+164   FEAT_EPIC_GREAT_STRENGTH_4                       817         1      -1               0
+165   FEAT_EPIC_GREAT_STRENGTH_5                       818         1      -1               0
+166   FEAT_EPIC_GREAT_STRENGTH_6                       819         1      -1               0
+167   FEAT_EPIC_GREAT_STRENGTH_7                       820         1      -1               0
+168   FEAT_EPIC_GREAT_STRENGTH_8                       821         1      -1               0
+169   FEAT_EPIC_GREAT_STRENGTH_9                       822         1      -1               0
+170   FEAT_EPIC_GREAT_STRENGTH_10                      823         1      -1               0
+
+

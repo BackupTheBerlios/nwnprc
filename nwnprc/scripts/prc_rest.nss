@@ -7,6 +7,7 @@
 void PrcFeats(object oPC)
 {
      SetLocalInt(oPC,"ONREST",1);
+     DeletePRCLocalIntsT(oPC);
      EvalPRCFeats(oPC);
      DeleteLocalInt(oPC,"ONREST");
      FeatSpecialUsePerDay(oPC);

@@ -112,15 +112,7 @@ void main()
     int bShockWeap=GetHasFeat(FEAT_SHOCK_WEAPON,oPC)        ?  1:0;
     int bShockingWeap=GetHasFeat(FEAT_THUNDER_WEAPON,oPC)   ?  1:0;
 
-    if (GetLocalInt(oPC,"ONENTER")|| GetLocalInt(oPC,"ONREST"))
-    {
-      object oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-      DeleteLocalInt(oItem,"STShock");
-      DeleteLocalInt(oItem,"STThund"); 
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_ELECTRICAL,IP_CONST_DAMAGEBONUS_1d6,1,"",-1,DURATION_TYPE_TEMPORARY);
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,0,1,"",-1,DURATION_TYPE_TEMPORARY);
-  
-    }
+
 
     if (bResElec>0) ResElec(oPC,oSkin,bResElec);
     if (bShockWeap>0)ShockWeap(oPC,GetLocalInt(oPC,"ONEQUIP"));

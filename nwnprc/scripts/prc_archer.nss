@@ -11,7 +11,7 @@ void Equip(object oPC,int bBowSpec,object oSkin,int bXShot)
 
   if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
 
-    SetCompositeBonus(oWeap,"ArcherSpec",bBowSpec,ITEM_PROPERTY_ATTACK_BONUS);
+    SetCompositeBonusT(oWeap,"ArcherSpec",bBowSpec,ITEM_PROPERTY_ATTACK_BONUS);
 
   if (bXShot && !GetHasSpellEffect(SPELL_EXTRASHOT,oPC))
   {
@@ -27,7 +27,7 @@ void UnEquip(object oPC,int bBowSpec,object oSkin,int bXShot)
 
   if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
 
-    SetCompositeBonus(oWeap,"ArcherSpec",0,ITEM_PROPERTY_ATTACK_BONUS);
+    SetCompositeBonusT(oWeap,"ArcherSpec",0,ITEM_PROPERTY_ATTACK_BONUS);
 
   if ( GetHasSpellEffect(SPELL_EXTRASHOT,oPC))
           RemoveSpellEffects(SPELL_EXTRASHOT,oPC,oPC);
@@ -50,16 +50,7 @@ void main()
         bBowSpec=GetHasFeat(FEAT_BOWSPEC9, oPC) ? 9 : bBowSpec;
 
     int bXShot=GetHasFeat(FEAT_EXTRASHOT, oPC) ? 1 : 0;
-
-    if (GetLocalInt(oPC,"ONENTER"))
-    {
-       object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-       int iType = GetBaseItemType(oWeap);
-       if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
-       SetLocalInt(oWeap,"ArcherSpec",bBowSpec);
-       return;	
-    }
-    
+   
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
 
     if (iEquip !=1) Equip(oPC,bBowSpec,oSkin,bXShot);

@@ -866,3 +866,104 @@ void SetCompositeDamageBonus(object oItem, string sBonus, int iVal, int iSubType
 
     SetLocalInt(oItem, sBonus, iVal);
 }
+
+int TotalAndRemoveDamagePropertyT(object oItem, int iSubType)
+{
+    itemproperty ip = GetFirstItemProperty(oItem);
+    int iPropertyValue = GetItemPropertyCostTableValue(ip);
+    int total = 0;
+    int iTemp;
+
+    while(GetIsItemPropertyValid(ip))
+    {
+        if((GetItemPropertyType(ip) == ITEM_PROPERTY_DAMAGE_BONUS) &&
+           (GetItemPropertySubType(ip) == iSubType) &&
+           (iPropertyValue < 6) || (iPropertyValue > 15))
+        {
+            total = iPropertyValue > total ? iPropertyValue : total;
+            if (GetItemPropertyDurationType(ip)== DURATION_TYPE_TEMPORARY) RemoveItemProperty(oItem, ip);
+        }
+        ip = GetNextItemProperty(oItem);
+        iPropertyValue = GetItemPropertyCostTableValue(ip);
+    }
+    return total;
+}
+
+void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubType = -1)
+{
+    int iOldVal = GetLocalInt(oItem, sBonus);
+    int iChange = iVal - iOldVal;
+    int iLinearDamage = 0;
+    int iCurVal = 0;
+
+    if(iChange == 0) return;
+
+    if (iSubType == -1) iSubType = GetItemPropertyDamageType(oItem);
+    if (iSubType == -1) return;  // if it's still -1 we're not dealing with a weapon.
+
+    iCurVal = TotalAndRemoveDamagePropertyT(oItem, iSubType);
+
+    if (iCurVal > 15) iCurVal -= 10; // values 6-20 are in the 2da as lines 16-30
+
+    iLinearDamage = iCurVal + iChange;
+    if (iLinearDamage > 20) iLinearDamage = 20;
+
+    if (iLinearDamage > 5) iLinearDamage += 10; // values 6-20 are in the 2da as lines 16-30
+
+    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(iSubType, iLinearDamage), oItem,9999.0);
+
+    SetLocalInt(oItem, sBonus, iVal);
+}
+
+void TotalRemovePropertyT(object oItem)
+{
+    itemproperty ip = GetFirstItemProperty(oItem);
+    while(GetIsItemPropertyValid(ip)){
+            if (GetItemPropertyDurationType(ip)== DURATION_TYPE_TEMPORARY) RemoveItemProperty(oItem, ip);
+          ip = GetNextItemProperty(oItem);
+        }
+}
+
+void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
+{
+   int iValid = GetIsObjectValid(oItem);
+   
+   // RIGHT HAND
+   if (!iValid)
+    oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+   TotalRemovePropertyT(oItem);
+
+   //Stormlord
+   DeleteLocalInt(oItem,"STShock");
+   DeleteLocalInt(oItem,"STThund");
+   //Archer
+   DeleteLocalInt(oItem,"ArcherSpec");
+   //ManAtArms
+   DeleteLocalInt(oItem,"ManArmsGenSpe");
+   DeleteLocalInt(oItem,"ManArmsDmg");
+   //Sanctify & Holy Martial Strike
+   DeleteLocalInt(oItem,"SanctMar");
+   DeleteLocalInt(oItem,"MartialStrik");
+  
+   
+   // LEFT HAND
+   if (!iValid){
+     oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
+     TotalRemovePropertyT(oItem);}
+     
+   //ManAtArms
+   DeleteLocalInt(oItem,"ManArmsGenSpe");
+   DeleteLocalInt(oItem,"ManArmsDmg");
+   //Sanctify & Holy Martial Strike
+   DeleteLocalInt(oItem,"SanctMar");
+   DeleteLocalInt(oItem,"MartialStrik");
+
+   // CHEST
+   if (!iValid){
+     oItem=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
+     TotalRemovePropertyT(oItem);}
+
+   // Bladesinger
+   DeleteLocalInt(oItem,"BladeASF");
+
+}

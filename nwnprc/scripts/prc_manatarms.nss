@@ -7,17 +7,11 @@ void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
 {
 //  object oWeapR=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
 
+    SetCompositeBonusT(oWeapR,"ManArmsGenSpe",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
 
- if(GetLocalInt(oWeapR, "ManArmsGenSpe")!=iLevel)
- {
-    SetCompositeBonus(oWeapR,"ManArmsGenSpe",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
+ int iDmg = 1;
 
- }
-
- int iDmg = IP_CONST_DAMAGEBONUS_1;
-
- if(GetHasFeat(FEAT_LEGENDARY_PROWESS))
-      iDmg = IP_CONST_DAMAGEBONUS_3;
+ if(GetHasFeat(FEAT_LEGENDARY_PROWESS))  iDmg = 3;
 
 
     int iType= GetBaseItemType(oWeapR);
@@ -38,11 +32,6 @@ void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
         break;
     }
 
- if (GetLocalInt(oWeapR, "ManArmsDmg")!=iDmg)
- {
-
-
-
     int iDType = GetWeaponDamageType(oWeapR);
 
     switch (iDType)
@@ -60,21 +49,15 @@ void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
          break;
     }
 
-
-    RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,iDType,GetLocalInt(oItem,"ManArmsDmg"));
-    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(iDType,iDmg),oItem);
-    SetLocalInt(oItem,"ManArmsDmg",iDmg);
-
-
-  }
+    SetCompositeDamageBonusT(oWeapR,"ManArmsDmg",iDmg,iDType);
 
   int bCore = 10 + GetLevelByClass(CLASS_TYPE_MANATARMS,oPC);
 
   if(GetHasFeat(FEAT_STRIKE_AT_CORE)&& GetLocalInt(oItem, "ManArmsCore")!= bCore)
   {
      if (GetLocalInt(oItem, "ManArmsCore"))
-         RemoveSpecificProperty(oItem,ITEM_PROPERTY_ON_HIT_PROPERTIES,IP_CONST_ONHIT_ABILITYDRAIN,GetLocalInt(oItem, "ManArmsCore"),1,"",IP_CONST_ABILITY_CON);
-     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitProps(IP_CONST_ONHIT_ABILITYDRAIN,bCore,IP_CONST_ABILITY_CON),oItem);
+         RemoveSpecificProperty(oItem,ITEM_PROPERTY_ON_HIT_PROPERTIES,IP_CONST_ONHIT_ABILITYDRAIN, GetLocalInt(oItem, "ManArmsCore"),1,"ManArmsCore", IP_CONST_ABILITY_CON, DURATION_TYPE_TEMPORARY);
+     AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitProps(IP_CONST_ONHIT_ABILITYDRAIN,bCore,IP_CONST_ABILITY_CON),oItem,9999.0);
      SetLocalInt(oItem,"ManArmsCore",bCore);
 
   }
@@ -85,16 +68,7 @@ void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
 void OnUnEquip(object oPC,object oSkin,int iLevel,object oWeapR )
 {
 
-//  object oWeapR=GetPCItemLastUnequipped();
-
-  if(GetLocalInt(oWeapR, "ManArmsGenSpe"))
-  {
-    SetCompositeBonus(oWeapR,"ManArmsGenSpe",0,ITEM_PROPERTY_ATTACK_BONUS);
-
-  }
-
-  if (GetLocalInt(oWeapR, "ManArmsDmg"))
-  {
+    SetCompositeBonusT(oWeapR,"ManArmsGenSpe",0,ITEM_PROPERTY_ATTACK_BONUS);
 
     int iType= GetBaseItemType(oWeapR);
     object oItem=oWeapR;
@@ -131,55 +105,12 @@ void OnUnEquip(object oPC,object oSkin,int iLevel,object oWeapR )
          break;
     }
 
-    RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,iDType,GetLocalInt(oItem,"ManArmsDmg"));
-    DeleteLocalInt(oItem,"ManArmsDmg");
+    SetCompositeDamageBonusT(oWeapR,"ManArmsDmg",0,iDType);
 
-    if(GetHasFeat(FEAT_STRIKE_AT_CORE)&& GetLocalInt(oItem, "ManArmsCore"))
-    {	
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_ON_HIT_PROPERTIES,IP_CONST_ONHIT_ABILITYDRAIN,GetLocalInt(oItem, "ManArmsCore"),1,"",IP_CONST_ABILITY_CON);
-      DeleteLocalInt(oItem,"ManArmsCore");
-    }
-  }
+    RemoveSpecificProperty(oItem,ITEM_PROPERTY_ON_HIT_PROPERTIES,IP_CONST_ONHIT_ABILITYDRAIN, -1,1,"ManArmsCore", IP_CONST_ABILITY_CON, DURATION_TYPE_TEMPORARY);
 
 }
 
-void OnEnter(object oPC,object oSkin,int iLevel,object  oWeapR)
-{
-
-  SetLocalInt(oWeapR,"ManArmsGenSpe",iLevel);
-  int iDmg = IP_CONST_DAMAGEBONUS_1;
-
-  if(GetHasFeat(FEAT_LEGENDARY_PROWESS))
-      iDmg = IP_CONST_DAMAGEBONUS_3;
-
-
-    int iType= GetBaseItemType(oWeapR);
-    object oItem=oWeapR;
-
-    switch (iType)
-    {
-      case BASE_ITEM_SHORTBOW:
-      case BASE_ITEM_LONGBOW:
-        oItem=GetItemInSlot(INVENTORY_SLOT_ARROWS);
-        break;
-      case BASE_ITEM_LIGHTCROSSBOW:
-      case BASE_ITEM_HEAVYCROSSBOW:
-        oItem=GetItemInSlot(INVENTORY_SLOT_BOLTS);
-        break;
-      case BASE_ITEM_SLING:
-        oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
-        break;
-    }
-
-  SetLocalInt(oItem,"ManArmsDmg",iDmg);
-
-  int bCore = 10 + GetLevelByClass(CLASS_TYPE_MANATARMS,oPC);
-
-  if(GetHasFeat(FEAT_STRIKE_AT_CORE))
-    SetLocalInt(oItem,"ManArmsCore",bCore);
-
-
-}
 void main()
 {
   //Declare main variables.
@@ -192,15 +123,7 @@ void main()
 
     if (GetHasFeat(FEAT_LEGENDARY_PROWESS,oPC))
        SetCompositeBonus(oSkin,"ManArmsAC",2,ITEM_PROPERTY_AC_BONUS);
-
-    if (GetLocalInt(oPC,"ONENTER"))
-    {
-      
-       OnEnter(oPC,oSkin,iAtk,GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC));
-       OnEnter(oPC,oSkin,iAtk,GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC));
-       return;	
-    }
-    
+   
     if (iEquip ==2)
     {
        OnEquip(oPC,oSkin,iAtk,GetPCItemLastEquipped());

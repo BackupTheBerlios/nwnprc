@@ -28,6 +28,7 @@
 14    FEAT_PSIONWILD_BOLT              3604        2      1                1        
 19    FEAT_PSIONWILD_DEMORALIZE        3605        2      1                1        
 20    FEAT_PSIONWILD_DISABLE           3606        2      1                1        
+20    FEAT_PSIONWILD_ENERGYRAY         3609        2      1                1        
 15    FEAT_ALL_DISTRACT                3607        2      1                1        
 16    FEAT_ALL_EMPTYMIND               3608        2      1                1        
 22    FEAT_ALL_DISSIPATING_TOUCH       3590        2      1                1        

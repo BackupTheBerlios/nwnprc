@@ -48,12 +48,17 @@ REM
 REM let the user know we are building a makefile, this could take a while.
 echo Building makefile
 
+REM make directories
+md objs 2>nul
+md epicspellobjs 2>nul
+
 REM generate temporary files for each of the source sets
 REM scripts, graphics files, 2das, and misc. other files.
 REM each of these temp files will be stuffed into a macro
 REM in the makefile.
 dir /b erf | tools\ssed -R "$! {s/$/ \\/g};s/^/erf\\/g" >erffiles.temp
 dir /b scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/scripts\\/g" >scripts.temp
+dir /b epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/epicspellscripts\\/g" >epicspellscripts.temp
 dir /b gfx | tools\ssed -R "$! {s/$/ \\/g};s/^/gfx\\/g" >gfx.temp
 dir /b 2das | tools\ssed -R "$! {s/$/ \\/g};s/^/2das\\/g" >2das.temp
 dir /b others | tools\ssed -R "$! {s/$/ \\/g};s/^/others\\/g" >others.temp
@@ -62,10 +67,11 @@ dir /b craft2das | tools\ssed -R "$! {s/$/ \\/g};s/^/craft2das\\/g" >craft2das.t
 REM use FINDSTR to find script files with "void main()" or "int StartingConditional()"
 REM in them, these are the ones we want to compile.
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/scripts\\/objs\\/g" >objs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/scripts\\/objs\\/g" >epicspellobjs.temp
 
 REM Now using our generic makefile as a base, glue all of the temp files into it making
 REM a fully formatted makefile we can run nmake on.
-type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
+type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
 
 SETLOCAL
 
@@ -73,7 +79,9 @@ REM set local variables for the source and object trees.
 SET MAKEERFPATH=erf
 SET MAKE2DAPATH=2das
 SET MAKESCRIPTPATH=scripts
+SET MAKEEPICSPELLSCRIPTPATH=epicspellscripts
 SET MAKEOBJSPATH=objs
+SET MAKEEPICSPELLOBJSPATH=epicspellobjs
 SET MAKETLKPATH=tlk
 SET MAKECRAFT2DASPATH=craft2das
 
@@ -91,9 +99,10 @@ ENDLOCAL
 REM delete temp files
 del erffiles.temp
 del scripts.temp
+rem del epicspellscripts.temp
 del gfx.temp
 del 2das.temp
 del others.temp
 del objs.temp
 del craft2das.temp
-del makefile.temp
+rem del makefile.temp

@@ -197,7 +197,7 @@ void main()
             eDamage = EffectDamage(iDamage, iDamageType, iEnhancement);
             if (iHolyDmg && iEvil)
              // DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(iHolyDmg, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_ENERGY), oTarget));
-             eDamage = EffectLinkEffects(eDamage,EffectDamage(iHolyDmg, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_ENERGY));
+             eDamage = EffectDamage(iHolyDmg+iDamage, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_ENERGY);
 
         }
 

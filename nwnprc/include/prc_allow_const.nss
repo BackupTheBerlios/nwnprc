@@ -99,7 +99,6 @@ const string ALLOW_CLASS_BLOOD_MAGUS            = "PRC_AllowBLMagus";
 const string ALLOW_CLASS_DIABOLIST              = "PRC_AllowDiablo";
 const string ALLOW_CLASS_PURPLE_DRAGON_KNIGHT   = "PRC_AllowPDK";
 const string ALLOW_CLASS_SOLDIER_OF_LIGHT       = "PRC_AllowSoLight";
-const string ALLOW_CLASS_HATHRAN                = "PRC_AllowHath";
 const string ALLOW_CLASS_RAVAGER                = "PRC_Allow_Rava";
 const string ALLOW_CLASS_SHOU                   = "PRC_AllowShou";
 const string ALLOW_CLASS_BRAWLER                = "PRC_AllowBrawler";

@@ -343,5 +343,5 @@
 339 EPIC_SPELL_UNIMPINGED                     5166      0    99             2      
 340 EPIC_SPELL_UNSEEN_WANDERER                5168      0    99             2      
 341 EPIC_SPELL_WHIP_OF_SHAR                   5170      0    99             2      
-342 FEAT_NIMBUSOFLIGHT                              3165      1     -1   1
-343 FEAT_SERVHEAVEN                                  3355      1     -1   1
+342 FEAT_NIMBUSOFLIGHT                              3165      0     -1   1
+343 FEAT_SERVHEAVEN                                 3355      0     -1   1

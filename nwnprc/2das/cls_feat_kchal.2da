@@ -33,5 +33,5 @@
 28        FEAT_MAGIC_CIRCLE_V_EVIL_2            2772        3      6                1
 29        FEAT_MAGIC_CIRCLE_V_EVIL_3            2773        3      10               1
 30        FEAT_HAMMER_OF_THE_GODS_2             2774        3      8                1
-31   FEAT_NIMBUSOFLIGHT                              3165      1     -1   1
-32   FEAT_SERVHEAVEN                                  3355      1     -1   1
+31   FEAT_NIMBUSOFLIGHT                              3165      0     -1   1
+32   FEAT_SERVHEAVEN                                 3355      0     -1   1

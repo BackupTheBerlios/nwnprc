@@ -82,7 +82,7 @@ void main()
                 //Zen Archery -- they already add their wisdom, shouldn't do it again.
                 if ((GetBaseItemType(oItem) == BASE_ITEM_LIGHTCROSSBOW ||
                      GetBaseItemType(oItem) == BASE_ITEM_HEAVYCROSSBOW) &&
-                     GetHasFeat(FEAT_ZEN_ARCHERY, oPC)
+                     GetHasFeat(FEAT_ZEN_ARCHERY, oPC))
                 {
                    iMod = 0;
                 }

@@ -38,6 +38,7 @@ void main()
     object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
     
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
+    int bOnOrOff = GetLocalInt(oPC, "HasTwoWeapON");
     string nMes = "";
 
     // On Error Remove effects
@@ -60,18 +61,16 @@ void main()
          if(GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
          {
               RemoveEffectsFromSpell(oPC, SPELL_T_TWO_WEAPON_FIGHTING);
+              FloatingTextStringOnCreature("*Greater Two-Weapon Fighting Disabled*", oPC, FALSE);
          }
-
-         nMes = "*Greater Two-Weapon Fighting Disabled*";
-         FloatingTextStringOnCreature(nMes, oPC, FALSE);
     }
     // Apply effects if it passes all other checks
     else
     {          
-          // inserts a random delay before calling this function
-          // this should prevent some errors caused by equipping
-          // two weapons in rapid succession.
-          float fDelay = IntToFloat(d6(1)) * 0.1;
-          DelayCommand(fDelay, ApplyExtraAttacks(oPC) );
-     }
+         // inserts a random delay before calling this function
+         // this should prevent some errors caused by equipping
+         // two weapons in rapid succession.
+         float fDelay = IntToFloat(d6(1)) * 0.1;
+         DelayCommand(fDelay, ApplyExtraAttacks(oPC) );
+    }
 }

@@ -816,6 +816,7 @@ public class Main{
 					other = masterFeats.get(Integer.parseInt(feats2da.getEntry("MASTERFEAT", check.entryNum)));
 					//check.master = other;
 					other.childFeats.add(check);
+					if(check.isEpic) other.isEpic = true;
 				}catch(NumberFormatException e){
 					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid masterfeat link");
 				}catch(NullPointerException e){
@@ -1593,7 +1594,7 @@ public class Main{
 		
 		// Parse through masterfeats
 		for(FeatEntry masterfeat : masterFeats.values()){
-			if(masterfeat.childFeats.get(0).isEpic)
+			if(masterfeat.isEpic)
 				normalFeatLinks.put(masterfeat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
 				                                                                 masterfeat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
 				                                                      .replaceAll("~~~targetName~~~", masterfeat.name));

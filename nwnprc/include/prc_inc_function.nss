@@ -103,7 +103,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_ALAGHAR, oPC) > 0)             ExecuteScript("prc_alaghar", oPC);
     if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)       DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
     if(iThrallOfGrazzt > 0)                                      ExecuteScript("tog", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD) > 0)		ExecuteScript("prc_blightlord", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)		ExecuteScript("prc_blightlord", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);

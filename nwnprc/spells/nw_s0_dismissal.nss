@@ -60,10 +60,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
         if(GetIsObjectValid(oMaster) && spellsIsTarget(oMaster,SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF ))
         {
             //Is the creature a summoned associate
-            if(GetAssociate(ASSOCIATE_TYPE_SUMMONED, oMaster) == oTarget ||
-               GetAssociate(ASSOCIATE_TYPE_FAMILIAR, oMaster) == oTarget ||
+            if((GetAssociate(ASSOCIATE_TYPE_SUMMONED, oMaster) == oTarget &&
+			    GetStringLeft(GetTag(oTarget), 14) != "psi_astral_con"
+			   )                                                                ||
+               GetAssociate(ASSOCIATE_TYPE_FAMILIAR, oMaster) == oTarget        ||
                GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION, oMaster) == oTarget ||
-               GetTag(oTarget)=="BONDFAMILIAR")
+               GetTag(oTarget)=="BONDFAMILIAR"
+              )
              {
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DISMISSAL));
                  //Make SR and will save checks

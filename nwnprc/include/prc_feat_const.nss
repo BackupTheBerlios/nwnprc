@@ -177,6 +177,7 @@ const int FEAT_PRACTISED_SPELLCASTER_WIZARD            = 3125;
 
 const int FEAT_EPIC_DIVINE_MIGHT                       = 3120;
 const int FEAT_EPIC_DIVINE_RESISTANCE                  = 3119;
+const int FEAT_EPIC_DIVINE_SHIELD                      = 3548;
 const int FEAT_DIVINE_CLEANSING                        = 3118;
 const int FEAT_DIVINE_RESISTANCE                       = 3117;
 const int FEAT_DIVINE_VIGOR                            = 3116;

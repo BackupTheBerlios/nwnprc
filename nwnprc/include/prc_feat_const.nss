@@ -1462,9 +1462,6 @@ const int FEAT_WILDER_VOLATILE_MIND_2            = 3572;
 const int FEAT_WILDER_VOLATILE_MIND_3            = 3573;
 const int FEAT_WILDER_VOLATILE_MIND_4            = 3574;
 
-//Psionic VFX Persistent
-const int AOE_PER_PSIGREASE			 = 131;
-
 //Psion - Nomad Powers
 const int FEAT_NOMAD_BALE_TELEPORT	         = 3553;
 

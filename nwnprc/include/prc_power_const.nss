@@ -9,6 +9,11 @@ const	int	METAPSIONIC_SPLIT		= 32;
 const	int	METAPSIONIC_TWIN		= 64;
 const	int	METAPSIONIC_WIDEN		= 128;
 
+
+//Psionic VFX Persistent
+const int AOE_PER_PSIGREASE			 = 131;
+const int AOE_PER_SHAMBLER			 = 132;
+
 // Level 1 Powers
 const	int	POWER_BOLT			= 14001;
 const	int	POWER_CALLTOMIND		= 14002;
@@ -122,6 +127,11 @@ const   int 	POWER_POWERLEECH	   	= 14158;
 
 // Level 5 Powers
 const	int	POWER_BALEFULTEL		= 14191;
+const   int 	POWER_ECTOSHAMBLER	   	= -1; // FIX ME
+const   int 	POWER_POWERRESISTANCE   	= -1; // FIX ME
+const   int 	POWER_PSYCHICCRUSH	   	= -1; // FIX ME
+const   int 	POWER_TRUESEEING	   	= -1; // FIX ME
+const   int 	POWER_TOWERIRONWILL	   	= -1; // FIX ME
 
 // Level 6 Powers
 const	int	POWER_BREATHBLACKDRAGON		= 14231;

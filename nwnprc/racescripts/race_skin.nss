@@ -145,4 +145,17 @@ void main()
     {
         SetCompositeBonus(oSkin, "SA_Craft_Weapon", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_WEAPON);
     }
+
+    // Skill Affinity, +2 to hide
+    if(GetHasFeat(FEAT_SA_HIDE))
+    {
+        SetCompositeBonus(oSkin, "SA_Hide", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+    }
+
+    // Skill Affinity, +4 to hide
+    // for forest gnomes since they get +4 or +8 in the woods.
+    if(GetHasFeat(FEAT_SA_HIDEF))
+    {
+        SetCompositeBonus(oSkin, "SA_Hide_Forest", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+    }
 }

@@ -64,6 +64,7 @@ void main()
         oPC = GetNextPC();
     }
     
+    // imaskari underground hide bonus
     if(GetIsAreaAboveGround(oArea) == AREA_UNDERGROUND && GetHasFeat(FEAT_SA_HIDEU, oPC) )
     {
         SetCompositeBonus(oSkin, "SA_Hide_Underground", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);       
@@ -73,13 +74,14 @@ void main()
         SetCompositeBonus(oSkin, "SA_Hide_Underground", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }
     
+    // forest gnomes bonus to hide in the woods
     if(GetIsAreaNatural(oArea) == AREA_NATURAL && GetHasFeat(FEAT_SA_HIDEF, oPC) )
     {
-        SetCompositeBonus(oSkin, "SA_Hide_Forest", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE); 
+        SetCompositeBonus(oSkin, "SA_Hide_Forest", 8, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE); 
     }
     else
     {
-        SetCompositeBonus(oSkin, "SA_Hide_Forest", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+        SetCompositeBonus(oSkin, "SA_Hide_Forest", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }
 }
 

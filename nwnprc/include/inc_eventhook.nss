@@ -139,6 +139,9 @@ const string PERMANENCY_SUFFIX = "_permanent";
 // bAllowDuplicate  This being set makes the function first check if a script with
 //                  the same name is already queued for the event and avoids adding a
 //                  duplicate. This will not remove duplicates already present, though.
+//
+// NOTE! Do not add a script that calls ExecuteAllScriptsHookedToEvent() to an eventhook.
+// It will result in recursive loop.
 void AddEventScript(object oCreature, int nEvent, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE);
 
 // Removes all instances of the given script from the given eventhook

@@ -65,4 +65,5 @@ void main()
      DuelistRemovePreciseStrike(oItem);
      KnightRemoveDaemonslaying(oItem);
      RemoveKatanaFinesse(oItem);
+     RemoveIronPower(oItem);
 }

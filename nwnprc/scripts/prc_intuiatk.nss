@@ -50,8 +50,11 @@ void main()
 
       object oBrac = GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
 
-      if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
+
+      if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD )
          SetCompositeBonus(oBrac,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
+      else if (iEquip == 1 && (GetBaseItemType(oItem)== BASE_ITEM_BRACER ||GetBaseItemType(oItem)== BASE_ITEM_GLOVES))
+         SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
       else if ( !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC)) &&  !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC)))
       {
           int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
@@ -78,15 +81,12 @@ void main()
 
         }
 
-        if(GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
+        if(GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD ||iEquip == 1 )
            SetCompositeBonus(oItem,"IntuiAtk",GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
         else
           SetCompositeBonus(oItem,"IntuiAtk",iMod+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
       }
 
-
-      if(iEquip == 1)
-        SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
 
 
    }

@@ -64,6 +64,10 @@ const int SPELL_SONG_OF_FURY    = 2200;
 const int SPELL_DES_20          = 1512;
 const int SPELL_DES_100         = 1513;
 
+//Thrall of Orcus
+
+const int SPELL_TO_CARRION          = 1558;
+
 //Shou Disciple
 
 const int SPELL_MARTIAL_FLURRY  = 1505;

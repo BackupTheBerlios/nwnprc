@@ -8,11 +8,11 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
-//#include "X0_I0_SPELLS"
+
 #include "nw_i0_spells"
 #include "inc_epicspells"
-//#include "prc_alterations"
 #include "x2_inc_spellhook"
+#include "prc_getbest_inc"
 
 void RunWorm(object oTarget, int nRoundsRemaining);
 

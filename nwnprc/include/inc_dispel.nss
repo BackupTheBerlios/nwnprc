@@ -125,7 +125,7 @@ int ReorderEffects(int nCasterLevel, int nSpellID, object oTarget, object oCaste
              SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nRealIndex), nEffectSpellID);
              SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nRealIndex), nEffectCastLevel);
              SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nRealIndex),oEffectCaster );
-             SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex),nWeave);
+             SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nRealIndex),nWeave);
  //            SendMessageToPC(OBJECT_SELF, "Index is incrementing.");
              nRealIndex++;
           }// end of if is the same as the current spell and caster
@@ -609,7 +609,7 @@ void PRCSPApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, in
    SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex), oCaster );
    SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), GetHasFeat(FEAT_TENACIOUSMAGIC,oCaster));
 
-   nIndex++;
+   //nIndex++;
    /// Set new index number to the character.
    DeleteLocalInt(oTarget, "X2_Effects_Index_Number");
    SetLocalInt(oTarget, "X2_Effects_Index_Number", nIndex);
@@ -670,9 +670,9 @@ void SetAllAoEInts(int SpellID, object oAoE, int nBaseSaveDC ,int SpecDispel = 0
       // think it will be necessary to actually delete these.
     }
     
-       SendMessageToPC(GetFirstPC(), "X2_AoE_Caster_Level:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_Caster_Level")));
-   SendMessageToPC(GetFirstPC(), "X2_AoE_SpellID:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_SpellID")));
-   SendMessageToPC(GetFirstPC(), "X2_AoE_Weave:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_Weave")));
+ //      SendMessageToPC(GetFirstPC(), "X2_AoE_Caster_Level:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_Caster_Level")));
+ //  SendMessageToPC(GetFirstPC(), "X2_AoE_SpellID:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_SpellID")));
+ //  SendMessageToPC(GetFirstPC(), "X2_AoE_Weave:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_Weave")));
  
 }
 

@@ -88,28 +88,28 @@ void ElementalFamiliar()
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,4),oHide);
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEBONUS_2d6),oCreL);
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEBONUS_2d6),oCreR);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
         }
         else if (iSize=="HUG")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,3),oHide);
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEBONUS_2d8),oCreL);
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEBONUS_2d8),oCreR);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
         }
         else if (iSize=="GRE")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,3),oHide);
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEBONUS_2d8),oCreL);
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEBONUS_2d8),oCreR);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
         }
         else if (iSize=="ELD")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,2),oHide);
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEBONUS_2d8),oCreL);
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEBONUS_2d8),oCreR);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
         }
 
     }
@@ -130,22 +130,22 @@ void ElementalFamiliar()
         else if (iSize=="LAR")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,4),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
         }
         else if (iSize=="HUG")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,3),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
         }
         else if (iSize=="GRE")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,3),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
         }
         else if (iSize=="ELD")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,4),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
         }
 
     }
@@ -166,22 +166,22 @@ void ElementalFamiliar()
         else if (iSize=="LAR")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,4),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
         }
         else if (iSize=="HUG")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,5),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
         }
         else if (iSize=="GRE")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,3),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
         }
         else if (iSize=="ELD")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,4),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
         }
 
     }
@@ -201,22 +201,22 @@ void ElementalFamiliar()
         else if (iSize=="LAR")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,4),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
         }
         else if (iSize=="HUG")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,3),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_5_HP),oHide);
         }
         else if (iSize=="GRE")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,3),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
         }
         else if (iSize=="ELD")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,4),oHide);
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
+           // AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,IP_CONST_DAMAGESOAK_10_HP),oHide);
         }
 
     }
@@ -257,16 +257,26 @@ void ElementalFamiliar()
         oCweap = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oEle);
 
 
+   int iSoak =-1;
+   
+   if (iSize=="LAR" || iSize=="HUG")
+      iSoak = IP_CONST_DAMAGESOAK_5_HP;	
+   else if (iSize=="GRE" || iSize=="ELD")
+      iSoak = IP_CONST_DAMAGESOAK_10_HP;
+   if (iHD>20)  iSoak++; 
+   if (iHD>30)  iSoak++; 
+   
+   if (iSoak>=0)
+     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,iSoak),oHide);
+
+   	
 
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBonus),GetItemInSlot(INVENTORY_SLOT_NECK,oEle));
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBonus),oHide);
 
-    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(iBonus,(iHD/10)),oHide);
-
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_WIS,iBonus),oHide);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_WIS,iBonus),oHide);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusSavingThrow(iSave,iBonus),oHide);
-
 
 //  AddHenchman(OBJECT_SELF,oEle);
 }

@@ -70,7 +70,7 @@ void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
 
   if(GetHasFeat(FEAT_STRIKE_AT_CORE)&& !GetLocalInt(oItem, "ManArmsCore") )
   {
-    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitProps(IP_CONST_ONHIT_ABILITYDRAIN,IP_CONST_ONHIT_SAVEDC_26,IP_CONST_ABILITY_CON),oItem);
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitProps(IP_CONST_ONHIT_ABILITYDRAIN,IP_CONST_ONHIT_SAVEDC_16,IP_CONST_ABILITY_CON),oItem);
     SetLocalInt(oItem,"ManArmsCore",1);
 
   }
@@ -132,7 +132,7 @@ void OnUnEquip(object oPC,object oSkin,int iLevel,object oWeapR )
 
     if(GetHasFeat(FEAT_STRIKE_AT_CORE)&& GetLocalInt(oItem, "ManArmsCore") )
     {
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_ON_HIT_PROPERTIES,IP_CONST_ONHIT_ABILITYDRAIN,IP_CONST_ONHIT_SAVEDC_26,1,"",IP_CONST_ABILITY_CON);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_ON_HIT_PROPERTIES,IP_CONST_ONHIT_ABILITYDRAIN,IP_CONST_ONHIT_SAVEDC_16,1,"",IP_CONST_ABILITY_CON);
       DeleteLocalInt(oItem,"ManArmsCore");
 
     }

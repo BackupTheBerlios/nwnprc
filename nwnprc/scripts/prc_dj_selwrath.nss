@@ -17,12 +17,18 @@ The Selvetarm's Wrath feat for the Drow Judicator
 //#include "prc_spell_const"
 #include "prc_inc_combat"
 
-int GetDamageBonusType(object oPC, int nClass);
-
 void main()
 {
      object oPC   = OBJECT_SELF;
      object oTarget  = GetSpellTargetObject();
+
+     if(oPC == oTarget)
+     {
+          SendMessageToPC(oPC,"You cannot attack yourself...");
+          return;
+     }
+        
+
      object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
      object oWeapR   = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 
@@ -32,6 +38,12 @@ void main()
      // script now uses combat system to hit and apply effect if appropriate
      string sSuccess = "";
      string sMiss = "";
+     
+     if(oPC == oTarget)
+     {
+          SendMessageToPC(oPC,"You cannot attack yourself...");
+          return;
+     }
         
      // If they are not within 5 ft, they can't do a melee attack.
      if(!bIsRangedAttack && GetDistanceBetween(oPC, oTarget) >= FeetToMeters(5.0) )

@@ -21,6 +21,13 @@ void main()
 //Setup Variables
 object oPC      = OBJECT_SELF;
 object oTarget  = GetSpellTargetObject();
+
+if(oPC == oTarget)
+{
+     SendMessageToPC(oPC,"You cannot attack yourself...");
+     return;
+}
+        
 object oWeapR   = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 
 int bIsRangedAttack = GetWeaponRanged(oWeapR);

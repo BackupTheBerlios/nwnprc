@@ -17,8 +17,14 @@
 void main()
 {     
     object oPC = OBJECT_SELF;
-    //object oTarget = GetSpellTargetObject();
+    object oTarget = GetSpellTargetObject();
     
+     if(oPC == oTarget)
+     {
+          SendMessageToPC(oPC,"You cannot attack yourself...");
+          return;
+     }
+
     // Sets the player back to stealth mode
     DelayCommand(0.3, SetActionMode(oPC, ACTION_MODE_STEALTH, TRUE) );
 
@@ -28,7 +34,7 @@ void main()
     {
         SendMessageToPC(oPC,"Your are still studying your target wait "+IntToString(FloatToInt(fApplyDATime))+ " seconds before you can perform the death attack");
         return;
-    }	
+    }     
 
     // Set a variable that tells us we are in the middle of a DA
     // Must study the target for three rounds

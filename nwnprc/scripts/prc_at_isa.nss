@@ -16,7 +16,13 @@ void main()
 {
      object oTarget = GetSpellTargetObject();
      object oPC = OBJECT_SELF;
-     
+
+     if(oPC == oTarget)
+     {
+          SendMessageToPC(oPC,"You cannot attack yourself...");
+          return;
+     }
+             
      // might need to modify the enemies bonus AC due to other class abilities
      // things like Canny Defense which are typically lost when a player loses dex bonus to AC
      int iEnemydexBonus = GetAbilityModifier(ABILITY_DEXTERITY, oTarget);

@@ -44,11 +44,11 @@ void main()
 			// Apply a bonus/penalty effect to the target depending on it's reaction to the caster.
 			// If the object is neutral it gets neither a bonus nor a penalty.
 			int nFriendly = 0;
-			if(GetIsReactionTypeFriendly(oTarget) || GetIsFriend(oTarget, oCaster)) 
+			if(GetIsFriend(oTarget, oCaster)) 
 			{
 				nFriendly = 1;
 			}
-			int nHostile = GetIsReactionTypeHostile(oTarget);
+			int nHostile = GetIsEnemy(oTarget, oCaster);
 	
 			if (nFriendly || nHostile)
 			{

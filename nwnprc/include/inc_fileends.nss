@@ -17,3 +17,6 @@ const int SPELLSCHOOL_2DA_END   = 10;
 const int APPEARANCE_2DA_END    = 500;
 const int WINGS_2DA_END         = 10;
 const int TAILS_2DA_END         = 10;
+const int PACKAGE_2DA_END       = 150;
+const int RACE_FEAT_2DA_END     = 30;
+const int PACK_FEAT_2DA_END     = 400;

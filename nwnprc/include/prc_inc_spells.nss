@@ -170,7 +170,7 @@ int GetArcanePRCLevels (object oCaster)
 		 +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
 		 +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2
 
-                 +   GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) / 3;
+                 +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 
    if (nOozeMLevel)
    {
@@ -210,7 +210,7 @@ int GetDivinePRCLevels (object oCaster)
 		 +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oCaster) + 1) / 2
 		 +  (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2
 
-                 +   GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) / 3;
+                 +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 
    if (!GetHasFeat(FEAT_SF_CODE, oCaster))
    {

@@ -26,7 +26,7 @@ void AddAcid(object oPC,int iEquip)
 
      if (GetBaseItemType(oItem)==BASE_ITEM_ARMOR)
         {
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
+            AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem,999.0);
 
             SetLocalInt(oItem,"Acidblood",1);
         }
@@ -43,7 +43,7 @@ void AddAcid(object oPC,int iEquip)
         oItem=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
         if ( !GetLocalInt(oItem,"Acidblood")&& GetBaseItemType(oItem)==BASE_ITEM_ARMOR)
         {
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
+        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem,999.0);
         SetLocalInt(oItem,"Acidblood",1);
     }
     }
@@ -62,7 +62,7 @@ void main()
     object oSkin = GetPCSkin(oPC);
 
     // *level 2
-    if (nBldarch == 2)
+    if (nBldarch >= 2)
     {
     // *Acid Blood
     AddAcid( oPC,GetLocalInt(oPC,"ONEQUIP"));

@@ -123,6 +123,7 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)                ExecuteScript("prc_lingdmg", oPC);
 
     if(GetHasFeat(FEAT_ETERNAL_FREEDOM, oPC))                    ExecuteScript("etern_free", oPC);
+    if(GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC))               ExecuteScript("psi_combat_manifest", oPC);
 
     // Miscellaneous
     ExecuteScript("prc_wyzfeat", oPC);
@@ -370,6 +371,9 @@ void DeletePRCLocalInts(object oSkin)
 
     //Alaghar
     DeleteLocalInt(oSkin, "SilverbeardAC");
+
+    //psionics
+    DeleteLocalInt(oSkin, "Combat_Mani");
 
     // future PRCs Go below here
 }

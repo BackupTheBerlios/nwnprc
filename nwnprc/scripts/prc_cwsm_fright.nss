@@ -56,8 +56,9 @@ void main()
       {
        ActionEquipItem(oWeap,INVENTORY_SLOT_LEFTHAND);
       }
+     oWeap = GetNextItemInInventory(oPC);
      }
-    oWeap = GetNextItemInInventory(oPC);
+
 
     //Determine enemies in the radius around the samurai
     oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));

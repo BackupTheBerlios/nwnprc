@@ -203,7 +203,7 @@
 199 FEAT_POSITIVE_FORTITUDE                        3140      3    3              0      
 200 FEAT_ENERGON_COMPANION                         3141      3    4              1      
 201 FEAT_DIVINE_VENGEANCE                          3142      3    5              1      
-202 FEAT_FAST_HEALING1                             3137      3    7              1      
+202 FEAT_FAST_HEALING1                             3137      3    7              0      
 203 FEAT_POSITIVE_ENERGY_BURST                     3146      3    8              1      
-204 FEAT_FAST_HEALING2                             3138      3    10             1      
+204 FEAT_FAST_HEALING2                             3138      3    10             0      
 205 FEAT_SOL_SPELLBOOK                             3136      3    1              1      

@@ -16,6 +16,13 @@
 #include "x2_inc_switches"
 #include "prc_inc_function"
 
+void PrcFeats(object oPC)
+{
+     EvalPRCFeats(oPC);
+     ExecuteScript("ft_sanctmartial",oPC);
+
+}
+
 void main()
 {
     object oPC = GetPCLevellingUp();
@@ -25,7 +32,7 @@ void main()
     //The code is pretty similar, but much more modular, concise
     //And easy to maintain.
     //  - Aaon Graywolf
-    DelayCommand(0.1, EvalPRCFeats(oPC));
+    DelayCommand(0.1, PrcFeats(oPC));
 
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the newly leveled up player meets.

@@ -4,6 +4,6 @@
 0     FEAT_TNECRO_REBUKE        4270        3      1                0        
 1     FEAT_TNECRO_NECRO         4271        3      1                0        
 2     FEAT_TNECRO_DESECRATE     4272        3      2                0        
-3     FEAT_TNECRO_MAJORDESC     4273        3      6                0        
+3     FEAT_TNECRO_MAJORDESC     4273        3      5                0        
 4     FEAT_TNECRO_ENERGYDRAIN   4274        3      10               1        
-5     TN_CGUNDEAD               4404        3      7                1        
+5     TN_CGUNDEAD               4403        3      7                1        

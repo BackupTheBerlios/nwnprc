@@ -8,11 +8,11 @@
 4          Half-Elf           RACE      4                ****        
 5          Base_Attack        BAB       6                ****        
 6          ScriptVar          VAR       X1_AllowArcher   0 
-7          Wizard             CLASS     10               ****           
-8          Sorcerer           CLASS     9                ****
-9          Assassin           CLASS     30               ****
-10         Harper             CLASS     28               ****
-11         Bard               CLASS     1                ****
+7          Wizard             CLASSOR   10               ****           
+8          Sorcerer           CLASSOR   9                ****
+9          Assassin           CLASSOR   30               ****
+10         Harper             CLASSOR   28               ****
+11         Bard               CLASSOR   1                ****
 
                                                                      
                                                                      

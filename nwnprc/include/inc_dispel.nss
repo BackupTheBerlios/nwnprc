@@ -622,6 +622,12 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 	// PRCSPApplyEffectToObject() method.  So just call the bioware default.
 //	SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
 
+        // Extraordinary/Supernatural effects are not supposed to be dispellable.
+        if (GetEffectSubType(eEffect) == SUBTYPE_EXTRAORDINARY || GetEffectSubType(eEffect) == SUBTYPE_SUPERNATURAL)
+        {
+            bDispellable = FALSE;
+        }
+
 	// Instant duration effects can use BioWare code, the PRC code doesn't care about those, as
 	// well as any non-dispellable effect.
 	if (DURATION_TYPE_INSTANT == nDurationType || !bDispellable || GetLocalInt(GetModule(),"BIODispel"))

@@ -29,7 +29,7 @@ void main(){
    eLink = ExtraordinaryEffect(EffectLinkEffects(ePersuade, eTaunt));
 
    if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD){
-      if (!GetHasFeatEffect(FEAT_NIMBUS_OF_LIGHT) && !GetHasFeatEffect(FEAT_HOLY_RADIANCE)){
+      if (!GetHasFeatEffect(FEAT_NIMBUSLIGHT) && !GetHasFeatEffect(FEAT_HOLYRADIANCE)){
          if (!GetIsObjectValid(oSkin)) return;
 
          // Apply the Light and Skill increase

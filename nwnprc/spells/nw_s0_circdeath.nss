@@ -127,7 +127,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             {
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Make a Fort Save versus death effects
-                if(!MySavingThrow(SAVING_THROW_FORT, oLowest, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oLowest, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                 {
                     DeathlessFrenzyCheck(oTarget); 
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oLowest));

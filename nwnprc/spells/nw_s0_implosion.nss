@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
            {
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Make Reflex save
-                if(!MySavingThrow(SAVING_THROW_FORT, oTarget, ((GetSpellSaveDC()+ nDC)+3), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, ((GetSpellSaveDC()+ nDC)+3), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                 {
                     DeathlessFrenzyCheck(oTarget);
                     

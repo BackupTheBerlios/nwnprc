@@ -138,21 +138,21 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
         case 1://fire
             nDamage = 20;
             nVis = VFX_IMP_FLAME_S;
-            nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC),SAVING_THROW_TYPE_FIRE);
+            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC),SAVING_THROW_TYPE_FIRE);
             ePrism = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, ePrism, oTarget));
         break;
         case 2: //Acid
             nDamage = 40;
             nVis = VFX_IMP_ACID_L;
-            nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC),SAVING_THROW_TYPE_ACID);
+            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC),SAVING_THROW_TYPE_ACID);
             ePrism = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, ePrism, oTarget));
         break;
         case 3: //Electricity
             nDamage = 80;
             nVis = VFX_IMP_LIGHTNING_S;
-            nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC),SAVING_THROW_TYPE_ELECTRICITY);
+            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC),SAVING_THROW_TYPE_ELECTRICITY);
             ePrism = EffectDamage(nDamage, DAMAGE_TYPE_ELECTRICAL);
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, ePrism, oTarget));
         break;
@@ -165,7 +165,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
         case 5: //Paralyze
             {
                 effect eDur2 = EffectVisualEffect(VFX_DUR_PARALYZED);
-                if (MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ nDC)) == 0)
+                if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ nDC)) == 0)
                 {
                     ePrism = EffectParalyze();
                     eLink = EffectLinkEffects(eDur, ePrism);
@@ -181,7 +181,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
                 eLink = EffectLinkEffects(eMind, ePrism);
                 eLink = EffectLinkEffects(eLink, eDur);
 
-                if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                 {
                     nVis = VFX_IMP_CONFUSION_S;
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(10),TRUE,-1,CasterLvl));
@@ -190,7 +190,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
         break;
         case 7: //Death
             {
-                if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
+                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                 {
                     DeathlessFrenzyCheck(oTarget);
                     

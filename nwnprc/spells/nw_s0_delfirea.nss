@@ -96,7 +96,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                             nDamage = nDamage + (nDamage/2);//Damage/Healing is +50%
                         }
                         //Change damage according to Reflex, Evasion and Improved Evasion
-                        nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator());
+                        nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator());
                         //Set up the damage effect
                         eDam = EffectDamage(nDamage, EleDmg);
                         if(nDamage > 0)

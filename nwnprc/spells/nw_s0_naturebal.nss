@@ -103,7 +103,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             {
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Check for saving throw
-                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC)))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC)))
                 {
                       nCasterLevel /= 5;
                       if(nCasterLevel == 0)

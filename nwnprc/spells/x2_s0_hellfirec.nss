@@ -37,7 +37,7 @@ ActionDoCommand(SetAllAoEInts(761,OBJECT_SELF, GetSpellSaveDC()));
             //Roll damage
             nDamage = d6(6);
             //Make a saving throw check
-            if(MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_FIRE))
+            if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_FIRE))
             {
                 nDamage = nDamage / 2;
             }

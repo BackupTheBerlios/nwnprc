@@ -82,7 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay) && oTarget != OBJECT_SELF)
             {
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
-                if(!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                 {
                       nDuration = 3 + d4();
                       //Enter Metamagic conditions

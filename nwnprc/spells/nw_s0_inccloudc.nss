@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
                 int nDC = GetChangesToSaveDC(oTarget,aoeCreator);
                 //Adjust damage for Reflex Save, Evasion and Improved Evasion
-                nDamage = GetReflexAdjustedDamage(nDamage, oTarget, GetSpellSaveDC()+nDC,SAVING_THROW_TYPE_FIRE, aoeCreator);
+                nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, GetSpellSaveDC()+nDC,SAVING_THROW_TYPE_FIRE, aoeCreator);
                 // Apply effects to the currently selected target.
                 eDam = EffectDamage(nDamage, EleDmg);
                 if(nDamage > 0)

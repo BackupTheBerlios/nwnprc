@@ -77,7 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SLOW));
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nLevel) && !/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC)))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nLevel) && !/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC)))
             {
                 //Apply the slow effect and VFX impact
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);

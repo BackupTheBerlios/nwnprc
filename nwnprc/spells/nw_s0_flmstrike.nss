@@ -97,8 +97,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                       nDamage = nDamage + (nDamage/2);
                 }
                 //Adjust the damage based on Reflex Save, Evasion and Improved Evasion
-                nDamage2 = GetReflexAdjustedDamage(nDamage/2, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_DIVINE);
-                nDamage = GetReflexAdjustedDamage(nDamage/2, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
+                nDamage2 = PRCGetReflexAdjustedDamage(nDamage/2, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_DIVINE);
+                nDamage = PRCGetReflexAdjustedDamage(nDamage/2, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
                 //Make a faction check so that only enemies receieve the full brunt of the damage.
                 if(!GetIsFriend(oTarget))
                 {

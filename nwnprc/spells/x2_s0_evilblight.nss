@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             {
                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                     //Make Will Save
-                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC)))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC)))
                 {
                     // wont stack
                     if (!GetHasSpellEffect(GetSpellId(), oTarget))

@@ -17,7 +17,7 @@ void main()
         
         // Let the target attempte to make a fort save. (good luck since there is a penalty equal to the 
         // caster's level on the save).
-        if(!MySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF) + nCasterLvl, SAVING_THROW_TYPE_SPELL))
+        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF) + nCasterLvl, SAVING_THROW_TYPE_SPELL))
         {
 			// Calculate the duration of the spell.
 			float fDuration = SPGetMetaMagicDuration(MinutesToSeconds(nCasterLvl));

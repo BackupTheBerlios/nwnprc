@@ -59,7 +59,7 @@ void RunHandImpact(object oTarget, object oCaster,int CasterLvl )
        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
-       if (!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
+       if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
        {
            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, RoundsToSeconds(1),TRUE,-1,CasterLvl);
        }

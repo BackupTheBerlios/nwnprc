@@ -16,7 +16,7 @@ void main()
 
 		// Make SR check
 		if (!SPResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr()) &&
-			!MySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
+			!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
 		{
 			// Determine the spell's duration, taking metamagic feats into account.
 			float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));

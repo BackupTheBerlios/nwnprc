@@ -35,7 +35,7 @@ void main()
             fDelay = GetDistanceToObject(oTarget)/10;
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_HOWL_DOOM));
-            if( !MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+            if( !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
             {
                 //Apply the VFX impact and effects
                 DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

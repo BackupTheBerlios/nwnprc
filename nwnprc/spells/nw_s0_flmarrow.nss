@@ -93,7 +93,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 {
                       nDam = nDam + nDam/2; //Damage/Healing is +50%
                 }
-                nDam = GetReflexAdjustedDamage(nDam, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
+                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
                 //Set damage effect
                 effect eDam = EffectDamage(nDam, EleDmg);
                 //Apply the MIRV and damage effect

@@ -163,7 +163,7 @@ void RunCombustImpact(object oTarget, object oCaster, int nLevel, int nMetaMagic
 
         int nDC = GetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_COMBUST));
 
-        if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE))
+        if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE))
         {
             //------------------------------------------------------------------
             // Calculate the damage, 1d6 + casterlevel, capped at +10

@@ -87,7 +87,7 @@ int BiowareHoldPerson (int nPenetr, int nCasterLvl, int nMeta, object oTarget, f
             if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
     	    {
                 //Make Will save
-                if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF)))
+                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF)))
                 {
                     //Make metamagic extend check
 //                    if (nMeta == METAMAGIC_EXTEND)

@@ -70,7 +70,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
         {
             int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
-            if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_ACID, GetAreaOfEffectCreator(), fDelay))
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_ACID, GetAreaOfEffectCreator(), fDelay))
             {
                  nDamage = d6(); 
             }

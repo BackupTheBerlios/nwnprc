@@ -91,7 +91,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                    nDamage = nDamage + nDamage / 2;
                 }
                 //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nSpellDC, SAVING_THROW_TYPE_ALL);
+                nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nSpellDC, SAVING_THROW_TYPE_ALL);
                 //Set the damage effect
                 eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
                 if(nDamage > 0)

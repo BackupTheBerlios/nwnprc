@@ -136,7 +136,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             {
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Make Fort save
-                if(!MySavingThrow(SAVING_THROW_WILL, oLowest, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_MIND_SPELLS))
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oLowest, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oLowest);
                     if (GetIsImmune(oLowest, IMMUNITY_TYPE_SLEEP) == FALSE)

@@ -197,7 +197,7 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
                         fTime += fDelay2;
 
 						// Adjust damage for reflex save / evasion / imp evasion
-						nDam = GetReflexAdjustedDamage(nDam, oTarget, 
+						nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, 
 							GetSpellSaveDC() + nDC, SAVING_THROW_TYPE_FIRE);
 
 						// Always apply missle but only apply impact/damage if we really have damage.							

@@ -28,7 +28,7 @@ void main()
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
 					EffectVisualEffect(VFX_IMP_ACID_S), oTarget);
 						
-				if (!MySavingThrow(SAVING_THROW_REFLEX, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), 
+				if (!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), 
 					SAVING_THROW_TYPE_SPELL))
 				{
 					float fDuration = SPGetMetaMagicDuration(MinutesToSeconds(CasterLvl));

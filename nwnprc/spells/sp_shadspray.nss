@@ -41,7 +41,7 @@ void main()
 
 			// Let the creature make a fort save, if it fails it's apply the
 			// detrimental effects.
-			if (!MySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF)))
+			if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF)))
 			{
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DAZED_S), oTarget);
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);

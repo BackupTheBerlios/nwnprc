@@ -40,7 +40,7 @@ void RunFlensing(object oCaster, object oTarget, int nSaveDC,
 	int nConDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 8, 0, 0, nMetaMagic);
 	int nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 8, 0, 0, nMetaMagic);
 	effect eDamage;
-	if (MySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_SPELL))
+	if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_SPELL))
 		eDamage = SPEffectDamage(nDamage / 2);
 	else
 	{

@@ -107,7 +107,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_GLYPH_OF_WARDING,OBJECT_SELF, GetSpellSaveDC
                     }
 
                     //Change damage according to Reflex, Evasion and Improved Evasion
-                    nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()  + nDC), SAVING_THROW_TYPE_SONIC, oCreator);
+                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()  + nDC), SAVING_THROW_TYPE_SONIC, oCreator);
 
 
                     //----------------------------------------------------------

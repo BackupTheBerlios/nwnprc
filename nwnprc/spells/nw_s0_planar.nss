@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_PLANAR_BINDING));
                 //Make a Will save
-                if(!MySavingThrow(SAVING_THROW_WILL, oTarget, ((GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))+2)))
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, ((GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))+2)))
                 {
                     //Apply the linked effect
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration/2),TRUE,-1,CasterLvl);

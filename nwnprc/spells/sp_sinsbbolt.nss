@@ -43,7 +43,7 @@ void main()
 					{
 						// Roll the drain damage and adjust for a reflex save/evasion.
 						int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 3, nBonusDam);
-						nDamage = GetReflexAdjustedDamage(nDamage, oTarget, 
+						nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, 
 							SPGetSpellSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_NEGATIVE);
 
 						// Apply str/con drain if any.

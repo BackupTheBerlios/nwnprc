@@ -55,10 +55,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
         if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
         {
             //Make a Will save
-            if (!MySavingThrow(SAVING_THROW_WILL,  oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
+            if (!PRCMySavingThrow(SAVING_THROW_WILL,  oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
             {
                 //Make a Fort save
-                if (MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)),SAVING_THROW_TYPE_DEATH))
+                if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)),SAVING_THROW_TYPE_DEATH))
                 {
                      //Check for metamagic
                      if (nMetaMagic == METAMAGIC_MAXIMIZE)

@@ -75,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
                 int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
 
-                nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_FIRE);
+                nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_FIRE);
                 if(nDamage > 0)
                 {
                     // Apply effects to the currently selected target.

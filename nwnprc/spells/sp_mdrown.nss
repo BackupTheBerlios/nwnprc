@@ -65,7 +65,7 @@ void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay
                 &&(GetRacialType(oTarget) != RACIAL_TYPE_ELEMENTAL))
             {
                 //Make a fortitude save 
-                if(!MySavingThrow(SAVING_THROW_FORT, oTarget, GetSpellSaveDC()))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetSpellSaveDC()))
                 {
                     nDam = FloatToInt(nDam * 0.9);
                     eDam = EffectDamage(nDam, DAMAGE_TYPE_BLUDGEONING);

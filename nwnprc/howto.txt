@@ -1,3 +1,9 @@
+THE NUMBER TO ADD TO CUSTOM TLK NUMBER:
+===========================================
+16777216
+
+
+
 TO DO BUILDS USING A WINDOWS COMMAND PROMPT:
 ============================================
 

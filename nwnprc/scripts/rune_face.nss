@@ -20,12 +20,12 @@ void main()
          if(GetLocalString(oScribe, "f_cmw") == "1")
             {
             DeleteLocalString(oScribe,"f_cmw");
-            ExecuteScript("rune_ccw", oPC);
+            ExecuteScript("rune_cmw", oPC);
             }
          if(GetLocalString(oScribe, "f_csw") == "1")
             {
             DeleteLocalString(oScribe,"f_csw");
-            ExecuteScript("rune_ccw", oPC);
+            ExecuteScript("rune_csw", oPC);
             }
          if(GetLocalString(oScribe, "f_divfavor") == "1")
             {

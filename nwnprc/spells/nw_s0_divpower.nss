@@ -37,7 +37,7 @@ int CalculateAttackBonus()
 {
    int iBAB = GetBaseAttackBonus(OBJECT_SELF);
    int iHD = GetHitDice(OBJECT_SELF);
-   int iBonus = (iHD > 20) ? ((20 + (iHD - 21) / 2) - iBAB) : (iHD - iBAB); // most confusing line ever. :)
+   int iBonus = (iHD > 20) ? ((20 + (iHD - 19) / 2) - iBAB) : (iHD - iBAB); // most confusing line ever. :)
    
    return (iBonus > 0) ? iBonus : 0;
 }

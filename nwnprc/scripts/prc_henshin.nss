@@ -62,7 +62,7 @@ void Invulerability(object oPC, object oSkin)
 
 
 
-void main
+void main ()
 {
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);

@@ -8,6 +8,6 @@
 void main()
 {
 	// Execute scripts hooked to this event for the player triggering it
-	object oPC = GetLastPCToCancelCutscene();
+	object oPC = GetLastPlayerDying();
 	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERDYING);
 }

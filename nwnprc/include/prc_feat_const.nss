@@ -885,6 +885,15 @@ const int FEAT_ANCESTRAL_DAISHO                  = 3417;
 const int FEAT_BATTLE_RAGE1                      = 3413;
 const int FEAT_BATTLE_RAGE2                      = 3414;
 const int FEAT_BATTLE_RAGE3                      = 3415;
+const int FEAT_BATTLE_RAGE4                      = 3505;
+const int FEAT_BATTLE_RAGE4                      = 3506;
+const int FEAT_BATTLE_RAGE4                      = 3507;
+const int FEAT_BATTLE_RAGE4                      = 3508;
+const int FEAT_BATTLE_RAGE4                      = 3509;
+const int FEAT_BATTLE_RAGE4                      = 3510;
+const int FEAT_BATTLE_RAGE4                      = 3511;
+const int FEAT_FEROCIOUS_PROW                    = 3512;
+const int FEAT_PRC_EPIC_MIGHT_RAGE               = 3516;
 
 /*//////////////////////////////////////////////////////
 //////////////////////END CODI//////////////////////////

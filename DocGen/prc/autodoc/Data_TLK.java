@@ -90,7 +90,7 @@ public class Data_TLK{
 	public String getEntry(int strRef){
 		if(strRef > 0x01000000) strRef -= 0x01000000;
 		String toReturn = mainData.get(strRef);
-		if(toReturn == null) toReturn = "Bad StrRef";
+		if(toReturn == null) toReturn = Main.badStrRef;
 		return toReturn;
 	}
 	
@@ -105,7 +105,9 @@ public class Data_TLK{
 	 * @throws NumberFormatException if <code>strRef</code> cannot be converted to an integer
 	 */
 	public String getEntry(String strRef){
-		return getEntry(Integer.parseInt(strRef));
+		try{
+			return getEntry(Integer.parseInt(strRef));
+		}catch(NumberFormatException e){ return Main.badStrRef; }
 	}
 	
 	/**

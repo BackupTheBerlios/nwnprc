@@ -26,7 +26,9 @@ public class Main{
 		}
 		
 		public String get(String num){
-			return Integer.parseInt(num) < 0x01000000 ? normal.getEntry(num) : custom.getEntry(num);
+			try{
+				return get(Integer.parseInt(num));
+			}catch(NumberFormatException e){ return Main.badStrRef; }
 		}
 	}
 	
@@ -167,6 +169,8 @@ public class Main{
 	public static boolean verbose = true;
 	public static Spinner spinner = new Spinner();
 	
+	public static final String badStrRef = "Bad StrRef";
+	
 	/**
 	 * The container object for general configuration data
 	 * read from file
@@ -187,14 +191,29 @@ public class Main{
 	private static final String classTemplate    = readTemplate("templates" + fileSeparator + "class.html"),
 	                            domainTemplate   = readTemplate("templates" + fileSeparator + "domain.html"),
 	                            featTemplate     = readTemplate("templates" + fileSeparator + "feat.html"),
+	                            mFeatTemplate    = readTemplate("templates" + fileSeparator + "masterfeat.html"),
 	                            menuTemplate     = readTemplate("templates" + fileSeparator + "menu.html"),
 	                            menuItemTemplate = readTemplate("templates" + fileSeparator + "menuitem.html"),
 	                            spellTemplate    = readTemplate("templates" + fileSeparator + "spell.html"),
 	                            skillTemplate    = readTemplate("templates" + fileSeparator + "skill.html");
 	
+	/* Data structure used for determining if a previous write has failed
+	 * Required in order to be able to skip generating dead links in the
+	 * manual
+	 */
 	private static final Object presenceIndicator = new Object();
-	private static final HashMap<Integer, Object> failedSkills = new HashMap<Integer, Object>(),
-	                                              failedSpells = new HashMap<Integer, Object>();
+	private static HashMap<Integer, Object> failedSkills = new HashMap<Integer, Object>(),
+	                                        failedSpells = new HashMap<Integer, Object>();
+	
+	/* A freaking pile of these for eventually building links.
+	 *Take up space, but simplify the code.
+	 */
+	private static HashMap<Integer, FeatEntry> masterFeats,
+	                                           feats/*,
+	                                           generalFeats,
+	                                           generalEpicFeats,
+	                                           classFeats,
+	                                           classEpicFeats*/;
 	public static void main(String[] args){
 		/* Argument parsing */
 		for(String opt : args){
@@ -217,13 +236,13 @@ public class Main{
 		for(int i = 0; i < settings.languages.size(); i++){
 			// Set language, path and load TLKs
 			curLanguage = settings.languages.get(i)[0];
-			mainPath = "manual" + fileSeparator + curLanguage + fileSeparator;
+			mainPath    = "manual" + fileSeparator + curLanguage + fileSeparator;
 			contentPath = mainPath + "content" + fileSeparator;
-			menuPath = mainPath + "menus" + fileSeparator;
+			menuPath    = mainPath + "menus" + fileSeparator;
+			
 			tlk = new TLKStore(settings.languages.get(i)[1], settings.languages.get(i)[2]);
 			
 			buildDirectories();
-			
 			
 			createPages();
 			//createMenus();
@@ -281,13 +300,13 @@ public class Main{
 		dirPath += fileSeparator;
 		
 		buildDir(dirPath + "base_classes");
-		buildDir(dirPath + "class_epic_feat");
-		buildDir(dirPath + "class_feat");
+		buildDir(dirPath + "class_epic_feats");
+		buildDir(dirPath + "class_feats");
 		buildDir(dirPath + "domains");
-		buildDir(dirPath + "epic_feat");
+		buildDir(dirPath + "epic_feats");
 		buildDir(dirPath + "epic_spells");
-		buildDir(dirPath + "feat");
-		buildDir(dirPath + "master_feat");
+		buildDir(dirPath + "feats");
+		buildDir(dirPath + "master_feats");
 		buildDir(dirPath + "prestige_classes");
 		buildDir(dirPath + "psionic_powers");
 		buildDir(dirPath + "races");
@@ -295,6 +314,8 @@ public class Main{
 		buildDir(dirPath + "spells");
 		
 		buildDir(mainPath + "menus");
+		
+		System.gc();
 	}
 	
 	/**
@@ -316,15 +337,14 @@ public class Main{
 	private static void createPages(){
 		/* First, do the pages that do not require linking to other pages */
 		doSkills();
-		// Do spells
 		doSpells();
-		// Do epicspells
-		// Do psionicpowers
 		
 		// Do masterfeats
+		preliMasterFeats();
 		// Do feats
+		preliFeats();
 		// Link feats
-		
+		linkFeats();
 		// Do domains
 		
 		// Do classes
@@ -380,6 +400,8 @@ public class Main{
 		for(int i = 0; i < skills.getEntryCount(); i++){
 			try{
 				name = tlk.get(skills.getEntry("Name", i));
+				// If we have a bad name, just toss a notice and skip to next entry
+				if(name.equals(badStrRef)) throw new PageGenerationException("Invalid name entry for skill " + i);
 				if(verbose) System.out.println("Printing page for " + name);
 				
 				// Build the entry data
@@ -397,7 +419,7 @@ public class Main{
 				failedSkills.put(i, presenceIndicator);
 			}
 		}
-		
+		System.gc();
 	}
 	
 	/**
@@ -434,13 +456,15 @@ public class Main{
 				
 				if(spelltype != NONE){
 					name = tlk.get(spells.getEntry("Name", i));
+					// If we have a bad name, just toss a notice and skip to next entry
+					if(name.equals(badStrRef)) throw new PageGenerationException("Invalid name entry for spell " + i);
 					if(verbose) System.out.println("Printing page for " + name);
 					
 					// Build the entry data
 					entry = spellTemplate;
 					entry = entry.replaceAll("~~~SpellName~~~",
 					                         name);
-					entry = entry.replaceAll("~~~SpelllTLKDescription~~~",
+					entry = entry.replaceAll("~~~SpellTLKDescription~~~",
 					                         htmlizeTLK(tlk.get(spells.getEntry("SpellDesc", i))));
 					
 					// Build the path and print
@@ -467,7 +491,7 @@ public class Main{
 				failedSpells.put(i, presenceIndicator);
 			}
 		}
-		
+		System.gc();
 	}
 	
 	/**
@@ -522,5 +546,122 @@ public class Main{
 		for(String check : settings.psionicpowerSignatures)
 			if(spells.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
 		return false;
+	}
+	
+	
+	/**
+	 * Build the preliminary list of master feats, without the child feats
+	 * linked in.
+	 */
+	private static void preliMasterFeats(){
+		String mFeatPath = contentPath + "master_feats" + fileSeparator;
+		String name     = null,
+		       text     = null;
+		FeatEntry entry = null;
+		
+		masterFeats = new HashMap<Integer, FeatEntry>();
+		Data_2da masterFeats2da = twoDA.get("masterfeats");
+		
+		for(int i = 0; i < masterFeats2da.getEntryCount(); i++){
+			// Skip blank rows
+			if(masterFeats2da.getEntry("LABEL", i).equals("****")) continue;
+			
+			try{
+				name = tlk.get(masterFeats2da.getEntry("STRREF", i));
+				// If we have a bad name, just toss a notice and skip to next entry
+				if(name.equals(badStrRef)) throw new PageGenerationException("Invalid name entry for masterfeat " + i);
+				if(verbose) System.out.println("Generating preliminary data for " + name);
+				
+				// Build the entry data
+				text = mFeatTemplate;
+				text = text.replaceAll("~~~FeatName~~~",
+				                       name);
+				text = text.replaceAll("~~~FeatTLKDescription~~~",
+				                       htmlizeTLK(tlk.get(masterFeats2da.getEntry("DESCRIPTION", i))));
+				entry = new FeatEntry(name , text, mFeatPath + i + ".html", i, false, false);
+				
+				// Store the entry to wait for further processing
+				masterFeats.put(i, entry);
+			}catch(Exception e){
+				System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+			}
+		}
+		System.gc();
+	}
+	
+	
+	/**
+	 * Build the preliminary list of feats, without master / successor / predecessor feats
+	 * linked in.
+	 */
+	private static void preliFeats(){
+		String featPath      = contentPath + "feats" + fileSeparator,
+		       epicPath      = contentPath + "epic_feats" + fileSeparator,
+		       classFeatPath = contentPath + "class_feats" + fileSeparator,
+		       classEpicPath = contentPath + "class_epic_feats" + fileSeparator;
+		
+		String name     = null,
+		       text     = null,
+		       path     = null;
+		FeatEntry entry = null;
+		boolean isEpic      = false,
+		        isClassFeat = false;
+		feats            = new HashMap<Integer, FeatEntry>();
+/*		generalFeats     = new HashMap<Integer, FeatEntry>();
+		generalEpicFeats = new HashMap<Integer, FeatEntry>();
+		classFeats       = new HashMap<Integer, FeatEntry>();
+		classEpicFeats   = new HashMap<Integer, FeatEntry>();*/
+		Data_2da feats2da = twoDA.get("feat");
+		
+		for(int i = 0; i < feats2da.getEntryCount(); i++){
+			// Skip blank rows
+			if(feats2da.getEntry("LABEL", i).equals("****")) continue;
+			
+			try{
+				name = tlk.get(feats2da.getEntry("FEAT", i));
+				// If we have a bad name, just toss a notice and skip to next entry
+				if(name.equals(badStrRef)) throw new PageGenerationException("Invalid name entry for feat " + i);
+				if(verbose) System.out.println("Generating preliminary data for " + name);
+				
+				// Build the entry data
+				text = featTemplate;
+				text = text.replaceAll("~~~FeatName~~~",
+				                       name);
+				text = text.replaceAll("~~~FeatTLKDescription~~~",
+				                       htmlizeTLK(tlk.get(feats2da.getEntry("DESCRIPTION", i))));
+				
+				isEpic = feats2da.getEntry("PreReqEpic", i).equals("1");
+				isClassFeat = !feats2da.getEntry("ALLCLASSESCANUSE", i).equals("1");
+				
+				// Get the path
+				if(isEpic){
+					if(isClassFeat) path = classEpicPath + i + ".html";
+					else            path = epicPath + i + ".html";
+				}else{
+					if(isClassFeat) path = classFeatPath + i + ".html";
+					else            path = featPath + i + ".html";
+				}
+				
+				// Create the entry data structure
+				entry = new FeatEntry(name , text, path, i, isEpic, isClassFeat);
+				
+				// Store the entry to wait for further processing
+				feats.put(i, entry);
+			}catch(Exception e){
+				System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+			}
+		}
+		System.gc();
+	}
+	
+	
+	/**
+	 * Builds the master - child, predecessor - successor and prerequisite links
+	 * and modifies the entry texts accordingly.
+	 */
+	private static void linkFeats(){
+		FeatEntry check = null;
+		
+		//path.replace(contentPath, "../");
 	}
 }

@@ -4,61 +4,31 @@ import java.util.*;
 /**
  * Data structure for a feat entry.
  */
-public class FeatEntry{
-	private FeatEntry predecessor = null,
+public class FeatEntry implements Comparable<FeatEntry>{
+	public FeatEntry predecessor = null,
 	                 successor = null,
 	                 master = null;
 	
-	private ArrayList<FeatEntry> childFeats = new ArrayList<FeatEntry>();
+	public ArrayList<FeatEntry> childFeats = new ArrayList<FeatEntry>();
 	
-	private int entryNum;
-	private String entryText;
-	private String filePath;
+	public String entryName;
+	public String entryText;
+	public String filePath;
+	public int entryNum;
+	public boolean isEpic;
+	public boolean isClassFeat;
 	
-	public FeatEntry(int entryNum, String entryText, String filePath){
-		this.entryNum  = entryNum;
-		this.entryText = entryText;
-		this.filePath  = filePath;
+	public FeatEntry(String entryName, String entryText, String filePath,
+	                 int entryNum, boolean isEpic, boolean isClassFeat){
+		this.entryName   = entryName;
+		this.entryText   = entryText;
+		this.filePath    = filePath;
+		this.entryNum    = entryNum;
+		this.isEpic      = isEpic;
+		this.isClassFeat = isClassFeat;
 	}
 	
-	public String getEntryText(){
-		return entryText;
+	public int compareTo(FeatEntry other){
+		return entryName.compareTo(other.entryName);
 	}
-	
-	public String filePath(){
-		return filePath;
-	}
-	
-	public void setPredecessor(FeatEntry predecessor){
-		this.predecessor = predecessor;
-	}
-	
-	public FeatEntry getPredecessor(){
-		return predecessor;
-	}
-	
-	public void setSuccessor(FeatEntry successor){
-		this.successor = successor;
-	}
-	
-	public FeatEntry getSuccessor(){
-		return successor;
-	}
-	
-	public void setMaster(FeatEntry master){
-		this.master = master;
-	}
-	
-	public FeatEntry getMaster(){
-		return master;
-	}
-	
-	public void addChild(FeatEntry childFeat){
-		childFeats.add(childFeat);
-	}
-	
-	public FeatEntry[] getChildFeats(){
-		return (FeatEntry[])childFeats.toArray();
-	}
-		
 }

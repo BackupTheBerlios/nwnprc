@@ -77,7 +77,7 @@ void main()
                 float fDelay = GetRandomDelay();
                 DelayCommand(fDelay,
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
-                        eIce, oItem, fDuration));
+                        eIce, oItem, fDuration, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
             }
             oItem = GetNextObjectInArea(oArea);
         }

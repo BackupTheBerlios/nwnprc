@@ -85,10 +85,10 @@ void main()
         lTarget = GetRandomLocation(GetArea(oTarget), oTarget, 0.5);
         DelayCommand(3.0, ApplyEffectAtLocation (DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_LIGHTNING_M), lTarget));
         ApplyEffectAtLocation (DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SCREEN_SHAKE), GetLocation(oTarget));
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BIGBYS_INTERPOSING_HAND), oTarget, 0.75);
-        DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BIGBYS_GRASPING_HAND), oTarget, 1.0));
-        DelayCommand(1.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BIGBYS_CLENCHED_FIST), oTarget, 0.75));
-        DelayCommand(2.5, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BIGBYS_CRUSHING_HAND), oTarget, 1.0));
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BIGBYS_INTERPOSING_HAND), oTarget, 0.75, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
+        DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BIGBYS_GRASPING_HAND), oTarget, 1.0, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
+        DelayCommand(1.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BIGBYS_CLENCHED_FIST), oTarget, 0.75, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
+        DelayCommand(2.5, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BIGBYS_CRUSHING_HAND), oTarget, 1.0, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
         DelayCommand(3.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_COM_HIT_DIVINE), oTarget));
         DelayCommand(3.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_COM_CHUNK_STONE_MEDIUM), oTarget));
         DelayCommand(3.1, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

@@ -9,6 +9,7 @@
 #include "x0_i0_position"
 #include "prc_alterations"
 #include "inc_dispel"
+#include "inc_epicspells"
 
 location GetOppositeLoc(object oTarget);
 
@@ -24,7 +25,7 @@ void main()
     effect eHold = EffectCutsceneImmobilize();
     effect eLink = EffectLinkEffects(eGhost, eEther);
     eLink = EffectLinkEffects(eLink, eHold);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oNPC, fDur);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oNPC, fDur, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
     SetPlotFlag(oNPC, TRUE);
     // Initiate a conversation with the PC.
     AssignCommand(oNPC, ActionStartConversation(oPC, "", TRUE, FALSE));

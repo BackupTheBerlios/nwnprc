@@ -109,7 +109,7 @@ void main()
                         DelayCommand( 2.1,
                             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
                                 eHeal, oCaster,
-                                    TurnsToSeconds(GetTotalCastingLevel(oCaster))) );
+                                    TurnsToSeconds(GetTotalCastingLevel(oCaster)), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)) );
                     }
                 }
             }

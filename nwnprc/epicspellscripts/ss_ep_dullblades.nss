@@ -50,7 +50,7 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                 eVis, oTarget);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
-                eLink, oTarget, HoursToSeconds(nDuration));
+                eLink, oTarget, HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
         }
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

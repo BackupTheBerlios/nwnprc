@@ -138,7 +138,7 @@ void main()
                 // Applying various effects to the Caster & Weapon.
                 SPApplyEffectToObject( DURATION_TYPE_INSTANT, eVis, oPC );
                 SPApplyEffectToObject( DURATION_TYPE_TEMPORARY, eDur, oPC,
-                    TurnsToSeconds(iDuration) );
+                    TurnsToSeconds(iDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF) );
                 AddEffectsToWeapon( oWeapon,
                     TurnsToSeconds(iDuration),iCasterLvl );
                 //Add the Exotic Weapons feature to oHide temporarily.

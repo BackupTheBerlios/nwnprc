@@ -58,8 +58,8 @@ void main()
         eLink = ExtraordinaryEffect(eLink);
 
         //Apply the armor bonuses and the VFX impact
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration));
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,1.0);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,1.0, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

@@ -58,7 +58,7 @@ void main()
         eLink = ExtraordinaryEffect(eLink);
 
         SPApplyEffectToObject( DURATION_TYPE_TEMPORARY, eLink,
-            oPC, RoundsToSeconds(nDuration) );
+            oPC, RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF) );
         RunHeel(oPC, nDuration);
     }
 
@@ -73,7 +73,7 @@ void RunHeel(object oTarget, int nDuration)
     {
         UnequipAnyImmunityItems(oTarget, IP_CONST_IMMUNITYMISC_LEVEL_ABIL_DRAIN);
         DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
-            eCon, oTarget, 6.0));
+            eCon, oTarget, 6.0, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
         nDuration -= 1;
         DelayCommand(6.0, RunHeel(oTarget, nDuration));
     }

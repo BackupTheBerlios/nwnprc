@@ -94,7 +94,7 @@ void main()
                 {
                     if (nTotalDamage > 50)
                     {
-                        DelayCommand(fDelay+0.3f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnock, oTarget,3.0f));
+                        DelayCommand(fDelay+0.3f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnock, oTarget,3.0f, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
                     }
 
                     // Apply effects to the currently selected target.

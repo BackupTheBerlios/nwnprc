@@ -42,7 +42,7 @@ void main()
         eLink = ExtraordinaryEffect(eLink); // No dispelling it.
 
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget,
-            HoursToSeconds(nDuration));
+            HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

@@ -47,7 +47,7 @@ void main()
         eLink = ExtraordinaryEffect(eLink);
 
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

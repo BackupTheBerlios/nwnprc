@@ -67,7 +67,7 @@ void main()
             }
             fDelay += 0.4;
         }
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, OBJECT_SELF, 15.0,FALSE);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, OBJECT_SELF, 15.0, FALSE, -1, GetTotalCastingLevel(OBJECT_SELF));
         DelayCommand(4.0,
             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eE, lNew));
 

@@ -54,7 +54,7 @@ void main()
                 RemoveEffectsFromSpell( oTarget, GetSpellId() );
                 //Apply the VFX impact and effects
                 SPApplyEffectToObject( DURATION_TYPE_TEMPORARY, eLink,
-                    oTarget, RoundsToSeconds(nDuration) );
+                    oTarget, RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF) );
             }
             oTarget = GetNextObjectInShape( SHAPE_SPHERE,
                 RADIUS_SIZE_HUGE, GetSpellTargetLocation() );

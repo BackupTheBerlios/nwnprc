@@ -41,7 +41,7 @@ void main()
     }
     else
     {
-        effect eInv = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);
+        effect eInv = SupernaturalEffect(EffectInvisibility(INVISIBILITY_TYPE_NORMAL));
         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eInv, oPC);
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -354,6 +354,8 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     }
     else // No caster class could be determined.  (Spell-Like abilities & items.)
     {
+        SendMessageToPC(oCaster, "SLA (?) casting at level " + IntToString(GetCasterLevel(oCaster)));
+
         return GetCasterLevel(oCaster);
     }
 }

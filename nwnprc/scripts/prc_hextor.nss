@@ -11,22 +11,7 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "prc_class_const"
-
-void RemoveBrutalStrikeDam(object oPC)
-{
-    effect e = GetFirstEffect(oPC);
-    
-    while (GetIsEffectValid(e))
-    {
-        if (GetEffectCreator(e) == oPC &&
-            GetEffectSpellId(e) == -1 &&
-            GetEffectType(e) == EFFECT_TYPE_DAMAGE_INCREASE &&
-            GetEffectSubType(e) == SUBTYPE_EXTRAORDINARY &&
-            GetEffectDurationType(e) == DURATION_TYPE_TEMPORARY)
-                RemoveEffect(oPC, e);
-        e = GetNextEffect(oPC);
-    }
-}
+#include "prc_inc_clsfunc"
 
 /// Applies the Fist of Hextor Damage ///
 void AddBrutalStrikeDam(object oPC)
@@ -82,11 +67,9 @@ void AddBrutalStrikeDam(object oPC)
 	iDam = DAMAGE_BONUS_1;
 	}
 	
-	RemoveBrutalStrikeDam(oPC);
-	effect eDam = EffectDamageIncrease(iDam, DAMAGE_TYPE_NEGATIVE);
-	eDam = ExtraordinaryEffect(eDam);
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oPC, HoursToSeconds(24));
 	SetLocalInt(oPC, "HexBSDam", iDam);
+	DelayCommand(0.1, ActionCastSpellOnSelf(SPELL_HEXTOR_DAMAGE));
+	DelayCommand(0.2, DeleteLocalInt(oPC, "HexBSDam"));
 }
 
 

@@ -4,17 +4,23 @@ const int SPELL_GREAT_WALL_OF_DISPEL        = 2096;
 const int SPELL_CONCECRATE                  = 2167;
 const int SPELL_SOL_CONCECRATE              = 2108;
 const int SPELL_BLACKLIGHT                  = 2091;
+
 //oozemaster
 const int SPELL_SLIME_WAVE = 2023;
 
+//damage increase spells for ActionCastSpellOnSelf
+const int SPELL_BATTLERAGER_DAMAGE	= 2728;
+const int SPELL_HEXTOR_DAMAGE		= 2729;
+const int SPELL_THAYANKNIGHT_DAMAGE	= 2730;
+
 //heartwarder
-int SPELL_LIPS_RAPTUR      = 2210;
-int SPELL_TEARS_EVERGOLD   = 2211;
-int SPELL_ELE_CONF_FIRE    = 2213;
-int SPELL_ELE_CONF_WATER   = 2214;
-int SPELL_ELE_CONF_EARTH   = 2215;
-int SPELL_ELE_CONF_AIR     = 2216;
-int IP_CONST_CASTSPELL_LIPS_RAPTURE_1 =550;
+const int SPELL_LIPS_RAPTUR      = 2210;
+const int SPELL_TEARS_EVERGOLD   = 2211;
+const int SPELL_ELE_CONF_FIRE    = 2213;
+const int SPELL_ELE_CONF_WATER   = 2214;
+const int SPELL_ELE_CONF_EARTH   = 2215;
+const int SPELL_ELE_CONF_AIR     = 2216;
+const int IP_CONST_CASTSPELL_LIPS_RAPTURE_1 =550;
 
 // Frenzied Berserker Spells
 const int SPELL_FRENZY = 2700; 

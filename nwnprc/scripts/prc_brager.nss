@@ -11,21 +11,13 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "prc_class_const"
+#include "prc_inc_clsfunc"
 
 void AddFerociousProwess(object oPC)
 {
-	int iAtk = 1;
-	int iDam = 1;
-	
-	SetCompositeAttackBonus(oPC, "BattleRagerAtk", 0);
-	
 	if(GetHasFeat(FEAT_FEROCIOUS_PROW, oPC))
 	{
-		effect eDam = EffectDamageIncrease(iDam, DAMAGE_TYPE_NEGATIVE);
-	
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oPC, HoursToSeconds(24));
-                SetCompositeAttackBonus(oPC, "BattleRagerAtk", iAtk);
-		SetLocalInt(oPC, "BRageProw", iAtk);
+                ActionCastSpellOnSelf(SPELL_BATTLERAGER_DAMAGE);   // +1 to attack and damage rolls
 	}
 }
 

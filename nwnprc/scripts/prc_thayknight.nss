@@ -12,7 +12,7 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "prc_class_const"
-
+#include "prc_inc_clsfunc"
 
 
 void HorrorOfThay(object oPC, object oSkin)
@@ -55,11 +55,7 @@ void ZulkirChampion(object oPC ,object oSkin)
 
 void ZulkirDefender(object oPC)
 {
-	effect eDam = EffectDamageIncrease(2, DAMAGE_TYPE_NEGATIVE);
-	eDam = ExtraordinaryEffect(eDam);
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oPC, HoursToSeconds(24));
-		
-        SetCompositeAttackBonus(oPC, "ZulkirDefender", 2);
+        ActionCastSpellOnSelf(SPELL_THAYANKNIGHT_DAMAGE); // +2 to attack and damage rolls
 }
 
 void main()

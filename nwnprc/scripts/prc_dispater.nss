@@ -38,8 +38,14 @@ void Iron_Power(object oPC, object oWeap, int iIronPower)
     int iEnhance = GetWeaponEnhancement(oWeap);
     //int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
 
-    if(iIronPower == 1) iHitBonus = 1;
-    if(iIronPower == 2) iHitBonus = 2;
+    if(iIronPower == 2)
+     {
+     iHitBonus = 2;
+     }
+    else if(iIronPower == 1)
+     {
+     iHitBonus = 1;
+     }
 
     iHitBonus = iHitBonus + iEnhance;
 

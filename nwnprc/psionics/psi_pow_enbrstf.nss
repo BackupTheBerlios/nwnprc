@@ -70,8 +70,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	location lTarget = GetSpellTargetLocation();
-	int nDamage = (d6(5) + 5);
 	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
+	int nDice = 5;
+	int nDiceSize = 6;
 	
     	float fDelay;
 		
@@ -80,7 +81,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	//Augmentation effects to Damage
 	if (nAugment > 0) 
 	{
-		nDamage += (d6(nAugment) + nAugment);
 		nDC += nAugment/2;
 	}
 	
@@ -95,6 +95,10 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		
 		if (PRCMyResistPower(oCaster, oTarget, nCaster))
 		{
+		       	if (nAugment > 0) nDice += nAugment;
+		      	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+                   	nDamage += nDice;
+                   	
 		        if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE))
 		        {
 			        nDamage /= 2;

@@ -71,7 +71,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = (GetManifesterDC(oCaster) + 2);
 	int nCaster = GetManifesterLevel(oCaster);
 	location lTarget = GetSpellTargetLocation();
-	int nDamage = d6(1);
 	effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
 	effect eExplode = EffectVisualEffect(VFX_FNF_ELECTRIC_EXPLOSION);
 	
@@ -82,13 +81,14 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	eLink = EffectLinkEffects(eLink, eDur);	
     	
     	float fDelay;
+    	int nDice = 1;
+    	int nDiceSize = 6;
 		
 	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Damage
 	if (nAugment > 0) 
 	{
-		nDamage += d6(nAugment);
 		nDC += nAugment;
 	}
 	
@@ -99,8 +99,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 		fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
 		
-		if (PRCMyResistPower(oCaster, oTarget, (nCaster + 2)))
+		if (PRCMyResistPower(oCaster, oTarget, nCaster))
 		{
+		       	if (nAugment > 0) nDice += nAugment;
+		      	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+
 		        if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_ELECTRICITY))
 		        {
 			        nDamage /= 2;

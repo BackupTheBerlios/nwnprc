@@ -65,18 +65,17 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	object oTarget = GetSpellTargetObject();
-	int nDamage = d6(22);
+	int nDice = 22;
+	int nDiceSize = 6;
 	
 	effect eRay = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
 		
 	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Damage
-	if (nAugment > 0) nDamage += d6((2 * nAugment));
+	if (nAugment > 0) nDice += (2 * nAugment);
 	
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-	
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 	
 	// Perform the Touch Attach
 	int nTouchAttack = TouchAttackRanged(oTarget);
@@ -87,9 +86,10 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		{
 			if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
 			{
-				nDamage = d6(5);
-				eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+				nDice = 5;
 			}
+			int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+			effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
 		}

@@ -58,15 +58,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	object oTarget;
-	int nDamage = d4(1);
 	effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
 	effect eKnock = EffectKnockdown();
 	float fDist;
-			
-	//Augmentation effects to Damage
-	if (nAugment > 0) nDamage += d4(nAugment);
-	
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
+	int nDice = 1;
+	int nDiceSize = 4;
 	
     	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
     	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
@@ -82,6 +78,10 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
 
     	            if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
     	            {
+    	               	if (nAugment > 0) nDice += nAugment;
+		      	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+		      	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
+    	            
     	                // Apply effects to the currently selected target. 
     	                DelayCommand(fDist, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
     	                DelayCommand(fDist, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

@@ -63,7 +63,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
-	int nDamage = d4(3);
+	int nDice = 3;
+	int nDiceSize = 4;
 	float fDelay;
 	location lTargetLocation = GetSpellTargetLocation();
     	object oTarget;
@@ -71,23 +72,20 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Damage
-	if (nAugment > 0)	nDamage += d4(nAugment);
-	
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_SLASHING);
-	effect eVis = EffectVisualEffect(VFX_IMP_WALLSPIKE);
+	if (nAugment > 0)	nDice += nAugment;
 	
     	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
     	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 15.0, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     	//Cycle through the targets within the spell shape until an invalid object is captured.
     	while(GetIsObjectValid(oTarget))
     	{
-
 	    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 	    
+	    int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+	    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_SLASHING);
+	    effect eVis = EffectVisualEffect(VFX_IMP_WALLSPIKE);	    
 	    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 	    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-
-
 
     	    //Select the next target within the spell shape.
     	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 15.0, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);

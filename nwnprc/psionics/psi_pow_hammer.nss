@@ -64,14 +64,14 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	object oTarget = GetSpellTargetObject();
-	int nDamage = d8(1);
 	effect eVis = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_HOLY);
-		
-	if (nSurge > 0) nAugment += nSurge;
-	
+	int nDice = 1;
+	int nDiceSize = 8;
+			
 	//Augmentation effects to Damage
-	if (nAugment > 0) nDamage += d8(nAugment);
+	if (nAugment > 0) nDice += nAugment;
 	
+	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
 	
 	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));

@@ -63,15 +63,16 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
-	int nDamage = d6(11);
 	float fDelay;
 	location lTargetLocation = GetSpellTargetLocation();
     	object oTarget;
+    	int nDice = 11;
+	int nDiceSize = 6;
 	
 	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Damage
-	if (nAugment > 0)	nDamage = nDamage + d6(nAugment);
+	if (nAugment > 0)	nDice += nAugment;
 	
 	
     	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
@@ -87,14 +88,17 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	        //Make SR check, and appropriate saving throw(s).
     	        if(PRCMyResistPower(OBJECT_SELF, oTarget,nCaster, fDelay) && (oTarget != OBJECT_SELF))
     	        {    	     
+    	        
+    	            int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+    	            
     	            //Adjust damage according to Reflex Save, Evasion or Improved Evasion
     	            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_ACID);
 	
-    	            // Apply effects to the currently selected target.
-    	            effect eAcid = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
-    	            effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
     	            if(nDamage > 0)
     	            {
+	                // Apply effects to the currently selected target.
+	    	        effect eAcid = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
+	            	effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);    	            
     	                //Apply delayed effects
     	                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
     	                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eAcid, oTarget));

@@ -66,9 +66,10 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	object oTarget = GetSpellTargetObject();
-	int nDamage = d4();
 	effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
 	effect eRay = EffectBeam(VFX_BEAM_FIRE_LASH, OBJECT_SELF, BODY_NODE_HAND);
+	int nDice = 1;
+	int nDiceSize = 4;
 	
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
 	effect eDaze = EffectDazed();
@@ -82,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	//Augmentation effects to Damage
 	if (nAugment > 0) 	
 	{
-		nDamage += d4(nAugment);
+		nDice += nAugment;
 		nDC += (nAugment * 2);
 	}
 
@@ -91,6 +92,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	//Check for Power Resistance
 	if (PRCMyResistPower(oCaster, oTarget, nCaster))
 	{
+		int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+		
                 //Make a saving throw check
                 if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
                 {

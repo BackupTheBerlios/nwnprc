@@ -64,18 +64,21 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	object oFirstTarget = GetSpellTargetObject();
-	int nDamage = d6();
 	effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
 	int nTargetCount = 1;
+	int nDice = 1;
+	int nDiceSize = 6; 	
 			
 	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Damage
 	if (nAugment > 0) 
 	{
-		nDamage += d6(nAugment);
+		nDice += nAugment;
 		nTargetCount += nAugment;
 	}
+	
+	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
 	
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
 	
@@ -106,7 +109,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         			
         			if (PRCMyResistPower(oCaster, oAreaTarget, nCaster))
 				{
-					nDamage = d6(nAugment + 1);
+					nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
 					eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
 					SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oAreaTarget);
 					SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);

@@ -60,14 +60,18 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (GetCanManifest(oCaster, nAugCost)) 
     {
-    	int nHP = d12(1);
+	int nDice = 1;
+	int nDiceSize = 12;    	
     
     	if (nSurge > 0) nAugment += nSurge;
     	
     	// Augmentation effects to point transfer
-	if (nAugment > 0)	nHP = nHP + d12(nAugment);
+	if (nAugment > 0)	nDice += nAugment;
 	
 	//Apply effects
+	
+	int nHP = MetaPsionics(nDiceSize, nDice, oCaster);
+	
 	effect eHeal = EffectHeal(nHP);
 	effect eHealVis = EffectVisualEffect(VFX_IMP_HEALING_L);
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, OBJECT_SELF);

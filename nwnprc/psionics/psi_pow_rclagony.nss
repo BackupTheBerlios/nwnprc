@@ -64,19 +64,18 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
-	int nDamage = d6(2);
 	effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
 	object oTarget = GetSpellTargetObject();
-	
-	if (nSurge > 0) nAugment += nSurge;
+	int nDice = 2;
+	int nDiceSize = 6;
 	
 	//Augmentation effects to Damage
-	if (nAugment > 0)	
+	if (nAugment > 0) 
 	{
-		nDamage = nDamage + d6(nAugment);
-		nDC += (nAugment/2);
+		nDice += nAugment;
+		nDC += nAugment/2;
 	}
-	
+	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
 	
 	//Check for Power Resistance
 	if (PRCMyResistPower(oCaster, oTarget, nCaster))

@@ -66,36 +66,37 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = (GetManifesterDC(oCaster) + 2);
 	int nCaster = GetManifesterLevel(oCaster);
 	object oTarget = GetSpellTargetObject();
-	int nDamage = d6(2);
 	effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
 	effect eRay = EffectBeam(VFX_BEAM_LIGHTNING, OBJECT_SELF, BODY_NODE_HAND);
 	effect eKnock = EffectKnockdown();
+	int nDice = 2;
+	int nDiceSize = 6;
 		
 	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Damage
 	if (nAugment > 0) 
 	{
-		nDamage += (d6(nAugment) + nAugment);
 		nDC += nAugment;
 	}
-	
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ELECTRICAL);
 	
 	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 	
 	//Check for Power Resistance
 	if (PRCMyResistPower(oCaster, oTarget, (nCaster + 2)))
 	{
-	        if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_ELECTRICITY))
+		if (nAugment > 0) nDice += nAugment;
+		int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+                
+	        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_ELECTRICITY))
 	        {
 		        nDamage /= 2;
-		        eDam = EffectDamage(nDamage, DAMAGE_TYPE_ELECTRICAL);
-               	}
+		}
                	else
                	{
                		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnock, oTarget, 6.0,TRUE,-1,nCaster);
                	}
+               	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ELECTRICAL);
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);

@@ -67,20 +67,17 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	object oTarget = GetSpellTargetObject();
-	int nDamage = d10(1);
+	int nDice = 1;
+	int nDiceSize = 10;
 	
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to DC/Damage/Caster Level
-	if (nAugment > 0)
+	//Augmentation effects to Damage
+	if (nAugment > 0) 
 	{
-		nDC = nDC + (nAugment/2);
-		nDamage = nDamage + d10(nAugment);
+		nDice += nAugment;
+		nDC += nAugment/2;
 	}
 	
-	//FloatingTextStringOnCreature("Augmented DC " + IntToString(nDC), oCaster, FALSE);
-	//FloatingTextStringOnCreature("Augmented Manifester Level " + IntToString(nCaster), oCaster, FALSE);
-	//FloatingTextStringOnCreature("Augmented Damage " + IntToString(nDamage), oCaster, FALSE);
+	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
 	
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);

@@ -71,7 +71,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	location lTarget = GetSpellTargetLocation();
-	int nDamage = (d6(1) - 1);
 	effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
 	effect eExplode = EffectVisualEffect(VFX_FNF_SOUND_BURST);
 	
@@ -82,13 +81,14 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	eLink = EffectLinkEffects(eLink, eDur);	
     	
     	float fDelay;
+    	int nDice = 1;
+    	int nDiceSize = 6;
 		
 	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Damage
 	if (nAugment > 0) 
 	{
-		nDamage += (d6(nAugment) - nAugment);
 		nDC += nAugment;
 	}
 	
@@ -101,6 +101,10 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		
 		if (PRCMyResistPower(oCaster, oTarget, nCaster))
 		{
+		       	if (nAugment > 0) nDice += nAugment;
+		      	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+                   	nDamage -= nDice;
+                   	
 		        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
 		        {
 			        nDamage /= 2;

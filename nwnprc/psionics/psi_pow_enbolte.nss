@@ -69,7 +69,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = (GetManifesterDC(oCaster) + 2);
 	int nCaster = GetManifesterLevel(oCaster);
-	int nDamage;
+	int nDice = 5;
+	int nDiceSize = 6;
 
 	if (nSurge > 0) nAugment += nSurge;
 	
@@ -105,8 +106,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
                    //Make an SR check
                    if (PRCMyResistPower(oCaster, oTarget, (nCaster + 2)))
                    {
-                   	nDamage = d6(5);
-                   	if (nAugment > 0) nDamage += d6(nAugment);
+                   	if (nAugment > 0) nDice += nAugment;
+                   	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
                    	
 			if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_ELECTRICITY))
 			{

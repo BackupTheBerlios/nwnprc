@@ -65,15 +65,16 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	object oTarget = GetSpellTargetObject();
-	int nDamage = d6(1);
 	effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
 	effect eRay = EffectBeam(VFX_BEAM_LIGHTNING, OBJECT_SELF, BODY_NODE_HAND);
+	int nDice = 1;
+	int nDiceSize = 6;
 		
 	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Damage
-	if (nAugment > 0) nDamage += d6(nAugment);
-	
+	if (nAugment > 0) nDice += nAugment;
+	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ELECTRICAL);
 	
 	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));

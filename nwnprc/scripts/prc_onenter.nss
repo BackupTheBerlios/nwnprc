@@ -1,17 +1,6 @@
 #include "inc_item_props"
 #include "prc_inc_function"
 
-void RemovBonusStormlord(object oPC)
-{
-   object oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-
-   if (GetBaseItemType(oItem)!=BASE_ITEM_SHORTSPEAR) return;
-   if (GetLocalInt(oItem,"STShock")) return;
-
-   if (GetHasFeat(FEAT_SHOCK_WEAPON,oPC)) SetLocalInt(oItem,"STShock",1);
-   if (GetHasFeat(FEAT_THUNDER_WEAPON,oPC)) SetLocalInt(oItem,"STThund",1);
-}
-
 void
 ScrubPCSkin(object oPC)
 {
@@ -50,10 +39,15 @@ void main()
 
     if (GetLevelByClass(CLASS_TYPE_STORMLORD,oPC))
         RemovBonusStormlord(oPC);
-
+        
+    SetLocalInt(oPC,"ONENTER",1);
+    ExecuteScript("onenter_setlocal",oPC);
+    
+    
     // Make sure we reapply any bonuses before the player notices they are gone.
     EvalPRCFeats(oPC);
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the entering player already meets.
     CheckSpecialPRCRecs(oPC);
+    DeleteLocalInt(oPC,"ONENTER");
 }

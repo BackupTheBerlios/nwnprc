@@ -51,6 +51,15 @@ void main()
 
     int bXShot=GetHasFeat(FEAT_EXTRASHOT, oPC) ? 1 : 0;
 
+    if (GetLocalInt(oPC,"ONENTER"))
+    {
+       object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+       int iType = GetBaseItemType(oWeap);
+       if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
+       SetLocalInt(oWeap,"ArcherSpec",bBowSpec);
+       return;	
+    }
+    
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
 
     if (iEquip !=1) Equip(oPC,bBowSpec,oSkin,bXShot);

@@ -1,10 +1,8 @@
 //::///////////////////////////////////////////////
-//:: Haste Song
+//:: Wisdom Song
 //:://////////////////////////////////////////////
 /*
-    Effectively a bard song version of the Mass Haste spell.
-    Duration is 10 rounds normally, 15 rounds with lingering
-    song, and 105 (!) rounds with lasting inspiration.
+   Bard song that gives everybody +4 Wisdom.
 */
 
 #include "x2_i0_spells"
@@ -25,10 +23,10 @@ void main()
     }
     //Declare major variables
     object oTarget;
-    effect eHaste = EffectHaste();
-    effect eVis = EffectVisualEffect(VFX_IMP_HASTE);
+    effect eBoost = EffectAbilityIncrease(ABILITY_WISDOM,4);
+    effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eLink = EffectLinkEffects(eHaste, eDur);
+    effect eLink = EffectLinkEffects(eBoost, eDur);
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
 
     float fDelay;
@@ -57,7 +55,7 @@ void main()
 
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
 
-    int iPerformReq = 50;
+    int iPerformReq = 30;
     if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
     {
         FloatingTextStringOnCreature("*Minstrel Song Failure*", OBJECT_SELF);

@@ -53,11 +53,19 @@ void main()
     string sSpellLocal = "MINSTREL_SONG_SLEEP_" + ObjectToString(OBJECT_SELF); 
     
     //Do the visual effects
-    effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);
+    effect eVis = EffectLinkEffects(EffectVisualEffect(VFX_DUR_BARD_SONG), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, OBJECT_SELF, RoundsToSeconds(nDuration));
     
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
+
+    int iPerformReq = 20;
+    if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
+    {
+        FloatingTextStringOnCreature("*Minstrel Song Failure*", OBJECT_SELF);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
+        return;
+    }
 
     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     float fDelay;
@@ -77,7 +85,10 @@ void main()
                     {
                         if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                         {
-                            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSleep, oTarget, RoundsToSeconds(nDuration));
+                            if (!GetHasSpellEffect(GetSpellId(),oTarget))
+                            {
+                                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSleep, oTarget, RoundsToSeconds(nDuration));
+                            }
                         }
                     }
                 }

@@ -1,10 +1,9 @@
 //::///////////////////////////////////////////////
-//:: Haste Song
+//:: Wounding Whispers
 //:://////////////////////////////////////////////
 /*
-    Effectively a bard song version of the Mass Haste spell.
-    Duration is 10 rounds normally, 15 rounds with lingering
-    song, and 105 (!) rounds with lasting inspiration.
+   Bard song that gives everybody Wouding Whispers (with caster
+   level being MotE level/3.)
 */
 
 #include "x2_i0_spells"
@@ -25,11 +24,14 @@ void main()
     }
     //Declare major variables
     object oTarget;
-    effect eHaste = EffectHaste();
-    effect eVis = EffectVisualEffect(VFX_IMP_HASTE);
+    int nBonus = GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, OBJECT_SELF)/3;
+    effect eBoost = EffectDamageShield(d6(1) + nBonus, 0, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_SONIC));
+    effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eLink = EffectLinkEffects(eHaste, eDur);
+    effect eLink = EffectLinkEffects(eBoost, eDur);
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
+    
+    int iDontStack;
 
     float fDelay;
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
@@ -56,6 +58,7 @@ void main()
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    //Declare the spell shape, size and the location.  Capture the first target object in the shape.
 
     int iPerformReq = 50;
     if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
@@ -64,15 +67,17 @@ void main()
         DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
         return;
     }
-
-    //Declare the spell shape, size and the location.  Capture the first target object in the shape.
+    
     oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lSpell);
     //Cycle through the targets within the spell shape until an invalid object is captured or the number of
     //targets affected is equal to the caster level.
     while(GetIsObjectValid(oTarget) && nCount != nDuration)
     {
+        iDontStack = GetHasSpellEffect(SPELL_WOUNDING_WHISPERS,oTarget) +
+                     GetHasSpellEffect(GetSpellId(),oTarget);
+    
         //Make faction check on the target
-        if((GetIsFriend(oTarget) || oTarget == OBJECT_SELF) && !GetHasSpellEffect(GetSpellId(),oTarget))
+        if((GetIsFriend(oTarget) || oTarget == OBJECT_SELF) && !iDontStack)
         {
             fDelay = GetRandomDelay(0.0, 1.0);
             //Fire cast spell at event for the specified target

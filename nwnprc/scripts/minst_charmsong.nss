@@ -44,13 +44,13 @@ void main()
         nDuration += 5;
     }
 
-    effect eSilence = ExtraordinaryEffect(EffectSilence());
-    effect eSilenceVis = EffectVisualEffect(VFX_IMP_SILENCE);
-    eSilence = EffectLinkEffects(eSilence, eSilenceVis);
-    eSilenceVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    eSilence = EffectLinkEffects(eSilence, eSilenceVis);
+    effect eCharm = ExtraordinaryEffect(EffectCharmed());
+    effect eCharmVis = EffectVisualEffect(VFX_IMP_CHARM);
+    eCharm = EffectLinkEffects(eCharm, eCharmVis);
+    eCharmVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    eCharm = EffectLinkEffects(eCharm, eCharmVis);
     
-    string sSpellLocal = "MINSTREL_SONG_SILENCE_" + ObjectToString(OBJECT_SELF);
+    string sSpellLocal = "MINSTREL_SONG_CHARM_" + ObjectToString(OBJECT_SELF);
     
     //Do the visual effects
     effect eVis = EffectLinkEffects(EffectVisualEffect(VFX_DUR_BARD_SONG), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
@@ -59,33 +59,35 @@ void main()
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
-    int iPerformReq = 20;
+    int iPerformReq = 50;
     if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
     {
         FloatingTextStringOnCreature("*Minstrel Song Failure*", OBJECT_SELF);
         DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
         return;
     }
-
+    
     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     float fDelay;
     
     while(GetIsObjectValid(oTarget))
     {
-        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
+        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF)
+            && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT
+            && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)  //constructs & undead are immune
         {
             if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget)) // deaf targets can't hear the song.
             {
                 iAlreadyAffected = GetLocalInt(oTarget, sSpellLocal);
                 if (!iAlreadyAffected) // don't want to check the targets more than once.
                 {
-                    if (GetIsImmune(oTarget, IMMUNITY_TYPE_SILENCE) == FALSE)
+                    if (GetIsImmune(oTarget, IMMUNITY_TYPE_CHARM) == FALSE)
                     {
                         if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                         {
                             if (!GetHasSpellEffect(GetSpellId(),oTarget))
                             {
-                                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSilence, oTarget, RoundsToSeconds(nDuration));
+                                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCharm, oTarget, RoundsToSeconds(nDuration));
                             }
                         }
                     }

@@ -5,6 +5,7 @@ const int CLASS_TYPE_MAGEKILLER                 = 65;
 const int CLASS_TYPE_HARPERMAGE                 = 66;
 const int CLASS_TYPE_SPELLSWORD                 = 67;
 const int CLASS_TYPE_ACOLYTE                    = 68;
+const int CLASS_TYPE_CHAMPION_BANE              = 69;
 const int CLASS_TYPE_ELDRITCH_KNIGHT            = 70;
 const int CLASS_TYPE_ES_FIRE                    = 71;
 const int CLASS_TYPE_ES_COLD                    = 72;

@@ -1,7 +1,7 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "nw_i0_spells"
-
+#include "soul_inc"
 
 
 void ClawDragon(object oPC,int iEquip)

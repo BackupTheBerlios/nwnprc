@@ -133,7 +133,7 @@ int GetAbilityScoreOfClass(object oCaster, int nClass)
         case CLASS_TYPE_WILDER:
             nScore = GetAbilityScore(oCaster, ABILITY_CHARISMA);
             break;
-        case CLASS_TYPE_PSYWARRIOR:
+        case CLASS_TYPE_PSYWAR:
             nScore = GetAbilityScore(oCaster, ABILITY_WISDOM);
             break;
     }

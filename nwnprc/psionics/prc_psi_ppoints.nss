@@ -28,7 +28,7 @@ int GetModifierPP (object oCaster)
    int nPP;
    int nBonus;
    int nPsion = GetLevelByClass(CLASS_TYPE_PSION, oCaster);
-   int nPsychic = GetLevelByClass(CLASS_TYPE_PSYWARRIOR, oCaster);
+   int nPsychic = GetLevelByClass(CLASS_TYPE_PSYWAR, oCaster);
    int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oCaster);
    
    if (nPsion > 0)
@@ -69,7 +69,7 @@ int GetTotalPP (object oCaster)
    
     nPP += GetPPForClass(oCaster, CLASS_TYPE_PSION);
     nPP += GetPPForClass(oCaster, CLASS_TYPE_WILDER);
-    nPP += GetPPForClass(oCaster, CLASS_TYPE_PSYWARRIOR);
+    nPP += GetPPForClass(oCaster, CLASS_TYPE_PSYWAR);
       		  
 //    if (nPP > 343) nPP = 343;
       		  

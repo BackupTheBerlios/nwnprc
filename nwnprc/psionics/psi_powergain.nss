@@ -27,6 +27,6 @@ void main()
         return;
     if(CheckMissingPowers(oPC, CLASS_TYPE_WILDER))
         return;
-    if(CheckMissingPowers(oPC, CLASS_TYPE_PSYWARRIOR))
+    if(CheckMissingPowers(oPC, CLASS_TYPE_PSYWAR))
         return;
 }

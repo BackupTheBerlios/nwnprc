@@ -44,12 +44,6 @@ int GetIsMagicalItem(object oItem);
 // * Passes back the stat bonus of the characters magical stat, if any.
 int GetIsMagicStatBonus(object oCaster);
 
-// * Save DC against Epic Spells is the relevant ability score of the caster
-// * + 20. The hightest ability score of the casting relevants is 99.99% identical
-// * with the one that is used for casting, so we just take it.
-// * if used by a placeable, it is equal to the placeables WILL save field.
-int GetEpicSpellSaveDC(object oCaster);
-
 // * Hub function for the epic barbarian feats that upgrade rage. Call from
 // * the end of the barbarian rage spellscript
 void CheckAndApplyEpicRageFeats(int nRounds);
@@ -565,38 +559,6 @@ void EngulfAndDamage(object oTarget, object oSource)
   }
 
 
-}
-// --------------------------------------------------------------------------------
-// Georg Zoeller, 2003-09-19
-// Save DC against Epic Spells is the relevant ability score of the caster
-// + 20. The hightest ability score of the casting relevants is 99.99% identical
-// with the one that is used for casting, so we just take it.
-// if used by a placeable, it is equal to the placeables WILL save field.
-// --------------------------------------------------------------------------------
-int GetEpicSpellSaveDC(object oCaster)
-{
-
-    // * Placeables use their WILL Save field as caster level
-    if (GetObjectType(oCaster) == OBJECT_TYPE_PLACEABLE)
-    {
-        return GetWillSavingThrow(oCaster);
-    }
-
-    int nWis = GetAbilityModifier(ABILITY_WISDOM,oCaster);
-    int nInt = GetAbilityModifier(ABILITY_INTELLIGENCE,oCaster);
-    int nCha = GetAbilityModifier(ABILITY_CHARISMA,oCaster);
-
-    int nHigh = nWis;
-    if (nHigh < nInt)
-    {
-        nHigh = nInt;
-    }
-    if (nHigh < nCha)
-    {
-        nHigh = nCha;
-    }
-    int nRet = 20 + nHigh;
-    return nRet;
 }
 
 // --------------------------------------------------------------------------------

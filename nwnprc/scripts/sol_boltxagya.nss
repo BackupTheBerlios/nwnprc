@@ -13,7 +13,7 @@ void main()
       //Make a saving throw check
     if (TouchAttackRanged(oTarget))
     {
-        eBolt = EffectDamage(d8(1)+iDice,DAMAGE_TYPE_POSITIVE);
+        eBolt = EffectDamage(d8(1),DAMAGE_TYPE_POSITIVE);
         eBolt = SupernaturalEffect(eBolt);
         //Apply the VFX impact and effects
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eBolt, oTarget);

@@ -107,7 +107,7 @@ void main()
                     iWeapDamage = 0;
                
                     // Perform Death attack on first attack if they have the feat
-                    if( i == 0 && GetHasFeat(FEAT_DEATH_ATTACK) && isEnemyDeniedDex  && iAttack != 0)
+                    if( i == 0 && GetHasFeat(FEAT_FH_DEATH_ATTACK) && isEnemyDeniedDex  && iAttack != 0)
                     {
                          int iSaveDC = 10 + GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oPC) + GetAbilityModifier(ABILITY_INTELLIGENCE);
                          int iFortSave = FortitudeSave(oTarget, iSaveDC, SAVING_THROW_TYPE_DEATH, oPC);
@@ -130,7 +130,7 @@ void main()
                     }
           
                     // If they have death attack, use Rancor on second attack
-                    if(i == 1 && GetHasFeat(FEAT_DEATH_ATTACK) && iAttack !=0)
+                    if(i == 1 && GetHasFeat(FEAT_FH_DEATH_ATTACK) && iAttack !=0)
                     {
                          iRancorDamage = GetRancorDamage(GetRancorDice(oPC) );   
           
@@ -193,7 +193,7 @@ void main()
                     iWeapDamage = 0;
                
                     // Perform Death attack on first attack if they have the feat
-                    if( i == 0 && GetHasFeat(FEAT_DEATH_ATTACK) && isEnemyDeniedDex  && iAttack != 0)
+                    if( i == 0 && GetHasFeat(FEAT_FH_DEATH_ATTACK) && isEnemyDeniedDex  && iAttack != 0)
                     {
                          int iSaveDC = 10 + GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oPC) + GetAbilityModifier(ABILITY_INTELLIGENCE);
                          int iFortSave = FortitudeSave(oTarget, iSaveDC, SAVING_THROW_TYPE_DEATH, oPC);
@@ -216,7 +216,7 @@ void main()
                     }
           
                     // If they have death attack, use Rancor on second attack
-                    if(i == 1 && GetHasFeat(FEAT_DEATH_ATTACK) && iAttack !=0)
+                    if(i == 1 && GetHasFeat(FEAT_FH_DEATH_ATTACK) && iAttack !=0)
                     {
                          iRancorDamage = GetRancorDamage(GetRancorDice(oPC) );   
           

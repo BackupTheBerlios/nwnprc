@@ -347,3 +347,11 @@
 343 FEAT_SERVHEAVEN                           3355      0    -1             1      
 344 FEAT_NEW_POWER_ATTACK                     3143      3    1              1      
 345 FEAT_NEW_IMpROVED_POWER_ATTACK            3144      3    1              1      
+346 FocusedSpellPenetrCon                     3128      1    -1             0      
+347 FocusedSpellPenetrDiv                     3129      1    -1             0      
+348 FocusedSpellPenetrEnc                     3130      1    -1             0      
+349 FocusedSpellPenetrEvo                     3131      1    -1             0      
+350 FocusedSpellPenetrIll                     3132      1    -1             0      
+351 FocusedSpellPenetrNec                     3133      1    -1             0      
+352 FocusedSpellPenetrTra                     3134      1    -1             0      
+353 FocusedSpellPenetrAbj                     3135      1    -1             0      

@@ -307,5 +307,13 @@
 303 EPIC_SPELL_UNIMPINGED                     5166      0    99             2      
 304 EPIC_SPELL_UNSEEN_WANDERER                5168      0    99             2      
 305 EPIC_SPELL_WHIP_OF_SHAR                   5170      0    99             2      
-306  FEAT_NIMBUSOFLIGHT                              3165      0     -1   1
-307 FEAT_SERVHEAVEN                                  3355      0     -1   1
+306 FEAT_NIMBUSOFLIGHT                        3165      0    -1             1      
+307 FEAT_SERVHEAVEN                           3355      0    -1             1      
+308 FocusedSpellPenetrCon                     3128      1    -1             0      
+309 FocusedSpellPenetrDiv                     3129      1    -1             0      
+310 FocusedSpellPenetrEnc                     3130      1    -1             0      
+311 FocusedSpellPenetrEvo                     3131      1    -1             0      
+312 FocusedSpellPenetrIll                     3132      1    -1             0      
+313 FocusedSpellPenetrNec                     3133      1    -1             0      
+314 FocusedSpellPenetrTra                     3134      1    -1             0      
+315 FocusedSpellPenetrAbj                     3135      1    -1             0      

@@ -61,11 +61,16 @@ int TotalPCPowers(object oPC = OBJECT_SELF)
 		GetHasFeat(FEAT_PSIONWILD_BOLT, oPC) + GetHasFeat(FEAT_PSIONWILD_DEMORALIZE, oPC) +
 		GetHasFeat(FEAT_PSIONWILD_DISABLE, oPC) + GetHasFeat(FEAT_ALL_DISTRACT, oPC) +		
 		GetHasFeat(FEAT_ALL_EMPTYMIND, oPC) + GetHasFeat(FEAT_PSIONWILD_ENERGYRAY, oPC) +		
-		
 		GetHasFeat(FEAT_PSIONWILD_ENTANGLE, oPC) + GetHasFeat(FEAT_PSIONWILD_GREASE, oPC) +
 		GetHasFeat(FEAT_ALL_HAMMER, oPC) + GetHasFeat(FEAT_ALL_MYLIGHT, oPC) +
 		GetHasFeat(FEAT_ALL_DEFPRECOG, oPC) + GetHasFeat(FEAT_ALL_OFFPRECOG, oPC) +		
-		GetHasFeat(FEAT_ALL_OFFPRESC, oPC);
+		GetHasFeat(FEAT_ALL_OFFPRESC, oPC) + GetHasFeat(FEAT_PSIONWILD_CONCBLAST, oPC) + 
+		GetHasFeat(FEAT_PSIONWILD_EGOWHIP, oPC) + GetHasFeat(FEAT_PSIONWILD_ENPUSH, oPC) + 
+		GetHasFeat(FEAT_PSIONWILD_ENSTUN, oPC) + GetHasFeat(FEAT_PSIONWILD_IDINSIN, oPC) + 
+		GetHasFeat(FEAT_PSIONWILD_IDENTIFY, oPC) + GetHasFeat(FEAT_PSIONWILD_INFLICTPAIN, oPC) + 
+		GetHasFeat(FEAT_PSIONWILD_KNOCK, oPC) +	GetHasFeat(FEAT_PSIONWILD_MINDDISRUPT, oPC) + 
+		GetHasFeat(FEAT_ALL_BIOFEEDBACK, oPC) +	GetHasFeat(FEAT_ALL_ELFSIGHT, oPC) + 
+		GetHasFeat(FEAT_ALL_ENERGYADAPTSPEC, oPC);
 		
 	return iPower;
 
@@ -185,14 +190,14 @@ void PCPowerCheck(object oPC = OBJECT_SELF)
 		FloatingTextStringOnCreature("Total Powers Allowed: " + IntToString(nAllowed), oPC, FALSE);
 		FloatingTextStringOnCreature("Total Powers Known: " + IntToString(nKnown), oPC, FALSE);
 		
-	        if (nKnown > nAllowed)
+	        if (nKnown != nAllowed)
 	        {
 	               int nHD = GetHitDice(oPC);
 	               int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
 	               int nOldXP = GetXP(oPC);
 	               int nNewXP = nMinXPForLevel - 1000;
 	               SetXP(oPC,nNewXP);
-	               FloatingTextStringOnCreature("You have too many powers. Please reselect your feats.", oPC, FALSE);
+	               FloatingTextStringOnCreature("You have an incorrect number of powers. Please reselect your feats.", oPC, FALSE);
 	               DelayCommand(1.0, SetXP(oPC,nOldXP));
           	}
 	}

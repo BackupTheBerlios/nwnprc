@@ -1409,7 +1409,7 @@ const int FEAT_PSYWAR_EXHALATION_BLACKDRAG       = 3601;
 const int FEAT_PSYWAR_STEADFAST_PERCEPTION       = 3602;
 const int FEAT_PSYWAR_STOMP			 = 3603;
 
-//Psion/Wilder Powers
+//Psion/Wilder Level One
 const int FEAT_PSIONWILD_MIND_THRUST	         = 3567;
 const int FEAT_PSIONWILD_BESTOW_POWER	         = 3575;
 const int FEAT_PSIONWILD_CALL_TO_MIND	         = 3577;
@@ -1424,7 +1424,18 @@ const int FEAT_PSIONWILD_ENERGYRAY		 = 3609;
 const int FEAT_PSIONWILD_ENTANGLE		 = 3610;
 const int FEAT_PSIONWILD_GREASE			 = 3611;
 
-//All Class Powers
+//Psion/Wilder Level Two
+const int FEAT_PSIONWILD_CONCBLAST		 = 3618;
+const int FEAT_PSIONWILD_EGOWHIP		 = 3619;
+const int FEAT_PSIONWILD_ENPUSH			 = 3622;
+const int FEAT_PSIONWILD_ENSTUN			 = 3623;
+const int FEAT_PSIONWILD_IDINSIN		 = 3624;
+const int FEAT_PSIONWILD_IDENTIFY		 = 3625;
+const int FEAT_PSIONWILD_INFLICTPAIN		 = 3626;
+const int FEAT_PSIONWILD_KNOCK			 = 3627;
+const int FEAT_PSIONWILD_MINDDISRUPT		 = 3628;
+
+//All Class Level One
 const int FEAT_ALL_BLACK_DRAGON_BREATH	         = 3576;
 const int FEAT_ALL_BODY_ADJUSTMENT		 = 3580;
 const int FEAT_ALL_CONCEAL_AMORPHA		 = 3584;
@@ -1443,6 +1454,11 @@ const int FEAT_ALL_MYLIGHT			 = 3613;
 const int FEAT_ALL_DEFPRECOG			 = 3614;
 const int FEAT_ALL_OFFPRECOG			 = 3615;
 const int FEAT_ALL_OFFPRESC			 = 3616;
+
+//All Class Level Two
+const int FEAT_ALL_BIOFEEDBACK			 = 3617;
+const int FEAT_ALL_ELFSIGHT			 = 3620;
+const int FEAT_ALL_ENERGYADAPTSPEC		 = 3621;
 
 //Psionic Feats
 const int FEAT_MENTAL_RESISTANCE           = 4812;

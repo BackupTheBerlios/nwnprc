@@ -400,7 +400,12 @@ void main()
     }
 
     int nEmpower = GetHasFeat(FEAT_EMPOWER_TURNING);
-    nTurnHD = nEmpower ? nTurnHD+nTurnHD/2 : nTurnHD;
+    int nMaximize = GetHasFeat(FEAT_MAXIMIZE_TURNING) && nAlign == ALIGNMENT_GOOD ;
+    
+    if (nMaximize)
+      nTurnHD *= 2;
+    else
+      nTurnHD = nEmpower ? nTurnHD+nTurnHD/2 : nTurnHD;
 
     if(nAlign == ALIGNMENT_EVIL) {
         RebukeUndead(nTurnLevel, nTurnHD, nVermin, nElemental, nConstructs, nOutsider, nClassLevel, nPlanar);

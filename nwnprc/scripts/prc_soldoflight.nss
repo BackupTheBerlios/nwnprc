@@ -53,7 +53,7 @@ void main()
 
     int iPosFor = GetHasFeat(FEAT_POSITIVE_FORTITUDE,oPC);
 
-    int iFH = GetHasFeat(FEAT_FAST_HEALING1,oPC)+GetHasFeat(FEAT_FAST_HEALING2,oPC);
+    int iFH = GetHasFeat(FEAT_FAST_HEALING1,oPC)+GetHasFeat(FEAT_FAST_HEALING2,oPC)+GetHasFeat(FEAT_FAST_HEALING3,oPC);
 
     PositiFor(oSkin,iGood);
 

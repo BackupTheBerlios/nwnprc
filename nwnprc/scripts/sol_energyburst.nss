@@ -4,15 +4,17 @@
 void main()
 {
    if (!GetHasFeat(FEAT_TURN_UNDEAD,OBJECT_SELF))  return;
-
-   DecrementRemainingFeatUses(OBJECT_SELF,FEAT_TURN_UNDEAD);
-
-   if (!GetHasFeat(FEAT_TURN_UNDEAD,OBJECT_SELF))
+   
+   if (!GetHasFeat(FEAT_SUP_POSITIVE_ENERGY_BURST,OBJECT_SELF))
    {
-     IncrementRemainingFeatUses(OBJECT_SELF,FEAT_TURN_UNDEAD);
-     return;
-   }
+     DecrementRemainingFeatUses(OBJECT_SELF,FEAT_TURN_UNDEAD);
 
+    if (!GetHasFeat(FEAT_TURN_UNDEAD,OBJECT_SELF))
+    {
+      IncrementRemainingFeatUses(OBJECT_SELF,FEAT_TURN_UNDEAD);
+      return;
+    }
+   }
    DecrementRemainingFeatUses(OBJECT_SELF,FEAT_TURN_UNDEAD);
 
    location lTarget = GetSpellTargetLocation();

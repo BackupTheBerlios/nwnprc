@@ -59,6 +59,8 @@ void main()
     effect eHeal = EffectHeal(nHeal);
     effect eVis = EffectVisualEffect(VFX_IMP_HEALING_M);
     effect eVis2 = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
+    effect eEVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
+    effect eEVis2 = EffectVisualEffect(VFX_IMP_DESTRUCTION);
     effect eDam;
     int nTouch;
 
@@ -70,7 +72,7 @@ void main()
 	 {
 	  SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS, FALSE));
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eEVis2, oTarget);
        }
        else
 	 {
@@ -94,7 +96,7 @@ void main()
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS));
                 eDam = EffectDamage(nHeal, DAMAGE_TYPE_DIVINE);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, eEVis, oTarget);
             }
         }
        }

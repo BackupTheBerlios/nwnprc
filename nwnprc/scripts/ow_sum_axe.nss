@@ -13,7 +13,7 @@
 #include "prc_inc_util"
 
 // sets how many of a specific orc can be summoned
-int iNumSummon = 0;
+int iNumSummon = 2;
 
 int GetCanSummonOrc(object oPC, string sCreatureResRef)
 {

@@ -8,7 +8,7 @@
 //
 //
 
-#include "prc_aser_inc"
+//#include "prc_aser_inc"
 #include "x2_i0_spells"
 void main()
 {

@@ -70,6 +70,9 @@ public class Main{
 		}
 	}
 	
+	/**
+	 * A class for handling the settings file.
+	 */
 	private static class Settings{
 		private Matcher mainMatch = Pattern.compile("\\S+:").matcher(""),
 		                paraMatch = Pattern.compile("\"[^\"]+\"").matcher(""),
@@ -88,8 +91,10 @@ public class Main{
 				Modes mode = null;
 				while(reader.hasNextLine()){
 					check = reader.nextLine();
+					
 					// Skip comments and blank lines
 					if(check.startsWith("#") || check.trim().equals("")) continue;
+					
 					// Check if a new rule is starting
 					mainMatch.reset(check);
 					if(mainMatch.find()){
@@ -152,18 +157,30 @@ public class Main{
 		}
 	}
 	
-
-	public static final boolean verbose = true;
-	public static final Spinner spinner = new Spinner();
+	/**
+	 * A boolean determining whether to print progress information
+	 * and use the decorative spinner.
+	 */
+	public static boolean verbose = true;
+	public static Spinner spinner = new Spinner();
 	
-	public static final Settings settings = new Settings();
+	public static Settings settings = new Settings();
 	
-	private static final String fileSeparator = System.getProperty("file.separator");
+	private static String fileSeparator = System.getProperty("file.separator");
+	
 	private static String curLanguage = null;
 	private static String mainPath = null;
 	
-	private static TwoDAStore twoDA = new TwoDAStore();
+	private static TwoDAStore twoDA;
 	private static TLKStore tlk;
+	
+	/* The template files */
+	private static final String classTemplate    = readTemplate("templates" + fileSeparator + "class.html"),
+	                            domainTemplate   = readTemplate("templates" + fileSeparator + "domain.html"),
+	                            featTemplate     = readTemplate("templates" + fileSeparator + "feat.html"),
+	                            menuTemplate     = readTemplate("templates" + fileSeparator + "menu.html"),
+	                            menuItemTemplate = readTemplate("templates" + fileSeparator + "menuitem.html"),
+	                            spellTemplate    = readTemplate("templates" + fileSeparator + "spell.html");
 	
 	
 	public static void main(String[] args){
@@ -173,34 +190,82 @@ public class Main{
 				readMe();
 			
 			if(opt.startsWith("-")){
-				if(opt.contains("q")
+				if(opt.contains("q"))
 					verbose = false;
-				if(opt.contains("?")
+				if(opt.contains("?"))
 					readMe();
 			}
 		}
-
+		
+		// Initialize the 2da container data structure
+		twoDA = new TwoDAStore();
 		
 		
+		// Print the manual files for each language specified
 		for(int i = 0; i < settings.languages.size(); i++){
+			// Set language, path and load TLKs
 			curLanguage = settings.languages.get(i)[0];
 			mainPath = "manual" + fileSeparator + curLanguage + fileSeparator;
 			tlk = new TLKStore(settings.languages.get(i)[1], settings.languages.get(i)[2]);
 			
 			buildDirectories();
 			
+			
 			createPages();
-			createMenus();
+			//createMenus();
 		}
 	}
 	
+	/**
+	 * Prints the use instructions for this program and kills execution.
+	 */
+	private static void readMe(){
+		System.out.println("Usage:\n"+
+		                   "  java prc/autodoc/Main [--help][-q?]\n"+
+		                   "\n"+
+		                   "-q     quiet mode. Does not print any progress info, only failure messages\n"+
+		                   "\n"+
+		                   "--help prints this info you are reading\n"+
+		                   "-?     see --help\n"
+		                  );
+		System.exit(0);
+	}
 	
+	/**
+	 * Reads the template file given as parameter and returns a string with it's contents
+	 * Kills execution if any operations fail.
+	 *
+	 * @param filePath string representing the path of the template file
+	 *
+	 * @return the contents of the template file as a string
+	 */
+	private static String readTemplate(String filePath){
+		try{
+			Scanner reader = new Scanner(new File(filePath));
+			StringBuffer temp = new StringBuffer();
+			
+			while(reader.hasNextLine()) temp.append(reader.nextLine());
+			
+			return temp.toString();
+		}catch(Exception e){
+			System.err.println("Failed to read template file. Exception:\n" + e + "\nAborting");
+			System.exit(1);
+		}
+		
+		throw new UnknownError("This message should not be seen");
+	}
+	
+	/**
+	 * Creates the directory structure for the current language
+	 * being processed.
+	 * Kills execution if any creation operations fail.
+	 */
 	private static void buildDirectories(){
 		File builder;
 		String contentPath = mainPath + "content";
 		
 		builder = new File(contentPath);
-		if(!builder.mkdirs()) buildDirAbort();
+		if(!builder.mkdirs()) buildDirAbort(builder);
 		contentPath += fileSeparator;
 		
 		builder = new File(contentPath + "base_classes");
@@ -229,7 +294,7 @@ public class Main{
 		if(!builder.mkdirs()) buildDirAbort(builder);
 		
 		builder = new File(mainPath + "menus");
-		if(!builder.mkdirs()) buildDirAbort();
+		if(!builder.mkdirs()) buildDirAbort(builder);
 	}
 	
 	private static void buildDirAbort(File dir){
@@ -240,6 +305,7 @@ public class Main{
 	
 	private static void createPages(){
 		// Do spells
+		doSpells();
 		// Do epicspells
 		// Do psionicpowers
 		
@@ -249,7 +315,7 @@ public class Main{
 		
 		// Do domains
 		// Do skills
-		// Do 
+		// Do classes
 	}
 	
 }

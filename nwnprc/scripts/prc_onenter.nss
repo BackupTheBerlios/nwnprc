@@ -37,9 +37,7 @@ void main()
 	object oPC = GetEnteringObject();
 	ScrubPCSkin(oPC);
 
-    if (GetLevelByClass(CLASS_TYPE_STORMLORD,oPC))
-        RemovBonusStormlord(oPC);
-        
+         
     SetLocalInt(oPC,"ONENTER",1);
     ExecuteScript("onenter_setlocal",oPC);
     

@@ -48,7 +48,7 @@ void main()
     effect eSurge = EffectAbilityIncrease(ABILITY_STRENGTH,nSurge);
     effect eLink = EffectLinkEffects(eStr, eDur);
 
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nContendSurge));
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSurge, oTarget, RoundsToSeconds(nContendSurge));
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 }

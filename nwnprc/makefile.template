@@ -134,7 +134,7 @@ NWN_TLK			= $(NWN_DIR)\tlk
 NWN_OVERRIDE	= $(NWN_DIR)\override
 
 # Arguments for various rules
-NSS_FLAGS		= -ceoq -I "$(MAKEDIR)\include"
+NSS_FLAGS		= -cgoq -I "$(MAKEDIR)\include"
 
 # suffixes for inference rules.
 .SUFFIXES: .nss .ncs .erf .hak .zip .rar

@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
     object oCopy = CopyObject(OBJECT_SELF, GetSpellTargetLocation(), OBJECT_INVALID, "Clone"+GetName(OBJECT_SELF));
 
-    DelayCommand(1.0, CleanCopy(oCopy));
+    DelayCommand(0.1f, CleanCopy(oCopy));
 
     effect eDomi = SupernaturalEffect(EffectCutsceneDominated());
     DelayCommand(0.1f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDomi, oCopy));

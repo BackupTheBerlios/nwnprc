@@ -1,5 +1,6 @@
 #include "prc_inc_clsfunc"
 
+
 void CleanCopy(object oImage)
 {     
      SetLootable(oImage, FALSE);
@@ -18,6 +19,22 @@ void CleanCopy(object oImage)
         SetItemCursedFlag(oItem, TRUE);
      }
      TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
+}
+
+void CleanAllCopies()
+{
+    string sImage1 = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
+    string sImage2 = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"flurry";
+
+    object oCreature = GetFirstObjectInArea(GetArea(OBJECT_SELF));
+    while (GetIsObjectValid(oCreature))
+        {
+         if(GetTag(oCreature) == sImage1 || GetTag(oCreature) == sImage2)
+         {
+            CleanCopy(oCreature);
+         }
+         oCreature = GetNextObjectInArea(GetArea(OBJECT_SELF));;
+        }
 }
 
 void RemoveExtraImages()
@@ -57,7 +74,6 @@ effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon);
     for (iPlus = 0; iPlus < iImages; iPlus++)
     {
      object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
-     DelayCommand(0.5, CleanCopy(oImage));
 
      object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oImage);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
@@ -69,6 +85,8 @@ effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon);
      DestroyObject(oSkin, 0.2);
      DestroyObject(oImage, (iLevel * 60.0)); // they dissapear after a minute per level
     }
+    
+    CleanAllCopies();
 }
 
 void main()

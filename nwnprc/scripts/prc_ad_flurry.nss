@@ -21,6 +21,22 @@ void CleanCopy(object oImage)
      TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
 }
 
+void CleanAllCopies()
+{
+    string sImage1 = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
+    string sImage2 = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"flurry";
+
+    object oCreature = GetFirstObjectInArea(GetArea(OBJECT_SELF));
+    while (GetIsObjectValid(oCreature))
+        {
+         if(GetTag(oCreature) == sImage1 || GetTag(oCreature) == sImage2)
+         {
+            CleanCopy(oCreature);
+         }
+         oCreature = GetNextObjectInArea(GetArea(OBJECT_SELF));;
+        }
+}
+
 void RemoveExtraImages()
 {
     string sImage1 = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
@@ -64,7 +80,6 @@ effect eNoSpell = EffectSpellFailure(100);
     {
 
      object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
-     DelayCommand(0.5, CleanCopy(oImage));
 
      AssignCommand(oImage, ActionAttack(oTarget, FALSE));
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
@@ -74,6 +89,9 @@ effect eNoSpell = EffectSpellFailure(100);
 
      DestroyObject(oImage, iLevel * 60.0); // they dissapear after one minute per level.
     }
+
+    CleanAllCopies();
+
     object oCreature = GetFirstObjectInArea(GetArea(OBJECT_SELF));
     while (GetIsObjectValid(oCreature))
         {

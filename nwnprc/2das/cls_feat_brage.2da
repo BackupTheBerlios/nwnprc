@@ -174,3 +174,6 @@
 170 FEAT_EPIC_GREAT_STRENGTH_10                    823       1    -1             0      
 171 WeapProfSim                                    46        0    -1             0      
 172 WeapProfMar                                    45        0    -1             0      
+173 FEAT_NEW_POWER_ATTACK                          3143      3    1              1      
+174 FEAT_NEW_IMPROVED_POWER_ATTACK                 3144      3    1              1      
+

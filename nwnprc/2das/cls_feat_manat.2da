@@ -205,3 +205,6 @@
 201 TwoWeap                                        41        0    -1             0      
 202 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
 203 DefArrow                                       8         0    -1             0      
+204 FEAT_NEW_POWER_ATTACK                          3143      3    1              1      
+205 FEAT_NEW_IMPROVED_POWER_ATTACK                 3144      3    1              1      
+

@@ -23,3 +23,6 @@
 19 DefArrow                 8         0    -1             0      
 20 TwoWeap                  41        0    -1             0      
 21 Ambidex                  1         0    -1             0      
+22 FEAT_NEW_POWER_ATTACK                          3143      3    1              1      
+23 FEAT_NEW_IMPROVED_POWER_ATTACK                 3144      3    1              1      
+

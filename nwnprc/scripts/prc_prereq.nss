@@ -222,7 +222,7 @@ int ArcSpell(object oPC, int iArcSpell)
         
         if (iSorc > iWiz)
         {
-             if (iSorc = 1)
+             if (iSorc == 1)
                   iArcSpell = 1;
              else
                   iArcSpell = iSorc - 1;

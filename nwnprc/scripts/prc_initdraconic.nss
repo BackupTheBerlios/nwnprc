@@ -100,6 +100,75 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
 
       iKi+= iEpicKi;
       Enh+= iKi;
+      
+    object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
+
+    if (iEquip == 2 &&  GetIsObjectValid(oItem))
+    {
+
+      int iType = GetBaseItemType(oItem);
+      if (iType == BASE_ITEM_GLOVES)
+      {
+
+         itemproperty ip = GetFirstItemProperty(oWeapL);
+         while (GetIsItemPropertyValid(ip))
+         {
+             RemoveItemProperty(oWeapL, ip);
+            ip = GetNextItemProperty(oWeapL);
+         }
+
+         ip = GetFirstItemProperty(oItem);
+         while(GetIsItemPropertyValid(ip))
+         {
+            iType = GetItemPropertyType(ip);
+
+            switch (iType)
+            {
+              case ITEM_PROPERTY_DAMAGE_BONUS:
+              case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
+              case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
+              case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
+                  AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
+                  break;
+              case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
+              case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
+              case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
+                  AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
+                  break;
+
+              case ITEM_PROPERTY_ATTACK_BONUS:
+                  int iCost =GetItemPropertyCostTableValue(ip);
+                  iCost= (iCost>Enh) ? iCost:Enh;
+                  break;
+
+
+
+
+            }
+
+           ip = GetNextItemProperty(oItem);
+
+         }
+
+      }
+    }
+    else if (iEquip == 1)
+    {
+        oItem=GetPCItemLastUnequipped();
+
+        int iType = GetBaseItemType(oItem);
+        if (iType == BASE_ITEM_GLOVES)
+        {
+
+          itemproperty ip = GetFirstItemProperty(oWeapL);
+          while (GetIsItemPropertyValid(ip))
+          {
+             RemoveItemProperty(oWeapL, ip);
+            ip = GetNextItemProperty(oWeapL);
+          }
+        }
+
+    }
 
       TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iDmg),oWeapL);

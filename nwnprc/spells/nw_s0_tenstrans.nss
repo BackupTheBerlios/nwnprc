@@ -55,11 +55,20 @@ void PolyAndMergeEquipment(float fDur, int iLvl)
     effect ePoly = EffectPolymorph(28);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, fDur, TRUE, -1, iLvl);
 
-    // Get the Polymorph's stuff
+    // Get the Polymorphed form's stuff
     object oWeaponNew = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF);
     object oArmorNew = GetItemInSlot(INVENTORY_SLOT_CARMOUR,OBJECT_SELF);
 
-    // Buffs you up based on your equipment
+    // Tenser's Sword is overpowerful with equipment merging -- no longer do you
+    // need a +3 flaming longsword if you have reasonably good equipment.
+    itemproperty ip = GetFirstItemProperty(oWeaponNew);
+    while (GetIsItemPropertyValid(ip))
+    {
+        RemoveItemProperty(oWeaponNew, ip);
+        ip = GetNextItemProperty(oWeaponNew);
+    }
+
+    // Merges in all your equipment so that you're not weakened by the morph.
     IPWildShapeCopyItemProperties(oWeaponOld,oWeaponNew, TRUE);
 
     IPWildShapeCopyItemProperties(oArmorOld,oArmorNew);
@@ -81,15 +90,6 @@ int CalculateAttackBonus()
    int iBAB = GetBaseAttackBonus(OBJECT_SELF);
    int iHD = GetHitDice(OBJECT_SELF);
    int iBonus = (iHD > 20) ? ((20 + (iHD - 20) / 2) - iBAB) : (iHD - iBAB); // most confusing line ever. :)
-   
-   return (iBonus > 0) ? iBonus : 0;
-}
-
-int CalculateFortitudeBonus()
-{
-   int iFort = GetFortitudeSavingThrow(OBJECT_SELF);
-   int iHD = GetHitDice(OBJECT_SELF);
-   int iBonus = ((iHD / 2 + 2) - iFort); // yep, this is the formula, trust me, look at the tables :)
    
    return (iBonus > 0) ? iBonus : 0;
 }
@@ -153,7 +153,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     }
     //Declare effects
     effect eAttack = EffectAttackIncrease(CalculateAttackBonus());
-    effect eSave = EffectSavingThrowIncrease(SAVING_THROW_FORT, CalculateFortitudeBonus());
+    effect eSave = EffectSavingThrowIncrease(SAVING_THROW_FORT, 5);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eSwing = EffectModifyAttacks(CalcNumberOfAttacks());
 

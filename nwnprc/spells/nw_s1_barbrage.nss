@@ -32,7 +32,7 @@ void main()
 
 //Lock: Added compatibility for PRC Mighty Rage ability
         
-        if (nLevel >= 15 && GetHasFeat(FEAT_PRC_EPIC_MIGHT_RAGE, OBJECT_SELF)
+        if ((nLevel >= 15) && (GetHasFeat(FEAT_PRC_EPIC_MIGHT_RAGE, OBJECT_SELF)))
         {
             iStr = 8;
             iCon = 8;

@@ -1,18 +1,14 @@
 2DA V2.0
 
-   LABEL        ReqType ReqParam1      ReqParam2 
-0  ShadowDancer CLASS   27             ****      
-1  Sorcerer     CLASS   9              ****      
-2  Wizard       CLASS   10             ****      
-3  Bard         CLASS   1              ****      
-4  BlindFight   FEAT    408            ****      
-5  Dodge        FEAT    10             ****      
-6  Mobility     FEAT    26             ****      
-7  SpringAttack FEAT    392            ****      
-8  SneakAttack2 FEATOR  345            ****      
-9  DeathAttack2 FEATOR  456            ****      
-10 DeathAttack2 FEATOR  461            ****      
-11 Lore         SKILL   7              2         
-12 Hide         SKILL   5              10        
-13 MoveSilently SKILL   8              10        
-14 ScriptVar    VAR     X1_AllowShaLow 0         
+      LABEL                              ReqType   ReqParam1        ReqParam2   
+0     BlindFight                         FEAT      408              ****        
+1     Dodge                              FEAT      10               ****        
+2     Mobility                           FEAT      26               ****        
+3     SpringAttack                       FEAT      392              ****        
+4     SneakAttack2                       FEATOR    345              ****        
+5     DeathAttack2                       FEATOR    456              ****        
+6     FEAT_BLACKGUARD_SNEAK_ATTACK_2D6   FEATOR    461              ****        
+7     Lore                               SKILL     7                2           
+8     Hide                               SKILL     5                10          
+9     MoveSilently                       SKILL     8                10          
+10    ScriptVar                          VAR       X1_AllowShaLow   0           

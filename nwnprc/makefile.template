@@ -63,12 +63,14 @@ TLK				= $(TLKPATH)\prc_consortium.tlk
 HIF				= "$(OUTPATH)\PRC Pack.hif"
 README			= prc_consortium.htm
 MISCRESOURCES	= $(OUTPATH)\PRCModuleUpdater.exe 
-# Proposed version 2.0 haks
-SCRIPTSHAK		= $(OUTPATH)\prc_scripts.hak
-2DASHAK			= $(OUTPATH)\prc_2das.hak
-MISCHAK			= $(OUTPATH)\prc_misc.hak
-TEXTURESHAK		= $(OUTPATH)\prc_textures.hak
-CRAFT2DASHAK	= $(OUTPATH)\prc_craft2das.hak
+
+# Version 2.0 haks
+SCRIPTSHAK				= $(OUTPATH)\prc_scripts.hak
+#EPICSPELLSCRIPTSHAK		= $(OUTPATH)\prc_epicspells.hak
+2DASHAK					= $(OUTPATH)\prc_2das.hak
+MISCHAK					= $(OUTPATH)\prc_misc.hak
+TEXTURESHAK				=$(OUTPATH)\prc_textures.hak
+CRAFT2DASHAK			= $(OUTPATH)\prc_craft2das.hak
 
 # The NSIS script used to build setup.exe
 INSTALLSCRIPT	= Setup\install.nsi
@@ -102,13 +104,15 @@ SED				= tools\ssed
 
 # Redefine various paths set by the bat file to give them prettier more
 # generic names.
-OUTPATH			= CompiledResources
-ERFFILESPATH	= $(MAKEERFPATH)
-2DAPATH			= $(MAKE2DAPATH)
-OBJPATH			= $(MAKEOBJSPATH)
-SRCPATH			= $(MAKESCRIPTPATH)
-TLKPATH			= $(MAKETLKPATH)
-CRAFT2DASPATH	= $(MAKECRAFT2DASPATH)
+OUTPATH				= CompiledResources
+ERFFILESPATH		= $(MAKEERFPATH)
+2DAPATH				= $(MAKE2DAPATH)
+OBJPATH				= $(MAKEOBJSPATH)
+EPICSPELLOBJSPATH	= $(MAKEEPICSPELLOBJSPATH)
+SRCPATH				= $(MAKESCRIPTPATH)
+EPICSPELLSRCPATH	= $(MAKEEPICSPELLSCRIPTPATH)
+TLKPATH				= $(MAKETLKPATH)
+CRAFT2DASPATH		= $(MAKECRAFT2DASPATH)
 
 
 # Paths for the various folders in the NWN install directory.
@@ -127,7 +131,11 @@ ERFFILES=~~~erffiles~~~
 
 SCRIPTS=~~~scripts~~~
 
+EPICSPELLSCRIPTS=~~~epicspellscripts~~~
+
 OBJS=~~~objs~~~
+
+EPICSPELLOBJS=~~~epicspellobjs~~~
 
 2DAS=~~~2das~~~
 
@@ -157,6 +165,7 @@ hak110: $(ERF110) $(HAK) install
 # Rule to build the 2.0 haks
 hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) \
 	$(CRAFT2DASHAK) $(HIF) install 
+#	$(EPICSPELLSCRIPTSHAK) 
 
 # Rule to build the NSIS installer.
 nsis:
@@ -242,11 +251,26 @@ $(ERF): $(ERFFILES)
 
 
 # Rule to build the 2.0 scripts HAK file.
-$(SCRIPTSHAK): $(OBJS) $(SCRIPTS)
+$(SCRIPTSHAK): $(OBJS) $(SCRIPTS) $(EPICSPELLOBJS) $(EPICSPELLSCRIPTS)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $(SCRIPTS)
 	@"$(ERFCOMPILER)" -u $@ $(OBJS) >nul
+	@"$(ERFCOMPILER)" -u $@ $(EPICSPELLSCRIPTS) >nul
+	@"$(ERFCOMPILER)" -u $@ $(EPICSPELLOBJS) >nul
+# At some point we may need to use the below method to generate the hak
+# it will add the files to the hak one at a time to prevent command line
+# too long errors, but it runs orders of magnitude slower.
+#	@"$(ERFCOMPILER)" -c $@ howto.txt >nul
+#	!@"$(ERFCOMPILER)" -u $@ $** >nul
+
+
+# Rule to build the 2.0 scripts HAK file.
+#$(EPICSPELLSCRIPTSHAK): $(EPICSPELLOBJS) $(EPICSPELLSCRIPTS)
+#	@echo $(@F)
+#	-@del "$@" 2>nul
+#	@"$(ERFCOMPILER)" -c $@ $(EPICSPELLSCRIPTS)
+#	@"$(ERFCOMPILER)" -u $@ $(EPICSPELLOBJS) >nul
 # At some point we may need to use the below method to generate the hak
 # it will add the files to the hak one at a time to prevent command line
 # too long errors, but it runs orders of magnitude slower.
@@ -299,6 +323,11 @@ depends:
 
 # Inference rule to compile scripts.
 {$(SRCPATH)\}.nss{$(OBJPATH)\}.ncs:
+	@echo $(<F)
+	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
+ 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
+
+{$(EPICSPELLSRCPATH)\}.nss{$(EPICSPELLOBJSPATH)\}.ncs:
 	@echo $(<F)
 	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
  	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul

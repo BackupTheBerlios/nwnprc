@@ -99,10 +99,11 @@ ENDLOCAL
 REM delete temp files
 del erffiles.temp
 del scripts.temp
-rem del epicspellscripts.temp
+del epicspellscripts.temp
 del gfx.temp
 del 2das.temp
 del others.temp
 del objs.temp
+del epicspellobjs.temp
 del craft2das.temp
-rem del makefile.temp
+del makefile.temp

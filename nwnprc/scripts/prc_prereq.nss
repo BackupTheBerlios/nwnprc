@@ -18,73 +18,73 @@ int GetBardSpellLevel(object oPC)
         int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA) - 10;
         int iShad = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
         int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE) - 10;
-	int iBSpell;
-	int iSSpell;
+     int iBSpell;
+     int iSSpell;
 
-	// Adjust the Bard's level upwards if it is the one recieving the benefits of
-	// the PRC's.
-	if (GetClassByPosition(1,oPC) == CLASS_TYPE_BARD || (     // basically, if bard is the first class
-	    GetClassByPosition(2,oPC) == CLASS_TYPE_BARD &&       // on the list that is a arcane class
-	    GetClassByPosition(1,oPC) != CLASS_TYPE_WIZARD &&     // it recieves the benefit
-	    GetClassByPosition(1,oPC) != CLASS_TYPE_SORCERER ) )
-	{
-	iBard += GetArcanePRCLevels(oPC);
-	}
+     // Adjust the Bard's level upwards if it is the one recieving the benefits of
+     // the PRC's.
+     if (GetClassByPosition(1,oPC) == CLASS_TYPE_BARD || (     // basically, if bard is the first class
+         GetClassByPosition(2,oPC) == CLASS_TYPE_BARD &&       // on the list that is a arcane class
+         GetClassByPosition(1,oPC) != CLASS_TYPE_WIZARD &&     // it recieves the benefit
+         GetClassByPosition(1,oPC) != CLASS_TYPE_SORCERER ) )
+     {
+     iBard += GetArcanePRCLevels(oPC);
+     }
 
-	if (iBard >= 16)
-	{
-	iBSpell = 6;
-	}
-	else if (iBard >= 13)
-	{
-	iBSpell = 5;
-	}
-	else if (iBard >= 10)
-	{
-	iBSpell = 4;
-	}
-	else if (iBard >= 7)
-	{
-	iBSpell = 3;
-	}
-	else if (iBard >= 4)
-	{
-	iBSpell = 2;
-	}
-	else if (iBard >= 2)
-	{
-	iBSpell = 1;
-	}
+     if (iBard >= 16)
+     {
+     iBSpell = 6;
+     }
+     else if (iBard >= 13)
+     {
+     iBSpell = 5;
+     }
+     else if (iBard >= 10)
+     {
+     iBSpell = 4;
+     }
+     else if (iBard >= 7)
+     {
+     iBSpell = 3;
+     }
+     else if (iBard >= 4)
+     {
+     iBSpell = 2;
+     }
+     else if (iBard >= 2)
+     {
+     iBSpell = 1;
+     }
 
-	else if (iShad >= 5)
-	{
-	iSSpell = 3;
-	}
-	else if (iShad >= 3)
-	{
-	iSSpell = 2;
-	}
-	else if (iShad >= 1)
-	{
-	iSSpell = 1;
-	}
+     else if (iShad >= 5)
+     {
+     iSSpell = 3;
+     }
+     else if (iShad >= 3)
+     {
+     iSSpell = 2;
+     }
+     else if (iShad >= 1)
+     {
+     iSSpell = 1;
+     }
 
-	if (iInt < iSSpell)
-	{
-	iSSpell = iInt;
-	}
+     if (iInt < iSSpell)
+     {
+     iSSpell = iInt;
+     }
 
-	if (iCha < iBSpell)
-	{
-	iBSpell = iCha;
-	}
+     if (iCha < iBSpell)
+     {
+     iBSpell = iCha;
+     }
 
-	if (iSSpell > iBSpell)
-	{
-	iBSpell = iSSpell;
-	}
+     if (iSSpell > iBSpell)
+     {
+     iBSpell = iSSpell;
+     }
 
-	return iBSpell;
+     return iBSpell;
 }
 
 int GetRanPalSpellLevel(object oPC)
@@ -96,61 +96,61 @@ int GetRanPalSpellLevel(object oPC)
         int iCorrupter = GetLevelByClass(CLASS_TYPE_CORRUPTER, oPC);
         int iKnight = GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE, oPC);
         int iWis = GetAbilityScore(oPC, ABILITY_WISDOM) - 10;
-	int iRanPal;
+     int iRanPal;
 
-	// Adjust the Rangers's level upwards if it is the one recieving the benefits of
-	// the PRC's.
-	if (GetClassByPosition(1, oPC) == CLASS_TYPE_RANGER || ( // Ranger recieves PrC benefits
-	    GetClassByPosition(2, oPC) == CLASS_TYPE_RANGER &&   // if it's the first divine class
-	    GetClassByPosition(1, oPC) != CLASS_TYPE_CLERIC &&   // on the class list.
-	    GetClassByPosition(1, oPC) != CLASS_TYPE_DRUID &&
-	    GetClassByPosition(1, oPC) != CLASS_TYPE_PALADIN ) )
-	     iRanger += GetDivinePRCLevels(oPC);
+     // Adjust the Rangers's level upwards if it is the one recieving the benefits of
+     // the PRC's.
+     if (GetClassByPosition(1, oPC) == CLASS_TYPE_RANGER || ( // Ranger recieves PrC benefits
+         GetClassByPosition(2, oPC) == CLASS_TYPE_RANGER &&   // if it's the first divine class
+         GetClassByPosition(1, oPC) != CLASS_TYPE_CLERIC &&   // on the class list.
+         GetClassByPosition(1, oPC) != CLASS_TYPE_DRUID &&
+         GetClassByPosition(1, oPC) != CLASS_TYPE_PALADIN ) )
+          iRanger += GetDivinePRCLevels(oPC);
 
-	// Likewise for the Paladin.
-	if (GetClassByPosition(1, oPC) == CLASS_TYPE_PALADIN || ( // Paladin recieves PrC benefits
-	    GetClassByPosition(2, oPC) == CLASS_TYPE_PALADIN &&   // if it's the first divine class
-	    GetClassByPosition(1, oPC) != CLASS_TYPE_CLERIC &&    // on the class list.
-	    GetClassByPosition(1, oPC) != CLASS_TYPE_DRUID &&
-	    GetClassByPosition(1, oPC) != CLASS_TYPE_RANGER ) )
-	     iPaladin += GetDivinePRCLevels(oPC);
+     // Likewise for the Paladin.
+     if (GetClassByPosition(1, oPC) == CLASS_TYPE_PALADIN || ( // Paladin recieves PrC benefits
+         GetClassByPosition(2, oPC) == CLASS_TYPE_PALADIN &&   // if it's the first divine class
+         GetClassByPosition(1, oPC) != CLASS_TYPE_CLERIC &&    // on the class list.
+         GetClassByPosition(1, oPC) != CLASS_TYPE_DRUID &&
+         GetClassByPosition(1, oPC) != CLASS_TYPE_RANGER ) )
+          iPaladin += GetDivinePRCLevels(oPC);
 
-	if (iRanger >= 14 || iPaladin >= 14 ||
-	    iAntiPal >= 15 || iCorrupter >= 15 ||
-	    iSoldier >= 8)
-	{
-	iRanPal = 4;
-	}
-	else if (iRanger >= 11 || iPaladin >= 11 ||
-	         iAntiPal >= 12 || iCorrupter >= 12 ||
-	         iSoldier >= 6 || iKnight >= 9)
-	{
-	iRanPal = 3;
-	}
-	else if (iRanger >= 8 || iPaladin >= 8 ||
-	         iAntiPal >= 10 || iCorrupter >= 10 ||
-	         iSoldier >= 4 || iKnight >= 7)
-	{
-	iRanPal = 2;
-	}
-	else if (iRanger >= 4 || iPaladin >= 4 ||
-	         iAntiPal >= 6 || iCorrupter >= 6 ||
-	         iSoldier >= 2 || iKnight >= 3)
-	{
-	iRanPal = 1;
-	}
+     if (iRanger >= 14 || iPaladin >= 14 ||
+         iAntiPal >= 15 || iCorrupter >= 15 ||
+         iSoldier >= 8)
+     {
+     iRanPal = 4;
+     }
+     else if (iRanger >= 11 || iPaladin >= 11 ||
+              iAntiPal >= 12 || iCorrupter >= 12 ||
+              iSoldier >= 6 || iKnight >= 9)
+     {
+     iRanPal = 3;
+     }
+     else if (iRanger >= 8 || iPaladin >= 8 ||
+              iAntiPal >= 10 || iCorrupter >= 10 ||
+              iSoldier >= 4 || iKnight >= 7)
+     {
+     iRanPal = 2;
+     }
+     else if (iRanger >= 4 || iPaladin >= 4 ||
+              iAntiPal >= 6 || iCorrupter >= 6 ||
+              iSoldier >= 2 || iKnight >= 3)
+     {
+     iRanPal = 1;
+     }
 
-	if (iWis < iRanPal)
-	{
-	iRanPal = iWis;
-	}
+     if (iWis < iRanPal)
+     {
+     iRanPal = iWis;
+     }
 
-	return iRanPal;
+     return iRanPal;
 }
 
 int ArcSpell(object oPC, int iArcSpell)
 {
-	//A basic check to see what their primary class is
+     //A basic check to see what their primary class is
         int iSorc = GetLevelByClass(CLASS_TYPE_SORCERER, oPC);
         int iWiz = GetLevelByClass(CLASS_TYPE_WIZARD, oPC);
         int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA) - 10;
@@ -166,106 +166,106 @@ int ArcSpell(object oPC, int iArcSpell)
                   iArcSpell = iSorc - 1;
         }
 
-	//Checks to see what level of spells they can cast
+     //Checks to see what level of spells they can cast
         iArcSpell += GetArcanePRCLevels(oPC);// actually the first arcane class gets the benefit, not the highest.
 
         iArcSpell = (iArcSpell + 1) / 2;
-	if (iArcSpell > 9)
-	{
-	iArcSpell = 9;
-	}
+     if (iArcSpell > 9)
+     {
+     iArcSpell = 9;
+     }
 
-	//Check to see they have a high enough casting stat for their spell level
+     //Check to see they have a high enough casting stat for their spell level
         if (iSorc > iWiz)
         {
-		if (iCha < iArcSpell)
-		{
-		iArcSpell = iCha;
-		}
+          if (iCha < iArcSpell)
+          {
+          iArcSpell = iCha;
+          }
         }
-	else if (iInt < iArcSpell)
-	{
-	iArcSpell = iInt;
-	}
+     else if (iInt < iArcSpell)
+     {
+     iArcSpell = iInt;
+     }
 
-	//Check for Bards
-	int iBSpell = GetBardSpellLevel(oPC);
-	if (iBSpell > iArcSpell)
-	{
-	iArcSpell = iBSpell;
-	}
+     //Check for Bards
+     int iBSpell = GetBardSpellLevel(oPC);
+     if (iBSpell > iArcSpell)
+     {
+     iArcSpell = iBSpell;
+     }
 
-	//Finally, set the variables.
-	string sVariable1;
-	string sVariable2;
-	int iCount;
+     //Finally, set the variables.
+     string sVariable1;
+     string sVariable2;
+     int iCount;
 
-	for (iCount = 1; iCount <= 9; iCount++)
-	{
-	   string sVariable1 = "PRC_ArcSpell" + IntToString(iCount);
-	   string sVariable2 = "PRC_AllSpell" + IntToString(iCount);
-	   if (iArcSpell >= iCount)
-	   {
-	      SetLocalInt(oPC, sVariable1, 0);
-	      SetLocalInt(oPC, sVariable2, 0);
-	   }
-	}
+     for (iCount = 1; iCount <= 9; iCount++)
+     {
+        string sVariable1 = "PRC_ArcSpell" + IntToString(iCount);
+        string sVariable2 = "PRC_AllSpell" + IntToString(iCount);
+        if (iArcSpell >= iCount)
+        {
+           SetLocalInt(oPC, sVariable1, 0);
+           SetLocalInt(oPC, sVariable2, 0);
+        }
+     }
 
         return iArcSpell;
 }
 
 int DivSpell(object oPC, int iDivSpell)
 {
-	//Variables
+     //Variables
         int iDruid = GetLevelByClass(CLASS_TYPE_DRUID, oPC);
         int iCler = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
         int iWis = GetAbilityScore(oPC, ABILITY_WISDOM) - 10;
 
         iDivSpell = iCler;
 
-       	//A basic check to see what their primary class is
+          //A basic check to see what their primary class is
         if (iDruid > iCler)
         {
         iDivSpell = iDruid;
         }
 
-	//Checks to see what level of spells they can cast
+     //Checks to see what level of spells they can cast
         iDivSpell += GetDivinePRCLevels(oPC); // actually the first divine class gets the benefit, not the highest.
 
-	iDivSpell = (iDivSpell + 1) / 2;
-	if (iDivSpell > 9)
-	{
-	iDivSpell = 9;
-	}
+     iDivSpell = (iDivSpell + 1) / 2;
+     if (iDivSpell > 9)
+     {
+     iDivSpell = 9;
+     }
 
-	//Check to see they have a high enough casting stat for their spell level
-	if (iWis < iDivSpell)
-	{
-	iDivSpell = iWis;
-	}
+     //Check to see they have a high enough casting stat for their spell level
+     if (iWis < iDivSpell)
+     {
+     iDivSpell = iWis;
+     }
 
-	//Check for rangers and paladins
-	int iRanPal = GetRanPalSpellLevel(oPC);
-	if (iRanPal > iDivSpell)
-	{
-	iDivSpell = iRanPal;
-	}
+     //Check for rangers and paladins
+     int iRanPal = GetRanPalSpellLevel(oPC);
+     if (iRanPal > iDivSpell)
+     {
+     iDivSpell = iRanPal;
+     }
 
-	//Finally, set the variables.
-	string sVariable1;
-	string sVariable2;
-	int iCount;
+     //Finally, set the variables.
+     string sVariable1;
+     string sVariable2;
+     int iCount;
 
-	for (iCount = 1; iCount <= 9; iCount++)
-	{
-	   string sVariable1 = "PRC_DivSpell" + IntToString(iCount);
-	   string sVariable2 = "PRC_AllSpell" + IntToString(iCount);
-	   if (iDivSpell >= iCount)
-	   {
-	      SetLocalInt(oPC, sVariable1, 0);
-	      SetLocalInt(oPC, sVariable2, 0);
-	   }
-	}
+     for (iCount = 1; iCount <= 9; iCount++)
+     {
+        string sVariable1 = "PRC_DivSpell" + IntToString(iCount);
+        string sVariable2 = "PRC_AllSpell" + IntToString(iCount);
+        if (iDivSpell >= iCount)
+        {
+           SetLocalInt(oPC, sVariable1, 0);
+           SetLocalInt(oPC, sVariable2, 0);
+        }
+     }
 
         return iDivSpell;
 }
@@ -298,108 +298,118 @@ void Hathran(object oPC)
 void Shifter(object oPC, int iArcSpell, int iDivSpell)
 {
 
-	SetLocalInt(oPC, "PRC_PrereqShift", 1);
+     SetLocalInt(oPC, "PRC_PrereqShift", 1);
 
-	if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && GetHasFeat(FEAT_ANIMAL_DOMAIN_POWER, oPC) && iDivSpell >= 5)
-	{
-		SetLocalInt(oPC, "PRC_PrereqShift", 0);
-	}
-	if (GetLevelByClass(CLASS_TYPE_SORCERER, oPC) && iArcSpell >= 4)
-	{
-		SetLocalInt(oPC, "PRC_PrereqShift", 0);
-	}
-	if (GetLevelByClass(CLASS_TYPE_WIZARD, oPC) && iArcSpell >= 4)
-	{
-		SetLocalInt(oPC, "PRC_PrereqShift", 0);
-	}
-	if (GetLevelByClass(CLASS_TYPE_DRUID, oPC) >= 5)
-	{
-		SetLocalInt(oPC, "PRC_PrereqShift", 0);
-	}
-	if (GetLevelByClass(CLASS_TYPE_RANGER, oPC) >= 15)
-	{
-		SetLocalInt(oPC, "PRC_PrereqShift", 0);
-	}
-	if (GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oPC) >= 10)
-	{
-		SetLocalInt(oPC, "PRC_PrereqShift", 0);
-	}
-	if (GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC) >= 7)
-	{
-		SetLocalInt(oPC, "PRC_PrereqShift", 0);
-	}
-	if (GetLevelByClass(CLASS_TYPE_WEREWOLF, oPC) >= 1)
-	{
-		SetLocalInt(oPC, "PRC_PrereqShift", 0);
-	}
-	if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC) >= 10)
-	{
-		SetLocalInt(oPC, "PRC_PrereqShift", 0);
-	}
+     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && GetHasFeat(FEAT_ANIMAL_DOMAIN_POWER, oPC) && iDivSpell >= 5)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
+     if (GetLevelByClass(CLASS_TYPE_SORCERER, oPC) && iArcSpell >= 4)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
+     if (GetLevelByClass(CLASS_TYPE_WIZARD, oPC) && iArcSpell >= 4)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
+     if (GetLevelByClass(CLASS_TYPE_DRUID, oPC) >= 5)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
+     if (GetLevelByClass(CLASS_TYPE_RANGER, oPC) >= 15)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
+     if (GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oPC) >= 10)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
+     if (GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC) >= 7)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
+     if (GetLevelByClass(CLASS_TYPE_WEREWOLF, oPC) >= 1)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
+     if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC) >= 10)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
+     
+     // these races have an alternate form
+     if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_PURE_YUAN) SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_ABOM_YUAN) SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_PIXIE) SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_RAKSHASA) SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_FEYRI) SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     
+     // not counted since it is just "disguise self" and not alter self or shape change
+     //if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_DEEP_GNOME) SetLocalInt(oPC, "PRC_PrereqShift", 0);
 }
 
 void Tempest(object oPC)
 {
-	SetLocalInt(oPC, "PRC_PrereqTemp", 1);
+     SetLocalInt(oPC, "PRC_PrereqTemp", 1);
 
-	if ((GetHasFeat(FEAT_AMBIDEXTERITY, oPC) && GetHasFeat(FEAT_TWO_WEAPON_FIGHTING, oPC)) || GetHasFeat(FEAT_RANGER_DUAL, oPC))
-	{
-	SetLocalInt(oPC, "PRC_PrereqTemp", 0);
-	}
+     if ((GetHasFeat(FEAT_AMBIDEXTERITY, oPC) && GetHasFeat(FEAT_TWO_WEAPON_FIGHTING, oPC)) || GetHasFeat(FEAT_RANGER_DUAL, oPC))
+     {
+     SetLocalInt(oPC, "PRC_PrereqTemp", 0);
+     }
 }
 
 void KOTC(object oPC)
 {
-	SetLocalInt(oPC, "PRC_PrereqKOTC", 1);
+     SetLocalInt(oPC, "PRC_PrereqKOTC", 1);
 
 
-	if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) >= 1)
-	{
-	SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
-	}
-	if (GetLevelByClass(CLASS_TYPE_PALADIN, oPC) >= 4)
-	{
-	SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
-	}
+     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) >= 1)
+     {
+     SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
+     }
+     if (GetLevelByClass(CLASS_TYPE_PALADIN, oPC) >= 4)
+     {
+     SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
+     }
 }
 
 void Shadowlord(object oPC, int iArcSpell)
 {
-	int iShadLevel = GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oPC);
+     int iShadLevel = GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oPC);
 
-	int iShadItem;
-	if(GetHasItem(oPC,"shadowwalkerstok"))
-	{
-	iShadItem = 1;
-	}
+     int iShadItem;
+     if(GetHasItem(oPC,"shadowwalkerstok"))
+     {
+     iShadItem = 1;
+     }
 
-	SetLocalInt(oPC, "PRC_PrereqTelflam", 1);
+     SetLocalInt(oPC, "PRC_PrereqTelflam", 1);
 
-	if ( iArcSpell >= 4 || iShadLevel  || iShadItem)
-	{
+     if ( iArcSpell >= 4 || iShadLevel  || iShadItem)
+     {
         SetLocalInt(oPC, "PRC_PrereqTelflam", 0);
-	}
+     }
 }
 
 void SOL(object oPC)
 {
-	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
 
 
-	if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
-	{
-		if (iCleric)
-		{
-		SetLocalInt(oPC, "PRC_PrereqSOL", 1);
-		int iElishar = GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_HEALING_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_LUCK_DOMAIN_POWER,oPC)+
-		GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_SUN_DOMAIN_POWER,oPC);
+     if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
+     {
+          if (iCleric)
+          {
+          SetLocalInt(oPC, "PRC_PrereqSOL", 1);
+          int iElishar = GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_HEALING_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_LUCK_DOMAIN_POWER,oPC)+
+          GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_SUN_DOMAIN_POWER,oPC);
 
-			if (iElishar>1)
-			{
-			SetLocalInt(oPC, "PRC_PrereqSOL", 0);
-			}
-		}
-	}
+               if (iElishar>1)
+               {
+               SetLocalInt(oPC, "PRC_PrereqSOL", 0);
+               }
+          }
+     }
 }
 
 void ManAtArms(object oPC)
@@ -427,46 +437,46 @@ void ManAtArms(object oPC)
         GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,oPC);//+GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,oPC);
 
 
-	SetLocalInt(oPC, "PRC_PrereqMAA", 1);
+     SetLocalInt(oPC, "PRC_PrereqMAA", 1);
 
-	if (iWF > 3)
-	{
-	SetLocalInt(oPC, "PRC_PrereqMAA", 0);
-	}
-	if (iWF>0)
-	  SetLocalInt(oPC, "PRC_PrereqFH", 1);
-	else
-	  SetLocalInt(oPC, "PRC_PrereqFH", 2);
+     if (iWF > 3)
+     {
+     SetLocalInt(oPC, "PRC_PrereqMAA", 0);
+     }
+     if (iWF>0)
+       SetLocalInt(oPC, "PRC_PrereqFH", 1);
+     else
+       SetLocalInt(oPC, "PRC_PrereqFH", 2);
 }
 
 void BFZ(object oPC)
 {
-	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
 
 
-	if (iCleric > 0)
-	{
-		SetLocalInt(oPC, "PRC_PrereqBFZ", 1);
-		if (GetHasFeat(FEAT_FIRE_DOMAIN_POWER,oPC) && GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC))
-		{
-		SetLocalInt(oPC, "PRC_PrereqBFZ", 0);
-		}
-	}
+     if (iCleric > 0)
+     {
+          SetLocalInt(oPC, "PRC_PrereqBFZ", 1);
+          if (GetHasFeat(FEAT_FIRE_DOMAIN_POWER,oPC) && GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC))
+          {
+          SetLocalInt(oPC, "PRC_PrereqBFZ", 0);
+          }
+     }
 }
 
 void ShiningBlade(object oPC)
 {
-	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
 
 
-	if (iCleric > 0)
-	{
-		SetLocalInt(oPC, "PRC_PrereqSBHeir", 1);
-		if (GetHasFeat(FEAT_WAR_DOMAIN_POWER,oPC) && GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC))
-		{
-		SetLocalInt(oPC, "PRC_PrereqSBHeir", 0);
-		}
-	}
+     if (iCleric > 0)
+     {
+          SetLocalInt(oPC, "PRC_PrereqSBHeir", 1);
+          if (GetHasFeat(FEAT_WAR_DOMAIN_POWER,oPC) && GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC))
+          {
+          SetLocalInt(oPC, "PRC_PrereqSBHeir", 0);
+          }
+     }
 }
 
 void DemiLich(object oPC)
@@ -479,56 +489,56 @@ void DemiLich(object oPC)
 
 void EOG(object oPC)
 {
-	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
 
 
-	if (iCleric)
-	{
-	SetLocalInt(oPC, "PRC_PrereqEOG", 1);
-	int iEOG = GetHasFeat(FEAT_WAR_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
-		{
-		if (iEOG>1)
-			{
-			SetLocalInt(oPC, "PRC_PrereqEOG", 0);
-			}
-		}
-	}
+     if (iCleric)
+     {
+     SetLocalInt(oPC, "PRC_PrereqEOG", 1);
+     int iEOG = GetHasFeat(FEAT_WAR_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
+          {
+          if (iEOG>1)
+               {
+               SetLocalInt(oPC, "PRC_PrereqEOG", 0);
+               }
+          }
+     }
 }
 
 void Stormlord(object oPC)
 {
-	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
 
 
-	if (iCleric)
-	{
-	SetLocalInt(oPC, "PRC_PrereqStormL", 1);
-	int iStorm = GetHasFeat(FEAT_FIRE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
-		{
-		if (iStorm>1)
-			{
-			SetLocalInt(oPC, "PRC_PrereqStormL", 0);
-			}
-		}
-	}
+     if (iCleric)
+     {
+     SetLocalInt(oPC, "PRC_PrereqStormL", 1);
+     int iStorm = GetHasFeat(FEAT_FIRE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
+          {
+          if (iStorm>1)
+               {
+               SetLocalInt(oPC, "PRC_PrereqStormL", 0);
+               }
+          }
+     }
 }
 
 void ShadowAdept(object oPC)
 {
-	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
 
 
-	if (iCleric)
-	{
-	SetLocalInt(oPC, "PRC_PrereqShadAd", 1);
-	int iShad = GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DARKNESS_DOMAIN,oPC);
-		{
-		if (iShad>1)
-			{
-			SetLocalInt(oPC, "PRC_PrereqShadAd", 0);
-			}
-		}
-	}
+     if (iCleric)
+     {
+     SetLocalInt(oPC, "PRC_PrereqShadAd", 1);
+     int iShad = GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DARKNESS_DOMAIN,oPC);
+          {
+          if (iShad>1)
+               {
+               SetLocalInt(oPC, "PRC_PrereqShadAd", 0);
+               }
+          }
+     }
 }
 
 void Rava(object oPC)
@@ -573,37 +583,37 @@ void RedWizard(object oPC)
   int iFeat;
   int iFocus;
 
-  iFocus = 	GetHasFeat(FEAT_RW_TF_ABJ, oPC)+GetHasFeat(FEAT_RW_TF_CON, oPC)+GetHasFeat(FEAT_RW_TF_DIV, oPC)+
-		GetHasFeat(FEAT_RW_TF_ENC, oPC)+GetHasFeat(FEAT_RW_TF_EVO, oPC)+GetHasFeat(FEAT_RW_TF_ILL, oPC)+
-		GetHasFeat(FEAT_RW_TF_NEC, oPC)+GetHasFeat(FEAT_RW_TF_TRS, oPC);
+  iFocus =     GetHasFeat(FEAT_RW_TF_ABJ, oPC)+GetHasFeat(FEAT_RW_TF_CON, oPC)+GetHasFeat(FEAT_RW_TF_DIV, oPC)+
+          GetHasFeat(FEAT_RW_TF_ENC, oPC)+GetHasFeat(FEAT_RW_TF_EVO, oPC)+GetHasFeat(FEAT_RW_TF_ILL, oPC)+
+          GetHasFeat(FEAT_RW_TF_NEC, oPC)+GetHasFeat(FEAT_RW_TF_TRS, oPC);
 
-  iFeat += 	GetHasFeat(FEAT_ARCANE_DEFENSE_ABJURATION, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_CONJURATION, oPC) +
-		GetHasFeat(FEAT_ARCANE_DEFENSE_DIVINATION, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_ENCHANTMENT, oPC) +
-		GetHasFeat(FEAT_ARCANE_DEFENSE_EVOCATION, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_ILLUSION, oPC) +
-		GetHasFeat(FEAT_ARCANE_DEFENSE_NECROMANCY, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_TRANSMUTATION, oPC) +
-		GetHasFeat(FEAT_BREW_POTION, oPC) + GetHasFeat(FEAT_CRAFT_WAND, oPC) + GetHasFeat(FEAT_EMPOWER_SPELL, oPC) +
-		GetHasFeat(FEAT_COMBAT_CASTING, oPC) + GetHasFeat(FEAT_EXTEND_SPELL, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION, oPC) +
-		GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_CONJURATION, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_DIVINATION, oPC) +
-		GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ENCHATMENT, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_EVOCATION, oPC) +
-		GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ILLUSION, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_NECROMANCY, oPC) +
-		GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_TRANSMUTATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oPC) +
-		GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINIATION, oPC) +
-		GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oPC) +
-		GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oPC) +
-		GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_PENETRATION, oPC) +
-		GetHasFeat(FEAT_MAXIMIZE_SPELL, oPC) + GetHasFeat(FEAT_PRACTISED_SPELLCASTER_WIZARD, oPC) +
-		GetHasFeat(FEAT_QUICKEN_SPELL, oPC) + GetHasFeat(FEAT_SCRIBE_SCROLL, oPC) +
-		GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oPC) +
-		GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oPC) +
-		GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oPC) +
-		GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oPC) +
-		GetHasFeat(FEAT_SPELL_PENETRATION, oPC) + GetHasFeat(FEAT_STILL_SPELL, oPC);
+  iFeat +=     GetHasFeat(FEAT_ARCANE_DEFENSE_ABJURATION, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_CONJURATION, oPC) +
+          GetHasFeat(FEAT_ARCANE_DEFENSE_DIVINATION, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_ENCHANTMENT, oPC) +
+          GetHasFeat(FEAT_ARCANE_DEFENSE_EVOCATION, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_ILLUSION, oPC) +
+          GetHasFeat(FEAT_ARCANE_DEFENSE_NECROMANCY, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_TRANSMUTATION, oPC) +
+          GetHasFeat(FEAT_BREW_POTION, oPC) + GetHasFeat(FEAT_CRAFT_WAND, oPC) + GetHasFeat(FEAT_EMPOWER_SPELL, oPC) +
+          GetHasFeat(FEAT_COMBAT_CASTING, oPC) + GetHasFeat(FEAT_EXTEND_SPELL, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION, oPC) +
+          GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_CONJURATION, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_DIVINATION, oPC) +
+          GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ENCHATMENT, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_EVOCATION, oPC) +
+          GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ILLUSION, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_NECROMANCY, oPC) +
+          GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_TRANSMUTATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oPC) +
+          GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINIATION, oPC) +
+          GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oPC) +
+          GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oPC) +
+          GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_PENETRATION, oPC) +
+          GetHasFeat(FEAT_MAXIMIZE_SPELL, oPC) + GetHasFeat(FEAT_PRACTISED_SPELLCASTER_WIZARD, oPC) +
+          GetHasFeat(FEAT_QUICKEN_SPELL, oPC) + GetHasFeat(FEAT_SCRIBE_SCROLL, oPC) +
+          GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oPC) +
+          GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oPC) +
+          GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oPC) +
+          GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oPC) +
+          GetHasFeat(FEAT_SPELL_PENETRATION, oPC) + GetHasFeat(FEAT_STILL_SPELL, oPC);
 
 
-	if (iFeat > 2 && iFocus == 1)
-	{
-	SetLocalInt(oPC, "PRC_PrereqRedWiz", 0);
-	}
+     if (iFeat > 2 && iFocus == 1)
+     {
+     SetLocalInt(oPC, "PRC_PrereqRedWiz", 0);
+     }
 }
 
 void FH(object oPC)
@@ -613,10 +623,10 @@ void FH(object oPC)
 
         int iPrereq = GetLocalInt(oPC, "PRC_PrereqFH");
 
-	if ( iRanger > 0 ||iURanger > 1 )
-	{
+     if ( iRanger > 0 ||iURanger > 1 )
+     {
           SetLocalInt(oPC, "PRC_PrereqFH", iPrereq-1);
-	}
+     }
 
 }
 
@@ -640,69 +650,69 @@ void main()
 
         // Initialize all the variables.
         string sVariable;
-	int iCount;
-	for (iCount = 1; iCount <= 9; iCount++)
-	{
-	   sVariable = "PRC_AllSpell" + IntToString(iCount);
-	   SetLocalInt(oPC, sVariable, 1);
+     int iCount;
+     for (iCount = 1; iCount <= 9; iCount++)
+     {
+        sVariable = "PRC_AllSpell" + IntToString(iCount);
+        SetLocalInt(oPC, sVariable, 1);
 
-	   sVariable = "PRC_ArcSpell" + IntToString(iCount);
-	   SetLocalInt(oPC, sVariable, 1);
+        sVariable = "PRC_ArcSpell" + IntToString(iCount);
+        SetLocalInt(oPC, sVariable, 1);
 
-	   sVariable = "PRC_DivSpell" + IntToString(iCount);
-	   SetLocalInt(oPC, sVariable, 1);
-	}
-	for (iCount = 1; iCount <= 30; iCount++)
-	{
-	   sVariable = "PRC_SneakLevel" + IntToString(iCount);
-	   SetLocalInt(oPC, sVariable, 1);
-	}
+        sVariable = "PRC_DivSpell" + IntToString(iCount);
+        SetLocalInt(oPC, sVariable, 1);
+     }
+     for (iCount = 1; iCount <= 30; iCount++)
+     {
+        sVariable = "PRC_SneakLevel" + IntToString(iCount);
+        SetLocalInt(oPC, sVariable, 1);
+     }
 
-	// Find the spell levels.
-	iArcSpell1 = ArcSpell(oPC, iArcSpell);
-	iDivSpell1 = DivSpell(oPC, iDivSpell);
+     // Find the spell levels.
+     iArcSpell1 = ArcSpell(oPC, iArcSpell);
+     iDivSpell1 = DivSpell(oPC, iDivSpell);
 
-	// Find the sneak attack capacity.
+     // Find the sneak attack capacity.
         SneakRequirement(oPC);
 
         // Special requirements for several classes.
         Hathran(oPC);
-	Tempest(oPC);
-	KOTC(oPC);
-	BFZ(oPC);
-	ManAtArms(oPC);
-	SOL(oPC);
-	Stormlord(oPC);
-	EOG(oPC);
-	RedWizard(oPC);
-	ShadowAdept(oPC);
-	ShiningBlade(oPC);
-	Shadowlord(oPC, iArcSpell1);
-	Shifter(oPC, iArcSpell1, iDivSpell1);
-	DemiLich(oPC);
-	Rava(oPC);
-	WWolf(oPC);
-	FH(oPC);
-	BloodArcher(oPC);
-	// Truly massive debug message flood if activated.
-	/*
-	string sPRC_AllSpell;
-	string sPRC_ArcSpell;
-	string sPRC_DivSpell;
-	for (iCount = 1; iCount <= 9; iCount++)
-	{
-	   sPRC_AllSpell = "PRC_AllSpell" + IntToString(iCount);
-	   sPRC_ArcSpell = "PRC_ArcSpell" + IntToString(iCount);
-	   sPRC_DivSpell = "PRC_DivSpell" + IntToString(iCount);
-	   SendMessageToPC(oPC, sPRC_AllSpell + " is " + IntToString(GetLocalInt(oPC, sPRC_AllSpell)) + ". " +
-	                        sPRC_ArcSpell + " is " + IntToString(GetLocalInt(oPC, sPRC_ArcSpell)) + ". " +
-	                        sPRC_DivSpell + " is " + IntToString(GetLocalInt(oPC, sPRC_DivSpell)) + ".");
-	}
- 	for (iCount = 1; iCount <= 30; iCount++)
-	{
-	   sVariable = "PRC_SneakLevel" + IntToString(iCount);
-	   SendMessageToPC(oPC, sVariable + " is " + IntToString(GetLocalInt(oPC, sVariable)) + ".");
-	}
-	*/
+     Tempest(oPC);
+     KOTC(oPC);
+     BFZ(oPC);
+     ManAtArms(oPC);
+     SOL(oPC);
+     Stormlord(oPC);
+     EOG(oPC);
+     RedWizard(oPC);
+     ShadowAdept(oPC);
+     ShiningBlade(oPC);
+     Shadowlord(oPC, iArcSpell1);
+     Shifter(oPC, iArcSpell1, iDivSpell1);
+     DemiLich(oPC);
+     Rava(oPC);
+     WWolf(oPC);
+     FH(oPC);
+     BloodArcher(oPC);
+     // Truly massive debug message flood if activated.
+     /*
+     string sPRC_AllSpell;
+     string sPRC_ArcSpell;
+     string sPRC_DivSpell;
+     for (iCount = 1; iCount <= 9; iCount++)
+     {
+        sPRC_AllSpell = "PRC_AllSpell" + IntToString(iCount);
+        sPRC_ArcSpell = "PRC_ArcSpell" + IntToString(iCount);
+        sPRC_DivSpell = "PRC_DivSpell" + IntToString(iCount);
+        SendMessageToPC(oPC, sPRC_AllSpell + " is " + IntToString(GetLocalInt(oPC, sPRC_AllSpell)) + ". " +
+                             sPRC_ArcSpell + " is " + IntToString(GetLocalInt(oPC, sPRC_ArcSpell)) + ". " +
+                             sPRC_DivSpell + " is " + IntToString(GetLocalInt(oPC, sPRC_DivSpell)) + ".");
+     }
+     for (iCount = 1; iCount <= 30; iCount++)
+     {
+        sVariable = "PRC_SneakLevel" + IntToString(iCount);
+        SendMessageToPC(oPC, sVariable + " is " + IntToString(GetLocalInt(oPC, sVariable)) + ".");
+     }
+     */
 
 }

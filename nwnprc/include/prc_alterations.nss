@@ -1,8 +1,8 @@
 //
-//	This is the original include file for the PRC Spell Engine.
+//   This is the original include file for the PRC Spell Engine.
 //
-//	Various spells, components and designs within this system have
-//	been contributed by many individuals within and without the PRC.
+//   Various spells, components and designs within this system have
+//   been contributed by many individuals within and without the PRC.
 //
 
 // Generic includes
@@ -10,6 +10,7 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
+#include "prc_racialtypes_const"
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"

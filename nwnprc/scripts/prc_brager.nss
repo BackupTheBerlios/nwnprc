@@ -17,11 +17,15 @@ void AddFerociousProwess(object oPC)
 	int iAtk = 1;
 	int iDam = 1;
 	
-	effect eDam = EffectDamageIncrease(iDam, DAMAGE_TYPE_NEGATIVE);
-	effect eAtk = EffectAttackIncrease(iAtk);
+	if(GetHasFeat(FEAT_FEROCIOUS_PROW, oPC)
+	{
+		effect eDam = EffectDamageIncrease(iDam, DAMAGE_TYPE_NEGATIVE);
+		effect eAtk = EffectAttackIncrease(iAtk);
 	
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oPC, HoursToSeconds(24));
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, HoursToSeconds(24));
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oPC, HoursToSeconds(24));
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, HoursToSeconds(24));
+		SetLocalInt(oPC, "BRageProw", iAtk);
+	}
 }
 
 void main()

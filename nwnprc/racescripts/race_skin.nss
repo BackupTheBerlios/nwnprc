@@ -9,7 +9,8 @@
 
 void main()
 {
-    object oSkin = GetPCSkin(OBJECT_SELF);
+    object oPC = OBJECT_SELF;
+    object oSkin = GetPCSkin(oPC);
 
     //immunity to cold
     if(GetHasFeat(FEAT_IMM_COLD))
@@ -52,6 +53,7 @@ void main()
     }
 
     //natural armor 1-10
+    // Note: This bonus will be Dodge bonus no matter what IP_CONST you specify.
     if(GetHasFeat(FEAT_NATARM_1))
         SetCompositeBonus(oSkin, "RacialNaturalArmor", 1, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_NATURAL);
     else if(GetHasFeat(FEAT_NATARM_2))
@@ -91,20 +93,22 @@ void main()
     //Azer Heat Damage +1 (armed and unarmed)
     if (GetHasFeat(FEAT_AZER_HEAT, oPC))
     {
-    if (GetLocalInt(oPC, "ONEQUIP") == 1)
-    {
-        object oItem = GetPCItemLastUnequipped();
-        SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 0, IP_CONST_DAMAGETYPE_FIRE);
+         if (GetLocalInt(oPC, "ONEQUIP") == 1)
+         {
+             object oItem = GetPCItemLastUnequipped();
+             SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 0, IP_CONST_DAMAGETYPE_FIRE);
+         }
+         else
+         {
+             object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+             SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
+             oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+             
+             // check to make sure the weapon is not a shield or torch
+             SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE); 
+         }
     }
-    else
-    {
-        object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-        SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
-        oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-        // check to make sure the weapon is not a shield or torch
-        SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE); 
-     }
-
+    
     //-1AC, -4hide
     if(GetHasFeat(FEAT_LARGE))
     {

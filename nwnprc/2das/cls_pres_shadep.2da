@@ -10,5 +10,5 @@
 6     Empower                            FEATOR    11                ****        
 7     ExtSpell                           FEATOR    12                ****           
 8     ScriptVar                          VAR       PRC_AllowShadAde  0           
-9     ScriptVar                          VAR       PRC_AllSpell3     0
+9     ScriptVar                          VAR       PRC_ArcSpell3     0
 10    ScriptVar                          VAR       PRC_PrereqShadAd  0 

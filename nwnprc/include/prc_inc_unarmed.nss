@@ -255,9 +255,6 @@ void UnarmedFists(object oCreature)
                     case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
                     case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
                     case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
-                    case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
-                    case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
-                    case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
                     case ITEM_PROPERTY_ON_HIT_PROPERTIES:
                     case ITEM_PROPERTY_ONHITCASTSPELL:
                         AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
@@ -269,6 +266,21 @@ void UnarmedFists(object oCreature)
                 }
                 ip = GetNextItemProperty(oItem);
             }
+            // handles these seperately so as not to create "attack penalties vs. xxxx"
+            while(GetIsItemPropertyValid(ip))
+	    {
+	        iType = GetItemPropertyType(ip);
+	        switch (iType)
+	        {
+                    case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
+	            case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
+	            case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
+	            if (GetItemPropertyCostTableValue(ip) > Enh)
+	                AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
+                    break;
+                }
+		ip = GetNextItemProperty(oItem);
+	    }
         }
     }
     

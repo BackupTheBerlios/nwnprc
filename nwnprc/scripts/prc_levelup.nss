@@ -19,7 +19,7 @@
 void PrcFeats(object oPC)
 {
      EvalPRCFeats(oPC);
-     FeatSpecialUsePerDay(oPC);
+     
 
 }
 
@@ -37,4 +37,6 @@ void main()
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the newly leveled up player meets.
     DelayCommand(0.2, CheckSpecialPRCRecs(oPC));
+    DelayCommand(1.0, FeatSpecialUsePerDay(oPC));
+    
 }

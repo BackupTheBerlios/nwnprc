@@ -40,10 +40,7 @@ void main()
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oFam);
          }
          
-           if (GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT,oPC))
-              ChangeSpellSol(oPC);
          
- 
           DelayCommand(1.0,FeatSpecialUsePerDay(oPC));
 
          break;

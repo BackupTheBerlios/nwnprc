@@ -1,7 +1,12 @@
 2DA V2.0
 
-     FeatLabel         FeatIndex 
-0    darkvision        228       
-1    Innate_Resistence 2004      
-2    Rak_Polymorph     2012      
-3    Rak_Reveal        2022      
+     FeatLabel            FeatIndex 
+0    darkvision           228       
+1    WeapProfSim          46
+2    WeapProfMar          45
+3    Spell_Resist_27      4709
+4    Natural_Armor_9      4738
+5    Damage_Reduction_15  4748
+6    SkillAff_Bluff       4753
+7    Disguise             4755
+8    Race_Outsider        4716  

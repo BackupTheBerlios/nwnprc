@@ -2,6 +2,7 @@
 
      FeatLabel          FeatIndex 
 0    darkvision         228       
-1    Innate_Resistence  2004      
-2    Illithid_IronMind  2008      
-3    Illithid_MindBlast 2009      
+1    Natural_Armor_3    4734
+2    Race_Aberration    4722
+3    Spell_Resist_25    4708
+ 

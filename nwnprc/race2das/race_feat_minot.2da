@@ -1,9 +1,13 @@
 2DA V2.0
 
      FeatLabel           FeatIndex 
-0    Alertness           0         
+0    Race_Monstrous      4720        
 1    darkvision          228       
 2    skillaffinitylisten 237       
 3    skillaffinitysearch 238       
 4    skillaffinityspot   239       
-5    Large_Creature      2006      
+5    Large_Creature      4760     
+6    Natural_Armor_5     4736
+7    WeapProfSim         46
+8    WeapProfMar         45  
+9    UncannyDodge1       195

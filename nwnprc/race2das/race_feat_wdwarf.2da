@@ -1,0 +1,15 @@
+2DA V2.0
+
+      FeatLabel           FeatIndex   
+0     darkvision          228
+1     hardinesspoisons    229
+2     hardinessspells     230
+3     orctrain            231
+4     gobtrain            232
+5     gianttrain          233
+6     skillaffinitylore   234
+7     Race_Dwarven        4710
+8     FEAT_USE_POISON     960
+9     Resist_Fire_5       4743
+10    Hardiness_Poison3   4728 
+11    small               375

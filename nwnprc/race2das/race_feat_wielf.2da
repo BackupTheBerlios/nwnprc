@@ -7,9 +7,6 @@
 3     skillaffinitysearch    238         
 4     skillaffinityspot      239         
 5     keensense              240         
-6     darkvision             228         
-        
-8     Spell_Resist_11        4703       
-9     Race_Elven             4711
-10    Light_Blindness        4701
-   
+6     LowLightVision         354
+7     WeapProfElf            256                
+8     Race_Elven             4711

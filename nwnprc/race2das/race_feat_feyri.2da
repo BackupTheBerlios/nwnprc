@@ -1,0 +1,18 @@
+2DA V2.0
+
+      FeatLabel                            FeatIndex   
+0     immunitysleep                        235         
+1     hardinessenchantment                 236         
+2     skillaffinitylisten                  237         
+3     skillaffinitysearch                  238         
+4     skillaffinityspot                    239         
+5     FEAT_EPIC_ENERGY_RESISTANCE_FIRE_1   553      
+6     LowLightVision                       354
+7     WeapProfElf                          256                
+8     Race_Elven                           4711
+9     Race_Outsider                        4716         
+10    Damage_Reduction_10                  4747
+11    Hardiness_Electricity                4727
+12    hardinesspoisons                     229
+13    skillaffinityhide                    178         
+14    SkillAff_Bluff                       4753

@@ -1,6 +1,12 @@
 2DA V2.0
 
-     FeatLabel      FeatIndex 
-0    darkvision     228       
-1    WeapProfMar    45        
-2    Large_Creature 2006      
+     FeatLabel          FeatIndex 
+0    darkvision         228       
+1    WeapProfMar        45        
+2    WeapProfSim        46
+3    ArmProfMed         4
+4    ArmProfLgt         3
+5    Shield	        32
+6    Natural_Armor_5	4736
+7    Large_Creature	4760
+8    Race_Giant		4717

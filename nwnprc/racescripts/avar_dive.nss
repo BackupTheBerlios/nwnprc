@@ -59,7 +59,7 @@ void main()
               effect eDamage;
               string sMes = "";
               int bIsCritical = FALSE;
-              int iAttackRoll = GetAttackRoll(oTarget, oPC, oWeap, 0, 2, 0, TRUE, 3.1);
+              int iAttackRoll = GetAttackRoll(oTarget, oPC, oWeap, 0, 0, 2, TRUE, 3.1);
                     
               if(iAttackRoll == 2)  bIsCritical = TRUE;    
               eDamage = GetAttackDamage(oTarget, oPC, oWeap, sWeaponBonusDamage, sSpellBonusDamage, 0, 0, bIsCritical, iNumDice, iNumSides, iCritMult);

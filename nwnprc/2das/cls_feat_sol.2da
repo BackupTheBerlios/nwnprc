@@ -207,3 +207,17 @@
 203 FEAT_POSITIVE_ENERGY_BURST                     3146      3    8              1      
 204 FEAT_FAST_HEALING2                             3138      3    10             0      
 205 FEAT_SOL_SPELLBOOK                             3136      3    1              1      
+206 FocusedSpellPenetrCon                          3128      1    -1             0      
+207 FocusedSpellPenetrDiv                          3129      1    -1             0      
+208 FocusedSpellPenetrEnc                          3130      1    -1             0      
+209 FocusedSpellPenetrEvo                          3131      1    -1             0      
+210 FocusedSpellPenetrIll                          3132      1    -1             0      
+211 FocusedSpellPenetrNec                          3133      1    -1             0      
+212 FocusedSpellPenetrTra                          3134      1    -1             0      
+213 FocusedSpellPenetrAbj                          3135      1    -1             0      
+214 FEAT_EPIC_DIVINE_VIGOR                         3115      0    -1             1      
+215 FEAT_DIVINE_VIGOR                              3116      0    -1             1      
+216 FEAT_DIVINE_RESISTANCE                         3117      0    -1             1      
+217 FEAT_DIVINE_CLEANSING                          3118      0    -1             1      
+218 FEAT_EPIC_DIVINE_RESISTANCE                    3119      0    -1             1      
+219 FEAT_EPIC_DIVINE_MIGHT                         3120      0    -1             1      

@@ -85,8 +85,8 @@ int CalculateAttackBonus()
 int CalculateFortitudeBonus()
 {
    int iFort = GetFortitudeSavingThrow(OBJECT_SELF);
-   int iFigFort = GetHitDice(OBJECT_SELF) / 2 + 2;
-   int iBonus = iFigFort - iFort;
+   int iHD = GetHitDice(OBJECT_SELF);
+   int iBonus = ((iHD / 2 + 2) - iFort); // yep, this is the formula, trust me, look at the tables :)
    
    return (iBonus > 0) ? iBonus : 0;
 }

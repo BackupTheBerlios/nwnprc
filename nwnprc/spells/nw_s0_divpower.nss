@@ -33,6 +33,15 @@ still problem:
 
 #include "x2_inc_spellhook"
 
+int CalculateAttackBonus()
+{
+   int iBAB = GetBaseAttackBonus(OBJECT_SELF);
+   int iHD = GetHitDice(OBJECT_SELF);
+   int iBonus = (iHD > 20) ? ((20 + (iHD - 20) / 2) - iBAB) : (iHD - iBAB); // most confusing line ever. :)
+   
+   return (iBonus > 0) ? iBonus : 0;
+}
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
@@ -60,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nLevel = CasterLvl;
     int nHP = nLevel;
-    int nAttack = nLevel - ((nLevel/4)*3) ;
+    int nAttack = CalculateAttackBonus();
     int nStr = GetAbilityScore(oTarget, ABILITY_STRENGTH);
     int nStrength = (nStr - 18) * -1;
     if(nStrength < 0)

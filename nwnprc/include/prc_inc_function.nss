@@ -132,6 +132,7 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
     ExecuteScript("race_unarmed", oPC);
+    ExecuteScript("psi_powergain", oPC);
 }
 
 void DeletePRCLocalInts(object oSkin)
@@ -400,9 +401,12 @@ void ScrubPCSkin(object oPC, object oSkin)
             int st = GetItemPropertySubType(ip);
 
             // Spare 400 through 570 and 398 -- epic spells & spell effects
-            //also spare the new spellbook feats
+            //also spare the new spellbook feats (1000+)
+            //also spare the psionic feats (100-250)
             if ((st < 400 || st > 570) && st != 398
-                && (st < 100 || st > 250))
+                && st < 1000
+                && (st < 100 || st > 250)
+                )
                 RemoveItemProperty(oSkin, ip);
         }
         else

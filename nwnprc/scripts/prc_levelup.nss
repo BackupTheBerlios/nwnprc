@@ -29,6 +29,16 @@ void PrcFeats(object oPC)
 void main()
 {
     object oPC = GetPCLevellingUp();
+
+    //Used to determine what the last levelled class was
+    if(GetLevelByClass(PRCGetClassByPosition(1, oPC), oPC) != PRCGetLevelByPosition(1, oPC))
+        SetLocalInt(oPC, "LastLevelledClass", PRCGetClassByPosition(1, oPC));
+    else if(GetLevelByClass(PRCGetClassByPosition(2, oPC), oPC) != PRCGetLevelByPosition(2, oPC))
+        SetLocalInt(oPC, "LastLevelledClass", PRCGetClassByPosition(2, oPC));
+    else if(GetLevelByClass(PRCGetClassByPosition(3, oPC), oPC) != PRCGetLevelByPosition(3, oPC))
+        SetLocalInt(oPC, "LastLevelledClass", PRCGetClassByPosition(3, oPC));
+    DelayCommand(2.0, DeleteLocalInt(oPC, "LastLevelledClass"));
+
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
     DeletePRCLocalInts(oSkin);     
@@ -45,7 +55,7 @@ void main()
     ExecuteScript("prc_enforce_feat", oPC);
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
-    ExecuteScript("prc_enforce_psi", oPC);
+
     DelayCommand(1.0, FeatSpecialUsePerDay(oPC)); 
 
     // These scripts fire events that should only happen on levelup

@@ -33,8 +33,7 @@ void WipeSpellbookHideFeats(object oPC)
     while(GetIsItemPropertyValid(ipTest))
     {
         if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
-            && GetItemPropertySubType(ipTest) > 100
-            && GetItemPropertySubType(ipTest) < 250)
+            && GetItemPropertySubType(ipTest) > 999)
             RemoveItemProperty(oHide, ipTest);
         ipTest = GetNextItemProperty(oHide);
     }

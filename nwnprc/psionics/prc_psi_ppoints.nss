@@ -11,21 +11,13 @@
 
 #include "prc_feat_const"
 #include "prc_class_const"
+#include "inc_utility"
 
 // Returns Bonus Power Points gained from Abilities
 int GetModifierPP (object oCaster = OBJECT_SELF);
 
-// Returns Psion Power Points
-int GetPsionPP (object oCaster = OBJECT_SELF);
-
-// Returns Psychic Warrior Power Points
-int GetPsychicPP (object oCaster = OBJECT_SELF);
-
-// Returns Wilder Power Points
-int GetWilderPP (object oCaster = OBJECT_SELF);
-
-// Returns Total Power Points
-int GetTotalPP (object oCaster = OBJECT_SELF);
+// Returns Power Points derived from a specific class
+int GetPPForClass (object oCaster, int nClass);
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -58,112 +50,28 @@ int GetModifierPP (object oCaster)
    return nPP;
 }
 
-int GetPsionPP (object oCaster)
+int GetPPForClass (object oCaster, int nClass)
 {
-   int nPP;
-   int nClass = GetLevelByClass(CLASS_TYPE_PSION, oCaster);
-   switch (nClass)
-   {
-           case 1: nPP = 2; break;
-           case 2: nPP = 6; break;
-           case 3: nPP = 11; break;
-           case 4: nPP = 17; break;
-           case 5: nPP = 25; break;
-           case 6: nPP = 35; break;
-           case 7: nPP = 46; break;
-           case 8: nPP = 58; break;
-           case 9: nPP = 72; break;
-           case 10: nPP = 88; break;
-           case 11: nPP = 106; break;
-           case 12: nPP = 126; break;
-           case 13: nPP = 147; break;
-           case 14: nPP = 170; break;
-           case 15: nPP = 195; break;
-           case 16: nPP = 221; break;
-           case 17: nPP = 250; break;
-           case 18: nPP = 280; break;
-           case 19: nPP = 311; break;
-           case 20: nPP = 343; break;           
-    }
-    if (nClass > 20) nPP = 343;
+    int nPP;
+    int nLevel = GetLevelByClass(nClass, oCaster);
+    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
+    sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    nPP = StringToInt(Get2DACache(sPsiFile, "PowerPoints", nLevel-1));
     
     return nPP;
 }
 
-int GetPsychicPP (object oCaster)
-{
-   int nPP;
-   int nClass = GetLevelByClass(CLASS_TYPE_PSYWARRIOR, oCaster);
-   switch (nClass)
-   {
-           case 1: nPP = 0; break;
-           case 2: nPP = 1; break;
-           case 3: nPP = 3; break;
-           case 4: nPP = 5; break;
-           case 5: nPP = 7; break;
-           case 6: nPP = 11; break;
-           case 7: nPP = 15; break;
-           case 8: nPP = 19; break;
-           case 9: nPP = 23; break;
-           case 10: nPP = 27; break;
-           case 11: nPP = 35; break;
-           case 12: nPP = 43; break;
-           case 13: nPP = 51; break;
-           case 14: nPP = 59; break;
-           case 15: nPP = 67; break;
-           case 16: nPP = 79; break;
-           case 17: nPP = 91; break;
-           case 18: nPP = 103; break;
-           case 19: nPP = 115; break;
-           case 20: nPP = 127; break;           
-    }
-    if (nClass > 20) nPP = 127;
-    
-    return nPP;
-}
-
-int GetWilderPP (object oCaster)
-{
-   int nPP;
-   int nClass = GetLevelByClass(CLASS_TYPE_WILDER, oCaster);
-   switch (nClass)
-   {
-           case 1: nPP = 2; break;
-           case 2: nPP = 6; break;
-           case 3: nPP = 11; break;
-           case 4: nPP = 17; break;
-           case 5: nPP = 25; break;
-           case 6: nPP = 35; break;
-           case 7: nPP = 46; break;
-           case 8: nPP = 58; break;
-           case 9: nPP = 72; break;
-           case 10: nPP = 88; break;
-           case 11: nPP = 106; break;
-           case 12: nPP = 126; break;
-           case 13: nPP = 147; break;
-           case 14: nPP = 170; break;
-           case 15: nPP = 195; break;
-           case 16: nPP = 221; break;
-           case 17: nPP = 250; break;
-           case 18: nPP = 280; break;
-           case 19: nPP = 311; break;
-           case 20: nPP = 343; break;           
-    }
-    if (nClass > 20) nPP = 343;
-    
-    return nPP;
-}
 
 int GetTotalPP (object oCaster)
 {
     //Variables
     int nPP;
    
-    nPP		  += GetPsionPP(oCaster)
-    		  +  GetPsychicPP(oCaster)
-      		  +  GetWilderPP(oCaster);
+    nPP += GetPPForClass(oCaster, CLASS_TYPE_PSION);
+    nPP += GetPPForClass(oCaster, CLASS_TYPE_WILDER);
+    nPP += GetPPForClass(oCaster, CLASS_TYPE_PSYWARRIOR);
       		  
-    if (nPP > 343) nPP = 343;
+//    if (nPP > 343) nPP = 343;
       		  
     nPP = nPP + GetModifierPP(oCaster);
     

@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
+    int nAugCost = 2;
     int nAugment = GetLocalInt(oCaster, "Augment");
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     
@@ -71,9 +71,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	location lTarget = GetSpellTargetLocation();
-	int nDamage = (d6(1) - 1);
-	effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
-	effect eExplode = EffectVisualEffect(VFX_FNF_SOUND_BURST);
+	int nDamage = (d6(1) + 1);
+	effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
+	effect eExplode = EffectVisualEffect(VFX_FNF_ICESTORM);
 	
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
 	effect eDaze = EffectStunned();
@@ -88,7 +88,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	//Augmentation effects to Damage
 	if (nAugment > 0) 
 	{
-		nDamage += (d6(nAugment) - nAugment);
+		nDamage += (d6(nAugment) + nAugment);
 		nDC += nAugment;
 	}
 	
@@ -101,7 +101,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		
 		if (PRCMyResistPower(oCaster, oTarget, nCaster))
 		{
-		        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
+		        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD))
 		        {
 			        nDamage /= 2;
 	               	}		
@@ -109,7 +109,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 			{
 				DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(1),TRUE,-1,nCaster));
 			}
-			effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_SONIC);	               	
+			effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_COLD);	               	
 	               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
 	               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 		}

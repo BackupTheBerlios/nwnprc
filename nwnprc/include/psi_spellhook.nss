@@ -16,6 +16,7 @@
 //#include "x2_inc_itemprop" - Inherited from x2_inc_craft
 #include "x2_inc_craft"
 #include "prc_inc_spells"
+#include "x2_inc_spellhook"
 //#include "prc_class_const"
 
 
@@ -24,107 +25,6 @@
 // and the spellscript will not run
 int PsiPrePowerCastCode();
 
-
-// check if the spell is prohibited from being cast on items
-// returns FALSE if the spell was cast on an item but is prevented
-// from being cast there by its corresponding entry in des_crft_spells
-// oItem - pass GetSpellTargetObject in here
-int X2CastOnItemWasAllowed(object oItem);
-
-int X2RunUserDefinedSpellScript();
-
-
-int X2UseMagicDeviceCheck()
-{
-    int nRet = ExecuteScriptAndReturnInt("x2_pc_umdcheck",OBJECT_SELF);
-    return nRet;
-}
-
-//------------------------------------------------------------------------------
-// GZ: This is a filter I added to prevent spells from firing their original spell
-// script when they were cast on items and do not have special coding for that
-// case. If you add spells that can be cast on items you need to put them into
-// des_crft_spells.2da
-//------------------------------------------------------------------------------
-int X2CastOnItemWasAllowed(object oItem)
-{
-    int bAllow = (Get2DAString(X2_CI_CRAFTING_SP_2DA,"CastOnItems",GetSpellId()) == "1");
-    if (!bAllow)
-    {
-        FloatingTextStrRefOnCreature(83453, OBJECT_SELF); // not cast spell on item
-    }
-    return bAllow;
-
-}
-
-//------------------------------------------------------------------------------
-// Execute a user overridden spell script.
-//------------------------------------------------------------------------------
-int X2RunUserDefinedSpellScript()
-{
-    // See x2_inc_switches for details on this code
-    string sScript =  GetModuleOverrideSpellscript();
-    if (sScript != "")
-    {
-        ExecuteScript(sScript,OBJECT_SELF);
-        if (GetModuleOverrideSpellScriptFinished() == TRUE)
-        {
-            return FALSE;
-        }
-    }
-    return TRUE;
-}
-
-//------------------------------------------------------------------------------
-// Set the user-specific spell script
-//------------------------------------------------------------------------------
-void PRCSetUserSpecificSpellScript(string sScript)
-{
-    SetLocalString(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT", sScript);
-}
-
-//------------------------------------------------------------------------------
-// Get the user-specific spell script
-//------------------------------------------------------------------------------
-string PRCGetUserSpecificSpellScript()
-{
-    return GetLocalString(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT");
-}
-
-//------------------------------------------------------------------------------
-// Finish the spell, if necessary
-//------------------------------------------------------------------------------
-void PRCSetUserSpecificSpellScriptFinished()
-{
-    SetLocalInt(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT_DONE", TRUE);
-}
-
-//------------------------------------------------------------------------------
-// Figure out if we should finish the spell.
-//------------------------------------------------------------------------------
-int PRCGetUserSpecificSpellScriptFinished()
-{
-    int iRet = GetLocalInt(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT_DONE");
-    DeleteLocalInt(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT_DONE");
-    return iRet;
-}
-
-//------------------------------------------------------------------------------
-// Run a user-specific spell script for classes that use spellhooking.
-//------------------------------------------------------------------------------
-int PRCRunUserSpecificSpellScript()
-{
-    string sScript = PRCGetUserSpecificSpellScript();
-    if (sScript != "")
-    {
-        ExecuteScript(sScript,OBJECT_SELF);
-        if (PRCGetUserSpecificSpellScriptFinished() == TRUE)
-        {
-            return FALSE;
-        }
-    }
-    return TRUE;
-}
 
 //------------------------------------------------------------------------------
 // if FALSE is returned by this function, the spell will not be cast

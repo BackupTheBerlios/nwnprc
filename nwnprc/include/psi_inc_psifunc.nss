@@ -11,22 +11,20 @@
 
 #include "prc_feat_const"
 #include "prc_class_const"
+#include "prc_power_const"
 #include "lookup_2da_spell"
+#include "prc_inc_clsfunc"
 
 // Returns the Manifesting Class
+// GetCasterClass wont work, so the casting class is set via a localint
 int GetManifestingClass(object oCaster = OBJECT_SELF);
 
 // Returns Manifester Level
 int GetManifesterLevel(object oCaster = OBJECT_SELF);
 
-// Checks to see if it is a Psychic Warrior
-// Power with a power level lower than its level
-// for Psion/Wilder.
-int PsychicWarriorLevel(int nSpell);
-
 // Returns the level of a Power
 // Used for Power cost and DC
-int GetPowerLevel();
+int GetPowerLevel(object oCaster);
 
 // Returns the psionic DC
 int GetManifesterDC(object oCaster = OBJECT_SELF);
@@ -48,6 +46,18 @@ int GetIsTelepathyPower();
 // amount if the target of the spell is a Wilder
 int VolatileMind(object oTarget, object oCaster);
 
+// Returns the number of powers a character posseses from a specific class
+int GetPowerCount(object oPC, int nClass);
+
+// Checks the feat.2da prereqs for a specific power
+// Only deals with AND/OR feat requirements at the moment
+// Also checks that the PC doesnt already have the feat
+int CheckPowerPrereqs(int nFeat, object oPC);
+
+// Run this to specify what class is casting it and then it will cheat-cast the real
+// power.
+void UsePower(int nPower, int nClass);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -55,32 +65,38 @@ int VolatileMind(object oTarget, object oCaster);
 
 int GetManifestingClass(object oCaster)
 {
-
-	int nPsion = GetLevelByClass(CLASS_TYPE_PSION, oCaster);
-	int nPsychic = GetLevelByClass(CLASS_TYPE_PSYWARRIOR, oCaster);
-	int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oCaster);
-	int nClass;
-	int nLevel = GetCasterLevel(oCaster);
-	
-	if (nLevel == 0) 		nClass = GetClassByPosition(1, oCaster);
-	else if (nLevel == nPsion)	nClass = CLASS_TYPE_PSION;
-	else if (nLevel == nWilder) 	nClass = CLASS_TYPE_WILDER;
-	else if (nLevel == nPsychic) 	nClass = CLASS_TYPE_PSYWARRIOR;
-
-	FloatingTextStringOnCreature("Manifesting Class: " + IntToString(nClass), oCaster, FALSE);	
-	
-	return nClass;
-
+      return GetLocalInt(oCaster, "ManifestingClass");
 }
 
 int GetManifesterLevel(object oCaster)
 {
+    int nLevel;
+    // Item Spells
+    if (GetItemPossessor(GetSpellCastItem()) == oCaster)
+    {
+        //SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
+        
+        return GetCasterLevel(oCaster);
+    }
+
+    // For when you want to assign the caster level.
+    else if (GetLocalInt(oCaster, "PRC_Castlevel_Override") != 0)
+    {
+        //SendMessageToPC(oCaster, "Forced-level manifesting at level " + IntToString(GetCasterLevel(oCaster)));
+
+        DelayCommand(1.0, DeleteLocalInt(oCaster, "PRC_Castlevel_Override"));
+        nLevel = GetLocalInt(oCaster, "PRC_Castlevel_Override");
+    }
+    else
+    {
 	//Gets the level of the manifesting class
-	int nLevel = GetCasterLevel(oCaster);
-	int nSurge = GetLocalInt(oCaster, "WildSurge");
-	
+	int nLevel = GetLevelByClass(GetManifestingClass(oCaster), oCaster);
+    }
+      
 	if (nLevel == 0)	nLevel = GetLevelByPosition(1, oCaster);
-	
+
+      //Adding wild surge
+	int nSurge = GetLocalInt(oCaster, "WildSurge");
 	if (nSurge > 0) nLevel = nLevel + nSurge;
 	
 	//FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oCaster, FALSE);
@@ -88,24 +104,27 @@ int GetManifesterLevel(object oCaster)
 	return nLevel;
 }
 
-
-int PsychicWarriorLevel(int nSpell)
+int GetPowerLevel(object oCaster)
 {
-	if (nSpell == 2372 || nSpell == 2377 || nSpell == 2412 || nSpell == 2415)
-	{
-		return TRUE;
-	}
-	
-	return FALSE;
+      return GetLocalInt(oCaster, "PowerLevel");
 }
 
-int GetPowerLevel()
+int GetAbilityScoreOfClass(object oCaster, int nClass)
 {
-	int nSpell = GetSpellId();
-	int nLevel = StringToInt(lookup_spell_innate(nSpell));
-	int nPsychic = PsychicWarriorLevel(nSpell);
-	if (nPsychic) nLevel -= 1;
-	return nLevel;
+    int nScore;
+    switch(nClass)
+    {
+        case CLASS_TYPE_PSION:
+            nScore = GetAbilityScore(oCaster, ABILITY_INTELLIGENCE);
+            break;
+        case CLASS_TYPE_WILDER:
+            nScore = GetAbilityScore(oCaster, ABILITY_CHARISMA);
+            break;
+        case CLASS_TYPE_PSYWARRIOR:
+            nScore = GetAbilityScore(oCaster, ABILITY_WISDOM);
+            break;
+    }
+    return nScore;
 }
 
 
@@ -114,24 +133,31 @@ int GetManifesterDC(object oCaster)
 
 	int nClass = GetManifestingClass(oCaster);
 	int nDC = 10;
-	nDC = nDC + GetPowerLevel();
-	
-	if (nClass == CLASS_TYPE_PSION)			nDC = nDC + GetAbilityModifier(ABILITY_INTELLIGENCE, oCaster);
-	else if (nClass == CLASS_TYPE_WILDER)		nDC = nDC + GetAbilityModifier(ABILITY_CHARISMA, oCaster);
-	else if (nClass == CLASS_TYPE_PSYWARRIOR)	nDC = nDC + GetAbilityModifier(ABILITY_WISDOM, oCaster);
-
+	nDC += GetPowerLevel(oCaster);
+      nDC += (GetAbilityScoreOfClass(oCaster, nClass) - 10)/2;
+      
 	return nDC;
 }
 
 int GetCanManifest(object oCaster, int nAugCost, object oTarget = OBJECT_SELF)
 {
-    int nLevel = GetPowerLevel();
+
+//    SendMessageToPC(GetFirstPC(), "Manifesting power "+IntToString(GetSpellId()));
+
+    int nLevel = GetPowerLevel(oCaster);
     int nAugment = GetLocalInt(oCaster, "Augment");
     int nPP = GetLocalInt(oCaster, "PowerPoints");
     int nPPCost;
     int nCanManifest = TRUE;
     int nVolatile = VolatileMind(oTarget, oCaster);
+    int nClass = GetManifestingClass(oCaster);
     
+    if(GetAbilityScoreOfClass(oCaster, nClass) - 10 < nLevel)
+    {
+        FloatingTextStringOnCreature("You do not have a high enough ability score to manifest this power", oCaster, FALSE);    
+        nCanManifest = FALSE;
+    }
+
     //Sets Power Point cost based on power level
     if (nLevel == 1) nPPCost = 1;
     else if (nLevel == 2) nPPCost = 3;
@@ -150,7 +176,7 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget = OBJECT_SELF)
     if (nVolatile > 0) nPPCost += nVolatile;
     
     // If PP Cost is greater than Manifester level
-    if (GetManifesterLevel(oCaster) >= nPPCost)
+    if (GetManifesterLevel(oCaster) >= nPPCost && nCanManifest)
     {
     	//If Manifest does not have enough points, cancel power
     	if (nPPCost > nPP) 
@@ -239,7 +265,7 @@ int VolatileMind(object oTarget, object oCaster)
 	{
 		if (GetIsEnemy(oTarget, oCaster))
 		{
-			if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_4, oTarget)) nCost = 4;
+			if      (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_4, oTarget)) nCost = 4;
 			else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_3, oTarget)) nCost = 3;
 			else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_2, oTarget)) nCost = 2;
 			else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_1, oTarget)) nCost = 1;
@@ -248,4 +274,50 @@ int VolatileMind(object oTarget, object oCaster)
 	
 	//FloatingTextStringOnCreature("Volatile Mind Cost: " + IntToString(nCost), oTarget, FALSE);
 	return nCost;
+}
+
+
+int CheckPowerPrereqs(int nFeat, object oPC)
+{
+    if(GetHasFeat(nFeat, oPC))
+        return FALSE;
+    if(Get2DACache("feat", "PREREQFEAT1", nFeat) != ""
+        && !GetHasFeat(StringToInt(Get2DACache("feat", "PREREQFEAT1", nFeat)), oPC))
+        return FALSE;
+    if(Get2DACache("feat", "PREREQFEAT2", nFeat) != ""
+        && !GetHasFeat(StringToInt(Get2DACache("feat", "PREREQFEAT2", nFeat)), oPC))
+        return FALSE;
+    if(    (Get2DACache("feat", "OrReqFeat0", nFeat) != ""
+               && !GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat0", nFeat)), oPC))
+        || (Get2DACache("feat", "OrReqFeat1", nFeat) != ""
+               && !GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat1", nFeat)), oPC))
+        || (Get2DACache("feat", "OrReqFeat2", nFeat) != ""
+               && !GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat2", nFeat)), oPC))
+        || (Get2DACache("feat", "OrReqFeat3", nFeat) != ""
+               && !GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat3", nFeat)), oPC))
+        || (Get2DACache("feat", "OrReqFeat4", nFeat) != ""
+               && !GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat4", nFeat)), oPC))
+      )
+        return FALSE;
+    //if youve reached this far then return TRUE
+    return TRUE;
+}
+
+int GetPowerCount(object oPC, int nClass)
+{
+    if(!persistant_array_exists(oPC, "PsiPowerCount"))
+        return 0;
+    return persistant_array_get_int(oPC, "PsiPowerCount", nClass);
+}
+
+void UsePower(int nPower, int nClass)
+{
+//    SendMessageToPC(OBJECT_SELF, "Manifesting power "+IntToString(nPower));
+    //set the class
+    SetLocalInt(OBJECT_SELF, "ManifestingClass", nClass);
+//    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "ManifestingClass"));
+    //set the spell power
+    SetLocalInt(OBJECT_SELF, "PowerLevel", StringToInt(lookup_spell_innate(GetSpellId())));
+    //pass in the spell
+    ActionCastSpell(nPower);
 }

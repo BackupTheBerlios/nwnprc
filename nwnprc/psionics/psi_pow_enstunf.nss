@@ -1,8 +1,8 @@
 /*
    ----------------
-   Energy Stun Electricity
+   Energy Stun Fire
    
-   prc_all_enstune
+   prc_all_enstunf
    ----------------
 
    6/11/04 by Stratovarius
@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
+    int nAugCost = 2;
     int nAugment = GetLocalInt(oCaster, "Augment");
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     
@@ -68,12 +68,12 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (GetCanManifest(oCaster, nAugCost)) 
     {
-	int nDC = (GetManifesterDC(oCaster) + 2);
+	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	location lTarget = GetSpellTargetLocation();
-	int nDamage = d6(1);
-	effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
-	effect eExplode = EffectVisualEffect(VFX_FNF_ELECTRIC_EXPLOSION);
+	int nDamage = (d6(1) + 1);
+	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
+	effect eExplode = EffectVisualEffect(VFX_FNF_FIREBALL);
 	
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
 	effect eDaze = EffectStunned();
@@ -88,7 +88,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	//Augmentation effects to Damage
 	if (nAugment > 0) 
 	{
-		nDamage += d6(nAugment);
+		nDamage += (d6(nAugment) + nAugment);
 		nDC += nAugment;
 	}
 	
@@ -99,9 +99,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 		fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
 		
-		if (PRCMyResistPower(oCaster, oTarget, (nCaster + 2)))
+		if (PRCMyResistPower(oCaster, oTarget, nCaster))
 		{
-		        if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_ELECTRICITY))
+		        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_FIRE))
 		        {
 			        nDamage /= 2;
 	               	}		
@@ -109,7 +109,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 			{
 				DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(1),TRUE,-1,nCaster));
 			}
-			effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ELECTRICAL);	               	
+			effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);	               	
 	               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
 	               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 		}

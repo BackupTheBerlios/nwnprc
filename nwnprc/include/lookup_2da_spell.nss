@@ -2,12 +2,15 @@
 ** Spell lookup&caching code by DarkGod
 ** Because the engine sucks so badly ...
 */
+#include "inc_utility"
 
 const string PRC_CACHE_SUB_STRING = "NULL";
 
 string
 lookup_and_cache_spell_field(int spell_id, string tag_base, string column, object oModule = OBJECT_INVALID)
 {
+//modifed by Primogenitor to a more general 2da caching system
+/*
 	// Verify the module
 	if (!GetIsObjectValid(oModule))
 		oModule = GetModule();
@@ -38,6 +41,8 @@ lookup_and_cache_spell_field(int spell_id, string tag_base, string column, objec
 		val = "";
 
 	return val;
+*/
+      return Get2DACache("spells", column, spell_id);
 }
 
 string

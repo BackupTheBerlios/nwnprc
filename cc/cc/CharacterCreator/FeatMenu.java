@@ -275,6 +275,24 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 
 		boolean extra = false;
 
+		// Verify we satisfy the min level requirement
+		if (feat.MinLevel > 1) {
+			if (extra)
+				System.out.println("Feat feat requirements aren't satisfied: " + feat.Feat);
+
+			return false;
+		}
+
+		// Verify we satisfy the min level class requirement
+		// W
+		if (feat.MinLevel > 0 && feat.MinLevelClass > -1
+				&& Integer.parseInt(menucreate.MainCharDataAux[3][classes.Index]) != feat.MinLevelClass) {
+			if (extra)
+				System.out.println("Feat feat requirements aren't satisfied: " + feat.Feat);
+
+			return false;
+		}
+
 		// Next we check to see if we satisfy the one _or_ the other requirements
 		int[] altreq = new int[5];
 		altreq[0] = feat.OrReqFeat0;

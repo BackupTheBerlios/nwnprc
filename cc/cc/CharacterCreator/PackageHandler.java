@@ -575,6 +575,23 @@ public class PackageHandler {
 
 		boolean extra = false;
 
+		// Verify we satisfy the min level requirement
+		if (feat.MinLevel > 1) {
+			if (extra)
+				System.out.println("Feat feat requirements aren't satisfied: " + feat.Feat);
+
+			return false;
+		}
+
+		// Verify we satisfy the min level class requirement
+		if (feat.MinLevel > 0 && feat.MinLevelClass > -1
+				&& Integer.parseInt(menucreate.MainCharDataAux[3][classes.Index]) != feat.MinLevelClass) {
+			if (extra)
+				System.out.println("Feat feat requirements aren't satisfied: " + feat.Feat);
+
+			return false;
+		}
+
 		// Next we check to see if we satisfy the one _or_ the other requirements
         LinkedList altreq = new LinkedList();
 		if (feat.OrReqFeat0 > -1)

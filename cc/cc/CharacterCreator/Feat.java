@@ -34,6 +34,8 @@ public class Feat implements Comparable {
 	public int ReqSkillMinRanks;
 	public int ReqSkill2;
 	public int ReqSkillMinRanks2;
+    public int MinLevel;
+    public int MinLevelClass;
 	public int MinFortSave;
 	public boolean PreReqEpic;
 
@@ -145,6 +147,8 @@ public class Feat implements Comparable {
 		ReqSkillMinRanks = ChkHex.ChkHex(data[MINSKILLRANKS], 0);
 		ReqSkill2 = ChkHex.ChkHex(data[REQSKILL2], -1);
 		ReqSkillMinRanks2 = ChkHex.ChkHex(data[MINSKILLRANKS2], 0);
+		MinLevel = ChkHex.ChkHex(data[MINLEVEL], 0);
+		MinLevelClass = ChkHex.ChkHex(data[MINLEVELCLASS], -1);
 		MinFortSave = ChkHex.ChkHex(data[MINFORTSAVE], 0);
 		PreReqEpic = (ChkHex.ChkHex(data[PREREQEPIC]) == 1);
 	}

@@ -4,6 +4,10 @@
 0          Base_Attack         BAB       5                ****  
 1          Orc                 RACE      14               **** 
 2          Half-orc            RACE      5                **** 
-3          Blood_warlord       FEAT      4608             ****                       
-5          ScriptVar           VAR       PRC_AllowOrcWar  0 
+3          Blood_warlord       FEAT      4608             ****   
+4          Intimidate          SKILL     24               8
+5          Discipline          SKILL     3                5
+6          Taunt               SKILL     18               5
+7          Rage                FEAT      293              ****
+8          ScriptVar           VAR       PRC_AllowOrcWar  0 
 

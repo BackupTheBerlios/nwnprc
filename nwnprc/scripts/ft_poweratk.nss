@@ -77,7 +77,7 @@ void main()
    if(!iSpell )
    {
       int nDamageBonusType = GetDamageTypeOfWeapon(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
-      int iDmg,iHit;
+      int iDmg,iHit,iDex;
 
        if (nSpell == SPELL_POWER_ATTACK1)      {  iHit = 1;}
        else if (nSpell == SPELL_POWER_ATTACK2) {  iHit = 2;}
@@ -92,14 +92,14 @@ void main()
 
       if(GetHasFeat(FEAT_FOCUSED_STRIKE))
       {
-        int iDex = GetAbilityModifier(ABILITY_DEXTERITY)>0 ? GetAbilityModifier(ABILITY_DEXTERITY):0 ;
+        iDex = GetAbilityModifier(ABILITY_DEXTERITY)>0 ? GetAbilityModifier(ABILITY_DEXTERITY):0 ;
         if (iDex>iHit) iDex=iHit;
-        iDmg = BonusAtk(iHit+iDex);
-      }
-      else
-        iDmg = BonusAtk(iHit);
         
-       if (GetHasFeat(FEAT_SUPREME_POWER_ATTACK)) iDmg = iDmg*2;
+      }
+             
+       if (GetHasFeat(FEAT_SUPREME_POWER_ATTACK)) iHit = iHit*2;
+       
+       iDmg = BonusAtk(iHit+iDex);
 
        eDamage = EffectDamageIncrease(iDmg, nDamageBonusType);
        eToHit = EffectAttackDecrease(iHit);

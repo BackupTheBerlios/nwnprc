@@ -23,11 +23,14 @@
 
 void TurnBasedDamage(object oTarget, object oCaster);
 void AttackNearestForDuration();
+void EndOfFrenzyDamage(object oSelf);
 
 void main()
 {
     if(!GetHasFeatEffect(FEAT_FRENZY))
-    {	    
+    {
+        SetLocalInt(OBJECT_SELF, "PC_Damage", 0);
+        
         // Declare major variables
         int nLevel = GetLevelByClass(CLASS_TYPE_FRE_BERSERKER);
         int nIncrease;
@@ -36,6 +39,11 @@ void main()
         int nSlot;  // for checking armor slots
 
         object oTarget = GetSpellTargetObject();
+        
+        if(GetHasFeat(FEAT_DEATHLESS_FRENZY, oTarget) )
+        {
+             SetImmortal(oTarget, TRUE);
+        }
         
         // Removes effects of being winded
         RemoveSpecificEffect(EFFECT_TYPE_ABILITY_DECREASE, oTarget);
@@ -124,6 +132,8 @@ void main()
             object oSelf = OBJECT_SELF; // because OBJECT_SELF is a function
             DelayCommand(6.0f,TurnBasedDamage(oTarget, oSelf) );
             AttackNearestForDuration();
+            
+            DelayCommand(RoundsToSeconds(nCon), EndOfFrenzyDamage(oSelf) );
 
             // 2004-01-18 mr_bumpkin: determine the ability scores before adding bonuses, so the values
             // can be read in by the GiveExtraRageBonuses() function below.
@@ -138,6 +148,17 @@ void main()
             DelayCommand(0.1, GiveExtraRageBonuses(nCon,StrBeforeBonuses, ConBeforeBonuses, nIncrease, 0, 0, DAMAGE_TYPE_DIVINE, OBJECT_SELF));
         }
     }
+}
+
+void EndOfFrenzyDamage(object oSelf)
+{
+     SetImmortal(oSelf, FALSE);
+     
+     int iDam = GetLocalInt(oSelf, "PC_Damage");
+     effect eDam = EffectDamage(iDam, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
+     ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSelf);
+     
+     SetLocalInt(oSelf, "PC_Damage", 0);
 }
 
 void TurnBasedDamage(object oTarget, object oCaster)

@@ -53,7 +53,36 @@ void main()
         FloatingTextStringOnCreature(sFeedback, oDying);
 
    }
+   
+    // Code added by Oni5115 for Remain Concious
+    if(GetHasFeat(FEAT_REMAIN_CONSCIOUS, oDying) && GetCurrentHitPoints(oDying) > -10)
+    {
+         int pc_Damage = (GetCurrentHitPoints(oDying) * -1) + 1;
+         int prev_Damage = GetLocalInt(oDying, "PC_Damage");
+         
+         // Store damage taken in a local variable
+         pc_Damage = pc_Damage + prev_Damage;
+         SetLocalInt(oDying, "PC_Damage", pc_Damage);
 
-    effect eDeath = EffectDeath(FALSE, FALSE);
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, GetLastPlayerDying());
+         if(pc_Damage < 10)
+         {
+              ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectResurrection(), oDying);
+         }
+         else
+         {
+              effect eDeath = EffectDeath(FALSE, FALSE);
+              ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, GetLastPlayerDying());
+              SetLocalInt(oDying, "PC_Damage", 0);
+         }
+
+         string sFeedback = GetName(oDying) + " : Current HP = " + IntToString(pc_Damage * -1);
+         SendMessageToPC(oDying, sFeedback);
+    } 
+    else
+    {    
+         // Standard death effect from BioWare
+         effect eDeath = EffectDeath(FALSE, FALSE);
+         ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, GetLastPlayerDying());
+         SetLocalInt(oDying, "PC_Damage", 0);
+    }
 }

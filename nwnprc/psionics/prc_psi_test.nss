@@ -1,32 +1,34 @@
-#include "prc_psi_func"
-#include "spinc_common"
-#include "NW_I0_SPELLS"
+#include "prc_inc_psifunc"
+#include "prc_inc_psionic"
+#include "X0_I0_SPELLS"
 
 void main()
 {
-    object oCaster = OBJECT_SELF;
-    int nPP = GetLocalInt(oCaster, "PowerPoints");
-    int nAugCost = 1;
-    int nPPCost = GetPowerCost(oCaster, nAugCost);
+DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
+SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 
-    if (nPP >= nPPCost) 
+    object oCaster = OBJECT_SELF;
+    int nAugCost = 1;
+    
+    if (GetCanManifest(oCaster, nAugCost)) 
     {
-	nPP = nPP - nPPCost;
-        FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
-        SetLocalInt(oCaster, "PowerPoints", nPP);
-	
 	int nDC = GetManifesterDC(oCaster);
 	object oTarget = GetSpellTargetObject();
-
+	
+	//Check for Power Resistance
+	if (PRCMyResistPower(oCaster, oTarget, GetManifesterLevel(oCaster)))
+	{
+	FloatingTextStringOnCreature("Target has failed its Power Resistance Check", oCaster, FALSE);
+		
+		//Check saving throw
                 if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NEGATIVE))
                 {
-			FloatingTextStringOnCreature("Target has made its save vs " + IntToString(nDC), oCaster, FALSE);
+			FloatingTextStringOnCreature("Target has made its save vs DC " + IntToString(nDC), oCaster, FALSE);
                 }
-	        FloatingTextStringOnCreature("Target has failed its save " + IntToString(nDC), oCaster, FALSE);
+		else
+		{
+		        FloatingTextStringOnCreature("Target has failed its save vs DC " + IntToString(nDC), oCaster, FALSE);
+		}
+	}
     }
-    else
-    {
-        FloatingTextStringOnCreature("You do not have enough Power Points remaining to cast this spell", oCaster, FALSE);	
-    }
-
 }

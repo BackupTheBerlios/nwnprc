@@ -51,11 +51,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Enter Metamagic conditions
     if (nMetaMagic == METAMAGIC_MAXIMIZE)
     {
-        int nDam = 16;//Damage is at max
+       nDam = 16;//Damage is at max
     }
     else if (nMetaMagic == METAMAGIC_EMPOWER)
     {
-        int nDam =  nDam + (nDam/2); //Damage/Healing is +50%
+       nDam =  nDam + (nDam/2); //Damage/Healing is +50%
     }
     eDam = EffectDamage(nDam, ChangedElementalDamage(aoeCreator, DAMAGE_TYPE_ACID));
     if(spellsIsTarget(oTarget,SPELL_TARGET_STANDARDHOSTILE , aoeCreator) )

@@ -29,7 +29,7 @@ void IPEnhancementBonus(object oWeap)
  
 }
 
-void WeapEnh()
+/* void WeapEnh()
 {
    object oPC = OBJECT_SELF;
    
@@ -45,7 +45,7 @@ void WeapEnh()
        IPEnhancementBonus(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC));
        IPEnhancementBonus(GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC));
     }  	
-}
+}*/
 
 void Sanctify()
 {
@@ -565,5 +565,5 @@ void main()
    }
 
    Vile();
-   WeapEnh();
+   //WeapEnh();
 }

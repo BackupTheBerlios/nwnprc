@@ -29,30 +29,34 @@ void main()
     int iRegenBonus = 0;
     if(nBldarch > 3) iRegenBonus++;
     if(nBldarch > 6) iRegenBonus++;
-    
+
     SetCompositeBonus(oSkin, "BloodArcherRegen", iRegenBonus, ITEM_PROPERTY_REGENERATION);
 
     // Determine Blood Bow Bonus
     int iBloodBowBonus = nBldarch / 3;
     if (iEquip ==1)  iBloodBowBonus = 0;
-    
+
     // Select last item equiped or unequiped.
     if (iEquip ==1)  oItem = GetPCItemLastUnequipped();
     else             oItem = GetPCItemLastEquipped();
-    
-    // Apply proper modifications to item
-    int iItemType = GetBaseItemType(oItem);
-    switch (iItemType)
-    {
-         case BASE_ITEM_LONGBOW:
-         case BASE_ITEM_SHORTBOW:
-              SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
-              SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);
-              break;
-         
-         case BASE_ITEM_ARMOR:
-              if (iEquip ==1)  RemoveSpecificProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", -1, DURATION_TYPE_TEMPORARY);
-              else             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-              break;
-    }
+
+    //if the item unequiped was destryed, the bow will sometimes loss its bonuses
+    //it would apper that the next item along is being targeted, but when check it dosnt apare to be the bow
+    //but is a valid object :\
+
+	// Apply proper modifications to item
+	int iItemType = GetBaseItemType(oItem);
+	switch (iItemType)
+	{
+		 case BASE_ITEM_LONGBOW:
+		 //case BASE_ITEM_SHORTBOW:
+			  SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
+			  SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);
+			  break;
+
+		 case BASE_ITEM_ARMOR:
+			  if (iEquip ==1)  RemoveSpecificProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", -1, DURATION_TYPE_TEMPORARY);
+			  else             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+			  break;
+	}
 }

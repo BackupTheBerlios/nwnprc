@@ -22,71 +22,84 @@ int isNotShield(object oItem)
      if(GetBaseItemType(oItem) == BASE_ITEM_LARGESHIELD)       isNotAShield == 0;
      else if (GetBaseItemType(oItem) == BASE_ITEM_TOWERSHIELD) isNotAShield == 0;
      else if (GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD) isNotAShield == 0;
-     
+
      return isNotAShield;
 }
+
+void FlurryAll(object oPC)
+{
+          string nMesA = "";
+          object oArmorA = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+          object oWeapRA = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+          object oWeapLA = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+
+          int armorTypeA = GetArmorType(oArmorA);
+          int iShouA = GetLevelByClass(CLASS_TYPE_SHOU, oPC);
+          int monkLevelA = GetLevelByClass(CLASS_TYPE_MONK, oPC);
+          int numAddAttacksA = 0;
+          int attackPenaltyA = 0;
+
+
+           if(iShouA >= 3 )
+          {
+              numAddAttacksA = 1;
+              attackPenaltyA = 2;
+              nMesA = "*Martial Flurry Activated*";
+          }
+
+          if(monkLevelA > 0 && GetBaseItemType(oWeapRA) == BASE_ITEM_KAMA)
+          {
+              numAddAttacksA = 0;
+              attackPenaltyA = 0;
+              nMesA = "*No Extra Attacks Gained by Kama Monks!*";
+          }
+
+
+
+
+          //check armor type
+          if(armorTypeA < ARMOR_TYPE_MEDIUM)
+          {
+               if(oWeapRA != OBJECT_INVALID  && oWeapLA != OBJECT_INVALID && isNotShield(oWeapLA) )
+              {
+                   effect addAttA = SupernaturalEffect( EffectModifyAttacks(numAddAttacksA) );
+                   effect attPenA = SupernaturalEffect( EffectAttackDecrease(attackPenaltyA) );
+                   effect eLinkA = EffectLinkEffects(addAttA, attPenA);
+                   ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLinkA, oPC);
+                   SetLocalInt(oPC, "HasMFlurry", 2);
+              }
+              else
+              {
+                   nMesA = "*Invalid Weapon.  Ability Not Activated!*";
+              }
+          }
+
+
+          FloatingTextStringOnCreature(nMesA, oPC, FALSE);
+     
+}
+
 
 void main()
 {
      object oPC = OBJECT_SELF;
      string nMes = "";
-
+     
      if(!GetHasSpellEffect(SPELL_MARTIAL_FLURRY) )
-     {    
-          object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-          object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-          object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-          
-          int armorType = GetArmorType(oArmor);
-          int iShou = GetLevelByClass(CLASS_TYPE_SHOU, oPC);
-          int monkLevel = GetLevelByClass(CLASS_TYPE_MONK, oPC);
-          int numAddAttacks = 0;
-          int attackPenalty = 0;
-          
-          if(iShou >= 3 )
-          {
-              numAddAttacks = 1;
-              attackPenalty = 2;
-              nMes = "*Martial Flurry Activated*";
-          }
-
-          if(monkLevel > 0 && GetBaseItemType(oWeapR) == BASE_ITEM_KAMA)
-          {
-              numAddAttacks = 0;
-              attackPenalty = 0;
-              nMes = "*No Extra Attacks Gained by Kama Monks!*";              
-          }
-          
-
-
-
-          //check armor type
-          if(armorType < ARMOR_TYPE_MEDIUM)
-          {
-               if(oWeapR != OBJECT_INVALID  && oWeapL != OBJECT_INVALID && isNotShield(oWeapL) )
-              {
-                   effect addAtt = SupernaturalEffect( EffectModifyAttacks(numAddAttacks) );
-                   effect attPen = SupernaturalEffect( EffectAttackDecrease(attackPenalty) );
-                   effect eLink = EffectLinkEffects(addAtt, attPen);
-                   ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);
-                   SetLocalInt(oPC, "HasMFlurry", 2);            
-              }
-              else
-              {
-                   nMes = "*Invalid Weapon.  Ability Not Activated!*";
-              }
-          }
-        
-
-          FloatingTextStringOnCreature(nMes, oPC, FALSE);    
+     {
+            if ( GetLevelByClass(CLASS_TYPE_SHOU, oPC) == 5)
+            {
+                FlurryAll(oPC);
+            }
      }
      else
-     {   
+     {
           // Removes effects
           RemoveSpellEffects(SPELL_MARTIAL_FLURRY, oPC, oPC);
 
           // Display message to player
           nMes = "*Martial Flurry Deactivated*";
           FloatingTextStringOnCreature(nMes, oPC, FALSE);
-     }  
+     }
+
 }

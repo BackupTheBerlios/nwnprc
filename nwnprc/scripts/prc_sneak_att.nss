@@ -158,7 +158,7 @@ void main()
       //Keep in mind we are not considering the Assassin's Death Attack or Improved
       //Sneak Attack.  If we hit more than +35d6 there is something wrong with the
       //character or the above code.
-      SendMessageToPC(oPC,"Fatal error: +35d6 Rogue/Blackguard Sneak Attack exceeded!")
+      SendMessageToPC(oPC,"Fatal error: +35d6 Rogue/Blackguard Sneak Attack exceeded!");
       return;
    }
 

@@ -106,6 +106,14 @@ const int SPELL_MINSTREL_INCREASE_SONGS     = 2144;
 // Ultimate Ranger
 const int SPELL_UR_FAVORITE_ENEMY           = 2134;
 
+// Dragonsong
+
+const int SPELL_DSL_SONG_STRENGTH           = 2135;
+const int SPELL_DSL_SONG_COMPULSION         = 2136;
+const int SPELL_DSL_SONG_SPEED              = 2137;
+const int SPELL_DSL_SONG_FEAR               = 2138;
+const int SPELL_DSL_SONG_HEALING            = 2139;
+
 // Spell Feat Generic
 const int SPELL_MANYSHOT2                   = 2246;
 const int SPELL_MANYSHOT3                   = 2248;

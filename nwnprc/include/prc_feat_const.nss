@@ -790,6 +790,17 @@ const int FEAT_UR_FE_SHAPECHANGER   = 2995;
 const int FEAT_UR_FE_UNDEAD         = 2996;
 const int FEAT_UR_FE_VERMIN         = 2997;
 const int FEAT_UR_SNAREMASTERY      = 2998;
+const int FEAT_UR_ARMOREDGRACE      = 3430;
+const int FEAT_UR_DODGE_FE          = 3431;
+const int FEAT_UR_RESIST_FE         = 3432;
+const int FEAT_UR_HAWK_TOTEM        = 3433;
+const int FEAT_UR_OWL_TOTEM         = 3434;
+const int FEAT_UR_VIPER_TOTEM       = 3435;
+const int FEAT_UR_GRACE1            = 3436;
+const int FEAT_UR_GRACE2            = 3437;
+const int FEAT_UR_GRACE3            = 3438;
+const int FEAT_UR_GRACE4            = 3439;
+
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////

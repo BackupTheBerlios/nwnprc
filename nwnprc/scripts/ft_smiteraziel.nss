@@ -272,12 +272,9 @@ void main()
 
         //Apply the damage
         if (iSmit)
-           eDamage = EffectDamage(iDamage, DAMAGE_TYPE_DIVINE, iEnhancementGD);
+           eDamage = AddDmgEffect(EffectDamage(iDamage, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_ENERGY) ,oWeap,oTarget,DAMAGE_POWER_ENERGY);
         else
-        {
-            eDamage = EffectDamage(iDamage, iDamageType, iEnhancementGD);
-
-        }
+           eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancementGD) ,oWeap,oTarget,iEnhancementGD);
 
         DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectLinkEffects(eDamage,eVis), oTarget));
 

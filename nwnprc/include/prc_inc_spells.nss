@@ -170,6 +170,7 @@ int GetArcanePRCLevels (object oCaster)
                  +  GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster)
 	         +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
 	         +  GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster)
+	         +  GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster)
 
                  +  (GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) + 1) / 2
 		 +  (GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) + 1) / 2

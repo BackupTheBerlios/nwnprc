@@ -68,6 +68,10 @@ void PolyAndMergeEquipment(float fDur, int iLvl)
         ip = GetNextItemProperty(oWeaponNew);
     }
 
+    // I like that nice flaming effect though.
+    itemproperty ipFlaming = ItemPropertyVisualEffect(ITEM_VISUAL_FIRE);
+    IPSafeAddItemProperty(oWeaponNew, ipFlaming);
+
     // Merges in all your equipment so that you're not weakened by the morph.
     IPWildShapeCopyItemProperties(oWeaponOld,oWeaponNew, TRUE);
 

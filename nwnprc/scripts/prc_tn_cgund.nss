@@ -9,59 +9,51 @@
 
 void main()
 {
+    SetMaxHenchmen(4);
     string sSummon;
     effect eSummonB;
     object oCreature;
+    effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     int nClass = GetLevelByClass(CLASS_TYPE_TRUENECRO, OBJECT_SELF);
 
 
-        if(GetLevelByClass(CLASS_TYPE_TRUENECRO, OBJECT_SELF) >= 11)
-        {
             switch (nClass)
             {
+                case 7:
+                    sSummon = "prc_sum_shad1";
+                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
+                    break;
                 case 10:
-                    sSummon = "prc_tn_nightshad";
+                    sSummon = "prc_sum_grav";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 13:
-                    sSummon = "prc_tn_nightsh02";
+                    sSummon = "prc_sum_vamp1";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 16:
-                    sSummon = "prc_tn_grshade";
+                    sSummon = "prc_sum_wight";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 19:
-                    sSummon = "prc_tn_grshad02";
+                    sSummon = "prc_sum_bonet";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 22:
-                    sSummon = "prc_tn_ep_shade";
+                    sSummon = "prc_sum_vamp2";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 25:
-                    sSummon = "prc_tn_gep_shade";
+                    sSummon = "prc_sum_dk";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
-                /*case 27:
-                    sSummon = "summonedgreat006";
+                case 28:  
+                    sSummon = "prc_sum_dbl";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
-                case 30:  //max level for npc
-                    sSummon = "summonedgreat006";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;*/
             }
-        }
-        else
-        {
-                    sSummon = "summonedgreat006";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
 
-        }
-
-
-   float fDelay = 0.0;
-   effect eSum = EffectSummonCreature(sSummon, VFX_IMP_NEGATIVE_ENERGY, fDelay);
-   ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSum, OBJECT_SELF, fDelay);
+   oCreature = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
+   AddHenchman(OBJECT_SELF, oCreature);
+   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
 }

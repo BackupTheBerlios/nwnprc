@@ -32,15 +32,16 @@ void main()
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 10:
-                    sSummon = "prc_sum_sklchief";
+                    sSummon = "prc_sum_sklch";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
             }
+	    if (nClass > 10)
+		{
+		sSummon = "prc_sum_sklch";
+		}
 
 
-   float fDelay = 0.0;
-//   effect eSum = EffectSummonCreature(sSummon, VFX_IMP_NEGATIVE_ENERGY, fDelay);
-//   ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());
    oCreature = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
    AddHenchman(OBJECT_SELF, oCreature);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());

@@ -23,7 +23,7 @@ void main()
             switch (nClass)
             {
                 case 7:
-                    sSummon = "prc_sum_shad1";
+                    sSummon = "prc_tn_fthug";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 10:
@@ -55,6 +55,10 @@ void main()
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
             }
+	    if (nClass > 28)
+		{
+		sSummon = "prc_sum_dbl";
+		}
 
    oCreature = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
    AddHenchman(OBJECT_SELF, oCreature);

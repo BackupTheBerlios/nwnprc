@@ -69,6 +69,10 @@ const int FEAT_MONSTEROUS = 4720;
 const int FEAT_REPTILIAN  = 4721;
 const int FEAT_ABERRATION = 4722;
 const int FEAT_ELEMENTAL  = 4759;
+const int FEAT_UNDEAD	  = 4769;
+const int FEAT_BEAST	  = 4770;
+const int FEAT_VERMIN	  = 4771;
+const int FEAT_DRAGON	  = 4773;
 
 const int FEAT_HARD_AIR   = 4723;
 const int FEAT_HARD_EARTH = 4724;

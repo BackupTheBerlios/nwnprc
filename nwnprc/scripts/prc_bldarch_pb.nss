@@ -17,6 +17,7 @@
 //:://////////////////////////////////////////////
 #include "x2_inc_itemprop"
 #include "X2_inc_switches"
+#include "prc_feat_const"
 
 void main()
 {

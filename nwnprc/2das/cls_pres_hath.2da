@@ -1,0 +1,6 @@
+2DA V2.0
+
+  LABEL     ReqType  ReqParam1    ReqParam2 
+0 Arcane    ARCSPELL 2            ****      
+1 Ethran    FEAT     2567         ****      
+2 ScriptVar VAR      X1_AllowHath 0         

@@ -1,19 +1,15 @@
 /*
 	race Entangle
 */
-#include "prc_alterations"
-#include "x2_inc_spellhook"
+#include "prc_inc_clsfunc"
+#include "prc_racial_const"
 void main()
 {
-    effect eAOE = EffectAreaOfEffect(AOE_PER_ENTANGLE);
-    location lTarget = GetSpellTargetLocation();
-    int nCasterLevel;
-    if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_PIXIE) { nCasterLevel = 8; }    
-    else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_PURE_YUAN) { nCasterLevel = 3; }
-    else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_ABOM_YUAN) { nCasterLevel = 3; }
+    int CasterLvl;
+    if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_PIXIE) { CasterLvl = 8; }    
+    else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_PURE_YUAN) { CasterLvl = 3; }
+    else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_ABOM_YUAN) { CasterLvl = 3; }
     
-    int nDuration = 3 + nCasterLevel;
-    //Create an instance of the AOE Object using the Apply Effect function
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nDuration));
+    ActionCastSpell(SPELL_ENTANGLE, CasterLvl);
 }
 

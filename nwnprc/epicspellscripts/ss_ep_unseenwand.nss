@@ -51,7 +51,7 @@ void main()
                     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lNew2));
                 fDelay += 0.4;
             }
-            DelayCommand(6.0, GiveFeat(oTarget, 128));
+            DelayCommand(6.0, GiveFeat(oTarget, 428));
             FloatingTextStringOnCreature("You have gained the ability " +
                 "to wander unseen at will!", oTarget, FALSE);
         }

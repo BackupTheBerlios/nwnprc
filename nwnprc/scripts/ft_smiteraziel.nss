@@ -11,6 +11,8 @@ void SmiteChain(object oTarget,float fDelay)
   int nDam;
   location lTarget=GetLocation(oTarget);
 
+   effect eVis = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
+
   //Declare the spell shape, size and the location.  Capture the first target object in the shape.
   object oTargets = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE );
   //Cycle through the targets within the spell shape until an invalid object is captured.
@@ -22,7 +24,7 @@ void SmiteChain(object oTarget,float fDelay)
 
          //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
          //nDam = GetReflexAdjustedDamage(nDam, oTargets, (15+GetAbilityModifier(ABILITY_CHARISMA)), SAVING_THROW_TYPE_DIVINE);
-         DelayCommand(fDelay + 0.2, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage( GetReflexAdjustedDamage(nDam, oTargets, (15+GetAbilityModifier(ABILITY_CHARISMA)), SAVING_THROW_TYPE_DIVINE),DAMAGE_TYPE_DIVINE), oTargets));
+         DelayCommand(fDelay + 0.2, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectLinkEffects(EffectDamage( GetReflexAdjustedDamage(nDam, oTargets, (15+GetAbilityModifier(ABILITY_CHARISMA)), SAVING_THROW_TYPE_DIVINE),DAMAGE_TYPE_DIVINE),eVis), oTargets));
      }
      //Select the next target within the spell shape.
      oTargets = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE );
@@ -56,6 +58,7 @@ void main()
 
    int iDamage = 0;
    effect eDamage,eDamage2;
+   effect eVis = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
 
    int iEnhancement = GetWeaponEnhancement(oWeap);
    int iDamageType = GetWeaponDamageType(oWeap);
@@ -110,13 +113,13 @@ void main()
 
     if(iHit > 0)
     {
-    
+
        if (Immune && iHit==2) iHit=1;
 
         //Check to see if we rolled a critical and determine damage accordingly
         // Dmg Bonus= Level Paladin+ Fist Raziel
 
-        if(iHit == 2 || ( (LvlRaziel>2) && iSmit  && !Immune))
+        if(iHit == 2 || ( (LvlRaziel>2) && iSmit && !Immune))
             iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, TRUE,iDmgBon);
         else
             iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, FALSE,iDmgBon);
@@ -128,10 +131,12 @@ void main()
         {
             eDamage = EffectDamage(iDamage, DAMAGE_TYPE_SLASHING, iEnhancement);
             if (iHolyDmg && iEvil)
-              DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(iHolyDmg, DAMAGE_TYPE_DIVINE, iEnhancement), oTarget));
+             // DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(iHolyDmg, DAMAGE_TYPE_DIVINE, iEnhancement), oTarget));
+             eDamage = EffectLinkEffects(eDamage,EffectDamage(iHolyDmg, DAMAGE_TYPE_DIVINE, iEnhancement));
+
         }
 
-        DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+        DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectLinkEffects(eDamage,eVis), oTarget));
 
         if (LvlRaziel>8 && iSmit) SmiteChain(oTarget,fDelay);
 
@@ -139,7 +144,7 @@ void main()
 
     iSmit=0;
     iNextAttackPenalty -= 5;
-    fDelay += 0.5;
+    fDelay += 1.0;
     iDmgBon=0;
 
 

@@ -18,7 +18,8 @@ GetReflexAdjustedDamage -> PRCGetReflexAdjustedDamage
 MySavingThrow -> PRCMySavingThrow
 MyResistSpell -> MyPRCResistSpell
 ApplyAffectToObject -> SPApplyAffectToObject
-MyNextObjectInShape -> GetNextObjectInShape
+GetFirstObjectInShape -> MyFirstObjectInShape
+GetNextObjectInShape -> MyNextObjectInShape
 GetRacialType -> MyPRCGetRacialType
 SetModuleOverrideSpellscript -> PRCSetUserSpecificSpellScript
 SetModuleOverrideSpellScriptFinished -> PRCSetUserSpecificSpellScriptFinished

@@ -364,9 +364,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 {
 
      int iURanger = GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER, oPC);
-     int iAbi;
-     int iFE;
-     int Ability = 0;
+     int iAbi = 0, iFE = 0, Ability = 0;
 
      if (iURanger > 0)
      {
@@ -398,7 +396,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 
 
 
-          iAbi    +=  +  (GetHasFeat(FEAT_UR_SNEAKATK_3D6, oPC))
+          iAbi    +=     (GetHasFeat(FEAT_UR_SNEAKATK_3D6, oPC))
                    +     (GetHasFeat(FEAT_UR_ARMOREDGRACE, oPC))
                    +     (GetHasFeat(FEAT_UR_DODGE_FE, oPC))
                    +     (GetHasFeat(FEAT_UR_RESIST_FE, oPC))

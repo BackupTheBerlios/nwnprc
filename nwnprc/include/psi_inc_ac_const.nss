@@ -60,6 +60,11 @@ const int MENU_B_MASK = 261632;
 const int MENU_C_MASK = 1073479680;
 
 
+const int AC_APPEARANCE_CHECK_LOW    = 10;
+const int AC_APPEARANCE_CHECK_MEDIUM = 20;
+const int AC_APPEARANCE_CHECK_HIGH   = 30;
+
+
 // For convenience. Compiler will complain if these are typoed :D
 const string ASTRAL_CONSTRUCT_LEVEL              = "AstralConstructLevel";
 const string ASTRAL_CONSTRUCT_OPTION_FLAGS       = "AstralConstructOptionFlags";

@@ -96,19 +96,15 @@ struct ac_forms GetAppearancesForLevel(int nLevel)
 		case 1:
 			toReturn.Appearance1     = APPEARANCE_TYPE_RAT;
 			toReturn.Appearance1Alt  = 387; //Dire Rat
-//			toReturn.Appearance1DC   = AC_APPEARANCE_DC_LOW;
 			
 			toReturn.Appearance2     = APPEARANCE_TYPE_INTELLECT_DEVOURER;
 			toReturn.Appearance2Alt  = APPEARANCE_TYPE_WAR_DEVOURER;
-//			toReturn.Appearance2DC   = AC_APPEARANCE_DC_MEDIUM;
 			
 			toReturn.Appearance3     = APPEARANCE_TYPE_PSEUDODRAGON;
 			toReturn.Appearance3Alt  = APPEARANCE_TYPE_PSEUDODRAGON;
-//			toReturn.Appearance3DC   = AC_APPEARANCE_DC_HIGH;
 			
 			toReturn.Appearance4     = APPEARANCE_TYPE_FAERIE_DRAGON;
 			toReturn.Appearance4Alt  = APPEARANCE_TYPE_FAERIE_DRAGON;
-//			toReturn.Appearance4DC   = AC_APPEARANCE_DC_VHIGH;
 			
 			return toReturn;
 		case 2:
@@ -236,9 +232,9 @@ int GetAppearanceForConstruct(int nACLevel, int nOptionFlags, int nCheck)
 {
 	int bUse2da = GetLocalInt(GetModule(), "UseAstralConstruct2da") != 0;
 	int bUseAlt = GetUseAltAppearances(nOptionFlags);
-	int nNum = nCheck < 30 ?
-	             nCheck < 20 ?
-	               nCheck < 10 ? 1
+	int nNum = nCheck < AC_APPEARANCE_CHECK_HIGH ?
+	             nCheck < AC_APPEARANCE_CHECK_MEDIUM ?
+	               nCheck < AC_APPEARANCE_CHECK_LOW ? 1
 	               : 2
 	             : 3
 	           : 4;

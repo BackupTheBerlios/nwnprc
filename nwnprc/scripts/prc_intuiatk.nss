@@ -55,7 +55,7 @@ void main()
       {
         if (iSimple == 2 && GetHasFeat(FEAT_WEAPON_FINESSE,oPC))
         {
-           int iDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC)
+           int iDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
            if (iDex>iStr)
            {
              if (iWis > iDex)

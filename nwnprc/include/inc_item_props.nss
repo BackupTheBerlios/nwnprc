@@ -85,8 +85,24 @@ int GetItemPropertyDamageType(object oItem);
 // * Only useful for damage effects!
 int GetItemDamageType(object oItem);
 
+// * To ensure a damage bonus stacks with any existing enhancement bonus,
+// * create a temporary damage bonus on the weapon.  You do not want to do this
+// * if the weapon is of the "slashing and piercing" type, because the
+// * enhancement bonus is considered "physical", not "slashing" or "piercing".
+// *
+// * Because of this strange Bioware behavior, you'll want to only call this code as such:
+// *
+// * if (StringToInt(Get2DAString("baseitems","WeaponType",GetBaseItemType(oWeapon))) != 4)
+// * {
+// *     IPEnhancementBonusToDamageBonus(oWeapon);
+// * }
+void IPEnhancementBonusToDamageBonus(object oWeap);
+
 // * Used to roll bonuses from multiple sources into a single property
 // * Only supports damage bonuses in a linear fashion - +1 through +20.
+// *
+// * Note: If you do not define iSubType, the damage applied will most likely not
+// * stack with any enhancement bonus.  See IPEnhancementBonusToDamageBonus() above.
 // *
 // * oItem = Object to apply bonus to
 // * sBonus = String name of the source for this bonus
@@ -852,6 +868,31 @@ int GetItemDamageType(object oItem)
    return -1;
 }
 
+// To ensure the damage bonus stacks with any existing enhancement bonus,
+// we create a temporary damage bonus on the weapon.  We do not want to do this
+// if the weapon is of the "slashing and piercing" type, because the
+// enhancement bonus is considered "physical", not "slashing" or "piercing".
+// If you borrow this code, make sure to keep the "IPEnh" and realize that
+// "slashing and piercing" weapons need a special case.
+void IPEnhancementBonusToDamageBonus(object oWeap)
+{
+    int iBonus = 0;
+    int iTemp;
+
+    if (GetLocalInt(oWeap, "IPEnh") || !GetIsObjectValid(oWeap)) return;    
+
+    itemproperty ip = GetFirstItemProperty(oWeap);
+    while(GetIsItemPropertyValid(ip))
+    {
+        if(GetItemPropertyType(ip) == ITEM_PROPERTY_ENHANCEMENT_BONUS)
+            iTemp = GetItemPropertyCostTableValue(ip);
+            iBonus = iTemp > iBonus ? iTemp : iBonus;
+        ip = GetNextItemProperty(oWeap);
+    }
+    
+    SetCompositeDamageBonusT(oWeap,"IPEnh",iBonus);
+}
+
 int TotalAndRemoveDamagePropertyT(object oItem, int iSubType)
 {
     itemproperty ip = GetFirstItemProperty(oItem);
@@ -1036,75 +1077,17 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    DeleteLocalInt(oItem,"DiscMephGlove");
 }
 
-void RemoveCompositeAttackBonus(object oPC)
-{
-    effect e = GetFirstEffect(oPC);
-    
-    while (GetIsEffectValid(e))
-    {
-        if (GetEffectCreator(e) == oPC &&
-            GetEffectSpellId(e) == -1 &&
-            GetEffectType(e) == EFFECT_TYPE_ATTACK_INCREASE &&
-            GetEffectSubType(e) == SUBTYPE_EXTRAORDINARY &&
-            GetEffectDurationType(e) == DURATION_TYPE_TEMPORARY)
-                RemoveEffect(oPC, e);
-        e = GetNextEffect(oPC);
-    }
-}
-
 void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC)
 {
-    int iTotalR = GetLocalInt(oPC, "CompositeAttackBonusR");
-    int iTotalL = GetLocalInt(oPC, "CompositeAttackBonusL");
-    int iCur = GetLocalInt(oPC, sBonus);
-    int iAB, iAP, iHand;
+    object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(oPC));
 
-    RemoveCompositeAttackBonus(oPC);
+    int iSpl = 2732; //SPELL_SET_COMPOSITE_ATTACK_BONUS;
 
-    switch (iSubType)
-    {
-        case ATTACK_BONUS_MISC:
-            iTotalR -= iCur;
-            iTotalL -= iCur;
-            if (iTotalR + iVal > 20) iVal = 20 - iTotalR;
-            if (iTotalL + iVal > 20) iVal = 20 - iTotalL;
-            iTotalR += iVal;
-            iTotalL += iVal;
-            break;
-        case ATTACK_BONUS_ONHAND:
-            iTotalR -= iCur;
-            if (iTotalR + iVal > 20) iVal = 20 - iTotalR;
-            iTotalR += iVal;
-            break;
-        case ATTACK_BONUS_OFFHAND:
-            iTotalL -= iCur;
-            if (iTotalL + iVal > 20) iVal = 20 - iTotalL;
-            iTotalL += iVal;
-            break;
-    }           
+    SetLocalString(oCastingObject, "SET_COMPOSITE_STRING", sBonus);
+    SetLocalInt(oCastingObject, "SET_COMPOSITE_VALUE", iVal);
+    SetLocalInt(oCastingObject, "SET_COMPOSITE_SUBTYPE", iSubType);
 
-    if (iTotalR > iTotalL)
-    {
-        iAB = iTotalR;
-        iAP = iTotalR - iTotalL;
-        iHand = ATTACK_BONUS_OFFHAND;
-    }
-    else
-    {
-        iAB = iTotalL;
-        iAP = iTotalL - iTotalR;
-        iHand = ATTACK_BONUS_ONHAND;
-    }
-    
-    effect eAttackInc = EffectAttackIncrease(iAB);
-    effect eAttackDec = EffectAttackDecrease(iAP, iHand);
-    effect eAttack = EffectLinkEffects(eAttackInc, eAttackDec);
+    DelayCommand(0.1, AssignCommand(oCastingObject, ActionCastSpellAtObject(iSpl, oPC, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE)));
 
-    eAttack = ExtraordinaryEffect(eAttack);
-
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAttack, oPC, 9999.0);
-
-    SetLocalInt(oPC, "CompositeAttackBonusR", iTotalR);
-    SetLocalInt(oPC, "CompositeAttackBonusL", iTotalL);
-    SetLocalInt(oPC, sBonus, iVal);
+    DestroyObject(oCastingObject, 6.0);
 }

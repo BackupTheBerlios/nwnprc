@@ -9,10 +9,11 @@ const int SPELL_BLACKLIGHT                  = 2091;
 const int SPELL_SLIME_WAVE = 2023;
 
 //damage increase spells for ActionCastSpellOnSelf
-const int SPELL_BATTLERAGER_DAMAGE	= 2728;
-const int SPELL_HEXTOR_DAMAGE		= 2729;
-const int SPELL_THAYANKNIGHT_DAMAGE	= 2730;
-const int SPELL_MANATARMS_DAMAGE	= 2731;
+const int SPELL_SET_COMPOSITE_ATTACK_BONUS	= 2732;
+const int SPELL_BATTLERAGER_DAMAGE		= 2728;
+const int SPELL_HEXTOR_DAMAGE			= 2729;
+const int SPELL_THAYANKNIGHT_DAMAGE		= 2730;
+const int SPELL_MANATARMS_DAMAGE		= 2731;
 
 //heartwarder
 const int SPELL_LIPS_RAPTUR      = 2210;

@@ -41,7 +41,7 @@ void main()
     if(bHit) {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_OA_DISRAY, TRUE));
         if (!MyResistSpell(OBJECT_SELF, oTarget)) {
-            if (!MySavingThrow(SAVING_THROW_FORT, oTarget, nOcSv)) {
+            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nOcSv)) {
                 //SendMessageToPC(OBJECT_SELF, "Disintegrate save fail start");
                 //Apply the death effect and VFX impact
                 //ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);

@@ -119,7 +119,7 @@ void main()
 
             if (ooze_touch_damage(damage))
             {
-                if (!MySavingThrow(SAVING_THROW_REFLEX, target, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
+                if (!PRCMySavingThrow(SAVING_THROW_REFLEX, target, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
                 {
                     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
                     effect stun = EffectLinkEffects(EffectStunned(), eMind);
@@ -146,7 +146,7 @@ void main()
             object target = GetSpellTargetObject();
             int DC = 15 + level;
 
-            if (!MySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
+            if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
             {
                 effect damage = EffectParalyze();
                 effect eMind = EffectVisualEffect(VFX_DUR_PARALYZED);
@@ -165,7 +165,7 @@ void main()
 
             if (ooze_touch_damage(damage))
             {
-                if (!MySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
+                if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
                 {
                     effect eMind = EffectVisualEffect(VFX_DUR_IOUNSTONE_RED);
                     effect stun = EffectLinkEffects(EffectAbilityDecrease(ABILITY_CONSTITUTION, d6()), eMind);
@@ -182,7 +182,7 @@ void main()
             object target = GetSpellTargetObject();
             int DC = 15 + level;
 
-            if (!MySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
+            if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
             {
                 damage = EffectAbilityDecrease(ABILITY_CONSTITUTION, d6(2));
             }

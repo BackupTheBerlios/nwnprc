@@ -77,7 +77,7 @@ void main()
             {
                 if (GetIsImmune(oTarget, IMMUNITY_TYPE_SLEEP) == FALSE && GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) == FALSE)
                 {
-                    if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                     {
                         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSleep, oTarget, RoundsToSeconds(nDuration), TRUE, GetSpellId(), nLevel);

@@ -42,7 +42,7 @@ void main()
         if(!MyResistSpell(OBJECT_SELF, oTarget))
         {
             //Make a will save
-            if(!MySavingThrow(SAVING_THROW_WILL, oTarget, nOcSv, SAVING_THROW_TYPE_FEAR, OBJECT_SELF)) {
+            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nOcSv, SAVING_THROW_TYPE_FEAR, OBJECT_SELF)) {
                 //Apply the linked effects and the VFX impact
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
             }

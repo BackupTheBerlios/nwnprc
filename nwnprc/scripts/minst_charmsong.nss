@@ -79,7 +79,7 @@ void main()
             {
                 if (GetIsImmune(oTarget, IMMUNITY_TYPE_SILENCE) == FALSE)
                 {
-                    if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                     {
                         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCharm, oTarget, RoundsToSeconds(nDuration), TRUE, GetSpellId(), nLevel);

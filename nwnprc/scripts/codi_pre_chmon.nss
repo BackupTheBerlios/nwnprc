@@ -49,7 +49,7 @@ void main()
             if (!MyResistSpell(OBJECT_SELF, oTarget))
             {
                 //Make a Will Save check
-                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nOcSv, SAVING_THROW_TYPE_MIND_SPELLS))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nOcSv, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     //SendMessageToPC(OBJECT_SELF, "Failed Save - duration " + FloatToString(RoundsToSeconds(nDuration)));
                     //Apply impact and linked effects

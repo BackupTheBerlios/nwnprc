@@ -46,7 +46,7 @@ void main()
                 //Make SR Check
                 if (!MyResistSpell(OBJECT_SELF, oTarget))
                 {
-                    if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nOcSv, SAVING_THROW_TYPE_NEGATIVE))
+                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nOcSv, SAVING_THROW_TYPE_NEGATIVE))
                     {
                         effect e1 = EffectDamage(d8(2)+10);
                         effect eVis = EffectVisualEffect(VFX_COM_BLOOD_REG_RED);

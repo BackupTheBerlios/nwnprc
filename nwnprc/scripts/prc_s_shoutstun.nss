@@ -45,7 +45,7 @@ void main()
         {
             //Determine effect delay
             float fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-            if(!/*WillSave*/MySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+            if(!/*WillSave*/PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
             {
                 DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGaze, oTarget, 12.0f));
                 DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVisDur, oTarget, 12.0f));

@@ -93,7 +93,7 @@ void main()
 
             if (ooze_ranged_damage(damage, DAMAGE_TYPE_ACID))
             {
-                if (!MySavingThrow(SAVING_THROW_REFLEX, target, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
+                if (!PRCMySavingThrow(SAVING_THROW_REFLEX, target, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
                 {
                     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
                     effect stun = EffectLinkEffects(EffectStunned(), eMind);

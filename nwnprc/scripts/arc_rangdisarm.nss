@@ -100,7 +100,7 @@ void main()
    int iRoll = RangedAttackBonus(OBJECT_SELF, oWeap, oTarget, 0)+d20();
    //Perform 1 attack
 
-   int iRef = MySavingThrow(SAVING_THROW_REFLEX,oTarget,iRoll-iBonusA);
+   int iRef = PRCMySavingThrow(SAVING_THROW_REFLEX,oTarget,iRoll-iBonusA);
 
     if(iRef == 0)
     {

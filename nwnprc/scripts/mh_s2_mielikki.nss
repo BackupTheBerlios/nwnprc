@@ -39,7 +39,7 @@ void main()
                 //Determine correct save
                 int nSpellDC = 15;
                 //Make SR and will save checks
-                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC))
                 {
                     //Apply the VFX and delay the destruction of the summoned monster so
                     //that the script and VFX can play.
@@ -77,7 +77,7 @@ void main()
             //Determine correct save
             int nSpellDC = 15;
             //Make SR and will save checks
-            if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC))
+            if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC))
             {
                 //Apply the VFX and delay the destruction of the summoned monster so
                 //that the script and VFX can play.
@@ -97,7 +97,7 @@ void main()
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_MIELIKKI));
          int nSpellDC = 15;
             //Make SR and will save checks
-            if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC))
+            if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC))
             {
                 effect eGood = GetFirstEffect(oTarget);
                 //Search for negative effects

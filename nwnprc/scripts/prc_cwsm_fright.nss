@@ -68,7 +68,7 @@ void main()
         {
 
         //Make a will save
-          if(!MySavingThrow(SAVING_THROW_WILL,oTarget,nDC, SAVING_THROW_TYPE_FEAR, OBJECT_SELF))
+          if(!PRCMySavingThrow(SAVING_THROW_WILL,oTarget,nDC, SAVING_THROW_TYPE_FEAR, OBJECT_SELF))
           {
            //Make A HitDie Check
            if(iHitDie <= 4)

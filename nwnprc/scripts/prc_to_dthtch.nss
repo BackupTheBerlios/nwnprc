@@ -32,7 +32,7 @@ void main()
     {
         //Saving Throw
 
-        if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nSave, SAVING_THROW_TYPE_NEGATIVE))
+        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSave, SAVING_THROW_TYPE_NEGATIVE))
         {
             //Apply effects to target and caster
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

@@ -54,7 +54,7 @@ while(GetIsObjectValid(oTarget))
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, SAVING_THROW_TYPE_FIRE))
+            if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, SAVING_THROW_TYPE_FIRE))
             {
                 nPersonalDamage  = nPersonalDamage/2;
                 if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))

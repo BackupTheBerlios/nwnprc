@@ -27,7 +27,7 @@ void main()
             if(GetIsEnemy(oTarget, GetAreaOfEffectCreator()))
             {
                 //Make a saving throw check
-                if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON))
                 {
                    	//Apply the VFX impact and effects
             		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

@@ -75,7 +75,7 @@ void main()
             {
                 if (GetIsImmune(oTarget, IMMUNITY_TYPE_SLOW) == FALSE)
                 {
-                    if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                     {
                         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSlow, oTarget, RoundsToSeconds(nDuration), TRUE, GetSpellId(), nLevel);

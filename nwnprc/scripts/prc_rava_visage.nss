@@ -19,10 +19,10 @@ void main()
     effect eVis2 = EffectVisualEffect(VFX_IMP_SONIC);
 
             //Make a Will save
-           if (!MySavingThrow(SAVING_THROW_WILL,  oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+           if (!PRCMySavingThrow(SAVING_THROW_WILL,  oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
             {
                 //Make a Fort save
-                if (MySavingThrow(SAVING_THROW_FORT, oTarget, nDC,SAVING_THROW_TYPE_DEATH))
+                if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC,SAVING_THROW_TYPE_DEATH))
                {
                      //Set the damage property
                      eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);

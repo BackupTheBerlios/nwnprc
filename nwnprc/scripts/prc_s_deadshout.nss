@@ -52,7 +52,7 @@ void main()
         {
             //Determine effect delay
             float fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-            if(MySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+            if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                 nDamage /= 2;
 
             eDamage = EffectDamage(nDamage, DAMAGE_TYPE_SONIC, DAMAGE_POWER_ENERGY);

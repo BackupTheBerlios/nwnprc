@@ -31,7 +31,7 @@ void main()
       if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD )
       {
 
-          nDamage = GetReflexAdjustedDamage(d6(CasterLvl), oTarget, (10+CasterLvl), SAVING_THROW_TYPE_POSITIVE);
+          nDamage = PRCGetReflexAdjustedDamage(d6(CasterLvl), oTarget, (10+CasterLvl), SAVING_THROW_TYPE_POSITIVE);
           eDeath = EffectDamage(nDamage,DAMAGE_TYPE_POSITIVE,DAMAGE_POWER_ENERGY);
 
           effect eLink = EffectLinkEffects(eDeath, eVis);

@@ -61,7 +61,7 @@ void main()
     if(!GetIsReactionTypeFriendly(oTarget))
     {
           //Make a Will Save
-          if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+          if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
           {
                //Apply linked effects and VFX Impact
                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget, 0.0,FALSE);

@@ -57,7 +57,7 @@ void main()
 
 
         //Make SR Check
-        if ((!MyResistSpell(OBJECT_SELF, oTarget)) &&  (MySavingThrow(SAVING_THROW_FORT, oTarget, GetSpellSaveDC()) == FALSE) )
+        if ((!MyResistSpell(OBJECT_SELF, oTarget)) &&  (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetSpellSaveDC()) == FALSE) )
         {
             //Set damage effect
             effect eBad = EffectAttackDecrease(1);

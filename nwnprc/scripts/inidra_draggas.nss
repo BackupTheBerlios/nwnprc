@@ -38,7 +38,7 @@ void main()
             //Determine effect delay
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-            if(MySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_ACID))
+            if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_ACID))
             {
                 nDamStrike = 0;
             }

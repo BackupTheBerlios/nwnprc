@@ -52,7 +52,7 @@ void main()
             //Make SR check
             if (!MyResistSpell(OBJECT_SELF, oTarget)) {
                 //Make Fort save
-                if(!MySavingThrow(SAVING_THROW_WILL, oTarget, nOcSv, SAVING_THROW_TYPE_MIND_SPELLS)) {
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nOcSv, SAVING_THROW_TYPE_MIND_SPELLS)) {
                     if (GetIsImmune(oTarget, IMMUNITY_TYPE_SLEEP) == FALSE) {
                         effect eLink2 = EffectLinkEffects(eLink, eVis);
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(nDuration));

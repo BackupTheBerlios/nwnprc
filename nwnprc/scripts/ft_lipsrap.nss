@@ -33,7 +33,7 @@ void main()
    //Make SR check
    if (!MyPRCResistSpell(OBJECT_SELF, oTarget))
    {
-      if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, (10+GetAbilityModifier(ABILITY_CHARISMA)+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
+      if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (10+GetAbilityModifier(ABILITY_CHARISMA)+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
       {
          ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDazed(), oTarget, RoundsToSeconds(1));
          ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DAZED_S), oTarget);

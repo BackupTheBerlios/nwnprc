@@ -23,8 +23,8 @@ void SmiteChain(object oTarget,float fDelay)
          nDam=(GetRacialType(oTargets)==RACIAL_TYPE_UNDEAD ||GetRacialType(oTargets)== RACIAL_TYPE_OUTSIDER) ? d8(2) :d6(2);
 
          //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-         //nDam = GetReflexAdjustedDamage(nDam, oTargets, (15+GetAbilityModifier(ABILITY_CHARISMA)), SAVING_THROW_TYPE_DIVINE);
-         DelayCommand(fDelay + 0.2, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectLinkEffects(EffectDamage( GetReflexAdjustedDamage(nDam, oTargets, (15+GetAbilityModifier(ABILITY_CHARISMA)), SAVING_THROW_TYPE_DIVINE),DAMAGE_TYPE_DIVINE),eVis), oTargets));
+         //nDam = PRCGetReflexAdjustedDamage(nDam, oTargets, (15+GetAbilityModifier(ABILITY_CHARISMA)), SAVING_THROW_TYPE_DIVINE);
+         DelayCommand(fDelay + 0.2, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectLinkEffects(EffectDamage( PRCGetReflexAdjustedDamage(nDam, oTargets, (15+GetAbilityModifier(ABILITY_CHARISMA)), SAVING_THROW_TYPE_DIVINE),DAMAGE_TYPE_DIVINE),eVis), oTargets));
      }
      //Select the next target within the spell shape.
      oTargets = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE );

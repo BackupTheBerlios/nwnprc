@@ -34,7 +34,7 @@ void main()
             fDist = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
 
             // Make appropriate saving throw.
-            if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_ACID, OBJECT_SELF) && oTarget != OBJECT_SELF)
+            if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_ACID, OBJECT_SELF) && oTarget != OBJECT_SELF)
             {
                 nDamage = d6(2);
 

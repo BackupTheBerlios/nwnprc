@@ -31,7 +31,7 @@ void main()
     if(bHit) {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_OA_DEATHRAY, TRUE));
         if (!MyResistSpell(OBJECT_SELF, oTarget)) {
-            if (!MySavingThrow(SAVING_THROW_FORT, oTarget, nOcSv, SAVING_THROW_TYPE_DEATH)) {
+            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nOcSv, SAVING_THROW_TYPE_DEATH)) {
                 //Apply the death effect and VFX impact
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
                 //ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

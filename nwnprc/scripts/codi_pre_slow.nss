@@ -28,7 +28,7 @@ void main()
     if(bHit) {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_OA_SLOWRAY, TRUE));
         if (!MyResistSpell(OBJECT_SELF, oTarget)) {
-            if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nOcSv)) {
+            if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nOcSv)) {
                 effect e1 = EffectSlow();
                 effect eVis = EffectVisualEffect(VFX_IMP_SLOW);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oTarget);

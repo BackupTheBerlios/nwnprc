@@ -75,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                int nDC = 13+ GetAbilityModifier(ABILITY_INTELLIGENCE)+GetChangesToSaveDC(oTarget,OBJECT_SELF);
 
                 //Make Will Save
-                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                 {
                    //Apply linked effect and VFX Impact
                    nDuration = GetScaledDuration(nLevel, oTarget);

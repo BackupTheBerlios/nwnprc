@@ -93,8 +93,8 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) > 0)     ExecuteScript("prc_arcduel", oPC);
     if(GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oPC) > 0)      ExecuteScript("prc_thayknight", oPC);
     if(GetLevelByClass(CLASS_TYPE_TEMPLE_RAIDER, oPC) > 0)      ExecuteScript("prc_templeraider", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BLARCHER, oPC) > 0)		ExecuteScript("prc_bld_arch", oPC);
     if(GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC) > 0)ExecuteScript("prc_outlawroad", oPC);
-
     if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
 
     // Feats are checked here

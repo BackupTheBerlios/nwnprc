@@ -223,4 +223,10 @@ void main()
         itemproperty ipIP = ItemPropertyDamageVulnerability(DAMAGE_TYPE_COLD, IP_CONST_DAMAGEVULNERABILITY_50_PERCENT);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
+    
+    //Svirfneblin dodge bonus (+4)
+    if(GetHasFeat(FEAT_SVIRFNEBLIN_DODGE))
+    {
+        SetCompositeBonus(oSkin, "Svirf_Dodge", 4, ITEM_PROPERTY_AC_BONUS);
+    }
 }

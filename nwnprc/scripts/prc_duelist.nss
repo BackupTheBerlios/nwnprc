@@ -114,7 +114,7 @@ void main()
 
     //Determine which duelist feats the character has
     int bCanDef = GetHasFeat(FEAT_CANNY_DEFENSE, oPC);
-    int bEpicCD = GetHasFeat(FEAT_EPIC_DUELIST, oPC);
+    int bEpicCD = 0;//GetHasFeat(FEAT_EPIC_DUELIST, oPC);
     int bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_1D4, oPC) ? 1 : 0;
         bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_2D4, oPC) ? 2 : bPStrk;
         bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_3D4, oPC) ? 3 : bPStrk;
@@ -130,6 +130,7 @@ void main()
 
     //Apply bonuses accordingly
     if(bCanDef > 0 && GetBaseAC(oArmor) == 0 &&
+       GetBaseItemType(oLefthand) != BASE_ITEM_SMALLSHIELD &&
        GetBaseItemType(oLefthand) != BASE_ITEM_LARGESHIELD &&
        GetBaseItemType(oLefthand) != BASE_ITEM_TOWERSHIELD)
         DuelistCannyDefense(oPC, oSkin, TRUE, bEpicCD);
@@ -137,6 +138,7 @@ void main()
         DuelistCannyDefense(oPC, oSkin, FALSE);
 
     if(bPStrk > 0 &&
+       GetBaseItemType(oLefthand) != BASE_ITEM_SMALLSHIELD &&
        GetBaseItemType(oLefthand) != BASE_ITEM_LARGESHIELD &&
        GetBaseItemType(oLefthand) != BASE_ITEM_TOWERSHIELD &&
       (GetBaseItemType(oWeapon) == BASE_ITEM_RAPIER ||
@@ -148,11 +150,13 @@ void main()
        RemoveDuelistPreciseStrike(GetPCItemLastUnequipped());
        
     if(GetBaseAC(oArmor) != 0 ||
+       GetBaseItemType(oLefthand) == BASE_ITEM_SMALLSHIELD ||
        GetBaseItemType(oLefthand) == BASE_ITEM_LARGESHIELD ||
        GetBaseItemType(oLefthand) == BASE_ITEM_TOWERSHIELD)
           RemoveDuelistPreciseStrike(oWeapon);
     
     if(bGrace > 0 && GetBaseAC(oArmor) == 0 &&
+       GetBaseItemType(oLefthand) != BASE_ITEM_SMALLSHIELD &&
        GetBaseItemType(oLefthand) != BASE_ITEM_LARGESHIELD &&
        GetBaseItemType(oLefthand) != BASE_ITEM_TOWERSHIELD)
           DuelistGrace(oPC, oSkin, bGrace);

@@ -82,6 +82,7 @@ const int FEAT_ALTFORM                  = 4754;
 const int FEAT_DISGUISE                 = 4755;
 const int FEAT_POWERFUL_CHARGE          = 4756;
 const int FEAT_AZER_HEAT		= 4790;
+const int FEAT_SVIRFNEBLIN_DODGE        = 4791;
 
 const int FEAT_LARGE                    = 4760;
 const int FEAT_DISGUISE_MEDIUM		= 4769;

@@ -304,8 +304,8 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     if (GetIsObjectValid(oWeapCRPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
-		AssignCommand(oPC, ActionUnequipItem(oWeapCRPC));
-		//DestroyObject(oWeapCRPC, 0.5);
+                RemoveAllItemProperties(oWeapCRPC);
+
 	}
     if (GetIsObjectValid(oWeapCR)) //if the target has a weapon
 	{
@@ -321,8 +321,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     if (GetIsObjectValid(oWeapCLPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
-		AssignCommand(oPC, ActionUnequipItem(oWeapCLPC));
-		//DestroyObject(oWeapCLPC, 0.5);
+                RemoveAllItemProperties(oWeapCLPC);
 	}
     if (GetIsObjectValid(oWeapCL)) //if the target has a weapon
 	{
@@ -337,8 +336,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     if (GetIsObjectValid(oWeapCBPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
-		AssignCommand(oPC, ActionUnequipItem(oWeapCBPC));
-		//DestroyObject(oWeapCBPC, 0.5);
+		RemoveAllItemProperties(oWeapCBPC);
 	}
     if (GetIsObjectValid(oWeapCB)) //if the target has a weapon
 	{
@@ -358,9 +356,9 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 //    SendMessageToPC(oPC,"target Str,dex,con" + IntToString(nTStr) + "," + IntToString(nTDex) + "," + IntToString(nTCon));
 
     // Get the PCs str, dex, and con from the clone
-    int nPCStr = GetAbilityScore(oASPC,ABILITY_STRENGTH);
-    int nPCDex = GetAbilityScore(oASPC,ABILITY_DEXTERITY);
-    int nPCCon = GetAbilityScore(oASPC,ABILITY_CONSTITUTION);
+    int nPCStr = GetLocalInt(oHidePC, "PRC_trueSTR");//GetAbilityScore(oASPC,ABILITY_STRENGTH);
+    int nPCDex = GetLocalInt(oHidePC, "PRC_trueDEX");//GetAbilityScore(oASPC,ABILITY_DEXTERITY);
+    int nPCCon = GetLocalInt(oHidePC, "PRC_trueCON");//GetAbilityScore(oASPC,ABILITY_CONSTITUTION);
 
 //    SendMessageToPC(oPC,"Pc Str,dex,con" + IntToString(nPCStr) + "," + IntToString(nPCDex) + "," + IntToString(nPCCon));
 
@@ -2081,26 +2079,23 @@ void SetShiftTrueForm(object oPC)
         //CopyItem(oHide,oPC,TRUE);
     }
 
+    itemproperty ipUnarmed = ItemPropertyMonsterDamage(2);
+
     if (GetIsObjectValid(oWeapCR))
     {
-        // Remove all the abilities of the object
-        AssignCommand(oPC, ActionUnequipItem(oWeapCR));
-        //DestroyObject(oWeapCR, 0.5);
-        //RemoveAllItemProperties(oWeapCR);
-    }
+        // Remove all the abilities of the object -- replace with destroy code at 1.64
+        RemoveAllItemProperties(oWeapCR);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ipUnarmed, oWeapCR);
+            }
     if (GetIsObjectValid(oWeapCL))
     {
         // Remove all the abilities of the object
-        AssignCommand(oPC, ActionUnequipItem(oWeapCL));
-        //DestroyObject(oWeapCL, 0.5);
-        //RemoveAllItemProperties(oWeapCL);
+        RemoveAllItemProperties(oWeapCL);
     }
     if (GetIsObjectValid(oWeapCB))
     {
         // Remove all abilities of the object
-        AssignCommand(oPC, ActionUnequipItem(oWeapCB));
-        //DestroyObject(oWeapCB, 0.5);
-        //RemoveAllItemProperties(oWeapCB);
+        RemoveAllItemProperties(oWeapCB);
     }
     // if the did an epic form remove the special powers
     object oEpicPowersItem = GetItemPossessedBy(oPC,"EpicShifterPowers");

@@ -51,7 +51,7 @@ void main()
          }  
     }
     // Remove effects if weapons are not correct
-    else if(oWeapR == OBJECT_INVALID || oWeapL == OBJECT_INVALID || 
+    if(oWeapR == OBJECT_INVALID || oWeapL == OBJECT_INVALID || 
             GetBaseItemType(oWeapL) == BASE_ITEM_LARGESHIELD ||
             GetBaseItemType(oWeapL) == BASE_ITEM_TOWERSHIELD ||
             GetBaseItemType(oWeapL) == BASE_ITEM_SMALLSHIELD ||

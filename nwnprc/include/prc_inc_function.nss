@@ -364,6 +364,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"SA_Craft_Weapon");
     DeleteLocalInt(oSkin,"SA_Hide");
     DeleteLocalInt(oSkin,"SA_Hide_Forest");
+    DeleteLocalInt(oSkin,"Svirf_Dodge");
 
     // future PRCs Go below here
 }

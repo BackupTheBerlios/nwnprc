@@ -263,7 +263,7 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     int nAugment = GetAugmentLevel(oCaster);
     int nPP = GetLocalInt(oCaster, "PowerPoints");
     int nPPCost;
-    int nMetaPsi;
+    int nMetaPsi, nMetaPsiUses;
     int nCanManifest = TRUE;
     int nVolatile = VolatileMind(oTarget, oCaster);
     int nPsiHole = GetHasFeat(FEAT_PSIONIC_HOLE, oTarget) ? GetAbilityModifier(ABILITY_WISDOM, oTarget) : 0;
@@ -289,44 +289,51 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
 
 
     // Calculate the added cost from metapsionics
-    if (nChain > 0 && GetLocalInt(oCaster, "PsiMetaChain") == TRUE && UsePsionicFocus(oCaster))
+    if (nChain > 0 && GetLocalInt(oCaster, "PsiMetaChain") == TRUE)
     {
         nMetaPsi += bUseSum ? 6 :
                      6 - nImpMetapsiReduction < 1 ? 1 : 6 - nImpMetapsiReduction;
         nCanManifest = 2;
+        nMetaPsiUses++;
     }
-    if (nEmp > 0 && GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE && UsePsionicFocus(oCaster))
+    if (nEmp > 0 && GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE)
     {
         nMetaPsi += 2;
         nCanManifest = 2;
+        nMetaPsiUses++;
     }
-    if (nExtend > 0 && GetLocalInt(oCaster, "PsiMetaExtend") == TRUE && UsePsionicFocus(oCaster))
+    if (nExtend > 0 && GetLocalInt(oCaster, "PsiMetaExtend") == TRUE)
     {
         nMetaPsi += 2;
         nCanManifest = 2;
+        nMetaPsiUses++;
     }
-    if (nMax > 0 && GetLocalInt(oCaster, "PsiMetaMax") == TRUE && UsePsionicFocus(oCaster))
+    if (nMax > 0 && GetLocalInt(oCaster, "PsiMetaMax") == TRUE)
     {
         nMetaPsi += bUseSum ? 4 :
                      4 - nImpMetapsiReduction < 1 ? 1 : 4 - nImpMetapsiReduction;
         nCanManifest = 2;
+        nMetaPsiUses++;
     }
-    if (nSplit > 0 && GetLocalInt(oCaster, "PsiMetaSplit") == TRUE && UsePsionicFocus(oCaster))
+    if (nSplit > 0 && GetLocalInt(oCaster, "PsiMetaSplit") == TRUE)
     {
         nMetaPsi += 2;
         nCanManifest = 2;
+        nMetaPsiUses++;
     }
-    if (nTwin > 0 && GetLocalInt(oCaster, "PsiMetaTwin") == TRUE && UsePsionicFocus(oCaster))
+    if (nTwin > 0 && GetLocalInt(oCaster, "PsiMetaTwin") == TRUE)
     {
         nMetaPsi += bUseSum ? 6 :
                      6 - nImpMetapsiReduction < 1 ? 1 : 6 - nImpMetapsiReduction;
         nCanManifest = 2;
+        nMetaPsiUses++;
     }
-    if (nWiden > 0 && GetLocalInt(oCaster, "PsiMetaWiden") == TRUE && UsePsionicFocus(oCaster))
+    if (nWiden > 0 && GetLocalInt(oCaster, "PsiMetaWiden") == TRUE)
     {
         nMetaPsi += bUseSum ? 4 :
                      4 - nImpMetapsiReduction < 1 ? 1 : 4 - nImpMetapsiReduction;
         nCanManifest = 2;
+        nMetaPsiUses++;
     }
 
 
@@ -372,6 +379,13 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
                 FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
                 SetLocalInt(oCaster, "PowerPoints", nPP);
             }
+            
+            // Psionic focus loss from using metapsionics
+            int i = 0;
+            for(; i < nMetaPsiUses; i++)
+                // No metapsi if you can't pay for it. As it is, this requires one to pay
+                // for all metapsi used to get any of it
+                if(!UsePsionicFocus(oCaster) && nCanManifest) nCanManifest = 1;
 
             /// APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE ///
             // Damage from overchanneling happens only if one actually spends PP

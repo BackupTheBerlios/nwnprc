@@ -11,7 +11,7 @@
 //:: Created On: Jan 22, 2002
 //:://////////////////////////////////////////////
 //:: Last Updated By: Andrew Nobbs May 20, 2003
-#include "heartward_inc"
+
 #include "prc_inc_function"
 #include "inc_item_props"
 #include "soul_inc"

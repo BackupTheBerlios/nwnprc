@@ -1,7 +1,7 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
-#include "heartward_inc"
+
 #include "soul_inc"
 
 void main()

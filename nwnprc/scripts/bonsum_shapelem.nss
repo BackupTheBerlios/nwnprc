@@ -10,22 +10,7 @@ void main()
         iType = GetHasFeat(FEAT_BONDED_FIRE, OBJECT_SELF)  ? 3 : iType ;
         iType = GetHasFeat(FEAT_BONDED_WATER, OBJECT_SELF) ? 4 : iType ;
 
-    if (!GetHasFeat(FEAT_TYPE_ELEMENTAL))
-    {
-         effect ePoly=GetFirstEffect(OBJECT_SELF);
-         while(GetIsEffectValid(ePoly))
-         {
-            if(GetSpellId()==SPELL_POLYMORPH_ELEM)
-               RemoveEffect(OBJECT_SELF, ePoly);
-
-           ePoly = GetNextEffect(OBJECT_SELF);
-         }
-
-      DeletePRCLocalInts(GetPCSkin(OBJECT_SELF));
-
-      return ;
-    }
-
+  
     int iPoly;
 
     if (iType==1)

@@ -1361,5 +1361,17 @@ const int FEAT_PSION_DIS_SEER		         = 3557;
 const int FEAT_PSION_DIS_SHAPER		         = 3558;
 const int FEAT_PSION_DIS_TELEPATH	         = 3559;
 
+//Wilder
+const int FEAT_WILDER_SURGING_EUPHORIA_1         = 3568;
+const int FEAT_WILDER_SURGING_EUPHORIA_2         = 3569;
+const int FEAT_WILDER_SURGING_EUPHORIA_3         = 3570;
+const int FEAT_WILDER_VOLATILE_MIND_1            = 3571;
+const int FEAT_WILDER_VOLATILE_MIND_2            = 3572;
+const int FEAT_WILDER_VOLATILE_MIND_3            = 3573;
+const int FEAT_WILDER_VOLATILE_MIND_4            = 3574;
+
 //Psion - Nomad Powers
 const int FEAT_PSI_BALE_TELEPORT	         = 3553;
+
+//Non-Class Specific Powers
+const int FEAT_PSIONWILD_MIND_THRUST	         = 3567;

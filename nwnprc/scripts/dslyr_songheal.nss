@@ -42,7 +42,7 @@ void main()
   effect eSun = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
   effect eHealVis = EffectVisualEffect(VFX_IMP_HEALING_S);
   
-  effect eRegen = EffectRegenerate(6, 6.0);
+  effect eRegen = EffectRegenerate(3, 6.0);
   effect eVis = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
   effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
   effect eLink = EffectLinkEffects(eRegen, eDur);

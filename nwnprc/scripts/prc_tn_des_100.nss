@@ -11,7 +11,7 @@
 
 void main()
 {
-    effect eAOE = EffectAreaOfEffect(AOE_MOB_DES_100, "prc_tn_des_a", "", "prc_tn_des_b");
+    effect eAOE = EffectAreaOfEffect(AOE_MOB_DES_100, "prc_tn_des_a", "", "prc_tn_des_c");
     ApplyEffectToObject(DURATION_TYPE_PERMENANT, eAOE, OBJECT_SELF);
 }
 

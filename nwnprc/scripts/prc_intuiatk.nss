@@ -69,9 +69,6 @@ void main()
 
    }
 
-   if (GetHasFeat(FEAT_NIMBUSLIGHT, oPC))
-     SetCompositeBonus(oSkin, "NimbusLight", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
-
    if (GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))
    {
 

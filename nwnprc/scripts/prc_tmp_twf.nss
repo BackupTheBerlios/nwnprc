@@ -119,7 +119,7 @@ void main()
      else
      {   
           // Removes effects
-          RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC);
+          RemoveEffectsFromSpell(oPC, SPELL_T_TWO_WEAPON_FIGHTING);
 
           // Display message to player
           if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC) )

@@ -1547,6 +1547,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
           else
           {
                sFeedback += "*Target Immune to Critical Hits*";
+               iReturn = 1;
           }
      }
 

@@ -254,4 +254,5 @@
 250 FEAT_EPIC_WEAPON_FOCUS_WHIP                    997       1    -1             0      
 251 FEAT_EPIC_DEVASTATING_CRITICAL_WHIP            996       1    -1             0      
 252 FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP           999       1    -1             0      
-253 FEAT_EPIC_WEAPON_SPECIALIZATION_WHIP           998       1    -1             0      
+253 FEAT_EPIC_WEAPON_SPECIALIZATION_WHIP           998       1    -1             0  
+254 FEAT_JUMP                                      2884      3    1              1

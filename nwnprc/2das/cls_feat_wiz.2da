@@ -176,4 +176,5 @@
 172 FEAT_SHADOW_LORD_CONVO              2360      3    1              1      
 173 FEAT_TENACIOUSMAGIC                 2961      1    -1             0      
 174 FEAT_PERNICIOUSMAGIC                2962      1    -1             0      
-175 FEAT_INSIDIOUSMAGIC                 2963      1    -1             0      
+175 FEAT_INSIDIOUSMAGIC                 2963      1    -1             0    
+176 FEAT_JUMP                           2884      3    1              1

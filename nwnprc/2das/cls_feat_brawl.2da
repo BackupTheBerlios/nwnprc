@@ -316,4 +316,5 @@
 313 WeaponProfCreature                             289       3    1              0      
 314 ImprovedUnarmedStrike                          21        3    1              0      
 315 Brawler_Fists                                  4428      3    1              0      
-316 FEAT_EPIC_BRAWLER                              4437      3    21             0      
+316 FEAT_EPIC_BRAWLER                              4437      3    21             0   
+317 FEAT_JUMP                                      2884      3    1              1

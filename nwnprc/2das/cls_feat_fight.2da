@@ -349,4 +349,5 @@
 345 FEAT_NEW_POWER_ATTACK                          3143      3    1              1      
 346 FEAT_NEW_IMPROVED_POWER_ATTACK                 3144      3    1              1      
 347 FEAT_SHADOW_LORD_CONVO                         2360      3    1              1      
-348 FEAT_HOLYRADIANCE                              3164      0    -1             1      
+348 FEAT_HOLYRADIANCE                              3164      0    -1             1   
+349 FEAT_JUMP                                      2884      3    1              1

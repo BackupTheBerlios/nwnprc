@@ -217,4 +217,5 @@
 213 FEAT_DIVINE_VENGEANCE                          3142      0    -1             1      
 214 FEAT_HOLYRADIANCE                              3164      0    -1             1      
 215 FEAT_DISCIPLE_OF_SUN                           3127      0    -1             1      
-216 FEAT_SHADOW_LORD_CONVO                         2360      3    1              1      
+216 FEAT_SHADOW_LORD_CONVO                         2360      3    1              1     
+217 FEAT_JUMP                                      2884      3    1              1

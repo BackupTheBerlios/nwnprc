@@ -132,4 +132,5 @@
 128 FEAT_MANYSHOT                             3306      1    -1             1      
 129 FEAT_IMP_MANYSHOT                         3350      1    -1             1      
 130 Pinpoint_Accuracy                         3351      0    -1             1      
-131 FEAT_HOLYRADIANCE                         3164      0    -1             1      
+131 FEAT_HOLYRADIANCE                         3164      0    -1             1    
+132 FEAT_JUMP                                 2884      3    1              1

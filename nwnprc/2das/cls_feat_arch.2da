@@ -11,3 +11,4 @@
 7     FEAT_SPELL_POWER_V           3011        2      -1               0        
 8     FEAT_ARCANE_FIRE             3012        2      -1               1        
 9     FEAT_SPELL_LIKE              3013        2      -1               1        
+10    FEAT_JUMP                    2884        3      1                1

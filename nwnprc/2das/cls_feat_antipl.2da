@@ -315,4 +315,5 @@
 311 FEAT_EPIC_GREAT_CHARISMA_7                     770       1    -1             0      
 312 FEAT_EPIC_GREAT_CHARISMA_8                     771       1    -1             0      
 313 FEAT_EPIC_GREAT_CHARISMA_9                     772       1    -1             0      
-314 FEAT_EPIC_GREAT_CHARISMA_10                    773       1    -1             0      
+314 FEAT_EPIC_GREAT_CHARISMA_10                    773       1    -1             0    
+315 FEAT_JUMP                                      2884      3    1              1

@@ -1,12 +1,11 @@
 /*
-   Holy Radiance
+   Nimbus of Light
 
-   Shown a light with radius 10 feets and all undead within the same
-   radius get 1d4 damage per round
+   Shown a light with radius 5 feets and +2 circumstance bonus to
+   persuade, taunt
 
    Created By: Starlight
-   Created On: 2004-5-6
-   Script Originated from: Rick Burton (Midnight)
+   Created On: 2004-5-5
 */
 
 #include "prc_feat_const"
@@ -18,33 +17,37 @@ void main(){
    object oPC = OBJECT_SELF;
    object oSkin = GetPCSkin(OBJECT_SELF);
    string nMes = "";
-   int nBrightness = IP_CONST_LIGHTBRIGHTNESS_LOW;
+   int nBrightness = IP_CONST_LIGHTBRIGHTNESS_DIM;
    int nColor = IP_CONST_LIGHTCOLOR_WHITE;
    itemproperty ipAdd = ItemPropertyLight(nBrightness, nColor);
-   effect eAOE = EffectAreaOfEffect(AOE_MOB_CIRCGOOD, "enter_holy_rad", "in_holy_rad", "exit_holy_rad");
-   effect eVisual = EffectVisualEffect(VFX_IMP_AURA_HOLY);
-   effect eLink = EffectLinkEffects(ExtraordinaryEffect(eAOE), eVisual);
+   effect ePersuade;
+   effect eTaunt;
+   effect eLink;
+
+   ePersuade = EffectSkillIncrease(SKILL_PERSUADE, 2);
+   eTaunt = EffectSkillIncrease(SKILL_TAUNT, 2);
+   eLink = ExtraordinaryEffect(EffectLinkEffects(ePersuade, eTaunt));
 
    if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD){
-      if (!GetHasFeatEffect(FEAT_HOLYRADIANCE) && !GetHasFeatEffect(FEAT_NIMBUSLIGHT)){
+      if (!GetHasFeatEffect(FEAT_NIMBUS_OF_LIGHT) && !GetHasFeatEffect(FEAT_HOLY_RADIANCE)){
          if (!GetIsObjectValid(oSkin)) return;
-   
+
          // Apply the Light and Skill increase
          IPSafeAddItemProperty(oSkin, ipAdd);
          ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);
 
          // Display the message
-         nMes = "*Holy Radiance Activated*";
+         nMes = "*Nimbus of Light Activated*";
          FloatingTextStringOnCreature(nMes, oPC, FALSE);
       }
       else{
          // Remove the Light and Skill increase
          IPRemoveMatchingItemProperties(oSkin, ITEM_PROPERTY_LIGHT, DURATION_TYPE_PERMANENT);
-         RemoveSpecificEffect(EFFECT_TYPE_AREA_OF_EFFECT, oPC);
-         RemoveSpecificEffect(EFFECT_TYPE_VISUALEFFECT, oPC);
-
+         RemoveSpecificEffect(EFFECT_TYPE_SKILL_INCREASE, oPC);
+         RemoveSpecificEffect(EFFECT_TYPE_SKILL_INCREASE, oPC);
+   
          // Display the message
-         nMes = "*Holy Radiance Deactivated*";
+         nMes = "*Nimbus of Light Deactivated*";
          FloatingTextStringOnCreature(nMes, oPC, FALSE);
       }
    }

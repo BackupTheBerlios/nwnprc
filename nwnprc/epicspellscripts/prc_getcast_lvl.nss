@@ -159,11 +159,7 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
         }
 
     }//end of divine spell part
-    else{
-        //to fix a weird hierophant bug
-        if(GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster) > 0)
-            nDivine+= GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster);
-    }
+
   
 
  if (iTypeSpell == TYPE_ARCANE)

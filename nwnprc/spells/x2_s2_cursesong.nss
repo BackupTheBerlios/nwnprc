@@ -371,6 +371,8 @@ void main()
     eHP = ExtraordinaryEffect(eHP);
     eLink = ExtraordinaryEffect(eLink);
 
+    string sCurseSongHP = "CURSE_SONG_HP_" + ObjectToString(OBJECT_SELF);
+
     RemoveSongEffects(GetSpellId(),OBJECT_SELF,OBJECT_SELF);
 
     float fDelay;
@@ -383,10 +385,12 @@ void main()
             {
                     RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
 
-                    if (nHP > 0)
+                    if (nHP > 0 && !GetLocalInt(oTarget, sCurseSongHP))
                     {
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SONIC), oTarget);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eHP, oTarget);
+                        SetLocalInt(oTarget, sCurseSongHP, TRUE);
+                        DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(oTarget, sCurseSongHP));
                     }
 
                     if (!GetIsDead(oTarget))

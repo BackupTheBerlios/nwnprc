@@ -18,11 +18,15 @@ void SacredSpeed(object oPC,object oSkin,int bSFSpeed ,int iShield)
 {
    object oArmor=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
 
-   if  ((GetBaseAC(oArmor)>3 ||iShield )&& GetHasSpellEffect(SPELL_SACREDSPEED,oPC))
-     RemoveSpellEffects(SPELL_SACREDSPEED,oPC,oPC);
-   else if (!GetHasSpellEffect(SPELL_SACREDSPEED,oPC))
+   if  (GetBaseAC(oArmor)>3 ||iShield )
    {
-     RemoveSpellEffects(SPELL_SACREDSPEED,oPC,oPC);
+     if ( GetHasSpellEffect(SPELL_SACREDSPEED,oPC))
+       RemoveSpellEffects(SPELL_SACREDSPEED,oPC,oPC);
+   }
+   else 
+   {
+     if (GetHasSpellEffect(SPELL_SACREDSPEED,oPC))
+          RemoveSpellEffects(SPELL_SACREDSPEED,oPC,oPC);
      ActionCastSpellAtObject(SPELL_SACREDSPEED,oPC,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);
    }
 

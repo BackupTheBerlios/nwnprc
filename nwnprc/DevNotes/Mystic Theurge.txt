@@ -1,0 +1,11 @@
+Book: Dungeon Master's Guide 3.5
+Class Reqs Changed:
+  Skills:
+    PnP:
+      Knowledge (Arcana) 6 Ranks
+      Knowledge (Religion) 6 Ranks
+    PRC:
+      Lore 6 Ranks
+      Concentration 6 Ranks
+      Spellcraft 6 Ranks
+	

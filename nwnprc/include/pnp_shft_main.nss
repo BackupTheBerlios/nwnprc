@@ -1614,6 +1614,10 @@ int GetShifterLevelRequired(object oTarget)
             nLevelRequired = 1;
         break;
     }
+    if (GetHasFeat(SHIFTER_BLACK_LIST,oTarget))
+	{
+		nLevelRequired = 1000;
+	}
     return nLevelRequired;
 }
 

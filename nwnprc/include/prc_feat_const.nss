@@ -481,6 +481,7 @@ const int FEAT_FREE_KI_4            = 2752;
 const int FEAT_PRESTIGE_SHIFTER_NATURALSPELL = 2917;
 const int FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1   = 2906;
 const int FEAT_PRESTIGE_SHIFTER_GWSHAPE_1    = 2900;
+const int SHIFTER_BLACK_LIST				 = 2918;
 
 //heartwarder
 const int FEAT_SANCTIFY_MARTIAL_CLUB        = 3194;

@@ -1,4 +1,3 @@
-#include "heartward_inc"
 #include "inc_combat"
 #include "x2_inc_itemprop"
 #include "X0_I0_SPELLS"

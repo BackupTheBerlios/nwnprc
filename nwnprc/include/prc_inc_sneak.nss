@@ -1,3 +1,8 @@
+
+#include "prc_class_const"
+#include "inc_item_props"
+#include "NW_I0_GENERIC"
+
 // * Various functions to determine sneak dice.
 
 // * Used to find the total sneak dice a character is capable of.
@@ -15,8 +20,24 @@ int GetAssassinSneak(object oPC);
 // * Used to find how much a character has taken "Improved Sneak Attack".
 int GetEpicFeatSneak(object oPC);
 
-#include "prc_class_const"
-#include "inc_item_props"
+//:://////////////////////////////////////////////
+//::  Sneak Attack Functions
+//:://////////////////////////////////////////////
+
+// Checks if attacker is flanking the defender or not
+int GetIsFlanked(object oDefender, object oAttacker);
+
+// Returns if oDefender is denied dex bonus to AC from spells
+int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker);
+
+// Returns true if oDefender has concealment
+int GetIsConcealed(object oDefender, object oAttacker);
+
+// Returns true if the Attacker can Sneak Attack the target
+int GetCanSneakAttack(object oDefender, object oAttacker);
+
+// Returns Sneak Attack Damage
+int GetSneakAttackDamage(int iSneakAttackDice);
 
 int GetTotalSneakAttackDice(object oPC)
 {
@@ -159,4 +180,189 @@ int GetEpicFeatSneak(object oPC)
    }
 
    return iEpicFeatDice;
+}
+
+//:://////////////////////////////////////////////
+//::  Sneak Attack Functions
+//:://////////////////////////////////////////////
+
+int GetIsFlanked(object oDefender, object oAttacker) 
+{
+    int bReturnVal = FALSE;
+    
+    if(GetIsObjectValid(oAttacker) && GetIsObjectValid(oDefender)) 
+    {
+        // I am assuming that if the Defender is facing away from the
+        // Attacker then the Defender is flanked, as NWN "turns" an
+        // attacker towards the defender
+
+        vector vDefender = AngleToVector(GetFacing(oDefender));
+        vector vAttacker = AngleToVector(GetFacing(oAttacker));
+        vector vResult = vDefender + vAttacker;
+
+        float iMagDefender = VectorMagnitude(vDefender);
+        float iMagResult = VectorMagnitude(vResult);
+
+        // If the magnitude of the Defenders facing vector is greater than the
+        // result of the magnitude of the vector addition of the Attackers and
+        // Defenders facing then the Defender is flanked.
+       
+        if(iMagDefender < iMagResult)
+        {
+             bReturnVal = TRUE;
+        }
+    }
+    
+    return bReturnVal;
+}
+
+int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker)
+{
+     int bIsDeniedDex = FALSE;
+     int bDefenderHasTrueSight = GetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
+     int bDefenderCanSeeInvisble = GetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
+     
+     // if defender has spell effect on them
+     if( GetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender) )          bIsDeniedDex = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_DAZED, oDefender) )         bIsDeniedDex = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_ENTANGLE, oDefender) )      bIsDeniedDex = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_FRIGHTENED, oDefender) )    bIsDeniedDex = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_PARALYZE, oDefender) )      bIsDeniedDex = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_PETRIFY, oDefender) )       bIsDeniedDex = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_SLEEP, oDefender) )         bIsDeniedDex = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_STUNNED, oDefender) )       bIsDeniedDex = TRUE;
+     
+     // if attacker is invisvisible/hiding/etc.     
+     else if( GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)  && !bDefenderHasTrueSight && !bDefenderCanSeeInvisble )
+     {
+          bIsDeniedDex = TRUE;
+     }
+     else if( GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)  && !bDefenderHasTrueSight && !bDefenderCanSeeInvisble )
+     {
+          bIsDeniedDex = TRUE;
+     }
+     else if( !GetObjectSeen(oAttacker, oDefender) )
+     {
+          bIsDeniedDex = TRUE;    
+     }
+     
+     // Check for Uncanny Dodge Vs. Sneak Attack.
+     if( GetHasFeat(FEAT_UNCANNY_DODGE_2, oDefender) )
+     {
+          int iUncannyDodgeLevels;
+          iUncannyDodgeLevels += GetLevelByClass(CLASS_TYPE_BARBARIAN, oDefender);
+          iUncannyDodgeLevels += GetLevelByClass(CLASS_TYPE_ASSASSIN , oDefender);
+          iUncannyDodgeLevels += GetLevelByClass(CLASS_TYPE_ROGUE    , oDefender);
+          iUncannyDodgeLevels += GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oDefender);
+          
+          // +4 because a rogue has to be 4 levels higher to flank
+          iUncannyDodgeLevels += 4;
+          
+          int iSneakAttackLevels;
+          iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_ASSASSIN  , oAttacker);
+          iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_ROGUE     , oAttacker);
+          iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_BLACKGUARD, oAttacker);
+          
+          // add other sneak attacking PrC's here
+          iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_ARCTRICK, oAttacker);
+          iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_SHADOWLORD, oAttacker);
+          iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_PEERLESS, oAttacker);
+          iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_BLARCHER, oAttacker);
+
+          //          
+          // Use template to add future classes
+          // iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_*, oAttacker);
+          //
+          
+          if(iUncannyDodgeLevels > iSneakAttackLevels)
+          {
+               bIsDeniedDex = FALSE;
+          }
+     }
+
+     if(GetLevelByClass(CLASS_TYPE_DWARVENDEFENDER, oDefender) > 0 )
+     {
+         bIsDeniedDex = FALSE; 
+     }
+     
+     return bIsDeniedDex;
+}
+
+int GetIsConcealed(object oDefender, object oAttacker)
+{
+     int bIsConcealed = FALSE;
+
+     int bAttackerHasTrueSight = GetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
+     int bAttackerCanSeeInvisble = GetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
+     int bAttackerUltraVision = GetHasEffect(EFFECT_TYPE_ULTRAVISION, oAttacker);
+     
+     // might be able to remove as it should fall under
+     // the concealment check... better to test first though
+     if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_50) )          bIsConcealed = TRUE;
+     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_40) )     bIsConcealed = TRUE;
+     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_30) )     bIsConcealed = TRUE;
+     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_20) )     bIsConcealed = TRUE;
+     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_10) )     bIsConcealed = TRUE;
+     
+     // darkness, invisible, imp invisible
+     else if(GetStealthMode(oDefender) == STEALTH_MODE_ACTIVATED && !GetObjectSeen(oDefender, oAttacker) )  bIsConcealed = TRUE;
+     else if(GetHasEffect(EFFECT_TYPE_SANCTUARY, oDefender) && ! bAttackerHasTrueSight )
+     {
+          bIsConcealed = TRUE;
+     }
+     else if(GetHasEffect(EFFECT_TYPE_INVISIBILITY, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble )
+     {
+          bIsConcealed = TRUE;
+     }
+     else if(GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
+     {
+          bIsConcealed = TRUE;
+     }
+     //else if(GetHasEffect(EFFECT_TYPE_ETHEREAL, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
+     //{
+     //     bIsConcealed = TRUE;
+     //}
+     else if(GetHasEffect(EFFECT_TYPE_CONCEALMENT, oDefender) && !bAttackerHasTrueSight)
+     {
+          bIsConcealed = TRUE;     
+     }
+     else if(GetHasEffect(EFFECT_TYPE_DARKNESS, oDefender) && !bAttackerHasTrueSight && !bAttackerUltraVision)
+     {
+          bIsConcealed = TRUE;     
+     }
+  
+     return bIsConcealed;
+}
+
+int GetCanSneakAttack(object oDefender, object oAttacker)
+{
+     int bReturnVal = FALSE;
+     int bIsInRange = FALSE;
+     int bIsFlanked = GetIsFlanked(oDefender, oAttacker);
+     int bIsDeniedDex = GetIsDeniedDexBonusToAC(oDefender, oAttacker);
+     
+     float fDistance = GetDistanceBetween(oAttacker, oDefender);
+     if(fDistance <= FeetToMeters(30.0f) )     bIsInRange = TRUE;
+     
+     // Is only run if enemy is indeed flanked or denied dex bonus to AC
+     // otherwise there is no reason to check further
+     if(bIsFlanked || bIsDeniedDex && bIsInRange)
+     {
+          // so far they can be sneaked
+          bReturnVal = TRUE;
+          
+          // checking for other factors that remove sneak attack
+          if( GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) )   bReturnVal = FALSE;
+          if( GetIsImmune(oDefender, IMMUNITY_TYPE_SNEAK_ATTACK, OBJECT_INVALID) )   bReturnVal = FALSE;
+          
+          if( GetIsConcealed(oDefender, oAttacker) )   bReturnVal = FALSE;
+     }
+     
+     return bReturnVal;
+}
+
+int GetSneakAttackDamage(int iSneakAttackDice)
+{
+     int iSneakAttackDamage = d6(iSneakAttackDice);     
+     return iSneakAttackDamage;
 }

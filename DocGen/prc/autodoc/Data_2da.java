@@ -52,7 +52,8 @@ public class Data_2da{
 		try{
 			reader = new Scanner(baseFile);
 		}catch(FileNotFoundException e){
-			System.err.println("2da file removed while program was running. Aborting");
+			err_pr.println("2da file removed while program was running. Aborting");
+			//System.err.println("2da file removed while program was running. Aborting");
 			System.exit(1);
 		}
 		

@@ -51,7 +51,7 @@ public class Main{
 			}catch(Exception e){
 				System.err.println("Failure while reading main 2das. Exception data:\n");
 				e.printStackTrace();
-				System.exit(0);
+				System.exit(1);
 			}
 		}
 		
@@ -63,10 +63,12 @@ public class Main{
 				try{
 					temp = new Data_2da("2da" + fileSeparator + name + ".2da");
 				}catch(IllegalArgumentException e){
-					System.err.println(e);
+					//System.err.println(e);
+					err_pr.println(e.toString());
 					temp = null;
 				}catch(TwoDAReadException e){
-					System.err.println(e);
+					//System.err.println(e);
+					err_pr.println(e.toString());
 					temp = null;
 				}
 				data.put(name, temp);
@@ -156,11 +158,15 @@ public class Main{
 					}
 				}
 			}catch(Exception e){
-				System.err.println("Failed to read settings file. Exception:\n" + e + "\nAborting");
+				//System.err.println("Failed to read settings file. Exception:\n" + e + "\nAborting");
+				err_pr.println("Failed to read settings file. Exception:\n" + e + "\nAborting");
 				System.exit(1);
 			}
 		}
 	}
+	
+	/** A convenience object for printing both to log and System.err */
+	public static ErrorPrinter err_pr = new ErrorPrinter();
 	
 	/**
 	 * A boolean determining whether to print progress information
@@ -169,6 +175,7 @@ public class Main{
 	public static boolean verbose = true;
 	public static Spinner spinner = new Spinner();
 	
+	/** A constant signifying Bad StrRef */
 	public static final String badStrRef = "Bad StrRef";
 	
 	/**
@@ -188,16 +195,17 @@ public class Main{
 	private static TLKStore tlk;
 	
 	/** The template files */
-	private static String classTemplate          = null,
-	                      domainTemplate         = null,
-	                      featTemplate           = null,
-	                      mFeatTemplate          = null,
-	                      menuTemplate           = null,
-	                      menuItemTemplate       = null,
-	                      prereqANDFeatTemplate  = null,
-	                      prereqORFeatTemplate   = null,
-	                      spellTemplate          = null,
-	                      skillTemplate          = null;
+	private static String classTemplate                 = null,
+	                      domainTemplate                = null,
+	                      featTemplate                  = null,
+	                      mFeatTemplate                 = null,
+	                      menuTemplate                  = null,
+	                      menuItemTemplate              = null,
+	                      prereqANDFeatHeaderTemplate   = null,
+	                      prereqORFeatHeaderTemplate    = null,
+	                      spellTemplate                 = null,
+	                      skillTemplate                 = null,
+	                      successorFeatHeaderTemplate   = null;
 	                      
 	
 	/* Data structure used for determining if a previous write has failed
@@ -226,6 +234,8 @@ public class Main{
 			if(opt.startsWith("-")){
 				if(opt.contains("q"))
 					verbose = false;
+				if(opt.contains("s"))
+					spinner.disable();
 				if(opt.contains("?"))
 					readMe();
 			}
@@ -243,7 +253,13 @@ public class Main{
 			contentPath = mainPath + "content" + fileSeparator;
 			menuPath    = mainPath + "menus" + fileSeparator;
 			
-			tlk = new TLKStore(settings.languages.get(i)[1], settings.languages.get(i)[2]);
+			// If we fail on a language, skip to next one
+			try{
+				tlk = new TLKStore(settings.languages.get(i)[1], settings.languages.get(i)[2]);
+			}catch(TLKReadException e){
+				err_pr.println("Failure while reading TLKs for language: " + curLanguage +". Exception: \n" + e);
+				continue;
+			}
 			
 			readTemplates();
 			buildDirectories();
@@ -258,9 +274,10 @@ public class Main{
 	 */
 	private static void readMe(){
 		System.out.println("Usage:\n"+
-		                   "  java prc/autodoc/Main [--help][-q?]\n"+
+		                   "  java prc/autodoc/Main [--help][-qs?]\n"+
 		                   "\n"+
 		                   "-q     quiet mode. Does not print any progress info, only failure messages\n"+
+		                   "-s     disable the spinner. Useful when logging to file\n"+
 		                   "\n"+
 		                   "--help prints this info you are reading\n"+
 		                   "-?     see --help\n"
@@ -274,16 +291,17 @@ public class Main{
 	private static void readTemplates(){
 		String templatePath = "templates" + fileSeparator + curLanguage + fileSeparator;
 		
-		classTemplate          = readTemplate(templatePath + "class.html");
-		domainTemplate         = readTemplate(templatePath + "domain.html");
-		featTemplate           = readTemplate(templatePath + "feat.html");
-		mFeatTemplate          = readTemplate(templatePath + "masterfeat.html");
-		menuTemplate           = readTemplate(templatePath + "menu.html");
-		menuItemTemplate       = readTemplate(templatePath + "menuitem.html");
-		prereqANDFeatTemplate  = readTemplate(templatePath + "prerequisiteandfeatheader.html");
-		prereqORFeatTemplate   = readTemplate(templatePath + "prerequisiteorfeatheader.html");
-		spellTemplate          = readTemplate(templatePath + "spell.html");
-		skillTemplate          = readTemplate(templatePath + "skill.html");
+		classTemplate                 = readTemplate(templatePath + "class.html");
+		domainTemplate                = readTemplate(templatePath + "domain.html");
+		featTemplate                  = readTemplate(templatePath + "feat.html");
+		mFeatTemplate                 = readTemplate(templatePath + "masterfeat.html");
+		menuTemplate                  = readTemplate(templatePath + "menu.html");
+		menuItemTemplate              = readTemplate(templatePath + "menuitem.html");
+		prereqANDFeatHeaderTemplate   = readTemplate(templatePath + "prerequisiteandfeatheader.html");
+		prereqORFeatHeaderTemplate    = readTemplate(templatePath + "prerequisiteorfeatheader.html");
+		spellTemplate                 = readTemplate(templatePath + "spell.html");
+		skillTemplate                 = readTemplate(templatePath + "skill.html");
+		successorFeatHeaderTemplate   = readTemplate(templatePath + "successorfeatheader.html");
 	}
 	
 	/**
@@ -303,7 +321,8 @@ public class Main{
 			
 			return temp.toString();
 		}catch(Exception e){
-			System.err.println("Failed to read template file. Exception:\n" + e + "\nAborting");
+			//System.err.println("Failed to read template file. Exception:\n" + e + "\nAborting");
+			err_pr.println("Failed to read template file. Exception:\n" + e + "\nAborting");
 			System.exit(1);
 		}
 		
@@ -349,7 +368,8 @@ public class Main{
 		File builder = new File(path);
 		if(!builder.exists()){
 			if(!builder.mkdirs()){
-				System.err.println("Failure creating directory:\n" + builder.getPath());
+				//System.err.println("Failure creating directory:\n" + builder.getPath());
+				err_pr.println("Failure creating directory:\n" + builder.getPath());
 				System.exit(1);
 			}
 		}
@@ -361,11 +381,9 @@ public class Main{
 		doSkills();
 		doSpells();
 		
-		// Do masterfeats
+		/* Then, build the feats */
 		preliMasterFeats();
-		// Do feats
 		preliFeats();
-		// Link feats
 		linkFeats();
 		// Do domains
 		
@@ -436,7 +454,8 @@ public class Main{
 				//entry = htmlizeTLK(tlk.get(skills2da.getEntry("Description", i)));
 				printPage(skillPath + i + ".html", entry);
 			}catch(Exception e){
-				System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+				//System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+				err_pr.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
 				// Note the failure, so this page isn't used elsewhere in the manual
 				failedSkills.put(i, presenceIndicator);
 			}
@@ -508,7 +527,8 @@ public class Main{
 					printPage(pathToUse, entry);
 				}
 			}catch(Exception e){
-				System.err.println("Failed to print page for spell " + i + ": " + name + "\nException:\n" + e);
+				//System.err.println("Failed to print page for spell " + i + ": " + name + "\nException:\n" + e);
+				err_pr.println("Failed to print page for spell " + i + ": " + name + "\nException:\n" + e);
 				// Note the failure, so this page isn't used elsewhere in the manual
 				failedSpells.put(i, presenceIndicator);
 			}
@@ -605,7 +625,8 @@ public class Main{
 				// Store the entry to wait for further processing
 				masterFeats.put(i, entry);
 			}catch(Exception e){
-				System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+				//System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+				err_pr.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
 			}
 		}
 		System.gc();
@@ -638,7 +659,8 @@ public class Main{
 		for(int i = 0; i < feats2da.getEntryCount(); i++){
 			// Skip blank rows
 			if(feats2da.getEntry("LABEL", i).equals("****")) continue;
-			
+			// Skip the ISC & Epic spell markers
+			if(feats2da.getEntry("LABEL", i).equals("ReservedForISCAndESS")) continue;
 			try{
 				name = tlk.get(feats2da.getEntry("FEAT", i));
 				// If we have a bad name, just toss a notice and skip to next entry
@@ -670,7 +692,8 @@ public class Main{
 				// Store the entry to wait for further processing
 				feats.put(i, entry);
 			}catch(Exception e){
-				System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+				//System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+				err_pr.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
 			}
 		}
 		System.gc();
@@ -697,12 +720,18 @@ public class Main{
 					check.master = other;
 					other.childFeats.add(check);
 				}catch(NumberFormatException e){
-					System.err.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid masterfeat link");
+					//System.err.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid masterfeat link");
+					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid masterfeat link");
+				}catch(NullPointerException e){
+					//System.err.println("Feat " + check.entryNum + ": " + check.entryName + " contains a link to nonexistent masterfeat");
+					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains a link to nonexistent masterfeat");
 			}}
 			
-			// Link prerequisites
+			// Print prerequisites into the entry
 			temp = buildPrerequisites(check, feats2da);
 			check.entryText.replaceAll("~~~PrerequisiteFeatList~~~", temp);
+			
+			
 		}
 		
 		// Add the child links to masterfeat texts
@@ -730,26 +759,29 @@ public class Main{
 		String preReqText = "";
 		
 		/* Handle AND prerequisite feats */
-		if(!andReq1.equals("****") || (!andReq2.equals("****"))){
-			// Some paranoia about bad entries
+		// Some paranoia about bad entries
+		if(!andReq1Num.equals("****")){
 			try{ andReq1 = feats.get(Integer.parseInt(andReq1Num)); }
 			catch(NumberFormatException e){
-				System.err.println("Invalid PREREQFEAT1 link in feat " + check.entryNum);
-			}
+				//System.err.println("Invalid PREREQFEAT1 link in feat " + check.entryNum);
+				err_pr.println("Invalid PREREQFEAT1 link in feat " + check.entryNum);
+		}}
+		if(!andReq2Num.equals("****")){
 			try{ andReq2 = feats.get(Integer.parseInt(andReq2Num)); }
 			catch(NumberFormatException e){
-				System.err.println("Invalid PREREQFEAT2 link in feat " + check.entryNum);
-			}
-			// Check if we had at least one valid entry
-			if(andReq1 != null || andReq2 != null){
-				preReqText = "<div>\n" + prereqANDFeatTemplate + "\n"; 
-				if(andReq1 != null)
-					preReqText += "<br /><a href=" + andReq1.filePath.replace(contentPath, "../") + " target=\"content\">" + andReq1.entryName + "</a>\n";
-				if(andReq2 != null)
-					preReqText += "<br /><a href=" + andReq2.filePath.replace(contentPath, "../") + " target=\"content\">" + andReq2.entryName + "</a>\n";
-				preReqText += "</div>\n";
-			}
+				//System.err.println("Invalid PREREQFEAT2 link in feat " + check.entryNum);
+				err_pr.println("Invalid PREREQFEAT2 link in feat " + check.entryNum);
+		}}
+		// Check if we had at least one valid entry
+		if(andReq1 != null || andReq2 != null){
+			preReqText = "<div>\n" + prereqANDFeatHeaderTemplate + "\n"; 
+			if(andReq1 != null)
+				preReqText += "<br /><a href=" + andReq1.filePath.replace(contentPath, "../") + " target=\"content\">" + andReq1.entryName + "</a>\n";
+			if(andReq2 != null)
+				preReqText += "<br /><a href=" + andReq2.filePath.replace(contentPath, "../") + " target=\"content\">" + andReq2.entryName + "</a>\n";
+			preReqText += "</div>\n";
 		}
+
 		
 		/* Handle OR prerequisite feats */
 		// First, check if there are any
@@ -761,16 +793,19 @@ public class Main{
 			boolean headerDone = false;
 			// Loop through each req and see if it's a valid link
 			for(int i = 0; i < orReqs.length; i++){
-				try{ orReq = feats.get(Integer.parseInt(orReqs[i])); }
-				catch(NumberFormatException e){
-					System.err.println("Invalid PREREQFEAT" + i + " link in feat " + check.entryNum);
-				}
-				if(orReq != null){
-					if(!headerDone){
-						preReqText = "<div>\n" + prereqORFeatTemplate + "\n";
-						headerDone = true;
+				if(!orReqs[i].equals("****")){
+					try{ orReq = feats.get(Integer.parseInt(orReqs[i])); }
+					catch(NumberFormatException e){
+						//System.err.println("Invalid OrReqFeat" + i + " link in feat " + check.entryNum);
+						err_pr.println("Invalid OrReqFeat" + i + " link in feat " + check.entryNum);
 					}
-					preReqText += "<br /><a href=" + orReq.filePath.replace(contentPath, "../") + " target=\"content\">" + orReq.entryName + "</a>\n";
+					if(orReq != null){
+						if(!headerDone){
+							preReqText = "<div>\n" + prereqORFeatHeaderTemplate + "\n";
+							headerDone = true;
+						}
+						preReqText += "<br /><a href=" + orReq.filePath.replace(contentPath, "../") + " target=\"content\">" + orReq.entryName + "</a>\n";
+					}
 				}
 			}
 			// End the <div> if we printed anything

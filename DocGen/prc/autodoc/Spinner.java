@@ -7,10 +7,13 @@ package prc.autodoc;
 public final class Spinner{
 	private char[] states = new char[]{'|','/','-','\\'};
 	private int curState = 0;
+	private boolean active = true;
 	
 	public Spinner(){}
 	
 	public void spin(){
-		System.out.print(states[curState = ++curState % states.length] + "\u0008");
+		if(active) System.out.print(states[curState = ++curState % states.length] + "\u0008");
 	}
+	
+	public void disable(){ active = false; }
 }

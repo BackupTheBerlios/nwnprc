@@ -54,6 +54,9 @@
 #include "prc_inc_util"
 #include "inc_utility"
 
+// Switch to allow the elemental damage to critical.
+const int PRC_ALLOW_ELEMNTAL_DAMAGE_CRITICAL = TRUE;
+
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
 //:://////////////////////////////////////////////
@@ -198,10 +201,10 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
 // and will not calculate it.  This is mainly for when you call PerformAttackRound 
 // to do multiple attacks,  so that it does not have to recalculate all the bonuses
 // for every attack made.
-// bIsCritical = FALSE is not a critical; true is a critcal hit.
+// bIsCritical = FALSE is not a critical; true is a critcal hit. (Function checks for crit immunity).
 // iNumDice  0 = calculate it; Anything else is the number of dice rolled
 // iNumSides 0 = calculate it; Anything else is the sides of the dice rolled
-// iCriticalMultiplier 0 = calculate itl Anything else is the damage multiplier on a critical hit
+// iCriticalMultiplier 0 = calculate it; Anything else is the damage multiplier on a critical hit
 effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struct BonusDamage sWeaponBonusDamage, struct BonusDamage sSpellBonusDamage, int iMainHand = 0, int iDamage = 0, int bIsCritical = FALSE, int iNumDice = 0, int iNumSides = 0, int iCriticalMultiplier = 0);
 
 // Due to the lack of a proper sleep function in order to delay attacks properly
@@ -2798,7 +2801,8 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      // a flaming sword are not multiplied when you score a critical hit
      // so no magical effects or bonuses are doubled.
 
-     if(bIsCritical)
+     // checks for immunity to critical hits before adding damage
+     if(bIsCritical && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) )
      {
           // determine critical damage
           iWeaponDamage *= iCriticalMultiplier;
@@ -2816,10 +2820,12 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      iWeaponDamage += GetDamageByConstant(sWeaponBonusDamage.dice_Slash, TRUE);
      
      // damage from spells is stored as solid number
-     // currently, no spells add ndX damage
      iWeaponDamage += sSpellBonusDamage.dam_Blud;
      iWeaponDamage += sSpellBonusDamage.dam_Pier;
      iWeaponDamage += sSpellBonusDamage.dam_Slash;     
+     iWeaponDamage += sSpellBonusDamage.dice_Blud;
+     iWeaponDamage += sSpellBonusDamage.dice_Pier;
+     iWeaponDamage += sSpellBonusDamage.dice_Slash; 
 
      // Logic to determine if enemy can be sneak attacked
      // and to add sneak attack damage
@@ -2874,22 +2880,26 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      iMag  = sSpellBonusDamage.dam_Mag;
      iMag += GetDamageByConstant(sWeaponBonusDamage.dam_Mag, TRUE);
      
-     // magical damage is not multiplied by criticals
-     // at least not in PnP
-     //if(bIsCritical)
-     //{
-     //     iAcid *= iCriticalMultiplier;
-     //     iCold *= iCriticalMultiplier;
-     //     iFire *= iCriticalMultiplier;
-     //     iElec *= iCriticalMultiplier;
-     //     iSon *= iCriticalMultiplier;
-     //     
-     //     iDiv *= iCriticalMultiplier;
-     //     iNeg *= iCriticalMultiplier;
-     //     iPos *= iCriticalMultiplier;
-     //     
-     //     iMag *= iCriticalMultiplier;
-     //}
+     // Magical damage is not multiplied by criticals, at least not in PnP
+     // Since it is in NwN, I left it default on in a switch.  
+     // Can be turned off to better emulate PnP rules.
+     if(  bIsCritical && 
+          !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) &&
+          PRC_ALLOW_ELEMNTAL_DAMAGE_CRITICAL
+       )
+     {
+          iAcid *= iCriticalMultiplier;
+          iCold *= iCriticalMultiplier;
+          iFire *= iCriticalMultiplier;
+          iElec *= iCriticalMultiplier;
+          iSon *= iCriticalMultiplier;
+          
+          iDiv *= iCriticalMultiplier;
+          iNeg *= iCriticalMultiplier;
+          iPos *= iCriticalMultiplier;
+          
+          iMag *= iCriticalMultiplier;
+     }
      
      iAcid += GetDamageByConstant(sSpellBonusDamage.dice_Acid, TRUE);
      iAcid += GetDamageByConstant(sWeaponBonusDamage.dice_Acid, TRUE);

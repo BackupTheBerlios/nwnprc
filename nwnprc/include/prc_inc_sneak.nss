@@ -242,7 +242,7 @@ int GetIsAOEFlanked(object oDefender, object oAttacker)
     int bReturnVal = TRUE;
     
     // if they are not in combat then they are automatically flanked (surprise round)
-    if(GetIsInCombat(oDefender) || !GetIsInCombat(oDefender) )
+    if(!GetIsFighting(oDefender) || !GetIsInCombat(oDefender) )
     {
          // checks if they are attacking something other than the caster
          object oTarget = GetAttackTarget(oDefender);

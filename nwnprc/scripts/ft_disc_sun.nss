@@ -175,8 +175,11 @@ void main()
         nClassLevel += (nHospLevel -2);
         nTurnLevel  += (nHospLevel - 2);
     }
-    if ( nAlign == ALIGNMENT_GOOD)   nClassLevel += nSolLevel;
-
+    if ( nAlign == ALIGNMENT_GOOD) 
+    {
+      nClassLevel += nSolLevel;
+      nTurnLevel  += nSolLevel;
+    }
     //Flags for bonus turning types
     int nElemental = GetHasFeat(FEAT_AIR_DOMAIN_POWER) + GetHasFeat(FEAT_EARTH_DOMAIN_POWER) + GetHasFeat(FEAT_FIRE_DOMAIN_POWER) + GetHasFeat(FEAT_WATER_DOMAIN_POWER);
     int nVermin = GetHasFeat(FEAT_PLANT_DOMAIN_POWER) + GetHasFeat(FEAT_ANIMAL_COMPANION);

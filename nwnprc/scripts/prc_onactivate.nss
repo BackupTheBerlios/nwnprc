@@ -24,6 +24,6 @@ void main()
         ExecuteScript("run_whipofshar", oPC);
 
     // "Epic Spellcasting" item used to prepare epic spells
-    if (GetTag(oItem) == "EpicSpellcasting")
+    if (GetTag(oItem) == "epicspellcast")
         ExecuteScript("_rest_button", oPC);
 }

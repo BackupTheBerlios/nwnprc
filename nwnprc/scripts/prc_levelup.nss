@@ -20,8 +20,6 @@
 void PrcFeats(object oPC)
 {
      EvalPRCFeats(oPC);
-     
-
 }
 
 void main()
@@ -40,6 +38,7 @@ void main()
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the newly leveled up player meets.
     ExecuteScript("prc_prereq", oPC);
+    ExecuteScript("prc_enforce_feat", oPC);
     PatronShar(oPC);
     DelayCommand(1.0, FeatSpecialUsePerDay(oPC));
     

@@ -14,8 +14,10 @@ const int MONST_DAMAGE_2D10  = 29; //7
 const int MONST_DAMAGE_3D8   = 20; //8
 const int MONST_DAMAGE_3D10  = 30; //9
 const int MONST_DAMAGE_3D12  = 40; //10
-const int MONST_DAMAGE_1D12  = 38; //5: Monk
-const int MONST_DAMAGE_1D20  = 48; //7: Monk
+const int MONST_DAMAGE_4D10  = 31; //11
+const int MONST_DAMAGE_3D6   = 10; //7: Large/Huge Monk only
+const int MONST_DAMAGE_4D8   = 21; //9: Large/Huge Monk only
+
 
 void UnarmedFeats(object oCreature)  //Stolen from SoulTaker + expanded with overwhelming/devastating critical.
 {
@@ -56,7 +58,7 @@ int FindUnarmedDamage(object oCreature)
    
     // IoDM: +1 dice at level 4, +2 dice at level 8
     // Shou: 1d6 at level 1, 1d8 at level 2, 1d10 at level 3, 2d6 at level 5
-    // Monk: 1d6 at level 1, 1d8 at level 4, 1d10 at level 8, 1d12 at level 12, 1d20 at level 16
+    // Monk: 1d6 at level 1, 1d8 at level 4, 1d10 at level 8, 2d6 at level 12, 2d10 at level 16
     int iMonkDamage;
     int iShouDamage;
     int iBrawlerDamage;
@@ -64,7 +66,6 @@ int FindUnarmedDamage(object oCreature)
     int iSize = GetCreatureSize(oCreature);
     
     int iDamageToUse = 0;
-    int iUseMonk;
     
     // Future unarmed classes: if you do your own damage, add in "levelups" below here.
     iMonk = iMonk + iShou + iSacredFist;
@@ -76,45 +77,39 @@ int FindUnarmedDamage(object oCreature)
     
      // Small monks get damage penalty
     if (iSize == CREATURE_SIZE_SMALL || iSize == CREATURE_SIZE_TINY)
-       iMonkDamage--; //1d4, 1d6, 1d8, 1d10
+       iMonkDamage--; //1d4, 1d6, 1d8, 1d10, 2d6, 2d8
     
+    // Bigger Monks get even more damage
+    int iUseBigMonk = FALSE;
+    if (iSize == CREATURE_SIZE_LARGE || iSize == CREATURE_SIZE_HUGE)
+    {
+       // 1d8, 2d6, 2d8, 3d6, 3d8, 4d8
+       iMonkDamage = (iMonk >= 4) ? 5 : 3;
+       iMonkDamage = (iMonk >= 8) ? 6 : iMonkDamage;
+       iMonkDamage = (iMonk >= 12) ? 7 : iMonkDamage; // different from other progressions
+       iMonkDamage = (iMonk >= 16) ? 8 : iMonkDamage;
+       iMonkDamage = (iMonk >= 20) ? 9 : iMonkDamage; // different from other progressions
+       iUseBigMonk = TRUE;
+    }
+    
+    iBrawlerDamage = iBrawler / 6 + 2;   //1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
     
     if (iShou == 1) iShouDamage = 2;                //1d6
     if (iShou == 2) iShouDamage = 3;                //1d8
     if (iShou == 3 || iShou == 4) iShouDamage = 4;  //1d10
     if (iShou == 5) iShouDamage = 5;                //2d6
     
-    if (iBrawler >= 1 && iBrawler < 6) iBrawlerDamage = 2;  //first four levels
-    if (iBrawler >= 6) iBrawlerDamage = iBrawler / 6 + 2;   //gets up to 3d8
-
     // Future unarmed classes:  if you do your own damage, add in "comparisons" below here.
-
-    if (iMonkDamage > iDamageToUse)
-    {
-        iDamageToUse = iMonkDamage;
-        iUseMonk = TRUE;
-    }
-    
-    if (iBrawlerDamage > iDamageToUse)
-    {
-        iDamageToUse = iBrawlerDamage;
-        iUseMonk = FALSE;
-    }
-    
-    if (iShouDamage > iDamageToUse)
-    {
-        iDamageToUse = iShouDamage;
-        iUseMonk = FALSE;
-    }
+    iDamageToUse = (iMonkDamage > iDamageToUse) ? iMonkDamage : 0;
+    iDamageToUse = (iBrawlerDamage > iDamageToUse) ? iBrawlerDamage : iDamageToUse;
+    iDamageToUse = (iShouDamage > iDamageToUse) ? iShouDamage : iDamageToUse;
     
     // Future unarmed classes:  if you enhance other classes' damage, add in bonuses here.
-    
     if (iIoDM >= 4) iDamageToUse++;
     if (iIoDM >= 8) iDamageToUse++;
     
     // This is where the correct damage dice is calculated
-    
-    if (iDamageToUse > 10) iDamageToUse = 10;
+    if (iDamageToUse > 11) iDamageToUse = 11;
     
     switch (iDamageToUse)
     {
@@ -140,16 +135,19 @@ int FindUnarmedDamage(object oCreature)
             iDamage = MONST_DAMAGE_2D8;
             break;
         case 7:
-            iDamage = MONST_DAMAGE_2D10;
+            iDamage = (iUseBigMonk) ? MONST_DAMAGE_3D6 : MONST_DAMAGE_2D10;
 	    break;
         case 8:
             iDamage = MONST_DAMAGE_3D8;
             break;
-        case 9:
-            iDamage = MONST_DAMAGE_3D10;
+        case 9: // biggest achievable by Monk/IoDM and Brawler/IoDM
+            iDamage = (iUseBigMonk) ? MONST_DAMAGE_4D8 : MONST_DAMAGE_3D10;
             break;
-        case 10:
+        case 10: // only achievable by Large/Huge Monk 20+/IoDM 4+
             iDamage = MONST_DAMAGE_3D12;
+            break;
+        case 11: // biggest achievable by Large/Huge Monk 20+/IoDM 8+
+            iDamage = MONST_DAMAGE_4D10;
             break;
         default:
             break;

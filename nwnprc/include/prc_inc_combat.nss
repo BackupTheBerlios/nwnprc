@@ -2618,6 +2618,10 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           int iDamage = FindUnarmedDamage(oAttacker);
           switch(iDamage)
           {
+               case MONST_DAMAGE_1D3:
+                    iNumSides = 3;
+                    iNumDice = 1;
+                    break;
                case MONST_DAMAGE_1D4:
                     iNumSides = 4;
                     iNumDice  = 1;
@@ -2658,13 +2662,17 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                     iNumSides = 12;
                     iNumDice  = 3;
                     break;
-               case MONST_DAMAGE_1D12:
-                    iNumSides = 12;
-                    iNumDice  = 1;
+               case MONST_DAMAGE_4D10:
+                    iNumSides = 10;
+                    iNumDice = 4;
                     break;
-               case MONST_DAMAGE_1D20:
-                    iNumSides = 20;
-                    iNumDice  = 1;
+               case MONST_DAMAGE_3D6:
+                    iNumSides = 6;
+                    iNumDice = 3;
+                    break;
+               case MONST_DAMAGE_4D8:
+                    iNumSides = 8;
+                    iNumDice = 4;
                     break;
           }
      }
@@ -3040,6 +3048,10 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           int iDamage = FindUnarmedDamage(oAttacker);
           switch(iDamage)
           {
+               case MONST_DAMAGE_1D3:
+                    iMainNumSides = 3;
+                    iMainNumDice = 1;
+                    break;
                case MONST_DAMAGE_1D4:
                     iMainNumSides = 4;
                     iMainNumDice  = 1;
@@ -3080,13 +3092,17 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
                     iMainNumSides = 12;
                     iMainNumDice  = 3;
                     break;
-               case MONST_DAMAGE_1D12:
-                    iMainNumSides = 12;
-                    iMainNumDice  = 1;
+               case MONST_DAMAGE_4D10:
+                    iMainNumSides = 10;
+                    iMainNumDice = 4;
                     break;
-               case MONST_DAMAGE_1D20:
-                    iMainNumSides = 20;
-                    iMainNumDice  = 1;
+               case MONST_DAMAGE_3D6:
+                    iMainNumSides = 6;
+                    iMainNumDice = 3;
+                    break;
+               case MONST_DAMAGE_4D8:
+                    iMainNumSides = 8;
+                    iMainNumDice = 4;
                     break;
           }
      }

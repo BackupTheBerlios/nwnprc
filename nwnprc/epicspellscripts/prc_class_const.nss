@@ -91,3 +91,4 @@ const int CLASS_TYPE_RAVAGER                    = 133;
 const int CLASS_TYPE_SACREDFIST                 = 126;
 const int CLASS_TYPE_SHOU                       = 164;
 const int CLASS_TYPE_BFZ                        = 165;
+const int CLASS_TYPE_SHADOW_ADEPT               = 117;

@@ -1480,9 +1480,9 @@ int GetHasEnoughGoldToResearch(object oPC, int nSpellDC)
 
 int GetHasEnoughExperienceToResearch(object oPC, int nSpellDC)
 {
-    int iHitDice = GetHitDice(oPC);
-    int iHitDiceXP = (500 * iHitDice * (iHitDice - 1)); // simplification of the sum
-    if (GetXP(oPC) > (iHitDiceXP + (nSpellDC * GOLD_MULTIPLIER / XP_FRACTION)))
+    int nHitDice = GetHitDice(oPC);
+    int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
+    if (GetXP(oPC) >= (nHitDiceXP + (nSpellDC * GOLD_MULTIPLIER / XP_FRACTION)))
         return TRUE;
     return FALSE;
 }
@@ -1628,9 +1628,9 @@ int GetDCSchoolFocusAdjustment(object oPC, string sChool)
 int GetHasXPToSpend(object oPC, int nCost)
 {
     // To be TRUE, make sure that oPC wouldn't lose a level by spending nCost.
-    int iHitDice = GetHitDice(oPC);
-    int iHitDiceXP = (500 * iHitDice * (iHitDice - 1)); // simplification of the sum
-    if (GetXP(oPC) > (iHitDiceXP + nCost))
+    int nHitDice = GetHitDice(oPC);
+    int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
+    if (GetXP(oPC) >= (nHitDiceXP + nCost))
         return TRUE;
     return FALSE;
 }

@@ -31,12 +31,18 @@ const int FEAT_DIVINE_RESISTANCE                       = 3117;
 const int FEAT_DIVINE_VIGOR                            = 3116;
 const int FEAT_EPIC_DIVINE_VIGOR                       = 3115;
 const int FEAT_INVOKE_DIVINE_WRATH                     = 3114;
+const int FEAT_SHADOWWEAVE                             = 2960;
+const int FEAT_TENACIOUSMAGIC                          = 2961;
+const int FEAT_PERNICIOUSMAGIC                         = 2962;
+const int FEAT_INSIDIOUSMAGIC                          = 2963;
 
 
 //Active Feats
 
 const int FEAT_FIST_OF_IRON = 3145;
 
+//Ranger Feats
+const int FEAT_RANGER_DUAL = 374;
 
 //Exalted Feat
 const int FEAT_SAC_VOW = 3388;
@@ -304,6 +310,13 @@ const int FEAT_TO_NIGHTWING      = 4413;
 const int AOE_MOB_DES_20       = 111;
 const int AOE_MOB_DES_100      = 112;
 
+//Desecrate Effect
+const int VFX_TN_DES_20                      = 801;
+const int VFX_TN_DES_100                     = 802;
+
+//Black Flame Zealot
+const int FEAT_SACRED_FLAME   = 4426;
+
 // Shadowlord
 const int SHADOWLORD_BLINDNESS    = 2225;
 const int SHADOWLORD_DARKNESS     = 2226;
@@ -313,8 +326,6 @@ const int SHADOWLORD_IMPROVINVIS  = 2230;
 const int SHADOWLORD_VAMPITOUCH   = 2231;
 const int SHADOWLORD_CONFUSION    = 2233;
 const int SHADOWLORD_INVISPHERE   = 2234;
-
-
 
 // Frenzied Berserker Feats
 const int FEAT_FRENZY = 4300;
@@ -419,6 +430,33 @@ const int IP_CONST_FEAT_ROGUE_SA_17D6   = 313;
 const int IP_CONST_FEAT_ROGUE_SA_18D6   = 314;
 const int IP_CONST_FEAT_ROGUE_SA_19D6   = 315;
 const int IP_CONST_FEAT_ROGUE_SA_20D6   = 316;
+
+const int IP_CONST_FEAT_BG_SA_1D6 = 276;
+const int IP_CONST_FEAT_BG_SA_2D6 = 277;
+const int IP_CONST_FEAT_BG_SA_3D6 = 278;
+const int IP_CONST_FEAT_BG_SA_4D6 = 279;
+const int IP_CONST_FEAT_BG_SA_5D6 = 280;
+const int IP_CONST_FEAT_BG_SA_6D6 = 281;
+const int IP_CONST_FEAT_BG_SA_7D6 = 282;
+const int IP_CONST_FEAT_BG_SA_8D6 = 283;
+const int IP_CONST_FEAT_BG_SA_9D6 = 284;
+const int IP_CONST_FEAT_BG_SA_10D6 = 285;
+const int IP_CONST_FEAT_BG_SA_11D6 = 286;
+const int IP_CONST_FEAT_BG_SA_12D6 = 287;
+const int IP_CONST_FEAT_BG_SA_13D6 = 288;
+const int IP_CONST_FEAT_BG_SA_14D6 = 289;
+const int IP_CONST_FEAT_BG_SA_15D6 = 290;
+
+const int IP_CONST_FEAT_EPIC_SA_1D6 = 291;
+const int IP_CONST_FEAT_EPIC_SA_2D6 = 292;
+const int IP_CONST_FEAT_EPIC_SA_3D6 = 293;
+const int IP_CONST_FEAT_EPIC_SA_4D6 = 294;
+const int IP_CONST_FEAT_EPIC_SA_5D6 = 295;
+const int IP_CONST_FEAT_EPIC_SA_6D6 = 296;
+const int IP_CONST_FEAT_EPIC_SA_7D6 = 297;
+const int IP_CONST_FEAT_EPIC_SA_8D6 = 298;
+const int IP_CONST_FEAT_EPIC_SA_9D6 = 299;
+const int IP_CONST_FEAT_EPIC_SA_10D6 = 300;
 
 //Iaijutsu Master Feats + Skill
 
@@ -553,7 +591,6 @@ const int FEAT_PERFECTSHOT2             = 3354;
 const int FEAT_BOWMASTERY               = 3174;
 const int FEAT_XBOWMASTERY              = 3175;
 const int FEAT_SHURIKENMASTERY          = 3176;
-const int FEAT_BATTLEDANCE              = 3179;
 
 // Man At Arm
 
@@ -564,6 +601,7 @@ const int FEAT_STRIKE_AT_CORE           = 3103;
 const int FEAT_FURIOUS_ASSAULT          = 3104;
 const int FEAT_LEGENDARY_PROWESS        = 3105;
 
+
 //Soldier of Light
 const int FEAT_SOL_DIVINE_GRACE                  = 3140;
 const int FEAT_SMITE_UNDEAD                      = 3139;
@@ -573,6 +611,12 @@ const int FEAT_POSITIVE_ENERGY_BURST             = 3146;
 const int FEAT_DIVINE_VENGEANCE                  = 3142;
 const int FEAT_FAST_HEALING1                     = 3137;
 const int FEAT_FAST_HEALING2                     = 3138;
+const int FEAT_SPELLLVL1                         = 3110;
+const int FEAT_SPELLLVL2                         = 3111;
+const int FEAT_SPELLLVL3                         = 3112;
+const int FEAT_SPELLLVL4                         = 3113;
+
+
 
 // Blood Archer
 
@@ -614,6 +658,41 @@ const int FEAT_VIGIL_HEAL           = 2574; //CONSTANT
 const int FEAT_ETHRAN               = 2567; //CONSTANT
 const int FEAT_ENDURANCE            = 2568; //CONSTANT
 const int FEAT_TRACK                = 2569; //CONSTANT
+
+// Sacred Fist
+const int FEAT_SF_AC1               = 2933;
+const int FEAT_SF_AC2               = 2934;
+const int FEAT_SF_AC3               = 2935;
+const int FEAT_SF_AC4               = 2936;
+const int FEAT_SF_AC5               = 2937;
+const int FEAT_SF_AC6               = 2938;
+const int FEAT_SF_AC7               = 2939;
+const int FEAT_SF_UNARMEDDMG        = 2932;
+const int FEAT_SF_INNERARMOR        = 2940;
+const int FEAT_SF_SACREDFLAME1      = 2941;
+const int FEAT_SF_SACREDFLAME2      = 2942;
+const int FEAT_SF_SACREDFLAME3      = 2943;
+const int FEAT_SF_SACREDFLAME4      = 2944;
+const int FEAT_SF_SACREDFLAME5      = 2945;
+const int FEAT_SF_SACREDFLAME6      = 2946;
+const int FEAT_SF_SACREDFLAME7      = 2947;
+const int FEAT_SF_SPEED1            = 2948;
+const int FEAT_SF_SPEED2            = 2949;
+const int FEAT_SF_SPEED3            = 2950;
+const int FEAT_SF_CODE              = 2951;
+
+// Shadow Adept
+
+const int FEAT_SA_SHADOWDEF1        = 2952;
+const int FEAT_SA_SHADOWDEF2        = 2953;
+const int FEAT_SA_SHADOWDEF3        = 2954;
+const int FEAT_SA_SHADOWDEPIC       = 2955;
+const int FEAT_SA_SHIELDSHADOW      = 2956;
+const int FEAT_SA_GREATSHIELDSHADOW = 2957;
+const int FEAT_SA_SHADOWWALK        = 2958;
+const int FEAT_SA_SHADOWDOUBLE      = 2959;
+
+
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////

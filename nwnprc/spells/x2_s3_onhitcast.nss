@@ -109,31 +109,28 @@ void main()
                 ExecuteScript("prc_bldarch_ab", oSpellOrigin);
             }
          }
-
+   
+   // Blood Archer Poison Blood
+   if (nBArcher > 1 && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+   {
+        // poison number based on archer level
+        // gives proper DC for poison
+        int iPoison = 104 + nBArcher;
+        effect ePoison = EffectPoison(iPoison);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoison, oSpellTarget);
+   }
+   
    // Frenzied Berserker Auto Frenzy
    if(GetHasFeat(FEAT_FRENZY, OBJECT_SELF) )
    {      
 	if(!GetHasFeatEffect(FEAT_FRENZY))
 	{	    
-		// 10 + damage dealt in that hit
-		int willSaveDC = 10 + GetTotalDamageDealt();
-		int save = WillSave(OBJECT_SELF, willSaveDC, SAVING_THROW_TYPE_NONE, OBJECT_SELF);
-        	if(save == 0)
-        	{
-			AssignCommand(OBJECT_SELF, ActionUseFeat(FEAT_FRENZY, OBJECT_SELF) );
-		}
+             DelayCommand(0.01, ExecuteScript("prc_fb_auto_fre",OBJECT_SELF) );
         }
         
         if(GetHasFeatEffect(FEAT_FRENZY) && GetHasFeat(FEAT_DEATHLESS_FRENZY, OBJECT_SELF) && GetCurrentHitPoints(OBJECT_SELF) == 1)
         {
-             int iDam = GetTotalDamageDealt();
-             iDam += GetLocalInt(OBJECT_SELF, "PC_Damage");
-             SetLocalInt(OBJECT_SELF, "PC_Damage", iDam);
-             
-             int iCHP = GetCurrentHitPoints(OBJECT_SELF) - iDam;
-             
-             string sFeedback = GetName(OBJECT_SELF) + " : Current HP = " + IntToString(iCHP);
-             SendMessageToPC(OBJECT_SELF, sFeedback);
+             DelayCommand(0.01, ExecuteScript("prc_fb_deathless",OBJECT_SELF) );
         }
    }
    

@@ -106,33 +106,35 @@ int RedWizardSP(int spell_id, object oCaster = OBJECT_SELF)
 		else if (sSpellSchool == "N") iSpellSchool = SPELL_SCHOOL_NECROMANCY;
 		else if (sSpellSchool == "T") iSpellSchool = SPELL_SCHOOL_TRANSMUTATION;
 
-		if (GetHasFeat(FEAT_RW_SPEC_ABJ, oCaster)) iRWSpec = SPELL_SCHOOL_ABJURATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_CON, oCaster)) iRWSpec = SPELL_SCHOOL_CONJURATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_DIV, oCaster)) iRWSpec = SPELL_SCHOOL_DIVINATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_ENC, oCaster)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
-		else if (GetHasFeat(FEAT_RW_SPEC_EVO, oCaster)) iRWSpec = SPELL_SCHOOL_EVOCATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_ILL, oCaster)) iRWSpec = SPELL_SCHOOL_ILLUSION;
-		else if (GetHasFeat(FEAT_RW_SPEC_NEC, oCaster)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
-		else if (GetHasFeat(FEAT_RW_SPEC_TRS, oCaster)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
+		if (GetHasFeat(FEAT_RW_TF_ABJ, oCaster)) iRWSpec = SPELL_SCHOOL_ABJURATION;
+		else if (GetHasFeat(FEAT_RW_TF_CON, oCaster)) iRWSpec = SPELL_SCHOOL_CONJURATION;
+		else if (GetHasFeat(FEAT_RW_TF_DIV, oCaster)) iRWSpec = SPELL_SCHOOL_DIVINATION;
+		else if (GetHasFeat(FEAT_RW_TF_ENC, oCaster)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
+		else if (GetHasFeat(FEAT_RW_TF_EVO, oCaster)) iRWSpec = SPELL_SCHOOL_EVOCATION;
+		else if (GetHasFeat(FEAT_RW_TF_ILL, oCaster)) iRWSpec = SPELL_SCHOOL_ILLUSION;
+		else if (GetHasFeat(FEAT_RW_TF_NEC, oCaster)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
+		else if (GetHasFeat(FEAT_RW_TF_TRS, oCaster)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
 
 		if (iSpellSchool == iRWSpec)
 		{
 		
-			if (iRedWizard > 29)		nSP = 15;
-			else if (iRedWizard > 27)	nSP = 14;
-			else if (iRedWizard > 25)	nSP = 13;
-			else if (iRedWizard > 23)	nSP = 12;
-			else if (iRedWizard > 21)	nSP = 11;
-			else if (iRedWizard > 19)	nSP = 10;
-			else if (iRedWizard > 17)	nSP = 9;
-			else if (iRedWizard > 15)	nSP = 8;
-			else if (iRedWizard > 13)	nSP = 7;
-			else if (iRedWizard > 11)	nSP = 6;
-			else if (iRedWizard > 9)	nSP = 5;
-			else if (iRedWizard > 7)	nSP = 4;
-			else if (iRedWizard > 5)	nSP = 3;
-			else if (iRedWizard > 3)	nSP = 2;
-			else if (iRedWizard > 1)	nSP = 1;
+			nSP = 1;
+
+			if (iRedWizard > 29)		nSP = 16;
+			else if (iRedWizard > 27)	nSP = 15;
+			else if (iRedWizard > 25)	nSP = 14;
+			else if (iRedWizard > 23)	nSP = 13;
+			else if (iRedWizard > 21)	nSP = 12;
+			else if (iRedWizard > 19)	nSP = 11;
+			else if (iRedWizard > 17)	nSP = 10;
+			else if (iRedWizard > 15)	nSP = 9;
+			else if (iRedWizard > 13)	nSP = 8;
+			else if (iRedWizard > 11)	nSP = 7;
+			else if (iRedWizard > 9)	nSP = 6;
+			else if (iRedWizard > 7)	nSP = 5;
+			else if (iRedWizard > 5)	nSP = 4;
+			else if (iRedWizard > 3)	nSP = 3;
+			else if (iRedWizard > 1)	nSP = 2;
 		
 		}
 

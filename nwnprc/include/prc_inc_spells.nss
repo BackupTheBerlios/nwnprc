@@ -556,14 +556,14 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 	if (iRedWizard > 0)
 	{
 		int iRWSpec;
-		if (GetHasFeat(FEAT_RW_SPEC_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
-		else if (GetHasFeat(FEAT_RW_SPEC_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
-		else if (GetHasFeat(FEAT_RW_SPEC_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
-		else if (GetHasFeat(FEAT_RW_SPEC_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
+		if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
+		else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
+		else if (GetHasFeat(FEAT_RW_TF_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
+		else if (GetHasFeat(FEAT_RW_TF_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
+		else if (GetHasFeat(FEAT_RW_TF_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
+		else if (GetHasFeat(FEAT_RW_TF_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
+		else if (GetHasFeat(FEAT_RW_TF_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
+		else if (GetHasFeat(FEAT_RW_TF_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
 
 		if (GetSpellSchool(nSpell) == iRWSpec)
 		{
@@ -603,14 +603,14 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 	if (iRedWizard > 0)
 	{
 		int iRWSpec;
-		if (GetHasFeat(FEAT_RW_SPEC_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
-		else if (GetHasFeat(FEAT_RW_SPEC_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
-		else if (GetHasFeat(FEAT_RW_SPEC_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
-		else if (GetHasFeat(FEAT_RW_SPEC_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
+		if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
+		else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
+		else if (GetHasFeat(FEAT_RW_TF_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
+		else if (GetHasFeat(FEAT_RW_TF_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
+		else if (GetHasFeat(FEAT_RW_TF_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
+		else if (GetHasFeat(FEAT_RW_TF_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
+		else if (GetHasFeat(FEAT_RW_TF_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
+		else if (GetHasFeat(FEAT_RW_TF_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
 
 		if (GetSpellSchool(nSpell) == iRWSpec)
 		{

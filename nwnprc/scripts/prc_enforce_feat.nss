@@ -40,18 +40,31 @@ void RedWizardFeats(object oPC = OBJECT_SELF)
 	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oPC);
 	int iRWRes;
 	int iRWSpec;
+
+
+		iRWSpec     +=	(GetHasFeat(FEAT_RW_TF_ABJ, oPC))
+			    +	(GetHasFeat(FEAT_RW_TF_CON, oPC))
+			    +	(GetHasFeat(FEAT_RW_TF_DIV, oPC))
+			    +	(GetHasFeat(FEAT_RW_TF_ENC, oPC))
+			    +	(GetHasFeat(FEAT_RW_TF_EVO, oPC))
+			    +	(GetHasFeat(FEAT_RW_TF_ILL, oPC))
+			    +	(GetHasFeat(FEAT_RW_TF_NEC, oPC))
+			    +	(GetHasFeat(FEAT_RW_TF_TRS, oPC));
+
+		if (iRWSpec > 1)
+		{
+			int nHD = GetHitDice(oPC);
+			int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+			int nOldXP = GetXP(oPC);
+			int nNewXP = nMinXPForLevel - 1000;
+			SetXP(oPC,nNewXP);
+			FloatingTextStringOnCreature("You may only have one Tattoo Focus. Please reselect your feats.", oPC, FALSE);
+			DelayCommand(1.0, SetXP(oPC,nOldXP));
+		}
+
 	
 	if (iRedWizard > 0)
 	{
-		iRWSpec     +=	(GetHasFeat(FEAT_RW_SPEC_ABJ, oPC))
-			    +	(GetHasFeat(FEAT_RW_SPEC_CON, oPC))
-			    +	(GetHasFeat(FEAT_RW_SPEC_DIV, oPC))
-			    +	(GetHasFeat(FEAT_RW_SPEC_ENC, oPC))
-			    +	(GetHasFeat(FEAT_RW_SPEC_EVO, oPC))
-			    +	(GetHasFeat(FEAT_RW_SPEC_ILL, oPC))
-			    +	(GetHasFeat(FEAT_RW_SPEC_NEC, oPC))
-			    +	(GetHasFeat(FEAT_RW_SPEC_TRS, oPC));
-	
 		iRWRes      +=	(GetHasFeat(FEAT_RW_RES_ABJ, oPC))
 			    +	(GetHasFeat(FEAT_RW_RES_CON, oPC))
 			    +	(GetHasFeat(FEAT_RW_RES_DIV, oPC))
@@ -62,14 +75,14 @@ void RedWizardFeats(object oPC = OBJECT_SELF)
 			    +	(GetHasFeat(FEAT_RW_RES_TRS, oPC));
 
 
-		if (iRWSpec != 1 || iRWRes != 2)
+		if (iRWRes != 2)
 		{
 			int nHD = GetHitDice(oPC);
 			int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
 			int nOldXP = GetXP(oPC);
 			int nNewXP = nMinXPForLevel - 1000;
 			SetXP(oPC,nNewXP);
-			FloatingTextStringOnCreature("You must have 2 Restricted Schools and 1 Specialist School. Please reselect your feats.", oPC, FALSE);
+			FloatingTextStringOnCreature("You must have 2 Restricted Schools. Please reselect your feats.", oPC, FALSE);
 			DelayCommand(1.0, SetXP(oPC,nOldXP));
 		}
 	}

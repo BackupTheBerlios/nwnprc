@@ -182,34 +182,35 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
 		else if (sSpellSchool == "N") iSpellSchool = SPELL_SCHOOL_NECROMANCY;
 		else if (sSpellSchool == "T") iSpellSchool = SPELL_SCHOOL_TRANSMUTATION;
 
-		if (GetHasFeat(FEAT_RW_SPEC_ABJ, oCaster)) iRWSpec = SPELL_SCHOOL_ABJURATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_CON, oCaster)) iRWSpec = SPELL_SCHOOL_CONJURATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_DIV, oCaster)) iRWSpec = SPELL_SCHOOL_DIVINATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_ENC, oCaster)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
-		else if (GetHasFeat(FEAT_RW_SPEC_EVO, oCaster)) iRWSpec = SPELL_SCHOOL_EVOCATION;
-		else if (GetHasFeat(FEAT_RW_SPEC_ILL, oCaster)) iRWSpec = SPELL_SCHOOL_ILLUSION;
-		else if (GetHasFeat(FEAT_RW_SPEC_NEC, oCaster)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
-		else if (GetHasFeat(FEAT_RW_SPEC_TRS, oCaster)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
+		if (GetHasFeat(FEAT_RW_TF_ABJ, oCaster)) iRWSpec = SPELL_SCHOOL_ABJURATION;
+		else if (GetHasFeat(FEAT_RW_TF_CON, oCaster)) iRWSpec = SPELL_SCHOOL_CONJURATION;
+		else if (GetHasFeat(FEAT_RW_TF_DIV, oCaster)) iRWSpec = SPELL_SCHOOL_DIVINATION;
+		else if (GetHasFeat(FEAT_RW_TF_ENC, oCaster)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
+		else if (GetHasFeat(FEAT_RW_TF_EVO, oCaster)) iRWSpec = SPELL_SCHOOL_EVOCATION;
+		else if (GetHasFeat(FEAT_RW_TF_ILL, oCaster)) iRWSpec = SPELL_SCHOOL_ILLUSION;
+		else if (GetHasFeat(FEAT_RW_TF_NEC, oCaster)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
+		else if (GetHasFeat(FEAT_RW_TF_TRS, oCaster)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
 
 		if (iSpellSchool == iRWSpec)
 		{
 		
-			if (iRedWizard > 29)		nDC = 15;
-			else if (iRedWizard > 27)	nDC = 14;
-			else if (iRedWizard > 25)	nDC = 13;
-			else if (iRedWizard > 23)	nDC = 12;
-			else if (iRedWizard > 21)	nDC = 11;
-			else if (iRedWizard > 19)	nDC = 10;
-			else if (iRedWizard > 17)	nDC = 9;
-			else if (iRedWizard > 15)	nDC = 8;
-			else if (iRedWizard > 13)	nDC = 7;
-			else if (iRedWizard > 11)	nDC = 6;
-			else if (iRedWizard > 9)	nDC = 5;
-			else if (iRedWizard > 7)	nDC = 4;
-			else if (iRedWizard > 5)	nDC = 3;
-			else if (iRedWizard > 3)	nDC = 2;
-			else if (iRedWizard > 1)	nDC = 1;
-		
+			nDC = 1;
+
+			if (iRedWizard > 29)		nDC = 16;
+			else if (iRedWizard > 27)	nDC = 15;
+			else if (iRedWizard > 25)	nDC = 14;
+			else if (iRedWizard > 23)	nDC = 13;
+			else if (iRedWizard > 21)	nDC = 12;
+			else if (iRedWizard > 19)	nDC = 11;
+			else if (iRedWizard > 17)	nDC = 10;
+			else if (iRedWizard > 15)	nDC = 9;
+			else if (iRedWizard > 13)	nDC = 8;
+			else if (iRedWizard > 11)	nDC = 7;
+			else if (iRedWizard > 9)	nDC = 6;
+			else if (iRedWizard > 7)	nDC = 5;
+			else if (iRedWizard > 5)	nDC = 4;
+			else if (iRedWizard > 3)	nDC = 3;
+			else if (iRedWizard > 1)	nDC = 2;
 		}
 
 

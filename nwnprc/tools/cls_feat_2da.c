@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
 			if (strcmp(featnum[j], featnum[k]) == 0 &&
 				strcmp(featnum[j], "****") != 0 &&
 				strcmp(featnum[k], "****") != 0)
-					printf("Lines %i and %i have the same feat number.\n", j + 4, k + 4);
+					printf("Lines %i and %i have the same feat number.\n", j/* + 4*/, k/* + 4*/); // Busquishage - Ornedan
 		}
 	}
 

@@ -2,6 +2,7 @@ import prc.autodoc.Data_2da;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.*;
 
 public final class CodeGen{
 	private CodeGen(){}
@@ -48,8 +49,8 @@ public final class CodeGen{
 		                   "2daPaths\tone or more 2da files to use fill the template with\n"+
 		                   "\n\n"+
 		                   "Places to replace in the template are marked with ~~~Identifier~~~. This will\n"+
-		                   "be replaced by entries from the given 2da called Identifier.2da. This is\n"+
-		                   "case-sensitive.\n"+
+		                   "be replaced by entries from a column in one of the 2das labeled Identifier.\n"+
+		                   "This is case-insensitive.\n"+
 		                   "\n"+
 		                   "The 2da files must contain two columns labeled Suffix and Value.\n"+
 		                   "\n"+
@@ -80,9 +81,15 @@ public final class CodeGen{
 		
 		for(int i = 0; i < data[depth].getEntryCount(); i++){
 			copy = (Script)script.clone();
-			copy.text = script.text.replaceAll("~~~" + data[depth].getName() + "~~~",
-			                                   data[depth].getEntry("Value", i));
-			copy.name += data[depth].getEntry("Suffix", i);
+			for(String label : data[depth].getLabels())
+				copy.text = Pattern.compile("~~~" + label + "~~~", Pattern.CASE_INSENSITIVE)
+				                   .matcher(copy.text)
+				                   .replaceAll(data[depth].getEntry(label, i));
+			/*copy.text = script.text.replaceAll("~~~" + data[depth].getName() + "~~~",
+			                                   data[depth].getEntry("Value", i));*/
+			copy.name += data[depth].getEntry("Suffix", i) != null ?
+			             data[depth].getEntry("Suffix", i) :
+			             "";
 			
 			doCreation(copy, depth + 1);
 		}

@@ -82,33 +82,28 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
     }
 
     private void RefreshFeatSelected() {
-        int i;
         FeatSelectedButtonList.removeAll();
-		for(i = 0; i < featlist.size(); i++) {
-			Feat feat = (Feat)featlist.get(i);
-			FeatSelectedButtonList.add(
-					new FeatButton(feat, true, this), -1
-				);
-		}
+		for (int ii = 0; ii < featlist.size(); ++ii)
+			FeatSelectedButtonList.add(new FeatButton((Feat)featlist.get(ii), true, this), -1);
+
         pack();
     }
 
     private void RefreshFeatAvailable() {
         FeatAvailableButtonList.removeAll();
 
-		if(Integer.parseInt(FeatRemainingText.getText()) > 0) {
+		if (Integer.parseInt(FeatRemainingText.getText()) > 0) {
 			ArrayList al = new ArrayList();
 
-			for(int ii = 0; ii < bonusfeatlist.size(); ++ii)
-				if(!featlist.contains(bonusfeatlist.get(ii)))
+			for (int ii = 0; ii < bonusfeatlist.size(); ++ii)
+				if (!featlist.contains(bonusfeatlist.get(ii)))
 					al.add(bonusfeatlist.get(ii));
 
 			Collections.sort(al);
-			for (int ii = 0; ii < al.size(); ++ii) {
-				FeatButton featbutton = new FeatButton((Feat)bonusfeatlist.get(ii), true, this);
-				FeatAvailableButtonList.add(featbutton, -1);
-			}
+			for (int ii = 0; ii < al.size(); ++ii)
+				FeatAvailableButtonList.add(new FeatButton((Feat)al.get(ii), true, this), -1);
 		}
+
         pack();
     }
 
@@ -164,6 +159,7 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
         FeatAvailableLabel = new javax.swing.JLabel();
         FeatSelectedTable = new javax.swing.JLabel();
         FeatRemainingText = new javax.swing.JTextField();
+		FeatRemainingLabel = new javax.swing.JLabel();
         RecommendedButton = new javax.swing.JButton();
         ResetButton = new javax.swing.JButton();
         OKButton = new javax.swing.JButton();
@@ -296,15 +292,25 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
         FeatRemainingText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FeatRemainingText.setText("0");
         FeatRemainingText.setBorder(null);
-        FeatRemainingText.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-        FeatRemainingText.setEnabled(false);
+        //FeatRemainingText.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        //FeatRemainingText.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         getContentPane().add(FeatRemainingText, gridBagConstraints);
+
+        FeatRemainingLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 10));
+        FeatRemainingLabel.setText("Feats Remaining");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 25);
+        getContentPane().add(FeatRemainingLabel, gridBagConstraints);
+
 
         RecommendedButton.setText("Recommended");
         RecommendedButton.addActionListener(new java.awt.event.ActionListener() {
@@ -378,8 +384,9 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
 
 		// This should take into account the possibility of having more than 1 feat to append
         int numberfeats = ((Integer)menucreate.MainCharData[9].get(new Integer(0))).intValue();
-        menucreate.MainCharData[9].put(new Integer(numberfeats+1),((Feat)featlist.get(0)).Index());
-        menucreate.MainCharData[9].put(new Integer(0),new Integer(numberfeats + 1));
+        menucreate.MainCharData[9].put(new Integer(0),new Integer(numberfeats + featlist.size()));
+		for (int ii=0; ii<featlist.size(); ++ii)
+			menucreate.MainCharData[9].put(new Integer(numberfeats+ii+1),((Feat)featlist.get(ii)).Index());
 
         //Put handling code here to check to see what menu goes next.
         //First of all, determine whether or not the character is a spellcaster AT ALL.
@@ -463,6 +470,7 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
     private javax.swing.JScrollPane FeatButtonContainer;
     private javax.swing.JScrollPane FeatButtonContainer1;
     private javax.swing.JTextField FeatRemainingText;
+    private javax.swing.JLabel FeatRemainingLabel;
     private javax.swing.JPanel FeatSelectedButtonList;
     private javax.swing.JLabel FeatSelectedTable;
     private javax.swing.JButton OKButton;

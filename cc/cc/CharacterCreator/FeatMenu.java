@@ -699,7 +699,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
         FeatRemainingText.setBorder(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
@@ -709,7 +709,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
         FeatRemainingLabel.setText("Feats Remaining");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 25);
         getContentPane().add(FeatRemainingLabel, gridBagConstraints);

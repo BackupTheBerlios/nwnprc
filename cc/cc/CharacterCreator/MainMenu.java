@@ -352,7 +352,7 @@ public class MainMenu extends javax.swing.JFrame {
     public CRC32 crc;
     //*******************************************************
     //************VERSION INFORMATION - CHANGE HERE**********
-    public static String versionumber = "PRC: v 1.5rc1";
+    public static String versionumber = "PRC: v 1.5rc2";
     //*******************************************************
     private static MainMenu mainmenu;
     private static CreateMenu createmenu;

@@ -10,7 +10,6 @@ void DominatedDuration(object oTarget)
    if (!iConc)
    {
         RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
-        DestroyObject(OBJECT_SELF);    
         return ;
    }
 
@@ -22,7 +21,7 @@ void DominatedDuration(object oTarget)
 
 void main()
 {
-    if (!GetHasFeat(FEAT_LYRITHSONG1, OBJECT_SELF))
+    if (!GetHasFeat(FEAT_DRAGONSONG_STRENGTH, OBJECT_SELF))
     {
         FloatingTextStringOnCreature("This ability is tied to your dragons song ability, which has no more uses for today.",OBJECT_SELF); // no more bardsong uses left
         return;
@@ -67,13 +66,14 @@ void main()
                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget, 0.0,FALSE);
                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                DelayCommand(6.0f,DominatedDuration(oTarget) );
+               StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), 0);
+               StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, GetSpellId(), 0);
+               SetLocalInt(OBJECT_SELF, "SpellConc", 1);   
           }
 
      }   
     
     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_LYRITHSONG1);
-    DeleteLocalInt(OBJECT_SELF, "SpellConc");
-    
-    
+ 
 
 }

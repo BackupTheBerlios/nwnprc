@@ -7,7 +7,10 @@ void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
 {
 //  object oWeapR=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
 
-    SetCompositeBonusT(oWeapR,"ManArmsGenSpe",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
+    if (GetItemHasItemProperty(oWeapR,ITEM_PROPERTY_ATTACK_BONUS))
+        SetCompositeBonusT(oWeapR,"ManArmsGenSpe",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
+    else
+        SetCompositeBonusT(oWeapR,"ManArmsGenSpe",iLevel+GetWeaponEnhancement(oWeapR),ITEM_PROPERTY_ATTACK_BONUS);
 
  int iDmg = 1;
 

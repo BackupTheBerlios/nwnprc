@@ -5,7 +5,7 @@
 
 void main()
 {
-    if (!GetHasFeat(FEAT_LYRITHSONG1, OBJECT_SELF))
+    if (!GetHasFeat(FEAT_DRAGONSONG_STRENGTH, OBJECT_SELF))
     {
         FloatingTextStringOnCreature("This ability is tied to your dragons song ability, which has no more uses for today.",OBJECT_SELF); // no more bardsong uses left
         return;

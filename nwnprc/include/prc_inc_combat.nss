@@ -22,12 +22,14 @@
 //:: Weapon Information and Damage
 //:: Elemental Information and Damage
 //:: Perform Attack Round
+//:: Sneak Attack Functions
 //:://////////////////////////////////////////////
 //:: Things to Test:
-//:: Cleave, Great Cleave, and Cirlce Kick
-//:: Sneak Attack Functions
 //:: Dark Fire and Flame Weapon
 //:: Unarmed Damage
+//:://////////////////////////////////////////////
+//:: Known Issues: 
+//:: Cleave, Great Cleave, and Cirlce Kick
 //:://////////////////////////////////////////////
 
 // #include "prc_feat_const"   <-- Inherited
@@ -237,6 +239,9 @@ int iMainAttackBonus = 0;
 int iOffHandAttacks = 0;
 int iBonusMainHandAttacks = 0;
 int bFirstAttack = FALSE;
+
+// var used to determine if enemy would die from first couple attacks.
+int iTotalDamageDealtToTarget = 0;
 
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
@@ -2872,22 +2877,35 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
 void AttackLoopLogic(object oDefender, object oAttacker, object oWeapon, object oAmmo, struct BonusDamage sWeaponDamage, struct BonusDamage sSpellBonusDamage, int iWeaponDamageRound, effect eSpecialEffect, string sMessageSuccess, string sMessageFailure, int bEffectAllAttacks, int iMainHand, int iAttackBonus, int iMod, int iNumDice, int iNumSides, int iCritMult, int bIsRangedWeapon)
 {
-     if(GetCurrentHitPoints(oDefender) <= 0 || !GetIsObjectValid(oDefender))
+     // if defender is dead or invalid
+     if( (GetCurrentHitPoints(oDefender) - iTotalDamageDealtToTarget) <= 0 || 
+          !GetIsObjectValid(oDefender) )
      {
+          iTotalDamageDealtToTarget = 0;
+          
           oNewDefender = GetNearestSeenOrHeardEnemy(); 
-          if(GetDistanceBetween(oNewDefender, oAttacker) >= FeetToMeters(5.0) && !bIsRangedWeapon ||
-             !GetIsObjectValid(oNewDefender) )
+          if( GetIsObjectValid(oNewDefender) )
           {
-              // if no person is close enough, no more attacks this round
+              // if enemy is invallid
               iMainAttackBonus = 0;
               iOffHandAttacks = 0;
               iBonusMainHandAttacks = 0;
-              AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(oNewDefender), TRUE) );
 
               oDefender = OBJECT_INVALID;
               oNewDefender = OBJECT_INVALID;
+              SendMessageToPC(oAttacker, "No new valid targets to attack!");
+              return;
           }
      }
+     
+     // If they are not within 5 ft, they can't do a melee attack.
+     // Move to the new target so that you can next round.
+     if(GetDistanceBetween(oNewDefender, oAttacker) <= FeetToMeters(5.0) && !bIsRangedWeapon )
+     {
+         // NEED TO ADD DELAY TO THIS!!!
+         AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(oNewDefender), TRUE) );
+         return;
+     }     
      
      effect eDamage;
      int iAttackRoll = 0;
@@ -2969,10 +2987,14 @@ void AttackLoopLogic(object oDefender, object oAttacker, object oWeapon, object 
           }
      }
      
-     if(GetCurrentHitPoints(oDefender) <= 0 || !GetIsObjectValid(oDefender))
+     // checks hp after the future damge will be dealt to check if dead.
+     if((GetCurrentHitPoints(oDefender) - iTotalDamageDealtToTarget) <= 0 ||
+         !GetIsObjectValid(oDefender))
      {
+          iTotalDamageDealtToTarget = 0;
+          
           oNewDefender = GetNearestSeenOrHeardEnemy();    
-          if(GetDistanceBetween(oNewDefender, oAttacker) >= FeetToMeters(5.0) && !bIsRangedWeapon )
+          if(GetDistanceBetween(oNewDefender, oAttacker) <= FeetToMeters(5.0) && !bIsRangedWeapon )
           {
               // if no person is close enough, no more attacks this round
               // the setting of these variables might not matter too much though
@@ -2980,7 +3002,10 @@ void AttackLoopLogic(object oDefender, object oAttacker, object oWeapon, object 
               iMainAttackBonus = 0;
               iOffHandAttacks = 0;
               iBonusMainHandAttacks = 0;
+              
+              // NEED TO ADD DELAY TO THIS!!!
               AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(oNewDefender), TRUE) );
+              return;
           }
           else if(!bIsRangedWeapon)
           {

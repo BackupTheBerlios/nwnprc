@@ -59,6 +59,13 @@ void main()
         effect eDeath;
         string sSuccess = "";
         string sMiss = "";
+        
+        // If they are not within 5 ft, they can't do a melee attack.
+        if(!bIsRangedAttack && GetDistanceBetween(oPC, oTarget) <= FeetToMeters(5.0) )
+        {
+             SendMessageToPC(oPC,"You are not close enough to your target to attack!");
+             return;
+        }
      
         if(!bIsRangedAttack && GetLocalInt(oPC, "HatedFoe") == iEnemyRace )
         {

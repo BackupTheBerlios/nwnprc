@@ -7,6 +7,8 @@
 
 void main()
 {
-	// Executes scripts stored on the module for this event
-	ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_ONUSERDEFINED);
+	// Unlike normal, this is executed on OBJECT_SELF. Therefore, we have to first
+	// check that the OBJECT_SELF is a creature.
+	if(GetObjectType(OBJECT_SELF) == OBJECT_TYPE_CREATURE)
+		ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_ONUSERDEFINED);
 }

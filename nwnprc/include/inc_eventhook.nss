@@ -30,11 +30,8 @@ const int EVENT_ONCLIENTLEAVE            = 4;
 const string NAME_ONCLIENTLEAVE          = "prc_event_array_onclientleave";
 const int EVENT_ONCUTSCENEABORT          = 5;
 const string NAME_ONCUTSCENEABORT        = "prc_event_array_oncutsceneabort";
-
-// Scripts for this event should be stored on the module
 const int EVENT_ONHEARTBEAT              = 6;
 const string NAME_ONHEARTBEAT            = "prc_event_array_onheartbeat";
-
 const int EVENT_ONPLAYERDEATH            = 9;
 const string NAME_ONPLAYERDEATH          = "prc_event_array_onplayerdeath";
 const int EVENT_ONPLAYERDYING            = 10;
@@ -56,20 +53,52 @@ const string NAME_ONPLAYERRESPAWN        = "prc_event_array_onplayerrespawn";
 const int EVENT_ONUNAQUIREITEM           = 18;
 const string NAME_ONUNAQUIREITEM         = "prc_event_array_onunaquireitem";
 
-// Scripts for this event should be stored on the module
+// This has special handling. See prc_onuserdef.nss
 const int EVENT_ONUSERDEFINED            = 19;
 const string NAME_ONUSERDEFINED          = "prc_event_array_onuserdefined";
 
+
 // Other events
+
 const int EVENT_ONHIT                 = 20;
 const string NAME_ONHIT               = "prc_event_array_onhit";
+const int EVENT_ONSPELLCAST           = 21;
+const string NAME_ONSPELLCAST         = "prc_event_array_onspellcast";
+const int EVENT_ONPOWERMANIFEST       = 22;
+const string NAME_ONPOWERMANIFEST     = "prc_event_array_onpowermanifest";
+
+
+// NPC events
+
+const int EVENT_NPC_ONBLOCKED            = 23;
+const string NAME_NPC_ONBLOCKED          = "prc_event_array_npc_onblocked";
+const int EVENT_NPC_ONCOMBATROUNDEND     = 24;
+const string NAME_NPC_ONCOMBATROUNDEND   = "prc_event_array_npc_oncombatroundend";
+const int EVENT_NPC_ONCONVERSATION       = 25;
+const string NAME_NPC_ONCONVERSATION     = "prc_event_array_npc_onconversation";
+const int EVENT_NPC_ONDAMAGED            = 26;
+const string NAME_NPC_ONDAMAGED          = "prc_event_array_npc_ondamaged";
+const int EVENT_NPC_ONDEATH              = 27;
+const string NAME_NPC_ONDEATH            = "prc_event_array_npc_ondeath";
+const int EVENT_NPC_ONDISTURBED          = 28;
+const string NAME_NPC_ONDISTURBED        = "prc_event_array_npc_ondisturbed";
+const int EVENT_NPC_ONHEARTBEAT          = 29;
+const string NAME_NPC_ONHEARTBEAT        = "prc_event_array_npc_onheartbeat";
+const int EVENT_NPC_ONPERCEPTION         = 30;
+const string NAME_NPC_ONPERCEPTION       = "prc_event_array_npc_onperception";
+const int EVENT_NPC_ONPHYSICALATTACKED   = 31;
+const string NAME_NPC_ONPHYSICALATTACKED = "prc_event_array_npc_onphysicalattacked";
+const int EVENT_NPC_ONRESTED             = 32;
+const string NAME_NPC_ONRESTED           = "prc_event_array_npc_onrested";
+const int EVENT_NPC_ONSPELLCASTAT        = 34;
+const string NAME_NPC_ONSPELLCASTAT      = "prc_event_array_npc_onspellcastat";
 
 
 // Unused events
-//const int EVENT_ONMODULELOAD          = 7;                              // Not included, since it is not possible for any scripts
-//const string NAME_ONMODULELOAD        = "prc_event_array_onmoduleload"; // to make hook additions before this is run
-//const int EVENT_ONMODULESTART         = 8;                              // PRC does not currently use have a script in this event.
-//const string NAME_ONMODULESTART       = "prc_event_array_onmodulestart";
+//const int EVENT_ONMODULELOAD          = 7;                              // Not included, since anything that would be hooked to this event
+//const string NAME_ONMODULELOAD        = "prc_event_array_onmoduleload"; // should be directly in the eventscript anyway.
+//const int EVENT_NPC_ONSPAWN         = 33;                           // No way to add script to the hook for a creature before this fires
+//const string NAME_NPC_ONSPAWN       = "prc_event_array_npc_onspawn";
 
 const string PERMANENCY_SUFFIX = "_permanent";
 
@@ -137,8 +166,11 @@ string GetNextEventScript(object oPC, int nEvent, int bPermanent);
 
 // Executes all scripts in both the one-shot and permanent hooks and
 // clears scripts off the one-shot hook afterwards.
-// All the scripts will be ExecuteScripted on OBJECT_SELF, which is
-// the module in most events.
+// All the scripts will be ExecuteScripted on OBJECT_SELF, so they will
+// behave as if being in the script slot for that event.
+//
+// It is recommended this be used instead of manually going through
+// the script lists with Get(First|Next)EventScript.
 //
 // oPC        The object to execute listed scripts for.
 // nEvent     One of the EVENT_* constants defined in "inc_eventhook"
@@ -153,10 +185,22 @@ string EventTypeIdToName(int nEvent);
 
 
 void AddEventScript(object oPC, int nEvent, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE){
+	// If an eventhook is running, place the call into queue
+	if(GetLocalInt(GetModule(), "prc_eventhook_running")){
+		int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue", nQueue);
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 1);
+		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oPC);
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
+		SetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_script", sScript);
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bAllowDuplicate));
+		return;
+	}
+		
 	string sArrayName = EventTypeIdToName(nEvent);
 	
-	// Abort if the event type wasn't valid
-	if(sArrayName == "") return;
+	// Abort if the object given / event isn't valid 
+	if(!GetIsObjectValid(oPC) || sArrayName == "") return;
 	
 	
 	sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
@@ -184,11 +228,23 @@ void AddEventScript(object oPC, int nEvent, string sScript, int bPermanent = FAL
 
 
 void RemoveEventScript(object oPC, int nEvent, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
+	// If an eventhook is running, place the call into queue
+	if(GetLocalInt(GetModule(), "prc_eventhook_running")){
+		int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue", nQueue);
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 2);
+		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oPC);
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
+		SetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_script", sScript);
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bIgnorePermanency));
+		return;
+	}
+	
 	string sArrayNameBase = EventTypeIdToName(nEvent),
 	       sArrayName;
 	
-	// Abort if the event type wasn't valid
-	if(sArrayNameBase == "") return;
+	// Abort if the object given / event isn't valid 
+	if(!GetIsObjectValid(oPC) || sArrayNameBase == "") return;
 	
 	// Go through one-shot array
 	if(!bPermanent || bIgnorePermanency){
@@ -237,11 +293,22 @@ void RemoveEventScript(object oPC, int nEvent, string sScript, int bPermanent = 
 
 
 void ClearEventScriptList(object oPC, int nEvent, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
+	// If an eventhook is running, place the call into queue
+	if(GetLocalInt(GetModule(), "prc_eventhook_running")){
+		int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue", nQueue);
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 3);
+		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oPC);
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
+		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bIgnorePermanency));
+		return;
+	}
+	
 	string sArrayNameBase = EventTypeIdToName(nEvent),
 	       sArrayName;
 	
-	// Abort if the event type wasn't valid
-	if(sArrayNameBase == "") return;
+	// Abort if the object given / event isn't valid 
+	if(!GetIsObjectValid(oPC) || sArrayNameBase == "") return;
 	
 	// Go through one-shot array
 	if(!bPermanent || bIgnorePermanency){
@@ -266,8 +333,8 @@ void ClearEventScriptList(object oPC, int nEvent, int bPermanent = FALSE, int bI
 string GetFirstEventScript(object oPC, int nEvent, int bPermanent){
 	string sArrayName = EventTypeIdToName(nEvent);
 	
-	// Abort if the event type wasn't valid
-	if(sArrayName == "") return "";
+	// Abort if the object given / event isn't valid 
+	if(!GetIsObjectValid(oPC) || sArrayName == "") return "";
 	
 	sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
 	
@@ -281,8 +348,8 @@ string GetFirstEventScript(object oPC, int nEvent, int bPermanent){
 string GetNextEventScript(object oPC, int nEvent, int bPermanent){
 	string sArrayName = EventTypeIdToName(nEvent);
 	
-	// Abort if the event type wasn't valid
-	if(sArrayName == "") return "";
+	// Abort if the object given / event isn't valid 
+	if(!GetIsObjectValid(oPC) || sArrayName == "") return "";
 	
 	sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
 	
@@ -299,6 +366,10 @@ string GetNextEventScript(object oPC, int nEvent, int bPermanent){
 
 
 void ExecuteAllScriptsHookedToEvent(object oPC, int nEvent){
+	// Mark that an eventhook is being run, so calls to modify the
+	// scripts listed are delayd until the eventhook is done.
+	SetLocalInt(GetModule(), "prc_eventhook_running", TRUE);
+	
 	// Loop through the scripts to be fired only once
 	string sScript = GetFirstEventScript(oPC, nEvent, FALSE);
 	while(sScript != ""){
@@ -315,11 +386,52 @@ void ExecuteAllScriptsHookedToEvent(object oPC, int nEvent){
 		ExecuteScript(sScript, OBJECT_SELF);
 		sScript = GetNextEventScript(oPC, nEvent, TRUE);
 	}
+	
+	// Remove the lock on modifying the script lists
+	DeleteLocalInt(GetModule(), "prc_eventhook_running");
+	
+	
+	// Run the delayed commands
+	int nQueued = GetLocalInt(GetModule(), "prc_eventhook_pending_queue"),
+	nOperation, nFlags, i;
+	object oTarget;
+	for(i = 1; i <= nQueued; i++){
+		nOperation = GetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_operation");
+		oTarget = GetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_target");
+		nEvent     = GetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_event");
+		sScript = GetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_script");
+		nFlags     = GetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_flags");
+	
+		switch(nOperation){
+			case 1:
+				AddEventScript(oTarget, nEvent, sScript, nFlags >>> 1, nFlags & 1);
+				break;
+			case 2:
+				RemoveEventScript(oTarget, nEvent, sScript, nFlags >>> 1, nFlags & 1);
+				break;
+			case 3:
+				ClearEventScriptList(oTarget, nEvent, nFlags >>> 1, nFlags & 1);
+				break;
+	
+			default:
+				WriteTimestampedLogEntry("Invalid value in delayed eventhook manipulation operation queue");
+		}
+		
+		DeleteLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_operation");
+		DeleteLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_target");
+		DeleteLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_event");
+		DeleteLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_script");
+		DeleteLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_flags");
+	}
+	
+	DeleteLocalInt(GetModule(), "prc_eventhook_pending_queue");
+	
 }
 
 
 string EventTypeIdToName(int nEvent){
 	switch(nEvent){
+	    // Module events
 		case EVENT_ONACQUIREITEM:
 			return NAME_ONACQUIREITEM;
 		case EVENT_ONACTIVATEITEM:
@@ -334,8 +446,6 @@ string EventTypeIdToName(int nEvent){
 			return NAME_ONHEARTBEAT;
 //		case EVENT_ONMODULELOAD:
 //			return NAME_ONMODULELOAD;
-//		case EVENT_ONMODULESTART:
-//			return NAME_ONMODULESTART;
 		case EVENT_ONPLAYERDEATH:
 			return NAME_ONPLAYERDEATH;
 		case EVENT_ONPLAYERDYING:
@@ -358,9 +468,41 @@ string EventTypeIdToName(int nEvent){
 			return NAME_ONUNAQUIREITEM;
 		case EVENT_ONUSERDEFINED:
 			return NAME_ONUSERDEFINED;
+		
+		// NPC events
+		case EVENT_NPC_ONBLOCKED:
+			return NAME_NPC_ONBLOCKED;
+		case EVENT_NPC_ONCOMBATROUNDEND:
+			return NAME_NPC_ONCOMBATROUNDEND;
+		case EVENT_NPC_ONCONVERSATION:
+			return NAME_NPC_ONCONVERSATION;
+		case EVENT_NPC_ONDAMAGED:
+			return NAME_NPC_ONDAMAGED;
+		case EVENT_NPC_ONDEATH:
+			return NAME_NPC_ONDEATH;
+		case EVENT_NPC_ONDISTURBED:
+			return NAME_NPC_ONDISTURBED;
+		case EVENT_NPC_ONHEARTBEAT:
+			return NAME_NPC_ONHEARTBEAT;
+		case EVENT_NPC_ONPERCEPTION:
+			return NAME_NPC_ONPERCEPTION;
+		case EVENT_NPC_ONPHYSICALATTACKED:
+			return NAME_NPC_ONPHYSICALATTACKED;
+		case EVENT_NPC_ONRESTED:
+			return NAME_NPC_ONRESTED;
+//		case EVENT_NPC_ONSPAWN:
+//			return NAME_NPC_ONSPAWN;
+		case EVENT_NPC_ONSPELLCASTAT:
+			return NAME_NPC_ONSPELLCASTAT;
+		
+		// Other events
 		case EVENT_ONHIT:
 			return NAME_ONHIT;
-		
+		case EVENT_ONSPELLCAST:
+			return NAME_ONSPELLCAST;
+		case EVENT_ONPOWERMANIFEST:
+			return NAME_ONPOWERMANIFEST;
+
 		default:
 			WriteTimestampedLogEntry("Unknown event id passed to EventTypeIdToName: " + IntToString(nEvent));
 	}

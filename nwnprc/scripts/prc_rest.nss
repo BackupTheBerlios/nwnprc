@@ -1,3 +1,11 @@
+//::///////////////////////////////////////////////
+//:: OnPlayerRest eventscript
+//:: prc_rest
+//:://////////////////////////////////////////////
+/*
+    Hooked NPC's into this via prc_npc_rested - 06.03.2004, Ornedan
+*/
+
 #include "inc_item_props"
 #include "nw_i0_plot"
 #include "prc_inc_function"
@@ -8,6 +16,7 @@
 #include "prc_power_const"
 #include "psi_inc_ac_manif"
 #include "inc_eventhook"
+#include "inc_prc_npc"
 
 void PrcFeats(object oPC)
 {
@@ -20,9 +29,9 @@ void PrcFeats(object oPC)
 
 void main()
 {
-    object oPC=GetLastPCRested();
-
-    switch(GetLastRestEventType()){
+    object oPC = GetLastBeingRested();
+    
+    switch(MyGetLastRestEventType()){
         case REST_EVENTTYPE_REST_CANCELLED:{
             DelayCommand(1.0,PrcFeats(oPC));
             // Execute scripts hooked to this event for the player triggering it

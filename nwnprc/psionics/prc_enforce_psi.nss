@@ -54,10 +54,18 @@ void PsionDiscipline(object oPC = OBJECT_SELF)
      }
 }
 
+void GeneralFeats(object oPC){
+	
+}
+void PsionicFeats(object oPC){}
+
 
 void main()
 {
      //Declare Major Variables
      object oPC = OBJECT_SELF;
      PsionDiscipline(oPC);
+     
+     GeneralFeats(oPC);
+     PsionicFeats(oPC);
 }

@@ -20,6 +20,6 @@ void main()
     // Remove all temporary item properties when dropped/given away/stolen/sold.
     DeletePRCLocalIntsT(oPC,oItem);
     
-    // Execute scripts hooked to this event for the player triggering it
+    // Execute scripts hooked to this event for the creature triggering it
 	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONUNAQUIREITEM);
 }

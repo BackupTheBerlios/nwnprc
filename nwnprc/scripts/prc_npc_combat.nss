@@ -1,4 +1,10 @@
+//::///////////////////////////////////////////////
+//:: OnCombatRoundEnd NPC eventscript
+//:: prc_npc_combat
+//:://////////////////////////////////////////////
+
 #include "inc_epicspellai"
+#include "inc_eventhook"
 
 void main()
 {
@@ -7,4 +13,10 @@ void main()
         ActionDoCommand(SetCommandable(TRUE));
         SetCommandable(FALSE);
     }
+    
+    
+    // Execute scripts hooked to this event for the NPC triggering it
+    // Epic spells will take priority here, so any commands given in
+    // these may well be ignored.
+	ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_NPC_ONCOMBATROUNDEND);
 }

@@ -1349,3 +1349,17 @@ const int FEAT_PRC_EPIC_MIGHT_RAGE               = 3516;
 //////////////////////////////////////////////////////*/
 
 
+/*//////////////////////////////////////////////////
+//////////////// PSIONICS //////////////////////////
+//////////////////////////////////////////////////*/
+
+//Psion
+const int FEAT_PSION_DIS_EGOIST		         = 3554;
+const int FEAT_PSION_DIS_KINETICIST	         = 3555;
+const int FEAT_PSION_DIS_NOMAD		         = 3556;
+const int FEAT_PSION_DIS_SEER		         = 3557;
+const int FEAT_PSION_DIS_SHAPER		         = 3558;
+const int FEAT_PSION_DIS_TELEPATH	         = 3559;
+
+//Psion - Nomad Powers
+const int FEAT_PSI_BALE_TELEPORT	         = 3553;

@@ -45,6 +45,7 @@ void main()
     ExecuteScript("prc_enforce_feat", oPC);
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
+    ExecuteScript("prc_enforce_psi", oPC);
     DelayCommand(1.0, FeatSpecialUsePerDay(oPC)); 
 
     // These scripts fire events that should only happen on levelup

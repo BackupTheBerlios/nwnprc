@@ -2,46 +2,46 @@
 const int FEAT_JUMP = 2884;
 
 // Racial Feats
-const int FEAT_URDINNIR_STONESKIN	= 4644;
-const int FEAT_AVARIEL_DIVE		= 4645;
-const int FEAT_AYUAN_FEAR		= 4646;
-const int FEAT_AYUAN_ENTANGLE		= 4647;
-const int FEAT_AYUAN_DARKNESS		= 4648;
-const int FEAT_AYUAN_NEUTRALIZE_POISON	= 4649;
-const int FEAT_AASIMAR_LIGHT		= 4650;
-const int FEAT_TIEFLING_DARK		= 4651;
-const int FEAT_SVIRF_BLIND_DEAF		= 4652;
-const int FEAT_SVIRF_BLUR		= 4653;
-const int FEAT_SVIRF_DISGUISE		= 4654;
-const int FEAT_SVIRF_REVERT		= 4655;
-const int FEAT_RAK_DISGUISE		= 4656;
-const int FEAT_RAK_REVERT		= 4657;
-const int FEAT_PYUAN_CHARM		= 4658;
-const int FEAT_PYUAN_DARKNESS		= 4659;
-const int FEAT_PYUAN_ENTANGLE		= 4660;
-const int FEAT_PYUAN_FEAR		= 4661;
-const int FEAT_PIXIE_INVIS		= 4662;
-const int FEAT_PIXIE_CONFUSE		= 4663;
-const int FEAT_PIXIE_ENTANGLE		= 4664;
-const int FEAT_PIXIE_DISPEL_MAGIC	= 4665;
-const int FEAT_PIXIE_POLYMORPH		= 4666;
-const int FEAT_PIXIE_REVERT		= 4667;
-const int FEAT_MINOTAUR_CHARGE		= 4668;
-const int FEAT_ILLITHID_CHARM		= 4669;
-const int FEAT_ILLITHID_BLAST		= 4670;
-const int FEAT_ILLITHID_SUCKBRAIN	= 4671;
-const int FEAT_GITHZERAI_DAZE		= 4672;
-const int FEAT_GITHYANKI_DAZE		= 4673;
-const int FEAT_GITHYANKI_BLUR		= 4674;
-const int FEAT_FEYRI_CHARMPERSON	= 4675;
-const int FEAT_FEYRI_CLAIRAUDIENCE	= 4676;
-const int FEAT_FEYRI_DARKNESS		= 4677;
-const int FEAT_FEYRI_ENERVATION		= 4678;
-const int FEAT_FEYRI_ALTER		= 4679;
-const int FEAT_FEYRI_REVERT		= 4680;
-const int FEAT_DUERGAR_INVIS		= 4681;
-const int FEAT_DROW_DARKNESS		= 4682;
-const int FEAT_DROW_FAERIE_FIRE		= 4683;
+const int FEAT_URDINNIR_STONESKIN  = 4644;
+const int FEAT_AVARIEL_DIVE        = 4645;
+const int FEAT_AYUAN_FEAR          = 4646;
+const int FEAT_AYUAN_ENTANGLE      = 4647;
+const int FEAT_AYUAN_DARKNESS      = 4648;
+const int FEAT_AYUAN_NEUTRALIZE_POISON  = 4649;
+const int FEAT_AASIMAR_LIGHT       = 4650;
+const int FEAT_TIEFLING_DARK       = 4651;
+const int FEAT_SVIRF_BLIND_DEAF         = 4652;
+const int FEAT_SVIRF_BLUR          = 4653;
+const int FEAT_SVIRF_DISGUISE      = 4654;
+const int FEAT_SVIRF_REVERT        = 4655;
+const int FEAT_RAK_DISGUISE        = 4656;
+const int FEAT_RAK_REVERT          = 4657;
+const int FEAT_PYUAN_CHARM         = 4658;
+const int FEAT_PYUAN_DARKNESS      = 4659;
+const int FEAT_PYUAN_ENTANGLE      = 4660;
+const int FEAT_PYUAN_FEAR          = 4661;
+const int FEAT_PIXIE_INVIS         = 4662;
+const int FEAT_PIXIE_CONFUSE       = 4663;
+const int FEAT_PIXIE_ENTANGLE      = 4664;
+const int FEAT_PIXIE_DISPEL_MAGIC  = 4665;
+const int FEAT_PIXIE_POLYMORPH          = 4666;
+const int FEAT_PIXIE_REVERT        = 4667;
+const int FEAT_MINOTAUR_CHARGE          = 4668;
+const int FEAT_ILLITHID_CHARM      = 4669;
+const int FEAT_ILLITHID_BLAST      = 4670;
+const int FEAT_ILLITHID_SUCKBRAIN  = 4671;
+const int FEAT_GITHZERAI_DAZE      = 4672;
+const int FEAT_GITHYANKI_DAZE      = 4673;
+const int FEAT_GITHYANKI_BLUR      = 4674;
+const int FEAT_FEYRI_CHARMPERSON   = 4675;
+const int FEAT_FEYRI_CLAIRAUDIENCE = 4676;
+const int FEAT_FEYRI_DARKNESS      = 4677;
+const int FEAT_FEYRI_ENERVATION         = 4678;
+const int FEAT_FEYRI_ALTER         = 4679;
+const int FEAT_FEYRI_REVERT        = 4680;
+const int FEAT_DUERGAR_INVIS       = 4681;
+const int FEAT_DROW_DARKNESS       = 4682;
+const int FEAT_DROW_FAERIE_FIRE         = 4683;
 
 const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;
@@ -70,10 +70,10 @@ const int FEAT_MONSTEROUS = 4720;
 const int FEAT_REPTILIAN  = 4721;
 const int FEAT_ABERRATION = 4722;
 const int FEAT_ELEMENTAL  = 4759;
-const int FEAT_UNDEAD	  = 4769;
-const int FEAT_BEAST	  = 4770;
-const int FEAT_VERMIN	  = 4771;
-const int FEAT_DRAGON	  = 4773;
+const int FEAT_UNDEAD      = 4769;
+const int FEAT_BEAST       = 4770;
+const int FEAT_VERMIN      = 4771;
+const int FEAT_DRAGON      = 4773;
 
 const int FEAT_HARD_AIR   = 4723;
 const int FEAT_HARD_EARTH = 4724;
@@ -116,102 +116,102 @@ const int FEAT_SA_HIDEF     = 4750;
 const int FEAT_SA_MOVE4     = 4751;
 const int FEAT_SA_JUMP      = 4752;
 const int FEAT_SA_BLUFF     = 4753;
-const int FEAT_SA_HIDE4	    = 4754;
+const int FEAT_SA_HIDE4      = 4754;
 const int FEAT_SA_CRFTARM   = 4757;
 const int FEAT_SA_CRFTWEAP  = 4758;
 const int FEAT_SA_SPOT_4    = 4762;
 const int FEAT_SA_JUMP_4    = 4763;
-const int FEAT_LEAP	    = 4772;
+const int FEAT_LEAP     = 4772;
 const int FEAT_KEEN_SIGHT   = 4774;
 const int FEAT_SA_APPRAISE  = 4792;
 
 const int FEAT_ALTFORM                  = 4754;
 const int FEAT_DISGUISE                 = 4755;
 const int FEAT_LARGE                    = 4760;
-const int FEAT_AZER_HEAT		= 4790;
+const int FEAT_AZER_HEAT      = 4790;
 const int FEAT_SVIRFNEBLIN_DODGE        = 4791;
-const int FEAT_WATER_BREATHING		= 4793;
-const int FEAT_MINOT_SCENT		= 4795;
+const int FEAT_WATER_BREATHING          = 4793;
+const int FEAT_MINOT_SCENT         = 4795;
 
-const int FEAT_CHAMELEON		= 4576;
-const int FEAT_BONUS_RIVER		= 4577;
-const int FEAT_BONUS_BAMBOO		= 4578;
-const int FEAT_BONUS_SEA		= 4579;
-const int FEAT_BONUS_MIND_2		= 4580;
-const int FEAT_SA_LISTEN_4		= 4581;
-const int FEAT_SA_SEARCH_4		= 4582;
-const int FEAT_FREEMOVEMENT		= 4583;
-const int FEAT_TIRELESS			= 4584;
-const int FEAT_SUBDUAL			= 4585;
-const int FEAT_SENSITIVESMELL		= 4586;
-const int FEAT_REGEN2			= 4587;
-const int FEAT_POORHEARING		= 4588;
-const int FEAT_MINUS_PERSUADE_2		= 4589;
-const int FEAT_ACUTEHEARING		= 4590;
-const int FEAT_COMPOSITEPLATING		= 4591;
-const int FEAT_DAYLIGHTADAPT		= 4592;
-const int FEAT_BONUS_FEAR_2		= 4593;
-const int FEAT_LACKOFFOCUS		= 4594;
-const int FEAT_PSA_LORESPELL		= 4595;
-const int FEAT_SA_PERFORM_4		= 4596;
-const int FEAT_PSA_PERSUADE		= 4597;
-const int FEAT_RESTRICT_BOOTS		= 4598;
-const int FEAT_RESTRICT_SHIELD		= 4599;
-const int FEAT_TINY			= 4614;
-const int FEAT_SPELL8			= 4615;
-const int FEAT_SPELL16			= 4616;
-const int FEAT_SPELL17			= 4617;
-const int FEAT_SPELL19			= 4619;
-const int FEAT_SPELL20			= 4620;
-const int FEAT_SPELL21			= 4621;
-const int FEAT_SPELL22			= 4622;
-const int FEAT_SPELL23			= 4623;
-const int FEAT_NATARM_11		= 4624;
-const int FEAT_NATARM_12		= 4625;
-const int FEAT_NATARM_13		= 4626;
-const int FEAT_NATARM_14		= 4627;
-const int FEAT_NATARM_15		= 4628;
-const int FEAT_NATARM_16		= 4629;
-const int FEAT_NATARM_17		= 4630;
-const int FEAT_NATARM_18		= 4631;
-const int FEAT_NATARM_19		= 4632;
-const int FEAT_NATARM_20		= 4633;
-const int FEAT_NATARM_21		= 4634;
-const int FEAT_NATARM_22		= 4635;
-const int FEAT_LIFEPATH			= 4636;
-const int FEAT_CRAFTGUILD		= 4637;
-const int FEAT_TECHGUILD		= 4638;
-const int FEAT_SAGEGUILD		= 4639;
-const int FEAT_VOWOFSILENCE		= 4640;
-const int FEAT_COLDTOPOR		= 4641;
-const int FEAT_COWARDPITY		= 4642;
-const int FEAT_IMMUNE_PETRIFICATION	= 4643;
-const int FEAT_BONUS_COLD_2		= 4684;
-const int FEAT_BONUS_FIRE_2		= 4685;
-const int FEAT_BONUS_SONIC_4		= 4686;
-const int FEAT_BONUS_PSIONICS_4		= 4687;
-const int FEAT_SA_HEAL			= 4755;
-const int FEAT_SA_PERFORM		= 4756;
-const int FEAT_THRIKREEN_LEAP		= 4775;
-const int FEAT_BIRDSEYE			= 4776;
-const int FEAT_SA_ANIMAL_EMP		= 4777;
-const int FEAT_SA_ANIMAL_EMP_6		= 4778;
-const int FEAT_KENDERBLUFF		= 4779;
-const int FEAT_CLAUSTROPHOBIC		= 4780;
-const int FEAT_RESTRICT_ARMOR		= 4781;
-const int FEAT_IMMUNE_ACID		= 4782;
-const int FEAT_IMMUNE_CHARM		= 4783;
-const int FEAT_IMMUNE_CONFUSION		= 4784;
-const int FEAT_IMMUNE_DISEASE 		= 4785;
-const int FEAT_IMMUNE_ELECTRICITY 	= 4786;
-const int FEAT_VULN_FIRE		= 4787;
-const int FEAT_VULN_GAS			= 4788;
-const int FEAT_FROSTYTOUCH		= 4789;
-const int FEAT_SA_OPEN			= 4794;
-const int FEAT_NATPSIONIC_1		= 4796;
-const int FEAT_NATPSIONIC_2		= 4797;
-const int FEAT_NATPSIONIC_3		= 4798;
-const int FEAT_HUGE			= 4799;
+const int FEAT_CHAMELEON      = 4576;
+const int FEAT_BONUS_RIVER         = 4577;
+const int FEAT_BONUS_BAMBOO        = 4578;
+const int FEAT_BONUS_SEA      = 4579;
+const int FEAT_BONUS_MIND_2        = 4580;
+const int FEAT_SA_LISTEN_4         = 4581;
+const int FEAT_SA_SEARCH_4         = 4582;
+const int FEAT_FREEMOVEMENT        = 4583;
+const int FEAT_TIRELESS            = 4584;
+const int FEAT_SUBDUAL             = 4585;
+const int FEAT_SENSITIVESMELL      = 4586;
+const int FEAT_REGEN2              = 4587;
+const int FEAT_POORHEARING         = 4588;
+const int FEAT_MINUS_PERSUADE_2         = 4589;
+const int FEAT_ACUTEHEARING        = 4590;
+const int FEAT_COMPOSITEPLATING         = 4591;
+const int FEAT_DAYLIGHTADAPT       = 4592;
+const int FEAT_BONUS_FEAR_2        = 4593;
+const int FEAT_LACKOFFOCUS         = 4594;
+const int FEAT_PSA_LORESPELL       = 4595;
+const int FEAT_SA_PERFORM_4        = 4596;
+const int FEAT_PSA_PERSUADE        = 4597;
+const int FEAT_RESTRICT_BOOTS      = 4598;
+const int FEAT_RESTRICT_SHIELD          = 4599;
+const int FEAT_TINY           = 4614;
+const int FEAT_SPELL8              = 4615;
+const int FEAT_SPELL16             = 4616;
+const int FEAT_SPELL17             = 4617;
+const int FEAT_SPELL19             = 4619;
+const int FEAT_SPELL20             = 4620;
+const int FEAT_SPELL21             = 4621;
+const int FEAT_SPELL22             = 4622;
+const int FEAT_SPELL23             = 4623;
+const int FEAT_NATARM_11      = 4624;
+const int FEAT_NATARM_12      = 4625;
+const int FEAT_NATARM_13      = 4626;
+const int FEAT_NATARM_14      = 4627;
+const int FEAT_NATARM_15      = 4628;
+const int FEAT_NATARM_16      = 4629;
+const int FEAT_NATARM_17      = 4630;
+const int FEAT_NATARM_18      = 4631;
+const int FEAT_NATARM_19      = 4632;
+const int FEAT_NATARM_20      = 4633;
+const int FEAT_NATARM_21      = 4634;
+const int FEAT_NATARM_22      = 4635;
+const int FEAT_LIFEPATH            = 4636;
+const int FEAT_CRAFTGUILD          = 4637;
+const int FEAT_TECHGUILD      = 4638;
+const int FEAT_SAGEGUILD      = 4639;
+const int FEAT_VOWOFSILENCE        = 4640;
+const int FEAT_COLDTOPOR      = 4641;
+const int FEAT_COWARDPITY          = 4642;
+const int FEAT_IMMUNE_PETRIFICATION     = 4643;
+const int FEAT_BONUS_COLD_2        = 4684;
+const int FEAT_BONUS_FIRE_2        = 4685;
+const int FEAT_BONUS_SONIC_4       = 4686;
+const int FEAT_BONUS_PSIONICS_4         = 4687;
+const int FEAT_SA_HEAL             = 4755;
+const int FEAT_SA_PERFORM          = 4756;
+const int FEAT_THRIKREEN_LEAP      = 4775;
+const int FEAT_BIRDSEYE            = 4776;
+const int FEAT_SA_ANIMAL_EMP       = 4777;
+const int FEAT_SA_ANIMAL_EMP_6          = 4778;
+const int FEAT_KENDERBLUFF         = 4779;
+const int FEAT_CLAUSTROPHOBIC      = 4780;
+const int FEAT_RESTRICT_ARMOR      = 4781;
+const int FEAT_IMMUNE_ACID         = 4782;
+const int FEAT_IMMUNE_CHARM        = 4783;
+const int FEAT_IMMUNE_CONFUSION         = 4784;
+const int FEAT_IMMUNE_DISEASE           = 4785;
+const int FEAT_IMMUNE_ELECTRICITY  = 4786;
+const int FEAT_VULN_FIRE      = 4787;
+const int FEAT_VULN_GAS            = 4788;
+const int FEAT_FROSTYTOUCH         = 4789;
+const int FEAT_SA_OPEN             = 4794;
+const int FEAT_NATPSIONIC_1        = 4796;
+const int FEAT_NATPSIONIC_2        = 4797;
+const int FEAT_NATPSIONIC_3        = 4798;
+const int FEAT_HUGE           = 4799;
 
 //Passive Feats
 const int FEAT_ETERNAL_FREEDOM                         = 4298;
@@ -493,11 +493,11 @@ const int FEAT_SPELLS_14 = 2542;
 const int FEAT_SPELLS_15 = 2543;
 
 //Diabolist
-const int FEAT_DIABOL_DIABOLISM_1	= 4236;
-const int FEAT_DIABOL_DIABOLISM_2	= 4237;
-const int FEAT_DIABOL_DIABOLISM_3	= 4238;
-const int FEAT_DIABOL_VILEDIAB		= 4239;
-const int FEAT_DIABOL_IMPFAM		= 4240;
+const int FEAT_DIABOL_DIABOLISM_1  = 4236;
+const int FEAT_DIABOL_DIABOLISM_2  = 4237;
+const int FEAT_DIABOL_DIABOLISM_3  = 4238;
+const int FEAT_DIABOL_VILEDIAB          = 4239;
+const int FEAT_DIABOL_IMPFAM       = 4240;
 
 //Red Wizard of Thay
 const int FEAT_RW_RES_ABJ     = 4210;
@@ -622,7 +622,7 @@ const int FEAT_FREE_KI_4            = 2752;
 const int FEAT_PRESTIGE_SHIFTER_NATURALSPELL = 2917;
 const int FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1   = 2906;
 const int FEAT_PRESTIGE_SHIFTER_GWSHAPE_1    = 2900;
-const int SHIFTER_BLACK_LIST				 = 2918;
+const int SHIFTER_BLACK_LIST                  = 2918;
 
 //heartwarder
 const int FEAT_SANCTIFY_MARTIAL_CLUB        = 3194;
@@ -853,6 +853,9 @@ const int FEAT_HATED_ENEMY_OUTSIDER = 4346;
 const int FEAT_HATED_ENEMY_SHAPECHANGER = 4347;
 const int FEAT_HATED_ENEMY_UNDEAD = 4348;
 const int FEAT_HATED_ENEMY_VERMIN = 4349;
+
+// Thrall of Graz'zt
+const int FEAT_TOG_SUMMON_DEMON = 2889;
 
 // Shadowlord
 const int FEAT_SHADOWBLUR                = 3304;
@@ -1349,11 +1352,11 @@ const int FEAT_ALAG_SILVERBEARD                  = 3993;
 const int FEAT_ALAG_ROCKBURST                    = 3994;
 
 // Crafting
-const int FEAT_CRAFT_WONDROUS			 = 2925;
-const int FEAT_CRAFT_ARMS_ARMOR			 = 2926;
-const int FEAT_CRAFT_ROD			 = 2927;
-const int FEAT_CRAFT_STAFF			 = 2928;
-const int FEAT_FORGE_RING			 = 2929;
+const int FEAT_CRAFT_WONDROUS            = 2925;
+const int FEAT_CRAFT_ARMS_ARMOR               = 2926;
+const int FEAT_CRAFT_ROD            = 2927;
+const int FEAT_CRAFT_STAFF               = 2928;
+const int FEAT_FORGE_RING                = 2929;
 
 
 /*//////////////////////////////////////////////////
@@ -1447,12 +1450,12 @@ const int FEAT_PRC_EPIC_MIGHT_RAGE               = 3516;
 //////////////////////////////////////////////////*/
 
 //Psion
-const int FEAT_PSION_DIS_EGOIST		         = 3554;
-const int FEAT_PSION_DIS_KINETICIST	         = 3555;
-const int FEAT_PSION_DIS_NOMAD		         = 3556;
-const int FEAT_PSION_DIS_SEER		         = 3557;
-const int FEAT_PSION_DIS_SHAPER		         = 3558;
-const int FEAT_PSION_DIS_TELEPATH	         = 3559;
+const int FEAT_PSION_DIS_EGOIST                  = 3554;
+const int FEAT_PSION_DIS_KINETICIST              = 3555;
+const int FEAT_PSION_DIS_NOMAD                   = 3556;
+const int FEAT_PSION_DIS_SEER               = 3557;
+const int FEAT_PSION_DIS_SHAPER                  = 3558;
+const int FEAT_PSION_DIS_TELEPATH           = 3559;
 
 //Wilder
 const int FEAT_WILDER_SURGING_EUPHORIA_1         = 3568;
@@ -1464,26 +1467,26 @@ const int FEAT_WILDER_VOLATILE_MIND_3            = 3573;
 const int FEAT_WILDER_VOLATILE_MIND_4            = 3574;
 
 //Psion - Nomad Powers
-const int FEAT_NOMAD_BALE_TELEPORT	         = 3553;
+const int FEAT_NOMAD_BALE_TELEPORT          = 3553;
 
 //Psion - Shaper Powers
-const int FEAT_SHAPER_CRYSTALLIZE	         = 3599;
+const int FEAT_SHAPER_CRYSTALLIZE           = 3599;
 
 //Psion - Telepath Powers
-const int FEAT_TELEPATH_CRISIS_OF_LIFE	         = 3579;
-const int FEAT_TELEPATH_BRAIN_LOCK	         = 3582;
-const int FEAT_TELEPATH_CHARM_PERSON	         = 3583;
+const int FEAT_TELEPATH_CRISIS_OF_LIFE           = 3579;
+const int FEAT_TELEPATH_BRAIN_LOCK          = 3582;
+const int FEAT_TELEPATH_CHARM_PERSON             = 3583;
 
 //Psion - Specialist / Psychic Warrior Powers
-const int FEAT_SHAPERPSYWAR_GAMORPHA		 = 3585;
-const int FEAT_KINETICPSYWAR_INERTIAL_BARRIER	 = 3593;
-const int FEAT_EGOISTPSYWAR_THICK_SKIN		 = 3597;
+const int FEAT_SHAPERPSYWAR_GAMORPHA          = 3585;
+const int FEAT_KINETICPSYWAR_INERTIAL_BARRIER      = 3593;
+const int FEAT_EGOISTPSYWAR_THICK_SKIN        = 3597;
 
 //Psychic Warrior Level One
-const int FEAT_PSYWAR_STOMP			 = 3603;
+const int FEAT_PSYWAR_STOMP              = 3603;
 
 //Psychic Warrior Level Two
-const int FEAT_PSYWAR_DISSOLVING_TOUCH 	         = 3600;
+const int FEAT_PSYWAR_DISSOLVING_TOUCH           = 3600;
 
 //Psychic Warrior Level Three
 const int FEAT_PSYWAR_EXHALATION_BLACKDRAG       = 3601;
@@ -1496,80 +1499,80 @@ const int FEAT_PSYWAR_STEADFAST_PERCEPTION       = 3602;
 //Psychic Warrior Level Six
 
 //Psion/Wilder Level One
-const int FEAT_PSIONWILD_DECELERATION		 = 3588;
-const int FEAT_PSIONWILD_DAZE			 = 3587;
-const int FEAT_PSIONWILD_MIND_THRUST	         = 3567;
-const int FEAT_PSIONWILD_CALL_TO_MIND	         = 3577;
-const int FEAT_PSIONWILD_CRYSTAL_SHARD	         = 3578;
-const int FEAT_PSIONWILD_BOLT			 = 3604;
-const int FEAT_PSIONWILD_DEMORALIZE		 = 3605;
-const int FEAT_PSIONWILD_DISABLE		 = 3606;
-const int FEAT_PSIONWILD_ENERGYRAY		 = 3609;
-const int FEAT_PSIONWILD_ENTANGLE		 = 3610;
-const int FEAT_PSIONWILD_GREASE			 = 3611;
+const int FEAT_PSIONWILD_DECELERATION         = 3588;
+const int FEAT_PSIONWILD_DAZE            = 3587;
+const int FEAT_PSIONWILD_MIND_THRUST             = 3567;
+const int FEAT_PSIONWILD_CALL_TO_MIND            = 3577;
+const int FEAT_PSIONWILD_CRYSTAL_SHARD           = 3578;
+const int FEAT_PSIONWILD_BOLT            = 3604;
+const int FEAT_PSIONWILD_DEMORALIZE           = 3605;
+const int FEAT_PSIONWILD_DISABLE         = 3606;
+const int FEAT_PSIONWILD_ENERGYRAY       = 3609;
+const int FEAT_PSIONWILD_ENTANGLE        = 3610;
+const int FEAT_PSIONWILD_GREASE               = 3611;
 
 //Psion/Wilder Level Two
-const int FEAT_PSIONWILD_BESTOW_POWER	         = 3575;
-const int FEAT_PSIONWILD_CONCBLAST		 = 3618;
-const int FEAT_PSIONWILD_EGOWHIP		 = 3619;
-const int FEAT_PSIONWILD_ENPUSH			 = 3622;
-const int FEAT_PSIONWILD_ENSTUN			 = 3623;
-const int FEAT_PSIONWILD_IDINSIN		 = 3624;
-const int FEAT_PSIONWILD_IDENTIFY		 = 3625;
-const int FEAT_PSIONWILD_INFLICTPAIN		 = 3626;
-const int FEAT_PSIONWILD_KNOCK			 = 3627;
-const int FEAT_PSIONWILD_MINDDISRUPT		 = 3628;
-const int FEAT_PSIONWILD_CRYSTALSWARM		 = 3629;
-const int FEAT_PSIONWILD_RECALL_AGONY		 = 3595;
+const int FEAT_PSIONWILD_BESTOW_POWER            = 3575;
+const int FEAT_PSIONWILD_CONCBLAST       = 3618;
+const int FEAT_PSIONWILD_EGOWHIP         = 3619;
+const int FEAT_PSIONWILD_ENPUSH               = 3622;
+const int FEAT_PSIONWILD_ENSTUN               = 3623;
+const int FEAT_PSIONWILD_IDINSIN         = 3624;
+const int FEAT_PSIONWILD_IDENTIFY        = 3625;
+const int FEAT_PSIONWILD_INFLICTPAIN          = 3626;
+const int FEAT_PSIONWILD_KNOCK                = 3627;
+const int FEAT_PSIONWILD_MINDDISRUPT          = 3628;
+const int FEAT_PSIONWILD_CRYSTALSWARM         = 3629;
+const int FEAT_PSIONWILD_RECALL_AGONY         = 3595;
 
 //Psion/Wilder Level Three
-const int FEAT_PSIONWILD_PSIBLAST		 = 3594;
+const int FEAT_PSIONWILD_PSIBLAST        = 3594;
 
 //Psion/Wilder Level Four
 
 //Psion/Wilder Level Five
 
 //Psion/Wilder Level Six
-const int FEAT_PSIONWILD_DISINTEGRATE			 = 3589;
+const int FEAT_PSIONWILD_DISINTEGRATE              = 3589;
 
 //Psion/Wilder Level Seven
 
 //Psion/Wilder Level Eight
-const int FEAT_PSIONWILD_RECALL_DEATH		 = 3596;
+const int FEAT_PSIONWILD_RECALL_DEATH         = 3596;
 
 //Psion/Wilder Level Nine
 
 //All Class Level One
-const int FEAT_ALL_DISSIPATING_TOUCH		 = 3590;
-const int FEAT_ALL_FORCE_SCREEN			 = 3591;
-const int FEAT_ALL_INERTIAL_ARMOUR		 = 3592;
-const int FEAT_ALL_VIGOR			 = 3598;
-const int FEAT_ALL_DISTRACT			 = 3607;
-const int FEAT_ALL_EMPTYMIND			 = 3608;
-const int FEAT_ALL_HAMMER			 = 3612;
-const int FEAT_ALL_MYLIGHT			 = 3613;
-const int FEAT_ALL_DEFPRECOG			 = 3614;
-const int FEAT_ALL_OFFPRECOG			 = 3615;
-const int FEAT_ALL_OFFPRESC			 = 3616;
-const int FEAT_ALL_SYNESTHETE			 = 3631;
+const int FEAT_ALL_DISSIPATING_TOUCH          = 3590;
+const int FEAT_ALL_FORCE_SCREEN               = 3591;
+const int FEAT_ALL_INERTIAL_ARMOUR       = 3592;
+const int FEAT_ALL_VIGOR            = 3598;
+const int FEAT_ALL_DISTRACT              = 3607;
+const int FEAT_ALL_EMPTYMIND             = 3608;
+const int FEAT_ALL_HAMMER                = 3612;
+const int FEAT_ALL_MYLIGHT               = 3613;
+const int FEAT_ALL_DEFPRECOG             = 3614;
+const int FEAT_ALL_OFFPRECOG             = 3615;
+const int FEAT_ALL_OFFPRESC              = 3616;
+const int FEAT_ALL_SYNESTHETE            = 3631;
 
 //All Class Level Two
-const int FEAT_ALL_BIOFEEDBACK			 = 3617;
-const int FEAT_ALL_ELFSIGHT			 = 3620;
-const int FEAT_ALL_ENERGYADAPTSPEC		 = 3621;
-const int FEAT_ALL_THOUGHTSHIELD		 = 3630;
-const int FEAT_ALL_CONCEAL_AMORPHA		 = 3584;
+const int FEAT_ALL_BIOFEEDBACK                = 3617;
+const int FEAT_ALL_ELFSIGHT              = 3620;
+const int FEAT_ALL_ENERGYADAPTSPEC       = 3621;
+const int FEAT_ALL_THOUGHTSHIELD         = 3630;
+const int FEAT_ALL_CONCEAL_AMORPHA       = 3584;
 
 //All Class Level Three
-const int FEAT_ALL_BODY_ADJUSTMENT		 = 3580;
-const int FEAT_ALL_DARKVISION			 = 3586;
+const int FEAT_ALL_BODY_ADJUSTMENT       = 3580;
+const int FEAT_ALL_DARKVISION            = 3586;
 
 //All Class Level Four
 
 //All Class Level Five
 
 //All Class Level Six
-const int FEAT_ALL_BLACK_DRAGON_BREATH	         = 3576;
+const int FEAT_ALL_BLACK_DRAGON_BREATH           = 3576;
 
 //Psionic Feats
 const int FEAT_MENTAL_RESISTANCE           = 4812;

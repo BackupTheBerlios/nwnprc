@@ -1,0 +1,8 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Rod_of_Terror	    	    RESULT      nw_wmgmrd003     ****        
+1     Caster_Level_7th              CASTERLVL   7                ****        
+2     CraftRod		            FEAT        2927             ****           
+3     Fear			    SPELL	54		 ****
+4     Scare			    SPELL	155		 ****

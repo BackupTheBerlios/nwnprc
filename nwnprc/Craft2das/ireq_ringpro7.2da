@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Ring_of_Protection_+7         RESULT      x2_it_mring013   ****        
+1     Caster_Level_35th             CASTERLVL   35               ****        
+2     ForgeRing		            FEAT        2929             **** 
+3     Shield_of_Faith		    SPELL	450		 ****         

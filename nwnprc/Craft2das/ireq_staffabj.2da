@@ -1,0 +1,11 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Staff_of_Abjuration	    RESULT      jd_wmgst001      ****        
+1    Caster_Level_13th              CASTERLVL   13               ****        
+2    CraftStaff		  	    FEAT        2928             ****           
+3    Dismissal			    SPELL	40		 ****
+4    Dispel_Magic		    SPELL	41		 ****
+5    Minor_Globe_of_Invulnerability SPELL	119		 ****
+6    Resist Elements		    SPELL	150		 ****
+7    Shield			    SPELL	417		 ****	

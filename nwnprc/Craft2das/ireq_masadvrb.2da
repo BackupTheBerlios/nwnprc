@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Master_Adventurer's_Robes      RESULT      nw_mcloth012     ****        
+1    Caster_Level_10th              CASTERLVL   10               ****        
+2    CraftWonderousItems            FEAT        2925             ****
+3    Improved_Mage_Armor  	    SPELL	3174		 ****

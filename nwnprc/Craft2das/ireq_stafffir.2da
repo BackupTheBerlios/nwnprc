@@ -1,0 +1,9 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Staff_of_Fire		    RESULT      jd_wmgst006      ****        
+1    Caster_Level_13th              CASTERLVL   13               ****        
+2    CraftStaff		  	    FEAT        2928             ****           
+3    Burning_Hands		    SPELL	10		 ****
+4    Fireball			    SPELL	58		 ****
+5    Wall_of_Fire		    SPELL	191		 ****

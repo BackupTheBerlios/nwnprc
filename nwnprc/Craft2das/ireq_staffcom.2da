@@ -1,0 +1,10 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Staff_of_Command		    RESULT      nw_wmgst002      ****        
+1     Caster_Level_15th             CASTERLVL   15               ****        
+2     CraftStaff		    FEAT        2928             ****           
+3     Charm_Monster		    SPELL	15		 ****
+4     Charm_Person		    SPELL	16		 ****
+5     Dominate_Person		    SPELL	45		 ****
+6     Mind_Blank		    SPELL	117		 ****

@@ -1,0 +1,9 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Staff_of_Conjuration	    RESULT      jd_wmgst002      ****        
+1    Caster_Level_13th              CASTERLVL   13               ****        
+2    CraftStaff		  	    FEAT        2928             ****           
+3    Cloudkill			    SPELL	23		 ****
+4    Stinking_Cloud		    SPELL	171		 ****
+5    Summon_Creature_VI		    SPELL	180		 ****

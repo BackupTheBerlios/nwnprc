@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Boots_of_Reflexes_+7	    RESULT      x2_it_mboots002  ****        
+1    Caster_Level_35th              CASTERLVL   35               ****        
+2    CraftWonderousItems            FEAT        2925             **** 
+3    Resistance			    SPELL	151		 ****

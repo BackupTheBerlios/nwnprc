@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Gloves_of_the_Yellow_Rose_+6   RESULT      x2_it_mglove011  ****        
+1    Caster_Level_30th              CASTERLVL   30               ****        
+2    CraftWonderousItems            FEAT        2925             ****
+3    Electric_Jolt		    SPELL	439		 ****

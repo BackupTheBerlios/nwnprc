@@ -1,0 +1,15 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Staff_of_True_Power	    RESULT      jd_wmgst013      ****        
+1    Caster_Level_21th              CASTERLVL   21               ****        
+2    CraftStaff		  	    FEAT        2928             ****           
+3    CraftMagicArmsandArmor	    FEAT	2926    	 ****
+4    Bigby's_Interposing_Hand	    SPELL	459		 ****
+5    Cone_of_Cold		    SPELL	25		 ****
+6    Fireball			    SPELL	58		 ****
+7    Globe_of_Invulnerability	    SPELL	65		 ****
+8    Hold_Monster		    SPELL	82		 ****
+9    Lightning_Bolt		    SPELL	101		 ****
+10   Magic_Missle		    SPELL	107		 ****
+11   Ray_of_Enfeeblement	    SPELL	143		 ****

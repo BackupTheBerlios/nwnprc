@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Gloves_of_the_Long_Death_+1    RESULT      nw_it_mglove021  ****        
+1    Caster_Level_5th               CASTERLVL   5                ****        
+2    CraftWonderousItems            FEAT        2925             ****
+3    Ray_of_Frost		    SPELL	144		 ****

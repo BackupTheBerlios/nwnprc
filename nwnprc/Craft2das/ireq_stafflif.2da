@@ -1,0 +1,8 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Staff_of_Life		    RESULT      jd_wmgst011      ****        
+1    Caster_Level_15th              CASTERLVL   15               ****        
+2    CraftStaff		  	    FEAT        2928             ****           
+3    Heal			    SPELL	79		 ****
+4    Raise_Dead			    SPELL	142		 ****

@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Boots_of_Striding_+3	    RESULT      nw_it_mboots007  ****        
+1    Caster_Level_9th               CASTERLVL   9                ****        
+2    CraftWonderousItems            FEAT        2925             **** 
+3    Endurance			    SPELL	49		 ****

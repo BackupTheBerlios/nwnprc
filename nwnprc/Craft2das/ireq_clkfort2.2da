@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Cloak_of_Fortification_+2	    RESULT      nw_maarcl105     ****        
+1    Caster_Level_8th               CASTERLVL   8                ****        
+2    CraftWonderousItems            FEAT        2925             **** 
+3    Resistance			    SPELL	151		 ****

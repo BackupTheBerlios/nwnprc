@@ -1,0 +1,8 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Belt_of_Agility_+4		    RESULT      nw_it_mbelt021   ****        
+1    Caster_Level_12th              CASTERLVL   12               ****        
+2    CraftWonderousItems            FEAT        2925             **** 
+3    Cat's_Grace		    SPELL	13		 ****
+4    Freedom_of_Movement	    SPELL	62		 ****

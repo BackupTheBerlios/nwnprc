@@ -1,0 +1,6 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Scimitar_+5                   RESULT      x0_wswmsc002     ****        
+1     Caster_Level_15th             CASTERLVL   15               ****        
+2     CraftArmsandArmor             FEAT        2926             ****           

@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Ring_Clear_Thoughts_+1        RESULT      nw_it_mring006   ****        
+1     Caster_Level_5th              CASTERLVL   5                ****        
+2     ForgeRing		            FEAT        2929             **** 
+3     Fox's_Cunning		    SPELL	356		 ****         

@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Rod_of_Resurrection	    RESULT      nw_wmgmrd002     ****        
+1     Caster_Level_13th             CASTERLVL   13               ****        
+2     CraftRod		            FEAT        2927             ****           
+3     Resurrection		    SPELL	153		 ****

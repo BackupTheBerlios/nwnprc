@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Gloves_of_the_Hin_Fist_+5      RESULT      nw_it_mglove020  ****        
+1    Caster_Level_15th              CASTERLVL   15               ****        
+2    CraftWonderousItems            FEAT        2925             ****
+3    Sound_Burst		    SPELL	167		 ****

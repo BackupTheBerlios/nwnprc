@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Robes_of_Blending	            RESULT      x0_cloth001      ****        
+1    Caster_Level_10th              CASTERLVL   10               ****        
+2    CraftWonderousItems            FEAT        2925             ****
+3    Improved_Invisibility  	    SPELL	88		 ****

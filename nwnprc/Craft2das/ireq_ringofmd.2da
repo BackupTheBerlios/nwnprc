@@ -1,0 +1,8 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Ring_of_Magic_Defenses        RESULT      nw_it_mring005   ****        
+1     Caster_Level_11th             CASTERLVL   11               ****        
+2     ForgeRing		            FEAT        2929             **** 
+3     Dispel_Magic		    SPELL	41		 ****
+4     Spell_Resistance		    SPELL	168		 ****         

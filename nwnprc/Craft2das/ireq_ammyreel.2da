@@ -1,0 +1,7 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Amulet_of_Electical_Resistance RESULT      nw_it_mneck031   ****        
+1    Caster_Level_5th               CASTERLVL   5                ****        
+2    CraftWonderousItems            FEAT        2925             **** 
+3    Resist_Elements		    SPELL	150		 ****

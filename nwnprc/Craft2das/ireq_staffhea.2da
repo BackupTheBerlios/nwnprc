@@ -1,0 +1,10 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Staff_of_Healing		    RESULT      jd_wmgst008      ****        
+1    Caster_Level_13th              CASTERLVL   13               ****        
+2    CraftStaff		  	    FEAT        2928             ****           
+3    Lesser_Restoration		    SPELL	97		 ****
+4    Cure_Serious_Wounds	    SPELL	35		 ****
+5    Remove_Blindness/Deafness	    SPELL	145		 ****
+6    Remove_Disease		    SPELL	147		 ****

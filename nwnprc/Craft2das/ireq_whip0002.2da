@@ -1,0 +1,6 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Whip_+2	                    RESULT      x2_it_wpmwhip2   ****        
+1     Caster_Level_6th              CASTERLVL   6                ****        
+2     CraftArmsandArmor             FEAT        2926             ****           

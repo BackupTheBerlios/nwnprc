@@ -1,0 +1,9 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Staff_of_Frost		    RESULT      jd_wmgst007      ****        
+1    Caster_Level_13th              CASTERLVL   13               ****        
+2    CraftStaff		  	    FEAT        2928             ****           
+3    Cold_Orb			    SPELL	3101		 ****
+4    Cone_of_Cold		    SPELL	25		 ****
+5    Ice_Storm			    SPELL	368		 ****

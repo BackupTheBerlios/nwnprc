@@ -1,0 +1,13 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Staff_of_the_Magi		    RESULT      nw_wmgst003      ****        
+1     Caster_Level_18th             CASTERLVL   18               ****        
+2     CraftStaff		    FEAT        2928             ****           
+3     Dispel_Magic		    SPELL	41		 ****
+4     Fireball			    SPELL	58		 ****
+5     Ice_Storm			    SPELL	368		 ****
+6     Invisibility		    SPELL	90		 ****
+7     Light			    SPELL	100		 ****
+8     Lightning_Bolt		    SPELL	101		 ****
+9     Mage_Armor		    SPELL	102		 ****

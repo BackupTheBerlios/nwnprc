@@ -1,0 +1,12 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0    Staff_of_the_Woodlands	    RESULT      jd_wmgst015      ****        
+1    Caster_Level_15th              CASTERLVL   15               ****        
+2    CraftStaff		  	    FEAT        2928             ****           
+3    Barkskin			    SPELL	3		 ****
+4    Charm_Person_or_Animal	    SPELL	17		 ****
+5    Creeping_Doom		    SPELL	364		 ****
+6    Entangle			    SPELL	53		 ****
+7    Stoneskin			    SPELL	172		 ****
+8    Summon_Creature_VI		    SPELL	180		 ****

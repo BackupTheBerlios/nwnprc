@@ -26,6 +26,8 @@ void PrcFeats(object oPC)
 //  Aaon Graywolf - 6 Jan 2004
 //Added delay to EvalPRCFeats event to allow module setup to take priority
 //  Aaon Graywolf - Jan 6, 2004
+//Removed the delay. It was messing up evaluation scripts that use GetItemLastEquipped(By)
+//  Ornedan - 07.03.2005
 
 void main()
 {
@@ -33,7 +35,8 @@ void main()
     object oPC   = GetItemLastEquippedBy();
   
 	
-    DelayCommand(0.3, PrcFeats(oPC));
+    //DelayCommand(0.3, PrcFeats(oPC));
+    PrcFeats(oPC);
     
     // Handle someone equipping a poisoned item
     ExecuteScript("poison_onequip", OBJECT_SELF);

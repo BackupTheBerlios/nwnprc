@@ -17,6 +17,9 @@ void main()
    }
    DecrementRemainingFeatUses(OBJECT_SELF,FEAT_TURN_UNDEAD);
 
+   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_HOLY_30), GetLocation(OBJECT_SELF));
+   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DEATH_WARD), GetLocation(OBJECT_SELF));
+   
    location lTarget = GetSpellTargetLocation();
 
    int CasterLvl = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT);
@@ -39,7 +42,7 @@ void main()
           effect eLink = EffectLinkEffects(eDeath, eVis);
 
            DelayCommand(0.0f,ApplyEffectToObject(DURATION_TYPE_INSTANT,eLink,oTarget));
-
+          ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_STUN), oTarget);
       }
        //Select the next target within the spell shape.
        oTarget = GetNextObjectInShape(SHAPE_SPHERE, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE );

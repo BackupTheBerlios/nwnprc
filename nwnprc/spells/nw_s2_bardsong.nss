@@ -20,6 +20,7 @@ bugfix by Kovi 2002.07.30
 
 #include "x0_i0_spells"
 #include "prc_class_const"
+#include "minstrelsong"
 
 void main()
 {
@@ -392,11 +393,11 @@ void main()
 
     while(GetIsObjectValid(oTarget))
     {
-        if(!GetHasFeatEffect(FEAT_BARD_SONGS, oTarget) && !GetHasSpellEffect(GetSpellId(),oTarget))
-        {
              // * GZ Oct 2003: If we are silenced, we can not benefit from bard song
              if (!GetHasEffect(EFFECT_TYPE_SILENCE,oTarget) && !GetHasEffect(EFFECT_TYPE_DEAF,oTarget))
              {
+                RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
+
                 if(oTarget == OBJECT_SELF)
                 {
                     effect eLinkBard = EffectLinkEffects(eLink, eVis);
@@ -417,7 +418,6 @@ void main()
                     }
                 }
             }
-        }
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     }
 }

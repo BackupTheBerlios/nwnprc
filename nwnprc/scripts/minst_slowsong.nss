@@ -9,6 +9,7 @@
 
 #include "x2_i0_spells"
 #include "prc_class_const"
+#include "minstrelsong"
 
 void main()
 {
@@ -50,17 +51,6 @@ void main()
     eSlowVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     eSlow = EffectLinkEffects(eSlow, eSlowVis);
     
-    string sSpellLocal = "MINSTREL_SONG_SLOW_" + ObjectToString(OBJECT_SELF);
-    
-    // Do the visual effects
-    effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
-    effect eVis3 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis2, OBJECT_SELF, RoundsToSeconds(nDuration));
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis3, OBJECT_SELF, RoundsToSeconds(nDuration));
-   
-    effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
-
     int iPerformReq = 30;
     if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
     {
@@ -69,8 +59,17 @@ void main()
         return;
     }
 
+    RemoveOldSongEffects(OBJECT_SELF);
+    
+    //Do the visual effects
+    effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
+    effect eVis3 = EffectVisualEffect(VFX_DUR_CESSATE_NEUTRAL);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(eVis2,eVis3), OBJECT_SELF, RoundsToSeconds(nDuration));
+   
+    effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
+
     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
-    float fDelay;
     
     while(GetIsObjectValid(oTarget))
     {
@@ -78,7 +77,6 @@ void main()
         {
             if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget)) // deaf targets can't hear the song.
             {
-                iAlreadyAffected = GetLocalInt(oTarget, sSpellLocal);
                 if (!iAlreadyAffected) // don't want to check the targets more than once.
                 {
                     if (GetIsImmune(oTarget, IMMUNITY_TYPE_SLOW) == FALSE)
@@ -87,7 +85,9 @@ void main()
                         {
                             if (!GetHasSpellEffect(GetSpellId(),oTarget))
                             {
+                                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
                                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSlow, oTarget, RoundsToSeconds(nDuration));
+                                StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
                             }
                         }
                     }
@@ -98,9 +98,6 @@ void main()
         {
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE), oTarget);
         }
-        SetLocalInt(oTarget, sSpellLocal, TRUE);
-	DelayCommand(0.5, SetLocalInt(oTarget, sSpellLocal, FALSE));
-	DelayCommand(0.5, DeleteLocalInt(oTarget, sSpellLocal));
 
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     }

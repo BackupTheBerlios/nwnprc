@@ -16,6 +16,7 @@
 
 #include "x2_i0_spells"
 #include "prc_class_const"
+#include "minstrelsong"
 
 void main()
 {
@@ -370,10 +371,8 @@ void main()
     eHP = ExtraordinaryEffect(eHP);
     eLink = ExtraordinaryEffect(eLink);
 
-    if(!GetHasFeatEffect(871, oTarget)&& !GetHasSpellEffect(GetSpellId(),oTarget))
-    {
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur2, OBJECT_SELF, RoundsToSeconds(nDuration));
-    }
+    RemoveSongEffects(GetSpellId(),OBJECT_SELF,OBJECT_SELF);
+
     float fDelay;
     while(GetIsObjectValid(oTarget))
     {
@@ -382,8 +381,8 @@ void main()
              // * GZ Oct 2003: If we are deaf, we do not have negative effects from curse song
             if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget))
             {
-                if(!GetHasFeatEffect(871, oTarget)&& !GetHasSpellEffect(GetSpellId(),oTarget))
-                {
+                    RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
+
                     if (nHP > 0)
                     {
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SONIC), oTarget);
@@ -395,7 +394,6 @@ void main()
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
                         DelayCommand(GetRandomDelay(0.1,0.5),ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                    }
-                }
             }
             else
             {

@@ -7,6 +7,7 @@
 
 #include "x2_i0_spells"
 #include "prc_class_const"
+#include "minstrelsong"
 
 void main()
 {
@@ -29,10 +30,8 @@ void main()
     effect eLink = EffectLinkEffects(eBoost, eDur);
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
 
-    float fDelay;
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
     int nDuration = 10;
-    int nCount;
     location lSpell = GetSpellTargetLocation();
 
     //Check to see if the caster has Lasting Impression and increase duration.
@@ -46,18 +45,6 @@ void main()
         nDuration += 5;
     }
 
-    //Do the visual effects
-    effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
-    effect eVis3 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis2, OBJECT_SELF, RoundsToSeconds(nDuration));
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis3, OBJECT_SELF, RoundsToSeconds(nDuration));
-   
-    effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
-
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
-    //Declare the spell shape, size and the location.  Capture the first target object in the shape.
-
     int iPerformReq = 30;
     if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
     {
@@ -66,19 +53,35 @@ void main()
         return;
     }
 
+    RemoveOldSongEffects(OBJECT_SELF);
+
+    //Do the visual effects
+    effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
+    effect eLink2 = EffectLinkEffects(eVis2,eLink);
+   
+    effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
+
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    //Declare the spell shape, size and the location.  Capture the first target object in the shape.
+
     oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lSpell);
     //Cycle through the targets within the spell shape until an invalid object is captured or the number of
     //targets affected is equal to the caster level.
-    while(GetIsObjectValid(oTarget) && nCount != nDuration)
+    while(GetIsObjectValid(oTarget))
     {
         //Make faction check on the target
-        if((GetIsFriend(oTarget) || oTarget == OBJECT_SELF) && !GetHasSpellEffect(GetSpellId(),oTarget))
+        if(oTarget == OBJECT_SELF)
         {
-            fDelay = GetRandomDelay(0.0, 1.0);
-            //Fire cast spell at event for the specified target
-            DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration)));
-            DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-            nCount++;
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(nDuration));
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+        }
+        else if(GetIsFriend(oTarget))
+        {
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
         }
         //Select the next target within the spell shape.
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lSpell);

@@ -14,7 +14,9 @@ public class Data_2da{
 	private int entries = 0;
 	
 	// String matching pattern. Gets a block of non-whitespace OR " followed by any characters until the next "
-	private Pattern pattern = Pattern.compile("\\S+|\"[.&&[^\"]]\"");
+	//private static Pattern pattern = Pattern.compile("\\S+|\"[.&&[^\"]]+\"");
+	private static Pattern pattern = Pattern.compile("([\\w[\\*]]+)|\"[^\"]+\"");
+	private static Matcher matcher = pattern.matcher("");
 	
 	/**
 	 * Creates a new Data_2da on the 2da file specified.
@@ -47,7 +49,7 @@ public class Data_2da{
 			CreateData(reader);
 		}catch(Exception e){
 			System.err.println("Exception occurred when reading 2da file: \n" + fileName + "\n" + e.getMessage());
-			e.printStackTrace();
+//			e.printStackTrace();
 			System.err.println("Aborting");
 			System.exit(0);
 		}
@@ -63,6 +65,7 @@ public class Data_2da{
 		mainData = new HashMap<String, ArrayList<String>>();
 		Scanner rowParser;
 		int line = 0;
+		
 		// Find the labels row
 		String data = getNextNonEmptyRow(reader);
 		if(data == null)
@@ -82,30 +85,37 @@ public class Data_2da{
 		if(data == null)
 			throw new IOException("No data in 2da file!");
 		
-		do{
-			rowParser = new Scanner(data);
+		while(true){
+			//rowParser = new Scanner(data);
+			matcher.reset(data);
+			matcher.find();
 			
 			// Check for the presence of the row number
-			if(!rowParser.hasNextInt())
+			try{
+				line = Integer.parseInt(matcher.group());
+			}catch(NumberFormatException e){
 				throw new IOException("Numberless 2da line: " + line);
-			else
-				line = rowParser.nextInt();
+			}
 			
 			// Start parsing the row
 			for(int i = 0; i < labels.length; i++){
-				// Check for too short rows
-				if(!rowParser.hasNext(pattern))
+				// Find the next match and check for too short rows
+				if(!matcher.find())
 					throw new IOException("Too short 2da line: " + line);
+					
+				/*
+				String foo = matcher.group();//rowParser.next(pattern);
+				System.out.print(labels[i] + ":\t\t");
+				System.out.println(foo);
+				mainData.get(labels[i]).add(foo);
+				*/
 				
-//				String foo = rowParser.next(pattern);
-//				System.out.print(labels[i] + ":\t\t");
-//				System.out.println(foo);
-//				mainData.get(labels[i]).add(foo);
-				mainData.get(labels[i]).add(rowParser.next(pattern));
+				// Get the next element and add it to the data structure
+				mainData.get(labels[i]).add(matcher.group());
 			}
 			
-			// Check for too long lines
-			if(rowParser.hasNext(pattern))
+			// Check for too long rows
+			if(matcher.find())
 				throw new IOException("Too long 2da line: " + line);
 			
 			// Increment the entry counter
@@ -117,17 +127,16 @@ public class Data_2da{
 			 */
 			if(reader.hasNextLine()){
 				data = reader.nextLine();
-				if(data.trim().equals("")){
+				if(data.trim().equals(""))
 					break;
-				}
 			}
 			else
 				break;
-		}while(true);
+		}
 		
 		// Some validity checking on the 2da. Empty rows allowed only in the end
 		if(getNextNonEmptyRow(reader) != null)
-			throw new IOException("Empty row in the middle of 2da. Row: " + line);
+			throw new IOException("Empty row in the middle of 2da. After row: " + line);
 	}
 	
 	/**

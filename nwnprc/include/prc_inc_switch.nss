@@ -34,6 +34,7 @@ const string PRC_SCRIBE_SCROLL_CASTER_LEVEL          = "PRC_SCRIBE_SCROLL_CASTER
 const string PRC_CRAFT_WAND_CASTER_LEVEL             = "PRC_CRAFT_WAND_CASTER_LEVEL";
 const string PRC_NPC_HAS_PC_SPELLCASTING             = "PRC_NPC_HAS_PC_SPELLCASTING";
 const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
+const string PRC_ECL_USES_XP_NOT_HD                  = "PRC_ECL_USES_XP_NOT_HD";
 
 // Poison system switches
 const string PRC_USE_TAGBASED_INDEX_FOR_POISON       = "USE_TAGBASED_INDEX_FOR_POISON";
@@ -90,7 +91,7 @@ void MultisummonPreSummon(object oPC = OBJECT_SELF)
 
 void DoEpicSpellDefaults()
 {
-    if(!GetPRCSwitch(PRC_EPIC_INGORE_DEFAULTS))
+    if(GetPRCSwitch(PRC_EPIC_INGORE_DEFAULTS))
         return;
     SetPRCSwitch(PRC_EPIC_XP_COSTS, TRUE);        
     SetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE, TRUE);

@@ -169,6 +169,15 @@ void main()
              }
         }
    }
+
+if(GetLocalInt(OBJECT_SELF,"doarcstrike"))
+{
+
+int nDice = GetLocalInt(OBJECT_SELF,"curentspell");
+int nDamage = d4(nDice);
+effect eDam = EffectDamage(nDamage);
+ApplyEffectToObject(DURATION_TYPE_INSTANT,eDam,oSpellTarget);
+}
 }
 
 void SetRancorVar(object oPC)

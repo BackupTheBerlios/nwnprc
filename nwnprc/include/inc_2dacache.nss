@@ -1,4 +1,5 @@
 #include "prc_inc_switch"
+#include "inc_utility"
 
 const int PRC_SQL_ERROR = 0;
 const int PRC_SQL_SUCCESS = 1;
@@ -25,6 +26,7 @@ void PRC_SQLInit()
 
 void PRC_SQLExecDirect(string sSQL)
 {
+PrintString(sSQL);
     SetLocalString(GetModule(), "NWNX!ODBC!EXEC", sSQL);
 }
 
@@ -90,6 +92,192 @@ string PRC_SQLGetData(int iCol)
     return sColValue;
 }
 
+void PRCMakeTables()
+{
+    string SQL;
+    SQL = "cached2da_feat ( ";
+    SQL+= "rowid int(55),";
+    SQL+= "LABEL varchar(255),";
+    SQL+= "FEAT varchar(255),";
+    SQL+= "DESCRIPTION varchar(255),";
+    SQL+= "ICON varchar(255),";
+    SQL+= "MINATTACKBONUS varchar(255),";
+    SQL+= "MINSTR varchar(255),";
+    SQL+= "MINDEX varchar(255),";
+    SQL+= "MININT varchar(255),";
+    SQL+= "MINWIS varchar(255),";
+    SQL+= "MINCON varchar(255),";
+    SQL+= "MINCHA varchar(255),";
+    SQL+= "MINSPELLLVL varchar(255),";
+    SQL+= "PREREQFEAT1 varchar(255),";
+    SQL+= "PREREQFEAT2 varchar(255),";
+    SQL+= "GAINMULTIPLE varchar(255),";
+    SQL+= "EFFECTSSTACK varchar(255),";
+    SQL+= "ALLCLASSESCANUSE varchar(255),";
+    SQL+= "CATEGORY varchar(255),";
+    SQL+= "MAXCR varchar(255),";
+    SQL+= "SPELLID varchar(255),";
+    SQL+= "SUCCESSOR varchar(255),";
+    SQL+= "CRValue varchar(255),";
+    SQL+= "USESPERDAY varchar(255),";
+    SQL+= "MASTERFEAT varchar(255),";
+    SQL+= "TARGETSELF varchar(255),";
+    SQL+= "OrReqFeat0 varchar(255),";
+    SQL+= "OrReqFeat1 varchar(255),";
+    SQL+= "OrReqFeat2 varchar(255),";
+    SQL+= "OrReqFeat3 varchar(255),";
+    SQL+= "OrReqFeat4 varchar(255),";
+    SQL+= "REQSKILL varchar(255),";
+    SQL+= "ReqSkillMinRanks varchar(255),";
+    SQL+= "REQSKILL2 varchar(255),";
+    SQL+= "ReqSkillMinRanks2 varchar(255),";
+    SQL+= "Constant varchar(255),";
+    SQL+= "TOOLSCATEGORIES varchar(255),";
+    SQL+= "HostileFeat varchar(255),";
+    SQL+= "MinLevel varchar(255),";
+    SQL+= "MinLevelClass varchar(255),";
+    SQL+= "MaxLevel varchar(255),";
+    SQL+= "MinFortSave varchar(255),";
+    SQL+= "PreReqEpic varchar(255)";
+    SQL+= ")";
+    SQL = "CREATE TABLE "+GetStringLowerCase(SQL);
+    PRC_SQLExecDirect(SQL);
+
+    SQL = "cached2da_soundset ( ";
+    SQL+= "rowid int(55),";
+    SQL+= "LABEL varchar(255), ";
+    SQL+= "RESREF varchar(255), ";
+    SQL+= "STRREF varchar(255), ";
+    SQL+= "GENDER varchar(255), ";
+    SQL+= "TYPE varchar(255) )";
+    SQL = "CREATE TABLE "+GetStringLowerCase(SQL);
+    SQL = "cached2da_portraits ( ";
+    SQL+= "rowid int(255),";
+    SQL+= "BaseResRef varchar(255), ";
+    SQL+= "Sex varchar(255), ";
+    SQL+= "Race varchar(255), ";
+    SQL+= "InanimateType varchar(255), ";
+    SQL+= "Plot varchar(255), ";
+    SQL+= "LowGore varchar(255) )";
+    SQL = "CREATE TABLE "+GetStringLowerCase(SQL);
+    PRC_SQLExecDirect(SQL);
+
+    SQL = "cached2da_appearance ( ";
+    SQL+= "rowid int(55),";
+    SQL+= "LABEL varchar(255), ";
+    SQL+= "STRING_REF varchar(255), ";
+    SQL+= "NAME varchar(255), ";
+    SQL+= "RACE varchar(255), ";
+    SQL+= "ENVMAP  varchar(255), ";
+    SQL+= "BLOODCOLOR varchar(255), ";
+    SQL+= "MODELTYPE varchar(255), ";
+    SQL+= "WEAPONSCALE varchar(255), ";
+    SQL+= "WING_TAIL_SCALE varchar(255), ";
+    SQL+= "HELMET_SCALE_M varchar(255), ";
+    SQL+= "HELMET_SCALE_F varchar(255), ";
+    SQL+= "MOVERATE varchar(255), ";
+    SQL+= "WALKDIST varchar(255), ";
+    SQL+= "RUNDIST varchar(255), ";
+    SQL+= "PERSPACE varchar(255), ";
+    SQL+= "CREPERSPACE varchar(255), ";
+    SQL+= "HEIGHT varchar(255), ";
+    SQL+= "HITDIST varchar(255), ";
+    SQL+= "PREFATCKDIST varchar(255), ";
+    SQL+= "TARGETHEIGHT varchar(255), ";
+    SQL+= "ABORTONPARRY varchar(255), ";
+    SQL+= "RACIALTYPE varchar(255), ";
+    SQL+= "HASLEGS varchar(255), ";
+    SQL+= "HASARMS varchar(255), ";
+    SQL+= "PORTRAIT varchar(255), ";
+    SQL+= "SIZECATEGORY varchar(255), ";
+    SQL+= "PERCEPTIONDIST varchar(255), ";
+    SQL+= "FOOTSTEPTYPE varchar(255), ";
+    SQL+= "SOUNDAPPTYPE varchar(255), ";
+    SQL+= "HEADTRACK varchar(255), ";
+    SQL+= "HEAD_ARC_H varchar(255), ";
+    SQL+= "HEAD_ARC_V varchar(255), ";
+    SQL+= "HEAD_NAME varchar(255), ";
+    SQL+= "BODY_BAG varchar(255), ";
+    SQL+= "TARGETABLE  varchar(255)";
+    SQL+= ")";
+    SQL = "CREATE TABLE "+GetStringLowerCase(SQL);
+    PRC_SQLExecDirect(SQL);
+
+    SQL = "cached2da_spells ( ";
+    SQL+= "rowid int(55),";
+    SQL+= "Label varchar(255), ";
+    SQL+= "Name varchar(255), ";
+    SQL+= "IconResRef varchar(255), ";
+    SQL+= "School varchar(255), ";
+    SQL+= "Range varchar(255), ";
+    SQL+= "VS varchar(255), ";
+    SQL+= "MetaMagic varchar(255), ";
+    SQL+= "TargetType varchar(255), ";
+    SQL+= "ImpactScript varchar(255), ";
+    SQL+= "Bard varchar(255), ";
+    SQL+= "Cleric varchar(255), ";
+    SQL+= "Druid varchar(255), ";
+    SQL+= "Paladin varchar(255), ";
+    SQL+= "Ranger varchar(255), ";
+    SQL+= "WizzSorc varchar(255), ";
+    SQL+= "Innate varchar(255), ";
+    SQL+= "ConjTime varchar(255), ";
+    SQL+= "ConjAnim varchar(255), ";
+    SQL+= "ConjHeadVisual varchar(255), ";
+    SQL+= "ConjHandVisual varchar(255), ";
+    SQL+= "ConjGrndVisual varchar(255), ";
+    SQL+= "ConjSoundVFX varchar(255), ";
+    SQL+= "ConjSoundMale varchar(255), ";
+    SQL+= "ConjSoundFemale varchar(255), ";
+    SQL+= "CastAnim varchar(255), ";
+    SQL+= "CastTime varchar(255), ";
+    SQL+= "CastHeadVisual varchar(255), ";
+    SQL+= "CastHandVisual varchar(255), ";
+    SQL+= "CastGrndVisual varchar(255), ";
+    SQL+= "CastSound varchar(255), ";
+    SQL+= "Proj varchar(255), ";
+    SQL+= "ProjModel varchar(255), ";
+    SQL+= "ProjType varchar(255), ";
+    SQL+= "ProjSpwnPoint varchar(255), ";
+    SQL+= "ProjSound varchar(255), ";
+    SQL+= "ProjOrientation varchar(255), ";
+    SQL+= "ImmunityType varchar(255), ";
+    SQL+= "ItemImmunity varchar(255), ";
+    SQL+= "SubRadSpell1 varchar(255), ";
+    SQL+= "SubRadSpell2 varchar(255), ";
+    SQL+= "SubRadSpell3 varchar(255), ";
+    SQL+= "SubRadSpell4 varchar(255), ";
+    SQL+= "SubRadSpell5 varchar(255), ";
+    SQL+= "Category varchar(255), ";
+    SQL+= "Master varchar(255), ";
+    SQL+= "UserType varchar(255), ";
+    SQL+= "SpellDesc varchar(255), ";
+    SQL+= "UseConcentration varchar(255), ";
+    SQL+= "SpontaneouslyCast varchar(255), ";
+    SQL+= "AltMessage varchar(255), ";
+    SQL+= "HostileSetting varchar(255), ";
+    SQL+= "FeatID varchar(255), ";
+    SQL+= "Counter1 varchar(255), ";
+    SQL+= "Counter2 varchar(255), ";
+    SQL+= "HasProjectile varchar(255))";
+    SQL = "CREATE TABLE "+GetStringLowerCase(SQL);
+    PRC_SQLExecDirect(SQL);
+
+    SQL = "CREATE TABLE cached2da_cls_feat ( ";
+    SQL+= "rowid int(55),";
+    SQL+= "class varchar(255), ";
+    SQL+= "FeatLabel varchar(255), ";
+    SQL+= "FeatIndex varchar(255), ";
+    SQL+= "List varchar(255), ";
+    SQL+= "GrantedOnLevel varchar(255), ";
+    SQL+= "OnMenu varchar(255))";
+    PRC_SQLExecDirect(SQL);
+
+    SQL = "CREATE TABLE cached2da ( file varchar(255), column varchar(255), rowid int(55), data varchar(255) )";
+    PRC_SQLExecDirect(SQL);
+
+}
+
 string Get2DACache(string s2DA, string sColumn, int nRow)
 {
     //get the waypoint htat marks the cache
@@ -107,235 +295,42 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
     //check if we should use the database
     int nDB = GetPRCSwitch(PRC_USE_DATABASE);
     string SQL;
-    string SQL2;
-    //lower case the query
+    //lower case the 2da and column
     s2DA = GetStringLowerCase(s2DA);
+    sColumn = GetStringLowerCase(sColumn);
+    
+    //sColumn = ReplaceChars(sColumn, "_" , "z");
+    string sDBColumn = sColumn;
+     
     //if its not locally cached already
     if (s == "")
     {
         //check the database
         if(nDB)
         {
+            //initialize if needed
+            if(GetLocalString(GetModule(), "NWNX!ODBC!SPACER") == "")
+                PRC_SQLInit();
             if(s2DA == "feat"
                 || s2DA == "spells"
                 || s2DA == "portraits"
                 || s2DA == "soundsets"
                 || s2DA == "appearance"
                 || s2DA == "rig")
-                SQL = "SELECT "+sColumn+" FROM cached2da_"+s2DA+" WHERE ( row = "+IntToString(nRow)+" )";
+                SQL = "SELECT "+sDBColumn+" FROM cached2da_"+s2DA+" WHERE ( rowid = "+IntToString(nRow)+" )";
             else if(TestStringAgainstPattern("cls_feat_**", s2DA))
-                SQL = "SELECT "+sColumn+" FROM cached2da_cls_feat WHERE ( row = "+IntToString(nRow)+" ) AND ( file = '"+s2DA+"' )";
+                SQL = "SELECT "+sDBColumn+" FROM cached2da_cls_feat WHERE ( rowid = "+IntToString(nRow)+" ) AND ( file = '"+s2DA+"' )";
             else
-                SQL = "SELECT data FROM cached2da WHERE ( file = '"+s2DA+"' ) AND ( column = '"+sColumn+"' ) AND ( row = "+IntToString(nRow)+" )";
+                SQL = "SELECT data FROM cached2da WHERE ( file = '"+s2DA+"' ) AND ( column = '"+sDBColumn+"' ) AND ( rowid = "+IntToString(nRow)+" )";
+            
             PRC_SQLExecDirect(SQL);
-            // if there is an error table is not built or is not initialized
-            if(PRC_SQLFetch() == PRC_SQL_ERROR)
+            // if there is an error, table is not built or is not initialized
+            
+            //THIS LINE CRASHES NWSCRIPT. WISH I KNEW WHY!!!!!            
+            //if(PRC_SQLFetch() == PRC_SQL_ERROR)
+            if(FALSE)
             {
-                //initialize if needed
-                if(GetLocalString(GetModule(), "NWNX!ODBC!SPACER") == "")
-                    PRC_SQLInit();
-                //create table
-                //separate tables for special 2das
-                if(s2DA == "feat"
-                    || s2DA == "spells"
-                    || s2DA == "portraits"
-                    || s2DA == "soundset"
-                    || s2DA == "appearance"
-                    || s2DA == "rig")
-                {
-                    SQL2 = "SELECT row FROM cached2da_"+s2DA;
-                    PRC_SQLExecDirect(SQL2);
-                    if(PRC_SQLFetch() == PRC_SQL_SUCCESS)
-                    {
-                    }
-                    else if(s2DA == "feat")
-                    {
-                        SQL2 = "CREATE TABLE cached2da_"+s2DA+" ( ";
-                        SQL2+= "row int(255),";
-                        SQL2+= "LABEL varchar(255),";
-                        SQL2+= "FEAT int(255),";
-                        SQL2+= "DESCRIPTION int(255),";
-                        SQL2+= "ICON varchar(255),";
-                        SQL2+= "MINATTACKBONUS int(255),";
-                        SQL2+= "MINSTR int(255),";
-                        SQL2+= "MINDEX int(255),";
-                        SQL2+= "MININT int(255),";
-                        SQL2+= "MINWIS int(255),";
-                        SQL2+= "MINCON int(255),";
-                        SQL2+= "MINCHA int(255),";
-                        SQL2+= "MINSPELLLVL int(255),";
-                        SQL2+= "PREREQFEAT1 int(255),";
-                        SQL2+= "PREREQFEAT2 int(255),";
-                        SQL2+= "GAINMULTIPLE int(255),";
-                        SQL2+= "EFFECTSSTACK int(255),";
-                        SQL2+= "ALLCLASSESCANUSE int(255),";
-                        SQL2+= "CATEGORY int(255),";
-                        SQL2+= "MAXCR int(255),";
-                        SQL2+= "SPELLID int(255),";
-                        SQL2+= "SUCCESSOR int(255),";
-                        SQL2+= "CRValue int(255),";
-                        SQL2+= "USESPERDAY int(255),";
-                        SQL2+= "MASTERFEAT int(255),";
-                        SQL2+= "TARGETSELF int(255),";
-                        SQL2+= "OrReqFeat0 int(255),";
-                        SQL2+= "OrReqFeat1 int(255),";
-                        SQL2+= "OrReqFeat2 int(255),";
-                        SQL2+= "OrReqFeat3 int(255),";
-                        SQL2+= "OrReqFeat4 int(255),";
-                        SQL2+= "REQSKILL int(255),";
-                        SQL2+= "ReqSkillMinRanks int(255),";
-                        SQL2+= "REQSKILL2 int(255),";
-                        SQL2+= "ReqSkillMinRanks2 int(255),";
-                        SQL2+= "Constant varchar(255),";
-                        SQL2+= "TOOLSCATEGORIES int(255),";
-                        SQL2+= "HostileFeat int(255),";
-                        SQL2+= "MinLevel int(255),";
-                        SQL2+= "MinLevelClass int(255),";
-                        SQL2+= "MaxLevel int(255),";
-                        SQL2+= "MinFortSave int(255),";
-                        SQL2+= "PreReqEpic int(255)";
-                        SQL2+= ")";
-                    }
-                    else if(s2DA == "soundset")
-                    {
-                        SQL2 = "CREATE TABLE cached2da_"+s2DA+" ( ";
-                        SQL2+= "row int(255),";
-                        SQL2+= "LABEL varchar(255), ";
-                        SQL2+= "RESREF varchar(255), ";
-                        SQL2+= "STRREF int(255), ";
-                        SQL2+= "GENDER int(255), ";
-                        SQL2+= "TYPE int(255) )";
-                    }
-                    else if(s2DA == "portraits")
-                    {
-                        SQL2 = "CREATE TABLE cached2da_"+s2DA+" ( ";
-                        SQL2+= "row int(255),";
-                        SQL2+= "BaseResRef varchar(255), ";
-                        SQL2+= "Sex int(255), ";
-                        SQL2+= "Race int(255), ";
-                        SQL2+= "InanimateType int(255), ";
-                        SQL2+= "Plot int(255), ";
-                        SQL2+= "LowGore int(255) )";
-                    }
-                    else if(s2DA == "appearance")
-                    {
-                        SQL2 = "CREATE TABLE cached2da_"+s2DA+" ( ";
-                        SQL2+= "row int(255),";
-                        SQL2+= "LABEL varchar(255), ";
-                        SQL2+= "STRING_REF int(255), ";
-                        SQL2+= "NAME varchar(255), ";
-                        SQL2+= "RACE varchar(255), ";
-                        SQL2+= "ENVMAP  varchar(255), ";
-                        SQL2+= "BLOODCOLR varchar(255), ";
-                        SQL2+= "MODELTYPE varchar(255), ";
-                        SQL2+= "WEAPONSCALE varchar(255), ";
-                        SQL2+= "WING_TAIL_SCALE varchar(255), ";
-                        SQL2+= "HELMET_SCALE_M varchar(255), ";
-                        SQL2+= "HELMET_SCALE_F varchar(255), ";
-                        SQL2+= "MOVERATE varchar(255), ";
-                        SQL2+= "WALKDIST varchar(255), ";
-                        SQL2+= "RUNDIST varchar(255), ";
-                        SQL2+= "PERSPACE varchar(255), ";
-                        SQL2+= "CREPERSPACE varchar(255), ";
-                        SQL2+= "HEIGHT varchar(255), ";
-                        SQL2+= "HITDIST varchar(255), ";
-                        SQL2+= "PREFATCKDIST varchar(255), ";
-                        SQL2+= "TARGETHEIGHT varchar(255), ";
-                        SQL2+= "ABORTONPARRY varchar(255), ";
-                        SQL2+= "RACIALTYPE varchar(255), ";
-                        SQL2+= "HASLEGS varchar(255), ";
-                        SQL2+= "HASARMS varchar(255), ";
-                        SQL2+= "PORTRAIT varchar(255), ";
-                        SQL2+= "SIZECATEGORY varchar(255), ";
-                        SQL2+= "PERCEPTIONDIST varchar(255), ";
-                        SQL2+= "FOOTSTEPTYPE varchar(255), ";
-                        SQL2+= "SOUNDAPPTYPE varchar(255), ";
-                        SQL2+= "HEADTRACK varchar(255), ";
-                        SQL2+= "HEAD_ARC_H varchar(255), ";
-                        SQL2+= "HEAD_ARC_V varchar(255), ";
-                        SQL2+= "HEAD_NAME varchar(255), ";
-                        SQL2+= "BODY_BAG varchar(255), ";
-                        SQL2+= "TARGETABLE  varchar(255)";
-                        SQL2+= ")";
-                    }
-                    else if(s2DA == "spells")
-                    {
-                        SQL2 = "CREATE TABLE cached2da_"+s2DA+" ( ";
-                        SQL2+= "row int(255),";
-                        SQL2+= "Label varchar(255), ";
-                        SQL2+= "Name int(255), ";
-                        SQL2+= "IconResRef varchar(255), ";
-                        SQL2+= "School varchar(255), ";
-                        SQL2+= "Range varchar(255), ";
-                        SQL2+= "VS varchar(255), ";
-                        SQL2+= "MetaMagic varchar(255), ";
-                        SQL2+= "TargetType varchar(255), ";
-                        SQL2+= "ImpactScript varchar(255), ";
-                        SQL2+= "Bard int(255), ";
-                        SQL2+= "Cleric int(255), ";
-                        SQL2+= "Druid int(255), ";
-                        SQL2+= "Paladin int(255), ";
-                        SQL2+= "Ranger int(255), ";
-                        SQL2+= "Wiz_Sorc int(255), ";
-                        SQL2+= "Innate int(255), ";
-                        SQL2+= "ConjTime int(255), ";
-                        SQL2+= "ConjAnim varchar(255), ";
-                        SQL2+= "ConjHeadVisual varchar(255), ";
-                        SQL2+= "ConjHandVisual varchar(255), ";
-                        SQL2+= "ConjGrndVisual varchar(255), ";
-                        SQL2+= "ConjSoundVFX varchar(255), ";
-                        SQL2+= "ConjSoundMale varchar(255), ";
-                        SQL2+= "ConjSoundFemale varchar(255), ";
-                        SQL2+= "CastAnim varchar(255), ";
-                        SQL2+= "CastTime int(255), ";
-                        SQL2+= "CastHeadVisual varchar(255), ";
-                        SQL2+= "CastHandVisual varchar(255), ";
-                        SQL2+= "CastGrndVisual varchar(255), ";
-                        SQL2+= "CastSound varchar(255), ";
-                        SQL2+= "Proj int(255), ";
-                        SQL2+= "ProjModel varchar(255), ";
-                        SQL2+= "ProjType varchar(255), ";
-                        SQL2+= "ProjSpwnPoint varchar(255), ";
-                        SQL2+= "ProjSound varchar(255), ";
-                        SQL2+= "ProjOrientation varchar(255), ";
-                        SQL2+= "ImmunityType varchar(255), ";
-                        SQL2+= "ItemImmunity int(255), ";
-                        SQL2+= "SubRadSpell1 int(255), ";
-                        SQL2+= "SubRadSpell2 int(255), ";
-                        SQL2+= "SubRadSpell3 int(255), ";
-                        SQL2+= "SubRadSpell4 int(255), ";
-                        SQL2+= "SubRadSpell5 int(255), ";
-                        SQL2+= "Category int(255), ";
-                        SQL2+= "Master int(255), ";
-                        SQL2+= "UserType int(255), ";
-                        SQL2+= "SpellDesc int(255), ";
-                        SQL2+= "UseConcentration int(255), ";
-                        SQL2+= "SpontaneouslyCast int(255), ";
-                        SQL2+= "AltMessage int(255), ";
-                        SQL2+= "HostileSetting int(255), ";
-                        SQL2+= "FeatID int(255), ";
-                        SQL2+= "Counter1 int(255), ";
-                        SQL2+= "Counter2 int(255), ";
-                        SQL2+= "HasProjectile int(255))";
-                    }
-                    else if(TestStringAgainstPattern("cls_feat_**", s2DA))
-                    {
-                        SQL2 = "CREATE TABLE cached2da_"+GetStringLeft(s2DA, 8)+" ( ";
-                        SQL2+= "row int(255),";
-                        SQL2+= "class varchar(255), ";
-                        SQL2+= "FeatLabel varchar(255), ";
-                        SQL2+= "FeatIndex varchar(255), ";
-                        SQL2+= "List varchar(255), ";
-                        SQL2+= "GrantedOnLevel varchar(255), ";
-                        SQL2+= "OnMenu varchar(255))";
-                    }
-                }
-                else
-                {
-                    SQL2 = "CREATE TABLE cached2da ( file varchar(255), column varchar(255), row int(55), data varchar(255) )";
-                }
-                //run the create table command
-                PRC_SQLExecDirect(SQL2);
+                WriteTimestampedLogEntry("Error getting table from DB");
             }
             else
             {
@@ -362,38 +357,47 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
                     || s2DA == "rig")
                 {
                     //check that 2da row exisits
-                    SQL = "SELECT row FROM cached2da_"+s2DA+" WHERE row="+IntToString(nRow);
+                    SQL = "SELECT rowid FROM cached2da_"+s2DA+" WHERE rowid="+IntToString(nRow);
                     PRC_SQLExecDirect(SQL);
                     //if the row exists, then update it
                     //otherwise insert a new row
                     if(PRC_SQLFetch() == PRC_SQL_SUCCESS
                         && PRC_SQLGetData(1) != "")
-                        SQL = "UPDATE cached2da_"+s2DA+" SET  "+sColumn+" = '"+s+"'  WHERE  row = "+IntToString(nRow)+" ";
+                    {
+                        SQL = "UPDATE cached2da_"+s2DA+" SET  "+sDBColumn+" = '"+s+"'  WHERE  rowid = "+IntToString(nRow)+" ";
+                    }
                     else
-                        SQL = "INSERT INTO cached2da_"+s2DA+" (row, "+sColumn+") VALUES ("+IntToString(nRow)+" , '"+s+"')";
+                    {
+                        SQL = "INSERT INTO cached2da_"+s2DA+" (rowid, "+sDBColumn+") VALUES ("+IntToString(nRow)+" , '"+s+"')";
+                    }                        
                 }
                 else if(TestStringAgainstPattern("cls_feat_**", s2DA))
                 {
                     //check that 2da row exisits
-                    SQL = "SELECT row FROM cached2da_"+GetStringLeft(s2DA, 8)+" WHERE row="+IntToString(nRow);
+                    SQL = "SELECT rowid FROM cached2da_"+GetStringLeft(s2DA, 8)+" WHERE rowid="+IntToString(nRow);
                     PRC_SQLExecDirect(SQL);
                     //if the row exists, then update it
                     //otherwise insert a new row
                     if(PRC_SQLFetch() == PRC_SQL_SUCCESS
                         && PRC_SQLGetData(1) != "")
-                        SQL = "UPDATE cached2da_"+GetStringLeft(s2DA, 8)+" SET  "+sColumn+" = '"+s+"'  WHERE  row = "+IntToString(nRow)+" ";
+                    {
+                        SQL = "UPDATE cached2da_cls_feat SET  "+sDBColumn+" = '"+s+"'  WHERE  rowid = "+IntToString(nRow)+" ";
+                    }
                     else
-                        SQL = "INSERT INTO cached2da_"+GetStringLeft(s2DA, 8)+" (row, "+sColumn+") VALUES ("+IntToString(nRow)+" , '"+s+"')";
+                    {
+                        SQL = "INSERT INTO cached2da_cls_feat (rowid, "+sDBColumn+") VALUES ("+IntToString(nRow)+" , '"+s+"')";
+                    }                        
                 }
                 else
-                    SQL = "INSERT INTO cached2da VALUES ('"+s2DA+"' , '"+sColumn+"' , '"+IntToString(nRow)+"' , '"+s+"')";
+                {
+                    SQL = "INSERT INTO cached2da VALUES ('"+s2DA+"' , '"+sDBColumn+"' , '"+IntToString(nRow)+"' , '"+s+"')";
+                }    
                 PRC_SQLExecDirect(SQL);
             }
         }
         //store it on the waypoint
         SetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow), s);
     }
-//    WriteTimestampedLogEntry(s2DA+" "+sColumn+" "+IntToString(nRow)+" "+s);
     if (s=="****")
         return "";
     else

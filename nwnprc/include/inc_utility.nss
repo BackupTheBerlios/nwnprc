@@ -70,6 +70,10 @@ string FilledIntToString(int nX, int nLength = 4, int nSigned = FALSE);
 //used by the dyynamic onversation system to track token assignment
 void SetToken(int nTokenID, string sString);
 
+//replaces specific substrings
+//sTarget and sReplacement must be the same length
+string ReplaceChars(string sString, string sTarget, string sReplacement);
+
 int HexToInt( string sHex)
 { if( sHex == "") return 0;
   if( GetStringLeft( sHex, 2) == "0x") sHex = GetStringRight( sHex, GetStringLength( sHex) -2);
@@ -246,4 +250,26 @@ void SetToken(int nTokenID, string sString)
 {
     SetCustomToken(nTokenID, sString);
     SetLocalString(OBJECT_SELF, "TOKEN"+IntToString(nTokenID), sString);
+}
+
+
+string ReplaceChars(string sString, string sTarget, string sReplacement)
+{
+    if (FindSubString(sString, sTarget) == -1)      // not found
+        return sString;
+
+    int i;
+    string sReturn = "";
+    string sChar;
+    int nLength = GetStringLength(sTarget);
+    // Loop over every character and replace special characters
+    for (i = 0; i < GetStringLength(sString)-nLength+1; i++)
+    {
+        sChar = GetSubString(sString, i, nLength);
+        if (sChar == sTarget)
+            sReturn += sReplacement;
+        else
+            sReturn += GetSubString(sString, i, 1);
+    }
+    return sReturn;
 }

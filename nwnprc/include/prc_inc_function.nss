@@ -41,7 +41,10 @@ void EvalPRCFeats(object oPC)
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESC, oPC);
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESE, oPC);
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESA, oPC);
-
+    
+    // special add atk bonus equal to Enhancement
+    ExecuteScript("ft_sanctmartial",oPC);
+    
     //Route the event to the appropriate class specific scripts
     if(GetLevelByClass(CLASS_TYPE_DUELIST, oPC) > 0)            ExecuteScript("prc_duelist", oPC);
     if(GetLevelByClass(CLASS_TYPE_ACOLYTE, oPC) > 0)            ExecuteScript("prc_acolyte", oPC);
@@ -54,7 +57,6 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_HEARTWARDER,oPC) > 0)         ExecuteScript("prc_heartwarder", oPC);
     if(GetLevelByClass(CLASS_TYPE_STORMLORD,oPC) > 0)           ExecuteScript("prc_stormlord", oPC);
     if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER ,oPC) > 0)        ExecuteScript("prc_shifter", oPC);
-    if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)      ExecuteScript("prc_knghtch", oPC);
     if(GetLevelByClass(CLASS_TYPE_FRE_BERSERKER, oPC) > 0)      ExecuteScript("prc_frebzk", oPC);
     if(GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH, oPC) > 0)     ExecuteScript("prc_eog", oPC);
     if(GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) > 0)            ExecuteScript("prc_tempest", oPC);
@@ -89,6 +91,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_WEREWOLF,oPC) > 0)            ExecuteScript("prc_werewolf", oPC);
     if(GetLevelByClass(CLASS_TYPE_JUDICATOR, oPC) > 0)          ExecuteScript("prc_judicator", oPC);
     if(GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) > 0)     ExecuteScript("prc_arcduel", oPC);
+    if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                        ExecuteScript("prc_vows", oPC);
@@ -113,7 +116,6 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)               ExecuteScript("prc_lingdmg", oPC);
 
     // Miscellaneous
-    ExecuteScript("ft_sanctmartial",oPC);
     ExecuteScript("prc_wyzfeat",oPC);
     ExecuteScript("onenter_ess",oPC);
     ExecuteScript("prc_sneak_att",oPC);
@@ -198,7 +200,8 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"DiscMephResist");
     DeleteLocalInt(oSkin,"DiscMephGlove");
     // Disciple of Dispater
-    DeleteLocalInt(oSkin,"DeviceLore");
+    DeleteLocalInt(oSkin,"DeviceSear");
+    DeleteLocalInt(oSkin,"DeviceDisa");
     DeleteLocalInt(oSkin,"IPowerBonus");
     // Evil Brand
     DeleteLocalInt(oSkin,"EvilbrandPe");

@@ -507,20 +507,15 @@ int GetBaseAC(object oItem){ return GetItemACValue(oItem) - GetACBonus(oItem); }
 //To Remove Katana Finesse Bonus
 void RemoveKatanaFinesse(object oWeap)
 {
-    int iBonus = GetLocalInt(oWeap, "KatFinBonus");
-    if(iBonus != 0)
-        RemoveSpecificProperty(oWeap, ITEM_PROPERTY_ATTACK_BONUS, -1, iBonus, 1, "KatFinBonus");
+   SetCompositeBonusT(oWeap, "KatFinBonus", 0, ITEM_PROPERTY_ATTACK_BONUS);
 }
 
 void KnightRemoveDaemonslaying(object oWeap)
 {
     int iDivineBonus = GetLocalInt(oWeap, "DSlayBonusDiv");
-    int iPositiveBonus = GetLocalInt(oWeap, "DSlayBonusPos");
     if(iDivineBonus != 0)
-        RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER, iDivineBonus, 1, "DSlayBonusDiv", IP_CONST_DAMAGETYPE_DIVINE);
-    if(iPositiveBonus != 0)
-        RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER, iPositiveBonus, 1, "DSlayBonusPos", IP_CONST_DAMAGETYPE_POSITIVE);
-    SetCompositeBonus(oWeap, "DSlayingAttackBonus", 0, ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER);
+        RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER, iDivineBonus, 1, "DSlayBonusDiv", IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+    SetCompositeBonusT(oWeap, "DSlayingAttackBonus", 0, ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER);
 }
 
 int GetOppositeElement(int iElem)
@@ -876,6 +871,8 @@ int GetItemDamageType(object oItem)
    return -1;
 }
 
+
+
 int TotalAndRemoveDamageProperty(object oItem, int iSubType)
 {
     itemproperty ip = GetFirstItemProperty(oItem);
@@ -927,24 +924,27 @@ void SetCompositeDamageBonus(object oItem, string sBonus, int iVal, int iSubType
     SetLocalInt(oItem, sBonus, iVal);
 }
 
+
 int TotalAndRemoveDamagePropertyT(object oItem, int iSubType)
 {
     itemproperty ip = GetFirstItemProperty(oItem);
-    int iPropertyValue = GetItemPropertyCostTableValue(ip);
+    int iPropertyValue;
     int total = 0;
     int iTemp;
 
     while(GetIsItemPropertyValid(ip))
     {
+    	iPropertyValue = GetItemPropertyCostTableValue(ip);
+    	
         if((GetItemPropertyType(ip) == ITEM_PROPERTY_DAMAGE_BONUS) &&
            (GetItemPropertySubType(ip) == iSubType) &&
-           (iPropertyValue < 6) || (iPropertyValue > 15))
-        {
+           ((iPropertyValue < 6) || (iPropertyValue > 15)))
+        {           
             total = iPropertyValue > total ? iPropertyValue : total;
             if (GetItemPropertyDurationType(ip)== DURATION_TYPE_TEMPORARY) RemoveItemProperty(oItem, ip);
-        }
+       }
         ip = GetNextItemProperty(oItem);
-        iPropertyValue = GetItemPropertyCostTableValue(ip);
+        
     }
     return total;
 }
@@ -956,6 +956,7 @@ void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubTyp
     int iLinearDamage = 0;
     int iCurVal = 0;
 
+    
     if(iChange == 0) return;
 
     if (iSubType == -1) iSubType = GetItemPropertyDamageType(oItem);
@@ -964,16 +965,13 @@ void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubTyp
     iCurVal = TotalAndRemoveDamagePropertyT(oItem, iSubType);
 
     if (iCurVal > 15) iCurVal -= 10; // values 6-20 are in the 2da as lines 16-30
-
     iLinearDamage = iCurVal + iChange;
     if (iLinearDamage > 20)
     {
         iVal = iLinearDamage - 20; // Change the stored value to reflect the fact that we overflowed
         iLinearDamage = 20; // This is prior to adjustment due to non-linear values
     }
-
     if (iLinearDamage > 5) iLinearDamage += 10; // values 6-20 are in the 2da as lines 16-30
-
     AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(iSubType, iLinearDamage), oItem,9999.0);
 
     SetLocalInt(oItem, sBonus, iVal);
@@ -988,6 +986,22 @@ void TotalRemovePropertyT(object oItem)
         }
 }
 
+int GetAtkBonus(object oWeap)
+{
+    int iBonus = 0;
+    int iTemp;
+    
+    itemproperty ip = GetFirstItemProperty(oWeap);
+    while(GetIsItemPropertyValid(ip))
+    {
+        if(GetItemPropertyType(ip) == ITEM_PROPERTY_ATTACK_BONUS)
+            iTemp = GetItemPropertyCostTableValue(ip);
+            iBonus = iTemp > iBonus ? iTemp : iBonus;
+        ip = GetNextItemProperty(oWeap);
+    }
+    return iBonus;
+}
+   
 void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
 {
    int iValid = GetIsObjectValid(oItem);
@@ -1017,6 +1031,17 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    //Duelist Precise Strike
    DeleteLocalInt(oItem,"DuelistPreciseSlash");
    DeleteLocalInt(oItem,"DuelistPreciseSmash");
+   // Other
+   DeleteLocalInt(oItem,"IPEnh");
+   DeleteLocalInt(oItem,"IPEnhA");
+   // Dispater
+   DeleteLocalInt(oItem,"DispIronPowerA");
+   DeleteLocalInt(oItem,"DispIronPowerD");
+   // Iaijutsu
+   DeleteLocalInt(oItem,"KatFinBonus");
+   // knight Kalice
+   DeleteLocalInt(oItem,"DSlayBonusDiv");
+   DeleteLocalInt(oItem,"DSlayingAttackBonus");
   
    
    // LEFT HAND
@@ -1032,7 +1057,11 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    DeleteLocalInt(oItem,"MartialStrik");
    DeleteLocalInt(oItem,"UnholyStrik");
    DeleteLocalInt(oItem,"USanctMar");
-
+   // Other
+   DeleteLocalInt(oItem,"IPEnh");
+   DeleteLocalInt(oItem,"IPEnhA");
+   
+   
    // CHEST
    if (!iValid){
      oItem=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);

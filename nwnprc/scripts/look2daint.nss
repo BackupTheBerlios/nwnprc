@@ -2426,47 +2426,32 @@ SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_486","vs");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_486","T");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_486",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_487","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_487","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_487",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_488","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_488","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_488",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_489","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_489","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_489",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_490","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_490","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_490",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_491","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_491","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_491",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_492","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_492","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_492",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_493","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_493","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_493",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_494","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_494","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_494",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_495","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_495","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_495",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_496","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_496","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_496",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_497","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_497","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_497",1);
 
@@ -2482,8 +2467,6 @@ SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_500","s");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_500","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_500",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_501","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_501","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_501",1);
 
 SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_502","s");
@@ -2502,8 +2485,6 @@ SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_505","s");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_505","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_505",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_506","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_506","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_506",1);
 
 SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_507","-");
@@ -2798,124 +2779,64 @@ SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_569","vs");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_569","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_569",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_570","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_570","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_570",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_571","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_571","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_571",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_572","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_572","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_572",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_573","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_573","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_573",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_574","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_574","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_574",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_575","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_575","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_575",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_576","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_576","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_576",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_577","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_577","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_577",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_578","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_578","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_578",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_579","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_579","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_579",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_580","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_580","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_580",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_581","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_581","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_581",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_582","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_582","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_582",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_583","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_583","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_583",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_584","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_584","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_584",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_585","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_585","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_585",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_586","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_586","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_586",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_587","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_587","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_587",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_588","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_588","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_588",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_589","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_589","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_589",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_590","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_590","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_590",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_591","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_591","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_591",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_592","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_592","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_592",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_593","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_593","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_593",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_594","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_594","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_594",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_595","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_595","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_595",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_596","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_596","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_596",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_597","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_597","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_597",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_598","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_598","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_598",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_599","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_599","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_599",1);
 
 SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_600","vs");
@@ -3006,8 +2927,6 @@ SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_620","s");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_620","T");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_620",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_621","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_621","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_621",1);
 
 SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_622","vs");
@@ -3041,32 +2960,18 @@ SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_628","vs");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_628","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_628",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_629","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_629","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_629",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_630","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_630","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_630",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_631","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_631","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_631",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_632","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_632","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_632",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_633","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_633","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_633",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_634","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_634","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_634",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_635","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_635","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_635",1);
 
 SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_636","vs");
@@ -3957,15 +3862,12 @@ SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1751","v");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1751","E");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_1751",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1752","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1752","E");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_1752",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1753","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1753","E");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_1753",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1754","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1754","E");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_1754",1);
 
@@ -4133,12 +4035,8 @@ SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2029","vs");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2029","E");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2029",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2030","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2030","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2030",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2031","****");
-SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2031","****");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2031",1);
 
 SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2197","vs");
@@ -4246,7 +4144,6 @@ SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2222","VS");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2222","C");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2222",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2223","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2223","T");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2223",1);
 
@@ -4458,35 +4355,27 @@ SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2275","-");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2275","T");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2275",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2700","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2700","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2700",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2701","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2701","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2701",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2702","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2702","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2702",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2703","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2703","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2703",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2704","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2704","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2704",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2705","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2705","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2705",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2706","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2706","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2706",1);
 
-SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2707","****");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2707","V");
 SetLocalInt(GetModule(), "PRC_PACK_SPELL_LOOKED_2707",1);
 

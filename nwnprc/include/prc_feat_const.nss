@@ -212,16 +212,38 @@ const int FEAT_IMP_SUMMON_HAMATULA = 4011;
 
 //Mage Killer
 const int FEAT_AUGMENT_SUMMON = 2510;
-const int MK_REF_1 = 2500;
-const int MK_REF_2 = 2501;
-const int MK_REF_3 = 2502;
-const int MK_REF_4 = 2503;
-const int MK_REF_5 = 2504;
-const int MK_FORT_1 = 2505;
-const int MK_FORT_2 = 2506;
-const int MK_FORT_3 = 2507;
-const int MK_FORT_4 = 2508;
-const int MK_FORT_5 = 2509;
+const int FEAT_MK_REF_1 = 2500;
+const int FEAT_MK_REF_2 = 2501;
+const int FEAT_MK_REF_3 = 2502;
+const int FEAT_MK_REF_4 = 2503;
+const int FEAT_MK_REF_5 = 2504;
+const int FEAT_MK_FORT_1 = 2505;
+const int FEAT_MK_FORT_2 = 2506;
+const int FEAT_MK_FORT_3 = 2507;
+const int FEAT_MK_FORT_4 = 2508;
+const int FEAT_MK_FORT_5 = 2509;
+
+//Epic Mage Killer
+const int FEAT_MK_REF_6 	= 2647;
+const int FEAT_MK_REF_7 	= 2648;
+const int FEAT_MK_REF_8 	= 2649;
+const int FEAT_MK_REF_9 	= 2650;
+const int FEAT_MK_REF_10 	= 2651;
+const int FEAT_MK_REF_11 	= 2652;
+const int FEAT_MK_REF_12 	= 2653;
+const int FEAT_MK_REF_13 	= 2654;
+const int FEAT_MK_REF_14 	= 2655;
+const int FEAT_MK_REF_15 	= 2656;
+const int FEAT_MK_FORT_6 	= 2657;
+const int FEAT_MK_FORT_7 	= 2658;
+const int FEAT_MK_FORT_8 	= 2659;
+const int FEAT_MK_FORT_9 	= 2660;
+const int FEAT_MK_FORT_10 	= 2661;
+const int FEAT_MK_FORT_11 	= 2662;
+const int FEAT_MK_FORT_12 	= 2663;
+const int FEAT_MK_FORT_13 	= 2664;
+const int FEAT_MK_FORT_14 	= 2665;
+const int FEAT_MK_FORT_15 	= 2666;
 
 //Spellsword
 const int FEAT_SPELLS_1 = 2512;

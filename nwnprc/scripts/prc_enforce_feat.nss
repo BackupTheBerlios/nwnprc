@@ -21,6 +21,10 @@
 // spell schools. You must have two restricted and one specialist.
 void RedWizardFeats(object oPC = OBJECT_SELF);
 
+// Enforces the proper selection of the Mage Killer
+// Bonus Save feats.
+void MageKiller(object oPC = OBJECT_SELF);
+
 // Enforces the proper selection of the Vile feats
 // and prevents illegal stacking of them
 void VileFeats(object oPC = OBJECT_SELF);
@@ -88,6 +92,62 @@ void RedWizardFeats(object oPC = OBJECT_SELF)
 			DelayCommand(1.0, SetXP(oPC,nOldXP));
 		}
 	}
+}
+
+
+void MageKiller(object oPC = OBJECT_SELF)
+{
+
+	int iMK = (GetLevelByClass(CLASS_TYPE_MAGEKILLER, oPC) + 1) / 2;
+
+int bRefx = GetHasFeat(FEAT_MK_REF_1, oPC) ? 1 : 0;
+        bRefx = GetHasFeat(FEAT_MK_REF_2, oPC) ? 2 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_3, oPC) ? 3 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_4, oPC) ? 4 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_5, oPC) ? 5 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_6, oPC) ? 6 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_7, oPC) ? 7 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_8, oPC) ? 8 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_9, oPC) ? 9 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_10, oPC) ? 10 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_11, oPC) ? 11 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_12, oPC) ? 12 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_13, oPC) ? 13 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_14, oPC) ? 14 : bRefx;
+        bRefx = GetHasFeat(FEAT_MK_REF_15, oPC) ? 15 : bRefx;
+
+    int bFort = GetHasFeat(FEAT_MK_FORT_1, oPC) ? 1 : 0;
+        bFort = GetHasFeat(FEAT_MK_FORT_2, oPC) ? 2 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_3, oPC) ? 3 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_4, oPC) ? 4 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_5, oPC) ? 5 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_6, oPC) ? 6 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_7, oPC) ? 7 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_8, oPC) ? 8 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_9, oPC) ? 9 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_10, oPC) ? 10 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_11, oPC) ? 11 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_12, oPC) ? 12 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_13, oPC) ? 13 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_14, oPC) ? 14 : bFort;
+        bFort = GetHasFeat(FEAT_MK_FORT_15, oPC) ? 15 : bFort;
+        	
+		int iMKSave = bRefx + bFort;
+		
+		FloatingTextStringOnCreature("Mage Killer Level: " + IntToString(iMK), oPC, FALSE);
+		FloatingTextStringOnCreature("Reflex Save Level: " + IntToString(bRefx), oPC, FALSE);
+		FloatingTextStringOnCreature("Fortitude Save Level: " + IntToString(bFort), oPC, FALSE);
+
+		if (iMK != iMKSave)
+		{
+			int nHD = GetHitDice(oPC);
+			int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+			int nOldXP = GetXP(oPC);
+			int nNewXP = nMinXPForLevel - 1000;
+			SetXP(oPC,nNewXP);
+			FloatingTextStringOnCreature("You must select an Improved Save Feat. Please reselect your feats.", oPC, FALSE);
+			DelayCommand(1.0, SetXP(oPC,nOldXP));
+		}
 }
 
 
@@ -251,4 +311,5 @@ void main()
 	VileFeats(oPC);
 	Warlord(oPC);
 	UltiRangerFeats(oPC);
+	MageKiller(oPC);
 }

@@ -87,7 +87,7 @@ int GetManifesterLevel(object oCaster)
     // Item Spells
     if (GetItemPossessor(GetSpellCastItem()) == oCaster)
     {
-        //SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
+        SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
 
         return GetCasterLevel(oCaster);
     }
@@ -95,7 +95,7 @@ int GetManifesterLevel(object oCaster)
     // For when you want to assign the caster level.
     else if (GetLocalInt(oCaster, "PRC_Castlevel_Override") != 0)
     {
-        //SendMessageToPC(oCaster, "Forced-level manifesting at level " + IntToString(GetCasterLevel(oCaster)));
+        SendMessageToPC(oCaster, "Forced-level manifesting at level " + IntToString(GetCasterLevel(oCaster)));
 
         DelayCommand(1.0, DeleteLocalInt(oCaster, "PRC_Castlevel_Override"));
         nLevel = GetLocalInt(oCaster, "PRC_Castlevel_Override");
@@ -103,16 +103,21 @@ int GetManifesterLevel(object oCaster)
     else
     {
         //Gets the level of the manifesting class
-        int nLevel = GetLevelByClass(GetManifestingClass(oCaster), oCaster);
+        SendMessageToPC(oCaster, "Manifesting class: " + IntToString(GetManifestingClass(oCaster)));
+        nLevel = GetLevelByClass(GetManifestingClass(oCaster), oCaster);
+        SendMessageToPC(oCaster, "Level gotten via GetLevelByClass: " + IntToString(nLevel));
     }
 
-    if (nLevel == 0)	nLevel = GetLevelByPosition(1, oCaster);
+    if (nLevel == 0){
+        SendMessageToPC(oCaster, "Failed to get manifester level, using first class slot");
+        nLevel = GetLevelByPosition(1, oCaster);
+    }
 
     //Adding wild surge
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     if (nSurge > 0) nLevel = nLevel + nSurge;
 
-    //FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oCaster, FALSE);
+    FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oCaster, FALSE);
 
     return nLevel;
 }
@@ -394,8 +399,7 @@ int GetPowerCount(object oPC, int nClass)
 void UsePower(int nPower, int nClass, int bIgnorePP = FALSE, int nLevelOverride = 0)
 {
     //SpawnScriptDebugger();
-
-    SendMessageToPC(OBJECT_SELF, "Manifesting power "+IntToString(nPower));
+    SendMessageToPC(OBJECT_SELF, "UsePower: nPower = " + IntToString(nPower) + "; nClass = " + IntToString(nClass) + "; bIgnorePP = " + (bIgnorePP ? "true":"false") + "; nLevelOverride = " + IntToString(nLevelOverride));
     //set the class
     SetLocalInt(OBJECT_SELF, "ManifestingClass", nClass);
 
@@ -425,7 +429,7 @@ int MetaPsionics(int nDiceSize, int nNumberOfDice, int nMetaPsi, object oCaster 
         nDamage = nDamage + Random(nDiceSize) + 1;
     }
     if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
-    return nDamage;
+        return nDamage;
     if (GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE && nMetaPsi == 2)
     {
         nDamage = nDamage + nDamage / 2;

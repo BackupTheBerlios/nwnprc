@@ -86,32 +86,27 @@ int FindUnarmedDamage(object oCreature)
     if (iBrawler) iBrawler = iBrawler + iShou;
 
     // Brawler has a very simple damage progression (regardless of size):    
-    iBrawlerDamage = iBrawler / 6 + 2;   //1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
+    iBrawlerDamage = iBrawler / 6 + 2;   // 1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
    
     // Future unarmed classes: if you do your own damage, add in "levelups" below here.
     iMonk = iMonk + iShou + iSacredFist;
     
     // 3.5 Dmg Table
-    iMonkDamage =  iMonk / 4 + 2;
+    iMonkDamage =  iMonk / 4 + 2; //1d6, 1d8, 1d10, 2d6, 2d8, 2d10
     
     // Monks have a damage cap.
     if (iMonkDamage > 7) iMonkDamage = 7;
    
      // Small monks get damage penalty
     if (iSize == CREATURE_SIZE_SMALL || iSize == CREATURE_SIZE_TINY)
-       iMonkDamage--; //1d4, 1d6, 1d8, 1d10, 2d6, 2d8
+        iMonkDamage--; //1d4, 1d6, 1d8, 1d10, 2d6, 2d8
     
-    // Bigger Monks get even more damage
+    // Bigger Monks get even more damage (that varies from the normal tables too, grr.)
     int iUseBigMonk = FALSE;
     if (iSize == CREATURE_SIZE_LARGE || iSize == CREATURE_SIZE_HUGE)
     {
-       // 1d8, 2d6, 2d8, 3d6, 3d8, 4d8
-       iMonkDamage = (iMonk >= 4) ? 5 : 3;
-       iMonkDamage = (iMonk >= 8) ? 6 : iMonkDamage;
-       iMonkDamage = (iMonk >= 12) ? 7 : iMonkDamage; // different from other progressions
-       iMonkDamage = (iMonk >= 16) ? 8 : iMonkDamage;
-       iMonkDamage = (iMonk >= 20) ? 9 : iMonkDamage; // different from other progressions
-       iUseBigMonk = TRUE;
+        iMonkDamage++; //1d8, 1d10, 2d6, 2d8, 3d6, 3d8
+        iUseBigMonk = TRUE;
     }
     
     if (iShou == 1) iShouDamage = 2;                //1d6

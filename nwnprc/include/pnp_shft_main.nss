@@ -2042,6 +2042,13 @@ void SetShiftTrueForm(object oPC)
 	EvalPRCFeats(oPC);
 	SetLocalInt(oHide,"nPCShifted",FALSE);
 
+	//object oCont = GetItemPossessedBy(oPC, "pnp_shft_sprkbox");
+	//if (GetIsObjectValid(oCont))
+	//{
+	//	object oSpark = GetItemPossessedBy(oPC, "sparkoflife");
+	//	DelayCommand(0.3, AssignCommand(oPC, ActionTakeItem(oSpark, oCont)));
+	//	DestroyObject(oCont, 0.7);
+	//}
 }
 
 

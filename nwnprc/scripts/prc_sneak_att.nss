@@ -36,7 +36,7 @@ int GetRogueSneak(object oPC)
    if (iBowEquipped)
    {
       iClassLevel = GetLevelByClass(CLASS_TYPE_PEERLESS, oPC);
-      if (iClassLevel) iRogueSneak += (iClassLevel + 2) / 3
+      if (iClassLevel) iRogueSneak += (iClassLevel + 2) / 3;
 
       //iClassLevel = GetLevelByClass(CLASS_TYPE_BLARCHER, oPC);
       //if ((iClassLevel >= 5) && (iClassLevel < 8)) iRogueSneak++;

@@ -1449,3 +1449,7 @@ const int FEAT_CLOSED_MIND                 = 3986;
 const int FEAT_RECKLESS_OFFENSE            = 3987;
 const int FEAT_CLOAK_DANCE                 = 3988;
 const int FEAT_PSIONIC_FOCUS               = 3989;
+const int FEAT_PSIONIC_HOLE                = 3982;
+const int FEAT_COMBAT_MANIFESTATION        = 3981;
+const int FEAT_MENTAL_LEAP                 = 3980;
+const int FEAT_NARROW_MIND                 = 3979;

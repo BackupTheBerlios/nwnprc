@@ -9,6 +9,7 @@
 //:: Created On: Feb 6, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_class_const"
 #include "inc_item_props"
 #include "mh_constante"
 

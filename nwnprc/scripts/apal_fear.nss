@@ -1,34 +1,97 @@
 //::///////////////////////////////////////////////
-//:: Aura of Fear
-//:: NW_S1_AuraFear.nss
-//:: Copyright (c) 2001 Bioware Corp.
+//:: [Fear]
+//:: [NW_S0_Fear.nss]
+//:: Copyright (c) 2000 Bioware Corp.
 //:://////////////////////////////////////////////
-/*
-    Upon entering the aura of the creature the player
-    must make a will save or be struck with fear because
-    of the creatures presence.
-*/
+//:: Causes an area of fear that reduces Will Saves
+//:: and applies the frightened effect.
 //:://////////////////////////////////////////////
 //:: Created By: Preston Watamaniuk
-//:: Created On: May 25, 2001
+//:: Created On: April 23, 2001
 //:://////////////////////////////////////////////
+//:: VFX Pass By: Preston W, On: June 20, 2001
+//:: Update Pass By: Preston W, On: July 30, 2001
 
+//:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
 #include "prc_inc_clsfunc"
+#include "X0_I0_SPELLS"
+#include "x2_inc_spellhook"
 
 void main()
 {
- 
-    if(GetHasSpellEffect(SPELL_ANTIPAL_AURAFEAR))
+DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+/*
+  Spellcast Hook Code
+  Added 2003-06-20 by Georg
+  If you want to make changes to all spells,
+  check x2_inc_spellhook.nss to find out more
+
+*/
+
+    if (!X2PreSpellCastCode())
     {
-    	RemoveEffectsFromSpell(OBJECT_SELF,SPELL_ANTIPAL_AURAFEAR);
-    	return;
+    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+
+// End of Spell Cast Hook
+
+    if (!CanCastSpell(4)) return;
+    //Declare major variables
+    int CasterLvl = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)/2;
+
+    int nMetaMagic = GetMetaMagicFeat();
+    float fDuration = RoundsToSeconds(CasterLvl);
+    int nDamage;
+    effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);
+    effect eFear = EffectFrightened();
+    effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR);
+    effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_20);
+    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    float fDelay;
+    //Link the fear and mind effects
+    effect eLink = EffectLinkEffects(eFear, eMind);
+    eLink = EffectLinkEffects(eLink, eDur);
+    int nPenetr = CasterLvl + SPGetPenetr();
+    int nDC = GetSpellDCSLA(OBJECT_SELF,1);
+    
+    object oTarget;
+    //Check for metamagic extend
+    if (nMetaMagic == METAMAGIC_EXTEND)
+    {
+        fDuration = fDuration * 2.0;    //Duration is +100%
+    }
+    //Apply Impact
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    //Get first target in the spell cone
+    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation(), TRUE);
+    while(GetIsObjectValid(oTarget))
+    {
+        if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
+        {
+            fDelay = GetRandomDelay();
+            //Fire cast spell at event for the specified target
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FEAR));
+            //Make SR Check
+            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+            {
+                //Make a will save
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_FEAR, OBJECT_SELF, fDelay))
+                {
+                    //Apply the linked effects and the VFX impact
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,CasterLvl));
+                }
+            }
+        }
+        //Get next target in the spell cone
+        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation(), TRUE);
     }
     
-    effect eImmu = EffectImmunity(IMMUNITY_TYPE_FEAR);
-    //Set and apply AOE object
-    effect eAOE = SupernaturalEffect(EffectAreaOfEffect(AOE_MOB_DRAGON_FEAR,"apal_aurafeara","","apal_aurafearb"));
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, OBJECT_SELF);   
 
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT,ExtraordinaryEffect(eImmu), OBJECT_SELF);
+
+DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+// Getting rid of the local integer storing the spellschool name
 }
+

@@ -84,7 +84,7 @@ void main()
     //  iSpell =  GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK,oPC) ? 20: iSpell;
     }
         
-    int iBonus = BonusAtk(nLevel+iIFE+iSpell);
+    int iBonus = BonusAtk(nLevel+iIFE);
     
     FavEn(FEAT_UR_FE_DWARF,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_DWARF);
     FavEn(FEAT_UR_FE_ELF,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_ELF);

@@ -36,7 +36,6 @@ void EB_app(object oPC,int iEquip,object oItem )
 
       if (GetBaseItemType(oItem)!= BASE_ITEM_INVALID) return;
         Evilbrand(oPC, oSkin, 2);
-        Evilbrand(oPC, oSkin, 2);
         SetLocalInt(oSkin,"Evilbrand",1);
   }
 

@@ -107,7 +107,8 @@ void ApplySneakToSkin(object oPC, int iRogueSneak, int iBlackguardSneak)
    if (iRogueSneak == 5) iRogueSneakFeat = 39;
    if (iRogueSneak >= 6) iRogueSneakFeat = iRogueSneak + 296;
 
-   //SendMessageToPC(oPC, "iRogueSneakFeat = " + IntToString(iRogueSneakFeat) + " iRogueSneak = " + IntToString(iRogueSneak));
+   //SendMessageToPC(oPC, "iRogueSneakFeat = " + IntToString(iRogueSneakFeat) +
+   //                     " iRogueSneak = " + IntToString(iRogueSneak));
 
    //Blackguard Sneaks
    //1-15: 276-290
@@ -115,23 +116,26 @@ void ApplySneakToSkin(object oPC, int iRogueSneak, int iBlackguardSneak)
 
    if (iBlackguardSneak) iBlackguardSneakFeat = iBlackguardSneak + 275;
 
-   //SendMessageToPC(oPC, "iBlackguardSneakFeat = " + IntToString(iBlackguardSneakFeat) + " iBlackguardSneak = " + IntToString(iBlackguardSneak));
+   //SendMessageToPC(oPC, "iBlackguardSneakFeat = " + IntToString(iBlackguardSneakFeat) +
+   //                     " iBlackguardSneak = " + IntToString(iBlackguardSneak));
 
 
-   // This is basically to always recalculate on every event PRCEvalFeats is called...
-   iPreviousSneakFeat = GetLocalInt(oPC,"RogueSneakDice");
-   if (iPreviousSneakFeat) RemoveSpecificProperty(oSkin,ITEM_PROPERTY_BONUS_FEAT,iPreviousSneakFeat);
+   // This is basically to always readd the sneaks on every event PRCEvalFeats is called...
+   iPreviousSneakFeat = GetLocalInt(oSkin,"RogueSneakDice");
+   if (iPreviousSneakFeat) DelayCommand(0.1, RemoveSpecificProperty(oSkin,
+                           ITEM_PROPERTY_BONUS_FEAT,iPreviousSneakFeat));
 
-   iPreviousSneakFeat = GetLocalInt(oPC,"BlackguardSneakDice");
-   if (iPreviousSneakFeat) RemoveSpecificProperty(oSkin,ITEM_PROPERTY_BONUS_FEAT,iPreviousSneakFeat);
+   iPreviousSneakFeat = GetLocalInt(oSkin,"BlackguardSneakDice");
+   if (iPreviousSneakFeat) DelayCommand(0.1, RemoveSpecificProperty(oSkin,
+                           ITEM_PROPERTY_BONUS_FEAT,iPreviousSneakFeat));
 
-   SetLocalInt(oPC,"RogueSneakDice",iRogueSneakFeat);
-   SetLocalInt(oPC,"BlackguardSneakDice",iBlackguardSneakFeat);
+   SetLocalInt(oSkin,"RogueSneakDice",iRogueSneakFeat);
+   SetLocalInt(oSkin,"BlackguardSneakDice",iBlackguardSneakFeat);
 
-   if (iRogueSneak) AddItemProperty(DURATION_TYPE_PERMANENT,
-                                    ItemPropertyBonusFeat(iRogueSneakFeat), oSkin);
-   if (iBlackguardSneak) AddItemProperty(DURATION_TYPE_PERMANENT,
-                                         ItemPropertyBonusFeat(iBlackguardSneakFeat), oSkin);
+   if (iRogueSneak) DelayCommand(0.2, AddItemProperty(DURATION_TYPE_PERMANENT,
+                           ItemPropertyBonusFeat(iRogueSneakFeat), oSkin));
+   if (iBlackguardSneak) DelayCommand(0.2, AddItemProperty(DURATION_TYPE_PERMANENT,
+                           ItemPropertyBonusFeat(iBlackguardSneakFeat), oSkin));
 }
 
 

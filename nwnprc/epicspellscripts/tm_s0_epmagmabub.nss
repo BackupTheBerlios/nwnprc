@@ -24,10 +24,8 @@
 // I managed to fix all the other scripts though =)
 
 #include "x0_i0_spells"
-#include "prc_getcast_lvl"
 #include "prc_class_const"
 //#include "inc_epicspells"
-#include "prc_getcast_lvl"
 #include "x2_inc_spellhook"
 
 //#include "inc_epicspells"

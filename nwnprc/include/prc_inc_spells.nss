@@ -78,6 +78,9 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 // abilities & items, it will only return GetCasterLevel.
 int PRCGetCasterLevel(object oCaster = OBJECT_SELF);
 
+// Finds caster levels by specific types (see the constants below).
+int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF);
+
 // Helps to find the adjustment to level granted by Practiced Spellcaster feats.
 //
 // oCaster - the PC/NPC in question
@@ -92,6 +95,20 @@ int ShadowWeave (object oCaster, int iSpellID);
 string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
 int FireAdept (object oCaster, int iSpellID);
 int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
+
+// ---------------
+// BEGIN CONSTANTS
+// ---------------
+
+const int  TYPE_ARCANE   = 1;
+const int  TYPE_SORCERER = 2;
+const int  TYPE_WIZARD   = 3;
+const int  TYPE_BARD     = 4;
+const int  TYPE_DIVINE   = 10;
+const int  TYPE_CLERIC   = 11;
+const int  TYPE_DRUID    = 12;
+const int  TYPE_RANGER   = 13;
+const int  TYPE_PALADIN  = 14;
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -736,4 +753,81 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 	}
 
     return GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
+}
+
+int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
+{
+    int iSor = GetLevelByClass(CLASS_TYPE_SORCERER, OBJECT_SELF);
+    int iWiz = GetLevelByClass(CLASS_TYPE_WIZARD, OBJECT_SELF);
+    int iBrd = GetLevelByClass(CLASS_TYPE_BARD, OBJECT_SELF);
+    int iCle = GetLevelByClass(CLASS_TYPE_CLERIC, OBJECT_SELF);
+    int iDru = GetLevelByClass(CLASS_TYPE_DRUID, OBJECT_SELF);
+    int iPal = GetLevelByClass(CLASS_TYPE_PALADIN, OBJECT_SELF);
+    int iRan = GetLevelByClass(CLASS_TYPE_RANGER, OBJECT_SELF);
+    int iArc = GetLevelByTypeArcane();
+    int iDiv = GetLevelByTypeDivine();
+
+    int iTemp;
+
+    switch (iTypeSpell)
+    {
+        case TYPE_ARCANE:
+             return iArc;
+             break;
+        case TYPE_DIVINE:
+             return iDiv;
+             break;
+        case TYPE_SORCERER:
+             if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_SORCERER)
+                 iTemp = iArc;
+             else
+                 iTemp = iSor + PractisedSpellcasting(OBJECT_SELF, CLASS_TYPE_SORCERER, iSor);
+             return iTemp;
+             break;
+        case TYPE_WIZARD:
+             if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_WIZARD)
+                 iTemp = iArc;
+             else
+                 iTemp = iWiz + PractisedSpellcasting(OBJECT_SELF, CLASS_TYPE_WIZARD, iWiz);
+             return iTemp;
+             break;
+        case TYPE_BARD:
+             if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_BARD)
+                 iTemp = iArc;
+             else
+                 iTemp = iBrd + PractisedSpellcasting(OBJECT_SELF, CLASS_TYPE_BARD, iBrd);
+             return iTemp;
+             break;
+        case TYPE_CLERIC:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_CLERIC)
+                 iTemp = iDiv;
+             else
+                 iTemp = iCle + PractisedSpellcasting(OBJECT_SELF, CLASS_TYPE_CLERIC, iCle);
+             return iTemp;
+             break;
+        case TYPE_DRUID:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_DRUID)
+                 iTemp = iDiv;
+             else
+                 iTemp = iDru + PractisedSpellcasting(OBJECT_SELF, CLASS_TYPE_DRUID, iDru);
+             return iTemp;
+             break;
+        case TYPE_RANGER:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_RANGER)
+                 iTemp = iDiv;
+             else
+                 iTemp = iRan / 2;
+             return iTemp;
+             break;
+        case TYPE_PALADIN:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_PALADIN)
+                 iTemp = iDiv;
+             else
+                 iTemp = iPal / 2;
+             return iTemp;
+             break;
+        default:
+             break;
+    }
+    return 0;
 }

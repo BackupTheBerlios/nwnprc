@@ -38,7 +38,6 @@
 //#include "prc_feat_const"
 //#include "prc_spell_const"
 #include "prc_ipfeat_const"
-#include "prc_getcast_lvl"
 
 // * Returns an integer amount of damage from a constant
 // * iDamageConst = DAMAGE_BONUS_* or IP_CONST_DAMAGEBONUS_*

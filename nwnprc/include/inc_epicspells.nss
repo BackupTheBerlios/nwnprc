@@ -8,7 +8,7 @@
 //:: Last Updated On: March 18, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_getcast_lvl"
+#include "prc_inc_spells"
 #include "prc_class_const"
 
 /*

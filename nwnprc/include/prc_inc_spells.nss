@@ -1,6 +1,6 @@
 /* 
    ----------------
-   prc_inc_cast
+   prc_inc_spells
    ----------------
    
    7/25/04 by WodahsEht
@@ -579,15 +579,11 @@ int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
 
 int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0)
 {
-
-return BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
-
+    return BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 }
 
 
 int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF)
 {
-
-return GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
-
+    return GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
 }

@@ -8,7 +8,7 @@
 //:: Created On: July 3rd, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_inc_cast"
+#include "prc_inc_spells"
 #include "prc_inc_sneak"
 #include "soul_inc"
 

@@ -75,7 +75,7 @@ void RebukeUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int 
     if (iMastery) nTurnHD*= 10;
     
     //Get nearest enemy within 20m (60ft)
-    //Why are you using GetNearest instead of GetFirstObjectInShape
+    //Why are you using GetNearest instead of MyFirstObjectInShape
     // Because ability description says "gets closest first" :P
     object oTarget = GetNearestCreature(CREATURE_TYPE_PLAYER_CHAR, PLAYER_CHAR_NOT_PC , OBJECT_SELF, nCnt);
     while(GetIsObjectValid(oTarget) && nHDCount < nTurnHD && GetDistanceToObject(oTarget) <= 20.0)
@@ -191,7 +191,7 @@ void TurnUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int nC
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpactVis, GetLocation(OBJECT_SELF)); 
      
     //Get nearest enemy within 20m (60ft)
-    //Why are you using GetNearest instead of GetFirstObjectInShape
+    //Why are you using GetNearest instead of MyFirstObjectInShape
     // Because ability description says "gets closest first" :P
     object oTarget = GetNearestCreature(CREATURE_TYPE_PLAYER_CHAR, PLAYER_CHAR_NOT_PC , OBJECT_SELF, nCnt);
     while(GetIsObjectValid(oTarget) && nHDCount < nTurnHD && GetDistanceToObject(oTarget) <= 20.0)

@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     //Set the delay to apply to effects based on the distance to the target
     float fDelay = 0.5 + GetDistanceBetween(OBJECT_SELF, oTarget)/20;
     //Get first target in the spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 11.0, GetSpellTargetLocation());
+    oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 11.0, GetSpellTargetLocation());
     while (GetIsObjectValid(oTarget))
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))

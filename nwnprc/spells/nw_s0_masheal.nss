@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
   //Apply VFX area impact
   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eStrike, lLoc);
   //Get first target in spell area
-  object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, lLoc);
+  object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, lLoc);
   while(GetIsObjectValid(oTarget))
   {
       fDelay = GetRandomDelay();

@@ -83,7 +83,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_GLYPH_OF_WARDING,OBJECT_SELF, GetSpellSaveDC
 
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
     //Cycle through the targets in the explosion area
-    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     while(GetIsObjectValid(oTarget))
     {
             if (spellsIsTarget(oTarget,SPELL_TARGET_STANDARDHOSTILE,oCreator))

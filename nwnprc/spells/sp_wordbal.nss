@@ -21,7 +21,7 @@ void main()
 	float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(PRCGetCasterLevel()));
 	
 	int nCasterLevel = PRCGetCasterLevel();
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget);
 	while(GetIsObjectValid(oTarget))
 	{
 		if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))

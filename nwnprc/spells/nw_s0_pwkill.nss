@@ -95,7 +95,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
                   nMin = 25;
                   oWeakest = OBJECT_INVALID;
                   //Get the first target in the spell area
-                  oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
+                  oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
                   while (GetIsObjectValid(oTarget))
                   {
                         //Make sure the target avoids all allies.

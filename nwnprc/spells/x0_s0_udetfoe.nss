@@ -93,7 +93,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     //Get the first target in the radius around the caster
-    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());
+    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());
     while(GetIsObjectValid(oTarget))
     {
         if(GetIsReactionTypeFriendly(oTarget) || GetFactionEqual(oTarget))

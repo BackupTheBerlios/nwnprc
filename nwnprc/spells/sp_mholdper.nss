@@ -26,7 +26,7 @@ void main()
 	// Declare the spell shape, size and the location.  Capture the first target object in the shape.
 	// Cycle through the targets within the spell shape until an invalid object is captured.
 	int nTargets = 0;
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
 	while (GetIsObjectValid(oTarget))
 	{
 		fDelay = GetSpellEffectDelay(lTarget, oTarget);

@@ -27,7 +27,7 @@ void main()
 	// Declare the spell shape, size and the location.  Capture the first target object in the shape.
 	// Cycle through the targets within the spell shape until an invalid object is captured.
 	int nTargets = 0;
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, FALSE, 
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, FALSE, 
 		OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
 	while (GetIsObjectValid(oTarget))
 	{

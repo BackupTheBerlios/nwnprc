@@ -26,7 +26,7 @@ void main()
 	effect eHidePenalty = EffectLinkEffects(EffectSkillDecrease(SKILL_HIDE, 40), 
 		EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
 	
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget);
     while(GetIsObjectValid(oTarget))
     {
     	if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))

@@ -109,6 +109,9 @@ int MyMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0)
 //has the metamagic feat the function gets and returns TRUE or FALSE accordingly
 int CheckMetaMagic(int nMeta,int nMMagic);
 
+//GetFirstObjectInShape wrapper for changing the AOE of the channeled spells (Spellsword Channel Spell)
+object MyFirstObjectInShape(int nShape, float fSize, location lTarget, int bLineOfSight=FALSE, int nObjectFilter=OBJECT_TYPE_CREATURE, vector vOrigin=[0.0,0.0,0.0]);
+
 //GetNextObjectInShape wrapper for changing the AOE of the channeled spells (Spellsword Channel Spell)
 object MyNextObjectInShape(int nShape, float fSize, location lTarget, int bLineOfSight=FALSE, int nObjectFilter=OBJECT_TYPE_CREATURE, vector vOrigin=[0.0,0.0,0.0]);
 

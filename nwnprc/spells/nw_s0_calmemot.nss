@@ -23,7 +23,7 @@ void main()
     effect eImpact = EffectVisualEffect(192);//VFX_FNF_LOS_NORMAL_20
     location lLocal = GetSpellTargetLocation();
 
-    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLocal);
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLocal);
     while(GetIsObjectValid(oTarget))
     {
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, RoundsToSeconds(2),FALSE);

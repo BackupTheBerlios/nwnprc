@@ -20,7 +20,7 @@ void main()
 
        int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 	
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget);
 	while(GetIsObjectValid(oTarget))
 	{
 		if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))

@@ -108,7 +108,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }
 
     int nCurHD;
-    object oFirst = GetFirstObjectInShape(SHAPE_SPHERE, 20.0f,lLoc );
+    object oFirst = MyFirstObjectInShape(SHAPE_SPHERE, 20.0f,lLoc );
 
      // Only start loop if there is a creature in the area of effect
      if  (GetIsObjectValid(oFirst))
@@ -152,7 +152,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     // decrement remaining HD
                     nHDLeft -= nLow;
                     // restart the loop
-                    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 20.0f, GetSpellTargetLocation());
+                    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 20.0f, GetSpellTargetLocation());
                 }
                 // reset counters
                 oLow = OBJECT_INVALID;

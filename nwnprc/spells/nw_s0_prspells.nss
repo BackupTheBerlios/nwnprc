@@ -64,7 +64,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     float fDelay;
     //Get first target in spell area
     location lLoc = GetLocation(OBJECT_SELF);
-    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, lLoc, FALSE);
+    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, lLoc, FALSE);
     while(GetIsObjectValid(oTarget) && nTargets != 0)
     {
         if(GetIsFriend(oTarget) && OBJECT_SELF != oTarget)

@@ -57,22 +57,60 @@ int GetHighestCraftSkillValue(object oCreature);
 void DoAstralConstructCreation(object oManifester, location locTarget, int nMetaPsi, int nACLevel,
                                int nOptionFlags, int nResElemFlags, int nETchElemFlags, int nEBltElemFlags)
 {
+	// Get the resref for the AC
+	string sResRef = GetResRefForConstruct(nACLevel, nOptionFlags);
+	
+	// Get the constructs duration. 1 round / level. Metapsionic Extend can be applied.
+	float fDur = 6.0 * GetManifesterLevel(oManifester);
+	      fDur = nMetaPsi == 2 && GetLocalInt(oManifester, "PsiMetaExtend") ? fDur * 2 : fDur;
+	
+	/* Until Bioware "fixes" Jasperre's multisummon trick, AC are added as genuine summons instead of henchies
 	// We need to make sure that we can add the new construct as henchman
 	int nMaxHenchmen = GetMaxHenchmen();
 	SetMaxHenchmen(TEMP_HENCH_COUNT);
 	
-	string sResRef = GetResRefForConstruct(nACLevel, nOptionFlags);
+	// Add the AC as henchman
 	object oConstruct = CreateObject(OBJECT_TYPE_CREATURE, sResRef, locTarget);
 	AddHenchman(oManifester, oConstruct);
 	
 	// And set the max henchmen count back to original, so we won't mess up the module
 	SetMaxHenchmen(nMaxHenchmen);
 	
-	// Set the timer on it. 1 round / level. Metapsionic Extend can be applied.
-	float fDur = 6.0 * GetManifesterLevel(oManifester);
-	      fDur = nMetaPsi == 2 && GetLocalInt(oManifester, "PsiMetaExtend") ? fDur * 2 : fDur;
-	
+	// Schedule unsummoning
 	DelayCommand(fDur, DoDespawn(oConstruct));
+	*/
+	
+	
+	// Do multisummon trick
+	int i = 1;
+	object oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
+	while(GetIsObjectValid(oSummon))
+	{
+		AssignCommand(oCheck, SetIsDestroyable(FALSE, FALSE, FALSE));
+		AssignCommand(oCheck, DelayCommand(1.0, SetIsDestroyable(TRUE, FALSE, FALSE)));
+		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i++);
+	}
+	
+	// Do actual summon effect
+	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature(sResRef), locTarget, fDur);
+	
+	// Find the newly added construct
+	object oConstruct = OBJECT_INVALID;
+	i = 1;
+	oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i++);
+	while(GetIsObjectValid(oCheck))
+    {
+		if(!GetLocalInt(oCheck, ASTRAL_CONSTRUCT_LEVEL) && GetResRef(oCheck) == sResRef)
+		{
+			oConstruct = oCheck;
+			break;
+		}
+		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i++);
+    }
+    
+    // DEBUG //
+    SendMessageToPC(oManifester, "Found the just added astral construct: " + (oConstruct != OBJECT_INVALID ? "true":"false") + "\nAssociate name: " + GetName(oConstruct));
+    // DEBUG //
 	
 	// Add the locals to the construct
 	SetLocalInt(oConstruct, ASTRAL_CONSTRUCT_LEVEL,              nACLevel);

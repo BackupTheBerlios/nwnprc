@@ -18,7 +18,8 @@
 344 FEAT_SHADOW_LORD_CONVO                         2360      3    1              1      
 345 FEAT_HOLYRADIANCE                              3164      0    -1             1      
 346 FEAT_JUMP                                      2884      3    1              1      
-389 FEAT_THRALL_TO_DEMON                           2616      0    -1             1      
+369 FEAT_THRALL_TO_DEMON                           2616      0    -1             1      
+370 FEAT_BLOOD_OF_THE_WARLORD                      4608      0    -1             1      
 347 ****                                           ****      **** ****           ****   
 348 "**racial_feats**"                             ****      **** ****           ****   
 349 FEAT_URDINNIR_STONESKIN                        4644      0    99             1      

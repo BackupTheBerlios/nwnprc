@@ -14,6 +14,7 @@ const int SPELL_BATTLERAGER_DAMAGE		= 2728;
 const int SPELL_HEXTOR_DAMAGE			= 2729;
 const int SPELL_THAYANKNIGHT_DAMAGE		= 2730;
 const int SPELL_MANATARMS_DAMAGE		= 2731;
+const int SPELL_KNIGHTCHALICE_DAMAGE		= 2733;
 
 //heartwarder
 const int SPELL_LIPS_RAPTUR      = 2210;
@@ -37,11 +38,12 @@ const int SPELL_BLINDSIGHT_5_FT   = 2710;
 const int SPELL_BLINDSIGHT_10_FT  = 2711;
 
 // Orc Warlord
-const int SPELL_OW_INSPIRE_COURAGE = 2712;
-const int SPELL_FINAL_RAGE         = 2713;
-const int SPELL_RELEASE_HORDE      = 2714;
-const int SPELL_GATHER_HORDE_I     = 2715;
-const int SPELL_GATHER_HORDE_II    = 2716;
+const int SPELL_OW_INSPIRE_COURAGE   = 2712;
+const int SPELL_FINAL_RAGE           = 2713;
+const int SPELL_RELEASE_HORDE        = 2714;
+const int SPELL_GATHER_HORDE_I       = 2715;
+const int SPELL_GATHER_HORDE_II      = 2716;
+const int SPELL_BLOOD_OF_THE_WARLORD = 2721;
 
 // Tempest Spells
 const int SPELL_T_TWO_WEAPON_FIGHTING = 2705;

@@ -23,6 +23,7 @@ void CleanHenchman(object oImage)
      {
         SetDroppableFlag(oItem, FALSE);
         SetItemCursedFlag(oItem, TRUE);
+        if (GetBaseItemType(oItem) == BASE_ITEM_THROWINGAXE) AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_80_PERCENT), oItem);
         oItem = GetNextItemInInventory(oImage);
      }
      int i;
@@ -31,6 +32,7 @@ void CleanHenchman(object oImage)
         oItem = GetItemInSlot(i, oImage);
         SetDroppableFlag(oItem, FALSE);
         SetItemCursedFlag(oItem, TRUE);
+        if (GetBaseItemType(oItem) == BASE_ITEM_THROWINGAXE) AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_80_PERCENT), oItem);
      }
      TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
 }

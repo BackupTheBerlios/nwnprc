@@ -1,22 +1,14 @@
-2DA V2.0                                                        
-                                                                
-           LABEL         ReqType   ReqParam1        ReqParam2   
-0          Dwarf         RACE      0                ****        
-0          ArcticDwarf   RACE      151              ****        
-0          GoldDwarf     RACE      152              ****        
-0          GreyDwarf     RACE      153              ****        
-0          ShieldDwarf   RACE      154              ****        
-0          Urdunnir      RACE      155              ****        
-0          WildDwarf     RACE      156              ****     
-1          Dodge         FEAT      10               ****        
-2          Toughness     FEAT      40               ****        
-3          Base_Attack   BAB       7                ****        
-4          ScriptVar     VAR       X1_AllowDwDef    0           
-                                                                
-                                                                
-                                                                
-                                                                
-                                                                
-                                                                
-                                                                
-                                                                
+2DA V2.0
+
+   LABEL       ReqType ReqParam1     ReqParam2 
+0  Dwarf       RACE    0             ****      
+1  ArcticDwarf RACE    151           ****      
+2  GoldDwarf   RACE    152           ****      
+3  GreyDwarf   RACE    153           ****      
+4  ShieldDwarf RACE    154           ****      
+5  Urdunnir    RACE    155           ****      
+6  WildDwarf   RACE    156           ****      
+7  Dodge       FEAT    10            ****      
+8  Toughness   FEAT    40            ****      
+9  Base_Attack BAB     7             ****      
+10 ScriptVar   VAR     X1_AllowDwDef 0         

@@ -63,6 +63,7 @@ const int FEAT_VULN_COLD    = 4746;
 const int FEAT_DAM_RED10    = 4747;
 const int FEAT_DAM_RED15    = 4748;
 
+const int FEAT_SA_HIDE      = 4767;
 const int FEAT_SA_HIDEU     = 4749;
 const int FEAT_SA_HIDEF     = 4750;
 const int FEAT_SA_MOVE4     = 4751;

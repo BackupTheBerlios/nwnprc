@@ -988,7 +988,6 @@ const int FEAT_DRAGONSONG_COMPULSION    = 3442;
 const int FEAT_DRAGONSONG_SPEED         = 3443;
 const int FEAT_DRAGONSONG_FEAR          = 3444;
 const int FEAT_DRAGONSONG_HEALING       = 3445;
-const int FEAT_LYRITHSONG1              = 3446;
 
 // Favored of Milil
 const int FEAT_FOM_DIVINE_SONG_BLESS          	 = 4459;

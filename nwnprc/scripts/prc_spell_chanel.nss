@@ -4,6 +4,8 @@
 #include "x2_inc_switches"
 #include "x2_inc_spellhook"
 
+const int SPELL_SPELLSWORD_CHANNELSPELL = 1700;
+
 //This function gets the Spell ID of the stored spell, the caster level of the
 //spellsword the weapon that stores the spell and if there are multiple channels,
 //in witch order will they be released.
@@ -146,10 +148,7 @@ PRCSetUserSpecificSpellScriptFinished();
 effect eVis = GetFirstEffect(oPC);
 while(GetIsEffectValid(eVis))
 {
-if(GetEffectCreator(eVis) == oPC
-&& GetEffectType(eVis) ==  EFFECT_TYPE_VISUALEFFECT
-&& GetEffectDurationType(eVis) == DURATION_TYPE_PERMANENT
-&& GetEffectSubType(eVis) == SUBTYPE_EXTRAORDINARY)
+if(GetEffectSpellId(eVis) == SPELL_SPELLSWORD_CHANNELSPELL) // prc_chan_feat.nss
 {
 RemoveEffect(oPC,eVis);
 }

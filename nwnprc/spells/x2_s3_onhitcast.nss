@@ -28,6 +28,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_combat"
+#include "prc_class_const"
 
 void SetRancorVar(object oPC);
 
@@ -181,6 +182,8 @@ void main()
 	{
 
 	        object oPC = oSpellOrigin;
+	        
+	        SetLocalInt(oPC,"PRC_Castlevel_Override",GetLevelByClass(CLASS_TYPE_SPELLSWORD,oPC));
 	        SetLocalInt(oPC,"spellswd_aoe",1);
 	        SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_1"));
 	        string sSpellString1 = GetLocalString(oItem,"spellscript1");

@@ -21,8 +21,8 @@ void main()
 
      if( GetLocalInt(oPC, "HasElaborateParry") != 1 )
      {
-          int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST, oPC);
-          if (iDuelistLevel > 10) iDuelistLevel = 10;
+          int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST, oPC) + 2;
+          if (iDuelistLevel > 12) iDuelistLevel = 12;
           
           effect eAC = SupernaturalEffect(EffectACIncrease(iDuelistLevel, AC_SHIELD_ENCHANTMENT_BONUS));
           effect eAttackPenalty = SupernaturalEffect(EffectAttackDecrease(4, ATTACK_BONUS_MISC));

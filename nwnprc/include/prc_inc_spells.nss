@@ -311,8 +311,13 @@ int GetLevelByTypeDivine(object oCaster = OBJECT_SELF)
 int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 {
     int iCastingClass = GetLastSpellCastClass(); // might be CLASS_TYPE_INVALID
-
+    
     int iSpellId = GetSpellId();
+
+    // Checks to see if the spell is being cast by an item
+    object oItem = GetSpellCastItem();
+    if (GetItemPossessor(oItem) == oCaster) iCastingClass = CLASS_TYPE_INVALID;
+    // end check
 
     if (GetIsArcaneClass(iCastingClass)) // Arcane spells
     {

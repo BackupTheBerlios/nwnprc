@@ -6,8 +6,4 @@
 2     ScriptVar      VAR        PRC_AllowArcTrick   0           
 3     OpenLock       SKILL      9                   7           
 4     Lore           SKILL      7                   4           
-5     SneakAttack2   FEATOR     345                 ****      
-6     DeathAttack2   FEATOR     456                 ****      
-7     BGSneakAttack2 FEATOR     461                 ****      
-8     PA_SNEAK_2d6   FEATOR     4290                ****      
-   
+5     ScriptVar      VAR        PRC_SneakLevel2     0

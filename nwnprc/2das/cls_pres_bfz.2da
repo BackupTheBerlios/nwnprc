@@ -8,8 +8,5 @@
 4     IronWill         FEAT      22              ****        
 5     ScriptVar        VAR       PRC_AllowBFZ    0           
 6     ScriptVar        VAR       PRC_DivSpell2   0           
-7     SneakAttack1     FEATOR    221             ****        
-8     DeathAttack1     FEATOR    455             ****        
-9     BGSneakAttack1   FEATOR    460             ****        
-10    PA_SNEAK_1d6     FEATOR    4289            ****        
-11    ScriptVar        VAR       PRC_PrereqBFZ   0    
+7     ScriptVar        VAR       PRC_SneakLevel1 0
+8     ScriptVar        VAR       PRC_PrereqBFZ   0    

@@ -10,6 +10,7 @@
 
 #include "prc_class_const"
 #include "prc_feat_const"
+#include "prc_inc_sneak"
 #include "soul_inc"
 
 
@@ -389,6 +390,54 @@ return iDivSpell;
 
 }
 
+void SneakRequirement(object oPC)
+{
+   int iSneak = GetTotalSneakAttackDice(oPC);
+   
+   if (iSneak >= 1)
+      SetLocalInt(oPC, "PRC_SneakLevel1", 0);
+   if (iSneak >= 2)
+      SetLocalInt(oPC, "PRC_SneakLevel2", 0);
+   if (iSneak >= 3)
+      SetLocalInt(oPC, "PRC_SneakLevel3", 0);
+   if (iSneak >= 4)
+      SetLocalInt(oPC, "PRC_SneakLevel4", 0);
+   if (iSneak >= 5)
+      SetLocalInt(oPC, "PRC_SneakLevel5", 0);
+   if (iSneak >= 6)
+      SetLocalInt(oPC, "PRC_SneakLevel6", 0);
+   if (iSneak >= 7)
+      SetLocalInt(oPC, "PRC_SneakLevel7", 0);
+   if (iSneak >= 8)
+      SetLocalInt(oPC, "PRC_SneakLevel8", 0);
+   if (iSneak >= 9)
+      SetLocalInt(oPC, "PRC_SneakLevel9", 0);
+   if (iSneak >= 10)
+      SetLocalInt(oPC, "PRC_SneakLevel10", 0);
+   if (iSneak >= 11)
+      SetLocalInt(oPC, "PRC_SneakLevel11", 0);
+   if (iSneak >= 12)
+      SetLocalInt(oPC, "PRC_SneakLevel12", 0);
+   if (iSneak >= 13)
+      SetLocalInt(oPC, "PRC_SneakLevel13", 0);
+   if (iSneak >= 14)
+      SetLocalInt(oPC, "PRC_SneakLevel14", 0);
+   if (iSneak >= 15)
+      SetLocalInt(oPC, "PRC_SneakLevel15", 0);
+   if (iSneak >= 16)
+      SetLocalInt(oPC, "PRC_SneakLevel16", 0);
+   if (iSneak >= 17)
+      SetLocalInt(oPC, "PRC_SneakLevel17", 0);
+   if (iSneak >= 18)
+      SetLocalInt(oPC, "PRC_SneakLevel18", 0);
+   if (iSneak >= 19)
+      SetLocalInt(oPC, "PRC_SneakLevel19", 0);
+   if (iSneak >= 20)
+      SetLocalInt(oPC, "PRC_SneakLevel20", 0);
+      
+   SendMessageToPC(oPC, "You can do a Sneak Attack at +" + IntToString(iSneak) + "d6.");
+}     
+
 void Hathran(object oPC)
 {
 
@@ -557,7 +606,8 @@ void main()
         int iDivSpell;
         int iArcSpell1;
         int iDivSpell1;
-
+        int iSnkLevel;
+        
 	SetLocalInt(oPC, "PRC_AllSpell1", 1);
 	SetLocalInt(oPC, "PRC_AllSpell2", 1);
 	SetLocalInt(oPC, "PRC_AllSpell3", 1);
@@ -567,12 +617,33 @@ void main()
 	SetLocalInt(oPC, "PRC_AllSpell7", 1);
 	SetLocalInt(oPC, "PRC_AllSpell8", 1);
 	SetLocalInt(oPC, "PRC_AllSpell9", 1);
-
+	
+	SetLocalInt(oPC, "PRC_SneakLevel1", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel2", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel3", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel4", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel5", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel6", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel7", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel8", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel9", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel10", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel11", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel12", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel13", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel14", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel15", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel16", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel17", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel18", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel19", 1);
+	SetLocalInt(oPC, "PRC_SneakLevel20", 1);
 
 	iArcSpell1 = ArcSpell(oPC, iArcSpell);
 	iDivSpell1 = DivSpell(oPC, iDivSpell);
 
-	Hathran(oPC);
+        SneakRequirement(oPC);
+        Hathran(oPC);
 	Tempest(oPC);
 	KOTC(oPC);
 	BFZ(oPC);

@@ -67,7 +67,6 @@ void SetHatedFoeDR(object oPC)
 void ApplyFoeHunterRancor(object oPC, object oWeapon)
 {    
      IPSafeAddItemProperty(oWeapon, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-     //AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oArmor);
      SetLocalInt(oPC, "HasFHRancor", 2);
 }
 
@@ -80,7 +79,6 @@ void RemoveFoeHunterRancor(object oPC, object oWeapon)
 void ApplyFoeHunterDR(object oPC, object oArmor)
 {    
      IPSafeAddItemProperty(oArmor, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-     //AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oArmor);
      SetLocalInt(oPC, "HasFHDR", 2);
 }
 
@@ -109,7 +107,7 @@ void main()
     object oWeaponR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 
     // On error - Typically when first entering a module
-    if(GetHasFeat(FEAT_HATED_ENEMY_DR) && GetLocalInt(oPC, "HasFHDR") == 0)
+    if(GetHasFeat(FEAT_HATED_ENEMY_DR) && iHasFHDR == 0)
     {
         RemoveFoeHunterDR(oPC, oArmor);
         ApplyFoeHunterDR(oPC, oArmor);
@@ -117,15 +115,12 @@ void main()
         RemoveFoeHunterRancor(oPC, oWeaponR);
         ApplyFoeHunterRancor(oPC, oWeaponR);
     }    
-    else if(GetHasFeat(FEAT_HATED_ENEMY_DR) && GetLocalInt(oPC, "HasFHDR") != 0)
+    else if(GetHasFeat(FEAT_HATED_ENEMY_DR) && iHasFHDR != 0)
     {              
         if(iEquip == 2)       // On Equip
         {
              // add bonus to armor
              oItem = GetPCItemLastEquipped();
-
-             string nMes = "Item Equiped = " + GetName(oItem);
-             FloatingTextStringOnCreature(nMes, oPC, FALSE);
              
              if(oItem == oArmor)
              {
@@ -150,9 +145,6 @@ void main()
         else if(iEquip == 1)  // Unequip
         {
              oItem = GetPCItemLastUnequipped();
-             
-             string nMes = "Item Unequiped = " + GetName(oItem);
-             FloatingTextStringOnCreature(nMes, oPC, FALSE);
              
              if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
              {

@@ -3,20 +3,23 @@
 #include "prc_class_const"
 #include "inc_item_props"
 
-const int MONST_DAMAGE_1D3   = 2;  //0
-const int MONST_DAMAGE_1D4   = 3;  //1
-const int MONST_DAMAGE_1D6   = 8;  //2
-const int MONST_DAMAGE_1D8   = 18; //3
-const int MONST_DAMAGE_1D10  = 28; //4
-const int MONST_DAMAGE_2D6   = 9;  //5
-const int MONST_DAMAGE_2D8   = 19; //6
-const int MONST_DAMAGE_2D10  = 29; //7
-const int MONST_DAMAGE_3D8   = 20; //8
-const int MONST_DAMAGE_3D10  = 30; //9
-const int MONST_DAMAGE_3D12  = 40; //10
-const int MONST_DAMAGE_4D10  = 31; //11
-const int MONST_DAMAGE_3D6   = 10; //7L: Large/Huge Monk only
-const int MONST_DAMAGE_4D8   = 21; //9L: Large/Huge Monk only
+const int MONST_DAMAGE_1D3   = 2;
+const int MONST_DAMAGE_1D4   = 3;
+const int MONST_DAMAGE_1D6   = 8;
+const int MONST_DAMAGE_1D8   = 18;
+const int MONST_DAMAGE_1D10  = 28;
+const int MONST_DAMAGE_1D12  = 38;
+const int MONST_DAMAGE_2D6   = 9;
+const int MONST_DAMAGE_2D8   = 19;
+const int MONST_DAMAGE_2D10  = 29;
+const int MONST_DAMAGE_2D12  = 39;
+const int MONST_DAMAGE_3D6   = 10;
+const int MONST_DAMAGE_3D8   = 20;
+const int MONST_DAMAGE_3D10  = 30;
+const int MONST_DAMAGE_3D12  = 40;
+const int MONST_DAMAGE_4D8   = 21;
+const int MONST_DAMAGE_4D10  = 31;
+const int MONST_DAMAGE_4D12  = 41;
 
 const int ITEM_PROPERTY_WOUNDING = 69;
 
@@ -72,7 +75,7 @@ int FindUnarmedDamage(object oCreature)
     if (iBrawler) iBrawlerDamage = iBrawler / 6 + 2;   // 1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
   
     // Monk 3.5 Dmg Table
-    if (iMonk) iMonkDamage =  iMonk / 4 + 2; //1d6, 1d8, 1d10, 2d6, 2d8, 2d10
+    if (iMonk) iMonkDamage = iMonk / 4 + 2; //1d6, 1d8, 1d10, 2d6, 2d8, 2d10
     if (iMonkDamage > 7) iMonkDamage = 7;
    
      // Small monks get damage penalty
@@ -99,55 +102,74 @@ int FindUnarmedDamage(object oCreature)
     iDamageToUse = (iBrawlerDamage > iDamageToUse) ? iBrawlerDamage : iDamageToUse;
     iDamageToUse = (iShouDamage > iDamageToUse) ? iShouDamage : iDamageToUse;
 
-    // Future unarmed classes:  if you enhance other classes' damage, add in bonuses here.
-    if (GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE5, oCreature)) iDamageToUse += 7;
-    else if (GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE4, oCreature)) iDamageToUse += 6;
-    else if (GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE3, oCreature)) iDamageToUse += 5;
-    else if (GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE2, oCreature)) iDamageToUse += 4;
-    else if (GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE1, oCreature)) iDamageToUse += 3;
-    else if (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDamageToUse += 2;
-    else if (GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature)) iDamageToUse += 1;
-    
     // This is where the correct damage dice is calculated
-    if (iDamageToUse > 11) iDamageToUse = 11;
+    if (iDamageToUse > 9) iDamageToUse = 9;
+    
+    // For Initiate of Draconic Mysteries
+    int iDieIncrease = 0;
+    if (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDieIncrease = 2;
+    else if (GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature)) iDieIncrease = 1;
     
     switch (iDamageToUse)
     {
-        case 0:
-            iDamage = MONST_DAMAGE_1D3;
+        case 0: // Start: Non-unarmed Classes
+            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D6;
+            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_1D4;
+            else iDamage == MONST_DAMAGE_1D3;
             break;
         case 1: // Start: Small Monk
-            iDamage = MONST_DAMAGE_1D4;
+            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D8;
+            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_1D6;
+            else iDamage = MONST_DAMAGE_1D4;
             break;
         case 2: // Start: Medium Monk
-            iDamage = MONST_DAMAGE_1D6;
+            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D10;
+            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_1D8;
+            else iDamage = MONST_DAMAGE_1D6;
             break;
         case 3: // Start: Large Monk
-	    iDamage = MONST_DAMAGE_1D8;
+            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D12;
+            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_1D10;
+            else iDamage = MONST_DAMAGE_1D8;
 	    break;
         case 4:
-	    iDamage = MONST_DAMAGE_1D10;
+            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_2D8; // fudged some
+            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_1D12;
+            else iDamage = MONST_DAMAGE_1D10;
 	    break;
         case 5: // Best Shou Disciple
-            iDamage = MONST_DAMAGE_2D6;
+            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_2D10;
+            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D8;
+            else iDamage = MONST_DAMAGE_2D6;
 	    break;
         case 6: // Best Small Monk
-            iDamage = MONST_DAMAGE_2D8;
+            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_2D12;
+            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D10;
+            else iDamage = MONST_DAMAGE_2D8;
             break;
-        case 7: // Best Medium Monk (2d10)
-            iDamage = (iUseBigMonk) ? MONST_DAMAGE_3D6 : MONST_DAMAGE_2D10;
+        case 7: // Best Medium Monk
+            if (iUseBigMonk)
+            {
+                if (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D10;
+		else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_3D8;
+                else iDamage = MONST_DAMAGE_3D6;
+            }
+            else
+            {
+                if (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D10; // fudged some
+                else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D12;
+                else iDamage = MONST_DAMAGE_2D10;
+            }
 	    break;
         case 8: // Best Brawler
-            iDamage = MONST_DAMAGE_3D8;
+            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D12;
+            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_3D10;
+            else iDamage = MONST_DAMAGE_3D8;
             break;
-        case 9: // Best Large/Huge Monk (4d8)
-            iDamage = (iUseBigMonk) ? MONST_DAMAGE_4D8 : MONST_DAMAGE_3D10;
-            break;
-        case 10: // Best Brawler/IoDM (?) ... Best Small Monk/IoDM
-            iDamage = MONST_DAMAGE_3D12;
-            break;
-        case 11: // Best any build can hit.  (Medium/Large/Huge Monk/IoDM builds).
-            iDamage = MONST_DAMAGE_4D10;
+        case 9: // Best Large/Huge Monk
+            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_4D12;
+            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_4D10;
+            else iDamage = MONST_DAMAGE_4D8;
             break;
         default:
             break;

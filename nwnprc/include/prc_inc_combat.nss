@@ -2642,6 +2642,10 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                     iNumSides = 10;
                     iNumDice  = 1;
                     break;
+               case MONST_DAMAGE_1D12:
+                    iNumSides = 12;
+                    iNumDice  = 1;
+                    break;
                case MONST_DAMAGE_2D6:
                     iNumSides = 6;
                     iNumDice  = 2;
@@ -2653,6 +2657,14 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                case MONST_DAMAGE_2D10:
                     iNumSides = 10;
                     iNumDice  = 2;
+                    break;
+               case MONST_DAMAGE_2D12:
+                    iNumSides = 12;
+                    iNumDice  = 2;
+                    break;
+               case MONST_DAMAGE_3D6:
+                    iNumSides = 6;
+                    iNumDice  = 3;
                     break;
                case MONST_DAMAGE_3D8:
                     iNumSides = 8;
@@ -2666,17 +2678,17 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                     iNumSides = 12;
                     iNumDice  = 3;
                     break;
-               case MONST_DAMAGE_4D10:
-                    iNumSides = 10;
-                    iNumDice = 4;
-                    break;
-               case MONST_DAMAGE_3D6:
-                    iNumSides = 6;
-                    iNumDice = 3;
-                    break;
                case MONST_DAMAGE_4D8:
                     iNumSides = 8;
-                    iNumDice = 4;
+                    iNumDice  = 4;
+                    break;
+               case MONST_DAMAGE_4D10:
+                    iNumSides = 10;
+                    iNumDice  = 4;
+                    break;
+               case MONST_DAMAGE_4D12:
+                    iNumSides = 12;
+                    iNumDice  = 4;
                     break;
           }
      }

@@ -15,10 +15,7 @@ void main()
     int nDuration = 2;
 
     if(GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) >= 14)
-    {
-     nDuration = 5;
-    }
-
+    	nDuration = 5;
 
     int iPCCha = GetAbilityModifier(ABILITY_CHARISMA,oPC);
     int iTACha = GetAbilityModifier(ABILITY_CHARISMA,oTarget);
@@ -29,8 +26,10 @@ void main()
     effect eDam = EffectAttackDecrease(2);
     effect eSave = EffectSavingThrowDecrease(SAVING_THROW_ALL,2);
     effect eSkill = EffectSkillDecrease(SKILL_ALL_SKILLS,2);
+    effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
     effect eLink = EffectLinkEffects(eDam,eSave);
     eLink = EffectLinkEffects(eLink,eSkill);
+    eLink = EffectLinkEffects(eLink,eVis);
 
 
     //Determine enemies in the radius around the samurai

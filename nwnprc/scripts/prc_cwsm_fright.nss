@@ -33,11 +33,13 @@ void main()
     effect eDam = EffectAttackDecrease(2);
     effect eSave = EffectSavingThrowDecrease(SAVING_THROW_ALL,2);
     effect eSkill = EffectSkillDecrease(SKILL_ALL_SKILLS,2);
+effect eVis2 = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
     effect eLink = EffectLinkEffects(eDam,eSave);
     eLink = EffectLinkEffects(eLink,eSkill);
+eLink = EffectLinkEffects(eLink,eVis2);
 
     //Panicked Effect
-    effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);
+    effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR);
     effect eFear = EffectFrightened();
 
     effect eLink2 = EffectLinkEffects(eVis,eFear);

@@ -38,10 +38,13 @@ void main()
     //effect eLink = EffectLinkEffects(eAttackBonus,eDamageBonus);
 
     PlayVoiceChat(VOICE_CHAT_BATTLECRY1);
+    
+    effect eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR);
 
     //Dual Weilding
     if(GetIsObjectValid(oItem2) && GetIsObjectValid(oItem1))
     {
+    ApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oPC);
     AddItemProperty(DURATION_TYPE_TEMPORARY,pAB,oItem1,9.0f);
     AddItemProperty(DURATION_TYPE_TEMPORARY,pDB,oItem1,9.0f);
     AddItemProperty(DURATION_TYPE_TEMPORARY,pAB,oItem2,9.0f);
@@ -51,6 +54,7 @@ void main()
     //One Weapon
     if(GetIsObjectValid(oItem2) && !GetIsObjectValid(oItem1))
     {
+    ApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oPC);
     AddItemProperty(DURATION_TYPE_TEMPORARY,pAB,oItem2,9.0f);
     AddItemProperty(DURATION_TYPE_TEMPORARY,pDB,oItem2,9.0f);
     }

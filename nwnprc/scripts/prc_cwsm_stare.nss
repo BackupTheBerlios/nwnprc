@@ -12,19 +12,18 @@ void main()
     effect eDam = EffectAttackDecrease(2);
     effect eSave = EffectSavingThrowDecrease(SAVING_THROW_ALL,2);
     effect eSkill = EffectSkillDecrease(SKILL_ALL_SKILLS,2);
+    effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
     effect eLink = EffectLinkEffects(eDam,eSave);
     eLink = EffectLinkEffects(eLink,eSkill);
-
-FloatingTextStringOnCreature("Staredown Firing At all?",OBJECT_SELF);
-
+    eLink = EffectLinkEffects(eLink,eVis);
 
     if(iPCRoll > iTARoll)
     	{
-	FloatingTextStringOnCreature("Staredown Succeeded",OBJECT_SELF);
+	FloatingTextStringOnCreature("*Staredown Succeeded*",OBJECT_SELF);
     	ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eLink,oTarget,RoundsToSeconds(2));
 	}
      else
-     	FloatingTextStringOnCreature("Staredown Failed",OBJECT_SELF);
+     	FloatingTextStringOnCreature("*Staredown Failed*",OBJECT_SELF);
      	
      
 }

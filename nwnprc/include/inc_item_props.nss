@@ -964,6 +964,10 @@ void TotalRemovePropertyT(object oItem)
 
 void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
 {
+   // See if we were given a valid item as parameter. If we were, we
+   // will be removing ints from it.
+   // Otherwise, we will take the item in each slot and removing the
+   // ints that should be on it.
    int iValid = GetIsObjectValid(oItem);
    
    // RIGHT HAND

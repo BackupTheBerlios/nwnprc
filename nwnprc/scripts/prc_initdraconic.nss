@@ -6,13 +6,15 @@
 #include "inc_item_props"
 #include "prc_ip_srcost"
 
+const int IP_CONST_MONSTERDAMAGE_7d4 = 58;
+
 int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 {
 
   int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
       iMonk = (iMonk >20) ? 20 :iMonk ;
 
-  int iSize =GetCreatureSize(oPC);
+  int iSize = GetCreatureSize(oPC);
 
 
   int iDmg = 0;
@@ -48,21 +50,21 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
         case 6:
           return IP_CONST_MONSTERDAMAGE_2d8;
         case 7:
-          return IP_CONST_MONSTERDAMAGE_2d10;
+          return IP_CONST_MONSTERDAMAGE_2d10;  //20
         case 8:
-          return IP_CONST_MONSTERDAMAGE_3d6;
+          return IP_CONST_MONSTERDAMAGE_4d6;   //24
         case 9:
-         return IP_CONST_MONSTERDAMAGE_3d8;
+         return  IP_CONST_MONSTERDAMAGE_7d4;   //28
         case 10:
-         return IP_CONST_MONSTERDAMAGE_3d10;
+         return  IP_CONST_MONSTERDAMAGE_3d10;  //30
         case 11:
-         return IP_CONST_MONSTERDAMAGE_4d6;
+         return  IP_CONST_MONSTERDAMAGE_4d8;   //32
         case 12:
-         return IP_CONST_MONSTERDAMAGE_4d8;
+         return  IP_CONST_MONSTERDAMAGE_6d6;   //34
         case 13:
-         return IP_CONST_MONSTERDAMAGE_4d10;
+         return  IP_CONST_MONSTERDAMAGE_4d10;  //40
         case 14:
-         return IP_CONST_MONSTERDAMAGE_5d6;
+         return  IP_CONST_MONSTERDAMAGE_6d8;   //48
 
       }
 

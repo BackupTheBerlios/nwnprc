@@ -2,7 +2,7 @@
 //:: Shield Song
 //:://////////////////////////////////////////////
 /*
-   Song that gives everybody +1 to +8 (perform ranks/8) Shield AC.
+   Song that gives everybody +1 to +8 Shield AC.
 */
 
 #include "x2_i0_spells"
@@ -23,9 +23,7 @@ void main()
         return;
     }
     //Declare major variables
-    int iBoost = GetSkillRank(SKILL_PERFORM)/8;
-    if (iBoost > 8) iBoost = 8;
-    if (iBoost < 1) iBoost = 1;
+    int iBoost = (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, OBJECT_SELF) - 2) / 4 + 1;
     object oTarget;
     effect eBoost = EffectACIncrease(iBoost, AC_SHIELD_ENCHANTMENT_BONUS);
     effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);

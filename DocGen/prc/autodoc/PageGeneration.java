@@ -102,7 +102,8 @@ public final class PageGeneration{
 				else if(isPsionicPower(spells2da, i)) spelltype = PSIONIC;
 				
 				if(spelltype != NONE){
-					name = tlk.get(spells2da.getEntry("Name", i));
+					name = tlk.get(spells2da.getEntry("Name", i))
+					          .replaceAll("/", " / ");
 					if(verbose) System.out.println("Printing page for " + name);
 					// Check the name for validity
 					if(name.equals(badStrRef)){
@@ -112,8 +113,7 @@ public final class PageGeneration{
 					
 					// Start building the entry data. First, place in the name
 					text = spellTemplate;
-					text = text.replaceAll("~~~SpellName~~~",
-					                         name);
+					text = text.replaceAll("~~~SpellName~~~", name);
 					// Then, put in the description
 					text = text.replaceAll("~~~SpellTLKDescription~~~",
 					                       htmlizeTLK(tlk.get(spells2da.getEntry("SpellDesc", i))));
@@ -197,7 +197,8 @@ public final class PageGeneration{
 	
 	/**
 	 * A small convenience method for testing if the given entry contains a
-	 * psionic power
+	 * psionic power. Subradial powers are cropped off, only the radial
+	 * master is printed.
 	 *
 	 * @param spells   the Data_2da entry containing spells.2da
 	 * @param entryNum the line number to use for testing
@@ -206,6 +207,22 @@ public final class PageGeneration{
 	 *           <code>false</code> otherwise
 	 */
 	private static boolean isPsionicPower(Data_2da spells2da, int entryNum){
+		// First, check if the power is a radial master.
+		String subRad = spells2da.getEntry("SubRadSpell1", entryNum);
+		/*
+		if(!subRad.equals("****")){
+			try{
+				// Check if the subradialspell is a psionic power
+				subRad = spells2da.getEntry("ImpactScript", Integer.parseInt(subRad));
+				for(String check : settings.psionicpowerSignatures)
+					if(subRad.startsWith(check)) return true;
+			}catch(NumberFormatException e){
+				throw new PageGenerationException("Invalid SubRadSpell1 entry:\n" + e);
+		}}
+		// Skip any spells with a Master entry
+		if(!spells2da.getEntry("Master", entryNum).equals("****")) return false;
+		*/
+		// Check if the power's impactscript has the correct prefix
 		for(String check : settings.psionicpowerSignatures)
 			if(spells2da.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
 		return false;
@@ -253,7 +270,9 @@ public final class PageGeneration{
 				
 				if(!errored || tolErr){
 					// Store the entry to wait for further processing
-					entry = new FeatEntry(name , text, mFeatPath + i + ".html", i, false, false);
+					// Masterfeats start as class feats and are converted into general feats if any child
+					// is a general feat
+					entry = new FeatEntry(name , text, mFeatPath + i + ".html", i, false, true);
 					masterFeats.put(i, entry);
 				}else
 					throw new PageGenerationException("Error(s) encountered while creating entry data");
@@ -357,9 +376,10 @@ public final class PageGeneration{
 			if(!feats2da.getEntry("MASTERFEAT", check.entryNum).equals("****")){
 				try{
 					other = masterFeats.get(Integer.parseInt(feats2da.getEntry("MASTERFEAT", check.entryNum)));
-					//check.master = other;
+					check.master = other;
 					other.childFeats.add(check);
 					if(check.isEpic) other.isEpic = true;
+					if(!check.isClassFeat) other.isClassFeat = false;
 				}catch(NumberFormatException e){
 					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid masterfeat link");
 				}catch(NullPointerException e){
@@ -943,7 +963,7 @@ public final class PageGeneration{
 		                           epicBonusFeats        = new TreeMap<String, FeatEntry>(),
 		                           normalSelectableFeats = new TreeMap<String, FeatEntry>(),
 		                           epicSelectableFeats   = new TreeMap<String, FeatEntry>();
-		
+		HashSet<FeatEntry> masterFeatsUsed = new HashSet<FeatEntry>();
 		// Build alphabetic lists of all the feats
 		for(int i = 0; i < featTable.getEntryCount(); i++){
 			if(featTable.getEntry("FeatLabel", i).equals("****")) continue;
@@ -970,7 +990,13 @@ public final class PageGeneration{
 					continue;
 				}else throw new PageGenerationException("FeatIndex entry in " + featTable.getName() + " on row " + i + " points to non-existent feat: " + featTable.getEntry("FeatIndex", i));
 			}
-			
+			// If the feat has a master, replace it with the master in the listing.
+			if(tempFeat.master != null){
+				tempFeat = tempFeat.master;
+				// Only add masterfeats to the list once.
+				if(masterFeatsUsed.contains(tempFeat)) continue;
+				masterFeatsUsed.add(tempFeat);
+			}
 			try{
 				grantedLevel = Integer.parseInt(featTable.getEntry("GrantedOnLevel", i));
 			}catch(NumberFormatException e){

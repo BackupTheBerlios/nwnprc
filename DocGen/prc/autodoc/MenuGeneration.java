@@ -43,10 +43,12 @@ public final class MenuGeneration{
 	public static void doSpellMenus(){
 		TreeMap<String, String> normalSpellLinks  = new TreeMap<String, String>(),
 		                        epicSpellLinks    = new TreeMap<String, String>(),
-		                        psionicPowerLinks = new TreeMap<String, String>();
-		StringBuffer normalPrint  = new StringBuffer(),
-		             epicPrint    = new StringBuffer(),
-		             psionicPrint = new StringBuffer();
+		                        psionicPowerLinks = new TreeMap<String, String>(),
+		                        modSpellLinks     = new TreeMap<String, String>();
+		StringBuffer normalPrint   = new StringBuffer(),
+		             epicPrint     = new StringBuffer(),
+		             psionicPrint  = new StringBuffer(),
+		             modSpellPrint = new StringBuffer();
 		String temp = null;
 		
 		if(verbose) System.out.println("Printing spell menus");
@@ -72,6 +74,11 @@ public final class MenuGeneration{
 				
 				default: throw new AssertionError("This message should not be seen");
 			}
+			
+			if(settings.modifiedSpells.contains(spell.entryNum))
+				modSpellLinks.put(spell.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                          spell.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                              .replaceAll("~~~targetName~~~", spell.name));
 		}
 		
 		while(normalSpellLinks.size() > 0)
@@ -80,6 +87,8 @@ public final class MenuGeneration{
 			epicPrint.append(epicSpellLinks.remove(epicSpellLinks.firstKey()));
 		while(psionicPowerLinks.size() > 0)
 			psionicPrint.append(psionicPowerLinks.remove(psionicPowerLinks.firstKey()));
+		while(modSpellLinks.size() > 0)
+			modSpellPrint.append(modSpellLinks.remove(modSpellLinks.firstKey()));
 		
 		printPage(menuPath + "manual_menus_spells.html", menuTemplate.replaceAll("~~~menuName~~~", "Spells")
 		                                                             .replaceAll("~~~menuEntries~~~", normalPrint.toString()));
@@ -87,6 +96,8 @@ public final class MenuGeneration{
 		                                                                  .replaceAll("~~~menuEntries~~~", epicPrint.toString()));
 		printPage(menuPath + "manual_menus_psionic_powers.html", menuTemplate.replaceAll("~~~menuName~~~", "Psionic Powers")
 		                                                                     .replaceAll("~~~menuEntries~~~", psionicPrint.toString()));
+		printPage(menuPath + "manual_menus_modified_spells.html", menuTemplate.replaceAll("~~~menuName~~~", "Modified Spells")
+		                                                                      .replaceAll("~~~menuEntries~~~", modSpellPrint.toString()));
 	}
 	
 	
@@ -107,7 +118,7 @@ public final class MenuGeneration{
 		// Parse through feats
 		for(FeatEntry feat : feats.values()){
 			if(feat.isClassFeat) continue;
-			if(feat.isEpic)
+			if(!feat.isEpic)
 				normalFeatLinks.put(feat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
 				                                                           feat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
 				                                               .replaceAll("~~~targetName~~~", feat.name));
@@ -119,7 +130,8 @@ public final class MenuGeneration{
 		
 		// Parse through masterfeats
 		for(FeatEntry masterfeat : masterFeats.values()){
-			if(masterfeat.isEpic)
+			if(masterfeat.isClassFeat) continue;
+			if(!masterfeat.isEpic)
 				normalFeatLinks.put(masterfeat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
 				                                                                 masterfeat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
 				                                                      .replaceAll("~~~targetName~~~", masterfeat.name));

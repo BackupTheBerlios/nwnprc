@@ -133,11 +133,12 @@ public class Main{
 		                paraMatch = Pattern.compile("\"[^\"]+\"").matcher(""),
 		                langMatch = Pattern.compile("\\w+=\"[^\"]+\"").matcher("");
 		/* An enumeration of the possible setting types */
-		private enum Modes{LANGUAGE, SIGNATURE};
+		private enum Modes{LANGUAGE, SIGNATURE, MODIFIED_SPELL};
 		
 		/* Settings data read in */
-		public ArrayList<String[]> languages = new ArrayList<String[]>();
-		public String[] epicspellSignatures = null;
+		public ArrayList<String[]> languages     = new ArrayList<String[]>();
+		public ArrayList<Integer> modifiedSpells = new ArrayList<Integer>();
+		public String[] epicspellSignatures    = null;
 		public String[] psionicpowerSignatures = null;
 		
 		/**
@@ -161,6 +162,7 @@ public class Main{
 					if(mainMatch.find()){
 						if(mainMatch.group().equals("language:")) mode = Modes.LANGUAGE;
 						else if(mainMatch.group().equals("signature:")) mode = Modes.SIGNATURE;
+						else if(mainMatch.group().equals("modified_spell:")) mode = Modes.MODIFIED_SPELL;
 						else{
 							throw new Exception("Unrecognized setting detected");
 						}
@@ -210,6 +212,10 @@ public class Main{
 						}
 						else
 							throw new Exception("Unknown signature parameter encountered:\n" + check);
+					}
+					// Parse the spell modified spell indices
+					if(mode == Modes.MODIFIED_SPELL){
+						modifiedSpells.add(Integer.parseInt(check.trim()));
 					}
 				}
 			}catch(Exception e){

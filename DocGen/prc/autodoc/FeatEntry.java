@@ -7,6 +7,7 @@ import java.util.*;
 public class FeatEntry implements Comparable<FeatEntry>{
 	public ArrayList<FeatEntry> childFeats = new ArrayList<FeatEntry>();
 	
+	public FeatEntry master;
 	public String name;
 	public String text;
 	public String filePath;
@@ -22,6 +23,8 @@ public class FeatEntry implements Comparable<FeatEntry>{
 		this.entryNum    = entryNum;
 		this.isEpic      = isEpic;
 		this.isClassFeat = isClassFeat;
+		
+		master = null;
 	}
 	
 	public int compareTo(FeatEntry other){

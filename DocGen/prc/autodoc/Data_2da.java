@@ -199,7 +199,7 @@ public class Data_2da{
 	 * @return String represeting the 2da entry or <code>null</code> if the column does not exist
 	 */
 	public String getEntry(String label, int row){
-		ArrayList column = mainData.get(label.toLowerCase());
+		ArrayList<String> column = mainData.get(label.toLowerCase());
 		return column != null ? column.get(row) : null;
 	}
 	

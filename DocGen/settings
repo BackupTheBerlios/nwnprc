@@ -18,4 +18,23 @@ language:
 # what string a certain type of spell.2da script name entry starts with. Delimited by | characters
 signature:
 	epicspell="ss_ep_|wander"
-	psionicpower="psi_"
+	psionicpower="psi_pow_|psi_ast_con_"
+
+# modified spells indices in spells.2da
+modified_spell:
+	23
+	46
+	67
+	70
+	77
+	79
+	102
+	114
+	129
+	185
+	417
+	423
+	426
+	440
+	461
+	463

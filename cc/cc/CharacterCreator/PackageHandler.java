@@ -593,32 +593,28 @@ public class PackageHandler {
 		}
 
 		// Next we check to see if we satisfy the one _or_ the other requirements
-        LinkedList altreq = new LinkedList();
-		if (feat.OrReqFeat0 > -1)
-            altreq.add(new Integer(feat.OrReqFeat0));
-		if (feat.OrReqFeat1 > -1)
-            altreq.add(new Integer(feat.OrReqFeat1));
-		if (feat.OrReqFeat2 > -1)
-            altreq.add(new Integer(feat.OrReqFeat2));
-		if (feat.OrReqFeat3 > -1)
-            altreq.add(new Integer(feat.OrReqFeat3));
-		if (feat.OrReqFeat4 > -1)
-            altreq.add(new Integer(feat.OrReqFeat4));
-        if (altreq.size() > 0) {
-			boolean found = false;
-            for (int ii = 0; ii < altreq.size(); ++ii)
-                if (featlist.contains(altreq.get(ii))) {
-					found = true;
-					break;
-				}
+		// Next we check to see if we satisfy the one _or_ the other requirements
+		int[] altreq = new int[5];
+		altreq[0] = feat.OrReqFeat0;
+		altreq[1] = feat.OrReqFeat1;
+		altreq[2] = feat.OrReqFeat2;
+		altreq[3] = feat.OrReqFeat3;
+		altreq[4] = feat.OrReqFeat4;
 
-            if (!found) {
-                if (extra)
-					System.out.println("Feat feat requirements aren't satisfied: " + feat.Feat);
+		boolean required = false;
+		boolean satisfied = false;
+		for (int ii = 0; ii < altreq.length; ++ii) {
+			if (altreq[ii] > -1) {
+				required = true;
+				satisfied = satisfied || featlist.contains(featmap[altreq[ii]]);
+			}
+		}
+		if (required && !satisfied) {
+			if (extra)
+				System.out.println("Feat feat requirements aren't 3satisfied: " + feat.Feat);
 
-                return false;
-            }
-        }
+			return false;
+		}
 
 		// Verify any required skills
 		if (feat.ReqSkill > -1) {

@@ -36,30 +36,23 @@ void KatFin(object oPC, object oWeap, int iBonus)
     int iDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC);
     int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
     int iBonus = 0;
-    int iEnhance = GetWeaponEnhancement(oWeap);
+    //int iEnhance = GetWeaponEnhancement(oWeap);
     //int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
 
-    if(iDex > iStr)
-    {
-    iBonus = iDex - iStr + iEnhance;
-    }
+    iBonus = iDex - iStr ; //+ iEnhance;
 
- if(iBonus > 0){
+
+    if(iBonus > 0){
         if(GetLocalInt(oWeap, "KatFinBonus") != iBonus){
-            RemoveKatanaFinesse(oWeap);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(iBonus), oWeap);
-            SetLocalInt(oWeap, "KatFinBonus", iBonus);
-        }
-        if(GetLocalInt(oPC, "KatanaFinesse") != TRUE)
+            SetCompositeBonusT(oWeap, "KatFinBonus", iBonus, ITEM_PROPERTY_ATTACK_BONUS);
             FloatingTextStringOnCreature("Katana Finesse On", oPC);
-        SetLocalInt(oPC, "KatanaFinesse", TRUE);
+        }
     }
     else {
         //The actual removal of the bonus is handled in the module's unequip script
         //This section simply alerts the player that the bonus has been turned off
-        if(GetLocalInt(oPC, "KatanaFinesse") != FALSE)
             FloatingTextStringOnCreature("Katana Finesse Off", oPC);
-        SetLocalInt(oPC, "KatanaFinesse", FALSE);
+
    }
  }
 }

@@ -596,7 +596,9 @@ void GainPsionicFocus(object oGainee = OBJECT_SELF)
     SetLocalInt(oGainee, "PsionicFocus", TRUE);
     
     // Speed Of Thought
-    if(GetHasFeat(FEAT_SPEED_OF_THOUGHT, oGainee))
+    if(GetHasFeat(FEAT_SPEED_OF_THOUGHT, oGainee) &&
+       GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, oPC)) < 6 // Check for heavy armor
+      )
         AssignCommand(oGainee, ActionCastSpellAtObject(SPELL_SPEED_OF_THOUGHT_BONUS, oGainee, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
     // Psionic Dodge
     if(GetHasFeat(FEAT_PSIONIC_DODGE, oGainee))

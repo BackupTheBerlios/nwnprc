@@ -55,14 +55,18 @@ void main()
           SetCompositeBonus(oItem,"IntuiAtk",iWis+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
       }
 
-      if (iEquip ==0)
+      if (iEquip == 0)
       {
         
          oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
-         if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
-           SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
-         else
+         
+         if (isSimple(oItem))
+         {
+           if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
+             SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
+           else
            SetCompositeBonus(oItem,"IntuiAtk",iWis+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
+         }
       }
 
 

@@ -199,10 +199,11 @@ void main()
     if (nVassal==8)
     {
     // *Shared Trove
-    if ( GetLocalInt(OBJECT_SELF, "Level8) == 1) return ;
+    if ( GetLocalInt(OBJECT_SELF, "Level8") == 1) return ;
     {
     GiveGoldToCreature(OBJECT_SELF, 80000);
     SetLocalInt( OBJECT_SELF, "Level8", 1);
+    }
     }
 
     // *Level 10

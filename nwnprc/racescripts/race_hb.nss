@@ -29,6 +29,7 @@ void main()
         {
            if(   GetIsObjectValid(oArea)
               && !GetHasFeat(FEAT_DAYLIGHTADAPT, oPC)
+              && !GetHasFeat(FEAT_NS_LIGHT_ADAPTION, oPC)
               && GetIsDay()
               && GetIsAreaAboveGround(oArea) == AREA_ABOVEGROUND
               && !GetIsAreaInterior(oArea)

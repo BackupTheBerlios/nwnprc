@@ -21,7 +21,7 @@ public class Data_TLK{
 	 * @throws IllegalArgumentException  fileName does not filePath a TLK file
 	 * @throws TLKReadException          reading the TLK file specified does not succeed
 	 */
-	public Data_TLK(String filePath) throws Exception{
+	public Data_TLK(String filePath){
 		// Some paranoia checking for bad parameters
 		if(!filePath.toLowerCase().endsWith("tlk"))
 			throw new IllegalArgumentException("Non-tlk filename passed to Data_TLK: " + filePath);
@@ -34,7 +34,12 @@ public class Data_TLK{
 		
 		
 		// Create a RandomAccessFile for reading the TLK. Read-only
-		RandomAccessFile reader = new RandomAccessFile(baseFile, "r");
+		RandomAccessFile reader = null;
+		try{
+			reader = new RandomAccessFile(baseFile, "r");
+		}catch(IOException e){
+			throw new TLKReadException("Cannot access TLK file: " + filePath, e);
+		}
 		byte[] bytes4 = new byte[4],
 		       bytes8 = new byte[8];
 		
@@ -44,24 +49,24 @@ public class Data_TLK{
 		// Tell the user what we are doing
 		if(verbose) System.out.print("Reading TLK file: " + fileName + " ");
 		
-		// Check the header
-		reader.readFully(bytes4);
-		if(!new String(bytes4).equals("TLK "))
-			throw new TLKReadException("Wrong file type field in: " + fileName);
-		
-		// Check the version
-		reader.readFully(bytes4);
-		if(!new String(bytes4).equals("V3.0"))
-			throw new TLKReadException("Wrong TLK version number in: " + fileName);
-		
-		// Skip the language ID
-		reader.skipBytes(4);
-		
-		// Read the entrycount
-		int stringCount  = readLittleEndianInt(reader, bytes4);
-		int stringOffset = readLittleEndianInt(reader, bytes4);
-		
 		try{
+			// Check the header
+			reader.readFully(bytes4);
+			if(!new String(bytes4).equals("TLK "))
+				throw new TLKReadException("Wrong file type field in: " + fileName);
+			
+			// Check the version
+			reader.readFully(bytes4);
+			if(!new String(bytes4).equals("V3.0"))
+				throw new TLKReadException("Wrong TLK version number in: " + fileName);
+			
+			// Skip the language ID
+			reader.skipBytes(4);
+
+			// Read the entrycount
+			int stringCount  = readLittleEndianInt(reader, bytes4);
+			int stringOffset = readLittleEndianInt(reader, bytes4);
+
 			// Read the entry lengths
 			int[] stringLengths = readStringLengths(reader, stringCount);
 		
@@ -87,6 +92,20 @@ public class Data_TLK{
 		String toReturn = mainData.get(strRef);
 		if(toReturn == null) toReturn = "Bad StrRef";
 		return toReturn;
+	}
+	
+	
+	/**
+	 * Get the given TLK entry.
+	 *
+	 * @param strRef  the number of the entry to get as a string
+	 * 
+	 * @return the entry string or "Bad StrRef" if the entry wasn't in the TLK
+	 *
+	 * @throws NumberFormatException if <code>strRef</code> cannot be converted to an integer
+	 */
+	public String getEntry(String strRef){
+		return getEntry(Integer.parseInt(strRef));
 	}
 	
 	/**

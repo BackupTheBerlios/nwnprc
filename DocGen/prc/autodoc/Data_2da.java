@@ -24,21 +24,22 @@ public class Data_2da{
 	 *
 	 * @param fileName The relative location of the 2da file to be loaded
 	 *
-	 * @throws IllegalArgumentException If fileName does not specify a 2da file
-	 * @throws IOException If reading the 2da file specified does not succeed, or the file does not contain any data
+	 * @throws IllegalArgumentException <code>filePath</code> does not specify a 2da file
+	 * @throws TwoDAReadException       reading the 2da file specified does not succeed,
+	 *                                    or the file does not contain any data
 	 */
-	public Data_2da(String fileName) throws IOException{
+	public Data_2da(String filePath){
 		// Some paranoia checking for bad parameters
-		if(!fileName.toLowerCase().endsWith("2da"))
-			throw new IllegalArgumentException("Non-2da filename passed to Data_2da: " + fileName);
+		if(!filePath.toLowerCase().endsWith("2da"))
+			throw new IllegalArgumentException("Non-2da filename passed to Data_2da: " + filePath);
 		
 		// Create the file handle
-		File baseFile = new File(fileName);
+		File baseFile = new File(filePath);
 		// More paraoia
 		if(!baseFile.exists())
-			throw new IllegalArgumentException("Nonexistent file passed to Data_2da: " + fileName);
+			throw new IllegalArgumentException("Nonexistent file passed to Data_2da: " + filePath);
 		if(!baseFile.isFile())
-			throw new IllegalArgumentException("Nonfile passed to Data_2da: " + fileName);
+			throw new IllegalArgumentException("Nonfile passed to Data_2da: " + filePath);
 		
 		// Drop the path from the filename
 		name = baseFile.getName().substring(0, baseFile.getName().length() - 4);
@@ -47,24 +48,21 @@ public class Data_2da{
 		if(verbose) System.out.print("Reading 2da file: " + name + " ");
 		
 		// Create a Scanner for reading the 2da
-		Scanner reader = new Scanner(baseFile);
+		Scanner reader = null;
+		try{
+			reader = new Scanner(baseFile);
+		}catch(FileNotFoundException e) { assert false : "Filenotfound when it's presence was already confirmed"; }
 		
 		// Check the 2da header
 		String data = getNextNonEmptyRow(reader);
 		if(!data.contains("2DA V2.0"))
-			throw new IOException("2da header missing or invalid: " + name);
+			throw new TwoDAReadException("2da header missing or invalid: " + name);
 		
 		// Start the actual reading
 		try{
 			CreateData(reader);
-		}catch(Exception e){
-			System.err.println("Exception occurred when reading 2da file: \n" + name + "\n" + e.getMessage());
-			/*
-			e.printStackTrace();
-			System.err.println("Aborting");
-			System.exit(0);
-			*/
-			throw new IOException();
+		}catch(TwoDAReadException e){
+			throw new TwoDAReadException("Exception occurred when reading 2da file: " + name, e);
 		}
 		
 		if(verbose) System.out.println("- Done");
@@ -76,14 +74,14 @@ public class Data_2da{
 	 *
 	 * @throws IOException If there is something wrong with the 2da file
 	 */
-	private void CreateData(Scanner reader) throws IOException{
+	private void CreateData(Scanner reader){
 		Scanner rowParser;
 		int line = 0;
 		
 		// Find the labels row
 		String data = getNextNonEmptyRow(reader);
 		if(data == null)
-			throw new IOException("No labels found in 2da file!");
+			throw new TwoDAReadException("No labels found in 2da file!");
 		
 		// Parse the labels
 		String[] labels = data.trim().split("\\p{javaWhitespace}+");
@@ -97,7 +95,7 @@ public class Data_2da{
 		// Skip empty rows until the data starts
 		data = getNextNonEmptyRow(reader);
 		if(data == null)
-			throw new IOException("No data in 2da file!");
+			throw new TwoDAReadException("No data in 2da file!");
 		
 		while(true){
 			//rowParser = new Scanner(data);
@@ -108,14 +106,14 @@ public class Data_2da{
 			try{
 				line = Integer.parseInt(matcher.group());
 			}catch(NumberFormatException e){
-				throw new IOException("Numberless 2da line: " + line);
+				throw new TwoDAReadException("Numberless 2da line: " + line);
 			}
 			
 			// Start parsing the row
 			for(int i = 0; i < labels.length; i++){
 				// Find the next match and check for too short rows
 				if(!matcher.find())
-					throw new IOException("Too short 2da line: " + line);
+					throw new TwoDAReadException("Too short 2da line: " + line);
 				/*	
 				String foo = matcher.group();//rowParser.next(pattern);
 				System.out.print(labels[i] + ":\t\t");
@@ -128,7 +126,7 @@ public class Data_2da{
 			
 			// Check for too long rows
 			if(matcher.find())
-				throw new IOException("Too long 2da line: " + line);
+				throw new TwoDAReadException("Too long 2da line: " + line);
 			
 			// Increment the entry counter
 			entries++;
@@ -150,13 +148,13 @@ public class Data_2da{
 		
 		// Some validity checking on the 2da. Empty rows allowed only in the end
 		if(getNextNonEmptyRow(reader) != null)
-			throw new IOException("Empty row in the middle of 2da. After row: " + line);
+			throw new TwoDAReadException("Empty row in the middle of 2da. After row: " + line);
 	}
 	
 	/**
 	 * Reads rows from the 2da until it finds a row containing non-whitespace characters.
 	 *
-	 * return The row found, or null if none were found.
+	 * @return The row found, or null if none were found.
 	 */
 	private String getNextNonEmptyRow(Scanner reader){
 		String toReturn = null;
@@ -201,9 +199,11 @@ public class Data_2da{
 	 * Get the 2da entry on the given row and column
 	 *
 	 * @param label the label of the column to get
-	 * @param row   the number of the row to get
+	 * @param row   the number of the row to get, as string
 	 *
 	 * @return String represeting the 2da entry
+	 *
+	 * @throws NumberFormatException if <code>row</code> cannot be converted to an integer
 	 */
 	public String getEntry(String label, String row){
 		return this.getEntry(label, Integer.parseInt(row));

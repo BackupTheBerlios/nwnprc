@@ -390,6 +390,28 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 	}
 }
 
+void ShadowWeave(object oPC)
+{
+   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && GetHasFeat(FEAT_SHADOWWEAVE, oPC))
+   {
+       int iCleDom = GetHasFeat(FEAT_EVIL_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_DARKNESS_DOMAIN, oPC);
+
+       if (iCleDom < 2)
+       {
+           int nHD = GetHitDice(oPC);
+	   int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+	   int nOldXP = GetXP(oPC);
+	   int nNewXP = nMinXPForLevel - 1000;
+	   SetXP(oPC,nNewXP);
+	   FloatingTextStringOnCreature("You must have two of the following domains: Evil, Fire, or Darkness to use the shadow weave.", oPC, FALSE);
+	   FloatingTextStringOnCreature("Please reselect your feats.", oPC, FALSE);
+	   DelayCommand(1.0, SetXP(oPC,nOldXP));
+       }
+   }
+}
+       
 void main()
 {
         //Declare Major Variables
@@ -402,4 +424,5 @@ void main()
 	Ethran(oPC);
 	UltiRangerFeats(oPC);
 	MageKiller(oPC);
+	ShadowWeave(oPC);
 }

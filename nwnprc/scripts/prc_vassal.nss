@@ -26,7 +26,7 @@ void AddArmorOnhit(object oPC,int iEquip)
 
      if (GetBaseItemType(oItem)==BASE_ITEM_ARMOR)
         {
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
+            AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem,999.0);
 
             SetLocalInt(oItem,"Dragonwrack",1);
         }
@@ -43,7 +43,7 @@ void AddArmorOnhit(object oPC,int iEquip)
         oItem=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
         if ( !GetLocalInt(oItem,"Dragonwrack")&& GetBaseItemType(oItem)==BASE_ITEM_ARMOR)
         {
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
+        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem,999.0);
         SetLocalInt(oItem,"Dragonwrack",1);
     }
     }
@@ -61,7 +61,7 @@ void DWRightWeap(object oPC,int iEquip)
 
      if (GetBaseItemType(oItem)!=BASE_ITEM_SMALLSHIELD || BASE_ITEM_TOWERSHIELD || BASE_ITEM_LARGESHIELD)
      {
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
+        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem,999.0);
 
         SetLocalInt(oItem,"DWright",1);
      }
@@ -78,7 +78,7 @@ void DWRightWeap(object oPC,int iEquip)
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
      if ( !GetLocalInt(oItem,"DWright")&& GetBaseItemType(oItem)!=BASE_ITEM_SMALLSHIELD || BASE_ITEM_TOWERSHIELD || BASE_ITEM_LARGESHIELD)
      {
-       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
+       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem,999.0);
         SetLocalInt(oItem,"DWright",1);
      }
   }
@@ -96,7 +96,7 @@ void DWLeftWeap(object oPC,int iEquip)
 
      if (GetBaseItemType(oItem)!=BASE_ITEM_SMALLSHIELD || BASE_ITEM_TOWERSHIELD || BASE_ITEM_LARGESHIELD)
      {
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
+        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem,999.0);
 
         SetLocalInt(oItem,"DWleft",1);
      }
@@ -113,7 +113,7 @@ void DWLeftWeap(object oPC,int iEquip)
      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
      if ( !GetLocalInt(oItem,"DWleft")&& GetBaseItemType(oItem)!=BASE_ITEM_SMALLSHIELD || BASE_ITEM_TOWERSHIELD || BASE_ITEM_LARGESHIELD)
      {
-       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
+       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem,999.0);
         SetLocalInt(oItem,"DWleft",1);
      }
   }

@@ -29,8 +29,13 @@ void main()
 
      AssignCommand(oPC, ActionMoveToLocation(GetLocation(oTarget), TRUE) );
     
-      effect eDamage;
+      effect eDamage1;
+      effect eDamage2;
+      effect eDamage3;
       
+      effect eLink1;
+      effect eLink2;
+
       int iAttackResult;
 
       struct BonusDamage sWeaponBonus;
@@ -47,22 +52,29 @@ void main()
       if (iAttackResult == 2)
       {
          SendMessageToPC(oPC, "Clangeddin's Strike **Critical Hit!**");
-         eDamage = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, TRUE, 0, 0, 0);
-         DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-         eDamage = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, TRUE, 0, 0, 0);
-         DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-         eDamage = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, TRUE, 0, 0, 0);
-         DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+         eDamage1 = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, TRUE, 0, 0, 0);
+         //DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+         eDamage2 = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, TRUE, 0, 0, 0);
+         //DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+         eDamage3 = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, TRUE, 0, 0, 0);
+         //DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+         eLink1 = EffectLinkEffects(eDamage1, eDamage2);
+         eLink2 = EffectLinkEffects(eLink1, eDamage3);
+         DelayCommand(6.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget));
+         
       }
       else if (iAttackResult == 1)
       {
          SendMessageToPC(oPC, "Clangeddin's Strike Hit!");
-         eDamage = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, FALSE, 0, 0, 0);
-         DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-         eDamage = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, FALSE, 0, 0, 0);
-         DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-         eDamage = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, FALSE, 0, 0, 0);
-         DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+         eDamage1 = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, FALSE, 0, 0, 0);
+         //DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+         eDamage2 = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, FALSE, 0, 0, 0);
+         //DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+         eDamage3 = GetAttackDamage(oTarget, oPC, oItem, sWeaponBonus, sSpellBonus,  0, 0, FALSE, 0, 0, 0);
+         //DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+         eLink1 = EffectLinkEffects(eDamage1, eDamage2);
+         eLink2 = EffectLinkEffects(eLink1, eDamage3);
+         DelayCommand(6.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget));
       }
      else
      {

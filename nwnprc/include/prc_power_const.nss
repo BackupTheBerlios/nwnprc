@@ -137,12 +137,25 @@ const   int 	POWER_TOWERIRONWILL	   	= -1; // FIX ME
 const	int	POWER_BREATHBLACKDRAGON		= 14231;
 const	int	POWER_DISINTEGRATE		= 14232;
 const	int	POWER_CRYSTALLIZE		= 14233;
+const   int 	POWER_FUSEFLESH		   	= -1; // FIX ME
 
 // Level 7 Powers
 const	int	POWER_CRISISLIFE		= 14271;
+const   int 	POWER_DECEREBRATE	   	= -1; // FIX ME
+const   int 	POWER_ENERGYWAVE_COLD	   	= -1; // FIX ME
+const   int 	POWER_ENERGYWAVE_ELEC	   	= -1; // FIX ME
+const   int 	POWER_ENERGYWAVE_FIRE	   	= -1; // FIX ME
+const   int 	POWER_ENERGYWAVE_SONIC	   	= -1; // FIX ME
+const   int 	POWER_INSANITY		   	= -1; // FIX ME
+const   int 	POWER_MINDBLANKPERSONAL	   	= -1; // FIX ME
+const   int 	POWER_OAKBODY		   	= -1; // FIX ME
+const   int 	POWER_ULTRABLAST	   	= -1; // FIX ME
 
 // Level 8 Powers
 const	int	POWER_RECALLDEATH		= 14301;
+const   int 	POWER_IRONBODY		   	= -1; // FIX ME
+const   int 	POWER_TRUEMETABOLISM	   	= -1; // FIX ME
+const   int 	POWER_PSIMINDBLANK	   	= -1; // FIX ME
 
 // Level 9 Powers
 

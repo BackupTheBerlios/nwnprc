@@ -16,7 +16,7 @@ void main()
     int nLevel = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, OBJECT_SELF) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, OBJECT_SELF);
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
 
-    if(nLevel <= 15)
+    if(nLevel < 15)
     {
          string sMes = "You must be at least a level 15 Thrall of Graz'zt to summon this type of demon.";
          SendMessageToPC(OBJECT_SELF, sMes);

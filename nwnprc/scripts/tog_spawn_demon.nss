@@ -22,12 +22,12 @@ int ScaleSummonedDemon(object oDemon)
     // chane level to make the demon
     int nLevelTo = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, GetMaster(oDemon)) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, GetMaster(oDemon)); 
     
-    if(nLevelTo >= 4 && nLevelTo < 9) nLevelTo = 5;
-    if(nLevelTo >= 9) nLevelTo = 10;
-    if(nLevelTo >= 15) nLevelTo = 15;
-    if(nLevelTo >= 20) nLevelTo = 20;
-    if(nLevelTo >= 25) nLevelTo = 25;
-    if(nLevelTo >= 30) nLevelTo = 30;
+    if(nLevelTo >= 4  && nLevelTo < 9)       nLevelTo = 5;
+    else if(nLevelTo >= 9  && nLevelTo < 15) nLevelTo = 10;
+    else if(nLevelTo >= 15 && nLevelTo < 20) nLevelTo = 15;
+    else if(nLevelTo >= 20 && nLevelTo < 25) nLevelTo = 20;
+    else if(nLevelTo >= 25 && nLevelTo < 30) nLevelTo = 25;
+    else if(nLevelTo >= 30 )                 nLevelTo = 30;
     
     int nRet = SSMLevelUpCreature(oDemon, nLevelTo, CLASS_TYPE_INVALID);
     if (nRet == FALSE)

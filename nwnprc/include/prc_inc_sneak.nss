@@ -242,7 +242,7 @@ int GetIsAOEFlanked(object oDefender, object oAttacker)
     int bReturnVal = TRUE;
     
     // if they are not in combat then they are automatically flanked (surprise round)
-    if(GetIsInCombat(oDefender))
+    if(GetIsInCombat(oDefender) || !GetIsInCombat(oDefender) )
     {
          // checks if they are attacking something other than the caster
          object oTarget = GetAttackTarget(oDefender);
@@ -257,6 +257,17 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
      int bIsDeniedDex = FALSE;
      int bDefenderHasTrueSight = GetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
      int bDefenderCanSeeInvisble = GetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
+
+     // if the player is not fighting, then this is the "surprise round"
+     if( !GetIsFighting(oDefender) || !GetIsInCombat(oDefender) )
+     {          
+          bIsDeniedDex = TRUE;
+     }
+     else
+     {
+          string sMes = "Not the Surprise Round!";
+          FloatingTextStringOnCreature(sMes, oAttacker, TRUE);          
+     }
      
      // if defender has spell effect on them
      if( GetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender) )          bIsDeniedDex = TRUE;
@@ -314,11 +325,11 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
           {
                bIsDeniedDex = FALSE;
           }
-     }
 
-     if(GetLevelByClass(CLASS_TYPE_DWARVENDEFENDER, oDefender) > 0 )
-     {
-         bIsDeniedDex = FALSE; 
+          if(GetLevelByClass(CLASS_TYPE_DWARVENDEFENDER, oDefender) > 0 )
+          {
+              bIsDeniedDex = FALSE; 
+          }          
      }
      
      return bIsDeniedDex;

@@ -861,6 +861,7 @@ int SpellBetrayalDamage(object oTarget, object oCaster)
 {
      int iDam = 0;
      int ThrallLevel = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, oCaster) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oCaster);
+     string sMes = "";
      
      if(ThrallLevel >= 2)
      {
@@ -900,10 +901,17 @@ int ApplySpellBetrayalStrikeDamage(object oTarget, object oCaster, int bShowText
      int iStrikeDam = SpellStrikeDamage(oTarget, oCaster);
      string sMes = "";
      
-     if(iBetrayalDam > 0)     sMes ="*Spell Betrayal Sucess*";
-     else if(iStrikeDam > 0)  sMes ="*Spellstrike Sucess*";
+     if(iStrikeDam > 0 && iBetrayalDam > 0)  sMes ="*Spellstrike Betrayal Sucess*";
+     else if(iBetrayalDam > 0)               sMes ="*Spell Betrayal Sucess*";
+     else if(iStrikeDam > 0)                 sMes ="*Spellstrike Sucess*";
+          
+     if(bShowTextString)      FloatingTextStringOnCreature(sMes, oCaster, TRUE); 
      
-     if(bShowTextString)      FloatingTextStringOnCreature(sMes, oCaster, TRUE);     
+     iDam = iBetrayalDam + iStrikeDam;
+
+     // debug code
+     //sMes = "Spell Betrayal / Spellstrike Bonus Damage: " + IntToString(iBetrayalDam) + " + " + IntToString(iStrikeDam) + " = " + IntToString(iDam);
+     //DelayCommand( 1.0, FloatingTextStringOnCreature(sMes, oCaster, TRUE) );
      
      return iDam;
 }

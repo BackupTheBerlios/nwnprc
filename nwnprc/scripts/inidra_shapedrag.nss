@@ -22,11 +22,6 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
     effect ePoly;
 
-    if (!GetHasFeat(FEAT_INIDR_SHAPEDRAGON))
-    {
-       DeletePRCLocalInts(GetPCSkin(OBJECT_SELF));
-       return ;
-    }
 
     int nSpell = GetSpellId();
 

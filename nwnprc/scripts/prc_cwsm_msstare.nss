@@ -14,7 +14,7 @@ void main()
 
     int nDuration = 2;
 
-    if(GetLevelByClass(CLASS_TYPE_CWSAMURAI,oPC) >= 14)
+    if(GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) >= 14)
     {
      nDuration = 5;
     }

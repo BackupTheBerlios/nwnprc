@@ -115,12 +115,12 @@ void main()
     //Determine which duelist feats the character has
     int bCanDef = GetHasFeat(FEAT_CANNY_DEFENSE, oPC);
     int bEpicCD = GetHasFeat(FEAT_EPIC_DUELIST, oPC);
-    int bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_1d4, oPC) ? 1 : 0;
-        bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_2d4, oPC) ? 2 : bPStrk;
-        bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_3d4, oPC) ? 3 : bPStrk;
-        bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_4d4, oPC) ? 4 : bPStrk;
-        bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_5d4, oPC) ? 5 : bPStrk;
-        bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_6d4, oPC) ? 6 : bPStrk;
+    int bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_1D4, oPC) ? 1 : 0;
+        bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_2D4, oPC) ? 2 : bPStrk;
+        bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_3D4, oPC) ? 3 : bPStrk;
+        bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_4D4, oPC) ? 4 : bPStrk;
+        bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_5D4, oPC) ? 5 : bPStrk;
+        bPStrk  = GetHasFeat(FEAT_PRECISE_STRIKE_6D4, oPC) ? 6 : bPStrk;
     int bGrace  = GetHasFeat(FEAT_GRACE_2, oPC) ? 2 : 0;
         bGrace  = GetHasFeat(FEAT_GRACE_4, oPC) ? 4 : bGrace;
         bGrace  = GetHasFeat(FEAT_GRACE_6, oPC) ? 6 : bGrace;

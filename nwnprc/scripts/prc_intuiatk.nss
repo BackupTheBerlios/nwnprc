@@ -9,14 +9,14 @@ int isSimple(object oItem)
       int iType= GetBaseItemType(oItem);
 
       switch (iType)
-      {
-        case BASE_ITEM_CLUB:       
+      {            
         case BASE_ITEM_MORNINGSTAR:
         case BASE_ITEM_QUARTERSTAFF:
         case BASE_ITEM_SHORTSPEAR:
         case BASE_ITEM_HEAVYCROSSBOW:
           return 1;
           break;
+        case BASE_ITEM_CLUB:  
         case BASE_ITEM_DAGGER:
         case BASE_ITEM_LIGHTMACE:
         case BASE_ITEM_SICKLE:
@@ -41,9 +41,9 @@ void main()
       int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
       int iStr =  GetAbilityModifier(ABILITY_STRENGTH,oPC);    
       int iWis =  GetAbilityModifier(ABILITY_WISDOM,oPC);
-          iWis = iWis > iStr ? iWis : 0;
+      int iMod = iWis > iStr  ? iWis-iStr :0;
+    
 
-      if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD) iWis =0;
       
       if (iEquip == 1)
            oItem = GetPCItemLastUnequipped();
@@ -53,16 +53,18 @@ void main()
       int iSimple = isSimple(oItem);
       if (iSimple)
       {
-        if (iSimple == 2)
+        if (iSimple == 2 && GetHasFeat(FEAT_WEAPON_FINESSE,oPC))
         {
            int iDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC)
-           iWis = iWis > iDex ? iWis : 0;
+           iMod = iWis>iDex ? iMod : 0;
         }
+
+        if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD) iMod =0;
                      
         if(iEquip == 1||GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
           SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
         else
-          SetCompositeBonus(oItem,"IntuiAtk",iWis+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
+          SetCompositeBonus(oItem,"IntuiAtk",iMod+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
       }
 
       if (iEquip == 0)
@@ -75,7 +77,7 @@ void main()
            if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
              SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
            else
-           SetCompositeBonus(oItem,"IntuiAtk",iWis+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
+           SetCompositeBonus(oItem,"IntuiAtk",iMod+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
          }
       }
 
@@ -83,9 +85,9 @@ void main()
      object oCweapB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC);
      object oCweapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
      object oCweapR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oPC);
-     SetCompositeBonus(oCweapB,"IntuiAtk",iWis,ITEM_PROPERTY_ATTACK_BONUS);
-     SetCompositeBonus(oCweapL,"IntuiAtk",iWis,ITEM_PROPERTY_ATTACK_BONUS);
-     SetCompositeBonus(oCweapR,"IntuiAtk",iWis,ITEM_PROPERTY_ATTACK_BONUS);
+     SetCompositeBonus(oCweapB,"IntuiAtk",iMod,ITEM_PROPERTY_ATTACK_BONUS);
+     SetCompositeBonus(oCweapL,"IntuiAtk",iMod,ITEM_PROPERTY_ATTACK_BONUS);
+     SetCompositeBonus(oCweapR,"IntuiAtk",iMod,ITEM_PROPERTY_ATTACK_BONUS);
 
 
    }

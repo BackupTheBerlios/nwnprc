@@ -23,7 +23,7 @@ void main()
         return;
     }
     //Declare major variables
-    int iBoost = (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, OBJECT_SELF) - 2) / 4 + 1;
+    int iBoost = (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, OBJECT_SELF) + 2) / 4;
     object oTarget;
     effect eBoost = EffectAbilityIncrease(ABILITY_CONSTITUTION,iBoost);
     effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
@@ -46,15 +46,6 @@ void main()
         nDuration += 5;
     }
     
-    int iPerformReq = 30;
-    if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) iPerformReq-= 2;
-    if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
-    {
-        FloatingTextStringOnCreature("*Minstrel Song Failure*", OBJECT_SELF);
-        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
-        return;
-    }
-
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 
     //Do the visual effects

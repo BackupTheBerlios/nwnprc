@@ -25,7 +25,7 @@ void main()
     }
     //Declare major variables
     object oTarget;
-    int nBonus = GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, OBJECT_SELF)/3;
+    int nBonus = (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, OBJECT_SELF) + 2) / 4;
     effect eBoost = EffectDamageShield(d6(1) + nBonus, 0, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_SONIC));
     effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
@@ -47,15 +47,6 @@ void main()
     if(GetHasFeat(424)) // lingering song
     {
         nDuration += 5;
-    }
-
-    int iPerformReq = 50;
-    if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) iPerformReq-= 2;
-    if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
-    {
-        FloatingTextStringOnCreature("*Minstrel Song Failure*", OBJECT_SELF);
-        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
-        return;
     }
 
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());

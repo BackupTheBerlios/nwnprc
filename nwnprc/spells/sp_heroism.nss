@@ -10,23 +10,6 @@ void main()
 	// Get the target and raise the spell cast event.
 	object oTarget = GetSpellTargetObject();
 	SPRaiseSpellCastAt(oTarget, FALSE);
-
-      if(GetHasSpellEffect(SPELL_MINSTREL_SONG_GR_HEROISM, oTarget))
-      {
-              FloatingTextStringOnCreature("Target already has Greater Heroism Affect!", OBJECT_SELF);
-              SPSetSchool();
-              return;
-      }
-      
-      if(GetHasSpellEffect(SPELL_MINSTREL_SONG_HEROISM, oTarget))
-      {
-              RemoveSpellEffects(SPELL_MINSTREL_SONG_HEROISM,OBJECT_SELF,OBJECT_SELF);
-      }
-      
-      if(GetHasSpellEffect(SPELL_HEROISM, oTarget))
-      {
-              RemoveSpellEffects(SPELL_HEROISM,OBJECT_SELF,OBJECT_SELF);
-      }
       
       if(GetHasSpellEffect(SPELL_GREATER_HEROISM, oTarget))
       {

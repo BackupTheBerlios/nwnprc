@@ -1,8 +1,8 @@
 //::///////////////////////////////////////////////
-//:: Shield Song
+//:: Immunity To Fear Song
 //:://////////////////////////////////////////////
 /*
-   Song that gives everybody +1 to +8 Shield AC.
+ Makes allies immune to fear for the duration of the song.
 */
 
 #include "x2_i0_spells"
@@ -23,12 +23,11 @@ void main()
         return;
     }
     //Declare major variables
-    int iBoost = (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, OBJECT_SELF) + 2) / 4;
     object oTarget;
-    effect eBoost = EffectACIncrease(iBoost, AC_SHIELD_ENCHANTMENT_BONUS);
-    effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
+    effect eImFear = EffectImmunity(IMMUNITY_TYPE_FEAR);
+    effect eVis = EffectVisualEffect(VFX_IMP_GOOD_HELP);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eLink = ExtraordinaryEffect(EffectLinkEffects(eBoost, eDur));
+    effect eLink = EffectLinkEffects(eImFear, eDur);
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
 
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
@@ -50,7 +49,7 @@ void main()
 
     //Do the visual effects
     effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
-    effect eLink2 = ExtraordinaryEffect(EffectLinkEffects(eVis2,eLink));
+    effect eLink2 = EffectLinkEffects(eVis2,eLink);
    
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));

@@ -4,6 +4,6 @@
 0 Discipline       SKILL   3                 10         
 1 Perform          SKILL   11                10        
 2 FEAT_CURSE_SONG  FEAT    871               ****      
-3 WeapProfMar      FEAT    45                ****      
-4 ScriptVar        VAR     PRC_AllowMinstrel 0         
-5 ScriptVar        VAR     PRC_PrereqMotE    0         
+3 FEAT_BARD_SONG   FEAT    257               ****      
+4 WeapProfMar      FEAT    45                ****      
+5 ScriptVar        VAR     PRC_AllowMinstrel 0         

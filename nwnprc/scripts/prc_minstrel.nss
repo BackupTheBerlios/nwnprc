@@ -34,14 +34,6 @@ void ReducedASF(object oCreature)
             case 3:
                 iASFMod = IP_CONST_ARCANE_SPELL_FAILURE_MINUS_20_PERCENT;
                 break;
-            case 4:
-                if (GetHasFeat(FEAT_MINSTREL_MEDIUM_ARMOR_CASTING, oCreature))
-                    iASFMod = IP_CONST_ARCANE_SPELL_FAILURE_MINUS_20_PERCENT;
-                break;
-            case 5:
-                if (GetHasFeat(FEAT_MINSTREL_MEDIUM_ARMOR_CASTING, oCreature))
-                    iASFMod = IP_CONST_ARCANE_SPELL_FAILURE_MINUS_30_PERCENT;
-                break;
             default:
                 break;
         }

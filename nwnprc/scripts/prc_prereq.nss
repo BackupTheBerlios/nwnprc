@@ -468,19 +468,6 @@ void ShiningBlade(object oPC)
 	}	
 }
 
-void MinstrelOfTheEdge(object oPC)
-{
-    SetLocalInt(oPC, "PRC_PrereqMotE", 1);
-    
-    if (GetClassByPosition(1,oPC) == CLASS_TYPE_BARD || (     // basically, if bard is the first class
-        GetClassByPosition(2,oPC) == CLASS_TYPE_BARD &&       // on the list that is a arcane class
-        GetClassByPosition(1,oPC) != CLASS_TYPE_WIZARD &&     // it recieves the benefit
-        GetClassByPosition(1,oPC) != CLASS_TYPE_SORCERER ) )
-    {
-        SetLocalInt(oPC, "PRC_PrereqMotE", 0);
-    }
-}
-
 void DemiLich(object oPC)
 {
     if (GetLocalInt(GetModule(),"PRC_DISABLE_DEMILICH") > 0 && GetLevelByClass(CLASS_TYPE_LICH) >= 4)
@@ -597,7 +584,6 @@ void main()
 	ShiningBlade(oPC);
 	Shadowlord(oPC, iArcSpell1);
 	Shifter(oPC, iArcSpell1, iDivSpell1);
-	MinstrelOfTheEdge(oPC);
 	DemiLich(oPC);
 	
 	// Truly massive debug message flood if activated.

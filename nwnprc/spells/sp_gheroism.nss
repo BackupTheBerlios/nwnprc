@@ -12,26 +12,11 @@ void main()
     object oTarget = GetSpellTargetObject();
     SPRaiseSpellCastAt(oTarget, FALSE);
 
-    if(GetHasSpellEffect(SPELL_MINSTREL_SONG_GR_HEROISM, oTarget))
-    {
-            RemoveSpellEffects(SPELL_MINSTREL_SONG_GR_HEROISM,OBJECT_SELF,OBJECT_SELF);
-    }
-    
-    if(GetHasSpellEffect(SPELL_MINSTREL_SONG_HEROISM, oTarget))
-    {
-            RemoveSpellEffects(SPELL_MINSTREL_SONG_HEROISM,OBJECT_SELF,OBJECT_SELF);
-    }
-    
     if(GetHasSpellEffect(SPELL_HEROISM, oTarget))
     {
             RemoveSpellEffects(SPELL_HEROISM,OBJECT_SELF,OBJECT_SELF);
     }
     
-    if(GetHasSpellEffect(SPELL_GREATER_HEROISM, oTarget))
-    {
-            RemoveSpellEffects(SPELL_GREATER_HEROISM,OBJECT_SELF,OBJECT_SELF);
-    }
-
     // Determine the spell's duration, taking metamagic feats into account.
     int nCasterlvl = PRCGetCasterLevel();
     float fDuration = SPGetMetaMagicDuration(TenMinutesToSeconds(nCasterlvl));

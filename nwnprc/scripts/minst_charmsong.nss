@@ -31,7 +31,7 @@ void main()
     int nLevel = GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE);
     int nCha = GetAbilityModifier(ABILITY_CHARISMA);
     int nDuration = 10; //+ nChr;
-    int nDC = 10 + (nLevel / 2) + nCha;
+    int nDC = 10 + nLevel + nCha;
     if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) nDC+=2;
 
     //Check to see if the caster has Lasting Impression and increase duration.
@@ -50,15 +50,6 @@ void main()
     effect eCharmVis = EffectVisualEffect(VFX_IMP_SILENCE);
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-
-    int iPerformReq = 20;
-    if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) iPerformReq-= 2;
-    if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
-    {
-        FloatingTextStringOnCreature("*Minstrel Song Failure*", OBJECT_SELF);
-        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
-        return;
-    }
 
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 

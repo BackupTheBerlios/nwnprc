@@ -75,6 +75,18 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     {
         nDuration = nDuration *2; //Duration is +100%
     }
+    
+    if (GetHasSpellEffect(SPELL_MINSTREL_SONG_WOUND_WHISP, oTarget))
+    {
+        effect eCheck = GetFirstEffect(oTarget);
+        while (GetIsEffectValid(eCheck))
+        {
+            if (GetEffectSpellId(eCheck) == SPELL_MINSTREL_SONG_WOUND_WHISP)
+                RemoveEffect(oTarget, eCheck);
+            eCheck = GetNextEffect(oTarget);
+        }
+    }
+    
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
 

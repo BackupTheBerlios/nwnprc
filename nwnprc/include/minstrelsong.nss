@@ -45,6 +45,7 @@ void RemoveOldSongEffects(object oSinger, int iSongID)
     string sRecip;
     string sSong;
     
+    /*
     // If you use the same song twice in a row you
     // should deal with the same slot again...
     if (GetLocalInt(oSinger, "SONG_IN_USE_" + IntToString(iSlotNow)) == iSongID)
@@ -52,6 +53,9 @@ void RemoveOldSongEffects(object oSinger, int iSongID)
     // Otherwise, we should toggle between slot "1" and slot "0"
     else
         iSlot = (iSlotNow == 1) ? 0 : 1;
+    */
+    
+    iSlot = 0;
     
     // Save the toggle we're on for later.
     SetLocalInt(oSinger, "SONG_SLOT", iSlot);

@@ -47,15 +47,6 @@ void main()
         nDuration += 5;
     }
 
-    int iPerformReq = 50;
-    if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) iPerformReq-= 2;
-    if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
-    {
-        FloatingTextStringOnCreature("*Minstrel Song Failure*", OBJECT_SELF);
-        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
-        return;
-    }
-
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 
     //Do the visual effects

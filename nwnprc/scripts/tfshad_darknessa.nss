@@ -25,7 +25,7 @@ void main()
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
- ActionDoCommand(SetAllAoEInts(OBJECT_SELF, GetSpellSaveDC(),0,GetLevelByClass(CLASS_TYPE_SHADOWLORD,GetAreaOfEffectCreator())));
+ ActionDoCommand(SetAllAoEInts(SPELL_DARKNESS ,OBJECT_SELF, GetSpellSaveDC(),0,GetLevelByClass(CLASS_TYPE_SHADOWLORD,GetAreaOfEffectCreator())));
  
     int nMetaMagic = GetMetaMagicFeat();
     effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_DARKNESS);

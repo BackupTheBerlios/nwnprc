@@ -6,26 +6,6 @@
 #include "inc_item_props"
 #include "prc_ipfeat_const"
 
-void BrawlerDodge(object oCreature)
-{
-    object oSkin = GetPCSkin(oCreature);
-    int iLevel = 0;
-    
-    if(GetHasFeat(FEAT_BRAWLER_DODGE_1, oCreature))
-       iLevel = 1;
-    if(GetHasFeat(FEAT_BRAWLER_DODGE_2, oCreature))
-       iLevel = 2;
-    if(GetHasFeat(FEAT_BRAWLER_DODGE_3, oCreature))
-       iLevel = 3;
-    if(GetHasFeat(FEAT_BRAWLER_DODGE_4, oCreature))
-       iLevel = 4;
-    if(GetHasFeat(FEAT_BRAWLER_DODGE_5, oCreature))
-       iLevel = 5;
-
-    if(GetLocalInt(oSkin, "BrawlerDodge") == iLevel) return;
-    else SetCompositeBonus(oSkin, "BrawlerDodge", iLevel, ITEM_PROPERTY_AC_BONUS);
-}
-
 void RemoveExtraAttacks(object oCreature)
 {
     if (GetHasSpellEffect(SPELL_BRAWLER_EXTRA_ATT))
@@ -50,7 +30,6 @@ void BrawlerDamageReduction(object oCreature)
     if (GetHasFeat(FEAT_BRAWLER_DAMAGE_REDUCTION_9, oCreature) && !GetHasFeat(FEAT_EPIC_DAMAGE_REDUCTION_9))
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_9),oSkin);
 }      
-       
 
 void main ()
 {
@@ -61,9 +40,6 @@ void main ()
 
     //Evaluate Fists
     UnarmedFists(oPC);
-
-    //Evaluate Dodge
-    BrawlerDodge(oPC);
     
     //Evaluate DR
     BrawlerDamageReduction(oPC);
@@ -72,5 +48,5 @@ void main ()
     if (GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND)) ||
         GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND)) ||
         GetLevelByClass(CLASS_TYPE_MONK, oPC))  // in case the brawler takes the monk class, this will handle it onlevelup
-            RemoveExtraAttacks(oPC);
+        RemoveExtraAttacks(oPC);
 }

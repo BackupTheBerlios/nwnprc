@@ -713,11 +713,11 @@ const int FEAT_SA_SHADOWDOUBLE      = 2959;
 // Brawler
 const int FEAT_BRAWLER_FISTS                     = 4428;
 const int FEAT_EPIC_BRAWLER                      = 4437;
-const int FEAT_BRAWLER_DODGE_1                   = 4438;
-const int FEAT_BRAWLER_DODGE_2                   = 4439;
-const int FEAT_BRAWLER_DODGE_3                   = 4440;
-const int FEAT_BRAWLER_DODGE_4                   = 4441;
-const int FEAT_BRAWLER_DODGE_5                   = 4442;
+const int FEAT_BRAWLER_BLOCK_1                   = 4438;
+const int FEAT_BRAWLER_BLOCK_2                   = 4439;
+const int FEAT_BRAWLER_BLOCK_3                   = 4440;
+const int FEAT_BRAWLER_BLOCK_4                   = 4441;
+const int FEAT_BRAWLER_BLOCK_5                   = 4442;
 const int FEAT_BRAWLER_EXTRAATT_1                = 4429;
 const int FEAT_BRAWLER_EXTRAATT_2                = 4430;
 const int FEAT_BRAWLER_EXTRAATT_3                = 4431;

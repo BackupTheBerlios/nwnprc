@@ -18,8 +18,20 @@ const int MONST_DAMAGE_4D10  = 31; //11
 const int MONST_DAMAGE_3D6   = 10; //7: Large/Huge Monk only
 const int MONST_DAMAGE_4D8   = 21; //9: Large/Huge Monk only
 
+// Clean up any extras in the inventory.
+void CleanExtraFists(object oCreature)
+{
+    object oClean = GetFirstItemInInventory(oCreature);
+    while (GetIsObjectValid(oClean))
+    {
+        if (GetTag(oClean) == "NW_IT_CREWPB010" && oClean != GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCreature))
+            DestroyObject(oClean);
+        oClean = GetNextItemInInventory(oCreature);
+    }
+}
 
-void UnarmedFeats(object oCreature)  //Stolen from SoulTaker + expanded with overwhelming/devastating critical.
+// Adds appropriate feats to the skin. Stolen from SoulTaker + expanded with overwhelming/devastating critical.
+void UnarmedFeats(object oCreature)
 {
     object oSkin = GetPCSkin(oCreature);
 
@@ -45,6 +57,7 @@ void UnarmedFeats(object oCreature)  //Stolen from SoulTaker + expanded with ove
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_DEVCRITICAL_CREATURE),oSkin);
 }
 
+// Determines the amount of damage a character can do.
 int FindUnarmedDamage(object oCreature)
 {
     int iDamage = 0;
@@ -156,19 +169,8 @@ int FindUnarmedDamage(object oCreature)
     return iDamage;
 }
 
-void CleanExtraFists(object oCreature)
-{
-    // clean up any extras in the inventory
-    object oClean = GetFirstItemInInventory(oCreature);
-    while (GetIsObjectValid(oClean))
-    {
-        if (GetTag(oClean) == "NW_IT_CREWPB010" && oClean != GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCreature))
-            DestroyObject(oClean);
-        oClean = GetNextItemInInventory(oCreature);
-    }
-}
-
-void UnarmedFists(object oCreature) // Large chunks stolen from SoulTaker
+// Creates/strips a creature weapon and applies bonuses.  Large chunks stolen from SoulTaker.
+void UnarmedFists(object oCreature)
 {
        object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature);
        object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
@@ -195,7 +197,7 @@ void UnarmedFists(object oCreature) // Large chunks stolen from SoulTaker
         }
     }
     
-    // Clean up the mess of extra fists made on first enter.
+    // Clean up the mess of extra fists made on taking first level.
     DelayCommand(1.0,CleanExtraFists(oCreature));
 
     if (GetTag(oWeapL) != "NW_IT_CREWPB010") return;
@@ -230,10 +232,13 @@ void UnarmedFists(object oCreature) // Large chunks stolen from SoulTaker
         RemoveItemProperty(oWeapL, ip);
         ip = GetNextItemProperty(oWeapL);
     }
-             
+    
     // Leave the fist blank if weapons/shields are equipped.
     if (GetIsObjectValid(oRighthand) || GetIsObjectValid(oLefthand)) return;
 
+    // -----------------------------------------
+    // ALL CREATURE WEAPON BONUSES GO BELOW HERE
+    // -----------------------------------------
     // Add glove bonuses.
     if (GetIsObjectValid(oItem))
     {
@@ -266,6 +271,22 @@ void UnarmedFists(object oCreature) // Large chunks stolen from SoulTaker
             }
         }
     }
+    
+    // Brawler blocking.
+    int iBlocking = 0;
+        
+    if (GetHasFeat(FEAT_BRAWLER_BLOCK_1, oCreature))
+        iBlocking = 1;
+    if (GetHasFeat(FEAT_BRAWLER_BLOCK_2, oCreature))
+        iBlocking = 2;
+    if (GetHasFeat(FEAT_BRAWLER_BLOCK_3, oCreature))
+        iBlocking = 3;
+    if (GetHasFeat(FEAT_BRAWLER_BLOCK_4, oCreature))
+        iBlocking = 4;
+    if (GetHasFeat(FEAT_BRAWLER_BLOCK_5, oCreature))
+        iBlocking = 5;
+    
+    if (iBlocking) AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBlocking),oWeapL);
 
     // ALL ADDITIONAL CLASS BONUSES ADDED BELOW HERE.
     int iMonsterDamage = FindUnarmedDamage(oCreature);  // Find the monster damage type to add.
@@ -274,5 +295,6 @@ void UnarmedFists(object oCreature) // Large chunks stolen from SoulTaker
 
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(Enh),oWeapL);
 
-    if (iIoDM >= 2) AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oWeapL);
+    if (iIoDM >= 2)
+        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oWeapL);
 }

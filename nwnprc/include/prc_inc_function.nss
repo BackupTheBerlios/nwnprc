@@ -232,8 +232,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"SacFisAC");
     DeleteLocalInt(oSkin,"SacFisMv"); 
     // Brawler
-    DeleteLocalInt(oSkin,"BrawlerDodge");
-    DeleteLocalInt(oSkin,"BrawlerFinesse");
+    DeleteLocalInt(oSkin,"BrawlerBlock");
     // Minstrel
     DeleteLocalInt(oSkin,"MinstrelSFBonus");
     // Nightshade

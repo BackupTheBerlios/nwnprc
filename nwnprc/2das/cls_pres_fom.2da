@@ -1,11 +1,11 @@
 2DA V2.0
 
-      LABEL           ReqType   ReqParam1         ReqParam2
-0     ScriptVar       VAR       PRC_DivSpell2     0        
-1     ScriptVar       VAR       PRC_ArcSpell1     0        
-2     ScriptVar       VAR       PRC_AllowFoM      0        
-3     ExtraMusic      FEAT      423               ****     
-4     GoodDomain      FEAT      317               ****     
-5     KnowledgeDomain FEAT      319               ****     
-6     Perform         SKILL     11                8        
-7     Lore            SKILL     7                 8        
+  LABEL           ReqType ReqParam1     ReqParam2 
+0 ScriptVar       VAR     PRC_DivSpell2 0         
+1 ScriptVar       VAR     PRC_ArcSpell1 0         
+2 ScriptVar       VAR     PRC_AllowFoM  0         
+3 ExtraMusic      FEAT    423           ****      
+4 GoodDomain      FEAT    317           ****      
+5 KnowledgeDomain FEAT    319           ****      
+6 Perform         SKILL   11            8         
+7 Lore            SKILL   7             8         

@@ -87,6 +87,22 @@ const int FEAT_DISGUISE_MEDIUM		= 4769;
 const int FEAT_DISGUISE_SMALL		= 4770;
 const int FEAT_DISGUISE_OFF		= 4771;
 
+const int FEAT_SPEC_AAS		    = 4775;
+const int FEAT_SPEC_AVAR	    = 4776;
+const int FEAT_SPEC_AYUAN	    = 4777;
+const int FEAT_SPEC_DROW	    = 4778;
+const int FEAT_SPEC_DUERG	    = 4779;
+const int FEAT_SPEC_FEYRI	    = 4780;
+const int FEAT_SPEC_GYANK	    = 4781;
+const int FEAT_SPEC_GZER	    = 4782;
+const int FEAT_SPEC_ILLITH	    = 4783;
+const int FEAT_SPEC_PIXIE	    = 4784;
+const int FEAT_SPEC_PYUAN	    = 4785;
+const int FEAT_SPEC_RAKS	    = 4786;
+const int FEAT_SPEC_SVIRF	    = 4787;
+const int FEAT_SPEC_TIEF	    = 4788;
+const int FEAT_SPEC_URDIN	    = 4789;
+
 //Passive Feats
 const int FEAT_ETERNAL_FREEDOM                         = 4298;
 const int FEAT_INTUITIVE_ATTACK                        = 3166;

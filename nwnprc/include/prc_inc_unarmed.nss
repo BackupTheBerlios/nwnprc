@@ -1,3 +1,15 @@
+//:://////////////////////////////////////////////
+//:: Unarmed evaluation include
+//:: prc_inc_unarmed
+//:://////////////////////////////////////////////
+/*
+    Handles attack bonus, damage and itemproperties
+    for creature weapons created based on class
+    and race abilities.
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
@@ -6,20 +18,9 @@
 #include "inc_item_props"
 
 
-// I plan to change these over to the switch system later
-const int PRC_3_5e_FIST_DAMAGE = FALSE;
-const int PRC_BRAWLER_FIST_SIZE_DAMAGE = FALSE;
-
-// Determines the amount of damage a character can do.
-int FindUnarmedDamage(object oCreature);
-
-// Adds appropriate unarmed feats to the skin. Goes with UnarmedFists()
-// Call this from a feat evaluation script.
-void UnarmedFeats(object oCreature);
-
-// Creates/strips a creature weapon and applies bonuses. Goes with UnarmedFeats()
-// Call this from a feat evaluation script.
-void UnarmedFists(object oCreature);
+//////////////////////////////////////////////////
+/* Constant declarations                        */
+//////////////////////////////////////////////////
 
 const int MONST_DAMAGE_1D2   = 1;
 const int MONST_DAMAGE_1D3   = 2;
@@ -42,6 +43,54 @@ const int MONST_DAMAGE_4D10  = 31;
 const int MONST_DAMAGE_4D12  = 41;
 
 const int ITEM_PROPERTY_WOUNDING = 69;
+
+
+const string CALL_UNARMED_FEATS = "CALL_UNARMED_FEATS";
+const string CALL_UNARMED_FISTS = "CALL_UNARMED_FISTS";
+
+
+// I plan to change these over to the switch system later
+const int PRC_3_5e_FIST_DAMAGE = FALSE;
+const int PRC_BRAWLER_FIST_SIZE_DAMAGE = FALSE;
+
+
+//////////////////////////////////////////////////
+/* Function prototypes                          */
+//////////////////////////////////////////////////
+
+
+// Determines the amount of unarmed damage a character can do
+// ==========================================================
+// oCreature    a creature whose unarmed damage dice are
+//              being evaluated
+//
+// Returns one of the MONST_DAMAGE_* constants defined in
+// this file.
+int FindUnarmedDamage(object oCreature);
+
+// Adds appropriate unarmed feats to the skin. Goes with UnarmedFists()
+// ====================================================================
+// oCreature    a creature whose unarmed combat feats to handle
+//
+// Do not call this directly from your evaluation script. Instead, set
+// the local variable CALL_UNARMED_FEATS on the creature to TRUE.
+// This is done to avoid bugs from redundant calls to these functions.
+void UnarmedFeats(object oCreature);
+
+// Creates/strips a creature weapon and applies bonuses. Goes with UnarmedFeats()
+// ==============================================================================
+// oCreature    a creature whose creature weapon to handle
+//
+// Do not call this directly from your evaluation script. Instead, set
+// the local variable CALL_UNARMED_FISTS on the creature to TRUE.
+// This is done to avoid bugs from redundant calls to these functions.
+void UnarmedFists(object oCreature);
+
+
+
+//////////////////////////////////////////////////
+/* Function defintions                          */
+//////////////////////////////////////////////////
 
 // Clean up any extras in the inventory.
 void CleanExtraFists(object oCreature)
@@ -221,7 +270,7 @@ int FindUnarmedDamage(object oCreature)
 
     // Optional code for "sized" bralwers
     if(PRC_BRAWLER_FIST_SIZE_DAMAGE && iBrawler > 0)  
-          iBrawlerDamage = iBrawler / 6 + iSizeModifier;
+        iBrawlerDamage = iBrawler / 6 + iSizeModifier;
     
     // Certain race pack creatures use different damages.
     if      (GetRacialType(oCreature) == RACIAL_TYPE_MINOTAUR)   iRacialDamage = 3;
@@ -282,7 +331,7 @@ int FindUnarmedDamage(object oCreature)
     if (iDamageToUse == iMonkDamage && !bSmallSize) bUseMonkAlt = TRUE;
 
     // This is where the correct damage dice is calculated
-    if (iDamageToUse > 8) iDamageToUse = 8;
+    if (iDamageToUse > 10) iDamageToUse = 10;
     
     switch (iDamageToUse)
     {
@@ -310,12 +359,12 @@ int FindUnarmedDamage(object oCreature)
             if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D12;
             else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D10;
             else                            iDamage = MONST_DAMAGE_1D8;
-         break;
+            break;
         case 4:
             if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_2D8;
             else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D12;
             else                            iDamage = MONST_DAMAGE_1D10;
-         break;
+            break;
         case 5:
             if (bUseMonkAlt && !PRC_3_5e_FIST_DAMAGE)
             {
@@ -329,7 +378,7 @@ int FindUnarmedDamage(object oCreature)
                 else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D8;
                 else                        iDamage = MONST_DAMAGE_2D6;
             }
-         break;
+            break;
         case 6:
             if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_2D12;
             else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_2D10;
@@ -348,7 +397,7 @@ int FindUnarmedDamage(object oCreature)
                 else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D12;
                 else                        iDamage = MONST_DAMAGE_2D10;
             }
-         break;
+            break;
         case 8:
             if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_3D12;
             else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_3D10;
@@ -366,6 +415,7 @@ int FindUnarmedDamage(object oCreature)
             break;
 
         default:
+            WriteTimestampedLogEntry("Unknown value encountered in FindUnarmedDamage: " + IntToString(iDamageToUse));
             break;
     }
 
@@ -537,19 +587,19 @@ void UnarmedFists(object oCreature)
             // handles these seperately so as not to create "attack penalties vs. xxxx"
             ip = GetFirstItemProperty(oItem);
             while(GetIsItemPropertyValid(ip))
-         {
-             iType = GetItemPropertyType(ip);
-             switch (iType)
-             {
+            {
+                iType = GetItemPropertyType(ip);
+                switch (iType)
+                {
                     case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
-                 case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
-                 case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
-                 if (GetItemPropertyCostTableValue(ip) > iEnh)
-                     DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL));
+                    case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
+                    case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
+                    if (GetItemPropertyCostTableValue(ip) > iEnh)
+                        DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL));
                     break;
                 }
-          ip = GetNextItemProperty(oItem);
-         }
+                ip = GetNextItemProperty(oItem);
+            }
         }
     }
 
@@ -564,7 +614,7 @@ void UnarmedFists(object oCreature)
     
     // Add OnHitCast: Unique if necessary
     if(GetHasFeat(FEAT_REND, oCreature))
-     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oWeapL);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oWeapL);
 
     // Cool VFX when striking unarmed
     if (iMonkEq > 9)

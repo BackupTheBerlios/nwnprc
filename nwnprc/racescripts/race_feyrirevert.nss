@@ -1,11 +1,8 @@
-#include "prc_feat_const"
-#include "prc_spell_const"
-
 void main()
 {
-string sRealFyi = "realFyi";
-int nRealFy;
-nRealFy = GetLocalInt(OBJECT_SELF, sRealFyi);
-if ( nRealFy > 0 )
-  SetCreatureAppearanceType(OBJECT_SELF, nRealFy - 1);
+string sRealApp = "realApp";
+int nRealMe;
+nRealMe = GetLocalInt(OBJECT_SELF, sRealApp);
+if ( nRealMe > 0 )
+  SetCreatureAppearanceType(OBJECT_SELF, nRealMe - 1);
 }

@@ -19,5 +19,6 @@
 15   FEAT_FEYRI_DARKNESS                4677      
 16   FEAT_FEYRI_ENERVATION              4678      
 17   FEAT_FEYRI_ALTER                   4679      
-18   Race_Elven                         4711      
-19   Race_Outsider                      4716      
+18   FEAT_FEYRI_REVERT                  4680      
+19   Race_Elven                         4711      
+20   Race_Outsider                      4716      

@@ -17,4 +17,5 @@
 13   FEAT_SVIRF_BLIND_DEAF 4652      
 14   FEAT_SVIRF_BLUR       4653      
 15   FEAT_SVIRF_DISGUISE   4654      
-16   Race_Gnomish          4712      
+16   FEAT_SVIRF_REVERT     4655      
+17   Race_Gnomish          4712      

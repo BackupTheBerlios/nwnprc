@@ -69,8 +69,11 @@ void main()
     effect eAttack = EffectAttackIncrease(nAttack);
     effect eAC = EffectACIncrease(nAC);
 
-    VersusRacialTypeEffect(eAttack, nRace);
-    VersusRacialTypeEffect(eAC, nRace);
+    eAttack = VersusRacialTypeEffect(eAttack, nRace);
+    eAC = VersusRacialTypeEffect(eAC, nRace);
+
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAttack, oPC, RoundsToSeconds(nDur));
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAC, oPC, RoundsToSeconds(nDur));
 
     SetLocalInt(oPC, "KOTMCCombat", TRUE);
     DelayCommand(RoundsToSeconds(nDur), DeleteLocalInt(oPC, "KOTMCCombat"));

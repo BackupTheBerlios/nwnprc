@@ -230,6 +230,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"BlackguardSneakDice");
     // Sacred Fist
     DeleteLocalInt(oSkin,"SacFisAC");
+    DeleteLocalInt(oSkin,"SacFisMv"); 
     // Brawler
     DeleteLocalInt(oSkin,"BrawlerDodge");
     DeleteLocalInt(oSkin,"BrawlerFinesse");

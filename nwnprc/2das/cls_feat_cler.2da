@@ -176,7 +176,7 @@
 172 FEAT_DISCIPLE_OF_SUN                3127      0    -1             1      
 173 FEAT_JUMP                           2884      3    1              1      
 174 ****                                ****      **** ****           ****   
-175 "**racial feats**"                  ****      **** ****           ****   
+175 "**racial_feats**"                  ****      **** ****           ****   
 176 FEAT_URDINNIR_STONESKIN             4644      0    99             1      
 177 FEAT_AVARIEL_DIVE                   4645      0    99             1      
 178 FEAT_AYUAN_FEAR                     4646      0    99             1      

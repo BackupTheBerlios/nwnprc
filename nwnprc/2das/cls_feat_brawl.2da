@@ -317,7 +317,7 @@
 313 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
 314 FEAT_MANYSHOT                                  3306      0    -1             1      
 315 ****                                           ****      **** ****           ****   
-316 "**racial feats**"                             ****      **** ****           ****   
+316 "**racial_feats**"                             ****      **** ****           ****   
 317 FEAT_URDINNIR_STONESKIN                        4644      0    99             1      
 318 FEAT_AVARIEL_DIVE                              4645      0    99             1      
 319 FEAT_AYUAN_FEAR                                4646      0    99             1      

@@ -1,7 +1,7 @@
 2DA V2.0
 
     FeatLabel                                      FeatIndex List GrantedOnLevel OnMenu 
-347 "**Class Feats**"                              ****      **** ****           ****   
+347 "**Class_Feats**"                              ****      **** ****           ****   
 0   WILDER_WILDSURGE_1                             3560      3    1              1
 0   WILDER_WILDSURGE_2                             3561      3    3              1
 0   WILDER_WILDSURGE_3                             3562      3    7              1
@@ -16,7 +16,7 @@
 0   FEAT_PSIONWILD_MNDTHRST                        3567      3    1              1
 0   FEAT_PSIONWILD_BESTOW_POWER                    3575      3    1              1
 346 ****                                           ****      **** ****           ****   
-347 "**normal feats**"                             ****      **** ****           ****   
+347 "**normal_feats**"                             ****      **** ****           ****   
 0   ArmProfLight                                   3         3    1              0      
 135 WeapProfSim                                    46        3    1              0      
 136 Shield                                         32        3    1              0      
@@ -31,8 +31,9 @@
 343 FEAT_HOLYRADIANCE                              3164      0    -1             1      
 344 FEAT_SHADOW_LORD_CONVO                         2360      3    1              1      
 345 FEAT_JUMP                                      2884      3    1              1      
+388 FEAT_THRALL_TO_DEMON                           2616      0    -1             1      
 346 ****                                           ****      **** ****           ****   
-347 "**racial feats**"                             ****      **** ****           ****   
+347 "**racial_feats**"                             ****      **** ****           ****   
 348 FEAT_URDINNIR_STONESKIN                        4644      0    99             1      
 349 FEAT_AVARIEL_DIVE                              4645      0    99             1      
 350 FEAT_AYUAN_FEAR                                4646      0    99             1      
@@ -73,4 +74,3 @@
 385 FEAT_DUERGAR_INVIS                             4681      0    99             1      
 386 FEAT_DROW_DARKNESS                             4682      0    99             1      
 387 FEAT_DROW_FAERIE_FIRE                          4683      0    99             1      
-388 FEAT_THRALL_TO_DEMON                           2616      0    -1             1      

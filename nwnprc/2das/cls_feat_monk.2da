@@ -135,7 +135,7 @@
 131 FEAT_HOLYRADIANCE                         3164      0    -1             1      
 132 FEAT_JUMP                                 2884      3    1              1      
 133 ****                                      ****      **** ****           ****   
-134 "**racial feats**"                        ****      **** ****           ****   
+134 "**racial_feats**"                        ****      **** ****           ****   
 135 FEAT_URDINNIR_STONESKIN                   4644      0    99             1      
 136 FEAT_AVARIEL_DIVE                         4645      0    99             1      
 137 FEAT_AYUAN_FEAR                           4646      0    99             1      

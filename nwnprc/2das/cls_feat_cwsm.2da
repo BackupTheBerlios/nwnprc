@@ -355,7 +355,7 @@
 351 FEAT_MANYSHOT                                  3306      0    -1             1      
 352 FEAT_IMP_MANYSHOT                              3350      0    -1             1      
 353 FEAT_DISCIPLE_OF_DARKNESS                      4012      0    -1             1      
-354 "**racial feats**"                             ****      **** ****           ****   
+354 "**racial_feats**"                             ****      **** ****           ****   
 355 FEAT_URDINNIR_STONESKIN                        4644      0    99             1      
 356 FEAT_AVARIEL_DIVE                              4645      0    99             1      
 357 FEAT_AYUAN_FEAR                                4646      0    99             1      

@@ -178,7 +178,7 @@
 174 FEAT_INSIDIOUSMAGIC                 2963      1    -1             0      
 175 FEAT_JUMP                           2884      3    1              1      
 176 ****                                ****      **** ****           ****   
-177 "**racial feats**"                  ****      **** ****           ****   
+177 "**racial_feats**"                  ****      **** ****           ****   
 178 FEAT_URDINNIR_STONESKIN             4644      0    99             1      
 179 FEAT_AVARIEL_DIVE                   4645      0    99             1      
 180 FEAT_AYUAN_FEAR                     4646      0    99             1      

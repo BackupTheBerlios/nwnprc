@@ -199,7 +199,7 @@
 195 FEAT_EPIC_GREAT_CHARISMA_9                772       1    -1             0      
 196 FEAT_EPIC_GREAT_CHARISMA_10               773       1    -1             0      
 197 ****                                      ****      **** ****           ****   
-198 "**racial feats**"                        ****      **** ****           ****   
+198 "**racial_feats**"                        ****      **** ****           ****   
 199 FEAT_URDINNIR_STONESKIN                   4644      0    99             1      
 200 FEAT_AVARIEL_DIVE                         4645      0    99             1      
 201 FEAT_AYUAN_FEAR                           4646      0    99             1      

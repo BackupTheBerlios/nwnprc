@@ -104,7 +104,8 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
             GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster)/2+
             GetHasFeat(FEAT_FIRE_ADEPT, oCaster) +
             GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)+
-            GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster)/2;
+            GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster)/2+
+            GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster);
 
 
         // area for CLASS-specific code. Avoid if possible
@@ -126,10 +127,7 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
                             nArcane+=1;
                         }}}}
         }
-        if(GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster)){
-            nArcane+=GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster);
-         
-        }
+
     }//end of arcane spell part
     
     else if( iTypeSpell == TYPE_DIVINE){
@@ -142,7 +140,6 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
             GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oCaster)+
             GetLevelByClass(CLASS_TYPE_HOSPITALER, oCaster)+
             GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster)/2+
-            GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster)+
 	    GetLevelByClass(CLASS_TYPE_OCULAR, oCaster)/2 +
 	    GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster)/2 +
 	    GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)+

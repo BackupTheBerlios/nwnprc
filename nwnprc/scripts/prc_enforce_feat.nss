@@ -121,6 +121,89 @@ void VileFeats(object oPC = OBJECT_SELF)
 }
 
 
+void UltiRangerFeats(object oPC = OBJECT_SELF)
+{
+
+	int iURanger = GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER, oPC);
+	int iAbi;
+	int iFE;
+	int Ability = 0;
+	
+	if (iURanger > 0)
+	{
+		iFE     +=	(GetHasFeat(FEAT_UR_FE_DWARF, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_ELF, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_GNOME, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_HALFING, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_HALFELF, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_HALFORC, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_HUMAN, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_ABERRATION, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_ANIMAL, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_BEAST, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_CONSTRUCT, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_DRAGON, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_GOBLINOID, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_MONSTROUS, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_ORC, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_REPTILIAN, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_ELEMENTAL, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_FEY, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_GIANT, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_MAGICAL_BEAST, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_OUSIDER, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_SHAPECHANGER, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_UNDEAD, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_VERMIN, oPC));
+
+
+
+	
+		iAbi    +=  +	(GetHasFeat(FEAT_UR_SNEAKATK_3D6, oPC))
+			    +	(GetHasFeat(FEAT_UR_ARMOREDGRACE, oPC))
+			    +	(GetHasFeat(FEAT_UR_DODGE_FE, oPC))
+			    +	(GetHasFeat(FEAT_UR_RESIST_FE, oPC))
+			    +	(GetHasFeat(FEAT_UR_HAWK_TOTEM, oPC))
+			    +	(GetHasFeat(FEAT_UR_OWL_TOTEM, oPC))
+			    +	(GetHasFeat(FEAT_UR_VIPER_TOTEM, oPC))
+			    +	(GetHasFeat(FEAT_UR_FAST_MOVEMENT, oPC))
+			    +	(GetHasFeat(FEAT_UNCANNYX_DODGE_1, oPC));
+
+			   
+                if (iURanger>11){
+                   if ((iURanger-8)/3 != iAbi) Ability = 1;
+                }
+
+		if ( iFE != (iURanger+3)/5 || Ability)
+		{
+			int nHD = GetHitDice(oPC);
+			int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+			int nOldXP = GetXP(oPC);
+			int nNewXP = nMinXPForLevel - 1000;
+			SetXP(oPC,nNewXP);
+			string sAbi ="1 ability ";
+			string sFE =" 1 favorite enemy ";
+			string msg=" You must select ";
+			if (iURanger>10 &&  (iURanger-8)%3 == 0) msg = msg+sAbi+" ";
+			if (iURanger>1 && (iURanger+8)%5 == 0) msg+=sFE;
+			if (iURanger == 1 || iURanger == 4 ||iURanger == 7 ||iURanger == 15 ||iURanger == 19) msg+= " 1 bonus Feat";
+                        
+			//FloatingTextStringOnCreature(" Please reselect your feats.", oPC, FALSE);
+			FloatingTextStringOnCreature(msg, oPC, FALSE);
+			DelayCommand(1.0, SetXP(oPC,nOldXP));
+		}
+		else
+		{
+		    iURanger++;
+		    string msg =" In your next Ultimate Ranger level ,you must select ";
+		    if (iURanger == 1 || iURanger == 4 ||iURanger == 7 ||iURanger == 15 ||iURanger == 19) msg+= " 1 bonus Feat ";
+                    if (iURanger>10 &&  (iURanger-8)%3 == 0) msg +="1 Ability ";
+                    if (iURanger>1 && (iURanger+8)%5 == 0) msg+=" 1 Favorite Enemy ";
+                    if ( msg != " In your next Ultimate Ranger level ,you must select ")
+                      FloatingTextStringOnCreature(msg, oPC, FALSE);
+		}
+	}
+}
 
 void main()
 {
@@ -129,4 +212,5 @@ void main()
 
 	RedWizardFeats(oPC);
 	VileFeats(oPC);
+	UltiRangerFeats(oPC);
 }

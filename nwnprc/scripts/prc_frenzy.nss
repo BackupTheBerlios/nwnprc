@@ -129,6 +129,8 @@ void main()
             // can be read in by the GiveExtraRageBonuses() function below.
             int StrBeforeBonuses = GetAbilityScore(OBJECT_SELF, ABILITY_STRENGTH);
             int ConBeforeBonuses = GetAbilityScore(OBJECT_SELF,ABILITY_CONSTITUTION);
+            int ExtRage = GetHasFeat(FEAT_EXTENDED_RAGE, OBJECT_SELF) ? 5:0;
+            nCon+= ExtRage;
 
             //Apply the VFX impact and effects
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nCon));

@@ -202,6 +202,7 @@ public class Main{
 	
 	/** The template files */
 	private static String babAndSavthrTableHeaderTemplate = null,
+	                      classFeatTableHeaderTemplate    = null,
 	                      classTemplate                   = null,
 	                      classTablesEntryTemplate        = null,
 	                      domainTemplate                  = null,
@@ -300,6 +301,7 @@ public class Main{
 		
 		try{
 			babAndSavthrTableHeaderTemplate = readTemplate(templatePath + "babNsavthrtableheader.html");
+			classFeatTableHeaderTemplate    = readTemplate(templatePath + "classfeattableheader.html");
 			classTablesEntryTemplate        = readTemplate(templatePath + "classtablesentry.html");
 			classTemplate                   = readTemplate(templatePath + "class.html");
 			domainTemplate                  = readTemplate(templatePath + "domain.html");
@@ -825,7 +827,7 @@ public class Main{
 			if(!feats2da.getEntry("SUCCESSOR", check.entryNum).equals("****")){
 				try{
 					other = feats.get(Integer.parseInt(feats2da.getEntry("SUCCESSOR", check.entryNum)));
-					temp += ("<div>\n" + successorFeatHeaderTemplate + "<br /><a href=" + other.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + other.name + "</a>\n</div>\n");
+					temp += ("<div>\n" + successorFeatHeaderTemplate + "<br /><a href=\"" + other.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + other.name + "</a>\n</div>\n");
 				}catch(NumberFormatException e){
 					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid successor link");
 				}catch(NullPointerException e){
@@ -841,7 +843,7 @@ public class Main{
 			boolean doOnce = false;
 			for(FeatEntry child : check.childFeats){
 				if(!doOnce){ temp += "<div>\n"; doOnce = true; }
-				temp += "<br /><a href=" + child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + child.name + "</a>\n";
+				temp += "<br /><a href=\"" + child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + child.name + "</a>\n";
 			}
 			if(doOnce) temp += "</div>\n";
 			
@@ -888,9 +890,9 @@ public class Main{
 		if(andReq1 != null || andReq2 != null){
 			preReqText = "<div>\n" + prereqANDFeatHeaderTemplate + "\n"; 
 			if(andReq1 != null)
-				preReqText += "<br /><a href=" + andReq1.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + andReq1.name + "</a>\n";
+				preReqText += "<br /><a href=\"" + andReq1.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + andReq1.name + "</a>\n";
 			if(andReq2 != null)
-				preReqText += "<br /><a href=" + andReq2.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + andReq2.name + "</a>\n";
+				preReqText += "<br /><a href=\"" + andReq2.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + andReq2.name + "</a>\n";
 			preReqText += "</div>\n";
 		}
 
@@ -915,7 +917,7 @@ public class Main{
 							preReqText = "<div>\n" + prereqORFeatHeaderTemplate + "\n";
 							headerDone = true;
 						}
-						preReqText += "<br /><a href=" + orReq.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + orReq.name + "</a>\n";
+						preReqText += "<br /><a href=\"" + orReq.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + orReq.name + "</a>\n";
 					}
 				}
 			}
@@ -995,7 +997,7 @@ public class Main{
 				try{
 					grantedFeat = feats.get(Integer.parseInt(domains2da.getEntry("GrantedFeat", i)));
 					text = text.replaceAll("~~~DomainFeat~~~",
-					                       "<a href=" + grantedFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + grantedFeat.name + "</a>");
+					                       "<a href=\"" + grantedFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + grantedFeat.name + "</a>");
 				}catch(NumberFormatException e){
 					err_pr.println("Invalid entry in GrantedFeat of domain " + i + ": " + name);
 					errored = true;
@@ -1011,7 +1013,7 @@ public class Main{
 					if(domains2da.getEntry("Level_" + j, i).equals("****")) continue;
 					try{
 						grantedSpell = spells.get(Integer.parseInt(domains2da.getEntry("Level_" + j, i)));
-						spellList += ("<br /><a href=" + grantedSpell.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + grantedSpell.name + "</a>\n");
+						spellList += ("<br /><a href=\"" + grantedSpell.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + grantedSpell.name + "</a>\n");
 					}catch(NumberFormatException e){
 						err_pr.println("Invalid entry in Level_" + j + " of domain " + i + ": " + name);
 						errored = true;
@@ -1087,7 +1089,7 @@ public class Main{
 				for(int j = 0; j < featTable.getEntryCount(); j++){
 					try{
 						grantedFeat = feats.get(Integer.parseInt(featTable.getEntry("FeatIndex", j)));
-						featList += ("<br /><a href=" + grantedFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + grantedFeat.name + "</a>\n");
+						featList += ("<br /><a href=\"" + grantedFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + grantedFeat.name + "</a>\n");
 					}catch(NumberFormatException e){
 						err_pr.println("Invalid entry in FeatIndex line " + j + " of " + featTable.getName());
 						errored = true;
@@ -1113,7 +1115,8 @@ public class Main{
 	
 	
 	/**
-	 * Handles creation of the race pages.
+	 * Handles creation of the class pages.
+	 * Subsections handled by several following methods.
 	 */
 	private static void doClasses(){
 		String baseClassPath     = contentPath + "base_classes" + fileSeparator,
@@ -1122,6 +1125,7 @@ public class Main{
 		       text     = null,
 		       path     = null,
 		       featList = null;
+		String[] tempArr = null;
 		FeatEntry grantedFeat   = null;
 		Data_2da featTable      = null,
 		         bonusFeatTable = null,
@@ -1161,6 +1165,11 @@ public class Main{
 				// Add in the skills table
 				text = text.replaceAll("~~~ClassSkillTable~~~", buildSkillTable(classes2da, i));
 				
+				// Add in the feat tables
+				tempArr = buildClassFeatTables(classes2da, i);
+				text = text.replaceAll("~~~ClassBonusFeatTable~~~", tempArr[0]);
+				text = text.replaceAll("~~~ClassSelectableFeatTable~~~", tempArr[1]);
+				
 				/* Check whether this is a base or a prestige class. No prestige
 				 * class should give exp penalty (nor should any base class not give it),
 				 * so it gan be used as an indicator.
@@ -1189,7 +1198,7 @@ public class Main{
 	 *
 	 * @return  string representation of the table
 	 *
-	 * @throws PageGenerationException if reading the 2das fails
+	 * @throws PageGenerationException if there is an error while generating the table and error tolerance is off
 	 */
 	private static String buildBabAndSaveTable(Data_2da classes2da, int entryNum){
 		Data_2da babTable  = null,
@@ -1243,11 +1252,11 @@ public class Main{
 			// Start building the table
 			for(int i = 0; i < maxToPrint; i++){
 				toReturn += "<tr>\n";
-				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", (i + 1) + "") + "\n";
-				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", babTable.getEntry("BAB", i)) + "\n";
-				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", saveTable.getEntry("FortSave", i)) + "\n";
-				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", saveTable.getEntry("RefSave", i)) + "\n";
-				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", saveTable.getEntry("WillSave", i)) + "\n";
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", (i + 1) + "");
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", babTable.getEntry("BAB", i));
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", saveTable.getEntry("FortSave", i));
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", saveTable.getEntry("RefSave", i));
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", saveTable.getEntry("WillSave", i));
 				toReturn += "</tr>\n";
 			}
 			toReturn += "</table>\n";
@@ -1265,10 +1274,10 @@ public class Main{
 	 *
 	 * @return  string representation of the table
 	 *
-	 * @throws PageGenerationException if reading the 2das fails
+	 * @throws PageGenerationException if there is an error while generating the table and error tolerance is off
 	 */
 	private static String buildSkillTable(Data_2da classes2da, int entryNum){
-		Data_2da skillTable  = null;
+		Data_2da skillTable = null;
 		try{
 			skillTable = twoDA.get(classes2da.getEntry("SkillsTable", entryNum));
 		}catch(TwoDAReadException e){
@@ -1314,17 +1323,17 @@ public class Main{
 		}
 		
 		while(classSkills.size() > 0 || crossClassSkills.size() > 0){
-			toReturn += "\n<tr>";
+			toReturn += "<tr>\n";
 			
 			if(classSkills.size() > 0){
 				tempSkill = classSkills.remove(classSkills.firstKey());
-				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=" + tempSkill.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + tempSkill.name + "</a>") + "\n";
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempSkill.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempSkill.name + "</a>");
 			}else
 				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
 			
 			if(crossClassSkills.size() > 0){
 				tempSkill = crossClassSkills.remove(crossClassSkills.firstKey());
-				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=" + tempSkill.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + tempSkill.name + "</a>") + "\n";
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempSkill.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempSkill.name + "</a>");
 			}else
 				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
 			
@@ -1332,6 +1341,119 @@ public class Main{
 		}
 		
 		toReturn += "</table>\n";
+		return toReturn;
+	}
+	
+	
+	/**
+	 * Constructs the html table of the bonus and selectable class feats of the given class.
+	 * TreeMaps are used to arrange the printed feats in alphabetic order.
+	 *
+	 * @param classes2da  data structure wrapping classes.2da
+	 * @param entryNum    number of the entry to generate table for
+	 *
+	 * @return  an array of two strings. First one is the bonus feats, second is the selectable feats
+	 *
+	 * @throws PageGenerationException if there is an error while generating the table and error tolerance is off
+	 */
+	private static String[] buildClassFeatTables(Data_2da classes2da, int entryNum){
+		Data_2da featTable = null;
+		try{
+			featTable = twoDA.get(classes2da.getEntry("FeatsTable", entryNum));
+		}catch(TwoDAReadException e){
+			if(tolErr){
+				err_pr.println("Failed to read CLS_FEAT_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
+				return new String[]{"", ""};
+			}
+			else throw new PageGenerationException("Failed to read CLS_FEAT_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
+		}
+		
+		String[] toReturn = {classFeatTableHeaderTemplate,
+		                     classFeatTableHeaderTemplate};
+		String temp = null;
+		FeatEntry tempFeat = null;
+		TreeMap<String, FeatEntry> normalBonusFeats      = new TreeMap<String, FeatEntry>(),
+		                           epicBonusFeats        = new TreeMap<String, FeatEntry>(),
+		                           normalSelectableFeats = new TreeMap<String, FeatEntry>(),
+		                           epicSelectableFeats   = new TreeMap<String, FeatEntry>();
+		
+		// Build alphabetic lists of all the feats
+		for(int i = 0; i < featTable.getEntryCount(); i++){
+			temp = featTable.getEntry("List", i);
+			// Yet more validity checking :P
+			if(!(temp.equals("0") || temp.equals("1") || temp.equals("2") || temp.equals("3"))){
+				if(tolErr){
+					err_pr.println("Invalid List entry in " + featTable.getName() + " on row " + i + ": " + temp);
+					continue;
+				}else throw new PageGenerationException("Invalid List entry in " + featTable.getName() + " on row " + i + ": " + temp);
+			}
+			
+			try{
+				tempFeat = feats.get(Integer.parseInt(featTable.getEntry("FeatIndex", i)));
+			}catch(NumberFormatException e){
+				if(tolErr){
+					err_pr.println("Invalid FeatIndex entry in " + featTable.getName() + " on row " + i + ": " + featTable.getEntry("FeatIndex", i));
+					continue;
+				}else throw new PageGenerationException("Invalid FeatIndex entry in " + featTable.getName() + " on row " + i + ": " + featTable.getEntry("FeatIndex", i));
+			}
+			if(tempFeat == null){
+				if(tolErr){
+					err_pr.println("FeatIndex entry in " + featTable.getName() + " on row " + i + " points to non-existent feat: " + featTable.getEntry("FeatIndex", i));
+					continue;
+				}else throw new PageGenerationException("FeatIndex entry in " + featTable.getName() + " on row " + i + " points to non-existent feat: " + featTable.getEntry("FeatIndex", i));
+			}
+			
+			if(temp.equals("3")){
+				if(tempFeat.isEpic) epicBonusFeats.put(tempFeat.name, tempFeat);
+				else              normalBonusFeats.put(tempFeat.name, tempFeat);
+			}else{
+				if(tempFeat.isEpic) epicSelectableFeats.put(tempFeat.name, tempFeat);
+				else              normalSelectableFeats.put(tempFeat.name, tempFeat);
+			}
+			
+		}
+		
+		// Build the bonus feat table
+		while(normalBonusFeats.size() > 0 || epicBonusFeats.size() > 0){
+			toReturn[0] += "<tr>\n";
+			
+			if(normalBonusFeats.size() > 0){
+				tempFeat = normalBonusFeats.remove(normalBonusFeats.firstKey());
+				toReturn[0] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempFeat.name + "</a>");
+			}else
+				toReturn[0] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
+			
+			if(epicBonusFeats.size() > 0){
+				tempFeat = epicBonusFeats.remove(epicBonusFeats.firstKey());
+				toReturn[0] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempFeat.name + "</a>");
+			}else
+				toReturn[0] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
+			
+			toReturn[0] += "</tr>\n";
+		}
+		
+		// Build the selectable feat table
+		while(normalSelectableFeats.size() > 0 || epicSelectableFeats.size() > 0){
+			toReturn[1] += "<tr>\n";
+			
+			if(normalSelectableFeats.size() > 0){
+				tempFeat = normalSelectableFeats.remove(normalSelectableFeats.firstKey());
+				toReturn[1] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempFeat.name + "</a>");
+			}else
+				toReturn[1] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
+			
+			if(epicSelectableFeats.size() > 0){
+				tempFeat = epicSelectableFeats.remove(epicSelectableFeats.firstKey());
+				toReturn[1] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempFeat.name + "</a>");
+			}else
+				toReturn[1] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
+			
+			toReturn[1] += "</tr>\n";
+		}
+		
+		toReturn[0] += "</table>\n";
+		toReturn[1] += "</table>\n";
+		
 		return toReturn;
 	}
 }

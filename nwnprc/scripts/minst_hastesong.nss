@@ -51,6 +51,20 @@ void main()
     //Do the visual effects
     effect eVis2 = EffectLinkEffects(EffectVisualEffect(VFX_DUR_BARD_SONG), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis2, OBJECT_SELF, RoundsToSeconds(nDuration));
+
+    int iRandomSound = d3(1);
+    if (iRandomSound = 1)
+    {
+        PlaySound("as_cv_lute1");
+    }
+    else if (iRandomSound = 2)
+    {
+        PlaySound("as_cv_lute1b");
+    }
+    else
+    {
+        PlaySound("srd_bardsong");
+    }    
     
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));

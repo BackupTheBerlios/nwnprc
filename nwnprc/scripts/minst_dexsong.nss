@@ -53,6 +53,20 @@ void main()
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
+    int iRandomSound = d3(1);
+    if (iRandomSound = 1)
+    {
+        PlaySound("as_cv_lute1");
+    }
+    else if (iRandomSound = 2)
+    {
+        PlaySound("as_cv_lute1b");
+    }
+    else
+    {
+        PlaySound("srd_bardsong");
+    }    
+
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
 
     int iPerformReq = 30;

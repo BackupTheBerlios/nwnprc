@@ -1,6 +1,13 @@
 2DA V2.0
 
     FeatLabel                                      FeatIndex List GrantedOnLevel OnMenu 
+0   WILDER_WILDSURGE_1                             3560      3    1              1
+0   WILDER_WILDSURGE_2                             3561      3    3              1
+0   WILDER_WILDSURGE_3                             3562      3    7              1
+0   WILDER_WILDSURGE_4                             3563      3    11              1
+0   WILDER_WILDSURGE_5                             3564      3    15              1
+0   WILDER_WILDSURGE_6                             3565      3    19              1
+0   WILDER_WILDSURGE_OFF                           3566      3    1              1
 0   FEAT_PSION_TEST                                3550      3    1              1
 0   FEAT_AUGMENT_PSIONICS                          3551      3    1              1
 0   FEAT_AUGMENT_NONE                              3552      3    1              1        

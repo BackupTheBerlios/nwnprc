@@ -92,6 +92,9 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_JUDICATOR, oPC) > 0)          ExecuteScript("prc_judicator", oPC);
     if(GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) > 0)     ExecuteScript("prc_arcduel", oPC);
     if(GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oPC) > 0)      ExecuteScript("prc_thayknight", oPC);
+    if(GetLevelByClass(CLASS_TYPE_TEMPLE_RAIDER, oPC) > 0)      ExecuteScript("prc_templeraider", oPC);
+    if(GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC) > 0)ExecuteScript("prc_outlawroad", oPC);
+
     if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
 
     // Feats are checked here
@@ -300,6 +303,15 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"ThayZulkChamp");
     DeleteLocalInt(oSkin,"ThayZulkChampSkill");
     DeleteLocalInt(oSkin,"ThayZulkChampSave");
+    // Outlaw
+    DeleteLocalInt(oSkin,"OutLuckF");
+    DeleteLocalInt(oSkin,"OutLuckR");
+    DeleteLocalInt(oSkin,"OutLuckW");
+    DeleteLocalInt(oSkin,"OutPe");
+    DeleteLocalInt(oSkin,"OutLIn");
+    DeleteLocalInt(oSkin,"OutLPe");
+    DeleteLocalInt(oSkin,"OutLBl");
+    
     // future PRCs Go below here
 }
 

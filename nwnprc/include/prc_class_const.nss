@@ -112,3 +112,5 @@ const int CLASS_TYPE_CORRUPTER                  = 112;
 const int CLASS_TYPE_JUDICATOR                  = 105;
 const int CLASS_TYPE_ARCANE_DUELIST             = 95;
 const int CLASS_TYPE_THAYAN_KNIGHT              = 149;
+const int CLASS_TYPE_TEMPLE_RAIDER              = 110;
+const int CLASS_TYPE_OUTLAW_CRIMSON_ROAD        = 109;

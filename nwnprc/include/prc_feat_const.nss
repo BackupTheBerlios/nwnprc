@@ -1052,6 +1052,15 @@ const int FEAT_CO_SPELLLVL2                      = 3002;
 const int FEAT_CO_SPELLLVL3                      = 3003;
 const int FEAT_CO_SPELLLVL4                      = 3004;
 
+// Outlaw Crimson Road
+const int FEAT_FUGITIVE_LUCK1                    = 2798;
+const int FEAT_FUGITIVE_LUCK2                    = 2799;
+const int FEAT_FUGITIVE_LUCK3                    = 2877;
+const int FEAT_FUGITIVE_LUCKEPIC                 = 2879;
+const int FEAT_OUT_LEADERSHIP                    = 2880;
+const int FEAT_OUT_LEGENDS                       = 2881;
+
+
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////
 //////////////////////////////////////////////////*/

@@ -73,6 +73,10 @@ int GetRogueSneak(object oPC)
    //Ambush Attack
    if (GetHasFeat(FEAT_UR_SNEAKATK_3D6,oPC)) iRogueSneak += 3;
    
+   // Outlaw Crimson Road
+   iClassLevel = GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC);
+   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
+   
    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
    {
       // Peerless Archer

@@ -25,7 +25,7 @@
 
 #include "x0_i0_spells"
 #include "prc_class_const"
-//#include "inc_epicspells"
+#include "inc_epicspells"
 #include "x2_inc_spellhook"
 
 //#include "inc_epicspells"
@@ -76,85 +76,6 @@
             //#include "prc_feat_const"
             //#include "lookup_2da_spell"
             //#include "prcsp_spell_adjs"
-
-int GetTotalCastingLevel(object oCaster)
-{
-    int nLevel = GetCasterLvl(TYPE_DIVINE, oCaster);
-    if (nLevel < GetCasterLvl(TYPE_ARCANE, oCaster))
-        nLevel = GetCasterLvl(TYPE_ARCANE, oCaster); 
-    return nLevel;
-}
-
-int GetDCSchoolFocusAdjustment(object oPC, string sChool)
-{
-    int nNewDC = 0;
-    if (sChool == "A") // Abjuration spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ABJURATION, oPC)) nNewDC = 6;
-    }
-    if (sChool == "C") // Conjuration spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_CONJURATION, oPC)) nNewDC = 6;
-    }
-    if (sChool == "D") // Divination spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINIATION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_DIVINATION, oPC)) nNewDC = 6;
-    }
-    if (sChool == "E") // Enchantment spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ENCHANTMENT, oPC)) nNewDC = 6;
-    }
-    if (sChool == "V") // Evocation spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_EVOCATION, oPC)) nNewDC = 6;
-    }
-    if (sChool == "I") // Illusion spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ILLUSION, oPC)) nNewDC = 6;
-    }
-    if (sChool == "N") // Necromancy spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_NECROMANCY, oPC)) nNewDC = 6;
-    }
-    if (sChool == "T") // Transmutation spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_TRANSMUTATION, oPC)) nNewDC = 6;
-    }
-    return nNewDC;
-}
-
-int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF)
-{
-    int iDC = 20;
-    int iArcaneClass = GetCasterLvl(TYPE_ARCANE,oCaster);
-    int iDivineClass = GetCasterLvl(TYPE_DIVINE,oCaster);
-    int iAbility = ABILITY_WISDOM;
-    
-    if (iArcaneClass > iDivineClass)
-    {
-        iAbility = ABILITY_CHARISMA;
-        if (GetLevelByClass(CLASS_TYPE_WIZARD,oCaster) > GetLevelByClass(CLASS_TYPE_SORCERER,oCaster))
-            iAbility = ABILITY_INTELLIGENCE;
-    }
-    iDC += GetAbilityModifier(iAbility,oCaster);
-    return iDC;
-}
 
 void main()
 {

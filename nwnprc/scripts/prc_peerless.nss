@@ -14,10 +14,15 @@ void Expert_Bowyer(object oPC ,object oSkin ,int nBowyer)
 /// Removes the Peerless Archer Sneak Attack ///
 void RemoveSneakAttack(object oPC, int iEquip)
 {
-
      object oItem = GetPCItemLastUnequipped();
+     int bHasBow = FALSE;
+     
+     if(GetBaseItemType(oItem) == BASE_ITEM_LONGBOW || GetBaseItemType(oItem) == BASE_ITEM_SHORTBOW) 
+     {
+          bHasBow = TRUE;
+     }
 
-     if(GetBaseItemType(oItem) != BASE_ITEM_LONGBOW || GetBaseItemType(oItem) != BASE_ITEM_SHORTBOW)	return;
+     if(!bHasBow) return;
 
      if (GetHasFeat(FEAT_PA_SNEAK_4D6, oPC))
      {
@@ -42,14 +47,12 @@ void RemoveSneakAttack(object oPC, int iEquip)
 /// Applies the Peerless Archer Sneak Attack to its bow ///
 void AddSneakAttack(object oPC , int iEquip)
 {
-   object oWeapon = GetPCItemLastEquipped();
-
+      object oWeapon = GetPCItemLastEquipped();
 
       if (iEquip = 2)      // On Equip
       {
           if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
           {
-
                      if (GetHasFeat(FEAT_PA_SNEAK_4D6, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_4D6), oWeapon);
@@ -77,11 +80,9 @@ void AddSneakAttack(object oPC , int iEquip)
       }
       else
       {
-      SendMessageToPC(oPC, "Peerless has equipped a Weapon");
           if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
           {
-
-                     SendMessageToPC(oPC, "Peerless has equipped a Bow");
+                     SendMessageToPC(oPC, "<Custom0> has equipped a Bow");
                      if (GetHasFeat(FEAT_PA_SNEAK_4D6, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_4D6), oWeapon);
@@ -101,8 +102,11 @@ void AddSneakAttack(object oPC , int iEquip)
 
              SetLocalInt(oPC, "HasPASneak", 2);
           }
-      }
-   
+          else
+          {
+               SendMessageToPC(oPC, "<Custom0> has equipped a Weapon");
+          }
+      }   
 }
 
 void main()

@@ -47,4 +47,5 @@ void main()
      }
      
      PerformAttackRound(oTarget, oPC, eCon, RoundsToSeconds(iDur), 0, 0, 0, FALSE, sSuccess, sMiss);
+ActionAttack(oTarget);
 }

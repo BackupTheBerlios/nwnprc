@@ -41,5 +41,6 @@ void main()
         iDam = unarmDamage;
 
     PerformAttackRound(oTarget, OBJECT_SELF, eVis, 0.0, 0, iDam, DAMAGE_TYPE_NEGATIVE, FALSE, sSuccess, sMiss);
+ActionAttack(oTarget);
 }
 

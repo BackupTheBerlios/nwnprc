@@ -13,6 +13,8 @@
 //:://////////////////////////////////////////////
 
 
+//Modified by WodahsEht -- Item Properties were being removed even if a new property wasn't applied.
+
 #include "x2_inc_craft"
 #include "mh_instr_inc"
 
@@ -71,8 +73,10 @@ if (iID == 0 && iIPConst != 0)
         return;
     }
 itemproperty ipC ;
+itemproperty ipPropertySave;
 float fCharge1 = 0.0f;
 float fCharge2;
+int iRemoveProperty = 0;
 int iCost;
 int iNewCost;
 
@@ -105,7 +109,8 @@ if(GetItemHasItemProperty(oItem, ITEM_PROPERTY_CAST_SPELL))
                 SetModuleOverrideSpellScriptFinished();
                 return;
                 }
-            RemoveItemProperty(oItem,ipTest);
+            iRemoveProperty = TRUE;  // tell it to remove the item charges later.
+            ipPropertySave = ipTest;  // gotta rember which property to remove.
             ipC = ItemPropertyCastSpell(iIPConst,iNewCost);
         }
         else
@@ -140,6 +145,7 @@ if(iCostMax < iTotalCost)
         SetModuleOverrideSpellScriptFinished();
         return;
     }
+if (iRemoveProperty) RemoveItemProperty(oItem,ipPropertySave);  // Prevent charges from stacking.
 AddItemProperty(DURATION_TYPE_PERMANENT,ipC, oItem);
 SetLocalInt(oItem,"cout_instrument",iCostMax - iTotalCost);
 SetModuleOverrideSpellScriptFinished();

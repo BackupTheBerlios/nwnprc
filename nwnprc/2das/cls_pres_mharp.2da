@@ -9,3 +9,4 @@
 5     ScriptVar    VAR       mh_AllowMaster   0           
 6     bluff        SKILL     23               8           
 7     spell        SPELL     2                ****        
+8     Perform      SKILL     11               12

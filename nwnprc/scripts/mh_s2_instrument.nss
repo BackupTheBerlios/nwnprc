@@ -3,7 +3,8 @@
 
 void main()
 {
-    object oCaster = GetLastSpellCaster();
+    //object oCaster = GetLastSpellCaster();
+    object oCaster = OBJECT_SELF;
 
     if(GetLocalInt(oCaster,"use_CIMM"))
     {

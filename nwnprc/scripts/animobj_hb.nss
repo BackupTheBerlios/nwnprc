@@ -39,7 +39,7 @@ void main()
     if(bDying)
         return;
 
-    SpeakString("HB");
+    //SpeakString("HB");
     //animated objects stop animating after casterlvl rounds
     int iRoundsToGo = GetLocalInt(OBJECT_SELF,"Rounds");
     if (iRoundsToGo<=0)

@@ -294,6 +294,9 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
   int nEffectSpellID, nEffectCastLevel;
   object oEffectCaster;
   int ModWeave;
+
+  string sSelf = "Dispelled: ";
+  string sCast = "Dispelled on "+GetName(oTarget)+": ";
  
  int Weave = GetHasFeat(FEAT_SHADOWWEAVE,OBJECT_SELF)+ GetLocalInt(OBJECT_SELF, "X2_AoE_SpecDispel");
 // SendMessageToPC(GetFirstPC(), "DispelMagicBestMod Weave Caster:"+ IntToString(Weave));
@@ -308,6 +311,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
     {
       ModWeave = 0;
       string SchoolWeave = lookup_spell_school(nEffectSpellID);
+      string SpellName = GetStringByStrRef(StringToInt(lookup_spell_name(nEffectSpellID)));
       nEffectCastLevel = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry));
       if (GetLocalInt(oTarget, " X2_Effect_Weave_ID_"+ IntToString(nCurrentEntry)) && !Weave) ModWeave = 4;
       if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
@@ -357,6 +361,11 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
         DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry));
         DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nCurrentEntry));
         DeleteLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nCurrentEntry));
+
+        //:: Display a message to all involved.
+        SendMessageToPC(OBJECT_SELF, sCast+SpellName);
+        if (oTarget != OBJECT_SELF) SendMessageToPC(oTarget, sSelf+SpellName);
+
         //:: If the check was successful, then we're done.
         return;
       }// end if check is successful.
@@ -372,6 +381,9 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
 
   }// end of for loop
 
+  // If we got here, the return function above never ran, so nothing got removed:
+  SendMessageToPC(OBJECT_SELF, sCast+"None");
+  if (oTarget != OBJECT_SELF) SendMessageToPC(oTarget, sSelf+"None");
 } // End Of Function
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -392,6 +404,10 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
 
   int nLastEntry = GetLocalInt(oTarget, "X2_Effects_Index_Number");
   effect eToDispel;
+  
+  string sList, SpellName;
+  string sSelf = "Dispelled: ";
+  string sCast = "Dispelled on "+GetName(oTarget)+": ";  
 
   int Weave = GetHasFeat(FEAT_SHADOWWEAVE,OBJECT_SELF)+ GetLocalInt(OBJECT_SELF, "X2_AoE_SpecDispel");
 //  SendMessageToPC(GetFirstPC(), "DispelMagicAllMod Weave Caster:"+ IntToString(Weave));
@@ -404,6 +420,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
     {
       ModWeave = 0;
       string SchoolWeave = lookup_spell_school(nEffectSpellID);
+      SpellName = GetStringByStrRef(StringToInt(lookup_spell_name(nEffectSpellID)));
       nEffectCasterLevel = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex));
       if (GetLocalInt(oTarget, " X2_Effect_Weave_ID_"+ IntToString(nIndex)) && !Weave) ModWeave = 4;
       if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
@@ -414,6 +431,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
 
       if(iDice + nCasterLevel >= 11 + nEffectCasterLevel+ModWeave)
       {
+        sList += SpellName+", ";
         oEffectCaster = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex));
 
         //:: Was going to use this function but upon reading it it became apparent it might not remove
@@ -468,6 +486,10 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
       DeleteLocalInt(oTarget,"XP2_L_SPELL_CASTER_LVL_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));
       effect eToDispel = GetFirstEffect(oTarget);
       nEffectSpellID = SPELL_INFESTATION_OF_MAGGOTS;
+
+      SpellName = GetStringByStrRef(StringToInt(lookup_spell_name(nEffectSpellID)));
+      sList += SpellName+", ";
+
       while(GetIsEffectValid(eToDispel))
       {
         if(GetEffectSpellId(eToDispel) == nEffectSpellID)
@@ -484,6 +506,11 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
   // loop to terminate and the other to begin - but it won't begin if eToDispel is
   // already invalid :)
 
+  if (sList == "") sList = "None  ";
+  sList = GetStringLeft(sList, GetStringLength(sList) - 2); // truncate the last ", "
+  
+  SendMessageToPC(OBJECT_SELF, sCast+sList);
+  if (oTarget != OBJECT_SELF) SendMessageToPC(oTarget, sSelf+sList);
 
 }// End of function.
 

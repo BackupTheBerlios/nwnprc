@@ -130,9 +130,9 @@ int GetSneakAttackDamage(int iSneakAttackDice)
      return iSneakAttackDamage;
 }
 
-int IsImmuneImpSneakAttack(oTarget)
+int IsImmuneImpSneakAttack(object oTarget)
 {
-     in bReturnVal = FALSE;
+     int bReturnVal = FALSE;
      
      if( GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) )
      {

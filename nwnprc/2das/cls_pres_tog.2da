@@ -7,4 +7,6 @@
 3          Persuade            SKILL     12               2
 4          ScriptVar           VAR       PRC_AllSpell3    0 
 5          ScriptVar           VAR       X2_AllowTOG      0
+6          ScriptVar           VAR       PRC_PrereqTOG    0
+
 

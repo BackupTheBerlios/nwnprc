@@ -6,19 +6,19 @@
 // Bonus on certain CHA based skills
 void Dark_Charisma(object oPC ,object oSkin, int nLevel)
 {
-    int nBonus = 0;
-    switch(nLevel)
-    { 
-         case 3: nBonus = 1;
-         case 5: nBonus = 2;
-         case 7: nBonus = 3;
-         case 11: nBonus = 4;
-         case 13: nBonus = 5;
-         case 17: nBonus = 6;
-         case 21: nBonus = 7;
-         case 25: nBonus = 8;
-         case 29: nBonus = 9;
-    }
+    int nBonus = 0;    
+    if(nLevel >= 3)  nBonus++;
+    if(nLevel >= 5)  nBonus++;
+    if(nLevel >= 7)  nBonus++;
+    if(nLevel >= 11) nBonus++;
+    if(nLevel >= 13) nBonus++;
+    if(nLevel >= 17) nBonus++;
+    if(nLevel >= 21) nBonus++;
+    if(nLevel >= 25) nBonus++;
+    if(nLevel >= 29) nBonus++;
+    
+    // string sMes = "Dark Charm Bonus: " + IntToString(nBonus);
+    // FloatingTextStringOnCreature(sMes, oPC);
     
     if(GetLocalInt(oSkin, "Dark_Charm_AE") == nBonus) return;
 

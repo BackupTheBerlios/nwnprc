@@ -16,7 +16,6 @@ void main()
         DeletePRCLocalInts(oSkin);     
 
     SetLocalInt(oPC,"ONENTER",1);
-    ExecuteScript("onenter_setlocal",oPC);
     
     // Make sure we reapply any bonuses before the player notices they are gone.
     DelayCommand(0.1, EvalPRCFeats(oPC));

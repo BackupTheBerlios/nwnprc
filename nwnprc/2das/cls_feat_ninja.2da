@@ -69,7 +69,7 @@
 65    FEAT_USE_POISON                       960         3      1                0        
 66    VenomImmunity                         203         3      8                0        
 67    FEAT_PRESTIGE_INVISIBILITY_2          471         3      10               1        
-68    FEAT_1000_FACES_MEDIUM                3000        3      7                1        
-69    FEAT_1000_FACES_SMALL                 3001        3      7                1        
-70    FEAT_1000_FACES_OFF                   3002        3      7                1        
-71    FEAT_EPIC_NINJA                       3026        3      11               0        
+68    FEAT_1000_FACES_MEDIUM                3400        3      7                1        
+69    FEAT_1000_FACES_SMALL                 3401        3      7                1        
+70    FEAT_1000_FACES_OFF                   3402        3      7                1        
+71    FEAT_EPIC_NINJA                       3426        3      11               0        

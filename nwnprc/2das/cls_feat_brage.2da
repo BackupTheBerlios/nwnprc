@@ -1,16 +1,16 @@
 2DA V2.0
 
       FeatLabel                                        FeatIndex   List   GrantedOnLevel   OnMenu   
-0     BattleRage1                                      3013        3      1                1        
+0     BattleRage1                                      3413        3      1                1        
 1     SkillFocInt                                      916         3      1                0        
 2     ResistPoi                                        383         3      1                0        
 3     KnockDown                                        23          3      2                0        
 4     AuraCourage                                      300         3      2                0        
 5     ImpStrike                                        21          3      3                0        
-6     BattleRage2                                      3014        3      3                1        
+6     BattleRage2                                      3414        3      3                1        
 7     ImpKnock                                         17          3      4                0        
 8     GreatCleave                                      391         3      4                0        
-9     BattleRage3                                      3015        3      5                1        
+9     BattleRage3                                      3415        3      5                1        
 10    FEAT_EPIC_ARMOR_SKIN                             490         3      5                0        
 11    WeapProfEx                                       44          0      -1               0        
 12    DefArrow                                         8           0      -1               0        

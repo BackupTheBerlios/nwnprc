@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eSave = EffectSavingThrowIncrease(SAVING_THROW_FORT, 5);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect ePoly = EffectPolymorph(28);
-    effect eSwing = EffectModifyAttacks(2);
+    effect eSwing = EffectModifyAttacks(CalcNumberOfAttacks());
 
     //Link effects
     effect eLink = EffectLinkEffects(eAttack, ePoly);

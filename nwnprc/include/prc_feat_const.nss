@@ -227,6 +227,8 @@ const int FEAT_VILE_MARTIAL_SHURIKEN      = 3397;
 const int FEAT_VILE_MARTIAL_DART          = 3398;
 const int FEAT_VILE_MARTIAL_SICKLE        = 3399;
 const int FEAT_VILE_MARTIAL_DWAXE         = 3452;
+const int FEAT_WEAPON_FOCUS_RAY           = 4819;
+const int FEAT_EPIC_WEAPON_FOCUS_RAY      = 4820;
 
 // Battleguard Tempus
 const int TEMPUS_ABILITY_ENHANC1   = 1;

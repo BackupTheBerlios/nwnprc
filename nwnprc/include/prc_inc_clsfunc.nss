@@ -28,6 +28,17 @@
 // about the PC being OBJECT_SELF.
 void ActionCastSpellOnSelf(int iSpell);
 
+// This is a wrapper function that causes OBJECT_SELF to fire the defined spell
+// at the defined level.  The target is automatically the object or location
+// that the user selects. Useful for SLA's to perform the casting of a true
+// spell.  This is useful because:
+//
+// 1) If the original's spell script is updated, so is this one.
+// 2) The spells are identified as the true spell.  That is, they ARE the true spell.
+// 3) Spellhooks (such as item crafting) that can only identify true spells
+//    will easily work.
+void ActionCastSpell(int iSpell, int iCasterLev = 0);
+
 void ActionCastSpellOnSelf(int iSpell)
 {
     object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(OBJECT_SELF));
@@ -36,6 +47,26 @@ void ActionCastSpellOnSelf(int iSpell)
     AssignCommand(oCastingObject, ActionCastSpellAtObject(iSpell, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
     
     DestroyObject(oCastingObject, 6.0);
+}
+
+void ActionCastSpell(int iSpell, int iCasterLev = 0)
+{
+    object oTarget = GetSpellTargetObject();
+    location lLoc = GetSpellTargetLocation();
+    
+    if (iCasterLev != 0)
+    {
+        SetLocalInt(OBJECT_SELF, "PRC_Castlevel_Override", iCasterLev);
+    }
+
+    if (GetIsObjectValid(oTarget))
+    {
+        AssignCommand(OBJECT_SELF, ActionCastSpellAtObject(iSpell, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+    }
+    else
+    {
+        AssignCommand(OBJECT_SELF, ActionCastSpellAtLocation(iSpell, lLoc, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+    }
 }
 
 ////////////////End Generic////////////////

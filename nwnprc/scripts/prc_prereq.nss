@@ -497,7 +497,25 @@ void EOG(object oPC)
 	}	
 }
 
+void Rava(object oPC)
+{
+    SetLocalInt(oPC, "PRC_PreReq_Rava", 1);
 
+    if(GetAlignmentLawChaos(oPC) == ALIGNMENT_CHAOTIC && GetAlignmentGoodEvil(oPC) == ALIGNMENT_NEUTRAL)
+    {
+        SetLocalInt(oPC, "PRC_PreReq_Rava", 0);
+    }
+
+    if(GetAlignmentLawChaos(oPC) == ALIGNMENT_CHAOTIC && GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL)
+    {
+        SetLocalInt(oPC, "PRC_PreReq_Rava", 0);
+    }
+
+    if(GetAlignmentLawChaos(oPC) == ALIGNMENT_NEUTRAL && GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL)
+    {
+        SetLocalInt(oPC, "PRC_PreReq_Rava", 0);
+    }
+}
 void WWolf(object oPC)
 {
     SetLocalInt(oPC, "PRC_PrereqWWolf", 1);
@@ -600,7 +618,7 @@ void main()
 	Shadowlord(oPC, iArcSpell1);
 	Shifter(oPC, iArcSpell1, iDivSpell1);
 	DemiLich(oPC);
-	
+	Rava(oPC);
 	// Truly massive debug message flood if activated.
 	/*
 	string sPRC_AllSpell;

@@ -1,7 +1,6 @@
 #include "prc_inc_function"
 #include "inc_item_props"
 #include "prc_feat_const"
-#include "prc_class_const"
 
 void main()
 {
@@ -14,7 +13,7 @@ void main()
         return;
     }
 
-    effect eJump = EffectSkillIncrease(SKILL_JUMP, 10);
+    effect eJump = EffectSkillIncrease(28, 10);
     
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eJump, oPC, 12.0);
     SetLocalInt(oSkin, "PsionicFocus", 0);

@@ -1,0 +1,118 @@
+#include "prc_class_const"
+#include "soul_inc"
+#include "inc_combat"
+#include "prc_feat_const"
+#include "nw_i0_spells"
+
+int BonusAtk(int iDmg)
+{
+  switch (iDmg)
+  {
+    case 1:  return DAMAGE_BONUS_1;
+    case 2:  return DAMAGE_BONUS_2;
+    case 3:  return DAMAGE_BONUS_3;
+    case 4:  return DAMAGE_BONUS_4;
+    case 5:  return DAMAGE_BONUS_5;
+    case 6:  return DAMAGE_BONUS_6;
+    case 7:  return DAMAGE_BONUS_7;
+    case 8:  return DAMAGE_BONUS_8;
+    case 9:  return DAMAGE_BONUS_9;
+    case 10:  return DAMAGE_BONUS_10;
+    case 11:  return DAMAGE_BONUS_11;
+    case 12:  return DAMAGE_BONUS_12;
+    case 13:  return DAMAGE_BONUS_13;
+    case 14:  return DAMAGE_BONUS_14;
+    case 15:  return DAMAGE_BONUS_15;
+    case 16:  return DAMAGE_BONUS_16;
+    case 17:  return DAMAGE_BONUS_17;
+    case 18:  return DAMAGE_BONUS_18;
+    case 19:  return DAMAGE_BONUS_19;
+    case 20:  return DAMAGE_BONUS_20;
+ }
+    if (iDmg>20) return DAMAGE_BONUS_20;
+
+  return 0;
+}
+
+
+void FavEn(int iFeat,int iBonus ,int nLevel, int iDmgType, int iFEAC, int iFERE ,int nRacial )
+{
+  if (!GetHasFeat(iFeat, OBJECT_SELF)) return ;
+   
+  effect eLink;
+  effect eDmg,eSkill;
+  
+  if (GetHasFeat(iFeat, OBJECT_SELF))
+  
+  eDmg = VersusRacialTypeEffect( EffectDamageIncrease(iBonus,iDmgType) ,nRacial);
+  eLink = EffectLinkEffects(eDmg,VersusRacialTypeEffect(EffectSkillIncrease(nLevel,SKILL_SPOT),nRacial));
+  
+  eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect(EffectSkillIncrease(nLevel,SKILL_BLUFF),nRacial));
+  eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect(EffectSkillIncrease(nLevel,SKILL_LISTEN),nRacial));
+  eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect(EffectSkillIncrease(nLevel,SKILL_SPOT),nRacial));
+  if (iFEAC) eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectACIncrease(nLevel) ,nRacial));
+  if (iFERE) eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectSavingThrowIncrease(SAVING_THROW_ALL,nLevel,SAVING_THROW_TYPE_SPELL) ,nRacial));
+  if (GetHasFeat(FEAT_EPIC_BANE_OF_ENEMIES, OBJECT_SELF)) {
+  	eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectAttackIncrease(2) ,nRacial));
+  	eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectDamageIncrease(DAMAGE_BONUS_2d6,DAMAGE_TYPE_MAGICAL) ,nRacial));
+  }
+ ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eLink),OBJECT_SELF);
+ 
+}
+
+void main()
+{
+    RemoveEffectsFromSpell(OBJECT_SELF,GetSpellId());   
+    int nLevel = (GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,OBJECT_SELF)+3)/5;
+    int iIFE= GetHasFeat(FEAT_IMPROVED_FAVORED_ENEMY, OBJECT_SELF) ? 3: 0;
+    
+    int iDmgType = GetWeaponDamageType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF));
+    if ( iDmgType == -1) iDmgType = DAMAGE_TYPE_BLUDGEONING;
+
+    int iFEAC = GetHasFeat(FEAT_UR_DODGE_FE,OBJECT_SELF);
+    int iFERE = GetHasFeat(FEAT_UR_RESIST_FE,OBJECT_SELF);
+    
+    int iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK1,OBJECT_SELF)  ? 1 : 0;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK2,OBJECT_SELF)  ? 2 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK3,OBJECT_SELF)  ? 3 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK4,OBJECT_SELF)  ? 4 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK5,OBJECT_SELF)  ? 5 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK6,OBJECT_SELF)  ? 6 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK7,OBJECT_SELF)  ? 7 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK8,OBJECT_SELF)  ? 8 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK9,OBJECT_SELF)  ? 9 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK10,OBJECT_SELF) ? 10: iSpell;
+     //   iSpell =  GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK,OBJECT_SELF) ? 20: iSpell;
+     
+        iSpell = iSpell && GetHasFeat(FEAT_FAVORED_POWER_ATTACK,OBJECT_SELF);
+        
+    int iBonus = BonusAtk(nLevel+iIFE+iSpell);
+    
+    FavEn(FEAT_UR_FE_DWARF,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_DWARF);
+    FavEn(FEAT_UR_FE_ELF,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_ELF);
+    FavEn(FEAT_UR_FE_GNOME,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_GNOME);
+    FavEn(FEAT_UR_FE_HALFING,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_HALFLING);
+    FavEn(FEAT_UR_FE_HALFELF,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_HALFELF);
+    FavEn(FEAT_UR_FE_HALFORC,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_HALFORC);
+    FavEn(FEAT_UR_FE_HUMAN,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_HUMAN);
+    FavEn(FEAT_UR_FE_ABERRATION,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_ABERRATION);
+    FavEn(FEAT_UR_FE_ANIMAL,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_ANIMAL);
+    FavEn(FEAT_UR_FE_BEAST,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_BEAST);
+    FavEn(FEAT_UR_FE_CONSTRUCT,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_CONSTRUCT);
+    FavEn(FEAT_UR_FE_DRAGON,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_DRAGON);
+    FavEn(FEAT_UR_FE_GOBLINOID,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_HUMANOID_GOBLINOID);
+    FavEn(FEAT_UR_FE_MONSTROUS,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_HUMANOID_MONSTROUS);
+    FavEn(FEAT_UR_FE_ORC,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_HUMANOID_ORC);
+    FavEn(FEAT_UR_FE_REPTILIAN,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_HUMANOID_REPTILIAN);
+    FavEn(FEAT_UR_FE_ELEMENTAL,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_ELEMENTAL);
+    FavEn(FEAT_UR_FE_FEY,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_FEY);
+    FavEn(FEAT_UR_FE_GIANT,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_GIANT);
+    FavEn(FEAT_UR_FE_MAGICAL_BEAST,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_MAGICAL_BEAST);
+    FavEn(FEAT_UR_FE_OUSIDER,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_OUTSIDER);
+    FavEn(FEAT_UR_FE_SHAPECHANGER,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_SHAPECHANGER);
+    FavEn(FEAT_UR_FE_UNDEAD,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_UNDEAD);
+    FavEn(FEAT_UR_FE_VERMIN,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_VERMIN);
+
+ 
+
+}

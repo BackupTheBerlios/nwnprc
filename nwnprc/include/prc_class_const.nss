@@ -123,3 +123,4 @@ const int CLASS_TYPE_SOULKNIFE                    = 147;
 const int CLASS_TYPE_WILDER                  = 148;
 const int CLASS_TYPE_ALAGHAR                      = 140;
 const int CLASS_TYPE_DIABOLIST                         = 154;
+const int CLASS_TYPE_BLIGHTLORD			= 135;

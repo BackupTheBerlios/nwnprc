@@ -1,5 +1,4 @@
-#include "prc_class_const"
-#include "prc_feat_const"
+#include "inc_combat"
 #include "inc_item_props"
 
 
@@ -22,27 +21,11 @@ void RemoveEnchantCW(object oPC, object oWeap)
       }
 }
 
-int GetWeaponEnhancement(object oWeap)
-{
-    int iBonus = 0;
-    int iTemp;
-
-    itemproperty ip = GetFirstItemProperty(oWeap);
-    while(GetIsItemPropertyValid(ip))
-    {
-        if(GetItemPropertyType(ip) == ITEM_PROPERTY_ENHANCEMENT_BONUS)
-            iTemp = GetItemPropertyCostTableValue(ip);
-            iBonus = iTemp > iBonus ? iTemp : iBonus;
-        ip = GetNextItemProperty(oWeap);
-    }
-    return iBonus;
-}
-
 // * Applies the Arcane Duelist's Enchant Chosen Weapon bonus
 void EnchantCW(object oPC, object oWeap)
 {
    int iBonus = 0;
-
+      
    RemoveEnchantCW(oPC, oWeap);
    iBonus = GetWeaponEnhancement(oWeap);
 
@@ -58,7 +41,7 @@ void EnchantCW(object oPC, object oWeap)
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 8)
          iBonus += 1;
                
-
+      SendMessageToPC(oPC, "Enchant Chosen Weapon has been run");
       AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(iBonus),oWeap, 9999.0);
       SetLocalInt(oWeap, "ADEnchant", iBonus);
 }
@@ -67,11 +50,13 @@ void main()
 {
   object oPC = OBJECT_SELF;
   object oSkin = GetPCSkin(oPC);
-  object oWeapon = GetLocalObject(oPC, "CHOSEN_WEAPON");
+  object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
+  
 
   if (GetHasFeat(FEAT_AD_APPARENT_DEFENSE, oPC)) ApparentDefense(oPC, oSkin);
   
-  EnchantCW(oPC, oWeapon);
+  if (GetLocalInt(oWeap,"CHOSEN_WEAPON") == 2)
+  	EnchantCW(oPC, oWeap);
   
   if (GetLocalInt(oPC,"ONEQUIP") == 1)
         RemoveEnchantCW(oPC, GetPCItemLastUnequipped());

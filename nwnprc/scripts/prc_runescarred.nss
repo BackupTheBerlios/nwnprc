@@ -15,7 +15,7 @@ const int FEAT_RIT_DR               = 2370;
 ////Resistance Cold////
 void ResCold(object oPC ,object oSkin ,int iLevel)
 {
-  if(GetLocalInt(oSkin, "RuneCold") == iLevel) return;
+  //if(GetLocalInt(oSkin, "RuneCold") == iLevel) return;
   RemoveSpecificProperty(oSkin,ITEM_PROPERTY_DAMAGE_RESISTANCE,IP_CONST_DAMAGETYPE_COLD,GetLocalInt(oSkin, "RuneCold"));
   AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_COLD,iLevel),oSkin);
   SetLocalInt(oSkin, "RuneCold",iLevel);
@@ -24,37 +24,15 @@ void ResCold(object oPC ,object oSkin ,int iLevel)
 ///Ritual Scarring /////////
 void RitScar(object oPC ,object oSkin, int iLevel)
 {
-
-
-
-   if(GetHasFeat(FEAT_RIT_SCAR, oPC))
-    iLevel = 1;
-
-   if(GetLevelByClass(CLASS_TYPE_RUNESCARRED, oPC) >= 6)
-    iLevel = 2;
-
-   if(GetLevelByClass(CLASS_TYPE_RUNESCARRED, oPC) >= 9)
-    iLevel = 3;
-
    if(GetLocalInt(oSkin, "RitScarAC") == iLevel) return;
+   // RemoveSpecificProperty(oSkin, ITEM_PROPERTY_AC_BONUS, GetLocalInt(oSkin, "RitScarAC"), IP_CONST_ACMODIFIERTYPE_DODGE, "RitScarAC");
     SetCompositeBonus(oSkin, "RitScarAC", iLevel,ITEM_PROPERTY_AC_BONUS,IP_CONST_ACMODIFIERTYPE_DODGE);
-    SetLocalInt(oSkin, "RitScarAC",iLevel);
+   // SetLocalInt(oSkin, "RitScarAC",iLevel);
 }
 
 void RitDR(object oPC, object oSkin, int iLevel)
 {
-
-
-   /* if(GetHasFeat(FEAT_RIT_DR, oPC))
-     iLevel = IP_CONST_DAMAGESOAK_1_HP;
-
-    if(GetLevelByClass(CLASS_TYPE_RUNESCARRED, oPC) >= 7)
-     iLevel = IP_CONST_DAMAGESOAK_2_HP;
-
-    if(GetLevelByClass(CLASS_TYPE_RUNESCARRED, oPC) >= 10)
-     iLevel = IP_CONST_DAMAGESOAK_3_HP;
-   */
-    if(GetLocalInt(oSkin, "RitScarDR") == iLevel) return;
+   //if(GetLocalInt(oSkin, "RitScarDR") == iLevel) return;
     RemoveSpecificProperty(oSkin, ITEM_PROPERTY_DAMAGE_REDUCTION, GetLocalInt(oSkin, "RitScarDR"), iLevel, 1, "RitScarDR");
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20, iLevel), oSkin);
     SetLocalInt(oSkin, "RitScarDR", iLevel);
@@ -66,9 +44,6 @@ void main()
     //Declare main variables.
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
-
-    //RitScar(oPC, oSkin);
-    //RitDR(oPC, oSkin);
 
     int bRitDR = GetHasFeat(FEAT_RIT_DR, oPC) ? IP_CONST_DAMAGESOAK_1_HP : 0;
 

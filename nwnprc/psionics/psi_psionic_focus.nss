@@ -13,8 +13,8 @@ void main()
     }
     
     int nDC = 20;
-    if(GetHasFeat(FEAT_NARROW_MIND, oPC))         nDC -= 4;
-    if(GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC) nDC += 4; // Hack to avoid granting bonus from Combat manifestation where it should not be
+    if(GetHasFeat(FEAT_NARROW_MIND, oPC))          nDC -= 4;
+    if(GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC)) nDC += 4; // Hack to avoid granting bonus from Combat manifestation where it should not be
     
     if(GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, nDC))
     {

@@ -12,6 +12,7 @@
 #include "inc_item_props"
 #include "nw_i0_spells"
 #include "soul_inc"
+#include "prc_inc_unarmed"
 
 
 /*
@@ -20,126 +21,6 @@ it_crewpb011 - 1d8
 it_crewpb015 - 1d10
 it_crewpb016 - 2d6
 */
-
-void UnarmedBonus(object oPC, int iEquip)
-{
-   int iDmg;
-   int Enh;
-   string sUnarmed;
-   object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
-
-SendMessageToPC(OBJECT_SELF, "Unarmed Bonus is called");
-
-
-
-   if ( oWeapL==OBJECT_INVALID )
-   {
-      object oSlamL=CreateItemOnObject("NW_IT_CREWPB010",oPC);
-
-      SetIdentified(oSlamL,TRUE);
-      AssignCommand(oPC,ActionEquipItem(oSlamL,INVENTORY_SLOT_CWEAPON_L));
-      oWeapL = oSlamL;
-   }
-
-
-    if (GetTag(oWeapL)!="NW_IT_CREWPB010") return;
-
-    iDmg = FindUnarmedDmg(oPC);
-
-      int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
-
-      int iKi = GetHasFeat(FEAT_KI_STRIKE,oPC) ? 1 : 0 ;
-          iKi = (iMonk>12)                     ? 2 : iKi;
-          iKi = (iMonk>15)                     ? 3 : iKi;
-
-      int iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_4,oPC) ? 1 : 0 ;
-          iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_5,oPC) ? 2 : iEpicKi ;
-
-      iKi+= iEpicKi;
-      Enh+= iKi;
-      
-    object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
-
-    if (iEquip != 1 &&  GetIsObjectValid(oItem))
-    {
-
-      int iType = GetBaseItemType(oItem);
-      if (iType == BASE_ITEM_GLOVES)
-      {
-
-         itemproperty ip = GetFirstItemProperty(oWeapL);
-         while (GetIsItemPropertyValid(ip))
-         {
-             RemoveItemProperty(oWeapL, ip);
-            ip = GetNextItemProperty(oWeapL);
-         }
-
-         ip = GetFirstItemProperty(oItem);
-         while(GetIsItemPropertyValid(ip))
-         {
-            iType = GetItemPropertyType(ip);
-
-            switch (iType)
-            {
-              case ITEM_PROPERTY_DAMAGE_BONUS:
-              case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
-              case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
-              case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
-              case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
-              case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
-              case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
-              case ITEM_PROPERTY_ON_HIT_PROPERTIES:
-              case ITEM_PROPERTY_ONHITCASTSPELL:
-                  AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
-                  break;
-
-              case ITEM_PROPERTY_ATTACK_BONUS:
-                  int iCost = GetItemPropertyCostTableValue(ip);
-                  Enh = (iCost>Enh) ? iCost:Enh;
-                  break;
-
-
-
-
-            }
-
-           ip = GetNextItemProperty(oItem);
-
-         }
-
-      }
-    }
-    else if (iEquip == 1)
-    {
-        oItem=GetPCItemLastUnequipped();
-
-        int iType = GetBaseItemType(oItem);
-        if (iType == BASE_ITEM_GLOVES)
-        {
-
-          itemproperty ip = GetFirstItemProperty(oWeapL);
-          while (GetIsItemPropertyValid(ip))
-          {
-             RemoveItemProperty(oWeapL, ip);
-            ip = GetNextItemProperty(oWeapL);
-          }
-        }
-
-    }
-
-      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iDmg),oWeapL);
-
-      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_ATTACK_BONUS,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(Enh),oWeapL);
-
-      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oWeapL);
-
-
-
-}
-
 
 
 void DodgeBonus(object oPC, object oSkin)
@@ -225,6 +106,11 @@ SendMessageToPC(OBJECT_SELF, "prc_shou is called");
           }
      }
 
-    UnarmedBonus(oPC, iEquip);
+    //Evaluate The Unarmed Strike Feats
+    UnarmedFeats(oPC);
+
+    //Evaluate Fists
+    UnarmedFists(oPC);
+
 
 }

@@ -1,119 +1,6 @@
-#include "inc_item_props"
-#include "prc_feat_const"
 #include "nw_i0_spells"
 #include "soul_inc"
-
-
-void ClawDragon(object oPC,int iEquip)
-{
-
-
-   object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
-
-   if ( oWeapL==OBJECT_INVALID )
-   {
-      object oSlamL=CreateItemOnObject("NW_IT_CREWPB010",oPC);
-
-      SetIdentified(oSlamL,TRUE);
-      AssignCommand(oPC,ActionEquipItem(oSlamL,INVENTORY_SLOT_CWEAPON_L));
-      oWeapL = oSlamL;
-   }
-
-
-    if (GetTag(oWeapL)!="NW_IT_CREWPB010") return;
-
-      int iDmg = FindUnarmedDmg(oPC);
-
-      int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
-
-      int iKi = GetHasFeat(FEAT_KI_STRIKE,oPC) ? 1 : 0 ;
-          iKi = (iMonk>12)                     ? 2 : iKi;
-          iKi = (iMonk>15)                     ? 3 : iKi;
-
-      int iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_4,oPC) ? 1 : 0 ;
-          iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_5,oPC) ? 2 : iEpicKi ;
-
-      iKi+= iEpicKi;
-      int Enh = iKi;
-
-    object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
-
-    if (iEquip == 2 &&  GetIsObjectValid(oItem))
-    {
-
-      int iType = GetBaseItemType(oItem);
-      if (iType == BASE_ITEM_GLOVES)
-      {
-
-         itemproperty ip = GetFirstItemProperty(oWeapL);
-         while (GetIsItemPropertyValid(ip))
-         {
-             RemoveItemProperty(oWeapL, ip);
-            ip = GetNextItemProperty(oWeapL);
-         }
-
-         ip = GetFirstItemProperty(oItem);
-         while(GetIsItemPropertyValid(ip))
-         {
-            iType = GetItemPropertyType(ip);
-
-            switch (iType)
-            {
-              case ITEM_PROPERTY_DAMAGE_BONUS:
-              case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
-              case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
-              case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
-              case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
-              case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
-              case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
-              case ITEM_PROPERTY_ON_HIT_PROPERTIES:
-              case ITEM_PROPERTY_ONHITCASTSPELL:
-                  AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
-                  break;
-
-              case ITEM_PROPERTY_ATTACK_BONUS:
-                  int iCost =GetItemPropertyCostTableValue(ip);
-                  Enh = (iCost>Enh) ? iCost:Enh;
-                  break;
-
-            }
-
-           ip = GetNextItemProperty(oItem);
-
-         }
-
-      }
-    }
-    else if (iEquip == 1)
-    {
-        oItem=GetPCItemLastUnequipped();
-
-        int iType = GetBaseItemType(oItem);
-        if (iType == BASE_ITEM_GLOVES)
-        {
-
-          itemproperty ip = GetFirstItemProperty(oWeapL);
-          while (GetIsItemPropertyValid(ip))
-          {
-             RemoveItemProperty(oWeapL, ip);
-            ip = GetNextItemProperty(oWeapL);
-          }
-        }
-
-    }
-
-      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iDmg),oWeapL);
-
-      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_ATTACK_BONUS,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(Enh),oWeapL);
-
-      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oWeapL);
-
-
-
-}
+#include "prc_inc_unarmed"
 
 void SacredAC(object oPC,object oSkin,int bSFAC ,int iShield)
 {
@@ -221,6 +108,11 @@ void main()
     if (bSFAC>0 && !iCode)    SacredAC(oPC,oSkin,bSFAC,iShield);
     if (bSFSpeed>0 && !iCode) SacredSpeed(oPC,oSkin,bSFSpeed,iShield);
 
-    ClawDragon(oPC,GetLocalInt(oPC,"ONEQUIP"));
+    //Evaluate The Unarmed Strike Feats
+    UnarmedFeats(oPC);
+
+    //Evaluate Fists
+    UnarmedFists(oPC);
+
 
 }

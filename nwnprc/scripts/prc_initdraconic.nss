@@ -1,211 +1,7 @@
-//#include "heartward_inc"
-//#include "prc_class_const"
+#include "prc_inc_unarmed"
 #include "soul_inc"
 #include "prc_ip_srcost"
 
-/*
-int FindUnarmedDmg(object oPC,int bUnarmedDmg)
-{
-
-  int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
-      iMonk = (iMonk >20) ? 20 :iMonk ;
-
-  int iSize = GetCreatureSize(oPC);
-
-  int iDmg = bUnarmedDmg;;
-
-
-
-  if (iMonk)
-  {
-    int iLvDmg = iMonk/4+2;
-
-     iDmg += iLvDmg ;
-  }
-
- if (iSize == CREATURE_SIZE_SMALL ||iSize== CREATURE_SIZE_TINY) iDmg--;
-
-     switch (iDmg)
-     {
-        case 0:
-          return IP_CONST_MONSTERDAMAGE_1d3;
-        case 1:
-          return IP_CONST_MONSTERDAMAGE_1d4;
-        case 2:
-          return IP_CONST_MONSTERDAMAGE_1d6;
-        case 3:
-          return IP_CONST_MONSTERDAMAGE_1d8;
-        case 4:
-          return IP_CONST_MONSTERDAMAGE_1d10;
-        case 5:
-          return IP_CONST_MONSTERDAMAGE_2d6;
-        case 6:
-          return IP_CONST_MONSTERDAMAGE_2d8;
-        case 7:
-          return IP_CONST_MONSTERDAMAGE_2d10;
-        case 8:
-          return IP_CONST_MONSTERDAMAGE_2d12;
-        case 9:
-          return IP_CONST_MONSTERDAMAGE_3d10;
-        case 10:
-          return IP_CONST_MONSTERDAMAGE_3d10;
-
-      }
-
-
-  return IP_CONST_MONSTERDAMAGE_1d2;
-
-}
-*/
-
-//-1 d2
-//0  d3
-//1  d4
-//2  d6
-//3  d8
-//4  d10
-//5  2d6
-//6  2d8
-//7  2d10
-//8  3d6
-//9  3d8
-//10 3d10
-
-
-void ClawDragon(object oPC,int Enh,int iEquip)
-{
-
-   object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
-
-//   object oWeapL =  GetItemPossessedBy(oPC,"NW_IT_CREWPB010");
-   if ( oWeapL==OBJECT_INVALID )
-   {
-      object oSlamL=CreateItemOnObject("NW_IT_CREWPB010",oPC);
-
-      SetIdentified(oSlamL,TRUE);
-      AssignCommand(oPC,ActionEquipItem(oSlamL,INVENTORY_SLOT_CWEAPON_L));
-      oWeapL = oSlamL;
-   }
-
-
-    if (GetTag(oWeapL)!="NW_IT_CREWPB010") return;
-
-      int iDmg = FindUnarmedDmg(oPC);
-
-      int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
-
-      int iKi = GetHasFeat(FEAT_KI_STRIKE,oPC) ? 1 : 0 ;
-          iKi = (iMonk>12)                     ? 2 : iKi;
-          iKi = (iMonk>15)                     ? 3 : iKi;
-
-      int iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_4,oPC) ? 1 : 0 ;
-          iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_5,oPC) ? 2 : iEpicKi ;
-
-      iKi+= iEpicKi;
-      Enh+= iKi;
-      
-    object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
-    
-    if (iEquip != 1 &&  GetIsObjectValid(oItem))
-    {
-
-      int iType = GetBaseItemType(oItem);
-      if (iType == BASE_ITEM_GLOVES)
-      {
-
-         itemproperty ip = GetFirstItemProperty(oWeapL);
-         while (GetIsItemPropertyValid(ip))
-         {
-             RemoveItemProperty(oWeapL, ip);
-            ip = GetNextItemProperty(oWeapL);
-         }
-
-         ip = GetFirstItemProperty(oItem);
-         while(GetIsItemPropertyValid(ip))
-         {
-            iType = GetItemPropertyType(ip);
-
-            switch (iType)
-            {
-              case ITEM_PROPERTY_DAMAGE_BONUS:
-              case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
-              case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
-              case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
-              case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
-              case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
-              case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
-              case ITEM_PROPERTY_ON_HIT_PROPERTIES:
-              case ITEM_PROPERTY_ONHITCASTSPELL:
-                  AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
-                  break;
-
-              case ITEM_PROPERTY_ATTACK_BONUS:
-                  int iCost = GetItemPropertyCostTableValue(ip);
-                  Enh = (iCost>Enh) ? iCost:Enh;
-                  break;
-
-
-
-
-            }
-
-           ip = GetNextItemProperty(oItem);
-
-         }
-
-      }
-    }
-    else if (iEquip == 1)
-    {
-        oItem=GetPCItemLastUnequipped();
-
-        int iType = GetBaseItemType(oItem);
-        if (iType == BASE_ITEM_GLOVES)
-        {
-
-          itemproperty ip = GetFirstItemProperty(oWeapL);
-          while (GetIsItemPropertyValid(ip))
-          {
-             RemoveItemProperty(oWeapL, ip);
-            ip = GetNextItemProperty(oWeapL);
-          }
-        }
-
-    }
-
-      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iDmg),oWeapL);
-
-      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_ATTACK_BONUS,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(Enh),oWeapL);
-
-      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oWeapL);
-
-
-
-}
-
-void BonusFeat(object oPC,object oSkin)
-{
-
-     if (GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE,oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_CREATURE,oPC))
-       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oSkin);
-
-     if (GetHasFeat(FEAT_WEAPON_SPECIALIZATION_UNARMED_STRIKE,oPC) && !GetHasFeat(FEAT_WEAPON_SPECIALIZATION_CREATURE,oPC))
-       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapSpecCreature),oSkin);
-
-     if (GetHasFeat(FEAT_IMPROVED_CRITICAL_UNARMED_STRIKE,oPC) && !GetHasFeat(FEAT_IMPROVED_CRITICAL_CREATURE,oPC))
-       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_ImpCritCreature),oSkin);
-
-     if (GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_UNARMED,oPC) && !GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_CREATURE,oPC))
-       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicFocCreature),oSkin);
-
-     if (GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_UNARMED,oPC) && !GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_CREATURE,oPC))
-       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicSpecCreature),oSkin);
-
-
-}
 
 void SpellResistancePC(object oPC,object oSkin,int iLevel)
 {
@@ -241,22 +37,17 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
 
-   // NW_IT_CREWPB010
+    // NW_IT_CREWPB010
+   
+    //Evaluate The Unarmed Strike Feats
+    UnarmedFeats(oPC);
 
-
-   int bEnh =  GetHasFeat(FEAT_CLAWDRAGON,oPC) ? 1: 0;
-       bEnh =  GetHasFeat(FEAT_CLAWENH2,oPC)   ? 2: bEnh;
-       bEnh =  GetHasFeat(FEAT_CLAWENH3,oPC)   ? 3: bEnh;
-
-//   int bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE1,oPC) ? 1:0;
-//       bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE2,oPC) ? 2:bUnarmedDmg;
-
-   if (bEnh)ClawDragon(oPC,bEnh,GetLocalInt(oPC,"ONEQUIP"));
+    //Evaluate Fists
+    UnarmedFists(oPC);
 
    if (GetHasFeat(FEAT_INIDR_SPELLRESISTANCE,oPC)) SpellResistancePC(oPC,oSkin,GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,oPC)+15);
    if (GetHasFeat(FEAT_INIDR_STUNSTRIKE,oPC)) StunStrike(oPC,oSkin);
 
 
-   BonusFeat(oPC,oSkin);
 
 }

@@ -391,7 +391,7 @@
 387 FEAT_FEYRI_CLAIRAUDIENCE                       4676      0    99             1      
 388 FEAT_FEYRI_DARKNESS                            4677      0    99             1      
 389 FEAT_FEYRI_ENERVATION                          4678      0    99             1      
-390 FEAT_FEYRI_ALTER                               4779      0    99             1      
+390 FEAT_FEYRI_ALTER                               4679      0    99             1      
 391 FEAT_FEYRI_REVERT                              4680      0    99             1      
 392 FEAT_DUERGAR_INVIS                             4681      0    99             1      
 393 FEAT_DROW_DARKNESS                             4682      0    99             1      

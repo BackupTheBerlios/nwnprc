@@ -58,6 +58,9 @@ int CheckPowerPrereqs(int nFeat, object oPC);
 // power.
 void UsePower(int nPower, int nClass);
 
+// This will roll the dice and perform the needed adjustments for metapsionics.
+int MetaPsionic(int nDiceSize, int nNumberOfDice, object oCaster = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -134,7 +137,17 @@ int GetManifesterDC(object oCaster)
 	int nClass = GetManifestingClass(oCaster);
 	int nDC = 10;
 	nDC += GetPowerLevel(oCaster);
-      nDC += (GetAbilityScoreOfClass(oCaster, nClass) - 10)/2;
+	nDC += (GetAbilityScoreOfClass(oCaster, nClass) - 10)/2;
+	
+	if (GetLocalInt(oCaster, "PsionicEndowment") == 1)
+	{
+		nDC += 1;
+	}
+	else if (GetLocalInt(oCaster, "GreaterPsionicEndowment") == 1)
+	{
+		nDC += 2;
+	}
+	
       
 	return nDC;
 }
@@ -320,4 +333,25 @@ void UsePower(int nPower, int nClass)
     SetLocalInt(OBJECT_SELF, "PowerLevel", StringToInt(lookup_spell_innate(GetSpellId())));
     //pass in the spell
     ActionCastSpell(nPower);
+}
+
+int MetaPsionics(int nDiceSize, int nNumberOfDice, object oCaster = OBJECT_SELF)
+{
+	int nDamage = 0;
+	int i = 0;
+	
+    	for (i=1; i<=nNumberOfDice; i++)
+    	{
+    		nDamage = nDamage + Random(nDiceSize) + 1;
+    	}
+	if (GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE)
+	{
+		nDamage = nDamage + nDamage / 2;
+	}
+	if (GetLocalInt(oCaster, "PsiMetaMax") == TRUE)
+	{
+		nDamage = nDiceSize * nNumberOfDice;
+	}
+	
+	return nDamage;
 }

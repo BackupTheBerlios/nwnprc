@@ -7,11 +7,11 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
 
-    if (GetLocalInt(oSkin, "PsionicFocus") == 0)
+    if (GetLocalInt(oPC, "PsionicFocus") == 0)
     {
         SendMessageToPC(oPC, "You must be psionically focused to use this feat.");
     }
 
-    SetLocalInt(oSkin, "PsionicFocus", 0);
-    SetLocalInt(oSkin, "PsionicEndowment", 1);
+    SetLocalInt(oPC, "PsionicFocus", 0);
+    SetLocalInt(oPC, "PsionicEndowment", 1);
 }

@@ -3,6 +3,7 @@
 #include "prc_inc_function"
 #include "prc_ipfeat_const"
 #include "inc_epicspells"
+#include "prc_inc_clsfunc"
 
 void PrcFeats(object oPC)
 {
@@ -28,6 +29,11 @@ void main()
             SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
             SetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON", 0);
          }
+        if (GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW))
+        {
+            //Destroy imbued arrows.
+            AADestroyAllImbuedArrows(oPC);
+        }
          break;
       }
       case REST_EVENTTYPE_REST_FINISHED:{

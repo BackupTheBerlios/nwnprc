@@ -1,6 +1,6 @@
 #include "inc_item_props"
 #include "prc_inc_function"
-
+#include "prc_inc_clsfunc"
     
 
 void main()
@@ -24,5 +24,10 @@ void main()
     // through the .2da's, the entering player already meets.
     ExecuteScript("prc_prereq", oPC);
     PatronShar(oPC);
+    if (GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW))
+    {
+        //Destroy imbued arrows.
+        AADestroyAllImbuedArrows(oPC);
+    }
     DeleteLocalInt(oPC,"ONENTER");
 }

@@ -16,6 +16,7 @@
 
 #include "x2_i0_spells"
 #include "inc_addragebonus"
+#include "inc_item_props"
 
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -87,23 +88,17 @@ void main()
             }
 	}
 	
-	if(hasHaste == 1)
-	{
-		acDecrease = 8;
-	}
-	else
-	{
-		acDecrease = 4;
-	}
-        
+        // ac penalty applied to skin	
+	object oSkin = GetPCSkin(OBJECT_SELF);
+        SetCompositeBonusT(oSkin, "FrenzyACPenalty", acDecrease, ITEM_PROPERTY_DECREASED_AC, AC_DODGE_BONUS); // for temporary bonuses
+
         PlayVoiceChat(VOICE_CHAT_BATTLECRY1);
         
         //Determine the duration
         int nCon = 3 + GetAbilityModifier(ABILITY_CONSTITUTION);
         effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, nIncrease);
-        effect eAC = EffectACDecrease(acDecrease, AC_DODGE_BONUS);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-        effect eLink = EffectLinkEffects(eStr, eAC);
+        effect eLink = EffectLinkEffects(eStr, eDur);
         
         if(hasHaste == 0)
         {
@@ -115,10 +110,9 @@ void main()
 		//effect eExAtt = EffectModifyAttacks(1);
 		//eLink = EffectLinkEffects(eLink, eExAtt);
 	}
-        
-        eLink = EffectLinkEffects(eLink, eDur);
-        
+
         SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_FRENZY, FALSE));
+        
         //Make effect extraordinary
         eLink = ExtraordinaryEffect(eLink);
         effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE); //Change to the Rage VFX
@@ -161,6 +155,10 @@ void EndOfFrenzyDamage(object oSelf)
      ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSelf);
      
      SetLocalInt(oSelf, "PC_Damage", 0);
+
+     // remove frenzy bonuses
+     object oSkin = GetPCSkin(OBJECT_SELF);
+     SetCompositeBonusT(oSkin, "FrenzyACPenalty", 0, ITEM_PROPERTY_DECREASED_AC, AC_DODGE_BONUS); // for temporary bonuses
 }
 
 void TurnBasedDamage(object oTarget, object oCaster)

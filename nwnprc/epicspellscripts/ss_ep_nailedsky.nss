@@ -19,7 +19,7 @@ void RunNailedToTheSky(object oTarget, int nDC);
 void Petrify(object oTarget)
 {
     effect ePetrify = EffectPetrify();
-    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePetrify, oTarget, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
+    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePetrify, oTarget, 0.0, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF), OBJECT_SELF);
 }
 
 void RemoveEffectOfType(object oTarget, int nEffectType)

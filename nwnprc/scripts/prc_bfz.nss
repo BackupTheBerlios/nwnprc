@@ -27,7 +27,7 @@ void SacredFlame(object oPC, object oWeap)
 SendMessageToPC(oPC, "Add Sacred Flame is run");
 
     RemoveSpecificProperty(oWeap, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "BFZFlame");
-    AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6), oWeap);
+    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6), oWeap, 999999.0);
     SetLocalInt(oWeap, "BFZFlame", TRUE);
 }
 
@@ -38,7 +38,7 @@ SendMessageToPC(oPC, "Remove Sacred Flame is run");
 
     if(GetLocalInt(oWeap, "BFZFlame") == TRUE)
         //RemoveSpecificProperty(oWeap, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "BFZFlame");
-	RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, "BFZFlame", -1, DURATION_TYPE_PERMANENT);
+	RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, "BFZFlame", -1, DURATION_TYPE_TEMPORARY);
 }
 
 
@@ -55,7 +55,7 @@ void main()
 
     if(GetHasFeat(FEAT_SACRED_FLAME, oPC))
     {
-	if (GetLocalInt(oUnequip, "BFZFlame") == TRUE)
+	if (iEquip == 1)
 	{
         	if (iEquip == 1)    RemoveSacredFlame(oPC, oUnequip);
 	}

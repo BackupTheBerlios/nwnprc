@@ -123,32 +123,34 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
     if( iTypeSpell == TYPE_ARCANE ){
 
 
-        nArcane+=
+        
          
-            GetHasFeat(FEAT_FIRE_ADEPT, oCaster) + 
-            GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster)+ 
-            
-            GetLevelByClass(CLASS_TYPE_ARCHMAGE, oCaster)+
-            GetLevelByClass(CLASS_TYPE_ARCTRICK, oCaster)+
-            GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oCaster)+
-            GetLevelByClass(CLASS_TYPE_ES_FIRE, oCaster)+
-            GetLevelByClass(CLASS_TYPE_ES_COLD, oCaster)+
-            GetLevelByClass(CLASS_TYPE_ES_ELEC, oCaster)+
-            GetLevelByClass(CLASS_TYPE_ES_ACID, oCaster)+
-            GetLevelByClass(CLASS_TYPE_HARPERMAGE, oCaster)+  
-            GetLevelByClass(CLASS_TYPE_MAGEKILLER, oCaster)+            
-            GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oCaster)+            
-            GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)+
-            GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster)+
-               
-            (GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) + 1) / 2+ 
-            (GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) + 1) / 2+          
-            (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) + 1) / 2+     
-            (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2+ 
-            (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2+ 
-            (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2+
+                nArcane += GetLevelByClass(CLASS_TYPE_ARCHMAGE, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_ARCTRICK, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_ES_ACID, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_ES_COLD, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_ES_ELEC, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_ES_FIRE, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_HARPERMAGE, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_MAGEKILLER, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oCaster)
+                        + GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster)
+                        + GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster);
 
-            (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, oCaster) + 1) / 3;
+		// This section of code tests for half progression classes.
+		// Leave the integer div-by two where it is, it is not distributive.
+		nArcane += (GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2;
+			
+	        // 1/3 progression classes.  These gain caster levels at 2, 5, 8, 11, ...
+	        // thus the correct formula, considering integer truncation, is: (level+1)/3
+	        nArcane += (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, oCaster) + 1) / 3;
 
         // area for CLASS-specific code. Avoid if possible
 
@@ -179,25 +181,28 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
     else if( iTypeSpell == TYPE_DIVINE){
 
  
-        nDivine+=
-            GetLevelByClass(CLASS_TYPE_DIVESA, oCaster)+
-            GetLevelByClass(CLASS_TYPE_DIVESC, oCaster)+
-            GetLevelByClass(CLASS_TYPE_DIVESE, oCaster)+
-            GetLevelByClass(CLASS_TYPE_DIVESF, oCaster)+
-            GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oCaster)+
-            GetLevelByClass(CLASS_TYPE_HEARTWARDER, oCaster)+
-            GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster)+
-            GetLevelByClass(CLASS_TYPE_HOSPITALER, oCaster)+
-            GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oCaster)+
-            GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)+
-            GetLevelByClass(CLASS_TYPE_STORMLORD, oCaster)+
-                       
-            (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) + 1) /  2+       
-	    (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2+ 
-	    (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2+ 
-	    (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2+ 
-            (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2+ 
-	    (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2;
+        nDivine += GetLevelByClass(CLASS_TYPE_DIVESA, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_DIVESC, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_DIVESE, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_DIVESF, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_HEARTWARDER, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_HOSPITALER, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
+			+ GetLevelByClass(CLASS_TYPE_STORMLORD, oCaster);
+
+		// This section of code tests for half progression classes.
+		// Leave the integer div-by two where it is, it is not distributive.
+		nDivine += (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_ORCUS, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2;
 
             if ( !GetHasFeat(FEAT_SF_CODE, oCaster))
                 nDivine += GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster) ;

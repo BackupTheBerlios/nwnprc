@@ -5,4 +5,4 @@
 1     ScriptVar        VAR        PRC_AllowOrcus   0           
 2     Lore             SKILL      7                4           
 3     FEAT_LICHLOVED   FEAT       3395             ****        
-4     ScriptVar        VAR        PRC_ArcSpell1    0         
+4     ScriptVar        VAR        PRC_DivSpell1    0         

@@ -219,6 +219,9 @@ void UnarmedFeats(object oCreature)
 {
     object oSkin = GetPCSkin(oCreature);
 
+    if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_CREATURE, oCreature))
+        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_CREATURE),oSkin);
+
     if (GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE, oCreature) && !GetHasFeat(FEAT_WEAPON_FOCUS_CREATURE, oCreature))
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oSkin);
 

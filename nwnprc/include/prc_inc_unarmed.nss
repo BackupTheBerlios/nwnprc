@@ -5,13 +5,15 @@
 #include "inc_item_props"
 
 // Determines the amount of damage a character can do.
-// IoDM: +1 dice at level 4, +2 dice at level 8
-// Sacred Fist: Levels add to monk levels, or stand alone as monk levels.
-// Shou: 1d6 at level 1, 1d8 at level 2, 1d10 at level 3, 2d6 at level 5
-// Monk: 1d6 at level 1, 1d8 at level 4, 1d10 at level 8, 2d6 at level 12, 2d8 at level 16, 2d10 at level 20
-// Brawler: 1d6 at level 1, 1d8 at level 6, 1d10 at level 12, 2d6 at level 18, 2d8 at level 24, 2d10 at level 30, 3d8 at level 36
 int FindUnarmedDamage(object oCreature);
 
+// Adds appropriate unarmed feats to the skin. Goes with UnarmedFists()
+// Call this from a feat evaluation script.
+void UnarmedFeats(object oCreature);
+
+// Creates/strips a creature weapon and applies bonuses. Goes with UnarmedFeats()
+// Call this from a feat evaluation script.
+void UnarmedFists(object oCreature);
 
 const int MONST_DAMAGE_1D3   = 2;
 const int MONST_DAMAGE_1D4   = 3;

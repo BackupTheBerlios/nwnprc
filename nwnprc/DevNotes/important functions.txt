@@ -28,8 +28,11 @@ inc_item_props
 // * iType: ITEM_PROPERTY_* of bonus
 // * iSubType: IP_CONST_* of bonus SubType if applicable
 // * 
-// * Remeber to add the name of the bonus (sBonus) to the DeletePRCInts()
-// * to make sure it is reapplied properly
+// * LocalInts from SetCompositeBonus() when applied to the skin need to be
+// * added to DeletePRCLocalInts() in prc_inc_function. When applied to equipment,
+// * the LocalInts need to be added to DeletePRCLocalIntsT() in inc_item_props.
+// *
+// * Use SetCompositeBonus for the skin, SetCompositeBonusT for other equipment.
 void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSubType = -1);
 void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iSubType = -1); // for temporary bonuses
 
@@ -41,8 +44,8 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
 // * iVal = Integer value to set this bonus to (damage +1 through +20)
 // * iSubType: IP_CONST_DAMAGETYPE*  -- leave blank to use the weapon's damage type.
 // * 
-// * Remeber to add the name of the bonus (sBonus) to the DeletePRCInts()
-// * to make sure it is reapplied properly
+// * LocalInts from SetCompositeDamageBonus() need to be added to
+// * DeletePRCLocalIntsT() in inc_item_props.
 void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubType = -1); // for temporary bonuses
 
 // * Keeps track of Attack Bonus effects and stacks them appropriately... you cannot set up
@@ -60,8 +63,8 @@ void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubTyp
 // * iSubType - ATTACK_BONUS_MISC applies to both hands, ATTACK_BONUS_ONHAND applies to the right (main)
 // *    hand, and ATTACK_BONUS_OFFHAND applies to the left (off) hand
 // * 
-// * Remeber to add the name of the bonus (sBonus) to the DeletePRCInts()
-// * to make sure it is reapplied properly
+// * LocalInts in and finally SetCompositeAttackBonus() need to be added to
+// * DeletePRCLocalInts() in prc_inc_function.
 void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC);
 
 
@@ -186,14 +189,16 @@ int GetRogueSneak(object oPC);
 
 prc_inc_unarmed
 
-
 // Determines the amount of damage a character can do.
-// IoDM: +1 dice at level 4, +2 dice at level 8
-// Sacred Fist: Levels add to monk levels, or stand alone as monk levels.
-// Shou: 1d6 at level 1, 1d8 at level 2, 1d10 at level 3, 2d6 at level 5
-// Monk: 1d6 at level 1, 1d8 at level 4, 1d10 at level 8, 2d6 at level 12, 2d8 at level 16, 2d10 at level 20
-// Brawler: 1d6 at level 1, 1d8 at level 6, 1d10 at level 12, 2d6 at level 18, 2d8 at level 24, 2d10 at level 30, 3d8 at level 36
 int FindUnarmedDamage(object oCreature);
+
+// Adds appropriate unarmed feats to the skin. Goes with UnarmedFists()
+// Call this from a feat evaluation script.
+void UnarmedFeats(object oCreature);
+
+// Creates/strips a creature weapon and applies bonuses. Goes with UnarmedFeats()
+// Call this from a feat evaluation script.
+void UnarmedFists(object oCreature);
 
 
 

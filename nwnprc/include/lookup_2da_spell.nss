@@ -48,6 +48,13 @@ lookup_spell_level(int spell_id, object oModule = OBJECT_INVALID)
 }
 
 string
+lookup_spell_innate(int spell_id, object oModule = OBJECT_INVALID)
+{
+	return lookup_and_cache_spell_field(spell_id,
+		"PRC_PACK_SPELL_INNATE_LEVEL_", "Innate", oModule);
+}
+
+string
 lookup_spell_cleric_level(int spell_id, object oModule = OBJECT_INVALID)
 {
 	return lookup_and_cache_spell_field(spell_id,

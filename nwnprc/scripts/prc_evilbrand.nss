@@ -9,6 +9,7 @@
 void EvilBrand(object oPC,int iEquip ,int iLevel)
     {
     object oItem ;
+    object oSkin = GetPCSkin(oPC);
 
     if (iEquip==2)
     {
@@ -93,10 +94,9 @@ void main()
     oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
     EvilBrand(oPC, "ONEQUIP", bEBArm);
     }
-
-     else
-      {
+    }
+    else
+    {
       EvilBrand(oPC, oSkin,0);
-      }
     }
 }

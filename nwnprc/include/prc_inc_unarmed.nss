@@ -82,7 +82,7 @@ int FindUnarmedDamage(object oCreature)
     if (iShou)
     {
         if (iBrawler) iBrawler += iShou;
-        if (iMonk)    iMonk += iShou;
+        if (iMonk)    iMonk    += iShou;
     }
 
     // Brawler has a very simple damage progression (regardless of size):    
@@ -91,7 +91,7 @@ int FindUnarmedDamage(object oCreature)
     // Monk 3e Dmg Table - 1d6, 1d8, 1d10, 1d12, 1d20
     if (iMonk > 16) iMonk = 16;
     if (iMonk) iMonkDamage = iMonk / 4 + 2;
-    if (iMonkDamage == 6) iMonkDamage = 7;
+    if (iMonkDamage > 5) iMonkDamage = 7;
    
     // Small monks get damage penalty -- 1d4, 1d6, 1d8, 1d10, 2d6
     if (bSmallSize) iMonkDamage = iMonk / 4 + 1;
@@ -288,7 +288,7 @@ void UnarmedFists(object oCreature)
     iKi += iEpicKi;
     bDragClaw += iEpicKi;
 
-    Enh = (iKi > Enh) ? iKi : Enh;
+    Enh = (iKi > Enh)       ? iKi       : Enh;
     Enh = (iBrawlEnh > Enh) ? iBrawlEnh : Enh;
     Enh = (bDragClaw > Enh) ? bDragClaw : Enh;
           

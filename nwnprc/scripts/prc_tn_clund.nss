@@ -16,31 +16,14 @@ void main()
 
 
     string sSummon;
-    effect eSummonB;
+    effect eSummonB== EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
     object oCreature;
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     int nClass = GetLevelByClass(CLASS_TYPE_TRUENECRO, OBJECT_SELF);
 
-            switch (nClass)
-            {
-                case 4:
-                    sSummon = "prc_sum_mohrg";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-                case 7:
-                    sSummon = "prc_sum_zlord";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-                case 10:
-                    sSummon = "prc_sum_sklch";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-            }
-	    if (nClass > 10)
-		{
-		sSummon = "prc_sum_sklch";
-		}
-
+    if (nClass > 9)	        sSummon = "prc_sum_sklch";
+    else if (nClass > 6)	sSummon = "prc_sum_zlord";
+    else if (nClass > 3)	sSummon = "prc_sum_mohrg";
 
    oCreature = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
    AddHenchman(OBJECT_SELF, oCreature);

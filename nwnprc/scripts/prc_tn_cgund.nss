@@ -14,51 +14,21 @@ void main()
     SetMaxHenchmen(4);
     }
     string sSummon;
-    effect eSummonB;
+    effect eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
     object oCreature;
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     int nClass = GetLevelByClass(CLASS_TYPE_TRUENECRO, OBJECT_SELF);
 
+    if (nClass > 27)	        sSummon = "prc_sum_dbl";
+    else if (nClass > 24)	sSummon = "prc_sum_dk";
+    else if (nClass > 21)	sSummon = "prc_sum_vamp2";
+    else if (nClass > 18)	sSummon = "prc_sum_bonet";
+    else if (nClass > 15)	sSummon = "prc_sum_wight";
+    else if (nClass > 12)	sSummon = "prc_sum_vamp1";
+    else if (nClass > 9)	sSummon = "prc_sum_grav";
+    else if (nClass > 6)	sSummon = "prc_tn_fthug";
+  	
 
-            switch (nClass)
-            {
-                case 7:
-                    sSummon = "prc_tn_fthug";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-                case 10:
-                    sSummon = "prc_sum_grav";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-                case 13:
-                    sSummon = "prc_sum_vamp1";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-                case 16:
-                    sSummon = "prc_sum_wight";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-                case 19:
-                    sSummon = "prc_sum_bonet";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-                case 22:
-                    sSummon = "prc_sum_vamp2";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-                case 25:
-                    sSummon = "prc_sum_dk";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-                case 28:  
-                    sSummon = "prc_sum_dbl";
-                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
-                    break;
-            }
-	    if (nClass > 28)
-		{
-		sSummon = "prc_sum_dbl";
-		}
 
    oCreature = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
    AddHenchman(OBJECT_SELF, oCreature);

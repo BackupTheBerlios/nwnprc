@@ -34,16 +34,6 @@ int BonusAtk(int iDmg)
   return 0;
 }
 
-void EnforceActionMode()
-{
-   if(GetHasSpellEffect(GetSpellId(), OBJECT_SELF))
-   {
-       SetActionMode(OBJECT_SELF,ACTION_MODE_POWER_ATTACK,FALSE);
-       SetActionMode(OBJECT_SELF,ACTION_MODE_IMPROVED_POWER_ATTACK,FALSE);
-       
-       DelayCommand(3.0, EnforceActionMode());
-   }
-}
 
 void main()
 {
@@ -114,15 +104,10 @@ void main()
        eDamage = EffectDamageIncrease(iDmg, nDamageBonusType);
        eToHit = EffectAttackDecrease(iHit);
 
-       SetActionMode(OBJECT_SELF,ACTION_MODE_POWER_ATTACK,FALSE);
-       SetActionMode(OBJECT_SELF,ACTION_MODE_IMPROVED_POWER_ATTACK,FALSE);
-
-       DelayCommand(3.0, EnforceActionMode());
-
        effect eLink = ExtraordinaryEffect(EffectLinkEffects(eDamage, eToHit));
        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, OBJECT_SELF);
 
-       string nMes = "*Power Attack Mode Activated*";
+       string nMes = "*Power Attack "+IntToString(iHit)+" Activated*";
        FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
        if (GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER)>1)
        {

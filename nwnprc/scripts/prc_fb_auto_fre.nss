@@ -12,7 +12,7 @@
 #include "prc_inc_clsfunc"
 #include "prc_spell_const"
 
-void main
+void main()
 {
      // 10 + damage dealt in that hit
      int willSaveDC = 10 + GetTotalDamageDealt();

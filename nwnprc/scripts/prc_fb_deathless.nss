@@ -9,7 +9,7 @@
 //:: Created By: Oni5115
 //:://////////////////////////////////////////////
 
-void main
+void main()
 {
      int iDam = GetTotalDamageDealt();
      iDam += GetLocalInt(OBJECT_SELF, "PC_Damage");

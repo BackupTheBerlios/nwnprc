@@ -19,51 +19,11 @@
 
 #include "x2_inc_itemprop" // for checking if item is a weapon
 
-// Used to add/remove the auto frenzy property on creature skin
-void AutoFrenzy(object oPC,int iEquip)
-{
-     object oItem;
-     if (iEquip==2)       // On Equip
-     {
-          oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-          if( GetLocalInt(oItem, "AFrenzy") )
-          {
-              return;
-          }
-
-          if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
-          {
-             AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
-             SetLocalInt(oItem,"AFrenzy",1);
-          }
-     }
-     else if(iEquip == 1)  // Unequip
-     {
-          oItem=GetPCItemLastUnequipped();
-          if(GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
-          {
-               return;
-          }
-          
-          RemoveSpecificProperty(oItem,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,0);
-          DeleteLocalInt(oItem,"AFrenzy");
-    }
-    else
-    {
-          oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-          if( !GetLocalInt(oItem,"AFrenzy")&& GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
-          {
-               AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
-               SetLocalInt(oItem,"AFrenzy",1);
-          }
-    }
-}
-
 void CheckSupremePowerAttack(object oPC, int iEquip)
 {
       int bIsWeapon = FALSE;
       
-      if(iEquip == 2)
+      if(iEquip == 2)       // On Equip
       {
           object oWeapon = GetPCItemLastEquipped();
           if(IPGetIsMeleeWeapon(oWeapon) || GetWeaponRanged(oWeapon) )
@@ -71,7 +31,7 @@ void CheckSupremePowerAttack(object oPC, int iEquip)
                bIsWeapon = TRUE;
           } 
       }
-      else if(iEquip == 1)
+      else if(iEquip == 1)  // Unequip
       {
           object oWeapon = GetPCItemLastUnequipped();
           if(IPGetIsMeleeWeapon(oWeapon) || GetWeaponRanged(oWeapon) )
@@ -90,16 +50,60 @@ void CheckSupremePowerAttack(object oPC, int iEquip)
       }
 }
 
+void ApplyAutoFrenzy(object oPC, object oArmor)
+{
+     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oArmor);
+     SetLocalInt(oPC, "AFrenzy", 2);
+}
+
+void RemoveAutoFrenzy(object oPC, object oArmor)
+{
+     RemoveSpecificProperty(oArmor, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0);
+     SetLocalInt(oPC, "AFrenzy", 1);
+}
+
 void main()
 {
     //Declare main variables.
     object oPC = OBJECT_SELF;
+    object oItem;
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
     
-    int nFrenzy = GetHasFeat(FEAT_FRENZY);
-    if(nFrenzy != 0)
+    if(GetHasFeat(FEAT_FRENZY) && GetLocalInt(oPC, "AFrenzy") == 0)
     {
-        AutoFrenzy(oPC,GetLocalInt(oPC, "ONEQUIP") );
+        // remove bonus on error
+        object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+        RemoveAutoFrenzy(oPC, oArmor);
+        ApplyAutoFrenzy(oPC, oArmor);
+    }    
+    else if(GetHasFeat(FEAT_FRENZY) && GetLocalInt(oPC, "AFrenzy") != 0)
+    {              
+        if(iEquip == 2)       // On Equip
+        {
+             // add bonus to armor
+             object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+             oItem = GetPCItemLastEquipped();
+             
+             if(oItem == oArmor)
+             {
+                  ApplyAutoFrenzy(oPC, oArmor); 
+             }
+        }
+        else if(iEquip == 1)  // Unequip
+        {
+             oItem = GetPCItemLastUnequipped();
+             
+             if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+             {
+                  RemoveAutoFrenzy(oPC, oItem);
+             }
+        }
+        else                  // On level, rest, or other events
+        {
+             object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+             RemoveAutoFrenzy(oPC, oArmor);
+             ApplyAutoFrenzy(oPC, oArmor);
+        }
     }
     
     CheckSupremePowerAttack(oPC, iEquip);

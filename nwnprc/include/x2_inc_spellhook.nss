@@ -371,145 +371,146 @@ void X2DoBreakConcentrationCheck()
 //------------------------------------------------------------------------------
 int X2PreSpellCastCode()
 {
-   object oTarget = GetSpellTargetObject();
-   int nContinue;
-   
-   DeleteLocalInt(OBJECT_SELF, "SpellConc");
-    nContinue = !ExecuteScriptAndReturnInt("prespellcode",OBJECT_SELF);
+	object oTarget = GetSpellTargetObject();
+	int nContinue;
 
-   //---------------------------------------------------------------------------
-   // This stuff is only interesting for player characters we assume that use
-   // magic device always works and NPCs don't use the crafting feats or
-   // sequencers anyway. Thus, any NON PC spellcaster always exits this script
-   // with TRUE (unless they are DM possessed or in the Wild Magic Area in
-   // Chapter 2 of Hordes of the Underdark.
-   //---------------------------------------------------------------------------
-   if (!GetIsPC(OBJECT_SELF)
-       && !GetPRCSwitch(PRC_NPC_HAS_PC_SPELLCASTING))
-   {
-       if( !GetIsDMPossessed(OBJECT_SELF) && !GetLocalInt(GetArea(OBJECT_SELF), "X2_L_WILD_MAGIC"))
-       {
-            return TRUE;
-       }
-   }
+	DeleteLocalInt(OBJECT_SELF, "SpellConc");
+	nContinue = !ExecuteScriptAndReturnInt("prespellcode",OBJECT_SELF);
 
-   //---------------------------------------------------------------------------
-   // Break any spell require maintaining concentration (only black blade of
-   // disaster)
-   // /*REM*/ X2BreakConcentrationSpells();
-   //---------------------------------------------------------------------------
-
-   //---------------------------------------------------------------------------
-   // Run Red Wizard School Restriction Check
-   //---------------------------------------------------------------------------
-   if (nContinue)
-      nContinue = RedWizRestrictedSchool();
-
-   if (nContinue)
-   {
 	//---------------------------------------------------------------------------
-	// Run use magic device skill check
+	// This stuff is only interesting for player characters we assume that use
+	// magic device always works and NPCs don't use the crafting feats or
+	// sequencers anyway. Thus, any NON PC spellcaster always exits this script
+	// with TRUE (unless they are DM possessed or in the Wild Magic Area in
+	// Chapter 2 of Hordes of the Underdark.
 	//---------------------------------------------------------------------------
-	nContinue = X2UseMagicDeviceCheck();
-   }
+	if (!GetIsPC(OBJECT_SELF)
+	&& !GetPRCSwitch(PRC_NPC_HAS_PC_SPELLCASTING))
+	{
+		if( !GetIsDMPossessed(OBJECT_SELF) && !GetLocalInt(GetArea(OBJECT_SELF), "X2_L_WILD_MAGIC"))
+		{
+			return TRUE;
+		}
+	}
 
-   if (nContinue)
-   {
-       //-----------------------------------------------------------------------
-       // run any user defined spellscript here
-       //-----------------------------------------------------------------------
-       nContinue = X2RunUserDefinedSpellScript();
-   }
-   
-   if (nContinue)
-   {
-       //-----------------------------------------------------------------------
-       // run any object-specific spellscript here
-       //-----------------------------------------------------------------------
-       nContinue = PRCRunUserSpecificSpellScript();
-   }
-   //---------------------------------------------------------------------------
-   // Check for the new restricted itemproperties
-   //---------------------------------------------------------------------------
-   if(nContinue 
-       && GetIsObjectValid(GetSpellCastItem()) 
-       && !CheckPRCLimitations(GetSpellCastItem(), OBJECT_SELF))
-   {
-       SendMessageToPC(OBJECT_SELF, "You cannot use "+GetName(GetSpellCastItem()));
-       nContinue = FALSE;
-   }
+	//---------------------------------------------------------------------------
+	// Break any spell require maintaining concentration (only black blade of
+	// disaster)
+	// /*REM*/ X2BreakConcentrationSpells();
+	//---------------------------------------------------------------------------
+
+	//---------------------------------------------------------------------------
+	// Run Red Wizard School Restriction Check
+	//---------------------------------------------------------------------------
+	if (nContinue)
+	nContinue = RedWizRestrictedSchool();
+
+	if (nContinue)
+	{
+		//---------------------------------------------------------------------------
+		// Run use magic device skill check
+		//---------------------------------------------------------------------------
+		nContinue = X2UseMagicDeviceCheck();
+	}
+
+	if (nContinue)
+	{
+		//-----------------------------------------------------------------------
+		// run any user defined spellscript here
+		//-----------------------------------------------------------------------
+		nContinue = X2RunUserDefinedSpellScript();
+	}
+
+	if (nContinue)
+	{
+		//-----------------------------------------------------------------------
+		// run any object-specific spellscript here
+		//-----------------------------------------------------------------------
+		nContinue = PRCRunUserSpecificSpellScript();
+	}
+	//---------------------------------------------------------------------------
+	// Check for the new restricted itemproperties
+	//---------------------------------------------------------------------------
+	if(nContinue
+	&& GetIsObjectValid(GetSpellCastItem())
+	&& !CheckPRCLimitations(GetSpellCastItem(), OBJECT_SELF))
+	{
+		SendMessageToPC(OBJECT_SELF, "You cannot use "+GetName(GetSpellCastItem()));
+		nContinue = FALSE;
+	}
 
 
-   //---------------------------------------------------------------------------
-   // The following code is only of interest if an item was targeted
-   //---------------------------------------------------------------------------
-   if (GetIsObjectValid(oTarget) && GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
-   {
+	//---------------------------------------------------------------------------
+	// The following code is only of interest if an item was targeted
+	//---------------------------------------------------------------------------
+	if (GetIsObjectValid(oTarget) && GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
+	{
 
-       //-----------------------------------------------------------------------
-       // Check if spell was used to trigger item creation feat
-       //-----------------------------------------------------------------------
-       if (nContinue) {
-           nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft",OBJECT_SELF);
-       }
+		//-----------------------------------------------------------------------
+		// Check if spell was used to trigger item creation feat
+		//-----------------------------------------------------------------------
+		if (nContinue) {
+			nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft",OBJECT_SELF);
+		}
 
-       //-----------------------------------------------------------------------
-       // Check if spell was used for on a sequencer item
-       //-----------------------------------------------------------------------
-       if (nContinue)
-       {
-            nContinue = (!X2GetSpellCastOnSequencerItem(oTarget));
-       }
+		//-----------------------------------------------------------------------
+		// Check if spell was used for on a sequencer item
+		//-----------------------------------------------------------------------
+		if (nContinue)
+		{
+			nContinue = (!X2GetSpellCastOnSequencerItem(oTarget));
+		}
 
-       //-----------------------------------------------------------------------
-       // * Execute item OnSpellCast At routing script if activated
-       //-----------------------------------------------------------------------
-       if (GetModuleSwitchValue(MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS) == TRUE)
-       {
-             SetUserDefinedItemEventNumber(X2_ITEM_EVENT_SPELLCAST_AT);
-             int nRet =   ExecuteScriptAndReturnInt(GetUserDefinedItemEventScriptName(oTarget),OBJECT_SELF);
-             if (nRet == X2_EXECUTE_SCRIPT_END)
-             {
-                return FALSE;
-             }
-       }
+		//-----------------------------------------------------------------------
+		// * Execute item OnSpellCast At routing script if activated
+		//-----------------------------------------------------------------------
+		if (GetModuleSwitchValue(MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS) == TRUE)
+		{
+			SetUserDefinedItemEventNumber(X2_ITEM_EVENT_SPELLCAST_AT);
+			int nRet =   ExecuteScriptAndReturnInt(GetUserDefinedItemEventScriptName(oTarget),OBJECT_SELF);
+			if (nRet == X2_EXECUTE_SCRIPT_END)
+			{
+				return FALSE;
+			}
+		}
 
-       //-----------------------------------------------------------------------
-       // Prevent any spell that has no special coding to handle targetting of items
-       // from being cast on items. We do this because we can not predict how
-       // all the hundreds spells in NWN will react when cast on items
-       //-----------------------------------------------------------------------
-       if (nContinue) {
-           nContinue = X2CastOnItemWasAllowed(oTarget);
-       }
-   }
+		//-----------------------------------------------------------------------
+		// Prevent any spell that has no special coding to handle targetting of items
+		// from being cast on items. We do this because we can not predict how
+		// all the hundreds spells in NWN will react when cast on items
+		//-----------------------------------------------------------------------
+		if (nContinue) {
+			nContinue = X2CastOnItemWasAllowed(oTarget);
+		}
+	}
 
-   return nContinue;
 
-//spellsharing for bonded summoner
-    if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
-    {
-      object oFam = GetLocalObject(OBJECT_SELF, "BONDED");
-      // Run the ShareSpell code to duplicate the spell on the familiar
-      if (GetIsObjectValid(oFam))
-      {
-        int bIsWizSorc = (GetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
-                          GetLastSpellCastClass() == CLASS_TYPE_SORCERER);
 
-        // spell has to be wiz/sorc and cast on self to be shared
-        if ((oTarget == OBJECT_SELF) && (bIsWizSorc) &&
-        (!GetIsObjectValid(GetSpellCastItem())) && // no item spells
-        (GetSpellId()!=SPELL_SHAPECHANGE) &&       // no polymorphs
-        (GetSpellId()!=SPELL_POLYMORPH_SELF) &&
-        (GetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
-        {
-           SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
-           // Make sure this variable gets deleted as quickly as possible in case it's added in error.
-           DelayCommand(1.0, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
-           AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-        }
-      }
-    }
+	//spellsharing for bonded summoner
+	if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
+	{
+		object oFam = GetLocalObject(OBJECT_SELF, "BONDED");
+		// Run the ShareSpell code to duplicate the spell on the familiar
+		if (GetIsObjectValid(oFam))
+		{
+			int bIsWizSorc = (GetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
+			GetLastSpellCastClass() == CLASS_TYPE_SORCERER);
 
+			// spell has to be wiz/sorc and cast on self to be shared
+			if ((oTarget == OBJECT_SELF) && (bIsWizSorc) &&
+			    (!GetIsObjectValid(GetSpellCastItem())) && // no item spells
+			    (GetSpellId()!=SPELL_SHAPECHANGE) &&       // no polymorphs
+			    (GetSpellId()!=SPELL_POLYMORPH_SELF) &&
+			    (GetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
+			{
+				SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
+				// Make sure this variable gets deleted as quickly as possible in case it's added in error.
+				DelayCommand(1.0, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
+				AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+			}
+		}
+	}
+
+	return nContinue;
 }
 

@@ -27,9 +27,9 @@ void main()
     int iDur = 5 + iLevel;
 
     //Setup some base damage
-    int unarmDamage = d8(1) + 12;
-    int armedDamage = GetMeleeWeaponDamage(OBJECT_SELF,oItem1,TRUE,0);
     int iStrMod = GetAbilityModifier(ABILITY_STRENGTH,OBJECT_SELF);
+    int unarmDamage = d3(1);
+    int armedDamage = GetMeleeWeaponDamage(OBJECT_SELF,oItem1,TRUE,0);
     unarmDamage = unarmDamage + iStrMod;
     armedDamage = armedDamage + iStrMod;
 
@@ -47,7 +47,7 @@ void main()
    //Check for Touch and Apply the Effects
    if(TouchAttackMelee(oTarget,TRUE)>0)
     {
-       if(!GetIsObjectValid(oItem2))
+       if(!GetIsObjectValid(oItem2) && !GetIsObjectValid(oItem1))
         {
          ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oTarget, RoundsToSeconds(iDur));
          ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink1, oTarget);

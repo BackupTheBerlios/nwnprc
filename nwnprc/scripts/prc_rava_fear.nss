@@ -23,8 +23,10 @@ void main()
     effect eSave = EffectSavingThrowDecrease(SAVING_THROW_ALL,2,SAVING_THROW_TYPE_ALL);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-
+    effect eExplode = EffectVisualEffect(VFX_FNF_LOS_EVIL_30);
     effect eLink = EffectLinkEffects(eSave, eDur);
+    
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eExplode, OBJECT_SELF);
 
     float fSize;
 

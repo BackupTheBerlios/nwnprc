@@ -27,18 +27,19 @@ void main()
     int unarmDamage = d8(1) + ravaLevel;
     int armedDamage = d4(1) + ravaLevel;
 
-    unarmDamage = unarmDamage + iStrMod;
-    armedDamage = armedDamage + iStrMod;
+    unarmDamage = unarmDamage;
+    armedDamage = armedDamage;
 
     effect eDam1;
     effect eDam2;
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-    eDam1 = EffectDamage(unarmDamage, DAMAGE_TYPE_DIVINE);
-    eDam2 = EffectDamage(armedDamage, DAMAGE_TYPE_DIVINE);
+    eDam1 = EffectDamage(unarmDamage, DAMAGE_TYPE_NEGATIVE);
+    eDam2 = EffectDamage(armedDamage, DAMAGE_TYPE_NEGATIVE);
     object oTarget = GetSpellTargetObject();
     object oItem1 = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF);
     object oItem2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,OBJECT_SELF);
     int iDamage = GetMeleeWeaponDamage(OBJECT_SELF,oItem1,TRUE,0);
+    iDamage + iStrMod;
 
     //Melee Attack
     if(TouchAttackMelee(oTarget,TRUE)>0)

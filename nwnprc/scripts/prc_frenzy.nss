@@ -22,6 +22,8 @@
 #include "prc_class_const"
 #include "prc_spell_const"
 
+#include "prc_inc_clsfunc"
+
 void TurnBasedDamage(object oTarget, object oCaster);
 void AttackNearestForDuration();
 void EndOfFrenzyDamage(object oSelf);
@@ -72,30 +74,30 @@ void main()
         // Check for haste
         if(GetHasSpellEffect(SPELL_MASS_HASTE, oTarget) == TRUE)
         {
-		hasHaste = 1;
-	}
-	if(GetHasSpellEffect(647, oTarget) == TRUE) // blinding speed
-	{
-		hasHaste = 1;	
-	}
-	if(GetHasSpellEffect(78, oTarget) == TRUE) // haste
-	{
-		hasHaste = 1;	
-	}
-	
-	// Checks all equiped items for haste
-	for (nSlot=0; nSlot<NUM_INVENTORY_SLOTS; nSlot++) 
-	{
-	    object oItem = GetItemInSlot(nSlot, OBJECT_SELF);
-	
-	    if (GetItemHasItemProperty(oItem, ITEM_PROPERTY_HASTE))
-	    {
-	          hasHaste = 1;		    	
+          hasHaste = 1;
+     }
+     if(GetHasSpellEffect(647, oTarget) == TRUE) // blinding speed
+     {
+          hasHaste = 1;  
+     }
+     if(GetHasSpellEffect(78, oTarget) == TRUE) // haste
+     {
+          hasHaste = 1;  
+     }
+     
+     // Checks all equiped items for haste
+     for (nSlot=0; nSlot<NUM_INVENTORY_SLOTS; nSlot++) 
+     {
+         object oItem = GetItemInSlot(nSlot, OBJECT_SELF);
+     
+         if (GetItemHasItemProperty(oItem, ITEM_PROPERTY_HASTE))
+         {
+               hasHaste = 1;            
             }
-	}
-	
-        // ac penalty applied to skin	
-	object oSkin = GetPCSkin(OBJECT_SELF);
+     }
+     
+        // ac penalty applied to skin   
+        object oSkin = GetPCSkin(OBJECT_SELF);
         SetCompositeBonusT(oSkin, "FrenzyACPenalty", acDecrease, ITEM_PROPERTY_DECREASED_AC, IP_CONST_ACMODIFIERTYPE_DODGE); // for temporary bonuses
 
         PlayVoiceChat(VOICE_CHAT_BATTLECRY1);
@@ -108,14 +110,14 @@ void main()
         
         if(hasHaste == 0)
         {
-		effect eHaste = EffectHaste();
-		effect eMove = EffectMovementSpeedDecrease(50);
-		eLink = EffectLinkEffects(eLink, eHaste);
-		eLink = EffectLinkEffects(eLink, eMove);
-		
-		//effect eExAtt = EffectModifyAttacks(1);
-		//eLink = EffectLinkEffects(eLink, eExAtt);
-	}
+          effect eHaste = EffectHaste();
+          effect eMove = EffectMovementSpeedDecrease(50);
+          eLink = EffectLinkEffects(eLink, eHaste);
+          eLink = EffectLinkEffects(eLink, eMove);
+          
+          //effect eExAtt = EffectModifyAttacks(1);
+          //eLink = EffectLinkEffects(eLink, eExAtt);
+     }
 
         SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_FRENZY, FALSE));
         
@@ -149,6 +151,13 @@ void main()
             // to determine what the ability scores become after adding the bonuses to them.
             DelayCommand(0.1, GiveExtraRageBonuses(nCon,StrBeforeBonuses, ConBeforeBonuses, nIncrease, 0, 0, DAMAGE_TYPE_DIVINE, OBJECT_SELF));
         }
+        
+        // if they have PTWF and frenzy, they should get their attacks re-checked.
+        if(GetHasFeat(FEAT_PERFECT_TWO_WEAPON_FIGHTING, OBJECT_SELF) )
+        {
+             RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, OBJECT_SELF, OBJECT_SELF); 
+             DelayCommand(0.3, ActionCastSpellOnSelf(SPELL_T_TWO_WEAPON_FIGHTING) );
+        }
     }
 }
 
@@ -172,7 +181,7 @@ void TurnBasedDamage(object oTarget, object oCaster)
     if (GZGetDelayedSpellEffectsExpired(SPELL_FRENZY,oTarget,oCaster)) // 2700
     {
         int nLevel = GetLevelByClass(CLASS_TYPE_FRE_BERSERKER);  // 210
-	    
+         
         // code for being winded
         if(nLevel < 10)
         {
@@ -190,7 +199,7 @@ void TurnBasedDamage(object oTarget, object oCaster)
     
     if (GetIsDead(oTarget) == FALSE)
     {
-	effect eDam = EffectDamage(2, DAMAGE_TYPE_MAGICAL);
+     effect eDam = EffectDamage(2, DAMAGE_TYPE_MAGICAL);
 
         ApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);
         DelayCommand(6.0f,TurnBasedDamage(oTarget,oCaster));
@@ -207,7 +216,7 @@ void AttackNearestForDuration()
     {
         AssignCommand(oCaster, ClearAllActions(TRUE) );     
         return;
-    }	
+    }     
     
     AssignCommand(oCaster, ActionAttack(oTarget, FALSE));
     DelayCommand(6.0f,AttackNearestForDuration() );

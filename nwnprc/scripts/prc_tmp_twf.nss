@@ -64,9 +64,10 @@ void main()
               numAddAttacks = 2;
               attackPenalty = 4;
 
-              if(GetHasSpellEffect(SPELL_MASS_HASTE, oPC) == TRUE || 
-                 GetHasSpellEffect(647, oPC) == TRUE  ||  // blinding speed
-                 GetHasSpellEffect(647, oPC) == TRUE)     // haste
+              if(GetHasSpellEffect(SPELL_MASS_HASTE, oPC) == TRUE || // mass haste
+                 GetHasSpellEffect(647, oPC) == TRUE  ||             // blinding speed
+                 GetHasSpellEffect(SPELL_HASTE, oPC) == TRUE ||     // haste
+                 GetHasSpellEffect(SPELL_FRENZY, oPC) == TRUE )     // frenzy 
               {
                    numAddAttacks += 1;
               }

@@ -867,4 +867,120 @@ newanim duration smp_desecrate20
         endlist
     endnode
 doneanim duration smp_desecrate20
+#NWmax ANIM ASCII
+newanim cessation smp_desecrate20
+  length 0.666667
+  transtime 0.25
+  animroot smp_desecrate20
+    node dummy smp_desecrate20
+        parent NULL
+        positionkey
+            0.0 0.0 0.0 0.0
+            0.666667 0.0 0.0 0.0
+        endlist
+        orientationkey
+            0.0 0.0 0.0 0.0 0.0
+            0.666667 0.0 0.0 0.0 0.0
+        endlist
+    endnode
+    node emitter Negative_Energy01
+        parent smp_desecrate20
+        positionkey
+            0.0 2.93917 2.99675 0.0957122
+            0.666667 2.93917 2.99675 0.0957122
+        endlist
+        orientationkey
+            0.0 -1.0 -2.10734e-007 0.0 -3.14159
+            0.666667 -1.0 -2.10734e-007 0.0 -3.14159
+        endlist
+    endnode
+    node emitter Negative_Energy03
+        parent smp_desecrate20
+        positionkey
+            0.0 -2.87303 3.02847 0.0957122
+            0.666667 -2.87303 3.02847 0.0957122
+        endlist
+        orientationkey
+            0.0 -1.0 -2.10734e-007 0.0 -3.14159
+            0.666667 -1.0 -2.10734e-007 0.0 -3.14159
+        endlist
+    endnode
+    node emitter Negative_Energy04
+        parent smp_desecrate20
+        positionkey
+            0.0 -2.88172 -3.00098 0.0957122
+            0.666667 -2.88172 -3.00098 0.0957122
+        endlist
+        orientationkey
+            0.0 -1.0 -2.10734e-007 0.0 -3.14159
+            0.666667 -1.0 -2.10734e-007 0.0 -3.14159
+        endlist
+    endnode
+    node emitter Negative_Energy02
+        parent smp_desecrate20
+        positionkey
+            0.0 3.01723 -2.94 0.0957122
+            0.666667 3.01723 -2.94 0.0957122
+        endlist
+        orientationkey
+            0.0 -1.0 -2.10734e-007 0.0 -3.14159
+            0.666667 -1.0 -2.10734e-007 0.0 -3.14159
+        endlist
+    endnode
+    node emitter Negative_Energy05
+        parent smp_desecrate20
+        positionkey
+            0.0 -0.00453552 4.01207 0.0957122
+            0.666667 -0.00453552 4.01207 0.0957122
+        endlist
+        orientationkey
+            0.0 -1.0 -2.10734e-007 0.0 -3.14159
+            0.666667 -1.0 -2.10734e-007 0.0 -3.14159
+        endlist
+    endnode
+    node emitter Negative_Energy06
+        parent smp_desecrate20
+        positionkey
+            0.0 0.0 -0.01 0.0957122
+            0.666667 0.0 -0.01 0.0957122
+        endlist
+        orientationkey
+            0.0 -1.0 -2.10734e-007 0.0 -3.14159
+            0.666667 -1.0 -2.10734e-007 0.0 -3.14159
+        endlist
+    endnode
+    node emitter Negative_Energy07
+        parent smp_desecrate20
+        positionkey
+            0.0 -4.19802 -0.01 0.0957122
+            0.666667 -4.19802 -0.01 0.0957122
+        endlist
+        orientationkey
+            0.0 -1.0 -2.10734e-007 0.0 -3.14159
+            0.666667 -1.0 -2.10734e-007 0.0 -3.14159
+        endlist
+    endnode
+    node emitter Negative_Energy08
+        parent smp_desecrate20
+        positionkey
+            0.0 0.0 -4.42993 0.0957122
+            0.666667 0.0 -4.42993 0.0957122
+        endlist
+        orientationkey
+            0.0 -1.0 -2.10734e-007 0.0 -3.14159
+            0.666667 -1.0 -2.10734e-007 0.0 -3.14159
+        endlist
+    endnode
+    node emitter Negative_Energy09
+        parent smp_desecrate20
+        positionkey
+            0.0 4.03409 -0.01 0.0957122
+            0.666667 4.03409 -0.01 0.0957122
+        endlist
+        orientationkey
+            0.0 -1.0 -2.10734e-007 0.0 -3.14159
+            0.666667 -1.0 -2.10734e-007 0.0 -3.14159
+        endlist
+    endnode
+doneanim duration smp_desecrate20
 donemodel smp_desecrate20

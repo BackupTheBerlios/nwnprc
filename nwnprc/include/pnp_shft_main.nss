@@ -503,19 +503,6 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     SetImmortal(oASPC,FALSE);
     DestroyObject(oASPC);
 
-    //re-equid creature items to get correct ip feats
-    //(some were staying on even when they had been removed from the hide)
-    //oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
-    //oWeapCRPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oPC);
-    //oWeapCLPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
-    //oWeapCBPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC);
-    //mast not unequid the items, this would crash the game
-    //but re-equiping the items when they are already equiped will
-    //recheck what is on the hide
-    //DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR)));
-    //DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R)));
-    //DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L)));
-    //DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B)));
 
     // Reset any PRC feats that might have been lost from the shift
     EvalPRCFeats(oPC);
@@ -1834,30 +1821,32 @@ int GetTrueForm(object oPC)
 {
     int nRace = GetRacialType(OBJECT_SELF);
     int nPCForm;
-    switch (nRace)
-    {
-    case RACIAL_TYPE_DWARF:
-        nPCForm = APPEARANCE_TYPE_DWARF;
-        break;
-    case RACIAL_TYPE_ELF:
-        nPCForm = APPEARANCE_TYPE_ELF;
-        break;
-    case RACIAL_TYPE_GNOME:
-        nPCForm = APPEARANCE_TYPE_GNOME;
-        break;
-    case RACIAL_TYPE_HALFELF:
-        nPCForm = APPEARANCE_TYPE_HALF_ELF;
-        break;
-    case RACIAL_TYPE_HALFLING:
-        nPCForm = APPEARANCE_TYPE_HALFLING;
-        break;
-    case RACIAL_TYPE_HALFORC:
-        nPCForm = APPEARANCE_TYPE_HALF_ORC;
-        break;
-    case RACIAL_TYPE_HUMAN:
-        nPCForm = APPEARANCE_TYPE_HUMAN;
-        break;
-    }
+	nPCForm = StringToInt(Get2DAString("racialtypes", "Appearance", nRace));
+//		switch (nRace)
+//		{
+//		case RACIAL_TYPE_DWARF:
+//			nPCForm = APPEARANCE_TYPE_DWARF;
+//			break;
+//		case RACIAL_TYPE_ELF:
+//			nPCForm = APPEARANCE_TYPE_ELF;
+//			break;
+//		case RACIAL_TYPE_GNOME:
+//			nPCForm = APPEARANCE_TYPE_GNOME;
+//			break;
+//		case RACIAL_TYPE_HALFELF:
+//			nPCForm = APPEARANCE_TYPE_HALF_ELF;
+//			break;
+//		case RACIAL_TYPE_HALFLING:
+//			nPCForm = APPEARANCE_TYPE_HALFLING;
+//			break;
+//		case RACIAL_TYPE_HALFORC:
+//			nPCForm = APPEARANCE_TYPE_HALF_ORC;
+//			break;
+//		case RACIAL_TYPE_HUMAN:
+//			nPCForm = APPEARANCE_TYPE_HUMAN;
+//			break;
+//		}
+//	}
     return nPCForm;
 }
 

@@ -1,10 +1,12 @@
-To use the Autodoc, create directories 2da/ and tlk/ in the location you will be
-running it from. This location should also contain the directory templates/ and
-the file settings from the CVS. Make a copy of Main Manual Files/ called
-manual/
+Manual generator:
 
-Place dialog.tlk and prc_consortium.tlk equivalents for each language specified in
-settings in tlk/. Place the following 2das in 2da/
+To use the Autodoc, create directories 2da/ and tlk/ in the location you will
+be running it from. This location should also contain the directory
+templates/ and the file settings from the CVS. Make a copy of
+Main Manual Files/ called manual/
+
+Place dialog.tlk and prc_consortium.tlk equivalents for each language
+specified in settings in tlk/. Place the following 2das in 2da/
 
 classes.2da
 domains.2da
@@ -22,11 +24,58 @@ all race_feat_*.2da
 
 
 
-If you have make installed, run "make" and "make run" to generate the manual. There are
-other run options present in the makefile for those interested.
+If you have make installed, run "make" and "make run" to generate the manual.
+There are other run options present in the makefile for those interested.
 If you do not have make, run
 	javac -source 1.5 -target 1.5 prc/autodoc/*.java
 and
 	java -Xmx300m -Xms300m prc/autodoc/Main
 
 use parameters --help or -? to get info about other possible parameters.
+
+
+
+
+-------------------------------------------------------------------------------
+Script generator:
+
+Use:
+Compile the CodeGen class.
+Run it:
+	java CodeGen namePrefix templatePath 2daPaths...
+
+where namePrefix   = the base name that all the resulting scripts will share
+      templatePath = the filename of the template used to generate the scripts
+      2daPaths...  = any number of filenames of 2das used to fill in the
+                     blanks in the template
+
+The 2das are applied in the order given. This only has effect on the filename,
+which is built up from the namePrefix + Suffix column of each of the 2das + .nss
+
+The 2das must contain two columns, Suffix and Value. Suffix is added to the
+filename as described above, and Value is used to replace all instances of
+the 2da's name in the template.
+
+Example template and 2das:
+
+**********template.txt*********
+void main(){
+	int ~~~Foo~~~ = ~~~Bar~~~;
+}
+*******************************
+************Foo.2da************
+2DA V2.0
+
+    Suffix    Value
+0   a         alpha
+1   b         beta
+2   c         gamma
+*******************************
+************Bar.2da************
+2DA V2.0
+
+    Suffix    Value
+0   1         delta
+1   2         epsilon
+2   32        phi
+*******************************

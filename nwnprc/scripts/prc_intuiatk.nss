@@ -35,7 +35,7 @@ void main()
    object oPC = OBJECT_SELF;
    object oSkin = GetPCSkin(oPC);
 
-  if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
+   if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
    {
       object oItem ;
       int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
@@ -43,17 +43,9 @@ void main()
       int iWis =  GetAbilityModifier(ABILITY_WISDOM,oPC);
       int iMod = iWis > iStr  ? iWis-iStr :0;
 
-      if (iEquip == 1)
-           oItem = GetPCItemLastUnequipped();
-      else
-           oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-
       object oBrac = GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
 
-
-      if (iEquip == 1 && (GetBaseItemType(oItem)== BASE_ITEM_BRACER ||GetBaseItemType(oItem)== BASE_ITEM_GLOVES))
-         SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
-      else if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD )
+      if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD )
          SetCompositeBonus(oBrac,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
       else if ( !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC)) &&  !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC)))
       {
@@ -64,7 +56,7 @@ void main()
       else
         SetCompositeBonus(oBrac,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
 
-
+      oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
       int iSimple = isSimple(oItem);
       if (iSimple)
       {
@@ -81,11 +73,16 @@ void main()
 
         }
 
-        if(GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD ||iEquip == 1 )
-           SetCompositeBonus(oItem,"IntuiAtk",GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
+        if(GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
+           SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
         else
           SetCompositeBonus(oItem,"IntuiAtk",iMod+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
       }
+
+
+      if (iEquip == 1)
+         SetCompositeBonus(GetPCItemLastUnequipped(),"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
+
 
 
 

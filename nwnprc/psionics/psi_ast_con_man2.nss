@@ -35,7 +35,7 @@ if (!PsiPrePowerCastCode()){ return; }
 	
 	if(!nACLevel || nACLevel > 9)
 	{
-		SendMessageToPCByStrref(oManifester, STRREF_INVALID_CONSTRUCT_IN_SLOT);
+		SendMessageToPCByStrRef(oManifester, STRREF_INVALID_CONSTRUCT_IN_SLOT);
 		return;
 	}
 	
@@ -52,7 +52,7 @@ if (!PsiPrePowerCastCode()){ return; }
 	int nOptionFlags   = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_OPTION_FLAGS       + sSlot);
 	int nResElemFlags  = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_RESISTANCE_FLAGS   + sSlot);
 	int nETchElemFlags = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_ENERGY_TOUCH_FLAGS + sSlot);
-	int nEBltElemFlags = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_ENERGY_BOLT_FLAGS  + sSLot);
+	int nEBltElemFlags = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_ENERGY_BOLT_FLAGS  + sSlot);
 	
 	DoAstralConstructCreation(oManifester, GetSpellTargetLocation(), nACLevel,
 	                          nOptionFlags, nResElemFlags, nETchElemFlags, nEBltElemFlags);

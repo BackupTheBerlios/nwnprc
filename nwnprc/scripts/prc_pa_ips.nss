@@ -31,11 +31,11 @@ void main()
 
      if (!bHasBow)
      {
-     FloatingTextStringOnCreature("No Bow Equipped", OBJECT_SELF, FALSE);
-     return;
+         FloatingTextStringOnCreature("No Bow Equipped", OBJECT_SELF, FALSE);
+         return;
      }
      
-     if(!GetHasFeatEffect(FEAT_PA_POWERSHOT) && !GetHasFeatEffect(FEAT_PA_SUP_POWERSHOT) && bHasBow)
+     if(!GetHasFeatEffect(FEAT_PA_POWERSHOT) && !GetHasFeatEffect(FEAT_PA_SUP_POWERSHOT) )
      {
           if(!GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT))
           {
@@ -58,14 +58,5 @@ void main()
                string nMes = "*Power Shot Mode Deactivated*";
                FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
           }          
-     }
-     
-     if(GetHasFeatEffect(FEAT_PA_POWERSHOT) || GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT) || GetHasFeatEffect(FEAT_PA_SUP_POWERSHOT) && !bHasBow)
-     {
-               RemoveSpecificEffect(EFFECT_TYPE_DAMAGE_INCREASE, OBJECT_SELF);
-               RemoveSpecificEffect(EFFECT_TYPE_ATTACK_DECREASE, OBJECT_SELF);
-
-               string nMes = "*Power Shot Mode Deactivated*";
-               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);     
      }
 }

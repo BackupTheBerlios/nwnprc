@@ -28,27 +28,26 @@ public class Main{
 	}
 	
 	private static class Settings{
-		private Matcher mainMatch = Pattern.compile("\\w+:").matcher(""),
+		private Matcher mainMatch = Pattern.compile("\\S+:").matcher(""),
 		                paraMatch = Pattern.compile("\"[^\"]+\"").matcher(""),
-		                langMatch = Pattern.compile("\\w+=\"\\w+\"").matcher("");
+		                langMatch = Pattern.compile("\\w+=\"[^\"]+\"").matcher("");
 		public ArrayList<String[]> languages = new ArrayList<String[]>();
 		
 		private enum Modes{LANGUAGE};
 		
 		public Settings(){
 			try{
-				Scanner reader = new Scanner("settings");
+				Scanner reader = new Scanner(new File("settings"));
 				String check;
 				Modes mode = null;
 				while(reader.hasNextLine()){
 					check = reader.nextLine();
 					// Skip comments and blank lines
 					if(check.startsWith("#") || check.trim().equals("")) continue;
-					
 					// Check if a new rule is starting
 					mainMatch.reset(check);
 					if(mainMatch.find()){
-						if(mainMatch.group().equals("language:")) mode = Modes.LANGUAGE;
+						if(mainMatch.group().equals("languages:")) mode = Modes.LANGUAGE;
 						else{
 							throw new Exception("Unrecognized setting detected");
 						}
@@ -70,17 +69,17 @@ public class Main{
 							if(result.startsWith("name")){
 								paraMatch.reset(result);
 								paraMatch.find();
-								temp[0] = paraMatch.group();
+								temp[0] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
 							else if(result.startsWith("base")){
 								paraMatch.reset(result);
 								paraMatch.find();
-								temp[1] = paraMatch.group();
+								temp[1] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
 							else if(result.startsWith("prc")){
 								paraMatch.reset(result);
 								paraMatch.find();
-								temp[2] = paraMatch.group();
+								temp[2] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
 							else
 								throw new Exception("Unknown language parameter encountered");

@@ -18,7 +18,7 @@ public class Data_TLK{
 	 *
 	 * @param filePath The path of the TLK file to be loaded
 	 *
-	 * @throws IllegalArgumentException  fileName does not filePath a TLK file
+	 * @throws IllegalArgumentException  <code>filePath</code> does not filePath a TLK file
 	 * @throws TLKReadException          reading the TLK file specified does not succeed
 	 */
 	public Data_TLK(String filePath){

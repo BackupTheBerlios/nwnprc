@@ -11,4 +11,4 @@
 # furthermore, value is surrounded by quotes
 
 languages:
-	name="english" base="dialog.tlk" prc="prc_consortium"
+	name="english" base="dialog.tlk" prc="prc_consortium.tlk"

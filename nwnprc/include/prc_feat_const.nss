@@ -77,12 +77,14 @@ const int FEAT_SA_JUMP_4    = 4763;
 const int FEAT_LEAP	    = 4772;
 const int FEAT_DIVE	    = 4773;
 const int FEAT_KEEN_SIGHT   = 4774;
+const int FEAT_SA_APPRAISE  = 4792;
 
 const int FEAT_ALTFORM                  = 4754;
 const int FEAT_DISGUISE                 = 4755;
-const int FEAT_POWERFUL_CHARGE          = 4756;
+const int FEAT_MINOT_CHARGE             = 4756;
 const int FEAT_AZER_HEAT		= 4790;
 const int FEAT_SVIRFNEBLIN_DODGE        = 4791;
+const int FEAT_WATER_BREATHING		= 4793;
 
 const int FEAT_LARGE                    = 4760;
 const int FEAT_DISGUISE_MEDIUM		= 4769;
@@ -104,6 +106,7 @@ const int FEAT_SPEC_RAKS	    = 4786;
 const int FEAT_SPEC_SVIRF	    = 4787;
 const int FEAT_SPEC_TIEF	    = 4788;
 const int FEAT_SPEC_URDIN	    = 4789;
+const int FEAT_SEPC_MINOT	    = 4794;
 
 //Passive Feats
 const int FEAT_ETERNAL_FREEDOM                         = 4298;

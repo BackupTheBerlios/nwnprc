@@ -5,14 +5,8 @@
 void main()
 {
 	object oPC = OBJECT_SELF;
-	if (GetHasFeat(FEAT_VIGIL_ARMOR)) {
+	if (GetHasFeat(FEAT_VIGIL_ARMOR, oPC)) {
 		object oSkin = GetPCSkin(oPC);
-
-		// This appears to be the simplest way to ensure the effect
-		// is active only once.
-		RemoveEffectOfType(oSkin, EFFECT_TYPE_AC_INCREASE);
-
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT,
-				EffectACIncrease(2, AC_NATURAL_BONUS), oSkin);
+		SetCompositeBonus(oSkin,"VigilantSkinBonus",2,ITEM_PROPERTY_AC_BONUS);
 	}
 }

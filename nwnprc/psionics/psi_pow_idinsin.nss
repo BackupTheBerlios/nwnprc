@@ -55,88 +55,86 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     object oFirstTarget = GetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oFirstTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
+
     if (nSurge > 0)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
+
+        PsychicEnervation(oCaster, nSurge);
     }
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nTargetCount = 1;
-	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2;
-	
-    	effect eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
-    	effect eConfuse = EffectConfused();
-    	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    
-    	//Link duration VFX and confusion effects
-    	effect eLink = EffectLinkEffects(eMind, eConfuse);
-    	eLink = EffectLinkEffects(eLink, eDur);	
-			
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) 
-	{
-		nDC += nAugment;
-		nTargetCount += nAugment;
-	}
-	
-	SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oFirstTarget, nPen))
-	{
-                //Make a saving throw check
-                if(!PRCMySavingThrow(SAVING_THROW_WILL, oFirstTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+        int nDC = GetManifesterDC(oCaster);
+        int nCaster = GetManifesterLevel(oCaster);
+        int nPen = GetPsiPenetration(oCaster);
+        int nTargetCount = 1;
+        int nDur = nCaster;
+        if (nMetaPsi == 2)	nDur *= 2;
+
+        effect eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
+        effect eConfuse = EffectConfused();
+        effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
+        effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+
+        //Link duration VFX and confusion effects
+        effect eLink = EffectLinkEffects(eMind, eConfuse);
+        eLink = EffectLinkEffects(eLink, eDur);
+
+        if (nSurge > 0) nAugment += nSurge;
+
+        //Augmentation effects to Damage
+        if (nAugment > 0)
+        {
+            nDC += nAugment;
+            nTargetCount += nAugment;
+        }
+
+        SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+
+        //Check for Power Resistance
+        if (PRCMyResistPower(oCaster, oFirstTarget, nPen))
+        {
+            //Make a saving throw check
+            if(!PRCMySavingThrow(SAVING_THROW_WILL, oFirstTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+            {
+                //Apply VFX Impact and daze effect
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFirstTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oFirstTarget);
+            }
+        }
+
+        if (nTargetCount > 1)
+        {
+
+            location lTarget = GetSpellTargetLocation();
+            int nTargetsLeft = nTargetCount - 1;
+            //Declare the spell shape, size and the location.  Capture the first target object in the shape.
+            object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+
+            //Cycle through the targets within the spell shape until you run out of targets.
+            while (GetIsObjectValid(oAreaTarget) && nTargetsLeft > 0)
+            {
+                if (spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oAreaTarget != OBJECT_SELF)
                 {
-                        //Apply VFX Impact and daze effect
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFirstTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oFirstTarget);
+                    //Fire cast spell at event for the specified target
+                    SignalEvent(oAreaTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+
+                    //Check for Power Resistance
+                    if (PRCMyResistPower(oCaster, oAreaTarget, nPen))
+                    {
+                        //Make a saving throw check
+                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oAreaTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                        {
+                            //Apply VFX Impact and daze effect
+                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oAreaTarget, RoundsToSeconds(nDur), TRUE, -1, nCaster);
+                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);
+                        }
+                    }
+                    nTargetsLeft -= 1;
                 }
-	}
-	
-	if (nTargetCount > 1)
-	{
-	    
-		location lTarget = GetSpellTargetLocation();	    
-		int nTargetsLeft = nTargetCount - 1;
-		//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-		object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-		
-		//Cycle through the targets within the spell shape until you run out of targets.
-		while (GetIsObjectValid(oAreaTarget) && nTargetsLeft > 0)
-		{
-			if (spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oAreaTarget != OBJECT_SELF)
-			{
-        			//Fire cast spell at event for the specified target
-        			SignalEvent(oAreaTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-        			
-				//Check for Power Resistance
-				if (PRCMyResistPower(oCaster, oAreaTarget, nPen))
-				{
-			                //Make a saving throw check
-			                if(!PRCMySavingThrow(SAVING_THROW_WILL, oAreaTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-			                {
-			                        //Apply VFX Impact and daze effect
-			                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oAreaTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-			               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);
-			               		nTargetsLeft -= 1;
-			                }
-				}
-			}
-	            
-        	}
-        	
-       		//Select the next target within the spell shape.
-       		oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-       	}
+				//Select the next target within the spell shape.
+	            oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            }
+        }
     }
 }

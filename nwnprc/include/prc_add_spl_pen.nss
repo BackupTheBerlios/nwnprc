@@ -100,6 +100,7 @@ int ShadowWeavePen(object oCaster = OBJECT_SELF)
    int nSP;
    
    if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0;
+   if (!GetLocalInt(oCaster, "PatronShar")) return 0 ;
    
    int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
    if ( nSchool == SPELL_SCHOOL_ENCHANTMENT || nSchool == SPELL_SCHOOL_NECROMANCY || nSchool == SPELL_SCHOOL_ILLUSION)

@@ -607,7 +607,10 @@ void PRCSPApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, in
    SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex), nSpellID);
    SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex), nCasterLevel);
    SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex), oCaster );
-   SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), GetHasFeat(FEAT_TENACIOUSMAGIC,oCaster));
+   if (GetLocalInt(oCaster, " PatronShar")) 
+     SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), GetHasFeat(FEAT_TENACIOUSMAGIC,oCaster));
+   else
+     SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), 0);
 
    //nIndex++;
    /// Set new index number to the character.

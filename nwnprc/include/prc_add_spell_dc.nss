@@ -149,7 +149,8 @@ int ShadowWeaveDC(object oCaster = OBJECT_SELF)
    int nDC;
 
    if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0;
-
+   if (!GetLocalInt(oCaster, "PatronShar")) return 0 ;
+   
    int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
    if ( nSchool == SPELL_SCHOOL_ENCHANTMENT || nSchool == SPELL_SCHOOL_NECROMANCY || nSchool == SPELL_SCHOOL_ILLUSION)
       nDC =1+GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;

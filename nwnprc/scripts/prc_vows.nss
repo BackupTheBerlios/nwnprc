@@ -19,7 +19,7 @@ void Vow_Obed(object oPC ,object oSkin ,int iLevel)
 {
    if(GetLocalInt(oSkin, "VowObed") == iLevel) return;
 
-    SetCompositeBonus(oSkin, "VowObed", iLevel, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC,SAVING_THROW_WILL);
+    SetCompositeBonus(oSkin, "VowObed", iLevel, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC,IP_CONST_SAVEBASETYPE_WILL);
 }
 
 void main()

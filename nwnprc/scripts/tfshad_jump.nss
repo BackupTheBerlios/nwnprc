@@ -126,7 +126,7 @@ void main()
              if(iHit > 0)
              {
                 //Check to see if we rolled a critical and determine damage accordingly
-                if(iHit == 2)
+                if(iHit == 2 && !GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT))
                     iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, TRUE) + iBonus;
                 else
                     iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, FALSE) + iBonus;

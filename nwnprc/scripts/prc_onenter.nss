@@ -23,6 +23,7 @@ void main()
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the entering player already meets.
     ExecuteScript("prc_prereq", oPC);
+    ExecuteScript("prc_psi_ppoints", oPC);
     if (GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW))
     {
         //Destroy imbued arrows.

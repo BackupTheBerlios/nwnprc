@@ -6,7 +6,11 @@ import java.util.regex.*;
 
 import static prc.autodoc.Main.SpellType.*;
 
-
+/**
+ * The main purpose of this autodocumenter is to create parts of the manual for
+ * the PRC pack from 2da and TLK files. As a side effect of doing so, it finds
+ * many errors present in the 2das.
+ */
 public class Main{
 	/**
 	 * A small data structure class that gives access to both normal and custom
@@ -205,23 +209,23 @@ public class Main{
 	                      successorFeatHeaderTemplate   = null;
 	                      
 	
-	/* Data structure used for determining if a previous write has failed
-	 * Required in order to be able to skip generating dead links in the
-	 * manual
-	 */
+	/*
 	private static final Object presenceIndicator = new Object();
 	private static HashMap<Integer, Object> failedSkills = new HashMap<Integer, Object>(),
-	                                        failedSpells = new HashMap<Integer, Object>();
+	                                        failedSpells = new HashMap<Integer, Object>();*/
 	
-	/* A freaking pile of these for eventually building links.
-	 *Take up space, but simplify the code.
+	
+	/* Data structure used for determining if a previous write has failed
+	 * Required in order to be able to skip generating dead links in the
+	 * manual.
+	 *
+	 * A freaking pile of these, so they take up space, but simplify the code.
 	 */
+	private static HashMap<Integer, SpellEntry> spells;
+	private static HashMap<Integer, SkillEntry> skills;
 	private static HashMap<Integer, FeatEntry> masterFeats,
-	                                           feats/*,
-	                                           generalFeats,
-	                                           generalEpicFeats,
-	                                           classFeats,
-	                                           classEpicFeats*/;
+	                                           feats;
+	
 	public static void main(String[] args){
 		/* Argument parsing */
 		for(String opt : args){
@@ -381,7 +385,10 @@ public class Main{
 		preliFeats();
 		linkFeats();
 		printFeats();
-		// Do domains
+		
+		doDomains();
+		
+		// Do races
 		
 		// Do classes
 	}
@@ -429,29 +436,35 @@ public class Main{
 	private static void doSkills(){
 		String skillPath = contentPath + "skills" + fileSeparator;
 		String name     = null,
-		       entry    = null;
-			
-		Data_2da skills = twoDA.get("skills");
+		       text    = null,
+		       path     = null;
 		
-		for(int i = 0; i < skills.getEntryCount(); i++){
+		skills = new HashMap<Integer, SkillEntry>();
+		Data_2da skills2da = twoDA.get("skills");
+		
+		for(int i = 0; i < skills2da.getEntryCount(); i++){
 			try{
-				name = tlk.get(skills.getEntry("Name", i));
+				name = tlk.get(skills2da.getEntry("Name", i));
 				// If we have a bad name, just toss a notice and skip to next entry
 				if(name.equals(badStrRef)) throw new PageGenerationException("Invalid name entry for skill " + i);
 				if(verbose) System.out.println("Printing page for " + name);
 				
 				// Build the entry data
-				entry = skillTemplate;
-				entry = entry.replaceAll("~~~SkillName~~~",
+				text = skillTemplate;
+				text = text.replaceAll("~~~SkillName~~~",
 				                         name);
-				entry = entry.replaceAll("~~~SkillTLKDescription~~~",
-				                         htmlizeTLK(tlk.get(skills.getEntry("Description", i))));
+				text = text.replaceAll("~~~SkillTLKDescription~~~",
+				                         htmlizeTLK(tlk.get(skills2da.getEntry("Description", i))));
 				
-				printPage(skillPath + i + ".html", entry);
+				path = skillPath + i + ".html";
+				
+				printPage(path, text);
+				
+				// Store a data structure represeting the entry into a hashmap
+				skills.put(i, new SkillEntry(name, text, path, i));
 			}catch(Exception e){
 				err_pr.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
-				// Note the failure, so this page isn't used elsewhere in the manual
-				failedSkills.put(i, presenceIndicator);
+
 			}
 		}
 		System.gc();
@@ -474,56 +487,59 @@ public class Main{
 		       epicPath  = contentPath + "epic_spells" + fileSeparator,
 		       psiPath   = contentPath + "psionic_powers" + fileSeparator;
 		
-		String pathToUse = null,
+		String path = null,
 		       name      = null,
-		       entry     = null;
+		       text     = null;
 		
 		SpellType spelltype = NONE;
 		
-		Data_2da spells = twoDA.get("spells");
+		spells = new HashMap<Integer, SpellEntry>();
+		Data_2da spells2da = twoDA.get("spells");
 		
-		for(int i = 0; i < spells.getEntryCount(); i++){
+		for(int i = 0; i < spells2da.getEntryCount(); i++){
 			spelltype = NONE;
 			try{
-				if(isNormalSpell(spells, i))       spelltype = NORMAL;
-				else if(isEpicSpell(spells, i))    spelltype = EPIC;
-				else if(isPsionicPower(spells, i)) spelltype = PSIONIC;
+				if(isNormalSpell(spells2da, i))       spelltype = NORMAL;
+				else if(isEpicSpell(spells2da, i))    spelltype = EPIC;
+				else if(isPsionicPower(spells2da, i)) spelltype = PSIONIC;
 				
 				if(spelltype != NONE){
-					name = tlk.get(spells.getEntry("Name", i));
+					name = tlk.get(spells2da.getEntry("Name", i));
 					// If we have a bad name, just toss a notice and skip to next entry
 					if(name.equals(badStrRef)) throw new PageGenerationException("Invalid name entry for spell " + i);
 					if(verbose) System.out.println("Printing page for " + name);
 					
 					// Build the entry data
-					entry = spellTemplate;
-					entry = entry.replaceAll("~~~SpellName~~~",
+					text = spellTemplate;
+					text = text.replaceAll("~~~SpellName~~~",
 					                         name);
-					entry = entry.replaceAll("~~~SpellTLKDescription~~~",
-					                         htmlizeTLK(tlk.get(spells.getEntry("SpellDesc", i))));
+					text = text.replaceAll("~~~SpellTLKDescription~~~",
+					                         htmlizeTLK(tlk.get(spells2da.getEntry("SpellDesc", i))));
 					
-					// Build the path and print
+					// Build the path
 					switch(spelltype){
 						case NORMAL:
-							pathToUse = spellPath + i + ".html";
+							path = spellPath + i + ".html";
 							break;
 						case EPIC:
-							pathToUse = epicPath + i + ".html";
+							path = epicPath + i + ".html";
 							break;
 						case PSIONIC:
-							pathToUse = psiPath + i + ".html";
+							path = psiPath + i + ".html";
 							break;
 						
 						default:
 							throw new AssertionError("This message should not be seen");
 					}
 					
-					printPage(pathToUse, entry);
+					// Print the page
+					printPage(path, text);
+					
+					// Store a data structure represeting the entry into a hashmap
+					spells.put(i, new SpellEntry(name, text, path, i, spelltype));
 				}
 			}catch(Exception e){
 				err_pr.println("Failed to print page for spell " + i + ": " + name + "\nException:\n" + e);
-				// Note the failure, so this page isn't used elsewhere in the manual
-				failedSpells.put(i, presenceIndicator);
 			}
 		}
 		System.gc();
@@ -539,13 +555,13 @@ public class Main{
 	 * @return <code>true</code> if any of the class spell level columns contain a number,
 	 *           <code>false</code> otherwise
 	 */
-	private static boolean isNormalSpell(Data_2da spells, int entryNum){
-		if(!spells.getEntry("Bard", entryNum).equals("****"))     return true;
-		if(!spells.getEntry("Cleric", entryNum).equals("****"))   return true;
-		if(!spells.getEntry("Druid", entryNum).equals("****"))    return true;
-		if(!spells.getEntry("Paladin", entryNum).equals("****"))  return true;
-		if(!spells.getEntry("Ranger", entryNum).equals("****"))   return true;
-		if(!spells.getEntry("Wiz_Sorc", entryNum).equals("****")) return true;
+	private static boolean isNormalSpell(Data_2da spells2da, int entryNum){
+		if(!spells2da.getEntry("Bard", entryNum).equals("****"))     return true;
+		if(!spells2da.getEntry("Cleric", entryNum).equals("****"))   return true;
+		if(!spells2da.getEntry("Druid", entryNum).equals("****"))    return true;
+		if(!spells2da.getEntry("Paladin", entryNum).equals("****"))  return true;
+		if(!spells2da.getEntry("Ranger", entryNum).equals("****"))   return true;
+		if(!spells2da.getEntry("Wiz_Sorc", entryNum).equals("****")) return true;
 		
 		return false;
 	}
@@ -561,9 +577,9 @@ public class Main{
 	 * @return <code>true</code> if the impactscript name starts with strings specified in settings,
 	 *           <code>false</code> otherwise
 	 */
-	private static boolean isEpicSpell(Data_2da spells, int entryNum){
+	private static boolean isEpicSpell(Data_2da spells2da, int entryNum){
 		for(String check : settings.epicspellSignatures)
-			if(spells.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
+			if(spells2da.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
 		return false;
 	}
 	
@@ -577,9 +593,9 @@ public class Main{
 	 * @return <code>true</code> if the impactscript name starts with strings specified in settings,
 	 *           <code>false</code> otherwise
 	 */
-	private static boolean isPsionicPower(Data_2da spells, int entryNum){
+	private static boolean isPsionicPower(Data_2da spells2da, int entryNum){
 		for(String check : settings.psionicpowerSignatures)
-			if(spells.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
+			if(spells2da.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
 		return false;
 	}
 	
@@ -634,18 +650,14 @@ public class Main{
 		       epicPath      = contentPath + "epic_feats" + fileSeparator,
 		       classFeatPath = contentPath + "class_feats" + fileSeparator,
 		       classEpicPath = contentPath + "class_epic_feats" + fileSeparator;
-		
 		String name     = null,
 		       text     = null,
 		       path     = null;
 		FeatEntry entry = null;
 		boolean isEpic      = false,
 		        isClassFeat = false;
-		feats            = new HashMap<Integer, FeatEntry>();
-/*		generalFeats     = new HashMap<Integer, FeatEntry>();
-		generalEpicFeats = new HashMap<Integer, FeatEntry>();
-		classFeats       = new HashMap<Integer, FeatEntry>();
-		classEpicFeats   = new HashMap<Integer, FeatEntry>();*/
+		
+		feats = new HashMap<Integer, FeatEntry>();
 		Data_2da feats2da = twoDA.get("feat");
 		
 		for(int i = 0; i < feats2da.getEntryCount(); i++){
@@ -704,7 +716,7 @@ public class Main{
 		
 		// Link normal feats to each other and to masterfeats
 		for(FeatEntry check : feats.values()){
-			if(verbose) System.out.println("Linking feat " + check.entryName);
+			if(verbose) System.out.println("Linking feat " + check.name);
 			// Link to master
 			if(!feats2da.getEntry("MASTERFEAT", check.entryNum).equals("****")){
 				try{
@@ -712,41 +724,41 @@ public class Main{
 					//check.master = other;
 					other.childFeats.add(check);
 				}catch(NumberFormatException e){
-					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid masterfeat link");
+					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid masterfeat link");
 				}catch(NullPointerException e){
-					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains a link to nonexistent masterfeat");
+					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains a link to nonexistent masterfeat");
 			}}
 			
 			// Print prerequisites into the entry
 			temp = buildPrerequisites(check, feats2da);
-			check.entryText = check.entryText.replaceAll("~~~PrerequisiteFeatList~~~", temp);
+			check.text = check.text.replaceAll("~~~PrerequisiteFeatList~~~", temp);
 			
 			// Print the successor, if any, into the entry
 			temp = "";
 			if(!feats2da.getEntry("SUCCESSOR", check.entryNum).equals("****")){
 				try{
 					other = feats.get(Integer.parseInt(feats2da.getEntry("SUCCESSOR", check.entryNum)));
-					temp += ("<div>\n" + successorFeatHeaderTemplate + "<br /><a href=" + other.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + other.entryName + "</a>\n</div>\n");
+					temp += ("<div>\n" + successorFeatHeaderTemplate + "<br /><a href=" + other.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + other.name + "</a>\n</div>\n");
 				}catch(NumberFormatException e){
-					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid successor link");
+					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid successor link");
 				}catch(NullPointerException e){
-					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains a link to nonexistent successor");
+					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains a link to nonexistent successor");
 			}}
-			check.entryText = check.entryText.replaceAll("~~~SuccessorFeat~~~", temp);
+			check.text = check.text.replaceAll("~~~SuccessorFeat~~~", temp);
 		}
 		
 		// Add the child links to masterfeat texts
 		for(FeatEntry check : masterFeats.values()){
-			if(verbose) System.out.println("Linking masterfeat " + check.entryName);
+			if(verbose) System.out.println("Linking masterfeat " + check.name);
 			temp = "";
 			boolean doOnce = false;
 			for(FeatEntry child : check.childFeats){
 				if(!doOnce){ temp += "<div>\n"; doOnce = true; }
-				temp += "<br /><a href=" + child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + child.entryName + "</a>\n";
+				temp += "<br /><a href=" + child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + child.name + "</a>\n";
 			}
 			if(doOnce) temp += "</div>\n";
 			
-			check.entryText = check.entryText.replaceAll("~~~MasterFeatChildList~~~", temp);
+			check.text = check.text.replaceAll("~~~MasterFeatChildList~~~", temp);
 		}
 		System.gc();
 	}
@@ -789,9 +801,9 @@ public class Main{
 		if(andReq1 != null || andReq2 != null){
 			preReqText = "<div>\n" + prereqANDFeatHeaderTemplate + "\n"; 
 			if(andReq1 != null)
-				preReqText += "<br /><a href=" + andReq1.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + andReq1.entryName + "</a>\n";
+				preReqText += "<br /><a href=" + andReq1.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + andReq1.name + "</a>\n";
 			if(andReq2 != null)
-				preReqText += "<br /><a href=" + andReq2.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + andReq2.entryName + "</a>\n";
+				preReqText += "<br /><a href=" + andReq2.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + andReq2.name + "</a>\n";
 			preReqText += "</div>\n";
 		}
 
@@ -816,7 +828,7 @@ public class Main{
 							preReqText = "<div>\n" + prereqORFeatHeaderTemplate + "\n";
 							headerDone = true;
 						}
-						preReqText += "<br /><a href=" + orReq.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + orReq.entryName + "</a>\n";
+						preReqText += "<br /><a href=" + orReq.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + orReq.name + "</a>\n";
 					}
 				}
 			}
@@ -833,20 +845,28 @@ public class Main{
 	 */
 	public static void printFeats(){
 		for(FeatEntry toPrint : feats.values()){
-			if(verbose) System.out.println("Printing page for " + toPrint.entryName);
+			if(verbose) System.out.println("Printing page for " + toPrint.name);
 			try{
-				printPage(toPrint.filePath, toPrint.entryText);
+				printPage(toPrint.filePath, toPrint.text);
 			}catch(IOException e){
-				err_pr.println("Exception when writing page for feat " + toPrint.entryNum + ": " + toPrint.entryName + ". Exception:\n" + e);
+				err_pr.println("Exception when writing page for feat " + toPrint.entryNum + ": " + toPrint.name + ". Exception:\n" + e);
 		}}
 		System.gc();
 		for(FeatEntry toPrint : masterFeats.values()){
-			if(verbose) System.out.println("Printing page for " + toPrint.entryName);
+			if(verbose) System.out.println("Printing page for " + toPrint.name);
 			try{
-				printPage(toPrint.filePath, toPrint.entryText);
+				printPage(toPrint.filePath, toPrint.text);
 			}catch(IOException e){
-				err_pr.println("Exception when writing page for masterfeat " + toPrint.entryNum + ": " + toPrint.entryName + ". Exception:\n" + e);
+				err_pr.println("Exception when writing page for masterfeat " + toPrint.entryNum + ": " + toPrint.name + ". Exception:\n" + e);
 		}}
 		System.gc();
+	}
+	
+	
+	/**
+	 * Handles creation of the domain pages.
+	 */
+	public static void doDomains(){
+		
 	}
 }

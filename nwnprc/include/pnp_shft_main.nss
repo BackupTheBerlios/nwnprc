@@ -1975,6 +1975,8 @@ void SetShiftTrueForm(object oPC)
     {
         // Remove all the abilities of the object
         ScrubPCSkin(oPC,oHide);
+        DeletePRCLocalInts(oHide);
+
 //        RemoveAllItemProperties(oHide);
     // Debug
         //CopyItem(oHide,oPC,TRUE);

@@ -23,6 +23,8 @@ const string PRC_USE_DEXBASED_WEAPON_POISONING_FAILURE_CHANCE = "PRC_USE_DEXBASE
 const string PRC_USES_PER_WEAPON_POISON_DIE          = "PRC_USES_PER_WEAPON_POISON_DIE";
 const string PRC_USES_PER_WEAPON_POISON_COUNT        = "PRC_USES_PER_WEAPON_POISON_COUNT";
 
+const string PRC_PSI_ASTRAL_CONSTRUCT_USE_2DA        = "ASTRAL_CONSTRUCT_USE_2DA";
+
 
 
 //Checks the state of a PRC switch
@@ -30,7 +32,7 @@ int GetPRCSwitch(string sSwitch);
 //Sets a PRC switch state
 void SetPRCSwitch(string sSwitch, int nState);
 
-int sd(string sSwitch)
+int GetPRCSwitch(string sSwitch)
 {
     return GetLocalInt(GetModule(), sSwitch);
 }

@@ -117,6 +117,7 @@ CRAFT2DASPATH		= $(MAKECRAFT2DASPATH)
 RACE2DASPATH		= $(MAKERACE2DASPATH)
 RACESRCPATH			= $(MAKERACESRCPATH)
 RACEOBJSPATH		= $(MAKERACEOBJSPATH)
+TEMPPATH			= $(MAKETEMPPATH)
 
 # Paths for the various folders in the NWN install directory.
 NWN_ERF			= $(NWN_DIR)\erf
@@ -342,6 +343,15 @@ depends:
 	@echo Updating dependencies
 	@tools\makedep -a -w -n -l -s$(SRCPATH) -i$(SRCPATH) -o$(MAKEFILE) $(OBJS)
 
+
+# The code below will compile scripts by copying them to the TEMPPATH and doing the
+# compile there.  This can be used along with an include directory to get all scripts
+# to use the shared include files.  These lines need to replace the 2 compile lines
+# (the lines after the echo) in each of the inference rules below.
+#	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)"
+#	@"$(NSSCOMPILER)" "$(MAKEDIR)\$(TEMPPATH)\$(<F)" "$(MAKEDIR)\$(@D)" >nul
+#	-@del "$(MAKEDIR)\$(TEMPPATH)\$(<F)" 2>nul
+# 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
 
 # Inference rule to compile scripts.
 {$(SRCPATH)\}.nss{$(OBJPATH)\}.ncs:

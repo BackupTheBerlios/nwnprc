@@ -147,72 +147,16 @@ void main()
     int bVassal = nVassal /2;
 
     //Imperious Aura
-    if (bVassal>0) ImperiousAura(oPC, oSkin,bVassal);
+    if (nVassal>0) ImperiousAura(oPC, oSkin,bVassal);
 
-    // *Level 1
-    if (nVassal==1)
-    // *Give him the Platinum Armor+4
-    {
-    if ( GetLocalInt(OBJECT_SELF, "Level1") == 1) return ;
-
-    CreateItemOnObject("Platinumarmor4", OBJECT_SELF, 1);
-    SetLocalInt(OBJECT_SELF, "Level1", 1);
-    }
-
-    // *Level 2
-    if (nVassal==2)
-    // *Shared Trove
-    {
-    if ( GetLocalInt(OBJECT_SELF, "Level2") == 1) return ;
-    {
-    GiveGoldToCreature(OBJECT_SELF, 20000);
-    SetLocalInt( OBJECT_SELF, "Level2", 1);
-    }
-    }
 
     // *Level 4
     //Dragonwrack
-    if (bVassal >= 4)
+    if (nVassal >= 4)
     {
         AddArmorOnhit( oPC,GetLocalInt(oPC,"ONEQUIP"));
         DWRightWeap( oPC,GetLocalInt(oPC,"ONEQUIP"));
         DWLeftWeap( oPC,GetLocalInt(oPC,"ONEQUIP"));
     }
 
-
-    // *Level 5
-    if (nVassal==5)
-    // *Shared Trove
-    {
-    if ( GetLocalInt(OBJECT_SELF, "Level5") == 1) return ;
-    {
-    GiveGoldToCreature(OBJECT_SELF, 50000);
-    SetLocalInt( OBJECT_SELF, "Level5", 1);
-    }
-    // *Platinum Armor +6
-    DestroyObject(oArmor4, 0.0f);
-    CreateItemOnObject("Platinumarmor6", OBJECT_SELF, 1);
-    SetLocalInt( OBJECT_SELF, "Level5", 1);
-    }
-
-    // *Level 8
-    if (nVassal==8)
-    {
-    // *Shared Trove
-    if ( GetLocalInt(OBJECT_SELF, "Level8") == 1) return ;
-    {
-    GiveGoldToCreature(OBJECT_SELF, 80000);
-    SetLocalInt( OBJECT_SELF, "Level8", 1);
-    }
-    }
-
-    // *Level 10
-    if (nVassal==10)
-    {
-    // *platinum Armor +8
-    if ( GetLocalInt(OBJECT_SELF, "Level10") == 1) return ;
-    DestroyObject(oArmor6, 0.0f);
-    CreateItemOnObject("Platinumarmor8", OBJECT_SELF, 1);
-    SetLocalInt( OBJECT_SELF, "Level10", 1);
-    }
 }

@@ -42,7 +42,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
 
-    if ( GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC)  &&  !GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC))   DeformObese(oPC, oSkin);
-    if ( GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC)  &&  !GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC))   DeformGaunt(oPC, oSkin);
-    if ( GetHasFeat(FEAT_VILE_WILL_DEFORM, oPC))   WillDeform(oPC, oSkin);
+    if ( GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC)  &&  !GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC) && GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL)   DeformObese(oPC, oSkin);
+    if ( GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC)  &&  !GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC) && GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL)   DeformGaunt(oPC, oSkin);
+    if ( GetHasFeat(FEAT_VILE_WILL_DEFORM, oPC) && GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL)   WillDeform(oPC, oSkin);
 }

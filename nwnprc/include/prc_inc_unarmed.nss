@@ -156,6 +156,18 @@ int FindUnarmedDamage(object oCreature)
     return iDamage;
 }
 
+void CleanExtraFists(object oCreature)
+{
+    // clean up any extras in the inventory
+    object oClean = GetFirstItemInInventory(oCreature);
+    while (GetIsObjectValid(oClean))
+    {
+        if (GetTag(oClean) == "NW_IT_CREWPB010" && oClean != GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCreature))
+            DestroyObject(oClean);
+        oClean = GetNextItemInInventory(oCreature);
+    }
+}
+
 void UnarmedFists(object oCreature) // Large chunks stolen from SoulTaker
 {
        object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature);
@@ -183,6 +195,9 @@ void UnarmedFists(object oCreature) // Large chunks stolen from SoulTaker
         }
     }
     
+    // Clean up the mess of extra fists made on first enter.
+    DelayCommand(1.0,CleanExtraFists(oCreature));
+
     if (GetTag(oWeapL) != "NW_IT_CREWPB010") return;
     
     int iKi = GetHasFeat(FEAT_KI_STRIKE,oCreature) ? 1 : 0 ;

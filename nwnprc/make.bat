@@ -51,6 +51,7 @@ echo Building makefile
 REM make directories
 md objs 2>nul
 md epicspellobjs 2>nul
+md raceobjs 2>nul
 
 REM generate temporary files for each of the source sets
 REM scripts, graphics files, 2das, and misc. other files.

@@ -33,11 +33,11 @@ void StoreSongRecipient(object oRecipient, object oSinger, int iSongID, int iDur
 
 // Removes all effects given by the previous song from all creatures who recieved it.
 // Now allows for two "slots", which means you can perform two songs at a time.
-void RemoveOldSongEffects(object oSinger)
+void RemoveOldSongEffects(object oSinger, int iSongID)
 {
     object oCreature;
     int iSlotNow = GetLocalInt(oSinger, "SONG_SLOT");
-    int iSlotOld;
+    int iSlot;
     int iNumRecip;
     int iSongInUse;
     int iIndex;
@@ -45,13 +45,20 @@ void RemoveOldSongEffects(object oSinger)
     string sRecip;
     string sSong;
     
-    // Should toggle between slot "1" and slot "0"
-    iSlotOld = (iSlotNow == 1) ? 0 : 1;
-    SetLocalInt(oSinger, "SONG_SLOT", iSlotOld);
+    // If you use the same song twice in a row you
+    // should deal with the same slot again...
+    if (GetLocalInt(oSinger, "SONG_IN_USE_" + IntToString(iSlotNow)) == iSongID)
+        iSlot = iSlotNow;
+    // Otherwise, we should toggle between slot "1" and slot "0"
+    else
+        iSlot = (iSlotNow == 1) ? 0 : 1;
+    
+    // Save the toggle we're on for later.
+    SetLocalInt(oSinger, "SONG_SLOT", iSlot);
 
     // Find the proper variable names based on slot     
-    sIndex = "SONG_INDEX_" + IntToString(iSlotOld);
-    sSong = "SONG_IN_USE_" + IntToString(iSlotOld);
+    sIndex = "SONG_INDEX_" + IntToString(iSlot);
+    sSong = "SONG_IN_USE_" + IntToString(iSlot);
     
     // Store the local variables into script variables
     iNumRecip = GetLocalInt(oSinger, sIndex);
@@ -67,7 +74,7 @@ void RemoveOldSongEffects(object oSinger)
     // Removes any effects from the recipients
     for (iIndex = 1 ; iIndex <= iNumRecip ; iIndex++)
     {
-       sRecip = "SONG_RECIPIENT_" + IntToString(iIndex) + "_" + IntToString(iSlotOld);
+       sRecip = "SONG_RECIPIENT_" + IntToString(iIndex) + "_" + IntToString(iSlot);
        oCreature = GetLocalObject(oSinger, sRecip);
 
        RemoveSongEffects(iSongInUse, oSinger, oCreature);

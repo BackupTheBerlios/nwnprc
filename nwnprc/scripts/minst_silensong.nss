@@ -61,7 +61,7 @@ void main()
         return;
     }
 
-    RemoveOldSongEffects(OBJECT_SELF);
+    RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 
     //Do the visual effects
     effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);

@@ -130,7 +130,21 @@ ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
 
 		// Now determine the bonus
 		if (feat && GetHasFeat(feat, oCaster)) {
-			if (GetHasFeat(FEAT_ES_FOCUS_3, oCaster))
+			if (GetHasFeat(FEAT_ES_FOCUS_10, oCaster))
+				nSP += 10;
+			else if (GetHasFeat(FEAT_ES_FOCUS_9, oCaster))
+				nSP += 9;
+			else if (GetHasFeat(FEAT_ES_FOCUS_8, oCaster))
+				nSP += 8;
+			else if (GetHasFeat(FEAT_ES_FOCUS_7, oCaster))
+				nSP += 7;
+			else if (GetHasFeat(FEAT_ES_FOCUS_6, oCaster))
+				nSP += 6;
+			else if (GetHasFeat(FEAT_ES_FOCUS_5, oCaster))
+				nSP += 5;
+			else if (GetHasFeat(FEAT_ES_FOCUS_4, oCaster))
+				nSP += 4;
+			else if (GetHasFeat(FEAT_ES_FOCUS_3, oCaster))
 				nSP += 3;
 			else if (GetHasFeat(FEAT_ES_FOCUS_2, oCaster))
 				nSP += 2;

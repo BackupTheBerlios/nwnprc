@@ -1,4 +1,4 @@
-//Pasive Feats
+//Passive Feats
 const int FEAT_EB_HAND                                 = 3390;
 const int FEAT_EB_HEAD                                 = 3391;
 const int FEAT_EB_CHEST                                = 3392;
@@ -161,6 +161,23 @@ const int FEAT_ES_FIRE = 2563;
 const int FEAT_ES_COLD = 2564;
 const int FEAT_ES_ELEC = 2565;
 const int FEAT_ES_ACID = 2566;
+
+//Epic Elemental Savant
+
+const int FEAT_ES_FOCUS_4 	= 2600;
+const int FEAT_ES_FOCUS_5 	= 2601;
+const int FEAT_ES_FOCUS_6 	= 2602;
+const int FEAT_ES_FOCUS_7 	= 2603;
+const int FEAT_ES_FOCUS_8     	= 2604;
+const int FEAT_ES_FOCUS_9     	= 2605;
+const int FEAT_ES_FOCUS_10    	= 2606;
+const int FEAT_ES_PEN_4 	= 2607;
+const int FEAT_ES_PEN_5 	= 2608;
+const int FEAT_ES_PEN_6 	= 2609;
+const int FEAT_ES_PEN_7 	= 2610;
+const int FEAT_ES_PEN_8 	= 2611;
+const int FEAT_ES_PEN_9 	= 2612;
+const int FEAT_ES_PEN_10 	= 2613;
 
 //Duelist
 const int FEAT_CANNY_DEFENSE        = 2800;

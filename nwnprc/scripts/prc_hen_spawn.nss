@@ -13,7 +13,6 @@ Henchman-specific OnSpawn handler for XP1. Based on NW_CH_AC9 by Bioware.
 #include "x0_inc_henai"
 #include "x2_inc_banter"
 #include "x2_inc_globals"
-#include "inc_npc"
 
 // * there are only a couple potential interjections henchmen can say in c3
 void StrikeOutStrings(object oNathyrra)
@@ -125,8 +124,8 @@ void main()
     // * to any area for the first time
     // * in Undermountain.
     // **************************************
-    if (GetAssociateType(OBJECT_SELF)== ASSOCIATE_TYPE_HENCHMAN)
-       SetIsDestroyable(FALSE, TRUE, TRUE);
+
+//       SetIsDestroyable(FALSE, TRUE, TRUE);
 
     // * September 2003
     // * Scan through all equipped items and make
@@ -166,11 +165,9 @@ void main()
         string szAreaTag = GetTag(GetArea(OBJECT_SELF));
         if (szAreaTag != "q2a_yawningportal" && szAreaTag != "q2c_um2east")
         {
-            if (GetAssociateTypeNPC(OBJECT_SELF)== ASSOCIATE_TYPE_HENCHMAN )
-            {
-              effect eDamage = EffectDamage(500);
-              DelayCommand(10.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, OBJECT_SELF));
-            }
+//              effect eDamage = EffectDamage(500);
+//              DelayCommand(10.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, OBJECT_SELF));
+
         }
     }
 

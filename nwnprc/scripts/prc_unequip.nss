@@ -65,8 +65,6 @@ void main()
      DuelistRemovePreciseStrike(oItem);
      KnightRemoveDaemonslaying(oItem);
      RemoveKatanaFinesse(oItem);
-     //if(GetLevelByClass(CLASS_TYPE_DISPATER,OBJECT_SELF) >= 4)
-     //{
-     //RemoveIronPower(oItem);
-     //}
+     RemoveItemHolyAvengerAntiStack(oItem); //superceded by RemoveItemEnhancementAntiStack when implemented.
+     //RemoveItemEnhancementAntiStack(oItem);
 }

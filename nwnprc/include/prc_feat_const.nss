@@ -183,6 +183,14 @@ const int FEAT_MILILS_EAR = 2406 ;
 const int FEAT_INSTRUMENT = 2409;
 const int FEAT_MIELIKKI = 2405;
 
+// Thayan Knight
+const int FEAT_TK_HORROR_1                         = 2640;
+const int FEAT_TK_HORROR_2                         = 2641;
+const int FEAT_TK_ZULKIR_FAVOUR                    = 2642;
+const int FEAT_TK_ZULKIR_DEFEND                    = 2643;
+const int FEAT_TK_ZULKIR_CHAMP                     = 2644;
+const int FEAT_TK_FINAL_STAND                      = 2645;
+
 //oozemaster
 const int FEAT_MIN_OOZY_TOUCH_BROWN = 3020;
 const int FEAT_MIN_OOZY_TOUCH_GRAY = 3021;

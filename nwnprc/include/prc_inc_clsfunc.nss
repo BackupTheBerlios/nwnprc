@@ -1905,6 +1905,7 @@ int AAImbueArrow(object oArrow, int iSpell, int iSpellLevel)
 
                     break;
                 }
+                ipCheck = GetNextItemProperty(oArrow);
             }
         }
 

@@ -64,7 +64,7 @@ void main()
                             // Apply effects to the currently selected target.
                             DelayCommand(fDelay, SPApplyEffectToObject
                                 (DURATION_TYPE_TEMPORARY, eLink, oTarget,
-                                HoursToSeconds(nDuration)));
+                                HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
                             DelayCommand(fDelay, SPApplyEffectToObject
                                 (DURATION_TYPE_INSTANT, eVis, oTarget));
                         }

@@ -68,13 +68,13 @@ void main()
                         {
                             DelayCommand(fDelay, SPApplyEffectToObject
                                 (DURATION_TYPE_TEMPORARY, eLink, oTarget,
-                                fDuration));
+                                fDuration, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
                         }
                     }
                 }
                 else
                     DelayCommand(fDelay, SPApplyEffectToObject
-                        (DURATION_TYPE_TEMPORARY, eLink2, oTarget, fDuration));
+                        (DURATION_TYPE_TEMPORARY, eLink2, oTarget, fDuration, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
 
                 oTarget = GetNextObjectInShape(SHAPE_SPHERE,
                     RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF), TRUE);

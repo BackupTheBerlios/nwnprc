@@ -45,7 +45,7 @@ void main()
                 (DURATION_TYPE_INSTANT, eVis, oTarget));
             DelayCommand(fDelay, SPApplyEffectToObject
                 (DURATION_TYPE_TEMPORARY, eLink, oTarget,
-                HoursToSeconds(nDuration)));
+                HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
         }
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

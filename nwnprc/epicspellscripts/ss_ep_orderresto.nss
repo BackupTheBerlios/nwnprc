@@ -62,7 +62,7 @@ void main()
                         {
                             DelayCommand(fDelay, SPApplyEffectToObject
                                 (DURATION_TYPE_TEMPORARY, eLink, oTarget,
-                                fDuration));
+                                fDuration, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
                         }
                     }
                 }

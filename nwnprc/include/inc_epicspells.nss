@@ -1759,10 +1759,13 @@ void UnequipAnyImmunityItems(object oTarget, int nImmType)
 
 int GetTotalCastingLevel(object oCaster)
 {
-    int iDiv = GetLevelByTypeDivine(oCaster);
-    int iArc = GetLevelByTypeArcane(oCaster);
-
-    return (iDiv > iArc) ? iDiv : iArc;
+    int iBestArcane = GetLevelByTypeArcaneFeats();
+    int iBestDivine = GetLevelByTypeDivineFeats();
+    int iBest = (iBestDivine > iBestArcane) ? iBestDivine : iBestArcane;
+    
+    SendMessageToPC(oCaster, "Epic casting at level " + IntToString(iBest));
+    
+    return iBest;
 }
 
 int GetDCSchoolFocusAdjustment(object oPC, string sChool)

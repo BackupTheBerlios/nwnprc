@@ -79,7 +79,7 @@ void main()
                             }
                         }
                         DelayCommand(fDelay, SPApplyEffectToObject
-                            (DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration));
+                            (DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
                     }
                 }
             }

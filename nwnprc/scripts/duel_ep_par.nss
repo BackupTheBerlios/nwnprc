@@ -37,9 +37,11 @@ void main()
      else
      {         
           // Removes effects from any version of the spell
-          SetCompositeBonus(oSkin, "ElaborateParryACBonus", 0, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
-          SetCompositeBonusT(oWeap, "ElaborateParryAttackPenalty", 0, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
           SetCompositeBonus(oSkin, "ElaborateParrySkillBonus", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);
+          
+          RemoveSpecificEffect(EFFECT_TYPE_AC_INCREASE, oPC);
+          RemoveSpecificEffect(EFFECT_TYPE_ATTACK_DECREASE, oPC);          
+          
           SetActionMode(oPC, ACTION_MODE_PARRY, FALSE);
           SetActionMode(oPC, ACTION_MODE_EXPERTISE, FALSE);
           SetActionMode(oPC, ACTION_MODE_IMPROVED_EXPERTISE, FALSE);

@@ -25,9 +25,11 @@ void main()
      {
           // add 2 extra defense due to defensive fighting.
           int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST, oPC) + 2;
-          
-          SetCompositeBonus(oSkin, "ElaborateParryACBonus", iDuelistLevel, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
-          SetCompositeBonusT(oWeap, "ElaborateParryAttackPenalty", 4, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
+                    
+          effect eAC = SupernaturalEffect(EffectACIncrease(iDuelistLevel, AC_SHIELD_ENCHANTMENT_BONUS));
+          ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAC, oPC);          
+          effect iAttackPenalty = SupernaturalEffect(EffectAttackDecrease(4, ATTACK_BONUS_MISC));
+          ApplyEffectToObject(DURATION_TYPE_PERMANENT, iAttackPenalty, oPC);          
           
           SetActionMode(oPC, ACTION_MODE_PARRY, FALSE);
           SetActionMode(oPC, ACTION_MODE_EXPERTISE, FALSE);
@@ -39,10 +41,11 @@ void main()
      }
      else
      {
-          // Removes effects from any version of the spell
-          SetCompositeBonus(oSkin, "ElaborateParryACBonus", 0, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
-          SetCompositeBonusT(oWeap, "ElaborateParryAttackPenalty", 0, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
-          SetCompositeBonus(oSkin, "ElaborateParrySkillBonus", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);
+          // Removes effects from any version of the spell          
+          SetCompositeBonus(oSkin, "ElaborateParrySkillBonus", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);          
+          RemoveSpecificEffect(EFFECT_TYPE_AC_INCREASE, oPC);
+          RemoveSpecificEffect(EFFECT_TYPE_ATTACK_DECREASE, oPC);
+         
           SetActionMode(oPC, ACTION_MODE_PARRY, FALSE);
           SetActionMode(oPC, ACTION_MODE_EXPERTISE, FALSE);
           SetActionMode(oPC, ACTION_MODE_IMPROVED_EXPERTISE, FALSE);

@@ -52,7 +52,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int nMetaMagic = GetMetaMagicFeat();
     if(nCasterLevel > 3)
     {
-        nCasterLevel = (nCasterLevel-3)/2;
+        nCasterLevel = (nCasterLevel-3)/3;
+    }
+    else
+    {
+        nCasterLevel = 0;
     }
     int nDamage = d6(2 + nCasterLevel);
 

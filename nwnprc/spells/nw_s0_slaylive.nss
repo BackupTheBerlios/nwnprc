@@ -81,8 +81,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     }
                     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                     {
-                        nDamage = d6(3) + nCasterLevel;
-                        nDamage = nDamage + (nDamage/2) + nCasterLevel;
+                        nDamage = nDamage + (nDamage/2);
                     }
                     //Apply damage effect and VFX impact
                     eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);

@@ -62,11 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
     int nPenetr = CasterLvl +=SPGetPenetr();
-    //Limit duration
-    if (nDuration > 10)
-    {
-        nDuration = 10;
-    }
+
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         //Fire cast spell at event for the specified target

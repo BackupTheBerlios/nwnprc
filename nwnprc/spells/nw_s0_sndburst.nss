@@ -96,7 +96,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 eDam = EffectDamage(nDamage, EleDmg);
                 //Apply the VFX impact and damage effect
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,oTarget);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam,oTarget);
+                DelayCommand(0.01,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam,oTarget));
             }
         }
         //Get the next target in the spell area

@@ -38,6 +38,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
 
     //Declare major variables
+    int nMetaMagic = GetMetaMagicFeat();
+    int nDuration = 100;
+    if (CheckMetaMagic(nMetaMagic,METAMAGIC_EXTEND))
+    {
+       nDuration = nDuration*2;
+    }
     object oTarget;
     effect eFear;
     effect eSave = EffectSavingThrowIncrease(SAVING_THROW_WILL, 4, SAVING_THROW_TYPE_FEAR);
@@ -76,7 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
                 eFear = GetNextEffect(oTarget);
             }
             //Apply the linked effects
-            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(10),TRUE,-1,CasterLvl));
+            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl));
         }
         //Get the next target in the spell area.
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());

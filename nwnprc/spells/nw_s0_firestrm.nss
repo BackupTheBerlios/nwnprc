@@ -42,7 +42,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
     //Declare major variables
-    int nMetaMagic;
+    int nMetaMagic = GetMetaMagicFeat();
     int nDamage;
     int nDamage2;
     

@@ -79,11 +79,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         {
               //Fire cast spell at event for the specified target
               SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NATURES_BALANCE, FALSE));
-              nRand = d8(3);
+              nRand = d8(3) + nCasterLevel;
               //Enter Metamagic conditions
               if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
               {
-                 nRand = 24;//Damage is at max
+                 nRand = 24 + nCasterLevel;//Damage is at max
               }
               else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
               {

@@ -55,8 +55,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     //Declare major variables
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-
     int nCasterLevel = CasterLvl;
+    //Limit caster level
+    // June 2/04 - Bugfix: Cap the level BEFORE the damage calculation, not after. Doh.
+    if (nCasterLevel > 20)
+    {
+        nCasterLevel = 20;
+    }
+    
     int nDamage = d6(nCasterLevel);
     int nDamStrike;
     int nNumAffected = 0;
@@ -69,11 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     object oHolder;
     object oTarget;
     location lSpellLocation;
-    //Limit caster level
-    if (nCasterLevel > 20)
-    {
-        nCasterLevel = 20;
-    }
+
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {

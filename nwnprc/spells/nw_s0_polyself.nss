@@ -81,6 +81,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
 	//this command will make shore that polymorph plays nice with the shifter
 	ShifterCheck(oTarget);
+	
+	AssignCommand(oTarget, ClearAllActions()); // prevents an exploit
 
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

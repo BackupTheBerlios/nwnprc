@@ -48,6 +48,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int nDuration = CasterLvl;
     int nAbsorb = d4() + 6;
     int nMetaMagic = GetMetaMagicFeat();
+    
+    RemoveEffectsFromSpell(oTarget, SPELL_GREATER_SPELL_MANTLE);
+    RemoveEffectsFromSpell(oTarget, SPELL_SPELL_MANTLE);
 
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))

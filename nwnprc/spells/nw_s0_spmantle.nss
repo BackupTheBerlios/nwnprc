@@ -13,7 +13,7 @@
 
 //:: modified by mr_bumpkin  Dec 4, 2003
 #include "spinc_common"
-
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
 
 void main()
@@ -46,10 +46,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int nAbsorb = d8() + 8;
     int nMetaMagic = GetMetaMagicFeat();
 
+    RemoveEffectsFromSpell(oTarget, GetSpellId());
+    RemoveEffectsFromSpell(oTarget, SPELL_LESSER_SPELL_MANTLE);
+    RemoveEffectsFromSpell(oTarget, SPELL_GREATER_SPELL_MANTLE);
+
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {
-        nAbsorb = 22;//Damage is at max
+        nAbsorb = 16;//Damage is at max
     }
     else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
     {

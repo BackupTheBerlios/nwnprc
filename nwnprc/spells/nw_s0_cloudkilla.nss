@@ -40,7 +40,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     float fDelay= GetRandomDelay(0.5, 1.5);
     effect eDam;
-    int nDam = d8(2);
+    int nDam = d10();
     int nMetaMagic = GetMetaMagicFeat();
 
 	object aoeCreator = GetAreaOfEffectCreator();
@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {
-       nDam = 16;//Damage is at max
+       nDam = 10;//Damage is at max
     }
     else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
     {

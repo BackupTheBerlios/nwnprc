@@ -41,10 +41,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
 
     //Declare major variables
+    int nMetaMagic = GetMetaMagicFeat();
     int nAlign = ALIGNMENT_GOOD;
     object oTarget = GetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
+    if (CheckMetaMagic(nMetaMagic,METAMAGIC_EXTEND))
+    {
+        nDuration = nDuration *2;    //Duration is +100%
+    }
     //effect eVis = EffectVisualEffect(VFX_IMP_GOOD_HELP);
     effect eAC = EffectACIncrease(2, AC_DEFLECTION_BONUS);
     //Change the effects so that it only applies when the target is evil

@@ -41,8 +41,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
 
     //Declare major variables
+    int nMetaMagic = GetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
+    if (CheckMetaMagic(nMetaMagic,METAMAGIC_EXTEND))
+    {
+        nDuration = nDuration *2;    //Duration is +100%
+    }
     int nTargets = nDuration / 4;
     if(nTargets == 0)
     {

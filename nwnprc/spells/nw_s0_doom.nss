@@ -81,7 +81,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 		return;
 	  }
 
-        nResult = (nResult && MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr));
+        nResult = (nResult || MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr));
         if (!nResult)
         {
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

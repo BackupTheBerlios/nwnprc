@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
                 if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC()+ nDC)))
                 {
-                    nDamage = d6();
+                    nDamage = nDamage/2;
                 }
                 //Set damage effect
                 eDam = EffectDamage(nDamage, DAMAGE_TYPE_SLASHING);

@@ -9,17 +9,17 @@ void main()
 		ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_POLYMORPH),OBJECT_SELF);
 		//re-equid creature items to get correct ip feats
 		//(some were staying on even when they had been removed from the hide)
-		object oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,OBJECT_SELF);
-		object oWeapCRPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,OBJECT_SELF);
-		object oWeapCLPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,OBJECT_SELF);
-		object oWeapCBPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,OBJECT_SELF);
+		//object oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,OBJECT_SELF);
+		//object oWeapCRPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,OBJECT_SELF);
+		//object oWeapCLPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,OBJECT_SELF);
+		//object oWeapCBPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,OBJECT_SELF);
 		//mast not unequid the items, this would crash the game
 		//but re-equiping the items when they are already equiped will
 		//recheck what is on the hide
-		DelayCommand(0.5,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR));
-		DelayCommand(0.7,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
-		DelayCommand(0.9,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
-		DelayCommand(1.1,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
+		//DelayCommand(0.5,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR));
+		//DelayCommand(0.7,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
+		//DelayCommand(0.9,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
+		//DelayCommand(1.1,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
 		//all other script content has been moved to other places
 
 		//this was added to stop the shifter from looking naked when they reenter/reload

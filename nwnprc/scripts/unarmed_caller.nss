@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Target list management functions include
-//:: inc_target_list
+//:: Unarmed handling script
+//:: unarmed_caller
 //::///////////////////////////////////////////////
 /*
     A single calling point for UnarmedFeats() and

@@ -21,6 +21,7 @@ void main()
            if(GetIsFriend(oTarget))
            {
                 // Casts rage on target
+                AssignCommand(oTarget, ClearAllActions());
                 AssignCommand(oTarget, ActionCastSpellAtObject(307, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE) );
            }
            

@@ -22,12 +22,9 @@
 
 void main()
 {
-
-  object oItem   = GetSpellCastItem();
-  object oPC     = OBJECT_SELF;
   object oTarget = GetSpellTargetObject();
-  string sTag    = GetTag(oItem);
-
+  object oPC     = GetItemPossessor(oTarget);
+  
   if (oTarget == OBJECT_INVALID || GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
   {
        FloatingTextStrRefOnCreature(83359,oPC);         //"Invalid target "
@@ -50,43 +47,38 @@ void main()
        return;
   }
 
-  if (IPGetItemHasItemOnHitPropertySubType(oTarget, 19)) // 19 == itempoison
-  {
-        FloatingTextStrRefOnCreature(83407,oPC); // weapon already poisoned
-        return;
-  }
-
-   // save DC and duration
-   int nSaveDC =  10 + GetLevelByClass(CLASS_TYPE_BLARCHER, OBJECT_SELF);
-   int nDuration = d6(2);
-   
-   // the poisons slot in poison.2da
-   int nPoisonType = 105;
-
-   int bHasFeat = GetHasFeat( FEAT_BLARCH_POISON_BLOOD , OBJECT_SELF);
+  //if (IPGetItemHasItemOnHitPropertySubType(oTarget, 19)) // 19 == itempoison
+  //{
+  //      FloatingTextStrRefOnCreature(83407,oPC); // weapon already poisoned
+  //      return;
+  //}
+  
+   int bHasFeat = GetHasFeat( FEAT_BLARCH_POISON_BLOOD , oPC);
    if (!bHasFeat) // without blood archer feat, they cannot use ability
    {
            FloatingTextStringOnCreature("Poison Blood ability failed.", oPC, FALSE);
            return;
    }
+  
+   // duration, made it longer since it felt way too short.
+   // now lasts 2d6 + class level rounds per use.
+   int nDuration = (d6(2) +  GetLevelByClass(CLASS_TYPE_BLARCHER, oPC)) * 6;
+   IPSafeAddItemProperty(oTarget, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), IntToFloat(nDuration), X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 
-   // only adds poison property if the weapon is not already poisoned.
-   itemproperty ip = ItemPropertyOnHitProps(IP_CONST_ONHIT_ITEMPOISON, nSaveDC, nPoisonType);
-   IPSafeAddItemProperty(oTarget, ip, IntToFloat(nDuration), X2_IP_ADDPROP_POLICY_KEEP_EXISTING, TRUE, TRUE);
-   
-   // Visual Effects and damage to player for using the ability
-   effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
-   effect eDam = EffectDamage(3, DAMAGE_TYPE_DIVINE);
-   
-   //technically this is not 100% safe but since there is no way to retrieve the sub
-   //properties of an item (i.e. itempoison), there is nothing we can do about it
-   if (IPGetItemHasItemOnHitPropertySubType(oTarget, 19))
+   if (IPGetHasItemPropertyByConst(ITEM_PROPERTY_ONHITCASTSPELL, oTarget))
    {
        // If weapon is poisoned, add proper effects
-       FloatingTextStrRefOnCreature(83361, oPC);         //"Weapon is coated with poison"
-       IPSafeAddItemProperty(oTarget, ItemPropertyVisualEffect(ITEM_VISUAL_ACID), IntToFloat(nDuration), X2_IP_ADDPROP_POLICY_KEEP_EXISTING, TRUE, FALSE);
-       ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oTarget));
-       ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, OBJECT_SELF);
+       FloatingTextStringOnCreature("Poison blood activated.", oPC);
+       IPSafeAddItemProperty(oTarget, ItemPropertyVisualEffect(ITEM_VISUAL_ACID), IntToFloat(nDuration), X2_IP_ADDPROP_POLICY_KEEP_EXISTING, TRUE, TRUE);
+
+       // Visual Effects and damage to player for using the ability
+       // made damage equal to the duration to make it a little more balanced.
+       // still might be overpowered.
+       effect eVis = EffectVisualEffect(VFX_IMP_EVIL_HELP, FALSE);
+       effect eDam = EffectDamage((nDuration/6), DAMAGE_TYPE_DIVINE);
+       
+       ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
+       ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
    }
    else
    {

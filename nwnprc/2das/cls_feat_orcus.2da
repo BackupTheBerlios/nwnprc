@@ -1,0 +1,19 @@
+2DA V2.0
+
+      FeatLabel           FeatIndex   List   GrantedOnLevel   OnMenu   
+0     WeapProfSim         46          3      1                0        
+1     WeapProfMar         45          3      1                0        
+2     ArmProfHvy          2           3      1                0        
+3     ArmProfLgt          3           3      1                0        
+4     ArmProfMed          4           3      1                0        
+5     Shield              32          3      1                0        
+6     TO_CARRION          4404        3      1                1        
+7     TO_FEAR             4405        3      2                1        
+8     VILE_DEFORM_OBESE   4406        2      4                0        
+9     VILE_DEFORM_GAUNT   4407        2      4                0        
+10    VILE_WILL_DEFORM    4408        3      3                0        
+11    TO_MNR_UNDEAD       4409        3      5                1        
+12    TO_PALLOR           4410        3      6                1        
+13    TO_DEATHTOUCH       4411        3      8                1        
+14    TO_MJR_UNDEAD       4412        3      9                1        
+15    TO_NIGHTWING        4413        3      10               1        

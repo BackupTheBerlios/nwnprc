@@ -23,8 +23,11 @@ void main()
     eLink = EffectLinkEffects(eLink, eSave);
     eLink = EffectLinkEffects(eLink, eHP);
 
+    FloatingTextStringOnCreature(ObjectToString(oTarget), OBJECT_SELF);
+    
             if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
             {
+               FloatingTextStringOnCreature("Entering Creature Is Undead", OBJECT_SELF);
                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
             }

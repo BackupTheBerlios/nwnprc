@@ -12,6 +12,5 @@
 void main()
 {
     effect eAOE = EffectAreaOfEffect(AOE_MOB_DES_20, "prc_tn_des_a", "prc_tn_des_a", "prc_tn_des_b");
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, OBJECT_SELF);
-    FloatingTextStringOnCreature("Lesser Desecrate has been activated", OBJECT_SELF);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, OBJECT_SELF, HoursToSeconds(99));
 }

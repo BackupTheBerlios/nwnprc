@@ -28,10 +28,18 @@ void CastSpellOnSelf(int iSpellId);
 // Functions:
 void ActionCastSpellOnSelf(int iSpell)
 {
-    if (GetCurrentAction() != ACTION_REST) ClearAllActions(TRUE);
-    ActionCastSpellAtObject(iSpell, OBJECT_SELF, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
-}
+    // Store current actions
+    object oTarget = GetAttackTarget();
+    int iAction = GetCurrentAction();
     
+    // Clear actions (unless resting) and cast the spell on self.
+    if (iAction != ACTION_REST) ClearAllActions(TRUE);
+    ActionCastSpellAtObject(iSpell, OBJECT_SELF, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+
+    // Return to combat if you were fighting.    
+    if (iAction == ACTION_ATTACKOBJECT) DelayCommand(0.1, ActionAttack(oTarget));
+}
+
 ////////////////End Generic////////////////
 
 ////////////////Begin Drunken Master//////////////////////

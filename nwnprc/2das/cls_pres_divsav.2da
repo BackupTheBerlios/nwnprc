@@ -1,6 +1,8 @@
 2DA V2.0
 
-      LABEL       ReqType    ReqParam1         ReqParam2   
-0     Divine      DIVSPELL   5                 ****        
-1     ScriptVar   VAR        X2_AllowDivSav    0           
-2     Lore        SKILL      7                 8           
+      LABEL       ReqType    ReqParam1        ReqParam2   
+0     Divine      DIVSPELL   5                ****        
+1     ScriptVar   VAR        X2_AllowDivSav   0           
+2     Lore        SKILL      7                8           
+3     CLERICOR    CLASSOR    2                ****        
+4     DRUIDOR     CLASSOR    3                ****        

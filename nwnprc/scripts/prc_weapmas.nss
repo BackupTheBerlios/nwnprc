@@ -9,6 +9,10 @@ void main()
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
     int iLevel = (iEquip == 1) ? 0:1;
 
+    SetCompositeAttackBonus(oPC, "WeoponMasteryBow", 0);
+    SetCompositeAttackBonus(oPC, "WeoponMasteryXBow", 0);
+    SetCompositeAttackBonus(oPC, "WeoponMasteryShur", 0);
+
     if (iEquip ==1)
       oWeap = GetPCItemLastUnequipped();
     else

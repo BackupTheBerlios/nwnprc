@@ -98,6 +98,8 @@ void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCos
 // * NOTE: This attack bonus is an effect on the creature, not an item property.  Item Property
 // * attacks have the downside that they pierce DR, whereas effects do not.
 // *
+// * NOTE: DO *NOT* USE THIS FUNCTION WITH SPELL/SLA EFFECTS.  They stack fine on their own.
+// *
 // * oPC - PC/NPC you wish to apply an attack bonus effect to
 // * sBonus - the unique name you wish to give this attack bonus
 // * iVal - the amount the attack bonus should be (there is a hardcoded limit of 20)

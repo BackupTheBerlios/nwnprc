@@ -61,35 +61,28 @@ void RemoveIronPower(object oPC, object oWeap)
       }
 }
 
-void IronPower(object oPC, object oWeap)
+void IronPower(object oPC, object oWeap, int iBonusType)
 {
    int iBonus = 0;
+
+   string sIronPower = "DispIronPowerA"+IntToString(iBonusType);
 
    RemoveIronPower(oPC, oWeap);
 
    if (IsItemMetal(oWeap) == 2)
    {
-      if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 4)
-         iBonus = 1;
-
-      if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 8)
+      if (GetHasFeat(FEAT_IRON_POWER_2,oPC))
          iBonus = 2;
-
-      //Stack with Enchantment on Weapon
-      //int iEnch = GetWeaponEnhancement(oWeap);
-      iBonus = iBonus ; //+ iEnch;
+      else if (GetHasFeat(FEAT_IRON_POWER_1,oPC))
+         iBonus = 1;
 
       if (iBonus)
       {
          SetCompositeDamageBonusT(oWeap, "DispIronPowerD", iBonus);
-         SetCompositeAttackBonus(oPC, "DispIronPowerA", iBonus, ATTACK_BONUS_ONHAND);
+         SetCompositeAttackBonus(oPC, sIronPower, iBonus, iBonusType);
          AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyKeen(), oWeap,9999.0);
       }
 
-   }
-   else
-   {
-      SetCompositeAttackBonus(oPC, "DispIronPowerA", 0, ATTACK_BONUS_ONHAND);
    }
 }
 
@@ -98,22 +91,21 @@ void main()
 
         object oPC = OBJECT_SELF;
         object oSkin = GetPCSkin(oPC);
-        object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
+        object oWeap1 = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
+        object oWeap2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
 
         int bDivLor = GetHasFeat(FEAT_DEVICE_LORE, oPC) ? 2 : 0;
-        //int bIrnPwr = GetHasFeat(FEAT_IRON_POWER_1,oPC) ? 1 : 0;
-        //    bIrnPwr = GetHasFeat(FEAT_IRON_POWER_2,oPC) ? 1 : bIrnPwr;
 
-   IronPower(oPC, oWeap);
+        string sIronPowerR = "DispIronPowerA"+IntToString(ATTACK_BONUS_ONHAND);
+        string sIronPowerL = "DispIronPowerA"+IntToString(ATTACK_BONUS_OFFHAND);
+        SetCompositeAttackBonus(oPC, sIronPowerR, 0, ATTACK_BONUS_ONHAND);
+        SetCompositeAttackBonus(oPC, sIronPowerL, 0, ATTACK_BONUS_OFFHAND);
 
-   if (GetLocalInt(oPC,"ONEQUIP") == 1)
-        RemoveIronPower(oPC, GetPCItemLastUnequipped());
+        IronPower(oPC, oWeap1, ATTACK_BONUS_ONHAND);
+        IronPower(oPC, oWeap2, ATTACK_BONUS_OFFHAND);
+
+        if (GetLocalInt(oPC,"ONEQUIP") == 1)
+            RemoveIronPower(oPC, GetPCItemLastUnequipped());
 
         if(bDivLor > 0) Device_Lore(oPC,oSkin,bDivLor);
-
-        //if(bIrnPwr > 0 && (IsItemMetal(oWeap) == 2))
-        //    Iron_Power(oPC,oWeap,bIrnPwr);
-        //else
-        //    Iron_Power(oPC,oWeap,0);
-
 }

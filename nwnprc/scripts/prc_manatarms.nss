@@ -126,7 +126,10 @@ void main()
        OnEquip(oPC,oSkin,iAtk,GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC));
     }
 
-    if (GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND))) SetCompositeAttackBonus(oPC, "ManArmsGenSpe", iAtk);
+    if (GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND)))
+       SetCompositeAttackBonus(oPC, "ManArmsGenSpe", iAtk);
+    else
+       SetCompositeAttackBonus(oPC, "ManArmsGenSpe", 0);
 
     if (GetHasFeat(FEAT_MASTER_CRITICAL,oPC)) ImpCrit(oPC,GetPCSkin(oPC));
 }

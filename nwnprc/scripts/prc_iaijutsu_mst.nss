@@ -73,17 +73,10 @@ void KatanaFinesse(object oPC)
     else if (iUseR)
     {
         SetCompositeAttackBonus(oPC, "KatanaFinesseR", bKatFinBon, ATTACK_BONUS_ONHAND);
-        SetCompositeAttackBonus(oPC, "KatanaFinesseL", 0, ATTACK_BONUS_OFFHAND);
     }
     else if (iUseL)
     {
-        SetCompositeAttackBonus(oPC, "KatanaFinesseR", 0, ATTACK_BONUS_ONHAND);
         SetCompositeAttackBonus(oPC, "KatanaFinesseL", bKatFinBon, ATTACK_BONUS_OFFHAND);
-    }
-    else
-    {
-        SetCompositeAttackBonus(oPC, "KatanaFinesseR", 0, ATTACK_BONUS_ONHAND);
-        SetCompositeAttackBonus(oPC, "KatanaFinesseL", 0, ATTACK_BONUS_OFFHAND);
     }
 }
 
@@ -110,6 +103,9 @@ void main()
     int bStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
     int bDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
     int bKatFinBon = (bDex > bStr) ? bDex - bStr : 0;
+
+    SetCompositeAttackBonus(oPC, "KatanaFinesseR", 0, ATTACK_BONUS_ONHAND);
+    SetCompositeAttackBonus(oPC, "KatanaFinesseL", 0, ATTACK_BONUS_OFFHAND);
 
     KatanaFinesse(oPC);
 }

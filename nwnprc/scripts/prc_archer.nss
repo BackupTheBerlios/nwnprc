@@ -27,8 +27,6 @@ void UnEquip(object oPC,int bBowSpec,object oSkin,int bXShot)
 
   if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
 
-    SetCompositeAttackBonus(oPC, "ArcherBowSpec", 0);
-
   if ( GetHasSpellEffect(SPELL_EXTRASHOT,oPC))
           RemoveSpellEffects(SPELL_EXTRASHOT,oPC,oPC);
 }
@@ -50,8 +48,10 @@ void main()
         bBowSpec=GetHasFeat(FEAT_BOWSPEC9, oPC) ? 9 : bBowSpec;
 
     int bXShot=GetHasFeat(FEAT_EXTRASHOT, oPC) ? 1 : 0;
-   
+
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
+
+    SetCompositeAttackBonus(oPC, "ArcherBowSpec", 0);
 
     if (iEquip !=1) Equip(oPC,bBowSpec,oSkin,bXShot);
     if (iEquip ==1) UnEquip(oPC,bBowSpec,oSkin,bXShot);

@@ -62,6 +62,6 @@ void KeepProperActionMode(object oPC, int ActionMode)
      
      if(GetLocalInt(oPC, "HasElaborateParry") == 1 )
      {
-          DelayCommand(6.0, KeepProperActionMode(oPC, ActionMode) );
+          DelayCommand(3.0, KeepProperActionMode(oPC, ActionMode) );
      }
 }

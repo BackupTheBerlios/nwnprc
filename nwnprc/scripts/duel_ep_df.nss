@@ -26,8 +26,8 @@ void main()
           // add 2 extra defense due to defensive fighting.
           int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST, oPC) + 2;
           
-          SetCompositeBonusT(oSkin, "ElaborateParryACBonus", iDuelistLevel, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
-          SetCompositeBonus(oWeap, "ElaborateParryAttackPenalty", 4, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
+          SetCompositeBonus(oSkin, "ElaborateParryACBonus", iDuelistLevel, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
+          SetCompositeBonusT(oWeap, "ElaborateParryAttackPenalty", 4, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
           
           SetActionMode(oPC, ACTION_MODE_PARRY, FALSE);
           SetActionMode(oPC, ACTION_MODE_EXPERTISE, FALSE);
@@ -63,6 +63,6 @@ void PreventImproperActionMode(object oPC)
      
      if(GetLocalInt(oPC, "HasElaborateParry") == 1 )
      {
-          DelayCommand(6.0, PreventImproperActionMode(oPC) );
+          DelayCommand(3.0, PreventImproperActionMode(oPC) );
      }
 }

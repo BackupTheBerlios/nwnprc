@@ -21,12 +21,12 @@ void main()
     object oTarget;
     effect eVis, eBreath;
 
-    if (GetAppearanceType(OBJECT_SELF)==130)
+    if (GetAppearanceType(OBJECT_SELF)==APPEARANCE_TYPE_DRAGON_GOLD)
     {
       nDamage = d10(14);
       nDC = 29;
     }
-    else if (GetAppearanceType(OBJECT_SELF)==131)
+    else if (GetAppearanceType(OBJECT_SELF)==APPEARANCE_TYPE_DRAGON_RED)
     {
       nDamage = d10(14);
       nDC = 28;

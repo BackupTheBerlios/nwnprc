@@ -510,8 +510,8 @@ int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int
     //If the target is undead and damage type is negative
     //or if the target is living and damage type is positive
     //then we're healing.  Otherwise, we're harming.
-    int iHeal = ( MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD && iEnergyType == DAMAGE_TYPE_NEGATIVE ) ||
-                ( MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD && iEnergyType == DAMAGE_TYPE_POSITIVE );
+    int iHeal = ( iEnergyType == DAMAGE_TYPE_NEGATIVE && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD ) ||
+                ( iEnergyType == DAMAGE_TYPE_POSITIVE && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD );
     int iRetVal = FALSE;
     int iAlignDif = CompareAlignment(oCaster, oTarget);
     string sFeedback = "";

@@ -1,5 +1,5 @@
 /*
-	Sarrukh Knock
+	Sarrukh Identify
 */
 #include "prc_inc_clsfunc"
 void main()

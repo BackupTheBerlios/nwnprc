@@ -390,7 +390,7 @@ void main()
                     if (nHP > 0 && !GetLocalInt(oTarget, sCurseSongHP))
                     {
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SONIC), oTarget);
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eHP, oTarget);
+                        DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eHP, oTarget));
                         SetLocalInt(oTarget, sCurseSongHP, TRUE);
                         DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(oTarget, sCurseSongHP));
                     }

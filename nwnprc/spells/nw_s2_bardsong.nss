@@ -203,7 +203,7 @@ void main()
         nAC = 5;
         nSkill = 9;
     }
-    if(nPerform >= 50 && nLevel >= 20)
+    else if(nPerform >= 50 && nLevel >= 20)
     {
         nAttack = 2;
         nDamage = 3;

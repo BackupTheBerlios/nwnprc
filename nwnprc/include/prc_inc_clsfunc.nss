@@ -1501,6 +1501,8 @@ void LycanthropePoly(object oPC, int nPoly)
     //check if a shifter and if shifted then unshift
     ShifterCheck(oPC);
     
+    ClearAllActions(); // prevents an exploit
+    
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoly, oPC);

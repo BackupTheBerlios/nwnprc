@@ -42,6 +42,15 @@ void PolyAndMergeEquipment(float fDur, int iLvl)
     // Get The PC's Equipment
     object oWeaponOld = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
     object oArmorOld  = GetItemInSlot(INVENTORY_SLOT_CHEST, OBJECT_SELF);
+    object oHelmetOld = GetItemInSlot(INVENTORY_SLOT_HEAD, OBJECT_SELF);
+    object oShieldOld = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, OBJECT_SELF);
+    
+    if (GetBaseItemType(oShieldOld) != BASE_ITEM_SMALLSHIELD &&
+        GetBaseItemType(oShieldOld) != BASE_ITEM_LARGESHIELD &&
+        GetBaseItemType(oShieldOld) != BASE_ITEM_TOWERSHIELD)
+    {
+        oShieldOld = OBJECT_INVALID;
+    }
 
     //this command will make shore that polymorph plays nice with the shifter
     ShifterCheck(OBJECT_SELF);
@@ -70,6 +79,8 @@ void PolyAndMergeEquipment(float fDur, int iLvl)
     effect ePoly = EffectPolymorph(28);
     eLink = EffectLinkEffects(eLink, ePoly);
 
+    ClearAllActions(); // prevents an exploit
+
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), OBJECT_SELF);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, OBJECT_SELF, fDur, TRUE, -1, iLvl);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, fDur, TRUE, -1, iLvl);
@@ -94,6 +105,8 @@ void PolyAndMergeEquipment(float fDur, int iLvl)
     // Merges in your weapon so that you're not weakened by the morph.
     IPWildShapeCopyItemProperties(oWeaponOld, oWeaponNew, TRUE);
     IPWildShapeCopyItemProperties(oArmorOld, oArmorNew, TRUE);
+    IPWildShapeCopyItemProperties(oHelmetOld, oArmorNew, TRUE);
+    IPWildShapeCopyItemProperties(oShieldOld, oArmorNew, TRUE);
 }
 
 void main()

@@ -50,6 +50,7 @@ void main()
 
             effect eDamage1 = EffectDamageIncrease(nDamage1,DAMAGE_TYPE_DIVINE);
             effect eLink = EffectLinkEffects(eDamage1, eDur);
+            eLink = SupernaturalEffect(eLink);
 
             // * Do not allow this to stack
             RemoveEffectsFromSpell(oTarget, GetSpellId());

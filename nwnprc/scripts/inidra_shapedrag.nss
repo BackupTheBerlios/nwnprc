@@ -50,6 +50,8 @@ void main()
 	//this command will make shore that polymorph plays nice with the shifter
 	ShifterCheck(OBJECT_SELF);
 
+        ClearAllActions(); // prevents an exploit
+
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(nDuration));

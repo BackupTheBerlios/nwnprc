@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
             location lLoc = GetLocation(GetSpellTargetObject());
             DelayCommand(1.3f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oMyArmor)));
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, GetItemPossessor(oMyArmor), TurnsToSeconds(nDuration));
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, GetItemPossessor(oMyArmor), HoursToSeconds(nDuration));
             AddACBonusToArmor(oMyArmor, HoursToSeconds(nDuration),nAmount);
     }
         return;

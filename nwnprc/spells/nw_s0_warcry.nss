@@ -92,7 +92,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
            //Make SR and Will saves
            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr)  && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_FEAR))
             {
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(4),TRUE,-1,CasterLvl);
+                DelayCommand(0.01,SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(4),TRUE,-1,CasterLvl));
             }
         }
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
@@ -100,7 +100,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     //Apply bonus and VFX effects to bard.
     RemoveSpellEffects(GetSpellId(),OBJECT_SELF,OBJECT_SELF);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nLevel),TRUE,-1,CasterLvl);
+    DelayCommand(0.01,SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nLevel),TRUE,-1,CasterLvl));
     SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_WAR_CRY, FALSE));
 
  

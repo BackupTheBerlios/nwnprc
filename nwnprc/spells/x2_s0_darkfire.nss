@@ -88,9 +88,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     //Limit nCasterLvl to 10, so it max out at +10 to the damage.
-    if(nCasterLvl > 10)
+    if(nCasterLvl > 20)
     {
-        nCasterLvl = 10;
+        nCasterLvl = 20;
     }
 
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))

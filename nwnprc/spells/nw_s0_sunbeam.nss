@@ -117,6 +117,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DIVINE, OBJECT_SELF, 1.0) == 0)
                 {
                     DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nBlindLength),TRUE,-1,CasterLvl));
+                }
+                else
+                {
                     nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, 0, SAVING_THROW_TYPE_DIVINE);
                 }
                 //Set damage effect

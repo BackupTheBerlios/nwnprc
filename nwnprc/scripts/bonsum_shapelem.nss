@@ -34,6 +34,8 @@ void main()
 	//this command will make shore that polymorph plays nice with the shifter
 	ShifterCheck(OBJECT_SELF);
 
+        ClearAllActions(); // prevents an exploit
+  
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY,EffectPolymorph(iPoly),OBJECT_SELF,HoursToSeconds(10));
     DelayCommand(1.5,ActionCastSpellAtObject(SPELL_SHAPE_INCREASE_DAMAGE,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE));
 }

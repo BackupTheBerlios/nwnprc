@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Declare major variables
     effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    int nDuration = 2 * PRCGetCasterLevel(OBJECT_SELF);
+    int nDuration = 10 * PRCGetCasterLevel(OBJECT_SELF);
     int nMetaMagic = GetMetaMagicFeat();
 
      object oMyWeapon   =  IPGetTargetedOrEquippedMeleeWeapon();

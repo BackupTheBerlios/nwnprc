@@ -127,7 +127,7 @@ void RebukeUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int 
                     nDamage = d3(nTurnLevel);
                     eDamage = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+                    DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
                     nHDCount += nHD;
                 }
                 else if (nRacial == RACIAL_TYPE_OUTSIDER && nOutsider > 0)
@@ -239,7 +239,7 @@ void TurnUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int nC
                     nDamage = d3(nTurnLevel);
                     eDamage = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+                    DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
                     nHDCount += nHD;
                 }
                 else if (nRacial == RACIAL_TYPE_OUTSIDER && nOutsider > 0)

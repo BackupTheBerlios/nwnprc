@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int nBonus = 4; //Saving throw bonus to be applied
     int nMetaMagic = GetMetaMagicFeat();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nDuration = nCasterLvl; // Turns
+    int nDuration = nCasterLvl * 10; // Turns
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
     //Check for metamagic extend

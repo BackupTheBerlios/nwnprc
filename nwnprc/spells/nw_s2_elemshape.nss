@@ -25,7 +25,7 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
     effect ePoly;
     int nPoly;
-    int nDuration = GetCasterLevel(OBJECT_SELF);
+    int nDuration = GetLevelByClass(CLASS_TYPE_DRUID);
     int bElder = FALSE;
     if(GetLevelByClass(CLASS_TYPE_DRUID) >= 20)
     {
@@ -92,7 +92,7 @@ void main()
     {
         if (GetBaseItemType(oShield) !=BASE_ITEM_LARGESHIELD &&
             GetBaseItemType(oShield) !=BASE_ITEM_SMALLSHIELD &&
-            GetBaseItemType(oShield) !=BASE_ITEM_SMALLSHIELD)
+            GetBaseItemType(oShield) !=BASE_ITEM_TOWERSHIELD)
         {
             oShield = OBJECT_INVALID;
         }
@@ -103,6 +103,8 @@ void main()
 	ShifterCheck(OBJECT_SELF);
 
     //Apply the VFX impact and effects
+    ClearAllActions(); // prevents an exploit
+    
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(nDuration));
 

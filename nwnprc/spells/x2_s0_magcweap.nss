@@ -71,8 +71,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         if (nDuration>0)
         {
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oMyWeapon));
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, GetItemPossessor(oMyWeapon), TurnsToSeconds(nDuration));
-            AddEnhancementEffectToWeapon(oMyWeapon, TurnsToSeconds(nDuration));
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, GetItemPossessor(oMyWeapon), HoursToSeconds(nDuration));
+            AddEnhancementEffectToWeapon(oMyWeapon, HoursToSeconds(nDuration));
     }
         return;
     }

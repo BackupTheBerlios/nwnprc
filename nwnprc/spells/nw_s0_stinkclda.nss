@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             {
                fDelay = GetRandomDelay(0.75, 1.75);
                //Apply the VFX impact and linked effects
-               if (GetIsImmune(oTarget, EFFECT_TYPE_POISON) == FALSE)
+               if (GetIsImmune(oTarget, IMMUNITY_TYPE_POISON) == FALSE)
                {
                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(2)));

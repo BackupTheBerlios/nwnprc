@@ -132,19 +132,16 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
 
                     // Apply effects to the currently selected target.
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                    DelayCommand(0.01, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
 
 
 
-                    if (MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
-                    {
-                        // * if reflex saving throw fails no blindness
+                        // * if reflex saving throw fails apply blindness
                         if (!ReflexSave(oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_SPELL))
                         {
                             effect eBlindness = EffectBlindness();
                             SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlindness, oTarget,0.0f,TRUE,-1,CasterLvl);
                         }
-                    }
 
                 } // nDamage > 0
              }

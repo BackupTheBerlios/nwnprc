@@ -32,7 +32,7 @@ void DoDamage(int nDamage, object oTarget)
     {
         //Apply VFX impact and damage effect
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+        DelayCommand(0.01,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
     }
 }
 

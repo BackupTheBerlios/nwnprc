@@ -68,14 +68,18 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     {
         nModifier = 4;
     }
-    if(!GetIsReactionTypeFriendly(oTarget) && spellsIsMindless(oTarget) == FALSE)
+    if(!GetIsReactionTypeFriendly(oTarget))
     {
+        //Fire cast spell at event for the specified target
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_TASHAS_HIDEOUS_LAUGHTER));
+ 
+        if (spellsIsMindless(oTarget) == FALSE)   {
+            if ( !GetIsImmune(oTarget,IMMUNITY_TYPE_MIND_SPELLS ))   {
+
         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl) && !/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, ((GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF))-nModifier), SAVING_THROW_TYPE_MIND_SPELLS))
         {
             effect eDur = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
 
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_TASHAS_HIDEOUS_LAUGHTER));
             float fDur = RoundsToSeconds(nDuration);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDur,TRUE,-1,CasterLvl);
@@ -96,7 +100,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             AssignCommand(oTarget, ActionPlayAnimation(ANIMATION_LOOPING_TALK_LAUGHING));
             effect eLaugh = EffectKnockdown();
             DelayCommand(0.3, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLaugh, oTarget, fDur,TRUE,-1,CasterLvl));
-        }
+        } } }
     }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

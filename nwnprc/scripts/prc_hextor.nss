@@ -17,7 +17,7 @@
 void RemoveBrutalStrike(object oPC, int iEquip)
 {
      object oItem = GetPCItemLastUnequipped();
-     
+
      if (GetHasFeat(FEAT_BSTRIKE_A4, oPC))
      {
          RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS, 4);
@@ -154,7 +154,10 @@ void AddBrutalStrike(object oPC , int iEquip)
       }
 }
 
-
+void Test(object oPC , int iEquip)
+{
+    SendMessageToPC(oPC, "iEquip = " + IntToString(iEquip));
+}
 
 void main()
 {
@@ -164,7 +167,14 @@ void main()
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
 
     SendMessageToPC(oPC, "You are a Fist of Hextor");
+    Test(oPC, iEquip);
 
+if (iEquip == 2)
+    {
+        AddBrutalStrike(oPC , iEquip);
+    }
+/*
     if (iEquip == 1)    RemoveBrutalStrike(oPC, iEquip);
     if (iEquip == 2)    AddBrutalStrike(oPC, iEquip);
+*/
 }

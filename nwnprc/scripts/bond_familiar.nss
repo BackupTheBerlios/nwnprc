@@ -62,11 +62,9 @@ void ElementalFamiliar()
     object oHide=GetItemInSlot(INVENTORY_SLOT_CARMOUR,oEle);
 
 
-  int iPack ,iSave ;
-
-    int iLvl;
+    int iPack ,iSave ;
     int iHD = GetHitDice(OBJECT_SELF);
-
+    int iBonus = (iHD/5)+1; 
    
     if (iType=="FIRE")
     {

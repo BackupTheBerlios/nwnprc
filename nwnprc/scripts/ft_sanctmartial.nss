@@ -13,6 +13,7 @@ void Sanctify()
 
    object oItem;
    object oPC = OBJECT_SELF;
+   int iType;
 
    if (GetLocalInt(oPC,"ONENTER")) return;
 
@@ -59,7 +60,7 @@ void Sanctify()
    }
 
    int iEquip=GetLocalInt(oPC,"ONEQUIP");
-   int iType;
+   
 
    if (GetLocalInt(oItem,"MartialStrik")) return;
 

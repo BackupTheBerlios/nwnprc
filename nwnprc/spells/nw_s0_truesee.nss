@@ -51,7 +51,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
         if(nSpot == 0)
             nSpot = 15;
         effect eSpot = EffectSkillIncrease(SKILL_SPOT, nSpot);
+        effect eUltra = EffectUltravision();
         eSight = EffectLinkEffects(eSight, eSpot);
+        eSight = EffectLinkEffects(eSight, eUltra);
     }
     effect eLink = EffectLinkEffects(eVis, eSight);
     eLink = EffectLinkEffects(eLink, eDur);

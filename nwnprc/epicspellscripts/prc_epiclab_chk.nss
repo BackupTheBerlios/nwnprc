@@ -1,7 +1,9 @@
+
+#include "prc_inc_switch"
 int StartingConditional()
 {
 object oPC = GetPCSpeaker();
-int iCondition = GetLocalInt(GetModule(), "PRC_SPELLSLAB");
+int iCondition = GetPRCSwitch(PRC_SPELLSLAB);
 object oArea = GetArea(oPC);
 
 // If teleportation to the Epic Lab is not allowed by the builder, do not show this.

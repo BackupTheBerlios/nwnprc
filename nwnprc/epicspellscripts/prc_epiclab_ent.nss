@@ -1,3 +1,5 @@
+
+#include "prc_inc_switch"
 void main()
 {
 
@@ -5,7 +7,7 @@ object oPC = GetEnteringObject();
 
 if (!GetIsPC(oPC)) return;
 
-if (GetLocalInt(GetModule(), "PRC_SPELLSLAB") < 2)
+if (GetPRCSwitch(PRC_SPELLSLAB) < 2)
    return;
 
 object oTarget;

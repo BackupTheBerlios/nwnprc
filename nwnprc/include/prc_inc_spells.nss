@@ -524,14 +524,23 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     int iCastingClass = GetLastSpellCastClass(); // might be CLASS_TYPE_INVALID
     
     int iSpellId = GetSpellId();
+    int bIsStaff = FALSE;
+    int nItemLevel;
 
     // Item Spells
     if (GetItemPossessor(GetSpellCastItem()) == oCaster)
     {
         //SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
-        if(!GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)
-            || GetBaseItemType(GetSpellCastItem()) != BASE_ITEM_MAGICSTAFF)
+        if(GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)
+            && GetBaseItemType(GetSpellCastItem()) == BASE_ITEM_MAGICSTAFF)
+        {
+            nItemLevel = GetCasterLevel(oCaster);
+            bIsStaff = TRUE;
+        }
+        else
+        {
             return GetCasterLevel(oCaster);
+        }
         //SendMessageToPC(oCaster, "Staff casting at user caster level");
     }
 
@@ -561,8 +570,15 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
         iArcLevel += PractisedSpellcasting(oCaster, iCastingClass, iArcLevel); //gotta be the last one
 
         //SendMessageToPC(oCaster, "Arcane casting at level " + IntToString(iArcLevel));
-
-        return iArcLevel;
+        if(bIsStaff)
+        {
+            if(iArcLevel > nItemLevel)
+                return iArcLevel;
+            else
+                return nItemLevel;
+        }
+        else
+            return iArcLevel;
     }
 
     else if (GetIsDivineClass(iCastingClass)) // Divine Spells
@@ -580,8 +596,15 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
         iDivLevel += PractisedSpellcasting(oCaster, iCastingClass, iDivLevel); //gotta be the last one
 
         //SendMessageToPC(oCaster, "Divine casting at level " + IntToString(iDivLevel));
-
-        return iDivLevel;
+        if(bIsStaff)
+        {
+            if(iDivLevel > nItemLevel)
+                return iDivLevel;
+            else
+                return nItemLevel;
+        }
+        else
+            return iDivLevel;
     }
 
     else // Spell-Like Abilities

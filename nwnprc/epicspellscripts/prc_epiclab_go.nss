@@ -5,12 +5,13 @@ For download info, please visit:
 http://www.lilacsoul.revility.com    */
 #include "prc_alterations"
 #include "inc_dispel"
+#include "prc_inc_switch"
 
 //Put this on action taken in the conversation editor
 void main()
 {
 //Make sure you can't run this script if the builder doesn't want it to run...
-if (GetLocalInt(GetModule(), "PRC_SPELLSLAB") > 2) return;
+if (GetPRCSwitch(PRC_SPELLSLAB) > 2) return;
 
 object oPC = GetPCSpeaker();
 

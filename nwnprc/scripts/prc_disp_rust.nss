@@ -17,6 +17,7 @@
 //::
 
 #include "NW_I0_GENERIC"
+#include "inc_combat"
 
 int IsItemMetal(object oItem)
 {
@@ -39,21 +40,24 @@ void main()
 
         object oPC = OBJECT_SELF;
         object oTarget = GetSpellTargetObject();
+        object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+        int iEnch = GetWeaponEnhancement(oWeapon);
+        int iAB = GetWeaponAtkBonusIP(oWeapon,oTarget);
 
     int iHit = TouchAttackMelee(oTarget);
      if (iHit > 0)
       {
         if (GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oTarget) != OBJECT_INVALID)
         {
-          object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+          oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
           if (!GetWeaponRanged(oWeapon) && (IsItemMetal(oWeapon)>0))
           {
             string sWeapon = GetName(oWeapon);
-            if(ReflexSave(oTarget,20))// saved
+            if(iEnch >= 1 || iAB >= 1)// If magical
             {
-             SendMessageToPC(oPC,"The weapon resists the rust effects.");
+             SendMessageToPC(oPC,"The weapons magical properties resists the rust effects.");
             }
-            else //didn't save
+            else //if plain
             {
              SendMessageToPC(oPC,"You destroyed your opponents weapon.");
              DestroyObject(oWeapon);
@@ -61,26 +65,7 @@ void main()
             }
           }
         }
-        else
-        {
-          if (GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget) != OBJECT_INVALID)
-          {
-            object oWeapon = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget);
-            if (IsItemMetal(oWeapon)>0)
-            {
-              string sWeapon = GetName(oWeapon);
-              if(ReflexSave(oTarget,20))// saved
-               {
-                SendMessageToPC(oPC,"The weapon resists the rust effects.");
-               }
-               else //didn't save
-               {
-                SendMessageToPC(oPC,"You destroyed your opponents weapon.");
-                DestroyObject(oWeapon);
-                ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_ACID_L),oTarget);
-               }
-            }
-          }
-        }
+
+
      }
 }

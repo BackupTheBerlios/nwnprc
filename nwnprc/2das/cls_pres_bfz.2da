@@ -12,3 +12,4 @@
 8     DeathAttack2     FEATOR    456             ****        
 9     BGSneakAttack2   FEATOR    461             ****        
 10    PA_SNEAK_2d6     FEATOR    4290            ****        
+11    ScriptVar        VAR       PRC_PrereqBFZ   0    

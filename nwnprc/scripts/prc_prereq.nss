@@ -535,6 +535,20 @@ void ManAtArms(object oPC)
 	}
 }
 
+void BFZ(object oPC)
+{       
+	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+	SetLocalInt(oPC, "PRC_PrereqBFZ", 1);
+
+	if (iCleric > 0)
+	{
+		if (GetHasFeat(FEAT_FIRE_DOMAIN_POWER,oPC) && GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC))
+		{
+		SetLocalInt(oPC, "PRC_PrereqBFZ", 0);
+		}	
+	}	
+}
+
 void main()
 {
         //Declare Major Variables

@@ -105,6 +105,11 @@ void main()
     //SetAssociateState(NW_ASC_MODE_DEFEND_MASTER, TRUE);
     SetAssociateState(NW_ASC_DISTANCE_2_METERS);
 
+     // * Companions, come in, by default with Attack Nearest Enemy && Follow Master modes
+    SetLocalInt(OBJECT_SELF,"NW_COM_MODE_COMBAT",ASSOCIATE_COMMAND_ATTACKNEAREST);
+    SetLocalInt(OBJECT_SELF,"NW_COM_MODE_MOVEMENT",ASSOCIATE_COMMAND_FOLLOWMASTER);
+
+
     //Use melee weapons by default
     SetAssociateState(NW_ASC_USE_RANGED_WEAPON, FALSE);
 

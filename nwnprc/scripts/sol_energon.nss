@@ -1,4 +1,6 @@
 #include "prc_feat_const"
+#include "x0_i0_henchman"
+
 void main()
 {
 
@@ -41,6 +43,7 @@ void main()
 
     oHench = CreateObject(OBJECT_TYPE_CREATURE,"xagya01",GetSpellTargetLocation());
     AddHenchman(OBJECT_SELF,oHench);
+    SetLastMaster(OBJECT_SELF,oHench);
 
 
    int i;

@@ -15,7 +15,7 @@
 //:: Modified by Jeremiah Teague for Drunken
 //:: Master Prestige Class
 //:://////////////////////////////////////////////
-#include "prc_drnknmstr"
+#include "prc_inc_clsfunc"
 #include "prc_class_const"
 #include "prc_feat_const"
 

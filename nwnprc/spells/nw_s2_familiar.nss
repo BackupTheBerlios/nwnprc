@@ -11,7 +11,6 @@
 //:: Created On: Sept 27, 2001
 //:://////////////////////////////////////////////
 
-#include "heartward_inc"
 #include "soul_inc"
 #include "inc_npc"
 

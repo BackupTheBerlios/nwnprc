@@ -1,7 +1,7 @@
 2DA V2.0
 
   LABEL                    ReqType ReqParam1        ReqParam2 
-0 ClericOr                 CLASSOR 2                ****      
+0 Cleric                   CLASS   2                ****      
 1 ScriptVar                VAR     PRC_AllowWarPrst 0         
 2 BAB                      BAB     5                ****      
 3 CombatCasting            FEAT    7                ****      

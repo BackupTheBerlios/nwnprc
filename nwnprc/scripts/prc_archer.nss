@@ -45,6 +45,9 @@ void main()
         bBowSpec=GetHasFeat(FEAT_BOWSPEC4, oPC) ? 4 : bBowSpec;
         bBowSpec=GetHasFeat(FEAT_BOWSPEC5, oPC) ? 5 : bBowSpec;
         bBowSpec=GetHasFeat(FEAT_BOWSPEC6, oPC) ? 6 : bBowSpec;
+        bBowSpec=GetHasFeat(FEAT_BOWSPEC7, oPC) ? 7 : bBowSpec;
+        bBowSpec=GetHasFeat(FEAT_BOWSPEC8, oPC) ? 8 : bBowSpec;
+        bBowSpec=GetHasFeat(FEAT_BOWSPEC9, oPC) ? 9 : bBowSpec;
 
     int bXShot=GetHasFeat(FEAT_EXTRASHOT, oPC) ? 1 : 0;
 

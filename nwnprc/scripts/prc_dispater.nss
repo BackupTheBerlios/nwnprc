@@ -1,6 +1,7 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "prc_class_const"
+#include "inc_combat"
 
 
 ///Checks to see if weapon is metal///
@@ -34,15 +35,19 @@ void Iron_Power(object oPC, object oWeap, int iIronPower)
 {
     int iHitBonus = 0;
     itemproperty ip;
+    int iEnhance = GetWeaponEnhancement(oWeap);
+    int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
 
     if(iIronPower == 1) iHitBonus = 1;
     if(iIronPower == 2) iHitBonus = 2;
+
+    iHitBonus = iHitBonus + iEnhance + iAB;
 
     if(iIronPower > 0){
         if(GetLocalInt(oWeap, "IPowerBonus") != iHitBonus){
             RemoveIronPower(oWeap);
             AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(iHitBonus), oWeap);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING,iHitBonus), oWeap);
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PHYSICAL,iHitBonus), oWeap);
             AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyKeen(), oWeap);
             SetLocalInt(oWeap, "IPowerBonus", iHitBonus);
         }
@@ -59,16 +64,14 @@ void main()
         int bDivLor = GetHasFeat(FEAT_DEVICE_LORE, oPC) ? 2 : 0;
         int bIrnPwr;
 
-        
+        if(GetHasFeat(FEAT_IRON_POWER_1,oPC))
+        {
+         bIrnPwr = 1;
+        }
 
         if(GetHasFeat(FEAT_IRON_POWER_2,oPC))
         {
          bIrnPwr = 2;
-        }
-
-        else if(GetHasFeat(FEAT_IRON_POWER_1,oPC))
-        {
-         bIrnPwr = 1;
         }
 
         if(bDivLor > 0) Device_Lore(oPC,oSkin,bDivLor);

@@ -1,6 +1,7 @@
 #include "x2_inc_itemprop"
 #include "inc_utility"
 #include "inc_item_props"
+#include "prc_class_const"
 
 int GetAbilityForClass(int nClass, object oPC)
 {
@@ -8,6 +9,7 @@ int GetAbilityForClass(int nClass, object oPC)
     switch(nClass)
     {
         case CLASS_TYPE_BLACKGUARD:
+        case CLASS_TYPE_VASSAL:
             return GetLocalInt(oHide, "PRC_trueWIS");
         case CLASS_TYPE_ASSASSIN:
             return GetLocalInt(oHide, "PRC_trueINT");
@@ -29,7 +31,7 @@ void WipeSpellbookHideFeats(object oPC)
     {
         if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
             && GetItemPropertySubType(ipTest) > 100
-            && GetItemPropertySubType(ipTest) < 200)
+            && GetItemPropertySubType(ipTest) < 250)
             RemoveItemProperty(oHide, ipTest);
         ipTest = GetNextItemProperty(oHide);
     }
@@ -141,41 +143,4 @@ void CheckNewSpellbooks(object oPC)
             DelayCommand(0.01, SetupSpells(oPC, i));
         }
     }
-}
-
-int GetNewSpellMetamagic()
-{
-    int nSpellID = GetSpellId();
-    int nMetamagic = nSpellID % 10;
-    switch(nMetamagic)
-    {
-        case 1://quicken
-            nMetamagic = METAMAGIC_QUICKEN;
-            break;
-        case 2://empower
-            nMetamagic = METAMAGIC_EMPOWER;
-            break;
-        case 3://extend
-            nMetamagic = METAMAGIC_EXTEND;
-            break;
-        case 4://maximise
-            nMetamagic = METAMAGIC_MAXIMIZE;
-            break;
-        case 5://silent
-            nMetamagic = METAMAGIC_SILENT;
-            break;
-        case 6://still
-            nMetamagic = METAMAGIC_STILL;
-            break;
-        case 7://none
-            nMetamagic = 0;
-            break;
-        case 8://none
-            nMetamagic = 0;
-            break;
-        case 9://none
-            nMetamagic = 0;
-            break;
-    }
-    return nMetamagic;
 }

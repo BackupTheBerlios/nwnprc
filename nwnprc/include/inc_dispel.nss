@@ -600,7 +600,7 @@ void PRCSPApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, in
    // Add this new effect to the slot after the last effect already on the character.
 
 
- SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
+   ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
    // may have code travers the lists right here and not add the new effect
    // if an identical one already appears in the list somewhere
 

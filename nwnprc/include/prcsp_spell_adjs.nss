@@ -7,7 +7,7 @@
 int
 PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 {
-	return (GetCasterLevel(oCaster) + PRCGetCasterLevel(oCaster) );
+	return (GetCasterLevel(oCaster) + ExecuteScriptAndReturnInt("prc_caster_level", oCaster) );
 }
 
 //

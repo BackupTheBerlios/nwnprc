@@ -81,11 +81,6 @@ void main()
 	object oSkin = GetPCSkin(oPC);
 	int iEquip = GetLocalInt(oPC, "ONEQUIP");
     
-	
-	if (iEquip == 1)	AddBrutalStrikeDam(oPC);
-	if (iEquip == 1)	AddBrutalStrikeAtk(oPC);
-
-
-
-
+	AddBrutalStrikeDam(oPC);
+	AddBrutalStrikeAtk(oPC);
 }

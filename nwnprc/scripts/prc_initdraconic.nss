@@ -142,8 +142,8 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
                   break;
 
               case ITEM_PROPERTY_ATTACK_BONUS:
-                  int iCost =GetItemPropertyCostTableValue(ip);
-                  iCost= (iCost>Enh) ? iCost:Enh;
+                  int iCost = GetItemPropertyCostTableValue(ip);
+                  Enh = (iCost>Enh) ? iCost:Enh;
                   break;
 
 

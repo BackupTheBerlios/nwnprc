@@ -16,7 +16,7 @@
 #include "x2_inc_spellhook"
 #include "x0_i0_spells"
 
-const int VFX_MOB_CIRCEVIL_NODIS   = 50 ;
+const int VFX_MOB_CIRCEVIL_NODIS   = 110 ;
 
 void main()
 {

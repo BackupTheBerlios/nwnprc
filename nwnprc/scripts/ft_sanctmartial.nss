@@ -3,6 +3,7 @@
 #include "Soul_inc"
 #include "inc_item_props"
 #include "ft_martialstrike"
+#include "nw_i0_spells"
 
 // Sanctify_Feat(iType);
 
@@ -190,10 +191,42 @@ void Sanctify()
 }
 
 
+void Pwatk(object oPC)
+{
+   if (GetLocalInt(oPC,"ONEQUIP")!= 2 ) return;
+   
+   object oItem = GetPCItemLastEquipped();
+   
+   if (GetWeaponRanged(oItem))
+   {
+      int iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK1,OBJECT_SELF)  ? SPELL_POWER_ATTACK1 : 0;
+          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK2,OBJECT_SELF)  ? SPELL_POWER_ATTACK2 : iSpell;
+          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK3,OBJECT_SELF)  ? SPELL_POWER_ATTACK3 : iSpell;
+          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK4,OBJECT_SELF)  ? SPELL_POWER_ATTACK4 : iSpell;
+          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK5,OBJECT_SELF)  ? SPELL_POWER_ATTACK5 : iSpell;
+          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK6,OBJECT_SELF)  ? SPELL_POWER_ATTACK6 : iSpell;
+          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK7,OBJECT_SELF)  ? SPELL_POWER_ATTACK7 : iSpell;
+          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK8,OBJECT_SELF)  ? SPELL_POWER_ATTACK8 : iSpell;
+          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK9,OBJECT_SELF)  ? SPELL_POWER_ATTACK9 : iSpell;
+          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK10,OBJECT_SELF) ? SPELL_POWER_ATTACK10: iSpell;
+   	
+      if(iSpell)
+      {
+     	 RemoveSpellEffects(iSpell,OBJECT_SELF,OBJECT_SELF);
+
+         string nMes = "*Power Attack Mode Desactivated*";
+         FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
+      }	
+   	
+   }
+	
+}
 
 void main()
 {
    object oPC = OBJECT_SELF;
+   
+   Pwatk(oPC);
    
    if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
    {

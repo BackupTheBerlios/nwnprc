@@ -2212,3 +2212,149 @@ int SpellToOnHitCastSpell(int iSpell)
 
 
 ////////////////End Imbue Arrow//////////////////
+
+////////////////Begin Spellsword//////////////////
+
+//GetNextObjectInShape wrapper for changing the AOE of the channeled spells
+object MyNextObjectInShape(int nShape,
+float fSize, location lTarget,
+int bLineOfSight=FALSE,
+int nObjectFilter=OBJECT_TYPE_CREATURE,
+vector vOrigin=[0.0,0.0,0.0])
+{
+
+int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
+if(nChannel != 1)
+{
+return GetNextObjectInShape(nShape,fSize,lTarget,bLineOfSight,nObjectFilter,vOrigin);
+}
+else
+{
+return OBJECT_INVALID;
+}
+}
+
+
+//GetFirstObjectInShape wrapper for changing the AOE of the channeled spells
+object MyFirstObjectInShape(int nShape,
+float fSize,
+location lTarget,
+int bLineOfSight=FALSE,
+int nObjectFilter=OBJECT_TYPE_CREATURE,
+vector vOrigin=[0.0,0.0,0.0])
+{
+
+int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
+if(nChannel != 1)
+{
+return GetFirstObjectInShape(nShape,fSize,lTarget,bLineOfSight,nObjectFilter,vOrigin);
+}
+else
+{
+return GetSpellTargetObject();
+}
+}
+
+
+//This checks if the spell is channeled and if there are multiple spells
+//channeled, which one is it. Then it checks in either case if the spell
+//has the metamagic feat the function gets and returns TRUE or FALSE accordingly
+int CheckMetaMagic(int nMeta,int nMMagic)
+{
+int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
+int nFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
+if(nChannel != 1)
+{
+    if(nMeta == nMMagic)
+    {
+    return TRUE;
+    }
+    else
+    {
+    return FALSE;
+    }
+}
+else
+{
+
+if(nFeat == nMMagic)
+    {
+    return TRUE;
+    }
+    else
+    {
+    return FALSE;
+    }
+}
+}
+
+
+
+//Wrapper for The MaximizeOrEmpower function that checks for metamagic feats
+//in channeled spells as well
+int MyMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0)
+{
+    int i = 0;
+    int nDamage = 0;
+    int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
+    int nFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
+    for (i=1; i<=nNumberOfDice; i++)
+    {
+        nDamage = nDamage + Random(nDice) + 1;
+    }
+    //Resolve metamagic
+    if (nMeta == METAMAGIC_MAXIMIZE || nFeat == METAMAGIC_MAXIMIZE)
+    {
+        nDamage = nDice * nNumberOfDice;
+    }
+    else if (nMeta == METAMAGIC_EMPOWER || nFeat == METAMAGIC_EMPOWER)
+    {
+       nDamage = nDamage + nDamage / 2;
+    }
+    return nDamage + nBonus;
+}
+
+
+
+//This function returns 1 only if the object oTarget is the object
+//the weapon hit when it channeled the spell sSpell or if there is no
+//channeling at all
+int ChannelChecker(string sSpell, object oTarget)
+{
+int nSpell = GetLocalInt(GetAreaOfEffectCreator(),sSpell+"channeled");
+int nTarget = GetLocalInt(oTarget, sSpell+"target");
+if(nSpell ==1 && nTarget == 1)
+{
+return 1;
+}
+else if(nSpell !=1 && nTarget !=1)
+{
+return 1;
+}
+else
+{
+return 0;
+}
+}
+
+//If a spell is being channeled, we store its target and its name
+void StoreSpellVariables(string sString,int nDuration)
+{
+
+    if(GetLocalInt(OBJECT_SELF,"spellswd_aoe") == 1)
+    {
+    SetLocalInt(OBJECT_SELF, sString+"channeled",1);
+    SetLocalInt(GetSpellTargetObject(), sString+"target",1);
+    }
+DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(GetSpellTargetObject(), sString+"target"));
+DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(OBJECT_SELF, sString+"channeled"));
+}
+
+effect ChannelingVisual()
+{
+return EffectVisualEffect(VFX_DUR_SPELLTURNING);
+}
+
+
+
+////////////////End Spellsword//////////////////

@@ -27,10 +27,6 @@
 //:: Created On: 2003-07-22
 //:://////////////////////////////////////////////
 
-//#include "prc_class_const"
-//#include "prc_feat_const"
-//#include "x2_inc_switches"
-
 #include "prc_inc_combat"
 
 void SetRancorVar(object oPC);
@@ -170,14 +166,46 @@ void main()
         }
    }
 
-if(GetLocalInt(OBJECT_SELF,"doarcstrike"))
-{
+	if(GetLocalInt(OBJECT_SELF,"doarcstrike"))
+	{
+		int nDice = GetLocalInt(OBJECT_SELF,"curentspell");
+		int nDamage = d4(nDice);
+		effect eDam = EffectDamage(nDamage);
+		ApplyEffectToObject(DURATION_TYPE_INSTANT,eDam,oSpellTarget);
+	}
 
-int nDice = GetLocalInt(OBJECT_SELF,"curentspell");
-int nDamage = d4(nDice);
-effect eDam = EffectDamage(nDamage);
-ApplyEffectToObject(DURATION_TYPE_INSTANT,eDam,oSpellTarget);
-}
+   	//spellsword
+	if(GetLocalInt(oItem,"spell")==1)
+	{
+
+	        object oPC = oSpellOrigin;
+	        SetLocalInt(oPC,"spellswd_aoe",1);
+	        SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_1"));
+	        string sSpellString1 = GetLocalString(oItem,"spellscript1");
+	        ExecuteScript(sSpellString1,oPC);
+	
+	        SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_2"));
+	        string sSpellString2 = GetLocalString(oItem,"spellscript2");
+	        ExecuteScript(sSpellString2,oPC);
+	
+	        SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_3"));
+	        string sSpellString3 = GetLocalString(oItem,"spellscript3");
+	        ExecuteScript(sSpellString3,oPC);
+	
+	        SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_4"));
+	        string sSpellString4 = GetLocalString(oItem,"spellscript4");
+	        ExecuteScript(sSpellString4,oPC);
+	        DeleteLocalString(oItem,"spellscript1");
+	        DeleteLocalString(oItem,"spellscript2");
+	        DeleteLocalString(oItem,"spellscript3");
+	        DeleteLocalString(oItem,"spellscript4");
+	        DeleteLocalInt(oItem,"spell");
+	        DeleteLocalInt(oPC,"spellswd_aoe");
+        	DeleteLocalInt(oPC,"spell_metamagic");
+	        
+	}
+
+
 }
 
 void SetRancorVar(object oPC)

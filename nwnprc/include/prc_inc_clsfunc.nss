@@ -247,7 +247,7 @@ switch(GetBaseItemType(oItem))
         }
     case BASE_ITEM_DART:
         {
-        FloatingTextStringOnCreature("You can't use the equiped weapon in a charge", oTarget);
+        FloatingTextStringOnCreature("You can't use the equipped weapon in a charge", oTarget);
         return -1;
         break;
         }
@@ -278,7 +278,7 @@ switch(GetBaseItemType(oItem))
         }
     case BASE_ITEM_GRENADE:
         {
-        FloatingTextStringOnCreature("You can't use the equiped weapon in a charge", oTarget);
+        FloatingTextStringOnCreature("You can't use the equipped weapon in a charge", oTarget);
         return -1;
         break;
         }
@@ -294,7 +294,7 @@ switch(GetBaseItemType(oItem))
         }
     case BASE_ITEM_HEAVYCROSSBOW:
         {
-        FloatingTextStringOnCreature("You can't use the equiped weapon in a charge", oTarget);
+        FloatingTextStringOnCreature("You can't use the equipped weapon in a charge", oTarget);
         return -1;
         break;
         }
@@ -320,7 +320,7 @@ switch(GetBaseItemType(oItem))
         }
     case BASE_ITEM_LIGHTCROSSBOW:
         {
-        FloatingTextStringOnCreature("You can't use the equiped weapon in a charge", oTarget);
+        FloatingTextStringOnCreature("You can't use the equipped weapon in a charge", oTarget);
         return -1;
         break;
         }
@@ -341,7 +341,7 @@ switch(GetBaseItemType(oItem))
         }
     case BASE_ITEM_LONGBOW:
         {
-        FloatingTextStringOnCreature("You can't use the equiped weapon in a charge", oTarget);
+        FloatingTextStringOnCreature("You can't use the equipped weapon in a charge", oTarget);
         return -1;
         break;
         }
@@ -377,7 +377,7 @@ switch(GetBaseItemType(oItem))
         }
     case BASE_ITEM_SHORTBOW:
         {
-        FloatingTextStringOnCreature("You can't use the equiped weapon in a charge", oTarget);
+        FloatingTextStringOnCreature("You can't use the equipped weapon in a charge", oTarget);
         return -1;
         break;
         }
@@ -393,7 +393,7 @@ switch(GetBaseItemType(oItem))
         }
     case BASE_ITEM_SHURIKEN:
         {
-        FloatingTextStringOnCreature("You can't use the equiped weapon in a charge", oTarget);
+        FloatingTextStringOnCreature("You can't use the equipped weapon in a charge", oTarget);
         return -1;
         break;
         }
@@ -404,19 +404,19 @@ switch(GetBaseItemType(oItem))
         }
     case BASE_ITEM_SLING:
         {
-        FloatingTextStringOnCreature("You can't use the equiped weapon in a charge", oTarget);
+        FloatingTextStringOnCreature("You can't use the equipped weapon in a charge", oTarget);
         return -1;
         break;
         }
     case BASE_ITEM_THROWINGAXE:
         {
-        FloatingTextStringOnCreature("You can't use the equiped weapon in a charge", oTarget);
+        FloatingTextStringOnCreature("You can't use the equipped weapon in a charge", oTarget);
         return -1;
         break;
         }
     case BASE_ITEM_TORCH:
         {
-        FloatingTextStringOnCreature("You can't use the equiped weapon in a charge", oTarget);
+        FloatingTextStringOnCreature("You can't use the equipped weapon in a charge", oTarget);
         return -1;
         break;
         }

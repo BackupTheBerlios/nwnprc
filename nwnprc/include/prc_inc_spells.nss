@@ -456,7 +456,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     // Item Spells
     if (GetItemPossessor(GetSpellCastItem()) == oCaster)
     {
-        SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
+        //SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
         
         return GetCasterLevel(oCaster);
     }
@@ -477,7 +477,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 
         iArcLevel += PractisedSpellcasting(oCaster, iCastingClass, iArcLevel); //gotta be the last one
 
-        SendMessageToPC(oCaster, "Arcane casting at level " + IntToString(iArcLevel));
+        //SendMessageToPC(oCaster, "Arcane casting at level " + IntToString(iArcLevel));
 
         return iArcLevel;
     }
@@ -496,14 +496,14 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
                   
         iDivLevel += PractisedSpellcasting(oCaster, iCastingClass, iDivLevel); //gotta be the last one
 
-        SendMessageToPC(oCaster, "Divine casting at level " + IntToString(iDivLevel));
+        //SendMessageToPC(oCaster, "Divine casting at level " + IntToString(iDivLevel));
 
         return iDivLevel;
     }
 
     else // Spell-Like Abilities
     {
-        SendMessageToPC(oCaster, "SLA casting at level " + IntToString(GetCasterLevel(oCaster)));
+        //SendMessageToPC(oCaster, "SLA casting at level " + IntToString(GetCasterLevel(oCaster)));
 
         return GetCasterLevel(oCaster);
     }
@@ -825,7 +825,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 			else if (iShadow > 1)	nDC = nDC - 1;
 		}
 	
-	SendMessageToPC(GetFirstPC(), "Your Spell Save modifier is " + IntToString(nDC));
+	//SendMessageToPC(GetFirstPC(), "Your Spell Save modifier is " + IntToString(nDC));
 	}
 	
         

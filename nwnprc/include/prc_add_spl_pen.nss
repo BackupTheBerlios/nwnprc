@@ -212,7 +212,7 @@ int ShadowWeavePen(int spell_id, object oCaster = OBJECT_SELF)
 
 
 	}
-	SendMessageToPC(GetFirstPC(), "Your Spell Pen modifier is " + IntToString(nSP));
+	//SendMessageToPC(GetFirstPC(), "Your Spell Pen modifier is " + IntToString(nSP));
 	return nSP;
 }
 int add_spl_pen(object oCaster = OBJECT_SELF)

@@ -260,7 +260,7 @@ int ShadowWeaveDC(int spell_id, object oCaster = OBJECT_SELF)
 
 
 	}
-	SendMessageToPC(GetFirstPC(), "Your Spell DC modifier is " + IntToString(nDC));
+	//SendMessageToPC(GetFirstPC(), "Your Spell DC modifier is " + IntToString(nDC));
 	return nDC;
 }
 

@@ -109,8 +109,8 @@ int CanShift(object oPC)
 	}
 	else
 	{
-		SendMessageToPC(oPC, "Your inventory is to full to allow you to unshift.");
-		SendMessageToPC(oPC, "Please make room enough for an armour sized item and then try again.");
+		SendMessageToPC(oPC, "Your inventory is too full to allow you to unshift.");
+		SendMessageToPC(oPC, "Please make room enough for an armor-sized item and then try again.");
 	}
 
 	DestroyObject(oItem);
@@ -123,7 +123,7 @@ int CanShift(object oPC)
         if (eType == EFFECT_TYPE_POLYMORPH)
         {
 			SendMessageToPC(oPC, "Shifting when polymorphed has been disabled.");
-			SendMessageToPC(oPC, "Please unpolymorph first");
+			SendMessageToPC(oPC, "Please cancel your polymorph first.");
 			return FALSE;
         }
         eEff = GetNextEffect(oPC);
@@ -1713,18 +1713,18 @@ int GetValidShift(object oPC, object oTarget)
     {
         if (nPCShifterLevelsRequired == 1000)
         {
-            SendMessageToPC(oPC,"You can never take on that form" );
+            SendMessageToPC(oPC,"You can never take on that form." );
             return FALSE;
         }
         else
-            SendMessageToPC(oPC,"You need " + IntToString(nPCShifterLevelsRequired-nPCShifterLevel) + " more shifter levels before you can take on that form" );
+            SendMessageToPC(oPC,"You need " + IntToString(nPCShifterLevelsRequired-nPCShifterLevel) + " more shifter levels before you can take on that form." );
         iInvalid = 1;
     }
 
     // HD check (cant take any form that has more HD then the shifter)
     if (nTHD > nPCHD)
     {
-        SendMessageToPC(oPC,"You need " + IntToString(nTHD-nPCHD) + " more character levels before you can take on that form" );
+        SendMessageToPC(oPC,"You need " + IntToString(nTHD-nPCHD) + " more character levels before you can take on that form." );
         iInvalid = 1;
     }
 
@@ -1945,11 +1945,11 @@ int SetShiftFromTemplateValidate(object oPC, string sTemplate, int iEpic)
 
     if (!GetIsObjectValid(oTarget))
     {
-        SendMessageToPC(oPC,"Not a valid creature");
+        SendMessageToPC(oPC,"Not a valid creature.");
     }
     if ( !in_list )
     {
-        SendMessageToPC( oPC, "You have not mimiced this creature yet" );
+        SendMessageToPC( oPC, "You have not mimiced this creature yet." );
     }
 
     // Make sure the PC can take on that form

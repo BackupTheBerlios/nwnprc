@@ -73,13 +73,13 @@ PRCShowSpellResist(object oCaster, object oTarget, int nResist, float fDelay = 0
 	{
 		string message = nResist == SPELL_RESIST_FAIL ?
 			"Target is AFFECTED by the spell" : "Target RESISTED the spell";
-		SendMessageToPC(oCaster, message);
+		//SendMessageToPC(oCaster, message);
 	}
 	if (GetIsPC(oTarget))
 	{
 		string message = nResist == SPELL_RESIST_FAIL ?
 			"You are AFFECTED by the spell" : "You RESISTED the spell";
-		SendMessageToPC(oTarget, message);
+		//SendMessageToPC(oTarget, message);
 	}
 	
 	if (nResist != SPELL_RESIST_FAIL) {

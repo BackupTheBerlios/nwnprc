@@ -3,8 +3,21 @@
 //:: inc_eventhook
 //:://////////////////////////////////////////////
 /*
+	A system for scheduling scripts to be run on
+	an arbitrary event during runtime (instead of
+	being hardcoded in compilation).
 	
+	Scheduling a script happens by calling
+	AddEventScript with the object the script is
+	to be run on (and on which the data about the
+	script is stored on), an EVENT_* constant
+	determining the event that the script is to be
+	run on and the name of the script to be run.
+	In addition to these, there are control parameters
+	to determine how many times the script is run.
 	
+	See the comments in function prototype section for
+	more details.
 */
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan
@@ -115,74 +128,77 @@ const string PERMANENCY_SUFFIX = "_permanent";
 /* Function prototypes                          */
 //////////////////////////////////////////////////
 
-// Adds the given script to be fired when the event next occurs for the given PC.
+// Adds the given script to be fired when the event next occurs for the given creature
+// ===================================================================================
+// oCreature        The object that the script is to be fired for. Usually a PC.
+// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
+// sScript          The script to be fired on the event
+// bPermanent       Unless this is set, the script will be only fired once, after which it
+//                  is removed from the list
 //
-// oPC        The object that the script is to be fired for. Usually a PC.
-// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
-// sScript    The script to be fired on the event
-// bPermanent Unless this is set, the script will be only fired once, after which it
-//            is removed from the list
-//
-// bAllowDuplicate This being set makes the function first check if a script with
-//                 the same name is already queued for the event and avoids adding a
-//                 duplicate. This will not remove duplicates already present, though.
-void AddEventScript(object oPC, int nEvent, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE);
+// bAllowDuplicate  This being set makes the function first check if a script with
+//                  the same name is already queued for the event and avoids adding a
+//                  duplicate. This will not remove duplicates already present, though.
+void AddEventScript(object oCreature, int nEvent, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE);
 
-// Removes all instances of the given script from the event's hook.
+// Removes all instances of the given script from the given eventhook
+// ==================================================================
+// oCreature        The object that the script is to be removed from the list for.
+// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
+// sScript          The script to be removed from the event
 //
-// oPC        The object that the script is to be removed from the list for.
-// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
-// sScript    The script to be removed from the event
-//
-// bPermanent Depending on the state of this switch, the script is either removed
-//            from the one-shot or permanent list.
+// bPermanent       Depending on the state of this switch, the script is either removed
+//                  from the one-shot or permanent list.
 //
 // bIgnorePermanency Setting this to true will make the function clear the script from
 //                   both one-shot and permanent lists, regardless of the value of bPermanent
-void RemoveEventScript(object oPC, int nEvent, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE);
+void RemoveEventScript(object oCreature, int nEvent, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE);
 
-// Removes all scripts in the given list.
+// Removes all scripts in the given eventhook
+// ==========================================
+// oCreature        The object to clear script list for.
+// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
 //
-// oPC        The object to clear script list for.
-// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
-//
-// bPermanent Depending on the state of this switch, the scripts are either removed
-//            from the one-shot or permanent list.
+// bPermanent       Depending on the state of this switch, the scripts are either removed
+//                  from the one-shot or permanent list.
 //
 // bIgnorePermanency Setting this to true will make the function clear both one-shot and
 //                   permanent lists, regardless of the value of bPermanent
-void ClearEventScriptList(object oPC, int nEvent, int bPermanent = FALSE, int bIgnorePermanency = FALSE);
+void ClearEventScriptList(object oCreature, int nEvent, int bPermanent = FALSE, int bIgnorePermanency = FALSE);
 
-// Gets the first script hooked to the given event. This must be called before any calls
-// to GetNextEventScript() are made.
-// Returns the name of the first script stored, or "", if one was not found.
+// Gets the first script hooked to the given event
+// ===============================================
+// oCreature        The object to get a script for.
+// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
+// bPermanent       Which list to get the first script from.
 //
-// oPC        The object to get a script for.
-// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
-// bPermanent Which list to get the first script from.
-string GetFirstEventScript(object oPC, int nEvent, int bPermanent);
+// This must be called before any calls to GetNextEventScript() are made.
+// Returns the name of the first script stored, or "", if one was not found.
+string GetFirstEventScript(object oCreature, int nEvent, int bPermanent);
 
-// Gets the next script hooked to the given event. You should call GetFirstEventScript
-// before calling this.
+// Gets the next script hooked to the given event
+// ==============================================
+// oCreature        The object to get a script for.
+// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
+// bPermanent       Which list to get the first script from.
+//
+// You should call GetFirstEventScript before calling this.
 // Returns the name of the next script in the list, or "" if there are no more scripts
 // left. Also returns "" if GetFirstEventScript hasn't been called.
-//
-// oPC        The object to get a script for.
-// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
-// bPermanent Which list to get the first script from.
-string GetNextEventScript(object oPC, int nEvent, int bPermanent);
+string GetNextEventScript(object oCreature, int nEvent, int bPermanent);
 
 // Executes all scripts in both the one-shot and permanent hooks and
-// clears scripts off the one-shot hook afterwards.
+// clears scripts off the one-shot hook afterwards
+// =================================================================
+// oCreature        The object to execute listed scripts for.
+// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
+//
 // All the scripts will be ExecuteScripted on OBJECT_SELF, so they will
 // behave as if being in the script slot for that event.
 //
 // It is recommended this be used instead of manually going through
 // the script lists with Get(First|Next)EventScript.
-//
-// oPC        The object to execute listed scripts for.
-// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
-void ExecuteAllScriptsHookedToEvent(object oPC, int nEvent);
+void ExecuteAllScriptsHookedToEvent(object oCreature, int nEvent);
 
 // Internal function. Returns the name matching the given integer constant
 string EventTypeIdToName(int nEvent);
@@ -192,13 +208,13 @@ string EventTypeIdToName(int nEvent);
 //////////////////////////////////////////////////
 
 
-void AddEventScript(object oPC, int nEvent, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE){
+void AddEventScript(object oCreature, int nEvent, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE){
 	// If an eventhook is running, place the call into queue
 	if(GetLocalInt(GetModule(), "prc_eventhook_running")){
 		int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue", nQueue);
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 1);
-		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oPC);
+		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oCreature);
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
 		SetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_script", sScript);
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bAllowDuplicate));
@@ -208,22 +224,22 @@ void AddEventScript(object oPC, int nEvent, string sScript, int bPermanent = FAL
 	string sArrayName = EventTypeIdToName(nEvent);
 	
 	// Abort if the object given / event isn't valid 
-	if(!GetIsObjectValid(oPC) || sArrayName == "") return;
+	if(!GetIsObjectValid(oCreature) || sArrayName == "") return;
 	
 	
 	sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
 	
 	// Create the array if necessary
-	if(!persistant_array_exists(oPC, sArrayName)){
-		persistant_array_create(oPC, sArrayName);
+	if(!persistant_array_exists(oCreature, sArrayName)){
+		persistant_array_create(oCreature, sArrayName);
 	}
 	
 	// Check for duplicates if necessary
 	int bAdd = TRUE;
 	if(bAllowDuplicate){
 		int i = 0;
-		for(; i <= persistant_array_get_size(oPC, sArrayName); i++){
-			if(persistant_array_get_string(oPC, sArrayName, i) == sScript){
+		for(; i <= persistant_array_get_size(oCreature, sArrayName); i++){
+			if(persistant_array_get_string(oCreature, sArrayName, i) == sScript){
 				bAdd = FALSE;
 				break;
 			}
@@ -231,17 +247,17 @@ void AddEventScript(object oPC, int nEvent, string sScript, int bPermanent = FAL
 	}
 	// Add to the array if needed
 	if(bAdd)
-		persistant_array_set_string(oPC, sArrayName, persistant_array_get_size(oPC, sArrayName), sScript);
+		persistant_array_set_string(oCreature, sArrayName, persistant_array_get_size(oCreature, sArrayName), sScript);
 }
 
 
-void RemoveEventScript(object oPC, int nEvent, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
+void RemoveEventScript(object oCreature, int nEvent, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
 	// If an eventhook is running, place the call into queue
 	if(GetLocalInt(GetModule(), "prc_eventhook_running")){
 		int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue", nQueue);
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 2);
-		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oPC);
+		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oCreature);
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
 		SetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_script", sScript);
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bIgnorePermanency));
@@ -252,61 +268,61 @@ void RemoveEventScript(object oPC, int nEvent, string sScript, int bPermanent = 
 	       sArrayName;
 	
 	// Abort if the object given / event isn't valid 
-	if(!GetIsObjectValid(oPC) || sArrayNameBase == "") return;
+	if(!GetIsObjectValid(oCreature) || sArrayNameBase == "") return;
 	
 	// Go through one-shot array
 	if(!bPermanent || bIgnorePermanency){
 		sArrayName = sArrayNameBase;
 		// First, check if there is an array to look through at all
-		if(persistant_array_exists(oPC, sArrayName)){
+		if(persistant_array_exists(oCreature, sArrayName)){
 			int nMoveBackBy = 0;
 			int i = 0;
 			// Loop through the array elements
-			for(; i <= persistant_array_get_size(oPC, sArrayName); i++){
+			for(; i <= persistant_array_get_size(oCreature, sArrayName); i++){
 				// See if we have an entry to remove
-				if(persistant_array_get_string(oPC, sArrayName, i) == sScript){
+				if(persistant_array_get_string(oCreature, sArrayName, i) == sScript){
 					nMoveBackBy++;
 				}
 				// Move the entris in the array back by an amount great enough to overwrite entries containing sScript
 				else if(nMoveBackBy){
-					persistant_array_set_string(oPC, sArrayName, i - nMoveBackBy,
-					                            persistant_array_get_string(oPC, sArrayName, i));
+					persistant_array_set_string(oCreature, sArrayName, i - nMoveBackBy,
+					                            persistant_array_get_string(oCreature, sArrayName, i));
 			}}
 			// Shrink the array by the number of entries removed
-			persistant_array_shrink(oPC, sArrayName, persistant_array_get_size(oPC, sArrayName) + 1 - nMoveBackBy);
+			persistant_array_shrink(oCreature, sArrayName, persistant_array_get_size(oCreature, sArrayName) + 1 - nMoveBackBy);
 	}}
 	
 	// Go through the permanent array
 	if(bPermanent || bIgnorePermanency){
 		sArrayName = sArrayNameBase + PERMANENCY_SUFFIX;
 		// First, check if there is an array to look through at all
-		if(persistant_array_exists(oPC, sArrayName)){
+		if(persistant_array_exists(oCreature, sArrayName)){
 			int nMoveBackBy = 0;
 			int i = 0;
 			// Loop through the array elements
-			for(; i <= persistant_array_get_size(oPC, sArrayName); i++){
+			for(; i <= persistant_array_get_size(oCreature, sArrayName); i++){
 				// See if we have an entry to remove
-				if(persistant_array_get_string(oPC, sArrayName, i) == sScript){
+				if(persistant_array_get_string(oCreature, sArrayName, i) == sScript){
 					nMoveBackBy++;
 				}
 				// Move the entris in the array back by an amount great enough to overwrite entries containing sScript
 				else if(nMoveBackBy){
-					persistant_array_set_string(oPC, sArrayName, i - nMoveBackBy,
-					                            persistant_array_get_string(oPC, sArrayName, i));
+					persistant_array_set_string(oCreature, sArrayName, i - nMoveBackBy,
+					                            persistant_array_get_string(oCreature, sArrayName, i));
 			}}
 			// Shrink the array by the number of entries removed
-			persistant_array_shrink(oPC, sArrayName, persistant_array_get_size(oPC, sArrayName) + 1 - nMoveBackBy);
+			persistant_array_shrink(oCreature, sArrayName, persistant_array_get_size(oCreature, sArrayName) + 1 - nMoveBackBy);
 	}}
 }
 
 
-void ClearEventScriptList(object oPC, int nEvent, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
+void ClearEventScriptList(object oCreature, int nEvent, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
 	// If an eventhook is running, place the call into queue
 	if(GetLocalInt(GetModule(), "prc_eventhook_running")){
 		int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue", nQueue);
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 3);
-		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oPC);
+		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oCreature);
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
 		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bIgnorePermanency));
 		return;
@@ -316,86 +332,86 @@ void ClearEventScriptList(object oPC, int nEvent, int bPermanent = FALSE, int bI
 	       sArrayName;
 	
 	// Abort if the object given / event isn't valid 
-	if(!GetIsObjectValid(oPC) || sArrayNameBase == "") return;
+	if(!GetIsObjectValid(oCreature) || sArrayNameBase == "") return;
 	
 	// Go through one-shot array
 	if(!bPermanent || bIgnorePermanency){
 		sArrayName = sArrayNameBase;
 		// First, check if there is an array present
-		if(persistant_array_exists(oPC, sArrayName)){
+		if(persistant_array_exists(oCreature, sArrayName)){
 			// Shrink the array to 0
-			persistant_array_shrink(oPC, sArrayName, 0);
+			persistant_array_shrink(oCreature, sArrayName, 0);
 	}}
 	
 	// Go through the permanent array
 	if(bPermanent || bIgnorePermanency){
 		sArrayName = sArrayNameBase + PERMANENCY_SUFFIX;
 		// First, check if there is an array present
-		if(persistant_array_exists(oPC, sArrayName)){
+		if(persistant_array_exists(oCreature, sArrayName)){
 			// Shrink the array to 0
-			persistant_array_shrink(oPC, sArrayName, 0);
+			persistant_array_shrink(oCreature, sArrayName, 0);
 	}}
 }
 
 
-string GetFirstEventScript(object oPC, int nEvent, int bPermanent){
+string GetFirstEventScript(object oCreature, int nEvent, int bPermanent){
 	string sArrayName = EventTypeIdToName(nEvent);
 	
 	// Abort if the object given / event isn't valid 
-	if(!GetIsObjectValid(oPC) || sArrayName == "") return "";
+	if(!GetIsObjectValid(oCreature) || sArrayName == "") return "";
 	
 	sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
 	
-	SetLocalInt(oPC, sArrayName + "_index", 1);
-	DelayCommand(0.0f, DeleteLocalInt(oPC, sArrayName + "_index"));
+	SetLocalInt(oCreature, sArrayName + "_index", 1);
+	DelayCommand(0.0f, DeleteLocalInt(oCreature, sArrayName + "_index"));
 	
-	return persistant_array_get_string(oPC, sArrayName, 0);
+	return persistant_array_get_string(oCreature, sArrayName, 0);
 }
 
 
-string GetNextEventScript(object oPC, int nEvent, int bPermanent){
+string GetNextEventScript(object oCreature, int nEvent, int bPermanent){
 	string sArrayName = GetLocalInt(GetModule(), "prc_eventhook_running") ?
 	                     GetLocalString(GetModule(), "prc_eventhook_running_sArrayName") :
 	                     EventTypeIdToName(nEvent);
 	
 	// Abort if the object given / event isn't valid 
-	if(!GetIsObjectValid(oPC) || sArrayName == "") return "";
+	if(!GetIsObjectValid(oCreature) || sArrayName == "") return "";
 	
 	sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
 	
-	int nIndex = GetLocalInt(oPC, sArrayName + "_index");
+	int nIndex = GetLocalInt(oCreature, sArrayName + "_index");
 	if(nIndex)
-		SetLocalInt(oPC, sArrayName + "_index", nIndex + 1);
+		SetLocalInt(oCreature, sArrayName + "_index", nIndex + 1);
 	else{
 		WriteTimestampedLogEntry("GetNextEventScript called without first calling GetFirstEventScript");
 		return "";
 	}
 	
-	return persistant_array_get_string(oPC, sArrayName, nIndex);
+	return persistant_array_get_string(oCreature, sArrayName, nIndex);
 }
 
 
-void ExecuteAllScriptsHookedToEvent(object oPC, int nEvent){
+void ExecuteAllScriptsHookedToEvent(object oCreature, int nEvent){
 	// Mark that an eventhook is being run, so calls to modify the
 	// scripts listed are delayd until the eventhook is done.
 	SetLocalInt(GetModule(), "prc_eventhook_running", TRUE);
 	SetLocalString(GetModule(), "prc_eventhook_running_sArrayName", EventTypeIdToName(nEvent));
 	
 	// Loop through the scripts to be fired only once
-	string sScript = GetFirstEventScript(oPC, nEvent, FALSE);
+	string sScript = GetFirstEventScript(oCreature, nEvent, FALSE);
 	while(sScript != ""){
 		ExecuteScript(sScript, OBJECT_SELF);
-		sScript = GetNextEventScript(oPC, nEvent, FALSE);
+		sScript = GetNextEventScript(oCreature, nEvent, FALSE);
 	}
 	
 	// Clear the one-shot script list
-	ClearEventScriptList(oPC, nEvent, FALSE, FALSE);
+	ClearEventScriptList(oCreature, nEvent, FALSE, FALSE);
 	
 	// Loop through the persistent scripts
-	sScript = GetFirstEventScript(oPC, nEvent, TRUE);
+	sScript = GetFirstEventScript(oCreature, nEvent, TRUE);
 	while(sScript != ""){
 		ExecuteScript(sScript, OBJECT_SELF);
-		sScript = GetNextEventScript(oPC, nEvent, TRUE);
+		sScript = GetNextEventScript(oCreature, nEvent, TRUE);
 	}
 	
 	// Remove the lock on modifying the script lists

@@ -43,7 +43,12 @@ void FindTrueAbilityScores()
     }
     else
     {
+        // create a clone but make it completely uninteractive
         oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "clone_"+ObjectToString(oPC));
+        effect eClone = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
+               eClone = EffectLinkEffects(eClone, EffectCutsceneGhost());
+               eClone = SupernaturalEffect(eClone);
+        DelayCommand(0.1, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eClone, oClone));
     }
     
     object oItem;

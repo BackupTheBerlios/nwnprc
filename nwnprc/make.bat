@@ -97,16 +97,6 @@ SET MAKECRAFT2DASPATH=craft2das
 SET MAKERACE2DASPATH=race2das
 SET MAKERACESRCPATH=racescripts
 SET MAKERACEOBJSPATH=raceobjs
-SET MAKETEMPPATH=tempcpl
-
-REM Create the scratch build directory if it does not exist.
-echo Creating temporary compile directory
-mkdir %MAKETEMPPATH% >nul 2>nul
-
-REM Copy all files from the include directory to the temp compile directory.
-REM This will allow each file compiled in this directory to see all of the
-REM include files.
-copy /y include\*.* %MAKETEMPPATH% >nul 2>nul
 
 REM before doing the real build build the dependencies for include files.
 tools\nmake -NOLOGO -f makefile.temp MAKEFILE=makefile.temp depends
@@ -116,10 +106,6 @@ mkdir %MAKEOBJSPATH% >nul 2>nul
 
 REM run nmake to do the build.
 tools\nmake -NOLOGO -f makefile.temp %1 %2 %3 %4 %5 %6 %7 %8 %9
-
-REM delete all files in temp compile directory.
-echo Cleaning up temporary files
-del /s /q %MAKETEMPPATH% >nul 2>nul
 
 ENDLOCAL
 

@@ -134,7 +134,7 @@ NWN_TLK			= $(NWN_DIR)\tlk
 NWN_OVERRIDE	= $(NWN_DIR)\override
 
 # Arguments for various rules
-NSS_FLAGS		= -ceo "$(NWN_DIR)"
+NSS_FLAGS		= -ceoq -I "$(MAKEDIR)\include"
 
 # suffixes for inference rules.
 .SUFFIXES: .nss .ncs .erf .hak .zip .rar
@@ -391,28 +391,20 @@ depends:
 
 # Inference rule to compile scripts.
 {$(SRCPATH)\}.nss{$(OBJPATH)\}.ncs:
-	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
-	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$(TEMPPATH)\$(<F)"
-	@move /y "$(MAKEDIR)\$(TEMPPATH)\$(@B).ncs" "$(MAKEDIR)\$(@D)" >nul
- 	-@del "$(MAKEDIR)\$(TEMPPATH)\$(@B).n??" 2>nul
+	@echo $(<F)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
 
 {$(SPELLSRCPATH)\}.nss{$(SPELLOBJPATH)\}.ncs:
-	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
-	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$(TEMPPATH)\$(<F)"
-	@move /y "$(MAKEDIR)\$(TEMPPATH)\$(@B).ncs" "$(MAKEDIR)\$(@D)" >nul
- 	-@del "$(MAKEDIR)\$(TEMPPATH)\$(@B).n??" 2>nul
+	@echo $(<F)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
 
 {$(EPICSPELLSRCPATH)\}.nss{$(EPICSPELLOBJSPATH)\}.ncs:
-	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
-	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$(TEMPPATH)\$(<F)"
-	@move /y "$(MAKEDIR)\$(TEMPPATH)\$(@B).ncs" "$(MAKEDIR)\$(@D)" >nul
- 	-@del "$(MAKEDIR)\$(TEMPPATH)\$(@B).n??" 2>nul
+	@echo $(<F)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
 
 {$(RACESRCPATH)\}.nss{$(RACEOBJSPATH)\}.ncs:
-	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
-	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$(TEMPPATH)\$(<F)"
-	@move /y "$(MAKEDIR)\$(TEMPPATH)\$(@B).ncs" "$(MAKEDIR)\$(@D)" >nul
- 	-@del "$(MAKEDIR)\$(TEMPPATH)\$(@B).n??" 2>nul
+	@echo $(<F)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
 
 #################################################################################
 # Depends updates will go here. DO NOT ADD ANYTING BELOW THIS LINE!

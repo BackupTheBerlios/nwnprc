@@ -80,6 +80,6 @@ void main()
 	//ScrubPCSkin(oPC, oSkin);
         //DeletePRCLocalInts(oSkin);     
 
-    DelayCommand(0.2, PrcFeats(oPC));
+    DelayCommand(0.3, PrcFeats(oPC));
 
 }

@@ -128,7 +128,7 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("race_skin", oPC);
 
     // Add the weapon's attack/enhancement bonus using SetCompositeBonus ::HACK TO GET AROUND BIOWARE BUG::
-    ExecuteScript("prc_weaponbonus", oPC);
+    DelayCommand(0.4, ExecuteScript("prc_weaponbonus", oPC));
 }
 
 void DeletePRCLocalInts(object oSkin)

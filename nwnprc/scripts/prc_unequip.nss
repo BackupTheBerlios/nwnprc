@@ -57,5 +57,5 @@ void main()
 
      }
      
-     DelayCommand(0.3,PrcFeats(oPC));
+     DelayCommand(0.2,PrcFeats(oPC));
 }

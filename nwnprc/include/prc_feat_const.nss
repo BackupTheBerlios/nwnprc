@@ -882,6 +882,8 @@ const int FEAT_UR_GRACE4            = 3439;
 const int FEAT_UR_FAST_MOVEMENT     = 3097;
 const int FEAT_UNCANNYX_DODGE_1     = 3098;
 const int FEAT_LINGERING_DAMAGE     = 3099;
+const int FEAT_UR_HIPS              = 3457;
+const int FEAT_UR_CAMOUFLAGE        = 3458;
 
 // Dragonsong Lyrith
 const int FEAT_DRAGONSONG_STRENGTH      = 3441;

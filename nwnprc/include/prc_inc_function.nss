@@ -260,10 +260,12 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"URGrace");
     DeleteLocalInt(oSkin,"URImmu");
     DeleteLocalInt(oSkin,"URSnare");
+    DeleteLocalInt(oSkin,"URCamouf");
     //Werewolf
     DeleteLocalInt(oSkin,"WerewolfArmorBonus");
     DeleteLocalInt(oSkin,"WerewolfWisBonus");
-    
+    // Tempest
+    DeleteLocalInt(oSkin,"TwoWeaponDefenseBonus");      
     
     // future PRCs Go below here
 }

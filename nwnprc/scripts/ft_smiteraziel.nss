@@ -185,27 +185,15 @@ void main()
          }
          else if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD){
             if (LvlRaziel > 0){
-               if (GetHasFeat(FEAT_SMITE_EVIL)){
+               while (GetHasFeat(FEAT_SMITE_EVIL)){
                   DecrementRemainingFeatUses(OBJECT_SELF, iFeat);
                   IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-                  if (GetHasFeat(FEAT_EXTRA_SMITING)){
-                     DecrementRemainingFeatUses(OBJECT_SELF, iFeat);
-                     DecrementRemainingFeatUses(OBJECT_SELF, iFeat);
-                     IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-                     IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-                  }
                }
             }
             else{
-               if (GetHasFeat(FEAT_SMITE_EVIL)){
-                  DecrementRemainingFeatUses(OBJECT_SELF,FEAT_SMITE_EVIL);
+               while (GetHasFeat(FEAT_SMITE_EVIL)){
+                  DecrementRemainingFeatUses(OBJECT_SELF, FEAT_SMITE_EVIL);
                   IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-                  if (GetHasFeat(FEAT_EXTRA_SMITING)){
-                     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_SMITE_EVIL);
-                     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_SMITE_EVIL);
-                     IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-                     IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-                  }
                }
             }
          }
@@ -213,27 +201,15 @@ void main()
       default:
          if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD){
             if (LvlRaziel > 0){
-               if (GetHasFeat(FEAT_SMITE_EVIL)){
+               while (GetHasFeat(FEAT_SMITE_EVIL)){
                   DecrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
                   IncrementRemainingFeatUses(OBJECT_SELF, iFeat);
-                  if (GetHasFeat(FEAT_EXTRA_SMITING)){
-                     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-                     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-                     IncrementRemainingFeatUses(OBJECT_SELF, iFeat);
-                     IncrementRemainingFeatUses(OBJECT_SELF, iFeat);
-                  }
                }
             }
             else{
-               if (GetHasFeat(FEAT_SMITE_EVIL)){
+               while (GetHasFeat(FEAT_SMITE_EVIL)){
                   DecrementRemainingFeatUses(OBJECT_SELF,FEAT_RANGED_SMITE);
                   IncrementRemainingFeatUses(OBJECT_SELF, FEAT_SMITE_EVIL);
-                  if (GetHasFeat(FEAT_EXTRA_SMITING)){
-                     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-                     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-                     IncrementRemainingFeatUses(OBJECT_SELF, FEAT_SMITE_EVIL);
-                     IncrementRemainingFeatUses(OBJECT_SELF, FEAT_SMITE_EVIL);
-                  }
                }
             }
          }

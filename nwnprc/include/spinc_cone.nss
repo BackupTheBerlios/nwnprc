@@ -65,7 +65,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
 				int nDamage = SPGetMetaMagicDamage(nDamageType, nCasterLvl, nDieSize, nBonusDam);
 				
 				// Adjust damage according to Reflex Save, Evasion or Improved Evasion
-				nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nSaveDC, nSaveType);
+				nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nSaveDC, nSaveType);
 
 				// Apply effects to the currently selected target.
 				if(nDamage > 0)

@@ -59,7 +59,7 @@ void DoGreenfire(int nDamageType, object oCaster, object oTarget)
 			// heartbeat hasn't fired yet, once that happens targets get no save.
 			int nDamage = SPGetMetaMagicDamage(nDamageType, 2, 6, 0, nBonus);
 			if (!HasHeartbeatFired())
-				nDamage = GetReflexAdjustedDamage(nDamage, oTarget, 
+				nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, 
 					SPGetSpellSaveDC(oTarget,oCaster), SAVING_THROW_TYPE_ACID);
 					
 			// If we really did damage apply it to the target.

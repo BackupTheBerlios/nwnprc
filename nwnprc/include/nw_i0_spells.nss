@@ -810,7 +810,7 @@ void TrapDoElectricalDamage(int ngDamageMaster, int nSaveDC, int nSecondary)
     location lTarget = GetLocation(oTarget);
     int nCount = 0;
     //Adjust the trap damage based on the feats of the target
-    if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, SAVING_THROW_TYPE_TRAP))
+    if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, SAVING_THROW_TYPE_TRAP))
     {
         if (GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
         {
@@ -842,7 +842,7 @@ void TrapDoElectricalDamage(int ngDamageMaster, int nSaveDC, int nSecondary)
             if(o2ndTarget != oTarget)
             {
                 //Adjust the trap damage based on the feats of the target
-                if(!MySavingThrow(SAVING_THROW_REFLEX, o2ndTarget, nSaveDC, SAVING_THROW_TYPE_ELECTRICITY))
+                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, o2ndTarget, nSaveDC, SAVING_THROW_TYPE_ELECTRICITY))
                 {
                     if (GetHasFeat(FEAT_IMPROVED_EVASION, o2ndTarget))
                     {

@@ -77,7 +77,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
 						
                         //Adjust damage based on Reflex Save, Evasion and Improved Evasion
                         int nFullDamage = nDamage;
-                        nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nSaveDC, nSaveType);
+                        nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nSaveDC, nSaveType);
 
                         //Set damage effect
                         eDamage = SPEffectDamage(nDamage, nDamageType);

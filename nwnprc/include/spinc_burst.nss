@@ -73,7 +73,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 					int nDam = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
 						
 					// Adjust damage for reflex save / evasion / imp evasion
-					nDam = GetReflexAdjustedDamage(nDam, oTarget, nSaveDC, nSaveType);
+					nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nSaveDC, nSaveType);
 
 					//Set the damage effect
 					if(nDam > 0)

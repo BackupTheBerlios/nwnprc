@@ -135,7 +135,7 @@ void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCos
 // * DeletePRCLocalInts() in prc_inc_function.
 void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC);
 
-#include "inc_persist_locals"
+#include "inc_persist_loca"
 
 int GetHasItem(object oPC, string sRes)
 {

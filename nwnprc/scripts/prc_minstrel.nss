@@ -5,19 +5,19 @@
 void ReducedASF(object oCreature)
 {
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature);
+    object oShield = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
     object oSkin = GetPCSkin(oCreature);
     int iArmorType = GetBaseAC(oArmor);
     int iASFMod = 99; // "bad" dummy value, will cause the code to quit if the wrong kind of armor is on.
     int iBonus = GetLocalInt(oSkin, "MinstrelSFBonus");
     int iCostTableValue;
     int iArmorASF = 0;
+    int iShieldASF = 0;
     itemproperty ip;
 
     // First thing is to remove old ASF (in case armor is changed.)
-    if (iBonus != 99)
+    if (iBonus != -1)
         RemoveSpecificProperty(oSkin, ITEM_PROPERTY_ARCANE_SPELL_FAILURE, -1, iBonus, 1, "MinstrelSFBonus");
-  
-    SetLocalInt(oSkin, "MinstrelSFBonus", 99); // set to 99 until the bonus is applied.
   
     // Find out how much ASF to apply based on armor type
     if (GetHasFeat(FEAT_MINSTREL_LIGHT_ARMOR_CASTING, oCreature))
@@ -46,9 +46,6 @@ void ReducedASF(object oCreature)
         }
     }
     
-    // Why 99?  Because 0 is IP_CONST_ARCANE_SPELL_FAILURE_MINUS_50_PERCENT!  99 isn't taken.
-    if (iASFMod == 99) return; // no need to proceed if we're wearing too much armor.
-
     // Determine the amount of ASF the armor has already.
     ip = GetFirstItemProperty(oArmor);
     while (GetIsItemPropertyValid(ip))
@@ -57,15 +54,37 @@ void ReducedASF(object oCreature)
        {
            iCostTableValue = GetItemPropertyCostTableValue(ip);
            if (iCostTableValue < 10)
-              iArmorASF += 10 - iCostTableValue; // see iprp_arcspell.2da for reference
+               iArmorASF += 10 - iCostTableValue; // see iprp_arcspell.2da for reference
        }
        ip = GetNextItemProperty(oArmor);
     }
 
+    if (GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD)
+    {
+        ip = GetFirstItemProperty(oShield);
+        while (GetIsItemPropertyValid(ip))
+        {
+            if (GetItemPropertyType(ip) == ITEM_PROPERTY_ARCANE_SPELL_FAILURE)
+            {
+                iCostTableValue = GetItemPropertyCostTableValue(ip);
+                if (iCostTableValue < 10)
+                    iShieldASF += 10 - iCostTableValue; // see iprp_arcspell.2da for reference
+            }
+            ip = GetNextItemProperty(oShield);
+        }
+    }        
+    
     // Find the proper adjustment to ASF.
     iASFMod += iArmorASF;
     
-    if (iASFMod >= 10) return; // the armor already has good enough ASF, we shouldn't add more.
+    if (GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD)
+        iASFMod += iShieldASF - 1;
+    
+    if (iASFMod >= 10)
+    {
+        SetLocalInt(oSkin, "MinstrelSFBonus", -1); // -1 represents "nothing's there"
+        return; // the armor and/or small shieldalready has good enough ASF, we shouldn't add more.
+    }
     
     // Apply the ASF to the skin.
     ip = ItemPropertyArcaneSpellFailure(iASFMod); 

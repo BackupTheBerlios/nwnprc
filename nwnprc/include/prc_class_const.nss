@@ -62,6 +62,7 @@ const int CLASS_TYPE_BLADESINGER                = 124;
 const int CLASS_TYPE_ARCHER                     = 125;
 const int CLASS_TYPE_FRE_BERSERKER              = 177;
 const int CLASS_TYPE_EYE_OF_GRUUMSH             = 180;
+const int CLASS_TYPE_ORC_WARLORD                = 181;
 const int CLASS_TYPE_TEMPEST                    = 178;
 const int CLASS_TYPE_FOE_HUNTER                 = 179;
 const int CLASS_TYPE_OCULAR                     = 51;

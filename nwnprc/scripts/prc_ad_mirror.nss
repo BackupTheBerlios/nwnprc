@@ -20,23 +20,57 @@ void CleanCopy(object oImage)
      TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
 }
 
-void main()
+void RemoveExtraImages()
+{
+    string sImage1 = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
+    string sImage2 = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"flurry";
+
+    object oCreature = GetFirstObjectInArea(GetArea(OBJECT_SELF));
+    while (GetIsObjectValid(oCreature))
+        {
+         if(GetTag(oCreature) == sImage1 || GetTag(oCreature) == sImage2)
+         {
+         DestroyObject(oCreature, 0.0);
+         }
+         oCreature = GetNextObjectInArea(GetArea(OBJECT_SELF));;
+        }
+}
+
+void main2()
 {
 int iLevel = GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, OBJECT_SELF);
 int iAdd = iLevel/3;
 int iImages = d4(1) + iAdd;
 int iCon = GetAbilityScore(OBJECT_SELF, ABILITY_CONSTITUTION) - 1;
+if (iCon > 10) iCon = 10;
 
+string sImage = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
+
+effect eImage = EffectCutsceneParalyze();
+       eImage = SupernaturalEffect(eImage);
+effect eNoSpell = EffectSpellFailure(100);
+       eNoSpell = SupernaturalEffect(eNoSpell);
+effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon);
+       eCon = SupernaturalEffect(eCon);
+       
     int iPlus;
     for (iPlus = 0; iPlus < iImages; iPlus++)
     {
-
-     object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, "PC_IMAGE");
+     object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
      DelayCommand(1.0, CleanCopy(oImage));
 
      object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oImage);
-     ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon), oImage, 0.0);
-     ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneParalyze(), oImage, 0.0);
-     DestroyObject(oSkin, 0.1);
+     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
+     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage);
+     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCon, oImage);
+
+     DestroyObject(oSkin, 0.2);
+     DestroyObject(oImage, (iLevel * 60.0)); // they dissapear after a minute per level
     }
+}
+
+void main()
+{
+   DelayCommand(0.0, RemoveExtraImages());
+   DelayCommand(0.5, main2());
 }

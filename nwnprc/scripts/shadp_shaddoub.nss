@@ -21,7 +21,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
         return;
     }
 
-    int nDuration = (GetCasterLevel(OBJECT_SELF) + GetChangesToCasterLevel(OBJECT_SELF));
+    int nDuration = PRCGetCasterLevel(OBJECT_SELF);
 
     object oCopy = CopyObject(OBJECT_SELF, GetSpellTargetLocation(), OBJECT_INVALID, "Clone"+GetName(OBJECT_SELF));
 
@@ -30,7 +30,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
     SetStandardFactionReputation(STANDARD_FACTION_DEFENDER,100,OBJECT_SELF);
     SetIsTemporaryFriend(oCopy,OBJECT_SELF);
-    DestroyObject(RoundsToSeconds(nDuration), oCopy);
+    DestroyObject(oCopy,RoundsToSeconds(nDuration) );
 
 
 //    AddHenchman(OBJECT_SELF,oCopy);

@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
 
     //Declare major variables including Area of Effect Object
-    int nDuration = (GetCasterLevel(OBJECT_SELF) + GetChangesToCasterLevel(OBJECT_SELF));
+    int nDuration = PRCGetCasterLevel(OBJECT_SELF);
 
     //Make sure duration does no equal 0
     if (nDuration < 1)

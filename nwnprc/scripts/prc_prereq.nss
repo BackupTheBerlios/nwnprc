@@ -10,6 +10,7 @@
 
 #include "prc_class_const"
 #include "prc_feat_const"
+#include "soul_inc"
 
 
 int Bard(object oPC)
@@ -413,19 +414,19 @@ void KOTC(object oPC)
 }
 
 
-void Shadowlord(object oPC)
+void Shadowlord(object oPC, int iArcSpell)
 {
-    int iBardLevel = GetLevelByClass(CLASS_TYPE_BARD, oPC);
-    int iSorcLevel = GetLevelByClass(CLASS_TYPE_SORCERER, oPC);
-    int iWizLevel = GetLevelByClass(CLASS_TYPE_WIZARD, oPC);
-    int iShadLevel = GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oPC);
-    int iShadItem;
-    if(GetHasItem(oPC,"shadowwalkerstok"))
-     iShadItem = 1;
+	int iShadLevel = GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oPC);
+    
+	int iShadItem;
+	if(GetHasItem(oPC,"shadowwalkerstok"))
+	{
+	iShadItem = 1;
+	}
 
-    SetLocalInt(oPC, "PRC_PrereqTelflam", 1);
+	SetLocalInt(oPC, "PRC_PrereqTelflam", 1);
 
-    if ( iSorcLevel>7 || iBardLevel>9 || iWizLevel>6 || iShadLevel || iShadItem == 1)
+	if ( iArcSpell >= 4 || iShadLevel  || iShadItem)
 	{
         SetLocalInt(oPC, "PRC_PrereqTelflam", 0);
 	}
@@ -433,12 +434,12 @@ void Shadowlord(object oPC)
 
 void SOL(object oPC)
 {       
-   
+	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
 	SetLocalInt(oPC, "PRC_PrereqSOL", 1);
 
 	if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD) 
 	{  
-		if (iClericLevel )
+		if (iCleric)
 		{
 		int iElishar = GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_HEALING_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_LUCK_DOMAIN_POWER,oPC)+
 		GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_SUN_DOMAIN_POWER,oPC);
@@ -473,7 +474,7 @@ void ManAtArms(object oPC)
         GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SHORTBOW,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SHURIKEN,oPC)+
         GetHasFeat(FEAT_WEAPON_FOCUS_SICKLE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SLING,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SPEAR,oPC)+
         GetHasFeat(FEAT_WEAPON_FOCUS_STAFF,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_THROWING_AXE,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,oPC);
+        GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,oPC);//+GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,oPC);
    
         
 	SetLocalInt(oPC, "PRC_PrereqMAA", 1);
@@ -504,12 +505,12 @@ void main()
 
 	iArcSpell = ArcSpell(oPC, iArcSpell);
 	iDivSpell = DivSpell(oPC, iDivSpell);
+
 	Hathran(oPC);
 	Tempest(oPC);
 	KOTC(oPC);
 	ManAtArms(oPC);
 	SOL(oPC);
-	Shadowlord(oPC);
+	Shadowlord(oPC, iArcSpell);
 	Shifter(oPC, iArcSpell, iDivSpell);
-	CheckSpecialPRCRecs(oPC);
 }

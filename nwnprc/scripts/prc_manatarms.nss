@@ -68,11 +68,7 @@ void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
 
   }
 
-  int bCore=IP_CONST_ONHIT_SAVEDC_16;   
-      bCore=GetHasFeat(FEAT_STRIKE_AT_CORE2, oPC) ? IP_CONST_ONHIT_SAVEDC_17 : bCore;
-      bCore=GetHasFeat(FEAT_STRIKE_AT_CORE3, oPC) ? IP_CONST_ONHIT_SAVEDC_18 : bCore;
-      bCore=GetHasFeat(FEAT_STRIKE_AT_CORE4, oPC) ? IP_CONST_ONHIT_SAVEDC_19 : bCore;
-      bCore=GetHasFeat(FEAT_STRIKE_AT_CORE5, oPC) ? IP_CONST_ONHIT_SAVEDC_20 : bCore;
+  int bCore = 10 + GetLevelByClass(CLASS_TYPE_MANATARMS,oPC);
 
   if(GetHasFeat(FEAT_STRIKE_AT_CORE)&& GetLocalInt(oItem, "ManArmsCore")!= bCore)
   {
@@ -138,12 +134,6 @@ void OnUnEquip(object oPC,object oSkin,int iLevel,object oWeapR )
     RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,iDType,GetLocalInt(oItem,"ManArmsDmg"));
     DeleteLocalInt(oItem,"ManArmsDmg");
 
-    int bCore=IP_CONST_ONHIT_SAVEDC_16;   
-        bCore=GetHasFeat(FEAT_STRIKE_AT_CORE2, oPC) ? IP_CONST_ONHIT_SAVEDC_17 : bCore;
-        bCore=GetHasFeat(FEAT_STRIKE_AT_CORE3, oPC) ? IP_CONST_ONHIT_SAVEDC_18 : bCore;
-        bCore=GetHasFeat(FEAT_STRIKE_AT_CORE4, oPC) ? IP_CONST_ONHIT_SAVEDC_19 : bCore;
-        bCore=GetHasFeat(FEAT_STRIKE_AT_CORE5, oPC) ? IP_CONST_ONHIT_SAVEDC_20 : bCore;
- 
     if(GetHasFeat(FEAT_STRIKE_AT_CORE)&& GetLocalInt(oItem, "ManArmsCore"))
     {	
       RemoveSpecificProperty(oItem,ITEM_PROPERTY_ON_HIT_PROPERTIES,IP_CONST_ONHIT_ABILITYDRAIN,GetLocalInt(oItem, "ManArmsCore"),1,"",IP_CONST_ABILITY_CON);
@@ -181,13 +171,9 @@ void OnEnter(object oPC,object oSkin,int iLevel,object  oWeapR)
         break;
     }
 
-    SetLocalInt(oItem,"ManArmsDmg",iDmg);
+  SetLocalInt(oItem,"ManArmsDmg",iDmg);
 
-  int bCore=IP_CONST_ONHIT_SAVEDC_16;   
-      bCore=GetHasFeat(FEAT_STRIKE_AT_CORE2, oPC) ? IP_CONST_ONHIT_SAVEDC_17 : bCore;
-      bCore=GetHasFeat(FEAT_STRIKE_AT_CORE3, oPC) ? IP_CONST_ONHIT_SAVEDC_18 : bCore;
-      bCore=GetHasFeat(FEAT_STRIKE_AT_CORE4, oPC) ? IP_CONST_ONHIT_SAVEDC_19 : bCore;
-      bCore=GetHasFeat(FEAT_STRIKE_AT_CORE5, oPC) ? IP_CONST_ONHIT_SAVEDC_20 : bCore;
+  int bCore = 10 + GetLevelByClass(CLASS_TYPE_MANATARMS,oPC);
 
   if(GetHasFeat(FEAT_STRIKE_AT_CORE))
     SetLocalInt(oItem,"ManArmsCore",bCore);

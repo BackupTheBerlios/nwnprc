@@ -123,6 +123,10 @@ int GetMagicalAttackBonus(object oAttacker);
 // inlcuding race and alignment checks
 int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender);
 
+// Returns the proper AC for the defender vs. this attacker.
+// takes into account being denied dex bonus to ac, etc.
+int GetDefenderAC(object oDefender, object oAttacker);
+
 // Returns the Attack Bonus for oAttacker attacking oDefender
 // iMainHand = 0 means attack is from main hand (default)
 // iMainHand = 1 for an off-hand attack
@@ -1334,6 +1338,48 @@ int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender)
     return iBonus;
 }
 
+int GetDefenderAC(object oDefender, object oAttacker)
+{
+     int iAC = GetAC(oDefender);
+     int iDexMod = GetAbilityModifier(ABILITY_DEXTERITY, oDefender);
+     
+     int bIsHelpless =  GetIsHelpless(oDefender);
+     int bGetIsDeniedDexBonus = GetIsDeniedDexBonusToAC(oDefender, oAttacker);
+     
+     // helpless enemies have an effective dexterity of 0 (for -5 ac)
+     if(bIsHelpless)
+     {
+          iAC -= 5;
+     }
+     
+     // remove the dexterity modifier to AC, based on armor limits
+     if(bGetIsDeniedDexBonus || bIsHelpless )
+     {
+          object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oDefender);
+          int iArmorType = GetItemACBase(oArmor);
+          int iDexMax = 100;
+          
+          // change the max dex mod based on armor value
+          if(iArmorType == 8)       iDexMax = 1;
+          else if(iArmorType == 7)  iDexMax = 1;
+          else if(iArmorType == 5)  iDexMax = 2;
+          else if(iArmorType == 4)  iDexMax = 4;
+          else if(iArmorType == 3)  iDexMax = 4;
+          else if(iArmorType == 2)  iDexMax = 6;
+          else if(iArmorType == 1)  iDexMax = 8;
+          
+          // if their dex mod exceeds the max for their current armor
+          if(iDexMod > iDexMax) iDexMod = iDexMax;
+          
+          // remove any dex bonus to AC
+          iAC -= iDexMod;
+          
+          // remove any dodge bonuses to AC
+     }
+   
+     return iAC;
+}
+
 int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHand = 0)
 {
      int iAttackBonus = 0;
@@ -1606,7 +1652,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      }
 
      //Check for a critical threat
-     if( (iDiceRoll >= iCritThreat && (iDiceRoll + iAttackBonus) > iEnemyAC) && iDiceRoll != 1 && !bEnemyIsConcealed)
+     if( (iDiceRoll >= iCritThreat && ((iDiceRoll + iAttackBonus) > iEnemyAC) || iDiceRoll == 20)  && iDiceRoll != 1 && !bEnemyIsConcealed)
      {
           sFeedback += "*Critical Hit*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + "): ";
           
@@ -1626,7 +1672,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      }
 
      //Just a regular hit
-     else if( (iDiceRoll + iAttackBonus > iEnemyAC) && iDiceRoll != 1 && !bEnemyIsConcealed)
+     else if( (((iDiceRoll + iAttackBonus) > iEnemyAC) || iDiceRoll == 20) && iDiceRoll != 1 && !bEnemyIsConcealed)
      {
          sFeedback += "*Hit*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
          iReturn = 1;

@@ -268,9 +268,10 @@ int GetIsHelpless(object oDefender)
      // PnP describes a helpless defender as
      // A helpless foe - one who is bound, held, sleeping, paralyzed,
      // unconscious, or otherwise at your mercy - is an easy target.
-     if( GetHasEffect(EFFECT_TYPE_PARALYZE, oDefender) )           bIsHelpless = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_SLEEP, oDefender) )         bIsHelpless = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_PETRIFY, oDefender) )       bIsHelpless = TRUE;     
+     if( GetHasEffect(EFFECT_TYPE_PARALYZE, oDefender) )               bIsHelpless = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_SLEEP, oDefender) )             bIsHelpless = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_PETRIFY, oDefender) )           bIsHelpless = TRUE;  
+     else if( GetHasEffect(EFFECT_TYPE_CUTSCENE_PARALYZE, oDefender) ) bIsHelpless = TRUE;
      
      return bIsHelpless;
 }

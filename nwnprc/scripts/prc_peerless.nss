@@ -82,7 +82,7 @@ void AddSneakAttack(object oPC , int iEquip)
       {
           if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
           {
-                     SendMessageToPC(oPC, "<Custom0> has equipped a Bow");
+
                      if (GetHasFeat(FEAT_PA_SNEAK_4D6, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_4D6), oWeapon);
@@ -101,10 +101,6 @@ void AddSneakAttack(object oPC , int iEquip)
                      }
 
              SetLocalInt(oPC, "HasPASneak", 2);
-          }
-          else
-          {
-               SendMessageToPC(oPC, "<Custom0> has equipped a Weapon");
           }
       }   
 }
@@ -131,12 +127,8 @@ void main()
     //else if(iSneak = 1) // if Sneak has been removed
     //{
 
-    if (iEquip = 1)
-    {
-        SendMessageToPC(oPC, IntToString(iEquip));
-        RemoveSneakAttack(oPC, iEquip);
-        SendMessageToPC(oPC, "Peerless has unequipped a Weapon");
-    }
+    if (iEquip = 1)    RemoveSneakAttack(oPC, iEquip);
+
     
     if (iEquip = 2)    AddSneakAttack(oPC, iEquip);
     //}

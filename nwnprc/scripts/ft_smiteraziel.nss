@@ -171,18 +171,18 @@ void main()
    int iBonus = GetAbilityModifier(ABILITY_CHARISMA)>0 ? GetAbilityModifier(ABILITY_CHARISMA):0;
 
    // no smite with ranged Weapon except the character has Ranged Smite Feat
-   /*
+   
    int iType=GetBaseItemType(oWeap);
    switch (iType)
    {
-      case BASE_ITEM_BOLT:
-      case BASE_ITEM_BULLET:
-      case BASE_ITEM_ARROW:
       case BASE_ITEM_SHORTBOW:
       case BASE_ITEM_LONGBOW:
       case BASE_ITEM_LIGHTCROSSBOW:
       case BASE_ITEM_HEAVYCROSSBOW:
       case BASE_ITEM_SLING:
+         return ;
+         break;
+      /*
          if (!GetHasFeat(FEAT_RANGED_SMITE)){
             return;
          }
@@ -221,9 +221,9 @@ void main()
                }
             }
          }
-         break;
+         break;*/
    }
-   */
+
    int Immune = GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT);
 
   SendMessageToPC(GetFirstPC(), "iAttacks:"+ IntToString(iAttacks));

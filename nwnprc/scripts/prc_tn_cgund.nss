@@ -9,7 +9,10 @@
 
 void main()
 {
+    if (GetMaxHenchmen() < 4)
+    {
     SetMaxHenchmen(4);
+    }
     string sSummon;
     effect eSummonB;
     object oCreature;

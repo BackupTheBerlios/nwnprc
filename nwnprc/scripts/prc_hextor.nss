@@ -17,7 +17,6 @@
 void RemoveBrutalStrike(object oPC, int iEquip)
 {
      object oItem = GetPCItemLastUnequipped();
-     int bHasBow = FALSE;
      
      if (GetHasFeat(FEAT_BSTRIKE_A4, oPC))
      {
@@ -64,16 +63,17 @@ void AddBrutalStrike(object oPC , int iEquip)
 
       if (iEquip = 2)      // On Equip
       {
+      SendMessageToPC(oPC, "You Have Equipped a Weapon");
                      //Fist of Hextor Attack from Brutal Strike
-                     if (GetHasFeat(FEAT_BSTRIKE_A4 oPC))
+                     if (GetHasFeat(FEAT_BSTRIKE_A4, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(4), oWeapon);
                      }
-                     else if (GetHasFeat(FEAT_BSTRIKE_A3 oPC))
+                     else if (GetHasFeat(FEAT_BSTRIKE_A3, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(3), oWeapon);
                      }
-                     else if (GetHasFeat(FEAT_BSTRIKE_A2 oPC))
+                     else if (GetHasFeat(FEAT_BSTRIKE_A2, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(2), oWeapon);
                      }
@@ -83,15 +83,15 @@ void AddBrutalStrike(object oPC , int iEquip)
                      }
 
                      //Fist of Hextor Damage from Brutal Strike
-                     if (GetHasFeat(FEAT_BSTRIKE_D4 oPC))
+                     if (GetHasFeat(FEAT_BSTRIKE_D4, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(DAMAGE_TYPE_BLUDGEONING, DAMAGE_BONUS_4), oWeapon);
                      }
-                     else if (GetHasFeat(FEAT_BSTRIKE_D3 oPC))
+                     else if (GetHasFeat(FEAT_BSTRIKE_D3, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(DAMAGE_TYPE_BLUDGEONING, DAMAGE_BONUS_3), oWeapon);
                      }
-                     else if (GetHasFeat(FEAT_BSTRIKE_D2 oPC))
+                     else if (GetHasFeat(FEAT_BSTRIKE_D2, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(DAMAGE_TYPE_BLUDGEONING, DAMAGE_BONUS_2), oWeapon);
                      }
@@ -111,15 +111,15 @@ void AddBrutalStrike(object oPC , int iEquip)
       {
 
                      //Fist of Hextor Attack from Brutal Strike
-                     if (GetHasFeat(FEAT_BSTRIKE_A4 oPC))
+                     if (GetHasFeat(FEAT_BSTRIKE_A4, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(4), oWeapon);
                      }
-                     else if (GetHasFeat(FEAT_BSTRIKE_A3 oPC))
+                     else if (GetHasFeat(FEAT_BSTRIKE_A3, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(3), oWeapon);
                      }
-                     else if (GetHasFeat(FEAT_BSTRIKE_A2 oPC))
+                     else if (GetHasFeat(FEAT_BSTRIKE_A2, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(2), oWeapon);
                      }
@@ -129,15 +129,15 @@ void AddBrutalStrike(object oPC , int iEquip)
                      }
 
                      //Fist of Hextor Damage from Brutal Strike
-                     if (GetHasFeat(FEAT_BSTRIKE_D4 oPC))
+                     if (GetHasFeat(FEAT_BSTRIKE_D4, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(DAMAGE_TYPE_BLUDGEONING, DAMAGE_BONUS_4), oWeapon);
                      }
-                     else if (GetHasFeat(FEAT_BSTRIKE_D3 oPC))
+                     else if (GetHasFeat(FEAT_BSTRIKE_D3, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(DAMAGE_TYPE_BLUDGEONING, DAMAGE_BONUS_3), oWeapon);
                      }
-                     else if (GetHasFeat(FEAT_BSTRIKE_D2 oPC))
+                     else if (GetHasFeat(FEAT_BSTRIKE_D2, oPC))
                      {
                      AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(DAMAGE_TYPE_BLUDGEONING, DAMAGE_BONUS_2), oWeapon);
                      }

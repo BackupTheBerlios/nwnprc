@@ -9,6 +9,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_class_const"
+#include "prc_feat_const"
 
 
 int Bard(object oPC)
@@ -346,7 +347,6 @@ void Hathran(object oPC)
     {
     SetLocalInt(oPC, "PRC_Female", 0);
     }
-
 }
 
 
@@ -384,10 +384,19 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
 	{
 	SetLocalInt(oPC, "PRC_PrereqShift", 0);
 	}
-
-
-
 }
+
+
+void Tempest(object oPC)
+{
+	SetLocalInt(oPC, "PRC_PrereqTemp", 1);
+
+	if ((GetHasFeat(FEAT_AMBIDEXTERITY, oPC) && GetHasFeat(FEAT_TWO_WEAPON_FIGHTING, oPC)) || GetHasFeat(FEAT_RANGER_DUAL, oPC))
+	{
+	SetLocalInt(oPC, "PRC_PrereqTemp", 0);
+	}
+}
+
 
 void main()
 {
@@ -410,5 +419,6 @@ void main()
 	iArcSpell = ArcSpell(oPC, iArcSpell);
 	iDivSpell = DivSpell(oPC, iDivSpell);
 	Hathran(oPC);
+	Tempest(oPC);
 	Shifter(oPC, iArcSpell, iDivSpell);
 }

@@ -5,39 +5,6 @@
 #include "soul_inc"
 #include "inc_item_props"
 
-int FindUnarmedDmgGlove(object oPC,int bUnarmedDmg)
-{
-
-  int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
-      iMonk = (iMonk >20) ? 20 :iMonk ;
-
-  int iSize =GetCreatureSize(oPC);
-
-  int iDmg = 1;
-  int iLvDmg;
-
-  if (iMonk)
-  {
-    int iLvDmg = iMonk/4+2;
-
-    if (iLvDmg == 6 && bUnarmedDmg == 0) return -1 ;
-
-    if (iSize == CREATURE_SIZE_SMALL ||iSize== CREATURE_SIZE_TINY)
-      iLvDmg--;
-
-    iDmg =iLvDmg ;
-
-  }
-
-  if (!bUnarmedDmg) return -1;
-
-  if (bUnarmedDmg == 1)
-    return  IP_CONST_DAMAGEBONUS_2;
-
-   return IP_CONST_DAMAGEBONUS_4;
-}
-
-
 int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 {
 
@@ -113,6 +80,7 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
 
    object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
 
+//   object oWeapL =  GetItemPossessedBy(oPC,"NW_IT_CREWPB010");
    if ( oWeapL==OBJECT_INVALID )
    {
       object oSlamL=CreateItemOnObject("NW_IT_CREWPB010",oPC);
@@ -138,92 +106,59 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
           iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_5,oPC) ? 2 : iEpicKi ;
 
       iKi+= iEpicKi;
+      Enh+= iKi;
+
+    object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
+
+    if (iEquip =! 1 &&  GetIsObjectValid(oItem))
+    {
+
+      int iType = GetBaseItemType(oItem);
+      if (iType == BASE_ITEM_GLOVES)
+      {
+
+         itemproperty ip = GetFirstItemProperty(oWeapL);
+         while (GetIsItemPropertyValid(ip))
+         {
+             RemoveItemProperty(oWeapL, ip);
+            ip = GetNextItemProperty(oWeapL);
+         }
+
+         ip = GetFirstItemProperty(oItem);
+         while(GetIsItemPropertyValid(ip))
+         {
+            iType = GetItemPropertyType(ip);
+
+            if ( iType ==ITEM_PROPERTY_ENHANCEMENT_BONUS)
+            {
+               int iCost = GetItemPropertyCostTableValue(ip);
+               AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(iCost),oWeapL);
+               if(iCost>(Enh)) Enh = iCost;
+
+            }
+            else
+               AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
+
+           ip = GetNextItemProperty(oItem);
+
+         }
+
+      }
+    }
 
       TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iDmg),oWeapL);
 
       TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_ENHANCEMENT_BONUS,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh+iKi),oWeapL);
+      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh),oWeapL);
 
       TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oWeapL);
 
-     int iDmgGlove =FindUnarmedDmgGlove(oPC,bUnarmedDmg);
-
-    if (iEquip==2)
-    {
-     object oItem=GetPCItemLastEquipped();
-     int iType = GetBaseItemType(oItem);
-
-     if (iType != BASE_ITEM_GLOVES) return;
-     if ( GetLocalInt(oItem,"IniClaw")) return;
-
-     if ( iDmgGlove!= -1 )
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING,iDmgGlove),oItem);
-//     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh+iKi),oItem);
-     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oItem);
-//     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackPenalty(Enh+iKi),oItem);
-
-     if (GetHasFeat(FEAT_INIDR_STUNSTRIKE,oPC) && !GetLocalInt(oItem,"IniStunStrk"))
-     {
-       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitProps(IP_CONST_ONHIT_STUN,IP_CONST_ONHIT_SAVEDC_26,IPRP_CONST_ONHIT_DURATION_5_PERCENT_1_ROUNDS),oItem);
-       SetLocalInt(oItem,"IniStunStrk",1);
-     }
-
-       SetLocalInt(oItem,"IniClaw",iDmgGlove);
-       SetLocalInt(oItem,"IniEnh",Enh+iKi);
-
-    }
-     else if (iEquip==1)
-    {
-      object oItem=GetPCItemLastUnequipped();
-      if (!GetLocalInt(oItem,"IniClaw")) return;
-
-      if ( iDmgGlove!= -1 )
-       RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_SLASHING,GetLocalInt(oItem, "IniClaw"));
-//      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
-//      RemoveSpecificProperty(oItem,ITEM_PROPERTY_ENHANCEMENT_BONUS,-1,GetLocalInt(oItem, "IniEnh"));
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,IP_CONST_DAMAGETYPE_SLASHING,-1);
-      DeleteLocalInt(oItem,"IniClaw");
-      DeleteLocalInt(oItem,"IniEnh");
-
-      if (GetLocalInt(oItem,"IniStunStrk"))
-      {
-        RemoveSpecificProperty(oItem,ITEM_PROPERTY_ON_HIT_PROPERTIES,IP_CONST_ONHIT_STUN,IP_CONST_ONHIT_SAVEDC_26);
-        DeleteLocalInt(oItem,"IniStunStrk");
-      }
+return ;
 
 
-    }
-    else
-    {
-       object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
-       if ( oItem == OBJECT_INVALID) return;
 
-       if ( GetLocalInt(oItem,"IniClaw"))
-       {
-         RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_SLASHING,GetLocalInt(oItem, "IniClaw"));
-//         RemoveSpecificProperty(oItem,ITEM_PROPERTY_ENHANCEMENT_BONUS,-1,GetLocalInt(oItem, "IniEnh"));
-         RemoveSpecificProperty(oItem,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,IP_CONST_DAMAGETYPE_SLASHING,-1);
-//         RemoveSpecificProperty(oItem,ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
-
-       }
-
-        if ( iDmgGlove!= -1 )
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING,iDmgGlove),oItem);
-//         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh+iKi),oItem);
-         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oItem);
-//         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackPenalty(Enh+iKi),oItem);
-
-        if (GetHasFeat(FEAT_INIDR_STUNSTRIKE,oPC) && !GetLocalInt(oItem,"IniStunStrk"))
-        {
-          AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitProps(IP_CONST_ONHIT_STUN,IP_CONST_ONHIT_SAVEDC_26,IPRP_CONST_ONHIT_DURATION_5_PERCENT_1_ROUNDS),oItem);
-          SetLocalInt(oItem,"IniStunStrk",1);
-        }
-
-         SetLocalInt(oItem,"IniClaw",iDmgGlove);
-         SetLocalInt(oItem,"IniEnh",Enh+iKi);
-    }
 }
 
 void BonusFeat(object oPC,object oSkin)

@@ -28,5 +28,5 @@
 24 Intimidate     8756     8786        isk_X2Inti     1         CHA        0                 1                ****     ****  SKILL_INTIMIDATE       0            
 25 CraftArmor     8787     8788        isk_X2CArm     1         INT        0                 1                ****     ****  SKILL_CRAFT_ARMOR      0            
 26 CraftWeapon    8789     8790        isk_X2CWeap    1         INT        0                 1                ****     ****  SKILL_CRAFT_WEAPON     0            
-27 IaijutsuFocus  16826112 16826113    is_iaijutsu    0         CHA        1                 1                ****     ****  SKILL_IAIJUTSU_FOCUS   0            
+27 IaijutsuFocus  16826112 16826113    is_iaijutsu    0         CHA        0                 1                ****     ****  SKILL_IAIJUTSU_FOCUS   0            
 28 Jump           16826011 16826012    is_jump        1         STR        1                 1                ****     ****  SKILL_JUMP             0            

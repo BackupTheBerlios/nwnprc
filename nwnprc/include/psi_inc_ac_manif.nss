@@ -35,7 +35,7 @@ struct ac_forms{
 /* Function prototypes                          */
 //////////////////////////////////////////////////
 
-void DoAstralConstructCreation(object oManifester, location locTarget, int nACLevel,
+void DoAstralConstructCreation(object oManifester, location locTarget, int nMetaPsi, int nACLevel,
                                int nOptionFlags, int nResElemFlags, int nETchElemFlags, int nEBltElemFlags);
 void DoDespawn(object oConstruct);
 
@@ -54,7 +54,7 @@ int GetHighestCraftSkillValue(object oCreature);
 // Summons the specified Astral Construct at the given location
 // Handling of the flags (other than the Buff series) is done
 // in the creature's OnSpawn eventscript
-void DoAstralConstructCreation(object oManifester, location locTarget, int nACLevel,
+void DoAstralConstructCreation(object oManifester, location locTarget, int nMetaPsi, int nACLevel,
                                int nOptionFlags, int nResElemFlags, int nETchElemFlags, int nEBltElemFlags)
 {
 	// We need to make sure that we can add the new construct as henchman
@@ -70,7 +70,7 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nACLe
 	
 	// Set the timer on it. 1 round / level. Metapsionic Extend can be applied.
 	float fDur = 6.0 * GetManifesterLevel(oManifester);
-	      fDur = GetLocalInt(oManifester, "PsiMetaExtend") ? fDur * 2 : fDur;
+	      fDur = nMetaPsi == 2 && GetLocalInt(oManifester, "PsiMetaExtend") ? fDur * 2 : fDur;
 	
 	DelayCommand(fDur, DoDespawn(oConstruct));
 	

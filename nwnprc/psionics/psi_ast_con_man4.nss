@@ -44,7 +44,8 @@ if (!PsiPrePowerCastCode()){ return; }
 	// scheme, we need to temporarily change the value of augmentation
 	int nTempAugment = GetLocalInt(oManifester, "Augment");
 	SetLocalInt(oManifester, "Augment", nACLevel - 1);
-	if(!GetCanManifest(oManifester, 2, OBJECT_INVALID, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE))
+	int nMetaPsi = GetCanManifest(oManifester, 2, OBJECT_INVALID, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE);
+	if(!nMetaPsi)
 		return;
 	SetLocalInt(oManifester, "Augment", nTempAugment);
 	
@@ -54,7 +55,7 @@ if (!PsiPrePowerCastCode()){ return; }
 	int nETchElemFlags = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_ENERGY_TOUCH_FLAGS + sSlot);
 	int nEBltElemFlags = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_ENERGY_BOLT_FLAGS  + sSlot);
 	
-	DoAstralConstructCreation(oManifester, GetSpellTargetLocation(), nACLevel,
+	DoAstralConstructCreation(oManifester, GetSpellTargetLocation(), nMetaPsi, nACLevel,
 	                          nOptionFlags, nResElemFlags, nETchElemFlags, nEBltElemFlags);
 	
 //SPSetSchool();

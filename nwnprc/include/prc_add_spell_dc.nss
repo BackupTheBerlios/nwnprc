@@ -173,7 +173,9 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
 	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
 	int nDC;
 
-	if (iRedWizard > 0)
+	if (iRedWizard > 0 || GetHasFeat(FEAT_RW_TF_ABJ, oCaster) || GetHasFeat(FEAT_RW_TF_CON, oCaster) || GetHasFeat(FEAT_RW_TF_DIV, oCaster) ||
+	GetHasFeat(FEAT_RW_TF_ENC, oCaster) || GetHasFeat(FEAT_RW_TF_EVO, oCaster) || GetHasFeat(FEAT_RW_TF_ILL, oCaster) ||
+	GetHasFeat(FEAT_RW_TF_NEC, oCaster) || GetHasFeat(FEAT_RW_TF_TRS, oCaster))
 	{
 		int nSpell = GetSpellId();
 		string sSpellSchool = lookup_spell_school(nSpell);

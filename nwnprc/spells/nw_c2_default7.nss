@@ -43,5 +43,6 @@ void main()
     craft_drop_items(oKiller);
 
     ExecuteScript("prc_npc_death", OBJECT_SELF);
+    ExecuteScript("prc_pwondeath", OBJECT_SELF);
 
 }

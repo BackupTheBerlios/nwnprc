@@ -78,11 +78,12 @@ const int FEAT_LEAP	    = 4772;
 const int FEAT_DIVE	    = 4773;
 const int FEAT_KEEN_SIGHT   = 4774;
 
-const int FEAT_ALTFORM      = 4754;
-const int FEAT_DISGUISE     = 4755;
-const int FEAT_SPELL_CLUTCH = 4756;
+const int FEAT_ALTFORM                  = 4754;
+const int FEAT_DISGUISE                 = 4755;
+const int FEAT_POWERFUL_CHARGE          = 4756;
+const int FEAT_AZER_HEAT		= 4790;
 
-const int FEAT_LARGE        = 4760;
+const int FEAT_LARGE                    = 4760;
 const int FEAT_DISGUISE_MEDIUM		= 4769;
 const int FEAT_DISGUISE_SMALL		= 4770;
 const int FEAT_DISGUISE_OFF		= 4771;

@@ -38,14 +38,13 @@ void main()
         }
     }
 
-//SendMessageToPC(oPC,"ShifterLevel = " + IntToString(nShifterLevel));
-//SendMessageToPC(oPC,"ShifterDefaultListLevel = " + IntToString(GetLocalInt(oPC,"ShifterDefaultListLevel")));
     // Make sure we are not doing this io intesive loop more than once per level
     if (nShifterLevel <= GetLocalInt(oPC,"ShifterDefaultListLevel"))
 	return;
 
     string sShifterFile = "shifterlist";
     string sCreatureResRef = "";
+    string sCreatureName = "";
     string sShifterLevel = "0";
     int i = 0;
     int nShiftLevelFile = 0;
@@ -53,14 +52,13 @@ void main()
     while(sShifterLevel != "")
     {
         sShifterLevel = Get2DAString(sShifterFile,"SLEVEL",i);
-//SendMessageToPC(oPC,"sShifterLevel = " + sShifterLevel);
         nShiftLevelFile = StringToInt(sShifterLevel);
         if ((nShiftLevelFile <= nShifterLevel) && (sShifterLevel != ""))
         {
 		// The creature is a standard that we apply to the shifters spark of life list
 		sCreatureResRef = Get2DAString(sShifterFile,"CResRef",i);
-		RecognizeCreature( oPC, "", sCreatureResRef);
-//SendMessageToPC(oPC,"Creature Added = " + sCreatureResRef);
+	        sCreatureName = Get2DAString(sShifterFile,"CreatureName",i);
+	        RecognizeCreature( oPC, sCreatureResRef, sCreatureName);
         }
 	i++;
     }

@@ -25,10 +25,10 @@
 21         TwoWeap                                         41          0      -1               0        
 22         Ambidex                                         1           0      -1               0        
 23    BlindFight					   408         3       2               0
-24    FEAT_PRESTIGE_RIDDLE_OF_AWARENESS                    2002        3       1               1
-25    FEAT_PRESTIGE_HAPPO_ZANSHIN                          2003        3       3               0
-26    FEAT_PRESTIGE_RIDDLE_OF_INTERACTION                  2004        3       4               1
-27    FEAT_PRESTIGE_BLINDSIGHT                             2005        3       6               0
-28    FEAT_PRESTIGE_HITSU_DO                               2006        3       6               1
-29    FEAT_PRESTIGE_WALK_THROUGH_THE_MOUNTAINS             2007        3       9               1
-30    FEAT_PRESTIGE_RIDDLE_OF_INVULNERABILITY              2008        3       10              0
+24    FEAT_PRESTIGE_RIDDLE_OF_AWARENESS                    4020        3       1               1
+25    FEAT_PRESTIGE_HAPPO_ZANSHIN                          4021        3       3               0
+26    FEAT_PRESTIGE_RIDDLE_OF_INTERACTION                  4022        3       4               1
+27    FEAT_PRESTIGE_BLINDSIGHT                             4023        3       6               0
+28    FEAT_PRESTIGE_HITSU_DO                               4024        3       6               1
+29    FEAT_PRESTIGE_WALK_THROUGH_THE_MOUNTAINS             4025        3       9               1
+30    FEAT_PRESTIGE_RIDDLE_OF_INVULNERABILITY              4026        3       10              0

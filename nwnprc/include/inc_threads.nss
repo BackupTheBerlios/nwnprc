@@ -1,7 +1,36 @@
-//::///////////////////////////////////////////////
-//:: Thread generation include
+//:://////////////////////////////////////////////
+//:: Thread include
 //:: inc_threads
-//::///////////////////////////////////////////////
+//:://////////////////////////////////////////////
+/*
+    A simple set of functions for creating,
+    controlling and destroying threads that
+    repeatedly run a given script.
+    A thread is implemented as a pseudo-hb that
+    executes a given script on each of it's
+    beats.
+    
+    Threads may be in one of 3 states:
+     THREAD_STATE_DEAD:
+      Equivalent to the thread not existing at
+      all.
+     
+     THREAD_STATE_RUNNING:
+      The thread is alive, and will execute it's
+      script on each of the underlying pseudo-hb's
+      beats.
+     
+     THREAD_STATE_SLEEPING:
+      The thread is alive, but will not execute
+      it's script on the pseudo-hb's beats.
+    
+    
+    The thread's script will be ExecuteScripted on
+    the object that the thread is running on. This
+    is the same object that also stores the
+    thread's state (all of 3 local variables).
+
+*/
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan
 //:: Created On: 14.03.2005
@@ -12,27 +41,116 @@
 /* Constant declarations                        */
 //////////////////////////////////////////////////
 
+// Thread state constants
+
+const int THREAD_STATE_DEAD     = 0;
+const int THREAD_STATE_RUNNING  = 1;
+const int THREAD_STATE_SLEEPING = 2;
+
+
+// Internal constants. Nothing to see here. <.<  >.>
+
 const string PREFIX          = "prc_thread_";
 const string SUFFIX_SCRIPT   = "_script";
 const string SUFFIX_INTERVAL = "_interval";
 const string CUR_THREAD      = "current_thread";
+
+
 //////////////////////////////////////////////////
 /* Function prototypes                          */
 //////////////////////////////////////////////////
 
-// Return success or failure
-int SpawnNewThread(string sName, string sScript, float fFiringInterval = 6.0f, object oToRunOn = OBJECT_INVALID);
+// Creates a new thread
+// ====================
+// sName                Name of thread to create. Must be non-empty
+// sScript              Name of script to run. Must be non-empty
+// fExecutionInterval   Amount of time that passes between executions of sScript.
+//                      Only values > 0.0 allowed
+// oToRunOn             Object that stores the thread state values, and that
+//                      sScript will be ExecuteScripted on.
+//                      If this is OBJECT_INVALID, the module will be used to hold
+//                      the thread
+//
+// Returns TRUE if the thread creation was successfull. Possible reasons of failure:
+// - One or more parameters were invalid
+// - A thread by the given name was already running on oToRunOn
+int SpawnNewThread(string sName, string sScript, float fExecutionInterval = 6.0f, object oToRunOn = OBJECT_INVALID);
 
-int GetThreadExists(string sName, object oRunningOn = OBJECT_INVALID);
 
+// Inspects the state of the given thread
+// ======================================
+// sName                Name of thread to inspect. Must be non-empty
+// oRunningOn           Object that the thread is running on. If this
+//                      is OBJECT_INVALID, the module will be used.
+//
+// Returns one of the THREAD_STATE_* constants. Inspecting a non-
+// existent thread, or thread that was running on an object that
+// was destroyed will return THREAD_STATE_DEAD
+int GetThreadState(string sName, object oRunningOn = OBJECT_INVALID);
+
+
+string GetThreadScript(string sName, object oRunningOn = OBJECT_INVALID);
+float GetThreadExecutionInterval(string sName, object oRunningOn = OBJECT_INVALID);
+
+string GetCurrentThread();
+object GetCurrentThreadObject();
+
+// Stops further execution of the given thread and removes it's data
+// from the object it was running on.
+// ======================================
+// sName                Name of thread to terminate. Must be non-empty
+// oRunningOn           Object that the thread is running on. If this
+//                      is OBJECT_INVALID, the module will be used.
 void TerminateThread(string sName, object oRunningOn = OBJECT_INVALID);
 
+
+// Stops further execution of the thread currently being executed.
+// A convenience wrapper for TerminateThread to be called from a 
+// threadscript.
 void TerminateCurrentThread();
 
-// Return success or failure
-int ChangeFiringInterval(string sName, float fNewInterval, object oRunningOn = OBJECT_INVALID);
+
+// Sets the stae of the given thread to sleeping
+// =============================================
+// sName                Name of thread to set sleeping. Must be non-empty
+// oRunningOn           Object that the thread is running on. If this
+//                      is OBJECT_INVALID, the module will be used.
+//
+// Returns whether the operation was successfull. Failure indicates
+// that the thread was dead.
+int SleepThread(string sName, object oRunningOn = OBJECT_INVALID);
 
 
+// Awakens the given thread
+// ========================
+// sName                Name of thread to set back running. Must be non-empty
+// oRunningOn           Object that the thread is running on. If this
+//                      is OBJECT_INVALID, the module will be used.
+//
+// Returns whether the operation was successfull. Failure indicates
+// that the thread was dead.
+int AwakenThread(string sName, object oRunningOn = OBJECT_INVALID);
+
+
+// Changes the execution interval of the given thread
+// =================================================
+// sName                Name of thread to set back running. Must be non-empty
+// oRunningOn           Object that the thread is running on. If this
+//                      is OBJECT_INVALID, the module will be used.
+// fNewInterval         The amount of time between executions of the
+//                      threadscript that will used from next execution
+//                      onwards.
+//
+// Returns whether the operation was successfull. Failure indicates
+// that the thread was dead.
+int ChangeExecutionInterval(string sName, float fNewInterval, object oRunningOn = OBJECT_INVALID);
+
+
+// Internal function. This is the pseudo-hb function that calls itself.
+// sName    name of the thread to run. Used to build local variable
+//          names
+// oRunningOn   object that stores the variables, and the one that will
+//              be passed to ExecuteScript
 void RunThread(string sName, object oRunningOn);
 
 
@@ -41,104 +159,147 @@ void RunThread(string sName, object oRunningOn);
 //////////////////////////////////////////////////
 
 
-int SpawnNewThread(string sName, string sScript, float fFiringInterval = 6.0f, object oToRunOn = OBJECT_INVALID){
-	if(oToRunOn == OBJECT_INVALID)
-		oToRunOn = GetModule();
-	
-	// Check paramaeters for correctness
-	if(sName   == ""           ||
-	   sScript == ""           ||
-	   fFiringInterval <= 0.0f ||
-	  !GetIsObjectValid(oToRunOn))
-		return FALSE;
-	
-	// Make sure there is no thread by this name already running
-	if(GetLocalInt(oToRunOn, PREFIX + sName))
-		return FALSE;
-	
-	// Set the thread variables
-	SetLocalInt(oToRunOn, PREFIX + sName, TRUE);
-	SetLocalString(oToRunOn, PREFIX + sName + SUFFIX_SCRIPT, sScript);
-	SetLocalFloat(oToRunOn, PREFIX + sName + SUFFIX_INTERVAL, fFiringInterval);
-	
-	// Start thread execution
-	DelayCommand(fFiringInterval, RunThread(sName, oToRunOn));
-	
-	// All done successfully
-	return TRUE;
+int SpawnNewThread(string sName, string sScript, float fExecutionInterval = 6.0f, object oToRunOn = OBJECT_INVALID){
+    if(oToRunOn == OBJECT_INVALID)
+    	oToRunOn = GetModule();
+
+    // Check paramaeters for correctness
+    if(sName   == ""              ||
+       sScript == ""              ||
+       fExecutionInterval <= 0.0f ||
+       !GetIsObjectValid(oToRunOn))
+        return FALSE;
+
+    // Make sure there is no thread by this name already running
+    if(GetLocalInt(oToRunOn, PREFIX + sName))
+        return FALSE;
+
+    // Set the thread variables
+    SetLocalInt(oToRunOn,    PREFIX + sName, THREAD_STATE_RUNNING);
+    SetLocalString(oToRunOn, PREFIX + sName + SUFFIX_SCRIPT, sScript);
+    SetLocalFloat(oToRunOn,  PREFIX + sName + SUFFIX_INTERVAL, fExecutionInterval);
+
+    // Start thread execution
+    DelayCommand(fExecutionInterval, RunThread(sName, oToRunOn));
+
+    // All done successfully
+    return TRUE;
 }
 
 
-int GetThreadExists(string sName, object oRunningOn = OBJECT_INVALID){
-	if(oRunningOn == OBJECT_INVALID)
-		oRunningOn = GetModule();
-	
-	// Check paramaeters for correctness
-	if(sName   == ""           ||
-	  !GetIsObjectValid(oRunningOn))
-		return FALSE;
-	
-	// Return the local determining if the thread exists
-	return GetLocalInt(oRunningOn, PREFIX + sName);
+int GetThreadState(string sName, object oRunningOn = OBJECT_INVALID){
+    if(oRunningOn == OBJECT_INVALID)
+        oRunningOn = GetModule();
+
+    // Check paramaeters for correctness
+    if(sName == "" ||
+       !GetIsObjectValid(oRunningOn))
+        return FALSE;
+
+    // Return the local determining if the thread exists
+    return GetLocalInt(oRunningOn, PREFIX + sName);
 }
 
 
 void TerminateThread(string sName, object oRunningOn = OBJECT_INVALID){
-	if(oRunningOn == OBJECT_INVALID)
-		oRunningOn = GetModule();
-	
-	// Check paramaeters for correctness
-	if(sName   == ""           ||
-	  !GetIsObjectValid(oRunningOn))
-		return;
-	
-	// Remove the thread variables
-	DeleteLocalInt(oToRunOn, PREFIX + sName);
-	DeleteLocalString(oToRunOn, PREFIX + sName + SUFFIX_SCRIPT);
-	DeleteLocalFloat(oToRunOn, PREFIX + sName + SUFFIX_INTERVAL);
+    if(oRunningOn == OBJECT_INVALID)
+        oRunningOn = GetModule();
+
+    // Check paramaeters for correctness. Just an optimization here, since
+    // if either of these were not valid, nothing would happen.
+    if(sName == "" ||
+       !GetIsObjectValid(oRunningOn))
+        return;
+
+    // Remove the thread variables
+    DeleteLocalInt(oRunningOn,    PREFIX + sName);
+    DeleteLocalString(oRunningOn, PREFIX + sName + SUFFIX_SCRIPT);
+    DeleteLocalFloat(oRunningOn,  PREFIX + sName + SUFFIX_INTERVAL);
 }
 
 
 void TerminateCurrentThread(){
-	TerminateThread(GetLocalString(GetModule(), PREFIX + CUR_THREAD),
-	                GetLocalObject(GetModule(), PREFIX + CUR_THREAD)
-		       );
+    TerminateThread(GetLocalString(GetModule(), PREFIX + CUR_THREAD),
+                    GetLocalObject(GetModule(), PREFIX + CUR_THREAD)
+    );
 }
 
 
-int ChangeFiringInterval(string sName, float fNewInterval, object oRunningOn = OBJECT_INVALID){
-	if(oRunningOn == OBJECT_INVALID)
-		oRunningOn = GetModule();
-	
-	// Check paramaeters for correctness
-	if(!GetThreadExists(sName, oRunningOn) ||
-	   fNewInterval <= 0.0f ||)
-		return FALSE;
-	
-	
-	SetLocalFloat(oRunningOn, PREFIX + sName + SUFFIX_INTERVAL, fNewInterval);
-	return true;
+int SleepThread(string sName, object oRunningOn = OBJECT_INVALID){
+    if(oRunningOn == OBJECT_INVALID)
+        oRunningOn = GetModule();
+
+    // Check paramaeters for correctness
+    if(sName == "" ||
+       !GetIsObjectValid(oRunningOn))
+        return FALSE;
+    
+    // Change thread state
+    SetLocalInt(oRunningOn, PREFIX + sName, THREAD_STATE_SLEEPING);
+    
+    return TRUE;
+}
+
+
+int AwakenThread(string sName, object oRunningOn = OBJECT_INVALID){
+    if(oRunningOn == OBJECT_INVALID)
+        oRunningOn = GetModule();
+
+    // Check paramaeters for correctness
+    if(sName == "" ||
+       !GetIsObjectValid(oRunningOn))
+        return FALSE;
+    
+    // Change thread state
+    SetLocalInt(oRunningOn, PREFIX + sName, THREAD_STATE_RUNNING);
+    
+    return TRUE;
+}
+
+
+int ChangeExecutionInterval(string sName, float fNewInterval, object oRunningOn = OBJECT_INVALID){
+    if(oRunningOn == OBJECT_INVALID)
+        oRunningOn = GetModule();
+
+    // Check paramaeters for correctness
+    if(!GetThreadState(sName, oRunningOn) ||
+       fNewInterval <= 0.0f)
+        return FALSE;
+
+
+    SetLocalFloat(oRunningOn, PREFIX + sName + SUFFIX_INTERVAL, fNewInterval);
+    return TRUE;
 }
 
 
 void RunThread(string sName, object oRunningOn){
-	// Abort if the object we're running on has ceased to exist
-	if(!GetIsObjectValid(oRunningOn))
-		return;
-	
-	// Mark this thread as running
-	SetLocalString(GetModule(), PREFIX + CUR_THREAD, sName);
-	SetLocalObject(GetModule(), PREFIX + CUR_THREAD, oRunningOn);
-	
-	// Execute the threadscript
-	string sScript = GetLocalString(oToRunOn, PREFIX + sName + SUFFIX_SCRIPT);
-	ExecuteScript(sScript, oRunningOn);
-	
-	// Schedule next execution, unless we've been terminated
-	if(GetThreadExists(sName, oRunningOn)){
-		DelayCommand(GetLocalFloat(oToRunOn, PREFIX + sName + SUFFIX_INTERVAL), RunThread(sName, oRunningOn));
-	
-	// Clean up the module variables
-	DeleteLocalString(GetModule(), PREFIX + CUR_THREAD);
-	DeleteLocalObject(GetModule(), PREFIX + CUR_THREAD);
+    // Abort if the object we're running on has ceased to exist
+    // or if the thread has been terminated
+    int nThreadState = GetThreadState(sName, oRunningOn);
+    if(nThreadState == THREAD_STATE_DEAD)
+        return;
+
+    // Mark this thread as running
+    SetLocalString(GetModule(), PREFIX + CUR_THREAD, sName);
+    SetLocalObject(GetModule(), PREFIX + CUR_THREAD, oRunningOn);
+
+    // Execute the threadscript if the thread is running atm
+    if(nThreadState == THREAD_STATE_RUNNING){
+        string sScript = GetLocalString(oRunningOn, PREFIX + sName + SUFFIX_SCRIPT);
+        ExecuteScript(sScript, oRunningOn);
+    }
+
+    // Schedule next execution, unless we've been terminated
+    if(GetThreadState(sName, oRunningOn) != THREAD_STATE_DEAD){
+        DelayCommand(GetLocalFloat(oRunningOn, PREFIX + sName + SUFFIX_INTERVAL), RunThread(sName, oRunningOn));
+
+        // Clean up the module variables
+        DeleteLocalString(GetModule(), PREFIX + CUR_THREAD);
+        DeleteLocalObject(GetModule(), PREFIX + CUR_THREAD);
+    }
 }
+
+
+/* Test main
+void main(){}
+*/

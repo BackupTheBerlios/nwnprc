@@ -77,9 +77,6 @@ void spellsGenericAreaOfEffect(
         int nSavingThrowSubType=SAVING_THROW_TYPE_ALL
         );
 
-
-
-
 // * how much should special archer arrows do for damage
 int ArcaneArcherDamageDoneByBow(int bCrit = FALSE, object oUser = OBJECT_SELF);
 
@@ -110,7 +107,7 @@ void DoCaltropEffect(object oTarget);
 void DoTrapSpike(int nDamage);
 
 //* fires a storm of nCap missiles at targets in area
-void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE);
+void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE, int nReflexSave = FALSE);
 
 // * Applies ability score damage
 void DoDirgeEffect(object oTarget,int nPenetr);
@@ -162,12 +159,12 @@ void DoTrapSpike(int nDamage)
 {
     //Declare major variables
     object oTarget = GetEnteringObject();
-    effect eVis = EffectVisualEffect(253);
 
     int nRealDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, 15, SAVING_THROW_TYPE_TRAP, OBJECT_SELF);
     if (nDamage > 0)
     {
         effect eDam = EffectDamage(nRealDamage, DAMAGE_TYPE_PIERCING);
+        effect eVis = EffectVisualEffect(253);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
     }
@@ -427,21 +424,8 @@ int GetSizeModifier(object oCreature)
 
 void DoDirgeEffect(object oTarget,int nPenetr)
 {    //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+//    int nMetaMagic = GetMetaMagicFeat();
 
-    int nGetLastPenalty = GetLocalInt(oTarget, "X0_L_LASTPENALTY");
-
-    // * increase penalty by 2
-    nGetLastPenalty = nGetLastPenalty + 2;
-
-
-
-    effect eStr = EffectAbilityDecrease(ABILITY_STRENGTH, nGetLastPenalty);
-    effect eDex = EffectAbilityDecrease(ABILITY_DEXTERITY, nGetLastPenalty);
-    //change from sonic effect to bard song...
-    effect eVis =    EffectVisualEffect(VFX_FNF_SOUND_BURST);
-
-    effect eLink = EffectLinkEffects(eDex, eStr);
    // SpawnScriptDebugger();
 
     if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, GetAreaOfEffectCreator()))
@@ -455,6 +439,16 @@ void DoDirgeEffect(object oTarget,int nPenetr)
             //Make a Fortitude Save to avoid the effects of the movement hit.
             if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_ALL, GetAreaOfEffectCreator()))
             {
+                int nGetLastPenalty = GetLocalInt(oTarget, "X0_L_LASTPENALTY");
+                // * increase penalty by 2
+                nGetLastPenalty = nGetLastPenalty + 2;
+
+                effect eStr = EffectAbilityDecrease(ABILITY_STRENGTH, nGetLastPenalty);
+                effect eDex = EffectAbilityDecrease(ABILITY_DEXTERITY, nGetLastPenalty);
+                //change from sonic effect to bard song...
+                effect eVis =    EffectVisualEffect(VFX_FNF_SOUND_BURST);
+                effect eLink = EffectLinkEffects(eDex, eStr);
+
                 //Apply damage and visuals
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
@@ -513,18 +507,7 @@ void DoCamoflage(object oTarget)
 //:://////////////////////////////////////////////
 
 void DoSpikeGrowthEffect(object oTarget,int nPenetr)
-{    //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
-
-    effect eSpeed = EffectMovementSpeedDecrease(30);
-
-    int nDam = MaximizeOrEmpower(4, 1, nMetaMagic);
-
-    effect eDam = EffectDamage(nDam, DAMAGE_TYPE_PIERCING);
-
-    effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
-    effect eLink = eDam;
-
+{
     float fDelay = GetRandomDelay(1.0, 2.2);
     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
     {
@@ -533,9 +516,15 @@ void DoSpikeGrowthEffect(object oTarget,int nPenetr)
         //Spell resistance check
         if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
         {
+            int nMetaMagic = GetMetaMagicFeat();
+            int nDam = MaximizeOrEmpower(4, 1, nMetaMagic);
+
+            effect eDam = EffectDamage(nDam, DAMAGE_TYPE_PIERCING);
+            effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
+            //effect eLink = eDam;
             //Apply damage and visuals
             DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-            DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget));
+            DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam/*eLink*/, oTarget));
 
            // * only apply a slow effect from this spell once
            if (GetHasSpellEffect(453, oTarget) == FALSE)
@@ -543,6 +532,7 @@ void DoSpikeGrowthEffect(object oTarget,int nPenetr)
                 //Make a Reflex Save to avoid the effects of the movement hit.
                 if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_ALL, GetAreaOfEffectCreator(), fDelay))
                 {
+                    effect eSpeed = EffectMovementSpeedDecrease(30);
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSpeed, oTarget, HoursToSeconds(24));
                 }
            }
@@ -570,12 +560,8 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
 {
     //Declare major variables
     object oTarget = GetSpellTargetObject();
-    int nHeal;
     int nMetaMagic = GetMetaMagicFeat();
     int nTouch = TouchAttackMelee(oTarget);
-    effect eVis = EffectVisualEffect(vfx_impactHurt);
-    effect eVis2 = EffectVisualEffect(vfx_impactHeal);
-    effect eHeal, eDam;
 
     int CasterLvl;
     if ( ModCasterlevel == 0)
@@ -598,6 +584,7 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
     {
         nDamage = nMaximized;
     }
+    else
     if (nMetaMagic == METAMAGIC_EMPOWER)
     {
         nDamage = nDamage + (nDamage / 2);
@@ -607,10 +594,11 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
     //Check that the target is undead
     if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
     {
+        effect eVis2 = EffectVisualEffect(vfx_impactHeal);
         //Figure out the amount of damage to heal
-        nHeal = nDamage;
+        //nHeal = nDamage;
         //Set the heal effect
-        eHeal = EffectHeal(nHeal + nExtraDamage);
+        effect eHeal = EffectHeal(nDamage + nExtraDamage);
         //Apply heal effect and VFX impact
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
@@ -632,7 +620,8 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
                 {
                     nDamageTotal = nDamageTotal / 2;
                 }
-                eDam = EffectDamage(nDamageTotal,DAMAGE_TYPE_NEGATIVE);
+                effect eVis = EffectVisualEffect(vfx_impactHurt);
+                effect eDam = EffectDamage(nDamageTotal,DAMAGE_TYPE_NEGATIVE);
                 //Apply the VFX impact and effects
                 DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
@@ -659,11 +648,11 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
 //:://////////////////////////////////////////////
 //:: Modified March 14 2003: Removed the option to hurt chests/doors
 //::  was potentially causing bugs when no creature targets available.
-void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE)
+void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE, int nReflexSave = FALSE)
 {
     object oTarget = OBJECT_INVALID;
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nDamage = 0;
+//    int nDamage = 0;
     int nMetaMagic = GetMetaMagicFeat();
     int nCnt = 1;
     effect eMissile = EffectVisualEffect(nMIRV);
@@ -769,6 +758,13 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
                         {
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }
+                        // Jan. 29, 2004 - Jonathan Epp
+                        // Reflex save was not being calculated for Firebrand
+                        if(nReflexSave)
+                        {
+                            nDam = GetReflexAdjustedDamage(nDam, oTarget, GetSpellSaveDC(), SAVING_THROW_TYPE_FIRE);
+                        }
+
                         fTime = fDelay;
                         fDelay2 += 0.1;
                         fTime += fDelay2;
@@ -873,23 +869,22 @@ void DoMagicFang(int nPower, int nDamagePower,int nCasterLevel)
 void DoCaltropEffect(object oTarget)
 {
 
-    int nDam = 1;
-
-    effect eDam = EffectDamage(nDam, DAMAGE_TYPE_PIERCING);
+    //int nDam = 1;
 
  //   effect eVis = EffectVisualEffect(VFX_IMP_SPIKE_TRAP);
-    effect eLink = eDam;
+    //effect eLink = eDam;
 
-    float fDelay = GetRandomDelay(1.0, 2.2);
     if(spellsIsTarget(oTarget,SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator())
      && spellsIsFlying(oTarget) == FALSE)
     {
         //Fire cast spell at event for the target
         SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), 471));
         {
+            effect eDam = EffectDamage(1, DAMAGE_TYPE_PIERCING);
+            float fDelay = GetRandomDelay(1.0, 2.2);
             //Apply damage and visuals
             //DelayCommand(fDelay, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget)));
-            DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget));
+            DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
             int nDamageDone = GetLocalInt(OBJECT_SELF, "NW_L_TOTAL_DAMAGE");
             nDamageDone++;
 
@@ -1084,8 +1079,6 @@ void DoPetrification(int nPower, object oSource, object oTarget, int nSpellID, i
     }
 
 }
-
-
 
 // * generic area of effect constructor
 void spellsGenericAreaOfEffect(

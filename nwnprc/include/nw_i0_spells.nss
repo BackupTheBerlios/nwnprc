@@ -232,11 +232,6 @@ void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1)
     }
     effect eSR = EffectSpellResistanceDecrease(nSR);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    effect eLink = EffectLinkEffects(eDur, eSR);
-    //--------------------------------------------------------------------------
-    // This can not be dispelled
-    //--------------------------------------------------------------------------
-    eLink = ExtraordinaryEffect(eLink);
 
     effect eVis = EffectVisualEffect(VFX_IMP_BREACH);
     int nCnt, nIdx;
@@ -250,6 +245,11 @@ void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1)
             nIdx = nIdx + RemoveProtections(GetSpellBreachProtection(nCnt), oTarget, nCnt);
             nCnt++;
         }
+        effect eLink = EffectLinkEffects(eDur, eSR);
+        //--------------------------------------------------------------------------
+        // This can not be dispelled
+        //--------------------------------------------------------------------------
+        eLink = ExtraordinaryEffect(eLink);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(10),TRUE);
     }
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
@@ -272,68 +272,75 @@ void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1)
 //:://////////////////////////////////////////////
 int GetDragonFearDC(int nAge)
 {
+    //hmm... not sure what's up with all these nCount variables, they're not
+    //actually used... so I'm gonna comment them out
+
     int nDC = 13;
-    int nCount = 1;
+//    int nCount = 1;
     //Determine the duration and save DC
+    //wyrmling meant no change from default, so we don't need it
+/*
     if (nAge <= 6) //Wyrmling
     {
         nDC = 13;
         nCount = 1;
     }
-    else if (nAge >= 7 && nAge <= 9) //Very Young
+    else
+*/
+    if (nAge >= 7 && nAge <= 9) //Very Young
     {
         nDC = 15;
-        nCount = 2;
+//        nCount = 2;
     }
-    else if (nAge >= 10 && nAge <= 12) //Young
+    else if (/*nAge >= 10 &&*/ nAge <= 12) //Young
     {
         nDC = 17;
-        nCount = 3;
+//        nCount = 3;
     }
-    else if (nAge >= 13 && nAge <= 15) //Juvenile
+    else if (/*nAge >= 13 &&*/ nAge <= 15) //Juvenile
     {
         nDC = 19;
-        nCount = 4;
+//        nCount = 4;
     }
-    else if (nAge >= 16 && nAge <= 18) //Young Adult
+    else if (/*nAge >= 16 &&*/ nAge <= 18) //Young Adult
     {
         nDC = 21;
-        nCount = 5;
+//        nCount = 5;
     }
-    else if (nAge >= 19 && nAge <= 21) //Adult
+    else if (/*nAge >= 19 &&*/ nAge <= 21) //Adult
     {
         nDC = 24;
-        nCount = 6;
+//        nCount = 6;
     }
-    else if (nAge >= 22 && nAge <= 24) //Mature Adult
+    else if (/*nAge >= 22 &&*/ nAge <= 24) //Mature Adult
     {
         nDC = 27;
-        nCount = 7;
+//        nCount = 7;
     }
-    else if (nAge >= 25 && nAge <= 27) //Old
+    else if (/*nAge >= 25 &&*/ nAge <= 27) //Old
     {
         nDC = 28;
-        nCount = 8;
+//        nCount = 8;
     }
-    else if (nAge >= 28 && nAge <= 30) //Very Old
+    else if (/*nAge >= 28 &&*/ nAge <= 30) //Very Old
     {
         nDC = 30;
-        nCount = 9;
+//        nCount = 9;
     }
-    else if (nAge >= 31 && nAge <= 33) //Ancient
+    else if (/*nAge >= 31 &&*/ nAge <= 33) //Ancient
     {
         nDC = 32;
-        nCount = 10;
+//        nCount = 10;
     }
-    else if (nAge >= 34 && nAge <= 37) //Wyrm
+    else if (/*nAge >= 34 &&*/ nAge <= 37) //Wyrm
     {
         nDC = 34;
-        nCount = 11;
+//        nCount = 11;
     }
     else if (nAge > 37) //Great Wyrm
     {
         nDC = 37;
-        nCount = 12;
+//        nCount = 12;
     }
 
     return nDC;
@@ -510,14 +517,16 @@ int MySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
             DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
         }
     }
-    if(bValid == 2)
+    //redundant comparison on bValid, let's move the eVis line down below
+/*    if(bValid == 2)
     {
         eVis = EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE);
-    }
+    }*/
     if(bValid == 1 || bValid == 2)
     {
         if(bValid == 2)
         {
+            eVis = EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE);
             /*
             If the spell is save immune then the link must be applied in order to get the true immunity
             to be resisted.  That is the reason for returing false and not true.  True blocks the

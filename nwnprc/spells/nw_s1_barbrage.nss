@@ -18,13 +18,13 @@
 
 #include "x2_i0_spells"
 #include "inc_addragebonus"
-
+#include "prc_class_const"
 void main()
 {
     if(!GetHasFeatEffect(FEAT_BARBARIAN_RAGE))
     {
         //Declare major variables
-        int nLevel = GetLevelByClass(CLASS_TYPE_BARBARIAN);
+        int nLevel = GetLevelByClass(CLASS_TYPE_BARBARIAN) + GetLevelByClass(CLASS_TYPE_RUNESCARRED) + GetLevelByClass(CLASS_TYPE_BATTLERAGER);
         int iStr, iCon, iAC;
         int nSave;
         

@@ -1574,3 +1574,23 @@ void RemoveOldSongEffects(object oSinger, int iSongID)
 
 
 ////////////////End Minstrel of the Edge//////////////////
+
+////////////////Begin Lolth Meat//////////////////
+
+void LolthMeat(object oPC)
+{
+
+SendMessageToPC(oPC, "You have killed an intelligent creature");
+
+if(GetHasFeat(FEAT_LOLTHS_MEAT, oPC))
+    {
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectAttackIncrease(1, ATTACK_BONUS_MISC), oPC, 24.0);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(1, DAMAGE_TYPE_DIVINE), oPC, 24.0);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSavingThrowIncrease(SAVING_THROW_ALL, 1, SAVING_THROW_TYPE_ALL), oPC, 24.0);
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_EVIL_HELP), oPC);
+    SendMessageToPC(oPC, "You have Lolth's Meat");
+    }
+
+}
+
+////////////////End Lolth Meat//////////////////

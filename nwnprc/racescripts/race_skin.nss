@@ -69,12 +69,18 @@ void main()
     else if(GetHasFeat(FEAT_NATARM_10))
         SetCompositeBonus(oSkin, "RacialNaturalArmor",10, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_NATURAL);
 
-    //immunity to drown and mass drown
+    //immunity to breathing-targetted spells
     if(GetHasFeat(FEAT_BREATHLESS))
     {
         itemproperty ipIP = ItemPropertySpellImmunitySpecific(SPELL_DROWN);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
         ipIP = ItemPropertySpellImmunitySpecific(SPELL_MASS_DROWN  );
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        ipIP = ItemPropertySpellImmunitySpecific(SPELL_CLOUDKILL  );
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        ipIP = ItemPropertySpellImmunitySpecific(SPELL_ACID_FOG  );
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        ipIP = ItemPropertySpellImmunitySpecific(SPELL_STINKING_CLOUD  );
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 

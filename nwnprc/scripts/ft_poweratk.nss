@@ -109,6 +109,11 @@ void main()
 
        string nMes = "*Power Attack "+IntToString(iHit)+" Activated*";
        FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
+       
+       if (GetHasFeat(FEAT_FAVORED_POWER_ATTACK, OBJECT_SELF))
+       {
+           ActionCastSpellAtObject(SPELL_UR_FAVORITE_ENEMY, OBJECT_SELF, METAMAGIC_ANY, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+       }
    }
    else
    {
@@ -116,7 +121,10 @@ void main()
 
       string nMes = "*Power Attack Mode Deactivated*";
       FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
+      
+      if (GetHasFeat(FEAT_FAVORED_POWER_ATTACK, OBJECT_SELF))
+      {
+          ActionCastSpellAtObject(SPELL_UR_FAVORITE_ENEMY, OBJECT_SELF, METAMAGIC_ANY, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+      }
    }
-
-
 }

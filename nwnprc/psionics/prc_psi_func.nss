@@ -14,10 +14,47 @@
 #include "lookup_2da_spell"
 
 
-int GetManifesterDC (object oCaster)
+int GetPowerLevel()
 {
 	int nSpell = GetSpellId();
-	int nDC = StringToInt(lookup_spell_innate(nSpell));
-	nDC = nDC + 10;
+	int nLevel = StringToInt(lookup_spell_innate(nSpell));
+	return nLevel;
+}
+
+
+int GetManifesterDC (object oCaster)
+{
+	int nDC = 10;
+	nDC = nDC + GetPowerLevel();
 	nDC = nDC + GetAbilityModifier(ABILITY_INTELLIGENCE, oCaster);
+
+	return nDC;
+}
+
+int GetPowerCost (object oCaster, int nAugCost)
+{
+    int nLevel = GetPowerLevel();
+    int nAugment = GetLocalInt(oCaster, "Augment");
+    int nPPCost;
+    
+    if (nLevel == 1) nPPCost = 1;
+    else if (nLevel == 2) nPPCost = 3;
+    else if (nLevel == 3) nPPCost = 5;
+    else if (nLevel == 4) nPPCost = 7;
+    else if (nLevel == 5) nPPCost = 9;
+    else if (nLevel == 6) nPPCost = 11;
+    else if (nLevel == 7) nPPCost = 13;
+    else if (nLevel == 8) nPPCost = 15;
+    else if (nLevel == 9) nPPCost = 17;
+    
+
+    if (nAugment == 0) nPPCost = nPPCost;    
+    else if (nAugment == 1) nPPCost = nPPCost + (nAugCost * 1);
+    else if (nAugment == 2) nPPCost = nPPCost + (nAugCost * 2);
+    else if (nAugment == 3) nPPCost = nPPCost + (nAugCost * 3);
+    else if (nAugment == 4) nPPCost = nPPCost + (nAugCost * 4);
+    else if (nAugment == 5) nPPCost = nPPCost + (nAugCost * 5);
+    
+    return nPPCost;
+
 }

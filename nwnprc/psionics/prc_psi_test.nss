@@ -1,23 +1,28 @@
+#include "prc_psi_func"
+#include "spinc_common"
+#include "NW_I0_SPELLS"
+
 void main()
 {
     object oCaster = OBJECT_SELF;
     int nPP = GetLocalInt(oCaster, "PowerPoints");
-    int nAugment = GetLocalInt(oCaster, "Augment");
-    int nPPCost = 1;
     int nAugCost = 1;
-
-    if (nAugment == 0) nPPCost = nPPCost;    
-    else if (nAugment == 1) nPPCost = nPPCost + (nAugCost * 1);
-    else if (nAugment == 2) nPPCost = nPPCost + (nAugCost * 2);
-    else if (nAugment == 3) nPPCost = nPPCost + (nAugCost * 3);
-    else if (nAugment == 4) nPPCost = nPPCost + (nAugCost * 4);
-    else if (nAugment == 5) nPPCost = nPPCost + (nAugCost * 5);
+    int nPPCost = GetPowerCost(oCaster, nAugCost);
 
     if (nPP >= nPPCost) 
     {
 	nPP = nPP - nPPCost;
         FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
         SetLocalInt(oCaster, "PowerPoints", nPP);
+	
+	int nDC = GetManifesterDC(oCaster);
+	object oTarget = GetSpellTargetObject();
+
+                if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NEGATIVE))
+                {
+			FloatingTextStringOnCreature("Target has made its save vs " + IntToString(nDC), oCaster, FALSE);
+                }
+	        FloatingTextStringOnCreature("Target has failed its save " + IntToString(nDC), oCaster, FALSE);
     }
     else
     {

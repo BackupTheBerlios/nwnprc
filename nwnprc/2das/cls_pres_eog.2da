@@ -7,3 +7,4 @@
 3          Exotic_Prof         FEAT      44               ****                       
 4          Focus_Orc_axe       FEAT      126              ****   
 5          ScriptVar           VAR       PRC_AllowEoG     0 
+6          ScriptVar           VAR       PRC_PrereqEOG    0

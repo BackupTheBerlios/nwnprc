@@ -248,15 +248,17 @@ int GetManifesterDC(object oCaster)
 int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int nEmp, int nExtend, int nMax, int nSplit, int nTwin, int nWiden)
 {
     //SpawnScriptDebugger();
-    
-    // Apply Hostile Mind damage, as necessary. This applies to everything, so it needs to go first.
-    HostileMind(oCaster, oTarget);
-    
+
     // If ignoring power points, autopass the check. This also means no metapsionics take effect
     // Used for racial psionic abilities
-    if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
+    if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE){
+         // Apply Hostile Mind damage, as necessary. It applis to all powers, regardless of PP use
+        HostileMind(oCaster, oTarget);
         return TRUE;
-    
+    }
+
+    /// NONE OF THE FOLLOWING STATEMENTS UP TO THE ABILITY CHECK SHOULD HAVE ANY SIDE-EFFECTS, SUCH AS DAMAGE ///
+    // Build the main variables
     int nLevel = GetPowerLevel(oCaster);
     int nAugment = GetAugmentLevel(oCaster);
     int nPP = GetLocalInt(oCaster, "PowerPoints");
@@ -267,25 +269,26 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     int nPsiHole = GetHasFeat(FEAT_PSIONIC_HOLE, oTarget) ? GetAbilityModifier(ABILITY_WISDOM, oTarget) : 0;
         nPsiHole = nPsiHole > 0 ? nPsiHole : 0; // Psionic Hole will never decrease power cost, even if the target is lacking in wisdom bonus
     int nClass = GetManifestingClass(oCaster);
+
     // Epic feat Improved Metapsionics - 2 PP per.
     int nImpMetapsiReduction, i = FEAT_IMPROVED_METAPSIONICS_1, bUseSum = GetPRCSwitch(PRC_PSI_IMP_METAPSIONICS_USE_SUM);
     while(i < FEAT_IMPROVED_METAPSIONICS_10 && GetHasFeat(i, oCaster))
         nImpMetapsiReduction += 2;
-    
-    
+
+
+    // Ability score check
     if(GetAbilityScoreOfClass(oCaster, nClass) - 10 < nLevel)
     {
         FloatingTextStringOnCreature("You do not have a high enough ability score to manifest this power", oCaster, FALSE);
-        nCanManifest = FALSE;
+        return FALSE; // Immediately quit calculating further
     }
 
-    // Sets Power Point cost based on power level
+
+    // Sets base Power Point cost based on power level
     nPPCost = nLevel * 2 - 1;
 
-    // Adds in the augmentation cost
-    if (nAugment > 0) nPPCost = nPPCost + (nAugCost * nAugment);
 
-    // Add in the cost from Metapsionics
+    // Calculate the added cost from metapsionics
     if (nChain > 0 && GetLocalInt(oCaster, "PsiMetaChain") == TRUE && UsePsionicFocus(oCaster))
     {
         nMetaPsi += bUseSum ? 6 :
@@ -325,14 +328,22 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
                      4 - nImpMetapsiReduction < 1 ? 1 : 4 - nImpMetapsiReduction;
         nCanManifest = 2;
     }
-    
-    SendMessageToPC(oCaster, "nPPCost: " + IntToString(nPPCost) + "; nMetaPsi: " + IntToString(nMetaPsi));
-    
+
+
+    /// APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE HERE ///
+    // Adds in the augmentation cost
+    if (nAugment > 0) nPPCost = nPPCost + (nAugCost * nAugment);
+
+    //SendMessageToPC(oCaster, "nPPCost: " + IntToString(nPPCost) + "; nMetaPsi: " + IntToString(nMetaPsi));
+
+    // Add in the metapsionic cost
     nPPCost += bUseSum ? nMetaPsi - nImpMetapsiReduction < 1 ? 1 : nMetaPsi - nImpMetapsiReduction
                 : nMetaPsi;
-                
+
     // Catapsi added cost
     if (GetLocalInt(oCaster, "Catapsi")) nPPCost += 4;
+    /// /APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE HERE ///
+
 
     // If PP Cost is greater than Manifester level
     if (GetManifesterLevel(oCaster) >= nPPCost && nCanManifest)
@@ -346,6 +357,7 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
         // Check if the power would fail after Volatile Mind and Psionic Hole are applied
         else
         {
+            /// THIS CHECK SHOULD CONTAIN ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE POWER FAIL ///
             if((nPPCost + nVolatile + nPsiHole) > nPP)
             {
                 FloatingTextStringOnCreature("Your target's abilities cause you to use more Power Points than you have. The power fails", oCaster, FALSE);
@@ -360,8 +372,13 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
                 FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
                 SetLocalInt(oCaster, "PowerPoints", nPP);
             }
+
+            /// APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE ///
             // Damage from overchanneling happens only if one actually spends PP
             DoOverchannelDamage(oCaster);
+            // Apply Hostile Mind damage, as necessary
+            HostileMind(oCaster, oTarget);
+            /// /APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE ///
         }
     }
     else

@@ -38,6 +38,11 @@ void main(){
          }
          
          FeatSpecialUsePerDay(oPC);
+         
+         // Cancel their rest immediately.
+         AssignCommand(oPC, ClearAllActions(FALSE));
+         // Start the special conversation with oPC.
+         AssignCommand(oPC,ActionStartConversation(OBJECT_SELF, "_rest_button", TRUE, FALSE));
 
          break;
       }
@@ -46,12 +51,5 @@ void main(){
       }
    }
 
-    // Who is resting?
-    object oPCESS = GetLastPCRested();
-    // Cancel their rest immediately.
-    AssignCommand(oPCESS, ClearAllActions(FALSE));
-    // Start the special conversation with oPC.
-    AssignCommand(oPCESS,
-    ActionStartConversation(OBJECT_SELF, "_rest_button", TRUE, FALSE));
-
+ 
 }

@@ -29,8 +29,7 @@ void main()
      else
      {
           // The code to cancel the effects
-            RemoveSpecificEffect(EFFECT_TYPE_MOVEMENT_SPEED_DECREASE,OBJECT_SELF);
-            RemoveSpecificEffect(EFFECT_TYPE_SKILL_INCREASE,OBJECT_SELF);
+            RemoveSpellEffects(GetSpellId(), OBJECT_SELF, OBJECT_SELF);
 
           //RemoveEffect(OBJECT_SELF, eLinkSet);
      }

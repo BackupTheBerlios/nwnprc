@@ -43,9 +43,8 @@ void main(){
       else{
          // Remove the Light and Skill increase
          IPRemoveMatchingItemProperties(oSkin, ITEM_PROPERTY_LIGHT, DURATION_TYPE_PERMANENT);
-         RemoveSpecificEffect(EFFECT_TYPE_SKILL_INCREASE, oPC);
-         RemoveSpecificEffect(EFFECT_TYPE_SKILL_INCREASE, oPC);
-   
+         RemoveSpellEffects(NimbusOfLight, oPC, oPC);
+            
          // Display the message
          nMes = "*Nimbus of Light Deactivated*";
          FloatingTextStringOnCreature(nMes, oPC, FALSE);

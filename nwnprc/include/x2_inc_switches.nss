@@ -566,7 +566,7 @@ string GetUserDefinedItemEventScriptName(object oItem)
 //----------------------------------------------------------------------------
 void SetUserDefinedItemEventPrefix(string sPrefix="")
 {
-    SetLocalString(GetModule(),"MODULE_VAR_TAGBASED_SCIRPT_PREFIX",sPrefix);
+    SetLocalString(GetModule(),"MODULE_VAR_TAGBASED_SCRIPT_PREFIX",sPrefix);
 }
 
 //----------------------------------------------------------------------------

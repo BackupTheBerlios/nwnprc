@@ -4,3 +4,4 @@
 0 Base_Attack   BAB     5               ****      
 1 Lore          SKILL   7               4         
 2 ScriptVar     VAR     PRC_AllowSoLight 0         
+3 ScriptVar     VAR     PRC_PrereqSOL   0 

@@ -5,6 +5,7 @@
 1          Lore            SKILL     7                10
 2          ScriptVar       VAR       PRC_AllowKnghtCh 0     
 3          ScriptVar       VAR       PRC_DivSpell1    0             
+3          ScriptVar       VAR       PRC_PrereqKOTC   0 
                                                                  
                                                                  
                                                                  

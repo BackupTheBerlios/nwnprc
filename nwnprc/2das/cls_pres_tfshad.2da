@@ -11,4 +11,5 @@
 7     Lore                               SKILL     7                2           
 8     Hide                               SKILL     5                10          
 9     MoveSilently                       SKILL     8                10          
-10    ScriptVar                          VAR       PRC_AllowShaLow   0           
+10    ScriptVar                          VAR       PRC_AllowShaLow  0           
+11    ScriptVar                          VAR       PRC_PrereqTelflam 0 

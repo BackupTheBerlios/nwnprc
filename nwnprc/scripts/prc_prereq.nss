@@ -397,6 +397,92 @@ void Tempest(object oPC)
 	}
 }
 
+void KOTC(object oPC)
+{
+	SetLocalInt(oPC, "PRC_PrereqKOTC", 1);
+
+	
+	if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) >= 1)
+	{
+	SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
+	}
+	if (GetLevelByClass(CLASS_TYPE_PALADIN, oPC) >= 4)
+	{
+	SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
+	}
+}
+
+
+void Shadowlord(object oPC)
+{
+    int iBardLevel = GetLevelByClass(CLASS_TYPE_BARD, oPC);
+    int iSorcLevel = GetLevelByClass(CLASS_TYPE_SORCERER, oPC);
+    int iWizLevel = GetLevelByClass(CLASS_TYPE_WIZARD, oPC);
+    int iShadLevel = GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oPC);
+    int iShadItem;
+    if(GetHasItem(oPC,"shadowwalkerstok"))
+     iShadItem = 1;
+
+    SetLocalInt(oPC, "PRC_PrereqTelflam", 1);
+
+    if ( iSorcLevel>7 || iBardLevel>9 || iWizLevel>6 || iShadLevel || iShadItem == 1)
+	{
+        SetLocalInt(oPC, "PRC_PrereqTelflam", 0);
+	}
+}
+
+void SOL(object oPC)
+{       
+   
+	SetLocalInt(oPC, "PRC_PrereqSOL", 1);
+
+	if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD) 
+	{  
+		if (iClericLevel )
+		{
+		int iElishar = GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_HEALING_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_LUCK_DOMAIN_POWER,oPC)+
+		GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_SUN_DOMAIN_POWER,oPC);
+	
+			if (iElishar>1)
+			{
+			SetLocalInt(oPC, "PRC_PrereqSOL", 0);
+			}
+		}	
+	}	
+}
+ 
+
+void ManAtArms(object oPC)
+{       
+
+  int iWF;
+  
+  iWF = GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_CLUB,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_DAGGER,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_DART,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_DIRE_MACE,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_DOUBLE_AXE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_DWAXE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_AXE,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_HALBERD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_HAND_AXE,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_FLAIL,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_KAMA,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LONG_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_RAPIER,oPC);
+        
+
+
+  iWF += GetHasFeat(FEAT_WEAPON_FOCUS_KATANA,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_KUKRI,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_FLAIL,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_HAMMER,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_MACE,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_LONGBOW,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_MORNING_STAR,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_SCIMITAR,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SCYTHE,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SHORTBOW,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SHURIKEN,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_SICKLE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SLING,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SPEAR,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_STAFF,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_THROWING_AXE,oPC)+
+        GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,oPC);
+   
+        
+	SetLocalInt(oPC, "PRC_PrereqMAA", 1);
+
+	if (iWF > 3) 
+	{
+	SetLocalInt(oPC, "PRC_PrereqMAA", 0);
+	}
+}
 
 void main()
 {
@@ -420,5 +506,10 @@ void main()
 	iDivSpell = DivSpell(oPC, iDivSpell);
 	Hathran(oPC);
 	Tempest(oPC);
+	KOTC(oPC);
+	ManAtArms(oPC);
+	SOL(oPC);
+	Shadowlord(oPC);
 	Shifter(oPC, iArcSpell, iDivSpell);
+	CheckSpecialPRCRecs(oPC);
 }

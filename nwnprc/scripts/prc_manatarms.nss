@@ -216,6 +216,6 @@ void main()
     }
 
 
- 
+     if (GetHasFeat(FEAT_MASTER_CRITICAL,oPC)) ImpCrit(oPC,GetPCSkin(oPC));
 
 }

@@ -266,6 +266,18 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"WerewolfWisBonus");
     // Tempest
     DeleteLocalInt(oSkin,"TwoWeaponDefenseBonus");      
+    // Lich
+    DeleteLocalInt(oSkin,"LichSkillHide");
+    DeleteLocalInt(oSkin,"LichSkillListen");
+    DeleteLocalInt(oSkin,"LichSkillPersuade");
+    DeleteLocalInt(oSkin,"LichSkillSilent");
+    DeleteLocalInt(oSkin,"LichSkillSearch");
+    DeleteLocalInt(oSkin,"LichSkillSpot");
+    DeleteLocalInt(oSkin,"LichInt");
+    DeleteLocalInt(oSkin,"LichTurn");
+    DeleteLocalInt(oSkin,"LichWis");
+    DeleteLocalInt(oSkin,"LichCon");
+    DeleteLocalInt(oSkin,"LichCha");
     
     // future PRCs Go below here
 }

@@ -89,34 +89,34 @@ void DuelistPreciseStrike(object oPC, object oWeap)
    switch(iDuelistLevel)
    {
       case 2: case 3: case 4: case 5:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_1d4;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_1d6;
          break;
       case 6: case 7: case 8: case 9:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_2d4;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
          break;
       case 10: case 11: case 12: case 13:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_2d4;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
          iSmashBonus = IP_CONST_DAMAGEBONUS_1d4;
          break;
       case 14: case 15: case 16: case 17:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_2d4;
-         iSmashBonus = IP_CONST_DAMAGEBONUS_2d4;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
+         iSmashBonus = IP_CONST_DAMAGEBONUS_1d6;
          break;
       case 18: case 19: case 20: case 21:
          iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
-	 iSmashBonus = IP_CONST_DAMAGEBONUS_2d4;
+	 iSmashBonus = IP_CONST_DAMAGEBONUS_1d8;
 	 break;
       case 22: case 23: case 24: case 25:
          iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
-         iSmashBonus = IP_CONST_DAMAGEBONUS_2d6;
+         iSmashBonus = IP_CONST_DAMAGEBONUS_1d10;
          break;
       case 26: case 27: case 28: case 29:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_2d8;
-         iSmashBonus = IP_CONST_DAMAGEBONUS_2d6;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
+         iSmashBonus = IP_CONST_DAMAGEBONUS_1d12;
          break;
       case 30:
          iSlashBonus = IP_CONST_DAMAGEBONUS_2d8;
-         iSmashBonus = IP_CONST_DAMAGEBONUS_2d8;
+         iSmashBonus = IP_CONST_DAMAGEBONUS_1d10;
          break;
       default:
          break;

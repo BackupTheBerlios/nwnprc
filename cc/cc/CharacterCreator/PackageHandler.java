@@ -611,7 +611,7 @@ public class PackageHandler {
 		}
 		if (required && !satisfied) {
 			if (extra)
-				System.out.println("Feat feat requirements aren't 3satisfied: " + feat.Feat);
+				System.out.println("Feat feat requirements aren't satisfied: " + feat.Feat);
 
 			return false;
 		}

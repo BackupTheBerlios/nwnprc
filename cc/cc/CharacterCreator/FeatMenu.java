@@ -274,13 +274,11 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 			return false;
 
 		boolean extra = false;
-		if (feat.Index == 103)
-			extra = true;
 
 		// Verify we satisfy the min level requirement
 		if (feat.MinLevel > 1) {
 			if (extra)
-				System.out.println("Feat feat requirements aren't 1satisfied: " + feat.Feat);
+				System.out.println("Feat feat requirements aren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -290,7 +288,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 		if (feat.MinLevel > 0 && feat.MinLevelClass > -1
 				&& Integer.parseInt(menucreate.MainCharDataAux[3][classes.Index]) != feat.MinLevelClass) {
 			if (extra)
-				System.out.println("Feat feat requirements aren't 2satisfied: " + feat.Feat);
+				System.out.println("Feat feat requirements aren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -313,7 +311,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 		}
 		if (required && !satisfied) {
 			if (extra)
-				System.out.println("Feat feat requirements aren't 3satisfied: " + feat.Feat);
+				System.out.println("Feat feat requirements aren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -323,7 +321,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 			// If this char doesn't have access to the skill
 			if (calcSkill(feat.ReqSkill) < feat.ReqSkillMinRanks) {
 				if (extra)
-					System.out.println("Feat skill requirements aren't 4satisfied: " + feat.Feat);
+					System.out.println("Feat skill requirements aren't satisfied: " + feat.Feat);
 
 				return false;
 			}
@@ -333,7 +331,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 			// If this char doesn't have access to the skill
 			if (calcSkill(feat.ReqSkill2) < feat.ReqSkillMinRanks2) {
 				if (extra)
-					System.out.println("Feat skill requirements aren't 5satisfied: " + feat.Feat);
+					System.out.println("Feat skill requirements aren't satisfied: " + feat.Feat);
 
 				return false;
 			}
@@ -342,13 +340,13 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 		// Determine if the Mandatory Feat Prerequisites are satisfied
 		if (feat.PreReqFeat1 > -1 && !featlist.contains(featmap[feat.PreReqFeat1])) {
 			if (extra)
-				System.out.println("Feat feat requirements weren't 6satisfied: " + feat.Feat);
+				System.out.println("Feat feat requirements weren't satisfied: " + feat.Feat);
 
 			return false;
 		}
 		if (feat.PreReqFeat2 > -1 && !featlist.contains(featmap[feat.PreReqFeat2])) {
 			if (extra)
-				System.out.println("Feat feat requirements weren't 7satisfied: " + feat.Feat);
+				System.out.println("Feat feat requirements weren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -364,7 +362,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 		// Check Str Requirements
 		if (realstr < feat.MinStr) {
 			if (extra)
-				System.out.println("Feat STR requirements weren't 8satisfied: " + feat.Feat);
+				System.out.println("Feat STR requirements weren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -372,7 +370,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 		// Check Dex Requirements
 		if (realdex < feat.MinDex) {
 			if (extra)
-				System.out.println("Feat DEX requirements weren't 9satisfied: " + feat.Feat);
+				System.out.println("Feat DEX requirements weren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -380,7 +378,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 		// Check Con Requirements
 		if (realcon < feat.MinCon) {
 			if (extra)
-				System.out.println("Feat CON requirements weren't 10satisfied: " + feat.Feat);
+				System.out.println("Feat CON requirements weren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -388,7 +386,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 		// Check Int Requirements
 		if (realint < feat.MinInt) {
 			if (extra)
-				System.out.println("Feat INT requirements weren't 11satisfied: " + feat.Feat);
+				System.out.println("Feat INT requirements weren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -396,7 +394,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 		// Check Wis Requirements
 		if (realwis < feat.MinWis) {
 			if (extra)
-				System.out.println("Feat WIS requirements weren't 12satisfied: " + feat.Feat);
+				System.out.println("Feat WIS requirements weren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -404,7 +402,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 		// Check Cha Requirements
 		if (realcha < feat.MinCha) {
 			if (extra)
-				System.out.println("Feat CHA requirements weren't 13satisfied: " + feat.Feat);
+				System.out.println("Feat CHA requirements weren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -414,7 +412,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 				? 0 : Integer.parseInt(attackmap[0][1]);
 		if (attackBonus < feat.MinAttackBonus) {
 			if (extra)
-				System.out.println("Feat Attack Bonus requirements weren't 14satisfied: " + feat.Feat);
+				System.out.println("Feat Attack Bonus requirements weren't satisfied: " + feat.Feat);
 
 			return false;
 		}
@@ -424,7 +422,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
         //Yes, this is a workaround - otherwise, we'd need to query the saves, and that's extra time
         if (feat.MinFortSave > 0) {
             if (extra)
-				System.out.println("Feat Fortitude Save requirements weren't 15satisfied: " + feat.Feat);
+				System.out.println("Feat Fortitude Save requirements weren't satisfied: " + feat.Feat);
 
             return false;
         }

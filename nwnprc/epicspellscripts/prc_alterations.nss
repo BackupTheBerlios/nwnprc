@@ -12,7 +12,6 @@
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"
-#include "prcsp_archmaginc"
 #include "prcsp_spell_adjs"
 #include "prcsp_engine"
 

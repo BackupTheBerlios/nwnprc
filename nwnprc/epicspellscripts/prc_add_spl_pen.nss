@@ -33,7 +33,7 @@ int ElementalSavantSP(int spell_id, object oCaster = OBJECT_SELF)
 	// Otherwise this would require checking ~4 items (class or specific feats)
 	if (GetHasFeat(FEAT_ES_PEN_1, oCaster)) {
 		// get spell elemental type
-		string element = ChangedElementalType(spell_id, oCaster);
+		string element = lookup_spell_type(spell_id);
 
 		// Any value that does not match one of the enumerated feats
 		int feat = 0;

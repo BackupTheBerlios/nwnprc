@@ -9,7 +9,7 @@
 //
 int
 GetChangesToCasterLevel(object oCaster){
-    return ExecuteScriptAndReturnInt("prc_caster_level", oCaster);
+    return ExecuteScriptAndReturnInt("prcep_cast_lvl", oCaster);
 }
 
 //
@@ -19,7 +19,7 @@ int
 PRCGetCasterLevel(object oCaster)
 {
 	return GetCasterLevel(oCaster)
-		+ ExecuteScriptAndReturnInt("prc_caster_level", oCaster);
+		+ ExecuteScriptAndReturnInt("prcep_cast_lvl", oCaster);
 }
 
 //

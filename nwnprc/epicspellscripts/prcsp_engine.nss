@@ -59,35 +59,30 @@ MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDel
 {
 	int nResist;
 
-	// Check if the archmage shape mastery applies to this target
-	if (CheckMasteryOfShapes(oCaster, oTarget))
-		nResist = SPELL_RESIST_MANTLE;
-	else {
-		// Check immunities and mantles, otherwise ignore the result completely
-		nResist = PRCResistSpell(oCaster, oTarget);
-		if (nResist <= SPELL_RESIST_PASS) {
-			nResist = SPELL_RESIST_FAIL;
+	// Check immunities and mantles, otherwise ignore the result completely
+	nResist = PRCResistSpell(oCaster, oTarget);
+	if (nResist <= SPELL_RESIST_PASS) {
+		nResist = SPELL_RESIST_FAIL;
 
-			// Because the version of this function was recently changed to
-			// optionally allow the caster level, we must calculate it here.
-			// The result will be cached for a period of time.
+		// Because the version of this function was recently changed to
+		// optionally allow the caster level, we must calculate it here.
+		// The result will be cached for a period of time.
+		if (!nEffCasterLvl) {
+			nEffCasterLvl = GetLocalInt(oCaster, CASTER_LEVEL_TAG);
 			if (!nEffCasterLvl) {
-				nEffCasterLvl = GetLocalInt(oCaster, CASTER_LEVEL_TAG);
-				if (!nEffCasterLvl) {
-					nEffCasterLvl = GetCasterLevel(oCaster)
-						+ GetChangesToCasterLevel(oCaster)
-						+ SPGetPenetr();
-					SetLocalInt(oCaster, CASTER_LEVEL_TAG, nEffCasterLvl);
-					DelayCommand(CACHE_TIMEOUT_CAST,
-						DeleteLocalInt(oCaster, CASTER_LEVEL_TAG));
-				}
+				nEffCasterLvl = GetCasterLevel(oCaster)
+					+ GetChangesToCasterLevel(oCaster)
+					+ SPGetPenetr();
+				SetLocalInt(oCaster, CASTER_LEVEL_TAG, nEffCasterLvl);
+				DelayCommand(CACHE_TIMEOUT_CAST,
+					DeleteLocalInt(oCaster, CASTER_LEVEL_TAG));
 			}
-
-			// A tie favors the caster.
-			if ((nEffCasterLvl + d20(1)) < PRCGetSpellResistance(oTarget))
-				nResist = SPELL_RESIST_PASS;
 		}
-    }
+
+		// A tie favors the caster.
+		if ((nEffCasterLvl + d20(1)) < PRCGetSpellResistance(oTarget))
+			nResist = SPELL_RESIST_PASS;
+	}
 
 	PRCShowSpellResist(oTarget, nResist, fDelay);
 

@@ -1,6 +1,6 @@
 
-const int FEAT_WEAPON_FOCUS_WHIP      = 993;
-const int FEAT_IMPROVED_CRITICAL_WHIP = 995;
+//const int FEAT_WEAPON_FOCUS_WHIP      = 993;
+//const int FEAT_IMPROVED_CRITICAL_WHIP = 995;
 
 //iprp_feats
 

@@ -61,7 +61,7 @@ public class CreditsMenu extends javax.swing.JFrame {
         CreditText.setWrapStyleWord(true);
         CreditText.setText("PRC: v1.3\nThis release was prepared by the "
 				+ "Player Resource Consortium so we could make Level 40 Drow "
-				+ "Samurai.\n\nv1.1\nThis version was a team effort.  Thanks "
+				+ "Samurai.\n\nPRC Website:\nhttp://nwnprc.netgamers.co.uk/index1.html\n\nv1.1\nThis version was a team effort.  Thanks "
 				+ "go to James, grond and Garad Moonbeam for getting the "
 				+ "updates done for SoU and 1.3x compatability as well as "
 				+ "dynamic skill menus.\nThanks go to Papermonk, first of all, "

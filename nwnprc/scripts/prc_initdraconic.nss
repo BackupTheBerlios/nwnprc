@@ -52,19 +52,19 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
         case 7:
           return IP_CONST_MONSTERDAMAGE_2d10;  //20
         case 8:
-          return IP_CONST_MONSTERDAMAGE_4d6;   //24
+          return IP_CONST_MONSTERDAMAGE_2d12;   //24
         case 9:
-         return  IP_CONST_MONSTERDAMAGE_7d4;   //28
+         return  IP_CONST_MONSTERDAMAGE_3d10;   //28
         case 10:
          return  IP_CONST_MONSTERDAMAGE_3d10;  //30
         case 11:
-         return  IP_CONST_MONSTERDAMAGE_4d8;   //32
+         return  IP_CONST_MONSTERDAMAGE_3d10;   //32
         case 12:
-         return  IP_CONST_MONSTERDAMAGE_6d6;   //34
+         return  IP_CONST_MONSTERDAMAGE_3d10;   //34
         case 13:
-         return  IP_CONST_MONSTERDAMAGE_4d10;  //40
+         return  IP_CONST_MONSTERDAMAGE_3d10  //40
         case 14:
-         return  IP_CONST_MONSTERDAMAGE_6d8;   //48
+         return  IP_CONST_MONSTERDAMAGE_3d10   //48
 
       }
 

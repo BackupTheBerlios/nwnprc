@@ -10,12 +10,12 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, SUP_DIS_DC, SUP_DIS_S, SUP_DIS_XP))
@@ -27,7 +27,7 @@ void main()
         location lLocal       = GetSpellTargetLocation();
         // If this option has been enabled, the caster will take the damage
         // as he/she should in accordance with the ELHB.
-        if (BACKLASH_DAMAGE == TRUE)
+        if (GetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE) == TRUE)
         {
             effect eCast = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
             int nDam = d6(10);
@@ -61,5 +61,5 @@ void main()
             }
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

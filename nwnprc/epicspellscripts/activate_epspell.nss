@@ -801,11 +801,11 @@ void main()
         sSc = WHIP_SH_S;
     }
     // If applicable, adjust the spell's DC.
-    if (FOCI_ADJUST_DC == TRUE)
+    if (GetPRCSwitch(PRC_EPIC_FOCI_ADJUST_DC) == TRUE)
         nDC -= GetDCSchoolFocusAdjustment(OBJECT_SELF, sSc);
 
-    nGP = nDC * GOLD_MULTIPLIER;
-    nXP = nGP / XP_FRACTION;
+    nGP = nDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER);
+    nXP = nGP / GetPRCSwitch(PRC_EPIC_XP_FRACTION);
     sName = GetStringByStrRef(StringToInt
         (Get2DACache("feat", "feat", nFE)));
     sDesc = GetStringByStrRef(StringToInt
@@ -834,7 +834,7 @@ void main()
     if (nR4 != 0)
         SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
         (Get2DACache("feat", "feat", nR4))));
-    if (nXC != 0 && XP_COSTS == TRUE)
+    if (nXC != 0 && GetPRCSwitch(PRC_EPIC_XP_COSTS) == TRUE)
         SendMessageToPC(OBJECT_SELF, " - Additionally, " + IntToString(nXC) +
             " experience points are spent per casting.");
     SendMessageToPC(OBJECT_SELF, " ");

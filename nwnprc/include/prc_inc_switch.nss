@@ -15,6 +15,18 @@ const string PRC_MUTLISUMMON                         = "PRC_MULTISUMMON";
 const string PRC_SUMMON_ROUND_PER_LEVEL              = "PRC_SUMMON_ROUND_PER_LEVEL";
 const string PRC_PNP_ELEMENTAL_SWARM                 = "PRC_PNP_ELEMENTAL_SWARM";
 
+// Epic spell switches
+const string PRC_EPIC_INGORE_DEFAULTS                = "PRC_EPIC_INGORE_DEFAULTS";
+const string PRC_EPIC_XP_COSTS                       = "PRC_EPIC_XP_COSTS";
+const string PRC_EPIC_TAKE_TEN_RULE                  = "PRC_EPIC_TAKE_TEN_RULE";
+const string PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE  = "PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE";
+const string PRC_EPIC_BACKLASH_DAMAGE                = "PRC_EPIC_BACKLASH_DAMAGE";
+const string PRC_EPIC_FOCI_ADJUST_DC                 = "PRC_EPIC_FOCI_ADJUST_DC";
+const string PRC_EPIC_GOLD_MULTIPLIER                = "PRC_EPIC_GOLD_MULTIPLIER";
+const string PRC_EPIC_XP_FRACTION                    = "PRC_EPIC_XP_FRACTION";
+const string PRC_EPIC_FAILURE_FRACTION_GOLD          = "PRC_EPIC_FAILURE_FRACTION_GOLD";
+const string PRC_EPIC_BOOK_DESTRUCTION               = "PRC_EPIC_BOOK_DESTRUCTION";
+
 // General switches
 const string PRC_STAFF_CASTER_LEVEL                  = "PRC_STAFF_CASTER_LEVEL";
 const string PRC_BREW_POTION_CASTER_LEVEL            = "PRC_BREW_POTION_CASTER_LEVEL";
@@ -61,20 +73,28 @@ void SetPRCSwitch(string sSwitch, int nState)
 
 void MultisummonPreSummon(object oPC = OBJECT_SELF)
 {
-//  SendMessageToPC(oPC, "Doing MultisummonPreSummon");
     if(!GetPRCSwitch(PRC_MUTLISUMMON))
         return;
-//  SendMessageToPC(oPC, "MultisummonPreSummon switch is ON");
     int i=1;
     object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
     while(GetIsObjectValid(oSummon))
     {
-//  SendMessageToPC(oPC, "Setting Associate "+GetName(oSummon));
         AssignCommand(oSummon, SetIsDestroyable(FALSE, FALSE, FALSE));
         AssignCommand(oSummon, DelayCommand(0.1, SetIsDestroyable(TRUE, FALSE, FALSE)));
-//        AssignCommand(oSummon, DelayCommand(0.1, SendMessageToPC(oPC, "Unsetting Associate "+GetName(oSummon))));
         i++;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
     }
-//  SendMessageToPC(oPC, "Ending MultisummonPreSummon");
+}
+
+void DoEpicSpellDefaults()
+{
+    if(!GetPRCSwitch(PRC_EPIC_INGORE_DEFAULTS))
+        return;
+    SetPRCSwitch(PRC_EPIC_XP_COSTS, TRUE);        
+    SetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE, TRUE);
+    SetPRCSwitch(PRC_EPIC_FOCI_ADJUST_DC, TRUE);
+    SetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER, 9000);
+    SetPRCSwitch(PRC_EPIC_XP_FRACTION, 25);
+    SetPRCSwitch(PRC_EPIC_FAILURE_FRACTION_GOLD, 2);
+    SetPRCSwitch(PRC_EPIC_BOOK_DESTRUCTION, 50);
 }

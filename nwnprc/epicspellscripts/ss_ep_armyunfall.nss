@@ -54,7 +54,7 @@ void main()
                 }
             }
         }
-        if (BACKLASH_DAMAGE == TRUE)
+        if (GetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE) == TRUE)
         {
             nBLD = d6(nAlly);
             eBLD = EffectDamage(nBLD);

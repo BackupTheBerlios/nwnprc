@@ -837,7 +837,7 @@ void main()
             if (!GetHasFeat(nFE, oPC))
             {
                 // If applicable, adjust the spell's DC.
-                if (FOCI_ADJUST_DC == TRUE)
+                if (GetPRCSwitch(PRC_EPIC_FOCI_ADJUST_DC) == TRUE)
                     nDC -= GetDCSchoolFocusAdjustment(oPC, sSc);
                 // Does the player have enough gold?
                 if (GetHasEnoughGoldToResearch(oPC, nDC))

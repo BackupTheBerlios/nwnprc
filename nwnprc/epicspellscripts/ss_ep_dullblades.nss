@@ -15,25 +15,25 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, DULBLAD_DC, DULBLAD_S, DULBLAD_XP))
     {
         object oTarget = GetSpellTargetObject();
-	  int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
+      int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
         int nDuration = 10 + nCasterLvl;
         effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
         effect eDur = EffectVisualEffect(VFX_DUR_GLOW_WHITE);
         effect eProt = EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING, 50);
         effect eLink = EffectLinkEffects(eProt, eDur);
         // if this option has been enabled, the caster will take backlash damage
-        if (BACKLASH_DAMAGE == TRUE)
+        if (GetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE) == TRUE)
         {
             int nDamage = d6(10);
             effect eDamVis = EffectVisualEffect(VFX_IMP_SONIC);
@@ -54,5 +54,5 @@ void main()
                 eLink, oTarget, RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

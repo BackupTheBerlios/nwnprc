@@ -10,12 +10,12 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, GODSMIT_DC, GODSMIT_S, GODSMIT_XP))
@@ -30,7 +30,7 @@ void main()
         int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, GODSMIT_S) + GetChangesToSaveDC(oTarget,OBJECT_SELF);
 
         // if this option has been enabled, the caster will take backlash damage
-        if (BACKLASH_DAMAGE == TRUE)
+        if (GetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE) == TRUE)
         {
             effect eCast = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_HOLY);
             int nDamage = d4(nSpellPower);
@@ -93,5 +93,5 @@ void main()
         DelayCommand(3.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_COM_CHUNK_STONE_MEDIUM), oTarget));
         DelayCommand(3.1, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

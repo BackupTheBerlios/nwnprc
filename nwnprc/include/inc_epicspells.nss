@@ -12,10 +12,13 @@
 #include "prc_class_const"
 #include "inc_epicspelldef"
 #include "inc_epicspellfunc"
+#include "prc_inc_switch"
 
 /*
 CONSTANTS FOR OPTIONAL FEATURES
 */
+/* moved to prc_inc_switch as runtime switches rather than compiletime
+
 // Use the "XP Costs" option, making casters expend some experience when they
 //      cast certain spells?
 const int XP_COSTS = TRUE;
@@ -72,10 +75,13 @@ const int FAILURE_FRACTION_GOLD = 2;
 // NOTE! This function is only ever called when the player actually acquires
 //      the seed feat. It is a way to control mass "gift-giving" amongst players
 const int BOOK_DESTRUCTION = 50;
+*/
+
 
 // Play cutscenes for learning Epic Spell Seeds and researching Epic Spells?
 const int PLAY_RESEARCH_CUTS = FALSE;
 const int PLAY_SPELLSEED_CUT = FALSE;
+
 // What school of magic does each spell belong to? (for research cutscenes)
 // A = Abjuration
 // C = Conjuration
@@ -238,7 +244,7 @@ int GetIsEpicWizard(object oPC)
 
 void DoBookDecay(object oBook, object oPC)
 {
-    if (d100() >= BOOK_DESTRUCTION)
+    if (d100() >= GetPRCSwitch(PRC_EPIC_BOOK_DESTRUCTION))
     {
         DestroyObject(oBook, 2.0);
         SendMessageToPC(oPC, MES_BOOK_DESTROYED);
@@ -253,7 +259,7 @@ int GetEpicSpellSlotLimit(object oPC)
     // What's oPC's Lore skill?.
     nLimit = GetSkillRank(SKILL_LORE, oPC);
     // Variant rule implementation.
-    if (PRIMARY_ABILITY_MODIFIER_RULE == TRUE)
+    if (GetPRCSwitch(PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE) == TRUE)
     {
         if (GetIsEpicSorcerer(oPC))
         {
@@ -310,7 +316,7 @@ int GetSpellcraftCheck(object oPC)
     // Get oPC's skill rank.
     int nCheck = GetSpellcraftSkill(oPC);
     // Do the check, dependant on "Take 10" variant rule.
-    if (TAKE_TEN_RULE == TRUE)
+    if (GetPRCSwitch(PRC_EPIC_TAKE_TEN_RULE) == TRUE)
         nCheck += 10;
     else
         nCheck += d20();
@@ -322,7 +328,7 @@ int GetSpellcraftSkill(object oPC)
     // Determine initial Spellcraft skill.
     int nSkill = GetSkillRank(SKILL_SPELLCRAFT, oPC);
     // Variant rule implementation.
-    if (PRIMARY_ABILITY_MODIFIER_RULE == TRUE)
+    if (GetPRCSwitch(PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE) == TRUE)
     {
         if (GetIsEpicSorcerer(oPC))
         {
@@ -340,7 +346,7 @@ int GetSpellcraftSkill(object oPC)
 
 int GetHasEnoughGoldToResearch(object oPC, int nSpellDC)
 {
-    if (GetGold(oPC) >= nSpellDC * GOLD_MULTIPLIER)
+    if (GetGold(oPC) >= nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER))
         return TRUE;
     return FALSE;
 }
@@ -352,7 +358,7 @@ int GetHasEnoughExperienceToResearch(object oPC, int nSpellDC)
     int nXP = GetXP(oPC);
     if (!GetIsPC(oPC))
         nXP = GetLocalInt(oPC, "NPC_XP");
-    if (nXP >= (nHitDiceXP + (nSpellDC * GOLD_MULTIPLIER / XP_FRACTION)))
+    if (nXP >= (nHitDiceXP + (nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_XP_FRACTION))))
         return TRUE;
     return FALSE;
 }
@@ -394,14 +400,14 @@ void TakeResourcesFromPC(object oPC, int nSpellDC, int nSuccess)
 {
     if (nSuccess != TRUE)
         TakeGoldFromCreature(nSpellDC *
-            GOLD_MULTIPLIER / FAILURE_FRACTION_GOLD, oPC, TRUE);
+            GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_FAILURE_FRACTION_GOLD), oPC, TRUE);
     else
     {
-        TakeGoldFromCreature(nSpellDC * GOLD_MULTIPLIER, oPC, TRUE);
+        TakeGoldFromCreature(nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER), oPC, TRUE);
         if(GetIsPC(oPC))
-            SetXP(oPC, GetXP(oPC) - nSpellDC * GOLD_MULTIPLIER / XP_FRACTION);
+            SetXP(oPC, GetXP(oPC) - (nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_XP_FRACTION)));
         else
-            SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")-nSpellDC * GOLD_MULTIPLIER / XP_FRACTION);
+            SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")-(nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_XP_FRACTION)));
     }
 }
 
@@ -420,7 +426,7 @@ int GetCanCastSpell(object oPC, int nSpellDC, string sChool, int nSpellXP)
         SendMessageToPC(oPC, MES_CANNOT_CAST_SLOTS);
         return FALSE;
     }
-    if (XP_COSTS == TRUE)
+    if (GetPRCSwitch(PRC_EPIC_XP_COSTS) == TRUE)
     {
         // Does oPC have the needed XP available to cast the spell?
         if (!GetHasXPToSpend(oPC, nSpellXP))

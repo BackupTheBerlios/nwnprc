@@ -8,6 +8,16 @@ or skill restriction itemproperties.
 Fired from prc_equip
 
 */
+
+void ForceUnequip(object oPC, object oItem, int nSlot)
+{
+    if(GetItemInSlot(nSlot, oPC) == oItem)
+    {
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        DelayCommand(0.1, ForceUnequip(oPC, oItem, nSlot));
+    }
+}
+
 void main()
 {
     object oPC = GetItemLastEquippedBy();
@@ -17,25 +27,14 @@ void main()
     if(!bUnequip)
     {
         SendMessageToPC(oPC, "You cannot equip "+GetName(oItem));
-        SetCommandable(TRUE, oPC);
-//        AssignCommand(oPC, ClearAllActions()); 
-        AssignCommand(oPC, ActionWait(1.0));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        AssignCommand(oPC, ActionDoCommand(SetCommandable(TRUE, oPC)));
-        SetCommandable(FALSE, oPC);
+        int i;
+        object oTest = GetItemInSlot(i, oPC);
+        while(oTest != oItem && i < 20)
+        {
+            i++;
+            oTest = GetItemInSlot(i, oPC);
+        }
+        if(i<20)
+            ForceUnequip(oPC, oItem, i);
     }
 }

@@ -45,12 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Declare major variables
     int nSpellID = GetSpellId();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
-    nDuration = 24;
-    if(nDuration == 1)
-    {
-        nDuration = 2;
-    }
-    effect eSummon = SetSummonEffect(nSpellID);
+        effect eSummon = SetSummonEffect(nSpellID);
 
     //Make metamagic check for extend
     int nMetaMagic = GetMetaMagicFeat();
@@ -61,7 +56,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Apply the VFX impact and summon effect
     MultisummonPreSummon();
 
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
+        float fDuration = HoursToSeconds(24);
+        if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
+            fDuration = RoundsToSeconds(nDuration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), fDuration);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the integer used to hold the spells spell school

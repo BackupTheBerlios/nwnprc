@@ -1,4 +1,4 @@
-
+#include "prc_inc_switch"
 void sp_summon(string creature, int impactVfx)
 {
 	SPSetSchool(SPELL_SCHOOL_CONJURATION);
@@ -10,6 +10,10 @@ void sp_summon(string creature, int impactVfx)
 	float fDuration = SPGetMetaMagicDuration(HoursToSeconds(24));
     
     // Apply impact VFX and summon effects.
+        if(GetPRCSwitch(PRC_MUTLISUMMON))
+            MultisummonPreSummon();
+        if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
+            fDuration = RoundsToSeconds(PRCGetCasterLevel()*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectVisualEffect(impactVfx), 
 		GetSpellTargetLocation());
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature(creature), 

@@ -33,6 +33,9 @@ void main()
 
     effect Summon=EffectSummonCreature(Elemental,VFX_NONE,0.0,1);
     MultisummonPreSummon();
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY,Summon,GetLocation(oTarget),RoundsToSeconds(Duration));
+    float fDuration = RoundsToSeconds(Duration);
+        if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
+            fDuration = RoundsToSeconds(Duration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, Summon, GetSpellTargetLocation(), fDuration);
 }
 

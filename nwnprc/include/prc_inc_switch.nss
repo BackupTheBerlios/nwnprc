@@ -41,19 +41,20 @@ void SetPRCSwitch(string sSwitch, int nState)
 
 void MultisummonPreSummon(object oPC = OBJECT_SELF)
 {
-	SendMessageToPC(oPC, "Doing MultisummonPreSummon");
+//	SendMessageToPC(oPC, "Doing MultisummonPreSummon");
     if(!GetPRCSwitch(PRC_MUTLISUMMON))
         return;
-	SendMessageToPC(oPC, "MultisummonPreSummon switch is ON");
+//	SendMessageToPC(oPC, "MultisummonPreSummon switch is ON");
     int i=1;
     object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
     while(GetIsObjectValid(oSummon))
     {
-	SendMessageToPC(oPC, "Setting Associate "+GetName(oSummon));
-        SetIsDestroyable(FALSE, FALSE, FALSE);
+//	SendMessageToPC(oPC, "Setting Associate "+GetName(oSummon));
+        AssignCommand(oSummon, SetIsDestroyable(FALSE, FALSE, FALSE));
         AssignCommand(oSummon, DelayCommand(1.0, SetIsDestroyable(TRUE, FALSE, FALSE)));
+      AssignCommand(oSummon, DelayCommand(1.0, SendMessageToPC(oPC, "Unsetting Associate "+GetName(oSummon))));
         i++;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
     }
-	SendMessageToPC(oPC, "Ending MultisummonPreSummon");
+//	SendMessageToPC(oPC, "Ending MultisummonPreSummon");
 }

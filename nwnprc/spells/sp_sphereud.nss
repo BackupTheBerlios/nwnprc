@@ -6,7 +6,11 @@ void main()
 	if (!X2PreSpellCastCode()) return;
 
 	// Calculate spell duration.
-	float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(PRCGetCasterLevel()));
+	int nCasterLvl = PRCGetCasterLevel();
+	float fDuration = RoundsToSeconds(nCasterLvl);
+	if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
+            fDuration = RoundsToSeconds(nCasterLvl*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
+	fDuration = SPGetMetaMagicDuration(fDuration);
 
 	// Apply summon and vfx at target location.	
 	location lTarget = GetSpellTargetLocation();

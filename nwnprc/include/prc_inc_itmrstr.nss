@@ -16,7 +16,7 @@ int DoUMDCheck(object oItem, object oPC, int nDCMod)
     int nSkill = GetSkillRank(SKILL_USE_MAGIC_DEVICE, oPC);
 
     //doesnt have UMD
-    if(nSkill == -1)
+    if(!GetHasSkill(SKILL_USE_MAGIC_DEVICE, oPC))
         return FALSE;
 
     int i;
@@ -28,7 +28,7 @@ int DoUMDCheck(object oItem, object oPC, int nDCMod)
     }
     i--;
     string s2DAReqSkill = Get2DACache("skillvsitemcost", "SkillReq_Class", i);
-PrintString("UMD check with value "+IntToString(nValue)+" of "+IntToString(n2DAValue)+" and UMD "+IntToString(nSkill)+" of "+s2DAReqSkill);
+//PrintString("UMD check with value "+IntToString(nValue)+" of "+IntToString(n2DAValue)+" and UMD "+IntToString(nSkill)+" of "+s2DAReqSkill);
     //item is off the scale of expense
     if(s2DAReqSkill == "")
         return FALSE;

@@ -34,6 +34,15 @@ void spellsCreateItemForSummoned(object oCaster, float fDuration)
         nStat = 1;
     }
     object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
+    int i = 1;
+    object oOldSummon;
+    while(GetIsObjectValid(oSummon))
+    {
+        oOldSummon = oSummon
+        oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oCaster, i);
+        i++;
+    }
+    oSummon = oOldSummon
     object oWeapon;
     if (GetIsObjectValid(oSummon))
     {
@@ -90,7 +99,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Apply the VFX impact and summon effect
     MultisummonPreSummon();
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+    float fDuration = RoundsToSeconds(nDuration);
+    if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
+        fDuration = RoundsToSeconds(nDuration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), fDuration);
 
     object oSelf = OBJECT_SELF;
     DelayCommand(1.0, spellsCreateItemForSummoned(oSelf,TurnsToSeconds(nDuration)));

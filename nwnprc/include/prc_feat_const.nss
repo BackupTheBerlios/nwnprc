@@ -36,6 +36,11 @@ const int FEAT_HARD_WATER = 4726;
 const int FEAT_HARD_ELEC  = 4727;
 const int FEAT_POISON_3   = 4728;
 
+const int FEAT_IMM_COLD     = 4729;
+const int FEAT_IMM_PHANT    = 4730;
+const int FEAT_NONDETECTION = 4731;
+const int FEAT_IMM_APOI     = 4732;
+
 //Passive Feats
 const int FEAT_INTUITIVE_ATTACK                        = 3166;
 const int FEAT_RAVAGEGOLDENICE                         = 3162;

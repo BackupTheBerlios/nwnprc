@@ -123,6 +123,7 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("prc_wyzfeat",oPC);
     ExecuteScript("onenter_ess",oPC);
     ExecuteScript("prc_sneak_att",oPC);
+    ExecuteScript("race_skin",oPC);
 }
 
 

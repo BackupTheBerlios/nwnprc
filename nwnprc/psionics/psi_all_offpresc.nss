@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     if (GetCanManifest(oCaster, nAugCost)) 
     {
     	int CasterLvl = GetManifesterLevel(oCaster);
-    	int nBonus = 1;
+    	int nBonus = 2;
 
 
     	// Augmentation effects to armour class

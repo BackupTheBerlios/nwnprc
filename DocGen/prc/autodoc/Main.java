@@ -67,12 +67,14 @@ public class Main{
 				try{
 					temp = new Data_2da("2da" + fileSeparator + name + ".2da");
 				}catch(IllegalArgumentException e){
-					err_pr.println(e.toString());
-					temp = null;
-				}catch(TwoDAReadException e){
-					err_pr.println(e.toString());
-					temp = null;
-				}
+					//err_pr.println(e.toString());
+					throw new TwoDAReadException("Problem with filename when trying to read from 2da:\n" + e);
+				}/* Seems it's better to let this cascade
+				catch(TwoDAReadException e){
+					// Just store a null and toss the exception onwards
+					data.put(name, null);
+					throw e;
+				}*/
 				data.put(name, temp);
 				return temp;
 			}
@@ -199,18 +201,21 @@ public class Main{
 	private static TLKStore tlk;
 	
 	/** The template files */
-	private static String classTemplate                 = null,
-	                      domainTemplate                = null,
-	                      featTemplate                  = null,
-	                      mFeatTemplate                 = null,
-	                      menuTemplate                  = null,
-	                      menuItemTemplate              = null,
-	                      prereqANDFeatHeaderTemplate   = null,
-	                      prereqORFeatHeaderTemplate    = null,
-	                      raceTemplate                  = null,
-	                      spellTemplate                 = null,
-	                      skillTemplate                 = null,
-	                      successorFeatHeaderTemplate   = null;
+	private static String babAndSavthrTableHeaderTemplate = null,
+	                      classTemplate                   = null,
+	                      classTablesEntryTemplate        = null,
+	                      domainTemplate                  = null,
+	                      featTemplate                    = null,
+	                      mFeatTemplate                   = null,
+	                      menuTemplate                    = null,
+	                      menuItemTemplate                = null,
+	                      prereqANDFeatHeaderTemplate     = null,
+	                      prereqORFeatHeaderTemplate      = null,
+	                      raceTemplate                    = null,
+	                      spellTemplate                   = null,
+	                      skillTableHeaderTemplate        = null,
+	                      skillTemplate                   = null,
+	                      successorFeatHeaderTemplate     = null;
 	
 	
 	/* Data structure used for determining if a previous write has failed
@@ -294,18 +299,21 @@ public class Main{
 		String templatePath = "templates" + fileSeparator + curLanguage + fileSeparator;
 		
 		try{
-			classTemplate                 = readTemplate(templatePath + "class.html");
-			domainTemplate                = readTemplate(templatePath + "domain.html");
-			featTemplate                  = readTemplate(templatePath + "feat.html");
-			mFeatTemplate                 = readTemplate(templatePath + "masterfeat.html");
-			menuTemplate                  = readTemplate(templatePath + "menu.html");
-			menuItemTemplate              = readTemplate(templatePath + "menuitem.html");
-			prereqANDFeatHeaderTemplate   = readTemplate(templatePath + "prerequisiteandfeatheader.html");
-			prereqORFeatHeaderTemplate    = readTemplate(templatePath + "prerequisiteorfeatheader.html");
-			raceTemplate                  = readTemplate(templatePath + "race.html");
-			spellTemplate                 = readTemplate(templatePath + "spell.html");
-			skillTemplate                 = readTemplate(templatePath + "skill.html");
-			successorFeatHeaderTemplate   = readTemplate(templatePath + "successorfeatheader.html");
+			babAndSavthrTableHeaderTemplate = readTemplate(templatePath + "babNsavthrtableheader.html");
+			classTablesEntryTemplate        = readTemplate(templatePath + "classtablesentry.html");
+			classTemplate                   = readTemplate(templatePath + "class.html");
+			domainTemplate                  = readTemplate(templatePath + "domain.html");
+			featTemplate                    = readTemplate(templatePath + "feat.html");
+			mFeatTemplate                   = readTemplate(templatePath + "masterfeat.html");
+			menuTemplate                    = readTemplate(templatePath + "menu.html");
+			menuItemTemplate                = readTemplate(templatePath + "menuitem.html");
+			prereqANDFeatHeaderTemplate     = readTemplate(templatePath + "prerequisiteandfeatheader.html");
+			prereqORFeatHeaderTemplate      = readTemplate(templatePath + "prerequisiteorfeatheader.html");
+			raceTemplate                    = readTemplate(templatePath + "race.html");
+			spellTemplate                   = readTemplate(templatePath + "spell.html");
+			skillTableHeaderTemplate        = readTemplate(templatePath + "skilltableheader.html");
+			skillTemplate                   = readTemplate(templatePath + "skill.html");
+			successorFeatHeaderTemplate     = readTemplate(templatePath + "successorfeatheader.html");
 		}catch(IOException e){
 			return false;
 		}
@@ -1092,7 +1100,7 @@ public class Main{
 				
 				// Build path and print
 				path = racePath + i + ".html";
-				if(!errored)
+				if(!errored || tolErr)
 					printPage(path, text);
 				else
 					throw new PageGenerationException("Error(s) encountered while creating page");
@@ -1117,8 +1125,7 @@ public class Main{
 		FeatEntry grantedFeat   = null;
 		Data_2da featTable      = null,
 		         bonusFeatTable = null,
-		         babTable       = null,
-		         saveTable      = null,
+		         
 		         skillTable     = null;
 		boolean errored;
 		
@@ -1129,9 +1136,123 @@ public class Main{
 			if(!classes2da.getEntry("PlayerClass", i).equals("1")) continue;
 			errored = false;
 			try{
+				name = tlk.get(classes2da.getEntry("Name", i));
+				if(verbose) System.out.println("Printing page for " + name);
+				if(name.equals(badStrRef)){
+					err_pr.println("Invalid name entry for class " + i);
+					errored = true;
+				}
+				
+				// Build the entry data
+				text = classTemplate;
+				text = text.replaceAll("~~~ClassName~~~",
+				                       name);
+				text = text.replaceAll("~~~ClassTLKDescription~~~",
+				                        htmlizeTLK(tlk.get(classes2da.getEntry("Description", i))));
+				// Check the description validity
+				if(tlk.get(classes2da.getEntry("Description", i)).equals(badStrRef)){
+					err_pr.println("Invalid description for class " + i + ": " + name);
+					errored = true;
+				}
+				
+				// Add in the BAB and saving throws table
+				text = text.replaceAll("~~~ClassBABAndSavThrTable~~~", buildBabAndSaveTable(classes2da, i));
+				
+				// Add in the skills table
+				text = text.replaceAll("~~~ClassSkillTable~~~", buildSkillTable(classes2da, i));
+				
+				/* Check whether this is a base or a prestige class. No prestige
+				 * class should give exp penalty (nor should any base class not give it),
+				 * so it gan be used as an indicator.
+				 */
+				if(classes2da.getEntry("XPPenalty", i).equals("1"))
+					path = baseClassPath + i + ".html";
+				else
+					path = prestigeClassPath + i + ".html";
+				
+				if(!errored || tolErr)
+					printPage(path, text);
+				else
+					throw new PageGenerationException("Error(s) encountered while creating page");
 			}catch(PageGenerationException e){
-				err_pr.println("Failed to print page for class " + i + ": " + name + "\nException:\n" + e);
+				err_pr.println("Failed to print page for class " + i + ": " + name + ":\n" + e);
 			}
 		}
+	}
+	
+	
+	/**
+	 * Constructs the html table of levels and their bab + saving throw bonus values.
+	 *
+	 * @param classes2da  data structure wrapping classes.2da
+	 * @param entryNum    number of the entry to generate table for
+	 *
+	 * @return  string representation of the table
+	 *
+	 * @throws PageGenerationException if reading the 2das fails
+	 */
+	private static String buildBabAndSaveTable(Data_2da classes2da, int entryNum){
+		Data_2da babTable  = null,
+		         saveTable = null;
+		try{
+			babTable = twoDA.get(classes2da.getEntry("AttackBonusTable", entryNum));
+		}catch(TwoDAReadException e){
+			if(tolErr){
+				err_pr.println("Failed to read CLS_ATK_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
+				return "";
+			}
+			else throw new PageGenerationException("Failed to read CLS_ATK_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
+		}
+		try{
+			saveTable = twoDA.get(classes2da.getEntry("SavingThrowTable", entryNum));
+		}catch(TwoDAReadException e){
+			if(tolErr){
+				err_pr.println("Failed to read CLS_SAVTHR_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
+				return "";
+			}
+			else throw new PageGenerationException("Failed to read CLS_SAVTHR_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
+		}
+		
+		String toReturn = "";
+		
+		/* Determine maximum level to print bab & save values to
+		 * The maximum level of the class, or the last non-epic level
+		 * whichever is lower
+		 */
+		int maxToPrint = 0, maxLevel = 0, epicLevel = 0;
+		try{ maxLevel = Integer.parseInt(classes2da.getEntry("MaxLevel", entryNum)); }
+		catch(NumberFormatException e){
+			if(tolErr) err_pr.println("Invalid MaxLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
+			else throw new PageGenerationException("Invalid MaxLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
+		}
+		try{ epicLevel = Integer.parseInt(classes2da.getEntry("EpicLevel", entryNum)); }
+		catch(NumberFormatException e){
+			if(tolErr) err_pr.println("Invalid EpicLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
+			else throw new PageGenerationException("Invalid EpicLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
+		}
+		
+		// base classes have special notation for the epic level limit
+		if(epicLevel == -1)
+			maxToPrint = 20;
+		else
+			maxToPrint = maxLevel > epicLevel ? epicLevel : maxLevel;
+		
+		// If the class has any pre-epic levels
+		if(maxToPrint > 0){
+			toReturn += babAndSavthrTableHeaderTemplate + "\n";
+			// Start building the table
+			for(int i = 0; i < maxToPrint; i++){
+				toReturn += "<tr>\n";
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", (i + 1) + "") + "\n";
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", babTable.getEntry("BAB", i)) + "\n";
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", saveTable.getEntry("FortSave", i)) + "\n";
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", saveTable.getEntry("RefSave", i)) + "\n";
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", saveTable.getEntry("WillSave", i)) + "\n";
+				toReturn += "</tr>\n";
+			}
+			toReturn += "</table>\n";
+		}
+		
+		return toReturn;
 	}
 }

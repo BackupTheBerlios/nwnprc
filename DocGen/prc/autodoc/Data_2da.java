@@ -66,7 +66,7 @@ public class Data_2da{
 		try{
 			CreateData(reader);
 		}catch(TwoDAReadException e){
-			throw new TwoDAReadException("Exception occurred when reading 2da file: " + name, e);
+			throw new TwoDAReadException("Exception occurred when reading 2da file: " + name + "\n" + e, e);
 		}
 		
 		if(verbose) System.out.println("- Done");

@@ -111,7 +111,9 @@ const int FEAT_SPELLS_2 = 2513;
 const int FEAT_SPELLS_3 = 2514;
 const int FEAT_SPELLS_4 = 2515;
 const int FEAT_SPELLS_5 = 2516;
-const int FEAT_SPELLS_6 = 2534; //here and below: epic
+
+//Epic Spellsword
+const int FEAT_SPELLS_6 = 2534;
 const int FEAT_SPELLS_7 = 2535;
 const int FEAT_SPELLS_8 = 2536;
 const int FEAT_SPELLS_9 = 2537;
@@ -121,6 +123,35 @@ const int FEAT_SPELLS_12 = 2540;
 const int FEAT_SPELLS_13 = 2541;
 const int FEAT_SPELLS_14 = 2542;
 const int FEAT_SPELLS_15 = 2543;
+
+//Red Wizard of Thay
+const int FEAT_RW_RES_ABJ 	= 4210;
+const int FEAT_RW_RES_CON 	= 4211;
+const int FEAT_RW_RES_DIV 	= 4212;
+const int FEAT_RW_RES_ENC 	= 4213;
+const int FEAT_RW_RES_EVO 	= 4214;
+const int FEAT_RW_RES_ILL 	= 4215;
+const int FEAT_RW_RES_NEC 	= 4216;
+const int FEAT_RW_RES_TRS 	= 4217;
+const int FEAT_RW_SPEC_ABJ 	= 4218;
+const int FEAT_RW_SPEC_CON 	= 4219;
+const int FEAT_RW_SPEC_DIV 	= 4220;
+const int FEAT_RW_SPEC_ENC 	= 4221;
+const int FEAT_RW_SPEC_EVO 	= 4222;
+const int FEAT_RW_SPEC_ILL 	= 4223;
+const int FEAT_RW_SPEC_NEC 	= 4224;
+const int FEAT_RW_SPEC_TRS 	= 4225;
+const int FEAT_RW_SPOWER_1 	= 4226;
+const int FEAT_RW_SPOWER_2 	= 4227;
+const int FEAT_RW_SPOWER_3 	= 4228;
+const int FEAT_RW_SPOWER_4 	= 4229;
+const int FEAT_RW_SPOWER_5 	= 4230;
+const int FEAT_RW_SDEF_1 	= 4231;
+const int FEAT_RW_SDEF_2 	= 4232;
+const int FEAT_RW_SDEF_3 	= 4233;
+const int FEAT_RW_SDEF_4 	= 4234;
+const int FEAT_RW_TATTOO 	= 4234;
+
 
 //Acolyte of the Skin
 const int FEAT_WEAR_FIEND = 2517;

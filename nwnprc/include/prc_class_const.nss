@@ -105,4 +105,5 @@ const int CLASS_TYPE_NIGHTSHADE                 = 116;
 const int CLASS_TYPE_ULTIMATE_RANGER            = 115;
 const int CLASS_TYPE_DRAGONSONG_LYRIST          = 114;
 const int CLASS_TYPE_MASTERH                    = 111;
+const int CLASS_TYPE_RED_WIZARD                 = 150;
 

@@ -574,11 +574,71 @@ int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
 
 int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0)
 {
-    return BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+
+	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
+	int nSpell = GetSpellId();
+	
+	if (iRedWizard > 0)
+	{
+		int iRWSpec;
+		if (GetHasFeat(FEAT_RW_SPEC_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
+		else if (GetHasFeat(FEAT_RW_SPEC_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
+		else if (GetHasFeat(FEAT_RW_SPEC_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
+		else if (GetHasFeat(FEAT_RW_SPEC_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
+		else if (GetHasFeat(FEAT_RW_SPEC_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
+		else if (GetHasFeat(FEAT_RW_SPEC_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
+		else if (GetHasFeat(FEAT_RW_SPEC_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
+		else if (GetHasFeat(FEAT_RW_SPEC_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
+
+		if (GetSpellSchool(nSpell) == iRWSpec)
+		{
+		
+			if (iRedWizard > 9)		nDC = nDC - 4;
+			else if (iRedWizard > 6)	nDC = nDC - 3;
+			else if (iRedWizard > 2)	nDC = nDC - 2;
+			else if (iRedWizard > 0)	nDC = nDC - 1;
+		
+		}
+
+
+	}
+
+
+
+	return BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 }
 
 
 int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF)
 {
+
+	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
+	int nSpell = GetSpellId();
+	
+	if (iRedWizard > 0)
+	{
+		int iRWSpec;
+		if (GetHasFeat(FEAT_RW_SPEC_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
+		else if (GetHasFeat(FEAT_RW_SPEC_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
+		else if (GetHasFeat(FEAT_RW_SPEC_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
+		else if (GetHasFeat(FEAT_RW_SPEC_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
+		else if (GetHasFeat(FEAT_RW_SPEC_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
+		else if (GetHasFeat(FEAT_RW_SPEC_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
+		else if (GetHasFeat(FEAT_RW_SPEC_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
+		else if (GetHasFeat(FEAT_RW_SPEC_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
+
+		if (GetSpellSchool(nSpell) == iRWSpec)
+		{
+		
+			if (iRedWizard > 9)		nDC = nDC - 4;
+			else if (iRedWizard > 6)	nDC = nDC - 3;
+			else if (iRedWizard > 2)	nDC = nDC - 2;
+			else if (iRedWizard > 0)	nDC = nDC - 1;
+		
+		}
+
+
+	}
+
     return GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
 }

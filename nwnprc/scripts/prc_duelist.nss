@@ -122,7 +122,7 @@ void main()
     else
         DuelistCannyDefense(oPC, oSkin, FALSE);
 
-    if(bPStrk > 0 && (GetBaseItemType(oWeapon) == BASE_ITEM_RAPIER || GetBaseItemType(oWeapon) == BASE_ITEM_DAGGER))
+    if(bPStrk > 0 && (GetBaseItemType(oWeapon) == BASE_ITEM_RAPIER || GetBaseItemType(oWeapon) == BASE_ITEM_DAGGER) || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSWORD)
         DuelistPreciseStrike(oPC, oWeapon, bPStrk);
     else
         DuelistPreciseStrike(oPC, oWeapon, 0);

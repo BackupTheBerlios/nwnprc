@@ -7,7 +7,7 @@ const int FEAT_EB_NECK                                 = 3394;
 const int FEAT_INTUITIVE_ATTACK                        = 3166;
 const int FEAT_RAVAGEGOLDENICE                         = 3162;
 const int FEAT_DRAGONSONG                              = 3440;
-
+const int FEAT_UNDEAD_MASTERY                          = 3446;
 
 const int FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION    = 3128;
 const int FEAT_FOCUSED_SPELL_PENETRATION_CONJURATION   = 3129;

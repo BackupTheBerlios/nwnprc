@@ -23,6 +23,9 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
     effect ePoly;
 
+    int Level = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,OBJECT_SELF)- 10 ;
+
+    int nDuration = 1+ (Level/5);
 
     int nSpell = GetSpellId();
 
@@ -45,6 +48,6 @@ void main()
 
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(1));
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(nDuration));
     DelayCommand(1.5,AddIniDmg(OBJECT_SELF));
 }

@@ -13,4 +13,5 @@
 9  Half-Elf      RACE     4              **** 
 10 Base_Attack   BAB      5              ****
 11 ScriptVar     VAR      X1_AllowBlades 0         
+12 Perform       SKILL    11             3         
    

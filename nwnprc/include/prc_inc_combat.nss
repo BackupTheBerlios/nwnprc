@@ -4,38 +4,95 @@
 //:: Created By: Oni5115
 //:: Created On: July 16, 2004
 //:://////////////////////////////////////////////
-//:: Code based on Aaon Graywolf's older inc_combat.nss
-//:: and Soul Taker's Additions in inc_combat2.nss
+//:: Code based on Aaon Graywolf's inc_combat.nss
+//:: and Soul Taker's additions in inc_combat2.nss
 //:://////////////////////////////////////////////
-//:: Attempts to add additional functionality to the 
-//:: older combat system to make combat simulation 
-//:: a little more accurate and easy to use.
+//:: Adds a great deal of additional functionality 
+//:: to the older combat system to make combat simulation 
+//:: more accurate and much easier to use.
+//:://////////////////////////////////////////////
+//:: Current Features:
+//:://////////////////////////////////////////////
+//:: Easy to use function for performing an entire attack round.  PerformAttackRound
+//:: Easy to use function for performing a single attack.         PerformAttack
+//:: Proper calculation of attack bonus including any bonus effects on weapon or spells.
+//:: Proper calculation of weapon damage including any bonus effects or spell effects.
+//:: Proper calculation of bonus, main, and off-hand attacks.
+//:: Proper calculation of enemy AC.
+//:: Proper application of sneak attacks.
+//:: Proper application of touch attacks.
+//:: All On Hit: Cast Spell abilities working
+//:: All On Hit: Unique Power abilities working
+//:: All On Hit: properties working  (daze, stun, vorpal, poison, disease, etc.)
+//:: All known weapon/spell damage bonuses are counted
+//::
+//:://////////////////////////////////////////////
+//:: Support for the following feats:
+//:://////////////////////////////////////////////
+//:: Weapon Focus, Epic Weapon Focus, Epic Prowess, 
+//:: Improved Critical, Overwhelming Critical, 
+//:: Weapon Specialization, Epic Weapon Specialization,
+//:: Weapon Finesse, Inuitive Attack, Zen Archery, 
+//::
+//:: Expertise, Improved Expertise,
+//:: Cleave, Great Cleave, Circle Kick,
+//:: Power Attack, Improved Power Attack, Supreme Power Attack,
+//:: Power Shot, Improved Power Shot, Supreme Power Shot,
+//:: 
+//:: Rapid Shot, Flurry of Blows, Martial Flurry, Furious Assult,
+//:: One Strike Two Cuts, Extra Shot
+//:: 
+//:: Epic Dodge, Self Concealment I-V, Blind Fight, Crippling Strike
+//::
+//:: All Arcane Archer and Weapon Master Feats.
+//:: Favored Enemy, Bane of Enemies, 
+//:: Battle Training, Divine Might, Bard Song, Thundering Rage
+//::
+//:: Note: If you notice any feats missing let Oni5115 know
+//::       They might be accounted for, but not added to the list;
+//::       or they might not be implemented yet.
+//::
 //:://////////////////////////////////////////////
 //:: Current Limitations:
-//:: Coup De Grace does not take into account bonus damage
+//:://////////////////////////////////////////////
+//:: Coup De Grace does not take into account bonus damage [Except from touch attack spells]
+//:: Calculation of Enemey AC does not take into account bonus vs. racial type or alignment type.
+//::
+//:: Devestating Critical not yet implemented
 //:: 
-//:: System does not add many magical effects on weapons.
-//:: Examples would be Vorpal, On hit: Daze/Stun/Sleep, Poison, etc.
-//:: 
-//:: All weapon/spell damage bonuses are counted though.
 //:://////////////////////////////////////////////
 //:: Tested:
+//:://////////////////////////////////////////////
 //:: Weapon Information and Damage
 //:: Elemental Information and Damage
-//:: Perform Attack Round
 //:: Sneak Attack Functions
+//:: On Hit: Cast Spell
+//:: On Hit: Unique Power 
+//:: On Hit: properties
+//:: Perform Attack Round
 //:://////////////////////////////////////////////
 //:: Things to Test:
-//:: 
-//:: Dark Fire and Flame Weapon
-//:: Unarmed Damage
+//:://////////////////////////////////////////////
+//:: On Hit: Slay Race/Alignment Group/Alignment
+//::         Wounding, Disease, Poison, 
+//::         [Duration abilities] sleep, stun, hold, etc..
+//::         Dark Fire and Flame Weapon
+//::         Unique Power - should test more of the abilities to make sure it works right
+//::
+//:: Bug Fix for Sanctuary / invis not being removed
+//:: Coup De Grace
+//:: PerformAttack
+//::
+//:: Unarmed Damage Calculation
 //:: Cleave, Great Cleave, and Cirlce Kick
 //:: 
-//:: Bug Fix for Sanctuary / invis not being removed
-//:: Coup De Grace to Perform Attack Round
+//:: Blinding Speed (should count as haste effect)
 //:://////////////////////////////////////////////
 //:: Known Bugs:
-//:: 
+//:://////////////////////////////////////////////
+//:: Rapid Reload - ... crossbows get full attack rounds currently
+//::                    will look at the PnP rules and see what 
+//::                    they are for cross bows
 //:://////////////////////////////////////////////
 
 // #include "prc_feat_const"   <-- Inherited
@@ -131,9 +188,10 @@ int GetMainHandAttacks(object oPC);
 // Returns number of attacks per round for off-hand
 int GetOffHandAttacks(object oPC);
 
-// Returns an  Alignment Group
+// Returns a specific alignment property.
+// Returns a line number from iprp_alignment.2da
 // Used to determine the attack and damage bonuses vs. alignments
-int ConvAlignGr(int iGoodEvil,int iLawChaos);
+int GetItemPropAlignment(int iGoodEvil,int iLawChaos);
 
 //:://////////////////////////////////////////////
 //::  Attack Bonus Functions
@@ -242,8 +300,20 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 //::  Attack Logic Functions
 //:://////////////////////////////////////////////
 
+// Called by ApplyOnHitAbilities
+// properly applies on hit abilties with a X% chance of firing that last Y rounds.
+// in other words... on hit stun, daze, sleep, blindness, etc.
+// iDruationVal - iprp_onhitdur.2da entry number
+// eAbility -  the proper effect this ability will apply to the target
+// eVis     - the visual effect to apply
+void ApplyOnHitDurationAbiltiies(object oDefender, int iDurationVal, effect eAbility, effect eVis);
+
 // applies any On Hit abilities like spells, vampiric regen, poison, vorpal, stun, etc.
-void ApplyOnHitAbilities(object oDefender, object oAttacker, object oWeapon);
+// if you sent a WEAPON
+// oDefender = one being hit | oAttacker = one attacking
+// if you send   ARMOR
+// oDefender = one attacking | oAttacker = one being hit
+void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem);
 
 // Due to the lack of a proper sleep function in order to delay attacks properly
 // I needed to make a separate function to control the logic of each attack.
@@ -347,6 +417,7 @@ int bFirstAttack = TRUE;
 
 int bIsVorpalWeaponEquiped = FALSE;
 int iVorpalSaveDC = 0;
+
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
 //:://////////////////////////////////////////////
@@ -1024,7 +1095,7 @@ int GetOffHandAttacks(object oPC)
      return iOffHandAttacks;
 }
 
-int ConvAlignGr(int iGoodEvil,int iLawChaos)
+int GetItemPropAlignment(int iGoodEvil,int iLawChaos)
 {
    int Align;
    
@@ -1324,7 +1395,7 @@ int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender)
 
     int iGoodEvil = GetAlignmentGoodEvil(oDefender);
     int iLawChaos = GetAlignmentLawChaos(oDefender);
-    int iAlignSpecific = ConvAlignGr(iGoodEvil, iLawChaos);
+    int iAlignSpecific = GetItemPropAlignment(iGoodEvil, iLawChaos);
     int iAlignGroup;
 
     itemproperty ip = GetFirstItemProperty(oWeap);
@@ -1977,6 +2048,12 @@ int GetFavoredEnemeyDamageBonus(object oDefender, object oAttacker)
           iDamageBonus = 0;
      }
      
+     // add in 2d6 damage for bane of enemies
+     if(bIsFavoredEnemy && GetHasFeat(FEAT_EPIC_BANE_OF_ENEMIES, oAttacker))
+     {
+          iDamageBonus += d6(2);
+     }
+     
      return iDamageBonus;
 }
 
@@ -2007,7 +2084,7 @@ int GetWeaponEnhancement(object oWeapon, object oDefender, object oAttacker)
      
      int iGoodEvil = GetAlignmentGoodEvil(oDefender);
      int iLawChaos = GetAlignmentLawChaos(oDefender);
-     int iAlignSp  = ConvAlignGr(iGoodEvil,iLawChaos);
+     int iAlignSp  = GetItemPropAlignment(iGoodEvil,iLawChaos);
      int iAlignGr; 
 
      itemproperty ip = GetFirstItemProperty(oWeapon);
@@ -2128,7 +2205,7 @@ int GetAmmunitionEnhancement(object oWeapon, object oDefender, object oAttacker)
      
     int iGoodEvil = GetAlignmentGoodEvil(oDefender);
     int iLawChaos = GetAlignmentLawChaos(oDefender);
-    int iAlignSp  = ConvAlignGr(iGoodEvil, iLawChaos);
+    int iAlignSp  = GetItemPropAlignment(iGoodEvil, iLawChaos);
     int iAlignGr; 
     
     object oAmmu = GetAmmunitionFromWeapon(oWeapon, oAttacker);    
@@ -2503,7 +2580,7 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
      
      int iGoodEvil = GetAlignmentGoodEvil(oTarget);
      int iLawChaos = GetAlignmentLawChaos(oTarget);
-     int iAlignSp  = ConvAlignGr(iGoodEvil,iLawChaos);
+     int iAlignSp  = GetItemPropAlignment(iGoodEvil,iLawChaos);
      int iAlignGr;    
      
      int iSpellType;
@@ -3028,7 +3105,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      if(iNumSides == 20) iWeaponDamage += d20(iNumDice);
      
      // Determine Masssive Critcal Bonuses
-     if(bIsCritical)
+     if(bIsCritical && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) )
      {
           itemproperty ip = GetFirstItemProperty(oWeapon);
           while(GetIsItemPropertyValid(ip))
@@ -3049,7 +3126,16 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           
           if(GetHasFeat(FEAT_EPIC_THUNDERING_RAGE, oAttacker) && GetHasFeatEffect(FEAT_BARBARIAN_RAGE, oAttacker) )
           {
-               iMassCritBonusDamage += d6(2);
+               iMassCritBonusDamage += d8(2);
+          }
+          
+          // if player has Overwhelming Critical with this weapon type.
+          if(GetHasFeat(GetFeatByWeaponType(GetBaseItemType(oWeapon), "OverwhelmingCrit"), oAttacker) )
+          {
+               // should do +1d6 damage, 2d6 if crit X 3, 3d6 if X4, etc.
+               int iOCDice = iCriticalMultiplier - 1;
+               if(iOCDice < 1) iOCDice = 1;
+               iMassCritBonusDamage += d6(iOCDice);
           }
      }
      
@@ -3243,7 +3329,20 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 //::  Attack Logic Functions
 //:://////////////////////////////////////////////
 
-void ApplyOnHitAbilities(object oDefender, object oAttacker, object oWeapon)
+void ApplyOnHitDurationAbiltiies(object oDefender, int iDurationVal, effect eAbility, effect eVis)
+{
+     int iChance   = StringToInt( Get2DACache("iprp_onhitdur", "EffectChance", iDurationVal) );
+     int iDuration = StringToInt( Get2DACache("iprp_onhitdur", "DurationRounds", iDurationVal) );
+     int iRoll = d100();
+     
+     if(iRoll <= iChance)
+     {
+         effect eLink = EffectLinkEffects(eAbility, eVis);
+         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oDefender, RoundsToSeconds(iDuration) );
+     }
+}
+
+void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
 {
      int ipType    = 0;
      int ipCostVal = 0;
@@ -3253,10 +3352,9 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oWeapon)
      
      string sMes = "";
      
-     itemproperty ip = GetFirstItemProperty(oWeapon);
+     itemproperty ip = GetFirstItemProperty(oItem);
      while(GetIsItemPropertyValid(ip))
      {
-          
           ipCostVal = GetItemPropertyCostTableValue(ip);
           ipSubType = GetItemPropertySubType(ip);
           ipParam1 = GetItemPropertyParam1Value(ip);
@@ -3303,6 +3401,14 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oWeapon)
                }
                
                // sMes += " | I have On Hit: ";
+               
+               effect eEffect;
+               effect eVis;
+               
+               // alignment code
+               int iGoodEvil = GetAlignmentGoodEvil(oDefender);
+               int iLawChaos = GetAlignmentLawChaos(oDefender);
+               int iAlignSpecific = GetItemPropAlignment(iGoodEvil, iLawChaos);
                 
                switch (ipSubType)
                {
@@ -3312,90 +3418,206 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oWeapon)
                          iVorpalSaveDC = ipCostVal;
                     break;
                     
-                    // requires no ipParam1
+                    // ipParam1 should be the ammout of levels to drain
                     case IP_CONST_ONHIT_LEVELDRAIN:
                          if( !FortitudeSave(oDefender, ipCostVal, SAVING_THROW_TYPE_NEGATIVE) )
                          {
-                              effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+                              if(ipParam1 < 1) ipParam1 = 1;
+                              
+                              eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
                               ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
                               
-                              effect eNegLev = SupernaturalEffect( EffectNegativeLevel(1) );
-                              ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNegLev, oDefender);
+                              eEffect = SupernaturalEffect( EffectNegativeLevel(ipParam1) );
+                              ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
                          }
                     break;
-
+                    
+                    // NEEDS TESTING
                     case IP_CONST_ONHIT_WOUNDING:
+                         if( !FortitudeSave(oDefender, ipCostVal, SAVING_THROW_TYPE_NONE) )
+                         {
+                              if(ipParam1 < 1) ipParam1 = 1;
+                              ipParam1 *= -1;
+                              
+                              eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                              
+                              // in theory this will drain them 1 HP per round.
+                              eEffect = ExtraordinaryEffect( EffectRegenerate(ipParam1, 6.0 ) );
+                              ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oDefender, 9999.0);
+                         }
                     break;
                     
                     case IP_CONST_ONHIT_KNOCK:
+                         ActionCastSpellAtObject(SPELL_KNOCK, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
                     break;
 
                     case IP_CONST_ONHIT_LESSERDISPEL:
+                         ActionCastSpellAtObject(SPELL_LESSER_DISPEL, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
                     break;
 
                     case IP_CONST_ONHIT_DISPELMAGIC:
+                         ActionCastSpellAtObject(SPELL_DISPEL_MAGIC, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);                    
                     break;
                        
                     case IP_CONST_ONHIT_GREATERDISPEL:
+                         ActionCastSpellAtObject(SPELL_GREATER_DISPELLING, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);                    
                     break;
                     
                     case IP_CONST_ONHIT_MORDSDISJUNCTION:
+                         ActionCastSpellAtObject(SPELL_MORDENKAINENS_DISJUNCTION, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);                    
                     break;
 
                     // ipParam1 = iprp_abilities.2da
+                    // both have the same effect in game
+                    // this "poison" property is 1d2 ability damage
+                    // not the actial poison.2da poison abilities.
+                    case IP_CONST_ONHIT_ITEMPOISON:   
                     case IP_CONST_ONHIT_ABILITYDRAIN:  
+                         int iStat;
+                         switch (ipParam1)
+                         {
+                              case 0: iStat = ABILITY_STRENGTH;     break;
+                              case 1: iStat = ABILITY_DEXTERITY;    break;
+                              case 2: iStat = ABILITY_CONSTITUTION; break;
+                              case 3: iStat = ABILITY_INTELLIGENCE; break;
+                              case 4: iStat = ABILITY_WISDOM;       break;
+                              case 5: iStat = ABILITY_CHARISMA;     break;
+                         }
+
+                         eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
+                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                         
+                         eEffect = EffectAbilityDecrease(iStat, d2() );
+                         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
                     break;
                     
                     // ipParam1 = disease.2da
-                    case IP_CONST_ONHIT_DISEASE:       
+                    case IP_CONST_ONHIT_DISEASE:
+                         string iDiseaseType = Get2DACache("disease", "Type", ipParam1);
+                         eEffect = EffectDisease(ipParam1);
+                         
+                         if(iDiseaseType == "EXTRA")      eEffect = ExtraordinaryEffect(eEffect);
+                         else if(iDiseaseType == "SUPER") eEffect = SupernaturalEffect(eEffect);
+                         
+                         eVis = EffectVisualEffect(VFX_IMP_DISEASE_S);
+                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
                     break;
                     
-                    // 
-                    case IP_CONST_ONHIT_SLAYALIGNMENT:
+                    // ipParam1 =  IPRP_ALIGNMENT
+                    case IP_CONST_ONHIT_SLAYALIGNMENT:                         
+                         // ipParam1 - specific alignment
+                         if(ipParam1 == iAlignSpecific)
+                         {
+                              eVis = EffectVisualEffect(VFX_IMP_DEATH);
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                    
+                              // circumvent death immunity
+                              eEffect = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);                              
+                         }
                     break;
-                       
-                    case IP_CONST_ONHIT_SLAYALIGNMENTGROUP:
+                    
+                    // ipParam1 =  IPRP_ALIGNGRP
+                    case IP_CONST_ONHIT_SLAYALIGNMENTGROUP:               
+                         // ipParam1 - alignment group
+                         if(ipParam1 == iGoodEvil || ipParam1 == iLawChaos || ipParam1 == IP_CONST_ALIGNMENTGROUP_ALL)
+                         {
+                              eVis = EffectVisualEffect(VFX_IMP_DEATH);
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                    
+                              // circumvent death immunity
+                              eEffect = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);                              
+                         }                         
                     break;
-                       
+                    
+                    // ipParam1 =  racialtypes.2da
                     case IP_CONST_ONHIT_SLAYRACE:
-                    break;
+                         if(ipParam1 == MyPRCGetRacialType(oDefender) )
+                         {
+                              eVis = EffectVisualEffect(VFX_IMP_DEATH);
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
                     
-                    // ipParam1 =  iprp_poison.2da
-                    case IP_CONST_ONHIT_ITEMPOISON:    
+                              // circumvent death immunity
+                              eEffect = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);
+                         }
                     break;
  
                     // ipParam1 = iprp_onhitdur.2da
                     case IP_CONST_ONHIT_BLINDNESS: 
+                         eEffect = EffectBlindness();
+                         eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);                    
                     break;
 
                     case IP_CONST_ONHIT_CONFUSION:
+                         eEffect = EffectConfused();
+                         eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);                    
                     break;
                        
                     case IP_CONST_ONHIT_DAZE:
+                         eEffect = EffectDazed();
+                         eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
                        
                     case IP_CONST_ONHIT_DEAFNESS:
+                         eEffect = EffectDeaf();
+                         eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
                        
                     case IP_CONST_ONHIT_DOOM:
+                         effect eSaves = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2);
+                         effect eAttack = EffectAttackDecrease(2);
+                         effect eDamage = EffectDamageDecrease(2);
+                         effect eSkill = EffectSkillDecrease(SKILL_ALL_SKILLS, 2);
+
+                         effect eLink = EffectLinkEffects(eAttack, eDamage);
+                         eLink = EffectLinkEffects(eLink, eSaves);
+                         eLink = EffectLinkEffects(eLink, eSkill);
+                         eVis = EffectVisualEffect(VFX_IMP_DOOM);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eLink, eVis);                    
                     break;
                        
                     case IP_CONST_ONHIT_FEAR:
+                         eEffect = EffectFrightened();
+                         eVis = EffectVisualEffect(VFX_IMP_HEAD_EVIL);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
 
                     case IP_CONST_ONHIT_HOLD:
+                         eEffect = EffectParalyze();
+                         eVis = EffectVisualEffect(VFX_DUR_FREEZE_ANIMATION);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
 
                     case IP_CONST_ONHIT_SILENCE:
+                         eEffect = EffectSilence();
+                         eVis = EffectVisualEffect(VFX_IMP_SILENCE);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
 
                     case IP_CONST_ONHIT_SLEEP:
+                         eEffect = EffectSleep();
+                         eVis = EffectVisualEffect(VFX_IMP_SLEEP);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
                        
                     case IP_CONST_ONHIT_SLOW:
+                         eEffect = EffectSlow();
+                         eVis = EffectVisualEffect(VFX_IMP_SLOW);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
                        
                     case IP_CONST_ONHIT_STUN:
+                         eEffect = EffectStunned();
+                         eVis = EffectVisualEffect(VFX_IMP_STUN);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
                }
                   
@@ -3405,14 +3627,128 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oWeapon)
           // much like above but for creature weapons
           else if(ipType == ITEM_PROPERTY_ON_MONSTER_HIT)
           {
+               effect eEffect;
+               effect eVis;
+               
+               switch(ipSubType)
+               {
+                    // ipParam1 should be the ammout of levels to drain
+                    case IP_CONST_ONMONSTERHIT_LEVELDRAIN:
+                         if( !FortitudeSave(oDefender, ipCostVal, SAVING_THROW_TYPE_NEGATIVE) )
+                         {
+                              if(ipParam1 < 1) ipParam1 = 1;
+                              
+                              eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                              
+                              eEffect = SupernaturalEffect( EffectNegativeLevel(ipParam1) );
+                              ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+                         }
+                    break;
+                    
+                    // NEEDS TESTING
+                    case IP_CONST_ONMONSTERHIT_WOUNDING:
+                         if( !FortitudeSave(oDefender, ipCostVal, SAVING_THROW_TYPE_NONE) )
+                         {
+                              if(ipParam1 < 1) ipParam1 = 1;
+                              ipParam1 *= -1;
+                              
+                              eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                              
+                              // in theory this will drain them 1 HP per round.
+                              eEffect = ExtraordinaryEffect( EffectRegenerate(ipParam1, 6.0 ) );
+                              ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oDefender, 9999.0);
+                         }
+                    break;
+
+                    // ipParam1 = iprp_abilities.2da
+                    // both have the same effect in game
+                    // this "poison" property is 1d2 ability damage
+                    // not the actial poison.2da poison abilities.
+                    case IP_CONST_ONMONSTERHIT_POISON:   
+                    case IP_CONST_ONMONSTERHIT_ABILITYDRAIN:  
+                         int iStat;
+                         switch (ipParam1)
+                         {
+                              case 0: iStat = ABILITY_STRENGTH;     break;
+                              case 1: iStat = ABILITY_DEXTERITY;    break;
+                              case 2: iStat = ABILITY_CONSTITUTION; break;
+                              case 3: iStat = ABILITY_INTELLIGENCE; break;
+                              case 4: iStat = ABILITY_WISDOM;       break;
+                              case 5: iStat = ABILITY_CHARISMA;     break;
+                         }
+
+                         eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
+                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                         
+                         eEffect = EffectAbilityDecrease(iStat, d2() );
+                         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+                    break;
+                    
+                    // ipParam1 = disease.2da
+                    case IP_CONST_ONMONSTERHIT_DISEASE:
+                         string iDiseaseType = Get2DACache("disease", "Type", ipParam1);
+                         eEffect = EffectDisease(ipParam1);
+                         
+                         if(iDiseaseType == "EXTRA")      eEffect = ExtraordinaryEffect(eEffect);
+                         else if(iDiseaseType == "SUPER") eEffect = SupernaturalEffect(eEffect);
+                         
+                         eVis = EffectVisualEffect(VFX_IMP_DISEASE_S);
+                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+                    break;
+
+                    case IP_CONST_ONMONSTERHIT_CONFUSION:
+                         eEffect = EffectConfused();
+                         eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);                    
+                    break;
+
+                    case IP_CONST_ONMONSTERHIT_DOOM:
+                         effect eSaves = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2);
+                         effect eAttack = EffectAttackDecrease(2);
+                         effect eDamage = EffectDamageDecrease(2);
+                         effect eSkill = EffectSkillDecrease(SKILL_ALL_SKILLS, 2);
+
+                         effect eLink = EffectLinkEffects(eAttack, eDamage);
+                         eLink = EffectLinkEffects(eLink, eSaves);
+                         eLink = EffectLinkEffects(eLink, eSkill);
+                         eVis = EffectVisualEffect(VFX_IMP_DOOM);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eLink, eVis);                    
+                    break;
+                       
+                    case IP_CONST_ONMONSTERHIT_FEAR:
+                         eEffect = EffectFrightened();
+                         eVis = EffectVisualEffect(VFX_IMP_HEAD_EVIL);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
+                    break;
+
+                    case IP_CONST_ONMONSTERHIT_SLOW:
+                         eEffect = EffectSlow();
+                         eVis = EffectVisualEffect(VFX_IMP_SLOW);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
+                    break;
+                       
+                    case IP_CONST_ONMONSTERHIT_STUN:
+                         eEffect = EffectStunned();
+                         eVis = EffectVisualEffect(VFX_IMP_STUN);
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
+                    break;
+               }
           }
           
+          // poisons from poison.2da
           else if(ipType == ITEM_PROPERTY_POISON)
           {
+               effect ePoison = EffectPoison( ipSubType );
+               ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoison, oDefender);
                
+               effect eVis = EffectVisualEffect(VFX_IMP_POISON_L);
+               ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
           }
         
-         ip = GetNextItemProperty(oWeapon);
+         ip = GetNextItemProperty(oItem);
      }
      
      FloatingTextStringOnCreature(sMes, oAttacker);
@@ -3452,6 +3788,12 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
 
                eEffect = GetNextEffect(oAttacker);
           }
+     }
+     
+     // take the player out of stealth mode
+     if(bFirstAttack && GetActionMode(oAttacker, ACTION_MODE_STEALTH) )
+     {
+          SetActionMode(oAttacker, ACTION_MODE_STEALTH, FALSE);
      }
 
      effect eDamage;
@@ -3549,8 +3891,14 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           if(iAttackRoll > 0)
           {
               ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oDefender);
+              
+              // apply any on hit abilities from attackers weapon to defender
               ApplyOnHitAbilities(oDefender, oAttacker, oWeapon);
               
+              // apply any on hit abilities from defenders armor to attacker
+              object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oDefender);
+              if( GetIsObjectValid(oArmor) ) ApplyOnHitAbilities(oAttacker, oDefender, oArmor);
+
               // if critical hit and vorpal weapon, apply vorpal effect
               if(bIsCritcal && bIsVorpalWeaponEquiped)
               {
@@ -3976,6 +4324,10 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      {
           iBonusMainHandAttacks += 1;
           iAttackPenalty -= 2;
+     }
+     if( GetHasSpellEffect(SPELL_EXTRASHOT, oAttacker) )
+     {
+          iBonusMainHandAttacks += 1;
      }
 
      // only run if using two weapons

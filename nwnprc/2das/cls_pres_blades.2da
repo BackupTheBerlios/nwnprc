@@ -1,13 +1,16 @@
 2DA V2.0
 
-  LABEL         ReqType  ReqParam1      ReqParam2 
-0 Concentration SKILL    1              4         
-1 Tumble        SKILL    21             2         
-2 CombatCasting FEAT     7              ****      
-3 Dodge         FEAT     10             ****      
-4 StillSpell    FEAT     28             **** 
-5 WeapFocRapier FEATOR   104            ****      
-6 WeapFocLSw    FEATOR   106            ****      
-7 Arcane        ARCSPELL 1              ****            
-8 ScriptVar     VAR      X1_AllowBlades 0         
+   LABEL         ReqType  ReqParam1      ReqParam2 
+0  Concentration SKILL    1              4         
+1  Tumble        SKILL    21             2         
+2  CombatCasting FEAT     7              ****      
+3  Dodge         FEAT     10             ****      
+4  StillSpell    FEAT     28             **** 
+5  WeapFocRapier FEATOR   104            ****      
+6  WeapFocLSw    FEATOR   106            ****      
+7  Arcane        ARCSPELL 1              ****            
+8  Elf           RACE     1              ****
+9  Half-Elf      RACE     4              **** 
+10 Base_Attack   BAB      5              ****
+11 ScriptVar     VAR      X1_AllowBlades 0         
    

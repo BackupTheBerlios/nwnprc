@@ -3,7 +3,7 @@
  *
  * Created on April 12, 2003, 12:05 PM
  */
- 
+
 package CharacterCreator;
 
 import java.awt.*;
@@ -20,24 +20,24 @@ import CharacterCreator.util.*;
  * @author  James
  */
 public class RaceMenu extends javax.swing.JFrame {
-    
+
     public class RaceButton extends JPanel {
-        
+
         private void initComponents() {
             RaceButton = new JButton();
             InfoNum = new JLabel();
             setLayout(new GridBagLayout());
             RaceButton.setBackground(new Color(0, 0, 0));
-            RaceButton.setForeground(new Color(204, 204, 0));
+            RaceButton.setForeground(new Color(222, 200, 120));  // Text color for buttons
             RaceButton.setText("Name Place Holder");
             RaceButton.setHorizontalAlignment(2);
             RaceButton.setPreferredSize(new Dimension(240, 52));
             RaceButton.addActionListener(new ActionListener() {
-                
+
                 public void actionPerformed(ActionEvent evt) {
                     RaceButtonActionPerformed(evt);
                 }
-                
+
             });
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.fill = 2;
@@ -48,35 +48,35 @@ public class RaceMenu extends javax.swing.JFrame {
             gridBagConstraints.gridy = 0;
             add(InfoNum, gridBagConstraints);
         }
-        
+
         private void RaceButtonActionPerformed(ActionEvent evt) {
             int tmp = (new Integer(InfoNum.getText())).intValue();
             descstr = racialmap[tmp][racialtypes.Description];
-            int descnum = ChkHex.ChkHex(descstr);              
+            int descnum = ChkHex.ChkHex(descstr);
             //int descnum = (new Integer((String)racialmap[tmp].get(new Integer(racialtypes.Description)))).intValue();
             DescriptionText.setText(TLKFAC.getEntry(descnum));
             DescriptionContainer.scrollRectToVisible(new Rectangle(10, 10));
             RACENUM = tmp;
             OKButton.setEnabled(true);
         }
-        
+
         public JButton RaceButton;
         public JLabel InfoNum;
         public String FILENAME;
-        
-        
+
+
         public RaceButton() {
             initComponents();
         }
     }
-    
+
     /** Creates new form RaceMenu1 */
     public RaceMenu() {
         RACENUM = 6;
         initComponents();
         OKButton.setEnabled(false);
         DescriptionContainer.setViewportView(DescriptionText);
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
@@ -85,9 +85,9 @@ public class RaceMenu extends javax.swing.JFrame {
         } else {
             setLocation(0,0);
         }
-        
+
         menucreate = TLKFactory.getCreateMenu();
-        menucreate.BlockWindow(true);        
+        menucreate.BlockWindow(true);
         TLKFAC = menucreate.getTLKFactory();
         RESFAC = menucreate.getResourceFactory();
         String imagestring = "";
@@ -104,17 +104,17 @@ public class RaceMenu extends javax.swing.JFrame {
             if(tempispc != null && tempispc.equalsIgnoreCase("1")) {
                 RaceButton racebutton = new RaceButton();
                 descstr = racialmap[i][racialtypes.Name];
-                int descnum = ChkHex.ChkHex(descstr);                
+                int descnum = ChkHex.ChkHex(descstr);
                 racebutton.RaceButton.setText(TLKFAC.getEntry(descnum));
                 racebutton.setSize(240, 52);
                 racebutton.InfoNum.setText(Integer.toString(i));
                 RaceButtonList.add(racebutton, -1);
             }
         }
-        
+
         pack();
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -148,24 +148,25 @@ public class RaceMenu extends javax.swing.JFrame {
         });
 
         RaceButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        RaceButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        RaceButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        RaceButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);         // was that weird green color on the menus
+        RaceButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         RaceButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         RaceButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         RaceButtonContainer.setAutoscrolls(true);
 		RaceButtonContainer.getVerticalScrollBar().setUnitIncrement(52);
 		RaceButtonContainer.getVerticalScrollBar().setBlockIncrement(52);
-        RaceButtonBak.setLayout(new java.awt.GridBagLayout());
 
+        RaceButtonBak.setLayout(new java.awt.GridBagLayout());
         RaceButtonBak.setBackground(new java.awt.Color(0, 0, 0));
-        RaceButtonBak.setForeground(new java.awt.Color(255, 255, 255));
+        RaceButtonBak.setForeground(new java.awt.Color(255, 255, 255)); // color not seen
         RaceButtonBak.setAlignmentX(0.0F);
         RaceButtonBak.setAlignmentY(0.0F);
         RaceButtonBak.setAutoscrolls(true);
-        RaceButtonList.setLayout(new java.awt.GridLayout(0, 1));
 
-        RaceButtonList.setBackground(new java.awt.Color(0, 0, 0));
+        RaceButtonList.setLayout(new java.awt.GridLayout(0, 1));
+        RaceButtonList.setBackground(new java.awt.Color(0, 0, 0));  // outline behind buttons
         RaceButtonList.setBorder(new javax.swing.border.EmptyBorder(new java.awt.Insets(3, 3, 3, 3)));
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -220,11 +221,11 @@ public class RaceMenu extends javax.swing.JFrame {
         getContentPane().add(CancelButton, gridBagConstraints);
 
         DescriptionContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        DescriptionContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(204, 204, 204)));
+        DescriptionContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);            // behind text description
+        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         DescriptionContainer.setPreferredSize(new java.awt.Dimension(400, 300));
         DescriptionText.setBackground(new java.awt.Color(0, 0, 0));
-        DescriptionText.setForeground(new java.awt.Color(255, 255, 153));
+        DescriptionText.setForeground(new java.awt.Color(240, 216, 130));  // text for description
         DescriptionText.setLineWrap(true);
         DescriptionText.setWrapStyleWord(true);
         DescriptionText.setPreferredSize(new java.awt.Dimension(400, 800));
@@ -283,46 +284,46 @@ public class RaceMenu extends javax.swing.JFrame {
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
-        menucreate.BlockWindow(false);        
+        menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
         CreateMenu menucreate = TLKFactory.getCreateMenu();
         menucreate.PortraitButton.setEnabled(true);
         descstr = racialmap[RACENUM][racialtypes.Name];
-        int tlkentry = ChkHex.ChkHex(descstr);        
+        int tlkentry = ChkHex.ChkHex(descstr);
         //int tlkentry = (new Integer((String)racialmap[RACENUM].get(new Integer(racialtypes.Name)))).intValue();
         menucreate.RaceName.setText(TLKFAC.getEntry(tlkentry));
         menucreate.MainCharDataAux[1] = racialmap[RACENUM];
-        menucreate.BlockWindow(false);        
+        menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     private void RecommendedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecommendedButtonActionPerformed
         // Add your handling code here:
         //HUMAN IS DEFAULT RACE (RACE 6)
         descstr = racialmap[6][racialtypes.Description];
-        int descnum = ChkHex.ChkHex(descstr);        
+        int descnum = ChkHex.ChkHex(descstr);
         //int descnum = (new Integer((String)racialmap[6].get(new Integer(racialtypes.Description)))).intValue();
         RACENUM = 6;
         DescriptionText.setText(TLKFAC.getEntry(descnum));
         OKButton.setEnabled(true);
     }//GEN-LAST:event_RecommendedButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_exitForm
-    
+
     private String descstr;
     private int RACENUM;
     private TLKFactory TLKFAC;
@@ -345,5 +346,5 @@ public class RaceMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     // End of variables declaration//GEN-END:variables
-    
+
 }

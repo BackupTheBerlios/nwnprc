@@ -31,7 +31,7 @@ public class AbilitiesMenu extends JFrame
         modifier = new int[6];
         racemod = new String[6];
         menucreate = TLKFactory.getCreateMenu();
-        menucreate.BlockWindow(true);        
+        menucreate.BlockWindow(true);
         TLKFAC = menucreate.getTLKFactory();
         RESFAC = menucreate.getResourceFactory();
         initComponents();
@@ -39,12 +39,12 @@ public class AbilitiesMenu extends JFrame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
-            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();            
+            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();
             setLocation(intwidth, intheight);
         } else {
             setLocation(0,0);
         }
-        
+
         TOTALPOINTS = 30;
         for(int i = 0; i < 6; i++)
         {
@@ -447,7 +447,7 @@ public class AbilitiesMenu extends JFrame
         });
         StrLabel.setBackground(new Color(0, 0, 0));
         StrLabel.setFont(new Font("Georgia", 0, 12));
-        StrLabel.setForeground(new Color(255, 255, 153));
+        StrLabel.setForeground(new Color(240, 216, 130));
         StrLabel.setHorizontalAlignment(2);
         StrLabel.setText("Strength");
         StrLabel.setOpaque(true);
@@ -456,8 +456,8 @@ public class AbilitiesMenu extends JFrame
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 StrLabelMouseClicked(evt);
             }
-        });        
-        
+        });
+
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
@@ -466,7 +466,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 17;
         getContentPane().add(StrLabel, gridBagConstraints);
         StrRaceMod.setBackground(new Color(0, 0, 0));
-        StrRaceMod.setForeground(new Color(255, 255, 153));
+        StrRaceMod.setForeground(new Color(240, 216, 130));
         StrRaceMod.setHorizontalAlignment(0);
         StrRaceMod.setText("+2");
         StrRaceMod.setBorder(null);
@@ -479,7 +479,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(StrRaceMod, gridBagConstraints);
         StrSpinner.setBackground(new Color(0, 0, 0));
         StrSpinner.setFont(new Font("Trebuchet MS", 0, 12));
-        StrSpinner.setForeground(new Color(255, 255, 153));
+        StrSpinner.setForeground(new Color(240, 216, 130));
         StrSpinner.setPreferredSize(new Dimension(50, 24));
         StrSpinner.addChangeListener(new ChangeListener() {
 
@@ -496,7 +496,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 13;
         getContentPane().add(StrSpinner, gridBagConstraints);
         StrMod.setBackground(new Color(0, 0, 0));
-        StrMod.setForeground(new Color(255, 255, 153));
+        StrMod.setForeground(new Color(240, 216, 130));
         StrMod.setHorizontalAlignment(0);
         StrMod.setText("(-1)");
         StrMod.setBorder(null);
@@ -508,7 +508,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 10, 0, 10);
         getContentPane().add(StrMod, gridBagConstraints);
         StrTotal.setBackground(new Color(0, 0, 0));
-        StrTotal.setForeground(new Color(255, 255, 153));
+        StrTotal.setForeground(new Color(240, 216, 130));
         StrTotal.setHorizontalAlignment(0);
         StrTotal.setText("8");
         StrTotal.setBorder(null);
@@ -521,16 +521,16 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(StrTotal, gridBagConstraints);
         DexLabel.setBackground(new Color(0, 0, 0));
         DexLabel.setFont(new Font("Georgia", 0, 12));
-        DexLabel.setForeground(new Color(255, 255, 153));
+        DexLabel.setForeground(new Color(240, 216, 130));
         DexLabel.setHorizontalAlignment(2);
         DexLabel.setText("Dexterity");
-        
+
         DexLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DexLabelMouseClicked(evt);
             }
-        }); 
-        
+        });
+
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -539,7 +539,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 17;
         getContentPane().add(DexLabel, gridBagConstraints);
         DexRaceMod.setBackground(new Color(0, 0, 0));
-        DexRaceMod.setForeground(new Color(255, 255, 153));
+        DexRaceMod.setForeground(new Color(240, 216, 130));
         DexRaceMod.setHorizontalAlignment(0);
         DexRaceMod.setText("+2");
         DexRaceMod.setBorder(null);
@@ -552,7 +552,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(DexRaceMod, gridBagConstraints);
         DexSpinner.setBackground(new Color(0, 0, 0));
         DexSpinner.setFont(new Font("Trebuchet MS", 0, 12));
-        DexSpinner.setForeground(new Color(255, 255, 153));
+        DexSpinner.setForeground(new Color(240, 216, 130));
         DexSpinner.setPreferredSize(new Dimension(50, 24));
         DexSpinner.addChangeListener(new ChangeListener() {
 
@@ -569,7 +569,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 13;
         getContentPane().add(DexSpinner, gridBagConstraints);
         DexMod.setBackground(new Color(0, 0, 0));
-        DexMod.setForeground(new Color(255, 255, 153));
+        DexMod.setForeground(new Color(240, 216, 130));
         DexMod.setHorizontalAlignment(0);
         DexMod.setText("(-1)");
         DexMod.setBorder(null);
@@ -581,7 +581,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 10, 0, 10);
         getContentPane().add(DexMod, gridBagConstraints);
         DexTotal.setBackground(new Color(0, 0, 0));
-        DexTotal.setForeground(new Color(255, 255, 153));
+        DexTotal.setForeground(new Color(240, 216, 130));
         DexTotal.setHorizontalAlignment(0);
         DexTotal.setText("8");
         DexTotal.setBorder(null);
@@ -594,16 +594,16 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(DexTotal, gridBagConstraints);
         ConLabel.setBackground(new Color(0, 0, 0));
         ConLabel.setFont(new Font("Georgia", 0, 12));
-        ConLabel.setForeground(new Color(255, 255, 153));
+        ConLabel.setForeground(new Color(240, 216, 130));
         ConLabel.setHorizontalAlignment(2);
         ConLabel.setText("Constitution");
-        
+
         ConLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ConLabelMouseClicked(evt);
             }
-        });         
-        
+        });
+
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
@@ -612,7 +612,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 17;
         getContentPane().add(ConLabel, gridBagConstraints);
         ConRaceMod.setBackground(new Color(0, 0, 0));
-        ConRaceMod.setForeground(new Color(255, 255, 153));
+        ConRaceMod.setForeground(new Color(240, 216, 130));
         ConRaceMod.setHorizontalAlignment(0);
         ConRaceMod.setText("+2");
         ConRaceMod.setBorder(null);
@@ -625,7 +625,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(ConRaceMod, gridBagConstraints);
         ConSpinner.setBackground(new Color(0, 0, 0));
         ConSpinner.setFont(new Font("Trebuchet MS", 0, 12));
-        ConSpinner.setForeground(new Color(255, 255, 153));
+        ConSpinner.setForeground(new Color(240, 216, 130));
         ConSpinner.setPreferredSize(new Dimension(50, 24));
         ConSpinner.addChangeListener(new ChangeListener() {
 
@@ -642,7 +642,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 13;
         getContentPane().add(ConSpinner, gridBagConstraints);
         ConMod.setBackground(new Color(0, 0, 0));
-        ConMod.setForeground(new Color(255, 255, 153));
+        ConMod.setForeground(new Color(240, 216, 130));
         ConMod.setHorizontalAlignment(0);
         ConMod.setText("(-1)");
         ConMod.setBorder(null);
@@ -654,7 +654,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 10, 0, 10);
         getContentPane().add(ConMod, gridBagConstraints);
         ConTotal.setBackground(new Color(0, 0, 0));
-        ConTotal.setForeground(new Color(255, 255, 153));
+        ConTotal.setForeground(new Color(240, 216, 130));
         ConTotal.setHorizontalAlignment(0);
         ConTotal.setText("8");
         ConTotal.setBorder(null);
@@ -667,16 +667,16 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(ConTotal, gridBagConstraints);
         IntLabel.setBackground(new Color(0, 0, 0));
         IntLabel.setFont(new Font("Georgia", 0, 12));
-        IntLabel.setForeground(new Color(255, 255, 153));
+        IntLabel.setForeground(new Color(240, 216, 130));
         IntLabel.setHorizontalAlignment(2);
         IntLabel.setText("Intelligence");
-        
+
         IntLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 IntLabelMouseClicked(evt);
             }
-        });           
-        
+        });
+
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
@@ -685,7 +685,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 17;
         getContentPane().add(IntLabel, gridBagConstraints);
         IntRaceMod.setBackground(new Color(0, 0, 0));
-        IntRaceMod.setForeground(new Color(255, 255, 153));
+        IntRaceMod.setForeground(new Color(240, 216, 130));
         IntRaceMod.setHorizontalAlignment(0);
         IntRaceMod.setText("+2");
         IntRaceMod.setBorder(null);
@@ -698,7 +698,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(IntRaceMod, gridBagConstraints);
         IntSpinner.setBackground(new Color(0, 0, 0));
         IntSpinner.setFont(new Font("Trebuchet MS", 0, 12));
-        IntSpinner.setForeground(new Color(255, 255, 153));
+        IntSpinner.setForeground(new Color(240, 216, 130));
         IntSpinner.setPreferredSize(new Dimension(50, 24));
         IntSpinner.addChangeListener(new ChangeListener() {
 
@@ -715,7 +715,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 13;
         getContentPane().add(IntSpinner, gridBagConstraints);
         IntMod.setBackground(new Color(0, 0, 0));
-        IntMod.setForeground(new Color(255, 255, 153));
+        IntMod.setForeground(new Color(240, 216, 130));
         IntMod.setHorizontalAlignment(0);
         IntMod.setText("(-1)");
         IntMod.setBorder(null);
@@ -727,7 +727,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 10, 0, 10);
         getContentPane().add(IntMod, gridBagConstraints);
         IntTotal.setBackground(new Color(0, 0, 0));
-        IntTotal.setForeground(new Color(255, 255, 153));
+        IntTotal.setForeground(new Color(240, 216, 130));
         IntTotal.setHorizontalAlignment(0);
         IntTotal.setText("8");
         IntTotal.setBorder(null);
@@ -740,16 +740,16 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(IntTotal, gridBagConstraints);
         WisLabel.setBackground(new Color(0, 0, 0));
         WisLabel.setFont(new Font("Georgia", 0, 12));
-        WisLabel.setForeground(new Color(255, 255, 153));
+        WisLabel.setForeground(new Color(240, 216, 130));
         WisLabel.setHorizontalAlignment(2);
         WisLabel.setText("Wisdom");
-        
+
         WisLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 WisLabelMouseClicked(evt);
             }
-        });    
-        
+        });
+
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 7;
@@ -758,7 +758,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 17;
         getContentPane().add(WisLabel, gridBagConstraints);
         WisRaceMod.setBackground(new Color(0, 0, 0));
-        WisRaceMod.setForeground(new Color(255, 255, 153));
+        WisRaceMod.setForeground(new Color(240, 216, 130));
         WisRaceMod.setHorizontalAlignment(0);
         WisRaceMod.setText("+2");
         WisRaceMod.setBorder(null);
@@ -771,7 +771,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(WisRaceMod, gridBagConstraints);
         WisSpinner.setBackground(new Color(0, 0, 0));
         WisSpinner.setFont(new Font("Trebuchet MS", 0, 12));
-        WisSpinner.setForeground(new Color(255, 255, 153));
+        WisSpinner.setForeground(new Color(240, 216, 130));
         WisSpinner.setPreferredSize(new Dimension(50, 24));
         WisSpinner.addChangeListener(new ChangeListener() {
 
@@ -788,7 +788,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 13;
         getContentPane().add(WisSpinner, gridBagConstraints);
         WisMod.setBackground(new Color(0, 0, 0));
-        WisMod.setForeground(new Color(255, 255, 153));
+        WisMod.setForeground(new Color(240, 216, 130));
         WisMod.setHorizontalAlignment(0);
         WisMod.setText("(-1)");
         WisMod.setBorder(null);
@@ -800,7 +800,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 10, 0, 10);
         getContentPane().add(WisMod, gridBagConstraints);
         WisTotal.setBackground(new Color(0, 0, 0));
-        WisTotal.setForeground(new Color(255, 255, 153));
+        WisTotal.setForeground(new Color(240, 216, 130));
         WisTotal.setHorizontalAlignment(0);
         WisTotal.setText("8");
         WisTotal.setBorder(null);
@@ -811,19 +811,19 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.fill = 1;
         gridBagConstraints.insets = new Insets(0, 6, 0, 6);
         getContentPane().add(WisTotal, gridBagConstraints);
-        
+
         ChaLabel.setBackground(new Color(0, 0, 0));
         ChaLabel.setFont(new Font("Georgia", 0, 12));
-        ChaLabel.setForeground(new Color(255, 255, 153));
+        ChaLabel.setForeground(new Color(240, 216, 130));
         ChaLabel.setHorizontalAlignment(2);
         ChaLabel.setText("Charisma");
-        
+
         ChaLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ChaLabelMouseClicked(evt);
             }
-        });   
-        
+        });
+
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
@@ -832,7 +832,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 17;
         getContentPane().add(ChaLabel, gridBagConstraints);
         ChaRaceMod.setBackground(new Color(0, 0, 0));
-        ChaRaceMod.setForeground(new Color(255, 255, 153));
+        ChaRaceMod.setForeground(new Color(240, 216, 130));
         ChaRaceMod.setHorizontalAlignment(0);
         ChaRaceMod.setText("+2");
         ChaRaceMod.setBorder(null);
@@ -845,7 +845,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(ChaRaceMod, gridBagConstraints);
         ChaSpinner.setBackground(new Color(0, 0, 0));
         ChaSpinner.setFont(new Font("Trebuchet MS", 0, 12));
-        ChaSpinner.setForeground(new Color(255, 255, 153));
+        ChaSpinner.setForeground(new Color(240, 216, 130));
         ChaSpinner.setPreferredSize(new Dimension(50, 24));
         ChaSpinner.addChangeListener(new ChangeListener() {
 
@@ -862,7 +862,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.anchor = 13;
         getContentPane().add(ChaSpinner, gridBagConstraints);
         ChaMod.setBackground(new Color(0, 0, 0));
-        ChaMod.setForeground(new Color(255, 255, 153));
+        ChaMod.setForeground(new Color(240, 216, 130));
         ChaMod.setHorizontalAlignment(0);
         ChaMod.setText("(-1)");
         ChaMod.setBorder(null);
@@ -874,7 +874,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 10, 0, 10);
         getContentPane().add(ChaMod, gridBagConstraints);
         ChaTotal.setBackground(new Color(0, 0, 0));
-        ChaTotal.setForeground(new Color(255, 255, 153));
+        ChaTotal.setForeground(new Color(240, 216, 130));
         ChaTotal.setHorizontalAlignment(0);
         ChaTotal.setText("8");
         ChaTotal.setBorder(null);
@@ -943,7 +943,7 @@ public class AbilitiesMenu extends JFrame
         DescriptionWindow.setLayout(new GridBagLayout());
         DescriptionWindow.setBorder(new EtchedBorder());
         DescriptionText.setBackground(new Color(0, 0, 0));
-        DescriptionText.setForeground(new Color(255, 255, 153));
+        DescriptionText.setForeground(new Color(240, 216, 130));
         DescriptionText.setLineWrap(true);
         DescriptionText.setWrapStyleWord(true);
         DescriptionText.setPreferredSize(new Dimension(400, 300));
@@ -1021,7 +1021,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(jPanel6, gridBagConstraints);
         NameLabel.setBackground(new Color(0, 0, 0));
         NameLabel.setFont(new Font("Trebuchet MS", 0, 10));
-        NameLabel.setForeground(new Color(255, 255, 102));
+        NameLabel.setForeground(new Color(255, 230, 140));
         NameLabel.setHorizontalAlignment(0);
         NameLabel.setText("Name");
         NameLabel.setOpaque(true);
@@ -1033,7 +1033,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(NameLabel, gridBagConstraints);
         Race.setBackground(new Color(0, 0, 0));
         Race.setFont(new Font("Trebuchet MS", 0, 10));
-        Race.setForeground(new Color(255, 255, 102));
+        Race.setForeground(new Color(255, 230, 140));
         Race.setHorizontalAlignment(0);
         Race.setText("Race");
         Race.setOpaque(true);
@@ -1045,7 +1045,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(Race, gridBagConstraints);
         Points.setBackground(new Color(0, 0, 0));
         Points.setFont(new Font("Trebuchet MS", 0, 10));
-        Points.setForeground(new Color(255, 255, 102));
+        Points.setForeground(new Color(255, 230, 140));
         Points.setHorizontalAlignment(0);
         Points.setText("Current");
         Points.setOpaque(true);
@@ -1057,7 +1057,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(Points, gridBagConstraints);
         StatMod.setBackground(new Color(0, 0, 0));
         StatMod.setFont(new Font("Trebuchet MS", 0, 10));
-        StatMod.setForeground(new Color(255, 255, 102));
+        StatMod.setForeground(new Color(255, 230, 140));
         StatMod.setHorizontalAlignment(0);
         StatMod.setText("Mod");
         StatMod.setOpaque(true);
@@ -1069,7 +1069,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(StatMod, gridBagConstraints);
         Total.setBackground(new Color(0, 0, 0));
         Total.setFont(new Font("Trebuchet MS", 0, 10));
-        Total.setForeground(new Color(255, 255, 102));
+        Total.setForeground(new Color(255, 230, 140));
         Total.setHorizontalAlignment(0);
         Total.setText("Total");
         Total.setOpaque(true);
@@ -1081,7 +1081,7 @@ public class AbilitiesMenu extends JFrame
         getContentPane().add(Total, gridBagConstraints);
         IncreaseCost.setBackground(new Color(0, 0, 0));
         IncreaseCost.setFont(new Font("Trebuchet MS", 0, 10));
-        IncreaseCost.setForeground(new Color(255, 255, 102));
+        IncreaseCost.setForeground(new Color(255, 230, 140));
         IncreaseCost.setHorizontalAlignment(0);
         IncreaseCost.setText("Cost");
         IncreaseCost.setOpaque(true);
@@ -1092,7 +1092,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.fill = 1;
         getContentPane().add(IncreaseCost, gridBagConstraints);
         StrCost.setBackground(new Color(0, 0, 0));
-        StrCost.setForeground(new Color(255, 255, 153));
+        StrCost.setForeground(new Color(240, 216, 130));
         StrCost.setHorizontalAlignment(0);
         StrCost.setText("8");
         StrCost.setBorder(null);
@@ -1104,7 +1104,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 6, 0, 6);
         getContentPane().add(StrCost, gridBagConstraints);
         DexCost.setBackground(new Color(0, 0, 0));
-        DexCost.setForeground(new Color(255, 255, 153));
+        DexCost.setForeground(new Color(240, 216, 130));
         DexCost.setHorizontalAlignment(0);
         DexCost.setText("8");
         DexCost.setBorder(null);
@@ -1116,7 +1116,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 6, 0, 6);
         getContentPane().add(DexCost, gridBagConstraints);
         ConCost.setBackground(new Color(0, 0, 0));
-        ConCost.setForeground(new Color(255, 255, 153));
+        ConCost.setForeground(new Color(240, 216, 130));
         ConCost.setHorizontalAlignment(0);
         ConCost.setText("8");
         ConCost.setBorder(null);
@@ -1128,7 +1128,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 6, 0, 6);
         getContentPane().add(ConCost, gridBagConstraints);
         IntCost.setBackground(new Color(0, 0, 0));
-        IntCost.setForeground(new Color(255, 255, 153));
+        IntCost.setForeground(new Color(240, 216, 130));
         IntCost.setHorizontalAlignment(0);
         IntCost.setText("8");
         IntCost.setBorder(null);
@@ -1140,7 +1140,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 6, 0, 6);
         getContentPane().add(IntCost, gridBagConstraints);
         WisCost.setBackground(new Color(0, 0, 0));
-        WisCost.setForeground(new Color(255, 255, 153));
+        WisCost.setForeground(new Color(240, 216, 130));
         WisCost.setHorizontalAlignment(0);
         WisCost.setText("8");
         WisCost.setBorder(null);
@@ -1152,7 +1152,7 @@ public class AbilitiesMenu extends JFrame
         gridBagConstraints.insets = new Insets(0, 6, 0, 6);
         getContentPane().add(WisCost, gridBagConstraints);
         ChaCost.setBackground(new Color(0, 0, 0));
-        ChaCost.setForeground(new Color(255, 255, 153));
+        ChaCost.setForeground(new Color(240, 216, 130));
         ChaCost.setHorizontalAlignment(0);
         ChaCost.setText("8");
         ChaCost.setBorder(null);
@@ -1380,17 +1380,17 @@ public class AbilitiesMenu extends JFrame
         // Add your handling code here:
         DescriptionText.setText(TLKFAC.getEntry(459));
     }
-    
+
     private void DexLabelMouseClicked(java.awt.event.MouseEvent evt) {
         // Add your handling code here:
         DescriptionText.setText(TLKFAC.getEntry(460));
     }
-    
+
     private void ConLabelMouseClicked(java.awt.event.MouseEvent evt) {
         // Add your handling code here:
         DescriptionText.setText(TLKFAC.getEntry(461));
     }
-    
+
     private void IntLabelMouseClicked(java.awt.event.MouseEvent evt) {
         // Add your handling code here:
         DescriptionText.setText(TLKFAC.getEntry(463));
@@ -1400,15 +1400,15 @@ public class AbilitiesMenu extends JFrame
         // Add your handling code here:
         DescriptionText.setText(TLKFAC.getEntry(462));
     }
-    
+
     private void ChaLabelMouseClicked(java.awt.event.MouseEvent evt) {
         // Add your handling code here:
         DescriptionText.setText(TLKFAC.getEntry(478));
     }
-    
+
     private void CancelButtonActionPerformed(ActionEvent evt)
     {
-        menucreate.BlockWindow(false);        
+        menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }
@@ -1448,7 +1448,7 @@ public class AbilitiesMenu extends JFrame
         menucreate.ChaMod.setText(ChaMod.getText());
         menucreate.PackagesButton.setEnabled(true);
         menucreate.RedoAll();
-        menucreate.BlockWindow(false);        
+        menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }
@@ -1485,7 +1485,7 @@ public class AbilitiesMenu extends JFrame
         //RecommendedButton.setEnabled(true);
 
         //Now do recommended stuff
-        
+
         int StrIncrease = Integer.parseInt(menucreate.MainCharDataAux[3][classes.Str]) - StartingValue;
         int DexIncrease = Integer.parseInt(menucreate.MainCharDataAux[3][classes.Dex]) - StartingValue;
         int ConIncrease = Integer.parseInt(menucreate.MainCharDataAux[3][classes.Con]) - StartingValue;
@@ -1503,12 +1503,12 @@ public class AbilitiesMenu extends JFrame
 
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
-        
+
     }
 
     private void exitForm(WindowEvent evt)
     {
-        menucreate.BlockWindow(false);        
+        menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }
@@ -1527,9 +1527,9 @@ public class AbilitiesMenu extends JFrame
             System.out.println("Number Format Exception warning: " + mod + " is not a true stat mod.");
             return 0;
         }
-        
+
     }
-    
+
     private TLKFactory TLKFAC;
     private ResourceFactory RESFAC;
     private CreateMenu menucreate;

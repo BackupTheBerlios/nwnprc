@@ -23,7 +23,7 @@ import CharacterCreator.io.*;
  * @author  James
  */
 public class MainMenu extends javax.swing.JFrame {
-    
+
     /** Creates new form MainMenu1 */
     public MainMenu() {
         crc = new CRC32();
@@ -43,7 +43,7 @@ public class MainMenu extends javax.swing.JFrame {
         ResVer rv = new ResVer();
         int tst = rv.VerifyResources();
     }
-    
+
     public boolean isWindows() {
         if(System.getProperty("os.name").equalsIgnoreCase("Windows XP")) {
             return true;
@@ -74,7 +74,7 @@ public class MainMenu extends javax.swing.JFrame {
         }
         return false;
     }
-    
+
     public static MainMenu getMainMenu() {
         return mainmenu;
     }
@@ -123,8 +123,8 @@ public class MainMenu extends javax.swing.JFrame {
         gridBagConstraints.gridheight = 3;
         getContentPane().add(jLabel2, gridBagConstraints);
 
-        CreateButton.setBackground(new java.awt.Color(204, 204, 0));
-        CreateButton.setForeground(new java.awt.Color(204, 204, 0));
+        CreateButton.setBackground(new java.awt.Color(0, 0, 0)); // color not really seen
+        CreateButton.setForeground(new java.awt.Color(255, 255, 255)); // also not really seen
         CreateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/charpic.jpg")));
         CreateButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         CreateButton.setPreferredSize(new java.awt.Dimension(121, 30));
@@ -139,7 +139,7 @@ public class MainMenu extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         getContentPane().add(CreateButton, gridBagConstraints);
 
-        SettingsButton.setBackground(new java.awt.Color(204, 204, 0));
+        SettingsButton.setBackground(new java.awt.Color(0, 0, 0)); // not seen
         SettingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/settingspic.jpg")));
         SettingsButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         SettingsButton.setPreferredSize(new java.awt.Dimension(121, 30));
@@ -154,7 +154,7 @@ public class MainMenu extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         getContentPane().add(SettingsButton, gridBagConstraints);
 
-        CreditsButton.setBackground(new java.awt.Color(204, 204, 0));
+        CreditsButton.setBackground(new java.awt.Color(0, 0, 0)); // not seen
         CreditsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/creditspic.jpg")));
         CreditsButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         CreditsButton.setPreferredSize(new java.awt.Dimension(121, 34));
@@ -169,7 +169,7 @@ public class MainMenu extends javax.swing.JFrame {
         gridBagConstraints.gridy = 3;
         getContentPane().add(CreditsButton, gridBagConstraints);
 
-        ExitButton.setBackground(new java.awt.Color(204, 204, 0));
+        ExitButton.setBackground(new java.awt.Color(0, 0, 0));  // not seen
         ExitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/exitpic.jpg")));
         ExitButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         ExitButton.setPreferredSize(new java.awt.Dimension(121, 34));
@@ -231,24 +231,24 @@ public class MainMenu extends javax.swing.JFrame {
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
         // Add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_ExitButtonActionPerformed
-    
+
     private void CreditsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreditsButtonActionPerformed
         // Add your handling code here:
         new CreditsMenu().show();
     }//GEN-LAST:event_CreditsButtonActionPerformed
-    
+
     private void SettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SettingsButtonActionPerformed
         // Add your handling code here:
         (new SettingsMenu()).show();
         setVisible(false);
         dispose();
     }//GEN-LAST:event_SettingsButtonActionPerformed
-    
+
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
         // Add your handling code here:
         Preferences prefs = Preferences.userNodeForPackage(getClass());
@@ -301,26 +301,26 @@ public class MainMenu extends javax.swing.JFrame {
         //System.out.println(System.getProperty("os.arch"));
         //System.out.println(System.getProperty("os.name"));
         SwingWorker worker2 = new SwingWorker() {
-            
+
             public Object construct() {
                 return new TLKFactory();
             }
-            
+
         };
         worker2.start();
         setVisible(false);
         dispose();
         return;
-        
+
     }//GEN-LAST:event_CreateButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         setVisible(false);
         dispose();
         System.exit(0);
     }//GEN-LAST:event_exitForm
-    
+
     /**
      * @param args the command line arguments
      */
@@ -332,15 +332,15 @@ public class MainMenu extends javax.swing.JFrame {
                 System.exit(10);
             }
         }
-        
+
         catch(Exception e) { }
-        
-        
+
+
         mainmenu = new MainMenu();
         mainmenu.show();
-        
+
     }
-    
+
     public CRC32 crc;
     //*******************************************************
     //************VERSION INFORMATION - CHANGE HERE**********

@@ -16,23 +16,23 @@ import java.awt.*;
  * @author  James
  */
 public class SchoolMenu extends javax.swing.JFrame {
-    
+
     /** Creates new form SchoolMenu */
     public SchoolMenu() {
         menucreate = TLKFactory.getCreateMenu();
-        TLKFAC = menucreate.getTLKFactory();        
-        RESFAC = menucreate.getResourceFactory();        
+        TLKFAC = menucreate.getTLKFactory();
+        RESFAC = menucreate.getResourceFactory();
         initComponents();
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
-            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();            
+            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();
             setLocation(intwidth, intheight);
         } else {
             setLocation(0,0);
-        }        
-        
+        }
+
         try
         {
             schoolmap = RESFAC.getResourceAs2DA("spellschools");
@@ -41,12 +41,12 @@ public class SchoolMenu extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null, "Fatal Error - spellschools.2da not found. Your data files might be corrupt.", "Error", 0);
             System.exit(0);
-        }        
+        }
         DescriptionText.setText(TLKFAC.getEntry(381));
         SCHOOL = 0;
-        GeneralButton.setSelected(true);        
+        GeneralButton.setSelected(true);
     }
-    
+
     private void DoReset() {
         ConjurationButton.setSelected(false);
         TransmutationButton.setSelected(false);
@@ -58,7 +58,7 @@ public class SchoolMenu extends javax.swing.JFrame {
         DivinationButton.setSelected(false);
         EvocationButton.setSelected(false);
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -292,13 +292,13 @@ public class SchoolMenu extends javax.swing.JFrame {
 
         DescriptionContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         DescriptionContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(204, 204, 204)));
+        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         DescriptionContainer.setPreferredSize(new java.awt.Dimension(400, 100));
         DescriptionContainer.setAutoscrolls(true);
         DescriptionPanel.setLayout(new java.awt.GridBagLayout());
 
         DescriptionText.setBackground(new java.awt.Color(0, 0, 0));
-        DescriptionText.setForeground(new java.awt.Color(255, 255, 153));
+        DescriptionText.setForeground(new java.awt.Color(240, 216, 130));
         DescriptionText.setLineWrap(true);
         DescriptionText.setWrapStyleWord(true);
         DescriptionText.setPreferredSize(new java.awt.Dimension(400, 800));
@@ -323,71 +323,71 @@ public class SchoolMenu extends javax.swing.JFrame {
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void IllusionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IllusionButtonActionPerformed
         // Add your handling code here:
         DoReset();
         IllusionButton.setSelected(true);
         DescriptionText.setText(TLKFAC.getEntry(Integer.parseInt(schoolmap[6][5])));
-        SCHOOL = 6;             
+        SCHOOL = 6;
     }//GEN-LAST:event_IllusionButtonActionPerformed
-    
+
     private void DivinationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DivinationButtonActionPerformed
         // Add your handling code here:
         DoReset();
         DivinationButton.setSelected(true);
         DescriptionText.setText(TLKFAC.getEntry(Integer.parseInt(schoolmap[3][5])));
-        SCHOOL = 3;             
+        SCHOOL = 3;
     }//GEN-LAST:event_DivinationButtonActionPerformed
-    
+
     private void EnchantmentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnchantmentButtonActionPerformed
         // Add your handling code here:
         DoReset();
         EnchantmentButton.setSelected(true);
         DescriptionText.setText(TLKFAC.getEntry(Integer.parseInt(schoolmap[4][5])));
-        SCHOOL = 4;             
+        SCHOOL = 4;
     }//GEN-LAST:event_EnchantmentButtonActionPerformed
-    
+
     private void TransmutationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TransmutationButtonActionPerformed
         // Add your handling code here:
         DoReset();
         TransmutationButton.setSelected(true);
         DescriptionText.setText(TLKFAC.getEntry(Integer.parseInt(schoolmap[8][5])));
-        SCHOOL = 8;             
+        SCHOOL = 8;
     }//GEN-LAST:event_TransmutationButtonActionPerformed
-    
+
     private void NecromancyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NecromancyButtonActionPerformed
         // Add your handling code here:
         DoReset();
         NecromancyButton.setSelected(true);
         DescriptionText.setText(TLKFAC.getEntry(Integer.parseInt(schoolmap[7][5])));
-        SCHOOL = 7;             
+        SCHOOL = 7;
     }//GEN-LAST:event_NecromancyButtonActionPerformed
-    
+
     private void ConjurationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConjurationButtonActionPerformed
         // Add your handling code here:
         DoReset();
         ConjurationButton.setSelected(true);
         DescriptionText.setText(TLKFAC.getEntry(Integer.parseInt(schoolmap[2][5])));
-        SCHOOL = 2;        
+        SCHOOL = 2;
     }//GEN-LAST:event_ConjurationButtonActionPerformed
-    
+
     private void EvocationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvocationButtonActionPerformed
         // Add your handling code here:
         DoReset();
         EvocationButton.setSelected(true);
         DescriptionText.setText(TLKFAC.getEntry(Integer.parseInt(schoolmap[5][5])));
-        SCHOOL = 5;        
+        SCHOOL = 5;
     }//GEN-LAST:event_EvocationButtonActionPerformed
-    
+
     private void AbjurationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbjurationButtonActionPerformed
         // Add your handling code here:
         DoReset();
         AbjurationButton.setSelected(true);
         DescriptionText.setText(TLKFAC.getEntry(Integer.parseInt(schoolmap[1][5])));
-        SCHOOL = 1;        
+        SCHOOL = 1;
     }//GEN-LAST:event_AbjurationButtonActionPerformed
-    
+
     private void GeneralButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeneralButtonActionPerformed
         // Add your handling code here:
         DoReset();
@@ -395,7 +395,7 @@ public class SchoolMenu extends javax.swing.JFrame {
         DescriptionText.setText(TLKFAC.getEntry(Integer.parseInt(schoolmap[0][5])));
         SCHOOL = 0;
     }//GEN-LAST:event_GeneralButtonActionPerformed
-    
+
     private void RecommendedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecommendedButtonActionPerformed
         // Add your handling code here:
         DoReset();
@@ -403,31 +403,31 @@ public class SchoolMenu extends javax.swing.JFrame {
         DescriptionText.setText(TLKFAC.getEntry(Integer.parseInt(schoolmap[0][5])));
         SCHOOL = 0;
     }//GEN-LAST:event_RecommendedButtonActionPerformed
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
         setVisible(false);
-        dispose();         
+        dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
-        
+
         menucreate.MainCharData[16].put(new Integer(0),new Integer(SCHOOL));
-        
+
         (new SpellMenu()).show();
         //What goes next
         setVisible(false);
-        dispose();         
+        dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         setVisible(false);
-        dispose();         
+        dispose();
     }//GEN-LAST:event_exitForm
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton AbjurationButton;
     private javax.swing.JButton CancelButton;
@@ -453,6 +453,6 @@ public class SchoolMenu extends javax.swing.JFrame {
     private String[][] schoolmap;
     private ResourceFactory RESFAC;
     public int SCHOOL;
-    private CreateMenu menucreate;    
-    private TLKFactory TLKFAC;    
+    private CreateMenu menucreate;
+    private TLKFactory TLKFAC;
 }

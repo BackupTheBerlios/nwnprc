@@ -22,24 +22,24 @@ import CharacterCreator.util.*;
  * @author  James
  */
 public class FamiliarMenu extends javax.swing.JFrame {
-    
+
     public class FamiliarButton extends JPanel {
-        
+
         private void initComponents() {
             FamiliarButton = new JButton();
             InfoNum = new JLabel();
             setLayout(new GridBagLayout());
             FamiliarButton.setBackground(new Color(0, 0, 0));
-            FamiliarButton.setForeground(new Color(204, 204, 0));
+            FamiliarButton.setForeground(new Color(222, 200, 120));
             FamiliarButton.setText("Name Place Holder");
             FamiliarButton.setHorizontalAlignment(2);
             FamiliarButton.setPreferredSize(new Dimension(240, 52));
             FamiliarButton.addActionListener(new ActionListener() {
-                
+
                 public void actionPerformed(ActionEvent evt) {
                     FamiliarButtonActionPerformed(evt);
                 }
-                
+
             });
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.fill = 2;
@@ -50,42 +50,42 @@ public class FamiliarMenu extends javax.swing.JFrame {
             gridBagConstraints.gridy = 0;
             add(InfoNum, gridBagConstraints);
         }
-        
+
         private void FamiliarButtonActionPerformed(ActionEvent evt) {
             int tmp = (new Integer(InfoNum.getText())).intValue();
             String descstr = familiarmap[tmp][4];
-            int descnum = ChkHex.ChkHex(descstr);            
+            int descnum = ChkHex.ChkHex(descstr);
             DescriptionText.setText(TLKFAC.getEntry(descnum));
             descstr = familiarmap[tmp][3];
-            descnum = ChkHex.ChkHex(descstr);            
-            SelectedText.setText(TLKFAC.getEntry(descnum));            
+            descnum = ChkHex.ChkHex(descstr);
+            SelectedText.setText(TLKFAC.getEntry(descnum));
             selectedfamiliar = tmp;
         }
-        
+
         public JButton FamiliarButton;
         public JLabel InfoNum;
         public String FILENAME;
-        
-        
+
+
         public FamiliarButton() {
             initComponents();
         }
     }
-    
+
     /** Creates new form FamiliarMenu */
     public FamiliarMenu() {
         selectedfamiliar = 0;
         initComponents();
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
-            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();            
+            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();
             setLocation(intwidth, intheight);
         } else {
             setLocation(0,0);
         }
-        
+
         menucreate = TLKFactory.getCreateMenu();
         TLKFAC = menucreate.getTLKFactory();
         RESFAC = menucreate.getResourceFactory();
@@ -97,25 +97,25 @@ public class FamiliarMenu extends javax.swing.JFrame {
             System.exit(0);
         }
         String descstr = familiarmap[0][3];
-        int descnum = ChkHex.ChkHex(descstr);        
-        SelectedText.setText(TLKFAC.getEntry(descnum));        
+        int descnum = ChkHex.ChkHex(descstr);
+        SelectedText.setText(TLKFAC.getEntry(descnum));
         DescriptionText.setText(TLKFAC.getEntry(5607));
         for(int i = 0; i < familiarmap.length; i++) {
             String tempispc = familiarmap[i][3];
             if(tempispc != null) {
                 FamiliarButton racebutton = new FamiliarButton();
                 descstr = familiarmap[i][3];
-                descnum = ChkHex.ChkHex(descstr);                
-                racebutton.FamiliarButton.setText(TLKFAC.getEntry(descnum));                
+                descnum = ChkHex.ChkHex(descstr);
+                racebutton.FamiliarButton.setText(TLKFAC.getEntry(descnum));
                 racebutton.setSize(240, 52);
                 racebutton.InfoNum.setText(Integer.toString(i));
                 FamiliarButtonList.add(racebutton, -1);
             }
         }
-        
+
         pack();
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -159,7 +159,7 @@ public class FamiliarMenu extends javax.swing.JFrame {
 
         FamiliarButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         FamiliarButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        FamiliarButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        FamiliarButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         FamiliarButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         FamiliarButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         FamiliarButtonContainer.setAutoscrolls(true);
@@ -288,7 +288,7 @@ public class FamiliarMenu extends javax.swing.JFrame {
 
         DescriptionPanel.setBorder(new javax.swing.border.EtchedBorder());
         DescriptionText.setBackground(new java.awt.Color(0, 0, 0));
-        DescriptionText.setForeground(new java.awt.Color(255, 255, 153));
+        DescriptionText.setForeground(new java.awt.Color(240, 216, 130));
         DescriptionText.setLineWrap(true);
         DescriptionText.setWrapStyleWord(true);
         DescriptionText.setPreferredSize(new java.awt.Dimension(400, 360));
@@ -338,13 +338,13 @@ public class FamiliarMenu extends javax.swing.JFrame {
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
         setVisible(false);
         dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
         menucreate.MainCharData[14].put(new Integer(1), new Integer(selectedfamiliar));
@@ -358,20 +358,20 @@ public class FamiliarMenu extends javax.swing.JFrame {
         //Animal Companion
         if(featmap.contains(new Integer(199))) {
             (new CompanionMenu()).show();
-        }        
+        }
         */
         menucreate.CustomizeButton.setEnabled(true);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         setVisible(false);
         dispose();
     }//GEN-LAST:event_exitForm
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JPanel DescriptionPanel;

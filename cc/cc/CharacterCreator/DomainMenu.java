@@ -20,25 +20,25 @@ import javax.swing.border.EtchedBorder;
  * @author  James
  */
 public class DomainMenu extends javax.swing.JFrame {
-    
+
     public class DomainButton extends JPanel {
         private void initComponents() {
             domainbutton = new JButton();
             InfoNum = new JLabel();
             setLayout(new GridBagLayout());
             domainbutton.setBackground(new Color(0, 0, 0));
-            domainbutton.setForeground(new Color(204, 204, 0));
+            domainbutton.setForeground(new Color(240, 216, 130));
             domainbutton.setIcon(new ImageIcon(getClass().getResource("/CharacterCreator/resource/folder.gif")));
             domainbutton.setText("Name Place Holder");
             domainbutton.setHorizontalAlignment(2);
             domainbutton.setIconTextGap(40);
             domainbutton.setPreferredSize(new Dimension(240, 52));
             domainbutton.addActionListener(new ActionListener() {
-                
+
                 public void actionPerformed(ActionEvent evt) {
                     DomainButtonActionPerformed(evt);
                 }
-                
+
             });
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.fill = 2;
@@ -49,7 +49,7 @@ public class DomainMenu extends javax.swing.JFrame {
             gridBagConstraints.gridy = 0;
             add(InfoNum, gridBagConstraints);
         }
-        
+
         private void DomainButtonActionPerformed(ActionEvent evt) {
             int tmp = Integer.parseInt(InfoNum.getText());
             int descnum = Integer.parseInt(domainmap[tmp][3]);
@@ -61,10 +61,10 @@ public class DomainMenu extends javax.swing.JFrame {
             RefreshSelectedDomains();
             //CLASSNUM = tmp;
         }
-        
+
         public JButton domainbutton;
         public JLabel InfoNum;
-        
+
         public DomainButton(String imageName, String desc, String dText) {
             initComponents();
 
@@ -82,25 +82,25 @@ public class DomainMenu extends javax.swing.JFrame {
 			InfoNum.setText(dText);
         }
     }
-    
+
     public class DomainSelectedButton extends JPanel {
         private void initComponents() {
             domainbutton = new JButton();
             InfoNum = new JLabel();
             setLayout(new GridBagLayout());
             domainbutton.setBackground(new Color(0, 0, 0));
-            domainbutton.setForeground(new Color(204, 204, 0));
+            domainbutton.setForeground(new Color(240, 216, 130));
             domainbutton.setIcon(new ImageIcon(getClass().getResource("/CharacterCreator/resource/folder.gif")));
             domainbutton.setText("Name Place Holder");
             domainbutton.setHorizontalAlignment(2);
             domainbutton.setIconTextGap(40);
             domainbutton.setPreferredSize(new Dimension(240, 52));
             domainbutton.addActionListener(new ActionListener() {
-                
+
                 public void actionPerformed(ActionEvent evt) {
                     DomainSelectedButtonActionPerformed(evt);
                 }
-                
+
             });
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.fill = 2;
@@ -111,12 +111,12 @@ public class DomainMenu extends javax.swing.JFrame {
             gridBagConstraints.gridy = 0;
             add(InfoNum, gridBagConstraints);
         }
-        
+
         private void DomainSelectedButtonActionPerformed(ActionEvent evt) {
             int tmp = Integer.parseInt(InfoNum.getText());
             int descnum = Integer.parseInt(domainmap[tmp][3]);
             DescriptionText.setText(TLKFAC.getEntry(descnum));
-            
+
             int indexof = domainlist.indexOf(new Integer(tmp));
             domainlist.remove(indexof);
             numdomains++;
@@ -124,11 +124,11 @@ public class DomainMenu extends javax.swing.JFrame {
             RefreshSelectedDomains();
             OKButton.setEnabled(false);
         }
-        
+
         public JButton domainbutton;
         public JLabel InfoNum;
-        
-        
+
+
         public DomainSelectedButton(String imageName, String desc, String dText) {
             initComponents();
 
@@ -149,16 +149,16 @@ public class DomainMenu extends javax.swing.JFrame {
     /** Creates new form DomainMenu */
     public DomainMenu() {
         initComponents();
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
-            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();            
+            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();
             setLocation(intwidth, intheight);
         } else {
             setLocation(0,0);
         }
-        
+
         OKButton.setEnabled(false);
         numdomains = 2;
         menucreate = TLKFactory.getCreateMenu();
@@ -175,7 +175,7 @@ public class DomainMenu extends javax.swing.JFrame {
         RefreshDomains();
         pack();
     }
-    
+
     private void RefreshDomains() {
         String imagestring = "";
         DomainButtonList.removeAll();
@@ -196,7 +196,7 @@ public class DomainMenu extends javax.swing.JFrame {
 		}
         pack();
     }
-    
+
     private void RefreshSelectedDomains() {
         String imagestring = "";
         SelectedDomainList.removeAll();
@@ -215,7 +215,7 @@ public class DomainMenu extends javax.swing.JFrame {
         pack();
         SelectedDomainList.repaint();
     }
-    
+
     private void DoReset() {
         numdomains = 2;
         domainlist.clear();
@@ -223,9 +223,9 @@ public class DomainMenu extends javax.swing.JFrame {
         RefreshSelectedDomains();
         OKButton.setEnabled(false);
     }
-    
-    
-    
+
+
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -273,7 +273,7 @@ public class DomainMenu extends javax.swing.JFrame {
 
         DomainButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         DomainButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        DomainButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        DomainButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         DomainButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         DomainButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         DomainButtonContainer.setAutoscrolls(true);
@@ -348,7 +348,7 @@ public class DomainMenu extends javax.swing.JFrame {
 
         DescriptionPanel.setBorder(new javax.swing.border.EtchedBorder());
         DescriptionText.setBackground(new java.awt.Color(0, 0, 0));
-        DescriptionText.setForeground(new java.awt.Color(255, 255, 153));
+        DescriptionText.setForeground(new java.awt.Color(240, 216, 130));
         DescriptionText.setLineWrap(true);
         DescriptionText.setWrapStyleWord(true);
         DescriptionText.setPreferredSize(new java.awt.Dimension(400, 300));
@@ -502,13 +502,13 @@ public class DomainMenu extends javax.swing.JFrame {
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
         setVisible(false);
         dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
         int numfeats = (((Integer)menucreate.MainCharData[9].get(new Integer(0)))).intValue();
@@ -518,16 +518,16 @@ public class DomainMenu extends javax.swing.JFrame {
         menucreate.MainCharData[9].put(new Integer(numfeats + 2), new Integer(feat2));
         numfeats += 2;
         menucreate.MainCharData[9].put(new Integer(0),new Integer(numfeats));
-        
+
         menucreate.MainCharData[16].put(new Integer(1),(Integer)domainlist.get(0));
         menucreate.MainCharData[16].put(new Integer(2),(Integer)domainlist.get(1));
-        
+
         menucreate.CustomizeButton.setEnabled(true);
 		menucreate.RedoAll();
         setVisible(false);
         dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     private void RecommendedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecommendedButtonActionPerformed
         // Add your handling code here:
         DoReset();
@@ -538,19 +538,19 @@ public class DomainMenu extends javax.swing.JFrame {
         RefreshSelectedDomains();
         OKButton.setEnabled(true);
     }//GEN-LAST:event_RecommendedButtonActionPerformed
-    
+
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         // Add your handling code here:
         DoReset();
     }//GEN-LAST:event_ResetButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         setVisible(false);
         dispose();
     }//GEN-LAST:event_exitForm
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JPanel DescriptionPanel;

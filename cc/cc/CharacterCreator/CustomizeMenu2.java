@@ -17,24 +17,24 @@ import javax.swing.*;
  * @author  James
  */
 public class CustomizeMenu2 extends javax.swing.JFrame {
-    
+
     public class SoundButton extends JPanel {
-        
+
         private void initComponents() {
             SoundButton = new JButton();
             InfoNum = new JLabel();
             setLayout(new GridBagLayout());
             SoundButton.setBackground(new Color(0, 0, 0));
-            SoundButton.setForeground(new Color(204, 204, 0));
+            SoundButton.setForeground(new Color(222, 200, 120));
             SoundButton.setText("Name Place Holder");
             SoundButton.setHorizontalAlignment(2);
             SoundButton.setPreferredSize(new Dimension(240, 52));
             SoundButton.addActionListener(new ActionListener() {
-                
+
                 public void actionPerformed(ActionEvent evt) {
                     SoundButtonActionPerformed(evt);
                 }
-                
+
             });
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.fill = 2;
@@ -45,7 +45,7 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
             gridBagConstraints.gridy = 0;
             add(InfoNum, gridBagConstraints);
         }
-        
+
         private void SoundButtonActionPerformed(ActionEvent evt) {
             int tmp = (new Integer(InfoNum.getText())).intValue();
             //int descnum = (new Integer((String)racialmap[tmp].get(new Integer(7)))).intValue();
@@ -53,17 +53,17 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
             //DescriptionContainer.scrollRectToVisible(new Rectangle());
             SOUNDNUM = tmp;
         }
-        
+
         public JButton SoundButton;
         public JLabel InfoNum;
         public String FILENAME;
-        
-        
+
+
         public SoundButton() {
             initComponents();
         }
     }
-    
+
     /** Creates new form CustomizeMenu2 */
     public CustomizeMenu2() {
         SOUNDNUM = 216;
@@ -77,18 +77,18 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
         } else {
             setLocation(0,0);
         }
-        
+
         DeityLabel.setVisible(false);
         sexlock = true;
         standardlock = true;
         menucreate = TLKFactory.getCreateMenu();
         TLKFAC = menucreate.getTLKFactory();
         RESFAC = menucreate.getResourceFactory();
-        
-        
+
+
         int desc = Integer.parseInt(menucreate.MainCharDataAux[1][18]);
         DescriptionText.setText(TLKFAC.getEntry(desc));
-        
+
         AgeText.setText(menucreate.MainCharDataAux[1][21]);
         //String imagestring = "";
         //DescriptionText.setText(TLKFAC.getEntry(485));
@@ -101,9 +101,9 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
         }
         doSoundSet();
         pack();
-        
+
     }
-    
+
     private void doSoundSet() {
         SoundSetButtonList.removeAll();
         for(int i = 0; i < soundsetmap.length; i++) {
@@ -229,7 +229,7 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
 
         PackageButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         PackageButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        PackageButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        PackageButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         PackageButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         PackageButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         PackageButtonContainer.setAutoscrolls(true);
@@ -391,13 +391,13 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
 
         DescriptionContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         DescriptionContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(204, 204, 204)));
+        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         DescriptionContainer.setPreferredSize(new java.awt.Dimension(400, 100));
         DescriptionContainer.setAutoscrolls(true);
         DescriptionPanel.setLayout(new java.awt.GridBagLayout());
 
         DescriptionText.setBackground(new java.awt.Color(0, 0, 0));
-        DescriptionText.setForeground(new java.awt.Color(255, 255, 153));
+        DescriptionText.setForeground(new java.awt.Color(240, 216, 130));
         DescriptionText.setLineWrap(true);
         DescriptionText.setWrapStyleWord(true);
         DescriptionText.setPreferredSize(new java.awt.Dimension(400, 800));
@@ -439,7 +439,7 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void StandardLockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StandardLockActionPerformed
         // Add your handling code here:
         if(standardlock)
@@ -450,7 +450,7 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
         doSoundSet();
         pack();
     }//GEN-LAST:event_StandardLockActionPerformed
-    
+
     private void GenderLockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenderLockActionPerformed
         // Add your handling code here:
         if(sexlock)
@@ -461,13 +461,13 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
         doSoundSet();
         pack();
     }//GEN-LAST:event_GenderLockActionPerformed
-    
+
     private void DeityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeityButtonActionPerformed
         // Add your handling code here:
         DeityMenu dialog = new DeityMenu(this, true, DeityLabel);
         dialog.show();
     }//GEN-LAST:event_DeityButtonActionPerformed
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
         //menucreate.MainCharData[15] = new HashMap();
@@ -479,34 +479,34 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
         menucreate.MainCharData[15].put(new Integer(12), SubraceText.getText());
         menucreate.MainCharData[15].put(new Integer(13), DescriptionText.getText());
         menucreate.FinalizeButton.setEnabled(true);
-        menucreate.BlockWindow(false);        
+        menucreate.BlockWindow(false);
         menucreate.RedoAll();
         setVisible(false);
         dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
         menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_exitForm
-    
+
     /**
      * @param args the command line arguments
      */
     //public static void main(String args[]) {
     //    new CustomizeMenu2().show();
     //}
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AgeLabel;
     private javax.swing.JTextField AgeText;

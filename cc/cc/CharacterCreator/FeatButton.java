@@ -23,7 +23,7 @@ public class FeatButton extends JPanel {
 			feat = _feat;
 
 			setBackground(new Color(0, 0, 0));
-			setForeground(new Color(204, 204, 0));
+			setForeground(new Color(222, 200, 120));
 			setHorizontalAlignment(2);
 			setIconTextGap(15);
 			setPreferredSize(new Dimension(330, 52));

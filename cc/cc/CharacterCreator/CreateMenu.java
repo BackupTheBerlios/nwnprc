@@ -31,7 +31,7 @@ public class CreateMenu extends javax.swing.JFrame {
 
             spellButton = new JButton();
             spellButton.setBackground(new Color(0, 0, 0));
-            spellButton.setForeground(new Color(0, 0, 125));
+            spellButton.setForeground(new Color(0, 0, 125));  // Where is this color used?
             spellButton.setHorizontalAlignment(2);
             spellButton.setIconTextGap(15);
             spellButton.setPreferredSize(new Dimension(240, 52));
@@ -140,7 +140,7 @@ public class CreateMenu extends javax.swing.JFrame {
 				SkillPanel.setBackground(new java.awt.Color(0, 0, 0));
 				SkillPanel.setBorder(new javax.swing.border.BevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.lightGray, java.awt.Color.gray, java.awt.Color.lightGray));
 				SkillButton.setBackground(new java.awt.Color(0, 0, 0));
-				SkillButton.setForeground(new java.awt.Color(153, 153, 0));
+				SkillButton.setForeground(new java.awt.Color(222, 200, 120));
 				SkillButton.setText(skillsmap[ii].Skill);
 
 				SkillButton.setIcon(skillsmap[ii].Icon());
@@ -156,7 +156,7 @@ public class CreateMenu extends javax.swing.JFrame {
 				SkillPanel.add(SkillButton, gridBagConstraints);
 
 				SkillLabel.setBackground(new java.awt.Color(0, 0, 0));
-				SkillLabel.setForeground(new java.awt.Color(153, 153, 0));
+				SkillLabel.setForeground(new java.awt.Color(222, 200, 120));
 				SkillLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 				SkillLabel.setText("0");
 				SkillLabel.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -774,7 +774,7 @@ public class CreateMenu extends javax.swing.JFrame {
 
         SkillButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         SkillButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        SkillButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        SkillButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         SkillButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         SkillButtonContainer.setPreferredSize(new java.awt.Dimension(291, 300));
         SkillButtonContainer.setAutoscrolls(true);
@@ -835,7 +835,7 @@ public class CreateMenu extends javax.swing.JFrame {
 
         FeatButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         FeatButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        FeatButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        FeatButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         FeatButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         FeatButtonContainer.setPreferredSize(new java.awt.Dimension(373, 300));
         FeatButtonContainer.setAutoscrolls(true);
@@ -897,7 +897,7 @@ public class CreateMenu extends javax.swing.JFrame {
         SpellSelectedTabs.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         Spell0ButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         Spell0ButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        Spell0ButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        Spell0ButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         Spell0ButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         Spell0ButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         Spell0ButtonContainer.setAutoscrolls(true);
@@ -929,7 +929,7 @@ public class CreateMenu extends javax.swing.JFrame {
 
         Spell1ButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         Spell1ButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        Spell1ButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        Spell1ButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         Spell1ButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         Spell1ButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         Spell1ButtonContainer.setAutoscrolls(true);

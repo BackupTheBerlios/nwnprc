@@ -12,21 +12,21 @@ import java.awt.*;
  * @author  James
  */
 public class CreditsMenu extends javax.swing.JFrame {
-    
+
     /** Creates new form CreditsMenu */
     public CreditsMenu() {
         initComponents();
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
-            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();            
+            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();
             setLocation(intwidth, intheight);
         } else {
             setLocation(0,0);
-        }        
+        }
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -54,9 +54,9 @@ public class CreditsMenu extends javax.swing.JFrame {
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(350, 303));
-        CreditText.setBackground(new java.awt.Color(51, 51, 51));
+        CreditText.setBackground(new java.awt.Color(0, 0, 0));
         CreditText.setEditable(false);
-        CreditText.setForeground(new java.awt.Color(204, 204, 0));
+        CreditText.setForeground(new java.awt.Color(240, 216, 130));
         CreditText.setLineWrap(true);
         CreditText.setWrapStyleWord(true);
         CreditText.setText("PRC: v1.3\nThis release was prepared by the "
@@ -125,17 +125,17 @@ public class CreditsMenu extends javax.swing.JFrame {
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
         setVisible(false);
-        dispose();             
+        dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         setVisible(false);
-        dispose();     
+        dispose();
     }//GEN-LAST:event_exitForm
-    
 
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -146,5 +146,5 @@ public class CreditsMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextArea CreditText;
     // End of variables declaration//GEN-END:variables
-    
+
 }

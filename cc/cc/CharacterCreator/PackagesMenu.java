@@ -21,24 +21,24 @@ import CharacterCreator.util.*;
  * @author  James
  */
 public class PackagesMenu extends javax.swing.JFrame {
-    
+
     public class PackageButton extends JPanel {
-        
+
         private void initComponents() {
             PackageButton = new JButton();
             InfoNum = new JLabel();
             setLayout(new GridBagLayout());
             PackageButton.setBackground(new Color(0, 0, 0));
-            PackageButton.setForeground(new Color(204, 204, 0));
+            PackageButton.setForeground(new Color(222, 200, 120));
             PackageButton.setText("Name Place Holder");
             PackageButton.setHorizontalAlignment(2);
             PackageButton.setPreferredSize(new Dimension(240, 52));
             PackageButton.addActionListener(new ActionListener() {
-                
+
                 public void actionPerformed(ActionEvent evt) {
                     PackageButtonActionPerformed(evt);
                 }
-                
+
             });
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.fill = 2;
@@ -49,7 +49,7 @@ public class PackagesMenu extends javax.swing.JFrame {
             gridBagConstraints.gridy = 0;
             add(InfoNum, gridBagConstraints);
         }
-        
+
         private void PackageButtonActionPerformed(ActionEvent evt) {
             int tmp = (new Integer(InfoNum.getText())).intValue();
             String descstr = packagemap[tmp][packages.Description];
@@ -59,17 +59,17 @@ public class PackagesMenu extends javax.swing.JFrame {
             //DescriptionContainer.scrollRectToVisible(new Rectangle());
             PACKAGENUM = tmp;
         }
-        
+
         public JButton PackageButton;
         public JLabel InfoNum;
         public String FILENAME;
-        
-        
+
+
         public PackageButton() {
             initComponents();
         }
     }
-    
+
     /** Creates new form PackagesMenu */
     public PackagesMenu() {
         PACKAGENUM = 0;
@@ -83,14 +83,14 @@ public class PackagesMenu extends javax.swing.JFrame {
         } else {
             setLocation(0,0);
         }
-        
+
         menucreate = TLKFactory.getCreateMenu();
-        menucreate.BlockWindow(true);    
+        menucreate.BlockWindow(true);
         TLKFAC = menucreate.getTLKFactory();
         RESFAC = menucreate.getResourceFactory();
         String imagestring = "";
-        
-        
+
+
         try {
             packagemap = RESFAC.getResourceAs2DA("packages");
         }
@@ -118,7 +118,7 @@ public class PackagesMenu extends javax.swing.JFrame {
         DescriptionText.setText(TLKFAC.getEntry(487));
         pack();
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -156,7 +156,7 @@ public class PackagesMenu extends javax.swing.JFrame {
 
         PackageButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         PackageButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        PackageButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        PackageButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         PackageButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         PackageButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         PackageButtonContainer.setAutoscrolls(true);
@@ -242,13 +242,13 @@ public class PackagesMenu extends javax.swing.JFrame {
 
         DescriptionContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         DescriptionContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(204, 204, 204)));
+        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         DescriptionContainer.setPreferredSize(new java.awt.Dimension(400, 100));
         DescriptionContainer.setAutoscrolls(true);
         DescriptionPanel.setLayout(new java.awt.GridBagLayout());
 
         DescriptionText.setBackground(new java.awt.Color(0, 0, 0));
-        DescriptionText.setForeground(new java.awt.Color(255, 255, 153));
+        DescriptionText.setForeground(new java.awt.Color(240, 216, 130));
         DescriptionText.setLineWrap(true);
         DescriptionText.setWrapStyleWord(true);
         DescriptionText.setPreferredSize(new java.awt.Dimension(400, 800));
@@ -315,14 +315,14 @@ public class PackagesMenu extends javax.swing.JFrame {
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
-        menucreate.BlockWindow(false);        
+        menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
         doRecommended();
@@ -330,46 +330,46 @@ public class PackagesMenu extends javax.swing.JFrame {
         menucreate.MainCharData[6].put(new Integer(0), Boolean.FALSE);
         menucreate.MainCharDataAux[7] = packagemap[PACKAGENUM];
         //menucreate.CustomizeButton.setEnabled(true);
-        
+
         //HANDLING CODE FOR PACKAGE HANDLER GOES HERE
         SwingWorker worker2 = new SwingWorker() {
-            
+
             public Object construct() {
                 return new PackageHandler();
             }
-            
+
         };
-        worker2.start();        
+        worker2.start();
         setVisible(false);
         dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     private void RecommendedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecommendedButtonActionPerformed
         // Add your handling code here:
         doRecommended();
     }//GEN-LAST:event_RecommendedButtonActionPerformed
-    
+
     private void ConfigurePackagesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfigurePackagesButtonActionPerformed
         // Add your handling code here:
-        
+
         menucreate.MainCharData[6] = new HashMap();
         menucreate.MainCharData[6].put(new Integer(0), Boolean.FALSE);
         menucreate.MainCharDataAux[7] = packagemap[PACKAGENUM];
         (new SkillMenu()).show();
         //THIS IS TEMPORARY
         menucreate.BlockWindow(false);
-        
+
         setVisible(false);
         dispose();
     }//GEN-LAST:event_ConfigurePackagesButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_exitForm
-    
+
     private void doRecommended() {
         int classn = 0;
         try {
@@ -411,7 +411,7 @@ public class PackagesMenu extends javax.swing.JFrame {
     public String[][] packagemap;
     private CreateMenu menucreate;
     private int PACKAGENUM;
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton ConfigurePackagesButton;
@@ -430,5 +430,5 @@ public class PackagesMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     // End of variables declaration//GEN-END:variables
-    
+
 }

@@ -49,12 +49,12 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
     public FeatMenu() {
         int i;
         initComponents();
-        
+
         menucreate = TLKFactory.getCreateMenu();
-        
+
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
@@ -63,18 +63,18 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
         } else {
             setLocation(0,0);
         }
-        
+
         featlist = new ArrayList();
         ccskill = new ArrayList();
         startfeatlist = new ArrayList();
         availclassfeatlist = new ArrayList();
         bonusfeatlist = new ArrayList();
-        
+
         TLKFAC = menucreate.getTLKFactory();
         RESFAC = menucreate.getResourceFactory();
 		featmap = FeatMap.GetFeatMap();
 		skillmap = SkillMap.GetSkillMap();
-        
+
         //Initialize values for the Class and Race feats -> Featlist
         int classn = Integer.parseInt(menucreate.MainCharDataAux[3][0]);
         String attack2da = menucreate.MainCharDataAux[3][classes.AttackBonusTable];
@@ -136,7 +136,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
                 startfeatlist.add(feat);
             }
         }
-        
+
         for(i = 0; i < skillmap.length; i++) {
             ccskill.add(null);
         }
@@ -153,7 +153,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
                 ccskill.set(skillchange, (new Integer(clssk)));
             }
         }
-        
+
         numfeats = 1;
 		// Adjust the number of feats based on
 		// Quick to Master (humans) and bonus feats for classes
@@ -164,17 +164,17 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 		// our behavior
         //if(bonusfeat2damap != null && bonusfeat2damap[0][1] != null)
          //   numfeats += Integer.parseInt(bonusfeat2damap[0][1]);
-        
+
         FeatRemainingText.setText(Integer.toString(numfeats));
         RefreshFeatAvailable();
         RefreshFeatSelected();
-        
+
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
-        
+
         pack();
     }
-    
+
     private void RefreshFeatSelected() {
         FeatSelectedButtonList.removeAll();
 		for(int i = 0; i < featlist.size(); i++) {
@@ -189,11 +189,11 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 
         pack();
     }
-    
+
 	// Iterate through each feat and select the availables ones
     private void RefreshFeatAvailable() {
         FeatAvailableButtonList.removeAll();
-		
+
 		// If we have feat slots available, regenerate the current list
         if (Integer.parseInt(FeatRemainingText.getText()) > 0) {
 			ArrayList al = new ArrayList();
@@ -232,7 +232,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 
 		return retval;
 	}
-    
+
     private boolean isValidFeat(Feat feat) {
 		// Test that this feat is valid
 		if (feat == null)
@@ -326,7 +326,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 
 			return false;
 		}
-        
+
 		// This is ugly, but I don't feel like trying to make this prettier.  I already wanna nix it.
         int realstr = new Integer(((String)menucreate.MainCharData[5].get(new Integer(0)))).intValue();
         int realdex = new Integer(((String)menucreate.MainCharData[5].get(new Integer(1)))).intValue();
@@ -456,11 +456,11 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 
         return true;
 	}
-    
+
     private void DoRecommended() {
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
-        
+
         DoReset();
         String featpref2da = menucreate.MainCharDataAux[7][packages.FeatPref2DA];
         String[][] featpref2damap = null;
@@ -487,11 +487,11 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
         FeatRemainingText.setText("0");
         RefreshFeatAvailable();
         RefreshFeatSelected();
-        
+
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
     }
-    
+
     private void DoReset() {
         featlist = new ArrayList();
         startfeatlist = new ArrayList();
@@ -516,7 +516,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
         RefreshFeatAvailable();
         RefreshFeatSelected();
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -546,7 +546,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
         CancelButton = new javax.swing.JButton();
 
         getContentPane().setLayout(new java.awt.GridBagLayout());
-	   setTitle("Feat Menu"); 
+	   setTitle("Feat Menu");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -556,7 +556,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 
         FeatButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         FeatButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        FeatButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        FeatButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         FeatButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         FeatButtonContainer.setPreferredSize(new java.awt.Dimension(373, 300));
         FeatButtonContainer.setAutoscrolls(true);
@@ -592,7 +592,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 
         FeatButtonContainer1.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         FeatButtonContainer1.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        FeatButtonContainer1.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        FeatButtonContainer1.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         FeatButtonContainer1.setMaximumSize(new java.awt.Dimension(32767, 300));
         FeatButtonContainer1.setPreferredSize(new java.awt.Dimension(373, 300));
         FeatButtonContainer1.setAutoscrolls(true);
@@ -744,13 +744,13 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
         setVisible(false);
         dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
         if(new Integer(FeatRemainingText.getText()).intValue() > 0) {
@@ -761,9 +761,9 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
         for(int i = 0; i < featlist.size(); i++) {
             menucreate.MainCharData[9].put(new Integer(i+1),((Feat)featlist.get(i)).Index());
         }
-        
-        
-        
+
+
+
         menucreate.MainCharData[16] = new HashMap();
         menucreate.RedoAll();
         //RANGER CLASS
@@ -847,29 +847,29 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
             return;
         }
         menucreate.CustomizeButton.setEnabled(true);
-        
+
         setVisible(false);
         dispose();
-        
+
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     private void RecommendedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecommendedButtonActionPerformed
         // Add your handling code here:
         DoRecommended();
     }//GEN-LAST:event_RecommendedButtonActionPerformed
-    
+
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         // Add your handling code here:
         DoReset();
     }//GEN-LAST:event_ResetButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         setVisible(false);
         dispose();
     }//GEN-LAST:event_exitForm
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel13;
     private javax.swing.JScrollPane FeatButtonContainer;
@@ -899,8 +899,8 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
     private String[][] racefeat2damap;
     private String[][] classfeat2damap;
     private String[][] classskill2damap;
-	private String[][] bonusfeat2damap;        
-	private String[][] spellgain2damap;        
+	private String[][] bonusfeat2damap;
+	private String[][] spellgain2damap;
     private CreateMenu menucreate;
     private ArrayList ccskill;
 

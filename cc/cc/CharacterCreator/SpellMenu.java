@@ -25,14 +25,14 @@ import CharacterCreator.util.*;
  * @author  James
  */
 public class SpellMenu extends javax.swing.JFrame {
-    
+
     public class Spell0AvailButton extends JPanel {
         private void initComponents() {
             setLayout(new GridBagLayout());
 
             spellButton = new JButton();
             spellButton.setBackground(new Color(0, 0, 0));
-            spellButton.setForeground(new Color(204, 204, 0));
+            spellButton.setForeground(new Color(222, 200, 120));
             spellButton.setHorizontalAlignment(2);
             spellButton.setIconTextGap(15);
             spellButton.setPreferredSize(new Dimension(240, 52));
@@ -53,7 +53,7 @@ public class SpellMenu extends javax.swing.JFrame {
             gridBagConstraints.fill = 2;
             add(spellButton, gridBagConstraints);
         }
-        
+
         private void Spell0AvailActionPerformed(ActionEvent evt) {
             Spells0List.add(spell.Index());
             Spells0Left--;
@@ -64,7 +64,7 @@ public class SpellMenu extends javax.swing.JFrame {
             RefreshSpell0Available();
             RefreshSpell0Selected();
         }
-        
+
         private void Spell0AvailButtonMouseClicked(java.awt.event.MouseEvent evt) {
             // Add your handling code here:
             if(evt.getButton() == 3) {
@@ -77,7 +77,7 @@ public class SpellMenu extends javax.swing.JFrame {
 					);
             }
         }
-        
+
 		private JButton spellButton;
 		private Spell spell;
 
@@ -90,14 +90,14 @@ public class SpellMenu extends javax.swing.JFrame {
 			spellButton.setText(spell.Spell);
         }
     }
-    
+
     public class Spell0SelectedButton extends JPanel {
         private void initComponents() {
             setLayout(new GridBagLayout());
 
             spellButton = new JButton();
             spellButton.setBackground(new Color(0, 0, 0));
-            spellButton.setForeground(new Color(204, 204, 0));
+            spellButton.setForeground(new Color(222, 200, 120));
             spellButton.setHorizontalAlignment(2);
             spellButton.setIconTextGap(15);
             spellButton.setPreferredSize(new Dimension(240, 52));
@@ -118,7 +118,7 @@ public class SpellMenu extends javax.swing.JFrame {
             gridBagConstraints.fill = 2;
             add(spellButton, gridBagConstraints);
         }
-        
+
         private void Spell0SelectedButtonActionPerformed(ActionEvent evt) {
             Spells0List.remove(spell.Index());
             Spells0Left++;
@@ -128,7 +128,7 @@ public class SpellMenu extends javax.swing.JFrame {
             RefreshSpell0Available();
             RefreshSpell0Selected();
         }
-        
+
         private void Spell0SelectedButtonMouseClicked(java.awt.event.MouseEvent evt) {
             // Add your handling code here:
             if(evt.getButton() == 3) {
@@ -141,10 +141,10 @@ public class SpellMenu extends javax.swing.JFrame {
 					);
             }
         }
-        
+
 		private JButton spellButton;
 		private Spell spell;
-        
+
         public Spell0SelectedButton(Spell _spell, boolean enabled) throws IOException {
 			spell = _spell;
             initComponents();
@@ -155,14 +155,14 @@ public class SpellMenu extends javax.swing.JFrame {
 			spellButton.setText(spell.Spell);
         }
     }
-    
+
     public class Spell1AvailButton extends JPanel {
         private void initComponents() {
             setLayout(new GridBagLayout());
 
             spellButton = new JButton();
             spellButton.setBackground(new Color(0, 0, 0));
-            spellButton.setForeground(new Color(204, 204, 0));
+            spellButton.setForeground(new Color(222, 200, 120));
             spellButton.setHorizontalAlignment(2);
             spellButton.setIconTextGap(15);
             spellButton.setPreferredSize(new Dimension(240, 52));
@@ -183,7 +183,7 @@ public class SpellMenu extends javax.swing.JFrame {
             gridBagConstraints.fill = 2;
             add(spellButton, gridBagConstraints);
         }
-        
+
         private void Spell1AvailActionPerformed(ActionEvent evt) {
             Spells1List.add(spell.Index());
             Spells1Left--;
@@ -194,7 +194,7 @@ public class SpellMenu extends javax.swing.JFrame {
             RefreshSpell1Available();
             RefreshSpell1Selected();
         }
-        
+
         private void Spell1AvailButtonMouseClicked(java.awt.event.MouseEvent evt) {
             // Add your handling code here:
             if(evt.getButton() == 3) {
@@ -207,7 +207,7 @@ public class SpellMenu extends javax.swing.JFrame {
 					);
             }
         }
-        
+
 		private JButton spellButton;
 		private Spell spell;
 
@@ -220,18 +220,18 @@ public class SpellMenu extends javax.swing.JFrame {
 			spellButton.setText(spell.Spell);
         }
     }
-    
+
     public class Spell1SelectedButton extends JPanel {
         private void initComponents() {
             setLayout(new GridBagLayout());
 
             spellButton = new JButton();
             spellButton.setBackground(new Color(0, 0, 0));
-            spellButton.setForeground(new Color(204, 204, 0));
+            spellButton.setForeground(new Color(222, 200, 120));
             spellButton.setHorizontalAlignment(2);
             spellButton.setIconTextGap(15);
             spellButton.setPreferredSize(new Dimension(240, 52));
-                
+
             spellButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     Spell1SelectedButtonActionPerformed(evt);
@@ -248,7 +248,7 @@ public class SpellMenu extends javax.swing.JFrame {
             gridBagConstraints.fill = 2;
             add(spellButton, gridBagConstraints);
         }
-        
+
         private void Spell1SelectedButtonActionPerformed(ActionEvent evt) {
             Spells1List.remove(spell.Index());
             Spells1Left++;
@@ -258,7 +258,7 @@ public class SpellMenu extends javax.swing.JFrame {
             RefreshSpell1Available();
             RefreshSpell1Selected();
         }
-        
+
         private void Spell1SelectedButtonMouseClicked(java.awt.event.MouseEvent evt) {
             // Add your handling code here:
             if(evt.getButton() == 3) {
@@ -271,10 +271,10 @@ public class SpellMenu extends javax.swing.JFrame {
 					);
             }
         }
-        
+
 		private JButton spellButton;
 		private Spell spell;
-        
+
 		public Spell1SelectedButton(Spell _spell) throws IOException {
 			spell = _spell;
             initComponents();
@@ -294,7 +294,7 @@ public class SpellMenu extends javax.swing.JFrame {
         Spells0AvailList = new LinkedList();
         Spells1AvailList = new LinkedList();
         initComponents();
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
@@ -303,7 +303,7 @@ public class SpellMenu extends javax.swing.JFrame {
         } else {
             setLocation(0,0);
         }
-        
+
         OKButton.setEnabled(false);
         menucreate = TLKFactory.getCreateMenu();
         TLKFAC = menucreate.getTLKFactory();
@@ -327,7 +327,7 @@ public class SpellMenu extends javax.swing.JFrame {
         }
         int i;
         classn = Integer.parseInt(menucreate.MainCharDataAux[3][0]);
-        
+
         if(classn == 10) {
             int school = ((Integer)menucreate.MainCharData[16].get(new Integer(0))).intValue();
             if(school != 0) {
@@ -335,8 +335,8 @@ public class SpellMenu extends javax.swing.JFrame {
                 oppletter = schoolmap[opposition][2];
             }
         }
-        
-        
+
+
         for (int ii = 0; ii < spellmap.length; ++ii) {
 			if (spellmap[ii] != null) {
 				//BARD SPELL CHECK
@@ -359,7 +359,7 @@ public class SpellMenu extends javax.swing.JFrame {
 				}
 			}
         }
-        
+
         if(classn == 10) {
             Spells0List = Spells0AvailList;
         }
@@ -368,7 +368,7 @@ public class SpellMenu extends javax.swing.JFrame {
             Spells0Left = 0;
             Spells1Left = 3 + intmod;
         } else {
-            
+
             String spknowntable = menucreate.MainCharDataAux[3][classes.SpellKnownTable];
             try {
                 spknownmap = RESFAC.getResourceAs2DA(spknowntable);
@@ -386,16 +386,16 @@ public class SpellMenu extends javax.swing.JFrame {
                 Spells1Left = 0;
             }
         }
-        
-        
+
+
         initialized = true;
-        
+
         RefreshSpell0Available();
         RefreshSpell1Available();
         RefreshSpell0Selected();
         pack();
     }
-    
+
     private void RefreshSpell0Available() {
         String imagestring = "";
         Spell0ButtonList.removeAll();
@@ -420,8 +420,8 @@ public class SpellMenu extends javax.swing.JFrame {
 		}
         pack();
     }
-    
-    
+
+
     private void RefreshSpell1Available() {
         String imagestring = "";
         Spell1ButtonList.removeAll();
@@ -446,7 +446,7 @@ public class SpellMenu extends javax.swing.JFrame {
 		}
         pack();
     }
-    
+
     private void RefreshSpell0Selected() {
         String imagestring = "";
         SpellSelectedButtonList.removeAll();
@@ -470,7 +470,7 @@ public class SpellMenu extends javax.swing.JFrame {
         }
         pack();
     }
-    
+
     private void RefreshSpell1Selected() {
         String imagestring = "";
         SpellSelectedButtonList.removeAll();
@@ -494,7 +494,7 @@ public class SpellMenu extends javax.swing.JFrame {
         }
         pack();
     }
-    
+
     private void DoReset() {
         if(classn == 10) {
             Spells0Left = 0;
@@ -509,7 +509,7 @@ public class SpellMenu extends javax.swing.JFrame {
                 Spells1Left = 0;
             }
         }
-        
+
         Spells1List.clear();
         if(classn != 10) {
             Spells0List.clear();
@@ -554,7 +554,7 @@ public class SpellMenu extends javax.swing.JFrame {
 
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-	   setTitle("Spell Menu"); 
+	   setTitle("Spell Menu");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -589,7 +589,7 @@ public class SpellMenu extends javax.swing.JFrame {
 
         Spell0ButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         Spell0ButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        Spell0ButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        Spell0ButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         Spell0ButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         Spell0ButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         Spell0ButtonContainer.setAutoscrolls(true);
@@ -620,7 +620,7 @@ public class SpellMenu extends javax.swing.JFrame {
 
         Spell1ButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         Spell1ButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        Spell1ButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        Spell1ButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         Spell1ButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         Spell1ButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         Spell1ButtonContainer.setAutoscrolls(true);
@@ -658,7 +658,7 @@ public class SpellMenu extends javax.swing.JFrame {
 
         SpellSelectedButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         SpellSelectedButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        SpellSelectedButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        SpellSelectedButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         SpellSelectedButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         SpellSelectedButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         SpellSelectedButtonContainer.setAutoscrolls(true);
@@ -776,13 +776,13 @@ public class SpellMenu extends javax.swing.JFrame {
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
         setVisible(false);
         dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
         try{
@@ -796,7 +796,7 @@ public class SpellMenu extends javax.swing.JFrame {
             for(int i = 0; i < Spells1List.size(); i++) {
                 menucreate.MainCharData[11].put(new Integer(i+1),Spells1List.get(i));
             }
-            
+
             LinkedList featmap = new LinkedList();
             int numfeats = ((Integer)menucreate.MainCharData[9].get(new Integer(0))).intValue();
             for(int q = 0; q<numfeats; q++) {
@@ -838,7 +838,7 @@ public class SpellMenu extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     private void RecommendedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecommendedButtonActionPerformed
         // Add your handling code here:
         String spellpref2da = ((String)menucreate.MainCharData[7].get(new Integer(packages.SpellPref2DA)));
@@ -854,7 +854,7 @@ public class SpellMenu extends javax.swing.JFrame {
         int i;
         String spknowntable = menucreate.MainCharDataAux[3][classes.SpellKnownTable];
         DoReset();
-        
+
         if(spknowntable == null) {
             //Wizard stuff
             //int sk0 = 4; //Make this all 0 level spells?
@@ -888,7 +888,7 @@ public class SpellMenu extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Fatal Error - " + spknowntable + " not found. Your data files might be corrupt.", "Error", 0);
                 System.exit(0);
             }
-            
+
             if(classn == 9) { // Sorcerer
                 int sk0 = Integer.parseInt(spknownmap[0][2]);
                 int sk1 = Integer.parseInt(spknownmap[0][3]);
@@ -944,16 +944,16 @@ public class SpellMenu extends javax.swing.JFrame {
                 pack();
             }
         }
-        
+
         System.out.println("Lv0: " + Spells0List.toString());
         System.out.println("Lv1: " + Spells1List.toString());
     }//GEN-LAST:event_RecommendedButtonActionPerformed
-    
+
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         // Add your handling code here:
         DoReset();
     }//GEN-LAST:event_ResetButtonActionPerformed
-    
+
     private void SpellSelectedTabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpellSelectedTabsStateChanged
         // Add your handling code here:
         if(initialized) {
@@ -966,14 +966,14 @@ public class SpellMenu extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_SpellSelectedTabsStateChanged
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         setVisible(false);
         dispose();
     }//GEN-LAST:event_exitForm
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton OKButton;

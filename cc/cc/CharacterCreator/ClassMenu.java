@@ -21,25 +21,25 @@ import CharacterCreator.util.*;
  * @author  James
  */
 public class ClassMenu extends javax.swing.JFrame {
-    
+
     public class ClassButton extends JPanel {
         private void initComponents() {
             ClassButton = new JButton();
             InfoNum = new JLabel();
             setLayout(new GridBagLayout());
             ClassButton.setBackground(new Color(0, 0, 0));
-            ClassButton.setForeground(new Color(204, 204, 0));
+            ClassButton.setForeground(new Color(222, 200, 120));
             ClassButton.setIcon(new ImageIcon(getClass().getResource("/CharacterCreator/resource/folder.gif")));
             ClassButton.setText("Name Place Holder");
             ClassButton.setHorizontalAlignment(2);
             ClassButton.setIconTextGap(40);
             ClassButton.setPreferredSize(new Dimension(240, 52));
             ClassButton.addActionListener(new ActionListener() {
-                
+
                 public void actionPerformed(ActionEvent evt) {
                     ClassButtonActionPerformed(evt);
                 }
-                
+
             });
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.fill = 2;
@@ -50,7 +50,7 @@ public class ClassMenu extends javax.swing.JFrame {
             gridBagConstraints.gridy = 0;
             add(InfoNum, gridBagConstraints);
         }
-        
+
         private void ClassButtonActionPerformed(ActionEvent evt) {
             int tmp = 0;
             //try {
@@ -70,8 +70,8 @@ public class ClassMenu extends javax.swing.JFrame {
         public JButton ClassButton;
         public JLabel InfoNum;
         public String FILENAME;
-        
-        
+
+
         public ClassButton(String imageName, String desc, String ctext) throws IOException {
             initComponents();
 
@@ -84,7 +84,7 @@ public class ClassMenu extends javax.swing.JFrame {
 			InfoNum.setText(ctext);
         }
     }
-    
+
     /** Creates new form ClassMenu1 */
     public ClassMenu() {
         CLASSNUM = 4;
@@ -95,7 +95,7 @@ public class ClassMenu extends javax.swing.JFrame {
         menucreate.BlockWindow(true);
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
@@ -104,8 +104,8 @@ public class ClassMenu extends javax.swing.JFrame {
         } else {
             setLocation(0,0);
         }
-        
-        
+
+
         TLKFAC = menucreate.getTLKFactory();
         RESFAC = menucreate.getResourceFactory();
         String imagestring = "";
@@ -137,7 +137,7 @@ public class ClassMenu extends javax.swing.JFrame {
                     }
                 }
             }
-            
+
         }
         catch(IOException err) {
             JOptionPane.showMessageDialog(null, "Error - Your data files might be corrupt.", "Error", 0);
@@ -149,10 +149,10 @@ public class ClassMenu extends javax.swing.JFrame {
         }
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
-        
+
         pack();
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -190,7 +190,7 @@ public class ClassMenu extends javax.swing.JFrame {
 
         ClassButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         ClassButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        ClassButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        ClassButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         ClassButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         ClassButtonContainer.setPreferredSize(new java.awt.Dimension(283, 300));
         ClassButtonContainer.setAutoscrolls(true);
@@ -262,14 +262,14 @@ public class ClassMenu extends javax.swing.JFrame {
 
         DescriptionContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         DescriptionContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(204, 204, 204)));
+        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         DescriptionContainer.setPreferredSize(new java.awt.Dimension(400, 100));
         DescriptionContainer.setAutoscrolls(true);
         DescriptionPanel.setLayout(new java.awt.GridBagLayout());
 
         DescriptionPanel.setPreferredSize(new java.awt.Dimension(400, 800));
         DescriptionText.setBackground(new java.awt.Color(0, 0, 0));
-        DescriptionText.setForeground(new java.awt.Color(255, 255, 153));
+        DescriptionText.setForeground(new java.awt.Color(240, 216, 130));
         DescriptionText.setLineWrap(true);
         DescriptionText.setWrapStyleWord(true);
         DescriptionText.setPreferredSize(new java.awt.Dimension(400, 800));
@@ -336,14 +336,14 @@ public class ClassMenu extends javax.swing.JFrame {
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
-        menucreate.BlockWindow(false);                
+        menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
         try {
@@ -354,7 +354,7 @@ public class ClassMenu extends javax.swing.JFrame {
             menucreate.ClassName.setText(TLKFAC.getEntry(tlkentry));
             menucreate.MainCharDataAux[3] = classmap[CLASSNUM];
             menucreate.RedoAll();
-            menucreate.BlockWindow(false);                    
+            menucreate.BlockWindow(false);
             setVisible(false);
             dispose();
         }
@@ -363,7 +363,7 @@ public class ClassMenu extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     private void RecommendedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecommendedButtonActionPerformed
         // Add your handling code here:
         try {
@@ -374,7 +374,7 @@ public class ClassMenu extends javax.swing.JFrame {
                 favored = Integer.parseInt(menucreate.MainCharDataAux[1][racialtypes.Favored]);
             //int descnum2 = (new Integer((String)classmap[favored].get(new Integer(classes.Description)))).intValue();
             descstr = classmap[favored][classes.Description];
-            int descnum2 = ChkHex.ChkHex(descstr); 
+            int descnum2 = ChkHex.ChkHex(descstr);
             DescriptionText.setText(TLKFAC.getEntry(descnum2));
             CLASSNUM = favored;
             OKButton.setEnabled(true);
@@ -384,14 +384,14 @@ public class ClassMenu extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_RecommendedButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
-        menucreate.BlockWindow(false);        
+        menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_exitForm
-    
+
     private int CLASSNUM;
     private TLKFactory TLKFAC;
     private ResourceFactory RESFAC;

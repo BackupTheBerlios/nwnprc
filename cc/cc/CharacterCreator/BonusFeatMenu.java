@@ -22,7 +22,7 @@ import CharacterCreator.WordWrap;
  * @author  James
  */
 public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener {
-    
+
 	// Call back for FeatButton
 	public void actionPerformed(ActionEvent evt) {
 		Feat feat = ((FeatButton.InternalFeatButton)evt.getSource()).Feat();
@@ -42,7 +42,7 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
 		RefreshFeatAvailable();
 		RefreshFeatSelected();
 	}
-    
+
     /** Creates new form BonusFeatMenu */
     public BonusFeatMenu(ArrayList _bonusfeatlist, int _numfeats) {
 		bonusfeatlist = _bonusfeatlist;
@@ -51,10 +51,10 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
         int i;
         menucreate = TLKFactory.getCreateMenu();
         initComponents();
-        
+
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
@@ -63,24 +63,24 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
         } else {
             setLocation(0,0);
         }
-        
+
         featlist = new ArrayList();
-        
+
         TLKFAC = menucreate.getTLKFactory();
         RESFAC = menucreate.getResourceFactory();
-        
+
 		featmap = FeatMap.GetFeatMap();
-        
+
         FeatRemainingText.setText(Integer.toString(numfeats));
         RefreshFeatAvailable();
         RefreshFeatSelected();
-        
+
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
-        
+
         pack();
     }
-    
+
     private void RefreshFeatSelected() {
         int i;
         FeatSelectedButtonList.removeAll();
@@ -92,7 +92,7 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
 		}
         pack();
     }
-    
+
     private void RefreshFeatAvailable() {
         FeatAvailableButtonList.removeAll();
 
@@ -111,15 +111,15 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
 		}
         pack();
     }
-    
+
     private void DoRecommended() {
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
-        
+
         DoReset();
 
 		// Ranger Favored Enemy
-		if(Integer.parseInt(menucreate.MainCharDataAux[3][0]) == 7) {	
+		if(Integer.parseInt(menucreate.MainCharDataAux[3][0]) == 7) {
 			//Goblinoid
 			featlist.add(featmap[273]);
 		}
@@ -130,18 +130,18 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
         FeatRemainingText.setText("0");
         RefreshFeatAvailable();
         RefreshFeatSelected();
-        
+
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
     }
-    
+
     private void DoReset() {
         featlist = new ArrayList();
         FeatRemainingText.setText(Integer.toString(numfeats));
         RefreshFeatAvailable();
         RefreshFeatSelected();
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -180,7 +180,7 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
 
         FeatButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         FeatButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        FeatButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        FeatButtonContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         FeatButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
         FeatButtonContainer.setPreferredSize(new java.awt.Dimension(373, 300));
         FeatButtonContainer.setAutoscrolls(true);
@@ -216,7 +216,7 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
 
         FeatButtonContainer1.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         FeatButtonContainer1.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        FeatButtonContainer1.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(153, 153, 0)));
+        FeatButtonContainer1.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         FeatButtonContainer1.setMaximumSize(new java.awt.Dimension(32767, 300));
         FeatButtonContainer1.setPreferredSize(new java.awt.Dimension(373, 300));
         FeatButtonContainer1.setAutoscrolls(true);
@@ -360,27 +360,27 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
 
         pack();
     }//GEN-END:initComponents
-    
+
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         // Add your handling code here:
         DoReset();
     }//GEN-LAST:event_ResetButtonActionPerformed
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
         setVisible(false);
         dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         if(Integer.parseInt(FeatRemainingText.getText()) > 0)
             DoRecommended();
-        
+
 		// This should take into account the possibility of having more than 1 feat to append
         int numberfeats = ((Integer)menucreate.MainCharData[9].get(new Integer(0))).intValue();
         menucreate.MainCharData[9].put(new Integer(numberfeats+1),((Feat)featlist.get(0)).Index());
         menucreate.MainCharData[9].put(new Integer(0),new Integer(numberfeats + 1));
-        
+
         //Put handling code here to check to see what menu goes next.
         //First of all, determine whether or not the character is a spellcaster AT ALL.
         if(menucreate.MainCharDataAux[3][15] != null && menucreate.MainCharDataAux[3][15].equalsIgnoreCase("1")) {
@@ -434,26 +434,26 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
             return;
         }
         menucreate.CustomizeButton.setEnabled(true);
-        
+
         //Must be a fighter, or something else boring
         menucreate.RedoAll();
         setVisible(false);
         dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
-    
+
     private void RecommendedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecommendedButtonActionPerformed
         // Add your handling code here:
         DoRecommended();
     }//GEN-LAST:event_RecommendedButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         setVisible(false);
         dispose();
     }//GEN-LAST:event_exitForm
-    
-    
-    
+
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JPanel FeatAvailableButtonList;

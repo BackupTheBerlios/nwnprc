@@ -22,25 +22,25 @@ import CharacterCreator.util.*;
  * @author  James
  */
 public class SkillMenu extends javax.swing.JFrame {
-    
+
     // Start New
     // Garad Moonbeam
     // Attempting dynamic skill menu
     public class SkillButton extends JPanel {
-        
+
         private void initComponents() {
             java.awt.GridBagConstraints gridBagConstraints;
             SkillButton = new JButton();        // Main part of SkillButton, has text and icon
             SkillSpinner = new JSpinner();      // Spinner for adjusting skill points
             InfoNum = new JLabel();             // Stores the index of the skill in skills.2da
-            
+
             this.setLayout(new java.awt.GridBagLayout());
             this.setBackground(new java.awt.Color(0, 0, 0));
             this.setBorder(new javax.swing.border.BevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.lightGray, java.awt.Color.gray, java.awt.Color.lightGray));
             this.setPreferredSize(new java.awt.Dimension(264, 36));
-            
+
             SkillButton.setBackground(new java.awt.Color(0, 0, 0));
-            SkillButton.setForeground(new java.awt.Color(153, 153, 0));
+            SkillButton.setForeground(new java.awt.Color(222, 200, 120));
             SkillButton.setText("Name Place Holder");
             SkillButton.setBorder(null);
             SkillButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -51,28 +51,28 @@ public class SkillMenu extends javax.swing.JFrame {
                     SkillButtonActionPerformed(evt);
                 }
             });
-            
+
             gridBagConstraints = new java.awt.GridBagConstraints();
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = 0;
             gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
             gridBagConstraints.weightx = 1.0;
             this.add(SkillButton, gridBagConstraints);
-            
+
             InfoNum.setText("Num");
             /*gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = 0;
             this.add(InfoNum, gridBagConstraints);
              */
-            
+
             SkillSpinner.setBorder(null);
             SkillSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
                 public void stateChanged(javax.swing.event.ChangeEvent evt) {
                     SkillSpinnerStateChanged(evt);
                 }
             });
-            
+
             gridBagConstraints = new java.awt.GridBagConstraints();
             gridBagConstraints.gridx = 1;
             gridBagConstraints.gridy = 0;
@@ -82,20 +82,20 @@ public class SkillMenu extends javax.swing.JFrame {
             gridBagConstraints.insets = new java.awt.Insets(0, 11, 0, 0);
             this.add(SkillSpinner, gridBagConstraints);
         }
-        
+
         private void SkillButtonActionPerformed(ActionEvent evt) {
             int tmp = Integer.parseInt(InfoNum.getText());
             DescriptionText.setText(skillmap[tmp].Description);
             DescriptionContainer.scrollRectToVisible(new Rectangle());
         }
-        
+
         private void SkillSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {
             int skillptsleft;
             int currentskill;
             int skillindex;
             JSpinner source = (JSpinner)evt.getSource();
             SkillButton parent = (SkillButton)source.getParent();
-            
+
             skillindex = (new Integer(parent.InfoNum.getText())).intValue();
             DescriptionText.setText(skillmap[skillindex].Description);
 
@@ -267,11 +267,11 @@ public class SkillMenu extends javax.swing.JFrame {
                 }
             }
         }
-        
+
         public JButton SkillButton;
         public JSpinner SkillSpinner;
         public JLabel InfoNum;
-        
+
         public SkillButton(Skill skill) throws IOException {
             initComponents();
 
@@ -285,47 +285,47 @@ public class SkillMenu extends javax.swing.JFrame {
         }
     }
     // End New
-    
+
     public class CCSkillModel extends javax.swing.SpinnerNumberModel {
-        
+
         public CCSkillModel(int value) {
             setValue(new Integer(value));
             setMaximum(new Integer(2));
             setMinimum(new Integer(0));
             setStepSize(new Integer(1));
         }
-        
+
     }
-    
+
     public class ClassSkillModel extends javax.swing.SpinnerNumberModel {
-        
+
         public ClassSkillModel(int value) {
             setValue(new Integer(value));
             setMaximum(new Integer(4));
             setMinimum(new Integer(0));
             setStepSize(new Integer(1));
         }
-        
+
     }
-    
+
     public class LockedSkillModel extends javax.swing.SpinnerNumberModel {
-        
+
         public LockedSkillModel(int value, int maxvalue) {
             setValue(new Integer(value));
             setMaximum(new Integer(maxvalue));
             setMinimum(new Integer(0));
             setStepSize(new Integer(1));
         }
-        
+
     }
-    
-    
+
+
     /** Creates new form SkillMenu */
     public SkillMenu() {
         // Start New
         // Garad Moonbeam
         // Attempting to add dynamic skill menu
-        
+
         int baseskillpoints;
         int intmod;
         int racenumber;
@@ -334,13 +334,13 @@ public class SkillMenu extends javax.swing.JFrame {
         String classsk2da;
         SkillButton skillbutton;
         LinkedList featlist;
-        
+
         ccskill = new LinkedList();
         skillnums = new LinkedList();
-        
+
         initComponents();
         DescriptionContainer.setViewportView(DescriptionText);
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
@@ -352,13 +352,13 @@ public class SkillMenu extends javax.swing.JFrame {
         menucreate = TLKFactory.getCreateMenu();
         TLKFAC = menucreate.getTLKFactory();
         RESFAC = menucreate.getResourceFactory();
-        
+
         DescriptionText.setText(TLKFAC.getEntry(485));
 		skillmap = SkillMap.GetSkillMap();
-        
+
         // Set the size of SkillButtonList
         SkillButtonList = new SkillButton[skillmap.length];
-        
+
         // Loop through the skills in skills.2da and create buttons for all valid ones
         try {
             for(int ii = 0; ii < skillmap.length; ii++) {
@@ -378,11 +378,11 @@ public class SkillMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Fatal Error - Your data files might be corrupt.", "Error", 0);
             System.exit(0);
         }
-        
+
         // Get racial feats
         featlist = new LinkedList();
         racefeat2da = menucreate.MainCharDataAux[1][racialtypes.FeatsTable];
-        
+
         classsk2da = menucreate.MainCharDataAux[3][classes.SkillsTable];
         String[][] classsk2damap = null;
         baseskillpoints = Integer.parseInt(menucreate.MainCharDataAux[3][classes.SkillPointBase]);
@@ -400,11 +400,11 @@ public class SkillMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Fatal Error - " + classsk2da + " not found. Your data files might be corrupt.", "Error", 0);
             System.exit(0);
         }
-        
+
         // Determine starting skill points
         intmod = new Integer(((String)menucreate.MainCharData[5].get(new Integer(15)))).intValue();
         startskillpoints = 4 * (baseskillpoints + intmod);
-        
+
         racenumber = Integer.parseInt(menucreate.MainCharDataAux[1][0]);
         //CHANGED due to the fact that Bioware HARD CODES the skill points to HUMANS.
         if(racenumber == 6) {
@@ -440,14 +440,14 @@ public class SkillMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "2da Parse Error - " + classsk2da + ", line " + i + ".\nError returned: " + err, "Error", 0);
             System.exit(0);
         }
-        
+
         pack();
         // End New
     }
-    
+
     private void LockSpinners() {
         int currentvalue1;
-        
+
         for(int i=0; i < SkillButtonList.length; i++) {
             if(ccskill.get(i) == null) {
                 SkillButtonList[i].setVisible(false);
@@ -457,10 +457,10 @@ public class SkillMenu extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void LockCCSpinners() {
         int currentvalue1;
-        
+
         for(int i = 0;i < SkillButtonList.length; i++) {
             if(ccskill.get(i) == null) {
                 SkillButtonList[i].setVisible(false);
@@ -472,10 +472,10 @@ public class SkillMenu extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void UnlockSpinners() {
         int currentvalue1;
-        
+
         for(int i = 0;i < SkillButtonList.length; i++) {
             if(ccskill.get(i) == null) {
                 SkillButtonList[i].setVisible(false);
@@ -489,7 +489,7 @@ public class SkillMenu extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void ResetSpinners() {
         SkillPointText.setText("" + startskillpoints);
         for(int i = 0;i < SkillButtonList.length; i++) {
@@ -506,18 +506,18 @@ public class SkillMenu extends javax.swing.JFrame {
             }
         }
     }
-    
-    
+
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
      * always regenerated by the Form Editor.
      */
-    
+
     //  TODO it appears that all of the skill listing is static, this needs to be changed to be dynamic in order to accomodate custom skills
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
-        
+
         SkillButtonContainer = new javax.swing.JScrollPane();
         SkillSetButtonBak = new javax.swing.JPanel();
         SkillSetButtonList = new javax.swing.JPanel();
@@ -540,17 +540,17 @@ public class SkillMenu extends javax.swing.JFrame {
         SkillPointLabel = new javax.swing.JLabel();
         SkillPointText = new javax.swing.JTextField();
         jPanel14 = new javax.swing.JPanel();
-        
+
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-	   setTitle("Skill Menu"); 
+	   setTitle("Skill Menu");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 exitForm(evt);
             }
         });
-        
+
         SkillButtonContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         SkillButtonContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         SkillButtonContainer.setMaximumSize(new java.awt.Dimension(32767, 300));
@@ -559,14 +559,14 @@ public class SkillMenu extends javax.swing.JFrame {
 		SkillButtonContainer.getVerticalScrollBar().setUnitIncrement(36);
 		SkillButtonContainer.getVerticalScrollBar().setBlockIncrement(36);
         SkillSetButtonBak.setLayout(new java.awt.GridBagLayout());
-        
+
         SkillSetButtonBak.setBackground(new java.awt.Color(0, 0, 0));
         SkillSetButtonBak.setForeground(new java.awt.Color(255, 255, 255));
         SkillSetButtonBak.setAlignmentX(0.0F);
         SkillSetButtonBak.setAlignmentY(0.0F);
         SkillSetButtonBak.setAutoscrolls(true);
         SkillSetButtonList.setLayout(new java.awt.GridLayout(0, 1));
-        
+
         SkillSetButtonList.setBorder(new javax.swing.border.EmptyBorder(new java.awt.Insets(3, 3, 3, 3)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -575,78 +575,78 @@ public class SkillMenu extends javax.swing.JFrame {
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         SkillSetButtonBak.add(SkillSetButtonList, gridBagConstraints);
-        
-        jPanel3.setBackground(new java.awt.Color(153, 153, 0));
+
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         SkillSetButtonBak.add(jPanel3, gridBagConstraints);
-        
-        jPanel4.setBackground(new java.awt.Color(153, 153, 0));
+
+        jPanel4.setBackground(new java.awt.Color(0, 0, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         SkillSetButtonBak.add(jPanel4, gridBagConstraints);
-        
-        jPanel5.setBackground(new java.awt.Color(153, 153, 0));
+
+        jPanel5.setBackground(new java.awt.Color(0, 0, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         SkillSetButtonBak.add(jPanel5, gridBagConstraints);
-        
-        jPanel6.setBackground(new java.awt.Color(153, 153, 0));
+
+        jPanel6.setBackground(new java.awt.Color(0, 0, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         SkillSetButtonBak.add(jPanel6, gridBagConstraints);
-        
+
         SkillButtonContainer.setViewportView(SkillSetButtonBak);
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         getContentPane().add(SkillButtonContainer, gridBagConstraints);
-        
+
         getContentPane().add(jPanel1, new java.awt.GridBagConstraints());
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         getContentPane().add(jPanel2, gridBagConstraints);
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
         getContentPane().add(jPanel7, gridBagConstraints);
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         getContentPane().add(jPanel8, gridBagConstraints);
-        
+
         OKButton.setText("OK");
         OKButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OKButtonActionPerformed(evt);
             }
         });
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
         getContentPane().add(OKButton, gridBagConstraints);
-        
+
         CancelButton.setText("Cancel");
         CancelButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -654,40 +654,40 @@ public class SkillMenu extends javax.swing.JFrame {
                 CancelButtonActionPerformed(evt);
             }
         });
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(CancelButton, gridBagConstraints);
-        
+
         RecommendedButton.setText("Recommended");
         RecommendedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RecommendedButtonActionPerformed(evt);
             }
         });
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(RecommendedButton, gridBagConstraints);
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         getContentPane().add(jPanel9, gridBagConstraints);
-        
+
         DescriptionContainer.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         DescriptionContainer.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(204, 204, 204)));
+        DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         DescriptionContainer.setPreferredSize(new java.awt.Dimension(400, 100));
         DescriptionContainer.setAutoscrolls(true);
         DescriptionPanel.setLayout(new java.awt.GridBagLayout());
-        
+
         DescriptionText.setBackground(new java.awt.Color(0, 0, 0));
-        DescriptionText.setForeground(new java.awt.Color(255, 255, 153));
+        DescriptionText.setForeground(new java.awt.Color(240, 216, 130));
         DescriptionText.setLineWrap(true);
         DescriptionText.setWrapStyleWord(true);
         DescriptionText.setPreferredSize(new java.awt.Dimension(400, 800));
@@ -699,9 +699,9 @@ public class SkillMenu extends javax.swing.JFrame {
         gridBagConstraints.gridheight = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         DescriptionPanel.add(DescriptionText, gridBagConstraints);
-        
+
         DescriptionContainer.setViewportView(DescriptionPanel);
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
@@ -709,19 +709,19 @@ public class SkillMenu extends javax.swing.JFrame {
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         getContentPane().add(DescriptionContainer, gridBagConstraints);
-        
+
         ResetButton.setText("Reset");
         ResetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ResetButtonActionPerformed(evt);
             }
         });
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
         getContentPane().add(ResetButton, gridBagConstraints);
-        
+
         SkillPointLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 10));
         SkillPointLabel.setText("Skill Points Remaining:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -730,7 +730,7 @@ public class SkillMenu extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 25);
         getContentPane().add(SkillPointLabel, gridBagConstraints);
-        
+
         SkillPointText.setEditable(false);
         SkillPointText.setFont(new java.awt.Font("Trebuchet MS", 0, 10));
         SkillPointText.setText("0");
@@ -742,20 +742,20 @@ public class SkillMenu extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         getContentPane().add(SkillPointText, gridBagConstraints);
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         getContentPane().add(jPanel14, gridBagConstraints);
-        
+
         pack();
     }
-    
+
     private void RecommendedButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // Add your handling code here:
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
-        
+
         String skill2da = menucreate.MainCharDataAux[7][packages.SkillPref2DA];
         String[][] skill2damap = null;
         try {
@@ -795,17 +795,17 @@ public class SkillMenu extends javax.swing.JFrame {
 			menucreate.skillPointsLeft = Integer.parseInt(SkillPointText.getText());
             //System.out.println("Current points: " + i);
         }
-        
+
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
     }
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // Add your handling code here:
         setVisible(false);
         dispose();
     }
-    
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // Add your handling code here:
         menucreate.MainCharData[8] = new HashMap();
@@ -818,25 +818,25 @@ public class SkillMenu extends javax.swing.JFrame {
 
 		menucreate.skillPointsLeft = Integer.parseInt(SkillPointText.getText());
 		menucreate.RedoAll();
-        
+
         //Put stuff in here to open feat menu
         (new FeatMenu()).show();
-        
+
         setVisible(false);
         dispose();
     }
-    
+
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // Add your handling code here:
         ResetSpinners();
     }
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {
         setVisible(false);
         dispose();
     }
-    
+
 /*    /**
  * @param args the command line arguments
  */
@@ -844,7 +844,7 @@ public class SkillMenu extends javax.swing.JFrame {
         new SkillMenu().show();
     }
  */
-    
+
     // Variables declaration - do not modify
     private javax.swing.JButton CancelButton;
     private javax.swing.JScrollPane DescriptionContainer;

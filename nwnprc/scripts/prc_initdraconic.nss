@@ -5,11 +5,20 @@
 
 void SpellResistancePC(object oPC,object oSkin,int iLevel)
 {
+    //15 +lvl
+    if (iLevel % 2 == 0)
+    {
+       iLevel = (iLevel-10)/2;
+       iLevel = (iLevel>IP_CONST_SPELLRESISTANCEBONUS_60) ? IP_CONST_SPELLRESISTANCEBONUS_60 :iLevel ;
+    }
+    else
+    {
+       iLevel = iLevel/2+21;
+       iLevel = (iLevel>IP_CONST_SPELLRESISTANCEBONUS_61) ? IP_CONST_SPELLRESISTANCEBONUS_61 :iLevel ;
+    	
+    }
 
-    iLevel = (iLevel-10)/2;
-
-    if (iLevel>IP_CONST_SPELLRESISTANCEBONUS_60)
-          iLevel=IP_CONST_SPELLRESISTANCEBONUS_60;
+    
 
     if (GetLocalInt(oSkin,"IniSR")==iLevel) return;
     RemoveSpecificProperty(oSkin,ITEM_PROPERTY_SPELL_RESISTANCE,-1,IP_CONST_ONHIT_SAVEDC_26,GetLocalInt(oSkin,"IniSR"));

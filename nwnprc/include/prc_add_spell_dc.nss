@@ -223,22 +223,47 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
 
 // Shadow Weave Feat
 // DC +1 (school Ench,Illu,Necro)
-int ShadowWeaveDC(object oCaster ,object oTarget, int nID )
+int ShadowWeaveDC(int spell_id, object oCaster = OBJECT_SELF)
 {
-   int nDC;
-   int iClass = (GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oTarget)+1)/3;
-   int iClassC = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;
-   
-   //if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0-iClass;
-   int iShar = GetLocalInt(oCaster, "PatronShar");
-   
-   int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
-   if ( nSchool == SPELL_SCHOOL_ENCHANTMENT || nSchool == SPELL_SCHOOL_NECROMANCY || nSchool == SPELL_SCHOOL_ILLUSION)
-      nDC = iShar-iClass+iClassC;
-      
-   return  nDC;
+	int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster);
+	int nDC;
 
+	if (iShadow > 0)
+	{
+		int nSpell = GetSpellId();
+		string sSpellSchool = lookup_spell_school(nSpell);
+		int iSpellSchool;
+		
+		if (sSpellSchool == "A") iSpellSchool = SPELL_SCHOOL_ABJURATION;
+		else if (sSpellSchool == "C") iSpellSchool = SPELL_SCHOOL_CONJURATION;
+		else if (sSpellSchool == "D") iSpellSchool = SPELL_SCHOOL_DIVINATION;
+		else if (sSpellSchool == "E") iSpellSchool = SPELL_SCHOOL_ENCHANTMENT;
+		else if (sSpellSchool == "V") iSpellSchool = SPELL_SCHOOL_EVOCATION;
+		else if (sSpellSchool == "I") iSpellSchool = SPELL_SCHOOL_ILLUSION;
+		else if (sSpellSchool == "N") iSpellSchool = SPELL_SCHOOL_NECROMANCY;
+		else if (sSpellSchool == "T") iSpellSchool = SPELL_SCHOOL_TRANSMUTATION;
+
+		if (iSpellSchool == SPELL_SCHOOL_ENCHANTMENT || iSpellSchool == SPELL_SCHOOL_NECROMANCY || iSpellSchool == SPELL_SCHOOL_ILLUSION)
+		{
+		
+			if (iShadow > 29)	nDC = 10;
+			else if (iShadow > 26)	nDC = 9;
+			else if (iShadow > 23)	nDC = 8;
+			else if (iShadow > 20)	nDC = 7;
+			else if (iShadow > 17)	nDC = 6;
+			else if (iShadow > 14)	nDC = 5;
+			else if (iShadow > 11)	nDC = 4;
+			else if (iShadow > 8)	nDC = 3;
+			else if (iShadow > 5)	nDC = 2;
+			else if (iShadow > 2)	nDC = 1;
+		}
+
+
+	}
+	SendMessageToPC(GetFirstPC(), "Your Spell DC modifier is " + IntToString(nDC));
+	return nDC;
 }
+
 
 int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/)
 {
@@ -247,7 +272,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/)
     nDC += GetHierophantSLAAdjustment(spell_id, oCaster);
     nDC += GetHeartWarderDC(spell_id, oCaster);
     nDC += GetSpellPowerBonus(oCaster);
-    nDC += ShadowWeaveDC(oCaster,oTarget,spell_id);
+    nDC += ShadowWeaveDC(spell_id, oCaster);
     nDC += RedWizardDC(spell_id, oCaster);
 
 	return nDC;

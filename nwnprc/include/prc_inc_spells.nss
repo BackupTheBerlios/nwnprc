@@ -570,8 +570,6 @@ int TrueNecromancy (object oCaster, int iSpellID, string sType)
 
 int ShadowWeave (object oCaster, int iSpellID)
 {
-   if (!GetLocalInt(oCaster, "PatronShar")) return 0;
-
    if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0;
    
    int iSpellSchool = GetSpellSchool(iSpellID);
@@ -768,7 +766,8 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 
 int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF)
 {
-
+	
+	int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oTarget);
 	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
 	int nSpell = GetSpellId();
 	
@@ -806,6 +805,30 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 
 
 	}
+        
+        if (iShadow > 0)
+	{
+
+	
+		if (GetSpellSchool(nSpell) == SPELL_SCHOOL_ENCHANTMENT || GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY || GetSpellSchool(nSpell) == SPELL_SCHOOL_ILLUSION)
+		{
+		
+			if (iShadow > 28)	nDC = nDC - 10;
+			else if (iShadow > 25)	nDC = nDC - 9;
+			else if (iShadow > 22)	nDC = nDC - 8;
+			else if (iShadow > 19)	nDC = nDC - 7;
+			else if (iShadow > 16)	nDC = nDC - 6;
+			else if (iShadow > 13)	nDC = nDC - 5;
+			else if (iShadow > 10)	nDC = nDC - 4;
+			else if (iShadow > 7)	nDC = nDC - 3;
+			else if (iShadow > 4)	nDC = nDC - 2;
+			else if (iShadow > 1)	nDC = nDC - 1;
+		}
+	
+	SendMessageToPC(GetFirstPC(), "Your Spell Save modifier is " + IntToString(nDC));
+	}
+	
+        
         
 	//racial pack code
         if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )

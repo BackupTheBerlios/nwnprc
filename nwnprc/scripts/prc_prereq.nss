@@ -520,6 +520,24 @@ void Stormlord(object oPC)
 	}	
 }
 
+void ShadowAdept(object oPC)
+{       
+	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+
+
+	if (iCleric)
+	{
+	SetLocalInt(oPC, "PRC_PrereqShadAd", 1);
+	int iShad = GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DARKNESS_DOMAIN,oPC);
+		{
+		if (iShad>1)
+			{
+			SetLocalInt(oPC, "PRC_PrereqShadAd", 0);
+			}
+		}	
+	}	
+}
+
 void Rava(object oPC)
 {
     SetLocalInt(oPC, "PRC_PreReq_Rava", 1);
@@ -656,6 +674,7 @@ void main()
 	Stormlord(oPC);
 	EOG(oPC);
 	RedWizard(oPC);
+	ShadowAdept(oPC);
 	ShiningBlade(oPC);
 	Shadowlord(oPC, iArcSpell1);
 	Shifter(oPC, iArcSpell1, iDivSpell1);

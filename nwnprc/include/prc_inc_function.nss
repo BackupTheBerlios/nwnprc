@@ -494,25 +494,6 @@ int GetArmorType(object oArmor)
     return nType;
 }
 
-void PatronShar(object oPC)
-{
-   if (GetHasFeat(FEAT_SHADOWWEAVE,oPC))
-   {
-     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
-     {
-       int iEvil = GetAlignmentGoodEvil(oPC);
-       int iDomain = GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DARKNESS_DOMAIN,oPC);
-       if (iEvil == ALIGNMENT_EVIL && iDomain>1)
-         SetLocalInt(oPC, "PatronShar",1);
-       else
-         SetLocalInt(oPC, "PatronShar",0);
-     }
-     else
-       SetLocalInt(oPC, "PatronShar",1);
-   }
-}
-
-
 void FeatUsePerDay(object oPC,int iFeat, int iAbiMod = ABILITY_CHARISMA, int iMod = 0)
 {
 

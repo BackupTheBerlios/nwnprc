@@ -175,23 +175,46 @@ int GetSpellPowerBonus(object oCaster = OBJECT_SELF)
 
 // Shadow Weave Feat
 // +1 caster level vs SR (school Ench,Illu,Necro)
-int ShadowWeavePen(int nID, object oCaster = OBJECT_SELF)
+int ShadowWeavePen(int spell_id, object oCaster = OBJECT_SELF)
 {
-   int nSP;
-   
-   if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0;
-   if (!GetLocalInt(oCaster, "PatronShar")) return 0 ;
-   
-   int iClass = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;
-   int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
-   if ( nSchool == SPELL_SCHOOL_ENCHANTMENT || nSchool == SPELL_SCHOOL_NECROMANCY || nSchool == SPELL_SCHOOL_ILLUSION)
-     nSP = 1+iClass;
-   else if( nID== SPELL_BLACKLIGHT )
-     nSP = 1+iClass;
+	int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster);
+	int nSP;
 
-   return  nSP;
+	if (iShadow > 0)
+	{
+		int nSpell = GetSpellId();
+		string sSpellSchool = lookup_spell_school(nSpell);
+		int iSpellSchool;
+		
+		if (sSpellSchool == "A") iSpellSchool = SPELL_SCHOOL_ABJURATION;
+		else if (sSpellSchool == "C") iSpellSchool = SPELL_SCHOOL_CONJURATION;
+		else if (sSpellSchool == "D") iSpellSchool = SPELL_SCHOOL_DIVINATION;
+		else if (sSpellSchool == "E") iSpellSchool = SPELL_SCHOOL_ENCHANTMENT;
+		else if (sSpellSchool == "V") iSpellSchool = SPELL_SCHOOL_EVOCATION;
+		else if (sSpellSchool == "I") iSpellSchool = SPELL_SCHOOL_ILLUSION;
+		else if (sSpellSchool == "N") iSpellSchool = SPELL_SCHOOL_NECROMANCY;
+		else if (sSpellSchool == "T") iSpellSchool = SPELL_SCHOOL_TRANSMUTATION;
+
+		if (iSpellSchool == SPELL_SCHOOL_ENCHANTMENT || iSpellSchool == SPELL_SCHOOL_NECROMANCY || iSpellSchool == SPELL_SCHOOL_ILLUSION)
+		{
+		
+			if (iShadow > 29)	nSP = 10;
+			else if (iShadow > 26)	nSP = 9;
+			else if (iShadow > 23)	nSP = 8;
+			else if (iShadow > 20)	nSP = 7;
+			else if (iShadow > 17)	nSP = 6;
+			else if (iShadow > 14)	nSP = 5;
+			else if (iShadow > 11)	nSP = 4;
+			else if (iShadow > 8)	nSP = 3;
+			else if (iShadow > 5)	nSP = 2;
+			else if (iShadow > 2)	nSP = 1;
+		}
+
+
+	}
+	SendMessageToPC(GetFirstPC(), "Your Spell Pen modifier is " + IntToString(nSP));
+	return nSP;
 }
-
 int add_spl_pen(object oCaster = OBJECT_SELF)
 {
     int spell_id = GetSpellId();

@@ -2,8 +2,27 @@
 void main()
 {
 
+   int nLoop, nCount;
+   object oHench;
+   for (nLoop=1; nLoop<=GetMaxHenchmen(); nLoop++)
+   {
+   	oHench = GetHenchman(OBJECT_SELF, nLoop);
+   	
+      if (GetIsObjectValid(oHench))  nCount++;
+      
+     if (GetResRef(oHench)=="xagya01")
+     {
+     	RemoveHenchman(OBJECT_SELF,oHench);
+     	AssignCommand(oHench, SetIsDestroyable(TRUE));
+        DestroyObject(oHench);
+        nCount--;
+     }
+   }
+    
+    if (nCount >= GetMaxHenchmen()) return;
+   
 
-    object oHench = CreateObject(OBJECT_TYPE_CREATURE,"xagya01",GetSpellTargetLocation());
+    oHench = CreateObject(OBJECT_TYPE_CREATURE,"xagya01",GetSpellTargetLocation());
     AddHenchman(OBJECT_SELF,oHench);
 
 

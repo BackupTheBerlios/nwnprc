@@ -359,13 +359,12 @@ void RunThread(string sName, object oRunningOn){
     }
 
     // Schedule next execution, unless we've been terminated
-    if(GetThreadState(sName, oRunningOn) != THREAD_STATE_DEAD){
+    if(GetThreadState(sName, oRunningOn) != THREAD_STATE_DEAD)
         DelayCommand(GetLocalFloat(oRunningOn, PREFIX + sName + SUFFIX_INTERVAL), RunThread(sName, oRunningOn));
-
-        // Clean up the module variables
-        DeleteLocalString(GetModule(), PREFIX + CUR_THREAD);
-        DeleteLocalObject(GetModule(), PREFIX + CUR_THREAD);
-    }
+        
+    // Clean up the module variables
+    DeleteLocalString(GetModule(), PREFIX + CUR_THREAD);
+    DeleteLocalObject(GetModule(), PREFIX + CUR_THREAD);
 }
 
 

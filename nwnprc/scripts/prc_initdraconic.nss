@@ -106,8 +106,6 @@ void ClawDragon(object oPC,int Enh,int iEquip)
       
     object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
     
-    int iIntuAtk = GetLocalInt(oItem,"IntuiAtk");
-
     if (iEquip != 1 &&  GetIsObjectValid(oItem))
     {
 
@@ -142,7 +140,7 @@ void ClawDragon(object oPC,int Enh,int iEquip)
                   break;
 
               case ITEM_PROPERTY_ATTACK_BONUS:
-                  int iCost = GetItemPropertyCostTableValue(ip)-iIntuAtk;
+                  int iCost = GetItemPropertyCostTableValue(ip);
                   Enh = (iCost>Enh) ? iCost:Enh;
                   break;
 

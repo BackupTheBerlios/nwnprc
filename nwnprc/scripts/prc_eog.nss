@@ -77,6 +77,11 @@ void main()
     {
          RemoveRitualScarringDefense(oPC, oSkin);
          RemoveSightOfGruumsh(oPC, oSkin);
+         
+         if(GetHasFeat(FEAT_SIGHT_OF_GRUUMSH, oPC) )
+         {
+              ApplySightOfGruumsh(oPC, oSkin);
+         }
     }
     // Apply effects
     else

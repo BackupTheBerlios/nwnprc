@@ -238,6 +238,13 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
 // iCriticalMultiplier 0 = calculate it; Anything else is the damage multiplier on a critical hit
 effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struct BonusDamage sWeaponBonusDamage, struct BonusDamage sSpellBonusDamage, int iMainHand = 0, int iDamage = 0, int bIsCritical = FALSE, int iNumDice = 0, int iNumSides = 0, int iCriticalMultiplier = 0);
 
+//:://////////////////////////////////////////////
+//::  Attack Logic Functions
+//:://////////////////////////////////////////////
+
+// applies any On Hit abilities like spells, vampiric regen, poison, vorpal, stun, etc.
+void ApplyOnHitAbilities(object oDefender, object oAttacker, object oWeapon);
+
 // Due to the lack of a proper sleep function in order to delay attacks properly
 // I needed to make a separate function to control the logic of each attack.
 // AttackLoopMain calls this function, which in turn uses a delay and calls AttackLoopMain.
@@ -338,6 +345,8 @@ int iCleaveAttacks = 0;
 int iCircleKick = 0;
 int bFirstAttack = TRUE;
 
+int bIsVorpalWeaponEquiped = FALSE;
+int iVorpalSaveDC = 0;
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
 //:://////////////////////////////////////////////
@@ -429,6 +438,8 @@ int GetIsTwoHandedMeleeWeapon(object oWeap)
              iReturn = 1;
              break;
         case BASE_ITEM_HEAVYFLAIL:
+             iReturn = 1;
+             break;
     }
     
     return iReturn;
@@ -455,7 +466,6 @@ int GetIsSimpleWeapon(object oWeap)
         case BASE_ITEM_LIGHTCROSSBOW:
           return 2;
           break;
-
       }
       return 0;
 }
@@ -2561,6 +2571,8 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
                     weapBonusDam = GetItemPropertyDamageConstant(iDamageType, iTemp, weapBonusDam);
                     break;
                
+               // Removed until new On Hit System is tested.
+               /*
                case ITEM_PROPERTY_ONHITCASTSPELL:
                     iSpellType = GetItemPropertySubType(ip);
                     iDamageType = GetItemPropertyCostTableValue(ip);
@@ -2602,6 +2614,7 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
                     }
                     
                     break;
+                 */
             }
             ip = GetNextItemProperty(oWeapon);
      }      
@@ -3226,6 +3239,185 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      return eLink;
 }
 
+//:://////////////////////////////////////////////
+//::  Attack Logic Functions
+//:://////////////////////////////////////////////
+
+void ApplyOnHitAbilities(object oDefender, object oAttacker, object oWeapon)
+{
+     int ipType    = 0;
+     int ipCostVal = 0;
+     int ipSubType = 0;
+     int ipParam1  = 0;
+     int ipSpellID = 0;
+     
+     string sMes = "";
+     
+     itemproperty ip = GetFirstItemProperty(oWeapon);
+     while(GetIsItemPropertyValid(ip))
+     {
+          
+          ipCostVal = GetItemPropertyCostTableValue(ip);
+          ipSubType = GetItemPropertySubType(ip);
+          ipParam1 = GetItemPropertyParam1Value(ip);
+          ipType = GetItemPropertyType(ip);
+         
+          if(ipType == ITEM_PROPERTY_REGENERATION_VAMPIRIC)
+          {
+               effect eHeal = EffectHeal(ipCostVal);
+               ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oAttacker, 0.0);              
+          }
+         
+          else if(ipType == ITEM_PROPERTY_ONHITCASTSPELL)
+          {
+               ipSpellID = StringToInt( Get2DACache("iprp_onhitspell", "SpellIndex", ipSubType) );
+               ActionCastSpellAtObject(ipSpellID, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+          }
+          
+          else if(ipType == ITEM_PROPERTY_ON_HIT_PROPERTIES)
+          {
+               // covers poison, vorpal, stun, disease, etc.
+               // ipSubType = IP_CONST_ONHIT_*
+               // ipCostVal = IP_CONST_ONHIT_SAVEDC_*
+               
+               // change to proper save DC
+               if(ipCostVal < 10)
+               {
+                   switch (ipCostVal)
+                   {
+                        case 0: ipCostVal = 14;
+                                break;
+                        case 1: ipCostVal = 16;
+                                break;                     
+                        case 2: ipCostVal = 18;
+                                break;                     
+                        case 3: ipCostVal = 20;
+                                break;                     
+                        case 4: ipCostVal = 22;
+                                break;                     
+                        case 5: ipCostVal = 24;
+                                break;                     
+                        case 6: ipCostVal = 26;
+                                break;        
+                   }
+               }
+               
+               // sMes += " | I have On Hit: ";
+                
+               switch (ipSubType)
+               {
+                    // set global vars for vorpal
+                    case IP_CONST_ONHIT_VORPAL:
+                         bIsVorpalWeaponEquiped = TRUE;
+                         iVorpalSaveDC = ipCostVal;
+                    break;
+                    
+                    // requires no ipParam1
+                    case IP_CONST_ONHIT_LEVELDRAIN:
+                         if( !FortitudeSave(oDefender, ipCostVal, SAVING_THROW_TYPE_NEGATIVE) )
+                         {
+                              effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                              
+                              effect eNegLev = SupernaturalEffect( EffectNegativeLevel(1) );
+                              ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNegLev, oDefender);
+                         }
+                    break;
+
+                    case IP_CONST_ONHIT_WOUNDING:
+                    break;
+                    
+                    case IP_CONST_ONHIT_KNOCK:
+                    break;
+
+                    case IP_CONST_ONHIT_LESSERDISPEL:
+                    break;
+
+                    case IP_CONST_ONHIT_DISPELMAGIC:
+                    break;
+                       
+                    case IP_CONST_ONHIT_GREATERDISPEL:
+                    break;
+                    
+                    case IP_CONST_ONHIT_MORDSDISJUNCTION:
+                    break;
+
+                    // ipParam1 = iprp_abilities.2da
+                    case IP_CONST_ONHIT_ABILITYDRAIN:  
+                    break;
+                    
+                    // ipParam1 = disease.2da
+                    case IP_CONST_ONHIT_DISEASE:       
+                    break;
+                    
+                    // 
+                    case IP_CONST_ONHIT_SLAYALIGNMENT:
+                    break;
+                       
+                    case IP_CONST_ONHIT_SLAYALIGNMENTGROUP:
+                    break;
+                       
+                    case IP_CONST_ONHIT_SLAYRACE:
+                    break;
+                    
+                    // ipParam1 =  iprp_poison.2da
+                    case IP_CONST_ONHIT_ITEMPOISON:    
+                    break;
+ 
+                    // ipParam1 = iprp_onhitdur.2da
+                    case IP_CONST_ONHIT_BLINDNESS: 
+                    break;
+
+                    case IP_CONST_ONHIT_CONFUSION:
+                    break;
+                       
+                    case IP_CONST_ONHIT_DAZE:
+                    break;
+                       
+                    case IP_CONST_ONHIT_DEAFNESS:
+                    break;
+                       
+                    case IP_CONST_ONHIT_DOOM:
+                    break;
+                       
+                    case IP_CONST_ONHIT_FEAR:
+                    break;
+
+                    case IP_CONST_ONHIT_HOLD:
+                    break;
+
+                    case IP_CONST_ONHIT_SILENCE:
+                    break;
+
+                    case IP_CONST_ONHIT_SLEEP:
+                    break;
+                       
+                    case IP_CONST_ONHIT_SLOW:
+                    break;
+                       
+                    case IP_CONST_ONHIT_STUN:
+                    break;
+               }
+                  
+               // sMes += " and Param1 = " + IntToString(ipParam1); 
+          }
+          
+          // much like above but for creature weapons
+          else if(ipType == ITEM_PROPERTY_ON_MONSTER_HIT)
+          {
+          }
+          
+          else if(ipType == ITEM_PROPERTY_POISON)
+          {
+               
+          }
+        
+         ip = GetNextItemProperty(oWeapon);
+     }
+     
+     FloatingTextStringOnCreature(sMes, oAttacker);
+}
+
 void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int iMainHand, int bIsCleaveAttack, int iTouchAttackType = FALSE)
 {
      // if there is no valid target, then no attack
@@ -3353,9 +3545,31 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           if(iTouchAttackType != TOUCH_ATTACK_RANGED_SPELL && iTouchAttackType != TOUCH_ATTACK_MELEE_SPELL)
                eDamage = GetAttackDamage(oDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, bIsCritcal, iNumDice, iNumSides, iCritMult);
           
+          // if you hit enemy
           if(iAttackRoll > 0)
           {
               ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oDefender);
+              ApplyOnHitAbilities(oDefender, oAttacker, oWeapon);
+              
+              // if critical hit and vorpal weapon, apply vorpal effect
+              if(bIsCritcal && bIsVorpalWeaponEquiped)
+              {
+                   if( !FortitudeSave(oDefender, iVorpalSaveDC, SAVING_THROW_TYPE_NONE) )
+                   {
+                        string nMes = "*Vorpal Blade*";
+                        FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
+                        
+                        effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+                        
+                        effect eDeath = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);                   
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oDefender);
+                    }
+              }
+              
+              // reset vorpal variables
+              bIsVorpalWeaponEquiped = FALSE;
+              iVorpalSaveDC = 0; 
           }
           
           // if special effect applies to all attacks and you hit them

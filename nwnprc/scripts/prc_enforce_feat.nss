@@ -29,8 +29,9 @@ void VileFeats(object oPC = OBJECT_SELF);
 // and prevents illegal use of bonus feats.
 void UltiRangerFeats(object oPC = OBJECT_SELF);
 
-
-
+// Stops non-Orcs from taking the Blood of the Warlord
+// Feat, can be expanded later.
+void Warlord(object oPC = OBJECT_SELF);
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -121,6 +122,19 @@ void VileFeats(object oPC = OBJECT_SELF)
 		}
 }
 
+void Warlord(object oPC = OBJECT_SELF)
+{
+		if (GetHasFeat(FEAT_BLOOD_OF_THE_WARLORD, oPC) && (GetRacialType(oPC) != RACIAL_TYPE_HALFORC))
+		{
+			int nHD = GetHitDice(oPC);
+			int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+			int nOldXP = GetXP(oPC);
+			int nNewXP = nMinXPForLevel - 1000;
+			SetXP(oPC,nNewXP);
+			FloatingTextStringOnCreature("You must be be an Orc or Half-Orc to take this feat. Please reselect your feats.", oPC, FALSE);
+			DelayCommand(1.0, SetXP(oPC,nOldXP));
+		}
+}
 
 void UltiRangerFeats(object oPC = OBJECT_SELF)
 {
@@ -221,5 +235,6 @@ void main()
 
 	RedWizardFeats(oPC);
 	VileFeats(oPC);
+	Warlord(oPC);
 	UltiRangerFeats(oPC);
 }

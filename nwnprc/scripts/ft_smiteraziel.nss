@@ -1,9 +1,9 @@
 #include "inc_combat"
 #include "x2_inc_itemprop"
-#include "X0_I0_SPELLS"
+//#include "X0_I0_SPELLS"
 
 #include "inc_combat2"
-#include "Soul_inc"
+#include "prc_inc_clsfunc"
 
 void SmiteChain(object oTarget,float fDelay)
 {

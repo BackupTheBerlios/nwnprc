@@ -1,6 +1,6 @@
 
 
-#include "codi_inc_samurai"
+#include "prc_inc_clsfunc"
 void main()
 {
     object oSamurai = GetLocalObject(OBJECT_SELF,"CODI_SAMURAI");

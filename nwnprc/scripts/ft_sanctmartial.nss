@@ -1,8 +1,6 @@
 #include "prc_inc_function"
 #include "prc_inc_clsfunc"
-#include "Soul_inc"
 #include "inc_item_props"
-#include "ft_martialstrike"
 #include "nw_i0_spells"
 
 

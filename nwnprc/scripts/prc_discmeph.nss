@@ -1,5 +1,3 @@
-void main()
-{
 //::///////////////////////////////////////////////
 //:: [Disciple of Mephistopheles Feats]
 //:: [prc_elemsavant.nss]
@@ -35,7 +33,7 @@ void HellFireGrasp(object oPC, object oGaunt)
     SetLocalInt(oGaunt, "DiscMephGlove", 6);
 }
 
-void RemoveHellFire(object oGaunt)
+void RemoveHellFire(object oPC, object oGaunt)
 {
     if(GetLocalInt(oGaunt, "DiscMephGlove") == 6)
         RemoveSpecificProperty(oGaunt, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "DiscMephGlove");
@@ -62,8 +60,8 @@ void main()
 
    if(GetHasFeat(FEAT_HELLFIRE_GRASP, oPC))
     {
-        if (iEquip == 1)    RemoveHellFire(oPC, iEquip);
-        if (iEquip == 2)    HellFireGrasp(oPC, iEquip);
+        if (iEquip == 1)    RemoveHellFire(oPC, oGaunt);
+        if (iEquip == 2)    HellFireGrasp(oPC, oGaunt);
     }
 
     //Apply bonuses accordingly

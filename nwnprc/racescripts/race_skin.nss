@@ -29,14 +29,18 @@ void main()
     }
 
     //immunity to detection. NEEDS TESTING!!!
+//tested and doesnt work (means you cant cast these on yourself)
+//removed untill a solution is found
     if(GetHasFeat(FEAT_NONDETECTION))
     {
+/*
         itemproperty ipIP = ItemPropertySpellImmunitySpecific(SPELL_SEE_INVISIBILITY);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
         ipIP = ItemPropertySpellImmunitySpecific(SPELL_TRUE_SEEING);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
         ipIP = ItemPropertySpellImmunitySpecific(SPELL_DARKVISION);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+*/
     }
 
     //immunity to artificial posions

@@ -3439,7 +3439,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
                          AssignCommand(oAttacker, ActionEquipItem(oItem, iAmmoSlot));
                          bNotEquipped = FALSE;
                     }
-                    oItem = GetNextItemInInventory(GetFirstPC());
+                    oItem = GetNextItemInInventory(oAttacker);
                }          
           }
  

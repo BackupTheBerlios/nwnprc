@@ -63,7 +63,7 @@ void main()
     {
         if (GetResRef(oItem) == "soul_gem")
             nNumSoulGems++;
-        oItem = GetNextItemInInventory(GetFirstPC());
+        oItem = GetNextItemInInventory(oPC);
     }
     //SendMessageToPC(oPC,"num soul gems = " + IntToString(nNumSoulGems));
     // Lich items

@@ -11,7 +11,7 @@
 void main()
 {
 
-SendMessageToPC(GetFirstPC(), "Release Horde Called");
+SendMessageToPC(OBJECT_SELF, "Release Horde Called");
 
 object oTarget = GetSpellTargetObject();
 string sRes = GetResRef(oTarget);
@@ -23,7 +23,7 @@ object oMaster = GetMaster(oTarget);
     if (OBJECT_SELF == oMaster)
     {
     
-    SendMessageToPC(GetFirstPC(), "You are target's master");
+    SendMessageToPC(OBJECT_SELF, "You are target's master");
     
         if (sRes == "ow_sum_axe_1" || sRes == "ow_sum_axe_2" || sRes == "ow_sum_axe_3" || sRes == "ow_sum_axe_4" || sRes == "ow_sum_axe_5" || 
 	    sRes == "ow_sum_axe_6" || sRes == "ow_sum_axe_7" || sRes == "ow_sum_axe_8" || sRes == "ow_sum_axe_9" || sRes == "ow_sum_axe_10" ||
@@ -36,7 +36,7 @@ object oMaster = GetMaster(oTarget);
 	    sRes == "ow_sum_sham_5" || sRes == "ow_sum_sham_6" || sRes == "ow_sum_sham_7" || sRes == "ow_sum_sham_8" || sRes == "ow_sum_sham_9" ||
 	    sRes == "ow_sum_sham_10" || sRes == "ow_sum_sham_11" || sRes == "ow_sum_sham_12")
         {
-        SendMessageToPC(GetFirstPC(), "Target is a Horde Orc");
+        SendMessageToPC(OBJECT_SELF, "Target is a Horde Orc");
         DestroyObject(oTarget);
         //ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
         }

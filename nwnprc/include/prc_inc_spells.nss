@@ -14,8 +14,7 @@
    be necessary, except when new casting feats are created.
 */
 
-
-
+#include "prc_inc_sneak.nss"
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "lookup_2da_spell"
@@ -178,6 +177,16 @@ int PractisedSpellcasting (object oCaster, int iCastingClass, int iCastingLevels
 // oTarget - Target of the spell
 void PRCBonusDamage(object oTarget);
 
+//  Calculates bonus damage to a spell for Spell Betrayal Ability
+int SpellBetrayalDamage(object oTarget, object oCaster);
+
+//  Calculates damage to a spell for Spellstrike Ability
+int SpellStrikeDamage(object oTarget, object oCaster);
+
+//  Adds the bonus damage from both Spell Betrayal and Spellstrike together
+int ApplySpellBetrayalStrikeDamage(object oTarget, object oCaster, int bShowTextString = TRUE);
+
+
 // -----------------
 // BEGIN SPELLSWORD
 // -----------------
@@ -247,28 +256,30 @@ int GetArcanePRCLevels (object oCaster)
    
    nArcane       += GetLevelByClass(CLASS_TYPE_ARCHMAGE, oCaster)
                  +  GetLevelByClass(CLASS_TYPE_ARCTRICK, oCaster)
-	         +  GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oCaster)
+              +  GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oCaster)
                  +  GetLevelByClass(CLASS_TYPE_ES_ACID, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_ES_COLD, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_ES_ELEC, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_ES_FIRE, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_HARPERMAGE, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_MAGEKILLER, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_ES_COLD, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_ES_ELEC, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_ES_FIRE, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_HARPERMAGE, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MAGEKILLER, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oCaster)
                  +  GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster)
                  +  GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster)
-	         +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
-	         +  GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster)
-	         +  GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster)
+              +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
+              +  GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster)
+              +  GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster)
 
                  +  (GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, oCaster) + 1) / 2
 
                  +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
+                 
 
    if (nOozeMLevel)
    {
@@ -291,26 +302,27 @@ int GetDivinePRCLevels (object oCaster)
    
    // This section accounts for full progression classes
    nDivine       += GetLevelByClass(CLASS_TYPE_DIVESA, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_DIVESC, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_DIVESE, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_DIVESF, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_HEARTWARDER, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_HOSPITALER, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_STORMLORD, oCaster)
-		 +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER_DIV, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_DIVESC, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_DIVESE, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_DIVESF, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_HEARTWARDER, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_HOSPITALER, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_STORMLORD, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER_DIV, oCaster)
 
                  +  (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_ORCUS, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_ORCUS, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, oCaster) + 1) / 2
 
                  +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 
@@ -655,14 +667,14 @@ int ArchmageSpellPower (object oCaster)
     if (GetHasFeat(FEAT_SPELL_POWER_I,oCaster))
     {
         nLevelBonus += 1;
-	if (GetHasFeat(FEAT_SPELL_POWER_V,oCaster))
-	    nLevelBonus += 4;
-	else if (GetHasFeat(FEAT_SPELL_POWER_IV,oCaster))
-	    nLevelBonus += 3;
-	else if (GetHasFeat(FEAT_SPELL_POWER_III,oCaster))
-	    nLevelBonus += 2;
+     if (GetHasFeat(FEAT_SPELL_POWER_V,oCaster))
+         nLevelBonus += 4;
+     else if (GetHasFeat(FEAT_SPELL_POWER_IV,oCaster))
+         nLevelBonus += 3;
+     else if (GetHasFeat(FEAT_SPELL_POWER_III,oCaster))
+         nLevelBonus += 2;
         else if (GetHasFeat(FEAT_SPELL_POWER_II,oCaster))
-	    nLevelBonus += 1;
+         nLevelBonus += 1;
     }
     return nLevelBonus;
 }
@@ -815,84 +827,136 @@ int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
 
 void PRCBonusDamage (object oTarget)
 {
-	object oCaster = OBJECT_SELF;
-	
-	//FloatingTextStringOnCreature("PRC Bonus Damage is called", oCaster, FALSE);
-	
-	if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) > 0 && GetLocalInt(oCaster, "Diabolism") == TRUE)
-	{
-	
-		//FloatingTextStringOnCreature("Diabolism is active", oCaster, FALSE);
-	
-		int nDice = (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) + 5) / 5;
-		int nDamage = d6(nDice);
-		
-		effect eVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_10);
-		effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
-		
-		if (GetLocalInt(oCaster, "VileDiabolism") == TRUE)
-		{
-			//FloatingTextStringOnCreature("Vile Diabolism is active", oCaster, FALSE);
-			nDamage /= 2;
-			eDam = EffectDamage(nDamage, DAMAGE_TYPE_POSITIVE);
-			SetLocalInt(oCaster, "VileDiabolism", FALSE);
-		}
-		
-		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-		DelayCommand(3.0, SetLocalInt(oCaster, "Diabolism", FALSE));
-	}
+     object oCaster = OBJECT_SELF;
+     
+     //FloatingTextStringOnCreature("PRC Bonus Damage is called", oCaster, FALSE);
+     
+     if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) > 0 && GetLocalInt(oCaster, "Diabolism") == TRUE)
+     {
+     
+          //FloatingTextStringOnCreature("Diabolism is active", oCaster, FALSE);
+     
+          int nDice = (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) + 5) / 5;
+          int nDamage = d6(nDice);
+          
+          effect eVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_10);
+          effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
+          
+          if (GetLocalInt(oCaster, "VileDiabolism") == TRUE)
+          {
+               //FloatingTextStringOnCreature("Vile Diabolism is active", oCaster, FALSE);
+               nDamage /= 2;
+               eDam = EffectDamage(nDamage, DAMAGE_TYPE_POSITIVE);
+               SetLocalInt(oCaster, "VileDiabolism", FALSE);
+          }
+          
+          ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+          ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+          DelayCommand(3.0, SetLocalInt(oCaster, "Diabolism", FALSE));
+     }
+}
+
+//  Bonus damage to a spell for Spell Betrayal Ability
+int SpellBetrayalDamage(object oTarget, object oCaster)
+{
+     int iDam = 0;
+     int ThrallLevel = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, oCaster);
+     
+     if(ThrallLevel >= 2)
+     {
+          if( GetIsDeniedDexBonusToAC(oTarget, oCaster, TRUE) )
+          {
+               ThrallLevel /= 2;
+               iDam = d6(ThrallLevel);
+          }
+     }
+     
+     return iDam;
+}
+
+//  Bonus damage to a spell for Spellstrike Ability
+int SpellStrikeDamage(object oTarget, object oCaster)
+{
+     int iDam = 0;
+     int ThrallLevel = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, oCaster);
+     
+     if(ThrallLevel >= 6)
+     {
+          if( GetIsAOEFlanked(oTarget, oCaster) )
+          {
+               ThrallLevel /= 4;
+               iDam = d6(ThrallLevel);
+          }
+     }
+     
+     return iDam;
+}
+
+//  Adds the bonus damage from both Spell Betrayal and Spellstrike together
+int ApplySpellBetrayalStrikeDamage(object oTarget, object oCaster, int bShowTextString = TRUE)
+{
+     int iDam = 0;
+     int iBetrayalDam = SpellBetrayalDamage(oTarget, oCaster);
+     int iStrikeDam = SpellStrikeDamage(oTarget, oCaster);
+     string sMes = "";
+     
+     if(iBetrayalDam > 0)     sMes ="*Spell Betrayal Sucess*";
+     else if(iStrikeDam > 0)  sMes ="*Spellstrike Sucess*";
+     
+     if(bShowTextString)      FloatingTextStringOnCreature(sMes, oCaster, TRUE);     
+     
+     return iDam;
 }
 
 
 int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0)
 {
 
-	object oCaster = GetLastSpellCaster();
-	int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
-	int iTK = GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oTarget);
-	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
-	int nSpell = GetSpellId();
-	
-	if (iRW > 0 && iTK > 0 && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS)
-	{
-		return 0;
-	}
-	
-	if (iRedWizard > 0)
-	{
-		int iRWSpec;
-		if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
-		else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
-		else if (GetHasFeat(FEAT_RW_TF_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
-		else if (GetHasFeat(FEAT_RW_TF_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
-		else if (GetHasFeat(FEAT_RW_TF_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
-		else if (GetHasFeat(FEAT_RW_TF_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
-		else if (GetHasFeat(FEAT_RW_TF_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
-		else if (GetHasFeat(FEAT_RW_TF_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
+     object oCaster = GetLastSpellCaster();
+     int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
+     int iTK = GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oTarget);
+     int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
+     int nSpell = GetSpellId();
+     
+     if (iRW > 0 && iTK > 0 && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS)
+     {
+          return 0;
+     }
+     
+     if (iRedWizard > 0)
+     {
+          int iRWSpec;
+          if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
+          else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
+          else if (GetHasFeat(FEAT_RW_TF_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
+          else if (GetHasFeat(FEAT_RW_TF_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
+          else if (GetHasFeat(FEAT_RW_TF_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
+          else if (GetHasFeat(FEAT_RW_TF_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
+          else if (GetHasFeat(FEAT_RW_TF_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
+          else if (GetHasFeat(FEAT_RW_TF_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
 
-		if (GetSpellSchool(nSpell) == iRWSpec)
-		{
-		
-			if (iRedWizard > 28)		nDC = nDC - 14;
-			else if (iRedWizard > 26)	nDC = nDC - 13;
-			else if (iRedWizard > 24)	nDC = nDC - 12;
-			else if (iRedWizard > 22)	nDC = nDC - 11;
-			else if (iRedWizard > 20)	nDC = nDC - 10;
-			else if (iRedWizard > 18)	nDC = nDC - 9;
-			else if (iRedWizard > 16)	nDC = nDC - 8;
-			else if (iRedWizard > 14)	nDC = nDC - 7;
-			else if (iRedWizard > 12)	nDC = nDC - 6;
-			else if (iRedWizard > 10)	nDC = nDC - 5;
-			else if (iRedWizard > 8)	nDC = nDC - 4;
-			else if (iRedWizard > 6)	nDC = nDC - 3;
-			else if (iRedWizard > 2)	nDC = nDC - 2;
-			else if (iRedWizard > 0)	nDC = nDC - 1;
-		
-		}
+          if (GetSpellSchool(nSpell) == iRWSpec)
+          {
+          
+               if (iRedWizard > 28)          nDC = nDC - 14;
+               else if (iRedWizard > 26)     nDC = nDC - 13;
+               else if (iRedWizard > 24)     nDC = nDC - 12;
+               else if (iRedWizard > 22)     nDC = nDC - 11;
+               else if (iRedWizard > 20)     nDC = nDC - 10;
+               else if (iRedWizard > 18)     nDC = nDC - 9;
+               else if (iRedWizard > 16)     nDC = nDC - 8;
+               else if (iRedWizard > 14)     nDC = nDC - 7;
+               else if (iRedWizard > 12)     nDC = nDC - 6;
+               else if (iRedWizard > 10)     nDC = nDC - 5;
+               else if (iRedWizard > 8) nDC = nDC - 4;
+               else if (iRedWizard > 6) nDC = nDC - 3;
+               else if (iRedWizard > 2) nDC = nDC - 2;
+               else if (iRedWizard > 0) nDC = nDC - 1;
+          
+          }
 
 
-	}
+     }
 
         //racial pack code
         if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
@@ -911,77 +975,77 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
         {   nDC -= 1+(GetHitDice(oTarget)/5);  }
 
-	return BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+     return BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 }
 
 
 int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF)
 {
-	
-	int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oTarget);
-	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
-	int nSpell = GetSpellId();
-	
-	if (iRedWizard > 0)
-	{
-		int iRWSpec;
-		if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
-		else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
-		else if (GetHasFeat(FEAT_RW_TF_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
-		else if (GetHasFeat(FEAT_RW_TF_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
-		else if (GetHasFeat(FEAT_RW_TF_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
-		else if (GetHasFeat(FEAT_RW_TF_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
-		else if (GetHasFeat(FEAT_RW_TF_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
-		else if (GetHasFeat(FEAT_RW_TF_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
+     
+     int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oTarget);
+     int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
+     int nSpell = GetSpellId();
+     
+     if (iRedWizard > 0)
+     {
+          int iRWSpec;
+          if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
+          else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
+          else if (GetHasFeat(FEAT_RW_TF_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
+          else if (GetHasFeat(FEAT_RW_TF_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
+          else if (GetHasFeat(FEAT_RW_TF_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
+          else if (GetHasFeat(FEAT_RW_TF_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
+          else if (GetHasFeat(FEAT_RW_TF_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
+          else if (GetHasFeat(FEAT_RW_TF_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
 
-		if (GetSpellSchool(nSpell) == iRWSpec)
-		{
-		
-			if (iRedWizard > 28)		nDC = nDC - 14;
-			else if (iRedWizard > 26)	nDC = nDC - 13;
-			else if (iRedWizard > 24)	nDC = nDC - 12;
-			else if (iRedWizard > 22)	nDC = nDC - 11;
-			else if (iRedWizard > 20)	nDC = nDC - 10;
-			else if (iRedWizard > 18)	nDC = nDC - 9;
-			else if (iRedWizard > 16)	nDC = nDC - 8;
-			else if (iRedWizard > 14)	nDC = nDC - 7;
-			else if (iRedWizard > 12)	nDC = nDC - 6;
-			else if (iRedWizard > 10)	nDC = nDC - 5;
-			else if (iRedWizard > 8)	nDC = nDC - 4;
-			else if (iRedWizard > 6)	nDC = nDC - 3;
-			else if (iRedWizard > 2)	nDC = nDC - 2;
-			else if (iRedWizard > 0)	nDC = nDC - 1;
-		
-		}
+          if (GetSpellSchool(nSpell) == iRWSpec)
+          {
+          
+               if (iRedWizard > 28)          nDC = nDC - 14;
+               else if (iRedWizard > 26)     nDC = nDC - 13;
+               else if (iRedWizard > 24)     nDC = nDC - 12;
+               else if (iRedWizard > 22)     nDC = nDC - 11;
+               else if (iRedWizard > 20)     nDC = nDC - 10;
+               else if (iRedWizard > 18)     nDC = nDC - 9;
+               else if (iRedWizard > 16)     nDC = nDC - 8;
+               else if (iRedWizard > 14)     nDC = nDC - 7;
+               else if (iRedWizard > 12)     nDC = nDC - 6;
+               else if (iRedWizard > 10)     nDC = nDC - 5;
+               else if (iRedWizard > 8) nDC = nDC - 4;
+               else if (iRedWizard > 6) nDC = nDC - 3;
+               else if (iRedWizard > 2) nDC = nDC - 2;
+               else if (iRedWizard > 0) nDC = nDC - 1;
+          
+          }
 
 
-	}
+     }
         
         if (iShadow > 0)
-	{
+     {
 
-	
-		if (GetSpellSchool(nSpell) == SPELL_SCHOOL_ENCHANTMENT || GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY || GetSpellSchool(nSpell) == SPELL_SCHOOL_ILLUSION)
-		{
-		
-			if (iShadow > 28)	nDC = nDC - 10;
-			else if (iShadow > 25)	nDC = nDC - 9;
-			else if (iShadow > 22)	nDC = nDC - 8;
-			else if (iShadow > 19)	nDC = nDC - 7;
-			else if (iShadow > 16)	nDC = nDC - 6;
-			else if (iShadow > 13)	nDC = nDC - 5;
-			else if (iShadow > 10)	nDC = nDC - 4;
-			else if (iShadow > 7)	nDC = nDC - 3;
-			else if (iShadow > 4)	nDC = nDC - 2;
-			else if (iShadow > 1)	nDC = nDC - 1;
-		}
-	
-	//SendMessageToPC(GetFirstPC(), "Your Spell Save modifier is " + IntToString(nDC));
-	}
-	
+     
+          if (GetSpellSchool(nSpell) == SPELL_SCHOOL_ENCHANTMENT || GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY || GetSpellSchool(nSpell) == SPELL_SCHOOL_ILLUSION)
+          {
+          
+               if (iShadow > 28)   nDC = nDC - 10;
+               else if (iShadow > 25)   nDC = nDC - 9;
+               else if (iShadow > 22)   nDC = nDC - 8;
+               else if (iShadow > 19)   nDC = nDC - 7;
+               else if (iShadow > 16)   nDC = nDC - 6;
+               else if (iShadow > 13)   nDC = nDC - 5;
+               else if (iShadow > 10)   nDC = nDC - 4;
+               else if (iShadow > 7)    nDC = nDC - 3;
+               else if (iShadow > 4)    nDC = nDC - 2;
+               else if (iShadow > 1)    nDC = nDC - 1;
+          }
+     
+     //SendMessageToPC(GetFirstPC(), "Your Spell Save modifier is " + IntToString(nDC));
+     }
+     
         
         
-	//racial pack code
+     //racial pack code
         if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
         { nDC -= 1+(GetHitDice(oTarget)/5); }
         else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )

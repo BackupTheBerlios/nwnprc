@@ -33,8 +33,12 @@ int GetEpicFeatSneak(object oPC);
 // Checks if attacker is flanking the defender or not
 int GetIsFlanked(object oDefender, object oAttacker);
 
+// Checks if an AoE spell is flanking the defender
+int GetIsAOEFlanked(object oDefender, object oAttacker);
+
 // Returns if oDefender is denied dex bonus to AC from spells
-int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker);
+// int nIgnoreUD - ignores Uncanny Dodge
+int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = FALSE);
 
 // Returns true if oDefender has concealment
 int GetIsConcealed(object oDefender, object oAttacker);
@@ -232,7 +236,23 @@ int GetIsFlanked(object oDefender, object oAttacker)
     return bReturnVal;
 }
 
-int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker)
+// Checks if an AoE spell is against someone distracted in meleee combat
+int GetIsAOEFlanked(object oDefender, object oAttacker)
+{
+    int bReturnVal = TRUE;
+    
+    // if they are not in combat then they are automatically flanked (surprise round)
+    if(GetIsInCombat(oDefender))
+    {
+         // checks if they are attacking something other than the caster
+         object oTarget = GetAttackTarget(oDefender);
+         if(oTarget == oAttacker)  bReturnVal = FALSE;
+    }
+    
+    return bReturnVal;
+}
+
+int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = FALSE)
 {
      int bIsDeniedDex = FALSE;
      int bDefenderHasTrueSight = GetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
@@ -263,7 +283,7 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker)
      }
      
      // Check for Uncanny Dodge Vs. Sneak Attack.
-     if( GetHasFeat(FEAT_UNCANNY_DODGE_2, oDefender) )
+     if( GetHasFeat(FEAT_UNCANNY_DODGE_2, oDefender) && !nIgnoreUD )
      {
           int iUncannyDodgeLevels;
           iUncannyDodgeLevels += GetLevelByClass(CLASS_TYPE_BARBARIAN, oDefender);

@@ -128,6 +128,12 @@ void main()
         SetCompositeBonus(oSkin, "SA_Jump_4", 4, ITEM_PROPERTY_SKILL_BONUS, 28);
     }
 
+    // Leap, +5 to Jump
+    if(GetHasFeat(FEAT_LEAP))
+    {
+        SetCompositeBonus(oSkin, "Leap", 5, ITEM_PROPERTY_SKILL_BONUS, 28);
+    }
+
     // Skill Affinity, +4 to spot
     if(GetHasFeat(FEAT_SA_SPOT_4))
     {

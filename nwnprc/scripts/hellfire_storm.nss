@@ -44,7 +44,7 @@ void main()
     int nMetaMagic = GetMetaMagicFeat();
     int nDamage;
     float fDelay;
-    effect eExplode = EffectVisualEffect(514);
+    effect eExplode = EffectVisualEffect(807);
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
     effect eDam;
     //Get the spell target location as opposed to the spell target.

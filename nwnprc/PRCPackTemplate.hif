@@ -67,6 +67,8 @@ erf : prc_consortium.erf
 # Haks used by the prc pack.
 module.Hak : prc_2das.hak
 module.Hak : prc_scripts.hak
+module.Hak : prc_epicspells.hak
+module.Hak : prc_race.hak
 module.Hak : prc_textures.hak
 module.Hak : prc_misc.hak
 module.Hak : prc_craft2das.hak
@@ -93,9 +95,6 @@ module.OnPlayerUnequipItem : prc_unequip
 module.OnUserDefined : prc_onuserdef
 
 # Cache PRC scripts for better performance.
-module.Cache : prc_add_spl_pen
-module.Cache : prc_add_spell_dc
-module.Cache : prc_set_dmg_type
 module.Cache : prc_caster_level
 module.Cache : prc_onaquire
 module.Cache : prc_onactivate

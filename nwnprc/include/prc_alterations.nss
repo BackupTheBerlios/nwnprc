@@ -11,6 +11,7 @@
 #include "prc_class_const"
 #include "prc_spell_const"
 #include "prc_racial_const"
+#include "prc_misc_const"
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"

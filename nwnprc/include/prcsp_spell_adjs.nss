@@ -1,14 +1,6 @@
 //#include "prc_add_spl_pen"  <-- Inherited from  #prc_add_spell_dc
 #include "prc_add_spell_dc"
-
-//
-//	Compute the Effective Caster Level without Penetration
-//
-int
-PRCGetCasterLevel(object oCaster = OBJECT_SELF)
-{
-	return (GetCasterLevel(oCaster) + ExecuteScriptAndReturnInt("prc_caster_level", oCaster) );
-}
+#include "prc_inc_cast"
 
 //
 //	Get the Spell Penetration Bonuses

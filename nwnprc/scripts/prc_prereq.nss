@@ -8,66 +8,9 @@
 //:: Created On: July 3rd, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_class_const"
-#include "prc_feat_const"
+#include "prc_inc_cast"
 #include "prc_inc_sneak"
 #include "soul_inc"
-
-// This part needs to be changed for every new arcane caster.
-int GetArcanePRCLevels(object oPC)
-{
-   int iArcanePRCLevels = GetLevelByClass(CLASS_TYPE_ARCHMAGE, oPC)
-        + GetLevelByClass(CLASS_TYPE_ARCTRICK, oPC)
-        + GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oPC)
-        + GetLevelByClass(CLASS_TYPE_ES_ACID, oPC)
-        + GetLevelByClass(CLASS_TYPE_ES_COLD, oPC)
-        + GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC)
-        + GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC)
-        + GetLevelByClass(CLASS_TYPE_HARPERMAGE, oPC)
-        + GetLevelByClass(CLASS_TYPE_MAGEKILLER, oPC)
-        + GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oPC)
-        + GetLevelByClass(CLASS_TYPE_TRUENECRO, oPC)
-        + GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oPC)
-        + (GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oPC)+ 1) / 2 // +1 caster lvl but 1/2 spell prog
-        + (GetLevelByClass(CLASS_TYPE_ACOLYTE, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_BLADESINGER, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_PALEMASTER, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_HATHRAN, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, oPC) + 1) / 3;
-
-   return iArcanePRCLevels;
-}
-   
-// This part needs to be changed for every new divine caster.
-int GetDivinePRCLevels(object oPC)
-{
-   int iDivinePRCLevels = GetLevelByClass(CLASS_TYPE_DIVESA, oPC)
-        + GetLevelByClass(CLASS_TYPE_DIVESC, oPC)
-        + GetLevelByClass(CLASS_TYPE_DIVESE, oPC)
-        + GetLevelByClass(CLASS_TYPE_DIVESF, oPC)
-        + GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oPC)
-        + GetLevelByClass(CLASS_TYPE_HEARTWARDER, oPC)
-        + GetLevelByClass(CLASS_TYPE_HIEROPHANT, oPC)
-        + GetLevelByClass(CLASS_TYPE_HOSPITALER, oPC)
-        + GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oPC)
-        + GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oPC)
-        + GetLevelByClass(CLASS_TYPE_STORMLORD, oPC)
-        + (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_OCULAR, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_TEMPUS, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_HATHRAN, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_BFZ, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_ORCUS, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_WARPRIEST, oPC) + 1) / 2;
-
-        if ( !GetHasFeat(FEAT_SF_CODE, oPC))
-              iDivinePRCLevels += GetLevelByClass(CLASS_TYPE_SACREDFIST, oPC);
-        
-   return iDivinePRCLevels;
-}
 
 int GetBardSpellLevel(object oPC)
 {

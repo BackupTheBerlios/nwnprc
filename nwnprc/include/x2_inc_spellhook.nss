@@ -28,10 +28,9 @@ const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 
 
 
-// Use Magic Device Check.
-// Returns TRUE if the Spell is allowed to be cast, either because the
-// character is allowed to cast it or he has won the required UMD check
-// Only active on spell scroll
+// This function checks for the Red Wizard's restricted
+// spell school and prevents him from casting the spells
+// that he is banned from casting. 
 int RedWizRestrictedSchool();
 
 
@@ -326,9 +325,17 @@ int X2PreSpellCastCode()
    //---------------------------------------------------------------------------
 
    //---------------------------------------------------------------------------
-   // Run use magic device skill check
+   // Run Red Wizard School Restriction Check
    //---------------------------------------------------------------------------
-   nContinue = X2UseMagicDeviceCheck();
+   nContinue = RedWizRestrictedSchool();
+
+   if (nContinue)
+   {
+	//---------------------------------------------------------------------------
+	// Run use magic device skill check
+	//---------------------------------------------------------------------------
+	nContinue = X2UseMagicDeviceCheck();
+   }
 
    if (nContinue)
    {

@@ -586,7 +586,6 @@ int IPGetIsMeleeWeapon(object oItem)
       || (nItem == 322) //CEP goad
       || (nItem == 323) //CEP windfirewheel
       || (nItem == 324) //CEP maugdoublesword
-      || (nItem == 300) //CEP Trident
       )
    {
         return TRUE;

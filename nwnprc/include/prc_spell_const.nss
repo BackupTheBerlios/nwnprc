@@ -371,3 +371,12 @@ const int SPELL_PIXIE_CONFUSION		 = 1974;
 const int SPELL_PIXIE_IMPINVIS		 = 1975;
 const int SPELL_PIXIE_DISPEL		 = 1976;
 const int SPELL_RACE_CHILLTOUCH          = 1977;
+
+
+// Poison system spells
+const int SPELL_POISONED_WEAPON    = 2880;
+const int SPELL_GRENADE_POISONVIAL = 2881;
+const int SPELL_POISON_WEAPON      = 2882;
+const int SPELL_POISON_ITEM        = 2883;
+const int SPELL_POISON_FOOD        = 2884;
+const int SPELL_CLEAN_POISON_OFF   = 2885;

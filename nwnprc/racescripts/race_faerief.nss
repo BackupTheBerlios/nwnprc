@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     //Declare major variables
     object oCaster = OBJECT_SELF;
 
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int CasterLvl = GetHitDice(OBJECT_SELF);
 
     int nCasterLvl = CasterLvl;
     int nMetaMagic = GetMetaMagicFeat();

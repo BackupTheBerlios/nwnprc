@@ -10,10 +10,12 @@
 //:://////////////////////////////////////////////
 
 #include "inc_item_props"
+#include "x2_inc_itemprop"
+
 #include "prc_feat_const"
 #include "prc_class_const"
 
-
+/*
 void AddAcid(object oPC,int iEquip)
     {
     object oItem ;
@@ -48,7 +50,19 @@ void AddAcid(object oPC,int iEquip)
     }
     }
     }
+*/
 
+void ApplyAcidBlood(object oPC, object oArmor)
+{    
+     IPSafeAddItemProperty(oArmor, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+     SetLocalInt(oPC, "HasAcidBlood", 2);
+}
+
+void RemoveAcidBlood(object oPC, object oArmor)
+{
+     RemoveSpecificProperty(oArmor, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0);
+     SetLocalInt(oPC, "HasAcidBlood", 1);
+}
 
 void main()
 {
@@ -58,12 +72,52 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
 
+    object oItem;
+    int iEquip = GetLocalInt(oPC, "ONEQUIP");
+    object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+
+    // on load, error since local ints are wiped and = 0
+    if (GetLocalInt(oPC, "HasAcidBlood") == 0)
+    {
+        RemoveAcidBlood(oPC, oArmor);
+        ApplyAcidBlood(oPC, oArmor);   
+    }
+    else if(nBldarch >= 2 && GetLocalInt(oPC, "HasAcidBlood") != 0)
+    {              
+        if(iEquip == 2)       // On Equip
+        {
+             // add bonus to armor
+             oItem = GetPCItemLastEquipped();
+             
+             if(oItem == oArmor)
+             {
+                  ApplyAcidBlood(oPC, oArmor); 
+             }
+        }
+        else if(iEquip == 1)  // Unequip
+        {
+             oItem = GetPCItemLastUnequipped();
+             
+             if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+             {
+                  RemoveAcidBlood(oPC, oItem);
+             }
+        }
+        else                  // On level, rest, or other events
+        {
+             RemoveAcidBlood(oPC, oArmor);
+             ApplyAcidBlood(oPC, oArmor);
+        }
+    }
+    
+    /*
     // *level 2
     if (nBldarch >= 2)
     {
     // *Acid Blood
     AddAcid( oPC,GetLocalInt(oPC,"ONEQUIP"));
     }
+    */
 
     // *Level 4
     if (6 >= nBldarch >= 4)
@@ -73,7 +127,7 @@ void main()
     }
 
     // *Level 7
-    if (nBldarch >= 7)
+    else if (nBldarch >= 7)
     {
     // Regen
         SetCompositeBonus(oSkin, "Regen2", 2, ITEM_PROPERTY_REGENERATION);

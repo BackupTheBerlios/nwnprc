@@ -2,9 +2,8 @@
 #include "prc_inc_function"
 
 void
-ScrubPCSkin(object oPC)
+ScrubPCSkin(object oPC, object oSkin)
 {
-    object oSkin = GetPCSkin(oPC);
 	itemproperty ip = GetFirstItemProperty(oSkin);
 	while (GetIsItemPropertyValid(ip)) {
 		// Insert Logic here to determine if we spare a property
@@ -35,14 +34,15 @@ void main()
     //hopefully in the next update
     //  -Aaon Graywolf
 	object oPC = GetEnteringObject();
-	ScrubPCSkin(oPC);
+        object oSkin = GetPCSkin(oPC);
+	ScrubPCSkin(oPC, oSkin);
+        DeletePRCLocalInts(oSkin);     
 
-         
     SetLocalInt(oPC,"ONENTER",1);
     ExecuteScript("onenter_setlocal",oPC);
     
     // Make sure we reapply any bonuses before the player notices they are gone.
-    EvalPRCFeats(oPC);
+    DelayCommand(0.1, EvalPRCFeats(oPC));
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the entering player already meets.
     CheckSpecialPRCRecs(oPC);

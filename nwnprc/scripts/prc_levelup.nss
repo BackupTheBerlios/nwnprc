@@ -26,7 +26,9 @@ void PrcFeats(object oPC)
 void main()
 {
     object oPC = GetPCLevellingUp();
-    object oArmor = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
+    object oSkin = GetPCSkin(oPC);
+    ScrubPCSkin(oPC, oSkin);
+    DeletePRCLocalInts(oSkin);     
 
     //All of the PRC feats have been hooked into EvalPRCFeats
     //The code is pretty similar, but much more modular, concise

@@ -34,15 +34,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int iSaveDC = GetSpellSaveDC() + GetChangesToSaveDC(oTarget, OBJECT_SELF);
     int iMeta = GetMetaMagicFeat();
     
-    if (iMeta == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(iMeta, METAMAGIC_EXTEND))
     {
         iTurnDur = iTurnDur * 2;
     }
-    else if (iMeta == METAMAGIC_EMPOWER)
+    else if (CheckMetaMagic(iMeta, METAMAGIC_EMPOWER))
     {
         iColdDam = iColdDam + iColdDam / 2;
     }
-    else if (iMeta == METAMAGIC_MAXIMIZE)
+    else if (CheckMetaMagic(iMeta, METAMAGIC_MAXIMIZE))
     {
         iColdDam = 6;
     }
@@ -63,9 +63,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     eDur = EffectLinkEffects(eDur, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR));
                     eDur = EffectLinkEffects(eDur, EffectTurned());
                     
-                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(iTurnDur));
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis1, oTarget);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(iTurnDur));
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis1, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
                 }
             }
             else
@@ -75,15 +75,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
                     effect eDam = EffectDamage(iColdDam, iEleDmg);
                 
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
                     if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, iSaveDC, SAVING_THROW_TYPE_COLD))
                     {
                         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
                         eDur = EffectLinkEffects(eDur, EffectAbilityDecrease(ABILITY_STRENGTH, 1));
                         
-                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(iTurnDur));
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(iTurnDur));
                     }
                 }
             }

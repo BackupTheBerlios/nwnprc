@@ -33,6 +33,8 @@ int FeatWeaponTempus(int iFeat)
      if (iFeat==FEAT_WEAPON_TEMPUS_TWOBLADED   ) return(BASE_ITEM_TWOBLADEDSWORD);
      if (iFeat==FEAT_WEAPON_TEMPUS_KAMA        ) return(BASE_ITEM_KAMA);
      if (iFeat==FEAT_WEAPON_TEMPUS_KUKRI       ) return(BASE_ITEM_KUKRI);
+     if (iFeat==FEAT_WEAPON_TEMPUS_SICKLE      ) return(BASE_ITEM_SICKLE);
+     if (iFeat==FEAT_WEAPON_TEMPUS_DWARVENAXE  ) return(BASE_ITEM_DWARVENWARAXE);
 
    return BASE_ITEM_TORCH;
 }
@@ -52,7 +54,11 @@ void WeaponTempus(object oPC,object oSkin)
 
   if (iFeat)
       SetLocalInt(oSkin,"FEAT_WEAP_TEMPUS",FeatWeaponTempus(iTempus-1));
-
+  else if (GetHasFeat(FEAT_WEAPON_TEMPUS_DWARVENAXE, oPC))
+      SetLocalInt(oSkin,"FEAT_WEAP_TEMPUS",BASE_ITEM_DWARVENWARAXE);
+  else if (GetHasFeat(FEAT_WEAPON_TEMPUS_SICKLE, oPC))
+      SetLocalInt(oSkin,"FEAT_WEAP_TEMPUS",BASE_ITEM_SICKLE);
+      
 }
 
 void KnowledgeLore(object oPC, object oSkin, int iLevel)

@@ -363,21 +363,49 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"HMInvul");
     // race vars
     DeleteLocalInt(oSkin,"RacialNaturalArmor");
-    DeleteLocalInt(oSkin,"RacialSize");
-    DeleteLocalInt(oSkin,"RacialRegeneration");
+    DeleteLocalInt(oSkin,"RacialSize_AC");
+    DeleteLocalInt(oSkin,"RacialSize_Attack");
+    DeleteLocalInt(oSkin,"RacialSize_SkillHide");
+    DeleteLocalInt(oSkin,"RacialRegeneration_5");
+    DeleteLocalInt(oSkin,"RacialRegeneration_2");
     DeleteLocalInt(oSkin,"VeryHeroic");
     DeleteLocalInt(oSkin,"SA_Jump");
     DeleteLocalInt(oSkin,"SA_Bluff");
     DeleteLocalInt(oSkin,"SA_Jump_4");
+    DeleteLocalInt(oSkin,"SA_Heal");
     DeleteLocalInt(oSkin,"Leap");
+    DeleteLocalInt(oSkin,"TKLeap");
     DeleteLocalInt(oSkin,"SA_Spot_4");
     DeleteLocalInt(oSkin,"Keen_Sight");
+    DeleteLocalInt(oSkin,"Birdseye");
+    DeleteLocalInt(oSkin,"SA_Listen_4");
+    DeleteLocalInt(oSkin,"SA_Search_4");
+    DeleteLocalInt(oSkin,"SA_Perform_4");
+    DeleteLocalInt(oSkin,"SA_Perform");
+    DeleteLocalInt(oSkin,"SA_Open_Lock");
+    DeleteLocalInt(oSkin,"Minot_Scent_Spot");
+    DeleteLocalInt(oSkin,"Minot_Scent_Search");
+    DeleteLocalInt(oSkin,"Minot_Scent_Listen");
+    DeleteLocalInt(oSkin,"Kender_Bonus_Bluff");
+    DeleteLocalInt(oSkin,"Kender_Bonus_Taunt");
+    DeleteLocalInt(oSkin,"LackofFocus");
+    DeleteLocalInt(oSkin,"Gully_Trait_Persuade");
+    DeleteLocalInt(oSkin,"Gully_Trait_Fear");
     DeleteLocalInt(oSkin,"SA_Move_4");
     DeleteLocalInt(oSkin,"SA_Craft_Armor");
     DeleteLocalInt(oSkin,"SA_Craft_Weapon");
     DeleteLocalInt(oSkin,"SA_Hide");
     DeleteLocalInt(oSkin,"SA_Hide_Forest");
     DeleteLocalInt(oSkin,"Svirf_Dodge");
+    DeleteLocalInt(oSkin,"SA_Hide_4");
+    DeleteLocalInt(oSkin,"Chameleon");
+    DeleteLocalInt(oSkin,"SA_Appraise");
+    DeleteLocalInt(oSkin,"SA_AnimalEmpathy_6");
+    DeleteLocalInt(oSkin,"SA_AnimalEmpathy_2");
+    DeleteLocalInt(oSkin,"PSA_Persuade");
+    DeleteLocalInt(oSkin,"PSA_Lorespell_Lore");
+    DeleteLocalInt(oSkin,"PSA_Lorespell_Spell");
+
 
     //Alaghar
     DeleteLocalInt(oSkin, "SilverbeardAC");

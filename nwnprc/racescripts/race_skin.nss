@@ -194,37 +194,37 @@ void main()
     //-1AC, -1 ATT, -4hide
     if(GetHasFeat(FEAT_LARGE))
     {
-        SetCompositeBonus(oSkin, "RacialSize", 1, ITEM_PROPERTY_DECREASED_AC);
-        SetCompositeBonus(oSkin, "RacialSize", 1, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
-        SetCompositeBonus(oSkin, "RacialSize", 4, ITEM_PROPERTY_DECREASED_SKILL_MODIFIER, SKILL_HIDE);
+        SetCompositeBonus(oSkin, "RacialSize_AC", 1, ITEM_PROPERTY_DECREASED_AC);
+        SetCompositeBonus(oSkin, "RacialSize_Attack", 1, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
+        SetCompositeBonus(oSkin, "RacialSize_SkillHide", 4, ITEM_PROPERTY_DECREASED_SKILL_MODIFIER, SKILL_HIDE);
     }
 
     //-2AC, -2 ATT, -8hide
-    if(GetHasFeat(FEAT_HUGE))
+    else if(GetHasFeat(FEAT_HUGE))
     {
-        SetCompositeBonus(oSkin, "RacialSize", 2, ITEM_PROPERTY_DECREASED_AC);
-        SetCompositeBonus(oSkin, "RacialSize", 2, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
-        SetCompositeBonus(oSkin, "RacialSize", 8, ITEM_PROPERTY_DECREASED_SKILL_MODIFIER, SKILL_HIDE);
+        SetCompositeBonus(oSkin, "RacialSize_AC", 2, ITEM_PROPERTY_DECREASED_AC);
+        SetCompositeBonus(oSkin, "RacialSize_Attack", 2, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
+        SetCompositeBonus(oSkin, "RacialSize_SkillHide", 8, ITEM_PROPERTY_DECREASED_SKILL_MODIFIER, SKILL_HIDE);
     }
 
     //+2AC, +2 ATT, +8hide
-    if(GetHasFeat(FEAT_TINY))
+    else if(GetHasFeat(FEAT_TINY))
     {
-        SetCompositeBonus(oSkin, "RacialSize", 2, ITEM_PROPERTY_AC_BONUS);
-        SetCompositeBonus(oSkin, "RacialSize", 2, ITEM_PROPERTY_ATTACK_BONUS);
-        SetCompositeBonus(oSkin, "RacialSize", 8, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+        SetCompositeBonus(oSkin, "RacialSize_AC", 2, ITEM_PROPERTY_AC_BONUS);
+        SetCompositeBonus(oSkin, "RacialSize_Attack", 2, ITEM_PROPERTY_ATTACK_BONUS);
+        SetCompositeBonus(oSkin, "RacialSize_SkillHide", 8, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }
 
     //regeneration 5PH/round
     if(GetHasFeat(FEAT_REGEN5))
     {
-        SetCompositeBonus(oSkin, "RacialRegeneration", 5, ITEM_PROPERTY_REGENERATION);
+        SetCompositeBonus(oSkin, "RacialRegeneration_5", 5, ITEM_PROPERTY_REGENERATION);
     }
 
     //regeneration 2PH/round
     if(GetHasFeat(FEAT_REGEN2))
     {
-        SetCompositeBonus(oSkin, "RacialRegeneration", 2, ITEM_PROPERTY_REGENERATION);
+        SetCompositeBonus(oSkin, "RacialRegeneration_2", 2, ITEM_PROPERTY_REGENERATION);
     }
 
     //fire resistance 5
@@ -328,16 +328,16 @@ void main()
    // Minotaur bonuses due to scent
     if(GetHasFeat(FEAT_MINOT_SCENT))
     {
-        SetCompositeBonus(oSkin, "Minot_Scent", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
-        SetCompositeBonus(oSkin, "Minot_Scent", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SEARCH);
-        SetCompositeBonus(oSkin, "Minot_Scent", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_LISTEN);
+        SetCompositeBonus(oSkin, "Minot_Scent_Spot", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
+        SetCompositeBonus(oSkin, "Minot_Scent_Search", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SEARCH);
+        SetCompositeBonus(oSkin, "Minot_Scent_Listen", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_LISTEN);
     }
 
    // Kender Bonuses
     if(GetHasFeat(FEAT_KENDERBLUFF))
     {
-        SetCompositeBonus(oSkin, "Kender_Bonus", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_BLUFF);
-        SetCompositeBonus(oSkin, "Kender_Bonus", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_TAUNT);
+        SetCompositeBonus(oSkin, "Kender_Bonus_Bluff", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_BLUFF);
+        SetCompositeBonus(oSkin, "Kender_Bonus_Taunt", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_TAUNT);
     }
 
     // -4 to concentration
@@ -349,8 +349,8 @@ void main()
    // Gully Dwarf Liabilities
     if(GetHasFeat(FEAT_COWARDPITY))
     {
-        SetCompositeBonus(oSkin, "Gully_Trait", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERSUADE);
-        SetCompositeBonus(oSkin, "Gully_Trait", 4, ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC, SPELL_FEAR);
+        SetCompositeBonus(oSkin, "Gully_Trait_Persuade", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERSUADE);
+        SetCompositeBonus(oSkin, "Gully_Trait_Fear", 4, ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC, SPELL_FEAR);
     }
    
     // Skill Affinity, +4 to move silently
@@ -407,13 +407,13 @@ void main()
     // Skill Affinity, +6 to animal empathy
     if(GetHasFeat(FEAT_SA_ANIMAL_EMP_6))
     {
-        SetCompositeBonus(oSkin, "SA_AnimalEmpathy", 6, ITEM_PROPERTY_SKILL_BONUS, SKILL_ANIMAL_EMPATHY);
+        SetCompositeBonus(oSkin, "SA_AnimalEmpathy_6", 6, ITEM_PROPERTY_SKILL_BONUS, SKILL_ANIMAL_EMPATHY);
     }
 
     // Skill Affinity, +2 to animal empathy
     if(GetHasFeat(FEAT_SA_ANIMAL_EMP))
     {
-        SetCompositeBonus(oSkin, "SA_AnimalEmpathy_6", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_ANIMAL_EMPATHY);
+        SetCompositeBonus(oSkin, "SA_AnimalEmpathy_2", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_ANIMAL_EMPATHY);
     }
 
     // Partial Skill Affinity, +1 to persuade
@@ -425,8 +425,8 @@ void main()
     // PSA to Lore and Spellcraft
     if(GetHasFeat(FEAT_PSA_LORESPELL))
     {
-        SetCompositeBonus(oSkin, "PSA_Lorespell", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_LORE);
-        SetCompositeBonus(oSkin, "PSA_Lorespell", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPELLCRAFT);
+        SetCompositeBonus(oSkin, "PSA_Lorespell_Lore", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_LORE);
+        SetCompositeBonus(oSkin, "PSA_Lorespell_Spell", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPELLCRAFT);
     }
 
     //damage reduction 10/+1

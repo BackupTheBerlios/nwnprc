@@ -67,7 +67,7 @@ void FindTrueAbilityScores()
     }
     
     DelayCommand(0.5, FindTrueAbilityScoresPhaseTwo(oPC, oClone));
-    DelayCommand(0.6, DestroyObject(oClone));
+    DelayCommand(6.0, DestroyObject(oClone));
 }    
 
 void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone)

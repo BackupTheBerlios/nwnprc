@@ -63,15 +63,9 @@ if (!PsiPrePowerCastCode()){ return; }
 	
 	
 			/* Add the onhit spell to the weapon */
-			itemproperty ip = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1);
+			IPSafeAddItemProperty(oTarget, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 			
-			// First, check if something else adds the unique onhit.
-			// If nothing does, then we should remove it once the effect has been used up
-			if(!IPGetItemHasProperty(oTarget, ip, -1))
-				SetLocalInt(oTarget, "DissolvingWeapon_DoDelete", TRUE);
-			
-			
-			AddItemProperty(DURATION_TYPE_TEMPORARY, ip , oTarget, 9999.0);
+			/* Apply the VFX to whatever is wielding the target */
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oTarget));
 		}
 		else

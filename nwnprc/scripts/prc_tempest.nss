@@ -52,13 +52,11 @@ void ApplyTwoWeaponDefense(object oPC, object oSkin)
      itemproperty ipACBonus = ItemPropertyACBonus(ACBonus);
      
      SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", ACBonus, ITEM_PROPERTY_AC_BONUS);   
-     SetLocalInt(oPC, "HasTWD", 2);
 }
 
 void RemoveTwoWeaponDefense(object oPC, object oSkin)
 {     
      SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", 0, ITEM_PROPERTY_AC_BONUS);
-     SetLocalInt(oPC, "HasTWD", 1);
 }
 
 void ApplyExtraAttacks(object oPC)
@@ -87,7 +85,7 @@ void main()
     // On Error Remove effects
     // This typically occurs On Load
     // Because the variables are not yet set.
-    if(GetLocalInt(oPC, "HasAbsAmbidex") == 0 && GetLocalInt(oPC, "HasTWD") == 0 )
+    if(GetLocalInt(oPC, "HasAbsAmbidex") == 0 )
     {
          RemoveAbsAmbidex(oPC);    
          RemoveTwoWeaponDefense(oPC, oSkin);
@@ -111,6 +109,8 @@ void main()
          nMes = "*Two-Weapon Fighting Abilities Disabled Due To Equipped Armor*";
          FloatingTextStringOnCreature(nMes, oPC, FALSE);
     }
+    
+    
     // Remove all effects if weapons are not correct
     else if(oWeapR == OBJECT_INVALID || oWeapL == OBJECT_INVALID || 
             GetBaseItemType(oWeapL) == BASE_ITEM_LARGESHIELD ||
@@ -143,9 +143,9 @@ void main()
 
           // Is called anytime TWD might have been upgraded
           // specifically set this way for level up
-          if(GetLocalInt(oPC, "HasTWD") != 0 && GetHasFeat(FEAT_TWO_WEAPON_DEFENSE, oPC) )
+          if(GetHasFeat(FEAT_TWO_WEAPON_DEFENSE, oPC) )
           {
-               RemoveTwoWeaponDefense(oPC, oSkin);
+               //RemoveTwoWeaponDefense(oPC, oSkin);
                ApplyTwoWeaponDefense(oPC, oSkin);
           
                nMes = "*Two-Weapon Defense Activated*";

@@ -167,10 +167,12 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 			    +	(GetHasFeat(FEAT_UR_OWL_TOTEM, oPC))
 			    +	(GetHasFeat(FEAT_UR_VIPER_TOTEM, oPC))
 			    +	(GetHasFeat(FEAT_UR_FAST_MOVEMENT, oPC))
-			    +	(GetHasFeat(FEAT_UNCANNYX_DODGE_1, oPC));
+			    +	(GetHasFeat(FEAT_UNCANNYX_DODGE_1, oPC))
+			    +	(GetHasFeat(FEAT_UR_HIPS, oPC))
+			    +	(GetHasFeat(FEAT_UR_CAMOUFLAGE, oPC));
 
-			   
-                if (iURanger>11){
+	 
+                if (iURanger>=11){
                    if ((iURanger-8)/3 != iAbi) Ability = 1;
                 }
 
@@ -184,9 +186,12 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 			string sAbi ="1 ability ";
 			string sFE =" 1 favorite enemy ";
 			string msg=" You must select ";
+			int bFeat;
+	                if (iURanger>4 && iURanger<21 ) bFeat = ((iURanger+1)%4 == 0);
+	                else if (iURanger>20 ) bFeat = ((iURanger+2)%5 == 0);
 			if (iURanger>10 &&  (iURanger-8)%3 == 0) msg = msg+sAbi+" ";
 			if (iURanger>1 && (iURanger+8)%5 == 0) msg+=sFE;
-			if (iURanger == 1 || iURanger == 4 ||iURanger == 7 ||iURanger == 15 ||iURanger == 19) msg+= " 1 bonus Feat";
+			if (iURanger == 1 || iURanger == 4 ||bFeat) msg+= " 1 bonus Feat";
                         
 			//FloatingTextStringOnCreature(" Please reselect your feats.", oPC, FALSE);
 			FloatingTextStringOnCreature(msg, oPC, FALSE);
@@ -196,7 +201,10 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 		{
 		    iURanger++;
 		    string msg =" In your next Ultimate Ranger level ,you must select ";
-		    if (iURanger == 1 || iURanger == 4 ||iURanger == 7 ||iURanger == 15 ||iURanger == 19) msg+= " 1 bonus Feat ";
+		    int bFeat;
+	            if (iURanger>4 && iURanger<21 ) bFeat = ((iURanger+1)%4 == 0);
+	            else if (iURanger>20 ) bFeat = ((iURanger+2)%5 == 0);
+		    if (iURanger == 1 || iURanger == 4 || bFeat) msg+= " 1 bonus Feat ";
                     if (iURanger>10 &&  (iURanger-8)%3 == 0) msg +="1 Ability ";
                     if (iURanger>1 && (iURanger+8)%5 == 0) msg+=" 1 Favorite Enemy ";
                     if ( msg != " In your next Ultimate Ranger level ,you must select ")

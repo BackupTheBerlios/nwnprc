@@ -190,10 +190,6 @@
 186 FEAT_EPIC_GREAT_WISDOM_8                       811       1    -1             0      
 187 FEAT_EPIC_GREAT_WISDOM_9                       812       1    -1             0      
 188 FEAT_EPIC_GREAT_WISDOM_10                      813       1    -1             0      
-189 FEAT_DISCIPLE_OF_DARKNESS                      4012      0    -1             1      
-190 FEAT_IMP_MANYSHOT                              3350      0    -1             1      
-191 FEAT_HOLYRADIANCE                              3164      0    -1             1      
-192 FEAT_STIGMATA                                  3163      0    -1             1      
 193 WeapProfSim                                    46        3    1              0      
 194 ArmProfLgt                                     3         3    1              0      
 195 ArmProfMed                                     4         3    1              0      

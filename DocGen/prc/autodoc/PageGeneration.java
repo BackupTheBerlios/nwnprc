@@ -946,6 +946,7 @@ public final class PageGeneration{
 		
 		// Build alphabetic lists of all the feats
 		for(int i = 0; i < featTable.getEntryCount(); i++){
+			if(featTable.getEntry("FeatLabel", i).equals("****")) continue;
 			temp = featTable.getEntry("List", i);
 			// Yet more validity checking :P
 			if(!(temp.equals("0") || temp.equals("1") || temp.equals("2") || temp.equals("3"))){

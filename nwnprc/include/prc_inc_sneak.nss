@@ -36,11 +36,16 @@ int GetIsFlanked(object oDefender, object oAttacker);
 // Checks if an AoE spell is flanking the defender
 int GetIsAOEFlanked(object oDefender, object oAttacker);
 
+// Determines if a creature is helpless. 
+// (effective dex modifier of 0, and can be Coup De Graced).
+int GetIsHelpless(object oDefender);
+
 // Returns if oDefender is denied dex bonus to AC from spells
 // int nIgnoreUD - ignores Uncanny Dodge
 int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = FALSE);
 
-// Returns true if oDefender has concealment
+// Returns FALSE if oDefender has no concealment
+// or the int amount of concealment on the defender.
 int GetIsConcealed(object oDefender, object oAttacker);
 
 // Returns true if the Attacker can Sneak Attack the target
@@ -48,6 +53,10 @@ int GetCanSneakAttack(object oDefender, object oAttacker);
 
 // Returns Sneak Attack Damage
 int GetSneakAttackDamage(int iSneakAttackDice);
+
+//:://////////////////////////////////////////////
+//::  Definintions
+//:://////////////////////////////////////////////
 
 int GetTotalSneakAttackDice(object oPC)
 {
@@ -203,7 +212,7 @@ int GetEpicFeatSneak(object oPC)
 }
 
 //:://////////////////////////////////////////////
-//::  Sneak Attack Functions
+//::  Sneak Attack Function Definitions
 //:://////////////////////////////////////////////
 
 int GetIsFlanked(object oDefender, object oAttacker) 
@@ -252,11 +261,29 @@ int GetIsAOEFlanked(object oDefender, object oAttacker)
     return bReturnVal;
 }
 
+int GetIsHelpless(object oDefender)
+{
+     int bIsHelpless = FALSE;
+     
+     // PnP describes a helpless defender as
+     // A helpless foe - one who is bound, held, sleeping, paralyzed,
+     // unconscious, or otherwise at your mercy - is an easy target.
+     if( GetHasEffect(EFFECT_TYPE_PARALYZE, oDefender) )           bIsHelpless = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_SLEEP, oDefender) )         bIsHelpless = TRUE;
+     else if( GetHasEffect(EFFECT_TYPE_PETRIFY, oDefender) )       bIsHelpless = TRUE;     
+     
+     return bIsHelpless;
+}
+
 int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = FALSE)
 {
      int bIsDeniedDex = FALSE;
      int bDefenderHasTrueSight = GetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
      int bDefenderCanSeeInvisble = GetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
+     int bDefenderIsKnockedDown = GetHasFeatEffect(FEAT_KNOCKDOWN, oDefender) || GetHasFeatEffect(FEAT_IMPROVED_KNOCKDOWN, oDefender);
+     
+     // if the player is helpess, they are automatically denied dex bonus.
+     if( GetIsHelpless(oDefender) ) return TRUE;
 
      // if the player is not fighting, then this is the "surprise round"
      if( !GetIsFighting(oDefender) || !GetIsInCombat(oDefender) )
@@ -264,16 +291,19 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
           bIsDeniedDex = TRUE;
      }
      
-     // if defender has spell effect on them
+     // In NwN, knocked down targets are counted as denied dex bonus to AC.
+     if( bDefenderIsKnockedDown ) bIsDeniedDex = TRUE;
+     
+     // if defender has spell effect on them causing them to be denied dex bonus to AC.
      if( GetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender) )          bIsDeniedDex = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_DAZED, oDefender) )         bIsDeniedDex = TRUE;
      else if( GetHasEffect(EFFECT_TYPE_ENTANGLE, oDefender) )      bIsDeniedDex = TRUE;
      else if( GetHasEffect(EFFECT_TYPE_FRIGHTENED, oDefender) )    bIsDeniedDex = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_PARALYZE, oDefender) )      bIsDeniedDex = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_PETRIFY, oDefender) )       bIsDeniedDex = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_SLEEP, oDefender) )         bIsDeniedDex = TRUE;
      else if( GetHasEffect(EFFECT_TYPE_STUNNED, oDefender) )       bIsDeniedDex = TRUE;
-     
+
+     // Note: This is wrong by PnP rules... but Bioware allows auto sneaks on Dazed targets.
+     //       to keep in tune with the game engine I'll leave this active.
+     else if( GetHasEffect(EFFECT_TYPE_DAZED, oDefender) )         bIsDeniedDex = TRUE;
+      
      // if attacker is invisvisible/hiding/etc.     
      else if( GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)  && !bDefenderHasTrueSight && !bDefenderCanSeeInvisble )
      {
@@ -338,41 +368,66 @@ int GetIsConcealed(object oDefender, object oAttacker)
      int bAttackerCanSeeInvisble = GetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
      int bAttackerUltraVision = GetHasEffect(EFFECT_TYPE_ULTRAVISION, oAttacker);
      
-     // might be able to remove as it should fall under
-     // the concealment check... better to test first though
-     if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_50) )          bIsConcealed = TRUE;
-     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_40) )     bIsConcealed = TRUE;
-     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_30) )     bIsConcealed = TRUE;
-     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_20) )     bIsConcealed = TRUE;
-     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_10) )     bIsConcealed = TRUE;
+     if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_50, oDefender) )          bIsConcealed = 50;
+     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_40, oDefender) )     bIsConcealed = 40;
+     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_30, oDefender) )     bIsConcealed = 30;
+     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_20, oDefender) )     bIsConcealed = 20;
+     else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_10, oDefender) )     bIsConcealed = 10;
      
      // darkness, invisible, imp invisible
      else if(GetStealthMode(oDefender) == STEALTH_MODE_ACTIVATED && !GetObjectSeen(oDefender, oAttacker) )  bIsConcealed = TRUE;
-     else if(GetHasEffect(EFFECT_TYPE_SANCTUARY, oDefender) && ! bAttackerHasTrueSight )
+     else if(GetHasEffect(EFFECT_TYPE_SANCTUARY, oDefender) && !bAttackerHasTrueSight )
      {
-          bIsConcealed = TRUE;
+          // if they player is hidden you know enough to try attacking, give 50% miss chance
+          // as that is the highest concealment normally allowed.
+          // couldn't find any rules that governed this though.
+          bIsConcealed = 50;
      }
      else if(GetHasEffect(EFFECT_TYPE_INVISIBILITY, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble )
      {
-          bIsConcealed = TRUE;
+          bIsConcealed = 50;
      }
      else if(GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
      {
-          bIsConcealed = TRUE;
+          bIsConcealed = 50;
+     }
+     else if(GetHasEffect(EFFECT_TYPE_DARKNESS, oDefender) && !bAttackerHasTrueSight && !bAttackerUltraVision)
+     {
+          bIsConcealed = 50; 
+     }
+     else if(GetHasFeatEffect(FEAT_EMPTY_BODY, oDefender) )
+     {
+          bIsConcealed = 50;   
      }
      //else if(GetHasEffect(EFFECT_TYPE_ETHEREAL, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
      //{
      //     bIsConcealed = TRUE;
      //}
+
+     // spell effects
+     else if(GetHasSpellEffect(1764 , oDefender) && !bAttackerHasTrueSight) // blur spell
+     {
+          bIsConcealed = 20;
+     }       
+     else if(GetHasSpellEffect(SPELL_DISPLACEMENT , oDefender) && !bAttackerHasTrueSight)
+     {
+          bIsConcealed = 50;
+     }  
+     else if(GetHasSpellEffect(SPELL_SHADOW_EVADE , oDefender) && !bAttackerHasTrueSight)
+     {
+          int iSDlevel = GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oDefender);
+          if(iSDlevel <= 4)  bIsConcealed = 5;
+          if(iSDlevel <= 6)  bIsConcealed = 10;
+          if(iSDlevel <= 8)  bIsConcealed = 15;
+          if(iSDlevel <= 10) bIsConcealed = 20;
+     }  
+
+     // this is the catch-all effect
      else if(GetHasEffect(EFFECT_TYPE_CONCEALMENT, oDefender) && !bAttackerHasTrueSight)
      {
-          bIsConcealed = TRUE;     
-     }
-     else if(GetHasEffect(EFFECT_TYPE_DARKNESS, oDefender) && !bAttackerHasTrueSight && !bAttackerUltraVision)
-     {
-          bIsConcealed = TRUE;     
-     }
-  
+          if(bIsConcealed == FALSE) bIsConcealed = TRUE;
+     }  
+
      return bIsConcealed;
 }
 

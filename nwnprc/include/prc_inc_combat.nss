@@ -29,11 +29,11 @@
 //:: Dark Fire and Flame Weapon
 //:: Unarmed Damage
 //:: Cleave, Great Cleave, and Cirlce Kick
+//:: 
+//:: Bug Fix for Sanctuary / invis not being removed
+//:: Coup De Grace to Perform Attack Round
 //:://////////////////////////////////////////////
 //:: Known Issues: 
-//:: Tempests seem to get an additional +2 with off-hand light weapons
-//:: when they have Absolute Ambidexterity, not sure if this is an issue specifically 
-//:: with tempests, or if it's for all two-weapon fighting
 //:://////////////////////////////////////////////
 
 // #include "prc_feat_const"   <-- Inherited
@@ -65,6 +65,11 @@ int GetWeaponDamageType(object oWeap);
 // returns true if weapon is two-handed 
 // does not include double weapons
 int GetIsTwoHandedMeleeWeapon(object oWeap);
+
+// returns true if the weapon is a simple weapon
+// returns 1 if simple melee weapon
+// returns 2 if ranged simple weapon
+int GetIsSimpleWeapon(object oWeap);
 
 // Returns the appropriate weapon feat given a weapon type
 // iType = BASE_ITEM_*
@@ -382,6 +387,33 @@ int GetIsTwoHandedMeleeWeapon(object oWeap)
     
     return iReturn;
 }
+
+int GetIsSimpleWeapon(object oWeap)
+{
+      int iType= GetBaseItemType(oWeap);
+
+      switch (iType)
+      {            
+        case BASE_ITEM_MORNINGSTAR:
+        case BASE_ITEM_QUARTERSTAFF:
+        case BASE_ITEM_SHORTSPEAR:
+        case BASE_ITEM_HEAVYCROSSBOW:
+          return 1;
+          break;
+        case BASE_ITEM_CLUB:  
+        case BASE_ITEM_DAGGER:
+        case BASE_ITEM_LIGHTMACE:
+        case BASE_ITEM_SICKLE:
+        case BASE_ITEM_SLING:
+        case BASE_ITEM_DART:
+        case BASE_ITEM_LIGHTCROSSBOW:
+          return 2;
+          break;
+
+      }
+      return 0;
+}
+
 
 int GetFeatByWeaponType(int iType, string sFeat)
 {
@@ -915,10 +947,11 @@ int GetOffHandAttacks(object oPC)
           // they are wielding two weapons so at least 1 off-hand attack
           iOffHandAttacks = 1;
           
-          if(GetLevelByClass(CLASS_TYPE_RANGER, oPC) > 8 )      iOffHandAttacks = 2;
-          if(GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING) )     iOffHandAttacks = 2;
-          if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING) ) iOffHandAttacks = 3;
-          if(GetHasFeat(FEAT_SUPREME_TWO_WEAPON_FIGHTING) ) iOffHandAttacks = 4;
+          if(GetLevelByClass(CLASS_TYPE_RANGER, oPC) > 8 )    iOffHandAttacks = 2;
+          if(GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING) )  iOffHandAttacks = 2;
+          if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING) )   iOffHandAttacks = 3;
+          if(GetHasFeat(FEAT_SUPREME_TWO_WEAPON_FIGHTING) )   iOffHandAttacks = 4;
+          if(GetHasFeat(FEAT_PERFECT_TWO_WEAPON_FIGHTING) )   iOffHandAttacks = iMainHandAttacks;
           
           if(iOffHandAttacks > iMainHandAttacks)
           {
@@ -1142,7 +1175,7 @@ int GetMagicalAttackBonus(object oAttacker)
                 
                     case SPELL_BIGBYS_INTERPOSING_HAND:
                          iMagicBonus -= 10;
-                         break;
+                         break;           
                      
                     // Bard's Curse Song
                     case 644:
@@ -1325,8 +1358,9 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      
      // cache result, might increase speed if this is an issue
      int bLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iWeaponType)) <= 2 || iWeaponType == BASE_ITEM_RAPIER;
-
-     int iEnhancement = GetWeaponEnhancement(oWeap, oDefender, oAttacker);
+     int bSimple = GetIsSimpleWeapon(oWeap);
+     // uses GetMonkEnhancement in case a glove/creature weapon is passed as oWeapon
+     int iEnhancement = GetMonkEnhancement(oWeap, oDefender, oAttacker);
 
      int bFocus = GetHasFeat(GetFeatByWeaponType(iWeaponType, "Focus"), oAttacker);
      int bEpicFocus = GetHasFeat(GetFeatByWeaponType(iWeaponType, "EpicFocus"), oAttacker);
@@ -1351,7 +1385,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      }
      
      // if they have intuitive attack feat, checks if wisdom is highest
-     if(bInuitiveAttack &&  !bIsRangedWeapon)
+     if(bInuitiveAttack &&  !bIsRangedWeapon && bSimple)
      {
           if(iWis > bTempBonus) bTempBonus = iWis;     
      }
@@ -1363,7 +1397,6 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      {
            // Two Weapon Fighting Penalties
            // NwN only allows melee weapons to be dual wielded
-           
            object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oAttacker);
            
            if((oWeapL != OBJECT_INVALID) && (GetBaseItemType(oWeapL) != BASE_ITEM_LARGESHIELD) && (GetBaseItemType(oWeapL) != BASE_ITEM_SMALLSHIELD) && (GetBaseItemType(oWeapL) != BASE_ITEM_TOWERSHIELD) && (GetBaseItemType(oWeapL) != BASE_ITEM_TORCH))
@@ -1503,11 +1536,28 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
 
      // Moved this to GetAttackRoll since it needs to be checked
      // every attack instead of each round.
-     // add bonus for flanking +2 or invisible +4
+     // add bonus +2 for flanking, invisible attacker, attacking blind opponent
      if( GetIsFlanked(oDefender, oAttacker) ) iAttackBonus += 2;
-     if( GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker) || 
-         GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)  ) iAttackBonus += 4;
+     if((      GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)           || 
+               GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)   &&
+               !GetHasFeat(FEAT_BLIND_FIGHT, oDefender)                  ) || 
+         GetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender)
+       ) iAttackBonus += 2;
+     
+     // +2 attack bonus if they are stunned or frightened
+     if( GetHasEffect(EFFECT_TYPE_STUNNED, oDefender)   || 
+         GetHasEffect(EFFECT_TYPE_FRIGHTENED, oDefender)  )    iAttackBonus += 2;
 
+     int bIsMeleeWeapon = !GetWeaponRanged(oWeapon);
+     int bIsKnockedDown = GetHasFeatEffect(FEAT_KNOCKDOWN, oDefender) || GetHasFeatEffect(FEAT_IMPROVED_KNOCKDOWN, oDefender);
+
+     // +4 to attack in melee against a helpless target.
+     if( GetIsHelpless(oDefender) && bIsMeleeWeapon) iAttackBonus += 4;
+     
+     // +4 attack bonus to a prone target (in melee) / -4 in ranged combat
+     if(bIsKnockedDown && bIsMeleeWeapon)  iAttackBonus += 4;
+     if(bIsKnockedDown && !bIsMeleeWeapon) iAttackBonus -= 4;
+       
      // Battle training (Gnomes and Dwarves)
      // adds +1 based on enemy race
      if(MyPRCGetRacialType(oAttacker) == RACIAL_TYPE_DWARF || MyPRCGetRacialType(oAttacker) == RACIAL_TYPE_GNOME)
@@ -1521,7 +1571,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
           if(bGobTrain && iEnemyRace == RACIAL_TYPE_HUMANOID_GOBLINOID)   iAttackBonus += 1;
           if(bLizTrain && iEnemyRace == RACIAL_TYPE_HUMANOID_REPTILIAN)   iAttackBonus += 1;
      }
-
+     
      int iDiceRoll = d20();
      int iEnemyAC = GetAC(oDefender);
      
@@ -1534,13 +1584,34 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      sFeedback += "<c™þþ>" + GetName(oAttacker) + "<cþf > attacks " + GetName(oDefender) + ": ";
      int iReturn = 0;
 
+     // roll concealment check
+     int iConcealment = GetIsConcealed(oDefender, oAttacker);
+     int iConcealRoll = d100();
+     int bEnemyIsConcealed = FALSE;
+     
+     if(iConcealRoll <= iConcealment)
+     {
+          // those with blind-fight get a re-roll
+          if( GetHasFeat(FEAT_BLIND_FIGHT, oAttacker) ) 
+          {
+               iConcealRoll = d100();
+          }
+          
+          if(iConcealRoll <= iConcealment)
+          {
+               bEnemyIsConcealed = TRUE;
+               sFeedback += "*Miss*: (Enemy is Concealed)";
+               iReturn = 0;
+          }
+     }
+
      //Check for a critical threat
-     if(iDiceRoll >= iCritThreat && iDiceRoll + iAttackBonus > iEnemyAC && iDiceRoll != 1)
+     if( (iDiceRoll >= iCritThreat && (iDiceRoll + iAttackBonus) > iEnemyAC) && iDiceRoll != 1 && !bEnemyIsConcealed)
      {
           sFeedback += "*Critical Hit*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + "): ";
+          
           //Roll again to see if we scored a critical hit
           iDiceRoll = d20();
- 
           if(!GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT) )
           {
                sFeedback += "*Threat Roll*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
@@ -1555,14 +1626,14 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      }
 
      //Just a regular hit
-     else if(iDiceRoll + iAttackBonus > iEnemyAC && iDiceRoll != 1)
+     else if( (iDiceRoll + iAttackBonus > iEnemyAC) && iDiceRoll != 1 && !bEnemyIsConcealed)
      {
          sFeedback += "*Hit*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
          iReturn = 1;
      }
 
      //Missed
-     else
+     else if(!bEnemyIsConcealed)
      {
          sFeedback += "*Miss*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
          iReturn = 0;
@@ -2662,7 +2733,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      int iMassCritBonusDamage = 0;
      
      int iWeaponType = GetBaseItemType(oWeapon);
-     
+          
      // only read the data if it is not already given
      if(iNumSides == 0) iNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iWeaponType));
      if(iNumDice  == 0) iNumDice  = StringToInt(Get2DACache("baseitems", "NumDice", iWeaponType)); 
@@ -2953,6 +3024,26 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
      if (iMag  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iMag, DAMAGE_TYPE_MAGICAL, iDamagePower)), EffectVisualEffect(VFX_COM_HIT_DIVINE));
 
+     // the rest of the code for a Coup De Grace
+     if( GetIsHelpless(oDefender) && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, oAttacker) )
+     {
+          // DC = 10 + damage dealt.
+          int iSaveDC = 10;
+          iSaveDC += iWeaponDamage;
+          iSaveDC += iAcid + iCold + iFire + iElec + iSon;
+          iSaveDC += iDiv + iNeg + iPos;
+          iSaveDC += iMag;
+          
+          if( FortitudeSave(oDefender, iSaveDC, SAVING_THROW_TYPE_NONE, oAttacker) )
+          {
+               string nMes = "*Coup De Grace*";
+               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE); 
+
+               // circumvents death immunity... since anyone CDG'ed is dead.
+               effect eDeath = EffectDamage(DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
+               ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oDefender);
+          } 
+     }
      return eLink;
 }
 
@@ -2970,7 +3061,27 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
      {
          AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(oDefender), TRUE) );
          return;
-     }       
+     }
+     
+     // Since we are attacking, remove sanctuary / invisibility effects.
+     // Only bother to do this on the first attack... 
+     // as they won't have the effect anymore on subsequent iterations.
+     if(bFirstAttack && 
+          (GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker) ||
+           GetHasEffect(EFFECT_TYPE_SANCTUARY, oAttacker) 
+          )
+       ) 
+     {
+          effect eEffect = GetFirstEffect(oAttacker);
+          while (GetIsEffectValid(eEffect) )
+          {
+               if(GetEffectType(eEffect) == EFFECT_TYPE_INVISIBILITY || 
+                  GetEffectType(eEffect) == EFFECT_TYPE_SANCTUARY )
+                    RemoveEffect(oAttacker, eEffect);
+
+               eEffect = GetNextEffect(oAttacker);
+          }
+     }
 
      effect eDamage;
      string sMes = "";
@@ -3013,9 +3124,27 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           else
           {
           }
-          
-          // code to perform actual attack
-          iAttackRoll = GetAttackRoll(oDefender, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0);
+ 
+          // Coup De Grace
+          // Automatic critical hit: Fort save DC: 10 + damage dealt
+          // Note: The rest of the code is in GetAttackDamage
+          //       this is because that part has the damage dealt in it.
+          if( GetIsHelpless(oDefender) && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, oAttacker) )
+          {
+               // make hit a crit
+               iAttackRoll     = 2;
+               
+               // remove all other attacks this round
+               // you give up all other attacks to make a coupe de grace
+               iBonusAttacks   = 0;
+               iMainAttacks    = 0;
+               iOffHandAttacks = 0;
+          }
+          else
+          {
+               // code to perform normal attack roll
+               iAttackRoll = GetAttackRoll(oDefender, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0);               
+          }
 
           if (iAttackRoll == 2) bIsCritcal = TRUE;
           eDamage = GetAttackDamage(oDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, bIsCritcal, iNumDice, iNumSides, iCritMult);
@@ -3369,25 +3498,8 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      sAttackVars.iOffHandNumSides = 0;
      sAttackVars.iOffHandNumDice = 0;
      sAttackVars.iOffHandCritMult = 0;
-     
-     // only run if using two weapons
-     if(bIsUsingTwoWeapons)
-     {
-          sAttackVars.iOffHandAttackBonus = GetAttackBonus(oDefender, oAttacker, sAttackVars.oWeaponL, 1);
-          iOffHandAttacks = GetOffHandAttacks(oAttacker);
-          sOffHandWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponL, oDefender);
-          sAttackVars.iOffHandWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponL, 1);
           
-          iOffHandWeaponType = GetBaseItemType(sAttackVars.oWeaponL);
-          sAttackVars.iOffHandNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iOffHandWeaponType));
-          sAttackVars.iOffHandNumDice = StringToInt(Get2DACache("baseitems", "NumDice", iOffHandWeaponType));
-          sAttackVars.iOffHandCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponL);
-          
-          //SendMessageToPC(oAttacker, "Off Hand Weapon does " + IntToString(iOffHandNumDice) + "d" + IntToString(iOffHandNumSides) + "Damage and has a crit multiplier of " + IntToString(iOffHandCritMult));
-     }
-     
      int iAttackPenalty = 0;
-     
      int bHasHaste = FALSE;
      int nInventorySlot;
      object oItem;
@@ -3426,6 +3538,22 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      {
           iBonusMainHandAttacks += 1;
           iAttackPenalty -= 2;
+     }
+
+     // only run if using two weapons
+     if(bIsUsingTwoWeapons)
+     {
+          sAttackVars.iOffHandAttackBonus = GetAttackBonus(oDefender, oAttacker, sAttackVars.oWeaponL, 1);
+          iOffHandAttacks = GetOffHandAttacks(oAttacker);
+          sOffHandWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponL, oDefender);
+          sAttackVars.iOffHandWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponL, 1);
+          
+          iOffHandWeaponType = GetBaseItemType(sAttackVars.oWeaponL);
+          sAttackVars.iOffHandNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iOffHandWeaponType));
+          sAttackVars.iOffHandNumDice = StringToInt(Get2DACache("baseitems", "NumDice", iOffHandWeaponType));
+          sAttackVars.iOffHandCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponL);
+          
+          //SendMessageToPC(oAttacker, "Off Hand Weapon does " + IntToString(iOffHandNumDice) + "d" + IntToString(iOffHandNumSides) + "Damage and has a crit multiplier of " + IntToString(iOffHandCritMult));
      }
 
      // Code to equip new ammo 

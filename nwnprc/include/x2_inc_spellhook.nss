@@ -86,6 +86,7 @@ int RedWizRestrictedSchool()
 
 		if (GetSpellSchool(nSpell) == iRWRes)
 		{
+			FloatingTextStringOnCreature("You cannot cast spells of your prohibited schools. Spell terminated.", OBJECT_SELF, FALSE);
 			return FALSE;
 		}
 	}

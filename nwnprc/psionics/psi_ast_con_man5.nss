@@ -1,11 +1,14 @@
 //::///////////////////////////////////////////////
-//:: Dissolving Weapon spellscript for slot 5
+//:: Astral Construct spellscript for slot 5
 //:: psi_ast_con_man5
 //:://////////////////////////////////////////////
 /*
     Creates an astral construct as specified by the
     contents of the astral contstruct local variable
     set 5 on the manifester.
+    
+    Deprecated, since the conversation needs to be
+    fit into the same subradial.
     
 */
 //:://////////////////////////////////////////////

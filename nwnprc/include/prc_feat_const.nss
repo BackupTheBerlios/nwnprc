@@ -443,8 +443,12 @@ const int FEAT_ES_PEN_10      = 2613;
 
 //Duelist
 const int FEAT_CANNY_DEFENSE        = 2800;
-const int FEAT_PRECISE_STRIKE_1d6   = 2801;
-const int FEAT_PRECISE_STRIKE_2d6   = 2802;
+const int FEAT_PRECISE_STRIKE_1D4   = 2801;
+const int FEAT_PRECISE_STRIKE_2D4   = 2802;
+const int FEAT_PRECISE_STRIKE_3D4   = 2823;
+const int FEAT_PRECISE_STRIKE_4D4   = 2881;
+const int FEAT_PRECISE_STRIKE_5D4   = 2882;
+const int FEAT_PRECISE_STRIKE_6D4   = 2883;
 const int FEAT_GRACE_2              = 2803;
 const int FEAT_GRACE_4              = 2804;
 const int FEAT_GRACE_6              = 2805;

@@ -24,7 +24,7 @@ void SacredFlame(object oPC, object oWeap)
 {
     if(GetLocalInt(oWeap, "BFZFlame") == TRUE) return;
 
-SendMessageToPC(oPC, "Add Sacred Flame is run");
+//SendMessageToPC(oPC, "Add Sacred Flame is run");
 
     RemoveSpecificProperty(oWeap, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "BFZFlame");
     AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6), oWeap, 999999.0);
@@ -34,7 +34,7 @@ SendMessageToPC(oPC, "Add Sacred Flame is run");
 void RemoveSacredFlame(object oPC, object oWeap)
 {
 
-SendMessageToPC(oPC, "Remove Sacred Flame is run");
+//SendMessageToPC(oPC, "Remove Sacred Flame is run");
 
     if(GetLocalInt(oWeap, "BFZFlame") == TRUE)
         //RemoveSpecificProperty(oWeap, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "BFZFlame");

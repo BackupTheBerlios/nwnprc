@@ -1,6 +1,7 @@
 #include "inc_item_props"
 #include "nw_i0_plot"
 #include "prc_inc_function"
+#include "soul_inc"
  
 void main(){
    object oPC=GetLastPCRested();
@@ -37,12 +38,15 @@ void main(){
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oFam);
          }
          
+           if (GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT,oPC))
+              ChangeSpellSol(oPC);
+         
          FeatSpecialUsePerDay(oPC);
          
          // Cancel their rest immediately.
-         AssignCommand(oPCESS, ClearAllActions(FALSE));
+         AssignCommand(oPC, ClearAllActions(FALSE));
          // Start the special conversation with oPC.
-         AssignCommand(oPCESS,ActionStartConversation(OBJECT_SELF, "_rest_button", TRUE, FALSE));
+         AssignCommand(oPC,ActionStartConversation(OBJECT_SELF, "_rest_button", TRUE, FALSE));
 
          break;
       }

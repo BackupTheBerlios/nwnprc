@@ -27,7 +27,7 @@ void main()
     eLink = EffectLinkEffects(eLink, eSaveFear);
     eLink = EffectLinkEffects(eLink, eSaveCharm);
     
-    effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE, FALSE);
+    effect eVis = EffectVisualEffect(VFX_IMP_MAGBLUE, FALSE);
     
     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
 

@@ -24,6 +24,9 @@ void main()
               int iEOGLevel = GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH, oCaster);
               effect eWill = EffectSavingThrowIncrease(SAVING_THROW_WILL, 2, SAVING_THROW_TYPE_ALL);
               ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWill, oTarget, HoursToSeconds(iEOGLevel) );
+              
+              effect eVis = EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE, FALSE);
+              ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
          }
          oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(oCaster) );
     }

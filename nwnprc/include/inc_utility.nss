@@ -88,6 +88,9 @@ void SeedRealRand(int nSeed);
 //credit goes to Pherves
 string FilledIntToString(int nX, int nLength = 4, int nSigned = FALSE);
 
+//used by the dyynamic onversation system to track token assignment
+void SetToken(int nTokenID, string sString);
+
 int HexToInt( string sHex)
 { if( sHex == "") return 0;
   if( GetStringLeft( sHex, 2) == "0x") sHex = GetStringRight( sHex, GetStringLength( sHex) -2);
@@ -319,4 +322,10 @@ string FilledIntToString(int nX, int nLength = 4, int nSigned = FALSE)
             sResult = "-"+sResult;
     }
     return sResult;
+}
+
+void SetToken(int nTokenID, string sString)
+{
+    SetCustomToken(nTokenID, sString);
+    SetLocalString(OBJECT_SELF, "TOKEN"+IntToString(nTokenID), sString);
 }

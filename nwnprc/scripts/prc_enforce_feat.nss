@@ -20,39 +20,39 @@
 // Enforces the proper selection of the Red Wizard feats
 // that are used to determine restricted and specialist
 // spell schools. You must have two restricted and one specialist.
-void RedWizardFeats(object oPC = OBJECT_SELF);
+int RedWizardFeats(object oPC = OBJECT_SELF);
 
 // Enforces the proper selection of the Mage Killer
 // Bonus Save feats.
-void MageKiller(object oPC = OBJECT_SELF);
+int MageKiller(object oPC = OBJECT_SELF);
 
 // Enforces the proper selection of the Fist of Hextor
 // Brutal Strike feats.
-void Hextor(object oPC = OBJECT_SELF);
+int Hextor(object oPC = OBJECT_SELF);
 
 // Enforces the proper selection of the Vile feats
 // and prevents illegal stacking of them
-void VileFeats(object oPC = OBJECT_SELF);
+int VileFeats(object oPC = OBJECT_SELF);
 
 // Enforces the proper selection of the Ultimate Ranger feats
 // and prevents illegal use of bonus feats.
-void UltiRangerFeats(object oPC = OBJECT_SELF);
+int UltiRangerFeats(object oPC = OBJECT_SELF);
 
 // Stops non-Orcs from taking the Blood of the Warlord
 // Feat, can be expanded later.
-void Warlord(object oPC = OBJECT_SELF);
+int Warlord(object oPC = OBJECT_SELF);
 
 // Stops PCs from having more than one Elemental Savant Class
-// as its supposed to be only one class, not 4.
-void ElementalSavant(object oPC = OBJECT_SELF);
+// as its supposed to be only one class, not 8.
+int ElementalSavant(object oPC = OBJECT_SELF);
 
 // Enforces Genasai taking the proper elemental domain
-void GenasaiFocus(object oPC = OBJECT_SELF);
+int GenasaiFocus(object oPC = OBJECT_SELF);
 
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
-void RedWizardFeats(object oPC = OBJECT_SELF)
+int RedWizardFeats(object oPC = OBJECT_SELF)
 {
 
      int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oPC);
@@ -71,13 +71,9 @@ void RedWizardFeats(object oPC = OBJECT_SELF)
 
           if (iRWSpec > 1)
           {
-               int nHD = GetHitDice(oPC);
-               int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-               int nOldXP = GetXP(oPC);
-               int nNewXP = nMinXPForLevel - 1000;
-               SetXP(oPC,nNewXP);
+
                FloatingTextStringOnCreature("You may only have one Tattoo Focus. Please reselect your feats.", oPC, FALSE);
-               DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
           }
 
 
@@ -95,19 +91,15 @@ void RedWizardFeats(object oPC = OBJECT_SELF)
 
           if (iRWRes != 2)
           {
-               int nHD = GetHitDice(oPC);
-               int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-               int nOldXP = GetXP(oPC);
-               int nNewXP = nMinXPForLevel - 1000;
-               SetXP(oPC,nNewXP);
                FloatingTextStringOnCreature("You must have 2 Restricted Schools. Please reselect your feats.", oPC, FALSE);
-               DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
           }
      }
+     return TRUE;
 }
 
 
-void MageKiller(object oPC = OBJECT_SELF)
+int MageKiller(object oPC = OBJECT_SELF)
 {
 
      int iMK = (GetLevelByClass(CLASS_TYPE_MAGEKILLER, oPC) + 1) / 2;
@@ -159,19 +151,15 @@ void MageKiller(object oPC = OBJECT_SELF)
 */
      if (iMK != iMKSave)
      {
-          int nHD = GetHitDice(oPC);
-          int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-          int nOldXP = GetXP(oPC);
-          int nNewXP = nMinXPForLevel - 1000;
-          SetXP(oPC,nNewXP);
           FloatingTextStringOnCreature("You must select an Improved Save Feat. Please reselect your feats.", oPC, FALSE);
-          DelayCommand(1.0, SetXP(oPC,nOldXP));
+          return FALSE;
      }
 
      }
+     return TRUE;
 }
 
-void Hextor(object oPC = OBJECT_SELF)
+int Hextor(object oPC = OBJECT_SELF)
 {
 
      int iHextor = GetLevelByClass(CLASS_TYPE_HEXTOR, oPC);
@@ -233,134 +221,145 @@ void Hextor(object oPC = OBJECT_SELF)
 */
      if (iCheck != TRUE)
      {
-          int nHD = GetHitDice(oPC);
-          int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-          int nOldXP = GetXP(oPC);
-          int nNewXP = nMinXPForLevel - 1000;
-          SetXP(oPC,nNewXP);
+
           FloatingTextStringOnCreature("You must select a Brutal Strike Feat. Please reselect your feats.", oPC, FALSE);
-          DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
      }
 
      }
+     return TRUE;
 }
 
 
-void GenasaiFocus(object oPC)
+int GenasaiFocus(object oPC)
 {
    if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_AIR_GEN))
    {
        if (!GetHasFeat(FEAT_AIR_DOMAIN_POWER, oPC))
        {
-        int nHD = GetHitDice(oPC);
-        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-        int nOldXP = GetXP(oPC);
-        int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);
+
         FloatingTextStringOnCreature("You must have the Air Domain as an Air Genasai.", oPC, FALSE);
-        DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
        }
    }
-   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_EARTH_GEN))
+   else if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_EARTH_GEN))
    {
        if (!GetHasFeat(FEAT_EARTH_DOMAIN_POWER, oPC))
        {
-        int nHD = GetHitDice(oPC);
-        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-        int nOldXP = GetXP(oPC);
-        int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);
+
         FloatingTextStringOnCreature("You must have the Earth Domain as an Earth Genasai.", oPC, FALSE);
-        DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
        }
    }
-   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_FIRE_GEN))
+   else if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_FIRE_GEN))
    {
        if (!GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC))
        {
-        int nHD = GetHitDice(oPC);
-        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-        int nOldXP = GetXP(oPC);
-        int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);
+
         FloatingTextStringOnCreature("You must have the Fire Domain as an Fire Genasai.", oPC, FALSE);
-        DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
        }
    }
    if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_WATER_GEN))
    {
        if (!GetHasFeat(FEAT_WATER_DOMAIN_POWER, oPC))
        {
-        int nHD = GetHitDice(oPC);
-        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-        int nOldXP = GetXP(oPC);
-        int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);
+
         FloatingTextStringOnCreature("You must have the Water Domain as an Water Genasai.", oPC, FALSE);
-        DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
        }
    }
+     return TRUE;
 }
 
 
-void ElementalSavant(object oPC)
+int ElementalSavant(object oPC)
 {
    if (GetLevelByClass(CLASS_TYPE_ES_ACID, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
+       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
        {
-        int nHD = GetHitDice(oPC);
-        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-        int nOldXP = GetXP(oPC);
-        int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);
-        FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
-        DelayCommand(1.0, SetXP(oPC,nOldXP));
+            FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+            return FALSE;
        }
    }
    if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
+       if (GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
        {
-        int nHD = GetHitDice(oPC);
-        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-        int nOldXP = GetXP(oPC);
-        int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);
-        FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
-        DelayCommand(1.0, SetXP(oPC,nOldXP));
+           FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+           return FALSE;
        }
    }
    if (GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
+       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
        {
-        int nHD = GetHitDice(oPC);
-        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-        int nOldXP = GetXP(oPC);
-        int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);
-        FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
-        DelayCommand(1.0, SetXP(oPC,nOldXP));
+           FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+           return FALSE;
        }
    }
    if (GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0)
+       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0)
        {
-        int nHD = GetHitDice(oPC);
-        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-        int nOldXP = GetXP(oPC);
-        int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);
-        FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
-        DelayCommand(1.0, SetXP(oPC,nOldXP));
+           FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+           return FALSE;       
        }
    }
+   if (GetLevelByClass(CLASS_TYPE_DIVESA, oPC))
+   {
+       if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_DIVESE, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_DIVESF, oPC) > 0)
+       {
+            FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+            return FALSE;
+       }
+   }
+   if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC))
+   {
+       if (GetLevelByClass(CLASS_TYPE_DIVESA, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_DIVESE, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_DIVESF, oPC) > 0)
+       {
+           FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+           return FALSE;
+       }
+   }
+   if (GetLevelByClass(CLASS_TYPE_DIVESE, oPC))
+   {
+       if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_DIVESA, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_DIVESF, oPC) > 0)
+       {
+           FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+           return FALSE;
+       }
+   }
+   if (GetLevelByClass(CLASS_TYPE_DIVESF, oPC))
+   {
+       if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_DIVESE, oPC) > 0 
+              || GetLevelByClass(CLASS_TYPE_DIVESA, oPC) > 0)
+       {
+           FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+           return FALSE;       
+       }
+   }
+     return TRUE;
 }
 
 
-void VileFeats(object oPC = OBJECT_SELF)
+int VileFeats(object oPC = OBJECT_SELF)
 {
 
      int iDeform = GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC) + GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC);
@@ -369,58 +368,43 @@ void VileFeats(object oPC = OBJECT_SELF)
 
           if (iDeform > 1)
           {
-               int nHD = GetHitDice(oPC);
-               int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-               int nOldXP = GetXP(oPC);
-               int nNewXP = nMinXPForLevel - 1000;
-               SetXP(oPC,nNewXP);
                FloatingTextStringOnCreature("You may only have one Deformity. Please reselect your feats.", oPC, FALSE);
-               DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
           }
 
 
           if (iThrall > 1)
           {
-               int nHD = GetHitDice(oPC);
-               int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-               int nOldXP = GetXP(oPC);
-               int nNewXP = nMinXPForLevel - 1000;
-               SetXP(oPC,nNewXP);
+
                FloatingTextStringOnCreature("You may only worship Demons or Devils, not both. Please reselect your feats.", oPC, FALSE);
-               DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
           }
+     return TRUE;
 }
 
-void Warlord(object oPC = OBJECT_SELF)
+int Warlord(object oPC = OBJECT_SELF)
 {
           if (GetHasFeat(FEAT_BLOOD_OF_THE_WARLORD, oPC) && (MyPRCGetRacialType(oPC) != RACIAL_TYPE_HALFORC)
                   && (MyPRCGetRacialType(oPC) != RACIAL_TYPE_HUMANOID_ORC))
           {
-               int nHD = GetHitDice(oPC);
-               int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-               int nOldXP = GetXP(oPC);
-               int nNewXP = nMinXPForLevel - 1000;
-               SetXP(oPC,nNewXP);
-               FloatingTextStringOnCreature("You must be an Orc or Half-Orc to take this feat. Please reselect your feats.", oPC, FALSE);
-               DelayCommand(1.0, SetXP(oPC,nOldXP));
+               FloatingTextStringOnCreature("You must be of orcish blood to take this feat. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
           }
+     return TRUE;
 }
 
-void Ethran(object oPC = OBJECT_SELF)
+int Ethran(object oPC = OBJECT_SELF)
 {
           if (GetHasFeat(FEAT_ETHRAN, oPC) && (GetGender(oPC) != GENDER_FEMALE))
           {
-               int nHD = GetHitDice(oPC);
-               int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-               int nOldXP = GetXP(oPC);
-               int nNewXP = nMinXPForLevel - 1000;
-               SetXP(oPC,nNewXP);
+
                FloatingTextStringOnCreature("You must be Female to take this feat. Please reselect your feats.", oPC, FALSE);
-               DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
           }
+     return TRUE;
 }
 
-void UltiRangerFeats(object oPC = OBJECT_SELF)
+int UltiRangerFeats(object oPC = OBJECT_SELF)
 {
 
      int iURanger = GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER, oPC);
@@ -470,11 +454,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 
           if ( iFE != (iURanger+3)/5 || Ability)
           {
-               int nHD = GetHitDice(oPC);
-               int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-               int nOldXP = GetXP(oPC);
-               int nNewXP = nMinXPForLevel - 1000;
-               SetXP(oPC,nNewXP);
+
                string sAbi ="1 ability ";
                string sFE =" 1 favorite enemy ";
                string msg=" You must select ";
@@ -487,7 +467,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 
                //FloatingTextStringOnCreature(" Please reselect your feats.", oPC, FALSE);
                FloatingTextStringOnCreature(msg, oPC, FALSE);
-               DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
           }
           else
           {
@@ -503,9 +483,10 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
                       FloatingTextStringOnCreature(msg, oPC, FALSE);
           }
      }
+     return TRUE;
 }
 
-void CheckClericShadowWeave(object oPC)
+int CheckClericShadowWeave(object oPC)
 {
    if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && GetHasFeat(FEAT_SHADOWWEAVE, oPC))
    {
@@ -515,19 +496,16 @@ void CheckClericShadowWeave(object oPC)
 
        if (iCleDom < 2)
        {
-           int nHD = GetHitDice(oPC);
-        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-        int nOldXP = GetXP(oPC);
-        int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);
+
         FloatingTextStringOnCreature("You must have two of the following domains: Evil, Fire, or Darkness to use the shadow weave.", oPC, FALSE);
         FloatingTextStringOnCreature("Please reselect your feats.", oPC, FALSE);
-        DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
        }
    }
+     return TRUE;
 }
 
-void LolthsMeat(object oPC)
+int LolthsMeat(object oPC)
 {
      if (GetHasFeat(FEAT_LOLTHS_MEAT, oPC) &&
          (GetRacialType(oPC) != RACIAL_TYPE_DROW_FEMALE &&
@@ -535,17 +513,13 @@ void LolthsMeat(object oPC)
           GetRacialType(oPC) != RACIAL_TYPE_ELF         &&
           GetRacialType(oPC) != RACIAL_TYPE_HALFDROW        ) )
      {
-          int nHD = GetHitDice(oPC);
-          int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-          int nOldXP = GetXP(oPC);
-          int nNewXP = nMinXPForLevel - 1000;
-          SetXP(oPC,nNewXP);
           FloatingTextStringOnCreature("You must be a Drow or Half-Drow to take this feat. Please reselect your feats.", oPC, FALSE);
-          DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
      }
+     return TRUE;
 }
 
-void PsionDiscipline(object oPC = OBJECT_SELF)
+int PsionDiscipline(object oPC = OBJECT_SELF)
 {
 
      int nPsion = GetLevelByClass(CLASS_TYPE_PSION, oPC);
@@ -563,15 +537,11 @@ void PsionDiscipline(object oPC = OBJECT_SELF)
 
           if (nDisc != 1)
           {
-               int nHD = GetHitDice(oPC);
-               int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-               int nOldXP = GetXP(oPC);
-               int nNewXP = nMinXPForLevel - 1000;
-               SetXP(oPC,nNewXP);
                FloatingTextStringOnCreature("You may only have 1 Discipline. Please reselect your feats.", oPC, FALSE);
-               DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return FALSE;
           }
      }
+     return TRUE;
 }
 
 void main()
@@ -579,16 +549,24 @@ void main()
         //Declare Major Variables
         object oPC = OBJECT_SELF;
 
-     RedWizardFeats(oPC);
-     VileFeats(oPC);
-     Warlord(oPC);
-     Hextor(oPC);
-     Ethran(oPC);
-     UltiRangerFeats(oPC);
-     MageKiller(oPC);
-     ElementalSavant(oPC);
-     GenasaiFocus(oPC);
-     CheckClericShadowWeave(oPC);
-     LolthsMeat(oPC);
-     PsionDiscipline(oPC);
+     if(!RedWizardFeats(oPC)
+         || !VileFeats(oPC)
+         || !Warlord(oPC)
+         || !Hextor(oPC)
+         || !Ethran(oPC)
+         || !UltiRangerFeats(oPC)
+         || !MageKiller(oPC)
+         || !ElementalSavant(oPC)
+         || !GenasaiFocus(oPC)
+         || !CheckClericShadowWeave(oPC)
+         || !LolthsMeat(oPC)
+         || !PsionDiscipline(oPC))
+    {
+       int nHD = GetHitDice(oPC);
+       int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+       int nOldXP = GetXP(oPC);
+       int nNewXP = nMinXPForLevel - 1000;
+       SetXP(oPC,nNewXP);
+       DelayCommand(1.0, SetXP(oPC,nOldXP));
+    }
 }

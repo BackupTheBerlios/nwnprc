@@ -30,6 +30,7 @@
 #include "prc_inc_combat"
 #include "psi_inc_onhit"
 #include "inc_rend"
+#include "psi_inc_ac_const"
 
 void SetRancorVar(object oPC);
 void SetPsiEnRetortVar(object oPC);
@@ -210,6 +211,12 @@ void main()
 		// Clean up the locals
 		DeleteLocalInt(oItem, "DissolvingWeaponDamage");
 		DeleteLocalInt(oItem, "DissolvingWeapon_DoDelete");
+	}
+	
+	// Astral Construct's Poison Touch special ability
+	if(GetLocalInt(oSpellOrigin, ASTRAL_CONSTRUCT_POISON_TOUCH))
+	{
+		ExecuteScript("psi_ast_con_ptch", oSpellOrigin);
 	}
    
    /*//////////////////////////////////////////////////

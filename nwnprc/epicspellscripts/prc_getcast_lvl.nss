@@ -1,6 +1,5 @@
-#include "prc_class_const"
-#include "prc_feat_const"
-//#include "heartward_inc"
+#include "prc_inc_function"
+#include "heartward_inc"
 
 
 int IsArcaneClass(int nClass);
@@ -82,6 +81,7 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
   nArcane = (nSorcerer>nWizard)? nSorcerer :  nWizard ;
   nArcane = (nArcane>nBard)    ? nArcane   : nBard ;
 
+  int nOozeMLevel = GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster);
   int nFirstClass = GetClassByPosition(1, oCaster);
 
 
@@ -89,32 +89,39 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
 
 
         nArcane+=
-            GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster)/2+
+         
+            GetHasFeat(FEAT_FIRE_ADEPT, oCaster) + 
+            GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster)+ 
+            
             GetLevelByClass(CLASS_TYPE_ARCHMAGE, oCaster)+
-            GetLevelByClass(CLASS_TYPE_MAGEKILLER, oCaster)+
-            GetLevelByClass(CLASS_TYPE_HARPERMAGE, oCaster)+
-            GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) / 2+
-            GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) / 2+
+            GetLevelByClass(CLASS_TYPE_ARCTRICK, oCaster)+
             GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oCaster)+
             GetLevelByClass(CLASS_TYPE_ES_FIRE, oCaster)+
             GetLevelByClass(CLASS_TYPE_ES_COLD, oCaster)+
             GetLevelByClass(CLASS_TYPE_ES_ELEC, oCaster)+
             GetLevelByClass(CLASS_TYPE_ES_ACID, oCaster)+
-            GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oCaster)+
-            GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster)/2+
-            GetHasFeat(FEAT_FIRE_ADEPT, oCaster) +
+            GetLevelByClass(CLASS_TYPE_HARPERMAGE, oCaster)+  
+            GetLevelByClass(CLASS_TYPE_MAGEKILLER, oCaster)+            
+            GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oCaster)+            
             GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)+
-            GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster)/2+
-            GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster);
+               
+            GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) / 2+ 
+            GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster)/2+                
+            GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster)/2+           
+            GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster)/2+
+            GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) / 2;
 
 
         // area for CLASS-specific code. Avoid if possible
 
-        if(GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster)){
-            if(IsArcaneClass(nFirstClass) ||
-               (!IsDivineClass(nFirstClass) && IsArcaneClass(GetClassByPosition(2, oCaster))))
-                nArcane+=GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster) / 2;
+
+		// Using nFirstClass does not look right
+        if (nOozeMLevel) {
+                          if (IsArcaneClass(nFirstClass) || (!IsDivineClass(nFirstClass)
+					&& IsArcaneClass(GetClassByPosition(2, oCaster))))
+                                         nArcane += nOozeMLevel / 2;
         }
+               
         if (GetHasFeat(FEAT_SPELL_POWER_I)){
             nArcane+=1;
             if (GetHasFeat(FEAT_SPELL_POWER_II)){
@@ -127,36 +134,37 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
                             nArcane+=1;
                         }}}}
         }
-
     }//end of arcane spell part
     
     else if( iTypeSpell == TYPE_DIVINE){
 
  
         nDivine+=
-            GetLevelByClass(CLASS_TYPE_HEARTWARDER, oCaster)+
-            GetLevelByClass(CLASS_TYPE_STORMLORD, oCaster)+
-            GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oCaster)+
-            GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oCaster)+
-            GetLevelByClass(CLASS_TYPE_HOSPITALER, oCaster)+
-            GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster)/2+
-	    GetLevelByClass(CLASS_TYPE_OCULAR, oCaster)/2 +
-	    GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster)/2 +
-	    GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)+
-	    GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster)/2 +
-            GetLevelByClass(CLASS_TYPE_DIVESF, oCaster)+
-	    GetLevelByClass(CLASS_TYPE_DIVESC, oCaster)+
+            GetLevelByClass(CLASS_TYPE_DIVESA, oCaster)+
+            GetLevelByClass(CLASS_TYPE_DIVESC, oCaster)+
             GetLevelByClass(CLASS_TYPE_DIVESE, oCaster)+
+            GetLevelByClass(CLASS_TYPE_DIVESF, oCaster)+
+            GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oCaster)+
+            GetLevelByClass(CLASS_TYPE_HEARTWARDER, oCaster)+
             GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster)+
-	    GetLevelByClass(CLASS_TYPE_DIVESA, oCaster);
-
-
+            GetLevelByClass(CLASS_TYPE_HOSPITALER, oCaster)+
+            GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oCaster)+
+            GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)+
+            GetLevelByClass(CLASS_TYPE_STORMLORD, oCaster)+
+                       
+            GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster)/2 +            
+	    GetLevelByClass(CLASS_TYPE_OCULAR, oCaster)/2 +
+	    GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster)/2+
+	    GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster)/2;
+	    
+   
         //class-specific code. Avoid if at all possible
 
-        if(GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster)){
-            if(IsDivineClass(nFirstClass) ||
-               (!IsArcaneClass(nFirstClass) && IsDivineClass(GetClassByPosition(2, oCaster))))
-                nArcane+=GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster) / 2;
+	// Using nFirstClass does not look right
+        if (nOozeMLevel) {
+            if (IsDivineClass(nFirstClass) || (!IsArcaneClass(nFirstClass)
+					&& IsDivineClass(GetClassByPosition(2, oCaster))))
+                nDivine += nOozeMLevel / 2;
         }
 
     }//end of divine spell part

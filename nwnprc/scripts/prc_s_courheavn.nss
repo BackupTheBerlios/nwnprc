@@ -14,7 +14,7 @@
 void main()
 {
       //Declare major variables including Area of Effect Object
-    effect eAOE = EffectAreaOfEffect(44);
+    effect eAOE = EffectAreaOfEffect(111);
     effect eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eGood = EffectVisualEffect(VFX_IMP_GOOD_HELP);

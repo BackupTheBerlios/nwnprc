@@ -8,26 +8,26 @@ void main()
     int iCha = GetAbilityModifier(ABILITY_CHARISMA,oPC);
     int iDam;
 
-    if(iCha <= 1){iDam = DAMAGE_BONUS_1;}
-    if(iCha == 2){iDam = DAMAGE_BONUS_2;}
-    if(iCha == 3){iDam = DAMAGE_BONUS_3;}
-    if(iCha == 4){iDam = DAMAGE_BONUS_4;}
-    if(iCha == 5){iDam = DAMAGE_BONUS_5;}
-    if(iCha == 6){iDam = DAMAGE_BONUS_6;}
-    if(iCha == 7){iDam = DAMAGE_BONUS_7;}
-    if(iCha == 8){iDam = DAMAGE_BONUS_8;}
-    if(iCha == 9){iDam = DAMAGE_BONUS_9;}
-    if(iCha == 10){iDam = DAMAGE_BONUS_10;}
-    if(iCha == 11){iDam = DAMAGE_BONUS_11;}
-    if(iCha == 12){iDam = DAMAGE_BONUS_12;}
-    if(iCha == 13){iDam = DAMAGE_BONUS_13;}
-    if(iCha == 14){iDam = DAMAGE_BONUS_14;}
-    if(iCha == 15){iDam = DAMAGE_BONUS_15;}
-    if(iCha == 16){iDam = DAMAGE_BONUS_16;}
-    if(iCha == 17){iDam = DAMAGE_BONUS_17;}
-    if(iCha == 18){iDam = DAMAGE_BONUS_18;}
-    if(iCha == 19){iDam = DAMAGE_BONUS_19;}
-    if(iCha == 20){iDam = DAMAGE_BONUS_20;}
+    if(iCha <= 1){iDam = 1;}
+    if(iCha == 2){iDam = 2;}
+    if(iCha == 3){iDam = 3;}
+    if(iCha == 4){iDam = 4;}
+    if(iCha == 5){iDam = 5;}
+    if(iCha == 6){iDam = 6;}
+    if(iCha == 7){iDam = 7;}
+    if(iCha == 8){iDam = 8;}
+    if(iCha == 9){iDam = 9;}
+    if(iCha == 10){iDam = 10;}
+    if(iCha == 11){iDam = 11;}
+    if(iCha == 12){iDam = 12;}
+    if(iCha == 13){iDam = 13;}
+    if(iCha == 14){iDam = 14;}
+    if(iCha == 15){iDam = 15;}
+    if(iCha == 16){iDam = 16;}
+    if(iCha == 17){iDam = 17;}
+    if(iCha == 18){iDam = 18;}
+    if(iCha == 19){iDam = 19;}
+    if(iCha == 20){iDam = 20;}
 
     effect eAttackBonus = EffectAttackIncrease(iCha,ATTACK_BONUS_MISC);
     effect eDamageBonus = EffectDamageIncrease(iDam,DAMAGE_TYPE_DIVINE);

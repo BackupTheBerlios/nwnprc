@@ -16,7 +16,8 @@
    Power Resistance: No
    Power Point Cost: 15
    
-   You are difficult to kill while this power resists. You regenerate at the rate of 10 hitpoints a round.
+   Your metabolism operates at a greatly increased rate, healing in minutes what it would take days normally. 
+   You regenerate at the rate of 10 hitpoints a round.
 */
 
 #include "psi_inc_psifunc"

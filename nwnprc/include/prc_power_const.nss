@@ -153,12 +153,12 @@ const   int 	POWER_ULTRABLAST	   	= 14280;
 
 // Level 8 Powers
 const	int	POWER_RECALLDEATH		= 14301;
-const   int 	POWER_IRONBODY		   	= -1; // FIX ME
-const   int 	POWER_TRUEMETABOLISM	   	= -1; // FIX ME
-const   int 	POWER_PSIMINDBLANK	   	= -1; // FIX ME
+const   int 	POWER_IRONBODY		   	= 14302;
+const   int 	POWER_TRUEMETABOLISM	   	= 14303;
+const   int 	POWER_PSIMINDBLANK	   	= 14304;
 
 // Level 9 Powers
-const   int 	POWER_ASSIMILATE	   	= -1; // FIX ME
-const   int 	POWER_ETHEREALNESS	   	= -1; // FIX ME
-const   int 	POWER_MICROCOSM		   	= -1; // FIX ME
-const   int 	POWER_TIMELESSBODY	   	= -1; // FIX ME
+const   int 	POWER_ASSIMILATE	   	= 14331;
+const   int 	POWER_ETHEREALNESS	   	= 14332;
+const   int 	POWER_MICROCOSM		   	= 14333;
+const   int 	POWER_TIMELESSBODY	   	= 14334;

@@ -16,7 +16,7 @@
    Power Resistance: No
    Power Point Cost: 15
    
-   The caster gains immunity to mind affecting spells and powers.
+   The creature touched gains immunity to mind affecting spells and powers.
 */
 
 #include "psi_inc_psifunc"

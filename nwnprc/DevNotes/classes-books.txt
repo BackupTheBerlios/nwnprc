@@ -74,7 +74,8 @@ Disciple of Mephistopheles			| Book of Vile Darkness
 Henshin Mystic					| Oriental Adventures
 Drunken Master					| Sword and Fist
 Apostle of Peace (incomplete)			| Book of Exalted Deeds
-Archer						| (????)
-Minstrel of the Edge				| (custom PRC prestige class)
-Brawler						| (custom PRC base class)
+Archer						| Three Arrows for the King - The Archer's Guide
+Minstrel of the Edge				| Custom Class - Author: WodahsEht
+Brawler						| Custom Class - Author: WodahsEht
+
 

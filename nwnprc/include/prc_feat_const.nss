@@ -75,6 +75,8 @@ const int FEAT_SA_CRFTWEAP  = 4758;
 const int FEAT_SA_SPOT_4    = 4762;
 const int FEAT_SA_JUMP_4    = 4763;
 const int FEAT_LEAP	    = 4772;
+const int FEAT_DIVE	    = 4773;
+const int FEAT_KEEN_SIGHT   = 4774;
 
 const int FEAT_ALTFORM      = 4754;
 const int FEAT_DISGUISE     = 4755;

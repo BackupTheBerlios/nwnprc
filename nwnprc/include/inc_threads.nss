@@ -88,12 +88,43 @@ int SpawnNewThread(string sName, string sScript, float fExecutionInterval = 6.0f
 // was destroyed will return THREAD_STATE_DEAD
 int GetThreadState(string sName, object oRunningOn = OBJECT_INVALID);
 
-
+// Gets the name of the script the given thread is running
+// =======================================================
+// sName                Name of thread to inspect. Must be non-empty
+// oRunningOn           Object that the thread is running on. If this
+//                      is OBJECT_INVALID, the module will be used.
+//
+// Returns the name of the the given thread executes on success, ""
+// on failure (querying with invalid parameters, or on a dead thread)
 string GetThreadScript(string sName, object oRunningOn = OBJECT_INVALID);
+
+
+// Gets the execution interval for the given thread
+// ================================================
+// sName                Name of thread to inspect. Must be non-empty
+// oRunningOn           Object that the thread is running on. If this
+//                      is OBJECT_INVALID, the module will be used.
+//
+// Returns the time between the given thread executing it's script.
+// On failure, 0.0f is returned.
 float GetThreadExecutionInterval(string sName, object oRunningOn = OBJECT_INVALID);
 
+
+// Gets the name of the thread whose script is currently being executed
+// ====================================================================
+//
+// Returns the name of the thread being executed at the time of the call,
+// or "" if no thread is being executed when this is called.
 string GetCurrentThread();
+
+
+// Gets the object currently running thread is executing on
+// ========================================================
+//
+// Returns the object the currently executing thread is being executed on
+// or OBJECT_INVALID if no thread is being executed when this is called.
 object GetCurrentThreadObject();
+
 
 // Stops further execution of the given thread and removes it's data
 // from the object it was running on.
@@ -198,6 +229,44 @@ int GetThreadState(string sName, object oRunningOn = OBJECT_INVALID){
 
     // Return the local determining if the thread exists
     return GetLocalInt(oRunningOn, PREFIX + sName);
+}
+
+
+string GetThreadScript(string sName, object oRunningOn = OBJECT_INVALID){
+    if(oRunningOn == OBJECT_INVALID)
+        oRunningOn = GetModule();
+
+    // Check paramaeters for correctness
+    if(sName == "" ||
+       !GetIsObjectValid(oRunningOn))
+        return "";
+    
+    return GetLocalString(oRunningOn, PREFIX + sName + SUFFIX_SCRIPT);
+}
+
+
+float GetThreadExecutionInterval(string sName, object oRunningOn = OBJECT_INVALID){
+    if(oRunningOn == OBJECT_INVALID)
+        oRunningOn = GetModule();
+
+    // Check paramaeters for correctness
+    if(sName == "" ||
+       !GetIsObjectValid(oRunningOn))
+        return 0.0f;
+    
+    return GetLocalFloat(oRunningOn, PREFIX + sName + SUFFIX_INTERVAL);
+}
+
+
+string GetCurrentThread(){
+    return GetLocalString(GetModule(), PREFIX + CUR_THREAD);
+}
+
+
+object GetCurrentThreadObject(){
+    return GetIsObjectValid(GetLocalObject(GetModule(), PREFIX + CUR_THREAD)) ?
+            GetLocalObject(GetModule(), PREFIX + CUR_THREAD) :
+            OBJECT_INVALID;
 }
 
 

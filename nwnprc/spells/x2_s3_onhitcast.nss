@@ -39,6 +39,7 @@ void main()
    object oSpellOrigin; // On a weapon: The one wielding the weapon. On an armor: The one wearing an armor
    int nVassal;         //Vassal Level
    int nBArcher;        // Blood Archer level
+   int nFoeHunter;      // Foe Hunter Level
    
    // fill the variables
    oSpellOrigin = OBJECT_SELF;
@@ -46,6 +47,7 @@ void main()
    oItem        =  GetSpellCastItem();
    nVassal =  GetLevelByClass(CLASS_TYPE_VASSAL, OBJECT_SELF);
    nBArcher = GetLevelByClass(CLASS_TYPE_BLARCHER, OBJECT_SELF);
+   nFoeHunter = GetLevelByClass(CLASS_TYPE_FOE_HUNTER, OBJECT_SELF);
 
 
    if (GetIsObjectValid(oItem))
@@ -131,8 +133,9 @@ void main()
         }
    }
    
-   if(GetLevelByClass(CLASS_TYPE_FOE_HUNTER, OBJECT_SELF) > 1)
-   {
-        ExecuteScript("prc_fh_dr",OBJECT_SELF);
+   // Foe Hunter Damage Resistance
+   if( nFoeHunter > 1 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+   {              
+        DelayCommand(0.01, ExecuteScript("prc_fh_dr",OBJECT_SELF) );
    }
 }

@@ -107,16 +107,16 @@ void EvalPRCFeats(object oPC)
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
     if(GetHasFeat(FEAT_LICHLOVED, oPC) >0)                       ExecuteScript("prc_lichloved", oPC);
-    if(GetHasFeat(FEAT_EB_HAND, oPC) >0)                         ExecuteScript("prc_evilbrand", oPC);
-    if(GetHasFeat(FEAT_EB_HEAD, oPC) >0)                         ExecuteScript("prc_evilbrand", oPC);
-    if(GetHasFeat(FEAT_EB_CHEST, oPC) >0)                        ExecuteScript("prc_evilbrand", oPC);
-    if(GetHasFeat(FEAT_EB_ARM, oPC) >0)                          ExecuteScript("prc_evilbrand", oPC);
-    if(GetHasFeat(FEAT_EB_NECK, oPC) >0)                         ExecuteScript("prc_evilbrand", oPC);
-    if(GetHasFeat(FEAT_VILE_WILL_DEFORM, oPC))                   ExecuteScript("prc_vilefeats", oPC);
-    if(GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC))                  ExecuteScript("prc_vilefeats", oPC);
-    if(GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC))                  ExecuteScript("prc_vilefeats", oPC);
+    if(GetHasFeat(FEAT_EB_HAND, oPC)  ||
+       GetHasFeat(FEAT_EB_HEAD, oPC)  ||
+       GetHasFeat(FEAT_EB_CHEST, oPC) ||
+       GetHasFeat(FEAT_EB_ARM, oPC)   ||
+       GetHasFeat(FEAT_EB_NECK, oPC)    )                        ExecuteScript("prc_evilbrand", oPC);
+    if(GetHasFeat(FEAT_VILE_WILL_DEFORM, oPC) ||
+       GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC)||
+       GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC)  )                ExecuteScript("prc_vilefeats", oPC);
     if (GetHasFeat(FEAT_VIGIL_ARMOR, oPC))                       ExecuteScript("ft_vigil_armor", oPC);
-    if(GetHasFeat(FEAT_BOWMASTERY, oPC) ||
+    if(GetHasFeat(FEAT_BOWMASTERY, oPC)  ||
        GetHasFeat(FEAT_XBOWMASTERY, oPC) ||
        GetHasFeat(FEAT_SHURIKENMASTERY, oPC))                    ExecuteScript("prc_weapmas", oPC);
     if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC) ||

@@ -32,12 +32,7 @@ void EvalPRCFeats(object oPC);
 int nbWeaponFocus(object oPC);
 
 void EvalPRCFeats(object oPC)
-{
-     // moved this to fix bug with brawler
-     // brawlers were not getting shield bonus AC properly because
-     // race script would replace the claws.  (Might fix Intuitive Attack as well.)
-     ExecuteScript("race_unarmed", oPC);
-     
+{   
     //Elemental savant is sort of four classes in one, so we'll take care
     //of them all at once.
     int iElemSavant =  GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC);
@@ -140,7 +135,12 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("onenter_ess", oPC);
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
+    ExecuteScript("race_unarmed", oPC);
     ExecuteScript("psi_powergain", oPC);
+    
+    // Gathers all the calls to UnarmedFists & Feats to one place.
+    // Must be after all evaluationscripts that need said functions.
+    ExecuteScript("unarmed_caller", oPC); 
 }
 
 void DeletePRCLocalInts(object oSkin)

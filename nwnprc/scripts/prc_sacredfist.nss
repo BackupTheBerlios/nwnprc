@@ -2,21 +2,19 @@
 #include "prc_inc_unarmed"
 #include "prc_inc_clsfunc"
 
-void SacredAC(object oPC,object oSkin,int bSFAC ,int iShield)
+void SacredAC(object oPC, object oSkin, int bSFAC , int iShield)
 {
-   object oArmor=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
+   object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
 
-   if  (GetBaseAC(oArmor)>3 || iShield)
+   if (GetBaseAC(oArmor) > 3 || iShield)
       SetCompositeBonus(oSkin, "SacFisAC", 0, ITEM_PROPERTY_AC_BONUS);
    else
       SetCompositeBonus(oSkin, "SacFisAC", bSFAC, ITEM_PROPERTY_AC_BONUS);
-
-
 }
 
-void SacredSpeed(object oPC,object oSkin,int bSFSpeed ,int iShield)
+void SacredSpeed(object oPC, object oSkin, int bSFSpeed , int iShield)
 {
-   object oArmor=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
+   object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
 
    if (GetBaseAC(oArmor) > 3 || iShield )
    {
@@ -26,7 +24,6 @@ void SacredSpeed(object oPC,object oSkin,int bSFSpeed ,int iShield)
    {
        ActionCastSpellOnSelf(SPELL_SACREDSPEED);
    }
-
 }
 
 void main()
@@ -59,62 +56,61 @@ void main()
 
     int iCode =  GetHasFeat(FEAT_SF_CODE);
 
-    int iShield = GetBaseItemType(oItemL)== BASE_ITEM_TOWERSHIELD || GetBaseItemType(oItemL)== BASE_ITEM_LARGESHIELD || GetBaseItemType(oItemL)== BASE_ITEM_SMALLSHIELD ;
+    int iShield = GetBaseItemType(oItemL) == BASE_ITEM_TOWERSHIELD ||
+                  GetBaseItemType(oItemL) == BASE_ITEM_LARGESHIELD ||
+                  GetBaseItemType(oItemL) == BASE_ITEM_SMALLSHIELD;
 
     if (!iCode)
     {
-       if ( oItemR ==   OBJECT_INVALID)
-       {
-         if ( oItemL ==   OBJECT_INVALID || GetBaseItemType(oItemL)==BASE_ITEM_TORCH || iShield)
-         {}
-         else
-         {
-          if (!GetHasFeat(FEAT_SF_CODE,oPC))
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_SF_CODE),oSkin);
-          iCode = 1;
-          FloatingTextStringOnCreature("You lost all your Sacred Fist powers.", OBJECT_SELF, FALSE);
-
-         }
-       }
-       else
-       {
-          if (!GetHasFeat(FEAT_SF_CODE,oPC))
-           AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_SF_CODE),oSkin);
-          iCode = 1;
-          FloatingTextStringOnCreature("You lost all your Sacred Fist powers.", OBJECT_SELF, FALSE);
-
-
-       }
+        if (oItemR == OBJECT_INVALID)
+        {
+            if (!(oItemL == OBJECT_INVALID || GetBaseItemType(oItemL)==BASE_ITEM_TORCH || iShield))
+            {
+                if (!GetHasFeat(FEAT_SF_CODE,oPC))
+                    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_SF_CODE),oSkin);
+                iCode = TRUE;
+                FloatingTextStringOnCreature("You lost all your Sacred Fist powers.", OBJECT_SELF, FALSE);
+            }
+        }
+        else
+        {
+            if (!GetHasFeat(FEAT_SF_CODE,oPC))
+                AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_SF_CODE),oSkin);
+            iCode = TRUE;
+            FloatingTextStringOnCreature("You lost all your Sacred Fist powers.", OBJECT_SELF, FALSE);
+        }
     }
 
     if (iCode)
     {
-       bSFAC = 0;
-       bSFSpeed=0;
-       SetCompositeBonus(oSkin, "SacFisAC", 0, ITEM_PROPERTY_AC_BONUS);
-       if (GetHasSpellEffect(SPELL_SACREDSPEED,oPC))
-          RemoveSpellEffects(SPELL_SACREDSPEED,oPC,oPC);
-       if (GetHasSpellEffect(SPELL_SACREDFLAME,oPC))
-          RemoveSpellEffects(SPELL_SACREDFLAME,oPC,oPC);
-       if (GetHasSpellEffect(SPELL_INNERARMOR,oPC))
-          RemoveSpellEffects(SPELL_INNERARMOR,oPC,oPC);
-       DeleteLocalInt(oSkin,"SacFisMv");
-       while(GetHasFeat(FEAT_SF_SACREDFLAME1))
-       DecrementRemainingFeatUses(oPC,FEAT_SF_SACREDFLAME1);
-
-       while(GetHasFeat(FEAT_SF_INNERARMOR))
-         DecrementRemainingFeatUses(oPC,FEAT_SF_INNERARMOR);
-
+        bSFAC    = 0;
+        bSFSpeed = 0;
+        
+        SetCompositeBonus(oSkin, "SacFisAC", 0, ITEM_PROPERTY_AC_BONUS);
+        
+        if (GetHasSpellEffect(SPELL_SACREDSPEED, oPC))
+        RemoveSpellEffects(SPELL_SACREDSPEED, oPC, oPC);
+        if (GetHasSpellEffect(SPELL_SACREDFLAME, oPC))
+        RemoveSpellEffects(SPELL_SACREDFLAME, oPC, oPC);
+        if (GetHasSpellEffect(SPELL_INNERARMOR, oPC))
+        RemoveSpellEffects(SPELL_INNERARMOR, oPC, oPC);
+        
+        DeleteLocalInt(oSkin, "SacFisMv");
+        
+        while(GetHasFeat(FEAT_SF_SACREDFLAME1))
+            DecrementRemainingFeatUses(oPC, FEAT_SF_SACREDFLAME1);
+        while(GetHasFeat(FEAT_SF_INNERARMOR))
+            DecrementRemainingFeatUses(oPC, FEAT_SF_INNERARMOR);
     }
-
-    if (bSFAC>0 && !iCode)    SacredAC(oPC,oSkin,bSFAC,iShield);
-    if (bSFSpeed>0 && !iCode) SacredSpeed(oPC,oSkin,bSFSpeed,iShield);
-
+    
+    if (bSFAC    > 0 && !iCode) SacredAC(oPC, oSkin, bSFAC, iShield);
+    if (bSFSpeed > 0 && !iCode) SacredSpeed(oPC, oSkin, bSFSpeed, iShield);
+    
     //Evaluate The Unarmed Strike Feats
-    UnarmedFeats(oPC);
-
+    //UnarmedFeats(oPC);
+    SetLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS, TRUE);
+    
     //Evaluate Fists
-    UnarmedFists(oPC);
-
-
+    //UnarmedFists(oPC);
+    SetLocalInt(OBJECT_SELF, CALL_UNARMED_FISTS, TRUE);
 }

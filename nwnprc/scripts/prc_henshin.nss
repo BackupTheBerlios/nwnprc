@@ -26,28 +26,26 @@ void HappoZanshin(object oPC, object oSkin)
 
 
 /// +4 to Taunt, Persuade, Bluff, and Intimidate /////////
-void Interaction(object oPC ,object oSkin)
+void Interaction(object oPC, object oSkin)
 {
-
-   if(GetLocalInt(oSkin, "InterP") == 4) return;
+    if(GetLocalInt(oSkin, "InterP") == 4) return;
 
     SetCompositeBonus(oSkin, "InterP", 4, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
     SetCompositeBonus(oSkin, "InterT", 4, ITEM_PROPERTY_SKILL_BONUS,SKILL_TAUNT);
     SetCompositeBonus(oSkin, "InterB", 4, ITEM_PROPERTY_SKILL_BONUS,SKILL_BLUFF);
     SetCompositeBonus(oSkin, "InterI", 4, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
-
 }
 
-    // Add Blindsight at level 6:
+// Add Blindsight at level 6:
 void BlindSight(object oPC)
-    {
+{
     if(GetLocalInt(oPC, "HMSight") == TRUE) return;
 
-        // PC can detect Invisible creatures and has Ultravision:
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(EffectUltravision()), oPC);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(EffectSeeInvisible()), oPC);
+    // PC can detect Invisible creatures and has Ultravision:
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(EffectUltravision()), oPC);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(EffectSeeInvisible()), oPC);
     SetLocalInt(oPC, "HMSight", TRUE);
-    }
+}
 
 
 // * Applies the Henshin Mystic's damage reduction bonuses as CompositeBonuses on object's skin.
@@ -67,28 +65,28 @@ void main ()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
 
-    UnarmedFeats(oPC);
-    UnarmedFists(oPC);
+    //UnarmedFeats(oPC);
+    //UnarmedFists(oPC);
+    SetLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS, TRUE);
+    SetLocalInt(OBJECT_SELF, CALL_UNARMED_FISTS, TRUE);
 
     if(GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC) >= 3)
     {
-    HappoZanshin(oPC, oSkin);
+        HappoZanshin(oPC, oSkin);
     }
 
     if(GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC) >= 4)
     {
-    Interaction(oPC , oSkin);
+        Interaction(oPC , oSkin);
     }
 
     if(GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC) >= 6)
     {
-    BlindSight(oPC);
+        BlindSight(oPC);
     }
 
     if(GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC) >= 10)
     {
-    Invulerability(oPC, oSkin);
+        Invulerability(oPC, oSkin);
     }
-
-
 }

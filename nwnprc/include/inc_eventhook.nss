@@ -100,6 +100,14 @@ const string NAME_NPC_ONSPELLCASTAT      = "prc_event_array_npc_onspellcastat";
 //const int EVENT_NPC_ONSPAWN         = 33;                           // No way to add script to the hook for a creature before this fires
 //const string NAME_NPC_ONSPAWN       = "prc_event_array_npc_onspawn";
 
+
+/* Callback hooks */
+
+const int CALLBACKHOOK_UNARMED           = 100;
+const string NAME_CALLBACKHOOK_UNARMED   = "prc_callbackhook_array_unarmed";
+
+
+
 const string PERMANENCY_SUFFIX = "_permanent";
 
 
@@ -346,7 +354,9 @@ string GetFirstEventScript(object oPC, int nEvent, int bPermanent){
 
 
 string GetNextEventScript(object oPC, int nEvent, int bPermanent){
-	string sArrayName = EventTypeIdToName(nEvent);
+	string sArrayName = GetLocalInt(GetModule(), "prc_eventhook_running") ?
+	                     GetLocalString(GetModule(), "prc_eventhook_running_sArrayName") :
+	                     EventTypeIdToName(nEvent);
 	
 	// Abort if the object given / event isn't valid 
 	if(!GetIsObjectValid(oPC) || sArrayName == "") return "";
@@ -369,6 +379,7 @@ void ExecuteAllScriptsHookedToEvent(object oPC, int nEvent){
 	// Mark that an eventhook is being run, so calls to modify the
 	// scripts listed are delayd until the eventhook is done.
 	SetLocalInt(GetModule(), "prc_eventhook_running", TRUE);
+	SetLocalString(GetModule(), "prc_eventhook_running_sArrayName", EventTypeIdToName(nEvent));
 	
 	// Loop through the scripts to be fired only once
 	string sScript = GetFirstEventScript(oPC, nEvent, FALSE);
@@ -389,7 +400,7 @@ void ExecuteAllScriptsHookedToEvent(object oPC, int nEvent){
 	
 	// Remove the lock on modifying the script lists
 	DeleteLocalInt(GetModule(), "prc_eventhook_running");
-	
+	DeleteLocalString(GetModule(), "prc_eventhook_running_sArrayName");
 	
 	// Run the delayed commands
 	int nQueued = GetLocalInt(GetModule(), "prc_eventhook_pending_queue"),
@@ -502,6 +513,10 @@ string EventTypeIdToName(int nEvent){
 			return NAME_ONSPELLCAST;
 		case EVENT_ONPOWERMANIFEST:
 			return NAME_ONPOWERMANIFEST;
+
+        // Callbackhooks
+        case CALLBACKHOOK_UNARMED:
+			return NAME_CALLBACKHOOK_UNARMED;
 
 		default:
 			WriteTimestampedLogEntry("Unknown event id passed to EventTypeIdToName: " + IntToString(nEvent));

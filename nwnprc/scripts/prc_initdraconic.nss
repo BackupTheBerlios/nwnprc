@@ -1,9 +1,10 @@
 #include "prc_inc_unarmed"
 #include "prc_ip_srcost"
 #include "prc_inc_clsfunc"
+#include "inc_eventhook"
 
 
-void SpellResistancePC(object oPC,object oSkin,int iLevel)
+void SpellResistancePC(object oPC, object oSkin, int iLevel)
 {
     //15 +lvl
     if (iLevel % 2 == 0)
@@ -26,7 +27,6 @@ void SpellResistancePC(object oPC,object oSkin,int iLevel)
 
 void StunStrike(object oPC,object oSkin)
 {
-
     if (GetLocalInt(oSkin,"IniStunStrk")) return;
 
     object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
@@ -45,20 +45,30 @@ void StunStrike(object oPC,object oSkin)
 
 void main()
 {
-
-    //Declare main variables.
     object oPC = OBJECT_SELF;
-    object oSkin = GetPCSkin(oPC);
-    object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
 
-    // NW_IT_CREWPB010
-   
-    //Evaluate The Unarmed Strike Feats
-    UnarmedFeats(oPC);
+    // We cannot add stuff to the creature weapons until they have been evaluated,
+    // so we request their evaluation, and wait for it to happen.
+    if(!GetLocalInt(OBJECT_SELF, UNARMED_CALLBACK))
+    {
+        //Evaluate The Unarmed Strike Feats
+        //UnarmedFeats(oPC);
+        SetLocalInt(oPC, CALL_UNARMED_FEATS, TRUE);
 
-    //Evaluate Fists
-    UnarmedFists(oPC);
+        //Evaluate Fists
+        //UnarmedFists(oPC);
+        SetLocalInt(oPC, CALL_UNARMED_FISTS, TRUE);
 
-    if (GetHasFeat(FEAT_INIDR_SPELLRESISTANCE,oPC)) SpellResistancePC(oPC,oSkin,GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,oPC)+15);
-    if (GetHasFeat(FEAT_INIDR_STUNSTRIKE,oPC)) StunStrike(oPC,oSkin);
+        // Request callback once the feat & fist evaluation is done
+        AddEventScript(oPC, CALLBACKHOOK_UNARMED, "prc_initdraconic", FALSE, FALSE);
+    }
+    else
+    { 
+        //Declare main variables.
+        object oSkin  = GetPCSkin(oPC);
+        object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
+
+        if (GetHasFeat(FEAT_INIDR_SPELLRESISTANCE,oPC)) SpellResistancePC(oPC,oSkin,GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,oPC)+15);
+        if (GetHasFeat(FEAT_INIDR_STUNSTRIKE,oPC)) StunStrike(oPC,oSkin);
+    }
 }

@@ -47,7 +47,7 @@ const int ITEM_PROPERTY_WOUNDING = 69;
 
 const string CALL_UNARMED_FEATS = "CALL_UNARMED_FEATS";
 const string CALL_UNARMED_FISTS = "CALL_UNARMED_FISTS";
-
+const string UNARMED_CALLBACK   = "UNARMED_CALLBACK";
 
 // I plan to change these over to the switch system later
 const int PRC_3_5e_FIST_DAMAGE = FALSE;
@@ -84,6 +84,12 @@ void UnarmedFeats(object oCreature);
 // Do not call this directly from your evaluation script. Instead, set
 // the local variable CALL_UNARMED_FISTS on the creature to TRUE.
 // This is done to avoid bugs from redundant calls to these functions.
+//
+// If you are going to add properties to the creature weapons, hook
+// your script for callback after this is evaluated by calling
+// AddEventScript(oPC, CALLBACKHOOK_UNARMED, "your_script", FALSE, FALSE);
+// When the callback is running, a local int UNARMED_CALLBACK will be
+// set on OBJECT_SELF
 void UnarmedFists(object oCreature);
 
 

@@ -267,15 +267,37 @@ int GetRogueSneak(object oPC);
 
 prc_inc_unarmed
 
-// Determines the amount of damage a character can do.
+// Determines the amount of unarmed damage a character can do
+// ==========================================================
+// oCreature    a creature whose unarmed damage dice are
+//              being evaluated
+//
+// Returns one of the MONST_DAMAGE_* constants defined in
+// this file.
 int FindUnarmedDamage(object oCreature);
 
 // Adds appropriate unarmed feats to the skin. Goes with UnarmedFists()
-// Call this from a feat evaluation script.
+// ====================================================================
+// oCreature    a creature whose unarmed combat feats to handle
+//
+// Do not call this directly from your evaluation script. Instead, set
+// the local variable CALL_UNARMED_FEATS on the creature to TRUE.
+// This is done to avoid bugs from redundant calls to these functions.
 void UnarmedFeats(object oCreature);
 
 // Creates/strips a creature weapon and applies bonuses. Goes with UnarmedFeats()
-// Call this from a feat evaluation script.
+// ==============================================================================
+// oCreature    a creature whose creature weapon to handle
+//
+// Do not call this directly from your evaluation script. Instead, set
+// the local variable CALL_UNARMED_FISTS on the creature to TRUE.
+// This is done to avoid bugs from redundant calls to these functions.
+//
+// If you are going to add properties to the creature weapons, hook
+// your script for callback after this is evaluated by calling
+// AddEventScript(oPC, CALLBACKHOOK_UNARMED, "your_script", FALSE, FALSE);
+// When the callback is running, a local int UNARMED_CALLBACK will be
+// set on OBJECT_SELF
 void UnarmedFists(object oCreature);
 
 

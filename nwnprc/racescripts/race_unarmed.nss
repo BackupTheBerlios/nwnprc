@@ -18,7 +18,9 @@ void main ()
         iRace == RACIAL_TYPE_ILLITHID   ||
         iRace == RACIAL_TYPE_LIZARDFOLK)
     {
-         UnarmedFeats(OBJECT_SELF);
-         UnarmedFists(OBJECT_SELF);
+         //UnarmedFeats(OBJECT_SELF);
+         //UnarmedFists(OBJECT_SELF);
+         SetLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS, TRUE);
+         SetLocalInt(OBJECT_SELF, CALL_UNARMED_FISTS, TRUE);
     }
 }

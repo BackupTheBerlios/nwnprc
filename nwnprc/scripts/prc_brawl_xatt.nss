@@ -17,7 +17,7 @@ void main()
         {
             if (!GetIsObjectValid(oRighthand))
             {
-                if (!GetIsObjectValid(oLefthand))
+                if (!GetIsObjectValid(oLefthand) || GetBaseItemType(oLefthand) == BASE_ITEM_TORCH)
                 {
                     if (!GetLevelByClass(CLASS_TYPE_MONK, oCreature))
                     {

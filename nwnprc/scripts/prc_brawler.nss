@@ -31,6 +31,30 @@ void BrawlerDamageReduction(object oCreature)
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_9),oSkin);
 }      
 
+void BrawlerBlocking(object oCreature)
+{
+    object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature);
+    object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
+    object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCreature);
+    int iBlocking = 0;
+
+    if (GetIsObjectValid(oRighthand)) return;
+    if (GetIsObjectValid(oLefthand) && GetBaseItemType(oLefthand) != BASE_ITEM_TORCH) return;
+
+    if (GetHasFeat(FEAT_BRAWLER_BLOCK_5, oCreature))
+        iBlocking = 5;
+    else if (GetHasFeat(FEAT_BRAWLER_BLOCK_4, oCreature))
+        iBlocking = 4;
+    else if (GetHasFeat(FEAT_BRAWLER_BLOCK_3, oCreature))
+        iBlocking = 3;
+    else if (GetHasFeat(FEAT_BRAWLER_BLOCK_2, oCreature))
+        iBlocking = 2;
+    else if (GetHasFeat(FEAT_BRAWLER_BLOCK_1, oCreature))
+        iBlocking = 1;
+
+    if (iBlocking) AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBlocking),oWeapL);
+}
+
 void main ()
 {
     object oPC = OBJECT_SELF;
@@ -43,10 +67,17 @@ void main ()
     
     //Evaluate DR
     BrawlerDamageReduction(oPC);
+    
+    //Evaluate Brawler Blocking
+    BrawlerBlocking(oPC);
 
-    //Extra Attacks OFF if equipping of weapons or shield is done
-    if (GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND)) ||
-        GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND)) ||
-        GetLevelByClass(CLASS_TYPE_MONK, oPC))  // in case the brawler takes the monk class, this will handle it onlevelup
-        RemoveExtraAttacks(oPC);
+    //Extra Attacks OFF if equipping of weapons or shield is done or if monk levels are taken.
+    object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+
+    int iRighthand = GetIsObjectValid(oRighthand);
+    int iLefthand = GetIsObjectValid(oLefthand) && GetBaseItemType(oLefthand) != BASE_ITEM_TORCH;
+    int iMonk = GetLevelByClass(CLASS_TYPE_MONK, oPC);
+    
+    if (iRighthand || iLefthand || iMonk) RemoveExtraAttacks(oPC);
 }

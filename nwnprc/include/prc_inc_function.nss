@@ -248,6 +248,7 @@ void DeletePRCLocalInts(object oSkin)
 
 void ScrubPCSkin(object oPC, object oSkin)
 {
+    int iCode = GetHasFeat(FEAT_SF_CODE,oPC);
     itemproperty ip = GetFirstItemProperty(oSkin);
     while (GetIsItemPropertyValid(ip)) {
         // Insert Logic here to determine if we spare a property
@@ -266,6 +267,9 @@ void ScrubPCSkin(object oPC, object oSkin)
         // Get the next property
         ip = GetNextItemProperty(oSkin);
     }
+    if (iCode) 
+      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(381),oSkin);
+
 }
 
 

@@ -29,6 +29,7 @@
 
 #include "prc_inc_combat"
 #include "psi_inc_onhit"
+#include "inc_rend"
 
 void SetRancorVar(object oPC);
 void SetPsiEnRetortVar(object oPC);
@@ -253,6 +254,18 @@ void main()
 	        DeleteLocalInt(oPC,"spellswd_aoe");
         	DeleteLocalInt(oPC,"spell_metamagic");
 	        
+	}
+	
+	// Handle Rend. Creature weapon damage + 1.5x STR bonus.
+	// Only happens when attacking with a creature weapon
+	if(GetHasFeat(FEAT_REND, oSpellOrigin) &&
+	   (GetBaseItemType(oItem) == BASE_ITEM_CBLUDGWEAPON ||
+	    GetBaseItemType(oItem) == BASE_ITEM_CPIERCWEAPON ||
+	    GetBaseItemType(oItem) == BASE_ITEM_CSLASHWEAPON ||
+	    GetBaseItemType(oItem) == BASE_ITEM_CSLSHPRCWEAP)
+	  )
+	{
+		DoRend(oSpellTarget, oSpellOrigin, oItem);
 	}
 
 

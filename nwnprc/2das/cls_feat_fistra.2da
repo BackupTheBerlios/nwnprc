@@ -319,4 +319,15 @@
 315 EPIC_SPELL_WHIP_OF_SHAR                        5170      0    99             2      
 316 FEAT_EPIC_AUTOMATIC_QUICKEN_2                  858       0    -1             0      
 317 FEAT_EPIC_AUTOMATIC_QUICKEN_3                  859       0    -1             0      
-318 FEAT_DISCIPLE_OF_SUN                           3127      0    -1             1      
+318 FEAT_EPIC_DIVINE_MIGHT                         3120      0    -1             1      
+319 FEAT_INVOKE_DIVINE_WRATH                       3114      0    -1             1      
+320 FEAT_EPIC_GREAT_CHARISMA_1                     764       1    -1             0      
+321 FEAT_EPIC_GREAT_CHARISMA_2                     765       1    -1             0      
+322 FEAT_EPIC_GREAT_CHARISMA_3                     766       1    -1             0      
+323 FEAT_EPIC_GREAT_CHARISMA_4                     767       1    -1             0      
+324 FEAT_EPIC_GREAT_CHARISMA_5                     768       1    -1             0      
+325 FEAT_EPIC_GREAT_CHARISMA_6                     769       1    -1             0      
+326 FEAT_EPIC_GREAT_CHARISMA_7                     770       1    -1             0      
+327 FEAT_EPIC_GREAT_CHARISMA_8                     771       1    -1             0      
+328 FEAT_EPIC_GREAT_CHARISMA_9                     772       1    -1             0      
+329 FEAT_EPIC_GREAT_CHARISMA_10                    773       1    -1             0      

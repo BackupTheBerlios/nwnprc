@@ -389,7 +389,7 @@ void PsychicEnervation(object oCaster, int nWildSurge)
         eLink = ExtraordinaryEffect(eLink);
 
         FloatingTextStringOnCreature("You have become psychically enervated and lost power points", oCaster, FALSE);
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oCaster, TurnsToSeconds(1));
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oCaster, RoundsToSeconds(1));
 
         nPP = nPP - nWilder;
         FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);

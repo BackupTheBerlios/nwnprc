@@ -6,7 +6,7 @@
 2     Spellcraft   SKILL     16               8           
 3     Alertness    FEAT      0                ****        
 4     IronWill     FEAT      22               ****        
-5     ScriptVar    VAR       mh_AllowMaster   0           
+5     ScriptVar    VAR       PRC_AllowMaster   0           
 6     bluff        SKILL     23               8           
 7     spell        SPELL     2                ****        
 8     Perform      SKILL     11               12

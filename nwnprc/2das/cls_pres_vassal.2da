@@ -4,6 +4,6 @@
 0     AttackBonus   BAB       7                ****        
 1     CraftArmor    SKILL     25               5           
 2     Persuade      SKILL     12               5           
-3     ScriptVar     VAR       X1_AllowVassal   ****
+3     ScriptVar     VAR       PRC_AllowVassal   ****
 4     SacredVow     FEAT      3388             ****
 5     VowOfObed     FEAT      3389             ****   

@@ -4,4 +4,4 @@
 0     Bluff       SKILL     23             10          
 1     Persuade    SKILL     12             8           
 2     ****        ****      ****           ****        
-3     ScriptVar   VAR       X2_AllowBaal   0           
+3     ScriptVar   VAR       PRC_AllowBaal   0           

@@ -35,7 +35,7 @@
 31 Lore           SKILL   7              5         
 32 CraftWeapon    SKILL   26             5         
 33 CraftArmor     SKILL   25             5         
-34 Divine         SPELL   3              ****      
+0  ScriptVar      VAR     PRC_DivSpell2  0  
 35 Cleric         CLASS   2              ****      
-36 ScriptVar      VAR     X1_AllowTempus 0         
+36 ScriptVar      VAR     PRC_AllowTempus 0         
 37 War_Domain     FEAT    306            ****      

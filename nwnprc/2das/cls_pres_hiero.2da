@@ -8,8 +8,8 @@
 4          MMSilent       FEATOR    33               ****
 5          MMStill        FEATOR    37               ****      
 6          SkillLore      SKILL     7                15     
-7          ClericLvl11    FEAT      2824             ****
-10         ScriptVar      VAR       X2_AllowHiero    0           
+0          ScriptVar      VAR       PRC_DivSpell7    0        
+10         ScriptVar      VAR       PRC_AllowHiero   0           
                                                                  
                                                                  
                                                                  

@@ -3,5 +3,5 @@
      LABEL     ReqType  ReqParam1      ReqParam2 
 0    Lore      SKILL    7              8         
 1    Familiar  FEAT     303            ****      
-2    Arcane    ARCSPELL 2              ****      
-3    ScriptVar VAR      X1_AllowBonded 0         
+2    ScriptVar VAR      PRC_ArcSpell2   0            
+3    ScriptVar VAR      PRC_AllowBonded 0         

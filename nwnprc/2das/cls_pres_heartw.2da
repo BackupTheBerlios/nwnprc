@@ -9,5 +9,5 @@
 5     Bluff                      SKILL     23                3
 6     SpellFocusEnc              FEAT      168               ****
 7     WeapProfEx                 FEAT      44                ****
-8     Spellcasting               SPELL     5                 **** 
-9     ScriptVar                  VAR       X1_AllowHeartW    0           
+8     ScriptVar                  VAR       PRC_DivSpell3     0        
+9     ScriptVar                  VAR       PRC_AllowHeartW   0           

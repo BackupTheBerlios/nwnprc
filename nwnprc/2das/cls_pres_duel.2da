@@ -10,4 +10,4 @@
 7          WeapProfMar    FEATOR    45               ****
 8          WeapProfElf    FEATOR    256              ****
 9          WeapProfRog    FEATOR    50               ****
-10         ScriptVar      VAR       X2_AllowDuel  0
+10         ScriptVar      VAR       PRC_AllowDuel    0

@@ -1,7 +1,6 @@
 2DA V2.0
 
       LABEL             ReqType    ReqParam1           ReqParam2   
-0     Arcane            ARCSPELL   7                   ****        
 1     Lore              SKILL      7                   15          
 2     Spellcraft        SKILL      16                  15          
 3     SkillFocusSpell   FEAT       189                 ****        
@@ -14,3 +13,4 @@
 10    SpellFocusTra     FEATOR     172                 ****        
 11    SpellFocusAb      FEATOR     35                  ****        
 12    ScriptVar         VAR        PRC_AllowArchmage   0           
+13    ScriptVar         VAR        PRC_ArcSpell7       0           

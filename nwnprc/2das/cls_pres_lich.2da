@@ -3,7 +3,7 @@
            LABEL       ReqType    ReqParam1       ReqParam2   
 1          SpellLevel  SPELL      11              ****       
 2          CraftWonder FEAT       2925            ****       
-3          ScriptVar   VAR        PNP_AllowLich   0
+3          ScriptVar   VAR        PRC_AllowLich   0
  
 
                                                               

@@ -36,4 +36,4 @@
 32         WeapFocClub         FEATOR    43               ****
 33         WeapFocDWAxe        FEATOR    952              ****
 34         WeapFocWhip         FEATOR    993              **** 
-35         ScriptVar           VAR       X2_AllowTempest  0 
+35         ScriptVar           VAR       PRC_AllowTempest  0 

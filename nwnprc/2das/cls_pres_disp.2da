@@ -5,4 +5,4 @@
 1     PowerAtk                    FEAT      28             ****        
 2     Expertise                   FEAT      389            ****        
 3     FEAT_DISCIPLE_OF_DARKNESS   FEAT      4012           ****        
-4     ScriptVar                   VAR       X1_AllowDisp   0           
+4     ScriptVar                   VAR       PRC_AllowDisp   0           

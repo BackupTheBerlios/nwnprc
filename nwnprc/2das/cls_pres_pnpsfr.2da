@@ -11,4 +11,4 @@
 7          AlternateForm  FEATOR    2931             ****
 8          Animal_Domain  FEATOR    312              ****
 9          SpellLevel     SPELL     5                ****        
-10         ScriptVar      VAR       X2_AllowPNPSfr   0
+10         ScriptVar      VAR       PRC_AllowPNPSfr   0

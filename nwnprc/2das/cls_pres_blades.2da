@@ -8,7 +8,7 @@
 4  StillSpell    FEAT     37             **** 
 5  WeapFocRapier FEATOR   104            ****      
 6  WeapFocLSw    FEATOR   106            ****      
-7  Arcane        ARCSPELL 1              ****            
+7  ScriptVar     VAR      PRC_ArcSpell1  0                  
 8  Elf           RACE     1              ****
 9  Half-Elf      RACE     4              **** 
 10 Base_Attack   BAB      5              ****

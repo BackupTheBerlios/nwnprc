@@ -2,7 +2,7 @@
                                                                       
            LABEL               ReqType   ReqParam1        ReqParam2   
 0          Base_Attack         BAB       8                ****               
-1          ScriptVar           VAR       X1_AllowManAt    0           
+1          ScriptVar           VAR       PRC_AllowManAt    0           
 2  PowerAtk       FEAT      28               ****
 3  WeapFocClub    FEATOR  28             ****      
 4  WeapFocDagger  FEATOR  90             ****      

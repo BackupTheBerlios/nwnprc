@@ -6,4 +6,4 @@
 2          Listen         SKILL     6                8
 3          Dodge          FEAT      21               ****
 4          Ambidex        FEAT      39               ****
-5          ScriptVar      VAR       X2_AllowRedavng  0
+5          ScriptVar      VAR       PRC_AllowRedavng  0

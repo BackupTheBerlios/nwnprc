@@ -9,4 +9,4 @@
 5     Base_Attack    BAB       5               ****        
 6     Dwarf          RACE      0               ****        
 7     BarbarianOr    CLASSOR   0               ****        
-8     ScriptVar      VAR       X1_AllowBRage   0           
+8     ScriptVar      VAR       PRC_AllowBRage   0           

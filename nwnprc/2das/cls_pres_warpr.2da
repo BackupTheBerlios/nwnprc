@@ -2,8 +2,11 @@
 
       LABEL           ReqType   ReqParam1          ReqParam2   
 0     ClericOr        CLASSOR   2                  ****        
-1     PaladinOr       CLASSOR   6                  ****        
-2     ScriptVar       VAR       codi_allow_warpr   0           
+2     ScriptVar       VAR       PRC_AllowWarPrst   0           
 3     BAB             BAB       5                  ****        
 4     CombatCasting   FEAT      7                  ****        
 5     Persuade        SKILL     12                 5           
+4     Destruction_Domain_Power  FEATOR    313      ****
+5     War_Domain_Power          FEATOR    306      ****
+6     Strength_Domain_Power     FEATOR    307      ****
+6     Protection_Domain_Power   FEATOR    308      ****

@@ -7,5 +7,5 @@
 3     WeapProfMar   FEAT      45                ****        
 4     Spot          SKILL     17                4           
 5     Intimidate    SKILL     24                4           
-6     ScriptVar     VAR       PNP_AllowHextor   0           
+6     ScriptVar     VAR       PRC_AllowHextor   0           
 7     Lore          SKILL     7                 4           

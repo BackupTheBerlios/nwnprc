@@ -6,7 +6,7 @@
 2          Tumble         SKILL     21               10                      
 3          Dodge          FEAT      10               ****
 4          Evasion        FEAT      206              ****
-5          ScriptVar      VAR       X1_AllowNinja    0           
+5          ScriptVar      VAR       PRC_AllowNinja    0           
                                                                  
                                                                  
                                                                  

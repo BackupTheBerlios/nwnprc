@@ -3,4 +3,4 @@
   LABEL         ReqType ReqParam1       ReqParam2 
 0 Base_Attack   BAB     5               ****      
 1 Lore          SKILL   7               4         
-2 ScriptVar     VAR     X1_AllowSoLight 0         
+2 ScriptVar     VAR     PRC_AllowSoLight 0         

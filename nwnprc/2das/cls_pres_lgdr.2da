@@ -42,4 +42,4 @@
 38    ImpCritDMace        FEATOR    87             ****        
 39    ImpCritDAxe         FEATOR    88             ****        
 40    ImpCrit2Sw          FEATOR    89             ****        
-41    ScriptVar           VAR       X1_AllowLgDr   0           
+41    ScriptVar           VAR       PRC_AllowLgDr   0           

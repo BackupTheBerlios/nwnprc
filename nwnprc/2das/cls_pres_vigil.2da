@@ -7,4 +7,4 @@
 3 Listen      SKILL   6             5         
 4 Persuade    SKILL   12            5         
 5 Base_Attack BAB     5             ****      
-6 ScriptVar   VAR     X1_AllowVigil 0         
+6 ScriptVar   VAR     PRC_AllowVigil 0         

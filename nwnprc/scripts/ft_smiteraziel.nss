@@ -85,9 +85,9 @@ void NoSmite(object oTarget ,string sText)
         // Dmg Bonus= Level Paladin+ Fist Raziel
 
         if(iHit == 2 )
-            iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, TRUE);
+            iDamage = GetMeleeWeaponDamageS(OBJECT_SELF, oWeap, oTarget, TRUE);
         else
-            iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, FALSE);
+            iDamage = GetMeleeWeaponDamageS(OBJECT_SELF, oWeap, oTarget, FALSE);
 
         //Apply the damage
         //Apply the damage
@@ -149,7 +149,7 @@ void main()
    int iEnhancement = GetWeaponEnhancement(oWeap);
    int iDamageType = GetWeaponDamageType(oWeap);
    int iEvil  =1 ;
-   int iOuts  =(GetRacialType(oTarget)==RACIAL_TYPE_UNDEAD ||GetRacialType(oTarget)== RACIAL_TYPE_OUTSIDER) && iEvil ? 1 :0 ;
+   int iOuts  =(GetRacialType(oTarget)==RACIAL_TYPE_UNDEAD ||GetRacialType(oTarget)== RACIAL_TYPE_OUTSIDER)  ? 1 :0 ;
 
    int iSmit=iEvil;
    int iEpicSmite = GetHasFeat(FEAT_EPIC_GREAT_SMITING_1) ? 2:1;
@@ -163,9 +163,9 @@ void main()
        iEpicSmite = GetHasFeat(FEAT_EPIC_GREAT_SMITING_9) ? 10:iEpicSmite;
        iEpicSmite = GetHasFeat(FEAT_EPIC_GREAT_SMITING_10)? 11:iEpicSmite;
 
-   int iDmgBon = iEvil ? (GetLevelByClass(CLASS_TYPE_FISTRAZIEL)+GetLevelByClass(CLASS_TYPE_PALADIN)+GetLevelByClass(CLASS_TYPE_DIVINECHAMPION))* iEpicSmite :0 ;
+   int iDmgBon =  (GetLevelByClass(CLASS_TYPE_FISTRAZIEL)+GetLevelByClass(CLASS_TYPE_PALADIN)+GetLevelByClass(CLASS_TYPE_DIVINECHAMPION))* iEpicSmite ;
    int iBonus = GetAbilityModifier(ABILITY_CHARISMA)>0 ? GetAbilityModifier(ABILITY_CHARISMA):0;
-       iBonus = iEvil ? iBonus : 0;
+
    // no smite with ranged Weapon
    int iType=GetBaseItemType(oWeap);
    switch (iType)
@@ -205,9 +205,9 @@ void main()
         // Dmg Bonus= Level Paladin+ Fist Raziel
 
         if(iHit == 2 || ( (LvlRaziel>2) && iSmit && !Immune))
-            iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, TRUE,iDmgBon);
+            iDamage = GetMeleeWeaponDamageS(OBJECT_SELF, oWeap, oTarget, TRUE,iDmgBon);
         else
-            iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, FALSE,iDmgBon);
+            iDamage = GetMeleeWeaponDamageS(OBJECT_SELF, oWeap, oTarget, FALSE,iDmgBon);
 
         //Apply the damage
         if (iSmit)

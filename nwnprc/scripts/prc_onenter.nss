@@ -16,7 +16,6 @@ void main()
         object oSkin = GetPCSkin(oPC);
 	ScrubPCSkin(oPC, oSkin);
         DeletePRCLocalInts(oSkin);     
-        DeletePRCLocalIntsT(oPC); // the other items get cleaned too
         
     SetLocalInt(oPC,"ONENTER",1);
     // Make sure we reapply any bonuses before the player notices they are gone.

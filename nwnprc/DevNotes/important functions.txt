@@ -8,6 +8,49 @@ It is a guide only, if in doubt, look at the actual code.
 
 
 
+Replaced Bioware Functions for spells:
+--------------------------------------
+
+BiowareFunction -> PRCFunction  (ALL OF THESE USE #include "spinc_common")
+--------------------------------------------------------------------------
+GetCasterLevel -> PRCGetCasterLevel
+GetReflexAdjustedDamage -> PRCGetReflexAdjustedDamage
+MySavingThrow -> PRCMySavingThrow
+MyResistSpell -> MyPRCResistSpell
+ApplyAffectToObject -> SPApplyAffectToObject
+MyNextObjectInShape -> GetNextObjectInShape
+GetRacialType -> MyPRCGetRacialType
+SetModuleOverrideSpellscript -> PRCSetUserSpecificSpellScript
+SetModuleOverrideSpellScriptFinished -> PRCSetUserSpecificSpellScriptFinished
+GetModuleOverrideSpellscript -> PRCGetUserSpecificSpellScript
+GetModuleOverrideSpellScriptFinished -> PRCGetUserSpecificSpellScriptFinished
+
+
+
+
+Other things needed for spells:
+-------------------------------
+
+PRCFunction  (ALL OF THESE USE #include "spinc_common")
+-------------------------------------------------------
+SPGetPenetr
+-----------
+   Used to find a spell penetration for MyPRCResistSpell:
+   int iPenetr = PRCGetCasterLevel(OBJECT_SELF) + SPGetPenetr();
+GetChangesToSaveDC
+------------------
+   Used to find a spell DC for PRCMySavingThrow and PRCGetReflexAdjustedDamage:
+   int iDC = GetSpellSaveDC() + GetChangesToSaveDC(GetSpelTargetObject(), OBJECT_SELF);
+ChangedElementalDamage
+----------------------
+   Used to apply the proper damage type in EffectDamage(iDamage, iElementalType)
+   int iElementalType = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_OF_THIS_SPELL)
+CheckMetaMagic
+--------------
+   Used in lieu of "if (GetMetaMagicFeat() == METAMAGIC_TYPE)"
+   if (CheckMetaMagic(GetMetaMagicFeat(), METAMAGIC_EXTEND)) { fDuration = fDuration * 2.0; }
+
+
 
 
 inc_item_props

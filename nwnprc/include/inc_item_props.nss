@@ -157,16 +157,24 @@ object GetPCSkin(object oPC)
     object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
     if (!GetIsObjectValid(oSkin))
     {
-      if ( GetHasItem(oPC, "base_prc_skin"))
-      {
-         oSkin = GetItemPossessedBy(oPC,"base_prc_skin");
-         AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
-      }
+        if ( GetHasItem(oPC, "base_prc_skin"))
+        {
+            oSkin = GetItemPossessedBy(oPC,"base_prc_skin");
+            if(!GetLocalInt(oPC, "EquippingPRCSkin")){
+                AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
+                SetLocalInt(oPC, "EquippingPRCSkin", TRUE);
+                DelayCommand(0.0f, DeleteLocalInt(oPC, "EquippingPRCSkin"));
+            }
+        }
 
-    //Added GetHasItem check to prevent creation of extra skins on module entry
-      else {
-        oSkin = CreateItemOnObject("base_prc_skin", oPC);
-        AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
+        //Added GetHasItem check to prevent creation of extra skins on module entry
+        else {
+            oSkin = CreateItemOnObject("base_prc_skin", oPC);
+            if(!GetLocalInt(oPC, "EquippingPRCSkin")){
+                AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
+                SetLocalInt(oPC, "EquippingPRCSkin", TRUE);
+                DelayCommand(0.0f, DeleteLocalInt(oPC, "EquippingPRCSkin"));
+            }
         }
     }
     return oSkin;

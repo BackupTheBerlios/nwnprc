@@ -124,12 +124,12 @@ void ImperiousAura(object oPC ,object oSkin ,int iLevel)
 
    if(GetLocalInt(oSkin, "ImperiousAura") == iLevel) return;
 
-    SetCompositeBonus(oSkin, "ImperiousAuraA", 0.5*iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_APPRAISE);
-    SetCompositeBonus(oSkin, "ImperiousAuraP", 0.5*iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERFORM);
-    SetCompositeBonus(oSkin, "ImperiousAuraPe", 0.5*iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
-    SetCompositeBonus(oSkin, "ImperiousAuraT", 0.5*iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_TAUNT);
-    SetCompositeBonus(oSkin, "ImperiousAuraB", 0.5*iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_BLUFF);
-    SetCompositeBonus(oSkin, "ImperiousAuraI", 0.5*iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
+    SetCompositeBonus(oSkin, "ImperiousAuraA", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_APPRAISE);
+    SetCompositeBonus(oSkin, "ImperiousAuraP", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERFORM);
+    SetCompositeBonus(oSkin, "ImperiousAuraPe", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+    SetCompositeBonus(oSkin, "ImperiousAuraT", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_TAUNT);
+    SetCompositeBonus(oSkin, "ImperiousAuraB", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_BLUFF);
+    SetCompositeBonus(oSkin, "ImperiousAuraI", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
 
 }
 
@@ -144,7 +144,7 @@ void main()
     object oItem = GetItemInSlot(INVENTORY_SLOT_CHEST,OBJECT_SELF);
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
-    int bVassal = GetLevelByClass(CLASS_TYPE_VASSAL, OBJECT_SELF);
+    int bVassal = nVassal /2;
 
     //Imperious Aura
     if (bVassal>0) ImperiousAura(oPC, oSkin,bVassal);

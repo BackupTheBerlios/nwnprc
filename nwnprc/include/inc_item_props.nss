@@ -983,6 +983,9 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    DeleteLocalInt(oItem,"DWleft");
    // Holy Avenger
    DeleteLocalInt(oItem,"HolyAvAntiStack");
+   // Dispater
+   DeleteLocalInt(oItem,"DispIronPowerA");
+   DeleteLocalInt(oItem,"DispIronPowerD");
    
    // CHEST
    if (!iValid){
@@ -1024,7 +1027,7 @@ void RemoveCompositeAttackBonus(object oPC)
         if (GetEffectCreator(e) == oPC &&
             GetEffectSpellId(e) == -1 &&
             GetEffectType(e) == EFFECT_TYPE_ATTACK_INCREASE &&
-            GetEffectSubType(e) == SUBTYPE_SUPERNATURAL &&
+            GetEffectSubType(e) == SUBTYPE_EXTRAORDINARY &&
             GetEffectDurationType(e) == DURATION_TYPE_TEMPORARY)
                 RemoveEffect(oPC, e);
         e = GetNextEffect(oPC);
@@ -1038,7 +1041,7 @@ void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType =
     int iCur = GetLocalInt(oPC, sBonus);
 
     RemoveCompositeAttackBonus(oPC);
-    
+
     switch (iSubType)
     {
         case ATTACK_BONUS_MISC:
@@ -1063,8 +1066,8 @@ void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType =
 
     effect eAttackBonusR = EffectAttackIncrease(iTotalR, ATTACK_BONUS_ONHAND);
     effect eAttackBonusL = EffectAttackIncrease(iTotalL, ATTACK_BONUS_OFFHAND);
-    effect eAttackBonus = SupernaturalEffect(EffectLinkEffects(eAttackBonusR, eAttackBonusL));
-
+    effect eAttackBonus = ExtraordinaryEffect(EffectLinkEffects(eAttackBonusR, eAttackBonusL));
+        
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAttackBonus, oPC, 9999.0);
     
     SetLocalInt(oPC, "CompositeAttackBonusR", iTotalR);

@@ -43,7 +43,7 @@ void EvalPRCFeats(object oPC)
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESA, oPC);
     
     // special add atk bonus equal to Enhancement
-    ExecuteScript("ft_sanctmartial",oPC);
+    ExecuteScript("ft_sanctmartial", oPC);
     
     //Route the event to the appropriate class specific scripts
     if(GetLevelByClass(CLASS_TYPE_DUELIST, oPC) > 0)             ExecuteScript("prc_duelist", oPC);
@@ -122,13 +122,14 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_ETERNAL_FREEDOM, oPC))                    ExecuteScript("etern_free", oPC);
     
     // Miscellaneous
-    ExecuteScript("prc_wyzfeat",oPC);
-    ExecuteScript("onenter_ess",oPC);
-    ExecuteScript("prc_sneak_att",oPC);
-    ExecuteScript("race_skin",oPC);
+    ExecuteScript("prc_wyzfeat", oPC);
+    ExecuteScript("onenter_ess", oPC);
+    ExecuteScript("prc_sneak_att", oPC);
+    ExecuteScript("race_skin", oPC);
+
+    // Add the weapon's attack/enhancement bonus using SetCompositeBonus ::HACK TO GET AROUND BIOWARE BUG::
+    ExecuteScript("prc_weaponbonus", oPC);
 }
-
-
 
 void DeletePRCLocalInts(object oSkin)
 {
@@ -329,7 +330,6 @@ void DeletePRCLocalInts(object oSkin)
     // future PRCs Go below here
 }
 
-
 void ScrubPCSkin(object oPC, object oSkin)
 {
     int iCode = GetHasFeat(FEAT_SF_CODE,oPC);
@@ -355,7 +355,6 @@ void ScrubPCSkin(object oPC, object oSkin)
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(381),oSkin);
 
 }
-
 
 int CompareAlignment(object oSource, object oTarget)
 {
@@ -431,9 +430,6 @@ int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int
     if(iDisplayFeedback) FloatingTextStringOnCreature(sFeedback, oCaster);
     return iRetVal;
 }
-
-
-
 
 ///////////////////////////////////////////////////////////////
 //  GetArmorType

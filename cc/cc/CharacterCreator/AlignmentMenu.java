@@ -19,26 +19,26 @@ import CharacterCreator.defs.*;
  * @author  James
  */
 public class AlignmentMenu extends javax.swing.JFrame {
-    
+
     /** Creates new form AlignmentMenu1 */
     public AlignmentMenu() throws Exception {
         GoodEvil = 50;
-        LawfulChaotic = 50;        
+        LawfulChaotic = 50;
         menucreate = TLKFactory.getCreateMenu();
         alignlabel = menucreate.AlignmentName;
-        //alignlabel = parent;        
+        //alignlabel = parent;
         menucreate.BlockWindow(true);
         initComponents();
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
-            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();            
+            int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();
             setLocation(intwidth, intheight);
         } else {
             setLocation(0,0);
         }
-        
+
         String restricted = menucreate.MainCharDataAux[3][classes.AlignRestrict];
         String type = menucreate.MainCharDataAux[3][classes.AlignRstrctType];
 		String invert = menucreate.MainCharDataAux[3][classes.InvertRestrict];
@@ -212,6 +212,7 @@ public class AlignmentMenu extends javax.swing.JFrame {
 			good = true;
 			evil = true;
 		}
+		// why is this code in here twice?
 		else if (!restricted.equalsIgnoreCase("0x00")
 				&& !restricted.equalsIgnoreCase("0x0")
 				&& !restricted.equalsIgnoreCase("0")
@@ -227,6 +228,7 @@ public class AlignmentMenu extends javax.swing.JFrame {
 
 		// In normal case, set the button enables to match !inverted.
 		// Then as the restrictions are applied, set them equal to inverted.
+		// Sets then all enables if InvertRestric != 1
 		LGButton.setEnabled(!inverted);
 		LNButton.setEnabled(!inverted);
 		LEButton.setEnabled(!inverted);
@@ -237,22 +239,24 @@ public class AlignmentMenu extends javax.swing.JFrame {
 		CNButton.setEnabled(!inverted);
 		CEButton.setEnabled(!inverted);
 
-		if (evil) {
+        // if InvertRestric != 1, then this code disables the buttons
+        // based on if that type of alignment is restricted.
+		if (evil && moral) {
 			LEButton.setEnabled(inverted);
 			NEButton.setEnabled(inverted);
 			CEButton.setEnabled(inverted);
 		}
-		if (good) {
+		if (good && moral) {
 			LGButton.setEnabled(inverted);
 			NGButton.setEnabled(inverted);
 			CGButton.setEnabled(inverted);
 		}
-		if (chaotic) {
+		if (chaotic && ethical) {
 			CGButton.setEnabled(inverted);
 			CNButton.setEnabled(inverted);
 			CEButton.setEnabled(inverted);
 		}
-		if (lawful) {
+		if (lawful && ethical) {
 			LGButton.setEnabled(inverted);
 			LNButton.setEnabled(inverted);
 			LEButton.setEnabled(inverted);
@@ -268,11 +272,11 @@ public class AlignmentMenu extends javax.swing.JFrame {
 				TNButton.setEnabled(inverted);
 				NEButton.setEnabled(inverted);
 			}
-		}
+	}
 
         OKButton.setEnabled(false);
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -494,9 +498,9 @@ public class AlignmentMenu extends javax.swing.JFrame {
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // Add your handling code here:
-        menucreate.BlockWindow(false);        
+        menucreate.BlockWindow(false);
         setVisible(false);
-        dispose();        
+        dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
@@ -535,81 +539,81 @@ public class AlignmentMenu extends javax.swing.JFrame {
         menucreate.AbilitiesButton.setEnabled(true);
         menucreate.BlockWindow(false);
         setVisible(false);
-        dispose();        
+        dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
 
     private void CEButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CEButtonActionPerformed
         // Add your handling code here:
         GoodEvil = 15;
-        LawfulChaotic = 15;   
+        LawfulChaotic = 15;
         OKButton.setEnabled(true);
     }//GEN-LAST:event_CEButtonActionPerformed
 
     private void CNButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CNButtonActionPerformed
         // Add your handling code here:
         GoodEvil = 50;
-        LawfulChaotic = 15;        
+        LawfulChaotic = 15;
         OKButton.setEnabled(true);
     }//GEN-LAST:event_CNButtonActionPerformed
 
     private void CGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CGButtonActionPerformed
         // Add your handling code here:
         GoodEvil = 85;
-        LawfulChaotic = 15;       
+        LawfulChaotic = 15;
         OKButton.setEnabled(true);
     }//GEN-LAST:event_CGButtonActionPerformed
 
     private void NEButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NEButtonActionPerformed
         // Add your handling code here:
         GoodEvil = 15;
-        LawfulChaotic = 50;       
+        LawfulChaotic = 50;
         OKButton.setEnabled(true);
     }//GEN-LAST:event_NEButtonActionPerformed
 
     private void TNButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TNButtonActionPerformed
         // Add your handling code here:
         GoodEvil = 50;
-        LawfulChaotic = 50;       
+        LawfulChaotic = 50;
         OKButton.setEnabled(true);
     }//GEN-LAST:event_TNButtonActionPerformed
 
     private void NGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NGButtonActionPerformed
         // Add your handling code here:
         GoodEvil = 85;
-        LawfulChaotic = 50;       
+        LawfulChaotic = 50;
         OKButton.setEnabled(true);
     }//GEN-LAST:event_NGButtonActionPerformed
 
     private void LEButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LEButtonActionPerformed
         // Add your handling code here:
         GoodEvil = 15;
-        LawfulChaotic = 85;       
+        LawfulChaotic = 85;
         OKButton.setEnabled(true);
     }//GEN-LAST:event_LEButtonActionPerformed
 
     private void LNButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LNButtonActionPerformed
         // Add your handling code here:
         GoodEvil = 50;
-        LawfulChaotic = 85;       
+        LawfulChaotic = 85;
         OKButton.setEnabled(true);
     }//GEN-LAST:event_LNButtonActionPerformed
 
     private void LGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LGButtonActionPerformed
         // Add your handling code here:
         GoodEvil = 85;
-        LawfulChaotic = 85;       
+        LawfulChaotic = 85;
         OKButton.setEnabled(true);
     }//GEN-LAST:event_LGButtonActionPerformed
-    
+
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         menucreate.BlockWindow(false);
         setVisible(false);
         dispose();
     }//GEN-LAST:event_exitForm
-    
 
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup AlignmentButtons;
     private javax.swing.JToggleButton CEButton;
@@ -630,6 +634,6 @@ public class AlignmentMenu extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     public int GoodEvil;
     public int LawfulChaotic;
-    private JLabel alignlabel;   
-    private CreateMenu menucreate;    
+    private JLabel alignlabel;
+    private CreateMenu menucreate;
 }

@@ -1,6 +1,6 @@
-// ----------------------
-// CLS_FEAT_2DA
-// ----------------------
+// -------------------------
+// CLS_FEAT_2DA by WodahsEht
+// -------------------------
 // Basically this utility goes through any specified cls_feat_*.2da and determines which feats
 // are duplicated.  It's not exactly the fastest algorithm possible but it shouldn't take long at
 // all to parse all 2da's in one fell swoop.

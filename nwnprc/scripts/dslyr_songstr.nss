@@ -46,6 +46,6 @@ void main()
     effect eAOE = SupernaturalEffect(EffectAreaOfEffect(AOESize,"dslyr_songstra","dslyr_songstrb","dslyr_songstrc"));
     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, OBJECT_SELF,0.0,FALSE);
     
-    DecrementRemainingFeatUses(OBJECT_SELF, FEAT_LYRITHSONG1);
+    //DecrementRemainingFeatUses(OBJECT_SELF, FEAT_LYRITHSONG1);
     SetLocalInt(OBJECT_SELF, "SpellConc", 1);   
 }

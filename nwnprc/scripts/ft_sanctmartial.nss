@@ -204,7 +204,7 @@ void Vile()
 
    if (iEquip==2)
    {
-     if (GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
+     //if (GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
 
      oItem=GetPCItemLastEquipped();
      iType= GetBaseItemType(oItem);
@@ -233,13 +233,13 @@ void Vile()
 
      if (!Vile_Feat(iType)) return;
 
-     AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
+     AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
      AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
      SetLocalInt(oItem,"USanctMar",1);
   }
   else if (iEquip==1)
    {
-     if (GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
+     //if (GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
 
      oItem=GetPCItemLastUnequipped();
      iType= GetBaseItemType(oItem);
@@ -269,7 +269,7 @@ void Vile()
 
     if ( GetLocalInt(oItem,"USanctMar"))
     {
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
       RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
       DeleteLocalInt(oItem,"USanctMar");
     }
@@ -280,41 +280,6 @@ void Vile()
 
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
      iType= GetBaseItemType(oItem);
-
-     if (GetHasFeat(FEAT_UNHOLY_STRIKE))
-     {
-        object oItem2=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
-
-        switch (iType)
-        {
-
-            case BASE_ITEM_SHORTBOW:
-            case BASE_ITEM_LONGBOW:
-                oItem=GetItemInSlot(INVENTORY_SLOT_ARROWS);
-                break;
-            case BASE_ITEM_LIGHTCROSSBOW:
-            case BASE_ITEM_HEAVYCROSSBOW:
-                oItem=GetItemInSlot(INVENTORY_SLOT_BOLTS);
-                break;
-            case BASE_ITEM_SLING:
-                oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
-                break;
-        }
-
-        if ( GetLocalInt(oItem,"USanctMar"))
-        {
-            RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
-            RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
-            DeleteLocalInt(oItem,"USanctMar");
-        }
-        if ( GetLocalInt(oItem2,"USanctMar"))
-        {
-            RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
-            RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
-            DeleteLocalInt(oItem2,"USanctMar");
-        }
-        return;
-     }
 
      switch (iType)
      {
@@ -338,7 +303,7 @@ void Vile()
 
      if (Vile_Feat(iType) &&  (!GetLocalInt(oItem,"USanctMar")) )
      {
-       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
+       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
        SetLocalInt(oItem,"USanctMar",1);
      }
@@ -346,7 +311,7 @@ void Vile()
      iType= GetBaseItemType(oItem);
       if ( Vile_Feat(iType) &&  (!GetLocalInt(oItem,"USanctMar")))
      {
-       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
+       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
        SetLocalInt(oItem,"USanctMar",1);
      }

@@ -1,0 +1,11 @@
+* LocalInts from SetCompositeBonus() when applied to the skin need to be
+  added to DeletePRCLocalInts() in prc_inc_function.
+
+* LocalInts from SetCompositeBonus() when applied to equipment need to be
+  added to DeletePRCLocalIntsT() in inc_item_props.
+
+* LocalInts from SetCompositeDamageBonus() need to be added to
+  DeletePRCLocalIntsT() in inc_item_props.
+
+* LocalInts in and finally SetCompositeAttackBonus() need to be added to
+  DeletePRCLocalInts() in prc_inc_function.

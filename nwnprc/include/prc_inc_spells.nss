@@ -276,7 +276,7 @@ int GetArcanePRCLevels (object oCaster)
            +  (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, oCaster) + 1) / 2
 
                  +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
                  
@@ -322,7 +322,7 @@ int GetDivinePRCLevels (object oCaster)
            +  (GetLevelByClass(CLASS_TYPE_ORCUS, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oCaster) + 1) / 2
 
                  +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 
@@ -860,7 +860,7 @@ void PRCBonusDamage (object oTarget)
 int SpellBetrayalDamage(object oTarget, object oCaster)
 {
      int iDam = 0;
-     int ThrallLevel = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, oCaster);
+     int ThrallLevel = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, oCaster) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oCaster);
      
      if(ThrallLevel >= 2)
      {
@@ -878,7 +878,7 @@ int SpellBetrayalDamage(object oTarget, object oCaster)
 int SpellStrikeDamage(object oTarget, object oCaster)
 {
      int iDam = 0;
-     int ThrallLevel = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, oCaster);
+     int ThrallLevel = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, oCaster) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oCaster);
      
      if(ThrallLevel >= 6)
      {

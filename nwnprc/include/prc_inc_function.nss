@@ -43,6 +43,9 @@ void EvalPRCFeats(object oPC)
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESC, oPC);
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESE, oPC);
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESA, oPC);
+    
+    int iThrallOfGrazzt =  GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, oPC);
+        iThrallOfGrazzt += GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oPC);
 
     // special add atk bonus equal to Enhancement
     ExecuteScript("ft_sanctmartial", oPC);
@@ -99,7 +102,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC) > 0) ExecuteScript("prc_outlawroad", oPC);
     if(GetLevelByClass(CLASS_TYPE_ALAGHAR, oPC) > 0)             ExecuteScript("prc_alaghar", oPC);
     if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)       DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
-    if(GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, oPC) > 0)    ExecuteScript("tog", oPC);
+    if(iThrallOfGrazzt > 0)                                      ExecuteScript("tog", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);

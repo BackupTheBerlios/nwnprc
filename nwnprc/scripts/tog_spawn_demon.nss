@@ -20,7 +20,8 @@ int ScaleSummonedDemon(object oDemon)
     }
 
     // Target level is masters shadowdancer classlevels -1
-    int nLevelTo = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, GetMaster(oDemon));
+    
+    int nLevelTo = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, GetMaster(oDemon)) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, GetMaster(oDemon)); 
     
     if(nLevelTo >= 4 && nLevelTo < 9) nLevelTo = 5;
     if(nLevelTo <= 9) nLevelTo = 10;

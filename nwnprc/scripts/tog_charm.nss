@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int nMetaMagic = GetMetaMagicFeat();
     
     //int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int CasterLvl = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, OBJECT_SELF);
+    int CasterLvl = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, OBJECT_SELF) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, OBJECT_SELF);
     
     int nDuration = 2 + CasterLvl/3;
     int nPenetr = CasterLvl + SPGetPenetr();

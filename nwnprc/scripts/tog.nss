@@ -33,7 +33,7 @@ void main()
     // Declare main variables.
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
-    int nLevel = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT, OBJECT_SELF);
+    int nLevel = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, OBJECT_SELF) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, OBJECT_SELF);
        
     Dark_Charisma(oPC, oSkin, nLevel);
 }

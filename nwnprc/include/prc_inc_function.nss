@@ -146,6 +146,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oPC, "KatanaFinesseL");
     DeleteLocalInt(oPC, "IntuitiveAttackR");
     DeleteLocalInt(oPC, "IntuitiveAttackL");
+    DeleteLocalInt(oPC, "IntuitiveAttackUnarmed");
     DeleteLocalInt(oPC, "ManArmsGenSpe");
     DeleteLocalInt(oPC, "AbsoluteAmbidex");
     DeleteLocalInt(oPC, "ZulkirDefender");

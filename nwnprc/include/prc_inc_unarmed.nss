@@ -2,6 +2,7 @@
 #include "prc_ipfeat_const"
 #include "prc_class_const"
 #include "prc_racial_const"
+#include "prc_spell_const"
 #include "inc_item_props"
 
 // Determines the amount of damage a character can do.
@@ -15,6 +16,7 @@ void UnarmedFeats(object oCreature);
 // Call this from a feat evaluation script.
 void UnarmedFists(object oCreature);
 
+const int MONST_DAMAGE_1D2   = 1;
 const int MONST_DAMAGE_1D3   = 2;
 const int MONST_DAMAGE_1D4   = 3;
 const int MONST_DAMAGE_1D6   = 8;
@@ -43,6 +45,31 @@ void CleanExtraFists(object oCreature)
             DestroyObject(oClean);
         oClean = GetNextItemInInventory(oCreature);
     }
+}
+
+// Remove the unarmed penalty effect
+void RemoveUnarmedAttackEffects(object oCreature)
+{
+    effect e = GetFirstEffect(oCreature);
+    
+    while (GetIsEffectValid(e))
+    {
+        if (GetEffectSpellId(e) == SPELL_UNARMED_ATTACK_PEN)
+            RemoveEffect(oCreature, e);
+
+        e = GetNextEffect(oCreature);
+    }
+}
+
+// Add the unarmed penalty effect -- the DR piercing property gives an unwanted
+// attack bonus.  This clears it up.
+void ApplyUnarmedAttackEffects(object oCreature)
+{
+    object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(OBJECT_SELF));
+
+    AssignCommand(oCastingObject, ActionCastSpellAtObject(SPELL_UNARMED_ATTACK_PEN, oCreature, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+    
+    DestroyObject(oCastingObject, 6.0);
 }
 
 // Determines the amount of damage a character can do.
@@ -82,20 +109,18 @@ int FindUnarmedDamage(object oCreature)
     // Henshin Mystic stacks with monk levels (or uses monk progression.)
     if (iHenshin) iMonk += iHenshin;
 
-    // Add Shou Disciple levels to all unarmed base classes
-    if (iShou)
-    {
-        if (iBrawler) iBrawler += iShou;
-        if (iMonk)    iMonk    += iShou;
-    }
+    // Shou Disciple stacks with monk levels (or uses monk progression.)
+    if (iShou) iMonk += iShou;
 
     // Brawler has a very simple damage progression (regardless of size):    
     if (iBrawler) iBrawlerDamage = iBrawler / 6 + 2;   // 1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
   
-    // Monk 3e Dmg Table - 1d6, 1d8, 1d10, 1d12, 1d20
+    // Monk progression stops after level 16:
     if (iMonk > 16) iMonk = 16;
+
+    // Monk 3e Dmg Table - 1d6, 1d8, 1d10, 1d12, 1d20
     if (iMonk) iMonkDamage = iMonk / 4 + 2;
-    if (iMonkDamage > 5) iMonkDamage = 7;
+    if (iMonkDamage > 5) iMonkDamage = 7; // skip 2d6, go to 1d20
    
     // Small monks get damage penalty -- 1d4, 1d6, 1d8, 1d10, 2d6
     if (bSmallSize) iMonkDamage = iMonk / 4 + 1;
@@ -105,7 +130,7 @@ int FindUnarmedDamage(object oCreature)
     // without stacking.
     if (iShou > 0) iShouDamage = iShou + 1; // Lv. 1: 1d6, Lv. 2: 1d8, Lv. 3: 1d10
     if (iShou > 3) iShouDamage--;           // Lv. 4: 1d10, Lv. 5: 2d6
-
+    
     // Certain race pack creatures use different damages.
     if      (GetRacialType(oCreature) == RACIAL_TYPE_MINOTAUR)   iRacialDamage = 3;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_TANARUKK)   iRacialDamage = 2;
@@ -114,6 +139,22 @@ int FindUnarmedDamage(object oCreature)
     else if (GetRacialType(oCreature) == RACIAL_TYPE_CENTAUR)    iRacialDamage = 2;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_ILLITHID)   iRacialDamage = 1;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_LIZARDFOLK) iRacialDamage = 1;
+
+    // For Initiate of Draconic Mysteries
+    if      (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDieIncrease = 2;
+    else if (GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature)) iDieIncrease = 1;
+
+    // Monks and monk-like classes deal no additional damage when wearing any armor
+    if (iMonkDamage > 0 || iShouDamage > 0)
+    {
+        object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature);
+                
+        if (GetBaseAC(oArmor) > 0)
+        {
+            iMonkDamage = 0;
+            iShouDamage = 0;
+        }
+    }
    
     // Future unarmed classes:  if you do your own damage, add in "comparisons" below here.
     iDamageToUse = (iMonkDamage    > iDamageToUse) ? iMonkDamage    : iDamageToUse;
@@ -132,18 +173,24 @@ int FindUnarmedDamage(object oCreature)
         DeleteLocalInt(oCreature, "UsesRacialAttack");
     }
     
+    // Small characters get a penalty to damage if they've somehow ended up
+    // with no damage bonus (monk wearing armor or no monk levels but
+    // IoDM levels, stuff like that.)
+    if (iDamageToUse == 0 && bSmallSize) iDamageToUse = -1;
+
     // Medium+ monks have some special values on the table:
     if (iDamageToUse == iMonkDamage && !bSmallSize) bUseMonkAlt = TRUE;
-    
+
     // This is where the correct damage dice is calculated
     if (iDamageToUse > 8) iDamageToUse = 8;
     
-    // For Initiate of Draconic Mysteries
-    if      (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDieIncrease = 2;
-    else if (GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature)) iDieIncrease = 1;
-    
     switch (iDamageToUse)
     {
+        case -1:
+            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D4;
+            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D3;
+            else                            iDamage = MONST_DAMAGE_1D2;
+            break;
         case 0:
             if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D6;
             else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D4;
@@ -247,14 +294,19 @@ void UnarmedFeats(object oCreature)
 // Creates/strips a creature weapon and applies bonuses.  Large chunks stolen from SoulTaker.
 void UnarmedFists(object oCreature)
 {
+    RemoveUnarmedAttackEffects(oCreature);
+
     object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature);
     object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
     object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCreature);
        
     int iMonk = GetLevelByClass(CLASS_TYPE_MONK, oCreature);
     int iShou = GetLevelByClass(CLASS_TYPE_SHOU, oCreature);
+    int iSacFist = GetLevelByClass(CLASS_TYPE_SACREDFIST, oCreature);
+    int iHenshin = GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oCreature);
     int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
     int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
+    int iMonkEq = iMonk + iShou + iSacFist + iHenshin;
     
     if (!GetIsObjectValid(oWeapL))
     {
@@ -274,33 +326,26 @@ void UnarmedFists(object oCreature)
     
     // Clean up the mess of extra fists made on taking first level.
     DelayCommand(1.0,CleanExtraFists(oCreature));
-
+    
     if (GetTag(oWeapL) != "NW_IT_CREWPB010") return;
     
-    int iKi = GetHasFeat(FEAT_KI_STRIKE,oCreature) ? 1 : 0 ;
-        iKi = (iMonk > 12)                         ? 2 : iKi;
-        iKi = (iMonk > 15)                         ? 3 : iKi;
+    // Determine the character's capacity to pierce DR.
+    int iKi = (iMonkEq > 9)  ? 1 : 0;
+        iKi = (iMonkEq > 12) ? 2 : iKi;
+        iKi = (iMonkEq > 15) ? 3 : iKi;
     
-    int bDragClaw = GetHasFeat(FEAT_CLAWDRAGON,oCreature) ? 1: 0;
-        bDragClaw = GetHasFeat(FEAT_CLAWENH2,oCreature)   ? 2: bDragClaw;
-        bDragClaw = GetHasFeat(FEAT_CLAWENH3,oCreature)   ? 3: bDragClaw;    
+    int iDragClaw = GetHasFeat(FEAT_CLAWDRAGON,oCreature) ? 1: 0;
+        iDragClaw = GetHasFeat(FEAT_CLAWENH2,oCreature)   ? 2: iDragClaw;
+        iDragClaw = GetHasFeat(FEAT_CLAWENH3,oCreature)   ? 3: iDragClaw;    
               
     int iBrawlEnh = iBrawler / 6;
          
     int iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_4,oCreature) ? 1 : 0 ;
         iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_5,oCreature) ? 2 : iEpicKi ;
-    
-    int Enh = 0;
-          
-    iKi += iEpicKi;
-    bDragClaw += iEpicKi;
 
-    Enh = (iKi > Enh)       ? iKi       : Enh;
-    Enh = (iBrawlEnh > Enh) ? iBrawlEnh : Enh;
-    Enh = (bDragClaw > Enh) ? bDragClaw : Enh;
-          
-    object oItem = GetItemInSlot(INVENTORY_SLOT_ARMS,oCreature);
-        
+    // The total enhancement to the fist is the sum of all the enhancements above
+    int iEnh = iKi + iDragClaw + iBrawlEnh + iEpicKi;
+
     //Strip the Fist.
     itemproperty ip = GetFirstItemProperty(oWeapL);
     while (GetIsItemPropertyValid(ip))
@@ -308,12 +353,14 @@ void UnarmedFists(object oCreature)
         RemoveItemProperty(oWeapL, ip);
         ip = GetNextItemProperty(oWeapL);
     }
-    
+
     // Leave the fist blank if weapons are equipped.  The only way a weapon will
     // be equipped on the left hand is if there is a weapon in the right hand.
     if (GetIsObjectValid(oRighthand)) return;
 
     // Add glove bonuses.
+    object oItem = GetItemInSlot(INVENTORY_SLOT_ARMS,oCreature);
+    int iGloveEnh = 0;
     if (GetIsObjectValid(oItem))
     {
         int iType = GetBaseItemType(oItem);
@@ -343,7 +390,8 @@ void UnarmedFists(object oCreature)
                         break;
                     case ITEM_PROPERTY_ATTACK_BONUS:
                         int iCost = GetItemPropertyCostTableValue(ip);
-                        Enh = (iCost>Enh) ? iCost:Enh;
+                        iGloveEnh = (iCost>iGloveEnh) ? iCost:iGloveEnh;
+                        iEnh =      (iCost>iEnh)      ? iCost:iEnh;
                         break;
                 }
                 ip = GetNextItemProperty(oItem);
@@ -358,7 +406,7 @@ void UnarmedFists(object oCreature)
                     case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
 	            case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
 	            case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
-	            if (GetItemPropertyCostTableValue(ip) > Enh)
+	            if (GetItemPropertyCostTableValue(ip) > iEnh)
 	                AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
                     break;
                 }
@@ -366,10 +414,35 @@ void UnarmedFists(object oCreature)
 	    }
         }
     }
-    
-    int iMonsterDamage = FindUnarmedDamage(oCreature);
 
+    // Weapon finesse or intuitive attack?
+    SetLocalInt(oCreature, "UsingCreature", TRUE);
+    ExecuteScript("prc_intuiatk", oCreature);
+    DelayCommand(1.0f, DeleteLocalInt(oCreature, "UsingCreature"));
+
+    // Add the appropriate damage to the fist.
+    int iMonsterDamage = FindUnarmedDamage(oCreature);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iMonsterDamage),oWeapL);
 
-    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(Enh),oWeapL);
+    // Cool VFX when striking unarmed
+    if (iMonkEq > 9)
+        DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_KI_STRIKE), oWeapL));
+
+    // Add damage resistance penetration.
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(iEnh), oWeapL);
+
+    // This adds creature weapon finesse and a penalty to offset the DR penetration attack bonus.
+    SetLocalInt(oCreature, "UnarmedEnhancement", iEnh);
+    SetLocalInt(oCreature, "UnarmedEnhancementGlove", iGloveEnh);
+    ApplyUnarmedAttackEffects(oCreature);
+
+    if (GetLocalInt(oCreature, "UnarmedSubSystemMessage") != TRUE)
+    {
+        SetLocalInt(oCreature, "UnarmedSubSystemMessage", TRUE);
+        DelayCommand(6.1f, SendMessageToPC(oCreature, "This character uses the PRC's unarmed system.  This system has been created to"));
+        DelayCommand(6.2f, SendMessageToPC(oCreature, "work around many Aurora engine bugs and limitations. Your attack roll may appear to be"));
+        DelayCommand(6.3f, SendMessageToPC(oCreature, "incorrect on the character's stats. However, the attack rolls should be correct in"));
+        DelayCommand(6.4f, SendMessageToPC(oCreature, "combat. Disregard any attack effects that seem extra: they are part of the workaround."));
+        DelayCommand(600.0f, DeleteLocalInt(oCreature, "UnarmedSubSystemMessage"));
+    }
 }

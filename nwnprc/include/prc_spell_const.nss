@@ -10,6 +10,7 @@ const int SPELL_SLIME_WAVE = 2023;
 
 //damage increase spells for ActionCastSpellOnSelf
 const int SPELL_SET_COMPOSITE_ATTACK_BONUS	= 2732;
+const int SPELL_UNARMED_ATTACK_PEN		= 2734;
 const int SPELL_BATTLERAGER_DAMAGE		= 2728;
 const int SPELL_HEXTOR_DAMAGE			= 2729;
 const int SPELL_THAYANKNIGHT_DAMAGE		= 2730;

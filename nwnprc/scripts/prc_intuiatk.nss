@@ -32,6 +32,30 @@ int isSimple(object oItem)
       return 0;
 }
 
+int isLight(object oItem)
+{
+     // weapon finesse works with dagger, handaxe, kama,
+     // kukri, light hammer, mace, rapier, short sword,
+     // whip, and unarmed strike.
+     int iType = GetBaseItemType(oItem);
+     
+     switch (iType)
+     {
+        case BASE_ITEM_DAGGER:
+        case BASE_ITEM_HANDAXE:
+        case BASE_ITEM_KAMA:
+        case BASE_ITEM_KUKRI:
+        case BASE_ITEM_LIGHTHAMMER:
+        case BASE_ITEM_LIGHTMACE:
+        case BASE_ITEM_RAPIER:
+        case BASE_ITEM_SHORTSWORD:
+        case BASE_ITEM_WHIP:
+            return TRUE;
+            break;
+     }
+     return FALSE;
+}
+
 void main()
 {
    object oPC = OBJECT_SELF;
@@ -78,39 +102,97 @@ void main()
 
    }
 
-   if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
+   if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC) || GetHasFeat(FEAT_WEAPON_FINESSE, oPC))
    {
+      // shorthand - IA is intuitive attack and WF is weapon finesse   
       object oItem ;
       int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
       int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
       int iDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC);
       int iWis = GetAbilityModifier(ABILITY_WISDOM,oPC);
-      int iCreature = GetLocalInt(oPC, "CreatureFinesse");
-      int iMod = (iWis > iStr) ? (iWis - iStr) : 0;
-      int iXBowEq = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_LIGHTCROSSBOW ||
+      int iIABonus = 0;
+      int iWFBonus = 0;
+      int bHasIA = GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC);
+      int bHasWF = GetHasFeat(FEAT_WEAPON_FINESSE, oPC);
+      int bUseIA = FALSE;
+      int bUseWF = FALSE;
+      int bIsSimpleR = isSimple(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC));
+      int bIsSimpleL = isSimple(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC));
+      int bIsLightR = isLight(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC));
+      int bIsLightL = isLight(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC));
+      int bXBowEq = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_LIGHTCROSSBOW ||
                     GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_HEAVYCROSSBOW;
-      
-      if (GetHasFeat(FEAT_WEAPON_FINESSE,oPC) && iWis > iDex && iDex > iStr)
-          iMod = iWis - iDex;
-          
-      if (GetHasFeat(FEAT_ZEN_ARCHERY,oPC) && iXBowEq)
-          iMod = 0;
+      int bUnarmed = GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == FALSE;
+      int bCreWeap = bUnarmed && GetLocalInt(oPC, "UsingCreature") == TRUE;
 
+      // Initialize all these values to 0:
       SetCompositeAttackBonus(oPC, "IntuitiveAttackR", 0, ATTACK_BONUS_ONHAND);
       SetCompositeAttackBonus(oPC, "IntuitiveAttackL", 0, ATTACK_BONUS_OFFHAND);
-      
-      if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD && iMod > iCreature)
+      SetCompositeAttackBonus(oPC, "InutitiveAttackUnarmed", 0);
+      SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", 0);
+
+      // only consider Weapon Finesse if Dex is higher than Str
+      if (bHasWF && iDex > iStr)
       {
-          if (!GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC))) // unarmed
-          {
+          bUseWF = TRUE;
+          iWFBonus = iDex - iStr;
+      }
+
+      // only consider Intuitive Attack if Wis is higher than Str and character is good
+      if (bHasIA && iWis > iStr && GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
+      {
+          bUseIA = TRUE;
+          iIABonus = iWis - iStr;
+      }
+      
+      // do not consider Intuitive Attack if the character is using a crossbow and the zen archery feat.
+      if (GetHasFeat(FEAT_ZEN_ARCHERY, oPC) && bXBowEq)
+      {
+          bUseIA = FALSE;
+      }
+
+      // If the character only has intuitive attack, add appropriate bonuses.
+      if (bUseIA && !bUseWF)
+      {
+          if (bIsSimpleR)
+              SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iIABonus, ATTACK_BONUS_ONHAND);
+          else if (bUnarmed)
+              SetCompositeAttackBonus(oPC, "IntuitiveAttackUnarmed", iIABonus);
+
+          if (bIsSimpleL)
+              SetCompositeAttackBonus(oPC, "IntuitiveAttackL", iIABonus, ATTACK_BONUS_OFFHAND);
+      }
+      // If the character has both intuitive attack and weapon finesse, things can get hairy:
+      else if (bUseWF && bUseIA)
+      {
+          int iMod = (iWis > iDex) ? (iWis - iDex) : (0);
+          
+          if (bIsSimpleR && !bIsLightR)
+              SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iIABonus, ATTACK_BONUS_ONHAND);
+          else if (bIsSimpleR && bIsLightR)
               SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iMod, ATTACK_BONUS_ONHAND);
-          }
-          else if (isSimple(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC))) // right hand
+
+          if (bIsSimpleL && !bIsLightL)
+              SetCompositeAttackBonus(oPC, "IntuitiveAttackL", iIABonus, ATTACK_BONUS_OFFHAND);
+          else if (bIsSimpleL && bIsLightL)
+              SetCompositeAttackBonus(oPC, "IntuitiveAttackL", iMod, ATTACK_BONUS_OFFHAND);
+
+          if (bCreWeap)
           {
-                  SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iMod, ATTACK_BONUS_ONHAND);
-              if (isSimple(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC))) // left hand
-                  SetCompositeAttackBonus(oPC, "IntuitiveAttackL", iMod, ATTACK_BONUS_OFFHAND);
+              if (iMod > 0)
+                  SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", iIABonus); // This will be added by SPELL_UNARMED_ATTACK_PEN
+              else
+                  SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", iWFBonus); // This will be added by SPELL_UNARMED_ATTACK_PEN
           }
+          else if (!bCreWeap && bUnarmed)
+          {
+              SetCompositeAttackBonus(oPC, "IntuitiveAttackUnarmed", iMod);
+          }
+      }
+      // If the character has only weapon finesse and a creature weapon
+      else if (bUseWF && !bUseIA && bCreWeap)
+      {
+          SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", iWFBonus); // This will be added by SPELL_UNARMED_ATTACK_PEN
       }
    }
 }

@@ -2676,6 +2676,10 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           int iDamage = FindUnarmedDamage(oAttacker);
           switch(iDamage)
           {
+               case MONST_DAMAGE_1D2:
+                    iNumSides = 2;
+                    iNumDice = 1;
+                    break;
                case MONST_DAMAGE_1D3:
                     iNumSides = 3;
                     iNumDice = 1;
@@ -3246,6 +3250,10 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           int iDamage = FindUnarmedDamage(oAttacker);
           switch(iDamage)
           {
+               case MONST_DAMAGE_1D2:
+                    sAttackVars.iMainNumSides = 2;
+                    sAttackVars.iMainNumDice = 1;
+                    break;
                case MONST_DAMAGE_1D3:
                     sAttackVars.iMainNumSides = 3;
                     sAttackVars.iMainNumDice = 1;

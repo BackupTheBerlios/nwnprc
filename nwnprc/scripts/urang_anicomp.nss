@@ -23,7 +23,7 @@ void AnimalCompanion()
     int nClass = GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER);
     string sRef ;
     if (nClass<10) sRef = "nw_ac_dwlf0"+IntToString(nClass);
-    else sRef = "nw_ac_wolf"+IntToString(nClass);
+    else sRef = "nw_ac_dwlf"+IntToString(nClass);
  
     object oAni = CreateLocalNPC(OBJECT_SELF,ASSOCIATE_TYPE_ANIMALCOMPANION,sRef,locSummon,1);
     effect eDomi = SupernaturalEffect(EffectCutsceneDominated());

@@ -119,3 +119,4 @@ const int CLASS_TYPE_PSION				= 145;
 const int CLASS_TYPE_PSYWARRIOR				= 146;
 const int CLASS_TYPE_SOULKNIFE				= 147;
 const int CLASS_TYPE_WILDER				= 148;
+const int CLASS_TYPE_ALAGHAR                    = 140;

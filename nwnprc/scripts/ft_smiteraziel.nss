@@ -128,8 +128,7 @@ void main()
 
    int iEnhancement = GetWeaponEnhancement(oWeap);
    int iDamageType = GetWeaponDamageType(oWeap);
-   int iWeapBonus=GetWeaponAtkBonusIP(oWeap,oTarget);
-   int iEvil  =(GetAlignmentGoodEvil(oTarget)==ALIGNMENT_EVIL)? 1:0;
+   int iEvil  =1 ;
    int iOuts  =(GetRacialType(oTarget)==RACIAL_TYPE_UNDEAD ||GetRacialType(oTarget)== RACIAL_TYPE_OUTSIDER) && iEvil ? 1 :0 ;
 
    int iSmit=iEvil;

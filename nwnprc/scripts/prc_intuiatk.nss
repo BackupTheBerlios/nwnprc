@@ -32,18 +32,18 @@ void main()
    object oPC = OBJECT_SELF;
    object oSkin = GetPCSkin(oPC);
 
-if((GetAbilityModifier(ABILITY_WISDOM,oPC) > GetAbilityModifier(ABILITY_STRENGTH,oPC))  
+if((GetAbilityModifier(ABILITY_WISDOM,oPC)) > (GetAbilityModifier(ABILITY_STRENGTH,oPC)))  
 {
-if(!((GetHasFeat(FEAT_WEAPON_FINESSE,oPC) && (GetAbilityModifier(ABILITY_DEXTERITY,oPC) > GetAbilityModifier(ABILITY_WISDOM,oPC)
+if(!((GetHasFeat(FEAT_WEAPON_FINESSE,oPC)) && (GetAbilityModifier(ABILITY_DEXTERITY,oPC) > GetAbilityModifier(ABILITY_WISDOM,oPC)))
 { 
  if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
    {
       object oItem ;
       int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
 // this wasn't preventing stacking, so we do the wis check up above, and make sure it is higher than STR or DEX before even BOTHERING to call the function. ~ Lock
-//    int iStr =  GetAbilityModifier(ABILITY_STRENGTH,oPC);
-//    int iWis =  GetAbilityModifier(ABILITY_WISDOM,oPC);
-//    iWis = iWis > iStr ? iWis : 0;
+     int iStr =  GetAbilityModifier(ABILITY_STRENGTH,oPC);
+     int iWis =  GetAbilityModifier(ABILITY_WISDOM,oPC);
+     iWis = iWis - iStr
 
       if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD) iWis =0;
       

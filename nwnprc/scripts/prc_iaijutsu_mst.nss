@@ -91,12 +91,12 @@ void main()
     else
         DuelistCannyDefense(oPC, oSkin, FALSE);
 
-    int bStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
-    int bDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
-    int bKatFinBon = (bDex > bStr) ? bDex - bStr : 0;
+    //int bStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
+    //int bDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
+    //int bKatFinBon = (bDex > bStr) ? bDex - bStr : 0;
 
-    SetCompositeAttackBonus(oPC, "KatanaFinesseR", 0, ATTACK_BONUS_ONHAND);
-    SetCompositeAttackBonus(oPC, "KatanaFinesseL", 0, ATTACK_BONUS_OFFHAND);
+    //SetCompositeAttackBonus(oPC, "KatanaFinesseR", 0, ATTACK_BONUS_ONHAND);
+    //SetCompositeAttackBonus(oPC, "KatanaFinesseL", 0, ATTACK_BONUS_OFFHAND);
 
     KatanaFinesse(oPC);
 }

@@ -103,23 +103,35 @@ void main()
     object oTarget = GetSpellTargetObject();
     object oPC = OBJECT_SELF;
     object oAnimate;
+    location lTarget;
     if (GetIsValidAnimate(oTarget))
     {
-        location lTarget = GetLocation(oTarget);
+		if (GetItemPossessor(oTarget) == OBJECT_INVALID)
+		{
+	        lTarget = GetLocation(oTarget);
+		}
+		else
+		{
+        	lTarget = GetLocation(GetItemPossessor(oTarget));
+		}
         if (GetBaseItemType(oTarget) == BASE_ITEM_ARMOR)
         {
+			SendMessageToPC(OBJECT_SELF, "is armour");
             int iArmourClass = GetItemACValue(oTarget);
             if (iArmourClass>4)
             {
                 oAnimate = CreateObject(OBJECT_TYPE_CREATURE, "anim_armour_5_8", lTarget, FALSE, "PRC_Spell_Animated_Object");
+				SendMessageToPC(OBJECT_SELF, "5-8");
             }
             else if (iArmourClass>0)
             {
                 oAnimate = CreateObject(OBJECT_TYPE_CREATURE, "anim_armour_1_4", lTarget, FALSE, "PRC_Spell_Animated_Object");
+                SendMessageToPC(OBJECT_SELF, "1-4");
             }
             else
             {
                 oAnimate = CreateObject(OBJECT_TYPE_CREATURE, "anim_armour_0", lTarget, FALSE, "PRC_Spell_Animated_Object");
+				SendMessageToPC(OBJECT_SELF, "0");
             }
             if (iArmourClass>0)
             {
@@ -129,6 +141,7 @@ void main()
             object oNewTarget = CopyObject(oTarget, GetLocation(oAnimate),oAnimate);
             DestroyObject(oTarget,1.0);
             AssignCommand(oAnimate, ActionEquipItem(oNewTarget,INVENTORY_SLOT_CHEST));
+			SendMessageToPC(OBJECT_SELF, "done armour");
         }
         else
         {
@@ -153,6 +166,10 @@ void main()
         DelayCommand(3.5, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDom, oAnimate));
 //            AddHenchman(OBJECT_SELF, oAnimate);
     }
+    else
+    {
+		SendMessageToPC(OBJECT_SELF, "Invalide Target");
+	}
 }
 
 

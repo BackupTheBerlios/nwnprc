@@ -13,8 +13,6 @@
 #include "inc_item_props"
 #include "nw_i0_spells"
 
-void KeepProperActionMode(object oPC, int ActionMode);
-
 void main()
 {
      object oPC = OBJECT_SELF;
@@ -26,10 +24,6 @@ void main()
           int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST, oPC);
           
           SetCompositeBonus(oSkin, "ElaborateParrySkillBonus", iDuelistLevel, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);
-          SetActionMode(oPC, ACTION_MODE_EXPERTISE, FALSE);
-          SetActionMode(oPC, ACTION_MODE_IMPROVED_EXPERTISE, FALSE);
-          SetActionMode(oPC, ACTION_MODE_PARRY, TRUE);
-          DelayCommand(6.0, KeepProperActionMode(oPC, ACTION_MODE_PARRY));
           
           FloatingTextStringOnCreature("*Elaborate Parry On*", oPC, FALSE);
           SetLocalInt(oPC, "HasElaborateParry", 1);
@@ -38,32 +32,9 @@ void main()
      {         
           // Removes effects from any version of the spell
           SetCompositeBonus(oSkin, "ElaborateParrySkillBonus", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);
-          
-          RemoveSpecificEffect(EFFECT_TYPE_AC_INCREASE, oPC);
-          RemoveSpecificEffect(EFFECT_TYPE_ATTACK_DECREASE, oPC);          
-          
-          SetActionMode(oPC, ACTION_MODE_PARRY, FALSE);
-          SetActionMode(oPC, ACTION_MODE_EXPERTISE, FALSE);
-          SetActionMode(oPC, ACTION_MODE_IMPROVED_EXPERTISE, FALSE);
+          RemoveSpellEffects(SPELL_ELABORATE_PARRY_FD, oPC, oPC);
           
           FloatingTextStringOnCreature("*Elaborate Parry Off*", oPC, FALSE);
           SetLocalInt(oPC, "HasElaborateParry", 0);
-     }
-}
-
-// Keeps the player in Parry Mode if they are in combat.
-void KeepProperActionMode(object oPC, int ActionMode)
-{
-     if(GetLocalInt(oPC, "HasElaborateParry") == 1 && GetIsFighting(oPC) )
-     {
-          if(!GetActionMode(oPC, ActionMode) )
-          {
-               SetActionMode(oPC, ActionMode, TRUE);
-          }
-     }
-     
-     if(GetLocalInt(oPC, "HasElaborateParry") == 1 )
-     {
-          DelayCommand(3.0, KeepProperActionMode(oPC, ActionMode) );
      }
 }

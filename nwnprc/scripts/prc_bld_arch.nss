@@ -38,7 +38,7 @@ void main()
 
     // Select last item equiped or unequiped.
     if (iEquip ==1)  oItem = GetPCItemLastUnequipped();
-    else             oItem = GetPCItemLastEquipped();
+    //else             oItem = GetPCItemLastEquipped();
 
     //if the item unequiped was destryed, the bow will sometimes loss its bonuses
     //it would apper that the next item along is being targeted, but when check it dosnt apare to be the bow
@@ -58,5 +58,18 @@ void main()
 			  if (iEquip ==1)  RemoveSpecificProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", -1, DURATION_TYPE_TEMPORARY);
 			  else             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 			  break;
+	}
+	
+	oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+	if (GetBaseItemType(oItem) == BASE_ITEM_LONGBOW)
+	{
+	    SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
+	    SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);  
+	}
+	
+	oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+	if (GetIsObjectValid(oItem))
+	{
+	    IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 	}
 }

@@ -16,7 +16,7 @@
     Altered by Boneshank, for purposes of the Epic Spellcasting project.
 */
 #include "nw_i0_spells"
-#include "x2_inc_toollib"
+//#include "x2_inc_toollib"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 void main()

@@ -9,13 +9,35 @@
 //:://////////////////////////////////////////////
 
 #include "nw_i0_spells"
-#include "x0_i0_petrify"
+//#include "x0_i0_petrify"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
 
 void RunNailedToTheSky(object oTarget, int nDC);
 
+void Petrify(object oTarget)
+{
+    effect ePetrify = EffectPetrify();
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePetrify, oTarget);
+}
+
+void RemoveEffectOfType(object oTarget, int nEffectType)
+{
+    effect eEff = GetFirstEffect(oTarget);
+    while (GetIsEffectValid(eEff)) {
+        if ( GetEffectType(eEff) == nEffectType) { 
+            RemoveEffect(oTarget, eEff);
+        }
+        eEff = GetNextEffect(oTarget);
+    }
+}
+// Removes the petrification effect.
+void Depetrify(object oTarget)
+{
+    RemoveEffectOfType(oTarget, EFFECT_TYPE_PETRIFY);
+}
+    
 void main()
 {
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -11,10 +11,45 @@
 #include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "x2_inc_toollib"
+//#include "x2_inc_toollib"
 //#include "prc_alterations"
 
 void DoWinterCheck(object oArea, float fDuration);
+
+const int X2_TL_GROUNDTILE_ICE = 426;
+
+void TLChangeAreaGroundTiles(object oArea, int nGroundTileConst, int nColumns, int nRows, float fZOffset = -0.4f )
+{
+    // Author: Brad "Cutscene" Prince
+    // * flood area with tiles
+    object oTile;
+    // * put ice everywhere
+    vector vPos;
+    vPos.x = 5.0;
+    vPos.y = 0.0;
+    vPos.z = fZOffset;
+    float fFace = 0.0;
+    location lLoc;
+
+    // * fill x axis
+    int i, j;
+    for (i=0 ; i <= nColumns; i++)
+    {
+        vPos.y = -5.0;
+        // fill y
+        for (j=0; j <= nRows; j++)
+        {
+            vPos.y = vPos.y + 10.0;
+            lLoc = Location(oArea, vPos, fFace);
+            // Ice tile (even though it says water).
+            oTile = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_invisobj", lLoc,FALSE, "x2_tmp_tile");
+            SetPlotFlag(oTile,TRUE);
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectVisualEffect(nGroundTileConst), oTile);
+        }
+        vPos.x = vPos.x + 10.0;
+    }
+
+}
 
 void main()
 {

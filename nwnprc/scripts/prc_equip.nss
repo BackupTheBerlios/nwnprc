@@ -31,7 +31,10 @@ void main()
     object oItem = GetItemLastEquipped();
     object oPC   = GetItemLastEquippedBy();
   
-
+	
     DelayCommand(0.3, PrcFeats(oPC));
+    
+    // Handle someone equipping a poisoned item
+    ExecuteScript("poison_onequip", OBJECT_SELF);
 
 }

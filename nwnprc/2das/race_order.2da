@@ -1,0 +1,258 @@
+2DA V2.0
+
+    Label                                 Priority 
+0   Dwarf                                 0        
+1   Elf                                   0        
+2   Gnome                                 0        
+3   Halfling                              0        
+4   Half-Elf                              0        
+5   Half-Orc                              0        
+6   Human                                 0        
+7   Aberration                            ****     
+8   Animal                                ****     
+9   Beast                                 ****     
+10  Construct                             ****     
+11  Dragon                                ****     
+12  Humanoid_Goblinoid                    ****     
+13  Humanoid_Monstrous                    ****     
+14  Humanoid_Orc                          ****     
+15  Humanoid_Reptilian                    ****     
+16  Elemental                             ****     
+17  Fey                                   ****     
+18  Giant                                 ****     
+19  Magical_Beast                         ****     
+20  Outsider                              ****     
+21  DELETED                               ****     
+22  DELETED                               ****     
+23  Shapechanger                          ****     
+24  Undead                                ****     
+25  Vermin                                ****     
+26  DELETED                               ****     
+27  DELETED                               ****     
+28  INVALID_RACE                          ****     
+29  Ooze                                  ****     
+30  ****                                  ****     
+31  ****                                  ****     
+32  ****                                  ****     
+33  "SHAPECHANGER - Aranea"               238      
+34  "REPTILIAN - Asabi, Stingtail"        227      
+35  "HUMAN - Aunuirean"                   125      
+36  "DRAGON - Baaz"                       32       
+37  "OUTSIDER - Bariaur"                  175      
+38  "ABERRATION - Beholder"               20       
+39  "GOBLINOID - Goblin, Blue"            108      
+40  "OUTSIDER - Bralani"                  176      
+41  "HUMAN - Brecht"                      126      
+42  "HALFLING - Cerilian Halfling"        115      
+43  "GNOME - Chaos Gnome"                 99       
+44  "MONSTROUS - Chitine"                 144      
+45  "GIANT - Cloud Giant"                 84       
+46  "ELF - Dargonesti"                    61       
+47  "DWARF - Dark Dwarf"                  45       
+48  "GIANT - Half-Giant, Dark Su"         88       
+49  "MONSTROUS - Derro"                   145      
+50  "DWARF - Maztican Desert Dwarf"       55       
+51  "DWARF - Desert Dwarf"                47       
+52  "ELF - Desert Elf"                    63       
+53  "ORC - Half-Orc, Desert"              166      
+54  "REPTILIAN - Kobold, Desert"          231      
+55  "ELF - Dimernesti"                    64       
+56  "OUTSIDER - Djinni"                   178      
+57  "HUMAN - Dog People"                  128      
+58  "DRAGON - Dragonkin"                  37       
+59  "DWARF - Dream Dwarf"                 48       
+60  "MONSTROUS - Dromite"                 146      
+61  "FEY - Dryad"                         77       
+62  "OUTSIDER - Efreeti"                  179      
+63  "ABERRATION - Elans"                  22       
+64  "ABERRATION - Ettercap"               23       
+65  "MONSTROUS - Feral Gargun"            147      
+66  "GIANT - Fire Giant"                  85       
+67  "OUTSIDER - Fire Gnome"               181      
+68  "REPTILIAN - Firenewt"                228      
+69  "OUTSIDER - Frost Dwarf"              183      
+70  "MONSTROUS - Frost Folk"              148      
+71  "GIANT - Frost Giant"                 86       
+72  "MONSTROUS - Gargoyle"                149      
+73  "OUTSIDER - Gloaming"                 190      
+74  "MONSTROUS - Goliath"                 150      
+75  "ELF - Gray Elf"                      67       
+76  "HUMAN - Green Folk"                  129      
+77  "FEY - Grig"                          78       
+78  "MONSTROUS - Grimlock"                151      
+79  "DWARF - Gully Dwarf"                 52       
+80  "MONSTROUS - Hagspawn"                152      
+81  "GIANT - Half-Ogre, Krynn"            90       
+82  "SHAPECHANGER - Hengeyokai"           239      
+83  "GIANT - Hill Giant"                  91       
+84  "OUTSIDER - Hound Archon"             191      
+85  "REPTILIAN - Hurwaeti"                229      
+86  "GNOME - Ice Gnome"                   102      
+87  "GIANT - Irda (High Ogre)"            92       
+88  "OUTSIDER - Janni"                    192      
+89  "ELF - Kagonesti"                     68       
+90  "HUMAN - Kalashtar"                   131      
+91  "DRAGON - Kapak"                      40       
+92  "DWARF - Karakhul"                    53       
+93  "HALFLING - Kender"                   120      
+94  "OUTSIDER - Khaasta"                  193      
+95  "HUMAN - Khinasi"                     132      
+96  "MONSTROUS - Kuo-toa"                 154      
+97  "HALFLING - Little Folk"              121      
+98  "OUTSIDER - Lizard King"              194      
+99  "BEAST - Lupin"                       29       
+100 "HUMAN - Maenad"                      133      
+101 "HUMAN - Maztican"                    134      
+102 "MONSTROUS - Medusa"                  155      
+103 "OUTSIDER - Mephit, Air Types"        195      
+104 "OUTSIDER - Mephit, Earth Types"      196      
+105 "OUTSIDER - Mephit, Fire Types"       197      
+106 "OUTSIDER - Mephit, Water Types"      198      
+107 "OUTSIDER - Mephling, Air"            199      
+108 "OUTSIDER - Mephling, Earth"          200      
+109 "OUTSIDER - Mephling, Fire"           201      
+110 "OUTSIDER - Mephling, Water"          202      
+111 "MONSTROUS - Minotaur, Krynn"         157      
+112 "HUMAN - Neanderthal"                 136      
+113 "FEY - Nixie"                         79       
+114 "REPTILIAN - Ophidian"                233      
+115 "HUMAN - Payit"                       137      
+116 "REPTILIAN - Pterafolk"               234      
+117 "ELF - Qualinesti"                    69       
+118 "OUTSIDER - Rakasta"                  204      
+119 "OUTSIDER - Rakshasa, Zakya"          206      
+120 "HUMAN - Rjurik"                      138      
+121 "MONSTROUS - Sahuagin"                158      
+122 "OUTSIDER - Salamander"               207      
+123 "MONSTROUS - Sarrukh"                 159      
+124 "FEY - Satyr"                         82       
+125 "REPITLIAN - Saurial, Bladeback"      223      
+126 "REPITLIAN - Saurial, Finhead"        224      
+127 "REPITLIAN - Saurial, Flyer"          225      
+128 "REPITLIAN - Saurial, Hornhead"       226      
+129 "ELF - Sidhelien"                     70       
+130 "ELF - Silvanesti"                    71       
+131 "OUTSIDER - Slyth"                    210      
+132 "GOBLINOID - Goblin, Snow"            110      
+133 "OUTSIDER - Spiker"                   211      
+134 "ELF - Star Elf"                      73       
+135 "MONSTROUS - Stinger"                 160      
+136 "GIANT - Stone Giant"                 95       
+137 "OUTSIDER - Stonechild"               212      
+138 "GIANT - Storm Giant"                 96       
+139 "GIANT - Taer"                        97       
+140 "GOBLINOID - Tasloi"                  112      
+141 "REPTILIAN - Tortle"                  235      
+142 "REPTILIAN - Tren"                    236      
+143 "FEY - Uldra"                         83       
+144 "ABERRATION - Umber Hulk"             25       
+145 "BEAST - Vanara"                      30       
+146 "OUTSIDER - Vistani"                  215      
+147 "PLANT - Volodni"                     219      
+148 "HUMAN - Vos"                         140      
+149 "HUMAN - Warforged"                   141      
+150 "MONSTROUS - Wemic"                   162      
+151 "DWARF - Arctic Dwarf"                44       
+152 "DWARF - Gold Dwarf"                  50       
+153 "DWARF - Gray Dwarf (Duergar)"        51       
+154 "DWARF - Glacier Dwarf"               49       
+155 "DWARF - Urdunnir"                    57       
+156 "DWARF - Wild Dwarf"                  58       
+157 "DWARF - Dark Sun Dwarf"              46       
+158 "DWARF - Mul"                         56       
+159 "DRAGON - Blue (Adult)"               33       
+160 "DRAGON - Brass (Adult)"              34       
+161 "ELF - Aquatic Elf"                   59       
+162 "ELF - Avariel"                       60       
+163 "ELF - Drow (Female)"                 65       
+164 "ELF - Drow (Male)"                   66       
+165 "ELF - Snow Elf"                      72       
+166 "ELF - Sun (Gold) Elf"                74       
+167 "ELF - Wild (Green) Elf"              75       
+168 "ELF - Wood (Sylvan/Copper) Elf"      76       
+169 "HALFLING - Jerren"                   119      
+170 "ELF - Dark Sun Elf"                  62       
+171 "OUTSIDER - Wildren"                  216      
+172 "HUMAN - Xeph"                        142      
+173 "MONSTROUS - Xixchil"                 163      
+174 "GNOME - Deep Gnome (Svirfneblin)"    100      
+175 "GNOME - Forest Gnome"                101      
+176 "GNOME - Rock Gnome (Bardic)"         103      
+177 "GNOME - Tinker Gnome"                104      
+178 "DWARF - Korobokuru"                  54       
+179 "GNOME - Whisper Gnome"               105      
+180 "DRAGON - Bronze (Adult)"             35       
+181 "HALF-ELF - Dark Sun Half-Elf"        113      
+182 "ORC - Scro"                          170      
+183 "HALF-ELF - Half-Drow"                114      
+184 "ORC - Orc, Gray"                     167      
+185 "ORC - Caliban"                       165      
+186 "DRAGON - Green (Adult)"              39       
+187 "ORC - Orog (Deep Orc)"               169      
+188 "MONSTROUS - Kir Lanan"               153      
+189 "DRAGON - Silver (Adult)"             42       
+190 "HALFLING - Ghostwise Halfling"       118      
+191 "HALFLING - Tundra Halfling"          124      
+192 "HALFLING - Strongheart Halfling"     122      
+193 "HALFLING - Tallfellow Halfling"      123      
+194 "HALFLING - Deep Halfling"            117      
+195 "HALFLING - Dark Sun Halfling"        116      
+196 "DRAGON - White (Adult)"              43       
+197 "OUTSIDER - Yuan-ti, Pureblood"       218      
+198 "OUTSIDER - Aasimar"                  172      
+199 "OUTSIDER - Genasi, Air"              184      
+200 "OUTSIDER - Genasi, Earth"            185      
+201 "OUTSIDER - Feyri"                    180      
+202 "OUTSIDER - Genasi, Fire"             186      
+203 "OUTSIDER - Tanarukk"                 213      
+204 "OUTSIDER - Tiefling"                 214      
+205 "OUTSIDER - Genasi, Water"            187      
+206 "DRAGON - Black (Adult)"              31       
+207 "BEAST - Aarakocra"                   26       
+208 "MONSTROUS - Centaur"                 143      
+209 "REPITLIAN - Pteran"                  222      
+210 "OUTSIDER - Shade"                    208      
+211 "GIANT - Ogre Mage"                   94       
+212 "GIANT - Ogre"                        93       
+213 "GOBLINOID - Goblin"                  107      
+214 "ORC - Orc, Mountain"                 168      
+215 "REPTILIAN - Kobold"                  230      
+216 "BEAST - Gnoll"                       27       
+217 "GOBLINOID - Bugbear"                 106      
+218 "MONSTROUS - Minotaur"                156      
+219 "REPTILIAN - Lizardfolk"              232      
+220 "OUTSIDER - Yuan-ti, Halfblood"       217      
+221 "GOBLINOID - Hobgoblin"               111      
+222 "OUTSIDER - Githyanki"                188      
+223 "OUTSIDER - Githzerai"                189      
+224 "OUTSIDER - Rakshasa"                 205      
+225 "ABERRATION - Illithid (Mind Flayer)" 24       
+226 "FEY - Pixie"                         81       
+227 "OUTSIDER - Azer"                     174      
+228 "MONSTROUS - Yuan-ti, Abomination"    164      
+229 "GIANT - Half-Ogre"                   89       
+230 "HUMAN - Deep Imaskari"               127      
+231 "GIANT - Troll"                       98       
+232 "OUTSIDER - Formian"                  182      
+233 "MONSTROUS - Thri-Kreen"              161      
+234 "REPTILIAN - Troglodyte"              237      
+235 "OUTSIDER - Neraphim"                 203      
+236 "OUTSIDER - Shadowswyft"              209      
+237 "GIANT - Half-Giant"                  87       
+238 "OUTSIDER - Buommans"                 177      
+239 "HUMAN - Mortif"                      135      
+240 "GOBLINOID - Goblin, Dekanter"        109      
+241 "REPITLIAN - Asabi"                   220      
+242 "HUMAN - Half-Vistani"                130      
+243 "HUMAN - Spirit Folk"                 139      
+244 "ORC - Trollborn"                     171      
+245 "OUTSIDER - Asura"                    173      
+246 "VERMIN - Nezumi"                     240      
+247 "BEAST - Gnoll, Flind"                28       
+248 "REPITLIAN - Poison Dusk"             221      
+249 "ABERRATION - Drider"                 21       
+250 "FEY - Nymph"                         80       
+251 "DRAGON - Red (Adult)"                41       
+252 "DRAGON - Gold (Adult)"               38       
+253 "DRAGON - Copper (Adult)"             36       
+254 254_LAST_LINE                         ****     

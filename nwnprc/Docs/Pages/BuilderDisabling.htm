@@ -1,0 +1,163 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-gb">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>PRC Documentation</title>
+<style>
+<!--
+.page
+{
+	background-color: #666666;
+}
+.tborder
+{
+	background-color: #000000;
+	border: 1px solid #000000
+}
+td
+{
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.alt1
+{
+	background-color: #666666;
+}
+-->
+</style>
+</head>
+
+<body text="#C0C0C0" bgcolor="#000000">
+
+<p align="center"><u><b><font size="6">Player Resource Consortium</font></b></u></p>
+       
+<p align="center"><u><b><font size="5">Disabling classes and the epic spell lab</font></b></u></p>
+       
+<p><font size="2">back to <a href="Builder.htm">Builder Readme</a></font></p>
+   
+<p>All the classes have a local variable that can be set on PCs to prevent them 
+taking levels in that class. This can be used to either ban a class entirely, or 
+to disable it before specific events have occurred. Below is a list of variable 
+names and the class that matches them. If they are not zero, a character is 
+banned from taking that class.</p>
+<p align="center">Shadowdancer = X1_AllowShadow<br>
+Harper Scout = X1_AllowHarper<br>
+Arcane Archer = X1_AllowArcher<br>
+Assassin = X1_AllowAsasin<br>
+Blackguard = X1_AllowBlkGrd<br>
+Pale Master = X2_AllowPalema<br>
+Shifter = X2_AllowShiftr<br>
+Dwarven Defender = X1_AllowDwDef<br>
+Red Dragon Disciple = X1_AllowDrDis<br>
+Ocular Adept = PRC_AllowOccAd<br>
+Battlerager = PRC_AllowBRage<br>
+Mystic Theurge = PRC_AllowMystic<br>
+Ninja Spy = PRC_AllowNinja<br>
+Warpriest = PRC_AllowWarPrst<br>
+Mage Killer = PRC_AllowMageK<br>
+Harper Mage = PRC_AllowHarperM<br>
+Spellsword = X2_AllowSpellS<br>
+Acolyte of the Skin = PRC_AllowAcolyte<br>
+Champion of Bane = PRC_AllowChaBane<br>
+Eldritch Knight = PRC_AllowEldknight<br>
+Elemental Savant of Fire = PRC_AllowElSav<br>
+Elemental Savant of Water = PRC_AllowElSav<br>
+Elemental Savant of Air = PRC_AllowElSav<br>
+Elemental Savant of Earth = PRC_AllowElSav<br>
+Divine Elemental Savant of Fire = PRC_AllowDivSav<br>
+Divine Elemental Savant of Water = PRC_AllowDivSav<br>
+Divine Elemental Savant of Air = PRC_AllowDivSav<br>
+Divine Elemental Savant of Earth = PRC_AllowDivSav<br>
+Duelist = PRC_AllowDuel<br>
+Hierophant = PRC_AllowHiero<br>
+Red Avenger = PRC_AllowRedavng<br>
+Knight of the Chalice = PRC_AllowKnghtCh<br>
+Knight of the Chalice = PRC_PrereqKOTC<br>
+Hathran = PRC_AllowHath<br>
+Vigilant = PRC_AllowVigil<br>
+Stormlord = PRC_PrereqStormL<br>
+Stormlord = PRC_AllowStormL<br>
+Heartwarder = PRC_AllowHeartW<br>
+Fist of Raziel = PRC_AllowFistRaz<br>
+Vassal of Bahamut = PRC_AllowVassal<br>
+Lich = PRC_AllowLich<br>
+Shifter = PRC_AllowPNPSfr<br>
+Arcane Duelist = PRC_AllowArcDuel<br>
+Archmage = PRC_AllowArchmage<br>
+Oozemaster = PRC_AllowUzi<br>
+Drow Judicator = PRC_AllowDrowJud<br>
+Corrupter = PRC_AllowCorrupter<br>
+Anti-Paladin = PRC_AllowAntiPal<br>
+Dragonsong Lyrist = PRC_AllowDraSong<br>
+Ultimate Ranger = PRC_Allow_URanger<br>
+Nightshade = PRC_AllowNights<br>
+Shadow Adept = PRC_AllowShadAde<br>
+Soldier of Light = PRC_AllowSoLight<br>
+Man at Arms = PRC_AllowManAt<br>
+Telflammar Shadowlord = PRC_AllowShaLow<br>
+Bonded Summoner = PRC_AllowBonded<br>
+Initiate of Draconic Mysteries = PRC_AllowIniDra<br>
+Bladesinger = PRC_AllowBlades<br>
+Archer = PRC_AllowArcherCore<br>
+Sacred Fist = PRC_AllowSacFist<br>
+Disciple of Baalzebul = PRC_AllowBaal<br>
+Iaijutsu Master = PRC_AllowIaij<br>
+Disciple of Dispater = PRC_AllowDisp<br>
+Ravager = PRC_Allow_Rava<br>
+Runescarred Berserker = PRC_Allow_Rune<br>
+Thayan Knight = PRC_AllowThayKt<br>
+Red Wizard of Thay = PRC_AllowRedWiz<br>
+True Necromancer = PRC_AllowTNecro<br>
+Arcane Trickster = PRC_AllowArcTrick<br>
+Blood Magus = PRC_AllowBLMagus<br>
+Diabolist = PRC_AllowDiablo<br>
+Fist of Hextor = PRC_AllowHextor<br>
+Blood Archer = PRC_AllowBLArcher<br>
+Purple Dragon Knight = PRC_AllowPDK<br>
+Peerless Archer = PRC_AllowPArcher<br>
+Thrall of Orcus = PRC_AllowOrcus<br>
+Shou Disciple = PRC_AllowShou<br>
+Black Flame Zealot = PRC_AllowBFZ<br>
+Black Flame Zealot = PRC_PrereqBFZ<br>
+Shining Blade of Heironeous = PRC_AllowSBHeir<br>
+Shining Blade of Heironeous = PRC_PrereqSBHeir<br>
+.Knight of the Middle Circle = PRC_AllowKotMC<br>
+Divine Master Harper = PRC_AllowMaster<br>
+Werewolf = PRC_AllowWWolf<br>
+Hospitaler = PRC_AllowHosp<br>
+Master of Shrouds = PRC_AllowShrouds<br>
+Arcane Master Harper = PRC_AllowMaster<br>
+Frenzied Berserker = PRC_AllowFrebzk<br>
+.Eye of Gruumsh = PRC_AllowEoG<br>
+Orc Warlord = PRC_AllowOrcWar<br>
+Disciple of Mephistopheles = PRC_AllowDiscmep<br>
+Henshin Mystic = PRC_AllowHnshn<br>
+Drunken Master = PRC_AllowDrnkn<br>
+Healer = PRC_AllowHeal<br>
+Favored of Milil = PRC_AllowFoM<br>
+Minstrel of the Edge = PRC_AllowMinstrel<br>
+Brawler = PRC_AllowBrawler</p>
+<p align="center">&nbsp;</p>
+<font SIZE="2">
+<p></font>In addition, if you set the local int &quot;PRC_DISABLE_DEMILICH&quot; on the 
+module to 1, then the lich class is limited to the first 4 levels only; i.e. no 
+demi-lich characters.</p>
+<p>&nbsp;</p>
+<p>You can also set a local int on the module to disable the epic spell lab or 
+to change its contents. The variable is named &quot;PRC_SPELLSLAB&quot; and can be set as 
+follows:</p>
+<p>&nbsp;</p>
+0 = (default) Can teleport to the Epic Spell Laboratory, merchant sells all 
+  epic spells and new wizard scrolls.
+<p>1 = Can teleport to the Epic Spell Laboratory, merchant sells only the epic 
+  spells available in HotU and new wizard scrolls. </p>
+2 = Can teleport to the Epic Spell Laboratory, but the merchant is 
+  unavailable.
+<p>3 = Cannot teleport to the Epic Spell Laboratory.</p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

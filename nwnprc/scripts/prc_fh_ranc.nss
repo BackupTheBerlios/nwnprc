@@ -62,11 +62,11 @@ void main()
           // gives player a few seconds to run at enemy from distance
           if(!bIsRangedAttack)
           {
-               DelayCommand( 2.0, PerformAttackRound(oTarget, oPC, eBonusDamage, 0, 0, 0, FALSE, sSuccess, sMiss) );
+               DelayCommand( 2.0, PerformAttackRound(oTarget, oPC, eBonusDamage, 0.0, 0, 0, 0, FALSE, sSuccess, sMiss) );
           }
           else
           {
-               PerformAttackRound(oTarget, oPC, eBonusDamage, 0, 0, 0, FALSE, sSuccess, sMiss);
+               PerformAttackRound(oTarget, oPC, eBonusDamage, 0.0, 0, 0, 0, FALSE, sSuccess, sMiss);
           }
      }
 }

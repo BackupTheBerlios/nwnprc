@@ -71,7 +71,7 @@ void main()
          int bPassedJump = PerformJump(oPC, GetLocation(oTarget), FALSE);
          if(bPassedJump)
          {
-              DelayCommand(3.1, PerformAttackRound(oTarget, oPC, eVfx, iBonus, iDam, iDamType,  TRUE, "*Acrobatic Attack*", "*Acrobatic Attack Miss*"));  
+              DelayCommand(3.1, PerformAttackRound(oTarget, oPC, eVfx, 0.0, iBonus, iDam, iDamType,  TRUE, "*Acrobatic Attack*", "*Acrobatic Attack Miss*"));  
          }
     }
     else

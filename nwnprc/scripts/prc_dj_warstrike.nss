@@ -10,9 +10,10 @@ of the Drow Judicator prestige class.
 //:://////////////////////////////////////////////
 //:: Created By: PsychicToaster
 //:: Created On: 7-24-04
+//:: Updated by Oni5115 9/23/2004 to use new combat engine
 //:://////////////////////////////////////////////
 
-#include "prc_class_const"
+#include "prc_inc_combat"
 
 void main()
 {
@@ -20,7 +21,9 @@ void main()
 //Setup Variables
 object oPC      = OBJECT_SELF;
 object oTarget  = GetSpellTargetObject();
+object oWeapR   = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 
+int bIsRangedAttack = GetWeaponRanged(oWeapR);
 int    nClass   = GetLevelByClass(CLASS_TYPE_JUDICATOR);
 int    nChaMod  = GetAbilityModifier(ABILITY_CHARISMA);
 int    nFortDC  = 10+nClass+nChaMod;
@@ -28,18 +31,38 @@ int    nCon     = d6(2);
 
 //Roll Fortitude Saving Throw
 if(FortitudeSave(oTarget, nFortDC, SAVING_THROW_FORT, oPC))
-    {
+{
     nCon = nCon/2;
     //Debug
     //SpeakString("Debug Save Succeeded.  Damage Dealt ="+IntToString(nCon));
-    }
+}
 
-effect eVis1 = EffectVisualEffect(VFX_IMP_POISON_L);
+effect eVis = EffectVisualEffect(VFX_IMP_POISON_L);
 effect eCon  = EffectAbilityDecrease(ABILITY_CONSTITUTION,nCon);
-effect eLink = EffectLinkEffects(eVis1, eCon);
+effect eLink = EffectLinkEffects(eVis, eCon);
 
-ApplyEffectToObject(DURATION_TYPE_PERMANENT, MagicalEffect(eLink), oTarget);
+//ApplyEffectToObject(DURATION_TYPE_PERMANENT, MagicalEffect(eLink), oTarget);
 //Debug
 //SpeakString("Damage Dealt ="+IntToString(nCon));
 
+
+     // script now uses combat system to hit and apply effect if appropriate
+     string sSuccess = "";
+     string sMiss = "";
+        
+     // If they are not within 5 ft, they can't do a melee attack.
+     if(!bIsRangedAttack && GetDistanceBetween(oPC, oTarget) >= FeetToMeters(5.0) )
+     {
+          SendMessageToPC(oPC,"You are not close enough to your target to attack!");
+          return;
+     }
+     
+     if(!bIsRangedAttack)
+     {
+           AssignCommand(oPC, ActionMoveToLocation(GetLocation(oTarget), TRUE) );
+           sSuccess = "*War Strike Hit*";
+           sMiss    = "*War Strike Miss*";
+     }        
+        
+     PerformAttackRound(oTarget, oPC, eLink, 0.0, 0, 0, 0, FALSE, sSuccess, sMiss);
 }

@@ -9,104 +9,47 @@ The Selvetarm's Wrath feat for the Drow Judicator
 //:://////////////////////////////////////////////
 //:: Created By: PsychicToaster
 //:: Created On: 7-31-04
+//:: Updated by Oni5115 9/23/2004 to use new combat engine
 //:://////////////////////////////////////////////
 
-#include "x2_inc_itemprop"
-#include "prc_class_const"
-#include "prc_spell_const"
+//#include "x2_inc_itemprop"
+//#include "prc_class_const"
+//#include "prc_spell_const"
+#include "prc_inc_combat"
 
 int GetDamageBonusType(object oPC, int nClass);
 
 void main()
 {
-object oPC   = OBJECT_SELF;
-object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
+     object oPC   = OBJECT_SELF;
+     object oTarget  = GetSpellTargetObject();
+     object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
+     object oWeapR   = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 
-int nSpell   = GetSpellId();
-int nClass;
-int nBonus   = GetDamageBonusType(oPC, nClass);
+     int bIsRangedAttack = GetWeaponRanged(oWeapR);
+     int iDamageBonus = GetLevelByClass(CLASS_TYPE_JUDICATOR);
 
-//Check if PC has a weapon equipped
-if(oItem==OBJECT_INVALID)
-    {
-    SendMessageToPC(oPC, "You must have a melee weapon equipped to use this feat.");
-    //debug
-    //SendMessageToPC(oPC, "Step 1 failure");
-    return;
-    }
-
-if(nSpell==SPELL_SELVETARMS_WRATH)
-    {
-    if(IPGetIsMeleeWeapon(oItem))
-        {
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(nBonus, DAMAGE_TYPE_NEGATIVE), oPC, 9.0);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_EVIL_HELP), oPC);
-        }
-    else SendMessageToPC(oPC, "You must have a melee weapon equipped to use this feat.");
-    }
-
-}
-
-int GetDamageBonusType(object oPC, int nClass)
-{
-object oPC;
-int nClass=GetLevelByClass(CLASS_TYPE_JUDICATOR);
-int nBonus;
-
-switch (nClass)
-    {
-    case 1:
-        {
-        nBonus=DAMAGE_BONUS_1;
-        break;
-        }
-    case 2:
-        {
-        nBonus=DAMAGE_BONUS_2;
-        break;
-        }
-    case 3:
-        {
-        nBonus=DAMAGE_BONUS_3;
-        break;
-        }
-    case 4:
-        {
-        nBonus=DAMAGE_BONUS_4;
-        break;
-        }
-    case 5:
-        {
-        nBonus=DAMAGE_BONUS_5;
-        break;
-        }
-    case 6:
-        {
-        nBonus=DAMAGE_BONUS_6;
-        break;
-        }
-    case 7:
-        {
-        nBonus=DAMAGE_BONUS_7;
-        break;
-        }
-    case 8:
-        {
-        nBonus=DAMAGE_BONUS_8;
-        break;
-        }
-    case 9:
-        {
-        nBonus=DAMAGE_BONUS_9;
-        break;
-        }
-    case 10:
-        {
-        nBonus=DAMAGE_BONUS_10;
-        break;
-        }
-    }
-
-
-return nBonus;
+     // script now uses combat system to hit and apply effect if appropriate
+     string sSuccess = "";
+     string sMiss = "";
+        
+     // If they are not within 5 ft, they can't do a melee attack.
+     if(!bIsRangedAttack && GetDistanceBetween(oPC, oTarget) >= FeetToMeters(5.0) )
+     {
+          SendMessageToPC(oPC,"You are not close enough to your target to attack!");
+          return;
+     }
+     
+     if(!bIsRangedAttack)
+     {
+           AssignCommand(oPC, ActionMoveToLocation(GetLocation(oTarget), TRUE) );
+           sSuccess = "*Selvetarm's Wrath Hit*";
+           sMiss    = "*Selvetarm's Wrath Miss*";
+     }        
+     
+     effect eVis1 = EffectVisualEffect(VFX_IMP_EVIL_HELP);
+     effect eVis2 = EffectVisualEffect(VFX_IMP_HARM);
+     effect eLink = EffectLinkEffects(eVis1, eVis2);
+     
+     PerformAttackRound(oTarget, oPC, eLink, 0.0, 0, iDamageBonus, DAMAGE_TYPE_DIVINE, FALSE, sSuccess, sMiss);
 }

@@ -87,7 +87,7 @@ void main()
             sSuccess = "*Not Hated Foe: Death Attack Not Possible*";
         }          
         
-        PerformAttackRound(oTarget, oPC, eDeath, 0, 0, 0, FALSE, sSuccess, sMiss);
+        PerformAttackRound(oTarget, oPC, eDeath, 0.0, 0, 0, 0, FALSE, sSuccess, sMiss);
     }
     else
     {

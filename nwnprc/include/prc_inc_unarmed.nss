@@ -85,6 +85,8 @@ int FindUnarmedDamage(object oCreature)
     // Future unarmed classes: if you do your own damage, add in "levelups" below here.
     iMonk = iMonk + iShou + iSacredFist;
     
+    iBrawler = iBrawler + iShou; // Decided to allow Shou disciple levels to stack on top of brawler.
+    
     // 3.5 Dmg Table
     iMonkDamage =  iMonk/4+2;
     

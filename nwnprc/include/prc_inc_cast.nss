@@ -55,6 +55,16 @@ int GetLevelByTypeArcane(object oCaster = OBJECT_SELF);
 // consider feats that situationally adjust caster level.
 int GetLevelByTypeDivine(object oCaster = OBJECT_SELF);
 
+//Returns Reflex Adjusted Damage. Is a wrapper function that allows the 
+//DC to be adjusted based on conditions that cannot be done using iprops
+//such as saves vs spellschools, or other adjustments
+int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF);
+
+//Returns 0, 1 or 2 as MySavingThrow does. 0 is a failure, 1 is success, 2 is immune.
+//Is a wrapper function that allows the DC to be adjusted based on conditions 
+//that cannot be done using iprops, such as saves vs spellschool.
+int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
+
 // Returns the caster level when used in spells.  Designed so that it can be wrapped
 // easily.  You can use PRCGetCasterLevel() to determine a caster level from within a spell,
 // or specify each of the parameters as necessary.
@@ -478,4 +488,105 @@ int FireAdept (object oCaster, int iSpellID)
         return 1;
     else
         return 0;
+}
+
+
+int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0)
+{
+    // -------------------------------------------------------------------------
+    // GZ: sanity checks to prevent wrapping around
+    // -------------------------------------------------------------------------
+    if (nDC<1)
+    {
+       nDC = 1;
+    }
+    else if (nDC > 255)
+    {
+      nDC = 255;
+    }
+
+    effect eVis;
+    int bValid = FALSE;
+    int nSpellID;
+    if(nSavingThrow == SAVING_THROW_FORT)
+    {
+        bValid = FortitudeSave(oTarget, nDC, nSaveType, oSaveVersus);
+        if(bValid == 1)
+        {
+            eVis = EffectVisualEffect(VFX_IMP_FORTITUDE_SAVING_THROW_USE);
+        }
+    }
+    else if(nSavingThrow == SAVING_THROW_REFLEX)
+    {
+        bValid = ReflexSave(oTarget, nDC, nSaveType, oSaveVersus);
+        if(bValid == 1)
+        {
+            eVis = EffectVisualEffect(VFX_IMP_REFLEX_SAVE_THROW_USE);
+        }
+    }
+    else if(nSavingThrow == SAVING_THROW_WILL)
+    {
+        bValid = WillSave(oTarget, nDC, nSaveType, oSaveVersus);
+        if(bValid == 1)
+        {
+            eVis = EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE);
+        }
+    }
+
+    nSpellID = GetSpellId();
+
+    /*
+        return 0 = FAILED SAVE
+        return 1 = SAVE SUCCESSFUL
+        return 2 = IMMUNE TO WHAT WAS BEING SAVED AGAINST
+    */
+    if(bValid == 0)
+    {
+        if((nSaveType == SAVING_THROW_TYPE_DEATH
+         || nSpellID == SPELL_WEIRD
+         || nSpellID == SPELL_FINGER_OF_DEATH) &&
+         nSpellID != SPELL_HORRID_WILTING)
+        {
+            eVis = EffectVisualEffect(VFX_IMP_DEATH);
+            DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        }
+    }
+    if(bValid == 2)
+    {
+        eVis = EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE);
+    }
+    if(bValid == 1 || bValid == 2)
+    {
+        if(bValid == 2)
+        {
+            /*
+            If the spell is save immune then the link must be applied in order to get the true immunity
+            to be resisted.  That is the reason for returing false and not true.  True blocks the
+            application of effects.
+            */
+            bValid = FALSE;
+        }
+        DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+    }
+    return bValid;
+}
+
+
+int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0)
+{
+
+int nSave = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+
+return nSave;
+
+}
+
+
+int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF)
+{
+
+int nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
+
+return nDamage;
+
 }

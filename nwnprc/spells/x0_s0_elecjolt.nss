@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()))
         {
             //Set damage effect
-            effect eBad = EffectDamage(MaximizeOrEmpower(3, 1, GetMetaMagicFeat()), ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL));
+            effect eBad = EffectDamage(MyMaximizeOrEmpower(3, 1, GetMetaMagicFeat()), ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL));
             //Apply the VFX impact and damage effect
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eBad, oTarget);

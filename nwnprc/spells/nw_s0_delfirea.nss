@@ -87,11 +87,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                         nDamage = d6(nCasterLevel);
                         //Enter Metamagic conditions
-                        if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                         {
                             nDamage = 6 * nCasterLevel;//Damage is at max
                         }
-                        else if (nMetaMagic == METAMAGIC_EMPOWER)
+                        else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                         {
                             nDamage = nDamage + (nDamage/2);//Damage/Healing is +50%
                         }
@@ -108,7 +108,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     }
                 }
                 //Get next target in the sequence
-                oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
             }
             DestroyObject(OBJECT_SELF, 1.0);
         }

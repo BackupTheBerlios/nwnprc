@@ -61,11 +61,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                 if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)),SAVING_THROW_TYPE_DEATH))
                 {
                      //Check for metamagic
-                     if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                     if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                      {
                         nDamage = 18;
                      }
-                     if (nMetaMagic == METAMAGIC_EMPOWER)
+                     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                      {
                         nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
                      }

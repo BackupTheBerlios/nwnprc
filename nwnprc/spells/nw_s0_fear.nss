@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     
     object oTarget;
     //Check for metamagic extend
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
         fDuration = fDuration * 2.0;    //Duration is +100%
     }
@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             }
         }
         //Get next target in the spell cone
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation(), TRUE);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation(), TRUE);
     }
     
 

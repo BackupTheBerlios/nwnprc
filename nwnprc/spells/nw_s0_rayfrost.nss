@@ -63,11 +63,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
         {
             //Enter Metamagic conditions
-            if (nMetaMagic == METAMAGIC_MAXIMIZE)
+            if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
             {
                 nDam = 5 ;//Damage is at max
             }
-            else if (nMetaMagic == METAMAGIC_EMPOWER)
+            else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
             {
                 nDam = nDam + nDam/2; //Damage/Healing is +50%
             }

@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     location lSpell = GetSpellTargetLocation();
 
     //Meta Magic check for extend
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2;   //Duration is +100%
     }
@@ -80,7 +80,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             nCount++;
         }
         //Select the next target within the spell shape.
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lSpell);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lSpell);
     }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

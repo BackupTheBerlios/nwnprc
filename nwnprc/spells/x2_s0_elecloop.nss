@@ -118,7 +118,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             {
 
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
-                nPotential = MaximizeOrEmpower(6, nNumDice, nMetaMagic);
+                nPotential = MyMaximizeOrEmpower(6, nNumDice, nMetaMagic);
                 nDamage    = PRCGetReflexAdjustedDamage(nPotential, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_ELECTRICITY);
 
                 //--------------------------------------------------------------
@@ -150,7 +150,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             oLastValid = oTarget;
 
         }
-       oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE );
+       oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE );
     }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

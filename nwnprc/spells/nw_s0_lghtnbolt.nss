@@ -88,11 +88,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         //Roll damage
                         nDamage =  d6(nCasterLevel);
                         //Enter Metamagic conditions
-                        if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                         {
                              nDamage = 6 * nCasterLevel;//Damage is at max
                         }
-                        if (nMetaMagic == METAMAGIC_EMPOWER)
+                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                         {
                              nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                         }
@@ -115,7 +115,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
            }
            //Get the next object in the lightning cylinder
-           oTarget = GetNextObjectInShape(SHAPE_SPELLCYLINDER, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
+           oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
         }
         nCnt++;
         oTarget2 = GetNearestObject(OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, OBJECT_SELF, nCnt);

@@ -75,11 +75,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     //Roll damage
                     nDamage = d6(3)+ nCasterLevel;
                     //Make metamagic checks
-                    if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                     {
                         nDamage = 18 + nCasterLevel;
                     }
-                    if (nMetaMagic == METAMAGIC_EMPOWER)
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                     {
                         nDamage = d6(3) + nCasterLevel;
                         nDamage = nDamage + (nDamage/2) + nCasterLevel;

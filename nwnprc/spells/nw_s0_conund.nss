@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int nDuration = CasterLvl;
     int nHD = CasterLvl * 2;
     //Make meta magic
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
         nDuration = CasterLvl * 2;
     }

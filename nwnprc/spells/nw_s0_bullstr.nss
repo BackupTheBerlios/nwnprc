@@ -48,15 +48,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Signal the spell cast at event
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_BULLS_STRENGTH, FALSE));
     //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_MAXIMIZE)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {
     nModify = 5;//Damage is at max
     }
-    if (nMetaMagic == METAMAGIC_EMPOWER)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
     {
     nModify = nModify + (nModify/2);
     }
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
         fDuration = fDuration * 2.0;    //Duration is +100%
     }

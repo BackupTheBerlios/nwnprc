@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
         {
             //Set damage effect
-            int nDamage =  MaximizeOrEmpower(3, 1, GetMetaMagicFeat());
+            int nDamage =  MyMaximizeOrEmpower(3, 1, GetMetaMagicFeat());
             effect eBad = EffectDamage(nDamage, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ACID));
             //Apply the VFX impact and damage effect
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

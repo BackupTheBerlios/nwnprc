@@ -65,11 +65,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     string sIdentifier = GetTag(OBJECT_SELF);
 
     //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_MAXIMIZE)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {
         nHD = 4 * CasterLvl;
     }
-    if (nMetaMagic == METAMAGIC_EMPOWER)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
     {
         nHD = nHD + (nHD/2); //Damage/Healing is +50%
     }
@@ -115,7 +115,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 }
             }
             //Get next target in shape to test for a new
-            oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
+            oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
         }
         //Check to make sure that oLowest has changed
         if(bContinueLoop == TRUE)

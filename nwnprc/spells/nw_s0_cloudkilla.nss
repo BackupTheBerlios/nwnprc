@@ -49,11 +49,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int nPenetr = SPGetPenetrAOE(aoeCreator,CasterLvl);
     
     //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_MAXIMIZE)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {
        nDam = 16;//Damage is at max
     }
-    else if (nMetaMagic == METAMAGIC_EMPOWER)
+    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
     {
        nDam =  nDam + (nDam/2); //Damage/Healing is +50%
     }

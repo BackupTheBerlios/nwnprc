@@ -408,7 +408,7 @@ void main()
             }
         }
 
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     }
     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
 }

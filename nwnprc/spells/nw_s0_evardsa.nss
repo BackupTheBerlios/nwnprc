@@ -53,11 +53,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             {
                 nDamage = nDamage + d6(1);
                 //Enter Metamagic conditions
-                if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                 {
                     nDamage = 6;//Damage is at max
                 }
-                else if (nMetaMagic == METAMAGIC_EMPOWER)
+                else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                 {
                     nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                 }

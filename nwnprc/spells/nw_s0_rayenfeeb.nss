@@ -79,15 +79,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
             {
                 //Enter Metamagic conditions
-                if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                 {
                     nLoss = 6 + nBonus;
                 }
-                if (nMetaMagic == METAMAGIC_EMPOWER)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                 {
                      nLoss = nLoss + (nLoss/2);
                 }
-                if (nMetaMagic == METAMAGIC_EXTEND)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
                 {
                     nDuration = nDuration * 2;
                 }

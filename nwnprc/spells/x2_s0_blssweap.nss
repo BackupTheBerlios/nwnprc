@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     object oTarget = GetSpellTargetObject();
     int nDuration = 2 * PRCGetCasterLevel(OBJECT_SELF);
     int nMetaMagic = GetMetaMagicFeat();
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
        nDuration = nDuration * 2; //Duration is +100%
     }

@@ -47,15 +47,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int nMetaMagic = GetMetaMagicFeat();
 
     //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_MAXIMIZE)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {
         nAbsorb = 22;//Damage is at max
     }
-    else if (nMetaMagic == METAMAGIC_EMPOWER)
+    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
     {
         nAbsorb = nAbsorb + (nAbsorb/2); //Damage/Healing is +50%
     }
-    else if (nMetaMagic == METAMAGIC_EXTEND)
+    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2; //Duration is +100%
     }

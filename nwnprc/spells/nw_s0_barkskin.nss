@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Signal spell cast at event
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_BARKSKIN, FALSE));
     //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_EXTEND) //Duration is +100%
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND)) //Duration is +100%
     {
         fDuration = HoursToSeconds(nCasterLevel * 2);
     }

@@ -68,7 +68,7 @@ void main()
     int nDuration = CasterLvl ;
     int nPenetr =  CasterLvl + SPGetPenetr();
 
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
        nDuration = nDuration * 2;
     }
@@ -132,7 +132,7 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         //----------------------------------------------------------------------
         // Calculate Damage
         //----------------------------------------------------------------------
-        int nDamage = MaximizeOrEmpower(6,2,nMetaMagic);
+        int nDamage = MyMaximizeOrEmpower(6,2,nMetaMagic);
         effect eDam = EffectDamage(nDamage, EleDmg);
         effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
         eDam = EffectLinkEffects(eVis,eDam); // flare up

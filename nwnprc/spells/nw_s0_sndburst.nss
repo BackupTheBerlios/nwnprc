@@ -84,11 +84,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(2),TRUE,-1,CasterLvl);
                 }
                 //Make meta magic checks
-                if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                 {
                     nDamage = 8;
                 }
-                if (nMetaMagic == METAMAGIC_EMPOWER)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                 {
                     nDamage = nDamage + (nDamage/2);
                 }
@@ -100,7 +100,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             }
         }
         //Get the next target in the spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, lLoc);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, lLoc);
     }
     
 

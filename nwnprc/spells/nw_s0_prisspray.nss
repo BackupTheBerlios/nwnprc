@@ -102,7 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             }
         }
         //Get next target in the spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 11.0, GetSpellTargetLocation());
+        oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 11.0, GetSpellTargetLocation());
     }
 
 

@@ -55,7 +55,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
                 //Make a Fort Save
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()  + nDC), SAVING_THROW_TYPE_MIND_SPELLS))
                 {
-                   nRounds = MaximizeOrEmpower(6, 1, nMetaMagic);
+                   nRounds = MyMaximizeOrEmpower(6, 1, nMetaMagic);
                    fDelay = GetRandomDelay(0.45, 1.85);
                    //Apply the VFX impact and linked effects
                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nRounds),FALSE));

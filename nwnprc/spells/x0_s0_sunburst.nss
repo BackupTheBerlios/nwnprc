@@ -96,11 +96,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
                 {
                     //Roll damage for each target
-                    nDamage = MaximizeOrEmpower(6, nCasterLvl, nMetaMagic);
+                    nDamage = MyMaximizeOrEmpower(6, nCasterLvl, nMetaMagic);
                 }
                 else
                 {
-                    nDamage = MaximizeOrEmpower(6, 6, nMetaMagic);
+                    nDamage = MyMaximizeOrEmpower(6, 6, nMetaMagic);
                }
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                     
@@ -155,7 +155,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
              bDoNotDoDamage = FALSE;
         }
        //Select the next target within the spell shape.
-       oTarget = GetNextObjectInShape(SHAPE_SPHERE, nSize, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+       oTarget = MyNextObjectInShape(SHAPE_SPHERE, nSize, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
 
 

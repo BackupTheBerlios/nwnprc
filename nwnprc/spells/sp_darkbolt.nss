@@ -39,11 +39,11 @@ void main()
                 //Roll damage
                 int nDam = d8(2);
                 //Enter Metamagic conditions
-                if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                 {
                       nDam = 16;//Damage is at max
                 }
-                if (nMetaMagic == METAMAGIC_EMPOWER)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                 {
                       nDam = nDam + nDam/2; //Damage/Healing is +50%
                 }

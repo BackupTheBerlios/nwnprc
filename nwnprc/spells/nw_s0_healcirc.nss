@@ -123,11 +123,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HEALING_CIRCLE, FALSE));
                 nHP = d8();
                 //Enter Metamagic conditions
-                if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                 {
                     nHP =8;//Damage is at max
                 }
-                if (nMetaMagic == METAMAGIC_EMPOWER)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                 {
                     nHP = nHP + (nHP/2); //Damage/Healing is +50%
                 }
@@ -140,7 +140,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             }
         }
         //Get next target in the shape
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
     }
     
 

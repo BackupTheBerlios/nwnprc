@@ -86,11 +86,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     //Roll damage for each target
                     nDamage = d8(nCasterLvl);
                     //Resolve metamagic
-                    if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                     {
                         nDamage = 8 * nCasterLvl;
                     }
-                    else if (nMetaMagic == METAMAGIC_EMPOWER)
+                    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                     {
                        nDamage = nDamage + nDamage / 2;
                     }
@@ -109,7 +109,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
              }
         }
        //Select the next target within the spell shape.
-       oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget);
+       oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget);
     }
     
 

@@ -72,11 +72,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             {
                 nDamage = d6(10);
                 //Enter Metamagic conditions
-                if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                 {
                     nDamage = 60;//Damage is at max
                 }
-                else if (nMetaMagic == METAMAGIC_EMPOWER)
+                else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                 {
                     nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                 }

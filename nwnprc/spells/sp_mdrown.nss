@@ -32,7 +32,7 @@ void main()
 		object oCaster = OBJECT_SELF;
 		BioWareDrown (nCasterLvl, oCaster, oTarget, fDelay);
 		
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	SPSetSchool();

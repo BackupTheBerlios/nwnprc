@@ -23,7 +23,7 @@ void main()
     int nMetaMagic = GetMetaMagicFeat();
     int nDuration = GetLevelByClass(CLASS_TYPE_DRUID);
     //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2; //Duration is +100%
     }

@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
 
     //Check for metamagic extend
-    if (nMetaMagic == METAMAGIC_EXTEND) //Duration is +100%
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND)) //Duration is +100%
     {
          nDuration = nDuration * 2;
     }

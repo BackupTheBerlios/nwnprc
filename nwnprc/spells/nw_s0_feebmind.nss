@@ -75,15 +75,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
             if (nWillResult == 0)
             {
                  //Enter Metamagic conditions
-                  if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                  if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                   {
                      nLoss = nLoss * 4;
                   }
-                  if (nMetaMagic == METAMAGIC_EMPOWER)
+                  if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                   {
                      nLoss = nLoss + (nLoss/2);
                   }
-                  if (nMetaMagic == METAMAGIC_EXTEND)
+                  if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
                   {
                      nDuration = nDuration * 2;
                   }

@@ -60,7 +60,7 @@ void main()
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 761, FALSE));
 
     //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
         nDuration = nDuration * 2; //Duration is +100%
     }

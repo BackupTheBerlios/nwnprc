@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     effect eLink = EffectLinkEffects(eAC, eDur);
 
     int nDuration = PRCGetCasterLevel(OBJECT_SELF); // * Duration 1 turn/level
-     if (nMetaMagic == METAMAGIC_EXTEND)    //Duration is +100%
+     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))    //Duration is +100%
     {
          nDuration = nDuration * 2;
     }

@@ -73,11 +73,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Roll damage for each target
             nDamage = d4(nCasterLvl);
             //Resolve metamagic
-            if (nMetaMagic == METAMAGIC_MAXIMIZE)
+            if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
             {
                 nDamage = 4 * nCasterLvl;
             }
-            else if (nMetaMagic == METAMAGIC_EMPOWER)
+            else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
             {
                 nDamage = nDamage + nDamage / 2;
             }

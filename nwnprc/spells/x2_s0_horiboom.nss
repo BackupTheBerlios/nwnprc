@@ -75,11 +75,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Roll damage
             int nDam = d4(nCasterLvl);
             //Enter Metamagic conditions
-            if (nMetaMagic == METAMAGIC_MAXIMIZE)
+            if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
             {
                 nDam = 4 * nCasterLvl; //Damage is at max
             }
-            if (nMetaMagic == METAMAGIC_EMPOWER)
+            if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
             {
                 nDam = nDam + nDam/2; //Damage/Healing is +50%
             }

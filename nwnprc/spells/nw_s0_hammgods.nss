@@ -89,11 +89,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Roll damage
                 nDamage = d8(nDamageDice);
                 //Make metamagic checks
-                if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                 {
                     nDamage = 8 * nDamageDice;
                 }
-                else if (nMetaMagic == METAMAGIC_EMPOWER)
+                else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                 {
                     nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
                 }
@@ -117,7 +117,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
              }
         }
         //Get next target in shape
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, GetSpellTargetLocation());
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, GetSpellTargetLocation());
     }
     
 

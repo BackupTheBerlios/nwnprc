@@ -65,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Set off fire and forget visual
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eNature, GetLocation(OBJECT_SELF));
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2;   //Duration is +100%
     }
@@ -81,11 +81,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
               SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NATURES_BALANCE, FALSE));
               nRand = d8(3);
               //Enter Metamagic conditions
-              if (nMetaMagic == METAMAGIC_MAXIMIZE)
+              if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
               {
                  nRand = 24;//Damage is at max
               }
-              else if (nMetaMagic == METAMAGIC_EMPOWER)
+              else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
               {
                  nRand = nRand + nRand/2; //Damage/Healing is +50%
               }
@@ -112,11 +112,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                       }
                       nRand = d4(nCasterLevel);
                       //Enter Metamagic conditions
-                      if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                      if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                       {
                          nRand = 4 * nCasterLevel;//Damage is at max
                       }
-                      else if (nMetaMagic == METAMAGIC_EMPOWER)
+                      else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                       {
                          nRand = nRand + (nRand/2); //Damage/Healing is +50%
                       }
@@ -129,7 +129,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             }
         }
         //Select the next target within the spell shape.
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetLocation(OBJECT_SELF), FALSE);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetLocation(OBJECT_SELF), FALSE);
     }
     
 

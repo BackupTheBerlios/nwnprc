@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         CasterLvl +=SPGetPenetr();
     int nDuration = (CasterLvl/3);
 
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
        nDuration = nDuration * 2;
     }
@@ -106,7 +106,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //----------------------------------------------------------------------
             // Do the initial 3d6 points of damage
             //----------------------------------------------------------------------
-            int nDamage = MaximizeOrEmpower(6,3,nMetaMagic);
+            int nDamage = MyMaximizeOrEmpower(6,3,nMetaMagic);
             effect eDam = EffectDamage(nDamage, EleDmg);
 
             DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
@@ -151,7 +151,7 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         //----------------------------------------------------------------------
         // Calculate Damage
         //----------------------------------------------------------------------
-        int nDamage = MaximizeOrEmpower(6,1,nMetaMagic);
+        int nDamage = MyMaximizeOrEmpower(6,1,nMetaMagic);
         effect eDam = EffectDamage(nDamage, EleDmg);
         effect eVis = EffectVisualEffect(VFX_IMP_ACID_S); 
         eDam = EffectLinkEffects(eVis,eDam); // flare up

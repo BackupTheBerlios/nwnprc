@@ -98,11 +98,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
      object oLow;
      int nHDLeft = nLevel *d4();
     //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_MAXIMIZE)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {
         nHDLeft = 4 * PRCGetCasterLevel(OBJECT_SELF);//Damage is at max
     }
-    if (nMetaMagic == METAMAGIC_EMPOWER)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
     {
         nHDLeft += (nHDLeft/2); //Damage/Healing is +50%
     }
@@ -140,7 +140,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             }
 
             // Get next target
-            oTarget = GetNextObjectInShape(SHAPE_SPHERE, 20.0f ,lLoc);
+            oTarget = MyNextObjectInShape(SHAPE_SPHERE, 20.0f ,lLoc);
 
             // End of cycle, time to kill the lowest creature
             if (!GetIsObjectValid(oTarget))

@@ -90,11 +90,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                                 //Roll damage
                                 nDamage = d6(3);
                                 //Make metamagic check
-                                if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                                 {
                                     nDamage = 18;
                                 }
-                                if (nMetaMagic == METAMAGIC_EMPOWER)
+                                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                                 {
                                     nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
                                 }
@@ -131,7 +131,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetSpellTargetLocation(), TRUE);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetSpellTargetLocation(), TRUE);
     }
     
  

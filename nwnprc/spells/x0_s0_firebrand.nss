@@ -124,7 +124,7 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
                 nEnemies++;
             }
         }
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
      }
 
      if (nEnemies == 0) return; // * Exit if no enemies to hit
@@ -184,11 +184,11 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
                         //Roll damage
                         int nDam = d6(nD6Dice);
                         //Enter Metamagic conditions
-                        if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                         {
                              nDam = nD6Dice*6;//Damage is at max
                         }
-                        if (nMetaMagic == METAMAGIC_EMPOWER)
+                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                         {
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }
@@ -219,7 +219,7 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
                 nCnt++;// * increment count of missiles fired
                 nRemainder = 0;
         }
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
 
 }

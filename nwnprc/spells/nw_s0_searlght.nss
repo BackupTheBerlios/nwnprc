@@ -104,11 +104,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             }
 
             //Make metamagic checks
-            if (nMetaMagic == METAMAGIC_MAXIMIZE)
+            if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
             {
                 nDamage = nMax * nCasterLevel;
             }
-            if (nMetaMagic == METAMAGIC_EMPOWER)
+            if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
             {
                 nDamage = nDamage + (nDamage/2);
             }

@@ -36,7 +36,7 @@ void main()
 		if (BiowareHoldPerson (nPenetr,nCasterLvl, nMetaMagic, oTarget, fDelay)) nTargets++;
 		if (nTargets >= nCasterLvl) break;
 		
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	SPSetSchool();

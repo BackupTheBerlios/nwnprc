@@ -66,7 +66,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     CasterLvl +=SPGetPenetr();
     //Make metamagic checks
-    if (nMetaMagic == METAMAGIC_MAXIMIZE)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {
         nDamage = 8 + nExtraDamage;
         // * if low or normal difficulty then MAXMIZED is doubled.

@@ -52,7 +52,7 @@ void RunHandImpact(object oTarget, object oCaster,int CasterLvl )
     {
        int nDC = GetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpellID));
 
-       int nDam  = MaximizeOrEmpower(8, 1, GetMetaMagicFeat(), 11);
+       int nDam  = MyMaximizeOrEmpower(8, 1, GetMetaMagicFeat(), 11);
        effect eDam = EffectDamage(nDam, DAMAGE_TYPE_BLUDGEONING);
        effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
 
@@ -104,7 +104,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int nDuration = CasterLvl;
 
     int nMetaMagic = GetMetaMagicFeat();
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
          nDuration = nDuration * 2;
     }

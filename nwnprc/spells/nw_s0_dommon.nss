@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
                {
                     //Check for Metamagic extension
-                    if (nMetaMagic == METAMAGIC_EXTEND)
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
                     {
                         nDuration = nDuration * 2;
                     }

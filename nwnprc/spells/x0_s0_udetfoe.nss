@@ -37,7 +37,7 @@ void GrantProtection(object oTarget, int CasterLvl)
     int nMetaMagic = GetMetaMagicFeat();
 
     //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2; //Duration is +100%
     }
@@ -104,7 +104,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
             GrantProtection(oTarget,CasterLvl);
         }
         //Get the next target in the specified area around the caster
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());
     }
 
 

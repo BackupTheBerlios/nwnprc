@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eLink = EffectLinkEffects(eChar, eDur);
 
     int nDuration = PRCGetCasterLevel(OBJECT_SELF); // * Duration 1 turn/level
-     if (nMetaMagic == METAMAGIC_EXTEND)    //Duration is +100%
+     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))    //Duration is +100%
     {
          nDuration = nDuration * 2;
     }
@@ -70,7 +70,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     float fDelay = 0.0;
     eVis = EffectVisualEffect(VFX_IMP_HEAD_HOLY);
     effect eFear = EffectSavingThrowIncrease(SAVING_THROW_ALL, 6, SAVING_THROW_TYPE_FEAR);
-    effect eHeal = EffectHeal(MaximizeOrEmpower(4,1, nMetaMagic));
+    effect eHeal = EffectHeal(MyMaximizeOrEmpower(4,1, nMetaMagic));
     eLink = EffectLinkEffects(eFear, eHeal);
     eLink = EffectLinkEffects(eLink, eDur);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
@@ -89,7 +89,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration)));
         }
         //Get the next target in the specified area around the caster
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     }
 
     //Create a disease effect on the caster 40% of the time

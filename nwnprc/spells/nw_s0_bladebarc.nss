@@ -75,11 +75,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Roll Damage
                 int nDamage = d6(nLevel);
                 //Enter Metamagic conditions
-                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                if(CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                 {
                     nDamage = nLevel * 6;//Damage is at max
                 }
-                else if (nMetaMagic == METAMAGIC_EMPOWER)
+                else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                 {
                     nDamage = nDamage + (nDamage/2);
                 }

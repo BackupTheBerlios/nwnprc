@@ -86,15 +86,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                 {
                       nDuration = 3 + d4();
                       //Enter Metamagic conditions
-                      if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                      if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                       {
                          nDuration = 7;//Damage is at max
                       }
-                      else if (nMetaMagic == METAMAGIC_EMPOWER)
+                      else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                       {
                          nDuration = nDuration + (nDuration/2); //Damage/Healing is +50%
                       }
-                      else if (nMetaMagic == METAMAGIC_EXTEND)
+                      else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
                       {
                          nDuration = nDuration *2;  //Duration is +100%
                       }
@@ -123,7 +123,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
             }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE);
+        oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE);
     }
     
  

@@ -77,7 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             {
              /*   nDamage = GetCurrentHitPoints(oTarget) - d4(1);
                 //Check for metamagic
-                if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                 {
                     nDamage = GetCurrentHitPoints(oTarget) - 1;
                 } */

@@ -50,7 +50,7 @@ void main()
 			}
 		}
 	    
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget);
 	}
 
 	SPSetSchool();

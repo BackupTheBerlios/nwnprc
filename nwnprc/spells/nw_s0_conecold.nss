@@ -88,11 +88,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     //Detemine damage
                     nDamage = d6(nCasterLevel);
                     //Enter Metamagic conditions
-                    if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                     {
                          nDamage = 6 * nCasterLevel;//Damage is at max
                     }
-                    else if (nMetaMagic == METAMAGIC_EMPOWER)
+                    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                     {
                          nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                     }
@@ -112,7 +112,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             }
         }
         //Select the next target within the spell shape.
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+        oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     }
 
 

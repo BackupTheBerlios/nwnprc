@@ -1373,5 +1373,12 @@ const int FEAT_WILDER_VOLATILE_MIND_4            = 3574;
 //Psion - Nomad Powers
 const int FEAT_PSI_BALE_TELEPORT	         = 3553;
 
+//Psion - Telepath Powers
+const int FEAT_TELEPATH_CRISIS_OF_LIFE	         = 3579;
+
 //Non-Class Specific Powers
 const int FEAT_PSIONWILD_MIND_THRUST	         = 3567;
+const int FEAT_PSIONWILD_BESTOW_POWER	         = 3575;
+const int FEAT_ALL_BLACK_DRAGON_BREATH	         = 3576;
+const int FEAT_PSIONWILD_CALL_TO_MIND	         = 3577;
+const int FEAT_PSIONWILD_CRYSTAL_SHARD	         = 3578;

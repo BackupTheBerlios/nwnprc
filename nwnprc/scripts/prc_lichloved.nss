@@ -3,6 +3,7 @@
 //
 
 #include "inc_item_props"
+#include "prc_feat_const"
 
 ///Lich Loved +1 on saves vs. Mind Affecting, Poison, and Disease /////////
 void Lich_Loved(object oPC ,object oSkin ,int iLevel)

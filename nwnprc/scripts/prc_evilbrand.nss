@@ -3,6 +3,7 @@
 //
 
 #include "inc_item_props"
+#include "prc_feat_const"
 
 ///Evil Brand +2 on persuade and intimidate /////////
 void EvilBrand(object oPC ,object oSkin ,int iLevel)

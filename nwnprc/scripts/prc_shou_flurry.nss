@@ -32,6 +32,7 @@ void FlurryLight(object oPC)
           object oArmorL = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
           object oWeapRL = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
           object oWeapLL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+          object oWeapCR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
 
           int armorTypeL = GetArmorType(oArmorL);
           int iShouL = GetLevelByClass(CLASS_TYPE_SHOU, oPC);
@@ -56,13 +57,12 @@ void FlurryLight(object oPC)
 	if (GetBaseItemType(oWeapRL) == BASE_ITEM_DAGGER || GetBaseItemType(oWeapRL) == BASE_ITEM_HANDAXE ||
 	GetBaseItemType(oWeapRL) == BASE_ITEM_LIGHTHAMMER || GetBaseItemType(oWeapRL) == BASE_ITEM_LIGHTMACE ||
 	GetBaseItemType(oWeapRL) == BASE_ITEM_KUKRI || GetBaseItemType(oWeapRL) == BASE_ITEM_SICKLE ||
-	GetBaseItemType(oWeapRL) == BASE_ITEM_WHIP || GetBaseItemType(oWeapRL) == BASE_ITEM_SHORTSWORD)
+	GetBaseItemType(oWeapRL) == BASE_ITEM_WHIP || GetBaseItemType(oWeapRL) == BASE_ITEM_SHORTSWORD || GetBaseItemType(oWeapCR) == BASE_ITEM_CBLUDGWEAPON)
 	{
         	if (GetBaseItemType(oWeapLL) == BASE_ITEM_DAGGER || GetBaseItemType(oWeapLL) == BASE_ITEM_HANDAXE ||
 	        GetBaseItemType(oWeapLL) == BASE_ITEM_LIGHTHAMMER || GetBaseItemType(oWeapLL) == BASE_ITEM_LIGHTMACE ||
 	        GetBaseItemType(oWeapLL) == BASE_ITEM_KUKRI || GetBaseItemType(oWeapLL) == BASE_ITEM_SICKLE ||
-	        GetBaseItemType(oWeapLL) == BASE_ITEM_WHIP || oWeapRL == OBJECT_INVALID  || oWeapLL == OBJECT_INVALID ||
-		GetBaseItemType(oWeapLL) == BASE_ITEM_SHORTSWORD)
+	        GetBaseItemType(oWeapLL) == BASE_ITEM_WHIP || GetBaseItemType(oWeapLL) == BASE_ITEM_SHORTSWORD || GetBaseItemType(oWeapCR) == BASE_ITEM_CBLUDGWEAPON)
 	        {
 
 			//check armor type

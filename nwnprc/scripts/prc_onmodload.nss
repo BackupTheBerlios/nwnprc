@@ -4,4 +4,5 @@
 
 void main()
 {
+ExecuteScript("look2daint", OBJECT_SELF);
 }

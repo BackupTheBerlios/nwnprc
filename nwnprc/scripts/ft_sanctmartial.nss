@@ -166,7 +166,7 @@ void Sanctify()
           break;
      }
 
-     if (Sanctify_Feat(iType) &&  (!GetLocalInt(oItem,"SanctMar")) || GetLocalInt(oPC,"ONREST"))
+     if (Sanctify_Feat(iType) &&  (!GetLocalInt(oItem,"SanctMar") || GetLocalInt(oPC,"ONREST")) )
      {
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonusVsRace(IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1d4),oItem,9999.0);

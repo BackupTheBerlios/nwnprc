@@ -5,15 +5,13 @@
 //:: Created By: Script Wizard
 //:: Created On: 6/26/2004 3:55:08 AM
 //:://////////////////////////////////////////////
-#include "nw_i0_plot"
-
 void main()
 {
 
-	// Either open the store with that tag or let the user know that no store exists.
-	object oStore = GetNearestObjectByTag("prc_wiz_store");
-	if(GetObjectType(oStore) == OBJECT_TYPE_STORE)
-		gplotAppraiseOpenStore(oStore, GetPCSpeaker());
-	else
-		ActionSpeakStringByStrRef(53090, TALKVOLUME_TALK);
+    // Either open the store with that tag or let the user know that no store exists.
+    object oStore = GetNearestObjectByTag("prc_wiz_store");
+    if(GetObjectType(oStore) == OBJECT_TYPE_STORE)
+        OpenStore(oStore, GetPCSpeaker());
+    else
+        ActionSpeakStringByStrRef(53090, TALKVOLUME_TALK);
 }

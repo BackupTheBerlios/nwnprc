@@ -123,11 +123,13 @@ public class MainMenu extends javax.swing.JFrame {
         gridBagConstraints.gridheight = 3;
         getContentPane().add(jLabel2, gridBagConstraints);
 
+        CreateButton.setBorderPainted(false);
         CreateButton.setBackground(new java.awt.Color(0, 0, 0)); // color not really seen
-        CreateButton.setForeground(new java.awt.Color(255, 255, 255)); // also not really seen
+        CreateButton.setForeground(new java.awt.Color(0, 0, 0)); // also not really seen
         CreateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/charpic.jpg")));
+        CreateButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/charpic2.jpg")));
         CreateButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        CreateButton.setPreferredSize(new java.awt.Dimension(121, 30));
+        CreateButton.setPreferredSize(new java.awt.Dimension(121, 32));
         CreateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CreateButtonActionPerformed(evt);
@@ -139,10 +141,12 @@ public class MainMenu extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         getContentPane().add(CreateButton, gridBagConstraints);
 
+        SettingsButton.setBorderPainted(false);
         SettingsButton.setBackground(new java.awt.Color(0, 0, 0)); // not seen
         SettingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/settingspic.jpg")));
+        SettingsButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/settingspic2.jpg")));
         SettingsButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        SettingsButton.setPreferredSize(new java.awt.Dimension(121, 30));
+        SettingsButton.setPreferredSize(new java.awt.Dimension(121, 32));
         SettingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SettingsButtonActionPerformed(evt);
@@ -154,10 +158,12 @@ public class MainMenu extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         getContentPane().add(SettingsButton, gridBagConstraints);
 
+        CreditsButton.setBorderPainted(false);
         CreditsButton.setBackground(new java.awt.Color(0, 0, 0)); // not seen
         CreditsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/creditspic.jpg")));
+        CreditsButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/creditspic2.jpg")));
         CreditsButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        CreditsButton.setPreferredSize(new java.awt.Dimension(121, 34));
+        CreditsButton.setPreferredSize(new java.awt.Dimension(121, 32));
         CreditsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CreditsButtonActionPerformed(evt);
@@ -169,10 +175,12 @@ public class MainMenu extends javax.swing.JFrame {
         gridBagConstraints.gridy = 3;
         getContentPane().add(CreditsButton, gridBagConstraints);
 
+        ExitButton.setBorderPainted(false);
         ExitButton.setBackground(new java.awt.Color(0, 0, 0));  // not seen
         ExitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/exitpic.jpg")));
+        ExitButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/exitpic2.jpg")));
         ExitButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        ExitButton.setPreferredSize(new java.awt.Dimension(121, 34));
+        ExitButton.setPreferredSize(new java.awt.Dimension(121, 32));
         ExitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ExitButtonActionPerformed(evt);
@@ -344,7 +352,7 @@ public class MainMenu extends javax.swing.JFrame {
     public CRC32 crc;
     //*******************************************************
     //************VERSION INFORMATION - CHANGE HERE**********
-    public static String versionumber = "PRC: v 1.3";
+    public static String versionumber = "PRC: v 1.4";
     //*******************************************************
     private static MainMenu mainmenu;
     private static CreateMenu createmenu;

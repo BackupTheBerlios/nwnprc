@@ -52,35 +52,54 @@ public class CreditsMenu extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS );
         jScrollPane1.setPreferredSize(new java.awt.Dimension(350, 303));
         CreditText.setBackground(new java.awt.Color(0, 0, 0));
         CreditText.setEditable(false);
         CreditText.setForeground(new java.awt.Color(240, 216, 130));
         CreditText.setLineWrap(true);
         CreditText.setWrapStyleWord(true);
-        CreditText.setText("PRC: v1.3\nThis release was prepared by the "
-				+ "Player Resource Consortium so we could make Level 40 Drow "
-				+ "Samurai.\n\nPRC Website:\nhttp://nwnprc.netgamers.co.uk/index1.html\n\nv1.1\nThis version was a team effort.  Thanks "
-				+ "go to James, grond and Garad Moonbeam for getting the "
+        CreditText.setText(
+			      "PRC: v1.4 \n"
+			    + "Created a new release after making a new splash screen and changing the "
+			    + "programs color scheme. \n\n"
+
+			    + "PRC: v1.3\nThis release was prepared by the "
+				+ "Player Resource Consortium so we could make Level 40 Drow Samurai. \n\n"
+				+ "PRC Website:\nhttp://nwnprc.netgamers.co.uk/ \n\n"
+
+				+ "CODI v1.1\n"
+				+ "Programed by: James 'Halfelf' Stoneburner\n"
+				+ "Contact: halfelf@city-of-doors.com\n\n"
+
+				+ "This version was a team effort.  "
+				+ "Thanks go to James, Grond and Garad Moonbeam for getting the "
 				+ "updates done for SoU and 1.3x compatability as well as "
-				+ "dynamic skill menus.\nThanks go to Papermonk, first of all, "
-				+ "for possessing the\nintestinal fortitude to stick with me "
-				+ "on this project. Many\npeople said it couldn't be done, but "
-				+ "here it is!\n\nThanks also go to the whole CODI gang, "
-				+ "specifically\nShkuey, Snowmit, Smeazel, Jupp, batinthehat, "
-				+ "MacIntyre,\nand Permagrin; also to the few external alpha "
-				+ "testers I\nhad, and everyone else who supported this "
-				+ "project. \nSpecific thanks go to GL (rabbithail) for "
-				+ "helping me hash\nout ELC issues with the program, and "
-				+ "sticking with me. \nThanks also go to Torlack for having "
-				+ "such an incredible\ninformation source; Maximus at the "
-				+ "NWVault for supporting\nCODI so much; RedR for hosting our "
-				+ "chat room, and of\ncourse, Bioware for making such a great "
+				+ "dynamic skill menus.\n\n"
+				+ "Thanks go to Papermonk, first of all, "
+				+ "for possessing the intestinal fortitude to stick with me "
+				+ "on this project.  Many people said it couldn't be done, but "
+				+ "here it is!\n\n"
+
+				+ "Thanks also go to the whole CODI gang, "
+				+ "specifically: Shkuey, Snowmit, Smeazel, Jupp, batinthehat, "
+				+ "MacIntyre, and Permagrin. \n\n"
+
+				+ "Thanks also to the few external alpha "
+				+ "testers I had, and everyone else who supported this "
+				+ "project.  Specific thanks go to GL (rabbithail) for "
+				+ "helping me hash out ELC issues with the program, and "
+				+ "sticking with me.  Thanks also go to Torlack for having "
+				+ "such an incredible information source; Maximus at the "
+				+ "NWVault for supporting CODI so much; RedR for hosting our "
+				+ "chat room, and of course, Bioware for making such a great "
 				+ "game.\n\nHappy custom character creating!");
+		CreditText.append("\n");
         CreditText.setMargin(new java.awt.Insets(10, 10, 10, 10));
-        CreditText.setMinimumSize(new java.awt.Dimension(360, 244));
-        CreditText.setPreferredSize(new java.awt.Dimension(300, 300));
+        //CreditText.setMinimumSize(new java.awt.Dimension(360, 244));
+        //CreditText.setPreferredSize(new java.awt.Dimension(300, 300));
+        CreditText.setCaretPosition(0);
         jScrollPane1.setViewportView(CreditText);
 
         gridBagConstraints = new java.awt.GridBagConstraints();

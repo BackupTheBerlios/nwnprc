@@ -88,7 +88,7 @@ void main()
        return;
    }
    
-   if (GetIsCreatureDisarmable(oTarget))
+   if (!GetIsCreatureDisarmable(oTarget))
    {
        FloatingTextStringOnCreature("*That target is not disarmable.*", OBJECT_SELF, FALSE);       
        return;

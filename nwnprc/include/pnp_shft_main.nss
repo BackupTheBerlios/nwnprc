@@ -15,7 +15,7 @@
 #include "prc_alterations"
 #include "nw_o0_itemmaker"
 #include "nw_i0_spells"
-//#include "prc_inc_function"
+#include "prc_inc_function"
 
 //shift from quickslot info
 void QuickShift(object oPC, int iQuickSlot);
@@ -1966,6 +1966,10 @@ void SetShiftTrueForm(object oPC)
                     RemoveEffect(oPC,eEff);
                     break;
             }
+        }
+        if (eType == EFFECT_TYPE_POLYMORPH)
+        {
+        	RemoveEffect(oPC,eEff);
         }
         eEff = GetNextEffect(oPC);
     }

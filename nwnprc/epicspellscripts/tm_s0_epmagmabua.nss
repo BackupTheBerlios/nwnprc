@@ -23,6 +23,8 @@ void main()
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
+    object oCaster = GetAreaOfEffectCreator();
+
     //Declare major variables
     int nDamage;
     effect eDam;
@@ -32,19 +34,19 @@ void main()
     float fDelay;
     // Boneshank - Added in the nDC formula.
     oTarget = GetEnteringObject();
-    int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +
-		GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()) +
-		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
+    int nDC = GetEpicSpellSaveDC(oCaster) +
+		GetChangesToSaveDC(oTarget,oCaster) +
+		GetDCSchoolFocusAdjustment(oCaster, MAGMA_B_S);
 
     
 
     //Declare the spell shape, size and the location.
-    if( spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()) )
+    if( spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster) )
     {
         //Fire cast spell at event for the specified target
         SignalEvent( oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_INCENDIARY_CLOUD) );
         //Make SR check, and appropriate saving throw(s).
-        if( !MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget, 0, fDelay) )
+        if( !MyPRCResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster), fDelay) )
         {
             fDelay = GetRandomDelay(0.5, 2.0);
             //Roll damage.
@@ -53,7 +55,7 @@ void main()
             //Adjust damage for Fort Save:  How does one avoid lava and not leave the area?
             // Flying, I guess:  To bad NWN doesn't have a "Z" Axis. :D
             if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC,
-                SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator()) )
+                SAVING_THROW_TYPE_FIRE, oCaster) )
             {
                 // Apply effects to the currently selected target.
                 eDam = EffectDamage( nDamage, DAMAGE_TYPE_FIRE );

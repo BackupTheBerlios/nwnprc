@@ -20,12 +20,14 @@ void main()
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
+    object oCaster = GetAreaOfEffectCreator();
+    
     //Declare variables
     effect eVis = EffectVisualEffect( VFX_IMP_DEATH );
 //    effect eVis = EffectVisualEffect( VFX_COM_CHUNK_RED_MEDIUM ); // Alternative Death VFX
     float fDelay;
-    int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + // Boneshank - added.
-		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), TOLO_KW_S);        
+    int nDC = GetEpicSpellSaveDC(oCaster) + // Boneshank - added.
+		GetDCSchoolFocusAdjustment(oCaster, TOLO_KW_S);        
         //Get the first object in the persistent area
     object oTarget = GetFirstInPersistentObject();
 
@@ -36,18 +38,18 @@ void main()
     while( GetIsObjectValid(oTarget) )
     {
         if( spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE,
-            GetAreaOfEffectCreator()) )
+            oCaster) )
         {
             //Fire cast spell at event for the specified target
             SignalEvent( oTarget,
                 EventSpellCastAt(OBJECT_SELF, SPELL_WAIL_OF_THE_BANSHEE) );
             //Make a SR check
-            if( !MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget, 0) )
+            if( !MyPRCResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster)) )
             {
 
                 //Make a fortitude save (-4) to avoid death
-                if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4+GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()),
-                    SAVING_THROW_TYPE_DEATH, GetAreaOfEffectCreator()) )
+                if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4+GetChangesToSaveDC(oTarget,oCaster),
+                    SAVING_THROW_TYPE_DEATH, oCaster) )
                 {
                     //Apply the delay VFX impact and death effect
                     DelayCommand( fDelay,

@@ -53,7 +53,7 @@ void main()
             {
                 fDelay = GetRandomDelay();
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FEAR));
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay))
+                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 {
  
                     if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),

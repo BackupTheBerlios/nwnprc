@@ -1766,7 +1766,7 @@ int GetTotalCastingLevel(object oCaster)
     int iBestDivine = GetLevelByTypeDivineFeats();
     int iBest = (iBestDivine > iBestArcane) ? iBestDivine : iBestArcane;
     
-    SendMessageToPC(oCaster, "Epic casting at level " + IntToString(iBest));
+    //SendMessageToPC(oCaster, "Epic casting at level " + IntToString(iBest));
     
     return iBest;
 }

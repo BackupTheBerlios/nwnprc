@@ -33,7 +33,7 @@ void main()
         SignalEvent(oTarget,
             EventSpellCastAt(OBJECT_SELF, SPELL_BESTOW_CURSE, FALSE));
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
+        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
         {
             DoSalvo(oTarget, nDC);
         }

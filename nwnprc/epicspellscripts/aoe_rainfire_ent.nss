@@ -24,23 +24,23 @@ void main()
     ActionDoCommand(SetAllAoEInts(4054, OBJECT_SELF, GetSpellSaveDC() ) );
 
     object oTarget = GetEnteringObject();
-    object oCreator = GetAreaOfEffectCreator();
-    int nDC = GetEpicSpellSaveDC(oCreator) + GetChangesToSaveDC(oTarget,oCreator) + GetDCSchoolFocusAdjustment(oCreator, RAINFIR_S);
+    object oCaster = GetAreaOfEffectCreator();
+    int nDC = GetEpicSpellSaveDC(oCaster) + GetChangesToSaveDC(oTarget,oCaster) + GetDCSchoolFocusAdjustment(oCaster, RAINFIR_S);
     int nDamage;
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
     float fDelay;
     
-    if (oTarget != oCreator &&
+    if (oTarget != oCaster &&
         !GetIsDM(oTarget))
     {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_INCENDIARY_CLOUD) );
-        if(!MyPRCResistSpell(oCreator, oTarget, 0, fDelay))
+        if(!MyPRCResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster), fDelay))
         {
             fDelay = GetRandomDelay(0.5, 2.0);
             nDamage = d6(1);
             eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
-            if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE, oCreator, fDelay))
+            if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE, oCaster, fDelay))
             {
                 DelayCommand(fDelay,
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

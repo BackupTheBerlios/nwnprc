@@ -74,7 +74,7 @@ void main()
             }
             else
             {
-                if( !MyPRCResistSpell(oCaster, oTarget, 0, fDelay) )
+                if( !MyPRCResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster), fDelay) )
                 {
                         
 

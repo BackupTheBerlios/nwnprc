@@ -81,7 +81,7 @@ void main()
             if (oGem != OBJECT_INVALID)
             {   // Onward! Cast the spell on the target.
                 // Spell Resistance check:
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, 1.0))
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), 1.0))
                 {   // Will Saving Throw.
                     if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                     {   // Choose the Gem Cage VFX based on gem value.

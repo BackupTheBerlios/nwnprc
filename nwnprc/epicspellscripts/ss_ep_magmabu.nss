@@ -68,7 +68,7 @@ void main()
                 SignalEvent( oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FIREBALL) );
                 // Set the delay for the explosion.
                 fDelay = GetRandomDelay( 0.5f, 2.0f );
-                if( !MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay) )
+                if( !MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay) )
                 {
                     nDamage = d8(20);
                     //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.

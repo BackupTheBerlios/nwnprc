@@ -630,7 +630,10 @@ public class ResourceFactory {
 				if (parsedLines.size() == 1)
 					columns = parsedLine.length;
 				else if (parsedLine.length != columns)
-					System.out.println("Columns don't match:" + columns + "," + parsedLine.length);
+					System.out.println("Columns don't match: "
+							+ name + ":" + columns + ","
+							+ parsedLine.length
+						);
 			}
 
 			currentLine = br.readLine();

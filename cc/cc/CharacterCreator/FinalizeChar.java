@@ -382,10 +382,10 @@ public class FinalizeChar {
         //Selected on Customization button
         //Check for Animal Companion feat
         if(featlist.contains(new Integer(199))) {
-            targetbic.addVarname("FamiliarType");
+            targetbic.addVarname("CompanionType");
             targetbic.addElementToEntry(0, 5, varnum++, new Integer(comptype));
             
-            targetbic.addVarname("FamiliarName");
+            targetbic.addVarname("CompanionName");
             targetbic.addElementToEntry(0, 10, varnum++, compname);
         }
         //SkillPoints

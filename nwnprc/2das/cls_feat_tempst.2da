@@ -137,7 +137,7 @@
 133 FEAT_EPIC_WEAPON_FOCUS_WHIP                    997       1    -1             0      
 134 FEAT_EPIC_SUPERIOR_INITIATIVE                  753       1    -1             0      
 135 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
-136 PERFECT_TWO_WEAPON_FIGHTING                    4320      1    -1             0      
+136 PERFECT_TWO_WEAPON_FIGHTING                    4320      1    11             0      
 137 WeapProfSim                                    46        0    -1             0      
 138 WeapProfEx                                     44        0    -1             0      
 139 WeapProfMar                                    45        0    -1             0      

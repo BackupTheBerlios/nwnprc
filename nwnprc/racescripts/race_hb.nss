@@ -28,6 +28,7 @@ void main()
         if(bHasLightSensitive || bHasLightBlindness)
         {
            if(   GetIsObjectValid(oArea)
+              && !GetHasFeat(FEAT_DAYLIGHTADAPT, oPC)
               && GetIsDay()
               && GetIsAreaAboveGround(oArea) == AREA_ABOVEGROUND
               && !GetIsAreaInterior(oArea)

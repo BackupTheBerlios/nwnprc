@@ -164,3 +164,7 @@ const int IP_CONST_DAMAGESOAK_3_HP = 22;
 
 //IP_CONST_DAMAGERESIST
 const int IP_CONST_DAMAGERESIST_500 = 20; // immunity alternative
+const int IP_CONST_DAMAGERESIST_1 = 21; 
+const int IP_CONST_DAMAGERESIST_2 = 22; 
+const int IP_CONST_DAMAGERESIST_3 = 23; 
+const int IP_CONST_DAMAGERESIST_4 = 24; 

@@ -6,6 +6,7 @@
 #include "prc_spell_const"
 #include "inc_item_props"
 #include "x2_inc_itemprop"
+#include "prc_ipfeat_const"
 
 void main()
 {
@@ -459,5 +460,52 @@ void main()
     if(GetHasFeat(FEAT_SVIRFNEBLIN_DODGE))
     {
         SetCompositeBonus(oSkin, "Svirf_Dodge", 4, ITEM_PROPERTY_AC_BONUS);
+    }
+
+
+    //Sheild restriction
+    if(   GetLocalInt(oPC,"ONEQUIP") == 2
+       && GetHasFeat(FEAT_RESTRICT_SHIELD)
+       && (   GetBaseItemType(GetPCItemLastEquipped()) == BASE_ITEM_TOWERSHIELD
+           || GetBaseItemType(GetPCItemLastEquipped()) == BASE_ITEM_LARGESHIELD
+           || GetBaseItemType(GetPCItemLastEquipped()) == BASE_ITEM_SMALLSHIELD
+          )
+      )
+    {
+        ActionUnequipItem(GetPCItemLastEquipped());
+        ActionDoCommand(SetCommandable(TRUE, oPC));
+        SetCommandable(FALSE, oPC);
+    }
+
+    //boots restriction
+    if(   GetLocalInt(oPC,"ONEQUIP") == 2
+       && GetHasFeat(FEAT_RESTRICT_BOOTS)
+       && GetBaseItemType(GetPCItemLastEquipped()) == BASE_ITEM_BOOTS
+      )
+    {
+        ActionUnequipItem(GetPCItemLastEquipped());
+        ActionDoCommand(SetCommandable(TRUE, oPC));
+        SetCommandable(FALSE, oPC);
+    }
+
+    //armor restriction
+    if(   GetLocalInt(oPC,"ONEQUIP") == 2
+       && GetHasFeat(FEAT_RESTRICT_ARMOR)
+       && GetBaseItemType(GetPCItemLastEquipped()) == BASE_ITEM_ARMOR
+      )
+    {
+        ActionUnequipItem(GetPCItemLastEquipped());
+        ActionDoCommand(SetCommandable(TRUE, oPC));
+        SetCommandable(FALSE, oPC);
+    }
+
+    //Subdual to elements
+    //implemented as resist 1/- for heat and cold
+    if(GetHasFeat(FEAT_SUBDUAL))
+    {
+        itemproperty ipIP =ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGERESIST_1);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        ipIP =ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_COLD, IP_CONST_DAMAGERESIST_1);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 }

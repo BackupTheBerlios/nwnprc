@@ -13,5 +13,7 @@ void main()
 {
     //SendMessageToPC(GetFirstPC(), "Desecrate has been activated");
     effect eAOE = EffectAreaOfEffect(AOE_MOB_DES_20); //"prc_tn_des_a", "prc_tn_des_a", "prc_tn_des_b");
+    effect eVis = EffectVisualEffect(VFX_TN_DES_20);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, OBJECT_SELF, HoursToSeconds(99));
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, OBJECT_SELF, HoursToSeconds(99));
 }

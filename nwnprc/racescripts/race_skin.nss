@@ -102,10 +102,13 @@ void main()
          {
              object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
              SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
+
              oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-             
              // check to make sure the weapon is not a shield or torch
-             SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE); 
+             if (GetBaseItemType(oItem) != BASE_ITEM_SMALLSHIELD && GetBaseItemType(oItem) != BASE_ITEM_LARGESHIELD &&
+                 GetBaseItemType(oItem) != BASE_ITEM_TOWERSHIELD && GetBaseItemType(oItem) != BASE_ITEM_TORCH &&
+                 GetIsObjectValid(oItem))
+             SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
          }
     }
     

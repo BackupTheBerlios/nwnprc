@@ -288,9 +288,9 @@
 284 EPIC_WILL                                      695       1    -1             0      
 285 EPIC_FORTITUDE                                 583       1    -1             0      
 286 EPIC_REFLEXES                                  585       1    -1             0      
-287 FEAT_BRAWLER_EXTRAATT_1                        4429      1    10             1      
-288 FEAT_BRAWLER_EXTRAATT_2                        4430      1    20             1      
-289 FEAT_BRAWLER_EXTRAATT_3                        4431      1    30             1      
+287 FEAT_BRAWLER_EXTRAATT_1                        4429      1    10             0      
+288 FEAT_BRAWLER_EXTRAATT_2                        4430      1    20             0      
+289 FEAT_BRAWLER_EXTRAATT_3                        4431      1    30             0      
 290 brawler_damage_reduction_3                     4432      1    16             0      
 291 brawler_damage_reduction_6                     4433      1    21             0      
 292 brawler_damage_reduction_9                     4434      1    26             0      

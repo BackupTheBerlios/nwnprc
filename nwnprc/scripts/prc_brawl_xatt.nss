@@ -49,10 +49,8 @@ void main()
 	SetLocalInt(oCreature, "BrawlerAttacks", iExtraAttacks);
         
         effect eExtraAttacks = SupernaturalEffect(EffectModifyAttacks(iExtraAttacks));
-        effect eVisual = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
 
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eExtraAttacks, oCreature);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, oCreature);
     }
     else
     {

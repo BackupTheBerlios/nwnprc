@@ -79,5 +79,8 @@ void main ()
     int iLefthand = GetIsObjectValid(oLefthand) && GetBaseItemType(oLefthand) != BASE_ITEM_TORCH;
     int iMonk = GetLevelByClass(CLASS_TYPE_MONK, oPC);
     
-    if (iRighthand || iLefthand || iMonk) RemoveExtraAttacks(oPC);
+    if (iRighthand || iLefthand || iMonk)
+        RemoveExtraAttacks(oPC);
+    else
+        ActionCastSpellAtObject(SPELL_BRAWLER_EXTRA_ATT, oPC, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 }

@@ -94,10 +94,12 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nMeta
 	// Do actual summon effect
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature(sResRef), locTarget, fDur);
 	
+	/* DOES NOT WORK.
+	 * TODO: REMOVE ONCE A WORKING SOLUTION EXISTS
 	// Find the newly added construct
 	object oConstruct = OBJECT_INVALID;
 	i = 1;
-	oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i++);
+	oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i);
 	while(GetIsObjectValid(oCheck))
     {
 		if(!GetLocalInt(oCheck, ASTRAL_CONSTRUCT_LEVEL) && GetResRef(oCheck) == sResRef)
@@ -105,12 +107,16 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nMeta
 			oConstruct = oCheck;
 			break;
 		}
-		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i++);
+		i++;
+		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i);
     }
     
     // DEBUG //
-    SendMessageToPC(oManifester, "Found the just added astral construct: " + (oConstruct != OBJECT_INVALID ? "true":"false") + "\nAssociate name: " + GetName(oConstruct));
+    SendMessageToPC(oManifester, "Found the just added astral construct: " + (oConstruct != OBJECT_INVALID ? "true":"false") + "\nSummon name: " + GetName(oConstruct) + "\nTotal summons: " + IntToString(i));
     // DEBUG //
+	*/
+	
+	/* For use if need to return to henchman setup
 	
 	// Add the locals to the construct
 	SetLocalInt(oConstruct, ASTRAL_CONSTRUCT_LEVEL,              nACLevel);
@@ -126,6 +132,7 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nMeta
 	
 	int nAppearance = GetAppearanceForConstruct(nACLevel, nOptionFlags, nCheck);
 	SetCreatureAppearanceType(oConstruct, nAppearance);
+	*/
 	
 	// Do VFX
 }
@@ -277,7 +284,7 @@ struct ac_forms GetAppearancesForLevel(int nLevel)
 			return toReturn;
 		
 		default:
-			WriteTimestampedLogEntry("Erroneous value for nLevel in GetAppearancessForLevel");
+			WriteTimestampedLogEntry("Erroneous value for nLevel in GetAppearancesForLevel");
 	}
 	
 	return toReturn;
@@ -286,7 +293,7 @@ struct ac_forms GetAppearancesForLevel(int nLevel)
 
 int GetAppearanceForConstruct(int nACLevel, int nOptionFlags, int nCheck)
 {
-	int bUse2da = GetLocalInt(GetModule(), "UseAstralConstruct2da") != 0;
+	int bUse2da = GetPRCSwitch(PRC_PSI_ASTRAL_CONSTRUCT_USE_2DA);
 	int bUseAlt = GetUseAltAppearances(nOptionFlags);
 	int nNum = nCheck < AC_APPEARANCE_CHECK_HIGH ?
 	             nCheck < AC_APPEARANCE_CHECK_MEDIUM ?

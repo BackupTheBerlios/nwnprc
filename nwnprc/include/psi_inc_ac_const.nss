@@ -80,6 +80,8 @@ const string ASTRAL_CONSTRUCT_SLAM = "psi_ast_con_slam";
 const string CURRENT_SLOT = "CurrentAstralConstructSlot";
 const string EDIT         = "Edit";
 
+const string MANIFESTED_SLOT = "ManifestedAstralConstructSlot";
+
 
 // Strref constants
 const int STRREF_INVALID_CONSTRUCT_IN_SLOT = 16824742;

@@ -56,6 +56,7 @@ const int POWER_ASTRALCONSTRUCT_SLOT1   = 14036;
 const int POWER_ASTRALCONSTRUCT_SLOT2   = 14037;
 const int POWER_ASTRALCONSTRUCT_SLOT3   = 14038;
 const int POWER_ASTRALCONSTRUCT_SLOT4   = 14039;
+const int POWER_CREATESOUND	    = 14040;
 
 // Level 2 Powers
 const	int	POWER_BESTOWPOWER		= 14051;
@@ -92,6 +93,8 @@ const	int	POWER_RECALLAGONY		= 14081;
 const	int	POWER_THOUGHTSHIELD		= 14082;
 const	int	POWER_DISSOLVEWEAP		= 14083;
 const   int 	POWER_SHAREPAIN		   	= 14084;
+const   int 	POWER_CONTROLAIR	   	= 14085;
+const   int 	POWER_CONTROLSOUND	   	= 14086;
 
 // Level 3 Powers
 const	int	POWER_BODYADJUST		= 14101;
@@ -118,6 +121,15 @@ const   int 	POWER_KEENEDGE   		= 14121;
 const   int 	POWER_MENTALBARRIER   		= 14122;
 const   int 	POWER_MINDTRAP   		= 14123;
 const   int 	POWER_TOUCHSIGHT   		= 14124;
+const   int 	POWER_BODYPURIFICATION 		= 14125;
+const   int 	POWER_DISPELPSIONICS   		= 14126;
+const   int 	POWER_ENERGYWALL_COLD  		= 14127;
+const   int 	POWER_ENERGYWALL_ELEC		= 14128;
+const   int 	POWER_ENERGYWALL_FIRE		= 14129;
+const   int 	POWER_ENERGYWALL_SONIC		= 14130;
+const   int 	POWER_HUSTLE	   		= 14131;
+const   int 	POWER_TIMEHOP   		= 14132;
+const   int 	POWER_UBIQVISION   		= 14133;
 
 
 // Level 4 Powers
@@ -129,6 +141,8 @@ const   int 	POWER_ENERGYADAPTION	   	= 14155;
 const   int 	POWER_FREEDOM		   	= 14156;
 const   int 	POWER_MINDWIPE		   	= 14157;
 const   int 	POWER_POWERLEECH	   	= 14158;
+const   int 	POWER_PSYCHICREFORMATION   	= 14159;
+const   int 	POWER_TELEKINETICMANEUVER   	= 14160;
 
 // Level 5 Powers
 const	int	POWER_BALEFULTEL		= 14191;
@@ -137,12 +151,16 @@ const   int 	POWER_POWERRESISTANCE   	= 14193;
 const   int 	POWER_PSYCHICCRUSH	   	= 14194;
 const   int 	POWER_TRUESEEING	   	= 14195;
 const   int 	POWER_TOWERIRONWILL	   	= 14196;
+const   int 	POWER_CATAPSI		   	= 14197;
+const   int 	POWER_SHATTERMINDBLANK	   	= 14198;
 
 // Level 6 Powers
 const	int	POWER_BREATHBLACKDRAGON		= 14231;
 const	int	POWER_DISINTEGRATE		= 14232;
 const	int	POWER_CRYSTALLIZE		= 14233;
 const   int 	POWER_FUSEFLESH		   	= 14234;
+const   int 	POWER_RETRIEVE		   	= 14235;
+const   int 	POWER_TEMPORALACCELERATION   	= 14236;
 
 // Level 7 Powers
 const	int	POWER_CRISISLIFE		= 14271;
@@ -155,12 +173,18 @@ const   int 	POWER_INSANITY		   	= 14277;
 const   int 	POWER_MINDBLANKPERSONAL	   	= 14278;
 const   int 	POWER_OAKBODY		   	= 14279;
 const   int 	POWER_ULTRABLAST	   	= 14280;
+const   int 	POWER_EVADEBURST	   	= 14281;
+const   int 	POWER_MOMENTOFPRESCIENCEATTACK 	= 14282;
+const   int 	POWER_MOMENTOFPRESCIENCEARMOUR  = 14283;
+const   int 	POWER_MOMENTOFPRESCIENCESAVES	= 14284;
+const   int 	POWER_MOMENTOFPRESCIENCESKILLS	= 14285;
 
 // Level 8 Powers
 const	int	POWER_RECALLDEATH		= 14301;
 const   int 	POWER_IRONBODY		   	= 14302;
 const   int 	POWER_TRUEMETABOLISM	   	= 14303;
 const   int 	POWER_PSIMINDBLANK	   	= 14304;
+const   int 	POWER_SHADOWBODY	   	= 14305;
 
 // Level 9 Powers
 const   int 	POWER_ASSIMILATE	   	= 14331;

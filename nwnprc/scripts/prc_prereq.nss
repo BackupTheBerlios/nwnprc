@@ -17,7 +17,10 @@ int Bard(object oPC)
 {
         int iBard = GetLevelByClass(CLASS_TYPE_BARD, oPC);
         int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA);
+        int iShad = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
+        int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
 	int iBSpell;
+	int iSSpell;
 
 
 	if (iBard >= 16)
@@ -45,9 +48,32 @@ int Bard(object oPC)
 	iBSpell = 1;
 	}
 
+	else if (iShad >= 5)
+	{
+	iSSpell = 3;
+	}
+	else if (iShad >= 3)
+	{
+	iSSpell = 2;
+	}
+	else if (iShad >= 1)
+	{
+	iSSpell = 1;
+	}
+
+	if (iInt < iSSpell)
+	{
+	iSSpell = iInt;
+	} 
+
 	if (iCha < iBSpell)
 	{
 	iBSpell = iCha;
+	} 
+
+	if (iSSpell > iBSpell)
+	{
+	iBSpell = iSSpell;
 	} 
 
 	return iBSpell;
@@ -185,8 +211,10 @@ int RanPal(object oPC)
 {
         int iRanger = GetLevelByClass(CLASS_TYPE_RANGER, oPC);
         int iPaladin = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
+        int iSoldier = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT, oPC);
         int iWis = GetAbilityScore(oPC, ABILITY_WISDOM);
 	int iRanPal;
+	int iSOL;
 
 
 	if (iRanger >= 14 || iPaladin >= 14)
@@ -206,6 +234,27 @@ int RanPal(object oPC)
 	iRanPal = 1;
 	}
 
+	if (iSoldier >= 8)
+	{
+	iSOL = 4;
+	}
+	else if (iSoldier >= 6)
+	{
+	iSOL = 3;
+	}
+	else if (iSoldier >= 4)
+	{
+	iSOL = 2;
+	}
+	else if (iSoldier >= 2)
+	{
+	iSOL = 1;
+	}
+
+	if (iSOL > iRanPal)
+	{
+	iRanPal = iSOL;
+	}
 
 	if (iWis < iRanPal)
 	{

@@ -538,6 +538,14 @@ void MinstrelOfTheEdge(object oPC)
     }
 }
 
+int DemiLich(object oPC)
+{
+    if (GetLocalInt(GetModule(),"PRC_DISABLE_DEMILICH") > 0 && GetLevelByClass(CLASS_TYPE_LICH) >= 4)
+    {
+       SetLocalInt(oPC, "PRC_AllowLich", 1); //reverse logic.  1 means don't allow.
+    }
+}
+
 void main()
 {
         //Declare Major Variables
@@ -586,6 +594,7 @@ void main()
 	Shadowlord(oPC, iArcSpell1);
 	Shifter(oPC, iArcSpell1, iDivSpell1);
 	MinstrelOfTheEdge(oPC);
+	DemiLich(oPC);
 	
 	// Truly massive debug message flood if activated.
 	/*

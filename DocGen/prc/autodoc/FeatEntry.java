@@ -5,7 +5,7 @@ import java.util.*;
  * Data structure for a feat entry.
  */
 public class FeatEntry implements Comparable<FeatEntry>{
-	public ArrayList<FeatEntry> childFeats = new ArrayList<FeatEntry>();
+	public TreeMap<String, FeatEntry> childFeats = new TreeMap<String, FeatEntry>();
 	
 	public FeatEntry master;
 	public String name;
@@ -14,6 +14,7 @@ public class FeatEntry implements Comparable<FeatEntry>{
 	public int entryNum;
 	public boolean isEpic;
 	public boolean isClassFeat;
+	public boolean isSuccessor;
 	
 	public FeatEntry(String name, String text, String filePath,
 	                 int entryNum, boolean isEpic, boolean isClassFeat){
@@ -25,6 +26,7 @@ public class FeatEntry implements Comparable<FeatEntry>{
 		this.isClassFeat = isClassFeat;
 		
 		master = null;
+		isSuccessor = false;
 	}
 	
 	public int compareTo(FeatEntry other){

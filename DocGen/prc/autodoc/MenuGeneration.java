@@ -117,7 +117,8 @@ public final class MenuGeneration{
 		
 		// Parse through feats
 		for(FeatEntry feat : feats.values()){
-			if(feat.isClassFeat) continue;
+			// Skip class feats and feats with masterfeat or a predecessor
+			if(feat.isClassFeat || feat.isSuccessor || feat.master != null) continue; 
 			if(!feat.isEpic)
 				normalFeatLinks.put(feat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
 				                                                           feat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))

@@ -377,7 +377,7 @@ public final class PageGeneration{
 				try{
 					other = masterFeats.get(Integer.parseInt(feats2da.getEntry("MASTERFEAT", check.entryNum)));
 					check.master = other;
-					other.childFeats.add(check);
+					other.childFeats.put(check.name, check);
 					if(check.isEpic) other.isEpic = true;
 					if(!check.isClassFeat) other.isClassFeat = false;
 				}catch(NumberFormatException e){
@@ -395,6 +395,7 @@ public final class PageGeneration{
 			if(!feats2da.getEntry("SUCCESSOR", check.entryNum).equals("****")){
 				try{
 					other = feats.get(Integer.parseInt(feats2da.getEntry("SUCCESSOR", check.entryNum)));
+					other.isSuccessor = true;
 					temp += ("<div>\n" + successorFeatHeaderTemplate + "<br /><a href=\"" + other.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + other.name + "</a>\n</div>\n");
 				}catch(NumberFormatException e){
 					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid successor link");
@@ -409,7 +410,7 @@ public final class PageGeneration{
 			if(verbose) System.out.println("Linking masterfeat " + check.name);
 			temp = "";
 			boolean doOnce = false;
-			for(FeatEntry child : check.childFeats){
+			for(FeatEntry child : check.childFeats.values()){
 				if(!doOnce){ temp += "<div>\n"; doOnce = true; }
 				temp += "<br /><a href=\"" + child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + child.name + "</a>\n";
 			}

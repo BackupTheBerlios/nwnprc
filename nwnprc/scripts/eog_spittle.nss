@@ -28,6 +28,7 @@ void main()
      object oTarget = GetSpellTargetObject();
      int iTargetRace = MyPRCGetRacialType(oTarget);
      
+     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_ACID_S), oTarget);   
      
      if(GetDistanceBetween(oCaster, oTarget) < 6.2 &&  // has to be within 20 ft.
         iTargetRace != RACIAL_TYPE_OOZE &&             // has to use sight to attack

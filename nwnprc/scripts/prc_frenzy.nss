@@ -125,6 +125,11 @@ void main()
 
         if (nCon > 0)
         {
+            // 2004-01-18 mr_bumpkin: determine the ability scores before adding bonuses, so the values
+            // can be read in by the GiveExtraRageBonuses() function below.
+            int StrBeforeBonuses = GetAbilityScore(OBJECT_SELF, ABILITY_STRENGTH);
+            int ConBeforeBonuses = GetAbilityScore(OBJECT_SELF,ABILITY_CONSTITUTION);
+
             //Apply the VFX impact and effects
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nCon));
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
@@ -134,11 +139,6 @@ void main()
             AttackNearestForDuration();
             
             DelayCommand(RoundsToSeconds(nCon), EndOfFrenzyDamage(oSelf) );
-
-            // 2004-01-18 mr_bumpkin: determine the ability scores before adding bonuses, so the values
-            // can be read in by the GiveExtraRageBonuses() function below.
-            int StrBeforeBonuses = GetAbilityScore(OBJECT_SELF, ABILITY_STRENGTH);
-            int ConBeforeBonuses = GetAbilityScore(OBJECT_SELF,ABILITY_CONSTITUTION);
  
             // 2004-01-18 mr_bumpkin: Adds special bonuses to those barbarians who are restricted by the
             // +12 attribute bonus cap, to make up for them. :)

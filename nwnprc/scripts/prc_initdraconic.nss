@@ -6,11 +6,6 @@
 #include "inc_item_props"
 #include "prc_ip_srcost"
 
-const int IP_CONST_MONSTERDAMAGE_7d4 = 58;
-
-
-
-
 
 int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 {
@@ -20,7 +15,7 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 
   int iSize = GetCreatureSize(oPC);
 
-  int iDmg = bUnarmedDmg;
+  int iDmg = bUnarmedDmg;;
 
   if (iSize == CREATURE_SIZE_SMALL ||iSize== CREATURE_SIZE_TINY)
       iDmg--;
@@ -30,14 +25,8 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
   {
     int iLvDmg = iMonk/4+2;
 
-    if (iLvDmg> iDmg+bUnarmedDmg)  iDmg =iLvDmg ;
-
-
-
-
+     iDmg = iLvDmg +bUnarmedDmg;
   }
-
-
 
      switch (iDmg)
      {
@@ -56,11 +45,9 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
         case 6:
           return IP_CONST_MONSTERDAMAGE_1d20;
         case 7:
-          return IP_CONST_MONSTERDAMAGE_1d20;
+          return IP_CONST_MONSTERDAMAGE_2d10;
         case 8:
-          return IP_CONST_MONSTERDAMAGE_1d20;
-
-
+          return IP_CONST_MONSTERDAMAGE_2d12;
       }
 
 
@@ -102,7 +89,7 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
 
       int iDmg =FindUnarmedDmg(oPC,bUnarmedDmg);
 
-      int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
+int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
 
       int iKi = GetHasFeat(FEAT_KI_STRIKE,oPC) ? 1 : 0 ;
           iKi = (iMonk>12)                     ? 2 : iKi;
@@ -196,11 +183,6 @@ void main()
 
    int bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE1,oPC) ? 1:0;
        bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE2,oPC) ? 2:bUnarmedDmg;
-/*       bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE1,oPC) ? 3:bUnarmedDmg;
-       bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE2,oPC) ? 4:bUnarmedDmg;
-       bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE3,oPC) ? 5:bUnarmedDmg;
-       bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE4,oPC) ? 6:bUnarmedDmg;
-*/
 
    if (bEnh)ClawDragon(oPC,bUnarmedDmg,bEnh,GetLocalInt(oPC,"ONEQUIP"));
 

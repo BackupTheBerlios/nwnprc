@@ -253,8 +253,12 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"BRageProw");
     // Runescarred Berserker
     DeleteLocalInt(oSkin,"RitScarAC");
-
-
+    // Ultimate Ranger
+    DeleteLocalInt(oSkin,"URGrace");
+    DeleteLocalInt(oSkin,"URImmu");
+    DeleteLocalInt(oSkin,"URSnare");
+    
+    
     // future PRCs Go below here
 }
 

@@ -15,11 +15,11 @@ if(GetTag(oItem) == "NW_IT_MPOTION021" || GetTag(oItem) == "NW_IT_MPOTION022" ||
     else
         {DestroyObject(oItem);}
 
-    //create potion of heal:
-    CreateItemOnObject("it_dm_heal");
+    //Cure Critical Wounds
+    spellsCure(d8(6), 20, 32, VFX_IMP_SUNSTRIKE, VFX_IMP_HEALING_G, GetSpellId());
     FloatingTextStringOnCreature("Heal Potion Created", OBJECT_SELF);
     }
-else
+    else
     {
     FloatingTextStringOnCreature("This is not a valid alcoholic beverage", OBJECT_SELF);
     IncrementRemainingFeatUses(OBJECT_SELF, FEAT_PRESTIGE_FOR_MEDICINAL_PURPOSES);

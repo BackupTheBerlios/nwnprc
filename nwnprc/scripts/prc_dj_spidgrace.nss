@@ -14,6 +14,8 @@ void main()
 {
 //Debug
 //SpeakString("Placeholder Grace");
+
+
 object oPC     = OBJECT_SELF;
 
 effect eHide   = EffectSkillIncrease(SKILL_HIDE, 4);

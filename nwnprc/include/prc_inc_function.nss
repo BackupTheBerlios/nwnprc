@@ -279,6 +279,11 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"LichWis");
     DeleteLocalInt(oSkin,"LichCon");
     DeleteLocalInt(oSkin,"LichCha");
+    // Drow Judicator
+    DeleteLocalInt(oSkin, "SelvBlessFortBonus");
+    DeleteLocalInt(oSkin, "SelvBlessRefBonus");
+    DeleteLocalInt(oSkin, "SelvBlessWillBonus");
+
     
     // future PRCs Go below here
 }

@@ -7,5 +7,5 @@
 3          Elf                 RACE      1                ****        
 4          Mobility            FEAT      26               ****
 5          LolthsMeat          FEAT      2441             ****
-6          Spellcasting        SPELL     1                ****
-7          ScriptVar           VAR       X2_AllowDrowj    0           
+8          ScriptVar           VAR       PRC_AllSpell1    0  
+7          ScriptVar           VAR       PRC_AllowDrowJud 0           

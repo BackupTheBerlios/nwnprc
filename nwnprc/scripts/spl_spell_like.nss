@@ -14,7 +14,7 @@ void main()
         SetLocalInt(focus, "spell_like_setup", 1);
 
         /* Save old hook, if any */
-        SetLocalString(OBJECT_SELF, "spelllike_save_overridespellscript", GetModuleOverrideSpellscript());
+        SetLocalString(OBJECT_SELF, "spelllike_save_overridespellscript", PRCGetUserSpecificSpellScript());
 
         /* Setup the global spellhok so we can intercept the next spell */
         PRCSetUserSpecificSpellScript("archmage_spelllk");

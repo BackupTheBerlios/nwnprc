@@ -14,7 +14,7 @@ void main()
     SetLocalInt(OBJECT_SELF, "arcane_fire_active", 1);
 
     /* Save old hook, if any */
-    SetLocalString(OBJECT_SELF, "archmage_save_overridespellscript", GetModuleOverrideSpellscript());
+    SetLocalString(OBJECT_SELF, "archmage_save_overridespellscript", PRCGetUserSpecificSpellScript());
 
     /* Setup the global spellhok so we can intercept the next spell */
     PRCSetUserSpecificSpellScript("archmage_fire");

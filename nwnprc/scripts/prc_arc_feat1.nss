@@ -13,7 +13,7 @@ if(!GetLocalInt(oPC,"arcstrikeactive"))
 {
 SetLocalInt(oPC,"arcstrikeactive",TRUE);
 FloatingTextStringOnCreature("Spell Storing Activated",oPC);
-SetLocalString(OBJECT_SELF,"arcstrikeovscript",GetModuleOverrideSpellscript());
+SetLocalString(OBJECT_SELF,"arcstrikeovscript",PRCGetUserSpecificSpellScript());
 PRCSetUserSpecificSpellScript("prc_arc_strike");
 }
 else

@@ -15,7 +15,7 @@
 void main()
 {
 
-    string sScript =  GetModuleOverrideSpellscript();
+    string sScript =  PRCGetUserSpecificSpellScript();
     if (sScript != "aa_spellhook")
     {
         SetLocalString(OBJECT_SELF,"temp_spell_at_inst",sScript);

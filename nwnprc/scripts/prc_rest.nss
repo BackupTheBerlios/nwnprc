@@ -43,11 +43,7 @@ void main()
            if (GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT,oPC))
               ChangeSpellSol(oPC);
          
-        
-         
-         AssignCommand(oPC, ClearAllActions(FALSE));
-         AssignCommand(oPC, RestMeUp(oPC));
-
+ 
           DelayCommand(1.0,FeatSpecialUsePerDay(oPC));
 
          break;

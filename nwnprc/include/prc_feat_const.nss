@@ -212,6 +212,7 @@ const int FEAT_NATPSIONIC_1        = 4796;
 const int FEAT_NATPSIONIC_2        = 4797;
 const int FEAT_NATPSIONIC_3        = 4798;
 const int FEAT_HUGE           = 4799;
+const int FEAT_SMALL          = 375;
 
 //Passive Feats
 const int FEAT_ETERNAL_FREEDOM                         = 4298;

@@ -2744,6 +2744,18 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                     iNumSides = 12;
                     iNumDice  = 3;
                     break;
+               case MONST_DAMAGE_4D8:
+                    iNumSides = 8;
+                    iNumDice  = 4;
+                    break;
+               case MONST_DAMAGE_4D10:
+                    iNumSides = 10;
+                    iNumDice  = 4;
+                    break;
+               case MONST_DAMAGE_4D12:
+                    iNumSides = 12;
+                    iNumDice  = 4;
+                    break;
           }
      }
      else if(iWeaponType == BASE_ITEM_INVALID)
@@ -3324,6 +3336,18 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
                case MONST_DAMAGE_3D12:
                     sAttackVars.iMainNumSides = 12;
                     sAttackVars.iMainNumDice  = 3;
+                    break;
+               case MONST_DAMAGE_4D8:
+                    sAttackVars.iMainNumSides = 8;
+                    sAttackVars.iMainNumDice  = 4;
+                    break;
+               case MONST_DAMAGE_4D10:
+                    sAttackVars.iMainNumSides = 10;
+                    sAttackVars.iMainNumDice  = 4;
+                    break;
+               case MONST_DAMAGE_4D12:
+                    sAttackVars.iMainNumSides = 12;
+                    sAttackVars.iMainNumDice  = 4;
                     break;
           }
      }

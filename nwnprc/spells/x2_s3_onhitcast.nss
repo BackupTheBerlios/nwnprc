@@ -274,6 +274,12 @@ void main()
 	{
 		DoRend(oSpellTarget, oSpellOrigin, oItem);
 	}
+	
+	// Handle poisoned weapons
+	if(GetLocalInt(oItem, "pois_wpn_uses"))
+	{
+		ExecuteScript("poison_wpn_onhit", OBJECT_SELF);
+	}
 
 
 }

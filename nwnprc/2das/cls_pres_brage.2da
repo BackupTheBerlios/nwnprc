@@ -7,6 +7,12 @@
 3     Cleave         FEAT      6               ****        
 4     PowerAttack    FEAT      28              ****        
 5     Base_Attack    BAB       5               ****        
-6     Dwarf          RACE      0               ****        
+6     Dwarf          RACE      0               ****    
+0          ArcticDwarf   RACE      151              ****        
+0          GoldDwarf     RACE      152              ****        
+0          GreyDwarf     RACE      153              ****        
+0          ShieldDwarf   RACE      154              ****        
+0          Urdunnir      RACE      155              ****        
+0          WildDwarf     RACE      156              ****      
 7     BarbarianOr    CLASSOR   0               ****        
 8     ScriptVar      VAR       PRC_AllowBRage   0           

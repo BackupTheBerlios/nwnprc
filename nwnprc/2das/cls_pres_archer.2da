@@ -15,7 +15,8 @@
 4          wood-Elf           RACE      168              ****    
 4          dark-Elf           RACE      169              **** 
 4          Half_aquatic-Elf   RACE      182              ****       
-4          Half-drow          RACE      183                ****    
+4          Half-drow          RACE      183              ****     
+4          feyri              RACE      201              ****    
 5          Base_Attack        BAB       6                ****        
 6          ScriptVar          VAR       X1_AllowArcher   0 
 7          Wizard             CLASSOR   10               ****           

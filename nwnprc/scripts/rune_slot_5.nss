@@ -6,7 +6,7 @@ int StartingConditional()
     object oPC = OBJECT_SELF;
     object oScribe = GetFirstItemInInventory(oPC);
     int SpellCount5 = 0;
-
+int lh,la,lc,rh,ra,rc,f;
     while(GetIsObjectValid(oScribe))
       {
        if(GetResRef(oScribe) == "runescarreddagge")

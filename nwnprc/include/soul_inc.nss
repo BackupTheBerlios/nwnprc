@@ -344,6 +344,7 @@ void SpellSol(object oPC)
 
    int Sol = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT,oPC);
    int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
+   if (Sol>10) Sol=10;
    
    if (!Sol) return ;
 
@@ -351,11 +352,31 @@ void SpellSol(object oPC)
    int iLvl2 = (Sol+1)/5 + (iWis<14 ? 0 :(iWis-6)/8) ;
    int iLvl3 = (Sol-1)/5 + (iWis<16 ? 0 :(iWis-8)/8) ;
    int iLvl4 = (Sol-3)/5 + (iWis<18 ? 0 :(iWis-10)/8) ;
-
+   
    FeatUsePerDay(oPC,FEAT_SPELLLVL1,-1,iLvl1);
    FeatUsePerDay(oPC,FEAT_SPELLLVL2,-1,iLvl2);
    FeatUsePerDay(oPC,FEAT_SPELLLVL3,-1,iLvl3);
    FeatUsePerDay(oPC,FEAT_SPELLLVL4,-1,iLvl4);
+
+}
+
+void SpellShadow(object oPC)
+{
+
+   int Sha = GetLevelByClass(CLASS_TYPE_SHADOWLORD,oPC);
+   int iInt = GetAbilityScore(oPC,ABILITY_INTELLIGENCE);
+   
+   if (!Sha) return ;
+
+   int iLvl1 = (Sha/2) + (iInt<12 ? 0 :(iInt-4)/8) ;
+   int iLvl2 = (Sha-2)/2 + (iInt<14 ? 0 :(iInt-6)/8) ;
+   int iLvl3 = (Sha-5)   + (iInt<16 ? 0 :(iInt-8)/8) ;
+   
+   if (Sha == 6) iLvl1--;
+
+   FeatUsePerDay(oPC,FEAT_SHADOWSPELLLV01,-1,iLvl1);
+   FeatUsePerDay(oPC,FEAT_SHADOWSPELLLV21,-1,iLvl2);
+   FeatUsePerDay(oPC,FEAT_SHADOWSPELLLV31,-1,iLvl3);
 
 }
 
@@ -370,7 +391,7 @@ void SpellKotMC(object oPC)
    int iLvl1 = (KotMC+2)/5 + (iWis<12 ? 0 :(iWis-4)/8) ;
    int iLvl2 = (KotMC-2)/5 + (iWis<14 ? 0 :(iWis-6)/8) ;
    int iLvl3 = (KotMC-4)/5 + (iWis<16 ? 0 :(iWis-8)/8) ;
-
+   
    FeatUsePerDay(oPC,FEAT_KOTMC_SL_1,-1,iLvl1);
    FeatUsePerDay(oPC,FEAT_KOTMC_SL_2,-1,iLvl2);
    FeatUsePerDay(oPC,FEAT_KOTMC_SL_3,-1,iLvl3);
@@ -382,6 +403,7 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC,FEAT_SMITE_UNDEAD, ABILITY_CHARISMA, 3);
     SpellSol(oPC);  
     SpellKotMC(oPC);
+    SpellShadow(oPC);
     FeatUsePerDay(oPC,FEAT_SA_SHIELDSHADOW,-1,GetCasterLvl(TYPE_ARCANE,oPC));
 
 }

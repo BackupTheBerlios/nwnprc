@@ -334,6 +334,9 @@ const int SHADOWLORD_IMPROVINVIS  = 2230;
 const int SHADOWLORD_VAMPITOUCH   = 2231;
 const int SHADOWLORD_CONFUSION    = 2233;
 const int SHADOWLORD_INVISPHERE   = 2234;
+const int FEAT_SHADOWSPELLLV01    = 3313;
+const int FEAT_SHADOWSPELLLV21    = 3317;
+const int FEAT_SHADOWSPELLLV31    = 3320;
 
 // Frenzied Berserker Feats
 const int FEAT_FRENZY = 4300;

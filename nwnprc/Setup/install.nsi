@@ -58,6 +58,7 @@ Section "PRC Pack" Section1
 	File "..\CompiledResources\PRC Pack.hif"
 	File "..\CompiledResources\prc_2das.hak"
 	File "..\CompiledResources\prc_epicspells.hak"
+	File "..\CompiledResources\prc_spells.hak
 	File "..\CompiledResources\prc_race.hak"
 	File "..\CompiledResources\prc_craft2das.hak"
 	File "..\CompiledResources\prc_misc.hak"
@@ -117,6 +118,7 @@ Section Uninstall
 	Delete "$NWNPATH\hak\PRC Pack.hif"
 	Delete "$NWNPATH\hak\prc_2das.hak"
 	Delete "$NWNPATH\hak\prc_craft2das.hak"
+	Delete "$NWNPATH\hak\prc_spells.hak"
 	Delete "$NWNPATH\hak\prc_epicspells.hak"
 	Delete "$NWNPATH\hak\prc_race.hak"
 	Delete "$NWNPATH\hak\prc_misc.hak"

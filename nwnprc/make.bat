@@ -89,6 +89,7 @@ SET MAKESCRIPTPATH=scripts
 SET MAKESPELLSPATH=spells
 SET MAKEEPICSPELLSCRIPTPATH=epicspellscripts
 SET MAKEOBJSPATH=objs
+SET MAKESPELLOBJSPATH=spellobjs
 SET MAKEEPICSPELLOBJSPATH=epicspellobjs
 SET MAKETLKPATH=tlk
 SET MAKECRAFT2DASPATH=craft2das
@@ -136,4 +137,4 @@ del craft2das.temp
 del race2das.temp
 del racescripts.temp
 del raceobjs.temp
-del makefile.temp
+rem del makefile.temp

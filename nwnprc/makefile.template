@@ -66,6 +66,7 @@ MISCRESOURCES	= $(OUTPATH)\PRCModuleUpdater.exe
 
 # Version 2.0 haks
 SCRIPTSHAK				= $(OUTPATH)\prc_scripts.hak
+SPELLSHAK				= $(OUTPATH)\prc_spells.hak
 EPICSPELLSCRIPTSHAK		= $(OUTPATH)\prc_epicspells.hak
 2DASHAK					= $(OUTPATH)\prc_2das.hak
 MISCHAK					= $(OUTPATH)\prc_misc.hak
@@ -75,6 +76,10 @@ RACEHAK					= $(OUTPATH)\prc_race.hak
 
 # The NSIS script used to build setup.exe
 INSTALLSCRIPT	= Setup\install.nsi
+
+# The list of include paths to look for nss include files.  If there are multiple
+# folders separate by ';', eg. include1;include2;include3
+NSSINCLUDE		= include
 
 # This variable contains all of the files that need to be installed in the
 # NWN override directory for the prc pack to work.  If this list is changed
@@ -178,7 +183,7 @@ hak110: $(ERF110) $(HAK) install
 
 # Rule to build the 2.0 haks
 hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) \
-	$(EPICSPELLSCRIPTSHAK) $(RACEHAK) \
+	$(SPELLSHAK) $(EPICSPELLSCRIPTSHAK) $(RACEHAK) \
 	$(CRAFT2DASHAK) $(HIF) install 
 
 # Rule to build the NSIS installer.
@@ -203,6 +208,7 @@ installcontent:
 	-@copy /y "$(ERF)" "$(NWN_ERF)" >nul
 	@copy /y "$(TLK)" "$(NWN_TLK)" >nul
 	-@copy /y "$(SCRIPTSHAK)" "$(NWN_HAK)" >nul
+	-@copy /y "$(SPELLSHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(2DASHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(MISCHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(TEXTURESHAK)" "$(NWN_HAK)" >nul
@@ -229,7 +235,7 @@ installoverrides: $(OVERRIDEFILES)
 # This rule builds the 2.0 RAR, commented out for now
 $(RAR): $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(MISCHAK) $(ERF) \
 	$(OVERRIDEFILES) $(TLK) $(README) $(MISCRESOURCES) $(CRAFT2DASHAK) \
-	$(EPICSPELLSCRIPTSHAK) $(RACEHAK) \
+	$(EPICSPELLSCRIPTSHAK) $(SPELLSHAK) $(RACEHAK) \
 	$(HIF)
 	@echo $(@F)
 	-@del "$@" 2>nul
@@ -268,19 +274,27 @@ $(ERF): $(ERFFILES)
 
 
 # Rule to build the 2.0 scripts HAK file.
-$(SCRIPTSHAK): $(OBJS) $(SCRIPTS) $(SPELLOBJS) $(SPELLS)
+$(SCRIPTSHAK): $(OBJS) $(SCRIPTS)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $(SCRIPTS)
 	@"$(ERFCOMPILER)" -u $@ $(OBJS) >nul
-	@"$(ERFCOMPILER)" -u $@ $(SPELLS) >nul
-	@"$(ERFCOMPILER)" -u $@ $(SPELLOBJS) >nul
 # At some point we may need to use the below method to generate the hak
 # it will add the files to the hak one at a time to prevent command line
 # too long errors, but it runs orders of magnitude slower.
 #	@"$(ERFCOMPILER)" -c $@ howto.txt >nul
 #	!@"$(ERFCOMPILER)" -u $@ $** >nul
 
+$(SPELLSHAK): $(SPELLOBJS) $(SPELLS)
+	@echo $(@F)
+	-@del "$@" 2>nul
+	@"$(ERFCOMPILER)" -c $@ $(SPELLS) >nul
+	@"$(ERFCOMPILER)" -u $@ $(SPELLOBJS) >nul
+# At some point we may need to use the below method to generate the hak
+# it will add the files to the hak one at a time to prevent command line
+# too long errors, but it runs orders of magnitude slower.
+#	@"$(ERFCOMPILER)" -c $@ howto.txt >nul
+#	!@"$(ERFCOMPILER)" -u $@ $** >nul
 
 # Rule to build the 2.0 scripts HAK file.
 $(EPICSPELLSCRIPTSHAK): $(EPICSPELLOBJS) $(EPICSPELLSCRIPTS)
@@ -349,10 +363,10 @@ $(HIF): PRCPackTemplate.hif config.make
 #
 depends:
 	@echo Updating dependencies
-	@tools\makedep -a -w -n -l -s$(SRCPATH) -i$(SRCPATH) -o$(MAKEFILE) $(OBJS)
-	@tools\makedep -a -w -n -l -s$(SPELLSRCPATH) -i$(SPELLSRCPATH) -o$(MAKEFILE) $(SPELLOBJPATH)
-	@tools\makedep -a -w -n -l -s$(EPICSPELLSRCPATH) -i$(EPICSPELLSRCPATH) -o$(MAKEFILE) $(EPICSPELLOBJS)
-	@tools\makedep -a -w -n -l -s$(RACESRCPATH) -i$(RACESRCPATH) -o$(MAKEFILE) $(RACEOBJS)
+	@tools\makedep -a -w -n -l -s$(SRCPATH) -i$(NSSINCLUDE) -o$(MAKEFILE) $(OBJS)
+	@tools\makedep -a -w -n -l -s$(SPELLSRCPATH) -i$(NSSINCLUDE) -o$(MAKEFILE) $(SPELLOBJS)
+	@tools\makedep -a -w -n -l -s$(EPICSPELLSRCPATH) -i$(NSSINCLUDE) -o$(MAKEFILE) $(EPICSPELLOBJS)
+	@tools\makedep -a -w -n -l -s$(RACESRCPATH) -i$(NSSINCLUDE) -o$(MAKEFILE) $(RACEOBJS)
 
 
 # The code below will compile scripts by copying them to the TEMPPATH and doing the

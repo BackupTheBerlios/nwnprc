@@ -1,7 +1,7 @@
 2DA V2.0                                                      
                                                               
            LABEL       ReqType    ReqParam1       ReqParam2   
-1          SpellLevel  SPELL      11              ****       
+3          ScriptVar   VAR        PRC_AllSpell6   0        
 2          CraftWonder FEAT       2925            ****       
 3          ScriptVar   VAR        PRC_AllowLich   0
  

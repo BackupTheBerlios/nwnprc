@@ -4,6 +4,6 @@
 0     ScriptVar    VAR        PRC_ArcSpell2   0        
 1     Ethran       FEAT       2567            ****        
 2     ScriptVar    VAR        PRC_AllowHath   0           
-0     ScriptVar    VAR        PRC_DivSpell2   0        
-5     Spellcraft   SKILL      16              9           
-  
+3     ScriptVar    VAR        PRC_DivSpell2   0        
+4     Spellcraft   SKILL      16              9           
+5     ScriptVar    VAR        PRC_Female      0        

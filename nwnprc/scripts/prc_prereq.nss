@@ -51,7 +51,7 @@ int Bard(object oPC)
 	return iBSpell;
 }
 
-void ArcSpell(object oPC, int iArcSpell)
+int ArcSpell(object oPC, int iArcSpell)
 {
 
 	SetLocalInt(oPC, "PRC_ArcSpell1", 1);
@@ -129,41 +129,52 @@ void ArcSpell(object oPC, int iArcSpell)
 	if (iArcSpell >= 1)
 	{
 	SetLocalInt(oPC, "PRC_ArcSpell1", 0);
+	SetLocalInt(oPC, "PRC_AllSpell1", 0);
 	}
 	if (iArcSpell >= 2)
 	{
 	SetLocalInt(oPC, "PRC_ArcSpell2", 0);
+	SetLocalInt(oPC, "PRC_AllSpell2", 0);
 	}
 	if (iArcSpell >= 3)
 	{
 	SetLocalInt(oPC, "PRC_ArcSpell3", 0);
+	SetLocalInt(oPC, "PRC_AllSpell3", 0);
 	}
 	if (iArcSpell >= 4)
 	{
 	SetLocalInt(oPC, "PRC_ArcSpell4", 0);
+	SetLocalInt(oPC, "PRC_AllSpell4", 0);
 	}
 	if (iArcSpell >= 5)
 	{
 	SetLocalInt(oPC, "PRC_ArcSpell5", 0);
+	SetLocalInt(oPC, "PRC_AllSpell5", 0);
 	}
 	if (iArcSpell >= 6)
 	{
 	SetLocalInt(oPC, "PRC_ArcSpell6", 0);
+	SetLocalInt(oPC, "PRC_AllSpell6", 0);
 	}
 	if (iArcSpell >= 7)
 	{
 	SetLocalInt(oPC, "PRC_ArcSpell7", 0);
+	SetLocalInt(oPC, "PRC_AllSpell7", 0);
 	}
 	if (iArcSpell >= 8)
 	{
 	SetLocalInt(oPC, "PRC_ArcSpell8", 0);
+	SetLocalInt(oPC, "PRC_AllSpell8", 0);
 	}
 	if (iArcSpell >= 9)
 	{
 	SetLocalInt(oPC, "PRC_ArcSpell9", 0);
+	SetLocalInt(oPC, "PRC_AllSpell9", 0);
 	}
 
 SendMessageToPC(oPC, "You can cast Arcane spells of level " + IntToString(iArcSpell));
+
+return iArcSpell;
 
 }
 
@@ -204,7 +215,7 @@ int RanPal(object oPC)
 
 
 
-void DivSpell(object oPC, int iDivSpell)
+int DivSpell(object oPC, int iDivSpell)
 {
 
 	SetLocalInt(oPC, "PRC_DivSpell1", 1);
@@ -277,41 +288,52 @@ void DivSpell(object oPC, int iDivSpell)
 	if (iDivSpell >= 1)
 	{
 	SetLocalInt(oPC, "PRC_DivSpell1", 0);
+	SetLocalInt(oPC, "PRC_AllSpell1", 0);
 	}
 	if (iDivSpell >= 2)
 	{
 	SetLocalInt(oPC, "PRC_DivSpell2", 0);
+	SetLocalInt(oPC, "PRC_AllSpell2", 0);
 	}
 	if (iDivSpell >= 3)
 	{
 	SetLocalInt(oPC, "PRC_DivSpell3", 0);
+	SetLocalInt(oPC, "PRC_AllSpell3", 0);
 	}
 	if (iDivSpell >= 4)
 	{
 	SetLocalInt(oPC, "PRC_DivSpell4", 0);
+	SetLocalInt(oPC, "PRC_AllSpell4", 0);
 	}
 	if (iDivSpell >= 5)
 	{
 	SetLocalInt(oPC, "PRC_DivSpell5", 0);
+	SetLocalInt(oPC, "PRC_AllSpell5", 0);
 	}
 	if (iDivSpell >= 6)
 	{
 	SetLocalInt(oPC, "PRC_DivSpell6", 0);
+	SetLocalInt(oPC, "PRC_AllSpell6", 0);
 	}
 	if (iDivSpell >= 7)
 	{
 	SetLocalInt(oPC, "PRC_DivSpell7", 0);
+	SetLocalInt(oPC, "PRC_AllSpell7", 0);
 	}
 	if (iDivSpell >= 8)
 	{
 	SetLocalInt(oPC, "PRC_DivSpell8", 0);
+	SetLocalInt(oPC, "PRC_AllSpell8", 0);
 	}
 	if (iDivSpell >= 9)
 	{
 	SetLocalInt(oPC, "PRC_DivSpell9", 0);
+	SetLocalInt(oPC, "PRC_AllSpell9", 0);
 	}
 
 SendMessageToPC(oPC, "You can cast Divine spells of level " + IntToString(iDivSpell));
+
+return iDivSpell;
 
 }
 
@@ -327,6 +349,46 @@ void Hathran(object oPC)
 
 }
 
+
+
+void Shifter(object oPC, int iArcSpell, int iDivSpell)
+{
+
+	SetLocalInt(oPC, "PRC_PrereqShift", 1);
+
+	if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && GetHasFeat(FEAT_ANIMAL_DOMAIN_POWER, oPC) && iDivSpell >= 5)
+	{
+	SetLocalInt(oPC, "PRC_PrereqShift", 0);
+	}
+	if (GetLevelByClass(CLASS_TYPE_SORCERER, oPC) && iArcSpell >= 4)
+	{
+	SetLocalInt(oPC, "PRC_PrereqShift", 0);
+	}
+	if (GetLevelByClass(CLASS_TYPE_WIZARD, oPC) && iArcSpell >= 4)
+	{
+	SetLocalInt(oPC, "PRC_PrereqShift", 0);
+	}
+	if (GetLevelByClass(CLASS_TYPE_DRUID, oPC) >= 5)
+	{
+	SetLocalInt(oPC, "PRC_PrereqShift", 0);
+	}
+	if (GetLevelByClass(CLASS_TYPE_RANGER, oPC) >= 15)
+	{
+	SetLocalInt(oPC, "PRC_PrereqShift", 0);
+	}
+	if (GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oPC) >= 10)
+	{
+	SetLocalInt(oPC, "PRC_PrereqShift", 0);
+	}
+	if (GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC) >= 7)
+	{
+	SetLocalInt(oPC, "PRC_PrereqShift", 0);
+	}
+
+
+
+}
+
 void main()
 {
         //Declare Major Variables
@@ -334,8 +396,19 @@ void main()
         int iArcSpell;
         int iDivSpell;
 
-ArcSpell(oPC, iArcSpell);
-DivSpell(oPC, iDivSpell);
-Hathran(oPC);
+	SetLocalInt(oPC, "PRC_AllSpell1", 1);
+	SetLocalInt(oPC, "PRC_AllSpell2", 1);
+	SetLocalInt(oPC, "PRC_AllSpell3", 1);
+	SetLocalInt(oPC, "PRC_AllSpell4", 1);
+	SetLocalInt(oPC, "PRC_AllSpell5", 1);
+	SetLocalInt(oPC, "PRC_AllSpell6", 1);
+	SetLocalInt(oPC, "PRC_AllSpell7", 1);
+	SetLocalInt(oPC, "PRC_AllSpell8", 1);
+	SetLocalInt(oPC, "PRC_AllSpell9", 1);
 
+
+	iArcSpell = ArcSpell(oPC, iArcSpell);
+	iDivSpell = DivSpell(oPC, iDivSpell);
+	Hathran(oPC);
+	Shifter(oPC, iArcSpell, iDivSpell);
 }

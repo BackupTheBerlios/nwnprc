@@ -641,6 +641,23 @@ void ShadowAdept(object oPC)
      }
 }
 
+void ThrallOfGrazzt(object oPC)
+{
+     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+
+     if (iCleric)
+     {
+          SetLocalInt(oPC, "PRC_PrereqTOG", 1);
+          int iThrall = GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DARKNESS_DOMAIN,oPC);
+          {
+          if (iThrall>1)
+               {
+               SetLocalInt(oPC, "PRC_PrereqTOG", 0);
+               }
+          }
+     }
+}
+
 void Rava(object oPC)
 {
     SetLocalInt(oPC, "PRC_PreReq_Rava", 1);
@@ -803,6 +820,7 @@ void main2()
      EOG(oPC);
      RedWizard(oPC);
      ShadowAdept(oPC);
+     ThrallOfGrazzt(oPC);
      ShiningBlade(oPC);
      Shadowlord(oPC, iArcSpell1);
      Shifter(oPC, iArcSpell1, iDivSpell1);

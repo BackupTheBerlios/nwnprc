@@ -12,6 +12,7 @@ void main()
     // Set the variables
     SetLocalInt(GetPCSpeaker(), "pnp_shft_qs", 0);
     object oPC = GetPCSpeaker();
+    /*
     object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
     if ( !GetIsObjectValid(oMimicForms) )
         oMimicForms = CreateItemOnObject( "sparkoflife", oPC );
@@ -19,8 +20,9 @@ void main()
     SetPlotFlag(oMimicForms, TRUE);
     SetDroppableFlag(oMimicForms, FALSE);
     SetItemCursedFlag(oMimicForms, FALSE);
+    */
 
-    int iMaxIndex = GetLocalInt( oMimicForms, "num_creatures" );
+    int iMaxIndex = GetPersistantLocalInt(oPC, "num_creatures");
     int i;
     string sTemp;
     int iIndex;
@@ -28,8 +30,8 @@ void main()
 
     for ( i=1; i<11; i++ )
     {
-        iIndex = GetLocalArrayInt(oMimicForms,"QuickSlotIndex",i);
-        iEpic  = GetLocalArrayInt(oMimicForms,"QuickSlotEpic",i);
+        iIndex = persistant_array_get_int(oPC, "QuickSlotIndex", i);
+        iEpic  = persistant_array_get_int(oPC, "QuickSlotEpic",  i);
         if(!(iIndex>iMaxIndex))
         {
             if (iMaxIndex==0)
@@ -43,7 +45,7 @@ void main()
                     sTemp="Epic: ";
                 else
                     sTemp = "";
-                sTemp += GetLocalArrayString( oMimicForms, "shift_choice_name", iIndex );
+                sTemp += persistant_array_get_string(oPC, "shift_choice_name", iIndex);
                 SetCustomToken(99+i, sTemp);
             }
         }

@@ -14,6 +14,7 @@
 void main()
 {
     object oPC = GetPCSpeaker();
+    /*
     object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
     if ( !GetIsObjectValid(oMimicForms) )
         oMimicForms = CreateItemOnObject( "sparkoflife", oPC );
@@ -21,8 +22,9 @@ void main()
     SetPlotFlag(oMimicForms, TRUE);
     SetDroppableFlag(oMimicForms, FALSE);
     SetItemCursedFlag(oMimicForms, FALSE);
-
-    int num_creatures = GetLocalInt( oMimicForms, "num_creatures" );
+    */
+    
+    int num_creatures = GetPersistantLocalInt(oPC, "num_creatures");
     int nStartIndex = GetLocalInt(oPC,"ShifterListIndex");
     int i;
     int j = 0;
@@ -40,7 +42,7 @@ void main()
         }
         else
         {
-            SetCustomToken(100+j,GetLocalArrayString( oMimicForms, "shift_choice", i ));
+            SetCustomToken(100+j, persistant_array_get_string( oPC, "shift_choice", i ));
         }
         j++;
         //SendMessageToPC(oPC,GetLocalArrayString( oMimicForms, "shift_choice", i ));

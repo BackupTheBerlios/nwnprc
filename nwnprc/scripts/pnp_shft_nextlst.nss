@@ -6,10 +6,14 @@
 //:: Created On: 2/22/2004 6:13:10 PM
 //:://////////////////////////////////////////////
 // Move to the starting point in the list of critters by 10
+
+#include "inc_persist_loca"
+
 void main()
 {
     object oPC = GetPCSpeaker();
     int nStartIndex = GetLocalInt(oPC,"ShifterListIndex");
+    /*
     object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
     if ( !GetIsObjectValid(oMimicForms) )
         oMimicForms = CreateItemOnObject( "sparkoflife", oPC );
@@ -17,8 +21,9 @@ void main()
     SetPlotFlag(oMimicForms, TRUE);
     SetDroppableFlag(oMimicForms, FALSE);
     SetItemCursedFlag(oMimicForms, FALSE);
-
-    int num_creatures = GetLocalInt( oMimicForms, "num_creatures" );
+    */
+    
+    int num_creatures = GetPersistantLocalInt(oPC, "num_creatures");
 
     nStartIndex+=10;
     // Make sure we dont go beyond the end of the list

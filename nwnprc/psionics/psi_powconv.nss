@@ -103,7 +103,7 @@ void main()
             int nPowerLevelToBrowse = GetLocalInt(oPC, "nPowerLevelToBrowse");
             //PrintString("Building power list for level " + IntToString(nPowerLevelToBrowse));
             int i;
-            for (i=0;i<CLASS_POWER_2DA_END;i++)
+            for(i = 0; i < CLASS_POWER_2DA_END ; i++)
             {
                 int nPowerLevel = StringToInt(Get2DACache(sPowerFile, "Level", i));
                 // Skip any powers of too low level
@@ -123,9 +123,11 @@ void main()
                 string sFeatID = Get2DACache(sPowerFile, "FeatID", i);
 //                int nPowerFeatIP= StringToInt(Get2DACache(sPowerFile, "IPFeatID", i));
 //                int nPowerSpell = StringToInt(Get2DACache(sPowerFile, "SpellID", i));
-                if(sFeatID != ""
-//                    && nPowerLevel <= nMaxLevel
-                    && CheckPowerPrereqs(StringToInt(sFeatID), oPC))
+                if(sFeatID != "" 
+                  && (!StringToInt(Get2DACache(sPowerFile, "HasPrereqs", i))
+                    || CheckPowerPrereqs(StringToInt(sFeatID), oPC)
+                     )
+                  )
                 {
 //                    array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
 //                        GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID))));

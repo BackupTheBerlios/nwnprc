@@ -93,7 +93,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	        if(PRCMyResistPower(OBJECT_SELF, oTarget,nPen, fDelay) && (oTarget != OBJECT_SELF))
     	        {    	     
     	        
-    	            int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
+    	            int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
     	            
     	            //Adjust damage according to Reflex Save, Evasion or Improved Evasion
     	            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_ACID);

@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	
 	//Augmentation effects to Damage
 	if (nAugment > 0) nDice += nAugment;
-	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
+	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ELECTRICAL);
 	
 	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));

@@ -1,59 +1,59 @@
 //real power spell constants
 
 // Metapsionics
-const	int	METAPSIONIC_CHAIN		= 2;
-const	int	METAPSIONIC_EMPOWER		= 4;
-const	int	METAPSIONIC_EXTEND		= 8;
-const	int	METAPSIONIC_MAXIMIZE		= 16;
-const	int	METAPSIONIC_SPLIT		= 32;
-const	int	METAPSIONIC_TWIN		= 64;
-const	int	METAPSIONIC_WIDEN		= 128;
+const int METAPSIONIC_CHAIN         = 2;
+const int METAPSIONIC_EMPOWER       = 4;
+const int METAPSIONIC_EXTEND        = 8;
+const int METAPSIONIC_MAXIMIZE      = 16;
+const int METAPSIONIC_SPLIT         = 32;
+const int METAPSIONIC_TWIN          = 64;
+const int METAPSIONIC_WIDEN         = 128;
 
 
 //Psionic VFX Persistent
-const int AOE_PER_PSIGREASE			 = 131;
-const int AOE_PER_SHAMBLER			 = 132;
+const int AOE_PER_PSIGREASE         = 131;
+const int AOE_PER_SHAMBLER          = 132;
 
 // Level 1 Powers
-const	int	POWER_BOLT			= 14001;
-const	int	POWER_CALLTOMIND		= 14002;
-const	int	POWER_CHARMPERSON		= 14003;
-const	int	POWER_CRYSTALSHARD		= 14004;
-const	int	POWER_DAZE			= 14005;
-const	int	POWER_DECELERATION		= 14006;
-const	int	POWER_DEFPRECOG			= 14007;
-const	int	POWER_DEMORALIZE		= 14008;
-const	int	POWER_DISABLE			= 14009;
-const	int	POWER_DISSIPATINGTOUCH		= 14010;
-const	int	POWER_DISTRACT			= 14011;
-const	int	POWER_EMPTYMIND			= 14012;
-const	int	POWER_CONCEALTHOUGHT		= 14013;
-const	int	POWER_ENERGYRAY_COLD		= 14014;
-const	int	POWER_ENERGYRAY_ELEC		= 14015;
-const	int	POWER_ENERGYRAY_FIRE		= 14016;
-const	int	POWER_ENERGYRAY_SONIC		= 14017;
-const	int	POWER_ENTANGLE			= 14018;
-const	int	POWER_FORCESCREEN		= 14019;
-const	int	POWER_GREASE			= 14020;
-const	int	POWER_HAMMER			= 14021;
-const	int	POWER_INERTIALARMOUR		= 14022;
-const	int	POWER_MINDTHRUST		= 14023;
-const	int	POWER_MYLIGHT			= 14024;
-const	int	POWER_OFFPRECOG			= 14025;
-const	int	POWER_OFFPRESC			= 14026;
-const	int	POWER_STOMP			= 14027;
-const	int	POWER_SYNESTHETE		= 14028;
-const	int	POWER_THICKSKIN			= 14029;
-const	int	POWER_VIGOR			= 14030;
-const	int	POWER_EMPATHY			= 14031;
-const	int	POWER_FARHAND			= 14032;
-const	int	POWER_MATTERAGITATION		= 14033;
-const	int	POWER_SKATE			= 14034;
-const	int	POWER_TELEMPATHICPRO		= 14035;
-const	int	POWER_ASTRALCONSTRUCT_SLOT1	= 14036;
-const	int	POWER_ASTRALCONSTRUCT_SLOT2	= 14037;
-const	int	POWER_ASTRALCONSTRUCT_SLOT3	= 14038;
-const	int	POWER_ASTRALCONSTRUCT_SLOT4	= 14039;
+const int POWER_BOLT                = 14001;
+const int POWER_CALLTOMIND          = 14002;
+const int POWER_CHARMPERSON         = 14003;
+const int POWER_CRYSTALSHARD        = 14004;
+const int POWER_DAZE                = 14005;
+const int POWER_DECELERATION        = 14006;
+const int POWER_DEFPRECOG           = 14007;
+const int POWER_DEMORALIZE          = 14008;
+const int POWER_DISABLE             = 14009;
+const int POWER_DISSIPATINGTOUCH    = 14010;
+const int POWER_DISTRACT            = 14011;
+const int POWER_EMPTYMIND           = 14012;
+const int POWER_CONCEALTHOUGHT      = 14013;
+const int POWER_ENERGYRAY_COLD      = 14014;
+const int POWER_ENERGYRAY_ELEC      = 14015;
+const int POWER_ENERGYRAY_FIRE      = 14016;
+const int POWER_ENERGYRAY_SONIC     = 14017;
+const int POWER_ENTANGLE            = 14018;
+const int POWER_FORCESCREEN         = 14019;
+const int POWER_GREASE              = 14020;
+const int POWER_HAMMER              = 14021;
+const int POWER_INERTIALARMOUR      = 14022;
+const int POWER_MINDTHRUST          = 14023;
+const int POWER_MYLIGHT             = 14024;
+const int POWER_OFFPRECOG           = 14025;
+const int POWER_OFFPRESC            = 14026;
+const int POWER_STOMP               = 14027;
+const int POWER_SYNESTHETE          = 14028;
+const int POWER_THICKSKIN           = 14029;
+const int POWER_VIGOR               = 14030;
+const int POWER_EMPATHY             = 14031;
+const int POWER_FARHAND             = 14032;
+const int POWER_MATTERAGITATION     = 14033;
+const int POWER_SKATE               = 14034;
+const int POWER_TELEMPATHICPRO      = 14035;
+const int POWER_ASTRALCONSTRUCT_SLOT1   = 14036;
+const int POWER_ASTRALCONSTRUCT_SLOT2   = 14037;
+const int POWER_ASTRALCONSTRUCT_SLOT3   = 14038;
+const int POWER_ASTRALCONSTRUCT_SLOT4   = 14039;
 
 // Level 2 Powers
 const	int	POWER_BESTOWPOWER		= 14051;

@@ -81,7 +81,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
     	            if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
     	            {
     	               	if (nAugment > 0) nDice += nAugment;
-		      	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
+		      	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
 		      	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
     	            
     	                // Apply effects to the currently selected target. 

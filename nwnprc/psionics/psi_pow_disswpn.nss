@@ -58,7 +58,7 @@ if (!PsiPrePowerCastCode()){ return; }
 			//SignalEvent(GetItemPossessor(oTarget), EventSpellCastAt(OBJECT_SELF, POWER_DISSOLVINGWEAPON, FALSE));
 	
 			// Roll the damage here and store it on the weapon
-			int nDamage = MetaPsionic(6, 4 + nAugment, nMetaPsi, oCaster);
+			int nDamage = MetaPsionics(6, 4 + nAugment, nMetaPsi, oCaster, TRUE);
 			SetLocalInt(oTarget, "DissolvingWeaponDamage", nDamage);
 	
 	

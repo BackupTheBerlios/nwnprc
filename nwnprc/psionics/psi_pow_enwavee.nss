@@ -101,7 +101,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	        //Make SR check, and appropriate saving throw(s).
     	        if(PRCMyResistPower(OBJECT_SELF, oTarget,nPen, fDelay) && (oTarget != OBJECT_SELF))
     	        {    	     
-    	               	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
+    	               	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
     	            
 			if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_ELECTRICITY))
 			{

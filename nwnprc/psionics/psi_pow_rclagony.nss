@@ -77,7 +77,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		nDice += nAugment;
 		nDC += nAugment/2;
 	}
-	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
+	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
 	
 	//Check for Power Resistance
 	if (PRCMyResistPower(oCaster, oTarget, nPen))

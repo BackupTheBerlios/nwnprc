@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 			nTargetCount += nAugment;
 		}
 
-		int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
+		int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
 
 		effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
 
@@ -110,7 +110,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 					if (PRCMyResistPower(oCaster, oAreaTarget, nPen))
 					{
-						nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
+						nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
 						eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
 						SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oAreaTarget);
 						SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);

@@ -18,7 +18,7 @@
 //:: VFX Pass By: Preston W, On: June 22, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "prc_alterations"
+//#include "prc_alterations" - included via x0_i0_spells
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"

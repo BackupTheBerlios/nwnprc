@@ -13,6 +13,11 @@
 #include "prc_class_const"
 #include "inc_utility"
 
+// Returns Bonus Power Points gained from Feats
+// ============================================
+// oCaster  creature whose feats to evaluate
+int GetFeatBonusPP(object oCaster = OBJECT_SELF);
+
 // Returns Bonus Power Points gained from Abilities
 int GetModifierPP (object oCaster = OBJECT_SELF);
 
@@ -23,34 +28,54 @@ int GetPPForClass (object oCaster, int nClass);
 // BEGIN FUNCTIONS
 // ---------------
 
+
+int GetFeatBonusPP(object oCaster = OBJECT_SELF){
+    int nBonusPP; // Implicit init to 0
+    
+    // Normal feats
+    if(GetHasFeat(FEAT_WILD_TALENT, oCaster))
+        nBonusPP += 2;
+    
+    int i, nPsiTalents;
+    for(i = FEAT_PSIONIC_TALENT_1; i <= FEAT_PSIONIC_TALENT_10; i++)
+        if(GetHasFeat(i, oCaster)) nPsiTalents++;
+    
+    nBonusPP += nPsiTalents * (2 + nPsiTalents + 1) / 2;
+    
+    // Racial boni
+    
+    return nBonusPP;
+}
+
+
 int GetModifierPP (object oCaster)
 {
-   int nPP;
-   int nBonus;
-   int nPsion = GetLevelByClass(CLASS_TYPE_PSION, oCaster);
-   int nPsychic = GetLevelByClass(CLASS_TYPE_PSYWAR, oCaster);
-   int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oCaster);
-   
-   if (nPsion > 0)
-   {
-	if (nPsion > 20)	nPsion = 20;
-   	nBonus = (nPsion * GetAbilityModifier(ABILITY_INTELLIGENCE, oCaster)) / 2;
-   	nPP = nBonus + nPP;
-   }
-   if (nPsychic > 0)
-   {
-	if (nPsychic > 20)	nPsychic = 20;
-   	nBonus = (nPsychic * GetAbilityModifier(ABILITY_WISDOM, oCaster)) / 2;
-   	nPP = nBonus + nPP;
-   }   
-   if (nWilder > 0)
-   {
-	if (nWilder > 20)	nWilder = 20;
-   	nBonus = (nWilder * GetAbilityModifier(ABILITY_CHARISMA, oCaster)) / 2;
-   	nPP = nBonus + nPP;
-   }
-   
-   return nPP;
+    int nPP;
+    int nBonus;
+    int nPsion = GetLevelByClass(CLASS_TYPE_PSION, oCaster);
+    int nPsychic = GetLevelByClass(CLASS_TYPE_PSYWAR, oCaster);
+    int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oCaster);
+
+    if (nPsion > 0)
+    {
+        if (nPsion > 20)	nPsion = 20;
+        nBonus = (nPsion * GetAbilityModifier(ABILITY_INTELLIGENCE, oCaster)) / 2;
+        nPP = nBonus + nPP;
+    }
+    if (nPsychic > 0)
+    {
+        if (nPsychic > 20)	nPsychic = 20;
+        nBonus = (nPsychic * GetAbilityModifier(ABILITY_WISDOM, oCaster)) / 2;
+        nPP = nBonus + nPP;
+    }
+    if (nWilder > 0)
+    {
+        if (nWilder > 20)	nWilder = 20;
+        nBonus = (nWilder * GetAbilityModifier(ABILITY_CHARISMA, oCaster)) / 2;
+        nPP = nBonus + nPP;
+    }
+
+    return nPP;
 }
 
 int GetPPForClass (object oCaster, int nClass)
@@ -77,6 +102,8 @@ int GetTotalPP (object oCaster)
 //    if (nPP > 343) nPP = 343;
       		  
     nPP = nPP + GetModifierPP(oCaster);
+    
+    nPP += GetFeatBonusPP(oCaster);
     
     return nPP;
 }

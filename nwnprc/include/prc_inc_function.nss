@@ -128,7 +128,6 @@ void EvalPRCFeats(object oPC)
 
     if(GetHasFeat(FEAT_ETERNAL_FREEDOM, oPC))                    ExecuteScript("etern_free", oPC);
     if(GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC))               ExecuteScript("psi_combat_manifest", oPC);
-    if(GetHasFeat(FEAT_PSIONIC_DODGE, oPC))                      ExecuteScript("psi_psionic_dodge", oPC);
 
     // Miscellaneous
     ExecuteScript("prc_wyzfeat", oPC);

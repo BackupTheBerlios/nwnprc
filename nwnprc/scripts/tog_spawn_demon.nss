@@ -19,8 +19,7 @@ int ScaleSummonedDemon(object oDemon)
         return FALSE;
     }
 
-    // Target level is masters shadowdancer classlevels -1
-    
+    // chane level to make the demon
     int nLevelTo = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, GetMaster(oDemon)) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, GetMaster(oDemon)); 
     
     if(nLevelTo >= 4 && nLevelTo < 9) nLevelTo = 5;
@@ -33,8 +32,12 @@ int ScaleSummonedDemon(object oDemon)
     int nRet = SSMLevelUpCreature(oDemon, nLevelTo, CLASS_TYPE_INVALID);
     if (nRet == FALSE)
     {
-        SSMSetSummonFailedLevelUp(oDemon,nLevelTo);
+        SSMSetSummonFailedLevelUp(oDemon, nLevelTo);
     }
+    
+    string sResRef = GetResRef(oDemon);
+    if(sResRef == "TOG_GLABREZU") ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect( EffectModifyAttacks(2) ), oDemon);
+    if(sResRef == "TOG_MARILITH") ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect( EffectModifyAttacks(4) ), oDemon);
 
     return nRet;
 }

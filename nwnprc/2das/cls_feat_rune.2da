@@ -12,3 +12,6 @@
 8     FEAT_RIT_SCAR          2369        3      3                0        
 9     FEAT_SPAWNFROST        2371        3      4                0        
 10    FEAT_RIT_DR            2370        3      4                0        
+11    FEAT_RUNE_BERS_1       2372        3      2                1        
+12    FEAT_RUNE_BERS_2       2373        3      5                1        
+13    FEAT_RUNE_BERS_3       2374        3      9                1        

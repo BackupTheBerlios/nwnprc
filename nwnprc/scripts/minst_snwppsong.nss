@@ -22,6 +22,13 @@ void main()
         FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
         return;
     }
+    
+    if (GetSkillRank(SKILL_PERFORM,OBJECT_SELF) < 18)
+    {
+        FloatingTextStringOnCreature("*You must have at least 18 perform ranks to use this song*",OBJECT_SELF);
+        return;
+    }
+
     //Declare major variables
     int iBoost = (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, OBJECT_SELF) + 2) / 4;
     if (iBoost > 5) iBoost += 10;

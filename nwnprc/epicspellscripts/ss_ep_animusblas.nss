@@ -16,12 +16,12 @@ void DoAnimationBit(location lTarget, object oCaster);
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, ANBLAST_DC, ANBLAST_S, ANBLAST_XP))
@@ -80,7 +80,7 @@ void main()
         }
         DelayCommand(3.0, DoAnimationBit(lTarget, OBJECT_SELF));
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 void DoAnimationBit(location lTarget, object oCaster)
@@ -99,13 +99,22 @@ void DoAnimationBit(location lTarget, object oCaster)
             if (GetIsDead(oTarget) &&
                 GetLocalInt(oTarget, "nAnBlasCheckMe") == TRUE)
             {
-                nH++;
-                SetMaxHenchmen(nH);
-                oSkel = CreateObject(OBJECT_TYPE_CREATURE, sSkel,
-                    GetLocation(oTarget));
-                AddHenchman(oCaster, oSkel);
-                SetAssociateListenPatterns(oSkel);
-                DetermineCombatRound(oSkel);
+                if(GetPRCSwitch(PRC_MUTLISUMMON))
+                {
+                    MultisummonPreSummon(oCaster);
+                    AssignCommand(oCaster, ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, 
+                        EffectSummonCreature(sSkel, VFX_FNF_SUMMON_UNDEAD), GetLocation(oTarget)));
+                }
+                else
+                {
+                    nH++;
+                    SetMaxHenchmen(nH);
+                    oSkel = CreateObject(OBJECT_TYPE_CREATURE, sSkel,
+                        GetLocation(oTarget));
+                    AddHenchman(oCaster, oSkel);
+                    SetAssociateListenPatterns(oSkel);
+                    DetermineCombatRound(oSkel);
+                }
                 nX++;
             }
         }

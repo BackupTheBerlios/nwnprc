@@ -16,6 +16,8 @@
 #include "x2_inc_itemprop"
 #include "x2_inc_switches"
 #include "inc_utility"
+#include "prc_inc_newip"
+#include "prc_inc_spells"
 
 struct craft_struct
 {
@@ -220,6 +222,11 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_SINGLE_USE);
         oTarget = CreateItemOnObject(X2_CI_BREWPOTION_NEWITEM_RESREF,oCreator);
         AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oTarget);
+        if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
+        {
+            itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpellID, PRCGetCasterLevel());
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
+        }
     }
     return oTarget;
 }
@@ -231,6 +238,11 @@ int CIGetCraftGPCost(int nLevel, int nMod)
 {
     int nLvlRow =   IPGetIPConstCastSpellFromSpellID(GetSpellId());
     int nCLevel = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
+    //PRC modification
+    if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
+    {
+        nCLevel = PRCGetCasterLevel();
+    }
 
     // -------------------------------------------------------------------------
     // in case we don't get a valid CLevel, use spell level instead
@@ -270,6 +282,11 @@ object CICraftCraftWand(object oCreator, int nSpellID )
         oTarget = CreateItemOnObject(X2_CI_CRAFTWAND_NEWITEM_RESREF,oCreator);
         AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oTarget);
 
+        if(GetPRCSwitch(PRC_CRAFT_WAND_CASTER_LEVEL))
+        {
+            itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpellID, PRCGetCasterLevel());
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
+        }
 
         int nType = CI_GetClassMagicType(GetLastSpellCastClass());
         itemproperty ipLimit;
@@ -295,7 +312,7 @@ object CICraftCraftWand(object oCreator, int nSpellID )
              AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oTarget);
         }
 
-        int nCharges = GetLevelByClass(GetLastSpellCastClass(),OBJECT_SELF) + d20();
+        int nCharges = PRCGetCasterLevel() + d20();
 
         if (nCharges == 0) // stupi cheaters
         {
@@ -378,6 +395,12 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
             oTarget = CreateItemOnObject(sResRef,oCreator);
         }
 
+        if(GetPRCSwitch(PRC_SCRIBE_SCROLL_CASTER_LEVEL))
+        {
+            itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpellID, PRCGetCasterLevel());
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
+        }
+        
         if (oTarget == OBJECT_INVALID)
         {
            WriteTimestampedLogEntry("x2_inc_craft::CICraftScribeScroll failed - Resref: " + sResRef + " Class: " + sClass + "(" +IntToString(nClass) +") " + " SpellID " + IntToString (nSpellID));

@@ -13,9 +13,13 @@ const string PRC_TIMESTOP_NO_HOSTILE                 = "PRC_TIMESTOP_NO_HOSTILE"
 const string PRC_TIMESTOP_BLANK_PC                   = "PRC_TIMESTOP_BLANK_PC";
 const string PRC_MUTLISUMMON                         = "PRC_MULTISUMMON";
 const string PRC_SUMMON_ROUND_PER_LEVEL              = "PRC_SUMMON_ROUND_PER_LEVEL";
+const string PRC_PNP_ELEMENTAL_SWARM                 = "PRC_PNP_ELEMENTAL_SWARM";
 
 // General switches
 const string PRC_STAFF_CASTER_LEVEL                  = "PRC_STAFF_CASTER_LEVEL";
+const string PRC_BREW_POTION_CASTER_LEVEL            = "PRC_BREW_POTION_CASTER_LEVEL";
+const string PRC_SCRIBE_SCROLL_CASTER_LEVEL          = "PRC_SCRIBE_SCROLL_CASTER_LEVEL";
+const string PRC_CRAFT_WAND_CASTER_LEVEL             = "PRC_CRAFT_WAND_CASTER_LEVEL";
 const string PRC_NPC_HAS_PC_SPELLCASTING             = "PRC_NPC_HAS_PC_SPELLCASTING";
 const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
 
@@ -51,20 +55,20 @@ void SetPRCSwitch(string sSwitch, int nState)
 
 void MultisummonPreSummon(object oPC = OBJECT_SELF)
 {
-//	SendMessageToPC(oPC, "Doing MultisummonPreSummon");
+//  SendMessageToPC(oPC, "Doing MultisummonPreSummon");
     if(!GetPRCSwitch(PRC_MUTLISUMMON))
         return;
-//	SendMessageToPC(oPC, "MultisummonPreSummon switch is ON");
+//  SendMessageToPC(oPC, "MultisummonPreSummon switch is ON");
     int i=1;
     object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
     while(GetIsObjectValid(oSummon))
     {
-//	SendMessageToPC(oPC, "Setting Associate "+GetName(oSummon));
+//  SendMessageToPC(oPC, "Setting Associate "+GetName(oSummon));
         AssignCommand(oSummon, SetIsDestroyable(FALSE, FALSE, FALSE));
-        AssignCommand(oSummon, DelayCommand(1.0, SetIsDestroyable(TRUE, FALSE, FALSE)));
-      AssignCommand(oSummon, DelayCommand(1.0, SendMessageToPC(oPC, "Unsetting Associate "+GetName(oSummon))));
+        AssignCommand(oSummon, DelayCommand(0.1, SetIsDestroyable(TRUE, FALSE, FALSE)));
+//        AssignCommand(oSummon, DelayCommand(0.1, SendMessageToPC(oPC, "Unsetting Associate "+GetName(oSummon))));
         i++;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
     }
-//	SendMessageToPC(oPC, "Ending MultisummonPreSummon");
+//  SendMessageToPC(oPC, "Ending MultisummonPreSummon");
 }

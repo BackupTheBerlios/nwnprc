@@ -237,6 +237,6 @@ void main()
 {
 
    Sanctify();
-   if (GetHasFeat(FEAT_HOLY_MARTIAL_STRIKE)) MartialStrike();
+   MartialStrike();
 
 }

@@ -34,8 +34,6 @@ cause any harm to the objects or creatures thus outlined.
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
 
-const int SPELL_FAERIE_FIRE = 1965;
-
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -13,7 +13,8 @@
 #include "prc_ipfeat_const"
 #include "inc_item_props"
 #include "nw_i0_spells"
-#include "pnp_shft_poly.nss"
+#include "pnp_shft_poly"
+#include "x2_inc_spellhook"
 
 ////////////////Begin Generic////////////////
 
@@ -1394,10 +1395,10 @@ void ActiveModeCIMM(object oTarget)
     string sScript =  GetModuleOverrideSpellscript();
     if (sScript != "mh_spell_at_inst")
     {
-        SetLocalString(GetModule(),"temp_spell_at_inst",sScript);
-        SetModuleOverrideSpellscript("mh_spell_at_inst");
+        SetLocalString(OBJECT_SELF,"temp_spell_at_inst",sScript);
+        PRCSetUserSpecificSpellScript("mh_spell_at_inst");
     }
-    SetLocalInt(GetModule(),"nb_spell_at_inst",GetLocalInt(GetModule(),"nb_spell_at_inst")+1);
+    SetLocalInt(OBJECT_SELF,"nb_spell_at_inst",GetLocalInt(OBJECT_SELF,"nb_spell_at_inst")+1);
     FloatingTextStrRefOnCreature(16825240,oTarget);
     SetLocalInt(oTarget,"use_CIMM",TRUE);
     }
@@ -1408,12 +1409,12 @@ void UnactiveModeCIMM(object oTarget)
     if(GetLocalInt(oTarget,"use_CIMM") )
     {
     string sScript =  GetModuleOverrideSpellscript();
-    SetLocalInt(GetModule(),"nb_spell_at_inst",GetLocalInt(GetModule(),"nb_spell_at_inst")-1);
-    if (sScript == "mh_spell_at_inst" && GetLocalInt(GetModule(),"nb_spell_at_inst") == 0)
+    SetLocalInt(OBJECT_SELF,"nb_spell_at_inst",GetLocalInt(OBJECT_SELF,"nb_spell_at_inst")-1);
+    if (sScript == "mh_spell_at_inst" && GetLocalInt(OBJECT_SELF,"nb_spell_at_inst") == 0)
     {
-        SetModuleOverrideSpellscript(GetLocalString(GetModule(),"temp_spell_at_inst"));
-        GetLocalString(GetModule(),"temp_spell_at_inst");
-        SetLocalString(GetModule(),"temp_spell_at_inst","");
+        PRCSetUserSpecificSpellScript(GetLocalString(OBJECT_SELF,"temp_spell_at_inst"));
+        GetLocalString(OBJECT_SELF,"temp_spell_at_inst");
+        SetLocalString(OBJECT_SELF,"temp_spell_at_inst","");
     }
     FloatingTextStrRefOnCreature(16825241,oTarget);
     SetLocalInt(oTarget,"use_CIMM",FALSE);
@@ -1654,7 +1655,7 @@ ApplyEffectToObject(DURATION_TYPE_TEMPORARY, Effect2, oPC, RoundsToSeconds(10));
 
 void CheckCombatDexAttack(object oPC)
 {
-//object oPC = GetLocalObject(GetModule(), "PC_IN_COMBAT_WITH_DEXATTACK_ON");
+//object oPC = GetLocalObject(OBJECT_SELF, "PC_IN_COMBAT_WITH_DEXATTACK_ON");
 int iCombat = GetIsInCombat(oPC);
 object oWeapon = GetLocalObject(oPC, "CHOSEN_WEAPON");
 
@@ -1676,7 +1677,7 @@ object oWeapon = GetLocalObject(oPC, "CHOSEN_WEAPON");
 
          eEffects = GetNextEffect(oPC);
          }
-      DeleteLocalObject(GetModule(), "PC_IN_COMBAT_WITH_DEXATTACK_ON");
+      DeleteLocalObject(OBJECT_SELF, "PC_IN_COMBAT_WITH_DEXATTACK_ON");
     }
 }
 

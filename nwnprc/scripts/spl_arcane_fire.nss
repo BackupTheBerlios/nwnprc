@@ -14,10 +14,10 @@ void main()
     SetLocalInt(OBJECT_SELF, "arcane_fire_active", 1);
 
     /* Save old hook, if any */
-    SetLocalString(GetModule(), "archmage_save_overridespellscript", GetModuleOverrideSpellscript());
+    SetLocalString(OBJECT_SELF, "archmage_save_overridespellscript", GetModuleOverrideSpellscript());
 
     /* Setup the global spellhok so we can intercept the next spell */
-    SetModuleOverrideSpellscript("archmage_fire");
+    PRCSetUserSpecificSpellScript("archmage_fire");
 
     /* Save the designed victi..erm..target */
     SetLocalObject(OBJECT_SELF, "arcane_fire_target", GetSpellTargetObject());

@@ -10,6 +10,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "X0_I0_SPELLS"
+#include "x2_inc_spellhook"
 
 void main()
 {
@@ -17,8 +18,8 @@ void main()
     string sScript =  GetModuleOverrideSpellscript();
     if (sScript != "aa_spellhook")
     {
-        SetLocalString(GetModule(),"temp_spell_at_inst",sScript);
-        SetModuleOverrideSpellscript("aa_spellhook");
+        SetLocalString(OBJECT_SELF,"temp_spell_at_inst",sScript);
+        PRCSetUserSpecificSpellScript("aa_spellhook");
     }
 
     //Reroute feat to conversation, only for PCs.

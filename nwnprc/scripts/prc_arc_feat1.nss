@@ -4,6 +4,7 @@
 //:://////////////////////////////////////////////
 
 #include "x2_inc_switches"
+#include "x2_inc_spellhook"
 
 void main()
 {
@@ -12,12 +13,12 @@ if(!GetLocalInt(oPC,"arcstrikeactive"))
 {
 SetLocalInt(oPC,"arcstrikeactive",TRUE);
 FloatingTextStringOnCreature("Spell Storing Activated",oPC);
-SetLocalString(GetModule(),"arcstrikeovscript",GetModuleOverrideSpellscript());
-SetModuleOverrideSpellscript("prc_arc_strike");
+SetLocalString(OBJECT_SELF,"arcstrikeovscript",GetModuleOverrideSpellscript());
+PRCSetUserSpecificSpellScript("prc_arc_strike");
 }
 else
 {
-SetModuleOverrideSpellscript(GetLocalString(GetModule(),"arcstrikeovscript"));
+PRCSetUserSpecificSpellScript(GetLocalString(OBJECT_SELF,"arcstrikeovscript"));
 FloatingTextStringOnCreature("Spell Storing Deactivated",oPC);
 DeleteLocalInt(oPC,"arcstrikeactive");
 }

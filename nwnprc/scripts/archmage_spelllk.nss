@@ -13,10 +13,10 @@ void main()
     string nEpicSpell = Get2DAString("spells", "Innate", GetSpellId());
 
     /* Whatever happens next we must restore the hook */
-    SetModuleOverrideSpellscript(GetLocalString(GetModule(), "spelllike_save_overridespellscript"));
+    PRCSetUserSpecificSpellScript(GetLocalString(OBJECT_SELF, "spelllike_save_overridespellscript"));
 
     /* Tell to not execute the original spell */
-    SetModuleOverrideSpellScriptFinished();
+    PRCSetUserSpecificSpellScriptFinished();
 
     /* Paranoia -- should never happen */
     if (!GetHasFeat(FEAT_SPELL_LIKE, OBJECT_SELF)) return;

@@ -14,10 +14,10 @@ void main()
         SetLocalInt(focus, "spell_like_setup", 1);
 
         /* Save old hook, if any */
-        SetLocalString(GetModule(), "spelllike_save_overridespellscript", GetModuleOverrideSpellscript());
+        SetLocalString(OBJECT_SELF, "spelllike_save_overridespellscript", GetModuleOverrideSpellscript());
 
         /* Setup the global spellhok so we can intercept the next spell */
-        SetModuleOverrideSpellscript("archmage_spelllk");
+        PRCSetUserSpecificSpellScript("archmage_spelllk");
 
         FloatingTextStringOnCreature("Spell-Like ability setting up, now cast the spell to store to finish the process.", OBJECT_SELF, FALSE);
 

@@ -65,6 +65,26 @@ int X2GetSpellCastOnSequencerItem(object oItem);
 
 int X2RunUserDefinedSpellScript();
 
+// Similar to SetModuleOverrideSpellscript but only applies to the user
+// of this spell. Basically tells the class to run this script when the
+// spell starts.
+void PRCSetUserSpecificSpellScript(string sScript);
+
+// Similar to SetModuleOverrideSpellscriptFinished but only applies to the
+// user of this spell. This prevents the spell from continuing on if the
+// ability dictates it.
+void PRCSetUserSpecificSpellScriptFinished();
+
+// By setting user-defined spellscripts to the player only, we
+// avoid the nasty mess of spellhooking the entire module for one player's
+// activities.  This function is mostly only useful inside this include.
+int PRCRunUserSpecificSpellScript();
+
+// Useful functions for PRCRunUserSpecificSpellScript but not useful in spell
+// scripts.
+string PRCGetUserSpecificSpellScript();
+int PRCGetUserSpecificSpellScriptFinished();
+
 
 int RedWizRestrictedSchool()
 {
@@ -156,7 +176,56 @@ int X2RunUserDefinedSpellScript()
     return TRUE;
 }
 
+//------------------------------------------------------------------------------
+// Set the user-specific spell script
+//------------------------------------------------------------------------------
+void PRCSetUserSpecificSpellScript(string sScript)
+{
+    SetLocalString(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT", sScript);
+}
 
+//------------------------------------------------------------------------------
+// Get the user-specific spell script
+//------------------------------------------------------------------------------
+string PRCGetUserSpecificSpellScript()
+{
+    return GetLocalString(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT");
+}
+
+//------------------------------------------------------------------------------
+// Finish the spell, if necessary
+//------------------------------------------------------------------------------
+void PRCSetUserSpecificSpellScriptFinished()
+{
+    SetLocalInt(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT_DONE", TRUE);
+}
+
+//------------------------------------------------------------------------------
+// Figure out if we should finish the spell.
+//------------------------------------------------------------------------------
+int PRCGetUserSpecificSpellScriptFinished()
+{
+    int iRet = GetLocalInt(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT_DONE");
+    DeleteLocalInt(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT_DONE");
+    return iRet;
+}
+
+//------------------------------------------------------------------------------
+// Run a user-specific spell script for classes that use spellhooking.
+//------------------------------------------------------------------------------
+int PRCRunUserSpecificSpellScript()
+{
+    string sScript = PRCGetUserSpecificSpellScript();
+    if (sScript != "")
+    {
+        ExecuteScript(sScript,OBJECT_SELF);
+        if (PRCGetUserSpecificSpellScriptFinished() == TRUE)
+        {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
 
 //------------------------------------------------------------------------------
 // Created Brent Knowles, Georg Zoeller 2003-07-31
@@ -367,6 +436,14 @@ int X2PreSpellCastCode()
        // run any user defined spellscript here
        //-----------------------------------------------------------------------
        nContinue = X2RunUserDefinedSpellScript();
+   }
+   
+   if (nContinue)
+   {
+       //-----------------------------------------------------------------------
+       // run any object-specific spellscript here
+       //-----------------------------------------------------------------------
+       nContinue = PRCRunUserSpecificSpellScript();
    }
 
    //---------------------------------------------------------------------------

@@ -7,7 +7,7 @@
 #include "prc_alterations"
 #include "x2_inc_switches"
 #include "nw_o0_itemmaker"
-
+#include "x2_inc_spellhook"
 
 const int FEAT_ARCANE_STRIKE = 5172;
 
@@ -93,7 +93,7 @@ int nClevel =PRCGetCasterLevel(OBJECT_SELF);
 
 //This stops the original spellscript (and all craft item code)
 // from being executed.
-SetModuleOverrideSpellScriptFinished();
+PRCSetUserSpecificSpellScriptFinished();
 
 
     StoreSpells (nSpell ,nClevel ,oWeapon , oPC);
@@ -102,7 +102,7 @@ SetModuleOverrideSpellScriptFinished();
 else
 {
     FloatingTextStringOnCreature("Arcane Strike only works with melee weapons or ammo",oPC);
-    SetModuleOverrideSpellScriptFinished();
+    PRCSetUserSpecificSpellScriptFinished();
     return;
 }
 }

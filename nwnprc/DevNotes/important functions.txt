@@ -163,6 +163,24 @@ object MyNextObjectInShape(int nShape, float fSize, location lTarget, int bLineO
 
 
 
+
+x2_inc_spellhook
+
+
+
+// Similar to SetModuleOverrideSpellscript but only applies to the user
+// of this spell. Basically tells the class to run this script when the
+// spell starts.
+void PRCSetUserSpecificSpellScript(string sScript);
+
+// Similar to SetModuleOverrideSpellscriptFinished but only applies to the
+// user of this spell. This prevents the spell from continuing on if the
+// ability dictates it.
+void PRCSetUserSpecificSpellScriptFinished();
+
+
+
+
 prc_inc_combat
 
 

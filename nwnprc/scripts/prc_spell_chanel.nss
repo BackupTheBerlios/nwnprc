@@ -2,7 +2,7 @@
 #include "prc_class_const"
 #include "prc_alterations"
 #include "x2_inc_switches"
-
+#include "x2_inc_spellhook"
 
 //This function gets the Spell ID of the stored spell, the caster level of the
 //spellsword the weapon that stores the spell and if there are multiple channels,
@@ -60,7 +60,7 @@ if (oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))
         {
         FloatingTextStringOnCreature("Spell Channeling doesnt work with ranged weapons",oPC);
         DelayCommand(1.5,FloatingTextStringOnCreature("Equip a melee weapon and try again",oPC));
-        SetModuleOverrideSpellScriptFinished();
+        PRCSetUserSpecificSpellScriptFinished();
         return;
         }
 
@@ -74,7 +74,7 @@ int nFeat = GetMetaMagicFeat();
 
 //This stops the original spellscript (and all craft item code)
 // from being executed.
-SetModuleOverrideSpellScriptFinished();
+PRCSetUserSpecificSpellScriptFinished();
 
 
 
@@ -157,6 +157,6 @@ eVis = GetNextEffect(oPC);
 }
 FloatingTextStringOnCreature("Spell stored",OBJECT_SELF);
 FloatingTextStringOnCreature("Channeling Deactivated",OBJECT_SELF);
-SetModuleOverrideSpellscript(GetLocalString(GetModule(),"ovscript"));
+PRCSetUserSpecificSpellScript(GetLocalString(OBJECT_SELF,"ovscript"));
 }
 }

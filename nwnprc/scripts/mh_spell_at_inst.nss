@@ -21,7 +21,7 @@
 
 void finish(object oTarget,int iDesactive = FALSE)
 {
-    string sScript =  GetLocalString(GetModule(),"temp_spell_at_inst");
+    string sScript =  GetLocalString(OBJECT_SELF,"temp_spell_at_inst");
     if (sScript != "")
         {
             ExecuteScript(sScript,OBJECT_SELF);
@@ -106,7 +106,7 @@ if(GetItemHasItemProperty(oItem, ITEM_PROPERTY_CAST_SPELL))
                 //if the item has max return
                 FloatingTextStrRefOnCreature(16825242,oCaster);
                 finish(oCaster);
-                SetModuleOverrideSpellScriptFinished();
+                PRCSetUserSpecificSpellScriptFinished();
                 return;
                 }
             iRemoveProperty = TRUE;  // tell it to remove the item charges later.
@@ -142,11 +142,11 @@ if(iCostMax < iTotalCost)
     {
         FloatingTextStrRefOnCreature(16825243,oCaster);
         finish(oCaster);
-        SetModuleOverrideSpellScriptFinished();
+        PRCSetUserSpecificSpellScriptFinished();
         return;
     }
 if (iRemoveProperty) RemoveItemProperty(oItem,ipPropertySave);  // Prevent charges from stacking.
 AddItemProperty(DURATION_TYPE_PERMANENT,ipC, oItem);
 SetLocalInt(oItem,"cout_instrument",iCostMax - iTotalCost);
-SetModuleOverrideSpellScriptFinished();
+PRCSetUserSpecificSpellScriptFinished();
 }

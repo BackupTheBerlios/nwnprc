@@ -46,7 +46,7 @@ void main()
             FloatingTextStringOnCreature("* Imbue Arrow success *", OBJECT_SELF);
 
             //Stops the original spell script from firing.
-            SetModuleOverrideSpellScriptFinished();
+            PRCSetUserSpecificSpellScriptFinished();
 
             //If you want the spellhook to end here, uncomment the following line.
             //return;
@@ -57,7 +57,7 @@ void main()
 
             //Stops the original spell script from firing.  May be removed, if
             //you have other spells that may affect arrows.
-            SetModuleOverrideSpellScriptFinished();
+            PRCSetUserSpecificSpellScriptFinished();
 
             //If you want the spellhook to end here, uncomment the following line.
             //return;

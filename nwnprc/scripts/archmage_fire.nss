@@ -23,10 +23,10 @@ void main()
     string nSpellLevel = lookup_spell_level(GetSpellId());
 
     /* Whatever happens next we must restore the hook */
-    SetModuleOverrideSpellscript(GetLocalString(GetModule(), "archmage_save_overridespellscript"));
+    PRCSetUserSpecificSpellScript(GetLocalString(OBJECT_SELF, "archmage_save_overridespellscript"));
 
     /* Tell to not execute the original spell */
-    SetModuleOverrideSpellScriptFinished();
+    PRCSetUserSpecificSpellScriptFinished();
 
     /* Allow to use it once again */
     SetLocalInt(OBJECT_SELF, "arcane_fire_active", 0);

@@ -60,6 +60,12 @@ void main()
 
    int iRogueSneakDice = GetRogueSneak(oPC);
    int iBlackguardSneakDice = GetBlackguardSneak(oPC);
+
+   // Special case in case someone multiclasses Telflammar Shadowlord and Assassin -- These are the only
+   // two classes that use Assassin Death Attack, and normally they would not stack.
+   if((GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC) >= 6) && (GetLevelByClass(CLASS_TYPE_ASSASSIN, oPC)))
+      iRogueSneakDice++;
+
    int iFinalSneakDice = iRogueSneakDice + iBlackguardSneakDice;
    
    if(iRogueSneakDice > 20)        //Basically, if the total sneaks spill over the rogue limit,

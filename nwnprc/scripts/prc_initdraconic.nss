@@ -15,10 +15,8 @@ void SpellResistancePC(object oPC,object oSkin,int iLevel)
     {
        iLevel = iLevel/2+21;
        iLevel = (iLevel>IP_CONST_SPELLRESISTANCEBONUS_61) ? IP_CONST_SPELLRESISTANCEBONUS_61 :iLevel ;
-    	
+     
     }
-
-    
 
     if (GetLocalInt(oSkin,"IniSR")==iLevel) return;
     RemoveSpecificProperty(oSkin,ITEM_PROPERTY_SPELL_RESISTANCE,-1,IP_CONST_ONHIT_SAVEDC_26,GetLocalInt(oSkin,"IniSR"));
@@ -32,7 +30,13 @@ void StunStrike(object oPC,object oSkin)
     if (GetLocalInt(oSkin,"IniStunStrk")) return;
 
     object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
-    if (GetTag(oWeapL)!="NW_IT_CREWPB010") return;
+    
+    // fixed to work with new unarmed inc
+    if (GetTag(oWeapL)!="PRC_UNARMED_B"  && 
+        GetTag(oWeapL)!="PRC_UNARMED_S"  && 
+        GetTag(oWeapL)!="PRC_UNARMED_P"  &&
+        GetTag(oWeapL)!="NW_IT_CREWPB010"   ) return;
+    
     RemoveSpecificProperty(oWeapL,ITEM_PROPERTY_ON_HIT_PROPERTIES,IP_CONST_ONHIT_STUN,IP_CONST_ONHIT_SAVEDC_26,IPRP_CONST_ONHIT_DURATION_5_PERCENT_1_ROUNDS);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitProps(IP_CONST_ONHIT_STUN,IP_CONST_ONHIT_SAVEDC_26,IPRP_CONST_ONHIT_DURATION_5_PERCENT_1_ROUNDS),oWeapL);
     SetLocalInt(oSkin,"IniStunStrk",1);

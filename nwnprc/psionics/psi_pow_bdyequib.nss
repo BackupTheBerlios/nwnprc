@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
-    int nAugCost = 3;
+    int nAugCost = 0;
     int nAugment = GetLocalInt(oCaster, "Augment");
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     

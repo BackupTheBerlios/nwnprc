@@ -32,11 +32,78 @@ void SmiteChain(object oTarget,float fDelay)
   }
 }
 
+void NoSmite(object oTarget ,string sText)
+{
+
+   object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
+
+   int iNextAttackPenalty = 0;
+   float fDelay = 1.5f;
+
+   int iAttacks=NbAtk(OBJECT_SELF);
+
+   int iDamage = 0;
+   effect eDamage;
+
+   int Immune = GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT);
+   int iEnhancement = GetWeaponEnhancement(oWeap);
+   int iDamageType = GetWeaponDamageType(oWeap);
+
+   FloatingTextStringOnCreature(sText,OBJECT_SELF);
+
+  for(iAttacks; iAttacks > 0; iAttacks--)
+  {
+    //Roll to hit  for Smite  Bonus CHA(1st atk) +Attack penalty +Weap Atk Bonus
+    int iHit = DoMeleeAttack(OBJECT_SELF, oWeap, oTarget,  iNextAttackPenalty, TRUE, fDelay);
+
+
+    if(iHit > 0)
+    {
+
+       if (Immune && iHit==2) iHit=1;
+
+        //Check to see if we rolled a critical and determine damage accordingly
+        // Dmg Bonus= Level Paladin+ Fist Raziel
+
+        if(iHit == 2 )
+            iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, TRUE);
+        else
+            iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, FALSE);
+
+        //Apply the damage
+        eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancement) ,oWeap,oTarget,iEnhancement);
+
+        DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage, oTarget));
+
+
+    }
+    iNextAttackPenalty -= 5;
+    fDelay += 1.0;
+
+
+  }
+
+
+
+}
 void main()
 {
 
-   // Paladin/Fist Raziel need a Loyal Good Alignment
-   if ( !(GetAlignmentGoodEvil(OBJECT_SELF)==ALIGNMENT_GOOD && GetAlignmentLawChaos(OBJECT_SELF)==ALIGNMENT_LAWFUL))return;
+   object oTarget=GetSpellTargetObject();
+
+   if (GetAlignmentGoodEvil(oTarget)!=ALIGNMENT_EVIL)
+   {
+     NoSmite(oTarget,"Smite Failed : not Evil");
+     return;
+   }// Paladin/Fist Raziel need a Loyal Good Alignment
+   else if (!(GetAlignmentGoodEvil(OBJECT_SELF)==ALIGNMENT_GOOD && GetAlignmentLawChaos(OBJECT_SELF)==ALIGNMENT_LAWFUL)  )
+   {
+     NoSmite(oTarget,"Smite Failed : you're  not Lawful Good");
+     return;
+   }
+
+
+
 
    // take lvl for Speed
    int LvlRaziel=GetLevelByClass(CLASS_TYPE_FISTRAZIEL);
@@ -47,7 +114,6 @@ void main()
         DecrementRemainingFeatUses(OBJECT_SELF,FEAT_SMITE_EVIL);
         IncrementRemainingFeatUses(OBJECT_SELF,iFeat);
    }
-   object oTarget=GetSpellTargetObject();
 
    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
 
@@ -103,7 +169,7 @@ void main()
   for(iAttacks; iAttacks > 0; iAttacks--)
   {
     //Roll to hit  for Smite  Bonus CHA(1st atk) +Attack penalty +Weap Atk Bonus
-    int iHit = DoMeleeAttack(OBJECT_SELF, oWeap, oTarget, iBonus + iNextAttackPenalty+iWeapBonus, TRUE, fDelay);
+    int iHit = DoMeleeAttack(OBJECT_SELF, oWeap, oTarget, iBonus + iNextAttackPenalty, TRUE, fDelay);
 
 
     // SancMar +1d4 vs Evil
@@ -129,7 +195,7 @@ void main()
            eDamage = EffectDamage(iDamage+iHolyDmg, DAMAGE_TYPE_DIVINE, iEnhancement);
         else
         {
-            eDamage = EffectDamage(iDamage, DAMAGE_TYPE_SLASHING, iEnhancement);
+            eDamage = EffectDamage(iDamage, iDamageType, iEnhancement);
             if (iHolyDmg && iEvil)
              // DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(iHolyDmg, DAMAGE_TYPE_DIVINE, iEnhancement), oTarget));
              eDamage = EffectLinkEffects(eDamage,EffectDamage(iHolyDmg, DAMAGE_TYPE_DIVINE, iEnhancement));

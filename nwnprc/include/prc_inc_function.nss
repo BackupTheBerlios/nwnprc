@@ -159,6 +159,14 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oPC, "WeaponAttackBonusR");
     DeleteLocalInt(oPC, "WeaponAttackBonusL");
 
+    // PRCGetClassByPosition and PRCGetLevelByPosition cleanup
+    DeleteLocalInt(oPC, "PRC_ClassInPos1");
+    DeleteLocalInt(oPC, "PRC_ClassInPos2");
+    DeleteLocalInt(oPC, "PRC_ClassInPos3");
+    DeleteLocalInt(oPC, "PRC_ClassLevelInPos1");
+    DeleteLocalInt(oPC, "PRC_ClassLevelInPos2");
+    DeleteLocalInt(oPC, "PRC_ClassLevelInPos3");
+
     // In order to work with the PRC system we need to delete some locals for each
     // PRC that has a hide
     // Duelist

@@ -2,8 +2,8 @@
                                                                      
            LABEL              ReqType   ReqParam1        ReqParam2   
 0          Point_Blank_Shot   FEAT      27               ****        
-1          DrowH              RACE      122              ****        
-2          DrowF              RACE      123              ****        
+1          DrowH              RACE      164              ****        
+2          DrowF              RACE      163              ****        
 3          MoveSilent         SKILL     8                7         
 4          ScriptVar          VAR       PRC_AllowNights  0 
 5          ScriptVar          VAR       PRC_ArcSpell1    0         

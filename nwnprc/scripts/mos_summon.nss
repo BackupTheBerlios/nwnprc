@@ -78,7 +78,6 @@ void main()
         sSummon = "prc_mos_allip";
         eSummonB = EffectVisualEffect( VFX_FNF_GAS_EXPLOSION_EVIL );
     }
-   float fDelay = 0.0;
-   effect eSum = EffectSummonCreature(sSummon, VFX_NONE, fDelay);
-   ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSum, OBJECT_SELF, fDelay);
+   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+   ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());
 }

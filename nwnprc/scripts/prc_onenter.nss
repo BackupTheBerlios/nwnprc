@@ -4,7 +4,7 @@
 void
 ScrubPCSkin(object oPC)
 {
-    object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
+    object oSkin = GetPCSkin(oPC);
 	itemproperty ip = GetFirstItemProperty(oSkin);
 	while (GetIsItemPropertyValid(ip)) {
 		// Insert Logic here to determine if we spare a property
@@ -21,7 +21,7 @@ ScrubPCSkin(object oPC)
 			RemoveItemProperty(oSkin, ip);
 
 		// Get the next property
-		ip = GetNextItemProperty(oPC);
+		ip = GetNextItemProperty(oSkin);
 	}
 }
 

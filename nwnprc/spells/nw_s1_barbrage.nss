@@ -57,7 +57,20 @@ void main()
            iAC += 2;
         }
 
-        PlayVoiceChat(VOICE_CHAT_BATTLECRY1);
+        // play a random voice chat instead of just VOICE_CHAT_BATTLECRY1
+        int iVoiceConst = 0;
+        int iVoice = d3(1);
+        switch(iVoice)
+        {
+             case 1: iVoice = VOICE_CHAT_BATTLECRY1;
+                     break;
+             case 2: iVoice = VOICE_CHAT_BATTLECRY2;
+                     break;
+             case 3: iVoice = VOICE_CHAT_BATTLECRY3;
+                     break;
+        }
+        PlayVoiceChat(iVoice);
+        
         //Determine the duration by getting the con modifier after being modified
         int nCon = 3 + GetAbilityModifier(ABILITY_CONSTITUTION) + iCon;
         effect eStr = EffectAbilityIncrease(ABILITY_CONSTITUTION, iCon);

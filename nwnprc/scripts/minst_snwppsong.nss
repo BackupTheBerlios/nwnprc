@@ -24,6 +24,7 @@ void main()
     }
     //Declare major variables
     int iBoost = (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, OBJECT_SELF) - 2) / 4 + 1;
+    if (iBoost > 5) iBoost += 10;
     object oTarget;
     effect eBoost = EffectDamageIncrease(iBoost, DAMAGE_TYPE_SONIC);
     effect eVis = EffectVisualEffect(VFX_IMP_HEAD_SONIC);

@@ -32,7 +32,6 @@ void main()
     int nCha = GetAbilityModifier(ABILITY_CHARISMA);
     int nDuration = 10; //+ nChr;
     int nDC = 10 + (nLevel / 2) + nCha;
-    int iAlreadyAffected;
     if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) nDC+=2;
 
     //Check to see if the caster has Lasting Impression and increase duration.
@@ -63,11 +62,6 @@ void main()
 
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 
-    //Do the visual effects
-    effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
-    effect eVis3 = EffectVisualEffect(VFX_DUR_CESSATE_NEUTRAL);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(eVis2,eVis3), OBJECT_SELF, RoundsToSeconds(nDuration));
-   
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
@@ -79,19 +73,13 @@ void main()
         {
             if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget)) // deaf targets can't hear the song.
             {
-                if (!iAlreadyAffected) // don't want to check the targets more than once.
+                if (GetIsImmune(oTarget, IMMUNITY_TYPE_SILENCE) == FALSE)
                 {
-                    if (GetIsImmune(oTarget, IMMUNITY_TYPE_SILENCE) == FALSE)
+                    if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                     {
-                        if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
-                        {
-                            if (!GetHasSpellEffect(GetSpellId(),oTarget))
-                            {
-                                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSilence, oTarget, RoundsToSeconds(nDuration));
-                                StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
-                            }
-                        }
+                        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSilence, oTarget, RoundsToSeconds(nDuration), TRUE, GetSpellId(), nLevel);
+                        StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
                     }
                 }
             }

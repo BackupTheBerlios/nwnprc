@@ -78,13 +78,13 @@ void main()
         iDontStack = GetHasSpellEffect(SPELL_WOUNDING_WHISPERS,oTarget);
     
         //Make faction check on the target
-        if(oTarget == OBJECT_SELF && iDontStack)
+        if(oTarget == OBJECT_SELF && !iDontStack)
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(nDuration));
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
         }
-        else if(GetIsFriend(oTarget) && iDontStack)
+        else if(GetIsFriend(oTarget) && !iDontStack)
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

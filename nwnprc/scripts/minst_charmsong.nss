@@ -2,7 +2,7 @@
 //:: Silence Song
 //:://////////////////////////////////////////////
 /*
-    Causes all creatures who fail their saving throw to be silenced
+    Causes all creatures who fail their saving throw to be charmed
     for 10 rounds, 15 rounds with lingering song, and 105 rounds
     with lasting impression.
 */
@@ -32,7 +32,6 @@ void main()
     int nCha = GetAbilityModifier(ABILITY_CHARISMA);
     int nDuration = 10; //+ nChr;
     int nDC = 10 + (nLevel / 2) + nCha;
-    int iAlreadyAffected;
     if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) nDC+=2;
 
     //Check to see if the caster has Lasting Impression and increase duration.
@@ -45,14 +44,14 @@ void main()
     {
         nDuration += 5;
     }
-
-    effect eCharm = EffectCharmed();
-    effect eCharmVis = EffectVisualEffect(VFX_IMP_CHARM);
-    eCharm = EffectLinkEffects(eCharm, eCharmVis);
-    eCharmVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    eCharm = EffectLinkEffects(eCharm, eCharmVis);
     
-    int iPerformReq = 50;
+    effect eCharm;
+    effect eCharmed = EffectCharmed();
+    effect eCharmVis = EffectVisualEffect(VFX_IMP_SILENCE);
+    effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
+    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+
+    int iPerformReq = 20;
     if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) iPerformReq-= 2;
     if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
     {
@@ -63,11 +62,6 @@ void main()
 
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 
-    //Do the visual effects
-    effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
-    effect eVis3 = EffectVisualEffect(VFX_DUR_CESSATE_NEUTRAL);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(eVis2,eVis3), OBJECT_SELF, RoundsToSeconds(nDuration));
-   
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
@@ -75,25 +69,22 @@ void main()
     
     while(GetIsObjectValid(oTarget))
     {
-        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF)
-            && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT
-            && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)  //constructs & undead are immune
+        eCharm = GetScaledEffect(eCharmed, oTarget);
+        eCharm = EffectLinkEffects(eCharm, eMind);
+        eCharm = EffectLinkEffects(eCharm, eDur);
+        
+        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
         {
             if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget)) // deaf targets can't hear the song.
             {
-                if (!iAlreadyAffected) // don't want to check the targets more than once.
+                if (GetIsImmune(oTarget, IMMUNITY_TYPE_SILENCE) == FALSE)
                 {
-                    if (GetIsImmune(oTarget, IMMUNITY_TYPE_CHARM) == FALSE && GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) == FALSE)
+                    if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                     {
-                        if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-                        {
-                            if (!GetHasSpellEffect(GetSpellId(),oTarget))
-                            {
-                                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCharm, oTarget, RoundsToSeconds(nDuration));
-                                StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
-                            }
-                        }
+                        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCharm, oTarget, RoundsToSeconds(nDuration), TRUE, GetSpellId(), nLevel);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eCharmVis, oTarget);
+                        StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
                     }
                 }
             }

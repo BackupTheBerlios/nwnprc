@@ -192,10 +192,12 @@ void main()
 
 
     // SancMar +1d4 vs Evil
-    int SancMar   = Sanctify_Feat(GetBaseItemType(oWeap))   ? (iOuts ? d4(1):1):0 ;
-    int iHolyDmg  = (iSmit && (LvlRaziel>4)) || (LvlRaziel>9) ? d6(2):SancMar ;
-        iHolyDmg  = iHolyDmg && (LvlRaziel>6) && iOuts  && iSmit   ? d8(2):iHolyDmg;
+    int SancMar   = Sanctify_Feat(GetBaseItemType(oWeap))   ? 1:0 ;
+//    int iHolyDmg  = (iSmit && (LvlRaziel>4)) || (LvlRaziel>9) ? d6(2):SancMar ;
+//        iHolyDmg  = iHolyDmg && (LvlRaziel>6) && iOuts  && iSmit   ? d8(2):iHolyDmg;
 
+    int iEnhancementGD = (SancMar) ? DAMAGE_POWER_ENERGY : iEnhancement;
+    
     if(iHit > 0)
     {
 
@@ -211,13 +213,10 @@ void main()
 
         //Apply the damage
         if (iSmit)
-           eDamage = EffectDamage(iDamage+iHolyDmg, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_ENERGY);
+           eDamage = EffectDamage(iDamage, DAMAGE_TYPE_DIVINE, iEnhancementGD);
         else
         {
-            eDamage = EffectDamage(iDamage, iDamageType, iEnhancement);
-            if (iHolyDmg && iEvil)
-             // DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(iHolyDmg, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_ENERGY), oTarget));
-             eDamage = EffectDamage(iHolyDmg+iDamage, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_ENERGY);
+            eDamage = EffectDamage(iDamage, iDamageType, iEnhancementGD);
 
         }
 

@@ -55,7 +55,7 @@ void main()
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELLABILITY_AURA_FEAR));
         //Make a saving throw check
-        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_FEAR))
+        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_FEAR) && !GetIsImmune(oTarget, IMMUNITY_TYPE_FEAR) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
         {
             int HD=GetHitDice(oTarget);
 

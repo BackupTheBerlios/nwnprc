@@ -18,6 +18,8 @@
 #include "prc_inc_spells"
 #include "x2_inc_spellhook"
 //#include "prc_class_const"
+#include "prc_inc_switch"
+#include "prc_inc_itmrstr"
 
 
 // This function holds all functions that are supposed to run before the actual
@@ -46,7 +48,8 @@ int PsiPrePowerCastCode()
    // with TRUE (unless they are DM possessed or in the Wild Magic Area in
    // Chapter 2 of Hordes of the Underdark.
    //---------------------------------------------------------------------------
-   if (!GetIsPC(OBJECT_SELF))
+   if (!GetIsPC(OBJECT_SELF)
+       && !GetPRCSwitch(PRC_NPC_HAS_PC_SPELLCASTING))
    {
        if( !GetIsDMPossessed(OBJECT_SELF) && !GetLocalInt(GetArea(OBJECT_SELF), "X2_L_WILD_MAGIC"))
        {
@@ -68,6 +71,17 @@ int PsiPrePowerCastCode()
        // run any user defined spellscript here
        //-----------------------------------------------------------------------
        nContinue = X2RunUserDefinedSpellScript();
+   }
+
+   //---------------------------------------------------------------------------
+   // Check for the new restricted itemproperties
+   //---------------------------------------------------------------------------
+   if(nContinue 
+       && GetIsObjectValid(GetSpellCastItem()) 
+       && !CheckPRCLimitations(GetSpellCastItem(), OBJECT_SELF))
+   {
+       SendMessageToPC(OBJECT_SELF, "You cannot use "+GetName(GetSpellCastItem()));
+       nContinue = FALSE;
    }
 
    //---------------------------------------------------------------------------

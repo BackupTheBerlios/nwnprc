@@ -37,4 +37,6 @@ void main()
     // Handle someone equipping a poisoned item
     ExecuteScript("poison_onequip", OBJECT_SELF);
 
+    // Handle ability skill limited items
+    ExecuteScript("prc_equip_rstr", OBJECT_SELF);
 }

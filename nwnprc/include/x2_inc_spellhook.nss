@@ -23,6 +23,8 @@
 #include "x2_inc_craft"
 #include "prc_inc_spells"
 //#include "prc_class_const"
+#include "prc_inc_switch"
+#include "prc_inc_itmrstr"
 
 const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 
@@ -375,30 +377,6 @@ int X2PreSpellCastCode()
    DeleteLocalInt(OBJECT_SELF, "SpellConc");
     nContinue = !ExecuteScriptAndReturnInt("prespellcode",OBJECT_SELF);
 
-    if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
-    {
-      object oFam = GetLocalObject(OBJECT_SELF, "BONDED");
-      // Run the ShareSpell code to duplicate the spell on the familiar
-      if (GetIsObjectValid(oFam))
-      {
-        int bIsWizSorc = (GetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
-                          GetLastSpellCastClass() == CLASS_TYPE_SORCERER);
-
-        // spell has to be wiz/sorc and cast on self to be shared
-        if ((oTarget == OBJECT_SELF) && (bIsWizSorc) &&
-        (!GetIsObjectValid(GetSpellCastItem())) && // no item spells
-        (GetSpellId()!=SPELL_SHAPECHANGE) &&       // no polymorphs
-        (GetSpellId()!=SPELL_POLYMORPH_SELF) &&
-        (GetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
-        {
-           SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
-           // Make sure this variable gets deleted as quickly as possible in case it's added in error.
-           DelayCommand(1.0, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
-           AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-        }
-      }
-    }
-
    //---------------------------------------------------------------------------
    // This stuff is only interesting for player characters we assume that use
    // magic device always works and NPCs don't use the crafting feats or
@@ -406,7 +384,8 @@ int X2PreSpellCastCode()
    // with TRUE (unless they are DM possessed or in the Wild Magic Area in
    // Chapter 2 of Hordes of the Underdark.
    //---------------------------------------------------------------------------
-   if (!GetIsPC(OBJECT_SELF))
+   if (!GetIsPC(OBJECT_SELF)
+       && !GetPRCSwitch(PRC_NPC_HAS_PC_SPELLCASTING))
    {
        if( !GetIsDMPossessed(OBJECT_SELF) && !GetLocalInt(GetArea(OBJECT_SELF), "X2_L_WILD_MAGIC"))
        {
@@ -449,6 +428,17 @@ int X2PreSpellCastCode()
        //-----------------------------------------------------------------------
        nContinue = PRCRunUserSpecificSpellScript();
    }
+   //---------------------------------------------------------------------------
+   // Check for the new restricted itemproperties
+   //---------------------------------------------------------------------------
+   if(nContinue 
+       && GetIsObjectValid(GetSpellCastItem()) 
+       && !CheckPRCLimitations(GetSpellCastItem(), OBJECT_SELF))
+   {
+       SendMessageToPC(OBJECT_SELF, "You cannot use "+GetName(GetSpellCastItem()));
+       nContinue = FALSE;
+   }
+
 
    //---------------------------------------------------------------------------
    // The following code is only of interest if an item was targeted
@@ -495,5 +485,31 @@ int X2PreSpellCastCode()
    }
 
    return nContinue;
+
+//spellsharing for bonded summoner
+    if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
+    {
+      object oFam = GetLocalObject(OBJECT_SELF, "BONDED");
+      // Run the ShareSpell code to duplicate the spell on the familiar
+      if (GetIsObjectValid(oFam))
+      {
+        int bIsWizSorc = (GetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
+                          GetLastSpellCastClass() == CLASS_TYPE_SORCERER);
+
+        // spell has to be wiz/sorc and cast on self to be shared
+        if ((oTarget == OBJECT_SELF) && (bIsWizSorc) &&
+        (!GetIsObjectValid(GetSpellCastItem())) && // no item spells
+        (GetSpellId()!=SPELL_SHAPECHANGE) &&       // no polymorphs
+        (GetSpellId()!=SPELL_POLYMORPH_SELF) &&
+        (GetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
+        {
+           SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
+           // Make sure this variable gets deleted as quickly as possible in case it's added in error.
+           DelayCommand(1.0, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
+           AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        }
+      }
+    }
+
 }
 

@@ -245,7 +245,7 @@ void Hextor(object oPC = OBJECT_SELF)
 
 void GenasaiFocus(object oPC)
 {
-   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) != RACIAL_TYPE_AIR_GEN))
+   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_AIR_GEN))
    {
        if (!GetHasFeat(FEAT_AIR_DOMAIN_POWER, oPC))
        {
@@ -258,7 +258,7 @@ void GenasaiFocus(object oPC)
         DelayCommand(1.0, SetXP(oPC,nOldXP));
        }
    }
-   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) != RACIAL_TYPE_EARTH_GEN))
+   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_EARTH_GEN))
    {
        if (!GetHasFeat(FEAT_EARTH_DOMAIN_POWER, oPC))
        {
@@ -271,7 +271,7 @@ void GenasaiFocus(object oPC)
         DelayCommand(1.0, SetXP(oPC,nOldXP));
        }
    }
-   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) != RACIAL_TYPE_FIRE_GEN))
+   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_FIRE_GEN))
    {
        if (!GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC))
        {
@@ -284,7 +284,7 @@ void GenasaiFocus(object oPC)
         DelayCommand(1.0, SetXP(oPC,nOldXP));
        }
    }
-   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) != RACIAL_TYPE_WATER_GEN))
+   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_WATER_GEN))
    {
        if (!GetHasFeat(FEAT_WATER_DOMAIN_POWER, oPC))
        {

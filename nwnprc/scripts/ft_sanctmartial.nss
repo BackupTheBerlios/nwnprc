@@ -7,6 +7,7 @@
 
 // Sanctify_Feat(iType);
 
+const int SKILL_JUMP = 28;
 
 
 void Sanctify()
@@ -227,6 +228,12 @@ void main()
    object oPC = OBJECT_SELF;
    
    Pwatk(oPC);
+
+  
+   object oSkin = GetPCSkin(oPC);
+   
+   if (GetSkillRank(SKILL_JUMP,oPC)>4) 
+       SetCompositeBonus(oSkin, "SkillJTum", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_TUMBLE);
    
    if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
    {

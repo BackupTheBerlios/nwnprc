@@ -20,6 +20,9 @@ TABLE.table_contenttable
 	color: #c0c0c0;
 	width: 550px;
 	height: 50px;
+	padding: 0px;
+	border-collapse: collapse;
+	border-spacing: 0px;
 }
 
 TD.padded

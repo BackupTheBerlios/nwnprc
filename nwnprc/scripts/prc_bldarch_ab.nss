@@ -23,12 +23,16 @@ void main()
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
-            if((GetSpellId() == 341) || GetSpellId() == 58)
-            {
+            // neither spell ID is that of acid blood.
+            // since there is no spell ID remove the if statement
+            //if((GetSpellId() == 341) || GetSpellId() == 58)
+            //{
                 //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FIREBALL));
+                //SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FIREBALL));
+                
                 //Get the distance between the explosion and the target to calculate delay
-                fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
+                //fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
+                
                 if (GetLevelByClass(CLASS_TYPE_BLARCHER,OBJECT_SELF) == 0)
                 {
                     //Roll damage for each target
@@ -43,7 +47,7 @@ void main()
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                     }
                  }
-             }
+             //}
         }
        //Select the next target within the spell shape.
        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);

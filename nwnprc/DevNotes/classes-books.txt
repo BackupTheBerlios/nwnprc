@@ -1,81 +1,80 @@
 class:						| book:
 ----------------------------------------------------------------------------------------
-PnP Shifter					| Masters of the Wild
-Blood Archer					| Evil
-Samurai						| Oriental Adventures
-Ninja Spy					| Oriental Adventures
-Ocular Adept					| Faiths And Pantheons
-Dwarven Battlerager				| Races of Faerun
-Mystic Theurge					| Dungeon Master's Guide
-Warpriest					| Complete Divine
-Mage-Killer					| Magic of Faerun
-Harper Mage					| Magic of Faerun
-Spellsword					| Complete Warrior
-Acolyte of the Skin				| Tome and Blood
-Eldritch Knight					| Dungeon Master's Guide
-Elemental Savant				| Tome and Blood
-Duelist						| Dungeon Master's Guide
-Hierophant					| Dungeon Master's Guide
-Red Avenger					| Sword and Fist
-Knight of the Chalice				| Complete Warrior
-Hathran						| Player's Guide to Faerun
-Vigilant					| Ultimate Prestige Classes Vol. 1
-Stormlord					| Complete Divine
-Heartwarder					| Faiths and Pantheons
-Arcane Duelist					| Random Encounters
-Archmage					| Dungeon Master's Guide
-Oozemaster					| Masters of the Wild
-Temple Raider					| Complete Divine
-Dragonsong Lyrist				| Draconomicon
-Shadow Adept					| Player's Guide to Faerun
-Soldier of Light				| Deities and Demigods
-Bonded Summoner					| Miniatures Handbook
-Initiate of the Draconic Mysteries		| Draconomicon
-Bladesinger					| Complete Warrior
-Sacred Fist					| Complete Divine
-Legendary Dreadnought				| Epic Level Handbook
-Disciple of Baalzebul				| Book of Vile Darkness
-Disciple of Dispater				| Book of Vile Darkness
-Ravager						| Complete Warrior
-Champion of Bane (Based on Divine Champion)	| Forgotten Realms Campaign Setting
+Apostle of Peace (incomplete)			| Book of Exalted Deeds
 Fist of Raziel					| Book of Exalted Deeds
 Vassal of Bahamut				| Book of Exalted Deeds
-Lich Template					| WotC Website
-Drow Judicator					| The Underdark
-Corrupter					| Dragon Magazine
-Anti-Paladin					| Dragon Magazine
-Nightshade					| Dragon Magazine
-Man-At-Arms					| Mercenaries
-Telflammar Shadowlord				| The Unapproachable East
-Battleguard of Tempus				| Dragon Magazine
-Iaijutsu Master					| Oriental Adventures
-Runescarred Berserker				| The Unarpproachable East
-Thayan Knight					| Complete Warrior
-Red Wizard					| Forgotten Realms Campaign Setting
-True Necromancer				| Tome and Blood
-Arcane Trickster				| Tome and Blood
-Fist of Hextor					| Sword and Fist
-Peerless Archer					| Silver Marches
+Disciple of Baalzebul				| Book of Vile Darkness
+Disciple of Dispater				| Book of Vile Darkness
+Disciple of Mephistopheles			| Book of Vile Darkness
 Thrall of Orcus					| Book of Vile Darkness
-Shou Disciple					| The Unapproachable East
-Black Flame Zealot				| The Unapproachable East
+Sacred Fist					| Complete Divine
 Shining Blade of Heironeous			| Complete Divine
+Stormlord					| Complete Divine
+Temple Raider					| Complete Divine
+Warpriest					| Complete Divine
+Bladesinger					| Complete Warrior
+Knight of the Chalice				| Complete Warrior
+Ravager						| Complete Warrior
+Spellsword					| Complete Warrior
+Thayan Knight					| Complete Warrior
+Ultimate Ranger					| Custom Class - Author: Szatany (Wizards.COMmunity Boards)
+Brawler						| Custom Class - Author: WodahsEht
+Minstrel of the Edge				| Custom Class - Author: WodahsEht
+Hospitaler					| Defenders of the Faith
 Knight of the Middle Circle			| Defenders of the Faith
+Master of Shrouds				| Defenders of the Faith
+Soldier of Light				| Deities and Demigods
+Dragonsong Lyrist				| Draconomicon
+Initiate of the Draconic Mysteries		| Draconomicon
+Anti-Paladin					| Dragon Magazine
+Battleguard of Tempus				| Dragon Magazine
+Corrupter					| Dragon Magazine
+Nightshade					| Dragon Magazine
+Archmage					| Dungeon Master's Guide
+Duelist						| Dungeon Master's Guide
+Eldritch Knight					| Dungeon Master's Guide
+Hierophant					| Dungeon Master's Guide
+Mystic Theurge					| Dungeon Master's Guide
+Legendary Dreadnought				| Epic Level Handbook
+Blood Archer					| Evil
+Heartwarder					| Faiths and Pantheons
+Ocular Adept					| Faiths And Pantheons
+Champion of Bane (Based on Divine Champion)	| Forgotten Realms Campaign Setting
+Red Wizard					| Forgotten Realms Campaign Setting
+Harper Mage					| Magic of Faerun
+Mage-Killer					| Magic of Faerun
+Eye of Gruumsh					| Masters of the Wild
+Foe Hunter					| Masters of the Wild
+Frenzied Berserker				| Masters of the Wild
+Oozemaster					| Masters of the Wild
+PnP Shifter					| Masters of the Wild
+Tempest						| Masters of the Wild
+Man-At-Arms					| Mercenaries
+Bonded Summoner					| Miniatures Handbook
+Henshin Mystic					| Oriental Adventures
+Iaijutsu Master					| Oriental Adventures
+Ninja Spy					| Oriental Adventures
+Samurai						| Oriental Adventures
+Hathran						| Player's Guide to Faerun
+Shadow Adept					| Player's Guide to Faerun
+Dwarven Battlerager				| Races of Faerun
+Orc Warlord					| Races of Faerun
+Arcane Duelist					| Random Encounters
+Peerless Archer					| Silver Marches
+Drunken Master					| Sword and Fist
+Fist of Hextor					| Sword and Fist
+Red Avenger					| Sword and Fist
+Black Flame Zealot				| The Unapproachable East
+Shou Disciple					| The Unapproachable East
+Telflammar Shadowlord				| The Unapproachable East
+Runescarred Berserker				| The Unarpproachable East
+Drow Judicator					| The Underdark
+Archer						| Three Arrows for the King - The Archer's Guide
+Acolyte of the Skin				| Tome and Blood
+Arcane Trickster				| Tome and Blood
+Elemental Savant				| Tome and Blood
+True Necromancer				| Tome and Blood
+Vigilant					| Ultimate Prestige Classes Vol. 1
+Lich Template					| WotC Website
 Master Harper					| WotC Website
 Werewolf Template				| WotC Website
-Hospitaler					| Defenders of the Faith
-Master of Shrouds				| Defenders of the Faith
-Frenzied Berserker				| Masters of the Wild
-Tempest						| Masters of the Wild
-Foe Hunter					| Masters of the Wild
-Eye of Gruumsh					| Masters of the Wild
-Orc Warlord					| Races of Faerun
-Disciple of Mephistopheles			| Book of Vile Darkness
-Henshin Mystic					| Oriental Adventures
-Drunken Master					| Sword and Fist
-Apostle of Peace (incomplete)			| Book of Exalted Deeds
-Archer						| Three Arrows for the King - The Archer's Guide
-Minstrel of the Edge				| Custom Class - Author: WodahsEht
-Brawler						| Custom Class - Author: WodahsEht
-Ultimate Ranger					| Custom Class - Author: Szatany (Wizards.COMmunity Boards)
-

@@ -89,9 +89,9 @@ int FindUnarmedDamage(object oCreature)
     if (iBrawler) iBrawlerDamage = iBrawler / 6 + 2;   // 1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
   
     // Monk 3e Dmg Table - 1d6, 1d8, 1d10, 1d12, 1d20
-    if (iMonk > 19) iMonk = 19;
+    if (iMonk > 16) iMonk = 16;
     if (iMonk) iMonkDamage = iMonk / 4 + 2;
-    if (iMonkDamage == 6) iMonkDamage == 7;
+    if (iMonkDamage == 6) iMonkDamage = 7;
    
     // Small monks get damage penalty -- 1d4, 1d6, 1d8, 1d10, 2d6
     if (bSmallSize) iMonkDamage = iMonk / 4 + 1;
@@ -103,18 +103,18 @@ int FindUnarmedDamage(object oCreature)
     if (iShou > 3) iShouDamage--;           // Lv. 4: 1d10, Lv. 5: 2d6
 
     // Certain race pack creatures use different damages.
-    if (GetRacialType(oCreature) == RACIAL_TYPE_MINOTAUR) iRacialDamage = 3;
-    else if (GetRacialType(oCreature) == RACIAL_TYPE_TANARUKK) iRacialDamage = 2;
-    else if (GetRacialType(oCreature) == RACIAL_TYPE_TROLL) iRacialDamage = 2;
-    else if (GetRacialType(oCreature) == RACIAL_TYPE_RAKSHASA) iRacialDamage = 2;
-    else if (GetRacialType(oCreature) == RACIAL_TYPE_CENTAUR) iRacialDamage = 2;
-    else if (GetRacialType(oCreature) == RACIAL_TYPE_ILLITHID) iRacialDamage = 1;
+    if      (GetRacialType(oCreature) == RACIAL_TYPE_MINOTAUR)   iRacialDamage = 3;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_TANARUKK)   iRacialDamage = 2;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_TROLL)      iRacialDamage = 2;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_RAKSHASA)   iRacialDamage = 2;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_CENTAUR)    iRacialDamage = 2;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_ILLITHID)   iRacialDamage = 1;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_LIZARDFOLK) iRacialDamage = 1;
    
     // Future unarmed classes:  if you do your own damage, add in "comparisons" below here.
-    iDamageToUse = (iMonkDamage > iDamageToUse) ? iMonkDamage : iDamageToUse;
+    iDamageToUse = (iMonkDamage    > iDamageToUse) ? iMonkDamage    : iDamageToUse;
     iDamageToUse = (iBrawlerDamage > iDamageToUse) ? iBrawlerDamage : iDamageToUse;
-    iDamageToUse = (iShouDamage > iDamageToUse) ? iShouDamage : iDamageToUse;
+    iDamageToUse = (iShouDamage    > iDamageToUse) ? iShouDamage    : iDamageToUse;
 
     // For the creature weapon, we consider only creatures that don't have IoDM levels, for
     // "correctness"
@@ -135,7 +135,7 @@ int FindUnarmedDamage(object oCreature)
     if (iDamageToUse > 8) iDamageToUse = 8;
     
     // For Initiate of Draconic Mysteries
-    if (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDieIncrease = 2;
+    if      (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDieIncrease = 2;
     else if (GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature)) iDieIncrease = 1;
     
     switch (iDamageToUse)

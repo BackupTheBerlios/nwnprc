@@ -311,17 +311,17 @@ int X2PreSpellCastCode()
       // Run the ShareSpell code to duplicate the spell on the familiar
       if (GetIsObjectValid(oFam))
       {
+        int bIsWizSorc = (GetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
+                          GetLastSpellCastClass() == CLASS_TYPE_SORCERER);
 
-        // spell has to be cast on self to be shared
-        if ((oTarget == OBJECT_SELF) && (!GetIsObjectValid(GetSpellCastItem())) &&
-        (GetSpellId()!=SPELL_SHAPECHANGE) &&
+        // spell has to be wiz/sorc and cast on self to be shared
+        if ((oTarget == OBJECT_SELF) && (bIsWizSorc) &&
+        (!GetIsObjectValid(GetSpellCastItem())) && // no item spells
+        (GetSpellId()!=SPELL_SHAPECHANGE) &&       // no polymorphs
         (GetSpellId()!=SPELL_POLYMORPH_SELF) &&
-        // familiar has to be summoned to share
-        (GetIsObjectValid(oFam)))
+        (GetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
         {
-           SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel(OBJECT_SELF));
-           DelayCommand(0.1, AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE)));
-           DelayCommand(0.2, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
+           AssignCommand(OBJECT_SELF, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         }
       }
     }

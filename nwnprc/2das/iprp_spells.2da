@@ -1128,3 +1128,5 @@
 1124 Word_of_Balance                   16830502 20        7         105000 3186       0         0       1          iss_wordofbal     
 1125 Greenfire                         16830505 5         3         11250  3187       0         1       1          iss_greenfire     
 1126 Greenfire                         16830506 10        3         22500  3187       0         1       1          iss_greenfire     
+1127 Major_Magic_Missile               16826070 9         5         25000  2247       0         0       1          is_MagMiss        
+1128 Major_Magic_Missile               16826070 20        5         75000  2247       0         0       1          is_MagMiss        

@@ -10,12 +10,11 @@
 // Last Updated: 03/12/2004, Nron Ksr
 /////////////////////////////////////////////////
 
-//#include "nw_i0_spells"
-//#include "x2_i0_spells"
+#include "nw_i0_spells"
 #include "x2_inc_itemprop"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void AddEffectsToWeapon( object oTarget, float fDuration, int iCasterLvl )
 {

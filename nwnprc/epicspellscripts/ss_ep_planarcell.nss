@@ -10,8 +10,8 @@
 //:://////////////////////////////////////////////
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
-#include "x2_i0_spells"
-#include "prc_alterations"
+#include "nw_i0_spells"
+//#include "prc_alterations"
 
 void main()
 {
@@ -28,7 +28,7 @@ void main()
         object oTarget = GetSpellTargetObject();
         location lTarget = GetSpellTargetLocation();
         location lCell;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, PLANCEL_S);
         effect eVis1 = EffectVisualEffect(VFX_FNF_IMPLOSION);
         effect eVis2 = EffectVisualEffect(VFX_FNF_SUMMON_GATE);

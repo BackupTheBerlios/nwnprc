@@ -9,11 +9,11 @@
 /////////////////////////////////////////////////
 // Last Updated: 03/15/2004, Nron Ksr
 /////////////////////////////////////////////////
-#include "X0_I0_SPELLS"
+//#include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "x2_I0_SPELLS"
-#include "prc_alterations"
+#include "nw_i0_spells"
+//#include "prc_alterations"
 
 void main()
 {
@@ -25,7 +25,7 @@ void main()
     object oTarget;
     int nDamage;
     float fDelay;
-    int nDC = GetEpicSpellSaveDC(oCaster) + // Boneshank - added.
+    int nDC = /*GetEpicSpellSaveDC(oCaster) + */// Boneshank - added.
 		GetChangesToSaveDC() +
         GetDCSchoolFocusAdjustment(oCaster, LEECH_F_S);
 

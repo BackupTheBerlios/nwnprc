@@ -5,7 +5,7 @@ For download info, please visit:
 http://www.lilacsoul.revility.com    */
 
 #include "prc_alterations"
-#include "inc_epicdispel"
+#include "inc_dispel"
 
 //Put this OnUsed
 void main()

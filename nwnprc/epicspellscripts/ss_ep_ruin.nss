@@ -7,11 +7,11 @@
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
 
-#include "x2_I0_SPELLS"
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
-#include "x0_I0_SPELLS"
+//#include "X0_I0_SPELLS"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void main()
 {
@@ -29,7 +29,7 @@ void main()
         object oTarget = GetSpellTargetObject();
         float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
         float fDelay = fDist/(3.0 * log(fDist) + 2.0);
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nSpellDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, RUIN_S);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
         int nDam = d6(20);

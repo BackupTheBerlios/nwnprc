@@ -1,6 +1,7 @@
 #include "NW_I0_GENERIC"
 #include "prc_feat_const"
 #include "lookup_2da_spell"
+#include "prcsp_spell_adjs"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //:: This is the prc_dispel_magic functions declarations.   The functions themselves are at the bottom
@@ -8,12 +9,12 @@
 //:: these both be just one file by adding my text to theirs.
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-//:: Will replace the normal call to ApplyEffectToObject() in all spell scripts
+//:: Will replace the normal call to SPApplyEffectToObject() in all spell scripts
 //:: This way as well as applying the effect, a reference is set up to it in the form
 //:: of entries in 3 very similar arrays.
 //:: The arrays are cleaned up every time the function is called to clear out old references
 //:: from spell effects that have either been removed, or run out their durations.
-void PRCApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f);
+void PRCSPApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f);
 
 //:: This function is called from withing PRCApplyEffectToObject().  It's purpose is to
 //:: clean up the three arrays that hold the caster level and references to all
@@ -25,7 +26,6 @@ int ReorderEffects(int nCasterLevel, int nSpellID, object oTarget, object oCaste
 //:: that the effect referred to by an entry in the 3 arrays is still in effect, returning
 //:: FALSE if it is not.
 int IsStillRealEffect(int nSpellID, object oCaster, object oTarget);
-
 
 //:: This is my remake of the spellsDispelMagic found in x0_i0_spells.   It's pretty much
 //:: identical to the old one except instead of calling the EffectDispelMagicBest() and
@@ -78,6 +78,9 @@ int AoECasterLevel(object oAoE = OBJECT_SELF);
 float GetRandomDelay(float fMinimumTime = 0.4, float MaximumTime = 1.1);
 
 void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1);
+
+void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
+	int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,9 +187,10 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
     //--------------------------------------------------------------------------
     // Fire hostile event only if the target is hostile...
     //--------------------------------------------------------------------------
+    
     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
-
+    
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nId));
     }
     else
@@ -590,13 +594,13 @@ void HandleInfestationOfMaggots(object oTarget)
 //:: End of section to trap infestation of maggots.
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-void PRCApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f)
+void PRCSPApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f)
 {
    int nIndex = ReorderEffects(nCasterLevel, nSpellID, oTarget, oCaster);
    // Add this new effect to the slot after the last effect already on the character.
 
 
-   ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
+ SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
    // may have code travers the lists right here and not add the new effect
    // if an identical one already appears in the list somewhere
 
@@ -604,22 +608,19 @@ void PRCApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, int 
    SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex), nCasterLevel);
    SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex), oCaster );
    SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), GetHasFeat(FEAT_TENACIOUSMAGIC,oCaster));
-//   SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(nSpellID)+" "+GetName(oCaster)+" FEAT_TENACIOUSMAGIC "+IntToString(GetHasFeat(FEAT_TENACIOUSMAGIC,oCaster)));
 
    nIndex++;
    /// Set new index number to the character.
    DeleteLocalInt(oTarget, "X2_Effects_Index_Number");
    SetLocalInt(oTarget, "X2_Effects_Index_Number", nIndex);
-   
-
 }
 
 void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
 	int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
 {
 	// PRC pack does not use version 2.0 of Bumpkin's PRC script package, so there is no
-	// PRCApplyEffectToObject() method.  So just call the bioware default.
-//	ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
+	// PRCSPApplyEffectToObject() method.  So just call the bioware default.
+//	SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
 
 	// Instant duration effects can use BioWare code, the PRC code doesn't care about those, as
 	// well as any non-dispellable effect.
@@ -629,13 +630,55 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 	}
 	else
 	{
-//		ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
+//		SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
 		// We need the extra arguments for the PRC code, get them if defaults were passed in.
 		if (-1 == nSpellID) nSpellID = GetSpellId();
 		if (-1 == nCasterLevel) nCasterLevel = PRCGetCasterLevel(oCaster);
 
 		// Invoke the PRC apply function passing the extra data.
-		PRCApplyEffectToObject(nSpellID, nCasterLevel, oCaster, nDurationType, eEffect, oTarget, fDuration);
+		PRCSPApplyEffectToObject(nSpellID, nCasterLevel, oCaster, nDurationType, eEffect, oTarget, fDuration);
 	}
+}
 
+// Sets up all of the AoE's int values, but only if they aren't already set.
+// When called in a function nMetamagic should be GetMetamagicFeat(), and nBaseSaveDC should be GetSpellSaveDC()
+void SetAllAoEInts(int SpellID, object oAoE, int nBaseSaveDC ,int SpecDispel = 0 , int nCasterLevel = 0)
+{
+    if(GetLocalInt(oAoE, "X2_AoE_Is_Modified") != 1)
+    {
+
+       // I keep making calls to GetAreaOfEffectCreator()
+       // I'm not sure if it would be better to just set it one time as an object variable
+       // It would certainly be better in terms of number of operations, but I'm not sure
+       // if it's as accurate.
+       // It's a total of 7 calls, so I figure it doesn't matter that much.  Still, 1 would be better than 7.
+       // Also: the 7 calls only happen once per casting of the AoE.
+       if ( !nCasterLevel) nCasterLevel = PRCGetCasterLevel(GetAreaOfEffectCreator());
+
+       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Caster_Level", nCasterLevel));
+       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_SpellID", SpellID));
+       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Weave", GetHasFeat(FEAT_SHADOWWEAVE,GetAreaOfEffectCreator())));
+      // ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Save_DC", (nBaseSaveDC + GetChangesToSaveDC(GetAreaOfEffectCreator()))));
+      // ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Modify_Spell_Penetr", ExecuteScriptAndReturnInt("add_spell_penetr", GetAreaOfEffectCreator())));
+      // ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Modify_Elemental_Damage", ChangedElementalDamage(GetAreaOfEffectCreator(), 0)));
+      // ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Store_Metamagic", nMetamagic));
+       if (SpecDispel) ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_SpecDispel", SpecDispel));
+       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Is_Modified", 1));
+       
+
+      // The AoE object is deleted after the duration runs out anyway, so I don't
+      // think it will be necessary to actually delete these.
+    }
+    
+       SendMessageToPC(GetFirstPC(), "X2_AoE_Caster_Level:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_Caster_Level")));
+   SendMessageToPC(GetFirstPC(), "X2_AoE_SpellID:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_SpellID")));
+   SendMessageToPC(GetFirstPC(), "X2_AoE_Weave:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_Weave")));
+ 
+}
+
+// Just returns the stored value.
+int AoECasterLevel(object oAoE = OBJECT_SELF)
+{
+   int toReturn = GetLocalInt(oAoE, "X2_AoE_Caster_Level");
+   return toReturn;
 }

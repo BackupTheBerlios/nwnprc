@@ -19,7 +19,7 @@
 #include "nw_i0_spells"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void main()
 {

@@ -7,18 +7,22 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-#include "X0_I0_SPELLS"
-#include "x2_i0_spells"
+//#include "X0_I0_SPELLS"
+//#include "x2_i0_spells"
+//#include "inc_epicspells"
+//#include "prc_alterations"
+
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
+#include "prc_add_spell_dc"
+#include "nw_i0_spells"
 
 void main()
 {
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
-    if (!X2PreSpellCastCode())
+    if (!X2PreSpellCastCode() )
     {
 		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
@@ -26,7 +30,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ALLHOPE_DC, ALLHOPE_S, ALLHOPE_XP))
     {
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
-        int nSaveDC = GetEpicSpellSaveDC(OBJECT_SELF) + 10 + GetChangesToSaveDC() +
+        int nSaveDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ 10 + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, ALLHOPE_S);
         float fDuration = RoundsToSeconds(20);
         effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);

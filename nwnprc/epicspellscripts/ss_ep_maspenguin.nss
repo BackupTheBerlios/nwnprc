@@ -7,11 +7,11 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-#include "X0_I0_SPELLS"
-#include "x2_i0_spells"
+//#include "X0_I0_SPELLS"
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void main()
 {
@@ -27,7 +27,7 @@ void main()
     {
         float fDelay;
         int nDuration = 20;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, MASSPEN_S);
         effect eExplode = EffectVisualEffect(VFX_FNF_MYSTICAL_EXPLOSION);
         effect eDuration = EffectVisualEffect(VFX_DUR_PIXIEDUST);

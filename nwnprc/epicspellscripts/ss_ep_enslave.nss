@@ -3,10 +3,10 @@
 //:: Author: Boneshank (Don Armstrong)
 
 #include "NW_I0_SPELLS"
-#include "x2_i0_spells"
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void main()
 {
@@ -22,7 +22,7 @@ void main()
     {
         //Declare major variables
         object oTarget = GetSpellTargetObject();
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, ENSLAVE_S) + GetChangesToSaveDC();
+        int nDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetDCSchoolFocusAdjustment(OBJECT_SELF, ENSLAVE_S) + GetChangesToSaveDC();
         effect eDom = EffectDominated();
         effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);

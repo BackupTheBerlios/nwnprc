@@ -7,10 +7,10 @@
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
 
-#include "x2_i0_spells"
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void DoAnimationBit(location lTarget, object oCaster);
 
@@ -27,7 +27,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ANBLIZZ_DC, ANBLIZZ_S, ANBLIZZ_XP))
     {
         float fDelay;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, ANBLIZZ_S);
         int nDam;
         effect eExplode = EffectVisualEffect(VFX_IMP_PULSE_COLD);

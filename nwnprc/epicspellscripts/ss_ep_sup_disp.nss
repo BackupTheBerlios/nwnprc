@@ -2,10 +2,11 @@
 //:: Epic Spell: Superb Dispelling
 //:: Author: Boneshank (Don Armstrong)
 
-#include "x0_i0_spells"
+#include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "inc_dispel"
+//#include "prc_alterations"
 
 void main()
 {
@@ -41,7 +42,7 @@ void main()
 
         // Targeted Dispelling
         if (GetIsObjectValid(oTarget))
-            spellsDispelMagic(oTarget, nCasterLevel, eVis, eImpact);
+            spellsDispelMagicMod(oTarget, nCasterLevel, eVis, eImpact);
 
         // Area of Effect - Only dispel best effect
         else
@@ -51,11 +52,11 @@ void main()
             while (GetIsObjectValid(oTarget))
             {
                 if(GetObjectType(oTarget) == OBJECT_TYPE_AREA_OF_EFFECT)
-                    spellsDispelAoE(oTarget, OBJECT_SELF, nCasterLevel);
+                    spellsDispelAoEMod(oTarget, OBJECT_SELF, nCasterLevel);
                 else if (GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE)
                     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
                 else
-                    spellsDispelMagic(oTarget, nCasterLevel, eVis, eImpact, FALSE);
+                    spellsDispelMagicMod(oTarget, nCasterLevel, eVis, eImpact, FALSE);
                 oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE,lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE);
             }
         }

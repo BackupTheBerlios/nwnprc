@@ -8,11 +8,11 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-#include "X0_I0_SPELLS"
-#include "x2_i0_spells"
+//#include "X0_I0_SPELLS"
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void main()
 {
@@ -27,7 +27,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ORDER_R_DC, ORDER_R_S, ORDER_R_XP))
     {
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
-        int nSaveDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nSaveDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, ORDER_R_S);
         float fDuration = RoundsToSeconds(20);
         effect eVis = EffectVisualEffect(VFX_FNF_HOWL_ODD);

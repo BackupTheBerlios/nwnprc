@@ -5,7 +5,7 @@
 #include "x2_inc_toollib"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "x2_i0_spells"
+#include "nw_i0_spells"
 
 void main()
 {

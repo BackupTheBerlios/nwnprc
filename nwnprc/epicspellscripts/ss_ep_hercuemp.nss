@@ -9,7 +9,7 @@
 #include "x2_inc_spellhook"
 #include "nw_i0_spells"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void main()
 {

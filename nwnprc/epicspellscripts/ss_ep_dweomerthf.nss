@@ -7,11 +7,11 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-#include "X0_I0_SPELLS"
+//#include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
-#include "x2_i0_spells"
+#include "nw_i0_spells"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void main()
 {
@@ -27,7 +27,7 @@ void main()
     {
         object oTarget = GetSpellTargetObject();
         int nTargetSpell;
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + 5 + GetChangesToSaveDC() +
+        int nSpellDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ 5 + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, DWEO_TH_S);
         effect eVis = EffectVisualEffect(VFX_IMP_DISPEL);
         effect eVis2 = EffectVisualEffect(VFX_IMP_DOOM);

@@ -10,7 +10,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "inc_epicdispel"
+#include "inc_dispel"
 
 void RunMyMartyrdom(object oAlly, int nDuration, object oMartyr = OBJECT_SELF);
 

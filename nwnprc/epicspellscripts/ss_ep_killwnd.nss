@@ -9,9 +9,9 @@
 // Last Updated: 03/16/2004, Nron Ksr
 /////////////////////////////////////////////////
 
-#include "x2_I0_SPELLS"
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
-#include "x0_I0_SPELLS"
+//#include "X0_I0_SPELLS"
 #include "inc_epicspells"
 
 void main()

@@ -7,10 +7,10 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
-#include "x2_i0_spells"
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 object GetSunderTarget(object oTarget);
 
@@ -27,7 +27,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, SINGSUN_DC, SINGSUN_S, SINGSUN_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, SINGSUN_S);
         effect eImp = EffectVisualEffect(VFX_IMP_BREACH);
         effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);

@@ -6,11 +6,15 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-#include "X0_I0_SPELLS"
-#include "x2_inc_spellhook"
-#include "inc_epicspells"
-#include "x2_I0_SPELLS"
+//#include "X0_I0_SPELLS"
+//#include "x2_inc_spellhook"
+//#include "inc_epicspells"
+//#include "x2_I0_SPELLS"
 //#include "prc_alterations"
+
+#include "inc_epicspells"
+#include "prc_add_spell_dc"
+#include "nw_i0_spells"
 
 void main()
 {
@@ -21,7 +25,7 @@ ActionDoCommand(SetAllAoEInts(4054,OBJECT_SELF, GetSpellSaveDC()));
     effect eDam;
     object oTarget;
     object oCreator = GetAreaOfEffectCreator();
-    int nDC = GetEpicSpellSaveDC(oCreator) + GetChangesToSaveDC() +
+    int nDC = /*GetEpicSpellSaveDC(oCreator) +*/ GetChangesToSaveDC() +
         GetDCSchoolFocusAdjustment(oCreator, RAINFIR_S);
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
     float fDelay;

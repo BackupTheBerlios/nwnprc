@@ -9,11 +9,11 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-#include "X0_I0_SPELLS"
+//#include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
-#include "x2_i0_spells"
+#include "nw_i0_spells"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 int GetNeededGemValue(int nHD);
 
@@ -30,7 +30,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, GEMCAGE_DC, GEMCAGE_S, GEMCAGE_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, GEMCAGE_S);
         if (!GetPlotFlag(oTarget) &&   // Plot creatures cannot be Caged, ever.
             !GetIsDM(oTarget) &&       // Neither can DM's.

@@ -11,7 +11,8 @@
 //:://////////////////////////////////////////////
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
-#include "prc_alterations"
+#include "inc_dispel"
+//#include "prc_alterations"
 
 // Brings oPC back to life, via the contingency of 'Contingent Resurrection'.
 void ContingencyResurrect(object oTarget, int nCount, object oCaster = OBJECT_SELF);

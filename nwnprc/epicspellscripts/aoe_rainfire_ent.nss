@@ -6,21 +6,25 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-#include "X0_I0_SPELLS"
-#include "x2_inc_spellhook"
-#include "inc_epicspells"
-#include "x2_I0_SPELLS"
+
+//#include "X0_I0_SPELLS"
 //#include "prc_alterations"
+//#include "inc_dispel"
+//#include "x2_I0_SPELLS" <--- blows the compiler the **** up
+//#include "x2_inc_spellhook"
+
+#include "inc_epicspells"
+#include "prc_add_spell_dc"
+#include "nw_i0_spells"
 
 void main()
 {
 
-ActionDoCommand(SetAllAoEInts(4054,OBJECT_SELF, GetSpellSaveDC()));
+    ActionDoCommand(SetAllAoEInts(4054, OBJECT_SELF, GetSpellSaveDC() ) );
 
     object oTarget;
     object oCreator = GetAreaOfEffectCreator();
-    int nDC = GetEpicSpellSaveDC(oCreator) + GetChangesToSaveDC() +
-        GetDCSchoolFocusAdjustment(oCreator, RAINFIR_S);
+    int nDC = /*GetEpicSpellSaveDC(oCreator) +*/ GetChangesToSaveDC() + GetDCSchoolFocusAdjustment(oCreator, RAINFIR_S);
     int nDamage;
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
@@ -29,15 +33,13 @@ ActionDoCommand(SetAllAoEInts(4054,OBJECT_SELF, GetSpellSaveDC()));
     if (oTarget != oCreator &&
         !GetIsDM(oTarget))
     {
-        SignalEvent(oTarget,
-            EventSpellCastAt(OBJECT_SELF, SPELL_INCENDIARY_CLOUD));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_INCENDIARY_CLOUD) );
         if(!MyPRCResistSpell(oCreator, oTarget, 0, fDelay))
         {
             fDelay = GetRandomDelay(0.5, 2.0);
             nDamage = d6(1);
             eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
-            if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC,
-                SAVING_THROW_TYPE_FIRE, oCreator, fDelay))
+            if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE, oCreator, fDelay))
             {
                 DelayCommand(fDelay,
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

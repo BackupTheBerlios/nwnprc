@@ -8,11 +8,11 @@
 // Fort. save -4 to resist
 /////////////////////////////////////////////////
 
-#include "x2_I0_SPELLS"
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
-#include "x0_I0_SPELLS"
+//#include "X0_I0_SPELLS"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void main()
 {
@@ -23,7 +23,7 @@ void main()
     effect eVis = EffectVisualEffect( VFX_IMP_DEATH );
 //    effect eVis = EffectVisualEffect( VFX_COM_CHUNK_RED_MEDIUM ); // Alternative Death VFX
     float fDelay;
-    int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + // Boneshank - added.
+    int nDC = /*GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + */ // Boneshank - added.
 		GetChangesToSaveDC() +
         GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), TOLO_KW_S);
 

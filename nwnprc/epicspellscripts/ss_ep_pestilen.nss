@@ -2,11 +2,11 @@
 //:: Epic Spell: Pestilence
 //:: Author: Boneshank (Don Armstrong)
 
-#include "X0_I0_SPELLS"
-#include "x2_i0_spells"
+//#include "X0_I0_SPELLS"
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void main()
 {
@@ -22,7 +22,7 @@ void main()
     {
         //Declare major variables
         int nDamage;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, PESTIL_S);
         float fDelay;
         effect eExplode = EffectVisualEffect(VFX_FNF_HORRID_WILTING);

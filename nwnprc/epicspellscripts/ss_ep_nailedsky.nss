@@ -8,11 +8,11 @@
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
 
-#include "x2_I0_SPELLS"
+#include "nw_i0_spells"
 #include "x0_i0_petrify"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void RunNailedToTheSky(object oTarget, int nDC);
 
@@ -33,7 +33,7 @@ void main()
         if (GetCanCastSpell(OBJECT_SELF, NAILSKY_DC, NAILSKY_S, NAILSKY_XP))
         {
             //Declare major variables
-            int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+            int nSpellDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
                 GetDCSchoolFocusAdjustment(OBJECT_SELF, NAILSKY_S);
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
             RunNailedToTheSky(oTarget, nSpellDC);

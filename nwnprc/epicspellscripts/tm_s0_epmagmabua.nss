@@ -11,12 +11,12 @@
 // Last Updated: 03/15/2004, Nron Ksr
 /////////////////////////////////////////////////
 
-#include "X0_I0_SPELLS"
+//#include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
 // Boneshank - Added below include files for needed functions.
-#include "x2_I0_SPELLS"
+#include "nw_i0_spells"
 #include "inc_epicspells"
-#include "prc_alterations"
+//#include "prc_alterations"
 
 void main()
 {
@@ -31,7 +31,7 @@ void main()
     effect eVis = EffectVisualEffect( VFX_IMP_FLAME_S );
     float fDelay;
     // Boneshank - Added in the nDC formula.
-    int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +
+    int nDC = /*GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + */
 		GetChangesToSaveDC() +
 		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
 

@@ -29,6 +29,10 @@ int GetManifesterDC(object oCaster = OBJECT_SELF);
 // If he does, subtract PP and cast power, else power fails
 int GetCanManifest(object oCaster, int nAugCost);
 
+// Checks to see if the caster has suffered psychic enervation
+// from a wild surge. If yes, daze and subtract power points.
+void PsychicEnervation(object oCaster, int nWildSurge);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -94,6 +98,10 @@ int GetManifesterLevel(object oCaster)
 	//Gets the level of the manifesting class
 	int nClass = GetManifestingClass(oCaster);
 	int nLevel = GetLevelByClass(nClass, oCaster);
+	int nSurge = GetLocalInt(oCaster, "WildSurge");
+	
+	if (nClass == CLASS_TYPE_WILDER && nSurge > 0) nLevel = nLevel + nSurge;
+	
 	FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oCaster, FALSE);
 
 	return nLevel;
@@ -172,4 +180,28 @@ int GetCanManifest(object oCaster, int nAugCost)
     }	
     return nCanManifest;
 
+}
+
+
+void PsychicEnervation(object oCaster, int nWildSurge)
+{
+	int nDice = d20(1);
+
+	if (nWildSurge >= nDice)
+	{
+		int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oCaster);
+		int nPP = GetLocalInt(oCaster, "PowerPoints");
+	
+		effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
+		effect eDaze = EffectDazed();
+		effect eLink = EffectLinkEffects(eMind, eDaze);
+		eLink = ExtraordinaryEffect(eLink);
+	
+		FloatingTextStringOnCreature("You have become psychically enervated and lost power points", oCaster, FALSE);
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oCaster, TurnsToSeconds(1));
+		
+    		nPP = nPP - nWilder;
+    		FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
+    		SetLocalInt(oCaster, "PowerPoints", nPP);	
+	}
 }

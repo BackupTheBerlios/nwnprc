@@ -1,6 +1,7 @@
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
+#include "prc_racialtypes_const"
 #include "inc_item_props"
 
 const int MONST_DAMAGE_1D3   = 2;
@@ -52,6 +53,7 @@ int FindUnarmedDamage(object oCreature)
     int iMonkDamage = 0;
     int iShouDamage = 0;
     int iBrawlerDamage = 0;
+    int iRacialDamage = 0;
     int iDamageToUse = 0;
     int iSize = GetCreatureSize(oCreature);
 
@@ -96,11 +98,21 @@ int FindUnarmedDamage(object oCreature)
     // without stacking.
     if (iShou > 0) iShouDamage = iShou + 1; // Lv. 1: 1d6, Lv. 2: 1d8, Lv. 3: 1d10
     if (iShou > 3) iShouDamage--;           // Lv. 4: 1d10, Lv. 5: 2d6
+
+    // Certain race pack creatures use different damages.
+    if (GetRacialType(oCreature) == RACIAL_TYPE_MINOTAUR) iRacialDamage = 3;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_TANARUKK) iRacialDamage = 2;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_TROLL) iRacialDamage = 2;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_RAKSHASA) iRacialDamage = 2;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_CENTAUR) iRacialDamage = 2;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_ILLITHID) iRacialDamage = 1;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_LIZARDFOLK) iRacialDamage = 1;
    
     // Future unarmed classes:  if you do your own damage, add in "comparisons" below here.
-    iDamageToUse = (iMonkDamage > iDamageToUse) ? iMonkDamage : 0;
+    iDamageToUse = (iMonkDamage > iDamageToUse) ? iMonkDamage : iDamageToUse;
     iDamageToUse = (iBrawlerDamage > iDamageToUse) ? iBrawlerDamage : iDamageToUse;
     iDamageToUse = (iShouDamage > iDamageToUse) ? iShouDamage : iDamageToUse;
+    iDamageToUse = (iRacialDamage > iDamageToUse) ? iRacialDamage : iDamageToUse;
 
     // This is where the correct damage dice is calculated
     if (iDamageToUse > 9) iDamageToUse = 9;

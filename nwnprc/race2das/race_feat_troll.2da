@@ -1,9 +1,10 @@
 2DA V2.0
 
-     FeatLabel       FeatIndex 
-0    darkvision      228       
-1    Alertness       0         
-2    Natural_Armor_5 4736      
-3    Race_Giant      4717      
-4    Regeneration_5  4741      
-5    Large_Creature  4760      
+  FeatLabel          FeatIndex 
+0 darkvision         228       
+1 Alertness          0         
+2 Natural_Armor_5    4736      
+3 Race_Giant         4717      
+4 Regeneration_5     4741      
+5 Large_Creature     4760      
+6 WeaponProfCreature 289       

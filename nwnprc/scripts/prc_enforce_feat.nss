@@ -1,10 +1,10 @@
-/* 
+/*
    ----------------
    prc_enforce_feat
    ----------------
-   
+
    7/25/04 by Stratovarius
-   
+
    This script is used to enforce the proper selection of bonus feats
    so that people cannot use epic bonus feats and class bonus feats to
    select feats they should not be allowed to. Only contains the Red Wizard,
@@ -77,7 +77,7 @@ void RedWizardFeats(object oPC = OBJECT_SELF)
                DelayCommand(1.0, SetXP(oPC,nOldXP));
           }
 
-     
+
      if (iRedWizard > 0)
      {
           iRWRes      += (GetHasFeat(FEAT_RW_RES_ABJ, oPC))
@@ -108,7 +108,7 @@ void MageKiller(object oPC = OBJECT_SELF)
 {
 
      int iMK = (GetLevelByClass(CLASS_TYPE_MAGEKILLER, oPC) + 1) / 2;
-     
+
      int iRef = 0;
      int iFort = 0;
      int iMKSave = 0;
@@ -116,36 +116,36 @@ void MageKiller(object oPC = OBJECT_SELF)
      if (iMK > 0)
      {
 
-     iRef +=        GetHasFeat(FEAT_MK_REF_15, oPC) + 
-               GetHasFeat(FEAT_MK_REF_14, oPC) + 
-               GetHasFeat(FEAT_MK_REF_13, oPC) + 
-               GetHasFeat(FEAT_MK_REF_12, oPC) + 
-               GetHasFeat(FEAT_MK_REF_11, oPC) + 
-               GetHasFeat(FEAT_MK_REF_10, oPC) + 
-               GetHasFeat(FEAT_MK_REF_9, oPC) + 
-               GetHasFeat(FEAT_MK_REF_8, oPC) + 
-               GetHasFeat(FEAT_MK_REF_7, oPC) + 
-               GetHasFeat(FEAT_MK_REF_6, oPC) + 
-               GetHasFeat(FEAT_MK_REF_5, oPC) + 
-               GetHasFeat(FEAT_MK_REF_4, oPC) + 
-               GetHasFeat(FEAT_MK_REF_3, oPC) + 
-               GetHasFeat(FEAT_MK_REF_2, oPC) + 
+     iRef +=        GetHasFeat(FEAT_MK_REF_15, oPC) +
+               GetHasFeat(FEAT_MK_REF_14, oPC) +
+               GetHasFeat(FEAT_MK_REF_13, oPC) +
+               GetHasFeat(FEAT_MK_REF_12, oPC) +
+               GetHasFeat(FEAT_MK_REF_11, oPC) +
+               GetHasFeat(FEAT_MK_REF_10, oPC) +
+               GetHasFeat(FEAT_MK_REF_9, oPC) +
+               GetHasFeat(FEAT_MK_REF_8, oPC) +
+               GetHasFeat(FEAT_MK_REF_7, oPC) +
+               GetHasFeat(FEAT_MK_REF_6, oPC) +
+               GetHasFeat(FEAT_MK_REF_5, oPC) +
+               GetHasFeat(FEAT_MK_REF_4, oPC) +
+               GetHasFeat(FEAT_MK_REF_3, oPC) +
+               GetHasFeat(FEAT_MK_REF_2, oPC) +
                GetHasFeat(FEAT_MK_REF_1, oPC);
 
-     iFort +=  GetHasFeat(FEAT_MK_FORT_15, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_14, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_13, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_12, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_11, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_10, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_9, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_8, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_7, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_6, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_5, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_4, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_3, oPC) + 
-               GetHasFeat(FEAT_MK_FORT_2, oPC) + 
+     iFort +=  GetHasFeat(FEAT_MK_FORT_15, oPC) +
+               GetHasFeat(FEAT_MK_FORT_14, oPC) +
+               GetHasFeat(FEAT_MK_FORT_13, oPC) +
+               GetHasFeat(FEAT_MK_FORT_12, oPC) +
+               GetHasFeat(FEAT_MK_FORT_11, oPC) +
+               GetHasFeat(FEAT_MK_FORT_10, oPC) +
+               GetHasFeat(FEAT_MK_FORT_9, oPC) +
+               GetHasFeat(FEAT_MK_FORT_8, oPC) +
+               GetHasFeat(FEAT_MK_FORT_7, oPC) +
+               GetHasFeat(FEAT_MK_FORT_6, oPC) +
+               GetHasFeat(FEAT_MK_FORT_5, oPC) +
+               GetHasFeat(FEAT_MK_FORT_4, oPC) +
+               GetHasFeat(FEAT_MK_FORT_3, oPC) +
+               GetHasFeat(FEAT_MK_FORT_2, oPC) +
                GetHasFeat(FEAT_MK_FORT_1, oPC);
 
      iMKSave = iRef + iFort;
@@ -164,7 +164,7 @@ void MageKiller(object oPC = OBJECT_SELF)
           FloatingTextStringOnCreature("You must select an Improved Save Feat. Please reselect your feats.", oPC, FALSE);
           DelayCommand(1.0, SetXP(oPC,nOldXP));
      }
-     
+
      }
 }
 
@@ -172,7 +172,7 @@ void Hextor(object oPC = OBJECT_SELF)
 {
 
      int iHextor = GetLevelByClass(CLASS_TYPE_HEXTOR, oPC);
-     
+
      int iAtk = 0;
      int iDam = 0;
      int iTotal = 0;
@@ -181,38 +181,38 @@ void Hextor(object oPC = OBJECT_SELF)
      if (iHextor > 0)
      {
 
-     iAtk +=        GetHasFeat(FEAT_BSTRIKE_A12, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_A11, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_A10, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_A9, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_A8, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_A7, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_A6, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_A5, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_A4, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_A3, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_A2, oPC) + 
+     iAtk +=        GetHasFeat(FEAT_BSTRIKE_A12, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_A11, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_A10, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_A9, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_A8, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_A7, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_A6, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_A5, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_A4, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_A3, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_A2, oPC) +
                GetHasFeat(FEAT_BSTRIKE_A1, oPC);
 
-     iDam +=        GetHasFeat(FEAT_BSTRIKE_D12, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D11, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D10, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D9, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D8, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D7, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D6, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D5, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D4, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D3, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D2, oPC) + 
-               GetHasFeat(FEAT_BSTRIKE_D1, oPC); 
+     iDam +=        GetHasFeat(FEAT_BSTRIKE_D12, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D11, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D10, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D9, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D8, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D7, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D6, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D5, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D4, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D3, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D2, oPC) +
+               GetHasFeat(FEAT_BSTRIKE_D1, oPC);
 
      iTotal = iAtk + iDam;
 
      if (iTotal == 12 && iHextor > 29) { iCheck = TRUE; }
      else if (iTotal == 11 && iHextor > 26 && iHextor < 30) { iCheck = TRUE; }
      else if (iTotal == 10 && iHextor > 23 && iHextor < 27) { iCheck = TRUE; }
-     else if (iTotal == 9 && iHextor > 20 && iHextor < 24) { iCheck = TRUE; }   
+     else if (iTotal == 9 && iHextor > 20 && iHextor < 24) { iCheck = TRUE; }
      else if (iTotal == 8 && iHextor > 19 && iHextor < 21) { iCheck = TRUE; }
      else if (iTotal == 7 && iHextor > 16 && iHextor < 20) { iCheck = TRUE; }
      else if (iTotal == 6 && iHextor > 13 && iHextor < 17) { iCheck = TRUE; }
@@ -222,7 +222,7 @@ void Hextor(object oPC = OBJECT_SELF)
      else if (iTotal == 2 && iHextor > 3 && iHextor < 7) { iCheck = TRUE; }
      else if (iTotal == 1 && iHextor > 0) { iCheck = TRUE; }
      else { iCheck = FALSE; }
-     
+
 /*
      FloatingTextStringOnCreature("Fist of Hextor Level: " + IntToString(iHextor), oPC, FALSE);
      FloatingTextStringOnCreature("Brutal Strike Attack Level: " + IntToString(iAtk), oPC, FALSE);
@@ -238,7 +238,7 @@ void Hextor(object oPC = OBJECT_SELF)
           FloatingTextStringOnCreature("You must select a Brutal Strike Feat. Please reselect your feats.", oPC, FALSE);
           DelayCommand(1.0, SetXP(oPC,nOldXP));
      }
-     
+
      }
 }
 
@@ -318,7 +318,7 @@ void VileFeats(object oPC = OBJECT_SELF)
                DelayCommand(1.0, SetXP(oPC,nOldXP));
           }
 
-     
+
           if (iThrall > 1)
           {
                int nHD = GetHitDice(oPC);
@@ -333,7 +333,7 @@ void VileFeats(object oPC = OBJECT_SELF)
 
 void Warlord(object oPC = OBJECT_SELF)
 {
-          if (GetHasFeat(FEAT_BLOOD_OF_THE_WARLORD, oPC) && (MyPRCGetRacialType(oPC) != RACIAL_TYPE_HALFORC) 
+          if (GetHasFeat(FEAT_BLOOD_OF_THE_WARLORD, oPC) && (MyPRCGetRacialType(oPC) != RACIAL_TYPE_HALFORC)
                   && (MyPRCGetRacialType(oPC) != RACIAL_TYPE_HUMANOID_ORC))
           {
                int nHD = GetHitDice(oPC);
@@ -367,7 +367,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
      int iAbi;
      int iFE;
      int Ability = 0;
-     
+
      if (iURanger > 0)
      {
           iFE     +=     (GetHasFeat(FEAT_UR_FE_DWARF, oPC))
@@ -397,7 +397,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 
 
 
-     
+
           iAbi    +=  +  (GetHasFeat(FEAT_UR_SNEAKATK_3D6, oPC))
                    +     (GetHasFeat(FEAT_UR_ARMOREDGRACE, oPC))
                    +     (GetHasFeat(FEAT_UR_DODGE_FE, oPC))
@@ -410,7 +410,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
                    +     (GetHasFeat(FEAT_UR_HIPS, oPC))
                    +     (GetHasFeat(FEAT_UR_CAMOUFLAGE, oPC));
 
-      
+
                 if (iURanger>=11){
                    if ((iURanger-8)/3 != iAbi) Ability = 1;
                 }
@@ -431,7 +431,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
                if (iURanger>10 &&  (iURanger-8)%3 == 0) msg = msg+sAbi+" ";
                if (iURanger>1 && (iURanger+8)%5 == 0) msg+=sFE;
                if (iURanger == 1 || iURanger == 4 ||bFeat) msg+= " 1 bonus Feat";
-                        
+
                //FloatingTextStringOnCreature(" Please reselect your feats.", oPC, FALSE);
                FloatingTextStringOnCreature(msg, oPC, FALSE);
                DelayCommand(1.0, SetXP(oPC,nOldXP));
@@ -476,9 +476,10 @@ void CheckClericShadowWeave(object oPC)
 
 void LolthsMeat(object oPC)
 {
-     if (GetHasFeat(FEAT_LOLTHS_MEAT, oPC) && 
-         (GetRacialType(oPC) != RACIAL_TYPE_DROW_FEMALE || 
-          GetRacialType(oPC) != RACIAL_TYPE_DROW_MALE   || 
+     if (GetHasFeat(FEAT_LOLTHS_MEAT, oPC) &&
+         (GetRacialType(oPC) != RACIAL_TYPE_DROW_FEMALE &&
+          GetRacialType(oPC) != RACIAL_TYPE_DROW_MALE   &&
+          GetRacialType(oPC) != RACIAL_TYPE_ELF         &&
           GetRacialType(oPC) != RACIAL_TYPE_HALFDROW        ) )
      {
           int nHD = GetHitDice(oPC);
@@ -488,9 +489,9 @@ void LolthsMeat(object oPC)
           SetXP(oPC,nNewXP);
           FloatingTextStringOnCreature("You must be a Drow or Half-Drow to take this feat. Please reselect your feats.", oPC, FALSE);
           DelayCommand(1.0, SetXP(oPC,nOldXP));
-     }     
+     }
 }
-       
+
 void main()
 {
         //Declare Major Variables

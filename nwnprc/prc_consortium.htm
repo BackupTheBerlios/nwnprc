@@ -4457,7 +4457,7 @@ style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 
 </div>
 
-<h4 style='margin-left:.5in'><a href="#ManualInstall">Manual Install</a></h4>
+<h4 style='margin-left:.5in'><a href="#NotesToBuilders">Manual Install</a></h4>
 
 <div class=Section1>
 
@@ -7592,6 +7592,8 @@ here are the steps:</p>
   should be listed in the following order (top to bottom):<br><br>
   prc_2das.hak<br>
   prc_scripts.hak<br>
+  prc_spells.hak<br>
+  prc_epicspells.hak<br>
   prc_textures.hak<br>
   prc_misc.hak<br>
   prc_craft2das.hak<br>
@@ -7639,6 +7641,28 @@ here are the steps:</p>
 
 <p>At this point if you have done everything correctly you should be all set to 
 play the module.</p>
+
+<h2><a name="NotesToBuilders"></a>Notes to Builders:</h2>
+
+<p>To compile the NWN scripts it is recommended that you use BioWare's command 
+line script compiler, clcompile.exe, located in the NWN\Utils folder.&nbsp; You 
+can compile any of the scripts haks without compiling any of the other haks, 
+however you will need the include files which are in an erf, prc_include.erf.&nbsp; 
+You need these files to compile any of the script haks.&nbsp; To compile the 
+source extract all of the nss files from the hak(s) you wish to compile and 
+extract prc_include.erf, all to the same directory.&nbsp; Then run &quot;clcompile *.nss&quot; 
+(note that the include files will try to compile and you will get errors on 
+those files but that is ok, everything else should compile correctly).</p>
+
+<p>If you wish to compile in the toolset it is recommended that you do not try 
+to compile all of the scripts, the prc pack currently contains over 1,600 
+scripts and the toolset can become unstable trying to compile this many files.&nbsp; 
+As above, to compile any of the haks you will need to import prc_include.erf 
+into your module.&nbsp; To get the scripts from a hak into the module you can 
+just rename/copy the hak to the erf folder (with an extension of .erf) and 
+import it into the module.&nbsp; Remember that hak content overwrites module 
+content so if you import a hak into the module you must remove it from the 
+module's hak list or you will not see any of your changes.</p>
 
 <h2><a name="_Updates"></a>Updates</h2>
 

@@ -31,6 +31,11 @@ void main()
   int  nHeal;
   effect eSun = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
   effect eHealVis = EffectVisualEffect(VFX_IMP_HEALING_X);
+  
+  effect eRegen = EffectRegenerate(6, 6.0);
+  effect eVis = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
+  effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+  effect eLink = EffectLinkEffects(eRegen, eDur);
 
   if (!GetHasFeat(FEAT_DRAGONSONG_STRENGTH, OBJECT_SELF))
   {
@@ -45,10 +50,27 @@ void main()
   }
   
   RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
-  
+
+  int nEpic = GetHasFeat(FEAT_EPIC_DRAGONSONG_HEALING) ? TRUE:FALSE;  
   //Fire cast spell at event for the specified target
   SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HEAL, FALSE));
 
+    int nLevel = GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST);
+
+    //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
+    int nDuration = 10*nLevel;
+    
+        //Check to see if the caster has Lasting Impression and increase duration.
+    if(GetHasFeat(870))
+    {
+        nDuration *= 10;
+    }
+
+    // lingering song
+    if(GetHasFeat(424)) // lingering song
+    {
+        nDuration += 5;
+    }
   
   //Get first target in shape
   oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, GetSpellTargetLocation());
@@ -66,7 +88,13 @@ void main()
         //Apply the heal effect and the VFX impact
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHealVis, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
-        
+       
+        if (nEpic)
+        {
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),FALSE);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, RoundsToSeconds(nDuration),FALSE);
+
+        }        
         // Code for FB to remove damage that would be caused at end of Frenzy
         SetLocalInt(oTarget, "PC_Damage", 0);
      }

@@ -21,8 +21,11 @@ void main()
     object oTarget;
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eFast = EffectMovementSpeedIncrease(50);
-
+    effect eHaste = EffectHaste();
     effect eLink = EffectLinkEffects(eFast, eDur);
+    if (GetHasFeat(FEAT_EPIC_DRAGONSONG_SPEED))
+       eLink = EffectLinkEffects(eLink, eLink);
+
     int nLevel = GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST);
 
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.

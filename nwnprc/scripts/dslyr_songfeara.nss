@@ -45,7 +45,13 @@ void main()
            eLink2 = EffectLinkEffects(eLink2, Skill);
            
     int nHD = GetHitDice(GetAreaOfEffectCreator());
-    int nDC = 12 + GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST,GetAreaOfEffectCreator())+ GetAbilityModifier(ABILITY_CHARISMA,GetAreaOfEffectCreator());
+    int nEpic = GetHasFeat(FEAT_EPIC_DRAGONSONG_COMPULSION) ? 4:0;
+
+    if (GetHasFeat(FEAT_EPIC_FOCUS_DRAGONSONG)) nEpic += 6;
+    else if (GetHasFeat(FEAT_GREATER_FOCUS_DRAGONSONG)) nEpic += 4;
+    else if (GetHasFeat(FEAT_FOCUS_DRAGONSONG)) nEpic += 2;
+    
+    int nDC = 12 + nEpic + GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST,GetAreaOfEffectCreator())+ GetAbilityModifier(ABILITY_CHARISMA,GetAreaOfEffectCreator());
     int nDuration = d6(2);
     if(GetIsEnemy(oTarget, GetAreaOfEffectCreator()))
     {

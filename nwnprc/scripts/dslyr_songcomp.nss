@@ -49,7 +49,14 @@ void main()
     effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
  
     int nRacial = MyPRCGetRacialType(oTarget);
-    int nDC = 12 + GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST,OBJECT_SELF)+ GetAbilityModifier(ABILITY_CHARISMA,OBJECT_SELF);
+    
+    int nFocSong;
+    if (GetHasFeat(FEAT_EPIC_FOCUS_DRAGONSONG)) nFocSong = 6;
+    else if (GetHasFeat(FEAT_GREATER_FOCUS_DRAGONSONG)) nFocSong = 4;
+    else if (GetHasFeat(FEAT_FOCUS_DRAGONSONG)) nFocSong = 2;
+    
+    int nEpic = GetHasFeat(FEAT_EPIC_DRAGONSONG_COMPULSION) ? TRUE:FALSE;
+    int nDC = 12 + nFocSong + GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST,OBJECT_SELF)+ GetAbilityModifier(ABILITY_CHARISMA,OBJECT_SELF);
  
     if (nRacial== RACIAL_TYPE_DRAGON ) nDC-=2;
      
@@ -58,8 +65,11 @@ void main()
     //Make sure the target is a monster
     if(!GetIsReactionTypeFriendly(oTarget))
     {
+    	  int iSave = PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS);
+    	  if ( nEpic && iSave) iSave = PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS);
+    	  
           //Make a Will Save
-          if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+          if (!iSave)
           {
                //Apply linked effects and VFX Impact
                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget, 0.0,FALSE);
@@ -69,6 +79,7 @@ void main()
                SetLocalInt(OBJECT_SELF, "SpellConc", 1);
                DelayCommand(6.0f,DominatedDuration(oTarget,oCaster) );   
           }
+          
 
      }   
     

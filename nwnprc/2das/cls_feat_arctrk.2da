@@ -11,6 +11,3 @@
 7     FEAT_BLACKGUARD_SNEAK_ATTACK_3D6   462         3      6                0        
 8     FEAT_BLACKGUARD_SNEAK_ATTACK_4D6   1007        3      8                0        
 9     FEAT_BLACKGUARD_SNEAK_ATTACK_5D6   1008        3      10               0        
-10    AT_LEGER_LOCK_1                    4400        3      1                1        
-11    AT_LEGER_LOCK_2                    4401        3      5                1        
-12    AT_LEGER_LOCK_3                    4402        3      9                1        

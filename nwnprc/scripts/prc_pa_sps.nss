@@ -28,6 +28,12 @@ void main()
      {
           bHasBow = TRUE;
      }
+
+     if (!bHasBow)
+     {
+     FloatingTextStringOnCreature("No Bow Equipped", OBJECT_SELF, FALSE);
+     return;
+     }
      
      if(!GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT) && !GetHasFeatEffect(FEAT_PA_POWERSHOT) && bHasBow)
      {

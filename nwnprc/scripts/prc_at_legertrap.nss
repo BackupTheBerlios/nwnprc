@@ -12,10 +12,6 @@
 //::////////////////////////////////////////////////////////////
 
 
-#include "prc_alterations"
-#include "NW_I0_SPELLS"
-#include "x2_inc_spellhook"
-
 void main()
 {
 
@@ -33,6 +29,20 @@ void main()
         if (GetIsSkillSuccessful(oCaster, SKILL_DISABLE_TRAP, nDC))
             {
             SetTrapDisabled(oTrap);
+            }
+
+        }
+    }
+
+    if (OBJECT_TYPE_DOOR == nType || OBJECT_TYPE_PLACEABLE == nType)
+    {
+    if (GetDistanceToObject(oTrap) <= 30.0)
+        {
+        nDC = GetLockUnlockDC(oTrap);
+        nDC = nDC + 5;
+        if (GetIsSkillSuccessful(oCaster, SKILL_OPEN_LOCK, nDC))
+            {
+            SetLocked(oTrap, FALSE);
             }
 
         }

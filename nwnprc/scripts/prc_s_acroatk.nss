@@ -45,7 +45,7 @@ void main()
        int iFeet = FloatToInt(iDistance*2);
        if (iFeet >6) iFeet-=5;
 
-       int dice= d20();
+       /*int dice= d20();
         if ( d20()+GetSkillRank(SKILL_JUMP, OBJECT_SELF)< iFeet)
         {
            string sFeedback = "*Jump*: (" + IntToString(dice) + " + " + IntToString(GetSkillRank(SKILL_JUMP, OBJECT_SELF)) + " = " + IntToString(dice+GetSkillRank(SKILL_JUMP, OBJECT_SELF)) + " vs DC:"+ IntToString(iFeet);
@@ -56,7 +56,7 @@ void main()
         }
 
         string sFeedback = "*Jump*: (" + IntToString(dice) + " + " + IntToString(GetSkillRank(SKILL_JUMP, OBJECT_SELF)) + " = " + IntToString(dice+GetSkillRank(SKILL_JUMP, OBJECT_SELF)) + " vs DC:"+ IntToString(iFeet);
-        DelayCommand(0.0, SendMessageToPC(OBJECT_SELF, sFeedback));
+        DelayCommand(0.0, SendMessageToPC(OBJECT_SELF, sFeedback)); */
 
         DelayCommand(0.2, DoWhirlwindAttack(FALSE));
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAttack, OBJECT_SELF, 3.0f);

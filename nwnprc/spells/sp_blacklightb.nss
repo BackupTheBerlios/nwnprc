@@ -9,7 +9,7 @@ void main()
 {
 
     SPSetSchool(SPELL_SCHOOL_EVOCATION);
-    ActionDoCommand(SetAllAoEInts(SPELL_DARKNESS ,OBJECT_SELF, GetSpellSaveDC()));
+    ActionDoCommand(SetAllAoEInts(SPELL_BLACKLIGHT ,OBJECT_SELF, GetSpellSaveDC()));
 
     object oTarget = GetExitingObject();
     object oCreator = GetAreaOfEffectCreator();

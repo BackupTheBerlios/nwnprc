@@ -17,7 +17,7 @@
 void main()
 {
     SPSetSchool(SPELL_SCHOOL_EVOCATION);
-    ActionDoCommand(SetAllAoEInts(SPELL_DARKNESS ,OBJECT_SELF, GetSpellSaveDC()));
+    ActionDoCommand(SetAllAoEInts(SPELL_BLACKLIGHT ,OBJECT_SELF, GetSpellSaveDC()));
     
     int nMetaMagic = GetMetaMagicFeat();
     effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_DARKNESS);

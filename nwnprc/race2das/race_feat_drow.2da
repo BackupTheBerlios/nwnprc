@@ -1,14 +1,15 @@
 2DA V2.0
 
-   FeatLabel            FeatIndex 
-0  immunitysleep        235       
-1  hardinessenchantment 236       
-2  skillaffinitylisten  237       
-3  skillaffinitysearch  238       
-4  skillaffinityspot    239       
-5  keensense            240       
-6  darkvision           228       
-7  Spell_Resist_11      4703      
-8  Light_Blindness      4701      
-9  SPEC_ABILITY_drow    4778      
-10 Race_Elven           4711      
+     FeatLabel            FeatIndex 
+0    immunitysleep        235       
+1    hardinessenchantment 236       
+2    IronWill             22        
+3    skillaffinitylisten  237       
+4    skillaffinitysearch  238       
+5    skillaffinityspot    239       
+6    keensense            240       
+7    darkvision           228       
+8    Spell_Resist_11      4703      
+9    Light_Blindness      4701      
+10   SPEC_ABILITY_drow    4778      
+11   Race_Elven           4711      

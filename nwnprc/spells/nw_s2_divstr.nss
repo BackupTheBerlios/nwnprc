@@ -37,8 +37,8 @@ void main()
     int nDuration = 5 + GetAbilityModifier(ABILITY_CHARISMA);
 
     nContendSurge = (GetLevelByClass(CLASS_TYPE_CONTENDER) >= 1) ? 1:0;
-    nContendSurge = (GetLevelByClass(CLASS_TYPE_CONTENDER) >= 3) ? d4(1):1;
-    nContendSurge = (GetLevelByClass(CLASS_TYPE_CONTENDER) == 10) ? nDuration:d4(1);
+    nContendSurge = (GetLevelByClass(CLASS_TYPE_CONTENDER) >= 3) ? (d4(1) + 1):1;
+    nContendSurge = (GetLevelByClass(CLASS_TYPE_CONTENDER) == 10) ? nDuration:(d4(1) + 1);
 
     //Fire cast spell at event for the specified target
     SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_DIVINE_STRENGTH, FALSE));

@@ -1,14 +1,11 @@
 
-
-SET PATH=D:\Program Files\Java\jdk1.5.0\bin
-
-jar cvfm CC.jar cc.mf CharacterCreator/*.class
-jar uvf CC.jar CharacterCreator/bic/*.class
-jar uvf CC.jar CharacterCreator/defs/*.class
+jar cvfm CC.jar cc.mf CharacterCreator/*.*
+jar uvf CC.jar CharacterCreator/bic/*.*
+jar uvf CC.jar CharacterCreator/defs/*.*
 jar uvf CC.jar CharacterCreator/doc/
-jar uvf CC.jar CharacterCreator/io/*.class
-jar uvf CC.jar CharacterCreator/key/*.class
+jar uvf CC.jar CharacterCreator/io/*.*
+jar uvf CC.jar CharacterCreator/key/*.*
 jar uvf CC.jar CharacterCreator/resource/
-jar uvf CC.jar CharacterCreator/util/*.class
+jar uvf CC.jar CharacterCreator/util/*.*
 
 PAUSE

@@ -68,7 +68,8 @@ void main()
       TotalAndRemoveProperty(oRod2,ITEM_PROPERTY_CAST_SPELL);
       TotalAndRemoveProperty(oRod2,ITEM_PROPERTY_USE_LIMITATION_CLASS);
       SetIdentified(oRod2,TRUE);
-      SetDroppableFlag(oRod2,FALSE);
+      SetItemCursedFlag(oRod2,TRUE);
+
 
     }
 }

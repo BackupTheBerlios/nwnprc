@@ -45,8 +45,6 @@ void Subtype(object oSkin,int iType,object oPC)
 
   if (iType==IP_CONST_DAMAGETYPE_FIRE)
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageVulnerability(IP_CONST_DAMAGETYPE_COLD,IP_CONST_DAMAGEVULNERABILITY_50_PERCENT),oSkin);
-  else  if (iType==IP_CONST_DAMAGETYPE_ACID && GetCreatureSize(oPC)==CREATURE_SIZE_MEDIUM )
-    ApplyEffectToObject(DURATION_TYPE_INSTANT,SupernaturalEffect(EffectMovementSpeedDecrease(20)),oPC);
   else  if (iType==IP_CONST_DAMAGETYPE_ELECTRICAL)
     ApplyEffectToObject(DURATION_TYPE_INSTANT,SupernaturalEffect(EffectMovementSpeedIncrease(50)),oPC);
   else if (iType==IP_CONST_DAMAGETYPE_COLD)

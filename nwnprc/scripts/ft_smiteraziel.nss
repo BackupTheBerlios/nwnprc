@@ -200,6 +200,7 @@ void main()
     if(iHit > 0)
     {
 
+       if ( iSmit)   PlaySound("vs_npaladm1_bat2");
        if (Immune && iHit==2) iHit=1;
 
         //Check to see if we rolled a critical and determine damage accordingly
@@ -224,6 +225,12 @@ void main()
         if (LvlRaziel>8 && iSmit) SmiteChain(oTarget,fDelay);
 
     }
+    else
+    {
+       if ( iSmit)   FloatingTextStringOnCreature("Smite Failed",OBJECT_SELF);
+    }
+
+
 
     iSmit=0;
     iNextAttackPenalty -= 5;

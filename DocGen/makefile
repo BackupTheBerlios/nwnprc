@@ -9,3 +9,6 @@ default:
 
 run:
 	java -Xmx300m -Xms300m prc/autodoc/Main
+
+runquiet:
+	java -Xmx300m -Xms300m prc/autodoc/Main -q

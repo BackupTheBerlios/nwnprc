@@ -380,6 +380,7 @@ public class Main{
 		preliMasterFeats();
 		preliFeats();
 		linkFeats();
+		printFeats();
 		// Do domains
 		
 		// Do classes
@@ -703,6 +704,7 @@ public class Main{
 		
 		// Link normal feats to each other and to masterfeats
 		for(FeatEntry check : feats.values()){
+			if(verbose) System.out.println("Linking feat " + check.entryName);
 			// Link to master
 			if(!feats2da.getEntry("MASTERFEAT", check.entryNum).equals("****")){
 				try{
@@ -717,23 +719,36 @@ public class Main{
 			
 			// Print prerequisites into the entry
 			temp = buildPrerequisites(check, feats2da);
-			check.entryText.replaceAll("~~~PrerequisiteFeatList~~~", temp);
+			check.entryText = check.entryText.replaceAll("~~~PrerequisiteFeatList~~~", temp);
 			
 			// Print the successor, if any, into the entry
 			temp = "";
 			if(!feats2da.getEntry("SUCCESSOR", check.entryNum).equals("****")){
 				try{
-					other = feats.get(Integer.parseInt(feats2da.getEntry("MASTERFEAT", check.entryNum)));
-					temp += ("<div>\n" + successorFeatHeaderTemplate + "<br /><a href=" + other.filePath.replace(contentPath, "../") + " target=\"content\">" + other.entryName + "</a>\n</div>\n");
+					other = feats.get(Integer.parseInt(feats2da.getEntry("SUCCESSOR", check.entryNum)));
+					temp += ("<div>\n" + successorFeatHeaderTemplate + "<br /><a href=" + other.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + other.entryName + "</a>\n</div>\n");
 				}catch(NumberFormatException e){
-					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid masterfeat link");
+					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid successor link");
 				}catch(NullPointerException e){
-					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains a link to nonexistent masterfeat");
+					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains a link to nonexistent successor");
 			}}
-			check.entryText.replaceAll("~~~SuccessorFeat~~~", temp);
+			check.entryText = check.entryText.replaceAll("~~~SuccessorFeat~~~", temp);
 		}
 		
 		// Add the child links to masterfeat texts
+		for(FeatEntry check : masterFeats.values()){
+			if(verbose) System.out.println("Linking masterfeat " + check.entryName);
+			temp = "";
+			boolean doOnce = false;
+			for(FeatEntry child : check.childFeats){
+				if(!doOnce){ temp += "<div>\n"; doOnce = true; }
+				temp += "<br /><a href=" + child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + child.entryName + "</a>\n";
+			}
+			if(doOnce) temp += "</div>\n";
+			
+			check.entryText = check.entryText.replaceAll("~~~MasterFeatChildList~~~", temp);
+		}
+		System.gc();
 	}
 	
 	/**
@@ -774,9 +789,9 @@ public class Main{
 		if(andReq1 != null || andReq2 != null){
 			preReqText = "<div>\n" + prereqANDFeatHeaderTemplate + "\n"; 
 			if(andReq1 != null)
-				preReqText += "<br /><a href=" + andReq1.filePath.replace(contentPath, "../") + " target=\"content\">" + andReq1.entryName + "</a>\n";
+				preReqText += "<br /><a href=" + andReq1.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + andReq1.entryName + "</a>\n";
 			if(andReq2 != null)
-				preReqText += "<br /><a href=" + andReq2.filePath.replace(contentPath, "../") + " target=\"content\">" + andReq2.entryName + "</a>\n";
+				preReqText += "<br /><a href=" + andReq2.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + andReq2.entryName + "</a>\n";
 			preReqText += "</div>\n";
 		}
 
@@ -801,7 +816,7 @@ public class Main{
 							preReqText = "<div>\n" + prereqORFeatHeaderTemplate + "\n";
 							headerDone = true;
 						}
-						preReqText += "<br /><a href=" + orReq.filePath.replace(contentPath, "../") + " target=\"content\">" + orReq.entryName + "</a>\n";
+						preReqText += "<br /><a href=" + orReq.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + orReq.entryName + "</a>\n";
 					}
 				}
 			}
@@ -810,5 +825,28 @@ public class Main{
 		}
 		
 		return preReqText;
+	}
+	
+	
+	/**
+	 * A simple method for printing out all the feat pages
+	 */
+	public static void printFeats(){
+		for(FeatEntry toPrint : feats.values()){
+			if(verbose) System.out.println("Printing page for " + toPrint.entryName);
+			try{
+				printPage(toPrint.filePath, toPrint.entryText);
+			}catch(IOException e){
+				err_pr.println("Exception when writing page for feat " + toPrint.entryNum + ": " + toPrint.entryName + ". Exception:\n" + e);
+		}}
+		System.gc();
+		for(FeatEntry toPrint : masterFeats.values()){
+			if(verbose) System.out.println("Printing page for " + toPrint.entryName);
+			try{
+				printPage(toPrint.filePath, toPrint.entryText);
+			}catch(IOException e){
+				err_pr.println("Exception when writing page for masterfeat " + toPrint.entryNum + ": " + toPrint.entryName + ". Exception:\n" + e);
+		}}
+		System.gc();
 	}
 }

@@ -25,25 +25,38 @@ void main()
     {
         //Declare major variables
         int nLevel = GetLevelByClass(CLASS_TYPE_BARBARIAN);
-        int nIncrease;
+        int iStr, iCon, iAC;
         int nSave;
+        
+        iAC = 2;
+        
         if (nLevel < 15)
         {
-            nIncrease = 4;
+            iStr = 4;
+            iCon = 4;
             nSave = 2;
         }
         else
         {
-            nIncrease = 6;
+            iStr = 6;
+            iCon = 6;
             nSave = 3;
         }
+
+        // Eye of Gruumsh ability. Additional  +4 Str and -2 AC.
+        if(GetHasFeat(FEAT_SWING_BLINDLY, OBJECT_SELF) )
+        {
+           iStr += 4;
+           iAC += 2;
+        }
+
         PlayVoiceChat(VOICE_CHAT_BATTLECRY1);
         //Determine the duration by getting the con modifier after being modified
-        int nCon = 3 + GetAbilityModifier(ABILITY_CONSTITUTION) + nIncrease;
-        effect eStr = EffectAbilityIncrease(ABILITY_CONSTITUTION, nIncrease);
-        effect eCon = EffectAbilityIncrease(ABILITY_STRENGTH, nIncrease);
+        int nCon = 3 + GetAbilityModifier(ABILITY_CONSTITUTION) + iCon;
+        effect eStr = EffectAbilityIncrease(ABILITY_CONSTITUTION, iCon);
+        effect eCon = EffectAbilityIncrease(ABILITY_STRENGTH, iStr);
         effect eSave = EffectSavingThrowIncrease(SAVING_THROW_WILL, nSave);
-        effect eAC = EffectACDecrease(2, AC_DODGE_BONUS);
+        effect eAC = EffectACDecrease(iAC, AC_DODGE_BONUS);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
         effect eLink = EffectLinkEffects(eCon, eStr);
@@ -74,7 +87,7 @@ void main()
  
             // The delay is because you have to delay the command if you want the function to be able
             // to determine what the ability scores become after adding the bonuses to them.
-            DelayCommand(0.1, GiveExtraRageBonuses(nCon,StrBeforeBonuses , ConBeforeBonuses, nIncrease, nIncrease, nSave, DAMAGE_TYPE_FIRE, OBJECT_SELF));
+            DelayCommand(0.1, GiveExtraRageBonuses(nCon, StrBeforeBonuses, ConBeforeBonuses, iStr, iCon, nSave, DAMAGE_TYPE_FIRE, OBJECT_SELF));
 
 
             // 2004-2-24 Oni5115: Intimidating Rage

@@ -19,22 +19,22 @@ void main()
      object oSkin = GetPCSkin(oPC);
      object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
      
-     if( GetLocalInt(oPC, "HasElaborateParry") != 1 )
+     if( !GetHasSpellEffect(SPELL_ELABORATE_PARRY_P) && !GetHasSpellEffect(SPELL_ELABORATE_PARRY_FD) )
      {
           int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST, oPC);
           
-          SetCompositeBonus(oSkin, "ElaborateParrySkillBonus", iDuelistLevel, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);
+          effect eParry = SupernaturalEffect(EffectSkillIncrease(SKILL_PARRY, iDuelistLevel));
           
-          FloatingTextStringOnCreature("*Elaborate Parry On*", oPC, FALSE);
-          SetLocalInt(oPC, "HasElaborateParry", 1);
+          ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParry, oPC);
+          
+          FloatingTextStringOnCreature("*Elaborate Parry: Parry Mode On*", oPC, FALSE);
      }
      else
      {         
           // Removes effects from any version of the spell
-          SetCompositeBonus(oSkin, "ElaborateParrySkillBonus", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);
+          RemoveSpellEffects(SPELL_ELABORATE_PARRY_P, oPC, oPC);
           RemoveSpellEffects(SPELL_ELABORATE_PARRY_FD, oPC, oPC);
           
           FloatingTextStringOnCreature("*Elaborate Parry Off*", oPC, FALSE);
-          SetLocalInt(oPC, "HasElaborateParry", 0);
      }
 }

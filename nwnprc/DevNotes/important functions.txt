@@ -258,6 +258,10 @@ void ActionCastSpellOnSelf(int iSpell);
 // 2) The spells are identified as the true spell.  That is, they ARE the true spell.
 // 3) Spellhooks (such as item crafting) that can only identify true spells
 //    will easily work.
+//
+// This function should only be used when SLA's are meant to simulate true
+// spellcasting abilities, such as those seen when using feats with subradials
+// to simulate spellbooks.
 void ActionCastSpell(int iSpell, int iCasterLev = 0);
 
 +lots of class specific functions

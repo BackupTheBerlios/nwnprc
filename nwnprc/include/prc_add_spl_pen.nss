@@ -29,6 +29,7 @@ int GetHeartWarderPene(int spell_id, object oCaster = OBJECT_SELF) {
 int ElementalSavantSP(int spell_id, object oCaster = OBJECT_SELF)
 {
 	int nSP = 0;
+	int nES;
 
 	// All Elemental Savants will have this feat
 	// when they first gain a penetration bonus.
@@ -42,39 +43,44 @@ int ElementalSavantSP(int spell_id, object oCaster = OBJECT_SELF)
 
 		// Specify the elemental type rather than lookup by class?
 		if (element == "Fire")
+		{
 			feat = FEAT_ES_FIRE;
+			nES = GetLevelByClass(CLASS_TYPE_ES_FIRE,oCaster);
+		}
 		else if (element == "Cold")
+		{
 			feat = FEAT_ES_COLD;
+			nES = GetLevelByClass(CLASS_TYPE_ES_COLD,oCaster);
+		}
 		else if (element == "Electricity")
+		{
 			feat = FEAT_ES_ELEC;
+			nES = GetLevelByClass(CLASS_TYPE_ES_ELEC,oCaster);
+		}
 		else if (element == "Acid")
+		{
 			feat = FEAT_ES_ACID;
+			nES = GetLevelByClass(CLASS_TYPE_ES_ACID,oCaster);
+		}
 
 		// Now determine the bonus
-		if (feat && GetHasFeat(feat, oCaster)) {
-			if (GetHasFeat(FEAT_ES_PEN_10, oCaster))
-				nSP += 10;
-			else if (GetHasFeat(FEAT_ES_PEN_9, oCaster))
-				nSP += 9;
-			else if (GetHasFeat(FEAT_ES_PEN_8, oCaster))
-				nSP += 8;
-			else if (GetHasFeat(FEAT_ES_PEN_7, oCaster))
-				nSP += 7;
-			else if (GetHasFeat(FEAT_ES_PEN_6, oCaster))
-				nSP += 6;
-			else if (GetHasFeat(FEAT_ES_PEN_5, oCaster))
-				nSP += 5;
-			else if (GetHasFeat(FEAT_ES_PEN_4, oCaster))
-				nSP += 4;
-			else if (GetHasFeat(FEAT_ES_PEN_3, oCaster))
-				nSP += 3;
-			else if (GetHasFeat(FEAT_ES_PEN_2, oCaster))
-				nSP += 2;
-			else	// We already know FEAT_ES_PEN_1
-				nSP += 1;
+		if (feat && GetHasFeat(feat, oCaster)) 
+		{
+
+			if (nES > 28)		nSP = 10;
+			else if (nES > 25)	nSP = 9;
+			else if (nES > 22)	nSP = 8;
+			else if (nES > 19)	nSP = 7;
+			else if (nES > 16)	nSP = 6;
+			else if (nES > 13)	nSP = 5;
+			else if (nES > 10)	nSP = 4;
+			else if (nES > 7)	nSP = 3;
+			else if (nES > 4)	nSP = 2;
+			else if (nES > 1)	nSP = 1;
+
 		}
 	}
-
+	SendMessageToPC(GetFirstPC(), "Your Elemental Penetration modifier is " + IntToString(nSP));
 	return nSP;
 }
 

@@ -103,10 +103,10 @@ int GetHeartWarderDC(int spell_id, object oCaster = OBJECT_SELF)
 //
 //	Calculate Elemental Savant Contributions
 //
-int
-ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
+int ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
 {
-	int nSP = 0;
+	int nDC = 0;
+	int nES;
 
 	// All Elemental Savants will have this feat
 	// when they first gain a penetration bonus.
@@ -120,40 +120,45 @@ ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
 
 		// Specify the elemental type rather than lookup by class?
 		if (element == "Fire")
+		{
 			feat = FEAT_ES_FIRE;
+			nES = GetLevelByClass(CLASS_TYPE_ES_FIRE,oCaster);
+		}
 		else if (element == "Cold")
+		{
 			feat = FEAT_ES_COLD;
+			nES = GetLevelByClass(CLASS_TYPE_ES_COLD,oCaster);
+		}
 		else if (element == "Electricity")
+		{
 			feat = FEAT_ES_ELEC;
+			nES = GetLevelByClass(CLASS_TYPE_ES_ELEC,oCaster);
+		}
 		else if (element == "Acid")
+		{
 			feat = FEAT_ES_ACID;
+			nES = GetLevelByClass(CLASS_TYPE_ES_ACID,oCaster);
+		}
 
 		// Now determine the bonus
-		if (feat && GetHasFeat(feat, oCaster)) {
-			if (GetHasFeat(FEAT_ES_FOCUS_10, oCaster))
-				nSP += 10;
-			else if (GetHasFeat(FEAT_ES_FOCUS_9, oCaster))
-				nSP += 9;
-			else if (GetHasFeat(FEAT_ES_FOCUS_8, oCaster))
-				nSP += 8;
-			else if (GetHasFeat(FEAT_ES_FOCUS_7, oCaster))
-				nSP += 7;
-			else if (GetHasFeat(FEAT_ES_FOCUS_6, oCaster))
-				nSP += 6;
-			else if (GetHasFeat(FEAT_ES_FOCUS_5, oCaster))
-				nSP += 5;
-			else if (GetHasFeat(FEAT_ES_FOCUS_4, oCaster))
-				nSP += 4;
-			else if (GetHasFeat(FEAT_ES_FOCUS_3, oCaster))
-				nSP += 3;
-			else if (GetHasFeat(FEAT_ES_FOCUS_2, oCaster))
-				nSP += 2;
-			else	// We already know FEAT_ES_FOCUS_1
-				nSP += 1;
+		if (feat && GetHasFeat(feat, oCaster)) 
+		{
+
+			if (nES > 28)		nDC = 10;
+			else if (nES > 25)	nDC = 9;
+			else if (nES > 22)	nDC = 8;
+			else if (nES > 19)	nDC = 7;
+			else if (nES > 16)	nDC = 6;
+			else if (nES > 13)	nDC = 5;
+			else if (nES > 10)	nDC = 4;
+			else if (nES > 7)	nDC = 3;
+			else if (nES > 4)	nDC = 2;
+			else if (nES > 1)	nDC = 1;
+
 		}
 	}
-
-	return nSP;
+	SendMessageToPC(GetFirstPC(), "Your Elemental Focus modifier is " + IntToString(nDC));
+	return nDC;
 }
 
 // Shadow Weave Feat

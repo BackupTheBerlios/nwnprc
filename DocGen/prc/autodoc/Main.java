@@ -188,14 +188,17 @@ public class Main{
 	private static TLKStore tlk;
 	
 	/** The template files */
-	private static final String classTemplate    = readTemplate("templates" + fileSeparator + "class.html"),
-	                            domainTemplate   = readTemplate("templates" + fileSeparator + "domain.html"),
-	                            featTemplate     = readTemplate("templates" + fileSeparator + "feat.html"),
-	                            mFeatTemplate    = readTemplate("templates" + fileSeparator + "masterfeat.html"),
-	                            menuTemplate     = readTemplate("templates" + fileSeparator + "menu.html"),
-	                            menuItemTemplate = readTemplate("templates" + fileSeparator + "menuitem.html"),
-	                            spellTemplate    = readTemplate("templates" + fileSeparator + "spell.html"),
-	                            skillTemplate    = readTemplate("templates" + fileSeparator + "skill.html");
+	private static String classTemplate          = null,
+	                      domainTemplate         = null,
+	                      featTemplate           = null,
+	                      mFeatTemplate          = null,
+	                      menuTemplate           = null,
+	                      menuItemTemplate       = null,
+	                      prereqANDFeatTemplate  = null,
+	                      prereqORFeatTemplate   = null,
+	                      spellTemplate          = null,
+	                      skillTemplate          = null;
+	                      
 	
 	/* Data structure used for determining if a previous write has failed
 	 * Required in order to be able to skip generating dead links in the
@@ -242,6 +245,7 @@ public class Main{
 			
 			tlk = new TLKStore(settings.languages.get(i)[1], settings.languages.get(i)[2]);
 			
+			readTemplates();
 			buildDirectories();
 			
 			createPages();
@@ -262,6 +266,24 @@ public class Main{
 		                   "-?     see --help\n"
 		                  );
 		System.exit(0);
+	}
+	
+	/**
+	 * Reads all the template files for the current language.
+	 */
+	private static void readTemplates(){
+		String templatePath = "templates" + fileSeparator + curLanguage + fileSeparator;
+		
+		classTemplate          = readTemplate(templatePath + "class.html");
+		domainTemplate         = readTemplate(templatePath + "domain.html");
+		featTemplate           = readTemplate(templatePath + "feat.html");
+		mFeatTemplate          = readTemplate(templatePath + "masterfeat.html");
+		menuTemplate           = readTemplate(templatePath + "menu.html");
+		menuItemTemplate       = readTemplate(templatePath + "menuitem.html");
+		prereqANDFeatTemplate  = readTemplate(templatePath + "prerequisiteandfeatheader.html");
+		prereqORFeatTemplate   = readTemplate(templatePath + "prerequisiteorfeatheader.html");
+		spellTemplate          = readTemplate(templatePath + "spell.html");
+		skillTemplate          = readTemplate(templatePath + "skill.html");
 	}
 	
 	/**
@@ -660,8 +682,27 @@ public class Main{
 	 * and modifies the entry texts accordingly.
 	 */
 	private static void linkFeats(){
-		FeatEntry check = null;
+		FeatEntry other = null;
+		Data_2da feats2da = twoDA.get("feat");
 		
 		//path.replace(contentPath, "../");
+		
+		// Link normal feats to each other and to masterfeats
+		for(FeatEntry check : feats){
+			// Link to master
+			if(!feats2da.getEntry("MASTERFEAT", check.entryNum).equals("****")){
+				try{
+					other = masterFeats.get(Integer.parseInt(feats2da.getEntry("MASTERFEAT", check.entryNum)));
+					check.master = other;
+					other.childFeats.add(check);
+				}catch(NumberFormatException e){
+					System.err.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid masterfeat link");
+			}}
+			
+			// Link prerequisites
+			if
+		}
+		
+		// Add the child links to masterfeat texts
 	}
 }

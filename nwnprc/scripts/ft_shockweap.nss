@@ -23,16 +23,16 @@ void main()
 
    int dice=d20();
 
- int iDiceCritical=2 + (GetHasFeat(FEAT_WEAPON_OF_CHOICE_SHORTSPEAR) && GetHasFeat(FEAT_INCREASE_MULTIPLIER));
+   int iDiceCritical = 2 + (GetHasFeat(FEAT_WEAPON_OF_CHOICE_SHORTSPEAR) && GetHasFeat(FEAT_INCREASE_MULTIPLIER));
 
      if (dice>=nThreat)
     {
       FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
 
       if (GetHasFeat( FEAT_SHOCKING_WEAPON,OBJECT_SELF))
-        ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d10(2),DAMAGE_TYPE_ELECTRICAL,DAMAGE_POWER_NORMAL),GetSpellTargetObject());
+        ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d10(iDiceCritical),DAMAGE_TYPE_ELECTRICAL,DAMAGE_POWER_NORMAL),GetSpellTargetObject());
 
-      ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d8(2),DAMAGE_TYPE_SONIC,DAMAGE_POWER_NORMAL),GetSpellTargetObject());
+      ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d8(iDiceCritical),DAMAGE_TYPE_SONIC,DAMAGE_POWER_NORMAL),GetSpellTargetObject());
 
     }
     

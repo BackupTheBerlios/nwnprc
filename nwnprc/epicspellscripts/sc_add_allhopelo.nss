@@ -1,0 +1,10 @@
+#include "inc_epicspells"
+int StartingConditional()
+{
+    // Make sure the player has the required feat
+    if(!GetHasFeat(R_ALLHOPE_FE, GetPCSpeaker()) ||
+        GetHasFeat(ALLHOPE_FE, GetPCSpeaker()))
+        return FALSE;
+
+    return TRUE;
+}

@@ -72,7 +72,7 @@ void main()
        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK8,OBJECT_SELF)  ? SPELL_POWER_ATTACK8 : iSpell;
        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK9,OBJECT_SELF)  ? SPELL_POWER_ATTACK9 : iSpell;
        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK10,OBJECT_SELF) ? SPELL_POWER_ATTACK10: iSpell;
-
+       iSpell =  GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK,OBJECT_SELF) ? SPELL_SUPREME_POWER_ATTACK: iSpell;
 
    if(!iSpell )
    {

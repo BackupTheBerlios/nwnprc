@@ -104,7 +104,7 @@ PRC_INSTALLVERSION	= PRC_VERSION
 # comes with NWN.
 RARCOMPILER		= tools\rar
 ERFCOMPILER 	= tools\erf
-NSSCOMPILER 	= $(NWN_DIR)\utils\clcompile
+NSSCOMPILER 	= tools\nwnnsscomp
 NSISCOMPILER	= "$(NSISPATH)\makensis.exe"
 SED				= tools\ssed
 
@@ -133,6 +133,8 @@ NWN_HAK			= $(NWN_DIR)\hak
 NWN_TLK			= $(NWN_DIR)\tlk
 NWN_OVERRIDE	= $(NWN_DIR)\override
 
+# Arguments for various rules
+NSS_FLAGS		= -ceo "$(NWN_DIR)"
 
 # suffixes for inference rules.
 .SUFFIXES: .nss .ncs .erf .hak .zip .rar
@@ -389,41 +391,28 @@ depends:
 
 # Inference rule to compile scripts.
 {$(SRCPATH)\}.nss{$(OBJPATH)\}.ncs:
-	@echo $(<F)
 	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
-	@"$(NSSCOMPILER)" "$(MAKEDIR)\$(TEMPPATH)\$(<F)" "$(MAKEDIR)\$(@D)" >nul
-	-@del "$(MAKEDIR)\$(TEMPPATH)\$(<F)" 2>nul
- 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
-#	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
-# 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$(TEMPPATH)\$(<F)"
+	@move /y "$(MAKEDIR)\$(TEMPPATH)\$(@B).ncs" "$(MAKEDIR)\$(@D)" >nul
+ 	-@del "$(MAKEDIR)\$(TEMPPATH)\$(@B).n??" 2>nul
 
 {$(SPELLSRCPATH)\}.nss{$(SPELLOBJPATH)\}.ncs:
-	@echo $(<F)
 	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
-	@"$(NSSCOMPILER)" "$(MAKEDIR)\$(TEMPPATH)\$(<F)" "$(MAKEDIR)\$(@D)" >nul
-	-@del "$(MAKEDIR)\$(TEMPPATH)\$(<F)" 2>nul
- 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
-#	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
-# 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$(TEMPPATH)\$(<F)"
+	@move /y "$(MAKEDIR)\$(TEMPPATH)\$(@B).ncs" "$(MAKEDIR)\$(@D)" >nul
+ 	-@del "$(MAKEDIR)\$(TEMPPATH)\$(@B).n??" 2>nul
 
 {$(EPICSPELLSRCPATH)\}.nss{$(EPICSPELLOBJSPATH)\}.ncs:
-	@echo $(<F)
 	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
-	@"$(NSSCOMPILER)" "$(MAKEDIR)\$(TEMPPATH)\$(<F)" "$(MAKEDIR)\$(@D)" >nul
-	-@del "$(MAKEDIR)\$(TEMPPATH)\$(<F)" 2>nul
- 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
-#	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
-# 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$(TEMPPATH)\$(<F)"
+	@move /y "$(MAKEDIR)\$(TEMPPATH)\$(@B).ncs" "$(MAKEDIR)\$(@D)" >nul
+ 	-@del "$(MAKEDIR)\$(TEMPPATH)\$(@B).n??" 2>nul
 
 {$(RACESRCPATH)\}.nss{$(RACEOBJSPATH)\}.ncs:
-	@echo $(<F)
 	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
-	@"$(NSSCOMPILER)" "$(MAKEDIR)\$(TEMPPATH)\$(<F)" "$(MAKEDIR)\$(@D)" >nul
-	-@del "$(MAKEDIR)\$(TEMPPATH)\$(<F)" 2>nul
- 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
-#	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
-# 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
-
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$(TEMPPATH)\$(<F)"
+	@move /y "$(MAKEDIR)\$(TEMPPATH)\$(@B).ncs" "$(MAKEDIR)\$(@D)" >nul
+ 	-@del "$(MAKEDIR)\$(TEMPPATH)\$(@B).n??" 2>nul
 
 #################################################################################
 # Depends updates will go here. DO NOT ADD ANYTING BELOW THIS LINE!

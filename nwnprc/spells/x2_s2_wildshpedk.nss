@@ -42,5 +42,5 @@ void main()
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(nDuration));
-    DelayCommand(1.5,ActionCastSpellAtObject(SPELL_SHAPE_INCREASE_DAMAGE,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE));
+    DelayCommand(1.5,ActionCastSpellOnSelf(SPELL_SHAPE_INCREASE_DAMAGE));
 }

@@ -2,5 +2,5 @@
 
 void main()
 {
-   AddIniDmg(OBJECT_SELF) ;
+   AddIniDmg(GetSpellTargetObject()) ;
 }

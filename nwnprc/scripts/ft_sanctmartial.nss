@@ -373,7 +373,11 @@ void Pwatk(object oPC)
    
    object oItem = GetPCItemLastEquipped();
    
-   if (GetWeaponRanged(oItem))
+   // don't run this if the equipped item is not a weapon
+   if (GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) != oItem &&
+       GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) != oItem) return;
+   
+   if (!GetWeaponRanged(oItem))
    {
       int iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK1,OBJECT_SELF)  ? SPELL_POWER_ATTACK1 : 0;
           iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK2,OBJECT_SELF)  ? SPELL_POWER_ATTACK2 : iSpell;
@@ -393,8 +397,8 @@ void Pwatk(object oPC)
 
          if (GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER)>1)
          {
-           RemoveEffectsFromSpell(OBJECT_SELF,SPELL_UR_FAVORITE_ENEMY); 
-           ActionCastSpellOnSelf(SPELL_UR_FAVORITE_ENEMY);
+           //RemoveEffectsFromSpell(OBJECT_SELF,SPELL_UR_FAVORITE_ENEMY); 
+           //ActionCastSpellOnSelf(SPELL_UR_FAVORITE_ENEMY);
          }
 
          string nMes = "*Power Attack Mode Deactivated*";

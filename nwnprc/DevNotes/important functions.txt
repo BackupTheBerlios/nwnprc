@@ -207,10 +207,12 @@ prc_inc_clsfunc
 
 
 
-// Applies a spell's effect immediately by clearing the character's action queue
-// The spell cast can be any spell, but it will not invoke a casting animation and it
-// will automatically be cast upon the caster.  Good for passive abilities
-// which conditionally change with certain actions.
+// Avoids adding passive spellcasting to the character's action queue by
+// creating an object specifically to cast the spell on the character.
+//
+// NOTE: The spell script must refer to the PC as GetSpellTargetObject()
+// otherwise this function WILL NOT WORK.  Do not make any assumptions
+// about the PC being OBJECT_SELF.
 void ActionCastSpellOnSelf(int iSpell);
 
 +lots of class specific functions

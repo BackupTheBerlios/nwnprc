@@ -19,6 +19,7 @@ void main()
      int save = WillSave(OBJECT_SELF, willSaveDC, SAVING_THROW_TYPE_NONE, OBJECT_SELF);
      if(save == 0)
      {
-          ActionCastSpellOnSelf(SPELL_FRENZY);
+          ClearAllActions();
+          ActionCastSpellAtObject(SPELL_FRENZY, OBJECT_SELF, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
      }
 }

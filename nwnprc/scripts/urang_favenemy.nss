@@ -36,55 +36,52 @@ int BonusAtk(int iDmg)
 
 void FavEn(int iFeat,int iBonus ,int nLevel, int iDmgType, int iFEAC, int iFERE ,int nRacial )
 {
-  if (!GetHasFeat(iFeat, OBJECT_SELF)) return ;
+  object oPC = GetSpellTargetObject();
+  if (!GetHasFeat(iFeat, oPC)) return ;
    
   effect eLink;
-  effect eDmg,eSkill;
   
-  if (GetHasFeat(iFeat, OBJECT_SELF))
-  
-  eDmg = VersusRacialTypeEffect( EffectDamageIncrease(iBonus,iDmgType) ,nRacial);
-  eLink = EffectLinkEffects(eDmg,VersusRacialTypeEffect(EffectSkillIncrease(nLevel,SKILL_SPOT),nRacial));
-  
+  eLink = VersusRacialTypeEffect(EffectDamageIncrease(iBonus,iDmgType) ,nRacial);
   eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect(EffectSkillIncrease(nLevel,SKILL_BLUFF),nRacial));
   eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect(EffectSkillIncrease(nLevel,SKILL_LISTEN),nRacial));
   eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect(EffectSkillIncrease(nLevel,SKILL_SPOT),nRacial));
   if (iFEAC) eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectACIncrease(nLevel) ,nRacial));
   if (iFERE) eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectSavingThrowIncrease(SAVING_THROW_ALL,nLevel,SAVING_THROW_TYPE_SPELL) ,nRacial));
-  if (GetHasFeat(FEAT_EPIC_BANE_OF_ENEMIES, OBJECT_SELF)) {
+  if (GetHasFeat(FEAT_EPIC_BANE_OF_ENEMIES, oPC)) {
   	eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectAttackIncrease(2) ,nRacial));
   	eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectDamageIncrease(DAMAGE_BONUS_2d6,DAMAGE_TYPE_MAGICAL) ,nRacial));
   }
- ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eLink),OBJECT_SELF);
+ ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eLink),oPC);
  
 }
 
 void main()
 {
-    RemoveEffectsFromSpell(OBJECT_SELF,GetSpellId());   
-    int nLevel = (GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,OBJECT_SELF)+3)/5;
-    int iIFE= GetHasFeat(FEAT_IMPROVED_FAVORED_ENEMY, OBJECT_SELF) ? 3: 0;
+    object oPC = GetSpellTargetObject();
+    RemoveEffectsFromSpell(oPC,GetSpellId());   
+    int nLevel = (GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC)+3)/5;
+    int iIFE= GetHasFeat(FEAT_IMPROVED_FAVORED_ENEMY, oPC) ? 3: 0;
     
-    int iDmgType = GetWeaponDamageType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF));
+    int iDmgType = GetWeaponDamageType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC));
     if ( iDmgType == -1) iDmgType = DAMAGE_TYPE_BLUDGEONING;
 
-    int iFEAC = GetHasFeat(FEAT_UR_DODGE_FE,OBJECT_SELF);
-    int iFERE = GetHasFeat(FEAT_UR_RESIST_FE,OBJECT_SELF);
+    int iFEAC = GetHasFeat(FEAT_UR_DODGE_FE,oPC);
+    int iFERE = GetHasFeat(FEAT_UR_RESIST_FE,oPC);
     
     int iSpell;
-    if (GetHasFeat(FEAT_FAVORED_POWER_ATTACK,OBJECT_SELF))
+    if (GetHasFeat(FEAT_FAVORED_POWER_ATTACK,oPC))
     {
-        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK1,OBJECT_SELF)  ? 1 : 0;
-        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK2,OBJECT_SELF)  ? 2 : iSpell;
-        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK3,OBJECT_SELF)  ? 3 : iSpell;
-        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK4,OBJECT_SELF)  ? 4 : iSpell;
-        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK5,OBJECT_SELF)  ? 5 : iSpell;
-        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK6,OBJECT_SELF)  ? 6 : iSpell;
-        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK7,OBJECT_SELF)  ? 7 : iSpell;
-        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK8,OBJECT_SELF)  ? 8 : iSpell;
-        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK9,OBJECT_SELF)  ? 9 : iSpell;
-        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK10,OBJECT_SELF) ? 10: iSpell;
-    //  iSpell =  GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK,OBJECT_SELF) ? 20: iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK1,oPC)  ? 1 : 0;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK2,oPC)  ? 2 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK3,oPC)  ? 3 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK4,oPC)  ? 4 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK5,oPC)  ? 5 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK6,oPC)  ? 6 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK7,oPC)  ? 7 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK8,oPC)  ? 8 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK9,oPC)  ? 9 : iSpell;
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK10,oPC) ? 10: iSpell;
+    //  iSpell =  GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK,oPC) ? 20: iSpell;
     }
         
     int iBonus = BonusAtk(nLevel+iIFE+iSpell);

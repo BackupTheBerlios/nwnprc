@@ -15,7 +15,7 @@
 #include "prc_inc_function"
 #include "inc_item_props"
 #include "pnp_shft_poly"
-
+#include "prc_inc_clsfunc"
 
 void main()
 {
@@ -56,7 +56,7 @@ void main()
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(nDuration));
 //    DelayCommand(1.5,AddIniDmg(OBJECT_SELF));
-    DelayCommand(1.5,ActionCastSpellAtObject(SPELL_SHAPE_INCREASE_DAMAGE,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE));
+    DelayCommand(1.5,ActionCastSpellOnSelf(SPELL_SHAPE_INCREASE_DAMAGE));
 
 
 }

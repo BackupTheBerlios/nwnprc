@@ -32,10 +32,10 @@ int isNotShield(object oItem)
 
 void main()
 {
-     object oPC = OBJECT_SELF;
+     object oPC = GetSpellTargetObject();
      string nMes = "";
 
-     if(!GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING) )
+     if(!GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
      {    
           object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
           object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
@@ -113,6 +113,11 @@ void main()
                    nMes = "*Invalid Weapon.  Ability Not Activated!*";
               }          
           }          
+          
+          if(tempestLevel > 4 && armorType >= ARMOR_TYPE_MEDIUM)
+          {
+              nMes = "*Invalid Armor.  Two-Weapon Fighting Bonuses Not Activated!*";
+          }
 
           FloatingTextStringOnCreature(nMes, oPC, FALSE);    
      }

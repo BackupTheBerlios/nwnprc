@@ -4,7 +4,7 @@
 
 void main()
 {
-    object oCreature = OBJECT_SELF;
+    object oCreature = GetSpellTargetObject();
     object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature);
     object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);   
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature);

@@ -19,44 +19,22 @@
 
 // Function Definitions:
 
-// Applies a spell's effect immediately by clearing the character's action queue
-// The spell cast can be any spell, but it will not invoke a casting animation and it
-// will automatically be cast upon the caster.  Good for passive abilities
-// which conditionally change with certain actions.
+// Avoids adding passive spellcasting to the character's action queue by
+// creating an object specifically to cast the spell on the character.
+//
+// NOTE: The spell script must refer to the PC as GetSpellTargetObject()
+// otherwise this function WILL NOT WORK.  Do not make any assumptions
+// about the PC being OBJECT_SELF.
 void ActionCastSpellOnSelf(int iSpell);
 
-// Functions:
 void ActionCastSpellOnSelf(int iSpell)
 {
-    // Store current actions
-    object oTarget = GetAttackTarget();
-    int iAction = GetCurrentAction();
+    object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(OBJECT_SELF));
+    object oTarget = OBJECT_SELF;
 
-    int iDetec = GetActionMode(OBJECT_SELF, ACTION_MODE_DETECT);
-    int iSteal = GetActionMode(OBJECT_SELF, ACTION_MODE_STEALTH);
-    int iCount = GetActionMode(OBJECT_SELF, ACTION_MODE_COUNTERSPELL);
-
-    // Clear actions (unless resting)
-    if (iAction == ACTION_REST)
-    {
-        DelayCommand(2.0, ActionCastSpellOnSelf(iSpell)); // keep trying
-        return;
-    }
-    else
-    {
-        ClearAllActions();
-    }
+    AssignCommand(oCastingObject, ActionCastSpellAtObject(iSpell, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
     
-    // Cast the spell on self.
-    ActionCastSpellAtObject(iSpell, OBJECT_SELF, METAMAGIC_QUICKEN, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
-
-    // Restore action mode (stealth is disrupted :/)
-    if (iDetec) DelayCommand(0.2, SetActionMode(OBJECT_SELF, ACTION_MODE_DETECT, TRUE));
-    if (iSteal) DelayCommand(0.2, SetActionMode(OBJECT_SELF, ACTION_MODE_STEALTH, TRUE));
-    if (iCount) DelayCommand(0.2, SetActionMode(OBJECT_SELF, ACTION_MODE_COUNTERSPELL, TRUE));
-
-    // Return to combat if you were fighting.    
-    if (iAction == ACTION_ATTACKOBJECT) DelayCommand(0.2, ActionAttack(oTarget, FALSE));
+    DestroyObject(oCastingObject, 6.0);
 }
 
 ////////////////End Generic////////////////

@@ -13,6 +13,7 @@
 #include "spinc_common"
 #include "x2_inc_spellhook"
 #include "pnp_shft_poly"
+#include "prc_inc_clsfunc"
 
 void main()
 {
@@ -127,7 +128,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, oTarget, HoursToSeconds(nDuration),TRUE,-1,8);
-    DelayCommand(1.5,ActionCastSpellAtObject(SPELL_SHAPE_INCREASE_DAMAGE,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE));
+    DelayCommand(1.5,ActionCastSpellOnSelf(SPELL_SHAPE_INCREASE_DAMAGE));
 
     //Apply the VFX impact and effects
     //ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);

@@ -16,7 +16,7 @@
 #include "spinc_common"
 #include "x2_inc_spellhook"
 #include "pnp_shft_poly"
-
+#include "prc_inc_clsfunc"
 
 void main()
 {
@@ -87,7 +87,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);
-    DelayCommand(1.5,ActionCastSpellAtObject(SPELL_SHAPE_INCREASE_DAMAGE,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE));
+    DelayCommand(1.5,ActionCastSpellOnSelf(SPELL_SHAPE_INCREASE_DAMAGE));
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the integer used to hold the spells spell school
 }

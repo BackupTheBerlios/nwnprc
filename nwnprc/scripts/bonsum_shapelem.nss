@@ -2,6 +2,7 @@
 #include "prc_inc_function"
 #include "inc_item_props"
 #include "pnp_shft_poly"
+#include "prc_inc_clsfunc"
 
 void main()
 {
@@ -37,5 +38,5 @@ void main()
         ClearAllActions(); // prevents an exploit
   
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY,EffectPolymorph(iPoly),OBJECT_SELF,HoursToSeconds(10));
-    DelayCommand(1.5,ActionCastSpellAtObject(SPELL_SHAPE_INCREASE_DAMAGE,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE));
+    DelayCommand(1.5,ActionCastSpellOnSelf(SPELL_SHAPE_INCREASE_DAMAGE));
 }

@@ -18,11 +18,11 @@ public class Main{
 			this.custom = new Data_TLK("tlk" + fileSeparator + customName);
 		}
 		
-		public String getEntry(int num){
+		public String get(int num){
 			return num < 0x01000000 ? normal.getEntry(num) : custom.getEntry(num);
 		}
 		
-		public String getEntry(String num){
+		public String get(String num){
 			return Integer.parseInt(num) < 0x01000000 ? normal.getEntry(num) : custom.getEntry(num);
 		}
 	}
@@ -164,24 +164,33 @@ public class Main{
 	public static boolean verbose = true;
 	public static Spinner spinner = new Spinner();
 	
+	/**
+	 * The container object for general configuration data
+	 * read from file
+	 */
 	public static Settings settings = new Settings();
 	
 	private static String fileSeparator = System.getProperty("file.separator");
 	
 	private static String curLanguage = null;
-	private static String mainPath = null;
+	private static String mainPath = null,
+	                      contentPath = null,
+	                      menuPath = null;
 	
 	private static TwoDAStore twoDA;
 	private static TLKStore tlk;
 	
-	/* The template files */
+	/** The template files */
 	private static final String classTemplate    = readTemplate("templates" + fileSeparator + "class.html"),
 	                            domainTemplate   = readTemplate("templates" + fileSeparator + "domain.html"),
 	                            featTemplate     = readTemplate("templates" + fileSeparator + "feat.html"),
 	                            menuTemplate     = readTemplate("templates" + fileSeparator + "menu.html"),
 	                            menuItemTemplate = readTemplate("templates" + fileSeparator + "menuitem.html"),
-	                            spellTemplate    = readTemplate("templates" + fileSeparator + "spell.html");
+	                            spellTemplate    = readTemplate("templates" + fileSeparator + "spell.html"),
+	                            skillTemplate    = readTemplate("templates" + fileSeparator + "skill.html");
 	
+	private static final Object presenceIndicator = new Object();
+	private static final HashMap<Integer, Object> failedSkills = new HashMap<Integer, Object>();
 	
 	public static void main(String[] args){
 		/* Argument parsing */
@@ -206,6 +215,8 @@ public class Main{
 			// Set language, path and load TLKs
 			curLanguage = settings.languages.get(i)[0];
 			mainPath = "manual" + fileSeparator + curLanguage + fileSeparator;
+			contentPath = mainPath + "content" + fileSeparator;
+			menuPath = mainPath + "menus" + fileSeparator;
 			tlk = new TLKStore(settings.languages.get(i)[1], settings.languages.get(i)[2]);
 			
 			buildDirectories();
@@ -261,49 +272,46 @@ public class Main{
 	 * Kills execution if any creation operations fail.
 	 */
 	private static void buildDirectories(){
-		File builder;
-		String contentPath = mainPath + "content";
+		String dirPath = mainPath + "content";
 		
-		builder = new File(contentPath);
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		contentPath += fileSeparator;
+		buildDir(dirPath);
+		dirPath += fileSeparator;
 		
-		builder = new File(contentPath + "base_classes");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "class_epic_feat");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "class_feat");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "domains");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "epic_feat");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "epic_spells");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "feat");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "master_feat");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "prestige_classes");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "races");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "skills");
-		if(!builder.mkdirs()) buildDirAbort(builder);
-		builder = new File(contentPath + "spells");
-		if(!builder.mkdirs()) buildDirAbort(builder);
+		buildDir(dirPath + "base_classes");
+		buildDir(dirPath + "class_epic_feat");
+		buildDir(dirPath + "class_feat");
+		buildDir(dirPath + "domains");
+		buildDir(dirPath + "epic_feat");
+		buildDir(dirPath + "epic_spells");
+		buildDir(dirPath + "feat");
+		buildDir(dirPath + "master_feat");
+		buildDir(dirPath + "prestige_classes");
+		buildDir(dirPath + "races");
+		buildDir(dirPath + "skills");
+		buildDir(dirPath + "spells");
 		
-		builder = new File(mainPath + "menus");
-		if(!builder.mkdirs()) buildDirAbort(builder);
+		buildDir(mainPath + "menus");
 	}
 	
-	private static void buildDirAbort(File dir){
-		System.err.println("Failure creating directory:\n" + dir.getPath());
-		System.exit(1);
+	/**
+	 * Does the actual work of building the directories
+	 *
+	 * @param path the target directory to create
+	 */
+	private static void buildDir(String path){
+		File builder = new File(path);
+		if(!builder.exists()){
+			if(!builder.mkdirs()){
+				System.err.println("Failure creating directory:\n" + builder.getPath());
+				System.exit(1);
+			}
+		}
 	}
 	
 	
 	private static void createPages(){
+		// Do skills
+		doSkills();
 		// Do spells
 		doSpells();
 		// Do epicspells
@@ -314,8 +322,83 @@ public class Main{
 		// Link feats
 		
 		// Do domains
-		// Do skills
+		
 		// Do classes
+	}
+	
+	/**
+	 *Replaces each line break in the given TLK entry with
+	 *a line break followed by <code>&lt;br /&gt;</code>.
+	 *
+	 * @param toHTML tlk entry to convert
+	 * @return the modified string
+	 */
+	private static String htmlizeTLK(String toHTML){
+		return toHTML.replaceAll("\n", "\n<br />");
+	}
+	
+	/**
+	 * Creates a new file at the given <code>path</code>, erasing previous file if present.
+	 * Prints the given <code>content</code> string into the file.
+	 *
+	 * @param path    the path of the file to be created
+	 * @param content the string to be printed into the file
+	 *
+	 * @throws IOException if one of the file operations fails
+	 */
+	private static void printPage(String path, String content) throws IOException{
+		File target = new File(path);
+		// Clean up old version if necessary
+		if(target.exists()){
+			if(verbose) System.out.println("Deleting previous version of " + path);
+			target.delete();
+		}
+		target.createNewFile();
+		
+		// Creater the writer and print
+		FileWriter writer = new FileWriter(target, false);
+		writer.write(content);
+		// Clean up
+		writer.flush();
+		writer.close();
+	}
+	
+	/**
+	 * Handles creation of the skill pages.
+	 */
+	private static void doSkills(){
+		String skillPath = contentPath + "skills";
+		String name     = null,
+		       entry    = null;
+			
+		Data_2da skills2da = twoDA.get("skills");
+		
+		for(int i = 0; i < skills2da.getEntryCount(); i++){
+			try{
+				name = tlk.get(skills2da.getEntry("Name", i));
+				if(verbose) System.out.println("Printing page for " + name);
+				// Build the entry data
+				entry = skillTemplate;
+				entry = entry.replaceAll("~~~SkillName~~~",
+				                         name);
+				entry = entry.replaceAll("~~~SkillTLKDescription~~~",
+				                         htmlizeTLK(tlk.get(skills2da.getEntry("Description", i))));
+				//name = tlk.get(skills2da.getEntry("Name", i));
+				//entry = htmlizeTLK(tlk.get(skills2da.getEntry("Description", i)));
+				
+				// Print the page
+				printPage(skillPath + fileSeparator + i + ".html", entry);
+			}catch(Exception e){
+				System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+				// Note the failure, so this page isn't used elsewhere in the manual
+				failedSkills.put(i, presenceIndicator);
+			}
+		}
+		
+	}
+	
+	private static void doSpells(){
+		
 	}
 	
 }

@@ -36,7 +36,7 @@ void HellFireGrasp(object oPC, object oGaunt)
 void RemoveHellFire(object oPC, object oGaunt)
 {
     if(GetLocalInt(oGaunt, "DiscMephGlove") == 6)
-        RemoveSpecificProperty(oGaunt, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "DiscMephGlove");
+        RemoveSpecificProperty(oGaunt, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, "DiscMephGlove", -1, DURATION_TYPE_PERMANENT);
 }
 
 void main()
@@ -45,6 +45,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     object oGaunt = GetItemInSlot(INVENTORY_SLOT_ARMS, oPC);
+    object oUnequip = GetPCItemLastUnequipped();
     int iResist = 0;
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
 
@@ -60,7 +61,10 @@ void main()
 
    if(GetHasFeat(FEAT_HELLFIRE_GRASP, oPC))
     {
-        if (iEquip == 1)    RemoveHellFire(oPC, oGaunt);
+	if (GetLocalInt(oUnequip, "DiscMephGlove") == 6)
+	{
+        	if (iEquip == 1)    RemoveHellFire(oPC, oUnequip);
+	}
         if (iEquip == 2)    HellFireGrasp(oPC, oGaunt);
     }
 

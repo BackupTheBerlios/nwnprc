@@ -22,17 +22,23 @@ void ZealousHeart(object oPC, object oSkin)
 
 void SacredFlame(object oPC, object oWeap)
 {
-    if(GetLocalInt(oWeap, "BFZFlame") == 6) return;
+    if(GetLocalInt(oWeap, "BFZFlame") == TRUE) return;
+
+SendMessageToPC(oPC, "Add Sacred Flame is run");
 
     RemoveSpecificProperty(oWeap, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "BFZFlame");
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6), oWeap);
-    SetLocalInt(oWeap, "BFZFlame", 6);
+    SetLocalInt(oWeap, "BFZFlame", TRUE);
 }
 
 void RemoveSacredFlame(object oPC, object oWeap)
 {
-    if(GetLocalInt(oWeap, "BFZFlame") == 6)
-        RemoveSpecificProperty(oWeap, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "BFZFlame");
+
+SendMessageToPC(oPC, "Remove Sacred Flame is run");
+
+    if(GetLocalInt(oWeap, "BFZFlame") == TRUE)
+        //RemoveSpecificProperty(oWeap, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "BFZFlame");
+	RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, "BFZFlame", -1, DURATION_TYPE_PERMANENT);
 }
 
 
@@ -42,13 +48,17 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    object oUnequip = GetPCItemLastUnequipped();
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
 
     ZealousHeart(oPC, oSkin);
 
     if(GetHasFeat(FEAT_SACRED_FLAME, oPC))
     {
-        if (iEquip == 1)    RemoveSacredFlame(oPC, oWeap);
+	if (GetLocalInt(oUnequip, "BFZFlame") == TRUE)
+	{
+        	if (iEquip == 1)    RemoveSacredFlame(oPC, oUnequip);
+	}
         if (iEquip == 2)    SacredFlame(oPC, oWeap);
     }
 }

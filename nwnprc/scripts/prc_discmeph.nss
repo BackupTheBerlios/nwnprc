@@ -28,15 +28,15 @@ void HellFireGrasp(object oPC, object oGaunt)
 {
     if(GetLocalInt(oGaunt, "DiscMephGlove") == 6) return;
 
-    RemoveSpecificProperty(oGaunt, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "DiscMephGlove");
-    AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6), oGaunt);
+    RemoveSpecificProperty(oGaunt, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, -1, "DiscMephGlove", -1, DURATION_TYPE_TEMPORARY);
+    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6), oGaunt, 9999.0);
     SetLocalInt(oGaunt, "DiscMephGlove", 6);
 }
 
 void RemoveHellFire(object oPC, object oGaunt)
 {
     if(GetLocalInt(oGaunt, "DiscMephGlove") == 6)
-        RemoveSpecificProperty(oGaunt, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, "DiscMephGlove", -1, DURATION_TYPE_PERMANENT);
+        RemoveSpecificProperty(oGaunt, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d6, 1, "DiscMephGlove", -1, DURATION_TYPE_TEMPORARY);
 }
 
 void main()

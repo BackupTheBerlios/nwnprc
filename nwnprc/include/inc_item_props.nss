@@ -94,8 +94,10 @@ int GetItemDamageType(object oItem);
 // * sBonus = String name of the source for this bonus
 // * iVal = Integer value to set this bonus to (damage +1 through +20)
 // * iSubType: IP_CONST_DAMAGETYPE*  -- leave blank to use the weapon's damage type.
-void SetCompositeDamageBonus(object oItem, string sBonus, int iVal, int iSubType = -1);
 void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubType = -1); // for temporary bonuses
+
+// Removes a specific property from an item
+void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCostVal = -1, int iNum = 1, string sFlag = "", int iParam1 = -1, int iDuration = DURATION_TYPE_PERMANENT);
 
 int GetHasItem(object oPC, string sRes)
 {
@@ -871,60 +873,6 @@ int GetItemDamageType(object oItem)
    return -1;
 }
 
-
-// Removed -- use SetCompositeDamageBonusT
-/*int TotalAndRemoveDamageProperty(object oItem, int iSubType)
-{
-    itemproperty ip = GetFirstItemProperty(oItem);
-    int iPropertyValue = GetItemPropertyCostTableValue(ip);
-    int total = 0;
-
-    while(GetIsItemPropertyValid(ip))
-    {
-        if((GetItemPropertyType(ip) == ITEM_PROPERTY_DAMAGE_BONUS) &&
-           (GetItemPropertySubType(ip) == iSubType) &&
-           (iPropertyValue < 6) || (iPropertyValue > 15))
-        {
-            total += iPropertyValue;
-            RemoveItemProperty(oItem, ip);
-        }
-        ip = GetNextItemProperty(oItem);
-        iPropertyValue = GetItemPropertyCostTableValue(ip);
-    }
-    return total;
-}
-
-void SetCompositeDamageBonus(object oItem, string sBonus, int iVal, int iSubType = -1)
-{
-    int iOldVal = GetLocalInt(oItem, sBonus);
-    int iChange = iVal - iOldVal;
-    int iLinearDamage = 0;
-    int iCurVal = 0;
-
-    if(iChange == 0) return;
-
-    if (iSubType == -1) iSubType = GetItemPropertyDamageType(oItem);
-    if (iSubType == -1) return;  // if it's still -1 we're not dealing with a weapon.
-
-    iCurVal = TotalAndRemoveDamageProperty(oItem, iSubType);
-
-    if (iCurVal > 15) iCurVal -= 10; // values 6-20 are in the 2da as lines 16-30
-
-    iLinearDamage = iCurVal + iChange;
-    if (iLinearDamage > 20)
-    {
-        iVal = iLinearDamage - 20; // Change the stored value to reflect the fact that we overflowed
-        iLinearDamage = 20; // This is prior to adjustment due to non-linear values
-    }
-
-    if (iLinearDamage > 5) iLinearDamage += 10; // values 6-20 are in the 2da as lines 16-30
-
-    AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(iSubType, iLinearDamage), oItem);
-
-    SetLocalInt(oItem, sBonus, iVal);
-}*/
-
-
 int TotalAndRemoveDamagePropertyT(object oItem, int iSubType)
 {
     itemproperty ip = GetFirstItemProperty(oItem);
@@ -1008,7 +956,7 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    
    // RIGHT HAND
    if (!iValid)
-    oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+     oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
    TotalRemovePropertyT(oItem);
 
    //Stormlord
@@ -1031,6 +979,12 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    //Duelist Precise Strike
    DeleteLocalInt(oItem,"DuelistPreciseSlash");
    DeleteLocalInt(oItem,"DuelistPreciseSmash");
+   //Duelist Elaborate Parry
+   DeleteLocalInt(oItem,"ElaborateParryACBonus");
+   DeleteLocalInt(oItem,"ElaborateParryAttackPenalty");
+   // Blood Archer
+   DeleteLocalInt(oItem,"BloodBowAttackBonus");
+   DeleteLocalInt(oItem,"BloodBowMightyBonus");
    // Other
    DeleteLocalInt(oItem,"IPEnh");
    DeleteLocalInt(oItem,"IPEnhA");
@@ -1044,7 +998,10 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    DeleteLocalInt(oItem,"DSlayingAttackBonus");
    // prc_battledance
    DeleteLocalInt(oItem,"BADanAtk");
-  
+   // Katana Finesse
+   DeleteLocalInt(oItem,"KatFinBonus");
+   // Demonslaying
+   DeleteLocalInt(oItem,"DSlayingAttackBonus");
    
    // LEFT HAND
    if (!iValid){
@@ -1062,7 +1019,10 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    // Other
    DeleteLocalInt(oItem,"IPEnh");
    DeleteLocalInt(oItem,"IPEnhA");
-   
+   // Katana Finesse
+   DeleteLocalInt(oItem,"KatFinBonus");
+   // Demonslaying
+   DeleteLocalInt(oItem,"DSlayingAttackBonus");
    
    // CHEST
    if (!iValid){
@@ -1071,7 +1031,10 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
 
    // Bladesinger
    DeleteLocalInt(oItem,"BladeASF");
-   
+   // Frenzied Berzerker
+   DeleteLocalInt(oItem,"AFrenzy");
+   // Shadowlord
+   DeleteLocalInt(oItem,"ShaDiscorp");
    
    // LEFT RING
    if (!iValid){
@@ -1081,4 +1044,11 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    // Bladesinger
    DeleteLocalInt(oItem,"NewPowAtk");
 
+   // ARMS
+   if (!iValid){
+     oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
+     TotalRemovePropertyT(oItem);}
+   
+   // Disciple of Mephistopheles
+   DeleteLocalInt(oItem,"DiscMephGlove");
 }

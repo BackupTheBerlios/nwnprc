@@ -90,6 +90,16 @@ void main()
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 
+    //immunity to drowning
+    //water gensasi and aquatic elves can breath water
+    if(GetHasFeat(FEAT_WATER_BREATHING))
+    {
+        itemproperty ipIP = ItemPropertySpellImmunitySpecific(SPELL_DROWN);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        ipIP = ItemPropertySpellImmunitySpecific(SPELL_MASS_DROWN  );
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
+
     //Azer Heat Damage +1 (armed and unarmed)
     if (GetHasFeat(FEAT_AZER_HEAT, oPC))
     {
@@ -203,6 +213,13 @@ void main()
     if(GetHasFeat(FEAT_SA_HIDEF))
     {
         SetCompositeBonus(oSkin, "SA_Hide_Forest", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+    }
+
+    // Skill Affinity, +2 to appraise
+    // dwarves and deep halfings get racial +2 to appraise checks.
+    if(GetHasFeat(FEAT_SA_APPRAISE))
+    {
+        SetCompositeBonus(oSkin, "SA_Appraise", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_APPRAISE);
     }
 
     //damage reduction 10/+1

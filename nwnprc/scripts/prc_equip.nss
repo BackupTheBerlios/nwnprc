@@ -75,6 +75,20 @@ void main()
            return;
         }
      }
+     
+     // -------------------------------------------------------------------------------------------
+     // Makes it so that all equipped items cannot be sold or traded without being unequipped first
+     // -------------------------------------------------------------------------------------------
+     if (GetItemCursedFlag(oItem) == FALSE)
+     {
+         SetItemCursedFlag(oItem, TRUE);
+         SetLocalInt(oItem, "PRC_MadeUndroppable", TRUE);
+     }
+     if (GetPlotFlag(oItem) == FALSE)
+     {
+         SetPlotFlag(oItem, TRUE);
+         SetLocalInt(oItem, "PRC_MadePlot", TRUE);
+     }
 
         //object oSkin = GetPCSkin(oPC);
 	//ScrubPCSkin(oPC, oSkin);

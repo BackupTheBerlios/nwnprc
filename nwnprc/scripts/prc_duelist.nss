@@ -72,8 +72,8 @@ void RemoveDuelistPreciseStrike(object oWeap)
    int iSlashBonus = GetLocalInt(oWeap,"DuelistPreciseSlash");
    int iSmashBonus = GetLocalInt(oWeap,"DuelistPreciseSmash");
    
-   if (iSlashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus, 1, "DuelistPreciseSlash", -1, DURATION_TYPE_TEMPORARY);
-   if (iSmashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_BLUDGEONING, iSmashBonus, 1, "DuelistPreciseSmash", -1, DURATION_TYPE_TEMPORARY);
+   if (iSlashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus, 1, "DuelistPreciseSlash");
+   if (iSmashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_BLUDGEONING, iSmashBonus, 1, "DuelistPreciseSmash");
 }
 
 void DuelistPreciseStrike(object oPC, object oWeap, int iPStrkLevel)
@@ -119,11 +119,11 @@ void DuelistPreciseStrike(object oPC, object oWeap, int iPStrkLevel)
       default:
          break;
    }
-   SetLocalInt(oWeap,"DuelistPreciseSlash",iSlashBonus);
-   SetLocalInt(oWeap,"DuelistPreciseSmash",iSmashBonus);
+   if(iSlashBonus) SetLocalInt(oWeap,"DuelistPreciseSlash",iSlashBonus);
+   if(iSmashBonus) SetLocalInt(oWeap,"DuelistPreciseSmash",iSmashBonus);
    
-   AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus), oWeap, 99999.0);
-   AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, iSmashBonus), oWeap, 99999.0);
+   if(iSlashBonus) AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus), oWeap);
+   if(iSmashBonus) AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, iSmashBonus), oWeap);
 }
 
 void main()

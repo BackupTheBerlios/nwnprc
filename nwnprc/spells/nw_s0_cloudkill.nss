@@ -16,9 +16,12 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
+//:: modified by Ornedan Dec 22, 2004 to PnP rules
 #include "prc_alterations"
 
 #include "x2_inc_spellhook"
+
+#include "spinc_common"
 
 void main()
 {
@@ -44,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Declare major variables
     effect eAOE = EffectAreaOfEffect(AOE_PER_FOGKILL);
     location lTarget = GetSpellTargetLocation();
-    int nDuration = PRCGetCasterLevel(OBJECT_SELF) / 2;
+    int nDuration = PRCGetCasterLevel(OBJECT_SELF);
     effect eImpact = EffectVisualEffect(258);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
     if(nDuration < 1)
@@ -58,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             nDuration = nDuration *2;   //Duration is +100%
         }
     //Apply the AOE object to the specified location
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nDuration));
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, MinutesToSeconds(nDuration));
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

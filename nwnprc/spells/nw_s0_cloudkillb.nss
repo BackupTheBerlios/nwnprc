@@ -16,6 +16,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
+//:: modified by Ornedan Dec 22, 2004
 #include "spinc_common"
 
 #include "x2_inc_spellhook"
@@ -40,7 +41,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         {
             if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
             {
-                if(GetEffectType(eAOE) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE)
+                if(GetEffectType(eAOE) == EFFECT_TYPE_CONCEALMENT)
                 {
                     //If the effect was created by the spell then remove it
                     if(GetEffectSpellId(eAOE) == SPELL_CLOUDKILL)

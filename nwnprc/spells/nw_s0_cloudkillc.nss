@@ -16,6 +16,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
+//:: modified by Ornedan Dec 22, 2004 to PnP rules
 #include "spinc_common"
 
 #include "X0_I0_SPELLS"
@@ -30,16 +31,17 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     //Declare major variables
     int nMetaMagic = GetMetaMagicFeat();
-    int nDamage = d10();
+    int nDamage = d4();
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
     object oTarget;
+    int nHD = GetHitDice(oTarget);
     float fDelay;
 
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {
-        nDamage = 10;//Damage is at max
+        nDamage = 4;//Damage is at max
     }
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
     {
@@ -56,14 +58,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         DestroyObject(OBJECT_SELF);
         return;
     }
-
-	object aoeCreator = GetAreaOfEffectCreator();
+    
+    object aoeCreator = GetAreaOfEffectCreator();
     int CasterLvl = PRCGetCasterLevel(aoeCreator);
     int nPenetr = SPGetPenetrAOE(aoeCreator,CasterLvl);
 
 
     //Set damage effect
-    eDam = EffectDamage(nDamage, ChangedElementalDamage(aoeCreator, DAMAGE_TYPE_ACID));
+    eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage);
     //Get the first object in the persistant AOE
     oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
@@ -73,12 +75,29 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         {
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CLOUDKILL));
-            if(!MyPRCResistSpell(aoeCreator, oTarget,nPenetr, fDelay))
+            //Cloudkill doesn't allow SR - Ornedan
+            //if(!MyPRCResistSpell(aoeCreator, oTarget,nPenetr, fDelay))
             {
                 //Apply VFX impact and damage
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                PRCBonusDamage(oTarget);
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                //Creatures with less than 6 HD take full damage automatically
+                //Any with more than 6 get to save (Fortitued) for half
+                if (nHD < 6)
+                {
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                }
+                else
+                {
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
+                    {
+                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    }
+                    else
+                    {
+                        // Halve the damage on succesfull save.
+                        eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage / 2);
+                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    }
+                }
             }
         }
         //Get the next target in the AOE

@@ -16,6 +16,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
+//:: modified by Ornedan Dec 22, 2004 to PnP rules
 #include "spinc_common"
 
 #include "X0_I0_SPELLS"
@@ -25,8 +26,8 @@ void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
-
- ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
+    
+ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
 
     //Declare major variables
     object oTarget = GetEnteringObject();
@@ -34,36 +35,42 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     effect eDeath = EffectDeath();
     effect eVis =   EffectVisualEffect(VFX_IMP_DEATH);
     effect eNeg = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-    effect eSpeed = EffectMovementSpeedDecrease(50);
-    effect eVis2 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    effect eLink = EffectLinkEffects(eSpeed, eVis2);
+    effect eConceal = EffectConcealment(20);
+    //effect eVis2 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    effect eVis2 = EffectVisualEffect(VFX_DUR_GHOST_TRANSPARENT);
+    effect eLink = EffectLinkEffects(eConceal, eVis2);
 
     float fDelay= GetRandomDelay(0.5, 1.5);
     effect eDam;
-    int nDam = d10();
+    int nDam = d4();
     int nMetaMagic = GetMetaMagicFeat();
 
-	object aoeCreator = GetAreaOfEffectCreator();
+	  object aoeCreator = GetAreaOfEffectCreator();
     int CasterLvl = PRCGetCasterLevel(aoeCreator);
 
-    int nPenetr = SPGetPenetrAOE(aoeCreator,CasterLvl);
+    //int nPenetr = SPGetPenetrAOE(aoeCreator,CasterLvl);
     
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
     {
-       nDam = 10;//Damage is at max
+       nDam = 4;//Damage is at max
     }
     else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
     {
        nDam =  nDam + (nDam/2); //Damage/Healing is +50%
     }
-    eDam = EffectDamage(nDam, ChangedElementalDamage(aoeCreator, DAMAGE_TYPE_ACID));
+    eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
     if(spellsIsTarget(oTarget,SPELL_TARGET_STANDARDHOSTILE , aoeCreator) )
     {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CLOUDKILL));
+        
+        //Concealement by fog happens no matter what
+        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eConceal, oTarget, 0.0f, FALSE);
+        
+        //Cloudkill doesn't allow SR - Ornedan
         //Make SR Check
-        if(!MyPRCResistSpell(aoeCreator, oTarget,nPenetr, fDelay))
+        //if(!MyPRCResistSpell(aoeCreator, oTarget, nPenetr, fDelay))
         {
             //Determine spell effect based on the targets HD
             if (nHD <= 3)
@@ -85,21 +92,23 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 else
                 {
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                    PRCBonusDamage(oTarget);
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
-                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
-                    {
-                        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpeed, oTarget,0.0f,FALSE);
-                    }
                 }
             }
             else
             {
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                PRCBonusDamage(oTarget);
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
-                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpeed, oTarget,0.0f,FALSE);
-
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
+                {
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
+                }
+                else
+                {
+                    // Halve the damage on succesfull save.
+                    eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam / 2);
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
+                }
             }
         }
     }

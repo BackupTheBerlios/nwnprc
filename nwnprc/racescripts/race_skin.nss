@@ -183,6 +183,14 @@ void main()
     {
         SetCompositeBonus(oSkin, "Keen_Sight", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
     }
+ 
+   // Minotaur bonuses due to scent
+    if(GetHasFeat(FEAT_MINOT_SCENT))
+    {
+        SetCompositeBonus(oSkin, "Minot_Scent", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
+        SetCompositeBonus(oSkin, "Minot_Scent", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SEARCH);
+        SetCompositeBonus(oSkin, "Minot_Scent", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_LISTEN);
+    }
     
     // Skill Affinity, +4 to move silently
     if(GetHasFeat(FEAT_SA_MOVE4))

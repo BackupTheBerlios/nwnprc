@@ -1,11 +1,16 @@
-#include "prc_feat_const"
-#include "prc_spell_const"
-
 void main()
 {
-int nRealPx = GetAppearanceType(OBJECT_SELF);
-string sRealPix= "realPix";
-SetLocalInt(OBJECT_SELF, sRealPix, nRealPx + 1);
-SetCreatureAppearanceType(OBJECT_SELF, APPEARANCE_TYPE_DEER);
+    //Declare major variables
+    object oTarget = GetSpellTargetObject();
+    effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
+    effect ePoly;
+    int nDuration = GetCasterLevel(OBJECT_SELF);
+    ePoly = EffectPolymorph(POLYMORPH_TYPE_WOLF  );
+    //Fire cast spell at event for the specified target
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_POLYMORPH_SELF, FALSE));
+
+    //Apply the VFX impact and effects
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, oTarget, TurnsToSeconds(nDuration));
 }
 

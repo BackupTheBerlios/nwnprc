@@ -52,4 +52,9 @@
 48 FEAT_EPIC_AUTOMATIC_SILENT_SPELL_3 862       0    -1             0      
 49 FEAT_EPIC_AUTOMATIC_STILL_SPELL_1  863       0    -1             0      
 50 FEAT_EPIC_AUTOMATIC_STILL_SPELL_2  864       0    -1             0      
-51 FEAT_EPIC_AUTOMATIC_STILL_SPELL_3  865       0    -1             0      
+51 FEAT_EPIC_AUTOMATIC_STILL_SPELL_3  865       0    -1             0   
+52 DivineMight                        413       0    -1             1      
+53 DivineShield                       414       0    -1             1    
+54 FEAT_EPIC_DIVINE_SHIELD            3548      0    -1             1  
+55 FEAT_EPIC_DIVINE_MIGHT             3120      0    -1             1
+   

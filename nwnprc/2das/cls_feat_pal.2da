@@ -213,7 +213,7 @@
 209 FEAT_DIVINE_RESISTANCE                         3117      0    -1             1      
 210 FEAT_DIVINE_CLEANSING                          3118      0    -1             1      
 211 FEAT_EPIC_DIVINE_RESISTANCE                    3119      0    -1             1      
-212 FEAT_EPIC_DIVINE_MIGHT                         3120      0    -1             1      
+212 FEAT_EPIC_DIVINE_MIGHT                         3120      1    -1             1      
 213 FEAT_DIVINE_VENGEANCE                          3142      0    -1             1      
 214 FEAT_HOLYRADIANCE                              3164      0    -1             1      
 215 FEAT_DISCIPLE_OF_SUN                           3127      0    -1             1      
@@ -262,4 +262,5 @@
 258 FEAT_FEYRI_REVERT                              4680      0    99             1      
 259 FEAT_DUERGAR_INVIS                             4681      0    99             1      
 260 FEAT_DROW_DARKNESS                             4682      0    99             1      
-261 FEAT_DROW_FAERIE_FIRE                          4683      0    99             1      
+261 FEAT_DROW_FAERIE_FIRE                          4683      0    99             1 
+262 FEAT_EPIC_DIVINE_SHIELD                        3548      1    -1             1     

@@ -41,6 +41,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 // End of Spell Cast Hook
 
     int CasterLvl = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN);
+    if (GetLocalInt(OBJECT_SELF, "Apal_DeathKnell") == TRUE)
+    {
+        CasterLvl = CasterLvl + 1;
+    }    
    
     //Declare major variables
     object oTarget = GetSpellTargetObject();

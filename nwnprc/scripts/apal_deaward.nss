@@ -49,6 +49,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eLink = EffectLinkEffects(eDeath, eDur);
 
     int CasterLvl = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)/2;
+    if (GetLocalInt(OBJECT_SELF, "Apal_DeathKnell") == TRUE)
+    {
+        CasterLvl = CasterLvl + 1;
+    }    
     int nDuration = CasterLvl;
 
     int nMetaMagic = GetMetaMagicFeat();

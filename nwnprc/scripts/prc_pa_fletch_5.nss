@@ -34,7 +34,7 @@ void main()
  }
 
 
- SetIdentified(CreateItemOnObject("NW_WAMMAR013", OBJECT_SELF, 99), TRUE);
+ SetIdentified(CreateItemOnObject("X2_WAMMAR013", OBJECT_SELF, 99), TRUE);
  SetXP(OBJECT_SELF,nNewXP);
  TakeGoldFromCreature(12000, OBJECT_SELF, TRUE);
 }

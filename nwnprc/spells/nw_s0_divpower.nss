@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nLevel = CasterLvl;
     int nHP = nLevel;
-    int nAttack = CalculateAttackBonus();
+    int nAttack = 1;
     int nStr = GetAbilityScore(oTarget, ABILITY_STRENGTH);
     int nStrength = (nStr - 18) * -1;
     if(nStrength < 0)

@@ -19,6 +19,7 @@
 //:: Last Update: 2003-10-07
 //:://////////////////////////////////////////////
 
+#include "inc_utility"
 
 //Changed by primogenitor to include CEP itemtypes
 
@@ -270,7 +271,7 @@ int IPGetIsItemEquipable(object oItem)
     // need to make sure that this function returns FALSE
     if(nBaseType==BASE_ITEM_INVALID) return FALSE;
 
-    string sResult = Get2DAString("baseitems","EquipableSlots",nBaseType);
+    string sResult = Get2DACache("baseitems","EquipableSlots",nBaseType);
     return  (sResult != "0x00000");
 }
 
@@ -600,7 +601,7 @@ int IPGetIsMeleeWeapon(object oItem)
 int IPGetIsBludgeoningWeapon(object oItem)
 {
   int nBT = GetBaseItemType(oItem);
-  int nWeapon =  ( StringToInt(Get2DAString("baseitems","WeaponType",nBT)));
+  int nWeapon =  ( StringToInt(Get2DACache("baseitems","WeaponType",nBT)));
   // 2 = bludgeoning
   return (nWeapon == 2);
 }
@@ -614,7 +615,7 @@ int IPGetIsBludgeoningWeapon(object oItem)
 int IPGetIPConstCastSpellFromSpellID(int nSpellID)
 {
     // look up Spell Property Index
-    string sTemp = Get2DAString("des_crft_spells","IPRP_SpellIndex",nSpellID);
+    string sTemp = Get2DACache("des_crft_spells","IPRP_SpellIndex",nSpellID);
     /*
     if (sTemp == "") // invalid nSpellID
     {
@@ -663,8 +664,8 @@ int IPGetItemHasItemOnHitPropertySubType(object oTarget, int nSubType)
 int IPGetNumberOfArmorAppearances(int nPart)
 {
     int nRet;
-    //SpeakString(Get2DAString(X2_IP_ARMORPARTS_2DA ,"NumParts",nPart));
-    nRet = StringToInt(Get2DAString(X2_IP_ARMORPARTS_2DA ,"NumParts",nPart));
+    //SpeakString(Get2DACache(X2_IP_ARMORPARTS_2DA ,"NumParts",nPart));
+    nRet = StringToInt(Get2DACache(X2_IP_ARMORPARTS_2DA ,"NumParts",nPart));
     return nRet;
 }
 
@@ -690,7 +691,7 @@ int IPGetArmorAppearanceType(object oArmor, int nPart, int nMode)
 
     if (nPart ==ITEM_APPR_ARMOR_MODEL_TORSO)
     {
-        nRet = StringToInt(Get2DAString(X2_IP_ARMORAPPEARANCE_2DA ,sMode,nCurrApp));
+        nRet = StringToInt(Get2DACache(X2_IP_ARMORAPPEARANCE_2DA ,sMode,nCurrApp));
         return nRet;
     }
     else

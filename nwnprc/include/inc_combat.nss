@@ -449,7 +449,7 @@ int GetFeatByWeaponType(int iType, string sFeat)
 int GetMeleeWeaponCriticalRange(object oPC, object oWeap)
 {
     int iType = GetBaseItemType(oWeap);
-    int nThreat = StringToInt(Get2DAString("baseitems", "CritThreat", iType));
+    int nThreat = StringToInt(Get2DACache("baseitems", "CritThreat", iType));
     int bKeen = GetItemHasItemProperty(oWeap, ITEM_PROPERTY_KEEN);
     int bImpCrit = GetHasFeat(GetFeatByWeaponType(iType, "ImprovedCrit"), oPC);
 
@@ -468,7 +468,7 @@ int DoMeleeAttack(object oPC, object oWeap, object oTarget, int iMod = 0, int bS
     int iType = GetBaseItemType(oWeap);
     int iCritThreat = GetMeleeWeaponCriticalRange(oPC, oWeap);
     int bFinesse = GetHasFeat(FEAT_WEAPON_FINESSE, oPC);
-    int bLight = StringToInt(Get2DAString("baseitems", "WeaponSize", iType)) <= 2 || iType == BASE_ITEM_RAPIER;
+    int bLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iType)) <= 2 || iType == BASE_ITEM_RAPIER;
     int iEnhancement = GetWeaponEnhancement(oWeap);
         iEnhancement = iEnhancement < 0 ? 0 : iEnhancement;
     int bFocus = GetHasFeat(GetFeatByWeaponType(iType, "Focus"), oPC);
@@ -531,9 +531,9 @@ int GetMeleeWeaponDamage(object oPC, object oWeap, int bCrit = FALSE,int iDamage
 {
     //Declare in instantiate major variables
     int iType = GetBaseItemType(oWeap);
-    int nSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iType));
-    int nDice = StringToInt(Get2DAString("baseitems", "NumDice", iType));
-    int nCritMult = StringToInt(Get2DAString("baseitems", "CritHitMult", iType));
+    int nSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iType));
+    int nDice = StringToInt(Get2DACache("baseitems", "NumDice", iType));
+    int nCritMult = StringToInt(Get2DACache("baseitems", "CritHitMult", iType));
     int nMassiveCrit;
     int iStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
         iStr = iStr < 0 ? 0 : iStr;
@@ -608,7 +608,7 @@ int GetWeaponEnhancement(object oWeap)
 int GetWeaponDamageType(object oWeap)
 {
    int iWeaponType = GetBaseItemType(oWeap);
-   int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
+   int iDamageType = StringToInt(Get2DACache("baseitems","WeaponType",iWeaponType));
    switch(iDamageType)
    {
       case 0: return -1; break;
@@ -694,9 +694,9 @@ int GetRangedWeaponDamage(object oPC, object oWeap, int bCrit = FALSE,int iDamag
 {
     //Declare in instantiate major variables
     int iType = GetBaseItemType(oWeap);
-    int nSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iType));
-    int nDice = StringToInt(Get2DAString("baseitems", "NumDice", iType));
-    int nCritMult = StringToInt(Get2DAString("baseitems", "CritHitMult", iType));
+    int nSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iType));
+    int nDice = StringToInt(Get2DACache("baseitems", "NumDice", iType));
+    int nCritMult = StringToInt(Get2DACache("baseitems", "CritHitMult", iType));
     int nMassiveCrit;
     int iStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
         iStr = iStr < 0 ? 0 : iStr;

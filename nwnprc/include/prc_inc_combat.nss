@@ -52,6 +52,7 @@
 #include "prc_inc_sneak"
 #include "prc_inc_unarmed"
 #include "prc_inc_util"
+#include "inc_utility"
 
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
@@ -741,7 +742,7 @@ int GetFeatByWeaponType(int iType, string sFeat)
 int GetWeaponCriticalRange(object oPC, object oWeap)
 {
     int iType = GetBaseItemType(oWeap);
-    int nThreat = StringToInt(Get2DAString("baseitems", "CritThreat", iType));
+    int nThreat = StringToInt(Get2DACache("baseitems", "CritThreat", iType));
     int bKeen = GetItemHasItemProperty(oWeap, ITEM_PROPERTY_KEEN);
     int bImpCrit = GetHasFeat(GetFeatByWeaponType(iType, "ImprovedCrit"), oPC);
     int bIsWeaponOfChoice = GetHasFeat(GetFeatByWeaponType(iType, "WeaponOfChoice"), oPC);
@@ -781,7 +782,7 @@ int GetWeaponCriticalRange(object oPC, object oWeap)
 int GetWeaponCritcalMultiplier(object oPC, object oWeap)
 {
      int iWeaponType = GetBaseItemType(oWeap);
-     int iCriticalMultiplier = StringToInt(Get2DAString("baseitems", "CritHitMult", iWeaponType));     
+     int iCriticalMultiplier = StringToInt(Get2DACache("baseitems", "CritHitMult", iWeaponType));     
      int bIsWeaponOfChoice = GetHasFeat(GetFeatByWeaponType(iWeaponType, "WeaponOfChoice"), oPC);
      
      if(bIsWeaponOfChoice && GetHasFeat(FEAT_INCREASE_MULTIPLIER, oPC) )
@@ -1322,7 +1323,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      int bIsInMelee = GetMeleeAttackers15ft(oAttacker);
      
      // cache result, might increase speed if this is an issue
-     int bLight = StringToInt(Get2DAString("baseitems", "WeaponSize", iWeaponType)) <= 2 || iWeaponType == BASE_ITEM_RAPIER;
+     int bLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iWeaponType)) <= 2 || iWeaponType == BASE_ITEM_RAPIER;
 
      int iEnhancement = GetWeaponEnhancement(oWeap, oDefender, oAttacker);
 
@@ -1390,7 +1391,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
                 }
                 
                 int iOffHandWeapType = GetBaseItemType(oWeapL);
-                int bOffHandLight = StringToInt(Get2DAString("baseitems", "WeaponSize", iOffHandWeapType)) <= 2 || iOffHandWeapType == BASE_ITEM_RAPIER;
+                int bOffHandLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iOffHandWeapType)) <= 2 || iOffHandWeapType == BASE_ITEM_RAPIER;
                 
                 int iAttackPenalty;
                 
@@ -2662,8 +2663,8 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      int iWeaponType = GetBaseItemType(oWeapon);
      
      // only read the data if it is not already given
-     if(iNumSides == 0) iNumSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iWeaponType));
-     if(iNumDice  == 0) iNumDice  = StringToInt(Get2DAString("baseitems", "NumDice", iWeaponType)); 
+     if(iNumSides == 0) iNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iWeaponType));
+     if(iNumDice  == 0) iNumDice  = StringToInt(Get2DACache("baseitems", "NumDice", iWeaponType)); 
      if(iCriticalMultiplier == 0)  iCriticalMultiplier = GetWeaponCritcalMultiplier(oAttacker, oWeapon);
 
      // Returns proper unarmed damage if they are a monk
@@ -3238,8 +3239,8 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      
      // get weapon information
      int iMainWeaponType = GetBaseItemType(sAttackVars.oWeaponR);
-     sAttackVars.iMainNumSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iMainWeaponType));
-     sAttackVars.iMainNumDice = StringToInt(Get2DAString("baseitems", "NumDice", iMainWeaponType));
+     sAttackVars.iMainNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iMainWeaponType));
+     sAttackVars.iMainNumDice = StringToInt(Get2DACache("baseitems", "NumDice", iMainWeaponType));
      sAttackVars.iMainCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponR);
      
      // Returns proper unarmed damage if they are a monk
@@ -3346,8 +3347,8 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           sAttackVars.iOffHandWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponL, 1);
           
           iOffHandWeaponType = GetBaseItemType(sAttackVars.oWeaponL);
-          sAttackVars.iOffHandNumSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iOffHandWeaponType));
-          sAttackVars.iOffHandNumDice = StringToInt(Get2DAString("baseitems", "NumDice", iOffHandWeaponType));
+          sAttackVars.iOffHandNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iOffHandWeaponType));
+          sAttackVars.iOffHandNumDice = StringToInt(Get2DACache("baseitems", "NumDice", iOffHandWeaponType));
           sAttackVars.iOffHandCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponL);
           
           //SendMessageToPC(oAttacker, "Off Hand Weapon does " + IntToString(iOffHandNumDice) + "d" + IntToString(iOffHandNumSides) + "Damage and has a crit multiplier of " + IntToString(iOffHandCritMult));

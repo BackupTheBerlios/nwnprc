@@ -110,7 +110,7 @@ void main()
     if (GetHasFeat(FEAT_TWO_WEAPON_DEFENSE,oPC))
     {
        int iType = GetBaseItemType(oWeapR);
-       int iSize = StringToInt(Get2DAString("baseitems", "DieToRoll", iType));
+       int iSize = StringToInt(Get2DACache("baseitems", "DieToRoll", iType));
        if(oWeapR == OBJECT_INVALID ||iType != 4 &&( oWeapL == OBJECT_INVALID || 
             GetBaseItemType(oWeapL) == BASE_ITEM_LARGESHIELD ||
             GetBaseItemType(oWeapL) == BASE_ITEM_TOWERSHIELD ||

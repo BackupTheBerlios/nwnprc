@@ -38,7 +38,7 @@
 
 int GetIsSlashingWeapon(object oItem)
 {
-    int iWeapType = StringToInt(Get2DAString("baseitems", "WeaponType", GetBaseItemType(oItem)));
+    int iWeapType = StringToInt(Get2DACache("baseitems", "WeaponType", GetBaseItemType(oItem)));
     
     if (iWeapType == 3 || iWeapType == 4) // slashing or slashing & piercing
         return TRUE;

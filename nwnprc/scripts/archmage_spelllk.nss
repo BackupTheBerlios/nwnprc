@@ -9,8 +9,8 @@ void main()
 {
     object focus = GetItemPossessedBy(OBJECT_SELF, "ArchmagesFocusofPower");
     int nMetaMagic = GetMetaMagicFeat();
-    string nSpellLevel = Get2DAString("spells", "Wiz_Sorc", GetSpellId());
-    string nEpicSpell = Get2DAString("spells", "Innate", GetSpellId());
+    string nSpellLevel = Get2DACache("spells", "Wiz_Sorc", GetSpellId());
+    string nEpicSpell = Get2DACache("spells", "Innate", GetSpellId());
 
     /* Whatever happens next we must restore the hook */
     PRCSetUserSpecificSpellScript(GetLocalString(OBJECT_SELF, "spelllike_save_overridespellscript"));

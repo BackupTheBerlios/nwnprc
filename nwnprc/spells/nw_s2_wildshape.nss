@@ -85,9 +85,9 @@ void main()
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_WILD_SHAPE, FALSE));
 
-    int bWeapon = StringToInt(Get2DAString("polymorph","MergeW",nPoly)) == 1;
-    int bArmor  = StringToInt(Get2DAString("polymorph","MergeA",nPoly)) == 1;
-    int bItems  = StringToInt(Get2DAString("polymorph","MergeI",nPoly)) == 1;
+    int bWeapon = StringToInt(Get2DACache("polymorph","MergeW",nPoly)) == 1;
+    int bArmor  = StringToInt(Get2DACache("polymorph","MergeA",nPoly)) == 1;
+    int bItems  = StringToInt(Get2DACache("polymorph","MergeI",nPoly)) == 1;
 
     object oWeaponOld = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF);
     object oArmorOld = GetItemInSlot(INVENTORY_SLOT_CHEST,OBJECT_SELF);

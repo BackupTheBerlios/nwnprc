@@ -42,8 +42,8 @@ void main()
               
               // get weapon information
               int iWeaponType = GetBaseItemType(oWeap);
-              int iNumSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iWeaponType));
-              int iNumDice = StringToInt(Get2DAString("baseitems", "NumDice", iWeaponType));
+              int iNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iWeaponType));
+              int iNumDice = StringToInt(Get2DACache("baseitems", "NumDice", iWeaponType));
               int iCritMult = GetWeaponCritcalMultiplier(oPC, oWeap);
               int iDamType = GetWeaponDamageType(oWeap);
              

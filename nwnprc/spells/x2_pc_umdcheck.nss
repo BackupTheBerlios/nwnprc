@@ -109,14 +109,14 @@ int X2_UMD()
         return TRUE;
     }
 
-    string sPropID = Get2DAString("des_crft_spells","IPRP_SpellIndex",nSpellID);
+    string sPropID = Get2DACache("des_crft_spells","IPRP_SpellIndex",nSpellID);
 
     // -------------------------------------------------------------------------
     //I am using des_crft_spells.2da Innate Level column here, not (as would be correct)
     //the IPPR_Spells.2da InnateLvl column, because some of the scrolls in
     //the game (i.e. light) would not be useable (DC 30+)
     // -------------------------------------------------------------------------
-    int nInnateLevel = StringToInt(Get2DAString("des_crft_spells","Level",nSpellID));
+    int nInnateLevel = StringToInt(Get2DACache("des_crft_spells","Level",nSpellID));
     int nSkill = SKILL_USE_MAGIC_DEVICE;
 
     int nPropID = StringToInt(sPropID);

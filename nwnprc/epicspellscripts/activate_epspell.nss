@@ -807,9 +807,9 @@ void main()
     nGP = nDC * GOLD_MULTIPLIER;
     nXP = nGP / XP_FRACTION;
     sName = GetStringByStrRef(StringToInt
-        (Get2DAString("feat", "feat", nFE)));
+        (Get2DACache("feat", "feat", nFE)));
     sDesc = GetStringByStrRef(StringToInt
-        (Get2DAString("feat", "description", nFE)));
+        (Get2DACache("feat", "description", nFE)));
 
     // Information message sent to player about the Epic Spell.
     SendMessageToPC(OBJECT_SELF, "-------------------------------------------");
@@ -824,16 +824,16 @@ void main()
         IntToString(nGP) + ".");
     if (nR1 != 0)
         SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
-        (Get2DAString("feat", "feat", nR1))));
+        (Get2DACache("feat", "feat", nR1))));
     if (nR2 != 0)
         SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
-        (Get2DAString("feat", "feat", nR2))));
+        (Get2DACache("feat", "feat", nR2))));
     if (nR3 != 0)
         SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
-        (Get2DAString("feat", "feat", nR3))));
+        (Get2DACache("feat", "feat", nR3))));
     if (nR4 != 0)
         SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
-        (Get2DAString("feat", "feat", nR4))));
+        (Get2DACache("feat", "feat", nR4))));
     if (nXC != 0 && XP_COSTS == TRUE)
         SendMessageToPC(OBJECT_SELF, " - Additionally, " + IntToString(nXC) +
             " experience points are spent per casting.");

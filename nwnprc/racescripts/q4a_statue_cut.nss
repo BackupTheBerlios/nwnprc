@@ -36,7 +36,7 @@ void main()
       //SpeakString("[NOT IN STRING EDITOR] You are too large to operate the lever.");
       SpeakStringByStrRef(85510);
    }
-   else if(GetAppearanceType(oPC) != StringToInt(Get2DAString("racialtypes", "Appearance", GetRacialType(oPC)))
+   else if(GetAppearanceType(oPC) != StringToInt(Get2DACache("racialtypes", "Appearance", GetRacialType(oPC)))
 /*         GetAppearanceType(oPC) != APPEARANCE_TYPE_DWARF &&
            GetAppearanceType(oPC) != APPEARANCE_TYPE_ELF &&
            GetAppearanceType(oPC) != APPEARANCE_TYPE_HUMAN &&

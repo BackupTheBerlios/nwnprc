@@ -31,7 +31,7 @@ if(temp<10)
     {
     temp++;
     }
-    int nLevel = StringToInt(Get2DAString("spells","Wiz_Sorc",nSpell));
+    int nLevel = StringToInt(Get2DACache("spells","Wiz_Sorc",nSpell));
     if(nLevel > 0)
     {
     SetLocalArrayInt(oPC,"arcstrike",temp,nLevel);

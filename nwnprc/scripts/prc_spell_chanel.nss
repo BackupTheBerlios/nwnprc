@@ -24,7 +24,7 @@ int nFeat)
 //If there are charges left for the day, we apply the temporary item property
 //on hit cast spell (with a 10 hours duration) and mark the weapon with a local int
 //so that we can find out if there is a spell stored on the weapon.
-    string sSpellScript = Get2DAString("spells","ImpactScript",nSpell);
+    string sSpellScript = Get2DACache("spells","ImpactScript",nSpell);
     itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,nClevel);
     IPSafeAddItemProperty(oWeapon,ipTest,36000.0);
     SetLocalInt(oWeapon,"spell",1);

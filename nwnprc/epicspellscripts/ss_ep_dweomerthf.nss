@@ -48,7 +48,7 @@ void main()
                     nTargetSpell = GetBestAvailableSpell(oTarget);
                     if (nTargetSpell != 99999)
                     {
-                        int nSpellIP = StringToInt(Get2DAString
+                        int nSpellIP = StringToInt(Get2DACache
                             ("des_crft_spells", // Name of the 2DA file.
                             "IPRP_SpellIndex",  // The column.
                             nTargetSpell));     // The row.

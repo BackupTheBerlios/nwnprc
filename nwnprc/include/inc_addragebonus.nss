@@ -1,3 +1,5 @@
+#include "inc_utility"
+
 //:: Created by Mr. Bumpkin
 //:: Include for all rages
 //:: This function gets called right after the attribute bonuses are
@@ -160,7 +162,7 @@ int GetDamageTypeOfWeapon(int nInventorySlot, object oCreature = OBJECT_SELF)
 // 2da lookup to see what kind of damage it deals, then find the equivalent constant
 
   int iWeaponType = GetBaseItemType(oCurrentWeapon);
-  int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
+  int iDamageType = StringToInt(Get2DACache("baseitems","WeaponType",iWeaponType));
   switch(iDamageType)
   {
      case 1: return DAMAGE_TYPE_PIERCING; break;

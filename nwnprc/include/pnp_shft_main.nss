@@ -18,6 +18,7 @@
 #include "prc_inc_function"
 #include "inc_persist_loca"
 #include "inc_array_c"
+#include "inc_utility"
 
 //clears out all extra shifter creature items
 void ClearShifterItems(object oPC);
@@ -2070,7 +2071,7 @@ int GetTrueForm(object oPC)
 {
     int nRace = GetRacialType(OBJECT_SELF);
     int nPCForm;
-	//nPCForm = StringToInt(Get2DAString("racialtypes", "Appearance", nRace));
+	//nPCForm = StringToInt(Get2DACache("racialtypes", "Appearance", nRace));
 
 //    object oSparkOfLife = GetItemPossessedBy( oPC, "sparkoflife" );
     int iIsStored = GetPersistantLocalInt( oPC, "AppearanceIsStored" );

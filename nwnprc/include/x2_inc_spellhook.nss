@@ -25,6 +25,7 @@
 //#include "prc_class_const"
 #include "prc_inc_switch"
 #include "prc_inc_itmrstr"
+#include "inc_utility"
 
 const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 
@@ -151,7 +152,7 @@ int X2UseMagicDeviceCheck()
 //------------------------------------------------------------------------------
 int X2CastOnItemWasAllowed(object oItem)
 {
-    int bAllow = (Get2DAString(X2_CI_CRAFTING_SP_2DA,"CastOnItems",GetSpellId()) == "1");
+    int bAllow = (Get2DACache(X2_CI_CRAFTING_SP_2DA,"CastOnItems",GetSpellId()) == "1");
     if (!bAllow)
     {
         FloatingTextStrRefOnCreature(83453, OBJECT_SELF); // not cast spell on item
@@ -264,7 +265,7 @@ int X2GetSpellCastOnSequencerItem(object oItem)
     }
 
     // Check if the spell is marked as hostile in spells.2da
-    int nHostile = StringToInt(Get2DAString("spells","HostileSetting",GetSpellId()));
+    int nHostile = StringToInt(Get2DACache("spells","HostileSetting",GetSpellId()));
     if(nHostile ==1)
     {
         FloatingTextStrRefOnCreature(83885,OBJECT_SELF);

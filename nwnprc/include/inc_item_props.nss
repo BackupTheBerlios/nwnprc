@@ -20,6 +20,7 @@
 
 //I know its messy, but this is the easiest place to hook this in
 //Primogentior
+//#include "inc_utility"
 #include "inc_prc_npc"
 
 // * Checks to see if oPC has an item created by sRes in his/her inventory
@@ -96,7 +97,7 @@ int GetItemDamageType(object oItem);
 // *
 // * Because of this strange Bioware behavior, you'll want to only call this code as such:
 // *
-// * if (StringToInt(Get2DAString("baseitems","WeaponType",GetBaseItemType(oWeapon))) != 4)
+// * if (StringToInt(Get2DACache("baseitems","WeaponType",GetBaseItemType(oWeapon))) != 4)
 // * {
 // *     IPEnhancementBonusToDamageBonus(oWeapon);
 // * }
@@ -838,6 +839,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
 int GetItemPropertyDamageType(object oItem)
 {
    int iWeaponType = GetBaseItemType(oItem);
+   //int iDamageType = StringToInt(Get2DACache("baseitems","WeaponType",iWeaponType));
    int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
    switch(iDamageType)
    {
@@ -853,7 +855,8 @@ int GetItemPropertyDamageType(object oItem)
 int GetItemDamageType(object oItem)
 {
    int iWeaponType = GetBaseItemType(oItem);
-   int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
+   //int iDamageType = StringToInt( Get2DACache("baseitems","WeaponType",iWeaponType) );
+   int iDamageType = StringToInt( Get2DAString("baseitems","WeaponType",iWeaponType) );
    switch(iDamageType)
    {
       case 0: return -1; break;

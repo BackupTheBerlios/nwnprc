@@ -123,7 +123,7 @@ void main()
     // Inform player
     SendMessageToPC(oPC,
 	                GetStringByStrRef(STRREF_POISON_FOOD_USE_1) + " " +
-	                GetStringByStrRef(StringToInt(Get2DAString("poison", "Name", nRow))) + " " +
+	                GetStringByStrRef(StringToInt(Get2DACache("poison", "Name", nRow))) + " " +
 	                GetStringByStrRef(STRREF_POISON_FOOD_USE_2) + " " +
 	                GetName(oTarget) + "."
 	               );  //"You put some xxxx into yyyy"

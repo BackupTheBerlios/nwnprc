@@ -236,7 +236,7 @@ int GetRealRand(int nMax, int nMin = 0)
 
     int nRow =    GetLocalInt(GetModule(), "LastRow");
     int nColumn = GetLocalInt(GetModule(), "LastColumn");
-    int nNumber = StringToInt(Get2DAString("RealRandom", IntToString(nColumn%10), nRow%100));
+    int nNumber = StringToInt(Get2DACache("RealRandom", IntToString(nColumn%10), nRow%100));
     SetLocalInt(GetModule(), "LastRow", nNumber);
     SetLocalInt(GetModule(), "LastColumn", nRow);
     nNumber = (nNumber%(nMax-nMin))+nMin;

@@ -152,9 +152,9 @@ int GetRangedWeaponDamageS(object oPC, object oWeap, int bCrit = FALSE,int iDama
 {
     //Declare in instantiate major variables
     int iType = GetBaseItemType(oWeap);
-    int nSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iType));
-    int nDice = StringToInt(Get2DAString("baseitems", "NumDice", iType));
-    int nCritMult = StringToInt(Get2DAString("baseitems", "CritHitMult", iType))+bCritMult;
+    int nSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iType));
+    int nDice = StringToInt(Get2DACache("baseitems", "NumDice", iType));
+    int nCritMult = StringToInt(Get2DACache("baseitems", "CritHitMult", iType))+bCritMult;
     int nMassiveCrit;
     int bSpec = GetHasFeat(GetFeatByWeaponType(iType, "Specialization"), oPC);
     int bESpec = GetHasFeat(GetFeatByWeaponType(iType, "EpicSpecialization"), oPC);
@@ -276,7 +276,7 @@ int DoRangedAttackS(object oPC, object oWeap, object oTarget, int iMod = 0, int 
     string sFeedback = GetName(oPC) + " attacks " + GetName(oTarget) + ": ";
     int iReturn = 0;
 
-    int RangeWeap=StringToInt(Get2DAString("baseitems", "RangedWeapon", iType));;
+    int RangeWeap=StringToInt(Get2DACache("baseitems", "RangedWeapon", iType));;
     int iBonus;
     int iEnhancement = GetWeaponRangeEnhancement(oWeap,oPC) ;
 
@@ -666,9 +666,9 @@ int GetMeleeWeaponDamageS(object oPC, object oWeap, object oTarget ,int bCrit = 
 {
     //Declare in instantiate major variables
     int iType = GetBaseItemType(oWeap);
-    int nSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iType));
-    int nDice = StringToInt(Get2DAString("baseitems", "NumDice", iType));
-    int nCritMult = StringToInt(Get2DAString("baseitems", "CritHitMult", iType));
+    int nSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iType));
+    int nDice = StringToInt(Get2DACache("baseitems", "NumDice", iType));
+    int nCritMult = StringToInt(Get2DACache("baseitems", "CritHitMult", iType));
     int nMassiveCrit;
     int iStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
         iStr = iStr < 0 ? 0 : iStr;

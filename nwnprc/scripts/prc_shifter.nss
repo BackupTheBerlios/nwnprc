@@ -66,13 +66,13 @@ void main()
 
     while(sShifterLevel != "")
     {
-        sShifterLevel = Get2DAString(sShifterFile,"SLEVEL",i);
+        sShifterLevel = Get2DACache(sShifterFile,"SLEVEL",i);
         nShiftLevelFile = StringToInt(sShifterLevel);
         if ((nShiftLevelFile <= nShifterLevel) && (sShifterLevel != ""))
         {
 		// The creature is a standard that we apply to the shifters spark of life list
-		sCreatureResRef = Get2DAString(sShifterFile,"CResRef",i);
-	        sCreatureName = Get2DAString(sShifterFile,"CreatureName",i);
+		sCreatureResRef = Get2DACache(sShifterFile,"CResRef",i);
+	        sCreatureName = Get2DACache(sShifterFile,"CreatureName",i);
 	        RecognizeCreature( oPC, sCreatureResRef, sCreatureName);
         }
 	i++;

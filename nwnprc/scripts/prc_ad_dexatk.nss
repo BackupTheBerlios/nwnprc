@@ -12,8 +12,8 @@ if (GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) != oWeapon)
 }
 
     int iWeaponType = GetBaseItemType(oWeapon);
-    int iNumDice = StringToInt(Get2DAString("baseitems","NumDice",iWeaponType));
-    int iDieToRoll = StringToInt(Get2DAString("baseitems","DieToRoll",iWeaponType));
+    int iNumDice = StringToInt(Get2DACache("baseitems","NumDice",iWeaponType));
+    int iDieToRoll = StringToInt(Get2DACache("baseitems","DieToRoll",iWeaponType));
     int iAttack = iNumDice * iDieToRoll - 1;
 
     effect eAttackIncrease = EffectAttackIncrease(iAttack,ATTACK_BONUS_MISC);

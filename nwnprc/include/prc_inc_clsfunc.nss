@@ -1502,9 +1502,9 @@ void LycanthropePoly(object oPC, int nPoly)
     ePoly = EffectPolymorph(nPoly);
     ePoly = SupernaturalEffect(ePoly);
 
-    int bWeapon = StringToInt(Get2DAString("polymorph","MergeW",nPoly)) == 1;
-    int bArmor  = StringToInt(Get2DAString("polymorph","MergeA",nPoly)) == 1;
-    int bItems  = StringToInt(Get2DAString("polymorph","MergeI",nPoly)) == 1;
+    int bWeapon = StringToInt(Get2DACache("polymorph","MergeW",nPoly)) == 1;
+    int bArmor  = StringToInt(Get2DACache("polymorph","MergeA",nPoly)) == 1;
+    int bItems  = StringToInt(Get2DACache("polymorph","MergeI",nPoly)) == 1;
 
     object oWeaponOld = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     object oArmorOld = GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);

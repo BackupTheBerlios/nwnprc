@@ -19,7 +19,7 @@ int RangedAttackBonus(object oPC, object oWeap, object oTarget, int iMod = 0)
     int iWis = GetAbilityModifier(ABILITY_WISDOM,oPC) && GetHasFeat(FEAT_ZEN_ARCHERY,oPC);
         iDex = iWis>iDex ? iWis:iDex;
 
-    int RangeWeap=StringToInt(Get2DAString("baseitems", "RangedWeapon", iType));;
+    int RangeWeap=StringToInt(Get2DACache("baseitems", "RangedWeapon", iType));;
     int iBonus;
     int iEnhancement;
 
@@ -100,7 +100,7 @@ void main()
 
    object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
 
-   int iSizeT =StringToInt(Get2DAString("baseitems", "WeaponSize", GetBaseItemType(oItem)));
+   int iSizeT =StringToInt(Get2DACache("baseitems", "WeaponSize", GetBaseItemType(oItem)));
 
    int iBonusA = iSizeT > 2 ? (iSizeT-2)*4:0 ;
    effect eDamage;

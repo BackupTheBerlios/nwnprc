@@ -7,6 +7,7 @@
 //:: Last Updated On: March 13, 2004
 //:://////////////////////////////////////////////
 
+#include "inc_utility"
 
 //////////////////////////////////////////////////////////////////////////////
 //  CONSTANTS
@@ -28,7 +29,7 @@ void TryToIDItems(object oPC = OBJECT_SELF)
 {
     int nLore = GetSkillRank(SKILL_LORE, oPC);
     int nGP;
-    string sMax = Get2DAString("SkillVsItemCost",
+    string sMax = Get2DACache("SkillVsItemCost",
         "DeviceCostMax", nLore);
     int nMax = StringToInt(sMax);
     if (sMax == "") nMax = 120000000;

@@ -91,7 +91,7 @@ void IronPower(object oPC, object oWeap, int iBonusType)
          // (See inc_item_props.nss)
          // If a weapon does piercing and slashing, we do not want to add the damage.
          // in the baseitems.2da, if a weapon's type is "4", it does piercing AND slashing.
-         if (StringToInt(Get2DAString("baseitems","WeaponType",GetBaseItemType(oWeap))) != 4)
+         if (StringToInt(Get2DACache("baseitems","WeaponType",GetBaseItemType(oWeap))) != 4)
          {
              IPEnhancementBonusToDamageBonus(oWeap);
          }

@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "NW_I0_GENERIC"
+#include "inc_utility"
 // Color text tags only compile using nwnnsscomp
 
 //:://////////////////////////////////////////////
@@ -415,12 +416,12 @@ int CreateRecipeFromItem(object oItem, object oPC)
     int i = 0;
     while (sRecipeTag == "NULL")
     {
-        string sItemResRefRead = Get2DAString(sItemIreqFile,"L_RESREF",i);
+        string sItemResRefRead = Get2DACache(sItemIreqFile,"L_RESREF",i);
         //SendMessageToPC(oPC,"reading "+sItemResRefRead);
         if (sItemResRefRead == sItemResRef)
         {
             SendMessageToPC(oPC,"Found item in file");
-            sRecipeTag = Get2DAString(sItemIreqFile,"RECIPE_TAG",i);
+            sRecipeTag = Get2DACache(sItemIreqFile,"RECIPE_TAG",i);
             // Once we have the recipe tag make a new recipe with that tag
             // so the user can make an item from it.
             // We have no way to change the name so the user will have some
@@ -511,10 +512,10 @@ struct ireqreport CheckIReqs(string sIReqTable, int nDisplay=TRUE, int nConsumeI
     object oTempObject;
     struct ireqreport iReport;
 // iterate over the ireq table entries and sort between them..
-    string sReqType = Get2DAString(sIReqTable, "ReqType", nIReq);
+    string sReqType = Get2DACache(sIReqTable, "ReqType", nIReq);
     do
     {
-        sCurrentParam1 = Get2DAString(sIReqTable, "ReqParam1", nIReq);
+        sCurrentParam1 = Get2DACache(sIReqTable, "ReqParam1", nIReq);
         if (sReqType == sReqTypeCasterLevel) {
         // Expect Param1 to be a positive int.
             // Ignore any subsequent ones.
@@ -640,7 +641,7 @@ struct ireqreport CheckIReqs(string sIReqTable, int nDisplay=TRUE, int nConsumeI
             // Convert to int.
             nCurrentParam1 = StringToInt(sCurrentParam1);
             // Expect a subrace string in ReqParam2, **** for race only ireq
-            sCurrentParam2 = Get2DAString(sIReqTable, "ReqParam2", nIReq);
+            sCurrentParam2 = Get2DACache(sIReqTable, "ReqParam2", nIReq);
             // Check Match, if race matches...
             if ((GetRacialType(OBJECT_SELF) == nCurrentParam1) &&
                 // and.. SubRace is blank (not required) or also matches
@@ -692,7 +693,7 @@ struct ireqreport CheckIReqs(string sIReqTable, int nDisplay=TRUE, int nConsumeI
         } else if (sReqType == sReqTypeSkill) {
         // Expect the SkillID.  Convert to int.  Lookup Skill's name.  Append to Skills line.
             nCurrentParam1 = StringToInt(sCurrentParam1);
-            sCurrentParam2 = Get2DAString(sIReqTable, "ReqParam2", nIReq);
+            sCurrentParam2 = Get2DACache(sIReqTable, "ReqParam2", nIReq);
             nCurrentParam2 = StringToInt(sCurrentParam2);
             // Check Match
             if (GetSkillRank(nCurrentParam1) >= nCurrentParam2)
@@ -796,7 +797,7 @@ struct ireqreport CheckIReqs(string sIReqTable, int nDisplay=TRUE, int nConsumeI
         }  else if (sReqType == sReqTypeSkillOR) {
         // Expect the SkillID.  Convert to int.  Lookup Skill's name.  Append to Skills line.
             nCurrentParam1 = StringToInt(sCurrentParam1);
-            sCurrentParam2 = Get2DAString(sIReqTable, "ReqParam2", nIReq);
+            sCurrentParam2 = Get2DACache(sIReqTable, "ReqParam2", nIReq);
             nCurrentParam2 = StringToInt(sCurrentParam2);
             // Check Match
             if (GetSkillRank(nCurrentParam1) >= nCurrentParam2)
@@ -837,7 +838,7 @@ struct ireqreport CheckIReqs(string sIReqTable, int nDisplay=TRUE, int nConsumeI
             // Expect the level.  Convert.
             // Expect the class.  Convert.  Lookup Class name.  Append to Levels line.
             nCurrentParam1 = StringToInt(sCurrentParam1);
-            sCurrentParam2 = Get2DAString(sIReqTable, "ReqParam2", nIReq);
+            sCurrentParam2 = Get2DACache(sIReqTable, "ReqParam2", nIReq);
             nCurrentParam2 = StringToInt(sCurrentParam2);
             // Check Match
             if (GetLevelByClass(nCurrentParam2) >= nCurrentParam1)
@@ -861,7 +862,7 @@ struct ireqreport CheckIReqs(string sIReqTable, int nDisplay=TRUE, int nConsumeI
             // Expect the level.  Convert.
             // Expect the class.  Convert.  Lookup Class name.  Append to Levels line.
             nCurrentParam1 = StringToInt(sCurrentParam1);
-            sCurrentParam2 = Get2DAString(sIReqTable, "ReqParam2", nIReq);
+            sCurrentParam2 = Get2DACache(sIReqTable, "ReqParam2", nIReq);
             nCurrentParam2 = StringToInt(sCurrentParam2);
             // Check Match
             if (GetLevelByClass(nCurrentParam2) >= nCurrentParam1)
@@ -885,7 +886,7 @@ struct ireqreport CheckIReqs(string sIReqTable, int nDisplay=TRUE, int nConsumeI
             nLevelORReqs++;
 
         }
-        sReqType = Get2DAString(sIReqTable, "ReqType", ++nIReq);
+        sReqType = Get2DACache(sIReqTable, "ReqType", ++nIReq);
     } while (sReqType != "");
 
     // Calculate GP and XP costs to create
@@ -1084,7 +1085,7 @@ struct ireqreport CheckIReqs(string sIReqTable, int nDisplay=TRUE, int nConsumeI
 // GetFeatName: via lookup of the name strref from feat.2da
 string GetFeatName(int nFeatID)
 {
-    string sName = GetStringByStrRef(StringToInt(Get2DAString("Feat", "FEAT" ,nFeatID)));
+    string sName = GetStringByStrRef(StringToInt(Get2DACache("Feat", "FEAT" ,nFeatID)));
     if ((sName != "Bad Strref") && (sName != ""))
         {return sName;}
     else
@@ -1094,7 +1095,7 @@ string GetFeatName(int nFeatID)
 // GetSpellName: via lookup of the name strref from spells.2da
 string GetSpellName(int nSpellID)
 {
-    string sName = GetStringByStrRef(StringToInt(Get2DAString("spells", "Name" ,nSpellID)));
+    string sName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name" ,nSpellID)));
     if ((sName != "Bad Strref") && (sName != ""))
         {return sName;}
     else
@@ -1104,8 +1105,8 @@ string GetSpellName(int nSpellID)
 // GetSkillName: via lookup of the name strref from skills.2da
 string GetSkillName(int nSkillID)
 {
-    // GetStringByStrRef(StringToInt(Get2DAString("skills", "Name" ,nSkillID)));
-    string sName = GetStringByStrRef(StringToInt(Get2DAString("skills", "Name", nSkillID)));
+    // GetStringByStrRef(StringToInt(Get2DACache("skills", "Name" ,nSkillID)));
+    string sName = GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", nSkillID)));
     if ((sName != "Bad Strref") && (sName != ""))
         {return sName;}
     else
@@ -1115,8 +1116,8 @@ string GetSkillName(int nSkillID)
 // GetRaceName: via lookup of the name strref from racialtypes.2da
 string GetRacialTypeName(int nRacialTypeID)
 {
-    // GetStringByStrRef(StringToInt(Get2DAString("racialtypes", "Name" ,nRacialTypeID)));
-    string sName = GetStringByStrRef(StringToInt(Get2DAString("racialtypes", "Name", nRacialTypeID)));
+    // GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name" ,nRacialTypeID)));
+    string sName = GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nRacialTypeID)));
     if ((sName != "Bad Strref") && (sName != ""))
         {return sName;}
     else
@@ -1125,7 +1126,7 @@ string GetRacialTypeName(int nRacialTypeID)
 
 string GetClassName(int nClassID)
 {
-    string sName = GetStringByStrRef(StringToInt(Get2DAString("classes", "Name", nClassID)));
+    string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClassID)));
     if ((sName != "Bad Strref") && (sName != ""))
         {return sName;}
     else
@@ -1190,7 +1191,7 @@ string GetAlign(object oTarget=OBJECT_SELF)
 int GetAvailXP(object oTarget=OBJECT_SELF)
 {
     int nRow = GetCharacterLevel(oTarget) - 1;
-    int nAvailXP = GetXP(oTarget) - StringToInt(Get2DAString("exptable", "XP", nRow));
+    int nAvailXP = GetXP(oTarget) - StringToInt(Get2DACache("exptable", "XP", nRow));
     return nAvailXP;
 }
 

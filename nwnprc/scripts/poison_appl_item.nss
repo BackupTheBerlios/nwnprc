@@ -155,7 +155,7 @@ void main()
     // Inform player
     SendMessageToPC(oPC,
 	                GetStringByStrRef(STRREF_POISON_ITEM_USE_1) + " " +
-	                GetStringByStrRef(StringToInt(Get2DAString("poison", "Name", nRow))) + " " +
+	                GetStringByStrRef(StringToInt(Get2DACache("poison", "Name", nRow))) + " " +
 	                GetStringByStrRef(STRREF_POISON_ITEM_USE_2) + " " +
 	                GetName(oTarget) + "."
 	               );  //"You smear xxxx all over yyyy"

@@ -131,11 +131,11 @@ else
 //get the cost of the property
 
 if(iCost > 0)
-    fCharge1 = StringToFloat(Get2DAString("iprp_chargecost","Cost",iCost));
+    fCharge1 = StringToFloat(Get2DACache("iprp_chargecost","Cost",iCost));
 
-fCharge2 = StringToFloat(Get2DAString("iprp_chargecost","Cost",iNewCost));
+fCharge2 = StringToFloat(Get2DACache("iprp_chargecost","Cost",iNewCost));
 
-int iTotalCost = FloatToInt( (fCharge2 - fCharge1) * StringToFloat(Get2DAString("iprp_spells","Cost",iIPConst)) );
+int iTotalCost = FloatToInt( (fCharge2 - fCharge1) * StringToFloat(Get2DACache("iprp_spells","Cost",iIPConst)) );
 int iCostMax = GetLocalInt(oItem,"cout_instrument");
 // if the cost is too hight return
 if(iCostMax < iTotalCost)

@@ -98,6 +98,7 @@ it, but PRC one does.
 // - Added an option to specify fade speed to all fade functions.
 // - Destroying a PC copy would jump the player to his original location.
 
+#include "inc_utility"
 
 // Use this function at the begining of a cutscene for each object involved in the cutscene.
 // Notice that this function would fail if oObject already has another cutscene value (any
@@ -351,13 +352,13 @@ float CutGetConvDuration(string sConvName)
 {
     // first, get the row of sConvName
     int nRow = 0;
-    string sName = Get2DAString("des_cutconvdur", "Dialog", nRow);
+    string sName = Get2DACache("des_cutconvdur", "Dialog", nRow);
     while(sName != "")
     {
         if(sName == sConvName) // found the dialog we need, current nRow has the right value
-            return StringToFloat(Get2DAString("des_cutconvdur", "Duration", nRow));
+            return StringToFloat(Get2DACache("des_cutconvdur", "Duration", nRow));
         nRow++;
-        sName = Get2DAString("des_cutconvdur", "Dialog", nRow);
+        sName = Get2DACache("des_cutconvdur", "Dialog", nRow);
     }
     return 0.0; // error value
 }

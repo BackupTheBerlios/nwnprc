@@ -5,10 +5,12 @@
 
 int CheckMissingPowers(object oPC, int nClass)
 { 
+    int nLevel = GetLevelByClass(nClass, oPC);
+    if(!nLevel)
+        return FALSE;
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
     sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     int nCurrentPowers = GetPowerCount(oPC, nClass);
-    int nLevel = GetLevelByClass(nClass, oPC);
     int nMaxPowers = StringToInt(Get2DACache(sPsiFile, "PowersKnown", nLevel-1));
     if(nCurrentPowers < nMaxPowers)
     {

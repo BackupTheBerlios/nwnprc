@@ -23,7 +23,7 @@ lookup_and_cache_spell_field(int spell_id, string tag_base, string column, objec
 
 	// lookup and fill the cache if required
 	if (val == "") {
-		val = Get2DAString("spells", column, spell_id);
+		val = Get2DACache("spells", column, spell_id);
 
 		// Get2DAString() will return "" for invalid fields
 		// In order to make our per field cache work, we need to

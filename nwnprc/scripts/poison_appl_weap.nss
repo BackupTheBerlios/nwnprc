@@ -155,7 +155,7 @@ void main()
 		int nFail;
 		if(GetPRCSwitch(PRC_USE_DEXBASED_WEAPON_POISONING_FAILURE_CHANCE))
 		{
-			int nApplyDC = StringToInt(Get2DAString("poison", "Handle_DC", nRow));
+			int nApplyDC = StringToInt(Get2DACache("poison", "Handle_DC", nRow));
 			int nDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC) ;
 			int nCheck = d10(1)+10+nDex;
 			nFail = (nCheck < nApplyDC);
@@ -209,7 +209,7 @@ void main()
 	// Inform player and do VFX
 	SendMessageToPC(oPC,
 	                GetStringByStrRef(STRREF_POISON_APPLY_SUCCESS) + " " +
-	                GetStringByStrRef(StringToInt(Get2DAString("poison", "Name", nRow)))
+	                GetStringByStrRef(StringToInt(Get2DACache("poison", "Name", nRow)))
 	               );  //"You coat your weapon with xxxx"
 	                             
 	effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NATURE);

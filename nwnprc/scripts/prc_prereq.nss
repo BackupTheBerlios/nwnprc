@@ -10,6 +10,7 @@
 
 #include "prc_inc_spells"
 #include "prc_inc_sneak"
+#include "prc_alterations"
 
 int GetBardSpellLevel(object oPC)
 {
@@ -619,6 +620,14 @@ void FH(object oPC)
 
 }
 
+void BloodArcher(object oPC)
+{
+    if (MyPRCGetRacialType(oPC) == RACIAL_TYPE_ELF)
+        SetLocalInt(oPC, "PRC_PrereqBlArch", 1);
+    else
+        SetLocalInt(oPC, "PRC_PrereqBlArch", 0);
+}
+
 void main()
 {
         //Declare Major Variables
@@ -674,6 +683,7 @@ void main()
 	Rava(oPC);
 	WWolf(oPC);
 	FH(oPC);
+	BloodArcher(oPC);
 	// Truly massive debug message flood if activated.
 	/*
 	string sPRC_AllSpell;

@@ -5,6 +5,7 @@
 1     Hide             SKILL     5                   4           
 2     PBShot           FEAT      27                  ***         
 3     ScriptVar        VAR       PRC_AllowBLArcher   0           
-4     WeapSpeLongBow   FEAT      139                 ****        
-5     CraftWeapon      SKILL     26                  6           
-6     Lore             SKILL     7                   7           
+4     ScriptVar        VAR       PRC_PrereqBlArch    0           
+5     WeapSpeLongBow   FEAT      139                 ****        
+6     CraftWeapon      SKILL     26                  6           
+7     Lore             SKILL     7                   7           

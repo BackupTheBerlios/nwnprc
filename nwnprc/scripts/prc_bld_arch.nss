@@ -40,6 +40,12 @@ void main()
     if (iEquip ==1)  oItem = GetPCItemLastUnequipped();
     else             oItem = GetPCItemLastEquipped();
 
+    // Apply the attack bonus as an effect
+    if (GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND)) == BASE_ITEM_LONGBOW)
+        SetCompositeAttackBonus(oPC, "BloodBowAttackBonus", iBloodBowBonus);
+    else
+        SetCompositeAttackBonus(oPC, "BloodBowAttackBonus", 0);
+
     //if the item unequiped was destryed, the bow will sometimes loss its bonuses
     //it would apper that the next item along is being targeted, but when check it dosnt apare to be the bow
     //but is a valid object :\
@@ -50,8 +56,6 @@ void main()
 	{
 		 case BASE_ITEM_LONGBOW:
 		 //case BASE_ITEM_SHORTBOW:
-		          //REWRITE THIS USING SetCompositeAttackBonus:
-			  //SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
 			  SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);
 			  break;
 

@@ -31,10 +31,18 @@ void ActionCastSpellOnSelf(int iSpell)
     // Store current actions
     object oTarget = GetAttackTarget();
     int iAction = GetCurrentAction();
-    
+    int iDetec = GetActionMode(OBJECT_SELF, ACTION_MODE_DETECT);
+    int iSteal = GetActionMode(OBJECT_SELF, ACTION_MODE_STEALTH);
+    int iCount = GetActionMode(OBJECT_SELF, ACTION_MODE_COUNTERSPELL);
+
     // Clear actions (unless resting) and cast the spell on self.
     if (iAction != ACTION_REST) ClearAllActions(TRUE);
-    ActionCastSpellAtObject(iSpell, OBJECT_SELF, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+    ActionCastSpellAtObject(iSpell, OBJECT_SELF, METAMAGIC_QUICKEN, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+
+    // Restore action mode (stealth is disrupted :/)
+    if (iDetec) DelayCommand(0.1, SetActionMode(OBJECT_SELF, ACTION_MODE_DETECT, TRUE));
+    if (iSteal) DelayCommand(0.1, SetActionMode(OBJECT_SELF, ACTION_MODE_STEALTH, TRUE));
+    if (iCount) DelayCommand(0.1, SetActionMode(OBJECT_SELF, ACTION_MODE_COUNTERSPELL, TRUE));
 
     // Return to combat if you were fighting.    
     if (iAction == ACTION_ATTACKOBJECT) DelayCommand(0.1, ActionAttack(oTarget));

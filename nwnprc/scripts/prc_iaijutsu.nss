@@ -106,6 +106,10 @@ void main()
             oWeap = GetNextItemInInventory(oPC);
            }
          }
+         else
+         {
+         FloatingTextStringOnCreature("Must have Katana unequiped, in Inventory.",OBJECT_SELF);
+         }
      }
 
      else if(GetIsObjectValid(oItem2))

@@ -104,8 +104,9 @@ void main()
               RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC); 
          }
     
-         nMes = "*Removing Invallid Effects*";
-         FloatingTextStringOnCreature(nMes, oPC, FALSE);    
+         // debug code removed to not confuse players
+         // nMes = "*Removing Invallid Effects*";
+         // FloatingTextStringOnCreature(nMes, oPC, FALSE);    
     }
     else if( armorType > ARMOR_TYPE_LIGHT )
     {

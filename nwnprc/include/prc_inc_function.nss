@@ -105,6 +105,7 @@ void EvalPRCFeats(object oPC)
 
     if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
        && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)        ExecuteScript("ft_gtwf", oPC);
+    if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)               ExecuteScript("prc_lingdmg", oPC);
 
     // Miscellaneous
     ExecuteScript("ft_sanctmartial",oPC);

@@ -27,8 +27,7 @@ void main()
           if(willSave == 1)
           {
                RemoveSpellEffects(SPELL_FRENZY, OBJECT_SELF, OBJECT_SELF);
-               RemoveSpecificEffect(EFFECT_TYPE_DAMAGE_INCREASE, OBJECT_SELF);
-               RemoveSpecificEffect(EFFECT_TYPE_ATTACK_DECREASE, OBJECT_SELF);
+               RemoveSpellEffects(SPELL_SUPREME_POWER_ATTACK, OBJECT_SELF, OBJECT_SELF);
           }
      }
 }

@@ -47,8 +47,14 @@ void main()
         }
         
         // Removes effects of being winded
-        RemoveSpecificEffect(EFFECT_TYPE_ABILITY_DECREASE, oTarget);
-        RemoveSpecificEffect(EFFECT_TYPE_MOVEMENT_SPEED_DECREASE, oTarget);
+        effect eWind = GetFirstEffect(oTarget);
+        while (GetIsEffectValid(eWind))
+        {
+            if (GetEffectType(eWind) == EFFECT_TYPE_ABILITY_DECREASE || GetEffectType(eWind) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE)
+                if (GetEffectSpellId(eWind) == GetSpellId())
+                    RemoveEffect(oTarget, eWind);
+            eWind = GetNextEffect(oTarget);
+        }
         
         hasHaste = 0;
         acDecrease = 4;

@@ -9,6 +9,9 @@
 //:: Created By: Oni5115
 //:://////////////////////////////////////////////
 
+#include "prc_inc_clsfunc"
+#include "prc_spell_const"
+
 void main
 {
      // 10 + damage dealt in that hit
@@ -16,6 +19,6 @@ void main
      int save = WillSave(OBJECT_SELF, willSaveDC, SAVING_THROW_TYPE_NONE, OBJECT_SELF);
      if(save == 0)
      {
-          AssignCommand(OBJECT_SELF, ActionUseFeat(FEAT_FRENZY, OBJECT_SELF) );
+          ActionCastSpellOnSelf(SPELL_FRENZY);
      }
 }

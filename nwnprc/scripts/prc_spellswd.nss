@@ -46,7 +46,12 @@ void main()
         bSpells2 = GetHasFeat(FEAT_SPELLS_15, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_30_PERCENT : bSpells2;
 
     object oSkin = GetPCSkin(oPC);
+    object oShield = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 
     if(bSpells > 0)  SpellswordIgnoreSpellFailure(oPC, oSkin, bSpells, "SpellswordSFBonusNormal");
-    if(bSpells2 > 0) SpellswordIgnoreSpellFailure(oPC, oSkin, bSpells2, "SpellswordSFBonusEpic");
+
+    if (GetBaseItemType(oShield) == BASE_ITEM_LARGESHIELD || GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD || GetBaseItemType(oShield) == BASE_ITEM_TOWERSHIELD)
+    {
+    if(bSpells2 > 0) SpellswordIgnoreSpellFailure(oPC, oShield, bSpells2, "SpellswordSFBonusEpic");
+    }
 }

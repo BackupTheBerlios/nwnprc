@@ -462,6 +462,12 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
         return GetCasterLevel(oCaster);
     }
 
+    // For when you want to assign the caster level.
+    if (GetLocalInt(oCaster, "PRC_Castlevel_Override") != 0)
+    {
+        return GetLocalInt(oCaster, "PRC_Castlevel_Override");
+    }
+
     if (GetIsArcaneClass(iCastingClass)) // Arcane Spells
     {
         int iArcLevel = GetLevelByClass(iCastingClass, oCaster);

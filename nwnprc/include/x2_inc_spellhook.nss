@@ -319,7 +319,9 @@ int X2PreSpellCastCode()
         // familiar has to be summoned to share
         (GetIsObjectValid(oFam)))
         {
-           AssignCommand(OBJECT_SELF, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+           SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel(OBJECT_SELF));
+           DelayCommand(0.1, AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE)));
+           DelayCommand(0.2, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
         }
       }
     }

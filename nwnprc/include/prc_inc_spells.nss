@@ -200,6 +200,7 @@ int GetDivinePRCLevels (object oCaster)
 		 +  GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oCaster)
 		 +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
 		 +  GetLevelByClass(CLASS_TYPE_STORMLORD, oCaster)
+		 +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER_DIV, oCaster)
 
                  +  (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) + 1) / 2
 		 +  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2

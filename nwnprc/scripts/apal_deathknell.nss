@@ -15,6 +15,18 @@
 #include "NW_I0_SPELLS"
 #include "prc_inc_clsfunc"
 
+void DeathKnellCheck(object oPC)
+{
+     if (!GetHasSpellEffect(2086, oPC)) // Death Knell
+     {
+         DeleteLocalInt(oPC, "Apal_DeathKnell");
+     }
+     else
+     {
+         DelayCommand(6.0, DeathKnellCheck(oPC));
+     }
+}
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
@@ -65,9 +77,14 @@ if (iHP < 10)
 	        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);
     		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, OBJECT_SELF, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);
     		SetLocalInt(OBJECT_SELF, "Apal_DeathKnell", TRUE);
+                DelayCommand(9.0, DeathKnellCheck(OBJECT_SELF));
     	}
     }
 
+}
+else
+{
+    FloatingTextStringOnCreature("*Death Knell failure: The target isn't weak enough*", OBJECT_SELF, FALSE);
 }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -1,15 +1,14 @@
 2DA V2.0
 
-      FeatLabel           FeatIndex   
-0     darkvision          228
-1     hardinesspoisons    229
-2     hardinessspells     230
-3     orctrain            231
-4     gobtrain            232
-5     gianttrain          233
-6     skillaffinitylore   234
-7     Race_Dwarven        4710
-8     FEAT_USE_POISON     960
-9     Resist_Fire_5       4743
-10    Hardiness_Poison3   4728 
-11    small               375
+   FeatLabel         FeatIndex 
+0  darkvision        228       
+1  hardinessspells   230       
+2  orctrain          231       
+3  gobtrain          232       
+4  gianttrain        233       
+5  skillaffinitylore 234       
+6  Race_Dwarven      4710      
+7  FEAT_USE_POISON   960       
+8  Resist_Fire_5     4743      
+9  Hardiness_Poison3 4728      
+10 small             375       

@@ -44,17 +44,43 @@ void BLKGlaive(object oPC,int iEquip)
 
 }
 
-void Corrupt(object oPC, object oItem)
+void Corrupt(object oPC, int iEquip)
 {
-    oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
 
-    if(GetLocalInt(oItem,"CorruptGlaive")) return ;
+	if(iEquip == 2)
+	{
+    		oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+		if(GetLocalInt(oItem,"CorruptGlaive")) return ;
 
-    if(GetBaseItemType(oItem) == BASE_ITEM_HALBERD)
-    {
-       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitProps(IP_CONST_ONHIT_WOUNDING,IP_CONST_ONHIT_SAVEDC_20),oItem,9999.0);
-       SetLocalInt(oItem,"CorruptGlaive",1);
-    }
+		if(GetBaseItemType(oItem) == BASE_ITEM_HALBERD)
+		{
+			AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitProps(IP_CONST_ONHIT_WOUNDING,IP_CONST_ONHIT_SAVEDC_20),oItem,9999.0);
+			SetLocalInt(oItem,"CorruptGlaive",1);
+		}
+	}
+
+	else if(iEquip == 1)
+	{
+		oItem = GetItemLastUnequipped();
+		if(GetBaseItemType(oItem) != BASE_ITEM_HALBERD) return;
+
+		if(GetLocalInt(oItem,"CorruptGlaive"))
+			RemoveSpecificProperty(oItem,ITEM_PROPERTY_ON_HIT_PROPERTIES,IP_CONST_ONHIT_WOUNDING,IP_CONST_ONHIT_SAVEDC_20,1,"",-1,DURATION_TYPE_TEMPORARY);
+		DeleteLocalInt(oItem, "CorruptGlaive");
+	}
+	
+	else
+	{
+    		oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+		if(GetLocalInt(oItem,"CorruptGlaive")) return ;
+
+		if(GetBaseItemType(oItem) == BASE_ITEM_HALBERD)
+		{
+			AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitProps(IP_CONST_ONHIT_WOUNDING,IP_CONST_ONHIT_SAVEDC_20),oItem,9999.0);
+			SetLocalInt(oItem,"CorruptGlaive",1);
+		}
+	}
 }
 
 //Immunity to Disease - Blightblood
@@ -62,7 +88,7 @@ void BltBlood(object oPC, object oSkin)
 {
 	if(GetLocalInt(oSkin, "BlightBlood") == 1)
 		return;
-		
+
 	AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_DISEASE), oSkin);
 
 	SetLocalInt(oSkin, "BlightBlood", 1);
@@ -72,7 +98,7 @@ void BltBlood(object oPC, object oSkin)
 //Plant Type Gained - Winterheart
 void Winterheart(object oPC ,object oSkin )
 {
-	if(GetLocalInt(oSkin, "WntrHeart") == 1) 
+	if(GetLocalInt(oSkin, "WntrHeart") == 1)
    		return;
 
 	AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertySpellImmunitySpecific(IP_CONST_IMMUNITYSPELL_CHARM_PERSON),oSkin);
@@ -95,8 +121,8 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oSkin = GetPCSkin(oPC);
 	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-	
-	DeleteLocalInt(oItem, "CorruptGlaive");
+
+
 	SendMessageToPC(oPC, "Blightlord Main is Firing");
 	if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD) >= 1)
       		BltBlood(oPC, oSkin);
@@ -105,7 +131,7 @@ void main()
         	BLKGlaive(oPC, GetLocalInt(oPC,"ONEQUIP"));
 
 	if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD) >= 8)
-        	Corrupt(oPC, oItem);
+        	Corrupt(oPC, GetLocalInt(oPC,"ONEQUIP"));
 
 	if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD) >= 10)
         	Winterheart(oPC, oSkin);

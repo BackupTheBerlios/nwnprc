@@ -26,7 +26,7 @@ void main()
     else if (nClass > 9)	sSummon = "prc_mos_spectre2";
     else if (nClass > 7)	sSummon = "prc_mos_spectre1";
     else if (nClass > 5)	sSummon = "prc_mos_wraith";
-    else if (nClass > 3)	sSummon = "prc_mos_allip";
+    else                 	sSummon = "prc_mos_allip";
 
 
    effect eSum = EffectSummonCreature(sSummon, VFX_NONE);

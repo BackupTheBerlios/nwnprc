@@ -4,13 +4,14 @@ void main()
     int nPP = GetLocalInt(oCaster, "PowerPoints");
     int nAugment = GetLocalInt(oCaster, "Augment");
     int nPPCost = 1;
+    int nAugCost = 1;
 
     if (nAugment == 0) nPPCost = nPPCost;    
-    else if (nAugment == 1) nPPCost = nPPCost + 1;
-    else if (nAugment == 2) nPPCost = nPPCost + 2;
-    else if (nAugment == 3) nPPCost = nPPCost + 3;
-    else if (nAugment == 4) nPPCost = nPPCost + 4;
-    else if (nAugment == 5) nPPCost = nPPCost + 5;
+    else if (nAugment == 1) nPPCost = nPPCost + (nAugCost * 1);
+    else if (nAugment == 2) nPPCost = nPPCost + (nAugCost * 2);
+    else if (nAugment == 3) nPPCost = nPPCost + (nAugCost * 3);
+    else if (nAugment == 4) nPPCost = nPPCost + (nAugCost * 4);
+    else if (nAugment == 5) nPPCost = nPPCost + (nAugCost * 5);
 
     if (nPP >= nPPCost) 
     {

@@ -197,7 +197,7 @@ void main()
 			+ (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2;
 
                 if ( !GetHasFeat(FEAT_SF_CODE, oCaster))
-                        nLevelBonus += (GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster) + 1) / 2;
+                        nLevelBonus += GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster);
 
 		//
 		//	Class specific code for Divine Casters

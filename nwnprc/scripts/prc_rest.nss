@@ -1,7 +1,6 @@
 #include "inc_item_props"
-#include "prc_feat_const"
-#include "prc_class_const"
 #include "nw_i0_plot"
+#include "prc_inc_function"
  
 void main(){
    object oPC=GetLastPCRested();

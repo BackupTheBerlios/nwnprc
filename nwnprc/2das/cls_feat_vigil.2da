@@ -104,3 +104,6 @@
 100 FEAT_EPIC_WEAPON_FOCUS_DWAXE          956       1    -1             0      
 101 FEAT_EPIC_WEAPON_FOCUS_WHIP           997       1    -1             0      
 102 FEAT_EPIC_PERFECT_HEALTH              747       1    -1             0      
+103 WeapProfSim                           46        0    -1             0      
+104 WeapProfEx                            44        0    -1             0      
+105 WeapProfMar                           45        0    -1             0      

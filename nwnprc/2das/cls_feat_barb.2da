@@ -29,7 +29,7 @@
 25  TwoWeap                                        41        0    -1             0      
 26  Ambidex                                        1         0    -1             0      
 27  FEAT_EPIC_BARBARIAN_DAMAGE_REDUCTION           1067      3    23             0      
-28  FEAT_PRC_EPIC_MIGHT_RAGE                       3516      1    -1             0        
+28  FEAT_PRC_EPIC_MIGHT_RAGE                       3516      1    -1             0      
 29  FEAT_EPIC_THUNDERING_RAGE                      988       1    -1             0      
 30  FEAT_EPIC_ARMOR_SKIN                           490       1    -1             0      
 31  FEAT_EPIC_DAMAGE_REDUCTION_3                   492       1    -1             0      
@@ -176,5 +176,5 @@
 172 FEAT_NEW_POWER_ATTACK                          3143      3    1              1      
 173 FEAT_NEW_IMPROVED_POWER_ATTACK                 3144      3    1              1      
 174 FEAT_SHADOW_LORD_CONVO                         2360      3    1              1      
-175 FEAT_HOLYRADIANCE                              3164      0    -1             1   
-176 FEAT_JUMP                                      2884      3    1              1
+175 FEAT_HOLYRADIANCE                              3164      0    -1             1      
+176 FEAT_JUMP                                      2884      3    1              1      

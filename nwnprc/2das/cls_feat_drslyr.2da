@@ -221,3 +221,5 @@
 217 FEAT_EPIC_AUTOMATIC_LESSER_STILL      863       0    -1             0      
 218 FEAT_EPIC_AUTOMATIC_STILL             864       0    -1             0      
 219 FEAT_EPIC_AUTOMATIC_GREATER_STILL     865       0    -1             0      
+220 WeapProfSim                           46        0    -1             0      
+221 WeapProfMar                           45        0    -1             0      

@@ -357,3 +357,13 @@
 353 FEAT_EPIC_DIVINE_MIGHT                         3120      0    -1             1      
 354 FEAT_DIVINE_VENGEANCE                          3142      0    -1             1      
 355 FEAT_DISCIPLE_OF_SUN                           3127      0    -1             1      
+356 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
+357 SpellFocusCon                                  166       0    -1             0      
+358 SpellFocusDiv                                  167       0    -1             0      
+359 SpellFocusEnc                                  168       0    -1             0      
+360 SpellFocusEvo                                  169       0    -1             0      
+361 SpellFocusIll                                  170       0    -1             0      
+362 SpellFocusNec                                  171       0    -1             0      
+363 SpellFocusTra                                  172       0    -1             0      
+364 SpellFocusAbj                                  35        0    -1             0      
+365 FEAT_EPIC_SPELL_PENETRATION                    618       0    -1             0      

@@ -18,3 +18,10 @@
 14 FEAT_PRESTIGE_WOLFCLASS_2     3523      2    -1             0      
 15 FEAT_PRESTIGE_WEREWOLFCLASS_2 3525      2    -1             0      
 16 FEAT_PRESTIGE_WEREWOLFCLASS_3 3526      2    -1             0      
+17 WeapProfSim                   46        0    -1             0      
+18 WeapProfEx                    44        0    -1             0      
+19 WeapProfMar                   45        0    -1             0      
+20 FEAT_EPIC_BLINDING_SPEED      491       0    -1             1      
+21 DefArrow                      8         0    -1             0      
+22 TwoWeap                       41        0    -1             0      
+23 Ambidex                       1         0    -1             0      

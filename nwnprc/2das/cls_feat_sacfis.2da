@@ -170,3 +170,10 @@
 166 FEAT_EPIC_IMPROVED_SPELL_RESISTANCE_8     706       1    -1             0      
 167 FEAT_EPIC_IMPROVED_SPELL_RESISTANCE_9     707       1    -1             0      
 168 FEAT_EPIC_IMPROVED_SPELL_RESISTANCE_10    708       1    -1             0      
+169 WeapProfSim                               46        0    -1             0      
+170 WeapProfEx                                44        0    -1             0      
+171 WeapProfMar                               45        0    -1             0      
+172 DefArrow                                  8         0    -1             0      
+173 TwoWeap                                   41        0    -1             0      
+174 Ambidex                                   1         0    -1             0      
+175 Quicken                                   29        0    -1             0      

@@ -19,3 +19,7 @@
 15 FEAT_SHADOWSPELLLV2             3317      3    3              1      
 16 FEAT_SHADOWSPELLLV3             3320      3    5              1      
 17 FEAT_PRESTIGE_ASSN_DEATH_ATTACK 2930      3    6              1      
+18 WeapProfSim                     46        0    -1             0      
+19 WeapProfEx                      44        0    -1             0      
+20 WeapProfMar                     45        0    -1             0      
+21 FEAT_EPIC_BLINDING_SPEED        491       0    -1             1      

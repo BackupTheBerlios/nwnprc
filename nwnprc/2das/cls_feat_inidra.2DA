@@ -113,3 +113,9 @@
 109 FEAT_EPIC_IMPROVED_STUNNING_FIST_10       853       1    -1             0      
 110 FEAT_EPIC_BLINDING_SPEED                  491       1    -1             1      
 111 FEAT_DISCIPLE_OF_DARKNESS                 4012      0    -1             1      
+112 WeapProfSim                               46        0    -1             0      
+113 WeapProfEx                                44        0    -1             0      
+114 WeapProfMar                               45        0    -1             0      
+115 DefArrow                                  8         0    -1             0      
+116 TwoWeap                                   41        0    -1             0      
+117 Ambidex                                   1         0    -1             0      

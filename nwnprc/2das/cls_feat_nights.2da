@@ -9,7 +9,7 @@
 5  WeapProfMar                          45        0    -1             0      
 6  FEAT_NS_SNEAKATK_1D6                 2966      3    3              0      
 7  FEAT_NS_SNEAKATK_2D6                 2967      3    6              0      
-8  FEAT_NS_SNEAKATK_3D6                 3968      3    9              0      
+8  FEAT_NS_SNEAKATK_3D6                 2968      3    9              0      
 9  DefArrow                             8         0    -1             0      
 10 TwoWeap                              41        0    -1             0      
 11 Ambidex                              1         0    -1             0      
@@ -65,11 +65,8 @@
 61 FEAT_SHADOW_LORD_CONVO               2360      3    1              1      
 62 FEAT_NS_LIGHT_ADAPTION               2964      3    1              0      
 63 FEAT_NS_WEBWALKER                    2965      3    1              0      
-64 FEAT_NS_SNEAKATK_1D6                 2966      3    3              0      
-65 FEAT_NS_SNEAKATK_2D6                 2967      3    6              0      
-66 FEAT_NS_SNEAKATK_3D6                 2968      3    9              0      
-67 FEAT_NS_INVISIBILITY                 2969      3    4              1      
-68 FEAT_NS_POISON_IMMUNE                2970      3    5              0      
-69 FEAT_NS_POISON_SPITTLE               2971      3    7              1      
-70 FEAT_NS_WEB                          2972      3    8              1      
-71 FEAT_NS_SHADOWWALK                   2973      3    10             1      
+64 FEAT_NS_INVISIBILITY                 2969      3    4              1      
+65 FEAT_NS_POISON_IMMUNE                2970      3    5              0      
+66 FEAT_NS_POISON_SPITTLE               2971      3    7              1      
+67 FEAT_NS_WEB                          2972      3    8              1      
+68 FEAT_NS_SHADOWWALK                   2973      3    10             1      

@@ -208,5 +208,15 @@
 204 FEAT_EPIC_GREAT_CHARISMA_7                     770       1    -1             0      
 205 FEAT_EPIC_GREAT_CHARISMA_8                     771       1    -1             0      
 206 FEAT_EPIC_GREAT_CHARISMA_9                     772       1    -1             0      
-207 FEAT_EPIC_GREAT_CHARISMA_10                    773       1    -1             0  
-208 FEAT_JUMP                                      2884      3    1              1
+207 FEAT_EPIC_GREAT_CHARISMA_10                    773       1    -1             0      
+208 FEAT_JUMP                                      2884      3    1              1      
+209 FEAT_NEW_POWER_ATTACK                          3143      3    1              1      
+210 FEAT_NEW_IMPROVED_POWER_ATTACK                 3144      3    1              1      
+211 FEAT_SHADOW_LORD_CONVO                         2360      3    1              1      
+212 FEAT_HOLYRADIANCE                              3164      0    -1             1      
+213 FEAT_NIMBUSOFLIGHT                             3165      0    -1             1      
+214 FEAT_SERVHEAVEN                                3355      0    -1             1      
+215 Pinpoint_Accuracy                              3351      0    -1             1      
+216 FEAT_MANYSHOT                                  3306      0    -1             1      
+217 FEAT_IMP_MANYSHOT                              3350      0    -1             1      
+218 FEAT_DISCIPLE_OF_DARKNESS                      4012      0    -1             1      

@@ -45,7 +45,7 @@ void main()
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
     
     effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);  
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, OBJECT_SELF,RoundsToSeconds(nDuration),FALSE); 
+   // SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, OBJECT_SELF,RoundsToSeconds(nDuration),FALSE); 
 
 
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
@@ -58,13 +58,13 @@ void main()
         if(oTarget == OBJECT_SELF)
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, RoundsToSeconds(nDuration));
             StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
         }
         else if(GetIsFriend(oTarget))
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, RoundsToSeconds(nDuration));
             StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
         }
         //Select the next target within the spell shape.

@@ -2,20 +2,19 @@
 #include "minstrelsong"
 #include "NW_I0_SPELLS"
 
-void DominatedDuration(object oTarget)
+void DominatedDuration(object oTarget, object oCaster)
 {
-   object oCaster = OBJECT_SELF;
-   int iConc = GetLocalInt(OBJECT_SELF, "SpellConc");
+   int iConc = GetLocalInt(oCaster, "SpellConc");
    
    if (!iConc)
    {
-        RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
+        RemoveOldSongEffects(oCaster,SPELL_DSL_SONG_COMPULSION);
         return ;
    }
 
    if (GetHasSpellEffect(SPELL_DSL_SONG_COMPULSION,oTarget))
    {
-      DelayCommand(6.0f,DominatedDuration(oTarget) );
+      DelayCommand(6.0f,DominatedDuration(oTarget,oCaster) );
    }
 }
 
@@ -36,6 +35,7 @@ void main()
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
     //Declare major variables
     object oTarget = GetSpellTargetObject();
+    object oCaster = OBJECT_SELF;
     effect eDom = EffectDominated();
     eDom = GetScaledEffect(eDom, oTarget);
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
@@ -43,11 +43,10 @@ void main()
 
     //Link domination and persistant VFX
     effect eLink = EffectLinkEffects(eMind, eDom);
-    eLink = SupernaturalEffect(EffectLinkEffects(eLink, eDur));
 
     effect eVis = EffectVisualEffect(VFX_IMP_DOMINATE_S);
     int nLevel = GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST);
- 
+    effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
  
     int nRacial = MyPRCGetRacialType(oTarget);
     int nDC = 12 + GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST,OBJECT_SELF)+ GetAbilityModifier(ABILITY_CHARISMA,OBJECT_SELF);
@@ -64,11 +63,11 @@ void main()
           {
                //Apply linked effects and VFX Impact
                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget, 0.0,FALSE);
-               SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-               DelayCommand(6.0f,DominatedDuration(oTarget) );
-               StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), 0);
-               StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, GetSpellId(), 0);
-               SetLocalInt(OBJECT_SELF, "SpellConc", 1);   
+               SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);  
+               SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis2, OBJECT_SELF,0.0,FALSE);             
+               StoreSongRecipient(oTarget, OBJECT_SELF, SPELL_DSL_SONG_COMPULSION, 0);
+               SetLocalInt(OBJECT_SELF, "SpellConc", 1);
+               DelayCommand(6.0f,DominatedDuration(oTarget,oCaster) );   
           }
 
      }   

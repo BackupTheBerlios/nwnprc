@@ -64,7 +64,7 @@ void main()
                  SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(nDuration),FALSE);
 
               SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-              StoreSongRecipient(oTarget, OBJECT_SELF, SPELL_DSL_SONG_FEAR, 0);
+              StoreSongRecipient(oTarget, GetAreaOfEffectCreator(), SPELL_DSL_SONG_FEAR, 0);
            }
         }
      }

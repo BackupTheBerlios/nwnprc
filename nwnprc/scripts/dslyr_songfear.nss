@@ -41,10 +41,9 @@ void main()
 
 
     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis, OBJECT_SELF,0.0,FALSE);  
-    int AOESize = AOE_MOB_DRAGON_FEAR;
 
     //Set and apply AOE object
-    effect eAOE = SupernaturalEffect(EffectAreaOfEffect(AOESize,"dslyr_songfeara","dslyr_songfearb"));
+    effect eAOE = SupernaturalEffect(EffectAreaOfEffect(AOE_MOB_DRAGON_FEAR,"dslyr_songfeara","dslyr_songfearb"));
     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, OBJECT_SELF,0.0,FALSE);
     StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, GetSpellId(), 0);
     

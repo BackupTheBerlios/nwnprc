@@ -242,7 +242,7 @@ void AddEventScript(object oCreature, int nEvent, string sScript, int bPermanent
 	
 	// Check for duplicates if necessary
 	int bAdd = TRUE;
-	if(bAllowDuplicate){
+	if(!bAllowDuplicate){
 		int i = 0;
 		for(; i <= persistant_array_get_size(oCreature, sArrayName); i++){
 			if(persistant_array_get_string(oCreature, sArrayName, i) == sScript){

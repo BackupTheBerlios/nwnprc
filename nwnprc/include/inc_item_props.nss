@@ -967,6 +967,7 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    //ManAtArms
    DeleteLocalInt(oItem,"ManArmsGenSpe");
    DeleteLocalInt(oItem,"ManArmsDmg");
+   DeleteLocalInt(oItem,"ManArmsCore");
    //Vile/Sanctify & Un/Holy Martial Strike
    DeleteLocalInt(oItem,"SanctMar");
    DeleteLocalInt(oItem,"MartialStrik");
@@ -985,24 +986,28 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    // Blood Archer
    DeleteLocalInt(oItem,"BloodBowAttackBonus");
    DeleteLocalInt(oItem,"BloodBowMightyBonus");
+   // Black Flame Zealot
+   DeleteLocalInt(oItem,"BFZFlame");
    // Other
    DeleteLocalInt(oItem,"IPEnh");
    DeleteLocalInt(oItem,"IPEnhA");
    // Dispater
    DeleteLocalInt(oItem,"DispIronPowerA");
    DeleteLocalInt(oItem,"DispIronPowerD");
-   // Iaijutsu
+   // Iaijutsu Master
    DeleteLocalInt(oItem,"KatFinBonus");
-   // knight Kalice
+   // knight Chalice
    DeleteLocalInt(oItem,"DSlayBonusDiv");
    DeleteLocalInt(oItem,"DSlayingAttackBonus");
    // prc_battledance
    DeleteLocalInt(oItem,"BADanAtk");
    // Katana Finesse
    DeleteLocalInt(oItem,"KatFinBonus");
-   // Demonslaying
-   DeleteLocalInt(oItem,"DSlayingAttackBonus");
-   
+   // Dragonwrack
+   DeleteLocalInt(oItem,"DWright");
+   // Holy Avenger
+   DeleteLocalInt(oItem,"HolyAvAntiStack");
+
    // LEFT HAND
    if (!iValid){
      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
@@ -1023,6 +1028,10 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    DeleteLocalInt(oItem,"KatFinBonus");
    // Demonslaying
    DeleteLocalInt(oItem,"DSlayingAttackBonus");
+   // Dragonwrack
+   DeleteLocalInt(oItem,"DWleft");
+   // Holy Avenger
+   DeleteLocalInt(oItem,"HolyAvAntiStack");
    
    // CHEST
    if (!iValid){
@@ -1035,6 +1044,8 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    DeleteLocalInt(oItem,"AFrenzy");
    // Shadowlord
    DeleteLocalInt(oItem,"ShaDiscorp");
+   // Dragonwrack
+   DeleteLocalInt(oItem,"Dragonwrack");
    
    // LEFT RING
    if (!iValid){

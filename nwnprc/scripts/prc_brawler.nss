@@ -38,8 +38,20 @@ void BrawlerBlocking(object oCreature)
     object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCreature);
     int iBlocking = 0;
 
-    if (GetIsObjectValid(oRighthand)) return;
-    if (GetIsObjectValid(oLefthand) && GetBaseItemType(oLefthand) != BASE_ITEM_TORCH) return;
+    if (GetIsObjectValid(oRighthand))
+    {
+        if (GetLocalInt(oCreature, "BrawlerBlockingOn"))
+            DelayCommand(1.0, FloatingTextStringOnCreature("*Brawler Blocking disabled*", oCreature, FALSE));
+        DeleteLocalInt(oCreature, "BrawlerBlockingOn");
+        return;
+    }
+    if (GetIsObjectValid(oLefthand) && GetBaseItemType(oLefthand) != BASE_ITEM_TORCH)
+    {
+        if (GetLocalInt(oCreature, "BrawlerBlockingOn"))
+            DelayCommand(1.0, FloatingTextStringOnCreature("*Brawler Blocking disabled*", oCreature, FALSE));
+        DeleteLocalInt(oCreature, "BrawlerBlockingOn");
+        return;
+    }
 
     if (GetHasFeat(FEAT_BRAWLER_BLOCK_5, oCreature))
         iBlocking = 5;
@@ -52,7 +64,14 @@ void BrawlerBlocking(object oCreature)
     else if (GetHasFeat(FEAT_BRAWLER_BLOCK_1, oCreature))
         iBlocking = 1;
 
-    if (iBlocking) AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBlocking),oWeapL);
+    if (iBlocking)
+    {
+        string str = IntToString(iBlocking);
+        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBlocking),oWeapL);
+        if (!GetLocalInt(oCreature, "BrawlerBlockingOn"))
+            DelayCommand(1.0, FloatingTextStringOnCreature("*Brawler Blocking +"+str+" Enabled*", oCreature, FALSE));
+        SetLocalInt(oCreature, "BrawlerBlockingOn", TRUE);
+    }
 }
 
 void main ()

@@ -52,16 +52,4 @@ void main()
 
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eExtraAttacks, oCreature);
     }
-    else
-    {
-        if (GetHasSpellEffect(SPELL_BRAWLER_EXTRA_ATT))
-        {
-            RemoveSpellEffects(SPELL_BRAWLER_EXTRA_ATT, oCreature, oCreature);
-            if (GetLocalInt(oCreature, "BrawlerAttacks"))
-            {
-                FloatingTextStringOnCreature("*Extra unarmed attacks disabled*", oCreature, FALSE);
-                DeleteLocalInt(oCreature, "BrawlerAttacks");
-            }
-        }
-    }
 }

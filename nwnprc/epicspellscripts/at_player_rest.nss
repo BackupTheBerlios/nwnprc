@@ -16,6 +16,14 @@ void RestMeUp(object oPC);
 void main()
 {
     object oPC = OBJECT_SELF;
+
+    SetLocalInt(oPC,"ForceRest",1);
+    DelayCommand(4.0,DeleteLocalInt(oPC,"ForceRest"));
+
+    AssignCommand(oPC, ClearAllActions(FALSE));
+    AssignCommand(oPC, ActionRest());
+    
+    /*
     object oMem = GetFirstFactionMember(oPC, FALSE);
     while (oMem != OBJECT_INVALID)
     {
@@ -34,6 +42,8 @@ void main()
         else {}
         oMem = GetNextFactionMember(oPC, FALSE);
     }
+    */
+    
 }
 
 void DoRestingStuff(object oPC)

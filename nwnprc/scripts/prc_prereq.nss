@@ -53,7 +53,7 @@ void FindTrueAbilityScores()
     {
         oItem = GetItemInSlot(nSlot, oClone);
         //remove if valid, unless in the creature hide slot
-        if (GetIsObjectValid(oItem) && nSlot != INVENTORY_SLOT_CARMOUR)
+        if (GetIsObjectValid(oItem)) // && nSlot != INVENTORY_SLOT_CARMOUR) -- I'd rather play it safe.
         {
             DestroyObject(oItem);
         }

@@ -78,7 +78,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		nDC += nAugment/2;
 	}
 	
-	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
 	
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);

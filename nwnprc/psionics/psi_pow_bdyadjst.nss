@@ -48,9 +48,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
     
     if (nSurge > 0)
     {
@@ -58,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDice = 1;
 	int nDiceSize = 12;    	
@@ -70,12 +72,12 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	
 	//Apply effects
 	
-	int nHP = MetaPsionics(nDiceSize, nDice, oCaster);
+	int nHP = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
 	
 	effect eHeal = EffectHeal(nHP);
 	effect eHealVis = EffectVisualEffect(VFX_IMP_HEALING_L);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, OBJECT_SELF);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHealVis, OBJECT_SELF);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHealVis, oTarget);
 	
     }
 }

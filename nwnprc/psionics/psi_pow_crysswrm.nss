@@ -81,7 +81,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	{
 	    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 	    
-	    int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+	    int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
 	    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_SLASHING);
 	    effect eVis = EffectVisualEffect(VFX_IMP_WALLSPIKE);	    
 	    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);

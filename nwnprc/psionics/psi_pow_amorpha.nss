@@ -48,8 +48,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 
     object oCaster = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, 0, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
     
-    if (GetCanManifest(oCaster, 0)) 
+    
+    if (nMetaPsi > 0) 
     {
     	int CasterLvl = GetManifesterLevel(oCaster);
     	effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
@@ -57,8 +60,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	effect eDur = EffectVisualEffect(VFX_DUR_GHOSTLY_VISAGE);
 	effect eLink = EffectLinkEffects(eDur, eConceal);
 	float fDuration = 60.0 * CasterLvl;
+	
+	// Apply MetaPsi Extend
+	if (nMetaPsi == 2)	fDuration *= 2;
 
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, fDuration,TRUE,-1,CasterLvl);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,CasterLvl);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

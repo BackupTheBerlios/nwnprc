@@ -52,6 +52,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 3;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
     
     if (nSurge > 0)
     {
@@ -59,9 +61,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
-	object oTarget = GetSpellTargetObject();
 	int nTargetSurge = GetLocalInt(oTarget, "WildSurge");
 	int nTargetPP = GetLocalInt(oTarget, "PowerPoints");
 	int nTarget = GetManifesterLevel(oTarget);

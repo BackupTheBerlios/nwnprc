@@ -50,9 +50,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
     int nAugCost = 3;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
     
     if (nSurge > 0)
     {
@@ -60,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
     	object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster);
     	int nBonus = DAMAGE_BONUS_1;
@@ -77,19 +79,19 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	
     	if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
     	{
-    	   	oAmmo = CreateItemOnObject("NW_WAMAR001", OBJECT_SELF, 99);
+    	   	oAmmo = CreateItemOnObject("NW_WAMAR001", oTarget, 99);
     	   	SetIdentified(oAmmo, TRUE);    	
     		AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PIERCING, nBonus), oAmmo, 99999.9);
     	}
     	if (GetBaseItemType(oWeapon) == BASE_ITEM_SLING)
     	{
-    	   	oAmmo = CreateItemOnObject("NW_WAMBU001", OBJECT_SELF, 99);
+    	   	oAmmo = CreateItemOnObject("NW_WAMBU001", oTarget, 99);
     	   	SetIdentified(oAmmo, TRUE);    	
     		AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, nBonus), oAmmo, 99999.9);
     	}
     	else 
     	{
-    	   	oAmmo = CreateItemOnObject("NW_WAMBO001", OBJECT_SELF, 99);
+    	   	oAmmo = CreateItemOnObject("NW_WAMBO001", oTarget, 99);
     	   	SetIdentified(oAmmo, TRUE);    	
     		AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PIERCING, nBonus), oAmmo, 99999.9);
     	}    	

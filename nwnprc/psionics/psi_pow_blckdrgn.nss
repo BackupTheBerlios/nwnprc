@@ -52,6 +52,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 1;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oTarget = OBJECT_SELF;
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, METAPSIONIC_WIDEN);
         
     if (nSurge > 0)
     {
@@ -59,16 +61,17 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
        	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
 	float fDelay;
 	location lTargetLocation = GetSpellTargetLocation();
-    	object oTarget;
     	int nDice = 11;
 	int nDiceSize = 6;
+	float fWidth = DoWiden(11.0, nMetaPsi);
+	
 	
 	if (nSurge > 0) nAugment += nSurge;
 	
@@ -77,7 +80,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	
 	
     	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, fWidth, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     	//Cycle through the targets within the spell shape until an invalid object is captured.
     	while(GetIsObjectValid(oTarget))
     	{
@@ -90,7 +93,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	        if(PRCMyResistPower(OBJECT_SELF, oTarget,nPen, fDelay) && (oTarget != OBJECT_SELF))
     	        {    	     
     	        
-    	            int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+    	            int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
     	            
     	            //Adjust damage according to Reflex Save, Evasion or Improved Evasion
     	            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_ACID);
@@ -106,7 +109,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	            }
     	        }
     	    //Select the next target within the spell shape.
-    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     	}
     
     }

@@ -52,6 +52,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 4;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oFirstTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oFirstTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
     
     if (nSurge > 0)
     {
@@ -59,12 +61,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	object oFirstTarget = GetSpellTargetObject();
 	effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
 	int nTargetCount = 1;
 	int nDice = 1;
@@ -79,7 +80,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		nTargetCount += nAugment;
 	}
 	
-	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
 	
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
 	
@@ -110,7 +111,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         			
         			if (PRCMyResistPower(oCaster, oAreaTarget, nPen))
 				{
-					nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+					nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
 					eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
 					SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oAreaTarget);
 					SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);

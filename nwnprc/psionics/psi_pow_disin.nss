@@ -89,7 +89,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 			{
 				nDice = 5;
 			}
-			int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
+			int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
 			effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);

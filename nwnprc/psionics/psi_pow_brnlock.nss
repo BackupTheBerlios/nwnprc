@@ -54,14 +54,18 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
     object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
     
-    if (GetCanManifest(oCaster, nAugCost, oTarget)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
 	int nRacial = MyPRCGetRacialType(oTarget);
 	int nTargetRace = FALSE;
+	int nDur = nCaster;
+	
+	if (nMetaPsi == 2)	nDur *= 2;
 	
 	//Verify that the Racial Type is humanoid
 	if  	((nRacial == RACIAL_TYPE_DWARF) ||
@@ -111,7 +115,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
         	        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
         	        {
         		        //Apply VFX Impact and daze effect
-        	                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nCaster),TRUE,-1,nCaster);
+        	                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
         	        }
 		}
 	}

@@ -13,7 +13,7 @@ void main()
 
       effect eCure = EffectHeal(d8(2) + nLevel);
 
-      effect eVis = VFX_IMP_HEALING_M;
+      effect eVis = EffectVisualEffect(VFX_IMP_HEALING_M);
 
       effect eLink = EffectLinkEffects(eCure,eVis);
 

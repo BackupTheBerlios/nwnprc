@@ -12,7 +12,7 @@ void main()
       int nLevel = GetLevelByClass(CLASS_TYPE_RUNESCARRED,oPC);
 
       effect eCure = EffectHeal(d8(3) + nLevel);
-      effect eVis = VFX_IMP_HEALING_S;
+      effect eVis = EffectVisualEffect(VFX_IMP_HEALING_S);
 
       effect eLink = EffectLinkEffects(eCure,eVis);
 

@@ -968,7 +968,7 @@ const int FEAT_UR_FE_ELEMENTAL      = 2990;
 const int FEAT_UR_FE_FEY            = 2991;
 const int FEAT_UR_FE_GIANT          = 2992;
 const int FEAT_UR_FE_MAGICAL_BEAST  = 2993;
-const int FEAT_UR_FE_OUSIDER        = 2994;
+const int FEAT_UR_FE_OUTSIDER       = 2994;
 const int FEAT_UR_FE_SHAPECHANGER   = 2995;
 const int FEAT_UR_FE_UNDEAD         = 2996;
 const int FEAT_UR_FE_VERMIN         = 2997;
@@ -1047,6 +1047,10 @@ const int FEAT_AP_SPELLLVL1                      = 3488;
 const int FEAT_AP_SPELLLVL2                      = 3489;
 const int FEAT_AP_SPELLLVL3                      = 3490;
 const int FEAT_AP_SPELLLVL4                      = 3491;
+const int FEAT_CO_SPELLLVL1                      = 3001;
+const int FEAT_CO_SPELLLVL2                      = 3002;
+const int FEAT_CO_SPELLLVL3                      = 3003;
+const int FEAT_CO_SPELLLVL4                      = 3004;
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////

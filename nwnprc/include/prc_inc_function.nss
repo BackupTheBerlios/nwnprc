@@ -521,6 +521,32 @@ void FeatUsePerDay(object oPC,int iFeat, int iAbiMod = ABILITY_CHARISMA, int iMo
 
 }
 
+void SpellCorup(object oPC)
+{
+
+   int Corup = GetLevelByClass(CLASS_TYPE_CORRUPTER,oPC);
+   int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
+   if (Corup>20) Corup = 20;
+   
+   if (!Corup) return ;
+ 
+   int iLvl1 = (Corup>5)+ (Corup>13)+ (Corup>17);
+   int iLvl2 = (Corup>9)+ (Corup>15)+ (Corup>18);
+   int iLvl3 = (Corup>11)+ (Corup>16)+ (Corup>18);
+   int iLvl4 = (Corup>14)+ (Corup>18)+ (Corup>19);
+   
+   iLvl1 +=  (iWis<12 ? 0 :(iWis-4)/8) ;
+   iLvl2 +=  (iWis<14 ? 0 :(iWis-6)/8) ;
+   iLvl3 +=  (iWis<16 ? 0 :(iWis-8)/8) ;
+   iLvl4 +=  (iWis<18 ? 0 :(iWis-10)/8) ;
+   
+   FeatUsePerDay(oPC,FEAT_CO_SPELLLVL1,-1,iLvl1);
+   FeatUsePerDay(oPC,FEAT_CO_SPELLLVL2,-1,iLvl2);
+   FeatUsePerDay(oPC,FEAT_CO_SPELLLVL3,-1,iLvl3);
+   FeatUsePerDay(oPC,FEAT_CO_SPELLLVL4,-1,iLvl4);
+
+}
+
 void SpellAPal(object oPC)
 {
 
@@ -615,6 +641,7 @@ void FeatSpecialUsePerDay(object oPC)
     SpellKotMC(oPC);
     SpellShadow(oPC);
     SpellAPal(oPC);
+    SpellCorup(oPC);
     FeatUsePerDay(oPC,FEAT_SA_SHIELDSHADOW,-1,GetCasterLvl(TYPE_ARCANE,oPC));
 
 }

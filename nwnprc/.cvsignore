@@ -2,3 +2,4 @@ objs
 config.make
 epicspellobjs
 raceobjs
+tempcpl

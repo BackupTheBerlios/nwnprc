@@ -59,14 +59,16 @@ void main()
         int bDivLor = GetHasFeat(FEAT_DEVICE_LORE, oPC) ? 2 : 0;
         int bIrnPwr;
 
-        if(GetHasFeat(FEAT_IRON_POWER_1,oPC))
-        {
-         bIrnPwr = 1;
-        }
+        
 
         if(GetHasFeat(FEAT_IRON_POWER_2,oPC))
         {
          bIrnPwr = 2;
+        }
+
+        else if(GetHasFeat(FEAT_IRON_POWER_1,oPC))
+        {
+         bIrnPwr = 1;
         }
 
         if(bDivLor > 0) Device_Lore(oPC,oSkin,bDivLor);

@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.*;
 
+/* Static import in order to let me use the enum constants in switches */
 import static prc.autodoc.Main.SpellType.*;
 
 /**
@@ -16,19 +17,42 @@ public class Main{
 	 * A small data structure class that gives access to both normal and custom
 	 * TLK with the same method
 	 */
-	private static class TLKStore{
+	public static class TLKStore{
 		private Data_TLK normal,
 		                 custom;
 		
-		public TLKStore(String normalName, String customName) throws TLKReadException{
+		/**
+		 * Creates a new TLKStore around the given two filenames.
+		 *
+		 * @param normalName dialog.tlk or equivalent for the given language
+		 * @param customName prc_consortium.tlk or equivalent for the given languag
+		 *
+		 * @throws TLKReadException if there are any problems reading either TLK
+		 */
+		public TLKStore(String normalName, String customName){
 			this.normal = new Data_TLK("tlk" + fileSeparator + normalName);
 			this.custom = new Data_TLK("tlk" + fileSeparator + customName);
 		}
 		
+		/**
+		 * Returns the TLK entry for the given StrRef. If there is nothing
+		 * at the location, returns Bad StrRef. Automatically picks between
+		 * normal and custom TLKs.
+		 *
+		 * @param num the line number in TLK
+		 *
+		 * @return the contents of the given TLK slot, or Bad StrRef
+		 */
 		public String get(int num){
 			return num < 0x01000000 ? normal.getEntry(num) : custom.getEntry(num);
 		}
 		
+		/**
+		 * See above, except that this one automatically parses the string for
+		 * the number.
+		 *
+		 * @return as above, except it returns Bad StrRef in case parsing failed
+		 */
 		public String get(String num){
 			try{
 				return get(Integer.parseInt(num));
@@ -39,9 +63,14 @@ public class Main{
 	/**
 	 * Another data structure class. Stores 2das and handles loading them.
 	 */
-	private static class TwoDAStore{
+	public static class TwoDAStore{
 		private HashMap<String, Data_2da> data = new HashMap<String, Data_2da>();
 		
+		/**
+		 * Generates a new TwoDAStore with all the main 2das preread in.
+		 * On a read failure, kills program execution, since there's nothing
+		 * that could be done anyway.
+		 */
 		public TwoDAStore(){
 			// Read the main 2das
 			try{
@@ -59,6 +88,16 @@ public class Main{
 			}
 		}
 		
+		/**
+		 * Gets a Data_2da structure wrapping the given 2da. If it hasn't been loaded
+		 * yet, the loading is done now.
+		 *
+		 * @param name name of the 2da to get. Without the file end ".2da".
+		 *
+		 * @return a Data_2da structure
+		 *
+		 * @throws TwoDAReadException if any errors are encountered while reading
+		 */
 		public Data_2da get(String name){
 			if(data.containsKey(name))
 				return data.get(name);
@@ -84,19 +123,26 @@ public class Main{
 	/**
 	 * A class for handling the settings file.
 	 */
-	private static class Settings{
+	public static class Settings{
+		/* Some pattern matchers for use when parsing the settings file */
 		private Matcher mainMatch = Pattern.compile("\\S+:").matcher(""),
 		                paraMatch = Pattern.compile("\"[^\"]+\"").matcher(""),
 		                langMatch = Pattern.compile("\\w+=\"[^\"]+\"").matcher("");
+		/* An enumeration of the possible setting types */
 		private enum Modes{LANGUAGE, SIGNATURE};
 		
+		/* Settings data read in */
 		public ArrayList<String[]> languages = new ArrayList<String[]>();
 		public String[] epicspellSignatures = null;
 		public String[] psionicpowerSignatures = null;
 		
-		
+		/**
+		 * Read the settings file in and store the data for later access.
+		 * Terminates execution on any errors.
+		 */
 		public Settings(){
 			try{
+				// The settings file should be present in the directory this is run from 
 				Scanner reader = new Scanner(new File("settings"));
 				String check;
 				Modes mode = null;
@@ -149,6 +195,7 @@ public class Main{
 						}
 						languages.add(temp);
 					}
+					// Parse the spell script name signatures
 					if(mode == Modes.SIGNATURE){
 						String[] temp = check.trim().split("=");
 						if(temp[0].equals("epicspell")){
@@ -174,11 +221,9 @@ public class Main{
 	/** A switche determinining how errors are handled */
 	public static boolean tolErr = true;
 	
-	/**
-	 * A boolean determining whether to print progress information
-	 * and use the decorative spinner.
-	 */
+	/** A boolean determining whether to spam the user with progress information */
 	public static boolean verbose = true;
+	/** A decorative spinner to look at while the program is loading big files */
 	public static Spinner spinner = new Spinner();
 	
 	/** A constant signifying Bad StrRef */
@@ -190,15 +235,21 @@ public class Main{
 	 */
 	public static Settings settings = new Settings();
 	
-	private static String fileSeparator = System.getProperty("file.separator");
+	/** The file separator, given it's own constant for ease of use */
+	public static final String fileSeparator = System.getProperty("file.separator");
 	
+	/** Current language name */
 	private static String curLanguage = null;
-	private static String mainPath = null,
-	                      contentPath = null,
-	                      menuPath = null;
 	
-	private static TwoDAStore twoDA;
-	private static TLKStore tlk;
+	/** The bases of target paths */
+	public static String mainPath     = null,
+	                     contentPath  = null,
+	                     menuPath     = null;
+	
+	/* Data structures for accessing 2das and TLKs */
+	public static TwoDAStore twoDA;
+	public static TLKStore tlk;
+	
 	
 	/** The template files */
 	private static String babAndSavthrTableHeaderTemplate = null,
@@ -225,11 +276,11 @@ public class Main{
 	 *
 	 * A freaking pile of these, so they take up space, but simplify the code.
 	 */
-	private static HashMap<Integer, SpellEntry> spells;
-	private static HashMap<Integer, FeatEntry> masterFeats,
+	public static HashMap<Integer, SpellEntry> spells;
+	public static HashMap<Integer, FeatEntry> masterFeats,
 	                                           feats;
-	private static HashMap<Integer, ClassEntry> classes;
-	private static HashMap<Integer, GenericEntry> skills,
+	public static HashMap<Integer, ClassEntry> classes;
+	public static HashMap<Integer, GenericEntry> skills,
 	                                              domains,
 	                                              races;
 	

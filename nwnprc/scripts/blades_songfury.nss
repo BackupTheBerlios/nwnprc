@@ -37,7 +37,9 @@ void main()
 
         return;
 
+   effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);
    effect eLink=EffectLinkEffects(EffectAttackDecrease(2),EffectModifyAttacks(1));
+          eLink=EffectLinkEffects (eLink,eVis);
 
    ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eLink), oTarget);
 }

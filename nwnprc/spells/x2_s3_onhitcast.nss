@@ -27,9 +27,13 @@
 //:: Created On: 2003-07-22
 //:://////////////////////////////////////////////
 
-#include "prc_class_const"
-#include "prc_feat_const"
-#include "x2_inc_switches"
+//#include "prc_class_const"
+//#include "prc_feat_const"
+//#include "x2_inc_switches"
+
+#include "prc_inc_combat"
+
+void SetRancorVar(object oPC);
 
 void main()
 {
@@ -138,4 +142,62 @@ void main()
    {              
         DelayCommand(0.01, ExecuteScript("prc_fh_dr",OBJECT_SELF) );
    }
+   
+   // Foe Hunter Rancor Attack
+   if( nFoeHunter > 0 && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+   {
+        if(GetLocalInt(oSpellOrigin, "PRC_CanUseRancor") != 2 && GetLocalInt(oSpellOrigin, "HatedFoe") == MyPRCGetRacialType(oSpellTarget) )
+        {
+             int iFHLevel = GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oSpellOrigin);
+             int iRancorDice = FloatToInt( (( iFHLevel + 1.0 ) /2) );
+                          
+             int iDamage = d6(iRancorDice);
+             int iDamType = GetWeaponDamageType(oItem);
+             int iDamPower = GetDamagePowerConstant(oItem, oSpellTarget, oSpellOrigin);
+             
+             effect eDam = EffectDamage(iDamage, iDamType, iDamPower);
+
+             string sMess = "*Rancor Attack*";
+             FloatingTextStringOnCreature(sMess, oSpellOrigin, FALSE);
+             ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSpellTarget);
+             
+             // Deactivates Ability
+             SetLocalInt(oSpellOrigin, "PRC_CanUseRancor", 2);
+             
+             // Prevents the heartbeat script from running multiple times
+             if(GetLocalInt(oSpellOrigin, "PRC_RancorVarRunning") != 1)
+             {
+                  DelayCommand(6.0, SetRancorVar(oSpellOrigin) );
+                  SetLocalInt(oSpellOrigin, "PRC_RancorVarRunning", 1);
+             }
+        }
+   }
+}
+
+void SetRancorVar(object oPC)
+{
+     // Turn Rancor on
+     SetLocalInt(oPC, "PRC_CanUseRancor", 1);
+     //FloatingTextStringOnCreature("Rancor Attack Possible", oPC, FALSE);
+     
+     int iMain = GetMainHandAttacks(oPC);
+     float fDelay = 6.0 / IntToFloat(iMain);
+     
+     // Turn Rancor off after one attack is made
+     DelayCommand(fDelay, SetLocalInt(oPC, "PRC_CanUseRancor", 2));
+     //DelayCommand((fDelay + 0.01), FloatingTextStringOnCreature("Rancor Attack Not Possible", oPC, FALSE));
+     
+     // Call again if the character is still in combat.
+     // this allows the ability to keep running even if the
+     // player does not score a rancor hit during the allotted time
+     if( GetIsFighting(oPC) )
+     {
+          DelayCommand(6.0, SetRancorVar(oPC) );
+     }
+     else
+     {
+          DelayCommand(2.0, SetLocalInt(oPC, "PRC_CanUseRancor", 1));
+          DelayCommand(2.1, SetLocalInt(oPC, "PRC_RancorVarRunning", 2));
+          //DelayCommand(2.2, FloatingTextStringOnCreature("Rancor Enabled After Combat", oPC, FALSE)); 
+     }
 }

@@ -64,6 +64,19 @@ void SetHatedFoeDR(object oPC)
      SetLocalInt(oPC, "HatedFoeDR", iDR);
 }
 
+void ApplyFoeHunterRancor(object oPC, object oWeapon)
+{    
+     IPSafeAddItemProperty(oWeapon, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+     //AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oArmor);
+     SetLocalInt(oPC, "HasFHRancor", 2);
+}
+
+void RemoveFoeHunterRancor(object oPC, object oWeapon)
+{
+     RemoveSpecificProperty(oWeapon, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0);
+     SetLocalInt(oPC, "HasFHRancor", 1);
+}
+
 void ApplyFoeHunterDR(object oPC, object oArmor)
 {    
      IPSafeAddItemProperty(oArmor, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
@@ -92,12 +105,17 @@ void main()
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
     int iHasFHDR = GetLocalInt(oPC, "HasFHDR");
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+    
+    object oWeaponR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 
     // On error - Typically when first entering a module
     if(GetHasFeat(FEAT_HATED_ENEMY_DR) && GetLocalInt(oPC, "HasFHDR") == 0)
     {
         RemoveFoeHunterDR(oPC, oArmor);
         ApplyFoeHunterDR(oPC, oArmor);
+        
+        RemoveFoeHunterRancor(oPC, oWeaponR);
+        ApplyFoeHunterRancor(oPC, oWeaponR);
     }    
     else if(GetHasFeat(FEAT_HATED_ENEMY_DR) && GetLocalInt(oPC, "HasFHDR") != 0)
     {              
@@ -110,6 +128,23 @@ void main()
              {
                   ApplyFoeHunterDR(oPC, oArmor); 
              }
+             else if(oItem == oWeaponR)
+             {
+                  ApplyFoeHunterRancor(oPC, oWeaponR);
+             }
+             
+             if(GetWeaponRanged(oWeaponR))
+             {
+                  object oAmmo;
+                  oAmmo = GetItemInSlot(INVENTORY_SLOT_BOLTS, oPC);
+                  ApplyFoeHunterRancor(oPC, oAmmo);
+                  
+                  oAmmo = GetItemInSlot(INVENTORY_SLOT_BULLETS, oPC);
+                  ApplyFoeHunterRancor(oPC, oAmmo);
+                  
+                  oAmmo = GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC);
+                  ApplyFoeHunterRancor(oPC, oAmmo);
+             }
         }
         else if(iEquip == 1)  // Unequip
         {
@@ -119,6 +154,10 @@ void main()
              {
                   RemoveFoeHunterDR(oPC, oItem);
              }
+             else
+             {
+                  RemoveFoeHunterRancor(oPC, oItem);
+             } 
         }
         else                  // On level, rest, or other events
         {

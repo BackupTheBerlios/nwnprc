@@ -1,5 +1,6 @@
-#include "nw_i0_spells"
-#include "prc_spell_const"
+//#include "nw_i0_spells"    - inherited from spinc_common
+//#include "prc_spell_const" - inherited from spinc_common
+#include "spinc_common"
 #include "inc_combat2"
 
 

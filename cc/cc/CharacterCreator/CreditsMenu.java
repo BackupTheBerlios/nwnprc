@@ -61,21 +61,23 @@ public class CreditsMenu extends javax.swing.JFrame {
         CreditText.setLineWrap(true);
         CreditText.setWrapStyleWord(true);
         CreditText.setText(
-			      "PRC: v1.4 \n"
-			    + "Created a new release after making a new splash screen and changing the "
-			    + "programs color scheme. \n\n"
-
-			    + "PRC: v1.3\nThis release was prepared by the "
-				+ "Player Resource Consortium so we could make Level 40 Drow Samurai. \n\n"
-				+ "PRC Website:\nhttp://nwnprc.netgamers.co.uk/ \n\n"
-
+				  "PRC: v1.5\n"
+				+ "Improved compatibility with GNU/Linux and MacOS systems.\n\n"
+			    + "PRC: v1.4\n"
+			    + "Created a new release after making a new splash screen "
+				+ "and changing the "
+			    + "programs color scheme.\n\n"
+			    + "PRC: v1.3\n"
+				+ "This release was prepared by the "
+				+ "Player Resource Consortium so we could make "
+				+ "Level 40 Drow Samurai. \n\n"
+				+ "PRC Website:\nhttp://nwnprc.netgamers.co.uk/\n\n"
 				+ "CODI v1.1\n"
 				+ "Programed by: James 'Halfelf' Stoneburner\n"
 				+ "Contact: halfelf@city-of-doors.com\n\n"
-
 				+ "This version was a team effort.  "
-				+ "Thanks go to James, Grond and Garad Moonbeam for getting the "
-				+ "updates done for SoU and 1.3x compatability as well as "
+				+ "Thanks go to James, Grond and Garad Moonbeam for getting "
+				+ "the updates done for SoU and 1.3x compatability as well as "
 				+ "dynamic skill menus.\n\n"
 				+ "Thanks go to Papermonk, first of all, "
 				+ "for possessing the intestinal fortitude to stick with me "

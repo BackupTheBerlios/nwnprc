@@ -6,4 +6,4 @@
 2     Listen        SKILL     6                 2           
 3     Spot          SKILL     17                2           
 4     Intimidate    SKILL     24                1           
-5     ScriptVar     VAR       PRC_AllowHextor   0           
+5     ScriptVar     VAR       PRC_AllowPDK      0           

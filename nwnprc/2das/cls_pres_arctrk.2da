@@ -3,7 +3,7 @@
       LABEL          ReqType    ReqParam1           ReqParam2   
 0     ScriptVar      VAR        PRC_ArcSpell3       0        
 1     DisableTrap    SKILL      2                   7           
-2     ScriptVar      VAR        PNP_AllowArcTrick   0           
+2     ScriptVar      VAR        PRC_AllowArcTrick   0           
 3     OpenLock       SKILL      9                   7           
 4     Lore           SKILL      7                   4           
 5     SneakAttack2   FEATOR     345                 ****      

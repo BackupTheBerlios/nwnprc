@@ -47,6 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         //Apply raise dead effect and VFX impact
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRaise, oTarget); 
+        ExecuteScript("prc_pw_raisedead", OBJECT_SELF);
     }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -20,12 +20,12 @@ void ContingencyResurrect(object oTarget, int nCount, object oCaster = OBJECT_SE
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     object oTarget = GetSpellTargetObject();
@@ -55,7 +55,7 @@ void main()
             SendMessageToPC(OBJECT_SELF, "Spell failed - Invalid target!");
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 void ContingencyResurrect(object oTarget, int nCount, object oCaster = OBJECT_SELF)
@@ -84,6 +84,7 @@ void ContingencyResurrect(object oTarget, int nCount, object oCaster = OBJECT_SE
                 SetLocalInt(oCaster, "nContingentRez",
                     GetLocalInt(oCaster, "nContingentRez") - 1);
                 ContingencyResurrect(oTarget, nCount);
+                ExecuteScript("prc_pw_contress", oTarget);
             }
         }
         else // Make the spell slot available to the original caster again.

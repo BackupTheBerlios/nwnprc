@@ -14,12 +14,12 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, ARMY_UN_DC, ARMY_UN_S, ARMY_UN_XP))
@@ -45,7 +45,10 @@ void main()
                 if (nX > 0)
                 {
                     if (GetIsDead(oTarget))
+                    {
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRez, oTarget);
+                        ExecuteScript("prc_pw_armyunfall", oTarget);
+                    }                        
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
                     nAlly++;
                 }
@@ -58,5 +61,5 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eBLD, oTarget);
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

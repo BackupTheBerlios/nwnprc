@@ -42,13 +42,23 @@ void main()
         FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
         return;
     }
+    
+    if (GetHasEffect(EFFECT_TYPE_DEAF,OBJECT_SELF) && d100(1) <= 20)
+    {
+        FloatingTextStringOnCreature("Your deafness has caused you to fail.",OBJECT_SELF);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);
+        return;
+    }
+
+    effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
     RemoveOldSongEffects(OBJECT_SELF,0);
     RemoveOldSongs();
      
-    effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);
+//    effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);
 //    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis, OBJECT_SELF,0.0,FALSE); 
-        
+    
     //Set and apply AOE object
     effect eAOE = EffectAreaOfEffect(AOE_MOB_DRAGON_FEAR,"dslyr_songstra","dslyr_songstrb","dslyr_songstrc");
     SPApplyEffectToObject(DURATION_TYPE_PERMANENT,eAOE, OBJECT_SELF,0.0,FALSE);

@@ -48,7 +48,15 @@ void main()
         return;
     }
 
+    if (GetHasEffect(EFFECT_TYPE_DEAF,OBJECT_SELF) && d100(1) <= 20)
+    {
+        FloatingTextStringOnCreature("Your deafness has caused you to fail.",OBJECT_SELF);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);
+        return;
+    }
 
+    effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
        
     RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_FEAR);
     RemoveOldSongs();

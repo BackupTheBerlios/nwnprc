@@ -5,15 +5,17 @@
 
 int GetAbilityForClass(int nClass, object oPC)
 {
-    object oHide = GetPCSkin(oPC);
+//    object oHide = GetPCSkin(oPC);
     switch(nClass)
     {
         case CLASS_TYPE_BLACKGUARD:
         case CLASS_TYPE_VASSAL:
         case CLASS_TYPE_SOLDIER_OF_LIGHT:
-            return GetLocalInt(oHide, "PRC_trueWIS");
+//            return GetLocalInt(oHide, "PRC_trueWIS");
+            return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_ASSASSIN:
-            return GetLocalInt(oHide, "PRC_trueINT");
+//            return GetLocalInt(oHide, "PRC_trueINT");
+            return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
     }
     return 0;
 }

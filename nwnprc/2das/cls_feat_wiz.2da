@@ -89,3 +89,4 @@
 85   FEAT_CRAFT_ROD                                       2927        0      9                1        
 86   FEAT_CRAFT_STAFF                                     2928        0      12               1        
 87   FEAT_FORGE_RING                                      2929        0      12               1        
+88   Prereq_Shadowlord                   3339      3    7              0      

@@ -16,8 +16,7 @@ void RemoveEnchantCW(object oPC, object oWeap)
 {
       if (GetLocalInt(oWeap, "ADEnchant"))
       {
-         RemoveSpecificProperty(oWeap, ITEM_PROPERTY_ENHANCEMENT_BONUS, -1, -1, 1, "ADEnchant", -1, DURATION_TYPE_TEMPORARY);
-         DeleteLocalInt(oWeap, "ADEnchant");
+         SetCompositeBonusT(oWeap, "ADEnchant", 0, ITEM_PROPERTY_ENHANCEMENT_BONUS);
       }
 }
 
@@ -26,9 +25,6 @@ void EnchantCW(object oPC, object oWeap)
 {
    int iBonus = 0;
       
-   RemoveEnchantCW(oPC, oWeap);
-   iBonus = GetWeaponEnhancement(oWeap);
-
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 1)
          iBonus += 1;
 
@@ -42,17 +38,15 @@ void EnchantCW(object oPC, object oWeap)
          iBonus += 1;
                
       //SendMessageToPC(oPC, "Enchant Chosen Weapon has been run");
-      AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(iBonus),oWeap, 9999.0);
-      SetLocalInt(oWeap, "ADEnchant", iBonus);
+      DelayCommand(0.1,SetCompositeBonusT(oWeap, "ADEnchant", iBonus, ITEM_PROPERTY_ENHANCEMENT_BONUS));
 }
 
 void main()
 {
   object oPC = OBJECT_SELF;
   object oSkin = GetPCSkin(oPC);
-  object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
+  object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
   
-
   if (GetHasFeat(FEAT_AD_APPARENT_DEFENSE, oPC)) ApparentDefense(oPC, oSkin);
   
   if (GetLocalInt(oWeap,"CHOSEN_WEAPON") == 2)
@@ -60,5 +54,4 @@ void main()
   
   if (GetLocalInt(oPC,"ONEQUIP") == 1)
         RemoveEnchantCW(oPC, GetPCItemLastUnequipped());
-
 }

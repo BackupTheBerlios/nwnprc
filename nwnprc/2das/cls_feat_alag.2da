@@ -13,10 +13,10 @@
 9   Shield                                         32        3    1              0      
 10  WeapProfMar                                    45        3    1              0          
 11  BlindFight                                     408       3    1              0
-13  FEAT_SILVERBEARD                               4052      3    2              0          
-14  FEAT_CLANGEDDINS_STRIKE                        4050      3    3              1
-15  FEAT_CLANGEDDINS_MIGHT                         4051      3    4              1
-16  FEAT_ALAG_ROCKBURST                            4053      3    2              1
+13  FEAT_SILVERBEARD                               4073      3    2              0          
+14  FEAT_CLANGEDDINS_STRIKE                        4071      3    3              1
+15  FEAT_CLANGEDDINS_MIGHT                         4072      3    4              1
+16  FEAT_ALAG_ROCKBURST                            4074      3    2              1
 17  SpellFocusCon                                  166       1    -1             0      
 18  SpellFocusDiv                                  167       1    -1             0      
 19  SpellFocusEnc                                  168       1    -1             0      

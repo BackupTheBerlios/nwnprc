@@ -1,3 +1,45 @@
-class:			| book:
+class:					| book:
 -------------------------------------------------------------------
-pnp shifter		| Masters of the Wild.
+PnP Shifter				| Masters of the Wild
+Blood Archer				| Evil
+Samurai					| Oriental Adventures
+Ninja Spy				| Oriental Adventures
+Ocular Adept				| Faiths And Pantheons
+Dwarven Battlerager			| Races of Faerun
+Mystic Theurge				| Dungeon Master's Guide
+Warpriest				| Complete Divine
+Mage-Killer				| Magic of Faerun
+Harper Mage				| Magic of Faerun
+Spellsword				| Complete Warrior
+Acolyte of the Skin			| Tome and Blood
+Eldritch Knight				| Dungeon Master's Guide
+Elemental Savant			| Tome and Blood
+Duelist					| Dungeon Master's Guide
+Hierophant				| Dungeon Master's Guide
+Red Avenger				| Sword and Fist
+Knight of the Chalice			| Complete Warrior
+Hathran					| Player's Guide to Faerun
+Vigilante				| Song and Silence
+Stormlord				| Complete Divine
+Heartwarder				| Faiths and Pantheons
+Arcane Duelist				| Random Encounters
+Archmage				| Dungeon Master's Guide
+Oozemaster				| Masters of the Wild
+Temple Raider				| Complete Divine
+Dragonsong Lyrist			| Draconomicon
+Shadow Adept				| Player's Guide to Faerun
+Soldier of Light			| Deities and Demigods
+Bonded Summoner				| Miniatures Handbook
+Initiate of the Draconic Mysteries	| Draconomicon
+Bladesinger				| Complete Warrior
+Sacred Fist				| Complete Divine
+Legendary Dreadnought			| Epic Level Handbook
+Disciple of Baalzebul			| Book of Vile Darkness
+Apostle of Peace			| Book of Exalted Deeds
+Disciple of Dispater			| Book of Vile Darkness
+Ravager					| Complete Warrior
+
+
+
+
+

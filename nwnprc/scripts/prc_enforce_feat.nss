@@ -110,46 +110,26 @@ void MageKiller(object oPC = OBJECT_SELF)
 	SetLocalInt(oPC, "MK_Ref", 0);
 	SetLocalInt(oPC, "MK_Fort", 0);
 	
-	if (iMK > 40)
+	if (iMK > 0)
 	{
-	
-	if     (GetHasFeat(FEAT_MK_REF_15, oPC) )  SetLocalInt(oPC, "MK_Ref", 15);
-	else if(GetHasFeat(FEAT_MK_REF_14, oPC) )  SetLocalInt(oPC, "MK_Ref", 14);
-	else if(GetHasFeat(FEAT_MK_REF_13, oPC) )  SetLocalInt(oPC, "MK_Ref", 13);
-	else if(GetHasFeat(FEAT_MK_REF_12, oPC) )  SetLocalInt(oPC, "MK_Ref", 12);
-	else if(GetHasFeat(FEAT_MK_REF_11, oPC) )  SetLocalInt(oPC, "MK_Ref", 11);
-	else if(GetHasFeat(FEAT_MK_REF_10, oPC) )  SetLocalInt(oPC, "MK_Ref", 10);
-	else if(GetHasFeat(FEAT_MK_REF_9, oPC) ) SetLocalInt(oPC, "MK_Ref", 9);
-	else if(GetHasFeat(FEAT_MK_REF_8, oPC) ) SetLocalInt(oPC, "MK_Ref", 8);
-	else if(GetHasFeat(FEAT_MK_REF_7, oPC) ) SetLocalInt(oPC, "MK_Ref", 7);
-	else if(GetHasFeat(FEAT_MK_REF_6, oPC) ) SetLocalInt(oPC, "MK_Ref", 6);
-	else if(GetHasFeat(FEAT_MK_REF_5, oPC) ) SetLocalInt(oPC, "MK_Ref", 5);
-	else if(GetHasFeat(FEAT_MK_REF_4, oPC) ) SetLocalInt(oPC, "MK_Ref", 4);
-	else if(GetHasFeat(FEAT_MK_REF_3, oPC) ) SetLocalInt(oPC, "MK_Ref", 3);
-	else if(GetHasFeat(FEAT_MK_REF_2, oPC) ) SetLocalInt(oPC, "MK_Ref", 2);
-	else if(GetHasFeat(FEAT_MK_REF_1, oPC) ) SetLocalInt(oPC, "MK_Ref", 1);
-	
-	if     (GetHasFeat(FEAT_MK_FORT_15, oPC) )  SetLocalInt(oPC, "MK_Fort", 15);
-	else if(GetHasFeat(FEAT_MK_FORT_14, oPC) )  SetLocalInt(oPC, "MK_Fort", 14);
-	else if(GetHasFeat(FEAT_MK_FORT_13, oPC) )  SetLocalInt(oPC, "MK_Fort", 13);
-	else if(GetHasFeat(FEAT_MK_FORT_12, oPC) )  SetLocalInt(oPC, "MK_Fort", 12);
-	else if(GetHasFeat(FEAT_MK_FORT_11, oPC) )  SetLocalInt(oPC, "MK_Fort", 11);
-	else if(GetHasFeat(FEAT_MK_FORT_10, oPC) )  SetLocalInt(oPC, "MK_Fort", 10);
-	else if(GetHasFeat(FEAT_MK_FORT_9, oPC) ) SetLocalInt(oPC, "MK_Fort", 9);
-	else if(GetHasFeat(FEAT_MK_FORT_8, oPC) ) SetLocalInt(oPC, "MK_Fort", 8);
-	else if(GetHasFeat(FEAT_MK_FORT_7, oPC) ) SetLocalInt(oPC, "MK_Fort", 7);
-	else if(GetHasFeat(FEAT_MK_FORT_6, oPC) ) SetLocalInt(oPC, "MK_Fort", 6);
-	else if(GetHasFeat(FEAT_MK_FORT_5, oPC) ) SetLocalInt(oPC, "MK_Fort", 5);
-	else if(GetHasFeat(FEAT_MK_FORT_4, oPC) ) SetLocalInt(oPC, "MK_Fort", 4);
-	else if(GetHasFeat(FEAT_MK_FORT_3, oPC) ) SetLocalInt(oPC, "MK_Fort", 3);
-	else if(GetHasFeat(FEAT_MK_FORT_2, oPC) ) SetLocalInt(oPC, "MK_Fort", 2);
-	else if(GetHasFeat(FEAT_MK_FORT_1, oPC) ) SetLocalInt(oPC, "MK_Fort", 1);
-	
-	iMKSave = GetLocalInt(oPC, "MK_Ref") + GetLocalInt(oPC, "MK_Fort");
-		
+
+	iRef +=	GetHasFeat(FEAT_MK_REF_15, oPC) + GetHasFeat(FEAT_MK_REF_14, oPC) + GetHasFeat(FEAT_MK_REF_13, oPC) + 
+		GetHasFeat(FEAT_MK_REF_12, oPC) + GetHasFeat(FEAT_MK_REF_11, oPC) + GetHasFeat(FEAT_MK_REF_10, oPC) + 
+		GetHasFeat(FEAT_MK_REF_9, oPC) + GetHasFeat(FEAT_MK_REF_8, oPC) + GetHasFeat(FEAT_MK_REF_7, oPC) + 
+		GetHasFeat(FEAT_MK_REF_6, oPC) + GetHasFeat(FEAT_MK_REF_5, oPC) + GetHasFeat(FEAT_MK_REF_4, oPC) + 
+		GetHasFeat(FEAT_MK_REF_3, oPC) + GetHasFeat(FEAT_MK_REF_2, oPC) + GetHasFeat(FEAT_MK_REF_1, oPC);
+
+	iFort +=	GetHasFeat(FEAT_MK_FORT_15, oPC) + GetHasFeat(FEAT_MK_FORT_14, oPC) + GetHasFeat(FEAT_MK_FORT_13, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_12, oPC) + GetHasFeat(FEAT_MK_FORT_11, oPC) + GetHasFeat(FEAT_MK_FORT_10, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_9, oPC) + GetHasFeat(FEAT_MK_FORT_8, oPC) + GetHasFeat(FEAT_MK_FORT_7, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_6, oPC) + GetHasFeat(FEAT_MK_FORT_5, oPC) + GetHasFeat(FEAT_MK_FORT_4, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_3, oPC) + GetHasFeat(FEAT_MK_FORT_2, oPC) + GetHasFeat(FEAT_MK_FORT_1, oPC);
+
+	iMKSave = iRef + iFort;
+
 	FloatingTextStringOnCreature("Mage Killer Level: " + IntToString(iMK), oPC, FALSE);
-	FloatingTextStringOnCreature("Reflex Save Level: " + IntToString(GetLocalInt(oPC, "MK_Ref")), oPC, FALSE);
-	FloatingTextStringOnCreature("Fortitude Save Level: " + IntToString(GetLocalInt(oPC, "MK_Fort")), oPC, FALSE);
+	FloatingTextStringOnCreature("Reflex Save Level: " + IntToString(iRef), oPC, FALSE);
+	FloatingTextStringOnCreature("Fortitude Save Level: " + IntToString(iFort), oPC, FALSE);
 
 	if (iMK != iMKSave)
 	{
@@ -325,6 +305,7 @@ void main()
 	RedWizardFeats(oPC);
 	VileFeats(oPC);
 	Warlord(oPC);
+	Ethran(oPC);
 	UltiRangerFeats(oPC);
 	MageKiller(oPC);
 }

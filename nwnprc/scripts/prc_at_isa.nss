@@ -19,107 +19,103 @@
 
 int GetTotalSneakAttackDice(object oPC)
 {
-     int iRogueDice = 0;
-     int iBlackGuardDice = 0;
-     int iAssassinDice = 0;
-     int iSneakAttackDice = 0;
-     
-     int iRogueLevel = GetLevelByClass(CLASS_TYPE_ROGUE, oPC);
-     int iBlackGuardLevel = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oPC);
-     int iAssassinLevel = GetLevelByClass(CLASS_TYPE_ASSASSIN, oPC);
-     
-     // Place other PrC's here
-     int iArcaneTricksterLevel = GetLevelByClass(CLASS_TYPE_ARCTRICK, oPC);
-     int iArcaneTricksterDice = 0;
-     
-     // Use template to add checks for other PrC's
-     // int iXXXXXXLevel = GetLevelByClass(CLASS_TYPE_*, oPC);
-     // int iXXXXDice = 0;
-     
-     // Every other rogue level starting at one
-     if( (iRogueLevel%2) != 0)
-     {
-          // is odd number, so add +1
-          iRogueDice = (iRogueLevel/2) + 1;
-     }
-     else
-     {
-          iRogueDice = iRogueLevel/2;
-     }
- 
-     // Every 3rd black guard level starting at 4
-     if( (iBlackGuardLevel%3) != 0 && iBlackGuardLevel > 3)
-     {
-          // is odd number, so add +1
-          iBlackGuardDice = (iBlackGuardLevel/3) + 1;
-     }
-     else
-     {
-          iBlackGuardDice = iBlackGuardLevel/3;
-     }
- 
-     // Every other level starting at one
-     if( (iAssassinLevel%2) != 0)
-     {
-          // is odd number, so add +1
-          iAssassinDice = (iAssassinLevel/2) + 1;
-     }
-     else
-     {
-          iAssassinDice = iAssassinLevel/2;
-     }
-     
-     // For Arcane Trickster 
-     // Every other level starting at 2
-     iArcaneTricksterDice = iArcaneTricksterLevel/2;
- 
+   object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+   int iSneakAttackDice = 0;
+   int iBowEquipped = FALSE;
+   int iClassLevel;
+
+   iClassLevel = GetLevelByClass(CLASS_TYPE_ROGUE, oPC);
+   if (iClassLevel) iSneakAttackDice += (iClassLevel + 1) / 2;
+
+   iClassLevel = GetLevelByClass(CLASS_TYPE_ARCTRICK, oPC);
+   if (iClassLevel) iSneakAttackDice += iClassLevel / 2;
+
+   iClassLevel = GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC);
+   if (iClassLevel) iSneakAttackDice += (iClassLevel + 1) / 3;
+
+   iClassLevel = GetLevelByClass(CLASS_TYPE_ASSASSIN, oPC);
+   if (iClassLevel) iSneakAttackDice += (iClassLevel + 1) / 2;
+
+   iClassLevel = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
+   if (iClassLevel >= 6) iSneakAttackDice++;
+
+   iClassLevel = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oPC);
+   if (iClassLevel) iSneakAttackDice += (iClassLevel - 1) / 3;
+   if ((iClassLevel) && (GetLevelByClass(CLASS_TYPE_PALADIN) >= 5)) iSneakAttackDice++;  // bonus for pal/bg
+
+   iClassLevel = GetLevelByClass(CLASS_TYPE_DISC_BAALZEBUL, oPC);
+   if ((iClassLevel >= 2) && (iClassLevel < 5)) iSneakAttackDice++;
+   if ((iClassLevel >= 5) && (iClassLevel < 8)) iSneakAttackDice += 2;
+   if (iClassLevel >= 8) iSneakAttackDice += 3;
+
+   if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW ||
+       GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
+          iBowEquipped = TRUE;
+
+   if (iBowEquipped)
+   {
+      iClassLevel = GetLevelByClass(CLASS_TYPE_PEERLESS, oPC);
+      if (iClassLevel) iSneakAttackDice += (iClassLevel + 2) / 3
+
+      //iClassLevel = GetLevelByClass(CLASS_TYPE_BLARCHER, oPC);
+      //if ((iClassLevel >= 5) && (iClassLevel < 8)) iSneakAttackDice++;
+      //if ((iClassLevel >= 8) && (iClassLevel < 10)) iSneakAttackDice += 2;
+      //if (iClassLevel >= 10) iSneakAttackDice += 3;
+   }
+
+   //iClassLevel = GetLevelByClass(CLASS_TYPE_INFILTRATOR, oPC);
+   //if ((iClassLevel >= 1) && (iClassLevel < 5)) iSneakAttackDice++;
+   //if (iClassLevel >= 5) iSneakAttackDice += 2;
+
+   //iClassLevel = GetLevelByClass(CLASS_TYPE_FANG_OF_LOLTH, oPC);
+   //if ((iClassLevel >= 2) && (iClassLevel < 5)) iSneakAttackDice++;
+   //if ((iClassLevel >= 5) && (iClassLevel < 8)) iSneakAttackDice += 2;
+   //if ((iClassLevel >= 8) && (iClassLevel < 12)) iSneakAttackDice += 3;
+   //if ((iClassLevel >= 12) && (iClassLevel < 16)) iSneakAttackDice += 4;
+   //if ((iClassLevel >= 16) && (iClassLevel < 20)) iSneakAttackDice += 5;
+   //if (iClassLevel >= 20) iSneakAttackDice += 6;
+
      // checks for epic feats that add sneak damage
      if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_1) )
      {
-         iSneakAttackDice = iSneakAttackDice + 1;
+         iSneakAttackDice++;
      }
      if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_2) )
      {
-         iSneakAttackDice = iSneakAttackDice + 1;
+         iSneakAttackDice++;
      }
      if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_3) )
      {
-         iSneakAttackDice = iSneakAttackDice + 1;
+         iSneakAttackDice++;
      }
      if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_4) )
      {
-         iSneakAttackDice = iSneakAttackDice + 1;
+         iSneakAttackDice++;
      }
      if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_5) )
      {
-         iSneakAttackDice = iSneakAttackDice + 1;
+         iSneakAttackDice++;
      }
      if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_6) )
      {
-         iSneakAttackDice = iSneakAttackDice + 1;
+         iSneakAttackDice++;
      }
      if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_7) )
      {
-         iSneakAttackDice = iSneakAttackDice + 1;
+         iSneakAttackDice++;
      }
      if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_8) )
      {
-         iSneakAttackDice = iSneakAttackDice + 1;
+         iSneakAttackDice++;
      }
      if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_9) )
      {
-         iSneakAttackDice = iSneakAttackDice + 1;
+         iSneakAttackDice++;
      }
      if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_10) )
      {
-         iSneakAttackDice = iSneakAttackDice + 1;
+         iSneakAttackDice++;
      }
-     
-     iSneakAttackDice = iSneakAttackDice + iRogueDice + iBlackGuardDice + iAssassinDice;
-     iSneakAttackDice = iSneakAttackDice + iArcaneTricksterDice;
-     
-     // use template to add any additional PrC's that have sneak attack
-     //iSneakAttackDice = iSneakAttackDice + iXXXXDice;
      
      return iSneakAttackDice;
 }

@@ -36,15 +36,12 @@ int GetRogueSneak(object oPC)
    if (iBowEquipped)
    {
       iClassLevel = GetLevelByClass(CLASS_TYPE_PEERLESS, oPC);
-      if ((iClassLevel >= 1) && (iClassLevel < 4)) iRogueSneak++;
-      if ((iClassLevel >= 4) && (iClassLevel < 6)) iRogueSneak += 2;
-      if ((iClassLevel >= 6) && (iClassLevel < 10)) iRogueSneak += 3;
-      if (iClassLevel >= 10) iRogueSneak += 4;
+      if (iClassLevel) iRogueSneak += (iClassLevel + 2) / 3
 
-      iClassLevel = GetLevelByClass(CLASS_TYPE_BLARCHER, oPC);
-      if ((iClassLevel >= 5) && (iClassLevel < 8)) iRogueSneak++;
-      if ((iClassLevel >= 8) && (iClassLevel < 10)) iRogueSneak += 2;
-      if (iClassLevel >= 10) iRogueSneak += 3;
+      //iClassLevel = GetLevelByClass(CLASS_TYPE_BLARCHER, oPC);
+      //if ((iClassLevel >= 5) && (iClassLevel < 8)) iRogueSneak++;
+      //if ((iClassLevel >= 8) && (iClassLevel < 10)) iRogueSneak += 2;
+      //if (iClassLevel >= 10) iRogueSneak += 3;
    }
 
    //iClassLevel = GetLevelByClass(CLASS_TYPE_INFILTRATOR, oPC);
@@ -75,6 +72,10 @@ int GetBlackguardSneak(object oPC)
    iClassLevel = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oPC);
    if (iClassLevel) iBlackguardSneak += (iClassLevel - 1) / 3;
    if ((iClassLevel) && (GetLevelByClass(CLASS_TYPE_PALADIN) >= 5)) iBlackguardSneak++;  // bonus for pal/bg
+
+   //Epic Ninja has Blackguard Sneaks as well...
+   iClassLevel = GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC);
+   if (iClassLevel) iBlackguardSneak += (iClassLevel + 1) / 3;
 
    //More special case on the Arcane Trickster... (see above)
    iClassLevel = GetLevelByClass(CLASS_TYPE_ARCTRICK, oPC);

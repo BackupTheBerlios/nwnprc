@@ -105,7 +105,7 @@ void EvalPRCFeats(object oPC)
 
     if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
        && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)        ExecuteScript("ft_gtwf", oPC);
-       
+
     // Miscellaneous
     ExecuteScript("ft_sanctmartial",oPC);
     ExecuteScript("prc_wyzfeat",oPC);
@@ -237,7 +237,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"BlackguardSneakDice");
     // Sacred Fist
     DeleteLocalInt(oSkin,"SacFisAC");
-    DeleteLocalInt(oSkin,"SacFisMv"); 
+    DeleteLocalInt(oSkin,"SacFisMv");
     // Brawler
     DeleteLocalInt(oSkin,"BrawlerBlock");
     // Minstrel
@@ -250,6 +250,8 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"SoLFH");
     // Battlerager
     DeleteLocalInt(oSkin,"BRageProw");
+    // Runescarred Berserker
+    DeleteLocalInt(oSkin,"RitScarAC");
 
 
     // future PRCs Go below here
@@ -277,7 +279,7 @@ void ScrubPCSkin(object oPC, object oSkin)
         // Get the next property
         ip = GetNextItemProperty(oSkin);
     }
-    if (iCode) 
+    if (iCode)
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(381),oSkin);
 
 }
@@ -427,16 +429,16 @@ void PatronShar(object oPC)
 {
    if (GetHasFeat(FEAT_SHADOWWEAVE,oPC))
    {
-     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC)) 
+     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
      {
        int iEvil = GetAlignmentGoodEvil(oPC);
        int iDomain = GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC);
        if (iEvil == ALIGNMENT_EVIL && iDomain>1)
-         SetLocalInt(oPC, "PatronShar",1); 
+         SetLocalInt(oPC, "PatronShar",1);
        else
-         SetLocalInt(oPC, "PatronShar",0); 
-     } 
+         SetLocalInt(oPC, "PatronShar",0);
+     }
      else
-       SetLocalInt(oPC, "PatronShar",1);  
-   }    
+       SetLocalInt(oPC, "PatronShar",1);
+   }
 }

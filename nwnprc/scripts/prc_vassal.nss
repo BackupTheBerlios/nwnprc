@@ -139,8 +139,8 @@ void main()
 
     // *get the vassal's class level and his armors
     int nVassal = GetLevelByClass(CLASS_TYPE_VASSAL,OBJECT_SELF);
-    object oArmor4 = GetItemPossessedBy(OBJECT_SELF, "Platinumarmor4");
-    object oArmor6 = GetItemPossessedBy(OBJECT_SELF, "Platinumarmor6");
+    object oArmor4 = GetItemPossessedBy(OBJECT_SELF, "PlatinumArmor4");
+    object oArmor6 = GetItemPossessedBy(OBJECT_SELF, "PlatinumArmor6");
     object oItem = GetItemInSlot(INVENTORY_SLOT_CHEST,OBJECT_SELF);
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);

@@ -14,6 +14,7 @@
 #include "heartward_inc"
 #include "prc_inc_function"
 #include "inc_item_props"
+#include "soul_inc"
 
 void main()
 {
@@ -45,5 +46,5 @@ void main()
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(1));
-
+    DelayCommand(1.5,AddIniDmg(OBJECT_SELF));
 }

@@ -1,6 +1,7 @@
 #include "heartward_inc"
 #include "prc_inc_function"
 #include "inc_item_props"
+#include "soul_inc"
 
 void main()
 {
@@ -10,7 +11,7 @@ void main()
         iType = GetHasFeat(FEAT_BONDED_FIRE, OBJECT_SELF)  ? 3 : iType ;
         iType = GetHasFeat(FEAT_BONDED_WATER, OBJECT_SELF) ? 4 : iType ;
 
-  
+
     int iPoly;
 
     if (iType==1)
@@ -32,5 +33,5 @@ void main()
 
 
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY,EffectPolymorph(iPoly),OBJECT_SELF,HoursToSeconds(10));
-
+    DelayCommand(1.5,AddIniDmg(OBJECT_SELF));
 }

@@ -77,6 +77,10 @@ int GetRogueSneak(object oPC)
    iClassLevel = GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC);
    if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
    
+   // Temple Raider
+   iClassLevel = GetLevelByClass(CLASS_TYPE_TEMPLE_RAIDER, oPC);
+   if (iClassLevel>= 2) iRogueSneak += (iClassLevel + 1) / 3;
+   
    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
    {
       // Peerless Archer

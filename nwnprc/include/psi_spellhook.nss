@@ -20,6 +20,7 @@
 //#include "prc_class_const"
 #include "prc_inc_switch"
 #include "prc_inc_itmrstr"
+#include "psi_inc_psifunc"
 
 
 // This function holds all functions that are supposed to run before the actual
@@ -58,7 +59,7 @@ int PsiPrePowerCastCode()
    }
    
    // Mind Trap power
-   if (GetLocalInt(oTarget, "MindTrap") == TRUE)
+   if (GetLocalInt(oTarget, "MindTrap") == TRUE && GetIsTelepathyPower())
    {
    	int nPP = GetLocalInt(OBJECT_SELF, "PowerPoints");
    	nPP -= d6();

@@ -32,4 +32,6 @@ void main()
      ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oCaster);
      effect eDam = EffectDamage(iHalf, DAMAGE_TYPE_POSITIVE);
      ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+     
+     if (GetIsDead(oTarget))	DeleteLocalInt(oCaster, "SharePain");
 }

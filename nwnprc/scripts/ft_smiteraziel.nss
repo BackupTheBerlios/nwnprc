@@ -36,7 +36,7 @@ void main()
 {
 
    // Paladin/Fist Raziel need a Loyal Good Alignment
-   if (GetAlignmentGoodEvil(OBJECT_SELF)!=ALIGNMENT_GOOD && GetAlignmentLawChaos(OBJECT_SELF)!=ALIGNMENT_LAWFUL)return;
+   if ( !(GetAlignmentGoodEvil(OBJECT_SELF)==ALIGNMENT_GOOD && GetAlignmentLawChaos(OBJECT_SELF)==ALIGNMENT_LAWFUL))return;
 
    // take lvl for Speed
    int LvlRaziel=GetLevelByClass(CLASS_TYPE_FISTRAZIEL);

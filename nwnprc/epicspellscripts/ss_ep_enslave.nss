@@ -39,34 +39,33 @@ void main()
         if(!GetIsReactionTypeFriendly(oTarget))
         {
             //Make SR Check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) && !GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE))
             {
                 //Make a Will Save
                 if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     object oOldSlave = GetLocalObject(OBJECT_SELF, "EnslavedCreature");
-                    // The new slave is docile.
+
+                    //Force the Target to be docile
                     ChangeToStandardFaction(oTarget, STANDARD_FACTION_MERCHANT);
                     ClearPersonalReputation(OBJECT_SELF, oTarget);
+
                     //Apply linked effects and VFX Impact
                     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                     SetLocalObject(OBJECT_SELF, "EnslavedCreature", oTarget);
-                    //Make the old slave angry.
+
+                    //Old slave dies
                     if (GetIsObjectValid(oOldSlave))
                     {
-                        ChangeToStandardFaction(oOldSlave, STANDARD_FACTION_HOSTILE);
-                        ClearPersonalReputation(OBJECT_SELF, oOldSlave);
-                        if (!GetCommandable(oOldSlave))
-                        {
-                            SetCommandable(TRUE,oOldSlave);
-                            DelayCommand(1.0,SetCommandable(FALSE,oOldSlave));
-                        }
-                        AssignCommand(oOldSlave, ActionAttack(OBJECT_SELF));
+                        FloatingTextStringOnCreature("*You command your previous thrall to die*",OBJECT_SELF);
+                        ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectKnockdown(), oOldSlave);
+                        DestroyObject(oOldSlave, 1.0f);
                     }
+                    
                 }
             }
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

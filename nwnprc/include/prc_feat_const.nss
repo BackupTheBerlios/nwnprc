@@ -115,6 +115,7 @@ const int FEAT_SA_HIDEF     = 4750;
 const int FEAT_SA_MOVE4     = 4751;
 const int FEAT_SA_JUMP      = 4752;
 const int FEAT_SA_BLUFF     = 4753;
+const int FEAT_SA_HIDE4	    = 4754;
 const int FEAT_SA_CRFTARM   = 4757;
 const int FEAT_SA_CRFTWEAP  = 4758;
 const int FEAT_SA_SPOT_4    = 4762;

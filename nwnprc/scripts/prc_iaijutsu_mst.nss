@@ -36,11 +36,11 @@ void KatFin(object oPC, object oWeap, int iBonus)
     int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
     int iBonus = 0;
     int iEnhance = GetWeaponEnhancement(oWeap);
-    int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
+    //int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
 
     if(iDex > iStr)
     {
-    iBonus = iDex - iStr + iEnhance + iAB;
+    iBonus = iDex - iStr + iEnhance;
     }
 
  if(iBonus > 0){

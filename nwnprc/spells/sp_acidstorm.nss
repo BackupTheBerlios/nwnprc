@@ -15,7 +15,7 @@ void main()
 	// Acid storm is a huge burst doing 1d6 / lvl acid damage (15 cap)
 	DoBurst (nCasterLvl,6, 0, nDice, 
 		AOE_PER_STORM, VFX_IMP_ACID_S, 
-		RADIUS_SIZE_HUGE, DAMAGE_TYPE_ACID, SAVING_THROW_TYPE_ACID,
+		RADIUS_SIZE_HUGE, DAMAGE_TYPE_ACID, DAMAGE_TYPE_ACID, SAVING_THROW_TYPE_ACID,
 		FALSE, SPELL_SCHOOL_EVOCATION, GetSpellId(), 6.0);
 
 	// Add some extra sfx.		

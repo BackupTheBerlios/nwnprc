@@ -15,5 +15,5 @@ void main()
 	// Ice burst is a colossal radius burst doing 1d4+10/level (cap at 10) cold damage.
 	DoBurst (nCasterLvl,6, 0, nDice, 
 		VFX_IMP_FROST_L, VFX_IMP_FROST_S, 
-		RADIUS_SIZE_MEDIUM, DAMAGE_TYPE_COLD, SAVING_THROW_TYPE_COLD);
+		RADIUS_SIZE_MEDIUM, DAMAGE_TYPE_COLD, DAMAGE_TYPE_COLD, SAVING_THROW_TYPE_COLD);
 }

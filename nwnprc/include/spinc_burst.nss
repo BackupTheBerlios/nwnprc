@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurstEffect, 
-	int nVictimEffect, float fRadius, int nDamageType, int nSaveType,
+	int nVictimEffect, float fRadius, int nDamageType, int nBonusDamageType, int nSaveType,
 	int bCasterImmune = FALSE,
 	int nSchool = SPELL_SCHOOL_EVOCATION, int nSpellID = -1,
 	float fAOEDuration = 0.0f)
@@ -35,9 +35,12 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 	// Get the effective caster level and hand it to the SR engine.
 
 	
-	// Adjust the damage type of necessary.
+	// Adjust the damage type of necessary, if the damage & bonus damage types are the
+	// same we need to copy the adjusted damage type to the bonus damage type.
+	int nSameDamageType = nDamageType == nBonusDamageType;
 	nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
-
+	if (nSameDamageType) nBonusDamageType = nDamageType;
+	
 	// Apply the specified vfx to the location.  If we were given an aoe vfx then
 	// fAOEDuration will be > 0.
 	if (fAOEDuration > 0.0)
@@ -46,10 +49,8 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 	else
 		ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(nBurstEffect), lTarget);
 	
-	
-	
 	effect eVis = EffectVisualEffect(nVictimEffect);
-	effect eDamage;
+	effect eDamage, eBonusDamage;
 	float fDelay;
 	
 	// Declare the spell shape, size and the location.  Capture the first target object in the shape.
@@ -68,15 +69,52 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 				fDelay = GetSpellEffectDelay(lTarget, oTarget);
 				if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
 				{
-				        int nSaveDC = SPGetSpellSaveDC(oTarget,OBJECT_SELF);
-					// Roll damage for each target
-					int nDam = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
+					int nSaveDC = SPGetSpellSaveDC(oTarget, OBJECT_SELF);
+
+					int nDam = 0;
+					int nDam2 = 0;
+					if (nSameDamageType)
+					{
+						// Damage damage type is the simple case, just get the total damage
+						// of the spell's type, apply metamagic and roll the save.
 						
-					// Adjust damage for reflex save / evasion / imp evasion
-					nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nSaveDC, nSaveType);
+						// Roll damage for each target
+						nDam = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
+							
+						// Adjust damage for reflex save / evasion / imp evasion
+						nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nSaveDC, nSaveType);
+					}
+					else
+					{
+						// Damage of different types is a bit more complicated, we need to
+						// calculate the bonus damage ourselves, figure out if the save was
+						// 1/2 or no damage, and apply appropriately to the secondary damage
+						// type.
+
+						// Calculate base and bonus damage.						
+						nDam = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, 0);
+						nDam2 = nDice * nBonusDam;
+
+						// Adjust damage for reflex save / evasion / imp evasion.  We need to
+						// deal with damage being constant, damage being 0, and damage being
+						// some percentage of the total (should be 1/2).
+						int nAdjustedDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nSaveDC, nSaveType);
+						if (0 == nAdjustedDam)
+						{
+							// Evasion zero'ed out the damage, clear both damage values.
+							nDam = 0;
+							nDam2 = 0;
+						}
+						else if (nAdjustedDam < nDam)
+						{
+							// Assume 1/2 damage, and half the bonus damage.
+							nDam = nAdjustedDam;
+							nDam2 /= 2;
+						}
+					}
 
 					//Set the damage effect
-					if(nDam > 0)
+					if (nDam > 0)
 					{
 						eDamage = SPEffectDamage(nDam, nDamageType);
 						
@@ -87,6 +125,12 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 						DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 					}
 
+					// Apply bonus damage if it is a different type.
+					if (nDam2 > 0)
+					{
+						DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
+							SPEffectDamage(nDam2, nBonusDamageType), oTarget));
+					}
 				}
 			}
 		}

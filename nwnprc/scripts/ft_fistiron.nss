@@ -9,6 +9,6 @@ void main()
     effect eDamage = EffectDamageIncrease(DAMAGE_BONUS_1d4, DAMAGE_TYPE_BLUDGEONING);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(eDamage), OBJECT_SELF,RoundsToSeconds(2));
 
-
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), OBJECT_SELF);
 
 }

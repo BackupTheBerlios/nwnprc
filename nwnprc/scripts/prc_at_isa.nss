@@ -12,113 +12,11 @@
 #include "inc_addragebonus" // for determining weapon damage type
 #include "inc_combat"       // for DoMeleeAttack
 #include "x2_inc_itemprop"  // for IPGetIsMeleeWeapon
+#include "prc_inc_sneak"    // for GetTotalSneakAttackDice
 
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
-
-int GetTotalSneakAttackDice(object oPC)
-{
-   object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-   int iSneakAttackDice = 0;
-   int iBowEquipped = FALSE;
-   int iClassLevel;
-
-   iClassLevel = GetLevelByClass(CLASS_TYPE_ROGUE, oPC);
-   if (iClassLevel) iSneakAttackDice += (iClassLevel + 1) / 2;
-
-   iClassLevel = GetLevelByClass(CLASS_TYPE_ARCTRICK, oPC);
-   if (iClassLevel) iSneakAttackDice += iClassLevel / 2;
-
-   iClassLevel = GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC);
-   if (iClassLevel) iSneakAttackDice += (iClassLevel + 1) / 3;
-
-   iClassLevel = GetLevelByClass(CLASS_TYPE_ASSASSIN, oPC);
-   if (iClassLevel) iSneakAttackDice += (iClassLevel + 1) / 2;
-
-   iClassLevel = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
-   if (iClassLevel >= 6) iSneakAttackDice++;
-
-   iClassLevel = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oPC);
-   if (iClassLevel) iSneakAttackDice += (iClassLevel - 1) / 3;
-   if ((iClassLevel) && (GetLevelByClass(CLASS_TYPE_PALADIN) >= 5)) iSneakAttackDice++;  // bonus for pal/bg
-
-   iClassLevel = GetLevelByClass(CLASS_TYPE_DISC_BAALZEBUL, oPC);
-   if ((iClassLevel >= 2) && (iClassLevel < 5)) iSneakAttackDice++;
-   if ((iClassLevel >= 5) && (iClassLevel < 8)) iSneakAttackDice += 2;
-   if (iClassLevel >= 8) iSneakAttackDice += 3;
-
-   if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW ||
-       GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
-          iBowEquipped = TRUE;
-
-   if (iBowEquipped)
-   {
-      iClassLevel = GetLevelByClass(CLASS_TYPE_PEERLESS, oPC);
-      if (iClassLevel) iSneakAttackDice += (iClassLevel + 2) / 3;
-
-      //iClassLevel = GetLevelByClass(CLASS_TYPE_BLARCHER, oPC);
-      //if ((iClassLevel >= 5) && (iClassLevel < 8)) iSneakAttackDice++;
-      //if ((iClassLevel >= 8) && (iClassLevel < 10)) iSneakAttackDice += 2;
-      //if (iClassLevel >= 10) iSneakAttackDice += 3;
-   }
-
-   //iClassLevel = GetLevelByClass(CLASS_TYPE_INFILTRATOR, oPC);
-   //if ((iClassLevel >= 1) && (iClassLevel < 5)) iSneakAttackDice++;
-   //if (iClassLevel >= 5) iSneakAttackDice += 2;
-
-   //iClassLevel = GetLevelByClass(CLASS_TYPE_FANG_OF_LOLTH, oPC);
-   //if ((iClassLevel >= 2) && (iClassLevel < 5)) iSneakAttackDice++;
-   //if ((iClassLevel >= 5) && (iClassLevel < 8)) iSneakAttackDice += 2;
-   //if ((iClassLevel >= 8) && (iClassLevel < 12)) iSneakAttackDice += 3;
-   //if ((iClassLevel >= 12) && (iClassLevel < 16)) iSneakAttackDice += 4;
-   //if ((iClassLevel >= 16) && (iClassLevel < 20)) iSneakAttackDice += 5;
-   //if (iClassLevel >= 20) iSneakAttackDice += 6;
-
-     // checks for epic feats that add sneak damage
-     if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_1) )
-     {
-         iSneakAttackDice++;
-     }
-     if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_2) )
-     {
-         iSneakAttackDice++;
-     }
-     if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_3) )
-     {
-         iSneakAttackDice++;
-     }
-     if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_4) )
-     {
-         iSneakAttackDice++;
-     }
-     if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_5) )
-     {
-         iSneakAttackDice++;
-     }
-     if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_6) )
-     {
-         iSneakAttackDice++;
-     }
-     if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_7) )
-     {
-         iSneakAttackDice++;
-     }
-     if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_8) )
-     {
-         iSneakAttackDice++;
-     }
-     if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_9) )
-     {
-         iSneakAttackDice++;
-     }
-     if(GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_10) )
-     {
-         iSneakAttackDice++;
-     }
-     
-     return iSneakAttackDice;
-}
 
 int GetSneakAttackDamage(int iSneakAttackDice)
 {

@@ -7,94 +7,10 @@
 // 
 // Compatibility with old PRC's is maintained.
 
+
 #include "prc_class_const"
 #include "inc_item_props"
-
-int GetRogueSneak(object oPC)
-{
-   object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-   int iRogueSneak = 0;
-   int iBowEquipped = FALSE;
-   int iClassLevel;
-
-   iClassLevel = GetLevelByClass(CLASS_TYPE_ROGUE, oPC);
-   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
-
-   // The Arcane Trickster is given a special case.  Before level 10, it
-   // gains blackguard sneaks by feats.  To avoid breaking the class, this
-   // was kept.  After level 10, it gains rogue sneaks to be applied to the skin.
-   iClassLevel = GetLevelByClass(CLASS_TYPE_ARCTRICK, oPC);
-   if (iClassLevel >= 12) iRogueSneak += (iClassLevel - 10) / 2;
-
-   iClassLevel = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
-   if (iClassLevel >= 6) iRogueSneak++;
-
-   if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW ||
-       GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
-          iBowEquipped = TRUE;
-
-   if (iBowEquipped)
-   {
-      iClassLevel = GetLevelByClass(CLASS_TYPE_PEERLESS, oPC);
-      if (iClassLevel) iRogueSneak += (iClassLevel + 2) / 3;
-
-      //iClassLevel = GetLevelByClass(CLASS_TYPE_BLARCHER, oPC);
-      //if ((iClassLevel >= 5) && (iClassLevel < 8)) iRogueSneak++;
-      //if ((iClassLevel >= 8) && (iClassLevel < 10)) iRogueSneak += 2;
-      //if (iClassLevel >= 10) iRogueSneak += 3;
-   }
-
-   //iClassLevel = GetLevelByClass(CLASS_TYPE_INFILTRATOR, oPC);
-   //if ((iClassLevel >= 1) && (iClassLevel < 5)) iRogueSneak++;
-   //if (iClassLevel >= 5) iRogueSneak += 2;
-
-   //iClassLevel = GetLevelByClass(CLASS_TYPE_FANG_OF_LOLTH, oPC);
-   //if ((iClassLevel >= 2) && (iClassLevel < 5)) iRogueSneak++;
-   //if ((iClassLevel >= 5) && (iClassLevel < 8)) iRogueSneak += 2;
-   //if ((iClassLevel >= 8) && (iClassLevel < 12)) iRogueSneak += 3;
-   //if ((iClassLevel >= 12) && (iClassLevel < 16)) iRogueSneak += 4;
-   //if ((iClassLevel >= 16) && (iClassLevel < 20)) iRogueSneak += 5;
-   //if (iClassLevel >= 20) iRogueSneak += 6;
-
-     iClassLevel = GetLevelByClass(CLASS_TYPE_BFZ, oPC);
-     if ((iClassLevel >= 3) && (iClassLevel < 6)) iRogueSneak++;
-     if ((iClassLevel >= 6) && (iClassLevel < 9)) iRogueSneak += 2;
-     if (iClassLevel >= 9) iRogueSneak += 3;
-
-   //Future PRC's go here.  DO NOT ADD SNEAK ATTACKS AS CLASS FEATS.
-   //Also, there are a couple of instances in the combat system
-   //which will need to be updated, as well as the impromptu sneak attack
-   //from the Arcane Trickster.
-
-   return iRogueSneak;
-}
-
-int GetBlackguardSneak(object oPC)
-{
-   int iClassLevel;
-   int iBlackguardSneak = 0;
-
-   iClassLevel = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oPC);
-   if (iClassLevel) iBlackguardSneak += (iClassLevel - 1) / 3;
-   if ((iClassLevel) && (GetLevelByClass(CLASS_TYPE_PALADIN) >= 5)) iBlackguardSneak++;  // bonus for pal/bg
-
-   //Epic Ninja has Blackguard Sneaks as well...
-   iClassLevel = GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC);
-   if (iClassLevel) iBlackguardSneak += (iClassLevel + 1) / 3;
-
-   //More special case on the Arcane Trickster... (see above)
-   iClassLevel = GetLevelByClass(CLASS_TYPE_ARCTRICK, oPC);
-   if ((iClassLevel >= 2) && (iClassLevel < 11)) iBlackguardSneak += iClassLevel / 2;
-   if (iClassLevel >= 11) iBlackguardSneak += 5;
-
-   //This guy was also given feats but he doesn't have any progression after this...
-   iClassLevel = GetLevelByClass(CLASS_TYPE_DISC_BAALZEBUL, oPC);
-   if ((iClassLevel >= 2) && (iClassLevel < 5)) iBlackguardSneak++;
-   if ((iClassLevel >= 5) && (iClassLevel < 8)) iBlackguardSneak += 2;
-   if (iClassLevel >= 8) iBlackguardSneak += 3;
-
-   return iBlackguardSneak;
-}
+#include "prc_inc_sneak"
 
 void ApplySneakToSkin(object oPC, int iRogueSneak, int iBlackguardSneak)
 {
@@ -113,18 +29,11 @@ void ApplySneakToSkin(object oPC, int iRogueSneak, int iBlackguardSneak)
    if (iRogueSneak == 5) iRogueSneakFeat = 39;
    if (iRogueSneak >= 6) iRogueSneakFeat = iRogueSneak + 296;
 
-   //SendMessageToPC(oPC, "iRogueSneakFeat = " + IntToString(iRogueSneakFeat) +
-   //                     " iRogueSneak = " + IntToString(iRogueSneak));
-
    //Blackguard Sneaks
    //1-15: 276-290
    if (iBlackguardSneak > 15) return; //Error, should never happen.
 
    if (iBlackguardSneak) iBlackguardSneakFeat = iBlackguardSneak + 275;
-
-   //SendMessageToPC(oPC, "iBlackguardSneakFeat = " + IntToString(iBlackguardSneakFeat) +
-   //                     " iBlackguardSneak = " + IntToString(iBlackguardSneak));
-
 
    // This is basically to always readd the sneaks on every event PRCEvalFeats is called...
    iPreviousSneakFeat = GetLocalInt(oSkin,"RogueSneakDice");
@@ -171,12 +80,6 @@ void main()
       SendMessageToPC(oPC,"Fatal error: +35d6 Rogue/Blackguard Sneak Attack exceeded!");
       return;
    }
-
-   //Debug messages:
-   //SendMessageToPC(oPC,"You will have a total of " + IntToString(iFinalSneakDice) +
-   //                " Sneak Dice.");
-   //SendMessageToPC(oPC,IntToString(iRogueSneakDice) + " are Rogue, and " +
-   //                IntToString(iBlackguardSneakDice) + " are Blackguard.");
 
    if(iFinalSneakDice) ApplySneakToSkin(oPC,iRogueSneakDice,iBlackguardSneakDice);
 }

@@ -14,7 +14,7 @@ void main()
     object oTarget = GetExitingObject();
     int bValid = FALSE;
     effect eAOE;
-    SendMessageToPC(GetFirstPC(), "Desecrate has been exited");    
+//    SendMessageToPC(GetFirstPC(), "Desecrate has been exited");    
 
     if(GetHasSpellEffect(SPELL_DES_20, oTarget))
     {

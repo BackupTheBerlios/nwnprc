@@ -1,72 +1,72 @@
 2DA V2.0
 
-   Label                     Level FeatID IPFeatID SpellID 
-0  ****                      ****  ****   ****     ****    
-1  **Level_1_Wilder_Powers** ****  ****   ****     ****    
-2  Bolt                      1     21361  12367    14721   
-3  CallToMind                1     21362  12368    14722   
-4  ConcealThought            1     21363  12369    14723   
-5  CrystalShard              1     21365  12371    14725   
-6  Daze                      1     21366  12372    14726   
-7  Deceleration              1     21367  12373    14727   
-8  DefPrecog                 1     21368  12374    14728   
-9  Demoralize                1     21369  12375    14729   
-10 Disable                   1     21370  12376    14730   
-11 DissipatingTouch          1     21371  12377    14731   
-12 Distract                  1     21372  12378    14732   
-13 EmptyMind                 1     21373  12379    14733   
-14 Empathy                   1     21374  12380    14734   
-15 EnergyRay                 1     21375  12381    14735   
-16 Entangle                  1     21376  12382    14740   
-17 ForceScreen               1     21377  12383    14741   
-18 Grease                    1     21378  12384    14742   
-19 Hammer                    1     21379  12385    14743   
-20 InertialArmour            1     21380  12386    14744   
-21 MindThrust                1     21381  12387    14745   
-22 MyLight                   1     21382  12388    14746   
-23 OffPrecog                 1     21383  12389    14747   
-24 OffPresc                  1     21384  12390    14748   
-25 Synesthete                1     21385  12391    14750   
-26 Vigor                     1     21387  12393    14752   
-27 FarHand                   1     21388  12394    14753   
-28 MatterAgitation           1     21389  12395    14754   
-29 Skate                     1     21390  12396    14755   
-30 TelempathicProjection     1     21391  12397    14756   
-31 **Level_2_Wilder_Powers** ****  ****   ****     ****    
-32 BestowPower               2     21410  12416    14771   
-33 Biofeedback               2     21411  12417    14772   
-34 ConcBlast                 2     21413  12419    14774   
-35 ConcealAmorpha            2     21414  12420    14775   
-36 CrystalSwarm              2     21415  12421    14776   
-37 EgoWhip                   2     21416  12422    14778   
-38 ElfSight                  2     21417  12423    14779   
-39 EnergyAdaptSpec           2     21418  12424    14780   
-40 BodyEquilibrium           2     21419  12425    14786   
-41 EnergyPush                2     21420  12426    14788   
-42 Lock                      2     21421  12427    14793   
-43 EnergyStun                2     21422  12428    14794   
-44 Identify                  2     21423  12429    14799   
-45 IdInsinuation             2     21424  12430    14800   
-46 InflictPain               2     21425  12431    14801   
-47 Knock                     2     21426  12432    14802   
-48 MindDisrupt               2     21427  12433    14803   
-49 RecallAgony               2     21428  12434    14804   
-50 ThoughtShield             2     21429  12435    14805   
-51 **Level_3_Wilder_Powers** ****  ****   ****     ****    
-52 BodyAdjustment            3     21461  12467    14821   
-53 Darkvision                3     21463  12469    14823   
-54 Psiblast                  3     21464  12470    14824   
-55 DangerSense               3     21465  12471    14825   
-56 EnergyBolt                3     21466  12472    14826   
-57 EnergyBurst               3     21467  12473    14831   
-58 EnergyRetort              3     21468  12474    14836   
-59 EradicateInvis            3     21469  12475    14842   
-60 **Level_4_Wilder_Powers** ****  ****   ****     ****    
-61 **Level_5_Wilder_Powers** ****  ****   ****     ****    
-62 **Level_6_Wilder_Powers** ****  ****   ****     ****    
-63 BreathBlackDragon         6     21591  12602    14951   
-64 Disintegrate              6     21592  12603    14952   
-65 **Level_7_Wilder_Powers** ****  ****   ****     ****    
-66 **Level_8_Wilder_Powers** ****  ****   ****     ****    
-67 RecallDeath               8     21661  12673    15021   
-68 **Level_9_Wilder_Powers** ****  ****   ****     ****    
+           Label                     Name     Level FeatID IPFeatID SpellID 
+0          ****                      ****     ****  ****   ****     ****    
+1          **Level_1_Wilder_Powers** ****     ****  ****   ****     ****    
+2          Bolt                      16823683 1     21361  12367    14721   
+3          CallToMind                16823629 1     21362  12368    14722   
+4          ConcealThought            16823758 1     21363  12369    14723   
+5          CrystalShard              16823631 1     21365  12371    14725   
+6          Daze                      16823649 1     21366  12372    14726   
+7          Deceleration              16823651 1     21367  12373    14727   
+8          DefPrecog                 16823707 1     21368  12374    14728   
+9          Demoralize                16823685 1     21369  12375    14729   
+10         Disable                   16823687 1     21370  12376    14730   
+11         DissipatingTouch          16823655 1     21371  12377    14731   
+12         Distract                  16823689 1     21372  12378    14732   
+13         EmptyMind                 16823691 1     21373  12379    14733   
+14         Empathy                   16823760 1     21374  12380    14734   
+15         EnergyRay                 16823693 1     21375  12381    14735   
+16         Entangle                  16823699 1     21376  12382    14740   
+17         ForceScreen               16823657 1     21377  12383    14741   
+18         Grease                    16823701 1     21378  12384    14742   
+19         Hammer                    16823703 1     21379  12385    14743   
+20         InertialArmour            16823659 1     21380  12386    14744   
+21         MindThrust                16823614 1     21381  12387    14745   
+22         MyLight                   16823705 1     21382  12388    14746   
+23         OffPrecog                 16823709 1     21383  12389    14747   
+24         OffPresc                  16823711 1     21384  12390    14748   
+25         Synesthete                16823754 1     21385  12391    14750   
+26         Vigor                     16823671 1     21387  12393    14752   
+27         FarHand                   16823762 1     21388  12394    14753   
+28         MatterAgitation           16823764 1     21389  12395    14754   
+29         Skate                     16823766 1     21390  12396    14755   
+30         TelempathicProjection     16823768 1     21391  12397    14756   
+31         **Level_2_Wilder_Powers** ****     ****  ****   ****     ****    
+32         BestowPower               16823625 2     21410  12416    14771   
+33         Biofeedback               16823713 2     21411  12417    14772   
+34         ConcBlast                 16823715 2     21413  12419    14774   
+35         ConcealAmorpha            16823643 2     21414  12420    14775   
+36         CrystalSwarm              16823750 2     21415  12421    14776   
+37         EgoWhip                   16823717 2     21416  12422    14778   
+38         ElfSight                  16823719 2     21417  12423    14779   
+39         EnergyAdaptSpec           16823721 2     21418  12424    14780   
+40         BodyEquilibrium           16823756 2     21419  12425    14786   
+41         EnergyPush                16823728 2     21420  12426    14788   
+42         Lock                      16823772 2     21421  12427    14793   
+43         EnergyStun                16823734 2     21422  12428    14794   
+44         Identify                  16823742 2     21423  12429    14799   
+45         IdInsinuation             16823740 2     21424  12430    14800   
+46         InflictPain               16823744 2     21425  12431    14801   
+47         Knock                     16823746 2     21426  12432    14802   
+48         MindDisrupt               16823748 2     21427  12433    14803   
+49         RecallAgony               16823665 2     21428  12434    14804   
+50         ThoughtShield             16823752 2     21429  12435    14805   
+51         **Level_3_Wilder_Powers** ****     ****  ****   ****     ****    
+52         BodyAdjustment            16823635 3     21461  12467    14821   
+53         Darkvision                16823647 3     21463  12469    14823   
+54         Psiblast                  16823663 3     21464  12470    14824   
+55         DangerSense               16823774 3     21465  12471    14825   
+56         EnergyBolt                16823776 3     21466  12472    14826   
+57         EnergyBurst               16823782 3     21467  12473    14831   
+58         EnergyRetort              16823788 3     21468  12474    14836   
+59         EradicateInvis            16823796 3     21469  12475    14842   
+60         **Level_4_Wilder_Powers** ****     ****  ****   ****     ****    
+61         **Level_5_Wilder_Powers** ****     ****  ****   ****     ****    
+62         **Level_6_Wilder_Powers** ****     ****  ****   ****     ****    
+63         BreathBlackDragon         16823627 6     21591  12602    14951   
+64         Disintegrate              16823653 6     21592  12603    14952   
+65         **Level_7_Wilder_Powers** ****     ****  ****   ****     ****    
+66         **Level_8_Wilder_Powers** ****     ****  ****   ****     ****    
+67         RecallDeath               16823667 8     21661  12673    15021   
+68         **Level_9_Wilder_Powers** ****     ****  ****   ****     ****    

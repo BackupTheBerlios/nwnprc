@@ -1,42 +1,42 @@
 2DA V2.0
 
-   Label                     Level FeatID IPFeatID SpellID 
-0  ****                      ****  ****   ****     ****    
-1  **Level_1_PsyWar_Powers** ****  ****   ****     ****    
-2  BioFeedback               1     21721  12733    15086   
-3  ElfSight                  1     21722  12734    15081   
-4  ConcealThought            1     21723  12735    15093   
-5  DefPrecog                 1     21728  12741    15087   
-6  DissipatingTouch          1     21731  12744    15090   
-7  Distract                  1     21732  12745    15091   
-8  EmptyMind                 1     21733  12746    15092   
-9  ForceScreen               1     21737  12750    15099   
-10 Stomp                     1     21738  12751    15107   
-11 Hammer                    1     21739  12752    15101   
-12 InertialArmour            1     21740  12753    15102   
-13 MyLight                   1     21742  12755    15104   
-14 OffPrecog                 1     21743  12756    15105   
-15 OffPresc                  1     21744  12757    15106   
-16 Synesthete                1     21745  12758    15108   
-17 ThickenSkin               1     21746  12759    15109   
-18 Vigor                     1     21747  12760    15110   
-19 Skate                     1     21750  12763    15114   
-20 **Level_2_PsyWar_Powers** ****  ****   ****     ****    
-21 BodyAdjustment            2     21770  12783    15132   
-22 Darkvision                2     21772  12785    15131   
-23 ConcealAmorpha            2     21774  12787    15135   
-24 DissolvingTouch           2     21775  12788    15136   
-25 EnergyAdaptSpec           2     21778  12791    15137   
-26 BodyEquilibrium           2     21779  12792    15145   
-27 ThoughtShield             2     21789  12802    15162   
-28 DissolvingWeapon          2     21790  12803    15163   
-29 **Level_3_PsyWar_Powers** ****  ****   ****     ****    
-30 GreaterAmorpha            3     21821  12835    15182   
-31 Exhale_BlackDrag          3     21822  12836    15198   
-32 DangerSense               3     21825  12838    15185   
-33 **Level_4_PsyWar_Powers** ****  ****   ****     ****    
-34 InertialBarrier           4     21871  12885    15231   
-35 SteadfastPerception       4     21872  12886    15232   
-36 **Level_5_PsyWar_Powers** ****  ****   ****     ****    
-37 **Level_6_PsyWar_Powers** ****  ****   ****     ****    
-38 BreathBlackDragon         6     21951  12969    15311   
+           Label                     Name     Level FeatID IPFeatID SpellID 
+0          ****                      ****     ****  ****   ****     ****    
+1          **Level_1_PsyWar_Powers** ****     ****  ****   ****     ****    
+2          BioFeedback               16823713 1     21721  12733    15086   
+3          ElfSight                  16823719 1     21722  12734    15081   
+4          ConcealThought            16823758 1     21723  12735    15093   
+5          DefPrecog                 16823707 1     21728  12741    15087   
+6          DissipatingTouch          16823655 1     21731  12744    15090   
+7          Distract                  16823689 1     21732  12745    15091   
+8          EmptyMind                 16823691 1     21733  12746    15092   
+9          ForceScreen               16823657 1     21737  12750    15099   
+10         Stomp                     16823681 1     21738  12751    15107   
+11         Hammer                    16823703 1     21739  12752    15101   
+12         InertialArmour            16823659 1     21740  12753    15102   
+13         MyLight                   16823705 1     21742  12755    15104   
+14         OffPrecog                 16823709 1     21743  12756    15105   
+15         OffPresc                  16823711 1     21744  12757    15106   
+16         Synesthete                16823754 1     21745  12758    15108   
+17         ThickenSkin               16823669 1     21746  12759    15109   
+18         Vigor                     16823671 1     21747  12760    15110   
+19         Skate                     16823766 1     21750  12763    15114   
+20         **Level_2_PsyWar_Powers** ****     ****  ****   ****     ****    
+21         BodyAdjustment            16823635 2     21770  12783    15132   
+22         Darkvision                16823647 2     21772  12785    15131   
+23         ConcealAmorpha            16823643 2     21774  12787    15135   
+24         DissolvingTouch           16823675 2     21775  12788    15136   
+25         EnergyAdaptSpec           16823721 2     21778  12791    15137   
+26         BodyEquilibrium           16823756 2     21779  12792    15145   
+27         ThoughtShield             16823752 2     21789  12802    15162   
+28         DissolvingWeapon          16823770 2     21790  12803    15163   
+29         **Level_3_PsyWar_Powers** ****     ****  ****   ****     ****    
+30         GreaterAmorpha            16823645 3     21821  12835    15182   
+31         Exhale_BlackDrag          16823794 3     21822  12836    15198   
+32         DangerSense               16823774 3     21825  12838    15185   
+33         **Level_4_PsyWar_Powers**          ****  ****   ****     ****    
+34         InertialBarrier           16823661 4     21871  12885    15231   
+35         SteadfastPerception       16823679 4     21872  12886    15232   
+36         **Level_5_PsyWar_Powers**          ****  ****   ****     ****    
+37         **Level_6_PsyWar_Powers**          ****  ****   ****     ****    
+38         BreathBlackDragon                  6     21951  12969    15311   

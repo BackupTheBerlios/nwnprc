@@ -1,82 +1,80 @@
 2DA V2.0
 
-   Label                    Level FeatID IPFeatID SpellID 
-0  ****                     ****  ****   ****     ****    
-1  **Level_1_Psion_Powers** ****  ****   ****     ****    
-2  Bolt                     1     21001  12001    14361   
-3  CallToMind               1     21002  12002    14362   
-3  ConcealThought           1     21003  12003    14363   
-4  CharmPerson              1     21004  12004    14364   
-5  CrystalShard             1     21005  12005    14365   
-6  Daze                     1     21006  12006    14366   
-7  Deceleration             1     21007  12007    14367   
-8  DefPrecog                1     21008  12008    14368   
-9  Demoralize               1     21009  12009    14369   
-10 Disable                  1     21010  12010    14370   
-11 DissipatingTouch         1     21011  12011    14371   
-12 Distract                 1     21012  12012    14372   
-13 EmptyMind                1     21013  12013    14373   
-14 Empathy                  1     21014  12014    14374   
-15 EnergyRay                1     21015  12015    14375   
-16 Entangle                 1     21016  12016    14380   
-17 ForceScreen              1     21017  12017    14381   
-18 Grease                   1     21018  12018    14382   
-19 Hammer                   1     21019  12019    14383   
-20 InertialArmour           1     21020  12020    14384   
-21 MindThrust               1     21021  12021    14385   
-22 MyLight                  1     21022  12022    14386   
-23 OffPrecog                1     21023  12023    14387   
-24 OffPresc                 1     21024  12024    14388   
-25 Synesthete               1     21025  12025    14390   
-26 ThickenSkin              1     21026  12026    14391   
-27 Vigor                    1     21027  12027    14392   
-28 FarHand                  1     21028  12028    14393   
-29 MatterAgitation          1     21029  12029    14394   
-30 Skate                    1     21030  12030    14395   
-31 TelempathicProjection    1     21031  12031    14396   
-32 **Level_2_Psion_Powers** ****  ****   ****     ****    
-33 BestowPower              2     21050  12050    14411   
-34 Biofeedback              2     21051  12051    14412   
-35 BrainLock                2     21052  12052    14413   
-36 ConcBlast                2     21053  12053    14414   
-37 ConcealAmorpha           2     21054  12054    14415   
-38 CrystalSwarm             2     21055  12055    14416   
-39 EgoWhip                  2     21056  12056    14418   
-40 ElfSight                 2     21057  12057    14419   
-41 EnergyAdaptSpec          2     21058  12058    14420   
-42 BodyEquilibrium          2     21059  12059    14426   
-42 EnergyPush               2     21060  12060    14428   
-43 Lock                     2     21061  12061    14433   
-44 EnergyStun               2     21062  12062    14434   
-45 Identify                 2     21063  12063    14439   
-46 IdInsinuation            2     21064  12064    14440   
-47 InflictPain              2     21065  12065    14441   
-48 Knock                    2     21066  12066    14442   
-49 MindDisrupt              2     21067  12067    14443   
-50 RecallAgony              2     21068  12068    14444   
-51 ThoughtShield            2     21069  12069    14445   
-52 **Level_3_Psion_Powers** ****  ****   ****     ****    
-53 BodyAdjustment           3     21101  12101    14461   
-54 GreaterAmorpha           3     21102  12102    14462   
-55 Darkvision               3     21103  12103    14463   
-56 Psiblast                 3     21104  12104    14464   
-57 DangerSense              3     21105  12105    14465   
-58 EnergyBolt               3     21106  12106    14466   
-59 EnergyBurst              3     21107  12107    14471   
-60 EnergyRetort             3     21108  12108    14476   
-61 EradicateInvis           3     21109  12109    14482   
-62 **Level_4_Psion_Powers** ****  ****   ****     **** 
-63 InertialBar              4     21151  12152    14511   
-64 **Level_5_Psion_Powers** ****  ****   ****     ****    
-65 BalefulTeleport          5     21191  12194    14551   
-66 **Level_6_Psion_Powers** ****  ****   ****     ****    
-67 BreatheBlackDragon       6     21231  12236    14591   
-68 Disintegrate             6     21232  12237    14592   
-69 Crystallize              6     21233  12238    14593   
-70 **Level_7_Psion_Powers** ****  ****   ****     ****    
-71 CrisisLife               7     21271  12277    14631   
-72 **Level_8_Psion_Powers** ****  ****   ****     ****    
-73 RecallDeath              8     21301  12307    14661   
-52 **Level_9_Psion_Powers** ****  ****   ****     ****    
-
-
+           Label                    Name     Level FeatID IPFeatID SpellID 
+0          ****                     ****     ****  ****   ****     ****    
+1          **Level_1_Psion_Powers** ****     ****  ****   ****     ****    
+2          Bolt                     16823683 1     21001  12001    14361   
+3          CallToMind               16823629 1     21002  12002    14362   
+3          ConcealThought           16823758 1     21003  12003    14363   
+4          CharmPerson              16823641 1     21004  12004    14364   
+5          CrystalShard             16823631 1     21005  12005    14365   
+6          Daze                     16823649 1     21006  12006    14366   
+7          Deceleration             16823651 1     21007  12007    14367   
+8          DefPrecog                16823707 1     21008  12008    14368   
+9          Demoralize               16823685 1     21009  12009    14369   
+10         Disable                  16823687 1     21010  12010    14370   
+11         DissipatingTouch         16823655 1     21011  12011    14371   
+12         Distract                 16823689 1     21012  12012    14372   
+13         EmptyMind                16823691 1     21013  12013    14373   
+14         Empathy                  16823760 1     21014  12014    14374   
+15         EnergyRay                16823693 1     21015  12015    14375   
+16         Entangle                 16823699 1     21016  12016    14380   
+17         ForceScreen              16823657 1     21017  12017    14381   
+18         Grease                   16823701 1     21018  12018    14382   
+19         Hammer                   16823703 1     21019  12019    14383   
+20         InertialArmour           16823659 1     21020  12020    14384   
+21         MindThrust               16823614 1     21021  12021    14385   
+22         MyLight                  16823705 1     21022  12022    14386   
+23         OffPrecog                16823709 1     21023  12023    14387   
+24         OffPresc                 16823711 1     21024  12024    14388   
+25         Synesthete               16823754 1     21025  12025    14390   
+26         ThickenSkin              16823669 1     21026  12026    14391   
+27         Vigor                    16823671 1     21027  12027    14392   
+28         FarHand                  16823762 1     21028  12028    14393   
+29         MatterAgitation          16823764 1     21029  12029    14394   
+30         Skate                    16823766 1     21030  12030    14395   
+31         TelempathicProjection    16823768 1     21031  12031    14396   
+32         **Level_2_Psion_Powers** ****     ****  ****   ****     ****    
+33         BestowPower              16823625 2     21050  12050    14411   
+34         Biofeedback              16823713 2     21051  12051    14412   
+35         BrainLock                16823639 2     21052  12052    14413   
+36         ConcBlast                16823715 2     21053  12053    14414   
+37         ConcealAmorpha           16823643 2     21054  12054    14415   
+38         CrystalSwarm             16823750 2     21055  12055    14416   
+39         EgoWhip                  16823717 2     21056  12056    14418   
+40         ElfSight                 16823719 2     21057  12057    14419   
+41         EnergyAdaptSpec          16823721 2     21058  12058    14420   
+42         BodyEquilibrium          16823756 2     21059  12059    14426   
+42         EnergyPush               16823728 2     21060  12060    14428   
+43         Lock                     16823772 2     21061  12061    14433   
+44         EnergyStun               16823734 2     21062  12062    14434   
+45         Identify                 16823742 2     21063  12063    14439   
+46         IdInsinuation            16823740 2     21064  12064    14440   
+47         InflictPain              16823744 2     21065  12065    14441   
+48         Knock                    16823746 2     21066  12066    14442   
+49         MindDisrupt              16823748 2     21067  12067    14443   
+50         RecallAgony              16823665 2     21068  12068    14444   
+51         ThoughtShield            16823752 2     21069  12069    14445   
+52         **Level_3_Psion_Powers** ****     ****  ****   ****     ****    
+53         BodyAdjustment           16823635 3     21101  12101    14461   
+54         GreaterAmorpha           16823645 3     21102  12102    14462   
+55         Darkvision               16823647 3     21103  12103    14463   
+56         Psiblast                 16823663 3     21104  12104    14464   
+57         DangerSense              16823774 3     21105  12105    14465   
+58         EnergyBolt               16823776 3     21106  12106    14466   
+59         EnergyBurst              16823782 3     21107  12107    14471   
+60         EnergyRetort             16823788 3     21108  12108    14476   
+61         EradicateInvis           16823796 3     21109  12109    14482   
+62         **Level_4_Psion_Powers** ****     ****  ****   ****     ****    
+63         InertialBar              16823661 4     21151  12152    14511   
+64         **Level_5_Psion_Powers** ****     ****  ****   ****     ****    
+65         BalefulTeleport          16823591 5     21191  12194    14551   
+66         **Level_6_Psion_Powers** ****     ****  ****   ****     ****    
+67         BreatheBlackDragon       16823627 6     21231  12236    14591   
+68         Disintegrate             16823653 6     21232  12237    14592   
+69         Crystallize              16823673 6     21233  12238    14593   
+70         **Level_7_Psion_Powers** ****     ****  ****   ****     ****    
+71         CrisisLife               16823633 7     21271  12277    14631   
+72         **Level_8_Psion_Powers** ****     ****  ****   ****     ****    
+73         RecallDeath              16823667 8     21301  12307    14661   
+52         **Level_9_Psion_Powers** ****     ****  ****   ****     ****    

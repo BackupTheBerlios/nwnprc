@@ -1,6 +1,7 @@
 #include "inc_array"
 #include "inc_array_b"
 #include "inc_array_c"
+#include "inc_2dacache"
 
 //takes a hex string "0x####" and returns the integer base 10 equivalent
 //Full credit to Axe Murderer
@@ -20,18 +21,6 @@ place one instance of that waypoint somewhere in your module (preferable in a
 location unviewable by players). If it is not present, the cache wil be created
 at the module start.
 */
-
-//wrapper for bioware Get2daString function
-//caches the result on waypoints
-//Original by He Who Watches
-//Modified by Primogenitor
-//now will use a database if enabled
-//To enable set a local variable on the module named USE_2DA_DB_CACHE to 1
-//and remove the comments and recompile the scripts named db_get2da and db_set2da
-//after the normal aps_include (or equivalent) has been imported into the module
-//these scripts are not compiled in the PRC, so the modules compiled versions will take priority
-//even if the script editor shows the un-edited version in the PRC haks.
-string Get2DACache(string datafile, string column, int row, int cachenull = TRUE, int debug = FALSE);
 
 //::///////////////////////////////////////////////
 //:: Function: GetAreaWidth
@@ -107,67 +96,6 @@ int HexToInt( string sHex)
     iMult *= 16;
   }
   return iIntVal;
-}
-
-string Get2DACache(string datafile, string column, int row, int cachenull = TRUE, int debug = FALSE)
-{
-    object cachewp = GetObjectByTag("CACHEWP");
-    location lCache = GetLocation(cachewp);
-    if (!GetIsObjectValid(cachewp))
-        lCache = GetStartingLocation();
-    string filewpname = "CACHED_"+GetStringUpperCase(datafile)+column;
-    object filewp = GetObjectByTag(filewpname);
-    if (!GetIsObjectValid(filewp))
-    {
-        filewp = CreateObject(OBJECT_TYPE_WAYPOINT,"NW_WAYPOINT001",lCache,FALSE,filewpname);
-    }
-    string s = GetLocalString(filewp, "2DA_"+datafile+"_"+column+"_"+IntToString(row));
-    if (s == "")
-    {
-        int bPutInDatabase = FALSE;
-        if(GetLocalInt(GetModule(), "USE_2DA_DB_CACHE"))
-        {
-            SetLocalString(GetModule(), "2DA_DB_CACHE_DATAFILE", datafile);
-            SetLocalString(GetModule(), "2DA_DB_CACHE_COLUMN", column);
-            SetLocalInt(GetModule(), "2DA_DB_CACHE_ROW", row);
-            DeleteLocalString(GetModule(),"2DA_DB_CACHE_RETVAR");
-            ExecuteScript("db_get2da",GetModule());
-            s = GetLocalString(GetModule(),"2DA_DB_CACHE_RETVAR");
-            DeleteLocalString(GetModule(),"2DA_DB_CACHE_RETVAR");
-            DeleteLocalString(GetModule(),"2DA_DB_CACHE_DATAFILE");
-            DeleteLocalString(GetModule(),"2DA_DB_CACHE_COLUMN");
-            DeleteLocalInt(GetModule(),"2DA_DB_CACHE_ROW");
-        }
-        if(s == "")
-        {
-            s = Get2DAString(datafile, column, row);
-            bPutInDatabase = TRUE;
-        }
-        if (cachenull && (s == ""))
-        {
-            if (debug) 
-                SendMessageToAllDMs("Null value (****) or error opening "+datafile+".2da (row "+IntToString(row)+", column "+column+"), my tag: "+GetTag(OBJECT_SELF));
-            s = "****";
-        }
-        if (s!="") 
-            SetLocalString(filewp, "2DA_"+datafile+"_"+column+"_"+IntToString(row), s);
-        if(s!="" 
-             && bPutInDatabase == TRUE 
-             && GetLocalInt(GetModule(), "USE_2DA_DB_CACHE"))
-        {
-            SetLocalString(GetModule(), "2DA_DB_CACHE_DATAFILE", datafile);
-            SetLocalString(GetModule(), "2DA_DB_CACHE_COLUMN", column);
-            SetLocalString(GetModule(), "2DA_DB_CACHE_RETVAR", s);
-            SetLocalInt(GetModule(), "2DA_DB_CACHE_ROW", row);
-            ExecuteScript("db_set2da",GetModule());
-            DeleteLocalString(GetModule(),"2DA_DB_CACHE_DATAFILE");
-            DeleteLocalString(GetModule(),"2DA_DB_CACHE_COLUMN");
-            DeleteLocalString(GetModule(),"2DA_DB_CACHE_RETVAR");
-            DeleteLocalInt(GetModule(),"2DA_DB_CACHE_ROW");
-        }
-    }
-    if (s=="****") return "";
-    else return s;
 }
 
 int GetIsValidAlignment ( int iLawChaos, int iGoodEvil,int iAlignRestrict, int iAlignRstrctType, int iInvertRestriction )

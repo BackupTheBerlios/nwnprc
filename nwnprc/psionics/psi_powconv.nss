@@ -51,8 +51,11 @@ void main()
                     && nPowerLevel <= nMaxLevel
                     && CheckPowerPrereqs(nFeatID, oPC))
                 {
+//                    array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+//                        GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID))));
                     array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                        GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID))));
+                        GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name", i))));
+
                     array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
                 }
             }
@@ -63,7 +66,8 @@ void main()
             string sToken = "You have selected:\n\n";
             int nPower = GetLocalInt(oPC, "nPower");
             int nFeatID = StringToInt(Get2DACache(sPowerFile, "FeatID", nPower));
-            sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID)))+"\n";
+//            sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID)))+"\n";
+            sToken += GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name", nPower)))+"\n";
             sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeatID)))+"\n\n";
             sToken += "Is this correct?";
             SetCustomToken(99, sToken);

@@ -12,6 +12,7 @@ const string PRC_MUTLISUMMON                         = "PRC_MULTISUMMON";
 const string PRC_SUMMON_ROUND_PER_LEVEL              = "PRC_SUMMON_ROUND_PER_LEVEL";
 const string PRC_STAFF_CASTER_LEVEL                  = "PRC_STAFF_CASTER_LEVEL";
 const string PRC_NPC_HAS_PC_SPELLCASTING             = "PRC_NPC_HAS_PC_SPELLCASTING";
+const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
 
 const string PRC_USE_TAGBASED_INDEX_FOR_POISON       = "USE_TAGBASED_INDEX_FOR_POISON";
 const string PRC_USES_PER_ITEM_POISON_DIE            = "USES_PER_ITEM_POISON_DIE";
@@ -29,7 +30,7 @@ int GetPRCSwitch(string sSwitch);
 //Sets a PRC switch state
 void SetPRCSwitch(string sSwitch, int nState);
 
-int GetPRCSwitch(string sSwitch)
+int sd(string sSwitch)
 {
     return GetLocalInt(GetModule(), sSwitch);
 }

@@ -19,7 +19,7 @@ Hierophant				| Dungeon Master's Guide
 Red Avenger				| Sword and Fist
 Knight of the Chalice			| Complete Warrior
 Hathran					| Player's Guide to Faerun
-Vigilante				| Song and Silence
+Vigilant				| Song and Silence
 Stormlord				| Complete Divine
 Heartwarder				| Faiths and Pantheons
 Arcane Duelist				| Random Encounters

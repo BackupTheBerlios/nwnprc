@@ -89,7 +89,9 @@ public class PortraitMenu extends javax.swing.JFrame {
 					CurrentPortrait.setIcon(icon);
                     BICPortraitname = baseFilename.substring(0, baseFilename.length() - 4);
                     InfoText.setText(PORTRAIT.substring(PORTRAIT.lastIndexOf(FileDelim) + 1));
-                    if(BICPortraitname.endsWith("m")) {
+                    if(BICPortraitname.endsWith("m") || BICPortraitname.endsWith("l")
+							|| BICPortraitname.endsWith("h") || BICPortraitname.endsWith("s")
+							|| BICPortraitname.endsWith("t")) {
                         BICPortraitname = BICPortraitname.substring(0, BICPortraitname.length() - 1);
                     }
                     OKButton.setEnabled(true);

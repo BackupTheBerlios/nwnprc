@@ -32,21 +32,28 @@ void main()
    object oPC = OBJECT_SELF;
    object oSkin = GetPCSkin(oPC);
 
-if((GetAbilityModifier(ABILITY_WISDOM,oPC)) > (GetAbilityModifier(ABILITY_STRENGTH,oPC)))  
+  if((GetAbilityModifier(ABILITY_WISDOM,oPC)) > (GetAbilityModifier(ABILITY_STRENGTH,oPC)))
 {
 if(!((GetHasFeat(FEAT_WEAPON_FINESSE,oPC)) && (GetAbilityModifier(ABILITY_DEXTERITY,oPC) > GetAbilityModifier(ABILITY_WISDOM,oPC)))
-{ 
+{
  if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
    {
       object oItem ;
       int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
+      int iDex =  GetAbilityModifier(ABILITY_DEXTERITY,oPC);
+      int iStr =  GetAbilityModifier(ABILITY_STRENGTH,oPC);
+      int iWis =  GetAbilityModifier(ABILITY_WISDOM,oPC);
 // this wasn't preventing stacking, so we do the wis check up above, and make sure it is higher than STR or DEX before even BOTHERING to call the function. ~ Lock
-     int iStr =  GetAbilityModifier(ABILITY_STRENGTH,oPC);
-     int iWis =  GetAbilityModifier(ABILITY_WISDOM,oPC);
-     iWis = iWis - iStr
+    if(GetHasFeat(FEAT_WEAPON_FINESSE,oPC))
+    {
+      if(iDex > iStr)
+        iWis = iWis - iDex
+    }
+    else
+        iWis = iWis - iStr
 
       if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD) iWis =0;
-      
+
       if (iEquip == 1)
            oItem = GetPCItemLastUnequipped();
       else
@@ -62,9 +69,9 @@ if(!((GetHasFeat(FEAT_WEAPON_FINESSE,oPC)) && (GetAbilityModifier(ABILITY_DEXTER
 
       if (iEquip == 0)
       {
-        
+
          oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
-         
+
          if (isSimple(oItem))
          {
            if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
@@ -86,19 +93,20 @@ if(!((GetHasFeat(FEAT_WEAPON_FINESSE,oPC)) && (GetAbilityModifier(ABILITY_DEXTER
    }
 }
 }
- 
-  if (GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))
+
+
+   if (GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))
    {
 
        int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
        object oItem;
-       
+
        if (iEquip == 1)
             oItem = GetPCItemLastUnequipped();
        else
             oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-      
-       
+
+
        if (iEquip == 1||GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
        {
           if (GetBaseItemType(oItem)==BASE_ITEM_GLOVES)

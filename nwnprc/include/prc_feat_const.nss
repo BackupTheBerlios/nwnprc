@@ -80,7 +80,9 @@ const int FEAT_DISGUISE     = 4755;
 const int FEAT_SPELL_CLUTCH = 4756;
 
 const int FEAT_LARGE        = 4760;
-
+const int FEAT_DISGUISE_MEDIUM		= 4769;
+const int FEAT_DISGUISE_SMALL		= 4770;
+const int FEAT_DISGUISE_OFF		= 4771;
 
 //Passive Feats
 const int FEAT_ETERNAL_FREEDOM                         = 4298;

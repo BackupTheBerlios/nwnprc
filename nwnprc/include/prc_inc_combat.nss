@@ -281,6 +281,8 @@ int GetWeaponDamageType(object oWeap)
         case BASE_ITEM_LIGHTCROSSBOW:
         case BASE_ITEM_HEAVYCROSSBOW:
         case BASE_ITEM_CPIERCWEAPON:
+        case BASE_ITEM_BOLT:
+        case BASE_ITEM_ARROW:
            return DAMAGE_TYPE_PIERCING;
 
         case BASE_ITEM_CLUB:
@@ -294,6 +296,7 @@ int GetWeaponDamageType(object oWeap)
         case BASE_ITEM_DIREMACE:
         case BASE_ITEM_SLING:
         case BASE_ITEM_CBLUDGWEAPON:
+        case BASE_ITEM_BULLET:
            return DAMAGE_TYPE_BLUDGEONING;
     }
     

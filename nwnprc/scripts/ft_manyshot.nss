@@ -62,7 +62,7 @@ void main()
           iDamage = GetRangedWeaponDamageS(OBJECT_SELF, oWeap, FALSE)+ iBonus;
 
       //Apply the damage
-      eDamage = AddDmgEffect(EffectDamage(iDamage, DAMAGE_TYPE_PIERCING, iEnhancement) ,  GetItemInSlot(INVENTORY_SLOT_ARROWS,OBJECT_SELF),oTarget);
+      eDamage = AddDmgEffect(EffectDamage(iDamage, DAMAGE_TYPE_PIERCING, iEnhancement) ,  GetItemInSlot(INVENTORY_SLOT_ARROWS,OBJECT_SELF),oTarget,iEnhancement);
       DelayCommand(fDelay +2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
 
       while (iAttacks)
@@ -71,7 +71,7 @@ void main()
         iAttacks--;
         fDelay+=0.3;
         //Apply the damage
-        eDamage = AddDmgEffect(EffectDamage(iDamage, DAMAGE_TYPE_PIERCING, iEnhancement) ,  GetItemInSlot(INVENTORY_SLOT_ARROWS,OBJECT_SELF),oTarget);
+        eDamage = AddDmgEffect(EffectDamage(iDamage, DAMAGE_TYPE_PIERCING, iEnhancement) ,  GetItemInSlot(INVENTORY_SLOT_ARROWS,OBJECT_SELF),oTarget,iEnhancement);
         DelayCommand(fDelay + 1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
 
       }
@@ -81,5 +81,4 @@ void main()
 
 
 }
-
 

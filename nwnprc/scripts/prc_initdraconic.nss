@@ -4,6 +4,7 @@
 #include "prc_spell_const"
 #include "soul_inc"
 #include "inc_item_props"
+#include "prc_ip_srcost"
 
 int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 {
@@ -54,6 +55,15 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
          return IP_CONST_MONSTERDAMAGE_3d8;
         case 10:
          return IP_CONST_MONSTERDAMAGE_3d10;
+        case 11:
+         return IP_CONST_MONSTERDAMAGE_4d6;
+        case 12:
+         return IP_CONST_MONSTERDAMAGE_4d8;
+        case 13:
+         return IP_CONST_MONSTERDAMAGE_4d10;
+        case 14:
+         return IP_CONST_MONSTERDAMAGE_5d6;
+
       }
 
 
@@ -149,8 +159,8 @@ void SpellResistancePC(object oPC,object oSkin,int iLevel)
 
     iLevel = (iLevel-10)/2;
 
-    if (iLevel>IP_CONST_SPELLRESISTANCEBONUS_32)
-          iLevel=IP_CONST_SPELLRESISTANCEBONUS_32;
+    if (iLevel>IP_CONST_SPELLRESISTANCEBONUS_60)
+          iLevel=IP_CONST_SPELLRESISTANCEBONUS_60;
 
     if (GetLocalInt(oSkin,"IniSR")==iLevel) return;
     RemoveSpecificProperty(oSkin,ITEM_PROPERTY_SPELL_RESISTANCE,-1,IP_CONST_ONHIT_SAVEDC_26,GetLocalInt(oSkin,"IniSR"));
@@ -187,6 +197,10 @@ void main()
 
    int bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE1,oPC) ? 1:0;
        bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE2,oPC) ? 2:bUnarmedDmg;
+       bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE1,oPC) ? 3:bUnarmedDmg;
+       bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE2,oPC) ? 4:bUnarmedDmg;
+       bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE3,oPC) ? 5:bUnarmedDmg;
+       bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE4,oPC) ? 6:bUnarmedDmg;
 
 
    if (bEnh)ClawDragon(oPC,bUnarmedDmg,bEnh,GetLocalInt(oPC,"ONEQUIP"));

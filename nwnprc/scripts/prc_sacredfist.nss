@@ -164,8 +164,6 @@ void main()
         bSFSpeed=GetHasFeat(FEAT_SF_SPEED2, oPC) ? 2 : bSFSpeed;
         bSFSpeed=GetHasFeat(FEAT_SF_SPEED3, oPC) ? 3 : bSFSpeed;
 
-            SendMessageToPC(oPC," bSFAC :"+ IntToString(bSFAC));
-
     object oItemR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
     object oItemL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
 
@@ -219,8 +217,6 @@ void main()
          DecrementRemainingFeatUses(oPC,FEAT_SF_INNERARMOR);
 
     }
-
-    SendMessageToPC(oPC," bSFAC :"+ IntToString(bSFAC));
 
     if (bSFAC>0 && !iCode)    SacredAC(oPC,oSkin,bSFAC,iShield);
     if (bSFSpeed>0 && !iCode) SacredSpeed(oPC,oSkin,bSFSpeed,iShield);

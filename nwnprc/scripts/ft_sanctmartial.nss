@@ -16,6 +16,48 @@ void Sanctify()
 
    if (GetLocalInt(oPC,"ONENTER")) return;
 
+   if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
+   {
+     oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+     iType= GetBaseItemType(oItem);
+
+     switch (iType)
+     {
+        case BASE_ITEM_BOLT:
+        case BASE_ITEM_BULLET:
+        case BASE_ITEM_ARROW:
+          iType=GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND));
+          break;
+        case BASE_ITEM_SHORTBOW:
+        case BASE_ITEM_LONGBOW:
+          oItem=GetItemInSlot(INVENTORY_SLOT_ARROWS);
+          break;
+        case BASE_ITEM_LIGHTCROSSBOW:
+        case BASE_ITEM_HEAVYCROSSBOW:
+          oItem=GetItemInSlot(INVENTORY_SLOT_BOLTS);
+          break;
+        case BASE_ITEM_SLING:
+          oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
+          break;
+     }
+
+     if (GetLocalInt(oItem,"MartialStrik"))
+     {
+       RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_2d6,IP_CONST_DAMAGETYPE_DIVINE);
+       RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY);
+       DeleteLocalInt(oItem,"MartialStrik");
+     }
+     oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
+     iType= GetBaseItemType(oItem);
+     if ( GetLocalInt(oItem,"MartialStrik"))
+     {
+       RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_2d6,IP_CONST_DAMAGETYPE_DIVINE);
+       RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY);
+       DeleteLocalInt(oItem,"MartialStrik");
+     }
+     return;
+   }
+
    int iEquip=GetLocalInt(oPC,"ONEQUIP");
    int iType;
 

@@ -312,8 +312,16 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"OutLIn");
     DeleteLocalInt(oSkin,"OutLPe");
     DeleteLocalInt(oSkin,"OutLBl");
-    // Blac Flame Zealot
+    // Black Flame Zealot
     DeleteLocalInt(oSkin,"BFZHeart");
+    // Henshin Mystic
+    DeleteLocalInt(oSkin,"Happo");
+    DeleteLocalInt(oSkin,"InterP");
+    DeleteLocalInt(oSkin,"InterT");
+    DeleteLocalInt(oSkin,"InterB");
+    DeleteLocalInt(oSkin,"InterI");
+    DeleteLocalInt(oSkin,"HMSight");
+    DeleteLocalInt(oSkin,"HMInvul");
     
     // future PRCs Go below here
 }

@@ -14,7 +14,6 @@
 
 #include "x2_inc_compon"
 #include "x0_i0_spawncond"
-#include "prc_inc_clsfunc"
 
 void main()
 {
@@ -43,9 +42,6 @@ void main()
     }
     craft_drop_items(oKiller);
 
-    if(GetAbilityScore(OBJECT_SELF, ABILITY_INTELLIGENCE)>4)
-    {
-    LolthMeat(oKiller);
-    }
+    ExecuteScript("prc_npc_death", OBJECT_SELF);
 
 }

@@ -55,24 +55,26 @@ void ApplyTwoWeaponDefense(object oPC, object oSkin)
      }
 
      itemproperty ipACBonus = ItemPropertyACBonus(ACBonus);
-     AddItemProperty(DURATION_TYPE_PERMANENT, ipACBonus, oSkin);
-          
+     //AddItemProperty(DURATION_TYPE_PERMANENT, ipACBonus, oSkin);
+     
+     SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", ACBonus, ITEM_PROPERTY_AC_BONUS);   
      SetLocalInt(oPC, "HasTWD", 2);
 }
 
 void RemoveTwoWeaponDefense(object oPC, object oSkin)
 {
-     itemproperty iprop = GetFirstItemProperty(oSkin);
+     //itemproperty iprop = GetFirstItemProperty(oSkin);
 
-     while (GetIsItemPropertyValid(iprop))
-     {
-          if(GetItemPropertyType(iprop) == ITEM_PROPERTY_AC_BONUS)
-          {
-               RemoveItemProperty(oSkin, iprop);
-          }
-          iprop = GetNextItemProperty(oSkin);
-     }
+     //while (GetIsItemPropertyValid(iprop))
+     //{
+     //     if(GetItemPropertyType(iprop) == ITEM_PROPERTY_AC_BONUS)
+     //     {
+     //          RemoveItemProperty(oSkin, iprop);
+     //     }
+     //     iprop = GetNextItemProperty(oSkin);
+     //}
      
+     SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", 0, ITEM_PROPERTY_AC_BONUS);
      SetLocalInt(oPC, "HasTWD", 1);
 }
 

@@ -51,6 +51,9 @@ void NoSmite(object oTarget ,string sText)
 
    FloatingTextStringOnCreature(sText,OBJECT_SELF);
 
+   int iEvil  = GetAlignmentGoodEvil(oTarget)==ALIGNMENT_EVIL ;
+   int SancMar  = Sanctify_Feat(GetBaseItemType(oWeap))  ? 1 :0 ;
+
   for(iAttacks; iAttacks > 0; iAttacks--)
   {
     //Roll to hit  for Smite  Bonus CHA(1st atk) +Attack penalty +Weap Atk Bonus
@@ -71,7 +74,11 @@ void NoSmite(object oTarget ,string sText)
             iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, FALSE);
 
         //Apply the damage
-        eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancement) ,oWeap,oTarget,iEnhancement);
+        //Apply the damage
+        if (SancMar)
+           eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, DAMAGE_POWER_ENERGY) ,oWeap,oTarget,iEnhancement);
+        else
+           eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancement) ,oWeap,oTarget,iEnhancement);
 
         DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage, oTarget));
 

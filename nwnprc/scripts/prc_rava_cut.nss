@@ -24,12 +24,12 @@ void main()
      int iDur = 5 + GetLevelByClass(CLASS_TYPE_RAVAGER, oPC);
      int bIsRangedAttack = GetWeaponRanged(oWeap);
      
-     effect eCon  = EffectAbilityDecrease(ABILITY_CONSTITUTION, d4(1) );
+     effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, d4(1));
             eCon = SupernaturalEffect(eCon);
      
      // script now uses combat system to hit and apply effect if appropriate
-     string sSuccess = "*Cruelist Cut Hit*";
-     string sMiss = "*Cruelist Cut Miss";
+     string sSuccess = "*Cruelest Cut Hit*";
+     string sMiss    = "*Cruelest Cut Miss*";
 
      if (bIsRangedAttack)
      {

@@ -165,7 +165,7 @@ void main()
    int iDmgBon =  (GetLevelByClass(CLASS_TYPE_FISTRAZIEL)+GetLevelByClass(CLASS_TYPE_PALADIN)+GetLevelByClass(CLASS_TYPE_DIVINECHAMPION))* iEpicSmite ;
    int iBonus = GetAbilityModifier(ABILITY_CHARISMA)>0 ? GetAbilityModifier(ABILITY_CHARISMA):0;
 
-   // no smite with ranged Weapon
+   // no smite with ranged Weapon except the character has Ranged Smite Feat
    int iType=GetBaseItemType(oWeap);
    switch (iType)
    {
@@ -177,7 +177,23 @@ void main()
     case BASE_ITEM_LIGHTCROSSBOW:
     case BASE_ITEM_HEAVYCROSSBOW:
     case BASE_ITEM_SLING:
-       return;
+       if (!GetHasFeat(FEAT_RANGED_SMITE)){
+          return;
+       }
+       else if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD){
+          if (LvlRaziel > 0){
+             if (GetHasFeat(FEAT_SMITE_EVIL)){
+                DecrementRemainingFeatUses(OBJECT_SELF, iFeat);
+                IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
+             }
+          }
+          else{
+             if (GetHasFeat(FEAT_SMITE_EVIL)){
+                DecrementRemainingFeatUses(OBJECT_SELF,FEAT_SMITE_EVIL);
+                IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
+             }
+          }
+       }
        break;
    }
 

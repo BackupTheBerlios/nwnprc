@@ -5,6 +5,15 @@
 #include "inc_combat2"
 #include "prc_inc_clsfunc"
 
+void Attack( effect eEffect, object oTarget,location loc)
+{
+  location lSmiter = GetLocation(OBJECT_SELF);
+  if (GetDistanceBetweenLocations(loc,lSmiter)>4.0) return;
+  if (GetIsDead(oTarget)) return;
+  
+  ApplyEffectToObject(DURATION_TYPE_INSTANT,eEffect,oTarget);
+}
+
 void SmiteChain(object oTarget,float fDelay)
 {
   int nMax=5;
@@ -62,6 +71,7 @@ void NoSmite(object oTarget ,string sText ,int iEvil)
    int Immune = GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT);
    int iEnhancement = GetWeaponEnhancement(oWeap);
    int iDamageType = GetWeaponDamageType(oWeap);
+   location loc = GetLocation(OBJECT_SELF);
 
    FloatingTextStringOnCreature(sText,OBJECT_SELF);
 
@@ -95,7 +105,7 @@ void NoSmite(object oTarget ,string sText ,int iEvil)
            eDamage = AddDmgEffectMulti(iDamage,iDamageType, oWeap,oTarget,iEnhancement,iHit);
         
         
-        DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage, oTarget));
+        DelayCommand(fDelay + 0.1, Attack(eDamage, oTarget,loc));
 
 
     }
@@ -224,6 +234,7 @@ void main()
 
    int Immune = GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT);
 
+   location loc = GetLocation(OBJECT_SELF);
    //Perform a full round of attacks
   for(iAttacks; iAttacks > 0; iAttacks--)
   {
@@ -260,7 +271,8 @@ void main()
            eDamage = AddDmgEffectMulti(iDamage,iDamageType, oWeap,oTarget,iEnhancementGD,iHit);
 //         eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancementGD) ,oWeap,oTarget,iEnhancementGD);
 
-        DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectLinkEffects(eDamage,eVis), oTarget));
+        DelayCommand(fDelay + 0.1,Attack(EffectLinkEffects(eDamage,eVis), oTarget,loc));
+        //DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectLinkEffects(eDamage,eVis), oTarget));
 
         if (LvlRaziel>8 && iSmit) SmiteChain(oTarget,fDelay);
 

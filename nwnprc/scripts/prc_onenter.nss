@@ -1,29 +1,6 @@
 #include "inc_item_props"
 #include "prc_inc_function"
 
-void
-ScrubPCSkin(object oPC, object oSkin)
-{
-	itemproperty ip = GetFirstItemProperty(oSkin);
-	while (GetIsItemPropertyValid(ip)) {
-		// Insert Logic here to determine if we spare a property
-		if (GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT) {
-			// Check for specific Bonus Feats
-			// Reference iprp_feats.2da
-			int st = GetItemPropertySubType(ip);
-
-			// Spare 400 through 570 except for 428 (currently unknown)
-			if (st < 400 || st > 570 || st == 428)
-				RemoveItemProperty(oSkin, ip);
-		}
-		else
-			RemoveItemProperty(oSkin, ip);
-
-		// Get the next property
-		ip = GetNextItemProperty(oSkin);
-	}
-}
-
 void main()
 {
     //The composite properties system gets confused when an exported

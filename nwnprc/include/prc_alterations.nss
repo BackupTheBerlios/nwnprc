@@ -49,6 +49,8 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_ELEMENTAL;
     if (GetLevelByClass(CLASS_TYPE_HEARTWARDER,oCreature) >= 10)
         return RACIAL_TYPE_FEY;
+    if (GetLevelByClass(CLASS_TYPE_WEREWOLF,oCreature) >= 10)
+        return RACIAL_TYPE_SHAPECHANGER;
     // check for a local variable that overrides the race
     // the shifter will use this everytime they change
     // the racial types are zero based, use 1 based to ensure the variable is set

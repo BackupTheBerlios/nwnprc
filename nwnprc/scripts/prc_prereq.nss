@@ -340,6 +340,10 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
 	{
 	SetLocalInt(oPC, "PRC_PrereqShift", 0);
 	}
+	if (GetLevelByClass(CLASS_TYPE_WEREWOLF, oPC) >= 1)
+	{
+	SetLocalInt(oPC, "PRC_PrereqShift", 0);
+	}
 }
 
 void Tempest(object oPC)
@@ -492,6 +496,18 @@ void EOG(object oPC)
 			}
 		}	
 	}	
+}
+
+
+void WWolf(object oPC)
+{
+    SetLocalInt(oPC, "PRC_PrereqWWolf", 1);
+
+    //If not a natural lycanthrope or not already leveled in werewolf, prevent the player from taking the werewolf class
+    if (GetHasFeat(FEAT_TRUE_LYCANTHROPE, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqWWolf", 0);
+    }
 }
 
 void RedWizard(object oPC)

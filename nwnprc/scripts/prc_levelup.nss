@@ -20,6 +20,10 @@
 void PrcFeats(object oPC)
 {
      EvalPRCFeats(oPC);
+     if (GetLevelByClass(CLASS_TYPE_WEREWOLF, oPC) > 0)
+     {
+        ExecuteScript("prc_wwunpoly", oPC);
+     }
 }
 
 void main()

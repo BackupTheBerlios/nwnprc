@@ -23,11 +23,11 @@ void RedWizardFeats(object oPC = OBJECT_SELF);
 
 // Enforces the proper selection of the Vile feats
 // and prevents illegal stacking of them
-void VileFeats(object oPC = OBJECT_SELF)
+void VileFeats(object oPC = OBJECT_SELF);
 
 // Enforces the proper selection of the Ultimate Ranger feats
 // and prevents illegal use of bonus feats.
-void UltiRangerFeats(object oPC = OBJECT_SELF)
+void UltiRangerFeats(object oPC = OBJECT_SELF);
 
 
 

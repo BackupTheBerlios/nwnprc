@@ -1,5 +1,6 @@
 #include "inc_2dacache"
 #include "prc_inc_switch"
+#include "inc_debug"
 
 //constants defining directories
 //must be changed to each install
@@ -110,11 +111,6 @@ string GetBicFileName(object oPC);
 object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",    string sType = "SCRIPT", string sPollScript = "", int nDestroyOriginal = TRUE);
 
 const int DEBUG = TRUE;
-
-void DoDebug(string s)
-{
-    //WriteTimestampedLogEntry(s);
-}
 
 string GetNWNDir()
 {
@@ -235,6 +231,28 @@ void PollThread(string sThreadID, string sScript)
         DoDebug("Poll: Executing: "+sScript);
         SetLocalInt(GetModule(), "StopThread"+sThreadID, TRUE);
         DelayCommand(6.0, DeleteLocalInt(GetModule(), "StopThread"+sThreadID));
+        location lLoc = GetLocalLocation(GetModule(), "Thread"+sThreadID+"_loc");
+        DelayCommand(1.0, DeleteLocalLocation(GetModule(), "Thread"+sThreadID+"_loc"));
+DoDebug("Thread"+sThreadID+"_loc");
+DoDebug(GetName(GetAreaFromLocation(lLoc)));        
+        object oReturn;
+        if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
+        {
+            oReturn = RetrieveCampaignObject(DB_NAME, DB_GATEWAY_VAR, lLoc);
+        }
+        else
+        {
+            string sSQL = "SELECT blob FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1";
+            SetLocalString(GetModule(), "NWNX!ODBC!SETSCORCOSQL", sSQL);
+            oReturn = RetrieveCampaignObject("NWNX", "-", lLoc);
+        }
+DoDebug(GetName(oReturn));        
+        SetLocalString(GetModule(), "LetoResult", sResult);
+        AssignCommand(GetModule(), DelayCommand(1.0, DeleteLocalString(GetModule(), "LetoResult")));
+        SetLocalObject(GetModule(), "LetoResultObject", oReturn);
+        AssignCommand(GetModule(), DelayCommand(1.0, DeleteLocalObject(GetModule(), "LetoResultObject")));
+        SetLocalString(GetModule(), "LetoResultThread", sThreadID);
+        AssignCommand(GetModule(), DelayCommand(1.0, DeleteLocalString(GetModule(), "LetoResultThread")));
         ExecuteScript(sScript, OBJECT_SELF);
     }
 }
@@ -270,7 +288,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
     //these use bic files
     if(GetIsPC(oObject) || GetIsDM(oObject))
     {
-        if(nDestroyOriginal == FALSE)//dont boot
+        if(!nDestroyOriginal)//dont boot
         {
             string sPath = GetLocalString(oObject, "Path");
             if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
@@ -351,18 +369,15 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
         lLoc = GetLocation(oObject);
         if(!GetIsObjectValid(GetAreaFromLocation(lLoc)))
             lLoc = GetStartingLocation();
-        //destroy the original
-        if(nDestroyOriginal == TRUE)
-        {
-            AssignCommand(oObject, SetIsDestroyable(TRUE));
-            DestroyObject(oObject);
-        }
-
+            
         sScript = sCommand + sScript;
         sCommand = "";
 
-        if(nDestroyOriginal == TRUE)
+        //destroy the original
+        if(nDestroyOriginal)
         {
+            AssignCommand(oObject, SetIsDestroyable(TRUE));
+            DestroyObject(oObject);
         //its an NPC/Placeable/Item, go through DB
             if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
             {
@@ -384,7 +399,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
         sScript = sScript + sCommand;
         sScriptResult = LetoScript(sScript, sType, sPollScript);
 
-        if(nDestroyOriginal == TRUE && sType != "POLL")
+        if(nDestroyOriginal && sType != "SPAWN")
         {
             if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
             {
@@ -408,6 +423,11 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                 else
                     oReturn = RetrieveCampaignObject("NWNX", "-", lLoc);
             }
+        }
+        else if(nDestroyOriginal && sType == "SPAWN")
+        {
+            SetLocalLocation(GetModule(), "Thread"+IntToString(StringToInt(sScriptResult))+"_loc", lLoc);            
+DoDebug("Thread"+IntToString(StringToInt(sScriptResult))+"_loc");
         }
     }
     SetLocalString(GetModule(), "LetoResult", sScriptResult);

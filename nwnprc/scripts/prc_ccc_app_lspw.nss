@@ -1,14 +1,15 @@
 #include "prc_ccc_inc"
 
 void main()
-{
-    object oPC = OBJECT_SELF;
+{   
+    string sThreadID = GetLocalString(GetModule(), "LetoResultThread");
+    object oPC = GetLocalObject(GetModule(), "PCForThread"+sThreadID);
     object oClone = GetLocalObject(oPC, "Clone");
     object oNewClone = GetLocalObject(GetModule(), "LetoResultObject");
-    //fr debugging
-//    SendMessageToPC(GetFirstPC(), "oPC is "+GetName(oPC)+" "+ObjectToString(oPC));
-//    SendMessageToPC(GetFirstPC(), "oClone is "+GetName(oClone)+" "+ObjectToString(oClone));
-//    SendMessageToPC(GetFirstPC(), "oNewClone is "+GetName(oNewClone)+" "+ObjectToString(oNewClone));
+    //for debugging
+    PrintString("oPC is "+GetName(oPC)+" "+ObjectToString(oPC));
+    PrintString("oClone is "+GetName(oClone)+" "+ObjectToString(oClone));
+    PrintString("oNewClone is "+GetName(oNewClone)+" "+ObjectToString(oNewClone));
     //destroy the old clone
     AssignCommand(oClone, SetIsDestroyable(TRUE));
     DestroyObject(oClone);

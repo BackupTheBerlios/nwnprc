@@ -93,7 +93,7 @@ void SkillLoop()
     }
 
     i = GetLocalInt(OBJECT_SELF, "i");
-    if(i==1
+    if(i==0
         && GetPRCSwitch(PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER))
         SetupSkillToken(-1, array_get_size(OBJECT_SELF, "ChoiceValue"));
     string sFile = Get2DACache("classes", "SkillsTable", nClass);
@@ -553,14 +553,15 @@ void SpellLoop()
     int nSchool = GetLocalInt(OBJECT_SELF, "School");
     //get opposition school
     string sOpposition = Get2DACache("spellschools", "Letter", StringToInt(Get2DACache("spellschools", "Opposition", nSchool)));
-    
+    int bEnd = TRUE;
     if(i==0 && nClass == CLASS_TYPE_WIZARD)
     {
         //add all cantrips
-        SQL = "SELECT rowid FROM cached2da_spells WHERE ('Wiz_Sorc' = 0) AND ('School' != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
+        SQL = "SELECT rowid FROM cached2da_spells WHERE (Wiz_Sorc = 0) AND (School != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
         PRC_SQLExecDirect(SQL);
         while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
         {
+            bEnd = FALSE;
             int nRow = StringToInt(PRC_SQLGetData(1));
             array_set_int(OBJECT_SELF, "SpellLvl0",
                 array_get_size(OBJECT_SELF, "SpellLvl0"),nRow);            
@@ -572,18 +573,19 @@ void SpellLoop()
     {
         case CLASS_TYPE_WIZARD:
             nSpellLevel = 1;
-            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE ('Wiz_Sorc' = 1) AND ('School' != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
+            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE (Wiz_Sorc = 1) AND (School != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
             break;
         case CLASS_TYPE_SORCERER:
-            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE ('Wiz_Sorc' = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
+            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE (Wiz_Sorc = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
             break;
         case CLASS_TYPE_BARD:
-            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE ('Bard' = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
+            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE (Bard = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
             break;
     }
     PRC_SQLExecDirect(SQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
+        bEnd = FALSE;
         int nStrRef = StringToInt(PRC_SQLGetData(2));
         string sName = GetStringByStrRef(nStrRef);
         int nRow = StringToInt(PRC_SQLGetData(1));
@@ -591,7 +593,7 @@ void SpellLoop()
             sName = "";
         if(sName != "")
         {
-            sName = "Level "+IntToString(nSpellLevel)+" : ";
+            sName = "Level "+IntToString(nSpellLevel)+" : "+sName;
             array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                     sName);
@@ -601,7 +603,7 @@ void SpellLoop()
         }                
     }
 
-    if(i > SPELLS_2DA_END)
+    if(bEnd)
     {
         DeleteLocalInt(OBJECT_SELF, "i");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
@@ -612,13 +614,14 @@ void SpellLoop()
 
     i += 100;
     SetLocalInt(OBJECT_SELF, "i", i);
+    /*
     if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
     {
         int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(SPELLS_2DA_END));
         FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
         SetLocalInt(OBJECT_SELF, "Percentage",1);
         DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
-    }
+    }*/
 
     DelayCommand(0.01, SpellLoop());
 }
@@ -1175,7 +1178,7 @@ void SoundsetLoop()
 void PortraitLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT rowid, BaseResRef, Race, SEX FROM cached2da_portraits WHERE ('InanimateType' = '****') AND (BaseResRef != '****') LIMIT 100 OFFSET "+IntToString(i);
+    string SQL = "SELECT rowid, BaseResRef, Race, SEX FROM cached2da_portraits WHERE (InanimateType = '****') AND (BaseResRef != '****') LIMIT 100 OFFSET "+IntToString(i);
     PRC_SQLExecDirect(SQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {

@@ -244,19 +244,16 @@ void main()
                 || i == 19 || i == 23 || i == 27 || i == 31
                 || i == 13 || i == 39)
         {
-            sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/LvlStatAbility' {type='byte' value='"+IntToString(GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Ability"))+"'}>";
-            sScript += AdjustAbility(GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Ability"),1);
+            sScript += AdjustAbility(GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Ability"),i);
         }
         //skills
         sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/SkillList' {type='list'}>";
         int j;
         for (j=0;j<SKILLS_2DA_END;j++)
         {
-            sScript += AdjustSkill(j, array_get_int(oPC, "RaceLevel"+IntToString(nLevel)+"Skills", j), -1);
-            sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/SkillList/Rank' {type='char' value="+IntToString(array_get_int(oPC, "RaceLevel"+IntToString(i)+"Skills", j))+"}>";
+            sScript += AdjustSkill(j, array_get_int(oPC, "RaceLevel"+IntToString(nLevel)+"Skills", j), i);
         }
-        sScript += "<gff:set 'SkillPoints' {type='word' value=("+IntToString(array_get_int(oPC, "RaceLevel"+IntToString(i)+"Skills", -1))+"+<gff:get 'SkillPoints'>)}>";
-        sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/SkillPoints' {type='word' value="+IntToString(array_get_int(oPC, "RaceLevel"+IntToString(i)+"Skills", -1))+"}>";
+        sScript += AdjustSpareSkill(array_get_int(oPC, "RaceLevel"+IntToString(i)+"Skills", -1), i);
         //feat
         if(i == 3 || i == 5 || i == 8 || i == 11
                 || i == 14 || i == 17 || i == 20 || i == 23
@@ -272,7 +269,10 @@ void main()
             sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/FeatList/Feat' {type='word' value="+IntToString(nFeatID)+"}>";
         }
         //epic level
-        sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/EpicLevel' {type='byte' value=0}>";
+        if(nLevel <21)
+            sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/EpicLevel' {type='byte' value=0}>";
+        else            
+            sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/EpicLevel' {type='byte' value=1}>";
         //hitdice
         int nRacialHitPoints = StringToInt(Get2DACache("classes", "HitDie", StringToInt(Get2DACache("ECL", "RacialClass", nRace))));
         //first 3 racial levels get max HP
@@ -298,6 +298,7 @@ void main()
     SetPlotFlag(oPC, FALSE);
     SetImmortal(oPC, FALSE);
     AssignCommand(oPC, SetIsDestroyable(TRUE));
+    AssignCommand(oPC, ActionRest());
     DelayCommand(0.0, FloatingTextStringOnCreature("5 seconds", oPC, FALSE));
     DelayCommand(1.0, FloatingTextStringOnCreature("4 seconds", oPC, FALSE));
     DelayCommand(2.0, FloatingTextStringOnCreature("3 seconds", oPC, FALSE));
@@ -305,4 +306,7 @@ void main()
     DelayCommand(4.0, FloatingTextStringOnCreature("1 seconds", oPC, FALSE));
     DelayCommand(5.0, FloatingTextStringOnCreature("Bootage!", oPC, FALSE));
     DelayCommand(5.0, BootPC(oPC));
+    object oClone = GetLocalObject(oPC, "Clone");
+    AssignCommand(oClone, SetIsDestroyable(TRUE));
+    DestroyObject(oClone);
 }

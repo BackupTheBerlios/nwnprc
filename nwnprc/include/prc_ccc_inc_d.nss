@@ -415,10 +415,16 @@ int SetupSkillToken(int nSkill, int nPosition)
     int nSkillClassNo;
     int bValid;
     int i;
+    int nLevel = GetLocalInt(OBJECT_SELF, "Level");
     //special case for stored skill points
     if(nSkill == -1)
     {
-        string sName = "Stored skill points: "+IntToString(array_get_int(OBJECT_SELF, "Skills", nSkill))+" points.";
+        int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkill);
+        for(i=1;i<=nLevel;i++)
+        {
+            nStoredPoints += array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Skills", nSkill);
+        }
+        string sName = "Stored skill points: "+IntToString(nStoredPoints)+" points.";
         array_set_string(OBJECT_SELF, "ChoiceTokens",nPosition,sName);
         array_set_int(OBJECT_SELF, "ChoiceValue",nPosition,nSkill);
         return TRUE;
@@ -443,13 +449,18 @@ int SetupSkillToken(int nSkill, int nPosition)
     if(sName == GetStringByStrRef(0))
         return TRUE;
     //add the current points value to name
-    sName += " "+IntToString(array_get_int(OBJECT_SELF, "Skills", nSkill))+" points.";
+    int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkill);
+    for(i=1;i<=nLevel;i++)
+    {
+        nStoredPoints += array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Skills", nSkill);
+    }
+    sName += " "+IntToString(nStoredPoints)+" points.";
     //check for crossclassness
     if(Get2DACache(sFile, "ClassSkill", nSkillClassNo) == "1")
     {
         sName += " (Class Skill)";
         if(nPoints >= 1
-            && array_get_int(OBJECT_SELF, "Skills", nSkill) < 4)//this is the class limit
+            && nStoredPoints < nLevel+3)//this is the class limit
             bValid = 1;
         else
             bValid = 2;
@@ -458,7 +469,7 @@ int SetupSkillToken(int nSkill, int nPosition)
     {//crossclass
         sName += " (Cross-class Skill)";
         if(nPoints >= 2
-            && array_get_int(OBJECT_SELF, "Skills", nSkill) < 2)//this is the class limit
+            && nStoredPoints < (nLevel+3)/2)//this is the class limit
             bValid = 1;
         else
             bValid = 2;
@@ -563,7 +574,10 @@ void DoCloneLetoscript()
     {
         StackedLetoScript("<gff:set 'Appearance_Head' "+IntToString(nHead)+">");
     }
+    string sResult;
     RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
+    sResult = GetLocalString(GetModule(), "LetoResult");
+    SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
     SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
 }
 
@@ -594,7 +608,7 @@ void MakeClone()
         object oClone = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, "PlayerClone");
         //move it to a standard faction so it can be henchmaned/dominated
         ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, OBJECT_SELF, 99999999.9);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, OBJECT_SELF, 9999.9);
         //set locals back and forth between PC and clone
         SetLocalObject(OBJECT_SELF, "Clone", oClone);
         SetLocalObject(oClone, "Master", OBJECT_SELF);
@@ -610,7 +624,7 @@ void MakeClone()
         DestroyObject(oArmor, 5.0);
         //make sure the clone stays put
         effect eParal = EffectCutsceneImmobilize();
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oClone);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oClone, 9999.9);
 
 }
 

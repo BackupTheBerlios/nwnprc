@@ -6,7 +6,7 @@
 2  SkillFocusSpell                     189       3    2              0      
 3  StillSpell                          37        3    3              0      
 4  Silent                              33        3    4              0      
-5  hardinessspells                     230       3    5              1      
+5  hardinessspells                     230       3    5              0      
 6  FEAT_EPIC_SKILL_FOCUS_INTIMIDATE    918       1    -1             0      
 7  FEAT_EPIC_SKILL_FOCUS_APPRAISE      588       1    -1             0      
 8  FEAT_EPIC_SKILL_FOCUS_CONCENTRATION 589       1    -1             0      

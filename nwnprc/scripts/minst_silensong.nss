@@ -45,7 +45,7 @@ void main()
         nDuration += 5;
     }
 
-    effect eSilence = ExtraordinaryEffect(EffectSilence());
+    effect eSilence = EffectSilence();
     effect eSilenceVis = EffectVisualEffect(VFX_IMP_SILENCE);
     eSilence = EffectLinkEffects(eSilence, eSilenceVis);
     eSilenceVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -64,7 +64,7 @@ void main()
     //Do the visual effects
     effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
     effect eVis3 = EffectVisualEffect(VFX_DUR_CESSATE_NEUTRAL);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectLinkEffects(eVis2,eVis3)), OBJECT_SELF, RoundsToSeconds(nDuration));
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(eVis2,eVis3), OBJECT_SELF, RoundsToSeconds(nDuration));
    
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
@@ -86,7 +86,7 @@ void main()
                             if (!GetHasSpellEffect(GetSpellId(),oTarget))
                             {
                                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-                                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSilence, oTarget, RoundsToSeconds(nDuration));
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSilence, oTarget, RoundsToSeconds(nDuration));
                                 StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
                             }
                         }
@@ -96,7 +96,7 @@ void main()
         }
         else
         {
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE), oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE), oTarget);
         }
 
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));

@@ -2,7 +2,7 @@
 //:: Strength Song
 //:://////////////////////////////////////////////
 /*
-   Bard song that gives everybody +4 Strength.
+   Song that gives everybody +1 to +8 (perform ranks/8) Strength.
 */
 
 #include "x2_i0_spells"
@@ -23,8 +23,11 @@ void main()
         return;
     }
     //Declare major variables
+    int iBoost = GetSkillRank(SKILL_PERFORM)/8;
+    if (iBoost > 8) iBoost = 8;
+    if (iBoost < 1) iBoost = 1;
     object oTarget;
-    effect eBoost = EffectAbilityIncrease(ABILITY_STRENGTH,4);
+    effect eBoost = EffectAbilityIncrease(ABILITY_STRENGTH,iBoost);
     effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eLink = ExtraordinaryEffect(EffectLinkEffects(eBoost, eDur));
@@ -73,14 +76,14 @@ void main()
         //Make faction check on the target
         if(oTarget == OBJECT_SELF)
         {
-            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(nDuration));
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(nDuration));
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
         }
         else if(GetIsFriend(oTarget))
         {
-            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
         }
         //Select the next target within the spell shape.

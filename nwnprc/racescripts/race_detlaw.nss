@@ -25,14 +25,14 @@ void main()
     object oTarget;
     int nLaw;
     effect eVis = EffectVisualEffect(VFX_COM_SPECIAL_RED_WHITE);
-    
+
     //Get first target in spell area
     oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     while(GetIsObjectValid(oTarget))
     {
         //Check the current target's alignment
         nLaw = GetAlignmentLawChaos(OBJECT_SELF);
-        if(nLaw == ALIGNMENT_LAW)
+        if(nLaw == ALIGNMENT_LAWFUL)
         {
             //Apply the VFX
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, 3.0);

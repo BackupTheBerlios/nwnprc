@@ -56,6 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     //Link duration VFX and confusion effects
     effect eLink = EffectLinkEffects(eMind, eConfuse);
     eLink = EffectLinkEffects(eLink, eDur);
+    int nDC = 13+ GetAbilityModifier(ABILITY_INTELLIGENCE)+GetChangesToSaveDC(OBJECT_SELF);
 
 
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
@@ -70,10 +71,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CONFUSION));
            fDelay = GetRandomDelay();
            //Make SR Check and faction check
-           if (!MyPRCResistSpell2(OBJECT_SELF, oTarget,nLevel, fDelay))
+           if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nLevel+SPGetPenetr(), fDelay))
            {
                 //Make Will Save
-                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, (13+ GetAbilityModifier(ABILITY_INTELLIGENCE)+ GetChangesToSaveDC(OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                 {
                    //Apply linked effect and VFX Impact
                    nDuration = GetScaledDuration(nLevel, oTarget);

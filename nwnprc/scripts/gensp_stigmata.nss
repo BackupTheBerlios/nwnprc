@@ -35,8 +35,13 @@ void main()
   object oSkin = GetPCSkin(oPC);
 
   object oTarget = GetSpellTargetObject();
+  
+  if (!spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, OBJECT_SELF))
+  {
+      FloatingTextStringOnCreature("Only works on Allies",OBJECT_SELF);
+      return ;	
+  }
 
-  if (GetIsEnemy(oTarget)|| oTarget == oPC) return ;
   if ( GetHasSpellEffect(SPELL_STIGMATA2,oTarget)||GetHasSpellEffect(SPELL_STIGMATA3,oTarget)||
        GetHasSpellEffect(SPELL_STIGMATA4,oTarget)||GetHasSpellEffect(SPELL_STIGMATA5,oTarget))
          return;
@@ -57,22 +62,10 @@ void main()
   effect eHealVis = EffectVisualEffect(VFX_IMP_HEALING_X);
   effect eHeal;
 
-  if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
-  {
-    //Make SR check
-    if (!MyPRCResistSpell(OBJECT_SELF, oTarget))
-    {
-      eHeal = EffectDamage(iCure, DAMAGE_TYPE_POSITIVE);
-      ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectLinkEffects(eHeal,eHealVis), oTarget);
-    }
-  }
-  else
-  {
-     eHeal = EffectHeal(iCure);
-     ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectLinkEffects(eHeal,eHealVis), oTarget);
-     ApplyEffectToObject(DURATION_TYPE_TEMPORARY,EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR), oTarget,HoursToSeconds(2));
-
-  }
+ 
+  eHeal = EffectHeal(iCure);
+  ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectLinkEffects(eHeal,eHealVis), oTarget);
+  ApplyEffectToObject(DURATION_TYPE_TEMPORARY,EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR), oTarget,HoursToSeconds(2));
 
   SetLocalInt(OBJECT_SELF,"Stigmata",iStigs-1);
 

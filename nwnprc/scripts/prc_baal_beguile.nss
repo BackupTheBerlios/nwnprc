@@ -93,7 +93,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                     //Fire cast spell at event for the specified target
                     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MASS_CHARM, FALSE));
                     //Make an SR check
-                    if (!MyPRCResistSpell(OBJECT_SELF, oTarget))
+                    if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()))
                     {
                         //Make a Will save to negate
                         if (!MySavingThrow(SAVING_THROW_WILL, oTarget, iSaveDC, SAVING_THROW_TYPE_MIND_SPELLS))

@@ -57,6 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     int iSaveDC = GetLevelByClass(CLASS_TYPE_DISC_BAALZEBUL) + GetAbilityModifier(ABILITY_CHARISMA) + 10;
     int nDuration = GetLevelByClass(CLASS_TYPE_DISC_BAALZEBUL);
+    int CasterLvl = nDuration+SPGetPenetr();
     nDuration = GetScaledDuration(nDuration, oTarget);
     int nRacial = MyPRCGetRacialType(oTarget);
 
@@ -65,7 +66,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHARM_PERSON, FALSE));
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget))
+        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
         {
             //Verify that the Racial Type is humanoid
             if  ((nRacial == RACIAL_TYPE_DWARF) ||

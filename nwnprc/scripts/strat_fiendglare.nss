@@ -48,7 +48,7 @@ void main()
             return;
         }
 
-        nResult = (nResult && MyPRCResistSpell(OBJECT_SELF, oTarget));
+        nResult = (nResult && MyPRCResistSpell(OBJECT_SELF, oTarget,10+SPGetPenetr()));
         if (!nResult)
         {
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink , oTarget, TurnsToSeconds(nLevel));

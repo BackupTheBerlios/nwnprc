@@ -23,6 +23,8 @@ void main()
     effect eLink = EffectLinkEffects(eFear, eMind);
     eLink = EffectLinkEffects(eLink, eDur);
     object oTarget;
+    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    int CasterLvl = 10+ SPGetPenetr();
 
     //Apply Impact
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
@@ -36,10 +38,10 @@ void main()
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FEAR));
             //Make SR Check
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, fDelay))
+            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
                 //Make a will save
-                if(!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(OBJECT_SELF)), SAVING_THROW_TYPE_FEAR, OBJECT_SELF, fDelay))
+                if(!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FEAR, OBJECT_SELF, fDelay))
                 {
                     //Apply the linked effects and the VFX impact
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration));

@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         //Fire cast spell at event
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_BLINDNESS_AND_DEAFNESS));
         //Do SR check
-        if (!MyPRCResistSpell2(OBJECT_SELF, oTarget,nDuration))
+        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nDuration+SPGetPenetr()))
         {
             // Make Fortitude save to negate
             if (!/*Fort Save*/ MySavingThrow(SAVING_THROW_FORT, oTarget, (10+ GetAbilityModifier(ABILITY_INTELLIGENCE)+GetChangesToSaveDC(OBJECT_SELF))))

@@ -19,7 +19,7 @@
 void PrcFeats(object oPC)
 {
      EvalPRCFeats(oPC);
-     ExecuteScript("ft_sanctmartial",oPC);
+
 
 }
 

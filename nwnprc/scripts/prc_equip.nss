@@ -18,7 +18,6 @@ void PrcFeats(object oPC)
 {
      SetLocalInt(oPC,"ONEQUIP",2);
      EvalPRCFeats(oPC);
-     ExecuteScript("ft_sanctmartial",oPC);
      DeleteLocalInt(oPC,"ONEQUIP");
 }
 

@@ -3,8 +3,8 @@
   FeatLabel          FeatIndex 
 0 WeapProfSim        46        
 1 SkillAff_Jump_4    4763      
-2 Race_Reptilian     4721      
-3 Shield             32        
-4 Natural_Armor_5    4736      
-5 WeaponProfCreature 289       
-6 Darkvision         228      
+2 Shield             32        
+3 Natural_Armor_5    4736      
+4 WeaponProfCreature 289       
+5 darkvision         228       
+6 Race_Reptilian     4721      

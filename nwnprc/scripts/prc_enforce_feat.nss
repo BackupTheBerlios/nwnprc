@@ -377,14 +377,14 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 		else
 		{
 		    iURanger++;
-		    string msg =" In your next Ultimate Ranger level ,you must select ";
+		    string msg =" In your next Ultimate Ranger level, you must select ";
 		    int bFeat;
 	            if (iURanger>4 && iURanger<21 ) bFeat = ((iURanger+1)%4 == 0);
 	            else if (iURanger>20 ) bFeat = ((iURanger+2)%5 == 0);
-		    if (iURanger == 1 || iURanger == 4 || bFeat) msg+= " 1 bonus Feat ";
+		    if (iURanger == 1 || iURanger == 4 || bFeat) msg+= "1 bonus Feat ";
                     if (iURanger>10 &&  (iURanger-8)%3 == 0) msg +="1 Ability ";
-                    if (iURanger>1 && (iURanger+8)%5 == 0) msg+=" 1 Favorite Enemy ";
-                    if ( msg != " In your next Ultimate Ranger level ,you must select ")
+                    if (iURanger>1 && (iURanger+8)%5 == 0) msg+="1 Favorite Enemy ";
+                    if ( msg != " In your next Ultimate Ranger level, you must select ")
                       FloatingTextStringOnCreature(msg, oPC, FALSE);
 		}
 	}

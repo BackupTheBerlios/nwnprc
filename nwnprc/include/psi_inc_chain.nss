@@ -134,7 +134,7 @@ void DoChain(object oOrigin, int nOrigDamage, int nDamageType,
 		oTarget = GetTargetListHead(oCaster);
 	}
 	
-	PurgeTargetList(oCaster);
+	//PurgeTargetList(oCaster);
 }
 
 

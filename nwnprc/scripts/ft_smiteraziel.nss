@@ -37,6 +37,22 @@ void NoSmite(object oTarget ,string sText)
 
    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
 
+   // no smite with ranged Weapon
+   int iType=GetBaseItemType(oWeap);
+   switch (iType)
+   {
+    case BASE_ITEM_BOLT:
+    case BASE_ITEM_BULLET:
+    case BASE_ITEM_ARROW:
+    case BASE_ITEM_SHORTBOW:
+    case BASE_ITEM_LONGBOW:
+    case BASE_ITEM_LIGHTCROSSBOW:
+    case BASE_ITEM_HEAVYCROSSBOW:
+    case BASE_ITEM_SLING:
+       return;
+       break;
+   }
+   
    int iNextAttackPenalty = 0;
    float fDelay = 1.5f;
 

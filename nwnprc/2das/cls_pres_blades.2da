@@ -1,17 +1,28 @@
 2DA V2.0
 
-   LABEL         ReqType  ReqParam1      ReqParam2 
-0  Concentration SKILL    1              4         
-1  Tumble        SKILL    21             2         
-2  CombatCasting FEAT     7              ****      
-3  Dodge         FEAT     10             ****      
-4  StillSpell    FEAT     37             **** 
-5  WeapFocRapier FEATOR   104            ****      
-6  WeapFocLSw    FEATOR   106            ****      
-7  ScriptVar     VAR      PRC_ArcSpell1  0                  
-8  Elf           RACE     1              ****
-9  Half-Elf      RACE     4              **** 
-10 Base_Attack   BAB      5              ****
-11 ScriptVar     VAR      PRC_AllowBlades 0         
-12 Perform       SKILL    11             3         
+   LABEL            ReqType  ReqParam1      ReqParam2 
+0  Concentration    SKILL    1              4         
+1  Tumble           SKILL    21             2         
+2  CombatCasting    FEAT     7              ****      
+3  Dodge            FEAT     10             ****      
+4  StillSpell       FEAT     37             **** 
+5  WeapFocRapier    FEATOR   104            ****      
+6  WeapFocLSw       FEATOR   106            ****      
+7  ScriptVar        VAR      PRC_ArcSpell1  0                  
+8  Elf              RACE     1              ****  
+9  Half-Elf         RACE     4              ****          
+9  Aquatic-Elf      RACE     161            ****  
+9  Avariel          RACE     162            ****       
+9  Drow_female      RACE     163            **** 
+9  Drow_male        RACE     164            ****  
+9  Sun-Elf          RACE     166            ****            
+9  wild-Elf         RACE     167            ****    
+9  wood-Elf         RACE     168            ****    
+9  dark-Elf         RACE     169            **** 
+9  Half_aquatic-Elf RACE     182            ****       
+9  Half-drow        RACE     183            ****     
+9  feyri            RACE     201            ****    
+10 Base_Attack      BAB      5              ****
+11 ScriptVar        VAR      PRC_AllowBlades 0         
+12 Perform          SKILL    11             3         
    

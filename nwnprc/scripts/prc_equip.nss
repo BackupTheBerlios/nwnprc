@@ -10,8 +10,7 @@
 //:: Created By: Georg Zoeller
 //:: Created On: 2003-07-16
 //:://////////////////////////////////////////////
-#include "x2_inc_switches"
-#include "x2_inc_intweapon"
+#include "prc_inc_function"
 #include "inc_eventhook"
 
 

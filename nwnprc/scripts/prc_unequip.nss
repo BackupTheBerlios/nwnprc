@@ -58,8 +58,4 @@ void main()
      }
      
      DelayCommand(0.3,PrcFeats(oPC));
-
-     KnightRemoveDaemonslaying(oItem);
-     RemoveKatanaFinesse(oItem);
-     RemoveItemHolyAvengerAntiStack(oItem); //superceded by RemoveItemEnhancementAntiStack when implemented.
 }

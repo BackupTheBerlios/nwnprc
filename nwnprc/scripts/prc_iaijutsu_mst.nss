@@ -28,33 +28,63 @@ void DuelistCannyDefense(object oPC, object oSkin, int iOnOff, int iEpic = FALSE
    }
 }
 
-///Katana Finesse /////////
-void KatFin(object oPC, object oWeap, int iBonus)
+//Applies Katana Finesse to the character as an effect
+void KatanaFinesse(object oPC)
 {
- if(iBonus > 0)
-  {
-    int iDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC);
-    int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
-    int iBonus = 0;
-    //int iEnhance = GetWeaponEnhancement(oWeap);
-    //int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
+    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    object oWeap2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+    
+    int bKatFin = GetHasFeat(FEAT_KATANA_FINESSE, oPC);
+    int bStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
+    int bDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
+    int bKatFinBon = (bDex > bStr) ? bDex - bStr : 0;
+    int iUseR = FALSE;
+    int iUseL = FALSE;
 
-    iBonus = iDex - iStr ; //+ iEnhance;
-
-
-    if(iBonus > 0){
-        if(GetLocalInt(oWeap, "KatFinBonus") != iBonus){
-            SetCompositeBonusT(oWeap, "KatFinBonus", iBonus, ITEM_PROPERTY_ATTACK_BONUS);
-            FloatingTextStringOnCreature("Katana Finesse On", oPC);
-        }
+    if(bKatFin && bKatFinBon && GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
+    {
+        iUseR = TRUE;
+        if (!GetLocalInt(oPC, "KatanaFinesseOnR")) FloatingTextStringOnCreature("Katana Finesse On -- Main Hand.", oPC);
+        SetLocalInt(oPC, "KatanaFinesseOnR", TRUE);
     }
-    else {
-        //The actual removal of the bonus is handled in the module's unequip script
-        //This section simply alerts the player that the bonus has been turned off
-            FloatingTextStringOnCreature("Katana Finesse Off", oPC);
+    else
+    {
+        if (GetLocalInt(oPC, "KatanaFinesseOnR")) FloatingTextStringOnCreature("Katana Finesse Off -- Main Hand.", oPC);
+        DeleteLocalInt(oPC, "KatanaFinesseOnR");
+    }
+    
+    if(bKatFin && bKatFinBon && GetBaseItemType(oWeap2) == BASE_ITEM_KATANA)
+    {
+        iUseL = TRUE;
+        if (!GetLocalInt(oPC, "KatanaFinesseOnL")) FloatingTextStringOnCreature("Katana Finesse On -- Off Hand.", oPC);
+        SetLocalInt(oPC, "KatanaFinesseOnL", TRUE);
+    }
+    else
+    {
+        if (GetLocalInt(oPC, "KatanaFinesseOnL")) FloatingTextStringOnCreature("Katana Finesse Off -- Off Hand.", oPC);
+        DeleteLocalInt(oPC, "KatanaFinesseOnL");
+    }
 
-   }
- }
+    if (iUseR && iUseL)
+    {
+        SetCompositeAttackBonus(oPC, "KatanaFinesseR", bKatFinBon, ATTACK_BONUS_ONHAND);
+        SetCompositeAttackBonus(oPC, "KatanaFinesseL", bKatFinBon, ATTACK_BONUS_OFFHAND);
+    }
+    else if (iUseR)
+    {
+        SetCompositeAttackBonus(oPC, "KatanaFinesseR", bKatFinBon, ATTACK_BONUS_ONHAND);
+        SetCompositeAttackBonus(oPC, "KatanaFinesseL", 0, ATTACK_BONUS_OFFHAND);
+    }
+    else if (iUseL)
+    {
+        SetCompositeAttackBonus(oPC, "KatanaFinesseR", 0, ATTACK_BONUS_ONHAND);
+        SetCompositeAttackBonus(oPC, "KatanaFinesseL", bKatFinBon, ATTACK_BONUS_OFFHAND);
+    }
+    else
+    {
+        SetCompositeAttackBonus(oPC, "KatanaFinesseR", 0, ATTACK_BONUS_ONHAND);
+        SetCompositeAttackBonus(oPC, "KatanaFinesseL", 0, ATTACK_BONUS_OFFHAND);
+    }
 }
 
 void main()
@@ -64,8 +94,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    object oWeap2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+    object oUnequip = GetPCItemLastUnequipped();
 
     //Determine which feats the character has
     int bCanDef = GetHasFeat(FEAT_CANNY_DEFENSE, oPC);
@@ -78,15 +107,9 @@ void main()
     else
         DuelistCannyDefense(oPC, oSkin, FALSE);
 
-    if(bKatFin > 0 && GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
-        KatFin(oPC,oWeap,bKatFin);
+    int bStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
+    int bDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
+    int bKatFinBon = (bDex > bStr) ? bDex - bStr : 0;
 
-    if(GetBaseItemType(oWeap) != BASE_ITEM_KATANA)
-        KatFin(oPC,oWeap,0);
-
-    if(bKatFin > 0 && GetBaseItemType(oWeap2) == BASE_ITEM_KATANA)
-        KatFin(oPC,oWeap2,bKatFin);
-
-    if(GetBaseItemType(oWeap2) != BASE_ITEM_KATANA)
-        KatFin(oPC,oWeap2,0);
+    KatanaFinesse(oPC);
 }

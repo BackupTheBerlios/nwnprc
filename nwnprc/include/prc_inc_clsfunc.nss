@@ -891,7 +891,7 @@ void AddIniDmg(object oPC)
        iWis = iWis > iStr ? iWis : 0;
 
 
-   if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
+   /*if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
    {
      SetCompositeBonusT(oCweapB,"",iWis,ITEM_PROPERTY_ATTACK_BONUS);
      SetCompositeBonusT(oCweapL,"",iWis,ITEM_PROPERTY_ATTACK_BONUS);
@@ -902,7 +902,7 @@ void AddIniDmg(object oPC)
      AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE,2),oCweapB,9999.0);
      AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE,2),oCweapL,9999.0);
      AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE,2),oCweapR,9999.0);
-   }
+   }*/
 
    
    if ( oCweapB != OBJECT_INVALID && !FeatIniDmg(oCweapB))

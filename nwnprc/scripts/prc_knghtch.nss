@@ -13,24 +13,18 @@
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 
-// * Applies the damage bonuses for Daemonslaying
-// * Uses multiple damage types, since constance do not exist for
-// * 3d6 and 4d6 (which are used by daemonslaying at higher levels)
-// * so stack different damage types in increments of 2d6
-void KnightDaemonslayingDamage(object oPC, object oWeap, int iDamageBonus, int iDamageType, string sFlag)
+void ApplyDemonslaying(object oPC, int iDivBonus, int iAttBonus)
 {
-    if(GetLocalInt(oWeap, sFlag) != iDamageBonus){
-    	
-        RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER, GetLocalInt(oWeap, sFlag), 1, sFlag, iDamageType,DURATION_TYPE_TEMPORARY);
-        AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonusVsRace(IP_CONST_RACIALTYPE_OUTSIDER, iDamageType, iDamageBonus), oWeap,9999.0);
-        SetLocalInt(oWeap, sFlag, iDamageBonus);
-    }
-}
+    if (!iDivBonus) return;
 
-void KnightDaemonslayingAttack(object oPC, object oWeap, int iAttackBonus)
-{
-    if(GetLocalInt(oWeap, "DSlayingAttackBonus") != iAttackBonus)
-        SetCompositeBonusT(oWeap, "DSlayingAttackBonus", iAttackBonus, ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER);
+    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER, -1, 1, "DSlayBonusDiv", -1, DURATION_TYPE_TEMPORARY);
+    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonusVsRace(IP_CONST_RACIALTYPE_OUTSIDER, IP_CONST_DAMAGETYPE_DIVINE, iDivBonus), oWeap, 9999.0);
+    SetLocalInt(oWeap, "DSlayBonusDiv", iDivBonus);
+
+    effect eAttBonus = VersusRacialTypeEffect(EffectAttackIncrease(iAttBonus, ATTACK_BONUS_ONHAND), RACIAL_TYPE_OUTSIDER);
+    eAttBonus = SupernaturalEffect(eAttBonus);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAttBonus, oPC);
 }
 
 void main()
@@ -38,9 +32,7 @@ void main()
     //Declare main variables.
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
-    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    if(GetLocalInt(oPC,"ONEQUIP") == 1) return;
-
+    
     //Determine which knight of the chalice feats the character has
     int iDivBonus = GetHasFeat(DEMONSLAYING_1, oPC) ? IP_CONST_DAMAGEBONUS_1d6 : 0;
         iDivBonus = GetHasFeat(DEMONSLAYING_2, oPC) ? IP_CONST_DAMAGEBONUS_2d6 : iDivBonus;
@@ -52,15 +44,10 @@ void main()
         iAttBonus = GetHasFeat(DEMONSLAYING_3, oPC) ? 3 : iAttBonus;
         iAttBonus = GetHasFeat(DEMONSLAYING_4, oPC) ? 4 : iAttBonus;
 
-    int iAtkb = GetAtkBonus(oWeap);
-    int iHolyAv = GetItemHolyAvengerBonus(oWeap); // Hey, Knights of the Chalice want to use Holy Avengers too!
-    if (iAtkb>iHolyAv)
-        iAttBonus += iAtkb;
-    else
-        iAttBonus += iHolyAv;
+    // For some odd reason, this refused to work using if (GetLocalInt(oPC, "ONEQUIP") == 1)
+    object oWeap = GetPCItemLastUnequipped();
+    if (GetLocalInt(oWeap, "DSlayBonusDiv"))
+        RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER, -1, 1, "DSlayBonusDiv", -1, DURATION_TYPE_TEMPORARY);
 
-    if(iDivBonus > 0)
-        KnightDaemonslayingDamage(oPC, oWeap, iDivBonus, IP_CONST_DAMAGETYPE_DIVINE, "DSlayBonusDiv");
-    if(iAttBonus > 0)
-        KnightDaemonslayingAttack(oPC, oWeap, iAttBonus);
+    ApplyDemonslaying(oPC, iDivBonus, iAttBonus);
 }

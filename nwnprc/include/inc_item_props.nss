@@ -50,14 +50,6 @@ int TotalAndRemoveProperty(object oItem, int iType, int iSubType = -1);
 void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSubType = -1);
 void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iSubType = -1); // for temporary bonuses
 
-// * Used to add +5 to Holy Avengers for Paladins only.  Normally, certain types
-// * of bonuses do not stack, so you end up getting penalties.  Returns the integer
-// * value of either +0 or +5.  Useful to make sure that attack/damage bonuses from the class
-// * stack with the Holy Avenger.  Would be more useful if automatic.
-// *
-// * oItem = Object to get Holy Avenger bonus from
-int GetItemHolyAvengerBonus(object oItem);
-
 // * Returns the total Bonus AC of oItem
 int GetACBonus(object oItem);
 
@@ -98,6 +90,20 @@ void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubTyp
 
 // Removes a specific property from an item
 void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCostVal = -1, int iNum = 1, string sFlag = "", int iParam1 = -1, int iDuration = DURATION_TYPE_PERMANENT);
+
+// * Keeps track of Attack Bonus effects and stacks them appropriately... you cannot set up
+// * "special" attack bonuses against races or alignments, but it will keep seperate tabs on
+// * on-hand attack bonuses and off-hand attack bonuses.
+// *
+// * NOTE: This attack bonus is an effect on the creature, not an item property.  Item Property
+// * attacks have the downside that they pierce DR, whereas effects do not.
+// *
+// * oPC - PC/NPC you wish to apply an attack bonus effect to
+// * sBonus - the unique name you wish to give this attack bonus
+// * iVal - the amount the attack bonus should be (there is a hardcoded limit of 20)
+// * iSubType - ATTACK_BONUS_MISC applies to both hands, ATTACK_BONUS_ONHAND applies to the right (main)
+// *    hand, and ATTACK_BONUS_OFFHAND applies to the left (off) hand
+void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC);
 
 int GetHasItem(object oPC, string sRes)
 {
@@ -174,33 +180,6 @@ void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCos
         ip = GetNextItemProperty(oItem);
     }
     SetLocalInt(oItem, sFlag, 0);
-}
-
-// Used to determine how to handle HolyAvenger bonuses.
-// No need to use if GetItemEnhancementBonus is called, when that is implemented.
-int GetItemHolyAvengerBonus(object oItem)
-{
-    object oPC = GetItemPossessor(oItem);
-    int iClassLevel = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
-    int iHolyAvengerPresent = GetItemHasItemProperty(oItem, ITEM_PROPERTY_HOLY_AVENGER);
-
-    if (!iClassLevel) return 0;
-    if (GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) return 0;
-    if (GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) return 0;
-    if (iHolyAvengerPresent && !GetLocalInt(oItem,"HolyAvAntiStack")) 
-    {
-       SetLocalInt(oItem,"HolyAvAntiStack",TRUE);
-       return 5;
-    }
-
-    return 0;
-}
-
-// Holy Avenger Anti-Stack variable removed on Unequip.
-// TO BE REPLACED BY ENHANCEMENT BONUS ANTI-STACK CODE --- WodahsEht
-void RemoveItemHolyAvengerAntiStack(object oItem)
-{
-   DeleteLocalInt(oItem,"HolyAvAntiStack");
 }
 
 void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSubType = -1)
@@ -505,20 +484,6 @@ int GetACBonus(object oItem)
 }
 
 int GetBaseAC(object oItem){ return GetItemACValue(oItem) - GetACBonus(oItem); }
-
-//To Remove Katana Finesse Bonus
-void RemoveKatanaFinesse(object oWeap)
-{
-   SetCompositeBonusT(oWeap, "KatFinBonus", 0, ITEM_PROPERTY_ATTACK_BONUS);
-}
-
-void KnightRemoveDaemonslaying(object oWeap)
-{
-    int iDivineBonus = GetLocalInt(oWeap, "DSlayBonusDiv");
-    if(iDivineBonus != 0)
-        RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER, iDivineBonus, 1, "DSlayBonusDiv", IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
-    SetCompositeBonusT(oWeap, "DSlayingAttackBonus", 0, ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP, IP_CONST_RACIALTYPE_OUTSIDER);
-}
 
 int GetOppositeElement(int iElem)
 {
@@ -934,22 +899,6 @@ void TotalRemovePropertyT(object oItem)
         }
 }
 
-int GetAtkBonus(object oWeap)
-{
-    int iBonus = 0;
-    int iTemp;
-    
-    itemproperty ip = GetFirstItemProperty(oWeap);
-    while(GetIsItemPropertyValid(ip))
-    {
-        if(GetItemPropertyType(ip) == ITEM_PROPERTY_ATTACK_BONUS)
-            iTemp = GetItemPropertyCostTableValue(ip);
-            iBonus = iTemp > iBonus ? iTemp : iBonus;
-        ip = GetNextItemProperty(oWeap);
-    }
-    return iBonus;
-}
-   
 void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
 {
    int iValid = GetIsObjectValid(oItem);
@@ -1062,4 +1011,61 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    
    // Disciple of Mephistopheles
    DeleteLocalInt(oItem,"DiscMephGlove");
+}
+
+void RemoveCompositeAttackBonus(object oPC)
+{
+    effect e = GetFirstEffect(oPC);
+    
+    while (GetIsEffectValid(e))
+    {
+        if (GetEffectCreator(e) == oPC &&
+            GetEffectSpellId(e) == -1 &&
+            GetEffectType(e) == EFFECT_TYPE_ATTACK_INCREASE &&
+            GetEffectSubType(e) == SUBTYPE_SUPERNATURAL &&
+            GetEffectDurationType(e) == DURATION_TYPE_TEMPORARY)
+                RemoveEffect(oPC, e);
+        e = GetNextEffect(oPC);
+    }
+}
+
+void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC)
+{
+    int iTotalR = GetLocalInt(oPC, "CompositeAttackBonusR");
+    int iTotalL = GetLocalInt(oPC, "CompositeAttackBonusL");
+    int iCur = GetLocalInt(oPC, sBonus);
+
+    RemoveCompositeAttackBonus(oPC);
+    
+    switch (iSubType)
+    {
+        case ATTACK_BONUS_MISC:
+            iTotalR -= iCur;
+            iTotalL -= iCur;
+            if (iTotalR + iVal > 20) iVal = 20 - iTotalR;
+            if (iTotalL + iVal > 20) iVal = 20 - iTotalL;
+            iTotalR += iVal;
+            iTotalL += iVal;
+            break;
+        case ATTACK_BONUS_ONHAND:
+            iTotalR -= iCur;
+            if (iTotalR + iVal > 20) iVal = 20 - iTotalR;
+            iTotalR += iVal;
+            break;
+        case ATTACK_BONUS_OFFHAND:
+            iTotalL -= iCur;
+            if (iTotalL + iVal > 20) iVal = 20 - iTotalL;
+            iTotalL += iVal;
+            break;
+    }           
+
+    effect eAttackBonusR = EffectAttackIncrease(iTotalR, ATTACK_BONUS_ONHAND);
+    effect eAttackBonusL = EffectAttackIncrease(iTotalL, ATTACK_BONUS_OFFHAND);
+    effect eAttackBonus = SupernaturalEffect(EffectLinkEffects(eAttackBonusR, eAttackBonusL));
+
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAttackBonus, oPC, 9999.0);
+    
+    SetLocalInt(oPC, "CompositeAttackBonusR", iTotalR);
+    SetLocalInt(oPC, "CompositeAttackBonusL", iTotalL);
+    SetLocalInt(oPC, sBonus, iVal);
 }

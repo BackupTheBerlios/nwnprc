@@ -58,23 +58,25 @@ int GetLevelByTypeDivine(object oCaster = OBJECT_SELF);
 //Returns Reflex Adjusted Damage. Is a wrapper function that allows the 
 //DC to be adjusted based on conditions that cannot be done using iprops
 //such as saves vs spellschools, or other adjustments
-int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE,
-                               object oSaveVersus=OBJECT_SELF);
+int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF);
 
 //Returns 0, 1 or 2 as MySavingThrow does. 0 is a failure, 1 is success, 2 is immune.
 //Is a wrapper function that allows the DC to be adjusted based on conditions 
 //that cannot be done using iprops, such as saves vs spellschool.
-int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE,
-                     object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
+int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
 
 // Returns the caster level when used in spells.  Designed so that it can be wrapped
 // easily.  You can use PRCGetCasterLevel() to determine a caster level from within a spell,
 // or specify each of the parameters as necessary.
 //
+// This function will return 0 if used outside of a spell script without *everything*
+// being defined.  Better to use GetLevelByTypeArcane or GetLevelByTypeDivine in these
+// situations.
+//
 // oCaster - the PC/NPC in question
+// iCastingClass - class doing the casting (CLASS_TYPE constant)
+// iCasterType - use "1" for arcane and "10" for divine (inherited from SoulTaker's scripts.)
 // iSpellId - the ID of the spell in consideration
-// iCasterType - refers to the TYPE_DIVINE, TYPE_ARCANE, etc. used in SoulTaker's scripts
-// iCastingClass - refers to the class in consideration (CLASS_TYPE constant)
 int PRCGetCasterLevel(object oCaster = OBJECT_SELF, int iCastingClass = -1, int iCasterType = -1, int iSpellId = -1);
 
 // Helps to find the adjustment to level granted by Practiced Spellcaster feats.
@@ -90,8 +92,7 @@ int TrueNecromancy (object oCaster, int iSpellID, string sType);
 int ShadowWeave (object oCaster, int iSpellID);
 string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
 int FireAdept (object oCaster, int iSpellID);
-int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE,
-                  object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
+int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
 
 // ---------------
 // BEGIN FUNCTIONS

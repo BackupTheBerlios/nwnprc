@@ -12,11 +12,11 @@
 /////////////////////////////////////////////////
 
 //#include "X0_I0_SPELLS"
-#include "x2_inc_spellhook"
 // Boneshank - Added below include files for needed functions.
 #include "nw_i0_spells"
 #include "inc_epicspells"
 //#include "prc_alterations"
+#include "x2_inc_spellhook"
 
 void main()
 {

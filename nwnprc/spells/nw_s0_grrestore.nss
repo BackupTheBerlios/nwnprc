@@ -17,8 +17,9 @@
 //:://////////////////////////////////////////////
 //:: VFX Pass By: Preston W, On: June 20, 2001
 
-#include "x2_inc_spellhook"
 #include "spinc_common"
+#include "x2_inc_spellhook"
+
 
 // return TRUE if the effect created by a supernatural force and can't be dispelled by spells
 int GetIsSupernaturalCurse(effect eEff);

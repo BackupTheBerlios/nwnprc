@@ -34,8 +34,9 @@
 //:: Added Katana Finesse into the code for determining AB for
 //:: DoMeleeAttack and therefore included prc_feat_const. aser
 
-#include "prc_feat_const"
-#include "prc_spell_const"
+#include "prc_alterations"
+//#include "prc_feat_const"
+//#include "prc_spell_const"
 #include "prc_ipfeat_const"
 #include "prc_getcast_lvl"
 

@@ -2,10 +2,12 @@
 //:: Epic Spell: Greater Spell Resistance
 //:: Author: Boneshank (Don Armstrong)
 
-#include "x2_inc_spellhook"
+
+#include "nw_i0_spells"
 #include "inc_epicspells"
 #include "inc_dispel"
 //#include "prc_alterations"
+#include "x2_inc_spellhook"
 
 void main()
 {

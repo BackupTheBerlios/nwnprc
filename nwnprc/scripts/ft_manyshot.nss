@@ -1,4 +1,3 @@
-#include "prc_spell_const"
 #include "inc_combat2"
 
 void main()

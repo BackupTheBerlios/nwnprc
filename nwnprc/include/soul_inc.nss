@@ -1,8 +1,9 @@
-#include "x2_inc_switches"
+//#include "x2_inc_switches"
+#include "prc_alterations"
 #include "prc_ipfeat_const"
 #include "prc_getcast_lvl"
 #include "inc_item_props"
-#include "prc_spell_const"
+
 
 
 const int IPRP_CONST_ONHIT_DURATION_5_PERCENT_1_ROUNDS = 20;
@@ -343,6 +344,8 @@ void SpellSol(object oPC)
 
    int Sol = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT,oPC);
    int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
+   
+   if (!Sol) return ;
 
    int iLvl1 = (Sol+3)/5 + (iWis<12 ? 0 :(iWis-4)/8) ;
    int iLvl2 = (Sol+1)/5 + (iWis<14 ? 0 :(iWis-6)/8) ;
@@ -361,6 +364,8 @@ void SpellKotMC(object oPC)
 
    int KotMC = GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE,oPC);
    int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
+   
+   if (!KotMC) return;
 
    int iLvl1 = (KotMC+2)/5 + (iWis<12 ? 0 :(iWis-4)/8) ;
    int iLvl2 = (KotMC-2)/5 + (iWis<14 ? 0 :(iWis-6)/8) ;

@@ -1,6 +1,7 @@
+#include "spinc_common"
 #include "x2_inc_spellhook"
 #include "prc_alterations"
-#include "spinc_common"
+
 
 void main()
 {

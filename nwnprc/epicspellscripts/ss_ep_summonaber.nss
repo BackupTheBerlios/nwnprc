@@ -6,7 +6,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 void main()

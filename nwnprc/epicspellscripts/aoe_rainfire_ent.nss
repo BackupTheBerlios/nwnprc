@@ -13,9 +13,10 @@
 //#include "x2_I0_SPELLS" <--- blows the compiler the **** up
 //#include "x2_inc_spellhook"
 
+#include "nw_i0_spells"
 #include "inc_epicspells"
 #include "prc_add_spell_dc"
-#include "nw_i0_spells"
+
 
 void main()
 {

@@ -5,7 +5,7 @@
 //:: Created By: Script Wizard
 //:: Created On: 1/24/2004 9:30:45 AM
 //:://////////////////////////////////////////////
-#include "prc_class_const"
+#include "prc_alterations"
 #include "prc_getcast_lvl"
 
 // Determines if the the lich is able to start the process of becoming a demilich

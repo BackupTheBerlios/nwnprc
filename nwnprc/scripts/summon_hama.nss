@@ -9,7 +9,7 @@
 //:: Created By: Sir Attilla
 //:: Created On: January 3 , 2004
 //:://////////////////////////////////////////////
-
+#include "prc_class_const"
 #include "x2_inc_spellhook"
 #include "prc_feat_const"
 void main()

@@ -12,7 +12,7 @@
 //:: Created On: Jan 7, 2002
 //:://////////////////////////////////////////////
 //:: VFX Pass By: Preston W, On: June 22, 2001
-
+#include "prc_class_const"
 #include "x2_inc_spellhook"
 
 // return TRUE if the effect created by a supernatural force and can't be dispelled by spells

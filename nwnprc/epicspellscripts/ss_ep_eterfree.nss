@@ -2,6 +2,7 @@
 //:: Epic Spell: Eternal Freedom
 //:: Author: Boneshank (Don Armstrong)
 
+#include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 #include "inc_dispel"

@@ -12,8 +12,8 @@
 //:://////////////////////////////////////////////
 
 #include "heartward_inc"
-#include "prc_getcast_lvl"
 #include "soul_inc"
+#include "prc_getcast_lvl"
 #include "inc_npc"
 
 void main()

@@ -1,5 +1,4 @@
 #include "inc_combat"
-#include "prc_class_const"
 
 // * Performs a ranged attack roll by oPC against oTarget.
 // * Begins with BAB; to simulate multiple attacks in one round,

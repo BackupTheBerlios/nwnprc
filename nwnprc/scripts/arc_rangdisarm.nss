@@ -1,6 +1,7 @@
+#include "nw_i0_spells"
 #include "prc_spell_const"
 #include "inc_combat2"
-#include "nw_i0_spells"
+
 
 int RangedAttackBonus(object oPC, object oWeap, object oTarget, int iMod = 0)
 {

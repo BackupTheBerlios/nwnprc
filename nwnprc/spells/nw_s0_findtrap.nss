@@ -10,7 +10,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Oct 29, 2001
 //:://////////////////////////////////////////////
-
+#include "prc_class_const"
 #include "x2_inc_spellhook"
 
 void main()

@@ -6,10 +6,11 @@
 // Description: This script changes someone's ability scores
 /////////////////////////////////////////////////
 
-#include "x2_inc_spellhook"
+
 #include "nw_i0_spells"
 #include "inc_epicspells"
 //#include "prc_alterations"
+#include "x2_inc_spellhook"
 
 void main()
 {

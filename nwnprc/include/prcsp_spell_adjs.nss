@@ -1,4 +1,4 @@
-#include "prc_add_spl_pen"
+//#include "prc_add_spl_pen"  <-- Inherited from  #prc_add_spell_dc
 #include "prc_add_spell_dc"
 
 //

@@ -40,7 +40,7 @@
 
 #include "x2_inc_itemprop"
 #include "prc_inc_function"
-#include "prc_ipfeat_const"
+//#include "prc_ipfeat_const"  <-- Inherited from "prc_inc_unarmed"
 #include "prc_inc_sneak"
 #include "prc_inc_unarmed"
 

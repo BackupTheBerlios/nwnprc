@@ -21,7 +21,7 @@
 
 //#include "x2_inc_itemprop" - Inherited from x2_inc_craft
 #include "x2_inc_craft"
-#include "prc_class_const"
+//#include "prc_class_const"
 
 const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 

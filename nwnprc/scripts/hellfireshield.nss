@@ -11,6 +11,7 @@
 //:: Created On: Jan 7, 2002
 //:://////////////////////////////////////////////
 //:: Created On: Aug 28, 2003, GZ: Fixed stacking issue
+#include "prc_class_const"
 #include "x2_inc_spellhook"
 #include "x0_i0_spells"
 void main()

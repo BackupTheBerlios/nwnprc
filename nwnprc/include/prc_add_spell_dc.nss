@@ -1,7 +1,7 @@
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "lookup_2da_spell"
-#include "prcsp_archmaginc"
+//#include "prcsp_archmaginc"
 #include "prc_add_spl_pen"
 
 // Check for CLASS_TYPE_HIEROPHANT > 0 in caller

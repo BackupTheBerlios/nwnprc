@@ -7,8 +7,10 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-#include "x2_inc_spellhook"
+
+#include "nw_i0_spells"
 #include "inc_epicspells"
+#include "x2_inc_spellhook"
 
 int VFX_PER_RAIN_OF_FIRE = 100;
 

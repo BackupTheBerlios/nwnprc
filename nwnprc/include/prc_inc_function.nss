@@ -234,6 +234,10 @@ void DeletePRCLocalInts(object oSkin)
     // Nightshade
     DeleteLocalInt(oSkin,"ImmuNSWeb");
     DeleteLocalInt(oSkin,"ImmuNSPoison");
+    // Soldier of Light
+    DeleteLocalInt(oSkin,"ImmuPF");
+    DeleteLocalInt(oSkin,"SoLFH");
+    
 
     // future PRCs Go below here
 }

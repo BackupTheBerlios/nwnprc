@@ -6,8 +6,11 @@
 //:: Created By: Boneshank
 //:: Last Updated On:
 //:://////////////////////////////////////////////
-#include "x2_inc_spellhook"
+
+#include "nw_i0_spells"
 #include "inc_epicspells"
+#include "x2_inc_spellhook"
+
 void main()
 {
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

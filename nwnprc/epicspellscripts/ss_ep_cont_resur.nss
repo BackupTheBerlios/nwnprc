@@ -9,6 +9,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 13, 2004
 //:://////////////////////////////////////////////
+#include "nw_i0_spells"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 #include "inc_dispel"

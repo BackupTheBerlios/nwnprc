@@ -12,7 +12,6 @@
 //:://////////////////////////////////////////////
 
 #include "heartward_inc"
-#include "prc_getcast_lvl"
 #include "soul_inc"
 #include "inc_npc"
 

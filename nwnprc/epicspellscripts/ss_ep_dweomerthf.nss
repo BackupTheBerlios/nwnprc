@@ -8,10 +8,11 @@
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
 //#include "X0_I0_SPELLS"
-#include "x2_inc_spellhook"
+
 #include "nw_i0_spells"
 #include "inc_epicspells"
 //#include "prc_alterations"
+#include "x2_inc_spellhook"
 
 void main()
 {

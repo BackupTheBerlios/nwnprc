@@ -14,10 +14,11 @@
 //#include "inc_epicspells"
 //#include "prc_alterations"
 
-#include "x2_inc_spellhook"
+
+#include "nw_i0_spells"
 #include "inc_epicspells"
 #include "prc_add_spell_dc"
-#include "nw_i0_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {

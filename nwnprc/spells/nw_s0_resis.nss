@@ -12,8 +12,9 @@
 //:: Last Updated By: Preston Watamaniuk, On: April 11, 2001
 //:: VFX Pass By: Preston W, On: Aug 7, 2001
 
-#include "x2_inc_spellhook"
 #include "spinc_common"
+#include "x2_inc_spellhook"
+
 
 void main()
 {

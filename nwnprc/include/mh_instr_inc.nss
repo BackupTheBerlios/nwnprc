@@ -1,4 +1,5 @@
 #include "mh_constante"
+#include "prc_class_const"
 #include "x2_inc_spellhook"
 
 

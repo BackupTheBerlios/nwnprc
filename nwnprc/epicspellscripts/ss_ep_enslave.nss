@@ -2,10 +2,10 @@
 //:: Epic Spell: Enslave
 //:: Author: Boneshank (Don Armstrong)
 
-#include "NW_I0_SPELLS"
 #include "nw_i0_spells"
-#include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "x2_inc_spellhook"
+
 //#include "prc_alterations"
 
 void main()

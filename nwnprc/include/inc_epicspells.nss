@@ -9,7 +9,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_getcast_lvl"
-
+#include "prc_class_const"
 
 /*
 CONSTANTS FOR OPTIONAL FEATURES
@@ -1208,9 +1208,13 @@ const string MES_CANNOT_CAST_XP         = "Spell failed! You do not have enough 
 const string MES_CONTINGENCIES_YES1     = "You have contingencies active, therefore you do not have your full complement of spell slots.";
 const string MES_CONTINGENCIES_YES2     = "The contingencies must expire to allow you to regain the spell slots.";
 
+
 /******************************************************************************
 FUNCTION DECLARATIONS
 ******************************************************************************/
+
+
+
 // Returns the combined caster level of oPC.
 int GetTotalCastingLevel(object oPC);
 
@@ -1335,17 +1339,13 @@ void DoSpellResearch(object oCaster, int nSpellDC, int nSpellIP, string sSchool,
 // Cycles through equipped items on oTarget, and unequips any having nImmunityType
 void UnequipAnyImmunityItems(object oTarget, int nImmType);
 
+#include "inc_epicfunc"
+
 /******************************************************************************
 FUNCTION BODIES
 ******************************************************************************/
 
-int GetTotalCastingLevel(object oCaster)
-{
-    int nLevel = GetCasterLvl(TYPE_DIVINE, oCaster);
-    if (nLevel < GetCasterLvl(TYPE_ARCANE, oCaster))
-        nLevel = GetCasterLvl(TYPE_ARCANE, oCaster); 
-    return nLevel;
-}
+
 
 int GetIsEpicCleric(object oPC)
 {
@@ -1569,60 +1569,6 @@ int GetCanCastSpell(object oPC, int nSpellDC, string sChool, int nSpellXP)
     SpendXP(oPC, nSpellXP); // Only spends the XP on a successful casting.
     DecrementSpellSlots(oPC);
     return TRUE;
-}
-
-int GetDCSchoolFocusAdjustment(object oPC, string sChool)
-{
-    int nNewDC = 0;
-    if (sChool == "A") // Abjuration spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ABJURATION, oPC)) nNewDC = 6;
-    }
-    if (sChool == "C") // Conjuration spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_CONJURATION, oPC)) nNewDC = 6;
-    }
-    if (sChool == "D") // Divination spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINIATION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_DIVINATION, oPC)) nNewDC = 6;
-    }
-    if (sChool == "E") // Enchantment spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ENCHANTMENT, oPC)) nNewDC = 6;
-    }
-    if (sChool == "V") // Evocation spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_EVOCATION, oPC)) nNewDC = 6;
-    }
-    if (sChool == "I") // Illusion spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ILLUSION, oPC)) nNewDC = 6;
-    }
-    if (sChool == "N") // Necromancy spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_NECROMANCY, oPC)) nNewDC = 6;
-    }
-    if (sChool == "T") // Transmutation spell?
-    {
-        if (GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oPC)) nNewDC = 2;
-        if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oPC)) nNewDC = 4;
-        if (GetHasFeat(FEAT_EPIC_SPELL_FOCUS_TRANSMUTATION, oPC)) nNewDC = 6;
-    }
-    return nNewDC;
 }
 
 int GetHasXPToSpend(object oPC, int nCost)

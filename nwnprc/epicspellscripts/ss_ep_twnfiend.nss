@@ -3,9 +3,9 @@
 //:: Author: Boneshank (Don Armstrong)
 
 #include "x2_inc_toollib"
-#include "x2_inc_spellhook"
-#include "inc_epicspells"
 #include "nw_i0_spells"
+#include "inc_epicspells"
+#include "x2_inc_spellhook"
 
 void main()
 {

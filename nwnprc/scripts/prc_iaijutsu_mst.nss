@@ -54,6 +54,11 @@ void main()
     int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
     int iBonus = 0;
 
+    if(GetBaseAC(oArmor) != 0)
+      {
+      iInt = 0;
+      }
+
     //Determine which feats the character has
     int bKatAC = GetHasFeat(FEAT_KATANA_FINESSE, oPC) ? iInt : 0;
     int bKatFin;
@@ -66,6 +71,10 @@ void main()
     bKatFin = GetHasFeat(FEAT_KATANA_FINESSE, oPC) ? iBonus : 0;
 
     //Apply bonuses accordingly
-    if(bKatAC > 0 && GetBaseAC(oArmor) == 0) KatanaAC(oPC,oSkin,bKatAC);
+    if(bKatAC > 0 && GetBaseAC(oArmor) == 0)
+            KatanaAC(oPC,oSkin,bKatAC);
+    else
+            KatanaAC(oPC,oSkin,0);
+
     if(bKatFin > 0 && GetBaseItemType(oWeap) == BASE_ITEM_KATANA) KatFin(oPC,oWeap,bKatFin);
 }

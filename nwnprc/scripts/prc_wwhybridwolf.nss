@@ -19,37 +19,49 @@ void main()
     object oPC = OBJECT_SELF;
     int nPoly;
 
-    //Can only turn into a werewolf if level 2 in werewolf class
-    if (!GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_2))
-    {
-        FloatingTextStringOnCreature("You can only assume your hybrid form if you are at least level 2 in the werewolf class", oPC, FALSE);
-        return;
-    }
+	
 
-    nPoly = POLYMORPH_TYPE_WEREWOLF_0s;
+   if (GetLocalInt(oPC, "WWHybrid") != TRUE)
+   {
+    	//Can only turn into a werewolf if level 2 in werewolf class
+    	if (!GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_2))
+    	{
+    	    FloatingTextStringOnCreature("You can only assume your hybrid form if you are at least level 2 in the werewolf class", oPC, FALSE);
+    	    return;
+    	}
+	
+    	nPoly = POLYMORPH_TYPE_WEREWOLF_0s;
+	
+    	if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_1))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WEREWOLF_1s;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_2))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WEREWOLF_2s;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WEREWOLF_0l;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_1)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WEREWOLF_1l;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_2)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WEREWOLF_2l;
+    	}
 
-    if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_1))
-    {
-        nPoly = POLYMORPH_TYPE_WEREWOLF_1s;
+	LycanthropePoly(oPC, nPoly);
+    	SetLocalInt(oPC, "WWHybrid", TRUE);
+    
     }
-    if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_2))
+    else
     {
-        nPoly = POLYMORPH_TYPE_WEREWOLF_2s;
+    ExecuteScript("prc_wwunpoly", oPC);
+    SetLocalInt(oPC, "WWHybrid", FALSE);
     }
-    if (GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
-    {
-        nPoly = POLYMORPH_TYPE_WEREWOLF_0l;
-    }
-    if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_1)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
-    {
-        nPoly = POLYMORPH_TYPE_WEREWOLF_1l;
-    }
-    if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_2)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
-    {
-        nPoly = POLYMORPH_TYPE_WEREWOLF_2l;
-    }
-
-    LycanthropePoly(oPC, nPoly);
 }
 
 

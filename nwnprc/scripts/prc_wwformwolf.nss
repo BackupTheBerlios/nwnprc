@@ -19,40 +19,49 @@ void main()
     object oPC = OBJECT_SELF;
     int nPoly;
 
-    nPoly = POLYMORPH_TYPE_WOLF_0;
+   if (GetLocalInt(oPC, "WWWolf") != TRUE)
+   {
+    	nPoly = POLYMORPH_TYPE_WOLF_0;
 
-    if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_1))
-    {
-        nPoly = POLYMORPH_TYPE_WOLF_1;
+    	if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_1))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WOLF_1;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_2))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WOLF_2;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_2))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WOLF_0s;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_1)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_2))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WOLF_1s;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_2)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_2))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WOLF_2s;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WOLF_0l;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_1)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WOLF_1l;
+    	}
+    	if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_2)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
+    	{
+    	    nPoly = POLYMORPH_TYPE_WOLF_2l;
+    	}
+	
+    	LycanthropePoly(oPC, nPoly);
+    	SetLocalInt(oPC, "WWWolf", TRUE);
     }
-    if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_2))
+    else
     {
-        nPoly = POLYMORPH_TYPE_WOLF_2;
-    }
-    if (GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_2))
-    {
-        nPoly = POLYMORPH_TYPE_WOLF_0s;
-    }
-    if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_1)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_2))
-    {
-        nPoly = POLYMORPH_TYPE_WOLF_1s;
-    }
-    if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_2)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_2))
-    {
-        nPoly = POLYMORPH_TYPE_WOLF_2s;
-    }
-    if (GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
-    {
-        nPoly = POLYMORPH_TYPE_WOLF_0l;
-    }
-    if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_1)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
-    {
-        nPoly = POLYMORPH_TYPE_WOLF_1l;
-    }
-    if (GetHasFeat(FEAT_PRESTIGE_WOLFCLASS_2)  && GetHasFeat(FEAT_PRESTIGE_WEREWOLFCLASS_3))
-    {
-        nPoly = POLYMORPH_TYPE_WOLF_2l;
-    }
-
-    LycanthropePoly(oPC, nPoly);
+    ExecuteScript("prc_wwunpoly", oPC);
+    SetLocalInt(oPC, "WWWolf", FALSE);
+    }    	
 }

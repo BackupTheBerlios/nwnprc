@@ -196,7 +196,7 @@ void main()
 			+ (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2
 			+ (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2;
 
-                if ( !GetHasFeat(FEAT_SF_CODE))
+                if ( !GetHasFeat(FEAT_SF_CODE, oCaster))
                         nLevelBonus += (GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster) + 1) / 2;
 
 		//

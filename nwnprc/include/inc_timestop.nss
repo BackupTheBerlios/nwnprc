@@ -1,7 +1,7 @@
 #include "x2_inc_itemprop"
 #include "prc_inc_switch"
 
-const int VFX_PER_NEW_TIMESTOP = 76;
+const int VFX_PER_NEW_TIMESTOP = 140;
 void DoTimestopEquip();
 void DoTimestopUnEquip();
 void ApplyTSToObject(object oTarget);

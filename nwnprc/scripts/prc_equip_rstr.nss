@@ -17,10 +17,25 @@ void main()
     if(!bUnequip)
     {
         SendMessageToPC(oPC, "You cannot equip "+GetName(oItem));
-//        SetCommandable(TRUE, oPC);
-        AssignCommand(oPC, ClearAllActions());
+        SetCommandable(TRUE, oPC);
+//        AssignCommand(oPC, ClearAllActions()); 
+        AssignCommand(oPC, ActionWait(1.0));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        AssignCommand(oPC, ActionUnequipItem(oItem));
         AssignCommand(oPC, ActionUnequipItem(oItem));
         AssignCommand(oPC, ActionDoCommand(SetCommandable(TRUE, oPC)));
-        AssignCommand(oPC, SetCommandable(FALSE, oPC));
+        SetCommandable(FALSE, oPC);
     }
 }

@@ -16,6 +16,8 @@
 #include "nw_o0_itemmaker"
 #include "nw_i0_spells"
 #include "prc_inc_function"
+#include "inc_persist_loca"
+#include "inc_array_c"
 
 //clears out all extra shifter creature items
 void ClearShifterItems(object oPC);
@@ -104,16 +106,19 @@ void StoreAppearance(object oPC)
 		return;
 	}
 
-    object oSparkOfLife = GetItemPossessedBy( oPC, "sparkoflife" );
-    int iIsStored = GetLocalInt( oSparkOfLife, "AppearanceIsStored" );
+//    object oSparkOfLife = GetItemPossessedBy( oPC, "sparkoflife" );
+//    int iIsStored = GetLocalInt( oSparkOfLife, "AppearanceIsStored" );
+    int iIsStored = GetPersistantLocalInt( oPC, "AppearanceIsStored" );
 
 	if (iIsStored == 6)
 	{
 	}
 	else
 	{
-    	SetLocalInt(oSparkOfLife, "AppearanceIsStored", 6);
-    	SetLocalInt(oSparkOfLife, "AppearanceStored", GetAppearanceType(oPC));
+//    	SetLocalInt(oSparkOfLife, "AppearanceIsStored", 6);
+//    	SetLocalInt(oSparkOfLife, "AppearanceStored", GetAppearanceType(oPC));
+	    	SetPersistantLocalInt(oPC, "AppearanceIsStored", 6);
+	    	SetPersistantLocalInt(oPC, "AppearanceStored", GetAppearanceType(oPC));
 	}
 }
 
@@ -160,19 +165,22 @@ int CanShift(object oPC)
 
 void QuickShift(object oPC, int iQuickSlot)
 {
-    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
-    int iMaxIndex = GetLocalInt(oMimicForms, "num_creatures");
-    int iIndex = GetLocalArrayInt(oMimicForms, "QuickSlotIndex", iQuickSlot);
-    int iEpic = GetLocalArrayInt(oMimicForms, "QuickSlotEpic", iQuickSlot);
+    int iMaxIndex = GetPersistantLocalInt(oPC, "num_creatures");
+    persistant_array_create(oPC, "QuickSlotIndex");
+    persistant_array_create(oPC, "QuickSlotEpic");
+    int iIndex = persistant_array_get_int(oPC, "QuickSlotIndex", iQuickSlot);
+    int iEpic = persistant_array_get_int(oPC, "QuickSlotEpic", iQuickSlot);
     if(!(iIndex>iMaxIndex))
         ShiftFromKnownArray(iIndex, iEpic, oPC);
 }
 
 void SetQuickSlot(object oPC, int iIndex, int iQuickSlot, int iEpic)
 {
-    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
-    SetLocalArrayInt(oMimicForms,"QuickSlotIndex",iQuickSlot,iIndex);
-    SetLocalArrayInt(oMimicForms,"QuickSlotEpic",iQuickSlot,iEpic);
+//    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
+    persistant_array_create(oPC, "QuickSlotIndex");
+    persistant_array_create(oPC, "QuickSlotEpic");
+    persistant_array_set_int(oPC,"QuickSlotIndex",iQuickSlot,iIndex);
+    persistant_array_set_int(oPC,"QuickSlotEpic",iQuickSlot,iEpic);
 }
 
 // Transforms the oPC into the oTarget
@@ -664,19 +672,21 @@ void RecognizeCreature( object oPC, string sTemplate, string sCreatureName )
     if (IsKnownCreature(oPC,sTemplate))
         return;
 
-    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
-    if ( !GetIsObjectValid(oMimicForms) )
-        oMimicForms = CreateItemOnObject( "sparkoflife", oPC );
+//    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
+//    if ( !GetIsObjectValid(oMimicForms) )
+//        oMimicForms = CreateItemOnObject( "sparkoflife", oPC );
 
-    SetPlotFlag(oMimicForms, TRUE);
-    SetDroppableFlag(oMimicForms, FALSE);
-    SetItemCursedFlag(oMimicForms, FALSE);
+//    SetPlotFlag(oMimicForms, TRUE);
+//    SetDroppableFlag(oMimicForms, FALSE);
+//    SetItemCursedFlag(oMimicForms, FALSE);
 
-    int num_creatures = GetLocalInt( oMimicForms, "num_creatures" );
+    int num_creatures = GetPersistantLocalInt( oPC, "num_creatures" );
 
-    SetLocalArrayString( oMimicForms, "shift_choice", num_creatures, sTemplate );
-    SetLocalArrayString( oMimicForms, "shift_choice_name", num_creatures, sCreatureName );//added thi line to store the name as well as the resref
-    SetLocalInt( oMimicForms, "num_creatures", num_creatures+1 );
+    persistant_array_create(oPC, "shift_choice");
+    persistant_array_create(oPC, "shift_choice_name");
+    persistant_array_set_string( oPC, "shift_choice", num_creatures, sTemplate );
+    persistant_array_set_string( oPC, "shift_choice_name", num_creatures, sCreatureName );//added thi line to store the name as well as the resref
+    SetPersistantLocalInt( oPC, "num_creatures", num_creatures+1 );
 
 
 //SendMessageToPC(oPC,"Num Creatures = "+IntToString(num_creatures+1));
@@ -684,14 +694,14 @@ void RecognizeCreature( object oPC, string sTemplate, string sCreatureName )
 
 int IsKnownCreature( object oPC, string sTemplate )
 {
-    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
-    int num_creatures = GetLocalInt( oMimicForms, "num_creatures" );
+//    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
+    int num_creatures = GetPersistantLocalInt( oPC, "num_creatures" );
     int i;
     string cmp;
 
     for ( i=0; i<num_creatures; i++ )
     {
-        cmp = GetLocalArrayString( oMimicForms, "shift_choice", i );
+        cmp = persistant_array_get_string( oPC, "shift_choice", i );
         if ( TestStringAgainstPattern( cmp, sTemplate ) )
         {
             return TRUE;
@@ -702,25 +712,27 @@ int IsKnownCreature( object oPC, string sTemplate )
 
 void DeleteFromKnownArray(int nIndex, object oPC)
 {
-    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
-    int num_creatures = GetLocalInt( oMimicForms, "num_creatures" );
+//  object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
+    int num_creatures = GetPersistantLocalInt( oPC, "num_creatures" );
     int i;
 
     for ( i=nIndex; i<(num_creatures-1); i++ )
     {
-        SetLocalArrayString( oMimicForms, "shift_choice", i,GetLocalArrayString( oMimicForms, "shift_choice", i+1 ));
-        SetLocalArrayString( oMimicForms, "shift_choice_name", i,GetLocalArrayString( oMimicForms, "shift_choice_name", i+1 ));
+        persistant_array_create(oPC, "shift_choice");
+        persistant_array_create(oPC, "shift_choice_name");
+        persistant_array_set_string( oPC, "shift_choice", i,persistant_array_get_string( oPC, "shift_choice", i+1 ));
+        persistant_array_set_string( oPC, "shift_choice_name", i,persistant_array_get_string( oPC, "shift_choice_name", i+1 ));
     }
-    SetLocalInt( oMimicForms, "num_creatures", num_creatures-1 );
+    SetPersistantLocalInt( oPC, "num_creatures", num_creatures-1 );
 }
 
 // Shift based on position in the known array
 void ShiftFromKnownArray(int nIndex,int iEpic, object oPC)
 {
-    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
+//    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
 
     // Find the name
-    string sResRef = GetLocalArrayString( oMimicForms, "shift_choice", nIndex );
+    string sResRef = persistant_array_get_string( oPC, "shift_choice", nIndex );
     if (iEpic == FALSE)
     {
         // Force a normal shift
@@ -2060,9 +2072,9 @@ int GetTrueForm(object oPC)
     int nPCForm;
 	//nPCForm = StringToInt(Get2DAString("racialtypes", "Appearance", nRace));
 
-    object oSparkOfLife = GetItemPossessedBy( oPC, "sparkoflife" );
-    int iIsStored = GetLocalInt( oSparkOfLife, "AppearanceIsStored" );
-    int iStoredAppearance = GetLocalInt( oSparkOfLife, "AppearanceStored" );
+//    object oSparkOfLife = GetItemPossessedBy( oPC, "sparkoflife" );
+    int iIsStored = GetPersistantLocalInt( oPC, "AppearanceIsStored" );
+    int iStoredAppearance = GetPersistantLocalInt( oPC, "AppearanceStored" );
 
 	if (iIsStored == 6)
 	{

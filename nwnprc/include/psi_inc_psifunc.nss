@@ -57,7 +57,7 @@ int CheckPowerPrereqs(int nFeat, object oPC);
 
 // Run this to specify what class is casting it and then it will cheat-cast the real
 // power.
-void UsePower(int nPower, int nClass);
+void UsePower(int nPower, int nClass, int bIgnorePP = FALSE, int nLevelOverride = -1);
 
 // This will roll the dice and perform the needed adjustments for metapsionics.
 int MetaPsionic(int nDiceSize, int nNumberOfDice, int nMetaPsi, object oCaster = OBJECT_SELF);
@@ -136,6 +136,9 @@ int GetAbilityScoreOfClass(object oCaster, int nClass)
         case CLASS_TYPE_PSYWAR:
             nScore = GetAbilityScore(oCaster, ABILITY_WISDOM);
             break;
+        default:
+            nScore = GetAbilityScore(oCaster, ABILITY_CHARISMA);
+            break;
     }
     return nScore;
 }
@@ -148,7 +151,8 @@ int GetManifesterDC(object oCaster)
 	int nDC = 10;
 	nDC += GetPowerLevel(oCaster);
 	nDC += (GetAbilityScoreOfClass(oCaster, nClass) - 10)/2;
-	
+      if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
+        return nDC;
 	if (GetLocalInt(oCaster, "PsionicEndowment") == 1)
 	{
 		nDC += 2;
@@ -170,6 +174,10 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     int nLevel = GetPowerLevel(oCaster);
     int nAugment = GetAugmentLevel(oCaster);
     int nPP = GetLocalInt(oCaster, "PowerPoints");
+    //if ignoring power points, autopass it
+    //used for racail psionic abilities
+    if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
+        return TRUE;
     int nPPCost;
     int nCanManifest = TRUE;
     int nVolatile = VolatileMind(oTarget, oCaster);
@@ -255,7 +263,8 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     	{
     		nPP = nPP - nPPCost;
     		FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
-    		SetLocalInt(oCaster, "PowerPoints", nPP);
+            if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") != TRUE)
+	    		SetLocalInt(oCaster, "PowerPoints", nPP);
     	}
     }
     else
@@ -269,7 +278,9 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
 
 
 void PsychicEnervation(object oCaster, int nWildSurge)
-{
+{    
+	if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
+        return;
 	int nDice = d20(1);
 
 	if (nWildSurge >= nDice)
@@ -287,7 +298,8 @@ void PsychicEnervation(object oCaster, int nWildSurge)
 		
     		nPP = nPP - nWilder;
     		FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
-    		SetLocalInt(oCaster, "PowerPoints", nPP);	
+            if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") != TRUE)
+      		SetLocalInt(oCaster, "PowerPoints", nPP);	
 	}
 	else
 	{
@@ -377,27 +389,38 @@ int GetPowerCount(object oPC, int nClass)
     return persistant_array_get_int(oPC, "PsiPowerCount", nClass);
 }
 
-void UsePower(int nPower, int nClass)
+void UsePower(int nPower, int nClass, int bIgnorePP = FALSE, int nLevelOverride = 0)
 {
 //    SendMessageToPC(OBJECT_SELF, "Manifesting power "+IntToString(nPower));
     //set the class
     SetLocalInt(OBJECT_SELF, "ManifestingClass", nClass);
-//    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "ManifestingClass"));
+    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "ManifestingClass"));
     //set the spell power
     SetLocalInt(OBJECT_SELF, "PowerLevel", StringToInt(lookup_spell_innate(GetSpellId())));
-    //pass in the spell
-    ActionCastSpell(nPower);
+    //pass in the spell    
+    //override level
+    if(nLevelOverride != 0)
+    {
+        SetLocalInt(OBJECT_SELF, "PRC_Castlevel_Override", nLevelOverride);
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "PRC_Castlevel_Override"));
+    }
+    //Ignore power points?
+    SetLocalInt(OBJECT_SELF, "IgnorePowerPoints", bIgnorePP);
+    ActionCastSpell(nPower, nLevelOverride);
 }
 
 int MetaPsionics(int nDiceSize, int nNumberOfDice, int nMetaPsi, object oCaster = OBJECT_SELF)
 {
 	int nDamage = 0;
 	int i = 0;
+
 	
     	for (i=1; i<=nNumberOfDice; i++)
     	{
     		nDamage = nDamage + Random(nDiceSize) + 1;
     	}
+    if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
+        return nDamage;
 	if (GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE && nMetaPsi == 2)
 	{
 		nDamage = nDamage + nDamage / 2;
@@ -414,13 +437,17 @@ int MetaPsionics(int nDiceSize, int nNumberOfDice, int nMetaPsi, object oCaster 
 
 int GetAugmentLevel(object oCaster = OBJECT_SELF)
 {
-	int nAug = GetLocalInt(oCaster, "Augment");
+	int nAug = GetLocalInt(oCaster, "Augment"); 
+      if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
+           return 0;
 	return nAug;
 }
 
 int GetPsiPenetration(object oCaster = OBJECT_SELF)
 {
 	int nPen = GetManifesterLevel(oCaster);
+      if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
+        return nPen;
 	
 	// Check for Power Pen feats being used
 	if (GetLocalInt(oCaster, "PowerPenetration") == 1)

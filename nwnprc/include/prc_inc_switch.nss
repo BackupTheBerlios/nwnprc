@@ -9,7 +9,7 @@ const string PRC_TIMESTOP_LOCAL                      = "PRC_TIMESTOP_LOCAL";
 const string PRC_TIMESTOP_NO_HOSTILE                 = "PRC_TIMESTOP_NO_HOSTILE";
 const string PRC_TIMESTOP_BLANK_PC                   = "PRC_TIMESTOP_BLANK_PC";
 const string PRC_MUTLISUMMON                         = "PRC_MULTISUMMON";
-const string PRC_SUMMON_1ROUND_PER_LEVEL             = "PRC_SUMMON_1ROUND_PER_LEVEL";
+const string PRC_SUMMON_ROUND_PER_LEVEL              = "PRC_SUMMON_ROUND_PER_LEVEL";
 const string PRC_STAFF_CASTER_LEVEL                  = "PRC_STAFF_CASTER_LEVEL";
 const string PRC_NPC_HAS_PC_SPELLCASTING             = "PRC_NPC_HAS_PC_SPELLCASTING";
 

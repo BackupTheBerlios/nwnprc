@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 // Death Attack for the assassin
 
-#include "inc_prc_function"
+#include "prc_inc_function"
 #include "NW_I0_GENERIC"
 
 void main()

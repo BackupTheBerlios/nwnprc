@@ -23,7 +23,7 @@ void main()
     //Declare major variables
     object oTarget = GetEnteringObject();
 
-    if (GetRacialType(oTarget)==IP_CONST_RACIALTYPE_DRAGON || MyPRCGetRacialType(oTarget)== IP_CONST_RACIALTYPE_DRAGON )
+    if (GetRacialType(oTarget)== RACIAL_TYPE_DRAGON || MyPRCGetRacialType(oTarget)== RACIAL_TYPE_DRAGON )
       return;
 
     effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);

@@ -200,7 +200,7 @@ void Vile()
    int iEquip=GetLocalInt(oPC,"ONEQUIP");
    
 
-   if (GetLocalInt(oItem,"UnholyStrik")) return;
+   //if (GetLocalInt(oItem,"UnholyStrik")) return;
 
    if (iEquip==2)
    {
@@ -232,7 +232,11 @@ void Vile()
      }
 
      if (!Vile_Feat(iType)) return;
-
+     
+     int nAlign = GetGoodEvilValue(OBJECT_SELF);
+     if (nAlign>7)
+         AdjustAlignment(oPC,ALIGNMENT_EVIL,7);
+         
      AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
      AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
      SetLocalInt(oItem,"USanctMar",1);
@@ -439,10 +443,10 @@ void main()
      }
      if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL) 
      {
-        Vile();
+        //Vile();
         UnholyStrike();
      }
-     return;
+     
    }
    else if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_EVIL)
    {
@@ -470,14 +474,14 @@ void main()
           break;
      }
 
-
+/*
      if ( GetLocalInt(oItem,"USanctMar"))
      {
         RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
         RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
         DeleteLocalInt(oItem,"USanctMar");
      }
-
+*/
      if (GetLocalInt(oItem,"UnholyStrik"))
      {
        RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_GOOD,IP_CONST_DAMAGEBONUS_2d6, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
@@ -487,14 +491,14 @@ void main()
      
      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
      iType= GetBaseItemType(oItem);
-     
+/*    
      if ( GetLocalInt(oItem,"USanctMar"))
      {
         RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
         RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
         DeleteLocalInt(oItem,"USanctMar");
      }
-
+*/
      if ( GetLocalInt(oItem,"UnholyStrik"))
      {
        RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_GOOD,IP_CONST_DAMAGEBONUS_2d6, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
@@ -510,5 +514,5 @@ void main()
 
    }
 
-
+   Vile();
 }

@@ -1,3 +1,4 @@
+#include "nw_i0_spells"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
@@ -24,18 +25,6 @@ void BrawlerDodge(object oCreature)
     else SetCompositeBonus(oSkin, "BrawlerDodge", iLevel, ITEM_PROPERTY_AC_BONUS);
 }
 
-void BrawlerBonuses(object oCreature)
-{
-    object oSkin = GetPCSkin(oCreature);
-    
-    if(GetHasFeat(FEAT_BRAWLER_STRENGTH, oCreature) && !GetLocalInt(oSkin,"BrawlerStrength"))
-       SetCompositeBonus(oSkin, "BrawlerStrength", 2, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_STR);
-    if(GetHasFeat(FEAT_BRAWLER_CONSTITUTION, oCreature) && !GetLocalInt(oSkin,"BrawlerConstitution"))
-       SetCompositeBonus(oSkin, "BrawlerConstitution", 2, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
-    if(GetHasFeat(FEAT_BRAWLER_DEXTERITY, oCreature) && !GetLocalInt(oSkin,"BrawlerDexterity"))
-       SetCompositeBonus(oSkin, "BrawlerDexterity", 2, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_DEX);
-}
-
 void BrawlerWeaponFinesse(object oCreature)
 {
     object oSkin = GetPCSkin(oCreature);
@@ -56,104 +45,37 @@ void BrawlerWeaponFinesse(object oCreature)
     }
 }
 
-void BrawlerFeats(object oCreature)  //Stolen from SoulTaker :)
+void RemoveExtraAttacks(object oCreature)
 {
-    object oSkin = GetPCSkin(oCreature);
-
-    if (GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE, oCreature) && !GetHasFeat(FEAT_WEAPON_FOCUS_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oSkin);
-
-    if (GetHasFeat(FEAT_WEAPON_SPECIALIZATION_UNARMED_STRIKE, oCreature) && !GetHasFeat(FEAT_WEAPON_SPECIALIZATION_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapSpecCreature),oSkin);
-
-    if (GetHasFeat(FEAT_IMPROVED_CRITICAL_UNARMED_STRIKE, oCreature) && !GetHasFeat(FEAT_IMPROVED_CRITICAL_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_ImpCritCreature),oSkin);
-
-    if (GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicFocCreature),oSkin);
-
-    if (GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicSpecCreature),oSkin);
-
-    if (GetHasFeat(FEAT_EPIC_OVERWHELMING_CRITICAL_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_OVERCRITICAL_CREATURE),oSkin);
-
-    if (GetHasFeat(FEAT_EPIC_DEVASTATING_CRITICAL_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_DEVCRITICAL_CREATURE),oSkin);
-}
-
-void RemoveOldAttacks(object oCreature)
-{
-    int iOldAttacks = GetLocalInt(oCreature, "BrawlerAttacks");
-
-    if (iOldAttacks)
+    if (GetHasSpellEffect(SPELL_BRAWLER_EXTRA_ATT))
     {
-        effect eRemoval = GetFirstEffect(oCreature);
-        effect eCompare = SupernaturalEffect(EffectModifyAttacks(iOldAttacks));
-        while (GetIsEffectValid(eRemoval))
+        RemoveSpellEffects(SPELL_BRAWLER_EXTRA_ATT, oCreature, oCreature);
+        if (GetLocalInt(oCreature, "BrawlerAttacks"))
         {
-            if (GetEffectType(eRemoval) == GetEffectType(eCompare) &&
-                GetEffectSubType(eRemoval) == GetEffectSubType(eCompare))
-            {
-                RemoveEffect(oCreature, eRemoval);
-                break;
-            }
-            eRemoval = GetNextEffect(oCreature);
+            FloatingTextStringOnCreature("*Extra unarmed attacks disabled*", oCreature, FALSE);
+            DeleteLocalInt(oCreature, "BrawlerAttacks");
         }
-    DeleteLocalInt(oCreature, "BrawlerAttacks");
-    }
-}
-
-void BrawlerExtraAtt(object oCreature)
-{
-    object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature);
-    object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);   
-    int iExtraAttacks = 0;
-    
-    RemoveOldAttacks(oCreature);
-    
-    if (GetHasFeat(FEAT_AMBIDEXTERITY, oCreature) &&
-        GetHasFeat(FEAT_TWO_WEAPON_FIGHTING, oCreature) &&
-        !GetIsObjectValid(oRighthand) &&
-        !GetIsObjectValid(oLefthand))
-    {
-        if (GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING, oCreature))
-        {
-            iExtraAttacks = 2;
-        }
-        else
-        {
-            iExtraAttacks = 1;
-        }
-    }
-    
-    if (iExtraAttacks)
-    {
-        effect eExtraAttacks = SupernaturalEffect(EffectModifyAttacks(iExtraAttacks));
-	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eExtraAttacks, oCreature);
-	SetLocalInt(oCreature, "BrawlerAttacks", iExtraAttacks);
     }
 }
 
 void main ()
 {
-   object oPC = OBJECT_SELF;
+    object oPC = OBJECT_SELF;
 
-   //Evaluate The Unarmed Strike Feats
-   BrawlerFeats(oPC);
+    //Evaluate The Unarmed Strike Feats
+    UnarmedFeats(oPC);
 
-   //Evaluate Weapon Finesse (Unarmed)
-   BrawlerWeaponFinesse(oPC);
+    //Evaluate Fists
+    UnarmedFists(oPC);
 
-   //Evaluate Fists
-   UnarmedFists(oPC);
+    //Evaluate Weapon Finesse (Unarmed)
+    BrawlerWeaponFinesse(oPC);
 
-   //Evaluate Dodge
-   BrawlerDodge(oPC);
+    //Evaluate Dodge
+    BrawlerDodge(oPC);
 
-   //Evaluate Bonuses
-   BrawlerBonuses(oPC);
-   
-   //Ambidex + TWF, nice little bonus :)
-   BrawlerExtraAtt(oPC);
+    //Extra Attacks OFF if equipping of weapons or shield is done
+    if (GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND)) ||
+        GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND)))
+            RemoveExtraAttacks(oPC);
 }

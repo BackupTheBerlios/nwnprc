@@ -21,6 +21,8 @@ const string ID_ITEM_END = " in your inventory.";
 // Try to identify all unidentified objects within oPC's inventory.
 void TryToIDItems(object oPC = OBJECT_SELF);
 
+// Returns the number of henchmen a player has.
+int GetNumHenchmen(object oPC);
 
 ///////////////////////////////////////////////////////////////////////////////
 //  FUNCTION IMPLEMENTATION
@@ -53,4 +55,19 @@ void TryToIDItems(object oPC = OBJECT_SELF)
         oItem = GetNextItemInInventory(oPC);
     }
 
+}
+
+
+int GetNumHenchmen(object oPC)
+{
+     if (!GetIsPC(oPC)) return -1;
+
+     int nLoop, nCount;
+     for (nLoop = 1; nLoop <= GetMaxHenchmen(); nLoop++)
+     {
+          if (GetIsObjectValid(GetHenchman(oPC, nLoop)))
+          nCount++;
+     }
+     
+     return nCount;
 }

@@ -24,6 +24,7 @@ void main()
        Attack += GetHasSpellEffect(SPELL_EXTRASHOT);
 
    int iBonusD = GetHasFeat(FEAT_PERFECTSHOT) ? d4(Attack):0;
+       iBonusD = GetHasFeat(FEAT_PERFECTSHOT2)? d6(Attack):iBonusD;
 
    effect eDamage;
 

@@ -16,6 +16,9 @@ void PrcFeats(object oPC)
 void main()
 {
     object oPC=GetLastPCRested();
+    
+    if (GetIsObjectValid(GetLocalObject(oPC, "EnslavedCreature"))) 
+        DelayCommand(0.1,ExecuteScript("enslave_redom", oPC));
 
    switch(GetLastRestEventType()){
       case REST_EVENTTYPE_REST_CANCELLED:{

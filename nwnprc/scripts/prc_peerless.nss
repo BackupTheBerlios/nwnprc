@@ -115,33 +115,34 @@ void CheckPowerShot(object oPC, int iEquip)
       int bHasFeatActive = FALSE;
       int iFeatToActivate;
 
-      if (iEquip == 1) // Unequip
+      // checks the item unequiped is a weapon or not
+      if(IPGetIsMeleeWeapon(oWeapon) || GetWeaponRanged(oWeapon) )
       {
-           if(IPGetIsMeleeWeapon(oWeapon) || GetWeaponRanged(oWeapon) )
-           {
-                bIsWeapon = TRUE;
-           }
-           
-           if(GetHasFeatEffect(FEAT_PA_POWERSHOT) )
-           {
-                bHasFeatActive = TRUE;
-                iFeatToActivate = FEAT_PA_POWERSHOT;
-           }
-           else if(GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT) )
-           {
-                bHasFeatActive = TRUE;
-                iFeatToActivate = FEAT_PA_POWERSHOT;
-           }
-           else if(GetHasFeatEffect(FEAT_PA_SUP_POWERSHOT) )
-           {
-                bHasFeatActive = TRUE;
-                iFeatToActivate = FEAT_PA_POWERSHOT;
-           }
-           
-           if(bIsWeapon && bHasFeatActive)
-           {
-                AssignCommand(OBJECT_SELF, ActionUseFeat(iFeatToActivate, OBJECT_SELF) );
-           }
+           bIsWeapon = TRUE;
+      }
+      
+      // if the feat is activated or not
+      if(GetHasFeatEffect(FEAT_PA_POWERSHOT) )
+      {
+           bHasFeatActive = TRUE;
+           iFeatToActivate = FEAT_PA_POWERSHOT;
+      }
+      else if(GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT) )
+      {
+           bHasFeatActive = TRUE;
+           iFeatToActivate = FEAT_PA_POWERSHOT;
+      }
+      else if(GetHasFeatEffect(FEAT_PA_SUP_POWERSHOT) )
+      {
+           bHasFeatActive = TRUE;
+           iFeatToActivate = FEAT_PA_POWERSHOT;
+      }
+      
+      // if item removes is weapon and they had power shot active
+      // then activate the feat - turns off the effects
+      if(bIsWeapon && bHasFeatActive)
+      {
+           AssignCommand(OBJECT_SELF, ActionUseFeat(iFeatToActivate, OBJECT_SELF) );
       }
 }
 
@@ -161,5 +162,6 @@ void main()
     if (iEquip == 1)    RemoveSneakAttack(oPC, iEquip);   
     if (iEquip == 2)    AddSneakAttack(oPC, iEquip);
     
-    CheckPowerShot(oPC, iEquip);
+    // now only fires on unequip
+    if (iEquip == 1)    CheckPowerShot(oPC, iEquip);
 }

@@ -46,79 +46,81 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("ft_sanctmartial",oPC);
     
     //Route the event to the appropriate class specific scripts
-    if(GetLevelByClass(CLASS_TYPE_DUELIST, oPC) > 0)            ExecuteScript("prc_duelist", oPC);
-    if(GetLevelByClass(CLASS_TYPE_ACOLYTE, oPC) > 0)            ExecuteScript("prc_acolyte", oPC);
-    if(GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) > 0)         ExecuteScript("prc_spellswd", oPC);
-    if(GetLevelByClass(CLASS_TYPE_MAGEKILLER, oPC) > 0)         ExecuteScript("prc_magekill", oPC);
-    if(GetLevelByClass(CLASS_TYPE_OOZEMASTER, oPC) > 0)         ExecuteScript("prc_oozemstr", oPC);
-    if(GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_MEPH, oPC) > 0)   ExecuteScript("prc_discmeph", oPC);
-    if(GetLevelByClass(CLASS_TYPE_LICH, oPC) > 0)               ExecuteScript("pnp_lich_level", oPC);
-    if(iElemSavant > 0)                                         ExecuteScript("prc_elemsavant", oPC);
-    if(GetLevelByClass(CLASS_TYPE_HEARTWARDER,oPC) > 0)         ExecuteScript("prc_heartwarder", oPC);
-    if(GetLevelByClass(CLASS_TYPE_STORMLORD,oPC) > 0)           ExecuteScript("prc_stormlord", oPC);
-    if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER ,oPC) > 0)        ExecuteScript("prc_shifter", oPC);
-    if(GetLevelByClass(CLASS_TYPE_FRE_BERSERKER, oPC) > 0)      ExecuteScript("prc_frebzk", oPC);
-    if(GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH, oPC) > 0)     ExecuteScript("prc_eog", oPC);
-    if(GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) > 0)            ExecuteScript("prc_tempest", oPC);
-    if(GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oPC) > 0)         ExecuteScript("prc_foe_hntr", oPC);
-    if(GetLevelByClass(CLASS_TYPE_VASSAL, oPC) > 0)             ExecuteScript("prc_vassal", oPC);
-    if(GetLevelByClass(CLASS_TYPE_PEERLESS, oPC) > 0)           ExecuteScript("prc_peerless", oPC);
-    if(GetLevelByClass(CLASS_TYPE_LEGENDARY_DREADNOUGHT,oPC)>0) ExecuteScript("prc_legendread", oPC);
-    if(GetLevelByClass(CLASS_TYPE_DISC_BAALZEBUL,oPC) > 0)      ExecuteScript("prc_baalzebul", oPC);
-    if(GetLevelByClass(CLASS_TYPE_IAIJUTSU_MASTER,oPC) >0)      ExecuteScript("prc_iaijutsu_mst", oPC);
-    if(GetLevelByClass(CLASS_TYPE_FISTRAZIEL,oPC) > 0)          ExecuteScript("prc_fistraziel", oPC);
-    if(GetLevelByClass(CLASS_TYPE_SACREDFIST,oPC) > 0)          ExecuteScript("prc_sacredfist", oPC);
-    if(GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,oPC) > 0)   ExecuteScript("prc_initdraconic", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BLADESINGER,oPC) > 0)         ExecuteScript("prc_bladesinger", oPC);
-    if(GetLevelByClass(CLASS_TYPE_HEXTOR,oPC) > 0)              ExecuteScript("prc_hextor", oPC);
-    if(GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0)              ExecuteScript("prc_archer", oPC);
-    if(GetLevelByClass(CLASS_TYPE_TEMPUS,oPC) > 0)              ExecuteScript("prc_battletempus", oPC);
-    if(GetLevelByClass(CLASS_TYPE_DISPATER,oPC) > 0)            ExecuteScript("prc_dispater", oPC);
-    if(GetLevelByClass(CLASS_TYPE_MANATARMS,oPC) > 0)           ExecuteScript("prc_manatarms", oPC);
-    if(GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT,oPC) > 0)    ExecuteScript("prc_soldoflight", oPC);
-    if(GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC,oPC) > 0)      ExecuteScript("prc_henshin", oPC);
-    if(GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER,oPC) > 0)      ExecuteScript("prc_drunk", oPC);
-    if(GetLevelByClass(CLASS_TYPE_MASTER_HARPER,oPC) > 0)       ExecuteScript("prc_masterh", oPC);
-    if(GetLevelByClass(CLASS_TYPE_SHOU,oPC) > 0)                ExecuteScript("prc_shou", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BFZ,oPC) > 0)                 ExecuteScript("prc_bfz", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER,oPC) > 0)    ExecuteScript("prc_bondedsumm", oPC);
-    if(GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oPC) > 0)        ExecuteScript("prc_shadowadept", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BRAWLER,oPC) > 0)             ExecuteScript("prc_brawler", oPC);
-    if(GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE,oPC) > 0)       ExecuteScript("prc_minstrel", oPC);
-    if(GetLevelByClass(CLASS_TYPE_NIGHTSHADE,oPC) > 0)          ExecuteScript("prc_nightshade", oPC);
-    if(GetLevelByClass(CLASS_TYPE_RUNESCARRED,oPC) > 0)         ExecuteScript("prc_runescarred", oPC);
-    if(GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0)     ExecuteScript("prc_uranger", oPC);
-    if(GetLevelByClass(CLASS_TYPE_WEREWOLF,oPC) > 0)            ExecuteScript("prc_werewolf", oPC);
-    if(GetLevelByClass(CLASS_TYPE_JUDICATOR, oPC) > 0)          ExecuteScript("prc_judicator", oPC);
-    if(GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) > 0)     ExecuteScript("prc_arcduel", oPC);
-    if(GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oPC) > 0)      ExecuteScript("prc_thayknight", oPC);
-    if(GetLevelByClass(CLASS_TYPE_TEMPLE_RAIDER, oPC) > 0)      ExecuteScript("prc_templeraider", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BLARCHER, oPC) > 0)		ExecuteScript("prc_bld_arch", oPC);
-    if(GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC) > 0)ExecuteScript("prc_outlawroad", oPC);
-    if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
+    if(GetLevelByClass(CLASS_TYPE_DUELIST, oPC) > 0)             ExecuteScript("prc_duelist", oPC);
+    if(GetLevelByClass(CLASS_TYPE_ACOLYTE, oPC) > 0)             ExecuteScript("prc_acolyte", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) > 0)          ExecuteScript("prc_spellswd", oPC);
+    if(GetLevelByClass(CLASS_TYPE_MAGEKILLER, oPC) > 0)          ExecuteScript("prc_magekill", oPC);
+    if(GetLevelByClass(CLASS_TYPE_OOZEMASTER, oPC) > 0)          ExecuteScript("prc_oozemstr", oPC);
+    if(GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_MEPH, oPC) > 0)    ExecuteScript("prc_discmeph", oPC);
+    if(GetLevelByClass(CLASS_TYPE_LICH, oPC) > 0)                ExecuteScript("pnp_lich_level", oPC);
+    if(iElemSavant > 0)                                          ExecuteScript("prc_elemsavant", oPC);
+    if(GetLevelByClass(CLASS_TYPE_HEARTWARDER,oPC) > 0)          ExecuteScript("prc_heartwarder", oPC);
+    if(GetLevelByClass(CLASS_TYPE_STORMLORD,oPC) > 0)            ExecuteScript("prc_stormlord", oPC);
+    if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER ,oPC) > 0)         ExecuteScript("prc_shifter", oPC);
+    if(GetLevelByClass(CLASS_TYPE_FRE_BERSERKER, oPC) > 0)       ExecuteScript("prc_frebzk", oPC);
+    if(GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH, oPC) > 0)      ExecuteScript("prc_eog", oPC);
+    if(GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) > 0)             ExecuteScript("prc_tempest", oPC);
+    if(GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oPC) > 0)          ExecuteScript("prc_foe_hntr", oPC);
+    if(GetLevelByClass(CLASS_TYPE_VASSAL, oPC) > 0)              ExecuteScript("prc_vassal", oPC);
+    if(GetLevelByClass(CLASS_TYPE_PEERLESS, oPC) > 0)            ExecuteScript("prc_peerless", oPC);
+    if(GetLevelByClass(CLASS_TYPE_LEGENDARY_DREADNOUGHT,oPC)>0)  ExecuteScript("prc_legendread", oPC);
+    if(GetLevelByClass(CLASS_TYPE_DISC_BAALZEBUL,oPC) > 0)       ExecuteScript("prc_baalzebul", oPC);
+    if(GetLevelByClass(CLASS_TYPE_IAIJUTSU_MASTER,oPC) >0)       ExecuteScript("prc_iaijutsu_mst", oPC);
+    if(GetLevelByClass(CLASS_TYPE_FISTRAZIEL,oPC) > 0)           ExecuteScript("prc_fistraziel", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SACREDFIST,oPC) > 0)           ExecuteScript("prc_sacredfist", oPC);
+    if(GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,oPC) > 0)    ExecuteScript("prc_initdraconic", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BLADESINGER,oPC) > 0)          ExecuteScript("prc_bladesinger", oPC);
+    if(GetLevelByClass(CLASS_TYPE_HEXTOR,oPC) > 0)               ExecuteScript("prc_hextor", oPC);
+    if(GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0)               ExecuteScript("prc_archer", oPC);
+    if(GetLevelByClass(CLASS_TYPE_TEMPUS,oPC) > 0)               ExecuteScript("prc_battletempus", oPC);
+    if(GetLevelByClass(CLASS_TYPE_DISPATER,oPC) > 0)             ExecuteScript("prc_dispater", oPC);
+    if(GetLevelByClass(CLASS_TYPE_MANATARMS,oPC) > 0)            ExecuteScript("prc_manatarms", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT,oPC) > 0)     ExecuteScript("prc_soldoflight", oPC);
+    if(GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC,oPC) > 0)       ExecuteScript("prc_henshin", oPC);
+    if(GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER,oPC) > 0)       ExecuteScript("prc_drunk", oPC);
+    if(GetLevelByClass(CLASS_TYPE_MASTER_HARPER,oPC) > 0)        ExecuteScript("prc_masterh", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SHOU,oPC) > 0)                 ExecuteScript("prc_shou", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BFZ,oPC) > 0)                  ExecuteScript("prc_bfz", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER,oPC) > 0)     ExecuteScript("prc_bondedsumm", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oPC) > 0)         ExecuteScript("prc_shadowadept", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BRAWLER,oPC) > 0)              ExecuteScript("prc_brawler", oPC);
+    if(GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE,oPC) > 0)        ExecuteScript("prc_minstrel", oPC);
+    if(GetLevelByClass(CLASS_TYPE_NIGHTSHADE,oPC) > 0)           ExecuteScript("prc_nightshade", oPC);
+    if(GetLevelByClass(CLASS_TYPE_RUNESCARRED,oPC) > 0)          ExecuteScript("prc_runescarred", oPC);
+    if(GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0)      ExecuteScript("prc_uranger", oPC);
+    if(GetLevelByClass(CLASS_TYPE_WEREWOLF,oPC) > 0)             ExecuteScript("prc_werewolf", oPC);
+    if(GetLevelByClass(CLASS_TYPE_JUDICATOR, oPC) > 0)           ExecuteScript("prc_judicator", oPC);
+    if(GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) > 0)      ExecuteScript("prc_arcduel", oPC);
+    if(GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oPC) > 0)       ExecuteScript("prc_thayknight", oPC);
+    if(GetLevelByClass(CLASS_TYPE_TEMPLE_RAIDER, oPC) > 0)       ExecuteScript("prc_templeraider", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BLARCHER, oPC) > 0)		 ExecuteScript("prc_bld_arch", oPC);
+    if(GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC) > 0) ExecuteScript("prc_outlawroad", oPC);
+    if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)       DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
 
     // Feats are checked here
-    if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                        ExecuteScript("prc_vows", oPC);
-    if(GetHasFeat(FEAT_LICHLOVED, oPC) >0)                      ExecuteScript("prc_lichloved", oPC);
-    if(GetHasFeat(FEAT_EB_HAND, oPC) >0)                        ExecuteScript("prc_evilbrand", oPC);
-    if(GetHasFeat(FEAT_EB_HEAD, oPC) >0)                        ExecuteScript("prc_evilbrand", oPC);
-    if(GetHasFeat(FEAT_EB_CHEST, oPC) >0)                       ExecuteScript("prc_evilbrand", oPC);
-    if(GetHasFeat(FEAT_EB_ARM, oPC) >0)                         ExecuteScript("prc_evilbrand", oPC);
-    if(GetHasFeat(FEAT_EB_NECK, oPC) >0)                        ExecuteScript("prc_evilbrand", oPC);
-    if(GetHasFeat(FEAT_VILE_WILL_DEFORM, oPC))                  ExecuteScript("prc_vilefeats", oPC);
-    if(GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC))                 ExecuteScript("prc_vilefeats", oPC);
-    if(GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC))                 ExecuteScript("prc_vilefeats", oPC);
-    if (GetHasFeat(FEAT_VIGIL_ARMOR, oPC))                      ExecuteScript("ft_vigil_armor", oPC);
+    if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
+    if(GetHasFeat(FEAT_LICHLOVED, oPC) >0)                       ExecuteScript("prc_lichloved", oPC);
+    if(GetHasFeat(FEAT_EB_HAND, oPC) >0)                         ExecuteScript("prc_evilbrand", oPC);
+    if(GetHasFeat(FEAT_EB_HEAD, oPC) >0)                         ExecuteScript("prc_evilbrand", oPC);
+    if(GetHasFeat(FEAT_EB_CHEST, oPC) >0)                        ExecuteScript("prc_evilbrand", oPC);
+    if(GetHasFeat(FEAT_EB_ARM, oPC) >0)                          ExecuteScript("prc_evilbrand", oPC);
+    if(GetHasFeat(FEAT_EB_NECK, oPC) >0)                         ExecuteScript("prc_evilbrand", oPC);
+    if(GetHasFeat(FEAT_VILE_WILL_DEFORM, oPC))                   ExecuteScript("prc_vilefeats", oPC);
+    if(GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC))                  ExecuteScript("prc_vilefeats", oPC);
+    if(GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC))                  ExecuteScript("prc_vilefeats", oPC);
+    if (GetHasFeat(FEAT_VIGIL_ARMOR, oPC))                       ExecuteScript("ft_vigil_armor", oPC);
     if(GetHasFeat(FEAT_BOWMASTERY, oPC) ||
        GetHasFeat(FEAT_XBOWMASTERY, oPC) ||
-       GetHasFeat(FEAT_SHURIKENMASTERY, oPC))                   ExecuteScript("prc_weapmas", oPC);
+       GetHasFeat(FEAT_SHURIKENMASTERY, oPC))                    ExecuteScript("prc_weapmas", oPC);
     if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC) ||
-       GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))                   ExecuteScript("prc_intuiatk", oPC);
+       GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))                    ExecuteScript("prc_intuiatk", oPC);
 
     if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
-       && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)        ExecuteScript("ft_gtwf", oPC);
-    if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)               ExecuteScript("prc_lingdmg", oPC);
+       && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)         ExecuteScript("ft_gtwf", oPC);
+    if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)                ExecuteScript("prc_lingdmg", oPC);
 
+    if(GetHasFeat(FEAT_ETERNAL_FREEDOM, oPC))                    ExecuteScript("etern_free", oPC);
+    
     // Miscellaneous
     ExecuteScript("prc_wyzfeat",oPC);
     ExecuteScript("onenter_ess",oPC);
@@ -338,8 +340,8 @@ void ScrubPCSkin(object oPC, object oSkin)
             // Reference iprp_feats.2da
             int st = GetItemPropertySubType(ip);
 
-            // Spare 400 through 570 except for 428 (currently unknown)
-            if (st < 400 || st > 570 || st == 428 )
+            // Spare 400 through 570 and 398 -- epic spells & spell effects
+            if ((st < 400 || st > 570) && st != 398)
                 RemoveItemProperty(oSkin, ip);
         }
         else

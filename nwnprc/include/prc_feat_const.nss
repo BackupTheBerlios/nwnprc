@@ -82,6 +82,7 @@ const int FEAT_LARGE        = 4760;
 
 
 //Passive Feats
+const int FEAT_ETERNAL_FREEDOM                         = 4298;
 const int FEAT_INTUITIVE_ATTACK                        = 3166;
 const int FEAT_RAVAGEGOLDENICE                         = 3162;
 const int FEAT_DRAGONSONG                              = 3440;

@@ -586,7 +586,7 @@ const int EP_WARD_R4    = 0;
 const string EP_WARD_S  = "A";
 ///////////////////////////////////////////////////////////////////////////////
 // EPIC SPELL: Eternal Freedom
-const int ET_FREE_DC    = 92;
+const int ET_FREE_DC    = 101;
 const int ET_FREE_IP    = 454;
 const int R_ET_FREE_IP  = 525;
 const int ET_FREE_FE    = 5080;
@@ -1158,7 +1158,7 @@ const int UNIMPIN_R4    = 0;
 const string UNIMPIN_S  = "A";
 ///////////////////////////////////////////////////////////////////////////////
 // EPIC SPELL: Unseen Wanderer
-const int UNSEENW_DC    = 88;
+const int UNSEENW_DC    = 101;
 const int UNSEENW_IP    = 498;
 const int R_UNSEENW_IP  = 569;
 const int UNSEENW_FE    = 5168;

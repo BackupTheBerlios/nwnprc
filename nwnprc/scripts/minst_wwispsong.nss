@@ -29,7 +29,7 @@ void main()
     effect eBoost = EffectDamageShield(d6(1) + nBonus, 0, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_SONIC));
     effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eLink = EffectLinkEffects(eBoost, eDur);
+    effect eLink = ExtraordinaryEffect(EffectLinkEffects(eBoost, eDur));
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     
     int iDontStack;
@@ -61,7 +61,7 @@ void main()
   
     //Do the visual effects
     effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
-    effect eLink2 = EffectLinkEffects(eVis2,eLink);
+    effect eLink2 = ExtraordinaryEffect(EffectLinkEffects(eVis2,eLink));
        
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));

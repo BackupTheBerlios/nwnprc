@@ -29,7 +29,7 @@ void main()
     effect eHaste = EffectHaste();
     effect eVis = EffectVisualEffect(VFX_IMP_HASTE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eLink = EffectLinkEffects(eHaste, eDur);
+    effect eLink = ExtraordinaryEffect(EffectLinkEffects(eHaste, eDur));
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
 
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
@@ -59,7 +59,7 @@ void main()
 
     //Do the visual effects
     effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
-    effect eLink2 = EffectLinkEffects(eVis2,eLink);
+    effect eLink2 = ExtraordinaryEffect(EffectLinkEffects(eVis2,eLink));
    
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));

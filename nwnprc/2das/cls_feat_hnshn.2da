@@ -33,3 +33,4 @@
 29 FEAT_PRESTIGE_WALK_THROUGH_THE_MOUNTAINS 4025      3    9              1      
 30 FEAT_PRESTIGE_RIDDLE_OF_INVULNERABILITY  4026      3    10             0      
 31 FEAT_EPIC_BLINDING_SPEED                 491       0    -1             1      
+32 CreatureWeaponProf                       289       3    1              0      

@@ -1,6 +1,11 @@
 2DA V2.0
 
-  LABEL     ReqType  ReqParam1    ReqParam2 
-0 Arcane    ARCSPELL 2            ****      
-1 Ethran    FEAT     2567         ****      
-2 ScriptVar VAR      X1_AllowHath 0         
+      LABEL        ReqType    ReqParam1       ReqParam2   
+0     Arcane       ARCSPELL   3               ****        
+1     Ethran       FEAT       2567            ****        
+2     ScriptVar    VAR        PRC_AllowHath   0           
+4     Divine          DIVSPELL   3                ****        
+5     CLERICOR        CLASSOR    2                ****        
+6     DRUIDOR         CLASSOR    3                ****   
+4     Spellcraft   SKILL      16              9           
+  

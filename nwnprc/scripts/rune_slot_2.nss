@@ -12,60 +12,181 @@ int lh,la,lc,rh,ra,rc,f;
        if(GetResRef(oScribe) == "runescarreddagge")
        {
 
-         if(GetLocalString(oScribe, "f_bulls") == "1"
-            ||GetLocalString(oScribe, "lh_bulls") == "1"
-            ||GetLocalString(oScribe, "la_bulls") == "1"
-            ||GetLocalString(oScribe, "lc_bulls") == "1"
-            ||GetLocalString(oScribe, "rh_bulls") == "1"
-            ||GetLocalString(oScribe, "ra_bulls") == "1"
-            ||GetLocalString(oScribe, "rc_bulls") == "1")
+         if(GetLocalString(oScribe, "f_bulls") == "1")
             {
             SpellCount2 += 1;
             }
 
-         if(GetLocalString(oScribe, "f_csw") == "1"
-            ||GetLocalString(oScribe, "lh_csw") == "1"
-            ||GetLocalString(oScribe, "la_csw") == "1"
-            ||GetLocalString(oScribe, "lc_csw") == "1"
-            ||GetLocalString(oScribe, "rh_csw") == "1"
-            ||GetLocalString(oScribe, "ra_csw") == "1"
-            ||GetLocalString(oScribe, "rc_csw") == "1")
+            if(GetLocalString(oScribe, "lh_bulls") == "1")
             {
             SpellCount2 += 1;
             }
 
-         if(GetLocalString(oScribe, "f_endur") == "1"
-            ||GetLocalString(oScribe, "lh_endur") == "1"
-            ||GetLocalString(oScribe, "la_endur") == "1"
-            ||GetLocalString(oScribe, "lc_endur") == "1"
-            ||GetLocalString(oScribe, "rh_endur") == "1"
-            ||GetLocalString(oScribe, "ra_endur") == "1"
-            ||GetLocalString(oScribe, "rc_endur") == "1")
+            if(GetLocalString(oScribe, "lc_bulls") == "1")
             {
             SpellCount2 += 1;
             }
 
-         if(GetLocalString(oScribe, "f_invis") == "1"
-            ||GetLocalString(oScribe, "lh_invis") == "1"
-            ||GetLocalString(oScribe, "la_invis") == "1"
-            ||GetLocalString(oScribe, "lc_invis") == "1"
-            ||GetLocalString(oScribe, "rh_invis") == "1"
-            ||GetLocalString(oScribe, "ra_invis") == "1"
-            ||GetLocalString(oScribe, "rc_invis") == "1")
+            if(GetLocalString(oScribe, "la_bulls") == "1")
             {
             SpellCount2 += 1;
             }
 
-         if(GetLocalString(oScribe, "f_keen") == "1"
-            ||GetLocalString(oScribe, "lh_keen") == "1"
-            ||GetLocalString(oScribe, "la_keen") == "1"
-            ||GetLocalString(oScribe, "lc_keen") == "1"
-            ||GetLocalString(oScribe, "rh_keen") == "1"
-            ||GetLocalString(oScribe, "ra_keen") == "1"
-            ||GetLocalString(oScribe, "rc_keen") == "1")
+            if(GetLocalString(oScribe, "rh_bulls") == "1")
             {
             SpellCount2 += 1;
             }
+
+            if(GetLocalString(oScribe, "rc_bulls") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "ra_bulls") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+         if(GetLocalString(oScribe, "f_csw") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "lh_csw") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "la_csw") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "lc_csw") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "rh_csw") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "ra_csw") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "rc_csw") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+         if(GetLocalString(oScribe, "f_endur") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "lh_endur") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "la_endur") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "lc_endur") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "rh_endur") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "ra_endur") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "rc_endur") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+         if(GetLocalString(oScribe, "f_invis") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "lh_invis") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "la_invis") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "lc_invis") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "rh_invis") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "ra_invis") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "rc_invis") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+         if(GetLocalString(oScribe, "f_keen") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "lh_keen") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "la_keen") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "lc_keen") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "rh_keen") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "ra_keen") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
+            if(GetLocalString(oScribe, "rc_keen") == "1")
+            {
+            SpellCount2 += 1;
+            }
+
 if(GetLocalString(oScribe, "lh_bulls") == "1"
           ||GetLocalString(oScribe, "lh_ccw") == "1"
           ||GetLocalString(oScribe, "lh_cmw") == "1"

@@ -12,27 +12,76 @@ int lh,la,lc,rh,ra,rc,f;
        if(GetResRef(oScribe) == "runescarreddagge")
        {
 
-       if(GetLocalString(oScribe, "f_spellr") == "1"
-               ||GetLocalString(oScribe, "lh_spellr") == "1"
-               ||GetLocalString(oScribe, "la_spellr") == "1"
-               ||GetLocalString(oScribe, "lc_spellr") == "1"
-               ||GetLocalString(oScribe, "rh_spellr") == "1"
-               ||GetLocalString(oScribe, "ra_spellr") == "1"
-               ||GetLocalString(oScribe, "rc_spellr") == "1")
+       if(GetLocalString(oScribe, "f_spellr") == "1")
             {
             SpellCount5 += 1;
             }
 
-            if(GetLocalString(oScribe, "f_heal") == "1"
-               ||GetLocalString(oScribe, "lh_heal") == "1"
-               ||GetLocalString(oScribe, "la_heal") == "1"
-               ||GetLocalString(oScribe, "lc_heal") == "1"
-               ||GetLocalString(oScribe, "rh_heal") == "1"
-               ||GetLocalString(oScribe, "ra_heal") == "1"
-               ||GetLocalString(oScribe, "rc_heal") == "1")
+        if(GetLocalString(oScribe, "lh_spellr") == "1")
             {
             SpellCount5 += 1;
             }
+
+        if(GetLocalString(oScribe, "lc_spellr") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+        if(GetLocalString(oScribe, "la_spellr") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+        if(GetLocalString(oScribe, "rh_spellr") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+        if(GetLocalString(oScribe, "ra_spellr") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+        if(GetLocalString(oScribe, "rc_spellr") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+        if(GetLocalString(oScribe, "lh_heal") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+        if(GetLocalString(oScribe, "la_heal") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+         if(GetLocalString(oScribe, "lc_heal") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+         if(GetLocalString(oScribe, "rh_heal") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+         if(GetLocalString(oScribe, "ra_heal") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+         if(GetLocalString(oScribe, "rc_heal") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
+         if(GetLocalString(oScribe, "f_heal") == "1")
+            {
+            SpellCount5 += 1;
+            }
+
 if(GetLocalString(oScribe, "lh_bulls") == "1"
           ||GetLocalString(oScribe, "lh_ccw") == "1"
           ||GetLocalString(oScribe, "lh_cmw") == "1"

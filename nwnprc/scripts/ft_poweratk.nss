@@ -34,6 +34,16 @@ int BonusAtk(int iDmg)
   return 0;
 }
 
+void EnforceActionMode()
+{
+   if(GetHasSpellEffect(GetSpellId(), OBJECT_SELF))
+   {
+       SetActionMode(OBJECT_SELF,ACTION_MODE_POWER_ATTACK,FALSE);
+       SetActionMode(OBJECT_SELF,ACTION_MODE_IMPROVED_POWER_ATTACK,FALSE);
+       
+       DelayCommand(3.0, EnforceActionMode());
+   }
+}
 
 void main()
 {
@@ -106,6 +116,8 @@ void main()
 
        SetActionMode(OBJECT_SELF,ACTION_MODE_POWER_ATTACK,FALSE);
        SetActionMode(OBJECT_SELF,ACTION_MODE_IMPROVED_POWER_ATTACK,FALSE);
+
+       DelayCommand(3.0, EnforceActionMode());
 
        effect eLink = ExtraordinaryEffect(EffectLinkEffects(eDamage, eToHit));
        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, OBJECT_SELF);

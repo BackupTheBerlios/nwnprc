@@ -15,6 +15,24 @@
 #include "nw_i0_spells"
 #include "pnp_shft_poly.nss"
 
+////////////////Begin Generic////////////////
+
+// Function Definitions:
+
+// Applies a spell's effect immediately by clearing the character's action queue
+// The spell cast can be any spell, but it will not invoke a casting animation and it
+// will automatically be cast upon the caster.  Good for passive abilities
+// which conditionally change with certain actions.
+void CastSpellOnSelf(int iSpellId);
+
+// Functions:
+void ActionCastSpellOnSelf(int iSpell)
+{
+    if (GetCurrentAction() != ACTION_REST) ClearAllActions(TRUE);
+    ActionCastSpellAtObject(iSpell, OBJECT_SELF, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+}
+    
+////////////////End Generic////////////////
 
 ////////////////Begin Drunken Master//////////////////////
 

@@ -1,5 +1,6 @@
 #include "nw_i0_spells"
 #include "prc_inc_unarmed"
+#include "prc_inc_clsfunc"
 
 void SacredAC(object oPC,object oSkin,int bSFAC ,int iShield)
 {
@@ -31,7 +32,7 @@ void SacredSpeed(object oPC,object oSkin,int bSFSpeed ,int iShield)
         if ( GetLocalInt(oSkin, "SacFisMv") == bSFSpeed ) return;
         RemoveSpellEffects(SPELL_SACREDSPEED,oPC,oPC);
      }
-     ActionCastSpellAtObject(SPELL_SACREDSPEED,oPC,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);
+     ActionCastSpellOnSelf(SPELL_SACREDSPEED);
      SetLocalInt(oSkin,"SacFisMv",bSFSpeed);
    }
 

@@ -4,7 +4,7 @@
 #include "prc_class_const"
 #include "prc_inc_unarmed"
 #include "inc_item_props"
-#include "prc_ipfeat_const"
+#include "prc_inc_clsfunc"
 
 void RemoveExtraAttacks(object oCreature)
 {
@@ -101,5 +101,5 @@ void main ()
     if (iRighthand || iLefthand || iMonk)
         RemoveExtraAttacks(oPC);
     else
-        ActionCastSpellAtObject(SPELL_BRAWLER_EXTRA_ATT, oPC, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+        ActionCastSpellOnSelf(SPELL_BRAWLER_EXTRA_ATT);
 }

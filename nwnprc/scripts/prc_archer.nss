@@ -1,3 +1,4 @@
+#include "prc_inc_clsfunc"
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "nw_i0_spells"
@@ -15,7 +16,7 @@ void Equip(object oPC,int bBowSpec,object oSkin,int bXShot)
 
   if (bXShot && !GetHasSpellEffect(SPELL_EXTRASHOT,oPC))
   {
-     ActionCastSpellAtObject(SPELL_EXTRASHOT,oPC,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);
+     ActionCastSpellOnSelf(SPELL_EXTRASHOT);
   }
 
 }

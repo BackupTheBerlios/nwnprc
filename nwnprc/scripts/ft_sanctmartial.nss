@@ -394,7 +394,7 @@ void Pwatk(object oPC)
          if (GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER)>1)
          {
            RemoveEffectsFromSpell(OBJECT_SELF,SPELL_UR_FAVORITE_ENEMY); 
-           ActionCastSpellAtObject(SPELL_UR_FAVORITE_ENEMY,oPC,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);
+           ActionCastSpellOnSelf(SPELL_UR_FAVORITE_ENEMY);
          }
 
          string nMes = "*Power Attack Mode Deactivated*";

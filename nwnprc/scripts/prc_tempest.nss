@@ -12,7 +12,7 @@
 #include "inc_item_props"
 #include "nw_i0_spells"
 #include "x2_inc_itemprop"
-
+#include "prc_inc_clsfunc"
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
@@ -61,7 +61,7 @@ void ApplyExtraAttacks(object oPC)
 {
      if(!GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
      {              
-          ActionCastSpellAtObject(SPELL_T_TWO_WEAPON_FIGHTING, oPC, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+          ActionCastSpellOnSelf(SPELL_T_TWO_WEAPON_FIGHTING);
      }
 }
 

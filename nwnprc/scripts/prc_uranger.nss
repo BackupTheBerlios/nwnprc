@@ -2,13 +2,14 @@
 #include "prc_feat_const"
 #include "nw_i0_spells"
 #include "prc_ipfeat_const"
+#include "prc_inc_clsfunc"
 
 void FavoriteEnemy(object oPC)
 {
 
   // if (GetHasSpellEffect(SPELL_UR_FAVORITE_ENEMY,oPC))
   //    RemoveSpellEffects(SPELL_UR_FAVORITE_ENEMY,oPC,oPC);
-   ActionCastSpellAtObject(SPELL_UR_FAVORITE_ENEMY,oPC,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);
+   ActionCastSpellOnSelf(SPELL_UR_FAVORITE_ENEMY);
 
 
 }

@@ -37,6 +37,7 @@ struct ac_forms{
 
 void DoAstralConstructCreation(object oManifester, location locTarget, int nACLevel,
                                int nOptionFlags, int nResElemFlags, int nETchElemFlags, int nEBltElemFlags);
+void DoDespawn(object oConstruct);
 
 struct ac_forms GetAppearancessForLevel(int nLevel);
 int GetAppearanceForConstruct(int nACLevel, int nOptionFlags, int nCheck);
@@ -67,6 +68,11 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nACLe
 	// And set the max henchmen count back to original, so we won't mess up the module
 	SetMaxHenchmen(nMaxHenchmen);
 	
+	// Set the timer on it. 1 round / level. Metapsionic Extend can be applied.
+	float fDur = 6.0 * GetManifesterLevel(oManifester);
+	      fDur = GetLocalInt(oManifester, "PsiMetaExtend") ? fDur * 2 : fDur;
+	
+	DelayCommand(fDur, DoDespawn(oConstruct));
 	
 	// Add the locals to the construct
 	SetLocalInt(oConstruct, ASTRAL_CONSTRUCT_LEVEL,              nACLevel);
@@ -84,6 +90,18 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nACLe
 	SetCreatureAppearanceType(oConstruct, nAppearance);
 	
 	// Do VFX
+}
+
+
+// A function to handle the AC's duration running out
+// Some paranoia present to make sure nothing could accidentally
+// make it permanent
+void DoDespawn(object oConstruct)
+{
+	SetPlotFlag(oConstruct, FALSE);
+	SetImmortal(oConstruct, FALSE);
+	AssignCommand(oConstruct, SetIsDestroyable(TRUE, FALSE, FALSE));
+	DelayCommand(0.1, DestroyObject(oConstruct));
 }
 
 

@@ -25,7 +25,7 @@
 
 
 #include "prc_alterations"
-#include "prc_getcast_lvl"
+//#include "prc_getcast_lvl"
 
 int nbWeaponFocus(object oPC);
 

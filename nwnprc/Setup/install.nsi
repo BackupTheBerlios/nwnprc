@@ -185,7 +185,7 @@ Function .onInit
 	Abort
 	
 	noXP:
-	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires Shadows of Undrentide and Hordes of the Underdark to be installed.  You must upgrade NWN before installing the PRC pack."
+	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires Shadows of Undrentide and Hordes of the Underdark to be installed.  You must upgrade NWN before installing the PRC pack.  If you installed the expansions by copying the files directly and did not install them using Bioware's setup applications, then you must reinstall using Bioware's setup applications."
 	Abort
 	
 	noNWN:

@@ -1,7 +1,7 @@
 #include "inc_item_props"
 #include "prc_inc_function"
 
-void SetUndroppableAndPlot(object oItem)
+/*void SetUndroppableAndPlot(object oItem)
 {
      // -------------------------------------------------------------------------------------------
      // Makes it so that all equipped items cannot be sold or traded without being unequipped first
@@ -37,7 +37,7 @@ void SetAllEquippedUndroppableAndPlot(object oPC)
            oItem = GetItemInSlot(INVENTORY_SLOT_NECK, oPC); SetUndroppableAndPlot(oItem);
            oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC); SetUndroppableAndPlot(oItem);
            oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTRING, oPC); SetUndroppableAndPlot(oItem);
-}
+}*/
     
 
 void main()
@@ -54,7 +54,7 @@ void main()
 	ScrubPCSkin(oPC, oSkin);
         DeletePRCLocalInts(oSkin);     
         
-    SetAllEquippedUndroppableAndPlot(oPC);
+    //SetAllEquippedUndroppableAndPlot(oPC);
 
     SetLocalInt(oPC,"ONENTER",1);
     // Make sure we reapply any bonuses before the player notices they are gone.

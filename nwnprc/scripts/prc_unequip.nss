@@ -60,16 +60,16 @@ void main()
      // --------------------------------------------------
      // Restores the item's ability to be sold or dropped.
      // --------------------------------------------------
-     if (GetLocalInt(oItem, "PRC_MadeUndroppable"))
-     {
+     //if (GetLocalInt(oItem, "PRC_MadeUndroppable"))
+     //{
          SetItemCursedFlag(oItem, FALSE);
          DeleteLocalInt(oItem, "PRC_MadeUndroppable");
-     }
-     if (GetLocalInt(oItem, "PRC_MadePlot"))
-     {
+     //}
+     //if (GetLocalInt(oItem, "PRC_MadePlot"))
+     //{
          SetPlotFlag(oItem, FALSE);
          DeleteLocalInt(oItem, "PRC_MadePlot");
-     }
+     //}
 
      DelayCommand(0.3,PrcFeats(oPC));
 

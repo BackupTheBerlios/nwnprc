@@ -61,8 +61,6 @@ void main()
       else
         SetCompositeBonus(oBrac,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
 
-      if(iEquip == 1)
-       SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
 
       int iSimple = isSimple(oItem);
       if (iSimple)
@@ -87,6 +85,8 @@ void main()
       }
 
 
+      if(iEquip == 1)
+        SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
 
 
    }

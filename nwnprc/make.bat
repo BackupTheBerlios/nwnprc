@@ -137,4 +137,4 @@ del craft2das.temp
 del race2das.temp
 del racescripts.temp
 del raceobjs.temp
-rem del makefile.temp
+del makefile.temp

@@ -502,6 +502,21 @@ void BFZ(object oPC)
 	}	
 }
 
+void ShiningBlade(object oPC)
+{       
+	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+
+
+	if (iCleric > 0)
+	{
+		SetLocalInt(oPC, "PRC_PrereqSBHeir", 1);
+		if (GetHasFeat(FEAT_WAR_DOMAIN_POWER,oPC) && GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC))
+		{
+		SetLocalInt(oPC, "PRC_PrereqSBHeir", 0);
+		}	
+	}	
+}
+
 void main()
 {
         //Declare Major Variables
@@ -546,6 +561,7 @@ void main()
 	BFZ(oPC);
 	ManAtArms(oPC);
 	SOL(oPC);
+	ShiningBlade(oPC);
 	Shadowlord(oPC, iArcSpell1);
 	Shifter(oPC, iArcSpell1, iDivSpell1);
 	

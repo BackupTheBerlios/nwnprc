@@ -1,4 +1,4 @@
-Void main()
+void main()
 {
 SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_0","Acid");
 SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_0","6");

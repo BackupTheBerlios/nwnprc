@@ -61,6 +61,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MAGIC_CIRCLE_AGAINST_GOOD, FALSE));
     //Create an instance of the AOE Object using the Apply Effect function
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,-1,CasterLvl);
+    if (GetLocalInt(OBJECT_SELF,"TEMPO_CIRCGOOD"))
+     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(GetLocalInt(OBJECT_SELF,"TEMPO_CIRCGOOD")),TRUE,-1,CasterLvl);
+    else
+     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,-1,CasterLvl);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eEvil, oTarget);
+    
+    DeleteLocalInt(OBJECT_SELF,"TEMPO_CIRCGOOD")
 }

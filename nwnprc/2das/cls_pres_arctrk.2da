@@ -6,4 +6,7 @@
 2     ScriptVar      VAR        PNP_AllowArcTrick   0           
 3     OpenLock       SKILL      9                   7           
 4     Lore           SKILL      7                   4           
-5     SneakAttack2   FEAT       345                 ****        
+5     SneakAttack2   FEATOR     345                 ****      
+6     DeathAttack2   FEATOR     456                 ****      
+7     DeathAttack2   FEATOR     461                 ****      
+      

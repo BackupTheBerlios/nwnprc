@@ -21,7 +21,7 @@ import CharacterCreator.defs.*;
 public class AlignmentMenu extends javax.swing.JFrame {
     
     /** Creates new form AlignmentMenu1 */
-    public AlignmentMenu() {
+    public AlignmentMenu() throws Exception {
         GoodEvil = 50;
         LawfulChaotic = 50;        
         menucreate = TLKFactory.getCreateMenu();
@@ -41,47 +41,235 @@ public class AlignmentMenu extends javax.swing.JFrame {
         
         String restricted = menucreate.MainCharDataAux[3][classes.AlignRestrict];
         String type = menucreate.MainCharDataAux[3][classes.AlignRstrctType];
-        if(restricted.equalsIgnoreCase("0x02") && type.equalsIgnoreCase("0x1"))
-        {
-            LEButton.setEnabled(false);
-            LNButton.setEnabled(false);
-            LGButton.setEnabled(false);
-        } else
-        if(restricted.equalsIgnoreCase("0x06") && type.equalsIgnoreCase("0x1"))
-        {
-            CGButton.setEnabled(false);
-            LGButton.setEnabled(false);
-            LEButton.setEnabled(false);
-            CEButton.setEnabled(false);
-        } else
-        if(restricted.equalsIgnoreCase("0x05") && type.equalsIgnoreCase("0x1"))
-        {
-            CGButton.setEnabled(false);
-            CNButton.setEnabled(false);
-            CEButton.setEnabled(false);
-            NGButton.setEnabled(false);
-            TNButton.setEnabled(false);
-            NEButton.setEnabled(false);
-        } else
-        if(restricted.equalsIgnoreCase("0x15") && type.equalsIgnoreCase("0x3"))
-        {
-            CGButton.setEnabled(false);
-            CNButton.setEnabled(false);
-            CEButton.setEnabled(false);
-            NGButton.setEnabled(false);
-            TNButton.setEnabled(false);
-            NEButton.setEnabled(false);
-            LNButton.setEnabled(false);
-            LEButton.setEnabled(false);
-        }  
-        if(restricted.equalsIgnoreCase("0x01") && type.equalsIgnoreCase("0x3"))
-        {
-            CGButton.setEnabled(false);
-            CEButton.setEnabled(false);
-            LGButton.setEnabled(false);
-            LEButton.setEnabled(false);
-        }        
-        
+		String invert = menucreate.MainCharDataAux[3][classes.InvertRestrict];
+		// We are going to decode the alignment masks
+		boolean evil = false;
+		boolean good = false;
+		boolean chaotic = false;
+		boolean lawful = false;
+		boolean neutral = false;
+		boolean moral = false;
+		boolean ethical = false;
+		boolean inverted = false;
+
+		// Handle Inversion
+		if (invert.equalsIgnoreCase("1"))
+			inverted = true;
+
+		// Handle Types
+		if (type.equalsIgnoreCase("0x01") || type.equalsIgnoreCase("0x1"))
+			ethical = true;
+		else if (type.equalsIgnoreCase("0x02") || type.equalsIgnoreCase("0x2"))
+			moral = true;
+		else if (type.equalsIgnoreCase("0x03")
+				|| type.equalsIgnoreCase("0x3")) {
+			ethical = true;
+			moral = true;
+		}
+		// This isn't complete as it should throw an error for an illformed
+		// type (this assumes the other value is some form of 0).
+		else if (!restricted.equalsIgnoreCase("0x0")
+				&& !restricted.equalsIgnoreCase("0x00")
+				&& !restricted.equalsIgnoreCase("0")
+				&& !restricted.equalsIgnoreCase("****")) {
+			throw new Exception("Invalid Restriction Type in classes.2da.");
+		}
+
+		if (restricted.equalsIgnoreCase("0x01"))
+			neutral = true;
+		else if (restricted.equalsIgnoreCase("0x02"))
+			lawful = true;
+		else if (restricted.equalsIgnoreCase("0x03")) {
+			neutral = true;
+			lawful = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x04"))
+			chaotic = true;
+		else if (restricted.equalsIgnoreCase("0x05")) {
+			neutral = true;
+			chaotic = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x06")) {
+			lawful = true;
+			chaotic = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x07")) {
+			neutral = true;
+			chaotic = true;
+			lawful = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x08"))
+			good = true;
+		else if (restricted.equalsIgnoreCase("0x09")) {
+			neutral = true;
+			good = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x0A")) {
+			lawful = true;
+			good = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x0B")) {
+			neutral = true;
+			lawful = true;
+			good = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x0C")) {
+			chaotic = true;
+			good = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x0D")) {
+			neutral = true;
+			chaotic = true;
+			good = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x0E")) {
+			lawful = true;
+			chaotic = true;
+			good = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x0F")) {
+			neutral = true;
+			lawful = true;
+			chaotic = true;
+			good = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x10"))
+			evil = true;
+		else if (restricted.equalsIgnoreCase("0x11")) {
+			neutral = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x12")) {
+			lawful = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x13")) {
+			neutral = true;
+			lawful = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x14")) {
+			chaotic = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x15")) {
+			neutral = true;
+			chaotic = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x16")) {
+			lawful = true;
+			chaotic = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x17")) {
+			neutral = true;
+			lawful = true;
+			chaotic = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x18")) {
+			good = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x19")) {
+			neutral = true;
+			good = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x1A")) {
+			lawful = true;
+			good = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x1B")) {
+			neutral = true;
+			lawful = true;
+			good = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x1C")) {
+			chaotic = true;
+			good = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x1D")) {
+			neutral = true;
+			chaotic = true;
+			good = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x1E")) {
+			lawful = true;
+			chaotic = true;
+			good = true;
+			evil = true;
+		}
+		else if (restricted.equalsIgnoreCase("0x1F")) {
+			neutral = true;
+			lawful = true;
+			chaotic = true;
+			good = true;
+			evil = true;
+		}
+		else if (!restricted.equalsIgnoreCase("0x00")
+				&& !restricted.equalsIgnoreCase("0x0")
+				&& !restricted.equalsIgnoreCase("0")
+				&& !restricted.equalsIgnoreCase("****")) {
+			throw new Exception("Invalid Alignment Restriction in classes.2da.");
+		}
+
+		if ((good || evil) && !moral)
+			throw new Exception("Invalid Alignment Restriction Type in classes.2da.");
+
+		if ((lawful || chaotic) && !ethical)
+			throw new Exception("Invalid Alignment Restriction Type in classes.2da.");
+
+		// In normal case, set the button enables to match !inverted.
+		// Then as the restrictions are applied, set them equal to inverted.
+		LGButton.setEnabled(!inverted);
+		LNButton.setEnabled(!inverted);
+		LEButton.setEnabled(!inverted);
+		NGButton.setEnabled(!inverted);
+		TNButton.setEnabled(!inverted);
+		NEButton.setEnabled(!inverted);
+		CGButton.setEnabled(!inverted);
+		CNButton.setEnabled(!inverted);
+		CEButton.setEnabled(!inverted);
+
+		if (evil) {
+			LEButton.setEnabled(inverted);
+			NEButton.setEnabled(inverted);
+			CEButton.setEnabled(inverted);
+		}
+		if (good) {
+			LGButton.setEnabled(inverted);
+			NGButton.setEnabled(inverted);
+			CGButton.setEnabled(inverted);
+		}
+		if (chaotic) {
+			CGButton.setEnabled(inverted);
+			CNButton.setEnabled(inverted);
+			CEButton.setEnabled(inverted);
+		}
+		if (lawful) {
+			LGButton.setEnabled(inverted);
+			LNButton.setEnabled(inverted);
+			LEButton.setEnabled(inverted);
+		}
+		if (neutral) {
+			if (moral) {
+				LNButton.setEnabled(inverted);
+				TNButton.setEnabled(inverted);
+				CNButton.setEnabled(inverted);
+			}
+			if (ethical) {
+				NGButton.setEnabled(inverted);
+				TNButton.setEnabled(inverted);
+				NEButton.setEnabled(inverted);
+			}
+		}
+
         OKButton.setEnabled(false);
     }
     

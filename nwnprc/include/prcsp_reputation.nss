@@ -1,3 +1,5 @@
+#include "x2_inc_switches"
+
 // * Generic reputation wrapper
 // * definition of constants:
 // * SPELL_TARGET_ALLALLIES = Will affect all allies, even those in my faction who don't like me

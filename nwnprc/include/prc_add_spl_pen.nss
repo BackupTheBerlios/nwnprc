@@ -1,3 +1,5 @@
+#include "prcsp_archmaginc"
+
 int GetHeartWarderPene(int spell_id, object oCaster = OBJECT_SELF) {
 	// Guard Expensive Calculations
     if (!GetHasFeat(FEAT_VOICE_SIREN, oCaster)) return 0;

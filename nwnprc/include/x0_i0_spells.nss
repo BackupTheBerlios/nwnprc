@@ -33,14 +33,11 @@
 //Added code into spellsInflictTouchAttack to maximize for Faith Healing and Blast Infidel
 //Aaon Graywolf - Jan 6, 2003
 
-#include "NW_I0_SPELLS"
-#include "x0_i0_match"
+//#include "NW_I0_SPELLS"
+//#include "x0_i0_match"
 #include "x2_inc_switches"
 #include "x2_inc_itemprop"
 #include "x0_i0_henchman"
-
-
-
 
 //* get the hightest spellcasting class level of oCreature)
 int GZGetHighestSpellcastingClassLevel(object oCreature);

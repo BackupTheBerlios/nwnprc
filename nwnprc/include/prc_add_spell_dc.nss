@@ -1,3 +1,9 @@
+#include "prc_class_const"
+#include "prc_feat_const"
+#include "lookup_2da_spell"
+#include "prcsp_archmaginc"
+#include "prc_add_spl_pen"
+
 // Check for CLASS_TYPE_HIEROPHANT > 0 in caller
 int GetWasLastSpellHieroSLA(int spell_id, object oCaster = OBJECT_SELF)
 {
@@ -63,12 +69,13 @@ int GetHierophantSLAAdjustment(int spell_id, object oCaster = OBJECT_SELF)
 {
 	int retval = 0;
 
-	if (GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster) > 0
-			&& GetWasLastSpellHieroSLA(spell_id, oCaster))
-        retval = StringToInt(lookup_spell_cleric_level(spell_id))
-				- GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster);
-
-    return retval;
+	if (GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster) > 0 && GetWasLastSpellHieroSLA(spell_id, oCaster) )
+	{
+             retval = StringToInt( lookup_spell_cleric_level(spell_id) );
+	     retval -= GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster);
+        }
+   
+   return retval;
 }
 
 int GetHeartWarderDC(int spell_id, object oCaster = OBJECT_SELF)

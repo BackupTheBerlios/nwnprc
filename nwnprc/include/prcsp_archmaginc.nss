@@ -10,6 +10,8 @@
 //				#include "prcsp_archmaginc"
 //
 
+#include "prcsp_reputation"
+
 const string MASTERY_OF_ELEMENTS_TAG = "archmage_mastery_elements";
 const string MASTERY_OF_ELEMENTS_NAME_TAG = "archmage_mastery_elements_name";
 const string MASTERY_OF_SHAPE_TAG = "archmage_mastery_shaping";
@@ -49,9 +51,12 @@ CheckMasteryOfShapes(object oCaster, object oTarget)
 
 	// This variable should not be set without the feat being available.
 	// If someone wants to cheat, let them.
-	if (GetLocalInt(oCaster, MASTERY_OF_SHAPE_TAG) == FEAT_ACTIVE
-			&& spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster))
-		bRetVal = TRUE;
+	if (GetLocalInt(oCaster, MASTERY_OF_SHAPE_TAG) == FEAT_ACTIVE 
+	    // && spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster)
+	   )
+	{
+	     bRetVal = TRUE;
+	}
 	
 	return bRetVal;
 }

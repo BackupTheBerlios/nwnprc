@@ -17,10 +17,8 @@
 //Added code into spellsCure to maximize for Faith Healing and Blast Infidel
 //Aaon Graywolf - Jan 6, 2003
 
-#include "prc_alterations"
 #include "prc_inc_function"
 #include "inc_dispel"
-
 
 // GZ: Number of spells in GetSpellBreachProtections
 const int NW_I0_SPELLS_MAX_BREACH = 33;

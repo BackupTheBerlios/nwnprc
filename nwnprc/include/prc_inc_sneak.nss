@@ -88,10 +88,10 @@ int GetRogueSneak(object oPC)
       if (iClassLevel) iRogueSneak += (iClassLevel + 2) / 3;
       
       // Blood Archer
-    /*iClassLevel = GetLevelByClass(CLASS_TYPE_BLARCHER, oPC);
+      iClassLevel = GetLevelByClass(CLASS_TYPE_BLARCHER, oPC);
       if ((iClassLevel >= 5) && (iClassLevel < 8)) iRogueSneak++;
       if ((iClassLevel >= 8) && (iClassLevel < 10)) iRogueSneak += 2;
-      if (iClassLevel >= 10) iRogueSneak += 3;*/
+      if (iClassLevel >= 10) iRogueSneak += 3;
        
       // Order of the Bow Initiate 
       //iClassLevel = GetLevelByClass(CLASS_TYPE_ORDER_BOW_INITIATE, oPC);

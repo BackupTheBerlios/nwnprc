@@ -37,10 +37,10 @@
 // #include "prc_alterations"  <-- Inherited
 // #include "X2_I0_SPELLS"     <-- Inherited
 // #include "x2_inc_spellhook" <-- Inherited
+// #include "prc_ipfeat_const" <-- Inherited from "prc_inc_unarmed"
 
 #include "x2_inc_itemprop"
 #include "prc_inc_function"
-//#include "prc_ipfeat_const"  <-- Inherited from "prc_inc_unarmed"
 #include "prc_inc_sneak"
 #include "prc_inc_unarmed"
 
@@ -809,17 +809,15 @@ int GetMainHandAttacks(object oPC)
     
     if (iCharLevel > 20)
     {
-         iCharLevel -= 19;
-         iCharLevel /= 2;
-         
+         iCharLevel -= 20;      
+         iCharLevel /= 2;      
          iBAB -= iCharLevel;
     }
     
-    int iNumAttacks = FloatToInt( (iBAB + 0.5)/5 );
-    int iNumMonkAttack = 0;
-    
+    int iNumAttacks = ( (iBAB - 1) / 5 ) + 1;    
     if(iNumAttacks > 4)  iNumAttacks = 4;
     
+    int iNumMonkAttack = 0;
     if( GetHasMonkWeaponEquipped(oPC) )
     {
          int iMonkLevel = GetLevelByClass(CLASS_TYPE_MONK, oPC);

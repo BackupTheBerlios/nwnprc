@@ -363,7 +363,9 @@ int CalcNumberOfAttacks()
   //  return 2; // additional attack
   //else
   //  return 1; // everything is normal
-
+  
+  
+  // Oni5115
   // This calculates bonus attacks based on Total Hit Dice
   // regardless of classes.  It effectively gives you 
   // the proper bonus attacks based on a fighter's level.
@@ -376,14 +378,15 @@ int CalcNumberOfAttacks()
   // because you do not gain more attacks after 20.
   if (iTemp > 20)
   {
-       iTemp -= 19;
+       iTemp -= 20;
        iTemp /= 2;
        
        iBAB -= iTemp;
        iCharLevel = 20;
   }
-  int iNormalAttacks = FloatToInt( (iBAB + 0.5)/5 );
-  int iFighterAttacks = FloatToInt( (iCharLevel + 0.5)/5 );
+  
+  int iNormalAttacks = ( (iBAB - 1) / 5 ) + 1;
+  int iFighterAttacks = ( (iCharLevel - 1) / 5 ) + 1;
   
   return (iFighterAttacks - iNormalAttacks);
 }

@@ -101,36 +101,51 @@ void MageKiller(object oPC = OBJECT_SELF)
 
 	int iMK = (GetLevelByClass(CLASS_TYPE_MAGEKILLER, oPC) + 1) / 2;
 	
-	string bRefx = "";
-	string bFort = "";
 	int iRef = 0;
 	int iFort = 0;
 	int iMKSave = 0;
-	
-	SetLocalInt(oPC, "MK_Ref", 0);
-	SetLocalInt(oPC, "MK_Fort", 0);
-	
+
 	if (iMK > 0)
 	{
 
-	iRef +=	GetHasFeat(FEAT_MK_REF_15, oPC) + GetHasFeat(FEAT_MK_REF_14, oPC) + GetHasFeat(FEAT_MK_REF_13, oPC) + 
-		GetHasFeat(FEAT_MK_REF_12, oPC) + GetHasFeat(FEAT_MK_REF_11, oPC) + GetHasFeat(FEAT_MK_REF_10, oPC) + 
-		GetHasFeat(FEAT_MK_REF_9, oPC) + GetHasFeat(FEAT_MK_REF_8, oPC) + GetHasFeat(FEAT_MK_REF_7, oPC) + 
-		GetHasFeat(FEAT_MK_REF_6, oPC) + GetHasFeat(FEAT_MK_REF_5, oPC) + GetHasFeat(FEAT_MK_REF_4, oPC) + 
-		GetHasFeat(FEAT_MK_REF_3, oPC) + GetHasFeat(FEAT_MK_REF_2, oPC) + GetHasFeat(FEAT_MK_REF_1, oPC);
+	iRef +=		GetHasFeat(FEAT_MK_REF_15, oPC) + 
+			GetHasFeat(FEAT_MK_REF_14, oPC) + 
+			GetHasFeat(FEAT_MK_REF_13, oPC) + 
+			GetHasFeat(FEAT_MK_REF_12, oPC) + 
+			GetHasFeat(FEAT_MK_REF_11, oPC) + 
+			GetHasFeat(FEAT_MK_REF_10, oPC) + 
+			GetHasFeat(FEAT_MK_REF_9, oPC) + 
+			GetHasFeat(FEAT_MK_REF_8, oPC) + 
+			GetHasFeat(FEAT_MK_REF_7, oPC) + 
+			GetHasFeat(FEAT_MK_REF_6, oPC) + 
+			GetHasFeat(FEAT_MK_REF_5, oPC) + 
+			GetHasFeat(FEAT_MK_REF_4, oPC) + 
+			GetHasFeat(FEAT_MK_REF_3, oPC) + 
+			GetHasFeat(FEAT_MK_REF_2, oPC) + 
+			GetHasFeat(FEAT_MK_REF_1, oPC);
 
-	iFort +=	GetHasFeat(FEAT_MK_FORT_15, oPC) + GetHasFeat(FEAT_MK_FORT_14, oPC) + GetHasFeat(FEAT_MK_FORT_13, oPC) + 
-			GetHasFeat(FEAT_MK_FORT_12, oPC) + GetHasFeat(FEAT_MK_FORT_11, oPC) + GetHasFeat(FEAT_MK_FORT_10, oPC) + 
-			GetHasFeat(FEAT_MK_FORT_9, oPC) + GetHasFeat(FEAT_MK_FORT_8, oPC) + GetHasFeat(FEAT_MK_FORT_7, oPC) + 
-			GetHasFeat(FEAT_MK_FORT_6, oPC) + GetHasFeat(FEAT_MK_FORT_5, oPC) + GetHasFeat(FEAT_MK_FORT_4, oPC) + 
-			GetHasFeat(FEAT_MK_FORT_3, oPC) + GetHasFeat(FEAT_MK_FORT_2, oPC) + GetHasFeat(FEAT_MK_FORT_1, oPC);
+	iFort +=	GetHasFeat(FEAT_MK_FORT_15, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_14, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_13, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_12, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_11, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_10, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_9, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_8, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_7, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_6, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_5, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_4, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_3, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_2, oPC) + 
+			GetHasFeat(FEAT_MK_FORT_1, oPC);
 
 	iMKSave = iRef + iFort;
-
+/*
 	FloatingTextStringOnCreature("Mage Killer Level: " + IntToString(iMK), oPC, FALSE);
 	FloatingTextStringOnCreature("Reflex Save Level: " + IntToString(iRef), oPC, FALSE);
 	FloatingTextStringOnCreature("Fortitude Save Level: " + IntToString(iFort), oPC, FALSE);
-
+*/
 	if (iMK != iMKSave)
 	{
 		int nHD = GetHitDice(oPC);

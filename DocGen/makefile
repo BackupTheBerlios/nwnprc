@@ -10,5 +10,8 @@ default:
 run:
 	java -Xmx300m -Xms300m prc/autodoc/Main
 
-runquiet:
+run_quiet:
 	java -Xmx300m -Xms300m prc/autodoc/Main -q
+
+run_no_spinner:
+	java -Xmx300m -Xms300m prc/autodoc/Main -s

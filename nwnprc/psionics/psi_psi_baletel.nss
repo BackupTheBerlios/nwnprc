@@ -51,9 +51,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 		nDamage = nDamage + d6(nAugment);
 	}
 	
-	FloatingTextStringOnCreature("Augmented DC " + IntToString(nDC), oCaster, FALSE);
-	FloatingTextStringOnCreature("Augmented Manifester Level " + IntToString(nCaster), oCaster, FALSE);
-	FloatingTextStringOnCreature("Augmented Damage " + IntToString(nDamage), oCaster, FALSE);
+	//FloatingTextStringOnCreature("Augmented DC " + IntToString(nDC), oCaster, FALSE);
+	//FloatingTextStringOnCreature("Augmented Manifester Level " + IntToString(nCaster), oCaster, FALSE);
+	//FloatingTextStringOnCreature("Augmented Damage " + IntToString(nDamage), oCaster, FALSE);
 	
 	effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
@@ -63,7 +63,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	if (PRCMyResistPower(oCaster, oTarget, nCaster))
 	{
 	
-	FloatingTextStringOnCreature("Target has failed its Power Resistance Check", oCaster, FALSE);
+	//FloatingTextStringOnCreature("Target has failed its Power Resistance Check", oCaster, FALSE);
 		
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));

@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    FloatingTextStringOnCreature("You have manifested Mind Thrust", oCaster, FALSE);
+    //FloatingTextStringOnCreature("You have manifested Mind Thrust", oCaster, FALSE);
     
     if (GetCanManifest(oCaster, nAugCost)) 
     {
@@ -61,9 +61,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		nDamage = nDamage + d10(nAugment);
 	}
 	
-	FloatingTextStringOnCreature("Augmented DC " + IntToString(nDC), oCaster, FALSE);
-	FloatingTextStringOnCreature("Augmented Manifester Level " + IntToString(nCaster), oCaster, FALSE);
-	FloatingTextStringOnCreature("Augmented Damage " + IntToString(nDamage), oCaster, FALSE);
+	//FloatingTextStringOnCreature("Augmented DC " + IntToString(nDC), oCaster, FALSE);
+	//FloatingTextStringOnCreature("Augmented Manifester Level " + IntToString(nCaster), oCaster, FALSE);
+	//FloatingTextStringOnCreature("Augmented Damage " + IntToString(nDamage), oCaster, FALSE);
 	
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
@@ -73,7 +73,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	if (PRCMyResistPower(oCaster, oTarget, nCaster))
 	{
 	
-	FloatingTextStringOnCreature("Target has failed its Power Resistance Check", oCaster, FALSE);
+	//FloatingTextStringOnCreature("Target has failed its Power Resistance Check", oCaster, FALSE);
 		
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));

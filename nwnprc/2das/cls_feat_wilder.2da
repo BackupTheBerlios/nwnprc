@@ -1,6 +1,7 @@
 2DA V2.0
 
     FeatLabel                                      FeatIndex List GrantedOnLevel OnMenu 
+347 "**Class Feats**"                              ****      **** ****           ****   
 0   WILDER_WILDSURGE_1                             3560      3    1              1
 0   WILDER_WILDSURGE_2                             3561      3    3              1
 0   WILDER_WILDSURGE_3                             3562      3    7              1
@@ -8,9 +9,14 @@
 0   WILDER_WILDSURGE_5                             3564      3    15             1
 0   WILDER_WILDSURGE_6                             3565      3    19             1
 0   WILDER_WILDSURGE_OFF                           3566      3    1              1
-0   FEAT_PSIONWILD_MNDTHRST                        3567      3    1              1
 0   FEAT_AUGMENT_PSIONICS                          3551      3    1              1
-0   FEAT_AUGMENT_NONE                              3552      3    1              1        
+0   FEAT_AUGMENT_NONE                              3552      3    1              1 
+346 ****                                           ****      **** ****           ****   
+347 "**powers**"                                   ****      **** ****           ****   
+0   FEAT_PSIONWILD_MNDTHRST                        3567      3    1              1
+0   FEAT_PSIONWILD_BESTOW_POWER                    3575      3    1              1
+346 ****                                           ****      **** ****           ****   
+347 "**normal feats**"                             ****      **** ****           ****   
 0   ArmProfLight                                   3         3    1              0      
 135 WeapProfSim                                    46        3    1              0      
 136 Shield                                         32        3    1              0      

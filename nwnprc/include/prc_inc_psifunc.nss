@@ -31,7 +31,16 @@ int GetCanManifest(object oCaster, int nAugCost);
 
 // Checks to see if the caster has suffered psychic enervation
 // from a wild surge. If yes, daze and subtract power points.
+// Also checks for Surging Euphoria, and applies it, if needed.
 void PsychicEnervation(object oCaster, int nWildSurge);
+
+// Checks to see if the power manifested is a Telepathy one
+// This is used with the Wilder's Volatile Mind ability.
+int GetIsTelepathyPower();
+
+// Increases the cost of a Telepathy power by an 
+// amount if the target of the spell is a Wilder
+int VolatileMind(object oTarget);
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -204,4 +213,49 @@ void PsychicEnervation(object oCaster, int nWildSurge)
     		FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
     		SetLocalInt(oCaster, "PowerPoints", nPP);	
 	}
+	else
+	{
+		effect eBonAttack = EffectAttackIncrease(nWildSurge);
+		effect eBonDam = EffectDamageIncrease(nWildSurge, DAMAGE_TYPE_MAGICAL);
+		effect eVis = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
+		effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nWildSurge, SAVING_THROW_TYPE_SPELL);
+		effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+		effect eDur2 = EffectVisualEffect(VFX_DUR_MAGIC_RESISTANCE);
+		effect eLink = EffectLinkEffects(eSave, eDur);
+		eLink = EffectLinkEffects(eLink, eDur2);
+		eLink = EffectLinkEffects(eLink, eBonDam);
+		eLink = EffectLinkEffects(eLink, eBonAttack);
+		eLink = ExtraordinaryEffect(eLink);
+		FloatingTextStringOnCreature("Surging Euphoria: " + IntToString(nWildSurge), oCaster, FALSE);
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oCaster, RoundsToSeconds(nWildSurge));
+	}
+}
+
+int GetIsTelepathyPower()
+{
+	int nSpell = GetSpellId();
+	if (nSpell < 6000 && nSpell > 6000)
+	{
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+
+int VolatileMind(object oTarget)
+{
+	int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oTarget);
+	int nTelepathy = GetIsTelepathyPower();
+	int nCost = 0;
+	
+	if (nWilder > 0 && nTelepathy == TRUE)
+	{
+		if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_4, oTarget)) nCost = 4;
+		else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_3, oTarget)) nCost = 3;
+		else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_2, oTarget)) nCost = 2;
+		else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_1, oTarget)) nCost = 1;
+	}
+	
+	FloatingTextStringOnCreature("Volatile Mind Cost: " + IntToString(nCost), oTarget, FALSE);
+	return nCost;
 }

@@ -12,10 +12,9 @@
 #include "prc_class_const"
 
 // Constants that dictate ResistPower results
-const int POWER_RESIST_FAIL = 0;
-const int POWER_RESIST_PASS = 1;
-const int POWER_RESIST_GLOBE = 2;
-const int POWER_RESIST_MANTLE = 3;
+const int POWER_RESIST_FAIL = 1;
+const int POWER_RESIST_PASS = 0;
+
 
 //
 //	This function is a wrapper should someone wish to rewrite the Bioware
@@ -96,15 +95,15 @@ PRCShowPowerResist(object oCaster, object oTarget, int nResist, float fDelay = 0
 int
 PRCMyResistPower(object oCaster, object oTarget, int nEffCasterLvl=0, float fDelay = 0.0)
 {
-	int nResist = POWER_RESIST_PASS;
+	int nResist = POWER_RESIST_FAIL;
 	int nCasterCheck = nEffCasterLvl + d20(1);
 	int nTargetPR = PRCGetPowerResistance(oTarget, oCaster);
 
 	// A tie favors the caster.
-	if (nCasterCheck < nTargetPR)	nResist = POWER_RESIST_FAIL;
+	if (nCasterCheck < nTargetPR)	nResist = POWER_RESIST_PASS;
    
-
-	PRCShowPowerResist(oCaster, oTarget, nResist, fDelay);
+	// Only show resistance if the target has any
+	if (nTargetPR > 0)	PRCShowPowerResist(oCaster, oTarget, nResist, fDelay);
 
     return nResist;
 }

@@ -38,7 +38,7 @@ void IPRemoveSpellFailure50(object oItem)
 }
 
 
-void OnEquip(object oPC,object oSkin,object oItem)
+void OnEquip(object oPC,object oSkin)
 {
 
   object oArmor=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
@@ -55,7 +55,7 @@ void OnEquip(object oPC,object oSkin,object oItem)
      SetCompositeBonus(oSkin, "BladesCon", 0, ITEM_PROPERTY_SKILL_BONUS,SKILL_CONCENTRATION);
      return;
   }
-  if ( GetHasFeat(FEAT_GREATER_SPELLSONG,oPC)) IPAddSpellFailure50(oItem);
+  if ( GetHasFeat(FEAT_GREATER_SPELLSONG,oPC)) IPAddSpellFailure50(oArmor);
 
 
   // only 1 weapon
@@ -185,8 +185,7 @@ void main()
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
 
 
-       if (iEquip !=1) OnEquip(oPC,oSkin,GetPCItemLastEquipped());
+       if (iEquip !=1) OnEquip(oPC,oSkin);
        if (iEquip ==1) OnUnEquip(oPC,oSkin);
 
 }
-

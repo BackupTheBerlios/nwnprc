@@ -1,7 +1,7 @@
 #include "NW_I0_GENERIC"
 #include "prc_feat_const"
 #include "lookup_2da_spell"
-#include "X0_I0_SPELLS"
+//#include "X0_I0_SPELLS"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //:: This is the prc_dispel_magic functions declarations.   The functions themselves are at the bottom

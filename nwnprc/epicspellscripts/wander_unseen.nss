@@ -10,6 +10,7 @@
 //:: Last Updated On: March 13, 2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
+#include "inc_epicdispel"
 
 void main()
 {

@@ -8,6 +8,7 @@
 //:://////////////////////////////////////////////
 #include "x0_i0_position"
 #include "prc_alterations"
+#include "inc_epicdispel"
 
 location GetOppositeLoc(object oTarget);
 

@@ -35,6 +35,9 @@
 # PRC_VERSION - The version number of the PRC build, this is only used for the RAR
 # file name
 #
+# PRC_INSTALLVERSION - The version number of the PRC build, this is placed in
+# the HIF file and the NSIS install script, so it is shown to the user.
+#
 # If just run w/o any arguments the makefile will build all haks/erfs/etc. and
 # install them in the appropriate spots in your NWN directory.  The following
 # additional build targets are supported, they are passed on the command
@@ -80,6 +83,11 @@ OVERRIDEFILES	=
 # If an install path for NSIS is not given, assume "C:\program files\nsis"
 !IFNDEF NSISPATH
 NSISPATH		= C:\program files\nsis
+!ENDIF
+
+# If no pretty install version is defined then just use the PRC_VERSION
+!IFNDEF PRC_INSTALLVERSION
+PRC_INSTALLVERSION	= PRC_VERSION
 !ENDIF
 
 # Define the locations of the various EXE's used by the makefile.  All
@@ -153,7 +161,8 @@ hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) \
 # Rule to build the NSIS installer.
 nsis:
 	@echo Setup$(PRC_VERSION).exe
-	@$(NSISCOMPILER) /DPRCVERSION=$(PRC_VERSION) /V1 $(INSTALLSCRIPT)
+	@$(NSISCOMPILER) /DPRCVERSION=$(PRC_VERSION) \
+		/DPRCINSTALLVERSION=$(PRC_INSTALLVERSION) /V1 $(INSTALLSCRIPT)
 
 
 #################################################################################
@@ -272,10 +281,10 @@ $(CRAFT2DASHAK): $(CRAFT2DAS)
 	@"$(ERFCOMPILER)" -c $@ $**
 
 # Rule to build the HIF file from it's template.
-$(HIF): PRCPackTemplate.hif
+$(HIF): PRCPackTemplate.hif config.make
 	@echo $(@F)
 	@-del $@ 2>nul
-	@type $** | $(SED) -R "s/XXXversionXXX/$(PRC_VERSION)/" >$@
+	@type PRCPackTemplate.hif | $(SED) -R "s/XXXversionXXX/$(PRC_INSTALLVERSION)/" >$@
 	
 #
 # Rule to add makefile dependencies.  This will run makedep to build the include

@@ -1,12 +1,16 @@
 ; Script generated with the Venis Install Wizard
 
-; Define your application name
-!define APPNAME "PRC Pack"
-!define APPNAMEANDVERSION "PRC Pack 2.0"
-
 !ifndef PRCVERSION
 	!define PRCVERSION ""
 !endif
+
+!ifndef PRCINSTALLVERSION
+	!define PRCINSTALLVERSION ""
+!endif
+
+; Define your application name
+!define APPNAME "PRC Pack"
+!define APPNAMEANDVERSION "PRC Pack ${PRCINSTALLVERSION}"
 
 ; Enable LZMA compression for the smallest EXE.
 SetCompressor lzma
@@ -29,6 +33,7 @@ Var NWNMINVERSION
 !define MUI_FINISHPAGE_SHOWREADME "$NWNPRCPATH\PRCPack\prc_consortium.htm"
 !define MUI_FINISHPAGE_RUN_TEXT "Install the PRC pack in modules now"
 !define MUI_FINISHPAGE_RUN "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
+!define MUI_FINISHPAGE_RUN_PARAMETERS "$\"PRC Pack.HIF$\""
 
 !define MUI_WELCOMEPAGE_TEXT "The PRC pack will now be installed into your installation of Neverwinter Nights.\r\n\r\n\r\nNeverwinter Nights version $NWNVERSION is currently installed at $NWNPATH."
 
@@ -63,9 +68,9 @@ Section "PRC Pack" Section1
 	File "..\prc_consortium.htm"
 	SetOutPath "$NWNPATH\erf\"
 	File "..\CompiledResources\prc_consortium.erf"
-	CreateShortCut "$DESKTOP\PRC Module Updater.lnk" "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
+	CreateShortCut "$DESKTOP\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
 	CreateDirectory "$SMPROGRAMS\PRC Pack"
-	CreateShortCut "$SMPROGRAMS\PRC Pack\PRC Module Updater.lnk" "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
+	CreateShortCut "$SMPROGRAMS\PRC Pack\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
 	CreateShortCut "$SMPROGRAMS\PRC Pack\Uninstall.lnk" "$NWNPRCPATH\PRCPack\uninstall.exe"
 	CreateShortCut "$SMPROGRAMS\PRC Pack\Read Me.lnk" "$NWNPRCPATH\PRCPack\prc_consortium.htm"
 

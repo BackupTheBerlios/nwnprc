@@ -204,7 +204,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(jLabel5, gridBagConstraints);
 
         VersionTag.setFont(new java.awt.Font("Trebuchet MS", 0, 10));
-        VersionTag.setForeground(new java.awt.Color(255, 214, 173));
+        VersionTag.setForeground(new java.awt.Color(200, 200, 215));
         VersionTag.setText("V. 1.1");
         VersionTag.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         gridBagConstraints = new java.awt.GridBagConstraints();

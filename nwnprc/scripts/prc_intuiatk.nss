@@ -46,9 +46,14 @@ void main()
       int iWis = GetAbilityModifier(ABILITY_WISDOM,oPC);
       int iCreature = GetLocalInt(oPC, "CreatureFinesse");
       int iMod = (iWis > iStr) ? (iWis - iStr) : 0;
+      int iXBowEq = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_LIGHTCROSSBOW ||
+                    GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_HEAVYCROSSBOW;
       
       if (GetHasFeat(FEAT_WEAPON_FINESSE,oPC) && iWis > iDex && iDex > iStr)
           iMod = iWis - iDex;
+          
+      if (GetHasFeat(FEAT_ZEN_ARCHERY,oPC) && iXBowEq)
+          iMod = 0;
 
       SetCompositeAttackBonus(oPC, "IntuitiveAttackR", 0, ATTACK_BONUS_ONHAND);
       SetCompositeAttackBonus(oPC, "IntuitiveAttackL", 0, ATTACK_BONUS_OFFHAND);

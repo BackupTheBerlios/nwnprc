@@ -16,10 +16,10 @@ void main()
 		//mast not unequid the items, this would crash the game
 		//but re-equiping the items when they are already equiped will
 		//recheck what is on the hide
-		DelayCommand(0.0,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR));
-		DelayCommand(0.0,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
-		DelayCommand(0.0,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
-		DelayCommand(0.0,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
+		DelayCommand(0.5,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR));
+		DelayCommand(0.5,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
+		DelayCommand(0.5,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
+		DelayCommand(0.5,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
 		//all other script content has been moved to other places
 
 		//this was added to stop the shifter from looking naked when they reenter/reload

@@ -286,7 +286,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
         ScrubPCSkin(oPC,oHidePC);
 		//RemoveAllItemProperties(oHidePC);
         CopyAllItemProperties(oHidePC,oHide);
-        DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR)));
+        DelayCommand(0.5,AssignCommand(oPC,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR)));
 
     }
     if (!GetIsObjectValid(oWeapCR))
@@ -306,7 +306,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 			// Make sure we start with a clean weapon
 			RemoveAllItemProperties(oWeapCRPC);
 			CopyAllItemProperties(oWeapCRPC,oWeapCR);
-		    DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R)));
+		    DelayCommand(0.5,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R)));
 		}
 	}
     if (!GetIsObjectValid(oWeapCL))
@@ -326,7 +326,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 			// Make sure we start with a clean weapon
 			RemoveAllItemProperties(oWeapCLPC);
 			CopyAllItemProperties(oWeapCLPC,oWeapCL);
-		    DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L)));
+		    DelayCommand(0.5,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L)));
 		}
 	}
     if (!GetIsObjectValid(oWeapCB))
@@ -346,7 +346,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 			// Make sure we start with a clean weapon
 			RemoveAllItemProperties(oWeapCBPC);
 			CopyAllItemProperties(oWeapCBPC,oWeapCB);
-			DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B)));
+			DelayCommand(0.5,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B)));
 		}
 	}
 

@@ -100,7 +100,7 @@ void MageKiller(object oPC = OBJECT_SELF)
 
 	int iMK = (GetLevelByClass(CLASS_TYPE_MAGEKILLER, oPC) + 1) / 2;
 
-int bRefx = GetHasFeat(FEAT_MK_REF_1, oPC) ? 1 : 0;
+int 	bRefx = GetHasFeat(FEAT_MK_REF_1, oPC) ? 1 : 0;
         bRefx = GetHasFeat(FEAT_MK_REF_2, oPC) ? 2 : bRefx;
         bRefx = GetHasFeat(FEAT_MK_REF_3, oPC) ? 3 : bRefx;
         bRefx = GetHasFeat(FEAT_MK_REF_4, oPC) ? 4 : bRefx;

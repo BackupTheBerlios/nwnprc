@@ -21,6 +21,7 @@ const int MONST_DAMAGE_1D6   = 8;
 const int MONST_DAMAGE_1D8   = 18;
 const int MONST_DAMAGE_1D10  = 28;
 const int MONST_DAMAGE_1D12  = 38;
+const int MONST_DAMAGE_1D20  = 48;
 const int MONST_DAMAGE_2D6   = 9;
 const int MONST_DAMAGE_2D8   = 19;
 const int MONST_DAMAGE_2D10  = 29;
@@ -29,9 +30,6 @@ const int MONST_DAMAGE_3D6   = 10;
 const int MONST_DAMAGE_3D8   = 20;
 const int MONST_DAMAGE_3D10  = 30;
 const int MONST_DAMAGE_3D12  = 40;
-const int MONST_DAMAGE_4D8   = 21;
-const int MONST_DAMAGE_4D10  = 31;
-const int MONST_DAMAGE_4D12  = 41;
 
 const int ITEM_PROPERTY_WOUNDING = 69;
 
@@ -66,7 +64,10 @@ int FindUnarmedDamage(object oCreature)
     int iBrawlerDamage = 0;
     int iRacialDamage = 0;
     int iDamageToUse = 0;
-    int iSize = GetCreatureSize(oCreature);
+    int iDieIncrease = 0;
+    int bUseMonkAlt = FALSE;
+    int bSmallSize = GetCreatureSize(oCreature) == CREATURE_SIZE_SMALL ||
+                     GetCreatureSize(oCreature) == CREATURE_SIZE_TINY;
 
     // Sacred Fist cannot add their levels if they've broken their code.    
     if (GetHasFeat(FEAT_SF_CODE,oCreature)) iSacredFist = 0;
@@ -87,22 +88,13 @@ int FindUnarmedDamage(object oCreature)
     // Brawler has a very simple damage progression (regardless of size):    
     if (iBrawler) iBrawlerDamage = iBrawler / 6 + 2;   // 1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
   
-    // Monk 3.5 Dmg Table
-    if (iMonk) iMonkDamage = iMonk / 4 + 2; //1d6, 1d8, 1d10, 2d6, 2d8, 2d10
-    if (iMonkDamage > 7) iMonkDamage = 7;
+    // Monk 3e Dmg Table - 1d6, 1d8, 1d10, 1d12, 1d20
+    if (iMonk > 19) iMonk = 19;
+    if (iMonk) iMonkDamage = iMonk / 4 + 2;
+    if (iMonkDamage == 6) iMonkDamage == 7;
    
-     // Small monks get damage penalty
-    if (iSize == CREATURE_SIZE_SMALL || iSize == CREATURE_SIZE_TINY)
-        iMonkDamage--; //1d4, 1d6, 1d8, 1d10, 2d6, 2d8
-    
-    // Bigger Monks get even more damage (that varies from the normal tables too, grr.)
-    int iUseBigMonk = FALSE;
-    if (iMonk && (iSize == CREATURE_SIZE_LARGE || iSize == CREATURE_SIZE_HUGE))
-    {
-        if (iMonk < 4) iMonk = 1;
-        iMonkDamage += 2; //1d8, 2d6, 2d8, 3d6, 3d8, 4d8
-        iUseBigMonk = TRUE;
-    }
+    // Small monks get damage penalty -- 1d4, 1d6, 1d8, 1d10, 2d6
+    if (bSmallSize) iMonkDamage = iMonk / 4 + 1;
     
     // Shou Disciple either adds its level to existing class or does its own damage, depending
     // on which is better. Here we will determine how much damage the Shou Disciple does
@@ -135,75 +127,81 @@ int FindUnarmedDamage(object oCreature)
     {
         DeleteLocalInt(oCreature, "UsesRacialAttack");
     }
-
+    
+    // Medium+ monks have some special values on the table:
+    if (iDamageToUse == iMonkDamage && !bSmallSize) bUseMonkAlt = TRUE;
+    
     // This is where the correct damage dice is calculated
-    if (iDamageToUse > 9) iDamageToUse = 9;
+    if (iDamageToUse > 8) iDamageToUse = 8;
     
     // For Initiate of Draconic Mysteries
-    int iDieIncrease = 0;
     if (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDieIncrease = 2;
     else if (GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature)) iDieIncrease = 1;
     
     switch (iDamageToUse)
     {
-        case 0: // Start: Non-unarmed Classes
-            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D6;
-            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_1D4;
-            else iDamage == MONST_DAMAGE_1D3;
+        case 0:
+            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D6;
+            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D4;
+            else                            iDamage = MONST_DAMAGE_1D3;
             break;
-        case 1: // Start: Small Monk
-            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D8;
-            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_1D6;
-            else iDamage = MONST_DAMAGE_1D4;
+        case 1:
+            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D8;
+            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D6;
+            else                            iDamage = MONST_DAMAGE_1D4;
             break;
-        case 2: // Start: Medium Monk
-            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D10;
-            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_1D8;
-            else iDamage = MONST_DAMAGE_1D6;
+        case 2:
+            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D10;
+            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D8;
+            else                            iDamage = MONST_DAMAGE_1D6;
             break;
-        case 3: // Start: Large Monk
-            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D12;
-            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_1D10;
-            else iDamage = MONST_DAMAGE_1D8;
+        case 3:
+            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D12;
+            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D10;
+            else                            iDamage = MONST_DAMAGE_1D8;
 	    break;
         case 4:
-            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_2D8; // fudged some
-            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_1D12;
-            else iDamage = MONST_DAMAGE_1D10;
+            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_2D8;
+            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D12;
+            else                            iDamage = MONST_DAMAGE_1D10;
 	    break;
-        case 5: // Best Shou Disciple
-            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_2D10;
-            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D8;
-            else iDamage = MONST_DAMAGE_2D6;
-	    break;
-        case 6: // Best Small Monk
-            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_2D12;
-            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D10;
-            else iDamage = MONST_DAMAGE_2D8;
-            break;
-        case 7: // Best Medium Monk
-            if (iUseBigMonk)
+        case 5:
+            if (bUseMonkAlt)
             {
-                if (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D10;
-		else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_3D8;
-                else iDamage = MONST_DAMAGE_3D6;
+                if      (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D20;
+                else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D8;
+                else                        iDamage = MONST_DAMAGE_1D12;
             }
             else
             {
-                if (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D10; // fudged some
-                else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D12;
-                else iDamage = MONST_DAMAGE_2D10;
+                if      (iDieIncrease == 2) iDamage = MONST_DAMAGE_2D10;
+                else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D8;
+                else                        iDamage = MONST_DAMAGE_2D6;
             }
 	    break;
-        case 8: // Best Brawler
-            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D12;
-            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_3D10;
-            else iDamage = MONST_DAMAGE_3D8;
+        case 6:
+            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_2D12;
+            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_2D10;
+            else                            iDamage = MONST_DAMAGE_2D8;
             break;
-        case 9: // Best Large/Huge Monk
-            if (iDieIncrease == 2) iDamage = MONST_DAMAGE_4D12;
-            else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_4D10;
-            else iDamage = MONST_DAMAGE_4D8;
+        case 7:
+            if (bUseMonkAlt)
+            {
+                if      (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D10;
+                else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D12;
+                else                        iDamage = MONST_DAMAGE_1D20;
+            }
+            else
+            {
+                if      (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D10;
+                else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D12;
+                else                        iDamage = MONST_DAMAGE_2D10;
+            }
+	    break;
+        case 8:
+            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_3D12;
+            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_3D10;
+            else                            iDamage = MONST_DAMAGE_3D8;
             break;
         default:
             break;

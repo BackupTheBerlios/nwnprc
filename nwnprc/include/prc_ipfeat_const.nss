@@ -97,8 +97,8 @@ const int IP_CONST_FEAT_KI_STRIKE = 254;
 
 const int IP_CONST_FEAT_REND         = 255;
 const int IP_CONST_FEAT_SPELL10      = 256;
-//const int IP_CONST_FEAT_MOBILITY     = 27;
-//const int IP_CONST_FEAT_WHIRLWIND    = 29;
+const int IP_CONST_FEAT_MOBILITY     = 27; // needed to compile.. removed why?
+const int IP_CONST_FEAT_WHIRLWIND    = 29; // also needed to compile...
 const int IP_CONST_FEAT_BLINDFIGHT   = 257;
 const int IP_CONST_FEAT_SPRINGATTACK = 258;
 const int IP_CONST_FEAT_EVASION         = 386;

@@ -1540,7 +1540,7 @@ void RemoveOldSongEffects(object oSinger, int iSongID)
     string sRecip;
     string sSong;
     
-    if (GetHasFeat(FEAT_MINSTREL_GREATER_MINSTREL_SONG, oSinger)
+    if (GetHasFeat(FEAT_MINSTREL_GREATER_MINSTREL_SONG, oSinger))
     {
         // If you use the same song twice in a row you
         // should deal with the same slot again...

@@ -2,11 +2,10 @@
 
       LABEL                      ReqType   ReqParam1         ReqParam2
 0     ScriptVar                  VAR       PRC_DivSpell3     0  
-2     GreatFort                  FEAT      14                ****
-3     WeapFocSpear               FEAT      97                ****     
-4     Destruction_Domain_Power   FEATOR    313               ****
-5     Evil_Domain_Power          FEATOR    315               ****
-6     Fire_Domain_Power          FEATOR    316               ****
-7     WildShape                  FEATOR    305               ****
-8     Spellcasting               SPELL     5                 **** 
-9     ScriptVar                  VAR       PRC_AllowStormL   0           
+1     GreatFort                  FEAT      14                ****
+2     WeapFocSpear               FEAT      97                ****     
+3     Destruction_Domain_Power   FEATOR    313               ****
+4     Evil_Domain_Power          FEATOR    315               ****
+5     Fire_Domain_Power          FEATOR    316               ****
+6     WildShape                  FEATOR    305               ****
+7     ScriptVar                  VAR       PRC_AllowStormL   0           

@@ -5,4 +5,4 @@
 1     IaijutsuFocus   SKILL     27             9           
 2     ImpInit         FEAT      377            ****        
 3     WeapFocKatana   FEAT      122            ****        
-4     ScriptVar       VAR       PRC_AllowIaij   0           
+4     ScriptVar       VAR       PRC_AllowIaij  0           

@@ -4,4 +4,4 @@
 0     Discipline    SKILL     3              5           
 1     Lore          SKILL     7              5           
 2     AttackBonus   BAB       4              ****        
-3     ScriptVar     VAR       PRC_AllowHosp   0           
+3     ScriptVar     VAR       PRC_AllowHosp  0           

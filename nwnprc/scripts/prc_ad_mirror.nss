@@ -57,12 +57,14 @@ effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon);
     for (iPlus = 0; iPlus < iImages; iPlus++)
     {
      object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
-     DelayCommand(1.0, CleanCopy(oImage));
+     DelayCommand(0.5, CleanCopy(oImage));
 
      object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oImage);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCon, oImage);
+
+     ChangeToStandardFaction(oImage, STANDARD_FACTION_DEFENDER);
 
      DestroyObject(oSkin, 0.2);
      DestroyObject(oImage, (iLevel * 60.0)); // they dissapear after a minute per level

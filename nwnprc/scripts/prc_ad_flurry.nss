@@ -41,12 +41,15 @@ void main2()
 {
 
 object oTarget = GetSpellTargetObject();
+
 int iLevel = GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, OBJECT_SELF);
 int iAdd = iLevel/3;
 int iImages = d4(1) + 3;
+
 RemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
 
 SetLocalObject(OBJECT_SELF, "FLURRY_TARGET", oTarget);
+
 FlurryEffects(OBJECT_SELF);
 
 string sImage = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"flurry";
@@ -61,13 +64,15 @@ effect eNoSpell = EffectSpellFailure(100);
     {
 
      object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
-     DelayCommand(1.0, CleanCopy(oImage));
+     DelayCommand(0.5, CleanCopy(oImage));
 
      AssignCommand(oImage, ActionAttack(oTarget, FALSE));
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage);
 
-     DestroyObject(oImage, 9.0); // they dissapear after one round
+     ChangeToStandardFaction(oImage, STANDARD_FACTION_DEFENDER);
+
+     DestroyObject(oImage, iLevel * 60.0); // they dissapear after one minute per level.
     }
     object oCreature = GetFirstObjectInArea(GetArea(OBJECT_SELF));
     while (GetIsObjectValid(oCreature))
@@ -83,6 +88,46 @@ effect eNoSpell = EffectSpellFailure(100);
 
 void main()
 {
+   // First we'll see if this target is in the flurry list.
+   int i;
+   string sName1 = "FLURRY_TARGET_";
+   object oTarget = GetSpellTargetObject();
+
+   for (i = 0 ; i < 10 ; i++)
+   {
+      string sName2 = sName1 + IntToString(i);
+      if (GetLocalObject(OBJECT_SELF, sName2) == oTarget)
+      {
+         IncrementRemainingFeatUses(OBJECT_SELF, 3534); // Flurry of Swords
+         FloatingTextStringOnCreature("This target has already been selected today.", OBJECT_SELF, FALSE);
+         return;
+      }
+   }
+
+   if (oTarget == OBJECT_SELF)
+   {
+      IncrementRemainingFeatUses(OBJECT_SELF, 3534); // Flurry of Swords
+      FloatingTextStringOnCreature("You may not target yourself.", OBJECT_SELF, FALSE);
+      return;
+   }
+   
+   if (!GetIsReactionTypeHostile(oTarget))
+   {
+      IncrementRemainingFeatUses(OBJECT_SELF, 3534); // Flurry of Swords
+      FloatingTextStringOnCreature("You must target an enemy.", OBJECT_SELF, FALSE);
+      return;
+   }
+
+   // If it's not on the flurry list, add it to the list
+   int iTargets = GetLocalInt(OBJECT_SELF, "FLURRY_TARGET_NUMBER");
+   sName1 = "FLURRY_TARGET_" + IntToString(iTargets);
+
+   SetLocalInt(OBJECT_SELF, "FLURRY_TARGET_NUMBER", iTargets + 1);
+   SetLocalObject(OBJECT_SELF, sName1, oTarget);
+
+   SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), TRUE));
+
+   // Continue on...
    DelayCommand(0.0, RemoveExtraImages());
    DelayCommand(0.5, main2());
 }

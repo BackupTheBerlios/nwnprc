@@ -11,6 +11,7 @@
 
 void main()
 {
-    effect eAOE = EffectAreaOfEffect(AOE_MOB_DES_20, "prc_tn_des_a", "prc_tn_des_a", "prc_tn_des_b");
+    //SendMessageToPC(GetFirstPC(), "Desecrate has been activated");
+    effect eAOE = EffectAreaOfEffect(AOE_MOB_DES_20); //"prc_tn_des_a", "prc_tn_des_a", "prc_tn_des_b");
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, OBJECT_SELF, HoursToSeconds(99));
 }

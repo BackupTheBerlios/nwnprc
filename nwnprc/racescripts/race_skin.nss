@@ -95,7 +95,6 @@ void main()
         SetCompositeBonus(oSkin, "RacialNaturalArmor", 9, ITEM_PROPERTY_AC_BONUS);
     else if(GetHasFeat(FEAT_NATARM_10))
         SetCompositeBonus(oSkin, "RacialNaturalArmor",10, ITEM_PROPERTY_AC_BONUS);
-/*
     else if(GetHasFeat(FEAT_NATARM_11))
         SetCompositeBonus(oSkin, "RacialNaturalArmor",11, ITEM_PROPERTY_AC_BONUS);
     else if(GetHasFeat(FEAT_NATARM_12))
@@ -120,7 +119,7 @@ void main()
         SetCompositeBonus(oSkin, "RacialNaturalArmor",21, ITEM_PROPERTY_AC_BONUS);
     else if(GetHasFeat(FEAT_NATARM_22))
         SetCompositeBonus(oSkin, "RacialNaturalArmor",22, ITEM_PROPERTY_AC_BONUS);
-*/
+
     //immunity to breathing-targetted spells
     if(GetHasFeat(FEAT_BREATHLESS))
     {
@@ -316,13 +315,13 @@ void main()
     {
         SetCompositeBonus(oSkin, "SA_Perform", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERFORM);
     }
-/*
+
     // Skill Affinity, +2 to open locks
     if(GetHasFeat(FEAT_SA_OPEN))
     {
-        SetCompositeBonus(oSkin, "SA_Open_Locks", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_OPEN_LOCKS);
+        SetCompositeBonus(oSkin, "SA_Open_Lock", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_OPEN_LOCK);
     }
-*/
+
 
    // Minotaur bonuses due to scent
     if(GetHasFeat(FEAT_MINOT_SCENT))

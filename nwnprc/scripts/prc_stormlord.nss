@@ -116,7 +116,10 @@ void main()
     {
       object oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
       DeleteLocalInt(oItem,"STShock");
-      DeleteLocalInt(oItem,"STThund");   
+      DeleteLocalInt(oItem,"STThund"); 
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_ELECTRICAL,IP_CONST_DAMAGEBONUS_1d6,1,"",-1,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,0,1,"",-1,DURATION_TYPE_TEMPORARY);
+  
     }
 
     if (bResElec>0) ResElec(oPC,oSkin,bResElec);

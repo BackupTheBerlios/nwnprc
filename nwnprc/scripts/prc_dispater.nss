@@ -55,6 +55,30 @@ void Iron_Power(object oPC, object oWeap, int iIronPower)
 
 }
 
+void Iron_Power_2(object oPC, object oWeap, int iIronPower)
+{
+
+    int iEnhance = GetWeaponEnhancement(oWeap);
+    //int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
+
+    iIronPower = iIronPower + iEnhance;
+
+    string irp = IntToString(iIronPower);
+    SendMessageToPC(GetFirstPC(), "Attack Bonus:" + irp);
+
+
+
+        if(GetLocalInt(oWeap, "IPowerBonus") != iIronPower)
+        {
+            RemoveIronPower(oWeap);
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(iIronPower), oWeap);
+           // AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PHYSICAL,iHitBonus), oWeap);
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyKeen(), oWeap);
+            SetLocalInt(oWeap, "IPowerBonus", iIronPower);
+        }
+
+}
+
 void main()
 {
 
@@ -72,9 +96,11 @@ void main()
         {
         Iron_Power(oPC, oWeap, 1);
         }
-        else if (GetLevelByClass(CLASS_TYPE_DISPATER,oPC) >= 8)
+
+        if (GetLevelByClass(CLASS_TYPE_DISPATER,oPC) >= 8)
         {
-        Iron_Power(oPC, oWeap, 2);
+        Iron_Power(oPC, oWeap, 0);
+        Iron_Power_2(oPC, oWeap, 2);
         }
     }
 

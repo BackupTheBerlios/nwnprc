@@ -77,13 +77,13 @@ PRCShowPowerResist(object oCaster, object oTarget, int nResist, float fDelay = 0
 	if (GetIsPC(oCaster))
 	{
 		string message = nResist == POWER_RESIST_FAIL ?
-			"Target is affected by the Power" : "Target resisted the Power";
+			"Target is affected by the power." : "Target resisted the power.";
 		SendMessageToPC(oCaster, message);
 	}
 	if (GetIsPC(oTarget))
 	{
 		string message = nResist == POWER_RESIST_FAIL ?
-			"You are affected by the Power" : "You resisted the Power";
+			"You are affected by the power." : "You resisted the power.";
 		SendMessageToPC(oTarget, message);
 	}
 }

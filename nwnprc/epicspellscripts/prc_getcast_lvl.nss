@@ -1,5 +1,5 @@
-#include "prc_inc_function"
-#include "heartward_inc"
+#include "prc_class_const"
+#include "prc_feat_const"
 
 
 int IsArcaneClass(int nClass);

@@ -200,6 +200,12 @@ string GetNextEventScript(object oCreature, int nEvent, int bPermanent);
 // the script lists with Get(First|Next)EventScript.
 void ExecuteAllScriptsHookedToEvent(object oCreature, int nEvent);
 
+// Gets the event currently being run via ExecuteAllScriptsHookedToEvent
+// =====================================================================
+// Returns one of the EVENT_* constants if an ExecuteAllScriptsHookedToEvent
+// is being run, FALSE otherwise.
+int GetRunningEvent();
+
 // Internal function. Returns the name matching the given integer constant
 string EventTypeIdToName(int nEvent);
 
@@ -394,7 +400,7 @@ string GetNextEventScript(object oCreature, int nEvent, int bPermanent){
 void ExecuteAllScriptsHookedToEvent(object oCreature, int nEvent){
 	// Mark that an eventhook is being run, so calls to modify the
 	// scripts listed are delayd until the eventhook is done.
-	SetLocalInt(GetModule(), "prc_eventhook_running", TRUE);
+	SetLocalInt(GetModule(), "prc_eventhook_running", nEvent);
 	SetLocalString(GetModule(), "prc_eventhook_running_sArrayName", EventTypeIdToName(nEvent));
 	
 	// Loop through the scripts to be fired only once
@@ -453,6 +459,11 @@ void ExecuteAllScriptsHookedToEvent(object oCreature, int nEvent){
 	
 	DeleteLocalInt(GetModule(), "prc_eventhook_pending_queue");
 	
+}
+
+
+int GetRunningEvent(){
+    return GetLocalInt(GetModule(), "prc_eventhook_running");
 }
 
 

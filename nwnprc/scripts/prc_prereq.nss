@@ -552,7 +552,7 @@ void BFZ(object oPC)
 void main()
 {
         //Declare Major Variables
-        object oPC = GetPCLevellingUp();
+        object oPC = OBJECT_SELF;
         int iArcSpell;
         int iDivSpell;
         int iArcSpell1;

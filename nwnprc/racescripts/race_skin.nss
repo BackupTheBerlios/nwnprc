@@ -139,6 +139,12 @@ void main()
     {
         SetCompositeBonus(oSkin, "SA_Spot_4", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
     }
+
+    // Skill Affinity, +4 to spot
+    if(GetHasFeat(FEAT_KEEN_SIGHT))
+    {
+        SetCompositeBonus(oSkin, "Keen_Sight", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
+    }
     
     // Skill Affinity, +4 to move silently
     if(GetHasFeat(FEAT_SA_MOVE4))

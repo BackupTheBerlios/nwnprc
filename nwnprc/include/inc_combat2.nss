@@ -751,10 +751,11 @@ effect AddDmgEffectMulti(int nDmg ,int dType, object oAmmu, object oTarget ,int 
     int iAlignGr;
     int iType = GetBaseItemType(oAmmu);
     int iDmg;
-
-    struct iMultiDmg sDmg = DmgSpellEffect(iCritik,OBJECT_SELF,sDmg);
+    struct iMultiDmg sDmg;
+    
+    DmgSpellEffect(iCritik,OBJECT_SELF,sDmg);
  
-   
+    
     // SendMessageToPC(GetFirstPC(), "DmgSpellEffect:"+IntToString(sDmg.Phys));
 
 
@@ -1057,10 +1058,10 @@ effect AddDmgEffectMulti(int nDmg ,int dType, object oAmmu, object oTarget ,int 
   return eLink;
 }
 
-struct iMultiDmg  DmgSpellEffect(int iCritik , object oPC ,struct iMultiDmg iMDmg)
+struct iMultiDmg  DmgSpellEffect(int iCritiks , object oPC ,struct iMultiDmg iMDmg)
 {
 
-   int iCritik = (iCritik >1) ? 2:1;
+   int iCritik = (iCritiks >1) ? 2:1;
 
    effect eff,eDmg ;
    int nDam,eType,eSpellID;

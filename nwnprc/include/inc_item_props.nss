@@ -1010,6 +1010,10 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    DeleteLocalInt(oItem,"MartialStrik");
    DeleteLocalInt(oItem,"UnholyStrik");
    DeleteLocalInt(oItem,"USanctMar");
+   // Feats
+   DeleteLocalInt(oItem,"WpMasBow");
+   DeleteLocalInt(oItem,"WpMasXBow");
+   DeleteLocalInt(oItem,"WpMasShu");
    //Duelist Precise Strike
    DeleteLocalInt(oItem,"DuelistPreciseSlash");
    DeleteLocalInt(oItem,"DuelistPreciseSmash");

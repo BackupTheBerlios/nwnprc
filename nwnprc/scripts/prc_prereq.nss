@@ -13,8 +13,56 @@
 #include "prc_inc_sneak"
 #include "soul_inc"
 
+// This part needs to be changed for every new arcane caster.
+int GetArcanePRCLevels(object oPC)
+{
+   int iArcanePRCLevels = GetLevelByClass(CLASS_TYPE_ARCHMAGE, oPC)
+        + GetLevelByClass(CLASS_TYPE_ARCTRICK, oPC)
+        + GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oPC)
+        + GetLevelByClass(CLASS_TYPE_ES_ACID, oPC)
+        + GetLevelByClass(CLASS_TYPE_ES_COLD, oPC)
+        + GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC)
+        + GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC)
+        + GetLevelByClass(CLASS_TYPE_HARPERMAGE, oPC)
+        + GetLevelByClass(CLASS_TYPE_MAGEKILLER, oPC)
+        + GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oPC)
+        + GetLevelByClass(CLASS_TYPE_TRUENECRO, oPC)
+        + GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oPC)
+        + (GetLevelByClass(CLASS_TYPE_ACOLYTE, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_BLADESINGER, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_PALEMASTER, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_HATHRAN, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) + 1) / 2;
 
-int Bard(object oPC)
+   return iArcanePRCLevels;
+}
+   
+// This part needs to be changed for every new divine caster.
+int GetDivinePRCLevels(object oPC)
+{
+   int iDivinePRCLevels = GetLevelByClass(CLASS_TYPE_DIVESA, oPC)
+        + GetLevelByClass(CLASS_TYPE_DIVESC, oPC)
+        + GetLevelByClass(CLASS_TYPE_DIVESE, oPC)
+        + GetLevelByClass(CLASS_TYPE_DIVESF, oPC)
+        + GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oPC)
+        + GetLevelByClass(CLASS_TYPE_HEARTWARDER, oPC)
+        + GetLevelByClass(CLASS_TYPE_HIEROPHANT, oPC)
+        + GetLevelByClass(CLASS_TYPE_HOSPITALER, oPC)
+        + GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oPC)
+        + GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oPC)
+        + GetLevelByClass(CLASS_TYPE_STORMLORD, oPC)
+        + (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_OCULAR, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_TEMPUS, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_HATHRAN, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_BFZ, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_WARPRIEST, oPC) + 1) / 2;
+        
+   return iDivinePRCLevels;
+}
+
+int GetBardSpellLevel(object oPC)
 {
         int iBard = GetLevelByClass(CLASS_TYPE_BARD, oPC);
         int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA) - 10;
@@ -22,7 +70,12 @@ int Bard(object oPC)
         int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE) - 10;
 	int iBSpell;
 	int iSSpell;
-
+	
+	// Adjust the Bard's level upwards if it is the one recieving the benefits of
+	// the PRC's.
+	if ((iBard > GetLevelByClass(CLASS_TYPE_SORCERER)) &&
+	    (iBard > GetLevelByClass(CLASS_TYPE_WIZARD)))
+	     iBard += GetArcanePRCLevels(oPC);
 
 	if (iBard >= 16)
 	{
@@ -80,135 +133,7 @@ int Bard(object oPC)
 	return iBSpell;
 }
 
-int ArcSpell(object oPC, int iArcSpell)
-{
-
-	SetLocalInt(oPC, "PRC_ArcSpell1", 1);
-	SetLocalInt(oPC, "PRC_ArcSpell2", 1);
-	SetLocalInt(oPC, "PRC_ArcSpell3", 1);
-	SetLocalInt(oPC, "PRC_ArcSpell4", 1);
-	SetLocalInt(oPC, "PRC_ArcSpell5", 1);
-	SetLocalInt(oPC, "PRC_ArcSpell6", 1);
-	SetLocalInt(oPC, "PRC_ArcSpell7", 1);
-	SetLocalInt(oPC, "PRC_ArcSpell8", 1);
-	SetLocalInt(oPC, "PRC_ArcSpell9", 1);
-
-
-	//A basic check to see what their primary class is
-        int iSorc = GetLevelByClass(CLASS_TYPE_SORCERER, oPC);
-        int iWiz = GetLevelByClass(CLASS_TYPE_WIZARD, oPC);
-        int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA) - 10;
-        int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE) - 10;
-
-
-        iArcSpell = iWiz;
-        
-        if (iSorc > iWiz)
-        {
-        iArcSpell = iSorc - 1;
-        }
-
-	//Checks to see what level of spells they can cast
-        iArcSpell += GetLevelByClass(CLASS_TYPE_ARCHMAGE, oPC)
-        + GetLevelByClass(CLASS_TYPE_ARCTRICK, oPC)
-        + GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oPC)
-        + GetLevelByClass(CLASS_TYPE_ES_ACID, oPC)
-        + GetLevelByClass(CLASS_TYPE_ES_COLD, oPC)
-        + GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC)
-        + GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC)
-        + GetLevelByClass(CLASS_TYPE_HARPERMAGE, oPC)
-        + GetLevelByClass(CLASS_TYPE_MAGEKILLER, oPC)
-        + GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oPC)
-        + GetLevelByClass(CLASS_TYPE_TRUENECRO, oPC)
-        + GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oPC)
-        + (GetLevelByClass(CLASS_TYPE_ACOLYTE, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_BLADESINGER, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_PALEMASTER, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_HATHRAN, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) + 1) / 2;
-
-        iArcSpell = (iArcSpell + 1) / 2;
-	if (iArcSpell > 9)
-	{
-	iArcSpell = 9;
-	}
-
-	//Check to see they have a high enough casting stat for their spell level
-        if (iSorc > iWiz)
-        {
-		if (iCha < iArcSpell)
-		{
-		iArcSpell = iCha;
-		}
-        }
-	else if (iInt < iArcSpell)
-	{
-	iArcSpell = iInt;
-	} 
-	
-	//Check for Bards
-	int iBSpell = Bard(oPC);
-	if (iBSpell > iArcSpell)
-	{
-	iArcSpell = iBSpell;
-	}
-
-	//Finally, set the variables.
-	if (iArcSpell >= 1)
-	{
-	SetLocalInt(oPC, "PRC_ArcSpell1", 0);
-	SetLocalInt(oPC, "PRC_AllSpell1", 0);
-	}
-	if (iArcSpell >= 2)
-	{
-	SetLocalInt(oPC, "PRC_ArcSpell2", 0);
-	SetLocalInt(oPC, "PRC_AllSpell2", 0);
-	}
-	if (iArcSpell >= 3)
-	{
-	SetLocalInt(oPC, "PRC_ArcSpell3", 0);
-	SetLocalInt(oPC, "PRC_AllSpell3", 0);
-	}
-	if (iArcSpell >= 4)
-	{
-	SetLocalInt(oPC, "PRC_ArcSpell4", 0);
-	SetLocalInt(oPC, "PRC_AllSpell4", 0);
-	}
-	if (iArcSpell >= 5)
-	{
-	SetLocalInt(oPC, "PRC_ArcSpell5", 0);
-	SetLocalInt(oPC, "PRC_AllSpell5", 0);
-	}
-	if (iArcSpell >= 6)
-	{
-	SetLocalInt(oPC, "PRC_ArcSpell6", 0);
-	SetLocalInt(oPC, "PRC_AllSpell6", 0);
-	}
-	if (iArcSpell >= 7)
-	{
-	SetLocalInt(oPC, "PRC_ArcSpell7", 0);
-	SetLocalInt(oPC, "PRC_AllSpell7", 0);
-	}
-	if (iArcSpell >= 8)
-	{
-	SetLocalInt(oPC, "PRC_ArcSpell8", 0);
-	SetLocalInt(oPC, "PRC_AllSpell8", 0);
-	}
-	if (iArcSpell >= 9)
-	{
-	SetLocalInt(oPC, "PRC_ArcSpell9", 0);
-	SetLocalInt(oPC, "PRC_AllSpell9", 0);
-	}
-
-SendMessageToPC(oPC, "You can cast Arcane spells of level " + IntToString(iArcSpell));
-
-return iArcSpell;
-
-}
-
-
-int RanPal(object oPC)
+int GetRanPalSpellLevel(object oPC)
 {
         int iRanger = GetLevelByClass(CLASS_TYPE_RANGER, oPC);
         int iPaladin = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
@@ -217,6 +142,18 @@ int RanPal(object oPC)
 	int iRanPal;
 	int iSOL;
 
+	// Adjust the Rangers's level upwards if it is the one recieving the benefits of
+	// the PRC's.
+	if ((iRanger > GetLevelByClass(CLASS_TYPE_CLERIC)) &&
+	    (iRanger > GetLevelByClass(CLASS_TYPE_DRUID)) &&
+	    (iRanger > iPaladin))
+	     iRanger += GetDivinePRCLevels(oPC);
+	
+	// Likewise for the Paladin.
+	if ((iPaladin > GetLevelByClass(CLASS_TYPE_CLERIC)) &&
+	    (iPaladin > GetLevelByClass(CLASS_TYPE_DRUID)) &&
+	    (iPaladin > iRanger))
+	     iPaladin += GetDivinePRCLevels(oPC);
 
 	if (iRanger >= 14 || iPaladin >= 14)
 	{
@@ -265,27 +202,79 @@ int RanPal(object oPC)
 	return iRanPal;
 }
 
+int ArcSpell(object oPC, int iArcSpell)
+{
+	//A basic check to see what their primary class is
+        int iSorc = GetLevelByClass(CLASS_TYPE_SORCERER, oPC);
+        int iWiz = GetLevelByClass(CLASS_TYPE_WIZARD, oPC);
+        int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA) - 10;
+        int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE) - 10;
 
+
+        iArcSpell = iWiz;
+        
+        if (iSorc > iWiz)
+        {
+             if (iSorc = 1)
+                  iArcSpell = 1;
+             else
+                  iArcSpell = iSorc - 1;
+        }
+
+	//Checks to see what level of spells they can cast
+        iArcSpell += GetArcanePRCLevels(oPC);
+
+        iArcSpell = (iArcSpell + 1) / 2;
+	if (iArcSpell > 9)
+	{
+	iArcSpell = 9;
+	}
+	
+	//Check to see they have a high enough casting stat for their spell level
+        if (iSorc > iWiz)
+        {
+		if (iCha < iArcSpell)
+		{
+		iArcSpell = iCha;
+		}
+        }
+	else if (iInt < iArcSpell)
+	{
+	iArcSpell = iInt;
+	} 
+
+	//Check for Bards
+	int iBSpell = GetBardSpellLevel(oPC);
+	if (iBSpell > iArcSpell)
+	{
+	iArcSpell = iBSpell;
+	}
+	
+	//Finally, set the variables.
+	string sVariable1;
+	string sVariable2;
+	int iCount;
+		
+	for (iCount = 1; iCount <= 9; iCount++)
+	{
+	   string sVariable1 = "PRC_ArcSpell" + IntToString(iCount);
+	   string sVariable2 = "PRC_AllSpell" + IntToString(iCount);
+	   if (iArcSpell >= iCount)
+	   {
+	      SetLocalInt(oPC, sVariable1, 0);
+	      SetLocalInt(oPC, sVariable2, 0);
+	   }
+	}
+        
+        return iArcSpell;
+}
 
 int DivSpell(object oPC, int iDivSpell)
 {
-
-	SetLocalInt(oPC, "PRC_DivSpell1", 1);
-	SetLocalInt(oPC, "PRC_DivSpell2", 1);
-	SetLocalInt(oPC, "PRC_DivSpell3", 1);
-	SetLocalInt(oPC, "PRC_DivSpell4", 1);
-	SetLocalInt(oPC, "PRC_DivSpell5", 1);
-	SetLocalInt(oPC, "PRC_DivSpell6", 1);
-	SetLocalInt(oPC, "PRC_DivSpell7", 1);
-	SetLocalInt(oPC, "PRC_DivSpell8", 1);
-	SetLocalInt(oPC, "PRC_DivSpell9", 1);
-
 	//Variables
         int iDruid = GetLevelByClass(CLASS_TYPE_DRUID, oPC);
         int iCler = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
         int iWis = GetAbilityScore(oPC, ABILITY_WISDOM) - 10;
-
-
 
         iDivSpell = iCler;
 
@@ -295,147 +284,59 @@ int DivSpell(object oPC, int iDivSpell)
         iDivSpell = iDruid;
         }
 
-
 	//Checks to see what level of spells they can cast
-        iDivSpell += GetLevelByClass(CLASS_TYPE_DIVESA, oPC)
-        + GetLevelByClass(CLASS_TYPE_DIVESC, oPC)
-        + GetLevelByClass(CLASS_TYPE_DIVESE, oPC)
-        + GetLevelByClass(CLASS_TYPE_DIVESF, oPC)
-        + GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oPC)
-        + GetLevelByClass(CLASS_TYPE_HEARTWARDER, oPC)
-        + GetLevelByClass(CLASS_TYPE_HIEROPHANT, oPC)
-        + GetLevelByClass(CLASS_TYPE_HOSPITALER, oPC)
-        + GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oPC)
-        + GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oPC)
-        + GetLevelByClass(CLASS_TYPE_STORMLORD, oPC)
-        + (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_OCULAR, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_TEMPUS, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_HATHRAN, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_BFZ, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_WARPRIEST, oPC) + 1) / 2;
-
+        iDivSpell += GetDivinePRCLevels(oPC);
 
 	iDivSpell = (iDivSpell + 1) / 2;
 	if (iDivSpell > 9)
 	{
 	iDivSpell = 9;
 	}
-
+	
 	//Check to see they have a high enough casting stat for their spell level
 	if (iWis < iDivSpell)
 	{
 	iDivSpell = iWis;
 	} 
 
-
 	//Check for rangers and paladins
-	int iRanPal = RanPal(oPC);
+	int iRanPal = GetRanPalSpellLevel(oPC);
 	if (iRanPal > iDivSpell)
 	{
 	iDivSpell = iRanPal;
 	}
 
-
 	//Finally, set the variables.
-	if (iDivSpell >= 1)
+	string sVariable1;
+	string sVariable2;
+	int iCount;
+	
+	for (iCount = 1; iCount <= 9; iCount++)
 	{
-	SetLocalInt(oPC, "PRC_DivSpell1", 0);
-	SetLocalInt(oPC, "PRC_AllSpell1", 0);
-	}
-	if (iDivSpell >= 2)
-	{
-	SetLocalInt(oPC, "PRC_DivSpell2", 0);
-	SetLocalInt(oPC, "PRC_AllSpell2", 0);
-	}
-	if (iDivSpell >= 3)
-	{
-	SetLocalInt(oPC, "PRC_DivSpell3", 0);
-	SetLocalInt(oPC, "PRC_AllSpell3", 0);
-	}
-	if (iDivSpell >= 4)
-	{
-	SetLocalInt(oPC, "PRC_DivSpell4", 0);
-	SetLocalInt(oPC, "PRC_AllSpell4", 0);
-	}
-	if (iDivSpell >= 5)
-	{
-	SetLocalInt(oPC, "PRC_DivSpell5", 0);
-	SetLocalInt(oPC, "PRC_AllSpell5", 0);
-	}
-	if (iDivSpell >= 6)
-	{
-	SetLocalInt(oPC, "PRC_DivSpell6", 0);
-	SetLocalInt(oPC, "PRC_AllSpell6", 0);
-	}
-	if (iDivSpell >= 7)
-	{
-	SetLocalInt(oPC, "PRC_DivSpell7", 0);
-	SetLocalInt(oPC, "PRC_AllSpell7", 0);
-	}
-	if (iDivSpell >= 8)
-	{
-	SetLocalInt(oPC, "PRC_DivSpell8", 0);
-	SetLocalInt(oPC, "PRC_AllSpell8", 0);
-	}
-	if (iDivSpell >= 9)
-	{
-	SetLocalInt(oPC, "PRC_DivSpell9", 0);
-	SetLocalInt(oPC, "PRC_AllSpell9", 0);
+	   string sVariable1 = "PRC_DivSpell" + IntToString(iCount);
+	   string sVariable2 = "PRC_AllSpell" + IntToString(iCount);
+	   if (iDivSpell >= iCount)
+	   {
+	      SetLocalInt(oPC, sVariable1, 0);
+	      SetLocalInt(oPC, sVariable2, 0);	      
+	   }
 	}
 
-SendMessageToPC(oPC, "You can cast Divine spells of level " + IntToString(iDivSpell));
-
-return iDivSpell;
-
+        return iDivSpell;
 }
 
 void SneakRequirement(object oPC)
 {
    int iSneak = GetTotalSneakAttackDice(oPC);
+   int iCount;
+   string sVariable;
    
-   if (iSneak >= 1)
-      SetLocalInt(oPC, "PRC_SneakLevel1", 0);
-   if (iSneak >= 2)
-      SetLocalInt(oPC, "PRC_SneakLevel2", 0);
-   if (iSneak >= 3)
-      SetLocalInt(oPC, "PRC_SneakLevel3", 0);
-   if (iSneak >= 4)
-      SetLocalInt(oPC, "PRC_SneakLevel4", 0);
-   if (iSneak >= 5)
-      SetLocalInt(oPC, "PRC_SneakLevel5", 0);
-   if (iSneak >= 6)
-      SetLocalInt(oPC, "PRC_SneakLevel6", 0);
-   if (iSneak >= 7)
-      SetLocalInt(oPC, "PRC_SneakLevel7", 0);
-   if (iSneak >= 8)
-      SetLocalInt(oPC, "PRC_SneakLevel8", 0);
-   if (iSneak >= 9)
-      SetLocalInt(oPC, "PRC_SneakLevel9", 0);
-   if (iSneak >= 10)
-      SetLocalInt(oPC, "PRC_SneakLevel10", 0);
-   if (iSneak >= 11)
-      SetLocalInt(oPC, "PRC_SneakLevel11", 0);
-   if (iSneak >= 12)
-      SetLocalInt(oPC, "PRC_SneakLevel12", 0);
-   if (iSneak >= 13)
-      SetLocalInt(oPC, "PRC_SneakLevel13", 0);
-   if (iSneak >= 14)
-      SetLocalInt(oPC, "PRC_SneakLevel14", 0);
-   if (iSneak >= 15)
-      SetLocalInt(oPC, "PRC_SneakLevel15", 0);
-   if (iSneak >= 16)
-      SetLocalInt(oPC, "PRC_SneakLevel16", 0);
-   if (iSneak >= 17)
-      SetLocalInt(oPC, "PRC_SneakLevel17", 0);
-   if (iSneak >= 18)
-      SetLocalInt(oPC, "PRC_SneakLevel18", 0);
-   if (iSneak >= 19)
-      SetLocalInt(oPC, "PRC_SneakLevel19", 0);
-   if (iSneak >= 20)
-      SetLocalInt(oPC, "PRC_SneakLevel20", 0);
-      
-   SendMessageToPC(oPC, "You can do a Sneak Attack at +" + IntToString(iSneak) + "d6.");
+   for (iCount = 1; iCount <= 30; iCount++)
+   {
+      sVariable = "PRC_SneakLevel" + IntToString(iCount);
+      if (iSneak >= iCount)
+         SetLocalInt(oPC, sVariable, 0);
+   }
 }     
 
 void Hathran(object oPC)
@@ -448,8 +349,6 @@ void Hathran(object oPC)
     SetLocalInt(oPC, "PRC_Female", 0);
     }
 }
-
-
 
 void Shifter(object oPC, int iArcSpell, int iDivSpell)
 {
@@ -486,7 +385,6 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
 	}
 }
 
-
 void Tempest(object oPC)
 {
 	SetLocalInt(oPC, "PRC_PrereqTemp", 1);
@@ -511,7 +409,6 @@ void KOTC(object oPC)
 	SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
 	}
 }
-
 
 void Shadowlord(object oPC, int iArcSpell)
 {
@@ -550,7 +447,6 @@ void SOL(object oPC)
 		}	
 	}	
 }
- 
 
 void ManAtArms(object oPC)
 {       
@@ -609,41 +505,34 @@ void main()
         int iDivSpell1;
         int iSnkLevel;
         
-	SetLocalInt(oPC, "PRC_AllSpell1", 1);
-	SetLocalInt(oPC, "PRC_AllSpell2", 1);
-	SetLocalInt(oPC, "PRC_AllSpell3", 1);
-	SetLocalInt(oPC, "PRC_AllSpell4", 1);
-	SetLocalInt(oPC, "PRC_AllSpell5", 1);
-	SetLocalInt(oPC, "PRC_AllSpell6", 1);
-	SetLocalInt(oPC, "PRC_AllSpell7", 1);
-	SetLocalInt(oPC, "PRC_AllSpell8", 1);
-	SetLocalInt(oPC, "PRC_AllSpell9", 1);
-	
-	SetLocalInt(oPC, "PRC_SneakLevel1", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel2", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel3", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel4", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel5", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel6", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel7", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel8", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel9", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel10", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel11", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel12", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel13", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel14", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel15", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel16", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel17", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel18", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel19", 1);
-	SetLocalInt(oPC, "PRC_SneakLevel20", 1);
+        // Initialize all the variables.
+        string sVariable;
+	int iCount;
+	for (iCount = 1; iCount <= 9; iCount++)
+	{
+	   sVariable = "PRC_AllSpell" + IntToString(iCount);
+	   SetLocalInt(oPC, sVariable, 1);
+	   
+	   sVariable = "PRC_ArcSpell" + IntToString(iCount);
+	   SetLocalInt(oPC, sVariable, 1);
 
+	   sVariable = "PRC_DivSpell" + IntToString(iCount);
+	   SetLocalInt(oPC, sVariable, 1);
+	}
+	for (iCount = 1; iCount <= 30; iCount++)
+	{
+	   sVariable = "PRC_SneakLevel" + IntToString(iCount);
+	   SetLocalInt(oPC, sVariable, 1);
+	}        
+
+	// Find the spell levels.
 	iArcSpell1 = ArcSpell(oPC, iArcSpell);
 	iDivSpell1 = DivSpell(oPC, iDivSpell);
 
+	// Find the sneak attack capacity.
         SneakRequirement(oPC);
+        
+        // Special requirements for several classes.
         Hathran(oPC);
 	Tempest(oPC);
 	KOTC(oPC);
@@ -652,4 +541,26 @@ void main()
 	SOL(oPC);
 	Shadowlord(oPC, iArcSpell1);
 	Shifter(oPC, iArcSpell1, iDivSpell1);
+	
+	// Truly massive debug message flood if activated.
+	/*
+	string sPRC_AllSpell;
+	string sPRC_ArcSpell;
+	string sPRC_DivSpell;
+	for (iCount = 1; iCount <= 9; iCount++)
+	{
+	   sPRC_AllSpell = "PRC_AllSpell" + IntToString(iCount);
+	   sPRC_ArcSpell = "PRC_ArcSpell" + IntToString(iCount);
+	   sPRC_DivSpell = "PRC_DivSpell" + IntToString(iCount);
+	   SendMessageToPC(oPC, sPRC_AllSpell + " is " + IntToString(GetLocalInt(oPC, sPRC_AllSpell)) + ". " +
+	                        sPRC_ArcSpell + " is " + IntToString(GetLocalInt(oPC, sPRC_ArcSpell)) + ". " +
+	                        sPRC_DivSpell + " is " + IntToString(GetLocalInt(oPC, sPRC_DivSpell)) + ".");
+	}
+ 	for (iCount = 1; iCount <= 30; iCount++)
+	{
+	   sVariable = "PRC_SneakLevel" + IntToString(iCount);
+	   SendMessageToPC(oPC, sVariable + " is " + IntToString(GetLocalInt(oPC, sVariable)) + ".");
+	}
+	*/
+
 }

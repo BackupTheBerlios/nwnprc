@@ -10,6 +10,7 @@
 #include "spinc_common"
 #include "psi_inc_psifunc"
 #include "psi_inc_ac_const"
+#include "inc_gaoneng_draw"
 
 
 //////////////////////////////////////////////////
@@ -37,7 +38,11 @@ struct ac_forms{
 
 void DoAstralConstructCreation(object oManifester, location locTarget, int nMetaPsi, int nACLevel,
                                int nOptionFlags, int nResElemFlags, int nETchElemFlags, int nEBltElemFlags);
-void DoDespawn(object oConstruct);
+
+void DoDespawn(object oConstruct, int bDoVFX = TRUE);
+void DoDespawnAux(object oManifester, float fDur);
+void DoSummonVFX(location locTarget, int nACLevel);
+void DoUnsummonVFX(location locTarget, int nACLevel);
 
 struct ac_forms GetAppearancessForLevel(int nLevel);
 int GetAppearanceForConstruct(int nACLevel, int nOptionFlags, int nCheck);
@@ -76,8 +81,6 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nMeta
 	// And set the max henchmen count back to original, so we won't mess up the module
 	SetMaxHenchmen(nMaxHenchmen);
 	
-	// Schedule unsummoning
-	DelayCommand(fDur, DoDespawn(oConstruct));
 	*/
 	
 	
@@ -92,29 +95,7 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nMeta
 	}
 	
 	// Do actual summon effect
-	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature(sResRef), locTarget, fDur);
-	
-	/* DOES NOT WORK.
-	 * TODO: REMOVE ONCE A WORKING SOLUTION EXISTS
-	// Find the newly added construct
-	object oConstruct = OBJECT_INVALID;
-	i = 1;
-	oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i);
-	while(GetIsObjectValid(oCheck))
-    {
-		if(!GetLocalInt(oCheck, ASTRAL_CONSTRUCT_LEVEL) && GetResRef(oCheck) == sResRef)
-		{
-			oConstruct = oCheck;
-			break;
-		}
-		i++;
-		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i);
-    }
-    
-    // DEBUG //
-    SendMessageToPC(oManifester, "Found the just added astral construct: " + (oConstruct != OBJECT_INVALID ? "true":"false") + "\nSummon name: " + GetName(oConstruct) + "\nTotal summons: " + IntToString(i));
-    // DEBUG //
-	*/
+	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature(sResRef), locTarget, fDur + 0.5);
 	
 	/* For use if need to return to henchman setup
 	
@@ -135,18 +116,59 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nMeta
 	*/
 	
 	// Do VFX
+	DoSummonVFX(locTarget, nACLevel);
+	
+	// Schedule unsummoning. No need to hurry this one, so give it a larger delay
+	// in order to avoid hogging too much resources over a short span of time.
+	DelayCommand(2.0, DoDespawnAux(oManifester, fDur));
 }
 
 
 // A function to handle the AC's duration running out
 // Some paranoia present to make sure nothing could accidentally
 // make it permanent
-void DoDespawn(object oConstruct)
+void DoDespawn(object oConstruct, int bDoVFX = TRUE)
 {
-	SetPlotFlag(oConstruct, FALSE);
-	SetImmortal(oConstruct, FALSE);
-	AssignCommand(oConstruct, SetIsDestroyable(TRUE, FALSE, FALSE));
-	DelayCommand(0.1, DestroyObject(oConstruct));
+	if(GetIsObjectValid(oConstruct)){
+		AssignCommand(oConstruct, SetIsDestroyable(TRUE, FALSE, FALSE));
+		DelayCommand(0.1, DestroyObject(oConstruct));
+		DelayCommand(0.15, DoDespawn(oConstruct, FALSE)); // The paranoia bit :D
+		if(bDoVFX) DoUnsummonVFX(GetLocation(oConstruct), GetLocalInt(oConstruct, ASTRAL_CONSTRUCT_LEVEL));
+	}
+}
+
+// An auxiliary to be delayed so that a reference to the just created AC can be found
+void DoDespawnAux(object oManifester, float fDur){
+	// Find the newly added construct
+	object oConstruct = OBJECT_INVALID;
+	int i = 1;
+	object oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i);
+	while(GetIsObjectValid(oCheck))
+    {
+		if(!GetLocalInt(oCheck, "UnsummonScheduled") && GetStringLeft(GetTag(oCheck), 14) == "psi_astral_con")
+		{
+			oConstruct = oCheck;
+			break;
+		}
+		i++;
+		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i);
+    }
+    SetLocalInt(oConstruct, "UnsummonScheduled", TRUE);
+    // DEBUG //
+    SendMessageToPC(oManifester, "Found the just added astral construct: " + (oConstruct != OBJECT_INVALID ? "true":"false") + "\nSummon name: " + GetName(oConstruct) + "\nTotal summons: " + IntToString(i));
+    // DEBUG //
+	// Schedule unsummoning. Done this way to skip the default unsummoning VFX.
+	DelayCommand(fDur - 2.0, DoDespawn(oConstruct));
+}
+
+// Does a visual choreography that depends on the level of the construct being created.
+// Higher level constructs get neater VFX :D
+void DoSummonVFX(location locTarget, int nACLevel){ 
+   DrawSpiral(0, 263, locTarget, IntToFloat(nACLevel) * 0.75 + 0.5, 0.4, 1.0, 60, 16.899999619, 3.0, 4.0);
+}
+
+void DoUnsummonVFX(location locTarget, int nACLevel){ 
+   DrawSpiral(0, 263, locTarget, 0.4, IntToFloat(nACLevel) * 0.75 + 0.5, 1.0, 60, 16.899999619, 3.0, 4.0);
 }
 
 

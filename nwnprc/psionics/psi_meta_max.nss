@@ -1,46 +1,29 @@
+//::///////////////////////////////////////////////
+//:: Mazimize Power switch
+//:: psi_meta_max
+//::///////////////////////////////////////////////
+/*
+    Switches the metapsionic feat Mazimize Power on or off.
+*/
+//:://////////////////////////////////////////////
+//:: Modified By: Ornedan
+//:: Modified On: 25.03.2005
+//:://////////////////////////////////////////////
+
+#include "psi_inc_psifunc"
+
 void main()
 {
-    object oCaster = OBJECT_SELF;
+    object oPC = OBJECT_SELF;
     
-    if (GetLocalInt(oCaster, "PsiMetaMax") == TRUE)
+    // Can't activate too many feats
+    if(!GetLocalInt(oPC, "PsiMetaMax") &&
+       GetPsionicFocusUsingFeatsActive(oPC) >= GetPsionicFocusUsesPerExpenditure(oPC))
     {
-    	SetLocalInt(oCaster, "PsiMetaMax", FALSE);
-    	FloatingTextStringOnCreature("Maximize Off", oCaster, FALSE);
+        FloatingTextStringOnCreature("You cannot activate more feats that require psionic focus", oPC, FALSE);
+        return;
     }
-    if (GetLocalInt(oCaster, "PsiMetaMax") == FALSE)
-    {
-    	SetLocalInt(oCaster, "PsiMetaMax", TRUE);
-    	FloatingTextStringOnCreature("Maximize On", oCaster, FALSE);
-    	
-        if (GetLocalInt(oCaster, "PsiMetaChain") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaChain", FALSE);
-	   	FloatingTextStringOnCreature("Chain Power Off", oCaster, FALSE);
-    	}
-        if (GetLocalInt(oCaster, "PsiMetaExtend") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaExtend", FALSE);
-	   	FloatingTextStringOnCreature("Extend Off", oCaster, FALSE);
-    	}
-        if (GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaEmpower", FALSE);
-	   	FloatingTextStringOnCreature("Empower Off", oCaster, FALSE);
-    	}
-        if (GetLocalInt(oCaster, "PsiMetaSplit") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaSplit", FALSE);
-	   	FloatingTextStringOnCreature("Split Psionic Ray Off", oCaster, FALSE);
-    	}    	
-        if (GetLocalInt(oCaster, "PsiMetaTwin") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaTwin", FALSE);
-	   	FloatingTextStringOnCreature("Twin Power Off", oCaster, FALSE);
-    	}
-        if (GetLocalInt(oCaster, "PsiMetaWiden") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaWiden", FALSE);
-	   	FloatingTextStringOnCreature("Widen Off", oCaster, FALSE);
-    	}    	
-    }    
+    
+    SetLocalInt(oPC, "PsiMetaMax", !GetLocalInt(oPC, "PsiMetaMax"));
+    FloatingTextStringOnCreature("Mazimize Power " + (GetLocalInt(oPC, "PsiMetaMax") ? "Activated":"Deactivated"), oPC, FALSE);
 }

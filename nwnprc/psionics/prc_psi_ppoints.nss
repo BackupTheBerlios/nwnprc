@@ -42,6 +42,13 @@ int GetFeatBonusPP(object oCaster = OBJECT_SELF){
     
     nBonusPP += nPsiTalents * (2 + nPsiTalents + 1) / 2;
     
+    // Epic feats
+    int nImpManifestations;
+    for(i = FEAT_IMPROVED_MANIFESTATION_1; i <= FEAT_IMPROVED_MANIFESTATION_10; i++)
+        if(GetHasFeat(i, oCaster)) nImpManifestations++;
+    
+    nBonusPP += nImpManifestations * (18 + nImpManifestations);
+    
     // Racial boni
     
     return nBonusPP;

@@ -255,12 +255,18 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     int nAugment = GetAugmentLevel(oCaster);
     int nPP = GetLocalInt(oCaster, "PowerPoints");
     int nPPCost;
+    int nMetaPsi;
     int nCanManifest = TRUE;
     int nVolatile = VolatileMind(oTarget, oCaster);
     int nPsiHole = GetHasFeat(FEAT_PSIONIC_HOLE, oTarget) ? GetAbilityModifier(ABILITY_WISDOM, oTarget) : 0;
         nPsiHole = nPsiHole > 0 ? nPsiHole : 0; // Psionic Hole will never decrease power cost, even if the target is lacking in wisdom bonus
     int nClass = GetManifestingClass(oCaster);
-
+    // Epic feat Improved Metapsionics - 2 PP per.
+    int nImpMetapsiReduction, i = FEAT_IMPROVED_METAPSIONICS_1, bUseSum = GetPRCSwitch(PRC_PSI_IMP_METAPSIONICS_USE_SUM);
+    while(i < FEAT_IMPROVED_METAPSIONICS_10 && GetHasFeat(i, oCaster))
+        nImpMetapsiReduction += 2;
+    
+    
     if(GetAbilityScoreOfClass(oCaster, nClass) - 10 < nLevel)
     {
         FloatingTextStringOnCreature("You do not have a high enough ability score to manifest this power", oCaster, FALSE);
@@ -276,39 +282,46 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     // Add in the cost from Metapsionics
     if (nChain > 0 && GetLocalInt(oCaster, "PsiMetaChain") == TRUE && UsePsionicFocus(oCaster))
     {
-        nPPCost += 6;
+        nMetaPsi += bUseSum ? 6 :
+                     6 - nImpMetapsiReduction < 1 ? 1 : 6 - nImpMetapsiReduction;
         nCanManifest = 2;
     }
     if (nEmp > 0 && GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE && UsePsionicFocus(oCaster))
     {
-        nPPCost += 2;
+        nMetaPsi += 2;
         nCanManifest = 2;
     }
     if (nExtend > 0 && GetLocalInt(oCaster, "PsiMetaExtend") == TRUE && UsePsionicFocus(oCaster))
     {
-        nPPCost += 2;
+        nMetaPsi += 2;
         nCanManifest = 2;
     }
     if (nMax > 0 && GetLocalInt(oCaster, "PsiMetaMax") == TRUE && UsePsionicFocus(oCaster))
     {
-        nPPCost += 4;
+        nMetaPsi += bUseSum ? 4 :
+                     4 - nImpMetapsiReduction < 1 ? 1 : 4 - nImpMetapsiReduction;
         nCanManifest = 2;
     }
     if (nSplit > 0 && GetLocalInt(oCaster, "PsiMetaSplit") == TRUE && UsePsionicFocus(oCaster))
     {
-        nPPCost += 2;
+        nMetaPsi += 2;
         nCanManifest = 2;
     }
     if (nTwin > 0 && GetLocalInt(oCaster, "PsiMetaTwin") == TRUE && UsePsionicFocus(oCaster))
     {
-        nPPCost += 6;
+        nMetaPsi += bUseSum ? 6 :
+                     6 - nImpMetapsiReduction < 1 ? 1 : 6 - nImpMetapsiReduction;
         nCanManifest = 2;
     }
     if (nWiden > 0 && GetLocalInt(oCaster, "PsiMetaWiden") == TRUE && UsePsionicFocus(oCaster))
     {
-        nPPCost += 4;
+        nMetaPsi += bUseSum ? 4 :
+                     4 - nImpMetapsiReduction < 1 ? 1 : 4 - nImpMetapsiReduction;
         nCanManifest = 2;
     }
+    
+    nPPCost += bUseSum ? nMetaPsi - nImpMetapsiReduction < 1 ? 1 : nMetaPsi - nImpMetapsiReduction
+                : nMetaPsi;
 
     // If PP Cost is greater than Manifester level
     if (GetManifesterLevel(oCaster) >= nPPCost && nCanManifest)
@@ -630,7 +643,7 @@ void GainPsionicFocus(object oGainee = OBJECT_SELF)
        GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, oGainee)) < 6 // Check for heavy armor
       )
     {
-        AssignCommand(oGainee, ActionCastSpellAtObject(SPELL_SPEED_OF_THOUGHT_BONUS, oGainee, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        AssignCommand(oGainee, ActionCastSpellAtObject(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, oGainee, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         // Schedule a script to remove the bonus should they equip heavy armor
         AddEventScript(oGainee, EVENT_ONPLAYEREQUIPITEM, "psi_spdfthgt_oeq", TRUE, FALSE);
         // Schedule another script to add the bonus back if the unequip the armor
@@ -670,17 +683,21 @@ int UsePsionicFocus(object oUser = OBJECT_SELF)
 
 void LosePsionicFocus(object oLoser = OBJECT_SELF)
 {
-    SetLocalInt(oLoser, "PsionicFocus", FALSE);
-    
-    // Loss of Speed of Thought effects
-    RemoveSpellEffects(SPELL_SPEED_OF_THOUGHT_BONUS, oLoser, oLoser);
-    RemoveEventScript(oLoser, EVENT_ONPLAYEREQUIPITEM, "psi_spdfthgt_oeq", TRUE);
-    RemoveEventScript(oLoser, EVENT_ONPLAYERUNEQUIPITEM, "psi_spdfthgt_ueq", TRUE);
-    // Loss of Psionic Dodge effects
-    SetCompositeBonus(GetPCSkin(oLoser), "PsionicDodge", 0, ITEM_PROPERTY_AC_BONUS);
-    
-    // Inform oLoser about the event
-    FloatingTextStringOnCreature("You have lost your Psionic Focus", oLoser, FALSE);
+    // Only remove focus if it's present
+    if(GetLocalInt(oLoser, "PsionicFocus"))
+    {
+        SetLocalInt(oLoser, "PsionicFocus", FALSE);
+        
+        // Loss of Speed of Thought effects
+        RemoveSpellEffects(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, oLoser, oLoser);
+        RemoveEventScript(oLoser, EVENT_ONPLAYEREQUIPITEM, "psi_spdfthgt_oeq", TRUE);
+        RemoveEventScript(oLoser, EVENT_ONPLAYERUNEQUIPITEM, "psi_spdfthgt_ueq", TRUE);
+        // Loss of Psionic Dodge effects
+        SetCompositeBonus(GetPCSkin(oLoser), "PsionicDodge", 0, ITEM_PROPERTY_AC_BONUS);
+        
+        // Inform oLoser about the event
+        FloatingTextStringOnCreature("You have lost your Psionic Focus", oLoser, FALSE);
+    }
 }
 
 

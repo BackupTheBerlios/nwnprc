@@ -22,13 +22,45 @@ string PLEASE_RESELECT = GetStringByStrRef(16826471); //"Please reselect your fe
 // Enforces the proper selection of the Psion feats
 // that are used to determine discipline.
 // You must have only one discipline.
-void PsionDiscipline(object oPC = OBJECT_SELF);
+//
+// Returns TRUE if needed to relevel
+int PsionDiscipline(object oPC = OBJECT_SELF);
+
+
+// Enforces feats that require one to *not* be a psionic character
+// ===============================================================
+// oPC  character, whose feats to check
+//
+// Returns TRUE if needed to relevel
+int AntiPsionicFeats(object oPC);
+
+
+// Enforces feats that require one to be a psionic character
+// =========================================================
+// oPC  character, whose feats to check
+//
+// Returns TRUE if needed to relevel
+int PsionicFeats(object oPC);
+
+// Enforces feats that require one to be an epic psionic character
+// ===============================================================
+// oPC  character, whose feats to check
+//
+// Returns TRUE if needed to relevel
+int EpicPsionicFeats(object oPC);
+
+// Checks the requirement of at least one metapsionic feat of Split Psionic Ray
+// ============================================================================
+// oPC  character, whose feats to check
+//
+// Returns TRUE if needed to relevel
+int SplitPsionicRay(object oPC);
 
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
 
-void PsionDiscipline(object oPC = OBJECT_SELF)
+int PsionDiscipline(object oPC = OBJECT_SELF)
 {
 
      int nPsion = GetLevelByClass(CLASS_TYPE_PSION, oPC);
@@ -46,18 +78,22 @@ void PsionDiscipline(object oPC = OBJECT_SELF)
 
           if (nDisc != 1)
           {
-               int nHD = GetHitDice(oPC);
+               /*int nHD = GetHitDice(oPC);
                int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
                int nOldXP = GetXP(oPC);
                int nNewXP = nMinXPForLevel - 1000;
                SetXP(oPC,nNewXP);         //You may only have 1 Discipline.
+               */
                FloatingTextStringOnCreature(GetStringByStrRef(16826470) + " " + PLEASE_RESELECT, oPC, FALSE);
-               DelayCommand(1.0, SetXP(oPC,nOldXP));
+               //DelayCommand(1.0, SetXP(oPC,nOldXP));
+               return TRUE;
           }
      }
+     
+     return FALSE;
 }
 
-void AntiPsionicFeats(object oPC)
+int AntiPsionicFeats(object oPC)
 {
     int bHasAntiPsionicFeats = FALSE,
         bRelevel             = FALSE,
@@ -73,42 +109,40 @@ void AntiPsionicFeats(object oPC)
 
     if(bRelevel)
     {
-        int nHD = GetHitDice(oPC);
-        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-        int nOldXP = GetXP(oPC);
-        int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);         //You are a psionic character and may not take        
+                                   //You are a psionic character and may not take
         FloatingTextStringOnCreature(GetStringByStrRef(16826473) + " " + sFeats + ". " + PLEASE_RESELECT, oPC, FALSE);
-        DelayCommand(1.0, SetXP(oPC,nOldXP));
     }
+    
+    return bRelevel;
 }    
 
-void PsionicFeats(object oPC)
+int PsionicFeats(object oPC)
 {
     int bRelevel = FALSE,
         bFirst   = 1;
     string sFeats = "";
     
     
-    //if(GetHasFeat(FEAT_BOOST_CONSTRUCT))              { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826476); }
-    //if(GetHasFeat(FEAT_COMBAT_MANIFESTATION))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826432); }
+    if(GetHasFeat(FEAT_BOOST_CONSTRUCT))              { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826476); }
+    if(GetHasFeat(FEAT_COMBAT_MANIFESTATION))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826432); }
     if(GetHasFeat(FEAT_MENTAL_LEAP))                  { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826434); }
     // Only check for the first Metamorphic Transfer feat... If some source forces one of the other feats on the char, nothing releveling could do about it, anyway
-    if(GetHasFeat(FEAT_METAMORPHIC_TRANSFER_1))       { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(-1/*FIXME*/); }
+    // Metamorphosis isn't in yet, so neither are Metamorphic Transfers
+    //if(GetHasFeat(FEAT_METAMORPHIC_TRANSFER_1))       { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(-1/*FIXME*/); }
     if(GetHasFeat(FEAT_NARROW_MIND))                  { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826436); }
-    //if(GetHasFeat(FEAT_OVERCHANNEL))                  { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826478); }
-    //if(GetHasFeat(FEAT_TALENTED))                     { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826500); }
-    //if(GetHasFeat(FEAT_POWER_PENETRATION))            { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826438); }
-    //if(GetHasFeat(FEAT_GREATER_POWER_PENETRATION))    { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826440); }
-    //if(GetHasFeat(FEAT_POWER_SPECIALIZATION))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826446); }
-    //if(GetHasFeat(FEAT_GREATER_POWER_SPECIALIZATION)) { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826448); }
+    if(GetHasFeat(FEAT_OVERCHANNEL))                  { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826478); }
+    if(GetHasFeat(FEAT_TALENTED))                     { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826500); }
+    if(GetHasFeat(FEAT_POWER_PENETRATION))            { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826438); }
+    if(GetHasFeat(FEAT_GREATER_POWER_PENETRATION))    { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826440); }
+    if(GetHasFeat(FEAT_POWER_SPECIALIZATION))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826446); }
+    if(GetHasFeat(FEAT_GREATER_POWER_SPECIALIZATION)) { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826448); }
     if(GetHasFeat(FEAT_PSIONIC_DODGE))                { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826450); }
-    //if(GetHasFeat(FEAT_PSIONIC_ENDOWMENT))            { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826452); }
-    //if(GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT))    { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826454); }
+    if(GetHasFeat(FEAT_PSIONIC_ENDOWMENT))            { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826452); }
+    if(GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT))    { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826454); }
     if(GetHasFeat(FEAT_PSIONIC_FIST))                 { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826456); }
     if(GetHasFeat(FEAT_GREATER_PSIONIC_FIST))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826458); }
-    if(GetHasFeat(FEAT_UNAVOIDABLE_STRIKE))           { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(-1/*FIXME*/); }
-    if(GetHasFeat(FEAT_PSIONIC_MEDITATION))           { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(-1/*FIXME*/); }
+    if(GetHasFeat(FEAT_UNAVOIDABLE_STRIKE))           { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826506); }
+    if(GetHasFeat(FEAT_PSIONIC_MEDITATION))           { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826501); }
     if(GetHasFeat(FEAT_PSIONIC_SHOT))                 { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826464); }
     if(GetHasFeat(FEAT_GREATER_PSIONIC_SHOT))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826466); }
     // Only check for the first Psionic Talent feat
@@ -116,29 +150,115 @@ void PsionicFeats(object oPC)
     if(GetHasFeat(FEAT_PSIONIC_WEAPON))               { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826460); }
     if(GetHasFeat(FEAT_GREATER_PSIONIC_WEAPON))       { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826462); }
     if(GetHasFeat(FEAT_SPEED_OF_THOUGHT))             { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826486); }
-    if(GetHasFeat(FEAT_WOUNDING_ATTACK))              { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(-1/*FIXME*/); }
+    if(GetHasFeat(FEAT_WOUNDING_ATTACK))              { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826510); }
+    if(GetHasFeat(FEAT_DEEP_IMPACT))                  { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826514); }
+    if(GetHasFeat(FEAT_FELL_SHOT))                    { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826516); }
+    // Only check for the first Expanded Knowledge feat - NOT IN YET
+    //if(GetHasFeat(FEAT_EXPANDED_KNOWLEDGE_1))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826520); }
     
+    if(bRelevel)
+    {
+                                   //You are not a psionic character and may not take
+        FloatingTextStringOnCreature(GetStringByStrRef(16826472) + " " + sFeats + ". " + PLEASE_RESELECT, oPC, FALSE);
+    }
+    
+    return bRelevel;
+}
+
+
+int EpicPsionicFeats(object oPC)
+{
+    int bCanManifMax = GetLevelByClass(CLASS_TYPE_PSION, oPC)  >= 17 ||
+                       GetLevelByClass(CLASS_TYPE_WILDER, oPC) >= 18 ||
+                       GetLevelByClass(CLASS_TYPE_PSYWAR, oPC) >= 16;
+    
+    int bRelevel = FALSE,
+        bFirst   = 1;
+    string sManifLimitedFeats = "";
+    
+    // Not in yet
+    //if(GetHasFeat(FEAT_EPIC_EXPANDED_KNOWLEDGE_1)) sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826522);
+    if(GetHasFeat(FEAT_IMPROVED_MANIFESTATION_1))  sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826526);
+    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_PSION_1))   sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826528);
+    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_PSYWAR_1))  sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826529);
+    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_WILDER_1))  sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826530);
+    
+    if(GetHasFeat(FEAT_EPIC_PSIONIC_FOCUS_1))      sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826518);
+    
+    
+    if(!bCanManifMax && bFirst < 1)
+    {
+        bRelevel = TRUE;           //You do not have the ability to manifest powers of the normal maximum power level in at least one psionic class and may not take 
+        FloatingTextStringOnCreature(GetStringByStrRef(16826469) + " " + sManifLimitedFeats + ". " + PLEASE_RESELECT, oPC, FALSE);
+    }
+    
+    if(GetHasFeat(FEAT_IMPROVED_METAPSIONICS_1))
+    {
+       int nMetaPsi = GetHasFeat(FEAT_CHAIN_POWER,       oPC) +
+                      GetHasFeat(FEAT_EMPOWER_POWER,     oPC) +
+                      GetHasFeat(FEAT_EXTEND_POWER,      oPC) +
+                      GetHasFeat(FEAT_MAXIMIZE_POWER,    oPC) +
+                      GetHasFeat(FEAT_SPLIT_PSIONIC_RAY, oPC) +
+                      GetHasFeat(FEAT_TWIN_POWER,        oPC) +
+                      GetHasFeat(FEAT_WIDEN_POWER,       oPC);
+        
+        if(nMetaPsi < 4)
+        {
+            bRelevel = TRUE;           //You do not posses 4 metapsionic feats and may not take Improved Metapsionics.
+            FloatingTextStringOnCreature(GetStringByStrRef(16826468) + " " + PLEASE_RESELECT, oPC, FALSE);
+        }        
+    }
+    
+    
+    return bRelevel;
+}
+
+
+int SplitPsionicRay(object oPC)
+{
+    int nMetaPsi = GetHasFeat(FEAT_CHAIN_POWER,       oPC) +
+                   GetHasFeat(FEAT_EMPOWER_POWER,     oPC) +
+                   GetHasFeat(FEAT_EXTEND_POWER,      oPC) +
+                   GetHasFeat(FEAT_MAXIMIZE_POWER,    oPC) +
+                   GetHasFeat(FEAT_TWIN_POWER,        oPC) +
+                   GetHasFeat(FEAT_WIDEN_POWER,       oPC);
+
+    if(nMetaPsi < 1)
+    {                              //You do not have at least one other metapsionic feat besides Split Psionic Ray, so you may not take it.
+        FloatingTextStringOnCreature(GetStringByStrRef(16826546) + " " + PLEASE_RESELECT, oPC, FALSE);
+        return TRUE;
+    }
+    
+    return FALSE;
+}
+
+
+void main()
+{
+    //Declare Major Variables
+    object oPC = OBJECT_SELF;
+    int bRelevel = FALSE;
+
+    // Psion disciplines
+    bRelevel |= PsionDiscipline(oPC);
+
+
+    if(GetIsPsionicCharacter(oPC))
+        bRelevel |= AntiPsionicFeats(oPC); // Feats that require one to *not* be a psionic character
+    else
+        bRelevel |= PsionicFeats(oPC);     // Feats that require one to be a psionic character
+
+    if(GetHasFeat(FEAT_SPLIT_PSIONIC_RAY)) bRelevel |= SplitPsionicRay(oPC);
+
+    if(GetHitDice(oPC) > 20) bRelevel |= EpicPsionicFeats(oPC);
+
     if(bRelevel)
     {
         int nHD = GetHitDice(oPC);
         int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
         int nOldXP = GetXP(oPC);
         int nNewXP = nMinXPForLevel - 1000;
-        SetXP(oPC,nNewXP);         //You are not a psionic character and may not take        
-        FloatingTextStringOnCreature(GetStringByStrRef(16826472) + " " + sFeats + ". " + PLEASE_RESELECT, oPC, FALSE);
+        SetXP(oPC,nNewXP);
         DelayCommand(1.0, SetXP(oPC,nOldXP));
     }
-}
-
-
-void main()
-{
-     //Declare Major Variables
-     object oPC = OBJECT_SELF;
-     PsionDiscipline(oPC);
-     
-     if(GetIsPsionicCharacter(oPC))
-        AntiPsionicFeats(oPC); // Feats that require one to *not* be a psionic character
-     else
-        PsionicFeats(oPC);     // Feats that require one to be a psionic character
 }

@@ -16,5 +16,5 @@
 void main()
 {
     if(GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, OBJECT_SELF)) >= 6)
-        RemoveSpellEffects(SPELL_SPEED_OF_THOUGHT_BONUS, OBJECT_SELF, OBJECT_SELF);
+        RemoveSpellEffects(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, OBJECT_SELF, OBJECT_SELF);
 }

@@ -12,6 +12,32 @@ int CheckMissingPowers(object oPC, int nClass)
     sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     int nCurrentPowers = GetPowerCount(oPC, nClass);
     int nMaxPowers = StringToInt(Get2DACache(sPsiFile, "PowersKnown", nLevel-1));
+    
+    // Apply the epic feat Power Knowledge - +2 powers known per
+    int nFeat;
+    switch(nClass)
+    {
+        case CLASS_TYPE_PSION:
+            nFeat = FEAT_POWER_KNOWLEDGE_PSION_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_PSION_10 &&
+                  GetHasFeat(nFeat, oPC))
+                nMaxPowers += 2;
+            break;
+        case CLASS_TYPE_WILDER:
+            nFeat = FEAT_POWER_KNOWLEDGE_PSYWAR_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_PSYWAR_10 &&
+                  GetHasFeat(nFeat, oPC))
+                nMaxPowers += 2;
+            break;
+        case CLASS_TYPE_PSYWAR:
+            nFeat = FEAT_POWER_KNOWLEDGE_WILDER_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_WILDER_10 &&
+                  GetHasFeat(nFeat, oPC))
+                nMaxPowers += 2;
+            break;
+    }
+    
+    
     if(nCurrentPowers < nMaxPowers)
     {
         SetLocalString(oPC, "DynConv_Script", "psi_powconv");

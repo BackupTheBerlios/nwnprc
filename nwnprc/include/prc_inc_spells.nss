@@ -878,6 +878,21 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
      int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
      int nSpell = GetSpellId();
      
+     // Handle the target having Force of Will and being targeted by a psionic power
+     if(nSavingThrow != SAVING_THROW_WILL        &&
+        nSpell > 14000 && nSpell < 14360         &&
+        GetHasFeat(FEAT_FORCE_OF_WILL, oTarget)  &&
+        !GetLocalInt(oTarget, "ForceOfWillUsed") &&
+        // Only use will save if it's better
+        (nSavingThrow == SAVING_THROW_FORT ? GetFortitudeSavingThrow(oTarget) : GetReflexSavingThrow(oTarget)) > GetWillSavingThrow(oTarget)
+       )
+     {
+        nSavingThrow = SAVING_THROW_WILL;
+        SetLocalInt(oTarget, "ForceOfWillUsed", TRUE);
+        DelayCommand(6.0f, DeleteLocalInt(oTarget, "ForceOfWillUsed"));
+        SendMessageToPC(oTarget, "Force Of Will used");
+     }
+     
      if (iRW > 0 && iTK > 0 && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS)
      {
           return 0;

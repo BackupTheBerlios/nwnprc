@@ -1,46 +1,29 @@
+//::///////////////////////////////////////////////
+//:: Split Psionic Ray switch
+//:: psi_meta_split
+//::///////////////////////////////////////////////
+/*
+    Switches the metapsionic feat Split Psionic Ray on or off.
+*/
+//:://////////////////////////////////////////////
+//:: Modified By: Ornedan
+//:: Modified On: 25.03.2005
+//:://////////////////////////////////////////////
+
+#include "psi_inc_psifunc"
+
 void main()
 {
-    object oCaster = OBJECT_SELF;
+    object oPC = OBJECT_SELF;
     
-    if (GetLocalInt(oCaster, "PsiMetaSplit") == TRUE)
+    // Can't activate too many feats
+    if(!GetLocalInt(oPC, "PsiMetaSplit") &&
+       GetPsionicFocusUsingFeatsActive(oPC) >= GetPsionicFocusUsesPerExpenditure(oPC))
     {
-    	SetLocalInt(oCaster, "PsiMetaSplit", FALSE);
-    	FloatingTextStringOnCreature("Split Psionic Ray Off", oCaster, FALSE);
+        FloatingTextStringOnCreature("You cannot activate more feats that require psionic focus", oPC, FALSE);
+        return;
     }
-    if (GetLocalInt(oCaster, "PsiMetaSplit") == FALSE)
-    {
-    	SetLocalInt(oCaster, "PsiMetaSplit", TRUE);
-    	FloatingTextStringOnCreature("Split Psionic Ray On", oCaster, FALSE);
-    	
-        if (GetLocalInt(oCaster, "PsiMetaChain") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaChain", FALSE);
-	   	FloatingTextStringOnCreature("Chain Power Off", oCaster, FALSE);
-    	}
-        if (GetLocalInt(oCaster, "PsiMetaExtend") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaExtend", FALSE);
-	   	FloatingTextStringOnCreature("Extend Off", oCaster, FALSE);
-    	}
-        if (GetLocalInt(oCaster, "PsiMetaMax") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaMax", FALSE);
-	   	FloatingTextStringOnCreature("Maximize Off", oCaster, FALSE);
-    	}
-        if (GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaEmpower", FALSE);
-	   	FloatingTextStringOnCreature("Empower Off", oCaster, FALSE);
-    	}    	
-        if (GetLocalInt(oCaster, "PsiMetaTwin") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaTwin", FALSE);
-	   	FloatingTextStringOnCreature("Twin Power Off", oCaster, FALSE);
-    	}
-        if (GetLocalInt(oCaster, "PsiMetaWiden") == TRUE)
-	{
-	    	SetLocalInt(oCaster, "PsiMetaWiden", FALSE);
-	   	FloatingTextStringOnCreature("Widen Off", oCaster, FALSE);
-    	}    	
-    }    
+    
+    SetLocalInt(oPC, "PsiMetaSplit", !GetLocalInt(oPC, "PsiMetaSplit"));
+    FloatingTextStringOnCreature("Split Psionic Ray " + (GetLocalInt(oPC, "PsiMetaSplit") ? "Activated":"Deactivated"), oPC, FALSE);
 }

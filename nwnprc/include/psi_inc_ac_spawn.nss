@@ -10,6 +10,7 @@
 #include "psi_inc_ac_const"
 #include "prc_ipfeat_const"
 #include "prc_feat_const"
+#include "inc_vfx_const"
 
 
 //////////////////////////////////////////////////
@@ -126,7 +127,7 @@ void HandleAstralConstructSpawn(object oConstruct)
 	/// Handle effects
 	
 	// Add the transparency effect
-    effect eVis =  EffectVisualEffect(VFX_DUR_GHOST_TRANSPARENT);
+    effect eVis =  EffectVisualEffect(VFX_DUR_GHOSTLY_PULSE_QUICK);//VFX_DUR_GHOST_TRANSPARENT);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis, oConstruct);
     
 	// Increase speed by 10 feet per round

@@ -97,7 +97,7 @@ void main()
                     DelayCommand( 2.1,
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY,
                             eHeal, oCaster,
-                                TurnsToSeconds(GetCasterLevel(oCaster))) );
+                                TurnsToSeconds(PRCGetCasterLevel(oCaster))) );
                 }
             }
         }

@@ -39,7 +39,7 @@ void main()
                 GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
         float fDelay;
         int nDamage;
-        int nCasterLvl = GetCasterLevel(oCaster);
+        int nCasterLvl = PRCGetCasterLevel(oCaster);
         effect eAOE = EffectAreaOfEffect
             ( AOE_PER_FOGFIRE, "tm_s0_epmagmabua", "tm_s0_epmagmabub", "tm_s0_epmagmabuc" );
         location lTarget = GetSpellTargetLocation();

@@ -1,1 +1,1 @@
-command.com
+cmd.exe

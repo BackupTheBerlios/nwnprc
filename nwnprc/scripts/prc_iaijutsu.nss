@@ -1,4 +1,4 @@
-/*
+ /*
   Iaijutsu Attack Script
   prc_iaijutsu
 */
@@ -19,6 +19,9 @@ void main()
     int iChaMod = GetAbilityModifier(ABILITY_CHARISMA,oPC);
     int iMod = 0;
     int iSkill = GetSkillRank(SKILL_IAIJUTSU_FOCUS,oPC)+ d20();
+    string OneKat;
+
+    SetLocalInt(oPC,OneKat,0);
 
     if(iSkill == 10 || iSkill < 15){ nDamage = d6(1); }  // 10-14 +1d6
     if(iSkill == 15 || iSkill < 20){ nDamage = d6(2); }  // 15-19 +2d6
@@ -69,12 +72,13 @@ void main()
      {
         if(!GetIsObjectValid(oItem2) && !GetIsObjectValid(oItem1))
          {
-          while(GetIsObjectValid(oWeap))
+          while(GetIsObjectValid(oWeap) && GetLocalInt(oPC,OneKat) == 0)
            {
 
             if(GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
             {
             int iAttack = DoMeleeAttack(oPC,oWeap,oTarget,iMod,TRUE,0.0);
+            SetLocalInt(oPC,OneKat,1);
 
             if(iAttack == 2)
              {
@@ -108,7 +112,7 @@ void main()
          }
          else
          {
-         FloatingTextStringOnCreature("Must have Katana unequiped, in Inventory.",OBJECT_SELF);
+         FloatingTextStringOnCreature("Must have Katana unequiped, in inventory.",OBJECT_SELF);
          }
      }
 

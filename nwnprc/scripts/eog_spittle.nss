@@ -43,7 +43,7 @@ void main()
            if(iHitEnemy > 0)
            {    
                 int iDC = 10 + GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH, oCaster) + GetAbilityModifier(ABILITY_CONSTITUTION, oCaster);
-                if(ReflexSave(oTarget, iDC, SAVING_THROW_TYPE_ACID, oCaster) == 1)
+                if(ReflexSave(oTarget, iDC, SAVING_THROW_TYPE_ACID, oCaster) == 0 && !GetIsImmune(oTarget, IMMUNITY_TYPE_BLINDNESS))
                 {
                      effect eBlind = EffectBlindness();
                      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlind, oTarget);

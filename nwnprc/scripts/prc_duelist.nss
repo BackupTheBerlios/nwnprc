@@ -64,7 +64,7 @@ void DuelistGrace(object oPC, object oSkin, int iLevel)
 void RemoveDuelistPreciseStrike(object oWeap)
 {
    int iSlashBonus = GetLocalInt(oWeap,"DuelistPreciseSlash");   
-   if (iSlashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus, 1, "DuelistPreciseSlash", -1, DURATION_TYPE_TEMPORARY);
+   if (iSlashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_PIERCING, iSlashBonus, 1, "DuelistPreciseSlash", -1, DURATION_TYPE_TEMPORARY);
 }
 
 void DuelistPreciseStrike(object oPC, object oWeap)
@@ -80,27 +80,27 @@ void DuelistPreciseStrike(object oPC, object oWeap)
    switch(iDuelistLevel)
    {   
       case 1:
-           iSlashBonus = IP_CONST_DAMAGEBONUS_1d6;
+           iSlashBonus = IP_CONST_DAMAGEBONUS_1d4;
            break;   
       case 2:
-           iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
+           iSlashBonus = IP_CONST_DAMAGEBONUS_2d4;
            break;  
       case 3:
-           iSlashBonus = IP_CONST_DAMAGEBONUS_3D6;
+           iSlashBonus = IP_CONST_DAMAGEBONUS_3D4;
            break;  
       case 4:
-           iSlashBonus = IP_CONST_DAMAGEBONUS_4D6;
+           iSlashBonus = IP_CONST_DAMAGEBONUS_4D4;
            break;  
       case 5:
-           iSlashBonus = IP_CONST_DAMAGEBONUS_5D6;
+           iSlashBonus = IP_CONST_DAMAGEBONUS_5D4;
            break;  
       case 6:
-           iSlashBonus = IP_CONST_DAMAGEBONUS_6D6;
+           iSlashBonus = IP_CONST_DAMAGEBONUS_6D4;
            break;  
    }
    
-   if(iSlashBonus) SetLocalInt(oWeap,"DuelistPreciseSlash",iSlashBonus);   
-   if(iSlashBonus) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus), oWeap, 99999.9);
+   if(iSlashBonus) SetLocalInt(oWeap,"DuelistPreciseSlash",iSlashBonus); // misnomer for simplicity's sake  
+   if(iSlashBonus) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PIERCING, iSlashBonus), oWeap, 99999.9);
 }
 
 void main()

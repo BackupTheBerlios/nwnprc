@@ -2,6 +2,47 @@
 const int FEAT_JUMP = 2884;
 
 // Racial Feats
+const int FEAT_URDINNIR_STONESKIN	= 4644;
+const int FEAT_AVARIEL_DIVE		= 4645;
+const int FEAT_AYUAN_FEAR		= 4646;
+const int FEAT_AYUAN_ENTANGLE		= 4647;
+const int FEAT_AYUAN_DARKNESS		= 4648;
+const int FEAT_AYUAN_NEUTRALIZE_POISON	= 4649;
+const int FEAT_AASIMAR_LIGHT		= 4650;
+const int FEAT_TIEFLING_DARK		= 4651;
+const int FEAT_SVIRF_BLIND_DEAF		= 4652;
+const int FEAT_SVIRF_BLUR		= 4653;
+const int FEAT_SVIRF_DISGUISE		= 4654;
+const int FEAT_SVIRF_REVERT		= 4655;
+const int FEAT_RAK_DISGUISE		= 4656;
+const int FEAT_RAK_REVERT		= 4657;
+const int FEAT_PYUAN_CHARM		= 4658;
+const int FEAT_PYUAN_DARKNESS		= 4659;
+const int FEAT_PYUAN_ENTANGLE		= 4660;
+const int FEAT_PYUAN_FEAR		= 4661;
+const int FEAT_PIXIE_INVIS		= 4662;
+const int FEAT_PIXIE_CONFUSE		= 4663;
+const int FEAT_PIXIE_ENTANGLE		= 4664;
+const int FEAT_PIXIE_DISPEL_MAGIC	= 4665;
+const int FEAT_PIXIE_POLYMORPH		= 4666;
+const int FEAT_PIXIE_REVERT		= 4667;
+const int FEAT_MINOTAUR_CHARGE		= 4668;
+const int FEAT_ILLITHID_CHARM		= 4669;
+const int FEAT_ILLITHID_BLAST		= 4670;
+const int FEAT_ILLITHID_SUCKBRAIN	= 4671;
+const int FEAT_GITHZERAI_DAZE		= 4672;
+const int FEAT_GITHYANKI_DAZE		= 4673;
+const int FEAT_GITHYANKI_BLUR		= 4674;
+const int FEAT_FEYRI_CHARMPERSON	= 4675;
+const int FEAT_FEYRI_CLAIRAUDIENCE	= 4676;
+const int FEAT_FEYRI_DARKNESS		= 4677;
+const int FEAT_FEYRI_ENERVATION		= 4678;
+const int FEAT_FEYRI_ALTER		= 4679;
+const int FEAT_FEYRI_REVERT		= 4680;
+const int FEAT_DUERGAR_INVIS		= 4681;
+const int FEAT_DROW_DARKNESS		= 4682;
+const int FEAT_DROW_FAERIE_FIRE		= 4683;
+
 const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;
 
@@ -75,13 +116,11 @@ const int FEAT_SA_CRFTWEAP  = 4758;
 const int FEAT_SA_SPOT_4    = 4762;
 const int FEAT_SA_JUMP_4    = 4763;
 const int FEAT_LEAP	    = 4772;
-const int FEAT_DIVE	    = 4773;
 const int FEAT_KEEN_SIGHT   = 4774;
 const int FEAT_SA_APPRAISE  = 4792;
 
 const int FEAT_ALTFORM                  = 4754;
 const int FEAT_DISGUISE                 = 4755;
-const int FEAT_MINOT_CHARGE             = 4756;
 const int FEAT_LARGE                    = 4760;
 const int FEAT_AZER_HEAT		= 4790;
 const int FEAT_SVIRFNEBLIN_DODGE        = 4791;

@@ -33,7 +33,7 @@ int GetManifesterDC(object oCaster = OBJECT_SELF);
 
 // Checks whether manifester has enough PP to cast
 // If he does, subtract PP and cast power, else power fails
-int GetCanManifest(object oCaster, int nAugCost);
+int GetCanManifest(object oCaster, int nAugCost, object oTarget = OBJECT_SELF);
 
 // Checks to see if the caster has suffered psychic enervation
 // from a wild surge. If yes, daze and subtract power points.
@@ -46,7 +46,7 @@ int GetIsTelepathyPower();
 
 // Increases the cost of a Telepathy power by an 
 // amount if the target of the spell is a Wilder
-int VolatileMind(object oTarget);
+int VolatileMind(object oTarget, object oCaster);
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -157,13 +157,14 @@ int GetManifesterDC(object oCaster)
 	return nDC;
 }
 
-int GetCanManifest(object oCaster, int nAugCost)
+int GetCanManifest(object oCaster, int nAugCost, object oTarget = OBJECT_SELF)
 {
     int nLevel = GetPowerLevel();
     int nAugment = GetLocalInt(oCaster, "Augment");
     int nPP = GetLocalInt(oCaster, "PowerPoints");
     int nPPCost;
     int nCanManifest = TRUE;
+    int nVolatile = VolatileMind(oTarget, oCaster);
     
     //Sets Power Point cost based on power level
     if (nLevel == 1) nPPCost = 1;
@@ -177,7 +178,10 @@ int GetCanManifest(object oCaster, int nAugCost)
     else if (nLevel == 9) nPPCost = 17;
     
     //Adds in the augmentation cost
-    if (nAugment > 0) nPPCost = nPPCost + (nAugCost * nAugment);    
+    if (nAugment > 0) nPPCost = nPPCost + (nAugCost * nAugment); 
+    
+    //Adds in the cost for volatile mind
+    if (nVolatile > 0) nPPCost += nVolatile;
     
     // If PP Cost is greater than Manifester level
     if (GetManifesterLevel(oCaster) >= nPPCost)
@@ -228,10 +232,14 @@ void PsychicEnervation(object oCaster, int nWildSurge)
 	}
 	else
 	{
-		effect eBonAttack = EffectAttackIncrease(nWildSurge);
-		effect eBonDam = EffectDamageIncrease(nWildSurge, DAMAGE_TYPE_MAGICAL);
+		int nEuphoria = 1;
+		if (GetLevelByClass(CLASS_TYPE_WILDER, oCaster) > 19) nEuphoria = 3;
+		else if (GetLevelByClass(CLASS_TYPE_WILDER, oCaster) > 11) nEuphoria = 2;
+		
+		effect eBonAttack = EffectAttackIncrease(nEuphoria);
+		effect eBonDam = EffectDamageIncrease(nEuphoria, DAMAGE_TYPE_MAGICAL);
 		effect eVis = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
-		effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nWildSurge, SAVING_THROW_TYPE_SPELL);
+		effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nEuphoria, SAVING_THROW_TYPE_SPELL);
 		effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 		effect eDur2 = EffectVisualEffect(VFX_DUR_MAGIC_RESISTANCE);
 		effect eLink = EffectLinkEffects(eSave, eDur);
@@ -247,7 +255,7 @@ void PsychicEnervation(object oCaster, int nWildSurge)
 int GetIsTelepathyPower()
 {
 	int nSpell = GetSpellId();
-	if (nSpell < 6000 && nSpell > 6000)
+	if (nSpell == 2371 || nSpell == 2373 || nSpell == 2374)
 	{
 		return TRUE;
 	}
@@ -255,18 +263,21 @@ int GetIsTelepathyPower()
 	return FALSE;
 }
 
-int VolatileMind(object oTarget)
+int VolatileMind(object oTarget, object oCaster)
 {
 	int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oTarget);
 	int nTelepathy = GetIsTelepathyPower();
 	int nCost = 0;
 	
-	if (nWilder > 0 && nTelepathy == TRUE)
+	if (nWilder > 4 && nTelepathy == TRUE)
 	{
-		if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_4, oTarget)) nCost = 4;
-		else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_3, oTarget)) nCost = 3;
-		else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_2, oTarget)) nCost = 2;
-		else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_1, oTarget)) nCost = 1;
+		if (GetIsEnemy(oTarget, oCaster))
+		{
+			if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_4, oTarget)) nCost = 4;
+			else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_3, oTarget)) nCost = 3;
+			else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_2, oTarget)) nCost = 2;
+			else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_1, oTarget)) nCost = 1;
+		}
 	}
 	
 	FloatingTextStringOnCreature("Volatile Mind Cost: " + IntToString(nCost), oTarget, FALSE);

@@ -36,12 +36,12 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     object oCaster = OBJECT_SELF;
     int nAugCost = 2;
     int nAugment = GetLocalInt(oCaster, "Augment");
+    object oTarget = GetSpellTargetObject();
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (GetCanManifest(oCaster, nAugCost, oTarget)) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
-	object oTarget = GetSpellTargetObject();
 	int nRacial = MyPRCGetRacialType(oTarget);
 	int nTargetRace = FALSE;
 	

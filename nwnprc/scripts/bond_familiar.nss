@@ -261,6 +261,8 @@ void ElementalFamiliar()
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBonus),GetItemInSlot(INVENTORY_SLOT_NECK,oEle));
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBonus),oHide);
 
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(iBonus,(iHD/10)+1),oHide);
+
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_WIS,iBonus),oHide);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_WIS,iBonus),oHide);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusSavingThrow(iSave,iBonus),oHide);

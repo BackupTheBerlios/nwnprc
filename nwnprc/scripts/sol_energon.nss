@@ -105,11 +105,12 @@ void main()
     SetItemCursedFlag(oBoot,TRUE);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_CON,iBonus),oBoot);
 
+   AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(iBonus,(iLvl/10)+1),oArmor);
 
 
    int i;
    for (i = 0; i < 4; i++)
-      LevelUpHenchman( GetObjectByTag("xagya01"),CLASS_TYPE_OUTSIDER,TRUE,PACKAGE_INVALID);
+      LevelUpHenchman( oHench,CLASS_TYPE_OUTSIDER,TRUE,PACKAGE_INVALID);
 
    int  iFeat = GetHasFeat(FEAT_POSITIVE_ENERGY_BURST);
 
@@ -118,12 +119,12 @@ void main()
       int level = (GetHitDice(OBJECT_SELF)-7+iFeat*2)/2;
 
      for (i = 0; i < level ; i++)
-      LevelUpHenchman( GetObjectByTag("xagya01"),CLASS_TYPE_CLERIC,TRUE,PACKAGE_CLERIC_DIVINE);
+      LevelUpHenchman( oHench,CLASS_TYPE_CLERIC,TRUE,PACKAGE_CLERIC_DIVINE);
 
      if ( (GetHitDice(OBJECT_SELF)-7+iFeat*2)!= level*2) level++;
 
      for (i = 0; i < level ; i++)
-      LevelUpHenchman( GetObjectByTag("xagya01"),CLASS_TYPE_OUTSIDER,TRUE,PACKAGE_INVALID);
+      LevelUpHenchman( oHench,CLASS_TYPE_OUTSIDER,TRUE,PACKAGE_INVALID);
 
    }
 

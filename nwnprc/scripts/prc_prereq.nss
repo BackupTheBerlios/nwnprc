@@ -58,8 +58,10 @@ int GetDivinePRCLevels(object oPC)
         + (GetLevelByClass(CLASS_TYPE_TEMPUS, oPC) + 1) / 2
         + (GetLevelByClass(CLASS_TYPE_HATHRAN, oPC) + 1) / 2
         + (GetLevelByClass(CLASS_TYPE_BFZ, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_SACREDFIST, oPC) + 1) / 2
         + (GetLevelByClass(CLASS_TYPE_WARPRIEST, oPC) + 1) / 2;
+
+        if ( !GetHasFeat(FEAT_SF_CODE))
+              iDivinePRCLevels += (GetLevelByClass(CLASS_TYPE_SACREDFIST, oPC) + 1) / 2;
         
    return iDivinePRCLevels;
 }

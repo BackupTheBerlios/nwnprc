@@ -197,8 +197,10 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
 	    GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster)/2+
 	    GetLevelByClass(CLASS_TYPE_BFZ, oCaster)/2+
             GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster)/2+
-            GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster)/2+
 	    GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster)/2;
+
+            if ( !GetHasFeat(FEAT_SF_CODE))
+                nDivine += (GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster) + 1) / 2;
 	    
           nDivine+= PractisedSpellGetCast(nDivine,CastingClassDiv,oCaster);
 

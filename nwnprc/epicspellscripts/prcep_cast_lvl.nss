@@ -193,9 +193,11 @@ void main()
 			+ GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) / 2
 			+ GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) / 2
 			+ GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) / 2
-			+ GetLevelByClass(CLASS_TYPE_BFZ, oCaster) / 2
-			+ GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster)/2
-			+ GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) / 2;
+			+ (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2;
+
+                if ( !GetHasFeat(FEAT_SF_CODE))
+                        nLevelBonus += (GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster) + 1) / 2;
 
 		//
 		//	Class specific code for Divine Casters

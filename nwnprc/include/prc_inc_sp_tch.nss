@@ -5,10 +5,12 @@
 // requires caster, target, and spell damage type
 int SpellSneakAttackDamage(object oCaster, object oTarget)
 {
-     if( GetCanSneakAttack(oTarget, oCaster) )
+     int numDice = GetTotalSneakAttackDice(oCaster);
+     
+     if(numDice != 0 && GetCanSneakAttack(oTarget, oCaster) )
      {
           FloatingTextStringOnCreature("*Sneak Attack Spell*", oCaster, TRUE);
-          return GetSneakAttackDamage(GetTotalSneakAttackDice(oCaster));  
+          return GetSneakAttackDamage(numDice); 
      }
      else
      {

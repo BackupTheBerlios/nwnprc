@@ -14,7 +14,10 @@
 10   hardinesspoisons                   229       
 11   skillaffinityhide                  178       
 12   SkillAff_Bluff                     4753      
-13   Disguise                           4755      
-14   SPEC_ABILITY_feyri                 4780      
-15   Race_Elven                         4711      
-16   Race_Outsider                      4716      
+13   FEAT_FEYRI_CHARMPERSON             4675      
+14   FEAT_FEYRI_CLAIRAUDIENCE           4676      
+15   FEAT_FEYRI_DARKNESS                4677      
+16   FEAT_FEYRI_ENERVATION              4678      
+17   FEAT_FEYRI_ALTER                   4679      
+18   Race_Elven                         4711      
+19   Race_Outsider                      4716      

@@ -1,13 +1,13 @@
 2DA V2.0
 
-     FeatLabel           FeatIndex 
-0    darkvision          228       
-1    Minotaur_Scent      4795      
-2    Large_Creature      4760      
-3    Natural_Armor_5     4736      
-4    WeapProfSim         46        
-5    WeapProfMar         45        
-6    UncannyDodge1       195       
-7    WeaponProfCreature  289       
-8    SPEC_ABILITY_minot  4794      
-9    Race_Monstrous      4720      
+  FeatLabel            FeatIndex 
+0 darkvision           228       
+1 Minotaur_Scent       4795      
+2 Large_Creature       4760      
+3 Natural_Armor_5      4736      
+4 WeapProfSim          46        
+5 WeapProfMar          45        
+6 UncannyDodge1        195       
+7 WeaponProfCreature   289       
+8 FEAT_MINOTAUR_CHARGE 4668      
+9 Race_Monstrous       4720      

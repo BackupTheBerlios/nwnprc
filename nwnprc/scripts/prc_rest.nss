@@ -1,5 +1,6 @@
 #include "inc_item_props"
 #include "prc_feat_const"
+#include "nw_i0_plot"
 
 void main()
 {
@@ -15,6 +16,18 @@ void main()
         SendMessageToPC(oPC," Lips of Rapture : use " +IntToString(iLips-1));
 
      }
+     
+     if(GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
+     {
+       object oFam =  GetLocalObject(oPC, "BONDED");
+
+       // Remove negative effects
+       RemoveEffects(oFam);
+       int nHeal =  GetMaxHitPoints(oFam);
+       effect eHeal = EffectHeal(nHeal);
+       ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oFam);
+
+    }
   }
 }
 

@@ -3,8 +3,8 @@
 //
 
 #include "inc_item_props"
-   const int FEAT_SAC_VOW = 12;
-   const int FEAT_VOW_OBED = 13;
+   const int FEAT_SAC_VOW = 3388;
+   const int FEAT_VOW_OBED = 3389;
 
 ///Sacred Vow +2 on Persuade /////////
 void Sacred_Vow(object oPC ,object oSkin ,int iLevel)

@@ -19,9 +19,9 @@ void main()
      object oFoe = GetLastDamager();
      
      int iFoeRace = GetRacialType(oFoe);
-     int iHatedFoe = GetLocalInt(oPC, "HatedFoeDR");
+     int iHatedFoe = GetLocalInt(oPC, "HatedFoe");
 
-     int iDR = GetLocalInt(oPC, "HatedFoe");
+     int iDR = GetLocalInt(oPC, "HatedFoeDR");
      int iDamageTaken = GetTotalDamageDealt();
      
      int iHeal = 0;

@@ -5,6 +5,8 @@
 #include "inc_epicspells"
 #include "prc_inc_clsfunc"
 #include "inc_newspellbook"
+#include "prc_power_const"
+#include "psi_inc_ac_manif"
 
 void PrcFeats(object oPC)
 {
@@ -26,16 +28,28 @@ void main()
       }
       case REST_EVENTTYPE_REST_STARTED:{
 
-         if (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC)){
+        if (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC)){
             SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
             SetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON", 0);
-         }
+        }
         if (GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW))
         {
             //Destroy imbued arrows.
             AADestroyAllImbuedArrows(oPC);
         }
-         break;
+        /* Commented out until the feat constant is determined
+        if(GetHasFeat(whatever feat determines if the PC can manifest Astral Construct here)){
+        	int i = 1;
+        	object oCheck = GetHenchman(oPC, i);
+        	while(oCheck != OBJECT_INVALID){
+        		if(GetStringLeft(GetTag(oCheck), 14) == "psi_astral_con")
+        			DoDespawn(oCheck);
+        		i++;
+        		oCheck = GetHenchman(oPC, i);
+        	}
+        }
+        */
+        break;
       }
       case REST_EVENTTYPE_REST_FINISHED:{
 

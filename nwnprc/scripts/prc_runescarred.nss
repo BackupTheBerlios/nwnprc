@@ -24,10 +24,10 @@ void ResCold(object oPC ,object oSkin ,int iLevel)
 ///Ritual Scarring /////////
 void RitScar(object oPC ,object oSkin, int iLevel)
 {
-   //if(GetLocalInt(oSkin, "RitScarAC") == iLevel) return;
-   // RemoveSpecificProperty(oSkin, ITEM_PROPERTY_AC_BONUS, GetLocalInt(oSkin, "RitScarAC"), IP_CONST_ACMODIFIERTYPE_DODGE, "RitScarAC");
-    SetCompositeBonus(oSkin, "RitScarAC", iLevel,ITEM_PROPERTY_AC_BONUS,IP_CONST_ACMODIFIERTYPE_DODGE);
-   // SetLocalInt(oSkin, "RitScarAC",iLevel);
+   if(GetLocalInt(oSkin, "RitScarAC") == iLevel) return;
+   
+    SetCompositeBonus(oSkin, "RitScarAC", iLevel,ITEM_PROPERTY_AC_BONUS);
+   
 }
 
 void RitDR(object oPC, object oSkin, int iLevel)

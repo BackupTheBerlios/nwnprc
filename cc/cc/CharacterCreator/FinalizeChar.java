@@ -76,7 +76,7 @@ public class FinalizeChar {
 
         spellcaster = (packagesmap[packages.School] != null);
         domains = (packagesmap[packages.Domain1] != null || packagesmap[packages.Domain2] != null);
-        wizardclass = (menucreate.MainCharDataAux[3][classes.SpellGainTable] != null || packagesmap[packages.SpellPref2DA] != null);
+        wizardclass = (menucreate.MainCharDataAux[3][classes.SpellGainTable] != null &&  menucreate.MainCharDataAux[3][classes.SpellKnownTable] == null);
 
         //Equipment start
         String equip2da = packagesmap[packages.Equip2DA];

@@ -74,10 +74,10 @@ const string PERMANENCY_SUFFIX = "_permanent";
 // Unless bPermanent is set, the script will be removed from the
 // list once it has fired
 //
-// bOnlyOne being set makes the function first check if a script with the same
+// bAllowDuplicate being set makes the function first check if a script with the same
 // name is already queued for the event and avoids adding a duplicate. This
-// will not remove already present duplicates, though.
-void AddEventScript(object oPC, int nEventType, string sScript, int bPermanent = FALSE, int bOnlyOne = TRUE);
+// will not remove duplicates already present, though.
+void AddEventScript(object oPC, int nEventType, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE);
 
 // Removes all instances of the given script from the event's hook.
 // By default, this removes the script both from one-shot and permanent hooks,
@@ -108,7 +108,7 @@ string EventTypeIdToName(int nEventType);
 //////////////////////////////////////////////////
 
 
-void AddEventScript(object oPC, int nEventType, string sScript, int bPermanent = FALSE, int bOnlyOne = TRUE){
+void AddEventScript(object oPC, int nEventType, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE){
 	string sArrayName = EventTypeIdToName(nEventType);
 	
 	// Abort if the event type wasn't valid
@@ -124,7 +124,7 @@ void AddEventScript(object oPC, int nEventType, string sScript, int bPermanent =
 	
 	// Check for duplicates if necessary
 	int bAdd = TRUE;
-	if(bOnlyOne){
+	if(bAllowDuplicate){
 		int i = 0;
 		for(; i <= persistant_array_get_size(oPC, sArrayName); i++){
 			if(persistant_array_get_string(oPC, sArrayName, i) == sScript){
@@ -243,7 +243,12 @@ string GetNextEventScript(object oPC, int nEventType, int bPermanent){
 	sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
 	
 	int nIndex = GetLocalInt(oPC, sArrayName + "_index");
-	SetLocalInt(oPC, sArrayName + "_index", nIndex + 1);
+	if(nIndex)
+		SetLocalInt(oPC, sArrayName + "_index", nIndex + 1);
+	else{
+		WriteTimestampedLogEntry("GetNextEventScript called without first calling GetFirstEventScript");
+		return "";
+	}
 	
 	return persistant_array_get_string(oPC, sArrayName, nIndex);
 }

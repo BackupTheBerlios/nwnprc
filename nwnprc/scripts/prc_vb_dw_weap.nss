@@ -26,11 +26,11 @@ void main()
      {
      iDam = d6(3);
      }
-     else if (nVassal = 10)
+     else if (nVassal == 10)
      {
      iDam = d6(4);
      }
-     eDam = EffectDamage(iDam);
+     eDam = EffectDamage(iDam, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_ENERGY);
      if (GetRacialType(oTarget)==RACIAL_TYPE_DRAGON)
      {
          if (GetAlignmentGoodEvil(oTarget)==ALIGNMENT_EVIL)

@@ -78,6 +78,15 @@ void main()
                else
                  iMod = 0;
              }
+
+                //Zen Archery -- they already add their wisdom, shouldn't do it again.
+                if ((GetBaseItemType(oItem) == BASE_ITEM_LIGHTCROSSBOW ||
+                     GetBaseItemType(oItem) == BASE_ITEM_HEAVYCROSSBOW) &&
+                     GetHasFeat(FEAT_ZEN_ARCHERY, oPC)
+                {
+                   iMod = 0;
+                }
+
              SetLocalInt(oPC,"IAtk",iMod);
               SendMessageToPC(OBJECT_SELF,"iMod "+IntToString(iMod));
              RemoveEffectsFromSpell(OBJECT_SELF,SPELL_INTUITIVE_ATK); 

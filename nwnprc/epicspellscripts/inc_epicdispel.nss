@@ -105,7 +105,7 @@ int ReorderEffects(int nCasterLevel, int nSpellID, object oTarget, object oCaste
 
    for(nPlace = 0; nPlace <= nIndex; nPlace++)
    {
-      SendMessageToPC(OBJECT_SELF, "reorder for loop is happening at least once.");
+//      SendMessageToPC(OBJECT_SELF, "reorder for loop is happening at least once.");
       nEffectSpellID = GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nPlace));
       oEffectCaster = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nPlace));
       nEffectCastLevel = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nPlace));
@@ -126,7 +126,7 @@ int ReorderEffects(int nCasterLevel, int nSpellID, object oTarget, object oCaste
              SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nRealIndex), nEffectCastLevel);
              SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nRealIndex),oEffectCaster );
              SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex),nWeave);
-             SendMessageToPC(OBJECT_SELF, "Index is incrementing.");
+ //            SendMessageToPC(OBJECT_SELF, "Index is incrementing.");
              nRealIndex++;
           }// end of if is the same as the current spell and caster
       }// end of if is valid effect statement
@@ -291,7 +291,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
   int ModWeave;
  
  int Weave = GetHasFeat(FEAT_SHADOWWEAVE,OBJECT_SELF)+ GetLocalInt(OBJECT_SELF, "X2_AoE_SpecDispel");
- SendMessageToPC(GetFirstPC(), "Weave Caster:"+ IntToString(Weave));
+ //SendMessageToPC(GetFirstPC(), "Weave Caster:"+ IntToString(Weave));
 
   for(nCurrentEntry = 0; nCurrentEntry <= nLastEntry; nCurrentEntry++)
   {
@@ -308,7 +308,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
       if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
 
       int iDice = d20(1);
-      SendMessageToPC(GetFirstPC(), "Dispell :"+ IntToString(iDice + nCasterLevel)+" vs DC "+IntToString(11 + nEffectCastLevel+ModWeave));
+ //     SendMessageToPC(GetFirstPC(), "Dispell :"+ IntToString(iDice + nCasterLevel)+" vs DC "+IntToString(11 + nEffectCastLevel+ModWeave));
       if(iDice + nCasterLevel >= 11 + nEffectCastLevel+ModWeave)
       {
         if(nEffectSpellID != SPELL_INFESTATION_OF_MAGGOTS)
@@ -388,7 +388,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
   effect eToDispel;
 
   int Weave = GetHasFeat(FEAT_SHADOWWEAVE,OBJECT_SELF)+ GetLocalInt(OBJECT_SELF, "X2_AoE_SpecDispel");
-  SendMessageToPC(GetFirstPC(), "Weave Caster:"+ IntToString(Weave));
+//  SendMessageToPC(GetFirstPC(), "Weave Caster:"+ IntToString(Weave));
 
   //:: Do the dispel check for each and every spell in effect on oTarget.
   for(nIndex; nIndex < nLastEntry; nIndex++)
@@ -403,7 +403,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
       if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
       
       int iDice = d20(1);
-      SendMessageToPC(GetFirstPC(), "Dispell :"+ IntToString(iDice + nCasterLevel)+" vs DC "+IntToString(11 + nEffectCasterLevel+ModWeave));
+//      SendMessageToPC(GetFirstPC(), "Dispell :"+ IntToString(iDice + nCasterLevel)+" vs DC "+IntToString(11 + nEffectCasterLevel+ModWeave));
       if(iDice + nCasterLevel >= 11 + nEffectCasterLevel+ModWeave)
       {
         oEffectCaster = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex));

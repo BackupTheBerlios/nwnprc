@@ -25,9 +25,9 @@ void ResCold(object oPC ,object oSkin ,int iLevel)
 void RitScar(object oPC ,object oSkin, int iLevel)
 {
    if(GetLocalInt(oSkin, "RitScarAC") == iLevel) return;
-   
+
     SetCompositeBonus(oSkin, "RitScarAC", iLevel,ITEM_PROPERTY_AC_BONUS);
-   
+
 }
 
 void RitDR(object oPC, object oSkin, int iLevel)
@@ -57,8 +57,9 @@ void main()
      }
 
      int bRitScar=GetHasFeat(FEAT_RIT_SCAR, oPC) ? 1 : 0;
-
-     if(GetLevelByClass(CLASS_TYPE_RUNESCARRED, oPC) >= 6)
+         bRitScar=GetHasFeat(FEAT_RIT_SCAR_2, oPC) ? 2 : bRitScar;
+         bRitScar=GetHasFeat(FEAT_RIT_SCAR_3, oPC) ? 3 : bRitScar;
+     /*if(GetLevelByClass(CLASS_TYPE_RUNESCARRED, oPC) >= 6)
      {
      bRitScar = 2;
      }
@@ -67,7 +68,7 @@ void main()
      {
      bRitScar = 3;
      }
-
+     */
     int bResCold=GetHasFeat(FEAT_SPAWNFROST, oPC) ? IP_CONST_DAMAGERESIST_5 : 0;
 
     if (bResCold>0) ResCold(oPC,oSkin,bResCold);

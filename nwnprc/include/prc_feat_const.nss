@@ -773,6 +773,8 @@ const int FEAT_NS_SHADOWWALK        = 2973;
 const int FEAT_RIT_SCAR             = 2369;
 const int FEAT_SPAWNFROST           = 2371;
 const int FEAT_RIT_DR               = 2370;
+const int FEAT_RIT_SCAR_2           = 2375;
+const int FEAT_RIT_SCAR_3           = 2376;
 
 // Ultimate Ranger
 

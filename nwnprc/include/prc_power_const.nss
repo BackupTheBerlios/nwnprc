@@ -45,6 +45,7 @@ const	int	POWER_FARHAND			= 14032;
 const	int	POWER_MATTERAGITATION		= 14033;
 const	int	POWER_SKATE			= 14034;
 const	int	POWER_TELEMPATHICPRO		= 14035;
+const   int POWER_ASTRALCONSTRUCT   = -1; // FIX ME
 
 // Level 2 Powers
 const	int	POWER_BESTOWPOWER		= 14051;

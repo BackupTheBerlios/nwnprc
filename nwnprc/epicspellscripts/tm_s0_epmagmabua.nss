@@ -29,7 +29,8 @@ void main()
     float fDelay;
     // Boneshank - Added in the nDC formula.
     int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +
-                GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
+		GetChangesToSaveDC() +
+		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
 
     oTarget = GetEnteringObject();
 

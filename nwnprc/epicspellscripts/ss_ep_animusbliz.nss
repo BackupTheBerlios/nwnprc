@@ -23,7 +23,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ANBLIZZ_DC, ANBLIZZ_S, ANBLIZZ_XP))
     {
         float fDelay;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) +
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, ANBLIZZ_S);
         int nDam;
         effect eExplode = EffectVisualEffect(VFX_IMP_PULSE_COLD);

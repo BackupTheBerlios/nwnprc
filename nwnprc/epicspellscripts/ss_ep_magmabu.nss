@@ -31,7 +31,7 @@ void main()
         object oCaster = OBJECT_SELF;
         object oTarget;
         // Boneshank - Added in the nDC formula.
-        int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +
+        int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + GetChangesToSaveDC() +
                 GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
         float fDelay;
         int nDamage;

@@ -16,7 +16,7 @@ void main()
 {
     object oTarget;
     object oCreator = GetAreaOfEffectCreator();
-    int nDC = GetEpicSpellSaveDC(oCreator) +
+    int nDC = GetEpicSpellSaveDC(oCreator) + GetChangesToSaveDC() +
         GetDCSchoolFocusAdjustment(oCreator, RAINFIR_S);
     int nDamage;
     effect eDam;

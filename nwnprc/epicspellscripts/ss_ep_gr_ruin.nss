@@ -20,6 +20,7 @@
 #include "x2_inc_spellhook"
 #include "x0_I0_SPELLS"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -36,7 +37,9 @@ void main()
         float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
         float fDelay = fDist/(3.0 * log(fDist) + 2.0);
 
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, GR_RUIN_S);
+        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF)
+			+ GetDCSchoolFocusAdjustment(OBJECT_SELF, GR_RUIN_S)
+			+ GetChangesToSaveDC();
 
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));

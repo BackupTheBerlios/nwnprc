@@ -21,7 +21,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, A_STONE_DC, A_STONE_S, A_STONE_XP))
     {
         float fDelay;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) +
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, A_STONE_S);
         effect eExplode = EffectVisualEffect(VFX_FNF_NATURES_BALANCE);
         effect eVis = EffectVisualEffect(VFX_COM_CHUNK_STONE_MEDIUM);

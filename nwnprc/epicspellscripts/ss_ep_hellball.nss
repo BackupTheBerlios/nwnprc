@@ -14,6 +14,7 @@
 #include "x2_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -31,7 +32,7 @@ void main()
         effect eVis2 = EffectVisualEffect(VFX_IMP_ACID_L);
         effect eVis3 = EffectVisualEffect(VFX_IMP_SONIC);
 
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, HELBALL_S);
+        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, HELBALL_S) + GetChangesToSaveDC();
 
         // if this option has been enabled, the caster will take damage for casting
         // epic spells, as descripbed in the ELHB

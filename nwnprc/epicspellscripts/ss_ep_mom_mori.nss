@@ -19,7 +19,7 @@ void main()
         //Declare major variables
         object oTarget = GetSpellTargetObject();
         int nDamage;
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + 10 +
+        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + 10 + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, MORI_S);
         effect eDam;
         effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);

@@ -23,7 +23,7 @@ void main()
     {
         float fDelay;
         int nDuration = 20;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) +
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, MASSPEN_S);
         effect eExplode = EffectVisualEffect(VFX_FNF_MYSTICAL_EXPLOSION);
         effect eDuration = EffectVisualEffect(VFX_DUR_PIXIEDUST);

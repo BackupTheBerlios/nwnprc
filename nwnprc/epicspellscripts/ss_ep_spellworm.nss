@@ -26,7 +26,7 @@ void main()
     {
         object oTarget = GetSpellTargetObject();
         int nDuration = FloatToInt(HoursToSeconds(20) / 6);
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) +
+        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, SP_WORM_S);
         effect eVis = EffectVisualEffect(VFX_IMP_HEAD_MIND);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));

@@ -21,6 +21,7 @@ void main()
 //    effect eVis = EffectVisualEffect( VFX_COM_CHUNK_RED_MEDIUM ); // Alternative Death VFX
     float fDelay;
     int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + // Boneshank - added.
+		GetChangesToSaveDC() +
         GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), TOLO_KW_S);
 
     //Get the first object entering the area

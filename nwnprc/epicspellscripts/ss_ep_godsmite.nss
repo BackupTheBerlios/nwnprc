@@ -6,6 +6,7 @@
 #include "x2_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -22,7 +23,7 @@ void main()
         int nDam, nDamGoodEvil, nDamLawChaos, nCount;
         location lTarget;
 
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, GODSMIT_S);
+        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, GODSMIT_S) + GetChangesToSaveDC();
 
         // if this option has been enabled, the caster will take backlash damage
         if (BACKLASH_DAMAGE == TRUE)

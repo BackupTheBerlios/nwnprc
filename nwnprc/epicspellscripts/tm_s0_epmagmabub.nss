@@ -16,6 +16,7 @@
 // Boneshank - Added below include files for needed functions.
 #include "x2_I0_SPELLS"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -26,7 +27,8 @@ void main()
     float fDelay;
     // Boneshank - Added in the nDC formula.
     int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +
-                GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
+		GetChangesToSaveDC() +
+		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
     //Declare and assign personal impact visual effect.
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
 

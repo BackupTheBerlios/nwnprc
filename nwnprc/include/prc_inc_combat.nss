@@ -25,11 +25,15 @@
 //:: Sneak Attack Functions
 //:://////////////////////////////////////////////
 //:: Things to Test:
+//:: Attack Bonuses - enchanted and non.
 //:: Dark Fire and Flame Weapon
 //:: Unarmed Damage
+//:: Cleave, Great Cleave, and Cirlce Kick
 //:://////////////////////////////////////////////
 //:: Known Issues: 
-//:: Cleave, Great Cleave, and Cirlce Kick
+//:: Tempests seem to get an additional +2 with off-hand light weapons
+//:: when they have Absolute Ambidexterity, not sure if this is an issue specifically 
+//:: with tempests, or if it's for all two-weapon fighting
 //:://////////////////////////////////////////////
 
 // #include "prc_feat_const"   <-- Inherited
@@ -198,10 +202,16 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
 // iCriticalMultiplier 0 = calculate itl Anything else is the damage multiplier on a critical hit
 effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struct BonusDamage sWeaponBonusDamage, struct BonusDamage sSpellBonusDamage, int iMainHand = 0, int iDamage = 0, int bIsCritical = FALSE, int iNumDice = 0, int iNumSides = 0, int iCriticalMultiplier = 0);
 
-// Function used by Perform Attack Round to perform the attacks
-// Used because I needed to delay the for loops in order to properly
-// simulate the attack timing.
-void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct BonusDamage sWeaponDamage, struct BonusDamage sSpellBonusDamage, int iWeaponDamageRound, effect eSpecialEffect, float eDuration, int iDamageBonus, int iDamageBonusType, string sMessageSuccess, string sMessageFailure, int bEffectAllAttacks, int iMainHand, int iAttackBonus, int iMod, int iNumDice, int iNumSides, int iCritMult, int bIsRangedWeapon);
+// Due to the lack of a proper sleep function in order to delay attacks properly
+// I needed to make a separate function to control the logic of each attack.
+// AttackLoopMain calls this function, which in turn uses a delay and calls AttackLoopMain.
+// This allowed a proper way to delay the function.
+void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int iMainHand, int bIsCleaveAttack);
+
+// Function used by PerformAttackRound to control the flow of logic
+// this function calls AttackLoopLogic which then calls this function again
+// making them recursive until the AttackLoopMain stops calling AttackLoopLogic
+void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage);
 
 // Performs a full attack round and can add in bonus damage damage/effects
 // Will perform all attacks and accounts for weapontype, haste, twf, tempest twf, etc.
@@ -239,16 +249,40 @@ struct BonusDamage
      int dam_Slash, dam_Pier, dam_Blud;
 };
 
-// Vars needed to pass between AttackLoopLogic and PerformAttackRound
+struct AttackLoopVars
+{
+     // these variables don't change during the attack loop logic, they are just 
+     // recursively passed back to the function.
+
+     // the delay of the functions recursion and the duration of the eSpecialEffect
+     float fDelay, eDuration;
+     
+     // does the special effect apply to all attacks? is it a ranged weapon?
+     int bEffectAllAttacks, bIsRangedWeapon;
+     
+     // Ammo if it is a ranged weapon, and both main and off-hand weapons
+     object oAmmo, oWeaponR, oWeaponL;
+     
+     // all the main hand weapon data
+     int iMainNumDice, iMainNumSides, iMainCritMult, iMainAttackBonus, iMainWeaponDamageRound;
+     
+     // all the off hand weapon data
+     int iOffHandNumDice, iOffHandNumSides, iOffHandCritMult, iOffHandAttackBonus, iOffHandWeaponDamageRound; 
+
+     // special effect applied on first attack, or all attacks
+     effect eSpecialEffect;
+
+     //  the damage modifier and damage type for extra damage from special attacks
+     int iDamageModifier, iDamageType;
+     
+     // string displayed on a successful hit, or a miss
+     string sMessageSuccess, sMessageFailure;     
+};
+
+// Vars needed to pass between AttackLoopMain and AttackLoopLogic
 int iCleaveAttacks = 0;
 int iCircleKick = 0;
-int bFirstAttack = FALSE;
-
-// global vars passed between AttackLoopLogic and PerformAttackRound
-object gDefender;
-int gMainHandAttacks = 0;
-int gOffHandAttacks = 0;
-int gBonusMainHandAttacks = 0;
+int bFirstAttack = TRUE;
 
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
@@ -2903,82 +2937,134 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      return eLink;
 }
 
-void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct BonusDamage sWeaponDamage, struct BonusDamage sSpellBonusDamage, int iWeaponDamageRound, effect eSpecialEffect, float eDuration, int iDamageBonus, int iDamageBonusType, string sMessageSuccess, string sMessageFailure, int bEffectAllAttacks, int iMainHand, int iAttackBonus, int iMod, int iNumDice, int iNumSides, int iCritMult, int bIsRangedWeapon)
-{         
-     string sMes2 = "Current Target = " + GetName(gDefender); 
-     FloatingTextStringOnCreature(sMes2, oAttacker, FALSE);
+void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int iMainHand, int bIsCleaveAttack)
+{
+     // if there is no valid target, then no attack
+     if( !GetIsObjectValid(oDefender) )
+     {
+         return;                  
+     }  
 
-     // If they are not within 5 ft, they can't do a melee attack.
-     // Move to the new target so that you can next round.
-     if(!GetIsInMeleeRange(gDefender, oAttacker) && !bIsRangedWeapon )
+     // If they are not within melee range
+     // Move to the new target so that you can attack next round.
+     if(!GetIsInMeleeRange(oDefender, oAttacker) && !sAttackVars.bIsRangedWeapon )
      {
-         AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(gDefender), TRUE) );
+         AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(oDefender), TRUE) );
          return;
-     }     
-     
+     }       
+
      effect eDamage;
+     string sMes = "";
      int iAttackRoll = 0;
+     int bIsCritcal = FALSE;
      
+     // set duration type of special effect based on passed value
      int iDurationType = DURATION_TYPE_INSTANT;
-     if ( eDuration > 0.0) iDurationType = DURATION_TYPE_TEMPORARY;
-     if (eDuration < 0.0)  iDurationType = DURATION_TYPE_PERMANENT;
+     if (sAttackVars.eDuration > 0.0) iDurationType = DURATION_TYPE_TEMPORARY;
+     if (sAttackVars.eDuration < 0.0) iDurationType = DURATION_TYPE_PERMANENT;
      
-     if(GetCurrentHitPoints(gDefender) > 0 || GetIsObjectValid(gDefender))
+     // check defender HP and validity before attacking
+     if(GetCurrentHitPoints(oDefender) > 0 || GetIsObjectValid(oDefender))
      {
+          // set weapon variables to right hand
+          object oWeapon   = sAttackVars.oWeaponR;
+          int iAttackBonus = sAttackVars.iMainAttackBonus;
+          int iWeaponDamageRound = sAttackVars.iMainWeaponDamageRound;
+          int iNumDice  = sAttackVars.iMainNumDice;
+          int iNumSides = sAttackVars.iMainNumSides;
+          int iCritMult = sAttackVars.iMainCritMult;
+          struct BonusDamage sWeaponDamage = sMainWeaponDamage;          
+          
+          // if attack is from left hand set vars to left hand values
+          if (iMainHand == 1)
+          {
+              oWeapon   = sAttackVars.oWeaponL;
+              iAttackBonus = sAttackVars.iOffHandAttackBonus;
+              iWeaponDamageRound = sAttackVars.iOffHandWeaponDamageRound;
+              iNumDice  = sAttackVars.iOffHandNumDice;
+              iNumSides = sAttackVars.iOffHandNumSides;
+              iCritMult = sAttackVars.iOffHandCritMult;
+              sWeaponDamage = sOffHandWeaponDamage;
+          }
+          
           // animation code
-          if(!bIsRangedWeapon)
+          if(!sAttackVars.bIsRangedWeapon)
           {
           }
           else
           {
           }
-     
-          iAttackRoll = GetAttackRoll(gDefender, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0);
-          if(iAttackRoll == 2)      eDamage = GetAttackDamage(gDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, TRUE, iNumDice, iNumSides, iCritMult);
-          else if(iAttackRoll == 1) eDamage = GetAttackDamage(gDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, FALSE, iNumDice, iNumSides, iCritMult);
-     
+          
+          // code to perform actual attack
+          iAttackRoll = GetAttackRoll(oDefender, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0);
+
+          if (iAttackRoll == 2) bIsCritcal = TRUE;
+          eDamage = GetAttackDamage(oDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, bIsCritcal, iNumDice, iNumSides, iCritMult);
+          
           if(iAttackRoll > 0)
           {
-              ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, gDefender);
+              ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oDefender);
           }
-     
-          if(bEffectAllAttacks && iAttackRoll > 0)
+          
+          // if special effect applies to all attacks and you hit them
+          if(sAttackVars.bEffectAllAttacks && iAttackRoll > 0)
           {
-               if(iDamageBonus > 0)
+               if(sAttackVars.iDamageModifier > 0)
                {
-                    int iDamagePower = GetDamagePowerConstant(oWeapon, gDefender, oAttacker);
-                    effect eBonusDamage = EffectDamage(iDamageBonus, iDamageBonusType, iDamagePower);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, gDefender);
+                    int iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
+                    effect eBonusDamage = EffectDamage(sAttackVars.iDamageModifier, sAttackVars.iDamageType, iDamagePower);
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, oDefender);
                }
                
-               ApplyEffectToObject(iDurationType, eSpecialEffect, gDefender, eDuration);
-               FloatingTextStringOnCreature(sMessageSuccess, oAttacker, FALSE);
+               ApplyEffectToObject(iDurationType, sAttackVars.eSpecialEffect, oDefender, sAttackVars.eDuration);
+               FloatingTextStringOnCreature(sAttackVars.sMessageSuccess, oAttacker, FALSE);
           }
-          else if(bEffectAllAttacks && iAttackRoll == 0)
+          // if special applies to all attacks and you miss
+          else if(sAttackVars.bEffectAllAttacks && iAttackRoll == 0)
           {
-               FloatingTextStringOnCreature(sMessageFailure, oAttacker, FALSE);
+               FloatingTextStringOnCreature(sAttackVars.sMessageFailure, oAttacker, FALSE);
           }
           // first attack in main hand, apply special effect
-          else if(bFirstAttack && !bEffectAllAttacks &&  iAttackRoll > 0)
+          else if(bFirstAttack && !sAttackVars.bEffectAllAttacks &&  iAttackRoll > 0)
           {
-               if(iDamageBonus > 0)
+               if(sAttackVars.iDamageModifier > 0)
                {
-                    int iDamagePower = GetDamagePowerConstant(oWeapon, gDefender, oAttacker);
-                    effect eBonusDamage = EffectDamage(iDamageBonus, iDamageBonusType, iDamagePower);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, gDefender);
+                    int iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
+                    effect eBonusDamage = EffectDamage(sAttackVars.iDamageModifier, sAttackVars.iDamageType, iDamagePower);
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, oDefender);
                }
 
-               ApplyEffectToObject(iDurationType, eSpecialEffect, gDefender, eDuration);
-               FloatingTextStringOnCreature(sMessageSuccess, oAttacker, FALSE);
+               ApplyEffectToObject(iDurationType, sAttackVars.eSpecialEffect, oDefender, sAttackVars.eDuration);
+               FloatingTextStringOnCreature(sAttackVars.sMessageSuccess, oAttacker, FALSE);
                bFirstAttack = FALSE;
           }
-     
-          // Code to remove ammo from inventory after an attack is made
-          if( bIsRangedWeapon )
+          // first attack, only applies to first attack, and you miss
+          else if(bFirstAttack && !sAttackVars.bEffectAllAttacks && iAttackRoll == 0)
           {
-               SetItemStackSize(oAmmo, (GetItemStackSize(oAmmo) - 1) );
+               FloatingTextStringOnCreature(sAttackVars.sMessageFailure, oAttacker, FALSE);
+               bFirstAttack = FALSE;
           }
-     
+          
+          // if this attack is a cleave attack
+          if(bIsCleaveAttack && iAttackRoll > 0)
+          {
+              if(GetHasFeat(FEAT_GREAT_CLEAVE, oAttacker)) sMes = "*Great Cleave Hit*";
+              else if(GetHasFeat(FEAT_CLEAVE, oAttacker))  sMes = "*Cleave Attack Hit*";
+              FloatingTextStringOnCreature(sMes, oAttacker, FALSE);            
+          }
+          else if(bIsCleaveAttack)
+          {
+              if(GetHasFeat(FEAT_GREAT_CLEAVE, oAttacker)) sMes = "*Great Cleave Miss*";
+              else if(GetHasFeat(FEAT_CLEAVE, oAttacker))  sMes = "*Cleave Attack Miss*"; 
+              FloatingTextStringOnCreature(sMes, oAttacker, FALSE);            
+          }          
+
+          // Code to remove ammo from inventory after an attack is made
+          if( sAttackVars.bIsRangedWeapon )
+          {
+               SetItemStackSize(sAttackVars.oAmmo, (GetItemStackSize(sAttackVars.oAmmo) - 1) );
+          }
+          
           // code for circle kick
           if(GetHasFeat(FEAT_CIRCLE_KICK, oAttacker) &&
              GetHasMonkWeaponEquipped(oAttacker) &&
@@ -2989,11 +3075,11 @@ void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct Bonu
                int iVal = 1;
                int bNoEnemyInRange = FALSE;
                object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
-               while(oTarget != gDefender || !bNoEnemyInRange )
+               while(oTarget != oDefender || !bNoEnemyInRange )
                {
                     iVal += 1;
                     oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
-                    if(!GetIsInMeleeRange(gDefender, oAttacker) )
+                    if(!GetIsInMeleeRange(oDefender, oAttacker) )
                          bNoEnemyInRange = TRUE;
                }
                
@@ -3006,20 +3092,23 @@ void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct Bonu
                     if(iAttackRoll > 0)
                     {            
                          ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
-                         string sMes = "*Circle Kick Hit*"; 
+                         sMes = "*Circle Kick Hit*"; 
                          FloatingTextStringOnCreature(sMes, oAttacker, FALSE);
                     }
+                    else
+                    {
+                         sMes = "*Circle Kick Miss*"; 
+                         FloatingTextStringOnCreature(sMes, oAttacker, FALSE);                  
+                    }
                }
-               iCircleKick += 1;
+               iCircleKick = 1;
           }
      }
-     
+
      // checks hp of enemy to see if they are alive still or not
-     if(GetCurrentHitPoints(gDefender) < 1 || !GetIsObjectValid(gDefender))
-     {    
-          string sMes = "All your base are belong to us."; 
-          FloatingTextStringOnCreature(sMes, oAttacker, FALSE);
-     
+     if(GetCurrentHitPoints(oDefender) < 1 || !GetIsObjectValid(oDefender))
+     { 
+          // if enemy is dead find a new target
           int iVal = 1;
           object oNewDefender = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
           while( !GetIsObjectValid(oNewDefender) || GetCurrentHitPoints(oNewDefender) < 1)
@@ -3027,105 +3116,133 @@ void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct Bonu
                iVal += 1;
                oNewDefender = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1); 
           }
-
-          sMes = "New Target = " + GetName(oNewDefender); 
-          sMes += "  | HP = " + IntToString(GetCurrentHitPoints(oNewDefender));
-          FloatingTextStringOnCreature(sMes, oAttacker, FALSE); 
           
-          gDefender = oNewDefender;
+          oDefender = oNewDefender;
 
-          sMes = "gDefender = " + GetName(gDefender); 
-          sMes += "  | HP = " + IntToString(GetCurrentHitPoints(gDefender));
-          FloatingTextStringOnCreature(sMes, oAttacker, FALSE); 
-          
-          // if the new target is invalid somehow, then turn off anymore attacks
-          if( !GetIsObjectValid(gDefender) )
+          // if there is no new valid target, then no more attacks
+          if( !GetIsObjectValid(oDefender) )
           {
-              // if there is no valid enemies
-              // no more attacks this round
-              gMainHandAttacks = 0;
-              gOffHandAttacks = 0;
-              gBonusMainHandAttacks = 0;
-
-              gDefender = OBJECT_INVALID;
+              oDefender = OBJECT_INVALID;
               oNewDefender = OBJECT_INVALID;
               SendMessageToPC(oAttacker, "No new valid targets to attack!");
               return;                  
-          }
-          
-          if(!GetIsInMeleeRange(gDefender, oAttacker) && !bIsRangedWeapon )
+          }      
+
+          if(!GetIsInMeleeRange(oDefender, oAttacker) && !sAttackVars.bIsRangedWeapon )
           {
-              // if no person is close enough, run to the nearest target
-              // turn off anymore attacks this round as it would take an action to move.
-              gMainHandAttacks = 0;
-              gOffHandAttacks = 0;
-              gBonusMainHandAttacks = 0;
-              
-              AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(gDefender), TRUE) );
+              // if no enemy is close enough, run to the nearest target
+              AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(oDefender), TRUE) );
               return;
           }
-          else if(!bIsRangedWeapon)
+          else if(!sAttackVars.bIsRangedWeapon)
           {
+               //check for cleave
                if( GetHasFeat(FEAT_GREAT_CLEAVE, oAttacker) || 
                    (GetHasFeat(FEAT_CLEAVE, oAttacker) && iCleaveAttacks == 0)
                  )
                {
-                    iAttackRoll = GetAttackRoll(gDefender, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0);
-                    if(iAttackRoll == 2)      eDamage = GetAttackDamage(gDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, TRUE, iNumDice, iNumSides, iCritMult);
-                    else if(iAttackRoll == 1) eDamage = GetAttackDamage(gDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, FALSE, iNumDice, iNumSides, iCritMult);
-               
-                    if(iAttackRoll > 0)
-                    {
-                         string sMes = "";
-                         if(GetHasFeat(FEAT_GREAT_CLEAVE, oAttacker)) sMes = "*Great Cleave Hit*";
-                         else if(GetHasFeat(FEAT_CLEAVE, oAttacker)) sMes = "*Cleave Attack Hit*";
-                    
-                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, gDefender);
-                         FloatingTextStringOnCreature(sMes, oAttacker, FALSE);
-                    }
+                    // perform cleave
+                    // recall this function with Cleave = TRUE
                     iCleaveAttacks += 1;
+                    
+                    AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, iMainHand, TRUE);
+                    return;
                }
           }
+     }
+     
+     // Has the same number of main and off-hand attacks left
+     // thus the player has attacked with both main and off-hand
+     // and should now have -5 to their next attack iterations.
+     if(iOffHandAttacks > 0 && iMainAttacks == iOffHandAttacks && !bIsCleaveAttack)
+     {
+          iMod -= 5;
+     }
+     else if(iOffHandAttacks == 0 && iBonusAttacks == 0 && !bIsCleaveAttack)
+     {
+          // if iOffHandAttacks = 0  and iBonusAttacks <= 0
+          // then the player only has main hand attacks
+          // thus they should have their attack decremented
+          iMod -= 5;
+     }
+
+     // go back to main part of loop
+     DelayCommand(sAttackVars.fDelay, AttackLoopMain(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage) );
+}
+
+void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage)
+{
+     // perform all bonus attacks
+     if(iBonusAttacks > 0)
+     {
+          iBonusAttacks --;
+          AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE);
+     }
+          
+     // perform main attack first, then off-hand attack
+     if(iBonusAttacks == 0 && iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
+     {
+          iMainAttacks --;
+          AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE);
+     }
+     else if(iOffHandAttacks > 0)
+     {
+          iOffHandAttacks --;
+          AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 1, FALSE);
      }
 }
 
 void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "")
 {
-     // set the global vars initial value
-     gDefender = oDefender;
+     // create struct for attack loop logic
+     struct AttackLoopVars sAttackVars;
      
-     object oWeaponR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oAttacker);
-     object oWeaponL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oAttacker);
+     // set variables required in attack loop logic
+     sAttackVars.oWeaponR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oAttacker);
+     sAttackVars.oWeaponL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oAttacker);
+     sAttackVars.bIsRangedWeapon = GetWeaponRanged(sAttackVars.oWeaponR);
      
-     int bIsRangedWeapon = GetWeaponRanged(oWeaponR);
-     int bIsTwoHandedMeleeWeapon = GetIsTwoHandedMeleeWeapon(oWeaponR);
-
+     sAttackVars.iDamageModifier = iDamageModifier;
+     sAttackVars.iDamageType = iDamageType;
+     
+     sAttackVars.eSpecialEffect = eSpecialEffect;
+     sAttackVars.eDuration = eDuration;
+     sAttackVars.bEffectAllAttacks = bEffectAllAttacks;
+     sAttackVars.sMessageSuccess = sMessageSuccess;
+     sAttackVars.sMessageFailure = sMessageFailure;
+     
+     // are they using a two handed weapon?
+     int bIsTwoHandedMeleeWeapon = GetIsTwoHandedMeleeWeapon(sAttackVars.oWeaponR);
+     
+     // are they unarmed?
      int bIsUnarmed = FALSE;
-     if(GetBaseItemType(oWeaponR) == BASE_ITEM_INVALID) bIsUnarmed = TRUE;
+     if(GetBaseItemType(sAttackVars.oWeaponR) == BASE_ITEM_INVALID) bIsUnarmed = TRUE;
      
      // if player is unarmed use gloves as weapon
-     if(bIsUnarmed) oWeaponR = GetItemInSlot(INVENTORY_SLOT_ARMS, oAttacker);
+     if(bIsUnarmed) sAttackVars.oWeaponR = GetItemInSlot(INVENTORY_SLOT_ARMS, oAttacker);
      
+     // is the player is using two weapons?
      int bIsUsingTwoWeapons = FALSE;
-     if(!bIsRangedWeapon && !bIsUnarmed && GetBaseItemType(oWeaponL) != BASE_ITEM_INVALID )  bIsUsingTwoWeapons = TRUE;
+     if(!sAttackVars.bIsRangedWeapon && !bIsUnarmed && GetBaseItemType(sAttackVars.oWeaponL) != BASE_ITEM_INVALID )  bIsUsingTwoWeapons = TRUE;
      
      // determine attack bonus and num attacks
-     int iMainAttackBonus = GetAttackBonus(oDefender, oAttacker, oWeaponR, 0);
-     gMainHandAttacks = GetMainHandAttacks(oAttacker);
-     //int iBonusMainHandAttacks = 0;
+     sAttackVars.iMainAttackBonus = GetAttackBonus(oDefender, oAttacker, sAttackVars.oWeaponR, 0);
+     
+     // number of attacks with main hand
+     int iMainHandAttacks = GetMainHandAttacks(oAttacker);
      
      // Determine physical damage per round (cached for multiple use)
-     int iMainWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, oWeaponR, 0);
+     sAttackVars.iMainWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponR, 0);
      
      // varaibles that store extra damage dealt
      struct BonusDamage sSpellBonusDamage = GetMagicalBonusDamage(oAttacker);
-     struct BonusDamage sMainWeaponDamage = GetWeaponBonusDamage(oWeaponR, oDefender);
+     struct BonusDamage sMainWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponR, oDefender);
      
      // get weapon information
-     int iMainWeaponType = GetBaseItemType(oWeaponR);
-     int iMainNumSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iMainWeaponType));
-     int iMainNumDice = StringToInt(Get2DAString("baseitems", "NumDice", iMainWeaponType));
-     int iMainCritMult = GetWeaponCritcalMultiplier(oAttacker, oWeaponR);
+     int iMainWeaponType = GetBaseItemType(sAttackVars.oWeaponR);
+     sAttackVars.iMainNumSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iMainWeaponType));
+     sAttackVars.iMainNumDice = StringToInt(Get2DAString("baseitems", "NumDice", iMainWeaponType));
+     sAttackVars.iMainCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponR);
      
      // Returns proper unarmed damage if they are a monk
      // or have a creature weapon from a PrC class. - Brawler, Shou, IoDM, etc.
@@ -3136,96 +3253,96 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           switch(iDamage)
           {
                case MONST_DAMAGE_1D3:
-                    iMainNumSides = 3;
-                    iMainNumDice = 1;
+                    sAttackVars.iMainNumSides = 3;
+                    sAttackVars.iMainNumDice = 1;
                     break;
                case MONST_DAMAGE_1D4:
-                    iMainNumSides = 4;
-                    iMainNumDice  = 1;
+                    sAttackVars.iMainNumSides = 4;
+                    sAttackVars.iMainNumDice  = 1;
                     break;
                case MONST_DAMAGE_1D6:
-                    iMainNumSides = 6;
-                    iMainNumDice  = 1;
+                    sAttackVars.iMainNumSides = 6;
+                    sAttackVars.iMainNumDice  = 1;
                     break;
                case MONST_DAMAGE_1D8:
-                    iMainNumSides = 8;
-                    iMainNumDice  = 1;
+                    sAttackVars.iMainNumSides = 8;
+                    sAttackVars.iMainNumDice  = 1;
                     break;
                case MONST_DAMAGE_1D10:
-                    iMainNumSides = 10;
-                    iMainNumDice  = 1;
+                    sAttackVars.iMainNumSides = 10;
+                    sAttackVars.iMainNumDice  = 1;
                     break;
                case MONST_DAMAGE_2D6:
-                    iMainNumSides = 6;
-                    iMainNumDice  = 2;
+                    sAttackVars.iMainNumSides = 6;
+                    sAttackVars.iMainNumDice  = 2;
                     break;
                case MONST_DAMAGE_2D8:
-                    iMainNumSides = 8;
-                    iMainNumDice  = 2;
+                    sAttackVars.iMainNumSides = 8;
+                    sAttackVars.iMainNumDice  = 2;
                     break;
                case MONST_DAMAGE_2D10:
-                    iMainNumSides = 10;
-                    iMainNumDice  = 2;
+                    sAttackVars.iMainNumSides = 10;
+                    sAttackVars.iMainNumDice  = 2;
                     break;
                case MONST_DAMAGE_3D8:
-                    iMainNumSides = 8;
-                    iMainNumDice  = 3;
+                    sAttackVars.iMainNumSides = 8;
+                    sAttackVars.iMainNumDice  = 3;
                     break;
                case MONST_DAMAGE_3D10:
-                    iMainNumSides = 10;
-                    iMainNumDice  = 3;
+                    sAttackVars.iMainNumSides = 10;
+                    sAttackVars.iMainNumDice  = 3;
                     break;
                case MONST_DAMAGE_3D12:
-                    iMainNumSides = 12;
-                    iMainNumDice  = 3;
+                    sAttackVars.iMainNumSides = 12;
+                    sAttackVars.iMainNumDice  = 3;
                     break;
                case MONST_DAMAGE_4D10:
-                    iMainNumSides = 10;
-                    iMainNumDice = 4;
+                    sAttackVars.iMainNumSides = 10;
+                    sAttackVars.iMainNumDice = 4;
                     break;
                case MONST_DAMAGE_3D6:
-                    iMainNumSides = 6;
-                    iMainNumDice = 3;
+                    sAttackVars.iMainNumSides = 6;
+                    sAttackVars.iMainNumDice = 3;
                     break;
                case MONST_DAMAGE_4D8:
-                    iMainNumSides = 8;
-                    iMainNumDice = 4;
+                    sAttackVars.iMainNumSides = 8;
+                    sAttackVars.iMainNumDice = 4;
                     break;
           }
      }
      else if(bIsUnarmed)
      {
           // unarmed non-monk 1d3 damage
-          iMainNumSides = 3;
-          iMainNumDice  = 1;
+          sAttackVars.iMainNumSides = 3;
+          sAttackVars.iMainNumDice  = 1;
      }
      
      //SendMessageToPC(oAttacker, "Weapon does " + IntToString(iMainNumDice) + "d" + IntToString(iMainNumSides) + "Damage and has a crit multiplier of " + IntToString(iMainCritMult));
      
      // off-hand variables
      int iOffHandWeaponType = 0;
-     int iOffHandAttackBonus = 0;
-     //int iOffHandAttacks = 0;
+     sAttackVars.iOffHandAttackBonus = 0;
+     int iOffHandAttacks = 0;
      
-     int iOffHandWeaponDamageRound = 0;
+     sAttackVars.iOffHandWeaponDamageRound = 0;
      struct BonusDamage sOffHandWeaponDamage;
      
-     int iOffHandNumSides = 0;
-     int iOffHandNumDice = 0;
-     int iOffHandCritMult = 0;
+     sAttackVars.iOffHandNumSides = 0;
+     sAttackVars.iOffHandNumDice = 0;
+     sAttackVars.iOffHandCritMult = 0;
      
      // only run if using two weapons
      if(bIsUsingTwoWeapons)
      {
-          iOffHandAttackBonus = GetAttackBonus(oDefender, oAttacker, oWeaponL, 1);
-          gOffHandAttacks = GetOffHandAttacks(oAttacker);
-          sOffHandWeaponDamage = GetWeaponBonusDamage(oWeaponL, oDefender);
-          iOffHandWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, oWeaponL, 1);
+          sAttackVars.iOffHandAttackBonus = GetAttackBonus(oDefender, oAttacker, sAttackVars.oWeaponL, 1);
+          iOffHandAttacks = GetOffHandAttacks(oAttacker);
+          sOffHandWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponL, oDefender);
+          sAttackVars.iOffHandWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponL, 1);
           
-          iOffHandWeaponType = GetBaseItemType(oWeaponL);
-          iOffHandNumSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iOffHandWeaponType));
-          iOffHandNumDice = StringToInt(Get2DAString("baseitems", "NumDice", iOffHandWeaponType));
-          iOffHandCritMult = GetWeaponCritcalMultiplier(oAttacker, oWeaponL);
+          iOffHandWeaponType = GetBaseItemType(sAttackVars.oWeaponL);
+          sAttackVars.iOffHandNumSides = StringToInt(Get2DAString("baseitems", "DieToRoll", iOffHandWeaponType));
+          sAttackVars.iOffHandNumDice = StringToInt(Get2DAString("baseitems", "NumDice", iOffHandWeaponType));
+          sAttackVars.iOffHandCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponL);
           
           //SendMessageToPC(oAttacker, "Off Hand Weapon does " + IntToString(iOffHandNumDice) + "d" + IntToString(iOffHandNumSides) + "Damage and has a crit multiplier of " + IntToString(iOffHandCritMult));
      }
@@ -3237,6 +3354,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      object oItem;
      
      // Check for extra main hand attacks 
+     int iBonusMainHandAttacks = 0;
      for (nInventorySlot = 0; nInventorySlot < NUM_INVENTORY_SLOTS; nInventorySlot++)
      {
           oItem = GetItemInSlot(nInventorySlot, oAttacker);
@@ -3248,45 +3366,44 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      }  
      if( GetHasEffect(EFFECT_TYPE_HASTE, oAttacker) || bHasHaste)
      {
-          gBonusMainHandAttacks += 1;
+          iBonusMainHandAttacks += 1;
      }
      if( GetHasSpellEffect(SPELL_FURIOUS_ASSAULT, oAttacker) )
      {
-          gBonusMainHandAttacks += 1;
+          iBonusMainHandAttacks += 1;
           iAttackPenalty -= 2;
      }
      if( GetHasSpellEffect(SPELL_MARTIAL_FLURRY, oAttacker) )
      {
-          gBonusMainHandAttacks += 1;
+          iBonusMainHandAttacks += 1;
           iAttackPenalty -= 2;
      }     
      if( GetLastAttackMode(oAttacker) ==  COMBAT_MODE_FLURRY_OF_BLOWS )
      {
-          gBonusMainHandAttacks += 1;
+          iBonusMainHandAttacks += 1;
           iAttackPenalty -= 2;
      } 
      if( GetLastAttackMode(oAttacker) ==  COMBAT_MODE_RAPID_SHOT )
      {
-          gBonusMainHandAttacks += 1;
+          iBonusMainHandAttacks += 1;
           iAttackPenalty -= 2;
      }
 
      // Code to equip new ammo 
      // Equips new ammo if they don't have enough ammo for the whole attack round
-     // or if they have no ammo equipped.
-     object oAmmo;
-     if(bIsRangedWeapon)
+     // or if they have no ammo equipped.     
+     if(sAttackVars.bIsRangedWeapon)
      {
-          oAmmo = GetAmmunitionFromWeapon(oWeaponR, oAttacker);
+          sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);
           // if there is no ammunition search inventory for ammo
-          if(oAmmo == OBJECT_INVALID || 
-             GetItemStackSize(oAmmo) <= (gMainHandAttacks + gBonusMainHandAttacks) )
+          if(sAttackVars.oAmmo == OBJECT_INVALID || 
+             GetItemStackSize(sAttackVars.oAmmo) <= (iMainHandAttacks + iBonusMainHandAttacks) )
           {
                int bNotEquipped = TRUE;
                int iNeededAmmoType;
                int iAmmoSlot;
 
-               switch (GetBaseItemType(oWeaponR))
+               switch (GetBaseItemType(sAttackVars.oWeaponR))
                {
                     case BASE_ITEM_LIGHTCROSSBOW:
                     case BASE_ITEM_HEAVYCROSSBOW:
@@ -3329,8 +3446,8 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
                }          
           }
  
-          oAmmo = GetAmmunitionFromWeapon(oWeaponR, oAttacker);        
-          struct BonusDamage sAmmoDamage = GetWeaponBonusDamage(oAmmo, oDefender);
+          sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);        
+          struct BonusDamage sAmmoDamage = GetWeaponBonusDamage(sAttackVars.oAmmo, oDefender);
           
           // if these values are better than the weapon, then use these.
           if(sAmmoDamage.dam_Acid > sMainWeaponDamage.dam_Acid) sMainWeaponDamage.dam_Acid = sAmmoDamage.dam_Acid;          
@@ -3366,44 +3483,17 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           if(sAmmoDamage.dice_Slash > sMainWeaponDamage.dice_Slash) sMainWeaponDamage.dice_Slash = sAmmoDamage.dice_Slash;    
      }
      
-     int i;
      int iMod = 0;
-     int iAttackNum = 0;
      
      // determines the delay between effect application
      // to make the system run like the normal combat system.
-     float fDelay = (6.0 / (gMainHandAttacks + gBonusMainHandAttacks + gOffHandAttacks));
-     
-     iMainAttackBonus += iAttackPenalty;
-     iOffHandAttackBonus += iAttackPenalty;
+     sAttackVars.fDelay = (6.0 / (iMainHandAttacks + iBonusMainHandAttacks + iOffHandAttacks));
+     sAttackVars.iMainAttackBonus = sAttackVars.iMainAttackBonus + iAttackPenalty;
+     sAttackVars.iOffHandAttackBonus = sAttackVars.iOffHandAttackBonus + iAttackPenalty;
      
      // sets iMods to iAttackBonusMod
-     // used in the logic of the For Loops on attacks.
-     if(bEffectAllAttacks)  iMod += iAttackBonusMod;  
+     // used in AttackLoopLogic to decrement attack bonus for attacks.
+     if(bEffectAllAttacks)  iMod += iAttackBonusMod;
      
-     // Perform all bonus attacks at full attack bonus
-     for(i = 0; i < gBonusMainHandAttacks; i++)
-     {
-          iAttackNum += 1;
-          DelayCommand( (fDelay * iAttackNum), AttackLoopLogic(oAttacker, oWeaponR, oAmmo, sMainWeaponDamage, sSpellBonusDamage, iMainWeaponDamageRound, eSpecialEffect, eDuration, iDamageModifier, iDamageType, sMessageSuccess, sMessageFailure, bEffectAllAttacks, 0, iMainAttackBonus, iMod, iMainNumDice, iMainNumSides, iMainCritMult, bIsRangedWeapon) );
-     }
-
-     // All main and off-hand Attacks
-     for(i = 0; i < gMainHandAttacks; i++)
-     {
-          if(i == 0) bFirstAttack = TRUE;
-          else       bFirstAttack = FALSE;
-
-          iAttackNum += 1;
-          DelayCommand( (fDelay * iAttackNum), AttackLoopLogic(oAttacker, oWeaponR, oAmmo, sMainWeaponDamage, sSpellBonusDamage, iMainWeaponDamageRound, eSpecialEffect, eDuration, iDamageModifier, iDamageType, sMessageSuccess, sMessageFailure, bEffectAllAttacks, 0, iMainAttackBonus, iMod, iMainNumDice, iMainNumSides, iMainCritMult, bIsRangedWeapon) );
-          
-          // all off-hand attacks
-          if(i < gOffHandAttacks)
-          {
-               if(i == 0) bFirstAttack = FALSE;            
-               iAttackNum += 1;
-               DelayCommand( (fDelay * iAttackNum + 0.1), AttackLoopLogic(oAttacker, oWeaponL, oAmmo, sOffHandWeaponDamage, sSpellBonusDamage, iOffHandWeaponDamageRound, eSpecialEffect, eDuration, iDamageModifier, iDamageType, sMessageSuccess, sMessageFailure, bEffectAllAttacks, 1, iOffHandAttackBonus, iMod, iOffHandNumDice, iOffHandNumSides, iOffHandCritMult, bIsRangedWeapon) );
-          }
-          iMod -= 5;
-     }
+     AttackLoopMain(oDefender, oAttacker, iBonusMainHandAttacks, iMainHandAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
 }

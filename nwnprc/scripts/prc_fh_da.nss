@@ -12,7 +12,7 @@
 //:: Created On: July 12, 2004
 //:://////////////////////////////////////////////
 
-//#include "prc_inc_combat"
+#include "inc_item_props.nss"
 
 void main()
 {     
@@ -24,6 +24,11 @@ void main()
           SendMessageToPC(oPC,"You cannot attack yourself...");
           return;
      }
+     
+    // apply HIPS to PC skin temporar so that player can "rehide" without being seen
+    object oSkin =  GetPCSkin(oPC);
+    itemproperty iProp = ItemPropertyBonusFeat(31);  // 31 = HIPS IP_PROP value
+    AddItemProperty(DURATION_TYPE_TEMPORARY, iProp, oSkin, 1.0);
 
     // Sets the player back to stealth mode
     DelayCommand(0.3, SetActionMode(oPC, ACTION_MODE_STEALTH, TRUE) );

@@ -59,8 +59,8 @@ effect eLink = EffectLinkEffects(eVis, eCon);
      float fDistance = GetDistanceBetween(oPC, oTarget);
      float fDelay = GetTimeToCloseDistance(fDistance, oPC, TRUE);
         
-     // If they are not within 5 ft, they can't do a melee attack.
-     if(!bIsRangedAttack &&  GetIsInMeleeRange(oTarget, oPC) )
+     // If they are not within 10 ft, they can't do a melee attack.
+     if(!bIsRangedAttack &&  !GetIsInMeleeRange(oTarget, oPC) )
      {
           SendMessageToPC(oPC,"You are not close enough to your target to attack!");
           return;

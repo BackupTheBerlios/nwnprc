@@ -60,8 +60,8 @@ void main()
         string sSuccess = "";
         string sMiss = "";
         
-        // If they are not within 5 ft, they can't do a melee attack.
-        if(!bIsRangedAttack && GetIsInMeleeRange(oTarget, oPC) )
+        // If they are not within 10 ft, they can't do a melee attack.
+        if(!bIsRangedAttack && !GetIsInMeleeRange(oTarget, oPC) )
         {
              SendMessageToPC(oPC,"You are not close enough to your target to attack!");
              return;
@@ -69,6 +69,9 @@ void main()
      
         if(!bIsRangedAttack && GetLocalInt(oPC, "HatedFoe") == iEnemyRace )
         {
+              sSuccess = "*Death Attack Hit*";
+              sMiss = "*Death Attack Miss*";
+             
               AssignCommand(oPC, ActionMoveToLocation(GetLocation(oTarget), TRUE) );
            
               int iSaveDC = 10 + GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oPC) + GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
@@ -77,9 +80,10 @@ void main()
               {
                    eDeath = EffectDeath();
               }
-
-             sSuccess = "*Death Attack Hit*";
-             sMiss = "*Death Attack Miss*";
+              else
+              {
+                   sSuccess = "*Death Attack Failed*";
+              }
         }
         
         if(GetLocalInt(oPC, "HatedFoe") != iEnemyRace )

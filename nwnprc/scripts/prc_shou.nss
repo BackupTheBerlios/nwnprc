@@ -11,11 +11,8 @@
 
 #include "inc_item_props"
 #include "nw_i0_spells"
-#include "x2_inc_itemprop"
 
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
+
 
 void DodgeBonus(object oPC, object oSkin)
 {
@@ -27,7 +24,7 @@ void DodgeBonus(object oPC, object oSkin)
 
 //SendMessageToPC(OBJECT_SELF, "Shou Class Level: " + IntToString(iShou));
 
-     if(iShou == 1)
+     if(iShou > 0 && iShou < 2)
      {
           ACBonus = 1;
      }

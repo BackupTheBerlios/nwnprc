@@ -9,7 +9,6 @@ manual-|
        |          |         |-epic_spells       -autogen
        |          |         |-feat              -autogen
        |          |         |-master_feat       -autogen
-       |          |         |-modified_spells   -autogen
        |          |         |-prestige_classes  -autogen
        |          |         |-races             -autogen
        |          |         |-skills            -autogen

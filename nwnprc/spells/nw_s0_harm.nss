@@ -57,9 +57,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         //Figure out the amount of damage to heal
         nHeal = 10 * nCasterLvl;
+        if (nHeal > 150)
+	    nHeal = 150;
         //Set the heal effect
-	  if(nHeal > 150)
-		nHeal = 150;
         eHeal = EffectHeal(nHeal);
         //Apply heal effect and VFX impact
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
@@ -73,7 +73,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         {
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HARM));
-            if (!MyResistSpell(OBJECT_SELF, oTarget))
+
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
             {
              /*   nDamage = GetCurrentHitPoints(oTarget) - d4(1);
                 //Check for metamagic
@@ -81,20 +82,21 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 {
                     nDamage = GetCurrentHitPoints(oTarget) - 1;
                 } */
-		    nDamage = 10 * nCasterLvl;
-		    if(nDamage > 150)
-			nDamage = 150;
-		
-		// will save for half damage and only drop to 1 hp
+                nDamage = nDamage * nCasterLvl;
+
+                if (nDamage > 150)
+                    nDamage = 150;
+
+                // Will save for half damage
                 if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
-                {
                     nDamage /= 2;
-                    
-                    if( nDamage > GetCurrentHitPoints(oTarget) )     
-                         nDamage = GetCurrentHitPoints(oTarget) - 1;
-                }
+
+                // Cannot drop you below 1 hp
+                if (nDamage > GetCurrentHitPoints(oTarget) - 1)
+                    nDamage = GetCurrentHitPoints(oTarget) - 1;
 		
                 eDam = EffectDamage(nDamage,DAMAGE_TYPE_NEGATIVE);
+
                 //Apply the VFX impact and effects
                 DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

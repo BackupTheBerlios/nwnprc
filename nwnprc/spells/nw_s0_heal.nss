@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             if (TouchAttackMelee(oTarget))
             {
                 //Make SR check
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget))
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
                 {
                     //Roll damage
                     nModify = d4();
@@ -72,11 +72,22 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                         nModify = 1;
                     }
                     //Figure out the amount of damage to inflict
-                    nDamage =  GetCurrentHitPoints(oTarget) - nModify;
-			  if(nDamage > 150)
-				nDamage = 150;
+                    nDamage = nDamage * nCasterLvl;
+
+                    if (nDamage > 150)
+                        nDamage = 150;
+
+                    // Will save for half damage
+                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
+                        nDamage /= 2;
+
+                    // Cannot drop you below nModify hp
+                    if (nDamage > GetCurrentHitPoints(oTarget) - nModify)
+                        nDamage = GetCurrentHitPoints(oTarget) - nModify;
+
                     //Set damage
                     eKill = EffectDamage(nDamage, DAMAGE_TYPE_POSITIVE);
+
                     //Apply damage effect and VFX impact
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSun, oTarget);

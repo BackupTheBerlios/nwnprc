@@ -55,6 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
   location lLoc =  GetSpellTargetLocation();
 
   int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+  int nCasterLvl = CasterLvl;
   CasterLvl +=SPGetPenetr();
 
   //Apply VFX area impact
@@ -87,11 +88,22 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                             nModify = 1;
                         }
                         //Detemine the damage to inflict to the undead
-                        nDamage =  10 * CasterLvl;
-				if(nDamage > 250)
-					nDamage = 250;
+                        nDamage =  10 * nCasterLvl;
+
+			if (nDamage > 250)
+			    nDamage = 250;
+
+                        // Will save for half damage
+			if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
+	                    nDamage /= 2;
+
+                        // Cannot drop you below nModify hp
+			if (nDamage > GetCurrentHitPoints(oTarget) - nModify)
+			    nDamage = GetCurrentHitPoints(oTarget) - nModify;
+
                         //Set the damage effect
                         eKill = EffectDamage(nDamage, DAMAGE_TYPE_POSITIVE);
+
                         //Apply the VFX impact and damage effect
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oTarget));
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

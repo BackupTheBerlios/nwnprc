@@ -50,6 +50,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
     
     if (nSurge > 0)
     {
@@ -57,12 +59,13 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
-	object oTarget = GetSpellTargetObject();
-	
+	int nDur = nCaster;
+	if (nMetaPsi == 2)	nDur *= 2;	
+		
     	//Declare major variables including Area of Effect Object
     	effect eAOE = EffectAreaOfEffect(AOE_PER_PSIGREASE);
     	location lTarget = GetSpellTargetLocation();
@@ -70,7 +73,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
 
     	//Create an instance of the AOE Object using the Apply Effect function
-    	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nCaster));
+    	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nDur));
     }
     	
 }

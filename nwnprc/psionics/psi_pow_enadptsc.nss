@@ -47,23 +47,28 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nAugCost = 0;
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
     
-    if (GetCanManifest(oCaster, 0)) 
+    if (nMetaPsi > 0) 
     {
     	int nCaster = GetManifesterLevel(oCaster);
     	int nResist = 10;
+    	float fDur = 600.0 * nCaster;
+    	if (nMetaPsi == 2)	fDur *= 2;
     	
     	if (nCaster >= 13)	nResist = 30;
     	else if (nCaster >= 9)	nResist = 20;
     	
-	effect eResist = EffectDamageResistance(DAMAGE_TYPE_COLD, nResist);
+	effect eResist = EffectDamageResistance(DAMAGE_TYPE_ACID, nResist);
 	effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS);
 	effect eVis = EffectVisualEffect(VFX_IMP_ELEMENTAL_PROTECTION);
     	effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     	effect eLink = EffectLinkEffects(eResist, eDur);
     	eLink = EffectLinkEffects(eLink, eDur2);
 
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, (600.0 * nCaster),TRUE,-1,nCaster);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

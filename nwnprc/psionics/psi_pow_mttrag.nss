@@ -100,6 +100,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 0;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);    
     
     if (nSurge > 0)
     {
@@ -107,11 +109,10 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	object oTarget = GetSpellTargetObject();
 	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 	int nSpell = GetSpellId();

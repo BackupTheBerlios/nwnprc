@@ -48,16 +48,17 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
     int nAugCost = 0;
     int nAugment = GetAugmentLevel(oCaster);
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	object oTarget = GetSpellTargetObject();
-	
+		
 	//Check for Power Resistance
 	if (PRCMyResistPower(oCaster, oTarget, nPen))
 	{

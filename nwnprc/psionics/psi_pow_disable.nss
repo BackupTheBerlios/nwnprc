@@ -52,6 +52,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
     
     if (nSurge > 0)
     {
@@ -59,14 +61,15 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	object oTarget;
 	int nTargetHD = 4;
 	float fDistance = 20.0;
+	float fDur = 60.0 * nCaster;
+	if (nMetaPsi == 2)	fDur *= 2;	
 	
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
 	effect eDaze = EffectSlow();
@@ -84,9 +87,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		nDC += nAugment;
 	}
 	
-	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
-
     	//Cycle through the targets within the spell shape until an invalid object is captured.
     	while(GetIsObjectValid(oTarget))
     	{
@@ -104,7 +104,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
 		                {
 		                        //Apply VFX Impact and daze effect
-		                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (60.0 * nCaster),TRUE,-1,nCaster);
+		                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
                         		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 		                }
 			}

@@ -50,9 +50,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
     
     if (nSurge > 0)
     {
@@ -60,14 +62,15 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	object oTarget = GetSpellTargetObject();
 	int nSize = GetCreatureSize(oTarget);
 	int nAllowedSize = CREATURE_SIZE_MEDIUM;
+	float fDur = 60.0 * nCaster;
+	if (nMetaPsi == 2)	fDur *= 2;
 	
 	effect eSlow = EffectSlow();
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -99,7 +102,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
 	                {
 	                        //Apply VFX Impact and daze effect
-	                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (60.0 * nCaster),TRUE,-1,nCaster);
+	                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
                 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 	                }
 		}

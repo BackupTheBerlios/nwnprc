@@ -49,7 +49,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     object oCaster = OBJECT_SELF;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oTarget = GetSpellTargetObject();
     int nAugCost = 0;
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
     
     if (nSurge > 0)
     {
@@ -57,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	object oTarget = GetSpellTargetObject();
 	int nCaster = GetManifesterLevel(oCaster);
@@ -65,8 +67,10 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     	effect eSpeed = EffectMovementSpeedIncrease(50);
     	effect eLink = EffectLinkEffects(eDur, eSpeed);
+    	float fDur = 60.0 * nCaster;
+	if (nMetaPsi == 2)	fDur *= 2;    	
 
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (60.0 * nCaster),TRUE,-1,nCaster);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
     }
 }

@@ -46,14 +46,18 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nAugCost = 0;
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
 
     
-    if (GetCanManifest(oCaster, 0)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	object oTarget = GetSpellTargetObject();
+	float fDur = 60.0 * nCaster;
+	if (nMetaPsi == 2)	fDur *= 2;
 	
 	effect eSpot = EffectSkillDecrease(SKILL_SPOT, 4);
 	effect eSearch = EffectSkillDecrease(SKILL_SEARCH, 4);
@@ -75,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                         //Apply VFX Impact and daze effect
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (60.0 * nCaster),TRUE,-1,nCaster);
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
                		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 }
 	}

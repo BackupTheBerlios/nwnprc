@@ -51,21 +51,23 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
     object oCaster = OBJECT_SELF;
     int nAugCost = 1;
     int nAugment = GetAugmentLevel(oCaster);
+    object oTarget = OBJECT_SELF;
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, METAPSIONIC_WIDEN);
 
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
-	object oTarget;
 	effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
 	effect eKnock = EffectKnockdown();
 	float fDist;
 	int nDice = 1;
 	int nDiceSize = 4;
+	float fWidth = DoWiden(20.0, nMetaPsi);
 	
     	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, fWidth, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
 
     	//Cycle through the targets within the spell shape until an invalid object is captured.
     	while(GetIsObjectValid(oTarget))
@@ -88,7 +90,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
     	                DelayCommand(fDist, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnock, oTarget, 6.0,TRUE,-1,nCaster));
     	            }
     	    //Select the next target within the spell shape.
-    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 20.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
     	}
 
 	

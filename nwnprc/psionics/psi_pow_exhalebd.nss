@@ -50,14 +50,15 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
     object oCaster = OBJECT_SELF;
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
+    object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
 
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	object oTarget = GetSpellTargetObject();
 	effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
 	int nDice = 3;
 	int nDiceSize = 6;

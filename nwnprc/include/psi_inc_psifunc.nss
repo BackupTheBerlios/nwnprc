@@ -30,8 +30,9 @@ int GetPowerLevel(object oCaster);
 int GetManifesterDC(object oCaster = OBJECT_SELF);
 
 // Checks whether manifester has enough PP to cast
+// Also adds in metamagic. Enter 0 for those not applicable to power
 // If he does, subtract PP and cast power, else power fails
-int GetCanManifest(object oCaster, int nAugCost, object oTarget = OBJECT_SELF);
+int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int nEmp, int nExtend, int nMax, int nSplit, int nTwin, int nWiden);
 
 // Checks to see if the caster has suffered psychic enervation
 // from a wild surge. If yes, daze and subtract power points.
@@ -59,13 +60,16 @@ int CheckPowerPrereqs(int nFeat, object oPC);
 void UsePower(int nPower, int nClass);
 
 // This will roll the dice and perform the needed adjustments for metapsionics.
-int MetaPsionic(int nDiceSize, int nNumberOfDice, object oCaster = OBJECT_SELF);
+int MetaPsionic(int nDiceSize, int nNumberOfDice, int nMetaPsi, object oCaster = OBJECT_SELF);
 
 // This will return the amount of augmentation
 int GetAugmentLevel(object oCaster = OBJECT_SELF);
 
 // This will return the amount of penetration for a given power
 int GetPsiPenetration(object oCaster = OBJECT_SELF);
+
+// Performs the widening operation for Widen MetaPsi
+float DoWiden(float fWidth, int nMetaPsi);
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -160,10 +164,8 @@ int GetManifesterDC(object oCaster)
 	return nDC;
 }
 
-int GetCanManifest(object oCaster, int nAugCost, object oTarget = OBJECT_SELF)
+int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int nEmp, int nExtend, int nMax, int nSplit, int nTwin, int nWiden)
 {
-
-//    SendMessageToPC(GetFirstPC(), "Manifesting power "+IntToString(GetSpellId()));
 
     int nLevel = GetPowerLevel(oCaster);
     int nAugment = GetAugmentLevel(oCaster);
@@ -179,7 +181,7 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget = OBJECT_SELF)
         nCanManifest = FALSE;
     }
 
-    //Sets Power Point cost based on power level
+    // Sets Power Point cost based on power level
     if (nLevel == 1) nPPCost = 1;
     else if (nLevel == 2) nPPCost = 3;
     else if (nLevel == 3) nPPCost = 5;
@@ -190,8 +192,52 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget = OBJECT_SELF)
     else if (nLevel == 8) nPPCost = 15;
     else if (nLevel == 9) nPPCost = 17;
     
-    //Adds in the augmentation cost
+    // Adds in the augmentation cost
     if (nAugment > 0) nPPCost = nPPCost + (nAugCost * nAugment); 
+    
+    // Add in the cost from Metapsionics
+    if (nChain > 0 && GetLocalInt(oCaster, "PsiMetaChain") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
+    {
+    	nPPCost += 6;
+    	SetLocalInt(oCaster, "PsionicFocus", 0);
+    	nCanManifest = 2;
+    }
+    if (nEmp > 0 && GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
+    {
+    	nPPCost += 2;
+    	SetLocalInt(oCaster, "PsionicFocus", 0);
+    	nCanManifest = 2;
+    }
+    if (nExtend > 0 && GetLocalInt(oCaster, "PsiMetaExtend") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
+    {
+    	nPPCost += 2;
+    	SetLocalInt(oCaster, "PsionicFocus", 0);
+    	nCanManifest = 2;
+    }    
+    if (nMax > 0 && GetLocalInt(oCaster, "PsiMetaMax") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
+    {
+    	nPPCost += 4;
+    	SetLocalInt(oCaster, "PsionicFocus", 0);
+    	nCanManifest = 2;
+    }    
+    if (nSplit > 0 && GetLocalInt(oCaster, "PsiMetaSplit") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
+    {
+    	nPPCost += 2;
+    	SetLocalInt(oCaster, "PsionicFocus", 0);
+    	nCanManifest = 2;
+    }
+    if (nTwin > 0 && GetLocalInt(oCaster, "PsiMetaTwin") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
+    {
+    	nPPCost += 6;
+    	SetLocalInt(oCaster, "PsionicFocus", 0);
+    	nCanManifest = 2;
+    }   
+    if (nWiden > 0 && GetLocalInt(oCaster, "PsiMetaWiden") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
+    {
+    	nPPCost += 4;
+    	SetLocalInt(oCaster, "PsionicFocus", 0);
+    	nCanManifest = 2;
+    }    
     
     // If PP Cost is greater than Manifester level
     if (GetManifesterLevel(oCaster) >= nPPCost && nCanManifest)
@@ -343,7 +389,7 @@ void UsePower(int nPower, int nClass)
     ActionCastSpell(nPower);
 }
 
-int MetaPsionics(int nDiceSize, int nNumberOfDice, object oCaster = OBJECT_SELF)
+int MetaPsionics(int nDiceSize, int nNumberOfDice, int nMetaPsi, object oCaster = OBJECT_SELF)
 {
 	int nDamage = 0;
 	int i = 0;
@@ -352,16 +398,14 @@ int MetaPsionics(int nDiceSize, int nNumberOfDice, object oCaster = OBJECT_SELF)
     	{
     		nDamage = nDamage + Random(nDiceSize) + 1;
     	}
-	if (GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
+	if (GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE && nMetaPsi == 2)
 	{
 		nDamage = nDamage + nDamage / 2;
-		SetLocalInt(oCaster, "PsionicFocus", 0);
 		FloatingTextStringOnCreature("Empowered Power", oCaster, FALSE);
 	}
-	if (GetLocalInt(oCaster, "PsiMetaMax") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
+	else if (GetLocalInt(oCaster, "PsiMetaMax") == TRUE && nMetaPsi == 2)
 	{
 		nDamage = nDiceSize * nNumberOfDice;
-		SetLocalInt(oCaster, "PsionicFocus", 0);
 		FloatingTextStringOnCreature("Maximized Power", oCaster, FALSE);
 	}
 	
@@ -370,7 +414,7 @@ int MetaPsionics(int nDiceSize, int nNumberOfDice, object oCaster = OBJECT_SELF)
 
 int GetAugmentLevel(object oCaster = OBJECT_SELF)
 {
-	int nAug = GetAugmentLevel(oCaster);
+	int nAug = GetLocalInt(oCaster, "Augment");
 	return nAug;
 }
 
@@ -391,4 +435,19 @@ int GetPsiPenetration(object oCaster = OBJECT_SELF)
 	}
 	
 	return nPen;
+}
+
+float DoWiden(float fWidth, int nMetaPsi)
+{
+	if (nMetaPsi == 2)
+	{
+		if (fWidth == RADIUS_SIZE_SMALL)	fWidth = RADIUS_SIZE_MEDIUM;
+		if (fWidth == RADIUS_SIZE_MEDIUM)	fWidth = RADIUS_SIZE_LARGE;
+		if (fWidth == RADIUS_SIZE_LARGE)	fWidth = RADIUS_SIZE_HUGE;
+		if (fWidth == RADIUS_SIZE_HUGE)		fWidth = RADIUS_SIZE_GARGANTUAN;
+		if (fWidth == RADIUS_SIZE_GARGANTUAN)	fWidth = RADIUS_SIZE_COLOSSAL;
+		else fWidth *= 2;
+	}
+	
+	return fWidth;
 }

@@ -53,17 +53,20 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 3;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
     
     if (nSurge > 0)
     {
        	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
     	int nCaster = GetManifesterLevel(oCaster);
-    	object oTarget = GetSpellTargetObject();
     	int nBonus = 4;
+    	int nDur = nCaster;
+    	if (nMetaPsi == 2)	nDur *= 2;
     	
     	if (nSurge > 0) nAugment += nSurge;
     	
@@ -78,6 +81,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         eLink = EffectLinkEffects(eLink, eDur);
         eLink = EffectLinkEffects(eLink, eAC);
     	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nCaster),TRUE,-1,nCaster);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDur),TRUE,-1,nCaster);
     }
 }

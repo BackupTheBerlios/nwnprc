@@ -47,16 +47,21 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nAugCost = 0;
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
     
-    if (GetCanManifest(oCaster, 0)) 
+    if (nMetaPsi > 0) 
     {
-    	int CasterLvl = GetManifesterLevel(oCaster);
+    	int nCaster = GetManifesterLevel(oCaster);
     	effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
 	effect eConceal = EffectConcealment(50);
 	effect eDur = EffectVisualEffect(VFX_DUR_GHOSTLY_VISAGE);
 	effect eLink = EffectLinkEffects(eDur, eConceal);
+	int nDur = nCaster;
+	if (nMetaPsi == 2)	nDur *= 2;	
 	
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(CasterLvl),TRUE,-1,CasterLvl);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

@@ -58,6 +58,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 1;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+
     
     if (nSurge > 0)
     {
@@ -65,22 +68,23 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nCaster = GetManifesterLevel(oCaster);
-	object oTarget = GetSpellTargetObject();
-	float fDuration = IntToFloat(nCaster);
+	float fDur = 60.0 * nCaster;
+	
 		
 	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Duration
-	if (nAugment > 0) fDuration += IntToFloat(nAugment);
+	if (nAugment > 0) fDur += (nAugment * 60.0);
+	if (nMetaPsi == 2)	fDur *= 2;
 	
 	effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
 	
 	// Variable for Energy Type
-	SetLocalInt(oTarget, "PsiEnRetort", 3);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDuration,TRUE,-1,nCaster);
-	DelayCommand(fDuration, SetLocalInt(oTarget, "PsiEnRetort", 0));
+	SetLocalInt(oTarget, "PsiEnRetort", 1);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur,TRUE,-1,nCaster);
+	DelayCommand(fDur, SetLocalInt(oTarget, "PsiEnRetort", 0));
     }
 }

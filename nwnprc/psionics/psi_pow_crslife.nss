@@ -54,8 +54,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     int nAugCost = 1;
     int nAugment = GetAugmentLevel(oCaster);
     object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
     
-    if (GetCanManifest(oCaster, nAugCost, oTarget)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);

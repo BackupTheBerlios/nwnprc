@@ -55,8 +55,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
     object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
     
-    if (GetCanManifest(oCaster, nAugCost, oTarget)) 
+    if (nMetaPsi) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
@@ -64,6 +65,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	int nRacial = MyPRCGetRacialType(oTarget);
 	int nTargetRace = FALSE;
 	float fDuration = HoursToSeconds(nCaster);
+	
+	if (nMetaPsi == 2)	fDuration *= 2;
 	
 	//Verify that the Racial Type is humanoid
 	if  	((nRacial == RACIAL_TYPE_DWARF) ||

@@ -54,6 +54,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oFirstTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oFirstTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
     
     if (nSurge > 0)
     {
@@ -61,13 +63,14 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	object oFirstTarget = GetSpellTargetObject();
 	int nTargetCount = 1;
+	int nDur = nCaster;
+	if (nMetaPsi == 2)	nDur *= 2;   
 	
 	effect eSkillFail = EffectSkillDecrease(SKILL_ALL_SKILLS, 4);
 	effect eAttackFail = EffectAttackDecrease(4);
@@ -104,13 +107,13 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oFirstTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                         //Apply VFX Impact and daze effect
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFirstTarget, RoundsToSeconds(nCaster),TRUE,-1,nCaster);
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFirstTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
                		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oFirstTarget);
                 }
                 else
                 {
                         //Apply VFX Impact and daze effect
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oFirstTarget, RoundsToSeconds(nCaster),TRUE,-1,nCaster);
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oFirstTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
                		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oFirstTarget);                
                 }
 	}
@@ -138,14 +141,14 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 			                if(!PRCMySavingThrow(SAVING_THROW_WILL, oAreaTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
 			                {
 			                        //Apply VFX Impact and daze effect
-			                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oAreaTarget, RoundsToSeconds(nCaster),TRUE,-1,nCaster);
+			                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oAreaTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
 			               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);
 			               		nTargetsLeft -= 1;
 			                }
 			                else
 			                {
 			                        //Apply VFX Impact and daze effect
-			                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oAreaTarget, RoundsToSeconds(nCaster),TRUE,-1,nCaster);
+			                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oAreaTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
 			               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);
 			               		nTargetsLeft -= 1;
 			                }			                

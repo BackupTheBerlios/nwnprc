@@ -46,10 +46,15 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nAugCost = 0;
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);      
     
-    if (GetCanManifest(oCaster, 0)) 
+    if (nMetaPsi > 0) 
     {
     	int nCaster = GetManifesterLevel(oCaster);
+	int nDur = nCaster;
+	if (nMetaPsi == 2)	nDur *= 2;        	
 	
 	//Massive effect linkage, go me
     	effect eSR = EffectSpellResistanceIncrease(13);
@@ -59,7 +64,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	effect eLink = EffectLinkEffects(eSR, eDur);
     	eLink = EffectLinkEffects(eLink, eDur2);
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nCaster),TRUE,-1,nCaster);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

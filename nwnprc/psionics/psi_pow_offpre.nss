@@ -51,11 +51,15 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     object oCaster = OBJECT_SELF;
     int nAugCost = 3;
     int nAugment = GetAugmentLevel(oCaster);
+    object oTarget = GetSpellTargetObject();
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
-    	int CasterLvl = GetManifesterLevel(oCaster);
+    	int nCaster = GetManifesterLevel(oCaster);
     	int nBonus = 1;
+    	float fDur = 60.0 * nCaster;
+	if (nMetaPsi == 2)	fDur *= 2;    	
 
 
     	// Augmentation effects to armour class
@@ -65,6 +69,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 	effect eLink = EffectLinkEffects(eAttack, eDur);
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, (60.0 * CasterLvl),TRUE,-1,CasterLvl);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
     }
 }

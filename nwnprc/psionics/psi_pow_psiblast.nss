@@ -51,24 +51,28 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     object oCaster = OBJECT_SELF;
     int nAugCost = 1;
     int nAugment = GetAugmentLevel(oCaster);
+    object oTarget;
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, METAPSIONIC_WIDEN);  
 
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
-	object oTarget;
 	effect eStun = EffectStunned();
-	int nDuration = 1;
+	int nDur = 1;
+	float fWidth = DoWiden(30.0, nMetaPsi);
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
 	effect eLink = EffectLinkEffects(eStun, eMind);
 	float fDist;
 			
 	//Augmentation effects to Duration
-	if (nAugment > 0) nDuration += nAugment;
+	if (nAugment > 0) nDur += nAugment;
+	
+	if (nMetaPsi == 2)	nDur *= 2;   
 	
 	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 30.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, fWidth, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
 
     	//Cycle through the targets within the spell shape until an invalid object is captured.
     	while(GetIsObjectValid(oTarget))
@@ -82,10 +86,10 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
     	            {
     	                // Apply effects to the currently selected target. 
-    	                DelayCommand(fDist, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCaster));
+    	                DelayCommand(fDist, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster));
     	            }
     	    //Select the next target within the spell shape.
-    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 30.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
     	}
 
 	

@@ -59,6 +59,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oTarget = OBJECT_SELF;
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, METAPSIONIC_WIDEN);
     
     if (nSurge > 0)
     {
@@ -66,15 +68,16 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	PsychicEnervation(oCaster, nSurge);
     }
     
-    if (GetCanManifest(oCaster, nAugCost)) 
+    if (nMetaPsi > 0) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
+	float fWidth = DoWiden(RADIUS_SIZE_SMALL, nMetaPsi);
+	
 	location lTarget = GetSpellTargetLocation();
 	effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
 	effect eExplode = EffectVisualEffect(VFX_FNF_SOUND_BURST);
-	
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
 	effect eDaze = EffectStunned();
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -94,7 +97,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	}
 	
 	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
-	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
 	while (GetIsObjectValid(oTarget))
 	{
 		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
@@ -119,7 +122,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 		}
 		//Select the next target within the spell shape.
-		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
 	}
     }
 }

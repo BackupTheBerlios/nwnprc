@@ -2,6 +2,7 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
+#include "prc_ipfeat_const"
 #include "inc_item_props"
 
 void ResEle(object oPC ,object oSkin ,int iLevel,int iType)
@@ -9,9 +10,8 @@ void ResEle(object oPC ,object oSkin ,int iLevel,int iType)
   if(GetLocalInt(oSkin, "BondResEle") == iLevel) return;
 
   RemoveSpecificProperty(oSkin,ITEM_PROPERTY_DAMAGE_RESISTANCE,iType,GetLocalInt(oSkin, "BondResEle"));
-  if (GetHasFeat(FEAT_IMMUNITY_ELEMENT, oPC)) return;
 
-  AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageResistance(iType,iLevel),oSkin);
+  DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageResistance(iType,iLevel),oSkin));
   SetLocalInt(oSkin, "BondResEle",iLevel);
 }
 
@@ -20,22 +20,6 @@ void ImmunityMisc(object oSkin,int bImmu,string sImmu)
   if (GetLocalInt(oSkin, sImmu)== 1 || bImmu==-1) return;
   AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyImmunityMisc(bImmu),oSkin);
   SetLocalInt(oSkin, sImmu,1);
-
-
-}
-
-void ImmunityDmg(object oSkin,int iType)
-{
-  if (GetLocalInt(oSkin, "ImmuEle") ) return;
-  if(GetLocalInt(oSkin, "BondResEle"))
-        RemoveSpecificProperty(oSkin,ITEM_PROPERTY_DAMAGE_RESISTANCE,iType,GetLocalInt(oSkin, "BondResEle"));
-
-  AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageImmunity(iType,IP_CONST_DAMAGEIMMUNITY_100_PERCENT),oSkin);
-  SetLocalInt(oSkin, "ImmuEle",1);
-
-
-
-
 }
 
 void RemoveSpeed (object oPC)
@@ -89,12 +73,10 @@ void main()
         bResisEle = GetHasFeat(FEAT_RESISTANCE_ELE10, oPC) ? IP_CONST_DAMAGERESIST_10 : bResisEle;
         bResisEle = GetHasFeat(FEAT_RESISTANCE_ELE15, oPC) ? IP_CONST_DAMAGERESIST_15 : bResisEle;
         bResisEle = GetHasFeat(FEAT_RESISTANCE_ELE20, oPC) ? IP_CONST_DAMAGERESIST_20 : bResisEle;
+        bResisEle = GetHasFeat(FEAT_IMMUNITY_ELEMENT, oPC) ? IP_CONST_DAMAGERESIST_500 : bResisEle;
 
     int bImmuSneak  = GetHasFeat(FEAT_IMMUNITY_SNEAKATK, oPC) ? IP_CONST_IMMUNITYMISC_BACKSTAB : -1;
     int bImmuCriti  = GetHasFeat(FEAT_IMMUNITY_CRITIK, oPC)   ? IP_CONST_IMMUNITYMISC_CRITICAL_HITS : -1;
-
-    int bImmuEle   = GetHasFeat(FEAT_IMMUNITY_ELEMENT, oPC)     ? 1: 0;
-        bResisEle = bImmuEle ? 0  : bResisEle ;
 
     int bType =  GetHasFeat(FEAT_TYPE_ELEMENTAL, oPC)     ? 1: 0;
 
@@ -102,8 +84,5 @@ void main()
     ImmunityMisc(oSkin,bImmuSneak,"ImmuSneak");
     ImmunityMisc(oSkin,bImmuCriti,"ImmuCritik");
 
-    if (bImmuEle>0) ImmunityDmg(oSkin,iType);
     if (bType>0) Subtype(oSkin,iType,oPC);
-
-
 }

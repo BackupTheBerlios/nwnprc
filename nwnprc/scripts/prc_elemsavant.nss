@@ -11,6 +11,7 @@
 
 #include "inc_item_props"
 #include "prc_feat_const"
+#include "prc_ipfeat_const"
 
 // * Applies the Elemental Savant's immunities on the object's skin.
 // * iType = IP_CONST_IMMUNITYMISC_*
@@ -43,7 +44,6 @@ void ElemSavantPerfection(object oPC, object oSkin, int iElem)
 {
     if(GetLocalInt(oSkin, "ElemSavantPerfection") == TRUE) return;
 
-    AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageImmunity(iElem, IP_CONST_DAMAGEIMMUNITY_100_PERCENT), oSkin);
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageVulnerability(GetOppositeElement(iElem), IP_CONST_DAMAGEVULNERABILITY_100_PERCENT), oSkin);
 
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_POISON), oSkin);
@@ -70,6 +70,7 @@ void main()
     int iResist = GetHasFeat(FEAT_ES_RESIST_1, oPC) ? IP_CONST_DAMAGERESIST_5 : -1;
         iResist = GetHasFeat(FEAT_ES_RESIST_2, oPC) ? IP_CONST_DAMAGERESIST_10 : iResist;
         iResist = GetHasFeat(FEAT_ES_RESIST_3, oPC) ? IP_CONST_DAMAGERESIST_15 : iResist;
+        iResist = GetHasFeat(FEAT_ES_PERFECTION, oPC) ? IP_CONST_DAMAGERESIST_500 : iResist;
 
     int iTrans1 = GetHasFeat(FEAT_ES_TRANS_1, oPC);
     int iTrans2 = GetHasFeat(FEAT_ES_TRANS_2, oPC);

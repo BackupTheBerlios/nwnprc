@@ -1,5 +1,6 @@
 #include "inc_item_props"
 #include "prc_feat_const"
+#include "prc_ipfeat_const"
 
 ////    Resistance Electricity   ////
 
@@ -8,13 +9,7 @@ void ResElec(object oPC ,object oSkin ,int iLevel)
   if(GetLocalInt(oSkin, "StormLResElec") == iLevel) return;
 
   RemoveSpecificProperty(oSkin,ITEM_PROPERTY_DAMAGE_RESISTANCE,IP_CONST_DAMAGETYPE_ELECTRICAL,GetLocalInt(oSkin, "StormLResElec"));
-  if (GetHasFeat(FEAT_ELECTRIC_RES_30, oPC)) 
-  {
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageImmunity(IP_CONST_DAMAGETYPE_ELECTRICAL,IP_CONST_DAMAGEIMMUNITY_100_PERCENT),oSkin);
-      SetLocalInt(oSkin, "StormLResElec",iLevel);
-      return;
-  }
-  
+
   AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_ELECTRICAL,iLevel),oSkin);
   SetLocalInt(oSkin, "StormLResElec",iLevel);
 }
@@ -107,7 +102,7 @@ void main()
     int bResElec=GetHasFeat(FEAT_ELECTRIC_RES_10, oPC) ? IP_CONST_DAMAGERESIST_10 : 0;
         bResElec=GetHasFeat(FEAT_ELECTRIC_RES_15, oPC) ? IP_CONST_DAMAGERESIST_15 : bResElec;
         bResElec=GetHasFeat(FEAT_ELECTRIC_RES_20, oPC) ? IP_CONST_DAMAGERESIST_20 : bResElec;
-        bResElec=GetHasFeat(FEAT_ELECTRIC_RES_30, oPC) ? IP_CONST_DAMAGERESIST_30 : bResElec;
+        bResElec=GetHasFeat(FEAT_ELECTRIC_RES_30, oPC) ? IP_CONST_DAMAGERESIST_500 : bResElec; //immunity
 
     int bShockWeap=GetHasFeat(FEAT_SHOCK_WEAPON,oPC)        ?  1:0;
     int bShockingWeap=GetHasFeat(FEAT_THUNDER_WEAPON,oPC)   ?  1:0;

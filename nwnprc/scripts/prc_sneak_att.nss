@@ -57,6 +57,7 @@ void ApplySneakToSkin(object oPC, int iRogueSneak, int iBlackguardSneak)
 void main()
 {
    object oPC = OBJECT_SELF;
+   object oSkin = GetPCSkin(oPC);
 
    int iRogueSneakDice = GetRogueSneak(oPC);
    int iBlackguardSneakDice = GetBlackguardSneak(oPC);
@@ -87,5 +88,14 @@ void main()
       return;
    }
 
+   // code to remove sneak attack feats if they had them before, but not now.
+   // mainly used for classes whose sneak is based on using a certain weapon
+   // such as the blood archer, peerless archer, and halfling warslinger.
+   int iPreviousSneak = GetLocalInt(oSkin,"RogueSneakDice");
+   if(!iFinalSneakDice && iPreviousSneak) DelayCommand(0.1, RemoveSpecificProperty(oSkin, ITEM_PROPERTY_BONUS_FEAT, iPreviousSneak));
+
+   iPreviousSneak = GetLocalInt(oSkin,"BlackguardSneakDice");
+   if(!iFinalSneakDice && iPreviousSneak) DelayCommand(0.1, RemoveSpecificProperty(oSkin, ITEM_PROPERTY_BONUS_FEAT, iPreviousSneak));
+   
    if(iFinalSneakDice) ApplySneakToSkin(oPC,iRogueSneakDice,iBlackguardSneakDice);
 }

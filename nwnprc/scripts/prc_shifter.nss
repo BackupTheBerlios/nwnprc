@@ -29,13 +29,28 @@ void main()
 
         // If we are entering a module, we have been stripped of the skin
         // and our powers are gone, shift back to true form so we dont confuse the player
-        if ( (GetTrueForm(oPC) != GetAppearanceType(oPC)) && 
-             !(GetLocalInt(oHidePC,"nPCShifted")) )
+        if ( (GetTrueForm(oPC) != GetAppearanceType(oPC)) && !(GetLocalInt(oHidePC,"nPCShifted")) )
         {
-            SetShiftTrueForm(oPC);
-            // Set a local on the pc so we dont have to do this more than once
-	    SetLocalInt(oPC,"SHIFTOnEnterHit",1);
+		// added a check to see if the player is under a polymorph effect. if they are dont unshift
+		// if this script was not run when the player entered the server they may not get it until
+		// they try to use polymorph. if they do they would be auto unpolymorphed.
+		effect eEff = GetFirstEffect(oPC);
+		int iNoGo = FALSE;
+		while (GetIsEffectValid(eEff))
+		{
+			int eType = GetEffectType(eEff);
+			if (eType == EFFECT_TYPE_POLYMORPH)
+			{
+				iNoGo = TRUE;
+			}
+			eEff = GetNextEffect(oPC);
+		}
+		if (!iNoGo)
+			SetShiftTrueForm(oPC);
+		
         }
+	// Set a local on the pc so we dont have to do this more than once
+	SetLocalInt(oPC,"SHIFTOnEnterHit",1);
     }
 
     // Make sure we are not doing this io intesive loop more than once per level

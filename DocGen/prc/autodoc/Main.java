@@ -204,6 +204,7 @@ public class Main{
 	                      menuItemTemplate              = null,
 	                      prereqANDFeatHeaderTemplate   = null,
 	                      prereqORFeatHeaderTemplate    = null,
+	                      raceTemplate                  = null,
 	                      spellTemplate                 = null,
 	                      skillTemplate                 = null,
 	                      successorFeatHeaderTemplate   = null;
@@ -300,6 +301,7 @@ public class Main{
 		menuItemTemplate              = readTemplate(templatePath + "menuitem.html");
 		prereqANDFeatHeaderTemplate   = readTemplate(templatePath + "prerequisiteandfeatheader.html");
 		prereqORFeatHeaderTemplate    = readTemplate(templatePath + "prerequisiteorfeatheader.html");
+		raceTemplate                  = readTemplate(templatePath + "race.html");
 		spellTemplate                 = readTemplate(templatePath + "spell.html");
 		skillTemplate                 = readTemplate(templatePath + "skill.html");
 		successorFeatHeaderTemplate   = readTemplate(templatePath + "successorfeatheader.html");
@@ -386,11 +388,10 @@ public class Main{
 		linkFeats();
 		printFeats();
 		
+		/* Last, domains, races and classes, which all link to the previous */
 		doDomains();
-		
-		// Do races
-		
-		// Do classes
+		doRaces();
+		doClasses();
 	}
 	
 	/**
@@ -411,23 +412,27 @@ public class Main{
 	 * @param path    the path of the file to be created
 	 * @param content the string to be printed into the file
 	 *
-	 * @throws IOException if one of the file operations fails
+	 * @throws PageGenerationException if one of the file operations fails
 	 */
-	private static void printPage(String path, String content) throws IOException{
-		File target = new File(path);
-		// Clean up old version if necessary
-		if(target.exists()){
-			if(verbose) System.out.println("Deleting previous version of " + path);
-			target.delete();
+	private static void printPage(String path, String content){
+		try{
+			File target = new File(path);
+			// Clean up old version if necessary
+			if(target.exists()){
+				if(verbose) System.out.println("Deleting previous version of " + path);
+				target.delete();
+			}
+			target.createNewFile();
+			
+			// Creater the writer and print
+			FileWriter writer = new FileWriter(target, false);
+			writer.write(content);
+			// Clean up
+			writer.flush();
+			writer.close();
+		}catch(IOException e){
+			throw new PageGenerationException("IOException when printing " + path, e);
 		}
-		target.createNewFile();
-		
-		// Creater the writer and print
-		FileWriter writer = new FileWriter(target, false);
-		writer.write(content);
-		// Clean up
-		writer.flush();
-		writer.close();
 	}
 	
 	/**
@@ -462,7 +467,7 @@ public class Main{
 				
 				// Store a data structure represeting the entry into a hashmap
 				skills.put(i, new SkillEntry(name, text, path, i));
-			}catch(Exception e){
+			}catch(PageGenerationException e){
 				err_pr.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
 
 			}
@@ -538,7 +543,7 @@ public class Main{
 					// Store a data structure represeting the entry into a hashmap
 					spells.put(i, new SpellEntry(name, text, path, i, spelltype));
 				}
-			}catch(Exception e){
+			}catch(PageGenerationException e){
 				err_pr.println("Failed to print page for spell " + i + ": " + name + "\nException:\n" + e);
 			}
 		}
@@ -633,8 +638,8 @@ public class Main{
 				
 				// Store the entry to wait for further processing
 				masterFeats.put(i, entry);
-			}catch(Exception e){
-				err_pr.println("Failed to print page for masterfeat " + i + ": " + name + "\nException:\n" + e);
+			}catch(PageGenerationException e){
+				err_pr.println("Failed to generate page data for masterfeat " + i + ": " + name + "\nException:\n" + e);
 			}
 		}
 		System.gc();
@@ -695,8 +700,8 @@ public class Main{
 				
 				// Store the entry to wait for further processing
 				feats.put(i, entry);
-			}catch(Exception e){
-				err_pr.println("Failed to print page for feat " + i + ": " + name + "\nException:\n" + e);
+			}catch(PageGenerationException e){
+				err_pr.println("Failed to generate page data for feat " + i + ": " + name + "\nException:\n" + e);
 			}
 		}
 		System.gc();
@@ -848,7 +853,7 @@ public class Main{
 			if(verbose) System.out.println("Printing page for " + toPrint.name);
 			try{
 				printPage(toPrint.filePath, toPrint.text);
-			}catch(IOException e){
+			}catch(PageGenerationException e){
 				err_pr.println("Exception when writing page for feat " + toPrint.entryNum + ": " + toPrint.name + ". Exception:\n" + e);
 		}}
 		System.gc();
@@ -856,7 +861,7 @@ public class Main{
 			if(verbose) System.out.println("Printing page for " + toPrint.name);
 			try{
 				printPage(toPrint.filePath, toPrint.text);
-			}catch(IOException e){
+			}catch(PageGenerationException e){
 				err_pr.println("Exception when writing page for masterfeat " + toPrint.entryNum + ": " + toPrint.name + ". Exception:\n" + e);
 		}}
 		System.gc();
@@ -867,6 +872,154 @@ public class Main{
 	 * Handles creation of the domain pages.
 	 */
 	public static void doDomains(){
+		String domainPath = contentPath + "domains" + fileSeparator;
+		String name      = null,
+		       text      = null,
+		       path      = null,
+		       spellList = null;
+		FeatEntry grantedFeat   = null;
+		SpellEntry grantedSpell = null;
 		
+		Data_2da domains2da = twoDA.get("domains");
+		
+		for(int i = 0; i < domains2da.getEntryCount(); i++){
+			// Skip blank rows
+			if(domains2da.getEntry("LABEL", i).equals("****")) continue;
+			
+			try{
+				name = tlk.get(domains2da.getEntry("Name", i));
+				// If we have a bad name, just toss a notice and skip to next entry
+				if(name.equals(badStrRef)) throw new PageGenerationException("Invalid name entry for domain " + i);
+				if(verbose) System.out.println("Printing page for " + name);
+				
+				// Build the entry data
+				text = domainTemplate;
+				text = text.replaceAll("~~~DomainName~~~",
+				                         name);
+				text = text.replaceAll("~~~DomainTLKDescription~~~",
+				                        htmlizeTLK(tlk.get(domains2da.getEntry("Description", i))));
+				
+				// Add a link to the feat
+				try{
+					grantedFeat = feats.get(Integer.parseInt(domains2da.getEntry("GrantedFeat", i)));
+					text = text.replaceAll("~~~DomainFeat~~~",
+					                       "<a href=" + grantedFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + grantedFeat.name + "</a>");
+				}catch(NumberFormatException e){
+					throw new PageGenerationException("Invalid entry in GrantedFeat of domain " + i + ": " + name);
+				}catch(NullPointerException e){
+					throw new PageGenerationException("GrantedFeat entry for domain " + i + ": " + name + " points to non-existent feat: " + domains2da.getEntry("GrantedFeat", i));
+				}
+				
+				// Add links to the granted spells
+				spellList = "";
+				for(int j = 1; j <= 9; j++){
+					// Skip blanks
+					if(domains2da.getEntry("Level_" + j, i).equals("****")) continue;
+					try{
+						grantedSpell = spells.get(Integer.parseInt(domains2da.getEntry("Level_" + j, i)));
+						spellList += ("<br /><a href=" + grantedSpell.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + grantedSpell.name + "</a>\n");
+					}catch(NumberFormatException e){
+						err_pr.println("Invalid entry in Level_" + j + " of domain " + i + ": " + name);
+					}catch(NullPointerException e){
+						err_pr.println("Level_" + j + " entry for domain " + i + ": " + name + " points to non-existent spell: " + domains2da.getEntry("Level_" + j, i));
+					}
+				}
+				text = text.replaceAll("~~~DomainSpellList~~~", spellList);
+				
+				// Build path and print
+				path = domainPath + i + ".html";
+				printPage(path, text);
+			}catch(PageGenerationException e){
+				err_pr.println("Failed to print page for domain " + i + ": " + name + "\nException:\n" + e);
+			}
+		}
+		System.gc();
+	}
+	
+	
+	/**
+	 * Handles creation of the race pages.
+	 */
+	private static void doRaces(){
+		String racePath = contentPath + "races" + fileSeparator;
+		String name     = null,
+		       text     = null,
+		       path     = null,
+		       featList = null;
+		FeatEntry grantedFeat = null;
+		Data_2da featTable    = null;
+		
+		Data_2da racialtypes2da = twoDA.get("racialtypes");
+		for(int i = 0; i < racialtypes2da.getEntryCount(); i++){
+			// Skip non-player races
+			if(!racialtypes2da.getEntry("PlayerRace", i).equals("1")) continue;
+			try{
+				name = tlk.get(racialtypes2da.getEntry("Name", i));
+				// If we have a bad name, just toss a notice and skip to next entry
+				if(name.equals(badStrRef)) throw new PageGenerationException("Invalid name entry for race " + i);
+				if(verbose) System.out.println("Printing page for " + name);
+				
+				// Build the entry data
+				text = raceTemplate;
+				text = text.replaceAll("~~~RaceName~~~",
+				                       name);
+				text = text.replaceAll("~~~RaceTLKDescription~~~",
+				                        htmlizeTLK(tlk.get(racialtypes2da.getEntry("Description", i))));
+				
+				
+				// Add links to the racial feats
+				featTable = twoDA.get(racialtypes2da.getEntry("FeatsTable", i));
+				if(featTable == null) throw new PageGenerationException("Missing feat table for race " + i + ": " + name);
+				
+				featList = "";
+				for(int j = 0; j < featTable.getEntryCount(); j++){
+					try{
+						grantedFeat = feats.get(Integer.parseInt(featTable.getEntry("FeatIndex", j)));
+						featList += ("<br /><a href=" + grantedFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + grantedFeat.name + "</a>\n");
+					}catch(NumberFormatException e){
+						err_pr.println("Invalid entry in FeatIndex line " + j + " of " + featTable.getName());
+					}catch(NullPointerException e){
+						err_pr.println("FeatIndex line " + j + " of " + featTable.getName() + " points to non-existent feat: " + featTable.getEntry("FeatIndex", j));
+					}
+				}
+				text = text.replaceAll("~~~RaceFeats~~~", featList);
+				
+				// Build path and print
+				path = racePath + i + ".html";
+				printPage(path, text);
+			}catch(PageGenerationException e){
+				err_pr.println("Failed to print page for race " + i + ": " + name + "\nException:\n" + e);
+			}
+		}
+		System.gc();
+	}
+	
+	
+	/**
+	 * Handles creation of the race pages.
+	 */
+	private static void doClasses(){
+		String classPath = contentPath + "classes" + fileSeparator;
+		String name     = null,
+		       text     = null,
+		       path     = null,
+		       featList = null;
+		FeatEntry grantedFeat   = null;
+		Data_2da featTable      = null,
+		         bonusFeatTable = null,
+		         babTable       = null,
+		         saveTable      = null,
+		         skillTable     = null;
+		
+		Data_2da classes2da = twoDA.get("classes");
+		
+		for(int i = 0; i < racialtypes2da.getEntryCount(); i++){
+			// Skip non-player classes
+			if(!racialtypes2da.getEntry("PlayerClass", i).equals("1")) continue;
+			try{
+			}catch(PageGenerationException e){
+				err_pr.println("Failed to print page for class " + i + ": " + name + "\nException:\n" + e);
+			}
+		}
 	}
 }

@@ -120,6 +120,7 @@ const int SPELL_MINSTREL_SONG_WOUND_WHISP   = 2156;
 // Ultimate Ranger
 const int SPELL_UR_FAVORITE_ENEMY           = 2134;
 const int SPELL_UR_HAWK_TOTEM               = 2140;
+const int SPELL_UR_HIPS                     = 2143;
 
 // Dragonsong
 

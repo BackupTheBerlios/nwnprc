@@ -294,8 +294,5 @@
 290 SpellFocusNec                                  171       0    -1             0      
 291 SpellFocusTra                                  172       0    -1             0      
 292 SpellFocusAbj                                  35        0    -1             0      
-293 FEAT_EPIC_SPELL_PENETRATION                    618       0    -1             0    
-294 DivineMight                                    413       0    -1             1      
-295 DivineShield                                   414       0    -1             1    
-296 FEAT_EPIC_DIVINE_SHIELD                        3548      0    -1             1  
-297 FEAT_EPIC_DIVINE_MIGHT                         3120      0    -1             1  
+293 FEAT_EPIC_SPELL_PENETRATION                    618       0    -1             0      
+296 FEAT_EPIC_DIVINE_SHIELD                        3548      0    -1             1      

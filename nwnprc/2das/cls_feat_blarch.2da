@@ -17,4 +17,5 @@
 13 FEAT_EPIC_BLINDING_SPEED 491       0    -1             1      
 14 DefArrow                 8         0    -1             0      
 15 TwoWeap                  41        0    -1             0      
-16 Ambidex                  1         0    -1             0      
+16 Ambidex                  1         0    -1             0
+17 FEAT_LINGERING_DAMAGE    3099      0    -1             0

@@ -142,4 +142,5 @@
 138 FEAT_FEYRI_REVERT                    4680      0    99             1      
 139 FEAT_DUERGAR_INVIS                   4681      0    99             1      
 140 FEAT_DROW_DARKNESS                   4682      0    99             1      
-141 FEAT_DROW_FAERIE_FIRE                4683      0    99             1      
+141 FEAT_DROW_FAERIE_FIRE                4683      0    99             1    
+142 FEAT_LINGERING_DAMAGE                3099      0    -1             0

@@ -250,4 +250,5 @@
 200  BlkSummonCreatureI                             2046      1     99             1      
 200  BlkSummonCreatureI                             2047      1     99             1      
 200  BlkSummonCreatureI                             2048      1     99             1      
-200  BlkSummonCreatureI                             2049      1     99             1      
+200  BlkSummonCreatureI                             2049      1     99             1     
+200  FEAT_LINGERING_DAMAGE                          3099      0     -1             0

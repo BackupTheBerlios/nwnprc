@@ -67,7 +67,7 @@ Red Avenger					| Sword and Fist
 Black Flame Zealot				| The Unapproachable East
 Shou Disciple					| The Unapproachable East
 Telflammar Shadowlord				| The Unapproachable East
-Runescarred Berserker				| The Unarpproachable East
+Runescarred Berserker				| The Unapproachable East
 Drow Judicator					| The Underdark
 Archer						| Three Arrows for the King - The Archer's Guide
 Acolyte of the Skin				| Tome and Blood

@@ -30,7 +30,7 @@ sub main() {
         <STDIN>;
         exit(0);
     }
-    if (! -d "tmp") { system("mkdir tmp"); }
+    #if (! -d "tmp") { system("mkdir tmp"); }
     #my $rfh = new FileHandle(">$router_file")
     #  || die "Error: could not open $router_file for writing\n";
     my $lfh = new FileHandle(">$lookup_file")
@@ -154,8 +154,8 @@ sub main() {
  #   SetLocalString(module, "PRC_PACK_SPELL_TYPE_" + IntToString(spell_id), element);
 #SetLocalString(module, "PRC_PACK_SPELL_TYPE_0",element); 
 
-if (($label ne "****") && ($num < 5000))
-{ 
+#if (($label ne "****"))
+#{ 
 
 if (($data[10] ne "****") || ($data[11] ne "****") || ($data[12] ne "****") || ($data[13] ne "****") || ($data[14] ne "****") || ($data[15] ne "****"))
 {
@@ -218,7 +218,7 @@ if (($data[10] ne "****") || ($data[11] ne "****") || ($data[12] ne "****") || (
 
 print $lfh "\n";
 }
-}
+#}
     }
     printf $lfh "}";
     

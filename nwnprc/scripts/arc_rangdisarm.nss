@@ -82,7 +82,17 @@ void main()
 
    int iDamage =0;
 
-   if (!GetWeaponRanged(oWeap)) return;
+   if (!GetWeaponRanged(oWeap))
+   {
+       FloatingTextStringOnCreature("*You must use a ranged weapon.*", OBJECT_SELF, FALSE);
+       return;
+   }
+   
+   if (GetIsCreatureDisarmable(oTarget))
+   {
+       FloatingTextStringOnCreature("*That target is not disarmable.*", OBJECT_SELF, FALSE);       
+       return;
+   }
 
    object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
 
@@ -100,7 +110,7 @@ void main()
    // Perform a ranged attack...
    int iDiceRoll = d20();
    
-   int iRoll = RangedAttackBonus(OBJECT_SELF, oWeap, oTarget, 0) + iDiceRoll;
+   int iRoll = RangedAttackBonus(OBJECT_SELF, oWeap, oTarget, 0) + iDiceRoll - 4;
    
    int iHit = ((iRoll > GetAC(oTarget)) || (iDiceRoll = 20)) ? 1 : 0;
 
@@ -110,5 +120,10 @@ void main()
    {
        AssignCommand(oTarget,ClearAllActions());
        AssignCommand(oTarget,ActionPutDownItem(oItem));
+       FloatingTextStringOnCreature("*Target disarmed!*", OBJECT_SELF, FALSE);
+   }
+   else
+   {
+       FloatingTextStringOnCreature("*Disarm unsuccessful.*", OBJECT_SELF, FALSE);
    }
 }

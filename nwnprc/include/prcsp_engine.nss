@@ -1,3 +1,6 @@
+#include "prc_feat_const"
+#include "prc_class_const"
+
 // Module Constants
 const float CACHE_TIMEOUT_CAST = 2.0;
 const string CASTER_LEVEL_TAG = "PRCEffectiveCasterLevel";
@@ -22,10 +25,20 @@ PRCResistSpell(object oCaster, object oTarget)
 //	This function is a wrapper should someone wish to rewrite the Bioware
 //	version. This is where it should be done.
 //
-int
-PRCGetSpellResistance(object oTarget)
+int 
+PRCGetSpellResistance(object oTarget, object oCaster)
 {
-	return GetSpellResistance(oTarget);
+        int iSpellRes = GetSpellResistance(oTarget);
+        
+        // Foe Hunter SR stacks with normal SR 
+        // when a spell is cast by their hated enemy
+        // When Inlcude fixes are done, change GetRacialType to MyPRCGetRacialType
+        if(GetHasFeat(FEAT_HATED_ENEMY_SR, oTarget) && GetLocalInt(oTarget, "HatedFoe") == GetRacialType(oCaster) )
+        {
+             iSpellRes += 15 + GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oTarget);
+        }
+	
+	return iSpellRes;
 }
 
 //
@@ -97,7 +110,7 @@ MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDel
 
 
 			// A tie favors the caster.
-			if ((nEffCasterLvl + d20(1)+iWeav) < PRCGetSpellResistance(oTarget))
+			if ((nEffCasterLvl + d20(1)+iWeav) < PRCGetSpellResistance(oTarget, oCaster))
 				nResist = SPELL_RESIST_PASS;
 		}
     }

@@ -2287,6 +2287,8 @@ void SetShiftTrueForm(object oPC)
 	//	DelayCommand(0.3, AssignCommand(oPC, ActionTakeItem(oSpark, oCont)));
 	//	DestroyObject(oCont, 0.7);
 	//}
+	
+	DelayCommand(1.0, ClearShifterItems(oPC));
 }
 
 

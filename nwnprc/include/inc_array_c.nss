@@ -119,7 +119,7 @@ int persistant_array_set_object(object store, string name, int i, object entry)
     if (!GetIsObjectValid(entry))
         return SDL_ERROR_NOT_VALID_OBJECT;
 
-    int results=array_set_string(store,name,i,"OBJECT");
+    int results = persistant_array_set_string(store,name,i,"OBJECT");
     if (results==SDL_SUCCESS)
         SetPersistantLocalObject(store,name+"_"+IntToString(i)+"_OBJECT",entry);
 
@@ -165,8 +165,9 @@ int persistant_array_shrink(object store, string name, int size_new)
     {
         DeletePersistantLocalString(store,name+"_"+IntToString(i));
 
-        // just in case, delete possible object names
-        DeletePersistantLocalString(store,name+"_"+IntToString(i)+"_OBJECT");
+        // just in case, delete possible objects
+        DeletePersistantLocalObject(store,name+"_"+IntToString(i)+"_OBJECT");
+        
     }
 
     SetPersistantLocalInt(store,name,size_new+1);

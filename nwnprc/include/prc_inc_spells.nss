@@ -14,11 +14,12 @@
    be necessary, except when new casting feats are created.
 */
 
-#include "prc_inc_sneak.nss"
+#include "prc_inc_sneak"
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "lookup_2da_spell"
 #include "prc_inc_switch"
+#include "inc_vfx_const"
 
 // Added by Primogenitor
 // part of the replacement for GetClassByPosition and GetLevelByPosition
@@ -1129,7 +1130,7 @@ void SetupPRCGetClassByPosition(object oCreature)
                 GetLevelByClass(i, oCreature)+1);
             nCounter++;
             if(nCounter >= 4)
-                i = 999; // end loop now
+                break; // end loop now
         }
     }
 }
@@ -1170,42 +1171,40 @@ int PRCGetLevelByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
 
 //GetNextObjectInShape wrapper for changing the AOE of the channeled spells
 object MyNextObjectInShape(int nShape,
-float fSize, location lTarget,
-int bLineOfSight=FALSE,
-int nObjectFilter=OBJECT_TYPE_CREATURE,
-vector vOrigin=[0.0,0.0,0.0])
+                           float fSize, location lTarget,
+                           int bLineOfSight = FALSE,
+                           int nObjectFilter = OBJECT_TYPE_CREATURE,
+                           vector vOrigin=[0.0, 0.0, 0.0])
 {
-
-int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
-if(nChannel != 1)
-{
-return GetNextObjectInShape(nShape,fSize,lTarget,bLineOfSight,nObjectFilter,vOrigin);
-}
-else
-{
-return OBJECT_INVALID;
-}
+    int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
+    if(nChannel != 1)
+    {
+        return GetNextObjectInShape(nShape,fSize,lTarget,bLineOfSight,nObjectFilter,vOrigin);
+    }
+    else
+    {
+        return OBJECT_INVALID;
+    }
 }
 
 
 //GetFirstObjectInShape wrapper for changing the AOE of the channeled spells
 object MyFirstObjectInShape(int nShape,
-float fSize,
-location lTarget,
-int bLineOfSight=FALSE,
-int nObjectFilter=OBJECT_TYPE_CREATURE,
-vector vOrigin=[0.0,0.0,0.0])
+                            float fSize,
+                            location lTarget,
+                            int bLineOfSight = FALSE,
+                            int nObjectFilter = OBJECT_TYPE_CREATURE,
+                            vector vOrigin=[0.0, 0.0, 0.0])
 {
-
-int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
-if(nChannel != 1)
-{
-return GetFirstObjectInShape(nShape,fSize,lTarget,bLineOfSight,nObjectFilter,vOrigin);
-}
-else
-{
-return GetSpellTargetObject();
-}
+    int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
+    if(nChannel != 1)
+    {
+        return GetFirstObjectInShape(nShape,fSize,lTarget,bLineOfSight,nObjectFilter,vOrigin);
+    }
+    else
+    {
+        return GetSpellTargetObject();
+    }
 }
 
 
@@ -1288,38 +1287,37 @@ int MyMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0)
 //channeling at all
 int ChannelChecker(string sSpell, object oTarget)
 {
-int nSpell = GetLocalInt(GetAreaOfEffectCreator(),sSpell+"channeled");
-int nTarget = GetLocalInt(oTarget, sSpell+"target");
-if(nSpell ==1 && nTarget == 1)
-{
-return 1;
-}
-else if(nSpell !=1 && nTarget !=1)
-{
-return 1;
-}
-else
-{
-return 0;
-}
+    int nSpell = GetLocalInt(GetAreaOfEffectCreator(), sSpell+"channeled");
+    int nTarget = GetLocalInt(oTarget, sSpell+"target");
+    if(nSpell == 1 && nTarget == 1)
+    {
+        return 1;
+    }
+    else if(nSpell != 1 && nTarget != 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 //If a spell is being channeled, we store its target and its name
 void StoreSpellVariables(string sString,int nDuration)
 {
-
     if(GetLocalInt(OBJECT_SELF,"spellswd_aoe") == 1)
     {
-    SetLocalInt(OBJECT_SELF, sString+"channeled",1);
-    SetLocalInt(GetSpellTargetObject(), sString+"target",1);
+        SetLocalInt(OBJECT_SELF, sString+"channeled",1);
+        SetLocalInt(GetSpellTargetObject(), sString+"target",1);
     }
-DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(GetSpellTargetObject(), sString+"target"));
-DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(OBJECT_SELF, sString+"channeled"));
+    DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(GetSpellTargetObject(), sString+"target"));
+    DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(OBJECT_SELF, sString+"channeled"));
 }
 
 effect ChannelingVisual()
 {
-return EffectVisualEffect(VFX_DUR_SPELLTURNING);
+    return EffectVisualEffect(VFX_DUR_SPELLTURNING);
 }
 
 ////////////////End Spellsword//////////////////

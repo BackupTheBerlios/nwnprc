@@ -34,6 +34,8 @@ void main()
   //Declare main variables.
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
+    
+    RemoveEffectsFromSpell(oPC, SPELL_SACREDSPEED);
 
     int iClass = GetLevelByClass(CLASS_TYPE_SACREDFIST,oPC);
 

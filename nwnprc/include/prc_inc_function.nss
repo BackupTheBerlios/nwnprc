@@ -91,6 +91,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_WEREWOLF,oPC) > 0)            ExecuteScript("prc_werewolf", oPC);
     if(GetLevelByClass(CLASS_TYPE_JUDICATOR, oPC) > 0)          ExecuteScript("prc_judicator", oPC);
     if(GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) > 0)     ExecuteScript("prc_arcduel", oPC);
+    if(GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oPC) > 0)      ExecuteScript("prc_thayknight", oPC);
     if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
 
     // Feats are checked here
@@ -289,7 +290,16 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "SelvBlessWillBonus");
     // Arcane Duelist
     DeleteLocalInt(oSkin, "ADDef");
-    
+    // Thayan Knight
+    DeleteLocalInt(oSkin,"ThayHorror");
+    DeleteLocalInt(oSkin,"ThayHorrorFear");
+    DeleteLocalInt(oSkin,"ThayHorrorCharm");
+    DeleteLocalInt(oSkin,"ThayZulkFave");
+    DeleteLocalInt(oSkin,"ThayZulkFaveSkill");
+    DeleteLocalInt(oSkin,"ThayZulkFaveSave");
+    DeleteLocalInt(oSkin,"ThayZulkChamp");
+    DeleteLocalInt(oSkin,"ThayZulkChampSkill");
+    DeleteLocalInt(oSkin,"ThayZulkChampSave");
     // future PRCs Go below here
 }
 

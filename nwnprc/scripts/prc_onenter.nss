@@ -12,6 +12,30 @@ void RemovBonusStormlord(object oPC)
    if (GetHasFeat(FEAT_THUNDER_WEAPON,oPC)) SetLocalInt(oItem,"STThund",1);
 }
 
+void
+ScrubPCSkin(object oPC)
+{
+    object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
+	itemproperty ip = GetFirstItemProperty(oSkin);
+	while (GetIsItemPropertyValid(ip)) {
+		// Insert Logic here to determine if we spare a property
+		if (GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT) {
+			// Check for specific Bonus Feats
+			// Reference iprp_feats.2da
+			int st = GetItemPropertySubType(ip);
+
+			// Spare 400 through 570 except for 428 (currently unknown)
+			if (st < 400 || st > 570 || st == 428)
+				RemoveItemProperty(oSkin, ip);
+		}
+		else
+			RemoveItemProperty(oSkin, ip);
+
+		// Get the next property
+		ip = GetNextItemProperty(oPC);
+	}
+}
+
 void main()
 {
     //The composite properties system gets confused when an exported
@@ -21,10 +45,8 @@ void main()
     //mess up the lich, but only until I hook it into the EvalPRC event -
     //hopefully in the next update
     //  -Aaon Graywolf
-    object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, GetEnteringObject());
-    DestroyObject(oSkin);
-    object oPC = GetEnteringObject();
-    GetPCSkin(oPC);
+	object oPC = GetEnteringObject();
+	ScrubPCSkin(oPC);
 
     if (GetLevelByClass(CLASS_TYPE_STORMLORD,oPC))
         RemovBonusStormlord(oPC);

@@ -60,9 +60,6 @@
 56 FEAT_DISCIPLE_OF_DARKNESS            4012      0    -1             1      
 57 FEAT_MANYSHOT                        3306      0    -1             1      
 58 FEAT_IMP_MANYSHOT                    3350      0    -1             1      
-59 FEAT_NEW_POWER_ATTACK                3143      3    1              1      
-60 FEAT_NEW_IMpROVED_POWER_ATTACK       3144      3    1              1      
-61 FEAT_SHADOW_LORD_CONVO               2360      3    1              1      
 62 FEAT_NS_LIGHT_ADAPTION               2964      3    1              0      
 63 FEAT_NS_WEBWALKER                    2965      3    1              0      
 64 FEAT_NS_INVISIBILITY                 2969      3    4              1      

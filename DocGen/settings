@@ -10,5 +10,12 @@
 # where valuegroup consists of Id & value pairs separated by whitespace
 # furthermore, value is surrounded by quotes
 
-languages:
+# different laguage tlks
+language:
 	name="english" base="dialog.tlk" prc="prc_consortium.tlk"
+
+
+# what string a certain type of spell.2da script name entry starts with. Delimited by | characters
+signature:
+	epicspell="ss_ep_|wander"
+	psionicpower="psi_"

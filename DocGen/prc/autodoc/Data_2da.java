@@ -51,7 +51,10 @@ public class Data_2da{
 		Scanner reader = null;
 		try{
 			reader = new Scanner(baseFile);
-		}catch(FileNotFoundException e) { assert false : "Filenotfound when it's presence was already confirmed"; }
+		}catch(FileNotFoundException e){
+			System.err.println("2da file removed while program was running. Aborting");
+			System.exit(1);
+		}
 		
 		// Check the 2da header
 		String data = getNextNonEmptyRow(reader);

@@ -1,5 +1,5 @@
 // Chill Touch
-// Does 1d6 cold damage plus 1 point strength damage to touched creatures.
+// Does 1d6 negative energy damage plus 1 point strength damage to touched creatures.
 // Undead take no damage but instead are "turned" for 1d4 + 1 rounds.
 
 #include "spinc_common"
@@ -29,7 +29,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     // Declare major variables
     object oTarget = GetSpellTargetObject();
     int iEleDmg = DAMAGE_TYPE_NEGATIVE;
-    int iColdDam = d6();
+    int iNegDam = d6();
     int iTurnDur = PRCGetCasterLevel(OBJECT_SELF) + d4();
     int iPenetr = PRCGetCasterLevel(OBJECT_SELF) + SPGetPenetr();
     int iSaveDC = GetSpellSaveDC() + GetChangesToSaveDC(oTarget, OBJECT_SELF);
@@ -41,11 +41,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
     else if (CheckMetaMagic(iMeta, METAMAGIC_EMPOWER))
     {
-        iColdDam = iColdDam + iColdDam / 2;
+        iNegDam = iNegDam + iNegDam / 2;
     }
     else if (CheckMetaMagic(iMeta, METAMAGIC_MAXIMIZE))
     {
-        iColdDam = 6;
+        iNegDam = 6;
     }
     
     int iAttackRoll = TouchAttackMelee(oTarget, GetSpellCastItem() == OBJECT_INVALID);
@@ -75,15 +75,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget, iPenetr))
                 {
                     effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
-                    //effect eDam = EffectDamage(iColdDam, iEleDmg);
+                    //effect eDam = EffectDamage(iNegDam, iEleDmg);
                 
                     //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                     
                     // apply damage + sneak damage
-                    ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, iColdDam, iEleDmg);
+                    ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, iNegDam, iEleDmg);
 
-                    if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, iSaveDC, SAVING_THROW_TYPE_COLD))
+                    if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, iSaveDC, SAVING_THROW_TYPE_NEGATIVE))
                     {
                         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
                         eDur = EffectLinkEffects(eDur, EffectAbilityDecrease(ABILITY_STRENGTH, 1));

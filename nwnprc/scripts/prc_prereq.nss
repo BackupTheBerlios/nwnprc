@@ -538,7 +538,7 @@ void MinstrelOfTheEdge(object oPC)
     }
 }
 
-int DemiLich(object oPC)
+void DemiLich(object oPC)
 {
     if (GetLocalInt(GetModule(),"PRC_DISABLE_DEMILICH") > 0 && GetLevelByClass(CLASS_TYPE_LICH) >= 4)
     {

@@ -23,6 +23,17 @@ bugfix by Kovi 2002.07.30
 #include "prc_class_const"
 #include "prc_inc_clsfunc"
 
+void RemoveOldSongs()
+{
+   if (GetHasSpellEffect(SPELL_DSL_SONG_STRENGTH)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_STRENGTH);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_COMPULSION)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_COMPULSION);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_SPEED)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_SPEED);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_FEAR)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_FEAR);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_HEALING)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_HEALING);
+
+}
+
+
 void main()
 {
 
@@ -32,16 +43,16 @@ void main()
         return;
     }
 
-    RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_STRENGTH);
-    
+    RemoveOldSongEffects(OBJECT_SELF,0);
+    RemoveOldSongs();
+     
     effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);
 //    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis, OBJECT_SELF,0.0,FALSE); 
         
     //Set and apply AOE object
-    effect eAOE = SupernaturalEffect(EffectAreaOfEffect(AOE_MOB_DRAGON_FEAR,"dslyr_songstra","dslyr_songstrb","dslyr_songstrc"));
-    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, OBJECT_SELF,0.0,FALSE);
-//    StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, GetSpellId(), 0);
-     
+    effect eAOE = EffectAreaOfEffect(AOE_MOB_DRAGON_FEAR,"dslyr_songstra","dslyr_songstrb","dslyr_songstrc");
+    SPApplyEffectToObject(DURATION_TYPE_PERMANENT,eAOE, OBJECT_SELF,0.0,FALSE);
+    StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, GetSpellId(), 0);
     //DecrementRemainingFeatUses(OBJECT_SELF, FEAT_LYRITHSONG1);
     SetLocalInt(OBJECT_SELF, "SpellConc", 1);   
 }

@@ -8,7 +8,7 @@ void DominatedDuration(object oTarget, object oCaster)
    
    if (!iConc)
    {
-        RemoveOldSongEffects(oCaster,SPELL_DSL_SONG_COMPULSION);
+        RemoveEffectsFromSpell(oCaster,SPELL_DSL_SONG_COMPULSION);
         return ;
    }
 
@@ -16,6 +16,16 @@ void DominatedDuration(object oTarget, object oCaster)
    {
       DelayCommand(6.0f,DominatedDuration(oTarget,oCaster) );
    }
+}
+
+void RemoveOldSongs()
+{
+   if (GetHasSpellEffect(SPELL_DSL_SONG_STRENGTH)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_STRENGTH);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_COMPULSION)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_COMPULSION);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_SPEED)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_SPEED);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_FEAR)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_FEAR);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_HEALING)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_HEALING);
+
 }
 
 void main()
@@ -32,7 +42,9 @@ void main()
        return;
     }
   
-    RemoveOldSongEffects(OBJECT_SELF,FEAT_EPIC_DRAGONSONG_COMPULSION);
+    RemoveOldSongEffects(OBJECT_SELF,0);
+    RemoveOldSongs();
+     
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     object oCaster = OBJECT_SELF;
@@ -72,12 +84,12 @@ void main()
           if (!iSave)
           {
                //Apply linked effects and VFX Impact
-               SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget, 0.0,FALSE);
+               SPApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eLink), oTarget, 0.0,FALSE);
                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);  
-               SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis2, OBJECT_SELF,0.0,FALSE);             
-               StoreSongRecipient(oTarget, OBJECT_SELF, SPELL_DSL_SONG_COMPULSION, 0);
+               SPApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eVis2), OBJECT_SELF,0.0,FALSE);             
                SetLocalInt(OBJECT_SELF, "SpellConc", 1);
-               DelayCommand(6.0f,DominatedDuration(oTarget,oCaster) );   
+               DelayCommand(6.0f,DominatedDuration(oTarget,oCaster) );  
+               StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, GetSpellId(), 0); 
           }
           
 

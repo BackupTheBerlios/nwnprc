@@ -3,6 +3,16 @@
 #include "prc_inc_clsfunc"
 #include "NW_I0_SPELLS"
 
+void RemoveOldSongs()
+{
+   if (GetHasSpellEffect(SPELL_DSL_SONG_STRENGTH)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_STRENGTH);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_COMPULSION)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_COMPULSION);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_SPEED)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_SPEED);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_FEAR)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_FEAR);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_HEALING)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_HEALING);
+
+}
+
 void main()
 {
     if (!GetHasFeat(FEAT_DRAGONSONG_STRENGTH, OBJECT_SELF))
@@ -46,8 +56,10 @@ void main()
     location lSpell = GetSpellTargetLocation();
  
     RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_SPEED);
+    RemoveOldSongs();
     
-    effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);  
+    effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG); 
+    eLink = EffectLinkEffects(eLink, eVis); 
    // SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, OBJECT_SELF,RoundsToSeconds(nDuration),FALSE); 
 
 
@@ -60,15 +72,13 @@ void main()
         //Make faction check on the target
         if(oTarget == OBJECT_SELF)
         {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),FALSE);
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, RoundsToSeconds(nDuration),FALSE);
-            StoreSongRecipient(oTarget, OBJECT_SELF, SPELL_DSL_SONG_SPEED, nDuration);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eLink), oTarget, RoundsToSeconds(nDuration),FALSE);
+            StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
         }
         else if(GetIsFriend(oTarget))
         {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),FALSE);
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, RoundsToSeconds(nDuration),FALSE);
-            StoreSongRecipient(oTarget, OBJECT_SELF, SPELL_DSL_SONG_SPEED, nDuration);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eLink), oTarget, RoundsToSeconds(nDuration),FALSE);
+            StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
         }
         //Select the next target within the spell shape.
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lSpell);

@@ -65,15 +65,18 @@ void main()
   
               if (nHD>GetHitDice(oTarget)/2)
                  //Apply the VFX impact and effects
-                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),FALSE);
+                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eLink), oTarget, RoundsToSeconds(nDuration),FALSE);
               else
-                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(nDuration),FALSE);
+                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eLink2), oTarget, RoundsToSeconds(nDuration),FALSE);
 
-              SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-              StoreSongRecipient(oTarget, GetAreaOfEffectCreator(), SPELL_DSL_SONG_FEAR, 0);
+              SPApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(eVis), oTarget);
            }
         }
      }
+     
+    effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
+    if (oTarget == GetAreaOfEffectCreator())
+      SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis2, OBJECT_SELF,0.0,FALSE);  
      
   
 }

@@ -21,6 +21,16 @@
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
 
+void RemoveOldSongs()
+{
+   if (GetHasSpellEffect(SPELL_DSL_SONG_STRENGTH)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_STRENGTH);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_COMPULSION)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_COMPULSION);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_SPEED)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_SPEED);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_FEAR)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_FEAR);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_HEALING)) RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DSL_SONG_HEALING);
+
+}
+
 void main()
 {
 
@@ -36,6 +46,8 @@ void main()
   effect eVis = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
   effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
   effect eLink = EffectLinkEffects(eRegen, eDur);
+         eLink = EffectLinkEffects(eLink, eVis);
+  
 
   if (!GetHasFeat(FEAT_DRAGONSONG_STRENGTH, OBJECT_SELF))
   {
@@ -50,6 +62,7 @@ void main()
   }
   
   RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_HEALING);
+  RemoveOldSongs();
 
   int nEpic = GetHasFeat(FEAT_EPIC_DRAGONSONG_HEALING) ? TRUE:FALSE;  
   //Fire cast spell at event for the specified target
@@ -91,10 +104,9 @@ void main()
        
         if (nEpic)
         {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),FALSE);
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, RoundsToSeconds(nDuration),FALSE);
-            StoreSongRecipient(oTarget, OBJECT_SELF, SPELL_DSL_SONG_HEALING, nDuration);
-        }        
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eLink), oTarget, RoundsToSeconds(nDuration),FALSE);
+            StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+         }        
         // Code for FB to remove damage that would be caused at end of Frenzy
         SetLocalInt(oTarget, "PC_Damage", 0);
      }

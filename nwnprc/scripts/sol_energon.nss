@@ -18,6 +18,11 @@ void RemoveAllIP(object oItem)
 void main()
 {
 
+   if (GetMaxHenchmen() < 4)
+   {
+      SetMaxHenchmen(4);
+   }
+   
    if (!GetHasFeat(FEAT_ENERGON_COMPANION))
    {
 
@@ -25,6 +30,8 @@ void main()
      object oHench;
      for (nLoop=1; nLoop<=GetMaxHenchmen(); nLoop++)
      {
+     	oHench = GetHenchman(OBJECT_SELF, nLoop);
+
         if (GetResRef(oHench)=="xagya01")
         {
            RemoveHenchman(OBJECT_SELF,oHench);

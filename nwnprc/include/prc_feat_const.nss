@@ -123,6 +123,16 @@ const int FEAT_PRESTIGE_WEREWOLFCLASS_2            = 3525;
 const int FEAT_PRESTIGE_WEREWOLFCLASS_3            = 3526;
 const int FEAT_PRESTIGE_LYCANTHROPE                = 3527;
 
+// Arcane Duelist
+const int FEAT_AD_CHOSEN_WEAPON                    = 3530;
+const int FEAT_AD_ENCHANT_CHOSEN_WEAPON            = 3531;
+const int FEAT_AD_APPARENT_DEFENSE                 = 3532;
+const int FEAT_AD_DEX_ATTACK                       = 3533;
+const int FEAT_AD_FLURRY_OF_SWORDS                 = 3534;
+const int FEAT_AD_FALSE_KEENNESS                   = 3535;
+const int FEAT_AD_BLUR                             = 3536;
+const int FEAT_AD_MISLEAD                          = 3537;
+
 //Drow Judicator Feats
 const int FEAT_COMMAND_SPIDERS     = 2442;
 const int FEAT_WAR_STRIKE          = 2443;

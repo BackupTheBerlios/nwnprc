@@ -1,8 +1,13 @@
-
+#include "NW_I0_SPELLS"
 
 void main()
 {
 
+   if (GetHasSpellEffect(SPELL_UR_HIPS))
+   {
+     RemoveEffectsFromSpell(OBJECT_SELF,SPELL_UR_HIPS);  
+     return;	
+   }
 
     object oTarget = GetSpellTargetObject();
     effect eMov = EffectMovementSpeedDecrease(50);

@@ -556,7 +556,6 @@ public class FinalizeChar {
         int baseskilllistentry = baseentry;
         targetbic.addElementToEntry(baseskilllistentry, 15, extranum++, new Integer(empty));
         for(int q = 0; q<skilllist.size(); q++) {
-            //for(int q=0;q<numskills;q++) {
             targetbic.addEntryToList(listnum, 0);
             targetbic.addNONMMElementToEntry(++entry, 0, extranum, ((Integer)skilllist.get(q)));
         }
@@ -789,7 +788,7 @@ public class FinalizeChar {
         menucreate.PackagesButton.setEnabled(false);
         menucreate.ClassButton.setEnabled(false);
         menucreate.CustomizeButton.setEnabled(false);
-        menucreate.ResetButton.setEnabled(false);
+        menucreate.ResetButton.setEnabled(true);
         
         menucreate.DoneLabel.setVisible(true);
         //menucreate.setCursor(0);

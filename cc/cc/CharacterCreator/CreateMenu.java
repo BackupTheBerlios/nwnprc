@@ -1090,6 +1090,8 @@ public class CreateMenu extends javax.swing.JFrame {
         // Add your handling code here:
         System.gc();
         CharReset(0);
+        DoneLabel.setVisible(false);
+		GenderButton.setEnabled(true);
     }
 
     private void PackagesButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1221,6 +1223,9 @@ public class CreateMenu extends javax.swing.JFrame {
                 pack();
             }
         }
+		else {
+			FeatSelectedButtonList.removeAll();
+		}
     }
 
     public void RedoSpells() {
@@ -1298,6 +1303,10 @@ public class CreateMenu extends javax.swing.JFrame {
                 }
             }
         }
+		else {
+			Spell0ButtonList.removeAll();
+			Spell1ButtonList.removeAll();
+		}
         pack();
     }
 
@@ -1450,6 +1459,7 @@ public class CreateMenu extends javax.swing.JFrame {
                 }
             }
         }
+		System.gc();
     }
 
     private JComponent glasspane;

@@ -40,6 +40,8 @@ void main()
       int iWis =  GetAbilityModifier(ABILITY_WISDOM,oPC);
           iWis = iWis > iStr ? iWis : 0;
 
+      if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD) iWis =0;
+      
       if (iEquip == 1)
            oItem = GetPCItemLastUnequipped();
       else
@@ -47,7 +49,7 @@ void main()
 
       if (isSimple(oItem))
       {
-        if(iEquip == 1)
+        if(iEquip == 1||GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
           SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
         else
           SetCompositeBonus(oItem,"IntuiAtk",iWis+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
@@ -55,9 +57,14 @@ void main()
 
       if (iEquip ==0)
       {
+        
          oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
-         SetCompositeBonus(oItem,"IntuiAtk",iWis+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
+         if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
+           SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
+         else
+           SetCompositeBonus(oItem,"IntuiAtk",iWis+GetWeaponEnhancement(oItem),ITEM_PROPERTY_ATTACK_BONUS);
       }
+
 
      object oCweapB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC);
      object oCweapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
@@ -72,12 +79,17 @@ void main()
    if (GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))
    {
 
-
        int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
        object oItem;
+       
        if (iEquip == 1)
+            oItem = GetPCItemLastUnequipped();
+       else
+            oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+      
+       
+       if (iEquip == 1||GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
        {
-          oItem = GetPCItemLastUnequipped();
           if (GetBaseItemType(oItem)==BASE_ITEM_GLOVES)
              RemoveSpecificProperty(oItem,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE);
        }
@@ -94,9 +106,13 @@ void main()
         RemoveSpecificProperty(oCweapB,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE);
         RemoveSpecificProperty(oCweapL,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE);
         RemoveSpecificProperty(oCweapR,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE,2),oCweapB);
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE,2),oCweapL);
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE,2),oCweapR);
+
+        if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
+        {
+          AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE,2),oCweapB);
+          AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE,2),oCweapL);
+          AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE,2),oCweapR);
+        }
 
 
    }

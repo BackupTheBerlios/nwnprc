@@ -30,7 +30,7 @@
 //:: Support for the following feats:
 //:://////////////////////////////////////////////
 //:: Weapon Focus, Epic Weapon Focus, Epic Prowess, 
-//:: Improved Critical, Overwhelming Critical, 
+//:: Improved Critical, Overwhelming Critical, Devestating Critical
 //:: Weapon Specialization, Epic Weapon Specialization,
 //:: Weapon Finesse, Inuitive Attack, Zen Archery, 
 //::
@@ -39,8 +39,8 @@
 //:: Power Attack, Improved Power Attack, Supreme Power Attack,
 //:: Power Shot, Improved Power Shot, Supreme Power Shot,
 //:: 
-//:: Rapid Shot, Flurry of Blows, Martial Flurry, Furious Assult,
-//:: One Strike Two Cuts, Extra Shot
+//:: Rapid Shot, Rapid Reload, Extra Shot, Flurry of Blows,
+//:: Martial Flurry, Furious Assult, One Strike Two Cuts, 
 //:: 
 //:: Epic Dodge, Self Concealment I-V, Blind Fight, Crippling Strike
 //::
@@ -57,8 +57,6 @@
 //:://////////////////////////////////////////////
 //:: Coup De Grace does not take into account bonus damage [Except from touch attack spells]
 //:: Calculation of Enemey AC does not take into account bonus vs. racial type or alignment type.
-//::
-//:: Devestating Critical not yet implemented
 //:: 
 //:://////////////////////////////////////////////
 //:: Tested:
@@ -79,7 +77,7 @@
 //::         Dark Fire and Flame Weapon
 //::         Unique Power - should test more of the abilities to make sure it works right
 //::
-//:: Bug Fix for Sanctuary / invis not being removed
+//:: Bug Fix for Sanctuary/invis/stealth not being removed
 //:: Coup De Grace
 //:: PerformAttack
 //::
@@ -90,9 +88,7 @@
 //:://////////////////////////////////////////////
 //:: Known Bugs:
 //:://////////////////////////////////////////////
-//:: Rapid Reload - ... crossbows get full attack rounds currently
-//::                    will look at the PnP rules and see what 
-//::                    they are for cross bows
+//::
 //:://////////////////////////////////////////////
 
 // #include "prc_feat_const"   <-- Inherited
@@ -1049,6 +1045,16 @@ int GetMainHandAttacks(object oPC)
     }
     
     if(iNumMonkAttack > iNumAttacks) iNumAttacks = iNumMonkAttack;
+    
+    // crossbows special rules
+    // if they don't have rapid reload, then only 1 attack per round
+    object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    if(GetBaseItemType(oWeapR) == BASE_ITEM_HEAVYCROSSBOW || 
+       GetBaseItemType(oWeapR) == BASE_ITEM_LIGHTCROSSBOW &&
+       !GetHasFeat(FEAT_RAPID_RELOAD, oPC) )
+    {
+         iNumAttacks = 1;
+    }
     
     return iNumAttacks;
 }
@@ -3320,7 +3326,24 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           } 
      }
      
-     // any other special attack effects that should be applied.
+     // Devestating Critical
+     if(bIsCritical && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID))
+     {
+           // DC = 10 + 1/2 char level + str mod.
+          int iStr = GetAbilityModifier(ABILITY_STRENGTH, oAttacker);
+          int iLevelMod = GetHitDice(oAttacker) / 2;
+          int iSaveDC = 10 + iStr + iLevelMod;
+ 
+          if( FortitudeSave(oDefender, iSaveDC, SAVING_THROW_TYPE_NONE, oAttacker) )
+          {
+               string nMes = "*Devestating Critical*";
+               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE); 
+
+               // circumvents death immunity... since anyone CDG'ed is dead.
+               effect eDeath = EffectDamage(DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
+               ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oDefender);
+          }          
+     }
      
      return eLink;
 }

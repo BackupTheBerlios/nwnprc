@@ -156,9 +156,9 @@ int GetIsInsertPosition(object oInsert, object oCompare, int nInsertionBias, int
 			bReturn  = GetHitDice(oInsert) > GetHitDice(oCompare);
 			break;
 		case INSERTION_BIAS_HP_RATIO:
-			bReturn  = (IntToFloat(GetCurrentHitPoints(oInsert)) / IntToFloat(GetMaxHitPoints(oInsert)))
+			bReturn  = (IntToFloat(GetCurrentHitPoints(oInsert)) / ((GetMaxHitPoints(oInsert) > 0) ? IntToFloat(GetMaxHitPoints(oInsert)) : 0.001f))
 			            >
-			           (IntToFloat(GetCurrentHitPoints(oCompare)) / IntToFloat(GetMaxHitPoints(oCompare)));
+			           (IntToFloat(GetCurrentHitPoints(oCompare)) / ((GetMaxHitPoints(oCompare) > 0) ? IntToFloat(GetMaxHitPoints(oCompare)) : 0.001f));
 			break;
 		default:
 			WriteTimestampedLogEntry("Invalid target selection bias given. Value: " + IntToString(nInsertionBias));

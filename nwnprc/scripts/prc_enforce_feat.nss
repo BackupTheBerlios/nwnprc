@@ -519,31 +519,6 @@ int LolthsMeat(object oPC)
      return TRUE;
 }
 
-int PsionDiscipline(object oPC = OBJECT_SELF)
-{
-
-     int nPsion = GetLevelByClass(CLASS_TYPE_PSION, oPC);
-     int nDisc;
-
-     if (nPsion > 0)
-     {
-          nDisc    += 	 (GetHasFeat(FEAT_PSION_DIS_EGOIST, oPC))
-                   +     (GetHasFeat(FEAT_PSION_DIS_KINETICIST, oPC))
-                   +     (GetHasFeat(FEAT_PSION_DIS_NOMAD, oPC))
-                   +     (GetHasFeat(FEAT_PSION_DIS_SEER, oPC))
-                   +     (GetHasFeat(FEAT_PSION_DIS_SHAPER, oPC))
-                   +     (GetHasFeat(FEAT_PSION_DIS_TELEPATH, oPC));
-
-
-          if (nDisc != 1)
-          {
-               FloatingTextStringOnCreature("You may only have 1 Discipline. Please reselect your feats.", oPC, FALSE);
-               return FALSE;
-          }
-     }
-     return TRUE;
-}
-
 void main()
 {
         //Declare Major Variables
@@ -559,8 +534,7 @@ void main()
          || !ElementalSavant(oPC)
          || !GenasaiFocus(oPC)
          || !CheckClericShadowWeave(oPC)
-         || !LolthsMeat(oPC)
-         || !PsionDiscipline(oPC))
+         || !LolthsMeat(oPC))
     {
        int nHD = GetHitDice(oPC);
        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;

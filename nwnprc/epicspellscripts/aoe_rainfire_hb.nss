@@ -26,7 +26,7 @@ ActionDoCommand(SetAllAoEInts(4054,OBJECT_SELF, GetSpellSaveDC()));
     effect eDam;
     object oTarget;
     object oCreator = GetAreaOfEffectCreator();
-    int nDC = /*GetEpicSpellSaveDC(oCreator) +*/ GetChangesToSaveDC() +
+    int nDC = GetEpicSpellSaveDC(oCreator) + GetChangesToSaveDC(oCreator) +
         GetDCSchoolFocusAdjustment(oCreator, RAINFIR_S);
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
     float fDelay;

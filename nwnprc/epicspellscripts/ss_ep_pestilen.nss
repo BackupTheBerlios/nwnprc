@@ -22,7 +22,7 @@ void main()
     {
         //Declare major variables
         int nDamage;
-        int nDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, PESTIL_S);
         float fDelay;
         effect eExplode = EffectVisualEffect(VFX_FNF_HORRID_WILTING);

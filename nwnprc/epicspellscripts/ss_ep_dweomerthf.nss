@@ -28,7 +28,7 @@ void main()
     {
         object oTarget = GetSpellTargetObject();
         int nTargetSpell;
-        int nSpellDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ 5 + GetChangesToSaveDC() +
+        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + 5 + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, DWEO_TH_S);
         effect eVis = EffectVisualEffect(VFX_IMP_DISPEL);
         effect eVis2 = EffectVisualEffect(VFX_IMP_DOOM);

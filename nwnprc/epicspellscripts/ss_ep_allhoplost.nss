@@ -31,7 +31,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ALLHOPE_DC, ALLHOPE_S, ALLHOPE_XP))
     {
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
-        int nSaveDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ 10 + GetChangesToSaveDC() +
+        int nSaveDC = GetEpicSpellSaveDC(OBJECT_SELF) + 10 + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, ALLHOPE_S);
         float fDuration = RoundsToSeconds(20);
         effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);

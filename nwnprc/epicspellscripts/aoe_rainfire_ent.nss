@@ -25,7 +25,7 @@ void main()
 
     object oTarget;
     object oCreator = GetAreaOfEffectCreator();
-    int nDC = /*GetEpicSpellSaveDC(oCreator) +*/ GetChangesToSaveDC() + GetDCSchoolFocusAdjustment(oCreator, RAINFIR_S);
+    int nDC = GetEpicSpellSaveDC(oCreator) + GetChangesToSaveDC(oCreator) + GetDCSchoolFocusAdjustment(oCreator, RAINFIR_S);
     int nDamage;
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);

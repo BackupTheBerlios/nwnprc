@@ -22,7 +22,7 @@ void main()
     {
         //Declare major variables
         object oTarget = GetSpellTargetObject();
-        int nDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetDCSchoolFocusAdjustment(OBJECT_SELF, ENSLAVE_S) + GetChangesToSaveDC();
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, ENSLAVE_S) + GetChangesToSaveDC();
         effect eDom = EffectDominated();
         effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);

@@ -42,7 +42,7 @@ void main()
         float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
         float fDelay = fDist/(3.0 * log(fDist) + 2.0);
 
-        int nSpellDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetDCSchoolFocusAdjustment(OBJECT_SELF, GR_RUIN_S)
+        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, GR_RUIN_S)
 			+ GetChangesToSaveDC();
 
         //Fire cast spell at event for the specified target

@@ -31,8 +31,8 @@ void main()
     effect eVis = EffectVisualEffect( VFX_IMP_FLAME_S );
     float fDelay;
     // Boneshank - Added in the nDC formula.
-    int nDC = /*GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + */
-		GetChangesToSaveDC() +
+    int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +
+		GetChangesToSaveDC(GetAreaOfEffectCreator()) +
 		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
 
     oTarget = GetEnteringObject();

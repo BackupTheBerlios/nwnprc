@@ -25,8 +25,8 @@ void main()
     object oTarget;
     int nDamage;
     float fDelay;
-    int nDC = /*GetEpicSpellSaveDC(oCaster) + */// Boneshank - added.
-		GetChangesToSaveDC() +
+    int nDC = GetEpicSpellSaveDC(oCaster) +// Boneshank - added.
+		GetChangesToSaveDC(oCaster) +
         GetDCSchoolFocusAdjustment(oCaster, LEECH_F_S);
 
     // If oCaster is not valid

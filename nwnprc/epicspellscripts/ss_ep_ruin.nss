@@ -29,7 +29,7 @@ void main()
         object oTarget = GetSpellTargetObject();
         float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
         float fDelay = fDist/(3.0 * log(fDist) + 2.0);
-        int nSpellDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
+        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, RUIN_S);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
         int nDam = d6(20);

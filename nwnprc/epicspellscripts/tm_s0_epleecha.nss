@@ -25,8 +25,8 @@ void main()
     int nDamage;
     object oTarget;
     float fDelay;
-    int nDC = /*GetEpicSpellSaveDC(oCaster) + */// Boneshank - added.
-		GetChangesToSaveDC() +
+    int nDC = GetEpicSpellSaveDC(oCaster) +// Boneshank - added.
+		GetChangesToSaveDC(oCaster) +
         GetDCSchoolFocusAdjustment(oCaster, LEECH_F_S);
 
     //Declare and assign personal impact visual effect.

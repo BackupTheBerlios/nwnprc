@@ -33,7 +33,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ANARCHY_DC, ANARCHY_S, ANARCHY_XP))
     {
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
-        int nSaveDC = /*GetEpicSpellSaveDC(OBJECT_SELF) + */ GetChangesToSaveDC() +
+        int nSaveDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, ANARCHY_S);
         float fDuration = RoundsToSeconds(20);
         effect eVis = EffectVisualEffect(VFX_FNF_HOWL_MIND );

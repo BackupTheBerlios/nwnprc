@@ -133,6 +133,28 @@ void EvalPRCFeats(object oPC)
 
 void DeletePRCLocalInts(object oSkin)
 {
+    // This will get rid of any SetCompositeAttackBonus LocalInts:
+    object oPC = GetItemPossessor(oSkin);
+    DeleteLocalInt(oPC, "CompositeAttackBonusR");
+    DeleteLocalInt(oPC, "CompositeAttackBonusL");
+    DeleteLocalInt(oPC, "ArcherBowSpec");
+    DeleteLocalInt(oPC, "BattleRagerAtk");
+    DeleteLocalInt(oPC, "DispIronPowerA"+IntToString(ATTACK_BONUS_ONHAND));
+    DeleteLocalInt(oPC, "DispIronPowerA"+IntToString(ATTACK_BONUS_OFFHAND));
+    DeleteLocalInt(oPC, "HexBrutStrikeAtk");
+    DeleteLocalInt(oPC, "KatanaFinesseR");
+    DeleteLocalInt(oPC, "KatanaFinesseL");
+    DeleteLocalInt(oPC, "IntuitiveAttackR");
+    DeleteLocalInt(oPC, "IntuitiveAttackL");
+    DeleteLocalInt(oPC, "ManArmsGenSpe");
+    DeleteLocalInt(oPC, "AbsoluteAmbidex");
+    DeleteLocalInt(oPC, "ZulkirDefender");
+    DeleteLocalInt(oPC, "WeoponMasteryBow");
+    DeleteLocalInt(oPC, "WeoponMasteryXBow");
+    DeleteLocalInt(oPC, "WeoponMasteryShur");
+    DeleteLocalInt(oPC, "WeaponAttackBonusR");
+    DeleteLocalInt(oPC, "WeaponAttackBonusL");
+
     // In order to work with the PRC system we need to delete some locals for each
     // PRC that has a hide
     // Duelist

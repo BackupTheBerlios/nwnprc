@@ -74,15 +74,15 @@ dir /b include | tools\ssed -R "$! {s/$/ \\/g};s/^/include\\/g" >include.temp
 
 REM use FINDSTR to find script files with "void main()" or "int StartingConditional()"
 REM in them, these are the ones we want to compile.
-grep -G -l --regexp="void *main *( *)" --regexp="int *StartingConditional *( *)" scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/scripts\\/objs\\/g" >objs.temp
-grep -G -l --regexp="void *main *( *)" --regexp="int *StartingConditional *( *)" spells\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/spells\\/spellobjs\\/g" >spellobjs.temp
-grep -G -l --regexp="void *main *( *)" --regexp="int *StartingConditional *( *)" epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/epicspellscripts\\/epicspellobjs\\/g" >epicspellobjs.temp
-grep -G -l --regexp="void *main *( *)" --regexp="int *StartingConditional *( *)" racescripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/racescripts\\/raceobjs\\/g" >raceobjs.temp
-grep -G -l --regexp="void *main *( *)" --regexp="int *StartingConditional *( *)" psionics\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/psionics\\/psionicsobjs\\/g" >psionicsobjs.temp
+tools\grep -G -l --regexp="void *main *( *)" --regexp="int *StartingConditional *( *)" scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/scripts\\/objs\\/g" >objs.temp
+tools\grep -G -l --regexp="void *main *( *)" --regexp="int *StartingConditional *( *)" spells\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/spells\\/spellobjs\\/g" >spellobjs.temp
+tools\grep -G -l --regexp="void *main *( *)" --regexp="int *StartingConditional *( *)" epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/epicspellscripts\\/epicspellobjs\\/g" >epicspellobjs.temp
+tools\grep -G -l --regexp="void *main *( *)" --regexp="int *StartingConditional *( *)" racescripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/racescripts\\/raceobjs\\/g" >raceobjs.temp
+tools\grep -G -l --regexp="void *main *( *)" --regexp="int *StartingConditional *( *)" psionics\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/psionics\\/psionicsobjs\\/g" >psionicsobjs.temp
 
 REM Now using our generic makefile as a base, glue all of the temp files into it making
 REM a fully formatted makefile we can run nmake on.
-type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~spells~~~/r spells.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~racescripts~~~/r racescripts.temp" | tools\ssed -R "/~~~psionicsscripts~~~/r psionics.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~race2das~~~/r race2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~spellobjs~~~/r spellobjs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "/~~~raceobjs~~~/r raceobjs.temp" | tools\ssed -R "/~~~psionicsobjs~~~/r psionicsobjs.temp" | tools\ssed -R "/~~~include~~~/r include.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
+type makefile.template.winold | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~spells~~~/r spells.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~racescripts~~~/r racescripts.temp" | tools\ssed -R "/~~~psionicsscripts~~~/r psionics.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~race2das~~~/r race2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~spellobjs~~~/r spellobjs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "/~~~raceobjs~~~/r raceobjs.temp" | tools\ssed -R "/~~~psionicsobjs~~~/r psionicsobjs.temp" | tools\ssed -R "/~~~include~~~/r include.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
 
 rem SETLOCAL
 

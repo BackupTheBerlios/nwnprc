@@ -14,7 +14,7 @@
 10   Blade_Barrier                     1107     15        6         67500  5          0         0       1          iss_BladeBar      
 11   Bless                             1108     2         1         1500   6          1         1       1          iss_Bless         
 12   Bless_Weapon                      ****     3         1         2250   7          1         1       1          ****              
-13   Bless_Weapon                      ****     10        1         7500   7          1         1       1          ****              
+13   Bless_Weapon                      1110     10        1         7500   7          1         1       1          is_BlessWeap         
 14   Blindness/Deafness                1111     3         2         4500   8          0         1       1          iss_BlindDeaf     
 15   Bulls_Strength                    1112     3         2         4500   9          1         1       1          iss_BullStr       
 16   Bulls_Strength                    1113     10        2         15000  9          1         1       1          iss_BullStr       

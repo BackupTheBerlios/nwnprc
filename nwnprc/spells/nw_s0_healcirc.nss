@@ -99,6 +99,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     {
                         nModify = 8 + nCasterLvl;
                     }
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+	                {
+	                    nModify += (nModify/2); //Damage/Healing is +50%
+	                }
                     //Make Fort save
                     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
                     {
@@ -123,9 +127,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HEALING_CIRCLE, FALSE));
                 nHP = d8();
                 //Enter Metamagic conditions
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, FALSE);
+                if (nMetaMagic == METAMAGIC_MAXIMIZE || iBlastFaith)
                 {
-                    nHP =8;//Damage is at max
+                    nHP = 8;//Damage is at max
                 }
                 if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                 {

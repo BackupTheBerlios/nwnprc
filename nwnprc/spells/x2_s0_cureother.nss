@@ -66,9 +66,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     CasterLvl +=SPGetPenetr();
     //Make metamagic checks
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+    int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, TRUE);
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE) || iBlastFaith)
     {
-        nDamage = 8 + nExtraDamage;
+        nDamage = 32 + nExtraDamage;
         // * if low or normal difficulty then MAXMIZED is doubled.
         if(GetIsPC(OBJECT_SELF) && GetGameDifficulty() < GAME_DIFFICULTY_CORE_RULES)
         {

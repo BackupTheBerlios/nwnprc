@@ -1,9 +1,4 @@
 //Passive Feats
-const int FEAT_EB_HAND                                 = 3390;
-const int FEAT_EB_HEAD                                 = 3391;
-const int FEAT_EB_CHEST                                = 3392;
-const int FEAT_EB_ARM                                  = 3393;
-const int FEAT_EB_NECK                                 = 3394;
 const int FEAT_INTUITIVE_ATTACK                        = 3166;
 const int FEAT_RAVAGEGOLDENICE                         = 3162;
 const int FEAT_DRAGONSONG                              = 3440;
@@ -57,7 +52,17 @@ const int FEAT_SERVHEAVEN = 3355;
 const int FEAT_RANGED_SMITE = 3356;
 
 //Vile Feat
-const int FEAT_LICHLOVED = 3395;
+const int FEAT_LICHLOVED                               = 3395;
+const int FEAT_THRALL_TO_DEMON                         = 2616;
+const int FEAT_DISCIPLE_OF_DARKNESS                    = 2616;
+const int FEAT_EB_HAND                                 = 3390;
+const int FEAT_EB_HEAD                                 = 3391;
+const int FEAT_EB_CHEST                                = 3392;
+const int FEAT_EB_ARM                                  = 3393;
+const int FEAT_EB_NECK                                 = 3394;
+const int FEAT_VILE_DEFORM_OBESE 		       = 4406;
+const int FEAT_VILE_DEFORM_GAUNT		       = 4407;
+const int FEAT_VILE_WILL_DEFORM  		       = 4408;
 
 //archmage
 const int FEAT_MASTERY_SHAPES = 3006;
@@ -358,9 +363,6 @@ const int FEAT_KOTMC_SL_3        = 2598;
 //Thrall of Orcus
 const int FEAT_TO_CARRION        = 4404;
 const int FEAT_TO_FEAR           = 4405;
-const int FEAT_VILE_DEFORM_OBESE = 4406;
-const int FEAT_VILE_DEFORM_GAUNT = 4407;
-const int FEAT_VILE_WILL_DEFORM  = 4408;
 const int FEAT_TO_MNR_UNDEAD     = 4409;
 const int FEAT_TO_PALLOR         = 4410;
 const int FEAT_TO_DEATHTOUCH     = 4411;

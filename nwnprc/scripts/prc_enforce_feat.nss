@@ -89,6 +89,38 @@ void RedWizardFeats(object oPC = OBJECT_SELF)
 }
 
 
+void VileFeats(object oPC = OBJECT_SELF)
+{
+
+	int iDeform = GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC) + GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC);
+	int iThrall = GetHasFeat(FEAT_THRALL_TO_DEMON, oPC) + GetHasFeat(FEAT_DISCIPLE_OF_DARKNESS, oPC);
+
+
+		if (iDeform > 1)
+		{
+			int nHD = GetHitDice(oPC);
+			int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+			int nOldXP = GetXP(oPC);
+			int nNewXP = nMinXPForLevel - 1000;
+			SetXP(oPC,nNewXP);
+			FloatingTextStringOnCreature("You may only have one Deformity. Please reselect your feats.", oPC, FALSE);
+			DelayCommand(1.0, SetXP(oPC,nOldXP));
+		}
+
+	
+		if (iThrall > 1)
+		{
+			int nHD = GetHitDice(oPC);
+			int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+			int nOldXP = GetXP(oPC);
+			int nNewXP = nMinXPForLevel - 1000;
+			SetXP(oPC,nNewXP);
+			FloatingTextStringOnCreature("You may only worship Demons or Devils, not both. Please reselect your feats.", oPC, FALSE);
+			DelayCommand(1.0, SetXP(oPC,nOldXP));
+		}
+}
+
+
 
 void main()
 {
@@ -96,4 +128,5 @@ void main()
         object oPC = OBJECT_SELF;
 
 	RedWizardFeats(oPC);
+	VileFeats(oPC);
 }

@@ -1,16 +1,15 @@
 2DA V2.0
 
-      FeatLabel           FeatIndex   
-0     darkvision          228
-1     stonecunning        227
-2     hardinesspoisons    229
-3     hardinessspells     230
-4     orctrain            231
-5     gobtrain            232
-6     gianttrain          233
-7     skillaffinitylore   234
-8     Race_Dwarven        4710
-9     SkiilAff_Movesi_4   4751 
-10    Immunity_Phant      4730
-11    Immunity_Poison     4732
-12    Light_Sensitivity   4700   
+   FeatLabel         FeatIndex 
+0  darkvision        228       
+1  stonecunning      227       
+2  hardinessspells   230       
+3  orctrain          231       
+4  gobtrain          232       
+5  gianttrain        233       
+6  skillaffinitylore 234       
+7  Race_Dwarven      4710      
+8  SkiilAff_Movesi_4 4751      
+9  Immunity_Phant    4730      
+10 Immunity_Poison   4732      
+11 Light_Sensitivity 4700      

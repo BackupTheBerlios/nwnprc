@@ -217,6 +217,20 @@ void Pwatk(object oPC)
       }	
    	
    }
+   else
+   { 
+      int iSpell =  GetHasSpellEffect(SPELL_PA_POWERSHOT,OBJECT_SELF)      ? SPELL_PA_POWERSHOT : 0;
+          iSpell =  GetHasSpellEffect(SPELL_PA_IMP_POWERSHOT,OBJECT_SELF)  ? SPELL_PA_IMP_POWERSHOT : iSpell;
+          iSpell =  GetHasSpellEffect(SPELL_PA_SUP_POWERSHOT,OBJECT_SELF)  ? SPELL_PA_SUP_POWERSHOT : iSpell;
+
+      if(iSpell)
+      {
+     	 RemoveSpellEffects(iSpell,OBJECT_SELF,OBJECT_SELF);
+
+         string nMes = "*Power Shot Mode Deactivated*";
+         FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
+      }	        
+   }
 	
 }
 

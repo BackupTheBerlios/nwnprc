@@ -37,7 +37,7 @@ void AddBrutalStrikeDam(object oPC)
 	iDam = DAMAGE_BONUS_1;
 	}
 
-	if(GetLocalInt(oPC, "HexBSDam") == iDam) return;
+	//if(GetLocalInt(oPC, "HexBSDam") == iDam) return;
 	effect eDam = EffectDamageIncrease(iDam, DAMAGE_TYPE_NEGATIVE);
 	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oPC, HoursToSeconds(24));
 	SetLocalInt(oPC, "HexBSDam", iDam);
@@ -68,7 +68,7 @@ void AddBrutalStrikeAtk(object oPC)
 	iAtk = 1;
 	}
 
-	if(GetLocalInt(oPC, "HexBSAtk") == iAtk) return;
+	//if(GetLocalInt(oPC, "HexBSAtk") == iAtk) return;
 	effect eAtk = EffectAttackIncrease(iAtk);
 	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, HoursToSeconds(24));
 	SetLocalInt(oPC, "HexBSAtk", iAtk);
@@ -76,11 +76,16 @@ void AddBrutalStrikeAtk(object oPC)
 
 void main()
 {
-    //Declare main variables.
-    object oPC = OBJECT_SELF;
-    object oSkin = GetPCSkin(oPC);
+	//Declare main variables.
+	object oPC = OBJECT_SELF;
+	object oSkin = GetPCSkin(oPC);
+	int iEquip = GetLocalInt(oPC, "ONEQUIP");
+    
+	
+	if (iEquip == 1)	AddBrutalStrikeDam(oPC);
+	if (iEquip == 1)	AddBrutalStrikeAtk(oPC);
 
-    AddBrutalStrikeDam(oPC);
-    AddBrutalStrikeAtk(oPC);
+
+
 
 }

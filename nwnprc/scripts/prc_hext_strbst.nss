@@ -11,12 +11,11 @@ void main()
 
     effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    int nStr = GetLevelByClass(CLASS_TYPE_HEXTOR, OBJECT_SELF);
-    effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, nStr);
+    effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
     effect eLink = EffectLinkEffects(eStr, eDur);
-    float fDur = (GetLevelByClass(CLASS_TYPE_HEXTOR, OBJECT_SELF) + 4.0);
+    int nDur = (GetLevelByClass(CLASS_TYPE_HEXTOR, OBJECT_SELF) + 4);
 
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, fDur);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nDur));
 
 }

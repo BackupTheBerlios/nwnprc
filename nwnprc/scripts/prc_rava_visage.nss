@@ -12,7 +12,7 @@ void main()
 {
     //Declare major variables
     int nDamage = d6(3);
-    int nDC = GetLevelByClass(CLASS_TYPE_RAVAGER,OBJECT_SELF) + 14;
+    int nDC = GetLevelByClass(CLASS_TYPE_RAVAGER,OBJECT_SELF) + 14 + GetAbilityModifier(ABILITY_CHARISMA,OBJECT_SELF);
     object oTarget = GetSpellTargetObject();
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_DEATH);

@@ -99,7 +99,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 	            
 	                //Make a saving throw check
-	                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+	                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
 	                {
 	                        //Apply VFX Impact and daze effect
 	                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);

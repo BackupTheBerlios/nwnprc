@@ -330,6 +330,9 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     
     nPPCost += bUseSum ? nMetaPsi - nImpMetapsiReduction < 1 ? 1 : nMetaPsi - nImpMetapsiReduction
                 : nMetaPsi;
+                
+    // Catapsi added cost
+    if (GetLocalInt(oCaster, "Catapsi")) nPPCost += 4;
 
     // If PP Cost is greater than Manifester level
     if (GetManifesterLevel(oCaster) >= nPPCost && nCanManifest)

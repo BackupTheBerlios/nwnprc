@@ -20,6 +20,7 @@ void RemoveSneakAttack(object oPC, int iEquip)
      if(GetBaseItemType(oItem) == BASE_ITEM_LONGBOW || GetBaseItemType(oItem) == BASE_ITEM_SHORTBOW) 
      {
           bHasBow = TRUE;
+          SendMessageToPC(oPC, "Peerless Archer unequipped his bow");
      }
 
      if(!bHasBow) return;
@@ -119,17 +120,8 @@ void main()
 
     if (nBowyer>0) Expert_Bowyer(oPC, oSkin, nBowyer);
 
-    // On error - Typically when first entering a module
-    //if(iSneak = 0)
-    //{
-    //	 RemoveSneakAttack(oPC, iEquip);
-    //}
-    //else if(iSneak = 1) // if Sneak has been removed
-    //{
-
-    if (iEquip = 1)    RemoveSneakAttack(oPC, iEquip);
-
+    if (iEquip == 1)    RemoveSneakAttack(oPC, iEquip);
     
-    if (iEquip = 2)    AddSneakAttack(oPC, iEquip);
-    //}
+    if (iEquip == 2)    AddSneakAttack(oPC, iEquip);
+
 }

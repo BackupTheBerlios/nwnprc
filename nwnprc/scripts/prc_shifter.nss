@@ -24,9 +24,9 @@ void main()
 
     int nShifterLevel = GetLevelByClass(CLASS_TYPE_PNP_SHIFTER,oPC);
  
-    if (!GetLocalInt(oPC,"SHIFTOnEnterHit"))
+    object oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
+    if (!GetLocalInt(oPC,"SHIFTOnEnterHit") || !GetIsObjectValid(oHidePC))
     {
-        object oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
 
         // If we are entering a module, we have been stripped of the skin
         // and our powers are gone, shift back to true form so we dont confuse the player

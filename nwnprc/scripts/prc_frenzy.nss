@@ -209,7 +209,7 @@ void TurnBasedDamage(object oTarget, object oCaster)
 void AttackNearestForDuration()
 {
     object oCaster = OBJECT_SELF;
-    object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, OBJECT_SELF, 1, -1, -1, -1, -1);    
+    object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, OBJECT_SELF, 1, CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN, -1, -1);    
      
     // stops force attacking when frenzy is over
     if (GZGetDelayedSpellEffectsExpired(SPELL_FRENZY,oCaster,oCaster))

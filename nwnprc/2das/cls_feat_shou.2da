@@ -54,4 +54,5 @@
 50    ImpInit                          377         1      -1               0        
 51    Shou_Dodge_2                     4417        3      1                0        
 52    Shou_Unarmed                     4418        3      1                0        
-53    Shou_Martial_Flurry              4419        3      3                1        
+53    Shou_Martial_Flurry              4419        3      3                1  
+54    WeapProfCreature                 289         3      1                0       

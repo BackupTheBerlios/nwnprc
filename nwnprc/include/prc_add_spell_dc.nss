@@ -173,9 +173,7 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
 	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
 	int nDC;
 
-	if (iRedWizard > 0 || GetHasFeat(FEAT_RW_TF_ABJ, oCaster) || GetHasFeat(FEAT_RW_TF_CON, oCaster) || GetHasFeat(FEAT_RW_TF_DIV, oCaster) ||
-	GetHasFeat(FEAT_RW_TF_ENC, oCaster) || GetHasFeat(FEAT_RW_TF_EVO, oCaster) || GetHasFeat(FEAT_RW_TF_ILL, oCaster) ||
-	GetHasFeat(FEAT_RW_TF_NEC, oCaster) || GetHasFeat(FEAT_RW_TF_TRS, oCaster))
+	if (iRedWizard > 0)
 	{
 		int nSpell = GetSpellId();
 		string sSpellSchool = lookup_spell_school(nSpell);
@@ -229,6 +227,40 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
 }
 
 
+//Tattoo Focus DC boost based on spell school specialization
+int TattooFocus(int spell_id, object oCaster = OBJECT_SELF)
+{
+
+		int nDC;
+		int nSpell = GetSpellId();
+		string sSpellSchool = lookup_spell_school(nSpell);
+		int iSpellSchool;
+		int iRWSpec;
+
+		if (sSpellSchool == "A") iSpellSchool = SPELL_SCHOOL_ABJURATION;
+		else if (sSpellSchool == "C") iSpellSchool = SPELL_SCHOOL_CONJURATION;
+		else if (sSpellSchool == "D") iSpellSchool = SPELL_SCHOOL_DIVINATION;
+		else if (sSpellSchool == "E") iSpellSchool = SPELL_SCHOOL_ENCHANTMENT;
+		else if (sSpellSchool == "V") iSpellSchool = SPELL_SCHOOL_EVOCATION;
+		else if (sSpellSchool == "I") iSpellSchool = SPELL_SCHOOL_ILLUSION;
+		else if (sSpellSchool == "N") iSpellSchool = SPELL_SCHOOL_NECROMANCY;
+		else if (sSpellSchool == "T") iSpellSchool = SPELL_SCHOOL_TRANSMUTATION;
+
+		if (GetHasFeat(FEAT_RW_TF_ABJ, oCaster)) iRWSpec = SPELL_SCHOOL_ABJURATION;
+		else if (GetHasFeat(FEAT_RW_TF_CON, oCaster)) iRWSpec = SPELL_SCHOOL_CONJURATION;
+		else if (GetHasFeat(FEAT_RW_TF_DIV, oCaster)) iRWSpec = SPELL_SCHOOL_DIVINATION;
+		else if (GetHasFeat(FEAT_RW_TF_ENC, oCaster)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
+		else if (GetHasFeat(FEAT_RW_TF_EVO, oCaster)) iRWSpec = SPELL_SCHOOL_EVOCATION;
+		else if (GetHasFeat(FEAT_RW_TF_ILL, oCaster)) iRWSpec = SPELL_SCHOOL_ILLUSION;
+		else if (GetHasFeat(FEAT_RW_TF_NEC, oCaster)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
+		else if (GetHasFeat(FEAT_RW_TF_TRS, oCaster)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
+
+		if (iSpellSchool == iRWSpec)
+		{
+			nDC = 1;
+		}
+	return nDC;
+}
 
 // Shadow Weave Feat
 // DC +1 (school Ench,Illu,Necro)
@@ -283,6 +315,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/)
     nDC += GetSpellPowerBonus(oCaster);
     nDC += ShadowWeaveDC(spell_id, oCaster);
     nDC += RedWizardDC(spell_id, oCaster);
+    nDC += TattooFocus(spell_id, oCaster);
 
 	return nDC;
 }

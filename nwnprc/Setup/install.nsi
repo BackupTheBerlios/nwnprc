@@ -58,7 +58,7 @@ Section "PRC Pack" Section1
 	File "..\CompiledResources\PRC Pack.hif"
 	File "..\CompiledResources\prc_2das.hak"
 	File "..\CompiledResources\prc_epicspells.hak"
-	File "..\CompiledResources\prc_spells.hak
+	File "..\CompiledResources\prc_spells.hak"
 	File "..\CompiledResources\prc_race.hak"
 	File "..\CompiledResources\prc_craft2das.hak"
 	File "..\CompiledResources\prc_misc.hak"

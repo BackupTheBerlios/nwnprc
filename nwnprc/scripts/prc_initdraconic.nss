@@ -8,6 +8,10 @@
 
 const int IP_CONST_MONSTERDAMAGE_7d4 = 58;
 
+
+
+
+
 int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 {
 
@@ -30,9 +34,7 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 
 
   }
-
-   iDmg+=bUnarmedDmg;
-
+     iDmg+=bUnarmedDmg;
      switch (iDmg)
      {
         case 0:
@@ -51,20 +53,6 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
           return IP_CONST_MONSTERDAMAGE_2d8;
         case 7:
           return IP_CONST_MONSTERDAMAGE_2d10;  //20
-        case 8:
-          return IP_CONST_MONSTERDAMAGE_2d12;   //24
-        case 9:
-         return  IP_CONST_MONSTERDAMAGE_3d10;   //28
-        case 10:
-         return  IP_CONST_MONSTERDAMAGE_3d10;  //30
-        case 11:
-         return  IP_CONST_MONSTERDAMAGE_3d10;   //32
-        case 12:
-         return  IP_CONST_MONSTERDAMAGE_3d10;   //34
-        case 13:
-         return  IP_CONST_MONSTERDAMAGE_3d10  //40
-        case 14:
-         return  IP_CONST_MONSTERDAMAGE_3d10   //48
 
       }
 
@@ -119,6 +107,8 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
       iKi+= iEpicKi;
       Enh+= iKi;
 
+      iDmg = DamageConv(iDmg);
+      iDmg = ConvMonsterDmg(iDmg+bUnarmedDmg);
 
       TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iDmg),oWeapL);
@@ -199,11 +189,11 @@ void main()
 
    int bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE1,oPC) ? 1:0;
        bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE2,oPC) ? 2:bUnarmedDmg;
-       bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE1,oPC) ? 3:bUnarmedDmg;
+/*       bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE1,oPC) ? 3:bUnarmedDmg;
        bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE2,oPC) ? 4:bUnarmedDmg;
        bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE3,oPC) ? 5:bUnarmedDmg;
        bUnarmedDmg = GetHasFeat(FEAT_EPIC_INCREASE_DAMAGE4,oPC) ? 6:bUnarmedDmg;
-
+*/
 
    if (bEnh)ClawDragon(oPC,bUnarmedDmg,bEnh,GetLocalInt(oPC,"ONEQUIP"));
 

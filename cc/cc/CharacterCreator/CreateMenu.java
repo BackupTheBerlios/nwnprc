@@ -31,7 +31,7 @@ public class CreateMenu extends javax.swing.JFrame {
 
             spellButton = new JButton();
             spellButton.setBackground(new Color(0, 0, 0));
-            spellButton.setForeground(new Color(204, 204, 0));
+            spellButton.setForeground(new Color(0, 0, 125));
             spellButton.setHorizontalAlignment(2);
             spellButton.setIconTextGap(15);
             spellButton.setPreferredSize(new Dimension(240, 52));
@@ -92,7 +92,7 @@ public class CreateMenu extends javax.swing.JFrame {
         }
         if((new File(GameDir, "xp2.key")).exists()) {
             XP2 = true;
-        }        
+        }
         skilllabels = new Vector();
         MainCharData = new HashMap[20];
         MainCharDataAux = new String[20][];
@@ -100,13 +100,13 @@ public class CreateMenu extends javax.swing.JFrame {
         RESFAC = resFac;
 
         initComponents();
-        glasspane = new MyGlassPane(this.getContentPane());        
+        glasspane = new MyGlassPane(this.getContentPane());
         //glasspane = new JPanel();
         this.setGlassPane(glasspane);
         //glasspane.setVisible(true);
         //mainframe = CreateMenu.getFrames();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         //        menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
 
@@ -1103,7 +1103,14 @@ public class CreateMenu extends javax.swing.JFrame {
         // Add your handling code here:
         System.gc();
         CharReset(4);
-        (new AlignmentMenu()).show();
+
+        // must catch unreported exception java.lang.Exception
+        try
+        {
+			(new AlignmentMenu()).show();
+		}
+		catch(Exception e)
+		{}
     }
 
     private void ClassButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1333,7 +1340,7 @@ public class CreateMenu extends javax.swing.JFrame {
         RedoACHP();
         RedoName();
     }
-    
+
     public void ChangePortrait(Image portrait) {
         CharPortrait.setIcon(new ImageIcon(portrait));
     }
@@ -1344,7 +1351,7 @@ public class CreateMenu extends javax.swing.JFrame {
             this.getGlassPane().setVisible(true);
         }
     }
-    
+
     public static TLKFactory getTLKFactory() {
         return TLKFac;
     }
@@ -1444,7 +1451,7 @@ public class CreateMenu extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private JComponent glasspane;
     //private JFrame mainframe[];
     // Variables declaration - do not modify

@@ -414,6 +414,7 @@ void ManAtArms(object oPC)
 
   int iWF;
   
+  
   iWF = GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_CLUB,oPC)+
         GetHasFeat(FEAT_WEAPON_FOCUS_DAGGER,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_DART,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_DIRE_MACE,oPC)+
         GetHasFeat(FEAT_WEAPON_FOCUS_DOUBLE_AXE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_DWAXE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_AXE,oPC)+
@@ -439,6 +440,10 @@ void ManAtArms(object oPC)
 	{
 	SetLocalInt(oPC, "PRC_PrereqMAA", 0);
 	}
+	if (iWF>0)
+	  SetLocalInt(oPC, "PRC_PrereqFH", 1);
+	else
+	  SetLocalInt(oPC, "PRC_PrereqFH", 2);
 }
 
 void BFZ(object oPC)
@@ -572,6 +577,20 @@ void RedWizard(object oPC)
 	}
 }
 
+void FH(object oPC)
+{
+        int iRanger = GetLevelByClass(CLASS_TYPE_RANGER, oPC);
+        int iURanger = GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER, oPC);
+        
+        int iPrereq = GetLocalInt(oPC, "PRC_PrereqFH");
+        
+	if ( iRanger > 0 ||iURanger > 1 )
+	{
+          SetLocalInt(oPC, "PRC_PrereqFH", iPrereq-1);
+	}	
+	
+}
+
 void main()
 {
         //Declare Major Variables
@@ -624,6 +643,7 @@ void main()
 	DemiLich(oPC);
 	Rava(oPC);
 	WWolf(oPC);
+	FH(oPC);
 	// Truly massive debug message flood if activated.
 	/*
 	string sPRC_AllSpell;

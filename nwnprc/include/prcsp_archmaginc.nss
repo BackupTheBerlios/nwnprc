@@ -51,9 +51,7 @@ CheckMasteryOfShapes(object oCaster, object oTarget)
 
 	// This variable should not be set without the feat being available.
 	// If someone wants to cheat, let them.
-	if (GetLocalInt(oCaster, MASTERY_OF_SHAPE_TAG) == FEAT_ACTIVE 
-	    // && spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster)
-	   )
+	if (GetLocalInt(oCaster, MASTERY_OF_SHAPE_TAG) == FEAT_ACTIVE && !GetIsReactionTypeHostile(oTarget, oCaster))
 	{
 	     bRetVal = TRUE;
 	}

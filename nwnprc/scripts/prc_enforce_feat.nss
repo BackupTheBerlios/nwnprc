@@ -102,6 +102,7 @@ void MageKiller(object oPC = OBJECT_SELF)
 	
 	int bRefx = 0;
 	int bFort = 0;
+	int iMKSave = 0;
 	
 	if     (GetHasFeat(FEAT_MK_REF_15, oPC) )  bRefx = 15;
 	else if(GetHasFeat(FEAT_MK_REF_14, oPC) )  bRefx = 14;
@@ -135,7 +136,7 @@ void MageKiller(object oPC = OBJECT_SELF)
 	else if(GetHasFeat(FEAT_MK_FORT_2, oPC) ) bFort = 2;
 	else if(GetHasFeat(FEAT_MK_FORT_1, oPC) ) bFort = 1;
 
-	int iMKSave = bRefx + bFort;
+	iMKSave = bRefx + bFort;
 		
 	FloatingTextStringOnCreature("Mage Killer Level: " + IntToString(iMK), oPC, FALSE);
 	FloatingTextStringOnCreature("Reflex Save Level: " + IntToString(bRefx), oPC, FALSE);

@@ -276,7 +276,7 @@ public class Main{
 			if(!(readTemplates() && buildDirectories())) continue;
 			
 			createPages();
-			//createMenus();
+			createMenus();
 		}
 	}
 	
@@ -971,6 +971,7 @@ public class Main{
 		SpellEntry grantedSpell = null;
 		boolean errored;
 		
+		domains = new HashMap<Integer, GenericEntry>();
 		Data_2da domains2da = twoDA.get("domains");
 		
 		for(int i = 0; i < domains2da.getEntryCount(); i++){
@@ -1030,9 +1031,10 @@ public class Main{
 				
 				// Build path and print
 				path = domainPath + i + ".html";
-				if(!errored || tolErr)
+				if(!errored || tolErr){
 					printPage(path, text);
-				else
+					domains.put(i, new GenericEntry(name, path, i));
+				}else
 					throw new PageGenerationException("Error(s) encountered while creating page");
 			}catch(PageGenerationException e){
 				err_pr.println("Failed to print page for domain " + i + ": " + name + ":\n" + e);
@@ -1055,6 +1057,7 @@ public class Main{
 		Data_2da featTable    = null;
 		boolean errored;
 		
+		races = new HashMap<Integer, GenericEntry>();
 		Data_2da racialtypes2da = twoDA.get("racialtypes");
 		
 		for(int i = 0; i < racialtypes2da.getEntryCount(); i++){
@@ -1106,9 +1109,10 @@ public class Main{
 				
 				// Build path and print
 				path = racePath + i + ".html";
-				if(!errored || tolErr)
+				if(!errored || tolErr){
 					printPage(path, text);
-				else
+					races.put(i, new GenericEntry(name, path, i));
+				}else
 					throw new PageGenerationException("Error(s) encountered while creating page");
 			}catch(PageGenerationException e){
 				err_pr.println("Failed to print page for race " + i + ": " + name + ":\n" + e);
@@ -1137,6 +1141,7 @@ public class Main{
 		         skillTable     = null;
 		boolean errored;
 		
+		classes = new HashMap<Integer, GenericEntry>();
 		Data_2da classes2da = twoDA.get("classes");
 		
 		for(int i = 0; i < classes2da.getEntryCount(); i++){
@@ -1183,9 +1188,10 @@ public class Main{
 				else
 					path = prestigeClassPath + i + ".html";
 				
-				if(!errored || tolErr)
+				if(!errored || tolErr){
 					printPage(path, text);
-				else
+					classes.put(i, new GenericEntry(name, path, i));
+				}else
 					throw new PageGenerationException("Error(s) encountered while creating page");
 			}catch(PageGenerationException e){
 				err_pr.println("Failed to print page for class " + i + ": " + name + ":\n" + e);
@@ -1459,5 +1465,95 @@ public class Main{
 		toReturn[1] += "</table>\n";
 		
 		return toReturn;
+	}
+	
+	
+	
+	private static void createMenus(){
+		
+		doGenericMenu(skills, "Skills", "manual_menus_skills.html");
+		doGenericMenu(domains, "Domains", "manual_menus_domains.html");
+		doGenericMenu(races, "Races", "manual_menus_races.html");
+		doSpellMenus();
+		//doFeatMenus();
+		//doClassMenus();
+	}
+	
+	/**
+	 * Sorts any of the pages for which GenericEntry is enough into alphabetic order
+	 * using a TreeMap, and prints a menu page out of the results.
+	 */
+	private static void doGenericMenu(HashMap<Integer, GenericEntry> entries, String menuName, String menuFileName){
+		TreeMap<String, String> links = new TreeMap<String, String>();
+		StringBuffer toPrint = new StringBuffer();
+		
+		if(verbose) System.out.println("Printing menu for " + menuName);
+		
+		for(GenericEntry entry : entries.values()){
+			links.put(entry.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+			                                                  entry.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+			                                      .replaceAll("~~~targetName~~~", entry.name));
+		}
+		
+		while(links.size() > 0){
+			toPrint.append(links.remove(links.firstKey()) + "\n");
+		}
+		
+		printPage(menuPath + menuFileName, menuTemplate.replaceAll("~~~menuName~~~", menuName)
+		                                               .replaceAll("~~~menuEntries~~~", toPrint.toString()));
+	}
+	
+	/**
+	 * Sorts the spells into alphabetic order using a TreeMap, and prints a menu
+	 * page out of the results. Normal, epic and psionics get their own menus
+	 */
+	private static void doSpellMenus(){
+		TreeMap<String, String> normalSpellLinks  = new TreeMap<String, String>(),
+		                        epicSpellLinks    = new TreeMap<String, String>(),
+		                        psionicPowerLinks = new TreeMap<String, String>(),
+		                        toPut = null;
+		StringBuffer normalPrint  = new StringBuffer(),
+		             epicPrint    = new StringBuffer(),
+		             psionicPrint = new StringBuffer();
+		String temp = null;
+		
+		if(verbose) System.out.println("Printing spell menus");
+		
+		for(SpellEntry spell : spells.values()){
+			switch(spell.type){
+				case NORMAL:
+					normalSpellLinks.put(spell.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+					                                                             spell.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+					                                                 .replaceAll("~~~targetName~~~", spell.name));
+					break;
+				case EPIC:
+					temp = spell.name.startsWith("Epic Spell: ") ? spell.name.substring(12) : spell.name;
+					epicSpellLinks.put(spell.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+					                                                           spell.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+					                                               .replaceAll("~~~targetName~~~", temp));
+					break;
+				case PSIONIC:
+					psionicPowerLinks.put(spell.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+					                                                              spell.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+					                                                  .replaceAll("~~~targetName~~~", spell.name));
+					break;
+				
+				default: throw new AssertionError("This message should not be seen");
+			}
+		}
+		
+		while(normalSpellLinks.size() > 0)
+			normalPrint.append(normalSpellLinks.remove(normalSpellLinks.firstKey()) + "\n");
+		while(epicSpellLinks.size() > 0)
+			epicPrint.append(epicSpellLinks.remove(epicSpellLinks.firstKey()) + "\n");
+		while(psionicPowerLinks.size() > 0)
+			psionicPrint.append(psionicPowerLinks.remove(psionicPowerLinks.firstKey()) + "\n");
+		
+		printPage(menuPath + "manual_menus_spells.html", menuTemplate.replaceAll("~~~menuName~~~", "Spells")
+		                                                             .replaceAll("~~~menuEntries~~~", normalPrint.toString()));
+		printPage(menuPath + "manual_menus_epic_spells.html", menuTemplate.replaceAll("~~~menuName~~~", "Epic Spells")
+		                                                                  .replaceAll("~~~menuEntries~~~", epicPrint.toString()));
+		printPage(menuPath + "manual_menus_psionic_powers.html", menuTemplate.replaceAll("~~~menuName~~~", "Psionic Powers")
+		                                                                     .replaceAll("~~~menuEntries~~~", psionicPrint.toString()));
 	}
 }

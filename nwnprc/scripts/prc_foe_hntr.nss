@@ -10,6 +10,7 @@
 //:://////////////////////////////////////////////
 
 #include "inc_item_props"
+#include "x2_inc_itemprop"
 
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -63,47 +64,22 @@ void SetHatedFoeDR(object oPC)
      SetLocalInt(oPC, "HatedFoeDR", iDR);
 }
 
-void RemoveFoeHunterDR(object oPC,int iEquip)
-{
-     object oItem = GetPCItemLastUnequipped();
-     
-     if(GetBaseItemType(oItem) != BASE_ITEM_ARMOR)	return;
-
-     RemoveSpecificProperty(oItem,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,0);
-     SetLocalInt(oPC, "HasFHDR", 1); 
+void ApplyFoeHunterDR(object oPC, object oArmor)
+{    
+     IPSafeAddItemProperty(oArmor, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+     //AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oArmor);
+     SetLocalInt(oPC, "HasFHDR", 2);
 }
 
-void AddFoeHunterDR(object oPC,int iEquip)
+void RemoveFoeHunterDR(object oPC, object oArmor)
 {
-     object oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-     
-     if (iEquip == 2)      // On Equip
-     {
-          object oLastEquip = GetPCItemLastEquipped();          
-          if(oItem == oLastEquip)
-          {
-             AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
-             SetLocalInt(oPC, "HasFHDR", 2);
-          } 
-     }
-     else if(iEquip == 1)  // Unequip
-     {
-          RemoveFoeHunterDR(oPC, iEquip);
-          return;
-     }
-     else
-     {
-          AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem);
-          SetLocalInt(oPC, "HasFHDR", 2); 
-     }
+     RemoveSpecificProperty(oArmor, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0);
+     SetLocalInt(oPC, "HasFHDR", 1);
 }
-
-
 
 void main()
 {
     object oPC = OBJECT_SELF;
-    int iHasFHDR = GetLocalInt(oPC, "HasFHDR");
     
     // Stores the values in a local int for use in on-hit script
     // prevents the checks from having to run every time player get's hit
@@ -112,13 +88,43 @@ void main()
     SetHatedEnemyRace(oPC);
     SetHatedFoeDR(oPC);
     
+    object oItem;
+    int iEquip = GetLocalInt(oPC, "ONEQUIP");
+    int iHasFHDR = GetLocalInt(oPC, "HasFHDR");
+    object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+
     // On error - Typically when first entering a module
-    if(iHasFHDR == 0 && GetHasFeat(FEAT_HATED_ENEMY_DR) )
+    if(GetHasFeat(FEAT_HATED_ENEMY_DR) && GetLocalInt(oPC, "HasFHDR") == 0)
     {
-    	 RemoveFoeHunterDR(oPC,GetLocalInt(oPC, "ONEQUIP") ); 
+        RemoveFoeHunterDR(oPC, oArmor);
+        ApplyFoeHunterDR(oPC, oArmor);
+    }    
+    else if(GetHasFeat(FEAT_HATED_ENEMY_DR) && GetLocalInt(oPC, "HasFHDR") != 0)
+    {              
+        if(iEquip == 2)       // On Equip
+        {
+             // add bonus to armor
+             oItem = GetPCItemLastEquipped();
+             
+             if(oItem == oArmor)
+             {
+                  ApplyFoeHunterDR(oPC, oArmor); 
+             }
+        }
+        else if(iEquip == 1)  // Unequip
+        {
+             oItem = GetPCItemLastUnequipped();
+             
+             if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+             {
+                  RemoveFoeHunterDR(oPC, oItem);
+             }
+        }
+        else                  // On level, rest, or other events
+        {
+             RemoveFoeHunterDR(oPC, oArmor);
+             ApplyFoeHunterDR(oPC, oArmor);
+        }
     }
-    else if(iHasFHDR == 1) // if DR has been removed
-    {
-         AddFoeHunterDR(oPC,GetLocalInt(oPC, "ONEQUIP") );
-    }
+
 }

@@ -77,7 +77,7 @@ void AddSneakAttack(object oPC , int iEquip)
       }
       else if(iEquip = 1)  // Unequip
       {
-          RemoveSneakAttack(oPC, iEquip);
+          //RemoveSneakAttack(oPC, iEquip);
           return;
       }
       else
@@ -159,8 +159,9 @@ void main()
 
     if (nBowyer>0) Expert_Bowyer(oPC, oSkin, nBowyer);
 
-    if (iEquip == 1)    RemoveSneakAttack(oPC, iEquip);   
-    if (iEquip == 2)    AddSneakAttack(oPC, iEquip);
+    // These functions have been superceded by the sneak attack system
+    // if (iEquip == 1)    RemoveSneakAttack(oPC, iEquip);   
+    // if (iEquip == 2)    AddSneakAttack(oPC, iEquip);
     
     // now only fires on unequip
     if (iEquip == 1)    CheckPowerShot(oPC, iEquip);

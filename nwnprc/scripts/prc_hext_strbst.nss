@@ -13,6 +13,7 @@ void main()
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
     effect eLink = EffectLinkEffects(eStr, eDur);
+    eLink = ExtraordinaryEffect(eLink);
     int nDur = (GetLevelByClass(CLASS_TYPE_HEXTOR, OBJECT_SELF) + 4);
 
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);

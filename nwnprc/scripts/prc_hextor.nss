@@ -39,6 +39,7 @@ void AddBrutalStrikeDam(object oPC)
 
 	//if(GetLocalInt(oPC, "HexBSDam") == iDam) return;
 	effect eDam = EffectDamageIncrease(iDam, DAMAGE_TYPE_NEGATIVE);
+	eDam = ExtraordinaryEffect(eDam);
 	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oPC, HoursToSeconds(24));
 	SetLocalInt(oPC, "HexBSDam", iDam);
 }
@@ -70,6 +71,7 @@ void AddBrutalStrikeAtk(object oPC)
 
 	//if(GetLocalInt(oPC, "HexBSAtk") == iAtk) return;
 	effect eAtk = EffectAttackIncrease(iAtk);
+	eAtk = ExtraordinaryEffect(eAtk);
 	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, HoursToSeconds(24));
 	SetLocalInt(oPC, "HexBSAtk", iAtk);
 }

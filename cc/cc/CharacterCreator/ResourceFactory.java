@@ -84,15 +84,15 @@ public class ResourceFactory {
 		return name;
 	}
     
-    private boolean SetToResource(String FullResource) throws IOException {
+    public boolean SetToResource(String FullResource) throws IOException {
         String Resource = FullResource.substring(0, FullResource.length() - 4).toLowerCase();
         
 		for(int ii = 0; ii < hakFiles.length; ++ii) {
-			if (hakFiles[ii].FileExists(Resource)) {
+			if (hakFiles[ii].FileExists(FullResource)) {
 				if (moreoutput)
 					System.out.println(FullResource + " exists in " + hakFiles[ii].getHAKname() + ".");
 
-				HakResource targetres = (HakResource)hakFiles[ii].HAKMap.get(Resource);
+				HakResource targetres = (HakResource)hakFiles[ii].HAKMap.get(FullResource);
 				int hakindex = targetres.getindex();
 				RandomAccessFile raf_biffile = new RandomAccessFile(new File(hakFiles[ii].getHAKname()), "r");
 				int totaloffset = hakFiles[ii].getposoffset() + (hakindex * 8);
@@ -155,12 +155,12 @@ public class ResourceFactory {
 
         // Patch search
         if(patchkey.testkey()) {
-            if(!(PatchKeyFile.resourcemap.containsKey(Resource))) {
+            if(!(PatchKeyFile.resourcemap.containsKey(FullResource))) {
                 if(moreoutput) System.out.println(FullResource + " not found in the Patch folder.");
             } else {
                 if(moreoutput) System.out.println(FullResource + " found in the Patch folder.");
-                ResourceFile resfile = (ResourceFile)PatchKeyFile.resourcemap.get(Resource);
-                BIFFile testbif = (BIFFile)PatchKeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
+                ResourceFile resfile = (ResourceFile)PatchKeyFile.resourcemap.get(FullResource);
+                BIFFile testbif = (BIFFile)PatchKeyFile.BIFmap[resfile.getBIFid()];
                 String biffilename = Fix(NWNDir + testbif.getBIFname());
                 InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
                 String signature = Filereader.readString(is, 4);
@@ -197,12 +197,12 @@ public class ResourceFactory {
         }
         //XP2 Patch Search
         if(xp2patch.testkey()) {
-            if(!(XP2PatchKeyFile.resourcemap.containsKey(Resource))) {
+            if(!(XP2PatchKeyFile.resourcemap.containsKey(FullResource))) {
                 if(moreoutput) System.out.println(FullResource + " not found in the XP2Patch folder.");
             } else {
                 if(moreoutput) System.out.println(FullResource + " found in the XP2Patch folder.");
-                ResourceFile resfile = (ResourceFile)XP2PatchKeyFile.resourcemap.get(Resource);
-                BIFFile testbif = (BIFFile)XP2PatchKeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
+                ResourceFile resfile = (ResourceFile)XP2PatchKeyFile.resourcemap.get(FullResource);
+                BIFFile testbif = (BIFFile)XP2PatchKeyFile.BIFmap[resfile.getBIFid()];
                 String biffilename = Fix(NWNDir + testbif.getBIFname());
                 InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
                 String signature = Filereader.readString(is, 4);
@@ -239,12 +239,12 @@ public class ResourceFactory {
         }
         // XP2 Search
         if(xp2.testkey()) {
-            if(!(XP2KeyFile.resourcemap.containsKey(Resource))) {
+            if(!(XP2KeyFile.resourcemap.containsKey(FullResource))) {
                 if(moreoutput) System.out.println(FullResource + " not found in the XP2 folder.");
             } else {
                 if(moreoutput) System.out.println(FullResource + " found in the XP2 folder.");
-                ResourceFile resfile = (ResourceFile)XP2KeyFile.resourcemap.get(Resource);
-                BIFFile testbif = (BIFFile)XP2KeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
+                ResourceFile resfile = (ResourceFile)XP2KeyFile.resourcemap.get(FullResource);
+                BIFFile testbif = (BIFFile)XP2KeyFile.BIFmap[resfile.getBIFid()];
                 String biffilename = Fix(NWNDir + testbif.getBIFname());
                 InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
                 String signature = Filereader.readString(is, 4);
@@ -282,12 +282,12 @@ public class ResourceFactory {
         
         //XP Patch Search
         if(xp1patch.testkey()) {
-            if(!(XP1PatchKeyFile.resourcemap.containsKey(Resource))) {
+            if(!(XP1PatchKeyFile.resourcemap.containsKey(FullResource))) {
                 if(moreoutput) System.out.println(FullResource + " not found in the XP1Patch folder.");
             } else {
                 if(moreoutput) System.out.println(FullResource + " found in the XP1Patch folder.");
-                ResourceFile resfile = (ResourceFile)XP1PatchKeyFile.resourcemap.get(Resource);
-                BIFFile testbif = (BIFFile)XP1PatchKeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
+                ResourceFile resfile = (ResourceFile)XP1PatchKeyFile.resourcemap.get(FullResource);
+                BIFFile testbif = (BIFFile)XP1PatchKeyFile.BIFmap[resfile.getBIFid()];
                 String biffilename = Fix(NWNDir + testbif.getBIFname());
                 InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
                 String signature = Filereader.readString(is, 4);
@@ -324,14 +324,14 @@ public class ResourceFactory {
         }
         // XP Search
         if(xp1.testkey()) {
-            if(!(XP1KeyFile.resourcemap.containsKey(Resource))) {
+            if(!(XP1KeyFile.resourcemap.containsKey(FullResource))) {
                 if (moreoutput)
 					System.out.println(FullResource + " not found in the XP1 folder.");
             }
 			else {
                 if(moreoutput) System.out.println(FullResource + " found in the XP1 folder.");
-                ResourceFile resfile = (ResourceFile)XP1KeyFile.resourcemap.get(Resource);
-                BIFFile testbif = (BIFFile)XP1KeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
+                ResourceFile resfile = (ResourceFile)XP1KeyFile.resourcemap.get(FullResource);
+                BIFFile testbif = (BIFFile)XP1KeyFile.BIFmap[resfile.getBIFid()];
                 String biffilename = Fix(NWNDir + testbif.getBIFname());
                 InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
                 String signature = Filereader.readString(is, 4);
@@ -368,7 +368,7 @@ public class ResourceFactory {
         }
         
         // Data search
-        if(!(KeyFile.resourcemap.containsKey(Resource))) {
+        if(!(KeyFile.resourcemap.containsKey(FullResource))) {
             if(moreoutput)
 				System.out.println(FullResource + " not found in the Data folder.");
             if(moreoutput)
@@ -376,8 +376,8 @@ public class ResourceFactory {
         }
 		else {
             if(moreoutput) System.out.println(FullResource + " found in the Data folder.");
-            ResourceFile resfile = (ResourceFile)KeyFile.resourcemap.get(Resource);
-            BIFFile testbif = (BIFFile)KeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
+            ResourceFile resfile = (ResourceFile)KeyFile.resourcemap.get(FullResource);
+            BIFFile testbif = (BIFFile)KeyFile.BIFmap[resfile.getBIFid()];
 			String biffilename = Fix(NWNDir + testbif.getBIFname());
             InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
             String signature = Filereader.readString(is, 4);
@@ -530,7 +530,7 @@ public class ResourceFactory {
 		return parsedLine;
 	}
 
-	public String fixFilename(String name, String extension) {
+	public static String fixFilename(String name, String extension) {
 		String base = null;
 
 		if (name != null) {
@@ -671,7 +671,7 @@ public class ResourceFactory {
 
         for(int hh = 0; hh < hakFiles.length; hh++) {
             HakFile tmphak = hakFiles[hh];
-            if(tmphak.HAKMap.containsKey(NewResource)) {
+            if(tmphak.HAKMap.containsKey(incres)) {
                 if(filemore) System.out.println(NewFullResource + " exists in HakFile" + hh + ".");
                 return true;
             } else {
@@ -705,7 +705,7 @@ public class ResourceFactory {
         
         //Patch Key
         if(patchkey.testkey()) {
-            if(!(PatchKeyFile.resourcemap.containsKey(NewResource))) {
+            if(!(PatchKeyFile.resourcemap.containsKey(incres))) {
                 if(filemore) System.out.println(NewFullResource + " not found in the Patch folder.");
             } else {
                 if(filemore) System.out.println(NewFullResource + " found in the Patch folder.");
@@ -715,7 +715,7 @@ public class ResourceFactory {
         
         //Expansion 2 patch key (HotU)
         if(xp2patch.testkey()) {
-            if(!(XP2PatchKeyFile.resourcemap.containsKey(NewResource))) {
+            if(!(XP2PatchKeyFile.resourcemap.containsKey(incres))) {
                 if(filemore) System.out.println(NewFullResource + " not found in the XP2Patch folder.");
             } else {
                 if(filemore) System.out.println(NewFullResource + " found in the XP2Patch folder.");
@@ -724,7 +724,7 @@ public class ResourceFactory {
         
         //Expansion 2 key (HotU)
         if(xp1.testkey()) {
-            if(!(XP2KeyFile.resourcemap.containsKey(NewResource))) {
+            if(!(XP2KeyFile.resourcemap.containsKey(incres))) {
                 if(filemore) System.out.println(NewFullResource + " not found in the XP2 folder.");
             } else {
                 if(filemore) System.out.println(NewFullResource + " found in the XP2 folder.");
@@ -734,7 +734,7 @@ public class ResourceFactory {
         
         //Expansion 1 patch key (SoU)
         if(xp1patch.testkey()) {
-            if(!(XP1PatchKeyFile.resourcemap.containsKey(NewResource))) {
+            if(!(XP1PatchKeyFile.resourcemap.containsKey(incres))) {
                 if(filemore) System.out.println(NewFullResource + " not found in the XP1Patch folder.");
             } else {
                 if(filemore) System.out.println(NewFullResource + " found in the XP1Patch folder.");
@@ -743,7 +743,7 @@ public class ResourceFactory {
         
         //Expansion 1 key (SoU)
         if(xp1.testkey()) {
-            if(!(XP1KeyFile.resourcemap.containsKey(NewResource))) {
+            if(!(XP1KeyFile.resourcemap.containsKey(incres))) {
                 if(filemore) System.out.println(NewFullResource + " not found in the XP1 folder.");
             } else {
                 if(filemore) System.out.println(NewFullResource + " found in the XP1 folder.");
@@ -751,7 +751,7 @@ public class ResourceFactory {
             }
         }
         
-        if(KeyFile.resourcemap.containsKey(NewResource)) {
+        if(KeyFile.resourcemap.containsKey(incres)) {
             if(filemore) System.out.println(NewFullResource + " found in the Data folder.");
             return true;
         } else {

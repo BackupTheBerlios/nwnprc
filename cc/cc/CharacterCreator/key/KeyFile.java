@@ -52,16 +52,16 @@ public class KeyFile {
         int numres = Byteconvert.convertInt(buffer, 12);
         int bifoff = Byteconvert.convertInt(buffer, 16);
         int resoff = Byteconvert.convertInt(buffer, 20);
+		BIFmap = new BIFFile[numbif];
         for(int i = 0; i < numbif; i++) {
             int offset = bifoff + 12 * i;
-            BIFFile bif = new BIFFile(i, buffer, offset);
-            BIFmap.put(new Integer(i), bif);
+            BIFmap[i] = new BIFFile(i, buffer, offset);
         }
         
         for(int i = 0; i < numres; i++) {
             int offset = resoff + 22 * i;
             ResourceFile res = new ResourceFile(i, buffer, offset);
-            resourcemap.put(res.getfilename(), res);
+            resourcemap.put(res.getfilename() + "." + getExtension(res.gettype()), res);
         }
         
     }
@@ -77,13 +77,17 @@ public class KeyFile {
     }
     
     public static String getExtension(int type) {
-        return (String)endmap.get(new Integer(type));
+		String ext = (String)endmap.get(new Integer(type));
+		if (ext != null)
+			ext = ext.toLowerCase();
+
+        return ext;
     }
     
     public static final String keyname = "chitin.key";
     public File keyfile;
     private static Map endmap;
-    public static Map BIFmap = new HashMap();
+    public static BIFFile[] BIFmap;
     public static Map resourcemap = new HashMap();
     private String signature;
     private String version;

@@ -62,7 +62,7 @@ public class HakFile {
             int restype = Filereader.readInt(hak);
 
 			// Don't overwrite keys.  Haks will be instantiated by priority
-			HAKMap.put(resname.toLowerCase(),new HakResource(resname,resindex,restype));
+			HAKMap.put(resname.toLowerCase() + "." + getExtension(restype),new HakResource(resname,resindex,restype));
         }
 		hak.close();
     }
@@ -86,11 +86,15 @@ public class HakFile {
     public int getHAKlength() {
         return filelength;
     }
-    
-    public static String getExtension(int type) {
-        return (String)endmap.get(new Integer(type));
+
+	public static String getExtension(int type) {
+		String ext = (String)endmap.get(new Integer(type));
+		if (ext != null)
+			ext = ext.toLowerCase();
+
+        return ext;
     }
-    
+ 
     public boolean FileExists(String filename) {
         if (HAKMap != null && HAKMap.containsKey(filename.toLowerCase()))
             return true;

@@ -46,17 +46,17 @@ void main()
     object oSkin = GetPCSkin(oPC);
     object oGaunt = GetItemInSlot(INVENTORY_SLOT_ARMS, oPC);
     object oUnequip = GetPCItemLastUnequipped();
-    int iResist = 0;
+    int iResist = -1;
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
 
     if(GetHasFeat(FEAT_FIRE_RESISTANCE_10, oPC))
     {
-        iResist = 1;
+        iResist = IP_CONST_DAMAGERESIST_10;
     }
 
     else if(GetHasFeat(FEAT_FIRE_RESISTANCE_20, oPC))
     {
-        iResist = 2;
+        iResist = IP_CONST_DAMAGERESIST_20;
     }
 
    if(GetHasFeat(FEAT_HELLFIRE_GRASP, oPC))
@@ -69,5 +69,5 @@ void main()
     }
 
     //Apply bonuses accordingly
-    if(iResist > 0) DiscMephResist(oPC, oSkin, iResist);
+    if(iResist > -1) DiscMephResist(oPC, oSkin, iResist);
 }

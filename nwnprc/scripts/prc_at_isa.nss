@@ -59,6 +59,8 @@ void main()
           sMiss    = "*Impromptu Sneak Attack Missed*";
      }
      
+     // if using a melee weapon, make them run into melee range
+     
      eSneakDamage = EffectDamage(iSneakDamage, iDamageType, iDamagePower);
      PerformAttackRound(oTarget, oPC, eSneakDamage, 0.0, iEnemydexBonus, 0, 0, FALSE, sSuccess, sMiss);     
 }

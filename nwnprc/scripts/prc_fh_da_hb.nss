@@ -61,7 +61,7 @@ void main()
         string sMiss = "";
         
         // If they are not within 5 ft, they can't do a melee attack.
-        if(!bIsRangedAttack && GetDistanceBetween(oPC, oTarget) >= FeetToMeters(5.0) )
+        if(!bIsRangedAttack && GetIsInMeleeRange(oTarget, oPC) )
         {
              SendMessageToPC(oPC,"You are not close enough to your target to attack!");
              return;

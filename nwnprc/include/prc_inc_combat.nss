@@ -83,6 +83,9 @@ object GetAmmunitionFromWeapon(object oWeapon, object oAttacker);
 // Returns true if melee attacker within 15 feet
 int GetMeleeAttackers15ft(object oPC = OBJECT_SELF);
 
+// Returns true if melee attacker is in range to attack target
+int GetIsInMeleeRange(object oDefender, object oAttacker);
+
 // Returns true/false if player is a monk and has a monk weapon equipped
 int GetHasMonkWeaponEquipped(object oPC);
 
@@ -796,6 +799,15 @@ int GetMeleeAttackers15ft(object oPC = OBJECT_SELF)
 
    return TRUE;
 }
+
+int GetIsInMeleeRange(object oDefender, object oAttacker)
+{
+     int bReturn = TRUE;
+     float fDistance = GetDistanceBetween(oDefender, oAttacker);
+     if(fDistance >= FeetToMeters(10.0) ) bReturn = FALSE;
+     
+     return bReturn;
+} 
 
 int GetHasMonkWeaponEquipped(object oPC)
 {
@@ -2898,7 +2910,7 @@ void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct Bonu
 
      // If they are not within 5 ft, they can't do a melee attack.
      // Move to the new target so that you can next round.
-     if(GetDistanceBetween(gDefender, oAttacker) > FeetToMeters(5.0) && !bIsRangedWeapon )
+     if(!GetIsInMeleeRange(gDefender, oAttacker) && !bIsRangedWeapon )
      {
          AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(gDefender), TRUE) );
          return;
@@ -2959,7 +2971,7 @@ void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct Bonu
              iCircleKick == 0 &&
              iAttackRoll > 0 )
           {
-               // Find nearest enemy creature within 5 meters
+               // Find nearest enemy creature within 10 feet
                int iVal = 1;
                int bNoEnemyInRange = FALSE;
                object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
@@ -2967,7 +2979,7 @@ void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct Bonu
                {
                     iVal += 1;
                     oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
-                    if(GetDistanceBetween(oTarget, oAttacker) >= FeetToMeters(5.0) )
+                    if(!GetIsInMeleeRange(gDefender, oAttacker) )
                          bNoEnemyInRange = TRUE;
                }
                
@@ -3027,7 +3039,7 @@ void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct Bonu
               return;                  
           }
           
-          if(GetDistanceBetween(gDefender, oAttacker) >= FeetToMeters(5.0) && !bIsRangedWeapon )
+          if(!GetIsInMeleeRange(gDefender, oAttacker) && !bIsRangedWeapon )
           {
               // if no person is close enough, run to the nearest target
               // turn off anymore attacks this round as it would take an action to move.

@@ -35,4 +35,45 @@ void main()
       ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d8(2),DAMAGE_TYPE_SONIC,DAMAGE_POWER_NORMAL),GetSpellTargetObject());
 
     }
+    
+  if (GetHasSpellEffect( SPELL_DARKFIRE,oWeap))
+  {
+
+     int nDamageType = GetLocalInt(oWeap, "X2_Wep_Dam_Type");
+     int nAppearanceTypeS = VFX_IMP_FLAME_S;
+     int nAppearanceTypeM = VFX_IMP_FLAME_M;
+
+     switch(nDamageType)
+     {
+        case DAMAGE_TYPE_ACID: nAppearanceTypeS = VFX_IMP_ACID_S; nAppearanceTypeM = VFX_IMP_ACID_L; break;
+        case DAMAGE_TYPE_COLD: nAppearanceTypeS = VFX_IMP_FROST_S; nAppearanceTypeM = VFX_IMP_FROST_L; break;
+        case DAMAGE_TYPE_ELECTRICAL: nAppearanceTypeS = VFX_IMP_LIGHTNING_S; nAppearanceTypeM =VFX_IMP_LIGHTNING_M;break;
+        case DAMAGE_TYPE_SONIC: nAppearanceTypeS = VFX_IMP_SONIC; nAppearanceTypeM = VFX_IMP_SONIC; break;
+     }
+
+     // Get Caster Level
+     int nLevel = GetLocalInt(oWeap, "X2_Wep_Caster_Lvl");
+    //int nLevel = GetCasterLevel(OBJECT_SELF); - OBJECT_SELF is whoever is holding the weapon.
+
+    int nDmg = d6() + (nLevel/2);
+
+    effect eDmg = EffectDamage(nDmg,nDamageType);
+    effect eVis;
+    if (nDmg<10) // if we are doing below 12 point of damage, use small flame
+    {
+      eVis =EffectVisualEffect(nAppearanceTypeS);
+    }
+    else
+    {
+       eVis =EffectVisualEffect(nAppearanceTypeM);
+    }
+    eDmg = EffectLinkEffects (eVis, eDmg);
+    object oTarget = GetSpellTargetObject();
+
+    if (GetIsObjectValid(oTarget))
+    {
+      ApplyEffectToObject(DURATION_TYPE_INSTANT, eDmg, oTarget);
+    }
+
+  }
 }

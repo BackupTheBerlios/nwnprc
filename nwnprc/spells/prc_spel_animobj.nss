@@ -50,13 +50,38 @@ int GetWeaponAnimateSize(object oTarget)
 
 int GetIsValidAnimate(object oTarget)
 {
+	int iBaseItemType = GetBaseItemType(oTarget);
     itemproperty ipMagicWeapon = GetFirstItemProperty(oTarget);
     if (GetIsItemPropertyValid(ipMagicWeapon))
     {
-        return FALSE;
+		if (iBaseItemType == BASE_ITEM_WHIP)
+		{
+			ipMagicWeapon = GetNextItemProperty(oTarget);
+			if (GetIsItemPropertyValid(ipMagicWeapon))
+			{
+				return FALSE;
+			}
+			else
+			{
+				ipMagicWeapon = GetFirstItemProperty(oTarget);
+				if (GetItemPropertyType(ipMagicWeapon) == ITEM_PROPERTY_BONUS_FEAT)
+				{
+					if (GetItemPropertySubType(ipMagicWeapon) != 37)
+						return FALSE;
+
+				}
+				else
+				{
+					return FALSE;
+				}
+			}
+		}
+		else
+		{
+			return FALSE;
+		}
     }
 
-    int iBaseItemType = GetBaseItemType(oTarget);
     switch (iBaseItemType)
     {
         case BASE_ITEM_ARMOR:

@@ -18,7 +18,7 @@ int iNumSummon = 0;
 int GetCanSummonOrc(object oPC, string sCreatureResRef)
 {
      int bCanSummon;
-     int iNumOrc = 0;
+     int iNumOrc = 2;
      
      object oHench1 = GetHenchman(oPC, 1);
      object oHench2 = GetHenchman(oPC, 2);

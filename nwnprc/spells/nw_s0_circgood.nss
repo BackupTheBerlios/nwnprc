@@ -67,5 +67,5 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
      SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,-1,CasterLvl);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eEvil, oTarget);
     
-    DeleteLocalInt(OBJECT_SELF,"TEMPO_CIRCGOOD")
+    DeleteLocalInt(OBJECT_SELF,"TEMPO_CIRCGOOD");
 }

@@ -2,5 +2,6 @@
 
 void main()
 {
-    QuickShift(OBJECT_SELF, 2);
+  	StoreAppearance(OBJECT_SELF);
+	QuickShift(OBJECT_SELF, 2);
 }

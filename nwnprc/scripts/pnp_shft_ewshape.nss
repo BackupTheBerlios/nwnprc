@@ -4,6 +4,7 @@
 
 void main()
 {
+	StoreAppearance(OBJECT_SELF);
 	if (CanShift(OBJECT_SELF))
 	{
 		object oTarget = GetSpellTargetObject();

@@ -1,3 +1,5 @@
+#include "pnp_shft_main"
+
 void main()
 {
 //    // Create the options creature
@@ -5,6 +7,8 @@ void main()
 //    // adjust the reputation so its not hostile to the pc
 //    SetIsTemporaryFriend(OBJECT_SELF, oListener);
 //    // start the convo
+
+	StoreAppearance(OBJECT_SELF);
 	DeleteLocalInt(OBJECT_SELF, "shifting");
     AssignCommand(OBJECT_SELF, ClearAllActions(TRUE));
     AssignCommand(OBJECT_SELF, ActionStartConversation(OBJECT_SELF, "pnp_shft_options", FALSE, FALSE));

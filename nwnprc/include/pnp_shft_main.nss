@@ -96,6 +96,27 @@ void SetShift(object oPC, object oTarget);
 void SetShift_02(object oPC, object oTarget);
 
 
+void StoreAppearance(object oPC)
+{
+
+	if (GetLocalInt(oPC, "shifting") == TRUE)
+	{
+		return;
+	}
+
+    object oSparkOfLife = GetItemPossessedBy( oPC, "sparkoflife" );
+    int iIsStored = GetLocalInt( oSparkOfLife, "AppearanceIsStored" );
+
+	if (iIsStored == 6)
+	{
+	}
+	else
+	{
+    	SetLocalInt(oSparkOfLife, "AppearanceIsStored", 6);
+    	SetLocalInt(oSparkOfLife, "AppearanceStored", GetAppearanceType(oPC));
+	}
+}
+
 
 int CanShift(object oPC)
 {
@@ -2037,7 +2058,22 @@ int GetTrueForm(object oPC)
 {
     int nRace = GetRacialType(OBJECT_SELF);
     int nPCForm;
-	nPCForm = StringToInt(Get2DAString("racialtypes", "Appearance", nRace));
+	//nPCForm = StringToInt(Get2DAString("racialtypes", "Appearance", nRace));
+
+    object oSparkOfLife = GetItemPossessedBy( oPC, "sparkoflife" );
+    int iIsStored = GetLocalInt( oSparkOfLife, "AppearanceIsStored" );
+    int iStoredAppearance = GetLocalInt( oSparkOfLife, "AppearanceStored" );
+
+	if (iIsStored == 6)
+	{
+		nPCForm = iStoredAppearance;
+	}
+	else
+	{
+		nPCForm = GetAppearanceType(oPC);
+	}
+
+
 //		switch (nRace)
 //		{
 //		case RACIAL_TYPE_DWARF:
@@ -2287,7 +2323,7 @@ void SetShiftTrueForm(object oPC)
 	//	DelayCommand(0.3, AssignCommand(oPC, ActionTakeItem(oSpark, oCont)));
 	//	DestroyObject(oCont, 0.7);
 	//}
-	
+
 	DelayCommand(1.0, ClearShifterItems(oPC));
 }
 

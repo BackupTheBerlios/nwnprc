@@ -742,7 +742,7 @@ void PRCBonusDamage (object oTarget)
 		
 		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-		SetLocalInt(oCaster, "Diabolism", FALSE);
+		DelayCommand(3.0, SetLocalInt(oCaster, "Diabolism", FALSE));
 	}
 }
 

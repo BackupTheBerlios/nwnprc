@@ -41,8 +41,8 @@ void main()
                 // Will save.
                 if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                 {
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                     DestroyObject(oItem, 1.0);
                 }
             }

@@ -11,6 +11,7 @@
 //:://////////////////////////////////////////////
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
+#include "prc_alterations"
 
 // Brings oPC back to life, via the contingency of 'Contingent Resurrection'.
 void ContingencyResurrect(object oTarget, int nCount, object oCaster = OBJECT_SELF);
@@ -76,8 +77,8 @@ void ContingencyResurrect(object oTarget, int nCount, object oCaster = OBJECT_SE
                 FloatingTextStringOnCreature("*Contingency triggered*", oTarget);
                 ApplyEffectAtLocation
                     (DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
-                ApplyEffectToObject(DURATION_TYPE_INSTANT, eRez, oTarget);
-                ApplyEffectToObject(DURATION_TYPE_INSTANT, eHea, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRez, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHea, oTarget);
                 SetLocalInt(oCaster, "nContingentRez",
                     GetLocalInt(oCaster, "nContingentRez") - 1);
                 ContingencyResurrect(oTarget, nCount);

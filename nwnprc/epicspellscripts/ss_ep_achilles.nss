@@ -18,6 +18,7 @@
 #include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void RunHeel(object oTarget, int nDuration);
 
@@ -56,7 +57,7 @@ void main()
         // * Can not be dispelled
         eLink = ExtraordinaryEffect(eLink);
 
-        ApplyEffectToObject( DURATION_TYPE_TEMPORARY, eLink,
+        SPApplyEffectToObject( DURATION_TYPE_TEMPORARY, eLink,
             oPC, RoundsToSeconds(nDuration) );
         RunHeel(oPC, nDuration);
     }
@@ -71,7 +72,7 @@ void RunHeel(object oTarget, int nDuration)
     if (nDuration > 0)
     {
         UnequipAnyImmunityItems(oTarget, IP_CONST_IMMUNITYMISC_LEVEL_ABIL_DRAIN);
-        DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_TEMPORARY,
+        DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
             eCon, oTarget, 6.0));
         nDuration -= 1;
         DelayCommand(6.0, RunHeel(oTarget, nDuration));

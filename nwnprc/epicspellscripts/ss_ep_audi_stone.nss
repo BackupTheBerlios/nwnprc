@@ -50,7 +50,7 @@ void main()
                     if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC,
                         SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                     {
-                        DelayCommand(fDelay, ApplyEffectToObject
+                        DelayCommand(fDelay, SPApplyEffectToObject
                             (DURATION_TYPE_INSTANT, eLink, oTarget));
                     }
                 }

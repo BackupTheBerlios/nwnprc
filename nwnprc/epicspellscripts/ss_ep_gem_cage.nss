@@ -91,16 +91,16 @@ void main()
                         effect eVis = EffectVisualEffect(nVis);
                         effect eImp = EffectVisualEffect(VFX_IMP_DESTRUCTION);
                         // Do fancy visual.
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,
                             oTarget);
                         DelayCommand(0.2,
-                            ApplyEffectToObject
+                            SPApplyEffectToObject
                                 (DURATION_TYPE_INSTANT, eImp, oTarget));
                         DelayCommand(1.2,
-                            ApplyEffectToObject
+                            SPApplyEffectToObject
                                 (DURATION_TYPE_INSTANT, eImp, oTarget));
                         DelayCommand(2.2,
-                            ApplyEffectToObject
+                            SPApplyEffectToObject
                                 (DURATION_TYPE_INSTANT, eImp, oTarget));
                         // Cage the target.
                         DelayCommand(2.8, DestroyObject(oTarget));

@@ -14,6 +14,7 @@
 #include "lookup_2da_spell"
 #include "prcsp_spell_adjs"
 #include "prcsp_engine"
+#include "inc_epicdispel"
 
 //function prototypes
 int MyPRCGetRacialType(object oTarget);

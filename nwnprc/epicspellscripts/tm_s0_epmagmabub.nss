@@ -61,18 +61,18 @@ void main()
                 // Apply effects to the currently selected target.
                 eDam = EffectDamage( nDamage, DAMAGE_TYPE_FIRE );
                 DelayCommand( fDelay,
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget) );
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget) );
                 DelayCommand( fDelay,
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget) );
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget) );
             }
             else
             {
                 nDamage = nDamage / 2;
                 eDam = EffectDamage( nDamage, DAMAGE_TYPE_FIRE );
                 DelayCommand( fDelay,
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget) );
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget) );
                 DelayCommand( fDelay,
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget) );
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget) );
             }
 
             int nMagmaBurstCounter = GetLocalInt( oTarget, "MagmaBurst" );

@@ -65,11 +65,11 @@ void main()
                 //Set the heal effect
                 eHeal = EffectHeal(d6(4));
                 DelayCommand( fDelay,
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget) );
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget) );
                 DelayCommand( fDelay,
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oTarget) );
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oTarget) );
                 DelayCommand( fDelay,
-                    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDur, oTarget) );
+                    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDur, oTarget) );
             }
             else
             {
@@ -91,20 +91,20 @@ void main()
                     eDam = EffectDamage( nDamage, DAMAGE_TYPE_NEGATIVE );
                     // Apply effects to the currently selected target.
                     DelayCommand( fDelay,
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget) );
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget) );
                     //This visual effect is applied to the target object not the location as above.
                     DelayCommand( fDelay,
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eBad, oTarget) );
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eBad, oTarget) );
 
                     // Heal the caster
                     if( GetCurrentHitPoints(oCaster) <= GetMaxHitPoints(oCaster) * 2 )
                     {
                         eHeal = EffectTemporaryHitpoints(nDamage);
                         DelayCommand( 2.1,
-                            ApplyEffectToObject(DURATION_TYPE_INSTANT,
+                            SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                                 eVisHeal, oCaster) );
                         DelayCommand( 2.1,
-                            ApplyEffectToObject(DURATION_TYPE_TEMPORARY,
+                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
                                 eHeal, oCaster,
                                     TurnsToSeconds(PRCGetCasterLevel(oCaster))) );
                     }

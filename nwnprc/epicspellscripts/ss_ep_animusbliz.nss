@@ -70,7 +70,7 @@ void main()
                     eDam = EffectDamage(nDam, DAMAGE_TYPE_COLD);
                     eLink = EffectLinkEffects(eDam, eVis);
                     eLink = EffectLinkEffects(eExplode, eLink);
-                    DelayCommand(fDelay, ApplyEffectToObject
+                    DelayCommand(fDelay, SPApplyEffectToObject
                         (DURATION_TYPE_INSTANT, eLink, oTarget));
                     // Do the animation bit if the target dies from blast.
                     if (!MatchNonliving(GetRacialType(oTarget)))

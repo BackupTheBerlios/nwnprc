@@ -14,6 +14,9 @@
 
 void main()
 {
+
+ActionDoCommand(SetAllAoEInts(4054,OBJECT_SELF, GetSpellSaveDC()));
+
     object oTarget;
     object oCreator = GetAreaOfEffectCreator();
     int nDC = GetEpicSpellSaveDC(oCreator) + GetChangesToSaveDC() +
@@ -37,9 +40,9 @@ void main()
                 SAVING_THROW_TYPE_FIRE, oCreator, fDelay))
             {
                 DelayCommand(fDelay,
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                 DelayCommand(fDelay,
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
             }
         }
     }

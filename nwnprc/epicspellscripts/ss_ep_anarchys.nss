@@ -60,14 +60,14 @@ void main()
                         if(!MySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC,
                             SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
                         {
-                            DelayCommand(fDelay, ApplyEffectToObject
+                            DelayCommand(fDelay, SPApplyEffectToObject
                                 (DURATION_TYPE_TEMPORARY, eLink, oTarget,
                                 fDuration));
                         }
                     }
                 }
                 else
-                    DelayCommand(fDelay, ApplyEffectToObject
+                    DelayCommand(fDelay, SPApplyEffectToObject
                         (DURATION_TYPE_TEMPORARY, eLink2, oTarget, fDuration));
 
                 oTarget = GetNextObjectInShape(SHAPE_SPHERE,

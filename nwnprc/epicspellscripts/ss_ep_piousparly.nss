@@ -12,6 +12,7 @@
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 #include "nw_i0_generic"
+#include "prc_alterations"
 
 void main()
 {
@@ -64,7 +65,7 @@ void main()
             }
             fDelay += 0.4;
         }
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, OBJECT_SELF, 15.0);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, OBJECT_SELF, 15.0,FALSE);
         DelayCommand(4.0,
             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eE, lNew));
 

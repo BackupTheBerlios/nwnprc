@@ -5,6 +5,7 @@
 #include "x0_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -30,8 +31,8 @@ void main()
             effect eCast = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
             int nDam = d6(10);
             effect eDam = EffectDamage(nDam, DAMAGE_TYPE_NEGATIVE);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eCast, OBJECT_SELF);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, OBJECT_SELF);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eCast, OBJECT_SELF);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, OBJECT_SELF);
             }
 
         // Superb Dispelling's bonus is capped at caster level 40

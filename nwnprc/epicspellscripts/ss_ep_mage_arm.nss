@@ -19,6 +19,7 @@
 #include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -57,8 +58,8 @@ void main()
         eLink = ExtraordinaryEffect(eLink);
 
         //Apply the armor bonuses and the VFX impact
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration));
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,1.0);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration));
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,1.0);
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

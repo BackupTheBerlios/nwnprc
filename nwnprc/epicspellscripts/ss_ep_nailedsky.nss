@@ -65,8 +65,8 @@ void RunNailedToTheSky(object oTarget, int nDC)
         DelayCommand(0.6, AssignCommand(oTarget,
             ActionPlayAnimation(ANIMATION_LOOPING_CUSTOM1, 1.0, 6.0)));
         DelayCommand(0.8, Petrify(oTarget));
-        DelayCommand(6.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis1, oTarget));
-        DelayCommand(6.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+        DelayCommand(6.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis1, oTarget));
+        DelayCommand(6.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
         DelayCommand(6.0, RunNailedToTheSky(oTarget, nDC));
     }
     else Depetrify(oTarget);

@@ -9,6 +9,7 @@
 #include "x2_inc_spellhook"
 #include "nw_i0_spells"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -44,8 +45,8 @@ void main()
         // * Making extraodinary so cannot be dispelled (optional)
         eLink = ExtraordinaryEffect(eLink);
 
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

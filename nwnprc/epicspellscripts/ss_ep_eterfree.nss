@@ -4,6 +4,7 @@
 
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -62,7 +63,7 @@ void main()
         IPSafeAddItemProperty(oSkin, ip7);
         IPSafeAddItemProperty(oSkin, ip8);
         IPSafeAddItemProperty(oSkin, ip9);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eDur), oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eDur), oTarget);
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

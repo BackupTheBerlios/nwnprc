@@ -81,9 +81,9 @@ void main()
                     {
                         // Apply effects to the currently selected target (dmg & visual)
                         DelayCommand( fDelay,
-                            ApplyEffectToObject( DURATION_TYPE_INSTANT, eDam, oTarget) );
+                            SPApplyEffectToObject( DURATION_TYPE_INSTANT, eDam, oTarget) );
                         DelayCommand( fDelay,
-                            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget) );
+                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget) );
                     }
                 }
             }

@@ -15,6 +15,7 @@
 //:://////////////////////////////////////////////
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -32,7 +33,7 @@ void main()
         effect eVis = EffectVisualEffect(VFX_FNF_TIME_STOP);
         effect eTime = EffectTimeStop();
         SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_TIME_STOP, FALSE));
-        DelayCommand(0.75, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, OBJECT_SELF, 18.0));
+        DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, OBJECT_SELF, 18.0));
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

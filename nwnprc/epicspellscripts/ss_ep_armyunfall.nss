@@ -9,6 +9,7 @@
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -43,8 +44,8 @@ void main()
                 if (nX > 0)
                 {
                     if (GetIsDead(oTarget))
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eRez, oTarget);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRez, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
                     nAlly++;
                 }
             }
@@ -53,7 +54,7 @@ void main()
         {
             nBLD = d6(nAlly);
             eBLD = EffectDamage(nBLD);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eBLD, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eBLD, oTarget);
         }
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

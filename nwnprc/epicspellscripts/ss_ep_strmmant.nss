@@ -14,6 +14,7 @@
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -52,7 +53,7 @@ void main()
                     SPELL_GREATER_SPELL_MANTLE, FALSE) );
                 RemoveEffectsFromSpell( oTarget, GetSpellId() );
                 //Apply the VFX impact and effects
-                ApplyEffectToObject( DURATION_TYPE_TEMPORARY, eLink,
+                SPApplyEffectToObject( DURATION_TYPE_TEMPORARY, eLink,
                     oTarget, RoundsToSeconds(nDuration) );
             }
             oTarget = GetNextObjectInShape( SHAPE_SPHERE,

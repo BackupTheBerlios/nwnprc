@@ -10,6 +10,7 @@
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -36,9 +37,9 @@ void main()
             int nDamage = d6(10);
             effect eDamVis = EffectVisualEffect(VFX_IMP_SONIC);
             effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-            DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT,
+            DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                 eDamVis, OBJECT_SELF));
-            DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT,
+            DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                 eDam, OBJECT_SELF));
         }
         if(GetIsReactionTypeFriendly(oTarget) || GetFactionEqual(oTarget))
@@ -46,8 +47,8 @@ void main()
             //Fire spell cast at event for target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(),
                 FALSE));
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget,
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget,
                 HoursToSeconds(nDuration));
         }
     }

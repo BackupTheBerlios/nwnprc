@@ -19,6 +19,7 @@
 #include "nw_i0_spells"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
+#include "prc_alterations"
 
 void main()
 {
@@ -47,7 +48,7 @@ void main()
 
         RemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
         //Apply the armor bonuses and the VFX impact
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

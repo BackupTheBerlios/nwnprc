@@ -39,8 +39,8 @@ void main()
                  if (!MySavingThrow(SAVING_THROW_FORT, oTarget, nSpellDC, SAVING_THROW_TYPE_DEATH))
                  {
                     //Apply the death effect and VFX impact
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
-                    //ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
+                    //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                  }
                  else
                  {
@@ -49,8 +49,8 @@ void main()
                     //Set damage effect
                     eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
                     //Apply damage effect and VFX impact
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
                 }
             }
         }

@@ -73,7 +73,7 @@ void main()
                                 DelayCommand(2.0, DestroyObject(oOffhand));
                             }
                         }
-                        DelayCommand(fDelay, ApplyEffectToObject
+                        DelayCommand(fDelay, SPApplyEffectToObject
                             (DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration));
                     }
                 }

@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -36,8 +37,8 @@ void main()
             SetLocalString(oTarget,
                 "sAllyForMyMartyrdom", GetName(OBJECT_SELF));
             SetLocalInt(oTarget, "nTimeForMartyrdomFor", nDuration);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
             // Is the party member another player?
             if (GetIsPC(oTarget))
             {

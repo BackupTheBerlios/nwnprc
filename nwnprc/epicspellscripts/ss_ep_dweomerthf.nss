@@ -40,9 +40,9 @@ void main()
                  if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC,
                     SAVING_THROW_TYPE_NONE))
                  {
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT,
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                         eVis, oTarget);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT,
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                         eVis2, oTarget);
                     nTargetSpell = GetBestAvailableSpell(oTarget);
                     if (nTargetSpell != 99999)

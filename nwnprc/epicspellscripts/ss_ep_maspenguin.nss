@@ -62,10 +62,10 @@ void main()
                             SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                         {
                             // Apply effects to the currently selected target.
-                            DelayCommand(fDelay, ApplyEffectToObject
+                            DelayCommand(fDelay, SPApplyEffectToObject
                                 (DURATION_TYPE_TEMPORARY, eLink, oTarget,
                                 HoursToSeconds(nDuration)));
-                            DelayCommand(fDelay, ApplyEffectToObject
+                            DelayCommand(fDelay, SPApplyEffectToObject
                                 (DURATION_TYPE_INSTANT, eVis, oTarget));
                         }
                     }

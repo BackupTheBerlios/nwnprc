@@ -9,6 +9,8 @@
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
+
 void RunMyMartyrdom(object oAlly, int nDuration, object oMartyr = OBJECT_SELF);
 
 void main()
@@ -40,8 +42,8 @@ void RunMyMartyrdom(object oAlly, int nDuration, object oMartyr = OBJECT_SELF)
         GetIsObjectValid(oAlly) &&
         nTransfer > 0 )
     {
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink1, OBJECT_SELF);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oAlly);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink1, OBJECT_SELF);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oAlly);
     }
     if (nDuration > 0)
     {

@@ -9,6 +9,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 13, 2004
 //:://////////////////////////////////////////////
+#include "prc_alterations"
 
 void main()
 {
@@ -40,7 +41,7 @@ void main()
     else
     {
         effect eInv = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eInv, oPC);
+        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eInv, oPC);
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

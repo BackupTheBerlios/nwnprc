@@ -11,6 +11,7 @@
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -31,9 +32,9 @@ void main()
         effect eSkill2 = EffectSkillIncrease(SKILL_SPOT, 50);
         effect eLink = EffectLinkEffects(eVis, eSkill);
         eLink = EffectLinkEffects(eLink, eSkill2);
-        DelayCommand(1.5, ApplyEffectToObject(DURATION_TYPE_INSTANT,
+        DelayCommand(1.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT,
             eVis2, OBJECT_SELF));
-        DelayCommand(1.5, ApplyEffectToObject(DURATION_TYPE_TEMPORARY,
+        DelayCommand(1.5, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
             eLink, OBJECT_SELF, 30.0));
         DelayCommand(6.0, ExploreAreaForPlayer(oArea, OBJECT_SELF));
     }

@@ -15,6 +15,7 @@
 #include "x2_inc_itemprop"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void AddEffectsToWeapon( object oTarget, float fDuration, int iCasterLvl )
 {
@@ -136,8 +137,8 @@ void main()
             if( iDuration > 0 )
             {
                 // Applying various effects to the Caster & Weapon.
-                ApplyEffectToObject( DURATION_TYPE_INSTANT, eVis, oPC );
-                ApplyEffectToObject( DURATION_TYPE_TEMPORARY, eDur, oPC,
+                SPApplyEffectToObject( DURATION_TYPE_INSTANT, eVis, oPC );
+                SPApplyEffectToObject( DURATION_TYPE_TEMPORARY, eDur, oPC,
                     TurnsToSeconds(iDuration) );
                 AddEffectsToWeapon( oWeapon,
                     TurnsToSeconds(iDuration),iCasterLvl );

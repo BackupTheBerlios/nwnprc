@@ -37,7 +37,7 @@ void main()
         //Make SR Check
         if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
         {
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             DoWithering(oTarget, nDC, nDuration);
         }
     }
@@ -60,7 +60,7 @@ void DoWithering(object oTarget, int nDC, int nDuration)
         eDown = EffectAbilityDecrease(nAbil, 1);
         eDown = SupernaturalEffect(eDown);
         if (GetAbilityScore(oTarget, nAbil) > 3)
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDown, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDown, oTarget);
     }
     nDuration--;
     if (nDuration >= 1)

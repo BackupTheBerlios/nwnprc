@@ -12,6 +12,7 @@
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 #include "x2_inc_toollib"
+#include "prc_alterations"
 
 void DoWinterCheck(object oArea, float fDuration);
 
@@ -40,7 +41,7 @@ void main()
             {
                 float fDelay = GetRandomDelay();
                 DelayCommand(fDelay,
-                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY,
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
                         eIce, oItem, fDuration));
             }
             oItem = GetNextObjectInArea(oArea);
@@ -62,7 +63,7 @@ void DoWinterCheck(object oArea, float fDuration)
         {
             nDam = d6(2);
             eDam = EffectDamage(nDam, DAMAGE_TYPE_COLD);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
         }
         oTarget = GetNextObjectInArea(oArea);
     }

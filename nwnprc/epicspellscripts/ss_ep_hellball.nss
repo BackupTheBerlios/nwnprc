@@ -45,8 +45,8 @@ void main()
             effect eCast = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
             int nDamage5 = d6(10);
             effect eDam5 = EffectDamage(nDamage5, DAMAGE_TYPE_NEGATIVE);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eCast, OBJECT_SELF);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam5, OBJECT_SELF);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eCast, OBJECT_SELF);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam5, OBJECT_SELF);
         }
 
 
@@ -93,19 +93,19 @@ void main()
                 {
                     if (nTotalDamage > 50)
                     {
-                        DelayCommand(fDelay+0.3f, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnock, oTarget,3.0f));
+                        DelayCommand(fDelay+0.3f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnock, oTarget,3.0f));
                     }
 
                     // Apply effects to the currently selected target.
-                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam1, oTarget));
-                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam2, oTarget));
-                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam3, oTarget));
-                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam4, oTarget));
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam1, oTarget));
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam2, oTarget));
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam3, oTarget));
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam4, oTarget));
                     //This visual effect is applied to the target object not the location as above.  This visual effect
                     //represents the flame that erupts on the target not on the ground.
-                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                    DelayCommand(fDelay+0.2f, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget));
-                    DelayCommand(fDelay+0.5f, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis3, oTarget));
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    DelayCommand(fDelay+0.2f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget));
+                    DelayCommand(fDelay+0.5f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis3, oTarget));
                  }
             }
            //Select the next target within the spell shape.

@@ -14,6 +14,9 @@
 
 void main()
 {
+
+ActionDoCommand(SetAllAoEInts(4054,OBJECT_SELF, GetSpellSaveDC()));
+
     int nDamage;
     effect eDam;
     object oTarget;
@@ -42,10 +45,10 @@ void main()
                 SAVING_THROW_TYPE_FIRE, oCreator, fDelay))
                 {
                     DelayCommand(fDelay,
-                        ApplyEffectToObject
+                        SPApplyEffectToObject
                             (DURATION_TYPE_INSTANT, eDam, oTarget));
                     DelayCommand(fDelay,
-                        ApplyEffectToObject
+                        SPApplyEffectToObject
                             (DURATION_TYPE_INSTANT, eVis, oTarget));
                 }
             }

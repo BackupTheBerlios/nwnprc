@@ -45,8 +45,8 @@ void main()
                 if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     //Apply linked effects and VFX Impact
-                    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 }
             }
         }

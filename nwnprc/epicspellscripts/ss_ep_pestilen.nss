@@ -51,8 +51,8 @@ void main()
                         if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DISEASE, OBJECT_SELF, fDelay))
                         {
                             // Apply effects to the currently selected target.
-                            DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDisease, oTarget));
-                            DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDisease, oTarget));
+                            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                         }
                     }
                  }

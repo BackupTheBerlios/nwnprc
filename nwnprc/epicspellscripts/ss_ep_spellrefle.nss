@@ -10,6 +10,7 @@
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -31,9 +32,9 @@ void main()
         itemproperty ipImm = ItemPropertyImmunityToSpellLevel(9);
         EnsurePCHasSkin(oTarget);
         oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oTarget);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eDur), oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eDur), oTarget);
         IPSafeAddItemProperty(oSkin, ipImm);
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

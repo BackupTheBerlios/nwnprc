@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void NoValidWP(object oPC);
 
@@ -131,7 +132,7 @@ void TeleportPartyToLocation(object oPC, location lWP)
     object oMem = GetFirstFactionMember(oPC, FALSE);
     while (oMem != OBJECT_INVALID)
     {
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oMem);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oMem);
         FloatingTextStringOnCreature("*begins to dream...*", oMem);
         DelayCommand(3.0, AssignCommand(oMem, JumpToLocation(lWP)));
         oMem = GetNextFactionMember(oPC, FALSE);

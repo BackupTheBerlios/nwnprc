@@ -3,6 +3,7 @@ Lilac Soul's NWN Script Generator, v. 1.6
 
 For download info, please visit:
 http://www.lilacsoul.revility.com    */
+#include "prc_alterations"
 
 //Put this on action taken in the conversation editor
 void main()
@@ -44,7 +45,7 @@ oTarget = oPC;
 int nInt;
 nInt = GetObjectType(oTarget);
 
-if (nInt != OBJECT_TYPE_WAYPOINT) ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_UNSUMMON), oTarget);
+if (nInt != OBJECT_TYPE_WAYPOINT) SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_UNSUMMON), oTarget);
 else ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_UNSUMMON), GetLocation(oTarget));
 
 }

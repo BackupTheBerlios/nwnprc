@@ -10,6 +10,7 @@
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -38,11 +39,11 @@ void main()
             //Fire spell cast at event for target
             SignalEvent(oTarget, EventSpellCastAt
                 (OBJECT_SELF, SPELL_EXPEDITIOUS_RETREAT, FALSE));
-            DelayCommand(fDelay, ApplyEffectToObject
+            DelayCommand(fDelay, SPApplyEffectToObject
                 (DURATION_TYPE_INSTANT, eImpact, oTarget));
-            DelayCommand(fDelay, ApplyEffectToObject
+            DelayCommand(fDelay, SPApplyEffectToObject
                 (DURATION_TYPE_INSTANT, eVis, oTarget));
-            DelayCommand(fDelay, ApplyEffectToObject
+            DelayCommand(fDelay, SPApplyEffectToObject
                 (DURATION_TYPE_TEMPORARY, eLink, oTarget,
                 HoursToSeconds(nDuration)));
         }

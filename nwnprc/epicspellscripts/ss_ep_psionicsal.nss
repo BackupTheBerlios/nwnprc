@@ -54,9 +54,9 @@ void DoSalvo(object oTarget, int nDC)
         eWIS = SupernaturalEffect(eWIS);
         eINT = SupernaturalEffect(eINT);
         if (GetAbilityScore(oTarget, ABILITY_WISDOM) > 3)
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eWIS, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eWIS, oTarget);
         if (GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) > 3)
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eINT, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eINT, oTarget);
         if (GetAbilityScore(oTarget, ABILITY_WISDOM) > 3 ||
             GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) > 3)
             DelayCommand(6.0, DoSalvo(oTarget, nDC));

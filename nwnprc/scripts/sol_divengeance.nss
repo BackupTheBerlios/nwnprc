@@ -4,7 +4,8 @@
 void main()
 {
    if (!GetHasFeat(FEAT_TURN_UNDEAD,OBJECT_SELF))  return;
-
+   if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL) return;
+    
    DecrementRemainingFeatUses(OBJECT_SELF,FEAT_TURN_UNDEAD);
 
    int iCha = GetAbilityModifier(ABILITY_CHARISMA);

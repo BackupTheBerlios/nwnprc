@@ -328,7 +328,7 @@
 324  Evards_Black_Tentacles            6365     7         4         21000  374        0         0       1          iss_Evards        
 325  Evards_Black_Tentacles            6366     15        4         45000  374        0         0       1          iss_Evards        
 326  Legend_Lore                       6367     5         3         11250  375        0         0       1          iss_Lore          
-327  Find_Traps                        6368     3         2         4500   376        1         1       1          iss_FindTrap      
+327  Find_Traps                        6368     3         2         4500   377        1         1       1          iss_FindTrap      
 328  Rogues_Cunning                    6570     3         3         6750   385        1         0       1          iss_ExtraThf      
 329  ACTIVATE_ITEM                     6803     1         1         1      386        1         1       1          iss_ActItem01     
 330  Special_Alcohol_Beer              10400    1         1         2      406        1         0       0          ****              

@@ -40,25 +40,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
 // End of Spell Cast Hook
 
+  ActionCastSpellAtObject(SPELL_MAGIC_CIRCLE_AGAINST_EVIL,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);
 
-    RemoveSpellEffects(GetSpellId(),OBJECT_SELF,GetSpellTargetObject());
-
-    //Declare major variables including Area of Effect Object
-    effect eAOE = EffectAreaOfEffect(AOE_MOB_CIRCGOOD,"fist_circevila","","fist_circevilb");
-    effect eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eVis2 = EffectVisualEffect(VFX_IMP_GOOD_HELP);
-
-    effect eLink = EffectLinkEffects(eAOE, eVis);
-    eLink = EffectLinkEffects(eLink, eDur);
-    eLink = SupernaturalEffect(eLink);
-
-    object oTarget = GetSpellTargetObject();
-    //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MAGIC_CIRCLE_AGAINST_EVIL, FALSE));
-
-    //Create an instance of the AOE Object using the Apply Effect function
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
 }
 

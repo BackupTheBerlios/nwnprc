@@ -44,7 +44,6 @@ void FlurryLight(object oPC)
           {
               numAddAttacksL = 1;
               attackPenaltyL = 2;
-              nMesL = "*Martial Flurry Activated*";
           }
 
           if(monkLevelL > 0 && GetBaseItemType(oWeapRL) == BASE_ITEM_KAMA)
@@ -57,24 +56,26 @@ void FlurryLight(object oPC)
 	if (GetBaseItemType(oWeapRL) == BASE_ITEM_DAGGER || GetBaseItemType(oWeapRL) == BASE_ITEM_HANDAXE ||
 	GetBaseItemType(oWeapRL) == BASE_ITEM_LIGHTHAMMER || GetBaseItemType(oWeapRL) == BASE_ITEM_LIGHTMACE ||
 	GetBaseItemType(oWeapRL) == BASE_ITEM_KUKRI || GetBaseItemType(oWeapRL) == BASE_ITEM_SICKLE ||
-	GetBaseItemType(oWeapRL) == BASE_ITEM_WHIP )
+	GetBaseItemType(oWeapRL) == BASE_ITEM_WHIP || GetBaseItemType(oWeapRL) == BASE_ITEM_SHORTSWORD)
 	{
         	if (GetBaseItemType(oWeapLL) == BASE_ITEM_DAGGER || GetBaseItemType(oWeapLL) == BASE_ITEM_HANDAXE ||
 	        GetBaseItemType(oWeapLL) == BASE_ITEM_LIGHTHAMMER || GetBaseItemType(oWeapLL) == BASE_ITEM_LIGHTMACE ||
 	        GetBaseItemType(oWeapLL) == BASE_ITEM_KUKRI || GetBaseItemType(oWeapLL) == BASE_ITEM_SICKLE ||
-	        GetBaseItemType(oWeapLL) == BASE_ITEM_WHIP )
+	        GetBaseItemType(oWeapLL) == BASE_ITEM_WHIP || oWeapRL == OBJECT_INVALID  || oWeapLL == OBJECT_INVALID ||
+		GetBaseItemType(oWeapLL) == BASE_ITEM_SHORTSWORD)
 	        {
 
 			//check armor type
 	   		if(armorTypeL < ARMOR_TYPE_MEDIUM)
 			{	
-				if(oWeapRL != OBJECT_INVALID  && oWeapLL != OBJECT_INVALID && isNotShield(oWeapLL) )
+				if(isNotShield(oWeapLL) )
 				{
 					effect addAttL = SupernaturalEffect( EffectModifyAttacks(numAddAttacksL) );
 					effect attPenL = SupernaturalEffect( EffectAttackDecrease(attackPenaltyL) );
 					effect eLinkL = EffectLinkEffects(addAttL, attPenL);
 					ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLinkL, oPC);
 					SetLocalInt(oPC, "HasMFlurry", 2);
+			                nMesL = "*Martial Flurry Activated*";
 				}
 			}
 		}
@@ -105,7 +106,6 @@ void FlurryAll(object oPC)
           {
               numAddAttacksA = 1;
               attackPenaltyA = 2;
-              nMesA = "*Martial Flurry Activated*";
           }
 
           if(monkLevelA > 0 && GetBaseItemType(oWeapRA) == BASE_ITEM_KAMA)
@@ -121,13 +121,14 @@ void FlurryAll(object oPC)
 	//check armor type
 	if(armorTypeA < ARMOR_TYPE_MEDIUM)
 	{
-		if(oWeapRA != OBJECT_INVALID  && oWeapLA != OBJECT_INVALID && isNotShield(oWeapLA) )
+		if(isNotShield(oWeapLA) )
 		{
 			effect addAttA = SupernaturalEffect( EffectModifyAttacks(numAddAttacksA) );
 			effect attPenA = SupernaturalEffect( EffectAttackDecrease(attackPenaltyA) );
 			effect eLinkA = EffectLinkEffects(addAttA, attPenA);
 			ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLinkA, oPC);
 			SetLocalInt(oPC, "HasMFlurry", 2);
+	                nMesA = "*Martial Flurry Activated*";
 		}
 	}
 	else

@@ -28,6 +28,9 @@ void main(){
    eTaunt = EffectSkillIncrease(SKILL_TAUNT, 2);
    eLink = ExtraordinaryEffect(EffectLinkEffects(ePersuade, eTaunt));
 
+   RemoveSpellEffects(GetSpellId(), oPC, oPC);
+   IPRemoveMatchingItemProperties(oSkin, ITEM_PROPERTY_LIGHT, DURATION_TYPE_PERMANENT);
+
    if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD){
       if (!GetHasFeatEffect(FEAT_NIMBUSLIGHT) && !GetHasFeatEffect(FEAT_HOLYRADIANCE)){
          if (!GetIsObjectValid(oSkin)) return;
@@ -43,7 +46,7 @@ void main(){
       else{
          // Remove the Light and Skill increase
          IPRemoveMatchingItemProperties(oSkin, ITEM_PROPERTY_LIGHT, DURATION_TYPE_PERMANENT);
-         RemoveSpellEffects(NimbusOfLight, oPC, oPC);
+         RemoveSpellEffects(GetSpellId(), oPC, oPC);
             
          // Display the message
          nMes = "*Nimbus of Light Deactivated*";

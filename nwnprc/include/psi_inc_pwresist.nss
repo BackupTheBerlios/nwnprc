@@ -98,6 +98,18 @@ PRCMyResistPower(object oCaster, object oTarget, int nEffCasterLvl=0, float fDel
 	int nResist = POWER_RESIST_FAIL;
 	int nCasterCheck = nEffCasterLvl + d20(1);
 	int nTargetPR = PRCGetPowerResistance(oTarget, oCaster);
+	
+	// Check for Power Pen feats being used
+	if (GetLocalInt(oCaster, "PowerPenetration") == 1)
+	{
+		nCasterCheck += 4;
+		SetLocalInt(oCaster, "PowerPenetration", 0);
+	}
+	else if (GetLocalInt(oCaster, "GreaterPowerPenetration") == 1)
+	{
+		nCasterCheck += 8;
+		SetLocalInt(oCaster, "GreaterPowerPenetration", 0);
+	}
 
 	// A tie favors the caster.
 	if (nCasterCheck < nTargetPR)	nResist = POWER_RESIST_PASS;

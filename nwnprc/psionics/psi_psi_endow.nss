@@ -10,6 +10,7 @@ void main()
     if (GetLocalInt(oPC, "PsionicFocus") == 0)
     {
         SendMessageToPC(oPC, "You must be psionically focused to use this feat.");
+        return;
     }
 
     SetLocalInt(oPC, "PsionicFocus", 0);

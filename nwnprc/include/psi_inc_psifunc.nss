@@ -349,13 +349,17 @@ int MetaPsionics(int nDiceSize, int nNumberOfDice, object oCaster = OBJECT_SELF)
     	{
     		nDamage = nDamage + Random(nDiceSize) + 1;
     	}
-	if (GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE)
+	if (GetLocalInt(oCaster, "PsiMetaEmpower") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
 	{
 		nDamage = nDamage + nDamage / 2;
+		SetLocalInt(oCaster, "PsionicFocus", 0);
+		FloatingTextStringOnCreature("Empowered Power", oCaster, FALSE);
 	}
-	if (GetLocalInt(oCaster, "PsiMetaMax") == TRUE)
+	if (GetLocalInt(oCaster, "PsiMetaMax") == TRUE && GetLocalInt(oCaster, "PsionicFocus") == 1)
 	{
 		nDamage = nDiceSize * nNumberOfDice;
+		SetLocalInt(oCaster, "PsionicFocus", 0);
+		FloatingTextStringOnCreature("Maximized Power", oCaster, FALSE);
 	}
 	
 	return nDamage;

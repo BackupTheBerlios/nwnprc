@@ -29,18 +29,23 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);
     effect eDur = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR);
     effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    effect eDur3 = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
+
     effect eFear = EffectFrightened();
     effect eAttackD = EffectAttackDecrease(2);
     effect eDmgD = EffectDamageDecrease(2,DAMAGE_TYPE_BLUDGEONING|DAMAGE_TYPE_PIERCING|DAMAGE_TYPE_SLASHING);
     effect SaveD = EffectSavingThrowDecrease(SAVING_THROW_ALL,2);
-
-    effect eLink = EffectLinkEffects(eDur2, eDur);
-    eLink = EffectLinkEffects(eLink, eAttackD);
-    eLink = EffectLinkEffects(eLink, eDmgD);
-    effect eLink2 = EffectLinkEffects(eLink, SaveD);
-    eLink = EffectLinkEffects(eLink, eFear);
-
-
+    effect Skill = EffectSkillDecrease(SKILL_ALL_SKILLS,2);
+    
+    effect eLink = EffectLinkEffects(eDmgD, eDur2);
+           eLink = EffectLinkEffects(eLink, eAttackD);
+           eLink = EffectLinkEffects(eLink, SaveD);
+           eLink = EffectLinkEffects(eLink, eFear);
+           eLink = EffectLinkEffects(eLink, Skill);
+           
+    effect eLink2 = EffectLinkEffects(eDur3, SaveD);
+           eLink2 = EffectLinkEffects(eLink2, Skill);
+           
     int nHD = GetHitDice(GetAreaOfEffectCreator());
     int nDC = 10 + GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,GetAreaOfEffectCreator())+ GetAbilityModifier(ABILITY_CHARISMA,GetAreaOfEffectCreator());
     int nDuration = d6(2);

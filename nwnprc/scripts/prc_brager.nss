@@ -17,7 +17,7 @@ void AddFerociousProwess(object oPC)
 	int iAtk = 1;
 	int iDam = 1;
 	
-	if(GetHasFeat(FEAT_FEROCIOUS_PROW, oPC)
+	if(GetHasFeat(FEAT_FEROCIOUS_PROW, oPC))
 	{
 		effect eDam = EffectDamageIncrease(iDam, DAMAGE_TYPE_NEGATIVE);
 		effect eAtk = EffectAttackIncrease(iAtk);

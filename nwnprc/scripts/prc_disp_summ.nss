@@ -18,13 +18,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Declare major variables
 
     int nDuration = 15;
-    effect eSummon = EffectSummonCreature("erinyes");
-    effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1);
-
-
+    float fDelay = 3.0;
+    effect eSummon = EffectSummonCreature("erinyes",VFX_FNF_SUMMON_GATE, fDelay);
+    
     //Apply the VFX impact and summon effect
     MultisummonPreSummon(OBJECT_SELF);
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

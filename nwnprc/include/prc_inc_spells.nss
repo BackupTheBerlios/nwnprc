@@ -568,7 +568,17 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 		if (GetSpellSchool(nSpell) == iRWSpec)
 		{
 		
-			if (iRedWizard > 9)		nDC = nDC - 4;
+			if (iRedWizard > 28)		nDC = nDC - 14;
+			else if (iRedWizard > 26)	nDC = nDC - 13;
+			else if (iRedWizard > 24)	nDC = nDC - 12;
+			else if (iRedWizard > 22)	nDC = nDC - 11;
+			else if (iRedWizard > 20)	nDC = nDC - 10;
+			else if (iRedWizard > 18)	nDC = nDC - 9;
+			else if (iRedWizard > 16)	nDC = nDC - 8;
+			else if (iRedWizard > 14)	nDC = nDC - 7;
+			else if (iRedWizard > 12)	nDC = nDC - 6;
+			else if (iRedWizard > 10)	nDC = nDC - 5;
+			else if (iRedWizard > 8)	nDC = nDC - 4;
 			else if (iRedWizard > 6)	nDC = nDC - 3;
 			else if (iRedWizard > 2)	nDC = nDC - 2;
 			else if (iRedWizard > 0)	nDC = nDC - 1;
@@ -605,7 +615,17 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 		if (GetSpellSchool(nSpell) == iRWSpec)
 		{
 		
-			if (iRedWizard > 9)		nDC = nDC - 4;
+			if (iRedWizard > 28)		nDC = nDC - 14;
+			else if (iRedWizard > 26)	nDC = nDC - 13;
+			else if (iRedWizard > 24)	nDC = nDC - 12;
+			else if (iRedWizard > 22)	nDC = nDC - 11;
+			else if (iRedWizard > 20)	nDC = nDC - 10;
+			else if (iRedWizard > 18)	nDC = nDC - 9;
+			else if (iRedWizard > 16)	nDC = nDC - 8;
+			else if (iRedWizard > 14)	nDC = nDC - 7;
+			else if (iRedWizard > 12)	nDC = nDC - 6;
+			else if (iRedWizard > 10)	nDC = nDC - 5;
+			else if (iRedWizard > 8)	nDC = nDC - 4;
 			else if (iRedWizard > 6)	nDC = nDC - 3;
 			else if (iRedWizard > 2)	nDC = nDC - 2;
 			else if (iRedWizard > 0)	nDC = nDC - 1;

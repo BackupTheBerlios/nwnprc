@@ -71,23 +71,43 @@ int RedWizRestrictedSchool()
 
 	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, OBJECT_SELF);
 	int nSpell = GetSpellId();
-	int iRWRes;
+	int iSchool = GetSpellSchool(nSpell);
+	int iRWRes1;
+	int iRWRes2;
+
+	if (GetHasFeat(FEAT_RW_RES_ABJ, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_ABJURATION;
+	else if (GetHasFeat(FEAT_RW_RES_CON, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_CONJURATION;
+	else if (GetHasFeat(FEAT_RW_RES_DIV, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_DIVINATION;
+	else if (GetHasFeat(FEAT_RW_RES_ENC, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_ENCHANTMENT;
+	else if (GetHasFeat(FEAT_RW_RES_EVO, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_EVOCATION;
+	else if (GetHasFeat(FEAT_RW_RES_ILL, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_ILLUSION;
+	else if (GetHasFeat(FEAT_RW_RES_NEC, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_NECROMANCY;
+	else if (GetHasFeat(FEAT_RW_RES_TRS, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_TRANSMUTATION;
+
+	if (GetHasFeat(FEAT_RW_RES_TRS, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_TRANSMUTATION;
+	else if (GetHasFeat(FEAT_RW_RES_NEC, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_NECROMANCY;
+	else if (GetHasFeat(FEAT_RW_RES_ILL, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_ILLUSION;
+	else if (GetHasFeat(FEAT_RW_RES_EVO, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_EVOCATION;
+	else if (GetHasFeat(FEAT_RW_RES_ENC, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_ENCHANTMENT;
+	else if (GetHasFeat(FEAT_RW_RES_DIV, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_DIVINATION;
+	else if (GetHasFeat(FEAT_RW_RES_CON, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_CONJURATION;
+	else if (GetHasFeat(FEAT_RW_RES_ABJ, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_ABJURATION;
 	
 	if (iRedWizard > 0)
 	{
-		if (GetHasFeat(FEAT_RW_RES_ABJ, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_ABJURATION;
-		else if (GetHasFeat(FEAT_RW_RES_CON, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_CONJURATION;
-		else if (GetHasFeat(FEAT_RW_RES_DIV, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_DIVINATION;
-		else if (GetHasFeat(FEAT_RW_RES_ENC, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_ENCHANTMENT;
-		else if (GetHasFeat(FEAT_RW_RES_EVO, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_EVOCATION;
-		else if (GetHasFeat(FEAT_RW_RES_ILL, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_ILLUSION;
-		else if (GetHasFeat(FEAT_RW_RES_NEC, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_NECROMANCY;
-		else if (GetHasFeat(FEAT_RW_RES_TRS, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_TRANSMUTATION;
-
-		if (GetSpellSchool(nSpell) == iRWRes)
+		if (iSchool == iRWRes1) 
 		{
 			FloatingTextStringOnCreature("You cannot cast spells of your prohibited schools. Spell terminated.", OBJECT_SELF, FALSE);
 			return FALSE;
+		}
+		else if (iSchool == iRWRes2)
+		{
+			FloatingTextStringOnCreature("You cannot cast spells of your prohibited schools. Spell terminated.", OBJECT_SELF, FALSE);
+			return FALSE;
+		}
+		else
+		{
+		return TRUE;		
 		}
 	}
 

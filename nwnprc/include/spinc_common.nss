@@ -232,7 +232,7 @@ int SPGetMetaMagicDamage(int nDamageType, int nDice, int nDieSize,
 	if (-1 == nMetaMagic) nMetaMagic = SPGetMetaMagic();
 
 	// Roll the damage, applying metamagic.	
-	int nDamage = MaximizeOrEmpower(nDieSize, nDice, nMetaMagic, (nBonusPerDie * nDice) + nBonus);
+	int nDamage = MyMaximizeOrEmpower(nDieSize, nDice, nMetaMagic, (nBonusPerDie * nDice) + nBonus);
 	return nDamage;
 }
 

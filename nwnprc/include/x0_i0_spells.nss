@@ -580,12 +580,12 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
 
         //Check for metamagic
     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_NEGATIVE, TRUE);
-    if (nMetaMagic == METAMAGIC_MAXIMIZE || iBlastFaith)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE) || iBlastFaith)
     {
         nDamage = nMaximized;
     }
     else
-    if (nMetaMagic == METAMAGIC_EMPOWER)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
     {
         nDamage = nDamage + (nDamage / 2);
     }
@@ -750,11 +750,11 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
                         //Roll damage
                         int nDam = d6(nD6Dice);
                         //Enter Metamagic conditions
-                        if (nMetaMagic == METAMAGIC_MAXIMIZE)
+                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
                         {
                              nDam = nD6Dice*6;//Damage is at max
                         }
-                        if (nMetaMagic == METAMAGIC_EMPOWER)
+                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
                         {
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }
@@ -840,7 +840,7 @@ void DoMagicFang(int nPower, int nDamagePower,int nCasterLevel)
     eLink = EffectLinkEffects(eLink, eReduction);
 
     int nDuration = nCasterLevel; // * Duration 1 turn/level
-     if (nMetaMagic == METAMAGIC_EXTEND)    //Duration is +100%
+     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))    //Duration is +100%
     {
          nDuration = nDuration * 2;
     }

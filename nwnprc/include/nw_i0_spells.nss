@@ -163,16 +163,16 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
 
     //Make metamagic checks
     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, TRUE);
-    if (nMetaMagic == METAMAGIC_MAXIMIZE || iBlastFaith)
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE) || iBlastFaith)
     {
-        nDamage = 8 + nExtraDamage;
+        nDamage = nMaximized + nExtraDamage;
         // * if low or normal difficulty then MAXMIZED is doubled.
         if(GetIsPC(OBJECT_SELF) && GetGameDifficulty() < GAME_DIFFICULTY_CORE_RULES)
         {
             nDamage = nDamage + nExtraDamage;
         }
     }
-    if (nMetaMagic == METAMAGIC_EMPOWER || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER) || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
     {
         nDamage = nDamage + (nDamage/2);
     }

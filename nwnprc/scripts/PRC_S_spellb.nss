@@ -1,0 +1,197 @@
+#include "inc_newspellbook"
+
+
+void main()
+{
+    object oPC = OBJECT_SELF;
+    int nValue = GetLocalInt(oPC, "DynConv_Var");
+            array_create(oPC, "ChoiceTokens");
+            array_create(oPC, "ChoiceValues");
+
+    if(nValue == 0)
+        return;
+    if(nValue > 0)
+        nValue --;//correct for 1 based to zero based
+
+
+    if(nValue == -1)
+    {
+        int nStage = GetLocalInt(oPC, "Stage");
+// INSERT CODE HERE FOR THE HEADER
+// token no 50
+        if(nStage == 0)
+        {
+            //select spell class
+            SetCustomToken(99, "Select a spell book");
+            int i;
+            for(i=12;i<=255;i++)
+            {
+                if(GetLevelByClass(i, oPC)
+                    && GetSlotCount(GetLevelByClass(i, oPC), 1, GetAbilityForClass(i, oPC), i))
+                {
+                    array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+                        GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", i))));
+                    array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
+                }
+            }
+        }
+        if(nStage == 1)
+        {
+            //select spell level
+            SetCustomToken(99, "Select a spell level");
+            int nSpellClass = GetLocalInt(oPC, "SpellClass");
+            int nClassLevel = GetLevelByClass(nSpellClass, oPC);
+            int nAbilityScore = GetAbilityForClass(nSpellClass, oPC);
+            int i;
+            for(i=0;i<=9;i++)
+            {
+                if(GetSlotCount(nClassLevel, i, nAbilityScore, nSpellClass))
+                {
+                    array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), "Spell level "+IntToString(i));
+                    array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
+                }
+            }
+        }
+        else if(nStage == 2)
+        {
+            //select spell slot
+            SetCustomToken(99, "Select a spell slot");
+            int nSpellClass = GetLocalInt(oPC, "SpellClass");
+            int nSpellLevel = GetLocalInt(oPC, "SpellLevel");
+            int nClassLevel = GetLevelByClass(nSpellClass, oPC);
+            int nAbilityScore = GetAbilityForClass(nSpellClass, oPC);
+            int nSlots = GetSlotCount(nClassLevel, nSpellLevel, nAbilityScore, nSpellClass);
+            int nSlot;
+            for(nSlot = 0; nSlot < nSlots; nSlot++)
+            {
+                int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nSpellClass), nSlot);
+                array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), nSlot);
+                if(nSpellbookID == 0)
+                    array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), "empty");
+                else
+                {
+                    string sFile = Get2DACache("classes", "FeatsTable", nSpellClass);
+                    sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+                    int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID));
+                    array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+                        GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID))));
+                }
+            }
+        }
+        else if(nStage == 3 && !GetLocalInt(oPC, "Stage3Setup"))
+        {
+            //select spell
+            SetCustomToken(99, "Select a spell");
+            int nSpellLevel = GetLocalInt(oPC, "SpellLevel");
+            int nSpellClass = GetLocalInt(oPC, "SpellClass");
+            string sFile = Get2DACache("classes", "FeatsTable", nSpellClass);
+            sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+            int i;
+            for(i=1;i<200;i++)
+            {
+                if(StringToInt(Get2DACache(sFile, "Level", i)) == nSpellLevel
+                    && (Get2DACache(sFile, "ReqFeat", i)=="" 
+                        || GetHasFeat(StringToInt(Get2DACache(sFile, "ReqFeat", i)), oPC)))
+                {
+                    int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", i));
+                    array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+                        GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID))));
+                    array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
+                }
+            }
+            SetLocalInt(oPC, "Stage3Setup", TRUE);
+        }
+        //do token setup
+        int nOffset = GetLocalInt(oPC, "ChoiceOffset");
+        int i;
+        for(i=nOffset; i<nOffset+10; i++)
+        {
+            string sValue = array_get_string(oPC, "ChoiceTokens" ,i);
+            SetLocalString(oPC, "TOKEN10"+IntToString(i-nOffset), sValue);
+            SetCustomToken(100+i-nOffset, sValue);
+        }
+
+// END OF INSERT FOR THE HEADER
+        return;
+    }
+    else if(nValue == -2)
+    {
+	  //end of conversation cleanup
+        DeleteLocalInt(oPC, "DynConv_Var");
+        array_delete(oPC, "ChoiceTokens");
+        array_delete(oPC, "ChoiceValues");
+        DeleteLocalInt(oPC, "Stage");
+        DeleteLocalInt(oPC, "SpellClass");
+        DeleteLocalInt(oPC, "SpellLevel");
+        DeleteLocalInt(oPC, "ChoiceOffset");
+        DeleteLocalInt(oPC, "SpellSlot");
+        DeleteLocalInt(oPC, "Stage3Setup");
+        return;
+    }
+    else if(nValue == -3)
+    {
+	  //abort conversation cleanup
+        DeleteLocalInt(oPC, "DynConv_Var");
+        array_delete(oPC, "ChoiceTokens");
+        array_delete(oPC, "ChoiceValues");
+        DeleteLocalInt(oPC, "Stage");
+        DeleteLocalInt(oPC, "SpellClass");
+        DeleteLocalInt(oPC, "SpellLevel");
+        DeleteLocalInt(oPC, "ChoiceOffset");
+        DeleteLocalInt(oPC, "SpellSlot");
+        DeleteLocalInt(oPC, "Stage3Setup");
+        return;
+    }
+    nValue = array_get_int(oPC, "ChoiceValues", nValue);
+    int nStage = GetLocalInt(oPC, "Stage");
+    if(nStage == 0)
+    {
+        //select class
+        SetLocalInt(oPC, "SpellClass", nValue);
+        nStage++;
+        array_delete(oPC, "ChoiceTokens");
+        array_delete(oPC, "ChoiceValues");
+        array_create(oPC, "ChoiceTokens");
+        array_create(oPC, "ChoiceValues");
+        DeleteLocalInt(oPC, "ChoiceOffset");
+    }
+    else if(nStage == 1)
+    {
+        //select level
+        SetLocalInt(oPC, "SpellLevel", nValue);
+        nStage++;
+        array_delete(oPC, "ChoiceTokens");
+        array_delete(oPC, "ChoiceValues");
+        array_create(oPC, "ChoiceTokens");
+        array_create(oPC, "ChoiceValues");
+        DeleteLocalInt(oPC, "ChoiceOffset");
+    }
+    else if(nStage == 2)
+    {
+        //select slot
+        SetLocalInt(oPC, "SpellSlot", nValue);
+        nStage++;
+        array_delete(oPC, "ChoiceTokens");
+        array_delete(oPC, "ChoiceValues");
+        array_create(oPC, "ChoiceTokens");
+        array_create(oPC, "ChoiceValues");
+        DeleteLocalInt(oPC, "ChoiceOffset");
+    }
+    else if(nStage == 3)
+    {
+        //select spell
+        int nSpellSlot = GetLocalInt(oPC, "SpellSlot");
+        int nSpellLevel = GetLocalInt(oPC, "SpellLevel");
+        int nSpellClass = GetLocalInt(oPC, "SpellClass");
+        persistant_array_create(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nSpellClass));
+        persistant_array_set_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nSpellClass), nSpellSlot, nValue);
+        nStage = 1;
+        array_delete(oPC, "ChoiceTokens");
+        array_delete(oPC, "ChoiceValues");
+        array_create(oPC, "ChoiceTokens");
+        array_create(oPC, "ChoiceValues");
+        DeleteLocalInt(oPC, "ChoiceOffset");
+        DeleteLocalInt(oPC, "Stage3Setup");
+    }
+    SetLocalInt(oPC, "Stage", nStage);
+}

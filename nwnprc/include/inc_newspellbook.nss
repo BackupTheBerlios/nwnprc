@@ -2,16 +2,17 @@
 #include "inc_utility"
 #include "inc_item_props"
 
-int GetAbilityForClass(int nClass)
+int GetAbilityForClass(int nClass, object oPC)
 {
+    object oHide = GetPCSkin(oPC);
     switch(nClass)
     {
         case CLASS_TYPE_BLACKGUARD:
-            return ABILITY_WISDOM;
+            return GetLocalInt(oHide, "PRC_trueWIS");
         case CLASS_TYPE_ASSASSIN:
-            return ABILITY_INTELLIGENCE;
+            return GetLocalInt(oHide, "PRC_trueINT");
     }
-    return ABILITY_INTELLIGENCE;
+    return 0;
 }
 
 int GetNewSpellbookCasterLevel(int nClass, object oCaster = OBJECT_SELF)
@@ -73,7 +74,7 @@ void RemoveSpellUse(object oPC, int nSpellID, int nClass)
     sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
     int nSpellbookID;
     int i;
-    for(i=1; i<50; i++)
+    for(i=1; i<150; i++)
     {
         if(StringToInt(Get2DACache(sFile, "SpellID", i)) == nSpellID)
         {
@@ -111,7 +112,7 @@ void SetupSpells(object oPC, int nClass)
 {
     WipeSpellbookHideFeats(oPC);
     int nLevel = GetLevelByClass(nClass, oPC);
-    int nAbility = GetAbilityScore(oPC, GetAbilityForClass(nClass));
+    int nAbility = GetAbilityForClass(nClass, oPC);
     int nSpellLevel;
     for(nSpellLevel = 1; nSpellLevel <=9; nSpellLevel++)
     {
@@ -140,4 +141,41 @@ void CheckNewSpellbooks(object oPC)
             DelayCommand(0.01, SetupSpells(oPC, i));
         }
     }
+}
+
+int GetNewSpellMetamagic()
+{
+    int nSpellID = GetSpellId();
+    int nMetamagic = nSpellID % 10;
+    switch(nMetamagic)
+    {
+        case 1://quicken
+            nMetamagic = METAMAGIC_QUICKEN;
+            break;
+        case 2://empower
+            nMetamagic = METAMAGIC_EMPOWER;
+            break;
+        case 3://extend
+            nMetamagic = METAMAGIC_EXTEND;
+            break;
+        case 4://maximise
+            nMetamagic = METAMAGIC_MAXIMIZE;
+            break;
+        case 5://silent
+            nMetamagic = METAMAGIC_SILENT;
+            break;
+        case 6://still
+            nMetamagic = METAMAGIC_STILL;
+            break;
+        case 7://none
+            nMetamagic = 0;
+            break;
+        case 8://none
+            nMetamagic = 0;
+            break;
+        case 9://none
+            nMetamagic = 0;
+            break;
+    }
+    return nMetamagic;
 }

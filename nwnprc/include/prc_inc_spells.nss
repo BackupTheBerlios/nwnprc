@@ -992,33 +992,45 @@ return GetSpellTargetObject();
 //This checks if the spell is channeled and if there are multiple spells
 //channeled, which one is it. Then it checks in either case if the spell
 //has the metamagic feat the function gets and returns TRUE or FALSE accordingly
+//Also used by the new spellbooks for the same purpose
 int CheckMetaMagic(int nMeta,int nMMagic)
 {
-int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
-int nFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
-if(nChannel != 1)
-{
-    if(nMeta == nMMagic)
+    int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
+    int nFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
+    int nNewSpellMetamagic = GetLocalInt(OBJECT_SELF, "NewSpellMetamagic");
+    if(nChannel == 1)
     {
-    return TRUE;
-    }
-    else
+        if(nFeat == nMMagic)
+        {
+            return TRUE;
+        }
+        else
+        {    
+            return FALSE;
+        }
+    } 
+    else if(nNewSpellMetamagic != 0)
     {
-    return FALSE;
-    }
-}
-else
-{
-
-if(nFeat == nMMagic)
+        if(nNewSpellMetamagic == nMMagic)
+        {
+            return TRUE;
+        }
+        else
+        {    
+            return FALSE;
+        }
+    } 
+    else    
     {
-    return TRUE;
-    }
-    else
-    {
-    return FALSE;
-    }
-}
+        if(nMeta == nMMagic)
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    } 
 }
 
 
@@ -1036,11 +1048,13 @@ int MyMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0)
         nDamage = nDamage + Random(nDice) + 1;
     }
     //Resolve metamagic
-    if (nMeta == METAMAGIC_MAXIMIZE || nFeat == METAMAGIC_MAXIMIZE)
+//    if (nMeta == METAMAGIC_MAXIMIZE || nFeat == METAMAGIC_MAXIMIZE)
+    if (CheckMetaMagic(nMeta, METAMAGIC_MAXIMIZE))
     {
         nDamage = nDice * nNumberOfDice;
     }
-    else if (nMeta == METAMAGIC_EMPOWER || nFeat == METAMAGIC_EMPOWER)
+//    else if (nMeta == METAMAGIC_EMPOWER || nFeat == METAMAGIC_EMPOWER)
+    else if (CheckMetaMagic(nMeta, METAMAGIC_EMPOWER))
     {
        nDamage = nDamage + nDamage / 2;
     }

@@ -1,25 +1,73 @@
 2DA V2.0
 
-     Label                    Level FeatID IPFeatID SpellID 
-0    ****                     ****  ****   ****     ****    
-1    CureLightWounds          1     2001   100      1793    
-2    Doom                     1     2002   101      1794    
-3    InflictLightWounds       1     2003   102      1795    
-4    MagicWeapon              1     2004   103      1796    
-5    SummonCreatureI          1     2005   104      1797    
-6    Bulls_Strength           2     2006   105      1798    
-7    Cure_Moderate_Wounds     2     2007   106      1799    
-8    Darkness                 2     2008   107      1800    
-9    Eagle_Splendor           2     2009   108      1801    
-10   Inflict_Moderate_Wounds  2     2010   109      1802    
-11   Summon_Creature_II       2     2011   110      1803    
-12   Contagion                3     2012   111      1804    
-13   Cure_Serious_Wounds      3     2013   112      1805    
-14   Inflict_Serious_Wounds   3     2014   113      1806    
-15   Protection_from_Elements 3     2015   114      1807    
-16   Summon_Creature_III      3     2016   115      1808    
-17   Cure_Critical_Wounds     4     2017   116      1809    
-18   Freedom_of_Movement      4     2018   117      1810    
-19   Inflict_Critical_Wounds  4     2019   118      1811    
-20   Poison                   4     2020   119      1812    
-21   Summon_Creature_IV       4     2021   120      1813    
+   Label                        Level FeatID IPFeatID SpellID ReqFeat 
+0  ****                         ****  ****   ****     ****    ****    
+1  CureLightWounds              1     2000   100      1800    ****    
+2  CureLightWoundsEmpower       3     2001   101      1801    11      
+3  CureLightWoundsMaximise      4     2002   102      1802    25      
+4  CureLightWoundsSilent        2     2003   103      1803    33      
+5  CureLightWoundsStill         2     2004   104      1804    37      
+6  Doom                         1     2005   105      1805    ****    
+7  DoomExtend                   2     2006   106      1806    12      
+8  DoomSilent                   2     2007   107      1807    33      
+9  DoomStill                    2     2008   108      1808    37      
+10 InflictLightWounds           1     2009   109      1809    ****    
+11 InflictLightWoundsEmpower    3     2010   110      1810    11      
+12 InflictLightWoundsMaximise   4     2011   111      1811    25      
+13 InflictLightWoundsSilent     2     2012   112      1812    33      
+14 InflictLightWoundsStill      2     2013   113      1813    37      
+15 MagicWeapon                  1     2014   114      1814    ****    
+16 MagicWeaponExtend            2     2015   115      1815    12      
+17 MagicWeaponSilent            2     2016   116      1816    33      
+18 MagicWeaponStill             2     2017   117      1817    37      
+19 SummonCreatureI              1     2018   118      1818    ****    
+20 SummonCreatureIExtend        2     2019   119      1819    12      
+21 SummonCreatureISilent        2     2020   120      1820    33      
+22 SummonCreatureIStill         2     2021   121      1821    37      
+23 BullsStrength                2     2022   122      1822    ****    
+24 BullsStrengthEmpower         4     2023   123      1823    11      
+25 BullsStrengthExtend          3     2024   124      1824    12      
+26 BullsStrengthSilent          3     2025   125      1825    33      
+27 BullsStrengthStill           3     2026   126      1826    37      
+28 CureModerateWounds           2     2027   127      1827    ****    
+29 CureModerateWoundsEmpower    4     2028   128      1828    11      
+30 CureModerateWoundsSilent     3     2029   129      1829    33      
+31 CureModerateWoundsStill      3     2030   130      1830    37      
+32 Darkness                     2     2031   131      1831    ****    
+33 DarknessExtend               3     2032   132      1832    12      
+34 DarknessSilent               3     2033   133      1833    33      
+35 EaglesSplendor               2     2034   134      1834    ****    
+36 EaglesSplendorEmpower        4     2035   135      1835    11      
+37 EaglesSplendorExtend         3     2036   136      1836    12      
+38 EaglesSplendorSilent         3     2037   137      1837    33      
+39 EaglesSplendorStill          3     2038   138      1838    37      
+40 InflictModerateWounds        2     2039   139      1839    ****    
+41 InflictModerateWoundsEmpower 4     2040   140      1840    11      
+42 InflictModerateWoundsSilent  3     2041   141      1841    33      
+43 InflictModerateWoundsStill   3     2042   142      1842    37      
+44 SummonCreatureII             2     2043   143      1843    ****    
+45 SummonCreatureIIExtend       3     2044   144      1844    12      
+46 SummonCreatureIISilent       3     2045   145      1845    33      
+47 SummonCreatureIIStill        3     2046   146      1846    37      
+48 Contagion                    3     2047   147      1847    ****    
+49 ContagionSilent              4     2048   148      1848    33      
+50 ContagionStill               4     2049   149      1849    37      
+51 CureSeriousWounds            3     2050   150      1850    ****    
+52 CureSeriousWoundsSilent      4     2051   151      1851    33      
+53 CureSeriousWoundsStill       4     2052   152      1852    37      
+54 InflictSeriousWounds         3     2053   153      1853    ****    
+55 InflictSeriousWoundsSilent   4     2054   154      1854    33      
+56 InflictSeriousWoundsStill    4     2055   155      1855    37      
+57 ProtectionFromElements       3     2056   156      1856    ****    
+58 ProtectionFromElementsExtend 4     2057   157      1857    12      
+59 ProtectionFromElementsSilent 4     2058   158      1858    33      
+60 ProtectionFromElementsStill  4     2059   159      1859    37      
+61 SummonCreatureIII            3     2060   160      1860    ****    
+62 SummonCreatureIIIExtend      4     2061   161      1861    12      
+63 SummonCreatureIIISilent      4     2062   162      1862    33      
+64 SummonCreatureIIIStill       4     2063   163      1863    37      
+65 CureCriticalWounds           4     2064   164      1864    ****    
+66 FreedomOfMovement            4     2065   165      1865    ****    
+67 InflictCriticalWounds        4     2066   166      1866    ****    
+68 Poison                       4     2067   167      1867    ****    
+69 SummonCreatureIV             4     2068   168      1868    ****    

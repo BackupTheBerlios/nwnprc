@@ -357,7 +357,9 @@ const int FEAT_FREE_KI_3            = 2751;
 const int FEAT_FREE_KI_4            = 2752;
 
 // Shifter
-const int FEAT_PRESTIGE_SHIFTER_NATURALSPELL = 2920;
+const int FEAT_PRESTIGE_SHIFTER_NATURALSPELL = 2917;
+const int FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1   = 2906;
+const int FEAT_PRESTIGE_SHIFTER_GWSHAPE_1    = 2900;
 
 //heartwarder
 const int FEAT_SANCTIFY_MARTIAL_CLUB        = 3194;

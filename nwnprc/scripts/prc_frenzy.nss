@@ -90,7 +90,7 @@ void main()
 	
         // ac penalty applied to skin	
 	object oSkin = GetPCSkin(OBJECT_SELF);
-        SetCompositeBonusT(oSkin, "FrenzyACPenalty", acDecrease, ITEM_PROPERTY_DECREASED_AC, AC_DODGE_BONUS); // for temporary bonuses
+        SetCompositeBonusT(oSkin, "FrenzyACPenalty", acDecrease, ITEM_PROPERTY_DECREASED_AC, IP_CONST_ACMODIFIERTYPE_DODGE); // for temporary bonuses
 
         PlayVoiceChat(VOICE_CHAT_BATTLECRY1);
         
@@ -158,7 +158,7 @@ void EndOfFrenzyDamage(object oSelf)
 
      // remove frenzy bonuses
      object oSkin = GetPCSkin(OBJECT_SELF);
-     SetCompositeBonusT(oSkin, "FrenzyACPenalty", 0, ITEM_PROPERTY_DECREASED_AC, AC_DODGE_BONUS); // for temporary bonuses
+     SetCompositeBonusT(oSkin, "FrenzyACPenalty", 0, ITEM_PROPERTY_DECREASED_AC, IP_CONST_ACMODIFIERTYPE_DODGE); // for temporary bonuses
 }
 
 void TurnBasedDamage(object oTarget, object oCaster)

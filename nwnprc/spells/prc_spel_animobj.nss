@@ -101,11 +101,12 @@ int GetIsValidAnimate(object oTarget)
 void main()
 {
     object oTarget = GetSpellTargetObject();
-    object oPC = OBJECT_SELF;
-    object oAnimate;
-    location lTarget;
     if (GetIsValidAnimate(oTarget))
     {
+		object oPC = OBJECT_SELF;
+		object oAnimate;
+		location lTarget;
+		effect eVis = EffectVisualEffect(VFX_DUR_ETHEREAL_VISAGE);
 		if (GetItemPossessor(oTarget) == OBJECT_INVALID)
 		{
 	        lTarget = GetLocation(oTarget);
@@ -116,22 +117,22 @@ void main()
 		}
         if (GetBaseItemType(oTarget) == BASE_ITEM_ARMOR)
         {
-			SendMessageToPC(OBJECT_SELF, "is armour");
+			//SendMessageToPC(OBJECT_SELF, "is armour");
             int iArmourClass = GetItemACValue(oTarget);
             if (iArmourClass>4)
             {
                 oAnimate = CreateObject(OBJECT_TYPE_CREATURE, "anim_armour_5_8", lTarget, FALSE, "PRC_Spell_Animated_Object");
-				SendMessageToPC(OBJECT_SELF, "5-8");
+				//SendMessageToPC(OBJECT_SELF, "5-8");
             }
             else if (iArmourClass>0)
             {
                 oAnimate = CreateObject(OBJECT_TYPE_CREATURE, "anim_armour_1_4", lTarget, FALSE, "PRC_Spell_Animated_Object");
-                SendMessageToPC(OBJECT_SELF, "1-4");
+                //SendMessageToPC(OBJECT_SELF, "1-4");
             }
             else
             {
                 oAnimate = CreateObject(OBJECT_TYPE_CREATURE, "anim_armour_0", lTarget, FALSE, "PRC_Spell_Animated_Object");
-				SendMessageToPC(OBJECT_SELF, "0");
+				//SendMessageToPC(OBJECT_SELF, "0");
             }
             if (iArmourClass>0)
             {
@@ -141,7 +142,7 @@ void main()
             object oNewTarget = CopyObject(oTarget, GetLocation(oAnimate),oAnimate);
             DestroyObject(oTarget,1.0);
             AssignCommand(oAnimate, ActionEquipItem(oNewTarget,INVENTORY_SLOT_CHEST));
-			SendMessageToPC(OBJECT_SELF, "done armour");
+			//SendMessageToPC(OBJECT_SELF, "done armour");
         }
         else
         {
@@ -162,13 +163,16 @@ void main()
         else
             SetLocalInt(oAnimate,"Rounds",GetCasterLevel(oPC));
         effect eDom = SupernaturalEffect(EffectCutsceneDominated());
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oAnimate, 4.0);
         DelayCommand(0.0, AssignCommand(oAnimate, ActionPlayAnimation(ANIMATION_LOOPING_DEAD_BACK, 1.0, 2.0)));
         DelayCommand(3.5, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDom, oAnimate));
 //            AddHenchman(OBJECT_SELF, oAnimate);
     }
     else
     {
-		SendMessageToPC(OBJECT_SELF, "Invalide Target");
+		SendMessageToPC(OBJECT_SELF, "Invalide target");
+		SendMessageToPC(OBJECT_SELF, "Target must be armour/clothing/melee weapon");
+		SendMessageToPC(OBJECT_SELF, "Target cannot be magical");
 	}
 }
 

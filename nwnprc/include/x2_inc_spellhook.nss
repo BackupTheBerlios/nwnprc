@@ -303,7 +303,7 @@ int X2PreSpellCastCode()
    int nContinue;
    
    DeleteLocalInt(OBJECT_SELF, "SpellConc");
-   ExecuteScript("prespellcode",OBJECT_SELF);
+    nContinue = ExecuteScriptAndReturnInt("prespellcode",OBJECT_SELF);
 
     if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
     {
@@ -348,7 +348,8 @@ int X2PreSpellCastCode()
    //---------------------------------------------------------------------------
    // Run Red Wizard School Restriction Check
    //---------------------------------------------------------------------------
-   nContinue = RedWizRestrictedSchool();
+   if (nContinue)
+      nContinue = RedWizRestrictedSchool();
 
    if (nContinue)
    {

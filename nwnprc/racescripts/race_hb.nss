@@ -35,13 +35,14 @@ void main()
            else bIsEffectedByLight = FALSE;
         }
 
-        //light sensitivity
-        if(bHasLightSensitive && bIsEffectedByLight)
+        // light sensitivity
+        // those with lightblindess are also sensitive
+        if( (bHasLightSensitive || bHasLightBlindness) && bIsEffectedByLight)
         {
            EffectDazzled(oPC, 6.5);
         }
 
-        //light blindness
+        // light blindness
         if(bHasLightBlindness && bIsEffectedByLight)
         {
            // on first entering bright light
@@ -53,16 +54,11 @@ void main()
                SetLocalInt(oPC, "EnteredDaylight", TRUE);
                EffectDazzled(oPC, 6.5);
            }
-           // Keep Dazzling them until they are out of the light
-           else if(GetLocalInt(oPC, "EnteredDaylight") == TRUE)
-           {
-               EffectDazzled(oPC, 6.5);
-           }
-           // Finally out of the light, no more daze, remove int
-           else
-           {
-                DeleteLocalInt(oPC, "EnteredDaylight");
-           }
+        }
+        
+        if(!bIsEffectedByLight && GetLocalInt(oPC, "EnteredDaylight") == TRUE)
+        {
+             DeleteLocalInt(oPC, "EnteredDaylight");
         }
 
         oPC = GetNextPC();

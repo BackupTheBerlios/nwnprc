@@ -116,7 +116,7 @@ void main()
         //Check to see if we rolled a critical and determine damage accordingly
         // Dmg Bonus= Level Paladin+ Fist Raziel
 
-        if(iHit == 2 || ( (LvlRaziel>2) && iSmit ))
+        if(iHit == 2 || ( (LvlRaziel>2) && iSmit  && !Immune))
             iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, TRUE,iDmgBon);
         else
             iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, FALSE,iDmgBon);

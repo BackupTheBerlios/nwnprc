@@ -96,6 +96,16 @@ void NoSmite(object oTarget ,string sText)
 void main()
 {
 
+   // take lvl for Speed
+   int LvlRaziel=GetLevelByClass(CLASS_TYPE_FISTRAZIEL);
+   int iFeat=(LvlRaziel+1)/2+FEAT_SMITE_GOOD_ALIGN-1;
+
+   if (GetHasFeat(FEAT_SMITE_EVIL))
+   {
+        DecrementRemainingFeatUses(OBJECT_SELF,FEAT_SMITE_EVIL);
+        IncrementRemainingFeatUses(OBJECT_SELF,iFeat);
+   }
+   
    object oTarget=GetSpellTargetObject();
 
    if (GetAlignmentGoodEvil(oTarget)!=ALIGNMENT_EVIL)

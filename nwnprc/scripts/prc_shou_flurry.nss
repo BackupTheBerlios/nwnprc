@@ -26,6 +26,67 @@ int isNotShield(object oItem)
      return isNotAShield;
 }
 
+void FlurryLight(object oPC)
+{
+          string nMesL = "";
+          object oArmorL = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+          object oWeapRL = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+          object oWeapLL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+
+          int armorTypeL = GetArmorType(oArmorL);
+          int iShouL = GetLevelByClass(CLASS_TYPE_SHOU, oPC);
+          int monkLevelL = GetLevelByClass(CLASS_TYPE_MONK, oPC);
+          int numAddAttacksL = 0;
+          int attackPenaltyL = 0;
+
+
+           if(iShouL >= 3 )
+          {
+              numAddAttacksL = 1;
+              attackPenaltyL = 2;
+              nMesL = "*Martial Flurry Activated*";
+          }
+
+          if(monkLevelL > 0 && GetBaseItemType(oWeapRL) == BASE_ITEM_KAMA)
+          {
+              numAddAttacksL = 0;
+              attackPenaltyL = 0;
+              nMesL = "*No Extra Attacks Gained by Kama Monks!*";
+          }
+
+	if (GetBaseItemType(oWeapRL) == BASE_ITEM_DAGGER || GetBaseItemType(oWeapRL) == BASE_ITEM_HANDAXE ||
+	GetBaseItemType(oWeapRL) == BASE_ITEM_LIGHTHAMMER || GetBaseItemType(oWeapRL) == BASE_ITEM_LIGHTMACE ||
+	GetBaseItemType(oWeapRL) == BASE_ITEM_KUKRI || GetBaseItemType(oWeapRL) == BASE_ITEM_SICKLE ||
+	GetBaseItemType(oWeapRL) == BASE_ITEM_WHIP )
+	{
+        	if (GetBaseItemType(oWeapLL) == BASE_ITEM_DAGGER || GetBaseItemType(oWeapLL) == BASE_ITEM_HANDAXE ||
+	        GetBaseItemType(oWeapLL) == BASE_ITEM_LIGHTHAMMER || GetBaseItemType(oWeapLL) == BASE_ITEM_LIGHTMACE ||
+	        GetBaseItemType(oWeapLL) == BASE_ITEM_KUKRI || GetBaseItemType(oWeapLL) == BASE_ITEM_SICKLE ||
+	        GetBaseItemType(oWeapLL) == BASE_ITEM_WHIP )
+	        {
+
+			//check armor type
+	   		if(armorTypeL < ARMOR_TYPE_MEDIUM)
+			{	
+				if(oWeapRL != OBJECT_INVALID  && oWeapLL != OBJECT_INVALID && isNotShield(oWeapLL) )
+				{
+					effect addAttL = SupernaturalEffect( EffectModifyAttacks(numAddAttacksL) );
+					effect attPenL = SupernaturalEffect( EffectAttackDecrease(attackPenaltyL) );
+					effect eLinkL = EffectLinkEffects(addAttL, attPenL);
+					ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLinkL, oPC);
+					SetLocalInt(oPC, "HasMFlurry", 2);
+				}
+			}
+		}
+	}
+	else
+	{
+		nMesL = "*Invalid Weapon.  Ability Not Activated!*";
+	}
+          
+	FloatingTextStringOnCreature(nMesL, oPC, FALSE);
+}
+
 void FlurryAll(object oPC)
 {
           string nMesA = "";
@@ -57,26 +118,24 @@ void FlurryAll(object oPC)
 
 
 
-          //check armor type
-          if(armorTypeA < ARMOR_TYPE_MEDIUM)
-          {
-               if(oWeapRA != OBJECT_INVALID  && oWeapLA != OBJECT_INVALID && isNotShield(oWeapLA) )
-              {
-                   effect addAttA = SupernaturalEffect( EffectModifyAttacks(numAddAttacksA) );
-                   effect attPenA = SupernaturalEffect( EffectAttackDecrease(attackPenaltyA) );
-                   effect eLinkA = EffectLinkEffects(addAttA, attPenA);
-                   ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLinkA, oPC);
-                   SetLocalInt(oPC, "HasMFlurry", 2);
-              }
-              else
-              {
-                   nMesA = "*Invalid Weapon.  Ability Not Activated!*";
-              }
-          }
+	//check armor type
+	if(armorTypeA < ARMOR_TYPE_MEDIUM)
+	{
+		if(oWeapRA != OBJECT_INVALID  && oWeapLA != OBJECT_INVALID && isNotShield(oWeapLA) )
+		{
+			effect addAttA = SupernaturalEffect( EffectModifyAttacks(numAddAttacksA) );
+			effect attPenA = SupernaturalEffect( EffectAttackDecrease(attackPenaltyA) );
+			effect eLinkA = EffectLinkEffects(addAttA, attPenA);
+			ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLinkA, oPC);
+			SetLocalInt(oPC, "HasMFlurry", 2);
+		}
+	}
+	else
+	{
+		nMesA = "*Invalid Weapon.  Ability Not Activated!*";
+	}
 
-
-          FloatingTextStringOnCreature(nMesA, oPC, FALSE);
-     
+	FloatingTextStringOnCreature(nMesA, oPC, FALSE);
 }
 
 
@@ -90,6 +149,10 @@ void main()
             if ( GetLevelByClass(CLASS_TYPE_SHOU, oPC) == 5)
             {
                 FlurryAll(oPC);
+            }
+            else if ( GetLevelByClass(CLASS_TYPE_SHOU, oPC) >= 3  && GetLevelByClass(CLASS_TYPE_SHOU, oPC) < 5)
+            {
+                FlurryLight(oPC);
             }
      }
      else

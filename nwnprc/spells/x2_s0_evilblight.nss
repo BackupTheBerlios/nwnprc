@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
    
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     CasterLvl +=SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
 
 
     //Get first target in the area of effect
@@ -74,6 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             //Make SR Check
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
             {
+               int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                     //Make Will Save
                 if (!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC)))
                 {

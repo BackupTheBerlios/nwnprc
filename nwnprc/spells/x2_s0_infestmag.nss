@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //--------------------------------------------------------------------------
     float  fDist   = GetDistanceToObject(oTarget);
     float  fDelay  = fDist/25.0;
-    int    nDC     = GetSpellSaveDC()  + GetChangesToSaveDC(OBJECT_SELF);
+    int    nDC     = GetSpellSaveDC()  + GetChangesToSaveDC(oTarget,OBJECT_SELF);
     effect eDur = EffectVisualEffect   ( VFX_DUR_FLIES );
 
     CasterLvl +=SPGetPenetr();

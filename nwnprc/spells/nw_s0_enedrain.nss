@@ -80,7 +80,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
         {
 
-           if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
+           if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
             {
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDrain, oTarget,0.0f,TRUE,-1,CasterLvl);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

@@ -25,11 +25,13 @@ void main()
 //    effect eVis = EffectVisualEffect( VFX_COM_CHUNK_RED_MEDIUM ); // Alternative Death VFX
     float fDelay;
     int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + // Boneshank - added.
-		GetChangesToSaveDC(GetAreaOfEffectCreator()) +
-        GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), TOLO_KW_S);
-
-    //Get the first object in the persistent area
+		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), TOLO_KW_S);        
+        //Get the first object in the persistent area
     object oTarget = GetFirstInPersistentObject();
+
+ 
+
+
 
     while( GetIsObjectValid(oTarget) )
     {
@@ -42,8 +44,9 @@ void main()
             //Make a SR check
             if( !MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget, 0) )
             {
+
                 //Make a fortitude save (-4) to avoid death
-                if( !MySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4,
+                if( !MySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4+GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()),
                     SAVING_THROW_TYPE_DEATH, GetAreaOfEffectCreator()) )
                 {
                     //Apply the delay VFX impact and death effect

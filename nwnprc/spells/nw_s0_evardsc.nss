@@ -44,7 +44,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int nRoll;
     float fDelay;
 
-    int nDC = GetChangesToSaveDC(GetAreaOfEffectCreator());
 
     oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
@@ -78,7 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         {
             eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_PLUS_TWO);
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-            if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
+            if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,(GetAreaOfEffectCreator()))), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
             {
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(1),FALSE));
             }

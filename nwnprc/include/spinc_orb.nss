@@ -33,7 +33,7 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
 			// Let the target make a fort save, if they succeed half damage and no bad effect, if they fail
 			// then full damage and the bad effect.
 			int nSaved = 0;
-			if (FortitudeSave(oTarget, SPGetSpellSaveDC(), nSaveType))
+			if (FortitudeSave(oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), nSaveType))
 			{
 				nSaved = 1;
 				nDamage /= 2;

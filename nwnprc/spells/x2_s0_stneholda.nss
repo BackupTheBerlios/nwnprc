@@ -39,7 +39,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
     int nMetaMagic = GetMetaMagicFeat();
     effect eLink = EffectLinkEffects(eDur,eHold);
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
-    int nDC = GetChangesToSaveDC(GetAreaOfEffectCreator());
+    
 
 
     //Get the first object in the persistant area
@@ -51,6 +51,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
         //Make a SR check
             if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             {
+                int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
                 //Make a Fort Save
                 if(!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()  + nDC), SAVING_THROW_TYPE_MIND_SPELLS))
                 {

@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
 
     int nCasterLevel = CasterLvl;
     int nDuration = nCasterLevel/2;
@@ -106,6 +106,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                     //Make an SR check
                     if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
                     {
+                        int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                         //Make a Will save to negate
                         if (!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS))
                         {

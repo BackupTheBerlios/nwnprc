@@ -66,7 +66,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
 
     int nPenetr = CasterLvl + SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
  
     //Search through target area
     oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
@@ -80,6 +80,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
            //Make SR Check and faction check
            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr , fDelay))
            {
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Make Will Save
                 if (!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                 {

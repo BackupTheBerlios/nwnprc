@@ -30,7 +30,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, GEMCAGE_DC, GEMCAGE_S, GEMCAGE_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, GEMCAGE_S);
         if (!GetPlotFlag(oTarget) &&   // Plot creatures cannot be Caged, ever.
             !GetIsDM(oTarget) &&       // Neither can DM's.

@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
   int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
-  int nDC = GetChangesToSaveDC(OBJECT_SELF);
+  
 
   int nCasterLvl = CasterLvl;
   int nDamagen, nModify, nHurt, nHP;
@@ -91,6 +91,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 //Make SR check
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
+                    int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                     nModify = d8() + nCasterLvl;
                     //Make metamagic check
                     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, FALSE);

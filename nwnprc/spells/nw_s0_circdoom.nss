@@ -65,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetSpellTargetLocation());
     
     CasterLvl +=SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
  
     //Get first target in the specified area
     oTarget =GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());
@@ -104,6 +104,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 //Make an SR Check
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
+                    int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                     if (MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_NEGATIVE, OBJECT_SELF, fDelay))
                     {
                         nDamage = nDamage/2;

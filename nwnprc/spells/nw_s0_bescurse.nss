@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
          if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
          {
             //Make Will Save
-            if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(OBJECT_SELF))))
+            if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
             {
                 //Apply Effect and VFX
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eCurse, oTarget,0.0f,TRUE,-1,CasterLvl);

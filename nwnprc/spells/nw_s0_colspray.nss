@@ -67,7 +67,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nPenetr = CasterLvl + SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
 
     //Get first object in the spell cone
     oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE);
@@ -81,6 +81,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/30;
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay) && oTarget != OBJECT_SELF)
             {
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 if(!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                 {
                       nDuration = 3 + d4();

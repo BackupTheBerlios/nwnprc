@@ -41,7 +41,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int CasterLvl = PRCGetCasterLevel(GetAreaOfEffectCreator());
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(),CasterLvl);
     
-    int nDC = GetChangesToSaveDC(GetAreaOfEffectCreator());
+    
 
     //Get the first object in the persistant area
     oTarget = GetFirstInPersistentObject();
@@ -54,6 +54,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Make a SR check
             if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             {
+                int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
                 //Make a Fort Save
                 if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_POISON))
                 {

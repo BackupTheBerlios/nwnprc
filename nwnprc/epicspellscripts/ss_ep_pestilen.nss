@@ -22,15 +22,14 @@ void main()
     {
         //Declare major variables
         int nDamage;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, PESTIL_S);
+
         float fDelay;
         effect eExplode = EffectVisualEffect(VFX_FNF_HORRID_WILTING);
         effect eDuration = EffectVisualEffect(VFX_DUR_AURA_DISEASE);
         effect eVis = EffectVisualEffect(VFX_IMP_DISEASE_S);
         effect eDisease = EffectDisease(DISEASE_SLIMY_DOOM);
         location lTarget = GetLocation(OBJECT_SELF);
-
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF)  + GetDCSchoolFocusAdjustment(OBJECT_SELF, PESTIL_S);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eDuration, lTarget, 10.0);
         object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lTarget);
@@ -47,8 +46,9 @@ void main()
                 {
                     if(GetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                     {
+    
                         // Targets all get a Fortitude saving throw
-                        if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DISEASE, OBJECT_SELF, fDelay))
+                        if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_DISEASE, OBJECT_SELF, fDelay))
                         {
                             // Apply effects to the currently selected target.
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDisease, oTarget));

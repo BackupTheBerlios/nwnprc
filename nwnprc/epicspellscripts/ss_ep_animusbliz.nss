@@ -27,8 +27,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ANBLIZZ_DC, ANBLIZZ_S, ANBLIZZ_XP))
     {
         float fDelay;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, ANBLIZZ_S);
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, ANBLIZZ_S);
         int nDam;
         effect eExplode = EffectVisualEffect(VFX_IMP_PULSE_COLD);
         effect eShake = EffectVisualEffect(VFX_FNF_SCREEN_SHAKE);
@@ -62,9 +61,10 @@ void main()
                 fDelay = GetRandomDelay();
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay))
                 {
+
                     nDam = d6(20);
                     // Reflex save for half damage.
-                    if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC,
+                    if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF),
                         SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                         nDam /= 2;
                     eDam = EffectDamage(nDam, DAMAGE_TYPE_COLD);

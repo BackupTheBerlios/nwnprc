@@ -65,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int nLow;
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
 
     int nDuration = CasterLvl;
     nDuration = 3 + GetScaledDuration(nDuration, oTarget);
@@ -134,6 +134,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             //Make SR check
             if (!MyPRCResistSpell(OBJECT_SELF, oLowest,nPenetr))
             {
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Make Fort save
                 if(!MySavingThrow(SAVING_THROW_WILL, oLowest, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_MIND_SPELLS))
                 {

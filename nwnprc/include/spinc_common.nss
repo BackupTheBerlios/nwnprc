@@ -124,10 +124,10 @@ int SPResistSpell(object oCaster, object oTarget,int nCasterLevel = 0, float fDe
 // New function for adjusted save DC's. Seems like this needs more than the caster
 // for things like elemental savant. (need spell damage type?)
 //		oCaster - caster object.
-int SPGetSpellSaveDC(object oCaster = OBJECT_SELF)
+int SPGetSpellSaveDC(object oTarget , object oCaster )
 {
 //	return GetSpellSaveDC();
-	return GetSpellSaveDC() + GetChangesToSaveDC(oCaster);
+	return GetSpellSaveDC() + GetChangesToSaveDC(oTarget,oCaster);
 }
 
 // Get altered damage type for energy sub feats.

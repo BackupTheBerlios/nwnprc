@@ -29,7 +29,7 @@ void main()
         object oTarget = GetSpellTargetObject();
         location lTarget = GetSpellTargetLocation();
         location lCell;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, PLANCEL_S);
         effect eVis1 = EffectVisualEffect(VFX_FNF_IMPLOSION);
         effect eVis2 = EffectVisualEffect(VFX_FNF_SUMMON_GATE);

@@ -35,9 +35,7 @@ void main()
         object oCaster = OBJECT_SELF;
         object oTarget;
         // Boneshank - Added in the nDC formula.
-        int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + GetChangesToSaveDC(GetAreaOfEffectCreator()) +
-                GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
-        float fDelay;
+         float fDelay;
         int nDamage;
         int nCasterLvl = PRCGetCasterLevel(oCaster);
         effect eAOE = EffectAreaOfEffect
@@ -50,7 +48,7 @@ void main()
         effect eImpact4 = EffectVisualEffect( VFX_FNF_FIRESTORM );
         effect eVis = EffectVisualEffect( VFX_IMP_FLAME_M );
         effect eDam;
-
+        int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +  GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
         // Direct Impact is handled first.  (20d8) - reflex.
         // Apply the explosion at the location captured above.
         ApplyEffectAtLocation( DURATION_TYPE_INSTANT, eImpact, lTarget );
@@ -74,7 +72,7 @@ void main()
                 {
                     nDamage = d8(20);
                     //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                    nDamage = GetReflexAdjustedDamage( nDamage, oTarget, nDC, SAVING_THROW_TYPE_FIRE );
+                    nDamage = GetReflexAdjustedDamage( nDamage, oTarget, nDC+ GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()), SAVING_THROW_TYPE_FIRE );
                     //Set the damage effect
                     eDam = EffectDamage( nDamage, DAMAGE_TYPE_FIRE );
                     if( nDamage > 0 )

@@ -56,9 +56,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
-
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
-
     int nCasterLevel= CasterLvl;
     int nDamage;
     int nOrgDam;
@@ -113,6 +110,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                     nDamage = nDamage + (nDamage/2);
                 }
+
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
 
                 //Check that a reflex save was made.
                 if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DIVINE, OBJECT_SELF, 1.0) == 0)

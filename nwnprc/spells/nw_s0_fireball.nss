@@ -52,7 +52,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 
     int nCasterLvl = CasterLvl;
@@ -98,7 +97,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                        nDamage = nDamage + nDamage / 2;
                     }
                     //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                    nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
+                    nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_FIRE);
                     //Set the damage effect
                     eDam = EffectDamage(nDamage, EleDmg);
                     if(nDamage > 0)

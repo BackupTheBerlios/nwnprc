@@ -25,8 +25,10 @@ void main()
     int nDamage;
     object oTarget;
     float fDelay;
+        //Capture the first target object in the shape.
+    oTarget = GetEnteringObject();
     int nDC = GetEpicSpellSaveDC(oCaster) +// Boneshank - added.
-		GetChangesToSaveDC(oCaster) +
+		GetChangesToSaveDC(oTarget,oCaster) +
         GetDCSchoolFocusAdjustment(oCaster, LEECH_F_S);
 
     //Declare and assign personal impact visual effect.
@@ -38,8 +40,7 @@ void main()
     //Declare major variables
 
 
-    //Capture the first target object in the shape.
-    oTarget = GetEnteringObject();
+
     //Declare the spell shape, size and the location.
     if( spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster) )
     {

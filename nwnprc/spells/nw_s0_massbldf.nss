@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
 
     int nDuration = CasterLvl;
     effect eBlind =  EffectBlindness();
@@ -78,6 +78,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
             //Make SR check
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Make Fort save
                 if (!/*Fort Save*/ MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ nDC)))
                 {

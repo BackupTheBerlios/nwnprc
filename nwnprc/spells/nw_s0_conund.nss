@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
            {
                 //Make a Will save
-                if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(OBJECT_SELF)), SAVING_THROW_TYPE_NONE, OBJECT_SELF, 1.0))
+                if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NONE, OBJECT_SELF, 1.0))
                 {
                     //Apply VFX impact and Link effect
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

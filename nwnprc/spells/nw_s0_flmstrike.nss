@@ -54,7 +54,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 
   int nCasterLvl = CasterLvl;
@@ -86,6 +86,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
            //Make SR check, and appropriate saving throw(s).
            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, 0.6))
            {
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 nDamage =  d6(nCasterLvl);
                 if (nMetaMagic == METAMAGIC_MAXIMIZE)
                 {

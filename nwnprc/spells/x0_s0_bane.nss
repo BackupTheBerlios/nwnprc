@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     int nDuration = CasterLvl;
     int nCasterLvl = CasterLvl + SPGetPenetr();
-    int nSpellDC = (GetSpellSaveDC() + GetChangesToSaveDC(OBJECT_SELF)) ;
+    
     
     int nMetaMagic = GetMetaMagicFeat();
     float fDelay;
@@ -79,6 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
              if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl) )
              {
 
+                int nSpellDC = (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)) ;
                 /*Will Save*/
                 int nWillResult = WillSave(oTarget, nSpellDC, SAVING_THROW_TYPE_MIND_SPELLS);
                 // * Bane is a mind affecting spell BUT its affects are not classified

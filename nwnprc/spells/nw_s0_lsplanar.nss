@@ -75,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             if(nRacial == RACIAL_TYPE_OUTSIDER)
             {
                 //Make a will save
-                if(!WillSave(oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(OBJECT_SELF))))
+                if(!WillSave(oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
                 {
                     //Apply the linked effect
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration/2),TRUE,-1,CasterLvl);

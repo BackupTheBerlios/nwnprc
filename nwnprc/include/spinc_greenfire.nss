@@ -60,7 +60,7 @@ void DoGreenfire(int nDamageType, object oCaster, object oTarget)
 			int nDamage = SPGetMetaMagicDamage(nDamageType, 2, 6, 0, nBonus);
 			if (!HasHeartbeatFired())
 				nDamage = GetReflexAdjustedDamage(nDamage, oTarget, 
-					SPGetSpellSaveDC(oCaster), SAVING_THROW_TYPE_ACID);
+					SPGetSpellSaveDC(oTarget,oCaster), SAVING_THROW_TYPE_ACID);
 					
 			// If we really did damage apply it to the target.
 			if (nDamage > 0)

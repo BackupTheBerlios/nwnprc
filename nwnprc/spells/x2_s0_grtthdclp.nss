@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     // End of Spell Cast Hook
 
     int nDamage = 0;
-    int nDC = GetSpellSaveDC()  + GetChangesToSaveDC(OBJECT_SELF);
+    
     float fDelay;
     effect eExplode = EffectVisualEffect(VFX_FNF_MYSTICAL_EXPLOSION);
     effect eVis  = EffectVisualEffect(VFX_IMP_SONIC);
@@ -71,6 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
 
+            int nDC = GetSpellSaveDC()  + GetChangesToSaveDC(oTarget,OBJECT_SELF);
             if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
             {
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDeaf, oTarget, RoundsToSeconds(10)));

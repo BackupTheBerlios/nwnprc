@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     int nCasterLvl = CasterLvl;
     CasterLvl +=SPGetPenetr();
-    int nSpellDC = (GetSpellSaveDC() + GetChangesToSaveDC(OBJECT_SELF)) ;
+    
     
     int nMetaMagic = GetMetaMagicFeat();
     int nDamage;
@@ -78,6 +78,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
+                int nSpellDC = (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)) ;
                 //Roll damage for each target
                 nDamage = d8(nCasterLvl);
                 //Resolve metamagic

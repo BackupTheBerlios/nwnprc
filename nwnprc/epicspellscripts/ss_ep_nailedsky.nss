@@ -55,7 +55,7 @@ void main()
         if (GetCanCastSpell(OBJECT_SELF, NAILSKY_DC, NAILSKY_S, NAILSKY_XP))
         {
             //Declare major variables
-            int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+            int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
                 GetDCSchoolFocusAdjustment(OBJECT_SELF, NAILSKY_S);
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
             RunNailedToTheSky(oTarget, nSpellDC);

@@ -78,7 +78,7 @@ int BiowareHoldMonster (int nPenetr, int nCasterLvl, int nMeta, object oTarget, 
        if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
 	   {
             //Make Will save
-            if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC()))
+            if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF)))
             {
                 //Check for metamagic extend
 /*

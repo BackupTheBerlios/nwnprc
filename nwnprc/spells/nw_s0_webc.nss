@@ -28,7 +28,6 @@ DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
-    int nDC = GetChangesToSaveDC(GetAreaOfEffectCreator());
 
 
     //Declare major variables
@@ -54,6 +53,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
                 if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
                 {
+                    int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
+
                     //Make a Fortitude Save to avoid the effects of the entangle.
                     if(!/*Reflex Save*/ MySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + nDC)))
                     {

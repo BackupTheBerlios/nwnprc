@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eVis = EffectVisualEffect(VFX_IMP_PULSE_WIND);
     
     nCasterLvl += SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
     
    // effect eDam;
     //Get the spell target location as opposed to the spell target.
@@ -100,6 +100,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                             AssignCommand(oTarget, ActionCloseDoor(oTarget));
                     }
                 }
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl) && !/*Fort Save*/ MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC)))
                 {
 

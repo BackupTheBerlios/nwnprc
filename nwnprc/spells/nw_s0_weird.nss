@@ -52,7 +52,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
 
     int nCasterLvl =CasterLvl;
     int nMetaMagic = GetMetaMagicFeat();
@@ -78,6 +78,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                {
                     if(GetHitDice(oTarget) >= 4)
                     {
+                        int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                         //Make a Will save against mind-affecting
                         if(!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                         {

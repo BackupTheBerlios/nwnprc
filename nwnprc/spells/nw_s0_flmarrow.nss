@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
   
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 
     int nCasterLvl = CasterLvl;

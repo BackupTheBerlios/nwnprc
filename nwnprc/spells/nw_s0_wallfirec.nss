@@ -49,7 +49,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(GetAreaOfEffectCreator());
     
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(),CasterLvl);
-    int nDC = GetChangesToSaveDC(GetAreaOfEffectCreator());
     int EleDmg = ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_FIRE);
 
     oTarget = GetFirstInPersistentObject(OBJECT_SELF,OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
@@ -74,6 +73,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                      nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                 }
+                int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
+
                 nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_FIRE);
                 if(nDamage > 0)
                 {

@@ -51,8 +51,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUD_OF_BEWILDERMENT,OBJECT_SELF, GetSpellS
         return;
     }
 
-    int nDC = GetChangesToSaveDC(GetAreaOfEffectCreator());
-
+ 
     //Get the first object in the persistant area
     oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
@@ -66,6 +65,8 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUD_OF_BEWILDERMENT,OBJECT_SELF, GetSpellS
             {
                 if (!GetHasSpellEffect(SPELL_CLOUD_OF_BEWILDERMENT,oTarget))
                 {
+                       int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
+
                     //Make a Fort Save
                     if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_POISON))
                     {

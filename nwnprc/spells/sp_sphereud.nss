@@ -15,6 +15,6 @@ void main()
 		EffectSummonCreature("sp_sphereofud"), lTarget, fDuration);
 	
 	// Save the spell DC for the spell so the sphere can use it.
-	int nSaveDC = SPGetSpellSaveDC();
+	int nSaveDC = SPGetSpellSaveDC(OBJECT_SELF,OBJECT_SELF);
 	SetLocalInt(OBJECT_SELF, "SP_SPHEREOFUD_DC", nSaveDC);
 }

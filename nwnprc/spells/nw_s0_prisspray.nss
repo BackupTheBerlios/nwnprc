@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     object oTarget;
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+   
 
     int nMetaMagic = GetMetaMagicFeat();
     int nRandom;
@@ -72,6 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Make an SR check
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay) && (oTarget != OBJECT_SELF))
             {
+                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Blind the target if they are less than 9 HD
                 nHD = GetHitDice(oTarget);
                 if (nHD <= 8)

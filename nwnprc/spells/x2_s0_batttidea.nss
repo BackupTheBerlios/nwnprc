@@ -54,7 +54,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_BATTLETIDE,OBJECT_SELF, GetSpellSaveDC()));
         if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
             //Make a Fort Save
-            if(!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(GetAreaOfEffectCreator())), SAVING_THROW_TYPE_NEGATIVE))
+            if(!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_NEGATIVE))
             {
                fDelay = GetRandomDelay(0.75, 1.75);
                //Apply the VFX impact and linked effects

@@ -39,7 +39,7 @@ void main()
         //Declare major variables
         object oTarget = GetSpellTargetObject();
         object oOldSlave = GetLocalObject(OBJECT_SELF, "EnslavedCreature");
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, ENSLAVE_S) + GetChangesToSaveDC();
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, ENSLAVE_S) + GetChangesToSaveDC(oTarget,OBJECT_SELF);
         effect eDom = EffectCutsceneDominated();
         effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);

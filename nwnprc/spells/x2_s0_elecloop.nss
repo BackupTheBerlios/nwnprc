@@ -63,7 +63,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL);
 
     int nNumDice = CasterLvl/2;
@@ -117,6 +117,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
 
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 nPotential = MaximizeOrEmpower(6, nNumDice, nMetaMagic);
                 nDamage    = GetReflexAdjustedDamage(nPotential, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_ELECTRICITY);
 

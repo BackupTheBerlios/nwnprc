@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
 
     int nCasterLvl = CasterLvl;
     int nMetaMagic = GetMetaMagicFeat();
@@ -97,6 +97,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                     nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
                 }
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                
                 //Make a will save for half damage and negation of daze effect
                 if (MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_DIVINE, OBJECT_SELF, 0.5))
                 {

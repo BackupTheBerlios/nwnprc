@@ -64,7 +64,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
     
     CasterLvl +=SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_COLD);
 
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
@@ -84,6 +84,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Make SR check, and appropriate saving throw(s).
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay) && (oTarget != OBJECT_SELF))
                 {
+                    int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                     //Detemine damage
                     nDamage = d6(nCasterLevel);
                     //Enter Metamagic conditions

@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
     
     CasterLvl +=SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL);
 
     //Damage the initial target
@@ -96,6 +96,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //Make an SR Check
         if (!MyPRCResistSpell(OBJECT_SELF, oFirstTarget,CasterLvl))
         {
+           int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
             //Adjust damage via Reflex Save or Evasion or Improved Evasion
             nDamStrike = GetReflexAdjustedDamage(nDamage, oFirstTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_ELECTRICITY);
             //Set the damage effect for the first target
@@ -140,7 +141,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Do an SR check
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
-
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 nDamage = d6(nCasterLevel) ;
 
                 if (nMetaMagic == METAMAGIC_MAXIMIZE)

@@ -49,7 +49,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
     }
     
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
-    int nDC = GetChangesToSaveDC(GetAreaOfEffectCreator());
+   
 
     oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
@@ -61,6 +61,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
             {
                 if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
                 {
+                    int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
                     if(!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC) , SAVING_THROW_TYPE_MIND_SPELLS))
                     {
                        nRounds = MaximizeOrEmpower(6, 1, nMetaMagic);

@@ -33,8 +33,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ANARCHY_DC, ANARCHY_S, ANARCHY_XP))
     {
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
-        int nSaveDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, ANARCHY_S);
+        int nSaveDC = GetEpicSpellSaveDC(OBJECT_SELF)  + GetDCSchoolFocusAdjustment(OBJECT_SELF, ANARCHY_S);       
         float fDuration = RoundsToSeconds(20);
         effect eVis = EffectVisualEffect(VFX_FNF_HOWL_MIND );
         effect eConf = EffectConfused();
@@ -63,7 +62,8 @@ void main()
                         SPELL_CONFUSION));
                     if(!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay))
                     {
-                        if(!MySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC,
+
+                        if(!MySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF),
                             SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
                         {
                             DelayCommand(fDelay, SPApplyEffectToObject

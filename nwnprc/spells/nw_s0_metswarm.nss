@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     CasterLvl +=SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 
 
@@ -71,6 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Make SR check
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, 0.5))
                 {
+                      int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                       //Roll damage
                       nDamage = d6(20);
 

@@ -44,9 +44,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     CasterLvl +=SPGetPenetr();
 
-    //Determine correct save
-    int nSpellDC = (GetSpellSaveDC()+ GetChangesToSaveDC(OBJECT_SELF)) + 6;
-
     //Declare major variables
     object oMaster;
     effect eVis = EffectVisualEffect(VFX_IMP_UNSUMMON);
@@ -70,7 +67,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
              {
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DISMISSAL));
                  //Make SR and will save checks
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl) && !MySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC))
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl) && !MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)) + 6))
                 {
                      //Apply the VFX and delay the destruction of the summoned monster so
                      //that the script and VFX can play.

@@ -27,15 +27,14 @@ void main()
     {
         float fDelay;
         int nDuration = 20;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, MASSPEN_S);
+
         effect eExplode = EffectVisualEffect(VFX_FNF_MYSTICAL_EXPLOSION);
         effect eDuration = EffectVisualEffect(VFX_DUR_PIXIEDUST);
         effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
         effect ePolymorph = EffectPolymorph(POLYMORPH_TYPE_PENGUIN, TRUE);
         effect eLink = EffectLinkEffects(eDuration, ePolymorph);
         location lTarget = GetSpellTargetLocation();
-
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, MASSPEN_S);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eDuration,
             lTarget, 10.0);
@@ -57,8 +56,9 @@ void main()
                         GetCreatureSize(oTarget) == CREATURE_SIZE_SMALL ||
                         GetCreatureSize(oTarget) == CREATURE_SIZE_MEDIUM)
                     {
+
                         // Targets all get a Fortitude saving throw
-                        if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC,
+                        if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),
                             SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                         {
                             // Apply effects to the currently selected target.

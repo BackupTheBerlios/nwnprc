@@ -37,7 +37,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
 	// Adjust the damage type of necessary.
 	nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
 
-	int nSaveDC = SPGetSpellSaveDC();
+	
 	
 	//Declare major variables
 	int nDamage;
@@ -60,6 +60,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
 			//Make SR check, and appropriate saving throw(s).
 			if(!SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay) && (oTarget != OBJECT_SELF))
 			{
+			        int nSaveDC = SPGetSpellSaveDC(oTarget,OBJECT_SELF);
 				// Roll damage for each target
 				int nDamage = SPGetMetaMagicDamage(nDamageType, nCasterLvl, nDieSize, nBonusDam);
 				

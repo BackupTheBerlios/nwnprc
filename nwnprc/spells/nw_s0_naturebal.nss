@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     int nDuration = nCasterLevel/3;
     
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
 
     int nMetaMagic = GetMetaMagicFeat();
     float fDelay;
@@ -101,6 +101,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NATURES_BALANCE));
             if(!GetIsReactionTypeFriendly(oTarget))
             {
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Check for saving throw
                 if (!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC)))
                 {

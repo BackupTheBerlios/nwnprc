@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     int nCasterLvl = CasterLvl;
     CasterLvl +=SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL);
     
     int nMetaMagic = GetMetaMagicFeat();
@@ -82,6 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Roll damage for each target
                 nDamage = d6(nCasterLvl);
                 //Resolve metamagic

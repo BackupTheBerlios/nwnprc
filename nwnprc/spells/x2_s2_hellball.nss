@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_GENERAL);
     effect eVis2 = EffectVisualEffect(VFX_IMP_ACID_L);
     effect eVis3 = EffectVisualEffect(VFX_IMP_SONIC);
 
-    int nSpellDC = (GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(OBJECT_SELF));
+    
 
     // if this option has been enabled, the caster will take damage for casting
     // epic spells, as descripbed in the ELHB
@@ -98,7 +98,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_GENERAL);
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
 
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+         int nSpellDC = (GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF));
+         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
         fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20 + 0.5f;
            //Roll damage for each target

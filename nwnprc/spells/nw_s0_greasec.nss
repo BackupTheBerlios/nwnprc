@@ -29,7 +29,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     object oTarget;
     effect eFall = EffectKnockdown();
     float fDelay;
-    int nDC = GetChangesToSaveDC(GetAreaOfEffectCreator());
 
     //Get first target in spell area
     oTarget = GetFirstInPersistentObject();
@@ -39,6 +38,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         {
             if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
             {
+                int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
+
                 fDelay = GetRandomDelay(0.0, 2.0);
                 if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
                 {

@@ -31,11 +31,12 @@ void main()
     effect eVis = EffectVisualEffect( VFX_IMP_FLAME_S );
     float fDelay;
     // Boneshank - Added in the nDC formula.
+    oTarget = GetEnteringObject();
     int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +
-		GetChangesToSaveDC(GetAreaOfEffectCreator()) +
+		GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()) +
 		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
 
-    oTarget = GetEnteringObject();
+    
 
     //Declare the spell shape, size and the location.
     if( spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()) )

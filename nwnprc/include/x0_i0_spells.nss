@@ -453,7 +453,7 @@ void DoDirgeEffect(object oTarget,int nPenetr)
         {
 
             //Make a Fortitude Save to avoid the effects of the movement hit.
-            if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(GetAreaOfEffectCreator())), SAVING_THROW_ALL, GetAreaOfEffectCreator()))
+            if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_ALL, GetAreaOfEffectCreator()))
             {
                 //Apply damage and visuals
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
@@ -541,7 +541,7 @@ void DoSpikeGrowthEffect(object oTarget,int nPenetr)
            if (GetHasSpellEffect(453, oTarget) == FALSE)
            {
                 //Make a Reflex Save to avoid the effects of the movement hit.
-                if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(GetAreaOfEffectCreator())), SAVING_THROW_ALL, GetAreaOfEffectCreator(), fDelay))
+                if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_ALL, GetAreaOfEffectCreator(), fDelay))
                 {
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSpeed, oTarget, HoursToSeconds(24));
                 }
@@ -623,7 +623,7 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
             {
                 int nDamageTotal = nDamage + nExtraDamage;
                 // A succesful will save halves the damage
-                if(MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(OBJECT_SELF)), SAVING_THROW_ALL,OBJECT_SELF))
+                if(MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_ALL,OBJECT_SELF))
                 {
                     nDamageTotal = nDamageTotal / 2;
                 }
@@ -1105,7 +1105,7 @@ void spellsGenericAreaOfEffect(
     float fDelay = 0.0;
 
     int nPenetr = PRCGetCasterLevel(oCaster);
-    int nDC = GetChangesToSaveDC(oCaster);
+    
 
     //Get the first target in the radius around the caster
     if (bPersistentObject == TRUE)
@@ -1127,6 +1127,7 @@ void spellsGenericAreaOfEffect(
             }
           if(!nResistSpellSuccess)
           {
+                int nDC = GetChangesToSaveDC(oTarget,oCaster);
                 int nSavingThrowSuccess = FALSE;
                 // * actually roll saving throw if told to
                 if (nSavingThrowType != SAVING_THROW_NONE)
@@ -1346,7 +1347,7 @@ void spellsStinkingCloud(object oTarget = OBJECT_INVALID)
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
                 //Make a Fort Save
-                if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(GetAreaOfEffectCreator())), SAVING_THROW_TYPE_POISON))
+                if(!MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_POISON))
                 {
                    float fDelay = GetRandomDelay(0.75, 1.75);
                    //Apply the VFX impact and linked effects

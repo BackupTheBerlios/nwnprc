@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             // Make Fortitude save to negate
-            if (!/*Fort Save*/ MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(OBJECT_SELF))))
+            if (!/*Fort Save*/ MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
             {
                 //Metamagic check for duration
                 if (nMetaMagic == METAMAGIC_EXTEND)

@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int nPenetr = CasterLvl + SPGetPenetr();
     
     location lLoc = GetSpellTargetLocation();
-    int nDC = (GetSpellSaveDC() + GetChangesToSaveDC(OBJECT_SELF));
+    
     //Apply the FNF to the spell location
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eFNF, lLoc);
     //Get the first target in the spell area
@@ -75,6 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Make a SR check
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
+                int nDC = (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF));
                 //Roll damage
                 nDamage = d8();
                 //Make a Will roll to avoid being stunned

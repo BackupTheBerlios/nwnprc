@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
                 //Make Will Save
-                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, ((GetSpellSaveDC()+ GetChangesToSaveDC(OBJECT_SELF))+4)))
+                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, ((GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))+4)))
                 {
                     //Check metamagic extend
                     if (nMeta == METAMAGIC_EXTEND)

@@ -125,7 +125,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             // Save the current save DC on the character because
             // GetSpellSaveDC won't work when delayed
             //----------------------------------------------------------
-            SetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpellID), (GetSpellSaveDC() + GetChangesToSaveDC(OBJECT_SELF)));
+            SetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpellID), (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)));
             object oSelf = OBJECT_SELF;
             RunHandImpact(oTarget,OBJECT_SELF,CasterLvl);
 

@@ -55,7 +55,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_GLYPH_OF_WARDING,OBJECT_SELF, GetSpellSaveDC
     object oCreator = GetLocalObject(OBJECT_SELF,"X2_PLC_GLYPH_CASTER") ;
 
     int nPenetr = SPGetPenetrAOE(oCreator,nCasterLevel);
-    int nDC = GetChangesToSaveDC(oCreator);
+    
 
 
     if ( GetLocalInt (OBJECT_SELF,"X2_PLC_GLYPH_PLAYERCREATED") == 0 )
@@ -93,6 +93,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_GLYPH_OF_WARDING,OBJECT_SELF, GetSpellSaveDC
                 //Make SR check
                 if (!MyPRCResistSpell(oCreator, oTarget,nPenetr))
                 {
+                    int nDC = GetChangesToSaveDC(oTarget,oCreator);
                     nDamage = d8(nDice);
                     //Enter Metamagic conditions
 

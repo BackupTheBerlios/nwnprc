@@ -29,7 +29,7 @@ void DoUndeadToDeath(object oCreature,int CasterLvl)
     SignalEvent(oCreature, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
     SetLocalInt(oCreature,"X2_EBLIGHT_I_AM_DEAD", TRUE);
 
-    if (!MySavingThrow(SAVING_THROW_WILL,oCreature,(GetSpellSaveDC() + GetChangesToSaveDC(OBJECT_SELF)),SAVING_THROW_TYPE_NONE,OBJECT_SELF))
+    if (!MySavingThrow(SAVING_THROW_WILL,oCreature,(GetSpellSaveDC() + GetChangesToSaveDC(oCreature,OBJECT_SELF)),SAVING_THROW_TYPE_NONE,OBJECT_SELF))
     {
        float fDelay = GetRandomDelay(0.2f,0.4f);
        if (!MyPRCResistSpell(OBJECT_SELF, oCreature,CasterLvl, fDelay))

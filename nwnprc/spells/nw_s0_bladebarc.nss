@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
 
     int nPenetr = SPGetPenetrAOE(aoeCreator,CasterLvl);
-    int nDC = GetChangesToSaveDC(aoeCreator);
+    
 
     //--------------------------------------------------------------------------
     // GZ 2003-Oct-15
@@ -71,6 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Make SR Check
             if (!MyPRCResistSpell(aoeCreator, oTarget,CasterLvl) )
             {
+                int nDC = GetChangesToSaveDC(oTarget,aoeCreator);
                 //Roll Damage
                 int nDamage = d6(nLevel);
                 //Enter Metamagic conditions

@@ -46,7 +46,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 	else
 		ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(nBurstEffect), lTarget);
 	
-	int nSaveDC = SPGetSpellSaveDC();
+	
 	
 	effect eVis = EffectVisualEffect(nVictimEffect);
 	effect eDamage;
@@ -68,6 +68,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 				fDelay = GetSpellEffectDelay(lTarget, oTarget);
 				if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
 				{
+				        int nSaveDC = SPGetSpellSaveDC(oTarget,OBJECT_SELF);
 					// Roll damage for each target
 					int nDam = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
 						

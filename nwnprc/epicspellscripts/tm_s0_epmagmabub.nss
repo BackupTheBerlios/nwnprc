@@ -168,9 +168,10 @@ void main()
     effect eDam;
     object oTarget;
     float fDelay;
+    oTarget = GetFirstInPersistentObject
+        ( OBJECT_SELF,OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE );
     // Boneshank - Added in the nDC formula.
     int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +
-	      GetChangesToSaveDC(GetAreaOfEffectCreator()) +
 	      GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(),  "V");
     //Declare and assign personal impact visual effect.
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
@@ -182,8 +183,7 @@ void main()
         return;
     }
 
-    oTarget = GetFirstInPersistentObject
-        ( OBJECT_SELF,OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE );
+
     //Declare the spell shape, size and the location.
     while( GetIsObjectValid(oTarget) )
     {
@@ -195,7 +195,7 @@ void main()
 
             //Adjust damage for Fort Save:  How does one avoid lava and not leave the area?
             // Flying, I guess:  To bad NWN doesn't have a "Z" Axis. :D
-            if( !MySavingThrow(SAVING_THROW_FORT, oTarget, nDC, // B- ch to nDC
+            if( !MySavingThrow(SAVING_THROW_FORT, oTarget, nDC + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()) , // B- ch to nDC
                     SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator()) )
             {
                 // Apply effects to the currently selected target.
@@ -223,7 +223,7 @@ void main()
                 if( nCounterIncrease >= 5 )
                     DoPetrification(GetTotalCastingLevel
                         (GetAreaOfEffectCreator()), OBJECT_SELF, oTarget,
-                        GetSpellId(), nDC );  // Boneshank - changed to nDC
+                        GetSpellId(), nDC + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()) );  // Boneshank - changed to nDC
             }
         }
         //Select the next target within the spell shape.

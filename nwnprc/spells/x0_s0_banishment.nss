@@ -58,7 +58,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int nPool = 2 * CasterLvl;
     CasterLvl +=SPGetPenetr();
 
-    nSpellDC = (GetSpellSaveDC() + GetChangesToSaveDC(OBJECT_SELF)) ;// + 6;
                    
     while(GetIsObjectValid(oTarget))
     {
@@ -95,9 +94,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
                     // * Must be enough points in the pool to destroy target
                     if (nPool >= GetHitDice(oTarget))
-                    // * Make SR and will save checks
-                    if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl) && !MySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC))
                     {
+                          nSpellDC = (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)) ;// + 6;
+
+                     // * Make SR and will save checks
+                     if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl) && !MySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC))
+                     {
                          //Apply the VFX and delay the destruction of the summoned monster so
                          //that the script and VFX can play.
 
@@ -107,6 +109,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
                          {
                             DestroyObject(oTarget, 0.3);
                          }
+                     }
                     }
                 } // rep check
             }

@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(aoeCreator);
 
     int nPenetr = SPGetPenetrAOE(aoeCreator,CasterLvl);
-    int nDC = GetChangesToSaveDC(aoeCreator);
+    
     int EleDmg = ChangedElementalDamage(aoeCreator, DAMAGE_TYPE_FIRE);
 
 
@@ -77,6 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                      nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                 }
+                int nDC = GetChangesToSaveDC(oTarget,aoeCreator);
                 //Adjust damage for Reflex Save, Evasion and Improved Evasion
                 nDamage = GetReflexAdjustedDamage(nDamage, oTarget, GetSpellSaveDC()+nDC,SAVING_THROW_TYPE_FIRE, aoeCreator);
                 // Apply effects to the currently selected target.

@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     object oTarget;
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
 
     int nLevel = CasterLvl;
     effect eAttack = EffectAttackIncrease(2);
@@ -87,6 +87,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && oTarget != OBJECT_SELF)
         {
+           int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WAR_CRY));
            //Make SR and Will saves
            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr)  && !MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_FEAR))

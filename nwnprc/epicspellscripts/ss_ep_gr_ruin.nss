@@ -43,7 +43,7 @@ void main()
         float fDelay = fDist/(3.0 * log(fDist) + 2.0);
 
         int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, GR_RUIN_S)
-			+ GetChangesToSaveDC();
+			+ GetChangesToSaveDC(oTarget,OBJECT_SELF);
 
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));

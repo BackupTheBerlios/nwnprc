@@ -158,31 +158,32 @@ ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
 
 // Shadow Weave Feat
 // DC +1 (school Ench,Illu,Necro)
-int ShadowWeaveDC(object oCaster , int nID )
+int ShadowWeaveDC(object oCaster ,object oTarget, int nID )
 {
    int nDC;
-
-   if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0;
-   if (!GetLocalInt(oCaster, "PatronShar")) return 0 ;
+   int iClass = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oTarget)/3;
+   
+   //if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0-iClass;
+   if (!GetLocalInt(oCaster, "PatronShar")) return -iClass ;
    
    int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
    if ( nSchool == SPELL_SCHOOL_ENCHANTMENT || nSchool == SPELL_SCHOOL_NECROMANCY || nSchool == SPELL_SCHOOL_ILLUSION)
-      nDC = 1+GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;
+      nDC = 1-iClass;
    else if( nID== SPELL_DARKNESS || nID == SPELLABILITY_AS_DARKNESS  || nID == SPELL_SHADOW_CONJURATION_DARKNESS || nID == 688 || nID ==SHADOWLORD_DARKNESS)
-      nDC = 1+GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;
+      nDC = 1-iClass;
 
    return  nDC;
 
 }
 
-int GetChangesToSaveDC(object oCaster = OBJECT_SELF)
+int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/)
 {
     int spell_id = GetSpellId();
     int nDC = ElementalSavantDC(spell_id, oCaster);
     nDC += GetHierophantSLAAdjustment(spell_id, oCaster);
     nDC += GetHeartWarderDC(spell_id, oCaster);
     nDC += GetSpellPowerBonus(oCaster);
-    nDC += ShadowWeaveDC(oCaster,spell_id);
+    nDC += ShadowWeaveDC(oCaster,oTarget,spell_id);
 
 	return nDC;
 }

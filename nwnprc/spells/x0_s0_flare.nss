@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
         //Make SR Check
-        if ((!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel)) &&  (MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(OBJECT_SELF))) == FALSE) )
+        if ((!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel)) &&  (MySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF))) == FALSE) )
         {
             //Set damage effect
             effect eBad = EffectAttackDecrease(1);

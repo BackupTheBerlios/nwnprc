@@ -23,7 +23,7 @@ void main()
     effect eLink = EffectLinkEffects(eFear, eMind);
     eLink = EffectLinkEffects(eLink, eDur);
     object oTarget;
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
     int CasterLvl = 10+ SPGetPenetr();
 
     //Apply Impact
@@ -40,6 +40,7 @@ void main()
             //Make SR Check
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Make a will save
                 if(!MySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FEAR, OBJECT_SELF, fDelay))
                 {

@@ -61,7 +61,7 @@ void DoTransposition(int bAllowHostile)
 		{
 			// Targets outside the party get a will save and SR to resist.
 			if (bParty || 
-				(!SPResistSpell(OBJECT_SELF, oTarget) && !MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC())))
+				(!SPResistSpell(OBJECT_SELF, oTarget) && !MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF))))
 			{
 				//Fire cast spell at event for the specified target
 				SPRaiseSpellCastAt(oTarget, !bParty);

@@ -23,14 +23,14 @@ void main()
 
     ActionDoCommand(SetAllAoEInts(4054, OBJECT_SELF, GetSpellSaveDC() ) );
 
-    object oTarget;
+    object oTarget = GetEnteringObject();
     object oCreator = GetAreaOfEffectCreator();
-    int nDC = GetEpicSpellSaveDC(oCreator) + GetChangesToSaveDC(oCreator) + GetDCSchoolFocusAdjustment(oCreator, RAINFIR_S);
+    int nDC = GetEpicSpellSaveDC(oCreator) + GetChangesToSaveDC(oTarget,oCreator) + GetDCSchoolFocusAdjustment(oCreator, RAINFIR_S);
     int nDamage;
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
     float fDelay;
-    oTarget = GetEnteringObject();
+    
     if (oTarget != oCreator &&
         !GetIsDM(oTarget))
     {

@@ -31,8 +31,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ALLHOPE_DC, ALLHOPE_S, ALLHOPE_XP))
     {
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
-        int nSaveDC = GetEpicSpellSaveDC(OBJECT_SELF) + 10 + GetChangesToSaveDC() +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, ALLHOPE_S);
+        int nSaveDC = GetEpicSpellSaveDC(OBJECT_SELF) + 10 + GetDCSchoolFocusAdjustment(OBJECT_SELF, ALLHOPE_S);        
         float fDuration = RoundsToSeconds(20);
         effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);
         effect eFear = EffectFrightened();
@@ -56,7 +55,8 @@ void main()
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FEAR));
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay))
                 {
-                    if(!MySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC,
+ 
+                    if(!MySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),
                         SAVING_THROW_TYPE_FEAR, OBJECT_SELF, fDelay))
                     {
                         if (GetIsCreatureDisarmable(oTarget))

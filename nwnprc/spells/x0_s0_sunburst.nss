@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     //Declare major variables
     object oCaster = OBJECT_SELF;
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+
 
     int nCasterLvl = CasterLvl;
     int nMetaMagic = GetMetaMagicFeat();
@@ -102,7 +102,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                     nDamage = MaximizeOrEmpower(6, 6, nMetaMagic);
                }
-
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                    
                 // * if a vampire then destroy it
                 if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_VAMPIRE_MALE || GetAppearanceType(oTarget) == APPEARANCE_TYPE_VAMPIRE_FEMALE || GetStringLowerCase(GetSubRace(oTarget)) == "vampire" )
                 {
@@ -122,7 +123,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
                 if (bDoNotDoDamage == FALSE)
                     //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                    nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(OBJECT_SELF)), SAVING_THROW_TYPE_SPELL);
+                    nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_SPELL);
 
                 // * Do damage
                 if ((nDamage > 0) && (bDoNotDoDamage == FALSE))
@@ -138,7 +139,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     if (MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                     {
                         // * if reflex saving throw fails no blindness
-                        if (!ReflexSave(oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(OBJECT_SELF)), SAVING_THROW_TYPE_SPELL))
+                        if (!ReflexSave(oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_SPELL))
                         {
                             effect eBlindness = EffectBlindness();
                             SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlindness, oTarget,0.0f,TRUE,-1,CasterLvl);

@@ -48,7 +48,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
     int nCnt = 1;
     int fKnockdownTarget = FALSE;
     
-    int nSaveDC = SPGetSpellSaveDC();
+    
     
     oTarget2 = GetNearestObject(OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, OBJECT_SELF, nCnt);
     while(GetIsObjectValid(oTarget2) && GetDistanceToObject(oTarget2) <= 30.0)
@@ -71,6 +71,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
                    //Make an SR check
                    if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
         	       {
+        	          int nSaveDC = SPGetSpellSaveDC(oTarget,OBJECT_SELF);
 						// Roll damage for each target
 						int nDamage = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
 						

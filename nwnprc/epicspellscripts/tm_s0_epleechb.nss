@@ -26,8 +26,11 @@ void main()
     int nDamage;
     float fDelay;
     int nDC = GetEpicSpellSaveDC(oCaster) +// Boneshank - added.
-		GetChangesToSaveDC(oCaster) +
-        GetDCSchoolFocusAdjustment(oCaster, LEECH_F_S);
+              GetDCSchoolFocusAdjustment(oCaster, LEECH_F_S);
+            
+    //Capture the first target object in the shape.
+    oTarget = GetFirstInPersistentObject();
+
 
     // If oCaster is not valid
     if( !GetIsObjectValid(oCaster) )
@@ -44,8 +47,6 @@ void main()
     effect eDam, eHeal;
 
 
-    //Capture the first target object in the shape.
-    oTarget = GetFirstInPersistentObject();
 
     while( GetIsObjectValid(oTarget) )
     {
@@ -75,11 +76,13 @@ void main()
             {
                 if( !MyPRCResistSpell(oCaster, oTarget, 0, fDelay) )
                 {
+                        
+
                     // Debug message.
                     SendMessageToPC(oCaster, "Not resisted.");
                     nDamage = d6(4);
                     //Adjust damage for Save
-                    if( MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, //B-chngd to nDC
+                    if( MySavingThrow(SAVING_THROW_WILL, oTarget, nDC+GetChangesToSaveDC(oTarget,oCaster) , //B-chngd to nDC
                         SAVING_THROW_TYPE_NEGATIVE, oCaster, fDelay) )
                     {
                         nDamage /= 2;

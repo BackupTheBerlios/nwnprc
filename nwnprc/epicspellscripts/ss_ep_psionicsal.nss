@@ -27,7 +27,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, PSION_S_DC, PSION_S_S, PSION_S_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
             GetDCSchoolFocusAdjustment(OBJECT_SELF, PSION_S_S);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget,

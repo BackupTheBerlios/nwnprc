@@ -35,9 +35,9 @@ void main()
         effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
         effect eVis2 = EffectVisualEffect(VFX_IMP_ACID_L);
         effect eVis3 = EffectVisualEffect(VFX_IMP_SONIC);
+        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, HELBALL_S);
 
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, HELBALL_S) + GetChangesToSaveDC();
-
+ 
         // if this option has been enabled, the caster will take damage for casting
         // epic spells, as descripbed in the ELHB
         if (BACKLASH_DAMAGE == TRUE)
@@ -74,8 +74,9 @@ void main()
                 nDamage2 = d6(10);
                 nDamage3 = d6(10);
                 nDamage4 = d6(10);
+
                 // no we don't care about evasion. there is no evasion to hellball
-                if (MySavingThrow(SAVING_THROW_REFLEX,oTarget,nSpellDC,SAVING_THROW_TYPE_SPELL,OBJECT_SELF,fDelay) >0)
+                if (MySavingThrow(SAVING_THROW_REFLEX,oTarget,nSpellDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),SAVING_THROW_TYPE_SPELL,OBJECT_SELF,fDelay) >0)
                 {
                     nDamage1 /=2;
                     nDamage2 /=2;

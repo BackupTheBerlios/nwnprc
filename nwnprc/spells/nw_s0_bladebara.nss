@@ -64,7 +64,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //Make SR Check
         if (!MyPRCResistSpell(aoeCreator, oTarget,nPenetr) )
         {
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(aoeCreator))))
+            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,aoeCreator))))
             {
                 nDamage = d6();
             }

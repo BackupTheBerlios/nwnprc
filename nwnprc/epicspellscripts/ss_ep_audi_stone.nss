@@ -25,8 +25,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, A_STONE_DC, A_STONE_S, A_STONE_XP))
     {
         float fDelay;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC() +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, A_STONE_S);
+        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, A_STONE_S);
         effect eExplode = EffectVisualEffect(VFX_FNF_NATURES_BALANCE);
         effect eVis = EffectVisualEffect(VFX_COM_CHUNK_STONE_MEDIUM);
         effect eStone = EffectPetrify();
@@ -47,7 +46,8 @@ void main()
                 fDelay = GetRandomDelay(1.5, 2.5);
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay))
                 {
-                    if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC,
+
+                    if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),
                         SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                     {
                         DelayCommand(fDelay, SPApplyEffectToObject

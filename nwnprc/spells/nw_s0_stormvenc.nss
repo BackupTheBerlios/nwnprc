@@ -45,7 +45,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(),CasterLvl);
     
 
-    int nDC = GetChangesToSaveDC(GetAreaOfEffectCreator());
 
     //Get first target in spell area
     object oTarget = GetFirstInPersistentObject(OBJECT_SELF,OBJECT_TYPE_CREATURE);
@@ -59,6 +58,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             fDelay = GetRandomDelay(0.5, 2.0);
             if(MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay) == 0)
             {
+                int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
+
                 //Make a saving throw check
                 // * if the saving throw is made they still suffer acid damage.
                 // * if they fail the saving throw, they suffer Electrical damage too

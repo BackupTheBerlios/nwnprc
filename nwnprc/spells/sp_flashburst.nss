@@ -36,7 +36,7 @@ void main()
 	        
 			// Let the creature make a will save, if it fails it's blinded.
 			if (!SPResistSpell(OBJECT_SELF, oTarget) &&
-				!MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC()))
+				!MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF)))
 			{
 				// Determine the spell's duration, the duration can be empower,
 				// maximized, or extended (since it's variable, empower/maximize

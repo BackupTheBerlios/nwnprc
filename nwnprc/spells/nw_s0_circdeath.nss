@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     
     CasterLvl +=SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
 
     while ((nHD > 0) && (bContinueLoop))
     {
@@ -125,6 +125,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             fDelay = GetRandomDelay();
             if(!MyPRCResistSpell(OBJECT_SELF, oLowest,CasterLvl, fDelay))
             {
+                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 //Make a Fort Save versus death effects
                 if(!MySavingThrow(SAVING_THROW_FORT, oLowest, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                 {

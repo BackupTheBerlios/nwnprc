@@ -19,7 +19,7 @@ void main()
 		{
 			// Fort save or die, if the fort save is successful will save or dazed for
 			// 1d4 rounds.
-			if (!MySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(), SAVING_THROW_TYPE_SPELL))
+			if (!MySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
 			{
 				DeathlessFrenzyCheck(oTarget);
 				
@@ -28,7 +28,7 @@ void main()
 				eDead = EffectLinkEffects(eDead, EffectVisualEffect(VFX_IMP_DEATH));
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDead, oTarget);
 			}
-			else if (!MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(), SAVING_THROW_TYPE_SPELL))
+			else if (!MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
 			{
 				// Apply metamagic to the 1d4 rounds duration.
 				int nRounds = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 4);

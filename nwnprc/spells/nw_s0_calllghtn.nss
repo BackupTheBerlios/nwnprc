@@ -61,7 +61,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
     
     CasterLvl +=SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL);
     
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
@@ -89,7 +88,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                    nDamage = nDamage + nDamage / 2;
                 }
                 //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_ELECTRICITY);
+                nDamage = GetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_ELECTRICITY);
                 //Set the damage effect
                 eDam = EffectDamage(nDamage, EleDmg);
                 if(nDamage > 0)

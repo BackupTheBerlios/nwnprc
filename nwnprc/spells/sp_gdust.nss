@@ -55,7 +55,7 @@ void main()
             }
             
             // Let the creature make a will save, if it fails it's blinded.
-			if (!MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC()))
+			if (!MySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF)))
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBlindness, oTarget, fDuration,TRUE,-1,nCasterLvl
 );
         }

@@ -43,7 +43,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_VINE_MINE_ENTANGLE,OBJECT_SELF, GetSpellSave
     }
 
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
-    int nDC = GetChangesToSaveDC(GetAreaOfEffectCreator());
+    
 
     object oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
@@ -59,6 +59,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_VINE_MINE_ENTANGLE,OBJECT_SELF, GetSpellSave
                 {
                     if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
                     {
+                        int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
                         //Make reflex save
                         int n =   MySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + nDC),SAVING_THROW_TYPE_NONE,GetAreaOfEffectCreator() );
                         if(n == 0)

@@ -23,12 +23,14 @@ void main()
     effect eVis = EffectVisualEffect( VFX_IMP_DEATH );
 //    effect eVis = EffectVisualEffect( VFX_COM_CHUNK_RED_MEDIUM ); // Alternative Death VFX
     float fDelay;
-    int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + // Boneshank - added.
-		GetChangesToSaveDC(GetAreaOfEffectCreator()) +
-        GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), TOLO_KW_S);
-
+    
     //Get the first object entering the area
     object oTarget = GetEnteringObject();
+    
+    int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + // Boneshank - added.
+		GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()) +
+        GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), TOLO_KW_S);
+
 
     if( spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE,
         GetAreaOfEffectCreator()) )

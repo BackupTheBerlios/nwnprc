@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
     
     CasterLvl +=SPGetPenetr();
-    int nDC = GetChangesToSaveDC(OBJECT_SELF);
+    
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 
     effect eDam;
@@ -84,6 +84,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     //Make SR check
                     if (!MyPRCResistSpell(oCaster, oTarget,CasterLvl))
                     {
+                        int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                         nDamage = d6(nCasterLevel);
                         //Enter Metamagic conditions
                         if (nMetaMagic == METAMAGIC_MAXIMIZE)

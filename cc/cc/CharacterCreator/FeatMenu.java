@@ -546,7 +546,7 @@ public class FeatMenu extends javax.swing.JFrame implements ActionListener {
         CancelButton = new javax.swing.JButton();
 
         getContentPane().setLayout(new java.awt.GridBagLayout());
-
+	   setTitle("Feat Menu"); 
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {

@@ -542,7 +542,8 @@ public class SkillMenu extends javax.swing.JFrame {
         jPanel14 = new javax.swing.JPanel();
         
         getContentPane().setLayout(new java.awt.GridBagLayout());
-        
+
+	   setTitle("Skill Menu"); 
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {

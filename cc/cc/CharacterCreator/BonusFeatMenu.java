@@ -419,23 +419,16 @@ public class BonusFeatMenu extends javax.swing.JFrame implements ActionListener 
         //Spellcaster = false
         menucreate.MainCharData[14] = new HashMap();
         //Animal companion
-        if(featlist.contains(featmap[199]) && !featlist.contains(featmap[303])) {
+		boolean companion = menucreate.MainCharData[9].containsValue(new Integer(199));
+		boolean familiar = menucreate.MainCharData[9].containsValue(new Integer(303));
+        if(companion) {	// This will eventually handle the familar case as well
             (new CompanionMenu()).show();
             setVisible(false);
             dispose();
             return;
         }
-        //Familiar
-        if(featlist.contains(featmap[303]) && !featlist.contains(featmap[199])) {
+		else if(familiar) {
             (new FamiliarMenu()).show();
-            setVisible(false);
-            dispose();
-            return;
-        }
-        //BOTH
-        if(featlist.contains(featmap[303]) && featlist.contains(featmap[199])) {
-            //Companion first
-            (new CompanionMenu()).show();
             setVisible(false);
             dispose();
             return;

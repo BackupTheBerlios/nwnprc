@@ -842,10 +842,10 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
             else if(GetHasFeat(FEAT_HARD_ELEC, oTarget))
                 nDC -= 2;
         }
-        else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
-        {   nDC -= 3;  }
         else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_4, oTarget) )
         {   nDC -= 4;  }
+        else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
+        {   nDC -= 3;  }
         else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
         {   nDC -= 1+(GetHitDice(oTarget)/5);  }
 

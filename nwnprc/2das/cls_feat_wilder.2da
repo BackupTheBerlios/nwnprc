@@ -16,9 +16,9 @@
 12    FEAT_PSIONWILD_MNDTHRST          3567        2      1                1        
 13    FEAT_PSIONWILD_CALL_TO_MIND      3577        2      1                1        
 14    FEAT_PSIONWILD_CRYSTAL_SHARD     3578        2      1                1        
-15    FEAT_PSIONWILD_BESTOW_POWER      3575        2      3                1        
-16    FEAT_ALL_BODY_ADJUSTMENT         3580        2      5                1        
-17    FEAT_ALL_BLACK_DRAGON_BREATH     3576        2      11               1        
+15    FEAT_PSIONWILD_BESTOW_POWER      3575        2      4                1        
+16    FEAT_ALL_BODY_ADJUSTMENT         3580        2      6                1        
+17    FEAT_ALL_BLACK_DRAGON_BREATH     3576        2      12               1        
 18    ****                             ****        ****   ****             ****     
 19    "**normal_feats**"               ****        ****   ****             ****     
 20    ArmProfLight                     3           3      1                0        

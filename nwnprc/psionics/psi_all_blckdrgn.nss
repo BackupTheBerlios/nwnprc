@@ -62,15 +62,14 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	//Cycle through the targets within the spell shape until an invalid object is captured.
     	while(GetIsObjectValid(oTarget))
     	{
-    	    if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
-    	    {
-    	        //Fire cast spell at event for the specified target
+
+	        //Fire cast spell at event for the specified target
     	        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
     	        //Get the distance between the target and caster to delay the application of effects
     	        fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20.0;
     	        //Make SR check, and appropriate saving throw(s).
-    	        if(!PRCMyResistPower(OBJECT_SELF, oTarget,nCaster, fDelay) && (oTarget != OBJECT_SELF))
-    	        {
+    	        if(PRCMyResistPower(OBJECT_SELF, oTarget,nCaster, fDelay) && (oTarget != OBJECT_SELF))
+    	        {    	     
     	            //Adjust damage according to Reflex Save, Evasion or Improved Evasion
     	            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_ACID);
 	
@@ -84,7 +83,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eAcid, oTarget));
     	            }
     	        }
-    	    }
     	    //Select the next target within the spell shape.
     	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 8.0, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     	}

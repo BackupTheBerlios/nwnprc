@@ -431,6 +431,14 @@ const int FEAT_SIGHT_OF_GRUUMSH  = 4604;
 const int FEAT_BLINDSIGHT_5_FT   = 4605;
 const int FEAT_BLINDSIGHT_10_FT  = 4606;
 
+// Orc Warlord
+const int FEAT_BLOOD_OF_THE_WARLORD = 4608;
+const int FEAT_OW_INSPIRE_COURAGE   = 4609;
+const int FEAT_FINAL_RAGE           = 4610;
+const int FEAT_RELEASE_HORDE        = 4611;
+const int FEAT_GATHER_HORDE_I       = 4612;
+const int FEAT_GATHER_HORDE_II      = 4613;
+
 // Tempest Feats
 const int FEAT_GREATER_TWO_WEAPON_FIGHTING = 4315;
 const int FEAT_SUPREME_TWO_WEAPON_FIGHTING = 4316;

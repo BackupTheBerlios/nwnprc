@@ -98,7 +98,7 @@ void main()
     if (GetHasFeat(FEAT_UR_VIPER_TOTEM,oPC)) ViperTotem(oSkin);
     if (bGrace>0) Grace(oPC,oSkin,bGrace);
     BonusFeat( oPC, oSkin);
-    if (GetHasFeat(FEAT_UR_CAMOUFLAGE,oPC)) SetCompositeBonus(oSkin, "URCamouf", 5, ITEM_PROPERTY_SKILL_BONUS,SKILL_HIDE);
+    //if (GetHasFeat(FEAT_UR_CAMOUFLAGE,oPC)) SetCompositeBonus(oSkin, "URCamouf", 5, ITEM_PROPERTY_SKILL_BONUS,SKILL_HIDE);
 
     
     object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);

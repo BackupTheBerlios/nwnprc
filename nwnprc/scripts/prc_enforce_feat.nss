@@ -393,9 +393,6 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
                    +     (GetHasFeat(FEAT_UR_FE_UNDEAD, oPC))
                    +     (GetHasFeat(FEAT_UR_FE_VERMIN, oPC));
 
-
-
-
           iAbi    +=     (GetHasFeat(FEAT_UR_SNEAKATK_3D6, oPC))
                    +     (GetHasFeat(FEAT_UR_ARMOREDGRACE, oPC))
                    +     (GetHasFeat(FEAT_UR_DODGE_FE, oPC))
@@ -405,9 +402,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
                    +     (GetHasFeat(FEAT_UR_VIPER_TOTEM, oPC))
                    +     (GetHasFeat(FEAT_UR_FAST_MOVEMENT, oPC))
                    +     (GetHasFeat(FEAT_UNCANNYX_DODGE_1, oPC))
-                   +     (GetHasFeat(FEAT_UR_HIPS, oPC))
-                   +     (GetHasFeat(FEAT_UR_CAMOUFLAGE, oPC));
-
+                   +     (GetHasFeat(FEAT_UR_HIPS, oPC));
 
                 if (iURanger>=11){
                    if ((iURanger-8)/3 != iAbi) Ability = 1;

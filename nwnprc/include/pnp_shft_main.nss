@@ -291,7 +291,8 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     }
     if (!GetIsObjectValid(oWeapCR))
 	{
-		DestroyObject(oWeapCRPC, 1.0);
+		RemoveAllItemProperties(oWeapCRPC);
+		DelayCommand(0.7,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R)));
 	}
 	else
 	{
@@ -306,12 +307,13 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 			// Make sure we start with a clean weapon
 			RemoveAllItemProperties(oWeapCRPC);
 			CopyAllItemProperties(oWeapCRPC,oWeapCR);
-		    DelayCommand(0.5,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R)));
+		    DelayCommand(0.7,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R)));
 		}
 	}
     if (!GetIsObjectValid(oWeapCL))
 	{
-		DestroyObject(oWeapCLPC, 1.0);
+		RemoveAllItemProperties(oWeapCLPC);
+		DelayCommand(0.9,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L)));
 	}
 	else
 	{
@@ -326,12 +328,13 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 			// Make sure we start with a clean weapon
 			RemoveAllItemProperties(oWeapCLPC);
 			CopyAllItemProperties(oWeapCLPC,oWeapCL);
-		    DelayCommand(0.5,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L)));
+		    DelayCommand(0.9,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L)));
 		}
 	}
     if (!GetIsObjectValid(oWeapCB))
 	{
-		DestroyObject(oWeapCBPC, 1.0);
+		RemoveAllItemProperties(oWeapCBPC);
+		DelayCommand(1.1,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B)));
 	}
 	else
 	{
@@ -346,7 +349,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 			// Make sure we start with a clean weapon
 			RemoveAllItemProperties(oWeapCBPC);
 			CopyAllItemProperties(oWeapCBPC,oWeapCB);
-			DelayCommand(0.5,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B)));
+			DelayCommand(1.1,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B)));
 		}
 	}
 
@@ -370,21 +373,43 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     int nDexDelta = nTDex - nPCDex;
     int nConDelta = nTCon - nPCCon;
 
+    int iRemainingSTR;
+    int iRemainingCON;
+    int iRemainingDEX;
+
 //    SendMessageToPC(oPC,"delta Str,dex,con" + IntToString(nStrDelta) + "," + IntToString(nDexDelta) + "," + IntToString(nConDelta));
 
     // Cap max to +12 til they can fix it and -10 for the low value
     if (nStrDelta > 12)
+    {
+		iRemainingSTR = nStrDelta - 12;
         nStrDelta = 12;
+	}
     if (nStrDelta < -10)
+    {
+		iRemainingSTR = nStrDelta + 10;
         nStrDelta = -10;
+	}
     if (nDexDelta > 12)
+    {
+		iRemainingDEX = nDexDelta - 12;
         nDexDelta = 12;
+	}
     if (nDexDelta < -10)
-        nDexDelta = -10;
+    {
+        iRemainingDEX = nDexDelta + 10;
+		nDexDelta = -10;
+	}
     if (nConDelta > 12)
+    {
+		iRemainingCON = nConDelta - 12;
         nConDelta = 12;
+	}
     if (nConDelta < -10)
+    {
+        iRemainingCON = nConDelta + 10;
         nConDelta = -10;
+	}
 
     // Big problem with <0 to abilities, if they have immunity to ability drain
     // the - to the ability wont do anything
@@ -403,6 +428,62 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     else
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDecreaseAbility(IP_CONST_ABILITY_CON,nConDelta*-1),oHidePC);
 
+	//add extra str bonuses to pc as attack bonues and damage bonus
+	int iExtSTRBon;
+	effect eAttackIncrease;
+	effect eDamageIncrease;
+	if (iRemainingSTR != 0)
+	{
+		int iDamageType = DAMAGE_TYPE_BLUDGEONING;
+		iExtSTRBon = FloatToInt(iRemainingSTR/2.0);
+
+		if (GetIsObjectValid(oWeapCRPC))
+		{
+			int iCR = GetBaseItemType(oWeapCRPC);
+			if ((iCR = BASE_ITEM_CSLASHWEAPON) || (iCR = BASE_ITEM_CSLSHPRCWEAP))
+				iDamageType = DAMAGE_TYPE_SLASHING;
+			else if (iCR = BASE_ITEM_CPIERCWEAPON)
+				iDamageType = DAMAGE_TYPE_PIERCING;
+		}
+		else if (GetIsObjectValid(oWeapCLPC))
+		{
+			int iCL = GetBaseItemType(oWeapCLPC);
+			if ((iCL = BASE_ITEM_CSLASHWEAPON) || (iCL = BASE_ITEM_CSLSHPRCWEAP))
+				iDamageType = DAMAGE_TYPE_SLASHING;
+			else if (iCL = BASE_ITEM_CPIERCWEAPON)
+				iDamageType = DAMAGE_TYPE_PIERCING;
+		}
+		else if (GetIsObjectValid(oWeapCBPC))
+		{
+			int iCB = GetBaseItemType(oWeapCBPC);
+			if ((iCB = BASE_ITEM_CSLASHWEAPON) || (iCB = BASE_ITEM_CSLSHPRCWEAP))
+				iDamageType = DAMAGE_TYPE_SLASHING;
+			else if (iCB = BASE_ITEM_CPIERCWEAPON)
+				iDamageType = DAMAGE_TYPE_PIERCING;
+		}
+
+		if (iRemainingSTR > 0)
+		{
+			eAttackIncrease = EffectAttackIncrease(iExtSTRBon, ATTACK_BONUS_MISC);
+			eDamageIncrease = EffectDamageIncrease(iExtSTRBon, iDamageType);
+		}
+		else if (iRemainingSTR < 0)
+		{
+			eAttackIncrease = EffectAttackDecrease(iExtSTRBon * -1, ATTACK_BONUS_MISC);
+			eDamageIncrease = EffectDamageDecrease(iExtSTRBon * -1, iDamageType);
+		}
+
+		ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eAttackIncrease),oPC);
+		ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eDamageIncrease),oPC);
+	}
+
+	//add extra con bonus as temp HP
+	if (iRemainingCON > 0)
+	{
+		int iExtCONBon = FloatToInt(iRemainingCON/2.0);
+		effect eTemporaryHitpoints = EffectTemporaryHitpoints(iExtCONBon * GetCharacterLevel(oPC));
+		ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eTemporaryHitpoints),oPC);
+	}
 
     // Apply the natural AC bonus to the hide
     // First get the AC from the target
@@ -421,6 +502,23 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
         effect eAC = EffectACIncrease(nTAC,AC_NATURAL_BONUS);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eAC),oPC);
     }
+
+	//add extra dex bonus as dodge ac
+	if (iRemainingDEX != 0)
+	{
+		int iExtDEXBon = FloatToInt(iRemainingDEX/2.0);
+		effect eACIncrease;
+		if (iRemainingDEX > 0)
+		{
+			eACIncrease = EffectACIncrease(iExtDEXBon);
+		}
+		else if (iRemainingDEX < 0)
+		{
+			eACIncrease = EffectACDecrease(iExtDEXBon * -1);
+		}
+
+		ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eACIncrease),oPC);
+	}
 
     // Apply any feats the target has to the hide as a bonus feat
     for (i = 0; i< 500; i++)
@@ -507,6 +605,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     // Reset any PRC feats that might have been lost from the shift
     EvalPRCFeats(oPC);
 
+	SendMessageToPC(oPC, "Finished shift script");
 }
 
 // stage 3 end:
@@ -2024,6 +2123,12 @@ void SetShiftTrueForm(object oPC)
                 case EFFECT_TYPE_SPELL_FAILURE:
                 case EFFECT_TYPE_INVISIBILITY:
                 case EFFECT_TYPE_AC_INCREASE:
+                case EFFECT_TYPE_AC_DECREASE:
+                case EFFECT_TYPE_ATTACK_INCREASE:
+                case EFFECT_TYPE_ATTACK_DECREASE:
+                case EFFECT_TYPE_DAMAGE_INCREASE:
+                case EFFECT_TYPE_DAMAGE_DECREASE:
+                case EFFECT_TYPE_TEMPORARY_HITPOINTS:
                     RemoveEffect(oPC,eEff);
                     break;
             }

@@ -22,12 +22,16 @@ void SacredSpeed(object oPC,object oSkin,int bSFSpeed ,int iShield)
    {
      if ( GetHasSpellEffect(SPELL_SACREDSPEED,oPC))
        RemoveSpellEffects(SPELL_SACREDSPEED,oPC,oPC);
+       DeleteLocalInt(oSkin,"SacFisMv");
+
    }
    else 
    {
+     if(GetLocalInt(oSkin, "SacFisMv") == bSFSpeed) return;
      if (GetHasSpellEffect(SPELL_SACREDSPEED,oPC))
           RemoveSpellEffects(SPELL_SACREDSPEED,oPC,oPC);
      ActionCastSpellAtObject(SPELL_SACREDSPEED,oPC,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);
+     SetLocalInt(oSkin,"SacFisMv",bSFSpeed);
    }
 
 }
@@ -101,6 +105,7 @@ void main()
           RemoveSpellEffects(SPELL_SACREDFLAME,oPC,oPC);
        if (GetHasSpellEffect(SPELL_INNERARMOR,oPC))
           RemoveSpellEffects(SPELL_INNERARMOR,oPC,oPC);
+       DeleteLocalInt(oSkin,"SacFisMv");
        while(GetHasFeat(FEAT_SF_SACREDFLAME1))
        DecrementRemainingFeatUses(oPC,FEAT_SF_SACREDFLAME1);
 

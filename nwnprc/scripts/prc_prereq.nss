@@ -591,6 +591,7 @@ void BFZ(object oPC)
 
 	if (iCleric > 0)
 	{
+		SetLocalInt(oPC, "PRC_PrereqBFZ", 1);
 		if (GetHasFeat(FEAT_FIRE_DOMAIN_POWER,oPC) && GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC))
 		{
 		SetLocalInt(oPC, "PRC_PrereqBFZ", 0);

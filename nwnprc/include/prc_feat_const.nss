@@ -1269,10 +1269,10 @@ const int FEAT_OUT_LEADERSHIP                    = 2880;
 const int FEAT_OUT_LEGENDS                       = 2881;
 
 //  Alaghar
-const int FEAT_CLANGEDDINS_STRIKE                = 4071;
-const int FEAT_CLANGEDDINS_MIGHT                 = 4072;
-const int FEAT_ALAG_SILVERBEARD                  = 4073;
-const int FEAT_ALAG_ROCKBURST                    = 4074;
+const int FEAT_CLANGEDDINS_STRIKE                = 3991;
+const int FEAT_CLANGEDDINS_MIGHT                 = 3992;
+const int FEAT_ALAG_SILVERBEARD                  = 3993;
+const int FEAT_ALAG_ROCKBURST                    = 3994;
 
 
 /*//////////////////////////////////////////////////
@@ -1443,14 +1443,22 @@ const int FEAT_ALL_OFFPRECOG			 = 3615;
 const int FEAT_ALL_OFFPRESC			 = 3616;
 
 //Psionic Feats
-const int FEAT_MENTAL_RESISTANCE           = 3983;
-const int FEAT_HOSTILE_MIND                = 3984;
-const int FEAT_FORCE_OF_WILL               = 3985;
-const int FEAT_CLOSED_MIND                 = 3986;
-const int FEAT_RECKLESS_OFFENSE            = 3987;
-const int FEAT_CLOAK_DANCE                 = 3988;
-const int FEAT_PSIONIC_FOCUS               = 3989;
-const int FEAT_PSIONIC_HOLE                = 3982;
-const int FEAT_COMBAT_MANIFESTATION        = 3981;
-const int FEAT_MENTAL_LEAP                 = 3980;
-const int FEAT_NARROW_MIND                 = 3979;
+const int FEAT_MENTAL_RESISTANCE           = 4812;
+const int FEAT_HOSTILE_MIND                = 4813;
+const int FEAT_FORCE_OF_WILL               = 4814;
+const int FEAT_CLOSED_MIND                 = 4815;
+const int FEAT_RECKLESS_OFFENSE            = 4816;
+const int FEAT_CLOAK_DANCE                 = 4817;
+const int FEAT_PSIONIC_FOCUS               = 4818;
+const int FEAT_PSIONIC_HOLE                = 4811;
+const int FEAT_COMBAT_MANIFESTATION        = 4810;
+const int FEAT_MENTAL_LEAP                 = 4809;
+const int FEAT_NARROW_MIND                 = 4808;
+const int FEAT_POWER_PENETRATION           = 4807;
+const int FEAT_GREATER_POWER_PENETRATION   = 4806;
+const int FEAT_POWER_SPECIALIZATION        = 4805;
+const int FEAT_GREATER_POWER_SPECIALIZATION = 4804;
+const int FEAT_PSIONIC_DODGE               = 4803;
+const int FEAT_PSIONIC_ENDOWMENT           = 4802;
+const int FEAT_GREATER_PSIONIC_ENDOWMENT   = 4801;
+const int FEAT_PSIONIC_FIST                = 4800;

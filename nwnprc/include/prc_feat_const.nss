@@ -3,6 +3,9 @@ const int FEAT_INTUITIVE_ATTACK                        = 3166;
 const int FEAT_RAVAGEGOLDENICE                         = 3162;
 const int FEAT_DRAGONSONG                              = 3440;
 const int FEAT_UNDEAD_MASTERY                          = 3446;
+const int FEAT_IMPROVED_FAVORED_ENEMY                  = 3454;
+const int FEAT_FAVORED_POWER_ATTACK                    = 3455;
+const int FEAT_EXTENDED_RAGE                           = 3456;
 
 const int FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION    = 3128;
 const int FEAT_FOCUSED_SPELL_PENETRATION_CONJURATION   = 3129;

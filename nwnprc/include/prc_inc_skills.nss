@@ -29,6 +29,21 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
           SendMessageToPC(oPC, "Jumping is not allowed in this area.");
           return FALSE;
      }
+     
+    // Immobilized creatures can't jump
+    effect eCheck = GetFirstEffect(oPC);
+    int nCheck;
+    while(GetIsEffectValid(eCheck)){
+        nCheck = GetEffectType(eCheck);
+        if(nCheck == EFFECT_TYPE_CUTSCENEIMMOBILIZE ||
+           nCheck == EFFECT_TYPE_ENTANGLE)
+        {
+            SendMessageToPC(oPC, "You cannot move.");
+            return FALSE;
+        }
+        
+        eCheck = GetNextEffect(oPC);
+    }
 
      int bIsRunningJump = FALSE;
      int bPassedJumpCheck = FALSE;

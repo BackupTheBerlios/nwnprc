@@ -10,19 +10,22 @@ int isSimple(object oItem)
 
       switch (iType)
       {
-        case BASE_ITEM_CLUB:
-        case BASE_ITEM_DAGGER:
-        case BASE_ITEM_LIGHTMACE:
+        case BASE_ITEM_CLUB:       
         case BASE_ITEM_MORNINGSTAR:
         case BASE_ITEM_QUARTERSTAFF:
         case BASE_ITEM_SHORTSPEAR:
+        case BASE_ITEM_HEAVYCROSSBOW:
+          return 1;
+          break;
+        case BASE_ITEM_DAGGER:
+        case BASE_ITEM_LIGHTMACE:
         case BASE_ITEM_SICKLE:
         case BASE_ITEM_SLING:
         case BASE_ITEM_DART:
         case BASE_ITEM_LIGHTCROSSBOW:
-        case BASE_ITEM_HEAVYCROSSBOW:
-          return 1;
+          return 2;
           break;
+
       }
       return 0;
 }
@@ -32,37 +35,30 @@ void main()
    object oPC = OBJECT_SELF;
    object oSkin = GetPCSkin(oPC);
 
-  if((GetAbilityModifier(ABILITY_WISDOM,oPC)) > (GetAbilityModifier(ABILITY_STRENGTH,oPC)))
-{
-if(!((GetHasFeat(FEAT_WEAPON_FINESSE,oPC)) && (GetAbilityModifier(ABILITY_DEXTERITY,oPC) > GetAbilityModifier(ABILITY_WISDOM,oPC)))
-{
- if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
+   if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
    {
       object oItem ;
       int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
-      int iDex =  GetAbilityModifier(ABILITY_DEXTERITY,oPC);
-      int iStr =  GetAbilityModifier(ABILITY_STRENGTH,oPC);
+      int iStr =  GetAbilityModifier(ABILITY_STRENGTH,oPC);    
       int iWis =  GetAbilityModifier(ABILITY_WISDOM,oPC);
-// this wasn't preventing stacking, so we do the wis check up above, and make sure it is higher than STR or DEX before even BOTHERING to call the function. ~ Lock
-    if(GetHasFeat(FEAT_WEAPON_FINESSE,oPC))
-    {
-      if(iDex > iStr)
-        iWis = iWis - iDex;
-	else
-	  iWis = iWis - iStr;
-    }
-    else
-        iWis = iWis - iStr;
+          iWis = iWis > iStr ? iWis : 0;
 
       if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD) iWis =0;
-
+      
       if (iEquip == 1)
            oItem = GetPCItemLastUnequipped();
       else
            oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
 
-      if (isSimple(oItem))
+      int iSimple = isSimple(oItem);
+      if (iSimple)
       {
+        if (iSimple == 2)
+        {
+           int iDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC)
+           iWis = iWis > iDex ? iWis : 0;
+        }
+                     
         if(iEquip == 1||GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
           SetCompositeBonus(oItem,"IntuiAtk",0,ITEM_PROPERTY_ATTACK_BONUS);
         else
@@ -71,9 +67,9 @@ if(!((GetHasFeat(FEAT_WEAPON_FINESSE,oPC)) && (GetAbilityModifier(ABILITY_DEXTER
 
       if (iEquip == 0)
       {
-
+        
          oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
-
+         
          if (isSimple(oItem))
          {
            if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
@@ -93,22 +89,19 @@ if(!((GetHasFeat(FEAT_WEAPON_FINESSE,oPC)) && (GetAbilityModifier(ABILITY_DEXTER
 
 
    }
-}
-}
-
 
    if (GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))
    {
 
        int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
        object oItem;
-
+       
        if (iEquip == 1)
             oItem = GetPCItemLastUnequipped();
        else
             oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-
-
+      
+       
        if (iEquip == 1||GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
        {
           if (GetBaseItemType(oItem)==BASE_ITEM_GLOVES)

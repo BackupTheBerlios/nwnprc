@@ -40,6 +40,19 @@ const int FEAT_UNHOLY_STRIKE                           = 3451;
 
 const int FEAT_FIST_OF_IRON = 3145;
 
+// Werewolf Template
+const int FEAT_PRESTIGE_WOLF_FORM                  = 3518;
+const int FEAT_PRESTIGE_WEREWOLF_FORM              = 3519;
+const int FEAT_TRUE_LYCANTHROPE                    = 3520;
+const int FEAT_PRESTIGE_WOLF_EMPATHY               = 3521;
+const int FEAT_PRESTIGE_WOLFCLASS_1                = 3522;
+const int FEAT_PRESTIGE_WOLFCLASS_2                = 3523;
+const int FEAT_PRESTIGE_WEREWOLFCLASS_1            = 3524;
+const int FEAT_PRESTIGE_WEREWOLFCLASS_2            = 3525;
+const int FEAT_PRESTIGE_WEREWOLFCLASS_3            = 3526;
+const int FEAT_PRESTIGE_LYCANTHROPE                = 3527;
+
+
 //Ranger Feats
 const int FEAT_RANGER_DUAL = 374;
 

@@ -1,7 +1,8 @@
 2DA V2.0
 
-      FeatLabel           FeatIndex
-0     darkvision          228
-1     WeapProfMar         45
-2     Race_Orcish         4714
-3     Light_Sensitivity   4700  
+     FeatLabel         FeatIndex 
+0    darkvision        228       
+1    WeapProfMar       45        
+2    Light_Sensitivity 4700      
+3    Track             2569      
+4    Race_Orcish       4714      

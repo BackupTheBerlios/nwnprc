@@ -13,7 +13,7 @@
 #include "prc_inc_util"
 
 // sets how many of a specific orc can be summoned
-int iNumSummon = 2;
+const int iNumSummon = 2;
 
 int GetCanSummonOrc(object oPC, string sCreatureResRef)
 {
@@ -67,7 +67,7 @@ void main()
          else if (iHD > 15)	sSummon = "ow_sum_sham_4";
          else if (iHD > 12)	sSummon = "ow_sum_sham_3";
          else if (iHD > 9)	sSummon = "ow_sum_sham_2";
-         else if (iHD > 6)	sSummon = "ow_sum_sham_1";
+         else if (iHD >= 6)	sSummon = "ow_sum_sham_1";
          
          if( GetCanSummonOrc(oPC, sSummon) )
          {

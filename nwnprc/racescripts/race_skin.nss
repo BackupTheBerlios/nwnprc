@@ -174,8 +174,32 @@ void main()
              object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
              if (!GetIsObjectValid(oItem))
              {
+                 // add fire damage to gloves
                  oItem = GetItemInSlot(INVENTORY_SLOT_ARMS, oPC);
                  SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
+                 
+                 // since adding fire damage to gloves did not seem to add it to creature claws...
+                 // add fire damage to creature weapons
+                 oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
+                 if( GetTag(oItem) == "PRC_UNARMED_B" ||
+                     GetTag(oItem) == "PRC_UNARMED_S" ||
+                     GetTag(oItem) == "PRC_UNARMED_P" ||
+                     GetTag(oItem) == "NW_IT_CREWPB010")
+                     SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
+                 
+                 oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
+                 if( GetTag(oItem) == "PRC_UNARMED_B" ||
+                     GetTag(oItem) == "PRC_UNARMED_S" ||
+                     GetTag(oItem) == "PRC_UNARMED_P" ||
+                     GetTag(oItem) == "NW_IT_CREWPB010")
+                     SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
+
+                 oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
+                 if( GetTag(oItem) == "PRC_UNARMED_B" ||
+                     GetTag(oItem) == "PRC_UNARMED_S" ||
+                     GetTag(oItem) == "PRC_UNARMED_P" ||
+                     GetTag(oItem) == "NW_IT_CREWPB010")
+                     SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);                 
              }
              else
              {

@@ -1,5 +1,5 @@
 #include "inc_item_props"
-#include "prc_aser_inc"
+#include "prc_feat_const"
 
 //King of Lies +4 Bonus to Cha
 void KingofLies(object oPC ,object oSkin ,int iLevel)

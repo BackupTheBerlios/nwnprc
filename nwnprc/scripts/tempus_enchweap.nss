@@ -1,3 +1,6 @@
+#include "prc_feat_const"
+#include "prc_class_const"
+#include "prc_spell_const"
 #include "inc_item_props"
 #include "heartward_inc"
 #include "x2_inc_itemprop"

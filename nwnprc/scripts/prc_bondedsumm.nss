@@ -1,4 +1,7 @@
 #include "heartward_inc"
+#include "prc_feat_const"
+#include "prc_class_const"
+#include "prc_spell_const"
 #include "inc_item_props"
 
 void ResEle(object oPC ,object oSkin ,int iLevel,int iType)

@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 //:: Last Updated By: Andrew Nobbs May 20, 2003
 #include "heartward_inc"
-#include "inc_prc_function"
+#include "prc_inc_function"
 #include "inc_item_props"
 
 void main()

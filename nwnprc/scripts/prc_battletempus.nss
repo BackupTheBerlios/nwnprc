@@ -1,4 +1,7 @@
 #include "heartward_inc"
+#include "prc_feat_const"
+#include "prc_spell_const"
+#include "prc_class_const"
 #include "inc_item_props"
 
 int FeatWeaponTempus(int iFeat)

@@ -13,6 +13,9 @@
 //:: Created On: November 6, 2001
 //:://////////////////////////////////////////////
 #include "heartward_inc"
+#include "prc_feat_const"
+#include "prc_spell_const"
+#include "prc_class_const"
 #include "x0_i0_position"
 #include "NW_I0_GENERIC"
 

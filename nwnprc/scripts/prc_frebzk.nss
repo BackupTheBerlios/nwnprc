@@ -9,6 +9,8 @@
 //:: Created On: Feb 26, 2004
 //:://////////////////////////////////////////////
 
+#include "nw_i0_spells"
+
 #include "inc_item_props"
 
 #include "prc_feat_const"
@@ -59,13 +61,32 @@ void AutoFrenzy(object oPC,int iEquip)
 
 void CheckSupremePowerAttack(object oPC, int iEquip)
 {
-      object oWeapon = GetPCItemLastUnequipped();
       int bIsWeapon = FALSE;
-      int bHasFeatActive = FALSE;
       
-      if (iEquip == 1) // Unequip
+      if(iEquip == 2)
       {
-           AssignCommand(OBJECT_SELF, ActionUseFeat(FEAT_SUPREME_POWER_ATTACK, OBJECT_SELF) );
+          object oWeapon = GetPCItemLastEquipped();
+          if(IPGetIsMeleeWeapon(oWeapon) || GetWeaponRanged(oWeapon) )
+          {
+               bIsWeapon = TRUE;
+          } 
+      }
+      else if(iEquip == 1)
+      {
+          object oWeapon = GetPCItemLastUnequipped();
+          if(IPGetIsMeleeWeapon(oWeapon) || GetWeaponRanged(oWeapon) )
+          {
+               bIsWeapon = TRUE;
+          } 
+      }      
+      
+      if(GetHasFeatEffect(FEAT_SUPREME_POWER_ATTACK) && bIsWeapon)
+      {    
+          // Removes effects
+          RemoveSpellEffects(SPELL_SUPREME_POWER_ATTACK, oPC, oPC);
+
+          string nMes = "*Supreme Power Attack Mode Deactivated*";
+          FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
       }
 }
 

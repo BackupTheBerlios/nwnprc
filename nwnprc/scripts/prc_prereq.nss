@@ -431,12 +431,13 @@ void Shadowlord(object oPC, int iArcSpell)
 void SOL(object oPC)
 {       
 	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-	SetLocalInt(oPC, "PRC_PrereqSOL", 1);
+
 
 	if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD) 
 	{  
 		if (iCleric)
 		{
+		SetLocalInt(oPC, "PRC_PrereqSOL", 1);
 		int iElishar = GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_HEALING_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_LUCK_DOMAIN_POWER,oPC)+
 		GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_SUN_DOMAIN_POWER,oPC);
 	

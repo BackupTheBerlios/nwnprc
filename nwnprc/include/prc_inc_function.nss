@@ -463,7 +463,7 @@ void PatronShar(object oPC)
      if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
      {
        int iEvil = GetAlignmentGoodEvil(oPC);
-       int iDomain = GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC);
+       int iDomain = GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DARKNESS_DOMAIN,oPC);
        if (iEvil == ALIGNMENT_EVIL && iDomain>1)
          SetLocalInt(oPC, "PatronShar",1);
        else

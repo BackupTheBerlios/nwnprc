@@ -632,10 +632,10 @@ void FH(object oPC)
 
 void BloodArcher(object oPC)
 {
+    SetLocalInt(oPC, "PRC_PrereqBlArch", 0);
+
     if (MyPRCGetRacialType(oPC) == RACIAL_TYPE_ELF)
         SetLocalInt(oPC, "PRC_PrereqBlArch", 1);
-    else
-        SetLocalInt(oPC, "PRC_PrereqBlArch", 0);
 }
 
 void main()

@@ -15,6 +15,29 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 
+void BloodBow(object oWeapon, int iBonus)
+{
+    int iAttack = GetLocalInt(oWeapon, "BloodBowAttackBonus");
+    int iMighty = GetLocalInt(oWeapon, "BloodBowMightyBonus");
+
+    RemoveSpecificProperty(oWeapon, ITEM_PROPERTY_ATTACK_BONUS, -1, iAttack, 1, "", -1, DURATION_TYPE_TEMPORARY);
+    RemoveSpecificProperty(oWeapon, ITEM_PROPERTY_MIGHTY, -1, iMighty, 1, "", -1, DURATION_TYPE_TEMPORARY);
+
+    if (iBonus == 0) return;
+
+    iAttack = iBonus;
+    iMighty = iBonus;
+
+    SetLocalInt(oWeapon, "BloodBowAttackBonus", iAttack);
+    SetLocalInt(oWeapon, "BloodBowMightyBonus", iMighty);
+    
+    itemproperty ipAttack = ItemPropertyAttackBonus(iAttack);
+    itemproperty ipMighty = ItemPropertyMaxRangeStrengthMod(iMighty);
+
+    IPSafeAddItemProperty(oWeapon, ipAttack, 9999.0, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
+    IPSafeAddItemProperty(oWeapon, ipMighty, 9999.0, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
+}
+
 void main()
 {
     // get the blood archer's level and stuff
@@ -50,8 +73,7 @@ void main()
 	{
 		 case BASE_ITEM_LONGBOW:
 		 //case BASE_ITEM_SHORTBOW:
-			  SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
-			  SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);
+                          BloodBow(oItem, iBloodBowBonus);
 			  break;
 
 		 case BASE_ITEM_ARMOR:

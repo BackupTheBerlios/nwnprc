@@ -482,19 +482,23 @@ void SOL(object oPC)
 {
      int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
 
-
-     if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
+     SetLocalInt(oPC, "PRC_PrereqSOL", 0);
+     if (GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD)
      {
-          if (iCleric)
-          {
+         SetLocalInt(oPC, "PRC_PrereqSOL", 1);
+     }
+     else if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD && iCleric)
+     {
           SetLocalInt(oPC, "PRC_PrereqSOL", 1);
-          int iElishar = GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_HEALING_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_LUCK_DOMAIN_POWER,oPC)+
-          GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_SUN_DOMAIN_POWER,oPC);
-
-               if (iElishar>1)
-               {
+          int iElishar = GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC) +
+                         GetHasFeat(FEAT_HEALING_DOMAIN_POWER,oPC) +
+                         GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC) +
+                         GetHasFeat(FEAT_LUCK_DOMAIN_POWER,oPC) +
+                         GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER,oPC) +
+                         GetHasFeat(FEAT_SUN_DOMAIN_POWER,oPC);
+          if (iElishar >= 2)
+          {
                SetLocalInt(oPC, "PRC_PrereqSOL", 0);
-               }
           }
      }
 }

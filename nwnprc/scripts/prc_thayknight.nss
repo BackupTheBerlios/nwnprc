@@ -59,9 +59,7 @@ void ZulkirDefender(object oPC)
 	eDam = ExtraordinaryEffect(eDam);
 	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oPC, HoursToSeconds(24));
 		
-	effect eAtk = EffectAttackIncrease(2);
-	eAtk = ExtraordinaryEffect(eAtk);
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, HoursToSeconds(24));
+        SetCompositeAttackBonus(oPC, "ZulkirDefender", 2);
 }
 
 void main()
@@ -69,6 +67,8 @@ void main()
     //Declare main variables.
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
+    
+    SetCompositeAttackBonus(oPC, "ZulkirDefender", 0);
     
     if (GetHasFeat(FEAT_TK_HORROR_1, oPC)) HorrorOfThay(oPC, oSkin);
     if (GetHasFeat(FEAT_TK_ZULKIR_FAVOUR, oPC)) ZulkirFavour(oPC, oSkin);

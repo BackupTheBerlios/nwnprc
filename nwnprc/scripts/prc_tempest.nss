@@ -19,15 +19,13 @@
 
 void ApplyAbsAmbidex(object oPC)
 {
-     effect eAB = EffectAttackIncrease(2, ATTACK_BONUS_MISC);
-     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAB, oPC);
-     
+     SetCompositeAttackBonus(oPC, "AbsoluteAmbidex", 2);
      SetLocalInt(oPC, "HasAbsAmbidex", 2);
 }
 
 void RemoveAbsAmbidex(object oPC)
 {
-     RemoveSpecificEffect(EFFECT_TYPE_ATTACK_INCREASE, oPC);
+     SetCompositeAttackBonus(oPC, "AbsoluteAmbidex", 0);
      SetLocalInt(oPC, "HasAbsAmbidex", 1);
 }
 

@@ -176,5 +176,6 @@ void main()
     object oCaster = OBJECT_SELF;
     int nPP = GetTotalPP(oCaster);
     SetLocalInt(oCaster, "PowerPoints", nPP);
-    FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
+    if (nPP != 0) 
+        FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
 }

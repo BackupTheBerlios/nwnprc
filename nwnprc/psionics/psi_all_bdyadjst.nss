@@ -54,7 +54,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (nSurge > 0)
     {
-    	nAugCost = 0;
+    	
     	PsychicEnervation(oCaster, nSurge);
     }
     
@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
     	int nHP = d12(1);
     
-    	if (nSurge > 0) nAugment = nSurge;
+    	if (nSurge > 0) nAugment += nSurge;
     	
     	// Augmentation effects to point transfer
 	if (nAugment > 0)	nHP = nHP + d12(nAugment);

@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (nSurge > 0)
     {
-    	nAugCost = 0;
+    	
     	PsychicEnervation(oCaster, nSurge);
     }
     

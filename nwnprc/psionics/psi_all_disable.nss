@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (nSurge > 0)
     {
-    	nAugCost = 0;
+    	
     	PsychicEnervation(oCaster, nSurge);
     }
     
@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	eLink = EffectLinkEffects(eLink, eDur);
     	effect eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
     			
-	if (nSurge > 0) nAugment = nSurge;
+	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to HD
 	if (nAugment > 0)

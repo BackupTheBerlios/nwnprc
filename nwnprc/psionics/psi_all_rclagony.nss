@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         
     if (nSurge > 0)
     {
-       	nAugCost = 0;
+       	
        	PsychicEnervation(oCaster, nSurge);
     }
     
@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
 	object oTarget = GetSpellTargetObject();
 	
-	if (nSurge > 0) nAugment = nSurge;
+	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Damage
 	if (nAugment > 0)	

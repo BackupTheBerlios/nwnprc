@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (nSurge > 0)
     {
-    	nAugCost = 0;
+    	
     	PsychicEnervation(oCaster, nSurge);
     }
     
@@ -66,7 +66,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	int nBonus = DAMAGE_BONUS_1;
     	object oAmmo;
     	
-	if (nSurge > 0) nAugment = nSurge;
+	if (nSurge > 0) nAugment += nSurge;
 	
 	// Augmentation effects to item property
 	if (nAugment == 1)	nBonus = DAMAGE_BONUS_2;

@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (nSurge > 0)
     {
-    	nAugCost = 0;
+    	
     	PsychicEnervation(oCaster, nSurge);
     }
     
@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nTotalPP;
 	effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
 	
-	if (nSurge > 0) nAugment = nSurge;
+	if (nSurge > 0) nAugment += nSurge;
 	
 	// Augmentation effects to point transfer
 	if (nAugment > 0)	nPPGiven = nPPGiven + (2 * nAugment);

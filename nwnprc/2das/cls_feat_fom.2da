@@ -1,39 +1,6 @@
 2DA V2.0
 
    FeatLabel                              FeatIndex List GrantedOnLevel OnMenu 
-0  FEAT_FOM_ENCORE_PERFORMANCE            4436      3    2              1      
-1  FEAT_FOM_GREATER_SPELLSONG             4448      3    10             0      
-2  FEAT_FOM_SPELLSONG_BLESS               4459      2    1              1      
-3  FEAT_FOM_SPELLSONG_CONVICTION          4460      2    1              1      
-4  FEAT_FOM_SPELLSONG_CURELIGHT           4461      2    1              1      
-5  FEAT_FOM_SPELLSONG_REMOVEFEAR          4462      2    1              1      
-6  FEAT_FOM_SPELLSONG_SANCTUARY           4463      2    1              1      
-7  FEAT_FOM_SPELLSONG_SHIELDFAITH         4464      2    1              1      
-8  FEAT_FOM_SPELLSONG_AID                 4465      2    3              1      
-9  FEAT_FOM_SPELLSONG_BULLSTRENGTH        4466      2    3              1      
-10 FEAT_FOM_SPELLSONG_CUREMODERATE        4467      2    3              1      
-11 FEAT_FOM_SPELLSONG_EAGLESPLENDOR       4468      2    3              1      
-12 FEAT_FOM_SPELLSONG_ENDURANCE           4469      2    3              1      
-13 FEAT_FOM_SPELLSONG_FOXCUNNING          4470      2    3              1      
-14 FEAT_FOM_SPELLSONG_LESSRESTORE         4471      2    3              1      
-15 FEAT_FOM_SPELLSONG_OWLWISDOM           4472      2    3              1      
-16 FEAT_FOM_SPELLSONG_CLAIRVOYANCE        4473      2    5              1      
-17 FEAT_FOM_SPELLSONG_CLARITY             4474      2    5              1      
-18 FEAT_FOM_SPELLSONG_CURESERIOUS         4475      2    5              1      
-19 FEAT_FOM_SPELLSONG_NEGATIVEPROT        4476      2    5              1      
-20 FEAT_FOM_SPELLSONG_PRAYER              4477      2    5              1      
-21 FEAT_FOM_SPELLSONG_PROTELEMENTS        4478      2    5              1      
-22 FEAT_FOM_SPELLSONG_REMOVECURSE         4479      2    5              1      
-23 FEAT_FOM_SPELLSONG_CURECRITICAL        4480      2    7              1      
-24 FEAT_FOM_SPELLSONG_DEATHWARD           4481      2    7              1      
-25 FEAT_FOM_SPELLSONG_FREEDOMMOVEMENT     4482      2    7              1      
-26 FEAT_FOM_SPELLSONG_PANACEA             4483      2    7              1      
-27 FEAT_FOM_SPELLSONG_RESTORATION         4484      2    7              1      
-28 FEAT_FOM_SPELLSONG_STONESKIN           4485      2    7              1      
-29 FEAT_FOM_SPELLSONG_TRUESEEING          4486      2    7              1      
-30 FEAT_FOM_SPELLSONG_MONSTREGEN          4487      2    9              1      
-31 FEAT_FOM_SPELLSONG_RAISEDEAD           4488      2    9              1      
-32 FEAT_FOM_SPELLSONG_SPELLRESISTANCE     4489      2    9              1      
 33 ExtraMusic                             423       0    -1             0      
 34 LingeringSong                          424       0    -1             0      
 35 FEAT_EPIC_LASTING_INSPIRATION          870       0    -1             0      

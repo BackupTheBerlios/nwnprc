@@ -27,9 +27,7 @@ const int FEAT_GOBLINOID  = 4719;
 const int FEAT_MONSTEROUS = 4720;
 const int FEAT_REPTILIAN  = 4721;
 const int FEAT_ABERRATION = 4722;
-
-// feat doesn't exist in feat.2da
-const int FEAT_ELEMENTAL  = -2;
+const int FEAT_ELEMENTAL  = 4759;
 
 const int FEAT_HARD_AIR   = 4723;
 const int FEAT_HARD_EARTH = 4724;

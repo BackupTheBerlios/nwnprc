@@ -23,8 +23,14 @@ at the module start.
 
 //wrapper for bioware Get2daString function
 //caches the result on waypoints
-//may not be needed after 1.64
 //Original by He Who Watches
+//Modified by Primogenitor
+//now will use a database if enabled
+//To enable set a local variable on the module named USE_2DA_DB_CACHE to 1
+//and remove the comments and recompile the scripts named db_get2da and db_set2da
+//after the normal aps_include (or equivalent) has been imported into the module
+//these scripts are not compiled in the PRC, so the modules compiled versions will take priority
+//even if the script editor shows the un-edited version in the PRC haks.
 string Get2DACache(string datafile, string column, int row, int cachenull = TRUE, int debug = FALSE);
 
 //::///////////////////////////////////////////////
@@ -115,6 +121,7 @@ string Get2DACache(string datafile, string column, int row, int cachenull = TRUE
     string s = GetLocalString(filewp, "2DA_"+datafile+"_"+column+"_"+IntToString(row));
     if (s == "")
     {
+        int bPutInDatabase = FALSE;
         if(GetLocalInt(GetModule(), "USE_2DA_DB_CACHE"))
         {
             SetLocalString(GetModule(), "2DA_DB_CACHE_DATAFILE", datafile);
@@ -128,8 +135,12 @@ string Get2DACache(string datafile, string column, int row, int cachenull = TRUE
             DeleteLocalString(GetModule(),"2DA_DB_CACHE_COLUMN");
             DeleteLocalInt(GetModule(),"2DA_DB_CACHE_ROW");
         }
-        s = Get2DAString(datafile, column, row);
-        if (cachenull&&(s == ""))
+        if(s == "")
+        {
+            s = Get2DAString(datafile, column, row);
+            bPutInDatabase = TRUE;
+        }
+        if (cachenull && (s == ""))
         {
             if (debug) 
                 SendMessageToAllDMs("Null value (****) or error opening "+datafile+".2da (row "+IntToString(row)+", column "+column+"), my tag: "+GetTag(OBJECT_SELF));
@@ -137,7 +148,9 @@ string Get2DACache(string datafile, string column, int row, int cachenull = TRUE
         }
         if (s!="") 
             SetLocalString(filewp, "2DA_"+datafile+"_"+column+"_"+IntToString(row), s);
-        if(s!="" && GetLocalInt(GetModule(), "USE_2DA_DB_CACHE"))
+        if(s!="" 
+             && bPutInDatabase == TRUE 
+             && GetLocalInt(GetModule(), "USE_2DA_DB_CACHE"))
         {
             SetLocalString(GetModule(), "2DA_DB_CACHE_DATAFILE", datafile);
             SetLocalString(GetModule(), "2DA_DB_CACHE_COLUMN", column);

@@ -21,12 +21,13 @@ void main()
     object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     int iDur = (GetLevelByClass(CLASS_TYPE_SHINING_BLADE,oPC) + GetAbilityModifier(ABILITY_CHARISMA));
 
-    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGSWORD)
-    {
-    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_ELECTRICAL, DAMAGE_BONUS_1d6), oWeapon, RoundsToSeconds(iDur));
-    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, IP_CONST_DAMAGETYPE_DIVINE, DAMAGE_BONUS_2d6), oWeapon, RoundsToSeconds(iDur));
-    }
+	if (GetLocalInt(oPC, "SBWeap") == TRUE) return;
 
-
-
+	    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGSWORD)
+	    {
+	    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_ELECTRICAL, DAMAGE_BONUS_1d6), oWeapon, RoundsToSeconds(iDur));
+	    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, IP_CONST_DAMAGETYPE_DIVINE, DAMAGE_BONUS_2d6), oWeapon, RoundsToSeconds(iDur));
+	    SetLocalInt(oPC, "SBWeap", TRUE);
+	    DelayCommand(RoundsToSeconds(iDur), DeleteLocalInt(oPC, "SBWeap"));
+	    }
 }

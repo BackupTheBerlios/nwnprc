@@ -61,9 +61,13 @@ void main()
     nAttack = 14;
     }
 
+    if (GetLocalInt(oPC, "KOTMCCombat") == TRUE) return;
+
 
     itemproperty iAttack = ItemPropertyAttackBonusVsRace(nRace, nAttack);
     AddItemProperty(DURATION_TYPE_TEMPORARY, iAttack, oWeapon, RoundsToSeconds(nDur));
     itemproperty iAC = ItemPropertyACBonusVsRace(nRace, nAC);
     AddItemProperty(DURATION_TYPE_TEMPORARY, iAC, oSkin, RoundsToSeconds(nDur));
+    SetLocalInt(oPC, "KOTMCCombat", TRUE);
+    DelayCommand(RoundsToSeconds(nDur), DeleteLocalInt(oPC, "KOTMCCombat"));
 }

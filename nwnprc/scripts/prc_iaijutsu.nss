@@ -74,8 +74,8 @@ void main()
               effect eDamage = GetAttackDamage(oTarget, oPC, oWeap, sWeaponBonusDamage, sSpellBonusDamage, 0, iWeapDamage, TRUE, 0, 0, iCriticalMultiplier);
               effect eDam = EffectDamage(nDamage,DAMAGE_TYPE_SLASHING,iWeapEnch);
               effect eLink = EffectLinkEffects(eDam, eDamage);
-              ApplyEffectToObject(DURATION_TYPE_INSTANT,eDam,oTarget);
-	ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
+              ApplyEffectToObject(DURATION_TYPE_INSTANT,eLink,oTarget);
+	//ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
               FloatingTextStringOnCreature("Critical Iaijutsu Attack",OBJECT_SELF);
               ActionEquipItem(oWeap,INVENTORY_SLOT_RIGHTHAND);
               ActionAttack(oTarget);
@@ -86,8 +86,8 @@ void main()
               effect eDamage = GetAttackDamage(oTarget, oPC, oWeap, sWeaponBonusDamage, sSpellBonusDamage, 0, iWeapDamage, FALSE, 0, 0, iCriticalMultiplier);
               effect eDam = EffectDamage(nDamage,DAMAGE_TYPE_SLASHING,iWeapEnch);
               effect eLink = EffectLinkEffects(eDam, eDamage);
-              ApplyEffectToObject(DURATION_TYPE_INSTANT,eDam,oTarget);
-	ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
+              ApplyEffectToObject(DURATION_TYPE_INSTANT,eLink,oTarget);
+	//ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
               FloatingTextStringOnCreature("Iaijutsu Attack",OBJECT_SELF);
               ActionEquipItem(oWeap,INVENTORY_SLOT_RIGHTHAND);
               ActionAttack(oTarget);

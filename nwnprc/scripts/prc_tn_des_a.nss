@@ -35,4 +35,7 @@ void main()
                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
             }
+            else
+              ApplyEffectToObject(DURATION_TYPE_PERMANENT,  EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE ), oTarget);  
+
 }

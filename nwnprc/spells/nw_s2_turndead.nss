@@ -361,6 +361,10 @@ void main()
         nTurnCheck += d4();
         nTurnHD += d6();
     }
+    if (nAlign != ALIGNMENT_EVIL && (GetHasSpellEffect(SPELL_ANTIPAL_DESECRATE) || GetHasSpellEffect(SPELL_DES_20)||GetHasSpellEffect(SPELL_DES_100)))
+    {
+    	 nTurnCheck -= 3;
+    }
     //Determine the maximum HD of the undead that can be turned.
     if(nTurnCheck <= 0)
     {
@@ -398,7 +402,7 @@ void main()
     {
         nTurnLevel += 4;
     }
-
+    
     int nEmpower = GetHasFeat(FEAT_EMPOWER_TURNING);
     int nMaximize = GetHasFeat(FEAT_MAXIMIZE_TURNING) && nAlign == ALIGNMENT_GOOD ;
     

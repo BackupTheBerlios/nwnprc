@@ -23,6 +23,10 @@ void DuelistCannyDefense(object oPC, object oSkin, int iOnOff, int iEpic = FALSE
     int iIntBonus = GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
         iIntBonus = iEpic ? iIntBonus * 2 : iIntBonus;
 
+    // limits bonus to class level as per 3.5e rules.
+    int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST,oPC);
+    if(iIntBonus > iDuelistLevel) iIntBonus = iDuelistLevel;
+
     if(iOnOff){
         SetCompositeBonus(oSkin, "CannyDefenseBonus", iIntBonus, ITEM_PROPERTY_AC_BONUS);
         if(GetLocalInt(oPC, "CannyDefense") != TRUE)
@@ -57,20 +61,9 @@ void DuelistGrace(object oPC, object oSkin, int iLevel)
    }
 }
 
-// * Applies the Duelist's parry skill bonuses as CompositeBonuses on the object's skin.
-// * Bonus is determined by object's Duelist level
-void DuelistElaborateParry(object oPC, object oSkin)
-{
-    int iClassBonus = GetLevelByClass(CLASS_TYPE_DUELIST, oPC);
-    if(GetLocalInt(oSkin, "ElaborateParryBonus") == iClassBonus) return;
-
-    SetCompositeBonus(oSkin, "ElaborateParryBonus", iClassBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);
-}
-
 void RemoveDuelistPreciseStrike(object oWeap)
 {
-   int iSlashBonus = GetLocalInt(oWeap,"DuelistPreciseSlash");
-   
+   int iSlashBonus = GetLocalInt(oWeap,"DuelistPreciseSlash");   
    if (iSlashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus, 1, "DuelistPreciseSlash", -1, DURATION_TYPE_TEMPORARY);
 }
 
@@ -81,39 +74,32 @@ void DuelistPreciseStrike(object oPC, object oWeap)
    
    RemoveDuelistPreciseStrike(oWeap);
    
+   // since new duelist gains it every 5 levels
+   iDuelistLevel /= 5;
    
-   //I'll do this based on level as opposed to by feats.
    switch(iDuelistLevel)
-   {
-      case 2: case 3: case 4: case 5:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_1d6;
-         break;
-      case 6: case 7: case 8: case 9:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
-         break;
-      case 10: case 11: case 12: case 13:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_3D6;
-         break;
-      case 14: case 15: case 16: case 17:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_4D6;
-         break;
-      case 18: case 19: case 20: case 21:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_5D6;
-	 break;
-      case 22: case 23: case 24: case 25:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_6D6;
-         break;
-      case 26: case 27: case 28: case 29:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_7D6;
-         break;
-      case 30:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_8D6;
-         break;
-      default:
-         break;
+   {   
+      case 1:
+           iSlashBonus = IP_CONST_DAMAGEBONUS_1d6;
+           break;   
+      case 2:
+           iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
+           break;  
+      case 3:
+           iSlashBonus = IP_CONST_DAMAGEBONUS_3D6;
+           break;  
+      case 4:
+           iSlashBonus = IP_CONST_DAMAGEBONUS_4D6;
+           break;  
+      case 5:
+           iSlashBonus = IP_CONST_DAMAGEBONUS_5D6;
+           break;  
+      case 6:
+           iSlashBonus = IP_CONST_DAMAGEBONUS_6D6;
+           break;  
    }
-   if(iSlashBonus) SetLocalInt(oWeap,"DuelistPreciseSlash",iSlashBonus);
    
+   if(iSlashBonus) SetLocalInt(oWeap,"DuelistPreciseSlash",iSlashBonus);   
    if(iSlashBonus) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus), oWeap, 99999.9);
 }
 
@@ -136,7 +122,6 @@ void main()
         bGrace  = GetHasFeat(FEAT_GRACE_6, oPC) ? 6 : bGrace;
         bGrace  = GetHasFeat(FEAT_GRACE_8, oPC) ? 8 : bGrace;
         bGrace  = GetHasFeat(FEAT_GRACE_10, oPC) ? 10 : bGrace;
-    int bElabPr = GetHasFeat(FEAT_ELABORATE_PARRY, oPC);
     int iLefthand = GetBaseItemType(oLefthand);
 
     //Apply bonuses accordingly
@@ -169,7 +154,5 @@ void main()
           DuelistGrace(oPC, oSkin, bGrace);
     else
           DuelistGrace(oPC, oSkin, 0);
-
-    if(bElabPr > 0) DuelistElaborateParry(oPC, oSkin);
 
 }

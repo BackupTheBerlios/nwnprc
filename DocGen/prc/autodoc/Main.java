@@ -683,12 +683,13 @@ public class Main{
 	 */
 	private static void linkFeats(){
 		FeatEntry other = null;
+		String temp = null;
 		Data_2da feats2da = twoDA.get("feat");
 		
 		//path.replace(contentPath, "../");
 		
 		// Link normal feats to each other and to masterfeats
-		for(FeatEntry check : feats){
+		for(FeatEntry check : feats.values()){
 			// Link to master
 			if(!feats2da.getEntry("MASTERFEAT", check.entryNum).equals("****")){
 				try{
@@ -700,9 +701,82 @@ public class Main{
 			}}
 			
 			// Link prerequisites
-			if
+			temp = buildPrerequisites(check, feats2da);
+			check.entryText.replaceAll("~~~PrerequisiteFeatList~~~", temp);
 		}
 		
 		// Add the child links to masterfeat texts
+	}
+	
+	/**
+	 * Constructs a text containing links to the prerequisite feats of the
+	 * given feat.
+	 *
+	 * @param check    the feat entry to be examined
+	 * @param feats2da the data structure representing feat.2da
+	 *
+	 * @return string containing html links to such prerequisite feats that
+	 *                  have FeatEntry data structures build for them
+	 */
+	private static String buildPrerequisites(FeatEntry check, Data_2da feats2da){
+		FeatEntry andReq1 = null, andReq2 = null, orReq = null;
+		String andReq1Num = feats2da.getEntry("PREREQFEAT1", check.entryNum),
+		       andReq2Num = feats2da.getEntry("PREREQFEAT2", check.entryNum);
+		String[] orReqs = {feats2da.getEntry("OrReqFeat0", check.entryNum),
+		                   feats2da.getEntry("OrReqFeat1", check.entryNum),
+		                   feats2da.getEntry("OrReqFeat2", check.entryNum),
+		                   feats2da.getEntry("OrReqFeat3", check.entryNum),
+		                   feats2da.getEntry("OrReqFeat4", check.entryNum)};
+		String preReqText = "";
+		
+		/* Handle AND prerequisite feats */
+		if(!andReq1.equals("****") || (!andReq2.equals("****"))){
+			// Some paranoia about bad entries
+			try{ andReq1 = feats.get(Integer.parseInt(andReq1Num)); }
+			catch(NumberFormatException e){
+				System.err.println("Invalid PREREQFEAT1 link in feat " + check.entryNum);
+			}
+			try{ andReq2 = feats.get(Integer.parseInt(andReq2Num)); }
+			catch(NumberFormatException e){
+				System.err.println("Invalid PREREQFEAT2 link in feat " + check.entryNum);
+			}
+			// Check if we had at least one valid entry
+			if(andReq1 != null || andReq2 != null){
+				preReqText = "<div>\n" + prereqANDFeatTemplate + "\n"; 
+				if(andReq1 != null)
+					preReqText += "<br /><a href=" + andReq1.filePath.replace(contentPath, "../") + " target=\"content\">" + andReq1.entryName + "</a>\n";
+				if(andReq2 != null)
+					preReqText += "<br /><a href=" + andReq2.filePath.replace(contentPath, "../") + " target=\"content\">" + andReq2.entryName + "</a>\n";
+				preReqText += "</div>\n";
+			}
+		}
+		
+		/* Handle OR prerequisite feats */
+		// First, check if there are any
+		boolean printOrReqs = false;
+		for(String orReqCheck : orReqs)
+			if(!orReqCheck.equals("****")) printOrReqs = true;
+		
+		if(printOrReqs){
+			boolean headerDone = false;
+			// Loop through each req and see if it's a valid link
+			for(int i = 0; i < orReqs.length; i++){
+				try{ orReq = feats.get(Integer.parseInt(orReqs[i])); }
+				catch(NumberFormatException e){
+					System.err.println("Invalid PREREQFEAT" + i + " link in feat " + check.entryNum);
+				}
+				if(orReq != null){
+					if(!headerDone){
+						preReqText = "<div>\n" + prereqORFeatTemplate + "\n";
+						headerDone = true;
+					}
+					preReqText += "<br /><a href=" + orReq.filePath.replace(contentPath, "../") + " target=\"content\">" + orReq.entryName + "</a>\n";
+				}
+			}
+			// End the <div> if we printed anything
+			if(headerDone) preReqText += "</div>\n";
+		}
+		
+		return preReqText;
 	}
 }

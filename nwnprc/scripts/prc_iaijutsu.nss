@@ -23,6 +23,12 @@ void main()
     int nDamage = 0;
     int iChaMod = GetAbilityModifier(ABILITY_CHARISMA,oPC);
     int iSkill = GetSkillRank(SKILL_IAIJUTSU_FOCUS,oPC)+ d20(); //Iaijutsu Focus Check
+
+	if(GetHasFeat(FEAT_SKILL_FOCUS_IAI))
+		if(GetHasFeat(FEAT_EPIC_SKILL_FOCUS_IAI))
+			iSkill = iSkill + 13;
+		else
+			iSkill = iSkill + 3;
     string OneKat;
     int iDie = 0;
 

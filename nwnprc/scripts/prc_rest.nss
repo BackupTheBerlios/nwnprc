@@ -40,9 +40,6 @@ void main(){
 
          break;
       }
-      case REST_EVENTTYPE_REST_FINISHED:{
-         break;
-      }
       case REST_EVENTTYPE_REST_INVALID:{
          break;
       }

@@ -1,6 +1,6 @@
 #include "prc_drnknmstr"
-#include "prcl_const_class"
-#include "prcl_const_feat"
+#include "prc_class_const"
+#include "prc_feat_const"
 
 void main()
 {

@@ -32,5 +32,6 @@ void main(){
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_PRAYER, FALSE));
     //Apply VFX impact and bonus effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, ePosVis, OBJECT_SELF);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePosLink, oTarget, 9.0));
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePosLink, OBJECT_SELF, 9.0);
+
 }

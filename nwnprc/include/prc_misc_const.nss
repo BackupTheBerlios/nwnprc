@@ -1,9 +1,10 @@
 // Include file for various constants that don't really belong in any of the other files,
 // but aren't numerous enough to warrant their own.
 
+const int AOE_MOB_PESTILENCE = 150;
+
 
 const int DISEASE_PESTILENCE = 51;
-
 
 
 const int POISON_TINY_CENTIPEDE_POISON        = 122;

@@ -16,7 +16,7 @@
    Power Resistance: Yes
    Power Point Cost: 13
    
-   Yu grumble psychically, then release a horrid shriek from your subconcious that disrupts the brains of all enemies in the power's
+   You grumble psychically, then release a horrid shriek from your subconcious that disrupts the brains of all enemies in the power's
    area, dealing 13d6 to each enemy.
    
    Augment: For every additional power point spent, this power's damage increases by 1d6. 

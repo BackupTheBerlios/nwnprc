@@ -141,15 +141,15 @@ const   int 	POWER_FUSEFLESH		   	= 14234;
 
 // Level 7 Powers
 const	int	POWER_CRISISLIFE		= 14271;
-const   int 	POWER_DECEREBRATE	   	= -1; // FIX ME
-const   int 	POWER_ENERGYWAVE_COLD	   	= -1; // FIX ME
-const   int 	POWER_ENERGYWAVE_ELEC	   	= -1; // FIX ME
-const   int 	POWER_ENERGYWAVE_FIRE	   	= -1; // FIX ME
-const   int 	POWER_ENERGYWAVE_SONIC	   	= -1; // FIX ME
-const   int 	POWER_INSANITY		   	= -1; // FIX ME
-const   int 	POWER_MINDBLANKPERSONAL	   	= -1; // FIX ME
-const   int 	POWER_OAKBODY		   	= -1; // FIX ME
-const   int 	POWER_ULTRABLAST	   	= -1; // FIX ME
+const   int 	POWER_DECEREBRATE	   	= 14272;
+const   int 	POWER_ENERGYWAVE_COLD	   	= 14273;
+const   int 	POWER_ENERGYWAVE_ELEC	   	= 14274;
+const   int 	POWER_ENERGYWAVE_FIRE	   	= 14275;
+const   int 	POWER_ENERGYWAVE_SONIC	   	= 14276;
+const   int 	POWER_INSANITY		   	= 14277;
+const   int 	POWER_MINDBLANKPERSONAL	   	= 14278;
+const   int 	POWER_OAKBODY		   	= 14279;
+const   int 	POWER_ULTRABLAST	   	= 14280;
 
 // Level 8 Powers
 const	int	POWER_RECALLDEATH		= 14301;

@@ -17,9 +17,6 @@ void main()
 {
     object oPC=GetLastPCRested();
     
-    if (GetIsObjectValid(GetLocalObject(oPC, "EnslavedCreature"))) 
-        DelayCommand(0.1,ExecuteScript("enslave_redom", oPC));
-
    switch(GetLastRestEventType()){
       case REST_EVENTTYPE_REST_CANCELLED:{
          DelayCommand(1.0,PrcFeats(oPC));
@@ -34,7 +31,10 @@ void main()
          break;
       }
       case REST_EVENTTYPE_REST_FINISHED:{
-
+      
+         // To heal up enslaved creatures...
+         object oSlave = GetLocalObject(oPC, "EnslavedCreature");
+         if (GetIsObjectValid(oSlave) && !GetIsDead(oSlave) && !GetIsInCombat(oSlave)) ForceRest(oSlave);
  
          if (GetHasFeat(FEAT_LIPS_RAPTUR,oPC)){
             int iLips=GetAbilityModifier(ABILITY_CHARISMA,oPC)+1;

@@ -8,6 +8,22 @@
 
 //#include "prc_alterations"
 
+void RemoveDomination(object oCreature, object oSlaver = OBJECT_SELF)
+{
+    effect eComp = SupernaturalEffect(EffectCutsceneDominated());
+    effect e = GetFirstEffect(oCreature);
+    
+    while (GetIsEffectValid(e))
+    {
+        if (GetEffectType(e) == GetEffectType(eComp) && GetEffectCreator(e) == oSlaver)
+        {
+            RemoveEffect(oCreature, e);
+        }
+        e = GetNextEffect(oCreature);
+    }
+}
+    
+
 void main()
 {
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
@@ -22,8 +38,9 @@ void main()
     {
         //Declare major variables
         object oTarget = GetSpellTargetObject();
+        object oOldSlave = GetLocalObject(OBJECT_SELF, "EnslavedCreature");
         int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, ENSLAVE_S) + GetChangesToSaveDC();
-        effect eDom = EffectDominated();
+        effect eDom = EffectCutsceneDominated();
         effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
@@ -39,33 +56,24 @@ void main()
         if(!GetIsReactionTypeFriendly(oTarget))
         {
             //Make SR Check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) && !GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) && !GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE) && !GetIsPC(oTarget))
             {
                 //Make a Will Save
                 if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
-                    object oOldSlave = GetLocalObject(OBJECT_SELF, "EnslavedCreature");
-
-                    //Force the Target to be docile
-                    ChangeToStandardFaction(oTarget, STANDARD_FACTION_MERCHANT);
-                    ClearPersonalReputation(OBJECT_SELF, oTarget);
+                    //Release old slave
+                    if (GetIsObjectValid(oOldSlave)) RemoveDomination(oOldSlave);
 
                     //Apply linked effects and VFX Impact
                     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                     SetLocalObject(OBJECT_SELF, "EnslavedCreature", oTarget);
-
-                    //Old slave dies
-                    if (GetIsObjectValid(oOldSlave))
-                    {
-                        FloatingTextStringOnCreature("*You command your previous thrall to die*",OBJECT_SELF);
-                        ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectKnockdown(), oOldSlave);
-                        DestroyObject(oOldSlave, 1.0f);
-                    }
-                    
                 }
+                else ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE), oTarget);
             }
+            else ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE), oTarget);
         }
+        else ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE), oTarget);
     }
     DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

@@ -140,7 +140,9 @@ int GetArcanePRCLevels (object oCaster)
 		 +  (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) + 1) / 2
 		 +  (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2
 		 +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2;
+		 +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2
+
+                 +   GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) / 3;
 
    if (nOozeMLevel)
    {

@@ -86,6 +86,7 @@ const int FEAT_LARGE                    = 4760;
 const int FEAT_AZER_HEAT		= 4790;
 const int FEAT_SVIRFNEBLIN_DODGE        = 4791;
 const int FEAT_WATER_BREATHING		= 4793;
+const int FEAT_MINOT_SCENT		= 4795;
 
 const int FEAT_SPEC_AAS		    = 4775;
 const int FEAT_SPEC_AVAR	    = 4776;

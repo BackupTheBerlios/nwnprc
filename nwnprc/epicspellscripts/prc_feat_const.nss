@@ -7,6 +7,37 @@ const int FEAT_EB_NECK = 3394;
 const int FEAT_INTUITIVE_ATTACK = 3166;
 const int FEAT_RAVAGEGOLDENICE = 3162;
 
+
+const int FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION    = 3128;
+const int FEAT_FOCUSED_SPELL_PENETRATION_CONJURATION   = 3129;
+const int FEAT_FOCUSED_SPELL_PENETRATION_DIVINATION    = 3130;
+const int FEAT_FOCUSED_SPELL_PENETRATION_ENCHATMENT    = 3131;
+const int FEAT_FOCUSED_SPELL_PENETRATION_EVOCATION     = 3132;
+const int FEAT_FOCUSED_SPELL_PENETRATION_ILLUSION      = 3133;
+const int FEAT_FOCUSED_SPELL_PENETRATION_NECROMANCY    = 3134;
+const int FEAT_FOCUSED_SPELL_PENETRATION_TRANSMUTATION = 3135;
+const int FEAT_DISCIPLE_OF_SUN 			       = 3127;
+const int FEAT_EMPOWER_TURNING                         = 3126;
+const int FEAT_PRACTISED_SPELLCASTER_BARD              = 3121;
+const int FEAT_PRACTISED_SPELLCASTER_CLERIC            = 3122;
+const int FEAT_PRACTISED_SPELLCASTER_DRUID             = 3123;
+const int FEAT_PRACTISED_SPELLCASTER_SORCERER          = 3124;
+const int FEAT_PRACTISED_SPELLCASTER_WIZARD            = 3125;
+
+const int FEAT_EPIC_DIVINE_MIGHT                       = 3120;
+const int FEAT_EPIC_DIVINE_RESISTANCE                  = 3119;
+const int FEAT_DIVINE_CLEANSING                        = 3118;
+const int FEAT_DIVINE_RESISTANCE                       = 3117;
+const int FEAT_DIVINE_VIGOR                            = 3116;
+const int FEAT_EPIC_DIVINE_VIGOR                       = 3115;
+const int FEAT_INVOKE_DIVINE_WRATH                     = 3114;
+
+
+//Active Feats
+
+const int FEAT_FIST_OF_IRON = 3145;
+
+
 //Exalted Feat
 const int FEAT_SAC_VOW = 3388;
 const int FEAT_VOW_OBED = 3389;
@@ -16,6 +47,7 @@ const int FEAT_NIMBUSLIGHT = 3165;
 const int FEAT_HOLYRADIANCE = 3164;
 const int FEAT_STIGMATA = 3163;
 const int FEAT_SERVHEAVEN = 3355;
+const int FEAT_RANGED_SMITE = 3356;
 
 //Vile Feat
 const int FEAT_LICHLOVED = 3395;
@@ -510,6 +542,10 @@ const int FEAT_BOWSPEC3                 = 3182;
 const int FEAT_BOWSPEC4                 = 3183;
 const int FEAT_BOWSPEC5                 = 3184;
 const int FEAT_BOWSPEC6                 = 3185;
+const int FEAT_BOWSPEC7                 = 3107;
+const int FEAT_BOWSPEC8                 = 3108;
+const int FEAT_BOWSPEC9                 = 3109;
+
 const int FEAT_KILLINGSHOT              = 3352;
 const int FEAT_PERFECTSHOT              = 3353;
 const int FEAT_PERFECTSHOT2             = 3354;
@@ -519,6 +555,24 @@ const int FEAT_XBOWMASTERY              = 3175;
 const int FEAT_SHURIKENMASTERY          = 3176;
 const int FEAT_BATTLEDANCE              = 3179;
 
+// Man At Arm
+
+const int FEAT_GENERAL_SPECIALIZATION   = 3100;
+const int FEAT_MASTER_CRITICAL          = 3101;
+const int FEAT_FOCUSED_STRIKE           = 3102;
+const int FEAT_STRIKE_AT_CORE           = 3103;
+const int FEAT_FURIOUS_ASSAULT          = 3104;
+const int FEAT_LEGENDARY_PROWESS        = 3105;
+
+//Soldier of Light
+const int FEAT_SOL_DIVINE_GRACE                  = 3140;
+const int FEAT_SMITE_UNDEAD                      = 3139;
+const int FEAT_POSITIVE_FORTITUDE                = 3140;
+const int FEAT_ENERGON_COMPANION                 = 3141;
+const int FEAT_POSITIVE_ENERGY_BURST             = 3146;
+const int FEAT_DIVINE_VENGEANCE                  = 3142;
+const int FEAT_FAST_HEALING1                     = 3137;
+const int FEAT_FAST_HEALING2                     = 3138;
 
 // Blood Archer
 
@@ -543,6 +597,23 @@ const int FEAT_PRESTIGE_LURCH                      = 4032;   // 2272
 const int FEAT_PRESTIGE_DRUNKEN_EMBRACE            = 4033;   // 2273
 const int FEAT_PRESTIGE_FOR_MEDICINAL_PURPOSES     = 4034;   // 2274
 const int FEAT_PRESTIGE_BREATH_OF_FLAME            = 4035;   // 2275
+
+//Hathran class feats
+const int FEAT_COHORT               = 2571; //CONSTANT
+const int FEAT_HATH_COMMAND         = 2572; //CONSTANT
+const int FEAT_HATH_FEAR1           = 2575; //CONSTANT
+const int FEAT_HATH_FEAR2           = 2576; //CONSTANT
+const int FEAT_HATH_FEAR3           = 2577; //CONSTANT
+
+//Vigilant class feats
+const int FEAT_VIGIL_ARMOR          = 2570; //CONSTANT
+const int FEAT_SPRINT               = 2573; //CONSTANT
+const int FEAT_VIGIL_HEAL           = 2574; //CONSTANT
+
+//Prerequisitie feats (Hathran and Vigilant)
+const int FEAT_ETHRAN               = 2567; //CONSTANT
+const int FEAT_ENDURANCE            = 2568; //CONSTANT
+const int FEAT_TRACK                = 2569; //CONSTANT
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////

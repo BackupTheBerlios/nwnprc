@@ -11,6 +11,7 @@
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -30,7 +31,7 @@ void main()
         if (GetObjectType(oTarget) == OBJECT_TYPE_CREATURE &&
             oTarget != OBJECT_SELF)
         {
-            if (!MyResistSpell(OBJECT_SELF, oTarget))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
             {
                  if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC,
                     SAVING_THROW_TYPE_NONE))

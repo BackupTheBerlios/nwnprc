@@ -10,6 +10,7 @@
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
+#include "prc_alterations"
 
 void DoWithering(object oTarget, int nDC, int nDuration);
 
@@ -30,7 +31,7 @@ void main()
         SignalEvent(oTarget,
             EventSpellCastAt(OBJECT_SELF, SPELL_BESTOW_CURSE, FALSE));
         //Make SR Check
-        if (!MyResistSpell(OBJECT_SELF, oTarget))
+        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
         {
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             DoWithering(oTarget, nDC, nDuration);

@@ -13,6 +13,7 @@
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 #include "x2_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -58,7 +59,7 @@ void main()
         }
         else
         {
-            if( !MyResistSpell(oCaster, oTarget, fDelay) )
+            if( !MyPRCResistSpell(oCaster, oTarget, 0, fDelay) )
             {
                 // Debug message.
                 SendMessageToPC(oCaster, "Not resisted.");

@@ -11,6 +11,7 @@
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -34,7 +35,7 @@ void main()
             !GetIsDM(oTarget))
         {
             lCell = GetLocalLocation(OBJECT_SELF, "lPlanarCell");
-            if (!MyResistSpell(OBJECT_SELF, oTarget))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
             {
                 if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                 {

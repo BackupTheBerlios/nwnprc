@@ -10,6 +10,7 @@
 #include "x2_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 object GetSunderTarget(object oTarget);
 
@@ -31,7 +32,7 @@ void main()
         if (oItem != OBJECT_INVALID)
         {
             // SR check.
-            if (!MyResistSpell(OBJECT_SELF, oTarget))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
             {
                 // Will save.
                 if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))

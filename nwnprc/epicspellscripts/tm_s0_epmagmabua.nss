@@ -16,6 +16,7 @@
 // Boneshank - Added below include files for needed functions.
 #include "x2_I0_SPELLS"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -38,7 +39,7 @@ void main()
         //Fire cast spell at event for the specified target
         SignalEvent( oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_INCENDIARY_CLOUD) );
         //Make SR check, and appropriate saving throw(s).
-        if( !MyResistSpell(GetAreaOfEffectCreator(), oTarget, fDelay) )
+        if( !MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget, 0, fDelay) )
         {
             fDelay = GetRandomDelay(0.5, 2.0);
             //Roll damage.

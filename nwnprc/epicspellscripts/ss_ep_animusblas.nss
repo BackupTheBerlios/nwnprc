@@ -10,6 +10,7 @@
 #include "x2_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void DoAnimationBit(location lTarget, object oCaster);
 
@@ -50,7 +51,7 @@ void main()
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,
                     GetSpellId()));
                 fDelay = GetRandomDelay();
-                if (!MyResistSpell(OBJECT_SELF, oTarget, fDelay))
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay))
                 {
                     nDam = d6(10);
                     // Reflex save for half damage.

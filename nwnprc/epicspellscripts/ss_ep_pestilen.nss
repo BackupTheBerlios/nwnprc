@@ -6,6 +6,7 @@
 #include "x2_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -38,7 +39,7 @@ void main()
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HORRID_WILTING));
                 //Get the distance between the explosion and the target to calculate delay
                 fDelay = GetRandomDelay(1.5, 2.5);
-                if (!MyResistSpell(OBJECT_SELF, oTarget, fDelay))
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay))
                 {
                     if(GetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                     {

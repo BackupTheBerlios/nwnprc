@@ -13,6 +13,7 @@
 #include "x2_inc_spellhook"
 #include "x0_I0_SPELLS"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -35,7 +36,7 @@ void main()
             SignalEvent( oTarget,
                 EventSpellCastAt(OBJECT_SELF, SPELL_WAIL_OF_THE_BANSHEE) );
             //Make a SR check
-            if( !MyResistSpell(GetAreaOfEffectCreator(), oTarget) )
+            if( !MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget, 0) )
             {
                 //Make a fortitude save (-4) to avoid death
                 if( !MySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4,

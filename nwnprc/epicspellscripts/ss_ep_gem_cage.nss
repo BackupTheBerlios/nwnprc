@@ -13,6 +13,7 @@
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 int GetNeededGemValue(int nHD);
 
@@ -76,7 +77,7 @@ void main()
             if (oGem != OBJECT_INVALID)
             {   // Onward! Cast the spell on the target.
                 // Spell Resistance check:
-                if (!MyResistSpell(OBJECT_SELF, oTarget, 1.0))
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, 1.0))
                 {   // Will Saving Throw.
                     if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                     {   // Choose the Gem Cage VFX based on gem value.

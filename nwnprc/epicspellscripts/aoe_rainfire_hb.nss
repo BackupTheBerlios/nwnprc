@@ -10,6 +10,7 @@
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 #include "x2_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -31,7 +32,7 @@ void main()
         !GetIsDM(oTarget))
         {
             fDelay = GetRandomDelay(0.5, 2.0);
-            if(!MyResistSpell(oCreator, oTarget, fDelay))
+            if(!MyPRCResistSpell(oCreator, oTarget, 0, fDelay))
             {
                 SignalEvent(oTarget,
                     EventSpellCastAt(oCreator, SPELL_INCENDIARY_CLOUD));

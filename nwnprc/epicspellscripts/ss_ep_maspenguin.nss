@@ -11,6 +11,7 @@
 #include "x2_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -46,7 +47,7 @@ void main()
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,
                     GetSpellId()));
                 fDelay = GetRandomDelay(1.5, 2.5);
-                if (!MyResistSpell(OBJECT_SELF, oTarget, fDelay))
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay))
                 {
                     if(GetCreatureSize(oTarget) == CREATURE_SIZE_TINY ||
                         GetCreatureSize(oTarget) == CREATURE_SIZE_SMALL ||

@@ -16,6 +16,7 @@
 // Boneshank - Added below include files for needed functions.
 #include "x2_I0_SPELLS"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -65,7 +66,7 @@ void main()
                 SignalEvent( oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FIREBALL) );
                 // Set the delay for the explosion.
                 fDelay = GetRandomDelay( 0.5f, 2.0f );
-                if( !MyResistSpell(OBJECT_SELF, oTarget, fDelay) )
+                if( !MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay) )
                 {
                     nDamage = d8(20);
                     //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.

@@ -12,6 +12,7 @@
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void RunWorm(object oTarget, int nRoundsRemaining);
 
@@ -35,7 +36,7 @@ void main()
             if (GetLocalInt(oTarget, "sSpellWormActive") != TRUE)
             {
                 //Make SR check
-                if (!MyResistSpell(OBJECT_SELF, oTarget))
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
                 {
                      //Make Will save
                      if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC,

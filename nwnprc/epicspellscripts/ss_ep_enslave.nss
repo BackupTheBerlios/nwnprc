@@ -6,6 +6,7 @@
 #include "x2_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_alterations"
 
 void main()
 {
@@ -34,7 +35,7 @@ void main()
         if(!GetIsReactionTypeFriendly(oTarget))
         {
             //Make SR Check
-            if (!MyResistSpell(OBJECT_SELF, oTarget))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
             {
                 //Make a Will Save
                 if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))

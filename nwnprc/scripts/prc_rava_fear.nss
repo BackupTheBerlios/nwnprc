@@ -18,10 +18,11 @@ void main()
     //Declare major variables
     object oTarget;
 
-    int iLevel = GetLevelByClass(CLASS_TYPE_RAVAGER,OBJECT_SELF);
+    int iLevel = GetLevelByClass(CLASS_TYPE_RAVAGER,OBJECT_SELF) + 3;
 
     effect eSave = EffectSavingThrowDecrease(SAVING_THROW_ALL,2,SAVING_THROW_TYPE_ALL);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
 
     effect eLink = EffectLinkEffects(eSave, eDur);
 
@@ -46,6 +47,7 @@ void main()
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && oTarget != OBJECT_SELF)
         {
+         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
          ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(iLevel));
         }
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, fSize, GetLocation(OBJECT_SELF));

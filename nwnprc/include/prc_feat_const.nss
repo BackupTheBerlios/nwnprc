@@ -47,6 +47,7 @@ const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;
 
 const int FEAT_SPELL5  = 4702;
+const int FEAT_SPELL10 = 4420;
 const int FEAT_SPELL11 = 4703;
 const int FEAT_SPELL13 = 4704;
 const int FEAT_SPELL14 = 4705;

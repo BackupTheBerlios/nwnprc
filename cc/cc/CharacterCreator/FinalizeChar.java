@@ -50,12 +50,10 @@ public class FinalizeChar {
         willmod = 0;
         fortitudemod = 0;
         try {
-            //System.out.println("Initialized");
             targetbic = new BICFile();
             targetbic.BICFile();
             writedata();
             BICEntry tmpbc = (BICEntry)targetbic.EntryMap.get(0);
-            //System.out.println(tmpbc.getnum());
             targetbic.write();
         }
         catch (IOException err) {
@@ -76,14 +74,10 @@ public class FinalizeChar {
         //Note.. Arcane Spellcasters are the only classes that get memorized/knownspells.
         //Currently, that's bards and wizards; but we're gonna set up anyone with the stuff in the packages.
 
-        spellcaster = !(packagesmap[packages.School] == null);
-        domains = !(packagesmap[packages.Domain1] == null
-				|| packagesmap[packages.Domain2] == null);
-        wizardclass = (menucreate.MainCharDataAux[3][classes.SpellGainTable] == null
-				&& packagesmap[packages.SpellPref2DA] != null);
+        spellcaster = (packagesmap[packages.School] != null);
+        domains = (packagesmap[packages.Domain1] != null || packagesmap[packages.Domain2] != null);
+        wizardclass = (menucreate.MainCharDataAux[3][classes.SpellGainTable] != null || packagesmap[packages.SpellPref2DA] != null);
 
-        //Handler for specabilities
-        specabilities = false;
         //Equipment start
         String equip2da = packagesmap[packages.Equip2DA];
         try {
@@ -100,7 +94,6 @@ public class FinalizeChar {
         //Equipment End
 		
         String sv2da = menucreate.MainCharDataAux[3][classes.SavingThrowTable];
-        //System.out.println("Save throw 2da name: " + sv2da.toLowerCase() + ".2da");
         try {
             String[][] savingthrowmap = RESFAC.getResourceAs2DA(sv2da);
 
@@ -115,15 +108,6 @@ public class FinalizeChar {
         
         //Spec ability initialization
         String racefeat = menucreate.MainCharDataAux[1][racialtypes.FeatsTable].toUpperCase();
-        String postspec = racefeat.replaceFirst("_FEAT_","_SPEC_");
-		try {
-			specabilitymap = RESFAC.getResourceAs2DA(postspec);
-			if (specabilitymap != null) {
-				System.out.println("Using Race Spec File: " + postspec);
-				specabilities = true;
-			}
-		}
-		catch(Exception e) {}
         //Spec ability end
         
         // Above this is necessary, below this can be handled by other menus
@@ -153,7 +137,6 @@ public class FinalizeChar {
         if(featlist.contains(new Integer(303))) { // Set info about familiar
             famtype = (((Integer)menucreate.MainCharData[14].get(new Integer(1)))).intValue();
             famname = ((String)menucreate.MainCharData[14].get(new Integer(0)));
-            System.out.println("Familiar name: " + famname);
         }
         if(featlist.contains(new Integer(199))) { // Set info about companion
             comptype = (((Integer)menucreate.MainCharData[14].get(new Integer(3)))).intValue();
@@ -184,7 +167,6 @@ public class FinalizeChar {
         // First thing to test, spellcaster or non spellcaster?
         //spellcaster = false; // Change this to actual test later on, pointer to classes.2da
         
-        //specabilities = true;
         int varnum = 0;
         int listnum = 0;
         int empty = 0;
@@ -325,7 +307,6 @@ public class FinalizeChar {
             //int school = 0;
             targetbic.addVarname("School");
             targetbic.addElementToEntry(classlistentry, 0, varnum++, new Integer(school));
-            
         }
         if(domains) {
             //int school = 0;
@@ -774,41 +755,6 @@ public class FinalizeChar {
         targetbic.addVarname("ArmorPart_RFoot");
         targetbic.addElementToEntry(0, 0, varnum++, new Integer(rfoot));
         
-        //SPEC ABILITIES
-        if(specabilities) {
-            targetbic.addVarname("SpecAbilityList");
-            targetbic.addElementToEntry(0, 15, varnum++, new Integer(empty));
-            
-            targetbic.addVarname("Spell");
-            varnum++;
-            
-            targetbic.addVarname("SpellFlags");
-            varnum++;
-            
-            targetbic.addVarname("SpellCasterLevel");
-            varnum++;
-            
-            int spellnum;
-            if(spellcaster) {
-                spellnum = spellvarnum;
-            } else {
-                spellnum = varnum - 3;
-            }
-            
-            for(int rr = 0; rr<specabilitymap.length; rr++) {
-                if(specabilitymap[rr][2] != null) {
-                    targetbic.addEntryToList(listnum, 4);
-                    targetbic.MMEntries.add(new Integer(targetbic.entrynum - 1));
-                    targetbic.addElementToEntry(++entry, 2, spellnum, new Integer(specabilitymap[rr][2]));
-                    targetbic.addElementToEntry(entry, 0, varnum - 2, new Integer(specabilitymap[rr][3]));
-                    targetbic.addElementToEntry(entry, 0, varnum - 1, new Integer(specabilitymap[rr][4]));
-                }
-            }
-            
-            listnum++;
-        } //END SPEC ABILITIES
-        
-        
         //Equip_ItemList
         targetbic.addVarname("Equip_ItemList");
         targetbic.addElementToEntry(0, 15, varnum++, new Integer(empty));
@@ -854,7 +800,6 @@ public class FinalizeChar {
     private ResourceFactory RESFAC;
     private CreateMenu menucreate;
     boolean domains;
-    boolean specabilities;
     boolean spellcaster;
     BICFile targetbic;
     

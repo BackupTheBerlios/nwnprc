@@ -73,7 +73,8 @@ INSTALLSCRIPT	= Setup\install.nsi
 # NWN override directory for the prc pack to work.  If this list is changed
 # then the updates should be made here. NOTE: You NEED to put the paths
 # to the subdirectories on there as well.
-OVERRIDEFILES	= $(2DAPATH)\classes.2da
+#OVERRIDEFILES	= $(2DAPATH)\classes.2da
+OVERRIDEFILES	= 
 
 # If an install path for NSIS is not given, assume "C:\program files\nsis"
 !IFNDEF NSISPATH
@@ -156,7 +157,8 @@ nsis:
 # Rules to install content in NWN begin here
 
 # Rule to install the hak content
-install: installcontent installoverrides
+#install: installcontent installoverrides
+install: installcontent 
 
 # Rule that does the real work to install the content (except overrides)
 # to the NWN install directory.

@@ -40,8 +40,6 @@ void main()
          
     SetLocalInt(oPC,"ONENTER",1);
     ExecuteScript("onenter_setlocal",oPC);
-	ExecuteScript("onenter_ess", oPC);
-    
     
     // Make sure we reapply any bonuses before the player notices they are gone.
     EvalPRCFeats(oPC);

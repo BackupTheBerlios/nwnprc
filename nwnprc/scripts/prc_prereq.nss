@@ -12,12 +12,99 @@
 #include "prc_inc_sneak"
 #include "prc_alterations"
 
+// this creates a clone of the PC in limbo, removes the effects and equipment,
+// then stores the results of a ability score query onto the PC's hide.
+void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone);
+void FindTrueAbilityScores()
+{
+    object oPC = OBJECT_SELF;
+    int i = 0;
+    object oLimbo = GetObjectByTag("Limbo",i);
+    location lLimbo;
+    while (i < 100)
+    {
+        if (GetIsObjectValid(oLimbo))
+        {
+            if (GetName(oLimbo) == "Limbo")
+            {
+                i = 2000;
+                vector vLimbo = Vector(0.0f, 0.0f, 0.0f);
+                lLimbo = Location(oLimbo, vLimbo, 0.0f);
+            }
+        }
+        i++;
+        object oLimbo = GetObjectByTag("Limbo",i);
+    }
+    //create copy of the PC for getting base ability scores
+    object oClone;
+    if (i >= 2000)
+    {
+        oClone = CopyObject(oPC, lLimbo, OBJECT_INVALID, "clone_"+ObjectToString(oPC));
+    }
+    else
+    {
+        oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "clone_"+ObjectToString(oPC));
+    }
+    
+    object oItem;
+    int nSlot;
+    
+    for (nSlot = 0 ; nSlot < NUM_INVENTORY_SLOTS ; nSlot++)
+    {
+        oItem = GetItemInSlot(nSlot, oClone);
+        //remove if valid, unless in the creature hide slot
+        if (GetIsObjectValid(oItem) && nSlot != INVENTORY_SLOT_CARMOUR)
+        {
+            DestroyObject(oItem);
+        }
+    }
+    
+    effect eEffect = GetFirstEffect(oClone);
+    while (GetIsEffectValid(eEffect))
+    {
+        RemoveEffect(oClone, eEffect);
+        eEffect = GetNextEffect(oClone);
+    }
+    
+    DelayCommand(0.5, FindTrueAbilityScoresPhaseTwo(oPC, oClone));
+    DelayCommand(0.6, DestroyObject(oClone));
+}    
+
+void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone)
+{
+    int i;
+
+    int iStr = GetAbilityScore(oClone, ABILITY_STRENGTH);
+    int iDex = GetAbilityScore(oClone, ABILITY_DEXTERITY);
+    int iCon = GetAbilityScore(oClone, ABILITY_CONSTITUTION);
+    int iInt = GetAbilityScore(oClone, ABILITY_INTELLIGENCE);
+    int iWis = GetAbilityScore(oClone, ABILITY_WISDOM);
+    int iCha = GetAbilityScore(oClone, ABILITY_CHARISMA);
+   
+    // hack - the clone gets double the benefit from the Epic Great Attribute feats
+    for (i = FEAT_EPIC_GREAT_STRENGTH_1 ; i <= FEAT_EPIC_GREAT_STRENGTH_10 ; i++) if (GetHasFeat(i, oPC)) iStr--;
+    for (i = FEAT_EPIC_GREAT_DEXTERITY_1 ; i <= FEAT_EPIC_GREAT_DEXTERITY_10 ; i++) if (GetHasFeat(i, oPC)) iDex--;
+    for (i = FEAT_EPIC_GREAT_CONSTITUTION_1 ; i <= FEAT_EPIC_GREAT_CONSTITUTION_10 ; i++) if (GetHasFeat(i, oPC)) iCon--;
+    for (i = FEAT_EPIC_GREAT_INTELLIGENCE_1 ; i <= FEAT_EPIC_GREAT_INTELLIGENCE_10 ; i++) if (GetHasFeat(i, oPC)) iInt--;
+    for (i = FEAT_EPIC_GREAT_WISDOM_1 ; i <= FEAT_EPIC_GREAT_WISDOM_10 ; i++) if (GetHasFeat(i, oPC)) iWis--;
+    for (i = FEAT_EPIC_GREAT_CHARISMA_1 ; i <= FEAT_EPIC_GREAT_CHARISMA_10 ; i++) if (GetHasFeat(i, oPC)) iCha--;
+
+    object oHide = GetPCSkin(oPC);
+    
+    SetLocalInt(oHide, "PRC_trueSTR", iStr);
+    SetLocalInt(oHide, "PRC_trueDEX", iDex);
+    SetLocalInt(oHide, "PRC_trueCON", iCon);
+    SetLocalInt(oHide, "PRC_trueINT", iInt);
+    SetLocalInt(oHide, "PRC_trueWIS", iWis);
+    SetLocalInt(oHide, "PRC_trueCHA", iCha);
+}
+
 int GetBardSpellLevel(object oPC)
 {
         int iBard = GetLevelByClass(CLASS_TYPE_BARD, oPC);
-        int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA) - 10;
+        int iCha = GetLocalInt(GetPCSkin(oPC), "PRC_trueCHA") - 10;
         int iShad = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
-        int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE) - 10;
+        int iInt = GetLocalInt(GetPCSkin(oPC), "PRC_trueINT") - 10;
      int iBSpell;
      int iSSpell;
 
@@ -95,7 +182,7 @@ int GetRanPalSpellLevel(object oPC)
         int iAntiPal = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, oPC);
         int iCorrupter = GetLevelByClass(CLASS_TYPE_CORRUPTER, oPC);
         int iKnight = GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE, oPC);
-        int iWis = GetAbilityScore(oPC, ABILITY_WISDOM) - 10;
+        int iWis = GetLocalInt(GetPCSkin(oPC), "PRC_trueWIS") - 10;
      int iRanPal;
 
      // Adjust the Rangers's level upwards if it is the one recieving the benefits of
@@ -153,8 +240,8 @@ int ArcSpell(object oPC, int iArcSpell)
      //A basic check to see what their primary class is
         int iSorc = GetLevelByClass(CLASS_TYPE_SORCERER, oPC);
         int iWiz = GetLevelByClass(CLASS_TYPE_WIZARD, oPC);
-        int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA) - 10;
-        int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE) - 10;
+        int iCha = GetLocalInt(GetPCSkin(oPC), "PRC_trueCHA") - 10;
+        int iInt = GetLocalInt(GetPCSkin(oPC), "PRC_trueINT") - 10;
 
         iArcSpell = iWiz;
 
@@ -219,7 +306,7 @@ int DivSpell(object oPC, int iDivSpell)
      //Variables
         int iDruid = GetLevelByClass(CLASS_TYPE_DRUID, oPC);
         int iCler = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-        int iWis = GetAbilityScore(oPC, ABILITY_WISDOM) - 10;
+        int iWis = GetLocalInt(GetPCSkin(oPC), "PRC_trueWIS") - 10;
 
         iDivSpell = iCler;
 
@@ -638,18 +725,19 @@ void BloodArcher(object oPC)
         SetLocalInt(oPC, "PRC_PrereqBlArch", 1);
 }
 
-void main()
+// YES, that is main2()... it's the second (delayed) phase of main.
+void main2()
 {
-        //Declare Major Variables
-        object oPC = OBJECT_SELF;
-        int iArcSpell;
-        int iDivSpell;
-        int iArcSpell1;
-        int iDivSpell1;
-        int iSnkLevel;
+     //Declare Major Variables
+     object oPC = OBJECT_SELF;
+     int iArcSpell;
+     int iDivSpell;
+     int iArcSpell1;
+     int iDivSpell1;
+     int iSnkLevel;
 
-        // Initialize all the variables.
-        string sVariable;
+     // Initialize all the variables.
+     string sVariable;
      int iCount;
      for (iCount = 1; iCount <= 9; iCount++)
      {
@@ -673,10 +761,10 @@ void main()
      iDivSpell1 = DivSpell(oPC, iDivSpell);
 
      // Find the sneak attack capacity.
-        SneakRequirement(oPC);
+     SneakRequirement(oPC);
 
-        // Special requirements for several classes.
-        Hathran(oPC);
+     // Special requirements for several classes.
+     Hathran(oPC);
      Tempest(oPC);
      KOTC(oPC);
      BFZ(oPC);
@@ -696,6 +784,13 @@ void main()
      BloodArcher(oPC);
      // Truly massive debug message flood if activated.
      /*
+     SendMessageToPC(oPC, "Your true Strength: " + IntToString(GetLocalInt(oHide, "PRC_trueSTR")));
+     SendMessageToPC(oPC, "Your true Dexterity: " + IntToString(GetLocalInt(oHide, "PRC_trueDEX")));
+     SendMessageToPC(oPC, "Your true Constitution: " + IntToString(GetLocalInt(oHide, "PRC_trueCON")));
+     SendMessageToPC(oPC, "Your true Intelligence: " + IntToString(GetLocalInt(oHide, "PRC_trueINT")));
+     SendMessageToPC(oPC, "Your true Wisdom: " + IntToString(GetLocalInt(oHide, "PRC_trueWIS")));
+     SendMessageToPC(oPC, "Your true Charisma: " + IntToString(GetLocalInt(oHide, "PRC_trueCHA")));
+     
      string sPRC_AllSpell;
      string sPRC_ArcSpell;
      string sPRC_DivSpell;
@@ -715,4 +810,11 @@ void main()
      }
      */
 
+}
+
+void main()
+{
+     FindTrueAbilityScores();
+     
+     DelayCommand(0.6, main2());
 }

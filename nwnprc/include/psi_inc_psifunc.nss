@@ -78,6 +78,12 @@ void DoOverchannelDamage(object oCaster);
 // Returns the number of powers a character posseses from a specific class
 int GetPowerCount(object oPC, int nClass);
 
+// Returns the maximum number of powers a character may posses from a specific class
+// =================================================================================
+// oPC      character to calculate maximum powers for
+// nClass   CLASS_TYPE_PSION / CLASS_TYPE_PSYWAR / CLASS_TYPE_WILDER
+int GetMaxPowerCount(object oPC, int nClass);
+
 // Checks the feat.2da prereqs for a specific power
 // Only deals with AND/OR feat requirements at the moment
 // Also checks that the PC doesnt already have the feat
@@ -320,6 +326,8 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
         nCanManifest = 2;
     }
     
+    SendMessageToPC(oCaster, "nPPCost: " + IntToString(nPPCost) + "; nMetaPsi: " + IntToString(nMetaPsi));
+    
     nPPCost += bUseSum ? nMetaPsi - nImpMetapsiReduction < 1 ? 1 : nMetaPsi - nImpMetapsiReduction
                 : nMetaPsi;
 
@@ -510,6 +518,42 @@ int GetPowerCount(object oPC, int nClass)
     if(!persistant_array_exists(oPC, "PsiPowerCount"))
         return 0;
     return persistant_array_get_int(oPC, "PsiPowerCount", nClass);
+}
+
+int GetMaxPowerCount(object oPC, int nClass)
+{
+    int nLevel = GetLevelByClass(nClass, oPC);
+    if(!nLevel)
+        return 0;
+    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
+    sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    int nMaxPowers = StringToInt(Get2DACache(sPsiFile, "PowersKnown", nLevel-1));
+    
+    // Apply the epic feat Power Knowledge - +2 powers known per
+    int nFeat;
+    switch(nClass)
+    {
+        case CLASS_TYPE_PSION:
+            nFeat = FEAT_POWER_KNOWLEDGE_PSION_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_PSION_10 &&
+                  GetHasFeat(nFeat, oPC))
+                { nMaxPowers += 2; nFeat++; }
+            break;
+        case CLASS_TYPE_WILDER:
+            nFeat = FEAT_POWER_KNOWLEDGE_PSYWAR_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_PSYWAR_10 &&
+                  GetHasFeat(nFeat, oPC))
+                { nMaxPowers += 2; nFeat++; }
+            break;
+        case CLASS_TYPE_PSYWAR:
+            nFeat = FEAT_POWER_KNOWLEDGE_WILDER_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_WILDER_10 &&
+                  GetHasFeat(nFeat, oPC))
+                { nMaxPowers += 2; nFeat++; }
+            break;
+    }
+    
+    return nMaxPowers;
 }
 
 void UsePower(int nPower, int nClass, int bIgnorePP = FALSE, int nLevelOverride = 0)
@@ -727,6 +771,13 @@ int GetPsionicFocusUsingFeatsActive(object oCreature = OBJECT_SELF)
     if(GetLocalInt(oCreature, "PsionicEndowmentActive"))    nFeats++;
     
     // TODO: Add in metapsionics here
+    if(GetLocalInt(oCreature, "PsiMetaChain"))   nFeats++;
+    if(GetLocalInt(oCreature, "PsiMetaEmpower")) nFeats++;
+    if(GetLocalInt(oCreature, "PsiMetaExtend"))  nFeats++;
+    if(GetLocalInt(oCreature, "PsiMetaMax"))     nFeats++;
+    if(GetLocalInt(oCreature, "PsiMetaSplit"))   nFeats++;
+    if(GetLocalInt(oCreature, "PsiMetaTwin"))    nFeats++;
+    if(GetLocalInt(oCreature, "PsiMetaWiden"))   nFeats++;
     
     return nFeats;
 }

@@ -23,10 +23,10 @@ void main()
     if(!GetLocalInt(oPC, "TalentedActive") &&
        GetPsionicFocusUsingFeatsActive(oPC) >= GetPsionicFocusUsesPerExpenditure(oPC))
     {
-        FloatingTextStringOnCreature("You cannot activate more feats that require psionic focus", oPC, FALSE);
+        FloatingTextStringOnCreature(GetStringByStrRef(16826549/*You already have the maximum amount of psionic focus expending feats active.*/), oPC, FALSE);
         return;
     }
     
     SetLocalInt(oPC, "TalentedActive", !GetLocalInt(oPC, "TalentedActive"));
-    FloatingTextStringOnCreature("Talented " + (GetLocalInt(oPC, "TalentedActive") ? "Activated":"Deactivated"), oPC, FALSE);
+    FloatingTextStringOnCreature(GetStringByStrRef(16826499) + " " + (GetLocalInt(oPC, "TalentedActive") ? GetStringByStrRef(63798/*Activated*/):GetStringByStrRef(63799/*Deactivated*/)), oPC, FALSE);
 }

@@ -30,11 +30,12 @@ void main()
     if(!GetLocalInt(oPC, "PsionicEndowmentActive") &&
        GetPsionicFocusUsingFeatsActive(oPC) >= GetPsionicFocusUsesPerExpenditure(oPC))
     {
-        FloatingTextStringOnCreature("You cannot activate more feats that require psionic focus", oPC, FALSE);
+        FloatingTextStringOnCreature(GetStringByStrRef(16826549/*You already have the maximum amount of psionic focus expending feats active.*/), oPC, FALSE);
         return;
     }
     
     SetLocalInt(oPC, "PsionicEndowmentActive", !GetLocalInt(oPC, "PsionicEndowmentActive"));
-    FloatingTextStringOnCreature((GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT, oPC) ? "Greater":"") + 
-                                 "Psionic Endowment " + (GetLocalInt(oPC, "PsionicEndowmentActive") ? "Activated":"Deactivated"), oPC, FALSE);
+                                                                                  //Greater Psionic Endowment   Psionic Endowment
+    FloatingTextStringOnCreature((GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT, oPC) ? GetStringByStrRef(16826454):GetStringByStrRef(16826452)) + " " +
+                                 (GetLocalInt(oPC, "PsionicEndowmentActive") ? GetStringByStrRef(63798/*Activated*/):GetStringByStrRef(63799/*Deactivated*/)), oPC, FALSE);
 }

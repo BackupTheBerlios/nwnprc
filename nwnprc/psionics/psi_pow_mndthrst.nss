@@ -55,46 +55,50 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     object oTarget = GetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
-    
+
     if (nSurge > 0)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
+
+        PsychicEnervation(oCaster, nSurge);
     }
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nDice = 1;
-	int nDiceSize = 10;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) 
-	{
-		nDice += nAugment;
-		nDC += nAugment/2;
-	}
-	
-	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-	
-	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-	effect eLink = EffectLinkEffects(eMind, eDam);
-	
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
-            
+        int nDC = GetManifesterDC(oCaster);
+        int nCaster = GetManifesterLevel(oCaster);
+        int nPen = GetPsiPenetration(oCaster);
+        int nDice = 1;
+        int nDiceSize = 10;
+
+        //Augmentation effects to Damage
+        if (nAugment > 0)
+        {
+            nDice += nAugment;
+            nDC += nAugment/2;
+        }
+        
+        int i;
+        for(i = 0; i < (GetLocalInt(oCaster, "PsiMetaTwin") ? 2 : 1); i++)
+        {
+            int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
+    
+            effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
+            effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+            effect eLink = EffectLinkEffects(eMind, eDam);
+    
+            //Check for Power Resistance
+            if (PRCMyResistPower(oCaster, oTarget, nPen))
+            {
+                //Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
+    
                 //Make a saving throw check
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
-                        //Apply VFX Impact and daze effect
-                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+                    //Apply VFX Impact and daze effect
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
                 }
-	}
+            }
+        }
     }
 }

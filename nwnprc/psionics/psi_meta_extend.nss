@@ -15,15 +15,15 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    
+
     // Can't activate too many feats
     if(!GetLocalInt(oPC, "PsiMetaExtend") &&
        GetPsionicFocusUsingFeatsActive(oPC) >= GetPsionicFocusUsesPerExpenditure(oPC))
     {
-        FloatingTextStringOnCreature("You cannot activate more feats that require psionic focus", oPC, FALSE);
+        FloatingTextStringOnCreature(GetStringByStrRef(16826549/*You already have the maximum amount of psionic focus expending feats active.*/), oPC, FALSE);
         return;
     }
-    
+
     SetLocalInt(oPC, "PsiMetaExtend", !GetLocalInt(oPC, "PsiMetaExtend"));
-    FloatingTextStringOnCreature("Extend Power " + (GetLocalInt(oPC, "PsiMetaExtend") ? "Activated":"Deactivated"), oPC, FALSE);
+    FloatingTextStringOnCreature(GetStringByStrRef(16826536) + " " + (GetLocalInt(oPC, "PsiMetaExtend") ? GetStringByStrRef(63798/*Activated*/):GetStringByStrRef(63799/*Deactivated*/)), oPC, FALSE);
 }

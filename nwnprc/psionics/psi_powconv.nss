@@ -85,8 +85,7 @@ void main()
         {
             //select a power to gain
             int nCurrentPowers = GetPowerCount(oPC, nClass);
-            int nLevel = GetLevelByClass(nClass, oPC);
-            int nMaxPowers = StringToInt(Get2DACache(sPsiFile, "PowersKnown", nLevel-1));
+            int nMaxPowers = GetMaxPowerCount(oPC, nClass);
             //string sToken = "Select a power to gain.\n You can select "+IntToString(nMaxPowers-nCurrentPowers)+" more powers";
             string sToken = GetStringByStrRef(STRREF_POWERLIST_HEADER1) + " " +
                             IntToString(nMaxPowers-nCurrentPowers) + " " +
@@ -124,6 +123,7 @@ void main()
 //                int nPowerFeatIP= StringToInt(Get2DACache(sPowerFile, "IPFeatID", i));
 //                int nPowerSpell = StringToInt(Get2DACache(sPowerFile, "SpellID", i));
                 if(sFeatID != "" 
+                  && !GetHasFeat(StringToInt(sFeatID), oPC)
                   && (!StringToInt(Get2DACache(sPowerFile, "HasPrereqs", i))
                     || CheckPowerPrereqs(StringToInt(sFeatID), oPC)
                      )
@@ -278,8 +278,7 @@ void main()
         }
 
         int nCurrentPowers = GetPowerCount(oPC, nClass);
-        int nLevel = GetLevelByClass(nClass, oPC);
-        int nMaxPowers = StringToInt(Get2DACache(sPsiFile, "PowersKnown", nLevel-1));
+        int nMaxPowers = GetMaxPowerCount(oPC, nClass);
         if(nCurrentPowers >= nMaxPowers)
             nStage++;
         else

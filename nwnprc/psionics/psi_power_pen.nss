@@ -30,11 +30,11 @@ void main()
     if(!GetLocalInt(oPC, "PowerPenetrationActive") &&
        GetPsionicFocusUsingFeatsActive(oPC) >= GetPsionicFocusUsesPerExpenditure(oPC))
     {
-        FloatingTextStringOnCreature("You cannot activate more feats that require psionic focus", oPC, FALSE);
+        FloatingTextStringOnCreature(GetStringByStrRef(16826549/*You already have the maximum amount of psionic focus expending feats active.*/), oPC, FALSE);
         return;
     }
     
     SetLocalInt(oPC, "PowerPenetrationActive", !GetLocalInt(oPC, "PowerPenetrationActive"));
-    FloatingTextStringOnCreature((GetHasFeat(FEAT_GREATER_POWER_PENETRATION, oPC) ? "Greater":"") + 
-                                 "Power Penetration " + (GetLocalInt(oPC, "PowerPenetrationActive") ? "Activated":"Deactivated"), oPC, FALSE);
+    FloatingTextStringOnCreature((GetHasFeat(FEAT_GREATER_POWER_PENETRATION, oPC) ? GetStringByStrRef(16826438):GetStringByStrRef(16826438)) + " " +
+                                 (GetLocalInt(oPC, "PowerPenetrationActive") ? GetStringByStrRef(63798/*Activated*/):GetStringByStrRef(63799/*Deactivated*/)), oPC, FALSE);
 }

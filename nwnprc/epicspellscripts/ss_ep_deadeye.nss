@@ -25,7 +25,7 @@ void main()
     {
         object oTarget = GetSpellTargetObject();
 	  int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
-        int nDuration = (nCasterLvl/2)-10;
+        int nDuration = nCasterLvl / 4;
 	  if (nDuration < 5)
 		nDuration = 5;
 

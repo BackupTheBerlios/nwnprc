@@ -143,6 +143,6 @@ void main()
 	object oSkin = GetPCSkin(oPC);
 	int iEquip = GetLocalInt(oPC, "ONEQUIP");
     
-	AddBrutalStrikeDam(oPC);
-	AddBrutalStrikeAtk(oPC);
+	if (GetHasFeat(FEAT_BSTRIKE_D1, oPC)) AddBrutalStrikeDam(oPC);
+	if (GetHasFeat(FEAT_BSTRIKE_A1, oPC)) AddBrutalStrikeAtk(oPC);
 }

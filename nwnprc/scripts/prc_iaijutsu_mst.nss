@@ -6,7 +6,8 @@ prc_iaijutsu_mst
 */
 
 #include "inc_item_props"
-#include "prc_aser_inc"
+#include "prc_feat_const"
+#include "prc_class_const"
 
 
 ///Int Bonus to AC /////////

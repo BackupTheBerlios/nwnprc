@@ -123,15 +123,16 @@ void main()
         {
              // add bonus to armor
              oItem = GetPCItemLastEquipped();
+
+             string nMes = "Item Equiped = " + GetName(oItem);
+             FloatingTextStringOnCreature(nMes, oPC, FALSE);
              
              if(oItem == oArmor)
              {
                   ApplyFoeHunterDR(oPC, oArmor); 
              }
-             else if(oItem == oWeaponR)
-             {
-                  ApplyFoeHunterRancor(oPC, oWeaponR);
-             }
+
+             ApplyFoeHunterRancor(oPC, oWeaponR);
              
              if(GetWeaponRanged(oWeaponR))
              {
@@ -149,6 +150,9 @@ void main()
         else if(iEquip == 1)  // Unequip
         {
              oItem = GetPCItemLastUnequipped();
+             
+             string nMes = "Item Unequiped = " + GetName(oItem);
+             FloatingTextStringOnCreature(nMes, oPC, FALSE);
              
              if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
              {

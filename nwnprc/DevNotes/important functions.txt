@@ -36,8 +36,24 @@ inc_item_props
 void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSubType = -1);
 void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iSubType = -1); // for temporary bonuses
 
+// * To ensure a damage bonus stacks with any existing enhancement bonus,
+// * create a temporary damage bonus on the weapon.  You do not want to do this
+// * if the weapon is of the "slashing and piercing" type, because the
+// * enhancement bonus is considered "physical", not "slashing" or "piercing".
+// *
+// * Because of this strange Bioware behavior, you'll want to only call this code as such:
+// *
+// * if (StringToInt(Get2DAString("baseitems","WeaponType",GetBaseItemType(oWeapon))) != 4)
+// * {
+// *     IPEnhancementBonusToDamageBonus(oWeapon);
+// * }
+void IPEnhancementBonusToDamageBonus(object oWeap);
+
 // * Used to roll bonuses from multiple sources into a single property
 // * Only supports damage bonuses in a linear fashion - +1 through +20.
+// *
+// * Note: If you do not define iSubType, the damage applied will most likely not
+// * stack with any enhancement bonus.  See IPEnhancementBonusToDamageBonus() above.
 // *
 // * oItem = Object to apply bonus to
 // * sBonus = String name of the source for this bonus

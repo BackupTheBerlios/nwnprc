@@ -146,7 +146,7 @@ const int FEAT_RANGED_SMITE = 3356;
 //Vile Feat
 const int FEAT_LICHLOVED                               = 3395;
 const int FEAT_THRALL_TO_DEMON                         = 2616;
-const int FEAT_DISCIPLE_OF_DARKNESS                    = 2616;
+const int FEAT_DISCIPLE_OF_DARKNESS                    = 4012;
 const int FEAT_EB_HAND                                 = 3390;
 const int FEAT_EB_HEAD                                 = 3391;
 const int FEAT_EB_CHEST                                = 3392;

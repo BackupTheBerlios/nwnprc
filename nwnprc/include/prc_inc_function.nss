@@ -88,6 +88,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0)     ExecuteScript("prc_uranger", oPC);
     if(GetLevelByClass(CLASS_TYPE_WEREWOLF,oPC) > 0)            ExecuteScript("prc_werewolf", oPC);
     if(GetLevelByClass(CLASS_TYPE_JUDICATOR, oPC) > 0)          ExecuteScript("prc_judicator", oPC);
+    if(GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) > 0)     ExecuteScript("prc_arcduel", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                        ExecuteScript("prc_vows", oPC);
@@ -283,7 +284,8 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "SelvBlessFortBonus");
     DeleteLocalInt(oSkin, "SelvBlessRefBonus");
     DeleteLocalInt(oSkin, "SelvBlessWillBonus");
-
+    // Arcane Duelist
+    DeleteLocalInt(oSkin, "ADDef");
     
     // future PRCs Go below here
 }

@@ -1594,3 +1594,64 @@ if(GetHasFeat(FEAT_LOLTHS_MEAT, oPC))
 }
 
 ////////////////End Lolth Meat//////////////////
+
+////////////////Begin Arcane Duelist//////////////////
+
+void FlurryEffects(object oPC)
+{
+effect Effect1 = EffectModifyAttacks(1);
+effect Effect2 = EffectAttackDecrease(2, ATTACK_BONUS_MISC);
+
+ApplyEffectToObject(DURATION_TYPE_PERMANENT, Effect1, oPC, 0.0);
+ApplyEffectToObject(DURATION_TYPE_PERMANENT, Effect2, oPC, 0.0);
+
+}
+
+void CheckCombatDexAttack(object oPC)
+{
+//object oPC = GetLocalObject(GetModule(), "PC_IN_COMBAT_WITH_DEXATTACK_ON");
+int iCombat = GetIsInCombat(oPC);
+
+    if(iCombat == TRUE)
+    {
+    DelayCommand(6.0, CheckCombatDexAttack(oPC));
+    }
+    if(iCombat == FALSE)
+    {
+    FloatingTextStringOnCreature("Dexterous Attack Mode Deactivated", oPC, FALSE);
+         effect eEffects = GetFirstEffect(oPC);
+         while (GetIsEffectValid(eEffects))
+        {
+
+         if (GetEffectType(eEffects) == EFFECT_TYPE_ATTACK_INCREASE)
+            {
+             RemoveEffect(oPC, eEffects);
+            }
+
+         eEffects = GetNextEffect(oPC);
+        }
+    DeleteLocalObject(GetModule(), "PC_IN_COMBAT_WITH_DEXATTACK_ON");
+    }
+
+}
+
+void SPMakeAttack(object oTarget, object oImage)
+{
+    int iDead = GetIsDead(oTarget);
+
+    if(iDead == FALSE)
+    {
+     PrintString("TARGET AINT DEAD");
+     DelayCommand(6.0, SPMakeAttack(oTarget, oImage));
+     AssignCommand(oImage, ActionAttack(oTarget, FALSE));
+    }
+    if(iDead == TRUE)
+    {
+    PrintString("TARGET BE DEAD AS A DOORNAIL");
+    DestroyObject(oImage, 0.0);
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_3), GetLocation(oImage), 0.0);
+    }
+
+}
+
+////////////////end Arcane Duelist//////////////////

@@ -296,8 +296,12 @@ $(INCLUDEHAK): $(INCLUDE)
 $(SCRIPTSHAK): $(OBJS) $(SCRIPTS)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $(SCRIPTS)
-	@"$(ERFCOMPILER)" -u $@ $(OBJS) >nul
+	@"$(ERFCOMPILER)" -c $@ $(SRCPATH)\*.nss
+	@"$(ERFCOMPILER)" -u $@ $(OBJPATH)\*.ncs >nul
+# The old version. This one seems to have hit the command line too long problem.
+#	@"$(ERFCOMPILER)" -c $@ $(SCRIPTS)
+#	@"$(ERFCOMPILER)" -u $@ $(OBJS) >nul
+#
 # At some point we may need to use the below method to generate the hak
 # it will add the files to the hak one at a time to prevent command line
 # too long errors, but it runs orders of magnitude slower.

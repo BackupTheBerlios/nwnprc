@@ -568,9 +568,11 @@ void ShiningBlade(object oPC)
 
 void DemiLich(object oPC)
 {
+    SetLocalInt(oPC, "PRC_DemiLich", 0);
+    
     if (GetLocalInt(GetModule(),"PRC_DISABLE_DEMILICH") > 0 && GetLevelByClass(CLASS_TYPE_LICH) >= 4)
     {
-       SetLocalInt(oPC, "PRC_AllowLich", 1); //reverse logic.  1 means don't allow.
+       SetLocalInt(oPC, "PRC_DemiLich", 1); //reverse logic.  1 means don't allow.
     }
 }
 

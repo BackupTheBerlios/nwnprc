@@ -123,12 +123,12 @@ void main()
                                              {
                                                 ActionUseSkill(SKILL_SEARCH, OBJECT_SELF);
                                              }
-                                             MyPrintString("GENERIC SCRIPT DEBUG STRING ********** " + "Assigning Force Follow Command with Search and/or Stealth");
+                                             //MyPrintString("GENERIC SCRIPT DEBUG STRING ********** " + "Assigning Force Follow Command with Search and/or Stealth");
                                              ActionForceFollowObject(oMaster, GetFollowDistance());
                                         }
                                         else
                                         {
-                                             MyPrintString("GENERIC SCRIPT DEBUG STRING ********** " + "Assigning Force Follow Normal");
+                                             //MyPrintString("GENERIC SCRIPT DEBUG STRING ********** " + "Assigning Force Follow Normal");
                                              ActionForceFollowObject(oMaster, GetFollowDistance());
                                              //ActionForceMoveToObject(GetMaster(), TRUE, GetFollowDistance(), 5.0);
                                         }
@@ -156,12 +156,12 @@ void main()
                                  {
                                     ActionUseSkill(SKILL_SEARCH, OBJECT_SELF);
                                  }
-                                 MyPrintString("GENERIC SCRIPT DEBUG STRING ********** " + "Assigning Force Follow Command with Search and/or Stealth");
+                                 //MyPrintString("GENERIC SCRIPT DEBUG STRING ********** " + "Assigning Force Follow Command with Search and/or Stealth");
                                  ActionForceFollowObject(oMaster, GetFollowDistance());
                             }
                             else
                             {
-                                 MyPrintString("GENERIC SCRIPT DEBUG STRING ********** " + "Assigning Force Follow Normal");
+                                 //MyPrintString("GENERIC SCRIPT DEBUG STRING ********** " + "Assigning Force Follow Normal");
                                  ActionForceFollowObject(oMaster, GetFollowDistance());
                             }
                         }

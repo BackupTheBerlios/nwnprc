@@ -109,18 +109,12 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
 
     object oItem ;
 
-    if (iEquip ==2)
-      oItem = GetPCItemLastEquipped();
-    else if (iEquip == 0)
-      oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
-
-    if (GetIsObjectValid(oItem))
+    if (iEquip !=1)
     {
-
+      oItem =GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
       int iType = GetBaseItemType(oItem);
       if (iType == BASE_ITEM_GLOVES)
       {
-
          itemproperty ip = GetFirstItemProperty(oWeapL);
          while (GetIsItemPropertyValid(ip))
          {
@@ -128,25 +122,47 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
             ip = GetNextItemProperty(oWeapL);
          }
 
-         ip = GetFirstItemProperty(oItem);
-         while(GetIsItemPropertyValid(ip))
+      }
+
+
+    }
+    else if (iEquip ==1)
+    {
+       oItem = GetPCItemLastUnequipped();
+
+       if (GetIsObjectValid(oItem))
+      {
+
+         int iType = GetBaseItemType(oItem);
+         if (iType == BASE_ITEM_GLOVES)
          {
-            iType = GetItemPropertyType(ip);
 
-            if ( iType ==ITEM_PROPERTY_ENHANCEMENT_BONUS)
-            {
-               int iCost = GetItemPropertyCostTableValue(ip);
-               AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(iCost),oWeapL);
-               if(iCost>(Enh)) Enh = iCost;
+           itemproperty ip = GetFirstItemProperty(oWeapL);
+           while (GetIsItemPropertyValid(ip))
+           {
+               RemoveItemProperty(oWeapL, ip);
+              ip = GetNextItemProperty(oWeapL);
+           }
 
-            }
-            else
-               AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
+           ip = GetFirstItemProperty(oItem);
+           while(GetIsItemPropertyValid(ip))
+           {
+              iType = GetItemPropertyType(ip);
 
-           ip = GetNextItemProperty(oItem);
+              if ( iType ==ITEM_PROPERTY_ENHANCEMENT_BONUS)
+              {
+                 int iCost = GetItemPropertyCostTableValue(ip);
+                 AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(iCost),oWeapL);
+                 if(iCost>(Enh)) Enh = iCost;
 
+              }
+              else
+                 AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
+
+              ip = GetNextItemProperty(oItem);
+
+           }
          }
-
       }
     }
 

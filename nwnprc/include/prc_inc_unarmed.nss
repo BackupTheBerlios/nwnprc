@@ -251,15 +251,16 @@ void UnarmedFists(object oCreature)
     int iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_4,oCreature) ? 1 : 0 ;
         iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_5,oCreature) ? 2 : iEpicKi ;
     
-    int Enh;
+    int Enh = 0;
           
     iKi += iEpicKi;
+    bDragClaw += iEpicKi;
 
-    Enh = (iKi > iBrawlEnh) ? iKi : iBrawlEnh;
+    Enh = (iKi > Enh) ? iKi : Enh;
+    Enh = (iBrawlEnh > Enh) ? iBrawlEnh : Enh;
+    Enh = (bDragClaw > Enh) ? bDragClaw : Enh;
           
-    Enh += bDragClaw;
-          
-    object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oCreature);
+    object oItem = GetItemInSlot(INVENTORY_SLOT_ARMS,oCreature);
         
     //Strip the Fist.
     itemproperty ip = GetFirstItemProperty(oWeapL);

@@ -1,6 +1,7 @@
 #include "spinc_common"
 #include "inc_item_props"
 #include "inc_combat2"
+#include "prc_inc_sneak"
 
 void main()
 {
@@ -85,27 +86,10 @@ void main()
 
            if (!GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT))
            {
-            iSneakAttack=((GetLevelByClass(CLASS_TYPE_ROGUE,OBJECT_SELF)+1)/2) +
-                         ((GetLevelByClass(CLASS_TYPE_BLACKGUARD,OBJECT_SELF)-1)/3);
-            iDeathAttack= ((GetLevelByClass(CLASS_TYPE_ASSASSIN,OBJECT_SELF)+1)/2) +
-                           GetHasFeat(FEAT_DEATHATTACK, OBJECT_SELF);
-
-             int iEpicSneak = GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_1,OBJECT_SELF) ? 1:0;
-                 iEpicSneak = GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_2,OBJECT_SELF) ? 2:iEpicSneak;
-                 iEpicSneak = GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_3,OBJECT_SELF) ? 3:iEpicSneak;
-                 iEpicSneak = GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_4,OBJECT_SELF) ? 4:iEpicSneak;
-                 iEpicSneak = GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_5,OBJECT_SELF) ? 5:iEpicSneak;
-                 iEpicSneak = GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_6,OBJECT_SELF) ? 6:iEpicSneak;
-                 iEpicSneak = GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_7,OBJECT_SELF) ? 7:iEpicSneak;
-                 iEpicSneak = GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_8,OBJECT_SELF) ? 8:iEpicSneak;
-                 iEpicSneak = GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_9,OBJECT_SELF) ? 9:iEpicSneak;
-                 iEpicSneak = GetHasFeat(FEAT_EPIC_IMPROVED_SNEAK_ATTACK_10,OBJECT_SELF) ? 10:iEpicSneak;
-
-             iSneakAttack+=iEpicSneak+iDeathAttack;
-
-
+            iSneakAttack = GetTotalSneakAttackDice(OBJECT_SELF);
+            iDeathAttack = GetAssassinSneak(OBJECT_SELF);
             iBonus=d6(iSneakAttack);
-
+            
            }
 
 

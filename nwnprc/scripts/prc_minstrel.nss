@@ -9,7 +9,7 @@ void ReducedASF(object oCreature)
     object oShield = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
     object oSkin = GetPCSkin(oCreature);
     int iArmorType = GetBaseAC(oArmor);
-    int iASFMod;
+    int iASFMod = 10;
     int iBonus = GetLocalInt(oSkin, "MinstrelSFBonus");
     int iCostTableValue;
     int iArmorASF = 0;
@@ -25,9 +25,6 @@ void ReducedASF(object oCreature)
     {
         switch (iArmorType)
         {
-            case 0:
-                iASFMod = 10; //nothing will be applied if it stays like this.
-                break;
             case 1:
                 iASFMod = IP_CONST_ARCANE_SPELL_FAILURE_MINUS_5_PERCENT;
                 break;

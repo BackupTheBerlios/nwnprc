@@ -76,6 +76,10 @@ void IronPower(object oPC, object oWeap)
       if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 8)
          iBonus = 2;
 
+      //Stack with Enchantment on Weapon
+      int iEnch = GetWeaponEnhancement(oWeap);
+      iBonus = iBonus + iEnch;
+
       if ((GetLocalInt(oWeap, "DispIronPowerA") != iBonus) && (iBonus))
       {
          SetCompositeBonus(oWeap, "DispIronPowerA", iBonus, ITEM_PROPERTY_ATTACK_BONUS);

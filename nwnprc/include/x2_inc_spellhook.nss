@@ -21,9 +21,18 @@
 
 //#include "x2_inc_itemprop" - Inherited from x2_inc_craft
 #include "x2_inc_craft"
+#include "prc_inc_spells"
 //#include "prc_class_const"
 
 const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
+
+
+
+// Use Magic Device Check.
+// Returns TRUE if the Spell is allowed to be cast, either because the
+// character is allowed to cast it or he has won the required UMD check
+// Only active on spell scroll
+int RedWizRestrictedSchool();
 
 
 // Use Magic Device Check.
@@ -57,6 +66,33 @@ int X2GetSpellCastOnSequencerItem(object oItem);
 
 int X2RunUserDefinedSpellScript();
 
+
+int RedWizRestrictedSchool()
+{
+
+	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, OBJECT_SELF);
+	int nSpell = GetSpellId();
+	int iRWRes;
+	
+	if (iRedWizard > 0)
+	{
+		if (GetHasFeat(FEAT_RW_RES_ABJ, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_ABJURATION;
+		else if (GetHasFeat(FEAT_RW_RES_CON, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_CONJURATION;
+		else if (GetHasFeat(FEAT_RW_RES_DIV, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_DIVINATION;
+		else if (GetHasFeat(FEAT_RW_RES_ENC, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_ENCHANTMENT;
+		else if (GetHasFeat(FEAT_RW_RES_EVO, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_EVOCATION;
+		else if (GetHasFeat(FEAT_RW_RES_ILL, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_ILLUSION;
+		else if (GetHasFeat(FEAT_RW_RES_NEC, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_NECROMANCY;
+		else if (GetHasFeat(FEAT_RW_RES_TRS, OBJECT_SELF)) iRWRes = SPELL_SCHOOL_TRANSMUTATION;
+
+		if (GetSpellSchool(nSpell) == iRWRes)
+		{
+			return FALSE;
+		}
+	}
+
+	return TRUE;
+}
 
 
 int X2UseMagicDeviceCheck()

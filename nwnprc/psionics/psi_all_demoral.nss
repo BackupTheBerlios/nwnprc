@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
     	while(GetIsObjectValid(oTarget))
     	{
-		if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oTarget != OBJECT_SELF)
+		if (oTarget != OBJECT_SELF)
 		{
 			//Check for Power Resistance
 			if (PRCMyResistPower(oCaster, oTarget, nCaster))

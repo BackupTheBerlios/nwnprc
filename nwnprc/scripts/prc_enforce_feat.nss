@@ -17,6 +17,9 @@
 #include "prc_alterations"
 #include "prc_inc_sneak"
 
+//  Prevents a Man at Arms from taking improved critical 
+//  in a weapon that he does not have focus in.
+int ManAtArmsFeats(object oPC = OBJECT_SELF);
 
 // Enforces the proper selection of the Red Wizard feats
 // that are used to determine restricted and specialist
@@ -57,6 +60,68 @@ int LingeringDamage(object oPC = OBJECT_SELF);
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
+
+int ManAtArmsFeats(object oPC = OBJECT_SELF)
+{
+     int bReturnVal = TRUE;
+     int iNumImpCrit = 0;
+     int iMaA = GetLevelByClass(CLASS_TYPE_MANATARMS, oPC);
+     
+     // only continue if they are a MaA taking level 3
+     if(iMaA == 3) return bReturnVal;
+     
+     // if they have improved crit and not weapon focus in that weapon
+     // time to relevel... can only take imp crit if they have the weapon focus
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_BASTARD_SWORD, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_BATTLE_AXE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_CLUB, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_CLUB, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_CREATURE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_CREATURE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_DAGGER, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_DAGGER, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_DART, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_DART, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_DIRE_MACE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_DIRE_MACE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_DOUBLE_AXE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_DOUBLE_AXE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_DWAXE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_DWAXE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_GREAT_AXE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_AXE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_GREAT_SWORD, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_SWORD, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_HALBERD, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_HALBERD, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_HAND_AXE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_HAND_AXE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_HEAVY_CROSSBOW, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_HEAVY_FLAIL, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_FLAIL, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_KAMA, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_KAMA, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_KATANA, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_KATANA, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_KUKRI, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_KUKRI, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_LIGHT_CROSSBOW, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_LIGHT_FLAIL, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_FLAIL, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_LIGHT_HAMMER, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_HAMMER, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_LIGHT_MACE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_MACE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_LONG_SWORD, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_LONG_SWORD, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_LONGBOW, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_LONGBOW, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_MORNING_STAR, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_MORNING_STAR, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_RAPIER, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_RAPIER, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SCIMITAR, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_SCIMITAR, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SCYTHE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_SCYTHE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SHORT_SWORD, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SHORTBOW, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_SHORTBOW, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SHURIKEN, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_SHURIKEN, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SICKLE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_SICKLE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SLING, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_SLING, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SPEAR, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_SPEAR, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_STAFF, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_STAFF, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_THROWING_AXE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_THROWING_AXE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_TWO_BLADED_SWORD, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_UNARMED_STRIKE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_WAR_HAMMER, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     
+     // if they have an improved crit without having the weapon focus
+     // or if they do not have 4 improved critical feats chosen
+     if(bReturnVal != TRUE || iNumImpCrit < 4)
+     {
+          FloatingTextStringOnCreature("You must choose 4 improved critical feats for weapons which you have weapon focus in.  Please reselect your feats.", oPC, FALSE);     
+     }
+     
+     return bReturnVal;  
+}
+
 int RedWizardFeats(object oPC = OBJECT_SELF)
 {
 
@@ -554,7 +619,9 @@ void main()
          || !GenasaiFocus(oPC)
          || !CheckClericShadowWeave(oPC)
          || !LolthsMeat(oPC)
-         || !LingeringDamage(oPC) )
+         || !LingeringDamage(oPC) 
+         || !ManAtArmsFeats(oPC) 
+       )
     {
        int nHD = GetHitDice(oPC);
        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;

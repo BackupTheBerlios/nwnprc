@@ -1,4 +1,5 @@
 #include "prc_inc_spells.nss"
+#include "x2_inc_spellhook"
 
 int GetIsValidAnimate(object oTarget);
 int GetWeaponAnimateSize(object oTarget);
@@ -127,6 +128,14 @@ int GetIsValidAnimate(object oTarget)
 
 void main()
 {
+
+    if (!X2PreSpellCastCode())
+    {
+    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+
+
     object oTarget = GetSpellTargetObject();
     if (GetIsValidAnimate(oTarget))
     {

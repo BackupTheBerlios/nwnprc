@@ -12,7 +12,7 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 
-void AddBrutalStrikeAtk(object oPC)
+void AddFerociousProwess(object oPC)
 {
 	int iAtk = 1;
 	int iDam = 1;

@@ -1,12 +1,9 @@
-#include "heartward_inc"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
+//#include "heartward_inc"
+//#include "prc_class_const"
 #include "soul_inc"
-#include "inc_item_props"
 #include "prc_ip_srcost"
 
-
+/*
 int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 {
 
@@ -59,6 +56,7 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
   return IP_CONST_MONSTERDAMAGE_1d2;
 
 }
+*/
 
 //-1 d2
 //0  d3
@@ -74,7 +72,7 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 //10 3d10
 
 
-void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
+void ClawDragon(object oPC,int Enh,int iEquip)
 {
 
    object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
@@ -92,7 +90,7 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
 
     if (GetTag(oWeapL)!="NW_IT_CREWPB010") return;
 
-      int iDmg =FindUnarmedDmg(oPC,bUnarmedDmg);
+      int iDmg = FindUnarmedDmg(oPC);
 
       int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
 
@@ -107,6 +105,8 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
       Enh+= iKi;
       
     object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
+    
+    int iIntuAtk = GetLocalInt(oItem,"IntuiAtk");
 
     if (iEquip != 1 &&  GetIsObjectValid(oItem))
     {
@@ -142,7 +142,7 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
                   break;
 
               case ITEM_PROPERTY_ATTACK_BONUS:
-                  int iCost = GetItemPropertyCostTableValue(ip);
+                  int iCost = GetItemPropertyCostTableValue(ip)-iIntuAtk;
                   Enh = (iCost>Enh) ? iCost:Enh;
                   break;
 
@@ -250,10 +250,10 @@ void main()
        bEnh =  GetHasFeat(FEAT_CLAWENH2,oPC)   ? 2: bEnh;
        bEnh =  GetHasFeat(FEAT_CLAWENH3,oPC)   ? 3: bEnh;
 
-   int bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE1,oPC) ? 1:0;
-       bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE2,oPC) ? 2:bUnarmedDmg;
+//   int bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE1,oPC) ? 1:0;
+//       bUnarmedDmg = GetHasFeat(FEAT_INCREASE_DAMAGE2,oPC) ? 2:bUnarmedDmg;
 
-   if (bEnh)ClawDragon(oPC,bUnarmedDmg,bEnh,GetLocalInt(oPC,"ONEQUIP"));
+   if (bEnh)ClawDragon(oPC,bEnh,GetLocalInt(oPC,"ONEQUIP"));
 
    if (GetHasFeat(FEAT_INIDR_SPELLRESISTANCE,oPC)) SpellResistancePC(oPC,oSkin,GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,oPC)+15);
    if (GetHasFeat(FEAT_INIDR_STUNSTRIKE,oPC)) StunStrike(oPC,oSkin);

@@ -31,29 +31,6 @@ SendMessageToPC(OBJECT_SELF, "Unarmed Bonus is called");
 
 
 
-     int iClass = GetLevelByClass(CLASS_TYPE_SHOU, OBJECT_SELF);
-     switch (iClass)
-     {
-
-        case 1:
-          iDmg = IP_CONST_MONSTERDAMAGE_1d6;
-	  break;
-        case 2:
-          iDmg = IP_CONST_MONSTERDAMAGE_1d8;
-	  break;
-        case 3:
-          iDmg = IP_CONST_MONSTERDAMAGE_1d10;
-	  break;
-        case 4:
-          iDmg = IP_CONST_MONSTERDAMAGE_1d10;
-	  break;
-        case 5:
-          iDmg = IP_CONST_MONSTERDAMAGE_2d6;
-	  break;
-
-     }
-
-
    if ( oWeapL==OBJECT_INVALID )
    {
       object oSlamL=CreateItemOnObject("NW_IT_CREWPB010",oPC);
@@ -66,6 +43,7 @@ SendMessageToPC(OBJECT_SELF, "Unarmed Bonus is called");
 
     if (GetTag(oWeapL)!="NW_IT_CREWPB010") return;
 
+    iDmg = FindUnarmedDmg(oPC);
 
       int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
 
@@ -80,6 +58,7 @@ SendMessageToPC(OBJECT_SELF, "Unarmed Bonus is called");
       Enh+= iKi;
       
     object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
+    int iIntuAtk = GetLocalInt(oItem,"IntuiAtk");
 
     if (iEquip != 1 &&  GetIsObjectValid(oItem))
     {
@@ -115,7 +94,7 @@ SendMessageToPC(OBJECT_SELF, "Unarmed Bonus is called");
                   break;
 
               case ITEM_PROPERTY_ATTACK_BONUS:
-                  int iCost = GetItemPropertyCostTableValue(ip);
+                  int iCost = GetItemPropertyCostTableValue(ip)-iIntuAtk;
                   Enh = (iCost>Enh) ? iCost:Enh;
                   break;
 

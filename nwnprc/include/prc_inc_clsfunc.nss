@@ -1375,7 +1375,7 @@ void spellsCureMod(int nCasterLvl ,int nDamage, int nMaxExtraDamage, int nMaximi
     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, TRUE);
     if (nMetaMagic == METAMAGIC_MAXIMIZE || iBlastFaith)
     {
-        nDamage = 8 + nExtraDamage;
+        nDamage = nMaximized + nExtraDamage;
         // * if low or normal difficulty then MAXMIZED is doubled.
         if(GetIsPC(OBJECT_SELF) && GetGameDifficulty() < GAME_DIFFICULTY_CORE_RULES)
         {

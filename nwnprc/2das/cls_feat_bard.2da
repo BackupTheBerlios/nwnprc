@@ -142,3 +142,5 @@
 138 FEAT_MANYSHOT                        3306      0    -1             1      
 139 FEAT_IMP_MANYSHOT                    3350      0    -1             1      
 140 Pinpoint_Accuracy                    3351      0    -1             1      
+141 FEAT_NIMBUSOFLIGHT                              3165      1     -1   1
+142 FEAT_SERVHEAVEN                                  3355      1     -1   1

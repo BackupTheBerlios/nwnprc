@@ -8,30 +8,38 @@
    Modified On: 2004-5-13
 */
 
-#include "NW_I0_SPELLS"    
+#include "NW_I0_SPELLS"
+#include "prc_feat_const"
+#include "inc_item_props"
+#include "x2_inc_itemprop"
 
 void main(){
 
-    //Declare major variables
-    object oTarget;
-    effect ePosVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
+   //Declare major variables
+   object oTarget;
+   object oSkin = GetPCSkin(OBJECT_SELF);
+   effect ePosVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
 
-    int nBonus = 1;
-    effect eBonAttack = EffectAttackIncrease(nBonus);
-    effect eBonSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nBonus);
-    effect eBonDam = EffectDamageIncrease(nBonus, DAMAGE_TYPE_SLASHING);
-    effect eBonSkill = EffectSkillIncrease(SKILL_ALL_SKILLS, nBonus);
-    effect ePosDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+   int nBonus = 1;
+   effect eBonAttack = EffectAttackIncrease(nBonus);
+   effect eBonSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nBonus);
+   effect eBonDam = EffectDamageIncrease(nBonus, DAMAGE_TYPE_SLASHING);
+   effect eBonSkill = EffectSkillIncrease(SKILL_ALL_SKILLS, nBonus);
+   effect ePosDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
-    effect ePosLink = EffectLinkEffects(eBonAttack, eBonSave);
-    ePosLink = EffectLinkEffects(ePosLink, eBonDam);
-    ePosLink = EffectLinkEffects(ePosLink, eBonSkill);
-    ePosLink = EffectLinkEffects(ePosLink, ePosDur);
+   effect ePosLink = EffectLinkEffects(eBonAttack, eBonSave);
+   ePosLink = EffectLinkEffects(ePosLink, eBonDam);
+   ePosLink = EffectLinkEffects(ePosLink, eBonSkill);
+   ePosLink = EffectLinkEffects(ePosLink, ePosDur);
 
-    //Fire spell cast at event for target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_PRAYER, FALSE));
-    //Apply VFX impact and bonus effects
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, ePosVis, OBJECT_SELF);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePosLink, OBJECT_SELF, 9.0);
+
+   if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD){
+
+      //Fire spell cast at event for target
+      SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_PRAYER, FALSE));
+      //Apply VFX impact and bonus effects
+      ApplyEffectToObject(DURATION_TYPE_INSTANT, ePosVis, OBJECT_SELF);
+      ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePosLink, OBJECT_SELF, 9.0);
+   }
 
 }

@@ -69,3 +69,5 @@
 65    MassHeal                              3424        3      8                1        
 66    FearAura2                             3429        3      9                1        
 67    ImplicableFoe                         3420        3      10               1        
+68   FEAT_NIMBUSOFLIGHT                              3165      1     -1   1
+69   FEAT_SERVHEAVEN                                  3355      1     -1   1

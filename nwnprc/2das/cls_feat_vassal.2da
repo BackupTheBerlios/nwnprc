@@ -314,3 +314,5 @@
 310   VASSALCIRCLE                                     2423        3      8                1        
 311   VASSALLIGHT                                      2424        3      9                1        
 312   DRAGONWRACK4D6                                   2419        3      10               0        
+313 FEAT_NIMBUSOFLIGHT                              3165      1     -1   1
+314 FEAT_SERVHEAVEN                                  3355      1     -1   1

@@ -158,7 +158,8 @@ PRC_TIMESTOP_NO_HOSTILE while in a timestop, the caster cannot perform hostile
 actions. This isn't perfect, some feats still work for example. <br>
 PRC_TIMESTOP_BLANK_PC when the victim of a timestop the PC cannot see what the 
 caster is doing. This may scare players when they don't know about it. <br>
-PRC_MUTLISUMMON you can have multiple summons at once, without any limit.<br>
+PRC_MUTLISUMMON you can have multiple summons at once, without any limit on 
+number.<br>
 PRC_SUMMON_ROUND_PER_LEVEL summoned creatures have a duration of rounds equal to 
 this variable multiplied by caster level <br>
 PRC_STAFF_CASTER_LEVEL spells cast from magic staffs use the wielders caster 
@@ -169,6 +170,19 @@ bioware wild magic local had been set on all areas in the module. </p>
 </div>
 
 <p>For a full list of these variables see prc_inc_switch in prc_include.hak</p>
+
+<p><u><b>Respawning Doors</b></u></p>
+<p>There is a very simple respawning door system included in the PRC. It 
+consists of two scripts, door_damaged and door_ud. Simply put the door_ud script 
+in a doors OnUserDefinedEvents script slot, and put door_damaged in OnDamaged 
+slot. You also have to set the doors HP to a very high number, 200 or higher. 
+You may also want to set a local variable named DoorMaxHP of type int on the 
+door, this controls the maximum number of hit point the door has. It is also a 
+good idea to set another local variable named DoorHP of type int on the door as 
+this is the number of hitpoints the door starts with.</p>
+<p>That's all there is to it. When you want the door to respawn, send it a 
+userdefined event number 500. This does not lock the door in any way, it mearly 
+makes it re-appear with full hit points.</p>
 
 </body>
 

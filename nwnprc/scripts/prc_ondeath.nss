@@ -34,10 +34,10 @@ void main()
             if(oKiller != oPlayer
                 && !GetIsFriend(oKiller, oPlayer)
                 && (GetIsObjectValid(GetFirstFactionMember(oKiller, TRUE))
-                    || GetPRCSwitch(PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS))
+                    || GetPRCSwitch(PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS)))
             {
                 object oTest = GetFirstFactionMember(oKiller, !GetPRCSwitch(PRC_XP_GIVE_XP_TO_NPCS));
-                while(GetIsObjectValid(oTest)
+                while(GetIsObjectValid(oTest))
                 {
                     float fDistance = GetDistanceToObject(oTest);
                     int nLevelDist = abs(GetECL(oTest)-GetECL(oKiller));

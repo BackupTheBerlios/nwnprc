@@ -6,10 +6,9 @@ xmlns="http://www.w3.org/TR/REC-html40">
 
 <head>
 <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
-<meta name=ProgId content=Word.Document>
-<meta name=Generator content="Microsoft Word 10">
+<meta name=ProgId content=FrontPage.Editor.Document>
+<meta name=Generator content="Microsoft FrontPage 5.0">
 <meta name=Originator content="Microsoft Word 10">
-<link rel=File-List href="BuilderExamples_files/filelist.xml">
 <title>Player Resource Consortium</title>
 <!--[if gte mso 9]><xml>
  <o:DocumentProperties>
@@ -48,13 +47,12 @@ xmlns="http://www.w3.org/TR/REC-html40">
  /* Style Definitions */
  p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{mso-style-parent:"";
-	margin:0cm;
 	margin-bottom:.0001pt;
 	mso-pagination:widow-orphan;
 	font-size:12.0pt;
 	font-family:"Times New Roman";
 	mso-fareast-font-family:"Times New Roman";
-	color:silver;}
+	color:silver; margin-left:0cm; margin-right:0cm; margin-top:0cm}
 a:link, span.MsoHyperlink
 	{color:blue;
 	text-decoration:underline;
@@ -148,13 +146,11 @@ div.Section1
 	mso-para-margin-bottom:.0001pt;
 	mso-pagination:widow-orphan;
 	font-size:10.0pt;
-	font-family:"Times New Roman";}
+	font-family:"Times New Roman"}
 </style>
 <![endif]-->
 <meta http-equiv=Content-Language content=en-gb>
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="2050"/>
-</xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
  </o:shapelayout></xml><![endif]-->
@@ -386,75 +382,6 @@ NOTE: The only minor problem I have seen is that you have a bare skeleton head
 instead of the lich head, but I can live with that. If you cant, you just have
 to rename the head models I think. SetAppearance gives all body parts number
 001.</p>
-
-<p>&nbsp;</p>
-
-<p><b><u>NPCs and the PRC</u></b></p>
-
-<p>Ok then, here is a short introduction to getting NPCs to begin to work with
-the new PRC classes. The PRC has added some scripts you need to hook into NPC
-scripts in order to have the PRC passive abilities. Simply add ExecuteScript(“NAMEOFSCRIPT”,
-OBJECT_SELF); somewhere in the AI script for each event. Most of these scripts
-do not do anything at the moment, but they might do in future versions.</p>
-
-<p>OnBlocked prc_npc_blocked</p>
-
-<p>OnCombatRoundEnd prc_npc_combat</p>
-
-<p>OnConversation prc_npc_conv</p>
-
-<p>OnDamaged prc_npc_damaged</p>
-
-<p>OnDeath prc_npc_death</p>
-
-<p>OnDisturbed prc_npc_disturb</p>
-
-<p>OnHeartbeat prc_npc_hb</p>
-
-<p>OnPerception prc_npc_percep</p>
-
-<p>OnPhysicalAttacked prc_npc_physatt</p>
-
-<p>Onrested prc_npc_rested</p>
-
-<p>OnSpawns prc_npc_spawn</p>
-
-<p>OnSpellCastAt prc_npc_spellat</p>
-
-<p>OnUserdefined prc_npc_userdef<o:p></o:p></p>
-
-<p><o:p>&nbsp;</o:p></p>
-
-<p>That's it! Of course, this doesn’t mean that the NPC will actually use any
-of its new powers, but at least it is not missing out on anything. There are
-still some problems with NPCs<br>
-<br>
-1) They don't use the active powers in any intelligent manner. They may use
-them as part of the Talent functions, but don't bet on it! Bioware default AI
-is better for this than most others. The exception that proves the rule is the
-epic spells. A basic wrapper AI has been implemented for many of the new epic
-spells. In order to use it, you don’t have to do anything once the scripts are
-hooked as above. If you want to manually setup NPCs to have specific spells,
-simply add the correct feat to the character and the system will detect that they
-have been setup and will not give them any free epic spells. You might also
-want to adjust a local variable called NPC_XP, this is used to burn XP for
-certain epic spells that need it. It is treated exactly the same as PC XP, so
-that it can only go down to the minimum for the NPCs level. Once this is setup,
-be prepared for much tougher combats; any players will be shocked as spells
-such as Nailed To The Sky take out melee tanks, party members are trapped with
-Enslave, and the entire party is petrified with Audience Of Stone.<br>
-<br>
-2) The toolset will throw up errors whenever the LevelUp or Character Wizards
-are used with the certain classes. We are not sure why it does it, and it only
-does it with certain classes. The best way around the problem is to hand make
-them, but your doing that anyway, right?<br>
-<br>
-And plenty of other, more specific, problems.<br>
-&nbsp;</p>
-
-<p>&nbsp;</p>
-
-<p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
 </div>
 

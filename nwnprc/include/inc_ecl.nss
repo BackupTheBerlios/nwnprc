@@ -23,8 +23,8 @@ int GetECL(object oTarget)
   //   level = 0.5 + sqrt(0.25 + (t/500))
   //
     if(GetPRCSwitch(PRC_ECL_USES_XP_NOT_HD)
-        && (GetIsPC(oPC) || GetLocalInt(oPC, "NPC_XP")))
-        nLevel = FloatToInt(0.5 + sqrt(0.25 + ( IntToFloat(GetXP(oPC)) / 500 )));
+        && (GetIsPC(oTarget) || GetLocalInt(oTarget, "NPC_XP")))
+        nLevel = FloatToInt(0.5 + sqrt(0.25 + ( IntToFloat(GetXP(oTarget)) / 500 )));
     else
         nLevel = GetHitDice(oTarget);
     int nRace = GetRacialType(oTarget);
@@ -48,14 +48,14 @@ void GiveXPReward(object oPC, object oTarget)
         ECL = 1;
     if(ECL > 60)
         ECL = 60;
-    int nBaseXP = StringToInt(Get2DACache("dmgxp", IntToString(nCR), nECL-1));
+    int nBaseXP = StringToInt(Get2DACache("dmgxp", IntToString(nCR), ECL-1));
     if(nBaseXP == 0)
         return;
     
     //count the size of the party
     
-    int nPartyCount;
-    object oTest = GetFirstFactionMemeber(oPC, FALSE);
+    float fPartyCount;
+    object oTest = GetFirstFactionMember(oPC, FALSE);
     while(GetIsObjectValid(oTest))
     {
         if(GetAssociateType(oTest) == ASSOCIATE_TYPE_NONE)
@@ -70,7 +70,7 @@ void GiveXPReward(object oPC, object oTarget)
             fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_FAMILIAR_PARTY_COUNT_x100))/100.0;
         if(GetAssociateType(oTest) == ASSOCIATE_TYPE_SUMMONED)
             fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_SUMMONED_PARTY_COUNT_x100))/100.0;
-        oTest = GetNextFactionMemeber(oPC, FALSE);
+        oTest = GetNextFactionMember(oPC, FALSE);
     }
     //incase something weird is happenening
     if(fPartyCount == 0.0)
@@ -95,7 +95,7 @@ void GiveXPReward(object oPC, object oTarget)
         int nClass = PRCGetClassByPosition(i, oPC);
         if(nClassLevel > nHighestClassLevel
             && Get2DACache("classes", "XPPenalty", nClass) != "1"
-            && Get2DACache("racialtypes", "Favored", nClass) != StringToInt(nClass)
+            && Get2DACache("racialtypes", "Favored", nClass) != IntToString(nClass)
             && Get2DACache("racialtypes", "Favored", nClass) != "")
              fPenalty += 0.2;
     }
@@ -109,7 +109,7 @@ void GiveXPReward(object oPC, object oTarget)
     
     if(GetIsPC(oPC))
     {
-        if(GetPRCSwitch(PRC_XP_USE_SETXP)
+        if(GetPRCSwitch(PRC_XP_USE_SETXP))
             SetXP(oPC, GetXP(oPC)+nXPAward);
         else
             GiveXPToCreature(oPC, nXPAward);
@@ -135,7 +135,7 @@ to cause experience to be adjusted according to ECL.
 const string sLEVEL_ADJUSTMENT = "ecl_LevelAdjustment";
 const string sXP_AT_LAST_HEARTBEAT = "ecl_LastExperience";
 
-int ApplyECLToXP(object oPC);
+void ApplyECLToXP(object oPC);
 
 int GetXPForLevel(int nLevel)
 {
@@ -148,7 +148,7 @@ void ApplyECLToXP(object oPC)
         return;
     int nRace = GetRacialType(oPC);
     int iLvlAdj = StringToInt(Get2DACache("ECL", "LA", nRace));
-    if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA)
+    if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA))
         iLvlAdj += StringToInt(Get2DACache("ECL", "RaceHD", nRace));
     if(iLvlAdj != 0)
     {

@@ -23,6 +23,74 @@
 
 #include "x2_inc_spellhook"
 
+#include "x2_inc_itemprop"
+#include "x2_inc_shifter"
+
+void PolyAndMergeEquipment(float fDur, int iLvl)
+{
+    // Get The PC's Equipment
+    object oWeaponOld = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF);
+    object oArmorOld  = GetItemInSlot(INVENTORY_SLOT_CHEST,OBJECT_SELF);
+    object oRing1Old  = GetItemInSlot(INVENTORY_SLOT_LEFTRING,OBJECT_SELF);
+    object oRing2Old  = GetItemInSlot(INVENTORY_SLOT_RIGHTRING,OBJECT_SELF);
+    object oAmuletOld = GetItemInSlot(INVENTORY_SLOT_NECK,OBJECT_SELF);
+    object oCloakOld  = GetItemInSlot(INVENTORY_SLOT_CLOAK,OBJECT_SELF);
+    object oBootsOld  = GetItemInSlot(INVENTORY_SLOT_BOOTS,OBJECT_SELF);
+    object oBeltOld   = GetItemInSlot(INVENTORY_SLOT_BELT,OBJECT_SELF);
+    object oHelmetOld = GetItemInSlot(INVENTORY_SLOT_HEAD,OBJECT_SELF);
+    object oShield    = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,OBJECT_SELF);
+    
+        if (GetIsObjectValid(oShield))
+        {
+            if (GetBaseItemType(oShield) !=BASE_ITEM_LARGESHIELD &&
+                GetBaseItemType(oShield) !=BASE_ITEM_SMALLSHIELD &&
+                GetBaseItemType(oShield) !=BASE_ITEM_TOWERSHIELD)
+            {
+                oShield = OBJECT_INVALID;
+            }
+        }
+
+    // Polymorph
+    effect ePoly = EffectPolymorph(28);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, fDur, TRUE, -1, iLvl);
+
+    // Get the Polymorph's stuff
+    object oWeaponNew = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF);
+    object oArmorNew = GetItemInSlot(INVENTORY_SLOT_CARMOUR,OBJECT_SELF);
+
+    // Buffs you up based on your equipment
+    IPWildShapeCopyItemProperties(oWeaponOld,oWeaponNew, TRUE);
+
+    IPWildShapeCopyItemProperties(oArmorOld,oArmorNew);
+    IPWildShapeCopyItemProperties(oHelmetOld,oArmorNew);
+    IPWildShapeCopyItemProperties(oShield,oArmorNew);
+
+    IPWildShapeCopyItemProperties(oRing1Old,oArmorNew);
+    IPWildShapeCopyItemProperties(oRing2Old,oArmorNew);
+    IPWildShapeCopyItemProperties(oAmuletOld,oArmorNew);
+    IPWildShapeCopyItemProperties(oCloakOld,oArmorNew);
+    IPWildShapeCopyItemProperties(oBootsOld,oArmorNew);
+    IPWildShapeCopyItemProperties(oBeltOld,oArmorNew);
+}
+
+int CalculateAttackBonus()
+{
+   int iBAB = GetBaseAttackBonus(OBJECT_SELF);
+   int iHD = GetHitDice(OBJECT_SELF);
+   int iBonus = (iHD > 20) ? ((20 + (iHD - 20) / 2) - iBAB) : (iHD - iBAB); // most confusing line ever. :)
+   
+   return (iBonus > 0) ? iBonus : 0;
+}
+
+int CalculateFortitudeBonus()
+{
+   int iFort = GetFortitudeSavingThrow(OBJECT_SELF);
+   int iFigFort = GetHitDice(OBJECT_SELF) / 2 + 2;
+   int iBonus = iFigFort - iFort;
+   
+   return (iBonus > 0) ? iBonus : 0;
+}
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
@@ -81,28 +149,27 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         nDuration *= 2;
     }
     //Declare effects
-    effect eAttack = EffectAttackIncrease(CasterLvl/2);
-    effect eSave = EffectSavingThrowIncrease(SAVING_THROW_FORT, 5);
+    effect eAttack = EffectAttackIncrease(CalculateAttackBonus());
+    effect eSave = EffectSavingThrowIncrease(SAVING_THROW_FORT, CalculateFortitudeBonus());
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect ePoly = EffectPolymorph(28);
     effect eSwing = EffectModifyAttacks(CalcNumberOfAttacks());
 
     //Link effects
-    effect eLink = EffectLinkEffects(eAttack, ePoly);
-
-    eLink = EffectLinkEffects(eLink, eSave);
+    effect eLink = EffectLinkEffects(eAttack, eSave);
     eLink = EffectLinkEffects(eLink, eDur);
     eLink = EffectLinkEffects(eLink, eSwing);
 
     effect eHP = EffectTemporaryHitpoints(nHP);
 
-    effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
+    //effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
     //Signal Spell Event
     SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_TENSERS_TRANSFORMATION, FALSE));
 
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
+    //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), OBJECT_SELF);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, OBJECT_SELF, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
+    PolyAndMergeEquipment(RoundsToSeconds(nDuration), CasterLvl);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the integer used to hold the spells spell school

@@ -44,6 +44,8 @@ void main()
     ExecuteScript("prc_prereq", oPC);
     ExecuteScript("prc_enforce_feat", oPC);
     PatronShar(oPC);
-    DelayCommand(1.0, FeatSpecialUsePerDay(oPC));
-    
+    DelayCommand(1.0, FeatSpecialUsePerDay(oPC)); 
+
+    // These scripts fire events that should only happen on levelup
+    ExecuteScript("prc_vassal_treas", oPC);
 }

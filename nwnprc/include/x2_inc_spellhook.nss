@@ -245,7 +245,8 @@ int X2PreSpellCastCode()
 {
    object oTarget = GetSpellTargetObject();
    int nContinue;
-
+   
+   DeleteLocalInt(OBJECT_SELF, "SpellConc");
    ExecuteScript("prespellcode",OBJECT_SELF);
 
     if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))

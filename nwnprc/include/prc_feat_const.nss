@@ -36,7 +36,7 @@ const int FEAT_SHADOWWEAVE                             = 2960;
 const int FEAT_TENACIOUSMAGIC                          = 2961;
 const int FEAT_PERNICIOUSMAGIC                         = 2962;
 const int FEAT_INSIDIOUSMAGIC                          = 2963;
-
+const int FEAT_UNHOLY_STRIKE                           = 3451;
 
 //Active Feats
 
@@ -809,6 +809,7 @@ const int FEAT_DRAGONSONG_COMPULSION    = 3442;
 const int FEAT_DRAGONSONG_SPEED         = 3443;
 const int FEAT_DRAGONSONG_FEAR          = 3444;
 const int FEAT_DRAGONSONG_HEALING       = 3445;
+const int FEAT_LYRITHSONG1              = 3446;
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////

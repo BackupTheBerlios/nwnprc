@@ -172,7 +172,7 @@ public class Main{
 	public static ErrorPrinter err_pr = new ErrorPrinter();
 	
 	/** A switche determinining how errors are handled */
-	public static boolean tolErr = false;
+	public static boolean tolErr = true;
 	
 	/**
 	 * A boolean determining whether to print progress information
@@ -236,7 +236,7 @@ public class Main{
 				readMe();
 			
 			if(opt.startsWith("-")){
-				if(opt.contains("e"))
+				if(opt.contains("a"))
 					tolErr = true;
 				if(opt.contains("q"))
 					verbose = false;
@@ -280,9 +280,9 @@ public class Main{
 	 */
 	private static void readMe(){
 		System.out.println("Usage:\n"+
-		                   "  java prc/autodoc/Main [--help][-eqs?]\n"+
+		                   "  java prc/autodoc/Main [--help][-aqs?]\n"+
 		                   "\n"+
-		                   "-e     does not abort printing on errors\n"+
+		                   "-a     forces aborting printing on errors\n"+
 		                   "-q     quiet mode. Does not print any progress info, only failure messages\n"+
 		                   "-s     disable the spinner. Useful when logging to file\n"+
 		                   "\n"+
@@ -1253,6 +1253,85 @@ public class Main{
 			toReturn += "</table>\n";
 		}
 		
+		return toReturn;
+	}
+	
+	/**
+	 * Constructs the html table of the class & cross-class skills of this class.
+	 * TreeMaps are used to arrange the printed skills in alphabetic order.
+	 *
+	 * @param classes2da  data structure wrapping classes.2da
+	 * @param entryNum    number of the entry to generate table for
+	 *
+	 * @return  string representation of the table
+	 *
+	 * @throws PageGenerationException if reading the 2das fails
+	 */
+	private static String buildSkillTable(Data_2da classes2da, int entryNum){
+		Data_2da skillTable  = null;
+		try{
+			skillTable = twoDA.get(classes2da.getEntry("SkillsTable", entryNum));
+		}catch(TwoDAReadException e){
+			if(tolErr){
+				err_pr.println("Failed to read CLS_SKILL_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
+				return "";
+			}
+			else throw new PageGenerationException("Failed to read CLS_SKILL_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
+		}
+		String toReturn = skillTableHeaderTemplate;
+		String temp = null;
+		SkillEntry tempSkill = null;
+		TreeMap<String, SkillEntry> classSkills      = new TreeMap<String, SkillEntry>(),
+		                            crossClassSkills = new TreeMap<String, SkillEntry>();
+		
+		for(int i = 0; i < skillTable.getEntryCount(); i++){
+			temp = skillTable.getEntry("ClassSkill", i);
+			// Yet more validity checking :P
+			if(!(temp.equals("0") || temp.equals("1"))){
+				if(tolErr){
+					err_pr.println("Invalid ClassSkill entry in " + skillTable.getName() + " on row " + i);
+					continue;
+				}else throw new PageGenerationException("Invalid ClassSkill entry in " + skillTable.getName() + " on row " + i);
+			}
+			
+			try{
+				tempSkill = skills.get(Integer.parseInt(skillTable.getEntry("SkillIndex", i)));
+			}catch(NumberFormatException e){
+				if(tolErr){
+					err_pr.println("Invalid SkillIndex entry in " + skillTable.getName() + " on row " + i);
+					continue;
+				}else throw new PageGenerationException("Invalid SkillIndex entry in " + skillTable.getName() + " on row " + i);
+			}
+			if(tempSkill == null){
+				if(tolErr){
+					err_pr.println("SkillIndex entry in " + skillTable.getName() + " on row " + i + " points to non-existent skill");
+					continue;
+				}else throw new PageGenerationException("SkillIndex entry in " + skillTable.getName() + " on row " + i + " points to non-existent skill");
+			}
+			
+			if(temp.equals("0")) classSkills.put(tempSkill.name, tempSkill);
+			else            crossClassSkills.put(tempSkill.name, tempSkill);
+		}
+		
+		while(classSkills.size() > 0 || crossClassSkills.size() > 0){
+			toReturn += "\n<tr>";
+			
+			if(classSkills.size() > 0){
+				tempSkill = classSkills.remove(classSkills.firstKey());
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=" + tempSkill.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + tempSkill.name + "</a>") + "\n";
+			}else
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
+			
+			if(crossClassSkills.size() > 0){
+				tempSkill = crossClassSkills.remove(crossClassSkills.firstKey());
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=" + tempSkill.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + " target=\"content\">" + tempSkill.name + "</a>") + "\n";
+			}else
+				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
+			
+			toReturn += "</tr>\n";
+		}
+		
+		toReturn += "</table>\n";
 		return toReturn;
 	}
 }

@@ -1,26 +1,25 @@
 /*
    ----------------
-   Mind Thrust
+   Mindwipe
    
-   prc_all_mndthrst
+   prc_pow_mindwipe
    ----------------
 
-   21/10/04 by Stratovarius
+   19/2/04 by Stratovarius
 
-   Class: Psion / Wilder
-   Power Level: 1
+   Class: Psion/Wilder
+   Power Level: 4
    Range: Short
    Target: One Creature
    Duration: Instantaneous
-   Saving Throw: Will negates
+   Saving Throw: Fortitude negates
    Power Resistance: Yes
-   Power Point Cost: 1
+   Power Point Cost: 7
    
-   You instantly deliver a massive assault on the thought pathways of any 
-   one creature, dealing 1d10 points of damage to it.
+   You partially wipe your victim's mind of past experiences, bestowing two negative levels.
    
-   Augment: For every additional power point spend, this power's damage increases by 1d10. 
-   For each extra 2d10 points of damage, this power's save DC increases by 1.
+   Augment: For every 3 additional power points spend, this power bestows an extra negative level.
+   For every 2 additional power points spent in this way, the DC increases by 1.
 */
 
 #include "psi_inc_psifunc"
@@ -50,11 +49,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
+    int nAugCost = 3;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     object oTarget = GetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
     
     if (nSurge > 0)
     {
@@ -67,33 +66,32 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	int nDice = 1;
-	int nDiceSize = 10;
+	int nDrain = 2;
+	
+	if (nSurge > 0) nAugment += nSurge;
 	
 	//Augmentation effects to Damage
 	if (nAugment > 0) 
 	{
-		nDice += nAugment;
-		nDC += nAugment/2;
+		nDrain += nAugment;
+		nDC += (nAugment * 3)/2;
 	}
 	
-	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
-	
-	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-	effect eLink = EffectLinkEffects(eMind, eDam);
+	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    	effect eDrain = EffectNegativeLevel(nDrain);
+    	effect eLink = EffectLinkEffects(eDrain, eDur);
 	
 	//Check for Power Resistance
 	if (PRCMyResistPower(oCaster, oTarget, nPen))
 	{
             //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
             
                 //Make a saving throw check
-                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NEGATIVE))
                 {
                         //Apply VFX Impact and daze effect
-                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(2),TRUE,-1,nCaster);
                 }
 	}
     }

@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nCaster = GetManifesterLevel(oCaster);
 	float fDur = 60.0 * nCaster;
-	
+	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCaster);	
 		
 	if (nSurge > 0) nAugment += nSurge;
 	
@@ -85,6 +85,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	// Variable for Energy Type
 	SetLocalInt(oTarget, "PsiEnRetort", 1);
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur,TRUE,-1,nCaster);
-	DelayCommand(fDur, SetLocalInt(oTarget, "PsiEnRetort", 0));
+	IPSafeAddItemProperty(oArmor, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+	DelayCommand(fDur, DeleteLocalInt(oTarget, "PsiEnRetort"));
     }
 }

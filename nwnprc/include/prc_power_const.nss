@@ -81,6 +81,7 @@ const	int	POWER_MINDDISRUPT		= 14080;
 const	int	POWER_RECALLAGONY		= 14081;
 const	int	POWER_THOUGHTSHIELD		= 14082;
 const	int	POWER_DISSOLVEWEAP		= 14083;
+const   int 	POWER_SHAREPAIN		   	= -1; // FIX ME
 
 // Level 3 Powers
 const	int	POWER_BODYADJUST		= 14101;
@@ -106,10 +107,17 @@ const   int 	POWER_KEENEDGE   		= -1; // FIX ME
 const   int 	POWER_MENTALBARRIER   		= -1; // FIX ME
 const   int 	POWER_MINDTRAP   		= -1; // FIX ME
 const   int 	POWER_TOUCHSIGHT   		= -1; // FIX ME
+const   int 	POWER_SHAREPAINFORCED   	= -1; // FIX ME
 
 // Level 4 Powers
 const	int	POWER_INERTBARRIER		= 14151;
 const	int	POWER_STEADFASTPERCEP		= 14152;
+const   int 	POWER_DIMENSIONDOOR	   	= -1; // FIX ME
+const   int 	POWER_EMPATHICFEEDBACK	   	= -1; // FIX ME
+const   int 	POWER_ENERGYADAPTION	   	= -1; // FIX ME
+const   int 	POWER_FREEDOM		   	= -1; // FIX ME
+const   int 	POWER_MINDWIPE		   	= -1; // FIX ME
+const   int 	POWER_POWERLEECH	   	= -1; // FIX ME
 
 // Level 5 Powers
 const	int	POWER_BALEFULTEL		= 14191;

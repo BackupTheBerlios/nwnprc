@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	}
 	
 	
-	if (GetWeight(oTarget) <= nWeight)
+	if (GetWeight(oTarget) <= nWeight && GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
 	{
 		CopyItem(oTarget, oCaster, FALSE);
 		DestroyObject(oTarget);

@@ -219,6 +219,18 @@ void main()
 		ExecuteScript("psi_ast_con_ptch", oSpellOrigin);
 	}
    
+   
+   // Share Pain and Share Pain, Forced
+   if(GetLocalInt(oSpellOrigin, "SharePain") == TRUE && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+   {              
+           DelayCommand(0.01, ExecuteScript("psi_sharepain",OBJECT_SELF));
+   }
+   
+   // Empathic Feedback
+   if(GetLocalInt(oSpellOrigin, "EmpathicFeedback") == TRUE && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+   {              
+           DelayCommand(0.01, ExecuteScript("psi_empathicfeed",OBJECT_SELF));
+   }   
    /*//////////////////////////////////////////////////
    //////////////// END PSIONICS //////////////////////
    //////////////////////////////////////////////////*/   

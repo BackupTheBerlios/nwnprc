@@ -33,16 +33,19 @@ int GetModifierPP (object oCaster)
    
    if (nPsion > 0)
    {
+	if (nPsion > 20)	nPsion = 20;
    	nBonus = (nPsion * GetAbilityModifier(ABILITY_INTELLIGENCE, oCaster)) / 2;
    	nPP = nBonus + nPP;
    }
    if (nPsychic > 0)
    {
+	if (nPsychic > 20)	nPsychic = 20;
    	nBonus = (nPsychic * GetAbilityModifier(ABILITY_WISDOM, oCaster)) / 2;
    	nPP = nBonus + nPP;
    }   
    if (nWilder > 0)
    {
+	if (nWilder > 20)	nWilder = 20;
    	nBonus = (nWilder * GetAbilityModifier(ABILITY_CHARISMA, oCaster)) / 2;
    	nPP = nBonus + nPP;
    }

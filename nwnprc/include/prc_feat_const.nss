@@ -1375,7 +1375,10 @@ const int FEAT_WILDER_VOLATILE_MIND_3            = 3573;
 const int FEAT_WILDER_VOLATILE_MIND_4            = 3574;
 
 //Psion - Nomad Powers
-const int FEAT_PSI_BALE_TELEPORT	         = 3553;
+const int FEAT_NOMAD_BALE_TELEPORT	         = 3553;
+
+//Psion - Shaper Powers
+const int FEAT_SHAPER_CRYSTALLIZE	         = 3599;
 
 //Psion - Telepath Powers
 const int FEAT_TELEPATH_CRISIS_OF_LIFE	         = 3579;
@@ -1384,6 +1387,14 @@ const int FEAT_TELEPATH_CHARM_PERSON	         = 3583;
 
 //Psion - Specialist / Psychic Warrior Powers
 const int FEAT_SHAPERPSYWAR_GAMORPHA		 = 3585;
+const int FEAT_KINETICPSYWAR_INERTIAL_BARRIER	 = 3593;
+const int FEAT_EGOISTPSYWAR_THICK_SKIN		 = 3597;
+
+//Psychic Warrior Powers
+const int FEAT_PSYWAR_DISSOLVING_TOUCH 	         = 3600;
+const int FEAT_PSYWAR_EXHALATION_BLACKDRAG       = 3601;
+const int FEAT_PSYWAR_STEADFAST_PERCEPTION       = 3602;
+const int FEAT_PSYWAR_STOMP			 = 3603;
 
 //Non-Class Specific Powers
 const int FEAT_PSIONWILD_MIND_THRUST	         = 3567;
@@ -1393,3 +1404,14 @@ const int FEAT_PSIONWILD_CALL_TO_MIND	         = 3577;
 const int FEAT_PSIONWILD_CRYSTAL_SHARD	         = 3578;
 const int FEAT_ALL_BODY_ADJUSTMENT		 = 3580;
 const int FEAT_ALL_CONCEAL_AMORPHA		 = 3584;
+const int FEAT_ALL_DARKVISION			 = 3586;
+const int FEAT_ALL_DAZE				 = 3587;
+const int FEAT_ALL_DECELERATION			 = 3588;
+const int FEAT_ALL_DISINTEGRATE			 = 3589;
+const int FEAT_ALL_DISSIPATING_TOUCH		 = 3590;
+const int FEAT_ALL_FORCE_SCREEN			 = 3591;
+const int FEAT_ALL_INERTIAL_ARMOUR		 = 3592;
+const int FEAT_PSIONWILD_PSIBLAST		 = 3594;
+const int FEAT_PSIONWILD_RECALL_AGONY		 = 3595;
+const int FEAT_PSIONWILD_RECALL_DEATH		 = 3596;
+const int FEAT_ALL_VIGOR			 = 3598;

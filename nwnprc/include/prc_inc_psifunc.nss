@@ -125,7 +125,7 @@ int GetManifesterLevel(object oCaster)
 
 int PsychicWarriorLevel(int nSpell)
 {
-	if (nSpell == 2372)
+	if (nSpell == 2372 || nSpell == 2377)
 	{
 		return TRUE;
 	}

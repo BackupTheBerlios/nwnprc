@@ -43,12 +43,21 @@ int TotalPCPowers(object oPC = OBJECT_SELF)
 {
   int iPower;
 
-  iPower =      GetHasFeat(FEAT_PSI_BALE_TELEPORT, oPC) + GetHasFeat(FEAT_TELEPATH_CRISIS_OF_LIFE, oPC) + 
+  iPower =      GetHasFeat(FEAT_NOMAD_BALE_TELEPORT, oPC) + GetHasFeat(FEAT_TELEPATH_CRISIS_OF_LIFE, oPC) + 
   		GetHasFeat(FEAT_PSIONWILD_MIND_THRUST, oPC)+ GetHasFeat(FEAT_PSIONWILD_BESTOW_POWER, oPC) + 
   		GetHasFeat(FEAT_ALL_BLACK_DRAGON_BREATH, oPC) + GetHasFeat(FEAT_PSIONWILD_CALL_TO_MIND, oPC) +
 		GetHasFeat(FEAT_PSIONWILD_CRYSTAL_SHARD, oPC) + GetHasFeat(FEAT_ALL_BODY_ADJUSTMENT, oPC) +
-		GetHasFeat(FEAT_TELEPATH_BRAIN_LOCK, oPC)+ GetHasFeat(FEAT_TELEPATH_CHARM_PERSON, oPC) + 
-  		GetHasFeat(FEAT_ALL_CONCEAL_AMORPHA, oPC) + GetHasFeat(FEAT_SHAPERPSYWAR_GAMORPHA, oPC);
+		GetHasFeat(FEAT_TELEPATH_BRAIN_LOCK, oPC)+ GetHasFeat(FEAT_TELEPATH_CHARM_PERSON, oPC) +
+		GetHasFeat(FEAT_ALL_DARKVISION, oPC) + GetHasFeat(FEAT_ALL_DAZE, oPC) + 
+		GetHasFeat(FEAT_ALL_DECELERATION, oPC)+ GetHasFeat(FEAT_ALL_DISINTEGRATE, oPC) + 
+		GetHasFeat(FEAT_ALL_DISSIPATING_TOUCH, oPC) + GetHasFeat(FEAT_ALL_FORCE_SCREEN, oPC) +
+		GetHasFeat(FEAT_ALL_INERTIAL_ARMOUR, oPC) + GetHasFeat(FEAT_PSIONWILD_PSIBLAST, oPC) +
+		GetHasFeat(FEAT_PSIONWILD_RECALL_AGONY, oPC)+ GetHasFeat(FEAT_PSIONWILD_RECALL_DEATH, oPC) +
+		GetHasFeat(FEAT_ALL_VIGOR, oPC)+ GetHasFeat(FEAT_KINETICPSYWAR_INERTIAL_BARRIER, oPC) + 
+		GetHasFeat(FEAT_EGOISTPSYWAR_THICK_SKIN, oPC) + GetHasFeat(FEAT_SHAPER_CRYSTALLIZE, oPC) +
+		GetHasFeat(FEAT_PSYWAR_DISSOLVING_TOUCH, oPC) + GetHasFeat(FEAT_PSYWAR_EXHALATION_BLACKDRAG, oPC) +
+		GetHasFeat(FEAT_PSYWAR_STEADFAST_PERCEPTION, oPC)+ GetHasFeat(FEAT_PSYWAR_STOMP, oPC) +		
+		GetHasFeat(FEAT_ALL_CONCEAL_AMORPHA, oPC) + GetHasFeat(FEAT_SHAPERPSYWAR_GAMORPHA, oPC);
 		
 	return iPower;
 
@@ -89,6 +98,7 @@ int GetAllowedPowers(object oPC = OBJECT_SELF)
 			case 19: nPsiPowers = 34; break;
 			case 20: nPsiPowers = 36; break;           
 		}
+		if (nPsion > 20) nPsiPowers = 36;
 		nTotal += nPsiPowers;
 	}
 	
@@ -117,6 +127,7 @@ int GetAllowedPowers(object oPC = OBJECT_SELF)
 			case 19: nWildPowers = 10; break;
 			case 20: nWildPowers = 11; break;           
 		}
+		if (nWilder > 20) nWildPowers = 11;
 		nTotal += nWildPowers;
 	}	
 	
@@ -145,6 +156,7 @@ int GetAllowedPowers(object oPC = OBJECT_SELF)
 			case 19: nWarPowers = 19; break;
 			case 20: nWarPowers = 20; break;           
 		}
+		if (nPsychic > 20) nWarPowers = 20;
 		nTotal += nWarPowers;
 	}	
 	
@@ -162,8 +174,8 @@ void PCPowerCheck(object oPC = OBJECT_SELF)
 	{
 		int nAllowed = GetAllowedPowers(oPC);
 		int nKnown = TotalPCPowers(oPC);
-		FloatingTextStringOnCreature("Total Powers Allowed" + IntToString(nAllowed), oPC, FALSE);
-		FloatingTextStringOnCreature("Total Powers Known" + IntToString(nKnown), oPC, FALSE);
+		FloatingTextStringOnCreature("Total Powers Allowed: " + IntToString(nAllowed), oPC, FALSE);
+		FloatingTextStringOnCreature("Total Powers Known: " + IntToString(nKnown), oPC, FALSE);
 		
 	        if (nKnown > nAllowed)
 	        {

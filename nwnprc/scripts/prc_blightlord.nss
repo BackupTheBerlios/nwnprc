@@ -66,6 +66,7 @@ void BltBlood(object oPC, object oSkin)
 	AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_DISEASE), oSkin);
 
 	SetLocalInt(oSkin, "BlightBlood", 1);
+	SendMessageToPC(oPC, "Blightblood is firing");
 }
 
 //Plant Type Gained - Winterheart
@@ -86,6 +87,7 @@ void Winterheart(object oPC ,object oSkin )
 	AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_BACKSTAB), oSkin);
 
 	SetLocalInt(oSkin, "WntrHeart",1);
+	SendMessageToPC(oPC, "Winterheart is Firing");
 }
 
 void main()
@@ -94,6 +96,8 @@ void main()
 	object oSkin = GetPCSkin(oPC);
 	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
 	
+	DeleteLocalInt(oItem, "CorruptGlaive");
+	SendMessageToPC(oPC, "Blightlord Main is Firing");
 	if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD) >= 1)
       		BltBlood(oPC, oSkin);
 

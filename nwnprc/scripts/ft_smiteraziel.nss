@@ -172,32 +172,48 @@ void main()
    int iType=GetBaseItemType(oWeap);
    switch (iType)
    {
-    case BASE_ITEM_BOLT:
-    case BASE_ITEM_BULLET:
-    case BASE_ITEM_ARROW:
-    case BASE_ITEM_SHORTBOW:
-    case BASE_ITEM_LONGBOW:
-    case BASE_ITEM_LIGHTCROSSBOW:
-    case BASE_ITEM_HEAVYCROSSBOW:
-    case BASE_ITEM_SLING:
-       if (!GetHasFeat(FEAT_RANGED_SMITE)){
-          return;
-       }
-       else if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD){
-          if (LvlRaziel > 0){
-             if (GetHasFeat(FEAT_SMITE_EVIL)){
-                DecrementRemainingFeatUses(OBJECT_SELF, iFeat);
-                IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-             }
-          }
-          else{
-             if (GetHasFeat(FEAT_SMITE_EVIL)){
-                DecrementRemainingFeatUses(OBJECT_SELF,FEAT_SMITE_EVIL);
-                IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
-             }
-          }
-       }
-       break;
+      case BASE_ITEM_BOLT:
+      case BASE_ITEM_BULLET:
+      case BASE_ITEM_ARROW:
+      case BASE_ITEM_SHORTBOW:
+      case BASE_ITEM_LONGBOW:
+      case BASE_ITEM_LIGHTCROSSBOW:
+      case BASE_ITEM_HEAVYCROSSBOW:
+      case BASE_ITEM_SLING:
+         if (!GetHasFeat(FEAT_RANGED_SMITE)){
+            return;
+         }
+         else if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD){
+            if (LvlRaziel > 0){
+               if (GetHasFeat(FEAT_SMITE_EVIL)){
+                  DecrementRemainingFeatUses(OBJECT_SELF, iFeat);
+                  IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
+               }
+            }
+            else{
+               if (GetHasFeat(FEAT_SMITE_EVIL)){
+                  DecrementRemainingFeatUses(OBJECT_SELF,FEAT_SMITE_EVIL);
+                  IncrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
+               }
+            }
+         }
+         break;
+      default:
+         if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD){
+            if (LvlRaziel > 0){
+               if (GetHasFeat(FEAT_SMITE_EVIL)){
+                  DecrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
+                  IncrementRemainingFeatUses(OBJECT_SELF, iFeat);
+               }
+            }
+            else{
+               if (GetHasFeat(FEAT_SMITE_EVIL)){
+                  DecrementRemainingFeatUses(OBJECT_SELF,FEAT_RANGED_SMITE);
+                  IncrementRemainingFeatUses(OBJECT_SELF, FEAT_SMITE_EVIL);
+               }
+            }
+         }
+         break;
    }
 
    int Immune = GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT);

@@ -37,6 +37,8 @@ void main(){
             effect eHeal = EffectHeal(nHeal);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oFam);
          }
+         
+         FeatSpecialUsePerDay(oPC);
 
          break;
       }

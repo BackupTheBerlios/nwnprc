@@ -19,7 +19,7 @@
 void PrcFeats(object oPC)
 {
      EvalPRCFeats(oPC);
-
+     FeatSpecialUsePerDay(oPC);
 
 }
 

@@ -69,8 +69,8 @@ void RedWizardFeats(object oPC = OBJECT_SELF)
 			int nOldXP = GetXP(oPC);
 			int nNewXP = nMinXPForLevel - 1000;
 			SetXP(oPC,nNewXP);
-			SetXP(oPC,nOldXP);
 			FloatingTextStringOnCreature("You must have 2 Restricted Schools and 1 Specialist School. Please reselect your feats.", oPC, FALSE);
+			DelayCommand(1.0, SetXP(oPC,nOldXP));
 		}
 	}
 }

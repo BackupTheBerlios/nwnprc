@@ -31,6 +31,8 @@ int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int 
      if(bCanSneakAttack)
           iDamage += SpellSneakAttackDamage(oCaster, oTarget);
      
+     // adds the bonus for spell bretrayal or spell strike for touch spells
+     iDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
      // apply damage
      if(iAttackRoll > 0)
      {

@@ -37,3 +37,12 @@ const int POISON_RAVAGE_CELESTIAL_LIGHTSBLOOD = 143;
 const int POISON_RAVAGE_JADE_WATER            = 144;
 const int POISON_RAVAGE_PURIFIED_COUATL_VENOM = 145;
 const int POISON_RAVAGE_UNICORN_BLOOD         = 146;
+
+
+
+//:://////////////////////////////////////////////
+//:: Skill Const
+//:://////////////////////////////////////////////
+
+const int SKILL_IAIJUTSU_FOCUS  = 27;
+const int SKILL_JUMP            = 28;

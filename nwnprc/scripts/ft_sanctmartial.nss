@@ -6,7 +6,7 @@
 
 // Sanctify_Feat(iType);
 
-const int SKILL_JUMP = 28;
+//const int SKILL_JUMP = 28; Moved to prc_misc_const
 
 void Sanctify()
 {

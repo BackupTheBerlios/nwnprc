@@ -945,7 +945,7 @@ const int IP_CONST_FEAT_EPIC_SA_10D6 = 300;
 
 //Iaijutsu Master Feats + Skill
 
-const int SKILL_IAIJUTSU_FOCUS = 27; //CONSTANT
+//const int SKILL_IAIJUTSU_FOCUS = 27; //CONSTANT Moved to prc_misc_const
 const int FEAT_SKILL_FOCUS_IAI = 2377;
 const int FEAT_EPIC_SKILL_FOCUS_IAI = 2378;
 const int FEAT_EPIC_IAIJUTSU_FOCUS = 2315; //CONSTANT

@@ -546,6 +546,24 @@ void DemiLich(object oPC)
     }
 }
 
+void EOG(object oPC)
+{       
+	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+
+
+	if (iCleric)
+	{
+	SetLocalInt(oPC, "PRC_PrereqEOG", 1);
+	int iEOG = GetHasFeat(FEAT_WAR_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
+		{
+		if (iEOG>1)
+			{
+			SetLocalInt(oPC, "PRC_PrereqEOG", 0);
+			}
+		}	
+	}	
+}
+
 void main()
 {
         //Declare Major Variables
@@ -590,6 +608,7 @@ void main()
 	BFZ(oPC);
 	ManAtArms(oPC);
 	SOL(oPC);
+	EOG(oPC);
 	ShiningBlade(oPC);
 	Shadowlord(oPC, iArcSpell1);
 	Shifter(oPC, iArcSpell1, iDivSpell1);

@@ -9,7 +9,32 @@
 //:://////////////////////////////////////////////
 
 #include "prc_class_const"
+#include "prc_feat_const"
 #include "prc_inc_util"
+
+// sets how many of a specific orc can be summoned
+int iNumSummon = 0;
+
+int GetCanSummonOrc(object oPC, string sCreatureResRef)
+{
+     int bCanSummon;
+     int iNumOrc = 0;
+     
+     object oHench1 = GetHenchman(oPC, 1);
+     object oHench2 = GetHenchman(oPC, 2);
+     object oHench3 = GetHenchman(oPC, 3);
+     object oHench4 = GetHenchman(oPC, 4);
+     
+     if(GetResRef(oHench1) ==  sCreatureResRef) iNumOrc += 1;
+     if(GetResRef(oHench2) ==  sCreatureResRef) iNumOrc += 1;
+     if(GetResRef(oHench3) ==  sCreatureResRef) iNumOrc += 1;
+     if(GetResRef(oHench4) ==  sCreatureResRef) iNumOrc += 1;
+     
+     if(iNumSummon > iNumOrc) bCanSummon = TRUE;
+     else                     bCanSummon = FALSE;
+
+     return bCanSummon;
+}
 
 void main()
 {
@@ -44,9 +69,22 @@ void main()
          else if (iHD > 9)	sSummon = "ow_sum_axe_3";
          else if (iHD > 6)	sSummon = "ow_sum_axe_2";
          else if (iHD > 3)	sSummon = "ow_sum_axe_1";
-    
-         oCreature = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
-         AddHenchman(OBJECT_SELF, oCreature);
-         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+         
+         if( GetCanSummonOrc(oPC, sSummon) )
+         {
+              oCreature = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
+              AddHenchman(OBJECT_SELF, oCreature);
+              ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+         }
+         else
+         {
+              string sMes = "You cannot gather more than " + IntToString(iNumSummon) + " of this type of orc.";
+              SendMessageToPC(oPC, sMes);
+              
+              if(GetHasFeat(FEAT_GATHER_HORDE_II, oPC) )
+                   IncrementRemainingFeatUses(oPC, FEAT_GATHER_HORDE_II);
+              else
+                   IncrementRemainingFeatUses(oPC, FEAT_GATHER_HORDE_I);  
+         }
     }
 }

@@ -65,9 +65,11 @@ void NoSmite(object oTarget ,string sText ,int iEvil)
         //Apply the damage
         //Apply the damage
         if (SancMar)
-           eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, DAMAGE_POWER_ENERGY) ,oWeap,oTarget,iEnhancement);
+           eDamage = AddDmgEffectMulti(iDamage,iDamageType, oWeap,oTarget,DAMAGE_POWER_ENERGY,iHit);
+//         eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, DAMAGE_POWER_ENERGY) ,oWeap,oTarget,iEnhancement);
         else
-           eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancement) ,oWeap,oTarget,iEnhancement);
+           eDamage = AddDmgEffectMulti(iDamage,iDamageType, oWeap,oTarget,iEnhancement,iHit);
+//          eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancement) ,oWeap,oTarget,iEnhancement);
 
         DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage, oTarget));
 
@@ -205,10 +207,14 @@ void main()
 
         //Apply the damage
         if (iSmit)
-           eDamage = EffectDamage(iDamage, DAMAGE_TYPE_DIVINE, iEnhancementGD);
+        {
+	   eDamage = AddDmgEffectMulti(iDamage,DAMAGE_TYPE_DIVINE, oWeap,oTarget,iEnhancementGD,iHit);
+//         eDamage = EffectDamage(iDamage, DAMAGE_TYPE_DIVINE, iEnhancementGD);
+        }
         else
         {
-            eDamage = EffectDamage(iDamage, iDamageType, iEnhancementGD);
+ 	    eDamage = AddDmgEffectMulti(iDamage,iDamageType, oWeap,oTarget,iEnhancementGD,iHit);
+//          eDamage = EffectDamage(iDamage, iDamageType, iEnhancementGD);
 
         }
 

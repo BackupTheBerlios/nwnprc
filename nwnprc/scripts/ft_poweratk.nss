@@ -54,6 +54,8 @@ void main()
 
    int nSpell = GetSpellId();
 
+   if (GetHasFeatEffect(FEAT_SUPREME_POWER_ATTACK)) return;
+
    if ( nSpell>SPELL_POWER_ATTACK5 && !GetHasFeat(FEAT_IMPROVED_POWER_ATTACK))
    {
       FloatingTextStringOnCreature("Prereq: Improved Power Attack feat ", OBJECT_SELF, FALSE);
@@ -96,6 +98,8 @@ void main()
       }
       else
         iDmg = BonusAtk(iHit);
+        
+       if (GetHasFeat(FEAT_SUPREME_POWER_ATTACK)) iDmg = iDmg*2;
 
        eDamage = EffectDamageIncrease(iDmg, nDamageBonusType);
        eToHit = EffectAttackDecrease(iHit);

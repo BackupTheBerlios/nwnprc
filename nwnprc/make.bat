@@ -52,6 +52,7 @@ REM make directories
 md objs 2>nul
 md epicspellobjs 2>nul
 md raceobjs 2>nul
+md spellobjs 2>nul
 
 REM generate temporary files for each of the source sets
 REM scripts, graphics files, 2das, and misc. other files.
@@ -59,6 +60,7 @@ REM each of these temp files will be stuffed into a macro
 REM in the makefile.
 dir /b erf | tools\ssed -R "$! {s/$/ \\/g};s/^/erf\\/g" >erffiles.temp
 dir /b scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/scripts\\/g" >scripts.temp
+dir /b spells\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/spells\\/g" >spells.temp
 dir /b epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/epicspellscripts\\/g" >epicspellscripts.temp
 dir /b racescripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/racescripts\\/g" >racescripts.temp
 dir /b gfx | tools\ssed -R "$! {s/$/ \\/g};s/^/gfx\\/g" >gfx.temp
@@ -70,12 +72,13 @@ dir /b craft2das | tools\ssed -R "$! {s/$/ \\/g};s/^/craft2das\\/g" >craft2das.t
 REM use FINDSTR to find script files with "void main()" or "int StartingConditional()"
 REM in them, these are the ones we want to compile.
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/scripts\\/objs\\/g" >objs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" spells\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/spells\\/spellobjs\\/g" >spellobjs.temp
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/epicspellscripts\\/epicspellobjs\\/g" >epicspellobjs.temp
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" racescripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/racescripts\\/raceobjs\\/g" >raceobjs.temp
 
 REM Now using our generic makefile as a base, glue all of the temp files into it making
 REM a fully formatted makefile we can run nmake on.
-type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~racescripts~~~/r racescripts.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~race2das~~~/r race2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "/~~~raceobjs~~~/r raceobjs.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
+type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~spells~~~/r spells.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~racescripts~~~/r racescripts.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~race2das~~~/r race2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~spellobjs~~~/r spellobjs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "/~~~raceobjs~~~/r raceobjs.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
 
 SETLOCAL
 
@@ -83,6 +86,7 @@ REM set local variables for the source and object trees.
 SET MAKEERFPATH=erf
 SET MAKE2DAPATH=2das
 SET MAKESCRIPTPATH=scripts
+SET MAKESPELLSPATH=spells
 SET MAKEEPICSPELLSCRIPTPATH=epicspellscripts
 SET MAKEOBJSPATH=objs
 SET MAKEEPICSPELLOBJSPATH=epicspellobjs
@@ -113,18 +117,20 @@ tools\nmake -NOLOGO -f makefile.temp %1 %2 %3 %4 %5 %6 %7 %8 %9
 
 REM delete all files in temp compile directory.
 echo Cleaning up temporary files
-del /s /q %MAKETEMPPATH%
+del /s /q %MAKETEMPPATH% >nul 2>nul
 
 ENDLOCAL
 
 REM delete temp files
 del erffiles.temp
 del scripts.temp
+del spells.temp
 del epicspellscripts.temp
 del gfx.temp
 del 2das.temp
 del others.temp
 del objs.temp
+del spellobjs.temp
 del epicspellobjs.temp
 del craft2das.temp
 del race2das.temp

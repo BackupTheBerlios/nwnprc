@@ -109,8 +109,10 @@ OUTPATH				= CompiledResources
 ERFFILESPATH		= $(MAKEERFPATH)
 2DAPATH				= $(MAKE2DAPATH)
 OBJPATH				= $(MAKEOBJSPATH)
+SPELLOBJPATH		= $(MAKESPELLOBJSPATH)
 EPICSPELLOBJSPATH	= $(MAKEEPICSPELLOBJSPATH)
 SRCPATH				= $(MAKESCRIPTPATH)
+SPELLSRCPATH		= $(MAKESPELLSPATH)
 EPICSPELLSRCPATH	= $(MAKEEPICSPELLSCRIPTPATH)
 TLKPATH				= $(MAKETLKPATH)
 CRAFT2DASPATH		= $(MAKECRAFT2DASPATH)
@@ -135,9 +137,13 @@ ERFFILES=~~~erffiles~~~
 
 SCRIPTS=~~~scripts~~~
 
+SPELLS=~~~spells~~~
+
 EPICSPELLSCRIPTS=~~~epicspellscripts~~~
 
 OBJS=~~~objs~~~
+
+SPELLOBJS=~~~spellobjs~~~
 
 EPICSPELLOBJS=~~~epicspellobjs~~~
 
@@ -262,11 +268,13 @@ $(ERF): $(ERFFILES)
 
 
 # Rule to build the 2.0 scripts HAK file.
-$(SCRIPTSHAK): $(OBJS) $(SCRIPTS)
+$(SCRIPTSHAK): $(OBJS) $(SCRIPTS) $(SPELLOBJS) $(SPELLS)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $(SCRIPTS)
 	@"$(ERFCOMPILER)" -u $@ $(OBJS) >nul
+	@"$(ERFCOMPILER)" -u $@ $(SPELLS) >nul
+	@"$(ERFCOMPILER)" -u $@ $(SPELLOBJS) >nul
 # At some point we may need to use the below method to generate the hak
 # it will add the files to the hak one at a time to prevent command line
 # too long errors, but it runs orders of magnitude slower.
@@ -342,6 +350,7 @@ $(HIF): PRCPackTemplate.hif config.make
 depends:
 	@echo Updating dependencies
 	@tools\makedep -a -w -n -l -s$(SRCPATH) -i$(SRCPATH) -o$(MAKEFILE) $(OBJS)
+	@tools\makedep -a -w -n -l -s$(SPELLSRCPATH) -i$(SPELLSRCPATH) -o$(MAKEFILE) $(SPELLOBJPATH)
 	@tools\makedep -a -w -n -l -s$(EPICSPELLSRCPATH) -i$(EPICSPELLSRCPATH) -o$(MAKEFILE) $(EPICSPELLOBJS)
 	@tools\makedep -a -w -n -l -s$(RACESRCPATH) -i$(RACESRCPATH) -o$(MAKEFILE) $(RACEOBJS)
 
@@ -358,18 +367,39 @@ depends:
 # Inference rule to compile scripts.
 {$(SRCPATH)\}.nss{$(OBJPATH)\}.ncs:
 	@echo $(<F)
-	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
+	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
+	@"$(NSSCOMPILER)" "$(MAKEDIR)\$(TEMPPATH)\$(<F)" "$(MAKEDIR)\$(@D)" >nul
+	-@del "$(MAKEDIR)\$(TEMPPATH)\$(<F)" 2>nul
  	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
+#	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
+# 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
+
+{$(SPELLSRCPATH)\}.nss{$(SPELLOBJPATH)\}.ncs:
+	@echo $(<F)
+	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
+	@"$(NSSCOMPILER)" "$(MAKEDIR)\$(TEMPPATH)\$(<F)" "$(MAKEDIR)\$(@D)" >nul
+	-@del "$(MAKEDIR)\$(TEMPPATH)\$(<F)" 2>nul
+ 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
+#	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
+# 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
 
 {$(EPICSPELLSRCPATH)\}.nss{$(EPICSPELLOBJSPATH)\}.ncs:
 	@echo $(<F)
-	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
+	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
+	@"$(NSSCOMPILER)" "$(MAKEDIR)\$(TEMPPATH)\$(<F)" "$(MAKEDIR)\$(@D)" >nul
+	-@del "$(MAKEDIR)\$(TEMPPATH)\$(<F)" 2>nul
  	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
+#	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
+# 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
 
 {$(RACESRCPATH)\}.nss{$(RACEOBJSPATH)\}.ncs:
 	@echo $(<F)
-	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
+	@copy /y "$(MAKEDIR)\$<" "$(MAKEDIR)\$(TEMPPATH)" >nul
+	@"$(NSSCOMPILER)" "$(MAKEDIR)\$(TEMPPATH)\$(<F)" "$(MAKEDIR)\$(@D)" >nul
+	-@del "$(MAKEDIR)\$(TEMPPATH)\$(<F)" 2>nul
  	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
+#	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
+# 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
 
 
 #################################################################################

@@ -3,3 +3,4 @@ config.make
 epicspellobjs
 raceobjs
 tempcpl
+spellobjs

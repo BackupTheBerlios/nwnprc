@@ -1317,29 +1317,33 @@ FUNCTION BODIES
 
 int GetIsEpicCleric(object oPC)
 {
-    if (GetCasterLvl(TYPE_CLERIC, oPC) >= 21)
-        return TRUE;
+    if (GetCasterLvl(TYPE_CLERIC, oPC) >= 17 && GetHitDice(oPC) >= 21 && 
+        GetAbilityScore(oPC, ABILITY_WISDOM) >= 19)
+            return TRUE;
     return FALSE;
 }
 
 int GetIsEpicDruid(object oPC)
 {
-    if (GetCasterLvl(TYPE_DRUID, oPC) >= 21)
-        return TRUE;
+    if (GetCasterLvl(TYPE_DRUID, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
+        GetAbilityScore(oPC, ABILITY_WISDOM) >= 19)
+            return TRUE;
     return FALSE;
 }
 
 int GetIsEpicSorcerer(object oPC)
 {
-    if (GetCasterLvl(TYPE_SORCERER, oPC) >= 21)
-        return TRUE;
+    if (GetCasterLvl(TYPE_SORCERER, oPC) >= 18 &&  GetHitDice(oPC) >= 21 &&
+        GetAbilityScore(oPC, ABILITY_CHARISMA) >= 19)
+            return TRUE;
     return FALSE;
 }
 
 int GetIsEpicWizard(object oPC)
 {
-    if (GetCasterLvl(TYPE_WIZARD, oPC) >= 21)
-        return TRUE;
+    if (GetCasterLvl(TYPE_WIZARD, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
+        GetAbilityScore(oPC, ABILITY_INTELLIGENCE) >= 19)
+            return TRUE;
     return FALSE;
 }
 
@@ -1755,10 +1759,10 @@ void UnequipAnyImmunityItems(object oTarget, int nImmType)
 
 int GetTotalCastingLevel(object oCaster)
 {
-    int nLevel = GetCasterLvl(TYPE_DIVINE, oCaster);
-    if (nLevel < GetCasterLvl(TYPE_ARCANE, oCaster))
-        nLevel = GetCasterLvl(TYPE_ARCANE, oCaster); 
-    return nLevel;
+    int iDiv = GetLevelByTypeDivine(oCaster);
+    int iArc = GetLevelByTypeArcane(oCaster);
+
+    return (iDiv > iArc) ? iDiv : iArc;
 }
 
 int GetDCSchoolFocusAdjustment(object oPC, string sChool)
@@ -1817,17 +1821,16 @@ int GetDCSchoolFocusAdjustment(object oPC, string sChool)
 
 int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF)
 {
-    int iDC = 20;
-    int iArcaneClass = GetCasterLvl(TYPE_ARCANE,oCaster);
-    int iDivineClass = GetCasterLvl(TYPE_DIVINE,oCaster);
-    int iAbility = ABILITY_WISDOM;
+    int iDiv = GetCasterLvl(TYPE_DIVINE,   oCaster);
+    int iWiz = GetCasterLvl(TYPE_WIZARD,   oCaster);
+    int iSor = GetCasterLvl(TYPE_SORCERER, oCaster);
+    int iBest = 0;
+    int iAbility;
+
+    if (iDiv > iBest) { iAbility = ABILITY_WISDOM;       iBest = iDiv; }
+    if (iWiz > iBest) { iAbility = ABILITY_INTELLIGENCE; iBest = iWiz; }
+    if (iSor > iBest) { iAbility = ABILITY_CHARISMA;     iBest = iSor; }
     
-    if (iArcaneClass > iDivineClass)
-    {
-        iAbility = ABILITY_CHARISMA;
-        if (GetLevelByClass(CLASS_TYPE_WIZARD,oCaster) > GetLevelByClass(CLASS_TYPE_SORCERER,oCaster))
-            iAbility = ABILITY_INTELLIGENCE;
-    }
-    iDC += GetAbilityModifier(iAbility,oCaster);
-    return iDC;
+    if (iBest)   return 20 + GetAbilityModifier(iAbility, oCaster);
+    else         return 20; // DC = 20 if the epic spell is cast some other way.
 }

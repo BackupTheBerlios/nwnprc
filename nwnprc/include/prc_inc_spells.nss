@@ -44,9 +44,6 @@ int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF);
 // Returns the position that the first divine class is in, returns 0 if none.
 int GetFirstDivineClassPosition (object oCaster = OBJECT_SELF);
 
-// Returns the SPELL_SCHOOL of the spell in question.
-int GetSpellSchool(int iSpellId);
-
 // Returns the best "natural" arcane levels of the PC in question.  Does not
 // consider feats that situationally adjust caster level.
 int GetLevelByTypeArcane(object oCaster = OBJECT_SELF);
@@ -54,6 +51,16 @@ int GetLevelByTypeArcane(object oCaster = OBJECT_SELF);
 // Returns the best "natural" divine levels of the PC in question.  Does not
 // consider feats that situationally adjust caster level.
 int GetLevelByTypeDivine(object oCaster = OBJECT_SELF);
+
+// Returns the SPELL_SCHOOL of the spell in question.
+int GetSpellSchool(int iSpellId);
+
+// Helps to find the adjustment to level granted by Practiced Spellcaster feats.
+//
+// oCaster - the PC/NPC in question
+// iCastingClass - the class we're looking at
+// iCastingLevels - the amount of adjusted caster levels BEFORE Practiced Spellcaster
+int PractisedSpellcasting (object oCaster, int iCastingClass, int iCastingLevels);
 
 //Returns Reflex Adjusted Damage. Is a wrapper function that allows the 
 //DC to be adjusted based on conditions that cannot be done using iprops
@@ -79,14 +86,7 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 // iSpellId - the ID of the spell in consideration
 int PRCGetCasterLevel(object oCaster = OBJECT_SELF, int iCastingClass = -1, int iCasterType = -1, int iSpellId = -1);
 
-// Helps to find the adjustment to level granted by Practiced Spellcaster feats.
-//
-// oCaster - the PC/NPC in question
-// iCastingClass - the class we're looking at
-// iCastingLevels - the amount of adjusted caster levels BEFORE Practiced Spellcaster
-int PractisedSpellcasting (object oCaster, int iCastingClass, int iCastingLevels);
-
-// Functions mostly only useful within the scope of this include
+// Functions mostly only useful for within this include
 int ArchmageSpellPower (object oCaster);
 int TrueNecromancy (object oCaster, int iSpellID, string sType);
 int ShadowWeave (object oCaster, int iSpellID);
@@ -229,35 +229,20 @@ int GetFirstArcaneClass (object oCaster = OBJECT_SELF)
 int GetFirstDivineClass (object oCaster = OBJECT_SELF)
 {
     int iDivinePos = GetFirstDivineClassPosition(oCaster);
-    if (!iDivinePos) return CLASS_TYPE_INVALID; // no Divine casting class
+    if (!iDivinePos) return CLASS_TYPE_INVALID; // no divine casting class
     
     return GetClassByPosition(iDivinePos, oCaster);
-}
-
-int GetSpellSchool(int iSpellId)
-{
-    string sSpellSchool = lookup_spell_school(iSpellId);
-    int iSpellSchool;
-
-    if (sSpellSchool == "A") iSpellSchool = SPELL_SCHOOL_ABJURATION;
-    else if (sSpellSchool == "C") iSpellSchool = SPELL_SCHOOL_CONJURATION;
-    else if (sSpellSchool == "D") iSpellSchool = SPELL_SCHOOL_DIVINATION;
-    else if (sSpellSchool == "E") iSpellSchool = SPELL_SCHOOL_ENCHANTMENT;
-    else if (sSpellSchool == "V") iSpellSchool = SPELL_SCHOOL_EVOCATION;
-    else if (sSpellSchool == "I") iSpellSchool = SPELL_SCHOOL_ILLUSION;
-    else if (sSpellSchool == "N") iSpellSchool = SPELL_SCHOOL_NECROMANCY;
-    else if (sSpellSchool == "T") iSpellSchool = SPELL_SCHOOL_TRANSMUTATION;
-    else iSpellSchool = SPELL_SCHOOL_GENERAL;
-    
-    return iSpellSchool;
 }
 
 int GetLevelByTypeArcane(object oCaster = OBJECT_SELF)
 {
     int iFirstArcane = GetFirstArcaneClass(oCaster);
+    int iBest = 0;
+    
     int iClass1 = GetClassByPosition(1, oCaster);
     int iClass2 = GetClassByPosition(2, oCaster);
     int iClass3 = GetClassByPosition(3, oCaster);
+    
     int iClass1Lev = GetLevelByClass(iClass1, oCaster);
     int iClass2Lev = GetLevelByClass(iClass2, oCaster);
     int iClass3Lev = GetLevelByClass(iClass3, oCaster);
@@ -266,16 +251,14 @@ int GetLevelByTypeArcane(object oCaster = OBJECT_SELF)
     if (iClass2 == iFirstArcane) iClass2Lev += GetArcanePRCLevels(oCaster);
     if (iClass3 == iFirstArcane) iClass3Lev += GetArcanePRCLevels(oCaster);
 
+    iClass1Lev += PractisedSpellcasting(oCaster, iClass1, iClass1Lev);
+    iClass2Lev += PractisedSpellcasting(oCaster, iClass2, iClass2Lev);
+    iClass3Lev += PractisedSpellcasting(oCaster, iClass3, iClass3Lev);
+
     if (!GetIsArcaneClass(iClass1)) iClass1Lev = 0;
-    else iClass1Lev += PractisedSpellcasting(oCaster, iClass1, iClass1Lev);
-
     if (!GetIsArcaneClass(iClass2)) iClass2Lev = 0;
-    else iClass2Lev += PractisedSpellcasting(oCaster, iClass2, iClass2Lev);
-
     if (!GetIsArcaneClass(iClass3)) iClass3Lev = 0;
-    else iClass3Lev += PractisedSpellcasting(oCaster, iClass3, iClass3Lev);
 
-    int iBest = 0;
     if (iClass1Lev > iBest) iBest = iClass1Lev;
     if (iClass2Lev > iBest) iBest = iClass2Lev;
     if (iClass3Lev > iBest) iBest = iClass3Lev;
@@ -286,9 +269,12 @@ int GetLevelByTypeArcane(object oCaster = OBJECT_SELF)
 int GetLevelByTypeDivine(object oCaster = OBJECT_SELF)
 {
     int iFirstDivine = GetFirstDivineClass(oCaster);
+    int iBest = 0;
+    
     int iClass1 = GetClassByPosition(1, oCaster);
     int iClass2 = GetClassByPosition(2, oCaster);
     int iClass3 = GetClassByPosition(3, oCaster);
+
     int iClass1Lev = GetLevelByClass(iClass1, oCaster);
     int iClass2Lev = GetLevelByClass(iClass2, oCaster);
     int iClass3Lev = GetLevelByClass(iClass3, oCaster);
@@ -301,16 +287,14 @@ int GetLevelByTypeDivine(object oCaster = OBJECT_SELF)
     if (iClass2 == iFirstDivine) iClass2Lev += GetDivinePRCLevels(oCaster);
     if (iClass3 == iFirstDivine) iClass3Lev += GetDivinePRCLevels(oCaster);
 
+    iClass1Lev += PractisedSpellcasting(oCaster, iClass1, iClass1Lev);
+    iClass2Lev += PractisedSpellcasting(oCaster, iClass2, iClass2Lev);
+    iClass3Lev += PractisedSpellcasting(oCaster, iClass3, iClass3Lev);
+
     if (!GetIsDivineClass(iClass1)) iClass1Lev = 0;
-    else iClass1Lev += PractisedSpellcasting(oCaster, iClass1, iClass1Lev);
-
     if (!GetIsDivineClass(iClass2)) iClass2Lev = 0;
-    else iClass2Lev += PractisedSpellcasting(oCaster, iClass2, iClass2Lev);
-
     if (!GetIsDivineClass(iClass3)) iClass3Lev = 0;
-    else iClass3Lev += PractisedSpellcasting(oCaster, iClass3, iClass3Lev);
 
-    int iBest = 0;
     if (iClass1Lev > iBest) iBest = iClass1Lev;
     if (iClass2Lev > iBest) iBest = iClass2Lev;
     if (iClass3Lev > iBest) iBest = iClass3Lev;
@@ -322,7 +306,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF, int iCastingClass = -1, int 
 {
     string sType;
     
-    if (iCastingClass == -1) iCastingClass = GetLastSpellCastClass(); // might be CLASS_TYPE_INVALID, oh well
+    if (iCastingClass == -1) iCastingClass = GetLastSpellCastClass(); // might be CLASS_TYPE_INVALID
 
     if (iCasterType == -1)
     {
@@ -381,6 +365,24 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF, int iCastingClass = -1, int 
     {
         return 0;
     }
+}
+
+int GetSpellSchool(int iSpellId)
+{
+    string sSpellSchool = lookup_spell_school(iSpellId);
+    int iSpellSchool;
+
+    if (sSpellSchool == "A") iSpellSchool = SPELL_SCHOOL_ABJURATION;
+    else if (sSpellSchool == "C") iSpellSchool = SPELL_SCHOOL_CONJURATION;
+    else if (sSpellSchool == "D") iSpellSchool = SPELL_SCHOOL_DIVINATION;
+    else if (sSpellSchool == "E") iSpellSchool = SPELL_SCHOOL_ENCHANTMENT;
+    else if (sSpellSchool == "V") iSpellSchool = SPELL_SCHOOL_EVOCATION;
+    else if (sSpellSchool == "I") iSpellSchool = SPELL_SCHOOL_ILLUSION;
+    else if (sSpellSchool == "N") iSpellSchool = SPELL_SCHOOL_NECROMANCY;
+    else if (sSpellSchool == "T") iSpellSchool = SPELL_SCHOOL_TRANSMUTATION;
+    else iSpellSchool = SPELL_SCHOOL_GENERAL;
+    
+    return iSpellSchool;
 }
 
 int PractisedSpellcasting (object oCaster, int iCastingClass, int iCastingLevels)

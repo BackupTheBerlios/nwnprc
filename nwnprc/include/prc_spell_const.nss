@@ -174,8 +174,13 @@ const int SPELL_FOM_DIVINE_SONG_SPELLRESISTANCE	    = 2330;
 const int SPELL_FOM_ENCOREPERFORMANCE          	    = 2331;
 
 //Anti-Paladin
+const int SPELL_ANTIPAL_BULLS_STRENGTH             = 2041;
 const int SPELL_ANTIPAL_DARKNESS                   = 2042;
 const int SPELL_ANTIPAL_DESECRATE                  = 2043;
+const int SPELL_ANTIPAL_INFLICT_LIGHT_WOUNDS       = 2037;
+const int SPELL_ANTIPAL_INFLICT_MODERATE_WOUNDS    = 2048;
+const int SPELL_ANTIPAL_INFLICT_SERIOUS_WOUNDS     = 2054;
+const int SPELL_ANTIPAL_MAGIC_CIRCLE_AGAINST_GOOD  = 2049;
 						  
 // Spell Feat Generic
 const int SPELL_MANYSHOT2                   = 2246;

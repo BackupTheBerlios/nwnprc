@@ -610,6 +610,7 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);
     FeatUsePerDay(oPC,FEAT_SMITE_UNDEAD, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC,FEAT_COMMAND_SPIDERS, ABILITY_CHARISMA, 3);
+    FeatUsePerDay(oPC,FEAT_AP_TURN_OUTSIDER, ABILITY_CHARISMA, 3+4*GetHasFeat(FEAT_EXTRA_TURNING,oPC));
     SpellSol(oPC);  
     SpellKotMC(oPC);
     SpellShadow(oPC);

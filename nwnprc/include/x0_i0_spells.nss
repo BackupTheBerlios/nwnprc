@@ -115,7 +115,7 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
 // * Applies ability score damage
 void DoDirgeEffect(object oTarget,int nPenetr);
 
-void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impactHurt, int vfx_impactHeal, int nSpellID);
+void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impactHurt, int vfx_impactHeal, int nSpellID,int ModCasterlevel = 0, int nDC = 0);
 
 // * improves an animal companion or summoned creature's attack and damage and the ability to hit
 // * magically protected creatures
@@ -566,7 +566,7 @@ void DoSpikeGrowthEffect(object oTarget,int nPenetr)
 //:: Created On:
 //:://////////////////////////////////////////////
 
-void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impactHurt, int vfx_impactHeal, int nSpellID)
+void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impactHurt, int vfx_impactHeal, int nSpellID,int ModCasterlevel = 0 , int nDC = 0)
 {
     //Declare major variables
     object oTarget = GetSpellTargetObject();
@@ -577,7 +577,11 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
     effect eVis2 = EffectVisualEffect(vfx_impactHeal);
     effect eHeal, eDam;
 
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int CasterLvl;
+    if ( ModCasterlevel == 0)
+       CasterLvl  = PRCGetCasterLevel(OBJECT_SELF); 
+    else
+       CasterLvl = ModCasterlevel;
 
     int nExtraDamage = CasterLvl; // * figure out the bonus damage
     if (nExtraDamage > nMaxExtraDamage)
@@ -623,7 +627,8 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
             {
                 int nDamageTotal = nDamage + nExtraDamage;
                 // A succesful will save halves the damage
-                if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_ALL,OBJECT_SELF))
+                if (nDC == 0) nDC = GetSpellSaveDC() ;
+                if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_ALL,OBJECT_SELF))
                 {
                     nDamageTotal = nDamageTotal / 2;
                 }

@@ -1069,5 +1069,14 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
 
    // Bladesinger
    DeleteLocalInt(oItem,"BladeASF");
+   
+   
+   // LEFT RING
+   if (!iValid){
+     oItem=GetItemInSlot(INVENTORY_SLOT_LEFTRING,oPC);
+     TotalRemovePropertyT(oItem);}
+
+   // Bladesinger
+   DeleteLocalInt(oItem,"NewPowAtk");
 
 }

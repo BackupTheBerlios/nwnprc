@@ -65,7 +65,9 @@ void DrunkenMasterCreateEmptyBottle(object oTarget, int nBeverage);
 // creature skin.
 int AddDrunkenMasterSkinProperties(object oPC, object oSkin);
 
-
+// Determines the DC needed to save against the cast spell-like ability
+// replace GetSpellSaveDC
+int GetSpellDCSLA(object oCaster, int iSpelllvl,int iAbi = ABILITY_WISDOM);
 
 // Functions:
 int UseBottle(object oPC)
@@ -1015,6 +1017,12 @@ int CanCastSpell(int iSpelllvl = 0,int iAbi = ABILITY_WISDOM,int iASF = 0,object
    }
    
    return 1;     
+}
+
+
+int GetSpellDCSLA(object oCaster, int iSpelllvl,int iAbi = ABILITY_WISDOM)
+{
+  return GetAbilityModifier(iAbi,oCaster)+10+iSpelllvl;
 }
 
 ////////////////End Soul Inc//////////////////

@@ -78,6 +78,8 @@ int GetManifesterLevel(object oCaster)
 	int nLevel = GetCasterLevel(oCaster);
 	int nSurge = GetLocalInt(oCaster, "WildSurge");
 	
+	if (nLevel == 0)	nLevel = GetLevelByPosition(1, oCaster);
+	
 	if (nSurge > 0) nLevel = nLevel + nSurge;
 	
 	//FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oCaster, FALSE);

@@ -40,10 +40,6 @@ void main()
     if (iEquip ==1)  oItem = GetPCItemLastUnequipped();
     //else             oItem = GetPCItemLastEquipped();
 
-    //if the item unequiped was destryed, the bow will sometimes loss its bonuses
-    //it would apper that the next item along is being targeted, but when check it dosnt apare to be the bow
-    //but is a valid object :\
-
 	// Apply proper modifications to item
 	int iItemType = GetBaseItemType(oItem);
 	switch (iItemType)
@@ -59,14 +55,16 @@ void main()
 			  else             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 			  break;
 	}
-	
+
+	//must rest iBloodBowBonus for this bit, even if its an unequip
 	oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+	iBloodBowBonus = nBldarch / 3;
 	if (GetBaseItemType(oItem) == BASE_ITEM_LONGBOW)
 	{
 	    SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
-	    SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);  
+	    SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);
 	}
-	
+
 	oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
 	if (GetIsObjectValid(oItem))
 	{

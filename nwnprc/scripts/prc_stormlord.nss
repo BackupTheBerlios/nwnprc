@@ -27,7 +27,7 @@ void ShockWeap(object oPC,int iEquip)
   {
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
 
-     if ( GetLocalInt(oItem,"STShock")&& !GetLocalInt(oPC,"ONREST")) return ;
+     if ( GetLocalInt(oItem,"STShock")) return ;
 
 
      if (GetBaseItemType(oItem)==BASE_ITEM_SHORTSPEAR)
@@ -49,7 +49,7 @@ void ShockWeap(object oPC,int iEquip)
   else
   {
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-     if ( GetLocalInt(oItem,"STShock")&& !GetLocalInt(oPC,"ONREST")) return ;
+     if ( GetLocalInt(oItem,"STShock")) return ;
 
      if (GetBaseItemType(oItem)==BASE_ITEM_SHORTSPEAR)
      {
@@ -67,7 +67,7 @@ void ShockingWeap(object oPC,int iEquip)
   if (iEquip==2)
   {
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-     if ( GetLocalInt(oItem,"STThund")&& !GetLocalInt(oPC,"ONREST"))
+     if ( GetLocalInt(oItem,"STThund"))
          return;
 
      if (GetBaseItemType(oItem)==BASE_ITEM_SHORTSPEAR)
@@ -87,7 +87,7 @@ void ShockingWeap(object oPC,int iEquip)
    else
   {
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-     if ( !GetLocalInt(oItem,"STThund")&& GetBaseItemType(oItem)==BASE_ITEM_SHORTSPEAR && !GetLocalInt(oPC,"ONREST"))
+     if ( !GetLocalInt(oItem,"STThund")&& GetBaseItemType(oItem)==BASE_ITEM_SHORTSPEAR )
      {
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1),oItem,9999.0);
         SetLocalInt(oItem,"STThund",1);
@@ -111,6 +111,13 @@ void main()
 
     int bShockWeap=GetHasFeat(FEAT_SHOCK_WEAPON,oPC)        ?  1:0;
     int bShockingWeap=GetHasFeat(FEAT_THUNDER_WEAPON,oPC)   ?  1:0;
+
+    if (GetLocalInt(oPC,"ONENTER")|| GetLocalInt(oPC,"ONREST"))
+    {
+      object oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+      DeleteLocalInt(oItem,"STShock");
+      DeleteLocalInt(oItem,"STThund");   
+    }
 
     if (bResElec>0) ResElec(oPC,oSkin,bResElec);
     if (bShockWeap>0)ShockWeap(oPC,GetLocalInt(oPC,"ONEQUIP"));

@@ -140,4 +140,5 @@
 136   FEAT_CRAFT_ROD                                       2927        0      9                1        
 137   FEAT_CRAFT_STAFF                                     2928        0      12               1        
 138   FEAT_FORGE_RING                                      2929        0      12               1        
-139   FEAT_MANYSHOT                                        3306        1      -1               1      
+139   FEAT_MANYSHOT                                        3306        0      -1               1      
+140   FEAT_IMP_MANYSHOT                                    3350        0      -1                1      

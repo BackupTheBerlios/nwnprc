@@ -90,4 +90,5 @@
 86    FEAT_CRAFT_STAFF                                    2928          0      12                1        
 87    FEAT_FORGE_RING                                     2929          0      12                1        
 88    Prereq_Shadowlord                                   3339          3       7                0      
-89    FEAT_MANYSHOT                                       3306          1      -1                1      
+89    FEAT_MANYSHOT                                       3306          0      -1                1      
+90    FEAT_IMP_MANYSHOT                                   3350          0      -1                1      

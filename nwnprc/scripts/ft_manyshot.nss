@@ -12,7 +12,10 @@ void main()
 
     float iDistance = GetDistanceToObject(oTarget);
     int iType = GetBaseItemType(oWeap);
-    int iMaxAttacks = NbAtk(OBJECT_SELF);
+    int iMaxAttacks = (GetBaseAttackBonus(OBJECT_SELF) - 1) / 5 + 1;
+
+        iMaxAttacks = iMaxAttacks > 6 ? 6 : iMaxAttacks;
+
     int iBonus = 0;
     int iDamage = 0;
 
@@ -20,11 +23,13 @@ void main()
 
     int nId = GetSpellId();
 
-    int iAttacks ;
+    int iAttacks =2 ;
 
     if (nId == SPELL_MANYSHOT2) iAttacks = 2;
     else if (nId == SPELL_MANYSHOT3) iAttacks = 3;
     else if (nId == SPELL_MANYSHOT4) iAttacks = 4;
+    else if (nId == SPELL_MANYSHOT5) iAttacks = 5;
+    else if (nId == SPELL_MANYSHOT6) iAttacks = 6;
 
     if (iAttacks>iMaxAttacks) iAttacks = iMaxAttacks;
 

@@ -168,5 +168,6 @@
 165   FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP             999         1      -1               0        
 166   FEAT_EPIC_BLINDING_SPEED                         491         0      -1               1   
 167   FEAT_DISCIPLE_OF_DARKNESS                        4012        0      -1               1
-168   FEAT_MANYSHOT                                    3306        1      -1               1      
-  
+168   FEAT_MANYSHOT                                    3306        0      -1               1      
+169   FEAT_IMP_MANYSHOT                                3350        0      -1               1      
+ 

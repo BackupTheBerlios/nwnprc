@@ -342,3 +342,4 @@
 338    FEAT_EPIC_BLINDING_SPEED                             491          0      -1                1   
 339    FEAT_DISCIPLE_OF_DARKNESS                           4012          0      -1                1   
 340    FEAT_MANYSHOT                                       3306          1      -1                1      
+341    FEAT_IMP_MANYSHOT                                   3350          1      -1                1      

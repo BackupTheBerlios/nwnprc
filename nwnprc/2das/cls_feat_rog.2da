@@ -89,5 +89,6 @@
 85    SneakAttack19                                       1040          3      37                0        
 86    SneakAttack20                                       1041          3      39                0        
 87    FEAT_DISCIPLE_OF_DARKNESS                           4012          0      -1                1 
-88    FEAT_MANYSHOT                                       3306          1      -1                1      
+88    FEAT_MANYSHOT                                       3306          0      -1                1      
+89    FEAT_IMP_MANYSHOT                                   3350          0      -1                1      
   

@@ -3,12 +3,12 @@
     FeatLabel                                      FeatIndex List GrantedOnLevel OnMenu 
 0   FEAT_SMITE_GOOD                                472       3    2              1      
 1   FEAT_PRESTIGE_DARK_BLESSING                    473       3    2              0      
-2   FEAT_CREATE_UNDEAD                             474       3    3              1      
+2   FEAT_CREATE_UNDEAD                             474       3    99             1      
 3   FEAT_FIEND                                     475       3    5              1      
-4   FEAT_INFLICT_SERIOUS_WOUNDS                    476       3    6              1      
-5   FEAT_INFLICT_CRITICAL_WOUNDS                   477       3    8              1      
-6   FEAT_BULLS_STRENGTH                            478       3    2              1      
-7   FEAT_CONTAGION                                 479       3    7              1      
+4   FEAT_INFLICT_SERIOUS_WOUNDS                    476       3    99             1      
+5   FEAT_INFLICT_CRITICAL_WOUNDS                   477       3    99             1      
+6   FEAT_BULLS_STRENGTH                            478       3    99             1      
+7   FEAT_CONTAGION                                 479       3    99             1      
 8   TurnUndead                                     294       3    3              1      
 9   SneakAttack                                    460       3    4              0      
 10  SneakAttack2                                   461       3    7              0      
@@ -198,4 +198,17 @@
 194 FEAT_EPIC_DIVINE_RESISTANCE                    3119      0    -1             1      
 195 FEAT_INVOKE_DIVINE_WRATH                       3114      0    -1             1      
 196 FEAT_EPIC_DIVINE_MIGHT                         3120      0    -1             1      
-197 DefArrow                                       8         0    -1             0      
+197 DefArrow                                       8         0    -1             0  
+198  ****                                           ****      **** ****           ****   
+199  Spellbook                                      2000      3    1              1      
+200  BlkCureLightWounds                             2001      1    99             1      
+201  BlkDoom                                        2002      1    99             1      
+202  BlkInflictLightWounds                          2003      1    99             1      
+203  BlkMagicWeapon                                 2004      1    99             1      
+204  BlkSummonMonster1                              2005      1    99             1      
+205  BlkBullsStrength                               2006      1    99             1      
+206  BlkCureModerateWounds                          2007      1    99             1      
+207  BlkDarkness                                    2008      1    99             1      
+208  BlkEaglesSplendor                              2009      1    99             1      
+209  BlkInflictModerateWounds                       2010      1    99             1      
+210  BlkSummonCreatureII                            2011      1    99             1      

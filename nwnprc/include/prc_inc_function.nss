@@ -392,7 +392,9 @@ void ScrubPCSkin(object oPC, object oSkin)
             int st = GetItemPropertySubType(ip);
 
             // Spare 400 through 570 and 398 -- epic spells & spell effects
-            if ((st < 400 || st > 570) && st != 398)
+            //also spare the new spellbook feats
+            if ((st < 400 || st > 570) && st != 398
+                && (st < 100 || st > 200))
                 RemoveItemProperty(oSkin, ip);
         }
         else

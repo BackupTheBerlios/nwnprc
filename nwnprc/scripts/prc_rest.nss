@@ -4,6 +4,7 @@
 #include "prc_ipfeat_const"
 #include "inc_epicspells"
 #include "prc_inc_clsfunc"
+#include "inc_newspellbook"
 
 void PrcFeats(object oPC)
 {
@@ -82,7 +83,9 @@ void main()
           // end flurry or swords array
 
           DelayCommand(1.0,PrcFeats(oPC));
-
+         
+         // New Spellbooks
+         DelayCommand(0.01, CheckNewSpellbooks(oPC));
          break;
       }
       case REST_EVENTTYPE_REST_INVALID:{

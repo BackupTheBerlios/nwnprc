@@ -123,3 +123,33 @@ object GetPersistantLocalObject(object oPC, string sName)
     object oToken = GetHideToken(oPC);
     return GetLocalObject(oToken, sName);
 }
+
+void DeletePersistantLocalString(object oPC, string sName)
+{
+    object oToken = GetHideToken(oPC);
+    DeleteLocalString(oToken, sName);
+}
+
+void DeletePersistantLocalInt(object oPC, string sName)
+{
+    object oToken = GetHideToken(oPC);
+    DeleteLocalInt(oToken, sName);
+}
+
+void DeletePersistantLocalFloat(object oPC, string sName)
+{
+    object oToken = GetHideToken(oPC);
+    DeleteLocalFloat(oToken, sName);
+}
+
+void DeletePersistantLocalLocation(object oPC, string sName)
+{
+    object oToken = GetHideToken(oPC);
+    DeleteLocalLocation(oToken, sName);
+}
+
+void DeletePersistantLocalObject(object oPC, string sName)
+{
+    object oToken = GetHideToken(oPC);
+    DeleteLocalObject(oToken, sName);
+}

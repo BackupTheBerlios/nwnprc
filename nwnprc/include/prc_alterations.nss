@@ -82,6 +82,14 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_HUMANOID_REPTILIAN;
     if(GetHasFeat(FEAT_MONSTEROUS, oCreature))
         return RACIAL_TYPE_HUMANOID_MONSTROUS;
+    if(GetHasFeat(FEAT_UNDEAD, oCreature))
+        return RACIAL_TYPE_UNDEAD;
+    if(GetHasFeat(FEAT_BEAST, oCreature))
+        return RACIAL_TYPE_BEAST;
+    if(GetHasFeat(FEAT_VERMIN, oCreature))
+        return RACIAL_TYPE_VERMIN;
+    if(GetHasFeat(FEAT_DRAGON, oCreature))
+        return RACIAL_TYPE_DRAGON;
     if(GetHasFeat(FEAT_ELEMENTAL, oCreature))
         return RACIAL_TYPE_ELEMENTAL;
     if(GetHasFeat(FEAT_GIANT, oCreature))

@@ -339,5 +339,6 @@
 335    FEAT_IMPROVED_WHIRLWIND                              868          1      -1                0
 336    FEAT_EPIC_SUPERIOR_INITIATIVE                        753          1      -1                0
 337    FEAT_IMPROVED_DWARVEN_WARAXE                         954          1      -1                0
-338   FEAT_EPIC_BLINDING_SPEED               491         0     -1               1   
-339   FEAT_DISCIPLE_OF_DARKNESS                        4012        0      -1               1   
+338    FEAT_EPIC_BLINDING_SPEED                             491          0      -1                1   
+339    FEAT_DISCIPLE_OF_DARKNESS                           4012          0      -1                1   
+340    FEAT_MANYSHOT                                       3306          1      -1                1      

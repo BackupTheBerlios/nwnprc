@@ -78,14 +78,16 @@
 74    FEAT_EPIC_SKILL_FOCUS_BLUFF                          917          1      -1                0
 75    FEAT_EPIC_SKILL_FOCUS_INTIMIDATE                     918          1      -1                0
 76    FEAT_EPIC_ROGUE                                      974          3      21                0
-77    SneakAttack11                          1032         3      21               0        
-78    SneakAttack13                          1033         3      23               0        
-79    SneakAttack14                          1034        3      25               0        
-80    SneakAttack15                          1035        3      27               0        
-81    SneakAttack16                          1036        3      29               0        
-82    SneakAttack16                          1037        3      31               0        
-83    SneakAttack17                          1038        3      33               0        
-84    SneakAttack18                          1039        3      35               0        
-85    SneakAttack19                          1040        3      37               0        
-86    SneakAttack20                          1041        3      39               0        
-87   FEAT_DISCIPLE_OF_DARKNESS                        4012        0      -1               1   
+77    SneakAttack11                                       1032          3      21                0        
+78    SneakAttack13                                       1033          3      23                0        
+79    SneakAttack14                                       1034          3      25                0        
+80    SneakAttack15                                       1035          3      27                0        
+81    SneakAttack16                                       1036          3      29                0        
+82    SneakAttack16                                       1037          3      31                0        
+83    SneakAttack17                                       1038          3      33                0        
+84    SneakAttack18                                       1039          3      35                0        
+85    SneakAttack19                                       1040          3      37                0        
+86    SneakAttack20                                       1041          3      39                0        
+87    FEAT_DISCIPLE_OF_DARKNESS                           4012          0      -1                1 
+88    FEAT_MANYSHOT                                       3306          1      -1                1      
+  

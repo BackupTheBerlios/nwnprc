@@ -22,7 +22,7 @@ void main()
     object oPC = OBJECT_SELF;
 
     int nShifterLevel = GetLevelByClass(CLASS_TYPE_PNP_SHIFTER,oPC);
- 
+
     object oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
     if (!GetLocalInt(oPC,"SHIFTOnEnterHit") || !GetIsObjectValid(oHidePC))
     {
@@ -47,7 +47,7 @@ void main()
 		}
 		if (!iNoGo)
 			SetShiftTrueForm(oPC);
-		
+
         }
 	// Set a local on the pc so we dont have to do this more than once
 	SetLocalInt(oPC,"SHIFTOnEnterHit",1);
@@ -63,7 +63,7 @@ void main()
     string sShifterLevel = "0";
     int i = 0;
     int nShiftLevelFile = 0;
-    
+
     while(sShifterLevel != "")
     {
         sShifterLevel = Get2DAString(sShifterFile,"SLEVEL",i);

@@ -46,6 +46,8 @@ int GetIsCreatureHarmless(object oCreature);
 // based on the players RACIAL type
 int GetTrueForm(object oPC);
 
+//is inventory full if yes then CanShift = false else CanShift = true
+int CanShift(object oPC);
 
 // Transforms the oPC into the oTarget using the epic rules
 // Assumes oTarget is already a valid target
@@ -95,6 +97,19 @@ void SetShift(object oPC, object oTarget);
 void SetShift_02(object oPC, object oTarget, object oASPC);
 void SetShift_03(object oPC, object oTarget, object oASPC);
 
+
+
+int CanShift(object oPC)
+{
+	int iOutcome = FALSE;
+	object oItem = CreateItemOnObject("pnp_shft_tstpkup", oPC);
+	if (GetItemPossessor(oItem) == oPC)
+	{
+		iOutcome = TRUE;
+	}
+	DestroyObject(oItem);
+	return iOutcome;
+}
 
 void QuickShift(object oPC, int iQuickSlot)
 {
@@ -1820,6 +1835,12 @@ int SetShiftEpic(object oPC, object oTarget)
 // addition of the iEpic peramiter
 int SetShiftFromTemplateValidate(object oPC, string sTemplate, int iEpic)
 {
+	if (!CanShift(oPC))
+	{
+		SendMessageToPC(oPC, "Your inventory is to full to allow you to shift.");
+		SendMessageToPC(oPC, "Please make room enough for an armour sized item and then try again.");
+		return FALSE;
+	}
     int bRetValue = FALSE;
     int in_list = IsKnownCreature( oPC, sTemplate );
 
@@ -1983,21 +2004,10 @@ void SetShiftTrueForm(object oPC)
     // Set race back to unused
     SetLocalInt(oPC,"RACIAL_TYPE",0);
 
-//this dosnt work
-//	//this was added to stop the shifter from looking naked when they reenter/reload
-//	//a server/mod and then unshifting.
-//	object oArmour = GetItemInSlot(INVENTORY_SLOT_CHEST);
-//	object oHelm = GetItemInSlot(INVENTORY_SLOT_HEAD);
-//	if (GetIsObjectValid(oArmour))
-//    	DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oArmour,INVENTORY_SLOT_CHEST)));
-//	if (GetIsObjectValid(oHelm))
-//	    DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oHelm,INVENTORY_SLOT_HEAD)));
+	// Reset any PRC feats that might have been lost from the shift
+	EvalPRCFeats(oPC);
+	SetLocalInt(oHide,"nPCShifted",FALSE);
 
-    SetLocalInt(oHide,"nPCShifted",FALSE);
-    // Reset any PRC feats that might have been lost from the shift
-    EvalPRCFeats(oPC);
-
-//    return TRUE;
 }
 
 

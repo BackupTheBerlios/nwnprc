@@ -48,15 +48,31 @@ public class PortraitMenu extends javax.swing.JFrame {
         private void PicButtonActionPerformed(ActionEvent evt) {
             OKButton.setEnabled(true);
             javax.swing.Icon test = PicButton.getIcon();
-            if(test instanceof ImageIcon)
-                if(!isBIFpic) {
-                    String PORTRAIT = FILENAME;
-                    String TEXTTEST = FILENAME.substring(FILENAME.length() - 5, FILENAME.length());
-                    if(TEXTTEST.equalsIgnoreCase("M.TGA")) {
-                        int indextarget = FILENAME.indexOf("M.TGA");
-                        String NEWFILE = FILENAME.substring(0, indextarget);
+            if (test instanceof ImageIcon) {
+				if (isBIFpic) {
+					String BIFFILENAME = "po_" + tmpname + "l.tga";
+					try {
+						InfoText.setText(BIFFILENAME);
+
+						File tempImage = RESFAC.TempImageFile(BIFFILENAME);
+						if (tempImage != null) {
+							TargaImage curtga = new TargaImage(tempImage);
+							CurrentPortrait.setIcon(new ImageIcon(curtga.getImage()));
+							BICPortraitname = "po_" + tmpname;
+							CURRENTPORTRAIT = tempImage.getParent() + FileDelim + baseFilename;
+							OKButton.setEnabled(true);
+						}
+					}
+					catch(IOException err) {
+						JOptionPane.showMessageDialog(null, "Fatal Error - " + BIFFILENAME + " not found. Your data files might be corrupt.", "Error", 0);
+						System.exit(0);
+					}
+				}
+				else {
+                    String PORTRAIT = qualifiedName;
+                    if(qualifiedName.toUpperCase().endsWith("M.TGA")) {
                         CURRENTPORTRAIT = PORTRAIT;
-                        PORTRAIT = NEWFILE + "L.TGA";
+                        PORTRAIT = qualifiedName.substring(0, qualifiedName.length() - 5) + "l.tga";
                     }
 
 					ImageIcon icon = null;
@@ -71,81 +87,48 @@ public class PortraitMenu extends javax.swing.JFrame {
 					}
 
 					CurrentPortrait.setIcon(icon);
-                    BICPortraitname = imagename.substring(0, imagename.length() - 4).toLowerCase();
-                    InfoText.setText(PORTRAIT.substring(PORTRAIT.lastIndexOf(FileDelim)+1).toLowerCase());
+                    BICPortraitname = baseFilename.substring(0, baseFilename.length() - 4);
+                    InfoText.setText(PORTRAIT.substring(PORTRAIT.lastIndexOf(FileDelim) + 1));
                     if(BICPortraitname.endsWith("m")) {
-                        String tmpport = BICPortraitname.substring(0, BICPortraitname.length() -1);
-                        BICPortraitname = tmpport;
+                        BICPortraitname = BICPortraitname.substring(0, BICPortraitname.length() - 1);
                     }
                     OKButton.setEnabled(true);
-                } else
-                    if(isBIFpic) {
-                        String BIFFILENAME = "";
-                        try {
-                            String PORTRAIT = imagename;
-                            String TEXTTEST = imagename.substring(0, imagename.length() - 9);
-                            BIFFILENAME = "po_" + tmpname.toLowerCase() + "l.tga";
-                            InfoText.setText(BIFFILENAME.toLowerCase());
-
-							File tempImage = RESFAC.TempImageFile(BIFFILENAME);
-							if (tempImage != null) {
-                                TargaImage curtga = new TargaImage(tempImage);
-                                CurrentPortrait.setIcon(new ImageIcon(curtga.getImage()));
-                                BICPortraitname = "po_" + tmpname;
-                                CURRENTPORTRAIT = tempImage.getParent() + FileDelim + imagename;
-                                OKButton.setEnabled(true);
-							}
-                        }
-                        catch(IOException err) {
-                            JOptionPane.showMessageDialog(null, "Fatal Error - " + BIFFILENAME + " not found. Your data files might be corrupt.", "Error", 0);
-                            System.exit(0);
-                        }
-                    }
+                }
+			}
         }
         
-        String imageName;
-        String imagename;
-        String dir;
+        String baseFilename;
         String tmpname;
         boolean isBIFpic;
-        public String FILENAME;
-        public String BASEFILENAME;
+        public String qualifiedName;
         
-        
-        public Portrait(String newdir, String image, boolean isBifpic, String pretmpname) {
-            imageName = newdir + image;
+        public Portrait(String dir, String imageFilename, boolean isBifpic, String pretmpname) {
+            baseFilename = imageFilename;
+            qualifiedName = dir + imageFilename;
             tmpname = pretmpname;
-            dir = newdir;
-            imagename = image;
             isBIFpic = isBifpic;
+
             CreateButton();
-            String upperCaseName = imageName.toUpperCase();
 
 			try {
-                File targetfile = new File(imageName);
+                File targetfile = new File(qualifiedName);
                 TargaImage tgapic = new TargaImage(targetfile);
                 Dimension tgasize = tgapic.getSize();
                 double tmpsize = (new Float(tgasize.height)).doubleValue() * (new Float(0.78125D)).doubleValue();
                 tgapic.setHeight((int)tmpsize);
                 PicButton.setIcon(new ImageIcon(tgapic.getImage()));
-                FILENAME = imageName.toUpperCase();
 			}
 			catch (IOException e) {
-				System.out.println("Invalid image: " + imageName);
-				FILENAME = "null";
+				System.out.println("Invalid image: " + qualifiedName);
+				qualifiedName = "null";
 			}
         }
     }
     
-    public class ImageFilter
-    implements FilenameFilter {
-        
+    public class ImageFilter implements FilenameFilter {
         public boolean accept(File dir, String name) {
             String upperCaseName = name.toUpperCase();
-            return upperCaseName.endsWith("M.tga") || upperCaseName.endsWith("m.tga") || upperCaseName.endsWith("M.TGA") || upperCaseName.endsWith("m.TGA");
-        }
-        
-        public ImageFilter() {
+            return upperCaseName.endsWith("M.TGA");
         }
     }
     
@@ -178,7 +161,7 @@ public class PortraitMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Fatal Error - portraits.2da not found. Your data files might be corrupt.", "Error", 0);
             System.exit(0);
         }
-        //try {
+
         CURRENTPORTRAIT = "resource/portrait.jpg";
         java.net.URL targurl = getClass().getResource(CURRENTPORTRAIT);
         CurrentPortrait.setIcon(new ImageIcon(targurl));
@@ -188,11 +171,6 @@ public class PortraitMenu extends javax.swing.JFrame {
         
         RedoPortraits(-1);
         
-        //}
-        //catch(NullPointerException err) {
-        //    JOptionPane.showMessageDialog(null, "Error: " +err, "Error", 0);
-        //    System.exit(0);
-        //}
         
         pack();
     }
@@ -209,23 +187,21 @@ public class PortraitMenu extends javax.swing.JFrame {
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         PortraitsWindow.removeAll();
         PortraitsWindow.repaint();
-        FilenameFilter tgafilter = new ImageFilter();
-        String filenames[] = (new File(directory)).list(tgafilter);
+        String filenames[] = (new File(directory)).list(new ImageFilter());
         String sexstr = "";
         int sex = ((Integer)menucreate.MainCharData[0].get(new Integer(0))).intValue();
         int race = Integer.parseInt(menucreate.MainCharDataAux[1][0]);
         int numbif = 0;
-        //for(int p = 0; p < 50; p++) {
         for(int p = 0; p < portraitmap.length; p++) {
             String basepicfilename = portraitmap[p][1];
-            if(portraitmap[p][2] != null && portraitmap[p][3] != null) {
-                if(basepicfilename != null
-						&& !basepicfilename.toLowerCase().startsWith("plc")
+            if(basepicfilename != null && portraitmap[p][2] != null && portraitmap[p][3] != null) {
+				basepicfilename = basepicfilename.toLowerCase();
+                if(!basepicfilename.startsWith("plc")
 						&& !basepicfilename.equalsIgnoreCase("door01_")
 						&& (Integer.parseInt(portraitmap[p][2]) == sex && sexlock || !sexlock)
 						&& (Integer.parseInt(portraitmap[p][3]) == race && racelock || !racelock)
 						&& CheckPortrait(directory, "po_" + basepicfilename)) {
-                    String picFilename = "po_" + basepicfilename.toLowerCase() + "m.tga";
+                    String picFilename = "po_" + basepicfilename + "m.tga";
                     CurrentNum++;
                     if((CurrentNum < ((50*screen)+1)) && CurrentNum > ((50*screen)-50)) {
                         try {
@@ -286,13 +262,12 @@ public class PortraitMenu extends javax.swing.JFrame {
         int portraitnum = 0;
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
-        FilenameFilter tgafilter = new ImageFilter();
         File tmpfile = new File(directory);
         if(!tmpfile.exists()) {
             JOptionPane.showMessageDialog(null, "Fatal Error - No portraits directory. Please create a new portraits directory in your NWN directory.", "Error", 0);
             System.exit(0);
         }
-        String filenames[] = (tmpfile.list(tgafilter));
+        String filenames[] = (tmpfile.list(new ImageFilter()));
         String sexstr = "";
         int sex = ((Integer)menucreate.MainCharData[0].get(new Integer(0))).intValue();
         int race = Integer.parseInt(menucreate.MainCharDataAux[1][0]);
@@ -300,12 +275,12 @@ public class PortraitMenu extends javax.swing.JFrame {
         for(int p = 0; p < portraitmap.length; p++) {
             String basepicfilename = portraitmap[p][1];
             if(basepicfilename != null && portraitmap[p][2] != null && portraitmap[p][3] != null) {
-                if (!basepicfilename.toLowerCase().startsWith("plc")
+				basepicfilename = basepicfilename.toLowerCase();
+                if (!basepicfilename.startsWith("plc")
 						&& !basepicfilename.equalsIgnoreCase("door01_")
 						&& (Integer.parseInt(portraitmap[p][2]) == sex && sexlock || !sexlock)
 						&& (Integer.parseInt(portraitmap[p][3]) == race && racelock || !racelock)
 						&& CheckPortrait(directory, "po_" + basepicfilename)) {
-                    String picfilename = "po_" + basepicfilename.toLowerCase() + "m.tga";
                     portraitnum++;
                 }
             }
@@ -329,6 +304,7 @@ public class PortraitMenu extends javax.swing.JFrame {
 		}
     }
     
+	// TODO: More case twiddling
     public boolean CheckPortrait(String resdir, String basepicname) {
         return RESFAC.FileExists(resdir, basepicname.toLowerCase() + "h.tga") && RESFAC.FileExists(resdir, basepicname.toLowerCase() + "l.tga") && RESFAC.FileExists(resdir, basepicname.toLowerCase() + "m.tga") && RESFAC.FileExists(resdir, basepicname.toLowerCase() + "s.tga") && RESFAC.FileExists(resdir, basepicname.toLowerCase() + "t.tga");
     }

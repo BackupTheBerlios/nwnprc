@@ -1,9 +1,64 @@
+//::///////////////////////////////////////////////
+//:: NPC event wrapper include
+//:: inc_prc_npc
+//:://////////////////////////////////////////////
+/*
+	Wrapper functions for getters used in module
+	events. Used to make the PRC evaluations
+	happening in events to work for NPCs, too.
+	
+	Event currently supported:
+	OnEquip
+	OnUnequip
+	OnDeath
+	OnRest
+	
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////
+/* Function prototypes                          */
+//////////////////////////////////////////////////
+
+// A heartbeat function for NPCs. Checks if their equipped items have changed.
+// Simulates OnEquip / OnUnEquip firing
 void DoEquipTest();
+
+
+/* On(Un)Equip wrappers */
+
+// Wrapper for GetPCItemLastEquipped
 object GetItemLastEquipped();
+// Wrapper for GetPCItemLastEquippedBy
 object GetItemLastEquippedBy();
+// Wrapper for GetItemLastUnequipped
 object GetItemLastUnequipped();
+// Wrapper for GetPCItemLastUnequippedBy
 object GetItemLastUnequippedBy();
 
+
+/* OnDeath wrappers */
+
+// Wrapper for GetLastHostileActor and GetLastKiller
+object MyGetLastKiller();
+
+// Wrapper for GetLastPlayerDied
+object GetLastBeingDied();
+
+
+/* OnRest wrapper */
+
+// Wrapper for GetLastPCRested
+object GetLastBeingRested();
+
+// Wrapper for GetLastRestEventType
+int MyGetLastRestEventType();
+
+//////////////////////////////////////////////////
+/* Function defintions                          */
+//////////////////////////////////////////////////
 
 object GetItemLastEquippedBy()
 {
@@ -61,4 +116,34 @@ void DoEquipTest()
             SetLocalObject(OBJECT_SELF, "oSlotItem"+IntToString(i), oItem);
         }
     }
+}
+
+
+object MyGetLastKiller(){
+    if(GetModule() == OBJECT_SELF)
+        return GetLastHostileActor();
+    else
+        return GetLastKiller();
+}
+
+object GetLastBeingDied(){
+    if(GetModule() == OBJECT_SELF)
+        return GetLastPlayerDied();
+    else
+        return OBJECT_SELF;
+}
+
+
+object GetLastBeingRested(){
+    if(GetModule() == OBJECT_SELF)
+        return GetLastPCRested();
+    else
+        return OBJECT_SELF;
+}
+
+int MyGetLastRestEventType(){
+    if(GetModule() == OBJECT_SELF)
+        return GetLastRestEventType();
+    else
+        return GetLocalInt(OBJECT_SELF, "prc_rest_eventtype");
 }

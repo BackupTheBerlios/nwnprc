@@ -69,6 +69,11 @@ void KatanaFinesse(object oPC)
         SetCompositeAttackBonus(oPC, "KatanaFinesseR", bKatFinBon, ATTACK_BONUS_ONHAND);
     if (iUseL)
         SetCompositeAttackBonus(oPC, "KatanaFinesseL", bKatFinBon, ATTACK_BONUS_OFFHAND);
+
+if (iUseR == FALSE)
+        SetCompositeAttackBonus(oPC, "KatanaFinesseR", 0, ATTACK_BONUS_ONHAND);
+    if (iUseL == FALSE)
+        SetCompositeAttackBonus(oPC, "KatanaFinesseL", 0, ATTACK_BONUS_OFFHAND);
 }
 
 void main()

@@ -37,7 +37,7 @@ void ActionCastSpellOnSelf(int iSpell)
     int iCount = GetActionMode(OBJECT_SELF, ACTION_MODE_COUNTERSPELL);
 
     // Clear actions (unless resting)
-    if (iAction == ACTION_REST)
+    if (iAction == (ACTION_REST || ACTION_DIALOGOBJECT))
     {
         DelayCommand(1.0, ActionCastSpellOnSelf(iSpell)); // keep trying until not resting.
         return;

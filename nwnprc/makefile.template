@@ -56,7 +56,7 @@
 # Names of the output files.
 # NOTE: For version 2.0 this is going to change and there will be 2 haks,
 # the exact names are TBD.
-RAR				= $(OUTPATH)\prc_consortium$(PRC_VERSION).rar
+RAR				= $(OUTPATH)\PRC$(PRC_VERSION).rar
 ERF				= $(OUTPATH)\prc_consortium.erf
 HAK				= $(OUTPATH)\prc_consortium.hak
 TLK				= $(TLKPATH)\prc_consortium.tlk

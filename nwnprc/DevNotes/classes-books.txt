@@ -34,7 +34,7 @@ Archmage					| Dungeon Master's Guide
 Duelist						| Dungeon Master's Guide
 Eldritch Knight					| Dungeon Master's Guide
 Hierophant					| Dungeon Master's Guide
-Mystic Theurge					| Dungeon Master's Guide
+Mystic Theurge					| Dungeon Master's Guide 3.5
 Legendary Dreadnought				| Epic Level Handbook
 Blood Archer					| Evil
 Heartwarder					| Faiths and Pantheons

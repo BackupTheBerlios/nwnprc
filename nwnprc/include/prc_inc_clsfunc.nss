@@ -950,8 +950,11 @@ void AddIniDmg(object oPC)
    if ( oCweapB != OBJECT_INVALID && !FeatIniDmg(oCweapB))
    {
       iDmg =  MonsterDamage(oCweapB);
-      iConv = DamageConv(iDmg);
-      iConv = ConvMonsterDmg(iConv+bUnarmedDmg);
+      iConv = DamageConv(iDmg) + bUnarmedDmg;
+      iConv = (iConv > 6 && iConv < 10)  ? 6  : iConv;
+      iConv = (iConv > 15 && iConv < 20) ? 15 : iConv;
+      iConv = (iConv > 25)               ? 25 : iConv;
+      iConv = ConvMonsterDmg(iConv);
       TotalAndRemoveProperty(oCweapB,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iConv),oCweapB);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oCweapB);
@@ -960,8 +963,11 @@ void AddIniDmg(object oPC)
    if ( oCweapL != OBJECT_INVALID && !FeatIniDmg(oCweapL))
    {
       iDmg =  MonsterDamage(oCweapL);
-      iConv = DamageConv(iDmg);
-      iConv = ConvMonsterDmg(iConv+bUnarmedDmg);
+      iConv = DamageConv(iDmg) + bUnarmedDmg;
+      iConv = (iConv > 6 && iConv < 10)  ? 6  : iConv;
+      iConv = (iConv > 15 && iConv < 20) ? 15 : iConv;
+      iConv = (iConv > 25)               ? 25 : iConv;
+      iConv = ConvMonsterDmg(iConv);
       TotalAndRemoveProperty(oCweapL,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iConv),oCweapL);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oCweapL);
@@ -970,8 +976,11 @@ void AddIniDmg(object oPC)
    if ( oCweapR != OBJECT_INVALID && !FeatIniDmg(oCweapR))
    {
       iDmg =  MonsterDamage(oCweapR);
-      iConv = DamageConv(iDmg);
-      iConv = ConvMonsterDmg(iConv+bUnarmedDmg);
+      iConv = DamageConv(iDmg) + bUnarmedDmg;
+      iConv = (iConv > 6 && iConv < 10)  ? 6  : iConv;
+      iConv = (iConv > 15 && iConv < 20) ? 15 : iConv;
+      iConv = (iConv > 25)               ? 25 : iConv;
+      iConv = ConvMonsterDmg(iConv);
       TotalAndRemoveProperty(oCweapR,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iConv),oCweapR);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oCweapR);

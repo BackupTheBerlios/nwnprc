@@ -6,12 +6,7 @@
 
 void FavoriteEnemy(object oPC)
 {
-
-  // if (GetHasSpellEffect(SPELL_UR_FAVORITE_ENEMY,oPC))
-  //    RemoveSpellEffects(SPELL_UR_FAVORITE_ENEMY,oPC,oPC);
    ActionCastSpellOnSelf(SPELL_UR_FAVORITE_ENEMY);
-
-
 }
 
 void Grace(object oPC, object oSkin,int bGrace)

@@ -54,7 +54,7 @@ void main()
 	ScrubPCSkin(oPC, oSkin);
         DeletePRCLocalInts(oSkin);     
         
-    //SetAllEquippedUndroppableAndPlot(oPC);
+    SetAllEquippedUndroppableAndPlot(oPC);
 
     SetLocalInt(oPC,"ONENTER",1);
     // Make sure we reapply any bonuses before the player notices they are gone.

@@ -1,7 +1,7 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "prc_class_const"
-
+#include "inc_combat"
 
 ///Int Bonus to AC /////////
 // * Applies the Iaijutusu Masters AC bonuses as CompositeBonuses on the object's skin.
@@ -35,10 +35,12 @@ void KatFin(object oPC, object oWeap, int iBonus)
     int iDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC);
     int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
     int iBonus = 0;
+    int iEnhance = GetWeaponEnhancement(oWeap);
+    int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
 
     if(iDex > iStr)
     {
-    iBonus = iDex - iStr;
+    iBonus = iDex - iStr + iEnhance + iAB;
     }
 
  if(iBonus > 0){

@@ -19,17 +19,28 @@
 
 void DodgeBonus(object oPC, object oSkin)
 {
+
+//SendMessageToPC(OBJECT_SELF, "DodgeBonus is called");
+
      int ACBonus = 0;
      int iShou = GetLevelByClass(CLASS_TYPE_SHOU, oPC);
 
-     if(iShou >= 2 && iShou < 4)
+//SendMessageToPC(OBJECT_SELF, "Shou Class Level: " + IntToString(iShou));
+
+     if(iShou == 1)
      {
           ACBonus = 1;
      }
-     else if(iShou >= 4)
+     else if(iShou >= 2 && iShou < 4)
      {
           ACBonus = 2;
      }
+     else if(iShou >= 4)
+     {
+          ACBonus = 3;
+     }
+
+//SendMessageToPC(OBJECT_SELF, "Dodge Bonus to AC: " + IntToString(ACBonus));
 
      SetCompositeBonus(oSkin, "ShouDodge", ACBonus, ITEM_PROPERTY_AC_BONUS);
      SetLocalInt(oPC, "HasShouDodge", 2);
@@ -51,13 +62,15 @@ void main()
 
     object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-    int iShield = GetItemACValue(oWeapL);
+    
+    int iBase = GetBaseItemType(oWeapL);
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
     int armorType = GetArmorType(oArmor);
     string nMes = "";
 
+SendMessageToPC(OBJECT_SELF, "prc_shou is called");
 
-    if( armorType > ARMOR_TYPE_LIGHT )
+    if( GetBaseAC(oArmor)>3 )
     {
          RemoveDodge(oPC, oSkin);
 
@@ -66,10 +79,9 @@ void main()
               RemoveSpellEffects(SPELL_MARTIAL_FLURRY, oPC, oPC);
          }
 
-         nMes = "*Shou Disciple Abilities Disabled Due To Equipped Armor*";
-         FloatingTextStringOnCreature(nMes, oPC, FALSE);
+         SendMessageToPC(OBJECT_SELF, "*Shou Disciple Abilities Disabled Due To Equipped Armor*");
     }
-    else if(iShield > 0)
+    else if(iBase == BASE_ITEM_SMALLSHIELD || iBase == BASE_ITEM_LARGESHIELD || iBase == BASE_ITEM_TOWERSHIELD)
     {
          RemoveDodge(oPC, oSkin);
 
@@ -78,8 +90,7 @@ void main()
               RemoveSpellEffects(SPELL_MARTIAL_FLURRY, oPC, oPC);
          }
 
-         nMes = "*Shou Disciple Abilities Disabled Due To Equipped Shield*";
-         FloatingTextStringOnCreature(nMes, oPC, FALSE);
+         SendMessageToPC(OBJECT_SELF, "*Shou Disciple Abilities Disabled Due To Equipped Shield*");
     }
     else
     {

@@ -188,6 +188,171 @@ void Sanctify()
 
 }
 
+void Vile()
+{
+
+   object oItem;
+   object oPC = OBJECT_SELF;
+   int iType;
+
+//   if (GetLocalInt(oPC,"ONENTER")) return;
+
+   int iEquip=GetLocalInt(oPC,"ONEQUIP");
+   
+
+   if (GetLocalInt(oItem,"UnholyStrik")) return;
+
+   if (iEquip==2)
+   {
+     if (GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
+
+     oItem=GetPCItemLastEquipped();
+     iType= GetBaseItemType(oItem);
+
+     if ( GetLocalInt(oItem,"USanctMar")) return ;
+
+     switch (iType)
+     {
+        case BASE_ITEM_BOLT:
+        case BASE_ITEM_BULLET:
+        case BASE_ITEM_ARROW:
+          iType=GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND));
+          break;
+        case BASE_ITEM_SHORTBOW:
+        case BASE_ITEM_LONGBOW:
+          oItem=GetItemInSlot(INVENTORY_SLOT_ARROWS);
+          break;
+        case BASE_ITEM_LIGHTCROSSBOW:
+        case BASE_ITEM_HEAVYCROSSBOW:
+          oItem=GetItemInSlot(INVENTORY_SLOT_BOLTS);
+          break;
+        case BASE_ITEM_SLING:
+          oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
+          break;
+     }
+
+     if (!Vile_Feat(iType)) return;
+
+     AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
+     AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
+     SetLocalInt(oItem,"USanctMar",1);
+  }
+  else if (iEquip==1)
+   {
+     if (GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
+
+     oItem=GetPCItemLastUnequipped();
+     iType= GetBaseItemType(oItem);
+
+     switch (iType)
+     {
+        case BASE_ITEM_BOLT:
+        case BASE_ITEM_BULLET:
+        case BASE_ITEM_ARROW:
+          iType=GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND));
+          break;
+        case BASE_ITEM_SHORTBOW:
+        case BASE_ITEM_LONGBOW:
+          oItem=GetItemInSlot(INVENTORY_SLOT_ARROWS);
+          break;
+        case BASE_ITEM_LIGHTCROSSBOW:
+        case BASE_ITEM_HEAVYCROSSBOW:
+          oItem=GetItemInSlot(INVENTORY_SLOT_BOLTS);
+          break;
+        case BASE_ITEM_SLING:
+          oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
+          break;
+     }
+
+//    if (!Sanctify_Feat(iType)) return;
+
+
+    if ( GetLocalInt(oItem,"USanctMar"))
+    {
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
+      DeleteLocalInt(oItem,"USanctMar");
+    }
+
+   }
+   else
+   {
+
+     oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+     iType= GetBaseItemType(oItem);
+
+     if (GetHasFeat(FEAT_UNHOLY_STRIKE))
+     {
+        object oItem2=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
+
+        switch (iType)
+        {
+
+            case BASE_ITEM_SHORTBOW:
+            case BASE_ITEM_LONGBOW:
+                oItem=GetItemInSlot(INVENTORY_SLOT_ARROWS);
+                break;
+            case BASE_ITEM_LIGHTCROSSBOW:
+            case BASE_ITEM_HEAVYCROSSBOW:
+                oItem=GetItemInSlot(INVENTORY_SLOT_BOLTS);
+                break;
+            case BASE_ITEM_SLING:
+                oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
+                break;
+        }
+
+        if ( GetLocalInt(oItem,"USanctMar"))
+        {
+            RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
+            RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
+            DeleteLocalInt(oItem,"USanctMar");
+        }
+        if ( GetLocalInt(oItem2,"USanctMar"))
+        {
+            RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
+            RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
+            DeleteLocalInt(oItem2,"USanctMar");
+        }
+        return;
+     }
+
+     switch (iType)
+     {
+        case BASE_ITEM_BOLT:
+        case BASE_ITEM_BULLET:
+        case BASE_ITEM_ARROW:
+          iType=GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND));
+          break;
+        case BASE_ITEM_SHORTBOW:
+        case BASE_ITEM_LONGBOW:
+          oItem=GetItemInSlot(INVENTORY_SLOT_ARROWS);
+          break;
+        case BASE_ITEM_LIGHTCROSSBOW:
+        case BASE_ITEM_HEAVYCROSSBOW:
+          oItem=GetItemInSlot(INVENTORY_SLOT_BOLTS);
+          break;
+        case BASE_ITEM_SLING:
+          oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
+          break;
+     }
+
+     if (Vile_Feat(iType) &&  (!GetLocalInt(oItem,"USanctMar")) )
+     {
+       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
+       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
+       SetLocalInt(oItem,"USanctMar",1);
+     }
+     oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
+     iType= GetBaseItemType(oItem);
+      if ( Vile_Feat(iType) &&  (!GetLocalInt(oItem,"USanctMar")))
+     {
+       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
+       AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
+       SetLocalInt(oItem,"USanctMar",1);
+     }
+   }
+
+}
 
 void Pwatk(object oPC)
 {
@@ -307,31 +472,78 @@ void main()
        RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
        DeleteLocalInt(oItem,"MartialStrik");
      }
+     if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL) 
+     {
+        Vile();
+        UnholyStrike();
+     }
      return;
    }
+   else if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_EVIL)
+   {
 
-    if (GetLocalInt(oPC,"ONENTER")|| GetLocalInt(oPC,"ONREST"))
-    {
-      object oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-      DeleteLocalInt(oItem,"SanctMar");
-      DeleteLocalInt(oItem,"MartialStrik");  
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGEBONUS_1d4, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_OUTSIDER,IP_CONST_DAMAGEBONUS_1d4, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_2d6, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
-  
-      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
-      DeleteLocalInt(oItem,"SanctMar");
-      DeleteLocalInt(oItem,"MartialStrik"); 
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGEBONUS_1d4, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_OUTSIDER,IP_CONST_DAMAGEBONUS_1d4, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_2d6, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+     object oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+     int iType= GetBaseItemType(oItem);
+
+     switch (iType)
+     {
+        case BASE_ITEM_BOLT:
+        case BASE_ITEM_BULLET:
+        case BASE_ITEM_ARROW:
+          iType=GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND));
+          break;
+        case BASE_ITEM_SHORTBOW:
+        case BASE_ITEM_LONGBOW:
+          oItem=GetItemInSlot(INVENTORY_SLOT_ARROWS);
+          break;
+        case BASE_ITEM_LIGHTCROSSBOW:
+        case BASE_ITEM_HEAVYCROSSBOW:
+          oItem=GetItemInSlot(INVENTORY_SLOT_BOLTS);
+          break;
+        case BASE_ITEM_SLING:
+          oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
+          break;
+     }
+
+
+     if ( GetLocalInt(oItem,"USanctMar"))
+     {
+        RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
+        RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
+        DeleteLocalInt(oItem,"USanctMar");
+     }
+
+     if (GetLocalInt(oItem,"UnholyStrik"))
+     {
+       RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_GOOD,IP_CONST_DAMAGEBONUS_2d6, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+       RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
+       DeleteLocalInt(oItem,"UnholyStrik");
+     }
+     
+     oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
+     iType= GetBaseItemType(oItem);
+     
+     if ( GetLocalInt(oItem,"USanctMar"))
+     {
+        RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
+        RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
+        DeleteLocalInt(oItem,"USanctMar");
+     }
+
+     if ( GetLocalInt(oItem,"UnholyStrik"))
+     {
+       RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_GOOD,IP_CONST_DAMAGEBONUS_2d6, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
+       RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
+       DeleteLocalInt(oItem,"UnholyStrik");
+     }
  
-    }
-   Sanctify();
-   MartialStrike();
+     if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
+     {
+        Sanctify();
+        MartialStrike();
+     }   
+
+   }
+
 
 }

@@ -53,42 +53,6 @@ int Sanctify_Feat(int iTypeWeap)
     return 0;
 }
 
-int Add_SneakAtk(int nD6)
-{
-  int Iprp_Feat;
-
-   if (nD6>20) nD6=20;
-
-   if (nD6<6)
-   {
-      switch (nD6)
-      {
-        case 1:
-          Iprp_Feat = 32;
-          break;
-        case 2:
-          Iprp_Feat = 33;
-          break;
-        case 3:
-          Iprp_Feat = 34;
-          break;
-        case 4:
-          Iprp_Feat = IP_CONST_FEAT_SNEAKATK4;
-          break;
-        case 5:
-          Iprp_Feat = 39;
-          break;
-      }
-   }
-   else
-     Iprp_Feat = IP_CONST_FEAT_SNEAKATK4+nD6-5;
-
-   return  Iprp_Feat;
-}
-
-
-
-
 int DamageConv(int iMonsDmg)
 {
 

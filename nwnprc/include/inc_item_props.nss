@@ -941,10 +941,11 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    //ManAtArms
    DeleteLocalInt(oItem,"ManArmsGenSpe");
    DeleteLocalInt(oItem,"ManArmsDmg");
-   //Sanctify & Holy Martial Strike
+   //Vile/Sanctify & Un/Holy Martial Strike
    DeleteLocalInt(oItem,"SanctMar");
    DeleteLocalInt(oItem,"MartialStrik");
    DeleteLocalInt(oItem,"UnholyStrik");
+   DeleteLocalInt(oItem,"USanctMar");
    //Duelist Precise Strike
    DeleteLocalInt(oItem,"DuelistPreciseSlash");
    DeleteLocalInt(oItem,"DuelistPreciseSmash");
@@ -958,10 +959,11 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    //ManAtArms
    DeleteLocalInt(oItem,"ManArmsGenSpe");
    DeleteLocalInt(oItem,"ManArmsDmg");
-   //Sanctify & Holy Martial Strike
+   //Vile/Sanctify & Un/Holy Martial Strike
    DeleteLocalInt(oItem,"SanctMar");
    DeleteLocalInt(oItem,"MartialStrik");
    DeleteLocalInt(oItem,"UnholyStrik");
+   DeleteLocalInt(oItem,"USanctMar");
 
    // CHEST
    if (!iValid){

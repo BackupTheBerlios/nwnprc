@@ -102,3 +102,7 @@ const int CLASS_TYPE_MASTER_SUMMONER            = 252;
 const int CLASS_TYPE_MINSTREL_EDGE              = 253;
 const int CLASS_TYPE_BRAWLER                    = 254;
 const int CLASS_TYPE_NIGHTSHADE                 = 116;
+const int CLASS_TYPE_ULTIMATE_RANGER            = 115;
+const int CLASS_TYPE_DRAGONSONG_LYRIST          = 114;
+
+

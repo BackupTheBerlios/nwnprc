@@ -103,6 +103,9 @@ const int SPELL_MINSTREL_SONG_CHARISMA      = 2155;
 const int SPELL_MINSTREL_SONG_WOUND_WHISP   = 2156;
 const int SPELL_MINSTREL_INCREASE_SONGS     = 2144;
 
+// Ultimate Ranger
+const int SPELL_UR_FAVORITE_ENEMY           = 2134;
+
 // Spell Feat Generic
 const int SPELL_MANYSHOT2                   = 2246;
 const int SPELL_MANYSHOT3                   = 2248;

@@ -62,7 +62,6 @@ void main()
     
     int iBase = GetBaseItemType(oWeapL);
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
-    int armorType = GetArmorType(oArmor);
     string nMes = "";
 
 SendMessageToPC(OBJECT_SELF, "prc_shou is called");

@@ -137,6 +137,7 @@ void main()
    if (!GetHasFeat(FEAT_TURN_UNDEAD,OBJECT_SELF))
    {
      IncrementRemainingFeatUses(OBJECT_SELF,FEAT_TURN_UNDEAD);
+     SpeakStringByStrRef(40550);
      return;
    }
 

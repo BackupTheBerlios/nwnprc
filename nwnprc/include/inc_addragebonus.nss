@@ -153,73 +153,27 @@ ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHitPoints, oRager, RoundsToSeconds
 
 int GetDamageTypeOfWeapon(int nInventorySlot, object oCreature = OBJECT_SELF)
 {
-object oRager = oCreature;
+  object oRager = oCreature;
 
-object oCurrentWeapon = GetItemInSlot(nInventorySlot, oRager);
+  object oCurrentWeapon = GetItemInSlot(nInventorySlot, oRager);
 
-// May as well do the whole test, to be sure we don't miss anything.
-//if(!GetIsObjectValid(oCurrentWeapon))
-//{
-//return DAMAGE_TYPE_BLUDGEONING;
-//}
+// 2da lookup to see what kind of damage it deals, then find the equivalent constant
 
-int nWeaponType = GetBaseItemType(oCurrentWeapon);
-switch(nWeaponType)
-{
-    case BASE_ITEM_BASTARDSWORD: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_BATTLEAXE: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_DAGGER: return DAMAGE_TYPE_PIERCING;break;
-    case BASE_ITEM_DART: return DAMAGE_TYPE_PIERCING;break;
-    case BASE_ITEM_DIREMACE: return DAMAGE_TYPE_BLUDGEONING;break;
-    case BASE_ITEM_DOUBLEAXE: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_DWARVENWARAXE: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_GREATAXE: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_GREATSWORD: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_HALBERD: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_HANDAXE: return DAMAGE_TYPE_SLASHING;break;
-
-    case BASE_ITEM_HEAVYFLAIL: return DAMAGE_TYPE_BLUDGEONING;break;
-
-    case BASE_ITEM_KAMA: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_KATANA: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_KUKRI: return DAMAGE_TYPE_SLASHING;break;
-
-    case BASE_ITEM_LIGHTFLAIL: return DAMAGE_TYPE_BLUDGEONING;break;
-    case BASE_ITEM_LIGHTHAMMER: return DAMAGE_TYPE_BLUDGEONING;break;
-    case BASE_ITEM_LIGHTMACE: return DAMAGE_TYPE_BLUDGEONING;break;
-    case BASE_ITEM_LONGBOW: return DAMAGE_TYPE_PIERCING;break;  // We'll keep this one in in case of a mighty bow.
-    case BASE_ITEM_LONGSWORD: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_MAGICSTAFF: return DAMAGE_TYPE_BLUDGEONING;break;
-    case BASE_ITEM_MORNINGSTAR: return DAMAGE_TYPE_BLUDGEONING;break;
-    case BASE_ITEM_QUARTERSTAFF: return DAMAGE_TYPE_BLUDGEONING;break;
-    case BASE_ITEM_RAPIER: return DAMAGE_TYPE_PIERCING;break;
-    case BASE_ITEM_SCIMITAR: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_SCYTHE: return DAMAGE_TYPE_SLASHING;break;//????? or is it piercing??
-    case BASE_ITEM_SHORTBOW: return DAMAGE_TYPE_PIERCING;break;  // We'll keep this one in in case of a mighty shortbow.
-    case BASE_ITEM_SHORTSPEAR: return DAMAGE_TYPE_PIERCING;break;
-    case BASE_ITEM_SHORTSWORD: return DAMAGE_TYPE_PIERCING;break;//??  It says "1" for piercing in the .2da
-
-    case BASE_ITEM_SICKLE: return DAMAGE_TYPE_SLASHING;break;
-
-    case BASE_ITEM_THROWINGAXE: return DAMAGE_TYPE_SLASHING;break;  // These always benefit from STR so they stay.
-    case BASE_ITEM_TWOBLADEDSWORD: return DAMAGE_TYPE_SLASHING;break;
-    case BASE_ITEM_WARHAMMER: return DAMAGE_TYPE_BLUDGEONING;break;
-    case BASE_ITEM_WHIP: return DAMAGE_TYPE_SLASHING;break;
-
-    //case BASE_ITEM_HEAVYCROSSBOW: return DAMAGE_TYPE_PIERCING;break;
-    //case BASE_ITEM_LIGHTCROSSBOW: return DAMAGE_TYPE_PIERCING;break;
-    //case BASE_ITEM_SHURIKEN: return DAMAGE_TYPE_PIERCING;break;
-    //case BASE_ITEM_SLING: return DAMAGE_TYPE_BLUDGEONING;break;
-    //case BASE_ITEM_DART: return DAMAGE_TYPE_PIERCING;break;
-    //case BASE_ITEM_INVALID: return DAMAGE_TYPE_BLUDGEONING;break;Decided it was better to check for prc creature weapons first, before returning blunt
-
-    }//end of switch statement.
+  int iWeaponType = GetBaseItemType(oCurrentWeapon);
+  int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
+  switch(iDamageType)
+  {
+     case 1: return DAMAGE_TYPE_PIERCING; break;
+     case 2: return DAMAGE_TYPE_BLUDGEONING; break;
+     case 3: return DAMAGE_TYPE_SLASHING; break;
+     case 4: return DAMAGE_TYPE_SLASHING; break; // slashing & piercing... slashing bonus.
+  }
 
 // If none of the above types got a hit, we must assume the character is unarmed.
 
- if(GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oRager)) == BASE_ITEM_CSLSHPRCWEAP|| GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oRager)) == BASE_ITEM_CSLSHPRCWEAP || GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oRager)) == BASE_ITEM_CSLSHPRCWEAP)
+  if(GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oRager)) == BASE_ITEM_CSLSHPRCWEAP|| GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oRager)) == BASE_ITEM_CSLSHPRCWEAP || GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oRager)) == BASE_ITEM_CSLSHPRCWEAP)
   {
-  return DAMAGE_TYPE_SLASHING;
+     return DAMAGE_TYPE_SLASHING;
   }
   // If they're unarmed and have no creature weapons from a prc, we must assume they are just using their fists.
   return DAMAGE_TYPE_BLUDGEONING;

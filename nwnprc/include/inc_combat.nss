@@ -607,60 +607,17 @@ int GetWeaponEnhancement(object oWeap)
 
 int GetWeaponDamageType(object oWeap)
 {
-    int iType = GetBaseItemType(oWeap);
-
-    switch(iType)
-    {
-        case BASE_ITEM_BASTARDSWORD:
-        case BASE_ITEM_BATTLEAXE:
-        case BASE_ITEM_DOUBLEAXE:
-        case BASE_ITEM_DWARVENWARAXE:
-        case BASE_ITEM_GREATAXE:
-        case BASE_ITEM_GREATSWORD:
-        case BASE_ITEM_HALBERD:
-        case BASE_ITEM_HANDAXE:
-        case BASE_ITEM_KAMA:
-        case BASE_ITEM_KATANA:
-        case BASE_ITEM_KUKRI:
-        case BASE_ITEM_LONGSWORD:
-        case BASE_ITEM_SCIMITAR:
-        case BASE_ITEM_SCYTHE:
-        case BASE_ITEM_SICKLE:
-        case BASE_ITEM_THROWINGAXE:
-        case BASE_ITEM_TWOBLADEDSWORD:
-        case BASE_ITEM_WHIP:
-        case BASE_ITEM_CSLASHWEAPON:
-        case BASE_ITEM_CSLSHPRCWEAP:
-           return DAMAGE_TYPE_SLASHING;
-
-        case BASE_ITEM_DAGGER:
-        case BASE_ITEM_DART:
-        case BASE_ITEM_SHORTSPEAR:
-        case BASE_ITEM_RAPIER:
-        case BASE_ITEM_LONGBOW:
-        case BASE_ITEM_SHORTBOW:
-        case BASE_ITEM_SHORTSWORD:
-        case BASE_ITEM_SHURIKEN:
-        case BASE_ITEM_LIGHTCROSSBOW:
-        case BASE_ITEM_HEAVYCROSSBOW:
-        case BASE_ITEM_CPIERCWEAPON:
-           return DAMAGE_TYPE_PIERCING;
-
-        case BASE_ITEM_CLUB:
-        case BASE_ITEM_WARHAMMER:
-        case BASE_ITEM_MORNINGSTAR:
-        case BASE_ITEM_QUARTERSTAFF:
-        case BASE_ITEM_LIGHTFLAIL:
-        case BASE_ITEM_LIGHTHAMMER:
-        case BASE_ITEM_LIGHTMACE:
-        case BASE_ITEM_HEAVYFLAIL:
-        case BASE_ITEM_DIREMACE:
-        case BASE_ITEM_SLING:
-        case BASE_ITEM_CBLUDGWEAPON:
-           return DAMAGE_TYPE_BLUDGEONING;
-    }
-
-    return -1;
+   int iWeaponType = GetBaseItemType(oWeap);
+   int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
+   switch(iDamageType)
+   {
+      case 0: return -1; break;
+      case 1: return DAMAGE_TYPE_PIERCING; break;
+      case 2: return DAMAGE_TYPE_BLUDGEONING; break;
+      case 3: return DAMAGE_TYPE_SLASHING; break;
+      case 4: return DAMAGE_TYPE_SLASHING; break; // slashing & piercing... slashing bonus.
+   }
+   return -1;
 }
 
 int DoRangedAttack(object oPC, object oWeap, object oTarget, int iMod = 0, int bShowFeedback = TRUE, float fDelay = 0.0)

@@ -178,6 +178,6 @@
 174 FEAT_SA_GREATSHIELDSHADOW           2957      3    8              1      
 175 FEAT_SA_SHADOWWALK                  2958      3    8              1      
 176 FEAT_SA_SHADOWDOUBLE                2959      3    10             1      
-177 FEAT_TENACIOUSMAGIC                 2961      3    1              1      
-178 FEAT_PERNICIOUSMAGIC                2962      3    1              1      
-179 FEAT_INSIDIOUSMAGIC                 2963      3    1              1      
+177 FEAT_TENACIOUSMAGIC                 2961      3    1              0      
+178 FEAT_PERNICIOUSMAGIC                2962      3    1              0      
+179 FEAT_INSIDIOUSMAGIC                 2963      3    1              0      

@@ -3,7 +3,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
 
-    int nDuration = 1;
+    int nDuration = 2;
 
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

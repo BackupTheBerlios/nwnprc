@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     //Declare major variables
     effect eStone;
-    effect eVis = EffectVisualEffect(VFX_DUR_PROT_STONESKIN);
+    effect eVis = EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
     effect eVis2 = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 

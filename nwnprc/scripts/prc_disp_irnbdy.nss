@@ -13,7 +13,7 @@ void main()
     effect eFResist;
     effect eAResist;
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    effect eDur = EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
 
     effect eStr,eDex;
     effect eCrit,eBlnd,ePois,eAbil,eDeaf,eDise,eStun;
@@ -57,6 +57,7 @@ void main()
     eLink = EffectLinkEffects(eLink,eDamRed);
     eLink = EffectLinkEffects(eLink,eSpell);
     eLink = EffectLinkEffects(eLink,eMove);
+    eLink = EffectLinkEffects(eLink,eDur);
 
       //Apply Bonus's
       ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,OBJECT_SELF);

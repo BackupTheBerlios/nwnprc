@@ -43,15 +43,7 @@ void Iron_Power(object oPC, object oWeap, int iIronPower)
             RemoveIronPower(oWeap);
             AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(iHitBonus), oWeap);
             AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING,iHitBonus), oWeap);
-
-     /*   while(GetIsItemPropertyValid(oWeap))
-         {
-          if(GetItemPropertyType(ip) != ITEM_PROPERTY_KEEN)
-          //  AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyKeen(oWeap);
-
-         }*/
-          ip = GetNextItemProperty(oWeap);
-     //       AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyKeen(oWeap);
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyKeen(), oWeap);
             SetLocalInt(oWeap, "IPowerBonus", iHitBonus);
         }
     }
@@ -73,6 +65,19 @@ void main()
         }
 
         if(GetHasFeat(FEAT_IRON_POWER_2,oPC))
+        {
+         bIrnPwr = 2;
+        }
+
+        if(bDivLor > 0) Device_Lore(oPC,oSkin,bDivLor);
+
+        if(bIrnPwr > 0 && (IsItemMetal(oWeap) == 2))
+            Iron_Power(oPC,oWeap,bIrnPwr);
+        else
+            Iron_Power(oPC,oWeap,0);
+
+}
+
         {
          bIrnPwr = 2;
         }

@@ -15,34 +15,60 @@ void RemoveSongEffects(int iSong, object oCaster, object oTarget)
 // an index variable.
 void StoreSongRecipient(object oRecipient, object oSinger, int iSongID, int iDuration)
 {
-    int iIndex = GetLocalInt(oSinger, "RecipientIndex") + 1;
-    string sIndex = "SONG_RECIPIENT_" + IntToString(iIndex);
+    int iSlot = GetLocalInt(oSinger, "SONG_SLOT");
+    int iIndex = GetLocalInt(oSinger, "SONG_INDEX_" + IntToString(iSlot)) + 1;
+    string sIndex = "SONG_INDEX_" + IntToString(iSlot);
+    string sRecip = "SONG_RECIPIENT_" + IntToString(iIndex) + "_" + IntToString(iSlot);
+    string sSong = "SONG_IN_USE_" + IntToString(iSlot);
 
-    SetLocalObject(oSinger, sIndex, oRecipient);
+    // Store the recipient into the current used slot
+    SetLocalObject(oSinger, sRecip, oRecipient);
    
-    SetLocalInt(oSinger, "SongInUse", iSongID);
+    // Store the song information
+    SetLocalInt(oSinger, sSong, iSongID);
    
-    SetLocalInt(oSinger, "RecipientIndex", iIndex);
+    // Store the index of creatures we're on
+    SetLocalInt(oSinger, sIndex, iIndex);
 }
 
 // Removes all effects given by the previous song from all creatures who recieved it.
+// Now allows for two "slots", which means you can perform two songs at a time.
 void RemoveOldSongEffects(object oSinger)
 {
     object oCreature;
-    int iRecipients = GetLocalInt(oSinger, "RecipientIndex");
-    int iSongInUse = GetLocalInt(oSinger, "SongInUse");
+    int iSlotNow = GetLocalInt(oSinger, "SONG_SLOT");
+    int iSlotOld;
+    int iNumRecip;
+    int iSongInUse;
     int iIndex;
     string sIndex;
+    string sRecip;
+    string sSong;
     
-    SetLocalInt(oSinger, "RecipientIndex", 0);
-    SetLocalInt(oSinger, "SongInUse", 0);
+    // Should toggle between slot "1" and slot "0"
+    iSlotOld = (iSlotNow == 1) ? 0 : 1;
+    SetLocalInt(oSinger, "SONG_SLOT", iSlotOld);
+
+    // Find the proper variable names based on slot     
+    sIndex = "SONG_INDEX_" + IntToString(iSlotOld);
+    sSong = "SONG_IN_USE_" + IntToString(iSlotOld);
     
+    // Store the local variables into script variables
+    iNumRecip = GetLocalInt(oSinger, sIndex);
+    iSongInUse = GetLocalInt(oSinger, sSong);
+    
+    // Reset the local variables
+    SetLocalInt(oSinger, sIndex, 0);
+    SetLocalInt(oSinger, sSong, 0);
+    
+    // Removes any effects from the caster first
     RemoveSongEffects(iSongInUse, oSinger, oSinger);
     
-    for (iIndex = 1 ; iIndex <= iRecipients ; iIndex++)
+    // Removes any effects from the recipients
+    for (iIndex = 1 ; iIndex <= iNumRecip ; iIndex++)
     {
-       sIndex = "SONG_RECIPIENT_" + IntToString(iIndex);
-       oCreature = GetLocalObject(oSinger, sIndex);
+       sRecip = "SONG_RECIPIENT_" + IntToString(iIndex) + "_" + IntToString(iSlotOld);
+       oCreature = GetLocalObject(oSinger, sRecip);
 
        RemoveSongEffects(iSongInUse, oSinger, oCreature);
     }

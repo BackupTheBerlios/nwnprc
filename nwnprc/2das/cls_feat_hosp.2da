@@ -243,7 +243,7 @@
 239   FEAT_EPIC_PLANAR_TURNING                         854         1      -1               1        
 240   FEAT_EPIC_IMPROVED_COMBAT_CASTING                696         1      -1               0        
 241   DivineMight                                      413         1      -1               1        
-242   DivineSheild                                     414         1      -1               1        
+242   DivineShield                                     414         1      -1               1        
 243  FEAT_EPIC_GREAT_WISDOM_1            804       1    -1             0      
 244  FEAT_EPIC_GREAT_WISDOM_2            805       1    -1             0      
 245  FEAT_EPIC_GREAT_WISDOM_3            806       1    -1             0      
@@ -326,3 +326,29 @@
 322 EPIC_SPELL_UNIMPINGED               5166      0    99             2      
 323 EPIC_SPELL_UNSEEN_WANDERER          5168      0    99             2      
 324 EPIC_SPELL_WHIP_OF_SHAR             5170      0    99             2   
+325  FEAT_EPIC_AUTOMATIC_QUICKEN_1       857       1    -1             0      
+326  FEAT_EPIC_AUTOMATIC_QUICKEN_2       858       1    -1             0      
+327  FEAT_EPIC_AUTOMATIC_QUICKEN_3       859       1    -1             0      
+328  FEAT_EPIC_AUTOMATIC_SILENT_SPELL_1  860       1    -1             0      
+329  FEAT_EPIC_AUTOMATIC_SILENT_SPELL_2  861       1    -1             0      
+330  FEAT_EPIC_AUTOMATIC_SILENT_SPELL_3  862       1    -1             0      
+331  FEAT_EPIC_AUTOMATIC_STILL_SPELL_1   863       1    -1             0      
+332  FEAT_EPIC_AUTOMATIC_STILL_SPELL_2   864       1    -1             0      
+333  FEAT_EPIC_AUTOMATIC_STILL_SPELL_3   865       1    -1             0  
+334  FEAT_BREW_POTION                    944       1    3              0    
+335  FEAT_NIMBUSOFLIGHT                  3165      0     -1   1
+336  FEAT_SERVHEAVEN                     3355      0     -1   1  
+337  FEAT_EPIC_SPELL_MUMMY_DUST          874       1    11             2      
+338  FEAT_EPIC_SPELL_DRAGON_KNIGHT       875       1    11             2      
+339  FEAT_EPIC_SPELL_HELLBALL            876       1    11             2      
+340  FEAT_EPIC_SPELL_MAGE_ARMOUR         877       1    11             2      
+341  FEAT_EPIC_SPELL_RUIN                878       1    11             2      
+342  FEAT_EPIC_SPELL_EPIC_WARD           990       1    11             2
+343  Quicken                             29        0    -1             0      
+344  ImpKnock                            17        1    -1             0   
+345 WhirlwindAttack                                867       1    -1             0      
+346 WeaponFocusdwaxe                               952       1    -1             0      
+347 WeaponFocuswhip                                993       1    -1             0         
+
+    
+

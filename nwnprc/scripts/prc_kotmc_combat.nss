@@ -25,6 +25,8 @@ void main()
     int nAC;
     int nAttack;
 
+
+
     if (nClass >= 1)
     {
     nAC = 2;
@@ -63,11 +65,12 @@ void main()
 
     if (GetLocalInt(oPC, "KOTMCCombat") == TRUE) return;
 
+    effect eAttack = EffectAttackIncrease(nAttack);
+    effect eAC = EffectACIncrease(nAC);
 
-    itemproperty iAttack = ItemPropertyAttackBonusVsRace(nRace, nAttack);
-    AddItemProperty(DURATION_TYPE_TEMPORARY, iAttack, oWeapon, RoundsToSeconds(nDur));
-    itemproperty iAC = ItemPropertyACBonusVsRace(nRace, nAC);
-    AddItemProperty(DURATION_TYPE_TEMPORARY, iAC, oSkin, RoundsToSeconds(nDur));
+    VersusRacialTypeEffect(eAttack, nRace);
+    VersusRacialTypeEffect(eAC, nRace);
+
     SetLocalInt(oPC, "KOTMCCombat", TRUE);
     DelayCommand(RoundsToSeconds(nDur), DeleteLocalInt(oPC, "KOTMCCombat"));
 }

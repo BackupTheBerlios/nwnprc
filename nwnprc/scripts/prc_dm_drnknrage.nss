@@ -6,6 +6,13 @@ void main()
 {
 object oPC = OBJECT_SELF;
 
+//see if player already has rage effects from another class:
+if (GetHasSpellEffect(307, oPC))
+{
+    FloatingTextStringOnCreature("You are already raging from another class ability.", oPC);
+    return;
+}
+
 //see if player is already in a drunken rage:
 if(GetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE") != 0)
     {

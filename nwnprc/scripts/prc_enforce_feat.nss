@@ -131,7 +131,21 @@ void Warlord(object oPC = OBJECT_SELF)
 			int nOldXP = GetXP(oPC);
 			int nNewXP = nMinXPForLevel - 1000;
 			SetXP(oPC,nNewXP);
-			FloatingTextStringOnCreature("You must be be an Orc or Half-Orc to take this feat. Please reselect your feats.", oPC, FALSE);
+			FloatingTextStringOnCreature("You must be an Orc or Half-Orc to take this feat. Please reselect your feats.", oPC, FALSE);
+			DelayCommand(1.0, SetXP(oPC,nOldXP));
+		}
+}
+
+void Ethran(object oPC = OBJECT_SELF)
+{
+		if (GetHasFeat(FEAT_ETHRAN, oPC) && (GetGender(oPC) != GENDER_FEMALE))
+		{
+			int nHD = GetHitDice(oPC);
+			int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+			int nOldXP = GetXP(oPC);
+			int nNewXP = nMinXPForLevel - 1000;
+			SetXP(oPC,nNewXP);
+			FloatingTextStringOnCreature("You must be Female to take this feat. Please reselect your feats.", oPC, FALSE);
 			DelayCommand(1.0, SetXP(oPC,nOldXP));
 		}
 }

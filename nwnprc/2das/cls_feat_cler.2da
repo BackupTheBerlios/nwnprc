@@ -280,5 +280,7 @@
 276 EPIC_SPELL_UNIMPINGED               5166      0    99             2      
 277 EPIC_SPELL_UNSEEN_WANDERER          5168      0    99             2      
 278 EPIC_SPELL_WHIP_OF_SHAR             5170      0    99             2      
-279 FEAT_NIMBUSOFLIGHT                  3165      0     -1   1
-280 FEAT_SERVHEAVEN                     3355      0     -1   1
+279 FEAT_NIMBUSOFLIGHT                  3165      0    -1             1      
+280 FEAT_SERVHEAVEN                     3355      0    -1             1      
+281 FEAT_NEW_POWER_ATTACK               3143      3    1              1      
+282 FEAT_NEW_IMpROVED_POWER_ATTACK      3144      3    1              1      

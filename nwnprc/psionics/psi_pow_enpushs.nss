@@ -92,7 +92,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
                 nDamage -= nDice;
                 
-	        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
+	        if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
 	        {
 		        nDamage /= 2;
 		}

@@ -99,17 +99,20 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		
 		if (PRCMyResistPower(oCaster, oTarget, nPen))
 		{
-		       	if (nAugment > 0) nDice += nAugment;
-		      	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
-                   	nDamage -= nDice;
-                   	
-		        if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
-		        {
-			        nDamage /= 2;
-	               	}		
-			effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_SONIC);	               	
-	               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-	               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+		       	if (oTarget != OBJECT_SELF)
+			{		
+			       	if (nAugment > 0) nDice += nAugment;
+			      	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
+	                   	nDamage -= nDice;
+	                   	
+			        if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
+			        {
+				        nDamage /= 2;
+		               	}		
+				effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_SONIC);	               	
+		               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+		               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+		        }
 		}
 		//Select the next target within the spell shape.
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));

@@ -22,6 +22,15 @@ void main()
             return;
         }
     }
+    else if (GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC))
+    {
+        if (GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, 24))
+        {
+            SetLocalInt(oPC, "PsionicFocus", 1);
+            SendMessageToPC(oPC, "You are now Psionically Focused.");
+            return;
+        }
+    }    
     else
     {
         if (GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, 20))

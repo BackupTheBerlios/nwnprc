@@ -87,7 +87,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 		
 	        //Make a saving throw check
-		if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+		if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
 	        {
 		        nDamage /= 2;
 	        }

@@ -4,22 +4,26 @@
 */
 
 #include "prc_feat_const"
+#include "inc_item_props"
 
 void EffectDazzled(object oPC, float fDelay);
 
 void main()
 {
     object oPC = GetFirstPC();
+    object oArea;
+    object oSkin;
     int bHasLightSensitive;
     int bHasLightBlindness;
     int bIsEffectedByLight;
     
     while(GetIsObjectValid(oPC))
     {
-        object oArea = GetArea(oPC);
+        oArea = GetArea(oPC);
+        oSkin = GetPCSkin(oPC);
         
-        int bHasLightSensitive = GetHasFeat(FEAT_LTSENSE, oPC);
-        int bHasLightBlindness = GetHasFeat(FEAT_LTBLIND, oPC);
+        bHasLightSensitive = GetHasFeat(FEAT_LTSENSE, oPC);
+        bHasLightBlindness = GetHasFeat(FEAT_LTBLIND, oPC);
         
         if(bHasLightSensitive || bHasLightBlindness)
         {
@@ -62,6 +66,24 @@ void main()
         }
 
         oPC = GetNextPC();
+    }
+    
+    if(GetIsAreaAboveGround(oArea) == AREA_UNDERGROUND && GetHasFeat(FEAT_SA_HIDEU, oPC) )
+    {
+        SetCompositeBonus(oSkin, "SA_Hide_Underground", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);       
+    }
+    else
+    {
+        SetCompositeBonus(oSkin, "SA_Hide_Underground", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+    }
+    
+    if(GetIsAreaNatural(oArea) == AREA_NATURAL && GetHasFeat(FEAT_SA_HIDEF, oPC) )
+    {
+        SetCompositeBonus(oSkin, "SA_Hide_Forest", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE); 
+    }
+    else
+    {
+        SetCompositeBonus(oSkin, "SA_Hide_Forest", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }
 }
 

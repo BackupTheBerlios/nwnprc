@@ -3,6 +3,7 @@
 // This file is where various content users can customize races.
 
 #include "prc_feat_const"
+#include "prc_spell_const"
 #include "inc_item_props"
 #include "x2_inc_itemprop"
 
@@ -87,7 +88,7 @@ void main()
     //regeneration 5PH/round
     if(GetHasFeat(FEAT_REGEN5))
     {
-        SetCompositeBonus(oSkin, "RacialSize", 5, ITEM_PROPERTY_REGENERATION);
+        SetCompositeBonus(oSkin, "RacialRegeneration", 5, ITEM_PROPERTY_REGENERATION);
     }
 
     //fire resistance 5
@@ -97,4 +98,51 @@ void main()
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 
+    // Very Heroic, +2 to all saving throws
+    if(GetHasFeat(FEAT_VERYHEROIC))
+    {
+        SetCompositeBonus(oSkin, "VeryHeroic", 2, ITEM_PROPERTY_SAVING_THROW_BONUS, SAVING_THROW_ALL);
+    }
+
+    // Skill Affinity, +2 to jump
+    if(GetHasFeat(FEAT_SA_JUMP))
+    {
+        SetCompositeBonus(oSkin, "SA_Jump", 2, ITEM_PROPERTY_SKILL_BONUS, 28);
+    }
+
+    // Skill Affinity, +2 to bluff
+    if(GetHasFeat(FEAT_SA_BLUFF))
+    {
+        SetCompositeBonus(oSkin, "SA_Bluff", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_BLUFF);
+    }
+
+    // Skill Affinity, +4 to jump
+    if(GetHasFeat(FEAT_SA_JUMP_4))
+    {
+        SetCompositeBonus(oSkin, "SA_Jump_4", 4, ITEM_PROPERTY_SKILL_BONUS, 28);
+    }
+
+    // Skill Affinity, +4 to spot
+    if(GetHasFeat(FEAT_SA_SPOT_4))
+    {
+        SetCompositeBonus(oSkin, "SA_Spot_4", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
+    }
+    
+    // Skill Affinity, +4 to move silently
+    if(GetHasFeat(FEAT_SA_MOVE4))
+    {
+        SetCompositeBonus(oSkin, "SA_Move_4", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY);
+    }
+
+    // Skill Affinity, +2 to craft armor
+    if(GetHasFeat(FEAT_SA_CRFTARM))
+    {
+        SetCompositeBonus(oSkin, "SA_Craft_Armor", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_ARMOR);
+    }
+ 
+    // Skill Affinity, +2 to craft armor
+    if(GetHasFeat(FEAT_SA_CRFTWEAP))
+    {
+        SetCompositeBonus(oSkin, "SA_Craft_Weapon", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_WEAPON);
+    }
 }

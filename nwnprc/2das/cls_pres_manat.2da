@@ -3,7 +3,38 @@
            LABEL               ReqType   ReqParam1        ReqParam2   
 0          Base_Attack         BAB       8                ****               
 1          ScriptVar           VAR       X1_AllowManAt    0           
-2          PowerAtk            FEAT      28               ****
+2  PowerAtk       FEAT      28               ****
+3  WeapFocClub    FEATOR  28             ****      
+4  WeapFocDagger  FEATOR  90             ****      
+5  WeapFocMorn    FEATOR  95             ****      
+6  WeapFocStaff   FEATOR  96             ****      
+7  WeapFocSpear   FEATOR  97             ****      
+8  WeapFocRapier  FEATOR  104            ****      
+9  WeapFocScim    FEATOR  105            ****      
+10  WeapFocLSw     FEATOR  106            ****      
+11 WeapFocGSw     FEATOR  107            ****      
+12 WeapFocHAxe    FEATOR  108            ****      
+13 WeapFocTAxe    FEATOR  109            ****      
+14 WeapFocBAxe    FEATOR  110            ****      
+15 WeapFocGAxe    FEATOR  111            ****      
+16 WeapFocHalb    FEATOR  112            ****      
+17 WeapFocLgHam   FEATOR  113            ****      
+18 WeapFocLgFlail FEATOR  114            ****      
+19 WeapFocWHam    FEATOR  115            ****      
+20 WeapFocHFlail  FEATOR  116            ****      
+21 WeapFocKama    FEATOR  117            ****      
+22 WeapFocKukri   FEATOR  118            ****      
+23 WeapFocScy     FEATOR  121            ****      
+24 WeapFocKatana  FEATOR  122            ****      
+25 WeapFocBSw     FEATOR  123            ****      
+26 WeapFocDMace   FEATOR  125            ****      
+27 WeapFoc2Sw     FEATOR  127            ****      
+28 WeapFocDAxe    FEATOR  126            ****      
+29 WeapFocLgMace  FEATOR  94             ****      
+30 WeapFocSickle  FEATOR  98             ****      
+31 WeapFocDwAxe   FEATOR  952            ****      
+
+
                                                                       
                                                                       
                                                                       

@@ -33,26 +33,27 @@ void Device_Lore(object oPC ,object oSkin ,int iLevel)
 ///Iron Power Bonus to Attack and Damage /////////
 void Iron_Power(object oPC, object oWeap, int iIronPower)
 {
-    int iHitBonus = 0;
-    itemproperty ip;
+    //int iHitBonus = 0;
+    //itemproperty ip;
     //int iEnhance = GetWeaponEnhancement(oWeap);
     //int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
 
-    if(iIronPower == 1) iHitBonus = 1;// + iEnhance;
-    if(iIronPower == 2) iHitBonus = 2;// + iEnhance;
+    //if(iIronPower == 1) iHitBonus = 1; + iEnhance;
+    //if(iIronPower == 2) iHitBonus = 2; + iEnhance;
     string irp = IntToString(iIronPower);
+    SendMessageToPC(GetFirstPC(), "Attack Bonus:" + irp);
     //iHitBonus = iHitBonus + iEnhance;
 
-    if(iIronPower > 0){
-        if(GetLocalInt(oWeap, "IPowerBonus") != iIronPower){
+
+        if(GetLocalInt(oWeap, "IPowerBonus") != iIronPower)
+        {
             RemoveIronPower(oWeap);
             AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(iIronPower), oWeap);
            // AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PHYSICAL,iHitBonus), oWeap);
             AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyKeen(), oWeap);
             SetLocalInt(oWeap, "IPowerBonus", iIronPower);
-            SendMessageToPC(OBJECT_SELF,"irp");
         }
-    }
+
 }
 
 void main()
@@ -63,15 +64,26 @@ void main()
         object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
 
         int bDivLor = GetHasFeat(FEAT_DEVICE_LORE, oPC) ? 2 : 0;
-        int bIrnPwr = GetHasFeat(FEAT_IRON_POWER_1,oPC) ? 1 : 0;
-            bIrnPwr = GetHasFeat(FEAT_IRON_POWER_2,oPC) ? 1 : bIrnPwr;
+        //int bIrnPwr = GetHasFeat(FEAT_IRON_POWER_1,oPC) ? 1 : 0;
+        //    bIrnPwr = GetHasFeat(FEAT_IRON_POWER_2,oPC) ? 1 : bIrnPwr;
 
+    if (IsItemMetal(oWeap) == 2)
+    {
+        //if (GetHasFeat(FEAT_IRON_POWER_2,oPC))
+        //{
+        //Iron_Power(oPC, oWeap, 2);
+        //}
+        if (GetHasFeat(FEAT_IRON_POWER_1,oPC))
+        {
+        Iron_Power(oPC, oWeap, 1);
+        }
+    }
 
         if(bDivLor > 0) Device_Lore(oPC,oSkin,bDivLor);
 
-        if(bIrnPwr > 0 && (IsItemMetal(oWeap) == 2))
-            Iron_Power(oPC,oWeap,bIrnPwr);
-        else
-            Iron_Power(oPC,oWeap,0);
+        //if(bIrnPwr > 0 && (IsItemMetal(oWeap) == 2))
+        //    Iron_Power(oPC,oWeap,bIrnPwr);
+        //else
+        //    Iron_Power(oPC,oWeap,0);
 
 }

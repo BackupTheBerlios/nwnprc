@@ -263,8 +263,9 @@ void ElementalFamiliar()
       iSoak = IP_CONST_DAMAGESOAK_5_HP;	
    else if (iSize=="GRE" || iSize=="ELD")
       iSoak = IP_CONST_DAMAGESOAK_10_HP;
-   if (iHD>20)  iSoak++; 
+   if (iHD>24)  iSoak++; 
    if (iHD>30)  iSoak++; 
+   
    
    if (iSoak>=0)
      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,iSoak),oHide);

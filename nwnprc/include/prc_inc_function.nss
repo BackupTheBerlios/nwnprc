@@ -199,6 +199,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"Level3");
     DeleteLocalInt(oSkin,"Level6");
     DeleteLocalInt(oSkin,"Level9");
+    DeleteLocalInt(oSkin,"BloodArcherRegen");
     // Bonded Summoner
     DeleteLocalInt(oSkin,"BondResEle");
     DeleteLocalInt(oSkin,"ImmuEle");

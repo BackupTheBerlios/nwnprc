@@ -103,8 +103,7 @@ void main()
      if(GetIsReactionTypeFriendly(oTarget)|| GetFactionEqual(oTarget))
      {
         //Figure out how much to heal
-        nHeal = d8(2) + 2 * nLevel;
-        nHeal = (nEpic) ? 3 * nHeal : nHeal; // epic healing song heals three times as much
+        nHeal = (nEpic) ? (d8(4) + 2 * nLevel) : (d8(2) + 2 * nLevel); // cure moderate or cure critical (epic)
 
         //Set the heal effect
         eHeal = EffectHeal(nHeal);

@@ -1545,6 +1545,9 @@ int GetCanCastSpell(object oPC, int nSpellDC, string sChool, int nSpellXP)
 
 int GetHasXPToSpend(object oPC, int nCost)
 {
+    //NPCs dont have XP
+    if(!GetIsPC(oPC))
+        return TRUE;
     // To be TRUE, make sure that oPC wouldn't lose a level by spending nCost.
     int nHitDice = GetHitDice(oPC);
     int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum

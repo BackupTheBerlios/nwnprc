@@ -21,19 +21,36 @@ void RemoveBrutalStrike(object oPC, int iEquip)
      
      if (GetHasFeat(FEAT_BSTRIKE_A4, oPC))
      {
-         RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS, IP_CONST_FEAT_ROGUE_SA_4D6);
+         RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS, 4);
      }
      else if (GetHasFeat(FEAT_BSTRIKE_A3, oPC))
      {
-         RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS, IP_CONST_FEAT_ROGUE_SA_3D6);
+         RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS, 3);
      }
      else if (GetHasFeat(FEAT_BSTRIKE_A2, oPC))
      {
-         RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS, IP_CONST_FEAT_ROGUE_SA_2D6);
+         RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS, 2);
      }
      else if (GetHasFeat(FEAT_BSTRIKE_A1, oPC))
      {
-         RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS, IP_CONST_FEAT_ROGUE_SA_1D6);
+         RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS, 1);
+     }
+
+     if (GetHasFeat(FEAT_BSTRIKE_D4, oPC))
+     {
+         RemoveSpecificProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGEBONUS_4);
+     }
+     else if (GetHasFeat(FEAT_BSTRIKE_D3, oPC))
+     {
+         RemoveSpecificProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGEBONUS_3);
+     }
+     else if (GetHasFeat(FEAT_BSTRIKE_D2, oPC))
+     {
+         RemoveSpecificProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGEBONUS_2);
+     }
+     else if (GetHasFeat(FEAT_BSTRIKE_D1, oPC))
+     {
+         RemoveSpecificProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGEBONUS_1);
      }
 
      SetLocalInt(oPC, "BSHextor", 1);
@@ -50,19 +67,19 @@ void AddBrutalStrike(object oPC , int iEquip)
                      //Fist of Hextor Attack from Brutal Strike
                      if (GetHasFeat(FEAT_BSTRIKE_A4 oPC))
                      {
-                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_4D6), oWeapon);
+                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(4), oWeapon);
                      }
                      else if (GetHasFeat(FEAT_BSTRIKE_A3 oPC))
                      {
-                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_3D6), oWeapon);
+                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(3), oWeapon);
                      }
                      else if (GetHasFeat(FEAT_BSTRIKE_A2 oPC))
                      {
-                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_2D6), oWeapon);
+                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(2), oWeapon);
                      }
                      else if (GetHasFeat(FEAT_BSTRIKE_A1, oPC))
                      {
-                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_1D6), oWeapon);
+                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(1), oWeapon);
                      }
 
                      //Fist of Hextor Damage from Brutal Strike
@@ -96,19 +113,19 @@ void AddBrutalStrike(object oPC , int iEquip)
                      //Fist of Hextor Attack from Brutal Strike
                      if (GetHasFeat(FEAT_BSTRIKE_A4 oPC))
                      {
-                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_4D6), oWeapon);
+                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(4), oWeapon);
                      }
                      else if (GetHasFeat(FEAT_BSTRIKE_A3 oPC))
                      {
-                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_3D6), oWeapon);
+                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(3), oWeapon);
                      }
                      else if (GetHasFeat(FEAT_BSTRIKE_A2 oPC))
                      {
-                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_2D6), oWeapon);
+                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(2), oWeapon);
                      }
                      else if (GetHasFeat(FEAT_BSTRIKE_A1, oPC))
                      {
-                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_1D6), oWeapon);
+                     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(1), oWeapon);
                      }
 
                      //Fist of Hextor Damage from Brutal Strike

@@ -85,7 +85,6 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
    {
       object oSlamL=CreateItemOnObject("NW_IT_CREWPB010",oPC);
 
-
       SetIdentified(oSlamL,TRUE);
       AssignCommand(oPC,ActionEquipItem(oSlamL,INVENTORY_SLOT_CWEAPON_L));
       oWeapL = oSlamL;
@@ -108,9 +107,14 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
       iKi+= iEpicKi;
       Enh+= iKi;
 
-    object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
+    object oItem ;
 
-    if (iEquip =! 1 &&  GetIsObjectValid(oItem))
+    if (iEquip ==2)
+      oItem = GetPCItemLastEquipped();
+    else if (iEquip == 0)
+      oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
+
+    if (GetIsObjectValid(oItem))
     {
 
       int iType = GetBaseItemType(oItem);

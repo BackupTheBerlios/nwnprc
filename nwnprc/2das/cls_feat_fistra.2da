@@ -241,4 +241,5 @@
 237 FEAT_SMITE_EPIC12                              3264      3    33             1      
 238 FEAT_SMITE_EPIC13                              3265      3    35             1      
 239 FEAT_SMITE_EPIC14                              3266      3    37             1      
-239 FEAT_SMITE_EPIC15                              3267      3    39             1      
+240 FEAT_SMITE_EPIC15                              3267      3    39             1      
+241 FEAT_EXTRA_SMITING                             910       3    6              1      

@@ -13,7 +13,7 @@
 //:: Created On: May 25, 2001
 //:://////////////////////////////////////////////
 
-#include "heartward_inc"
+
 // shaken   -2 attack,weapon dmg,save.
 // panicked -2 save + flee away ,50 % drop object holding
 #include "NW_I0_SPELLS"

@@ -39,6 +39,7 @@ void PolyAndMergeEquipment(float fDur, int iLvl)
     object oBeltOld   = GetItemInSlot(INVENTORY_SLOT_BELT,OBJECT_SELF);
     object oHelmetOld = GetItemInSlot(INVENTORY_SLOT_HEAD,OBJECT_SELF);
     object oShield    = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,OBJECT_SELF);
+    object oArmsOld   = GetItemInSlot(INVENTORY_SLOT_ARMS,OBJECT_SELF);
     
         if (GetIsObjectValid(oShield))
         {
@@ -71,6 +72,8 @@ void PolyAndMergeEquipment(float fDur, int iLvl)
     IPWildShapeCopyItemProperties(oCloakOld,oArmorNew);
     IPWildShapeCopyItemProperties(oBootsOld,oArmorNew);
     IPWildShapeCopyItemProperties(oBeltOld,oArmorNew);
+    
+    IPWildShapeCopyItemProperties(oArmsOld,oArmorNew);
 }
 
 int CalculateAttackBonus()

@@ -1,5 +1,5 @@
 void main()
 {
     object oCaster = OBJECT_SELF;
-    SetLocalInt(oCaster, "PowerPoints", 2);
+    SetLocalInt(oCaster, "Augment", 2);
 }

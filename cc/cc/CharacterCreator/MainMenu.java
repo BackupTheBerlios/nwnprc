@@ -31,7 +31,7 @@ public class MainMenu extends javax.swing.JFrame {
         String filedelimiter = System.getProperty("file.separator");
         newprefs.put("FileDelim", filedelimiter);
         initComponents();
-        VersionTag.setText("v. " + versionumber);
+        VersionTag.setText(versionumber);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
@@ -204,7 +204,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(jLabel5, gridBagConstraints);
 
         VersionTag.setFont(new java.awt.Font("Trebuchet MS", 0, 10));
-        VersionTag.setForeground(new java.awt.Color(200, 200, 215));
+        VersionTag.setForeground(new java.awt.Color(192, 192, 192));
         VersionTag.setText("V. 1.1");
         VersionTag.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -212,7 +212,7 @@ public class MainMenu extends javax.swing.JFrame {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 12, 7, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 18, 5, 0);
         getContentPane().add(VersionTag, gridBagConstraints);
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CharacterCreator/resource/splashbottom.jpg")));
@@ -344,7 +344,7 @@ public class MainMenu extends javax.swing.JFrame {
     public CRC32 crc;
     //*******************************************************
     //************VERSION INFORMATION - CHANGE HERE**********
-    public static String versionumber = "PRC: 1.3";
+    public static String versionumber = "PRC: v 1.3";
     //*******************************************************
     private static MainMenu mainmenu;
     private static CreateMenu createmenu;

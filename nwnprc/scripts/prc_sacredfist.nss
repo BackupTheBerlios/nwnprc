@@ -27,9 +27,9 @@ void SacredSpeed(object oPC,object oSkin,int bSFSpeed ,int iShield)
    }
    else 
    {
-     if (GetHasSpellEffect(SPELL_SACREDSPEED,oPC)
+     if (GetHasSpellEffect(SPELL_SACREDSPEED,oPC))
      { 
-        if GetLocalInt(oSkin, "SacFisMv") == bSFSpeed return;
+        if ( GetLocalInt(oSkin, "SacFisMv") == bSFSpeed ) return;
         RemoveSpellEffects(SPELL_SACREDSPEED,oPC,oPC);
      }
      ActionCastSpellAtObject(SPELL_SACREDSPEED,oPC,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);

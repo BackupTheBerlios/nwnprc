@@ -171,6 +171,7 @@ void main()
    int iBonus = GetAbilityModifier(ABILITY_CHARISMA)>0 ? GetAbilityModifier(ABILITY_CHARISMA):0;
 
    // no smite with ranged Weapon except the character has Ranged Smite Feat
+   /*
    int iType=GetBaseItemType(oWeap);
    switch (iType)
    {
@@ -201,15 +202,20 @@ void main()
          }
          break;
       default:
-         if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD){
-            if (LvlRaziel > 0){
-               while (GetHasFeat(FEAT_SMITE_EVIL)){
+         if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD)
+         {
+            if (LvlRaziel > 0)
+            {
+               while (GetHasFeat(FEAT_SMITE_EVIL))
+               {
                   DecrementRemainingFeatUses(OBJECT_SELF, FEAT_RANGED_SMITE);
                   IncrementRemainingFeatUses(OBJECT_SELF, iFeat);
                }
             }
-            else{
-               while (GetHasFeat(FEAT_SMITE_EVIL)){
+            else
+            {
+               while (GetHasFeat(FEAT_SMITE_EVIL))
+               {
                   DecrementRemainingFeatUses(OBJECT_SELF,FEAT_RANGED_SMITE);
                   IncrementRemainingFeatUses(OBJECT_SELF, FEAT_SMITE_EVIL);
                }
@@ -217,9 +223,11 @@ void main()
          }
          break;
    }
-
+   */
    int Immune = GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT);
 
+  SendMessageToPC(GetFirstPC(), "iAttacks:"+ IntToString(iAttacks));
+ 
    //Perform a full round of attacks
   for(iAttacks; iAttacks > 0; iAttacks--)
   {

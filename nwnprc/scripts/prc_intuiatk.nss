@@ -47,10 +47,12 @@ if(!((GetHasFeat(FEAT_WEAPON_FINESSE,oPC)) && (GetAbilityModifier(ABILITY_DEXTER
     if(GetHasFeat(FEAT_WEAPON_FINESSE,oPC))
     {
       if(iDex > iStr)
-        iWis = iWis - iDex
+        iWis = iWis - iDex;
+	else
+	  iWis = iWis - iStr;
     }
     else
-        iWis = iWis - iStr
+        iWis = iWis - iStr;
 
       if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD) iWis =0;
 

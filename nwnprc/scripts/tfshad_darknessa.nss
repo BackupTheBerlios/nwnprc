@@ -37,6 +37,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     object oTarget = GetEnteringObject();
 
+   int iShadow = GetLevelByClass(CLASS_TYPE_SHADOWLORD,oTarget);
+
+    if (iShadow)
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectUltravision(), oTarget);
+    if (iShadow>1)
+      ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectConcealment(20), oTarget);
+
     // * July 2003: If has darkness then do not put it on it again
     if (GetHasEffect(EFFECT_TYPE_DARKNESS, oTarget) == TRUE)
     {
@@ -53,8 +60,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         {
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
         }
-        //Fire cast spell at event for the specified target
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+        
+        if (iShadow)
+          ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget);
+        else  
+          //Fire cast spell at event for the specified target
+          ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
     }
     else if (oTarget == GetAreaOfEffectCreator())
     {
@@ -63,13 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget);
     }
 
-    int iShadow = GetLevelByClass(CLASS_TYPE_SHADOWLORD,oTarget);
-
-    if (iShadow)
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectUltravision(), oTarget);
-    if (iShadow>1)
-      ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectConcealment(20), oTarget);
-
+ 
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

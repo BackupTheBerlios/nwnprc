@@ -29,6 +29,27 @@ int
 PRCGetSpellResistance(object oTarget, object oCaster)
 {
         int iSpellRes = GetSpellResistance(oTarget);
+
+        //racial pack SR
+        int iRacialSpellRes = 0;
+        if(GetHasFeat(FEAT_SPELL27, oTarget))
+            iRacialSpellRes += 27+GetHitDice(oTarget);
+        else if(GetHasFeat(FEAT_SPELL25, oTarget))
+            iRacialSpellRes += 25+GetHitDice(oTarget);
+        else if(GetHasFeat(FEAT_SPELL18, oTarget))
+            iRacialSpellRes += 18+GetHitDice(oTarget);
+        else if(GetHasFeat(FEAT_SPELL15, oTarget))
+            iRacialSpellRes += 15+GetHitDice(oTarget);
+        else if(GetHasFeat(FEAT_SPELL14, oTarget))
+            iRacialSpellRes += 14+GetHitDice(oTarget);
+        else if(GetHasFeat(FEAT_SPELL13, oTarget))
+            iRacialSpellRes += 13+GetHitDice(oTarget);
+        else if(GetHasFeat(FEAT_SPELL11, oTarget))
+            iRacialSpellRes += 11+GetHitDice(oTarget);
+        else if(GetHasFeat(FEAT_SPELL5, oTarget))
+            iRacialSpellRes += 5+GetHitDice(oTarget);
+        if(iRacialSpellRes > iSpellRes)
+            iSpellRes = iRacialSpellRes;
         
         // Foe Hunter SR stacks with normal SR 
         // when a spell is cast by their hated enemy

@@ -1,6 +1,43 @@
 // skill based feats
 const int FEAT_JUMP = 2884;
 
+// Racial Feats
+const int FEAT_LTSENSE = 4700;
+const int FEAT_LTBLIND = 4701;
+
+const int FEAT_SPELL5  = 4702;
+const int FEAT_SPELL11 = 4703;
+const int FEAT_SPELL13 = 4704;
+const int FEAT_SPELL14 = 4705;
+const int FEAT_SPELL15 = 4706;
+const int FEAT_SPELL18 = 4707;
+const int FEAT_SPELL25 = 4708;
+const int FEAT_SPELL27 = 4709;
+
+const int FEAT_DWARVEN    = 4710;
+const int FEAT_ELVEN      = 4711;
+const int FEAT_GNOMISH    = 4712;
+const int FEAT_HALFLING   = 4713;
+const int FEAT_ORCISH     = 4714;
+const int FEAT_HUMAN      = 4715;
+const int FEAT_OUTSIDER   = 4716;
+const int FEAT_GIANT      = 4717;
+const int FEAT_FEY        = 4718;
+const int FEAT_GOBLINOID  = 4719;
+const int FEAT_MONSTEROUS = 4720;
+const int FEAT_REPTILIAN  = 4721;
+const int FEAT_ABERRATION = 4722;
+
+// feat doesn't exist in feat.2da
+const int FEAT_ELEMENTAL  = -2;
+
+const int FEAT_HARD_AIR   = 4723;
+const int FEAT_HARD_EARTH = 4724;
+const int FEAT_HARD_FIRE  = 4725;
+const int FEAT_HARD_WATER = 4726;
+const int FEAT_HARD_ELEC  = 4727;
+const int FEAT_POISON_3   = 4728;
+
 //Passive Feats
 const int FEAT_INTUITIVE_ATTACK                        = 3166;
 const int FEAT_RAVAGEGOLDENICE                         = 3162;

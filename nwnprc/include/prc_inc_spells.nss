@@ -745,7 +745,22 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 
 	}
 
-
+        //racial pack code
+        if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
+        { nDC -= 1+(GetHitDice(oTarget)/5); }
+        else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )
+        {    nDC -= 1+(GetHitDice(oTarget)/5);  }
+        else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY )
+        {
+            if(GetHasFeat(FEAT_HARD_AIR, oTarget))
+                nDC -= 1+(GetHitDice(oTarget)/5);
+            else if(GetHasFeat(FEAT_HARD_ELEC, oTarget))
+                nDC -= 2;
+        }
+        else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
+        {   nDC -= 3;  }
+        else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
+        {   nDC -= 1+(GetHitDice(oTarget)/5);  }
 
 	return BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 }

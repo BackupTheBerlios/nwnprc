@@ -51,12 +51,44 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_FEY;
     if (GetLevelByClass(CLASS_TYPE_WEREWOLF,oCreature) >= 10)
         return RACIAL_TYPE_SHAPECHANGER;
+
+    //race pack racial types
+    if(GetHasFeat(FEAT_DWARVEN, oCreature))
+        return RACIAL_TYPE_DWARF;
+    if(GetHasFeat(FEAT_ELVEN, oCreature))
+        return RACIAL_TYPE_ELF;
+    if(GetHasFeat(FEAT_GNOMISH, oCreature))
+        return RACIAL_TYPE_GNOME;
+    if(GetHasFeat(FEAT_HALFLING, oCreature))
+        return RACIAL_TYPE_HALFLING;
+    if(GetHasFeat(FEAT_ORCISH, oCreature))
+        return RACIAL_TYPE_HUMANOID_ORC;
+    if(GetHasFeat(FEAT_HUMAN, oCreature))
+        return RACIAL_TYPE_HUMAN;
+    if(GetHasFeat(FEAT_GOBLINOID, oCreature))
+        return RACIAL_TYPE_HUMANOID_GOBLINOID;
+    if(GetHasFeat(FEAT_REPTILIAN, oCreature))
+        return RACIAL_TYPE_HUMANOID_REPTILIAN;
+    if(GetHasFeat(FEAT_MONSTEROUS, oCreature))
+        return RACIAL_TYPE_HUMANOID_MONSTROUS;
+    if(GetHasFeat(FEAT_ELEMENTAL, oCreature))
+        return RACIAL_TYPE_ELEMENTAL;
+    if(GetHasFeat(FEAT_GIANT, oCreature))
+        return RACIAL_TYPE_GIANT;
+    if(GetHasFeat(FEAT_FEY, oCreature))
+        return RACIAL_TYPE_FEY;
+    if(GetHasFeat(FEAT_ABERRATION, oCreature))
+        return RACIAL_TYPE_ABERRATION;
+    if(GetHasFeat(FEAT_OUTSIDER, oCreature))
+        return RACIAL_TYPE_OUTSIDER;
+
     // check for a local variable that overrides the race
     // the shifter will use this everytime they change
     // the racial types are zero based, use 1 based to ensure the variable is set
     int nRace = GetLocalInt(oCreature,"RACIAL_TYPE");
     if (nRace)
         return (nRace-1);
+
     return GetRacialType(oCreature);
 }
 

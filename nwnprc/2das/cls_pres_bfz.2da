@@ -1,0 +1,14 @@
+2DA V2.0
+
+      LABEL            ReqType   ReqParam1       ReqParam2   
+0     MoveSilently     SKILL     8               8           
+1     Lore             SKILL     7               8           
+2     Hide             SKILL     5               8           
+3     WeapProfEx       FEAT      44              ****        
+4     IronWill         FEAT      22              ****        
+5     ScriptVar        VAR       PRC_AllowBFZ    0           
+6     ScriptVar        VAR       PRC_DivSpell2   0           
+7     SneakAttack2     FEATOR    345             ****        
+8     DeathAttack2     FEATOR    456             ****        
+9     BGSneakAttack2   FEATOR    461             ****        
+10    PA_SNEAK_2d6     FEATOR    4290            ****        

@@ -56,6 +56,11 @@ int GetRogueSneak(object oPC)
    //if ((iClassLevel >= 16) && (iClassLevel < 20)) iRogueSneak += 5;
    //if (iClassLevel >= 20) iRogueSneak += 6;
 
+     iClassLevel = GetLevelByClass(CLASS_TYPE_BFZ, oPC);
+     if ((iClassLevel >= 3) && (iClassLevel < 6)) iRogueSneak++;
+     if ((iClassLevel >= 6) && (iClassLevel < 9)) iRogueSneak += 2;
+     if (iClassLevel >= 9) iRogueSneak += 3;
+
    //Future PRC's go here.  DO NOT ADD SNEAK ATTACKS AS CLASS FEATS.
    //Also, there are a couple of instances in the combat system
    //which will need to be updated, as well as the impromptu sneak attack

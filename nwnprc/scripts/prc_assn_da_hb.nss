@@ -74,7 +74,7 @@ void main()
         // for 3 rounds
         if (GetIsObjectValid(oWeapon))
         {
-            int nSaveDC = 10 + GetLevelByClass(CLASS_TYPE_ASSASSIN,oPC) + GetLevelByClass(CLASS_TYPE_SHADOWLORD,oPC) + GetAbilityModifier(ABILITY_INTELLIGENCE,oPC);
+            int nSaveDC = 10 + GetLevelByClass(CLASS_TYPE_BFZ,oPC) + GetLevelByClass(CLASS_TYPE_ASSASSIN,oPC) + GetLevelByClass(CLASS_TYPE_SHADOWLORD,oPC) + GetAbilityModifier(ABILITY_INTELLIGENCE,oPC);
             // Saves are capped at 70
             if (nSaveDC > 70)
                 nSaveDC = 70;

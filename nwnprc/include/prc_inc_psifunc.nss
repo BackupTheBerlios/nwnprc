@@ -19,7 +19,13 @@ int GetManifestingClass(object oCaster = OBJECT_SELF);
 // Returns Manifester Level
 int GetManifesterLevel(object oCaster = OBJECT_SELF);
 
+// Checks to see if it is a Psychic Warrior
+// Power with a power level lower than its level
+// for Psion/Wilder.
+int PsychicWarriorLevel(int nSpell);
+
 // Returns the level of a Power
+// Used for Power cost and DC
 int GetPowerLevel();
 
 // Returns the psionic DC
@@ -117,10 +123,22 @@ int GetManifesterLevel(object oCaster)
 }
 
 
+int PsychicWarriorLevel(int nSpell)
+{
+	if (nSpell == 6000)
+	{
+		return TRUE;
+	}
+	
+	return FALSE:
+}
+
 int GetPowerLevel()
 {
 	int nSpell = GetSpellId();
 	int nLevel = StringToInt(lookup_spell_innate(nSpell));
+	int nPsychic = PsychicWarriorLevel(nSpell);
+	if (nPsychic) nLevel -= 1;
 	return nLevel;
 }
 
@@ -159,12 +177,7 @@ int GetCanManifest(object oCaster, int nAugCost)
     else if (nLevel == 9) nPPCost = 17;
     
     //Adds in the augmentation cost
-    if (nAugment == 0) nPPCost = nPPCost;    
-    else if (nAugment == 1) nPPCost = nPPCost + (nAugCost * 1);
-    else if (nAugment == 2) nPPCost = nPPCost + (nAugCost * 2);
-    else if (nAugment == 3) nPPCost = nPPCost + (nAugCost * 3);
-    else if (nAugment == 4) nPPCost = nPPCost + (nAugCost * 4);
-    else if (nAugment == 5) nPPCost = nPPCost + (nAugCost * 5);
+    if (nAugment > 0) nPPCost = nPPCost + (nAugCost * nAugment);    
     
     // If PP Cost is greater than Manifester level
     if (GetManifesterLevel(oCaster) >= nPPCost)

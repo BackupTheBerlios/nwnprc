@@ -18,6 +18,8 @@ const int MONST_DAMAGE_4D10  = 31; //11
 const int MONST_DAMAGE_3D6   = 10; //7: Large/Huge Monk only
 const int MONST_DAMAGE_4D8   = 21; //9: Large/Huge Monk only
 
+const int ITEM_PROPERTY_WOUNDING = 69;
+
 // Clean up any extras in the inventory.
 void CleanExtraFists(object oCreature)
 {
@@ -257,6 +259,14 @@ void UnarmedFists(object oCreature)
                     case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
                     case ITEM_PROPERTY_ON_HIT_PROPERTIES:
                     case ITEM_PROPERTY_ONHITCASTSPELL:
+                    case ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE:
+                    case ITEM_PROPERTY_KEEN:
+                    case ITEM_PROPERTY_MASSIVE_CRITICALS:
+                    case ITEM_PROPERTY_POISON:
+                    case ITEM_PROPERTY_REGENERATION_VAMPIRIC:
+                    case ITEM_PROPERTY_WOUNDING:
+                    case ITEM_PROPERTY_DECREASED_DAMAGE:
+                    case ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER:
                         AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
                         break;
                     case ITEM_PROPERTY_ATTACK_BONUS:

@@ -84,8 +84,8 @@ int FindUnarmedDamage(object oCreature)
     if (iShou == 3 || iShou == 4) iShouDamage = 4;  //1d10
     if (iShou == 5) iShouDamage = 5;                //2d6
     
-    if (iBrawler >= 1 && iBrawler < 6) iBrawlerDamage = 1;  //first four levels
-    if (iBrawler >= 6) iBrawlerDamage = iBrawler / 6 + 2;   //gets up to 3d6
+    if (iBrawler >= 1 && iBrawler < 6) iBrawlerDamage = 2;  //first four levels
+    if (iBrawler >= 6) iBrawlerDamage = iBrawler / 6 + 2;   //gets up to 3d8
 
     // Future unarmed classes:  if you do your own damage, add in "comparisons" below here.
 
@@ -175,19 +175,17 @@ void UnarmedFists(object oCreature) // Large chunks stolen from SoulTaker
         {
             oWeapL = GetItemPossessedBy(oCreature,"NW_IT_CREWPB010");
             SetIdentified(oWeapL, TRUE);
-            //AssignCommand(oCreature,ActionEquipItem(oWeapL,INVENTORY_SLOT_CWEAPON_L));
+            AssignCommand(oCreature,ActionEquipItem(oWeapL,INVENTORY_SLOT_CWEAPON_L));
         }
         else
         {
             oWeapL = CreateItemOnObject("NW_IT_CREWPB010", oCreature);
             SetIdentified(oWeapL, TRUE);
-            //AssignCommand(oCreature,ActionEquipItem(oWeapL,INVENTORY_SLOT_CWEAPON_L));
+            AssignCommand(oCreature,ActionEquipItem(oWeapL,INVENTORY_SLOT_CWEAPON_L));
         }
     }
     
     if (GetTag(oWeapL) != "NW_IT_CREWPB010") return;
-    
-    //int iDmg = FindUnarmedDmg(oCreature);
     
     int iKi = GetHasFeat(FEAT_KI_STRIKE,oCreature) ? 1 : 0 ;
         iKi = (iMonk>12)                     ? 2 : iKi;

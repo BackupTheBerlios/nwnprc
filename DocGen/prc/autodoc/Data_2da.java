@@ -253,11 +253,13 @@ public class Data_2da{
 	
 	private static void doComparison(Data_2da file1, Data_2da file2){
 		// Check lengths
+		int shortCount = 0;
 		if(file1.getEntryCount() != file2.getEntryCount()){
 			System.out.println("Differing line counts.\n" +
 			                   file1.getName() + ": " + file1.getEntryCount() + "\n" +
 			                   file2.getName() + ": " + file2.getEntryCount());
-			System.exit(0);
+			
+			shortCount = file1.getEntryCount() > file2.getEntryCount() ? file2.getEntryCount() : file1.getEntryCount();
 		}
 		
 		// Check labels
@@ -276,13 +278,12 @@ public class Data_2da{
 		}
 		
 		// Check elements
-		for(int i = 0; i < file1.getEntryCount(); i++){
+		for(int i = 0; i < shortCount; i++){
 			for(String label : labels1){
 				if(!file1.getEntry(label, i).equals(file2.getEntry(label, i))){
 					System.out.println("Differing entries on row " + i + ", column " + label + "\n" +
 					                   file1.getName() + ": " + file1.getEntry(label, i) + "\n" +
 					                   file2.getName() + ": " + file2.getEntry(label, i));
-					System.exit(0);
 				}
 			}
 		}

@@ -8,8 +8,10 @@
 3     FEAT_AUGMENT_NONE                3552        3      1                1        
 4     ****                             ****        ****   ****             ****     
 5     "**powers**"                     ****        ****   ****             ****     
-6     FEAT_ALL_BODY_ADJUSTMENT         3580        2      3                1        
-7     FEAT_ALL_BLACK_DRAGON_BREATH     3576        2      11               1        
+6     FEAT_ALL_BODY_ADJUSTMENT         3580        2      4                1    
+15    FEAT_ALL_CONCEAL_AMORPHA         3584        2      4                1       
+16    FEAT_SHAPERPSYWAR_GAMORPHA       3585        2      7                1 
+7     FEAT_ALL_BLACK_DRAGON_BREATH     3576        2      16               1        
 8     ****                             ****        ****   ****             ****     
 9     "**normal_feats**"               ****        ****   ****             ****     
 10    ArmProfLight                     3           3      1                0        

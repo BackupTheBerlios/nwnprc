@@ -30,7 +30,7 @@ void main()
     int iLycanbane = GetHasFeat(FEAT_LYCANBANE,oPC);
     int iMililEar = GetHasFeat(FEAT_MILILS_EAR,oPC);
     int iDeneirsOrel = GetHasFeat(FEAT_DENEIRS_OREL,oPC);
-    int iHarperLevel = GetLevelByClass(CLASS_TYPE_MASTERH,oPC);
+    int iHarperLevel = GetLevelByClass(CLASS_TYPE_MASTER_HARPER,oPC);
 
     if (iLycanbane > 0) MasterHarperBonusFeat(oPC, oSkin, "MHLycanbane",
                                                 ITEM_PROPERTY_AC_BONUS_VS_RACIAL_GROUP,

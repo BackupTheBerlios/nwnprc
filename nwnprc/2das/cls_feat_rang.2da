@@ -128,4 +128,4 @@
 124   FEAT_FORGE_RING                                      2929         0      12               1        
 125   FEAT_MANYSHOT                                        3306         0      -1               1      
 126   FEAT_IMP_MANYSHOT                                    3350         0      -1               1      
-
+127   FEAT_ALTERNATE_FORM                                  2931         3      15               0      

@@ -21,7 +21,24 @@ void main()
 {
     // being called by EvalPRCFeats
     object oPC = OBJECT_SELF;
+
     int nShifterLevel = GetLevelByClass(CLASS_TYPE_PNP_SHIFTER,oPC);
+ 
+    if (!GetLocalInt(oPC,"SHIFTOnEnterHit"))
+    {
+        object oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
+
+        // If we are entering a module, we have been stripped of the skin
+        // and our powers are gone, shift back to true form so we dont confuse the player
+        if ( (GetTrueForm(oPC) != GetAppearanceType(oPC)) && 
+             !(GetLocalInt(oHidePC,"nPCShifted")) )
+        {
+            SetShiftTrueForm(oPC);
+            // Set a local on the pc so we dont have to do this more than once
+	    SetLocalInt(oPC,"SHIFTOnEnterHit",1);
+        }
+    }
+
 //SendMessageToPC(oPC,"ShifterLevel = " + IntToString(nShifterLevel));
 //SendMessageToPC(oPC,"ShifterDefaultListLevel = " + IntToString(GetLocalInt(oPC,"ShifterDefaultListLevel")));
     // Make sure we are not doing this io intesive loop more than once per level

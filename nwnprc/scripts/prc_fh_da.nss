@@ -12,12 +12,15 @@
 //:: Created On: July 12, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_inc_combat"
+//#include "prc_inc_combat"
 
 void main()
 {     
     object oPC = OBJECT_SELF;
     //object oTarget = GetSpellTargetObject();
+    
+    // Sets the player back to stealth mode
+    DelayCommand(0.3, SetActionMode(oPC, ACTION_MODE_STEALTH, TRUE) );
 
     // If they are in the middle of a DA or have to wait till times up they are denied
     float fApplyDATime = GetLocalFloat(oPC,"PRC_FH_DEATHATTACK_APPLY");

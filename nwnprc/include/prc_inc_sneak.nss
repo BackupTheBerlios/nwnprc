@@ -263,11 +263,6 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
      {          
           bIsDeniedDex = TRUE;
      }
-     else
-     {
-          string sMes = "Not the Surprise Round!";
-          FloatingTextStringOnCreature(sMes, oAttacker, TRUE);          
-     }
      
      // if defender has spell effect on them
      if( GetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender) )          bIsDeniedDex = TRUE;

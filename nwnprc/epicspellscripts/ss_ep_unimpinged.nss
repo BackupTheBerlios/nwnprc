@@ -31,7 +31,7 @@ void main()
         effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
         effect eDur = EffectVisualEffect(VFX_DUR_GLOW_GREY);
         effect eProt = EffectDamageImmunityIncrease
-            (DAMAGE_TYPE_BLUDGEONING, 100);
+            (DAMAGE_TYPE_BLUDGEONING, 50);
         effect eLink = EffectLinkEffects(eProt, eDur);
         // if this option has been enabled, the caster will take backlash damage
         if (BACKLASH_DAMAGE == TRUE)

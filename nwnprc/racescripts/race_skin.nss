@@ -88,6 +88,23 @@ void main()
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 
+    //Azer Heat Damage +1 (armed and unarmed)
+    if (GetHasFeat(FEAT_AZER_HEAT, oPC))
+    {
+    if (GetLocalInt(oPC, "ONEQUIP") == 1)
+    {
+        object oItem = GetPCItemLastUnequipped();
+        SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 0, IP_CONST_DAMAGETYPE_FIRE);
+    }
+    else
+    {
+        object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+        SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
+        oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+        // check to make sure the weapon is not a shield or torch
+        SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE); 
+     }
+
     //-1AC, -4hide
     if(GetHasFeat(FEAT_LARGE))
     {

@@ -14,7 +14,7 @@ void main()
     object oTarget = GetExitingObject();
     int bValid = FALSE;
     effect eAOE;
-    if(GetHasSpellEffect(TN_DES_100, oTarget))
+    if(GetHasSpellEffect(SPELL_DES_100, oTarget))
     {
         //Search through the valid effects on the target.
         eAOE = GetFirstEffect(oTarget);
@@ -22,7 +22,7 @@ void main()
         {
             if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
             {
-                    if(GetEffectSpellId(eAOE) == TN_DES_100)
+                    if(GetEffectSpellId(eAOE) == SPELL_DES_100)
                     {
                         RemoveEffect(oTarget, eAOE);
                         bValid = TRUE;

@@ -1,4 +1,4 @@
-by/**
+/**
  * True Necromancer: Create Lesser Undead
  * 2004/04/14
  * Stratovarius

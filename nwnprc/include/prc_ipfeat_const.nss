@@ -130,10 +130,10 @@ const int IP_CONST_ONHIT_SAVEDC_17 = 17;
 const int IP_CONST_ONHIT_SAVEDC_19 = 19;
 
 // Creature Epic Criticals
-const int IP_CONST_FEAT_DEVCRITICAL_CREATURE  = 571;
-const int IP_CONST_FEAT_OVERCRITICAL_CREATURE = 572;
+const int IP_CONST_FEAT_DEVCRITICAL_CREATURE  = 271;
+const int IP_CONST_FEAT_OVERCRITICAL_CREATURE = 272;
 
 // Epic DR
-const int IP_CONST_FEAT_EPIC_DR_3             = 573;
-const int IP_CONST_FEAT_EPIC_DR_6             = 574;
-const int IP_CONST_FEAT_EPIC_DR_9             = 575;
+const int IP_CONST_FEAT_EPIC_DR_3             = 273;
+const int IP_CONST_FEAT_EPIC_DR_6             = 274;
+const int IP_CONST_FEAT_EPIC_DR_9             = 275;

@@ -33,7 +33,7 @@ if (!PsiPrePowerCastCode()){ return; }
 	
 	int nACLevel = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_LEVEL + sSlot);
 	
-	if(!nACLevel || nACLevel > 9)
+	if(nACLevel < 1 || nACLevel > 9)
 	{
 		SendMessageToPCByStrRef(oManifester, STRREF_INVALID_CONSTRUCT_IN_SLOT);
 		return;
@@ -57,6 +57,9 @@ if (!PsiPrePowerCastCode()){ return; }
 	
 	DoAstralConstructCreation(oManifester, GetSpellTargetLocation(), nMetaPsi, nACLevel,
 	                          nOptionFlags, nResElemFlags, nETchElemFlags, nEBltElemFlags);
+	
+	// Mark the slot manifested out of on the manifester
+	SetLocalString(oManifester, MANIFESTED_SLOT, sSlot);
 	
 //SPSetSchool();
 }

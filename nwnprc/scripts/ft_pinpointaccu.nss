@@ -29,6 +29,8 @@ void main()
    effect eDamage;
 
    float fDelay = 0.0;
+   
+   SignalEvent(oTarget,EventUserDefined(EVENT_ATTACKED));
 
    //Perform 1 attack
 

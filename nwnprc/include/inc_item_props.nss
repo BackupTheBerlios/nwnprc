@@ -1075,6 +1075,8 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    
    // Disciple of Mephistopheles
    DeleteLocalInt(oItem,"DiscMephGlove");
+   // Azer fire
+   DeleteLocalInt(oItem,"AzerFlameDamage");
 }
 
 void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC)

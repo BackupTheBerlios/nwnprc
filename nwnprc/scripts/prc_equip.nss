@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 #include "x2_inc_switches"
 #include "x2_inc_intweapon"
+#include "inc_eventhook"
 
 
 void PrcFeats(object oPC)
@@ -39,4 +40,7 @@ void main()
 
     // Handle ability skill limited items
     ExecuteScript("prc_equip_rstr", OBJECT_SELF);
+    
+    // Execute scripts hooked to this event for the player triggering it
+	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYEREQUIPITEM);
 }

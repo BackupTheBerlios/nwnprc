@@ -13,6 +13,7 @@
 #include "x2_inc_switches"
 #include "x2_inc_intweapon"
 #include "inc_item_props"
+#include "inc_eventhook"
 
 void PrcFeats(object oPC)
 {
@@ -31,4 +32,7 @@ void main()
      object oPC   = GetItemLastUnequippedBy();
     
      DelayCommand(0.2,PrcFeats(oPC));
+     
+     // Execute scripts hooked to this event for the player triggering it
+     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERUNEQUIPITEM);
 }

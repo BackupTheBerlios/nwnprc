@@ -1,7 +1,8 @@
 #include "inc_item_props"
 #include "prc_inc_function"
 #include "prc_inc_clsfunc"
-    
+#include "inc_eventhook"
+
 
 void main()
 {
@@ -30,4 +31,7 @@ void main()
         AADestroyAllImbuedArrows(oPC);
     }
     DeleteLocalInt(oPC,"ONENTER");
+    
+    // Execute scripts hooked to this event for the player triggering it
+	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
 }

@@ -28,6 +28,8 @@
 #include "psi_inc_onhit"
 #include "inc_rend"
 #include "psi_inc_ac_const"
+#include "inc_eventhook"
+
 
 void SetRancorVar(object oPC);
 void SetPsiEnRetortVar(object oPC);
@@ -271,6 +273,9 @@ void main()
     {
         ExecuteScript("poison_wpn_onhit", OBJECT_SELF);
     }
+    
+    // Execute scripts hooked to this event for the player triggering it
+	ExecuteAllScriptsHookedToEvent(oSpellOrigin, EVENT_ONHIT);
 }
 
 void SetRancorVar(object oPC)

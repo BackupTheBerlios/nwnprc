@@ -1,6 +1,9 @@
-//
-// Stub function for possible later use.
-//
+//::///////////////////////////////////////////////
+//:: OnActivateItem eventscript
+//:: prc_onactivate
+//:://////////////////////////////////////////////
+
+#include "inc_eventhook"
 
 void main()
 {
@@ -26,4 +29,7 @@ void main()
     // "Epic Spellcasting" item used to prepare epic spells
     if (GetTag(oItem) == "epicspellcast")
         ExecuteScript("_rest_button", oPC);
+    
+    // Execute scripts hooked to this event for the player triggering it
+	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONACTIVATEITEM);
 }

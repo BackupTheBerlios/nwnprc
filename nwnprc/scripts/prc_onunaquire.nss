@@ -1,9 +1,11 @@
-//
-// Stub function for possible later use.
-//
+//::///////////////////////////////////////////////
+//:: OnUnaquireItem eventscript
+//:: prc_onunaquire
+//:://////////////////////////////////////////////
 //Include required for Imbue Arrow functionality.
 #include "prc_inc_clsfunc"
 #include "inc_item_props"
+#include "inc_eventhook"
 
 void main()
 {
@@ -17,4 +19,7 @@ void main()
    
     // Remove all temporary item properties when dropped/given away/stolen/sold.
     DeletePRCLocalIntsT(oPC,oItem);
+    
+    // Execute scripts hooked to this event for the player triggering it
+	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONUNAQUIREITEM);
 }

@@ -1,7 +1,13 @@
-//
-// Stub function for possible later use.
-//
+//::///////////////////////////////////////////////
+//:: OnCutsceneAbort eventscript
+//:: prc_oncutabort
+//:://////////////////////////////////////////////
+
+#include "inc_eventhook"
 
 void main()
 {
+	// Execute scripts hooked to this event for the player triggering it
+	object oPC = GetLastPCToCancelCutscene();
+	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCUTSCENEABORT);
 }

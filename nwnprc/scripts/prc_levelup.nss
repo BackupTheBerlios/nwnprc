@@ -16,6 +16,7 @@
 #include "x2_inc_switches"
 #include "prc_inc_function"
 #include "inc_item_props"
+#include "inc_eventhook"
 
 void PrcFeats(object oPC)
 {
@@ -61,4 +62,7 @@ void main()
 
     // These scripts fire events that should only happen on levelup
     ExecuteScript("prc_vassal_treas", oPC);
+    
+    // Execute scripts hooked to this event for the player triggering it
+	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERLEVELUP);
 }

@@ -59,11 +59,14 @@ void RemoveBrutalStrike(object oPC, int iEquip)
 /// Applies the Fist of Hextor Brutal Strike to its weapon ///
 void AddBrutalStrike(object oPC , int iEquip)
 {
+      SendMessageToPC(oPC, "You Have Activated Brutal Strike");
       object oWeapon = GetPCItemLastEquipped();
 
       if (iEquip = 2)      // On Equip
       {
+
       SendMessageToPC(oPC, "You Have Equipped a Weapon");
+
                      //Fist of Hextor Attack from Brutal Strike
                      if (GetHasFeat(FEAT_BSTRIKE_A4, oPC))
                      {
@@ -159,6 +162,8 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
+
+    SendMessageToPC(oPC, "You are a Fist of Hextor");
 
     if (iEquip == 1)    RemoveBrutalStrike(oPC, iEquip);
     if (iEquip == 2)    AddBrutalStrike(oPC, iEquip);

@@ -12,6 +12,7 @@ void main()
 
 	// Get the effective caster level.
 	int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+	object oCaster = OBJECT_SELF;
 
 	// Apply the area vfx.
 //	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(), lTarget);
@@ -37,25 +38,34 @@ void main()
 	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lTarget, FALSE, OBJECT_TYPE_CREATURE);
 	while (GetIsObjectValid(oTarget))
 	{
-		// Apply a bonus/penalty effect to the target depending on it's reaction to the caster.
-		// If the object is neutral it gets neither a bonus nor a penalty.
-		int nFriendly = GetIsReactionTypeFriendly(oTarget);
-		int nHostile = GetIsReactionTypeHostile (oTarget);
-		if (nFriendly || nHostile)
+	// make sure it doesn't stack
+		if(GetHasSpellEffect(3140, oTarget) == FALSE)
 		{
-			// Determine which effect chain to use.
-			effect eTarget = nFriendly ? ePositive : eNegative;
+			// Apply a bonus/penalty effect to the target depending on it's reaction to the caster.
+			// If the object is neutral it gets neither a bonus nor a penalty.
+			int nFriendly = 0;
+			if(GetIsReactionTypeFriendly(oTarget) || GetIsFriend(oTarget, oCaster)) 
+			{
+				nFriendly = 1;
+			}
+			int nHostile = GetIsReactionTypeHostile(oTarget);
+	
+			if (nFriendly || nHostile)
+			{
+				// Determine which effect chain to use.
+				effect eTarget = nFriendly ? ePositive : eNegative;
 			
-			// Fire cast spell at event for the specified target
-			SPRaiseSpellCastAt(oTarget, nHostile);
+				// Fire cast spell at event for the specified target
+				SPRaiseSpellCastAt(oTarget, nHostile);
 			
-			// Check for SR vs. hostile targets before applying effects.
-			fDelay = GetSpellEffectDelay(lTarget, oTarget);
-			if (nFriendly || !SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
-				DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTarget, oTarget, fDuration,TRUE,-1,nCasterLvl));
-		}
+				// Check for SR vs. hostile targets before applying effects.
+				fDelay = GetSpellEffectDelay(lTarget, oTarget);
+				if (nFriendly || !SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+					DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTarget, oTarget, fDuration,TRUE,-1,nCasterLvl));
+			}
 		
-		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lTarget, FALSE, OBJECT_TYPE_CREATURE);
+			oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lTarget, FALSE, OBJECT_TYPE_CREATURE);
+		}
 	}
 	
 	SPSetSchool();

@@ -5,10 +5,9 @@
 // * Applies the Arcane Duelist's AC bonus as a CompositeBonus on object's skin.
 void ApparentDefense(object oPC, object oSkin)
 {
-    if(GetLocalInt(oSkin, "ADDef") == TRUE) return;
+    if(GetLocalInt(oSkin, "ADDef") == GetAbilityModifier(ABILITY_CHARISMA, oPC)) return;
 
     SetCompositeBonus(oSkin, "ADDef", GetAbilityModifier(ABILITY_CHARISMA, oPC), ITEM_PROPERTY_AC_BONUS);
-    SetLocalInt(oSkin, "ADDef", TRUE);
 }
 
 
@@ -18,6 +17,7 @@ void RemoveEnchantCW(object oPC, object oWeap)
       if (GetLocalInt(oWeap, "ADEnchant"))
       {
          RemoveSpecificProperty(oWeap, ITEM_PROPERTY_ENHANCEMENT_BONUS, -1, -1, 1, "ADEnchant", -1, DURATION_TYPE_TEMPORARY);
+         DeleteLocalInt(oWeap, "ADEnchant");
       }
 }
 
@@ -41,7 +41,7 @@ void EnchantCW(object oPC, object oWeap)
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 8)
          iBonus += 1;
                
-      SendMessageToPC(oPC, "Enchant Chosen Weapon has been run");
+      //SendMessageToPC(oPC, "Enchant Chosen Weapon has been run");
       AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(iBonus),oWeap, 9999.0);
       SetLocalInt(oWeap, "ADEnchant", iBonus);
 }

@@ -970,8 +970,10 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    DeleteLocalInt(oItem,"DWright");
    // Holy Avenger
    DeleteLocalInt(oItem,"HolyAvAntiStack");
-   //Azer Heat Damage
+   // Azer Heat Damage
    DeleteLocalInt(oItem,"AzerFlameDamage");
+   // Arcane Duelist
+   DeleteLocalInt(oItem,"ADEnchant");
 
    // LEFT HAND
    if (!iValid){
@@ -1000,7 +1002,7 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    // Dispater
    DeleteLocalInt(oItem,"DispIronPowerA");
    DeleteLocalInt(oItem,"DispIronPowerD");
-   //Azer Heat Damage
+   // Azer Heat Damage
    DeleteLocalInt(oItem,"AzerFlameDamage");
    
    // CHEST

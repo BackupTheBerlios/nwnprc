@@ -31,7 +31,8 @@ void DuelistCannyDefense(object oPC, object oSkin, int iOnOff, int iEpic = FALSE
 ///Katana Finesse /////////
 void KatFin(object oPC, object oWeap, int iBonus)
 {
-
+ if(iBonus > 0)
+  {
     int iDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC);
     int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
     int iBonus = 0;
@@ -60,6 +61,7 @@ void KatFin(object oPC, object oWeap, int iBonus)
             FloatingTextStringOnCreature("Katana Finesse Off", oPC);
         SetLocalInt(oPC, "KatanaFinesse", FALSE);
    }
+ }
 }
 
 void main()
@@ -70,6 +72,7 @@ void main()
     object oSkin = GetPCSkin(oPC);
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    object oWeap2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 
     //Determine which feats the character has
     int bCanDef = GetHasFeat(FEAT_CANNY_DEFENSE, oPC);
@@ -84,7 +87,13 @@ void main()
 
     if(bKatFin > 0 && GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
         KatFin(oPC,oWeap,bKatFin);
-    else
-        KatFin(oPC,oWeap,0);
-}
 
+    if(GetBaseItemType(oWeap) != BASE_ITEM_KATANA)
+        KatFin(oPC,oWeap,0);
+
+    if(bKatFin > 0 && GetBaseItemType(oWeap2) == BASE_ITEM_KATANA)
+        KatFin(oPC,oWeap2,bKatFin);
+
+    if(GetBaseItemType(oWeap2) != BASE_ITEM_KATANA)
+        KatFin(oPC,oWeap2,0);
+}

@@ -1,6 +1,7 @@
 To use the Autodoc, create directories 2da/ and tlk/ in the location you will be
 running it from. This location should also contain the directory templates/ and
-the file settings from the CVS.
+the file settings from the CVS. Make a copy of Main Manual Files/ called
+manual/
 
 Place dialog.tlk and prc_consortium.tlk equivalents for each language specified in
 settings in tlk/. Place the following 2das in 2da/

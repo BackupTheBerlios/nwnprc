@@ -18,11 +18,11 @@
 #include "prc_class_const"
 #include "prc_spell_const"
 
-int GetSneakAttackDamage(int iSneakAttackDice)
-{
-     int iSneakAttackDamage = d6(iSneakAttackDice);     
-     return iSneakAttackDamage;
-}
+//int GetSneakAttackDamage(int iSneakAttackDice)
+//{
+//     int iSneakAttackDamage = d6(iSneakAttackDice);     
+//     return iSneakAttackDamage;
+//}
 
 int IsImmuneImpSneakAttack(object oTarget)
 {

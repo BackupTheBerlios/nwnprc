@@ -1,5 +1,14 @@
 //real power spell constants
 
+// Metapsionics
+const	int	METAPSIONIC_CHAIN		= 2;
+const	int	METAPSIONIC_EMPOWER		= 4;
+const	int	METAPSIONIC_EXTEND		= 8;
+const	int	METAPSIONIC_MAXIMIZE		= 16;
+const	int	METAPSIONIC_SPLIT		= 32;
+const	int	METAPSIONIC_TWIN		= 64;
+const	int	METAPSIONIC_WIDEN		= 128;
+
 // Level 1 Powers
 const	int	POWER_BOLT			= 14001;
 const	int	POWER_CALLTOMIND		= 14002;

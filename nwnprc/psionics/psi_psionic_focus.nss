@@ -13,7 +13,7 @@ void main()
         return;
     }
 
-    if ((GetHasFeat(FEAT_NARROW_MIND, oPC)) && (!(GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC))))
+    if (GetHasFeat(FEAT_NARROW_MIND, oPC))
     {
         if (GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, 16))
         {

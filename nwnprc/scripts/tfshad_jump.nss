@@ -1,4 +1,4 @@
-#include "prc_alterations"
+#include "spinc_common"
 #include "inc_item_props"
 #include "inc_combat2"
 
@@ -65,7 +65,7 @@ void main()
         {
            // Caster cannot move for 1 turn now.
            SendMessageToPC(oCaster, "Shadow Jump complete");
-           //DelayCommand(2.0, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oCaster, fDuration));
+           //DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oCaster, fDuration));
         }
         else
         {
@@ -128,14 +128,14 @@ void main()
 
                 //Apply the damage
                 eDamage = EffectDamage(iDamage, DAMAGE_TYPE_PIERCING, iEnhancement);
-                DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+                DelayCommand(fDelay + 0.1, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
 
                 if (iDeathAttack && iBonus)
                 {
                     if (!FortitudeSave(oTarget,10+iDeathAttack+GetAbilityModifier(ABILITY_INTELLIGENCE,OBJECT_SELF),SAVING_THROW_TYPE_DEATH))
                     {
                        DeathlessFrenzyCheck(oTarget);
-                       DelayCommand(fDelay + 0.2, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(TRUE), oTarget));
+                       DelayCommand(fDelay + 0.2, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(TRUE), oTarget));
                     }
                 }
 

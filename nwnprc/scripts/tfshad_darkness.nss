@@ -42,7 +42,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
     //Declare major variables including Area of Effect Object
-    effect eAOE = EffectAreaOfEffect(AOE_PER_DARKNESS,"tfshad_darknessa");
+    effect eAOE = EffectAreaOfEffect(AOE_PER_DARKNESS,"tfshad_darknessa","","tfshad_darknessb");
     location lTarget = GetSpellTargetLocation();
     int nDuration =GetLevelByClass(CLASS_TYPE_SHADOWLORD,OBJECT_SELF);
 
@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
     //Create an instance of the AOE Object using the Apply Effect function
 
-   ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, GetSpellTargetObject(), RoundsToSeconds(nDuration));
+   SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, GetSpellTargetObject(), RoundsToSeconds(nDuration),TRUE,-1,nDuration);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

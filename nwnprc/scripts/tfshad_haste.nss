@@ -14,7 +14,7 @@
 // Modified March 2003: Remove Expeditious Retreat effects
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "prc_alterations"
+#include "spinc_common"
 
 #include "x0_i0_spells"
 
@@ -74,8 +74,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HASTE, FALSE));
     // Apply effects to the currently selected target.
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,nDuration);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

@@ -39,6 +39,8 @@ void main()
     eList = EffectLinkEffects (eList, eMore);
     eMore = EffectACIncrease (4);
     eList = EffectLinkEffects (eList, eMore);
+    eMore = EffectAttackIncrease (4);
+    eList = EffectLinkEffects (eList, eMore);
     eMore = EffectSavingThrowIncrease (SAVING_THROW_ALL, 4);
     eList = EffectLinkEffects (eList, eMore);
     eMore = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

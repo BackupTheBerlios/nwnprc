@@ -62,10 +62,11 @@ int GetManifestingClass(object oCaster)
 	int nClass;
 	int nLevel = GetCasterLevel(oCaster);
 	
-	if (nLevel == nPsion)	 	nClass = CLASS_TYPE_PSION;
+	if (nLevel == 0) 		nClass = GetClassByPosition(1, oCaster);
+	else if (nLevel == nPsion)	nClass = CLASS_TYPE_PSION;
 	else if (nLevel == nWilder) 	nClass = CLASS_TYPE_WILDER;
 	else if (nLevel == nPsychic) 	nClass = CLASS_TYPE_PSYWARRIOR;
-	
+
 	FloatingTextStringOnCreature("Manifesting Class: " + IntToString(nClass), oCaster, FALSE);	
 	
 	return nClass;
@@ -245,6 +246,6 @@ int VolatileMind(object oTarget, object oCaster)
 		}
 	}
 	
-	FloatingTextStringOnCreature("Volatile Mind Cost: " + IntToString(nCost), oTarget, FALSE);
+	//FloatingTextStringOnCreature("Volatile Mind Cost: " + IntToString(nCost), oTarget, FALSE);
 	return nCost;
 }

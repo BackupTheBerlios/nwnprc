@@ -17,7 +17,7 @@ void CleanCopy(object oImage)
         SetDroppableFlag(oItem, FALSE);
         SetItemCursedFlag(oItem, TRUE);
      }
-     TakeGoldFromCreature(oImage, GetGold(oImage), TRUE);
+     TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
 }
 
 void main()

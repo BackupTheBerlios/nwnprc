@@ -84,7 +84,7 @@ void main()
         // GZ: The PhB classifies Lay on Hands as spell like ability, so it is
         //     subject to SR. No more cheesy demi lich kills on touch, sorry.
         //----------------------------------------------------------------------
-        int nResist = MyResistSpell(OBJECT_SELF,oTarget);
+        int nResist = MyPRCResistSpell(OBJECT_SELF, oTarget, nLevel + SPGetPenetr());
         if (nResist == 0 )
         {
             if(nTouch > 0)
@@ -120,7 +120,7 @@ if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD || GetAlignmentGoodEvil(
         // GZ: The PhB classifies Lay on Hands as spell like ability, so it is
         //     subject to SR. No more cheesy demi lich kills on touch, sorry.
         //----------------------------------------------------------------------
-        int nResist = MyResistSpell(OBJECT_SELF,oTarget);
+        int nResist = MyPRCResistSpell(OBJECT_SELF, oTarget, nLevel + SPGetPenetr());
         if (nResist == 0 )
         {
             if(nTouch > 0)

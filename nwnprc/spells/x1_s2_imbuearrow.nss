@@ -101,7 +101,7 @@ void main()
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), TRUE));
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-            if (!MyResistSpell(OBJECT_SELF, oTarget, fDelay))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr(), fDelay))
             {
                 //Roll damage for each target
                 nDamage = d6(nCasterLvl);

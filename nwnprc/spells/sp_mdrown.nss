@@ -57,7 +57,7 @@ void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 437));
         //Make SR Check
-        if(!MyResistSpell(OBJECT_SELF, oTarget))
+        if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
         {
             // * certain racial types are immune
             if ((MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT)

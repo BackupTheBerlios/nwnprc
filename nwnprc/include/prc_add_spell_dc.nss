@@ -144,7 +144,7 @@ ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
 
 // Shadow Weave Feat
 // DC +1 (school Ench,Illu,Necro)
-int ShadowWeaveDC(object oCaster = OBJECT_SELF)
+int ShadowWeaveDC(object oCaster , int nID )
 {
    int nDC;
 
@@ -153,7 +153,9 @@ int ShadowWeaveDC(object oCaster = OBJECT_SELF)
    
    int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
    if ( nSchool == SPELL_SCHOOL_ENCHANTMENT || nSchool == SPELL_SCHOOL_NECROMANCY || nSchool == SPELL_SCHOOL_ILLUSION)
-      nDC = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;
+      nDC = 1+GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;
+   else if( nID== SPELL_DARKNESS || nID == SPELLABILITY_AS_DARKNESS  || nID == SPELL_SHADOW_CONJURATION_DARKNESS || nID == 688 || nID ==SHADOWLORD_DARKNESS)
+      nDC = 1+GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;
 
    return  nDC;
 
@@ -166,7 +168,7 @@ int GetChangesToSaveDC(object oCaster = OBJECT_SELF)
     nDC += GetHierophantSLAAdjustment(spell_id, oCaster);
     nDC += GetHeartWarderDC(spell_id, oCaster);
     nDC += GetSpellPowerBonus(oCaster);
-    nDC += ShadowWeaveDC(oCaster);
+    nDC += ShadowWeaveDC(oCaster,spell_id);
 
 	return nDC;
 }

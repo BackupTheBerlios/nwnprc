@@ -22,4 +22,8 @@ void main()
     // "Whip of Shar" item received from the epic spell Whip of Shar.
     if (GetTag(oItem) == "WhipofShar")
         ExecuteScript("run_whipofshar", oPC);
+
+    // "Epic Spellcasting" item used to prepare epic spells
+    if (GetTag(oItem) == "EpicSpellcasting")
+        ExecuteScript("_rest_button", oPC);
 }

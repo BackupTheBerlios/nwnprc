@@ -13,7 +13,7 @@ void SetCompositeBonusTemp(object oItem, int iVal, int iType, int iSubType = -1)
        iCurVal = 20;
        iVal = 0;
     }
-    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDecreaseAbility(iSubType, iCurVal + iVal), oItem,HoursToSeconds(2));
+    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDecreaseAbility(iSubType, iCurVal + iVal), oItem,HoursToSeconds(5));
 
 }
 
@@ -42,16 +42,26 @@ void main()
       return ;	
   }
 
+  int iSpell =  GetHasSpellEffect(SPELL_STIGMATA2,OBJECT_SELF)  ? SPELL_STIGMATA2 : 0;
+      iSpell =  GetHasSpellEffect(SPELL_STIGMATA3,OBJECT_SELF)  ? SPELL_STIGMATA3 : iSpell;
+      iSpell =  GetHasSpellEffect(SPELL_STIGMATA4,OBJECT_SELF)  ? SPELL_STIGMATA4 : iSpell;
+      iSpell =  GetHasSpellEffect(SPELL_STIGMATA5,OBJECT_SELF)  ? SPELL_STIGMATA5 : iSpell;
+
   if ( GetHasSpellEffect(SPELL_STIGMATA2,oTarget)||GetHasSpellEffect(SPELL_STIGMATA3,oTarget)||
        GetHasSpellEffect(SPELL_STIGMATA4,oTarget)||GetHasSpellEffect(SPELL_STIGMATA5,oTarget))
          return;
 
-  if ( !iStigs )
+  if ( !iStigs || !iSpell)
   {
+    RemoveEffectsFromSpell(OBJECT_SELF, iSpell);
     SetLocalInt(OBJECT_SELF,"Stigmata",iStig);
     SetLocalInt(OBJECT_SELF,"StigmataMax",iStig);
     iStigs = iStig;
     SetCompositeBonusTemp(oSkin,iStig,ITEM_PROPERTY_DECREASED_ABILITY_SCORE,IP_CONST_ABILITY_CON);
+    
+    effect eDur2 = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur2, OBJECT_SELF,TurnsToSeconds(5));
+
   }
 
   int iMaxStig =GetLocalInt(OBJECT_SELF,"Stigmata");

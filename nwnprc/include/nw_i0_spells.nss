@@ -345,24 +345,47 @@ int GetDragonFearDC(int nAge)
 //------------------------------------------------------------------------------
 int CalcNumberOfAttacks()
 {
-  int n = PRCGetCasterLevel(OBJECT_SELF);
-  int nBAB1 = GetLevelByClass(CLASS_TYPE_RANGER)
-   + GetLevelByClass(CLASS_TYPE_FIGHTER)
-   + GetLevelByClass(CLASS_TYPE_PALADIN)
-   + GetLevelByClass(CLASS_TYPE_BARBARIAN);
-  int nBAB2 = GetLevelByClass(CLASS_TYPE_DRUID)
-   + GetLevelByClass(CLASS_TYPE_MONK)
-   + GetLevelByClass(CLASS_TYPE_ROGUE)
-   + GetLevelByClass(CLASS_TYPE_BARD);
-  int nBAB3 = GetLevelByClass(CLASS_TYPE_WIZARD)
-   + GetLevelByClass(CLASS_TYPE_SORCERER);
+  //int n = PRCGetCasterLevel(OBJECT_SELF);
+  //int nBAB1 = GetLevelByClass(CLASS_TYPE_RANGER)
+  // + GetLevelByClass(CLASS_TYPE_FIGHTER)
+  // + GetLevelByClass(CLASS_TYPE_PALADIN)
+  // + GetLevelByClass(CLASS_TYPE_BARBARIAN);
+  //int nBAB2 = GetLevelByClass(CLASS_TYPE_DRUID)
+  // + GetLevelByClass(CLASS_TYPE_MONK)
+  // + GetLevelByClass(CLASS_TYPE_ROGUE)
+  // + GetLevelByClass(CLASS_TYPE_BARD);
+  //int nBAB3 = GetLevelByClass(CLASS_TYPE_WIZARD)
+  // + GetLevelByClass(CLASS_TYPE_SORCERER);
 
-  int nOldBAB = nBAB1 + (nBAB2 + n) * 3 / 4 + nBAB3 / 2;
-  int nNewBAB = nBAB1 + n + nBAB2 * 3 / 4 + nBAB3 / 2;
-  if (nNewBAB / 5 > nOldBAB / 5)
-    return 2; // additional attack
-  else
-    return 1; // everything is normal
+  //int nOldBAB = nBAB1 + (nBAB2 + n) * 3 / 4 + nBAB3 / 2;
+  //int nNewBAB = nBAB1 + n + nBAB2 * 3 / 4 + nBAB3 / 2;
+  //if (nNewBAB / 5 > nOldBAB / 5)
+  //  return 2; // additional attack
+  //else
+  //  return 1; // everything is normal
+
+  // This calculates bonus attacks based on Total Hit Dice
+  // regardless of classes.  It effectively gives you 
+  // the proper bonus attacks based on a fighter's level.
+  
+  int iBAB = GetBaseAttackBonus(OBJECT_SELF);
+  int iCharLevel = GetHitDice(OBJECT_SELF);
+  int iTemp = GetHitDice(OBJECT_SELF);
+  
+  // if character is over 20, remove all BaB gained past level 20
+  // because you do not gain more attacks after 20.
+  if (iTemp > 20)
+  {
+       iTemp -= 19;
+       iTemp /= 2;
+       
+       iBAB -= iTemp;
+       iCharLevel = 20;
+  }
+  int iNormalAttacks = FloatToInt( (iBAB + 0.5)/5 );
+  int iFighterAttacks = FloatToInt( (iCharLevel + 0.5)/5 );
+  
+  return (iFighterAttacks - iNormalAttacks);
 }
 
 //------------------------------------------------------------------------------

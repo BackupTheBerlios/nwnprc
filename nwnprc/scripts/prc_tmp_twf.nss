@@ -59,7 +59,23 @@ void main()
               attackPenalty = 4;
               nMes = "*Supreme Two-Weapon Fighting Activated*";
           }
+          if(GetHasFeat(FEAT_PERFECT_TWO_WEAPON_FIGHTING, oPC) )
+          {
+              numAddAttacks = 2;
+              attackPenalty = 4;
 
+              if(GetHasSpellEffect(SPELL_MASS_HASTE, oPC) == TRUE || 
+                 GetHasSpellEffect(647, oPC) == TRUE  ||  // blinding speed
+                 GetHasSpellEffect(647, oPC) == TRUE)     // haste
+              {
+                   numAddAttacks += 1;
+              }
+              if(GetHasSpellEffect(SPELL_FURIOUS_ASSAULT, oPC)) numAddAttacks += 1;
+              if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY, oPC))  numAddAttacks += 1;
+              
+              nMes = "*Perfect Two-Weapon Fighting Activated*";
+          }
+          
           if(monkLevel > 0 && GetBaseItemType(oWeapL) == BASE_ITEM_KAMA)
           {
               numAddAttacks = 0;
@@ -113,6 +129,10 @@ void main()
           if(GetHasFeat(FEAT_SUPREME_TWO_WEAPON_FIGHTING, oPC) )
           {
               nMes = "*Supreme Two-Weapon Fighting Deactivated*";
+          }
+          if(GetHasFeat(FEAT_PERFECT_TWO_WEAPON_FIGHTING, oPC) )
+          {
+              nMes = "*Perfect Two-Weapon Fighting Deactivated*";          
           }
           FloatingTextStringOnCreature(nMes, oPC, FALSE);
      }  

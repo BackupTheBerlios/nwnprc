@@ -136,4 +136,5 @@
 133 FEAT_EPIC_OVERWHELMING_CRITICAL_DWAXE          958       1    -1             0      
 134 FEAT_EPIC_WEAPON_FOCUS_WHIP                    997       1    -1             0  
 135 FEAT_EPIC_SUPERIOR_INITIATIVE                  753       1    -1             0         
-136 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1     
+136 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1    
+137 PERFECT_TWO_WEAPON_FIGHTING                    4320      1    -1             0

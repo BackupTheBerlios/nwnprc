@@ -217,6 +217,13 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"DeformObeseCon");
     DeleteLocalInt(oSkin,"DeformGauntDex");
     DeleteLocalInt(oSkin,"WillDeform");
+    DeleteLocalInt(oSkin,"DeformObeseDex");
+    DeleteLocalInt(oSkin,"DeformObeseIntim");
+    DeleteLocalInt(oSkin,"DeformObesePoison");
+    DeleteLocalInt(oSkin,"DeformGauntCon");
+    DeleteLocalInt(oSkin,"DeformGauntIntim");
+    DeleteLocalInt(oSkin,"DeformGauntHide");
+    DeleteLocalInt(oSkin,"DeformGauntMS");
     // Vow Feats
     DeleteLocalInt(oSkin,"SacredVow");
     DeleteLocalInt(oSkin,"VowObed");
@@ -241,7 +248,7 @@ void DeletePRCLocalInts(object oSkin)
     // Soldier of Light
     DeleteLocalInt(oSkin,"ImmuPF");
     DeleteLocalInt(oSkin,"SoLFH");
-    
+
 
     // future PRCs Go below here
 }

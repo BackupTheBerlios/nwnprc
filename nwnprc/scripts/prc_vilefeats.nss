@@ -20,7 +20,7 @@ void DeformGaunt(object oPC ,object oSkin)
   if(GetLocalInt(oSkin, "DeformGauntDex") == 2) return;
 
     SetCompositeBonus(oSkin, "DeformGauntDex", 2, ITEM_PROPERTY_ABILITY_BONUS,IP_CONST_ABILITY_DEX);
-    SetCompositeBonus(oSkin, "DeformgGauntCon", 2, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_CON);
+    SetCompositeBonus(oSkin, "DeformGauntCon", 2, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_CON);
     SetCompositeBonus(oSkin, "DeformGauntIntim", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
     SetCompositeBonus(oSkin, "DeformGauntHide", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_HIDE);
     SetCompositeBonus(oSkin, "DeformGauntMS", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_MOVE_SILENTLY);

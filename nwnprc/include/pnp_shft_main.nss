@@ -1983,6 +1983,15 @@ void SetShiftTrueForm(object oPC)
     // Set race back to unused
     SetLocalInt(oPC,"RACIAL_TYPE",0);
 
+//this dosnt work
+//	//this was added to stop the shifter from looking naked when they reenter/reload
+//	//a server/mod and then unshifting.
+//	object oArmour = GetItemInSlot(INVENTORY_SLOT_CHEST);
+//	object oHelm = GetItemInSlot(INVENTORY_SLOT_HEAD);
+//	if (GetIsObjectValid(oArmour))
+//    	DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oArmour,INVENTORY_SLOT_CHEST)));
+//	if (GetIsObjectValid(oHelm))
+//	    DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oHelm,INVENTORY_SLOT_HEAD)));
 
     SetLocalInt(oHide,"nPCShifted",FALSE);
     // Reset any PRC feats that might have been lost from the shift

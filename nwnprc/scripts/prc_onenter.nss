@@ -13,11 +13,11 @@ void main()
     //mess up the lich, but only until I hook it into the EvalPRC event -
     //hopefully in the next update
     //  -Aaon Graywolf
-	object oPC = GetEnteringObject();
-        object oSkin = GetPCSkin(oPC);
-	ScrubPCSkin(oPC, oSkin);
-        DeletePRCLocalInts(oSkin);     
-        
+    object oPC = GetEnteringObject();
+    object oSkin = GetPCSkin(oPC);
+    ScrubPCSkin(oPC, oSkin);
+    DeletePRCLocalInts(oSkin);
+
     SetLocalInt(oPC,"ONENTER",1);
     // Make sure we reapply any bonuses before the player notices they are gone.
     DelayCommand(0.1, EvalPRCFeats(oPC));
@@ -30,8 +30,8 @@ void main()
         //Destroy imbued arrows.
         AADestroyAllImbuedArrows(oPC);
     }
-    DeleteLocalInt(oPC,"ONENTER");
-    
+    DelayCommand(0.15, DeleteLocalInt(oPC,"ONENTER"));
+
     // Execute scripts hooked to this event for the player triggering it
-	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
+    ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
 }

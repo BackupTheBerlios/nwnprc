@@ -104,6 +104,5 @@ del gfx.temp
 del 2das.temp
 del others.temp
 del objs.temp
-del epicspellobjs.temp
 del craft2das.temp
 del makefile.temp

@@ -86,7 +86,7 @@ void AddArmorOnhit(object oPC,int iEquip)
     }
     else if (iEquip==1)
     {
-        oItem=GetPCItemLastUnequipped();
+        oItem=GetItemLastUnequipped();
         if (GetBaseItemType(oItem)!=BASE_ITEM_ARMOR) return;
             RemoveSpecificProperty(oItem,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,0);
         DeleteLocalInt(oItem,"Dragonwrack");
@@ -121,7 +121,7 @@ void DWRightWeap(object oPC,int iEquip)
   }
   else if (iEquip==1)
   {
-      oItem=GetPCItemLastUnequipped();
+      oItem=GetItemLastUnequipped();
       if (GetBaseItemType(oItem)==BASE_ITEM_SMALLSHIELD || BASE_ITEM_TOWERSHIELD || BASE_ITEM_LARGESHIELD) return;
          RemoveSpecificProperty(oItem,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,0);
       DeleteLocalInt(oItem,"DWright");
@@ -156,7 +156,7 @@ void DWLeftWeap(object oPC,int iEquip)
   }
   else if (iEquip==1)
   {
-      oItem=GetPCItemLastUnequipped();
+      oItem=GetItemLastUnequipped();
       if (GetBaseItemType(oItem)==BASE_ITEM_SMALLSHIELD || BASE_ITEM_TOWERSHIELD || BASE_ITEM_LARGESHIELD) return;
          RemoveSpecificProperty(oItem,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,0);
       DeleteLocalInt(oItem,"DWleft");

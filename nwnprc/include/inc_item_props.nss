@@ -18,6 +18,10 @@
 //::    - Extended Composite bonus function to handle pretty much
 //::      every property that can possibly be composited.
 
+//I know its messy, but this is the easiest place to hook this in
+//Primogentior
+#include "inc_prc_npc"
+
 // * Checks to see if oPC has an item created by sRes in his/her inventory
 int GetHasItem(object oPC, string sRes);
 

@@ -25,7 +25,7 @@ void CheckSupremePowerAttack(object oPC, int iEquip)
       
       if(iEquip == 2)       // On Equip
       {
-          object oWeapon = GetPCItemLastEquipped();
+          object oWeapon = GetItemLastEquipped();
           if(IPGetIsMeleeWeapon(oWeapon) || GetWeaponRanged(oWeapon) )
           {
                bIsWeapon = TRUE;
@@ -33,7 +33,7 @@ void CheckSupremePowerAttack(object oPC, int iEquip)
       }
       else if(iEquip == 1)  // Unequip
       {
-          object oWeapon = GetPCItemLastUnequipped();
+          object oWeapon = GetItemLastUnequipped();
           if(IPGetIsMeleeWeapon(oWeapon) || GetWeaponRanged(oWeapon) )
           {
                bIsWeapon = TRUE;
@@ -82,7 +82,7 @@ void main()
         {
              // add bonus to armor
              object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-             oItem = GetPCItemLastEquipped();
+             oItem = GetItemLastEquipped();
              
              if(oItem == oArmor)
              {
@@ -91,7 +91,7 @@ void main()
         }
         else if(iEquip == 1)  // Unequip
         {
-             oItem = GetPCItemLastUnequipped();
+             oItem = GetItemLastUnequipped();
              
              if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
              {

@@ -12,6 +12,7 @@
 
 #include "inc_item_props"
 #include "prc_feat_const"
+#include "inc_prc_npc"
 
 // * Applies the Disciple of Mephistopheles's resistances on the object's skin.
 // * iLevel = IP_CONST_DAMAGERESIST_*
@@ -45,7 +46,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     object oGaunt = GetItemInSlot(INVENTORY_SLOT_ARMS, oPC);
-    object oUnequip = GetPCItemLastUnequipped();
+    object oUnequip = GetItemLastUnequipped();
     int iResist = -1;
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
 

@@ -68,7 +68,7 @@ void main()
        object oItem;
        
        if (iEquip == 1)
-            oItem = GetPCItemLastUnequipped();
+            oItem = GetItemLastUnequipped();
        else
             oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
       

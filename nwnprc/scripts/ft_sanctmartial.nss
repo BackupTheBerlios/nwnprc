@@ -26,7 +26,7 @@ void Sanctify()
    {
      if (GetHasFeat(FEAT_HOLY_MARTIAL_STRIKE)) return;
 
-     oItem=GetPCItemLastEquipped();
+     oItem=GetItemLastEquipped();
      iType= GetBaseItemType(oItem);
 
      if ( GetLocalInt(oItem,"SanctMar")) return ;
@@ -63,7 +63,7 @@ void Sanctify()
    {
      if (GetHasFeat(FEAT_HOLY_MARTIAL_STRIKE)) return;
 
-     oItem=GetPCItemLastUnequipped();
+     oItem=GetItemLastUnequipped();
      iType= GetBaseItemType(oItem);
 
      switch (iType)
@@ -204,7 +204,7 @@ void Vile()
    {
      //if (GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
 
-     oItem=GetPCItemLastEquipped();
+     oItem=GetItemLastEquipped();
      iType= GetBaseItemType(oItem);
 
      if ( GetLocalInt(oItem,"USanctMar")) return ;
@@ -243,7 +243,7 @@ void Vile()
    {
      //if (GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
 
-     oItem=GetPCItemLastUnequipped();
+     oItem=GetItemLastUnequipped();
      iType= GetBaseItemType(oItem);
 
      switch (iType)
@@ -332,7 +332,7 @@ void Pwatk(object oPC)
 {
    if (GetLocalInt(oPC,"ONEQUIP")!= 2 ) return;
    
-   object oItem = GetPCItemLastEquipped();
+   object oItem = GetItemLastEquipped();
    
    // don't run this if the equipped item is not a weapon
    if (GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) != oItem) return;

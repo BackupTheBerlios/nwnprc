@@ -11,6 +11,7 @@
 
 #include "inc_item_props"
 #include "prc_feat_const"
+#include "inc_prc_npc"
 
 void RemoveSacredFlame(object oPC, object oWeap);
 
@@ -48,7 +49,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    object oUnequip = GetPCItemLastUnequipped();
+    object oUnequip = GetItemLastUnequipped();
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
 
     ZealousHeart(oPC, oSkin);

@@ -27,8 +27,8 @@ void PrcFeats(object oPC)
 //  Aaon Graywolf - Jan 6, 2004
 void main()
 {
-     object oItem = GetPCItemLastUnequipped();
-     object oPC   = GetPCItemLastUnequippedBy();
+     object oItem = GetItemLastUnequipped();
+     object oPC   = GetItemLastUnequippedBy();
     
      DelayCommand(0.2,PrcFeats(oPC));
 }

@@ -14,7 +14,7 @@ void main()
     SetCompositeAttackBonus(oPC, "WeoponMasteryShur", 0);
 
     if (iEquip ==1)
-      oWeap = GetPCItemLastUnequipped();
+      oWeap = GetItemLastUnequipped();
     else
       oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
 

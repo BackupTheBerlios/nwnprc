@@ -43,7 +43,7 @@ void main()
 
     if (iEquip ==1)
     {
-       OnUnEquip(oPC,oSkin,iAtk,GetPCItemLastUnequipped());
+       OnUnEquip(oPC,oSkin,iAtk,GetItemLastUnequipped());
     }
     else
     {

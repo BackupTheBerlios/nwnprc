@@ -2,6 +2,7 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "nw_i0_spells"
+#include "inc_prc_npc"
 
 int GetIPASF(int asf)
 {
@@ -212,7 +213,7 @@ void OnEquip(object oPC,object oSkin)
 
 void  OnUnEquip(object oPC,object oSkin)
 {
-  object oItem=GetPCItemLastUnequipped();
+  object oItem=GetItemLastUnequipped();
 
   object oArmor=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
   object oWeapL=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);

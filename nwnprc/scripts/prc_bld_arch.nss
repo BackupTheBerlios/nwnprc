@@ -14,6 +14,7 @@
 #include "x2_inc_itemprop"
 #include "prc_feat_const"
 #include "prc_class_const"
+#include "inc_prc_npc"
 
 void main()
 {
@@ -37,8 +38,8 @@ void main()
     if (iEquip ==1)  iBloodBowBonus = 0;
 
     // Select last item equiped or unequiped.
-    if (iEquip ==1)  oItem = GetPCItemLastUnequipped();
-    //else             oItem = GetPCItemLastEquipped();
+    if (iEquip ==1)  oItem = GetItemLastUnequipped();
+    //else             oItem = GetItemLastEquipped();
 
 	// Apply proper modifications to item
 	int iItemType = GetBaseItemType(oItem);

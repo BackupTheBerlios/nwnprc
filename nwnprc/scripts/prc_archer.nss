@@ -23,7 +23,7 @@ void Equip(object oPC,int bBowSpec,object oSkin,int bXShot)
 
 void UnEquip(object oPC,int bBowSpec,object oSkin,int bXShot)
 {
-  object oWeap = GetPCItemLastUnequipped();
+  object oWeap = GetItemLastUnequipped();
   int iType = GetBaseItemType(oWeap);
 
   if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;

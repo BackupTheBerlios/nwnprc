@@ -147,7 +147,7 @@ void main()
           DuelistPreciseStrike(oPC, oWeapon);
     
     if(GetLocalInt(oPC,"ONEQUIP") == 1)
-       RemoveDuelistPreciseStrike(GetPCItemLastUnequipped());
+       RemoveDuelistPreciseStrike(GetItemLastUnequipped());
        
     if(GetBaseAC(oArmor) != 0 ||
        GetBaseItemType(oLefthand) == BASE_ITEM_SMALLSHIELD ||

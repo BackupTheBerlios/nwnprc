@@ -166,7 +166,7 @@ void main()
     {
          if (GetLocalInt(oPC, "ONEQUIP") == 1)
          {
-             object oItem = GetPCItemLastUnequipped();
+             object oItem = GetItemLastUnequipped();
              SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 0, IP_CONST_DAMAGETYPE_FIRE);
          }
          else
@@ -467,13 +467,13 @@ void main()
     //Sheild restriction
     if(   GetLocalInt(oPC,"ONEQUIP") == 2
        && GetHasFeat(FEAT_RESTRICT_SHIELD)
-       && (   GetBaseItemType(GetPCItemLastEquipped()) == BASE_ITEM_TOWERSHIELD
-           || GetBaseItemType(GetPCItemLastEquipped()) == BASE_ITEM_LARGESHIELD
-           || GetBaseItemType(GetPCItemLastEquipped()) == BASE_ITEM_SMALLSHIELD
+       && (   GetBaseItemType(GetItemLastEquipped()) == BASE_ITEM_TOWERSHIELD
+           || GetBaseItemType(GetItemLastEquipped()) == BASE_ITEM_LARGESHIELD
+           || GetBaseItemType(GetItemLastEquipped()) == BASE_ITEM_SMALLSHIELD
           )
       )
     {
-        ActionUnequipItem(GetPCItemLastEquipped());
+        ActionUnequipItem(GetItemLastEquipped());
         ActionDoCommand(SetCommandable(TRUE, oPC));
         SetCommandable(FALSE, oPC);
     }
@@ -481,10 +481,10 @@ void main()
     //boots restriction
     if(   GetLocalInt(oPC,"ONEQUIP") == 2
        && GetHasFeat(FEAT_RESTRICT_BOOTS)
-       && GetBaseItemType(GetPCItemLastEquipped()) == BASE_ITEM_BOOTS
+       && GetBaseItemType(GetItemLastEquipped()) == BASE_ITEM_BOOTS
       )
     {
-        ActionUnequipItem(GetPCItemLastEquipped());
+        ActionUnequipItem(GetItemLastEquipped());
         ActionDoCommand(SetCommandable(TRUE, oPC));
         SetCommandable(FALSE, oPC);
     }
@@ -492,10 +492,10 @@ void main()
     //armor restriction
     if(   GetLocalInt(oPC,"ONEQUIP") == 2
        && GetHasFeat(FEAT_RESTRICT_ARMOR)
-       && GetBaseItemType(GetPCItemLastEquipped()) == BASE_ITEM_ARMOR
+       && GetBaseItemType(GetItemLastEquipped()) == BASE_ITEM_ARMOR
       )
     {
-        ActionUnequipItem(GetPCItemLastEquipped());
+        ActionUnequipItem(GetItemLastEquipped());
         ActionDoCommand(SetCommandable(TRUE, oPC));
         SetCommandable(FALSE, oPC);
     }

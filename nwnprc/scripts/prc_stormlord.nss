@@ -34,7 +34,7 @@ void ShockWeap(object oPC,int iEquip)
   }
   else if (iEquip==1)     // Unequip
   {
-     oItem=GetPCItemLastUnequipped();
+     oItem=GetItemLastUnequipped();
      if (GetBaseItemType(oItem)!=BASE_ITEM_SHORTSPEAR) return;
      if ( GetLocalInt(oItem,"STShock"))
        RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_ELECTRICAL,IP_CONST_DAMAGEBONUS_1d6,1,"",-1,DURATION_TYPE_TEMPORARY);
@@ -74,7 +74,7 @@ void ShockingWeap(object oPC,int iEquip)
   }
   else if (iEquip==1)
   {
-      oItem=GetPCItemLastUnequipped();
+      oItem=GetItemLastUnequipped();
       if (GetBaseItemType(oItem)!=BASE_ITEM_SHORTSPEAR) return;
          RemoveSpecificProperty(oItem,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,0,1,"",-1,DURATION_TYPE_TEMPORARY);
       DeleteLocalInt(oItem,"STThund");

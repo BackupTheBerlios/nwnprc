@@ -28,8 +28,8 @@ void PrcFeats(object oPC)
 
 void main()
 {
-    object oItem = GetPCItemLastEquipped();
-    object oPC   = GetPCItemLastEquippedBy();
+    object oItem = GetItemLastEquipped();
+    object oPC   = GetItemLastEquippedBy();
   
 
     DelayCommand(0.3, PrcFeats(oPC));

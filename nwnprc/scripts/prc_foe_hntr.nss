@@ -120,7 +120,7 @@ void main()
         if(iEquip == 2)       // On Equip
         {
              // add bonus to armor
-             oItem = GetPCItemLastEquipped();
+             oItem = GetItemLastEquipped();
              
              if(oItem == oArmor)
              {
@@ -144,7 +144,7 @@ void main()
         }
         else if(iEquip == 1)  // Unequip
         {
-             oItem = GetPCItemLastUnequipped();
+             oItem = GetItemLastUnequipped();
              
              if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
              {

@@ -78,7 +78,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-    object oUnequip = GetPCItemLastUnequipped();
+    object oUnequip = GetItemLastUnequipped();
 
     //Determine which feats the character has
     int bCanDef = GetHasFeat(FEAT_CANNY_DEFENSE, oPC);

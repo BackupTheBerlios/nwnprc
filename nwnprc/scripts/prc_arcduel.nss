@@ -1,5 +1,6 @@
 #include "inc_combat"
 #include "inc_item_props"
+#include "inc_prc_npc"
 
 
 // * Applies the Arcane Duelist's AC bonus as a CompositeBonus on object's skin.
@@ -53,5 +54,5 @@ void main()
   	EnchantCW(oPC, oWeap);
   
   if (GetLocalInt(oPC,"ONEQUIP") == 1)
-        RemoveEnchantCW(oPC, GetPCItemLastUnequipped());
+        RemoveEnchantCW(oPC, GetItemLastUnequipped());
 }

@@ -1,13 +1,13 @@
 2DA V2.0
 
     Name                   LA   RaceClassName      RaceClass RaceHD 
-0   Dwarf                  **** ****               ****      ****   
-1   Elf                    **** ****               ****      ****   
-2   Gnome                  **** ****               ****      ****   
-3   Halfling               **** ****               ****      ****   
-4   HalfElf                **** ****               ****      ****   
-5   HalfOrc                **** ****               ****      ****   
-6   Human                  **** ****               ****      ****   
+0   Dwarf                  0    ****               ****      ****   
+1   Elf                    0    ****               ****      ****   
+2   Gnome                  0    ****               ****      ****   
+3   Halfling               0    ****               ****      ****   
+4   HalfElf                0    ****               ****      ****   
+5   HalfOrc                0    ****               ****      ****   
+6   Human                  0    ****               ****      ****   
 7   Aberration             **** ****               ****      ****   
 8   Animal                 **** ****               ****      ****   
 9   Beast                  **** ****               ****      ****   
@@ -152,12 +152,12 @@
 148 Vos                    **** ****               ****      ****   
 149 Warforged              **** ****               ****      ****   
 150 Wemic                  **** ****               ****      ****   
-151 Arctic_Dwarf           **** ****               ****      ****   
-152 Gold_Dwarf             **** ****               ****      ****   
+151 Arctic_Dwarf           0    ****               ****      ****   
+152 Gold_Dwarf             0    ****               ****      ****   
 153 Gray_Dwarf             1    ****               ****      ****   
 154 Glacier_Dwarf          **** ****               ****      ****   
 155 Urdunnir               **** ****               ****      ****   
-156 Wild_Dwarf             **** ****               ****      ****   
+156 Wild_Dwarf             0    ****               ****      ****   
 157 Dark_Sun_Dwarf         **** ****               ****      ****   
 158 Mul                    **** ****               ****      ****   
 159 Adult_Blue_Dragon      **** ****               ****      ****   
@@ -167,18 +167,18 @@
 163 Drow_Female            2    ****               ****      ****   
 164 Drow_Male              2    ****               ****      ****   
 165 Snow_Elf               **** ****               ****      ****   
-166 Sun_Elf                **** ****               ****      ****   
-167 Wild_Elf               **** ****               ****      ****   
-168 Wood_Elf               **** ****               ****      ****   
+166 Sun_Elf                0    ****               ****      ****   
+167 Wild_Elf               0    ****               ****      ****   
+168 Wood_Elf               0    ****               ****      ****   
 169 Jerren                 **** ****               ****      ****   
 170 Dark_Sun_Elf           **** ****               ****      ****   
 171 Wildren                **** ****               ****      ****   
 172 Xeph                   **** ****               ****      ****   
 173 Xixchil                **** ****               ****      ****   
 174 Deep_Gnome_Svirfneblin 3    ****               ****      ****   
-175 Forest_Gnome           **** ****               ****      ****   
-176 Rock_Gnome             **** ****               ****      ****   
-177 Tinker_Gnome           **** ****               ****      ****   
+175 Forest_Gnome           0    ****               ****      ****   
+176 Rock_Gnome             0    ****               ****      ****   
+177 Tinker_Gnome           0    ****               ****      ****   
 178 Korobokuru             **** ****               ****      ****   
 179 Whisper_Gnome          **** ****               ****      ****   
 180 Adult_Bronze_Dragon    **** ****               ****      ****   
@@ -214,9 +214,9 @@
 210 Shade                  **** ****               ****      ****   
 211 Ogre_Mage              **** ****               ****      ****   
 212 Ogre                   2    Giant              22        4      
-213 Goblin                 **** ****               ****      ****   
-214 Orc                    **** ****               ****      ****   
-215 Kobold                 **** ****               ****      ****   
+213 Goblin                 0    ****               ****      ****   
+214 Orc                    0    ****               ****      ****   
+215 Kobold                 0    ****               ****      ****   
 216 Gnoll                  1    Humanoid           14        2      
 217 Bugbear                1    Humanoid           14        3      
 218 Minotaur               2    Monstrous_Humanoid 15        6      

@@ -137,7 +137,7 @@ void main()
 
         // Remove any bonuses from items unequipped
         if (GetLocalInt(oPC,"ONEQUIP") == 1)
-            RemoveIronPower(oPC, GetPCItemLastUnequipped());
+            RemoveIronPower(oPC, GetItemLastUnequipped());
 
         // Add device lore bonus
         if(bDivLor > 0) Device_Lore(oPC,oSkin,bDivLor);

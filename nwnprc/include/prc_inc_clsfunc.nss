@@ -15,6 +15,7 @@
 #include "nw_i0_spells"
 #include "pnp_shft_poly"
 #include "x2_inc_spellhook"
+#include "inc_prc_npc"
 
 ////////////////Begin Generic////////////////
 
@@ -1111,7 +1112,7 @@ void MartialStrike()
    	
      if (!GetHasFeat(FEAT_HOLY_MARTIAL_STRIKE)) return;
      
-     oItem=GetPCItemLastEquipped();
+     oItem=GetItemLastEquipped();
      iType= GetBaseItemType(oItem);
 
      switch (iType)
@@ -1140,7 +1141,7 @@ void MartialStrike()
   }
    else if (iEquip==1)
    {
-     oItem=GetPCItemLastUnequipped();
+     oItem=GetItemLastUnequipped();
      iType= GetBaseItemType(oItem);
 
      switch (iType)
@@ -1232,7 +1233,7 @@ void UnholyStrike()
    	
      if (!GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
      
-     oItem=GetPCItemLastEquipped();
+     oItem=GetItemLastEquipped();
      iType= GetBaseItemType(oItem);
 
      switch (iType)
@@ -1262,7 +1263,7 @@ void UnholyStrike()
   }
    else if (iEquip==1)
    {
-     oItem=GetPCItemLastUnequipped();
+     oItem=GetItemLastUnequipped();
      iType= GetBaseItemType(oItem);
 
      switch (iType)

@@ -60,10 +60,6 @@
 56    FEAT_EPIC_GREAT_WISDOM_8              811         1      -1               0        
 57    FEAT_EPIC_GREAT_WISDOM_9              812         1      -1               0        
 58    FEAT_EPIC_GREAT_WISDOM_10             813         1      -1               0        
-59    FEAT_EPIC_SPELL_MUMMY_DUST            874         0      11               2        
-60    FEAT_EPIC_SPELL_DRAGON_KNIGHT         875         0      11               2        
-61    FEAT_EPIC_SPELL_HELLBALL              876         0      11               2        
-62    FEAT_EPIC_SPELL_RUIN                  878         0      11               2        
 63    FEAT_EPIC_BLINDING_SPEED              491         0      -1               1        
 64    FEAT_CHPERRAY                         3403        3      1                1        
 65    FEAT_SLEEPRAY                         3404        3      2                1        

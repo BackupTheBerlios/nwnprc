@@ -89,13 +89,6 @@
 85    FEAT_EPIC_AUTOMATIC_STILL_SPELL_1           863         1      -1               0        
 86    FEAT_EPIC_AUTOMATIC_STILL_SPELL_2           864         1      -1               0        
 87    FEAT_EPIC_AUTOMATIC_STILL_SPELL_3           865         1      -1               0        
-88    FEAT_EPIC_SPELL_MUMMY_DUST                  874         1      21               2        
-89    FEAT_EPIC_SPELL_DRAGON_KNIGHT               875         1      21               2        
-90    FEAT_EPIC_SPELL_HELLBALL                    876         1      21               2        
-91    FEAT_EPIC_SPELL_MAGE_ARMOUR                 877         1      21               2        
-92    FEAT_EPIC_SPELL_RUIN                        878         1      21               2        
-93    FEAT_EPIC_SPELL_EPIC_WARD                   990         1      21               2        
-94    FEAT_EPIC_SORCERER                          975         3      21               0        
 95    FEAT_EPIC_BLINDING_SPEED                    491         0      -1               1        
 96    FEAT_DISCIPLE_OF_DARKNESS                   4012        0      -1               1        
 97    FEAT_CRAFT_WONDROUS_ITEM                    2925        0      3                1        

@@ -249,12 +249,6 @@
 245  FEAT_SERVHEAVEN                     3355      0         -1   1
 246  Quicken                             29        0    -1             0      
 247  FEAT_EPIC_AUTOMATIC_QUICKEN_1       857       0    -1             0 
-248  FEAT_EPIC_SPELL_MUMMY_DUST          874       1    11             2      
-249  FEAT_EPIC_SPELL_DRAGON_KNIGHT       875       1    11             2      
-250  FEAT_EPIC_SPELL_HELLBALL            876       1    11             2      
-251  FEAT_EPIC_SPELL_MAGE_ARMOUR         877       1    11             2      
-252  FEAT_EPIC_SPELL_RUIN                878       1    11             2      
-253  FEAT_EPIC_SPELL_EPIC_WARD           990       1    11             2
 254 EPIC_SPELL_ACHILLES_HEEL            5030      0    99             2      
 255 EPIC_SPELL_ALL_HOPE_LOST            5032      0    99             2      
 256 EPIC_SPELL_ALLIED_MARTYR            5034      0    99             2      

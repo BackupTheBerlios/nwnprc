@@ -92,11 +92,6 @@
 87   FEAT_SHOCKING_WEAPON                            3246      3      8            0
 88   FEAT_ELECTRIC_RES_30                            3243      3      9            0
 89   FEAT_ELEM_CONFLA                                3247      3      10           1
-90   FEAT_EPIC_SPELL_MUMMY_DUST                      874       0      11           2
-91   FEAT_EPIC_SPELL_DRAGON_KNIGHT                   875       0      11           2
-92   FEAT_EPIC_SPELL_HELLBALL                        876       0      11           2
-93   FEAT_EPIC_SPELL_RUIN                            878       0      11           2
-
 
 
 

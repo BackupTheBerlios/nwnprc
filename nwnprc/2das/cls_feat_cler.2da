@@ -67,10 +67,6 @@
 63    FEAT_EPIC_GREAT_WISDOM_8              811         1      -1               0        
 64    FEAT_EPIC_GREAT_WISDOM_9              812         1      -1               0        
 65    FEAT_EPIC_GREAT_WISDOM_10             813         1      -1               0        
-66    FEAT_EPIC_SPELL_MUMMY_DUST            874         0      21               2        
-67    FEAT_EPIC_SPELL_DRAGON_KNIGHT         875         0      21               2        
-68    FEAT_EPIC_SPELL_HELLBALL              876         0      21               2        
-69    FEAT_EPIC_SPELL_RUIN                  878         0      21               2        
 70    FEAT_EPIC_BLINDING_SPEED              491         0      -1               1        
 71    EnableHierophant                      2824        3      11               0        
 72    FEAT_CRAFT_WONDROUS_ITEM              2925        0      3                1        

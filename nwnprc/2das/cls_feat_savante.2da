@@ -33,12 +33,6 @@
 29    FEAT_EPIC_AUTOMATIC_STILL_SPELL_1     863         1      -1               0        
 30    FEAT_EPIC_AUTOMATIC_STILL_SPELL_2     864         1      -1               0        
 31    FEAT_EPIC_AUTOMATIC_STILL_SPELL_3     865         1      -1               0        
-32    FEAT_EPIC_SPELL_MUMMY_DUST            874         1      21               2        
-33    FEAT_EPIC_SPELL_DRAGON_KNIGHT         875         1      21               2        
-34    FEAT_EPIC_SPELL_HELLBALL              876         1      21               2        
-35    FEAT_EPIC_SPELL_MAGE_ARMOUR           877         1      21               2        
-36    FEAT_EPIC_SPELL_RUIN                  878         1      21               2        
-37    FEAT_EPIC_SPELL_EPIC_WARD             990         1      21               2        
 38    FEAT_EPIC_GREAT_INTELLIGENCE_1        794         1      -1               0        
 39    FEAT_EPIC_GREAT_INTELLIGENCE_2        795         1      -1               0        
 40    FEAT_EPIC_GREAT_INTELLIGENCE_3        796         1      -1               0        

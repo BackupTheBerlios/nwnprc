@@ -338,12 +338,6 @@
 334 FEAT_BREW_POTION                               944       1    3              0      
 335 FEAT_NIMBUSOFLIGHT                             3165      0    -1             1      
 336 FEAT_SERVHEAVEN                                3355      0    -1             1      
-337 FEAT_EPIC_SPELL_MUMMY_DUST                     874       1    11             2      
-338 FEAT_EPIC_SPELL_DRAGON_KNIGHT                  875       1    11             2      
-339 FEAT_EPIC_SPELL_HELLBALL                       876       1    11             2      
-340 FEAT_EPIC_SPELL_MAGE_ARMOUR                    877       1    11             2      
-341 FEAT_EPIC_SPELL_RUIN                           878       1    11             2      
-342 FEAT_EPIC_SPELL_EPIC_WARD                      990       1    11             2      
 343 Quicken                                        29        0    -1             0      
 344 ImpKnock                                       17        1    -1             0      
 345 WhirlwindAttack                                867       1    -1             0      

@@ -76,12 +76,6 @@
 72    FEAT_EPIC_ENERGY_RESISTANCE_SONIC_8              580         1      -1               0        
 73    FEAT_EPIC_ENERGY_RESISTANCE_SONIC_9              581         1      -1               0        
 74    FEAT_EPIC_ENERGY_RESISTANCE_SONIC_10             582         1      -1               0        
-75    FEAT_EPIC_SPELL_DRAGON_KNIGHT                    875         1      15               2        
-76    FEAT_EPIC_SPELL_HELLBALL                         876         1      15               2        
-77    FEAT_EPIC_SPELL_MAGE_ARMOUR                      877         1      15               2        
-78    FEAT_EPIC_SPELL_RUIN                             878         1      15               2        
-79    FEAT_EPIC_SPELL_EPIC_WARD                        990         1      15               2        
-80    FEAT_EPIC_SPELL_MUMMY_DUST                       874         1      15               2        
 81    FEAT_EPIC_BLINDING_SPEED                         491         0      -1               1        
 82    WeapSpeClub                                      47          1      -1               0        
 83    WeapSpeDagger                                    128         1      -1               0        

@@ -256,12 +256,6 @@
 252   FEAT_EPIC_AUTOMATIC_STILL_SPELL_1                863         1      -1               0        
 253   FEAT_EPIC_AUTOMATIC_STILL_SPELL_2                864         1      -1               0        
 254   FEAT_EPIC_AUTOMATIC_STILL_SPELL_3                865         1      -1               0        
-255   FEAT_EPIC_SPELL_MUMMY_DUST                       874         1      11               2        
-256   FEAT_EPIC_SPELL_DRAGON_KNIGHT                    875         1      11               2        
-257   FEAT_EPIC_SPELL_HELLBALL                         876         1      11               2        
-258   FEAT_EPIC_SPELL_MAGE_ARMOUR                      877         1      11               2        
-259   FEAT_EPIC_SPELL_RUIN                             878         1      11               2        
-260   FEAT_EPIC_SPELL_EPIC_WARD                        990         1      11               2        
 261   Epic_Eldritch_Knight                             4013        1      11               0        
 262   WeapProfSim                                      46          1      -1               0        
 263 FEAT_WANDER_UNSEEN                  5028      0    99             1      

@@ -215,7 +215,7 @@ void Pwatk(object oPC)
       {
      	 RemoveSpellEffects(iSpell,OBJECT_SELF,OBJECT_SELF);
 
-         string nMes = "*Power Attack Mode Desactivated*";
+         string nMes = "*Power Attack Mode Deactivated*";
          FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
       }	
    	

@@ -4,12 +4,21 @@
 #include "soul_inc"
 #include "inc_epicspells"
 
+void PrcFeats(object oPC)
+{
+     SetLocalInt(oPC,"ONREST",1);
+     EvalPRCFeats(oPC);
+     DeleteLocalInt(oPC,"ONREST");
+     FeatSpecialUsePerDay(oPC);
+}
+
 void main()
 {
     object oPC=GetLastPCRested();
 
    switch(GetLastRestEventType()){
       case REST_EVENTTYPE_REST_CANCELLED:{
+         DelayCommand(1.0,PrcFeats(oPC));
          break;
       }
       case REST_EVENTTYPE_REST_STARTED:{
@@ -41,7 +50,7 @@ void main()
          }
          
          
-          DelayCommand(1.0,FeatSpecialUsePerDay(oPC));
+          DelayCommand(1.0,PrcFeats(oPC));
 
          break;
       }

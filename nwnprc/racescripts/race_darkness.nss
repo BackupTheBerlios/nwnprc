@@ -12,6 +12,7 @@ void main()
     else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_ABOM_YUAN) { CasterLvl = 3; }
     else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_DROW_MALE) { CasterLvl = 3; }
     else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_DROW_FEMALE) { CasterLvl = 3; }
+    else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_OMAGE) { CasterLvl = 9; }
     
     if (CasterLvl < 1)
     {

@@ -1,0 +1,624 @@
+//Pasive Feats
+const int FEAT_EB_HAND = 3390;
+const int FEAT_EB_HEAD = 3391;
+const int FEAT_EB_CHEST = 3392;
+const int FEAT_EB_ARM = 3393;
+const int FEAT_EB_NECK = 3394;
+const int FEAT_INTUITIVE_ATTACK = 3166;
+const int FEAT_RAVAGEGOLDENICE = 3162;
+
+//Exalted Feat
+const int FEAT_SAC_VOW = 3388;
+const int FEAT_VOW_OBED = 3389;
+const int FEAT_EXALTED_TURNING = 3168;
+const int FEAT_HAND_HEALER = 3167;
+const int FEAT_NIMBUSLIGHT = 3165;
+const int FEAT_HOLYRADIANCE = 3164;
+const int FEAT_STIGMATA = 3163;
+const int FEAT_SERVHEAVEN = 3355;
+
+//Vile Feat
+const int FEAT_LICHLOVED = 3395;
+
+//archmage
+const int FEAT_MASTERY_SHAPES = 3006;
+const int FEAT_SPELL_POWER_I = 3007;
+const int FEAT_SPELL_POWER_II = 3008;
+const int FEAT_SPELL_POWER_III = 3009;
+const int FEAT_SPELL_POWER_IV = 3010;
+const int FEAT_SPELL_POWER_V = 3011;
+const int FEAT_ARCANE_FIRE = 3012;
+const int FEAT_SPELL_LIKE = 3013;
+
+//oozemaster
+const int FEAT_MIN_OOZY_TOUCH_BROWN = 3020;
+const int FEAT_MIN_OOZY_TOUCH_GRAY = 3021;
+const int FEAT_MIN_OOZY_TOUCH_OCHRE = 3022;
+const int FEAT_MIN_OOZY_TOUCH_FUNGUS = 3023;
+const int FEAT_INDISCERNIBLE_ANATOMY = 3033;
+const int FEAT_CHARISMA_PENALITY = 3034;
+const int FEAT_ONE_WITH_THE_OOZE = 3035;
+
+//disciple mephisto
+const int FEAT_HELLFIRE_GRASP = 4000;
+const int FEAT_FIRE_ADEPT = 4001;
+const int FEAT_FIRE_RESISTANCE_10 = 4002;
+const int FEAT_FIRE_RESISTANCE_20 = 4007;
+const int FEAT_IMP_SUMMON_HAMATULA = 4011;
+
+//Mage Killer
+const int FEAT_AUGMENT_SUMMON = 2510;
+const int MK_REF_1 = 2500;
+const int MK_REF_2 = 2501;
+const int MK_REF_3 = 2502;
+const int MK_REF_4 = 2503;
+const int MK_REF_5 = 2504;
+const int MK_FORT_1 = 2505;
+const int MK_FORT_2 = 2506;
+const int MK_FORT_3 = 2507;
+const int MK_FORT_4 = 2508;
+const int MK_FORT_5 = 2509;
+
+//Spellsword
+const int FEAT_SPELLS_1 = 2512;
+const int FEAT_SPELLS_2 = 2513;
+const int FEAT_SPELLS_3 = 2514;
+const int FEAT_SPELLS_4 = 2515;
+const int FEAT_SPELLS_5 = 2516;
+const int FEAT_SPELLS_6 = 2534; //here and below: epic
+const int FEAT_SPELLS_7 = 2535;
+const int FEAT_SPELLS_8 = 2536;
+const int FEAT_SPELLS_9 = 2537;
+const int FEAT_SPELLS_10 = 2538;
+const int FEAT_SPELLS_11 = 2539;
+const int FEAT_SPELLS_12 = 2540;
+const int FEAT_SPELLS_13 = 2541;
+const int FEAT_SPELLS_14 = 2542;
+const int FEAT_SPELLS_15 = 2543;
+
+//Acolyte of the Skin
+const int FEAT_WEAR_FIEND = 2517;
+const int FEAT_FLAME_RESISTANT = 2518;
+const int FEAT_FIENDISH_GLARE = 2519;
+const int FEAT_SKIN_ADAPTION = 2521;
+const int FEAT_COLD_RESISTANT = 2522;
+const int FEAT_PIT_GLARE = 2523;
+const int FEAT_SUMMON_FIEND = 2525;
+const int FEAT_SYMBIOSIS = 2526;
+const int FEAT_EPIC_SYMBIOSIS_1 = 2544; //here and below: epic
+const int FEAT_EPIC_SYMBIOSIS_2 = 2545;
+const int FEAT_EPIC_SYMBIOSIS_3 = 2546;
+const int FEAT_EPIC_SYMBIOSIS_4 = 2547;
+const int FEAT_EPIC_CON_1 = 2527;
+const int FEAT_EPIC_CON_2 = 2528;
+const int FEAT_EPIC_CON_3 = 2529;
+const int FEAT_EPIC_INT_1 = 2532;
+const int FEAT_EPIC_INT_2 = 2533;
+const int FEAT_ACID_RESISTANT = 2530;
+const int FEAT_ELEC_RESISTANT = 2531;
+
+//Elemental Savant
+const int FEAT_ES_TRANS_1 = 2550;
+const int FEAT_ES_TRANS_2 = 2551;
+const int FEAT_ES_TRANS_3 = 2552;
+const int FEAT_ES_RESIST_1 = 2553;
+const int FEAT_ES_RESIST_2 = 2554;
+const int FEAT_ES_RESIST_3 = 2555;
+const int FEAT_ES_FOCUS_1 = 2556;
+const int FEAT_ES_FOCUS_2 = 2557;
+const int FEAT_ES_FOCUS_3 = 2558;
+const int FEAT_ES_PEN_1 = 2559;
+const int FEAT_ES_PEN_2 = 2560;
+const int FEAT_ES_PEN_3 = 2561;
+const int FEAT_ES_PERFECTION = 2562;
+const int FEAT_ES_FIRE = 2563;
+const int FEAT_ES_COLD = 2564;
+const int FEAT_ES_ELEC = 2565;
+const int FEAT_ES_ACID = 2566;
+
+//Duelist
+const int FEAT_CANNY_DEFENSE        = 2800;
+const int FEAT_PRECISE_STRIKE_1d6   = 2801;
+const int FEAT_PRECISE_STRIKE_2d6   = 2802;
+const int FEAT_GRACE_2              = 2803;
+const int FEAT_GRACE_4              = 2804;
+const int FEAT_GRACE_6              = 2805;
+const int FEAT_GRACE_8              = 2806;
+const int FEAT_GRACE_10             = 2807;
+const int FEAT_ACROBATIC_ATTACK_2   = 2808;
+const int FEAT_ACROBATIC_ATTACK_4   = 2809;
+const int FEAT_ACROBATIC_ATTACK_6   = 2810;
+const int FEAT_ACROBATIC_ATTACK_8   = 2811;
+const int FEAT_ELABORATE_PARRY      = 2812;
+const int FEAT_EPIC_DUELIST         = 2813;
+
+//Hierophant
+const int FEAT_BLAST_INFIDEL        = 2814;
+const int FEAT_FAITH_HEALING        = 2815;
+const int FEAT_MASTER_OF_ENERGY     = 2816;
+const int FEAT_SPELLPOWER_2         = 2817;
+const int FEAT_SPELLPOWER_4         = 2818;
+const int FEAT_SPELLPOWER_6         = 2819;
+const int FEAT_SPELLPOWER_8         = 2820;
+const int FEAT_SPELLPOWER_10        = 2821;
+
+//Red Avenger
+const int FEAT_FREE_KI_2            = 2750;
+const int FEAT_FREE_KI_3            = 2751;
+const int FEAT_FREE_KI_4            = 2752;
+
+// Shifter
+const int FEAT_PRESTIGE_SHIFTER_NATURALSPELL = 2920;
+
+//heartwarder
+const int FEAT_SANCTIFY_MARTIAL_CLUB        = 3194;
+const int FEAT_SANCTIFY_MARTIAL_DAGGER      = 3195;
+const int FEAT_SANCTIFY_MARTIAL_MACE        = 3196;
+const int FEAT_SANCTIFY_MARTIAL_MORNINGSTAR = 3197;
+const int FEAT_SANCTIFY_MARTIAL_QUATERSTAFF = 3198;
+const int FEAT_SANCTIFY_MARTIAL_SPEAR       = 3199;
+const int FEAT_SANCTIFY_MARTIAL_SHORTSWORD  = 3200;
+const int FEAT_SANCTIFY_MARTIAL_RAPIER      = 3201;
+const int FEAT_SANCTIFY_MARTIAL_SCIMITAR    = 3202;
+const int FEAT_SANCTIFY_MARTIAL_LONGSWORD   = 3203;
+const int FEAT_SANCTIFY_MARTIAL_GREATSWORD  = 3204;
+const int FEAT_SANCTIFY_MARTIAL_HANDAXE     = 3205;
+const int FEAT_SANCTIFY_MARTIAL_BATTLEAXE   = 3206;
+const int FEAT_SANCTIFY_MARTIAL_GREATAXE    = 3207;
+const int FEAT_SANCTIFY_MARTIAL_HALBERD     = 3208;
+const int FEAT_SANCTIFY_MARTIAL_LIGHTHAMMER = 3209;
+const int FEAT_SANCTIFY_MARTIAL_LIGHTFLAIL  = 3210;
+const int FEAT_SANCTIFY_MARTIAL_WARHAMMER    = 3211;
+const int FEAT_SANCTIFY_MARTIAL_HEAVYFLAIL  = 3212;
+const int FEAT_SANCTIFY_MARTIAL_SCYTHE      = 3213;
+const int FEAT_SANCTIFY_MARTIAL_KATANA      = 3214;
+const int FEAT_SANCTIFY_MARTIAL_BASTARDSWORD = 3215;
+const int FEAT_SANCTIFY_MARTIAL_DIREMACE    = 3216;
+const int FEAT_SANCTIFY_MARTIAL_DOUBLEAXE   = 3217;
+const int FEAT_SANCTIFY_MARTIAL_TWOBLADED   = 3218;
+const int FEAT_SANCTIFY_MARTIAL_KAMA        = 3219;
+const int FEAT_SANCTIFY_MARTIAL_KUKRI       = 3220;
+const int FEAT_SANCTIFY_MARTIAL_HEAVYCROSSBOW = 3221;
+const int FEAT_SANCTIFY_MARTIAL_LIGHTCROSSBOW = 3222;
+const int FEAT_SANCTIFY_MARTIAL_SLING       = 3223;
+const int FEAT_SANCTIFY_MARTIAL_LONGBOW     = 3224;
+const int FEAT_SANCTIFY_MARTIAL_SHORTBOW    = 3225;
+const int FEAT_SANCTIFY_MARTIAL_SHURIKEN    = 3226;
+const int FEAT_SANCTIFY_MARTIAL_DART        = 3227;
+const int FEAT_SANCTIFY_MARTIAL_DWAXE       = 3170;
+const int FEAT_SANCTIFY_MARTIAL_SICKLE      = 3169;
+
+//heartwarder
+const int FEAT_CHARISMA_INC1     = 3230;
+const int FEAT_CHARISMA_INC2     = 3231;
+const int FEAT_CHARISMA_INC3     = 3232;
+const int FEAT_CHARISMA_INC4     = 3233;
+const int FEAT_CHARISMA_INC5     = 3234;
+const int FEAT_HEART_PASSION     = 3235;
+const int FEAT_LIPS_RAPTUR       = 3236;
+const int FEAT_VOICE_SIREN       = 3237;
+const int FEAT_TEARS_EVERGOLD    = 3238;
+const int FEAT_FEY_METAMORPH     = 3239;
+const int FEAT_ELECTRIC_RES_10   = 3240;
+const int FEAT_ELECTRIC_RES_15   = 3241;
+const int FEAT_ELECTRIC_RES_20   = 3242;
+const int FEAT_ELECTRIC_RES_30   = 3243;
+const int FEAT_SHOCK_WEAPON      = 3244;
+const int FEAT_THUNDER_WEAPON    = 3245;
+const int FEAT_SHOCKING_WEAPON   = 3246;
+const int FEAT_ELEMENTAL_CONFLAG = 3247;
+
+// Fist of Raziel
+const int FEAT_SMITE_GOOD_ALIGN  = 3248;
+const int FEAT_SMITE_CONFIRMING  = 3249;
+const int FEAT_SMITE_HOLY        = 3250;
+const int FEAT_SMITE_FIEND       = 3251;
+const int FEAT_SMITE_CHAIN       = 3252;
+const int FEAT_HOLY_MARTIAL_STRIKE = 3228;
+const int FEAT_MAGIC_CIRCLE_EVIL = 3229;
+
+const int FEAT_HEALER_10    =   4500;
+
+//Master of Shrouds
+const int FEAT_MOS_UNDEAD_1         = 3501;
+const int FEAT_MOS_UNDEAD_2         = 3502;
+const int FEAT_MOS_UNDEAD_3         = 3503;
+const int FEAT_MOS_UNDEAD_4         = 3504;
+
+//Knight of the Chalice
+const int DEMONSLAYING_1            = 2754;
+const int DEMONSLAYING_2            = 2755;
+const int DEMONSLAYING_3            = 2756;
+const int DEMONSLAYING_4            = 2757;
+
+//Peerless Archer Feats
+const int FEAT_PA_FLETCH_1         = 4284;
+const int FEAT_PA_FLETCH_2         = 4285;
+const int FEAT_PA_FLETCH_3         = 4286;
+const int FEAT_PA_FLETCH_4         = 4287;
+const int FEAT_PA_FLETCH_5         = 4288;
+const int FEAT_PA_SNEAK_1D6        = 4289;
+const int FEAT_PA_SNEAK_2D6        = 4290;
+const int FEAT_PA_SNEAK_3D6        = 4291;
+const int FEAT_PA_SNEAK_4D6        = 4292;
+const int FEAT_PA_POWERSHOT        = 4293;
+const int FEAT_PA_IMP_POWERSHOT    = 4294;
+const int FEAT_PA_SUP_POWERSHOT    = 4295;
+const int FEAT_EXPERT_BOWYER       = 4296;
+
+//Fist of Hextor Feats
+const int FEAT_BSTRIKE_A1        = 4246;
+const int FEAT_BSTRIKE_A2        = 4247;
+const int FEAT_BSTRIKE_A3        = 4248;
+const int FEAT_BSTRIKE_A4        = 4249;
+const int FEAT_BSTRIKE_D1        = 4242;
+const int FEAT_BSTRIKE_D2        = 4243;
+const int FEAT_BSTRIKE_D3        = 4244;
+const int FEAT_BSTRIKE_D4        = 4245;
+
+//Thrall of Orcus
+const int FEAT_TO_CARRION        = 4404;
+const int FEAT_TO_FEAR           = 4405;
+const int FEAT_VILE_DEFORM_OBESE = 4406;
+const int FEAT_VILE_DEFORM_GAUNT = 4407;
+const int FEAT_VILE_WILL_DEFORM  = 4408;
+const int FEAT_TO_MNR_UNDEAD     = 4409;
+const int FEAT_TO_PALLOR         = 4410;
+const int FEAT_TO_DEATHTOUCH     = 4411;
+const int FEAT_TO_MJR_UNDEAD     = 4412;
+const int FEAT_TO_NIGHTWING      = 4413;
+
+//True Necromancer
+const int AOE_MOB_DES_20       = 111;
+const int AOE_MOB_DES_100      = 112;
+
+// Shadowlord
+const int SHADOWLORD_BLINDNESS    = 2225;
+const int SHADOWLORD_DARKNESS     = 2226;
+const int SHADOWLORD_INVISIBILITY = 2227;
+const int SHADOWLORD_HASTE        = 2229;
+const int SHADOWLORD_IMPROVINVIS  = 2230;
+const int SHADOWLORD_VAMPITOUCH   = 2231;
+const int SHADOWLORD_CONFUSION    = 2233;
+const int SHADOWLORD_INVISPHERE   = 2234;
+
+
+
+// Frenzied Berserker Feats
+const int FEAT_FRENZY = 4300;
+const int FEAT_REMOVE_FRENZY = 4309;
+const int FEAT_GREATER_FRENZY = 4305;
+const int FEAT_INSPIRE_FRENZY = 4306;
+const int FEAT_REMAIN_CONSCIOUS = 4313;
+const int FEAT_DEATHLESS_FRENZY = 4314;
+const int FEAT_REMOVE_S_POWER_ATTACK = 4310;
+const int FEAT_SUPREME_POWER_ATTACK = 4311;
+const int FEAT_INTIMIDATING_RAGE = 4312;
+
+// Tempest Feats
+const int FEAT_GREATER_TWO_WEAPON_FIGHTING = 4315;
+const int FEAT_SUPREME_TWO_WEAPON_FIGHTING = 4316;
+const int FEAT_TWO_WEAPON_DEFENSE = 4317;
+const int FEAT_ABSOLUTE_AMBIDEX = 4321;
+
+// Foe Hunter Feats
+const int FEAT_RANCOR = 4322;
+const int FEAT_HATED_ENEMY_DR = 4323;
+const int FEAT_HATED_ENEMY_SR = 4324;
+const int FEAT_FH_DEATH_ATTACK = 4325;
+
+const int FEAT_HATED_ENEMY_DWARF = 4326;
+const int FEAT_HATED_ENEMY_ELF = 4327;
+const int FEAT_HATED_ENEMY_GNOME = 4328;
+const int FEAT_HATED_ENEMY_HALFLING = 4329;
+const int FEAT_HATED_ENEMY_HALFELF = 4330;
+const int FEAT_HATED_ENEMY_HALFORC = 4331;
+const int FEAT_HATED_ENEMY_HUMAN = 4332;
+const int FEAT_HATED_ENEMY_ABERRATION = 4333;
+const int FEAT_HATED_ENEMY_ANIMAL = 4334;
+const int FEAT_HATED_ENEMY_BEAST = 4335;
+const int FEAT_HATED_ENEMY_CONSTRUCT = 4336;
+const int FEAT_HATED_ENEMY_DRAGON = 4337;
+const int FEAT_HATED_ENEMY_GOBLINOID = 4338;
+const int FEAT_HATED_ENEMY_MONSTROUS = 4339;
+const int FEAT_HATED_ENEMY_ORC = 4340;
+const int FEAT_HATED_ENEMY_REPTILIAN = 4341;
+const int FEAT_HATED_ENEMY_ELEMENTAL = 4342;
+const int FEAT_HATED_ENEMY_FEY = 4343;
+const int FEAT_HATED_ENEMY_GIANT = 4344;
+const int FEAT_HATED_ENEMY_MAGICAL_BEAST = 4345;
+const int FEAT_HATED_ENEMY_OUTSIDER = 4346;
+const int FEAT_HATED_ENEMY_SHAPECHANGER = 4347;
+const int FEAT_HATED_ENEMY_UNDEAD = 4348;
+const int FEAT_HATED_ENEMY_VERMIN = 4349;
+
+// Shadowlord
+const int FEAT_SHADOWBLUR                = 3304;
+const int FEAT_SHADOWDISCOPOR            = 3305;
+const int FEAT_DEATHATTACK               = 3306;
+const int FEAT_SHADOWJUMP                = 3307;
+const int FEAT_SHADOWJUMP2               = 3308;
+const int FEAT_SHADOWJUMP3               = 3309;
+const int FEAT_SHADOWPOUNCE              = 3310;
+const int FEAT_SHADOWPOUNCE2             = 3311;
+const int FEAT_SHADOWPOUNCE3             = 3312;
+
+// Battleguard Tempus
+const int TEMPUS_ENCHANT_WEAPON  = 2220;
+
+// Bonded Summoner
+const int FEAT_RESISTANCE_ELE5          = 3322;
+const int FEAT_RESISTANCE_ELE10         = 3323;
+const int FEAT_RESISTANCE_ELE15         = 3324;
+const int FEAT_RESISTANCE_ELE20         = 3325;
+const int FEAT_IMMUNITY_SNEAKATK        = 3326;
+const int FEAT_IMMUNITY_ELEMENT         = 3327;
+const int FEAT_IMMUNITY_CRITIK          = 3328;
+const int FEAT_BONDED_AIR               = 3329;
+const int FEAT_BONDED_EARTH             = 3330;
+const int FEAT_BONDED_FIRE              = 3331;
+const int FEAT_BONDED_WATER             = 3332;
+const int FEAT_ELE_COMPANION_MED        = 3333;
+const int FEAT_ELE_COMPANION_LAR        = 3334;
+const int FEAT_ELE_COMPANION_HUG        = 3335;
+const int FEAT_ELE_COMPANION_GRE        = 3336;
+const int FEAT_ELE_COMPANION_ELD        = 3337;
+const int FEAT_TYPE_ELEMENTAL           = 3338;
+const int FEAT_SHARE_SPELL              = 3339;
+
+//Sneak Attacks
+const int IP_CONST_FEAT_ROGUE_SA_1D6    = 32;
+const int IP_CONST_FEAT_ROGUE_SA_2D6    = 33;
+const int IP_CONST_FEAT_ROGUE_SA_3D6    = 34;
+const int IP_CONST_FEAT_ROGUE_SA_4D6    = 301;
+const int IP_CONST_FEAT_ROGUE_SA_5D6    = 39;
+const int IP_CONST_FEAT_ROGUE_SA_6D6    = 302;
+const int IP_CONST_FEAT_ROGUE_SA_7D6    = 303;
+const int IP_CONST_FEAT_ROGUE_SA_8D6    = 304;
+const int IP_CONST_FEAT_ROGUE_SA_9D6    = 305;
+const int IP_CONST_FEAT_ROGUE_SA_10D6   = 306;
+const int IP_CONST_FEAT_ROGUE_SA_11D6   = 307;
+const int IP_CONST_FEAT_ROGUE_SA_12D6   = 308;
+const int IP_CONST_FEAT_ROGUE_SA_13D6   = 309;
+const int IP_CONST_FEAT_ROGUE_SA_14D6   = 310;
+const int IP_CONST_FEAT_ROGUE_SA_15D6   = 311;
+const int IP_CONST_FEAT_ROGUE_SA_16D6   = 312;
+const int IP_CONST_FEAT_ROGUE_SA_17D6   = 313;
+const int IP_CONST_FEAT_ROGUE_SA_18D6   = 314;
+const int IP_CONST_FEAT_ROGUE_SA_19D6   = 315;
+const int IP_CONST_FEAT_ROGUE_SA_20D6   = 316;
+
+//Iaijutsu Master Feats + Skill
+
+const int SKILL_IAIJUTSU_FOCUS = 27; //CONSTANT
+
+const int FEAT_EPIC_IAIJUTSU_FOCUS = 2315; //CONSTANT
+const int FEAT_STRIKE_VOID         = 2316; //CONSTANT
+const int FEAT_TWO_CUTS            = 2317; //CONSTANT
+const int FEAT_ECHOS_EDGE_1        = 2318; //CONSTANT
+const int FEAT_ECHOS_EDGE_2        = 2319; //CONSTANT
+const int FEAT_ECHOS_EDGE_3        = 2320; //CONSTANT
+const int FEAT_ECHOS_EDGE_4        = 2321; //CONSTANT
+const int FEAT_ECHOS_EDGE_5        = 2322; //CONSTANT
+const int FEAT_ECHOS_EDGE_6        = 2323; //CONSTANT
+const int FEAT_SPIRIT_STRIKE_1     = 2324; //CONSTANT
+const int FEAT_SPIRIT_STRIKE_2     = 2325; //CONSTANT
+const int FEAT_SPIRIT_STRIKE_3     = 2326; //CONSTANT
+const int FEAT_SPIRIT_STRIKE_4     = 2327; //CONSTANT
+const int FEAT_SPIRIT_STRIKE_5     = 2328; //CONSTANT
+const int FEAT_SPIRIT_STRIKE_6     = 2329; //CONSTANT
+const int FEAT_KATANA_FINESSE      = 2330; //CONSTANT
+const int FEAT_IAIJUTSU_ATTACK     = 2331; //CONSTANT
+const int FEAT_EPIC_IAIJUTSU       = 2332;
+
+//Legendary Dread Feats
+const int FEAT_UNSTOPPABLE_1         = 2300; //CONSTANT
+const int FEAT_UNSTOPPABLE_2         = 2301; //CONSTANT
+const int FEAT_UNSTOPPABLE_3         = 2302; //CONSTANT
+const int FEAT_UNSTOPPABLE_4         = 2303; //CONSTANT
+const int FEAT_UNMOVABLE_1           = 2304; //CONSTANT
+const int FEAT_UNMOVABLE_2           = 2305; //CONSTANT
+const int FEAT_UNMOVABLE_3           = 2306; //CONSTANT
+const int FEAT_UNMOVABLE_4           = 2307; //CONSTANT
+
+//Disciple of Baalzebul Feats
+const int FEAT_KING_LIES             = 2308; //CONSTANT
+const int FEAT_TONGUE_DEVIL          = 2309; //CONSTANT
+const int FEAT_SUGGESTION            = 2310; //CONSTANT
+const int FEAT_SUMMON_OSYLUTH        = 2311; //CONSTANT
+const int FEAT_INSECT_PLAGUE         = 2312; //CONSTANT
+const int FEAT_SUMMON_CORNUGON       = 2313; //CONSTANT
+const int FEAT_BEGUILEING_NATURE     = 2314; //CONSTANT
+
+const int FEAT_DEVICE_LORE           = 2333;
+const int FEAT_IRON_HEWS             = 2334;
+const int FEAT_RUSTING_GRASP         = 2335;
+const int FEAT_IRON_POWER_1          = 2336;
+const int FEAT_IRON_POWER_2          = 2337;
+const int FEAT_SUMMON_ERINYES        = 2338;
+const int FEAT_GREATER_IRON_HEWS     = 2339;
+const int FEAT_IRON_SKIN             = 2340;
+const int FEAT_IRON_BODY             = 2341;
+
+const int FEAT_COFFIN_SANCTUARY      = 2343;
+const int FEAT_GASEOUS_FORM          = 2344;
+
+const int FEAT_WEAPON_TEMPUS_CLUB        = 3268;
+const int FEAT_WEAPON_TEMPUS_DAGGER      = 3269;
+const int FEAT_WEAPON_TEMPUS_MACE        = 3270;
+const int FEAT_WEAPON_TEMPUS_MORNINGSTAR = 3271;
+const int FEAT_WEAPON_TEMPUS_QUATERSTAFF = 3272;
+const int FEAT_WEAPON_TEMPUS_SPEAR       = 3273;
+const int FEAT_WEAPON_TEMPUS_SHORTSWORD  = 3274;
+const int FEAT_WEAPON_TEMPUS_RAPIER      = 3275;
+const int FEAT_WEAPON_TEMPUS_SCIMITAR    = 3276;
+const int FEAT_WEAPON_TEMPUS_LONGSWORD   = 3277;
+const int FEAT_WEAPON_TEMPUS_GREATSWORD  = 3278;
+const int FEAT_WEAPON_TEMPUS_HANDAXE     = 3279;
+const int FEAT_WEAPON_TEMPUS_BATTLEAXE   = 3280;
+const int FEAT_WEAPON_TEMPUS_GREATAXE    = 3281;
+const int FEAT_WEAPON_TEMPUS_HALBERD     = 3282;
+const int FEAT_WEAPON_TEMPUS_LIGHTHAMMER = 3283;
+const int FEAT_WEAPON_TEMPUS_LIGHTFLAIL  = 3284;
+const int FEAT_WEAPON_TEMPUS_WARHAMMER   = 3285;
+const int FEAT_WEAPON_TEMPUS_HEAVYFLAIL  = 3286;
+const int FEAT_WEAPON_TEMPUS_SCYTHE      = 3287;
+const int FEAT_WEAPON_TEMPUS_KATANA      = 3288;
+const int FEAT_WEAPON_TEMPUS_BASTARDSWORD= 3289;
+const int FEAT_WEAPON_TEMPUS_DIREMACE    = 3290;
+const int FEAT_WEAPON_TEMPUS_DOUBLEAXE   = 3291;
+const int FEAT_WEAPON_TEMPUS_TWOBLADED   = 3292;
+const int FEAT_WEAPON_TEMPUS_KAMA        = 3293;
+const int FEAT_WEAPON_TEMPUS_KUKRI       = 3294;
+const int FEAT_ARMY_POWER                = 3295;
+const int FEAT_BATTLEFORGER              = 3296;
+const int FEAT_DIEHARD                   = 3297;
+const int FEAT_ENCHANT_WEAPON1           = 3299;
+const int FEAT_ENCHANT_WEAPON2           = 3300;
+const int FEAT_ENCHANT_WEAPON3           = 3301;
+const int FEAT_WEAPON_TEMPUS_SICKLE      = 3171;
+const int FEAT_WEAPON_TEMPUS_DWARVENAXE  = 3172;
+
+
+
+// Initiate of Draconic
+const int FEAT_CLAWDRAGON               = 3341;
+const int FEAT_INCREASE_DAMAGE1         = 3342;
+const int FEAT_INCREASE_DAMAGE2         = 3343;
+const int FEAT_INIDR_SPELLRESISTANCE    = 3345;
+const int FEAT_INIDR_STUNSTRIKE         = 3346;
+const int FEAT_INIDR_SHAPEDRAGON        = 3347;
+const int FEAT_CLAWENH2                 = 3348;
+const int FEAT_CLAWENH3                 = 3349;
+const int FEAT_EPIC_INCREASE_DAMAGE1    = 3186;
+const int FEAT_EPIC_INCREASE_DAMAGE2    = 3187;
+const int FEAT_EPIC_INCREASE_DAMAGE3    = 3188;
+const int FEAT_EPIC_INCREASE_DAMAGE4    = 3189;
+
+// BladeSinger
+
+const int FEAT_BLADESONG_STYLE          = 3190;
+const int FEAT_LESSER_SPELLSONG         = 3191;
+const int FEAT_GREATER_SPELLSONG        = 3192;
+const int FEAT_SONG_OF_FURY             = 3193;
+
+// Archer
+
+const int FEAT_EXTRASHOT                = 3180;
+const int FEAT_BOWSPEC2                 = 3181;
+const int FEAT_BOWSPEC3                 = 3182;
+const int FEAT_BOWSPEC4                 = 3183;
+const int FEAT_BOWSPEC5                 = 3184;
+const int FEAT_BOWSPEC6                 = 3185;
+const int FEAT_KILLINGSHOT              = 3352;
+const int FEAT_PERFECTSHOT              = 3353;
+const int FEAT_PERFECTSHOT2             = 3354;
+
+const int FEAT_BOWMASTERY               = 3174;
+const int FEAT_XBOWMASTERY              = 3175;
+const int FEAT_SHURIKENMASTERY          = 3176;
+const int FEAT_BATTLEDANCE              = 3179;
+
+
+// Blood Archer
+
+const int FEAT_BLARCH_POISON_BLOOD      = 4200;
+
+// Henshin Mystic                                  feat.2da  spell.2da
+const int FEAT_PRESTIGE_RIDDLE_OF_AWARENESS        = 4020;   // 2260
+const int FEAT_PRESTIGE_HAPPO_ZANSHIN              = 4021;   // 2261
+const int FEAT_PRESTIGE_RIDDLE_OF_INTERACTION      = 4022;   // 2262
+const int FEAT_PRESTIGE_BLINDSIGHT                 = 4023;   // 2263
+const int FEAT_PRESTIGE_HITSU_DO                   = 4024;   // 2264
+const int FEAT_PRESTIGE_WALK_THROUGH_THE_MOUNTAINS = 4025;   // 2265
+const int FEAT_PRESTIGE_RIDDLE_OF_INVULNERABILITY  = 4026;   // 2266
+
+// Drunken Master
+const int FEAT_PRESTIGE_DRINK_LIKE_A_DEMON         = 4027;   // 2267
+const int FEAT_PRESTIGE_BOTTLE_PROFICIENCY         = 4028;   // 2268
+const int FEAT_PRESTIGE_STAGGER                    = 4029;   // 2269
+const int FEAT_PRESTIGE_SWAYING_WAIST              = 4030;   // 2270
+const int FEAT_PRESTIGE_DRUNKEN_RAGE               = 4031;   // 2271
+const int FEAT_PRESTIGE_LURCH                      = 4032;   // 2272
+const int FEAT_PRESTIGE_DRUNKEN_EMBRACE            = 4033;   // 2273
+const int FEAT_PRESTIGE_FOR_MEDICINAL_PURPOSES     = 4034;   // 2274
+const int FEAT_PRESTIGE_BREATH_OF_FLAME            = 4035;   // 2275
+
+/*//////////////////////////////////////////////////
+////////////////CODI STUFF//////////////////////////
+//////////////////////////////////////////////////*/
+
+//Ninja Spy
+const int SPELLABILITY_NS_MEDIUM                 = 1528;
+const int SPELLABILITY_NS_SMALL                  = 1529;
+const int SPELLABILITY_NS_DWARF                  = 1530;
+const int SPELLABILITY_NS_ELF                    = 1531;
+const int SPELLABILITY_NS_HALF_ELF               = 1532;
+const int SPELLABILITY_NS_HALF_ORC               = 1533;
+const int SPELLABILITY_NS_HUMAN                  = 1534;
+const int SPELLABILITY_NS_GNOME                  = 1535;
+const int SPELLABILITY_NS_HALFLING               = 1536;
+const int SPELLABILITY_NS_OFF                    = 1537;
+
+const int FEAT_EPIC_NINJA                        = 3426;
+const int FEAT_1000FACES_MEDIUM                  = 3400;
+const int FEAT_1000FACES_SMALL                   = 3401;
+const int FEAT_1000FACES_OFF                     = 3402;
+
+//Mystic Theurge
+const int FEAT_EPIC_THEURGE                      = 3427;
+
+//War Priest
+const int SPELLABILITY_WP_RALLY                  = 1549;
+const int SPELLABILITY_WP_INFLAME                = 1550;
+const int SPELLABILITY_WP_IMPLACABLE_FOE         = 1551;
+
+const int FEAT_EPIC_WARPRIEST                    = 3428;
+const int FEAT_RALLY                             = 3418;
+const int FEAT_INFLAME                           = 3419;
+const int FEAT_IMPLACABLE_FOE                    = 3420;
+const int FEAT_HEALING_CIRCLE                    = 3421;
+const int FEAT_FEAR_AURA                         = 3422;
+const int FEAT_MASS_HASTE                        = 3423;
+const int FEAT_MASS_HEAL                         = 3424;
+
+//Ocular Adept
+const int SPELLABILITY_OA_CHPERRAY               = 1538;
+const int SPELLABILITY_OA_SLEEPRAY               = 1539;
+const int SPELLABILITY_OA_INFRAY                 = 1540;
+const int SPELLABILITY_OA_SLOWRAY                = 1541;
+const int SPELLABILITY_OA_FEARRAY                = 1542;
+const int SPELLABILITY_OA_CHMONRAY               = 1543;
+const int SPELLABILITY_OA_TELERAY                = 1544;
+const int SPELLABILITY_OA_PETRAY                 = 1545;
+const int SPELLABILITY_OA_DISRAY                 = 1546;
+const int SPELLABILITY_OA_DEATHRAY               = 1547;
+
+const int FEAT_CHPERRAY                          = 3403;
+const int FEAT_SLEEPRAY                          = 3404;
+const int FEAT_INFRAY                            = 3405;
+const int FEAT_SLOWRAY                           = 3406;
+const int FEAT_FEARRAY                           = 3407;
+const int FEAT_CHMONRAY                          = 3408;
+const int FEAT_TELERAY                           = 3409;
+const int FEAT_PETRAY                            = 3410;
+const int FEAT_DISRAY                            = 3411;
+const int FEAT_DEATHRAY                          = 3412;
+
+//Samurai
+const int SPELLABILITY_SM_ANCESTDAISHO           = 1548;
+
+const int FEAT_EPIC_SAMURAI                      = 3416;
+const int FEAT_ANCESTRAL_DAISHO                  = 3417;
+
+//Battlerager
+const int FEAT_BATTLE_RAGE1                      = 3413;
+const int FEAT_BATTLE_RAGE2                      = 3414;
+const int FEAT_BATTLE_RAGE3                      = 3415;
+
+/*//////////////////////////////////////////////////////
+//////////////////////END CODI//////////////////////////
+//////////////////////////////////////////////////////*/
+
+
+

@@ -8,7 +8,7 @@
 //:: Last Updated On: March 18, 2004
 //:://////////////////////////////////////////////
 
-
+#include "prc_getcast_lvl"
 
 
 /*
@@ -1338,44 +1338,39 @@ void UnequipAnyImmunityItems(object oTarget, int nImmType);
 /******************************************************************************
 FUNCTION BODIES
 ******************************************************************************/
+
 int GetTotalCastingLevel(object oCaster)
 {
-    int nLevel = GetLevelByClass(CLASS_TYPE_WIZARD, oCaster);
-    if (nLevel < GetLevelByClass(CLASS_TYPE_SORCERER, oCaster))
-        nLevel = GetLevelByClass(CLASS_TYPE_SORCERER, oCaster);
-    if (nLevel < GetLevelByClass(CLASS_TYPE_DRUID, oCaster))
-        nLevel = GetLevelByClass(CLASS_TYPE_DRUID, oCaster);
-    if (nLevel < GetLevelByClass(CLASS_TYPE_CLERIC, oCaster))
-        nLevel = GetLevelByClass(CLASS_TYPE_CLERIC, oCaster);
-    if (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) > 0)
-        nLevel += (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster)/2);
+    int nLevel = GetCasterLvl(TYPE_DIVINE, oCaster);
+    if (nLevel < GetCasterLvl(TYPE_ARCANE, oCaster))
+        nLevel = GetCasterLvl(TYPE_ARCANE, oCaster); 
     return nLevel;
 }
 
 int GetIsEpicCleric(object oPC)
 {
-    if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) >= 21)
+    if (GetCasterLvl(TYPE_CLERIC, oPC) >= 21)
         return TRUE;
     return FALSE;
 }
 
 int GetIsEpicDruid(object oPC)
 {
-    if (GetLevelByClass(CLASS_TYPE_DRUID, oPC) >= 21)
+    if (GetCasterLvl(TYPE_DRUID, oPC) >= 21)
         return TRUE;
     return FALSE;
 }
 
 int GetIsEpicSorcerer(object oPC)
 {
-    if (GetLevelByClass(CLASS_TYPE_SORCERER, oPC) >= 21)
+    if (GetCasterLvl(TYPE_SORCERER, oPC) >= 21)
         return TRUE;
     return FALSE;
 }
 
 int GetIsEpicWizard(object oPC)
 {
-    if (GetLevelByClass(CLASS_TYPE_WIZARD, oPC) >= 21)
+    if (GetCasterLvl(TYPE_WIZARD, oPC) >= 21)
         return TRUE;
     return FALSE;
 }

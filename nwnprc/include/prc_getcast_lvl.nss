@@ -1,5 +1,4 @@
-#include "prc_class_const"
-#include "prc_feat_const"
+#include "prc_alterations"
 
 
 int IsArcaneClass(int nClass);

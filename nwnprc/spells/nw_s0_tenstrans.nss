@@ -26,6 +26,9 @@
 #include "x2_inc_itemprop"
 #include "x2_inc_shifter"
 
+#include "pnp_shft_poly"
+
+
 void PolyAndMergeEquipment(float fDur, int iLvl)
 {
     // Get The PC's Equipment
@@ -40,7 +43,7 @@ void PolyAndMergeEquipment(float fDur, int iLvl)
     object oHelmetOld = GetItemInSlot(INVENTORY_SLOT_HEAD,OBJECT_SELF);
     object oShield    = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,OBJECT_SELF);
     object oArmsOld   = GetItemInSlot(INVENTORY_SLOT_ARMS,OBJECT_SELF);
-    
+
         if (GetIsObjectValid(oShield))
         {
             if (GetBaseItemType(oShield) !=BASE_ITEM_LARGESHIELD &&
@@ -50,6 +53,9 @@ void PolyAndMergeEquipment(float fDur, int iLvl)
                 oShield = OBJECT_INVALID;
             }
         }
+
+	//this command will make shore that polymorph plays nice with the shifter
+	ShifterCheck(OBJECT_SELF);
 
     // Polymorph
     effect ePoly = EffectPolymorph(28);
@@ -85,7 +91,7 @@ void PolyAndMergeEquipment(float fDur, int iLvl)
     IPWildShapeCopyItemProperties(oCloakOld,oArmorNew);
     IPWildShapeCopyItemProperties(oBootsOld,oArmorNew);
     IPWildShapeCopyItemProperties(oBeltOld,oArmorNew);
-    
+
     IPWildShapeCopyItemProperties(oArmsOld,oArmorNew);
 }
 
@@ -94,7 +100,7 @@ int CalculateAttackBonus()
    int iBAB = GetBaseAttackBonus(OBJECT_SELF);
    int iHD = GetHitDice(OBJECT_SELF);
    int iBonus = (iHD > 20) ? ((20 + (iHD - 20) / 2) - iBAB) : (iHD - iBAB); // most confusing line ever. :)
-   
+
    return (iBonus > 0) ? iBonus : 0;
 }
 

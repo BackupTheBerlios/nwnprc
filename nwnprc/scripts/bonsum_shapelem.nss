@@ -1,6 +1,7 @@
 
 #include "prc_inc_function"
 #include "inc_item_props"
+#include "pnp_shft_poly"
 
 void main()
 {
@@ -30,6 +31,8 @@ void main()
        iPoly = POLYMORPH_TYPE_ELDER_WATER_ELEMENTAL;
     }
 
+	//this command will make shore that polymorph plays nice with the shifter
+	ShifterCheck(OBJECT_SELF);
 
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY,EffectPolymorph(iPoly),OBJECT_SELF,HoursToSeconds(10));
     DelayCommand(1.5,ActionCastSpellAtObject(SPELL_SHAPE_INCREASE_DAMAGE,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE));

@@ -19,6 +19,9 @@
 #include "x2_inc_itemprop"
 #include "prc_inc_clsfunc"
 
+#include "pnp_shft_poly"
+
+
 void main()
 {
     //Declare major variables
@@ -107,7 +110,8 @@ void main()
     }
 
 
-
+	//this command will make shore that polymorph plays nice with the shifter
+	ShifterCheck(OBJECT_SELF);
 
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);

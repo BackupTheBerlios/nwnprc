@@ -12,6 +12,8 @@
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
+#include "pnp_shft_poly"
+
 
 void main()
 {
@@ -61,6 +63,9 @@ void main()
                         if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),
                             SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                         {
+							//this command will make shore that polymorph plays nice with the shifter
+							ShifterCheck(oTarget);
+
                             // Apply effects to the currently selected target.
                             DelayCommand(fDelay, SPApplyEffectToObject
                                 (DURATION_TYPE_TEMPORARY, eLink, oTarget,

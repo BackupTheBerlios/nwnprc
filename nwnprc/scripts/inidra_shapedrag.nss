@@ -14,6 +14,8 @@
 
 #include "prc_inc_function"
 #include "inc_item_props"
+#include "pnp_shft_poly"
+
 
 void main()
 {
@@ -45,11 +47,14 @@ void main()
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_WILD_SHAPE, FALSE));
 
+	//this command will make shore that polymorph plays nice with the shifter
+	ShifterCheck(OBJECT_SELF);
+
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(nDuration));
 //    DelayCommand(1.5,AddIniDmg(OBJECT_SELF));
     DelayCommand(1.5,ActionCastSpellAtObject(SPELL_SHAPE_INCREASE_DAMAGE,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE));
-   
- 
+
+
 }

@@ -13,7 +13,7 @@
 #include "prc_ipfeat_const"
 #include "inc_item_props"
 #include "nw_i0_spells"
-
+#include "pnp_shft_poly.nss"
 
 
 ////////////////Begin Drunken Master//////////////////////
@@ -1456,6 +1456,9 @@ void LycanthropePoly(object oPC, int nPoly)
         }
     }
 
+    //check if a shifter and if shifted then unshift
+    ShifterCheck(oPC);
+    
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoly, oPC);

@@ -13,6 +13,8 @@
 //:: Last Updated By: Andrew Nobbs May 20, 2003
 
 #include "prc_inc_clsfunc"
+#include "pnp_shft_poly"
+
 
 void main()
 {
@@ -31,6 +33,9 @@ void main()
 //    ePoly = EffectPolymorph(POLYMORPH_TYPE_DRAGONKIN);
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_WILD_SHAPE, FALSE));
+
+	//this command will make shore that polymorph plays nice with the shifter
+	ShifterCheck(OBJECT_SELF);
 
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);

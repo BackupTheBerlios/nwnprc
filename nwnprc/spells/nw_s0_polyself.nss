@@ -15,6 +15,8 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
 #include "x2_inc_spellhook"
+#include "pnp_shft_poly"
+
 
 void main()
 {
@@ -76,6 +78,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     ePoly = EffectPolymorph(nPoly);
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_POLYMORPH_SELF, FALSE));
+
+	//this command will make shore that polymorph plays nice with the shifter
+	ShifterCheck(oTarget);
 
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

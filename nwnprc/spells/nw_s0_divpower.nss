@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nLevel = CasterLvl;
     int nHP = nLevel;
-    int nAttack = 1;
+    int nAttack = CalculateAttackBonus();
     int nStr = GetAbilityScore(oTarget, ABILITY_STRENGTH);
     int nStrength = (nStr - 18) * -1;
     if(nStrength < 0)
@@ -81,7 +81,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eStrength = EffectAbilityIncrease(ABILITY_STRENGTH, nStrength);
     effect eHP = EffectTemporaryHitpoints(nHP);
     effect eAttack = EffectAttackIncrease(nAttack);
-    effect eAttackMod = EffectModifyAttacks(CalcNumberOfAttacks());
+    effect eAttackMod = EffectModifyAttacks(1);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
     effect eLink = EffectLinkEffects(eAttack, eAttackMod);

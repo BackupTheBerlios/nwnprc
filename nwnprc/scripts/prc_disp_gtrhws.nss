@@ -7,7 +7,7 @@ void main()
 
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    itemproperty pIron = ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE,6);
+    itemproperty pIron = ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE, DAMAGE_BONUS_6);
 
     ApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oPC);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eDur,oPC,RoundsToSeconds(nDuration));

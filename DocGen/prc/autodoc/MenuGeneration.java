@@ -155,14 +155,14 @@ public final class MenuGeneration{
 		if(verbose) System.out.println("Printing class menus");
 		
 		for(ClassEntry clazz : classes.values()){
-			if(clazz.isPrestige)
-				prestigeLinks.put(clazz.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
-				                                                          clazz.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
-				                                              .replaceAll("~~~targetName~~~", clazz.name));
-			else
+			if(clazz.isBase)
 				baseLinks.put(clazz.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
 				                                                      clazz.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
 				                                          .replaceAll("~~~targetName~~~", clazz.name));
+			else
+				prestigeLinks.put(clazz.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                          clazz.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                              .replaceAll("~~~targetName~~~", clazz.name));
 		}
 		
 		while(baseLinks.size() > 0)

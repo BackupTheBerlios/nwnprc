@@ -7,11 +7,11 @@ const int IP_CONST_DAMAGESOAK_2_HP = 12;
 const int IP_CONST_DAMAGESOAK_3_HP = 13;
 
 // Runescarred Berserker
-
+/*
 const int FEAT_RIT_SCAR             = 2369;
 const int FEAT_SPAWNFROST           = 2371;
 const int FEAT_RIT_DR               = 2370;
-
+*/
 ////Resistance Cold////
 void ResCold(object oPC ,object oSkin ,int iLevel)
 {

@@ -16,7 +16,7 @@
 //:: Created On: Aug 13, 2001
 //:://////////////////////////////////////////////
 
-//#include "x2_i0_spells"
+#include "x2_i0_spells"
 #include "inc_addragebonus"
 #include "prc_class_const"
 

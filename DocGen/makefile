@@ -15,3 +15,6 @@ run_quiet:
 
 run_no_spinner:
 	java -Xmx300m -Xms300m prc/autodoc/Main -s
+
+run_log:
+	java -Xmx300m -Xms300m prc/autodoc/Main -s > log.txt

@@ -2,6 +2,23 @@
 void main()
 {
 
+   if (!GetHasFeat(FEAT_ENERGON_COMPANION))
+   {
+   
+     int nLoop, nCount;
+     object oHench;
+     for (nLoop=1; nLoop<=GetMaxHenchmen(); nLoop++)
+     {	
+        if (GetResRef(oHench)=="xagya01")
+        {
+     	   RemoveHenchman(OBJECT_SELF,oHench);
+     	   AssignCommand(oHench, SetIsDestroyable(TRUE));
+           DestroyObject(oHench);
+        }   	
+     }	
+      return;	
+   }
+
    int nLoop, nCount;
    object oHench;
    for (nLoop=1; nLoop<=GetMaxHenchmen(); nLoop++)

@@ -14,6 +14,7 @@
 
 void CreateBalor();
 #include "x2_inc_spellhook"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -57,6 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
         eSummon = EffectSummonCreature("NW_S_BALOR",VFX_FNF_SUMMON_GATE,3.0);
         float fSeconds = RoundsToSeconds(nDuration);
+        DelayCommand(3.0, MultisummonPreSummon());
         DelayCommand(3.0, ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lSpellTargetLOC, fSeconds));
 
     }

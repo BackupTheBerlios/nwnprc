@@ -9,6 +9,7 @@
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
+#include "prc_inc_switch"
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
@@ -22,6 +23,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 
     //Apply the VFX impact and summon effect
+    MultisummonPreSummon(OBJECT_SELF);
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
 

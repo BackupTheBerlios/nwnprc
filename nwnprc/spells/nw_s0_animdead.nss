@@ -17,6 +17,7 @@
 #include "prc_alterations"
 
 #include "x2_inc_spellhook"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -68,6 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }
     //Apply the summon visual and summon the two undead.
     //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+    MultisummonPreSummon();
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

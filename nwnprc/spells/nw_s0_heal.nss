@@ -20,6 +20,7 @@
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -74,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     //Figure out the amount of damage to inflict
                     nDamage = nDamage * nCasterLvl;
 
-                    if (nDamage > 150)
+                    if (nDamage > 150 && !GetPRCSwitch(PRC_BIOWARE_HEAL))
                         nDamage = 150;
 
                     // Will save for half damage
@@ -101,7 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HEAL, FALSE));
         //Figure out how much to heal
         nHeal = GetMaxHitPoints(oTarget);
-	  if(nHeal > 150)
+	  if(nHeal > 150 && !GetPRCSwitch(PRC_BIOWARE_HEAL))
 		nHeal = 150;
         //Set the heal effect
         eHeal = EffectHeal(nHeal);

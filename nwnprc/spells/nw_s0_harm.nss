@@ -21,6 +21,7 @@
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -57,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         //Figure out the amount of damage to heal
         nHeal = 10 * nCasterLvl;
-        if (nHeal > 150)
+        if (nHeal > 150 && !GetPRCSwitch(PRC_BIOWARE_HARM))
 	    nHeal = 150;
         //Set the heal effect
         eHeal = EffectHeal(nHeal);
@@ -84,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 } */
                 nDamage = nDamage * nCasterLvl;
 
-                if (nDamage > 150)
+                if (nDamage > 150 && !GetPRCSwitch(PRC_BIOWARE_HARM))
                     nDamage = 150;
 
                 // Will save for half damage

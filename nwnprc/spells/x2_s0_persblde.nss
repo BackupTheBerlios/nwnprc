@@ -17,6 +17,7 @@
 
 #include "x2_i0_spells"
 #include "x2_inc_spellhook"
+#include "prc_inc_switch"
 
 //Creates the weapon that the creature will be using.
 void spellsCreateItemForSummoned(object oCaster, float fDuration)
@@ -87,6 +88,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         nDuration = nDuration *2;   //Duration is +100%
     }
     //Apply the VFX impact and summon effect
+    MultisummonPreSummon();
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
 

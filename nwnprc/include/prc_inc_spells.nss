@@ -19,6 +19,7 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "lookup_2da_spell"
+#include "prc_inc_switch"
 
 // Added by Primogenitor
 // part of the replacement for GetClassByPosition and GetLevelByPosition
@@ -563,8 +564,10 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     if (GetItemPossessor(GetSpellCastItem()) == oCaster)
     {
         //SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
-        
-        return GetCasterLevel(oCaster);
+        if(!GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)
+            || GetBaseItemType(GetSpellCastItem()) != BASE_ITEM_MAGICSTAFF)
+            return GetCasterLevel(oCaster);
+        //SendMessageToPC(oCaster, "Staff casting at user caster level");
     }
 
     // For when you want to assign the caster level.

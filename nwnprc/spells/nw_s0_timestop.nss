@@ -16,6 +16,8 @@
 #include "spinc_common"
 
 #include "x2_inc_spellhook"
+#include "prc_inc_switch"
+#include "inc_timestop"
 
 void main()
 {
@@ -42,14 +44,38 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     location lTarget = GetSpellTargetLocation();
     effect eVis = EffectVisualEffect(VFX_FNF_TIME_STOP);
     effect eTime = EffectTimeStop();
+    object oCaster = OBJECT_SELF;
     int nRoll = 1 + d4();
+    float fDuration = RoundsToSeconds(nRoll);
+    if(GetPRCSwitch(PRC_TIMESTOP_BIOWARE_DURATION))
+         fDuration = 9.0;
+    if(GetPRCSwitch(PRC_TIMESTOP_LOCAL))
+    {
+        eTime = EffectAreaOfEffect(VFX_PER_NEW_TIMESTOP);
+        eTime = EffectLinkEffects(eTime, EffectEthereal());
+        if(GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE))
+        {
+            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCaster),fDuration);
+            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster),fDuration);
+            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_BULLETS, oCaster),fDuration);
+            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_ARROWS, oCaster),fDuration);
+            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_BOLTS, oCaster),fDuration);
+            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oCaster),fDuration);
+            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster),fDuration);
+            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oCaster),fDuration);            
+            DelayCommand(fDuration, RemoveTimestopEquip());
+            string sSpellscript = PRCGetUserSpecificSpellScript();
+            DelayCommand(fDuration, PRCSetUserSpecificSpellScript(sSpellscript));
+            PRCSetUserSpecificSpellScript("tsspellscript");
+        }
+    }
 
     //Fire cast spell at event for the specified target
     SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_TIME_STOP, FALSE));
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     //Apply the VFX impact and effects
-    DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, OBJECT_SELF, RoundsToSeconds(nRoll),TRUE,-1,CasterLvl));
+    DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, OBJECT_SELF, fDuration,TRUE,-1,CasterLvl));
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

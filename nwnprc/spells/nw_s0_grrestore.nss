@@ -19,6 +19,7 @@
 
 #include "spinc_common"
 #include "x2_inc_spellhook"
+#include "prc_inc_switch"
 
 
 // return TRUE if the effect created by a supernatural force and can't be dispelled by spells
@@ -88,7 +89,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         //Apply the VFX impact and effects
         int nHeal = 10 * nCasterLvl;
-	  if(nHeal > 250)
+	  if(nHeal > 250 && !GetPRCSwitch(PRC_BIOWARE_GRRESTORE))
 		nHeal = 250;
         effect eHeal = EffectHeal(nHeal);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);

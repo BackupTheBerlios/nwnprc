@@ -16,6 +16,7 @@
 #include "spinc_common"
 
 #include "x2_inc_spellhook"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -43,6 +44,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
     effect eVis = EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eSight = EffectTrueSeeing();
+    if(GetPRCSwitch(PRC_PNP_TRUESEEING))
+    {
+        eSight = EffectSeeInvisible();
+        int nSpot = GetPRCSwitch(PRC_PNP_TRUESEEING_SPOT_BONUS);
+        if(nSpot == 0)
+            nSpot = 15;
+        effect eSpot = EffectSkillIncrease(SKILL_SPOT, nSpot);
+        eSight = EffectLinkEffects(eSight, eSpot);
+    }
     effect eLink = EffectLinkEffects(eVis, eSight);
     eLink = EffectLinkEffects(eLink, eDur);
     //Fire cast spell at event for the specified target

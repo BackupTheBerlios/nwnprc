@@ -279,6 +279,7 @@ int X2GetSpellCastOnSequencerItem(object oItem)
         //NOTE: I add +1 to the SpellId to spell 0 can be used to trap failure
         int nSID = GetSpellId()+1;
         SetLocalInt(oItem, "X2_L_SPELLTRIGGER" + IntToString(nNumberOfTriggers), nSID);
+        SetLocalInt(oItem, "X2_L_SPELLTRIGGER_L" + IntToString(nNumberOfTriggers), PRCGetCasterLevel(OBJECT_SELF));
         SetLocalInt(oItem, "X2_L_NUMTRIGGERS", nNumberOfTriggers);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, OBJECT_SELF);
         FloatingTextStrRefOnCreature(83884, OBJECT_SELF);
@@ -390,7 +391,10 @@ int X2PreSpellCastCode()
         (GetSpellId()!=SPELL_POLYMORPH_SELF) &&
         (GetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
         {
-           AssignCommand(OBJECT_SELF, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+           SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
+           // Make sure this variable gets deleted as quickly as possible in case it's added in error.
+           DelayCommand(1.0, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
+           AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         }
       }
     }

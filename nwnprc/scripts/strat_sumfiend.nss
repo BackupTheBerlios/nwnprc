@@ -17,6 +17,7 @@
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -101,6 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             break;
         }
         //Apply the VFX impact and summon effect
+        MultisummonPreSummon(OBJECT_SELF);
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), RoundsToSeconds(nDuration));
     }
 

@@ -8,6 +8,7 @@
 
 #include "prc_class_const"
 #include "prc_feat_const"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -28,7 +29,7 @@ void main()
     else if (nClass > 5)	sSummon = "prc_mos_wraith";
     else                 	sSummon = "prc_mos_allip";
 
-
+   MultisummonPreSummon(OBJECT_SELF);
    effect eSum = EffectSummonCreature(sSummon, VFX_NONE);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummonB, GetSpellTargetLocation());
    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());

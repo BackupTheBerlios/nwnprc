@@ -13,6 +13,7 @@
 
 #include "prc_class_const"
 #include "prc_feat_const"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -35,5 +36,6 @@ void main()
     sWolf += sLevel;
 
     //Apply the VFX impact and summon effect
+    MultisummonPreSummon(OBJECT_SELF);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSummonCreature(sWolf, VFX_FNF_NATURES_BALANCE, 0.0, 1), oPC);
 }

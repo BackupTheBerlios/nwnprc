@@ -8,16 +8,13 @@ void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID);
 
 int GetAbilityForClass(int nClass, object oPC)
 {
-//    object oHide = GetPCSkin(oPC);
     switch(nClass)
     {
         case CLASS_TYPE_BLACKGUARD:
         case CLASS_TYPE_VASSAL:
         case CLASS_TYPE_SOLDIER_OF_LIGHT:
-//            return GetLocalInt(oHide, "PRC_trueWIS");
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_ASSASSIN:
-//            return GetLocalInt(oHide, "PRC_trueINT");
             return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
     }
     return 0;
@@ -56,7 +53,8 @@ void WipeSpellbookHideFeats(object oPC)
     while(GetIsItemPropertyValid(ipTest))
     {
         if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
-            && GetItemPropertySubType(ipTest) > 999)
+            && GetItemPropertySubType(ipTest) > 10400
+            && GetItemPropertySubType(ipTest) < 10592)
             RemoveItemProperty(oHide, ipTest);
         ipTest = GetNextItemProperty(oHide);
     }
@@ -137,7 +135,6 @@ void RemoveSpellUse(object oPC, int nSpellID, int nClass)
 
 void SetupSpells(object oPC, int nClass)
 {
-    WipeSpellbookHideFeats(oPC);
     int nLevel = GetLevelByClass(nClass, oPC);
     int nAbility = GetAbilityForClass(nClass, oPC);
     int nSpellLevel;
@@ -167,7 +164,8 @@ void CheckNewSpellbooks(object oPC)
         {
             DelayCommand(0.01, SetupSpells(oPC, i));
         }
-    }
+    }    
+    WipeSpellbookHideFeats(oPC);
 }
 
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)

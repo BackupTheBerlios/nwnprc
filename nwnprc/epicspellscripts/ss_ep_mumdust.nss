@@ -17,6 +17,7 @@
 #include "nw_i0_spells"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "prc_inc_switch"
 void main()
 {
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
@@ -33,6 +34,7 @@ void main()
         eSummon = EffectSummonCreature("X2_S_MUMMYWARR",496,1.0f);
         eSummon = ExtraordinaryEffect(eSummon);
         //Apply the summon visual and summon the undead.
+        MultisummonPreSummon();
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummon, GetSpellTargetLocation());
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -16,6 +16,7 @@
 #include "prc_alterations"
 
 #include "x2_i0_spells"
+#include "prc_inc_switch"
 
 //Creates the weapon that the creature will be using.
 void spellsCreateItemForSummoned()
@@ -106,6 +107,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         nDuration = nDuration *2;//Duration is +100%
     }
     //Apply the VFX impact and summon effect
+    MultisummonPreSummon();
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), RoundsToSeconds(nDuration));
     DelayCommand(1.5, spellsCreateItemForSummoned());

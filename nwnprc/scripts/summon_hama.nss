@@ -12,6 +12,7 @@
 #include "prc_class_const"
 #include "x2_inc_spellhook"
 #include "prc_feat_const"
+#include "prc_inc_switch"
 void main()
 {
     //Declare major variables
@@ -32,6 +33,7 @@ void main()
         nDuration = nDuration *2;   //Duration is +100%
     }
     //Apply the VFX impact and summon effect
+    MultisummonPreSummon(OBJECT_SELF);
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
 }

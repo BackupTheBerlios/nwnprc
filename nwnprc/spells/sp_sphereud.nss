@@ -1,4 +1,5 @@
 #include "spinc_common"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -9,6 +10,7 @@ void main()
 
 	// Apply summon and vfx at target location.	
 	location lTarget = GetSpellTargetLocation();
+        MultisummonPreSummon();
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, 
 		EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_3), lTarget);
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, 

@@ -18,6 +18,7 @@ effect SetSummonEffect(int nSpellID);
 
 #include "prc_class_const"
 #include "prc_spell_const"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -31,7 +32,7 @@ void main()
     effect eSummon = SetSummonEffect(nSpellID);
 
     //Apply the VFX impact and summon effect
-
+    MultisummonPreSummon(OBJECT_SELF);
     ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, GetSpellTargetLocation());
 }
 

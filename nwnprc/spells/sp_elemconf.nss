@@ -1,5 +1,6 @@
 #include "prc_spell_const"
 #include "prc_class_const"
+#include "prc_inc_switch"
 
 void main()
 {
@@ -31,6 +32,7 @@ void main()
     int Duration=GetLevelByClass(CLASS_TYPE_CLERIC,oTarget)+GetLevelByClass(CLASS_TYPE_DRUID,oTarget)+GetLevelByClass(CLASS_TYPE_STORMLORD,oTarget);
 
     effect Summon=EffectSummonCreature(Elemental,VFX_NONE,0.0,1);
+    MultisummonPreSummon();
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY,Summon,GetLocation(oTarget),RoundsToSeconds(Duration));
 }
 

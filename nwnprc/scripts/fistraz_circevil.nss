@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     RemoveSpellEffects(GetSpellId(),OBJECT_SELF,GetSpellTargetObject());
 
     //Declare major variables including Area of Effect Object
-    effect eAOE = EffectAreaOfEffect(VFX_MOB_CIRCEVIL_NODIS,"fist_circevila","","fist_circevilb");
+    effect eAOE = EffectAreaOfEffect(AOE_MOB_CIRCGOOD,"fist_circevila","","fist_circevilb");
     effect eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eVis2 = EffectVisualEffect(VFX_IMP_GOOD_HELP);

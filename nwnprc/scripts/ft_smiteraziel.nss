@@ -68,7 +68,7 @@ void NoSmite(object oTarget ,string sText)
    FloatingTextStringOnCreature(sText,OBJECT_SELF);
 
    int iEvil  = GetAlignmentGoodEvil(oTarget)==ALIGNMENT_EVIL ;
-   int SancMar  = Sanctify_Feat(GetBaseItemType(oWeap))  ? 1 :0 ;
+   int SancMar  = Sanctify_Feat(GetBaseItemType(oWeap)) && iEvil ? 1 :0 ;
 
   for(iAttacks; iAttacks > 0; iAttacks--)
   {

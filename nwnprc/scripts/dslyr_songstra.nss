@@ -9,8 +9,8 @@ void main()
 
     effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    int nStr = GetHasFeat(FEAT_EPIC_DRAGONSONG_STRENGTH) ? 6: 4;
-    int nCon = GetHasFeat(FEAT_EPIC_DRAGONSONG_STRENGTH) ? 4: 0;
+    int nStr = GetHasFeat(FEAT_EPIC_DRAGONSONG_STRENGTH,GetAreaOfEffectCreator()) ? 6: 4;
+    int nCon = GetHasFeat(FEAT_EPIC_DRAGONSONG_STRENGTH,GetAreaOfEffectCreator()) ? 4: 0;
     effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH,nStr);
     effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION,nCon);
     effect eLink = EffectLinkEffects(eStr, eDur);

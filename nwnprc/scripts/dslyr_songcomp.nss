@@ -32,7 +32,7 @@ void main()
        return;
     }
   
-    RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
+    RemoveOldSongEffects(OBJECT_SELF,FEAT_EPIC_DRAGONSONG_COMPULSION);
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     object oCaster = OBJECT_SELF;

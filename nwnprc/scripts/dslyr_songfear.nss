@@ -37,6 +37,7 @@ void main()
         return;
     }
     
+    RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_FEAR);
     effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);
 
 
@@ -45,7 +46,7 @@ void main()
     //Set and apply AOE object
     effect eAOE = SupernaturalEffect(EffectAreaOfEffect(AOE_MOB_DRAGON_FEAR,"dslyr_songfeara","dslyr_songfearb"));
     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, OBJECT_SELF,0.0,FALSE);
-    StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, GetSpellId(), 0);
+    StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, SPELL_DSL_SONG_FEAR, 0);
     
     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);
     SetLocalInt(OBJECT_SELF, "SpellConc", 1);   

@@ -49,7 +49,7 @@ void main()
        return;
   }
   
-  RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
+  RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_HEALING);
 
   int nEpic = GetHasFeat(FEAT_EPIC_DRAGONSONG_HEALING) ? TRUE:FALSE;  
   //Fire cast spell at event for the specified target
@@ -93,7 +93,7 @@ void main()
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),FALSE);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, RoundsToSeconds(nDuration),FALSE);
-
+            StoreSongRecipient(oTarget, OBJECT_SELF, SPELL_DSL_SONG_HEALING, nDuration);
         }        
         // Code for FB to remove damage that would be caused at end of Frenzy
         SetLocalInt(oTarget, "PC_Damage", 0);

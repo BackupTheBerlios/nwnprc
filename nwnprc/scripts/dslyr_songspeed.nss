@@ -24,12 +24,12 @@ void main()
     effect eHaste = EffectHaste();
     effect eLink = EffectLinkEffects(eFast, eDur);
     if (GetHasFeat(FEAT_EPIC_DRAGONSONG_SPEED))
-       eLink = EffectLinkEffects(eLink, eLink);
+       eLink = EffectLinkEffects(eLink, eHaste);
 
     int nLevel = GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST);
 
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
-    int nDuration = 10*nLevel;
+    int nDuration = nLevel;
     
         //Check to see if the caster has Lasting Impression and increase duration.
     if(GetHasFeat(870))
@@ -45,7 +45,7 @@ void main()
 
     location lSpell = GetSpellTargetLocation();
  
-    RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
+    RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_SPEED);
     
     effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);  
    // SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, OBJECT_SELF,RoundsToSeconds(nDuration),FALSE); 
@@ -62,13 +62,13 @@ void main()
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),FALSE);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, RoundsToSeconds(nDuration),FALSE);
-            StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+            StoreSongRecipient(oTarget, OBJECT_SELF, SPELL_DSL_SONG_SPEED, nDuration);
         }
         else if(GetIsFriend(oTarget))
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),FALSE);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, RoundsToSeconds(nDuration),FALSE);
-            StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+            StoreSongRecipient(oTarget, OBJECT_SELF, SPELL_DSL_SONG_SPEED, nDuration);
         }
         //Select the next target within the spell shape.
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lSpell);

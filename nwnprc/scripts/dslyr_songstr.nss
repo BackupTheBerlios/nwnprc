@@ -31,6 +31,8 @@ void main()
         FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
         return;
     }
+
+    RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_STRENGTH);
     
     effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);
 //    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis, OBJECT_SELF,0.0,FALSE); 

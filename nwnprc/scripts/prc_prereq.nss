@@ -96,8 +96,6 @@ int GetRanPalSpellLevel(object oPC)
         int iKnight = GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE, oPC);
         int iWis = GetAbilityScore(oPC, ABILITY_WISDOM) - 10;
 	int iRanPal;
-	int iSOL;
-	int iKMC;
 
 	// Adjust the Rangers's level upwards if it is the one recieving the benefits of
 	// the PRC's.
@@ -116,61 +114,29 @@ int GetRanPalSpellLevel(object oPC)
 	    GetClassByPosition(1, oPC) != CLASS_TYPE_RANGER ) )
 	     iPaladin += GetDivinePRCLevels(oPC);
 
-	if (iRanger >= 14 || iPaladin >= 14 || iAntiPal >= 15 || iCorrupter >= 15)
+	if (iRanger >= 14 || iPaladin >= 14 ||
+	    iAntiPal >= 15 || iCorrupter >= 15 ||
+	    iSoldier >= 8)
 	{
 	iRanPal = 4;
 	}
-	else if (iRanger >= 11 || iPaladin >= 11 || iAntiPal >= 12 || iCorrupter >= 12)
+	else if (iRanger >= 11 || iPaladin >= 11 ||
+	         iAntiPal >= 12 || iCorrupter >= 12 ||
+	         iSoldier >= 6 || iKnight >= 9)
 	{
 	iRanPal = 3;
 	}
-	else if (iRanger >= 8 || iPaladin >= 8 || iAntiPal >= 10 || iCorrupter >= 10)
+	else if (iRanger >= 8 || iPaladin >= 8 ||
+	         iAntiPal >= 10 || iCorrupter >= 10 ||
+	         iSoldier >= 4 || iKnight >= 7)
 	{
 	iRanPal = 2;
 	}
-	else if (iRanger >= 4 || iPaladin >= 4 || iAntiPal >= 6 || iCorrupter >= 6)
+	else if (iRanger >= 4 || iPaladin >= 4 ||
+	         iAntiPal >= 6 || iCorrupter >= 6 ||
+	         iSoldier >= 2 || iKnight >= 3)
 	{
 	iRanPal = 1;
-	}
-
-	if (iSoldier >= 8)
-	{
-	iSOL = 4;
-	}
-	else if (iSoldier >= 6)
-	{
-	iSOL = 3;
-	}
-	else if (iSoldier >= 4)
-	{
-	iSOL = 2;
-	}
-	else if (iSoldier >= 2)
-	{
-	iSOL = 1;
-	}
-	
-	if (iKnight >= 9)
-	{
-	iKMC = 3;
-	}
-	else if (iKnight >= 7)
-	{
-	iKMC = 2;
-	}
-	else if (iKnight >= 3)
-	{
-	iKMC = 1;
-	}
-
-	if (iSOL > iRanPal)
-	{
-	iRanPal = iSOL;
-	}
-	
-	if (iKMC > iRanPal)
-	{
-	iRanPal = iKMC;
 	}
 
 	if (iWis < iRanPal)

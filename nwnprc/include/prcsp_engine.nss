@@ -45,8 +45,22 @@ PRCGetSpellResistance(object oTarget, object oCaster)
 //	If a spell is resisted, display the effect
 //
 void
-PRCShowSpellResist(object oTarget, int nResist, float fDelay = 0.0)
+PRCShowSpellResist(object oCaster, object oTarget, int nResist, float fDelay = 0.0)
 {
+	// If either caster/target is a PC send them a message
+	if (GetIsPC(oCaster))
+	{
+		string message = nResist == SPELL_RESIST_FAIL ?
+			"Target is AFFECTED by the spell" : "Target RESISTED the spell";
+		SendMessageToPC(oCaster, "Target RESISTED spell");
+	}
+	if (GetIsPC(oTarget))
+	{
+		string message = nResist == SPELL_RESIST_FAIL ?
+			"You are AFFECTED by the spell" : "You RESISTED the spell";
+		SendMessageToPC(oTarget, message);
+	}
+	
 	if (nResist != SPELL_RESIST_FAIL) {
 		// Default to a standard resistance
 		int eve = VFX_IMP_MAGIC_RESISTANCE_USE;
@@ -115,7 +129,7 @@ MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDel
 		}
     }
 
-	PRCShowSpellResist(oTarget, nResist, fDelay);
+	PRCShowSpellResist(oCaster, oTarget, nResist, fDelay);
 
     return nResist;
 }

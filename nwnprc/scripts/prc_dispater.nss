@@ -77,16 +77,3 @@ void main()
             Iron_Power(oPC,oWeap,0);
 
 }
-
-        {
-         bIrnPwr = 2;
-        }
-
-        if(bDivLor > 0) Device_Lore(oPC,oSkin,bDivLor);
-
-        if(bIrnPwr > 0 && (IsItemMetal(oWeap) == 2))
-            Iron_Power(oPC,oWeap,bIrnPwr);
-        else
-            Iron_Power(oPC,oWeap,0);
-
-}

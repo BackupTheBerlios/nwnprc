@@ -18,9 +18,9 @@
 //::Aaon Graywolf - Jan 7, 2003
 
 #include "spinc_common"
+#include "prc_inc_sp_tch"
 
 #include "NW_I0_SPELLS"
-
 #include "x2_inc_spellhook"
 
 void main()
@@ -82,28 +82,32 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eDrain = EffectNegativeLevel(nDrain);
     effect eLink = EffectLinkEffects(eDrain, eDur);
 
-        
+    int iAttackRoll = TouchAttackRanged(oTarget);
+    if(iAttackRoll > 0)
+    {
         if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, HoursToSeconds(1),TRUE,-1,CasterLvl);
         }
 
-
-    if(!GetIsReactionTypeFriendly(oTarget))
-    {
-        //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ENERVATION));
-        //Resist magic check
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if(!GetIsReactionTypeFriendly(oTarget))
         {
-            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
+            //Fire cast spell at event for the specified target
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ENERVATION));
+            //Resist magic check
+            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
-                //Apply the VFX impact and effects
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,-1,CasterLvl);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            }
-        }
-    }
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
+                {
+                     //Apply the VFX impact and effects
+                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,-1,CasterLvl);
+                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                 }
+                 
+                 ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, 0, DAMAGE_TYPE_NEGATIVE);
+             }
+         }
+     }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

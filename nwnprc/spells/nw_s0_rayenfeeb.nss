@@ -14,6 +14,7 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
+#include "prc_inc_sp_tch"
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -68,31 +69,41 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_RAY_OF_ENFEEBLEMENT));
         eRay = EffectBeam(VFX_BEAM_ODD, OBJECT_SELF, BODY_NODE_HAND);
-        //Make SR check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        
+        // attack roll
+        int iAttackRoll = TouchAttackRanged(oTarget);
+        if(iAttackRoll > 0)
         {
-            //Make a Fort save to negate
-            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
-            {
-                //Enter Metamagic conditions
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+             //Make SR check
+             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+             {
+
+                //Make a Fort save to negate
+                if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
                 {
-                    nLoss = 6 + nBonus;
+                    //Enter Metamagic conditions
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                    {
+                        nLoss = 6 + nBonus;
+                    }
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                    {
+                         nLoss = nLoss + (nLoss/2);
+                    }
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+                    {
+                        nDuration = nDuration * 2;
+                    }
+                    //Set ability damage effect
+                    eFeeb = EffectAbilityDecrease(ABILITY_STRENGTH, nLoss);
+                    effect eLink = EffectLinkEffects(eFeeb, eDur);
+
+                   //Apply the ability damage effect and VFX impact
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,FALSE);
                 }
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
-                {
-                     nLoss = nLoss + (nLoss/2);
-                }
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-                {
-                    nDuration = nDuration * 2;
-                }
-                //Set ability damage effect
-                eFeeb = EffectAbilityDecrease(ABILITY_STRENGTH, nLoss);
-                effect eLink = EffectLinkEffects(eFeeb, eDur);
-               //Apply the ability damage effect and VFX impact
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,FALSE);
+                
+                ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, 0, DAMAGE_TYPE_NEGATIVE);
              }
          }
     }

@@ -16,6 +16,7 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
+#include "prc_inc_sp_tch"
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -77,29 +78,37 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FLAME_ARROW));
         //Apply a single damage hit for each missile instead of as a single mass
         //Make SR Check
+        int iAttackRoll = 0;
         for (nCnt = 1; nCnt <= nMissiles; nCnt++)
         {
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+            // causes them each to make a ranged touch attack
+            iAttackRoll = TouchAttackRanged(oTarget);
+            if(iAttackRoll > 0)
             {
-
-                //Roll damage
-                int nDam = d6(4) + 1;
-                //Enter Metamagic conditions
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
-                      nDam = 24;//Damage is at max
+                    //Roll damage
+                    int nDam = d6(4) + 1;
+                    //Enter Metamagic conditions
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                    {
+                          nDam = 24;//Damage is at max
+                    }
+                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                    {
+                          nDam = nDam + nDam/2; //Damage/Healing is +50%
+                    }
+                    nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
+                
+                    // only add sneak attack damage to first projectile
+                    if(nCnt == 1)  nDam += SpellSneakAttackDamage(OBJECT_SELF, oTarget);
+                    
+                    //Set damage effect
+                    effect eDam = EffectDamage(nDam, EleDmg);
+                    //Apply the MIRV and damage effect
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,FALSE));
                 }
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
-                {
-                      nDam = nDam + nDam/2; //Damage/Healing is +50%
-                }
-                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
-                //Set damage effect
-                effect eDam = EffectDamage(nDam, EleDmg);
-                //Apply the MIRV and damage effect
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,FALSE));
-
             }
             // * May 2003: Make it so the arrow always appears, even if resisted
             eMissile = EffectVisualEffect(VFX_IMP_MIRV_FLAME);

@@ -3,6 +3,7 @@
 // Undead take no damage but instead are "turned" for 1d4 + 1 rounds.
 
 #include "spinc_common"
+#include "prc_inc_sp_tch"
 
 void main()
 {
@@ -46,8 +47,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         iColdDam = 6;
     }
-
-    if (TouchAttackMelee(oTarget, GetSpellCastItem() == OBJECT_INVALID) > 0)
+    
+    int iAttackRoll = TouchAttackMelee(oTarget, GetSpellCastItem() == OBJECT_INVALID);
+    if (iAttackRoll > 0)
     {
         if (!GetIsReactionTypeFriendly(oTarget))
         {
@@ -73,10 +75,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget, iPenetr))
                 {
                     effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
-                    effect eDam = EffectDamage(iColdDam, iEleDmg);
+                    //effect eDam = EffectDamage(iColdDam, iEleDmg);
                 
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                    //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    
+                    // apply damage + sneak damage
+                    ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, iColdDam, iEleDmg);
 
                     if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, iSaveDC, SAVING_THROW_TYPE_COLD))
                     {

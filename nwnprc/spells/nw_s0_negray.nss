@@ -20,6 +20,7 @@
 //::Aaon Graywolf - Jan 7, 2004
 
 #include "spinc_common"
+#include "prc_inc_sp_tch"
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -70,7 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
     }
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
+    //effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
     effect eHeal = EffectHeal(nDamage);
     effect eVisHeal = EffectVisualEffect(VFX_IMP_HEALING_M);
     effect eRay;
@@ -81,20 +82,25 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         if(!GetIsReactionTypeFriendly(oTarget))
         {
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
-            eRay = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+            int iAttackRoll = TouchAttackRanged(oTarget);
+            if(iAttackRoll > 0)
             {
-                //Make a saving throw check
-                if(/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
+                //Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
+                eRay = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
                 {
-                    nDamage /= 2;
+                    //Make a saving throw check
+                    if(/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
+                    {
+                        nDamage /= 2;
+                    }
+                    //Apply the VFX impact and effects
+                    //DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                    ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_NEGATIVE);
                 }
-                //Apply the VFX impact and effects
-                //DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
             }
         }
     }

@@ -16,6 +16,7 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
+#include "prc_inc_sp_tch"
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -68,31 +69,35 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
         //Get the distance between the explosion and the target to calculate delay
         fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+        
+        int iAttackRoll = TouchAttackRanged(oTarget);
+        if(iAttackRoll > 0)
         {
-            //Roll damage for each target
-            nDamage = d4(nCasterLvl);
-            //Resolve metamagic
-            if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
-            {
-                nDamage = 4 * nCasterLvl;
-            }
-            else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
-            {
-                nDamage = nDamage + nDamage / 2;
-            }
-            //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()  + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_COLD);
-            //Set the damage effect
-            eDam = EffectDamage(nDamage, ChangedElementalDamage(oCaster, DAMAGE_TYPE_COLD));
-            if(nDamage > 0)
-            {
-                // Apply effects to the currently selected target.
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                //This visual effect is applied to the target object not the location as above.  This visual effect
-                //represents the flame that erupts on the target not on the ground.
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-            }
+             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+             {
+                 //Roll damage for each target
+                 nDamage = d4(nCasterLvl);
+                 //Resolve metamagic
+                 if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                 {
+                     nDamage = 4 * nCasterLvl;
+                 }
+                 else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                 {
+                     nDamage = nDamage + nDamage / 2;
+                 }
+                 //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
+                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()  + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_COLD);
+                 if(nDamage > 0)
+                 {
+                     //This visual effect is applied to the target object not the location as above.  This visual effect
+                     //represents the flame that erupts on the target not on the ground.
+                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+     
+                     int nDamage =  MyMaximizeOrEmpower(3, 1, GetMetaMagicFeat());
+                     ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_COLD));
+                 }
+             }
         }
     }
 

@@ -22,6 +22,7 @@
 
 //:: modified by mr_bumpkin Dec 4, and 15, 2003
 #include "spinc_common"
+#include "prc_inc_sp_tch"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -100,33 +101,35 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         float fDist = GetDistanceToObject(oTarget);
         float fDelay = (fDist/25.0);//(3.0 * log(fDist) + 2.0);
 
-
-        if(MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl) == FALSE)
+        int iAttackRoll = TouchAttackRanged(oTarget);
+        if(iAttackRoll > 0)
         {
-            //----------------------------------------------------------------------
-            // Do the initial 3d6 points of damage
-            //----------------------------------------------------------------------
-            int nDamage = MyMaximizeOrEmpower(6,3,nMetaMagic);
-            effect eDam = EffectDamage(nDamage, EleDmg);
+            if(MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl) == FALSE)
+            {
+                //----------------------------------------------------------------------
+                // Do the initial 3d6 points of damage
+                //----------------------------------------------------------------------
+                int nDamage = MyMaximizeOrEmpower(6,3,nMetaMagic);
+                ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, EleDmg);
 
-            DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-            DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-
-            //----------------------------------------------------------------------
-            // Apply the VFX that is used to track the spells duration
-            //----------------------------------------------------------------------
-            DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,eDur,oTarget,RoundsToSeconds(nDuration),FALSE));
-            object oSelf = OBJECT_SELF; // because OBJECT_SELF is a function
-            DelayCommand(6.0f,RunImpact(oTarget, oSelf,nMetaMagic,EleDmg));
-        }
-        else
-        {
-            //----------------------------------------------------------------------
-            // Indicate Failure
-            //----------------------------------------------------------------------
-            effect eSmoke = EffectVisualEffect(VFX_IMP_REFLEX_SAVE_THROW_USE);
-            DelayCommand(fDelay+0.1f,SPApplyEffectToObject(DURATION_TYPE_INSTANT,eSmoke,oTarget));
-        }
+                DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                
+                //----------------------------------------------------------------------
+                // Apply the VFX that is used to track the spells duration
+                //----------------------------------------------------------------------
+                DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,eDur,oTarget,RoundsToSeconds(nDuration),FALSE));
+                object oSelf = OBJECT_SELF; // because OBJECT_SELF is a function
+                DelayCommand(6.0f,RunImpact(oTarget, oSelf,nMetaMagic,EleDmg));
+            }
+            else
+            {
+                //----------------------------------------------------------------------
+                // Indicate Failure
+                //----------------------------------------------------------------------
+                effect eSmoke = EffectVisualEffect(VFX_IMP_REFLEX_SAVE_THROW_USE);
+                DelayCommand(fDelay+0.1f,SPApplyEffectToObject(DURATION_TYPE_INSTANT,eSmoke,oTarget));
+            }
+         }
     }
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eArrow, oTarget);
 

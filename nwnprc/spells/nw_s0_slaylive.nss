@@ -14,6 +14,7 @@
 
 //:: modified by mr_bumpkin  Dec 4, 2003
 #include "spinc_common"
+#include "prc_inc_sp_tch"
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -57,9 +58,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SLAY_LIVING));
         //Make SR check
         if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
-        {
+        {  
+            int iAttackRoll = TouchAttackMelee(oTarget);
             //Make melee touch attack
-            if(TouchAttackMelee(oTarget))
+            if(iAttackRoll)
             {
                 //Make Fort save
                 if  (!/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_DEATH))
@@ -83,9 +85,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     {
                         nDamage = nDamage + (nDamage/2);
                     }
-                    //Apply damage effect and VFX impact
-                    eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                    //Apply damage effect and VFX impact               
+                    ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_NEGATIVE);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
                 }
             }
         }

@@ -27,10 +27,9 @@ Georg 2003-09-11
 
 //:: modified by mr_bumpkin  Dec 4, 2003
 #include "spinc_common"
+#include "prc_inc_sp_tch"
 
 #include "x0_I0_SPELLS"
-
-
 #include "x2_inc_spellhook"
 
 void main()
@@ -98,7 +97,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eLink = EffectLinkEffects(eHeal, eDur);
 
-    effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
+    //effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
     effect eVisHeal = EffectVisualEffect(VFX_IMP_HEALING_M);
     
@@ -115,13 +114,17 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
             SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_VAMPIRIC_TOUCH, FALSE));
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_VAMPIRIC_TOUCH, TRUE));
-            // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
-            if (TouchAttackMelee(oTarget,GetSpellCastItem() == OBJECT_INVALID)>0)
+           
+            // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property    
+            int iAttackRoll = TouchAttackMelee(oTarget,GetSpellCastItem() == OBJECT_INVALID);
+           
+            if (iAttackRoll > 0)
             {
                 if(MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr) == 0)
                  {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+                    //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+                    ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_NEGATIVE);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, OBJECT_SELF);
                     RemoveTempHitPoints();
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, HoursToSeconds(nDuration),TRUE,-1,nCasterLevel);

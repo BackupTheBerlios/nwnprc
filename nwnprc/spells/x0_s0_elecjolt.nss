@@ -13,6 +13,7 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
+#include "prc_inc_sp_tch"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -47,14 +48,21 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ELECTRIC_JOLT));
-        //Make SR Check
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()))
+
+        int iAttackRoll = TouchAttackRanged(oTarget);
+        if(iAttackRoll > 0)
         {
-            //Set damage effect
-            effect eBad = EffectDamage(MyMaximizeOrEmpower(3, 1, GetMetaMagicFeat()), ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL));
-            //Apply the VFX impact and damage effect
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eBad, oTarget);
+             //Make SR Check
+             if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()))
+             {
+                 //Apply the VFX impact and damage effect
+                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            
+                 // perform attack roll for ray and deal proper damage
+                 int nDamage =  MyMaximizeOrEmpower(3, 1, GetMetaMagicFeat());
+                 int iAttackRoll = TouchAttackRanged(oTarget);
+                 ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL));
+             }
         }
     }
 

@@ -18,10 +18,9 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
-
+#include "prc_inc_sp_tch"
 
 #include "NW_I0_SPELLS"
-
 #include "x2_inc_spellhook"
 
 void main()
@@ -70,9 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eVs = EffectVisualEffect(VFX_IMP_HEALING_M);
     effect eLink = EffectLinkEffects(eVs,eHeal);
 
-    effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-    effect eLink2 = EffectLinkEffects(eVis,eDamage);
 
     if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
     {
@@ -84,15 +81,22 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
            //Signal spell cast at event
 
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            //Spell resistance
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl))
+
+            int iAttackRoll = TouchAttackRanged(oTarget);
+            if(iAttackRoll > 0)
             {
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
-                {
-                    //Apply effects to target and caster
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget);
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, OBJECT_SELF);
-                    SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+                 //Spell resistance
+                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl))
+                 {
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
+                    {
+                        //Apply effects to target and caster
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, OBJECT_SELF);
+                        SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+                    
+                        ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_NEGATIVE);
+                    }
                 }
             }
         }

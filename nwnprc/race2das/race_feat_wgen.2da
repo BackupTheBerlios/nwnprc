@@ -1,7 +1,8 @@
 2DA V2.0
 
-      FeatLabel           FeatIndex
-0     darkvision          228
-1     Hardiness_Water     4726
-2     Race_Human          4715
-3     Race_Elemental      4759        
+     FeatLabel       FeatIndex 
+0    darkvision      228       
+1    Hardiness_Water 4726      
+2    Race_Human      4715      
+3    Race_Elemental  4759      
+4    Water_Breathing 4793      

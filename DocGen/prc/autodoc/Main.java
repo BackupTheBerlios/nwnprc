@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.*;
 
+import static prc.autodoc.Main.SpellType.*;
+
+
 public class Main{
 	/**
 	 * A small data structure class that gives access to both normal and custom
@@ -190,8 +193,8 @@ public class Main{
 	                            skillTemplate    = readTemplate("templates" + fileSeparator + "skill.html");
 	
 	private static final Object presenceIndicator = new Object();
-	private static final HashMap<Integer, Object> failedSkills = new HashMap<Integer, Object>();
-	
+	private static final HashMap<Integer, Object> failedSkills = new HashMap<Integer, Object>(),
+	                                              failedSpells = new HashMap<Integer, Object>();
 	public static void main(String[] args){
 		/* Argument parsing */
 		for(String opt : args){
@@ -263,7 +266,7 @@ public class Main{
 			System.exit(1);
 		}
 		
-		throw new UnknownError("This message should not be seen");
+		throw new AssertionError("This message should not be seen");
 	}
 	
 	/**
@@ -286,6 +289,7 @@ public class Main{
 		buildDir(dirPath + "feat");
 		buildDir(dirPath + "master_feat");
 		buildDir(dirPath + "prestige_classes");
+		buildDir(dirPath + "psionic_powers");
 		buildDir(dirPath + "races");
 		buildDir(dirPath + "skills");
 		buildDir(dirPath + "spells");
@@ -310,7 +314,7 @@ public class Main{
 	
 	
 	private static void createPages(){
-		// Do skills
+		/* First, do the pages that do not require linking to other pages */
 		doSkills();
 		// Do spells
 		doSpells();
@@ -367,27 +371,26 @@ public class Main{
 	 * Handles creation of the skill pages.
 	 */
 	private static void doSkills(){
-		String skillPath = contentPath + "skills";
+		String skillPath = contentPath + "skills" + fileSeparator;
 		String name     = null,
 		       entry    = null;
 			
-		Data_2da skills2da = twoDA.get("skills");
+		Data_2da skills = twoDA.get("skills");
 		
-		for(int i = 0; i < skills2da.getEntryCount(); i++){
+		for(int i = 0; i < skills.getEntryCount(); i++){
 			try{
-				name = tlk.get(skills2da.getEntry("Name", i));
+				name = tlk.get(skills.getEntry("Name", i));
 				if(verbose) System.out.println("Printing page for " + name);
+				
 				// Build the entry data
 				entry = skillTemplate;
 				entry = entry.replaceAll("~~~SkillName~~~",
 				                         name);
 				entry = entry.replaceAll("~~~SkillTLKDescription~~~",
-				                         htmlizeTLK(tlk.get(skills2da.getEntry("Description", i))));
+				                         htmlizeTLK(tlk.get(skills.getEntry("Description", i))));
 				//name = tlk.get(skills2da.getEntry("Name", i));
 				//entry = htmlizeTLK(tlk.get(skills2da.getEntry("Description", i)));
-				
-				// Print the page
-				printPage(skillPath + fileSeparator + i + ".html", entry);
+				printPage(skillPath + i + ".html", entry);
 			}catch(Exception e){
 				System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
 				// Note the failure, so this page isn't used elsewhere in the manual
@@ -397,8 +400,127 @@ public class Main{
 		
 	}
 	
+	/**
+	 * A small enumeration for use in spell printing methods
+ 	 */
+	enum SpellType{NONE, NORMAL, EPIC, PSIONIC};
+	
+	/**
+	 * Prints normal & epic spells and psionic powers.
+	 * As of now, all of these are similar enough to share the same
+	 * template, so they can be done here together.
+	 *
+	 * The enumeration class used here is found at the end of the file
+	 */
 	private static void doSpells(){
+		String spellPath = contentPath + "spells" + fileSeparator,
+		       epicPath  = contentPath + "epic_spells" + fileSeparator,
+		       psiPath   = contentPath + "psionic_powers" + fileSeparator;
+		
+		String pathToUse = null,
+		       name      = null,
+		       entry     = null;
+		
+		SpellType spelltype = NONE;
+		
+		Data_2da spells = twoDA.get("spells");
+		
+		for(int i = 0; i < spells.getEntryCount(); i++){
+			spelltype = NONE;
+			try{
+				if(isNormalSpell(spells, i))       spelltype = NORMAL;
+				else if(isEpicSpell(spells, i))    spelltype = EPIC;
+				else if(isPsionicPower(spells, i)) spelltype = PSIONIC;
+				
+				if(spelltype != NONE){
+					name = tlk.get(spells.getEntry("Name", i));
+					if(verbose) System.out.println("Printing page for " + name);
+					
+					// Build the entry data
+					entry = spellTemplate;
+					entry = entry.replaceAll("~~~SpellName~~~",
+					                         name);
+					entry = entry.replaceAll("~~~SpelllTLKDescription~~~",
+					                         htmlizeTLK(tlk.get(spells.getEntry("SpellDesc", i))));
+					
+					// Build the path and print
+					switch(spelltype){
+						case NORMAL:
+							pathToUse = spellPath + i + ".html";
+							break;
+						case EPIC:
+							pathToUse = epicPath + i + ".html";
+							break;
+						case PSIONIC:
+							pathToUse = psiPath + i + ".html";
+							break;
+						
+						default:
+							throw new AssertionError("This message should not be seen");
+					}
+					
+					printPage(pathToUse, entry);
+				}
+			}catch(Exception e){
+				System.err.println("Failed to print page for spell " + i + ": " + name + "\nException:\n" + e);
+				// Note the failure, so this page isn't used elsewhere in the manual
+				failedSpells.put(i, presenceIndicator);
+			}
+		}
 		
 	}
 	
+	/**
+	 * A small convenience method for wrapping all the normal spell checks into
+	 * one.
+	 *
+	 * @param spells   the Data_2da entry containing spells.2da
+	 * @param entryNum the line number to use for testing
+	 *
+	 * @return <code>true</code> if any of the class spell level columns contain a number,
+	 *           <code>false</code> otherwise
+	 */
+	private static boolean isNormalSpell(Data_2da spells, int entryNum){
+		if(!spells.getEntry("Bard", entryNum).equals("****"))     return true;
+		if(!spells.getEntry("Cleric", entryNum).equals("****"))   return true;
+		if(!spells.getEntry("Druid", entryNum).equals("****"))    return true;
+		if(!spells.getEntry("Paladin", entryNum).equals("****"))  return true;
+		if(!spells.getEntry("Ranger", entryNum).equals("****"))   return true;
+		if(!spells.getEntry("Wiz_Sorc", entryNum).equals("****")) return true;
+		
+		return false;
+	}
+	
+	
+	/**
+	 * A small convenience method for testing if the given entry contains a
+	 * epic spell.
+	 *
+	 * @param spells   the Data_2da entry containing spells.2da
+	 * @param entryNum the line number to use for testing
+	 *
+	 * @return <code>true</code> if the impactscript name starts with strings specified in settings,
+	 *           <code>false</code> otherwise
+	 */
+	private static boolean isEpicSpell(Data_2da spells, int entryNum){
+		for(String check : settings.epicspellSignatures)
+			if(spells.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
+		return false;
+	}
+	
+	/**
+	 * A small convenience method for testing if the given entry contains a
+	 * psionic power
+	 *
+	 * @param spells   the Data_2da entry containing spells.2da
+	 * @param entryNum the line number to use for testing
+	 *
+	 * @return <code>true</code> if the impactscript name starts with strings specified in settings,
+	 *           <code>false</code> otherwise
+	 */
+	private static boolean isPsionicPower(Data_2da spells, int entryNum){
+		for(String check : settings.psionicpowerSignatures)
+			if(spells.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
+		return false;
+	}
 }

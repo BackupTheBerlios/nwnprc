@@ -1,9 +1,15 @@
 2DA V2.0
 
     FeatLabel                                      FeatIndex List GrantedOnLevel OnMenu 
-0   FEAT_PSION_TEST                                3550      3    1              1
+176 ****                                           ****      **** ****           ****   
+177 "**Class_feats**"                              ****      **** ****           ****  
 0   FEAT_AUGMENT_PSIONICS                          3551      3    1              1
-0   FEAT_AUGMENT_NONE                              3552      3    1              1    
+0   FEAT_AUGMENT_NONE                              3552      3    1              1  
+176 ****                                           ****      **** ****           ****   
+177 "**powers**"                                   ****      **** ****           ****  
+0   ALL_BODY_ADJUSTMENT                            3580      2    3              1
+176 ****                                           ****      **** ****           ****   
+177 "**normal_feats**"                             ****      **** ****           ****  
 0   ArmProfLight                                   3         3    1              0      
 1   ArmProfMed                                     4         3    1              0      
 2   WeapProfMar                                    45        3    1              0      

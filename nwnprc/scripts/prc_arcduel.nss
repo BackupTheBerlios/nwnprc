@@ -18,8 +18,24 @@ void RemoveEnchantCW(object oPC, object oWeap)
 {
       if (GetLocalInt(oWeap, "ADEnchant"))
       {
-         SetCompositeBonusT(oWeap, "ADEnchant", 0, ITEM_PROPERTY_ENHANCEMENT_BONUS);
+         RemoveSpecificProperty(oWeap, ITEM_PROPERTY_ENHANCEMENT_BONUS, -1, -1, 1, "ADEnchant", -1, DURATION_TYPE_TEMPORARY);
       }
+}
+
+int GetWeaponEnhancement(object oWeap)
+{
+    int iBonus = 0;
+    int iTemp;
+
+    itemproperty ip = GetFirstItemProperty(oWeap);
+    while(GetIsItemPropertyValid(ip))
+    {
+        if(GetItemPropertyType(ip) == ITEM_PROPERTY_ENHANCEMENT_BONUS)
+            iTemp = GetItemPropertyCostTableValue(ip);
+            iBonus = iTemp > iBonus ? iTemp : iBonus;
+        ip = GetNextItemProperty(oWeap);
+    }
+    return iBonus;
 }
 
 // * Applies the Arcane Duelist's Enchant Chosen Weapon bonus
@@ -28,40 +44,34 @@ void EnchantCW(object oPC, object oWeap)
    int iBonus = 0;
 
    RemoveEnchantCW(oPC, oWeap);
+   iBonus = GetWeaponEnhancement(oWeap);
 
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 1)
-         iBonus = 1;
+         iBonus += 1;
 
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 4)
-         iBonus = 2;
+         iBonus += 1;
          
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 6)
-         iBonus = 3;
+         iBonus += 1;
 	 
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 8)
-         iBonus = 4;
+         iBonus += 1;
+               
 
-      if ((GetLocalInt(oWeap, "ADEnchant") != iBonus) && (iBonus))
-      {
-         SetCompositeBonusT(oWeap, "ADEnchant", iBonus, ITEM_PROPERTY_ENHANCEMENT_BONUS);
-      }
-
+      AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(iBonus),oWeap, 9999.0);
+      SetLocalInt(oWeap, "ADEnchant", iBonus);
 }
 
 void main()
 {
   object oPC = OBJECT_SELF;
   object oSkin = GetPCSkin(oPC);
-
-  int iClassLVLArcDuelist = GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC);
-  int iHasFeat1 = GetHasFeat(FEAT_AD_ENCHANT_CHOSEN_WEAPON, oPC);
-
   object oWeapon = GetLocalObject(oPC, "CHOSEN_WEAPON");
 
   if (GetHasFeat(FEAT_AD_APPARENT_DEFENSE, oPC)) ApparentDefense(oPC, oSkin);
   
-  if (GetPCItemLastEquipped() == oWeapon)
-  	EnchantCW(oPC, oWeapon);
+  EnchantCW(oPC, oWeapon);
   
   if (GetLocalInt(oPC,"ONEQUIP") == 1)
         RemoveEnchantCW(oPC, GetPCItemLastUnequipped());

@@ -1,12 +1,11 @@
 //Pasive Feats
-const int FEAT_EB_HAND                                 = 3390;
-const int FEAT_EB_HEAD                                 = 3391;
-const int FEAT_EB_CHEST                                = 3392;
-const int FEAT_EB_ARM                                  = 3393;
-const int FEAT_EB_NECK                                 = 3394;
-const int FEAT_INTUITIVE_ATTACK                        = 3166;
-const int FEAT_RAVAGEGOLDENICE                         = 3162;
-const int FEAT_DRAGONSONG                              = 3440;
+const int FEAT_EB_HAND = 3390;
+const int FEAT_EB_HEAD = 3391;
+const int FEAT_EB_CHEST = 3392;
+const int FEAT_EB_ARM = 3393;
+const int FEAT_EB_NECK = 3394;
+const int FEAT_INTUITIVE_ATTACK = 3166;
+const int FEAT_RAVAGEGOLDENICE = 3162;
 
 
 const int FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION    = 3128;
@@ -36,7 +35,7 @@ const int FEAT_SHADOWWEAVE                             = 2960;
 const int FEAT_TENACIOUSMAGIC                          = 2961;
 const int FEAT_PERNICIOUSMAGIC                         = 2962;
 const int FEAT_INSIDIOUSMAGIC                          = 2963;
-const int FEAT_UNHOLY_STRIKE                           = 3451;
+
 
 //Active Feats
 
@@ -346,19 +345,9 @@ const int FEAT_REMOVE_S_POWER_ATTACK = 4310;
 const int FEAT_SUPREME_POWER_ATTACK = 4311;
 const int FEAT_INTIMIDATING_RAGE = 4312;
 
-// Eye of Gruumsh Feats
-const int FEAT_COMMAND_THE_HORDE = 4600;
-const int FEAT_BLINDING_SPITTLE  = 4601;
-const int FEAT_SWING_BLINDLY     = 4602;
-const int FEAT_RITUAL_SCARRING   = 4603;
-const int FEAT_SIGHT_OF_GRUUMSH  = 4604;
-const int FEAT_BLINDSIGHT_5_FT   = 4605;
-const int FEAT_BLINDSIGHT_10_FT  = 4606;
-
 // Tempest Feats
 const int FEAT_GREATER_TWO_WEAPON_FIGHTING = 4315;
 const int FEAT_SUPREME_TWO_WEAPON_FIGHTING = 4316;
-const int FEAT_PERFECT_TWO_WEAPON_FIGHTING = 4320;
 const int FEAT_TWO_WEAPON_DEFENSE = 4317;
 const int FEAT_ABSOLUTE_AMBIDEX = 4321;
 
@@ -713,11 +702,11 @@ const int FEAT_SA_SHADOWDOUBLE      = 2959;
 // Brawler
 const int FEAT_BRAWLER_FISTS                     = 4428;
 const int FEAT_EPIC_BRAWLER                      = 4437;
-const int FEAT_BRAWLER_BLOCK_1                   = 4438;
-const int FEAT_BRAWLER_BLOCK_2                   = 4439;
-const int FEAT_BRAWLER_BLOCK_3                   = 4440;
-const int FEAT_BRAWLER_BLOCK_4                   = 4441;
-const int FEAT_BRAWLER_BLOCK_5                   = 4442;
+const int FEAT_BRAWLER_DODGE_1                   = 4438;
+const int FEAT_BRAWLER_DODGE_2                   = 4439;
+const int FEAT_BRAWLER_DODGE_3                   = 4440;
+const int FEAT_BRAWLER_DODGE_4                   = 4441;
+const int FEAT_BRAWLER_DODGE_5                   = 4442;
 const int FEAT_BRAWLER_EXTRAATT_1                = 4429;
 const int FEAT_BRAWLER_EXTRAATT_2                = 4430;
 const int FEAT_BRAWLER_EXTRAATT_3                = 4431;
@@ -728,7 +717,7 @@ const int FEAT_BRAWLER_DAMAGE_REDUCTION_9        = 4434;
 // Minstrel of the Edge
 const int FEAT_MINSTREL_LIGHT_ARMOR_CASTING      = 4435;
 const int FEAT_MINSTREL_MEDIUM_ARMOR_CASTING     = 4436;
-const int FEAT_MINSTREL_INCREASE_SONGS           = 4459;
+const int FEAT_MINSTREL_SMALL_SHIELD_CASTING     = 4459;
 const int FEAT_MINSTREL_SONG_SLEEP               = 4443;
 const int FEAT_MINSTREL_SONG_SILENCE             = 4444;
 const int FEAT_MINSTREL_SONG_HASTE               = 4445;
@@ -763,53 +752,9 @@ const int FEAT_NS_SHADOWWALK        = 2973;
 const int FEAT_RIT_SCAR             = 2369;
 const int FEAT_SPAWNFROST           = 2371;
 const int FEAT_RIT_DR               = 2370;
+const int FEAT_RIT_SCAR_2           = 2375;
+const int FEAT_RIT_SCAR_3           = 2376;
 
-// Ultimate Ranger
-
-const int FEAT_UR_FE_DWARF          = 2974;
-const int FEAT_UR_FE_ELF            = 2975;
-const int FEAT_UR_FE_GNOME          = 2976;
-const int FEAT_UR_FE_HALFING        = 2977;
-const int FEAT_UR_FE_HALFELF        = 2978;
-const int FEAT_UR_FE_HALFORC        = 2979;
-const int FEAT_UR_FE_HUMAN          = 2980;
-const int FEAT_UR_FE_ABERRATION     = 2981;
-const int FEAT_UR_FE_ANIMAL         = 2982;
-const int FEAT_UR_FE_BEAST          = 2983;
-const int FEAT_UR_FE_CONSTRUCT      = 2984;
-const int FEAT_UR_FE_DRAGON         = 2985;
-const int FEAT_UR_FE_GOBLINOID      = 2986;
-const int FEAT_UR_FE_MONSTROUS      = 2987;
-const int FEAT_UR_FE_ORC            = 2988;
-const int FEAT_UR_FE_REPTILIAN      = 2989;
-const int FEAT_UR_FE_ELEMENTAL      = 2990;
-const int FEAT_UR_FE_FEY            = 2991;
-const int FEAT_UR_FE_GIANT          = 2992;
-const int FEAT_UR_FE_MAGICAL_BEAST  = 2993;
-const int FEAT_UR_FE_OUSIDER        = 2994;
-const int FEAT_UR_FE_SHAPECHANGER   = 2995;
-const int FEAT_UR_FE_UNDEAD         = 2996;
-const int FEAT_UR_FE_VERMIN         = 2997;
-const int FEAT_UR_SNAREMASTERY      = 2998;
-const int FEAT_UR_SNEAKATK_3D6      = 2999;
-const int FEAT_UR_ARMOREDGRACE      = 3430;
-const int FEAT_UR_DODGE_FE          = 3431;
-const int FEAT_UR_RESIST_FE         = 3432;
-const int FEAT_UR_HAWK_TOTEM        = 3433;
-const int FEAT_UR_OWL_TOTEM         = 3434;
-const int FEAT_UR_VIPER_TOTEM       = 3435;
-const int FEAT_UR_GRACE1            = 3436;
-const int FEAT_UR_GRACE2            = 3437;
-const int FEAT_UR_GRACE3            = 3438;
-const int FEAT_UR_GRACE4            = 3439;
-
-// Dragonsong Lyrith
-const int FEAT_DRAGONSONG_STRENGTH      = 3441;
-const int FEAT_DRAGONSONG_COMPULSION    = 3442;
-const int FEAT_DRAGONSONG_SPEED         = 3443;
-const int FEAT_DRAGONSONG_FEAR          = 3444;
-const int FEAT_DRAGONSONG_HEALING       = 3445;
-const int FEAT_LYRITHSONG1              = 3446;
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////
@@ -886,5 +831,4 @@ const int FEAT_BATTLE_RAGE3                      = 3415;
 /*//////////////////////////////////////////////////////
 //////////////////////END CODI//////////////////////////
 //////////////////////////////////////////////////////*/
-
 

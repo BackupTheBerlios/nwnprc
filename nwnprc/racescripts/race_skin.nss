@@ -146,7 +146,7 @@ void main()
         SetCompositeBonus(oSkin, "SA_Craft_Armor", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_ARMOR);
     }
  
-    // Skill Affinity, +2 to craft armor
+    // Skill Affinity, +2 to craft weapon
     if(GetHasFeat(FEAT_SA_CRFTWEAP))
     {
         SetCompositeBonus(oSkin, "SA_Craft_Weapon", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_WEAPON);

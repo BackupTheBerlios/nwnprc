@@ -24,7 +24,7 @@ void main()
     effect eVis2 = EffectVisualEffect(VFX_IMP_DEATH);
     int nClass = GetLevelByClass(CLASS_TYPE_ORCUS, OBJECT_SELF);
     int nCha = GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
-    int nSave = nCha + nClass;
+    int nSave = 10 + nCha + nClass;
 
     //Link effects
 

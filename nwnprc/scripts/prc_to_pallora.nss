@@ -26,9 +26,9 @@ void main()
     effect eLink = EffectLinkEffects(eFear, eDur);
     eLink = EffectLinkEffects(eLink, eDur2);
 
-    int nDC = 10 + GetLevelByClass(CLASS_TYPE_ORCUS, OBJECT_SELF) + GetAbilityModifier(ABILITY_INTELLIGENCE, OBJECT_SELF);
-    int nDuration = GetLevelByClass(CLASS_TYPE_ORCUS, OBJECT_SELF);
-    if(!GetLevelByClass(CLASS_TYPE_ORCUS, OBJECT_SELF))
+    int nDC = 10 + GetLevelByClass(CLASS_TYPE_ORCUS, GetAreaOfEffectCreator()) + GetAbilityModifier(ABILITY_INTELLIGENCE, GetAreaOfEffectCreator());
+    int nDuration = GetLevelByClass(CLASS_TYPE_ORCUS, GetAreaOfEffectCreator());
+    if(GetIsEnemy(oTarget, GetAreaOfEffectCreator()))
     {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELLABILITY_AURA_FEAR));

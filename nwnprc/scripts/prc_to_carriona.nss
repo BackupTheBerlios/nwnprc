@@ -18,21 +18,20 @@ void main()
 {
     //Declare major variables
     object oTarget = GetEnteringObject();
-    effect eDoom = CreateDoomEffectsLink();
-    effect eTest;
-    eDoom = ExtraordinaryEffect(eDoom);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    effect eLink = EffectLinkEffects(eDoom, eDur);
-    int nDC = (10 + GetLevelByClass(CLASS_TYPE_ORCUS, OBJECT_SELF) + GetAbilityModifier(ABILITY_CONSTITUTION, OBJECT_SELF));
-    int nDur = GetLevelByClass(CLASS_TYPE_ORCUS, OBJECT_SELF);
+    effect eVis = EffectVisualEffect(VFX_IMP_DOOM);
+    effect eLink = CreateDoomEffectsLink();
 
-            if(!GetLevelByClass(CLASS_TYPE_ORCUS, OBJECT_SELF))
+    int nDC = (10 + GetLevelByClass(CLASS_TYPE_ORCUS, GetAreaOfEffectCreator()) + GetAbilityModifier(ABILITY_CONSTITUTION, GetAreaOfEffectCreator()));
+    int nDur = GetLevelByClass(CLASS_TYPE_ORCUS, GetAreaOfEffectCreator());
+
+            if(GetIsEnemy(oTarget, GetAreaOfEffectCreator()))
             {
                 //Make a saving throw check
                 if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON))
                 {
-                    //Apply the VFX impact and effects
-                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur));
+                   	//Apply the VFX impact and effects
+            		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+           		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink , oTarget, RoundsToSeconds(nDur));
                 }
             }
 }

@@ -64,7 +64,7 @@ public class Data_2da{
 		
 		// Start the actual reading
 		try{
-			CreateData(reader);
+			createData(reader);
 		}catch(TwoDAReadException e){
 			throw new TwoDAReadException("Exception occurred when reading 2da file: " + name + "\n" + e, e);
 		}
@@ -78,7 +78,7 @@ public class Data_2da{
 	 *
 	 * @throws IOException If there is something wrong with the 2da file
 	 */
-	private void CreateData(Scanner reader){
+	private void createData(Scanner reader){
 		Scanner rowParser;
 		int line = 0;
 		
@@ -110,7 +110,7 @@ public class Data_2da{
 			try{
 				line = Integer.parseInt(matcher.group());
 			}catch(NumberFormatException e){
-				throw new TwoDAReadException("Numberless 2da line: " + line);
+				throw new TwoDAReadException("Numberless 2da line: " + (line + 1));
 			}
 			
 			// Start parsing the row
@@ -125,7 +125,10 @@ public class Data_2da{
 				mainData.get(labels[i]).add(foo);
 				*/
 				// Get the next element and add it to the data structure
-				mainData.get(labels[i]).add(matcher.group());
+				data = matcher.group();
+				// Remove the surrounding quotes if they are present
+				if(data.startsWith("\"")) data = data.substring(1, data.length() - 1);
+				mainData.get(labels[i]).add(data);
 			}
 			
 			// Check for too long rows
@@ -193,10 +196,11 @@ public class Data_2da{
 	 * @param label the label of the column to get
 	 * @param row   the number of the row to get
 	 *
-	 * @return String represeting the 2da entry
+	 * @return String represeting the 2da entry or <code>null</code> if the column does not exist
 	 */
 	public String getEntry(String label, int row){
-		return mainData.get(label.toLowerCase()).get(row);
+		ArrayList column = mainData.get(label.toLowerCase());
+		return column != null ? column.get(row) : null;
 	}
 	
 	/**
@@ -205,7 +209,7 @@ public class Data_2da{
 	 * @param label the label of the column to get
 	 * @param row   the number of the row to get, as string
 	 *
-	 * @return String represeting the 2da entry
+	 * @return String represeting the 2da entry or <code>null</code> if the column does not exist
 	 *
 	 * @throws NumberFormatException if <code>row</code> cannot be converted to an integer
 	 */

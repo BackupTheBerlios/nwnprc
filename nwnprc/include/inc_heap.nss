@@ -83,8 +83,8 @@ int heap_exists(object oStore, string sName);
 int heap_get_size(object oStore, string sName);
 
 
-// Heap insertion functions
-// ========================
+// Heap insertion functions - float
+// ================================
 // oStore   object the heap to be used is stored on
 // sName    the name of the heap
 // nKey     integer value used to determine insertion location
@@ -92,9 +92,47 @@ int heap_get_size(object oStore, string sName);
 //
 // Inserts the given key & element pair at a location in the heap
 // determined by the key. Returns one of the SDL_* constants.
-int heap_put_float (object oStore, string sName, int nKey, float fEntry);
-int heap_put_int   (object oStore, string sName, int nKey, int nEntry);
+//
+// Return order of elements inserted with the same key is not defined.
+int heap_put_float(object oStore, string sName, int nKey, float fEntry);
+
+// Heap insertion functions - integer
+// ==================================
+// oStore   object the heap to be used is stored on
+// sName    the name of the heap
+// nKey     integer value used to determine insertion location
+// *Entry   element to be insterted
+//
+// Inserts the given key & element pair at a location in the heap
+// determined by the key. Returns one of the SDL_* constants.
+//
+// Return order of elements inserted with the same key is not defined.
+int heap_put_int(object oStore, string sName, int nKey, int nEntry);
+
+// Heap insertion functions - object
+// =================================
+// oStore   object the heap to be used is stored on
+// sName    the name of the heap
+// nKey     integer value used to determine insertion location
+// *Entry   element to be insterted
+//
+// Inserts the given key & element pair at a location in the heap
+// determined by the key. Returns one of the SDL_* constants.
+//
+// Return order of elements inserted with the same key is not defined.
 int heap_put_object(object oStore, string sName, int nKey, object oEntry);
+
+// Heap insertion functions - string
+// =================================
+// oStore   object the heap to be used is stored on
+// sName    the name of the heap
+// nKey     integer value used to determine insertion location
+// *Entry   element to be insterted
+//
+// Inserts the given key & element pair at a location in the heap
+// determined by the key. Returns one of the SDL_* constants.
+//
+// Return order of elements inserted with the same key is not defined.
 int heap_put_string(object oStore, string sName, int nKey, string sEntry);
 
 
@@ -107,8 +145,8 @@ int heap_put_string(object oStore, string sName, int nKey, string sEntry);
 // (heap does not exist or is empy)
 int heap_get_type(object oStore, string sName);
 
-// Gets the top element of the heap
-// ===============================
+// Gets the top element of the heap as float
+// =========================================
 // oStore   object the heap to be used is stored on
 // sName    the name of the heap
 //
@@ -116,9 +154,39 @@ int heap_get_type(object oStore, string sName);
 // If the type the function returns and the type stored
 // do not match, null value is returned.
 // (0.0f, 0, OBJECT_INVALID, "")
-float  heap_get_float (object oStore, string sName);
-int    heap_get_int   (object oStore, string sName);
+float heap_get_float(object oStore, string sName);
+
+// Gets the top element of the heap as integer
+// ===========================================
+// oStore   object the heap to be used is stored on
+// sName    the name of the heap
+//
+// Returns the top element as an entity of a certain type.
+// If the type the function returns and the type stored
+// do not match, null value is returned.
+// (0.0f, 0, OBJECT_INVALID, "")
+int heap_get_int(object oStore, string sName);
+
+// Gets the top element of the heap as object
+// ==========================================
+// oStore   object the heap to be used is stored on
+// sName    the name of the heap
+//
+// Returns the top element as an entity of a certain type.
+// If the type the function returns and the type stored
+// do not match, null value is returned.
+// (0.0f, 0, OBJECT_INVALID, "")
 object heap_get_object(object oStore, string sName);
+
+// Gets the top element of the heap as string
+// ==========================================
+// oStore   object the heap to be used is stored on
+// sName    the name of the heap
+//
+// Returns the top element as an entity of a certain type.
+// If the type the function returns and the type stored
+// do not match, null value is returned.
+// (0.0f, 0, OBJECT_INVALID, "")
 string heap_get_string(object oStore, string sName);
 
 
@@ -159,15 +227,24 @@ int heap_delete(object oStore, string sName){
         return SDL_ERROR_DOES_NOT_EXIST;
     
     nSize -= 1;
-
+    int nTempType;
     for(; nSize >= 0; nSize--){
         // Delete the storage values
-        DeleteLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + ELEMENT_SUFFIX);
+        nTempType = GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + TYPE_SUFFIX);
+        DeleteLocalInt   (oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + TYPE_SUFFIX);
         DeleteLocalInt   (oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + KEY_SUFFIX);
-        // Delete the potential object reference whether it's present or not.
-        // Done this way, since checking for it's presence would force calculation
-        // of the hash code anyway.
-        DeleteLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + ELEMENT_SUFFIX);
+        
+        if(nTempType > ENTITY_TYPE_INTEGER){
+            if(nTempType > ENTITY_TYPE_OBJECT)
+                DeleteLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + ELEMENT_SUFFIX);
+            else
+                DeleteLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + ELEMENT_SUFFIX);
+        }else{
+            if(nTempType > ENTITY_TYPE_FLOAT)
+                DeleteLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + ELEMENT_SUFFIX);
+            else
+                DeleteLocalFloat(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + ELEMENT_SUFFIX);
+        }
     }
     
     // Delete the size variable
@@ -177,15 +254,15 @@ int heap_delete(object oStore, string sName){
 
 
 int heap_exists(object oStore, string sName){
-    if(GetLocalInt(oStore, sName))
-        return FALSE;
-    else
+    if(GetLocalInt(oStore, HEAP_PREFIX + sName))
         return TRUE;
+    else
+        return FALSE;
 }
 
 
 int heap_get_size(object oStore, string sName){
-    return GetLocalInt(oStore, sName) - 1;
+    return GetLocalInt(oStore, HEAP_PREFIX + sName) - 1;
 }
 
 
@@ -204,16 +281,20 @@ void heap_swap(object oStore, string sName, int nInd1, int nInd2){
     
     // Grab the element from index1
     if(nTempType > ENTITY_TYPE_INTEGER){
-        if(nTempType > ENTITY_TYPE_OBJECT)
+        if(nTempType > ENTITY_TYPE_OBJECT){
             sTemp = GetLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX);
-        else
+            DeleteLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX);
+        }else{
             oTemp = GetLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX);
-    }else{
-        if(nTempType > ENTITY_TYPE_FLOAT)
+            DeleteLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX);
+    }}else{
+        if(nTempType > ENTITY_TYPE_FLOAT){
             nTemp = GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX);
-        else
+            DeleteLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX);
+        }else{
             fTemp = GetLocalFloat(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX);
-    }
+            DeleteLocalFloat(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX);
+    }}
     
     // Start moving from index2
     int nTempType2 = GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + TYPE_SUFFIX);
@@ -223,20 +304,24 @@ void heap_swap(object oStore, string sName, int nInd1, int nInd2){
                 GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + KEY_SUFFIX));
     // Illegal use of enumerations. Don't do this at home :p
     if(nTempType2 > ENTITY_TYPE_INTEGER){
-        if(nTempType2 > ENTITY_TYPE_OBJECT)
+        if(nTempType2 > ENTITY_TYPE_OBJECT){
             SetLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX,
                            GetLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + ELEMENT_SUFFIX));
-        else
+            DeleteLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + ELEMENT_SUFFIX);
+        }else{
             SetLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX,
                            GetLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + ELEMENT_SUFFIX));
-    }else{
-        if(nTempType2 > ENTITY_TYPE_FLOAT)
+            DeleteLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + ELEMENT_SUFFIX);
+    }}else{
+        if(nTempType2 > ENTITY_TYPE_FLOAT){
             SetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX,
                         GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + ELEMENT_SUFFIX));
-        else
+            DeleteLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + ELEMENT_SUFFIX);
+        }else{
             SetLocalFloat(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd1) + ELEMENT_SUFFIX,
                           GetLocalFloat(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + ELEMENT_SUFFIX));
-    }
+            DeleteLocalFloat(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + ELEMENT_SUFFIX);
+    }}
     
     // Place the stuff copied to temporary variables to their new place
     SetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nInd2) + TYPE_SUFFIX,
@@ -266,9 +351,9 @@ void heap_swap(object oStore, string sName, int nInd1, int nInd2){
  */
 int heap_get_insert_location(object oStore, string sName, int nKey){
     // Insert into position just beyond the end of current elements
-    int nIndex = GetLocalInt(oStore, HEAP_PREFIX + sName);
+    int nIndex = heap_get_size(oStore, sName);
     int nTempType;
-    while(nIndex > 1 && GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + KEY_SUFFIX) < nKey){
+    while(nIndex > 0 && GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + KEY_SUFFIX) < nKey){
         // Move the parent entry down
         nTempType = GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + TYPE_SUFFIX);
         SetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nIndex) + TYPE_SUFFIX,
@@ -276,29 +361,27 @@ int heap_get_insert_location(object oStore, string sName, int nKey){
         SetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nIndex) + KEY_SUFFIX,
                     GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + KEY_SUFFIX));
         // Illegal use of enumerations. Don't do this at home :p
+        // The old entry is deleted, since the entry to be inserted might not be of the same type
         if(nTempType > ENTITY_TYPE_INTEGER){
-            if(nTempType > ENTITY_TYPE_OBJECT)
+            if(nTempType > ENTITY_TYPE_OBJECT){
                 SetLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(nIndex) + ELEMENT_SUFFIX,
                                GetLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + ELEMENT_SUFFIX));
-            else
+                DeleteLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + ELEMENT_SUFFIX);
+            }else{
                 SetLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(nIndex) + ELEMENT_SUFFIX,
                                GetLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + ELEMENT_SUFFIX));
-        }else{
-            if(nTempType > ENTITY_TYPE_FLOAT)
+                 DeleteLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + ELEMENT_SUFFIX);
+        }}else{
+            if(nTempType > ENTITY_TYPE_FLOAT){
                 SetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nIndex) + ELEMENT_SUFFIX,
                             GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + ELEMENT_SUFFIX));
-            else
+                DeleteLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + ELEMENT_SUFFIX);
+            }else{
                 SetLocalFloat(oStore, HEAP_PREFIX + sName + "_" + IntToString(nIndex) + ELEMENT_SUFFIX,
                               GetLocalFloat(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + ELEMENT_SUFFIX));
-        }
-        /*
-        SetLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(nIndex) + ELEMENT_SUFFIX,
-                       GetLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + ELEMENT_SUFFIX));
-        // Move the object entry if it exists. A minor time efficiency loss, but may save a lot of space
-        if(nTempType == ENTITY_TYPE_OBJECT)
-            SetLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(nIndex) + ELEMENT_SUFFIX,
-                           GetLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + ELEMENT_SUFFIX));
-        */
+                DeleteLocalFloat(oStore, HEAP_PREFIX + sName + "_" + IntToString(heap_parent(nIndex)) + ELEMENT_SUFFIX);
+        }}
+
         nIndex = heap_parent(nIndex);
     }
     
@@ -394,12 +477,33 @@ int heap_remove(object oStore, string sName){
     if(!GetLocalInt(oStore, HEAP_PREFIX + sName))
         return SDL_ERROR_DOES_NOT_EXIST;
     
-    // Move the bottommost element over the max
-    int nSize = GetLocalInt(oStore, HEAP_PREFIX + sName) - 1;
-    heap_swap(oStore, sName, 0, nSize);
-    // Mark the heapsize as reduced
-    SetLocalInt(oStore, HEAP_PREFIX + sName, nSize);
+    int nSize = heap_get_size(oStore, sName);
+    if(!nSize)
+        return SDL_ERROR_OUT_OF_BOUNDS;
     
+    // Move the bottommost element over the max
+    nSize--;
+    heap_swap(oStore, sName, 0, nSize);
+    // Delete the bottommost element
+    int nTempType = GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + TYPE_SUFFIX);
+    DeleteLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + TYPE_SUFFIX);
+    DeleteLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + KEY_SUFFIX);
+    
+    if(nTempType > ENTITY_TYPE_INTEGER){
+        if(nTempType > ENTITY_TYPE_OBJECT)
+            DeleteLocalString(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + ELEMENT_SUFFIX);
+        else
+            DeleteLocalObject(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + ELEMENT_SUFFIX);
+    }else{
+        if(nTempType > ENTITY_TYPE_FLOAT)
+            DeleteLocalInt(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + ELEMENT_SUFFIX);
+        else
+            DeleteLocalFloat(oStore, HEAP_PREFIX + sName + "_" + IntToString(nSize) + ELEMENT_SUFFIX);
+    }
+    // Mark the heapsize as reduced
+    SetLocalInt(oStore, HEAP_PREFIX + sName, nSize + 1);
+    // Move nSize to point at the new last entry
+    nSize--;
     // Re-assert the heap conditions
     int nLeft, nRight, nMax, nIndex = 0;
     int bContinue = TRUE;
@@ -446,27 +550,27 @@ int heap_get_type(object oStore, string sName){
 
 float heap_get_float(object oStore, string sName){
     return GetLocalInt(oStore, HEAP_PREFIX + sName + "_0" + TYPE_SUFFIX) == ENTITY_TYPE_FLOAT ?
-             GetLocalFloat(oStore, HEAP_PREFIX + sName + "_" + "_0" + ELEMENT_SUFFIX) :
+             GetLocalFloat(oStore, HEAP_PREFIX + sName + "_0" + ELEMENT_SUFFIX) :
              0.0f;
 }
 
 int heap_get_int(object oStore, string sName){
     return GetLocalInt(oStore, HEAP_PREFIX + sName + "_0" + TYPE_SUFFIX) == ENTITY_TYPE_INTEGER ?
-             GetLocalInt(oStore, HEAP_PREFIX + sName + "_" + "_0" + ELEMENT_SUFFIX) :
+             GetLocalInt(oStore, HEAP_PREFIX + sName + "_0" + ELEMENT_SUFFIX) :
              0;
 }
 
 object heap_get_object(object oStore, string sName){
     return GetLocalInt(oStore, HEAP_PREFIX + sName + "_0" + TYPE_SUFFIX) == ENTITY_TYPE_OBJECT ?
-             GetLocalObject(oStore, HEAP_PREFIX + sName + "_" + "_0" + ELEMENT_SUFFIX) :
+             GetLocalObject(oStore, HEAP_PREFIX + sName + "_0" + ELEMENT_SUFFIX) :
              OBJECT_INVALID;
 }
 
 string heap_get_string(object oStore, string sName){
     return GetLocalInt(oStore, HEAP_PREFIX + sName + "_0" + TYPE_SUFFIX) == ENTITY_TYPE_STRING ?
-             GetLocalString(oStore, HEAP_PREFIX + sName + "_" + "_0" + ELEMENT_SUFFIX) :
+             GetLocalString(oStore, HEAP_PREFIX + sName + "_0" + ELEMENT_SUFFIX) :
              "";
 }
 
 
-void main(){}
+//void main(){}

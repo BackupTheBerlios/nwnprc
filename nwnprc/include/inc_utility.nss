@@ -1,6 +1,7 @@
 #include "inc_array"
 #include "inc_array_b"
 #include "inc_array_c"
+#include "inc_heap"
 #include "inc_2dacache"
 
 //takes a hex string "0x####" and returns the integer base 10 equivalent

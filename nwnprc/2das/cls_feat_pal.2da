@@ -208,7 +208,7 @@
 204 FEAT_SERVHEAVEN                                3355      0    -1             1      
 205 FEAT_NEW_POWER_ATTACK                          3143      3    1              1      
 206 FEAT_NEW_IMPROVED_POWER_ATTACK                 3144      3    1              1      
-207 FEAT_RANGED_SMITE                              3356      0    -1             1      
+207 ****                                           ****      **** ****           ****   
 208 FEAT_EPIC_DIVINE_VIGOR                         3115      0    -1             1      
 209 FEAT_DIVINE_VIGOR                              3116      0    -1             1      
 210 FEAT_DIVINE_RESISTANCE                         3117      0    -1             1      

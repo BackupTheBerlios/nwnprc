@@ -632,7 +632,7 @@ public final class PageGeneration{
 				// Add links to the racial feats
 				featTable = twoDA.get(racialtypes2da.getEntry("FeatsTable", i));
 				if(featTable == null){
-					err_pr.println("Missing feat table for race " + i + ": " + name);
+					err_pr.println("Missing RACE_FEAT_*.2da for race " + i + ": " + name);
 					errored = true;
 				}
 				
@@ -678,11 +678,7 @@ public final class PageGeneration{
 		       path      = null,
 		       temp      = null;
 		String[] tempArr = null;
-		FeatEntry grantedFeat   = null;
-		Data_2da featTable      = null,
-		         bonusFeatTable = null,
-		         
-		         skillTable     = null;
+		
 		boolean errored;
 		
 		classes = new HashMap<Integer, ClassEntry>();
@@ -929,6 +925,15 @@ public final class PageGeneration{
 			}
 			else throw new PageGenerationException("Failed to read CLS_FEAT_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
 		}
+		int epicLevel = 40,
+		    grantedLevel = 0;
+		
+		try{ 
+			epicLevel = Integer.parseInt(classes2da.getEntry("EpicLevel", entryNum));
+		}catch(NumberFormatException e){
+			if(tolErr) err_pr.println("Invalid EpicLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
+			else throw new PageGenerationException("Invalid EpicLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
+		}
 		
 		String[] toReturn = {classFeatTableHeaderTemplate,
 		                     classFeatTableHeaderTemplate};
@@ -965,12 +970,21 @@ public final class PageGeneration{
 				}else throw new PageGenerationException("FeatIndex entry in " + featTable.getName() + " on row " + i + " points to non-existent feat: " + featTable.getEntry("FeatIndex", i));
 			}
 			
+			try{
+				grantedLevel = Integer.parseInt(featTable.getEntry("GrantedOnLevel", i));
+			}catch(NumberFormatException e){
+				if(tolErr){
+					err_pr.println("Invalid GrantedOnLevel entry in " + featTable.getName() + " on row " + i + ": " + featTable.getEntry("GrantedOnLevel", i));
+					continue;
+				}else throw new PageGenerationException("Invalid GrantedOnLevel entry in " + featTable.getName() + " on row " + i + ": " + featTable.getEntry("GrantedOnLevel", i));
+			}
+			
 			if(temp.equals("3")){
-				if(tempFeat.isEpic) epicBonusFeats.put(tempFeat.name, tempFeat);
-				else              normalBonusFeats.put(tempFeat.name, tempFeat);
+				if(tempFeat.isEpic || grantedLevel > epicLevel) epicBonusFeats.put(tempFeat.name, tempFeat);
+				else                                            normalBonusFeats.put(tempFeat.name, tempFeat);
 			}else{
-				if(tempFeat.isEpic) epicSelectableFeats.put(tempFeat.name, tempFeat);
-				else              normalSelectableFeats.put(tempFeat.name, tempFeat);
+				if(tempFeat.isEpic || grantedLevel > epicLevel) epicSelectableFeats.put(tempFeat.name, tempFeat);
+				else                                            normalSelectableFeats.put(tempFeat.name, tempFeat);
 			}
 			
 		}

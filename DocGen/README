@@ -1,0 +1,31 @@
+To use the Autodoc, create directories 2da/ and tlk/ in the location you will be
+running it from. This location should also contain the directory templates/ and
+the file settings from the CVS.
+
+Place dialog.tlk and prc_consortium.tlk equivalents for each language specified in
+settings in tlk/. Place the following 2das in 2da/
+
+classes.2da
+domains.2da
+feat.2da
+masterfeats.2da
+racialtypes.2da
+skills.2da
+spells.2da
+
+all cls_atk*.2da
+all cls_savthr*.2da
+all cls_skill*.2da
+all cls_feat*.2da
+all race_feat_*.2da
+
+
+
+If you have make installed, run "make" and "make run" to generate the manual. There are
+other run options present in the makefile for those interested.
+If you do not have make, run
+	javac -source 1.5 -target 1.5 prc/autodoc/*.java
+and
+	java -Xmx300m -Xms300m prc/autodoc/Main
+
+use parameters --help or -? to get info about other possible parameters.

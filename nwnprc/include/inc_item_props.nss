@@ -1055,6 +1055,7 @@ void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType =
     int iTotalR = GetLocalInt(oPC, "CompositeAttackBonusR");
     int iTotalL = GetLocalInt(oPC, "CompositeAttackBonusL");
     int iCur = GetLocalInt(oPC, sBonus);
+    int iAB, iAP, iHand;
 
     RemoveCompositeAttackBonus(oPC);
 
@@ -1080,12 +1081,27 @@ void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType =
             break;
     }           
 
-    effect eAttackBonusR = EffectAttackIncrease(iTotalR, ATTACK_BONUS_ONHAND);
-    effect eAttackBonusL = EffectAttackIncrease(iTotalL, ATTACK_BONUS_OFFHAND);
-    effect eAttackBonus = ExtraordinaryEffect(EffectLinkEffects(eAttackBonusR, eAttackBonusL));
-        
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAttackBonus, oPC, 9999.0);
+    if (iTotalR > iTotalL)
+    {
+        iAB = iTotalR;
+        iAP = iTotalR - iTotalL;
+        iHand = ATTACK_BONUS_OFFHAND;
+    }
+    else
+    {
+        iAB = iTotalL;
+        iAP = iTotalL - iTotalR;
+        iHand = ATTACK_BONUS_ONHAND;
+    }
     
+    effect eAttackInc = EffectAttackIncrease(iAB);
+    effect eAttackDec = EffectAttackDecrease(iAP, iHand);
+    effect eAttack = EffectLinkEffects(eAttackInc, eAttackDec);
+
+    eAttack = ExtraordinaryEffect(eAttack);
+
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAttack, oPC, 9999.0);
+
     SetLocalInt(oPC, "CompositeAttackBonusR", iTotalR);
     SetLocalInt(oPC, "CompositeAttackBonusL", iTotalL);
     SetLocalInt(oPC, sBonus, iVal);

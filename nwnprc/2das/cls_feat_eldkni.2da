@@ -55,7 +55,6 @@
 51  PBShot                                         27        1    -1             0      
 52  PowerAtk                                       28        1    -1             0      
 53  RapidShot                                      30        1    -1             0      
-54  Sap                                            31        1    -1             0      
 55  StunFist                                       39        1    -1             0      
 56  TwoWeap                                        41        1    -1             0      
 57  WeapFinesse                                    42        1    -1             0      
@@ -253,7 +252,7 @@
 249 FEAT_EPIC_AUTOMATIC_STILL_SPELL_1              863       1    -1             0      
 250 FEAT_EPIC_AUTOMATIC_STILL_SPELL_2              864       1    -1             0      
 251 FEAT_EPIC_AUTOMATIC_STILL_SPELL_3              865       1    -1             0      
-252 Epic_Eldritch_Knight                           4013      1    11             0      
+252 Epic_Eldritch_Knight                           4013      3    11             0      
 253 WeapProfSim                                    46        1    -1             0      
 254 SpellFocusCon                                  166       0    -1             0      
 255 SpellFocusDiv                                  167       0    -1             0      

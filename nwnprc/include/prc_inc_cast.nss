@@ -298,13 +298,13 @@ int GetLevelByTypeDivine(object oCaster = OBJECT_SELF)
     int iClass2Lev = GetLevelByClass(iClass2, oCaster);
     int iClass3Lev = GetLevelByClass(iClass3, oCaster);
 
-    if (iClass1 == iFirstDivine) iClass1Lev += GetDivinePRCLevels(oCaster);
-    if (iClass2 == iFirstDivine) iClass2Lev += GetDivinePRCLevels(oCaster);
-    if (iClass3 == iFirstDivine) iClass3Lev += GetDivinePRCLevels(oCaster);
-
     if (iClass1 == CLASS_TYPE_PALADIN || iClass1 == CLASS_TYPE_RANGER) iClass1Lev = iClass1Lev / 2;
     if (iClass2 == CLASS_TYPE_PALADIN || iClass2 == CLASS_TYPE_RANGER) iClass2Lev = iClass2Lev / 2;
     if (iClass3 == CLASS_TYPE_PALADIN || iClass3 == CLASS_TYPE_RANGER) iClass3Lev = iClass3Lev / 2;
+
+    if (iClass1 == iFirstDivine) iClass1Lev += GetDivinePRCLevels(oCaster);
+    if (iClass2 == iFirstDivine) iClass2Lev += GetDivinePRCLevels(oCaster);
+    if (iClass3 == iFirstDivine) iClass3Lev += GetDivinePRCLevels(oCaster);
 
     if (!GetIsDivineClass(iClass1)) iClass1Lev = 0;
     else iClass1Lev += PractisedSpellcasting(oCaster, iClass1, iClass1Lev);
@@ -369,9 +369,9 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF, int iCastingClass = -1, int 
     {
         int iDivLevel = GetLevelByClass(iCastingClass, oCaster);
 
-        if (GetFirstDivineClass(oCaster) == iCastingClass) iDivLevel += GetDivinePRCLevels(oCaster);
-
         if (iCastingClass == CLASS_TYPE_RANGER || iCastingClass == CLASS_TYPE_PALADIN) iDivLevel = iDivLevel / 2;
+
+        if (GetFirstDivineClass(oCaster) == iCastingClass) iDivLevel += GetDivinePRCLevels(oCaster);
 
         iDivLevel += TrueNecromancy(oCaster, iSpellId, sType);
         iDivLevel += ShadowWeave(oCaster, iSpellId);

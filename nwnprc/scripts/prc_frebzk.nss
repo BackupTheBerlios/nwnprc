@@ -15,6 +15,8 @@
 #include "prc_class_const"
 #include "prc_spell_const"
 
+#include "x2_inc_itemprop" // for checking if item is a weapon
+
 // Used to add/remove the auto frenzy property on creature skin
 void AutoFrenzy(object oPC,int iEquip)
 {
@@ -55,14 +57,29 @@ void AutoFrenzy(object oPC,int iEquip)
     }
 }
 
+void CheckSupremePowerAttack(object oPC, int iEquip)
+{
+      object oWeapon = GetPCItemLastUnequipped();
+      int bIsWeapon = FALSE;
+      int bHasFeatActive = FALSE;
+      
+      if (iEquip == 1) // Unequip
+      {
+           AssignCommand(OBJECT_SELF, ActionUseFeat(FEAT_SUPREME_POWER_ATTACK, OBJECT_SELF) );
+      }
+}
+
 void main()
 {
     //Declare main variables.
     object oPC = OBJECT_SELF;
+    int iEquip = GetLocalInt(oPC, "ONEQUIP");
     
     int nFrenzy = GetHasFeat(FEAT_FRENZY);
     if(nFrenzy != 0)
     {
         AutoFrenzy(oPC,GetLocalInt(oPC, "ONEQUIP") );
-    }  
+    }
+    
+    CheckSupremePowerAttack(oPC, iEquip);
 }

@@ -1,6 +1,7 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "prc_class_const"
+#include "x2_inc_itemprop" // for checking if item is a weapon
 
 /// +3 on Craft Weapon /////////
 void Expert_Bowyer(object oPC ,object oSkin ,int nBowyer)
@@ -106,9 +107,46 @@ void AddSneakAttack(object oPC , int iEquip)
       }   
 }
 
+// Removes Power Shot feats if they unequip their bow
+void CheckPowerShot(object oPC, int iEquip)
+{
+      object oWeapon = GetPCItemLastUnequipped();
+      int bIsWeapon = FALSE;
+      int bHasFeatActive = FALSE;
+      int iFeatToActivate;
+
+      if (iEquip == 1) // Unequip
+      {
+           if(IPGetIsMeleeWeapon(oWeapon) || GetWeaponRanged(oWeapon) )
+           {
+                bIsWeapon = TRUE;
+           }
+           
+           if(GetHasFeatEffect(FEAT_PA_POWERSHOT) )
+           {
+                bHasFeatActive = TRUE;
+                iFeatToActivate = FEAT_PA_POWERSHOT;
+           }
+           else if(GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT) )
+           {
+                bHasFeatActive = TRUE;
+                iFeatToActivate = FEAT_PA_POWERSHOT;
+           }
+           else if(GetHasFeatEffect(FEAT_PA_SUP_POWERSHOT) )
+           {
+                bHasFeatActive = TRUE;
+                iFeatToActivate = FEAT_PA_POWERSHOT;
+           }
+           
+           if(bIsWeapon && bHasFeatActive)
+           {
+                AssignCommand(OBJECT_SELF, ActionUseFeat(iFeatToActivate, OBJECT_SELF) );
+           }
+      }
+}
+
 void main()
 {
-
      //Declare main variables.
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
@@ -116,12 +154,12 @@ void main()
     int iSneak = GetLocalInt(oPC, "HasPASneak");
     int nBowyer = GetHasFeat(FEAT_EXPERT_BOWYER, oPC) ? 3 : 0;
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
-
+    
 
     if (nBowyer>0) Expert_Bowyer(oPC, oSkin, nBowyer);
 
-    if (iEquip == 1)    RemoveSneakAttack(oPC, iEquip);
-    
+    if (iEquip == 1)    RemoveSneakAttack(oPC, iEquip);   
     if (iEquip == 2)    AddSneakAttack(oPC, iEquip);
-
+    
+    CheckPowerShot(oPC, iEquip);
 }

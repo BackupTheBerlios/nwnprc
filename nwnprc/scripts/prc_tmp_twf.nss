@@ -67,7 +67,7 @@ void main()
           // If feat is on a tempest, check armor type
           if(tempestLevel > 4 && armorType < ARMOR_TYPE_MEDIUM)
           {
-               if(oWeapR != OBJECT_INVALID  && oWeapL != OBJECT_INVALID && oWeapL != oWeapR && isNotShield(oWeapL) )
+               if(oWeapR != OBJECT_INVALID  && oWeapL != OBJECT_INVALID && isNotShield(oWeapL) )
               {
                    effect addAtt = SupernaturalEffect( EffectModifyAttacks(numAddAttacks) );
                    effect attPen = SupernaturalEffect( EffectAttackDecrease(attackPenalty) );
@@ -82,7 +82,7 @@ void main()
           }
           else
           {
-               if(oWeapR != OBJECT_INVALID  && oWeapL != OBJECT_INVALID && oWeapL != oWeapR && isNotShield(oWeapL) )
+               if(oWeapR != OBJECT_INVALID  && oWeapL != OBJECT_INVALID && isNotShield(oWeapL) )
               {
                    effect addAtt = SupernaturalEffect( EffectModifyAttacks(numAddAttacks) );
                    ApplyEffectToObject(DURATION_TYPE_PERMANENT, addAtt, oPC);

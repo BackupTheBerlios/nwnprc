@@ -14,6 +14,7 @@
 #include "prc_power_const"
 #include "lookup_2da_spell"
 #include "prc_inc_clsfunc"
+#include "inc_eventhook"
 
 // Returns the Manifesting Class
 // GetCasterClass wont work, so the casting class is set via a localint
@@ -68,6 +69,11 @@ int VolatileMind(object oTarget, object oCaster);
 // oCaster  creature manifesting a power
 // oTarget  creature being manifested at
 void HostileMind(object oCaster, object oTarget);
+
+// Deals damage from overchanneling if it is active
+// ================================================
+// oCaster  creature manifesting a power
+void DoOverchannelDamage(object oCaster);
 
 // Returns the number of powers a character posseses from a specific class
 int GetPowerCount(object oPC, int nClass);
@@ -128,6 +134,11 @@ int GetPsionicFocusUsesPerExpenditure(object oCreature = OBJECT_SELF);
 // oLoser       creature losing it's psionic focus
 void LosePsionicFocus(object oLoser = OBJECT_SELF);
 
+// Returns whether the creature is a psionic being or not
+// ======================================================
+// oCreature    creature to test
+int GetIsPsionicCharacter(object oCreature);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -173,6 +184,10 @@ int GetManifesterLevel(object oCaster)
     //Adding wild surge
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     if (nSurge > 0) nLevel = nLevel + nSurge;
+    
+    // Adding overchannel
+    int nOverchannel = GetLocalInt(oCaster, "Overchannel");
+    if(nOverchannel > 0) nLevel += nOverchannel;
 
     FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oCaster, FALSE);
 
@@ -207,24 +222,19 @@ int GetAbilityOfClass(int nClass){
 
 int GetManifesterDC(object oCaster)
 {
-
     int nClass = GetManifestingClass(oCaster);
     int nDC = 10;
     nDC += GetPowerLevel(oCaster);
     nDC += (GetAbilityScoreOfClass(oCaster, nClass) - 10)/2;
+    
+    // Ignoring power points skips feat evaluation
     if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
-    return nDC;
-    if (GetLocalInt(oCaster, "PsionicEndowment") == 1)
+        return nDC;
+    
+    if (GetLocalInt(oCaster, "PsionicEndowmentActive") == TRUE && UsePsionicFocus(oCaster))
     {
-        nDC += 2;
-        SetLocalInt(oCaster, "PsionicEndowment", 0);
+        nDC += GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT, oCaster) ? 4 : 2;
     }
-    else if (GetLocalInt(oCaster, "GreaterPsionicEndowment") == 1)
-    {
-        nDC += 4;
-        SetLocalInt(oCaster, "GreaterPsionicEndowment", 0);
-    }
-
 
     return nDC;
 }
@@ -310,20 +320,24 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
             nCanManifest = FALSE;
         }
         // Check if the power would fail after Volatile Mind and Psionic Hole are applied
-        else if((nPPCost + nVolatile + nPsiHole) > nPP)
+        else
         {
-            FloatingTextStringOnCreature("Your target's abilities cause you to use more Power Points than you have. The power fails", oCaster, FALSE);
-            nCanManifest = FALSE;
-            SetLocalInt(oCaster, "PowerPoints", 0);
-        }
-        else //Manifester has enough points, so subtract cost and manifest power
-        {
-            //Adds in the cost for volatile mind and psionic hole
-            nPPCost += nVolatile + nPsiHole;
-            nPP = nPP - nPPCost;
-            FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
-//            if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") != TRUE) Checked for at the beginning alredy
-            SetLocalInt(oCaster, "PowerPoints", nPP);
+            if((nPPCost + nVolatile + nPsiHole) > nPP)
+            {
+                FloatingTextStringOnCreature("Your target's abilities cause you to use more Power Points than you have. The power fails", oCaster, FALSE);
+                nCanManifest = FALSE;
+                SetLocalInt(oCaster, "PowerPoints", 0);
+            }
+            else //Manifester has enough points, so subtract cost and manifest power
+            {
+                //Adds in the cost for volatile mind and psionic hole
+                nPPCost += nVolatile + nPsiHole;
+                nPP = nPP - nPPCost;
+                FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
+                SetLocalInt(oCaster, "PowerPoints", nPP);
+            }
+            // Damage from overchanneling happens only if one actually spends PP
+            DoOverchannelDamage(oCaster);
         }
     }
     else
@@ -331,8 +345,8 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
         FloatingTextStringOnCreature("Your manifester level is not high enough to spend that many Power Points", oCaster, FALSE);
         nCanManifest = FALSE;
     }
-    return nCanManifest;
 
+    return nCanManifest;
 }
 
 
@@ -431,6 +445,27 @@ void HostileMind(object oCaster, object oTarget)
 }
 
 
+void DoOverchannelDamage(object oCaster)
+{
+    int nOverchannel = GetLocalInt(oCaster, "Overchannel");
+    if(nOverchannel > 0)
+    {
+        int nDam = d8(nOverchannel * 2 - 1);
+        // Check if Talented applies
+        if(GetPowerLevel(oCaster) <= 3)
+        {
+            if(GetLocalInt(oCaster, "TalentedActive") && UsePsionicFocus(oCaster))
+                return;
+            /* Should we be merciful and let the feat be "retroactively activated" if the damage were enough to kill?
+            else if(GetCurrentHitPoints(oCaster) < nDam && GetHasFeat(FEAT_TALENTED, oCaster) && UsePsionicFocus(oCaster))
+                return;*/
+        }
+        effect eDam = EffectDamage(nDam);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oCaster);
+    }
+}
+
+
 int CheckPowerPrereqs(int nFeat, object oPC)
 {
     if(GetHasFeat(nFeat, oPC))
@@ -504,10 +539,10 @@ int MetaPsionics(int nDiceSize, int nNumberOfDice, int nMetaPsi, object oCaster 
         if(bIsRayOrRangedTouch && 
            GetHasFeat(FEAT_POWER_SPECIALIZATION, oCaster))
         {
-            if(GetLocalInt(oCaster, "PsionicFocusUsed"))
-                nBonusDamage += 2;
-            else
+            if(GetLocalInt(oCaster, "PowerSpecializationActive") && UsePsionicFocus(oCaster))
                 nBonusDamage += GetAbilityModifier(GetAbilityOfClass(GetManifestingClass(oCaster)));
+            else
+                nBonusDamage += 2;
         }
         if(GetHasFeat(FEAT_GREATER_POWER_SPECIALIZATION, oCaster) &&
            GetDistanceBetween(oTarget, oCaster) <= 9.144f)
@@ -560,16 +595,11 @@ int GetPsiPenetration(object oCaster = OBJECT_SELF)
         return nPen;
 
     // Check for Power Pen feats being used
-    if (GetLocalInt(oCaster, "PowerPenetration") == 1)
+    if(GetLocalInt(oCaster, "PowerPenetrationActive") == TRUE && UsePsionicFocus(oCaster))
     {
-        nPen += 4;
-        SetLocalInt(oCaster, "PowerPenetration", 0);
+        nPen += GetHasFeat(FEAT_GREATER_POWER_PENETRATION, oCaster) ? 8 : 4;
     }
-    else if (GetLocalInt(oCaster, "GreaterPowerPenetration") == 1)
-    {
-        nPen += 8;
-        SetLocalInt(oCaster, "GreaterPowerPenetration", 0);
-    }
+
 
     return nPen;
 }
@@ -599,7 +629,13 @@ void GainPsionicFocus(object oGainee = OBJECT_SELF)
     if(GetHasFeat(FEAT_SPEED_OF_THOUGHT, oGainee) &&
        GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, oGainee)) < 6 // Check for heavy armor
       )
+    {
         AssignCommand(oGainee, ActionCastSpellAtObject(SPELL_SPEED_OF_THOUGHT_BONUS, oGainee, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        // Schedule a script to remove the bonus should they equip heavy armor
+        AddEventScript(oGainee, EVENT_ONPLAYEREQUIPITEM, "psi_spdfthgt_oeq", TRUE, FALSE);
+        // Schedule another script to add the bonus back if the unequip the armor
+        AddEventScript(oGainee, EVENT_ONPLAYERUNEQUIPITEM, "psi_spdfthgt_ueq", TRUE, FALSE);
+    }
     // Psionic Dodge
     if(GetHasFeat(FEAT_PSIONIC_DODGE, oGainee))
         SetCompositeBonus(GetPCSkin(oGainee), "PsionicDodge", 1, ITEM_PROPERTY_AC_BONUS);
@@ -614,6 +650,7 @@ int UsePsionicFocus(object oUser = OBJECT_SELF)
     {
         SetLocalInt(oUser, "PsionicFocusUses", GetPsionicFocusUsesPerExpenditure(oUser) - 1);
         DelayCommand(0.5f, DeleteLocalInt(oUser, "PsionicFocusUses"));
+        SendMessageToPC(oUser, "You have used your Psionic Focus");
         
         bToReturn = TRUE;
     }
@@ -631,6 +668,26 @@ int UsePsionicFocus(object oUser = OBJECT_SELF)
     return bToReturn;
 }
 
+void LosePsionicFocus(object oLoser = OBJECT_SELF)
+{
+    SetLocalInt(oLoser, "PsionicFocus", FALSE);
+    
+    // Loss of Speed of Thought effects
+    RemoveSpellEffects(SPELL_SPEED_OF_THOUGHT_BONUS, oLoser, oLoser);
+    RemoveEventScript(oLoser, EVENT_ONPLAYEREQUIPITEM, "psi_spdfthgt_oeq", TRUE);
+    RemoveEventScript(oLoser, EVENT_ONPLAYERUNEQUIPITEM, "psi_spdfthgt_ueq", TRUE);
+    // Loss of Psionic Dodge effects
+    SetCompositeBonus(GetPCSkin(oLoser), "PsionicDodge", 0, ITEM_PROPERTY_AC_BONUS);
+    
+    // Inform oLoser about the event
+    FloatingTextStringOnCreature("You have lost your Psionic Focus", oLoser, FALSE);
+}
+
+
+int GetIsPsionicallyFocused(object oCreature = OBJECT_SELF)
+{
+    return GetLocalInt(oCreature, "PsionicFocus");
+}
 
 int GetPsionicFocusUsesPerExpenditure(object oCreature = OBJECT_SELF)
 {
@@ -643,11 +700,29 @@ int GetPsionicFocusUsesPerExpenditure(object oCreature = OBJECT_SELF)
 }
 
 
-void LosePsionicFocus(object oLoser = OBJECT_SELF)
+int GetPsionicFocusUsingFeatsActive(object oCreature = OBJECT_SELF)
 {
-    SetLocalInt(oLoser, "PsionicFocus", FALSE);
+    int nFeats;
     
-    // Loss of Psionic Dodge and Speed of Thought effects
-    RemoveSpellEffects(SPELL_SPEED_OF_THOUGHT_BONUS, oLoser, oLoser);
-    SetCompositeBonus(GetPCSkin(oLoser), "PsionicDodge", 0, ITEM_PROPERTY_AC_BONUS);
+    if(GetLocalInt(oCreature, "TalentedActive"))            nFeats++;
+    if(GetLocalInt(oCreature, "PowerSpecializationActive")) nFeats++;
+    if(GetLocalInt(oCreature, "PowerPenetrationActive"))    nFeats++;
+    if(GetLocalInt(oCreature, "PsionicEndowmentActive"))    nFeats++;
+    
+    // TODO: Add in metapsionics here
+    
+    return nFeats;
+}
+
+
+
+
+int GetIsPsionicCharacter(object oCreature)
+{
+    return !!(GetLevelByClass(CLASS_TYPE_PSION, oCreature)  ||
+              GetLevelByClass(CLASS_TYPE_PSYWAR, oCreature) ||
+              GetLevelByClass(CLASS_TYPE_WILDER, oCreature) ||
+              GetHasFeat(FEAT_WILD_TALENT, oCreature)
+              // Racial psionicity signifying feats go here
+             );
 }

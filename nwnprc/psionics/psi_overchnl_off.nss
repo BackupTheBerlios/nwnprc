@@ -1,0 +1,18 @@
+//::///////////////////////////////////////////////
+//:: Overchannel - off
+//:: psi_overchnl_off
+//:://////////////////////////////////////////////
+/*
+    Turns Overchannel off.
+*/
+//:://////////////////////////////////////////////
+//:: Created By: Ornedan
+//:: Created On: 21.03.2005
+//:://////////////////////////////////////////////
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    SetLocalInt(oCaster, "Overchannel", 0);
+    FloatingTextStringOnCreature("Overchannel Off", oCaster, FALSE);
+}

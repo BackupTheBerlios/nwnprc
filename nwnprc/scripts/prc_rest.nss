@@ -40,9 +40,9 @@ void main(){
          FeatSpecialUsePerDay(oPC);
          
          // Cancel their rest immediately.
-         AssignCommand(oPC, ClearAllActions(FALSE));
+         AssignCommand(oPCESS, ClearAllActions(FALSE));
          // Start the special conversation with oPC.
-         AssignCommand(oPC,ActionStartConversation(OBJECT_SELF, "_rest_button", TRUE, FALSE));
+         AssignCommand(oPCESS,ActionStartConversation(OBJECT_SELF, "_rest_button", TRUE, FALSE));
 
          break;
       }

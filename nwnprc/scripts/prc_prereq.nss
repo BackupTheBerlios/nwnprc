@@ -51,6 +51,8 @@ void FindTrueAbilityScores()
         DelayCommand(0.1, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eClone, oClone));
     }
     
+    ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
+    
     object oItem;
     int nSlot;
     
@@ -72,7 +74,7 @@ void FindTrueAbilityScores()
     }
     
     DelayCommand(0.5, FindTrueAbilityScoresPhaseTwo(oPC, oClone));
-    DelayCommand(6.0, DestroyObject(oClone));
+    DelayCommand(3.0, DestroyObject(oClone));
 }    
 
 void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone)

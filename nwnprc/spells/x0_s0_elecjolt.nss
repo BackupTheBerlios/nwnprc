@@ -62,6 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                  int nDamage =  MyMaximizeOrEmpower(3, 1, GetMetaMagicFeat());
                  int iAttackRoll = TouchAttackRanged(oTarget);
                  ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL));
+                 PRCBonusDamage(oTarget);
              }
         }
     }

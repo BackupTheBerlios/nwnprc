@@ -190,6 +190,7 @@ void RunCombustImpact(object oTarget, object oCaster, int nLevel, int nMetaMagic
             effect eVFX = EffectVisualEffect(VFX_IMP_FLAME_S);
 
             SPApplyEffectToObject(DURATION_TYPE_INSTANT,eDmg,oTarget);
+            PRCBonusDamage(oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT,eVFX,oTarget);
 
             //------------------------------------------------------------------

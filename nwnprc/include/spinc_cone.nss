@@ -74,6 +74,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
 					effect eVis = EffectVisualEffect(nVictimEffect);
 					DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 					DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+					PRCBonusDamage(oTarget);
 				}
 			}
 		}

@@ -60,6 +60,7 @@ void main()
                 if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                 {
                    DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                   PRCBonusDamage(oTarget);
                    DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0,FALSE));
                    //DelayCommand(fDelay2, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eBolt, oTarget,1.0));
 

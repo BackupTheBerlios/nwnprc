@@ -96,6 +96,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
      
                      int nDamage =  MyMaximizeOrEmpower(3, 1, GetMetaMagicFeat());
                      ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_COLD));
+                     PRCBonusDamage(oTarget);
                  }
              }
         }

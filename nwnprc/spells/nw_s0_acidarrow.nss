@@ -111,6 +111,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 //----------------------------------------------------------------------
                 int nDamage = MyMaximizeOrEmpower(6,3,nMetaMagic);
                 ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, EleDmg);
+                PRCBonusDamage(oTarget);
 
                 DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                 
@@ -159,6 +160,7 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         effect eVis = EffectVisualEffect(VFX_IMP_ACID_S); 
         eDam = EffectLinkEffects(eVis,eDam); // flare up
         SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);
+        PRCBonusDamage(oTarget);
         DelayCommand(6.0f,RunImpact(oTarget,oCaster,nMetaMagic,EleDmg));
     }
 }

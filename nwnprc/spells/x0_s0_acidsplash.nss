@@ -61,6 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                  // perform attack roll for ray and deal proper damage
                  int nDamage =  MyMaximizeOrEmpower(3, 1, GetMetaMagicFeat());
                  ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ACID));
+                 PRCBonusDamage(oTarget);
              }
         }
     }

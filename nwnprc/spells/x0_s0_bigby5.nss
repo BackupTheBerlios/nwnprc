@@ -50,6 +50,7 @@ void RunHandImpact(object oTarget, object oCaster)
     effect eDam = EffectDamage(nDam, DAMAGE_TYPE_BLUDGEONING);
     effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+    PRCBonusDamage(oTarget);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     DelayCommand(6.0f,RunHandImpact(oTarget,oCaster));
 }

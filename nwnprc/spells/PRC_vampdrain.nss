@@ -115,6 +115,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     }
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+                        PRCBonusDamage(oTarget);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, OBJECT_SELF);
                         RemoveTempHitPoints();
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, HoursToSeconds(1));

@@ -87,6 +87,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             effect eDam = EffectDamage(nDam, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_SONIC));
             //Apply the MIRV and damage effect
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            PRCBonusDamage(oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
             if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))

@@ -86,6 +86,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
                             // Apply VFX, damage effect and lightning effect
                             //fDelay = GetSpellEffectDelay(GetLocation(oTarget), oTarget);
                             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+                            PRCBonusDamage(oTarget);
                             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                         }
 

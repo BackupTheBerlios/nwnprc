@@ -120,6 +120,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 						
 						// Apply effects to the currently selected target.
 						DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+						PRCBonusDamage(oTarget);
 						
 						// This visual effect is applied to the target object not the location as above.
 						DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

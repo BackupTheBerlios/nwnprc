@@ -41,6 +41,7 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
 
 			// Apply the damage and the damage visible effect to the target.				
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, nDamageType), oTarget);
+			PRCBonusDamage(oTarget);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 			// If the target failed it's save then apply the failed save effect as well for 1 round.

@@ -107,6 +107,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             if(nDamStrike > 0)
             {
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oFirstTarget);
+                PRCBonusDamage(oFirstTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oFirstTarget);
             }
         }
@@ -161,6 +162,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 if(nDamStrike > 0) //age > 0)
                 {
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget));
+                    PRCBonusDamage(oTarget);
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oTarget));
                 }
             }

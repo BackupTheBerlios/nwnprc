@@ -36,6 +36,7 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
                
                // Apply the damage and the damage visible effect to the target.                
                SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, nDamageType), oTarget);
+               PRCBonusDamage(oTarget);
                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
           }
      }

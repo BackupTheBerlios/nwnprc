@@ -95,6 +95,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 eDam2 = EffectDamage(nDamage2, EleDmg);
                 // Apply effects to the currently selected target.
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                PRCBonusDamage(oTarget);
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam2, oTarget));
                 //This visual effect is applied to the target object not the location as above.  This visual effect
                 //represents the impact that erupts on the target not on the ground.

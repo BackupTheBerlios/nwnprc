@@ -714,10 +714,15 @@ int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
 
 void PRCBonusDamage (object oTarget)
 {
-	object oCaster = GetLastSpellCaster();
+	object oCaster = OBJECT_SELF;
+	
+	//FloatingTextStringOnCreature("PRC Bonus Damage is called", oCaster, FALSE);
 	
 	if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) > 0 && GetLocalInt(oCaster, "Diabolism") == TRUE)
 	{
+	
+		//FloatingTextStringOnCreature("Diabolism is active", oCaster, FALSE);
+	
 		int nDamage;
 		
 		if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) == 10) 	nDamage = d6(3);
@@ -729,6 +734,7 @@ void PRCBonusDamage (object oTarget)
 		
 		if (GetLocalInt(oCaster, "VileDiabolism") == TRUE)
 		{
+			//FloatingTextStringOnCreature("Vile Diabolism is active", oCaster, FALSE);
 			nDamage /= 2;
 			eDam = EffectDamage(nDamage, DAMAGE_TYPE_POSITIVE);
 			SetLocalInt(oCaster, "VileDiabolism", FALSE);
@@ -738,7 +744,6 @@ void PRCBonusDamage (object oTarget)
 		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 		SetLocalInt(oCaster, "Diabolism", FALSE);
 	}
-
 }
 
 

@@ -131,6 +131,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
     effect eLink;
     int nVis;
     float fDelay = 0.5 + GetDistanceBetween(OBJECT_SELF, oTarget)/20;
+    PRCBonusDamage(oTarget);
     //Based on the random number passed in, apply the appropriate effect and set the visual to
     //the correct constant
     switch(nEffect)

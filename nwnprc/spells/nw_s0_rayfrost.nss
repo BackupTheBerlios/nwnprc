@@ -79,6 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                  // perform ranged touch attack and apply sneak attack if any exists
                  int eDamageType = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_COLD);
                  ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDam, eDamageType);
+                 PRCBonusDamage(oTarget);
     
                  //Apply the VFX impact and damage effect
                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

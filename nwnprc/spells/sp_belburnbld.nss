@@ -29,6 +29,7 @@ void RunSpell(object oCaster, object oTarget, int nMetaMagic, int nSpellID,
 		effect eDamage = SPEffectDamage(nDamage, DAMAGE_TYPE_FIRE);
 		eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_FLAME_S));
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+		PRCBonusDamage(oTarget);
 		
 		nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_ACID, 1, 8, 0, 0, nMetaMagic);
 		eDamage = SPEffectDamage(nDamage, DAMAGE_TYPE_ACID);

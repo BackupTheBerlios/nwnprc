@@ -692,7 +692,7 @@ void FeatDiabolist(object oPC)
    
    if (!Diabol) return;
 
-   int iUse = (Diabol + 2)/3;
+   int iUse = (Diabol + 3)/3;
 
    FeatUsePerDay(oPC,FEAT_DIABOL_DIABOLISM_1,-1,iUse);
    FeatUsePerDay(oPC,FEAT_DIABOL_DIABOLISM_2,-1,iUse);

@@ -44,6 +44,7 @@ void DarkBolt(object oTarget,int nMissiles, int nDC , int nMetaMagic)
        if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
        {
            DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+           PRCBonusDamage(oTarget);
            DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0,FALSE));
            //DelayCommand(fDelay2, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget,1.0));
        }

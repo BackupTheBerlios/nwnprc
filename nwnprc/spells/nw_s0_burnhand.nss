@@ -101,6 +101,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                 {
                     // Apply effects to the currently selected target. 
                     DelayCommand(fDist, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eFire, oTarget));
+                    PRCBonusDamage(oTarget);
                     DelayCommand(fDist, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                 }
             }

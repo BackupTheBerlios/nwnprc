@@ -57,6 +57,7 @@ void RunHandImpact(object oTarget, object oCaster,int CasterLvl )
        effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
 
        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+       PRCBonusDamage(oTarget);
        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
        if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))

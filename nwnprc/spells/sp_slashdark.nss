@@ -42,6 +42,7 @@ void main()
 				effect eEffect = RACIAL_TYPE_UNDEAD == MyPRCGetRacialType(oTarget) ?
 					EffectHeal(nDamage) : SPEffectDamage(nDamage, nDamageType);
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oTarget);
+				PRCBonusDamage(oTarget);
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY), oTarget);
 			}
 		}

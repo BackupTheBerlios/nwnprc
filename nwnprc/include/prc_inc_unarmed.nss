@@ -112,7 +112,11 @@ int FindUnarmedDamage(object oCreature)
     iDamageToUse = (iMonkDamage > iDamageToUse) ? iMonkDamage : iDamageToUse;
     iDamageToUse = (iBrawlerDamage > iDamageToUse) ? iBrawlerDamage : iDamageToUse;
     iDamageToUse = (iShouDamage > iDamageToUse) ? iShouDamage : iDamageToUse;
-    iDamageToUse = (iRacialDamage > iDamageToUse) ? iRacialDamage : iDamageToUse;
+
+    // For the creature weapon, we consider only creatures that don't have IoDM levels, for
+    // "correctness"
+    if (!GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature))
+        iDamageToUse = (iRacialDamage > iDamageToUse) ? iRacialDamage : iDamageToUse;
 
     // This is where the correct damage dice is calculated
     if (iDamageToUse > 9) iDamageToUse = 9;

@@ -91,6 +91,7 @@ void main()
       if(GetHasFeat(FEAT_FOCUSED_STRIKE))
       {
         int iDex = GetAbilityModifier(ABILITY_DEXTERITY)>0 ? GetAbilityModifier(ABILITY_DEXTERITY):0 ;
+        if (iDex>iHit) iDex=iHit;
         iDmg = BonusAtk(iHit+iDex);
       }
       else

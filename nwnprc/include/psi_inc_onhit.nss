@@ -89,11 +89,12 @@ void PsiEnergyRetort(object oCaster, object oTarget)
 		{
 			if(PRCMySavingThrow(nSavingThrow, oTarget, nDC, nSaveType))
 			{
-				effect eDam = EffectDamage(nDamage, nDamageType);
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
+				nDamage /= 2;
 			}
+			effect eDam = EffectDamage(nDamage, nDamageType);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
 		}
 	}
 }

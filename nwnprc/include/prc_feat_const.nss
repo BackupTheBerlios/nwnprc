@@ -75,6 +75,38 @@ const int FEAT_VILE_MARTIAL_DART          = 3398;
 const int FEAT_VILE_MARTIAL_SICKLE        = 3399;
 const int FEAT_VILE_MARTIAL_DWAXE         = 3452;
 
+// Battleguard Tempus
+const int TEMPUS_ABILITY_ENHANC1   = 1;
+const int TEMPUS_ABILITY_ENHANC2   = 2;
+const int TEMPUS_ABILITY_ENHANC3   = 3;
+const int TEMPUS_ABILITY_FIRE1D6   = 4;
+const int TEMPUS_ABILITY_COLD1D6   = 5;
+const int TEMPUS_ABILITY_ELEC1D6   = 6;
+const int TEMPUS_ABILITY_KEEN      = 7;
+const int TEMPUS_ABILITY_ANARCHIC  = 8;
+const int TEMPUS_ABILITY_AXIOMATIC = 9;
+const int TEMPUS_ABILITY_HOLY      = 10;
+const int TEMPUS_ABILITY_UNHOLY    = 11;
+const int TEMPUS_ABILITY_VICIOUS   = 12;
+const int TEMPUS_ABILITY_DISRUPTION= 13;
+const int TEMPUS_ABILITY_WOUNDING  = 14;
+const int TEMPUS_ABILITY_BARSKIN   = 15;
+const int TEMPUS_ABILITY_CONECOLD  = 16;
+const int TEMPUS_ABILITY_DARKNESS  = 17;
+const int TEMPUS_ABILITY_FIREBALL  = 18;
+const int TEMPUS_ABILITY_HASTE     = 19;
+const int TEMPUS_ABILITY_IMPROVINV = 20;
+const int TEMPUS_ABILITY_LIGHTBOLT = 21;
+const int TEMPUS_ABILITY_MAGICMISSILE  = 22;
+const int TEMPUS_ABILITY_WEB       = 23;
+const int TEMPUS_ABILITY_VAMPIRE   = 24;
+
+// Polymorph
+const int POLY_SHAPEDRAGONGOLD  = 130;
+const int POLY_SHAPEDRAGONRED   = 131;
+const int POLY_SHAPEDRAGONPRYS  = 132;
+
+
 //Active Feats
 
 const int FEAT_FIST_OF_IRON = 3145;

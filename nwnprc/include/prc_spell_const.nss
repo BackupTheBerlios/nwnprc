@@ -203,6 +203,9 @@ const int SPELL_DIVINE_CLEANSING             = 2165;
 const int SPELL_DIVINE_VIGOR                 = 2164;
 const int SPELL_EPIC_DIVINE_VIGOR            = 2162;
 
+// VFX Persistant
+const int VFX_MOB_CIRCEVIL_NODIS   = 110 ;
+
 
 // Custom Spell ID's
 const int SPELL_ACID_ORB							= 3100;

@@ -1412,6 +1412,8 @@ const int FEAT_PSIONWILD_BOLT			 = 3604;
 const int FEAT_PSIONWILD_DEMORALIZE		 = 3605;
 const int FEAT_PSIONWILD_DISABLE		 = 3606;
 const int FEAT_PSIONWILD_ENERGYRAY		 = 3609;
+const int FEAT_PSIONWILD_ENTANGLE		 = 3610;
+const int FEAT_PSIONWILD_GREASE			 = 3611;
 
 //All Class Powers
 const int FEAT_ALL_BLACK_DRAGON_BREATH	         = 3576;
@@ -1427,3 +1429,8 @@ const int FEAT_ALL_INERTIAL_ARMOUR		 = 3592;
 const int FEAT_ALL_VIGOR			 = 3598;
 const int FEAT_ALL_DISTRACT			 = 3607;
 const int FEAT_ALL_EMPTYMIND			 = 3608;
+const int FEAT_ALL_HAMMER			 = 3612;
+const int FEAT_ALL_MYLIGHT			 = 3613;
+const int FEAT_ALL_DEFPRECOG			 = 3614;
+const int FEAT_ALL_OFFPRECOG			 = 3615;
+const int FEAT_ALL_OFFPRESC			 = 3616;

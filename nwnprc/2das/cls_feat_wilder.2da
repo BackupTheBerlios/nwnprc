@@ -29,6 +29,13 @@
 19    FEAT_PSIONWILD_DEMORALIZE        3605        2      1                1        
 20    FEAT_PSIONWILD_DISABLE           3606        2      1                1        
 20    FEAT_PSIONWILD_ENERGYRAY         3609        2      1                1        
+20    FEAT_PSIONWILD_ENTANGLE          3610        2      1                1        
+20    FEAT_PSIONWILD_GREASE            3611        2      1                1        
+15    FEAT_ALL_HAMMER                  3612        2      1                1        
+16    FEAT_ALL_MYLIGHT                 3613        2      1                1        
+15    FEAT_ALL_DEFPRECOG               3614        2      1                1        
+16    FEAT_ALL_OFFPRECOG               3615        2      1                1        
+15    FEAT_ALL_OFFPRESC                3616        2      1                1 
 15    FEAT_ALL_DISTRACT                3607        2      1                1        
 16    FEAT_ALL_EMPTYMIND               3608        2      1                1        
 22    FEAT_ALL_DISSIPATING_TOUCH       3590        2      1                1        

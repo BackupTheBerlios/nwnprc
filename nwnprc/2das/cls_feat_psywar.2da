@@ -7,7 +7,12 @@
 3     FEAT_AUGMENT_PSIONICS                 3551        3      1                1        
 4     FEAT_AUGMENT_NONE                     3552        3      1                1        
 5     ****                                  ****        ****   ****             ****     
-6     "**Level_One_Powers**"                ****        ****   ****             ****     
+6     "**Level_One_Powers**"                ****        ****   ****             ****    
+15    FEAT_ALL_HAMMER                       3612        2      1                1        
+16    FEAT_ALL_MYLIGHT                      3613        2      1                1        
+15    FEAT_ALL_DEFPRECOG                    3614        2      1                1        
+16    FEAT_ALL_OFFPRECOG                    3615        2      1                1        
+15    FEAT_ALL_OFFPRESC                     3616        2      1                1 
 7     FEAT_ALL_DISSIPATING_TOUCH            3590        2      1                1        
 8     FEAT_ALL_FORCE_SCREEN                 3591        2      1                1        
 9     FEAT_ALL_INERTIAL_ARMOUR              3592        2      1                1        

@@ -836,6 +836,8 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         { nDC -= 1+(GetHitDice(oTarget)/5); }
         else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )
         {    nDC -= 1+(GetHitDice(oTarget)/5);  }
+        else if(nSaveType == SAVING_THROW_TYPE_SONIC && GetHasFeat(FEAT_HARD_AIR, oTarget) )
+        {    nDC -= 1+(GetHitDice(oTarget)/5);  }
         else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY )
         {
             if(GetHasFeat(FEAT_HARD_AIR, oTarget))

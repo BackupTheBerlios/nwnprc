@@ -48,6 +48,7 @@ int TotalAndRemoveProperty(object oItem, int iType, int iSubType = -1);
 // * iType: ITEM_PROPERTY_* of bonus
 // * iSubType: IP_CONST_* of bonus SubType if applicable
 void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSubType = -1);
+void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iSubType = -1); // for temporary bonuses
 
 // * Used to add +5 to Holy Avengers for Paladins only.  Normally, certain types
 // * of bonuses do not stack, so you end up getting penalties.  Returns the integer
@@ -94,6 +95,7 @@ int GetItemDamageType(object oItem);
 // * iVal = Integer value to set this bonus to (damage +1 through +20)
 // * iSubType: IP_CONST_DAMAGETYPE*  -- leave blank to use the weapon's damage type.
 void SetCompositeDamageBonus(object oItem, string sBonus, int iVal, int iSubType = -1);
+void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubType = -1); // for temporary bonuses
 
 int GetHasItem(object oPC, string sRes)
 {
@@ -215,6 +217,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 12)
             {
+                iVal -= iCurVal + iChange - 12;
                 iCurVal = 12;
                 iChange = 0;
             }
@@ -224,6 +227,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -233,6 +237,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -242,6 +247,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -251,6 +257,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -260,6 +267,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -269,6 +277,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -278,6 +287,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -287,6 +297,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -296,6 +307,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -305,6 +317,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -314,6 +327,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 5)
             {
+                iVal -= iCurVal + iChange - 5;
                 iCurVal = 5;
                 iChange = 0;
             }
@@ -323,6 +337,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType);
             if ((iCurVal + iChange)  > 5)
             {
+                iVal -= iCurVal + iChange - 5;
                 iCurVal = 5;
                 iChange = 0;
             }
@@ -332,6 +347,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType);
             if ((iCurVal + iChange)  > 5)
             {
+                iVal -= iCurVal + iChange - 5;
                 iCurVal = 5;
                 iChange = 0;
             }
@@ -341,6 +357,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -350,6 +367,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -359,6 +377,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 10)
             {
+                iVal -= iCurVal + iChange - 10;
                 iCurVal = 10;
                 iChange = 0;
             }
@@ -368,6 +387,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -377,6 +397,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -386,6 +407,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -395,6 +417,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -404,6 +427,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -413,6 +437,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -422,6 +447,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -431,6 +457,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -440,6 +467,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -449,6 +477,7 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 50)
             {
+                iVal -= iCurVal + iChange - 50;
                 iCurVal = 50;
                 iChange = 0;
             }
@@ -547,6 +576,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 12)
             {
+                iVal -= iCurVal + iChange - 12;
                 iCurVal = 12;
                 iChange = 0;
             }
@@ -556,6 +586,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -565,6 +596,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -574,6 +606,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -583,6 +616,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -592,6 +626,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -601,6 +636,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -610,6 +646,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -619,6 +656,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -628,6 +666,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -637,6 +676,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -646,6 +686,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 5)
             {
+                iVal -= iCurVal + iChange - 5;
                 iCurVal = 5;
                 iChange = 0;
             }
@@ -655,6 +696,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType);
             if ((iCurVal + iChange)  > 5)
             {
+                iVal -= iCurVal + iChange - 5;
                 iCurVal = 5;
                 iChange = 0;
             }
@@ -664,6 +706,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType);
             if ((iCurVal + iChange)  > 5)
             {
+                iVal -= iCurVal + iChange - 5;
                 iCurVal = 5;
                 iChange = 0;
             }
@@ -673,6 +716,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -682,6 +726,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -691,6 +736,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 10)
             {
+                iVal -= iCurVal + iChange - 10;
                 iCurVal = 10;
                 iChange = 0;
             }
@@ -700,6 +746,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -709,6 +756,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -718,6 +766,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -727,6 +776,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -736,6 +786,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -745,6 +796,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -754,6 +806,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -763,6 +816,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -772,6 +826,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 20)
             {
+                iVal -= iCurVal + iChange - 20;
                 iCurVal = 20;
                 iChange = 0;
             }
@@ -781,6 +836,7 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
             iCurVal = TotalAndRemovePropertyT(oItem, iType, iSubType);
             if ((iCurVal + iChange)  > 50)
             {
+                iVal -= iCurVal + iChange - 50;
                 iCurVal = 50;
                 iChange = 0;
             }
@@ -858,7 +914,11 @@ void SetCompositeDamageBonus(object oItem, string sBonus, int iVal, int iSubType
     if (iCurVal > 15) iCurVal -= 10; // values 6-20 are in the 2da as lines 16-30
 
     iLinearDamage = iCurVal + iChange;
-    if (iLinearDamage > 20) iLinearDamage = 20;
+    if (iLinearDamage > 20)
+    {
+        iVal = iLinearDamage - 20; // Change the stored value to reflect the fact that we overflowed
+        iLinearDamage = 20; // This is prior to adjustment due to non-linear values
+    }
 
     if (iLinearDamage > 5) iLinearDamage += 10; // values 6-20 are in the 2da as lines 16-30
 
@@ -906,7 +966,11 @@ void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubTyp
     if (iCurVal > 15) iCurVal -= 10; // values 6-20 are in the 2da as lines 16-30
 
     iLinearDamage = iCurVal + iChange;
-    if (iLinearDamage > 20) iLinearDamage = 20;
+    if (iLinearDamage > 20)
+    {
+        iVal = iLinearDamage - 20; // Change the stored value to reflect the fact that we overflowed
+        iLinearDamage = 20; // This is prior to adjustment due to non-linear values
+    }
 
     if (iLinearDamage > 5) iLinearDamage += 10; // values 6-20 are in the 2da as lines 16-30
 

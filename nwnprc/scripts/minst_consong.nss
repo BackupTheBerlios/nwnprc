@@ -49,6 +49,7 @@ void main()
     }
     
     int iPerformReq = 30;
+    if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) iPerformReq-= 2;
     if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
     {
         FloatingTextStringOnCreature("*Minstrel Song Failure*", OBJECT_SELF);

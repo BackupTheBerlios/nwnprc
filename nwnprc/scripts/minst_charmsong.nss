@@ -33,6 +33,7 @@ void main()
     int nDuration = 10; //+ nChr;
     int nDC = 10 + (nLevel / 2) + nCha;
     int iAlreadyAffected;
+    if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) nDC+=2;
 
     //Check to see if the caster has Lasting Impression and increase duration.
     if(GetHasFeat(870))
@@ -52,6 +53,7 @@ void main()
     eCharm = EffectLinkEffects(eCharm, eCharmVis);
     
     int iPerformReq = 50;
+    if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) iPerformReq-= 2;
     if (!GetIsSkillSuccessful(OBJECT_SELF, SKILL_PERFORM, iPerformReq))
     {
         FloatingTextStringOnCreature("*Minstrel Song Failure*", OBJECT_SELF);

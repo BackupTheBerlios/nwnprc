@@ -15,9 +15,16 @@ void main()
     effect eLink = EffectLinkEffects(eDam,eSave);
     eLink = EffectLinkEffects(eLink,eSkill);
 
+FloatingTextStringOnCreature("Staredown Firing At all?",OBJECT_SELF);
+
 
     if(iPCRoll > iTARoll)
-     {
-      ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eLink,oTarget,RoundsToSeconds(2));
-     }
+    	{
+	FloatingTextStringOnCreature("Staredown Succeeded",OBJECT_SELF);
+    	ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eLink,oTarget,RoundsToSeconds(2));
+	}
+     else
+     	FloatingTextStringOnCreature("Staredown Failed",OBJECT_SELF);
+     	
+     
 }

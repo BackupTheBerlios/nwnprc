@@ -47,17 +47,21 @@ void main()
 
    //Searches Inventory for Katana and Shortsword and Equips them
    while(!GetIsObjectValid(oItem2) || !GetIsObjectValid(oItem1))
-    {
-     if(GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
-      {
-       ActionEquipItem(oWeap,INVENTORY_SLOT_RIGHTHAND);
-      }
-     if(GetBaseItemType(oWeap) == BASE_ITEM_SHORTSWORD)
-      {
-       ActionEquipItem(oWeap,INVENTORY_SLOT_LEFTHAND);
-      }
-     oWeap = GetNextItemInInventory(oPC);
-     }
+   {
+   	if(GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
+	{
+     		oItem2 = oWeap;
+		ActionEquipItem(oWeap,INVENTORY_SLOT_RIGHTHAND);
+	}
+   
+	if(GetBaseItemType(oWeap) == BASE_ITEM_SHORTSWORD)
+	{
+		oItem1 = oWeap;
+		ActionEquipItem(oWeap,INVENTORY_SLOT_LEFTHAND);
+	}
+      
+	oWeap = GetNextItemInInventory(oPC);
+   }
 
 
     //Determine enemies in the radius around the samurai
@@ -77,7 +81,7 @@ void main()
             }
             else if(iHitDie < iPCHD)
             {
-             ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eLink2,oTarget,RoundsToSeconds(nDuration));
+             ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eLink,oTarget,RoundsToSeconds(nDuration));
             }
 
            }

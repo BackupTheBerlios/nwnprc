@@ -42,6 +42,9 @@ void UltiRangerFeats(object oPC = OBJECT_SELF);
 // Feat, can be expanded later.
 void Warlord(object oPC = OBJECT_SELF);
 
+// Stops PCs from having more than one Elemental Savant Class
+// as its supposed to be only one class, not 4.
+void ElementalSavant(object oPC = OBJECT_SELF);
 
 // Enforces Genasai taking the proper elemental domain
 void GenasaiFocus(object oPC = OBJECT_SELF);
@@ -300,6 +303,63 @@ void GenasaiFocus(object oPC)
 }
 
 
+void ElementalSavant(object oPC)
+{
+   if (GetLevelByClass(CLASS_TYPE_ES_ACID, oPC))
+   {
+       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
+       {
+        int nHD = GetHitDice(oPC);
+        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+        int nOldXP = GetXP(oPC);
+        int nNewXP = nMinXPForLevel - 1000;
+        SetXP(oPC,nNewXP);
+        FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+        DelayCommand(1.0, SetXP(oPC,nOldXP));
+       }
+   }
+   if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC))
+   {
+       if (GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
+       {
+        int nHD = GetHitDice(oPC);
+        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+        int nOldXP = GetXP(oPC);
+        int nNewXP = nMinXPForLevel - 1000;
+        SetXP(oPC,nNewXP);
+        FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+        DelayCommand(1.0, SetXP(oPC,nOldXP));
+       }
+   }
+   if (GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC))
+   {
+       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
+       {
+        int nHD = GetHitDice(oPC);
+        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+        int nOldXP = GetXP(oPC);
+        int nNewXP = nMinXPForLevel - 1000;
+        SetXP(oPC,nNewXP);
+        FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+        DelayCommand(1.0, SetXP(oPC,nOldXP));
+       }
+   }
+   if (GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC))
+   {
+       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 || GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0)
+       {
+        int nHD = GetHitDice(oPC);
+        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+        int nOldXP = GetXP(oPC);
+        int nNewXP = nMinXPForLevel - 1000;
+        SetXP(oPC,nNewXP);
+        FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
+        DelayCommand(1.0, SetXP(oPC,nOldXP));
+       }
+   }
+}
+
+
 void VileFeats(object oPC = OBJECT_SELF)
 {
 
@@ -497,6 +557,7 @@ void main()
      Ethran(oPC);
      UltiRangerFeats(oPC);
      MageKiller(oPC);
+     ElementalSavant(oPC);
      GenasaiFocus(oPC);
      CheckClericShadowWeave(oPC);
      LolthsMeat(oPC);

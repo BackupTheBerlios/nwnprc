@@ -761,18 +761,18 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 
 int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
 {
-    int iSor = GetLevelByClass(CLASS_TYPE_SORCERER, OBJECT_SELF);
-    int iWiz = GetLevelByClass(CLASS_TYPE_WIZARD, OBJECT_SELF);
-    int iBrd = GetLevelByClass(CLASS_TYPE_BARD, OBJECT_SELF);
-    int iCle = GetLevelByClass(CLASS_TYPE_CLERIC, OBJECT_SELF);
-    int iDru = GetLevelByClass(CLASS_TYPE_DRUID, OBJECT_SELF);
-    int iPal = GetLevelByClass(CLASS_TYPE_PALADIN, OBJECT_SELF);
-    int iRan = GetLevelByClass(CLASS_TYPE_RANGER, OBJECT_SELF);
-    int iArc = GetLevelByTypeArcane();
-    int iDiv = GetLevelByTypeDivine();
+    int iSor = GetLevelByClass(CLASS_TYPE_SORCERER, oCaster);
+    int iWiz = GetLevelByClass(CLASS_TYPE_WIZARD, oCaster);
+    int iBrd = GetLevelByClass(CLASS_TYPE_BARD, oCaster);
+    int iCle = GetLevelByClass(CLASS_TYPE_CLERIC, oCaster);
+    int iDru = GetLevelByClass(CLASS_TYPE_DRUID, oCaster);
+    int iPal = GetLevelByClass(CLASS_TYPE_PALADIN, oCaster);
+    int iRan = GetLevelByClass(CLASS_TYPE_RANGER, oCaster);
+    int iArc = GetLevelByTypeArcane(oCaster);
+    int iDiv = GetLevelByTypeDivine(oCaster);
 
     int iTemp;
-
+    
     switch (iTypeSpell)
     {
         case TYPE_ARCANE:
@@ -785,35 +785,35 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_SORCERER)
                  iTemp = iArc;
              else
-                 iTemp = iSor + PractisedSpellcasting(OBJECT_SELF, CLASS_TYPE_SORCERER, iSor);
+                 iTemp = iSor + PractisedSpellcasting(oCaster, CLASS_TYPE_SORCERER, iSor);
              return iTemp;
              break;
         case TYPE_WIZARD:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_WIZARD)
                  iTemp = iArc;
              else
-                 iTemp = iWiz + PractisedSpellcasting(OBJECT_SELF, CLASS_TYPE_WIZARD, iWiz);
+                 iTemp = iWiz + PractisedSpellcasting(oCaster, CLASS_TYPE_WIZARD, iWiz);
              return iTemp;
              break;
         case TYPE_BARD:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_BARD)
                  iTemp = iArc;
              else
-                 iTemp = iBrd + PractisedSpellcasting(OBJECT_SELF, CLASS_TYPE_BARD, iBrd);
+                 iTemp = iBrd + PractisedSpellcasting(oCaster, CLASS_TYPE_BARD, iBrd);
              return iTemp;
              break;
         case TYPE_CLERIC:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_CLERIC)
                  iTemp = iDiv;
              else
-                 iTemp = iCle + PractisedSpellcasting(OBJECT_SELF, CLASS_TYPE_CLERIC, iCle);
+                 iTemp = iCle + PractisedSpellcasting(oCaster, CLASS_TYPE_CLERIC, iCle);
              return iTemp;
              break;
         case TYPE_DRUID:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_DRUID)
                  iTemp = iDiv;
              else
-                 iTemp = iDru + PractisedSpellcasting(OBJECT_SELF, CLASS_TYPE_DRUID, iDru);
+                 iTemp = iDru + PractisedSpellcasting(oCaster, CLASS_TYPE_DRUID, iDru);
              return iTemp;
              break;
         case TYPE_RANGER:

@@ -39,7 +39,7 @@ void main()
      }
         
      // If they are not within 5 ft, they can't do a melee attack.
-     if(!bIsRangedAttack && GetIsInMeleeRange(oTarget, oPC))
+     if(!bIsRangedAttack && !GetIsInMeleeRange(oTarget, oPC))
      {
           SendMessageToPC(oPC,"You are not close enough to your target to attack!");
           IncrementRemainingFeatUses(oPC, 2348);

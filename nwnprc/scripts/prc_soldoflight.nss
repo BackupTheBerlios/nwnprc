@@ -59,17 +59,4 @@ void main()
 
     if (iFH) AddFastHealing(oSkin,iFH,iGood);
 
-    object oRod = GetItemPossessedBy(oPC,"SolRod");
-    if (oRod ==OBJECT_INVALID)
-    {
-      oRod =CreateItemOnObject("nw_wmgmrd006");
-      object oRod2 = CopyObject(oRod,GetLocation(oPC),oPC,"SolRod");
-      DestroyObject(oRod);
-      TotalAndRemoveProperty(oRod2,ITEM_PROPERTY_CAST_SPELL);
-      TotalAndRemoveProperty(oRod2,ITEM_PROPERTY_USE_LIMITATION_CLASS);
-      SetIdentified(oRod2,TRUE);
-      SetItemCursedFlag(oRod2,TRUE);
-
-
-    }
-}
+ }

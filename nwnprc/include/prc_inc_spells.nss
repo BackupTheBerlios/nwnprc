@@ -671,8 +671,16 @@ int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
 int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0)
 {
 
+	object oCaster = GetLastSpellCaster();
+	int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
+	int iTK = GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oTarget);
 	int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
 	int nSpell = GetSpellId();
+	
+	if (iRW > 0 && iTK > 0 && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS)
+	{
+		return 0;
+	}
 	
 	if (iRedWizard > 0)
 	{

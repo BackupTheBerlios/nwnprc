@@ -215,8 +215,8 @@
 211 FEAT_SOLSPELLLV04                              3113      3    7              1      
 213 Healing_Domain_Power                           318       3    13             0      
 214 FEAT_MAXIMIZE_TURNING                          3315      3    16             0      
-215 FEAT_SUP_POSITIVE_ENERGY_BURST                 3316      3    24             0      
-216 FEAT_FAST_HEALING3                             3314      3    20             0      
+215 FEAT_SUP_POSITIVE_ENERGY_BURST                 3316      3    22             0      
+216 FEAT_FAST_HEALING3                             3314      3    19             0      
 217 FocusedSpellPenetrCon                          3128      1    -1             0      
 218 FocusedSpellPenetrDiv                          3129      1    -1             0      
 219 FocusedSpellPenetrEnc                          3130      1    -1             0      

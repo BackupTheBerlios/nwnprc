@@ -38,29 +38,26 @@ void main()
          return;
      }
      
-     if(!GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT) && !GetHasFeatEffect(FEAT_PA_SUP_POWERSHOT) )
+     if(!GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT) && !GetHasFeatEffect(FEAT_PA_POWERSHOT) && !GetHasFeatEffect(FEAT_PA_SUP_POWERSHOT))
      {
-          if(!GetHasFeatEffect(FEAT_PA_POWERSHOT))
-          {
-               int nDamageBonusType = GetWeaponDamageType(oWeap);
-               
-               eDamage = EffectDamageIncrease(DAMAGE_BONUS_5, nDamageBonusType);               
-               eToHit = EffectAttackDecrease(5);
+          int nDamageBonusType = GetWeaponDamageType(oWeap);
+          
+          eDamage = EffectDamageIncrease(DAMAGE_BONUS_5, nDamageBonusType);               
+          eToHit = EffectAttackDecrease(5);
 
-               effect eLink = ExtraordinaryEffect(EffectLinkEffects(eDamage, eToHit));
-               ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, OBJECT_SELF);
-               
-               string nMes = "*Power Shot Mode Activated*";
-               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
-          }
-          else
-          {          
-               RemoveSpellEffects(SPELL_PA_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-               RemoveSpellEffects(SPELL_PA_IMP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-               RemoveSpellEffects(SPELL_PA_SUP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-
-               string nMes = "*Power Shot Mode Deactivated*";
-               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
-          }          
+          effect eLink = ExtraordinaryEffect(EffectLinkEffects(eDamage, eToHit));
+          ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, OBJECT_SELF);
+          
+          string nMes = "*Power Shot Mode Activated*";
+          FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
      }
+     else
+     {          
+          RemoveSpellEffects(SPELL_PA_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+          RemoveSpellEffects(SPELL_PA_IMP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+          RemoveSpellEffects(SPELL_PA_SUP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+
+          string nMes = "*Power Shot Mode Deactivated*";
+          FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
+     }          
 }

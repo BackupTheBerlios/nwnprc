@@ -65,6 +65,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = (GetManifesterDC(oCaster) + 2);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	object oTarget = GetSpellTargetObject();
 	effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
 	effect eRay = EffectBeam(VFX_BEAM_LIGHTNING, OBJECT_SELF, BODY_NODE_HAND);
@@ -83,7 +84,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 	
 	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, (nCaster + 2)))
+	if (PRCMyResistPower(oCaster, oTarget, (nPen + 2)))
 	{
 		if (nAugment > 0) nDice += nAugment;
 		int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);

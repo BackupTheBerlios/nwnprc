@@ -69,6 +69,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	int nDice = 5;
 	int nDiceSize = 6;
 
@@ -104,7 +105,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
                    //Fire cast spell at event for the specified target
                    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
                    //Make an SR check
-                   if (PRCMyResistPower(oCaster, oTarget, nCaster))
+                   if (PRCMyResistPower(oCaster, oTarget, nPen))
                    {
                    	if (nAugment > 0) nDice += nAugment;
                    	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);

@@ -53,6 +53,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	int nDamage = d6(5);
 	effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
     	effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
@@ -60,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
 	
 	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nCaster))
+	if (PRCMyResistPower(oCaster, oTarget, nPen))
 	{
 		
 		//Fire cast spell at event for the specified target

@@ -59,6 +59,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	int nDamage = d6(7);
 	int nHD = 11;
 	int nTargetHD = GetHitDice(oTarget);
@@ -73,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
 	
 	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nCaster))
+	if (PRCMyResistPower(oCaster, oTarget, nPen))
 	{
 	
             //Fire cast spell at event for the specified target

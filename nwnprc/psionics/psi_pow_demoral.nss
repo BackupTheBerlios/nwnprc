@@ -62,6 +62,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 
 	if (nSurge > 0) nAugment += nSurge;
 	
@@ -80,7 +81,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		if (oTarget != OBJECT_SELF)
 		{
 			//Check for Power Resistance
-			if (PRCMyResistPower(oCaster, oTarget, nCaster))
+			if (PRCMyResistPower(oCaster, oTarget, nPen))
 			{
 					
 			    //Fire cast spell at event for the specified target

@@ -42,6 +42,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     float fDelay = GetRandomDelay(1.0, 2.2);
     
     int nCaster = GetManifesterLevel(GetAreaOfEffectCreator());
+    int nPen = GetPsiPenetration(GetAreaOfEffectCreator());
 
 
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
@@ -51,7 +52,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Fire cast spell at event for the target
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_GREASE));
                //Spell resistance check
-            if(PRCMyResistPower(GetAreaOfEffectCreator(), oTarget, nCaster))
+            if(PRCMyResistPower(GetAreaOfEffectCreator(), oTarget, nPen))
             {
                 //Apply reduced movement effect and VFX_Impact
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,FALSE);

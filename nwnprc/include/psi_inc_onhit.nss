@@ -29,6 +29,7 @@ void PsiEnergyRetort(object oCaster, object oTarget)
 {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 		
 	int nDamage;
 	effect eVis;
@@ -56,7 +57,7 @@ void PsiEnergyRetort(object oCaster, object oTarget)
 		nSaveType = SAVING_THROW_TYPE_ELECTRICITY;
 		nDamageType = DAMAGE_TYPE_ELECTRICAL;
 		nDC += 2;
-		nCaster += 2;
+		nPen += 2;
 	}
 	else if (nElement == 3)
 	{
@@ -84,7 +85,7 @@ void PsiEnergyRetort(object oCaster, object oTarget)
 	if (nTouchAttack > 0)
 	{
 		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nCaster))
+		if (PRCMyResistPower(oCaster, oTarget, nPen))
 		{
 			if(PRCMySavingThrow(nSavingThrow, oTarget, nDC, nSaveType))
 			{

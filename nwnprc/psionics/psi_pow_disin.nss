@@ -64,6 +64,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	object oTarget = GetSpellTargetObject();
 	int nDice = 22;
 	int nDiceSize = 6;
@@ -82,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	if (nTouchAttack > 0)
 	{
 		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nCaster))
+		if (PRCMyResistPower(oCaster, oTarget, nPen))
 		{
 			if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
 			{

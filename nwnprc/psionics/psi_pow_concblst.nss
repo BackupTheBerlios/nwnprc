@@ -63,6 +63,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	object oFirstTarget = GetSpellTargetObject();
 	effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
 	int nTargetCount = 1;
@@ -85,7 +86,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 	
 	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oFirstTarget, nCaster))
+	if (PRCMyResistPower(oCaster, oFirstTarget, nPen))
 	{
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oFirstTarget);
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oFirstTarget);
@@ -107,7 +108,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         			//Fire cast spell at event for the specified target
         			SignalEvent(oAreaTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
         			
-        			if (PRCMyResistPower(oCaster, oAreaTarget, nCaster))
+        			if (PRCMyResistPower(oCaster, oAreaTarget, nPen))
 				{
 					nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
 					eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);

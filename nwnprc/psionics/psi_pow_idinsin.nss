@@ -64,6 +64,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	object oFirstTarget = GetSpellTargetObject();
 	int nTargetCount = 1;
 	
@@ -88,7 +89,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 	
 	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oFirstTarget, nCaster))
+	if (PRCMyResistPower(oCaster, oFirstTarget, nPen))
 	{
                 //Make a saving throw check
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oFirstTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
@@ -116,7 +117,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         			SignalEvent(oAreaTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
         			
 				//Check for Power Resistance
-				if (PRCMyResistPower(oCaster, oAreaTarget, nCaster))
+				if (PRCMyResistPower(oCaster, oAreaTarget, nPen))
 				{
 			                //Make a saving throw check
 			                if(!PRCMySavingThrow(SAVING_THROW_WILL, oAreaTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))

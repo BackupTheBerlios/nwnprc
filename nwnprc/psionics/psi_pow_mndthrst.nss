@@ -66,6 +66,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	object oTarget = GetSpellTargetObject();
 	int nDice = 1;
 	int nDiceSize = 10;
@@ -84,11 +85,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	effect eLink = EffectLinkEffects(eMind, eDam);
 	
 	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nCaster))
+	if (PRCMyResistPower(oCaster, oTarget, nPen))
 	{
-	
-	//FloatingTextStringOnCreature("Target has failed its Power Resistance Check", oCaster, FALSE);
-		
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
             

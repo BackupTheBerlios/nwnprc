@@ -63,6 +63,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	object oTarget = GetSpellTargetObject();
 	int nTargetHD = 4;
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
@@ -82,9 +83,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	{
     	    if(GetHitDice(oTarget) <= nTargetHD)
     	    {
-		
 			//Check for Power Resistance
-			if (PRCMyResistPower(oCaster, oTarget, nCaster))
+			if (PRCMyResistPower(oCaster, oTarget, nPen))
 			{
 			
 			    //Fire cast spell at event for the specified target

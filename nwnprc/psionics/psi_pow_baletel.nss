@@ -57,6 +57,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	object oTarget = GetSpellTargetObject();
 	int nDice = 9;
 	int nDiceSize = 6;
@@ -64,8 +65,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	//Augmentation effects to DC/Damage/Caster Level
 	if (nAugment > 0)
 	{
-		nDC = nDC + (nAugment/2);
-		nCaster = nCaster + (nAugment/2);
+		nDC += (nAugment/2);
+		nPen += (nAugment/2);
 		nDice += nAugment;
 	}
 	
@@ -75,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	effect eRay;
 	
 	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nCaster))
+	if (PRCMyResistPower(oCaster, oTarget, nPen))
 	{
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));

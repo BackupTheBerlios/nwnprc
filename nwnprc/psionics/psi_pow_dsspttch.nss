@@ -63,6 +63,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	object oTarget = GetSpellTargetObject();
 	int nDice = 1;
 	int nDiceSize = 6;
@@ -83,7 +84,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	if (nTouchAttack > 0)
 	{
 		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nCaster))
+		if (PRCMyResistPower(oCaster, oTarget, nPen))
 		{		
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

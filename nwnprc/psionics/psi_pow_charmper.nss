@@ -60,6 +60,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	int nRacial = MyPRCGetRacialType(oTarget);
 	int nTargetRace = FALSE;
 	float fDuration = HoursToSeconds(nCaster);
@@ -110,7 +111,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 		
 		
 		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nCaster))
+		if (PRCMyResistPower(oCaster, oTarget, nPen))
 		{
 		
 		    //Fire cast spell at event for the specified target

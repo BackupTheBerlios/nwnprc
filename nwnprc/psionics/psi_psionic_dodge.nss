@@ -5,13 +5,12 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oSkin = GetPCSkin(oPC);
     
-    if (GetLocalInt(oSkin, "PsionicFocus") == 1)
+    if (GetLocalInt(oPC, "PsionicFocus") == 1)
     {
-        SetCompositeBonus(oSkin, "PsionicDodge", 1, ITEM_PROPERTY_AC_BONUS);
+        SetCompositeBonus(oPC, "PsionicDodge", 1, ITEM_PROPERTY_AC_BONUS);
         return;
     }
     
-    SetCompositeBonus(oSkin, "PsionicDodge", 0, ITEM_PROPERTY_AC_BONUS);
+    SetCompositeBonus(oPC, "PsionicDodge", 0, ITEM_PROPERTY_AC_BONUS);
 }

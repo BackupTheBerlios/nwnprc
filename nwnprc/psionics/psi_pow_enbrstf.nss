@@ -69,6 +69,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	location lTarget = GetSpellTargetLocation();
 	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
 	int nDice = 5;
@@ -93,7 +94,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 		fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
 		
-		if (PRCMyResistPower(oCaster, oTarget, nCaster))
+		if (PRCMyResistPower(oCaster, oTarget, nPen))
 		{
 		       	if (nAugment > 0) nDice += nAugment;
 		      	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);

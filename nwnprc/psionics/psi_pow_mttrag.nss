@@ -110,6 +110,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     if (GetCanManifest(oCaster, nAugCost)) 
     {
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	object oTarget = GetSpellTargetObject();
 	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -117,7 +118,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		
 	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 	
-	if(PRCMyResistPower(oCaster, oTarget, nCaster))
+	if(PRCMyResistPower(oCaster, oTarget, nPen))
 	{
 		SPApplyEffectToObject (DURATION_TYPE_INSTANT,EffectDamage(1, DAMAGE_TYPE_FIRE),oTarget);
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

@@ -52,6 +52,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	object oTarget = GetSpellTargetObject();
 	
 	effect eSpot = EffectSkillDecrease(SKILL_SPOT, 4);
@@ -64,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	effect eVis = EffectVisualEffect(VFX_IMP_SLOW);
 		
 	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nCaster))
+	if (PRCMyResistPower(oCaster, oTarget, nPen))
 	{
 		
 	    //Fire cast spell at event for the specified target

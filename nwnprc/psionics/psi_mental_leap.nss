@@ -5,9 +5,8 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oSkin = GetPCSkin(oPC);
 
-    if (GetLocalInt(oSkin, "PsionicFocus") == 0)
+    if (GetLocalInt(oPC, "PsionicFocus") == 0)
     {
         SendMessageToPC(oPC, "You must be psionically focused to use this feat");
         return;
@@ -16,6 +15,6 @@ void main()
     effect eJump = EffectSkillIncrease(28, 10);
     
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eJump, oPC, 12.0);
-    SetLocalInt(oSkin, "PsionicFocus", 0);
+    SetLocalInt(oPC, "PsionicFocus", 0);
 }
    

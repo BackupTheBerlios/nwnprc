@@ -6,11 +6,10 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oSkin = GetPCSkin(oPC);
     object oTarget  = GetSpellTargetObject();
     effect eDummy;
 
-    if (GetLocalInt(oSkin, "PsionicFocus") == 0)
+    if (GetLocalInt(oPC, "PsionicFocus") == 0)
     {
         SendMessageToPC(oPC, "You must be psionically focused to use this feat");
         return;
@@ -24,5 +23,5 @@ void main()
     
     PerformAttackRound(oTarget, oPC, eDummy, 0.0, 0, d6(2), DAMAGE_TYPE_MAGICAL, FALSE, "Psionic Weapon Hit", "Psionic Weapon Miss");
     
-    SetLocalInt(oSkin, "PsionicFocus", 0);
+    SetLocalInt(oPC, "PsionicFocus", 0);
 }

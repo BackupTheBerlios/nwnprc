@@ -63,6 +63,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	float fDelay;
 	location lTargetLocation = GetSpellTargetLocation();
     	object oTarget;
@@ -86,7 +87,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	        //Get the distance between the target and caster to delay the application of effects
     	        fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20.0;
     	        //Make SR check, and appropriate saving throw(s).
-    	        if(PRCMyResistPower(OBJECT_SELF, oTarget,nCaster, fDelay) && (oTarget != OBJECT_SELF))
+    	        if(PRCMyResistPower(OBJECT_SELF, oTarget,nPen, fDelay) && (oTarget != OBJECT_SELF))
     	        {    	     
     	        
     	            int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);

@@ -64,6 +64,9 @@ int MetaPsionic(int nDiceSize, int nNumberOfDice, object oCaster = OBJECT_SELF);
 // This will return the amount of augmentation
 int GetAugmentLevel(object oCaster = OBJECT_SELF);
 
+// This will return the amount of penetration for a given power
+int GetPsiPenetration(object oCaster = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -369,4 +372,23 @@ int GetAugmentLevel(object oCaster = OBJECT_SELF)
 {
 	int nAug = GetAugmentLevel(oCaster);
 	return nAug;
+}
+
+int GetPsiPenetration(object oCaster = OBJECT_SELF)
+{
+	int nPen = GetManifesterLevel(oCaster);
+	
+	// Check for Power Pen feats being used
+	if (GetLocalInt(oCaster, "PowerPenetration") == 1)
+	{
+		nPen += 4;
+		SetLocalInt(oCaster, "PowerPenetration", 0);
+	}
+	else if (GetLocalInt(oCaster, "GreaterPowerPenetration") == 1)
+	{
+		nPen += 8;
+		SetLocalInt(oCaster, "GreaterPowerPenetration", 0);
+	}
+	
+	return nPen;
 }

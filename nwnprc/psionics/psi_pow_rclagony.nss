@@ -64,6 +64,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
+	int nPen = GetPsiPenetration(oCaster);
 	effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
 	object oTarget = GetSpellTargetObject();
 	int nDice = 2;
@@ -78,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
 	
 	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nCaster))
+	if (PRCMyResistPower(oCaster, oTarget, nPen))
 	{
 		
 		//Fire cast spell at event for the specified target

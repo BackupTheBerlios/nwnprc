@@ -5,7 +5,6 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oSkin = GetPCSkin(oPC);
 
     if (GetLocalInt(oPC, "PsionicFocus") == 0)
     {

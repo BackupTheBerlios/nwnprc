@@ -21,19 +21,19 @@ void AddSneakAttack(object oPC ,object oWeapon)
         SendMessageToPC(oPC, "Add Sneak Attack Is Called");
         if (GetHasFeat(FEAT_PA_SNEAK_4D6, oPC))
         {
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(FEAT_ROGUE_SA_4D6), oWeapon);
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_4D6), oWeapon);
         }
         else if (GetHasFeat(FEAT_PA_SNEAK_3D6, oPC))
         {
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(FEAT_BLACKGUARD_SNEAK_ATTACK_3D6), oWeapon);
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_3D6), oWeapon);
         }
         else if (GetHasFeat(FEAT_PA_SNEAK_2D6, oPC))
         {
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(FEAT_BLACKGUARD_SNEAK_ATTACK_2D6), oWeapon);
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_2D6), oWeapon);
         }
         else if (GetHasFeat(FEAT_PA_SNEAK_1D6, oPC))
         {
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(FEAT_BLACKGUARD_SNEAK_ATTACK_1D6), oWeapon);
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_ROGUE_SA_1D6), oWeapon);
         }
     }
 

@@ -35,6 +35,7 @@ const int FEAT_HARD_FIRE  = 4725;
 const int FEAT_HARD_WATER = 4726;
 const int FEAT_HARD_ELEC  = 4727;
 const int FEAT_POISON_3   = 4728;
+const int FEAT_POISON_4   = 4768;
 
 const int FEAT_IMM_COLD     = 4729;
 const int FEAT_IMM_PHANT    = 4730;

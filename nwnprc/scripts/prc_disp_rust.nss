@@ -19,16 +19,39 @@
 #include "NW_I0_GENERIC"
 #include "inc_combat"
 
+///Checks to see if weapon is metal///
 int IsItemMetal(object oItem)
 {
   int nReturnVal=0;
   int type=GetBaseItemType(oItem);
-  if((type<6)||type==9||type==10||type==12||type==13||type==17||type==18
-     ||type==22||type==27||type==32||type==33||type==35||type==37||type==28
-     ||type==40||type==41||type==42||type==47||type==51||type==52||type==53
-     ||type==57||type==59||type==60||type==63||type==65||type==76||type==7
-     ||type==19||type==20||type==21||type==28||type==31||type==44||type==45
-     ||type==46||type==56||type==62||type==78||type==25||type==55||type==58)
+   if((type==BASE_ITEM_BASTARDSWORD)
+     ||type==BASE_ITEM_BATTLEAXE
+     ||type==BASE_ITEM_DAGGER
+     ||type==BASE_ITEM_DIREMACE
+     ||type==BASE_ITEM_DOUBLEAXE
+     ||type==BASE_ITEM_DWARVENWARAXE
+     ||type==BASE_ITEM_GREATAXE
+     ||type==BASE_ITEM_GREATSWORD
+     ||type==BASE_ITEM_HALBERD
+     ||type==BASE_ITEM_HANDAXE
+     ||type==BASE_ITEM_HEAVYFLAIL
+     ||type==BASE_ITEM_KAMA
+     ||type==BASE_ITEM_KATANA
+     ||type==BASE_ITEM_KUKRI
+     ||type==BASE_ITEM_LIGHTFLAIL
+     ||type==BASE_ITEM_LIGHTHAMMER
+     ||type==BASE_ITEM_LIGHTMACE
+     ||type==BASE_ITEM_LONGSWORD
+     ||type==BASE_ITEM_MORNINGSTAR
+     ||type==BASE_ITEM_RAPIER
+     ||type==BASE_ITEM_SCIMITAR
+     ||type==BASE_ITEM_SCYTHE
+     ||type==BASE_ITEM_SHORTSWORD
+     ||type==BASE_ITEM_SHURIKEN
+     ||type==BASE_ITEM_SICKLE
+     ||type==BASE_ITEM_THROWINGAXE
+     ||type==BASE_ITEM_TWOBLADEDSWORD
+     ||type==BASE_ITEM_WARHAMMER)
   {
     nReturnVal=2;// Mostly metal
   }

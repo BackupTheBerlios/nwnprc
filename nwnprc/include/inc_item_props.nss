@@ -872,8 +872,8 @@ int GetItemDamageType(object oItem)
 }
 
 
-
-int TotalAndRemoveDamageProperty(object oItem, int iSubType)
+// Removed -- use SetCompositeDamageBonusT
+/*int TotalAndRemoveDamageProperty(object oItem, int iSubType)
 {
     itemproperty ip = GetFirstItemProperty(oItem);
     int iPropertyValue = GetItemPropertyCostTableValue(ip);
@@ -922,7 +922,7 @@ void SetCompositeDamageBonus(object oItem, string sBonus, int iVal, int iSubType
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(iSubType, iLinearDamage), oItem);
 
     SetLocalInt(oItem, sBonus, iVal);
-}
+}*/
 
 
 int TotalAndRemoveDamagePropertyT(object oItem, int iSubType)
@@ -1042,6 +1042,8 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    // knight Kalice
    DeleteLocalInt(oItem,"DSlayBonusDiv");
    DeleteLocalInt(oItem,"DSlayingAttackBonus");
+   // prc_battledance
+   DeleteLocalInt(oItem,"BADanAtk");
   
    
    // LEFT HAND

@@ -74,7 +74,7 @@ void ApplyTwoWeaponDefense(object oPC, object oSkin)
 
      itemproperty ipACBonus = ItemPropertyACBonus(ACBonus);
      
-     SetCompositeBonusT(oSkin, "TwoWeaponDefenseBonus", ACBonus, ITEM_PROPERTY_AC_BONUS);   
+     SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", ACBonus, ITEM_PROPERTY_AC_BONUS);   
      
 }
 

@@ -70,6 +70,10 @@ void RebukeUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int 
     effect eImpactVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpactVis, GetLocation(OBJECT_SELF));
 
+    int iMastery = GetHasFeat(FEAT_UNDEAD_MASTERY);
+    
+    if (iMastery) nTurnHD*= 10;
+    
     //Get nearest enemy within 20m (60ft)
     //Why are you using GetNearest instead of GetFirstObjectInShape
     // Because ability description says "gets closest first" :P
@@ -80,6 +84,8 @@ void RebukeUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int 
         {
             nHD = GetHitDice(oTarget) + GetTurnResistanceHD(oTarget);
             nRacial = MyPRCGetRacialType(oTarget);
+            
+            
 
             if (nRacial == RACIAL_TYPE_OUTSIDER )
             {
@@ -97,6 +103,8 @@ void RebukeUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int 
             {
                   nHD = GetHitDice(oTarget) + GetTurnResistanceHD(oTarget);
             }
+            
+            if (iMastery && nRacial != RACIAL_TYPE_UNDEAD) nHD*= 10;
 
             if(nHD <= nTurnLevel && nHD <= (nTurnHD - nHDCount))
             {

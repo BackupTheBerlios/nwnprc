@@ -19,9 +19,9 @@ void main()
         object oArea = GetArea(oPC);
         
         int bHasLightSensitive = GetHasFeat(FEAT_LTSENSE, oPC);
-        int bHasLightBlindness = GetHasFeat(FEAT_LTSENSE, oPC);
+        int bHasLightBlindness = GetHasFeat(FEAT_LTBLIND, oPC);
         
-        if(bHasLightSensitive || bHasLightSensitive)
+        if(bHasLightSensitive || bHasLightBlindness)
         {
            if(   GetIsObjectValid(oArea)
               && GetIsDay()
@@ -34,7 +34,7 @@ void main()
         //light sensitivity
         if(bHasLightSensitive && bIsEffectedByLight)
         {
-           EffectDazzled(oPC, 5.99);
+           EffectDazzled(oPC, 6.5);
         }
 
         //light blindness
@@ -47,12 +47,12 @@ void main()
                effect eBlind = EffectBlindness();
                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBlind, oPC, 5.99);
                SetLocalInt(oPC, "EnteredDaylight", TRUE);
-               EffectDazzled(oPC, 5.99);
+               EffectDazzled(oPC, 6.5);
            }
            // Keep Dazzling them until they are out of the light
            else if(GetLocalInt(oPC, "EnteredDaylight") == TRUE)
            {
-               EffectDazzled(oPC, 5.99);
+               EffectDazzled(oPC, 6.5);
            }
            // Finally out of the light, no more daze, remove int
            else

@@ -36,35 +36,35 @@ void main()
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 11:
-                    sSummon = "summonedgreaterw";
+                    sSummon = "prc_mos_21";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 14:
-                    sSummon = "summonedgreat001";
+                    sSummon = "prc_mos_24";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 17:
-                    sSummon = "summonedgreat002";
+                    sSummon = "prc_mos_27";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 20:
-                    sSummon = "summonedgreat003";
+                    sSummon = "prc_mos_30";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 23:
-                    sSummon = "summonedgreat004";
+                    sSummon = "prc_mos_33";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 26:
-                    sSummon = "summonedgreat005";
+                    sSummon = "prc_mos_36";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 29:
-                    sSummon = "summonedgreat006";
+                    sSummon = "prc_mos_39";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 180:  //max level for npc
-                    sSummon = "summonedgreat006";
+                    sSummon = "prc_mos_39";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
             }

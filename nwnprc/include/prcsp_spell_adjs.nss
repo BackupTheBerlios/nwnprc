@@ -5,10 +5,10 @@
 //	Compute the Effective Caster Level without Penetration
 //
 int
-PRCGetCasterLevel(object oCaster)
+PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 {
 	return GetCasterLevel(oCaster)
-		+ ExecuteScriptAndReturnInt("prcep_cast_lvl", oCaster);
+		+ ExecuteScriptAndReturnInt("prc_caster_level", oCaster);
 }
 
 //

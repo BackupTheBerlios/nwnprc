@@ -9,12 +9,14 @@
 #include "x2_inc_switches"
 #include "prc_feat_const"
 #include "prc_class_const"
+#include "prc_spell_const"
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"
+#include "prcsp_reputation"
+#include "prcsp_archmaginc"
 #include "prcsp_spell_adjs"
 #include "prcsp_engine"
-#include "inc_epicdispel"
 
 //function prototypes
 int MyPRCGetRacialType(object oTarget);
@@ -23,7 +25,7 @@ int MyPRCGetRacialType(object oTarget);
 // If so removes imortality flag so that Death Spell can kill them
 void DeathlessFrenzyCheck(object oTarget);
 
-//const int SAVING_THROW_NONE = 4;
+const int SAVING_THROW_NONE = 4;
 
 int MyPRCGetRacialType(object oCreature)
 {

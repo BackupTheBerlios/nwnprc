@@ -33,7 +33,7 @@ int ElementalSavantSP(int spell_id, object oCaster = OBJECT_SELF)
 	// Otherwise this would require checking ~4 items (class or specific feats)
 	if (GetHasFeat(FEAT_ES_PEN_1, oCaster)) {
 		// get spell elemental type
-		string element = lookup_spell_type(spell_id);
+		string element = ChangedElementalType(spell_id, oCaster);
 
 		// Any value that does not match one of the enumerated feats
 		int feat = 0;
@@ -91,6 +91,21 @@ int GetSpellPowerBonus(object oCaster = OBJECT_SELF)
     return nBonus;
 }
 
+// Shadow Weave Feat
+// +1 caster level vs SR (school Ench,Illu,Necro)
+int ShadowWeavePen(object oCaster = OBJECT_SELF)
+{
+   int nSP;
+   
+   if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0;
+   
+   int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
+   if ( nSchool == SPELL_SCHOOL_ENCHANTMENT || nSchool == SPELL_SCHOOL_NECROMANCY || nSchool == SPELL_SCHOOL_ILLUSION)
+     nSP++;
+
+   return  nSP;
+}
+
 int add_spl_pen(object oCaster = OBJECT_SELF)
 {
     int spell_id = GetSpellId();
@@ -98,6 +113,7 @@ int add_spl_pen(object oCaster = OBJECT_SELF)
     nSP += GetHeartWarderPene(spell_id, oCaster);
     nSP += GetSpellPowerBonus(oCaster);
     nSP += GetSpellPenetreFocusSchool(oCaster);
+    nSP += ShadowWeavePen(oCaster);
         
     return nSP;
 }

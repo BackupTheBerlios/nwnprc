@@ -16,7 +16,7 @@ const int FEAT_FOCUSED_SPELL_PENETRATION_EVOCATION     = 3132;
 const int FEAT_FOCUSED_SPELL_PENETRATION_ILLUSION      = 3133;
 const int FEAT_FOCUSED_SPELL_PENETRATION_NECROMANCY    = 3134;
 const int FEAT_FOCUSED_SPELL_PENETRATION_TRANSMUTATION = 3135;
-const int FEAT_DISCIPLE_OF_SUN 			       = 3127;
+const int FEAT_DISCIPLE_OF_SUN                 = 3127;
 const int FEAT_EMPOWER_TURNING                         = 3126;
 const int FEAT_PRACTISED_SPELLCASTER_BARD              = 3121;
 const int FEAT_PRACTISED_SPELLCASTER_CLERIC            = 3122;
@@ -293,6 +293,11 @@ const int FEAT_BSTRIKE_D1        = 4242;
 const int FEAT_BSTRIKE_D2        = 4243;
 const int FEAT_BSTRIKE_D3        = 4244;
 const int FEAT_BSTRIKE_D4        = 4245;
+
+//Knight of the Middle Circle
+const int FEAT_KOTMC_SL_1        = 2596;
+const int FEAT_KOTMC_SL_2        = 2597;
+const int FEAT_KOTMC_SL_3        = 2598;
 
 //Thrall of Orcus
 const int FEAT_TO_CARRION        = 4404;
@@ -702,16 +707,33 @@ const int FEAT_BRAWLER_DODGE_2                   = 4439;
 const int FEAT_BRAWLER_DODGE_3                   = 4440;
 const int FEAT_BRAWLER_DODGE_4                   = 4441;
 const int FEAT_BRAWLER_DODGE_5                   = 4442;
-const int FEAT_WEAPON_FINESSE_UNARMED            = 4446;
 const int FEAT_BRAWLER_EXTRAATT_1                = 4429;
 const int FEAT_BRAWLER_EXTRAATT_2                = 4430;
+const int FEAT_BRAWLER_EXTRAATT_3                = 4431;
+const int FEAT_BRAWLER_DAMAGE_REDUCTION_3        = 4432;
+const int FEAT_BRAWLER_DAMAGE_REDUCTION_6        = 4433;
+const int FEAT_BRAWLER_DAMAGE_REDUCTION_9        = 4434;
 
 // Minstrel of the Edge
-const int FEAT_MOE_GREATER_MAGIC_WEAPON          = 4431;
-const int FEAT_MOE_MAGIC_VESTMENT                = 4432;
-const int FEAT_MOE_GREATER_HEROISM               = 4433;
-const int FEAT_MOE_REDUCED_ASF_10                = 4434;
-const int FEAT_MOE_REDUCED_ASF_20                = 4435;
+const int FEAT_MINSTREL_LIGHT_ARMOR_CASTING      = 4435;
+const int FEAT_MINSTREL_MEDIUM_ARMOR_CASTING     = 4436;
+const int FEAT_MINSTREL_SMALL_SHIELD_CASTING     = 4459;
+const int FEAT_MINSTREL_SONG_SLEEP               = 4443;
+const int FEAT_MINSTREL_SONG_SILENCE             = 4444;
+const int FEAT_MINSTREL_SONG_HASTE               = 4445;
+const int FEAT_MINSTREL_SONG_SLOW                = 4446;
+const int FEAT_MINSTREL_SONG_CHARM               = 4447;
+const int FEAT_MINSTREL_SONG_HEROISM             = 4448;
+const int FEAT_MINSTREL_SONG_GR_HEROISM          = 4449;
+const int FEAT_MINSTREL_SONG_SHIELD_AC           = 4450;
+const int FEAT_MINSTREL_SONG_SONIC_WEAP          = 4451;
+const int FEAT_MINSTREL_SONG_STRENGTH            = 4452;
+const int FEAT_MINSTREL_SONG_DEXTERITY           = 4453;
+const int FEAT_MINSTREL_SONG_CONSTITUTION        = 4454;
+const int FEAT_MINSTREL_SONG_INTELLIGENCE        = 4455;
+const int FEAT_MINSTREL_SONG_WISDOM              = 4456;
+const int FEAT_MINSTREL_SONG_CHARISMA            = 4457;
+const int FEAT_MINSTREL_SONG_WOUND_WHISP         = 4458;
 
 // Nightshade
 const int FEAT_NS_LIGHT_ADAPTION    = 2964;
@@ -724,6 +746,12 @@ const int FEAT_NS_POISON_IMMUNE     = 2970;
 const int FEAT_NS_POISON_SPITTLE    = 2971;
 const int FEAT_NS_WEB               = 2972;
 const int FEAT_NS_SHADOWWALK        = 2973;
+
+// Runescarred Berserker
+
+const int FEAT_RIT_SCAR             = 2369;
+const int FEAT_SPAWNFROST           = 2371;
+const int FEAT_RIT_DR               = 2370;
 
 
 /*//////////////////////////////////////////////////
@@ -801,6 +829,5 @@ const int FEAT_BATTLE_RAGE3                      = 3415;
 /*//////////////////////////////////////////////////////
 //////////////////////END CODI//////////////////////////
 //////////////////////////////////////////////////////*/
-
 
 

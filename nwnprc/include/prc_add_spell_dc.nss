@@ -106,7 +106,7 @@ ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
 	// Otherwise this would require checking ~4 items (class or specific feats)
 	if (GetHasFeat(FEAT_ES_FOCUS_1, oCaster)) {
 		// get spell elemental type
-		string element = lookup_spell_type(spell_id);
+		string element = ChangedElementalType(spell_id, oCaster);
 
 		// Any value that does not match one of the enumerated feats
 		int feat = 0;
@@ -135,6 +135,22 @@ ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
 	return nSP;
 }
 
+// Shadow Weave Feat
+// DC +1 (school Ench,Illu,Necro)
+int ShadowWeaveDC(object oCaster = OBJECT_SELF)
+{
+   int nDC;
+
+   if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0;
+
+   int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
+   if ( nSchool == SPELL_SCHOOL_ENCHANTMENT || nSchool == SPELL_SCHOOL_NECROMANCY || nSchool == SPELL_SCHOOL_ILLUSION)
+      nDC =1+GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;
+
+   return  nDC;
+
+}
+
 int GetChangesToSaveDC(object oCaster = OBJECT_SELF)
 {
     int spell_id = GetSpellId();
@@ -142,6 +158,7 @@ int GetChangesToSaveDC(object oCaster = OBJECT_SELF)
     nDC += GetHierophantSLAAdjustment(spell_id, oCaster);
     nDC += GetHeartWarderDC(spell_id, oCaster);
     nDC += GetSpellPowerBonus(oCaster);
+    nDC += ShadowWeaveDC(oCaster);
 
 	return nDC;
 }

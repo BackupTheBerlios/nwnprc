@@ -132,8 +132,6 @@ const int FEAT_SVIRFNEBLIN_DODGE        = 4791;
 const int FEAT_WATER_BREATHING		= 4793;
 const int FEAT_MINOT_SCENT		= 4795;
 
-// WYZ, Check that it compiles before you commit it!
-//FEAT_SPELL18 is already used for something
 const int FEAT_CHAMELEON		= 4576;
 const int FEAT_BONUS_RIVER		= 4577;
 const int FEAT_BONUS_BAMBOO		= 4578;
@@ -162,7 +160,6 @@ const int FEAT_TINY			= 4614;
 const int FEAT_SPELL8			= 4615;
 const int FEAT_SPELL16			= 4616;
 const int FEAT_SPELL17			= 4617;
-//const int FEAT_SPELL18			= 4618;
 const int FEAT_SPELL19			= 4619;
 const int FEAT_SPELL20			= 4620;
 const int FEAT_SPELL21			= 4621;
@@ -214,8 +211,6 @@ const int FEAT_NATPSIONIC_1		= 4796;
 const int FEAT_NATPSIONIC_2		= 4797;
 const int FEAT_NATPSIONIC_3		= 4798;
 const int FEAT_HUGE			= 4799;
-
-
 
 //Passive Feats
 const int FEAT_ETERNAL_FREEDOM                         = 4298;

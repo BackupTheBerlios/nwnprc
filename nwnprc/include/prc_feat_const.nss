@@ -6,6 +6,7 @@ const int FEAT_UNDEAD_MASTERY                          = 3446;
 const int FEAT_IMPROVED_FAVORED_ENEMY                  = 3454;
 const int FEAT_FAVORED_POWER_ATTACK                    = 3455;
 const int FEAT_EXTENDED_RAGE                           = 3456;
+const int FEAT_DARKNESS_DOMAIN                         = 3458;
 
 const int FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION    = 3128;
 const int FEAT_FOCUSED_SPELL_PENETRATION_CONJURATION   = 3129;
@@ -935,6 +936,11 @@ const int FEAT_FOM_DIVINE_SONG_RAISEDEAD      	 = 4488;
 const int FEAT_FOM_DIVINE_SONG_SPELLRESISTANCE	 = 4489;
 const int FEAT_FOM_GREATER_DIVINE_SONG 		 = 4448;
 const int FEAT_FOM_ENCORE_PERFORMANCE		 = 4436;
+
+// Evil-Paladin
+const int FEAT_HIDDENFAITH                       = 3484;
+const int FEAT_AP_TURN_OUTSIDER                  = 3486;
+
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////

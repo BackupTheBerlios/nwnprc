@@ -8,3 +8,4 @@
 4 ImpUnarmed    FEAT    21             ****      
 5 PowerAtk      FEAT    28             ****      
 6 ScriptVar     VAR     X1_AllowIniDra 0         
+7 Jump          SKILL   28             8         

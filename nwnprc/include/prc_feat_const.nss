@@ -1,11 +1,12 @@
 //Pasive Feats
-const int FEAT_EB_HAND = 3390;
-const int FEAT_EB_HEAD = 3391;
-const int FEAT_EB_CHEST = 3392;
-const int FEAT_EB_ARM = 3393;
-const int FEAT_EB_NECK = 3394;
-const int FEAT_INTUITIVE_ATTACK = 3166;
-const int FEAT_RAVAGEGOLDENICE = 3162;
+const int FEAT_EB_HAND                                 = 3390;
+const int FEAT_EB_HEAD                                 = 3391;
+const int FEAT_EB_CHEST                                = 3392;
+const int FEAT_EB_ARM                                  = 3393;
+const int FEAT_EB_NECK                                 = 3394;
+const int FEAT_INTUITIVE_ATTACK                        = 3166;
+const int FEAT_RAVAGEGOLDENICE                         = 3162;
+const int FEAT_DRAGONSONG                              = 3440;
 
 
 const int FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION    = 3128;
@@ -801,6 +802,12 @@ const int FEAT_UR_GRACE2            = 3437;
 const int FEAT_UR_GRACE3            = 3438;
 const int FEAT_UR_GRACE4            = 3439;
 
+// Dragonsong Lyrith
+const int FEAT_DRAGONSONG_STRENGTH      = 3441;
+const int FEAT_DRAGONSONG_COMPULSION    = 3442;
+const int FEAT_DRAGONSONG_SPEED         = 3443;
+const int FEAT_DRAGONSONG_FEAR          = 3444;
+const int FEAT_DRAGONSONG_HEALING       = 3445;
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////

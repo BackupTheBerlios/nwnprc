@@ -114,6 +114,7 @@ const int SPELL_MINSTREL_INCREASE_SONGS     = 2144;
 
 // Ultimate Ranger
 const int SPELL_UR_FAVORITE_ENEMY           = 2134;
+const int SPELL_UR_HAWK_TOTEM               = 2140;
 
 // Dragonsong
 

@@ -7,13 +7,13 @@ public class ClassEntry implements Comparable<ClassEntry>{
 	public String name;
 	public String filePath;
 	
-	boolean isPrestige;
+	boolean isBase;
 	public int entryNum;
 
-	public ClassEntry(String name, String filePath, boolean isPrestige, int entryNum){
+	public ClassEntry(String name, String filePath, boolean isBase, int entryNum){
 		this.name       = name;
 		this.filePath   = filePath;
-		this.isPrestige = isPrestige;
+		this.isBase     = isBase;
 		this.entryNum   = entryNum;
 	}
 	

@@ -117,7 +117,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
                if (spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF)
 				    && oAreaTarget != OBJECT_SELF
 				    && oAreaTarget != oFirstTarget // Do not affect the same creature twice
-				   )
+				   ){
                     //Fire cast spell at event for the specified target
                     SignalEvent(oAreaTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
@@ -139,7 +139,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
                 
 				//Select the next target within the spell shape.
 	            oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-            }
+	        }
         }
     }
 }

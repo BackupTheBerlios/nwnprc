@@ -35,25 +35,63 @@ void AcolyteSymbiosis(object oPC, object oSkin, int iLevel)
 // * Applies the Acolyte's stat bonuses as CompositeBonuses on object's skin.
 // * Currently only valid for Con, Dex and Int
 // * iLevel = integer stat bonus
-// * iStat = IP_CONST_ABILITY_*
-void AcolyteStatBonus(object oPC, object oSkin, int iLevel, int iStat)
+void AcolyteDexBonus(object oPC, object oSkin, int iLevel)
 {
-    string sFlag;
-    if(iStat == IP_CONST_ABILITY_CON) sFlag = "AcolyteStatBonusCon";
-    if(iStat == IP_CONST_ABILITY_DEX) sFlag = "AcolyteStatBonusDex";
-    if(iStat == IP_CONST_ABILITY_INT) sFlag = "AcolyteStatBonusInt";
+    string sFlag = "AcolyteStatBonusDex";
 
     if(GetLocalInt(oSkin, sFlag) == iLevel) return;
 
-    if(iLevel > 0){
-        SetCompositeBonus(oSkin, sFlag, iLevel, ITEM_PROPERTY_ABILITY_BONUS, iStat);
+	if(iLevel > 0)
+	{
+        SetCompositeBonus(oSkin, sFlag, iLevel, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_DEX);
         SetLocalInt(oSkin, sFlag, TRUE);
-    }
-    else {
-        SetCompositeBonus(oSkin, sFlag, 0, ITEM_PROPERTY_ABILITY_BONUS, iStat);
+	}
+
+	else 
+	{
+        SetCompositeBonus(oSkin, sFlag, 0, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_DEX);
         SetLocalInt(oSkin, sFlag, FALSE);
-   }
+   	}
 }
+
+void AcolyteConBonus(object oPC, object oSkin, int iLevel)
+{
+    string sFlag = "AcolyteStatBonusCon";
+
+    if(GetLocalInt(oSkin, sFlag) == iLevel) return;
+
+	if(iLevel > 0)
+	{
+        SetCompositeBonus(oSkin, sFlag, iLevel, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
+        SetLocalInt(oSkin, sFlag, TRUE);
+	}
+
+	else 
+	{
+        SetCompositeBonus(oSkin, sFlag, 0, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
+        SetLocalInt(oSkin, sFlag, FALSE);
+   	}
+}
+
+void AcolyteIntBonus(object oPC, object oSkin, int iLevel)
+{
+    string sFlag = "AcolyteStatBonusInt";
+
+    if(GetLocalInt(oSkin, sFlag) == iLevel) return;
+
+	if(iLevel > 0)
+	{
+        SetCompositeBonus(oSkin, sFlag, iLevel, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_INT);
+        SetLocalInt(oSkin, sFlag, TRUE);
+	}
+
+	else 
+	{
+        SetCompositeBonus(oSkin, sFlag, 0, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_INT);
+        SetLocalInt(oSkin, sFlag, FALSE);
+   	}
+}
+
 
 // * Applies the Acolyte's resistance bonuses as CompositeBonuses on object's skin.
 // * Currently only valid for Cold, Fire, Acid and Electric
@@ -106,9 +144,9 @@ void main()
     if(bFSkin > 0) AcolyteFiendSkin(oPC, oSkin, bFSkin);
     //NOT IMPLEMENTED if(bFKnow > 0) AcolyteFiendishKnowledge(oPC, oSkin, bFKnow);
     if(bSymbi > -1) AcolyteSymbiosis(oPC, oSkin, bSymbi);
-    if(bStCon > 0) AcolyteStatBonus(oPC, oSkin, bStCon, IP_CONST_ABILITY_CON);
-    if(bStDex > 0) AcolyteStatBonus(oPC, oSkin, bStDex, IP_CONST_ABILITY_DEX);
-    if(bStInt > 0) AcolyteStatBonus(oPC, oSkin, bStInt, IP_CONST_ABILITY_INT);
+    if(bStCon > 0) AcolyteConBonus(oPC, oSkin, bStCon);
+    if(bStDex > 0) AcolyteDexBonus(oPC, oSkin, bStDex);
+    if(bStInt > 0) AcolyteIntBonus(oPC, oSkin, bStInt);
     if(bResCo) AcolyteResistance(oPC, oSkin, IP_CONST_DAMAGETYPE_COLD);
     if(bResFl) AcolyteResistance(oPC, oSkin, IP_CONST_DAMAGETYPE_FIRE);
     if(bResAc) AcolyteResistance(oPC, oSkin, IP_CONST_DAMAGETYPE_ACID);

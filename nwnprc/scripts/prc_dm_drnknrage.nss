@@ -42,13 +42,17 @@ effect eAC = EffectACDecrease(2);
 effect eVFX2 = EffectVisualEffect(VFX_DUR_BLUR);
 effect eVFX3  = EffectVisualEffect(VFX_DUR_AURA_FIRE);
 
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStr, oPC, fSec);
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCst, oPC, fSec);
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWillSave, oPC, fSec);
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAC, oPC, fSec);
+effect eLink;
 
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVFX2, oPC, fSec);
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVFX3, oPC, fSec);
+eLink = EffectLinkEffects(eStr, eCst);
+eLink = EffectLinkEffects(eLink, eWillSave);
+eLink = EffectLinkEffects(eLink, eAC);
+eLink = EffectLinkEffects(eLink, eVFX2);
+eLink = EffectLinkEffects(eLink, eVFX3);
+
+eLink = ExtraordinaryEffect(eLink);
+
+ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fSec);
 
 FloatingTextStringOnCreature("Drunken Rage Activated", oPC);
 }

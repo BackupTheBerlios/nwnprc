@@ -14,8 +14,7 @@
 
 // Called by the EvalPRC function
 
-#include "pnp_shifter"
-
+#include "pnp_shft_main"
 
 void main()
 {
@@ -60,7 +59,7 @@ void main()
         {
 		// The creature is a standard that we apply to the shifters spark of life list
 		sCreatureResRef = Get2DAString(sShifterFile,"CResRef",i);
-		RecognizeCreature( oPC, sCreatureResRef);
+		RecognizeCreature( oPC, "", sCreatureResRef);
 //SendMessageToPC(oPC,"Creature Added = " + sCreatureResRef);
         }
 	i++;

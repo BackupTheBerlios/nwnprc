@@ -12,10 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "inc_item_props"
-#include "pnp_shifter"
-//#include "strat_prc_inc"
-
-
+#include "pnp_shft_main"
 
 // Returns the lich amulet level
 int GetAmuletLevel(object oAmulet);

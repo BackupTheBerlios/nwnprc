@@ -12,8 +12,7 @@
 //:://////////////////////////////////////////////
 // alter self for the lich
 
-#include "pnp_shifter"
-
+#include "pnp_shft_main"
 
 void main()
 {

@@ -18,8 +18,12 @@
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, GR_TIME_DC, GR_TIME_S, GR_TIME_XP))
@@ -31,5 +35,6 @@ void main()
         DelayCommand(0.75, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, OBJECT_SELF, 18.0));
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

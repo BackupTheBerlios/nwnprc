@@ -10,8 +10,12 @@
 #include "inc_epicspells"
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, UNHOLYD_DC, UNHOLYD_S, UNHOLYD_XP))
@@ -25,6 +29,7 @@ void main()
         else
             SendMessageToPC(OBJECT_SELF, "You must be non-good to summon an unholy disciple.");
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 

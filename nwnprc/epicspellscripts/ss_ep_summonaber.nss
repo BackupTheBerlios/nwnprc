@@ -11,8 +11,12 @@
 #include "inc_epicspells"
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, SUMABER_DC, SUMABER_S, SUMABER_XP))
@@ -42,6 +46,7 @@ void main()
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummon,
             GetSpellTargetLocation(), fDuration);
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 

@@ -52,9 +52,13 @@ void AddEffectsToWeapon( object oTarget, float fDuration, int iCasterLvl )
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+
     // Spell Cast Hook
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, WHIP_SH_DC, WHIP_SH_S, WHIP_SH_XP))
@@ -170,4 +174,5 @@ void main()
         DelayCommand( TurnsToSeconds(iDuration),
             SetLocalInt(oPC, "WhipOfShar", 0) );
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

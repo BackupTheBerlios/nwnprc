@@ -14,8 +14,12 @@ int VFX_PER_RAIN_OF_FIRE = 100;
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, RAINFIR_DC, RAINFIR_S, RAINFIR_XP))
@@ -30,5 +34,6 @@ void main()
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY,
             eAOE, lTarget, HoursToSeconds(nDuration));
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

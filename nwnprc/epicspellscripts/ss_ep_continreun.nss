@@ -13,8 +13,12 @@
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, CON_REU_DC, CON_REU_S, CON_REU_XP))
@@ -46,5 +50,6 @@ void main()
         AssignCommand(OBJECT_SELF, ActionStartConversation(OBJECT_SELF,
             "ss_cont_reunion", TRUE, FALSE));
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

@@ -16,8 +16,12 @@
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, LEECH_F_DC, LEECH_F_S, LEECH_F_XP))
@@ -46,5 +50,5 @@ void main()
         ApplyEffectAtLocation( DURATION_TYPE_TEMPORARY, eAOE,
             lTarget, RoundsToSeconds(nCasterLevel) );
     }
-
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

@@ -20,6 +20,9 @@
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+
     //Declare major variables
     int nDamage;
     effect eDam;
@@ -70,4 +73,5 @@ void main()
             SetLocalInt( oTarget, "MagmaBurst", 1 );
         }
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

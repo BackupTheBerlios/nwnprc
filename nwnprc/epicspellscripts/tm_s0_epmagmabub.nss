@@ -20,6 +20,9 @@
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+
     //Declare major variables
     int nDamage;
     effect eDam;
@@ -34,6 +37,7 @@ void main()
 
     if( !GetIsObjectValid(GetAreaOfEffectCreator()) )
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         DestroyObject(OBJECT_SELF);
         return;
     }
@@ -86,4 +90,5 @@ void main()
         oTarget = GetNextInPersistentObject
             (OBJECT_SELF,OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

@@ -17,9 +17,12 @@
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     if( !X2PreSpellCastCode() )
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }  // End of Spell Cast Hook
     if (GetCanCastSpell(OBJECT_SELF, STORM_M_DC, STORM_M_S, STORM_M_XP))
@@ -56,5 +59,6 @@ void main()
                 RADIUS_SIZE_HUGE, GetSpellTargetLocation() );
         }
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

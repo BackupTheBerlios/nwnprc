@@ -12,8 +12,12 @@
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, EP_RPLS_DC, EP_RPLS_S, EP_RPLS_XP))
@@ -26,4 +30,5 @@ void main()
         AssignCommand(OBJECT_SELF, ActionStartConversation(OBJECT_SELF,
             "ss_ep_repulsion", TRUE, FALSE));
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

@@ -13,8 +13,12 @@
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, TRANVIT_DC, TRANVIT_S, TRANVIT_XP))
@@ -36,5 +40,6 @@ void main()
         IPSafeAddItemProperty(oSkin, ipReg, 0.0f,
             X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, TRUE);
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

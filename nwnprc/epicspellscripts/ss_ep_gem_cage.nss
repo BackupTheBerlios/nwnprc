@@ -19,8 +19,12 @@ int GetNeededGemValue(int nHD);
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, GEMCAGE_DC, GEMCAGE_S, GEMCAGE_XP))
@@ -120,6 +124,7 @@ void main()
             FloatingTextStringOnCreature("*Spell failed! Invalid target.*",
                 OBJECT_SELF, FALSE);
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 int GetNeededGemValue(int nHD)

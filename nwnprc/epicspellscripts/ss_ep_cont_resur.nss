@@ -17,8 +17,12 @@ void ContingencyResurrect(object oTarget, int nCount, object oCaster = OBJECT_SE
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     object oTarget = GetSpellTargetObject();
@@ -48,6 +52,7 @@ void main()
             SendMessageToPC(OBJECT_SELF, "Spell failed - Invalid target!");
         }
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 void ContingencyResurrect(object oTarget, int nCount, object oCaster = OBJECT_SELF)

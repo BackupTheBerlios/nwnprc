@@ -12,6 +12,9 @@
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
+
     object oPC = OBJECT_SELF;
     effect eX, eRem;
     int nIsInvis;
@@ -39,4 +42,5 @@ void main()
         effect eInv = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eInv, oPC);
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

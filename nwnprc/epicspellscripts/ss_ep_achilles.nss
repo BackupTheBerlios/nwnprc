@@ -23,9 +23,12 @@ void RunHeel(object oTarget, int nDuration);
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, ACHHEEL_DC, ACHHEEL_S, ACHHEEL_XP))
@@ -57,6 +60,8 @@ void main()
             oPC, RoundsToSeconds(nDuration) );
         RunHeel(oPC, nDuration);
     }
+
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 void RunHeel(object oTarget, int nDuration)

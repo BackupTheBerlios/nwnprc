@@ -17,6 +17,9 @@
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+
     //Declare major variables
     object oCaster = GetAreaOfEffectCreator();
     object oTarget;
@@ -29,6 +32,7 @@ void main()
     // If oCaster is not valid
     if( !GetIsObjectValid(oCaster) )
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         DestroyObject( OBJECT_SELF );
         return;
     }
@@ -110,4 +114,5 @@ void main()
     //Select the next target within the spell shape.
     oTarget = GetNextInPersistentObject();
     }
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

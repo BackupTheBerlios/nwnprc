@@ -18,8 +18,12 @@ void RunNailedToTheSky(object oTarget, int nDC);
 
 void main()
 {
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+
     if (!X2PreSpellCastCode())
     {
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     object oTarget = GetSpellTargetObject();
@@ -38,6 +42,7 @@ void main()
     else
     FloatingTextStringOnCreature
         ("*Invalid target for spell*", OBJECT_SELF, FALSE);
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 void RunNailedToTheSky(object oTarget, int nDC)

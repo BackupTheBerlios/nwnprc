@@ -763,6 +763,33 @@ const int FEAT_RIT_SCAR             = 2369;
 const int FEAT_SPAWNFROST           = 2371;
 const int FEAT_RIT_DR               = 2370;
 
+// Ultimate Ranger
+
+const int FEAT_UR_FE_DWARF          = 2974;
+const int FEAT_UR_FE_ELF            = 2975;
+const int FEAT_UR_FE_GNOME          = 2976;
+const int FEAT_UR_FE_HALFING        = 2977;
+const int FEAT_UR_FE_HALFELF        = 2978;
+const int FEAT_UR_FE_HALFORC        = 2979;
+const int FEAT_UR_FE_HUMAN          = 2980;
+const int FEAT_UR_FE_ABERRATION     = 2981;
+const int FEAT_UR_FE_ANIMAL         = 2982;
+const int FEAT_UR_FE_BEAST          = 2983;
+const int FEAT_UR_FE_CONSTRUCT      = 2984;
+const int FEAT_UR_FE_DRAGON         = 2985;
+const int FEAT_UR_FE_GOBLINOID      = 2986;
+const int FEAT_UR_FE_MONSTROUS      = 2987;
+const int FEAT_UR_FE_ORC            = 2988;
+const int FEAT_UR_FE_REPTILIAN      = 2989;
+const int FEAT_UR_FE_ELEMENTAL      = 2990;
+const int FEAT_UR_FE_FEY            = 2991;
+const int FEAT_UR_FE_GIANT          = 2992;
+const int FEAT_UR_FE_MAGICAL_BEAST  = 2993;
+const int FEAT_UR_FE_OUSIDER        = 2994;
+const int FEAT_UR_FE_SHAPECHANGER   = 2995;
+const int FEAT_UR_FE_UNDEAD         = 2996;
+const int FEAT_UR_FE_VERMIN         = 2997;
+const int FEAT_UR_SNAREMASTERY      = 2998;
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////

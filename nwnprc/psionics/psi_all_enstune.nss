@@ -1,6 +1,6 @@
 /*
    ----------------
-   Energy Push Electricity
+   Energy Stun Electricity
    
    prc_all_enstune
    ----------------

@@ -1,6 +1,6 @@
 /*
    ----------------
-   Energy Push Cold
+   Energy Stun Cold
    
    prc_all_enstunc
    ----------------

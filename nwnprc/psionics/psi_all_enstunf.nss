@@ -1,6 +1,6 @@
 /*
    ----------------
-   Energy Push Fire
+   Energy Stun Fire
    
    prc_all_enstunf
    ----------------

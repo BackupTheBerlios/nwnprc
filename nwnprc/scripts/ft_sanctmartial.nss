@@ -309,7 +309,11 @@ void Vile()
      {
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
-       SetLocalInt(oItem,"USanctMar",1);
+       SetLocalInt(oItem,"USanctMar",1);     
+       int nAlign = GetGoodEvilValue(OBJECT_SELF);
+       if (nAlign>7)
+         AdjustAlignment(oPC,ALIGNMENT_EVIL,7);
+         
      }
      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
      iType= GetBaseItemType(oItem);
@@ -318,6 +322,9 @@ void Vile()
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
        SetLocalInt(oItem,"USanctMar",1);
+       int nAlign = GetGoodEvilValue(OBJECT_SELF);
+       if (nAlign>7)
+         AdjustAlignment(oPC,ALIGNMENT_EVIL,7);
      }
    }
 

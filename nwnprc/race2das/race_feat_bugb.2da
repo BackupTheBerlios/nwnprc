@@ -1,10 +1,10 @@
 2DA V2.0
 
-     FeatLabel               FeatIndex 
-0    darkvision              228       
-1    skillaffinitymovesi     237       
-2    Natural_Armor_3         4734
-3    WeapProfSim             46
-4    ArmProfLgt              3
-5    Shield                  32  
-6    Race_Goblinoid          4719 
+     FeatLabel           FeatIndex 
+0    darkvision          228       
+1    Natural_Armor_3     4734      
+2    WeapProfSim         46        
+3    ArmProfLgt          3         
+4    Shield              32        
+5    Race_Goblinoid      4719      
+6    SkillAff_Movesi_4   4751      

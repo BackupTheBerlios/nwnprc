@@ -38,11 +38,6 @@ void main()
 		}
 
 	}
-	else
-	{
-		SendMessageToPC(OBJECT_SELF, "Your inventory is to full to allow you to unshift.");
-		SendMessageToPC(OBJECT_SELF, "Please make room enough for an armour sized item and then try again.");
-	}
 }
 
 

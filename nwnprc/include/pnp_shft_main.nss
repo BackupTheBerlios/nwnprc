@@ -107,7 +107,28 @@ int CanShift(object oPC)
 	{
 		iOutcome = TRUE;
 	}
+	else
+	{
+		SendMessageToPC(oPC, "Your inventory is to full to allow you to unshift.");
+		SendMessageToPC(oPC, "Please make room enough for an armour sized item and then try again.");
+	}
+
 	DestroyObject(oItem);
+
+    //there are issues with shifting will polymorphed
+    effect eEff = GetFirstEffect(oPC);
+    while (GetIsEffectValid(eEff))
+    {
+        int eType = GetEffectType(eEff);
+        if (eType == EFFECT_TYPE_POLYMORPH)
+        {
+			SendMessageToPC(oPC, "Shifting when polymorphed has been disabled.");
+			SendMessageToPC(oPC, "Please unpolymorph first");
+			return FALSE;
+        }
+        eEff = GetNextEffect(oPC);
+    }
+
 	return iOutcome;
 }
 
@@ -245,6 +266,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     object oWeapCLPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
     object oWeapCBPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC);
 
+
     // Force the PC to equip the creature items if the PC does not have one
     if (!GetIsObjectValid(oHidePC))
     {
@@ -262,46 +284,71 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     {
         // Make sure we start with a clean hide
         ScrubPCSkin(oPC,oHidePC);
-//        RemoveAllItemProperties(oHidePC);
+		//RemoveAllItemProperties(oHidePC);
         CopyAllItemProperties(oHidePC,oHide);
-    }
+        DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR)));
 
-    if (!GetIsObjectValid(oWeapCRPC))
-    {
-        oWeapCRPC = CopyObject(oWeapCR,GetLocation(oPC),oPC);
-        SetIdentified(oWeapCRPC,TRUE);
-        AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
     }
-    else // apply effects to the item
-    {
-        // Make sure we start with a clean weapon
-        RemoveAllItemProperties(oWeapCRPC);
-        CopyAllItemProperties(oWeapCRPC,oWeapCR);
-    }
-    if (!GetIsObjectValid(oWeapCLPC))
-    {
-        oWeapCLPC = CopyObject(oWeapCL,GetLocation(oPC),oPC);
-        SetIdentified(oWeapCLPC,TRUE);
-        AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
-    }
-    else // apply effects to the item
-    {
-        // Make sure we start with a clean weapon
-        RemoveAllItemProperties(oWeapCLPC);
-        CopyAllItemProperties(oWeapCLPC,oWeapCL);
-    }
-    if (!GetIsObjectValid(oWeapCBPC))
-    {
-        oWeapCBPC = CopyObject(oWeapCB,GetLocation(oPC),oPC);
-        SetIdentified(oWeapCBPC,TRUE);
-        AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
-    }
-    else // apply effects to the item
-    {
-        // Make sure we start with a clean weapon
-        RemoveAllItemProperties(oWeapCBPC);
-        CopyAllItemProperties(oWeapCBPC,oWeapCB);
-    }
+    if (!GetIsObjectValid(oWeapCR))
+	{
+		DestroyObject(oWeapCRPC, 1.0);
+	}
+	else
+	{
+		if (!GetIsObjectValid(oWeapCRPC))
+		{
+			oWeapCRPC = CopyObject(oWeapCR,GetLocation(oPC),oPC);
+			SetIdentified(oWeapCRPC,TRUE);
+			AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
+		}
+		else // apply effects to the item
+		{
+			// Make sure we start with a clean weapon
+			RemoveAllItemProperties(oWeapCRPC);
+			CopyAllItemProperties(oWeapCRPC,oWeapCR);
+		    DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R)));
+		}
+	}
+    if (!GetIsObjectValid(oWeapCL))
+	{
+		DestroyObject(oWeapCLPC, 1.0);
+	}
+	else
+	{
+		if (!GetIsObjectValid(oWeapCLPC))
+		{
+			oWeapCLPC = CopyObject(oWeapCL,GetLocation(oPC),oPC);
+			SetIdentified(oWeapCLPC,TRUE);
+			AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
+		}
+		else // apply effects to the item
+		{
+			// Make sure we start with a clean weapon
+			RemoveAllItemProperties(oWeapCLPC);
+			CopyAllItemProperties(oWeapCLPC,oWeapCL);
+		    DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L)));
+		}
+	}
+    if (!GetIsObjectValid(oWeapCB))
+	{
+		DestroyObject(oWeapCBPC, 1.0);
+	}
+	else
+	{
+		if (!GetIsObjectValid(oWeapCBPC))
+		{
+			oWeapCBPC = CopyObject(oWeapCB,GetLocation(oPC),oPC);
+			SetIdentified(oWeapCBPC,TRUE);
+			AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
+		}
+		else // apply effects to the item
+		{
+			// Make sure we start with a clean weapon
+			RemoveAllItemProperties(oWeapCBPC);
+			CopyAllItemProperties(oWeapCBPC,oWeapCB);
+			DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B)));
+		}
+	}
 
     // Get the Targets str, dex, and con
     int nTStr = GetAbilityScore(oTarget,ABILITY_STRENGTH);
@@ -458,17 +505,17 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 
     //re-equid creature items to get correct ip feats
     //(some were staying on even when they had been removed from the hide)
-    oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
-    oWeapCRPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oPC);
-    oWeapCLPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
-    oWeapCBPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC);
+    //oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
+    //oWeapCRPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oPC);
+    //oWeapCLPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
+    //oWeapCBPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC);
     //mast not unequid the items, this would crash the game
     //but re-equiping the items when they are already equiped will
     //recheck what is on the hide
-    DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR)));
-    DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R)));
-    DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L)));
-    DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B)));
+    //DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR)));
+    //DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R)));
+    //DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L)));
+    //DelayCommand(0.0,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B)));
 
     // Reset any PRC feats that might have been lost from the shift
     EvalPRCFeats(oPC);
@@ -1837,8 +1884,6 @@ int SetShiftFromTemplateValidate(object oPC, string sTemplate, int iEpic)
 {
 	if (!CanShift(oPC))
 	{
-		SendMessageToPC(oPC, "Your inventory is to full to allow you to shift.");
-		SendMessageToPC(oPC, "Please make room enough for an armour sized item and then try again.");
 		return FALSE;
 	}
     int bRetValue = FALSE;

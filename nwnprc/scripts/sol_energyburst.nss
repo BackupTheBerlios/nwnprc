@@ -33,8 +33,10 @@ void main()
 
           nDamage = GetReflexAdjustedDamage(d6(CasterLvl), oTarget, (10+CasterLvl), SAVING_THROW_TYPE_POSITIVE);
           eDeath = EffectDamage(nDamage,DAMAGE_TYPE_POSITIVE,DAMAGE_POWER_ENERGY);
-          DelayCommand(0.5f,ApplyEffectToObject(DURATION_TYPE_INSTANT,eDeath,oTarget));
-          DelayCommand(0.0f,ApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oTarget));
+
+          effect eLink = EffectLinkEffects(eDeath, eVis);
+
+           DelayCommand(0.0f,ApplyEffectToObject(DURATION_TYPE_INSTANT,eLink,oTarget));
 
       }
        //Select the next target within the spell shape.

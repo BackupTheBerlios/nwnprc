@@ -33,16 +33,15 @@ void Device_Lore(object oPC ,object oSkin ,int iLevel)
 ///Iron Power Bonus to Attack and Damage /////////
 void Iron_Power(object oPC, object oWeap, int iIronPower)
 {
-    //int iHitBonus = 0;
-    //itemproperty ip;
-    //int iEnhance = GetWeaponEnhancement(oWeap);
+
+    int iEnhance = GetWeaponEnhancement(oWeap);
     //int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
 
-    //if(iIronPower == 1) iHitBonus = 1; + iEnhance;
-    //if(iIronPower == 2) iHitBonus = 2; + iEnhance;
+    iIronPower = iIronPower + iEnhance;
+
     string irp = IntToString(iIronPower);
     SendMessageToPC(GetFirstPC(), "Attack Bonus:" + irp);
-    //iHitBonus = iHitBonus + iEnhance;
+
 
 
         if(GetLocalInt(oWeap, "IPowerBonus") != iIronPower)
@@ -69,13 +68,13 @@ void main()
 
     if (IsItemMetal(oWeap) == 2)
     {
-        //if (GetHasFeat(FEAT_IRON_POWER_2,oPC))
-        //{
-        //Iron_Power(oPC, oWeap, 2);
-        //}
-        if (GetHasFeat(FEAT_IRON_POWER_1,oPC))
+        if (GetLevelByClass(CLASS_TYPE_DISPATER,oPC) >= 4)
         {
         Iron_Power(oPC, oWeap, 1);
+        }
+        else if (GetLevelByClass(CLASS_TYPE_DISPATER,oPC) >= 8)
+        {
+        Iron_Power(oPC, oWeap, 2);
         }
     }
 

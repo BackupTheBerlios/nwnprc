@@ -33,7 +33,7 @@ void main()
         return;
     }
 
-    RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
+    //RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
     
     //Declare major variables
     int nLevel = GetLevelByClass(CLASS_TYPE_BARD) + GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE)/2;
@@ -399,7 +399,7 @@ void main()
                     {
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
                         DelayCommand(GetRandomDelay(0.1,0.5),ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                        StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+                        //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
                    }
             }
             else

@@ -31,7 +31,7 @@ void main()
     }
     string sTag = GetTag(OBJECT_SELF);
     
-    RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
+    //RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 
     if (sTag == "x0_hen_dee" || sTag == "x2_hen_deekin")
     {
@@ -407,7 +407,7 @@ void main()
                     effect eLinkBard = EffectLinkEffects(eLink, eVis);
                     eLinkBard = ExtraordinaryEffect(eLinkBard);
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLinkBard, oTarget, RoundsToSeconds(nDuration));
-                    StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+                    //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
                     if (nHP > 0)
                     {
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
@@ -417,7 +417,7 @@ void main()
                 {
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
-                    StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+                    //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
                     if (nHP > 0)
                     {
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));

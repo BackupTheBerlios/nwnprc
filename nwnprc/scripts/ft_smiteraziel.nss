@@ -94,11 +94,14 @@ void main()
        break;
    }
 
+   int Immune = GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT);
+
    //Perform a full round of attacks
   for(iAttacks; iAttacks > 0; iAttacks--)
   {
     //Roll to hit  for Smite  Bonus CHA(1st atk) +Attack penalty +Weap Atk Bonus
     int iHit = DoMeleeAttack(OBJECT_SELF, oWeap, oTarget, iBonus + iNextAttackPenalty+iWeapBonus, TRUE, fDelay);
+
 
     // SancMar +1d4 vs Evil
     int SancMar   = Sanctify_Feat(GetBaseItemType(oWeap))   ? (iOuts ? d4(1):1):0 ;
@@ -107,6 +110,9 @@ void main()
 
     if(iHit > 0)
     {
+    
+       if (Immune && iHit==2) iHit=1;
+
         //Check to see if we rolled a critical and determine damage accordingly
         // Dmg Bonus= Level Paladin+ Fist Raziel
 

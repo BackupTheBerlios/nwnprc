@@ -41,6 +41,13 @@ lookup_and_cache_spell_field(int spell_id, string tag_base, string column, objec
 }
 
 string
+lookup_spell_name(int spell_id, object oModule = OBJECT_INVALID)
+{
+	return lookup_and_cache_spell_field(spell_id,
+		"PRC_PACK_SPELL_NAME_", "Name", oModule);
+}
+
+string
 lookup_spell_level(int spell_id, object oModule = OBJECT_INVALID)
 {
 	return lookup_and_cache_spell_field(spell_id,

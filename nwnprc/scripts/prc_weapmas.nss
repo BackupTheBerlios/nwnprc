@@ -16,6 +16,26 @@ void main()
 
     int iType = GetBaseItemType(oWeap);
 
+    if (GetLocalInt(oPC,"ONENTER"))
+    {
+        switch (iType)
+       {
+         case BASE_ITEM_LONGBOW:
+         case BASE_ITEM_SHORTBOW:
+           if ( GetHasFeat(FEAT_BOWMASTERY, oPC))  SetLocalInt(oWeap,"WpMasBow",iLevel);
+           break;
+         case BASE_ITEM_LIGHTCROSSBOW:
+         case BASE_ITEM_HEAVYCROSSBOW:
+           if ( GetHasFeat(FEAT_XBOWMASTERY, oPC)) SetLocalInt(oWeap,"WpMasXBow",iLevel);
+           break;
+         case BASE_ITEM_SHURIKEN:
+           if ( GetHasFeat(FEAT_SHURIKENMASTERY, oPC)) SetLocalInt(oWeap,"WpMasShu",iLevel+GetWeaponEnhancement(oWeap));
+           break;
+       }
+       
+       return;	
+    }
+    
     switch (iType)
     {
        case BASE_ITEM_LONGBOW:

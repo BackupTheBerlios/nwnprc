@@ -39,6 +39,6 @@ void main()
 
    effect eLink=EffectLinkEffects(EffectAttackDecrease(2),EffectModifyAttacks(1));
 
-   ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+   ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eLink), oTarget);
 }
 

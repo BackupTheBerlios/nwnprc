@@ -8,6 +8,13 @@ void ResElec(object oPC ,object oSkin ,int iLevel)
   if(GetLocalInt(oSkin, "StormLResElec") == iLevel) return;
 
   RemoveSpecificProperty(oSkin,ITEM_PROPERTY_DAMAGE_RESISTANCE,IP_CONST_DAMAGETYPE_ELECTRICAL,GetLocalInt(oSkin, "StormLResElec"));
+  if (GetHasFeat(FEAT_ELECTRIC_RES_30, oPC)) 
+  {
+      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageImmunity(IP_CONST_DAMAGETYPE_ELECTRICAL,IP_CONST_DAMAGEIMMUNITY_100_PERCENT),oSkin);
+      SetLocalInt(oSkin, "StormLResElec",iLevel);
+      return;
+  }
+  
   AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_ELECTRICAL,iLevel),oSkin);
   SetLocalInt(oSkin, "StormLResElec",iLevel);
 }
@@ -84,6 +91,20 @@ void ShockingWeap(object oPC,int iEquip)
         SetLocalInt(oItem,"STThund",1);
      }
   }
+
+
+}
+
+void ImmunityDmg(object oSkin,int iType)
+{
+  if (GetLocalInt(oSkin, "ImmuEle") ) return;
+  if(GetLocalInt(oSkin, "BondResEle"))
+        RemoveSpecificProperty(oSkin,ITEM_PROPERTY_DAMAGE_RESISTANCE,iType,GetLocalInt(oSkin, "BondResEle"));
+
+  AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageImmunity(iType,IP_CONST_DAMAGEIMMUNITY_100_PERCENT),oSkin);
+  SetLocalInt(oSkin, "ImmuEle",1);
+
+
 
 
 }

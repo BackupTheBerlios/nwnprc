@@ -25,6 +25,7 @@ void main()
      {
           // add 2 extra defense due to defensive fighting.
           int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST, oPC) + 2;
+          if (iDuelistLevel > 12) iDuelistLevel = 12; // capped at 10
                     
           effect eAC = SupernaturalEffect(EffectACIncrease(iDuelistLevel, AC_SHIELD_ENCHANTMENT_BONUS));
           ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAC, oPC);          

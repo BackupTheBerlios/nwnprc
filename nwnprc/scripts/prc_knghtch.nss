@@ -10,9 +10,10 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_clsfunc"
+#include "prc_spell_const"
 
 void main()
 {
     // Everything is handled by the spell's script.
-    ActionCastSpellOnSelf(2733); //prc_knight_dam.nss, Applies attack and damage bonus.
+    ActionCastSpellOnSelf(SPELL_KNIGHTCHALICE_DAMAGE); //prc_knight_dam.nss, Applies attack and damage bonus.
 }

@@ -78,29 +78,14 @@ PRCShowPowerResist(object oCaster, object oTarget, int nResist, float fDelay = 0
 	if (GetIsPC(oCaster))
 	{
 		string message = nResist == POWER_RESIST_FAIL ?
-			"Target is AFFECTED by the Power" : "Target RESISTED the Power";
-		//SendMessageToPC(oCaster, message);
+			"Target is affected by the Power" : "Target resisted the Power";
+		SendMessageToPC(oCaster, message);
 	}
 	if (GetIsPC(oTarget))
 	{
 		string message = nResist == POWER_RESIST_FAIL ?
-			"You are AFFECTED by the Power" : "You RESISTED the Power";
-		//SendMessageToPC(oTarget, message);
-	}
-	
-	if (nResist != POWER_RESIST_FAIL) {
-		// Default to a standard resistance
-		int eve = VFX_IMP_MAGIC_RESISTANCE_USE;
-
-		// Check for other resistances
-		if (nResist == POWER_RESIST_GLOBE)
-			eve = VFX_IMP_GLOBE_USE;
-		else if (nResist == POWER_RESIST_MANTLE)
-			eve = VFX_IMP_SPELL_MANTLE_USE;
-
-		// Render the effect
-		DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT,
-			EffectVisualEffect(eve), oTarget));
+			"You are affected by the Power" : "You resisted the Power";
+		SendMessageToPC(oTarget, message);
 	}
 }
 
@@ -111,18 +96,13 @@ PRCShowPowerResist(object oCaster, object oTarget, int nResist, float fDelay = 0
 int
 PRCMyResistPower(object oCaster, object oTarget, int nEffCasterLvl=0, float fDelay = 0.0)
 {
-	int nResist;
+	int nResist = POWER_RESIST_PASS;
+	int nCasterCheck = nEffCasterLvl + d20(1);
+	int nTargetPR = PRCGetPowerResistance(oTarget, oCaster);
 
-	// Check immunities and mantles, otherwise ignore the result completely
-	nResist = PRCResistPower(oCaster, oTarget);
-	if (nResist <= POWER_RESIST_PASS) {
-		nResist = POWER_RESIST_FAIL;
-
-		// A tie favors the caster.
-		if ((nEffCasterLvl + d20(1)) < PRCGetPowerResistance(oTarget, oCaster))
-			nResist = POWER_RESIST_PASS;
-	}
-    
+	// A tie favors the caster.
+	if (nCasterCheck < nTargetPR)	nResist = POWER_RESIST_FAIL;
+   
 
 	PRCShowPowerResist(oCaster, oTarget, nResist, fDelay);
 

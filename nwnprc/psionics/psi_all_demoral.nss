@@ -60,21 +60,23 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
     	while(GetIsObjectValid(oTarget))
     	{
-
-		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nCaster))
+		if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oTarget != OBJECT_SELF)
 		{
-				
-		    //Fire cast spell at event for the specified target
-	            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-		            
-	                //Make a saving throw check
-	                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-	                {
-	                        //Apply VFX Impact and daze effect
-	                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (60.0 * nCaster),TRUE,-1,nCaster);
-	               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
-	                }
+			//Check for Power Resistance
+			if (PRCMyResistPower(oCaster, oTarget, nCaster))
+			{
+					
+			    //Fire cast spell at event for the specified target
+		            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+			            
+		                //Make a saving throw check
+		                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+		                {
+		                        //Apply VFX Impact and daze effect
+		                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (60.0 * nCaster),TRUE,-1,nCaster);
+		               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
+		                }
+			}
 		}
 
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetLocation(OBJECT_SELF));

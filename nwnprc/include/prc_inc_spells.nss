@@ -465,6 +465,9 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     // For when you want to assign the caster level.
     if (GetLocalInt(oCaster, "PRC_Castlevel_Override") != 0)
     {
+        //SendMessageToPC(oCaster, "Forced-level casting at level " + IntToString(GetCasterLevel(oCaster)));
+
+        DelayCommand(0.1, DeleteLocalInt(oCaster, "PRC_Castlevel_Override");
         return GetLocalInt(oCaster, "PRC_Castlevel_Override");
     }
 

@@ -1791,8 +1791,8 @@
 1787       ****                                          ****              1          1         1        ****    0
 1788       ****                                          ****              1          1         1        ****    0
 1789       ****                                          ****              1          1         1        ****    0
-1790       Animate_Object                                1135              1          1         0        6       1
-1791       ****                                          ****              1          1         1        ****    0
+1790       Animate_Object                                1136              1          1         0        6       1
+1791       Chill_Touch                                   1137              1          0         0        1       1
 1792       ****                                          ****              1          1         1        ****    0
 1793       ****                                          ****              1          1         1        ****    0
 1794       ****                                          ****              1          1         1        ****    0
@@ -2097,10 +2097,10 @@
 2093       ****                                          ****              1          1         1        ****    0
 2094       ****                                          ****              1          1         1        ****    0
 2095       ****                                          ****              1          1         1        ****    0
-2096       Greater_Wall_of_Dispel_Magic                  1129              0          0         0           8    0
-2097       Nature_Avatar                                 1130              0          0         0           9    0
-2098       Unyielding_Roots                              1131              0          0         0           9    0
-2099       Blessing_of_bahamut                           1132              0          0         0           4    0
+2096       Greater_Wall_of_Dispel_Magic                  1129              1          0         0           8    1 
+2097       Nature_Avatar                                 1130              1          0         0           9    1
+2098       Unyielding_Roots                              1131              0          0         0           9    1
+2099       Blessing_of_bahamut                           1132              0          0         0           4    1
 2100       FEAT_SOLSPELLLV1                              ****              1          1         1        ****    0
 2101       Sol_Bless                                     ****              1          1         1        ****    0
 2102       Sol_CureLight                                 ****              1          1         1        ****    0
@@ -2123,7 +2123,7 @@
 2119       Sol_HolySword                                 ****              1          1         1        ****    0
 2120       Sol_PlanarBind                                ****              1          1         1        ****    0
 2121       Sol_Restoration                               ****              1          1         1        ****    0
-2122       Mass_Contagion                                1133              0          0         0           5    0
+2122       Mass_Contagion                                1133              1          0         0           5    1
 2123       ****                                          ****              1          1         1        ****    0
 2124       ****                                          ****              1          1         1        ****    0
 2125       ****                                          ****              1          1         1        ****    0
@@ -2168,7 +2168,7 @@
 2164       SPELL_DIVINE_VIGOR                            ****              1          1         1        ****    0
 2165       SPELL_DIVINE_CLEANSING                        ****              1          1         1        ****    0
 2166       SPELL_DIVINE_RESISTANCE                       ****              1          1         1        ****    0
-2167       Consecrated_Aura                              ****              1          1         1        ****    0
+2167       Consecrated_Aura                              1138              1          0         0        2       1
 2168       BOLT_XAGYA                                    ****              1          1         1        ****    0
 2169       SPELL_DISCIPLE_OF_SUN                         ****              1          1         1        ****    0
 2170       New_PowerAtk                                  ****              1          1         1        ****    0
@@ -2248,7 +2248,7 @@
 2244       Dragon_Breath_Prismatic                       ****              1          1         1        ****    0
 2245       ManyShot                                      ****              1          1         1        ****    0
 2246       ManyShot2                                     ****              1          1         1        ****    0
-2247       Magic_Missile                                 ****              1          1         1        ****    0
+2247       Magic_Missile                                 1128              1          0         0        5       1
 2248       ManyShot4                                     ****              1          1         1        ****    0
 2249       ManyShot6                                     ****              1          1         1        ****    0
 2250       Read_Magic                                    ****              1          1         1        ****    0

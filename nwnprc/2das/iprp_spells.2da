@@ -1133,9 +1133,10 @@
 1129 Wall_Greater_Dispel_Magic         16825361 15        8         90000  2096       0         1       1          iss_WallFire      
 1130 Nature_Avatar                     16825355 17        9         114750 2097       0         0       1          iss_Awaken        
 1131 Unyielding_Roots                  16825359 17        9         114750 2098       1         1       1          iss_Entangle      
-1132 Blessing_of_bahamut               16825357 7         4         21000  2099       1         1       1          is_GhostVis       
-1133 Contagion                         16825365 11        6         49500  2122       0         1       1          is_mContagion     
+1132 Blessing_of_bahamut               16825357 7         4         21000  2099       1         1       1          iss_MirrImage     
+1133 Contagion                         16825365 11        6         49500  2122       0         1       1          iss_contag        
 1134 PowerAtk                          16825832 1         1         0      2170       0         1       1          ife_powhit        
 1135 ImpPowerAtk                       16825839 1         1         0      2176       0         1       1          ife_imppowhit     
-1135 Animate_Object                    16826216 15        6         49500  1790       0         1       1          iss_animobj    
-1135 Chill_Touch                       16826220 2         1         1500   1791       0         1       1          iss_chilltouch 
+1136 Animate_Object                    16826216 15        6         49500  1790       0         1       1          iss_animobj    
+1137 Chill_Touch                       16826220 2         1         1500   1791       0         1       1          iss_chilltouch 
+1138 Consecrate                        16825353 3         2         4500   2167       1         1       1          iss_protalign

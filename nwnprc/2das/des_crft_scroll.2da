@@ -1792,7 +1792,7 @@
 1788 ****                                    ****                 ****                  ****                  ****                  ****                  ****
 1789 ****                                    ****                 ****                  ****                  ****                  ****                  ****
 1790 Animate_Object                          ****                 splscrl_animobj       ****                  ****                  ****                  splscrl_animobj
-1791 ****                                    ****                 ****                  ****                  ****                  ****                  ****
+1791 Chill_Touch                             splscrl_chillt       ****                  ****                  ****                  ****                  ****
 1792 ****                                    ****                 ****                  ****                  ****                  ****                  ****
 1793 ****                                    ****                 ****                  ****                  ****                  ****                  ****
 1794 ****                                    ****                 ****                  ****                  ****                  ****                  ****
@@ -2097,10 +2097,10 @@
 2093 ****                                    ****                 ****                  ****                  ****                  ****                  ****
 2094 ****                                    ****                 ****                  ****                  ****                  ****                  ****
 2095 ****                                    ****                 ****                  ****                  ****                  ****                  ****
-2096 Greater_Wall_of_Dispel_Magic            8                    8                     ****                  8                     ****                  5
-2097 Nature_Avatar                           ****                 ****                  ****                  9                     ****                  ****
-2098 Unyielding_Roots                        ****                 ****                  ****                  9                     9                     ****
-2099 Blessing_of_bahamut                     ****                 ****                  3                     ****                  ****                  ****
+2096 Greater_Wall_of_Dispel_Magic            splscrl_gwdm         splscrl_gwdm          ****                  splscrl_gwdm          ****                  splscrl_gwdm    
+2097 Nature_Avatar                           ****                 ****                  ****                  splscrl_natav         ****                  ****
+2098 Unyielding_Roots                        ****                 ****                  ****                  splscrl_unyield       ****                  ****
+2099 Blessing_of_bahamut                     ****                 ****                  splscrl_blsbah        ****                  ****                  ****
 2100 FEAT_SOLSPELLLV1                        ****                 ****                  ****                  ****                  ****                  ****
 2101 Sol_Bless                               ****                 ****                  ****                  ****                  ****                  ****
 2102 Sol_CureLight                           ****                 ****                  ****                  ****                  ****                  ****
@@ -2123,7 +2123,7 @@
 2119 Sol_HolySword                           ****                 ****                  ****                  ****                  ****                  ****
 2120 Sol_PlanarBind                          ****                 ****                  ****                  ****                  ****                  ****
 2121 Sol_Restoration                         ****                 ****                  ****                  ****                  ****                  ****
-2122 Mass_Contagion                          6                    5                     ****                  5                     ****                  ****
+2122 Mass_Contagion                          splscrl_contag       splscrl_contag        ****                  splscrl_contag        ****                  ****
 2123 ****                                    ****                 ****                  ****                  ****                  ****                  ****
 2124 ****                                    ****                 ****                  ****                  ****                  ****                  ****
 2125 ****                                    ****                 ****                  ****                  ****                  ****                  ****
@@ -2168,7 +2168,7 @@
 2164 SPELL_DIVINE_VIGOR                      ****                 ****                  ****                  ****                  ****                  ****
 2165 SPELL_DIVINE_CLEANSING                  ****                 ****                  ****                  ****                  ****                  ****
 2166 SPELL_DIVINE_RESISTANCE                 ****                 ****                  ****                  ****                  ****                  ****
-2167 Consecrated_Aura                        ****                 2                     ****                  ****                  ****                  ****
+2167 Consecrated_Aura                        ****                 splscrl_conse         ****                  ****                  ****                  ****
 2168 BOLT_XAGYA                              ****                 ****                  ****                  ****                  ****                  ****
 2169 SPELL_DISCIPLE_OF_SUN                   ****                 ****                  ****                  ****                  ****                  ****
 2170 New_PowerAtk                            ****                 ****                  ****                  ****                  ****                  ****
@@ -2248,10 +2248,10 @@
 2244 Dragon_Breath_Prismatic                 ****                 ****                  ****                  ****                  ****                  ****
 2245 ManyShot                                ****                 ****                  ****                  ****                  ****                  ****
 2246 ManyShot2                               ****                 ****                  ****                  ****                  ****                  ****
-2247 Magic_Missile                           5                    ****                  ****                  ****                  ****                  ****
+2247 Magic_Missile                           splscrl_majmiss      ****                  ****                  ****                  ****                  ****
 2248 ManyShot4                               ****                 ****                  ****                  ****                  ****                  ****
 2249 ManyShot6                               ****                 ****                  ****                  ****                  ****                  ****
-2250 Read_Magic                              0                    0                     1                     0                     1                     0
+2250 Read_Magic                              ****                 ****                  ****                  ****                  ****                  ****
 2251 Read                                    ****                 ****                  ****                  ****                  ****                  ****
 2252 Item_Creation                           ****                 ****                  ****                  ****                  ****                  ****
 2253 Craft_Wondrous_Item                     ****                 ****                  ****                  ****                  ****                  ****
@@ -4001,75 +4001,75 @@
 3997 ****                                    ****                 ****                  ****                  ****                  ****                  ****
 3998 ****                                    ****                 ****                  ****                  ****                  ****                  ****
 3999 ****                                    ****                 ****                  ****                  ****                  ****                  ****
-4000 Epic Spell: Achilles Heel               ****                 ****                  ****                  ****                  ****                  ****
-4001 Epic Spell: All Hope Lost               ****                 ****                  ****                  ****                  ****                  ****
-4002 Epic Spell: Allied Martyr               ****                 ****                  ****                  ****                  ****                  ****
-4003 Epic Spell: Anarchy's Call              ****                 ****                  ****                  ****                  ****                  ****
-4004 Epic Spell: Animus Blast                ****                 ****                  ****                  ****                  ****                  ****
-4005 Epic Spell: Animus Blizzard             ****                 ****                  ****                  ****                  ****                  ****
-4006 Epic Spell: Army Unfallen               ****                 ****                  ****                  ****                  ****                  ****
-4007 Epic Spell: Audience of Stone           ****                 ****                  ****                  ****                  ****                  ****
-4008 Epic Spell: Battle Bounding             ****                 ****                  ****                  ****                  ****                  ****
-4009 Epic Spell: Celestial Council           ****                 ****                  ****                  ****                  ****                  ****
-4010 Epic Spell: Champion's Valor            ****                 ****                  ****                  ****                  ****                  ****
-4011 Epic Spell: Contingent Resurrection     ****                 ****                  ****                  ****                  ****                  ****
-4012 Epic Spell: Contingent Reunion          ****                 ****                  ****                  ****                  ****                  ****
-4013 Epic Spell: Deadeye Sense               ****                 ****                  ****                  ****                  ****                  ****
-4014 Epic Spell: Deathmark                   ****                 ****                  ****                  ****                  ****                  ****
-4015 Epic Spell: Dire Winter                 ****                 ****                  ****                  ****                  ****                  ****
-4016 Epic Spell: Dragon Knight               ****                 ****                  ****                  ****                  ****                  ****
-4017 Epic Spell: Dreamscape                  ****                 ****                  ****                  ****                  ****                  ****
-4018 Epic Spell: Dullblades                  ****                 ****                  ****                  ****                  ****                  ****
-4019 Epic Spell: Dweomer Thief               ****                 ****                  ****                  ****                  ****                  ****
-4020 Epic Spell: Enslave                     ****                 ****                  ****                  ****                  ****                  ****
-4021 Epic Spell: Epic Mage Armor             ****                 ****                  ****                  ****                  ****                  ****
-4022 Epic Spell: Epic Repulsion              ****                 ****                  ****                  ****                  ****                  ****
-4023 Epic Spell: Epic Spell Reflection       ****                 ****                  ****                  ****                  ****                  ****
-4024 Epic Spell: Epic Warding                ****                 ****                  ****                  ****                  ****                  ****
-4025 Epic Spell: Eternal Freedom             ****                 ****                  ****                  ****                  ****                  ****
-4026 Epic Spell: Fiendish Words              ****                 ****                  ****                  ****                  ****                  ****
-4027 Epic Spell: Fleetness of Foot           ****                 ****                  ****                  ****                  ****                  ****
-4028 Epic Spell: Gem Cage                    ****                 ****                  ****                  ****                  ****                  ****
-4029 Epic Spell: Godsmite                    ****                 ****                  ****                  ****                  ****                  ****
-4030 Epic Spell: Greater Ruin                ****                 ****                  ****                  ****                  ****                  ****
-4031 Epic Spell: Greater Spell Resistance    ****                 ****                  ****                  ****                  ****                  ****
-4032 Epic Spell: Greater Timestop            ****                 ****                  ****                  ****                  ****                  ****
-4033 Epic Spell: Hell Send                   ****                 ****                  ****                  ****                  ****                  ****
-4034 Epic Spell: Hellball                    ****                 ****                  ****                  ****                  ****                  ****
-4035 Epic Spell: Herculean Alliance          ****                 ****                  ****                  ****                  ****                  ****
-4036 Epic Spell: Herculean Empowerment       ****                 ****                  ****                  ****                  ****                  ****
-4037 Epic Spell: Impenetrability             ****                 ****                  ****                  ****                  ****                  ****
-4038 Epic Spell: Leech Field                 ****                 ****                  ****                  ****                  ****                  ****
-4039 Epic Spell: Legendary Artisan           ****                 ****                  ****                  ****                  ****                  ****
-4040 Epic Spell: Life Force Transfer         ****                 ****                  ****                  ****                  ****                  ****
-4041 Epic Spell: Magma Burst                 ****                 ****                  ****                  ****                  ****                  ****
-4042 Epic Spell: Mass Penguin                ****                 ****                  ****                  ****                  ****                  ****
-4043 Epic Spell: Momento Mori                ****                 ****                  ****                  ****                  ****                  ****
-4044 Epic Spell: Mummy Dust                  ****                 ****                  ****                  ****                  ****                  ****
-4045 Epic Spell: Nailed to the Sky           ****                 ****                  ****                  ****                  ****                  ****
-4046 Epic Spell: Night's Undoing             ****                 ****                  ****                  ****                  ****                  ****
-4047 Epic Spell: Order Restored              ****                 ****                  ****                  ****                  ****                  ****
-4048 Epic Spell: Paths Become Known          ****                 ****                  ****                  ****                  ****                  ****
-4049 Epic Spell: Peerless Penitence          ****                 ****                  ****                  ****                  ****                  ****
-4050 Epic Spell: Pestilence                  ****                 ****                  ****                  ****                  ****                  ****
-4051 Epic Spell: Pious Parley                ****                 ****                  ****                  ****                  ****                  ****
-4052 Epic Spell: Planar Cell                 ****                 ****                  ****                  ****                  ****                  ****
-4053 Epic Spell: Psionic Salvo               ****                 ****                  ****                  ****                  ****                  ****
-4054 Epic Spell: Rain of Fire                ****                 ****                  ****                  ****                  ****                  ****
-4055 Epic Spell: Risen Reunited              ****                 ****                  ****                  ****                  ****                  ****
-4056 Epic Spell: Ruin                        ****                 ****                  ****                  ****                  ****                  ****
-4057 Epic Spell: Singular Sunder             ****                 ****                  ****                  ****                  ****                  ****
-4058 Epic Spell: Spell Worm                  ****                 ****                  ****                  ****                  ****                  ****
-4059 Epic Spell: Storm Mantle                ****                 ****                  ****                  ****                  ****                  ****
-4060 Epic Spell: Summon Aberration           ****                 ****                  ****                  ****                  ****                  ****
-4061 Epic Spell: Superb Dispelling           ****                 ****                  ****                  ****                  ****                  ****
-4062 Epic Spell: Symrustar's Spellbinding    ****                 ****                  ****                  ****                  ****                  ****
-4063 Epic Spell: The Withering               ****                 ****                  ****                  ****                  ****                  ****
-4064 Epic Spell: Tolodine's Killing Wind     ****                 ****                  ****                  ****                  ****                  ****
-4065 Epic Spell: Transcendent Vitality       ****                 ****                  ****                  ****                  ****                  ****
-4066 Epic Spell: Twinfiend                   ****                 ****                  ****                  ****                  ****                  ****
-4067 Epic Spell: Unholy Disciple             ****                 ****                  ****                  ****                  ****                  ****
-4068 Epic Spell: Unimpinged                  ****                 ****                  ****                  ****                  ****                  ****
-4069 Epic Spell: Unseen Wanderer             ****                 ****                  ****                  ****                  ****                  ****
-4070 Epic Spell: Whip of Shar                ****                 ****                  ****                  ****                  ****                  ****
-4071 Wander Unseen                           ****                 ****                  ****                  ****                  ****                  ****
+4000 Epic_Spell_Achilles_Heel                ****                 ****                  ****                  ****                  ****                  ****
+4001 Epic_Spell_All_Hope_Lost                ****                 ****                  ****                  ****                  ****                  ****
+4002 Epic_Spell_Allied_Martyr                ****                 ****                  ****                  ****                  ****                  ****
+4003 Epic_Spell_Anarchys_Call                ****                 ****                  ****                  ****                  ****                  ****
+4004 Epic_Spell_Animus_Blast                 ****                 ****                  ****                  ****                  ****                  ****
+4005 Epic_Spell_Animus_Blizzard              ****                 ****                  ****                  ****                  ****                  ****
+4006 Epic_Spell_Army_Unfallen                ****                 ****                  ****                  ****                  ****                  ****
+4007 Epic_Spell_Audience_of_Stone            ****                 ****                  ****                  ****                  ****                  ****
+4008 Epic_Spell_Battle_Bounding              ****                 ****                  ****                  ****                  ****                  ****
+4009 Epic_Spell_Celestial_Council            ****                 ****                  ****                  ****                  ****                  ****
+4010 Epic_Spell_Champions_Valor              ****                 ****                  ****                  ****                  ****                  ****
+4011 Epic_Spell_Contingent_Resurrection      ****                 ****                  ****                  ****                  ****                  ****
+4012 Epic_Spell_Contingent_Reunion           ****                 ****                  ****                  ****                  ****                  ****
+4013 Epic_Spell_Deadeye_Sense                ****                 ****                  ****                  ****                  ****                  ****
+4014 Epic_Spell_Deathmark                    ****                 ****                  ****                  ****                  ****                  ****
+4015 Epic_Spell_Dire_Winter                  ****                 ****                  ****                  ****                  ****                  ****
+4016 Epic_Spell_Dragon_Knight                ****                 ****                  ****                  ****                  ****                  ****
+4017 Epic_Spell_Dreamscape                   ****                 ****                  ****                  ****                  ****                  ****
+4018 Epic_Spell_Dullblades                   ****                 ****                  ****                  ****                  ****                  ****
+4019 Epic_Spell_Dweomer_Thief                ****                 ****                  ****                  ****                  ****                  ****
+4020 Epic_Spell_Enslave                      ****                 ****                  ****                  ****                  ****                  ****
+4021 Epic_Spell_Epic_Mage_Armor              ****                 ****                  ****                  ****                  ****                  ****
+4022 Epic_Spell_Epic_Repulsion               ****                 ****                  ****                  ****                  ****                  ****
+4023 Epic_Spell_Epic_Spell_Reflection        ****                 ****                  ****                  ****                  ****                  ****
+4024 Epic_Spell_Epic_Warding                 ****                 ****                  ****                  ****                  ****                  ****
+4025 Epic_Spell_Eternal_Freedom              ****                 ****                  ****                  ****                  ****                  ****
+4026 Epic_Spell_Fiendish_Words               ****                 ****                  ****                  ****                  ****                  ****
+4027 Epic_Spell_Fleetness_of_Foot            ****                 ****                  ****                  ****                  ****                  ****
+4028 Epic_Spell_Gem_Cage                     ****                 ****                  ****                  ****                  ****                  ****
+4029 Epic_Spell_Godsmite                     ****                 ****                  ****                  ****                  ****                  ****
+4030 Epic_Spell_Greater_Ruin                 ****                 ****                  ****                  ****                  ****                  ****
+4031 Epic_Spell_Greater_Spell_Resistance     ****                 ****                  ****                  ****                  ****                  ****
+4032 Epic_Spell_Greater_Timestop             ****                 ****                  ****                  ****                  ****                  ****
+4033 Epic_Spell_Hell_Send                    ****                 ****                  ****                  ****                  ****                  ****
+4034 Epic_Spell_Hellball                     ****                 ****                  ****                  ****                  ****                  ****
+4035 Epic_Spell_Herculean_Alliance           ****                 ****                  ****                  ****                  ****                  ****
+4036 Epic_Spell_Herculean_Empowerment        ****                 ****                  ****                  ****                  ****                  ****
+4037 Epic_Spell_Impenetrability              ****                 ****                  ****                  ****                  ****                  ****
+4038 Epic_Spell_Leech_Field                  ****                 ****                  ****                  ****                  ****                  ****
+4039 Epic_Spell_Legendary_Artisan            ****                 ****                  ****                  ****                  ****                  ****
+4040 Epic_Spell_Life_Force_Transfer          ****                 ****                  ****                  ****                  ****                  ****
+4041 Epic_Spell_Magma_Burst                  ****                 ****                  ****                  ****                  ****                  ****
+4042 Epic_Spell_Mass_Penguin                 ****                 ****                  ****                  ****                  ****                  ****
+4043 Epic_Spell_Momento_Mori                 ****                 ****                  ****                  ****                  ****                  ****
+4044 Epic_Spell_Mummy_Dust                   ****                 ****                  ****                  ****                  ****                  ****
+4045 Epic_Spell_Nailed_to_the_Sky            ****                 ****                  ****                  ****                  ****                  ****
+4046 Epic_Spell_Nights_Undoing               ****                 ****                  ****                  ****                  ****                  ****
+4047 Epic_Spell_Order_Restored               ****                 ****                  ****                  ****                  ****                  ****
+4048 Epic_Spell_Paths_Become_Known           ****                 ****                  ****                  ****                  ****                  ****
+4049 Epic_Spell_Peerless_Penitence           ****                 ****                  ****                  ****                  ****                  ****
+4050 Epic_Spell_Pestilence                   ****                 ****                  ****                  ****                  ****                  ****
+4051 Epic_Spell_Pious_Parley                 ****                 ****                  ****                  ****                  ****                  ****
+4052 Epic_Spell_Planar_Cell                  ****                 ****                  ****                  ****                  ****                  ****
+4053 Epic_Spell_Psionic_Salvo                ****                 ****                  ****                  ****                  ****                  ****
+4054 Epic_Spell_Rain_of_Fire                 ****                 ****                  ****                  ****                  ****                  ****
+4055 Epic_Spell_Risen_Reunited               ****                 ****                  ****                  ****                  ****                  ****
+4056 Epic_Spell_Ruin                         ****                 ****                  ****                  ****                  ****                  ****
+4057 Epic_Spell_Singular_Sunder              ****                 ****                  ****                  ****                  ****                  ****
+4058 Epic_Spell_Spell_Worm                   ****                 ****                  ****                  ****                  ****                  ****
+4059 Epic_Spell_Storm_Mantle                 ****                 ****                  ****                  ****                  ****                  ****
+4060 Epic_Spell_Summon_Aberration            ****                 ****                  ****                  ****                  ****                  ****
+4061 Epic_Spell_Superb_Dispelling            ****                 ****                  ****                  ****                  ****                  ****
+4062 Epic_Spell_Symrustars_Spellbinding      ****                 ****                  ****                  ****                  ****                  ****
+4063 Epic_Spell_The_Withering                ****                 ****                  ****                  ****                  ****                  ****
+4064 Epic_Spell_Tolodines_Killing_Wind       ****                 ****                  ****                  ****                  ****                  ****
+4065 Epic_Spell_Transcendent_Vitality        ****                 ****                  ****                  ****                  ****                  ****
+4066 Epic_Spell_Twinfiend                    ****                 ****                  ****                  ****                  ****                  ****
+4067 Epic_Spell_Unholy_Disciple              ****                 ****                  ****                  ****                  ****                  ****
+4068 Epic_Spell_Unimpinged                   ****                 ****                  ****                  ****                  ****                  ****
+4069 Epic_Spell_Unseen_Wanderer              ****                 ****                  ****                  ****                  ****                  ****
+4070 Epic_Spell_Whip_of_Shar                 ****                 ****                  ****                  ****                  ****                  ****
+4071 Wander_Unseen                           ****                 ****                  ****                  ****                  ****                  ****

@@ -7,7 +7,7 @@ void main()
 
     object oTarget = GetSpellTargetObject();
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
-    int iEnhancement = GetWeaponEnhancement(oWeap);
+    int iEnhancement = GetWeaponRangeEnhancement(oWeap,OBJECT_SELF);
     int iDamageType = GetWeaponDamageType(oWeap);
 
     float iDistance = GetDistanceToObject(oTarget);

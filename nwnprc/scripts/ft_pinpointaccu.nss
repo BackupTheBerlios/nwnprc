@@ -6,7 +6,7 @@ void main()
    int nSpellId = GetSpellId();
    object oTarget = GetSpellTargetObject();
    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
-   int iEnhancement = GetWeaponEnhancement(oWeap);
+   int iEnhancement = GetWeaponRangeEnhancement(oWeap,OBJECT_SELF);
    int iDamageType = GetWeaponDamageType(oWeap);
    int iBonusA = 2;
    int iDamage =0;

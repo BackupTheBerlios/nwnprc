@@ -40,12 +40,8 @@ int RangedAttackBonus(object oPC, object oWeap, object oTarget, int iMod = 0)
        break;
     }
 
-    int iEnhAA = (GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER,oPC)+1)/2 && !IsMagicalArrow(oAmmu) ;
-
-        iEnhancement = iEnhAA ? iEnhAA : iEnhancement ;
-        iEnhancement = iEnhancement>GetWeaponEnhancement(oWeap) ? iEnhancement : GetWeaponEnhancement(oWeap);
-        iEnhancement = iEnhancement < 0 ? 0 : iEnhancement;
-
+  
+    iEnhancement = GetWeaponRangeEnhancement(oWeap,oPC) ;
 
     int Distance=FloatToInt(GetDistanceBetween(oPC,oTarget));
 
@@ -79,7 +75,7 @@ void main()
    int nSpellId = GetSpellId();
    object oTarget = GetSpellTargetObject();
    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
-   int iEnhancement = GetWeaponEnhancement(oWeap);
+   int iEnhancement = GetWeaponRangeEnhancement(oWeap,OBJECT_SELF);
    int iDamageType = GetWeaponDamageType(oWeap);
 
    int iDamage =0;

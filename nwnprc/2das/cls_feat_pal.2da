@@ -203,3 +203,4 @@
 199 FEAT_MANYSHOT                                  3306      0    -1             1      
 200 FEAT_IMP_MANYSHOT                              3350      0    -1             1      
 201 Pinpoint_Accuracy                              3351      0    -1             1      
+201 FEAT_HAND_HEALER                               3167      0    -1             1      

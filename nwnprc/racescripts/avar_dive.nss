@@ -67,7 +67,7 @@ void main()
               if(iAttackRoll > 0)
               {
                    sMes = "*Dive Attack Hit*";
-                   DelayCommand(3.2, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oPC) );  
+                   DelayCommand(3.2, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget) );  
               }
               else
               {

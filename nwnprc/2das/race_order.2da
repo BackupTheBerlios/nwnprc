@@ -126,10 +126,10 @@
 122 "OUTSIDER - Salamander"               207      
 123 "MONSTROUS - Sarrukh"                 159      
 124 "FEY - Satyr"                         82       
-125 "REPITLIAN - Saurial, Bladeback"      223      
-126 "REPITLIAN - Saurial, Finhead"        224      
-127 "REPITLIAN - Saurial, Flyer"          225      
-128 "REPITLIAN - Saurial, Hornhead"       226      
+125 "REPTILIAN - Saurial, Bladeback"      223      
+126 "REPTILIAN - Saurial, Finhead"        224      
+127 "REPTILIAN - Saurial, Flyer"          225      
+128 "REPTILIAN - Saurial, Hornhead"       226      
 129 "ELF - Sidhelien"                     70       
 130 "ELF - Silvanesti"                    71       
 131 "OUTSIDER - Slyth"                    210      
@@ -210,7 +210,7 @@
 206 "DRAGON - Black (Adult)"              31       
 207 "BEAST - Aarakocra"                   26       
 208 "MONSTROUS - Centaur"                 143      
-209 "REPITLIAN - Pteran"                  222      
+209 "REPTILIAN - Pteran"                  222      
 210 "OUTSIDER - Shade"                    208      
 211 "GIANT - Ogre Mage"                   94       
 212 "GIANT - Ogre"                        93       
@@ -242,14 +242,14 @@
 238 "OUTSIDER - Buommans"                 177      
 239 "HUMAN - Mortif"                      135      
 240 "GOBLINOID - Goblin, Dekanter"        109      
-241 "REPITLIAN - Asabi"                   220      
+241 "REPTILIAN - Asabi"                   220      
 242 "HUMAN - Half-Vistani"                130      
 243 "HUMAN - Spirit Folk"                 139      
 244 "ORC - Trollborn"                     171      
 245 "OUTSIDER - Asura"                    173      
 246 "VERMIN - Nezumi"                     240      
 247 "BEAST - Gnoll, Flind"                28       
-248 "REPITLIAN - Poison Dusk"             221      
+248 "REPTILIAN - Poison Dusk"             221      
 249 "ABERRATION - Drider"                 21       
 250 "FEY - Nymph"                         80       
 251 "DRAGON - Red (Adult)"                41       

@@ -1,7 +1,7 @@
 #include "x2_inc_itemprop"
 #include "inc_utility"
 #include "inc_item_props"
-#include "prc_class_const"
+#include "prc_inc_spells"
 
 int GetAbilityForClass(int nClass, object oPC)
 {
@@ -23,6 +23,26 @@ int GetAbilityForClass(int nClass, object oPC)
 int GetNewSpellbookCasterLevel(int nClass, object oCaster = OBJECT_SELF)
 {
     int nLevel = GetLevelByClass(nClass, oCaster);
+    if(GetIsDivineClass(nClass))
+    { 
+        if (GetFirstDivineClass(oCaster) == nClass) 
+            nLevel += GetDivinePRCLevels(oCaster);
+        nLevel += TrueNecromancy(oCaster, GetSpellId(), "DIVINE") 
+                  +  ShadowWeave(oCaster, GetSpellId()) 
+                  +  FireAdept(oCaster, GetSpellId());
+                  
+        nLevel += PractisedSpellcasting(oCaster, nClass, nLevel); //gotta be the last one
+    }
+    if(GetIsArcaneClass(nClass))
+    { 
+        if (GetFirstArcaneClass(oCaster) == nClass) 
+            nLevel += GetArcanePRCLevels(oCaster);
+        nLevel += TrueNecromancy(oCaster, GetSpellId(), "ARCANE") 
+                  +  ShadowWeave(oCaster, GetSpellId()) 
+                  +  FireAdept(oCaster, GetSpellId());
+                  
+        nLevel += PractisedSpellcasting(oCaster, nClass, nLevel); //gotta be the last one
+    }
     return nLevel;
 }
 

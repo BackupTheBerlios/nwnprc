@@ -16,9 +16,9 @@ int StartingConditional()
     int iPassed = FALSE;
 	
     if((GetLevelByClass(CLASS_TYPE_LICH, GetPCSpeaker()) >= 4) &&
-       ((GetCasterLvl(TYPE_CLERIC,GetPCSpeaker()) >= 21) ||
-        (GetCasterLvl(TYPE_WIZARD,GetPCSpeaker()) >= 21) ||
-        (GetCasterLvl(TYPE_SORCERER,GetPCSpeaker()) >= 21)) )
+       ((GetCasterLvl(CLASS_TYPE_CLERIC,GetPCSpeaker()) >= 21) ||
+        (GetCasterLvl(CLASS_TYPE_WIZARD,GetPCSpeaker()) >= 21) ||
+        (GetCasterLvl(CLASS_TYPE_SORCERER,GetPCSpeaker()) >= 21)) )
         iPassed = TRUE;
 
     return iPassed;

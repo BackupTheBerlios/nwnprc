@@ -4,7 +4,7 @@
 */
 #include "inc_utility"
 
-const string PRC_CACHE_SUB_STRING = "NULL";
+//const string PRC_CACHE_SUB_STRING = "NULL";
 
 string
 lookup_and_cache_spell_field(int spell_id, string tag_base, string column, object oModule = OBJECT_INVALID)

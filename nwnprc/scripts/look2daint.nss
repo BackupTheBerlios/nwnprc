@@ -1,5 +1,6 @@
 void main()
 {
+/*
     SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_0", "750");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_0", "Acid");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_0", "6");
@@ -3320,5 +3321,5 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3187", "vs");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3187", "V");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3187", "1");
-
+*/
 }

@@ -14,9 +14,98 @@
    be necessary, except when new casting feats are created.
 */
 
+
+
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "lookup_2da_spell"
+
+// Added by Primogenitor
+// part of the replacement for GetClassByPosition and GetLevelByPosition
+// since those always return CLASS_TYPE_INVALID for non-bioware classes
+void SetupPRCGetClassByPosition(object oCreature)
+{
+    int i;
+    int nCounter = 1;
+    //set to defaults, including the +1 for 1start not 0 start
+    SetLocalInt(oCreature, "PRC_ClassInPos1", CLASS_TYPE_INVALID+1);
+    SetLocalInt(oCreature, "PRC_ClassInPos2", CLASS_TYPE_INVALID+1);
+    SetLocalInt(oCreature, "PRC_ClassInPos3", CLASS_TYPE_INVALID+1);
+    SetLocalInt(oCreature, "PRC_ClassLevelInPos1", 0+1);
+    SetLocalInt(oCreature, "PRC_ClassLevelInPos2", 0+1);
+    SetLocalInt(oCreature, "PRC_ClassLevelInPos3", 0+1);
+    for(i=0;i<256;i++)
+    {
+        if(GetLevelByClass(i, oCreature))
+        {
+            // set to values, including the +1 for 1start not 0 start
+            SetLocalInt(oCreature, "PRC_ClassInPos"+IntToString(nCounter), i+1);
+            SetLocalInt(oCreature, "PRC_ClassLevelInPos"+IntToString(nCounter),
+                GetLevelByClass(i, oCreature)+1);
+            nCounter++;
+            if(nCounter >= 4)
+                i = 999; // end loop now
+        }
+    }
+}
+
+// Added by Primogenitor
+// replacement for GetClassByPosition since that always returns
+// CLASS_TYPE_INVALID for non-bioware classes
+//
+// A creature can have up to three classes.  This function determines the
+// creature's class (CLASS_TYPE_*) based on nClassPosition.
+// - nClassPosition: 1, 2 or 3
+// - oCreature
+// * Returns CLASS_TYPE_INVALID if the oCreature does not have a class in
+//   nClassPosition (i.e. a single-class creature will only have a value in
+//   nClassLocation=1) or if oCreature is not a valid creature.
+int PRCGetClassByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
+{
+    if(!GetIsObjectValid(oCreature) || GetObjectType(oCreature) != OBJECT_TYPE_CREATURE)
+        return CLASS_TYPE_INVALID;
+    int nClass = GetLocalInt(oCreature, "PRC_ClassInPos"+IntToString(nClassPosition));
+    if(nClass == 0)
+    {
+        SetupPRCGetClassByPosition(oCreature);
+        nClass = GetLocalInt(oCreature, "PRC_ClassInPos"+IntToString(nClassPosition));
+    }
+    //correct for 1 start not 0 start
+    nClass--;
+    return nClass;
+}
+
+// Added by Primogenitor
+// replacement for GetLevelByPosition since GetClassByPosition always returns
+// CLASS_TYPE_INVALID for non-bioware classes, so the PRC order may not be the
+// same as the bioware order for the classes
+//
+// A creature can have up to three classes.  This function determines the
+// creature's class level based on nClass Position.
+// - nClassPosition: 1, 2 or 3
+// - oCreature
+// * Returns 0 if oCreature does not have a class in nClassPosition
+//   (i.e. a single-class creature will only have a value in nClassLocation=1)
+//   or if oCreature is not a valid creature.
+int PRCGetLevelByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
+{
+    if(!GetIsObjectValid(oCreature) || GetObjectType(oCreature) != OBJECT_TYPE_CREATURE)
+        return 0;
+    int nClass = GetLocalInt(oCreature, "PRC_ClassLevelInPos"+IntToString(nClassPosition));
+    if(nClass == 0)
+    {
+        SetupPRCGetClassByPosition(oCreature);
+        nClass = GetLocalInt(oCreature, "PRC_ClassLevelInPos"+IntToString(nClassPosition));
+    }
+    //correct for 1 start not 0 start
+    nClass--;
+    return nClass;
+}
+
+// Returns the caster level when used in spells.  You can use PRCGetCasterLevel()
+// to determine a caster level from within a true spell script.  In spell-like-
+// abilities & items, it will only return GetCasterLevel.
+int PRCGetCasterLevel(object oCaster = OBJECT_SELF);
 
 // Returns the equivalent added caster levels from Arcane Prestige Classes.
 int GetArcanePRCLevels (object oCaster);
@@ -72,11 +161,6 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 //Is a wrapper function that allows the DC to be adjusted based on conditions 
 //that cannot be done using iprops, such as saves vs spellschool.
 int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
-
-// Returns the caster level when used in spells.  You can use PRCGetCasterLevel()
-// to determine a caster level from within a true spell script.  In spell-like-
-// abilities & items, it will only return GetCasterLevel.
-int PRCGetCasterLevel(object oCaster = OBJECT_SELF);
 
 // Finds caster levels by specific types (see the constants below).
 int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF);
@@ -136,15 +220,18 @@ int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
 // BEGIN CONSTANTS
 // ---------------
 
-const int  TYPE_ARCANE   = 1;
-const int  TYPE_SORCERER = 2;
-const int  TYPE_WIZARD   = 3;
-const int  TYPE_BARD     = 4;
-const int  TYPE_DIVINE   = 10;
-const int  TYPE_CLERIC   = 11;
-const int  TYPE_DRUID    = 12;
-const int  TYPE_RANGER   = 13;
-const int  TYPE_PALADIN  = 14;
+const int  TYPE_ARCANE   = -1;
+const int  TYPE_DIVINE   = -2;
+
+//Changed to use CLASS_TYPE_* instead
+//const int  TYPE_SORCERER = 2;
+//const int  TYPE_WIZARD   = 3;
+//const int  TYPE_BARD     = 4;
+//const int  TYPE_CLERIC   = 11;
+//const int  TYPE_DRUID    = 12;
+//const int  TYPE_RANGER   = 13;
+//const int  TYPE_PALADIN  = 14;
+
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -153,8 +240,9 @@ int GetArcanePRCLevels (object oCaster)
 {
    int nArcane;
    int nOozeMLevel = GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster);
-   int nFirstClass = GetClassByPosition(1, oCaster);
-   int nSecondClass = GetClassByPosition(2, oCaster);
+   int nFirstClass = PRCGetClassByPosition(1, oCaster);
+   int nSecondClass = PRCGetClassByPosition(2, oCaster);
+   int nThirdClass = PRCGetClassByPosition(3, oCaster);
    
    nArcane       += GetLevelByClass(CLASS_TYPE_ARCHMAGE, oCaster)
                  +  GetLevelByClass(CLASS_TYPE_ARCTRICK, oCaster)
@@ -183,7 +271,9 @@ int GetArcanePRCLevels (object oCaster)
 
    if (nOozeMLevel)
    {
-       if (GetIsArcaneClass(nFirstClass) || (!GetIsDivineClass(nFirstClass) && GetIsArcaneClass(nSecondClass)))
+       if (GetIsArcaneClass(nFirstClass) 
+           || (!GetIsDivineClass(nFirstClass) && GetIsArcaneClass(nSecondClass))
+           || (!GetIsDivineClass(nFirstClass) && !GetIsDivineClass(nSecondClass) && GetIsArcaneClass(nThirdClass)))
            nArcane += nOozeMLevel / 2;
    }
 
@@ -194,8 +284,9 @@ int GetDivinePRCLevels (object oCaster)
 {
    int nDivine;
    int nOozeMLevel = GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster);
-   int nFirstClass = GetClassByPosition(1, oCaster);
-   int nSecondClass = GetClassByPosition(2, oCaster);
+   int nFirstClass = PRCGetClassByPosition(1, oCaster);
+   int nSecondClass = PRCGetClassByPosition(2, oCaster);
+   int nThirdClass = PRCGetClassByPosition(3, oCaster);
    
    // This section accounts for full progression classes
    nDivine       += GetLevelByClass(CLASS_TYPE_DIVESA, oCaster)
@@ -229,7 +320,9 @@ int GetDivinePRCLevels (object oCaster)
 
    if (nOozeMLevel)
    {
-       if (GetIsDivineClass(nFirstClass) || (!GetIsArcaneClass(nFirstClass) && GetIsDivineClass(nSecondClass)))
+       if (GetIsDivineClass(nFirstClass) 
+           || (!GetIsArcaneClass(nFirstClass) && GetIsDivineClass(nSecondClass))
+           || (!GetIsArcaneClass(nFirstClass) && !GetIsArcaneClass(nSecondClass) && GetIsDivineClass(nThirdClass)))
            nDivine += nOozeMLevel / 2;
    }
 
@@ -248,16 +341,19 @@ int GetIsDivineClass (int nClass)
     return (nClass==CLASS_TYPE_CLERIC ||
             nClass==CLASS_TYPE_DRUID ||
             nClass==CLASS_TYPE_PALADIN ||
-            nClass==CLASS_TYPE_RANGER);
+            nClass==CLASS_TYPE_RANGER ||
+            nClass==CLASS_TYPE_BLACKGUARD ||
+            nClass==CLASS_TYPE_SOLDIER_OF_LIGHT ||
+            nClass==CLASS_TYPE_VASSAL);
 }
 
 int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF)
 {
-    if (GetIsArcaneClass(GetClassByPosition(1, oCaster)))
+    if (GetIsArcaneClass(PRCGetClassByPosition(1, oCaster)))
         return 1;
-    if (GetIsArcaneClass(GetClassByPosition(2, oCaster)))
+    if (GetIsArcaneClass(PRCGetClassByPosition(2, oCaster)))
         return 2;
-    if (GetIsArcaneClass(GetClassByPosition(3, oCaster)))
+    if (GetIsArcaneClass(PRCGetClassByPosition(3, oCaster)))
         return 3;
 
     return 0;
@@ -265,11 +361,11 @@ int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF)
 
 int GetFirstDivineClassPosition (object oCaster = OBJECT_SELF)
 {
-    if (GetIsDivineClass(GetClassByPosition(1, oCaster)))
+    if (GetIsDivineClass(PRCGetClassByPosition(1, oCaster)))
         return 1;
-    if (GetIsDivineClass(GetClassByPosition(2, oCaster)))
+    if (GetIsDivineClass(PRCGetClassByPosition(2, oCaster)))
         return 2;
-    if (GetIsDivineClass(GetClassByPosition(3, oCaster)))
+    if (GetIsDivineClass(PRCGetClassByPosition(3, oCaster)))
         return 3;
 
     return 0;
@@ -280,7 +376,7 @@ int GetFirstArcaneClass (object oCaster = OBJECT_SELF)
     int iArcanePos = GetFirstArcaneClassPosition(oCaster);
     if (!iArcanePos) return CLASS_TYPE_INVALID; // no arcane casting class
     
-    return GetClassByPosition(iArcanePos, oCaster);
+    return PRCGetClassByPosition(iArcanePos, oCaster);
 }
 
 int GetFirstDivineClass (object oCaster = OBJECT_SELF)
@@ -288,7 +384,7 @@ int GetFirstDivineClass (object oCaster = OBJECT_SELF)
     int iDivinePos = GetFirstDivineClassPosition(oCaster);
     if (!iDivinePos) return CLASS_TYPE_INVALID; // no Divine casting class
     
-    return GetClassByPosition(iDivinePos, oCaster);
+    return PRCGetClassByPosition(iDivinePos, oCaster);
 }
 
 int GetSpellSchool(int iSpellId)
@@ -313,12 +409,12 @@ int GetLevelByTypeArcane(object oCaster = OBJECT_SELF)
 {
     int iFirstArcane = GetFirstArcaneClass(oCaster);
     int iBest = 0;
-    int iClass1 = GetClassByPosition(1, oCaster);
-    int iClass2 = GetClassByPosition(2, oCaster);
-    int iClass3 = GetClassByPosition(3, oCaster);
-    int iClass1Lev = GetLevelByPosition(1, oCaster);
-    int iClass2Lev = GetLevelByPosition(2, oCaster);
-    int iClass3Lev = GetLevelByPosition(3, oCaster);
+    int iClass1 = PRCGetClassByPosition(1, oCaster);
+    int iClass2 = PRCGetClassByPosition(2, oCaster);
+    int iClass3 = PRCGetClassByPosition(3, oCaster);
+    int iClass1Lev = PRCGetLevelByPosition(1, oCaster);
+    int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
+    int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
 
     if (iClass1 == iFirstArcane) iClass1Lev += GetArcanePRCLevels(oCaster);
     if (iClass2 == iFirstArcane) iClass2Lev += GetArcanePRCLevels(oCaster);
@@ -343,12 +439,12 @@ int GetLevelByTypeDivine(object oCaster = OBJECT_SELF)
 {
     int iFirstDivine = GetFirstDivineClass(oCaster);
     int iBest = 0;
-    int iClass1 = GetClassByPosition(1, oCaster);
-    int iClass2 = GetClassByPosition(2, oCaster);
-    int iClass3 = GetClassByPosition(3, oCaster);
-    int iClass1Lev = GetLevelByPosition(1, oCaster);
-    int iClass2Lev = GetLevelByPosition(2, oCaster);
-    int iClass3Lev = GetLevelByPosition(3, oCaster);
+    int iClass1 = PRCGetClassByPosition(1, oCaster);
+    int iClass2 = PRCGetClassByPosition(2, oCaster);
+    int iClass3 = PRCGetClassByPosition(3, oCaster);
+    int iClass1Lev = PRCGetLevelByPosition(1, oCaster);
+    int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
+    int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
 
     if (iClass1 == CLASS_TYPE_PALADIN || iClass1 == CLASS_TYPE_RANGER) iClass1Lev = iClass1Lev / 2;
     if (iClass2 == CLASS_TYPE_PALADIN || iClass2 == CLASS_TYPE_RANGER) iClass2Lev = iClass2Lev / 2;
@@ -377,12 +473,12 @@ int GetLevelByTypeArcaneFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
 {
     int iFirstArcane = GetFirstArcaneClass(oCaster);
     int iBest = 0;
-    int iClass1 = GetClassByPosition(1, oCaster);
-    int iClass2 = GetClassByPosition(2, oCaster);
-    int iClass3 = GetClassByPosition(3, oCaster);
-    int iClass1Lev = GetLevelByPosition(1, oCaster);
-    int iClass2Lev = GetLevelByPosition(2, oCaster);
-    int iClass3Lev = GetLevelByPosition(3, oCaster);
+    int iClass1 = PRCGetClassByPosition(1, oCaster);
+    int iClass2 = PRCGetClassByPosition(2, oCaster);
+    int iClass3 = PRCGetClassByPosition(3, oCaster);
+    int iClass1Lev = PRCGetLevelByPosition(1, oCaster);
+    int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
+    int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
 
     if (iSpellID = -1) iSpellID = GetSpellId();
 
@@ -417,12 +513,12 @@ int GetLevelByTypeDivineFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
 {
     int iFirstDivine = GetFirstDivineClass(oCaster);
     int iBest = 0;
-    int iClass1 = GetClassByPosition(1, oCaster);
-    int iClass2 = GetClassByPosition(2, oCaster);
-    int iClass3 = GetClassByPosition(3, oCaster);
-    int iClass1Lev = GetLevelByPosition(1, oCaster);
-    int iClass2Lev = GetLevelByPosition(2, oCaster);
-    int iClass3Lev = GetLevelByPosition(3, oCaster);
+    int iClass1 = PRCGetClassByPosition(1, oCaster);
+    int iClass2 = PRCGetClassByPosition(2, oCaster);
+    int iClass3 = PRCGetClassByPosition(3, oCaster);
+    int iClass1Lev = PRCGetLevelByPosition(1, oCaster);
+    int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
+    int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
 
     if (iSpellID = -1) iSpellID = GetSpellId();
 
@@ -928,49 +1024,49 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
         case TYPE_DIVINE:
              return iDiv;
              break;
-        case TYPE_SORCERER:
+        case CLASS_TYPE_SORCERER:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_SORCERER)
                  iTemp = iArc;
              else
                  iTemp = iSor + PractisedSpellcasting(oCaster, CLASS_TYPE_SORCERER, iSor);
              return iTemp;
              break;
-        case TYPE_WIZARD:
+        case CLASS_TYPE_WIZARD:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_WIZARD)
                  iTemp = iArc;
              else
                  iTemp = iWiz + PractisedSpellcasting(oCaster, CLASS_TYPE_WIZARD, iWiz);
              return iTemp;
              break;
-        case TYPE_BARD:
+        case CLASS_TYPE_BARD:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_BARD)
                  iTemp = iArc;
              else
                  iTemp = iBrd + PractisedSpellcasting(oCaster, CLASS_TYPE_BARD, iBrd);
              return iTemp;
              break;
-        case TYPE_CLERIC:
+        case CLASS_TYPE_CLERIC:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_CLERIC)
                  iTemp = iDiv;
              else
                  iTemp = iCle + PractisedSpellcasting(oCaster, CLASS_TYPE_CLERIC, iCle);
              return iTemp;
              break;
-        case TYPE_DRUID:
+        case CLASS_TYPE_DRUID:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_DRUID)
                  iTemp = iDiv;
              else
                  iTemp = iDru + PractisedSpellcasting(oCaster, CLASS_TYPE_DRUID, iDru);
              return iTemp;
              break;
-        case TYPE_RANGER:
+        case CLASS_TYPE_RANGER:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_RANGER)
                  iTemp = iDiv;
              else
                  iTemp = iRan / 2;
              return iTemp;
              break;
-        case TYPE_PALADIN:
+        case CLASS_TYPE_PALADIN:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_PALADIN)
                  iTemp = iDiv;
              else

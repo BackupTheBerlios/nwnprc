@@ -1,47 +1,27 @@
-#include "prc_inc_function"
-#include "inc_item_props"
 #include "prc_feat_const"
-#include "prc_class_const"
+#include "psi_inc_psifunc"
 
 void main()
 {
     object oPC = OBJECT_SELF;
 
-    if (GetLocalInt(oPC, "PsionicFocus") == 1)
+    if(GetLocalInt(oPC, "PsionicFocus"))
     {
         SendMessageToPC(oPC, "You are already Psionically Focused.");
+        GainPsionicFocus(oPC); // Recheck the bonuses associated with Psionic Focus
         return;
     }
-
-    if (GetHasFeat(FEAT_NARROW_MIND, oPC))
+    
+    int nDC = 20;
+    if(GetHasFeat(FEAT_NARROW_MIND, oPC))         nDC -= 4;
+    if(GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC) nDC += 4; // Hack to avoid granting bonus from Combat manifestation where it should not be
+    
+    if(GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, nDC))
     {
-        if (GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, 16))
-        {
-            SetLocalInt(oPC, "PsionicFocus", 1);
-            SendMessageToPC(oPC, "You are now Psionically Focused.");
-            return;
-        }
+        SendMessageToPC(oPC, "You are now Psionically Focused.");
+        GainPsionicFocus(oPC);
     }
-    else if (GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC))
-    {
-        if (GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, 24))
-        {
-            SetLocalInt(oPC, "PsionicFocus", 1);
-            SendMessageToPC(oPC, "You are now Psionically Focused.");
-            return;
-        }
-    }    
     else
-    {
-        if (GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, 20))
-        {
-            SetLocalInt(oPC, "PsionicFocus", 1);
-            SendMessageToPC(oPC, "You are now Psionically Focused.");
-            return;
-        }
-    }
-
-    SendMessageToPC(oPC, "Concentration check failed.  You are not Psionically Focused.");
-
+        SendMessageToPC(oPC, "You failed to become Psionically Focused.");
 }
  

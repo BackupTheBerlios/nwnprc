@@ -8,7 +8,7 @@ int IsItemMetal(object oItem)
 {
   int nReturnVal=0;   // Assume it's not metal until proven otherwise.
   int type=GetBaseItemType(oItem);
-  
+
   // Any of these Base Item Types can be considered "mostly metal"
    if (type==BASE_ITEM_BASTARDSWORD ||
        type==BASE_ITEM_BATTLEAXE ||
@@ -71,13 +71,18 @@ void RemoveIronPower(object oPC, object oWeap)
 // Adds damage property and keenness
 void IronPower(object oPC, object oWeap, int iBonusType)
 {
-   int iBonus = 0;
-   int iLev = GetLevelByClass(CLASS_TYPE_DISPATER, oPC);
 
+	int iBonus = 0;
 
-   // Level 4: +1 bonus.  Level 8: +2 bonus.
-   if (iLev >= 4) iBonus++;
-   if (iLev >= 8) iBonus++;
+	if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 4)
+         	iBonus = 1;
+
+	if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 8)
+         	iBonus = 2;
+
+      //Stack with Enchantment on Weapon
+      //int iEnch = 0;
+      //iBonus = iBonus + iEnch;   
 
    // This string identifies that each hand has its own attack bonus.
    string sIronPower = "DispIronPowerA"+IntToString(iBonusType);
@@ -95,15 +100,15 @@ void IronPower(object oPC, object oWeap, int iBonusType)
          {
              IPEnhancementBonusToDamageBonus(oWeap);
          }
-         
+
          // Add the +1 or +2 to the weapon's damage rolls
          SetCompositeDamageBonusT(oWeap, "DispIronPowerD", iBonus);
-         
+
          // Make the weapon keen
          AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyKeen(), oWeap,9999.0);
-         
+
          // Add a hand-specific attack roll bonus using effects (so that it doesn't go through DR)
-         SetCompositeAttackBonus(oPC, sIronPower, iBonus, iBonusType);
+        // SetCompositeAttackBonus(oPC, sIronPower, iBonus, iBonusType);
    }
 }
 
@@ -114,7 +119,7 @@ void main()
         object oSkin = GetPCSkin(oPC);
         object oWeap1 = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
         object oWeap2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
-        
+
         // make sure it doesn't mess with non-weapons
         if (GetBaseItemType(oWeap2) == BASE_ITEM_SMALLSHIELD ||
             GetBaseItemType(oWeap2) == BASE_ITEM_LARGESHIELD ||

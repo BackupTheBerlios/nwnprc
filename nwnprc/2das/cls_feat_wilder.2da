@@ -31,6 +31,7 @@
 27    FEAT_PSIONWILD_ENERGYRAY         3609        2      1                1        
 28    FEAT_PSIONWILD_ENTANGLE          3610        2      1                1        
 29    FEAT_PSIONWILD_GREASE            3611        2      1                1        
+23    FEAT_ALL_SYNESTHETE              3631        2      1                1        
 30    FEAT_ALL_HAMMER                  3612        2      1                1        
 31    FEAT_ALL_MYLIGHT                 3613        2      1                1        
 32    FEAT_ALL_DEFPRECOG               3614        2      1                1        

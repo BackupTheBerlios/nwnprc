@@ -1,5 +1,21 @@
-2DA V2.0
+2DA V2.0                                                             
+                                                                     
+           LABEL              ReqType   ReqParam1        ReqParam2   
+0          Point_Blank_Shot   FEAT      27               ****        
+1          WeapFocLongBow     FEATOR    101              ****        
+2          WeapFocShortBow    FEATOR    102              ****        
+3          Elf                RACE      1                ****        
+4          Half-Elf           RACE      4                ****        
+5          Base_Attack        BAB       6                ****        
+6          ScriptVar          VAR       X1_AllowArcher   0 
+7          Wizard             CLASS     10               ****           
+8          Sorcerer           CLASS     9                ****
+9          Assassin           CLASS     30               ****
+10         Harper             CLASS     28               ****
+11         Bard               CLASS     1                ****
 
-      LABEL       ReqType    ReqParam1         ReqParam2    
-0     ScriptVar   VAR        X2_AllowArcher   0           
-       
+                                                                     
+                                                                     
+                                                                     
+                                                                     
+                                                                     

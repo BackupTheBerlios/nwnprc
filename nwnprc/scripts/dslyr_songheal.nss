@@ -40,7 +40,7 @@ void main()
   effect eHeal;
   int  nHeal;
   effect eSun = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
-  effect eHealVis = EffectVisualEffect(VFX_IMP_HEALING_X);
+  effect eHealVis = EffectVisualEffect(VFX_IMP_HEALING_S);
   
   effect eRegen = EffectRegenerate(6, 6.0);
   effect eVis = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
@@ -60,6 +60,16 @@ void main()
        FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
        return;
   }
+  
+  if (GetHasEffect(EFFECT_TYPE_DEAF,OBJECT_SELF) && d100(1) <= 20)
+  {
+      FloatingTextStringOnCreature("Your deafness has caused you to fail.",OBJECT_SELF);
+      DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);
+      return;
+  }
+  
+  effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
+  ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
   
   RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_HEALING);
   RemoveOldSongs();
@@ -92,9 +102,9 @@ void main()
 
      if(GetIsReactionTypeFriendly(oTarget)|| GetFactionEqual(oTarget))
      {
-
         //Figure out how much to heal
-        nHeal = GetMaxHitPoints(oTarget);
+        nHeal = d8(2) + 2 * nLevel;
+        nHeal = (nEpic) ? 3 * nHeal : nHeal; // epic healing song heals three times as much
 
         //Set the heal effect
         eHeal = EffectHeal(nHeal);

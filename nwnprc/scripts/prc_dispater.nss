@@ -45,7 +45,7 @@ void IronPower(object oPC, object oWeap)
       if ((GetLocalInt(oWeap, "DispIronPowerA") != iBonus) && (iBonus))
       {
          SetCompositeBonus(oWeap, "DispIronPowerA", iBonus, ITEM_PROPERTY_ATTACK_BONUS);
-         SetCompositeBonus(oWeap, "DispIronPowerD", iBonus, ITEM_PROPERTY_DAMAGE_BONUS);
+         SetCompositeDamageBonus(oWeap, "DispIronPowerD", iBonus);
          AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyKeen(), oWeap, 99999.0);
       }
    }
@@ -56,7 +56,7 @@ void RemoveIronPower(object oPC, object oWeap)
       if (GetLocalInt(oWeap, "DispIronPowerA"))
       {
          SetCompositeBonus(oWeap, "DispIronPowerA", 0, ITEM_PROPERTY_ATTACK_BONUS);
-         SetCompositeBonus(oWeap, "DispIronPowerD", 0, ITEM_PROPERTY_DAMAGE_BONUS);
+         SetCompositeDamageBonus(oWeap, "DispIronPowerD", 0);
          RemoveSpecificProperty(oWeap, ITEM_PROPERTY_KEEN, -1, -1, 1, "", -1, DURATION_TYPE_TEMPORARY);
       }  
 }

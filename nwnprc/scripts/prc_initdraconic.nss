@@ -17,16 +17,16 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
 
   int iDmg = bUnarmedDmg;;
 
-  if (iSize == CREATURE_SIZE_SMALL ||iSize== CREATURE_SIZE_TINY)
-      iDmg--;
 
 
   if (iMonk)
   {
     int iLvDmg = iMonk/4+2;
 
-     iDmg = iLvDmg +bUnarmedDmg;
+     iDmg += iLvDmg ;
   }
+
+ if (iSize == CREATURE_SIZE_SMALL ||iSize== CREATURE_SIZE_TINY) iDmg--;
 
      switch (iDmg)
      {
@@ -43,11 +43,11 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
         case 5:
           return IP_CONST_MONSTERDAMAGE_1d12;
         case 6:
-          return IP_CONST_MONSTERDAMAGE_1d20;
-        case 7:
           return IP_CONST_MONSTERDAMAGE_2d10;
-        case 8:
+        case 7:
           return IP_CONST_MONSTERDAMAGE_2d12;
+        case 8:
+          return IP_CONST_MONSTERDAMAGE_3d10;
       }
 
 
@@ -89,7 +89,7 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
 
       int iDmg =FindUnarmedDmg(oPC,bUnarmedDmg);
 
-int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
+      int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
 
       int iKi = GetHasFeat(FEAT_KI_STRIKE,oPC) ? 1 : 0 ;
           iKi = (iMonk>12)                     ? 2 : iKi;
@@ -101,9 +101,6 @@ int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
       iKi+= iEpicKi;
       Enh+= iKi;
 
-      iDmg = DamageConv(iDmg);
-      iDmg = ConvMonsterDmg(iDmg+bUnarmedDmg);
-
       TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iDmg),oWeapL);
 
@@ -112,8 +109,6 @@ int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
 
       TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oWeapL);
-
-return ;
 
 
 

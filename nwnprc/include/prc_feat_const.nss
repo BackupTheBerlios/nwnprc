@@ -383,8 +383,6 @@ const int FEAT_RW_SDEF_1      = 4231;
 const int FEAT_RW_SDEF_2      = 4232;
 const int FEAT_RW_SDEF_3      = 4233;
 const int FEAT_RW_SDEF_4      = 4234;
-const int FEAT_RW_TATTOO      = 4234;
-
 
 //Acolyte of the Skin
 const int FEAT_WEAR_FIEND = 2517;

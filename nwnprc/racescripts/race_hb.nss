@@ -45,7 +45,7 @@ void main()
             else
                 DeleteLocalInt(oPC, "EnteredDaylight");
         }
-        FloatingTextStringOnCreature("Heart Beat Active", oPC);
+        //FloatingTextStringOnCreature("Heart Beat Active", oPC);
         oPC = GetNextPC();
     }
     

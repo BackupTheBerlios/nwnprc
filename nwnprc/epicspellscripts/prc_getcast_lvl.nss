@@ -147,6 +147,7 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
             GetLevelByClass(CLASS_TYPE_DIVESF, oCaster)+
 	    GetLevelByClass(CLASS_TYPE_DIVESC, oCaster)+
             GetLevelByClass(CLASS_TYPE_DIVESE, oCaster)+
+            GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster)+
 	    GetLevelByClass(CLASS_TYPE_DIVESA, oCaster);
 
 

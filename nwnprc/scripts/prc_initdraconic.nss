@@ -108,7 +108,7 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
       
     object oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
 
-    if (iEquip == 2 &&  GetIsObjectValid(oItem))
+    if (iEquip != 1 &&  GetIsObjectValid(oItem))
     {
 
       int iType = GetBaseItemType(oItem);

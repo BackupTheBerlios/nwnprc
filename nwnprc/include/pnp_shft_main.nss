@@ -2244,8 +2244,10 @@ void SetShiftTrueForm(object oPC)
         int eDurType = GetEffectDurationType(eEff);
         int eSubType = GetEffectSubType(eEff);
         int eType = GetEffectType(eEff);
-        //all three effects are permanent and supernatural
-        if ((eDurType == DURATION_TYPE_PERMANENT) && (eSubType == SUBTYPE_SUPERNATURAL) )
+        int eID = GetEffectSpellId(eEff);
+        object eCreator = GetEffectCreator(eEff);
+        //all three effects are permanent and supernatural and are created by spell id -1 and by the PC.
+        if ((eDurType == DURATION_TYPE_PERMANENT) && (eSubType == SUBTYPE_SUPERNATURAL) && (eID == -1) && (eCreator == oPC))
         {
             switch (eType)
             {

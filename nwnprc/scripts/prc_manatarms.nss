@@ -7,52 +7,47 @@ void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
 {
 //  object oWeapR=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
 
-    if (GetItemHasItemProperty(oWeapR,ITEM_PROPERTY_ATTACK_BONUS))
-        SetCompositeBonusT(oWeapR,"ManArmsGenSpe",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
-    else
-        SetCompositeBonusT(oWeapR,"ManArmsGenSpe",iLevel+GetWeaponEnhancement(oWeapR),ITEM_PROPERTY_ATTACK_BONUS);
+  SetCompositeBonusT(oWeapR,"ManArmsGenSpe",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
+  int iDmg = 1;
 
- int iDmg = 1;
+  if(GetHasFeat(FEAT_LEGENDARY_PROWESS))  iDmg = 3;
 
- if(GetHasFeat(FEAT_LEGENDARY_PROWESS))  iDmg = 3;
+  int iType= GetBaseItemType(oWeapR);
+  object oItem=oWeapR;
 
+  switch (iType)
+  {
+    case BASE_ITEM_SHORTBOW:
+    case BASE_ITEM_LONGBOW:
+      oItem=GetItemInSlot(INVENTORY_SLOT_ARROWS);
+      break;
+    case BASE_ITEM_LIGHTCROSSBOW:
+    case BASE_ITEM_HEAVYCROSSBOW:
+      oItem=GetItemInSlot(INVENTORY_SLOT_BOLTS);
+      break;
+    case BASE_ITEM_SLING:
+      oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
+      break;
+  }
 
-    int iType= GetBaseItemType(oWeapR);
-    object oItem=oWeapR;
+  int iDType = GetWeaponDamageType(oWeapR);
 
-    switch (iType)
-    {
-      case BASE_ITEM_SHORTBOW:
-      case BASE_ITEM_LONGBOW:
-        oItem=GetItemInSlot(INVENTORY_SLOT_ARROWS);
-        break;
-      case BASE_ITEM_LIGHTCROSSBOW:
-      case BASE_ITEM_HEAVYCROSSBOW:
-        oItem=GetItemInSlot(INVENTORY_SLOT_BOLTS);
-        break;
-      case BASE_ITEM_SLING:
-        oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
-        break;
-    }
+  switch (iDType)
+  {
+     case DAMAGE_TYPE_SLASHING:
+       iDType =IP_CONST_DAMAGETYPE_SLASHING;
+       break;
 
-    int iDType = GetWeaponDamageType(oWeapR);
+     case DAMAGE_TYPE_PIERCING:
+       iDType =IP_CONST_DAMAGETYPE_PIERCING;
+       break;
 
-    switch (iDType)
-    {
-       case DAMAGE_TYPE_SLASHING:
-         iDType =IP_CONST_DAMAGETYPE_SLASHING;
-         break;
+     case DAMAGE_TYPE_BLUDGEONING:
+       iDType =IP_CONST_DAMAGETYPE_BLUDGEONING;
+       break;
+  }
 
-       case DAMAGE_TYPE_PIERCING:
-         iDType =IP_CONST_DAMAGETYPE_PIERCING;
-         break;
-
-       case DAMAGE_TYPE_BLUDGEONING:
-         iDType =IP_CONST_DAMAGETYPE_BLUDGEONING;
-         break;
-    }
-
-    SetCompositeDamageBonusT(oWeapR,"ManArmsDmg",iDmg,iDType);
+  SetCompositeDamageBonusT(oWeapR,"ManArmsDmg",iDmg,iDType);
 
   int bCore = 10 + GetLevelByClass(CLASS_TYPE_MANATARMS,oPC);
 

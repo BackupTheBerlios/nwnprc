@@ -8,6 +8,44 @@
 
 const int SKILL_JUMP = 28;
 
+void IPEnhancementBonus(object oWeap)
+{
+    int iBonus = 0;
+    int iTemp;
+
+    if (GetLocalInt(oWeap, "IPEnh") || !GetIsObjectValid(oWeap)) return;    
+
+    itemproperty ip = GetFirstItemProperty(oWeap);
+    while(GetIsItemPropertyValid(ip))
+    {
+        if(GetItemPropertyType(ip) == ITEM_PROPERTY_ENHANCEMENT_BONUS)
+            iTemp = GetItemPropertyCostTableValue(ip);
+            iBonus = iTemp > iBonus ? iTemp : iBonus;
+        ip = GetNextItemProperty(oWeap);
+    }
+    
+    SetCompositeDamageBonusT(oWeap,"IPEnh",iBonus);
+    SetCompositeBonusT(oWeap,"IPEnhA",iBonus,ITEM_PROPERTY_ATTACK_BONUS);      
+ 
+}
+
+void WeapEnh()
+{
+   object oPC = OBJECT_SELF;
+   
+   int iEquip= GetLocalInt(oPC,"ONEQUIP");
+ 
+    if (iEquip ==1)
+    {
+       SetCompositeDamageBonusT(GetPCItemLastUnequipped(),"IPEnh",0);
+       SetCompositeBonusT(GetPCItemLastUnequipped(),"IPEnhA",0,ITEM_PROPERTY_ATTACK_BONUS); 
+    }
+    else
+    {
+       IPEnhancementBonus(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC));
+       IPEnhancementBonus(GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC));
+    }  	
+}
 
 void Sanctify()
 {
@@ -527,4 +565,5 @@ void main()
    }
 
    Vile();
+   WeapEnh();
 }

@@ -74,7 +74,6 @@ void main()
      oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, GetSpellTargetLocation());
   }
  
-  DecrementRemainingFeatUses(OBJECT_SELF, FEAT_LYRITHSONG1);
-  DeleteLocalInt(OBJECT_SELF, "SpellConc");
+  DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);
 
 }

@@ -72,7 +72,7 @@ void main()
 
      }   
     
-    DecrementRemainingFeatUses(OBJECT_SELF, FEAT_LYRITHSONG1);
+    DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);
  
 
 }

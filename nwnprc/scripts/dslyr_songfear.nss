@@ -47,6 +47,6 @@ void main()
     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, OBJECT_SELF,0.0,FALSE);
     StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, GetSpellId(), 0);
     
-    DecrementRemainingFeatUses(OBJECT_SELF, FEAT_LYRITHSONG1);
+    DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);
     SetLocalInt(OBJECT_SELF, "SpellConc", 1);   
 }

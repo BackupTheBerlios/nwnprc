@@ -25,12 +25,6 @@ void main()
         return;
     }
     
-    if (GetSkillRank(SKILL_PERFORM,OBJECT_SELF) < 18)
-    {
-        FloatingTextStringOnCreature("*You must have at least 18 perform ranks to use this song*",OBJECT_SELF);
-        return;
-    }
-
     //Declare major variables
     object oTarget;
     effect eHaste = EffectHaste();

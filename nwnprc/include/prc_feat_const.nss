@@ -901,6 +901,41 @@ const int FEAT_DRAGONSONG_FEAR          = 3444;
 const int FEAT_DRAGONSONG_HEALING       = 3445;
 const int FEAT_LYRITHSONG1              = 3446;
 
+// Favored of Milil
+const int FEAT_FOM_DIVINE_SONG_BLESS          	 = 4459;
+const int FEAT_FOM_DIVINE_SONG_CONVICTION     	 = 4460;
+const int FEAT_FOM_DIVINE_SONG_CURELIGHT      	 = 4461;
+const int FEAT_FOM_DIVINE_SONG_REMOVEFEAR     	 = 4462;
+const int FEAT_FOM_DIVINE_SONG_SANCTUARY      	 = 4463;
+const int FEAT_FOM_DIVINE_SONG_SHIELDFAITH    	 = 4464;
+const int FEAT_FOM_DIVINE_SONG_AID            	 = 4465;
+const int FEAT_FOM_DIVINE_SONG_BULLSTRENGTH   	 = 4466;
+const int FEAT_FOM_DIVINE_SONG_CUREMODERATE   	 = 4467;
+const int FEAT_FOM_DIVINE_SONG_EAGLESPLENDOR  	 = 4468;
+const int FEAT_FOM_DIVINE_SONG_ENDURANCE      	 = 4469;
+const int FEAT_FOM_DIVINE_SONG_FOXCUNNING     	 = 4470;
+const int FEAT_FOM_DIVINE_SONG_LESSRESTORE    	 = 4471;
+const int FEAT_FOM_DIVINE_SONG_OWLWISDOM      	 = 4472;
+const int FEAT_FOM_DIVINE_SONG_CLAIRVOYANCE   	 = 4473;
+const int FEAT_FOM_DIVINE_SONG_CLARITY        	 = 4474;
+const int FEAT_FOM_DIVINE_SONG_CURESERIOUS    	 = 4475;
+const int FEAT_FOM_DIVINE_SONG_NEGATIVEPROT   	 = 4476;
+const int FEAT_FOM_DIVINE_SONG_PRAYER         	 = 4477;
+const int FEAT_FOM_DIVINE_SONG_PROTELEMENTS   	 = 4478;
+const int FEAT_FOM_DIVINE_SONG_REMOVECURSE    	 = 4479;
+const int FEAT_FOM_DIVINE_SONG_CURECRITICAL   	 = 4480;
+const int FEAT_FOM_DIVINE_SONG_DEATHWARD      	 = 4481;
+const int FEAT_FOM_DIVINE_SONG_FREEDOMMOVEMENT	 = 4482;
+const int FEAT_FOM_DIVINE_SONG_PANACEA        	 = 4483;
+const int FEAT_FOM_DIVINE_SONG_RESTORATION    	 = 4484;
+const int FEAT_FOM_DIVINE_SONG_STONESKIN      	 = 4485;
+const int FEAT_FOM_DIVINE_SONG_TRUESEEING     	 = 4486;
+const int FEAT_FOM_DIVINE_SONG_MONSTREGEN     	 = 4487;
+const int FEAT_FOM_DIVINE_SONG_RAISEDEAD      	 = 4488;
+const int FEAT_FOM_DIVINE_SONG_SPELLRESISTANCE	 = 4489;
+const int FEAT_FOM_GREATER_DIVINE_SONG 		 = 4448;
+const int FEAT_FOM_ENCORE_PERFORMANCE		 = 4436;
+
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////
 //////////////////////////////////////////////////*/

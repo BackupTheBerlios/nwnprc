@@ -130,6 +130,40 @@ const int SPELL_DSL_SONG_SPEED              = 2137;
 const int SPELL_DSL_SONG_FEAR               = 2138;
 const int SPELL_DSL_SONG_HEALING            = 2139;
 
+// Favored of Milil
+const int SPELL_FOM_DIVINE_SONG_BLESS          	    = 2300;
+const int SPELL_FOM_DIVINE_SONG_CONVICTION     	    = 2301;
+const int SPELL_FOM_DIVINE_SONG_CURELIGHT      	    = 2302;
+const int SPELL_FOM_DIVINE_SONG_REMOVEFEAR     	    = 2303;
+const int SPELL_FOM_DIVINE_SONG_SANCTUARY      	    = 2304;
+const int SPELL_FOM_DIVINE_SONG_SHIELDFAITH    	    = 2305;
+const int SPELL_FOM_DIVINE_SONG_AID            	    = 2306;
+const int SPELL_FOM_DIVINE_SONG_BULLSTRENGTH   	    = 2307;
+const int SPELL_FOM_DIVINE_SONG_CUREMODERATE   	    = 2308;
+const int SPELL_FOM_DIVINE_SONG_EAGLESPLENDOR  	    = 2309;
+const int SPELL_FOM_DIVINE_SONG_ENDURANCE      	    = 2310;
+const int SPELL_FOM_DIVINE_SONG_FOXCUNNING     	    = 2311;
+const int SPELL_FOM_DIVINE_SONG_LESSRESTORE    	    = 2312;
+const int SPELL_FOM_DIVINE_SONG_OWLWISDOM      	    = 2313;
+const int SPELL_FOM_DIVINE_SONG_CLAIRVOYANCE   	    = 2314;
+const int SPELL_FOM_DIVINE_SONG_CLARITY        	    = 2315;
+const int SPELL_FOM_DIVINE_SONG_CURESERIOUS    	    = 2316;
+const int SPELL_FOM_DIVINE_SONG_NEGATIVEPROT   	    = 2317;
+const int SPELL_FOM_DIVINE_SONG_PRAYER         	    = 2318;
+const int SPELL_FOM_DIVINE_SONG_PROTELEMENTS   	    = 2319;
+const int SPELL_FOM_DIVINE_SONG_REMOVECURSE    	    = 2320;
+const int SPELL_FOM_DIVINE_SONG_CURECRITICAL   	    = 2321;
+const int SPELL_FOM_DIVINE_SONG_DEATHWARD      	    = 2322;
+const int SPELL_FOM_DIVINE_SONG_FREEDOMMOVEMENT	    = 2323;
+const int SPELL_FOM_DIVINE_SONG_PANACEA        	    = 2324;
+const int SPELL_FOM_DIVINE_SONG_RESTORATION    	    = 2325;
+const int SPELL_FOM_DIVINE_SONG_STONESKIN      	    = 2326;
+const int SPELL_FOM_DIVINE_SONG_TRUESEEING     	    = 2327;
+const int SPELL_FOM_DIVINE_SONG_MONSTREGEN     	    = 2328;
+const int SPELL_FOM_DIVINE_SONG_RAISEDEAD      	    = 2329;
+const int SPELL_FOM_DIVINE_SONG_SPELLRESISTANCE	    = 2330;
+const int SPELL_FOM_ENCOREPERFORMANCE          	    = 2331;
+						  
 // Spell Feat Generic
 const int SPELL_MANYSHOT2                   = 2246;
 const int SPELL_MANYSHOT3                   = 2248;

@@ -105,4 +105,4 @@ const int CLASS_TYPE_DRAGONSONG_LYRIST          = 114;
 const int CLASS_TYPE_MASTERH                    = 111;
 const int CLASS_TYPE_RED_WIZARD                 = 150;
 const int CLASS_TYPE_WEREWOLF                   = 173;
-
+const int CLASS_TYPE_FAVORED_MILIL              = 252;

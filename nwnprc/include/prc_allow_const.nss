@@ -112,6 +112,7 @@ const string ALLOW_CLASS_RUNESCARRED            = "PRC_Allow_Rune";
 const string ALLOW_CLASS_NIGHTSHADE             = "PRC_AllowNights";
 const string ALLOW_CLASS_ULTIMATE_RANGER        = "PRC_Allow_URanger";
 const string ALLOW_CLASS_DRAGONSONG_LYRIST      = "PRC_AllowDraSong";
+const string ALLOW_CLASS_FAVORED_MILIL          = "PRC_AllowFoM";
 
 const string ALLOW_SHADOWDANCER                 = "X1_AllowShadow";
 const string ALLOW_HARPER                       = "X1_AllowHarper";

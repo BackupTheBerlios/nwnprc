@@ -62,7 +62,7 @@ INCLUDEHAK		= $(OUTPATH)\prc_include.hak
 HAK				= $(OUTPATH)\prc_consortium.hak
 TLK				= $(TLKPATH)\prc_consortium.tlk
 HIF				= "$(OUTPATH)\PRC Pack.hif"
-README			= prc_consortium.htm
+#README			= prc_consortium.htm
 MISCRESOURCES	= $(OUTPATH)\PRCModuleUpdater.exe 
 
 # Version 2.0 haks
@@ -248,7 +248,7 @@ installoverrides: $(OVERRIDEFILES)
 
 # This rule builds the 2.0 RAR, commented out for now
 $(RAR): $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(MISCHAK) $(ERF) \
-	$(OVERRIDEFILES) $(TLK) $(README) $(MISCRESOURCES) $(CRAFT2DASHAK) \
+	$(OVERRIDEFILES) $(TLK) $(MISCRESOURCES) $(CRAFT2DASHAK) \
 	$(EPICSPELLSCRIPTSHAK) $(SPELLSHAK) $(RACEHAK) $(INCLUDEHAK) \
 	$(HIF) $(PSIONICSHAK)
 	@echo $(@F)

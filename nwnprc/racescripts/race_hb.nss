@@ -71,11 +71,13 @@ void main()
     }
     else
     {
-        SetCompositeBonus(oSkin, "SA_Hide_Underground", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+        SetCompositeBonus(oSkin, "SA_Hide_Underground", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }
     
     // forest gnomes bonus to hide in the woods
-    if(GetIsAreaNatural(oArea) == AREA_NATURAL && GetHasFeat(FEAT_SA_HIDEF, oPC) )
+    if(GetHasFeat(FEAT_SA_HIDEF, oPC) &&
+       GetIsAreaNatural(oArea) == AREA_NATURAL && 
+       GetIsAreaAboveGround(oArea) == AREA_ABOVEGROUND)
     {
         SetCompositeBonus(oSkin, "SA_Hide_Forest", 8, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE); 
     }

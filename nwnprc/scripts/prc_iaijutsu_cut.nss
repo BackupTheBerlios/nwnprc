@@ -1,5 +1,5 @@
 #include "nw_i0_spells"
-//#include "prc_aser_inc"
+#include "prc_spell_const"
 #include "inc_item_props"
 
 void main()

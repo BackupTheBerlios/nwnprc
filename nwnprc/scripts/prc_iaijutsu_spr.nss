@@ -5,7 +5,7 @@
 
 #include "NW_I0_GENERIC"
 #include "x0_i0_position"
-#include "prc_aser_inc"
+#include "prc_feat_const"
 #include "inc_combat"
 void main()
 {

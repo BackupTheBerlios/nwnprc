@@ -5,19 +5,32 @@ import java.util.*;
 
 import static prc.autodoc.Main.*;
 
+/**
+ * This class forms an interface for accessing TLK files in the
+ * PRC automated manual generator.
+ */
 public class Data_TLK{
 	private HashMap<Integer, String> mainData = new HashMap<Integer, String>();
 	
-	public Data_TLK(String fileName) throws Exception{
+	
+	/**
+	 * Creates a new Data_TLK on the TLK file specified.
+	 *
+	 * @param filePath The path of the TLK file to be loaded
+	 *
+	 * @throws IllegalArgumentException  fileName does not filePath a TLK file
+	 * @throws TLKReadException          reading the TLK file specified does not succeed
+	 */
+	public Data_TLK(String filePath) throws Exception{
 		// Some paranoia checking for bad parameters
-		if(!fileName.toLowerCase().endsWith("tlk"))
-			throw new IllegalArgumentException("Non-tlk filename passed to Data_TLK: " + fileName);
+		if(!filePath.toLowerCase().endsWith("tlk"))
+			throw new IllegalArgumentException("Non-tlk filename passed to Data_TLK: " + filePath);
 		
-		File baseFile = new File(fileName);
+		File baseFile = new File(filePath);
 		if(!baseFile.exists())
-			throw new IllegalArgumentException("Nonexistent file passed to Data_TLK: " + fileName);
+			throw new IllegalArgumentException("Nonexistent file passed to Data_TLK: " + filePath);
 		if(!baseFile.isFile())
-			throw new IllegalArgumentException("Nonfile passed to Data_TLK: " + fileName);
+			throw new IllegalArgumentException("Nonfile passed to Data_TLK: " + filePath);
 		
 		
 		// Create a RandomAccessFile for reading the TLK. Read-only
@@ -26,7 +39,7 @@ public class Data_TLK{
 		       bytes8 = new byte[8];
 		
 		// Drop the path from the filename
-		fileName = baseFile.getName();
+		String fileName = baseFile.getName();
 		
 		// Tell the user what we are doing
 		if(verbose) System.out.print("Reading TLK file: " + fileName + " ");
@@ -34,12 +47,12 @@ public class Data_TLK{
 		// Check the header
 		reader.readFully(bytes4);
 		if(!new String(bytes4).equals("TLK "))
-			throw new IOException("Wrong file type field in: " + fileName);
+			throw new TLKReadException("Wrong file type field in: " + fileName);
 		
 		// Check the version
 		reader.readFully(bytes4);
 		if(!new String(bytes4).equals("V3.0"))
-			throw new IOException("Wrong TLK version number in: " + fileName);
+			throw new TLKReadException("Wrong TLK version number in: " + fileName);
 		
 		// Skip the language ID
 		reader.skipBytes(4);
@@ -55,8 +68,7 @@ public class Data_TLK{
 			// Read the strings themselves
 			readStrings(reader, stringLengths, stringOffset);
 		}catch(IOException e){
-			System.err.println("Exception while reading TLK file: " + fileName);
-			throw e;
+			throw new TLKReadException("IOException while reading TLK file: " + fileName, e);
 		}
 		
 		if(verbose) System.out.println("- Done");

@@ -188,10 +188,25 @@ public class Data_2da{
 	/**
 	 * Get the 2da entry on the given row and column
 	 *
+	 * @param label the label of the column to get
+	 * @param row   the number of the row to get
+	 *
 	 * @return String represeting the 2da entry
 	 */
 	public String getEntry(String label, int row){
 		return mainData.get(label.toLowerCase()).get(row);
+	}
+	
+	/**
+	 * Get the 2da entry on the given row and column
+	 *
+	 * @param label the label of the column to get
+	 * @param row   the number of the row to get
+	 *
+	 * @return String represeting the 2da entry
+	 */
+	public String getEntry(String label, String row){
+		return this.getEntry(label, Integer.parseInt(row));
 	}
 	
 	/**
@@ -258,17 +273,7 @@ public class Data_2da{
 	 * @param file1  Data_2da containing one of the files to be compared
 	 * @param file1  Data_2da containing the other file to be compared
 	 */
-	private static void doComparison(Data_2da file1, Data_2da file2){
-		// Check lengths
-		int shortCount = 0;
-		if(file1.getEntryCount() != file2.getEntryCount()){
-			System.out.println("Differing line counts.\n" +
-			                   file1.getName() + ": " + file1.getEntryCount() + "\n" +
-			                   file2.getName() + ": " + file2.getEntryCount());
-			
-			shortCount = file1.getEntryCount() > file2.getEntryCount() ? file2.getEntryCount() : file1.getEntryCount();
-		}
-		
+	public static void doComparison(Data_2da file1, Data_2da file2){
 		// Check labels
 		String[] labels1 = file1.getLabels(),
 		         labels2 = file2.getLabels();
@@ -276,12 +281,23 @@ public class Data_2da{
 			System.out.println("Differing amount of row labels\n"+
 			                   file1.getName() + ": " + labels1.length + "\n" +
 			                   file2.getName() + ": " + labels2.length);
-			System.exit(0);
+			return;
 		}
 		for(int i = 0; i < labels1.length; i++){
-			if(!labels1[i].equals(labels2[i]))
+			if(!labels1[i].equals(labels2[i])){
 				System.out.println("Differing labels");
-			System.exit(0);
+				return;
+			}
+		}
+		
+		// Check lengths
+		int shortCount = file1.getEntryCount();
+		if(file1.getEntryCount() != file2.getEntryCount()){
+			System.out.println("Differing line counts.\n" +
+			                   file1.getName() + ": " + file1.getEntryCount() + "\n" +
+			                   file2.getName() + ": " + file2.getEntryCount());
+			
+			shortCount = shortCount > file2.getEntryCount() ? file2.getEntryCount() : shortCount;
 		}
 		
 		// Check elements

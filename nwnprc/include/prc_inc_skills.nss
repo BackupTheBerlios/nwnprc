@@ -24,7 +24,7 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
 {
      object oArea = GetArea(oPC);
      // if jumping is disabled in this place.
-     if( GetLocalInt(oArea, "AreaJump") == FALSE )
+     if( GetLocalInt(oArea, "AreaJumpOff") == TRUE )
      {
           SendMessageToPC(oPC, "Jumping is not allowed in this area.");
           return FALSE;

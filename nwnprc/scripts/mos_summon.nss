@@ -78,6 +78,7 @@ void main()
         sSummon = "prc_mos_allip";
         eSummonB = EffectVisualEffect( VFX_FNF_GAS_EXPLOSION_EVIL );
     }
-   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+   effect eSum = EffectSummonCreature(sSummon, VFX_NONE);
+   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummonB, GetSpellTargetLocation());
    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());
 }

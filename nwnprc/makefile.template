@@ -128,7 +128,8 @@ RACESRCPATH			= $(MAKERACESRCPATH)
 RACEOBJSPATH		= $(MAKERACEOBJSPATH)
 PSIONICSSRCPATH		= $(MAKEPSIONICSSRCPATH)
 PSIONICSOBJSPATH	= $(MAKEPSIONICSOBJSPATH)
-TEMPPATH			= $(MAKETEMPPATH)
+# TEMPPATH			= $(MAKETEMPPATH)
+MISCPATH            = $(MAKEMISCPATH)
 
 # Paths for the various folders in the NWN install directory.
 NWN_ERF			= $(NWN_DIR)\erf
@@ -375,7 +376,10 @@ $(TEXTURESHAK): $(GFX)
 $(MISCHAK): $(OTHERS) 
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $**
+	@"$(ERFCOMPILER)" -c $@ $(MISCPATH)\*.*
+#	Another hak that broke on too many parameters
+#	@"$(ERFCOMPILER)" -c $@ $**
+
 
 
 # Rule to build the 2.0 craft HAK file.

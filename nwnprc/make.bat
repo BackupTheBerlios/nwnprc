@@ -102,6 +102,7 @@ SET MAKERACESRCPATH=racescripts
 SET MAKERACEOBJSPATH=raceobjs
 SET MAKEPSIONICSSRCPATH=psionics
 SET MAKEPSIONICSOBJSPATH=psionicsobjs
+SET MAKEMISCPATH=others
 
 REM before doing the real build build the dependencies for include files.
 tools\nmake -NOLOGO -f makefile.temp MAKEFILE=makefile.temp depends

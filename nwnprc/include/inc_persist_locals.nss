@@ -1,4 +1,4 @@
-#include "inc_item_props"
+
 
 //returns the token inside oPCs hide
 //creates hide and/or token as appropriate
@@ -27,6 +27,8 @@ location GetPersistantLocalLocation(object oPC, string sName);
 // Get oPC's hide container token's local object variable sVarName
 // * Return value on error: OBJECT_INVALID
 object GetPersistantLocalObject(object oPC, string sName);
+
+#include "inc_item_props"
 
 object GetHideToken(object oPC)
 {

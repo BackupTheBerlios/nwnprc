@@ -1,6 +1,5 @@
 // "sdl_array"
 #include "inc_persist_locals"
-#include "inc_array_c"
 
 /////////////////////////////////////
 // Functions

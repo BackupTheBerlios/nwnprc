@@ -135,6 +135,8 @@ void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCos
 // * DeletePRCLocalInts() in prc_inc_function.
 void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC);
 
+#include "inc_persist_locals"
+
 int GetHasItem(object oPC, string sRes)
 {
     object oItem = GetFirstItemInInventory(oPC);
@@ -145,19 +147,6 @@ int GetHasItem(object oPC, string sRes)
     return GetResRef(oItem) == sRes;
 }
 
-/*
-object GetPCSkin(object oPC)
-{
-    object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
-
-    //Added GetHasItem check to prevent creation of extra skins on module entry
-    if(!GetIsObjectValid(oSkin) && !GetHasItem(oPC, "base_prc_skin")){
-        oSkin = CreateItemOnObject("base_prc_skin", oPC);
-        AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
-    }
-    return oSkin;
-}
-*/
 object GetPCSkin(object oPC)
 {
     object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
@@ -226,13 +215,17 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
     {
         case ITEM_PROPERTY_ABILITY_BONUS:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
+            iCurVal -= GetPersistantLocalInt(GetItemPossessor(oItem), "LetoAbility_"+IntToString(iSubType));
             if ((iCurVal + iChange)  > 12)
             {
                 iVal -= iCurVal + iChange - 12;
                 iCurVal = 12;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAbilityBonus(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAbilityBonus(iSubType, iCurVal + iChange), oItem);
+            else if(iCurVal+iChange < 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDecreaseAbility(iSubType, -1*(iCurVal + iChange)), oItem);
             break;
         case ITEM_PROPERTY_AC_BONUS:
             iCurVal = TotalAndRemoveProperty(oItem, iType);

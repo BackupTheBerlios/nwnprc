@@ -12,8 +12,16 @@
 //:://////////////////////////////////////////////
 // fear aura for lich
 
+#include "prc_class_const"
+
 void main()
 {
+    if (GetLevelByClass(CLASS_TYPE_LICH, OBJECT_SELF) < 2)
+    {
+       FloatingTextStringOnCreature("*The Fear Aura Does Not Work Until Level 2*", OBJECT_SELF, FALSE);
+       return;
+    }
+
     // turn off aura if it is on
     if (GetLocalInt(OBJECT_SELF,"LichAuraOn"))
     {

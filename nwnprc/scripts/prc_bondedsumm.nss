@@ -1,4 +1,5 @@
 
+#include "prc_inc_clsfunc"
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
@@ -22,27 +23,12 @@ void ImmunityMisc(object oSkin,int bImmu,string sImmu)
   SetLocalInt(oSkin, sImmu,1);
 }
 
-void RemoveSpeed (object oPC)
-{
-  effect e = GetFirstEffect(oPC);
-  while (GetIsEffectValid(e))
-  {
-    if (GetEffectType(e) == EFFECT_TYPE_MOVEMENT_SPEED_INCREASE && GetEffectCreator(e) == oPC && GetEffectSpellId(e) == -1)
-    {
-       RemoveEffect(oPC, e);
-    }
-    e = GetNextEffect(oPC);
-  }
-}
-         
-
 void Subtype(object oSkin,int iType,object oPC)
 {
-  //handle this seperately
   if (iType==IP_CONST_DAMAGETYPE_ELECTRICAL)
   {
-    RemoveSpeed(oPC);
-    ApplyEffectToObject(DURATION_TYPE_INSTANT,SupernaturalEffect(EffectMovementSpeedIncrease(50)),oPC);
+      ActionCastSpellOnSelf(SPELL_SACREDSPEED);
+      return;
   }
 
   if (GetLocalInt(oSkin, "BondSubType")) return;
@@ -54,7 +40,6 @@ void Subtype(object oSkin,int iType,object oPC)
 
     SetLocalInt(oSkin, "BondSubType",iType);
 }
-
 
 void main()
 {

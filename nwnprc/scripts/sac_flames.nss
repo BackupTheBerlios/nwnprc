@@ -54,19 +54,20 @@ int GetIPDmg(int iDmg)
 void main()
 {
         int nWis = GetAbilityModifier(ABILITY_WISDOM)<1 ? 1 : GetAbilityModifier(ABILITY_WISDOM);
+        int totDamage = nWis+GetLevelByClass(CLASS_TYPE_SACREDFIST,OBJECT_SELF);
+        int iDivDmg = totDamage / 2; // round down
+        int iFlmDmg = totDamage - iDivDmg; // round up
 
-        int maxDamage = (nWis+GetLevelByClass(CLASS_TYPE_SACREDFIST,OBJECT_SELF)+1)/2;
+        if (iDivDmg > 20) iDivDmg = 20;
+        if (iFlmDmg > 20) iFlmDmg = 20;
+        
+        iDivDmg = GetIPDmg(iDivDmg);
+        iFlmDmg = GetIPDmg(iFlmDmg);
 
-        if (maxDamage>20) maxDamage = 20;
-
-        int iDmg = GetIPDmg(maxDamage);
-
-
-
-        effect eDmg = EffectDamageIncrease(iDmg, DAMAGE_TYPE_FIRE);
+        effect eDmg = EffectDamageIncrease(iFlmDmg, DAMAGE_TYPE_FIRE);
+        eDmg = EffectLinkEffects(eDmg,EffectDamageIncrease(iDivDmg,DAMAGE_TYPE_DIVINE));
         eDmg = EffectLinkEffects(eDmg, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
-        eDmg = EffectLinkEffects(eDmg,EffectDamageIncrease(iDmg,DAMAGE_TYPE_DIVINE));
-
+        eDmg = SupernaturalEffect(eDmg);
 
     effect eVFX = EffectVisualEffect(VFX_IMP_HOLY_AID );
 

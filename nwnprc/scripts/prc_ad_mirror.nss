@@ -65,6 +65,8 @@ string sImage = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
 
 effect eImage = EffectCutsceneParalyze();
        eImage = SupernaturalEffect(eImage);
+effect eGhost = EffectCutsceneGhost();
+       eGhost = SupernaturalEffect(eGhost);
 effect eNoSpell = EffectSpellFailure(100);
        eNoSpell = SupernaturalEffect(eNoSpell);
 effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon);
@@ -79,6 +81,7 @@ effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCon, oImage);
+     DelayCommand(3.0f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGhost, oImage));
 
      ChangeToStandardFaction(oImage, STANDARD_FACTION_DEFENDER);
 

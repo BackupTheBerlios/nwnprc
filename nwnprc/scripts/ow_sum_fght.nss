@@ -15,6 +15,26 @@
 // sets how many of a specific orc can be summoned
 const int iNumSummon = 2;
 
+void CleanHenchman(object oImage)
+{     
+     SetLootable(oImage, FALSE);
+     object oItem = GetFirstItemInInventory(oImage);
+     while(GetIsObjectValid(oItem))
+     {
+        SetDroppableFlag(oItem, FALSE);
+        SetItemCursedFlag(oItem, TRUE);
+        oItem = GetNextItemInInventory(oImage);
+     }
+     int i;
+     for(i=0;i<14;i++)//equipment
+     {
+        oItem = GetItemInSlot(i, oImage);
+        SetDroppableFlag(oItem, FALSE);
+        SetItemCursedFlag(oItem, TRUE);
+     }
+     TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
+}
+
 int GetCanSummonOrc(object oPC, string sCreatureResRef)
 {
      int bCanSummon;
@@ -72,6 +92,7 @@ void main()
          if( GetCanSummonOrc(oPC, sSummon) )
          {
               oCreature = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
+              DelayCommand(1.0f, CleanHenchman(oCreature));
               AddHenchman(OBJECT_SELF, oCreature);
               ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
          }

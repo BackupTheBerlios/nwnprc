@@ -210,7 +210,7 @@ void UnarmedFists(object oCreature)
         bDragClaw =  GetHasFeat(FEAT_CLAWENH2,oCreature)   ? 2: bDragClaw;
         bDragClaw =  GetHasFeat(FEAT_CLAWENH3,oCreature)   ? 3: bDragClaw;    
               
-    int iBrawlEnh = iBrawler = iBrawler / 6;
+    int iBrawlEnh = iBrawler / 6;
          
     int iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_4,oCreature) ? 1 : 0 ;
         iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_5,oCreature) ? 2 : iEpicKi ;

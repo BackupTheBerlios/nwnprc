@@ -16,6 +16,8 @@
 #include "soul_inc"
 #include "inc_npc"
 
+const int PACKAGE_ELEMENTAL_STR = PACKAGE_ELEMENTAL ;
+const int PACKAGE_ELEMENTAL_DEX = PACKAGE_FEY ;
 
 
 void ElementalFamiliar()
@@ -47,7 +49,7 @@ void ElementalFamiliar()
            iSize = GetHasFeat(FEAT_ELE_COMPANION_GRE, OBJECT_SELF) ? "GRE"  : iSize ;
            iSize = GetHasFeat(FEAT_ELE_COMPANION_ELD, OBJECT_SELF) ? "ELD"  : iSize ;
 
-    string sRef = "HEN_"+iType+"_"+iSize;
+    string sRef = "HEN_"+iType+"_"+iSize+"2";
 
     object oEle = CreateLocalNPC(OBJECT_SELF,ASSOCIATE_TYPE_FAMILIAR,sRef,locSummon,1);
     effect eDomi = SupernaturalEffect(EffectCutsceneDominated());
@@ -59,10 +61,24 @@ void ElementalFamiliar()
     object oCreR=GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oEle);
     object oHide=GetItemInSlot(INVENTORY_SLOT_CARMOUR,oEle);
 
+
+  int iPack ,iSave ;
+
+    int iLvl;
+    int iHD = GetHitDice(OBJECT_SELF);
+
+   
     if (iType=="FIRE")
     {
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageImmunity(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEIMMUNITY_100_PERCENT),oHide);
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageVulnerability(IP_CONST_DAMAGETYPE_COLD,IP_CONST_DAMAGEVULNERABILITY_50_PERCENT),oHide);
+
+        iPack = PACKAGE_ELEMENTAL_DEX ;
+        iSave =  IP_CONST_SAVEBASETYPE_REFLEX ;
+
+        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_DEX,iBonus),oHide);
+        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_STR,iBonus*2/3),oHide);
+        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_CON,iBonus*2/3),oHide);
 
         if (iSize=="MED")
         {
@@ -101,6 +117,14 @@ void ElementalFamiliar()
     }
     else if (iType=="WATER")
     {
+    	
+       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_STR,iBonus*2/3+1),oHide);
+       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_DEX,iBonus*2/3),oHide);
+       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_CON,iBonus*2/3),oHide);
+
+       iPack = PACKAGE_ELEMENTAL_STR ;
+       iSave =  IP_CONST_SAVEBASETYPE_FORTITUDE ;
+
          if (iSize=="MED")
         {
            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,3),oHide);
@@ -129,6 +153,13 @@ void ElementalFamiliar()
     }
  else if (iType=="AIR")
     {
+       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_DEX,iBonus),oHide);
+       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_STR,iBonus*2/3),oHide);
+       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_CON,iBonus*2/3),oHide);
+
+        iPack = PACKAGE_ELEMENTAL_DEX ;
+        iSave =  IP_CONST_SAVEBASETYPE_REFLEX ;
+
 
         if (iSize=="MED")
         {
@@ -158,6 +189,12 @@ void ElementalFamiliar()
     }
     else if (iType=="EARTH")
     {
+       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_STR,iBonus),oHide);
+       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_CON,iBonus*2/3),oHide);
+
+        iPack = PACKAGE_ELEMENTAL_STR ;
+        iSave =  IP_CONST_SAVEBASETYPE_FORTITUDE ;
+
 
         if (iSize=="MED")
         {
@@ -186,18 +223,51 @@ void ElementalFamiliar()
 
     }
 
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oHide);
+
     int Arcanlvl = GetCasterLvl(TYPE_ARCANE);
 
+
+   if (Arcanlvl>26)
+       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicSpecCreature),oHide);
+
+    if (Arcanlvl>21)
+       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicFocCreature),oHide);
+  	    
     if (Arcanlvl>11)
     {
+      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapSpecCreature),oHide);
       ApplyEffectToObject(DURATION_TYPE_INSTANT,SupernaturalEffect(EffectSpellResistanceIncrease(Arcanlvl+5)),oEle);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_BarbEndurance),oHide);
+      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_ImpCritCreature),oHide);
     }
     else  if (Arcanlvl>8)
     {
+      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_ImpCritCreature),oHide);
       ApplyEffectToObject(DURATION_TYPE_INSTANT,SupernaturalEffect(EffectSpellResistanceIncrease(Arcanlvl+5)),oEle);
     }
 
+
+   int i;
+   for (i = 1; i < iHD; i++)
+     LevelUpHenchman( oEle,CLASS_TYPE_ELEMENTAL,TRUE,iPack);
+
+   object oCweap = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oEle);
+     if  (!GetIsObjectValid(oCweap))
+        oCweap = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oEle);
+     if  (!GetIsObjectValid(oCweap))
+        oCweap = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oEle);
+
+
+
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBonus),GetItemInSlot(INVENTORY_SLOT_NECK,oEle));
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBonus),oHide);
+
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_WIS,iBonus),oHide);
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_WIS,iBonus),oHide);
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusSavingThrow(iSave,iBonus),oHide);
+
+//  AddHenchman(OBJECT_SELF,oEle);
 }
 
 void main()

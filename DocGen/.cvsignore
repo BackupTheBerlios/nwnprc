@@ -3,3 +3,6 @@ tlk
 .cvsignore
 manual
 errorlog
+CodeGen.class
+CodeGen$Script.class
+twoDAcomp.class

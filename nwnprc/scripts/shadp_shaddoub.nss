@@ -2,6 +2,26 @@
 #include "prc_spell_const"
 #include "x2_inc_spellhook"
 
+void CleanCopy(object oImage)
+{     
+     SetLootable(oImage, FALSE);
+     object oItem = GetFirstItemInInventory(oImage);
+     while(GetIsObjectValid(oItem))
+     {
+        SetDroppableFlag(oItem, FALSE);
+        SetItemCursedFlag(oItem, TRUE);
+        oItem = GetNextItemInInventory(oImage);
+     }
+     int i;
+     for(i=0;i<14;i++)//equipment
+     {
+        oItem = GetItemInSlot(i, oImage);
+        SetDroppableFlag(oItem, FALSE);
+        SetItemCursedFlag(oItem, TRUE);
+     }
+     TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
+}
+
 void main()
 {
 
@@ -24,6 +44,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     int nDuration = GetLevelByTypeArcane();
 
     object oCopy = CopyObject(OBJECT_SELF, GetSpellTargetLocation(), OBJECT_INVALID, "Clone"+GetName(OBJECT_SELF));
+
+    DelayCommand(1.0, CleanCopy(oCopy));
 
     effect eDomi = SupernaturalEffect(EffectCutsceneDominated());
     DelayCommand(0.1f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDomi, oCopy));

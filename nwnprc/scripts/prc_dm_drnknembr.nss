@@ -1,6 +1,7 @@
 #include "prc_inc_clsfunc"
 #include "prc_class_const"
 #include "prc_feat_const"
+#include "x0_i0_spells"
 
 void main()
 {

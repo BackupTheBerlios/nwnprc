@@ -3,7 +3,6 @@
 #include "prc_class_const"
 #include "prc_spell_const"
 #include "inc_item_props"
-#include "soul_inc"
 
 void Discorp(object oPC,int iEquip)
 {

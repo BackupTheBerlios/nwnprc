@@ -1,7 +1,6 @@
 #include "inc_item_props"
 #include "nw_i0_plot"
 #include "prc_inc_function"
-#include "soul_inc"
 #include "inc_epicspells"
 
 void RestMeUp(object oPC)

@@ -1,7 +1,5 @@
-
-#include "soul_inc"
 #include "inc_npc"
-
+#include "prc_class_const"
 
 void AnimalCompanion()
 {

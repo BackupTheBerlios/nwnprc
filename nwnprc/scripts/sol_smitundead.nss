@@ -1,9 +1,7 @@
 #include "inc_combat"
 #include "x2_inc_itemprop"
-#include "X0_I0_SPELLS"
-
+#include "prc_inc_clsfunc"
 #include "inc_combat2"
-#include "Soul_inc"
 
 
 void NoSmite(object oTarget ,string sText ,int iEvil)

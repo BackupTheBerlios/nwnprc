@@ -1,7 +1,6 @@
 
 #include "prc_inc_function"
 #include "inc_item_props"
-#include "soul_inc"
 
 void main()
 {

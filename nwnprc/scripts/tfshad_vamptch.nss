@@ -26,12 +26,9 @@ Georg 2003-09-11
 */
 
 //:: modified by mr_bumpkin  Dec 4, 2003
+
 #include "prc_alterations"
-#include "soul_inc"
-
 #include "x0_I0_SPELLS"
-
-
 #include "x2_inc_spellhook"
 
 void main()

@@ -1,5 +1,4 @@
 #include "nw_i0_spells"
-#include "soul_inc"
 #include "prc_inc_unarmed"
 
 void SacredAC(object oPC,object oSkin,int bSFAC ,int iShield)

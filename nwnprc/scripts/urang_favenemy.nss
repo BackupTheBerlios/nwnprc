@@ -1,5 +1,4 @@
 #include "prc_class_const"
-#include "soul_inc"
 #include "inc_combat"
 #include "prc_feat_const"
 #include "nw_i0_spells"

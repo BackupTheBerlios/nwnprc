@@ -11,8 +11,11 @@
 //:: Created On: Sept 27, 2001
 //:://////////////////////////////////////////////
 
-#include "soul_inc"
 #include "inc_npc"
+#include "prc_feat_const"
+#include "prc_ipfeat_const"
+#include "prc_class_const"
+#include "prc_inc_spells"
 
 const int PACKAGE_ELEMENTAL_STR = PACKAGE_ELEMENTAL ;
 const int PACKAGE_ELEMENTAL_DEX = PACKAGE_FEY ;

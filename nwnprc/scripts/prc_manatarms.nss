@@ -1,7 +1,7 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "inc_combat"
-#include "soul_inc"
+#include "prc_inc_clsfunc"
 
 void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
 {

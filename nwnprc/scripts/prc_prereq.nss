@@ -10,7 +10,6 @@
 
 #include "prc_inc_spells"
 #include "prc_inc_sneak"
-#include "soul_inc"
 
 int GetBardSpellLevel(object oPC)
 {

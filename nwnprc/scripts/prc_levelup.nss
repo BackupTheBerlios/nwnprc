@@ -15,7 +15,7 @@
 
 #include "x2_inc_switches"
 #include "prc_inc_function"
-#include "soul_inc"
+#include "inc_item_props"
 
 void PrcFeats(object oPC)
 {

@@ -1,7 +1,7 @@
 #include "inc_item_props"
 #include "nw_i0_plot"
 #include "prc_inc_function"
-#include "soul_inc"
+#include "prc_ipfeat_const"
 #include "inc_epicspells"
 
 void PrcFeats(object oPC)

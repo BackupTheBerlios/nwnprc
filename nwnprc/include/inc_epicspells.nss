@@ -30,7 +30,7 @@ const int TAKE_TEN_RULE = FALSE;
 //      CHARISMA for sorcerers) instead of intelligence as a modifier on their
 //      Spellcraft checks for casting and researching epic spells, as well as
 //      their total Lore skill level for determining spell slots per day.
-const int PRIMARY_ABILITY_MODIFIER_RULE = FALSE;
+const int PRIMARY_ABILITY_MODIFIER_RULE = TRUE;
 
 // Enable BACKLASH damage on spells? TRUE for yes, FALSE for no.
 const int BACKLASH_DAMAGE = TRUE;
@@ -1388,6 +1388,12 @@ int GetEpicSpellSlotLimit(object oPC)
 int GetSpellSlots(object oPC)
 {
     int nSlots = GetLocalInt(oPC, "nEpicSpellSlots");
+    if(!GetIsPC(oPC) && !GetLocalInt(oPC, "EpicSpellSlotsReplenished"))
+    {
+        ReplenishSlots(oPC);
+        SetLocalInt(oPC, "EpicSpellSlotsReplenished", TRUE);
+        nSlots = GetLocalInt(oPC, "nEpicSpellSlots");
+    }
     return nSlots;
 }
 
@@ -1454,7 +1460,10 @@ int GetHasEnoughExperienceToResearch(object oPC, int nSpellDC)
 {
     int nHitDice = GetHitDice(oPC);
     int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
-    if (GetXP(oPC) >= (nHitDiceXP + (nSpellDC * GOLD_MULTIPLIER / XP_FRACTION)))
+    int nXP = GetXP(oPC);
+    if (!GetIsPC(oPC))
+        nXP = GetLocalInt(oPC, "NPC_XP");
+    if (nXP >= (nHitDiceXP + (nSpellDC * GOLD_MULTIPLIER / XP_FRACTION)))
         return TRUE;
     return FALSE;
 }
@@ -1500,7 +1509,10 @@ void TakeResourcesFromPC(object oPC, int nSpellDC, int nSuccess)
     else
     {
         TakeGoldFromCreature(nSpellDC * GOLD_MULTIPLIER, oPC, TRUE);
-        SetXP(oPC, GetXP(oPC) - nSpellDC * GOLD_MULTIPLIER / XP_FRACTION);
+        if(GetIsPC(oPC))
+            SetXP(oPC, GetXP(oPC) - nSpellDC * GOLD_MULTIPLIER / XP_FRACTION);
+        else
+            SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")-nSpellDC * GOLD_MULTIPLIER / XP_FRACTION);
     }
 }
 
@@ -1549,13 +1561,13 @@ int GetCanCastSpell(object oPC, int nSpellDC, string sChool, int nSpellXP)
 
 int GetHasXPToSpend(object oPC, int nCost)
 {
-    //NPCs dont have XP
-    if(!GetIsPC(oPC))
-        return TRUE;
     // To be TRUE, make sure that oPC wouldn't lose a level by spending nCost.
     int nHitDice = GetHitDice(oPC);
     int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
-    if (GetXP(oPC) >= (nHitDiceXP + nCost))
+    int nXP = GetXP(oPC);
+    if(!GetIsPC(oPC))
+        nXP = GetLocalInt(oPC, "NPC_XP");
+    if (nXP >= (nHitDiceXP + nCost))
         return TRUE;
     return FALSE;
 }
@@ -1563,7 +1575,12 @@ int GetHasXPToSpend(object oPC, int nCost)
 void SpendXP(object oPC, int nCost)
 {
     if (nCost > 0)
-        SetXP(oPC, GetXP(oPC) - nCost);
+    {
+        if(GetIsPC(oPC))
+            SetXP(oPC, GetXP(oPC) - nCost);
+        else 
+            SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")-nCost);
+    }
 }
 
 void EnsurePCHasSkin(object oPC)

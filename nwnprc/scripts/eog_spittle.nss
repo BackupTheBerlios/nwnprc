@@ -27,6 +27,8 @@ void main()
      object oCaster = OBJECT_SELF;
      object oTarget = GetSpellTargetObject();
      int iTargetRace = MyPRCGetRacialType(oTarget);
+     int iBeholder = iTargetRace == RACIAL_TYPE_ABERRATION && GetHasSpell(710, oTarget) && GetHasSpell(711, oTarget) && GetHasSpell(712, oTarget);
+     
      
      ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_ACID_S), oTarget);   
      
@@ -35,8 +37,8 @@ void main()
         iTargetRace != RACIAL_TYPE_CONSTRUCT && 
         iTargetRace != RACIAL_TYPE_UNDEAD &&
         iTargetRace != RACIAL_TYPE_ELEMENTAL &&
-        iTargetRace != RACIAL_TYPE_VERMIN ||           // beholders have too many eyes.
-        (iTargetRace != RACIAL_TYPE_ABERRATION && GetHasSpell(710, oTarget) || GetHasSpell(711, oTarget) || GetHasSpell(712, oTarget) ) )
+        iTargetRace != RACIAL_TYPE_VERMIN &&
+        !iBeholder)
      {
            int iHitEnemy = TouchAttackRanged(oTarget, TRUE);
            

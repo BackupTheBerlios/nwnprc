@@ -8,7 +8,7 @@ void main()
 {
     //Declare major variables
     float fDist;
-    int nDC = 17 + GetLevelByClass(CLASS_TYPE_OOZEMASTER);
+    int nDC = 10 + GetLevelByClass(CLASS_TYPE_OOZEMASTER);
     int nDamage;
     int nDuration = GetLevelByClass(CLASS_TYPE_OOZEMASTER);
     object oTarget;

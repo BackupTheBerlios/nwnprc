@@ -84,6 +84,7 @@ effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon);
      DelayCommand(3.0f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGhost, oImage));
 
      ChangeToStandardFaction(oImage, STANDARD_FACTION_DEFENDER);
+     SetIsTemporaryFriend(OBJECT_SELF, oImage, FALSE);
 
      DestroyObject(oSkin, 0.2);
      DestroyObject(oImage, (iLevel * 60.0)); // they dissapear after a minute per level

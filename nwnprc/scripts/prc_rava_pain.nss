@@ -17,47 +17,29 @@
 #include "NW_I0_SPELLS"
 #include "X2_inc_switches"
 #include "prc_class_const"
-#include "inc_combat"
+#include "prc_inc_combat"
+
 void main()
 {
     //Declare major variables
 
     int ravaLevel = GetLevelByClass(CLASS_TYPE_RAVAGER,OBJECT_SELF);
-    int iStrMod = GetAbilityModifier(ABILITY_STRENGTH,OBJECT_SELF);
     int unarmDamage = d8(1) + ravaLevel;
     int armedDamage = d4(1) + ravaLevel;
+    int iDam;
 
-    unarmDamage = unarmDamage;
-    armedDamage = armedDamage;
-
-    effect eDam1;
-    effect eDam2;
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-    eDam1 = EffectDamage(unarmDamage, DAMAGE_TYPE_NEGATIVE);
-    eDam2 = EffectDamage(armedDamage, DAMAGE_TYPE_NEGATIVE);
+
+    string sSuccess = "*Pain Touch Hit*";
+    string sMiss = "*Pain Touch Miss*";
+
     object oTarget = GetSpellTargetObject();
-    object oItem1 = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF);
-    object oItem2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,OBJECT_SELF);
-    int iDamage = GetMeleeWeaponDamage(OBJECT_SELF,oItem1,TRUE,0);
-    iDamage + iStrMod;
 
-    //Melee Attack
-    if(TouchAttackMelee(oTarget,TRUE)>0)
-    {
-             //If left hand empty, the touch attack hand is empty
-        if(!GetIsObjectValid(oItem2))
-        {
-          ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam1, oTarget);
-          ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-        }
-        else
-        {
-          ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam2, oTarget);
-          ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-          effect eDam = EffectDamage(iDamage,DAMAGE_TYPE_SLASHING,DAMAGE_POWER_NORMAL);
-          ApplyEffectToObject(DURATION_TYPE_INSTANT,eDam,oTarget);
+    if (GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF)))
+        iDam = armedDamage;
+    else
+        iDam = unarmDamage;
 
-        }
-     }
+    PerformAttackRound(oTarget, OBJECT_SELF, eVis, 0.0, 0, iDam, DAMAGE_TYPE_NEGATIVE, FALSE, sSuccess, sMiss);
 }
 

@@ -19,7 +19,9 @@ void main()
     //Declare main variables.
     object oPC = OBJECT_SELF;
     object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    int iDur = (GetLevelByClass(CLASS_TYPE_SHINING_BLADE,oPC) + GetAbilityModifier(ABILITY_CHARISMA));
+    int iCha = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+    if (iCha < 0) iCha = 0;
+    int iDur = (GetLevelByClass(CLASS_TYPE_SHINING_BLADE,oPC)) + iCha;
 
 	if (GetLocalInt(oPC, "SBWeap") == TRUE) return;
 
@@ -27,7 +29,8 @@ void main()
 	    {
 	    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_ELECTRICAL, DAMAGE_BONUS_1d6), oWeapon, RoundsToSeconds(iDur));
 	    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, IP_CONST_DAMAGETYPE_DIVINE, DAMAGE_BONUS_2d6), oWeapon, RoundsToSeconds(iDur));
-	    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyAttackBonus(20), oWeapon, RoundsToSeconds(iDur));
+	    //AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyAttackBonus(20), oWeapon, RoundsToSeconds(iDur));
+	    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectAttackIncrease(20)), oPC, RoundsToSeconds(iDur));
 	    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyLight(IP_CONST_LIGHTBRIGHTNESS_BRIGHT, IP_CONST_LIGHTCOLOR_WHITE), oWeapon, RoundsToSeconds(iDur));
 	    SetLocalInt(oPC, "SBWeap", TRUE);
 	    DelayCommand(RoundsToSeconds(iDur), DeleteLocalInt(oPC, "SBWeap"));

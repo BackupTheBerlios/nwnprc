@@ -36,6 +36,16 @@
 #include "prc_ipfeat_const"
 #include "prc_class_const"
 
+int GetIsSlashingWeapon(object oItem)
+{
+    int iWeapType = StringToInt(Get2DAString("baseitems", "WeaponType", GetBaseItemType(oItem)));
+    
+    if (iWeapType == 3 || iWeapType == 4) // slashing or slashing & piercing
+        return TRUE;
+    else
+        return FALSE;
+}
+
 void main()
 {
 
@@ -50,22 +60,11 @@ void main()
        return;
   }
   int nType = GetBaseItemType(oTarget);
-  if (!IPGetIsMeleeWeapon(oTarget) &&
-       nType != BASE_ITEM_SHURIKEN &&
-       nType != BASE_ITEM_DART &&
-       nType != BASE_ITEM_THROWINGAXE)
+  if (!GetIsSlashingWeapon(oTarget))
   {
-       FloatingTextStrRefOnCreature(83359,oPC);         //"Invalid target "
+       FloatingTextStringOnCreature("You may only target slashing melee weapons.", oPC);         //"Invalid target "
        return;
   }
-
-  if (IPGetIsBludgeoningWeapon(oTarget))
-  {
-       FloatingTextStrRefOnCreature(83367,oPC);         //"Weapon does not do slashing or piercing damage "
-       return;
-  }
-
-
 
     float nDuration = HoursToSeconds(2);
 

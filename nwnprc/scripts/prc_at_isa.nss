@@ -43,11 +43,11 @@ void main()
      if(GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) ) 
      {
           iSneakDamage = 0;
-          sSuccess = "*Enemy Immune to Impromtu Sneak Attack*";
+          sSuccess = "*Enemy Immune to Impromptu Sneak Attack*";
      }
      
      // if enemy is more than 30 feet away
-     if(GetDistanceBetween(oTarget, oPC) <= FeetToMeters(30.0))
+     if(GetDistanceBetween(oTarget, oPC) >= 30.0/3.2808399)
      {
           iSneakDamage = 0;
           sSuccess = "*Enemy is to far away for Impromptu Sneak Attack*";          

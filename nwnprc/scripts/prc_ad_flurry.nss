@@ -86,6 +86,7 @@ effect eNoSpell = EffectSpellFailure(100);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage);
 
      ChangeToStandardFaction(oImage, STANDARD_FACTION_DEFENDER);
+     SetIsTemporaryFriend(OBJECT_SELF, oImage, FALSE);
 
      DestroyObject(oImage, iLevel * 60.0); // they dissapear after one minute per level.
     }

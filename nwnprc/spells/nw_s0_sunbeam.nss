@@ -53,20 +53,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eBlind = EffectBlindness();
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     effect eLink = EffectLinkEffects(eBlind, eDur);
-
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-
-    int nCasterLevel= CasterLvl;
     int nDamage;
     int nOrgDam;
     int nMax;
     float fDelay;
     int nBlindLength = 3;
-    //Limit caster level
-    if (nCasterLevel > 20)
-    {
-        nCasterLevel = 20;
-    }
+
     
     int nPenetr = CasterLvl + SPGetPenetr();
     
@@ -75,6 +68,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetSpellTargetLocation());
     while(GetIsObjectValid(oTarget))
     {
+
+        int nCasterLevel= CasterLvl;
+        //Limit caster level
+        if (nCasterLevel > 20)
+        {
+            nCasterLevel = 20;
+        }    
+    
         // Make a faction check
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {

@@ -1,30 +1,29 @@
 2DA V2.0
 
-     FeatLabel          FeatIndex List GrantedOnLevel OnMenu 
-0    ArmProfMed         4         3    1              0      
-1    ArmProfLgt         3         3    1              0      
-2    WeapProfSim        46        3    1              0      
-3    WeapProfMar        45        3    1              0      
-4    SpecBow2           3181      3    1              0      
-5    SpecBow3           3182      3    5              0      
-6    SpecBow4           3183      3    10             0      
-7    SpecBow5           3184      3    15             0      
-8    SpecBow6           3185      3    20             0      
-9    Extrashot          3180      3    2              0      
-10   Pinpoint_Accuracy  3351      3    4              1      
-11   KillingShot        3352      1    -1             0      
-12   PerfectShot        3353      1    -1             0      
-13   RangeDisarm        3178      3    18             1      
-14   Callshot           5         1    -1             1      
-15   WeapSpecialization 3173      3    8              0      
-16   ImpCritLongBow     63        1    -1             0      
-17   ImpCritShortBow    64        1    -1             0      
-18   Manyshot           3306      1    -1             1      
-19   ZenArchery         412       1    -1             0      
-20   RapidShot          30        1    -1             0 
-21   PBShot             27        3     1             0
-22   WeapFocShortBow    102       1    -1             0
-23   WeapFocLongBow     101       1    -1             0
-24   PerfectShot        3354      1    -1             0
-        
-     
+    FeatLabel          FeatIndex List GrantedOnLevel OnMenu 
+0   ArmProfMed         4         3    1              0      
+1   ArmProfLgt         3         3    1              0      
+2   WeapProfSim        46        3    1              0      
+3   WeapProfMar        45        3    1              0      
+4   SpecBow2           3181      3    1              0      
+5   SpecBow3           3182      3    5              0      
+6   SpecBow4           3183      3    10             0      
+7   SpecBow5           3184      3    15             0      
+8   SpecBow6           3185      3    20             0      
+9   Extrashot          3180      3    2              0      
+10  Pinpoint_Accuracy  3351      3    4              1      
+11  KillingShot        3352      1    -1             0      
+12  PerfectShot        3353      1    -1             0      
+13  RangeDisarm        3178      3    18             1      
+14  Callshot           5         1    -1             1      
+15  WeapSpecialization 3173      3    8              0      
+16  ImpCritLongBow     63        1    -1             0      
+17  ImpCritShortBow    64        1    -1             0      
+18  Manyshot           3306      1    -1             1      
+19  ZenArchery         412       1    -1             0      
+20  RapidShot          30        1    -1             0      
+21  PBShot             27        3    1              0      
+22  WeapFocShortBow    102       1    -1             0      
+23  WeapFocLongBow     101       1    -1             0      
+24  PerfectShot        3354      1    -1             0      
+25  FEAT_IMP_MANYSHOT  3350      1    -1             1      

@@ -83,6 +83,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE,oPC) > 0)       ExecuteScript("prc_minstrel", oPC);
     if(GetLevelByClass(CLASS_TYPE_NIGHTSHADE,oPC) > 0)          ExecuteScript("prc_nightshade", oPC);
     if(GetLevelByClass(CLASS_TYPE_RUNESCARRED,oPC) > 0)         ExecuteScript("prc_runescarred", oPC);
+    if(GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0)     ExecuteScript("prc_uranger", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                        ExecuteScript("prc_vows", oPC);

@@ -160,9 +160,9 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
 
      if ( iDmgGlove!= -1 )
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING,iDmgGlove),oItem);
-     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh+iKi),oItem);
+//     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh+iKi),oItem);
      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oItem);
-     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackPenalty(Enh+iKi),oItem);
+//     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackPenalty(Enh+iKi),oItem);
 
      if (GetHasFeat(FEAT_INIDR_STUNSTRIKE,oPC) && !GetLocalInt(oItem,"IniStunStrk"))
      {
@@ -181,8 +181,8 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
 
       if ( iDmgGlove!= -1 )
        RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_SLASHING,GetLocalInt(oItem, "IniClaw"));
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
-      RemoveSpecificProperty(oItem,ITEM_PROPERTY_ENHANCEMENT_BONUS,-1,GetLocalInt(oItem, "IniEnh"));
+//      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
+//      RemoveSpecificProperty(oItem,ITEM_PROPERTY_ENHANCEMENT_BONUS,-1,GetLocalInt(oItem, "IniEnh"));
       RemoveSpecificProperty(oItem,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,IP_CONST_DAMAGETYPE_SLASHING,-1);
       DeleteLocalInt(oItem,"IniClaw");
       DeleteLocalInt(oItem,"IniEnh");
@@ -203,17 +203,17 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
        if ( GetLocalInt(oItem,"IniClaw"))
        {
          RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_SLASHING,GetLocalInt(oItem, "IniClaw"));
-         RemoveSpecificProperty(oItem,ITEM_PROPERTY_ENHANCEMENT_BONUS,-1,GetLocalInt(oItem, "IniEnh"));
+//         RemoveSpecificProperty(oItem,ITEM_PROPERTY_ENHANCEMENT_BONUS,-1,GetLocalInt(oItem, "IniEnh"));
          RemoveSpecificProperty(oItem,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,IP_CONST_DAMAGETYPE_SLASHING,-1);
-         RemoveSpecificProperty(oItem,ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
+//         RemoveSpecificProperty(oItem,ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
 
        }
 
         if ( iDmgGlove!= -1 )
             AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING,iDmgGlove),oItem);
-         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh+iKi),oItem);
+//         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh+iKi),oItem);
          AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oItem);
-         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackPenalty(Enh+iKi),oItem);
+//         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackPenalty(Enh+iKi),oItem);
 
         if (GetHasFeat(FEAT_INIDR_STUNSTRIKE,oPC) && !GetLocalInt(oItem,"IniStunStrk"))
         {

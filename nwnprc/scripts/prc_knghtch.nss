@@ -50,6 +50,8 @@ void main()
         iAttBonus = GetHasFeat(DEMONSLAYING_3, oPC) ? 3 : iAttBonus;
         iAttBonus = GetHasFeat(DEMONSLAYING_4, oPC) ? 4 : iAttBonus;
 
+        iAttBonus += GetItemHolyAvengerBonus(oWeap); // Hey, Knights of the Chalice want to use Holy Avengers too!
+
     if(iDivBonus > 0)
         KnightDaemonslayingDamage(oPC, oWeap, iDivBonus, IP_CONST_DAMAGETYPE_DIVINE, "DSlayBonusDiv");
     if(iPosBonus > 0)

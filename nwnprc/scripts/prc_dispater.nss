@@ -30,53 +30,35 @@ void Device_Lore(object oPC ,object oSkin ,int iLevel)
     SetCompositeBonus(oSkin, "DeviceDisa", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_DISABLE_TRAP);
 }
 
-///Iron Power Bonus to Attack and Damage /////////
-void Iron_Power(object oPC, object oWeap, int iIronPower)
+void IronPower(object oPC, object oWeap)
 {
+   int iBonus = 0;
 
-    int iEnhance = GetWeaponEnhancement(oWeap);
-    //int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
+   if (IsItemMetal(oWeap) == 2)
+   {
+      if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 4)
+         iBonus = 1;
 
-    iIronPower = iIronPower + iEnhance;
+      if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 8)
+         iBonus = 2;
 
-    string irp = IntToString(iIronPower);
-    SendMessageToPC(GetFirstPC(), "Attack Bonus:" + irp);
-
-
-
-        if(GetLocalInt(oWeap, "IPowerBonus") != iIronPower)
-        {
-            RemoveIronPower(oWeap);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(iIronPower), oWeap);
-           // AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PHYSICAL,iHitBonus), oWeap);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyKeen(), oWeap);
-            SetLocalInt(oWeap, "IPowerBonus", iIronPower);
-        }
-
+      if ((GetLocalInt(oWeap, "DispIronPowerA") != iBonus) && (iBonus))
+      {
+         SetCompositeBonus(oWeap, "DispIronPowerA", iBonus, ITEM_PROPERTY_ATTACK_BONUS);
+         SetCompositeBonus(oWeap, "DispIronPowerD", iBonus, ITEM_PROPERTY_DAMAGE_BONUS);
+         AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyKeen(), oWeap, 99999.0);
+      }
+   }
 }
 
-void Iron_Power_2(object oPC, object oWeap, int iIronPower)
+void RemoveIronPower(object oPC, object oWeap)
 {
-
-    int iEnhance = GetWeaponEnhancement(oWeap);
-    //int iAB = GetWeaponAtkBonusIP(oWeap,oPC);
-
-    iIronPower = iIronPower + iEnhance;
-
-    string irp = IntToString(iIronPower);
-    SendMessageToPC(GetFirstPC(), "Attack Bonus:" + irp);
-
-
-
-        if(GetLocalInt(oWeap, "IPowerBonus") != iIronPower)
-        {
-            RemoveIronPower(oWeap);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(iIronPower), oWeap);
-           // AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PHYSICAL,iHitBonus), oWeap);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyKeen(), oWeap);
-            SetLocalInt(oWeap, "IPowerBonus", iIronPower);
-        }
-
+      if (GetLocalInt(oWeap, "DispIronPowerA"))
+      {
+         SetCompositeBonus(oWeap, "DispIronPowerA", 0, ITEM_PROPERTY_ATTACK_BONUS);
+         SetCompositeBonus(oWeap, "DispIronPowerD", 0, ITEM_PROPERTY_DAMAGE_BONUS);
+         RemoveSpecificProperty(oWeap, ITEM_PROPERTY_KEEN, -1, -1, 1, "", -1, DURATION_TYPE_TEMPORARY);
+      }  
 }
 
 void main()
@@ -90,19 +72,15 @@ void main()
         //int bIrnPwr = GetHasFeat(FEAT_IRON_POWER_1,oPC) ? 1 : 0;
         //    bIrnPwr = GetHasFeat(FEAT_IRON_POWER_2,oPC) ? 1 : bIrnPwr;
 
-    if (IsItemMetal(oWeap) == 2)
-    {
-        if (GetLevelByClass(CLASS_TYPE_DISPATER,oPC) >= 4)
-        {
-        Iron_Power(oPC, oWeap, 1);
-        }
+   if (GetLocalInt(oPC,"ONEQUIP") == 2)
+   {
+      IronPower(oPC, GetPCItemLastEquipped());
+   }
 
-        if (GetLevelByClass(CLASS_TYPE_DISPATER,oPC) >= 8)
-        {
-        Iron_Power(oPC, oWeap, 0);
-        Iron_Power_2(oPC, oWeap, 2);
-        }
-    }
+   if (GetLocalInt(oPC,"ONEQUIP") == 1)
+   {
+      RemoveIronPower(oPC, GetPCItemLastUnequipped());
+   }
 
         if(bDivLor > 0) Device_Lore(oPC,oSkin,bDivLor);
 

@@ -13,11 +13,11 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-    object oTarget = OBJECT_SELF;
+    object oTarget = OBJECT_SELF; 
     effect eDam = EffectDamage(d12(2), DAMAGE_TYPE_ACID);
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 }

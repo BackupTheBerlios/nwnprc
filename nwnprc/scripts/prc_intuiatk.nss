@@ -41,64 +41,33 @@ void main()
    {
       object oItem ;
       int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
-      int iStr =  GetAbilityModifier(ABILITY_STRENGTH,oPC);
-      int iWis =  GetAbilityModifier(ABILITY_WISDOM,oPC);
-      int iMod = iWis > iStr  ? iWis-iStr :0;
+      int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
+      int iDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC);
+      int iWis = GetAbilityModifier(ABILITY_WISDOM,oPC);
+      int iCreature = GetLocalInt(oPC, "CreatureFinesse");
+      int iMod = (iWis > iStr) ? (iWis - iStr) : 0;
+      
+      if (GetHasFeat(FEAT_WEAPON_FINESSE,oPC) && iWis > iDex && iDex > iStr)
+          iMod = iWis - iDex;
 
-      if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD )
+      SetCompositeAttackBonus(oPC, "IntuitiveAttackR", 0, ATTACK_BONUS_ONHAND);
+      SetCompositeAttackBonus(oPC, "IntuitiveAttackL", 0, ATTACK_BONUS_OFFHAND);
+      
+      if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD && iMod > iCreature)
       {
-      	 if (GetHasSpellEffect(SPELL_INTUITIVE_ATK,oPC))
-             RemoveEffectsFromSpell(OBJECT_SELF,SPELL_INTUITIVE_ATK);  
-      }
-      else if ( !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC)) &&  !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC)))
-      {
-          int iMonk = GetLevelByClass(CLASS_TYPE_MONK,oPC);
-          if (iMonk||GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC))||GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC))||GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oPC)))
+          SetCompositeAttackBonus(oPC, "CreatureFinesse", 0);
+
+          if (!GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC))) // unarmed
           {
-               SetLocalInt(oPC,"IAtk",iMod);
-                 SendMessageToPC(OBJECT_SELF,"monk iMod "+IntToString(iMod));
-               RemoveEffectsFromSpell(OBJECT_SELF,SPELL_INTUITIVE_ATK);
-               ActionCastSpellAtObject(SPELL_INTUITIVE_ATK,oPC,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);
+              SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iMod, ATTACK_BONUS_ONHAND);
+          }
+          else if (isSimple(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC))) // right hand
+          {
+                  SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iMod, ATTACK_BONUS_ONHAND);
+              if (isSimple(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC))) // left hand
+                  SetCompositeAttackBonus(oPC, "IntuitiveAttackL", iMod, ATTACK_BONUS_OFFHAND);
           }
       }
-      else
-      {
-
-        oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-        int iSimple = isSimple(oItem);
-        if (iSimple)
-        {
-          if (iSimple == 2 && GetHasFeat(FEAT_WEAPON_FINESSE,oPC))
-          {
-             int iDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
-             if (iDex>iStr)
-             {
-               if (iWis > iDex)
-                 iMod = iWis-iDex ;
-               else
-                 iMod = 0;
-             }
-
-                //Zen Archery -- they already add their wisdom, shouldn't do it again.
-                if ((GetBaseItemType(oItem) == BASE_ITEM_LIGHTCROSSBOW ||
-                     GetBaseItemType(oItem) == BASE_ITEM_HEAVYCROSSBOW) &&
-                     GetHasFeat(FEAT_ZEN_ARCHERY, oPC))
-                {
-                   iMod = 0;
-                }
-
-             SetLocalInt(oPC,"IAtk",iMod);
-              SendMessageToPC(OBJECT_SELF,"iMod "+IntToString(iMod));
-             RemoveEffectsFromSpell(OBJECT_SELF,SPELL_INTUITIVE_ATK); 
-             ActionCastSpellAtObject(SPELL_INTUITIVE_ATK,oPC,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);
-          }
-
-        }
-        else if (GetHasSpellEffect(SPELL_INTUITIVE_ATK,oPC))
-           RemoveEffectsFromSpell(OBJECT_SELF,SPELL_INTUITIVE_ATK);  
-               
-      }
-
    }
 
    if (GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))

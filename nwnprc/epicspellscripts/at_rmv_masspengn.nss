@@ -1,5 +1,0 @@
-#include "inc_epicspells"
-void main()
-{
-    TakeFeat(GetPCSpeaker(), MASSPEN_IP);
-}

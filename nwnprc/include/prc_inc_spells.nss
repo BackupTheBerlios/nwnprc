@@ -88,6 +88,11 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF);
 // iCastingLevels - the amount of adjusted caster levels BEFORE Practiced Spellcaster
 int PractisedSpellcasting (object oCaster, int iCastingClass, int iCastingLevels);
 
+// Applies bonus damage to targets from Prestige abilities, like the Diabolist.
+//
+// oTarget - Target of the spell
+void PRCBonusDamage(object oTarget);
+
 // -----------------
 // BEGIN SPELLSWORD
 // -----------------
@@ -704,6 +709,36 @@ int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
         DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
     }
     return bValid;
+}
+
+
+void PRCBonusDamage (object oTarget)
+{
+	object oCaster = GetLastSpellCaster();
+	
+	if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) > 0 && GetLocalInt(oCaster, "Diabolism") == TRUE)
+	{
+		int nDamage;
+		
+		if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) == 10) 	nDamage = d6(3);
+		else if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) >= 5)	nDamage = d6(2);
+		else if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) >= 1)	nDamage = d6(1);
+		
+		effect eVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_10);
+		effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
+		
+		if (GetLocalInt(oCaster, "VileDiabolism") == TRUE)
+		{
+			nDamage /= 2;
+			eDam = EffectDamage(nDamage, DAMAGE_TYPE_POSITIVE);
+			SetLocalInt(oCaster, "VileDiabolism", FALSE);
+		}
+		
+		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+		SetLocalInt(oCaster, "Diabolism", FALSE);
+	}
+
 }
 
 

@@ -17,12 +17,20 @@
 void main()
 {
 
-    SummonFamiliar();
+    	SummonFamiliar();
+    	object oFam = GetAssociate(ASSOCIATE_TYPE_FAMILIAR);
           
-    if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
-    {
-      object oFam =GetAssociate(ASSOCIATE_TYPE_FAMILIAR);
-      DestroyObject(oFam, 0.5);
-    }
+    	if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
+    	{
+    		DestroyObject(oFam, 0.5);
+    	}
+    	
+    	if (GetLevelByClass(CLASS_TYPE_DIABOLIST) >= 2)
+    	{
+    		if (GetAppearanceType(oFam) != APPEARANCE_TYPE_IMP)
+	    	{
+	    		DestroyObject(oFam, 0.5);
+	    	}
+    	}
 
 }

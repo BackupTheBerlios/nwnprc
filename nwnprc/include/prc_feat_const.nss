@@ -491,6 +491,13 @@ const int FEAT_SPELLS_13 = 2541;
 const int FEAT_SPELLS_14 = 2542;
 const int FEAT_SPELLS_15 = 2543;
 
+//Diabolist
+const int FEAT_DIABOL_DIABOLISM_1	= 4236;
+const int FEAT_DIABOL_DIABOLISM_2	= 4237;
+const int FEAT_DIABOL_DIABOLISM_3	= 4238;
+const int FEAT_DIABOL_VILEDIAB		= 4239;
+const int FEAT_DIABOL_IMPFAM		= 4240;
+
 //Red Wizard of Thay
 const int FEAT_RW_RES_ABJ     = 4210;
 const int FEAT_RW_RES_CON     = 4211;

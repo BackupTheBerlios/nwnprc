@@ -686,6 +686,19 @@ void SpellKotMC(object oPC)
    FeatUsePerDay(oPC,FEAT_KOTMC_SL_3,-1,iLvl3);
 }
 
+void FeatDiabolist(object oPC)
+{
+   int Diabol = GetLevelByClass(CLASS_TYPE_DIABOLIST, oPC);
+   
+   if (!Diabol) return;
+
+   int iUse = (Diabol + 2)/3;
+
+   FeatUsePerDay(oPC,FEAT_DIABOL_DIABOLISM_1,-1,iUse);
+   FeatUsePerDay(oPC,FEAT_DIABOL_DIABOLISM_2,-1,iUse);
+   FeatUsePerDay(oPC,FEAT_DIABOL_DIABOLISM_3,-1,iUse);
+}
+
 void FeatAlaghar(object oPC)
 {
     int iAlagharLevel = GetLevelByClass(CLASS_TYPE_ALAGHAR, oPC);
@@ -712,6 +725,7 @@ void FeatSpecialUsePerDay(object oPC)
     SpellShadow(oPC);
     SpellAPal(oPC);
     SpellCorup(oPC);
+    FeatDiabolist(oPC);
     FeatAlaghar(oPC);
     FeatUsePerDay(oPC,FEAT_SA_SHIELDSHADOW,-1,GetCasterLvl(TYPE_ARCANE,oPC));
 

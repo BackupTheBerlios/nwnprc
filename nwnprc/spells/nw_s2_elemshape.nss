@@ -11,9 +11,8 @@
 //:: Created On: Jan 22, 2002
 //:://////////////////////////////////////////////
 
-
+#include "prc_inc_clsfunc"
 #include "x2_inc_itemprop"
-#include "soul_inc"
 
 void main()
 {

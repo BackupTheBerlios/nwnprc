@@ -14,7 +14,6 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
-#include "soul_inc"
 #include "x2_inc_spellhook"
 
 void main()

@@ -11,7 +11,8 @@
 //:: Created On: Jan 22, 2002
 //:://////////////////////////////////////////////
 //:: Last Updated By: Andrew Nobbs May 20, 2003
-#include "soul_inc"
+
+#include "prc_inc_clsfunc"
 
 void main()
 {

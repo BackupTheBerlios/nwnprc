@@ -11,8 +11,8 @@
 //:: Created On: Sept 27, 2001
 //:://////////////////////////////////////////////
 
-#include "soul_inc"
 #include "inc_npc"
+#include "prc_class_const"
 
 void main()
 {

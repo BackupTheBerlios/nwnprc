@@ -17,7 +17,7 @@
 //:://////////////////////////////////////////////
 
 #include "x2_inc_itemprop"
-#include "soul_inc"
+#include "prc_inc_clsfunc"
 
 void main()
 {

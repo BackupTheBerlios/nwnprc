@@ -16,7 +16,7 @@
 
 #include "x2_i0_spells"
 #include "prc_class_const"
-#include "minstrelsong"
+#include "prc_inc_clsfunc"
 
 void main()
 {

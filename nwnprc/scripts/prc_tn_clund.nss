@@ -17,15 +17,15 @@ void main()
             switch (nClass)
             {
                 case 4:
-                    sSummon = "doomkght001";
+                    sSummon = "prc_sum_mohrg";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 7:
-                    sSummon = "mohrg001";
+                    sSummon = "prc_sum_dk";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 10:
-                    sSummon = "doomkghtboss001";
+                    sSummon = "prc_sum_dkc";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
             }

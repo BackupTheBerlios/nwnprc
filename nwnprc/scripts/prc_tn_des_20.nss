@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Desecrate
-//:: PRC_TN_desecrate
+//:: Lesser Desecrate
+//:: PRC_TN_DES_20
 //:://////////////////////////////////////////////
 /*
     You create an aura that boosts the undead
@@ -11,7 +11,7 @@
 
 void main()
 {
-    effect eAOE = EffectAreaOfEffect(AOE_MOB_DES_20, "prc_tn_des_a", "", "prc_tn_des_b");
+    effect eAOE = EffectAreaOfEffect(AOE_MOB_DES_20, "prc_tn_des_a", "prc_tn_des_a", "prc_tn_des_b");
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, OBJECT_SELF);
+    FloatingTextStringOnCreature("Lesser Desecrate has been activated", OBJECT_SELF);
 }
-

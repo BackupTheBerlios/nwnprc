@@ -11,6 +11,7 @@
 
 void main()
 {
+    SendMessageToPC(GetFirstPC(), "Desecrate has been entered");
     object oTarget = GetEnteringObject();
     effect eDam = EffectDamageIncrease(DAMAGE_BONUS_1, DAMAGE_TYPE_NEGATIVE);
     effect eAttack = EffectAttackIncrease(1);

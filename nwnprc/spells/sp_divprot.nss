@@ -32,6 +32,8 @@ void main()
 		{
 			//Fire cast spell at event for the specified target
 			SPRaiseSpellCastAt(oTarget, FALSE);
+			
+			RemoveSpellEffects(GetSpellId(), OBJECT_SELF, oTarget);
 
 			float fDelay = GetSpellEffectDelay(lTarget, oTarget);
 

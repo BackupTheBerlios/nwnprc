@@ -245,8 +245,8 @@
 241 FEAT_SMITE_EPIC14                              3266      3    37             1      
 242 FEAT_SMITE_EPIC15                              3267      3    39             1      
 243 FEAT_EXTRA_SMITING                             910       1    6              0     
-244  FEAT_NIMBUSOFLIGHT 3165      0     -1   1
-245  FEAT_SERVHEAVEN    3355      0     -1   1
+244  FEAT_NIMBUSOFLIGHT                  3165      0         -1   1
+245  FEAT_SERVHEAVEN                     3355      0         -1   1
 246  Quicken                             29        0    -1             0      
 247  FEAT_EPIC_AUTOMATIC_QUICKEN_1       857       0    -1             0 
 248  FEAT_EPIC_SPELL_MUMMY_DUST          874       1    11             2      

@@ -23,31 +23,7 @@
 // Added by Primogenitor
 // part of the replacement for GetClassByPosition and GetLevelByPosition
 // since those always return CLASS_TYPE_INVALID for non-bioware classes
-void SetupPRCGetClassByPosition(object oCreature)
-{
-    int i;
-    int nCounter = 1;
-    //set to defaults, including the +1 for 1start not 0 start
-    SetLocalInt(oCreature, "PRC_ClassInPos1", CLASS_TYPE_INVALID+1);
-    SetLocalInt(oCreature, "PRC_ClassInPos2", CLASS_TYPE_INVALID+1);
-    SetLocalInt(oCreature, "PRC_ClassInPos3", CLASS_TYPE_INVALID+1);
-    SetLocalInt(oCreature, "PRC_ClassLevelInPos1", 0+1);
-    SetLocalInt(oCreature, "PRC_ClassLevelInPos2", 0+1);
-    SetLocalInt(oCreature, "PRC_ClassLevelInPos3", 0+1);
-    for(i=0;i<256;i++)
-    {
-        if(GetLevelByClass(i, oCreature))
-        {
-            // set to values, including the +1 for 1start not 0 start
-            SetLocalInt(oCreature, "PRC_ClassInPos"+IntToString(nCounter), i+1);
-            SetLocalInt(oCreature, "PRC_ClassLevelInPos"+IntToString(nCounter),
-                GetLevelByClass(i, oCreature)+1);
-            nCounter++;
-            if(nCounter >= 4)
-                i = 999; // end loop now
-        }
-    }
-}
+void SetupPRCGetClassByPosition(object oCreature);
 
 // Added by Primogenitor
 // replacement for GetClassByPosition since that always returns
@@ -60,20 +36,8 @@ void SetupPRCGetClassByPosition(object oCreature)
 // * Returns CLASS_TYPE_INVALID if the oCreature does not have a class in
 //   nClassPosition (i.e. a single-class creature will only have a value in
 //   nClassLocation=1) or if oCreature is not a valid creature.
-int PRCGetClassByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
-{
-    if(!GetIsObjectValid(oCreature) || GetObjectType(oCreature) != OBJECT_TYPE_CREATURE)
-        return CLASS_TYPE_INVALID;
-    int nClass = GetLocalInt(oCreature, "PRC_ClassInPos"+IntToString(nClassPosition));
-    if(nClass == 0)
-    {
-        SetupPRCGetClassByPosition(oCreature);
-        nClass = GetLocalInt(oCreature, "PRC_ClassInPos"+IntToString(nClassPosition));
-    }
-    //correct for 1 start not 0 start
-    nClass--;
-    return nClass;
-}
+int PRCGetClassByPosition(int nClassPosition, object oCreature=OBJECT_SELF);
+
 
 // Added by Primogenitor
 // replacement for GetLevelByPosition since GetClassByPosition always returns
@@ -87,20 +51,7 @@ int PRCGetClassByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
 // * Returns 0 if oCreature does not have a class in nClassPosition
 //   (i.e. a single-class creature will only have a value in nClassLocation=1)
 //   or if oCreature is not a valid creature.
-int PRCGetLevelByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
-{
-    if(!GetIsObjectValid(oCreature) || GetObjectType(oCreature) != OBJECT_TYPE_CREATURE)
-        return 0;
-    int nClass = GetLocalInt(oCreature, "PRC_ClassLevelInPos"+IntToString(nClassPosition));
-    if(nClass == 0)
-    {
-        SetupPRCGetClassByPosition(oCreature);
-        nClass = GetLocalInt(oCreature, "PRC_ClassLevelInPos"+IntToString(nClassPosition));
-    }
-    //correct for 1 start not 0 start
-    nClass--;
-    return nClass;
-}
+int PRCGetLevelByPosition(int nClassPosition, object oCreature=OBJECT_SELF);
 
 // Returns the caster level when used in spells.  You can use PRCGetCasterLevel()
 // to determine a caster level from within a true spell script.  In spell-like-
@@ -1154,6 +1105,65 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
     }
     return 0;
 }
+
+//primos class position things
+
+void SetupPRCGetClassByPosition(object oCreature)
+{
+    int i;
+    int nCounter = 1;
+    //set to defaults, including the +1 for 1start not 0 start
+    SetLocalInt(oCreature, "PRC_ClassInPos1", CLASS_TYPE_INVALID+1);
+    SetLocalInt(oCreature, "PRC_ClassInPos2", CLASS_TYPE_INVALID+1);
+    SetLocalInt(oCreature, "PRC_ClassInPos3", CLASS_TYPE_INVALID+1);
+    SetLocalInt(oCreature, "PRC_ClassLevelInPos1", 0+1);
+    SetLocalInt(oCreature, "PRC_ClassLevelInPos2", 0+1);
+    SetLocalInt(oCreature, "PRC_ClassLevelInPos3", 0+1);
+    for(i=0;i<256;i++)
+    {
+        if(GetLevelByClass(i, oCreature))
+        {
+            // set to values, including the +1 for 1start not 0 start
+            SetLocalInt(oCreature, "PRC_ClassInPos"+IntToString(nCounter), i+1);
+            SetLocalInt(oCreature, "PRC_ClassLevelInPos"+IntToString(nCounter),
+                GetLevelByClass(i, oCreature)+1);
+            nCounter++;
+            if(nCounter >= 4)
+                i = 999; // end loop now
+        }
+    }
+}
+
+int PRCGetClassByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
+{
+    if(!GetIsObjectValid(oCreature) || GetObjectType(oCreature) != OBJECT_TYPE_CREATURE)
+        return CLASS_TYPE_INVALID;
+    int nClass = GetLocalInt(oCreature, "PRC_ClassInPos"+IntToString(nClassPosition));
+    if(nClass == 0)
+    {
+        SetupPRCGetClassByPosition(oCreature);
+        nClass = GetLocalInt(oCreature, "PRC_ClassInPos"+IntToString(nClassPosition));
+    }
+    //correct for 1 start not 0 start
+    nClass--;
+    return nClass;
+}
+
+int PRCGetLevelByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
+{
+    if(!GetIsObjectValid(oCreature) || GetObjectType(oCreature) != OBJECT_TYPE_CREATURE)
+        return 0;
+    int nClass = GetLocalInt(oCreature, "PRC_ClassLevelInPos"+IntToString(nClassPosition));
+    if(nClass == 0)
+    {
+        SetupPRCGetClassByPosition(oCreature);
+        nClass = GetLocalInt(oCreature, "PRC_ClassLevelInPos"+IntToString(nClassPosition));
+    }
+    //correct for 1 start not 0 start
+    nClass--;
+    return nClass;
+}
+
 
 
 ////////////////Begin Spellsword//////////////////

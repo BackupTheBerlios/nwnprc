@@ -11,17 +11,6 @@ int HexToInt( string sHex);
 //also counts other memebers of a PCs parts (henchmen familairs etc)
 int GetIsAPCInArea(object oArea);
 
-/*
-Credit to He Who Watches
-taken from the Homebrew Functions sticky on the bioware scripting forum
-
-This version stores the local strings on a different waypoint object for each
-2da file. It requires you to define a waypoint with tag "CACHEWP", and to
-place one instance of that waypoint somewhere in your module (preferable in a
-location unviewable by players). If it is not present, the cache wil be created
-at the module start.
-*/
-
 //::///////////////////////////////////////////////
 //:: Function: GetAreaWidth
 //:://////////////////////////////////////////////

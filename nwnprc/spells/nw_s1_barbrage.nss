@@ -29,18 +29,26 @@ void main()
         int nSave;
         
         iAC = 2;
+
+//Lock: Added compatibility for PRC Mighty Rage ability
         
-        if (nLevel < 15)
+        if (nLevel >= 15 && GetHasFeat(FEAT_PRC_EPIC_MIGHT_RAGE, OBJECT_SELF)
+        {
+            iStr = 8;
+            iCon = 8;
+            nSave = 4;
+        }
+	  else if(nLevel >= 15)
+	  {
+		iStr = 6;
+            iCon = 6;
+            nSave = 3;
+	  }
+        else
         {
             iStr = 4;
             iCon = 4;
             nSave = 2;
-        }
-        else
-        {
-            iStr = 6;
-            iCon = 6;
-            nSave = 3;
         }
 
         // Eye of Gruumsh ability. Additional  +4 Str and -2 AC.

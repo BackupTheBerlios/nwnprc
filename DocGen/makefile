@@ -5,3 +5,7 @@ TARGET = prc/autodoc/*.java
 
 default:
 	$(COMPILER) $(FLAGS) $(TARGET)
+
+
+run:
+	java -Xmx300m -Xms300m prc/autodoc/Main

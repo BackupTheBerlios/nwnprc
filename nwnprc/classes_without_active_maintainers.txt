@@ -1,0 +1,6 @@
+Archmage (although Judd/BE recently updated this one), Champion of Bane,
+Disciple of Meph (Lock and I redid this for 2.1 I believe), Duelist, Eldritch Knight,
+Hathran (somewhat, its Wyz's), Heirophant, Knight of the Chalice, Master Harper,
+Master of Shrouds (although Lock and I debugged it for 2.1 release), Ninja Spy,
+Ocular Adept, Mystic Theurge, Battlerager, Warpriest, Oozemaster, Red Avenger,
+Vigliant (somewhat, Wyz's again)

@@ -37,7 +37,7 @@ void main() {
     //Link persistant effects
     effect eLink = EffectLinkEffects(eMind, eCharm);
     eLink = EffectLinkEffects(eLink, eDur);
-    int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
+    int nCasterLevel = GetLevelByTypeDivine();
     int nDuration = 2 + nCasterLevel;
     //nDuration = GetScaledDuration(nDuration, oTarget);
     int nRacial = GetRacialType(oTarget);

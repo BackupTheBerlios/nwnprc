@@ -21,7 +21,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
         return;
     }
 
-    int nDuration = PRCGetCasterLevel(OBJECT_SELF);
+    int nDuration = GetLevelByTypeArcane();
 
     object oCopy = CopyObject(OBJECT_SELF, GetSpellTargetLocation(), OBJECT_INVALID, "Clone"+GetName(OBJECT_SELF));
 

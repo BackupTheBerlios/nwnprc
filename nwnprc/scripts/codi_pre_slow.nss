@@ -32,7 +32,7 @@ void main()
                 effect e1 = EffectSlow();
                 effect eVis = EffectVisualEffect(VFX_IMP_SLOW);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oTarget);
-                ApplyEffectToObject(DURATION_TYPE_TEMPORARY,e1,oTarget,RoundsToSeconds(PRCGetCasterLevel(OBJECT_SELF)));
+                ApplyEffectToObject(DURATION_TYPE_TEMPORARY,e1,oTarget,RoundsToSeconds(GetLevelByTypeDivine()));
             }
         }
     } else {

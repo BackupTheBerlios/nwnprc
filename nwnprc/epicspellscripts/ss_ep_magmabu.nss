@@ -37,7 +37,7 @@ void main()
         // Boneshank - Added in the nDC formula.
          float fDelay;
         int nDamage;
-        int nCasterLvl = PRCGetCasterLevel(oCaster);
+        int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
         effect eAOE = EffectAreaOfEffect
             ( AOE_PER_FOGFIRE, "tm_s0_epmagmabua", "tm_s0_epmagmabub", "tm_s0_epmagmabuc" );
         location lTarget = GetSpellTargetLocation();

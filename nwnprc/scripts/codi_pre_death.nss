@@ -21,7 +21,7 @@ void main()
     int nOcLvl = GetLevelByClass(CLASS_TYPE_OCULAR, OBJECT_SELF);
     int nChaMod = GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
     int nOcSv = 10 + (nOcLvl/2) + nChaMod;
-    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nCasterLvl = GetLevelByTypeDivine();
     effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
 
     //Declare major variables

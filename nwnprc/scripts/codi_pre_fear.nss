@@ -24,7 +24,7 @@ void main()
 
     //Declare major variables
     object oTarget = GetSpellTargetObject();
-    int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
+    int nCasterLevel = GetLevelByTypeDivine();
     float fDuration = RoundsToSeconds(nCasterLevel);
     effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);
     effect eFear = EffectFrightened();

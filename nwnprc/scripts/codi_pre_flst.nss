@@ -22,7 +22,7 @@ void main()
     int nChaMod = GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
     int nOcSv = 10 + (nOcLvl/2) + nChaMod;
     object oTarget = GetSpellTargetObject();
-    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nCasterLvl = GetLevelByTypeDivine();
     int bHit = TouchAttackRanged(oTarget,FALSE)>0;
 
     if(bHit) {

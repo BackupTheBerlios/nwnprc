@@ -17,7 +17,7 @@ void main()
     if(GetIsFriend(oTarget, GetAreaOfEffectCreator()))
     {
         //Declare major variables
-        int nDuration = PRCGetCasterLevel(OBJECT_SELF);
+        int nDuration = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, OBJECT_SELF);
         //effect eVis = EffectVisualEffect(VFX_IMP_EVIL_HELP);
         effect eIFear = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_FEAR), RACIAL_TYPE_OUTSIDER);
         effect eICharm = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_CHARM), RACIAL_TYPE_OUTSIDER);

@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
 
     //Declare major variables including Area of Effect Object
-    int nDuration = PRCGetCasterLevel(OBJECT_SELF);
+    int nDuration = GetLevelByClass(CLASS_TYPE_NIGHTSHADE) + GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT);
 
     //Make sure duration does no equal 0
     if (nDuration < 1)

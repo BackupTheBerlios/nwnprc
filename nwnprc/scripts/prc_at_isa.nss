@@ -13,9 +13,9 @@
 #include "inc_combat"       // for DoMeleeAttack
 #include "x2_inc_itemprop"  // for IPGetIsMeleeWeapon
 
-// Includes for PrC's
-#include "prc_inc_oni"
-#include "strat_prc_inc"
+#include "prc_feat_const"
+#include "prc_class_const"
+#include "prc_spell_const"
 
 int GetTotalSneakAttackDice(object oPC)
 {

@@ -1,12 +1,13 @@
 2DA V2.0
 
-     FeatLabel            FeatIndex 
-0    darkvision           228       
-1    WeapProfSim          46
-2    WeapProfMar          45
-3    Spell_Resist_27      4709
-4    Natural_Armor_9      4738
-5    Damage_Reduction_15  4748
-6    SkillAff_Bluff       4753
-7    Disguise             4755
-8    Race_Outsider        4716  
+   FeatLabel           FeatIndex 
+0  darkvision          228       
+1  WeapProfSim         46        
+2  WeapProfMar         45        
+3  Spell_Resist_27     4709      
+4  Natural_Armor_9     4738      
+5  Damage_Reduction_15 4748      
+6  SkillAff_Bluff      4753      
+7  Disguise            4755      
+8  SPEC_ABILITY_raks   4786      
+9  Race_Outsider       4716      

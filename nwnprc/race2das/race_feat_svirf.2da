@@ -1,17 +1,18 @@
 2DA V2.0
 
-      FeatLabel              FeatIndex               
-1     spellfocusill          170                 
-2     stonecunning           227         
-3     darkvision             228         
-4     Race_Gnomish           4712           
-5     skillaffinitylisten    237         
-6     hardinessillusion      241         
-7     Very_Heroic            4745        
-8     skillaffinityconcent   243         
-9     SkillAff_Hide_Under    4749        
-10    small                  375         
-11    Nondetection           4731 
-12    Spell_Resist_11        4703        
-13    reptiletrain           242
-14    gobtrain               232 
+   FeatLabel            FeatIndex 
+0  spellfocusill        170       
+1  stonecunning         227       
+2  darkvision           228       
+3  skillaffinitylisten  237       
+4  hardinessillusion    241       
+5  Very_Heroic          4745      
+6  skillaffinityconcent 243       
+7  SkillAff_Hide_Under  4749      
+8  small                375       
+9  Nondetection         4731      
+10 Spell_Resist_11      4703      
+11 reptiletrain         242       
+12 gobtrain             232       
+13 SPEC_ABILITY_svirf   4787      
+14 Race_Gnomish         4712      

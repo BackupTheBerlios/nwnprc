@@ -1,12 +1,13 @@
 2DA V2.0
 
-  FeatLabel       FeatIndex 
-0 darkvision      228       
-1 Shield          32        
-2 WeapProfSim     46        
-3 BlindFight      408       
-4 Alertness       0         
-5 ArmProfLgt      3         
-6 Race_Monstrous  4720      
-7 Spell_Resist_14 4705      
-8 Natural_Armor_1 4733      
+   FeatLabel          FeatIndex 
+0  darkvision         228       
+1  Shield             32        
+2  WeapProfSim        46        
+3  BlindFight         408       
+4  Alertness          0         
+5  ArmProfLgt         3         
+6  Spell_Resist_14    4705      
+7  Natural_Armor_1    4733      
+8  SPEC_ABILITY_pyuan 4785      
+9  Race_Monstrous     4720      

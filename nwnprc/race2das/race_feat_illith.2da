@@ -1,8 +1,8 @@
 2DA V2.0
 
-     FeatLabel          FeatIndex 
-0    darkvision         228       
-1    Natural_Armor_3    4734
-2    Race_Aberration    4722
-3    Spell_Resist_25    4708
- 
+   FeatLabel           FeatIndex 
+0  darkvision          228       
+1  Natural_Armor_3     4734      
+2  Spell_Resist_25     4708      
+3  SPEC_ABILITY_illith 4783      
+4  Race_Aberration     4722      

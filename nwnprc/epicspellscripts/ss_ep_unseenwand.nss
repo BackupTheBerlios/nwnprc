@@ -24,7 +24,7 @@ void main()
     }
     object oTarget = GetSpellTargetObject();
     if (GetIsObjectValid(oTarget) &&  // Is the target valid?
-        !GetHasFeat(4028, oTarget) && // Does the target not already have the feat?
+        !GetHasFeat(5028, oTarget) && // Does the target not already have the feat?
         GetIsPC(oTarget))             // Is the target a player?
     {
         if (GetCanCastSpell(OBJECT_SELF, UNSEENW_DC, UNSEENW_S, UNSEENW_XP))

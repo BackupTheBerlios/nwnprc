@@ -16,7 +16,7 @@ void main()
 
     effect eLink;
     object oTarget = GetSpellTargetObject();
-    int CasterLvl = 8;
+    int CasterLvl = 4;
     int nAmount = CasterLvl * 10;
     int nDuration = CasterLvl;
 

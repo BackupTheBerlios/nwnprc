@@ -272,7 +272,8 @@ void VileFeats(object oPC = OBJECT_SELF)
 
 void Warlord(object oPC = OBJECT_SELF)
 {
-          if (GetHasFeat(FEAT_BLOOD_OF_THE_WARLORD, oPC) && (MyPRCGetRacialType(oPC) != RACIAL_TYPE_HALFORC))
+          if (GetHasFeat(FEAT_BLOOD_OF_THE_WARLORD, oPC) && (MyPRCGetRacialType(oPC) != RACIAL_TYPE_HALFORC) 
+                  && (MyPRCGetRacialType(oPC) != RACIAL_TYPE_HUMANOID_ORC))
           {
                int nHD = GetHitDice(oPC);
                int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;

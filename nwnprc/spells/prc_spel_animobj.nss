@@ -1,3 +1,5 @@
+#include "prc_inc_spells.nss"
+
 int GetIsValidAnimate(object oTarget);
 int GetWeaponAnimateSize(object oTarget);
 void AddArmourHardness(object oHide, object oArmour, object oAnimate);
@@ -184,9 +186,9 @@ void main()
             AssignCommand(oAnimate, ActionEquipItem(oNewTarget,INVENTORY_SLOT_RIGHTHAND));
         }
         if (GetMetaMagicFeat() == METAMAGIC_EXTEND)
-            SetLocalInt(oAnimate,"Rounds",(GetCasterLevel(oPC)*2));
+            SetLocalInt(oAnimate,"Rounds",(PRCGetCasterLevel(oPC)*2));
         else
-            SetLocalInt(oAnimate,"Rounds",GetCasterLevel(oPC));
+            SetLocalInt(oAnimate,"Rounds",PRCGetCasterLevel(oPC));
         effect eDom = SupernaturalEffect(EffectCutsceneDominated());
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oAnimate, 4.0);
         DelayCommand(0.0, AssignCommand(oAnimate, ActionPlayAnimation(ANIMATION_LOOPING_DEAD_BACK, 1.0, 2.0)));

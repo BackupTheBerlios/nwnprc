@@ -791,6 +791,7 @@ const int FEAT_UR_FE_SHAPECHANGER   = 2995;
 const int FEAT_UR_FE_UNDEAD         = 2996;
 const int FEAT_UR_FE_VERMIN         = 2997;
 const int FEAT_UR_SNAREMASTERY      = 2998;
+const int FEAT_UR_SNEAKATK_3D6      = 2999;
 const int FEAT_UR_ARMOREDGRACE      = 3430;
 const int FEAT_UR_DODGE_FE          = 3431;
 const int FEAT_UR_RESIST_FE         = 3432;

@@ -1,5 +1,6 @@
 
 #include "prc_class_const"
+#include "prc_feat_const"
 #include "inc_item_props"
 #include "NW_I0_GENERIC"
 
@@ -69,6 +70,8 @@ int GetRogueSneak(object oPC)
    iClassLevel = GetLevelByClass(CLASS_TYPE_NIGHTSHADE, oPC);
    if (iClassLevel) iRogueSneak += iClassLevel / 3;
    
+   //Ambush Attack
+   if (GetHasFeat(FEAT_UR_SNEAKATK_3D6,oPC)) iRogueSneak += 3;
    
    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
    {

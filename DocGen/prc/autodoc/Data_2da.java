@@ -251,6 +251,13 @@ public class Data_2da{
 		System.exit(0);
 	}
 	
+	/**
+	 * Compares the given two 2da files and prints differences it finds
+	 * Differing number of rows, or row names will cause comparison to abort.
+	 *
+	 * @param file1  Data_2da containing one of the files to be compared
+	 * @param file1  Data_2da containing the other file to be compared
+	 */
 	private static void doComparison(Data_2da file1, Data_2da file2){
 		// Check lengths
 		int shortCount = 0;

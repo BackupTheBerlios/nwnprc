@@ -1,28 +1,47 @@
-/*
-
-Iaijutsu Master Passive Feats
-prc_iaijutsu_mst
-
-*/
-
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "prc_class_const"
 
 
 ///Int Bonus to AC /////////
-void KatanaAC(object oPC ,object oSkin ,int iLevel)
+// * Applies the Iaijutusu Masters AC bonuses as CompositeBonuses on the object's skin.
+// * AC bonus is determined by object's int bonus (2x int bonus if epic)
+// * iOnOff = TRUE/FALSE
+// * iEpic = TRUE/FALSE
+// * Code By Aaon Greywolf
+void DuelistCannyDefense(object oPC, object oSkin, int iOnOff, int iEpic = FALSE)
 {
-   if(GetLocalInt(oSkin, "KatAC") == iLevel) return;
+    int iIntBonus = GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
+        iIntBonus = iEpic ? iIntBonus * 2 : iIntBonus;
 
-    SetCompositeBonus(oSkin, "KatAC", iLevel,ITEM_PROPERTY_AC_BONUS);
-
+    if(iOnOff){
+        SetCompositeBonus(oSkin, "CannyDefenseBonus", iIntBonus, ITEM_PROPERTY_AC_BONUS);
+        if(GetLocalInt(oPC, "CannyDefense") != TRUE)
+            FloatingTextStringOnCreature("Canny Defense On", oPC);
+        SetLocalInt(oPC, "CannyDefense", TRUE);
+    }
+    else {
+        SetCompositeBonus(oSkin, "CannyDefenseBonus", 0, ITEM_PROPERTY_AC_BONUS);
+        if(GetLocalInt(oPC, "CannyDefense") != FALSE)
+            FloatingTextStringOnCreature("Canny Defense Off", oPC);
+        SetLocalInt(oPC, "CannyDefense", FALSE);
+   }
 }
 
 ///Katana Finesse /////////
 void KatFin(object oPC, object oWeap, int iBonus)
 {
-    if(iBonus > 0){
+
+    int iDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC);
+    int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
+    int iBonus = 0;
+
+    if(iDex > iStr)
+    {
+    iBonus = iDex - iStr;
+    }
+
+ if(iBonus > 0){
         if(GetLocalInt(oWeap, "KatFinBonus") != iBonus){
             RemoveKatanaFinesse(oWeap);
             AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(iBonus), oWeap);
@@ -49,32 +68,21 @@ void main()
     object oSkin = GetPCSkin(oPC);
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    int iInt = GetAbilityModifier(ABILITY_INTELLIGENCE,oPC);
-    int iDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC);
-    int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
-    int iBonus = 0;
-
-    if(GetBaseAC(oArmor) != 0)
-      {
-      iInt = 0;
-      }
 
     //Determine which feats the character has
-    int bKatAC = GetHasFeat(FEAT_KATANA_FINESSE, oPC) ? iInt : 0;
-    int bKatFin;
-
-    if(iDex > iStr)
-    {
-    iBonus = iDex - iStr;
-    }
-
-    bKatFin = GetHasFeat(FEAT_KATANA_FINESSE, oPC) ? iBonus : 0;
+    int bCanDef = GetHasFeat(FEAT_CANNY_DEFENSE, oPC);
+    int bEpicCD = GetHasFeat(FEAT_EPIC_IAIJUTSU, oPC);
+    int bKatFin = GetHasFeat(FEAT_KATANA_FINESSE, oPC);
 
     //Apply bonuses accordingly
-    if(bKatAC > 0 && GetBaseAC(oArmor) == 0)
-            KatanaAC(oPC,oSkin,bKatAC);
+    if(bCanDef > 0 && GetBaseAC(oArmor) == 0)
+        DuelistCannyDefense(oPC, oSkin, TRUE, bEpicCD);
     else
-            KatanaAC(oPC,oSkin,0);
+        DuelistCannyDefense(oPC, oSkin, FALSE);
 
-    if(bKatFin > 0 && GetBaseItemType(oWeap) == BASE_ITEM_KATANA) KatFin(oPC,oWeap,bKatFin);
+    if(bKatFin > 0 && GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
+        KatFin(oPC,oWeap,bKatFin);
+    else
+        KatFin(oPC,oWeap,0);
 }
+

@@ -1434,6 +1434,7 @@ const int FEAT_PSIONWILD_IDENTIFY		 = 3625;
 const int FEAT_PSIONWILD_INFLICTPAIN		 = 3626;
 const int FEAT_PSIONWILD_KNOCK			 = 3627;
 const int FEAT_PSIONWILD_MINDDISRUPT		 = 3628;
+const int FEAT_PSIONWILD_CRYSTALSWARM		 = 3629;
 
 //All Class Level One
 const int FEAT_ALL_BLACK_DRAGON_BREATH	         = 3576;
@@ -1459,6 +1460,7 @@ const int FEAT_ALL_OFFPRESC			 = 3616;
 const int FEAT_ALL_BIOFEEDBACK			 = 3617;
 const int FEAT_ALL_ELFSIGHT			 = 3620;
 const int FEAT_ALL_ENERGYADAPTSPEC		 = 3621;
+const int FEAT_ALL_THOUGHTSHIELD		 = 3630;
 
 //Psionic Feats
 const int FEAT_MENTAL_RESISTANCE           = 4812;

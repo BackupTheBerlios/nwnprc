@@ -25,9 +25,10 @@
 21    "**Level_Two_Powers**"                ****        ****   ****             ****     
 22    FEAT_ALL_CONCEAL_AMORPHA              3584        2      4                1        
 23    FEAT_ALL_DARKVISION                   3586        2      4                1        
-24    FEAT_ALL_BIOFEEDBACK                  3617        2      3                1        
-25    FEAT_ALL_ELFSIGHT                     3620        2      3                1        
-26    FEAT_ALL_ENERGYADAPTSPEC              3621        2      3                1        
+24    FEAT_ALL_BIOFEEDBACK                  3617        2      4                1        
+25    FEAT_ALL_ELFSIGHT                     3620        2      4                1        
+26    FEAT_ALL_ENERGYADAPTSPEC              3621        2      4                1        
+26    FEAT_ALL_THOUGHTSHIELD                3630        2      4                1        
 27    FEAT_PSYWAR_DISSOLVING_TOUCH          3600        2      4                1        
 28    ****                                  ****        ****   ****             ****     
 29    "**Level_Three_Powers**"              ****        ****   ****             ****     

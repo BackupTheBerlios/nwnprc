@@ -9,6 +9,8 @@
 //
 /////////////////////////////////////////////////////////////////////////////////
 
+#include "prc_inc_racial"
+
 int biowareSpellsCure(int nCasterLvl, object oTarget, int nDamage, int nMaxExtraDamage, int nMaximized, 
 	effect vfx_impactHurt, effect vfx_impactHeal, int nSpellID);
 
@@ -116,7 +118,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
     }
 
 
-    if (GetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
+    if (MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
     {
 		// NEW CODE
 		// Add target check since we only want this to land on friendly targets and

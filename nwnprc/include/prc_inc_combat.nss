@@ -47,6 +47,7 @@
 // #include "nw_i0_generic"    <-- Inherited
 
 #include "x2_inc_itemprop"
+#include "prc_inc_racial"
 #include "prc_inc_function"
 #include "prc_inc_sneak"
 #include "prc_inc_unarmed"
@@ -1228,7 +1229,7 @@ int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender)
     int iTemp;
     int bIsPenalty = FALSE;
 
-    int iRace = GetRacialType(oDefender);
+    int iRace = MyPRCGetRacialType(oDefender);
 
     int iGoodEvil = GetAlignmentGoodEvil(oDefender);
     int iLawChaos = GetAlignmentLawChaos(oDefender);
@@ -1749,7 +1750,7 @@ int GetWeaponEnhancement(object oWeapon, object oDefender, object oAttacker)
      int iTemp;
      int bIsPenalty = FALSE;
 
-     int iRace = GetRacialType(oDefender);
+     int iRace = MyPRCGetRacialType(oDefender);
      
      int iGoodEvil = GetAlignmentGoodEvil(oDefender);
      int iLawChaos = GetAlignmentLawChaos(oDefender);
@@ -1870,7 +1871,7 @@ int GetAmmunitionEnhancement(object oWeapon, object oDefender, object oAttacker)
     int iType = GetBaseItemType(oWeapon);
     
 
-    int iRace = GetRacialType(oDefender);
+    int iRace = MyPRCGetRacialType(oDefender);
      
     int iGoodEvil = GetAlignmentGoodEvil(oDefender);
     int iLawChaos = GetAlignmentLawChaos(oDefender);
@@ -2245,7 +2246,7 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
      int iDamageType;
      int iTemp;     
   
-     int iRace = GetRacialType(oTarget);
+     int iRace = MyPRCGetRacialType(oTarget);
      
      int iGoodEvil = GetAlignmentGoodEvil(oTarget);
      int iLawChaos = GetAlignmentLawChaos(oTarget);

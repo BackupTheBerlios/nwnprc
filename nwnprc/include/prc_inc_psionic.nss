@@ -8,6 +8,7 @@
    Calculates Power Resistance for Psionics and performs the checks.
 */
 
+#include "prc_inc_racial"
 #include "prc_feat_const"
 #include "prc_class_const"
 
@@ -58,8 +59,7 @@ PRCGetPowerResistance(object oTarget, object oCaster)
         
         // Foe Hunter SR stacks with normal SR 
         // when a Power is cast by their hated enemy
-        // When Inlcude fixes are done, change GetRacialType to MyPRCGetRacialType
-        if(GetHasFeat(FEAT_HATED_ENEMY_SR, oTarget) && GetLocalInt(oTarget, "HatedFoe") == GetRacialType(oCaster) )
+        if(GetHasFeat(FEAT_HATED_ENEMY_SR, oTarget) && GetLocalInt(oTarget, "HatedFoe") == MyPRCGetRacialType(oCaster) )
         {
              iPowerRes += 15 + GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oTarget);
         }

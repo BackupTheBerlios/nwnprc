@@ -10,6 +10,7 @@
 //:: Created On: 5 april 2004
 //:://////////////////////////////////////////////
 
+#include "prc_inc_racial"
 #include "prc_class_const"
 
 void main()
@@ -27,7 +28,7 @@ void main()
      iDam = d6(2);
      }
      eDam = EffectDamage(iDam, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_ENERGY);
-     if (GetRacialType(oTarget)==RACIAL_TYPE_DRAGON)
+     if (MyPRCGetRacialType(oTarget)==RACIAL_TYPE_DRAGON)
      {
          if (GetAlignmentGoodEvil(oTarget)==ALIGNMENT_EVIL)
          {

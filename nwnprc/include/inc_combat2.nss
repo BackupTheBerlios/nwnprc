@@ -523,7 +523,7 @@ int GetWeaponDmgBonusIP(object oWeap,object oTarget)
     int iBonus = 0;
     int iTemp;
 
-    int iRace=GetRacialType(oTarget);
+    int iRace=MyPRCGetRacialType(oTarget);
 
     int iGoodEvil=GetAlignmentGoodEvil(oTarget);
     int iLawChaos=GetAlignmentLawChaos(oTarget);
@@ -743,7 +743,7 @@ effect AddDmgEffectMulti(int nDmg ,int dType, object oAmmu, object oTarget ,int 
     int iBonus = 0;
     effect eLink;
 
-    int iRace=GetRacialType(oTarget);
+    int iRace=MyPRCGetRacialType(oTarget);
 
     int iGoodEvil=GetAlignmentGoodEvil(oTarget);
     int iLawChaos=GetAlignmentLawChaos(oTarget);

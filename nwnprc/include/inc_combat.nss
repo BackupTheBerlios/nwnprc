@@ -805,7 +805,7 @@ int GetWeaponAtkBonusIP(object oWeap,object oTarget)
     int iBonus = 0;
     int iTemp;
 
-    int iRace=GetRacialType(oTarget);
+    int iRace=MyPRCGetRacialType(oTarget);
 
     int iGoodEvil=GetAlignmentGoodEvil(oTarget);
     int iLawChaos=GetAlignmentLawChaos(oTarget);

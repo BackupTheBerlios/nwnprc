@@ -590,7 +590,7 @@ void SetShift_02(object oPC, object oTarget)
         SetCreatureAppearanceType(oPC,GetAppearanceType(oTarget));
 
     // For spells to make sure they now treat you like the new race
-    SetLocalInt(oPC,"RACIAL_TYPE",GetRacialType(oTarget)+1);
+    SetLocalInt(oPC,"RACIAL_TYPE",MyPRCGetRacialType(oTarget)+1);
 
     // PnP rules say the shifter would heal as if they rested
     effect eHeal = EffectHeal(GetHitDice(oPC)*d4());

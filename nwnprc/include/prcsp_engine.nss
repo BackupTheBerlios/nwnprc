@@ -1,3 +1,4 @@
+#include "prc_inc_racial"
 #include "prc_feat_const"
 #include "prc_class_const"
 
@@ -53,8 +54,7 @@ PRCGetSpellResistance(object oTarget, object oCaster)
         
         // Foe Hunter SR stacks with normal SR 
         // when a spell is cast by their hated enemy
-        // When Inlcude fixes are done, change GetRacialType to MyPRCGetRacialType
-        if(GetHasFeat(FEAT_HATED_ENEMY_SR, oTarget) && GetLocalInt(oTarget, "HatedFoe") == GetRacialType(oCaster) )
+        if(GetHasFeat(FEAT_HATED_ENEMY_SR, oTarget) && GetLocalInt(oTarget, "HatedFoe") == MyPRCGetRacialType(oCaster) )
         {
              iSpellRes += 15 + GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oTarget);
         }
@@ -73,13 +73,13 @@ PRCShowSpellResist(object oCaster, object oTarget, int nResist, float fDelay = 0
 	{
 		string message = nResist == SPELL_RESIST_FAIL ?
 			"Target is AFFECTED by the spell" : "Target RESISTED the spell";
-		//SendMessageToPC(oCaster, message);
+		SendMessageToPC(oCaster, message);
 	}
 	if (GetIsPC(oTarget))
 	{
 		string message = nResist == SPELL_RESIST_FAIL ?
 			"You are AFFECTED by the spell" : "You RESISTED the spell";
-		//SendMessageToPC(oTarget, message);
+		SendMessageToPC(oTarget, message);
 	}
 	
 	if (nResist != SPELL_RESIST_FAIL) {

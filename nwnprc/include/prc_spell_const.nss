@@ -3,6 +3,7 @@ const int SPELL_MAJOR_MAGIC_MISSILE         = 2247;
 const int SPELL_GREAT_WALL_OF_DISPEL        = 2096;
 const int SPELL_CONCECRATE                  = 2167;
 const int SPELL_SOL_CONCECRATE              = 2108;
+const int SPELL_BLACKLIGHT                  = 2091;
 //oozemaster
 const int SPELL_SLIME_WAVE = 2023;
 
@@ -171,6 +172,10 @@ const int SPELL_FOM_DIVINE_SONG_MONSTREGEN     	    = 2328;
 const int SPELL_FOM_DIVINE_SONG_RAISEDEAD      	    = 2329;
 const int SPELL_FOM_DIVINE_SONG_SPELLRESISTANCE	    = 2330;
 const int SPELL_FOM_ENCOREPERFORMANCE          	    = 2331;
+
+//Anti-Paladin
+const int SPELL_ANTIPAL_DARKNESS                   = 2042;
+const int SPELL_ANTIPAL_DESECRATE                  = 2043;
 						  
 // Spell Feat Generic
 const int SPELL_MANYSHOT2                   = 2246;

@@ -521,6 +521,32 @@ void FeatUsePerDay(object oPC,int iFeat, int iAbiMod = ABILITY_CHARISMA, int iMo
 
 }
 
+void SpellAPal(object oPC)
+{
+
+   int APal = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oPC);
+   int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
+   if (APal>20) APal = 20;
+   
+   if (!APal) return ;
+ 
+   int iLvl1 = (APal>5)+ (APal>13)+ (APal>17);
+   int iLvl2 = (APal>9)+ (APal>15)+ (APal>18);
+   int iLvl3 = (APal>11)+ (APal>16)+ (APal>18);
+   int iLvl4 = (APal>14)+ (APal>18)+ (APal>19);
+   
+   iLvl1 +=  (iWis<12 ? 0 :(iWis-4)/8) ;
+   iLvl2 +=  (iWis<14 ? 0 :(iWis-6)/8) ;
+   iLvl3 +=  (iWis<16 ? 0 :(iWis-8)/8) ;
+   iLvl4 +=  (iWis<18 ? 0 :(iWis-10)/8) ;
+   
+   FeatUsePerDay(oPC,FEAT_AP_SPELLLVL1,-1,iLvl1);
+   FeatUsePerDay(oPC,FEAT_AP_SPELLLVL2,-1,iLvl2);
+   FeatUsePerDay(oPC,FEAT_AP_SPELLLVL3,-1,iLvl3);
+   FeatUsePerDay(oPC,FEAT_AP_SPELLLVL4,-1,iLvl4);
+
+}
+
 void SpellSol(object oPC)
 {
 
@@ -587,6 +613,7 @@ void FeatSpecialUsePerDay(object oPC)
     SpellSol(oPC);  
     SpellKotMC(oPC);
     SpellShadow(oPC);
+    SpellAPal(oPC);
     FeatUsePerDay(oPC,FEAT_SA_SHIELDSHADOW,-1,GetCasterLvl(TYPE_ARCANE,oPC));
 
 }

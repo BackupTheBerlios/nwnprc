@@ -996,6 +996,14 @@ const int FEAT_DRAGONSONG_COMPULSION    = 3442;
 const int FEAT_DRAGONSONG_SPEED         = 3443;
 const int FEAT_DRAGONSONG_FEAR          = 3444;
 const int FEAT_DRAGONSONG_HEALING       = 3445;
+const int FEAT_EPIC_DRAGONSONG_STRENGTH      = 3496;
+const int FEAT_EPIC_DRAGONSONG_COMPULSION    = 3497;
+const int FEAT_EPIC_DRAGONSONG_SPEED         = 3498;
+const int FEAT_EPIC_DRAGONSONG_FEAR          = 3499;
+const int FEAT_EPIC_DRAGONSONG_HEALING       = 3500;
+const int FEAT_FOCUS_DRAGONSONG              = 3318;
+const int FEAT_GREATER_FOCUS_DRAGONSONG      = 3319;
+const int FEAT_EPIC_FOCUS_DRAGONSONG         = 3321;
 
 // Favored of Milil
 const int FEAT_FOM_DIVINE_SONG_BLESS          	 = 4459;
@@ -1035,7 +1043,10 @@ const int FEAT_FOM_ENCORE_PERFORMANCE		 = 4436;
 // Evil-Paladin
 const int FEAT_HIDDENFAITH                       = 3484;
 const int FEAT_AP_TURN_OUTSIDER                  = 3486;
-
+const int FEAT_AP_SPELLLVL1                      = 3488;
+const int FEAT_AP_SPELLLVL2                      = 3489;
+const int FEAT_AP_SPELLLVL3                      = 3490;
+const int FEAT_AP_SPELLLVL4                      = 3491;
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////

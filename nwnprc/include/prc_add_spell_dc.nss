@@ -226,16 +226,15 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
 int ShadowWeaveDC(object oCaster ,object oTarget, int nID )
 {
    int nDC;
-   int iClass = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oTarget)/3;
+   int iClass = (GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oTarget)+1)/3;
+   int iClassC = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;
    
    //if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0-iClass;
    int iShar = GetLocalInt(oCaster, "PatronShar");
    
    int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
    if ( nSchool == SPELL_SCHOOL_ENCHANTMENT || nSchool == SPELL_SCHOOL_NECROMANCY || nSchool == SPELL_SCHOOL_ILLUSION)
-      nDC = iShar-iClass;
-   else if( nID== SPELL_DARKNESS || nID == SPELLABILITY_AS_DARKNESS  || nID == SPELL_SHADOW_CONJURATION_DARKNESS || nID == 688 || nID ==SHADOWLORD_DARKNESS)
-      nDC = iShar-iClass;
+      nDC = iShar-iClass+iClassC;
       
    return  nDC;
 

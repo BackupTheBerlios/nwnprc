@@ -175,16 +175,19 @@ int GetSpellPowerBonus(object oCaster = OBJECT_SELF)
 
 // Shadow Weave Feat
 // +1 caster level vs SR (school Ench,Illu,Necro)
-int ShadowWeavePen(object oCaster = OBJECT_SELF)
+int ShadowWeavePen(int nID, object oCaster = OBJECT_SELF)
 {
    int nSP;
    
    if (!GetHasFeat(FEAT_SHADOWWEAVE,oCaster)) return 0;
    if (!GetLocalInt(oCaster, "PatronShar")) return 0 ;
    
+   int iClass = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,oCaster)/3;
    int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
    if ( nSchool == SPELL_SCHOOL_ENCHANTMENT || nSchool == SPELL_SCHOOL_NECROMANCY || nSchool == SPELL_SCHOOL_ILLUSION)
-     nSP++;
+     nSP = 1+iClass;
+   else if( nID== SPELL_BLACKLIGHT )
+     nSP = 1+iClass;
 
    return  nSP;
 }
@@ -197,7 +200,7 @@ int add_spl_pen(object oCaster = OBJECT_SELF)
     nSP += RedWizardSP(spell_id, oCaster);
     nSP += GetSpellPowerBonus(oCaster);
     nSP += GetSpellPenetreFocusSchool(oCaster);
-    nSP += ShadowWeavePen(oCaster);
+    nSP += ShadowWeavePen(spell_id,oCaster);
         
     return nSP;
 }

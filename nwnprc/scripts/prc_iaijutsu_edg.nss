@@ -23,23 +23,26 @@ void main()
     int iWeapEnch = GetDamagePowerConstant(oWeap, oTarget, oPC);
     int iReturn = GetAttackRoll(oTarget, oPC, oWeap, 0, iAttackBonus, 0, TRUE, 0.0);
 
-    
-
-    if(iReturn == 2)
+    if(GetBaseItemType(oWeap) == BASE_ITEM_KATANA) 
     {
-       	effect eDamage = GetAttackDamage(oTarget, oPC, oWeap, sWeaponBonusDamage, sSpellBonusDamage, 0, iWeapDamage, TRUE, 0, 0, iCriticalMultiplier);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
-	ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
-	FloatingTextStringOnCreature("Critical Echoes of the Edge",OBJECT_SELF);
-        ActionAttack(oTarget);
-    }
+    	if(iReturn == 2)
+	{
+   	    	effect eDamage = GetAttackDamage(oTarget, oPC, oWeap, sWeaponBonusDamage, sSpellBonusDamage, 0, iWeapDamage, TRUE, 0, 0, iCriticalMultiplier);
+		ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
+		FloatingTextStringOnCreature("Critical Echoes of the Edge",OBJECT_SELF);
+		ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
+		FloatingTextStringOnCreature("Critical Echoes of the Edge",OBJECT_SELF);
+		ActionAttack(oTarget);
+	}
     
-    if(iReturn == 1)
-    {
-       effect eDamage = GetAttackDamage(oTarget, oPC, oWeap, sWeaponBonusDamage, sSpellBonusDamage, 0, iWeapDamage, FALSE, 0, 0, iCriticalMultiplier);
-       ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
-       ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
-       FloatingTextStringOnCreature("Echoes of the Edge",OBJECT_SELF);
-       ActionAttack(oTarget);
-    }
+	if(iReturn == 1)
+	{
+		effect eDamage = GetAttackDamage(oTarget, oPC, oWeap, sWeaponBonusDamage, sSpellBonusDamage, 0, iWeapDamage, FALSE, 0, 0, iCriticalMultiplier);
+		ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
+		FloatingTextStringOnCreature("Echoes of the Edge",OBJECT_SELF);
+		ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget);
+		FloatingTextStringOnCreature("Echoes of the Edge",OBJECT_SELF);
+		ActionAttack(oTarget);
+	}
+    }	
 }

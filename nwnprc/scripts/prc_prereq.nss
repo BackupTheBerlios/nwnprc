@@ -575,6 +575,7 @@ void main()
 	Hathran(oPC);
 	Tempest(oPC);
 	KOTC(oPC);
+	BFZ(oPC);
 	ManAtArms(oPC);
 	SOL(oPC);
 	Shadowlord(oPC, iArcSpell1);

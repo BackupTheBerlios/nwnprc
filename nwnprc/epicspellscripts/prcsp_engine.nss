@@ -70,9 +70,7 @@ MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDel
 		if (!nEffCasterLvl) {
 			nEffCasterLvl = GetLocalInt(oCaster, CASTER_LEVEL_TAG);
 			if (!nEffCasterLvl) {
-				nEffCasterLvl = GetCasterLevel(oCaster)
-					+ GetChangesToCasterLevel(oCaster)
-					+ SPGetPenetr();
+				nEffCasterLvl = PRCGetCasterLevel(oCaster) + SPGetPenetr();
 				SetLocalInt(oCaster, CASTER_LEVEL_TAG, nEffCasterLvl);
 				DelayCommand(CACHE_TIMEOUT_CAST,
 					DeleteLocalInt(oCaster, CASTER_LEVEL_TAG));

@@ -40,7 +40,7 @@ IsDivineClass(int nClass)
 int
 PractisedSpellCast( int nLevelBonus,int nCastingClass ,object oCaster)
 {
-   int DiffCasterLvl = GetHitDice(oCaster)-(GetCasterLevel(oCaster)+nLevelBonus);
+   int DiffCasterLvl = GetHitDice(oCaster)-(PRCGetCasterLevel(oCaster)+nLevelBonus);
    int nBonus ;
   
    if (DiffCasterLvl)

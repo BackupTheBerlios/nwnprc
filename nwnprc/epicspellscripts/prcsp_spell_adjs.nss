@@ -2,17 +2,6 @@
 #include "prc_add_spell_dc"
 
 //
-//	This function computes additional increases to the effective
-//	spell level of the caster.
-//	TODO: Convert the script to a function.
-//	TODO: Get rid of this function if possible.
-//
-int
-GetChangesToCasterLevel(object oCaster){
-    return ExecuteScriptAndReturnInt("prcep_cast_lvl", oCaster);
-}
-
-//
 //	Compute the Effective Caster Level without Penetration
 //
 int

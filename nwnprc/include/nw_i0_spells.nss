@@ -128,7 +128,7 @@ int AmIAHumanoid(object oTarget)
 //:: Created On:
 //:://////////////////////////////////////////////
 
-void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impactHurt, int vfx_impactHeal, int nSpellID)
+void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impactHurt, int vfx_impactHeal, int nSpellID ,int ModCasterlevel = 0)
 {
     //Declare major variables
     object oTarget = GetSpellTargetObject();
@@ -137,8 +137,12 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
     effect eVis = EffectVisualEffect(vfx_impactHurt);
     effect eVis2 = EffectVisualEffect(vfx_impactHeal);
     effect eHeal, eDam;
-
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+   
+    int CasterLvl;
+    if ( ModCasterlevel == 0)
+       CasterLvl  = PRCGetCasterLevel(OBJECT_SELF); 
+    else
+       CasterLvl = ModCasterlevel;
 
     int nExtraDamage = CasterLvl; // * figure out the bonus damage
     if (nExtraDamage > nMaxExtraDamage)

@@ -111,7 +111,7 @@ void main()
         if (nFirstClass != nCastingClass && IsArcaneClass(nFirstClass))
             return;
 
-        nLevelBonus += GetLevelByClass(CLASS_TYPE_ARCHMAGE, oCaster)
+            nLevelBonus += GetLevelByClass(CLASS_TYPE_ARCHMAGE, oCaster)
 			+ GetLevelByClass(CLASS_TYPE_ARCTRICK, oCaster)
 			+ GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oCaster)
 			+ GetLevelByClass(CLASS_TYPE_ES_ACID, oCaster)
@@ -132,7 +132,12 @@ void main()
 			+ (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) + 1) / 2
 			+ (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2
 			+ (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_ORCUS, oCaster) + 1) / 2
 			+ (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2;
+			
+	        // 1/3 progression classes.  These gain caster levels at 2, 5, 8, 11, ...
+	        // thus the correct formula, considering integer truncation, is: (level+1)/3
+	        nLevelBonus += (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, oCaster) + 1) / 3;
 
 		//
 		//	Class specific code for Arcane Casters
@@ -175,7 +180,7 @@ void main()
             return;
 
 		// This section accounts for full progression classes
-        nLevelBonus += GetLevelByClass(CLASS_TYPE_DIVESA, oCaster)
+             nLevelBonus += GetLevelByClass(CLASS_TYPE_DIVESA, oCaster)
 			+ GetLevelByClass(CLASS_TYPE_DIVESC, oCaster)
 			+ GetLevelByClass(CLASS_TYPE_DIVESE, oCaster)
 			+ GetLevelByClass(CLASS_TYPE_DIVESF, oCaster)
@@ -194,6 +199,7 @@ void main()
 			+ (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2
 			+ (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
 			+ (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oCaster) + 1) / 2
 			+ (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2;
 
                 if ( !GetHasFeat(FEAT_SF_CODE, oCaster))

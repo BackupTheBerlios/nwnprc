@@ -98,6 +98,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_GREATER_RESTORATION, FALSE));
 
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, oTarget);
+    SetLocalInt(oTarget, "WasRestored", TRUE);
+    DelayCommand(HoursToSeconds(1), DeleteLocalInt(oTarget, "WasRestored"));
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

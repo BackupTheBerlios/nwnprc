@@ -54,7 +54,7 @@ void NoSmite(object oTarget ,string sText ,int iEvil)
    }
    
    int iNextAttackPenalty = 0;
-   float fDelay = 1.5f;
+   float fDelay = 0.0f;
 
    int iAttacks=NbAtk(OBJECT_SELF);
 
@@ -137,7 +137,7 @@ void main()
    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
 
    int iNextAttackPenalty = 0;
-   float fDelay = 1.5f;
+   float fDelay = 0.0f;
 
    int iAttacks=NbAtk(OBJECT_SELF);
 

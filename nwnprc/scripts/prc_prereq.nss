@@ -16,9 +16,9 @@
 int Bard(object oPC)
 {
         int iBard = GetLevelByClass(CLASS_TYPE_BARD, oPC);
-        int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA);
+        int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA) - 10;
         int iShad = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
-        int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
+        int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE) - 10;
 	int iBSpell;
 	int iSSpell;
 
@@ -96,8 +96,8 @@ int ArcSpell(object oPC, int iArcSpell)
 	//A basic check to see what their primary class is
         int iSorc = GetLevelByClass(CLASS_TYPE_SORCERER, oPC);
         int iWiz = GetLevelByClass(CLASS_TYPE_WIZARD, oPC);
-        int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA);
-        int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
+        int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA) - 10;
+        int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE) - 10;
 
 
         iArcSpell = iWiz;
@@ -212,7 +212,7 @@ int RanPal(object oPC)
         int iRanger = GetLevelByClass(CLASS_TYPE_RANGER, oPC);
         int iPaladin = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
         int iSoldier = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT, oPC);
-        int iWis = GetAbilityScore(oPC, ABILITY_WISDOM);
+        int iWis = GetAbilityScore(oPC, ABILITY_WISDOM) - 10;
 	int iRanPal;
 	int iSOL;
 
@@ -282,7 +282,7 @@ int DivSpell(object oPC, int iDivSpell)
 	//Variables
         int iDruid = GetLevelByClass(CLASS_TYPE_DRUID, oPC);
         int iCler = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-        int iWis = GetAbilityScore(oPC, ABILITY_WISDOM);
+        int iWis = GetAbilityScore(oPC, ABILITY_WISDOM) - 10;
 
 
 
@@ -555,6 +555,8 @@ void main()
         object oPC = GetPCLevellingUp();
         int iArcSpell;
         int iDivSpell;
+        int iArcSpell1;
+        int iDivSpell1;
 
 	SetLocalInt(oPC, "PRC_AllSpell1", 1);
 	SetLocalInt(oPC, "PRC_AllSpell2", 1);
@@ -567,14 +569,14 @@ void main()
 	SetLocalInt(oPC, "PRC_AllSpell9", 1);
 
 
-	iArcSpell = ArcSpell(oPC, iArcSpell);
-	iDivSpell = DivSpell(oPC, iDivSpell);
+	iArcSpell1 = ArcSpell(oPC, iArcSpell);
+	iDivSpell1 = DivSpell(oPC, iDivSpell);
 
 	Hathran(oPC);
 	Tempest(oPC);
 	KOTC(oPC);
 	ManAtArms(oPC);
 	SOL(oPC);
-	Shadowlord(oPC, iArcSpell);
-	Shifter(oPC, iArcSpell, iDivSpell);
+	Shadowlord(oPC, iArcSpell1);
+	Shifter(oPC, iArcSpell1, iDivSpell1);
 }

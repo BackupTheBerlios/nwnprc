@@ -19,11 +19,6 @@
 
 void ApplyAbsAmbidex(object oPC)
 {
-     // former code that should have added it to the
-     // player skin, but did not function...
-     //itemproperty ipAB = ItemPropertyAttackBonus(2);
-     //AddItemProperty(DURATION_TYPE_PERMANENT, ipAB, oSkin);
-
      effect eAB = EffectAttackIncrease(2, ATTACK_BONUS_MISC);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAB, oPC);
      
@@ -55,27 +50,23 @@ void ApplyTwoWeaponDefense(object oPC, object oSkin)
      }
 
      itemproperty ipACBonus = ItemPropertyACBonus(ACBonus);
-     //AddItemProperty(DURATION_TYPE_PERMANENT, ipACBonus, oSkin);
      
      SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", ACBonus, ITEM_PROPERTY_AC_BONUS);   
      SetLocalInt(oPC, "HasTWD", 2);
 }
 
 void RemoveTwoWeaponDefense(object oPC, object oSkin)
-{
-     //itemproperty iprop = GetFirstItemProperty(oSkin);
-
-     //while (GetIsItemPropertyValid(iprop))
-     //{
-     //     if(GetItemPropertyType(iprop) == ITEM_PROPERTY_AC_BONUS)
-     //     {
-     //          RemoveItemProperty(oSkin, iprop);
-     //     }
-     //     iprop = GetNextItemProperty(oSkin);
-     //}
-     
+{     
      SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", 0, ITEM_PROPERTY_AC_BONUS);
      SetLocalInt(oPC, "HasTWD", 1);
+}
+
+void ApplyExtraAttacks(object oPC)
+{
+     if(!GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
+     {              
+          ActionCastSpellAtObject(SPELL_T_TWO_WEAPON_FIGHTING, oPC, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+     }
 }
 
 void main()
@@ -104,12 +95,9 @@ void main()
          if(GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
          {
               RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC); 
-         }
-    
-         // debug code removed to not confuse players
-         // nMes = "*Removing Invallid Effects*";
-         // FloatingTextStringOnCreature(nMes, oPC, FALSE);    
+         }  
     }
+    // Removes effects is armor is not light
     else if( armorType > ARMOR_TYPE_LIGHT )
     {
          RemoveAbsAmbidex(oPC);    
@@ -123,7 +111,12 @@ void main()
          nMes = "*Two-Weapon Fighting Abilities Disabled Due To Equipped Armor*";
          FloatingTextStringOnCreature(nMes, oPC, FALSE);
     }
-    else if(oWeapR == OBJECT_INVALID || oWeapL == OBJECT_INVALID || oWeapR == oWeapL)
+    // Remove all effects if weapons are not correct
+    else if(oWeapR == OBJECT_INVALID || oWeapL == OBJECT_INVALID || 
+            GetBaseItemType(oWeapL) == BASE_ITEM_LARGESHIELD ||
+            GetBaseItemType(oWeapL) == BASE_ITEM_TOWERSHIELD ||
+            GetBaseItemType(oWeapL) == BASE_ITEM_SMALLSHIELD ||
+            GetBaseItemType(oWeapL) == BASE_ITEM_TORCH)
     {
          RemoveAbsAmbidex(oPC);    
          RemoveTwoWeaponDefense(oPC, oSkin);
@@ -136,6 +129,7 @@ void main()
          nMes = "*Two-Weapon Fighting Abilities Disabled Due To Invallid Weapon*";
          FloatingTextStringOnCreature(nMes, oPC, FALSE);
     }
+    // Apply effects if it passes all other checks
     else
     {
           // Is only called if Absolute Ambidex has been previously removed
@@ -157,5 +151,11 @@ void main()
                nMes = "*Two-Weapon Defense Activated*";
                FloatingTextStringOnCreature(nMes, oPC, FALSE);
           }
+          
+          // inserts a random delay before calling this function
+          // this should prevent some errors caused by equipping
+          // two weapons in rapid succession.
+          float fDelay = IntToFloat(d6(1)) * 0.1;
+          DelayCommand(fDelay, ApplyExtraAttacks(oPC) );
      }
 }

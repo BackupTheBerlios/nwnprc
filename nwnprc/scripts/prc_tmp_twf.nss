@@ -24,6 +24,9 @@ int isNotShield(object oItem)
      else if (GetBaseItemType(oItem) == BASE_ITEM_TOWERSHIELD) isNotAShield == 0;
      else if (GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD) isNotAShield == 0;
      
+     // Added torches to the check as they should not count either
+     else if (GetBaseItemType(oItem) == BASE_ITEM_TORCH) isNotAShield == 0;
+     
      return isNotAShield;
 }
 
@@ -80,6 +83,7 @@ void main()
                    nMes = "*Invalid Weapon.  Ability Not Activated!*";
               }
           }
+          // non-tempests
           else
           {
                if(oWeapR != OBJECT_INVALID  && oWeapL != OBJECT_INVALID && isNotShield(oWeapL) )

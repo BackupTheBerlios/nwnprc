@@ -60,7 +60,8 @@ void main()
         // Must set which school the spell is before the spell hook, in case spell school
         // is a criteria for ending the spell.
         nEffect1 = EFFECT_TYPE_DISEASE;
-        nEffect2 = EFFECT_TYPE_ABILITY_DECREASE;
+        if(GetPRCSwitch(PRC_BIOWARE_NEUTRALIZE_POISON))
+        	nEffect2 = EFFECT_TYPE_ABILITY_DECREASE;
     }
     else if(nSpellID == SPELL_NEUTRALIZE_POISON)
     {
@@ -70,7 +71,8 @@ void main()
          // is a criteria for ending the spell.
         nEffect1 = EFFECT_TYPE_POISON;
         nEffect2 = EFFECT_TYPE_DISEASE;
-        nEffect3 = EFFECT_TYPE_ABILITY_DECREASE;
+        if(GetPRCSwitch(PRC_BIOWARE_REMOVE_DISEASE))
+        	nEffect3 = EFFECT_TYPE_ABILITY_DECREASE;
     }
 
 /*

@@ -66,7 +66,7 @@ int iIPConst =  IPGetIPConstCastSpellFromSpellID(iID);
 
 if (iID == 0 && iIPConst != 0)
     {
-        FloatingTextStrRefOnCreature(84544,oCaster);
+        //FloatingTextStrRefOnCreature(84544,oCaster);
         finish(oCaster);
         return;
     }
@@ -100,7 +100,7 @@ if(GetItemHasItemProperty(oItem, ITEM_PROPERTY_CAST_SPELL))
             if(iCost == IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY)
                 {
                 //if the item has max return
-                FloatingTextStrRefOnCreature(16780242,oCaster);
+                FloatingTextStrRefOnCreature(16825242,oCaster);
                 finish(oCaster);
                 SetModuleOverrideSpellScriptFinished();
                 return;
@@ -135,7 +135,7 @@ int iCostMax = GetLocalInt(oItem,"cout_instrument");
 // if the cost is too hight return
 if(iCostMax < iTotalCost)
     {
-        FloatingTextStrRefOnCreature(16780243,oCaster);
+        FloatingTextStrRefOnCreature(16825243,oCaster);
         finish(oCaster);
         SetModuleOverrideSpellScriptFinished();
         return;

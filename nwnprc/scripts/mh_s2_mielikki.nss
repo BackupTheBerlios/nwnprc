@@ -22,7 +22,7 @@ void main()
     string str;
     if(GetRacialType(oTarget) != RACIAL_TYPE_ANIMAL)
     {
-    FloatingTextStrRefOnCreature(16780237,OBJECT_SELF,TRUE);
+    FloatingTextStrRefOnCreature(16825237,OBJECT_SELF,TRUE);
     IncrementRemainingFeatUses(OBJECT_SELF,FEAT_MIELIKKI);
     //FloatingTextStringOnCreature("Vous devez cibler une cible animale",OBJECT_SELF,TRUE);
     return;

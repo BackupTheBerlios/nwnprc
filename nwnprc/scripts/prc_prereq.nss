@@ -57,6 +57,6 @@ void main()
 
     if(bEnd > 0) EnduranceBonus(oPC, oSkin, bEnd, IP_CONST_SAVEVS_DEATH);
     if(bTS > 0) TrackSkill(oPC, oSkin, bTS);
-    if(bGen = 1) Ethran(oPC, oSkin,bEthran);
-    if(bEthran>0) Ethran(oPC, oSkin,bEthran);
+    if((bGen = 1) && (bEthran > 0)) Ethran(oPC, oSkin,bEthran);
+    //if(bEthran>0) Ethran(oPC, oSkin,bEthran);
     }

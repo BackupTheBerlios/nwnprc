@@ -82,16 +82,21 @@ int FindUnarmedDamage(object oCreature)
     
     int iDamageToUse = 0;
     
+    // Decided to allow Shou disciple levels to stack on top of brawler.
+    if (iBrawler) iBrawler = iBrawler + iShou;
+
+    // Brawler has a very simple damage progression (regardless of size):    
+    iBrawlerDamage = iBrawler / 6 + 2;   //1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
+   
     // Future unarmed classes: if you do your own damage, add in "levelups" below here.
     iMonk = iMonk + iShou + iSacredFist;
     
-    iBrawler = iBrawler + iShou; // Decided to allow Shou disciple levels to stack on top of brawler.
-    
     // 3.5 Dmg Table
-    iMonkDamage =  iMonk/4+2;
+    iMonkDamage =  iMonk / 4 + 2;
     
-    if (iMonkDamage>7) iMonkDamage = 7;
-    
+    // Monks have a damage cap.
+    if (iMonkDamage > 7) iMonkDamage = 7;
+   
      // Small monks get damage penalty
     if (iSize == CREATURE_SIZE_SMALL || iSize == CREATURE_SIZE_TINY)
        iMonkDamage--; //1d4, 1d6, 1d8, 1d10, 2d6, 2d8
@@ -108,8 +113,6 @@ int FindUnarmedDamage(object oCreature)
        iMonkDamage = (iMonk >= 20) ? 9 : iMonkDamage; // different from other progressions
        iUseBigMonk = TRUE;
     }
-    
-    iBrawlerDamage = iBrawler / 6 + 2;   //1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
     
     if (iShou == 1) iShouDamage = 2;                //1d6
     if (iShou == 2) iShouDamage = 3;                //1d8

@@ -18,9 +18,39 @@ void AddBrutalStrikeDam(object oPC)
 {
 	int iDam;
 
-
-
-	if (GetHasFeat(FEAT_BSTRIKE_D4, oPC))
+	if (GetHasFeat(FEAT_BSTRIKE_D12, oPC))
+	{
+	iDam = DAMAGE_BONUS_12;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_D11, oPC))
+	{
+	iDam = DAMAGE_BONUS_11;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_D10, oPC))
+	{
+	iDam = DAMAGE_BONUS_10;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_D9, oPC))
+	{
+	iDam = DAMAGE_BONUS_9;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_D8, oPC))
+	{
+	iDam = DAMAGE_BONUS_8;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_D7, oPC))
+	{
+	iDam = DAMAGE_BONUS_7;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_D6, oPC))
+	{
+	iDam = DAMAGE_BONUS_6;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_D5, oPC))
+	{
+	iDam = DAMAGE_BONUS_5;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_D4, oPC))
 	{
 	iDam = DAMAGE_BONUS_4;
 	}
@@ -50,9 +80,39 @@ void AddBrutalStrikeAtk(object oPC)
 {
 	int iAtk;
 
-
-
-	if (GetHasFeat(FEAT_BSTRIKE_A4, oPC))
+	if (GetHasFeat(FEAT_BSTRIKE_A12, oPC))
+	{
+	iAtk = 12;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_A11, oPC))
+	{
+	iAtk = 11;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_A10, oPC))
+	{
+	iAtk = 10;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_A9, oPC))
+	{
+	iAtk = 9;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_A8, oPC))
+	{
+	iAtk = 8;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_A7, oPC))
+	{
+	iAtk = 7;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_A6, oPC))
+	{
+	iAtk = 6;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_A5, oPC))
+	{
+	iAtk = 5;
+	}
+	else if (GetHasFeat(FEAT_BSTRIKE_A4, oPC))
 	{
 	iAtk = 4;
 	}

@@ -539,10 +539,26 @@ const int FEAT_BSTRIKE_A1        = 4246;
 const int FEAT_BSTRIKE_A2        = 4247;
 const int FEAT_BSTRIKE_A3        = 4248;
 const int FEAT_BSTRIKE_A4        = 4249;
+const int FEAT_BSTRIKE_A5        = 2683;
+const int FEAT_BSTRIKE_A6        = 2684;
+const int FEAT_BSTRIKE_A7        = 2685;
+const int FEAT_BSTRIKE_A8        = 2686;
+const int FEAT_BSTRIKE_A9        = 2687;
+const int FEAT_BSTRIKE_A10       = 2688;
+const int FEAT_BSTRIKE_A11       = 2689;
+const int FEAT_BSTRIKE_A12       = 2690;
 const int FEAT_BSTRIKE_D1        = 4242;
 const int FEAT_BSTRIKE_D2        = 4243;
 const int FEAT_BSTRIKE_D3        = 4244;
 const int FEAT_BSTRIKE_D4        = 4245;
+const int FEAT_BSTRIKE_D5        = 2669;
+const int FEAT_BSTRIKE_D6        = 2670;
+const int FEAT_BSTRIKE_D7        = 2671;
+const int FEAT_BSTRIKE_D8        = 2672;
+const int FEAT_BSTRIKE_D9        = 2673;
+const int FEAT_BSTRIKE_D10       = 2674;
+const int FEAT_BSTRIKE_D11       = 2675;
+const int FEAT_BSTRIKE_D12       = 2676;
 
 //Knight of the Middle Circle
 const int FEAT_KOTMC_SL_1        = 2596;

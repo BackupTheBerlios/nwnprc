@@ -980,6 +980,10 @@ public final class PageGeneration{
 				}else throw new PageGenerationException("Invalid GrantedOnLevel entry in " + featTable.getName() + " on row " + i + ": " + featTable.getEntry("GrantedOnLevel", i));
 			}
 			
+			// Skip feats that can never be gotten
+			if(grantedLevel > 40) continue;
+			
+			// Figure out the correct map to place the feat in
 			if(temp.equals("3")){
 				if(tempFeat.isEpic || grantedLevel > epicLevel) epicBonusFeats.put(tempFeat.name, tempFeat);
 				else                                            normalBonusFeats.put(tempFeat.name, tempFeat);
@@ -987,7 +991,6 @@ public final class PageGeneration{
 				if(tempFeat.isEpic || grantedLevel > epicLevel) epicSelectableFeats.put(tempFeat.name, tempFeat);
 				else                                            normalSelectableFeats.put(tempFeat.name, tempFeat);
 			}
-			
 		}
 		
 		// Build the bonus feat table

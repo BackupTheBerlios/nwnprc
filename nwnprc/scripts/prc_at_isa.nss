@@ -130,6 +130,18 @@ int GetSneakAttackDamage(int iSneakAttackDice)
      return iSneakAttackDamage;
 }
 
+int IsImmuneImpSneakAttack(oTarget)
+{
+     in bReturnVal = FALSE;
+     
+     if( GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) )
+     {
+          bReturnVal = TRUE;
+     }
+     
+     return bReturnVal;
+}
+
 void main()
 {
      object oTarget = GetSpellTargetObject();
@@ -187,14 +199,23 @@ void main()
                
           iSneakDamage = GetSneakAttackDamage(iSneakAttackDice);
           
-          int itotDam = iWeapDamage + iSneakDamage;
+          int itotDam = 0;
+          if(IsImmuneImpSneakAttack(oTarget) )
+          {
+               itotDam = iWeapDamage;
+               nMes = "*Enemy Immune to Impromtu Sneak Attack*";
+          }
+          else
+          {
+               itotDam = iWeapDamage + iSneakDamage;
+               nMes = "*Impromptu Sneak Attack Hit*";
+          }
           
           effect eTotalDamage = EffectDamage(itotDam, nDamageBonusType, DAMAGE_POWER_NORMAL);
           ApplyEffectToObject(DURATION_TYPE_INSTANT, eTotalDamage, oTarget);
           
           string damage = "Impromtu Sneak Attack Damage: " + IntToString(iSneakDamage);
           SendMessageToPC(oPC, damage);
-          nMes = "*Impromptu Sneak Attack Hit*";
      }
      else
      {

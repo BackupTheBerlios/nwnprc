@@ -5,7 +5,7 @@ void main()
 
     int iGoldCost = (10*GetLevelByClass(CLASS_TYPE_RUNESCARRED,OBJECT_SELF));
     int iXPCost = (iGoldCost/25);
-    effect eDam = EffectDamage(d6(2),DAMAGE_TYPE_SLASHING,DAMAGE_POWER_NORMAL);
+    effect eDam = EffectDamage(d6(2),DAMAGE_TYPE_MAGICAL,DAMAGE_POWER_NORMAL);
 
     // Remove some gold from the player
     TakeGoldFromCreature(iGoldCost, GetPCSpeaker(), TRUE);

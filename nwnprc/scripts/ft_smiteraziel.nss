@@ -55,9 +55,7 @@ void NoSmite(object oTarget ,string sText ,int iEvil)
    
    int iNextAttackPenalty = 0;
    float fDelay = 0.0f;
-
    int iAttacks=NbAtk(OBJECT_SELF);
-
    int iDamage = 0;
    effect eDamage;
 
@@ -73,8 +71,7 @@ void NoSmite(object oTarget ,string sText ,int iEvil)
   {
     //Roll to hit  for Smite  Bonus CHA(1st atk) +Attack penalty +Weap Atk Bonus
     int iHit = DoMeleeAttack(OBJECT_SELF, oWeap, oTarget,  iNextAttackPenalty, TRUE, fDelay);
-
-
+ 
     if(iHit > 0)
     {
 
@@ -90,13 +87,14 @@ void NoSmite(object oTarget ,string sText ,int iEvil)
 
         //Apply the damage
         //Apply the damage
+        
+        
         if (SancMar)
            eDamage = AddDmgEffectMulti(iDamage,iDamageType, oWeap,oTarget,iEnhancement,iHit);
-//          eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, DAMAGE_POWER_ENERGY) ,oWeap,oTarget,iEnhancement);
         else
            eDamage = AddDmgEffectMulti(iDamage,iDamageType, oWeap,oTarget,iEnhancement,iHit);
-//         eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancement) ,oWeap,oTarget,iEnhancement);
-
+        
+        
         DelayCommand(fDelay + 0.1, ApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage, oTarget));
 
 
@@ -112,7 +110,7 @@ void NoSmite(object oTarget ,string sText ,int iEvil)
 }
 void main()
 {
-
+  
    // take lvl for Speed
    int LvlRaziel=GetLevelByClass(CLASS_TYPE_FISTRAZIEL);
    int iFeat=(LvlRaziel+1)/2+FEAT_SMITE_GOOD_ALIGN-1;
@@ -226,8 +224,6 @@ void main()
 
    int Immune = GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT);
 
-  SendMessageToPC(GetFirstPC(), "iAttacks:"+ IntToString(iAttacks));
- 
    //Perform a full round of attacks
   for(iAttacks; iAttacks > 0; iAttacks--)
   {

@@ -74,19 +74,22 @@ int RangedAttackBonus(object oPC, object oWeap, object oTarget, int iMod = 0)
 
 void main()
 {
-   int nSpellId = GetSpellId();
-   object oTarget = GetSpellTargetObject();
-   object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
+   int nSpellId     = GetSpellId();
+   object oTarget   = GetSpellTargetObject();
+   object oWeap     = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
    int iEnhancement = GetWeaponRangeEnhancement(oWeap,OBJECT_SELF);
-   int iDamageType = GetWeaponDamageType(oWeap);
+   int iDamageType  = GetWeaponDamageType(oWeap);
 
-   int iDamage =0;
+   int iDamage = 0;
 
    if (!GetWeaponRanged(oWeap))
    {
        FloatingTextStringOnCreature("*You must use a ranged weapon.*", OBJECT_SELF, FALSE);
        return;
    }
+   
+   // Let the target know they were done a hostile action at
+   SPRaiseSpellCastAt(oTarget, TRUE, nSpellId);
    
    if (!GetIsCreatureDisarmable(oTarget))
    {
@@ -101,7 +104,7 @@ void main()
    int iBonusA = iSizeT > 2 ? (iSizeT-2)*4:0 ;
    effect eDamage;
 
-   if (iSizeT ==4 && !GetWeaponRanged(oWeap)) iBonusA+=4;
+   if (iSizeT == 4 && !GetWeaponRanged(oWeap)) iBonusA+=4;
 
    float fDelay = 0.0;
 

@@ -90,11 +90,11 @@
 86  FEAT_SHADOW_LORD_CONVO                2360      3    1              1      
 87  WeaponProfCreature                    289       3    1              0      
 88  ImprovedUnarmedStrike                 21        3    1              0      
-89  Uncanny_Dodge_1                       195       3    8              0      
+89  Uncanny_Dodge_1                       195       3    10             0      
 90  Fists                                 4428      3    1              0      
-91  Strength_2                            4443      3    3              0      
-92  Constitution_2                        4444      3    11             0      
-93  Dexterity_2                           4445      3    18             0      
+91  Strength_2                            4443      3    17             0      
+92  Constitution_2                        4444      3    9              0      
+93  Dexterity_2                           4445      3    13             0      
 94  Brawler_Dodge_1                       4438      3    7              0      
 95  Brawler_Dodge_2                       4439      3    14             0      
 96  Brawler_Dodge_3                       4440      3    21             0      

@@ -41,10 +41,10 @@ void EvalPRCFeats(object oPC)
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESC, oPC);
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESE, oPC);
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESA, oPC);
-    
+
     // special add atk bonus equal to Enhancement
     ExecuteScript("ft_sanctmartial", oPC);
-    
+
     //Route the event to the appropriate class specific scripts
     if(GetLevelByClass(CLASS_TYPE_DUELIST, oPC) > 0)             ExecuteScript("prc_duelist", oPC);
     if(GetLevelByClass(CLASS_TYPE_ACOLYTE, oPC) > 0)             ExecuteScript("prc_acolyte", oPC);
@@ -120,7 +120,7 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)                ExecuteScript("prc_lingdmg", oPC);
 
     if(GetHasFeat(FEAT_ETERNAL_FREEDOM, oPC))                    ExecuteScript("etern_free", oPC);
-    
+
     // Miscellaneous
     ExecuteScript("prc_wyzfeat", oPC);
     ExecuteScript("onenter_ess", oPC);
@@ -299,7 +299,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"WerewolfArmorBonus");
     DeleteLocalInt(oSkin,"WerewolfWisBonus");
     // Tempest
-    DeleteLocalInt(oSkin,"TwoWeaponDefenseBonus");      
+    DeleteLocalInt(oSkin,"TwoWeaponDefenseBonus");
     // Lich
     DeleteLocalInt(oSkin,"LichSkillHide");
     DeleteLocalInt(oSkin,"LichSkillListen");
@@ -346,7 +346,23 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"InterI");
     DeleteLocalInt(oSkin,"HMSight");
     DeleteLocalInt(oSkin,"HMInvul");
-    
+    // race vars
+    DeleteLocalInt(oSkin,"RacialNaturalArmor");
+    DeleteLocalInt(oSkin,"RacialSize");
+    DeleteLocalInt(oSkin,"RacialRegeneration");
+    DeleteLocalInt(oSkin,"VeryHeroic");
+    DeleteLocalInt(oSkin,"SA_Jump");
+    DeleteLocalInt(oSkin,"SA_Bluff");
+    DeleteLocalInt(oSkin,"SA_Jump_4");
+    DeleteLocalInt(oSkin,"Leap");
+    DeleteLocalInt(oSkin,"SA_Spot_4");
+    DeleteLocalInt(oSkin,"Keen_Sight");
+    DeleteLocalInt(oSkin,"SA_Move_4");
+    DeleteLocalInt(oSkin,"SA_Craft_Armor");
+    DeleteLocalInt(oSkin,"SA_Craft_Weapon");
+    DeleteLocalInt(oSkin,"SA_Hide");
+    DeleteLocalInt(oSkin,"SA_Hide_Forest");
+
     // future PRCs Go below here
 }
 
@@ -550,19 +566,19 @@ void SpellCorup(object oPC)
    int Corup = GetLevelByClass(CLASS_TYPE_CORRUPTER,oPC);
    int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
    if (Corup>20) Corup = 20;
-   
+
    if (!Corup) return ;
- 
+
    int iLvl1 = (Corup>5)+ (Corup>13)+ (Corup>17);
    int iLvl2 = (Corup>9)+ (Corup>15)+ (Corup>18);
    int iLvl3 = (Corup>11)+ (Corup>16)+ (Corup>18);
    int iLvl4 = (Corup>14)+ (Corup>18)+ (Corup>19);
-   
+
    iLvl1 +=  (iWis<12 ? 0 :(iWis-4)/8) ;
    iLvl2 +=  (iWis<14 ? 0 :(iWis-6)/8) ;
    iLvl3 +=  (iWis<16 ? 0 :(iWis-8)/8) ;
    iLvl4 +=  (iWis<18 ? 0 :(iWis-10)/8) ;
-   
+
    FeatUsePerDay(oPC,FEAT_CO_SPELLLVL1,-1,iLvl1);
    FeatUsePerDay(oPC,FEAT_CO_SPELLLVL2,-1,iLvl2);
    FeatUsePerDay(oPC,FEAT_CO_SPELLLVL3,-1,iLvl3);
@@ -576,19 +592,19 @@ void SpellAPal(object oPC)
    int APal = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oPC);
    int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
    if (APal>20) APal = 20;
-   
+
    if (!APal) return ;
- 
+
    int iLvl1 = (APal>5)+ (APal>13)+ (APal>17);
    int iLvl2 = (APal>9)+ (APal>15)+ (APal>18);
    int iLvl3 = (APal>11)+ (APal>16)+ (APal>18);
    int iLvl4 = (APal>14)+ (APal>18)+ (APal>19);
-   
+
    iLvl1 +=  (iWis<12 ? 0 :(iWis-4)/8) ;
    iLvl2 +=  (iWis<14 ? 0 :(iWis-6)/8) ;
    iLvl3 +=  (iWis<16 ? 0 :(iWis-8)/8) ;
    iLvl4 +=  (iWis<18 ? 0 :(iWis-10)/8) ;
-   
+
    FeatUsePerDay(oPC,FEAT_AP_SPELLLVL1,-1,iLvl1);
    FeatUsePerDay(oPC,FEAT_AP_SPELLLVL2,-1,iLvl2);
    FeatUsePerDay(oPC,FEAT_AP_SPELLLVL3,-1,iLvl3);
@@ -602,14 +618,14 @@ void SpellSol(object oPC)
    int Sol = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT,oPC);
    int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
    if (Sol>10) Sol=10;
-   
+
    if (!Sol) return ;
 
    int iLvl1 = (Sol+3)/5 + (iWis<12 ? 0 :(iWis-4)/8) ;
    int iLvl2 = (Sol+1)/5 + (iWis<14 ? 0 :(iWis-6)/8) ;
    int iLvl3 = (Sol-1)/5 + (iWis<16 ? 0 :(iWis-8)/8) ;
    int iLvl4 = (Sol-3)/5 + (iWis<18 ? 0 :(iWis-10)/8) ;
-   
+
    FeatUsePerDay(oPC,FEAT_SPELLLVL1,-1,iLvl1);
    FeatUsePerDay(oPC,FEAT_SPELLLVL2,-1,iLvl2);
    FeatUsePerDay(oPC,FEAT_SPELLLVL3,-1,iLvl3);
@@ -622,13 +638,13 @@ void SpellShadow(object oPC)
 
    int Sha = GetLevelByClass(CLASS_TYPE_SHADOWLORD,oPC);
    int iInt = GetAbilityScore(oPC,ABILITY_INTELLIGENCE);
-   
+
    if (!Sha) return ;
 
    int iLvl1 = (Sha/2) + (iInt<12 ? 0 :(iInt-4)/8) ;
    int iLvl2 = (Sha-2)/2 + (iInt<14 ? 0 :(iInt-6)/8) ;
    int iLvl3 = (Sha-5)   + (iInt<16 ? 0 :(iInt-8)/8) ;
-   
+
    if (Sha == 6) iLvl1--;
 
    FeatUsePerDay(oPC,FEAT_SHADOWSPELLLV01,-1,iLvl1);
@@ -642,13 +658,13 @@ void SpellKotMC(object oPC)
 
    int KotMC = GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE,oPC);
    int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
-   
+
    if (!KotMC) return;
 
    int iLvl1 = (KotMC+2)/5 + (iWis<12 ? 0 :(iWis-4)/8) ;
    int iLvl2 = (KotMC-2)/5 + (iWis<14 ? 0 :(iWis-6)/8) ;
    int iLvl3 = (KotMC-4)/5 + (iWis<16 ? 0 :(iWis-8)/8) ;
-   
+
    FeatUsePerDay(oPC,FEAT_KOTMC_SL_1,-1,iLvl1);
    FeatUsePerDay(oPC,FEAT_KOTMC_SL_2,-1,iLvl2);
    FeatUsePerDay(oPC,FEAT_KOTMC_SL_3,-1,iLvl3);
@@ -660,7 +676,7 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC,FEAT_SMITE_UNDEAD, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC,FEAT_COMMAND_SPIDERS, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC,FEAT_AP_TURN_OUTSIDER, ABILITY_CHARISMA, 3+4*GetHasFeat(FEAT_EXTRA_TURNING,oPC));
-    SpellSol(oPC);  
+    SpellSol(oPC);
     SpellKotMC(oPC);
     SpellShadow(oPC);
     SpellAPal(oPC);

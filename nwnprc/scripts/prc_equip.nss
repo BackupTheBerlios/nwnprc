@@ -76,9 +76,9 @@ void main()
         }
      }
 
-        object oSkin = GetPCSkin(oPC);
-	ScrubPCSkin(oPC, oSkin);
-        DeletePRCLocalInts(oSkin);     
+        //object oSkin = GetPCSkin(oPC);
+	//ScrubPCSkin(oPC, oSkin);
+        //DeletePRCLocalInts(oSkin);     
 
     DelayCommand(0.1, PrcFeats(oPC));
 

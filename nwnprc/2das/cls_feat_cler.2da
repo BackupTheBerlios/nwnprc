@@ -295,6 +295,8 @@
 291   FEAT_NIMBUSOFLIGHT                    3165        0      -1               1        
 292   FEAT_SERVHEAVEN                       3355        0      -1               1        
 293   FEAT_NEW_POWER_ATTACK                 3143        3      1                1        
-294   FEAT_NEW_IMpROVED_POWER_ATTACK        3144        3      1                1        
+294   FEAT_NEW_IMPROVED_POWER_ATTACK        3144        3      1                1        
 295   ESS_Rest                              4399        0      99               2        
 296   FEAT_SHADOW_LORD_CONVO                2360        3      1                1        
+297   FEAT_DISCIPLE_OF_DARKNESS             4012        0      -1               1        
+298   Pinpoint_Accuracy                     3351        0      -1               1        

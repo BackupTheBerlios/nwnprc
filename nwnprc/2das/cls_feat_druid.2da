@@ -342,7 +342,7 @@
 338   FEAT_NIMBUSOFLIGHT                          3165        0      -1               1        
 339   FEAT_SERVHEAVEN                             3355        0      -1               1        
 340   FEAT_NEW_POWER_ATTACK                       3143        3      1                1        
-341   FEAT_NEW_IMpROVED_POWER_ATTACK              3144        3      1                1        
+341   FEAT_NEW_IMPROVED_POWER_ATTACK              3144        3      1                1        
 342   FocusedSpellPenetrCon                       3128        1      -1               0        
 343   FocusedSpellPenetrDiv                       3129        1      -1               0        
 344   FocusedSpellPenetrEnc                       3130        1      -1               0        

@@ -311,3 +311,5 @@
 307   FocusedSpellPenetrTra                       3134        1      -1               0        
 308   FocusedSpellPenetrAbj                       3135        1      -1               0        
 309   ESS_Rest                                    4399        0      99               2        
+310   FEAT_NEW_POWER_ATTACK                       3143        3      1                1        
+311   FEAT_NEW_IMPROVED_POWER_ATT                 3144        3      1                1        

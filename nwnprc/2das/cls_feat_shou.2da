@@ -52,7 +52,7 @@
 48    FEAT_NIMBUSOFLIGHT               3165        0      -1               1        
 49    FEAT_SERVHEAVEN                  3355        0      -1               1        
 50    FEAT_NEW_POWER_ATTACK            3143        3      1                1        
-51    FEAT_NEW_IMpROVED_POWER_ATTACK   3144        3      1                1        
+51    FEAT_NEW_IMPROVED_POWER_ATTACK   3144        3      1                1        
 52    FEAT_SHADOW_LORD_CONVO           2360        3      1                1        
 53    KnockDown                        23          2      -1               1        
 54    ImpKnock                         17          2      -1               1        

@@ -142,12 +142,13 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
             GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)+
             GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster)+
                
-            GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) / 2+ 
-            GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster)/2+                
-            GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster)/2+           
-            GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster)/2+
-            GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster)/2+
-            GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) / 2;
+            (GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) + 1) / 2+ 
+            (GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) + 1) / 2+          
+            (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) + 1) / 2+     
+            (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2+ 
+            (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2+ 
+            (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2+ 
+            (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, oCaster) + 1) / 2; 
 
 
         // area for CLASS-specific code. Avoid if possible
@@ -192,12 +193,12 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
             GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)+
             GetLevelByClass(CLASS_TYPE_STORMLORD, oCaster)+
                        
-            GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster)/2 +            
-	    GetLevelByClass(CLASS_TYPE_OCULAR, oCaster)/2 +
-	    GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster)/2+
-	    GetLevelByClass(CLASS_TYPE_BFZ, oCaster)/2+
-            GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster)/2+
-	    GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster)/2;
+            (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) + 1) /  2+       
+	    (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2+ 
+	    (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2+ 
+	    (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2+ 
+            (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2+ 
+	    (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2; 
 
             if ( !GetHasFeat(FEAT_SF_CODE, oCaster))
                 nDivine += GetLevelByClass(CLASS_TYPE_SACREDFIST, oCaster);

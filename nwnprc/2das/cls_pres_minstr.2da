@@ -1,0 +1,10 @@
+2DA V2.0
+
+      LABEL        ReqType   ReqParam1         ReqParam2   
+0     Perform      SKILL     11                10          
+1     Discipline   SKILL     3                 6           
+2     WPMartial    FEAT      45                ****        
+3     Toughness    FEAT      40                ****        
+4     SFDiscipline FEAT      175               ****        
+5     ScriptVar    VAR       PRC_AllowMinstrel 0           
+6     Bard         CLASS     1                 ****        

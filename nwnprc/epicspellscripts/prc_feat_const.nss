@@ -305,6 +305,8 @@ const int FEAT_TO_PALLOR         = 4410;
 const int FEAT_TO_DEATHTOUCH     = 4411;
 const int FEAT_TO_MJR_UNDEAD     = 4412;
 const int FEAT_TO_NIGHTWING      = 4413;
+const int AOE_MOB_CARRION        = 117;
+const int AOE_MOB_PALLOR         = 118;
 
 //True Necromancer
 const int AOE_MOB_DES_20       = 111;
@@ -692,6 +694,36 @@ const int FEAT_SA_GREATSHIELDSHADOW = 2957;
 const int FEAT_SA_SHADOWWALK        = 2958;
 const int FEAT_SA_SHADOWDOUBLE      = 2959;
 
+// Brawler
+const int FEAT_BRAWLER_FISTS                     = 4428;
+const int FEAT_EPIC_BRAWLER                      = 4437;
+const int FEAT_BRAWLER_DODGE_1                   = 4438;
+const int FEAT_BRAWLER_DODGE_2                   = 4439;
+const int FEAT_BRAWLER_DODGE_3                   = 4440;
+const int FEAT_BRAWLER_DODGE_4                   = 4441;
+const int FEAT_BRAWLER_DODGE_5                   = 4442;
+const int FEAT_WEAPON_FINESSE_UNARMED            = 4446;
+const int FEAT_BRAWLER_EXTRAATT_1                = 4429;
+const int FEAT_BRAWLER_EXTRAATT_2                = 4430;
+
+// Minstrel of the Edge
+const int FEAT_MOE_GREATER_MAGIC_WEAPON          = 4431;
+const int FEAT_MOE_MAGIC_VESTMENT                = 4432;
+const int FEAT_MOE_GREATER_HEROISM               = 4433;
+const int FEAT_MOE_REDUCED_ASF_10                = 4434;
+const int FEAT_MOE_REDUCED_ASF_20                = 4435;
+
+// Nightshade
+const int FEAT_NS_LIGHT_ADAPTION    = 2964;
+const int FEAT_NS_WEBWALKER         = 2965;
+const int FEAT_NS_SNEAKATK_1D6      = 2966;
+const int FEAT_NS_SNEAKATK_2D6      = 2967;
+const int FEAT_NS_SNEAKATK_3D6      = 2968;
+const int FEAT_NS_INVISIBILITY      = 2969;
+const int FEAT_NS_POISON_IMMUNE     = 2970;
+const int FEAT_NS_POISON_SPITTLE    = 2971;
+const int FEAT_NS_WEB               = 2972;
+const int FEAT_NS_SHADOWWALK        = 2973;
 
 
 /*//////////////////////////////////////////////////

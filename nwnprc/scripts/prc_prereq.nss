@@ -35,7 +35,8 @@ int GetArcanePRCLevels(object oPC)
         + (GetLevelByClass(CLASS_TYPE_PALEMASTER, oPC) + 1) / 2
         + (GetLevelByClass(CLASS_TYPE_HATHRAN, oPC) + 1) / 2
         + (GetLevelByClass(CLASS_TYPE_ORCUS, oPC) + 1) / 2
-        + (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) + 1) / 2;
+        + (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) + 1) / 2
+        + (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, oPC) + 1) / 2; 
 
    return iArcanePRCLevels;
 }

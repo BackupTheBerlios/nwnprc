@@ -184,6 +184,7 @@ installcontent:
 	-@copy /y "$(MISCHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(TEXTURESHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(CRAFT2DASHAK)" "$(NWN_HAK)" >nul
+	-@copy /y $(HIF) "$(NWN_HAK)" >nul
 
 # Rule to install all the override files.  This one is a bit tricky, the '!'
 # operator tells nmake to run the rule once for each target, and $** will

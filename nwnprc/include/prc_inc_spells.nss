@@ -58,12 +58,14 @@ int GetLevelByTypeDivine(object oCaster = OBJECT_SELF);
 //Returns Reflex Adjusted Damage. Is a wrapper function that allows the 
 //DC to be adjusted based on conditions that cannot be done using iprops
 //such as saves vs spellschools, or other adjustments
-int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF);
+int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE,
+                               object oSaveVersus=OBJECT_SELF);
 
 //Returns 0, 1 or 2 as MySavingThrow does. 0 is a failure, 1 is success, 2 is immune.
 //Is a wrapper function that allows the DC to be adjusted based on conditions 
 //that cannot be done using iprops, such as saves vs spellschool.
-int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
+int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE,
+                     object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
 
 // Returns the caster level when used in spells.  Designed so that it can be wrapped
 // easily.  You can use PRCGetCasterLevel() to determine a caster level from within a spell,
@@ -82,22 +84,14 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF, int iCastingClass = -1, int 
 // iCastingLevels - the amount of adjusted caster levels BEFORE Practiced Spellcaster
 int PractisedSpellcasting (object oCaster, int iCastingClass, int iCastingLevels);
 
-// Updated version of MySavingThrow
-int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE,
-                     object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
-
-// Updated version of GetReflexAdjustedDamage
-int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE,
-                               object oSaveVersus=OBJECT_SELF);
-
 // Functions mostly only useful within the scope of this include
 int ArchmageSpellPower (object oCaster);
 int TrueNecromancy (object oCaster, int iSpellID, string sType);
 int ShadowWeave (object oCaster, int iSpellID);
+string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
 int FireAdept (object oCaster, int iSpellID);
 int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE,
                   object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
-string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
 
 // ---------------
 // BEGIN FUNCTIONS

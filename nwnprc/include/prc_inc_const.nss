@@ -1502,5 +1502,10 @@ const int IP_CONST_SPELLRESISTANCEBONUS_56 = 56;
 const int IP_CONST_SPELLRESISTANCEBONUS_58 = 58;
 const int IP_CONST_SPELLRESISTANCEBONUS_60 = 60;
 
-
 const int TEMPUS_ABILITY_VICIOUS   = 12;
+
+// Armor Type Const
+const int ARMOR_TYPE_CLOTH      = 0;
+const int ARMOR_TYPE_LIGHT      = 1;
+const int ARMOR_TYPE_MEDIUM     = 2;
+const int ARMOR_TYPE_HEAVY      = 3;

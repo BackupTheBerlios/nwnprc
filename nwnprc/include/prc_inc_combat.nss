@@ -12,6 +12,7 @@
 //:: a little more accurate and easy to use.
 //:://////////////////////////////////////////////
 //:: Current Limitations:
+//:: Coup De Grace does not take into account bonus damage
 //:: 
 //:: System does not add many magical effects on weapons.
 //:: Examples would be Vorpal, On hit: Daze/Stun/Sleep, Poison, etc.
@@ -25,7 +26,7 @@
 //:: Sneak Attack Functions
 //:://////////////////////////////////////////////
 //:: Things to Test:
-//:: Attack Bonuses - enchanted and non.
+//:: 
 //:: Dark Fire and Flame Weapon
 //:: Unarmed Damage
 //:: Cleave, Great Cleave, and Cirlce Kick
@@ -33,7 +34,8 @@
 //:: Bug Fix for Sanctuary / invis not being removed
 //:: Coup De Grace to Perform Attack Round
 //:://////////////////////////////////////////////
-//:: Known Issues: 
+//:: Known Bugs:
+//:: 
 //:://////////////////////////////////////////////
 
 // #include "prc_feat_const"   <-- Inherited
@@ -55,9 +57,13 @@
 #include "inc_utility"
 #include "prc_inc_switch"
 
-// constant ints
+// constant ints for touch attacks
+// using these helps determing which type of touch attack to perform.
+// using the spell versions if your spell does not use a weapon.
 const int TOUCH_ATTACK_MELEE  = 1;
 const int TOUCH_ATTACK_RANGED = 2;
+const int TOUCH_ATTACK_MELEE_SPELL  = 3;
+const int TOUCH_ATTACK_RANGED_SPELL = 4;
 
 const string COLOR_BLUE         = "<cfÌþ>";    // used by saving throws.
 const string COLOR_DARK_BLUE    = "<c fþ>";    // used for electric damage.                                           
@@ -258,7 +264,25 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
 // bEffectAllAttacks - If FALSE will only effect first attack, otherwise effects all attacks.
 // sMessageSuccess - message to display on a successful hit. (i.e. "*Sneak Attack Hit*")
 // sMessageFailure - message to display on a failure to hit. (i.e. "*Sneak Attack Miss*")
+// bApplyTouchToAll - Applies a touch attack to all attacks - FALSE if only first attack is a touch attack.
+// iTouchAttackType - TOUCH_ATTACK_* const - melee, ranged, spell melee, spell ranged
 void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE);
+
+// Performs a single attack and can add in bonus damage damage/effects
+//
+// eSpecialEffect -  any special Vfx or other effects the attack should use IF successful.
+// eDuration - Changes the duration of the applied effect(s)
+//           0.0 = DURATION_TYPE_INSTANT, effect lasts 0.0 seconds.
+//          >0.0 = DURATION_TYPE_TEMPORARY, effect lasts the amount of time put in here.
+//          <0.0 = DURATION_TYPE_PERMAMENT!!!!!  Effect lasts until dispelled.  
+// iAttackBonusMod is the attack modifier - Will effect all attacks if bEffectAllAttacks is on
+// iDamageModifier - should be either a DAMAGE_BONUS_* constant or an int of damage.
+//                   Give an int if the attack effects ONLY the first attack!
+// iDamageType = DAMAGE_TYPE_*
+// sMessageSuccess - message to display on a successful hit. (i.e. "*Sneak Attack Hit*")
+// sMessageFailure - message to display on a failure to hit. (i.e. "*Sneak Attack Miss*")
+// iTouchAttackType - TOUCH_ATTACK_* const - melee, ranged, spell melee, spell ranged
+void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, string sMessageSuccess = "", string sMessageFailure = "", int iTouchAttackType = FALSE);
 
 //:://///////////////////////////////////////
 //::  Structs
@@ -3177,7 +3201,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      if (iMag  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iMag, DAMAGE_TYPE_MAGICAL, iDamagePower)), EffectVisualEffect(VFX_COM_HIT_DIVINE));
 
      // the rest of the code for a Coup De Grace
-     if( GetIsHelpless(oDefender) && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, oAttacker) )
+     if( GetIsHelpless(oDefender) && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, oAttacker) && bFirstAttack )
      {
           // DC = 10 + damage dealt.
           int iSaveDC = 10;
@@ -3185,7 +3209,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           iSaveDC += iAcid + iCold + iFire + iElec + iSon;
           iSaveDC += iDiv + iNeg + iPos;
           iSaveDC += iMag;
-          
+ 
           if( FortitudeSave(oDefender, iSaveDC, SAVING_THROW_TYPE_NONE, oAttacker) )
           {
                string nMes = "*Coup De Grace*";
@@ -3212,7 +3236,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
 
      // If they are not within melee range
      // Move to the new target so that you can attack next round.
-     if(!GetIsInMeleeRange(oDefender, oAttacker) && !sAttackVars.bIsRangedWeapon )
+     if(!GetIsInMeleeRange(oDefender, oAttacker) && !sAttackVars.bIsRangedWeapon && iTouchAttackType != TOUCH_ATTACK_RANGED_SPELL )
      {
          AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(oDefender), TRUE) );
          return;
@@ -3284,7 +3308,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           // Automatic critical hit: Fort save DC: 10 + damage dealt
           // Note: The rest of the code is in GetAttackDamage
           //       this is because that part has the damage dealt in it.
-          if( GetIsHelpless(oDefender) && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, oAttacker) )
+          if( GetIsHelpless(oDefender) && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, oAttacker) && bFirstAttack)
           {
                // make hit a crit
                iAttackRoll     = 2;
@@ -3294,6 +3318,28 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                iBonusAttacks   = 0;
                iMainAttacks    = 0;
                iOffHandAttacks = 0;
+               
+               // apply the CDG if spell ability
+               if(iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL || iTouchAttackType == TOUCH_ATTACK_MELEE_SPELL)
+               {
+                    // DC = 10 + damage dealt.
+                    int iSaveDC = 10;
+                    int iDamage = sAttackVars.iDamageModifier;
+                    
+                    // if the attack effects all attacks use DAMAGE_BONUS_* const
+                    if(sAttackVars.bEffectAllAttacks) iDamage = GetDamageByConstant(sAttackVars.iDamageModifier, FALSE);
+                    iSaveDC += iDamage;
+                    
+                    if( FortitudeSave(oDefender, iSaveDC, SAVING_THROW_TYPE_NONE, oAttacker) )
+                    {
+                         string nMes = "*Coup De Grace*";
+                         FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE); 
+
+                         // circumvents death immunity... since anyone CDG'ed is dead.
+                         effect eDeath = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
+                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oDefender);
+                    }
+               }
           }
           else
           {
@@ -3301,8 +3347,11 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                iAttackRoll = GetAttackRoll(oDefender, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0, iTouchAttackType);               
           }
 
-          if (iAttackRoll == 2) bIsCritcal = TRUE;
-          eDamage = GetAttackDamage(oDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, bIsCritcal, iNumDice, iNumSides, iCritMult);
+          if(iAttackRoll == 2) bIsCritcal = TRUE;
+          
+          // only calculate damage if it is not a touch attack spell
+          if(iTouchAttackType != TOUCH_ATTACK_RANGED_SPELL && iTouchAttackType != TOUCH_ATTACK_MELEE_SPELL)
+               eDamage = GetAttackDamage(oDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, bIsCritcal, iNumDice, iNumSides, iCritMult);
           
           if(iAttackRoll > 0)
           {
@@ -3314,11 +3363,20 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           {
                if(sAttackVars.iDamageModifier > 0)
                {
-                    int iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
-                    effect eBonusDamage = EffectDamage(sAttackVars.iDamageModifier, sAttackVars.iDamageType, iDamagePower);
+                    // set damage power to normal for a touch spell
+                    int iDamagePower = DAMAGE_POWER_NORMAL;
+                    if(!TOUCH_ATTACK_RANGED_SPELL && !TOUCH_ATTACK_MELEE_SPELL)
+                         iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
+                    
+                    // the damage given should be a DAMAGE_BONUS_* const.  
+                    // calculate proper damage from the const.
+                    int iDamage = GetDamageByConstant(sAttackVars.iDamageModifier, FALSE);
+                    
+                    effect eBonusDamage = EffectDamage(iDamage, sAttackVars.iDamageType, iDamagePower);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, oDefender);
                }
                
+               // apply any special bonus effects
                ApplyEffectToObject(iDurationType, sAttackVars.eSpecialEffect, oDefender, sAttackVars.eDuration);
                FloatingTextStringOnCreature(sAttackVars.sMessageSuccess, oAttacker, FALSE);
           }
@@ -3332,7 +3390,11 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           {
                if(sAttackVars.iDamageModifier > 0)
                {
-                    int iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
+                    // set damage power to normal of touch spells
+                    int iDamagePower = DAMAGE_POWER_NORMAL;
+                    if(!TOUCH_ATTACK_RANGED_SPELL && !TOUCH_ATTACK_MELEE_SPELL)
+                         iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
+
                     effect eBonusDamage = EffectDamage(sAttackVars.iDamageModifier, sAttackVars.iDamageType, iDamagePower);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, oDefender);
                }
@@ -3825,4 +3887,277 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      if(bEffectAllAttacks)  iMod += iAttackBonusMod;
      
      AttackLoopMain(oDefender, oAttacker, iBonusMainHandAttacks, iMainHandAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
+}
+
+void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, string sMessageSuccess = "", string sMessageFailure = "", int iTouchAttackType = FALSE)
+{     
+     // create struct for attack loop logic
+     struct AttackLoopVars sAttackVars;
+     
+     // set variables required in attack loop logic
+     sAttackVars.oWeaponR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oAttacker);
+     sAttackVars.oWeaponL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oAttacker);
+     sAttackVars.bIsRangedWeapon = GetWeaponRanged(sAttackVars.oWeaponR);
+     
+     sAttackVars.iDamageModifier = iDamageModifier;
+     sAttackVars.iDamageType = iDamageType;
+     
+     sAttackVars.eSpecialEffect = eSpecialEffect;
+     sAttackVars.eDuration = eDuration;
+     sAttackVars.bEffectAllAttacks = FALSE;
+     sAttackVars.sMessageSuccess = sMessageSuccess;
+     sAttackVars.sMessageFailure = sMessageFailure;
+     
+     // are they using a two handed weapon?
+     int bIsTwoHandedMeleeWeapon = GetIsTwoHandedMeleeWeapon(sAttackVars.oWeaponR);
+     
+     // are they unarmed?
+     int bIsUnarmed = FALSE;
+     if(GetBaseItemType(sAttackVars.oWeaponR) == BASE_ITEM_INVALID) bIsUnarmed = TRUE;
+     
+     // if player is unarmed use gloves as weapon
+     if(bIsUnarmed) sAttackVars.oWeaponR = GetItemInSlot(INVENTORY_SLOT_ARMS, oAttacker);
+     
+     // is the player is using two weapons?
+     int bIsUsingTwoWeapons = FALSE;
+     if(!sAttackVars.bIsRangedWeapon && !bIsUnarmed && GetBaseItemType(sAttackVars.oWeaponL) != BASE_ITEM_INVALID )  bIsUsingTwoWeapons = TRUE;
+     
+     // determine attack bonus and num attacks
+     sAttackVars.iMainAttackBonus = GetAttackBonus(oDefender, oAttacker, sAttackVars.oWeaponR, 0);
+     
+     // number of attacks with main hand
+     // only 1 attack is made period
+     int iMainHandAttacks = 1;
+     
+     // Determine physical damage per round (cached for multiple use)
+     sAttackVars.iMainWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponR, 0);
+     
+     // varaibles that store extra damage dealt
+     struct BonusDamage sSpellBonusDamage = GetMagicalBonusDamage(oAttacker);
+     struct BonusDamage sMainWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponR, oDefender);
+     
+     // get weapon information
+     int iMainWeaponType = GetBaseItemType(sAttackVars.oWeaponR);
+     sAttackVars.iMainNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iMainWeaponType));
+     sAttackVars.iMainNumDice = StringToInt(Get2DACache("baseitems", "NumDice", iMainWeaponType));
+     sAttackVars.iMainCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponR);
+     
+     // Returns proper unarmed damage if they are a monk
+     // or have a creature weapon from a PrC class. - Brawler, Shou, IoDM, etc.
+     if(bIsUnarmed && GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oAttacker) != OBJECT_INVALID || 
+        bIsUnarmed && GetLevelByClass(CLASS_TYPE_MONK, oAttacker) )
+     {
+          int iDamage = FindUnarmedDamage(oAttacker);
+          switch(iDamage)
+          {
+               case MONST_DAMAGE_1D2:
+                    sAttackVars.iMainNumSides = 2;
+                    sAttackVars.iMainNumDice = 1;
+                    break;
+               case MONST_DAMAGE_1D3:
+                    sAttackVars.iMainNumSides = 3;
+                    sAttackVars.iMainNumDice = 1;
+                    break;
+               case MONST_DAMAGE_1D4:
+                    sAttackVars.iMainNumSides = 4;
+                    sAttackVars.iMainNumDice  = 1;
+                    break;
+               case MONST_DAMAGE_1D6:
+                    sAttackVars.iMainNumSides = 6;
+                    sAttackVars.iMainNumDice  = 1;
+                    break;
+               case MONST_DAMAGE_1D8:
+                    sAttackVars.iMainNumSides = 8;
+                    sAttackVars.iMainNumDice  = 1;
+                    break;
+               case MONST_DAMAGE_1D10:
+                    sAttackVars.iMainNumSides = 10;
+                    sAttackVars.iMainNumDice  = 1;
+                    break;
+               case MONST_DAMAGE_1D12:
+                    sAttackVars.iMainNumSides = 12;
+                    sAttackVars.iMainNumDice  = 1;
+                    break;
+               case MONST_DAMAGE_1D20:
+                    sAttackVars.iMainNumSides = 20;
+                    sAttackVars.iMainNumDice  = 1;
+                    break;
+               case MONST_DAMAGE_2D6:
+                    sAttackVars.iMainNumSides = 6;
+                    sAttackVars.iMainNumDice  = 2;
+                    break;
+               case MONST_DAMAGE_2D8:
+                    sAttackVars.iMainNumSides = 8;
+                    sAttackVars.iMainNumDice  = 2;
+                    break;
+               case MONST_DAMAGE_2D10:
+                    sAttackVars.iMainNumSides = 10;
+                    sAttackVars.iMainNumDice  = 2;
+                    break;
+               case MONST_DAMAGE_2D12:
+                    sAttackVars.iMainNumSides = 12;
+                    sAttackVars.iMainNumDice  = 2;
+                    break;
+               case MONST_DAMAGE_3D6:
+                    sAttackVars.iMainNumSides = 6;
+                    sAttackVars.iMainNumDice  = 3;
+                    break;
+               case MONST_DAMAGE_3D8:
+                    sAttackVars.iMainNumSides = 8;
+                    sAttackVars.iMainNumDice  = 3;
+                    break;
+               case MONST_DAMAGE_3D10:
+                    sAttackVars.iMainNumSides = 10;
+                    sAttackVars.iMainNumDice  = 3;
+                    break;
+               case MONST_DAMAGE_3D12:
+                    sAttackVars.iMainNumSides = 12;
+                    sAttackVars.iMainNumDice  = 3;
+                    break;
+               case MONST_DAMAGE_4D8:
+                    sAttackVars.iMainNumSides = 8;
+                    sAttackVars.iMainNumDice  = 4;
+                    break;
+               case MONST_DAMAGE_4D10:
+                    sAttackVars.iMainNumSides = 10;
+                    sAttackVars.iMainNumDice  = 4;
+                    break;
+               case MONST_DAMAGE_4D12:
+                    sAttackVars.iMainNumSides = 12;
+                    sAttackVars.iMainNumDice  = 4;
+                    break;
+          }
+     }
+     else if(bIsUnarmed)
+     {
+          // unarmed non-monk 1d3 damage
+          sAttackVars.iMainNumSides = 3;
+          sAttackVars.iMainNumDice  = 1;
+     }
+     
+     //SendMessageToPC(oAttacker, "Weapon does " + IntToString(iMainNumDice) + "d" + IntToString(iMainNumSides) + "Damage and has a crit multiplier of " + IntToString(iMainCritMult));
+     
+     // off-hand variables set to null, just to make sure they are there
+     int iOffHandWeaponType = 0;
+     sAttackVars.iOffHandAttackBonus = 0;
+     int iOffHandAttacks = 0;
+     
+     sAttackVars.iOffHandWeaponDamageRound = 0;
+     struct BonusDamage sOffHandWeaponDamage;
+     
+     sAttackVars.iOffHandNumSides = 0;
+     sAttackVars.iOffHandNumDice = 0;
+     sAttackVars.iOffHandCritMult = 0;
+          
+     int iAttackPenalty = 0;
+     int iBonusMainHandAttacks = 0;
+
+     // Code to equip new ammo 
+     // Equips new ammo if they don't have enough ammo for the whole attack round
+     // or if they have no ammo equipped.     
+     if(sAttackVars.bIsRangedWeapon)
+     {
+          sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);
+          // if there is no ammunition search inventory for ammo
+          if(sAttackVars.oAmmo == OBJECT_INVALID || 
+             GetItemStackSize(sAttackVars.oAmmo) <= (iMainHandAttacks + iBonusMainHandAttacks) )
+          {
+               int bNotEquipped = TRUE;
+               int iNeededAmmoType;
+               int iAmmoSlot;
+
+               switch (GetBaseItemType(sAttackVars.oWeaponR))
+               {
+                    case BASE_ITEM_LIGHTCROSSBOW:
+                    case BASE_ITEM_HEAVYCROSSBOW:
+                         iNeededAmmoType = BASE_ITEM_BOLT;
+                         iAmmoSlot = INVENTORY_SLOT_BOLTS;
+                         break;
+                    case BASE_ITEM_SLING:
+                         iNeededAmmoType = BASE_ITEM_BULLET;
+                         iAmmoSlot = INVENTORY_SLOT_BULLETS;
+                         break;
+                    case BASE_ITEM_SHORTBOW:
+                    case BASE_ITEM_LONGBOW:
+                         iNeededAmmoType = BASE_ITEM_ARROW;
+                         iAmmoSlot = INVENTORY_SLOT_ARROWS;
+                         break;
+                    case BASE_ITEM_DART:
+                         iNeededAmmoType = BASE_ITEM_DART;
+                         iAmmoSlot = INVENTORY_SLOT_RIGHTHAND;
+                         break;
+                    case BASE_ITEM_SHURIKEN:
+                         iNeededAmmoType = BASE_ITEM_SHURIKEN;
+                         iAmmoSlot = INVENTORY_SLOT_RIGHTHAND;
+                         break;
+                    case BASE_ITEM_THROWINGAXE:
+                         iNeededAmmoType = BASE_ITEM_THROWINGAXE;
+                         iAmmoSlot = INVENTORY_SLOT_RIGHTHAND;
+                         break;
+               }
+               
+               object oItem = GetFirstItemInInventory(oAttacker);
+               while (GetIsObjectValid(oItem) == TRUE && bNotEquipped)
+               {
+                    int iAmmoType = GetBaseItemType(oItem);
+                    if( iAmmoType == iNeededAmmoType)
+                    {
+                         AssignCommand(oAttacker, ActionEquipItem(oItem, iAmmoSlot));
+                         bNotEquipped = FALSE;
+                    }
+                    oItem = GetNextItemInInventory(oAttacker);
+               }          
+          }
+ 
+          sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);        
+          struct BonusDamage sAmmoDamage = GetWeaponBonusDamage(sAttackVars.oAmmo, oDefender);
+          
+          // if these values are better than the weapon, then use these.
+          if(sAmmoDamage.dam_Acid > sMainWeaponDamage.dam_Acid) sMainWeaponDamage.dam_Acid = sAmmoDamage.dam_Acid;          
+          if(sAmmoDamage.dam_Cold > sMainWeaponDamage.dam_Cold) sMainWeaponDamage.dam_Cold = sAmmoDamage.dam_Cold;
+          if(sAmmoDamage.dam_Fire > sMainWeaponDamage.dam_Fire) sMainWeaponDamage.dam_Fire = sAmmoDamage.dam_Fire;
+          if(sAmmoDamage.dam_Elec > sMainWeaponDamage.dam_Elec) sMainWeaponDamage.dam_Elec = sAmmoDamage.dam_Elec;
+          if(sAmmoDamage.dam_Son  > sMainWeaponDamage.dam_Son)  sMainWeaponDamage.dam_Son  = sAmmoDamage.dam_Son;
+          
+          if(sAmmoDamage.dam_Div > sMainWeaponDamage.dam_Div) sMainWeaponDamage.dam_Div = sAmmoDamage.dam_Div;
+          if(sAmmoDamage.dam_Neg > sMainWeaponDamage.dam_Neg) sMainWeaponDamage.dam_Neg = sAmmoDamage.dam_Neg;
+          if(sAmmoDamage.dam_Pos > sMainWeaponDamage.dam_Pos) sMainWeaponDamage.dam_Pos = sAmmoDamage.dam_Pos;
+          
+          if(sAmmoDamage.dam_Mag > sMainWeaponDamage.dam_Mag) sMainWeaponDamage.dam_Mag = sAmmoDamage.dam_Mag;
+          
+          if(sAmmoDamage.dam_Blud > sMainWeaponDamage.dam_Blud) sMainWeaponDamage.dam_Blud = sAmmoDamage.dam_Blud;
+          if(sAmmoDamage.dam_Pier > sMainWeaponDamage.dam_Pier) sMainWeaponDamage.dam_Pier = sAmmoDamage.dam_Pier;
+          if(sAmmoDamage.dam_Slash > sMainWeaponDamage.dam_Slash) sMainWeaponDamage.dam_Slash = sAmmoDamage.dam_Slash;
+          
+          if(sAmmoDamage.dice_Acid > sMainWeaponDamage.dice_Acid) sMainWeaponDamage.dice_Acid = sAmmoDamage.dice_Acid;          
+          if(sAmmoDamage.dice_Cold > sMainWeaponDamage.dice_Cold) sMainWeaponDamage.dice_Cold = sAmmoDamage.dice_Cold;
+          if(sAmmoDamage.dice_Fire > sMainWeaponDamage.dice_Fire) sMainWeaponDamage.dice_Fire = sAmmoDamage.dice_Fire;
+          if(sAmmoDamage.dice_Elec > sMainWeaponDamage.dice_Elec) sMainWeaponDamage.dice_Elec = sAmmoDamage.dice_Elec;
+          if(sAmmoDamage.dice_Son  > sMainWeaponDamage.dice_Son)  sMainWeaponDamage.dice_Son  = sAmmoDamage.dice_Son;
+          
+          if(sAmmoDamage.dice_Div > sMainWeaponDamage.dice_Div) sMainWeaponDamage.dice_Div = sAmmoDamage.dice_Div;
+          if(sAmmoDamage.dice_Neg > sMainWeaponDamage.dice_Neg) sMainWeaponDamage.dice_Neg = sAmmoDamage.dice_Neg;
+          if(sAmmoDamage.dice_Pos > sMainWeaponDamage.dice_Pos) sMainWeaponDamage.dice_Pos = sAmmoDamage.dice_Pos;
+          
+          if(sAmmoDamage.dice_Mag > sMainWeaponDamage.dice_Mag) sMainWeaponDamage.dice_Mag = sAmmoDamage.dice_Mag;
+          
+          if(sAmmoDamage.dice_Blud > sMainWeaponDamage.dice_Blud) sMainWeaponDamage.dice_Blud = sAmmoDamage.dice_Blud;
+          if(sAmmoDamage.dice_Pier > sMainWeaponDamage.dice_Pier) sMainWeaponDamage.dice_Pier = sAmmoDamage.dice_Pier;
+          if(sAmmoDamage.dice_Slash > sMainWeaponDamage.dice_Slash) sMainWeaponDamage.dice_Slash = sAmmoDamage.dice_Slash;    
+     }
+     
+     int iMod = 0;
+     
+     // determines the delay between effect application
+     // to make the system run like the normal combat system.
+     sAttackVars.fDelay = 0.1;
+     sAttackVars.iMainAttackBonus = sAttackVars.iMainAttackBonus + iAttackPenalty;
+     sAttackVars.iOffHandAttackBonus = sAttackVars.iOffHandAttackBonus + iAttackPenalty;
+     
+     // sets iMods to iAttackBonusMod
+     // used in AttackLoopLogic to decrement attack bonus for attacks.
+     iMod += iAttackBonusMod;
+     
+     // run this with no bonus or off-hand attacks, and only 1 main hand attack
+     AttackLoopMain(oDefender, oAttacker, 0, 1, 0, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage); 
 }

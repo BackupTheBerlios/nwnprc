@@ -4749,6 +4749,12 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1498","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1498","N");
 
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_1499","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1499","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1499","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1499","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1499","D");
+
     SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_1500","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1500","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1500","");
@@ -4802,6 +4808,18 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1510","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1510","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1510","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_1512","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1512","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1512","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1512","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1512","N");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_1513","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1513","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1513","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1513","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1513","N");
 
     SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_1515","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1515","");
@@ -5019,6 +5037,18 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1551","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1551","E");
 
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_1553","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1553","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1553","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1553","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1553","N");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_1554","Negative");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1554","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1554","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1554","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1554","N");
+
     SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_1750","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1750","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1750","");
@@ -5190,6 +5220,12 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2008","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2008","T");
 
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2009","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2009","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2009","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2009","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2009","T");
+
     SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2010","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2010","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2010","");
@@ -5295,6 +5331,396 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2031","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2031","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2031","****");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2032","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2032","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2032","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2032","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2032","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2033","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2033","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2033","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2033","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2033","A");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2034","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2034","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2034","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2034","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2034","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2096","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2096","8");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2096","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2096","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2096","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2097","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2097","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2097","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2097","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2097","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2098","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2098","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2098","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2098","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2098","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2099","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2099","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2099","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2099","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2099","A");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2100","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2100","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2100","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2100","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2100","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2101","Mind_Affecting");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2101","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2101","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2101","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2101","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2102","Positive");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2102","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2102","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2102","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2102","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2103","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2103","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2103","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2103","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2103","T");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2104","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2104","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2104","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2104","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2104","A");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2105","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2105","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2105","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2105","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2105","A");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2106","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2106","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2106","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2106","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2106","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2107","Mind_Affecting");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2107","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2107","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2107","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2107","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2108","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2108","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2108","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2108","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2108","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2109","Positive");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2109","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2109","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2109","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2109","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2110","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2110","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2110","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2110","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2110","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2111","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2111","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2111","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2111","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2111","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2112","Positive");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2112","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2112","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2112","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2112","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2113","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2113","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2113","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2113","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2113","T");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2114","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2114","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2114","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2114","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2114","A");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2115","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2115","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2115","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2115","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2115","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2116","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2116","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2116","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2116","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2116","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2117","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2117","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2117","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2117","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2117","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2118","Positive");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2118","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2118","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2118","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2118","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2119","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2119","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2119","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2119","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2119","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2120","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2120","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2120","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2120","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2120","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2121","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2121","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2121","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2121","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2121","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2122","Disease");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2122","6");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2122","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2122","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2122","N");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2162","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2162","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2162","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2162","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2162","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2163","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2163","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2163","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2163","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2163","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2164","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2164","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2164","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2164","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2164","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2165","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2165","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2165","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2165","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2165","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2166","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2166","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2166","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2166","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2166","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2167","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2167","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2167","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2167","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2167","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2168","Positive");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2168","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2168","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2168","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2168","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2169","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2169","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2169","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2169","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2169","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2170","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2170","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2170","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2170","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2170","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2171","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2171","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2171","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2171","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2171","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2172","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2172","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2172","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2172","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2172","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2173","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2173","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2173","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2173","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2173","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2174","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2174","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2174","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2174","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2174","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2175","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2175","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2175","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2175","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2175","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2176","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2176","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2176","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2176","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2176","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2177","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2177","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2177","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2177","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2177","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2178","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2178","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2178","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2178","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2178","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2179","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2179","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2179","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2179","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2179","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2180","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2180","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2180","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2180","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2180","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2181","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2181","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2181","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2181","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2181","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2182","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2182","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2182","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2182","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2182","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2183","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2183","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2183","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2183","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2183","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2184","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2184","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2184","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2184","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2184","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2185","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2185","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2185","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2185","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2185","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2186","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2186","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2186","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2186","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2186","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2187","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2187","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2187","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2187","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2187","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2188","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2188","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2188","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2188","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2188","T");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2189","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2189","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2189","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2189","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2189","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2190","Poison");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2190","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2190","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2190","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2190","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2191","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2191","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2191","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2191","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2191","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2192","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2192","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2192","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2192","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2192","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2193","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2193","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2193","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2193","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2193","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2194","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2194","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2194","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2194","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2194","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2195","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2195","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2195","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2195","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2195","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2196","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2196","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2196","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2196","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2196","V");
 
     SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2197","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2197","");
@@ -5450,7 +5876,7 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2222","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2222","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2222","");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2222","C");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2222","T");
 
     SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2223","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2223","");
@@ -5660,6 +6086,12 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2257","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2257","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2257","G");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2258","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2258","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2258","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2258","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2258","V");
 
     SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2260","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2260","");
@@ -5905,6 +6337,65 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2767","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2767","T");
 
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2768","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2768","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2768","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2768","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2768","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2769","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2769","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2769","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2769","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2769","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2770","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2770","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2770","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2770","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2770","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2771","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2771","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2771","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2771","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2771","I");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2772","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2772","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2772","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2772","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2772","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2773","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2773","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2773","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2773","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2773","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2774","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2774","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2774","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2774","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2774","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2775","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2775","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2775","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2775","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2775","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2776","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2776","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2776","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2776","E");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_2998","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2998","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2998","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2998","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2998","E");
+
     SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3000","Fire");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3000","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3000","");
@@ -5958,6 +6449,12 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3008","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3008","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3008","T");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3009","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3009","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3009","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3009","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3009","N");
 
     SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3100","Acid");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3100","4");
@@ -6492,5 +6989,77 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3188","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3188","");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3188","V");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3189","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3189","7");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3189","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3189","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3189","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3190","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3190","7");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3190","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3190","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3190","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3191","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3191","7");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3191","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3191","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3191","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3192","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3192","7");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3192","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3192","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3192","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3193","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3193","8");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3193","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3193","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3193","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3194","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3194","8");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3194","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3194","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3194","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3195","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3195","8");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3195","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3195","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3195","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3196","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3196","8");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3196","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3196","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3196","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3197","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3197","9");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3197","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3197","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3197","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3198","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3198","9");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3198","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3198","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3198","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3199","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3199","9");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3199","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3199","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3199","C");
+
+    SetLocalString(GetModule() ,"PRC_PACK_SPELL_TYPE_3200","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3200","9");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3200","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3200","");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3200","C");
 
 }

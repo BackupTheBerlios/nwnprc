@@ -105,7 +105,7 @@ void main()
     SetItemCursedFlag(oBoot,TRUE);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_CON,iBonus),oBoot);
 
-   AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(iBonus,(iLvl/10)+1),oArmor);
+   AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(iBonus-1,(iLvl/10)),oArmor);
 
 
    int i;

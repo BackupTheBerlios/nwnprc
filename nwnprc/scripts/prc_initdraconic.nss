@@ -50,6 +50,8 @@ int FindUnarmedDmg(object oPC,int bUnarmedDmg)
           return IP_CONST_MONSTERDAMAGE_2d12;
         case 9:
           return IP_CONST_MONSTERDAMAGE_3d10;
+        case 10:
+          return IP_CONST_MONSTERDAMAGE_3d10;
 
       }
 
@@ -131,11 +133,11 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
               case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
               case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
               case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
-                  AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
-                  break;
               case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
               case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
               case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
+              case ITEM_PROPERTY_ON_HIT_PROPERTIES:
+              case ITEM_PROPERTY_ONHITCASTSPELL:
                   AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
                   break;
 

@@ -1,3 +1,6 @@
+#include "inc_item_props"
+#include "prc_class_const"
+
 void SwayingWaist(object oPC, object oSkin, int iLevel)
 {
     if(GetLocalInt(oSkin, "DMWaist") == iLevel) return;

@@ -41,12 +41,12 @@ void Interaction(object oPC ,object oSkin)
     // Add Blindsight at level 6:
 void BlindSight(object oPC)
     {
-    if(GetLocalInt(oSkin, "HMSight") == TRUE) return;
+    if(GetLocalInt(oPC, "HMSight") == TRUE) return;
 
         // PC can detect Invisible creatures and has Ultravision:
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(EffectUltravision()), oPC);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(EffectSeeInvisible()), oPC);
-    SetLocalInt(oSkin, "HMSight", TRUE);
+    SetLocalInt(oPC, "HMSight", TRUE);
     }
 
 

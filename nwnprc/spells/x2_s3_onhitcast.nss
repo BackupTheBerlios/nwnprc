@@ -40,6 +40,9 @@ void main()
    int nVassal;         //Vassal Level
    int nBArcher;        // Blood Archer level
    int nFoeHunter;      // Foe Hunter Level
+   int bItemIsWeapon;
+   
+      
    
    // fill the variables
    oSpellOrigin = OBJECT_SELF;
@@ -48,7 +51,6 @@ void main()
    nVassal =  GetLevelByClass(CLASS_TYPE_VASSAL, OBJECT_SELF);
    nBArcher = GetLevelByClass(CLASS_TYPE_BLARCHER, OBJECT_SELF);
    nFoeHunter = GetLevelByClass(CLASS_TYPE_FOE_HUNTER, OBJECT_SELF);
-
 
    if (GetIsObjectValid(oItem))
    {
@@ -117,7 +119,7 @@ void main()
    }
    
    // Frenzied Berserker Auto Frenzy
-   if(GetHasFeat(FEAT_FRENZY, OBJECT_SELF) )
+   if(GetHasFeat(FEAT_FRENZY, OBJECT_SELF) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
    {      
 	if(!GetHasFeatEffect(FEAT_FRENZY))
 	{	    
@@ -131,13 +133,13 @@ void main()
    }
    
    // Foe Hunter Damage Resistance
-   if( nFoeHunter > 1 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+   if(nFoeHunter > 1 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
    {              
         DelayCommand(0.01, ExecuteScript("prc_fh_dr",OBJECT_SELF) );
    }
    
    // Foe Hunter Rancor Attack
-   if( nFoeHunter > 0 && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+   if(nFoeHunter > 0 && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
    {
         if(GetLocalInt(oSpellOrigin, "PRC_CanUseRancor") != 2 && GetLocalInt(oSpellOrigin, "HatedFoe") == MyPRCGetRacialType(oSpellTarget) )
         {
@@ -166,7 +168,7 @@ void main()
         }
    }
 
-	if(GetLocalInt(OBJECT_SELF,"doarcstrike"))
+	if(GetLocalInt(OBJECT_SELF,"doarcstrike") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
 	{
 		int nDice = GetLocalInt(OBJECT_SELF,"curentspell");
 		int nDamage = d4(nDice);
@@ -175,7 +177,7 @@ void main()
 	}
 
    	//spellsword
-	if(GetLocalInt(oItem,"spell")==1)
+	if(GetLocalInt(oItem,"spell")==1 && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
 	{
 
 	        object oPC = oSpellOrigin;

@@ -55,6 +55,9 @@ void main()
 
 
     // They failed, now they die
+    
+    DeathlessFrenzyCheck(oTarget);
+    
     eVis = EffectVisualEffect(VFX_FNF_PWKILL);
     effect eDeath = EffectDeath(TRUE);
     ApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oTarget);

@@ -138,9 +138,10 @@ void main()
                 if (iDeathAttack && iBonus)
                 {
                     if (!FortitudeSave(oTarget,10+iDeathAttack+GetAbilityModifier(ABILITY_INTELLIGENCE,OBJECT_SELF),SAVING_THROW_TYPE_DEATH))
+                    {
+                       DeathlessFrenzyCheck(oTarget);
                        DelayCommand(fDelay + 0.2, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(TRUE), oTarget));
-
-
+                    }
                 }
 
                 iNextAttackPenalty -= 5;

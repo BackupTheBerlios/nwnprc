@@ -150,6 +150,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget)
             {
                 if (!/*Will Save*/ MySavingThrow(SAVING_THROW_WILL, oTarget, 31, SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                 {
+                    DeathlessFrenzyCheck(oTarget);
                     //nVis = VFX_IMP_DEATH;
                     ePrism = EffectDeath();
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, ePrism, oTarget));

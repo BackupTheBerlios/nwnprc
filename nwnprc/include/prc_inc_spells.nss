@@ -65,9 +65,9 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 //that cannot be done using iprops, such as saves vs spellschool.
 int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
 
-// Returns the caster level when used in spells.  Designed so that it can be wrapped
-// easily.  You can use PRCGetCasterLevel() to determine a caster level from within a
-// true spell script.  In spell-like-abilities, it will only return GetCasterLevel.
+// Returns the caster level when used in spells.  You can use PRCGetCasterLevel()
+// to determine a caster level from within a true spell script.  In spell-like-
+// abilities & items, it will only return GetCasterLevel.
 int PRCGetCasterLevel(object oCaster = OBJECT_SELF);
 
 // Helps to find the adjustment to level granted by Practiced Spellcaster feats.

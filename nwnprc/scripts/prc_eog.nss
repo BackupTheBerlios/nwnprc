@@ -45,13 +45,19 @@ void RemoveRitualScarringDefense(object oPC, object oSkin)
 
 void ApplySightOfGruumsh(object oPC, object oSkin)
 { 
-     SetCompositeBonus(oSkin, "SightOfGruumshBonus", 2, ITEM_PROPERTY_SAVING_THROW_BONUS);
+     SetCompositeBonus(oSkin, "SightOfGruumshFortBonus", 2, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_FORTITUDE);
+     SetCompositeBonus(oSkin, "SightOfGruumshRefBonus",  2, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_REFLEX);
+     SetCompositeBonus(oSkin, "SightOfGruumshWillBonus", 2, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_WILL);
+
      SetLocalInt(oPC, "HasSightOfGruumsh", 1);     
 }
 
 void RemoveSightOfGruumsh(object oPC, object oSkin)
 {     
-     SetCompositeBonus(oSkin, "SightOfGruumshBonus", 0, ITEM_PROPERTY_SAVING_THROW_BONUS);
+     SetCompositeBonus(oSkin, "SightOfGruumshFortBonus", 0, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_FORTITUDE);
+     SetCompositeBonus(oSkin, "SightOfGruumshRefBonus",  0, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_REFLEX);
+     SetCompositeBonus(oSkin, "SightOfGruumshWillBonus", 0, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_WILL);
+
      SetLocalInt(oPC, "HasSightOfGruumsh", 1);
 }
 

@@ -20,3 +20,4 @@ const int TAILS_2DA_END         = 10;
 const int PACKAGE_2DA_END       = 150;
 const int RACE_FEAT_2DA_END     = 30;
 const int PACK_FEAT_2DA_END     = 400;
+const int CLASS_POWER_2DA_END   = 150;

@@ -2,6 +2,7 @@
 #include "inc_item_props"
 #include "x2_inc_itemprop"
 #include "psi_inc_psifunc"
+#include "inc_fileends"
 
 void main()
 {
@@ -40,7 +41,7 @@ void main()
             int nManifestLevel = GetLevelByClass(nClass, oPC);
             int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel-1));
             int i;
-            for (i=0;i<100;i++)
+            for (i=0;i<CLASS_POWER_2DA_END;i++)
             {
                 int nPowerLevel = StringToInt(Get2DACache(sPowerFile, "Level", i));
                 int nFeatID  = StringToInt(Get2DACache(sPowerFile, "FeatID", i));

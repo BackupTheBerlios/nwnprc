@@ -12,7 +12,7 @@
 #include "inc_item_props"
 #include "prc_class_const"
 #include "prc_feat_const"
-
+#include "prc_ipfeat_const"
 
 // * Applies the Duelist's AC bonuses as CompositeBonuses on the object's skin.
 // * AC bonus is determined by object's int bonus (2x int bonus if epic)
@@ -70,16 +70,13 @@ void DuelistElaborateParry(object oPC, object oSkin)
 void RemoveDuelistPreciseStrike(object oWeap)
 {
    int iSlashBonus = GetLocalInt(oWeap,"DuelistPreciseSlash");
-   int iSmashBonus = GetLocalInt(oWeap,"DuelistPreciseSmash");
    
    if (iSlashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus, 1, "DuelistPreciseSlash", -1, DURATION_TYPE_TEMPORARY);
-   if (iSmashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_BLUDGEONING, iSmashBonus, 1, "DuelistPreciseSmash", -1, DURATION_TYPE_TEMPORARY);
 }
 
 void DuelistPreciseStrike(object oPC, object oWeap)
 {
    int iSlashBonus = 0;
-   int iSmashBonus = 0;
    int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST,oPC);
    
    RemoveDuelistPreciseStrike(oWeap);
@@ -92,41 +89,32 @@ void DuelistPreciseStrike(object oPC, object oWeap)
          iSlashBonus = IP_CONST_DAMAGEBONUS_1d6;
          break;
       case 6: case 7: case 8: case 9:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_1d6;
-         iSmashBonus = IP_CONST_DAMAGEBONUS_1d6;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
          break;
       case 10: case 11: case 12: case 13:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_1d8;
-         iSmashBonus = IP_CONST_DAMAGEBONUS_1d6;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_3D6;
          break;
       case 14: case 15: case 16: case 17:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_1d8;
-         iSmashBonus = IP_CONST_DAMAGEBONUS_1d8;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_4D6;
          break;
       case 18: case 19: case 20: case 21:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_1d10;
-	 iSmashBonus = IP_CONST_DAMAGEBONUS_1d8;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_5D6;
 	 break;
       case 22: case 23: case 24: case 25:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_1d10;
-         iSmashBonus = IP_CONST_DAMAGEBONUS_1d10;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_6D6;
          break;
       case 26: case 27: case 28: case 29:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_1d12;
-         iSmashBonus = IP_CONST_DAMAGEBONUS_1d10;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_7D6;
          break;
       case 30:
-         iSlashBonus = IP_CONST_DAMAGEBONUS_1d12;
-         iSmashBonus = IP_CONST_DAMAGEBONUS_1d12;
+         iSlashBonus = IP_CONST_DAMAGEBONUS_8D6;
          break;
       default:
          break;
    }
    if(iSlashBonus) SetLocalInt(oWeap,"DuelistPreciseSlash",iSlashBonus);
-   if(iSmashBonus) SetLocalInt(oWeap,"DuelistPreciseSmash",iSmashBonus);
    
    if(iSlashBonus) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus), oWeap, 99999.9);
-   if(iSmashBonus) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, iSmashBonus), oWeap, 99999.9);
 }
 
 void main()

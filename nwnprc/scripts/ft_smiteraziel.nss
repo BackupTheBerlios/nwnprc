@@ -122,6 +122,9 @@ void main()
    }
    
    object oTarget=GetSpellTargetObject();
+   
+   ActionAttack(oTarget,TRUE);
+
 
    if (GetAlignmentGoodEvil(oTarget)!=ALIGNMENT_EVIL)
    {

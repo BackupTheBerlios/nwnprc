@@ -1,8 +1,9 @@
 2DA V2.0
 
   LABEL            ReqType ReqParam1         ReqParam2 
-0 Discipline       SKILL   3                 10         
+0 Discipline       SKILL   3                 10        
 1 Perform          SKILL   11                10        
 2 FEAT_CURSE_SONG  FEAT    871               ****      
 3 WeapProfMar      FEAT    45                ****      
-4 ScriptVar        VAR     PRC_AllowMinstrel 0         
+4 SkillFocusPerf   FEAT    184               ****      
+5 ScriptVar        VAR     PRC_AllowMinstrel 0         

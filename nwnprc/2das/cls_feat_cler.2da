@@ -300,5 +300,5 @@
 296   FEAT_SERVHEAVEN                       3355        0      -1               1        
 297   FEAT_NEW_POWER_ATTACK                 3143        3      1                1        
 298   FEAT_NEW_IMpROVED_POWER_ATTACK        3144        3      1                1        
-299   ESS_Rest                              4399        3      1                1        
+299   ESS_Rest                              4399        0      99               2        
 300   FEAT_SHADOW_LORD_CONVO                2360        3      1                1        

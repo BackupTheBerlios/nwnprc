@@ -355,5 +355,5 @@
 351   FocusedSpellPenetrNec                       3133        1      -1               0        
 352   FocusedSpellPenetrTra                       3134        1      -1               0        
 353   FocusedSpellPenetrAbj                       3135        1      -1               0        
-354   ESS_Rest                                    4399        3      1                1        
+354   ESS_Rest                                    4399        0      99               2        
 355   FEAT_SHADOW_LORD_CONVO                      2360        3      1                1        

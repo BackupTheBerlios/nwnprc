@@ -317,4 +317,4 @@
 313   FocusedSpellPenetrNec                       3133        1      -1               0        
 314   FocusedSpellPenetrTra                       3134        1      -1               0        
 315   FocusedSpellPenetrAbj                       3135        1      -1               0        
-316   ESS_Rest                                    4399        3      1                1        
+316   ESS_Rest                                    4399        0      99               2        

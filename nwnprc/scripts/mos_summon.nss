@@ -20,19 +20,19 @@ void main()
             switch (nClass)
             {
                 case 3:
-                    sSummon = "summonedgreaterw";
+                    sSummon = "prc_mos_allip";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 5:
-                    sSummon = "summonedgreaterw";
+                    sSummon = "prc_mos_wraith";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 7:
-                    sSummon = "summonedgreaterw";
+                    sSummon = "prc_mos_spectre1";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 9:
-                    sSummon = "summonedgreaterw";
+                    sSummon = "prc_mos_spectre2";
                     eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
                     break;
                 case 11:

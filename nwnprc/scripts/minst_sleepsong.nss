@@ -27,7 +27,7 @@ void main()
 
 
     //Declare major variables
-    int nLevel = GetLevelByClass(CLASS_TYPE_BARD) + GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE);
+    int nLevel = GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE);
     int nCha = GetAbilityModifier(ABILITY_CHARISMA);
     int nDuration = 10; //+ nChr;
     int nDC = 10 + (nLevel / 2) + nCha;

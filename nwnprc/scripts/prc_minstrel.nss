@@ -8,7 +8,7 @@ void ReducedASF(object oCreature)
     object oShield = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
     object oSkin = GetPCSkin(oCreature);
     int iArmorType = GetBaseAC(oArmor);
-    int iASFMod = 99; // "bad" dummy value, will cause the code to quit if the wrong kind of armor is on.
+    int iASFMod;
     int iBonus = GetLocalInt(oSkin, "MinstrelSFBonus");
     int iCostTableValue;
     int iArmorASF = 0;
@@ -24,6 +24,9 @@ void ReducedASF(object oCreature)
     {
         switch (iArmorType)
         {
+            case 0:
+                iASFMod = 10; //nothing will be applied if it stays like this.
+                break;
             case 1:
                 iASFMod = IP_CONST_ARCANE_SPELL_FAILURE_MINUS_5_PERCENT;
                 break;
@@ -58,8 +61,12 @@ void ReducedASF(object oCreature)
        }
        ip = GetNextItemProperty(oArmor);
     }
+    
+    // Find the proper adjustment to ASF from armor
+    iASFMod += iArmorASF; //existing ASF can push this above 10.
 
-    if (GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD)
+    // Determine whether the shield bonus should be applied and the amount of ASF it has already.
+    if (GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD && GetHasFeat(FEAT_MINSTREL_SMALL_SHIELD_CASTING))
     {
         ip = GetFirstItemProperty(oShield);
         while (GetIsItemPropertyValid(ip))
@@ -72,15 +79,14 @@ void ReducedASF(object oCreature)
             }
             ip = GetNextItemProperty(oShield);
         }
+        
+        // Find the proper adjustment to ASF from the shield
+        iASFMod += iShieldASF - 1; // existing ASF can push this above 10, but the presence of the
+                                   // shield drives it down by one level.
     }        
     
-    // Find the proper adjustment to ASF.
-    iASFMod += iArmorASF;
-    
-    if (GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD)
-        iASFMod += iShieldASF - 1;
-    
-    if (iASFMod >= 10)
+    // Should we apply?  
+    if (iASFMod >= 10) // if it went over ten, that means no bonus is needed.
     {
         SetLocalInt(oSkin, "MinstrelSFBonus", -1); // -1 represents "nothing's there"
         return; // the armor and/or small shieldalready has good enough ASF, we shouldn't add more.

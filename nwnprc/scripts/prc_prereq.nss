@@ -36,6 +36,7 @@ int GetArcanePRCLevels(object oPC)
         + (GetLevelByClass(CLASS_TYPE_HATHRAN, oPC) + 1) / 2
         + (GetLevelByClass(CLASS_TYPE_ORCUS, oPC) + 1) / 2
         + (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) + 1) / 2;
+        + (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, oPC) + 1) / 3;
 
    return iArcanePRCLevels;
 }
@@ -79,9 +80,13 @@ int GetBardSpellLevel(object oPC)
 	
 	// Adjust the Bard's level upwards if it is the one recieving the benefits of
 	// the PRC's.
-	if ((iBard > GetLevelByClass(CLASS_TYPE_SORCERER)) &&
-	    (iBard > GetLevelByClass(CLASS_TYPE_WIZARD)))
-	     iBard += GetArcanePRCLevels(oPC);
+	if (GetClassByPosition(1,oPC) == CLASS_TYPE_BARD || (     // basically, if bard is the first class
+	    GetClassByPosition(2,oPC) == CLASS_TYPE_BARD &&       // on the list that is a arcane class
+	    GetClassByPosition(1,oPC) != CLASS_TYPE_WIZARD &&     // it recieves the benefit
+	    GetClassByPosition(1,oPC) != CLASS_TYPE_SORCERER ) )
+	{
+	iBard += GetArcanePRCLevels(oPC);
+	}
 
 	if (iBard >= 16)
 	{
@@ -150,15 +155,19 @@ int GetRanPalSpellLevel(object oPC)
 
 	// Adjust the Rangers's level upwards if it is the one recieving the benefits of
 	// the PRC's.
-	if ((iRanger > GetLevelByClass(CLASS_TYPE_CLERIC)) &&
-	    (iRanger > GetLevelByClass(CLASS_TYPE_DRUID)) &&
-	    (iRanger > iPaladin))
+	if (GetClassByPosition(1, oPC) == CLASS_TYPE_RANGER || ( // Ranger recieves PrC benefits
+	    GetClassByPosition(2, oPC) == CLASS_TYPE_RANGER &&   // if it's the first divine class
+	    GetClassByPosition(1, oPC) != CLASS_TYPE_CLERIC &&   // on the class list.
+	    GetClassByPosition(1, oPC) != CLASS_TYPE_DRUID &&
+	    GetClassByPosition(1, oPC) != CLASS_TYPE_PALADIN ) )
 	     iRanger += GetDivinePRCLevels(oPC);
 	
 	// Likewise for the Paladin.
-	if ((iPaladin > GetLevelByClass(CLASS_TYPE_CLERIC)) &&
-	    (iPaladin > GetLevelByClass(CLASS_TYPE_DRUID)) &&
-	    (iPaladin > iRanger))
+	if (GetClassByPosition(1, oPC) == CLASS_TYPE_PALADIN || ( // Paladin recieves PrC benefits
+	    GetClassByPosition(2, oPC) == CLASS_TYPE_PALADIN &&   // if it's the first divine class
+	    GetClassByPosition(1, oPC) != CLASS_TYPE_CLERIC &&    // on the class list.
+	    GetClassByPosition(1, oPC) != CLASS_TYPE_DRUID &&
+	    GetClassByPosition(1, oPC) != CLASS_TYPE_RANGER ) )
 	     iPaladin += GetDivinePRCLevels(oPC);
 
 	if (iRanger >= 14 || iPaladin >= 14)
@@ -216,7 +225,6 @@ int ArcSpell(object oPC, int iArcSpell)
         int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA) - 10;
         int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE) - 10;
 
-
         iArcSpell = iWiz;
         
         if (iSorc > iWiz)
@@ -228,7 +236,7 @@ int ArcSpell(object oPC, int iArcSpell)
         }
 
 	//Checks to see what level of spells they can cast
-        iArcSpell += GetArcanePRCLevels(oPC);
+        iArcSpell += GetArcanePRCLevels(oPC);// actually the first arcane class gets the benefit, not the highest.
 
         iArcSpell = (iArcSpell + 1) / 2;
 	if (iArcSpell > 9)
@@ -291,7 +299,7 @@ int DivSpell(object oPC, int iDivSpell)
         }
 
 	//Checks to see what level of spells they can cast
-        iDivSpell += GetDivinePRCLevels(oPC);
+        iDivSpell += GetDivinePRCLevels(oPC); // actually the first divine class gets the benefit, not the highest.
 
 	iDivSpell = (iDivSpell + 1) / 2;
 	if (iDivSpell > 9)
@@ -517,6 +525,19 @@ void ShiningBlade(object oPC)
 	}	
 }
 
+void MinstrelOfTheEdge(object oPC)
+{
+    SetLocalInt(oPC, "PRC_PrereqMotE", 1);
+    
+    if (GetClassByPosition(1,oPC) == CLASS_TYPE_BARD || (     // basically, if bard is the first class
+        GetClassByPosition(2,oPC) == CLASS_TYPE_BARD &&       // on the list that is a arcane class
+        GetClassByPosition(1,oPC) != CLASS_TYPE_WIZARD &&     // it recieves the benefit
+        GetClassByPosition(1,oPC) != CLASS_TYPE_SORCERER ) )
+    {
+        SetLocalInt(oPC, "PRC_PrereqMotE", 0);
+    }
+}
+
 void main()
 {
         //Declare Major Variables
@@ -564,6 +585,7 @@ void main()
 	ShiningBlade(oPC);
 	Shadowlord(oPC, iArcSpell1);
 	Shifter(oPC, iArcSpell1, iDivSpell1);
+	MinstrelOfTheEdge(oPC);
 	
 	// Truly massive debug message flood if activated.
 	/*

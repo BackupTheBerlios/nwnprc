@@ -107,70 +107,12 @@ void ClawDragon(object oPC,int bUnarmedDmg,int Enh,int iEquip)
       iKi+= iEpicKi;
       Enh+= iKi;
 
-    object oItem ;
-
-    if (iEquip !=1)
-    {
-      oItem =GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
-      int iType = GetBaseItemType(oItem);
-      if (iType == BASE_ITEM_GLOVES)
-      {
-         itemproperty ip = GetFirstItemProperty(oWeapL);
-         while (GetIsItemPropertyValid(ip))
-         {
-             RemoveItemProperty(oWeapL, ip);
-            ip = GetNextItemProperty(oWeapL);
-         }
-
-      }
-
-
-    }
-    else if (iEquip ==1)
-    {
-       oItem = GetPCItemLastUnequipped();
-
-       if (GetIsObjectValid(oItem))
-      {
-
-         int iType = GetBaseItemType(oItem);
-         if (iType == BASE_ITEM_GLOVES)
-         {
-
-           itemproperty ip = GetFirstItemProperty(oWeapL);
-           while (GetIsItemPropertyValid(ip))
-           {
-               RemoveItemProperty(oWeapL, ip);
-              ip = GetNextItemProperty(oWeapL);
-           }
-
-           ip = GetFirstItemProperty(oItem);
-           while(GetIsItemPropertyValid(ip))
-           {
-              iType = GetItemPropertyType(ip);
-
-              if ( iType ==ITEM_PROPERTY_ENHANCEMENT_BONUS)
-              {
-                 int iCost = GetItemPropertyCostTableValue(ip);
-                 AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(iCost),oWeapL);
-                 if(iCost>(Enh)) Enh = iCost;
-
-              }
-              else
-                 AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
-
-              ip = GetNextItemProperty(oItem);
-
-           }
-         }
-      }
-    }
 
       TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iDmg),oWeapL);
 
-      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_ENHANCEMENT_BONUS,-1);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyEnhancementBonus(Enh),oWeapL);
+      TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_ATTACK_BONUS,-1);
+      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(Enh),oWeapL);
 
       TotalAndRemoveProperty(oWeapL,ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyExtraMeleeDamageType(IP_CONST_DAMAGETYPE_SLASHING),oWeapL);

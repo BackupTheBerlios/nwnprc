@@ -390,7 +390,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 	}
 }
 
-void ShadowWeave(object oPC)
+void CheckClericShadowWeave(object oPC)
 {
    if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && GetHasFeat(FEAT_SHADOWWEAVE, oPC))
    {
@@ -424,5 +424,5 @@ void main()
 	Ethran(oPC);
 	UltiRangerFeats(oPC);
 	MageKiller(oPC);
-	ShadowWeave(oPC);
+	CheckClericShadowWeave(oPC);
 }

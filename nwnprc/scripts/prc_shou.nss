@@ -11,6 +11,7 @@
 
 #include "inc_item_props"
 #include "nw_i0_spells"
+#include "soul_inc"
 
 
 /*

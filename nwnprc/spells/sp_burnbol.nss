@@ -47,7 +47,11 @@ void main()
                          nDamage = SPGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? 1 : 2, 4, 1);
                          
                     // if this is the first target / first attack do sneak damage
-                    if(nCnt == 1)  nDamage += SpellSneakAttackDamage(OBJECT_SELF, oTarget);
+                    if(nCnt == 1)
+                    {
+                         nDamage += SpellSneakAttackDamage(OBJECT_SELF, oTarget);
+                         nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                    }
                     
                     fTime = fDelay;
                     fDelay2 += 0.1;

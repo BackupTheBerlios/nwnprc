@@ -31,7 +31,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     //Declare major variables
     effect eAcid = EffectDamage(d6(3), DAMAGE_TYPE_ACID);
-    effect eElec = EffectDamage(d6(6), ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_ELECTRICAL));
     effect eStun = EffectStunned();
     effect eVisAcid = EffectVisualEffect(VFX_IMP_ACID_S);
     effect eVisElec = EffectVisualEffect(VFX_IMP_LIGHTNING_M);
@@ -50,6 +49,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     object oTarget = GetFirstInPersistentObject(OBJECT_SELF,OBJECT_TYPE_CREATURE);
     while(GetIsObjectValid(oTarget))
     {
+        int nDamage  = d6(6) + ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+        effect eElec = EffectDamage(nDamage, ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_ELECTRICAL));
+         
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, GetAreaOfEffectCreator()))
         {
             //Fire cast spell at event for the specified target

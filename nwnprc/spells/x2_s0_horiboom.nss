@@ -83,6 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             {
                 nDam = nDam + nDam/2; //Damage/Healing is +50%
             }
+            nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             //Set damage effect
             effect eDam = EffectDamage(nDam, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_SONIC));
             //Apply the MIRV and damage effect

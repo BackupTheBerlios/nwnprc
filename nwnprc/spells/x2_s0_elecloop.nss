@@ -119,6 +119,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 nPotential = MyMaximizeOrEmpower(6, nNumDice, nMetaMagic);
+                nPotential += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                 nDamage    = PRCGetReflexAdjustedDamage(nPotential, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_ELECTRICITY);
 
                 //--------------------------------------------------------------

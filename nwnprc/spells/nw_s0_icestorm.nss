@@ -90,6 +90,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                    nDamage3 = nDamage3 + (nDamage3 / 2);
                 }
                 nDamage2 = nDamage2 + nDamage3;
+                nDamage2 += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 //Set the damage effect
                 eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
                 eDam2 = EffectDamage(nDamage2, EleDmg);

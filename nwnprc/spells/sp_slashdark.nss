@@ -8,45 +8,46 @@
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+     SPSetSchool(SPELL_SCHOOL_EVOCATION);
 
-	// Determine the dice of damage.
-	int nCasterLvl = PRCGetCasterLevel();
-	int nDice = (nCasterLvl + 1) / 2;
-	if (nDice > 5) nDice = 5;
-	int nPenetr = nCasterLvl + SPGetPenetr();
+     // Determine the dice of damage.
+     int nCasterLvl = PRCGetCasterLevel();
+     int nDice = (nCasterLvl + 1) / 2;
+     if (nDice > 5) nDice = 5;
+     int nPenetr = nCasterLvl + SPGetPenetr();
 
-	// Adjust the damage type if necessary.
-	int nDamageType = SPGetElementalDamageType(DAMAGE_TYPE_NEGATIVE, OBJECT_SELF);
+     // Adjust the damage type if necessary.
+     int nDamageType = SPGetElementalDamageType(DAMAGE_TYPE_NEGATIVE, OBJECT_SELF);
 
-	object oTarget = GetSpellTargetObject();
-	if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
-	{
-		//Fire cast spell at event for the specified target
-		SPRaiseSpellCastAt(oTarget);
+     object oTarget = GetSpellTargetObject();
+     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
+     {
+          //Fire cast spell at event for the specified target
+          SPRaiseSpellCastAt(oTarget);
 
-		//Make SR Check
-		if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
-		{
-			// Make the touch attack and roll damage if it hits.
-			int nDamage = 0;
-			int nTouchAttack = TouchAttackRanged(oTarget);
-			if (nTouchAttack > 0)
-				nDamage = SPGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? nDice : (nDice * 2), 8);
+          //Make SR Check
+          if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
+          {
+               // Make the touch attack and roll damage if it hits.
+               int nDamage = 0;
+               int nTouchAttack = TouchAttackRanged(oTarget);
+               if (nTouchAttack > 0)
+                    nDamage = SPGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? nDice : (nDice * 2), 8);
 
-			// Apply the damage and the vfx to the target.
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, 
-				EffectBeam(VFX_BEAM_BLACK, OBJECT_SELF, BODY_NODE_HAND, 0 == nTouchAttack), oTarget, 1.0,FALSE);
-			if (nDamage)
-			{
-				effect eEffect = RACIAL_TYPE_UNDEAD == MyPRCGetRacialType(oTarget) ?
-					EffectHeal(nDamage) : SPEffectDamage(nDamage, nDamageType);
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oTarget);
-				PRCBonusDamage(oTarget);
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY), oTarget);
-			}
-		}
-	}
+               // Apply the damage and the vfx to the target.
+               SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, 
+                    EffectBeam(VFX_BEAM_BLACK, OBJECT_SELF, BODY_NODE_HAND, 0 == nTouchAttack), oTarget, 1.0,FALSE);
+               if (nDamage)
+               {
+                    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                    effect eEffect = RACIAL_TYPE_UNDEAD == MyPRCGetRacialType(oTarget) ?
+                         EffectHeal(nDamage) : SPEffectDamage(nDamage, nDamageType);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oTarget);
+                    PRCBonusDamage(oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY), oTarget);
+               }
+          }
+     }
 
-	SPSetSchool();
+     SPSetSchool();
 }

@@ -97,6 +97,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                     nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
                 }
+                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 
                 //Make a will save for half damage and negation of daze effect

@@ -48,6 +48,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         iNegDam = 6;
     }
     
+    iNegDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+    
     int iAttackRoll = TouchAttackMelee(oTarget, GetSpellCastItem() == OBJECT_INVALID);
     if (iAttackRoll > 0)
     {

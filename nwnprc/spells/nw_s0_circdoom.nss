@@ -84,6 +84,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         {
             nDamage = nDamage + (nDamage/2) + nCasterLevel;
         }
+        nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
         //If the target is an allied undead it is healed
         if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
         {

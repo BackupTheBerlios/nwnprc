@@ -63,6 +63,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         nDuration *= 2;
     }
+    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
     //--------------------------------------------------------------------------
     //Limit damage to max hp + 10
     //--------------------------------------------------------------------------

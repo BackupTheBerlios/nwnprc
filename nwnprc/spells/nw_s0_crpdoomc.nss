@@ -69,6 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 SignalEvent(oTarget,EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_CREEPING_DOOM));
                 //Roll Damage
                 nDamage = d6(nSwarm);
+                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 //Set Damage Effect with the modified damage
                 eDam = EffectDamage(nDamage, DAMAGE_TYPE_PIERCING);
                 //Apply damage and visuals

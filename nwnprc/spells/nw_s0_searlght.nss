@@ -112,6 +112,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             {
                 nDamage = nDamage + (nDamage/2);
             }
+            
+            nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             //Set the damage effect
             eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
             //Apply the damage effect and VFX impact

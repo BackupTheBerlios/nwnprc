@@ -41,7 +41,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     // When the caster is no longer there, all functions calling
     // GetAreaOfEffectCreator will fail. Its better to remove the barrier then
     //--------------------------------------------------------------------------
-	object aoeCreator = GetAreaOfEffectCreator();
+     object aoeCreator = GetAreaOfEffectCreator();
     if (!GetIsObjectValid(aoeCreator))
     {
         DestroyObject(OBJECT_SELF);
@@ -77,6 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                      nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                 }
+                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 int nDC = GetChangesToSaveDC(oTarget,aoeCreator);
                 //Adjust damage for Reflex Save, Evasion and Improved Evasion
                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, GetSpellSaveDC()+nDC,SAVING_THROW_TYPE_FIRE, aoeCreator);

@@ -92,6 +92,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         nDamage = nMax;
     }
+    
+    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
 
     effect eHeal = EffectTemporaryHitpoints(nDamage);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

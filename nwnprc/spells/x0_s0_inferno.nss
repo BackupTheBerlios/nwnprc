@@ -133,6 +133,7 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         // Calculate Damage
         //----------------------------------------------------------------------
         int nDamage = MyMaximizeOrEmpower(6,2,nMetaMagic);
+        nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
         effect eDam = EffectDamage(nDamage, EleDmg);
         effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
         eDam = EffectLinkEffects(eVis,eDam); // flare up

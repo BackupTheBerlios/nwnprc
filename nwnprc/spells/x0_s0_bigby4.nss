@@ -45,7 +45,7 @@ void RunHandImpact(object oTarget, object oCaster,int CasterLvl )
     }
 
     int nCasterModifiers = GetCasterAbilityModifier(oCaster)
-			+ PRCGetCasterLevel(oCaster);
+               + PRCGetCasterLevel(oCaster);
     int nCasterRoll = d20(1) + nCasterModifiers + 11 + -1;
     int nTargetRoll = GetAC(oTarget);
     if (nCasterRoll >= nTargetRoll)
@@ -53,6 +53,7 @@ void RunHandImpact(object oTarget, object oCaster,int CasterLvl )
        int nDC = GetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpellID));
 
        int nDam  = MyMaximizeOrEmpower(8, 1, GetMetaMagicFeat(), 11);
+       nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
        effect eDam = EffectDamage(nDam, DAMAGE_TYPE_BLUDGEONING);
        effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
 

@@ -47,6 +47,7 @@ void RunHandImpact(object oTarget, object oCaster)
     }
 
     int nDam = MyMaximizeOrEmpower(6,2,GetMetaMagicFeat(), 12);
+    nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
     effect eDam = EffectDamage(nDam, DAMAGE_TYPE_BLUDGEONING);
     effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
@@ -110,13 +111,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 + CasterLvl + 12 + -1;
             int nTargetRoll = GetAC(oTarget);
 
-			// Give the caster feedback about the grapple check if he is a PC.
-			if (GetIsPC(OBJECT_SELF))
-			{
-				SendMessageToPC(OBJECT_SELF, nCasterRoll >= nTargetRoll ?
-					"Bigby's Crushing Hand hit" : "Bigby's Grasping Hand missed");
-			}
-			
+               // Give the caster feedback about the grapple check if he is a PC.
+               if (GetIsPC(OBJECT_SELF))
+               {
+                    SendMessageToPC(OBJECT_SELF, nCasterRoll >= nTargetRoll ?
+                         "Bigby's Crushing Hand hit" : "Bigby's Grasping Hand missed");
+               }
+               
             // * grapple HIT succesful,
             if (nCasterRoll >= nTargetRoll)
             {
@@ -132,14 +133,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 //                    GetBaseAttackBonus(oTarget) + GetSizeModifier(oTarget)
 //                    + GetAbilityModifier(ABILITY_STRENGTH);
 
-				// Give the caster feedback about the grapple check if he is a PC.
-				if (GetIsPC(OBJECT_SELF))
-				{
-					string suffix = nCasterRoll >= nTargetRoll ? ", success" : ", failure";
-					SendMessageToPC(OBJECT_SELF, "Grapple check " + IntToString(nCasterRoll) + 
-						" vs. " + IntToString(nTargetRoll) + suffix);
-				}
-			
+                    // Give the caster feedback about the grapple check if he is a PC.
+                    if (GetIsPC(OBJECT_SELF))
+                    {
+                         string suffix = nCasterRoll >= nTargetRoll ? ", success" : ", failure";
+                         SendMessageToPC(OBJECT_SELF, "Grapple check " + IntToString(nCasterRoll) + 
+                              " vs. " + IntToString(nTargetRoll) + suffix);
+                    }
+               
                 if (nCasterRoll >= nTargetRoll)
                 {
                     effect eKnockdown = EffectParalyze();

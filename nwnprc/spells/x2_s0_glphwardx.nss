@@ -105,6 +105,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_GLYPH_OF_WARDING,OBJECT_SELF, GetSpellSaveDC
                     {
                         nDamage = nDamage + (nDamage/2);//Damage/Healing is +50%
                     }
+                    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
 
                     //Change damage according to Reflex, Evasion and Improved Evasion
                     nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()  + nDC), SAVING_THROW_TYPE_SONIC, oCreator);

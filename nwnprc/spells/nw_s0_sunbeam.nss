@@ -112,6 +112,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     nDamage = nDamage + (nDamage/2);
                 }
 
+                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
 
                 //Check that a reflex save was made.

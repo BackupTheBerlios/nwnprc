@@ -34,7 +34,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     object oTarget = GetEnteringObject();
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_COM_BLOOD_LRG_RED);
-	object aoeCreator = GetAreaOfEffectCreator();
+     object aoeCreator = GetAreaOfEffectCreator();
     int nMetaMagic = GetMetaMagicFeat();
     int nLevel = PRCGetCasterLevel(aoeCreator);
     int CasterLvl = nLevel;
@@ -61,6 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         {
             nDamage = nDamage + (nDamage/2);
         }
+        nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
         //Make SR Check
         if (!MyPRCResistSpell(aoeCreator, oTarget,nPenetr) )
         {

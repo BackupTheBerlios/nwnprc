@@ -79,6 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         {
                             nDamage = nDamage + (nDamage/2);//Damage/Healing is +50%
                         }
+                        nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                         //Change damage according to Reflex, Evasion and Improved Evasion
                         nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator());
                         //Set up the damage effect

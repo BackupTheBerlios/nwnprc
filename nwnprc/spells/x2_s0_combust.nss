@@ -82,6 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             nDamage = nDamage + (nDamage/2);//Damage/Healing is +50%
         }
     }
+    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
 
     //--------------------------------------------------------------------------
     // Calculate the duration (we need a duration or bad things would happen

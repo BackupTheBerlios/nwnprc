@@ -27,8 +27,8 @@
 #include "x2_inc_spellhook"
 
 void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, 
-	int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, 
-	int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE);
+     int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, 
+     int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE);
 
 void main()
 {
@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
 
-	// Changed to local function to add reflex save.
+     // Changed to local function to add reflex save.
     DoFirebrand(CasterLvl,nDamage, 15, SPELL_FIREBRAND, VFX_IMP_MIRV_FLAME, VFX_IMP_FLAME_M, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE), TRUE);
 
 
@@ -192,23 +192,24 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
                         {
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }
+                        if(i == 1) nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                         fTime = fDelay;
                         fDelay2 += 0.1;
                         fTime += fDelay2;
 
-						// Adjust damage for reflex save / evasion / imp evasion
-						nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, 
-							GetSpellSaveDC() + nDC, SAVING_THROW_TYPE_FIRE);
+                              // Adjust damage for reflex save / evasion / imp evasion
+                              nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, 
+                                   GetSpellSaveDC() + nDC, SAVING_THROW_TYPE_FIRE);
 
-						// Always apply missle but only apply impact/damage if we really have damage.							
-						DelayCommand(fDelay2, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget));
-						if (nDam > 0)
-						{
-							//Set damage effect
-							effect eDam = EffectDamage(nDam, nDAMAGETYPE);
-							//Apply the MIRV and damage effect
-							DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,TRUE,-1,CasterLvl));
-							DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                              // Always apply missle but only apply impact/damage if we really have damage.                                 
+                              DelayCommand(fDelay2, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget));
+                              if (nDam > 0)
+                              {
+                                   //Set damage effect
+                                   effect eDam = EffectDamage(nDam, nDAMAGETYPE);
+                                   //Apply the MIRV and damage effect
+                                   DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,TRUE,-1,CasterLvl));
+                                   DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                         }
                     }
                 } // for

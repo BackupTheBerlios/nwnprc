@@ -91,6 +91,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                       nDam = nDam + nDam/2; //Damage/Healing is +50%
                 }
+                
+                // apply bonus damage to first missle.
+                if(nCnt == 1) nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                
                 fTime = fDelay;
                 fDelay2 += 0.1;
                 fTime += fDelay2;

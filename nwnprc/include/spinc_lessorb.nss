@@ -33,6 +33,7 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
                // Roll the damage, doing double damage on a crit.
                int nDamage = SPGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? nDice : (nDice * 2), 8);
                nDamage += SpellSneakAttackDamage(OBJECT_SELF, oTarget);
+               nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                
                // Apply the damage and the damage visible effect to the target.                
                SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, nDamageType), oTarget);

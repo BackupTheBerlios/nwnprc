@@ -98,6 +98,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     {
                           nDam = nDam + nDam/2; //Damage/Healing is +50%
                     }
+                    
+                    if(nCnt == 1) nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                    
                     nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
                 
                     // only add sneak attack damage to first projectile

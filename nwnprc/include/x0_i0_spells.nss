@@ -518,6 +518,7 @@ void DoSpikeGrowthEffect(object oTarget,int nPenetr)
         {
             int nMetaMagic = GetMetaMagicFeat();
             int nDam = MaximizeOrEmpower(4, 1, nMetaMagic);
+            nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
 
             effect eDam = EffectDamage(nDam, DAMAGE_TYPE_PIERCING);
             effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
@@ -758,6 +759,9 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
                         {
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }
+                        
+                        if(i == 1) nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                        
                         // Jan. 29, 2004 - Jonathan Epp
                         // Reflex save was not being calculated for Firebrand
                         if(nReflexSave)

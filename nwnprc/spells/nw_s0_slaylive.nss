@@ -85,6 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     {
                         nDamage = nDamage + (nDamage/2);
                     }
+                    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                     //Apply damage effect and VFX impact               
                     ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_NEGATIVE);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);

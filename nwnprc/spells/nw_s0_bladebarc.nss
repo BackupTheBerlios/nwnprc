@@ -32,7 +32,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     object oTarget;
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_COM_BLOOD_LRG_RED);
-	object aoeCreator = GetAreaOfEffectCreator();
+     object aoeCreator = GetAreaOfEffectCreator();
     int nMetaMagic = GetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(aoeCreator);
     int nLevel = CasterLvl;
@@ -83,6 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                     nDamage = nDamage + (nDamage/2);
                 }
+                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC()+ nDC)))
                 {
                     nDamage = nDamage/2;

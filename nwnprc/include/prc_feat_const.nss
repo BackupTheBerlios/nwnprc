@@ -1267,6 +1267,12 @@ const int FEAT_FUGITIVE_LUCKEPIC                 = 2879;
 const int FEAT_OUT_LEADERSHIP                    = 2880;
 const int FEAT_OUT_LEGENDS                       = 2881;
 
+//  Alaghar
+const int FEAT_CLANGEDDINS_STRIKE                = 4071;
+const int FEAT_CLANGEDDINS_MIGHT                 = 4072;
+const int FEAT_ALAG_SILVERBEARD                  = 4073;
+const int FEAT_ALAG_ROCKBURST                    = 4074;
+
 
 /*//////////////////////////////////////////////////
 ////////////////CODI STUFF//////////////////////////
@@ -1434,3 +1440,12 @@ const int FEAT_ALL_MYLIGHT			 = 3613;
 const int FEAT_ALL_DEFPRECOG			 = 3614;
 const int FEAT_ALL_OFFPRECOG			 = 3615;
 const int FEAT_ALL_OFFPRESC			 = 3616;
+
+//Psionic Feats
+const int FEAT_MENTAL_RESISTANCE           = 3983;
+const int FEAT_HOSTILE_MIND                = 3984;
+const int FEAT_FORCE_OF_WILL               = 3985;
+const int FEAT_CLOSED_MIND                 = 3986;
+const int FEAT_RECKLESS_OFFENSE            = 3987;
+const int FEAT_CLOAK_DANCE                 = 3988;
+const int FEAT_PSIONIC_FOCUS               = 3989;

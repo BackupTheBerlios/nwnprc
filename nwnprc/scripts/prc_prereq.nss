@@ -738,6 +738,22 @@ void BloodArcher(object oPC)
         SetLocalInt(oPC, "PRC_PrereqBlArch", 1);
 }
 
+void Alaghar(object oPC)
+{
+    int iProperDomains = 0;
+
+    SetLocalInt(oPC, "PRC_PrereqAlag", 1);
+
+    iProperDomains = GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC);
+
+    if (iProperDomains >= 2)
+    {
+        SetLocalInt(oPC, "PRC_PrereqAlag", 0);
+    }
+}
+
 // YES, that is main2()... it's the second (delayed) phase of main.
 void main2()
 {
@@ -795,6 +811,7 @@ void main2()
      WWolf(oPC);
      FH(oPC);
      BloodArcher(oPC);
+     Alaghar(oPC);
      // Truly massive debug message flood if activated.
      /*
      SendMessageToPC(oPC, "Your true Strength: " + IntToString(GetLocalInt(oHide, "PRC_trueSTR")));

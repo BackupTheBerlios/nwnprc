@@ -97,6 +97,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_TEMPLE_RAIDER, oPC) > 0)       ExecuteScript("prc_templeraider", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLARCHER, oPC) > 0)		 ExecuteScript("prc_bld_arch", oPC);
     if(GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC) > 0) ExecuteScript("prc_outlawroad", oPC);
+    if(GetLevelByClass(CLASS_TYPE_ALAGHAR, oPC) > 0)             ExecuteScript("prc_alaghar", oPC);
     if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)       DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
 
     // Feats are checked here
@@ -366,6 +367,9 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"SA_Hide");
     DeleteLocalInt(oSkin,"SA_Hide_Forest");
     DeleteLocalInt(oSkin,"Svirf_Dodge");
+
+    //Alaghar
+    DeleteLocalInt(oSkin, "SilverbeardAC");
 
     // future PRCs Go below here
 }
@@ -674,6 +678,21 @@ void SpellKotMC(object oPC)
    FeatUsePerDay(oPC,FEAT_KOTMC_SL_3,-1,iLvl3);
 }
 
+void FeatAlaghar(object oPC)
+{
+    int iAlagharLevel = GetLevelByClass(CLASS_TYPE_ALAGHAR, oPC);
+    
+    if (!iAlagharLevel) return;
+
+    int iClangStrike = iAlagharLevel/3;
+    int iClangMight = (iAlagharLevel - 1)/3;
+    int iRockburst = (iAlagharLevel + 2)/4;
+
+    FeatUsePerDay(oPC, FEAT_CLANGEDDINS_STRIKE, -1, iClangStrike);
+    FeatUsePerDay(oPC, FEAT_CLANGEDDINS_MIGHT, -1, iClangMight);
+    FeatUsePerDay(oPC, FEAT_ALAG_ROCKBURST, -1, iRockburst);
+}
+
 void FeatSpecialUsePerDay(object oPC)
 {
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);
@@ -685,6 +704,7 @@ void FeatSpecialUsePerDay(object oPC)
     SpellShadow(oPC);
     SpellAPal(oPC);
     SpellCorup(oPC);
+    FeatAlaghar(oPC);
     FeatUsePerDay(oPC,FEAT_SA_SHIELDSHADOW,-1,GetCasterLvl(TYPE_ARCANE,oPC));
 
 }

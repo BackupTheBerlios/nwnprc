@@ -1364,7 +1364,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
            
            object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oAttacker);
            
-           if(oWeapL != OBJECT_INVALID)
+           if((oWeapL != OBJECT_INVALID) && (GetBaseItemType(oWeapL) != BASE_ITEM_LARGESHIELD) && (GetBaseItemType(oWeapL) != BASE_ITEM_SMALLSHIELD) && (GetBaseItemType(oWeapL) != BASE_ITEM_TOWERSHIELD) && (GetBaseItemType(oWeapL) != BASE_ITEM_TORCH))
            {
                 // has two weapons
                 // Absolute ambidex is covered in AB on player scripts

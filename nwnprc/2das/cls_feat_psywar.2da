@@ -3,6 +3,7 @@
       FeatLabel                        FeatIndex   List   GrantedOnLevel   OnMenu   
 0     ****                             ****        ****   ****             ****     
 1     "**Class_feats**"                ****        ****   ****             ****     
+6     FEAT_PSYWAR_PSYWARRIOR           3581        3      1                0        
 2     FEAT_AUGMENT_PSIONICS            3551        3      1                1        
 3     FEAT_AUGMENT_NONE                3552        3      1                1        
 4     ****                             ****        ****   ****             ****     

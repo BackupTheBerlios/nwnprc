@@ -95,6 +95,7 @@ const int SPELL_MINSTREL_SONG_INTELLIGENCE  = 2153;
 const int SPELL_MINSTREL_SONG_WISDOM        = 2154;
 const int SPELL_MINSTREL_SONG_CHARISMA      = 2155;
 const int SPELL_MINSTREL_SONG_WOUND_WHISP   = 2156;
+const int SPELL_MINSTREL_INCREASE_SONGS     = 2144;
 
 // Spell Feat Generic
 const int SPELL_MANYSHOT2                   = 2246;

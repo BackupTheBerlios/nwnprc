@@ -81,7 +81,7 @@ void main()
             {
                 if (!iAlreadyAffected) // don't want to check the targets more than once.
                 {
-                    if (GetIsImmune(oTarget, IMMUNITY_TYPE_CHARM) == FALSE)
+                    if (GetIsImmune(oTarget, IMMUNITY_TYPE_CHARM) == FALSE && GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) == FALSE)
                     {
                         if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                         {

@@ -1,5 +1,6 @@
 #include "inc_item_props"
 #include "prc_feat_const"
+#include "prc_class_const"
 
 // Only the armor's value is affected.  Therefore, using a shield can still cause ASF.
 void ReducedASF(object oCreature)
@@ -65,26 +66,6 @@ void ReducedASF(object oCreature)
     // Find the proper adjustment to ASF from armor
     iASFMod += iArmorASF; //existing ASF can push this above 10.
 
-    // Determine whether the shield bonus should be applied and the amount of ASF it has already.
-    if (GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD && GetHasFeat(FEAT_MINSTREL_SMALL_SHIELD_CASTING))
-    {
-        ip = GetFirstItemProperty(oShield);
-        while (GetIsItemPropertyValid(ip))
-        {
-            if (GetItemPropertyType(ip) == ITEM_PROPERTY_ARCANE_SPELL_FAILURE)
-            {
-                iCostTableValue = GetItemPropertyCostTableValue(ip);
-                if (iCostTableValue < 10)
-                    iShieldASF += 10 - iCostTableValue; // see iprp_arcspell.2da for reference
-            }
-            ip = GetNextItemProperty(oShield);
-        }
-        
-        // Find the proper adjustment to ASF from the shield
-        iASFMod += iShieldASF - 1; // existing ASF can push this above 10, but the presence of the
-                                   // shield drives it down by one level.
-    }        
-    
     // Should we apply?  
     if (iASFMod >= 10) // if it went over ten, that means no bonus is needed.
     {

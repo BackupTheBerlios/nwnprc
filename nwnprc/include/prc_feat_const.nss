@@ -718,7 +718,7 @@ const int FEAT_BRAWLER_DAMAGE_REDUCTION_9        = 4434;
 // Minstrel of the Edge
 const int FEAT_MINSTREL_LIGHT_ARMOR_CASTING      = 4435;
 const int FEAT_MINSTREL_MEDIUM_ARMOR_CASTING     = 4436;
-const int FEAT_MINSTREL_SMALL_SHIELD_CASTING     = 4459;
+const int FEAT_MINSTREL_INCREASE_SONGS           = 4459;
 const int FEAT_MINSTREL_SONG_SLEEP               = 4443;
 const int FEAT_MINSTREL_SONG_SILENCE             = 4444;
 const int FEAT_MINSTREL_SONG_HASTE               = 4445;

@@ -2,7 +2,7 @@
 
     FeatLabel                             FeatIndex List GrantedOnLevel OnMenu 
 0   FEAT_MINSTREL_LIGHT_ARMOR_CASTING     4435      3    1              0      
-1   ****                                  ****      **** ****           ****   
+1   FEAT_MINSTREL_INCREASE_SONGS          4459      3    1              1      
 2   FEAT_MINSTREL_MEDIUM_ARMOR_CASTING    4436      3    10             0      
 3   FEAT_MINSTREL_SONG_SLEEP              4443      2    2              1      
 4   FEAT_MINSTREL_SONG_SILENCE            4444      2    2              1      

@@ -23,7 +23,7 @@
 // The spell cast can be any spell, but it will not invoke a casting animation and it
 // will automatically be cast upon the caster.  Good for passive abilities
 // which conditionally change with certain actions.
-void CastSpellOnSelf(int iSpellId);
+void ActionCastSpellOnSelf(int iSpell);
 
 // Functions:
 void ActionCastSpellOnSelf(int iSpell)
@@ -31,21 +31,32 @@ void ActionCastSpellOnSelf(int iSpell)
     // Store current actions
     object oTarget = GetAttackTarget();
     int iAction = GetCurrentAction();
+
     int iDetec = GetActionMode(OBJECT_SELF, ACTION_MODE_DETECT);
     int iSteal = GetActionMode(OBJECT_SELF, ACTION_MODE_STEALTH);
     int iCount = GetActionMode(OBJECT_SELF, ACTION_MODE_COUNTERSPELL);
 
-    // Clear actions (unless resting) and cast the spell on self.
-    if (iAction != ACTION_REST) ClearAllActions(TRUE);
+    // Clear actions (unless resting)
+    if (iAction == ACTION_REST)
+    {
+        DelayCommand(1.0, ActionCastSpellOnSelf(iSpell)); // keep trying until not resting.
+        return;
+    }
+    else
+    {
+        ClearAllActions();
+    }
+    
+    // Cast the spell on self.
     ActionCastSpellAtObject(iSpell, OBJECT_SELF, METAMAGIC_QUICKEN, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 
     // Restore action mode (stealth is disrupted :/)
-    if (iDetec) DelayCommand(0.1, SetActionMode(OBJECT_SELF, ACTION_MODE_DETECT, TRUE));
-    if (iSteal) DelayCommand(0.1, SetActionMode(OBJECT_SELF, ACTION_MODE_STEALTH, TRUE));
-    if (iCount) DelayCommand(0.1, SetActionMode(OBJECT_SELF, ACTION_MODE_COUNTERSPELL, TRUE));
+    if (iDetec) DelayCommand(0.2, SetActionMode(OBJECT_SELF, ACTION_MODE_DETECT, TRUE));
+    if (iSteal) DelayCommand(0.2, SetActionMode(OBJECT_SELF, ACTION_MODE_STEALTH, TRUE));
+    if (iCount) DelayCommand(0.2, SetActionMode(OBJECT_SELF, ACTION_MODE_COUNTERSPELL, TRUE));
 
     // Return to combat if you were fighting.    
-    if (iAction == ACTION_ATTACKOBJECT) DelayCommand(0.1, ActionAttack(oTarget));
+    if (iAction == ACTION_ATTACKOBJECT) DelayCommand(0.2, ActionAttack(oTarget, FALSE));
 }
 
 ////////////////End Generic////////////////

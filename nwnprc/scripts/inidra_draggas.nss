@@ -21,7 +21,7 @@ void main()
     object oTarget;
     effect eVis, eBreath;
 
-    nDamage = d10(14);
+    nDamage = 7;
     nDC = 28;
 
     PlayDragonBattleCry();
@@ -38,22 +38,19 @@ void main()
             //Determine effect delay
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_ACID))
+            if(MySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_ACID))
             {
-                nDamStrike = nDamStrike/2;
-                if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-                {
-                    nDamStrike = 0;
-                }
+                nDamStrike = 0;
             }
             else if(GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
             {
                 nDamStrike = nDamStrike/2;
             }
+
             if (nDamStrike > 0)
             {
                 //Set Damage and VFX
-                eBreath = EffectDamage(nDamStrike, DAMAGE_TYPE_ACID);
+                eBreath = EffectAbilityDecrease(ABILITY_STRENGTH,nDamStrike);
                 eVis = EffectVisualEffect(VFX_IMP_POISON_L);
 
                 //Apply the VFX impact and effects
@@ -65,4 +62,3 @@ void main()
         oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 14.0, GetSpellTargetLocation(), TRUE);
     }
 }
-

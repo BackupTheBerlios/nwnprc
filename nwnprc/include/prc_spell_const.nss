@@ -339,7 +339,9 @@ const int SPELL_SPIDERSKIN							= 3184;
 const int SPELL_VISCID_GLOB							= 3185;
 const int SPELL_WORD_OF_BALANCE						= 3186;
 const int SPELL_GREENFIRE							= 3187;
-const int SPELL_CHILL_TOUCH						= 1791;
+const int SPELL_CHILL_TOUCH						    = 1791;
+const int SPELL_POX                                 = 2886;
+const int SPELL_PESTILENCE                          = 2887;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE        = 1951;

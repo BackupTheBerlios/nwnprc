@@ -307,8 +307,13 @@ void main()
                 
                 // don't destroy PRC items
                 // Lich's Phylactery or soul stones
-                // Shifters spark of life
-                if(GetTag(oGear) != "soul_gem" && GetTag(oGear) != "sparkoflife" && GetTag(oGear) != "lichamulet")
+                // Shifters spark of life    archfocusofpower
+                // Archmage Focus Power
+                if(GetTag(oGear) != "soul_gem"    && 
+                   GetTag(oGear) != "sparkoflife" && 
+                   GetTag(oGear) != "lichamulet"  &&
+                   GetTag(oGear) != "archfocusofpower"
+                  )
                 {
                     nGold = nGold + GetGoldPieceValue(oGear);
                     oGear2 = CopyItem(oGear, oContainer);

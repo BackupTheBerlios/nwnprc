@@ -47,7 +47,7 @@ void main()
     {
          if(GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
          {
-              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC); 
+              RemoveEffectsFromSpell(oPC, SPELL_T_TWO_WEAPON_FIGHTING);
          }  
     }
     // Remove effects if weapons are not correct
@@ -59,7 +59,7 @@ void main()
     {
          if(GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
          {
-              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC); 
+              RemoveEffectsFromSpell(oPC, SPELL_T_TWO_WEAPON_FIGHTING);
          }
 
          nMes = "*Greater Two-Weapon Fighting Disabled*";

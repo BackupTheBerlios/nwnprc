@@ -53,9 +53,7 @@
 #include "prc_inc_unarmed"
 #include "prc_inc_util"
 #include "inc_utility"
-
-// Switch to allow the elemental damage to critical.
-const int PRC_ALLOW_ELEMNTAL_DAMAGE_CRITICAL = TRUE;
+#include "prc_inc_switch"
 
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
@@ -2897,7 +2895,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      // Can be turned off to better emulate PnP rules.
      if(  bIsCritical && 
           !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) &&
-          PRC_ALLOW_ELEMNTAL_DAMAGE_CRITICAL
+          !GetPRCSwitch(PRC_PNP_ELEMENTAL_DAMAGE)
        )
      {
           iAcid *= iCriticalMultiplier;

@@ -16,6 +16,7 @@
 #include "prc_racial_const"
 #include "prc_spell_const"
 #include "inc_item_props"
+#include "prc_inc_switch"
 
 
 //////////////////////////////////////////////////
@@ -44,15 +45,9 @@ const int MONST_DAMAGE_4D12  = 41;
 
 const int ITEM_PROPERTY_WOUNDING = 69;
 
-
 const string CALL_UNARMED_FEATS = "CALL_UNARMED_FEATS";
 const string CALL_UNARMED_FISTS = "CALL_UNARMED_FISTS";
 const string UNARMED_CALLBACK   = "UNARMED_CALLBACK";
-
-// I plan to change these over to the switch system later
-const int PRC_3_5e_FIST_DAMAGE = FALSE;
-const int PRC_BRAWLER_FIST_SIZE_DAMAGE = FALSE;
-
 
 //////////////////////////////////////////////////
 /* Function prototypes                          */
@@ -91,8 +86,6 @@ void UnarmedFeats(object oCreature);
 // When the callback is running, a local int UNARMED_CALLBACK will be
 // set on OBJECT_SELF
 void UnarmedFists(object oCreature);
-
-
 
 //////////////////////////////////////////////////
 /* Function defintions                          */
@@ -244,7 +237,7 @@ int FindUnarmedDamage(object oCreature)
     if (iShou) iMonk += iShou;
   
     // In 3.0e, Monk progression stops after level 16:
-    if (iMonk > 16 && !PRC_3_5e_FIST_DAMAGE) iMonk = 16;
+    if (iMonk > 16 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) ) iMonk = 16;
     // in 3.5e, monk progression stops at 20.
     else if(iMonk > 20) iMonk = 20;
    
@@ -260,7 +253,7 @@ int FindUnarmedDamage(object oCreature)
     iMonkDamage = iMonk / 4 + iSizeModifier;
     
     // For medium monks in 3.0e skip 2d6 and go to 1d20
-    if(bMediumSize && iMonkDamage == 6 && !PRC_3_5e_FIST_DAMAGE) iMonkDamage = 7; 
+    if(bMediumSize && iMonkDamage == 6 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) ) iMonkDamage = 7; 
         
     // Shou Disciple either adds its level to existing class or does its own damage, depending
     // on which is better. Here we will determine how much damage the Shou Disciple does
@@ -275,7 +268,7 @@ int FindUnarmedDamage(object oCreature)
     if (iBrawler) iBrawlerDamage = iBrawler / 6 + 2;   // 1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
 
     // Optional code for "sized" bralwers
-    if(PRC_BRAWLER_FIST_SIZE_DAMAGE && iBrawler > 0)  
+    if(GetPRCSwitch(PRC_BRAWLER_SIZE) && iBrawler > 0)  
         iBrawlerDamage = iBrawler / 6 + iSizeModifier;
     
     // Certain race pack creatures use different damages.
@@ -372,7 +365,7 @@ int FindUnarmedDamage(object oCreature)
             else                            iDamage = MONST_DAMAGE_1D10;
             break;
         case 5:
-            if (bUseMonkAlt && !PRC_3_5e_FIST_DAMAGE)
+            if (bUseMonkAlt && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) )
             {
                 if      (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D20;
                 else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D8;
@@ -391,7 +384,7 @@ int FindUnarmedDamage(object oCreature)
             else                            iDamage = MONST_DAMAGE_2D8;
             break;
         case 7:
-            if (bUseMonkAlt && !PRC_3_5e_FIST_DAMAGE)
+            if (bUseMonkAlt && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE))
             {
                 if      (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D10;
                 else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D12;

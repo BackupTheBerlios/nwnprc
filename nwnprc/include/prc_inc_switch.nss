@@ -36,6 +36,12 @@ const string PRC_USES_PER_WEAPON_POISON_COUNT        = "PRC_USES_PER_WEAPON_POIS
 // Psionics switches
 const string PRC_PSI_ASTRAL_CONSTRUCT_USE_2DA        = "ASTRAL_CONSTRUCT_USE_2DA";
 
+// Combat System Switches 
+const string PRC_PNP_ELEMENTAL_DAMAGE = "PRC_PNP_ELEMENTAL_DAMAGE";
+
+// Unarmed Damage
+const string PRC_3_5e_FIST_DAMAGE = "PRC_3_5e_FIST_DAMAGE";
+const string PRC_BRAWLER_SIZE = "PRC_BRAWLER_SIZE";
 
 
 //Checks the state of a PRC switch

@@ -6,8 +6,13 @@
     This is a script for the grenadelike use of a
     poison item.
     
-    The item used to trigger this should have a local
-    integer called "pois_idx"
+    The number of poison used is gotten from
+    local integer "pois_idx" on the item being cast from.
+    The last 3 letters of the item's tag will be used instead
+    if the following module switch is set:
+    
+    PRC_USE_TAGBASED_INDEX_FOR_POISON
+    
     
     If the poison used is an inhaled poison, any
     creatures in a RADIUS_SIZE_MEDIUM will be effected.
@@ -23,6 +28,8 @@
 #include "inc_poison"
 #include "spinc_common"
 
+#include "prc_inc_switch"
+
 
 void main(){
 	object oPC = OBJECT_SELF;
@@ -35,7 +42,7 @@ void main(){
 	
     // Get the 2da row to lookup the poison from 
     int nPoisonIdx;
-    if(GetModuleSwitchValue("USE_TAGBASED_INDEX_FOR_POISON"))
+    if(GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON))
     	nPoisonIdx = StringToInt(GetStringRight(GetTag(oItem), 3));
     else
     	nPoisonIdx = GetLocalInt(oItem, "pois_idx");
@@ -45,7 +52,9 @@ void main(){
 	
 	if (nPoisonIdx < 0)
 	{
-		WriteTimestampedLogEntry ("Error: Item with resref " +GetResRef(oItem)+ ", tag " +GetTag(oItem) + " has the Poison Vial spellscript attached it's local integer variable 'pois_idx' contains an invalid value!");
+		WriteTimestampedLogEntry ("Error: Item with resref " +GetResRef(oItem)+ ", tag " +GetTag(oItem) + " has the Poison Vial spellscript attached but "
+                                   + (GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON) ? "it's tag" : "it's local integer variable 'pois_idx'")
+                                   + " contains an invalid value!");
 		return;
 	}
 	

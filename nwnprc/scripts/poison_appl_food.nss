@@ -8,7 +8,7 @@
     The last 3 letters of the item's tag will be used instead
     if the following module switch is set:
     
-    USE_TAGBASED_INDEX_FOR_POISON
+    PRC_USE_TAGBASED_INDEX_FOR_POISON
     
     
     Any non-contact poison will have no effect. An already
@@ -57,6 +57,7 @@
 #include "X2_inc_switches"
 
 #include "inc_poison"
+#include "prc_inc_switch"
 
 
 void main()
@@ -82,7 +83,7 @@ void main()
 
     // Get the 2da row to lookup the poison from 
     int nRow;
-    if(GetModuleSwitchValue("USE_TAGBASED_INDEX_FOR_POISON"))
+    if(GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON))
     	nRow = StringToInt(GetStringRight(GetTag(oItem), 3));
     else
     	nRow = GetLocalInt(oItem, "pois_idx");
@@ -92,7 +93,7 @@ void main()
     {
         SendMessageToPCByStrRef(oPC, 83360);         //"Nothing happens
         WriteTimestampedLogEntry ("Error: Item with resref " +GetResRef(oItem)+ ", tag " +GetTag(oItem) + " has the PoisonFood spellscript attached but "
-                                   + (GetModuleSwitchValue("USE_TAGBASED_INDEX_FOR_POISON") ? "it's tag" : "it's local integer variable 'pois_idx'")
+                                   + (GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON) ? "it's tag" : "it's local integer variable 'pois_idx'")
                                    + " contains an invalid value!");
         return;
     }

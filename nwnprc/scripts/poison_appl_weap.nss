@@ -8,7 +8,7 @@
     The last 3 letters of the item's tag will be used instead
     if the following module switch is set:
     
-    USE_TAGBASED_INDEX_FOR_POISON
+    PRC_USE_TAGBASED_INDEX_FOR_POISON
     
     
     The item will have a permanent OnHitCastSpell applied
@@ -20,17 +20,17 @@
     
     The system uses the following module switches:
     
-    ALLOW_ONLY_SHARP_WEAPONS
+    PRC_ALLOW_ONLY_SHARP_WEAPONS
     - If this is nonzero, only weapons that do slashing or piercing
       damage are allowed to be poisoned.
     - Default: All weapons can be poisoned.
     
-    ALLOW_ALL_POISONS_ON_WEAPONS
+    PRC_ALLOW_ALL_POISONS_ON_WEAPONS
     - If this is nonzero, inhaled and ingest poisons may be
       placed on weapons in addition to contact and injury.
     - Default: Only contact and injury poisons are allowed on weapons.
     
-    USE_DEXBASED_WEAPON_POISONING_FAILURE_CHANCE
+    PRC_USE_DEXBASED_WEAPON_POISONING_FAILURE_CHANCE
     - If this is nonzero, a DEX check is rolled against Handle_DC
       in the poison's column in poison.2da.
     - Possessing the Use Poison feat will always pass this check.
@@ -42,14 +42,14 @@
     These may be overridden with similarly named variables on the item
     used to poison the weapon.
     If the die value is not present (or less than 2), the amount of uses
-    will be equal to USES_PER_POISON_COUNT.
+    will be equal to PRC_USES_PER_POISON_COUNT.
     There will always be at least one use.
     
-    USES_PER_WEAPON_POISON_COUNT
+    PRC_USES_PER_WEAPON_POISON_COUNT
     - Number of uses or dice for uses of the poisoned weapon.
     - Values less than 1 will be treated as 1.
     
-    USES_PER_WEAPON_POISON_DIE
+    PRC_USES_PER_WEAPON_POISON_DIE
     - Size of dice used to determine number of uses. Any number
       greater than 1 works.
     - Values less than 2 on the module switch will disable the die roll.
@@ -68,7 +68,7 @@
 #include "X2_inc_switches"
 
 #include "inc_poison"
-
+#include "prc_inc_switch"
 
 
 void main()
@@ -99,7 +99,7 @@ void main()
 	}
 	
 	// Make sure the weapon can be applied poison to
-	if(GetModuleSwitchValue("ALLOW_ONLY_SHARP_WEAPONS") &&
+	if(GetPRCSwitch(PRC_ALLOW_ONLY_SHARP_WEAPONS) &&
 	   IPGetIsBludgeoningWeapon(oTarget))
 	{
 		SendMessageToPCByStrRef(oPC, 83367);         //"Weapon does not do slashing or piercing damage "
@@ -109,7 +109,7 @@ void main()
 	
     // Get the 2da row to lookup the poison from 
     int nRow;
-    if(GetModuleSwitchValue("USE_TAGBASED_INDEX_FOR_POISON"))
+    if(GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON))
     	nRow = StringToInt(GetStringRight(GetTag(oItem), 3));
     else
     	nRow = GetLocalInt(oItem, "pois_idx");
@@ -119,7 +119,7 @@ void main()
     {
         SendMessageToPCByStrRef(oPC, 83360);         //"Nothing happens
         WriteTimestampedLogEntry ("Error: Item with resref " +GetResRef(oItem)+ ", tag " +GetTag(oItem) + " has the PoisonWeapon spellscript attached but "
-                                   + (GetModuleSwitchValue("USE_TAGBASED_INDEX_FOR_POISON") ? "it's tag" : "it's local integer variable 'pois_idx'")
+                                   + (GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON) ? "it's tag" : "it's local integer variable 'pois_idx'")
                                    + " contains an invalid value!");
         return;
     }
@@ -127,7 +127,7 @@ void main()
 	// Make sure the poison can be applied to a weapon
 	if(!GetIsContactPoison(nRow) &&
 	   !GetIsInjuryPoison(nRow) &&
-	   !GetModuleSwitchValue("ALLOW_ALL_POISONS_ON_WEAPONS"))
+	   !GetPRCSwitch(PRC_ALLOW_ALL_POISONS_ON_WEAPONS))
 	{
 		SendMessageToPCByStrRef(oPC, STRREF_POISON_NOT_VALID_FOR_WEAPON);
 		return;
@@ -153,7 +153,7 @@ void main()
 		
 		// Check for failure.
 		int nFail;
-		if(GetModuleSwitchValue("USE_DEXBASED_WEAPON_POISONING_FAILURE_CHANCE"))
+		if(GetPRCSwitch(PRC_USE_DEXBASED_WEAPON_POISONING_FAILURE_CHANCE))
 		{
 			int nApplyDC = StringToInt(Get2DAString("poison", "Handle_DC", nRow));
 			int nDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC) ;
@@ -189,10 +189,10 @@ void main()
 	SetLocalInt(oTarget, "pois_wpn_idx", nRow);
 	
 	int nUses = 0;
-	int nDie = GetLocalInt(oItem, "USES_PER_WEAPON_POISON_DIE");
-	    nDie = nDie ? nDie : GetModuleSwitchValue("USES_PER_WEAPON_POISON_DIE");
-	int nCount = GetLocalInt(oItem, "USES_PER_WEAPON_POISON_COUNT");
-	    nCount = nCount > 0 ? nCount : GetModuleSwitchValue("USES_PER_WEAPON_POISON_COUNT"); 
+	int nDie = GetLocalInt(oItem, PRC_USES_PER_WEAPON_POISON_DIE);
+	    nDie = nDie ? nDie : GetPRCSwitch(PRC_USES_PER_WEAPON_POISON_DIE);
+	int nCount = GetLocalInt(oItem, PRC_USES_PER_WEAPON_POISON_COUNT);
+	    nCount = nCount > 0 ? nCount : GetPRCSwitch(PRC_USES_PER_WEAPON_POISON_COUNT); 
 	    nCount = nCount > 0 ? nCount : 1;
 	if(nDie >= 2){
 		int i;

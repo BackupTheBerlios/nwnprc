@@ -8,7 +8,7 @@
     The last 3 characters of the item's tag will be used
     instead if the following module switch is set:
     
-    USE_TAGBASED_INDEX_FOR_POISON
+    PRC_USE_TAGBASED_INDEX_FOR_POISON
     
     
     The last 3 digits of the tag are used as a reference
@@ -51,15 +51,15 @@
     These may be overridden with similarly named variables on the item
     used to poison the item.
     If the die value is not present (or less than 2), the amount of uses
-    will be equal to USES_PER_POISON_COUNT.
+    will be equal to PRC_USES_PER_POISON_COUNT.
     There will always be at least one use.
     
-    USES_PER_ITEM_POISON_COUNT
+    PRC_USES_PER_ITEM_POISON_COUNT
     - Number of uses or dice for times the poisoned item will
       take effect.
     - Values less than 1 will be treated as 1.
     
-    USES_PER_ITEM_POISON_DIE
+    PRC_USES_PER_ITEM_POISON_DIE
     - Size of dice used to determine number of uses. Any number
       greater than 1 works.
     - Values less than 2 will be treated as 2.
@@ -74,6 +74,7 @@
 #include "X2_inc_switches"
 
 #include "inc_poison"
+#include "prc_inc_switch"
 
 
 void main()
@@ -91,7 +92,7 @@ void main()
 
     // Get the 2da row to lookup the poison from 
     int nRow;
-    if(GetModuleSwitchValue("USE_TAGBASED_INDEX_FOR_POISON"))
+    if(GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON))
     	nRow = StringToInt(GetStringRight(GetTag(oItem), 3));
     else
     	nRow = GetLocalInt(oItem, "pois_idx");
@@ -101,7 +102,7 @@ void main()
     {
         SendMessageToPCByStrRef(oPC, 83360);         //"Nothing happens
         WriteTimestampedLogEntry ("Error: Item with resref " +GetResRef(oItem)+ ", tag " +GetTag(oItem) + " has the PoisonItem spellscript attached but "
-                                   + (GetModuleSwitchValue("USE_TAGBASED_INDEX_FOR_POISON") ? "it's tag" : "it's local integer variable 'pois_idx'")
+                                   + (GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON) ? "it's tag" : "it's local integer variable 'pois_idx'")
                                    + " contains an invalid value!");
         return;
     }
@@ -134,10 +135,10 @@ void main()
     SetLocalInt(oTarget, "pois_itm_trap_dc", nDC);
 
     int nUses = 0;
-	int nDie = GetLocalInt(oItem, "USES_PER_ITEM_POISON_DIE");
-	    nDie = nDie ? nDie : GetModuleSwitchValue("USES_PER_ITEM_POISON_DIE");
-	int nCount = GetLocalInt(oItem, "USES_PER_ITEM_POISON_COUNT");
-	    nCount = nCount > 0 ? nCount : GetModuleSwitchValue("USES_PER_ITEM_POISON_COUNT"); 
+	int nDie = GetLocalInt(oItem, PRC_USES_PER_ITEM_POISON_DIE);
+	    nDie = nDie ? nDie : GetPRCSwitch(PRC_USES_PER_ITEM_POISON_DIE);
+	int nCount = GetLocalInt(oItem, PRC_USES_PER_ITEM_POISON_COUNT);
+	    nCount = nCount > 0 ? nCount : GetPRCSwitch(PRC_USES_PER_ITEM_POISON_COUNT);
 	    nCount = nCount > 0 ? nCount : 1;
 	if(nDie >= 2){
 		int i;

@@ -154,7 +154,7 @@ int ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
 
 		}
 	}
-	SendMessageToPC(GetFirstPC(), "Your Elemental Focus modifier is " + IntToString(nDC));
+//	SendMessageToPC(GetFirstPC(), "Your Elemental Focus modifier is " + IntToString(nDC));
 	return nDC;
 }
 
@@ -214,7 +214,7 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
 
 
 	}
-	SendMessageToPC(GetFirstPC(), "Your Spell Power modifier is " + IntToString(nDC));
+//	SendMessageToPC(GetFirstPC(), "Your Spell Power modifier is " + IntToString(nDC));
 	return nDC;
 }
 

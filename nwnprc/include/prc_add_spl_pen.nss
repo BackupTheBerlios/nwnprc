@@ -80,7 +80,7 @@ int ElementalSavantSP(int spell_id, object oCaster = OBJECT_SELF)
 
 		}
 	}
-	SendMessageToPC(GetFirstPC(), "Your Elemental Penetration modifier is " + IntToString(nSP));
+//	SendMessageToPC(GetFirstPC(), "Your Elemental Penetration modifier is " + IntToString(nSP));
 	return nSP;
 }
 
@@ -138,7 +138,7 @@ int RedWizardSP(int spell_id, object oCaster = OBJECT_SELF)
 
 
 	}
-	SendMessageToPC(GetFirstPC(), "Your Spell Power modifier is " + IntToString(nSP));
+//	SendMessageToPC(GetFirstPC(), "Your Spell Power modifier is " + IntToString(nSP));
 	return nSP;
 }
 

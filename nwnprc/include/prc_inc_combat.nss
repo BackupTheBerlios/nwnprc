@@ -201,7 +201,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 // Function used by Perform Attack Round to perform the attacks
 // Used because I needed to delay the for loops in order to properly
 // simulate the attack timing.
-void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct BonusDamage sWeaponDamage, struct BonusDamage sSpellBonusDamage, int iWeaponDamageRound, effect eSpecialEffect, float eDuration, string sMessageSuccess, string sMessageFailure, int bEffectAllAttacks, int iMainHand, int iAttackBonus, int iMod, int iNumDice, int iNumSides, int iCritMult, int bIsRangedWeapon);
+void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct BonusDamage sWeaponDamage, struct BonusDamage sSpellBonusDamage, int iWeaponDamageRound, effect eSpecialEffect, float eDuration, int iDamageBonus, int iDamageBonusType, string sMessageSuccess, string sMessageFailure, int bEffectAllAttacks, int iMainHand, int iAttackBonus, int iMod, int iNumDice, int iNumSides, int iCritMult, int bIsRangedWeapon);
 
 // Performs a full attack round and can add in bonus damage damage/effects
 // Will perform all attacks and accounts for weapontype, haste, twf, tempest twf, etc.
@@ -2903,7 +2903,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      return eLink;
 }
 
-void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct BonusDamage sWeaponDamage, struct BonusDamage sSpellBonusDamage, int iWeaponDamageRound, effect eSpecialEffect, float eDuration, string sMessageSuccess, string sMessageFailure, int bEffectAllAttacks, int iMainHand, int iAttackBonus, int iMod, int iNumDice, int iNumSides, int iCritMult, int bIsRangedWeapon)
+void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct BonusDamage sWeaponDamage, struct BonusDamage sSpellBonusDamage, int iWeaponDamageRound, effect eSpecialEffect, float eDuration, int iDamageBonus, int iDamageBonusType, string sMessageSuccess, string sMessageFailure, int bEffectAllAttacks, int iMainHand, int iAttackBonus, int iMod, int iNumDice, int iNumSides, int iCritMult, int bIsRangedWeapon)
 {         
      string sMes2 = "Current Target = " + GetName(gDefender); 
      FloatingTextStringOnCreature(sMes2, oAttacker, FALSE);
@@ -2944,6 +2944,13 @@ void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct Bonu
      
           if(bEffectAllAttacks && iAttackRoll > 0)
           {
+               if(iDamageBonus > 0)
+               {
+                    int iDamagePower = GetDamagePowerConstant(oWeapon, gDefender, oAttacker);
+                    effect eBonusDamage = EffectDamage(iDamageBonus, iDamageBonusType, iDamagePower);
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, gDefender);
+               }
+               
                ApplyEffectToObject(iDurationType, eSpecialEffect, gDefender, eDuration);
                FloatingTextStringOnCreature(sMessageSuccess, oAttacker, FALSE);
           }
@@ -2954,6 +2961,13 @@ void AttackLoopLogic(object oAttacker, object oWeapon, object oAmmo, struct Bonu
           // first attack in main hand, apply special effect
           else if(bFirstAttack && !bEffectAllAttacks &&  iAttackRoll > 0)
           {
+               if(iDamageBonus > 0)
+               {
+                    int iDamagePower = GetDamagePowerConstant(oWeapon, gDefender, oAttacker);
+                    effect eBonusDamage = EffectDamage(iDamageBonus, iDamageBonusType, iDamagePower);
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, gDefender);
+               }
+
                ApplyEffectToObject(iDurationType, eSpecialEffect, gDefender, eDuration);
                FloatingTextStringOnCreature(sMessageSuccess, oAttacker, FALSE);
                bFirstAttack = FALSE;
@@ -3371,7 +3385,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      for(i = 0; i < gBonusMainHandAttacks; i++)
      {
           iAttackNum += 1;
-          DelayCommand( (fDelay * iAttackNum), AttackLoopLogic(oAttacker, oWeaponR, oAmmo, sMainWeaponDamage, sSpellBonusDamage, iMainWeaponDamageRound, eSpecialEffect, eDuration, sMessageSuccess, sMessageFailure, bEffectAllAttacks, 0, iMainAttackBonus, iMod, iMainNumDice, iMainNumSides, iMainCritMult, bIsRangedWeapon) );
+          DelayCommand( (fDelay * iAttackNum), AttackLoopLogic(oAttacker, oWeaponR, oAmmo, sMainWeaponDamage, sSpellBonusDamage, iMainWeaponDamageRound, eSpecialEffect, eDuration, iDamageModifier, iDamageType, sMessageSuccess, sMessageFailure, bEffectAllAttacks, 0, iMainAttackBonus, iMod, iMainNumDice, iMainNumSides, iMainCritMult, bIsRangedWeapon) );
      }
 
      // All main and off-hand Attacks
@@ -3381,14 +3395,14 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           else       bFirstAttack = FALSE;
 
           iAttackNum += 1;
-          DelayCommand( (fDelay * iAttackNum), AttackLoopLogic(oAttacker, oWeaponR, oAmmo, sMainWeaponDamage, sSpellBonusDamage, iMainWeaponDamageRound, eSpecialEffect, eDuration, sMessageSuccess, sMessageFailure, bEffectAllAttacks, 0, iMainAttackBonus, iMod, iMainNumDice, iMainNumSides, iMainCritMult, bIsRangedWeapon) );
+          DelayCommand( (fDelay * iAttackNum), AttackLoopLogic(oAttacker, oWeaponR, oAmmo, sMainWeaponDamage, sSpellBonusDamage, iMainWeaponDamageRound, eSpecialEffect, eDuration, iDamageModifier, iDamageType, sMessageSuccess, sMessageFailure, bEffectAllAttacks, 0, iMainAttackBonus, iMod, iMainNumDice, iMainNumSides, iMainCritMult, bIsRangedWeapon) );
           
           // all off-hand attacks
           if(i < gOffHandAttacks)
           {
                if(i == 0) bFirstAttack = FALSE;            
                iAttackNum += 1;
-               DelayCommand( (fDelay * iAttackNum + 0.1), AttackLoopLogic(oAttacker, oWeaponL, oAmmo, sOffHandWeaponDamage, sSpellBonusDamage, iOffHandWeaponDamageRound, eSpecialEffect, eDuration, sMessageSuccess, sMessageFailure, bEffectAllAttacks, 1, iOffHandAttackBonus, iMod, iOffHandNumDice, iOffHandNumSides, iOffHandCritMult, bIsRangedWeapon) );
+               DelayCommand( (fDelay * iAttackNum + 0.1), AttackLoopLogic(oAttacker, oWeaponL, oAmmo, sOffHandWeaponDamage, sSpellBonusDamage, iOffHandWeaponDamageRound, eSpecialEffect, eDuration, iDamageModifier, iDamageType, sMessageSuccess, sMessageFailure, bEffectAllAttacks, 1, iOffHandAttackBonus, iMod, iOffHandNumDice, iOffHandNumSides, iOffHandCritMult, bIsRangedWeapon) );
           }
           iMod -= 5;
      }

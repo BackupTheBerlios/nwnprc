@@ -13,5 +13,9 @@ void main()
 
       effect eCure = EffectHeal(d8(2) + nLevel);
 
-      ApplyEffectToObject(DURATION_TYPE_INSTANT,eCure,oPC);
+      effect eVis = VFX_IMP_HEALING_M;
+
+      effect eLink = EffectLinkEffects(eCure,eVis);
+
+      ApplyEffectToObject(DURATION_TYPE_INSTANT,eLink,oPC);
 }

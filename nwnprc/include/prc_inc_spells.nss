@@ -178,7 +178,9 @@ int GetDivinePRCLevels (object oCaster)
 		 +  (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2
 		 +  (GetLevelByClass(CLASS_TYPE_ORCUS, oCaster) + 1) / 2
 		 +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oCaster) + 1) / 2
-		 +  (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2;
+		 +  (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2
+
+                 +   GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) / 3;
 
    if (!GetHasFeat(FEAT_SF_CODE, oCaster))
    {

@@ -1,0 +1,11 @@
+2DA V2.0                                                              
+                                                                      
+           LABEL               ReqType   ReqParam1        ReqParam2   
+0          Intimidate          SKILL     24               4           
+1          Lore                SKILL     7                4
+2          Base_Attack         BAB       5                ****        
+3          Elf                 RACE      1                ****        
+4          Mobility            FEAT      26               ****
+5          LolthsMeat          FEAT      2441             ****
+6          Spellcasting        SPELL     1                ****
+7          ScriptVar           VAR       X2_AllowDrowj    0           

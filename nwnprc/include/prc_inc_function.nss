@@ -87,6 +87,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_RUNESCARRED,oPC) > 0)         ExecuteScript("prc_runescarred", oPC);
     if(GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0)     ExecuteScript("prc_uranger", oPC);
     if(GetLevelByClass(CLASS_TYPE_WEREWOLF,oPC) > 0)            ExecuteScript("prc_werewolf", oPC);
+    if(GetLevelByClass(CLASS_TYPE_JUDICATOR, oPC) > 0)          ExecuteScript("prc_judicator", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                        ExecuteScript("prc_vows", oPC);
@@ -562,6 +563,7 @@ void FeatSpecialUsePerDay(object oPC)
 {
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);
     FeatUsePerDay(oPC,FEAT_SMITE_UNDEAD, ABILITY_CHARISMA, 3);
+    FeatUsePerDay(oPC,FEAT_COMMAND_SPIDERS, ABILITY_CHARISMA, 3);
     SpellSol(oPC);  
     SpellKotMC(oPC);
     SpellShadow(oPC);

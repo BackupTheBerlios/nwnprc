@@ -109,3 +109,4 @@ const int CLASS_TYPE_WEREWOLF                   = 173;
 const int CLASS_TYPE_FAVORED_MILIL              = 252;
 const int CLASS_TYPE_ANTI_PALADIN               = 113;
 const int CLASS_TYPE_CORRUPTER                  = 112;
+const int CLASS_TYPE_JUDICATOR                  = 105;

@@ -123,6 +123,11 @@ const int FEAT_PRESTIGE_WEREWOLFCLASS_2            = 3525;
 const int FEAT_PRESTIGE_WEREWOLFCLASS_3            = 3526;
 const int FEAT_PRESTIGE_LYCANTHROPE                = 3527;
 
+//Drow Judicator Feats
+const int FEAT_COMMAND_SPIDERS     = 2442;
+const int FEAT_WAR_STRIKE          = 2443;
+const int FEAT_SELVETARMS_BLESSING = 2447;
+const int FEAT_LOLTHS_MEAT                             = 2361;
 
 //Ranger Feats
 const int FEAT_RANGER_DUAL = 374;

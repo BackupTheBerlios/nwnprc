@@ -66,6 +66,7 @@ int RangedAttackBonus(object oPC, object oWeap, object oTarget, int iMod = 0)
 
 
     iAttackBonus += GetWeaponAtkBonusIP(oWeap,oTarget);
+    iAttackBonus += AtkSpellEffect(oPC);
 
     return iAttackBonus;
 }

@@ -62,7 +62,9 @@ void main()
           iDamage = GetRangedWeaponDamageS(OBJECT_SELF, oWeap, FALSE)+ iBonus;
 
       //Apply the damage
-      eDamage = AddDmgEffect(EffectDamage(iDamage, DAMAGE_TYPE_PIERCING, iEnhancement) ,  GetItemInSlot(INVENTORY_SLOT_ARROWS,OBJECT_SELF),oTarget,iEnhancement);
+      eDamage = AddDmgEffectMulti(iDamage,DAMAGE_TYPE_PIERCING, GetItemInSlot(INVENTORY_SLOT_ARROWS,OBJECT_SELF),oTarget,iEnhancement,iHit);
+
+//      eDamage = AddDmgEffect(EffectDamage(iDamage, DAMAGE_TYPE_PIERCING, iEnhancement) ,  GetItemInSlot(INVENTORY_SLOT_ARROWS,OBJECT_SELF),oTarget,iEnhancement);
       DelayCommand(fDelay +2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
 
       while (iAttacks)
@@ -71,7 +73,9 @@ void main()
         iAttacks--;
         fDelay+=0.3;
         //Apply the damage
-        eDamage = AddDmgEffect(EffectDamage(iDamage, DAMAGE_TYPE_PIERCING, iEnhancement) ,  GetItemInSlot(INVENTORY_SLOT_ARROWS,OBJECT_SELF),oTarget,iEnhancement);
+        eDamage = AddDmgEffectMulti(iDamage,DAMAGE_TYPE_PIERCING, GetItemInSlot(INVENTORY_SLOT_ARROWS,OBJECT_SELF),oTarget,iEnhancement,0);
+
+//        eDamage = AddDmgEffect(EffectDamage(iDamage, DAMAGE_TYPE_PIERCING, iEnhancement) ,  GetItemInSlot(INVENTORY_SLOT_ARROWS,OBJECT_SELF),oTarget,iEnhancement);
         DelayCommand(fDelay + 1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
 
       }

@@ -42,14 +42,18 @@ void main()
    if(iHit > 0)
    {
 
+      if (Immune && iHit==2) iHit=1;
+      
       //Check to see if we rolled a critical and determine damage accordingly
-      if(iHit == 2 && !Immune)
+      if(iHit == 2 )
           iDamage = GetRangedWeaponDamageS(OBJECT_SELF, oWeap, TRUE,0,GetHasFeat(FEAT_KILLINGSHOT) ? 2:0) + iBonusD;
       else
           iDamage = GetRangedWeaponDamageS(OBJECT_SELF, oWeap, FALSE)+ iBonusD;
 
       //Apply the damage
-      eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancement) ,  GetWeaponAmmu(oWeap,OBJECT_SELF),oTarget,iEnhancement);
+      eDamage = AddDmgEffectMulti(iDamage,DAMAGE_TYPE_PIERCING, GetWeaponAmmu(oWeap,OBJECT_SELF),oTarget,iEnhancement,iHit);
+
+//      eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancement) ,  GetWeaponAmmu(oWeap,OBJECT_SELF),oTarget,iEnhancement);
       DelayCommand(fDelay +2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
    }
 

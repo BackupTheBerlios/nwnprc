@@ -1,10 +1,7 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "prc_class_const"
-
-const int IP_CONST_DAMAGESOAK_1_HP = 11;
-const int IP_CONST_DAMAGESOAK_2_HP = 12;
-const int IP_CONST_DAMAGESOAK_3_HP = 13;
+#include "prc_ipfeat_const"
 
 // Runescarred Berserker
 /*

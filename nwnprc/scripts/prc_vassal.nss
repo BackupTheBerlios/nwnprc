@@ -164,9 +164,10 @@ void main()
     // *Shared Trove
     {
     if ( GetLocalInt(OBJECT_SELF, "Level2") == 1) return ;
-
-    GiveGoldToCreature(OBJECT_SELF, 200000);
+    {
+    GiveGoldToCreature(OBJECT_SELF, 20000);
     SetLocalInt( OBJECT_SELF, "Level2", 1);
+    }
     }
 
     // *Level 4
@@ -184,8 +185,10 @@ void main()
     // *Shared Trove
     {
     if ( GetLocalInt(OBJECT_SELF, "Level5") == 1) return ;
-
+    {
     GiveGoldToCreature(OBJECT_SELF, 50000);
+    SetLocalInt( OBJECT_SELF, "Level5", 1);
+    }
     // *Platinum Armor +6
     DestroyObject(oArmor4, 0.0f);
     CreateItemOnObject("Platinumarmor6", OBJECT_SELF, 1);
@@ -196,7 +199,10 @@ void main()
     if (nVassal==8)
     {
     // *Shared Trove
+    if ( GetLocalInt(OBJECT_SELF, "Level8) == 1) return ;
+    {
     GiveGoldToCreature(OBJECT_SELF, 80000);
+    SetLocalInt( OBJECT_SELF, "Level8", 1);
     }
 
     // *Level 10

@@ -502,6 +502,24 @@ void EOG(object oPC)
 	}	
 }
 
+void Stormlord(object oPC)
+{       
+	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+
+
+	if (iCleric)
+	{
+	SetLocalInt(oPC, "PRC_PrereqStormL", 1);
+	int iStorm = GetHasFeat(FEAT_FIRE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
+		{
+		if (iStorm>1)
+			{
+			SetLocalInt(oPC, "PRC_PrereqStormL", 0);
+			}
+		}	
+	}	
+}
+
 void Rava(object oPC)
 {
     SetLocalInt(oPC, "PRC_PreReq_Rava", 1);
@@ -635,6 +653,7 @@ void main()
 	BFZ(oPC);
 	ManAtArms(oPC);
 	SOL(oPC);
+	Stormlord(oPC);
 	EOG(oPC);
 	RedWizard(oPC);
 	ShiningBlade(oPC);

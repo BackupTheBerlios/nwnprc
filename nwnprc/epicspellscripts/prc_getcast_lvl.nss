@@ -109,6 +109,7 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
             GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster)/2+                
             GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster)/2+           
             GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster)/2+
+            GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster)/2+
             GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) / 2;
 
 
@@ -155,6 +156,8 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
             GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster)/2 +            
 	    GetLevelByClass(CLASS_TYPE_OCULAR, oCaster)/2 +
 	    GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster)/2+
+	    GetLevelByClass(CLASS_TYPE_BFZ, oCaster)/2+
+	    GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster)/2+
 	    GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster)/2;
 	    
    

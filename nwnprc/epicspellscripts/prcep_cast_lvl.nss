@@ -193,6 +193,7 @@ void main()
 			+ GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) / 2
 			+ GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) / 2
 			+ GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) / 2
+			+ GetLevelByClass(CLASS_TYPE_BFZ, oCaster) / 2
 			+ GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) / 2;
 
 		//

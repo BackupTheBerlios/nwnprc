@@ -70,6 +70,7 @@ module.Hak : prc_2das.hak
 module.Hak : prc_scripts.hak
 module.Hak : prc_spells.hak
 module.Hak : prc_epicspells.hak
+module.Hak : prc_psionics.hak
 module.Hak : prc_race.hak
 module.Hak : prc_textures.hak
 module.Hak : prc_misc.hak
@@ -97,10 +98,19 @@ module.OnPlayerUnequipItem : prc_unequip
 module.OnUserDefined : prc_onuserdef
 
 # Cache PRC scripts for better performance.
-module.Cache : prc_caster_level
 module.Cache : prc_onaquire
 module.Cache : prc_onactivate
-module.Cache : prc_equip
+module.Cache : prc_onenter
+module.Cache : prc_onleave
+module.Cache : prc_oncutabort
 module.Cache : prc_onheartbeat
+module.Cache : prc_onmodload
+module.Cache : prc_ondeath
+module.Cache : prc_ondying
+module.Cache : prc_equip
+module.Cache : prc_levelup
+module.Cache : prc_rest
+module.Cache : prc_onrespawn
 module.Cache : prc_onunaquire
+module.Cache : prc_unequip
 module.Cache : prc_onuserdef

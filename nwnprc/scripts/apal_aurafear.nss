@@ -27,7 +27,7 @@ void main()
     
     effect eImmu = EffectImmunity(IMMUNITY_TYPE_FEAR);
     //Set and apply AOE object
-    effect eAOE = SupernaturalEffect(EffectAreaOfEffect(AOE_MOB_DRAGON_FEAR,"apal_aurafeara","","apal_aurafearb"));
+    effect eAOE = ExtraordinaryEffect(EffectAreaOfEffect(AOE_MOB_DRAGON_FEAR,"apal_aurafeara","","apal_aurafearb"));
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, OBJECT_SELF);   
 
     ApplyEffectToObject(DURATION_TYPE_PERMANENT,ExtraordinaryEffect(eImmu), OBJECT_SELF);

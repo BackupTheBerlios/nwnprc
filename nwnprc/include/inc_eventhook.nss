@@ -18,7 +18,8 @@
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-// Player events
+// Module events
+
 const int EVENT_ONACQUIREITEM            = 1;
 const string NAME_ONACQUIREITEM          = "prc_event_array_onacquireitem";
 const int EVENT_ONACTIVATEITEM           = 2;
@@ -29,12 +30,11 @@ const int EVENT_ONCLIENTLEAVE            = 4;
 const string NAME_ONCLIENTLEAVE          = "prc_event_array_onclientleave";
 const int EVENT_ONCUTSCENEABORT          = 5;
 const string NAME_ONCUTSCENEABORT        = "prc_event_array_oncutsceneabort";
+
+// Scripts for this event should be stored on the module
 const int EVENT_ONHEARTBEAT              = 6;
 const string NAME_ONHEARTBEAT            = "prc_event_array_onheartbeat";
-//const int EVENT_ONMODULELOAD          = 7;                              // Not included, since it is not possible for any scripts
-//const string NAME_ONMODULELOAD        = "prc_event_array_onmoduleload"; // to make hook additions before this is run
-//const int EVENT_ONMODULESTART         = 8;                              // PRC does not currently use have a script in this event.
-//const string NAME_ONMODULESTART       = "prc_event_array_onmodulestart";
+
 const int EVENT_ONPLAYERDEATH            = 9;
 const string NAME_ONPLAYERDEATH          = "prc_event_array_onplayerdeath";
 const int EVENT_ONPLAYERDYING            = 10;
@@ -55,6 +55,8 @@ const int EVENT_ONPLAYERRESPAWN          = 17;
 const string NAME_ONPLAYERRESPAWN        = "prc_event_array_onplayerrespawn";
 const int EVENT_ONUNAQUIREITEM           = 18;
 const string NAME_ONUNAQUIREITEM         = "prc_event_array_onunaquireitem";
+
+// Scripts for this event should be stored on the module
 const int EVENT_ONUSERDEFINED            = 19;
 const string NAME_ONUSERDEFINED          = "prc_event_array_onuserdefined";
 
@@ -63,6 +65,12 @@ const int EVENT_ONHIT                 = 20;
 const string NAME_ONHIT               = "prc_event_array_onhit";
 
 
+// Unused events
+//const int EVENT_ONMODULELOAD          = 7;                              // Not included, since it is not possible for any scripts
+//const string NAME_ONMODULELOAD        = "prc_event_array_onmoduleload"; // to make hook additions before this is run
+//const int EVENT_ONMODULESTART         = 8;                              // PRC does not currently use have a script in this event.
+//const string NAME_ONMODULESTART       = "prc_event_array_onmodulestart";
+
 const string PERMANENCY_SUFFIX = "_permanent";
 
 
@@ -70,46 +78,82 @@ const string PERMANENCY_SUFFIX = "_permanent";
 /* Function prototypes                          */
 //////////////////////////////////////////////////
 
-// Adds the given script to be fired when the event next occurs.
-// Unless bPermanent is set, the script will be removed from the
-// list once it has fired
+// Adds the given script to be fired when the event next occurs for the given PC.
 //
-// bAllowDuplicate being set makes the function first check if a script with the same
-// name is already queued for the event and avoids adding a duplicate. This
-// will not remove duplicates already present, though.
-void AddEventScript(object oPC, int nEventType, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE);
+// oPC        The object that the script is to be fired for. Usually a PC.
+// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
+// sScript    The script to be fired on the event
+// bPermanent Unless this is set, the script will be only fired once, after which it
+//            is removed from the list
+//
+// bAllowDuplicate This being set makes the function first check if a script with
+//                 the same name is already queued for the event and avoids adding a
+//                 duplicate. This will not remove duplicates already present, though.
+void AddEventScript(object oPC, int nEvent, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE);
 
 // Removes all instances of the given script from the event's hook.
-// By default, this removes the script both from one-shot and permanent hooks,
-// but the behavior can be set using bIgnorePermanency and bPermanent.
-void RemoveEventScript(object oPC, int nEventType, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE);
+//
+// oPC        The object that the script is to be removed from the list for.
+// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
+// sScript    The script to be removed from the event
+//
+// bPermanent Depending on the state of this switch, the script is either removed
+//            from the one-shot or permanent list.
+//
+// bIgnorePermanency Setting this to true will make the function clear the script from
+//                   both one-shot and permanent lists, regardless of the value of bPermanent
+void RemoveEventScript(object oPC, int nEvent, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE);
 
 // Removes all scripts in the given list.
-void ClearEventScriptList(object oPC, int nEventType, int bPermanent = FALSE, int bIgnorePermanency = FALSE);
+//
+// oPC        The object to clear script list for.
+// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
+//
+// bPermanent Depending on the state of this switch, the scripts are either removed
+//            from the one-shot or permanent list.
+//
+// bIgnorePermanency Setting this to true will make the function clear both one-shot and
+//                   permanent lists, regardless of the value of bPermanent
+void ClearEventScriptList(object oPC, int nEvent, int bPermanent = FALSE, int bIgnorePermanency = FALSE);
 
-// Gets the first script hooked to the given event
-string GetFirstEventScript(object oPC, int nEventType, int bPermanent);
+// Gets the first script hooked to the given event. This must be called before any calls
+// to GetNextEventScript() are made.
+// Returns the name of the first script stored, or "", if one was not found.
+//
+// oPC        The object to get a script for.
+// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
+// bPermanent Which list to get the first script from.
+string GetFirstEventScript(object oPC, int nEvent, int bPermanent);
 
-// Gets the next script hooked to the given event.
-// You should call GetFirstEventScript before calling this.
-string GetNextEventScript(object oPC, int nEventType, int bPermanent);
+// Gets the next script hooked to the given event. You should call GetFirstEventScript
+// before calling this.
+// Returns the name of the next script in the list, or "" if there are no more scripts
+// left. Also returns "" if GetFirstEventScript hasn't been called.
+//
+// oPC        The object to get a script for.
+// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
+// bPermanent Which list to get the first script from.
+string GetNextEventScript(object oPC, int nEvent, int bPermanent);
 
 // Executes all scripts in both the one-shot and permanent hooks and
 // clears scripts off the one-shot hook afterwards.
-// All the scripts will be executed on OBJECT_SELF, which in most
-// cases would be the module
-void ExecuteAllScriptsHookedToEvent(object oPC, int nEventType);
+// All the scripts will be ExecuteScripted on OBJECT_SELF, which is
+// the module in most events.
+//
+// oPC        The object to execute listed scripts for.
+// nEvent     One of the EVENT_* constants defined in "inc_eventhook"
+void ExecuteAllScriptsHookedToEvent(object oPC, int nEvent);
 
 // Internal function. Returns the name matching the given integer constant
-string EventTypeIdToName(int nEventType);
+string EventTypeIdToName(int nEvent);
 
 //////////////////////////////////////////////////
 /* Function defintions                          */
 //////////////////////////////////////////////////
 
 
-void AddEventScript(object oPC, int nEventType, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE){
-	string sArrayName = EventTypeIdToName(nEventType);
+void AddEventScript(object oPC, int nEvent, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE){
+	string sArrayName = EventTypeIdToName(nEvent);
 	
 	// Abort if the event type wasn't valid
 	if(sArrayName == "") return;
@@ -139,8 +183,8 @@ void AddEventScript(object oPC, int nEventType, string sScript, int bPermanent =
 }
 
 
-void RemoveEventScript(object oPC, int nEventType, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
-	string sArrayNameBase = EventTypeIdToName(nEventType),
+void RemoveEventScript(object oPC, int nEvent, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
+	string sArrayNameBase = EventTypeIdToName(nEvent),
 	       sArrayName;
 	
 	// Abort if the event type wasn't valid
@@ -192,8 +236,8 @@ void RemoveEventScript(object oPC, int nEventType, string sScript, int bPermanen
 }
 
 
-void ClearEventScriptList(object oPC, int nEventType, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
-	string sArrayNameBase = EventTypeIdToName(nEventType),
+void ClearEventScriptList(object oPC, int nEvent, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
+	string sArrayNameBase = EventTypeIdToName(nEvent),
 	       sArrayName;
 	
 	// Abort if the event type wasn't valid
@@ -219,8 +263,8 @@ void ClearEventScriptList(object oPC, int nEventType, int bPermanent = FALSE, in
 }
 
 
-string GetFirstEventScript(object oPC, int nEventType, int bPermanent){
-	string sArrayName = EventTypeIdToName(nEventType);
+string GetFirstEventScript(object oPC, int nEvent, int bPermanent){
+	string sArrayName = EventTypeIdToName(nEvent);
 	
 	// Abort if the event type wasn't valid
 	if(sArrayName == "") return "";
@@ -234,8 +278,8 @@ string GetFirstEventScript(object oPC, int nEventType, int bPermanent){
 }
 
 
-string GetNextEventScript(object oPC, int nEventType, int bPermanent){
-	string sArrayName = EventTypeIdToName(nEventType);
+string GetNextEventScript(object oPC, int nEvent, int bPermanent){
+	string sArrayName = EventTypeIdToName(nEvent);
 	
 	// Abort if the event type wasn't valid
 	if(sArrayName == "") return "";
@@ -254,28 +298,28 @@ string GetNextEventScript(object oPC, int nEventType, int bPermanent){
 }
 
 
-void ExecuteAllScriptsHookedToEvent(object oPC, int nEventType){
+void ExecuteAllScriptsHookedToEvent(object oPC, int nEvent){
 	// Loop through the scripts to be fired only once
-	string sScript = GetFirstEventScript(oPC, nEventType, FALSE);
+	string sScript = GetFirstEventScript(oPC, nEvent, FALSE);
 	while(sScript != ""){
 		ExecuteScript(sScript, OBJECT_SELF);
-		sScript = GetNextEventScript(oPC, nEventType, FALSE);
+		sScript = GetNextEventScript(oPC, nEvent, FALSE);
 	}
 	
 	// Clear the one-shot script list
-	ClearEventScriptList(oPC, nEventType, FALSE, FALSE);
+	ClearEventScriptList(oPC, nEvent, FALSE, FALSE);
 	
 	// Loop through the persistent scripts
-	sScript = GetFirstEventScript(oPC, nEventType, TRUE);
+	sScript = GetFirstEventScript(oPC, nEvent, TRUE);
 	while(sScript != ""){
 		ExecuteScript(sScript, OBJECT_SELF);
-		sScript = GetNextEventScript(oPC, nEventType, TRUE);
+		sScript = GetNextEventScript(oPC, nEvent, TRUE);
 	}
 }
 
 
-string EventTypeIdToName(int nEventType){
-	switch(nEventType){
+string EventTypeIdToName(int nEvent){
+	switch(nEvent){
 		case EVENT_ONACQUIREITEM:
 			return NAME_ONACQUIREITEM;
 		case EVENT_ONACTIVATEITEM:
@@ -318,7 +362,7 @@ string EventTypeIdToName(int nEventType){
 			return NAME_ONHIT;
 		
 		default:
-			WriteTimestampedLogEntry("Unknown event id passed to EventTypeIdToName: " + IntToString(nEventType));
+			WriteTimestampedLogEntry("Unknown event id passed to EventTypeIdToName: " + IntToString(nEvent));
 	}
 	
 	return "";

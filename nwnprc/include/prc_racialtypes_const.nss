@@ -61,6 +61,8 @@ const int RACIAL_TYPE_TROLL			= 231;
 const int RACIAL_TYPE_FORMIAN			= 232;
 const int RACIAL_TYPE_THRIKREEN			= 233;
 const int RACIAL_TYPE_TROGLODYTE		= 234;
+const int RACIAL_TYPE_NERAPHIM			= 235;
+const int RACIAL_TYPE_SHADOWSWYFT		= 236;
 
 /*//////////////////////////////////////////////////////
 //////////////////////END RACE//////////////////////////

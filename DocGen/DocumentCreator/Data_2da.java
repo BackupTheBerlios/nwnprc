@@ -3,7 +3,6 @@
 import java.io.*;
 import java.util.*;
 import java.util.regex.*;
-//import DocumentorMain.pattern;
 
 /**
  * This class forms an interface for accessing 2da files in the
@@ -14,8 +13,7 @@ public class Data_2da{
 	private int entries = 0;
 	
 	// String matching pattern. Gets a block of non-whitespace OR " followed by any characters until the next "
-	//private static Pattern pattern = Pattern.compile("\\S+|\"[.&&[^\"]]+\"");
-	private static Pattern pattern = Pattern.compile("([\\w[\\*]]+)|\"[^\"]+\"");
+	private static Pattern pattern = Pattern.compile("[\\S&&[^\"]]+|\"[^\"]+\"");
 	private static Matcher matcher = pattern.matcher("");
 	
 	/**
@@ -102,14 +100,12 @@ public class Data_2da{
 				// Find the next match and check for too short rows
 				if(!matcher.find())
 					throw new IOException("Too short 2da line: " + line);
-					
-				/*
+				/*	
 				String foo = matcher.group();//rowParser.next(pattern);
 				System.out.print(labels[i] + ":\t\t");
 				System.out.println(foo);
 				mainData.get(labels[i]).add(foo);
 				*/
-				
 				// Get the next element and add it to the data structure
 				mainData.get(labels[i]).add(matcher.group());
 			}
@@ -190,6 +186,13 @@ public class Data_2da{
 	}
 	
 	public static void main(String[] args) throws Throwable{
+		if(args.length < 1){
+			System.out.println("To use, give the path of a 2da file as parameter. ex:\n"+
+			                   "java Data_2da my.2da"+
+			                   "  or"+
+			                   "java Data_2da ..\foo\bar\baz.2da");
+			System.exit(0);
+		}
 		Data_2da test = new Data_2da(args[0]);
 		
 		String[] labels = test.getLabels();

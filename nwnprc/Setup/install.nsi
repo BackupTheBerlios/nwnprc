@@ -141,6 +141,13 @@ Function .onInit
 	Pop $0
 	
 	okNWN:
+	; Validate that XP2 is installed
+	Push $0
+	ClearErrors
+	ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Underdark" "GUID"
+	IfErrors noXP2
+	Pop $0
+	
 	; Get the parent directory of the $NWNPATH to use for the prc pack, since
 	; the NWN install path always has the nwn\ folder which contains the game,
 	; we want the PRC installer EXE and readme's to be parallel to that.
@@ -162,7 +169,11 @@ Function .onInit
 	Abort
 	
 	badNWN:
-	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires at least version 1.62 of NWN.  You must upgrade NWN before installing the PRC pack."
+	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires at least version 1.62 of NWN and HotU.  You must upgrade NWN before installing the PRC pack."
+	Abort
+	
+	noXP2:
+	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires Hordes of the Underdark to be installed.  You must upgrade NWN before installing the PRC pack."
 	Abort
 	
 	noNWN:

@@ -1,14 +1,88 @@
+//::///////////////////////////////////////////////
+//:: Lingering Damage
+//:: ft_lingdmg
+//:://////////////////////////////////////////////
+/*
+	Sets up adding and removing OnHit: CastSpell
+	- Unique Power to weapons equipped by the feat
+	possessor. This is done by the script adding
+	itself via the eventhook to OnPlayerEquipItem
+	and OnPlayerUnEquipItem events.
+	
+	The script also adds itself to be run during
+	OnHit event, where it will deal the lingering
+	sneak attack damage.
+	
+	
+	Should Lingering Damage apply to unarmed strike, too ?
+	Also, should there be some text notification when
+	the damage is dealt, like with PerformAttackRound?
+	 - Ornedan
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
 
-// sets up events to add on hit unique property to weapon(s)
-// and sets up the on hit event to run the proper script
 
 #include "inc_eventhook"
+#include "prc_inc_combat"
+
+#include "inc_prc_npc"
+#include "inc_item_props"
+#include "x2_inc_itemprop"
 
 void main()
 {
-    object oPC = OBJECT_SELF;
+    object oPC, oItem;
+    int nEvent = GetRunningEvent();
     
-    AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM, "on_hit_add_w", TRUE, FALSE);
-    AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "on_hit_rem_w", TRUE, FALSE);
-    AddEventScript(oPC, EVENT_ONHIT, "prc_onhitcast", TRUE, FALSE);
+    
+    // We aren't being called from any event, instead from EvalPRCFeats, so set up the eventhooks
+    if(nEvent == FALSE)
+    {
+        oPC = OBJECT_SELF;
+        //SendMessageToPC(oPC, "ft_lingdmg - Adding eventhooks");
+        
+        AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM, "ft_lingdmg", TRUE, FALSE);
+        AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "ft_lingdmg", TRUE, FALSE);
+        AddEventScript(oPC, EVENT_ONHIT, "ft_lingdmg", TRUE, FALSE);
+    }
+    // We're being called from the OnHit eventhook, so deal the damage
+    else if(nEvent == EVENT_ONHIT)
+    {
+        oPC = OBJECT_SELF;
+        oItem = GetSpellCastItem();
+        object oTarget = GetSpellTargetObject();
+        //SendMessageToPC(oPC, "ft_lingdmg - OnHit");
+        // only run if called by a weapon
+        if(GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+        {
+            if( GetCanSneakAttack(oTarget, oPC) )
+            {
+                int iDam      = d6(GetTotalSneakAttackDice(oPC) );
+                int iDamType  = GetWeaponDamageType(oItem);
+                int iDamPower = GetDamagePowerConstant(oItem, oTarget, oPC);
+                //SendMessageToPC(oPC, "Lingering Damage - iDam: " + IntToString(iDam) + "; iDamType: " + IntToString(iDamType) + "; iDamPower: " + IntToString(iDamPower));
+                effect eDam = EffectDamage(iDam, iDamType, iDamPower);
+                DelayCommand(RoundsToSeconds(1), ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget) );
+            }
+        }
+    }
+    // We are called from the OnPlayerEquipItem eventhook. Add OnHitCast: Unique Power to oPC's weapon
+    else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
+    {
+        oPC = GetItemLastEquippedBy();
+        oItem = GetItemLastEquipped();
+        //SendMessageToPC(oPC, "ft_lingdmg - OnEquip");
+        if( GetWeaponRanged(oItem) || IPGetIsMeleeWeapon(oItem) )
+            IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    }
+    // We are called from the OnPlayerUnEquipItem eventhook. Remove OnHitCast: Unique Power from oPC's weapon
+    else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
+    {
+        oPC = GetItemLastUnequippedBy();
+        oItem = GetItemLastUnequipped();
+        //SendMessageToPC(oPC, "ft_lingdmg - OnEquip");
+        if( GetWeaponRanged(oItem) || IPGetIsMeleeWeapon(oItem) )
+            RemoveSpecificProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", 1, DURATION_TYPE_TEMPORARY);
+    }
 }

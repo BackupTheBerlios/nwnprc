@@ -160,24 +160,6 @@ void main()
             }
         }
     }
-    
-    // Epic Feat: Lingering Damage
-    if( GetHasFeat(FEAT_LINGERING_DAMAGE, oSpellOrigin) )
-    {
-         // only run if called by a weapon
-         if(GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
-         {
-             if( GetCanSneakAttack(oSpellTarget, oSpellOrigin) )
-             {
-                  int iDam      = d6(GetTotalSneakAttackDice(oSpellOrigin) );
-                  int iDamType  = GetWeaponDamageType(oItem);
-                  int iDamPower = GetDamagePowerConstant(oItem, oSpellTarget, oSpellOrigin);
-                  
-                  effect eDam = EffectDamage(iDam, iDamType, iDamPower);
-                  DelayCommand(RoundsToSeconds(1), ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSpellTarget) );
-             }
-         }
-    }
 
 
     /*//////////////////////////////////////////////////

@@ -48,5 +48,5 @@ void main()
     object oSkin = GetPCSkin(oPC);
 
     if(bSpells > 0)  SpellswordIgnoreSpellFailure(oPC, oSkin, bSpells, "SpellswordSFBonusNormal");
-    if(bSpells2 > 0) SpellswordIgnoreSpellFailure(oPC, oSkin, bSpells, "SpellswordSFBonusEpic");
+    if(bSpells2 > 0) SpellswordIgnoreSpellFailure(oPC, oSkin, bSpells2, "SpellswordSFBonusEpic");
 }

@@ -147,8 +147,7 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
             (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) + 1) / 2+     
             (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2+ 
             (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2+ 
-            (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2+ 
-            (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, oCaster) + 1) / 2; 
+            (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2;
 
 
         // area for CLASS-specific code. Avoid if possible

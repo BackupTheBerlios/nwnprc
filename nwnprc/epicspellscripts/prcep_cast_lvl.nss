@@ -127,12 +127,12 @@ void main()
 
 		// This section of code tests for half progression classes.
 		// Leave the integer div-by two where it is, it is not distributive.
-		nLevelBonus += GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) / 2
-			+ GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) / 2
-			+ GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) / 2
-			+ GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) / 2
-			+ GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) / 2
-			+ GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) / 2;
+		nLevelBonus += (GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2;
 
 		//
 		//	Class specific code for Arcane Casters
@@ -189,10 +189,10 @@ void main()
 
 		// This section of code tests for half progression classes.
 		// Leave the integer div-by two where it is, it is not distributive.
-		nLevelBonus += GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) / 2
-			+ GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) / 2
-			+ GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) / 2
-			+ GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) / 2
+		nLevelBonus += (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2
+			+ (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
 			+ (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2
 			+ (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2;
 

@@ -9,12 +9,8 @@ void main()
     object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);   
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature);
     int iExtraAttacks = 0;
-    int iMonkAttackPenalty = 0;
     int iBrawlerAttacks = GetLocalInt(oCreature, "BrawlerAttacks");
         
-    //Monk attack penalty
-    if (GetLevelByClass(CLASS_TYPE_MONK, oCreature)) iMonkAttackPenalty = 10;
-    
     if (!GetHasSpellEffect(SPELL_BRAWLER_EXTRA_ATT, oCreature))
     {
         if (GetHasFeat(FEAT_BRAWLER_EXTRAATT_1, oCreature))
@@ -23,16 +19,25 @@ void main()
             {
                 if (!GetIsObjectValid(oLefthand))
                 {
-                if (GetHasFeat(FEAT_BRAWLER_EXTRAATT_2, oCreature))
+                    if (!GetLevelByClass(CLASS_TYPE_MONK, oCreature))
                     {
-                        iExtraAttacks = 2;
-                        FloatingTextStringOnCreature("*Extra unarmed attacks enabled: Two extra attacks per round*", oCreature, FALSE);
+                        if (GetHasFeat(FEAT_BRAWLER_EXTRAATT_3, oCreature))
+                        {
+                            iExtraAttacks = 3;
+			    FloatingTextStringOnCreature("*Extra unarmed attacks enabled: Three extra attacks per round*", oCreature, FALSE);
+			}
+                        else if (GetHasFeat(FEAT_BRAWLER_EXTRAATT_2, oCreature))
+                        {
+                            iExtraAttacks = 2;
+                            FloatingTextStringOnCreature("*Extra unarmed attacks enabled: Two extra attacks per round*", oCreature, FALSE);
+                        }
+                        else
+                        {
+                            iExtraAttacks = 1;
+                            FloatingTextStringOnCreature("*Extra unarmed attack enabled: One extra attack per round*", oCreature, FALSE);
+                        }
                     }
-                    else
-                    {
-                        iExtraAttacks = 1;
-                        FloatingTextStringOnCreature("*Extra unarmed attack enabled: One extra attack per round*", oCreature, FALSE);
-                    }
+                    else FloatingTextStringOnCreature("*Extra unarmed attack not enabled: Cannot stack with monk*", oCreature, FALSE);
                 }
                 else FloatingTextStringOnCreature("*Extra unarmed attack not enabled: Shield equipped*", oCreature, FALSE);
             }
@@ -44,12 +49,8 @@ void main()
 	SetLocalInt(oCreature, "BrawlerAttacks", iExtraAttacks);
         
         effect eExtraAttacks = SupernaturalEffect(EffectModifyAttacks(iExtraAttacks));
-        effect eMonkAttackPenalty = SupernaturalEffect(EffectAttackDecrease(iMonkAttackPenalty));
-        effect eLinked = eExtraAttacks;
        
-        if (iMonkAttackPenalty) eLinked = EffectLinkEffects(eExtraAttacks, eMonkAttackPenalty);
-        
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLinked, oCreature);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eExtraAttacks, oCreature);
     }
     else
     {

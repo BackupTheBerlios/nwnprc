@@ -57,14 +57,9 @@ void main()
 
      }
 
-     DelayCommand(0.5,PrcFeats(oPC));
+     DelayCommand(0.3,PrcFeats(oPC));
 
-     // * Moved code to turn off precise strike here
-     // * because unequiped weapons weren't being found
-     // * correctly through EvalPRCFeats
-     DuelistRemovePreciseStrike(oItem);
      KnightRemoveDaemonslaying(oItem);
      RemoveKatanaFinesse(oItem);
      RemoveItemHolyAvengerAntiStack(oItem); //superceded by RemoveItemEnhancementAntiStack when implemented.
-     //RemoveItemEnhancementAntiStack(oItem);
 }

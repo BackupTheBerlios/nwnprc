@@ -67,33 +67,63 @@ void DuelistElaborateParry(object oPC, object oSkin)
     SetCompositeBonus(oSkin, "ElaborateParryBonus", iClassBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);
 }
 
-// * Applies the Duelist's damage bonuses on the object's main hand weapon.
-// * iPStrkLevel = 1 (1D6), 2 (2D6) or 0 (off)
+void RemoveDuelistPreciseStrike(object oWeap)
+{
+   int iSlashBonus = GetLocalInt(oWeap,"DuelistPreciseSlash");
+   int iSmashBonus = GetLocalInt(oWeap,"DuelistPreciseSmash");
+   
+   if (iSlashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus, 1, "DuelistPreciseSlash", -1, DURATION_TYPE_TEMPORARY);
+   if (iSmashBonus) RemoveSpecificProperty(oWeap, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_BLUDGEONING, iSmashBonus, 1, "DuelistPreciseSmash", -1, DURATION_TYPE_TEMPORARY);
+}
+
 void DuelistPreciseStrike(object oPC, object oWeap, int iPStrkLevel)
 {
-    int iDamBonus = 0;
-
-    if(iPStrkLevel == 1) iDamBonus = IP_CONST_DAMAGEBONUS_1d6;
-    if(iPStrkLevel == 2) iDamBonus = IP_CONST_DAMAGEBONUS_2d6;
-
-    if(iPStrkLevel > 0){
-        if(GetLocalInt(oWeap, "PStrkBonus") != iDamBonus){
-            DuelistRemovePreciseStrike(oWeap);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, iDamBonus), oWeap);
-            SetLocalInt(oWeap, "PStrkBonus", iDamBonus);
-        }
-
-        if(GetLocalInt(oPC, "PreciseStrike") != TRUE)
-            FloatingTextStringOnCreature("Precise Strike On", oPC);
-        SetLocalInt(oPC, "PreciseStrike", TRUE);
-    }
-    else {
-        //The actual removal of the bonus is handled in the module's unequip script
-        //This section simply alerts the player that the bonus has been turned off
-        if(GetLocalInt(oPC, "PreciseStrike") != FALSE)
-            FloatingTextStringOnCreature("Precise Strike Off", oPC);
-        SetLocalInt(oPC, "PreciseStrike", FALSE);
+   int iSlashBonus = 0;
+   int iSmashBonus = 0;
+   int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST,oPC);
+   
+   RemoveDuelistPreciseStrike(oWeap);
+   //I'll do this based on level as opposed to by feats.
+   switch(iDuelistLevel)
+   {
+      case 2: case 3: case 4: case 5:
+         iSlashBonus = IP_CONST_DAMAGEBONUS_1d6;
+         break;
+      case 6: case 7: case 8: case 9:
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
+         break;
+      case 10: case 11: case 12: case 13:
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
+         iSmashBonus = IP_CONST_DAMAGEBONUS_1d6;
+         break;
+      case 14: case 15: case 16: case 17:
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d6;
+         iSmashBonus = IP_CONST_DAMAGEBONUS_2d6;
+         break;
+      case 18: case 19: case 20: case 21:
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d8;
+	 iSmashBonus = IP_CONST_DAMAGEBONUS_2d6;
+	 break;
+      case 22: case 23: case 24: case 25:
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d10;
+         iSmashBonus = IP_CONST_DAMAGEBONUS_2d6;
+         break;
+      case 26: case 27: case 28: case 29:
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d10;
+         iSmashBonus = IP_CONST_DAMAGEBONUS_2d8;
+         break;
+      case 30:
+         iSlashBonus = IP_CONST_DAMAGEBONUS_2d10;
+         iSmashBonus = IP_CONST_DAMAGEBONUS_2d10;
+         break;
+      default:
+         break;
    }
+   SetLocalInt(oWeap,"DuelistPreciseSlash",iSlashBonus);
+   SetLocalInt(oWeap,"DuelistPreciseSmash",iSmashBonus);
+   
+   AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, iSlashBonus), oWeap, 99999.0);
+   AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, iSmashBonus), oWeap, 99999.0);
 }
 
 void main()
@@ -122,11 +152,15 @@ void main()
     else
         DuelistCannyDefense(oPC, oSkin, FALSE);
 
-    if(bPStrk > 0 && (GetBaseItemType(oWeapon) == BASE_ITEM_RAPIER || GetBaseItemType(oWeapon) == BASE_ITEM_DAGGER) || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSWORD)
-        DuelistPreciseStrike(oPC, oWeapon, bPStrk);
-    else
-        DuelistPreciseStrike(oPC, oWeapon, 0);
-
+    if(bPStrk > 0 &&
+      (GetBaseItemType(oWeapon) == BASE_ITEM_RAPIER ||
+       GetBaseItemType(oWeapon) == BASE_ITEM_DAGGER ||
+       GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSWORD))
+          DuelistPreciseStrike(oPC, oWeapon, bPStrk);
+    
+    if(GetLocalInt(oPC,"ONEQUIP") == 1)
+       RemoveDuelistPreciseStrike(GetPCItemLastUnequipped());
+    
     if(bGrace > 0 && GetBaseAC(oArmor) == 0)
         DuelistGrace(oPC, oSkin, bGrace);
     else

@@ -30,10 +30,22 @@ void Device_Lore(object oPC ,object oSkin ,int iLevel)
     SetCompositeBonus(oSkin, "DeviceDisa", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_DISABLE_TRAP);
 }
 
+void RemoveIronPower(object oPC, object oWeap)
+{
+      if (GetLocalInt(oWeap, "DispIronPowerA"))
+      {
+         SetCompositeBonus(oWeap, "DispIronPowerA", 0, ITEM_PROPERTY_ATTACK_BONUS);
+         SetCompositeDamageBonus(oWeap, "DispIronPowerD", 0);
+         RemoveSpecificProperty(oWeap, ITEM_PROPERTY_KEEN, -1, -1, 1, "", -1, DURATION_TYPE_TEMPORARY);
+      }  
+}
+
 void IronPower(object oPC, object oWeap)
 {
    int iBonus = 0;
 
+   RemoveIronPower(oPC, oWeap);
+   
    if (IsItemMetal(oWeap) == 2)
    {
       if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 4)
@@ -51,16 +63,6 @@ void IronPower(object oPC, object oWeap)
    }
 }
 
-void RemoveIronPower(object oPC, object oWeap)
-{
-      if (GetLocalInt(oWeap, "DispIronPowerA"))
-      {
-         SetCompositeBonus(oWeap, "DispIronPowerA", 0, ITEM_PROPERTY_ATTACK_BONUS);
-         SetCompositeDamageBonus(oWeap, "DispIronPowerD", 0);
-         RemoveSpecificProperty(oWeap, ITEM_PROPERTY_KEEN, -1, -1, 1, "", -1, DURATION_TYPE_TEMPORARY);
-      }  
-}
-
 void main()
 {
 
@@ -72,15 +74,10 @@ void main()
         //int bIrnPwr = GetHasFeat(FEAT_IRON_POWER_1,oPC) ? 1 : 0;
         //    bIrnPwr = GetHasFeat(FEAT_IRON_POWER_2,oPC) ? 1 : bIrnPwr;
 
-   if (GetLocalInt(oPC,"ONEQUIP") == 2)
-   {
-      IronPower(oPC, GetPCItemLastEquipped());
-   }
+   IronPower(oPC, oWeap);
 
    if (GetLocalInt(oPC,"ONEQUIP") == 1)
-   {
-      RemoveIronPower(oPC, GetPCItemLastUnequipped());
-   }
+        RemoveIronPower(oPC, GetPCItemLastUnequipped());
 
         if(bDivLor > 0) Device_Lore(oPC,oSkin,bDivLor);
 

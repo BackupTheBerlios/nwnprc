@@ -63,7 +63,7 @@ void main()
     object oArm = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 
     //Check alignment and check what bonus applies
-   if(GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL)
+    if(GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL)
     {
     if(bEBHand > 0)
     {
@@ -98,5 +98,5 @@ void main()
       {
       EvilBrand(oPC, oSkin,0);
       }
-
+    }
 }

@@ -97,16 +97,18 @@ void main()
 
    effect  eVis = EffectVisualEffect(VFX_IMP_REFLEX_SAVE_THROW_USE);
 
-   int iRoll = RangedAttackBonus(OBJECT_SELF, oWeap, oTarget, 0)+d20();
-   //Perform 1 attack
+   // Perform a ranged attack...
+   int iDiceRoll = d20();
+   
+   int iRoll = RangedAttackBonus(OBJECT_SELF, oWeap, oTarget, 0) + iDiceRoll;
+   
+   int iHit = ((iRoll > GetAC(oTarget)) || (iDiceRoll = 20)) ? 1 : 0;
 
-   int iRef = PRCMySavingThrow(SAVING_THROW_REFLEX,oTarget,iRoll-iBonusA);
+   int iDisc = (iRoll > (GetSkillRank(SKILL_DISCIPLINE, oTarget) + d20())) ? 1 : 0;
 
-    if(iRef == 0)
-    {
+   if(iHit && iDisc)
+   {
        AssignCommand(oTarget,ClearAllActions());
        AssignCommand(oTarget,ActionPutDownItem(oItem));
-    }
-
-
+   }
 }

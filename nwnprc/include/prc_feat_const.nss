@@ -41,6 +41,42 @@ const int FEAT_IMM_PHANT    = 4730;
 const int FEAT_NONDETECTION = 4731;
 const int FEAT_IMM_APOI     = 4732;
 
+const int FEAT_NATARM_1     = 4733;
+const int FEAT_NATARM_2     = 4761;
+const int FEAT_NATARM_3     = 4734;
+const int FEAT_NATARM_4     = 4735;
+const int FEAT_NATARM_5     = 4736;
+const int FEAT_NATARM_6     = 4737;
+const int FEAT_NATARM_9     = 4738;
+
+const int FEAT_BREATHLESS   = 4739;
+const int FEAT_CONSTRICT    = 4740;
+const int FEAT_REGEN5       = 4741;
+const int FEAT_REND         = 4742;
+const int FEAT_RESIST_FIRE5 = 4743;
+const int FEAT_SUFFOCATION  = 4744;
+const int FEAT_VERYHEROIC   = 4745;
+const int FEAT_VULN_COLD    = 4746;
+const int FEAT_DAM_RED10    = 4747;
+const int FEAT_DAM_RED15    = 4748;
+
+const int FEAT_SA_HIDEU     = 4749;
+const int FEAT_SA_HIDEF     = 4750;
+const int FEAT_SA_MOVE4     = 4751;
+const int FEAT_SA_JUMP      = 4752;
+const int FEAT_SA_BLUFF     = 4753;
+const int FEAT_SA_CRFTARM   = 4757;
+const int FEAT_SA_CRFTWEAP  = 4758;
+const int FEAT_SA_SPOT_4   = 4762;
+const int FEAT_SA_JUMP_4   = 4763;
+
+const int FEAT_ALTFORM      = 4754;
+const int FEAT_DISGUISE     = 4755;
+const int FEAT_SPELL_CLUTCH = 4756;
+
+const int FEAT_LARGE        = 4760;
+
+
 //Passive Feats
 const int FEAT_INTUITIVE_ATTACK                        = 3166;
 const int FEAT_RAVAGEGOLDENICE                         = 3162;

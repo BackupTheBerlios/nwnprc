@@ -36,29 +36,21 @@ void main()
         object oTarget = GetSpellTargetObject();
         int nDuration = GetTotalCastingLevel(OBJECT_SELF);
         effect eVis = EffectVisualEffect(495);
-        effect eAC1, eAC2, eAC3, eAC4;
+        effect eAC;
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
 
         //Set the four unique armor bonuses
-        eAC1 = EffectACIncrease(5, AC_ARMOUR_ENCHANTMENT_BONUS);
-        eAC2 = EffectACIncrease(5, AC_DEFLECTION_BONUS);
-        eAC3 = EffectACIncrease(5, AC_DODGE_BONUS);
-        eAC4 = EffectACIncrease(5, AC_NATURAL_BONUS);
+        eAC = EffectACIncrease(20, AC_ARMOUR_ENCHANTMENT_BONUS);
         effect eDur = EffectVisualEffect(VFX_DUR_SANCTUARY);
-
-        effect eLink = EffectLinkEffects(eAC1, eAC2);
-        eLink = EffectLinkEffects(eLink, eAC3);
-        eLink = EffectLinkEffects(eLink, eAC4);
-        eLink = EffectLinkEffects(eLink, eDur);
 
         RemoveEffectsFromSpell(oTarget, GetSpellId());
 
         // * Brent, Nov 24, making extraodinary so cannot be dispelled
-        eLink = ExtraordinaryEffect(eLink);
+        eAC = ExtraordinaryEffect(eAC);
 
         //Apply the armor bonuses and the VFX impact
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAC, oTarget, HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,1.0, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

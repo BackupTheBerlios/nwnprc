@@ -26,7 +26,8 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, UNIMPIN_DC, UNIMPIN_S, UNIMPIN_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDuration = 24;
+	  int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
+	  int nDuration = nCasterLvl + 10;
         effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
         effect eDur = EffectVisualEffect(VFX_DUR_GLOW_GREY);
         effect eProt = EffectDamageImmunityIncrease
@@ -50,7 +51,7 @@ void main()
                 FALSE));
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget,
-                HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
+                RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
         }
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

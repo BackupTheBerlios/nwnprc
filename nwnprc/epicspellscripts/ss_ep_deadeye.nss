@@ -24,7 +24,10 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, DEADEYE_DC, DEADEYE_S, DEADEYE_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDuration = 20;
+	  int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
+        int nDuration = (nCasterLvl/2)-10;
+	  if (nDuration < 5)
+		nDuration = 5;
 
         effect eVis = EffectVisualEffect(VFX_IMP_HEAD_HOLY);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
@@ -39,7 +42,7 @@ void main()
             //Fire spell cast at event for target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_BLESS, FALSE));
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
+            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
         }
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -26,10 +26,11 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, DULBLAD_DC, DULBLAD_S, DULBLAD_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDuration = 24;
+	  int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
+        int nDuration = 10 + nCasterLvl;
         effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
         effect eDur = EffectVisualEffect(VFX_DUR_GLOW_WHITE);
-        effect eProt = EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING, 100);
+        effect eProt = EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING, 50);
         effect eLink = EffectLinkEffects(eProt, eDur);
         // if this option has been enabled, the caster will take backlash damage
         if (BACKLASH_DAMAGE == TRUE)
@@ -50,7 +51,7 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                 eVis, oTarget);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
-                eLink, oTarget, HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
+                eLink, oTarget, RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
         }
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

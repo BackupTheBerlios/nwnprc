@@ -25,7 +25,11 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, CHAMP_V_DC, CHAMP_V_S, CHAMP_V_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDuration = 20;
+        int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
+        int nDuration = (nCasterLvl/2)-10;
+	  if (nDuration < 5)
+		nDuration = 5;
+
         effect eImm1 = EffectImmunity(IMMUNITY_TYPE_KNOCKDOWN);
         effect eImm2 = EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK);
         effect eImm3 = EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT);
@@ -42,7 +46,7 @@ void main()
         eLink = ExtraordinaryEffect(eLink); // No dispelling it.
 
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget,
-            HoursToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
+            TurnsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

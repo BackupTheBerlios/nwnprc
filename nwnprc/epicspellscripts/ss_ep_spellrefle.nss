@@ -26,6 +26,7 @@ void main()
     {
         object oTarget = GetSpellTargetObject();
         object oSkin;
+	  int nDuration = GetTotalCastingLevel(OBJECT_SELF);
         effect eVis = EffectVisualEffect(VFX_FNF_PWSTUN);
         effect eImp = EffectVisualEffect(VFX_FNF_ELECTRIC_EXPLOSION);
         effect eDur = EffectVisualEffect(VFX_DUR_SPELLTURNING);
@@ -34,7 +35,7 @@ void main()
         oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
-        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eDur), oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eDur), oTarget, RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
         IPSafeAddItemProperty(oSkin, ipImm);
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -560,12 +560,12 @@ const int EP_RPLS_R4    = 0;
 const string EP_RPLS_S  = "A";
 ///////////////////////////////////////////////////////////////////////////////
 // EPIC SPELL: Epic Spell Reflection
-const int EP_SP_R_DC    = 108;
+const int EP_SP_R_DC    = 52;
 const int EP_SP_R_IP    = 452;
 const int R_EP_SP_R_IP  = 523;
 const int EP_SP_R_FE    = 5076;
 const int R_EP_SP_R_FE  = 5077;
-const int EP_SP_R_XP    = 10000;
+const int EP_SP_R_XP    = 0;
 const int EP_SP_R_R1    = REFLECT_FE; // Reflect seed
 const int EP_SP_R_R2    = 0;
 const int EP_SP_R_R3    = 0;

@@ -62,10 +62,51 @@ void main()
     effect eDam;
     int nTouch;
 
+// evil paladins should not heal non-undead, they should do damage, and heal undead. ~ Lock
+
+     if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL)
+	{
+	 if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD || GetLevelByClass(CLASS_TYPE_UNDEAD,oTarget)>0)
+	 {
+	  SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS, FALSE));
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+       }
+       else
+	 {
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS));
+        //Make a ranged touch attack
+        nTouch = TouchAttackMelee(oTarget,TRUE);
+
+        //----------------------------------------------------------------------
+        // GZ: The PhB classifies Lay on Hands as spell like ability, so it is
+        //     subject to SR. No more cheesy demi lich kills on touch, sorry.
+        //----------------------------------------------------------------------
+        int nResist = MyResistSpell(OBJECT_SELF,oTarget);
+        if (nResist == 0 )
+        {
+            if(nTouch > 0)
+            {
+                if(nTouch == 2)
+                {
+                    nHeal *= 2;
+                }
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS));
+                eDam = EffectDamage(nHeal, DAMAGE_TYPE_DIVINE);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+            }
+        }
+       }
+	}
+
     //--------------------------------------------------------------------------
-    // A paladine can use his lay on hands ability to damage undead creatures
+    // A good-aligned paladin can use his lay on hands ability to damage undead creatures
     // having undead class levels qualifies as undead as well
     //--------------------------------------------------------------------------
+ 
+if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD || GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_NEUTRAL)
+{   
     if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD || GetLevelByClass(CLASS_TYPE_UNDEAD,oTarget)>0)
     {
         //Fire cast spell at event for the specified target
@@ -100,6 +141,7 @@ void main()
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
+}
 
 }
 

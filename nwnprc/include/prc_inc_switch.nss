@@ -84,6 +84,7 @@ const string PRC_DB_SQLLITE                          = "PRC_DB_SQLLITE";
 const string PRC_USE_LETOSCRIPT                      = "PRC_USE_LETOSCRIPT";
 const string PRC_LETOSCRIPT_PHEONIX_SYNTAX           = "PRC_LETOSCRIPT_PHEONIX_SYNTAX";
 const string PRC_LETOSCRIPT_FIX_ABILITIES            = "PRC_LETOSCRIPT_FIX_ABILITIES";
+const string PRC_LETOSCRIPT_NWN_DIR                  = "PRC_LETOSCRIPT_NWN_DIR";
 // letoscript needs a string named PRC_LETOSCRIPT_NWN_DIR set to the directory of NWN
 // if it doesnt work, try different slash options // \\ / \
 

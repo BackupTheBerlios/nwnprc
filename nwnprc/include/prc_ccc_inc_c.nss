@@ -7,7 +7,7 @@
 //causes extreme lag
 
 void PortraitLoop();
-void FeatLoop();
+void FeatLoop(int nClassFeatStage = FALSE);
 void ClassLoop();
 void SoundsetLoop();
 void SpellLoop();
@@ -111,184 +111,423 @@ void SkillLoop()
    DeleteLocalInt(OBJECT_SELF, "i");
 }
 
-void FeatLoop()
+void FeatLoop(int nClassFeatStage = FALSE)
 {
-    object oPC = OBJECT_SELF;
+    int iMax = 5;
+
     //get some stored data
-//    int nLoop;
-    int i;
-    int nClass = GetLocalInt(OBJECT_SELF, "Class");
-//declare using variables
-    i = GetLocalInt(oPC, "i");
-    int j;
-    int bReturn;
-    string sFeatName;
-    int nFeatIsAll;
-    string sFeatTest;
-    int bNoAdd;
-    int nFeatStage = GetLocalInt(oPC, "FeatStage");
+    object oPC = OBJECT_SELF;
+    int nStr = GetLocalInt(oPC, "Str");
+    int nDex = GetLocalInt(oPC, "Dex");
+    int nCon = GetLocalInt(oPC, "Con");
+    int nInt = GetLocalInt(oPC, "Int");
+    int nWis = GetLocalInt(oPC, "Wis");
+    int nCha = GetLocalInt(oPC, "Cha");
+    int nRace = GetLocalInt(oPC, "Race");
     int nLevel = GetLocalInt(oPC, "Level");
-    //FOR DEBUG PURPOSES ONLY
-//    nFeatStage = 1;
-    object oACCUwp = GetWaypointByTag("CACHED__ACCU");
-///go through each feat in turn
-//    if(i < FEAT_2DA_END && nFeatStage == 0)
-//FOR DEBUG PURPOSES ONLY
-    if(i < 500 && nFeatStage == 0)
+    int nOrder = GetLocalInt(oPC, "LawfulChaotic");
+    int nMoral = GetLocalInt(oPC, "GoodEvil");
+    //add racial ability alterations
+    nStr += StringToInt(Get2DACache("racialypes", "StrAdjust", nRace));
+    nDex += StringToInt(Get2DACache("racialypes", "DexAdjust", nRace));
+    nCon += StringToInt(Get2DACache("racialypes", "ConAdjust", nRace));
+    nInt += StringToInt(Get2DACache("racialypes", "IntAdjust", nRace));
+    nWis += StringToInt(Get2DACache("racialypes", "WisAdjust", nRace));
+    nCha += StringToInt(Get2DACache("racialypes", "ChaAdjust", nRace));
+    int j;
+    for(j=1;j<=nLevel;j++)
     {
-            object cachewp = GetObjectByTag("CACHEWP");
-            location lCache = GetLocation(cachewp);
-            if (!GetIsObjectValid(cachewp))
-                lCache = GetStartingLocation();
-            bNoAdd=FALSE;
-            //check its name (which will be a tlk reference)
-            sFeatName = Get2DACache("feat", "FEAT", i);
-            //if it has a name, its not an empty row
-            if(sFeatName != "")
-            {
-                if(!StringToInt(Get2DACache("feat", "ALLCLASSESCANUSE",i)))
-                {
-                    bNoAdd = TRUE;
-                }
-                if(!bNoAdd)
-                {   //Test its not already been given
-                    for(j=1;j<=array_get_size(oPC, "Feats"); j++)
-                    {
-                        int nTestFeatID = array_get_int(oPC, "Feats", j);
-                        if(nTestFeatID == i)
-                            bNoAdd=TRUE;
-                    }
-                }
-                if(!bNoAdd)
-                {   //test its not been taken as a racial bonus feat
-                    for(j=1;j<nLevel; j++)
-                    {
-                        int nTestFeatID = GetLocalInt(oPC, "RaceLevel"+IntToString(j)+"Feat");
-                        if(nTestFeatID == i)
-                            bNoAdd=TRUE;
-                    }
-                }
-                if(!bNoAdd)
-                {   //test its not already on the list
-                    for(j=0;j<array_get_size(OBJECT_SELF, "ChoiceValue");j++)
-                    {
-                        if(array_get_int(OBJECT_SELF, "ChoiceValue", j) == i)
-                            bNoAdd= TRUE;
-                    }
-                }
-                if(!bNoAdd && !CheckFeatRequirements(i))
-                    bNoAdd= TRUE;
-                if(bNoAdd==FALSE)
-                {
-                    array_set_string(OBJECT_SELF, "ChoiceTokens",
-                        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                           GetStringByStrRef(StringToInt(sFeatName)));
-                    array_set_int(OBJECT_SELF, "ChoiceValue",
-                        array_get_size(OBJECT_SELF, "ChoiceValue"),
-                           i);
-                }
-            } //if(sFeatName != "")
-            i++;
-        //prepare for next thing
-            SetLocalInt(oPC, "i",i);
-            DelayCommand(0.01,FeatLoop());
-            if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
-            {
-                int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(FEAT_2DA_END+CLASS_FEAT_2DA_END));
-                FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
-                SetLocalInt(OBJECT_SELF, "Percentage",1);
-                DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
-            }
-            return;
-
-    }
-//now add class specific feats
-    if(nFeatStage == 0)//i.e final general feat done
-    {
-        nFeatStage = 1;
-        SetLocalInt(oPC, "FeatStage", 1);
-        DeleteLocalInt(oACCUwp, "Building");
-        i=0;
-        SetLocalInt(oPC, "i",i);
-    }
-    string sFeatList = Get2DACache("classes", "FeatsTable", nClass);
-
-    if(i < CLASS_FEAT_2DA_END && nFeatStage == 1)
-    {
-        bNoAdd=FALSE;
-        //check its name (which will be a tlk reference)
-        sFeatName = Get2DACache(sFeatList, "FeatIndex", i);
-        //if it has a name, its not an empty row
-        if(sFeatName != "")
+        //ability
+        if(j == 3 || j == 7 || j == 11 || j == 15
+                || j == 19 || j == 23 || j == 27 || j == 31
+                || j == 13 || j == 39)
         {
-            int nFeatNo = StringToInt(sFeatName);
-            if(!bNoAdd &&
-                !StringToInt(Get2DACache("feat", "ALLCLASSESCANUSE",nFeatNo)))
-                bNoAdd = TRUE;
-            if(!bNoAdd)
-            {   //test its not been given as a feat
-                for(j=1;j<=array_get_size(oPC, "Feats"); j++)
-                {
-                    int nFeatID = array_get_int(oPC, "Feats", j);
-                    if(nFeatID == nFeatNo)
-                        bNoAdd=TRUE;
-                }
-            }
-            if(!bNoAdd)
-            {   //test its not been taken as a racial bonus feat
-                for(j=1;j<nLevel; j++)
-                {
-                    int nTestFeatID = GetLocalInt(oPC, "RaceLevel"+IntToString(j)+"Feat");
-                    if(nTestFeatID == nFeatNo)
-                        bNoAdd=TRUE;
-                }
-            }
-            if(!bNoAdd)
+            int nAbil = GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(j)+"Ability");
+            switch(nAbil)
             {
-                for(j=0;j<array_get_size(OBJECT_SELF, "ChoiceValue");j++)
-                {
-                    if(array_get_int(OBJECT_SELF, "ChoiceValue", j) == nFeatNo)
-                        bNoAdd= TRUE;
-                }
-            }
-            if(!bNoAdd && !CheckFeatRequirements(nFeatNo))
-                bNoAdd= TRUE;
-            if(bNoAdd==FALSE)
-            {
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                       GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", StringToInt(sFeatName)))));
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                       nFeatNo);
+                case ABILITY_STRENGTH:      nStr++;     break;
+                case ABILITY_DEXTERITY:     nDex++;     break;
+                case ABILITY_CONSTITUTION:  nCon++;     break;
+                case ABILITY_INTELLIGENCE:  nInt++;     break;
+                case ABILITY_WISDOM:        nWis++;     break;
+                case ABILITY_CHARISMA:      nCha++;     break;
             }
         }
-        i++;
-        //prepare for next thing
-        SetLocalInt(oPC, "i",i);
-        DelayCommand(0.01,FeatLoop());
-//        ActionDoCommand(FeatLoop());
-        if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
-        {
-            int nPercentage = FloatToInt((IntToFloat(i+FEAT_2DA_END)*100.0)/IntToFloat(FEAT_2DA_END+CLASS_FEAT_2DA_END));
-            FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
-            SetLocalInt(OBJECT_SELF, "Percentage",1);
-            DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
-        }
-        return;
     }
-    if((i < FEAT_2DA_END && nFeatStage == 0)
-        || i < CLASS_FEAT_2DA_END && nFeatStage == 1)
+    int nClass = GetLocalInt(oPC, "Class");
+    int nSex = GetLocalInt(oPC, "Gender");
+    int nBAB;
+    for(j=0;j<=nLevel;j++)
     {
+        nBAB += StringToInt(Get2DACache(Get2DACache("classes", "AttackBonusTable",nClass),"BAB",j));
+    }
+    int nCasterLevel;
+    if(nClass == CLASS_TYPE_WIZARD
+        || nClass == CLASS_TYPE_SORCERER
+        || nClass == CLASS_TYPE_BARD
+        || nClass == CLASS_TYPE_CLERIC
+        || nClass == CLASS_TYPE_DRUID)
+        nCasterLevel = 1;
+    int nFortSave;
+    for(j=0;j<=nLevel;j++)
+    {
+        nFortSave = StringToInt(Get2DACache(Get2DACache("classes","SavingThrowTable" , nClass), "FortSave", nLevel));
+    }        
+    string sFeatList = Get2DACache("classes", "FeatsTable", nClass);   
+    sFeatList = GetStringLowerCase(sFeatList);
+        
+    int i = GetLocalInt(OBJECT_SELF, "i");
+    string SQL;
+    if(nClassFeatStage == TRUE)
+    {
+        SQL = "SELECT cached2da_cls_feat.FeatIndex, cached2da_feat.FEAT, cached2da_feat.PREREQFEAT1, cached2da_feat.PREREQFEAT2, cached2da_feat.OrReqFeat0,"
+            +" cached2da_feat.OrReqFeat1, cached2da_feat.OrReqFeat2, cached2da_feat.OrReqFeat3, cached2da_feat.OrReqFeat4, cached2da_feat.REQSKILL, cached2da_feat.REQSKILL2,"
+            +" cached2da_feat.ReqSkillMinRanks, cached2da_feat.ReqSkillMinRanks2"
+            +" FROM cached2da_cls_feat INNER JOIN cached2da_feat"
+            +" WHERE (FEAT != '****')"  
+            +" AND (cached2da_cls_feat.file = '"+sFeatList+"')"
+            +" AND ((cached2da_cls_feat.List = '****') OR (cached2da_cls_feat.List = 0) OR (cached2da_cls_feat.List = 1))"
+            +" AND ((PreReqEpic = '****') OR (PreReqEpic = 0))"
+            +" AND ((ALLCLASSESCANUSE = 0) OR (ALLCLASSESCANUSE = '****'))"
+            +" AND ((MINATTACKBONUS = '****') OR (MINATTACKBONUS <= "+IntToString(nBAB)+"))"
+            +" AND ((MINSPELLLVL = '****') OR (MINSPELLLVL <= "+IntToString(nCasterLevel)+"))"
+            +" AND ((MINSTR = '****') OR (MINSTR <= "+IntToString(nStr)+"))"
+            +" AND ((MINDEX = '****') OR (MINDEX <= "+IntToString(nDex)+"))"
+            +" AND ((MINCON = '****') OR (MINCON <= "+IntToString(nCon)+"))"
+            +" AND ((MININT = '****') OR (MININT <= "+IntToString(nInt)+"))"
+            +" AND ((MINWIS = '****') OR (MINWIS <= "+IntToString(nWis)+"))"
+            +" AND ((MINCHA = '****') OR (MINCHA <= "+IntToString(nCha)+"))"
+            +" AND ((MaxLevel = '****') OR (MaxLevel > "+IntToString(nLevel)+"))"
+            +" AND ((MinFortSave = '****') OR (MinFortSave <= "+IntToString(nFortSave)+"))"
+            +" AND (cached2da_cls_feat.FeatIndex != '****')" 
+            +" AND (cached2da_feat.rowid = cached2da_cls_feat.FeatIndex)" 
+            +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
     }
     else
     {
-        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
-        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
-        DeleteLocalInt(OBJECT_SELF, "Percentage");
-        DeleteLocalInt(OBJECT_SELF, "i");
-        DeleteLocalInt(OBJECT_SELF, "FeatStage");
+        SQL = "SELECT rowid, FEAT, PREREQFEAT1, PREREQFEAT2, OrReqFeat0,"
+            +" OrReqFeat1, OrReqFeat2, OrReqFeat3, OrReqFeat4, REQSKILL, REQSKILL2,"
+            +" ReqSkillMinRanks, ReqSkillMinRanks2 FROM cached2da_feat"
+            +" WHERE (FEAT != '****')"  
+            +" AND ((PreReqEpic = '****') OR (PreReqEpic = 0))"
+            +" AND (ALLCLASSESCANUSE = 1)"
+            +" AND ((MINATTACKBONUS = '****') OR (MINATTACKBONUS <= "+IntToString(nBAB)+"))"
+            +" AND ((MINSPELLLVL = '****') OR (MINSPELLLVL <= "+IntToString(nCasterLevel)+"))"
+            +" AND ((MINSTR = '****') OR (MINSTR <= "+IntToString(nStr)+"))"
+            +" AND ((MINDEX = '****') OR (MINDEX <= "+IntToString(nDex)+"))"
+            +" AND ((MINCON = '****') OR (MINCON <= "+IntToString(nCon)+"))"
+            +" AND ((MININT = '****') OR (MININT <= "+IntToString(nInt)+"))"
+            +" AND ((MINWIS = '****') OR (MINWIS <= "+IntToString(nWis)+"))"
+            +" AND ((MINCHA = '****') OR (MINCHA <= "+IntToString(nCha)+"))"
+            +" AND ((MaxLevel = '****') OR (MaxLevel > "+IntToString(nLevel)+"))"
+            +" AND ((MinFortSave = '****') OR (MinFortSave <= "+IntToString(nFortSave)+"))"
+            +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
+    }    
+        
+    PRC_SQLExecDirect(SQL);
+    int bAtLeastOneResult;
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        bAtLeastOneResult = TRUE;
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        int nStrRef = StringToInt(PRC_SQLGetData(2));
+        string sName = GetStringByStrRef(nStrRef);
+        string sPreReqFeat1 = PRC_SQLGetData(3);
+        string sPreReqFeat2 = PRC_SQLGetData(4);
+        string sOrReqFeat0 = PRC_SQLGetData(5);
+        string sOrReqFeat1 = PRC_SQLGetData(6);
+        string sOrReqFeat2 = PRC_SQLGetData(7);
+        string sOrReqFeat3 = PRC_SQLGetData(8);
+        string sOrReqFeat4 = PRC_SQLGetData(9);
+        string sReqSkill = PRC_SQLGetData(10);
+        string sReqSkill2 = PRC_SQLGetData(11);
+        string sReqSkillRanks = PRC_SQLGetData(12);
+        string sReqSkillRanks2 = PRC_SQLGetData(13);
+        PrintString(sName);
+        //enforcement testing
+        if(sName == "" || sName == "Bad Strref")
+        {
+        }
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD)
+            && nRow == FEAT_BLOOD_OF_THE_WARLORD
+            && nRace != RACIAL_TYPE_ORC
+            && nRace != RACIAL_TYPE_GRAYORC
+            && nRace != RACIAL_TYPE_HALFORC
+            && nRace != RACIAL_TYPE_QD_HALFORC
+            && nRace != RACIAL_TYPE_TANARUKK
+            && nRace != RACIAL_TYPE_OROG)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_NIMBUSLIGHT)
+            && nRow == FEAT_NIMBUSLIGHT
+            && nMoral < 70)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_HOLYRADIANCE)
+            && nRow == FEAT_HOLYRADIANCE
+            && nMoral < 70)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_SERVHEAVEN)
+            && nRow == FEAT_SERVHEAVEN
+            && nMoral < 70)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_SAC_VOW)
+            && nRow == FEAT_SAC_VOW
+            && nMoral < 70)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_VOW_OBED)
+            && nRow == FEAT_VOW_OBED
+            && (nMoral < 70 || nOrder < 70))
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_THRALL_TO_DEMON)
+            && nRow == FEAT_THRALL_TO_DEMON
+            && nMoral > 20)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_DISCIPLE_OF_DARKNESS)
+            && nRow == FEAT_DISCIPLE_OF_DARKNESS
+            && nMoral > 20)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_LICHLOVED)
+            && nRow == FEAT_LICHLOVED
+            && nMoral > 20)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_EVIL_BRANDS)
+            && (nRow == FEAT_EB_ARM
+                || nRow == FEAT_EB_CHEST
+                || nRow == FEAT_EB_HAND
+                || nRow == FEAT_EB_HEAD)
+            && nMoral > 20)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_VILE_WILL_DEFORM)
+            && nRow == FEAT_VILE_WILL_DEFORM
+            && nMoral > 20)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_OBESE)
+            && nRow == FEAT_VILE_DEFORM_OBESE
+            && nMoral > 20)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_GAUNT)
+            && nRow == FEAT_VILE_DEFORM_GAUNT
+            && nMoral > 20)
+            sName = "";
+        else if(sPreReqFeat1 != "****")
+        {
+            int bReturn = FALSE;
+            for(j=0;j<array_get_size(oPC, "Feats"); j++)
+            {
+                int nFeatID = array_get_int(oPC, "Feats", j);
+                if(nFeatID == StringToInt(sPreReqFeat1))
+                    bReturn = TRUE;
+            }
+            for(j=1;j<nLevel; j++)
+            {
+                int nFeatID = GetLocalInt(oPC, "RaceLevel"+IntToString(j)+"Feat");
+                if(nFeatID == StringToInt(sPreReqFeat1))
+                    bReturn = TRUE;
+            }
+            if(bReturn == FALSE)
+                sName = "";
+        }
+        else if(sPreReqFeat2 != "****")
+        {
+            int bReturn = FALSE;
+            for(j=0;j<array_get_size(oPC, "Feats"); j++)
+            {
+                int nFeatID = array_get_int(oPC, "Feats", j);
+                if(nFeatID == StringToInt(sPreReqFeat2))
+                    bReturn = TRUE;
+            }
+            for(j=1;j<nLevel; j++)
+            {
+                int nFeatID = GetLocalInt(oPC, "RaceLevel"+IntToString(j)+"Feat");
+                if(nFeatID == StringToInt(sPreReqFeat2))
+                    bReturn = TRUE;
+            }
+            if(bReturn == FALSE)
+                sName = "";
+        }
+        else if(sOrReqFeat0 != "****"
+                || sOrReqFeat1 != "****"
+                || sOrReqFeat2 != "****"
+                || sOrReqFeat3 != "****"
+                || sOrReqFeat4 != "****")
+        {
+            int bReturn = FALSE;
+            string sFeatTest = sOrReqFeat0;
+            if(sFeatTest != "****")
+            {
+                for(j=0;j<array_get_size(oPC, "Feats"); j++)
+                {
+                    int nFeatID = array_get_int(oPC, "Feats", j);
+                    if(nFeatID == StringToInt(sFeatTest))
+                        bReturn = TRUE;
+                }
+                for(j=1;j<nLevel; j++)
+                {
+                    int nFeatID = GetLocalInt(oPC, "RaceLevel"+IntToString(j)+"Feat");
+                    if(nFeatID == StringToInt(sFeatTest))
+                        bReturn = TRUE;
+                }
+            }
+            sFeatTest = sOrReqFeat1;
+            if(sFeatTest != "****")
+            {
+                for(j=0;j<array_get_size(oPC, "Feats"); j++)
+                {
+                    int nFeatID = array_get_int(oPC, "Feats", j);
+                    if(nFeatID == StringToInt(sFeatTest))
+                        bReturn = TRUE;
+                }
+                for(j=1;j<nLevel; j++)
+                {
+                    int nFeatID = GetLocalInt(oPC, "RaceLevel"+IntToString(j)+"Feat");
+                    if(nFeatID == StringToInt(sFeatTest))
+                        bReturn = TRUE;
+                }
+            }
+            sFeatTest = sOrReqFeat2;
+            if(sFeatTest != "****")
+            {
+                for(j=0;j<array_get_size(oPC, "Feats"); j++)
+                {
+                    int nFeatID = array_get_int(oPC, "Feats", j);
+                    if(nFeatID == StringToInt(sFeatTest))
+                        bReturn = TRUE;
+                }
+                for(j=1;j<nLevel; j++)
+                {
+                    int nFeatID = GetLocalInt(oPC, "RaceLevel"+IntToString(j)+"Feat");
+                    if(nFeatID == StringToInt(sFeatTest))
+                        bReturn = TRUE;
+                }
+            }
+            sFeatTest = sOrReqFeat3;
+            if(sFeatTest != "****")
+            {
+                for(j=0;j<array_get_size(oPC, "Feats"); j++)
+                {
+                    int nFeatID = array_get_int(oPC, "Feats", j);
+                    if(nFeatID == StringToInt(sFeatTest))
+                        bReturn = TRUE;
+                }
+                for(j=1;j<nLevel; j++)
+                {
+                    int nFeatID = GetLocalInt(oPC, "RaceLevel"+IntToString(j)+"Feat");
+                    if(nFeatID == StringToInt(sFeatTest))
+                        bReturn = TRUE;
+                }
+            }
+            sFeatTest = sOrReqFeat4;
+            if(sFeatTest != "****")
+            {
+                for(j=0;j<array_get_size(oPC, "Feats"); j++)
+                {
+                    int nFeatID = array_get_int(oPC, "Feats", j);
+                    if(nFeatID == StringToInt(sFeatTest))
+                        bReturn = TRUE;
+                }
+                for(j=1;j<nLevel; j++)
+                {
+                    int nFeatID = GetLocalInt(oPC, "RaceLevel"+IntToString(j)+"Feat");
+                    if(nFeatID == StringToInt(sFeatTest))
+                        bReturn = TRUE;
+                }
+            }
+            if(bReturn == FALSE)
+                sName = "";
+        }
+        else if(sReqSkill != "****")
+        {
+            int nSkillValue = GetLocalInt(oPC, "Skill"+sReqSkill);
+            if((sReqSkillRanks == "****" && nSkillValue)
+                || nSkillValue >= StringToInt(sReqSkillRanks))
+            {
+            }
+            else
+                sName = "";
+        }
+        else if(sReqSkill2 != "****")
+        {
+            int nSkillValue = GetLocalInt(oPC, "Skill"+sReqSkill2);
+            if((sReqSkillRanks2 == "****" && nSkillValue)
+                || nSkillValue >= StringToInt(sReqSkillRanks2))
+            {
+            }
+            else
+                sName = "";
+        }
+               
+        if(sName != "")
+        {   //Test its not already been given
+            for(j=1;j<=array_get_size(oPC, "Feats"); j++)
+            {
+                int nTestFeatID = array_get_int(oPC, "Feats", j);
+                if(nTestFeatID == nRow)
+                    sName = "";
+            }
+        }
+        if(sName != "")
+        {   //test its not been taken as a racial bonus feat
+            for(j=1;j<nLevel; j++)
+            {
+                int nTestFeatID = GetLocalInt(oPC, "RaceLevel"+IntToString(j)+"Feat");
+                if(nTestFeatID == nRow)
+                    sName = "";
+            }
+        }
+        if(sName != "")
+        {   //test its not already on the list
+            for(j=0;j<array_get_size(OBJECT_SELF, "ChoiceValue");j++)
+            {
+                if(array_get_int(OBJECT_SELF, "ChoiceValue", j) == nRow)
+                    sName = "";
+            }
+        }
+        PrintString(sName);
+        
+        if(sName != "")
+        {          
+            array_set_string(OBJECT_SELF, "ChoiceTokens",
+                array_get_size(OBJECT_SELF, "ChoiceTokens"),
+                    sName);
+            array_set_int(OBJECT_SELF, "ChoiceValue",
+                array_get_size(OBJECT_SELF, "ChoiceValue"),
+                    nRow);
+        }                
     }
+    int n2daLimit;
+    if(nClassFeatStage)
+        n2daLimit = CLASS_FEAT_2DA_END;
+    else
+        n2daLimit = FEAT_2DA_END;
+
+    if(!bAtLeastOneResult)
+    {
+        DeleteLocalInt(OBJECT_SELF, "i");
+        DeleteLocalInt(OBJECT_SELF, "Percentage");
+        if(nClassFeatStage)
+        {
+            DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+            FloatingTextStringOnCreature("Done all feats", OBJECT_SELF, FALSE);
+            return;
+        }            
+        else 
+        {
+            nClassFeatStage = TRUE;
+            FloatingTextStringOnCreature("Done general feats", OBJECT_SELF, FALSE);
+        }            
+    }
+
+    i += iMax;
+    SetLocalInt(OBJECT_SELF, "i", i);
+    /*
+    if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
+    {
+        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(n2daLimit));
+        FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
+        SetLocalInt(OBJECT_SELF, "Percentage",1);
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
+    }*/
+
+    DelayCommand(0.01, FeatLoop(nClassFeatStage));
 }
 
 int IsInWizList(int nSpell, int nLevel)
@@ -306,93 +545,73 @@ int IsInWizList(int nSpell, int nLevel)
 void SpellLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
-        return;
-    //end if you have reached the end of the file
-    if(i >= SPELLS_2DA_END)
-    {
-        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
-        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
-        DeleteLocalInt(OBJECT_SELF, "Percentage");
-        DeleteLocalInt(OBJECT_SELF, "i");
-        return;
-    }
-    int nSpellLevel = GetLocalInt(OBJECT_SELF, "SpellLevel");
-    string sClassAbbrev;
-    string sName;
+    string sClassCol;
     int nClass = GetLocalInt(OBJECT_SELF, "Class");
+    string SQL;
+    
     //get spellschool
     int nSchool = GetLocalInt(OBJECT_SELF, "School");
     //get opposition school
     string sOpposition = Get2DACache("spellschools", "Letter", StringToInt(Get2DACache("spellschools", "Opposition", nSchool)));
+    
+    if(i==0 && nClass == CLASS_TYPE_WIZARD)
+    {
+        //add all cantrips
+        SQL = "SELECT rowid FROM cached2da_spells WHERE ('Wiz_Sorc' = 0) AND ('School' != '"+sOpposition+"') LIMIT 100, "+IntToString(i);
+        PRC_SQLExecDirect(SQL);
+        while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+        {
+            int nRow = StringToInt(PRC_SQLGetData(1));
+            array_set_int(OBJECT_SELF, "SpellLvl0",
+                array_get_size(OBJECT_SELF, "SpellLvl0"),nRow);            
+        }
+    }
+    
+    int nSpellLevel = GetLocalInt(OBJECT_SELF, "CurrentSpellLevel");
     switch(nClass)
     {
         case CLASS_TYPE_WIZARD:
-            sClassAbbrev = "Wiz_Sorc";
-
-            //check spell is valid and is a level 1 spell
-            //and is not already in list
-            //and is not in opposition school
-            if(Get2DACache("spells", sClassAbbrev, i) != ""
-                && StringToInt(Get2DACache("spells", sClassAbbrev, i)) == 1
-                && !IsInWizList(i, 1)
-                && Get2DACache("spells", "School", i) != sOpposition)
-            {
-                sName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", i)));
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                       "Level "+Get2DACache("spells", sClassAbbrev, i)+": "+sName);
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                       i);
-            }
-            array_create(OBJECT_SELF, "SpellLvl0");
-            //if its a cantrip, add it stright to the spelllist.
-            if(Get2DACache("spells", sClassAbbrev, i) != ""
-                && StringToInt(Get2DACache("spells", sClassAbbrev, i)) == 0
-                && !IsInWizList(i, 0))
-            {
-                array_set_int(OBJECT_SELF, "SpellLvl0",
-                    array_get_size(OBJECT_SELF, "SpellLvl0"),i);
-            }
+            nSpellLevel = 1;
+            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE ('Wiz_Sorc' = 1) AND ('School' != '"+sOpposition+"') LIMIT 100, "+IntToString(i);
             break;
         case CLASS_TYPE_SORCERER:
-            sClassAbbrev = "Wiz_Sorc";
-            //check spell is valid and is a level 1 spell
-            if(Get2DACache("spells", sClassAbbrev, i) != ""
-                && StringToInt(Get2DACache("spells", sClassAbbrev, i)) == GetLocalInt(OBJECT_SELF, "CurrentSpellLevel")
-                && !IsInWizList(i, GetLocalInt(OBJECT_SELF, "CurrentSpellLevel")))
-            {
-                sName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", i)));
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                       "Level "+Get2DACache("spells", sClassAbbrev, i)+": "+sName);
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                       i);
-            }
+            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE ('Wiz_Sorc' = "+IntToString(nSpellLevel)+") LIMIT 100, "+IntToString(i);
             break;
         case CLASS_TYPE_BARD:
-            sClassAbbrev = "Bard";
-            //check spell is valid and is a level 1 spell
-            if(Get2DACache("spells", sClassAbbrev, i) != ""
-                && StringToInt(Get2DACache("spells", sClassAbbrev, i)) == GetLocalInt(OBJECT_SELF, "CurrentSpellLevel")
-                && !IsInWizList(i, GetLocalInt(OBJECT_SELF, "CurrentSpellLevel")))
-            {
-                sName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", i)));
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                       "Level "+Get2DACache("spells", sClassAbbrev, i)+": "+sName);
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                       i);
-            }
+            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE ('Bard' = "+IntToString(nSpellLevel)+") LIMIT 100, "+IntToString(i);
             break;
     }
-    //now do the counting stuff to go to the next line
-    i++;
+    PRC_SQLExecDirect(SQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        int nStrRef = StringToInt(PRC_SQLGetData(2));
+        string sName = GetStringByStrRef(nStrRef);
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        if(IsInWizList(nRow, nSpellLevel))
+            sName = "";
+        if(sName != "")
+        {
+            sName = "Level "+IntToString(nSpellLevel)+" : ";
+            array_set_string(OBJECT_SELF, "ChoiceTokens",
+                array_get_size(OBJECT_SELF, "ChoiceTokens"),
+                    sName);
+            array_set_int(OBJECT_SELF, "ChoiceValue",
+                array_get_size(OBJECT_SELF, "ChoiceValue"),
+                    nRow);
+        }                
+    }
+
+    if(i > SPELLS_2DA_END)
+    {
+        DeleteLocalInt(OBJECT_SELF, "i");
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+        DeleteLocalInt(OBJECT_SELF, "Percentage");
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+        return;
+    }
+
+    i += 100;
     SetLocalInt(OBJECT_SELF, "i", i);
-    DelayCommand(0.01, SpellLoop());
     if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
     {
         int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(SPELLS_2DA_END));
@@ -400,6 +619,8 @@ void SpellLoop()
         SetLocalInt(OBJECT_SELF, "Percentage",1);
         DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
     }
+
+    DelayCommand(0.01, SpellLoop());
 }
 
 
@@ -483,10 +704,6 @@ void BonusFeatLoop()
 void RaceLoop()
 {
     object oPC = OBJECT_SELF;
-    //get some stored data
-//    int nRace = GetLocalInt(oPC, "Race");
-//    int nClass = GetLocalInt(oPC, "Class");
-//declare using variables
     int i = GetLocalInt(oPC, "i");
     int j;
     int bReturn;
@@ -559,7 +776,8 @@ void DoClassFeat(string sClassFeatTable, int i=0)
 void AppearanceLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT row, STRING_REF FROM cached2da_appearance LIMIT 100, "+IntToString(i);
+    string SQL = "SELECT rowid, STRING_REF FROM cached2da_appearance LIMIT 100, "+IntToString(i);
+    PRC_SQLExecDirect(SQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
         int nStrRef = StringToInt(PRC_SQLGetData(2));
@@ -599,6 +817,30 @@ void AppearanceLoop()
 void SoundsetLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
+    string SQL = "SELECT rowid, STRREF, TYPE, GENDER FROM cached2da_soundset LIMIT 100, "+IntToString(i);
+    PRC_SQLExecDirect(SQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        int nStrRef = StringToInt(PRC_SQLGetData(2));
+        string sName = GetStringByStrRef(nStrRef);
+        if(GetPRCSwitch(PRC_CONVOCC_ONLY_PLAYER_VOICESETS)
+            && PRC_SQLGetData(3) != "0")
+            sName = "";
+        if(GetPRCSwitch(PRC_CONVOCC_RESTRICT_VOICESETS_BY_SEX)
+            && StringToInt(PRC_SQLGetData(4)) != GetLocalInt(OBJECT_SELF, "Gender"))
+            sName = "";
+        if(sName != "")
+        {
+            array_set_string(OBJECT_SELF, "ChoiceTokens",
+                array_get_size(OBJECT_SELF, "ChoiceTokens"),
+                    sName);
+            array_set_int(OBJECT_SELF, "ChoiceValue",
+                array_get_size(OBJECT_SELF, "ChoiceValue"),
+                    nRow);
+        }                    
+    }
+
     if(i > SOUNDSET_2DA_END)
     {
         DeleteLocalInt(OBJECT_SELF, "i");
@@ -607,42 +849,49 @@ void SoundsetLoop()
         FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
         return;
     }
-    else
-    {
-        string sName = Get2DACache("soundset", "STRREF", i);
-        if(GetPRCSwitch(PRC_CONVOCC_ONLY_PLAYER_VOICESETS)
-            && Get2DACache("soundset", "TYPE", i) != "0")
-            sName = "";
-        if(GetPRCSwitch(PRC_CONVOCC_RESTRICT_VOICESETS_BY_SEX)
-            && StringToInt(Get2DACache("soundset", "GENDER", i)) != GetLocalInt(OBJECT_SELF, "Gender"))
-            sName = "";
-        if(sName != "")
-        {
-            sName = GetStringByStrRef(StringToInt(sName));
 
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    i);
-        }
-        i++;
-        SetLocalInt(OBJECT_SELF, "i", i);
-        if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
-        {
-            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(SOUNDSET_2DA_END));
-            FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
-            SetLocalInt(OBJECT_SELF, "Percentage",1);
-            DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
-        }
-        DelayCommand(0.01, SoundsetLoop());
+    i += 100;
+    SetLocalInt(OBJECT_SELF, "i", i);
+    if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
+    {
+        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(SOUNDSET_2DA_END));
+        FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
+        SetLocalInt(OBJECT_SELF, "Percentage",1);
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
     }
+
+    DelayCommand(0.01, SoundsetLoop());
 }
 
 void PortraitLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
+    string SQL = "SELECT rowid, STRREF, Race, SEX FROM cached2da_portraits WHERE ('InanimateType' == '****') LIMIT 100, "+IntToString(i);
+    PRC_SQLExecDirect(SQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        int nStrRef = StringToInt(PRC_SQLGetData(2));
+        string sName = GetStringByStrRef(nStrRef);
+        int nPortGender = StringToInt(PRC_SQLGetData(4));
+        int nPortRace = StringToInt(PRC_SQLGetData(3));
+        if(GetPRCSwitch(PRC_CONVOCC_RESTRICT_PORTRAIT_BY_SEX)
+            && nPortGender != GetLocalInt(OBJECT_SELF, "Gender"))
+            sName == "";
+        if(sName != "")
+        {
+            //cant do nested SQL lookups
+            //sName += " "+GetStringByStrRef(StringToInt(Get2DACache("gender", "NAME", nPortGender)));
+            //sName += " "+GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nPortRace)));
+            array_set_string(OBJECT_SELF, "ChoiceTokens",
+                array_get_size(OBJECT_SELF, "ChoiceTokens"),
+                    sName);
+            array_set_int(OBJECT_SELF, "ChoiceValue",
+                array_get_size(OBJECT_SELF, "ChoiceValue"),
+                    nRow);
+        }                    
+    }
+
     if(i > PORTRAITS_2DA_END)
     {
         DeleteLocalInt(OBJECT_SELF, "i");
@@ -651,35 +900,18 @@ void PortraitLoop()
         FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
         return;
     }
-    else
-    {
-        string sName = Get2DACache("portraits", "BaseResRef", i);
-        if(GetPRCSwitch(PRC_CONVOCC_RESTRICT_PORTRAIT_BY_SEX)
-            && StringToInt(Get2DACache("portraits", "SEX", i)) != GetLocalInt(OBJECT_SELF, "Gender"))
-            sName = "";
-        if(sName != "" && Get2DACache("portraits", "InanimateType", i)=="" )
-        {
-            sName += " "+GetStringByStrRef(StringToInt(Get2DACache("gender", "NAME", StringToInt(Get2DACache("portraits", "Sex", i)))));
-            sName += " "+GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", StringToInt(Get2DACache("portraits", "Race", i)))));
 
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    i);
-        }
-        i++;
-        SetLocalInt(OBJECT_SELF, "i", i);
-        if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
-        {
-            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(PORTRAITS_2DA_END));
-            FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
-            SetLocalInt(OBJECT_SELF, "Percentage",1);
-            DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
-        }
-        DelayCommand(0.01, PortraitLoop());
+    i += 100;
+    SetLocalInt(OBJECT_SELF, "i", i);
+    if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
+    {
+        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(PORTRAITS_2DA_END));
+        FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
+        SetLocalInt(OBJECT_SELF, "Percentage",1);
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
     }
+
+    DelayCommand(0.01, PortraitLoop());
 }
 
 void WingLoop()

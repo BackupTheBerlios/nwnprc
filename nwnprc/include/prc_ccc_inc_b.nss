@@ -295,6 +295,7 @@ void ChoiceSelected(int nChoiceNo)
             {
                 array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
                 DeleteLocalInt(OBJECT_SELF, "Points");
+                DeleteLocalString(OBJECT_SELF, "Skills_-1");
                 array_delete(OBJECT_SELF, "Skills");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");

@@ -11,6 +11,7 @@
 #include "prc_inc_spells"
 #include "prc_inc_sneak"
 #include "prc_alterations"
+#include "inc_newspellbook"
 
 // this creates a clone of the PC in limbo, removes the effects and equipment,
 // then stores the results of a ability score query onto the PC's hide.
@@ -104,264 +105,6 @@ void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone)
     SetLocalInt(oHide, "PRC_trueINT", iInt);
     SetLocalInt(oHide, "PRC_trueWIS", iWis);
     SetLocalInt(oHide, "PRC_trueCHA", iCha);
-}
-
-int GetBardSpellLevel(object oPC)
-{
-        int iBard = GetLevelByClass(CLASS_TYPE_BARD, oPC);
-        int iCha = GetLocalInt(GetPCSkin(oPC), "PRC_trueCHA") - 10;
-        int iShad = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
-        int iInt = GetLocalInt(GetPCSkin(oPC), "PRC_trueINT") - 10;
-     int iBSpell;
-     int iSSpell;
-
-     // Adjust the Bard's level upwards if it is the one recieving the benefits of
-     // the PRC's.
-     if (GetClassByPosition(1,oPC) == CLASS_TYPE_BARD || (     // basically, if bard is the first class
-         GetClassByPosition(2,oPC) == CLASS_TYPE_BARD &&       // on the list that is a arcane class
-         GetClassByPosition(1,oPC) != CLASS_TYPE_WIZARD &&     // it recieves the benefit
-         GetClassByPosition(1,oPC) != CLASS_TYPE_SORCERER ) )
-     {
-     iBard += GetArcanePRCLevels(oPC);
-     }
-
-     if (iBard >= 16)
-     {
-     iBSpell = 6;
-     }
-     else if (iBard >= 13)
-     {
-     iBSpell = 5;
-     }
-     else if (iBard >= 10)
-     {
-     iBSpell = 4;
-     }
-     else if (iBard >= 7)
-     {
-     iBSpell = 3;
-     }
-     else if (iBard >= 4)
-     {
-     iBSpell = 2;
-     }
-     else if (iBard >= 2)
-     {
-     iBSpell = 1;
-     }
-
-     else if (iShad >= 5)
-     {
-     iSSpell = 3;
-     }
-     else if (iShad >= 3)
-     {
-     iSSpell = 2;
-     }
-     else if (iShad >= 1)
-     {
-     iSSpell = 1;
-     }
-
-     if (iInt < iSSpell)
-     {
-     iSSpell = iInt;
-     }
-
-     if (iCha < iBSpell)
-     {
-     iBSpell = iCha;
-     }
-
-     if (iSSpell > iBSpell)
-     {
-     iBSpell = iSSpell;
-     }
-
-     return iBSpell;
-}
-
-int GetRanPalSpellLevel(object oPC)
-{
-        int iRanger = GetLevelByClass(CLASS_TYPE_RANGER, oPC);
-        int iPaladin = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
-        int iSoldier = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT, oPC);
-        int iAntiPal = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, oPC);
-        int iCorrupter = GetLevelByClass(CLASS_TYPE_CORRUPTER, oPC);
-        int iKnight = GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE, oPC);
-        int iWis = GetLocalInt(GetPCSkin(oPC), "PRC_trueWIS") - 10;
-     int iRanPal;
-
-     // Adjust the Rangers's level upwards if it is the one recieving the benefits of
-     // the PRC's.
-     if (GetClassByPosition(1, oPC) == CLASS_TYPE_RANGER || ( // Ranger recieves PrC benefits
-         GetClassByPosition(2, oPC) == CLASS_TYPE_RANGER &&   // if it's the first divine class
-         GetClassByPosition(1, oPC) != CLASS_TYPE_CLERIC &&   // on the class list.
-         GetClassByPosition(1, oPC) != CLASS_TYPE_DRUID &&
-         GetClassByPosition(1, oPC) != CLASS_TYPE_PALADIN ) )
-          iRanger += GetDivinePRCLevels(oPC);
-
-     // Likewise for the Paladin.
-     if (GetClassByPosition(1, oPC) == CLASS_TYPE_PALADIN || ( // Paladin recieves PrC benefits
-         GetClassByPosition(2, oPC) == CLASS_TYPE_PALADIN &&   // if it's the first divine class
-         GetClassByPosition(1, oPC) != CLASS_TYPE_CLERIC &&    // on the class list.
-         GetClassByPosition(1, oPC) != CLASS_TYPE_DRUID &&
-         GetClassByPosition(1, oPC) != CLASS_TYPE_RANGER ) )
-          iPaladin += GetDivinePRCLevels(oPC);
-
-     if (iRanger >= 14 || iPaladin >= 14 ||
-         iAntiPal >= 15 || iCorrupter >= 15 ||
-         iSoldier >= 8)
-     {
-     iRanPal = 4;
-     }
-     else if (iRanger >= 11 || iPaladin >= 11 ||
-              iAntiPal >= 12 || iCorrupter >= 12 ||
-              iSoldier >= 6 || iKnight >= 9)
-     {
-     iRanPal = 3;
-     }
-     else if (iRanger >= 8 || iPaladin >= 8 ||
-              iAntiPal >= 10 || iCorrupter >= 10 ||
-              iSoldier >= 4 || iKnight >= 7)
-     {
-     iRanPal = 2;
-     }
-     else if (iRanger >= 4 || iPaladin >= 4 ||
-              iAntiPal >= 6 || iCorrupter >= 6 ||
-              iSoldier >= 2 || iKnight >= 3)
-     {
-     iRanPal = 1;
-     }
-
-     if (iWis < iRanPal)
-     {
-     iRanPal = iWis;
-     }
-
-     return iRanPal;
-}
-
-int ArcSpell(object oPC, int iArcSpell)
-{
-     //A basic check to see what their primary class is
-        int iSorc = GetLevelByClass(CLASS_TYPE_SORCERER, oPC);
-        int iWiz = GetLevelByClass(CLASS_TYPE_WIZARD, oPC);
-        int iCha = GetLocalInt(GetPCSkin(oPC), "PRC_trueCHA") - 10;
-        int iInt = GetLocalInt(GetPCSkin(oPC), "PRC_trueINT") - 10;
-
-        iArcSpell = iWiz;
-
-        if (iSorc > iWiz)
-        {
-             if (iSorc == 1)
-                  iArcSpell = 1;
-             else
-                  iArcSpell = iSorc - 1;
-        }
-
-     //Checks to see what level of spells they can cast
-        iArcSpell += GetArcanePRCLevels(oPC);// actually the first arcane class gets the benefit, not the highest.
-
-        iArcSpell = (iArcSpell + 1) / 2;
-     if (iArcSpell > 9)
-     {
-     iArcSpell = 9;
-     }
-
-     //Check to see they have a high enough casting stat for their spell level
-        if (iSorc > iWiz)
-        {
-          if (iCha < iArcSpell)
-          {
-          iArcSpell = iCha;
-          }
-        }
-     else if (iInt < iArcSpell)
-     {
-     iArcSpell = iInt;
-     }
-
-     //Check for Bards
-     int iBSpell = GetBardSpellLevel(oPC);
-     if (iBSpell > iArcSpell)
-     {
-     iArcSpell = iBSpell;
-     }
-
-     //Finally, set the variables.
-     string sVariable1;
-     string sVariable2;
-     int iCount;
-
-     for (iCount = 1; iCount <= 9; iCount++)
-     {
-        string sVariable1 = "PRC_ArcSpell" + IntToString(iCount);
-        string sVariable2 = "PRC_AllSpell" + IntToString(iCount);
-        if (iArcSpell >= iCount)
-        {
-           SetLocalInt(oPC, sVariable1, 0);
-           SetLocalInt(oPC, sVariable2, 0);
-        }
-     }
-
-        return iArcSpell;
-}
-
-int DivSpell(object oPC, int iDivSpell)
-{
-     //Variables
-        int iDruid = GetLevelByClass(CLASS_TYPE_DRUID, oPC);
-        int iCler = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-        int iWis = GetLocalInt(GetPCSkin(oPC), "PRC_trueWIS") - 10;
-
-        iDivSpell = iCler;
-
-          //A basic check to see what their primary class is
-        if (iDruid > iCler)
-        {
-        iDivSpell = iDruid;
-        }
-
-     //Checks to see what level of spells they can cast
-        iDivSpell += GetDivinePRCLevels(oPC); // actually the first divine class gets the benefit, not the highest.
-
-     iDivSpell = (iDivSpell + 1) / 2;
-     if (iDivSpell > 9)
-     {
-     iDivSpell = 9;
-     }
-
-     //Check to see they have a high enough casting stat for their spell level
-     if (iWis < iDivSpell)
-     {
-     iDivSpell = iWis;
-     }
-
-     //Check for rangers and paladins
-     int iRanPal = GetRanPalSpellLevel(oPC);
-     if (iRanPal > iDivSpell)
-     {
-     iDivSpell = iRanPal;
-     }
-
-     //Finally, set the variables.
-     string sVariable1;
-     string sVariable2;
-     int iCount;
-
-     for (iCount = 1; iCount <= 9; iCount++)
-     {
-        string sVariable1 = "PRC_DivSpell" + IntToString(iCount);
-        string sVariable2 = "PRC_AllSpell" + IntToString(iCount);
-        if (iDivSpell >= iCount)
-        {
-           SetLocalInt(oPC, sVariable1, 0);
-           SetLocalInt(oPC, sVariable2, 0);
-        }
-     }
-
-        return iDivSpell;
 }
 
 void SneakRequirement(object oPC)
@@ -803,8 +546,54 @@ void main2()
      }
 
      // Find the spell levels.
-     iArcSpell1 = ArcSpell(oPC, iArcSpell);
-     iDivSpell1 = DivSpell(oPC, iDivSpell);
+    int i;
+    int iCha = GetLocalInt(GetPCSkin(oPC), "PRC_trueCHA") - 10;
+    int iWis = GetLocalInt(GetPCSkin(oPC), "PRC_trueWIS") - 10;
+    int iInt = GetLocalInt(GetPCSkin(oPC), "PRC_trueINT") - 10;
+    int nArcHighest;
+    int nDivHighest;
+    for(i=1;i<3;i++)
+    {
+        int nClass = PRCGetClassByPosition(i, oPC);
+        if(GetIsDivineClass(nClass))
+        { 
+            int nLevel = PRCGetLevelByPosition(i, oPC);
+            if (GetFirstDivineClass(oPC) == nClass) 
+                nLevel += GetDivinePRCLevels(oPC);
+            int nAbility = GetAbilityForClass(nClass, oPC);                       
+                       
+            for(i=1;i<=9;i++)
+            {
+                int nSlots = GetSlotCount(nLevel, i, nAbility, nClass);
+                if(nSlots > 0)
+                {
+                    SetLocalInt(oPC, "PRC_AllSpell"+IntToString(i), 0);
+                    SetLocalInt(oPC, "PRC_DivSpell"+IntToString(i), 0);
+                    if(i > nDivHighest)
+                        nDivHighest = i;
+                }
+            }
+        }
+        else if(GetIsArcaneClass(nClass))
+        { 
+            int nLevel = PRCGetLevelByPosition(i, oPC);
+            if (GetFirstArcaneClass(oPC) == nClass) 
+                nLevel += GetArcanePRCLevels(oPC);
+            int nAbility = GetAbilityForClass(nClass, oPC);                       
+                       
+            for(i=1;i<=9;i++)
+            {
+                int nSlots = GetSlotCount(nLevel, i, nAbility, nClass);
+                if(nSlots > 0)
+                {
+                    SetLocalInt(oPC, "PRC_AllSpell"+IntToString(i), 0);
+                    SetLocalInt(oPC, "PRC_ArcSpell"+IntToString(i), 0);
+                    if(i > nArcHighest)
+                        nArcHighest = i;
+                }
+            }
+        }        
+    }
 
      // Find the sneak attack capacity.
      SneakRequirement(oPC);
@@ -822,8 +611,8 @@ void main2()
      ShadowAdept(oPC);
      ThrallOfGrazzt(oPC);
      ShiningBlade(oPC);
-     Shadowlord(oPC, iArcSpell1);
-     Shifter(oPC, iArcSpell1, iDivSpell1);
+     Shadowlord(oPC, nArcHighest);
+     Shifter(oPC, nArcHighest, nDivHighest);
      DemiLich(oPC);
      Rava(oPC);
      WWolf(oPC);

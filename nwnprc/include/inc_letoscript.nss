@@ -118,7 +118,7 @@ void DoDebug(string s)
 
 string GetNWNDir()
 {
-    string sReturn = GetLocalString(GetModule(), "PRC_LETOSCRIPT_NWN_DIR");
+    string sReturn = GetLocalString(GetModule(), PRC_LETOSCRIPT_NWN_DIR);
     return sReturn;
 }
 
@@ -275,7 +275,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
             string sPath = GetLocalString(oObject, "Path");
             if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
             {
-                sCommand = "<file:open <qq:"+sLetoTag+"' "+sPath+">>";
+                sCommand = "<file:open '"+sLetoTag+"' <qq:"+sPath+">>";
                 sScript = sCommand+sScript;
                 sCommand = "<file:close '"+sLetoTag+"'>";
                 sScript = sScript+sCommand;

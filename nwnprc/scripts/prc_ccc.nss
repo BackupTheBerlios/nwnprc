@@ -21,6 +21,9 @@ void main()
 
     if(nValue == -1)
     {
+        ActionPauseConversation();
+        ActionWait(1.0);
+        ActionResumeConversation();
         SetupStage();
         SetupTokens();
         ExecuteScript("prc_ccc_debug", OBJECT_SELF);
@@ -53,7 +56,4 @@ void main()
     }
 
     ChoiceSelected(nValue);
-    ActionPauseConversation();
-    ActionWait(1.0);
-    ActionResumeConversation();
 }

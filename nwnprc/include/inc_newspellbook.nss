@@ -14,9 +14,17 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_VASSAL:
         case CLASS_TYPE_SOLDIER_OF_LIGHT:
         case CLASS_TYPE_KNIGHT_MIDDLECIRCLE:
+        case CLASS_TYPE_CLERIC:
+        case CLASS_TYPE_DRUID:
+        case CLASS_TYPE_RANGER:
+        case CLASS_TYPE_PALADIN:
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_ASSASSIN:
+        case CLASS_TYPE_WIZARD:
             return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
+        case CLASS_TYPE_SORCERER:
+        case CLASS_TYPE_BARD:
+            return GetAbilityScore(oPC, ABILITY_CHARISMA);
     }
     return 0;
 }
@@ -67,8 +75,22 @@ int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
     if(nAbilityScore < nSpellLevel+10)
         return 0;
     int nSlots;
-    string sFile = Get2DACache("classes", "FeatsTable", nClass);
-    sFile = GetStringLeft(sFile, 4)+"spbk"+GetStringRight(sFile, GetStringLength(sFile)-8);
+    string sFile;
+    if(nClass == CLASS_TYPE_WIZARD
+        || nClass == CLASS_TYPE_SORCERER
+        || nClass == CLASS_TYPE_BARD
+        || nClass == CLASS_TYPE_CLERIC
+        || nClass == CLASS_TYPE_DRUID
+        || nClass == CLASS_TYPE_PALADIN
+        || nClass == CLASS_TYPE_RANGER)
+    {        
+        sFile = Get2DACache("classes", "SpellGainTable", nClass);
+    }
+    else
+    {
+        sFile = Get2DACache("classes", "FeatsTable", nClass);
+        sFile = GetStringLeft(sFile, 4)+"spbk"+GetStringRight(sFile, GetStringLength(sFile)-8);
+    }
     string sSlots = Get2DACache(sFile, "SpellLevel"+IntToString(nSpellLevel), nLevel);
     if(sSlots == "")
         nSlots = -1;

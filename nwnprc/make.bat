@@ -52,6 +52,7 @@ REM make directories
 md objs 2>nul
 md epicspellobjs 2>nul
 md raceobjs 2>nul
+md psionicsobjs 2>nul
 md spellobjs 2>nul
 
 REM generate temporary files for each of the source sets
@@ -63,6 +64,7 @@ dir /b scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/scripts\\/g" >scripts.t
 dir /b spells\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/spells\\/g" >spells.temp
 dir /b epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/epicspellscripts\\/g" >epicspellscripts.temp
 dir /b racescripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/racescripts\\/g" >racescripts.temp
+dir /b psionics\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/psionics\\/g" >psionics.temp
 dir /b gfx | tools\ssed -R "$! {s/$/ \\/g};s/^/gfx\\/g" >gfx.temp
 dir /b 2das | tools\ssed -R "$! {s/$/ \\/g};s/^/2das\\/g" >2das.temp
 dir /b race2das | tools\ssed -R "$! {s/$/ \\/g};s/^/race2das\\/g" >race2das.temp
@@ -76,10 +78,11 @@ FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" scripts\
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" spells\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/spells\\/spellobjs\\/g" >spellobjs.temp
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/epicspellscripts\\/epicspellobjs\\/g" >epicspellobjs.temp
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" racescripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/racescripts\\/raceobjs\\/g" >raceobjs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" psionics\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/psionics\\/psionicsobjs\\/g" >psionicsobjs.temp
 
 REM Now using our generic makefile as a base, glue all of the temp files into it making
 REM a fully formatted makefile we can run nmake on.
-type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~spells~~~/r spells.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~racescripts~~~/r racescripts.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~race2das~~~/r race2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~spellobjs~~~/r spellobjs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "/~~~raceobjs~~~/r raceobjs.temp" | tools\ssed -R "/~~~include~~~/r include.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
+type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~spells~~~/r spells.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~racescripts~~~/r racescripts.temp" | tools\ssed -R "/~~~psionicsscripts~~~/r psionics.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~race2das~~~/r race2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~spellobjs~~~/r spellobjs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "/~~~raceobjs~~~/r raceobjs.temp" | tools\ssed -R "/~~~psionicsobjs~~~/r psionicsobjs.temp" | tools\ssed -R "/~~~include~~~/r include.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
 
 SETLOCAL
 
@@ -88,15 +91,17 @@ SET MAKEERFPATH=erf
 SET MAKE2DAPATH=2das
 SET MAKESCRIPTPATH=scripts
 SET MAKESPELLSPATH=spells
+SET MAKESPELLOBJSPATH=spellobjs
 SET MAKEEPICSPELLSCRIPTPATH=epicspellscripts
 SET MAKEOBJSPATH=objs
-SET MAKESPELLOBJSPATH=spellobjs
 SET MAKEEPICSPELLOBJSPATH=epicspellobjs
 SET MAKETLKPATH=tlk
 SET MAKECRAFT2DASPATH=craft2das
 SET MAKERACE2DASPATH=race2das
 SET MAKERACESRCPATH=racescripts
 SET MAKERACEOBJSPATH=raceobjs
+SET MAKEPSIONICSSRCPATH=psionics
+SET MAKEPSIONICSOBJSPATH=psionicsobjs
 
 REM before doing the real build build the dependencies for include files.
 tools\nmake -NOLOGO -f makefile.temp MAKEFILE=makefile.temp depends
@@ -124,5 +129,7 @@ del craft2das.temp
 del race2das.temp
 del racescripts.temp
 del raceobjs.temp
+del psionics.temp
+del psionicsobjs.temp
 del include.temp
 del makefile.temp

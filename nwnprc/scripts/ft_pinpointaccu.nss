@@ -17,7 +17,7 @@ void main()
    ApplyEffectToObject(DURATION_TYPE_INSTANT, eArrow, oTarget);
 //   SendMessageToPC(OBJECT_SELF,"GetSpellId"+IntToString(nSpellId));
 
-   if (nSpellId == SPELL_PINPOINTACCURACY4) iBonusA = 2;
+   if (nSpellId == SPELL_PINPOINTACCURACY4) iBonusA = 4;
    else if (nSpellId == SPELL_PINPOINTACCURACY6) iBonusA = 6;
 
    int Attack  = NbAtk(OBJECT_SELF);
@@ -30,7 +30,7 @@ void main()
 
    float fDelay = 0.0;
    
-   SignalEvent(oTarget,EventUserDefined(EVENT_ATTACKED));
+   SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), TRUE));
 
    //Perform 1 attack
 

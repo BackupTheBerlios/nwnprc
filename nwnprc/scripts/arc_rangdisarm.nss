@@ -49,7 +49,7 @@ int RangedAttackBonus(object oPC, object oWeap, object oTarget, int iMod = 0)
     int mMelee=GetMeleeAttackers15ft(oPC);
 
     int bPBShot = (mMelee) ? (GetHasFeat(FEAT_POINT_BLANK_SHOT,oPC)? 1:-4):0 ;
-    int iTrueStrike = GetHasSpellEffect(SPELL_TRUE_STRIKE,oPC) ? 20:0 ;
+//    int iTrueStrike = GetHasSpellEffect(SPELL_TRUE_STRIKE,oPC) ? 20:0 ;
 
     //Add up total attack bonus
 

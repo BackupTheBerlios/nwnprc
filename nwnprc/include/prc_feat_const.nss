@@ -69,6 +69,13 @@ const int FEAT_SPELL_POWER_V = 3011;
 const int FEAT_ARCANE_FIRE = 3012;
 const int FEAT_SPELL_LIKE = 3013;
 
+//Master Harper
+const int FEAT_LYCANBANE = 2404 ;
+const int FEAT_DENEIRS_OREL = 2408 ;
+const int FEAT_MILILS_EAR = 2406 ;
+const int FEAT_INSTRUMENT = 2409;
+const int FEAT_MIELIKKI = 2405;
+
 //oozemaster
 const int FEAT_MIN_OOZY_TOUCH_BROWN = 3020;
 const int FEAT_MIN_OOZY_TOUCH_GRAY = 3021;

@@ -12,7 +12,6 @@
 
 
 #include "X0_I0_SPELLS"
-#include "mh_constante"
 
 void main()
 {

@@ -30,6 +30,11 @@ const int SPELL_BLINDSIGHT_10_FT  = 2711;
 // Tempest Spells
 const int SPELL_T_TWO_WEAPON_FIGHTING = 2705;
 
+// Master Harper
+const int SPELLABILITY_AURA_LLIIRA = 1509;
+const int SPELLABILITY_LYCANBANE   = 1507;
+const int SPELLABILITY_MIELIKKI = 1508;
+
 // Foe Hunter Spells
 const int SPELL_RANCOR = 2706;
 const int SPELL_FH_DEATH_ATTACK = 2707;

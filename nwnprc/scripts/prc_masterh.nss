@@ -10,8 +10,8 @@
 //:://////////////////////////////////////////////
 
 #include "prc_class_const"
+#include "prc_feat_const"
 #include "inc_item_props"
-#include "mh_constante"
 
 void MasterHarperBonusFeat(object oPC, object oSkin, string sFlag, int iItemProp, int iSubProp, int iValue)
 {

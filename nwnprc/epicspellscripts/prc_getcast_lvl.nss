@@ -61,11 +61,11 @@ int GetCasterLvl(int iTypeSpell,object oCaster = OBJECT_SELF)
       iTypeSpell = TYPE_DIVINE;
       break;	
     case TYPE_RANGER:
-      if (nPaladin>nRanger || nCleric>nRanger ||nDruid>nRanger  )      return nCleric;
+      if (nPaladin>nRanger || nCleric>nRanger ||nDruid>nRanger  )      return nRanger;
       iTypeSpell = TYPE_DIVINE;
       break;	
     case TYPE_PALADIN:
-      if (nDruid>nPaladin  ||nRanger>nPaladin   ||nCleric>nPaladin )   return nDruid;
+      if (nDruid>nPaladin  ||nRanger>nPaladin   ||nCleric>nPaladin )   return nPaladin;
       iTypeSpell = TYPE_DIVINE;
       break;	
   	

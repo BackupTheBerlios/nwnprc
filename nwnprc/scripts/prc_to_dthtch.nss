@@ -11,6 +11,7 @@
 */
 
 #include "prc_class_const"
+#include "nw_i0_spells"
 
 void main()
 {

@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     //Apply the VFX impact and effects
-    DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, OBJECT_SELF, 9.0,TRUE,-1,CasterLvl));
+    DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, OBJECT_SELF, RoundsToSeconds(nRoll),TRUE,-1,CasterLvl));
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

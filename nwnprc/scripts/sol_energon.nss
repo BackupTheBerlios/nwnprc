@@ -32,10 +32,19 @@ void main()
 
    int  iFeat = GetHasFeat(FEAT_POSITIVE_ENERGY_BURST);
 
+  
    if ( GetHitDice(OBJECT_SELF) >12)
    {
-     for (i = 0; i < (GetHitDice(OBJECT_SELF)-12+iFeat*2) ; i++)
+      int level = (GetHitDice(OBJECT_SELF)-12+iFeat*2)/2;
+
+     for (i = 0; i < level ; i++)
       LevelUpHenchman( GetObjectByTag("xagya01"),CLASS_TYPE_CLERIC,TRUE,PACKAGE_CLERIC_DIVINE);
+
+     if ( (GetHitDice(OBJECT_SELF)-12+iFeat*2)!= level*2) level++;
+
+     for (i = 0; i < level ; i++)
+      LevelUpHenchman( GetObjectByTag("xagya01"),CLASS_TYPE_OUTSIDER,TRUE,PACKAGE_INVALID);
+
    }
 
     object oCreL=GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oHench);

@@ -55,6 +55,7 @@
 49         MindDisrupt              16823748 2     21067  12067    14443   
 50         RecallAgony              16823665 2     21068  12068    14444   
 51         ThoughtShield            16823752 2     21069  12069    14445   
+51         SharePain                16823798 2     21070  12070    14417   
 52         **Level_3_Psion_Powers** ****     ****  ****   ****     ****    
 53         BodyAdjustment           16823635 3     21101  12101    14461   
 54         GreaterAmorpha           16823645 3     21102  12102    14462   
@@ -65,8 +66,19 @@
 59         EnergyBurst              16823782 3     21107  12107    14471   
 60         EnergyRetort             16823788 3     21108  12108    14476   
 61         EradicateInvis           16823796 3     21109  12109    14482   
+57         SharePain_Forced         16823800 3     21110  12110    14481   
+58         KeenEdge                 16823814 3     21111  12111    14483   
+59         MentalBarrier            16823816 3     21112  12112    14484   
+60         Mindtrap                 16823818 3     21113  12113    14485   
+61         Touchsight               16823820 3     21114  12114    14486   
 62         **Level_4_Psion_Powers** ****     ****  ****   ****     ****    
 63         InertialBar              16823661 4     21151  12152    14511   
+63         DimensionDoor            16823802 4     21152  12153    14512   
+63         EmpathicFeedback         16823804 4     21153  12154    14513   
+63         EnergyAdaption           16823806 4     21154  12155    14514   
+63         FreedomOfMovement        16823808 4     21155  12156    14515   
+63         Mindwipe                 16823810 4     21156  12157    14516   
+63         PowerLeech               16823812 4     21157  12158    14517   
 64         **Level_5_Psion_Powers** ****     ****  ****   ****     ****    
 65         BalefulTeleport          16823591 5     21191  12194    14551   
 66         **Level_6_Psion_Powers** ****     ****  ****   ****     ****    

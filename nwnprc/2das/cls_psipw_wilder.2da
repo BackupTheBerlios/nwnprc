@@ -52,6 +52,7 @@
 48         MindDisrupt               16823748 2     21427  12433    14803   
 49         RecallAgony               16823665 2     21428  12434    14804   
 50         ThoughtShield             16823752 2     21429  12435    14805   
+51         SharePain                 16823798 2     21430  12436    14773   
 51         **Level_3_Wilder_Powers** ****     ****  ****   ****     ****    
 52         BodyAdjustment            16823635 3     21461  12467    14821   
 53         Darkvision                16823647 3     21463  12469    14823   
@@ -61,7 +62,18 @@
 57         EnergyBurst               16823782 3     21467  12473    14831   
 58         EnergyRetort              16823788 3     21468  12474    14836   
 59         EradicateInvis            16823796 3     21469  12475    14842   
+57         SharePain_Forced          16823800 3     21462  12476    14822   
+58         KeenEdge                  16823814 3     21470  12477    14841   
+59         MentalBarrier             16823816 3     21471  12478    14843   
+60         Mindtrap                  16823818 3     21472  12479    14844   
+61         Touchsight                16823820 3     21473  12480    14845   
 60         **Level_4_Wilder_Powers** ****     ****  ****   ****     ****    
+63         DimensionDoor             16823802 4     21511  12518    14871   
+63         EmpathicFeedback          16823804 4     21512  12519    14872   
+63         EnergyAdaption            16823806 4     21513  12520    14873   
+63         FreedomOfMovement         16823808 4     21514  12521    14874   
+63         Mindwipe                  16823810 4     21515  12522    14875   
+63         PowerLeech                16823812 4     21516  12523    14876   
 61         **Level_5_Wilder_Powers** ****     ****  ****   ****     ****    
 62         **Level_6_Wilder_Powers** ****     ****  ****   ****     ****    
 63         BreathBlackDragon         16823627 6     21591  12602    14951   

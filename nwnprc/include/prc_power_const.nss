@@ -127,17 +127,17 @@ const   int 	POWER_POWERLEECH	   	= 14158;
 
 // Level 5 Powers
 const	int	POWER_BALEFULTEL		= 14191;
-const   int 	POWER_ECTOSHAMBLER	   	= -1; // FIX ME
-const   int 	POWER_POWERRESISTANCE   	= -1; // FIX ME
-const   int 	POWER_PSYCHICCRUSH	   	= -1; // FIX ME
-const   int 	POWER_TRUESEEING	   	= -1; // FIX ME
-const   int 	POWER_TOWERIRONWILL	   	= -1; // FIX ME
+const   int 	POWER_ECTOSHAMBLER	   	= 14192;
+const   int 	POWER_POWERRESISTANCE   	= 14193;
+const   int 	POWER_PSYCHICCRUSH	   	= 14194;
+const   int 	POWER_TRUESEEING	   	= 14195;
+const   int 	POWER_TOWERIRONWILL	   	= 14196;
 
 // Level 6 Powers
 const	int	POWER_BREATHBLACKDRAGON		= 14231;
 const	int	POWER_DISINTEGRATE		= 14232;
 const	int	POWER_CRYSTALLIZE		= 14233;
-const   int 	POWER_FUSEFLESH		   	= -1; // FIX ME
+const   int 	POWER_FUSEFLESH		   	= 14234;
 
 // Level 7 Powers
 const	int	POWER_CRISISLIFE		= 14271;

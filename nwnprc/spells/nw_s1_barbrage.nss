@@ -24,26 +24,25 @@ void main()
     if(!GetHasFeatEffect(FEAT_BARBARIAN_RAGE))
     {
         //Declare major variables
-        int nLevel = GetLevelByClass(CLASS_TYPE_BARBARIAN) + GetLevelByClass(CLASS_TYPE_RUNESCARRED) + GetLevelByClass(CLASS_TYPE_BATTLERAGER);
+        int nLevel = GetLevelByClass(CLASS_TYPE_BARBARIAN) + GetLevelByClass(CLASS_TYPE_RUNESCARRED) + GetLevelByClass(CLASS_TYPE_BATTLERAGER) + GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH);
         int iStr, iCon, iAC;
         int nSave;
         
         iAC = 2;
 
-//Lock: Added compatibility for PRC Mighty Rage ability
-        
+        //Lock: Added compatibility for PRC Mighty Rage ability
         if ((nLevel >= 15) && (GetHasFeat(FEAT_PRC_EPIC_MIGHT_RAGE, OBJECT_SELF)))
         {
             iStr = 8;
             iCon = 8;
             nSave = 4;
         }
-	  else if(nLevel >= 15)
-	  {
-		iStr = 6;
+	else if(nLevel >= 15)
+	{
+            iStr = 6;
             iCon = 6;
             nSave = 3;
-	  }
+	}
         else
         {
             iStr = 4;

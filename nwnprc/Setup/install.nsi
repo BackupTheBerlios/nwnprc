@@ -4,6 +4,10 @@
 !define APPNAME "PRC Pack"
 !define APPNAMEANDVERSION "PRC Pack 2.0"
 
+!ifndef PRCVERSION
+	!define PRCVERSION ""
+!endif
+
 ; Enable LZMA compression for the smallest EXE.
 SetCompressor lzma
 
@@ -11,7 +15,7 @@ SetCompressor lzma
 Name "${APPNAMEANDVERSION}"
 InstallDir "$PROGRAMFILES\PRC Pack"
 InstallDirRegKey HKLM "Software\${APPNAME}" ""
-OutFile "..\CompiledResources\Setup.exe"
+OutFile "..\CompiledResources\Setup${PRCVERSION}.exe"
 Var NWNVERSION
 Var NWNPATH
 Var NWNPRCPATH
@@ -141,11 +145,14 @@ Function .onInit
 	Pop $0
 	
 	okNWN:
-	; Validate that XP2 is installed
+	; Validate that XP1 and XP2 are installed
 	Push $0
 	ClearErrors
+	ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Undrentide" "GUID"
+	IfErrors noXP
+	ClearErrors
 	ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Underdark" "GUID"
-	IfErrors noXP2
+	IfErrors noXP
 	Pop $0
 	
 	; Get the parent directory of the $NWNPATH to use for the prc pack, since
@@ -172,8 +179,8 @@ Function .onInit
 	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires at least version 1.62 of NWN and HotU.  You must upgrade NWN before installing the PRC pack."
 	Abort
 	
-	noXP2:
-	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires Hordes of the Underdark to be installed.  You must upgrade NWN before installing the PRC pack."
+	noXP:
+	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires Shadows of Undrentide and Hordes of the Underdark to be installed.  You must upgrade NWN before installing the PRC pack."
 	Abort
 	
 	noNWN:

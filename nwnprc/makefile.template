@@ -149,8 +149,8 @@ hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) $(CRAFT2DASHAK) i
 
 # Rule to build the NSIS installer.
 nsis:
-	@echo Setup.exe
-	@$(NSISCOMPILER) /V1 $(INSTALLSCRIPT)
+	@echo Setup$(PRC_VERSION).exe
+	@$(NSISCOMPILER) /DPRCVERSION=$(PRC_VERSION) /V1 $(INSTALLSCRIPT)
 
 
 #################################################################################

@@ -186,7 +186,7 @@
 182   FEAT_SPIRIT_STRIKE_4                             1315        3      21               1        
 183   FEAT_SPIRIT_STRIKE_5                             1316        3      24               1        
 184   FEAT_SPIRIT_STRIKE_6                             1317        3      27               1        
-185   FEAT_KATANA_FINESSE                              1318        3      1                1        
+185   FEAT_KATANA_FINESSE                              1318        3      1                0        
 186   FEAT_IAIJUTSU_ATTACK                             1319        3      5                1        
 187   FEAT_CANNY_DEFENSE                               2800        3      1                0        
 188   FEAT_EPIC_IAIJUTSU                               1320        3      11               0        

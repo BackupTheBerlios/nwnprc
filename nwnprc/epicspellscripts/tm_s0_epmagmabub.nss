@@ -23,11 +23,18 @@
 // If anyone can think of a way to fix it please go ahead...
 // I managed to fix all the other scripts though =)
 
-#include "inc_epicspells"
-   //#include "prc_getcast_lvl"
-      //#include "prc_alterations"***
-      
 #include "x0_i0_spells"
+#include "prc_getcast_lvl"
+#include "prc_class_const"
+#include "inc_epicfunc"
+#include "prc_getcast_lvl"
+#include "x2_inc_spellhook"
+
+//#include "inc_epicspells"
+     //#include "prc_getcast_lvl"
+        //#include "prc_alterations"***
+      
+//#include "x0_i0_spells"
    //#include "x2_inc_switches"
    //#include "x2_inc_itemprop"
    //#include "x0_i0_match"
@@ -85,7 +92,7 @@ void main()
     // Boneshank - Added in the nDC formula.
     int nDC = /*GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + */
 		GetChangesToSaveDC() +
-		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
+		GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(),  "V");
     //Declare and assign personal impact visual effect.
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
 

@@ -33,14 +33,14 @@ void main()
    int  iFeat = GetHasFeat(FEAT_POSITIVE_ENERGY_BURST);
 
   
-   if ( GetHitDice(OBJECT_SELF) >12)
+   if ( GetHitDice(OBJECT_SELF) >9)
    {
-      int level = (GetHitDice(OBJECT_SELF)-12+iFeat*2)/2;
+      int level = (GetHitDice(OBJECT_SELF)-9+iFeat*2)/2;
 
      for (i = 0; i < level ; i++)
       LevelUpHenchman( GetObjectByTag("xagya01"),CLASS_TYPE_CLERIC,TRUE,PACKAGE_CLERIC_DIVINE);
 
-     if ( (GetHitDice(OBJECT_SELF)-12+iFeat*2)!= level*2) level++;
+     if ( (GetHitDice(OBJECT_SELF)-9+iFeat*2)!= level*2) level++;
 
      for (i = 0; i < level ; i++)
       LevelUpHenchman( GetObjectByTag("xagya01"),CLASS_TYPE_OUTSIDER,TRUE,PACKAGE_INVALID);
@@ -53,8 +53,8 @@ void main()
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_POSITIVE,IP_CONST_DAMAGEBONUS_1d6),oCreL);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_POSITIVE,IP_CONST_DAMAGEBONUS_1d6),oCreR);
 
-    effect eConceal = SupernaturalEffect(EffectConcealment(50));
-    DelayCommand(0.1f, ApplyEffectToObject(DURATION_TYPE_INSTANT, eConceal, oHench));
+//    effect eConceal = SupernaturalEffect(EffectConcealment(50));
+//    DelayCommand(0.1f, ApplyEffectToObject(DURATION_TYPE_INSTANT, eConceal, oHench));
 
 
 

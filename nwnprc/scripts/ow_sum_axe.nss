@@ -56,19 +56,18 @@ void main()
          effect eSummon = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
          effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1);
     
-         if      (iHD > 39)	sSummon = "ow_sum_axe_13";
-         else if (iHD > 36)	sSummon = "ow_sum_axe_12";
-         else if (iHD > 33)	sSummon = "ow_sum_axe_11";
-         else if (iHD > 30)	sSummon = "ow_sum_axe_10";
-         else if (iHD > 27)	sSummon = "ow_sum_axe_9";
-         else if (iHD > 24)	sSummon = "ow_sum_axe_8";
-         else if (iHD > 21)	sSummon = "ow_sum_axe_7";
-         else if (iHD > 18)	sSummon = "ow_sum_axe_6";
-         else if (iHD > 15)	sSummon = "ow_sum_axe_5";
-         else if (iHD > 12)	sSummon = "ow_sum_axe_4";
-         else if (iHD > 9)	sSummon = "ow_sum_axe_3";
-         else if (iHD > 6)	sSummon = "ow_sum_axe_2";
-         else if (iHD > 3)	sSummon = "ow_sum_axe_1";
+         if      (iHD > 39)	sSummon = "ow_sum_axe_12";
+         else if (iHD > 36)	sSummon = "ow_sum_axe_11";
+         else if (iHD > 33)	sSummon = "ow_sum_axe_10";
+         else if (iHD > 30)	sSummon = "ow_sum_axe_9";
+         else if (iHD > 27)	sSummon = "ow_sum_axe_8";
+         else if (iHD > 24)	sSummon = "ow_sum_axe_7";
+         else if (iHD > 21)	sSummon = "ow_sum_axe_6";
+         else if (iHD > 18)	sSummon = "ow_sum_axe_5";
+         else if (iHD > 15)	sSummon = "ow_sum_axe_4";
+         else if (iHD > 12)	sSummon = "ow_sum_axe_3";
+         else if (iHD > 9)	sSummon = "ow_sum_axe_2";
+         else if (iHD > 6)	sSummon = "ow_sum_axe_1";
          
          if( GetCanSummonOrc(oPC, sSummon) )
          {

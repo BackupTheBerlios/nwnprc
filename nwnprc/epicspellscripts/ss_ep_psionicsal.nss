@@ -44,7 +44,7 @@ void main()
 void DoSalvo(object oTarget, int nDC)
 {
     //Make a Will save each time
-    if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
     {
         effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
         effect eWIS = EffectAbilityDecrease(ABILITY_WISDOM, 1);

@@ -42,7 +42,7 @@ void main()
             lCell = GetLocalLocation(OBJECT_SELF, "lPlanarCell");
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
             {
-                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                 {
                     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis1, lTarget);
                     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis2, lTarget);

@@ -63,7 +63,7 @@ void main()
                     if(!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay))
                     {
 
-                        if(!MySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF),
+                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF),
                             SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
                         {
                             DelayCommand(fDelay, SPApplyEffectToObject

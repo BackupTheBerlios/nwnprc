@@ -50,7 +50,7 @@ void DoWithering(object oTarget, int nDC, int nDuration)
     int nAbil;
     effect eDown;
     //Make a Fort Save each time
-    if (!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
+    if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
     {
         // Lower one of either STR, DEX, or CON by 1 every 2 seconds
         nX = d3();

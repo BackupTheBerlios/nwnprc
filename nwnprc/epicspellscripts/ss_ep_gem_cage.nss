@@ -83,7 +83,7 @@ void main()
                 // Spell Resistance check:
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, 1.0))
                 {   // Will Saving Throw.
-                    if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                     {   // Choose the Gem Cage VFX based on gem value.
                         int nVis = 799;
                         if (GetGoldPieceValue(oGem) > 1600) nVis = 800;

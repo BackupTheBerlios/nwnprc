@@ -71,7 +71,7 @@ void RunNailedToTheSky(object oTarget, int nDC)
 {
     effect eVis1 = EffectVisualEffect(VFX_IMP_DEATH_WARD);
     effect eDam = EffectDamage(d6(2));
-    if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC) && !GetIsDead(oTarget))
+    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC) && !GetIsDead(oTarget))
     {
         AssignCommand(oTarget, ClearAllActions(TRUE));
         AssignCommand(oTarget,

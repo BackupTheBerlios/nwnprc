@@ -52,7 +52,7 @@ void main()
 
             //Adjust damage for Fort Save:  How does one avoid lava and not leave the area?
             // Flying, I guess:  To bad NWN doesn't have a "Z" Axis. :D
-            if( !MySavingThrow(SAVING_THROW_FORT, oTarget, nDC,
+            if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC,
                 SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator()) )
             {
                 // Apply effects to the currently selected target.

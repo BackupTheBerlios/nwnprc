@@ -59,7 +59,7 @@ void main()
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) && !GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE) && !GetIsPC(oTarget))
             {
                 //Make a Will Save
-                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     //Release old slave
                     if (GetIsObjectValid(oOldSlave)) RemoveDomination(oOldSlave);

@@ -72,7 +72,7 @@ void main()
                 {
                     nDamage = d8(20);
                     //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                    nDamage = GetReflexAdjustedDamage( nDamage, oTarget, nDC+ GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()), SAVING_THROW_TYPE_FIRE );
+                    nDamage = PRCGetReflexAdjustedDamage( nDamage, oTarget, nDC+ GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()), SAVING_THROW_TYPE_FIRE );
                     //Set the damage effect
                     eDam = EffectDamage( nDamage, DAMAGE_TYPE_FIRE );
                     if( nDamage > 0 )

@@ -82,7 +82,7 @@ void main()
                     SendMessageToPC(oCaster, "Not resisted.");
                     nDamage = d6(4);
                     //Adjust damage for Save
-                    if( MySavingThrow(SAVING_THROW_WILL, oTarget, nDC+GetChangesToSaveDC(oTarget,oCaster) , //B-chngd to nDC
+                    if( PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC+GetChangesToSaveDC(oTarget,oCaster) , //B-chngd to nDC
                         SAVING_THROW_TYPE_NEGATIVE, oCaster, fDelay) )
                     {
                         nDamage /= 2;

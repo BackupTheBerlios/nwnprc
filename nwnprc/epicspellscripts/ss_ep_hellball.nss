@@ -76,7 +76,7 @@ void main()
                 nDamage4 = d6(10);
 
                 // no we don't care about evasion. there is no evasion to hellball
-                if (MySavingThrow(SAVING_THROW_REFLEX,oTarget,nSpellDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),SAVING_THROW_TYPE_SPELL,OBJECT_SELF,fDelay) >0)
+                if (PRCMySavingThrow(SAVING_THROW_REFLEX,oTarget,nSpellDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),SAVING_THROW_TYPE_SPELL,OBJECT_SELF,fDelay) >0)
                 {
                     nDamage1 /=2;
                     nDamage2 /=2;

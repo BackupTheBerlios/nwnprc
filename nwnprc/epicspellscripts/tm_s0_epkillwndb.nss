@@ -46,7 +46,7 @@ void main()
             {
 
                 //Make a fortitude save (-4) to avoid death
-                if( !MySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4+GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()),
+                if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4+GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()),
                     SAVING_THROW_TYPE_DEATH, GetAreaOfEffectCreator()) )
                 {
                     //Apply the delay VFX impact and death effect

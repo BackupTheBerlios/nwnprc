@@ -64,7 +64,7 @@ void main()
 
                     nDam = d6(20);
                     // Reflex save for half damage.
-                    if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF),
+                    if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF),
                         SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                         nDam /= 2;
                     eDam = EffectDamage(nDam, DAMAGE_TYPE_COLD);

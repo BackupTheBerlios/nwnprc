@@ -39,7 +39,7 @@ void main()
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
             {
                 // Will save.
-                if (!MySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
                 {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

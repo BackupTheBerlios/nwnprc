@@ -48,7 +48,7 @@ void main()
                     {
     
                         // Targets all get a Fortitude saving throw
-                        if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_DISEASE, OBJECT_SELF, fDelay))
+                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_DISEASE, OBJECT_SELF, fDelay))
                         {
                             // Apply effects to the currently selected target.
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDisease, oTarget));

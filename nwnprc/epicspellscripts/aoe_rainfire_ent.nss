@@ -40,7 +40,7 @@ void main()
             fDelay = GetRandomDelay(0.5, 2.0);
             nDamage = d6(1);
             eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
-            if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE, oCreator, fDelay))
+            if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE, oCreator, fDelay))
             {
                 DelayCommand(fDelay,
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

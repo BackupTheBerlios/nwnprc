@@ -46,7 +46,7 @@ ActionDoCommand(SetAllAoEInts(4054,OBJECT_SELF, GetSpellSaveDC()));
                     EventSpellCastAt(oCreator, SPELL_INCENDIARY_CLOUD));
                 nDamage = d6(1);
                 eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
-                if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC+ GetChangesToSaveDC(oTarget,oCreator),
+                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC+ GetChangesToSaveDC(oTarget,oCreator),
                 SAVING_THROW_TYPE_FIRE, oCreator, fDelay))
                 {
                     DelayCommand(fDelay,

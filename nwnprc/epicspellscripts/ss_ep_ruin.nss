@@ -33,7 +33,7 @@ void main()
             GetDCSchoolFocusAdjustment(OBJECT_SELF, RUIN_S);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
         int nDam = d6(20);
-        if (MySavingThrow(SAVING_THROW_FORT,oTarget,nSpellDC,SAVING_THROW_TYPE_SPELL,OBJECT_SELF) != 0 )
+        if (PRCMySavingThrow(SAVING_THROW_FORT,oTarget,nSpellDC,SAVING_THROW_TYPE_SPELL,OBJECT_SELF) != 0 )
         {
             nDam /=2;
         }

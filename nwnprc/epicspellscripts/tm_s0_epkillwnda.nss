@@ -42,7 +42,7 @@ void main()
         if( !MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
         {
             //Make a fortitude save (-4) to avoid death
-            if( !MySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4,
+            if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4,
                 SAVING_THROW_TYPE_DEATH, GetAreaOfEffectCreator()) )
             {
                 //Apply the delay VFX impact and death effect

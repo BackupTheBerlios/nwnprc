@@ -36,7 +36,7 @@ void main()
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0))
                {
                  //Make Fortitude save
-                 if (!MySavingThrow(SAVING_THROW_FORT, oTarget, nSpellDC, SAVING_THROW_TYPE_DEATH))
+                 if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSpellDC, SAVING_THROW_TYPE_DEATH))
                  {
                     //Apply the death effect and VFX impact
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);

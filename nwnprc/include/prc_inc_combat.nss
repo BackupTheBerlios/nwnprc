@@ -55,6 +55,24 @@
 #include "inc_utility"
 #include "prc_inc_switch"
 
+// constant ints
+const int TOUCH_ATTACK_MELEE  = 1;
+const int TOUCH_ATTACK_RANGED = 2;
+
+const string COLOR_BLUE         = "<cfÌþ>";    // used by saving throws.
+const string COLOR_DARK_BLUE    = "<c fþ>";    // used for electric damage.                                           
+const string COLOR_GRAY         = "<c™™™>";    // used for negative damage.
+const string COLOR_GREEN        = "<c þ >";    // used for acid damage.
+const string COLOR_LIGHT_BLUE   = "<c™þþ>";    // used for the player's name, and cold damage.
+const string COLOR_LIGHT_GRAY   = "<c°°°>";    // used for system messages.
+const string COLOR_LIGHT_ORANGE = "<cþ™ >";    // used for sonic damage.
+const string COLOR_LIGHT_PURPLE = "<cÌ™Ì>";    // used for a target's name.
+const string COLOR_ORANGE       = "<cþf >";    // used for attack rolls and physical damage.
+const string COLOR_PURPLE       = "<cÌwþ>";    // used for spell casts, as well as magic damage.
+const string COLOR_RED          = "<cþ  >";    // used for fire damage.
+const string COLOR_WHITE        = "<cþþþ>";    // used for positive damage.
+const string COLOR_YELLOW       = "<cþþ >";    // used for healing, and sent messages.
+
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
 //:://////////////////////////////////////////////
@@ -125,12 +143,12 @@ int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender);
 
 // Returns the proper AC for the defender vs. this attacker.
 // takes into account being denied dex bonus to ac, etc.
-int GetDefenderAC(object oDefender, object oAttacker);
+int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE);
 
 // Returns the Attack Bonus for oAttacker attacking oDefender
 // iMainHand = 0 means attack is from main hand (default)
 // iMainHand = 1 for an off-hand attack
-int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHand = 0);
+int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHand = 0, int iTouchAttackType = FALSE);
 
 // Returns 0 on miss, 1 on hit, and 2 on Critical hit
 // Works for both Ranged and Melee Attacks
@@ -142,7 +160,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
 // If you are coding an attack that reduces the attack roll, put the number in the iMod slot.
 // bShowFeedback tells the script to show the script feedback
 // fDelay is the amount of time to delay the display of feedback
-int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainHand = 0, int iAttackBonus = 0, int iMod = 0, int bShowFeedback = TRUE, float fDelay = 0.0);
+int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainHand = 0, int iAttackBonus = 0, int iMod = 0, int bShowFeedback = TRUE, float fDelay = 0.0, int iTouchAttackType = FALSE);
 
 //:://////////////////////////////////////////////
 //::  Damage Bonus Functions
@@ -218,12 +236,12 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 // I needed to make a separate function to control the logic of each attack.
 // AttackLoopMain calls this function, which in turn uses a delay and calls AttackLoopMain.
 // This allowed a proper way to delay the function.
-void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int iMainHand, int bIsCleaveAttack);
+void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int iMainHand, int bIsCleaveAttack, int iTouchAttackType = FALSE);
 
 // Function used by PerformAttackRound to control the flow of logic
 // this function calls AttackLoopLogic which then calls this function again
 // making them recursive until the AttackLoopMain stops calling AttackLoopLogic
-void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage);
+void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE);
 
 // Performs a full attack round and can add in bonus damage damage/effects
 // Will perform all attacks and accounts for weapontype, haste, twf, tempest twf, etc.
@@ -240,7 +258,7 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
 // bEffectAllAttacks - If FALSE will only effect first attack, otherwise effects all attacks.
 // sMessageSuccess - message to display on a successful hit. (i.e. "*Sneak Attack Hit*")
 // sMessageFailure - message to display on a failure to hit. (i.e. "*Sneak Attack Miss*")
-void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "");
+void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE);
 
 //:://///////////////////////////////////////
 //::  Structs
@@ -1338,13 +1356,14 @@ int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender)
     return iBonus;
 }
 
-int GetDefenderAC(object oDefender, object oAttacker)
+int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE)
 {
      int iAC = GetAC(oDefender);
      int iDexMod = GetAbilityModifier(ABILITY_DEXTERITY, oDefender);
      
      int bIsHelpless =  GetIsHelpless(oDefender);
      int bGetIsDeniedDexBonus = GetIsDeniedDexBonusToAC(oDefender, oAttacker);
+     int bIsStunned = GetHasEffect(EFFECT_TYPE_STUNNED, oDefender);
      
      // helpless enemies have an effective dexterity of 0 (for -5 ac)
      if(bIsHelpless)
@@ -1358,6 +1377,15 @@ int GetDefenderAC(object oDefender, object oAttacker)
           object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oDefender);
           int iArmorType = GetItemACBase(oArmor);
           int iDexMax = 100;
+
+          // remove any bonus AC from boots (it's Dodge AC)
+          iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_BOOTS, oDefender) );
+          
+          // remove bonus AC from having tumble skill.
+          int iTumble = GetSkillRank(SKILL_TUMBLE, oDefender);
+          iTumble -= iDexMod;
+          iTumble /= 5;
+          iAC -= iTumble;
           
           // change the max dex mod based on armor value
           if(iArmorType == 8)       iDexMax = 1;
@@ -1374,13 +1402,63 @@ int GetDefenderAC(object oDefender, object oAttacker)
           // remove any dex bonus to AC
           iAC -= iDexMod;
           
-          // remove any dodge bonuses to AC
+          // remove any bonuses applied to PrC Skins
+          iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_CARMOUR, oDefender) );
+          
+          // if the skin AC bonus was racial "natural" AC, add it back in.
+          // but only if it is not a touch attack
+          if(!bIsTouchAttack)
+          {
+               if     ( GetHasFeat(FEAT_NATARM_1) )  iAC += 1;
+               else if( GetHasFeat(FEAT_NATARM_2) )  iAC += 2;
+               else if( GetHasFeat(FEAT_NATARM_3) )  iAC += 3;
+               else if( GetHasFeat(FEAT_NATARM_4) )  iAC += 4;
+               else if( GetHasFeat(FEAT_NATARM_5) )  iAC += 5;
+               else if( GetHasFeat(FEAT_NATARM_6) )  iAC += 6;
+               else if( GetHasFeat(FEAT_NATARM_7) )  iAC += 7;
+               else if( GetHasFeat(FEAT_NATARM_8) )  iAC += 8;
+               else if( GetHasFeat(FEAT_NATARM_9) )  iAC += 9;
+               else if( GetHasFeat(FEAT_NATARM_10) ) iAC += 10;
+               else if( GetHasFeat(FEAT_NATARM_11) ) iAC += 11;
+               else if( GetHasFeat(FEAT_NATARM_12) ) iAC += 12;
+               else if( GetHasFeat(FEAT_NATARM_13) ) iAC += 13;
+               else if( GetHasFeat(FEAT_NATARM_14) ) iAC += 14;
+               else if( GetHasFeat(FEAT_NATARM_15) ) iAC += 15;
+               else if( GetHasFeat(FEAT_NATARM_16) ) iAC += 16;
+               else if( GetHasFeat(FEAT_NATARM_17) ) iAC += 17;
+               else if( GetHasFeat(FEAT_NATARM_18) ) iAC += 18;
+               else if( GetHasFeat(FEAT_NATARM_19) ) iAC += 19;
+               else if( GetHasFeat(FEAT_NATARM_20) ) iAC += 20;
+               else if( GetHasFeat(FEAT_NATARM_21) ) iAC += 21;
+               else if( GetHasFeat(FEAT_NATARM_22) ) iAC += 22;
+          }
+     }
+     
+     // if helpless or stunned, can't use shield
+     if(bIsHelpless || bIsStunned)
+     {
+          iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oDefender) );
+     }
+
+     // AC rules are different for a touch attack
+     // no shield, armor, or natural armor bonuses apply.
+     if(bIsTouchAttack)
+     {
+          // remove Armor AC
+          iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_CHEST, oDefender) );
+          
+          // remove natural armor AC
+          iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_NECK, oDefender) );
+          
+          // remove shield bonus - only if it has not been removed already
+          if(!bIsHelpless && !bIsStunned)
+               iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oDefender) );
      }
    
      return iAC;
 }
 
-int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHand = 0)
+int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHand = 0, int iTouchAttackType = FALSE)
 {
      int iAttackBonus = 0;
      int iStatMod = 0;
@@ -1393,7 +1471,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      int iCha = GetAbilityModifier(ABILITY_CHARISMA, oAttacker);
      int iWis = GetAbilityModifier(ABILITY_WISDOM, oAttacker);
      
-     int bIsRangedWeapon = GetWeaponRanged(oWeap);
+     int bIsRangedWeapon = GetWeaponRanged(oWeap) || iTouchAttackType == TOUCH_ATTACK_RANGED;
      
      int bFinesse = GetHasFeat(FEAT_WEAPON_FINESSE, oAttacker);
      int bKatanaFinesse = GetHasFeat(FEAT_KATANA_FINESSE, oAttacker);
@@ -1571,11 +1649,11 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      return iAttackBonus;
 }
 
-int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainHand = 0, int iAttackBonus = 0, int iMod = 0, int bShowFeedback = TRUE, float fDelay = 0.0)
+int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainHand = 0, int iAttackBonus = 0, int iMod = 0, int bShowFeedback = TRUE, float fDelay = 0.0, int iTouchAttackType = FALSE)
 {
      if (iAttackBonus == 0)
      {
-         iAttackBonus = GetAttackBonus(oDefender, oAttacker, oWeapon, iMainHand);
+         iAttackBonus = GetAttackBonus(oDefender, oAttacker, oWeapon, iMainHand, iTouchAttackType);
      }
      
      iAttackBonus += iMod;
@@ -1619,17 +1697,33 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      }
      
      int iDiceRoll = d20();
-     int iEnemyAC = GetAC(oDefender);
+     int iEnemyAC = GetDefenderAC(oDefender, oAttacker, iTouchAttackType);
      
      int iType = GetBaseItemType(oWeapon);
      int iCritThreat = GetWeaponCriticalRange(oAttacker, oWeapon);
 
+     // print off-hand of off-hand attack
      string sFeedback ="";
-     if(iMainHand == 1) sFeedback += "<cþf >Off Hand : ";
+     if(iMainHand == 1) sFeedback += COLOR_ORANGE + "Off Hand : ";
      
-     sFeedback += "<c™þþ>" + GetName(oAttacker) + "<cþf > attacks " + GetName(oDefender) + ": ";
+     // change color of attacker if it is Player or NPC
+     if(GetIsPC(oAttacker)) sFeedback += COLOR_LIGHT_BLUE;
+     else                   sFeedback += COLOR_LIGHT_PURPLE;
+     
+     // display name of attacker
+     sFeedback +=  GetName(oAttacker);
+     
+     // show proper message for touch attacks or normal attacks.
+     if(iTouchAttackType == TOUCH_ATTACK_RANGED) 
+          sFeedback += COLOR_PURPLE + " attempts ranged touch attack on ";
+     else if(iTouchAttackType == TOUCH_ATTACK_RANGED) 
+          sFeedback += COLOR_PURPLE + " attempts touch attack on ";
+     else
+          sFeedback += COLOR_ORANGE + " attacks ";
+     
+     sFeedback +=  GetName(oDefender) + ": ";
+          
      int iReturn = 0;
-
      // roll concealment check
      int iConcealment = GetIsConcealed(oDefender, oAttacker);
      int iConcealRoll = d100();
@@ -1637,7 +1731,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      
      if(iConcealRoll <= iConcealment)
      {
-          // those with blind-fight get a re-roll
+          // Those with blind-fight get a re-roll
           if( GetHasFeat(FEAT_BLIND_FIGHT, oAttacker) ) 
           {
                iConcealRoll = d100();
@@ -1651,7 +1745,14 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
           }
      }
 
-     //Check for a critical threat
+     // Autmatically dodge the first attack of each round
+     if( GetHasFeat(FEAT_EPIC_DODGE, oDefender) && bFirstAttack)
+     {
+               sFeedback += "*Miss*: (Enemy Dodged)";
+               iReturn = 0;
+     }
+
+     // Check for a critical threat
      if( (iDiceRoll >= iCritThreat && ((iDiceRoll + iAttackBonus) > iEnemyAC) || iDiceRoll == 20)  && iDiceRoll != 1 && !bEnemyIsConcealed)
      {
           sFeedback += "*Critical Hit*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + "): ";
@@ -1704,7 +1805,6 @@ int GetFavoredEnemeyDamageBonus(object oDefender, object oAttacker)
      
      // Additional PRC's
      // else if(GetLevelByClass(CLASS_TYPE_*, oAttacker) )   bCanHaveFavoredEnemy = TRUE;
-     
      
      // Exit if the class can not have a favored enemy
      // Prevents lots of useless code from running
@@ -2965,6 +3065,12 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                string nMes = "*Sneak Attack*";
                FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE); 
           }
+          
+          if(GetHasFeat(FEAT_CRIPPLING_STRIKE, oAttacker) )
+          {
+               effect eCrippleStrike = EffectAbilityDecrease(ABILITY_STRENGTH, 2);
+               ApplyEffectToObject(DURATION_TYPE_INSTANT, eCrippleStrike, oDefender);
+          }
      }
           
      int iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
@@ -3090,10 +3196,13 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oDefender);
           } 
      }
+     
+     // any other special attack effects that should be applied.
+     
      return eLink;
 }
 
-void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int iMainHand, int bIsCleaveAttack)
+void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int iMainHand, int bIsCleaveAttack, int iTouchAttackType = FALSE)
 {
      // if there is no valid target, then no attack
      if( !GetIsObjectValid(oDefender) )
@@ -3189,7 +3298,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           else
           {
                // code to perform normal attack roll
-               iAttackRoll = GetAttackRoll(oDefender, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0);               
+               iAttackRoll = GetAttackRoll(oDefender, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0, iTouchAttackType);               
           }
 
           if (iAttackRoll == 2) bIsCritcal = TRUE;
@@ -3279,7 +3388,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                
                if(!bNoEnemyInRange)
                {
-                    iAttackRoll = GetAttackRoll(oTarget, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0);
+                    iAttackRoll = GetAttackRoll(oTarget, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0, iTouchAttackType);
                     if(iAttackRoll == 2)      eDamage = GetAttackDamage(oTarget, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, TRUE, iNumDice, iNumSides, iCritMult);
                     else if(iAttackRoll == 1) eDamage = GetAttackDamage(oTarget, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, FALSE, iNumDice, iNumSides, iCritMult);
                
@@ -3364,29 +3473,32 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
      DelayCommand(sAttackVars.fDelay, AttackLoopMain(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage) );
 }
 
-void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage)
+void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE)
 {
+     // turn off touch attack if var says it only applies to first attack
+     if (bFirstAttack && !bApplyTouchToAll) iTouchAttackType == FALSE;
+     
      // perform all bonus attacks
      if(iBonusAttacks > 0)
      {
           iBonusAttacks --;
-          AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE);
+          AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE, iTouchAttackType);
      }
           
      // perform main attack first, then off-hand attack
      if(iBonusAttacks == 0 && iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
      {
           iMainAttacks --;
-          AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE);
+          AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE, iTouchAttackType);
      }
      else if(iOffHandAttacks > 0)
      {
           iOffHandAttacks --;
-          AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 1, FALSE);
+          AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 1, FALSE, iTouchAttackType);
      }
 }
 
-void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "")
+void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE)
 {
      // create struct for attack loop logic
      struct AttackLoopVars sAttackVars;
@@ -3575,6 +3687,10 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           iBonusMainHandAttacks += 1;
           iAttackPenalty -= 2;
      }     
+     if( GetHasSpellEffect(SPELL_ONE_STRIKE_TWO_CUTS, oAttacker) )
+     {
+          iBonusMainHandAttacks += 1;
+     }  
      if( GetLastAttackMode(oAttacker) ==  COMBAT_MODE_FLURRY_OF_BLOWS )
      {
           iBonusMainHandAttacks += 1;

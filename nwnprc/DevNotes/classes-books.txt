@@ -77,5 +77,5 @@ Apostle of Peace (incomplete)			| Book of Exalted Deeds
 Archer						| Three Arrows for the King - The Archer's Guide
 Minstrel of the Edge				| Custom Class - Author: WodahsEht
 Brawler						| Custom Class - Author: WodahsEht
-
+Ultimate Ranger					| Custom Class - Author: Szatany (Wizards.COMmunity Boards)
 

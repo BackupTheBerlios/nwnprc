@@ -11,7 +11,7 @@ void Equip(object oPC,int bBowSpec,object oSkin,int bXShot)
 
   if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
 
-    SetCompositeBonusT(oWeap,"ArcherSpec",bBowSpec,ITEM_PROPERTY_ATTACK_BONUS);
+    SetCompositeAttackBonus(oPC, "ArcherBowSpec", bBowSpec);
 
   if (bXShot && !GetHasSpellEffect(SPELL_EXTRASHOT,oPC))
   {
@@ -27,7 +27,7 @@ void UnEquip(object oPC,int bBowSpec,object oSkin,int bXShot)
 
   if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
 
-    SetCompositeBonusT(oWeap,"ArcherSpec",0,ITEM_PROPERTY_ATTACK_BONUS);
+    SetCompositeAttackBonus(oPC, "ArcherBowSpec", 0);
 
   if ( GetHasSpellEffect(SPELL_EXTRASHOT,oPC))
           RemoveSpellEffects(SPELL_EXTRASHOT,oPC,oPC);

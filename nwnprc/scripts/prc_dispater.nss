@@ -54,12 +54,10 @@ void Device_Lore(object oPC ,object oSkin ,int iLevel)
 
 void RemoveIronPower(object oPC, object oWeap)
 {
-      if (GetLocalInt(oWeap, "DispIronPowerA"))
+      if (GetLocalInt(oWeap, "DispIronPowerD"))
       {
-         SetCompositeBonusT(oWeap, "DispIronPowerA", 0, ITEM_PROPERTY_ATTACK_BONUS);
          SetCompositeDamageBonusT(oWeap, "DispIronPowerD", 0);
          RemoveSpecificProperty(oWeap, ITEM_PROPERTY_KEEN,-1,-1, 1,"",-1,DURATION_TYPE_TEMPORARY);
-
       }
 }
 
@@ -81,12 +79,17 @@ void IronPower(object oPC, object oWeap)
       //int iEnch = GetWeaponEnhancement(oWeap);
       iBonus = iBonus ; //+ iEnch;
 
-      if ((GetLocalInt(oWeap, "DispIronPowerA") != iBonus) && (iBonus))
+      if (iBonus)
       {
-         SetCompositeBonusT(oWeap, "DispIronPowerA", iBonus, ITEM_PROPERTY_ATTACK_BONUS);
          SetCompositeDamageBonusT(oWeap, "DispIronPowerD", iBonus);
+         SetCompositeAttackBonus(oPC, "DispIronPowerA", iBonus, ATTACK_BONUS_ONHAND);
          AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyKeen(), oWeap,9999.0);
       }
+
+   }
+   else
+   {
+      SetCompositeAttackBonus(oPC, "DispIronPowerA", 0, ATTACK_BONUS_ONHAND);
    }
 }
 

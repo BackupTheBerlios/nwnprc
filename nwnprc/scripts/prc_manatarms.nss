@@ -6,8 +6,6 @@
 void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
 {
 //  object oWeapR=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-
-  SetCompositeBonusT(oWeapR,"ManArmsGenSpe",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
   int iDmg = 1;
 
   if(GetHasFeat(FEAT_LEGENDARY_PROWESS))  iDmg = 3;
@@ -59,15 +57,11 @@ void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
      SetLocalInt(oItem,"ManArmsCore",bCore);
 
   }
-
 }
 
 
 void OnUnEquip(object oPC,object oSkin,int iLevel,object oWeapR )
 {
-
-    SetCompositeBonusT(oWeapR,"ManArmsGenSpe",0,ITEM_PROPERTY_ATTACK_BONUS);
-
     int iType= GetBaseItemType(oWeapR);
     object oItem=oWeapR;
 
@@ -132,7 +126,7 @@ void main()
        OnEquip(oPC,oSkin,iAtk,GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC));
     }
 
+    if (GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND))) SetCompositeAttackBonus(oPC, "ManArmsGenSpe", iAtk);
 
-     if (GetHasFeat(FEAT_MASTER_CRITICAL,oPC)) ImpCrit(oPC,GetPCSkin(oPC));
-
+    if (GetHasFeat(FEAT_MASTER_CRITICAL,oPC)) ImpCrit(oPC,GetPCSkin(oPC));
 }

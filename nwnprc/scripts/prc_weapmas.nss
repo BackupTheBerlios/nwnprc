@@ -21,18 +21,14 @@ void main()
     {
        case BASE_ITEM_LONGBOW:
        case BASE_ITEM_SHORTBOW:
-         if ( GetHasFeat(FEAT_BOWMASTERY, oPC)) SetCompositeBonusT(oWeap,"WpMasBow",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
+         if ( GetHasFeat(FEAT_BOWMASTERY, oPC)) SetCompositeAttackBonus(oPC, "WeoponMasteryBow", iLevel);
          break;
        case BASE_ITEM_LIGHTCROSSBOW:
        case BASE_ITEM_HEAVYCROSSBOW:
-         if ( GetHasFeat(FEAT_XBOWMASTERY, oPC)) SetCompositeBonusT(oWeap,"WpMasXBow",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
-       break;
+         if ( GetHasFeat(FEAT_XBOWMASTERY, oPC)) SetCompositeAttackBonus(oPC, "WeoponMasteryXBow", iLevel);
+         break;
        case BASE_ITEM_SHURIKEN:
-         if ( GetHasFeat(FEAT_SHURIKENMASTERY, oPC)) 
-               SetCompositeBonusT(oWeap,"WpMasShu",iLevel,ITEM_PROPERTY_ATTACK_BONUS);
-       break;
-
-
+         if ( GetHasFeat(FEAT_SHURIKENMASTERY, oPC)) SetCompositeAttackBonus(oPC, "WeoponMasteryShur", iLevel);
+         break;
     }
-
 }

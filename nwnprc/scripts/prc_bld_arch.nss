@@ -50,7 +50,8 @@ void main()
 	{
 		 case BASE_ITEM_LONGBOW:
 		 //case BASE_ITEM_SHORTBOW:
-			  SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
+		          //REWRITE THIS USING SetCompositeAttackBonus:
+			  //SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
 			  SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);
 			  break;
 

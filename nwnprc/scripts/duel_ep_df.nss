@@ -19,13 +19,14 @@ void main()
 {
      object oPC = OBJECT_SELF;
      object oSkin = GetPCSkin(oPC);
+     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 
      if( GetLocalInt(oPC, "HasElaborateParry") != 1 )
      {
           // add 2 extra defense due to defensive fighting.
           int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST, oPC) + 2;
           
-          SetCompositeBonus(oSkin, "ElaborateParryACBonus", iDuelistLevel, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
+          SetCompositeBonusT(oWeap, "ElaborateParryACBonus", iDuelistLevel, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
           SetCompositeBonus(oSkin, "ElaborateParryAttackPenalty", 4, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
           
           SetActionMode(oPC, ACTION_MODE_PARRY, FALSE);
@@ -40,7 +41,7 @@ void main()
      {
           // Removes effects from any version of the spell
           SetCompositeBonus(oSkin, "ElaborateParryACBonus", 0, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
-          SetCompositeBonus(oSkin, "ElaborateParryAttackPenalty", 0, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
+          SetCompositeBonusT(oWeap, "ElaborateParryAttackPenalty", 0, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
           SetCompositeBonus(oSkin, "ElaborateParrySkillBonus", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);
           SetActionMode(oPC, ACTION_MODE_PARRY, FALSE);
           SetActionMode(oPC, ACTION_MODE_EXPERTISE, FALSE);

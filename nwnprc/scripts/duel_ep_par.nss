@@ -19,7 +19,8 @@ void main()
 {
      object oPC = OBJECT_SELF;
      object oSkin = GetPCSkin(oPC);
-
+     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+     
      if( GetLocalInt(oPC, "HasElaborateParry") != 1 )
      {
           int iDuelistLevel = GetLevelByClass(CLASS_TYPE_DUELIST, oPC);
@@ -37,7 +38,7 @@ void main()
      {         
           // Removes effects from any version of the spell
           SetCompositeBonus(oSkin, "ElaborateParryACBonus", 0, ITEM_PROPERTY_AC_BONUS, IP_CONST_ACMODIFIERTYPE_SHIELD);
-          SetCompositeBonus(oSkin, "ElaborateParryAttackPenalty", 0, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
+          SetCompositeBonusT(oWeap, "ElaborateParryAttackPenalty", 0, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER);
           SetCompositeBonus(oSkin, "ElaborateParrySkillBonus", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY);
           SetActionMode(oPC, ACTION_MODE_PARRY, FALSE);
           SetActionMode(oPC, ACTION_MODE_EXPERTISE, FALSE);

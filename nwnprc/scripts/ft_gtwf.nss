@@ -38,8 +38,6 @@ void main()
     object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
     
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
-    int armorType = GetArmorType(oArmor);
-    
     string nMes = "";
 
     // On Error Remove effects

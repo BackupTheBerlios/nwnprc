@@ -1,0 +1,10 @@
+2DA V2.0                                                              
+                                                                      
+           LABEL               ReqType   ReqParam1        ReqParam2   
+0          Base_Attack         BAB       8                ****               
+1          ScriptVar           VAR       X1_AllowManAt    0           
+2          PowerAtk            FEAT      28               ****
+                                                                      
+                                                                      
+                                                                      
+             

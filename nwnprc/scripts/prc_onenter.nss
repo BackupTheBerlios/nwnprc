@@ -21,10 +21,8 @@ void main()
     //mess up the lich, but only until I hook it into the EvalPRC event -
     //hopefully in the next update
     //  -Aaon Graywolf
-    object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, GetEnteringObject());
-    DestroyObject(oSkin);
     object oPC = GetEnteringObject();
-    GetPCSkin(oPC);
+	UpdateSkin(oPC);
 
     if (GetLevelByClass(CLASS_TYPE_STORMLORD,oPC))
         RemovBonusStormlord(oPC);

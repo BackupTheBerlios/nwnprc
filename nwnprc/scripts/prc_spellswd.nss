@@ -6,6 +6,7 @@
 //:: has and apply the appropriate bonuses.
 //:://////////////////////////////////////////////
 //:: Created By: Stratovarius.  Modified by Aaon Graywolf
+//:: Modified by Solowing
 //:: Created On: Dec 28, 2003
 //:://////////////////////////////////////////////
 
@@ -31,27 +32,36 @@ void main()
     int bSpells = GetHasFeat(FEAT_SPELLS_1, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_10_PERCENT : 0;
         bSpells = GetHasFeat(FEAT_SPELLS_2, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_15_PERCENT : bSpells;
         bSpells = GetHasFeat(FEAT_SPELLS_3, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_20_PERCENT : bSpells;
-        bSpells = GetHasFeat(FEAT_SPELLS_4, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_25_PERCENT : bSpells;
-        bSpells = GetHasFeat(FEAT_SPELLS_5, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_30_PERCENT : bSpells;
-        bSpells = GetHasFeat(FEAT_SPELLS_6, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_35_PERCENT : bSpells;
-        bSpells = GetHasFeat(FEAT_SPELLS_7, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_40_PERCENT : bSpells;
-        bSpells = GetHasFeat(FEAT_SPELLS_8, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_45_PERCENT : bSpells;
-        bSpells = GetHasFeat(FEAT_SPELLS_9, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_50_PERCENT : bSpells;
+        bSpells = GetHasFeat(FEAT_SPELLS_4, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_30_PERCENT : bSpells;
+        bSpells = GetHasFeat(FEAT_SPELLS_5, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_40_PERCENT : bSpells;
+        bSpells = GetHasFeat(FEAT_SPELLS_6, oPC)  ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_45_PERCENT : bSpells;
 
-    int bSpells2 = GetHasFeat(FEAT_SPELLS_10, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_5_PERCENT  : 0;
-        bSpells2 = GetHasFeat(FEAT_SPELLS_11, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_10_PERCENT : bSpells2;
-        bSpells2 = GetHasFeat(FEAT_SPELLS_12, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_15_PERCENT : bSpells2;
-        bSpells2 = GetHasFeat(FEAT_SPELLS_13, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_20_PERCENT : bSpells2;
-        bSpells2 = GetHasFeat(FEAT_SPELLS_14, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_25_PERCENT : bSpells2;
-        bSpells2 = GetHasFeat(FEAT_SPELLS_15, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_30_PERCENT : bSpells2;
 
+
+    int bSpells2 = GetHasFeat(FEAT_SPELLS_7, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_5_PERCENT  : 0;
+        bSpells2 = GetHasFeat(FEAT_SPELLS_8, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_10_PERCENT : bSpells2;
+        bSpells2 = GetHasFeat(FEAT_SPELLS_9, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_15_PERCENT : bSpells2;
+        bSpells2 = GetHasFeat(FEAT_SPELLS_10, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_20_PERCENT : bSpells2;
+        bSpells2 = GetHasFeat(FEAT_SPELLS_11, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_25_PERCENT : bSpells2;
+        bSpells2 = GetHasFeat(FEAT_SPELLS_12, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_30_PERCENT : bSpells2;
+        bSpells2 = GetHasFeat(FEAT_SPELLS_13, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_35_PERCENT : bSpells2;
+        bSpells2 = GetHasFeat(FEAT_SPELLS_14, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_40_PERCENT : bSpells2;
+        bSpells2 = GetHasFeat(FEAT_SPELLS_15, oPC) ? IP_CONST_ARCANE_SPELL_FAILURE_MINUS_45_PERCENT : bSpells2;
     object oSkin = GetPCSkin(oPC);
-    object oShield = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 
     if(bSpells > 0)  SpellswordIgnoreSpellFailure(oPC, oSkin, bSpells, "SpellswordSFBonusNormal");
-
-    if (GetBaseItemType(oShield) == BASE_ITEM_LARGESHIELD || GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD || GetBaseItemType(oShield) == BASE_ITEM_TOWERSHIELD)
-    {
-    if(bSpells2 > 0) SpellswordIgnoreSpellFailure(oPC, oShield, bSpells2, "SpellswordSFBonusEpic");
-    }
+    if(bSpells2 > 0) SpellswordIgnoreSpellFailure(oPC, oSkin, bSpells2, "SpellswordSFBonusEpic");
+    //DelayCommand(5.0,SpeakString("ASF is "+IntToString(GetArcaneSpellFailure(oPC))));
+object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
+if(GetLocalInt(oItem,"spell")==1 && GetLocalInt(oPC,"ONREST") == 1)
+{
+        DeleteLocalString(oItem,"spellscript1");
+        DeleteLocalString(oItem,"spellscript2");
+        DeleteLocalString(oItem,"spellscript3");
+        DeleteLocalString(oItem,"spellscript4");
+        DeleteLocalInt(oItem,"spell");
+        DeleteLocalInt(oPC,"spellswd_aoe");
+        DeleteLocalInt(oPC,"spell_metamagic");
 }
+}
+

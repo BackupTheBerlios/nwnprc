@@ -14,10 +14,10 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
-
+#include "prc_inc_switch"
 #include "x2_i0_spells"
 #include "x2_inc_spellhook"
-#include "prc_inc_switch"
+
 
 //Creates the weapon that the creature will be using.
 void spellsCreateItemForSummoned(object oCaster, float fDuration)
@@ -38,11 +38,11 @@ void spellsCreateItemForSummoned(object oCaster, float fDuration)
     object oOldSummon;
     while(GetIsObjectValid(oSummon))
     {
-        oOldSummon = oSummon
+        oOldSummon = oSummon;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oCaster, i);
         i++;
     }
-    oSummon = oOldSummon
+    oSummon = oOldSummon;
     object oWeapon;
     if (GetIsObjectValid(oSummon))
     {

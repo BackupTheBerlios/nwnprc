@@ -17,11 +17,11 @@ int nNPCRoll = GetBaseAttackBonus(oTarget) + GetAbilityModifier(ABILITY_STRENGTH
 
 if(nPCRoll > nNPCRoll)
     {//oTarget is grappled for next 3 rounds
-    effect eGrappled = EffectParalyze();
-    if(GetIsImmune(oTarget, IMMUNITY_TYPE_PARALYSIS, oPC))
-        {
-        eGrappled = EffectCutsceneParalyze();
-        }
+    effect eGrappled = EffectKnockdown();
+    //if(GetIsImmune(oTarget, IMMUNITY_TYPE_PARALYSIS, oPC))
+    //    {
+    //    eGrappled = EffectCutsceneParalyze();
+    //    }
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGrappled, oTarget, RoundsToSeconds(3));
     FloatingTextStringOnCreature("Target is grappled", oPC);
     SendMessageToPC(oPC, "Drunken Embrace was sucessful");

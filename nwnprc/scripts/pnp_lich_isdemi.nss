@@ -6,6 +6,7 @@
 //:: Created On: 1/24/2004 9:30:45 AM
 //:://////////////////////////////////////////////
 #include "prc_class_const"
+#include "prc_getcast_lvl"
 
 // Determines if the the lich is able to start the process of becoming a demilich
 
@@ -13,14 +14,13 @@ int StartingConditional()
 {
 
     // Restrict based on the player's class
-    int iPassed = 0;
+    int iPassed = FALSE;
+	
     if((GetLevelByClass(CLASS_TYPE_LICH, GetPCSpeaker()) >= 4) &&
-       ((GetLevelByClass(CLASS_TYPE_CLERIC,GetPCSpeaker()) >= 21) ||
-        (GetLevelByClass(CLASS_TYPE_WIZARD,GetPCSpeaker()) >= 21) ||
-        (GetLevelByClass(CLASS_TYPE_SORCERER,GetPCSpeaker()) >= 21)) )
-        iPassed = 1;
-    if(iPassed == 0)
-        return FALSE;
+       ((GetCasterLvl(TYPE_CLERIC,GetPCSpeaker()) >= 21) ||
+        (GetCasterLvl(TYPE_WIZARD,GetPCSpeaker()) >= 21) ||
+        (GetCasterLvl(TYPE_SORCERER,GetPCSpeaker()) >= 21)) )
+        iPassed = TRUE;
 
-    return TRUE;
+    return iPassed;
 }

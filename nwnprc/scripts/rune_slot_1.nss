@@ -85,6 +85,9 @@ int StartingConditional()
     if(GetLevelByClass(CLASS_TYPE_RUNESCARRED, GetPCSpeaker()) >= 7 && SpellCount1 == 4)
         return FALSE;
 
+    if(GetAbilityScore(GetPCSpeaker(),ABILITY_WISDOM) < 11)
+        return FALSE;
+
     if(iPassed == 0)
         return FALSE;
 

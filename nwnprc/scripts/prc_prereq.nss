@@ -28,6 +28,7 @@ int GetArcanePRCLevels(object oPC)
         + GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oPC)
         + GetLevelByClass(CLASS_TYPE_TRUENECRO, oPC)
         + GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oPC)
+        + GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oPC)
         + (GetLevelByClass(CLASS_TYPE_ACOLYTE, oPC) + 1) / 2
         + (GetLevelByClass(CLASS_TYPE_BLADESINGER, oPC) + 1) / 2
         + (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC) + 1) / 2

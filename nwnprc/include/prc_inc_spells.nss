@@ -724,11 +724,8 @@ void PRCBonusDamage (object oTarget)
 	
 		//FloatingTextStringOnCreature("Diabolism is active", oCaster, FALSE);
 	
-		int nDamage;
-		
-		if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) == 10) 	nDamage = d6(3);
-		else if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) >= 5)	nDamage = d6(2);
-		else if (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) >= 1)	nDamage = d6(1);
+		int nDice = (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) + 5) / 5;
+		int nDamage = d6(nDice);
 		
 		effect eVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_10);
 		effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);

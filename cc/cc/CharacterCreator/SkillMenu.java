@@ -405,6 +405,10 @@ public class SkillMenu extends javax.swing.JFrame {
         intmod = new Integer(((String)menucreate.MainCharData[5].get(new Integer(15)))).intValue();
         startskillpoints = 4 * (baseskillpoints + intmod);
 
+		// Every character gets a minimum of 4 skill points
+		if (startskillpoints < 4)
+			startskillpoints = 4;
+
         racenumber = Integer.parseInt(menucreate.MainCharDataAux[1][0]);
         //CHANGED due to the fact that Bioware HARD CODES the skill points to HUMANS.
         if(racenumber == 6) {

@@ -53,7 +53,6 @@ void main()
 
      // Get Caster Level
      int nLevel = GetLocalInt(oWeap, "X2_Wep_Caster_Lvl");
-    //int nLevel = GetCasterLevel(OBJECT_SELF); - OBJECT_SELF is whoever is holding the weapon.
 
     int nDmg = d6() + (nLevel/2);
 

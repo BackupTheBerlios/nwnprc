@@ -41,7 +41,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     //Declare major variables
     int nMetaMagic = GetMetaMagicFeat();
-    int nCasterLevel = (GetCasterLevel(OBJECT_SELF) + GetChangesToCasterLevel(OBJECT_SELF));
+    int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = ( 100 );
     effect eSummon;
     effect eGate;

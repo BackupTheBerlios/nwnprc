@@ -35,7 +35,7 @@ void main()
     effect eLink = EffectLinkEffects(eSleep, eMind);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    int nDuration = GetCasterLevel(OBJECT_SELF);
+    int nDuration = PRCGetCasterLevel(OBJECT_SELF);
     nDuration = 3 + GetScaledDuration(nDuration, oTarget);
 
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());

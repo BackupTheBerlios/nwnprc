@@ -23,7 +23,7 @@ void main()
     int nOcLvl = GetLevelByClass(CLASS_TYPE_OCULAR, OBJECT_SELF);
     int nChaMod = GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
     int nOcSv = 10 + (nOcLvl/2) + nChaMod;
-    int nCasterLvl = GetCasterLevel(OBJECT_SELF);
+    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     object oTarget = GetSpellTargetObject();
     int bHit = TouchAttackRanged(oTarget,FALSE)>0;
     object oCorpse;

@@ -1656,28 +1656,28 @@ void CheckCombatDexAttack(object oPC)
 {
 //object oPC = GetLocalObject(GetModule(), "PC_IN_COMBAT_WITH_DEXATTACK_ON");
 int iCombat = GetIsInCombat(oPC);
+object oWeapon = GetLocalObject(oPC, "CHOSEN_WEAPON");
 
-    if(iCombat == TRUE)
+    if(iCombat == TRUE && GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oWeapon)
     {
-    DelayCommand(6.0, CheckCombatDexAttack(oPC));
+        DelayCommand(6.0, CheckCombatDexAttack(oPC));
     }
-    if(iCombat == FALSE)
+    else
     {
-    FloatingTextStringOnCreature("Dexterous Attack Mode Deactivated", oPC, FALSE);
+      FloatingTextStringOnCreature("Dexterous Attack Mode Deactivated", oPC, FALSE);
          effect eEffects = GetFirstEffect(oPC);
          while (GetIsEffectValid(eEffects))
-        {
+         {
 
-         if (GetEffectType(eEffects) == EFFECT_TYPE_ATTACK_INCREASE)
+         if (GetEffectType(eEffects) == EFFECT_TYPE_ATTACK_INCREASE && GetEffectSpellId(eEffects) == 1761) // dextrous attack
             {
              RemoveEffect(oPC, eEffects);
             }
 
          eEffects = GetNextEffect(oPC);
-        }
-    DeleteLocalObject(GetModule(), "PC_IN_COMBAT_WITH_DEXATTACK_ON");
+         }
+      DeleteLocalObject(GetModule(), "PC_IN_COMBAT_WITH_DEXATTACK_ON");
     }
-
 }
 
 void SPMakeAttack(object oTarget, object oImage)

@@ -160,7 +160,6 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         effect eVis = EffectVisualEffect(VFX_IMP_ACID_S); 
         eDam = EffectLinkEffects(eVis,eDam); // flare up
         SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);
-        PRCBonusDamage(oTarget);
         DelayCommand(6.0f,RunImpact(oTarget,oCaster,nMetaMagic,EleDmg));
     }
 }

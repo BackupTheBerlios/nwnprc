@@ -5,9 +5,9 @@ import java.util.*;
  * Data structure for a feat entry.
  */
 public class FeatEntry implements Comparable<FeatEntry>{
-	public FeatEntry predecessor = null,
+	/*public FeatEntry predecessor = null,
 	                 successor = null,
-	                 master = null;
+	                 master = null;*/
 	
 	public ArrayList<FeatEntry> childFeats = new ArrayList<FeatEntry>();
 	

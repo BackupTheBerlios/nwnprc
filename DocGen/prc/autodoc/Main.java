@@ -63,11 +63,9 @@ public class Main{
 				try{
 					temp = new Data_2da("2da" + fileSeparator + name + ".2da");
 				}catch(IllegalArgumentException e){
-					//System.err.println(e);
 					err_pr.println(e.toString());
 					temp = null;
 				}catch(TwoDAReadException e){
-					//System.err.println(e);
 					err_pr.println(e.toString());
 					temp = null;
 				}
@@ -158,7 +156,6 @@ public class Main{
 					}
 				}
 			}catch(Exception e){
-				//System.err.println("Failed to read settings file. Exception:\n" + e + "\nAborting");
 				err_pr.println("Failed to read settings file. Exception:\n" + e + "\nAborting");
 				System.exit(1);
 			}
@@ -317,11 +314,10 @@ public class Main{
 			Scanner reader = new Scanner(new File(filePath));
 			StringBuffer temp = new StringBuffer();
 			
-			while(reader.hasNextLine()) temp.append(reader.nextLine());
+			while(reader.hasNextLine()) temp.append(reader.nextLine() + "\n");
 			
 			return temp.toString();
 		}catch(Exception e){
-			//System.err.println("Failed to read template file. Exception:\n" + e + "\nAborting");
 			err_pr.println("Failed to read template file. Exception:\n" + e + "\nAborting");
 			System.exit(1);
 		}
@@ -368,7 +364,6 @@ public class Main{
 		File builder = new File(path);
 		if(!builder.exists()){
 			if(!builder.mkdirs()){
-				//System.err.println("Failure creating directory:\n" + builder.getPath());
 				err_pr.println("Failure creating directory:\n" + builder.getPath());
 				System.exit(1);
 			}
@@ -450,11 +445,9 @@ public class Main{
 				                         name);
 				entry = entry.replaceAll("~~~SkillTLKDescription~~~",
 				                         htmlizeTLK(tlk.get(skills.getEntry("Description", i))));
-				//name = tlk.get(skills2da.getEntry("Name", i));
-				//entry = htmlizeTLK(tlk.get(skills2da.getEntry("Description", i)));
+				
 				printPage(skillPath + i + ".html", entry);
 			}catch(Exception e){
-				//System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
 				err_pr.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
 				// Note the failure, so this page isn't used elsewhere in the manual
 				failedSkills.put(i, presenceIndicator);
@@ -527,7 +520,6 @@ public class Main{
 					printPage(pathToUse, entry);
 				}
 			}catch(Exception e){
-				//System.err.println("Failed to print page for spell " + i + ": " + name + "\nException:\n" + e);
 				err_pr.println("Failed to print page for spell " + i + ": " + name + "\nException:\n" + e);
 				// Note the failure, so this page isn't used elsewhere in the manual
 				failedSpells.put(i, presenceIndicator);
@@ -625,8 +617,7 @@ public class Main{
 				// Store the entry to wait for further processing
 				masterFeats.put(i, entry);
 			}catch(Exception e){
-				//System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
-				err_pr.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+				err_pr.println("Failed to print page for masterfeat " + i + ": " + name + "\nException:\n" + e);
 			}
 		}
 		System.gc();
@@ -692,8 +683,7 @@ public class Main{
 				// Store the entry to wait for further processing
 				feats.put(i, entry);
 			}catch(Exception e){
-				//System.err.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
-				err_pr.println("Failed to print page for skill " + i + ": " + name + "\nException:\n" + e);
+				err_pr.println("Failed to print page for feat " + i + ": " + name + "\nException:\n" + e);
 			}
 		}
 		System.gc();
@@ -717,13 +707,11 @@ public class Main{
 			if(!feats2da.getEntry("MASTERFEAT", check.entryNum).equals("****")){
 				try{
 					other = masterFeats.get(Integer.parseInt(feats2da.getEntry("MASTERFEAT", check.entryNum)));
-					check.master = other;
+					//check.master = other;
 					other.childFeats.add(check);
 				}catch(NumberFormatException e){
-					//System.err.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid masterfeat link");
 					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid masterfeat link");
 				}catch(NullPointerException e){
-					//System.err.println("Feat " + check.entryNum + ": " + check.entryName + " contains a link to nonexistent masterfeat");
 					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains a link to nonexistent masterfeat");
 			}}
 			
@@ -731,7 +719,18 @@ public class Main{
 			temp = buildPrerequisites(check, feats2da);
 			check.entryText.replaceAll("~~~PrerequisiteFeatList~~~", temp);
 			
-			
+			// Print the successor, if any, into the entry
+			temp = "";
+			if(!feats2da.getEntry("SUCCESSOR", check.entryNum).equals("****")){
+				try{
+					other = feats.get(Integer.parseInt(feats2da.getEntry("MASTERFEAT", check.entryNum)));
+					temp += ("<div>\n" + successorFeatHeaderTemplate + "<br /><a href=" + other.filePath.replace(contentPath, "../") + " target=\"content\">" + other.entryName + "</a>\n</div>\n");
+				}catch(NumberFormatException e){
+					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains an invalid masterfeat link");
+				}catch(NullPointerException e){
+					err_pr.println("Feat " + check.entryNum + ": " + check.entryName + " contains a link to nonexistent masterfeat");
+			}}
+			check.entryText.replaceAll("~~~SuccessorFeat~~~", temp);
 		}
 		
 		// Add the child links to masterfeat texts
@@ -739,7 +738,8 @@ public class Main{
 	
 	/**
 	 * Constructs a text containing links to the prerequisite feats of the
-	 * given feat.
+	 * given feat. Separated from the linkFeats method for improved
+	 * readability.
 	 *
 	 * @param check    the feat entry to be examined
 	 * @param feats2da the data structure representing feat.2da
@@ -763,13 +763,11 @@ public class Main{
 		if(!andReq1Num.equals("****")){
 			try{ andReq1 = feats.get(Integer.parseInt(andReq1Num)); }
 			catch(NumberFormatException e){
-				//System.err.println("Invalid PREREQFEAT1 link in feat " + check.entryNum);
 				err_pr.println("Invalid PREREQFEAT1 link in feat " + check.entryNum);
 		}}
 		if(!andReq2Num.equals("****")){
 			try{ andReq2 = feats.get(Integer.parseInt(andReq2Num)); }
 			catch(NumberFormatException e){
-				//System.err.println("Invalid PREREQFEAT2 link in feat " + check.entryNum);
 				err_pr.println("Invalid PREREQFEAT2 link in feat " + check.entryNum);
 		}}
 		// Check if we had at least one valid entry
@@ -796,7 +794,6 @@ public class Main{
 				if(!orReqs[i].equals("****")){
 					try{ orReq = feats.get(Integer.parseInt(orReqs[i])); }
 					catch(NumberFormatException e){
-						//System.err.println("Invalid OrReqFeat" + i + " link in feat " + check.entryNum);
 						err_pr.println("Invalid OrReqFeat" + i + " link in feat " + check.entryNum);
 					}
 					if(orReq != null){

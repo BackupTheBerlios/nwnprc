@@ -584,9 +584,5 @@ return nSave;
 
 int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF)
 {
-
-int nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
-
-return nDamage;
-
+	return GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
 }

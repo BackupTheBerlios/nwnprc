@@ -248,6 +248,8 @@ void DeletePRCLocalInts(object oSkin)
     // Soldier of Light
     DeleteLocalInt(oSkin,"ImmuPF");
     DeleteLocalInt(oSkin,"SoLFH");
+    // Battlerager
+    DeleteLocalInt(oSkin,"BRageProw");
 
 
     // future PRCs Go below here

@@ -71,7 +71,10 @@ void main()
     int iFEAC = GetHasFeat(FEAT_UR_DODGE_FE,OBJECT_SELF);
     int iFERE = GetHasFeat(FEAT_UR_RESIST_FE,OBJECT_SELF);
     
-    int iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK1,OBJECT_SELF)  ? 1 : 0;
+    int iSpell;
+    if (GetHasFeat(FEAT_FAVORED_POWER_ATTACK,OBJECT_SELF))
+    {
+        iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK1,OBJECT_SELF)  ? 1 : 0;
         iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK2,OBJECT_SELF)  ? 2 : iSpell;
         iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK3,OBJECT_SELF)  ? 3 : iSpell;
         iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK4,OBJECT_SELF)  ? 4 : iSpell;
@@ -81,9 +84,8 @@ void main()
         iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK8,OBJECT_SELF)  ? 8 : iSpell;
         iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK9,OBJECT_SELF)  ? 9 : iSpell;
         iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK10,OBJECT_SELF) ? 10: iSpell;
-     //   iSpell =  GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK,OBJECT_SELF) ? 20: iSpell;
-     
-        iSpell = iSpell && GetHasFeat(FEAT_FAVORED_POWER_ATTACK,OBJECT_SELF);
+    //  iSpell =  GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK,OBJECT_SELF) ? 20: iSpell;
+    }
         
     int iBonus = BonusAtk(nLevel+iIFE+iSpell);
     

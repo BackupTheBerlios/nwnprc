@@ -169,5 +169,11 @@
 165   SB_Brill_23                                      4195        3      23               1        
 166   SB_Brill_25                                      4196        3      25               1        
 167   SB_Brill_27                                      4197        3      29               1        
-168   SB_Brill_29                                      4198        3      29               1   
-169   SB_EpicSB                                        4183        3      11               0 
+168   SB_Brill_29                                      4198        3      29               1        
+169   SB_EpicSB                                        4183        3      11               0        
+170   WeapProfSim                                      46          3      1                0        
+171   ArmProfLgt                                       3           3      1                0        
+172   ArmProfMed                                       4           3      1                0        
+173   ArmProfHvy                                       2           3      1                0        
+174   Shield                                           32          3      1                0        
+175   WeapProfMar                                      45          3      1                0        

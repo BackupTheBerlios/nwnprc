@@ -51,37 +51,32 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 
     object oCaster = OBJECT_SELF;
     int nAugCost = 1;
-    int nAugment = GetLocalInt(oCaster, "Augment");
+    int nAugment = GetAugmentLevel(oCaster);
     
     if (GetCanManifest(oCaster, nAugCost)) 
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	object oTarget = GetSpellTargetObject();
-	int nDamage = d6(9);
+	int nDice = 9;
+	int nDiceSize = 6;
 	
 	//Augmentation effects to DC/Damage/Caster Level
 	if (nAugment > 0)
 	{
 		nDC = nDC + (nAugment/2);
 		nCaster = nCaster + (nAugment/2);
-		nDamage = nDamage + d6(nAugment);
+		nDice += nAugment;
 	}
 	
-	//FloatingTextStringOnCreature("Augmented DC " + IntToString(nDC), oCaster, FALSE);
-	//FloatingTextStringOnCreature("Augmented Manifester Level " + IntToString(nCaster), oCaster, FALSE);
-	//FloatingTextStringOnCreature("Augmented Damage " + IntToString(nDamage), oCaster, FALSE);
+	int nDamage = MetaPsionics(nDiceSize, nDice, oCaster);
 	
 	effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
 	effect eRay;
 	
 	//Check for Power Resistance
 	if (PRCMyResistPower(oCaster, oTarget, nCaster))
 	{
-	
-	//FloatingTextStringOnCreature("Target has failed its Power Resistance Check", oCaster, FALSE);
-		
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
             eRay = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
@@ -91,6 +86,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
                 {
                     nDamage /= 2;
                 }
+                effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
                 //Apply the VFX impact and effects
                 DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);

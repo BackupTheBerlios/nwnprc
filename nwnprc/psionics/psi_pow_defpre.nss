@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
     object oCaster = OBJECT_SELF;
     int nAugCost = 3;
-    int nAugment = GetLocalInt(oCaster, "Augment");
+    int nAugment = GetAugmentLevel(oCaster);
     
     if (GetCanManifest(oCaster, nAugCost)) 
     {

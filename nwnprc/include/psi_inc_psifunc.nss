@@ -61,6 +61,9 @@ void UsePower(int nPower, int nClass);
 // This will roll the dice and perform the needed adjustments for metapsionics.
 int MetaPsionic(int nDiceSize, int nNumberOfDice, object oCaster = OBJECT_SELF);
 
+// This will return the amount of augmentation
+int GetAugmentLevel(object oCaster = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -160,7 +163,7 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget = OBJECT_SELF)
 //    SendMessageToPC(GetFirstPC(), "Manifesting power "+IntToString(GetSpellId()));
 
     int nLevel = GetPowerLevel(oCaster);
-    int nAugment = GetLocalInt(oCaster, "Augment");
+    int nAugment = GetAugmentLevel(oCaster);
     int nPP = GetLocalInt(oCaster, "PowerPoints");
     int nPPCost;
     int nCanManifest = TRUE;
@@ -187,12 +190,12 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget = OBJECT_SELF)
     //Adds in the augmentation cost
     if (nAugment > 0) nPPCost = nPPCost + (nAugCost * nAugment); 
     
-    //Adds in the cost for volatile mind
-    if (nVolatile > 0) nPPCost += nVolatile;
-    
     // If PP Cost is greater than Manifester level
     if (GetManifesterLevel(oCaster) >= nPPCost && nCanManifest)
     {
+	//Adds in the cost for volatile mind
+	if (nVolatile > 0) nPPCost += nVolatile;
+
     	//If Manifest does not have enough points, cancel power
     	if (nPPCost > nPP) 
     	{
@@ -356,4 +359,10 @@ int MetaPsionics(int nDiceSize, int nNumberOfDice, object oCaster = OBJECT_SELF)
 	}
 	
 	return nDamage;
+}
+
+int GetAugmentLevel(object oCaster = OBJECT_SELF)
+{
+	int nAug = GetAugmentLevel(oCaster);
+	return nAug;
 }

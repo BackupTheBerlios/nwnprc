@@ -66,11 +66,12 @@ MISCRESOURCES	= $(OUTPATH)\PRCModuleUpdater.exe
 
 # Version 2.0 haks
 SCRIPTSHAK				= $(OUTPATH)\prc_scripts.hak
-#EPICSPELLSCRIPTSHAK		= $(OUTPATH)\prc_epicspells.hak
+EPICSPELLSCRIPTSHAK		= $(OUTPATH)\prc_epicspells.hak
 2DASHAK					= $(OUTPATH)\prc_2das.hak
 MISCHAK					= $(OUTPATH)\prc_misc.hak
-TEXTURESHAK				=$(OUTPATH)\prc_textures.hak
+TEXTURESHAK				= $(OUTPATH)\prc_textures.hak
 CRAFT2DASHAK			= $(OUTPATH)\prc_craft2das.hak
+RACEHAK					= $(OUTPATH)\prc_race.hak
 
 # The NSIS script used to build setup.exe
 INSTALLSCRIPT	= Setup\install.nsi
@@ -113,7 +114,9 @@ SRCPATH				= $(MAKESCRIPTPATH)
 EPICSPELLSRCPATH	= $(MAKEEPICSPELLSCRIPTPATH)
 TLKPATH				= $(MAKETLKPATH)
 CRAFT2DASPATH		= $(MAKECRAFT2DASPATH)
-
+RACE2DASPATH		= $(MAKERACE2DASPATH)
+RACESRCPATH			= $(MAKERACESRCPATH)
+RACEOBJSPATH		= $(MAKERACEOBJSPATH)
 
 # Paths for the various folders in the NWN install directory.
 NWN_ERF			= $(NWN_DIR)\erf
@@ -145,6 +148,11 @@ OTHERS=~~~others~~~
 
 CRAFT2DAS=~~~craft2das~~~
 
+RACE2DAS=~~~race2das~~~
+
+RACESCRIPTS=~~~racescripts~~~
+
+RACEOBJS=~~~raceobjs~~~
 
 #
 # Top level virtual rules that just associate pretty text names with various
@@ -161,11 +169,10 @@ rar: hak $(RAR)
 # Rule to build the 'hak' content and install it.
 hak110: $(ERF110) $(HAK) install
 
-
 # Rule to build the 2.0 haks
 hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) \
+	$(EPICSPELLSCRIPTSHAK) $(RACEHAK) \
 	$(CRAFT2DASHAK) $(HIF) install 
-#	$(EPICSPELLSCRIPTSHAK) 
 
 # Rule to build the NSIS installer.
 nsis:
@@ -193,6 +200,8 @@ installcontent:
 	-@copy /y "$(MISCHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(TEXTURESHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(CRAFT2DASHAK)" "$(NWN_HAK)" >nul
+	-@copy /y "$(EPICSPELLSCRIPTSHAK)" "$(NWN_HAK)" >nul
+	-@copy /y "$(RACEHAK)" "$(NWN_HAK)" >nul
 	-@copy /y $(HIF) "$(NWN_HAK)" >nul
 
 # Rule to install all the override files.  This one is a bit tricky, the '!'
@@ -213,6 +222,7 @@ installoverrides: $(OVERRIDEFILES)
 # This rule builds the 2.0 RAR, commented out for now
 $(RAR): $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(MISCHAK) $(ERF) \
 	$(OVERRIDEFILES) $(TLK) $(README) $(MISCRESOURCES) $(CRAFT2DASHAK) \
+	$(EPICSPELLSCRIPTSHAK) $(RACEHAK) \
 	$(HIF)
 	@echo $(@F)
 	-@del "$@" 2>nul
@@ -251,12 +261,23 @@ $(ERF): $(ERFFILES)
 
 
 # Rule to build the 2.0 scripts HAK file.
-$(SCRIPTSHAK): $(OBJS) $(SCRIPTS) $(EPICSPELLOBJS) $(EPICSPELLSCRIPTS)
+$(SCRIPTSHAK): $(OBJS) $(SCRIPTS)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $(SCRIPTS)
 	@"$(ERFCOMPILER)" -u $@ $(OBJS) >nul
-	@"$(ERFCOMPILER)" -u $@ $(EPICSPELLSCRIPTS) >nul
+# At some point we may need to use the below method to generate the hak
+# it will add the files to the hak one at a time to prevent command line
+# too long errors, but it runs orders of magnitude slower.
+#	@"$(ERFCOMPILER)" -c $@ howto.txt >nul
+#	!@"$(ERFCOMPILER)" -u $@ $** >nul
+
+
+# Rule to build the 2.0 scripts HAK file.
+$(EPICSPELLSCRIPTSHAK): $(EPICSPELLOBJS) $(EPICSPELLSCRIPTS)
+	@echo $(@F)
+	-@del "$@" 2>nul
+	@"$(ERFCOMPILER)" -c $@ $(EPICSPELLSCRIPTS)
 	@"$(ERFCOMPILER)" -u $@ $(EPICSPELLOBJS) >nul
 # At some point we may need to use the below method to generate the hak
 # it will add the files to the hak one at a time to prevent command line
@@ -266,11 +287,12 @@ $(SCRIPTSHAK): $(OBJS) $(SCRIPTS) $(EPICSPELLOBJS) $(EPICSPELLSCRIPTS)
 
 
 # Rule to build the 2.0 scripts HAK file.
-#$(EPICSPELLSCRIPTSHAK): $(EPICSPELLOBJS) $(EPICSPELLSCRIPTS)
-#	@echo $(@F)
-#	-@del "$@" 2>nul
-#	@"$(ERFCOMPILER)" -c $@ $(EPICSPELLSCRIPTS)
-#	@"$(ERFCOMPILER)" -u $@ $(EPICSPELLOBJS) >nul
+$(RACEHAK): $(RACE2DAS) $(RACEOBJS) $(RACESCRIPTS) 
+	@echo $(@F)
+	-@del "$@" 2>nul
+	@"$(ERFCOMPILER)" -c $@ $(RACE2DAS)
+	@"$(ERFCOMPILER)" -u $@ $(RACESCRIPTS) >nul
+	@"$(ERFCOMPILER)" -u $@ $(RACEOBJS) >nul
 # At some point we may need to use the below method to generate the hak
 # it will add the files to the hak one at a time to prevent command line
 # too long errors, but it runs orders of magnitude slower.
@@ -328,6 +350,11 @@ depends:
  	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
 
 {$(EPICSPELLSRCPATH)\}.nss{$(EPICSPELLOBJSPATH)\}.ncs:
+	@echo $(<F)
+	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
+ 	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul
+
+{$(RACESRCPATH)\}.nss{$(RACEOBJSPATH)\}.ncs:
 	@echo $(<F)
 	@"$(NSSCOMPILER)" "$(MAKEDIR)\$<" "$(MAKEDIR)\$(@D)" >nul
  	-@del "$(MAKEDIR)\$(@R).ndb" 2>nul

@@ -59,19 +59,22 @@ REM in the makefile.
 dir /b erf | tools\ssed -R "$! {s/$/ \\/g};s/^/erf\\/g" >erffiles.temp
 dir /b scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/scripts\\/g" >scripts.temp
 dir /b epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/epicspellscripts\\/g" >epicspellscripts.temp
+dir /b racescripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/racescripts\\/g" >racescripts.temp
 dir /b gfx | tools\ssed -R "$! {s/$/ \\/g};s/^/gfx\\/g" >gfx.temp
 dir /b 2das | tools\ssed -R "$! {s/$/ \\/g};s/^/2das\\/g" >2das.temp
+dir /b race2das | tools\ssed -R "$! {s/$/ \\/g};s/^/race2das\\/g" >race2das.temp
 dir /b others | tools\ssed -R "$! {s/$/ \\/g};s/^/others\\/g" >others.temp
 dir /b craft2das | tools\ssed -R "$! {s/$/ \\/g};s/^/craft2das\\/g" >craft2das.temp
 
 REM use FINDSTR to find script files with "void main()" or "int StartingConditional()"
 REM in them, these are the ones we want to compile.
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/scripts\\/objs\\/g" >objs.temp
-FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/scripts\\/objs\\/g" >epicspellobjs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/epicspellscripts\\/epicspellobjs\\/g" >epicspellobjs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" racescripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/racescripts\\/raceobjs\\/g" >raceobjs.temp
 
 REM Now using our generic makefile as a base, glue all of the temp files into it making
 REM a fully formatted makefile we can run nmake on.
-type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
+type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~racescripts~~~/r racescripts.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~race2das~~~/r race2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "/~~~raceobjs~~~/r raceobjs.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
 
 SETLOCAL
 
@@ -84,6 +87,9 @@ SET MAKEOBJSPATH=objs
 SET MAKEEPICSPELLOBJSPATH=epicspellobjs
 SET MAKETLKPATH=tlk
 SET MAKECRAFT2DASPATH=craft2das
+SET MAKERACE2DASPATH=race2das
+SET MAKERACESRCPATH=racescripts
+SET MAKERACEOBJSPATH=raceobjs
 
 REM before doing the real build build the dependencies for include files.
 tools\nmake -NOLOGO -f makefile.temp MAKEFILE=makefile.temp depends
@@ -104,5 +110,9 @@ del gfx.temp
 del 2das.temp
 del others.temp
 del objs.temp
+del epicspellobjs.temp
 del craft2das.temp
-del makefile.temp
+del race2das.temp
+del racescripts.temp
+del raceobjs.temp
+rem del makefile.temp

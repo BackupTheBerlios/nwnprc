@@ -50,6 +50,7 @@ const int FEAT_NATARM_6     = 4737;
 const int FEAT_NATARM_7     = 4764;
 const int FEAT_NATARM_8     = 4765;
 const int FEAT_NATARM_9     = 4738;
+const int FEAT_NATARM_10    = 4766;
 
 const int FEAT_BREATHLESS   = 4739;
 const int FEAT_CONSTRICT    = 4740;

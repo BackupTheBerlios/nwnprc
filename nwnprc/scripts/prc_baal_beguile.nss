@@ -22,7 +22,7 @@
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
-#include "prc_aser_inc"
+#include "prc_class_const"
 
 void main()
 {

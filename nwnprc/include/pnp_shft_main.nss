@@ -37,9 +37,6 @@ int GetCanFormEquip(object oCreature, int nInvSlot);
 // Determine if the oCreature has the ability to cast spells
 // Return values: TRUE or FALSE
 int GetCanFormCast(object oCreature);
-// Translastes a creature name to a resref for use in createobject
-// returns a resref string
-string GetResRefFromName(object oPC, string sName);
 // Determines if the oCreature is harmless enough to have
 // special effects applied to the shifter
 // Return values: TRUE or FALSE
@@ -96,8 +93,7 @@ void DeleteFromKnownArray(int nIndex, object oPC);
 // these 3 scripts replace the origanel setshift script
 // (setshift_03 is almost all of the origenal setshift script)
 void SetShift(object oPC, object oTarget);
-void SetShift_02(object oPC, object oTarget, object oASPC);
-void SetShift_03(object oPC, object oTarget, object oASPC);
+void SetShift_02(object oPC, object oTarget);
 
 
 
@@ -163,106 +159,27 @@ void SetQuickSlot(object oPC, int iIndex, int iQuickSlot, int iEpic)
 // starts here and goes to SetShift_02 then SetShift_03
 
 // stage 1:
-//   create the clone of the PC to get ability scores from later
-//   make the clone an invi model so it dont apper
 //   if the shifter if already shifted call unshift to run after this stage ends
 //   call next stage to start after this stage ends
 void SetShift(object oPC, object oTarget)
 {
 	SetLocalInt(oPC, "shifting", TRUE);
 
-    int i=0;
-    object oLimbo=GetObjectByTag("Limbo",i);
-    location lLimbo;
-    while (i < 100)
-    {
-        if (GetIsObjectValid(oLimbo))
-        {
-            if (GetName(oLimbo)=="Limbo")
-            {
-                i = 2000;
-                vector vLimbo = Vector(0.0f, 0.0f, 0.0f);
-                lLimbo = Location(oLimbo, vLimbo, 0.0f);
-            }
-        }
-        i++;
-        object oLimbo=GetObjectByTag("Limbo",i);
-    }
-    //create copy of the PC for getting base ability scores
-    object oASPC;
-    if (i>=2000)
-    {
-        oASPC = CopyObject(oPC, lLimbo, OBJECT_INVALID, "pnp_shifter_deleteme");
-    }
-    else
-    {
-        oASPC = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "pnp_shifter_deleteme");
-    }
-
-//    //set appearance to invis so it dont show up when scripts run thro
-//    SetCreatureAppearanceType(oASPC,APPEARANCE_TYPE_INVISIBLE_HUMAN_MALE);
-    DelayCommand(0.1,SetShift_02(oPC, oTarget, oASPC));
-
-    object oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
-    int iTemp = GetLocalInt(oHidePC,"nPCShifted");
-
-    //if (iTemp)
-    //{
-        DelayCommand(0.0, SetShiftTrueForm(oPC));
-    //}
-
+    DelayCommand(0.1,SetShift_02(oPC, oTarget));
+    SetShiftTrueForm(oPC);
 
 }
-
 // stage 1 end:
-//   the clone is made
 //   the shifter is unshifted if need be
 //   and the next stage is called
 
 // stage 2:
-//   strip the clone of all items and ability effects(spells,etc)
-//   call stage 3 to start after this stage ends
-void SetShift_02(object oPC, object oTarget, object oASPC)
-{
-
-
-    object oItem;
-    int nSlot;
-
-    for (nSlot=0; nSlot<NUM_INVENTORY_SLOTS; nSlot++)
-    {
-        oItem=GetItemInSlot(nSlot, oASPC);
-        //remove if valid
-        if (GetIsObjectValid(oItem))
-        {
-//            AssignCommand(oASPC, DestroyObject(oItem,0.0));
-            DestroyObject(oItem);
-        }
-    }
-    // remove all effect on the clone so
-    // we can determine the ability scores
-    effect eEff = GetFirstEffect(oASPC);
-    while(GetIsEffectValid(eEff))
-    {
-        RemoveEffect(oASPC,eEff);
-        eEff = GetNextEffect(oASPC);
-    }
-
-    DelayCommand(0.1,SetShift_03(oPC, oTarget, oASPC));
-}
-
-// stage 2 end:
-//   the clone is strip of all items and effects and is just a base copy of you
-//   stage 3 is run
-
-// stage 3:
 //   this is most of what the old SetShift script did
 //   the changes are:
-//     base ability scores are read from your clone
 //     no check for if shifted is needed and has been removed
 //     the epic ability item is done here (if epicshifter var is 1)
-//     both oTarget and oASPC are destryed in this script
-void SetShift_03(object oPC, object oTarget, object oASPC)
+//     oTarget is destryed in this script if its from the convo
+void SetShift_02(object oPC, object oTarget)
 {
 
     //get all the creature items from the target
@@ -278,106 +195,65 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     object oWeapCBPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC);
 
 
-    // Force the PC to equip the creature items if the PC does not have one
-    if (!GetIsObjectValid(oHidePC))
+	//creature item handling
+    if (!GetIsObjectValid(oHidePC)) //if you dont got a hide
     {
-        oHidePC = CopyObject(oHide,GetLocation(oPC),oPC);
-        // Some NPCs dont have hides, create a generic on on the pc
-        if (!GetIsObjectValid(oHidePC))
+        oHidePC = CopyObject(oHide,GetLocation(oPC),oPC);  //copy the targets hide
+        if (!GetIsObjectValid(oHidePC))  //if the target dont have a hide
         {
-            oHidePC = CreateItemOnObject("shifterhide",oPC);
+            oHidePC = CreateItemOnObject("shifterhide",oPC);  //use a blank shifter hide
         }
         // Need to ID the stuff before we can put it on the PC
         SetIdentified(oHidePC,TRUE);
         DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR)));
     }
-    else // apply the hide effects to the PCs hide
+    else // if you do have a hide
     {
-        // Make sure we start with a clean hide
-        ScrubPCSkin(oPC,oHidePC);
-		//RemoveAllItemProperties(oHidePC);
-        CopyAllItemProperties(oHidePC,oHide);
-        DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR)));
+        ScrubPCSkin(oPC,oHidePC); //clean off all old props
+		CopyAllItemProperties(oHidePC,oHide); //copy all target props to our hide
+        DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR)));  //reequip the hide to get item props to update properly
     }
 
-    //copy targets right c weapons
+    //copy targets right creature weapon
     if (GetIsObjectValid(oWeapCRPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
 		AssignCommand(oPC,ActionUnequipItem(oWeapCRPC));
 
-//      RemoveAllItemProperties(oWeapCRPC);
-//		SetIdentified(oWeapCRPC,TRUE);
-//		AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
 	}
-//	else
-//	{
-//		oWeapCRPC = CreateItemOnObject("pnp_shft_cweap", oPC);
-//	    RemoveAllItemProperties(oWeapCRPC);
-//		SetIdentified(oWeapCRPC,TRUE);
-//		AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R));
-//	}
     if (GetIsObjectValid(oWeapCR)) //if the target has a weapon
 	{
-		//create a blank creature item (pnp_shft_cweap)
-		//and copy all the traget props over
-		oWeapCRPC = CreateItemOnObject("pnp_shft_cweap", oPC);
-		CopyAllItemProperties(oWeapCRPC,oWeapCR);
-		SetIdentified(oWeapCRPC,TRUE);
-		DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R)));
+		oWeapCRPC = CreateItemOnObject("pnp_shft_cweap", oPC); //create a shifter blank creature weapon
+		CopyAllItemProperties(oWeapCRPC,oWeapCR); //copy all target props over
+		SetIdentified(oWeapCRPC,TRUE); //id so we dont get any funny stuff when equiping
+		DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R))); //reequip the item to get item props to update properly
 	}
 
-    //copy targets left c weapons
+    //copy targets left creature weapon
     if (GetIsObjectValid(oWeapCLPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
 		AssignCommand(oPC,ActionUnequipItem(oWeapCLPC));
-
-//      RemoveAllItemProperties(oWeapCLPC);
-//		SetIdentified(oWeapCLPC,TRUE);
-//		AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
 	}
-//	else
-//	{
-//		oWeapCLPC = CreateItemOnObject("pnp_shft_cweap", oPC);
-//      RemoveAllItemProperties(oWeapCLPC);
-//		SetIdentified(oWeapCLPC,TRUE);
-//		AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L));
-//	}
     if (GetIsObjectValid(oWeapCL)) //if the target has a weapon
 	{
-		//create a blank creature item (pnp_shft_cweap)
-		//and copy all the traget props over
-		oWeapCLPC = CreateItemOnObject("pnp_shft_cweap", oPC);
-		CopyAllItemProperties(oWeapCLPC,oWeapCL);
-		SetIdentified(oWeapCLPC,TRUE);
-		DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L)));
+		oWeapCLPC = CreateItemOnObject("pnp_shft_cweap", oPC); //create a shifter blank creature weapon
+		CopyAllItemProperties(oWeapCLPC,oWeapCL); //copy all target props over
+		SetIdentified(oWeapCLPC,TRUE); //id so we dont get any funny stuff when equiping
+		DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L))); //reequip the item to get item props to update properly
 	}
-    //copy targets special c weapons
+    //copy targets special creature weapons
     if (GetIsObjectValid(oWeapCBPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
 		AssignCommand(oPC,ActionUnequipItem(oWeapCBPC));
-
-//		RemoveAllItemProperties(oWeapCBPC);
-//		SetIdentified(oWeapCBPC,TRUE);
-//		AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
 	}
-//	else
-//	{
-//		oWeapCBPC = CreateItemOnObject("pnp_shft_cweap", oPC);
-//		SetIdentified(oWeapCBPC,TRUE);
-//		RemoveAllItemProperties(oWeapCBPC);
-//		AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B));
-//	}
     if (GetIsObjectValid(oWeapCB)) //if the target has a weapon
 	{
-		//create a blank creature item (pnp_shft_cweap)
-		//and copy all the traget props over
-		oWeapCBPC = CreateItemOnObject("pnp_shft_cweap", oPC);
-		CopyAllItemProperties(oWeapCBPC,oWeapCB);
-		SetIdentified(oWeapCBPC,TRUE);
-		DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B)));
+		oWeapCBPC = CreateItemOnObject("pnp_shft_cweap", oPC); //create a shifter blank creature weapon
+		CopyAllItemProperties(oWeapCBPC,oWeapCB); //copy all target props over
+		SetIdentified(oWeapCBPC,TRUE); //id so we dont get any funny stuff when equiping
+		DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B))); //reequip the item to get item props to update properly
 	}
 
     // Get the Targets str, dex, and con
@@ -385,15 +261,10 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     int nTDex = GetAbilityScore(oTarget,ABILITY_DEXTERITY);
     int nTCon = GetAbilityScore(oTarget,ABILITY_CONSTITUTION);
 
-//    SendMessageToPC(oPC,"target Str,dex,con" + IntToString(nTStr) + "," + IntToString(nTDex) + "," + IntToString(nTCon));
-
     // Get the PCs str, dex, and con from the clone
-    int nPCStr = GetLocalInt(oHidePC, "PRC_trueSTR");//GetAbilityScore(oASPC,ABILITY_STRENGTH);
-    int nPCDex = GetLocalInt(oHidePC, "PRC_trueDEX");//GetAbilityScore(oASPC,ABILITY_DEXTERITY);
-    int nPCCon = GetLocalInt(oHidePC, "PRC_trueCON");//GetAbilityScore(oASPC,ABILITY_CONSTITUTION);
-
-//    SendMessageToPC(oPC,"Pc Str,dex,con" + IntToString(nPCStr) + "," + IntToString(nPCDex) + "," + IntToString(nPCCon));
-
+    int nPCStr = GetLocalInt(oHidePC, "PRC_trueSTR");
+    int nPCDex = GetLocalInt(oHidePC, "PRC_trueDEX");
+    int nPCCon = GetLocalInt(oHidePC, "PRC_trueCON");
 
     // Get the deltas
     int nStrDelta = nTStr - nPCStr;
@@ -404,9 +275,8 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
     int iRemainingCON;
     int iRemainingDEX;
 
-//    SendMessageToPC(oPC,"delta Str,dex,con" + IntToString(nStrDelta) + "," + IntToString(nDexDelta) + "," + IntToString(nConDelta));
-
     // Cap max to +12 til they can fix it and -10 for the low value
+    // get remaining bonus/penelty for later
     if (nStrDelta > 12)
     {
 		iRemainingSTR = nStrDelta - 12;
@@ -438,7 +308,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
         nConDelta = -10;
 	}
 
-    // Big problem with <0 to abilities, if they have immunity to ability drain
+    // Big problem with < 0 to abilities, if they have immunity to ability drain
     // the - to the ability wont do anything
 
     // Apply these boni to the creature hide
@@ -624,13 +494,55 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 		effect eACIncrease;
 		if (iRemainingDEX > 0)
 		{
+			object oPCArmour = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+			if (GetIsObjectValid(oPCArmour))
+			{
+				int iACArmour = GetItemACValue(oPCArmour);
+				int iMaxDexBon;
+				int iCurentDexBon;
+				iCurentDexBon = FloatToInt(((nPCDex + nStrDelta)-10.0)/2.0);
+				switch (iACArmour)
+				{
+				case 8:
+				case 7:
+				case 6:
+					iMaxDexBon = 1;
+					break;
+				case 5:
+					iMaxDexBon = 2;
+					break;
+				case 4:
+				case 3:
+					iMaxDexBon = 4;
+					break;
+				case 2:
+					iMaxDexBon = 6;
+					break;
+				case 1:
+					iMaxDexBon = 8;
+					break;
+				default:
+					iMaxDexBon = 100;
+					break;
+				}
+				if (iCurentDexBon > iMaxDexBon)
+				{
+					iExtDEXBon = 0;
+				}
+				else
+				{
+					if ((iExtDEXBon+iCurentDexBon) > iMaxDexBon)
+					{
+						iExtDEXBon = iMaxDexBon - iCurentDexBon;
+					}
+				}
+			}
 			eACIncrease = EffectACIncrease(iExtDEXBon);
 		}
 		else if (iRemainingDEX < 0)
 		{
 			eACIncrease = EffectACDecrease(iExtDEXBon * -1);
 		}
-
 		ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eACIncrease),oPC);
 	}
 
@@ -709,23 +621,17 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
         SetImmortal(oTarget,FALSE);
         DestroyObject(oTarget);
     }
-    //remove your clone
-    AssignCommand(oASPC,SetIsDestroyable(TRUE,FALSE,FALSE));
-    SetPlotFlag(oASPC,FALSE);
-    SetImmortal(oASPC,FALSE);
-    DestroyObject(oASPC);
-
 
     // Reset any PRC feats that might have been lost from the shift
     DelayCommand(1.0, EvalPRCFeats(oPC));
 
-	DelayCommand(1.0, ClearShifterItems(oPC));
+	DelayCommand(1.5, ClearShifterItems(oPC));
 
 	DelayCommand(3.0, DeleteLocalInt(oPC, "shifting"));
 	SendMessageToPC(oPC, "Finished shifting");
 }
 
-// stage 3 end:
+// stage 2 end:
 //   both the clone and the target are distroyed(target only if not mimic target)
 //   all effects and item propertys are applyed to you and your hide/cweapons
 
@@ -1795,94 +1701,202 @@ void SetItemSpellPowers(object oItem, object oCreature)
 // 1000 means they can never take the shape
 int GetShifterLevelRequired(object oTarget)
 {
-    // Target Information
-    int nTSize = GetCreatureSize(oTarget);
-    int nTRacialType = MyPRCGetRacialType(oTarget);
+    int nTRacialType			= MyPRCGetRacialType(oTarget);
+    int nLevelRequired			= 0;
 
-    int nLevelRequired = 0;
+	if ((nTRacialType == RACIAL_TYPE_FEY) || (nTRacialType == RACIAL_TYPE_SHAPECHANGER))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
 
-    // Size validation
-    switch (nTSize)
-    {
-    case CREATURE_SIZE_HUGE:
-        if (nLevelRequired < 7)
-            nLevelRequired = 7;
-        break;
-    case CREATURE_SIZE_TINY:
-    case CREATURE_SIZE_LARGE:
-        if (nLevelRequired < 3)
-            nLevelRequired = 3;
-        break;
-    case CREATURE_SIZE_MEDIUM:
-    case CREATURE_SIZE_SMALL:
-        if (nLevelRequired < 1)
-            nLevelRequired = 1;
-        break;
-    }
-
-    // Type validation
-    switch (nTRacialType)
-    {
-    case RACIAL_TYPE_FEY:
-    case RACIAL_TYPE_SHAPECHANGER:
-        nLevelRequired = 1000;
-        break;
-    case RACIAL_TYPE_OUTSIDER:
-    case RACIAL_TYPE_ELEMENTAL:
-        if (nLevelRequired < 9)
-            nLevelRequired = 9;
-        break;
-    case RACIAL_TYPE_CONSTRUCT:
-    case RACIAL_TYPE_UNDEAD:
-        if (nLevelRequired < 8)
-            nLevelRequired = 8;
-        break;
-    case RACIAL_TYPE_DRAGON:
-        if (nLevelRequired < 7)
-            nLevelRequired = 7;
-        break;
-    case RACIAL_TYPE_ABERRATION:
-    case RACIAL_TYPE_OOZE:
-        if (nLevelRequired < 6)
-            nLevelRequired = 6;
-        break;
-    case RACIAL_TYPE_MAGICAL_BEAST:
-        if (nLevelRequired < 5)
-            nLevelRequired = 5;
-        break;
-    case RACIAL_TYPE_GIANT:
-    case RACIAL_TYPE_VERMIN:
-        if (nLevelRequired < 4)
-            nLevelRequired = 4;
-        break;
-    case RACIAL_TYPE_BEAST:
-//    case RACIAL_TYPE_PLANT:
-        if (nLevelRequired < 3)
-            nLevelRequired = 3;
-        break;
-    case RACIAL_TYPE_ANIMAL:
-    case RACIAL_TYPE_HUMANOID_MONSTROUS:
-        if (nLevelRequired < 2)
-            nLevelRequired = 2;
-        break;
-    case RACIAL_TYPE_DWARF:
-    case RACIAL_TYPE_ELF:
-    case RACIAL_TYPE_GNOME:
-    case RACIAL_TYPE_HALFELF:
-    case RACIAL_TYPE_HALFLING:
-    case RACIAL_TYPE_HALFORC:
-    case RACIAL_TYPE_HUMAN:
-    case RACIAL_TYPE_HUMANOID_ORC:
-    case RACIAL_TYPE_HUMANOID_REPTILIAN:
-        // all level 1 forms
-        if (nLevelRequired < 1)
-            nLevelRequired = 1;
-        break;
-    }
     if (GetHasFeat(SHIFTER_BLACK_LIST,oTarget))
 	{
 		nLevelRequired = 1000;
+	    return nLevelRequired;
 	}
+
+    int nTSize					= GetCreatureSize(oTarget);
+
+    int iAllowHuge				= GetLocalInt(GetModule(),"PNP_SHFT_S_HUGE");
+    int iAllowLarge				= GetLocalInt(GetModule(),"PNP_SHFT_S_LARGE");
+    int iAllowMedium			= GetLocalInt(GetModule(),"PNP_SHFT_S_MEDIUM");
+    int iAllowSmall				= GetLocalInt(GetModule(),"PNP_SHFT_S_SMALL");
+    int iAllowTiny				= GetLocalInt(GetModule(),"PNP_SHFT_S_TINY");
+    int iAllowOutsider			= GetLocalInt(GetModule(),"PNP_SHFT_F_OUTSIDER");
+    int iAllowElemental			= GetLocalInt(GetModule(),"PNP_SHFT_F_ELEMENTAL");
+    int iAllowConstruct			= GetLocalInt(GetModule(),"PNP_SHFT_F_CONSTRUCT");
+    int iAllowUndead			= GetLocalInt(GetModule(),"PNP_SHFT_F_UNDEAD");
+    int iAllowDragon			= GetLocalInt(GetModule(),"PNP_SHFT_F_DRAGON");
+    int iAllowAberration		= GetLocalInt(GetModule(),"PNP_SHFT_F_ABERRATION");
+    int iAllowOoze				= GetLocalInt(GetModule(),"PNP_SHFT_F_OOZE");
+    int iAllowMagicalBeast		= GetLocalInt(GetModule(),"PNP_SHFT_F_MAGICALBEAST");
+    int iAllowGiant				= GetLocalInt(GetModule(),"PNP_SHFT_F_GIANT");
+    int iAllowVermin			= GetLocalInt(GetModule(),"PNP_SHFT_F_VERMIN");
+    int iAllowBeast				= GetLocalInt(GetModule(),"PNP_SHFT_F_BEAST");
+    int iAllowAnimal			= GetLocalInt(GetModule(),"PNP_SHFT_F_ANIMAL");
+    int iAllowMonstrousHumanoid	= GetLocalInt(GetModule(),"PNP_SHFT_F_MONSTROUSHUMANOID");
+    int iAllowHumanoid			= GetLocalInt(GetModule(),"PNP_SHFT_F_HUMANOID");
+
+    // Size validation
+	if ((nTSize == CREATURE_SIZE_HUGE) && (iAllowHuge == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTSize == CREATURE_SIZE_LARGE) && (iAllowLarge == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTSize == CREATURE_SIZE_MEDIUM) && (iAllowMedium == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTSize == CREATURE_SIZE_SMALL) && (iAllowSmall == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTSize == CREATURE_SIZE_TINY) && (iAllowTiny == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+
+    // Type validation
+	if ((nTRacialType == RACIAL_TYPE_OUTSIDER) && (iAllowOutsider == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_ELEMENTAL) && (iAllowElemental == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_CONSTRUCT) && (iAllowConstruct == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_UNDEAD) && (iAllowUndead == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_DRAGON) && (iAllowDragon == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_ABERRATION) && (iAllowAberration == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_OOZE) && (iAllowOoze == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_MAGICAL_BEAST) && (iAllowMagicalBeast == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_GIANT) && (iAllowGiant == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_VERMIN) && (iAllowVermin == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_BEAST) && (iAllowBeast == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_ANIMAL) && (iAllowAnimal == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((nTRacialType == RACIAL_TYPE_HUMANOID_MONSTROUS) && (iAllowMonstrousHumanoid == 1))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+	if ((iAllowHumanoid == 1) && (
+			(nTRacialType == RACIAL_TYPE_DWARF) ||
+			(nTRacialType == RACIAL_TYPE_ELF) ||
+			(nTRacialType == RACIAL_TYPE_GNOME) ||
+			(nTRacialType == RACIAL_TYPE_HUMAN) ||
+			(nTRacialType == RACIAL_TYPE_HALFORC) ||
+			(nTRacialType == RACIAL_TYPE_HALFELF) ||
+			(nTRacialType == RACIAL_TYPE_HALFLING) ||
+			(nTRacialType == RACIAL_TYPE_HUMANOID_ORC) ||
+			(nTRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN)))
+	{
+		nLevelRequired = 1000;
+	    return nLevelRequired;
+	}
+
+    // Size validation
+	if ((nTSize == CREATURE_SIZE_HUGE) && (nLevelRequired < 7))
+		nLevelRequired = 7;
+	if ((nTSize == CREATURE_SIZE_LARGE) && (nLevelRequired < 3))
+		nLevelRequired = 3;
+	if ((nTSize == CREATURE_SIZE_MEDIUM) && (nLevelRequired < 1))
+		nLevelRequired = 1;
+	if ((nTSize == CREATURE_SIZE_SMALL) && (nLevelRequired < 1))
+		nLevelRequired = 1;
+	if ((nTSize == CREATURE_SIZE_TINY) && (nLevelRequired < 3))
+		nLevelRequired = 3;
+
+    // Type validation
+	if ((nTRacialType == RACIAL_TYPE_OUTSIDER) && (nLevelRequired < 9))
+		nLevelRequired = 9;
+	if ((nTRacialType == RACIAL_TYPE_ELEMENTAL) && (nLevelRequired < 9))
+		nLevelRequired = 9;
+	if ((nTRacialType == RACIAL_TYPE_CONSTRUCT) && (nLevelRequired < 8))
+		nLevelRequired = 8;
+	if ((nTRacialType == RACIAL_TYPE_UNDEAD) && (nLevelRequired < 8))
+		nLevelRequired = 8;
+	if ((nTRacialType == RACIAL_TYPE_DRAGON) && (nLevelRequired < 7))
+		nLevelRequired = 7;
+	if ((nTRacialType == RACIAL_TYPE_ABERRATION) && (nLevelRequired < 6))
+		nLevelRequired = 6;
+	if ((nTRacialType == RACIAL_TYPE_OOZE) && (nLevelRequired < 6))
+		nLevelRequired = 6;
+	if ((nTRacialType == RACIAL_TYPE_MAGICAL_BEAST) && (nLevelRequired < 5))
+		nLevelRequired = 5;
+	if ((nTRacialType == RACIAL_TYPE_GIANT) && (nLevelRequired < 4))
+		nLevelRequired = 4;
+	if ((nTRacialType == RACIAL_TYPE_VERMIN) && (nLevelRequired < 4))
+		nLevelRequired = 4;
+	if ((nTRacialType == RACIAL_TYPE_BEAST) && (nLevelRequired < 3))
+		nLevelRequired = 3;
+	if ((nTRacialType == RACIAL_TYPE_ANIMAL) && (nLevelRequired < 2))
+		nLevelRequired = 2;
+	if ((nTRacialType == RACIAL_TYPE_HUMANOID_MONSTROUS) && (nLevelRequired < 2))
+		nLevelRequired = 2;
+	if ((nLevelRequired < 1) && (
+			(nTRacialType == RACIAL_TYPE_DWARF) ||
+			(nTRacialType == RACIAL_TYPE_ELF) ||
+			(nTRacialType == RACIAL_TYPE_GNOME) ||
+			(nTRacialType == RACIAL_TYPE_HUMAN) ||
+			(nTRacialType == RACIAL_TYPE_HALFORC) ||
+			(nTRacialType == RACIAL_TYPE_HALFELF) ||
+			(nTRacialType == RACIAL_TYPE_HALFLING) ||
+			(nTRacialType == RACIAL_TYPE_HUMANOID_ORC) ||
+			(nTRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN)))
+		nLevelRequired = 1;
+
     return nLevelRequired;
 }
 
@@ -1903,8 +1917,17 @@ int GetValidShift(object oPC, object oTarget)
     if (GetIsPC(oTarget))
         return FALSE;
 
+    int iUseCR = GetLocalInt(GetModule(),"PNP_SHFT_USECR");
+	int nTHD;
     // Target Information
-    int nTHD = GetHitDice(oTarget);
+    if (iUseCR == 1)
+    {
+		nTHD = FloatToInt(GetChallengeRating(oTarget));
+	}
+	else
+	{
+    	nTHD = GetHitDice(oTarget);
+	}
 
     // PC Info
     int nPCHD = GetHitDice(oPC);
@@ -1985,29 +2008,6 @@ int GetCanFormCast(object oCreature)
     }
 
     return TRUE;
-}
-
-// Translastes a creature name to a resref for use in createobject
-// returns a resref string
-string GetResRefFromName(object oPC, string sName)
-{
-    //now that i have added the name of the criter to the spark
-    //i have changed this function to search that list for a match
-    object oMimicForms = GetItemPossessedBy( oPC, "sparkoflife" );
-    int num_creatures = GetLocalInt( oMimicForms, "num_creatures" );
-    int i;
-    string cmp;
-
-    for ( i=0; i<num_creatures; i++ )
-    {
-        cmp = GetLocalArrayString( oMimicForms, "shift_choice_name", i );
-        if ( TestStringAgainstPattern( cmp, sName ) )
-        {
-            return GetLocalArrayString( oMimicForms, "shift_choice", i );
-
-        }
-    }
-    return "";
 }
 
 // Determines if the oCreature is harmless enough to have

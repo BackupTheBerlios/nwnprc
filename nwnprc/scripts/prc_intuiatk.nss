@@ -56,7 +56,14 @@ void main()
         if (iSimple == 2 && GetHasFeat(FEAT_WEAPON_FINESSE,oPC))
         {
            int iDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC)
-           iMod = iWis>iDex ? iMod : 0;
+           if (iDex>iStr)
+           {
+             if (iWis > iDex)
+                iMod = iWis-iDex ;
+             else
+                iMod = 0;
+           }
+
         }
 
         if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD) iMod =0;

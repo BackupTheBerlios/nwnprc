@@ -58,7 +58,7 @@ void main()
     
     if (!FortitudeSave(oTarget,nDC))
     {
-    	effect eVis = EffectVisualEffect(VFX_FNF_LOS_HOLY_20);
+    	effect eVis = EffectVisualEffect(VFX_IMP_HARM);
     	effect eDmg = EffectDamage(d8(nClassLevel/2),DAMAGE_TYPE_DIVINE,DAMAGE_POWER_ENERGY);
     	effect eLink =EffectLinkEffects(eVis,eDmg);
         ApplyEffectToObject(DURATION_TYPE_INSTANT,eLink,oTarget);

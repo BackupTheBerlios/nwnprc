@@ -40,7 +40,7 @@ void main()
    int nDuration = GetAbilityModifier(ABILITY_CHARISMA)<1 ? 1 : GetAbilityModifier(ABILITY_CHARISMA);
 
 
-   effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
+   effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
    effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
    effect eVis = EffectVisualEffect(VFX_IMP_HEAD_HEAL);

@@ -21,7 +21,7 @@ void main()
    }
    else
    {
-     effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+     effect eDur2 = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
      ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur2, OBJECT_SELF,TurnsToSeconds(5));
      return;
    }

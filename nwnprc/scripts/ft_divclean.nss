@@ -14,7 +14,7 @@ void main()
    if(GetHasFeatEffect(FEAT_DIVINE_CLEANSING) == FALSE)
    {
     effect eSave = EffectSavingThrowIncrease(SAVING_THROW_FORT, 2);
-    effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
+    effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
     effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID); 

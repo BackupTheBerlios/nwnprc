@@ -11,8 +11,8 @@ Henchman-specific OnSpawn handler for XP1. Based on NW_CH_AC9 by Bioware.
 //:://////////////////////////////////////////////////
 
 #include "x0_inc_henai"
-#include "x2_inc_banter"
-#include "x2_inc_globals"
+//#include "x2_inc_banter"
+//#include "x2_inc_globals"
 
 // * there are only a couple potential interjections henchmen can say in c3
 void StrikeOutStrings(object oNathyrra)
@@ -23,6 +23,36 @@ void StrikeOutStrings(object oNathyrra)
 
 void main()
 {
+    // NW_CH_ACANI9
+    //Sets up the special henchmen listening patterns
+    SetAssociateListenPatterns();
+
+    // Set additional henchman listening patterns
+    bkSetListeningPatterns();
+
+    // Default behavior for henchmen at start
+    SetAssociateState(NW_ASC_POWER_CASTING);
+    SetAssociateState(NW_ASC_HEAL_AT_50);
+    SetAssociateState(NW_ASC_RETRY_OPEN_LOCKS);
+    SetAssociateState(NW_ASC_DISARM_TRAPS);
+    SetAssociateState(NW_ASC_MODE_DEFEND_MASTER, FALSE);
+
+    //Use melee weapons by default
+    SetAssociateState(NW_ASC_USE_RANGED_WEAPON, FALSE);
+
+    // Distance: make henchmen stick closer
+    SetAssociateState(NW_ASC_DISTANCE_4_METERS);
+    if (GetAssociateType(OBJECT_SELF) == ASSOCIATE_TYPE_HENCHMAN)
+    {
+    	SetAssociateState(NW_ASC_DISTANCE_2_METERS);
+    }
+
+    // Set starting location
+    SetAssociateStartLocation();
+    
+    return ;
+
+
     string sAreaTag = GetTag(GetArea(OBJECT_SELF));
     string sModuleTag = GetTag(GetModule());
     string sMyTag = GetTag(OBJECT_SELF);

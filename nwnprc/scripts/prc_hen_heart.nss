@@ -42,42 +42,6 @@ void main()
        bDying)
         return;
 
-
-
-
-
-
-    // Check to see if should re-enter stealth mode
-    if (GetIsInCombat() == FALSE)
-    {
-        if(GetLocalInt(OBJECT_SELF, "X2_HENCH_STEALTH_MODE") == 1
-            && GetActionMode(OBJECT_SELF, ACTION_MODE_STEALTH) == FALSE)
-            {
-                SetActionMode(OBJECT_SELF, ACTION_MODE_STEALTH, TRUE);
-            }
-    }
-
-    // * checks to see if a ranged weapon was being used
-    // * if so, it equips it back
-    if (GetIsInCombat() == FALSE)
-    {        //   SpawnScriptDebugger();
-        object oRight = GetLocalObject(OBJECT_SELF, "X0_L_RIGHTHAND");
-        if (GetIsObjectValid(oRight) == TRUE)
-        {    // * you always want to blank this value, if it not invalid
-            SetLocalObject(OBJECT_SELF, "X0_L_RIGHTHAND", OBJECT_INVALID);
-            if (GetWeaponRanged(oRight) == TRUE)
-            {
-                ClearAllActions();
-                bkEquipRanged(OBJECT_INVALID, TRUE, TRUE);
-                //ActionEquipItem(
-                return;
-
-            }
-        }
-    }
-
-
-
     ExecuteScript("nw_ch_ac1", OBJECT_SELF);
 }
 

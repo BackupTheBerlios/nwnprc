@@ -483,7 +483,7 @@ void ManAtArms(object oPC)
 void BFZ(object oPC)
 {       
 	int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-	SetLocalInt(oPC, "PRC_PrereqBFZ", 1);
+
 
 	if (iCleric > 0)
 	{

@@ -513,10 +513,10 @@ int CheckClericShadowWeave(object oPC)
 int LolthsMeat(object oPC)
 {
      if (GetHasFeat(FEAT_LOLTHS_MEAT, oPC) &&
-         (GetRacialType(oPC) != RACIAL_TYPE_DROW_FEMALE &&
-          GetRacialType(oPC) != RACIAL_TYPE_DROW_MALE   &&
-          GetRacialType(oPC) != RACIAL_TYPE_ELF         &&
-          GetRacialType(oPC) != RACIAL_TYPE_HALFDROW        ) )
+        !(GetRacialType(oPC) == RACIAL_TYPE_DROW_FEMALE ||
+          GetRacialType(oPC) == RACIAL_TYPE_DROW_MALE   ||
+          GetRacialType(oPC) == RACIAL_TYPE_ELF         ||
+          GetRacialType(oPC) == RACIAL_TYPE_HALFDROW        ) )
      {
           FloatingTextStringOnCreature("You must be a Drow or Half-Drow to take this feat. Please reselect your feats.", oPC, FALSE);
                return FALSE;
@@ -528,7 +528,8 @@ int LolthsMeat(object oPC)
 // have 8d6 sneak attack
 int LingeringDamage(object oPC = OBJECT_SELF)
 {
-     if( GetTotalSneakAttackDice(oPC) < 8)
+     if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) &&
+        GetTotalSneakAttackDice(oPC) < 8)
      {
           FloatingTextStringOnCreature("You must have at least 8d6 sneak attack dice. Please reselect your feats.", oPC, FALSE);
           return FALSE;          

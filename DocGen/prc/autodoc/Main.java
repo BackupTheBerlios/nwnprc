@@ -228,10 +228,10 @@ public class Main{
 	private static HashMap<Integer, SpellEntry> spells;
 	private static HashMap<Integer, FeatEntry> masterFeats,
 	                                           feats;
+	private static HashMap<Integer, ClassEntry> classes;
 	private static HashMap<Integer, GenericEntry> skills,
 	                                              domains,
-	                                              races,
-	                                              classes;
+	                                              races;
 	
 	
 	public static void main(String[] args){
@@ -401,7 +401,7 @@ public class Main{
 				return false;
 		}}
 		else{
-			if(builder.isDirectory()){
+			if(!builder.isDirectory()){
 				err_pr.println(builder.getPath() + " already exists as a file!");
 				return false;
 		}}
@@ -1129,10 +1129,10 @@ public class Main{
 	private static void doClasses(){
 		String baseClassPath     = contentPath + "base_classes" + fileSeparator,
 		       prestigeClassPath = contentPath + "prestige_classes" + fileSeparator;
-		String name     = null,
-		       text     = null,
-		       path     = null,
-		       featList = null;
+		String name      = null,
+		       text      = null,
+		       path      = null,
+		       temp      = null;
 		String[] tempArr = null;
 		FeatEntry grantedFeat   = null;
 		Data_2da featTable      = null,
@@ -1141,7 +1141,7 @@ public class Main{
 		         skillTable     = null;
 		boolean errored;
 		
-		classes = new HashMap<Integer, GenericEntry>();
+		classes = new HashMap<Integer, ClassEntry>();
 		Data_2da classes2da = twoDA.get("classes");
 		
 		for(int i = 0; i < classes2da.getEntryCount(); i++){
@@ -1183,14 +1183,21 @@ public class Main{
 				 * class should give exp penalty (nor should any base class not give it),
 				 * so it gan be used as an indicator.
 				 */
-				if(classes2da.getEntry("XPPenalty", i).equals("1"))
+				temp = classes2da.getEntry("XPPenalty", i);
+				if(!(temp.equals("0") || temp.equals("1"))){
+					if(tolErr){
+						err_pr.println("Invalid List XPPenalty in classes.2da on row " + i + ": " + temp);
+						continue;
+					}else throw new PageGenerationException("Invalid XPPenalty entry in classes.2da on row " + i + ": " + temp);
+				}
+				if(temp.equals("1"))
 					path = baseClassPath + i + ".html";
 				else
 					path = prestigeClassPath + i + ".html";
 				
 				if(!errored || tolErr){
 					printPage(path, text);
-					classes.put(i, new GenericEntry(name, path, i));
+					classes.put(i, new ClassEntry(name, path, temp.equals("1"), i));
 				}else
 					throw new PageGenerationException("Error(s) encountered while creating page");
 			}catch(PageGenerationException e){
@@ -1475,8 +1482,8 @@ public class Main{
 		doGenericMenu(domains, "Domains", "manual_menus_domains.html");
 		doGenericMenu(races, "Races", "manual_menus_races.html");
 		doSpellMenus();
-		//doFeatMenus();
-		//doClassMenus();
+		doFeatMenus();
+		doClassMenus();
 	}
 	
 	/**
@@ -1496,7 +1503,7 @@ public class Main{
 		}
 		
 		while(links.size() > 0){
-			toPrint.append(links.remove(links.firstKey()) + "\n");
+			toPrint.append(links.remove(links.firstKey()));
 		}
 		
 		printPage(menuPath + menuFileName, menuTemplate.replaceAll("~~~menuName~~~", menuName)
@@ -1510,8 +1517,7 @@ public class Main{
 	private static void doSpellMenus(){
 		TreeMap<String, String> normalSpellLinks  = new TreeMap<String, String>(),
 		                        epicSpellLinks    = new TreeMap<String, String>(),
-		                        psionicPowerLinks = new TreeMap<String, String>(),
-		                        toPut = null;
+		                        psionicPowerLinks = new TreeMap<String, String>();
 		StringBuffer normalPrint  = new StringBuffer(),
 		             epicPrint    = new StringBuffer(),
 		             psionicPrint = new StringBuffer();
@@ -1543,11 +1549,11 @@ public class Main{
 		}
 		
 		while(normalSpellLinks.size() > 0)
-			normalPrint.append(normalSpellLinks.remove(normalSpellLinks.firstKey()) + "\n");
+			normalPrint.append(normalSpellLinks.remove(normalSpellLinks.firstKey()));
 		while(epicSpellLinks.size() > 0)
-			epicPrint.append(epicSpellLinks.remove(epicSpellLinks.firstKey()) + "\n");
+			epicPrint.append(epicSpellLinks.remove(epicSpellLinks.firstKey()));
 		while(psionicPowerLinks.size() > 0)
-			psionicPrint.append(psionicPowerLinks.remove(psionicPowerLinks.firstKey()) + "\n");
+			psionicPrint.append(psionicPowerLinks.remove(psionicPowerLinks.firstKey()));
 		
 		printPage(menuPath + "manual_menus_spells.html", menuTemplate.replaceAll("~~~menuName~~~", "Spells")
 		                                                             .replaceAll("~~~menuEntries~~~", normalPrint.toString()));
@@ -1555,5 +1561,92 @@ public class Main{
 		                                                                  .replaceAll("~~~menuEntries~~~", epicPrint.toString()));
 		printPage(menuPath + "manual_menus_psionic_powers.html", menuTemplate.replaceAll("~~~menuName~~~", "Psionic Powers")
 		                                                                     .replaceAll("~~~menuEntries~~~", psionicPrint.toString()));
+	}
+	
+	
+	/**
+	 * Sorts the feats into alphabetic order using a TreeMap, and prints a menu
+	 * page out of the results. Normal and epic feats get their own menus and class feats
+	 * are skipped.
+	 */
+	private static void doFeatMenus(){
+		TreeMap<String, String> normalFeatLinks  = new TreeMap<String, String>(),
+		                        epicFeatLinks    = new TreeMap<String, String>();
+		StringBuffer normalPrint  = new StringBuffer(),
+		             epicPrint    = new StringBuffer();
+		String temp = null;
+		
+		if(verbose) System.out.println("Printing feat menus");
+		
+		// Parse through feats
+		for(FeatEntry feat : feats.values()){
+			if(feat.isClassFeat) continue;
+			if(feat.isEpic)
+				normalFeatLinks.put(feat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                           feat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                               .replaceAll("~~~targetName~~~", feat.name));
+			else
+				epicFeatLinks.put(feat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                         feat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                             .replaceAll("~~~targetName~~~", feat.name));
+		}
+		
+		// Parse through masterfeats
+		for(FeatEntry masterfeat : masterFeats.values()){
+			if(masterfeat.childFeats.get(0).isEpic)
+				normalFeatLinks.put(masterfeat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                                 masterfeat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                                      .replaceAll("~~~targetName~~~", masterfeat.name));
+			else
+				epicFeatLinks.put(masterfeat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                               masterfeat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                                   .replaceAll("~~~targetName~~~", masterfeat.name));
+		}
+		
+		while(normalFeatLinks.size() > 0)
+			normalPrint.append(normalFeatLinks.remove(normalFeatLinks.firstKey()));
+		while(epicFeatLinks.size() > 0)
+			epicPrint.append(epicFeatLinks.remove(epicFeatLinks.firstKey()));
+		
+		printPage(menuPath + "manual_menus_feat.html", menuTemplate.replaceAll("~~~menuName~~~", "Feats")
+		                                                           .replaceAll("~~~menuEntries~~~", normalPrint.toString()));
+		printPage(menuPath + "manual_menus_epic_feat.html", menuTemplate.replaceAll("~~~menuName~~~", "Epic Feats")
+		                                                                .replaceAll("~~~menuEntries~~~", epicPrint.toString()));
+	}
+	
+	
+	/**
+	 * Sorts the classes into alphabetic order using a TreeMap, and prints a menu
+	 * page out of the results. Base and prestige classes get their own menus
+	 */
+	private static void doClassMenus(){
+		TreeMap<String, String> baseLinks      = new TreeMap<String, String>(),
+		                        prestigeLinks  = new TreeMap<String, String>();
+		StringBuffer basePrint     = new StringBuffer(),
+		             prestigePrint = new StringBuffer();
+		String temp = null;
+		
+		if(verbose) System.out.println("Printing class menus");
+		
+		for(ClassEntry clazz : classes.values()){
+			if(clazz.isPrestige)
+				prestigeLinks.put(clazz.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                          clazz.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                              .replaceAll("~~~targetName~~~", clazz.name));
+			else
+				baseLinks.put(clazz.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                      clazz.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                          .replaceAll("~~~targetName~~~", clazz.name));
+		}
+		
+		while(baseLinks.size() > 0)
+			basePrint.append(baseLinks.remove(baseLinks.firstKey()));
+		while(prestigeLinks.size() > 0)
+			prestigePrint.append(prestigeLinks.remove(prestigeLinks.firstKey()));
+		
+		printPage(menuPath + "manual_menus_base_classes.html", menuTemplate.replaceAll("~~~menuName~~~", "Base Classes")
+		                                                                   .replaceAll("~~~menuEntries~~~", basePrint.toString()));
+		printPage(menuPath + "manual_menus_prestige_classes.html", menuTemplate.replaceAll("~~~menuName~~~", "Prestige Classes")
+		                                                                       .replaceAll("~~~menuEntries~~~", prestigePrint.toString()));
 	}
 }

@@ -518,7 +518,11 @@ void Rava(object oPC)
 }
 void WWolf(object oPC)
 {
-    SetLocalInt(oPC, "PRC_PrereqWWolf", 1);
+    //If not a natural lycanthrope or not already leveled in werewolf, prevent the player from taking the werewolf class
+    if (!GetHasFeat(FEAT_TRUE_LYCANTHROPE, oPC) || GetLevelByClass(CLASS_TYPE_WEREWOLF, oPC) < 1)
+    {
+        SetLocalInt(oPC, "PRC_PrereqWWolf", 1);
+    }
 
     //If not a natural lycanthrope or not already leveled in werewolf, prevent the player from taking the werewolf class
     if (GetHasFeat(FEAT_TRUE_LYCANTHROPE, oPC))
@@ -619,6 +623,7 @@ void main()
 	Shifter(oPC, iArcSpell1, iDivSpell1);
 	DemiLich(oPC);
 	Rava(oPC);
+	WWolf(oPC);
 	// Truly massive debug message flood if activated.
 	/*
 	string sPRC_AllSpell;

@@ -38,11 +38,11 @@ void main()
         if ((nRoll + nConBonus + nFortitude) < 15)
         {
             //Only send message if player isn't already a lycanthrope.
-            if (GetLocalInt(oSpellTarget, "prc_AllowWWolf") != 0)
+            if (GetLocalInt(oSpellTarget, "PRC_AllowWWolf") != 0)
             {
                 FloatingTextStringOnCreature("You have contracted lycanthropy!", oSpellTarget, FALSE);
             }
-            SetLocalInt(oSpellTarget, "prc_AllowWWolf", 0);
+            SetLocalInt(oSpellTarget, "PRC_AllowWWolf", 0);
         }
     }
 }

@@ -1,0 +1,9 @@
+2DA V2.0                                                              
+                                                                      
+           LABEL               ReqType   ReqParam1        ReqParam2   
+0          Base_Attack         BAB       5                ****  
+1          Orc                 RACE      14               **** 
+2          Half-orc            RACE      5                **** 
+3          Blood_warlord       FEAT      4608             ****                       
+5          ScriptVar           VAR       PRC_AllowOrcWar  0 
+

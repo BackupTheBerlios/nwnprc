@@ -16,7 +16,7 @@ void ZealousHeart(object oPC, object oSkin)
 {
     if(GetLocalInt(oSkin, "BFZHeart") == TRUE) return;
 
-    AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IP_CONST_IMMUNITYSPELL_FEAR), oSkin);
+    AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_FEAR), oSkin);
     SetLocalInt(oSkin, "BFZHeart", TRUE);
 }
 
@@ -55,10 +55,7 @@ void main()
 
     if(GetHasFeat(FEAT_SACRED_FLAME, oPC))
     {
-	if (iEquip == 1)
-	{
-        	if (iEquip == 1)    RemoveSacredFlame(oPC, oUnequip);
-	}
+       	if (iEquip == 1)    RemoveSacredFlame(oPC, oUnequip);
         if (iEquip == 2)    SacredFlame(oPC, oWeap);
     }
 }

@@ -31,7 +31,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	FloatingTextStringOnCreature("Augmented Damage " + IntToString(nDamage), oCaster, FALSE);
 	
 	effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
+	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
 	effect eRay;
 	
 	//Check for Power Resistance

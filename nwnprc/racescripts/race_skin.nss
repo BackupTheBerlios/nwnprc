@@ -231,6 +231,13 @@ void main()
         SetCompositeBonus(oSkin, "SA_Hide_Forest", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }
 
+    // Skill Affinity, +4 to hide
+    // for forest gnomes since they get +4 or +8 in the woods.
+    if(GetHasFeat(FEAT_SA_HIDE4))
+    {
+        SetCompositeBonus(oSkin, "SA_Hide_4", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+    }
+
     // Skill Affinity, +2 to appraise
     // dwarves and deep halfings get racial +2 to appraise checks.
     if(GetHasFeat(FEAT_SA_APPRAISE))

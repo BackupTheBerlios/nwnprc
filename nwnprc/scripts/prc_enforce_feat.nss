@@ -42,6 +42,10 @@ void UltiRangerFeats(object oPC = OBJECT_SELF);
 // Feat, can be expanded later.
 void Warlord(object oPC = OBJECT_SELF);
 
+
+// Enforces Genasai taking the proper elemental domain
+void GenasaiFocus(object oPC = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -236,6 +240,63 @@ void Hextor(object oPC = OBJECT_SELF)
      }
      
      }
+}
+
+
+void GenasaiFocus(object oPC)
+{
+   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) != RACIAL_TYPE_AIR_GEN))
+   {
+       if (!GetHasFeat(FEAT_AIR_DOMAIN_POWER, oPC))
+       {
+        int nHD = GetHitDice(oPC);
+        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+        int nOldXP = GetXP(oPC);
+        int nNewXP = nMinXPForLevel - 1000;
+        SetXP(oPC,nNewXP);
+        FloatingTextStringOnCreature("You must have the Air Domain as an Air Genasai.", oPC, FALSE);
+        DelayCommand(1.0, SetXP(oPC,nOldXP));
+       }
+   }
+   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) != RACIAL_TYPE_EARTH_GEN))
+   {
+       if (!GetHasFeat(FEAT_EARTH_DOMAIN_POWER, oPC))
+       {
+        int nHD = GetHitDice(oPC);
+        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+        int nOldXP = GetXP(oPC);
+        int nNewXP = nMinXPForLevel - 1000;
+        SetXP(oPC,nNewXP);
+        FloatingTextStringOnCreature("You must have the Earth Domain as an Earth Genasai.", oPC, FALSE);
+        DelayCommand(1.0, SetXP(oPC,nOldXP));
+       }
+   }
+   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) != RACIAL_TYPE_FIRE_GEN))
+   {
+       if (!GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC))
+       {
+        int nHD = GetHitDice(oPC);
+        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+        int nOldXP = GetXP(oPC);
+        int nNewXP = nMinXPForLevel - 1000;
+        SetXP(oPC,nNewXP);
+        FloatingTextStringOnCreature("You must have the Fire Domain as an Fire Genasai.", oPC, FALSE);
+        DelayCommand(1.0, SetXP(oPC,nOldXP));
+       }
+   }
+   if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) != RACIAL_TYPE_WATER_GEN))
+   {
+       if (!GetHasFeat(FEAT_WATER_DOMAIN_POWER, oPC))
+       {
+        int nHD = GetHitDice(oPC);
+        int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+        int nOldXP = GetXP(oPC);
+        int nNewXP = nMinXPForLevel - 1000;
+        SetXP(oPC,nNewXP);
+        FloatingTextStringOnCreature("You must have the Water Domain as an Water Genasai.", oPC, FALSE);
+        DelayCommand(1.0, SetXP(oPC,nOldXP));
+       }
+   }
 }
 
 
@@ -442,6 +503,7 @@ void main()
      Ethran(oPC);
      UltiRangerFeats(oPC);
      MageKiller(oPC);
+     GenasaiFocus(oPC);
      CheckClericShadowWeave(oPC);
      LolthsMeat(oPC);
 }

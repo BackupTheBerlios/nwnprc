@@ -45,7 +45,7 @@ const	int	POWER_FARHAND			= 14032;
 const	int	POWER_MATTERAGITATION		= 14033;
 const	int	POWER_SKATE			= 14034;
 const	int	POWER_TELEMPATHICPRO		= 14035;
-const   int POWER_ASTRALCONSTRUCT   = -1; // FIX ME
+const   int 	POWER_ASTRALCONSTRUCT   	= -1; // FIX ME
 
 // Level 2 Powers
 const	int	POWER_BESTOWPOWER		= 14051;
@@ -102,6 +102,10 @@ const	int	POWER_ENERGYRETORT_FIRE		= 14116;
 const	int	POWER_ENERGYRETORT_SONIC	= 14117;
 const	int	POWER_EXHALEBLACKDRAG		= 14118;
 const	int	POWER_ERADICATEINVIS		= 14119;
+const   int 	POWER_KEENEDGE   		= -1; // FIX ME
+const   int 	POWER_MENTALBARRIER   		= -1; // FIX ME
+const   int 	POWER_MINDTRAP   		= -1; // FIX ME
+const   int 	POWER_TOUCHSIGHT   		= -1; // FIX ME
 
 // Level 4 Powers
 const	int	POWER_INERTBARRIER		= 14151;

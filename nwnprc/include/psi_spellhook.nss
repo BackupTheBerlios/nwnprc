@@ -56,6 +56,15 @@ int PsiPrePowerCastCode()
             return TRUE;
        }
    }
+   
+   // Mind Trap power
+   if (GetLocalInt(oTarget, "MindTrap") == TRUE)
+   {
+   	int nPP = GetLocalInt(OBJECT_SELF, "PowerPoints");
+   	nPP -= d6();
+   	if (nPP < 0)	nPP = 0;
+   	DelayCommand(1.0, SetLocalInt(OBJECT_SELF, "PowerPoints", nPP));
+   }   
 
    if (nContinue)
    {

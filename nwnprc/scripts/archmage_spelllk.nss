@@ -41,6 +41,7 @@ void main()
     /* Store all the info needed */
     SetLocalInt(focus, "spell_like_spell", GetSpellId());
     SetLocalInt(focus, "spell_like_meta", nMetaMagic);
+    SetLocalInt(focus, "spell_like_present", TRUE);
 
     FloatingTextStringOnCreature("Spell-Like ability ready.", OBJECT_SELF, FALSE);
 }

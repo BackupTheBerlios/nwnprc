@@ -6,7 +6,7 @@ void main()
     object focus = GetItemPossessedBy(OBJECT_SELF, "ArchmagesFocusofPower");
 
     /* Setup mode */
-    if (!GetIsObjectValid(focus))
+    if (!GetIsObjectValid(focus) || GetLocalInt(focus, "spell_like_present") != TRUE)
     {
         /* No focus yet, make one */
         focus = CreateItemOnObject("archfocusofpower", OBJECT_SELF, 1);

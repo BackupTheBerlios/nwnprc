@@ -72,7 +72,7 @@ public class PortraitMenu extends javax.swing.JFrame {
 
 					CurrentPortrait.setIcon(icon);
                     BICPortraitname = imagename.substring(0, imagename.length() - 4).toLowerCase();
-                    InfoText.setText(PORTRAIT.substring(PORTRAIT.lastIndexOf("\\")+1).toLowerCase());
+                    InfoText.setText(PORTRAIT.substring(PORTRAIT.lastIndexOf(FileDelim)+1).toLowerCase());
                     if(BICPortraitname.endsWith("m")) {
                         String tmpport = BICPortraitname.substring(0, BICPortraitname.length() -1);
                         BICPortraitname = tmpport;
@@ -92,7 +92,7 @@ public class PortraitMenu extends javax.swing.JFrame {
                                 TargaImage curtga = new TargaImage(tempImage);
                                 CurrentPortrait.setIcon(new ImageIcon(curtga.getImage()));
                                 BICPortraitname = "po_" + tmpname;
-                                CURRENTPORTRAIT = tempImage.getParent() + "\\" + imagename;
+                                CURRENTPORTRAIT = tempImage.getParent() + FileDelim + imagename;
                                 OKButton.setEnabled(true);
 							}
                         }
@@ -156,7 +156,8 @@ public class PortraitMenu extends javax.swing.JFrame {
         RESFAC = menucreate.getResourceFactory();
         Preferences prefs = Preferences.userRoot().node("/CharacterCreator");
         String NWNDir = prefs.get("GameDir", null);
-        directory = NWNDir + "portraits\\";
+		FileDelim = prefs.get("FileDelim", null);
+        directory = NWNDir + "portraits" + FileDelim;
         menucreate.BlockWindow(true);
         initComponents();
         PortraitScrollPane.setViewportView(PortraitsWindow);
@@ -230,7 +231,7 @@ public class PortraitMenu extends javax.swing.JFrame {
                         try {
 							File tempImage = RESFAC.TempImageFile(picFilename);
 							if (tempImage != null) {
-                                Portrait port = new Portrait(tempImage.getParent() + "\\", tempImage.getName(), true, basepicfilename);
+                                Portrait port = new Portrait(tempImage.getParent() + FileDelim, tempImage.getName(), true, basepicfilename);
                                 port.getComponent(0).setSize(64, 100);
                                 PortraitsWindow.add(port, -1);
                                 numbif++;
@@ -686,6 +687,7 @@ public class PortraitMenu extends javax.swing.JFrame {
     private JButton PicButton;
     public String CURRENTPORTRAIT;
     public String FILENAME;
+	public String FileDelim;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
     private javax.swing.JButton CancelButton;

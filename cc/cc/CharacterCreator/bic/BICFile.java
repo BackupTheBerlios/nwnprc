@@ -479,7 +479,7 @@ public class BICFile {
         String Filename = charname.concat(".bic");
         Preferences prefs = Preferences.userRoot().node("/CharacterCreator");
         String GameDir = prefs.get("GameDir", null);
-        String BicDir = GameDir + "localvault\\";
+        String BicDir = GameDir + "localvault" + prefs.get("FileDelim", null);
         //System.out.println(BicDir + Filename);
         if(new File(BicDir + Filename).exists()) {
             do {

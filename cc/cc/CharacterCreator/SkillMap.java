@@ -19,6 +19,8 @@ public class SkillMap {
 		}
 		catch (IOException ioe) {
 			skillmap = null;
+			System.out.println("Failed to Load Skillmap.2da");
+			ioe.printStackTrace();
 		}
 	}
 

@@ -29,6 +29,7 @@ public class SettingsMenu extends javax.swing.JFrame {
         initComponents();
         
         
+		FileDelim = prefs.get("FileDelim", null);
         String TLKPref = prefs.get("TLKDefault", null);
         String TLKFilePref = prefs.get("TLKFile", null);
         if(TLKPref != null && TLKPref.equalsIgnoreCase("FALSE")) {
@@ -501,9 +502,9 @@ public class SettingsMenu extends javax.swing.JFrame {
         });
         //        fc.setFileSelectionMode(1);
         if(!NWNDirText.getText().equalsIgnoreCase("") && NWNDirText.getText() != null) {
-            if(new File(NWNDirText.getText() + "\\tlk").exists()) {
+            if(new File(NWNDirText.getText() + FileDelim + "tlk").exists()) {
                 //if(new File(NWNDirText.getText()).exists()) {
-                fc.setCurrentDirectory(new File(NWNDirText.getText() + "\\tlk"));
+                fc.setCurrentDirectory(new File(NWNDirText.getText() + FileDelim + "tlk"));
                 //} else {
                 //    fc.setCurrentDirectory(new File("C:\\"));
                 //}
@@ -663,8 +664,8 @@ public class SettingsMenu extends javax.swing.JFrame {
         //        fc.setFileSelectionMode(1);
         if(!NWNDirText.getText().equalsIgnoreCase("") && NWNDirText.getText() != null) {
             if(new File(NWNDirText.getText()).exists()) {
-                if(new File(NWNDirText.getText() + "hak\\").exists()) {
-                    fc.setCurrentDirectory(new File(NWNDirText.getText() + "hak\\"));
+                if(new File(NWNDirText.getText() + "hak" + FileDelim).exists()) {
+                    fc.setCurrentDirectory(new File(NWNDirText.getText() + "hak" + FileDelim));
                 } else {
                     fc.setCurrentDirectory(new File(NWNDirText.getText()));
                 }
@@ -761,7 +762,7 @@ public class SettingsMenu extends javax.swing.JFrame {
         int returnVal = fc.showOpenDialog(this);
         if(returnVal == 0) {
             File directoryfile = fc.getSelectedFile();
-            NWNDirText.setText(directoryfile.getAbsolutePath() + "\\");
+            NWNDirText.setText(directoryfile.getAbsolutePath() + FileDelim);
         }
     }//GEN-LAST:event_NWNDirFileActionPerformed
     
@@ -831,6 +832,7 @@ public class SettingsMenu extends javax.swing.JFrame {
     //        (new SettingsMenu_1()).show();
     //    }
     
+	private String FileDelim;
     private String TLKFilePref;
     private boolean TLKEnabled;
     private String AltTLKFilePref;

@@ -76,6 +76,13 @@ public class ResourceFactory {
 
         blocker.setBlocked(false);
     }
+
+	private static String Fix(String name) {
+		if ('\\' != File.separatorChar)
+			return name.replace('\\', File.separatorChar);
+
+		return name;
+	}
     
     private boolean SetToResource(String FullResource) throws IOException {
         String Resource = FullResource.substring(0, FullResource.length() - 4).toLowerCase();
@@ -154,7 +161,7 @@ public class ResourceFactory {
                 if(moreoutput) System.out.println(FullResource + " found in the Patch folder.");
                 ResourceFile resfile = (ResourceFile)PatchKeyFile.resourcemap.get(Resource);
                 BIFFile testbif = (BIFFile)PatchKeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
-                String biffilename = NWNDir + testbif.getBIFname();
+                String biffilename = Fix(NWNDir + testbif.getBIFname());
                 InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
                 String signature = Filereader.readString(is, 4);
                 is.close();
@@ -196,7 +203,7 @@ public class ResourceFactory {
                 if(moreoutput) System.out.println(FullResource + " found in the XP2Patch folder.");
                 ResourceFile resfile = (ResourceFile)XP2PatchKeyFile.resourcemap.get(Resource);
                 BIFFile testbif = (BIFFile)XP2PatchKeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
-                String biffilename = NWNDir + testbif.getBIFname();
+                String biffilename = Fix(NWNDir + testbif.getBIFname());
                 InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
                 String signature = Filereader.readString(is, 4);
                 is.close();
@@ -238,7 +245,7 @@ public class ResourceFactory {
                 if(moreoutput) System.out.println(FullResource + " found in the XP2 folder.");
                 ResourceFile resfile = (ResourceFile)XP2KeyFile.resourcemap.get(Resource);
                 BIFFile testbif = (BIFFile)XP2KeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
-                String biffilename = NWNDir + testbif.getBIFname();
+                String biffilename = Fix(NWNDir + testbif.getBIFname());
                 InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
                 String signature = Filereader.readString(is, 4);
                 is.close();
@@ -281,7 +288,7 @@ public class ResourceFactory {
                 if(moreoutput) System.out.println(FullResource + " found in the XP1Patch folder.");
                 ResourceFile resfile = (ResourceFile)XP1PatchKeyFile.resourcemap.get(Resource);
                 BIFFile testbif = (BIFFile)XP1PatchKeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
-                String biffilename = NWNDir + testbif.getBIFname();
+                String biffilename = Fix(NWNDir + testbif.getBIFname());
                 InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
                 String signature = Filereader.readString(is, 4);
                 is.close();
@@ -325,7 +332,7 @@ public class ResourceFactory {
                 if(moreoutput) System.out.println(FullResource + " found in the XP1 folder.");
                 ResourceFile resfile = (ResourceFile)XP1KeyFile.resourcemap.get(Resource);
                 BIFFile testbif = (BIFFile)XP1KeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
-                String biffilename = NWNDir + testbif.getBIFname();
+                String biffilename = Fix(NWNDir + testbif.getBIFname());
                 InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
                 String signature = Filereader.readString(is, 4);
                 is.close();
@@ -371,7 +378,7 @@ public class ResourceFactory {
             if(moreoutput) System.out.println(FullResource + " found in the Data folder.");
             ResourceFile resfile = (ResourceFile)KeyFile.resourcemap.get(Resource);
             BIFFile testbif = (BIFFile)KeyFile.BIFmap.get(new Integer(resfile.getBIFid()));
-            String biffilename = NWNDir + testbif.getBIFname();
+			String biffilename = Fix(NWNDir + testbif.getBIFname());
             InputStream is = new BufferedInputStream(new FileInputStream(new File(biffilename)));
             String signature = Filereader.readString(is, 4);
 			is.close();

@@ -38,13 +38,55 @@ const int ITEM_PROPERTY_WOUNDING = 69;
 // Clean up any extras in the inventory.
 void CleanExtraFists(object oCreature)
 {
+    int iIsCWeap, iIsEquip;
+
     object oClean = GetFirstItemInInventory(oCreature);
+
     while (GetIsObjectValid(oClean))
     {
-        if (GetTag(oClean) == "NW_IT_CREWPB010" && oClean != GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCreature))
+        iIsCWeap = GetTag(oClean) == "PRC_UNARMED_B"   ||
+                   GetTag(oClean) == "PRC_UNARMED_S"   ||
+                   GetTag(oClean) == "PRC_UNARMED_P"   ||
+                   GetTag(oClean) == "NW_IT_CREWPB010"; //legacy unarmed fist
+
+        iIsEquip = oClean == GetItemInSlot(INVENTORY_SLOT_CWEAPON_L) ||
+                   oClean == GetItemInSlot(INVENTORY_SLOT_CWEAPON_R) ||
+                   oClean == GetItemInSlot(INVENTORY_SLOT_CWEAPON_B);
+
+        if (iIsCWeap && !iIsEquip)
+        {
             DestroyObject(oClean);
+        }
+
         oClean = GetNextItemInInventory(oCreature);
     }
+}
+
+// Determine whether the character is polymorphed or shfited.
+int GetIsPolyMorphedOrShifted(object oCreature)
+{
+    int bPoly = FALSE;
+
+    object oHide = GetPCSkin(oCreature);
+
+    effect eChk = GetFirstEffect(oCreature);
+
+    while (GetIsEffectValid(eChk))
+    {
+        if (GetEffectType(eChk) == EFFECT_TYPE_POLYMORPH)
+        {
+            bPoly = TRUE;
+        }
+
+        eChk = GetNextEffect(oCreature);
+    }
+    
+    if (GetLocalInt(oHide, "nPCShifted"))
+    {
+        bPoly = TRUE;
+    }
+    
+    return bPoly;
 }
 
 // Remove the unarmed penalty effect
@@ -304,7 +346,8 @@ void UnarmedFists(object oCreature)
     object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature);
     object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
     object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCreature);
-       
+
+    int iRace = GetRacialType(oCreature);
     int iMonk = GetLevelByClass(CLASS_TYPE_MONK, oCreature);
     int iShou = GetLevelByClass(CLASS_TYPE_SHOU, oCreature);
     int iSacFist = GetLevelByClass(CLASS_TYPE_SACREDFIST, oCreature);
@@ -312,31 +355,54 @@ void UnarmedFists(object oCreature)
     int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
     int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
     
+    // Sacred Fists who break their code get no benefits.
     if (GetHasFeat(FEAT_SF_CODE,oCreature)) iSacFist = 0;
     
+    // The monk adds all these classes.
     int iMonkEq = iMonk + iShou + iSacFist + iHenshin;
-    
-    if (!GetIsObjectValid(oWeapL))
+
+    // Determine the type of damage the character should do.    
+    string sWeapType;
+    if (GetHasFeat(FEAT_CLAWDRAGON, oCreature) ||
+        iRace == RACIAL_TYPE_TROLL             ||
+        iRace == RACIAL_TYPE_RAKSHASA          ||
+        iRace == RACIAL_TYPE_LIZARDFOLK)
     {
-        if (GetHasItem(oCreature, "NW_IT_CREWPB010"))
+        sWeapType = "PRC_UNARMED_S";
+    }
+    else if (iRace == RACIAL_TYPE_TANARUKK ||
+             iRace == RACIAL_TYPE_MINOTAUR)
+    {
+        sWeapType = "PRC_UNARMED_P";
+    }
+    else
+    {
+        sWeapType = "PRC_UNARMED_B";
+    }
+
+    // If we are polymorphed/shifted, do not mess with the creature weapon.
+    if (GetIsPolyMorphedOrShifted(oCreature)) return;
+    
+    // Equip the creature weapon.
+    if (!GetIsObjectValid(oWeapL) || GetTag(oWeapL) != sWeapType)
+    {
+        if (GetHasItem(oCreature, sWeapType))
         {
-            oWeapL = GetItemPossessedBy(oCreature,"NW_IT_CREWPB010");
+            oWeapL = GetItemPossessedBy(oCreature, sWeapType);
             SetIdentified(oWeapL, TRUE);
-            AssignCommand(oCreature,ActionEquipItem(oWeapL,INVENTORY_SLOT_CWEAPON_L));
+            AssignCommand(oCreature, ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
         }
         else
         {
-            oWeapL = CreateItemOnObject("NW_IT_CREWPB010", oCreature);
+            oWeapL = CreateItemOnObject(sWeapType, oCreature);
             SetIdentified(oWeapL, TRUE);
-            AssignCommand(oCreature,ActionEquipItem(oWeapL,INVENTORY_SLOT_CWEAPON_L));
+            AssignCommand(oCreature,ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
         }
     }
     
     // Clean up the mess of extra fists made on taking first level.
     DelayCommand(1.0,CleanExtraFists(oCreature));
-    
-    if (GetTag(oWeapL) != "NW_IT_CREWPB010") return;
-    
+ 
     // Determine the character's capacity to pierce DR.
     int iKi = (iMonkEq > 9)  ? 1 : 0;
         iKi = (iMonkEq > 12) ? 2 : iKi;
@@ -354,7 +420,7 @@ void UnarmedFists(object oCreature)
     // The total enhancement to the fist is the sum of all the enhancements above
     int iEnh = iKi + iDragClaw + iBrawlEnh + iEpicKi;
 
-    //Strip the Fist.
+    // Strip the Fist.
     itemproperty ip = GetFirstItemProperty(oWeapL);
     while (GetIsItemPropertyValid(ip))
     {

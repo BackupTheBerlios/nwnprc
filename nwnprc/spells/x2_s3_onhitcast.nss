@@ -190,6 +190,26 @@ void main()
         }   	
    }
    
+
+   	if(GetLocalInt(oItem, "DissolvingWeaponDamage"))
+	{
+		int nDamage = GetLocalInt(oItem, "DissolvingWeaponDamage");
+		int bDoRemoval = GetLocalInt(oItem, "DissolvingWeapon_DoDelete");
+		
+		
+		effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
+		effect eLink = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_ACID_L));
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oSpellTarget);
+		
+		
+		// If Dissolving Weapon added the OnHit power, remove it
+		if(bDoRemoval)
+			RemoveSpecificProperty(oItem,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,0,1,"",-1,DURATION_TYPE_TEMPORARY);
+		
+		// Clean up the locals
+		DeleteLocalInt(oItem, "DissolvingWeaponDamage");
+		DeleteLocalInt(oItem, "DissolvingWeapon_DoDelete");
+	}
    
    /*//////////////////////////////////////////////////
    //////////////// END PSIONICS //////////////////////

@@ -144,12 +144,17 @@ int FindUnarmedDamage(object oCreature)
     if      (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDieIncrease = 2;
     else if (GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature)) iDieIncrease = 1;
 
-    // Monks and monk-like classes deal no additional damage when wearing any armor
+    // Monks and monk-like classes deal no additional damage when wearing any armor, at
+    // least in NWN.  This is to reflect that.  No shields too.
     if (iMonkDamage > 0 || iShouDamage > 0)
     {
         object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature);
+        object oShield = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
+        int bShieldEq = GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD ||
+                        GetBaseItemType(oShield) == BASE_ITEM_LARGESHIELD ||
+                        GetBaseItemType(oShield) == BASE_ITEM_TOWERSHIELD;
                 
-        if (GetBaseAC(oArmor) > 0)
+        if (GetBaseAC(oArmor) > 0 || bShieldEq)
         {
             iMonkDamage = 0;
             iShouDamage = 0;
@@ -389,7 +394,7 @@ void UnarmedFists(object oCreature)
                     case ITEM_PROPERTY_WOUNDING:
                     case ITEM_PROPERTY_DECREASED_DAMAGE:
                     case ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER:
-                        AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
+                        DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL));
                         break;
                     case ITEM_PROPERTY_ATTACK_BONUS:
                         int iCost = GetItemPropertyCostTableValue(ip);
@@ -410,7 +415,7 @@ void UnarmedFists(object oCreature)
 	            case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
 	            case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
 	            if (GetItemPropertyCostTableValue(ip) > iEnh)
-	                AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL);
+	                DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL));
                     break;
                 }
 		ip = GetNextItemProperty(oItem);
@@ -432,20 +437,21 @@ void UnarmedFists(object oCreature)
         DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_KI_STRIKE), oWeapL));
 
     // Add damage resistance penetration.
-    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(iEnh), oWeapL);
+    DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(iEnh), oWeapL));
 
     // This adds creature weapon finesse and a penalty to offset the DR penetration attack bonus.
     SetLocalInt(oCreature, "UnarmedEnhancement", iEnh);
     SetLocalInt(oCreature, "UnarmedEnhancementGlove", iGloveEnh);
     ApplyUnarmedAttackEffects(oCreature);
 
-    if (GetLocalInt(oCreature, "UnarmedSubSystemMessage") != TRUE)
+    // Friendly message to remind players that certain things won't appear correct.
+    if (GetLocalInt(oCreature, "UnarmedSubSystemMessage") != TRUE && GetHasSpellEffect(SPELL_UNARMED_ATTACK_PEN, oCreature))
     {
         SetLocalInt(oCreature, "UnarmedSubSystemMessage", TRUE);
-        DelayCommand(6.1f, SendMessageToPC(oCreature, "This character uses the PRC's unarmed system.  This system has been created to"));
-        DelayCommand(6.2f, SendMessageToPC(oCreature, "work around many Aurora engine bugs and limitations. Your attack roll may appear to be"));
-        DelayCommand(6.3f, SendMessageToPC(oCreature, "incorrect on the character's stats. However, the attack rolls should be correct in"));
-        DelayCommand(6.4f, SendMessageToPC(oCreature, "combat. Disregard any attack effects that seem extra: they are part of the workaround."));
+        DelayCommand(3.001f, SendMessageToPC(oCreature, "This character uses the PRC's unarmed system.  This system has been created to"));
+        DelayCommand(3.002f, SendMessageToPC(oCreature, "work around many Aurora engine bugs and limitations. Your attack roll may appear to be"));
+        DelayCommand(3.003f, SendMessageToPC(oCreature, "incorrect on the character's stats. However, the attack rolls should be correct in"));
+        DelayCommand(3.004f, SendMessageToPC(oCreature, "combat. Disregard any attack effects that seem extra: they are part of the workaround."));
         DelayCommand(600.0f, DeleteLocalInt(oCreature, "UnarmedSubSystemMessage"));
     }
 }

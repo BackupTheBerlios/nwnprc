@@ -12,7 +12,7 @@
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "inc_item_props"
-
+#include "prc_inc_unarmed"
 
 
 /// Immune to Sneak Attacks /////////
@@ -66,6 +66,9 @@ void main ()
 {
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
+
+    UnarmedFeats(oPC);
+    UnarmedFists(oPC);
 
     if(GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC) >= 3)
     {

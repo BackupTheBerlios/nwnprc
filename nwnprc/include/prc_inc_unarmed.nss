@@ -59,6 +59,7 @@ int FindUnarmedDamage(object oCreature)
     int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
     int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
     int iSacredFist = GetLevelByClass(CLASS_TYPE_SACREDFIST, oCreature);
+    int iHenshin = GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oCreature);
     int iMonkDamage = 0;
     int iShouDamage = 0;
     int iBrawlerDamage = 0;
@@ -77,6 +78,9 @@ int FindUnarmedDamage(object oCreature)
     // of equal level when considering damage (and unarmed attack schedule, which
     // is not implemented.)
     if (iSacredFist) iMonk += iSacredFist;
+
+    // Henshin Mystic stacks with monk levels (or uses monk progression.)
+    if (iHenshin) iMonk += iHenshin;
 
     // Add Shou Disciple levels to all unarmed base classes
     if (iShou)

@@ -55,7 +55,9 @@ void main()
 			ReplenishSlots(oPC);
 		}
  
-         
+          if (GetHasFeat(FEAT_SF_CODE,oPC))
+            RemoveSpecificProperty(GetPCSkin(oPC),ITEM_PROPERTY_BONUS_FEAT,IP_CONST_FEAT_SF_CODE);
+
           DelayCommand(1.0,PrcFeats(oPC));
 
          break;

@@ -299,3 +299,4 @@
 295 FEAT_DUERGAR_INVIS                             4681      0    99             1      
 296 FEAT_DROW_DARKNESS                             4682      0    99             1      
 297 FEAT_DROW_FAERIE_FIRE                          4683      0    99             1      
+298 FEAT_THRALL_TO_DEMON                           2616      0    -1             1      

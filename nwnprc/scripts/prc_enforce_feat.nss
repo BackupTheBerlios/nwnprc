@@ -166,7 +166,7 @@ void UltiRangerFeats(object oPC = OBJECT_SELF)
 			    +	(GetHasFeat(FEAT_UR_FE_FEY, oPC))
 			    +	(GetHasFeat(FEAT_UR_FE_GIANT, oPC))
 			    +	(GetHasFeat(FEAT_UR_FE_MAGICAL_BEAST, oPC))
-			    +	(GetHasFeat(FEAT_UR_FE_OUSIDER, oPC))
+			    +	(GetHasFeat(FEAT_UR_FE_OUTSIDER, oPC))
 			    +	(GetHasFeat(FEAT_UR_FE_SHAPECHANGER, oPC))
 			    +	(GetHasFeat(FEAT_UR_FE_UNDEAD, oPC))
 			    +	(GetHasFeat(FEAT_UR_FE_VERMIN, oPC));

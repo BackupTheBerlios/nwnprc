@@ -68,7 +68,7 @@ int ManAtArmsFeats(object oPC = OBJECT_SELF)
      int iMaA = GetLevelByClass(CLASS_TYPE_MANATARMS, oPC);
      
      // only continue if they are a MaA taking level 3
-     if(iMaA == 3) return bReturnVal;
+     if(iMaA != 3) return bReturnVal;
      
      // if they have improved crit and not weapon focus in that weapon
      // time to relevel... can only take imp crit if they have the weapon focus

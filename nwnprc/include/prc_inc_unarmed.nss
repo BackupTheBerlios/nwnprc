@@ -497,6 +497,10 @@ void UnarmedFists(object oCreature)
     // Add the appropriate damage to the fist.
     int iMonsterDamage = FindUnarmedDamage(oCreature);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iMonsterDamage),oWeapL);
+    
+    // Add OnHitCast: Unique if necessary
+    if(GetHasFeat(FEAT_REND, oCreature))
+    	AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oWeapL);
 
     // Cool VFX when striking unarmed
     if (iMonkEq > 9)

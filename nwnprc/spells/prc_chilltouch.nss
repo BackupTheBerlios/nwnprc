@@ -27,7 +27,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     // Declare major variables
     object oTarget = GetSpellTargetObject();
-    int iEleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_COLD);
+    int iEleDmg = DAMAGE_TYPE_NEGATIVE;
     int iColdDam = d6();
     int iTurnDur = PRCGetCasterLevel(OBJECT_SELF) + d4();
     int iPenetr = PRCGetCasterLevel(OBJECT_SELF) + SPGetPenetr();

@@ -2548,7 +2548,7 @@ void main()
     SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_1790", "0");
 
     SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_1791", "16826218");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_1791", "Cold");
+    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_1791", "Negative");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_1791", "1");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1791", "1");
     SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1791", "");

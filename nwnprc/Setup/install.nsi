@@ -71,6 +71,7 @@ Section "PRC Pack" Section1
 	File "..\prc_consortium.htm"
 	SetOutPath "$NWNPATH\erf\"
 	File "..\CompiledResources\prc_consortium.erf"
+	File "..\CompiledResources\prc_include.erf"
 	CreateShortCut "$DESKTOP\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
 	CreateDirectory "$SMPROGRAMS\PRC Pack"
 	CreateShortCut "$SMPROGRAMS\PRC Pack\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
@@ -126,6 +127,7 @@ Section Uninstall
 	Delete "$NWNPATH\hak\prc_textures.hak"
 	Delete "$NWNPATH\tlk\prc_consortium.tlk"
 	Delete "$NWNPATH\erf\prc_consortium.erf"
+	Delete "$NWNPATH\erf\prc_include.erf"
 	Delete "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
 	Delete "$NWNPRCPATH\PRCPack\prc_consortium.htm"
 

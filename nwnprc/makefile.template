@@ -58,6 +58,7 @@
 # the exact names are TBD.
 RAR				= $(OUTPATH)\PRC$(PRC_VERSION).rar
 ERF				= $(OUTPATH)\prc_consortium.erf
+INCLUDEERF		= $(OUTPATH)\prc_include.erf
 HAK				= $(OUTPATH)\prc_consortium.hak
 TLK				= $(TLKPATH)\prc_consortium.tlk
 HIF				= "$(OUTPATH)\PRC Pack.hif"
@@ -140,6 +141,8 @@ NWN_OVERRIDE	= $(NWN_DIR)\override
 
 ERFFILES=~~~erffiles~~~
 
+INCLUDE=~~~include~~~
+
 SCRIPTS=~~~scripts~~~
 
 SPELLS=~~~spells~~~
@@ -184,7 +187,7 @@ hak110: $(ERF110) $(HAK) install
 # Rule to build the 2.0 haks
 hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) \
 	$(SPELLSHAK) $(EPICSPELLSCRIPTSHAK) $(RACEHAK) \
-	$(CRAFT2DASHAK) $(HIF) install 
+	$(CRAFT2DASHAK) $(INCLUDEERF) $(HIF) install 
 
 # Rule to build the NSIS installer.
 nsis:
@@ -206,6 +209,7 @@ installcontent:
 	@echo Installing PRC files
 	-@copy /y "$(HAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(ERF)" "$(NWN_ERF)" >nul
+	-@copy /y "$(INCLUDEERF)" "$(NWN_ERF)" >nul
 	@copy /y "$(TLK)" "$(NWN_TLK)" >nul
 	-@copy /y "$(SCRIPTSHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(SPELLSHAK)" "$(NWN_HAK)" >nul
@@ -235,7 +239,7 @@ installoverrides: $(OVERRIDEFILES)
 # This rule builds the 2.0 RAR, commented out for now
 $(RAR): $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(MISCHAK) $(ERF) \
 	$(OVERRIDEFILES) $(TLK) $(README) $(MISCRESOURCES) $(CRAFT2DASHAK) \
-	$(EPICSPELLSCRIPTSHAK) $(SPELLSHAK) $(RACEHAK) \
+	$(EPICSPELLSCRIPTSHAK) $(SPELLSHAK) $(RACEHAK) $(INCLUDEERF) \
 	$(HIF)
 	@echo $(@F)
 	-@del "$@" 2>nul
@@ -272,6 +276,11 @@ $(ERF): $(ERFFILES)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $**
 
+# Rule to build the include ERF, containing the nss files in the include directory
+$(INCLUDEERF): $(INCLUDE)
+	@echo $(@F)
+	-@del "$@" 2>nul
+	@"$(ERFCOMPILER)" -c $@ $**
 
 # Rule to build the 2.0 scripts HAK file.
 $(SCRIPTSHAK): $(OBJS) $(SCRIPTS)

@@ -42,8 +42,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	effect eListen = EffectSkillDecrease(SKILL_LISTEN, 4);
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 	effect eLink = EffectLinkEffects(eSpot, eDur);
-	eLink = EffectLinkEffects(eSearch, eDur);
-	eLink = EffectLinkEffects(eListen, eDur);
+	eLink = EffectLinkEffects(eSearch, eLink);
+	eLink = EffectLinkEffects(eListen, eLink);
 	effect eVis = EffectVisualEffect(VFX_IMP_SLOW);
 		
 	//Check for Power Resistance

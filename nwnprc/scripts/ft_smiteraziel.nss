@@ -32,7 +32,7 @@ void SmiteChain(object oTarget,float fDelay)
   }
 }
 
-void NoSmite(object oTarget ,string sText)
+void NoSmite(object oTarget ,string sText ,int iEvil)
 {
 
    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
@@ -67,7 +67,6 @@ void NoSmite(object oTarget ,string sText)
 
    FloatingTextStringOnCreature(sText,OBJECT_SELF);
 
-   int iEvil  = GetAlignmentGoodEvil(oTarget)==ALIGNMENT_EVIL ;
    int SancMar  = Sanctify_Feat(GetBaseItemType(oWeap)) && iEvil ? 1 :0 ;
 
   for(iAttacks; iAttacks > 0; iAttacks--)
@@ -126,12 +125,12 @@ void main()
 
    if (GetAlignmentGoodEvil(oTarget)!=ALIGNMENT_EVIL)
    {
-     NoSmite(oTarget,"Smite Failed : not Evil");
+     NoSmite(oTarget,"Smite Failed : not Evil",0);
      return;
    }// Paladin/Fist Raziel need a Loyal Good Alignment
    else if (!(GetAlignmentGoodEvil(OBJECT_SELF)==ALIGNMENT_GOOD && GetAlignmentLawChaos(OBJECT_SELF)==ALIGNMENT_LAWFUL)  )
    {
-     NoSmite(oTarget,"Smite Failed : you're  not Lawful Good");
+     NoSmite(oTarget,"Smite Failed : you're  not Lawful Good",1);
      return;
    }
 

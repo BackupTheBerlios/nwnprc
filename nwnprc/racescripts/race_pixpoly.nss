@@ -10,9 +10,30 @@
 //:://////////////////////////////////////////////
 
 #include "x2_inc_itemprop"
+#include "spinc_common"
+#include "x2_inc_spellhook"
+#include "pnp_shft_poly"
 
 void main()
 {
+DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+/*
+  Spellcast Hook Code
+  Added 2003-06-23 by GeorgZ
+  If you want to make changes to all spells,
+  check x2_inc_spellhook.nss to find out more
+
+*/
+
+    if (!X2PreSpellCastCode())
+    {
+    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+
+// End of Spell Cast Hook
+
     //Declare major variables
     int nSpell = GetSpellId();
     object oTarget = GetSpellTargetObject();
@@ -99,11 +120,18 @@ void main()
     }
 
 
+	//this command will make shore that polymorph plays nice with the shifter
+	ShifterCheck(oTarget);
+	
+	AssignCommand(oTarget, ClearAllActions()); // prevents an exploit
 
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, oTarget, HoursToSeconds(nDuration),TRUE,-1,8);
+    DelayCommand(1.5,ActionCastSpellAtObject(SPELL_SHAPE_INCREASE_DAMAGE,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE));
 
     //Apply the VFX impact and effects
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(nDuration));
+    //ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
+    //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(nDuration));
 
     object oWeaponNew = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF);
     object oArmorNew = GetItemInSlot(INVENTORY_SLOT_CARMOUR,OBJECT_SELF);
@@ -128,4 +156,6 @@ void main()
         IPWildShapeCopyItemProperties(oBeltOld,oArmorNew);
     }
 
+DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+// Getting rid of the integer used to hold the spells spell school
 }

@@ -4,6 +4,7 @@
 
 #include "prc_feat_const"
 #include "prc_spell_const"
+#include "prc_racial_const"
 #include "inc_item_props"
 #include "x2_inc_itemprop"
 #include "prc_ipfeat_const"
@@ -507,5 +508,30 @@ void main()
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
         ipIP =ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_COLD, IP_CONST_DAMAGERESIST_1);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
+
+
+    ///Buommans vow of silence
+    if(GetHasFeat(FEAT_VOWOFSILENCE))
+    {
+        int nHasSilence = FALSE;
+        effect eTest = GetFirstEffect(oPC);
+        while(GetIsEffectValid(eTest))
+        {
+            if(GetEffectType(eTest) == EFFECT_TYPE_SILENCE
+                && GetEffectDurationType(eTest) == DURATION_TYPE_PERMANENT
+                && GetEffectCreator(eTest) == oPC
+                && GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL)
+            {
+                nHasSilence == TRUE;
+            }
+            eTest = GetNextEffect(oPC);
+        }
+        if(!nHasSilence)
+        {
+            effect eSilence = EffectSilence();
+            eSilence = SupernaturalEffect(eSilence);
+            AssignCommand(oPC, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSilence, oPC));
+        }
     }
 }

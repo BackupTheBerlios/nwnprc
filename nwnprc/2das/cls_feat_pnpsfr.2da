@@ -141,7 +141,4 @@
 137 FEAT_EPIC_WEAPON_FOCUS_CREATURE           656       0    -1             0      
 138 FEAT_EPIC_WEAPON_SPECIALIZATION_CREATURE  694       0    -1             0      
 139 FEAT_EPIC_OVERWHELMING_CRITICAL_CREATURE  746       0    -1             0      
-140 WeapProfSim                               46        0    -1             0      
-141 WeapProfEx                                44        0    -1             0      
-142 WeapProfMar                               45        0    -1             0      
-143 TwoWeap                                   41        0    -1             0      
+140 TwoWeap                                   41        0    -1             0      

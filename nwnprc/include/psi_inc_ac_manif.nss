@@ -83,12 +83,12 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nMeta
 	
 	// Do multisummon trick
 	int i = 1;
-	object oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
-	while(GetIsObjectValid(oSummon))
+	object oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i);
+	while(GetIsObjectValid(oCheck))
 	{
 		AssignCommand(oCheck, SetIsDestroyable(FALSE, FALSE, FALSE));
 		AssignCommand(oCheck, DelayCommand(1.0, SetIsDestroyable(TRUE, FALSE, FALSE)));
-		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i++);
+		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i++);
 	}
 	
 	// Do actual summon effect

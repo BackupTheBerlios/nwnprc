@@ -315,3 +315,20 @@ const int SPELL_SPIDERSKIN							= 3184;
 const int SPELL_VISCID_GLOB							= 3185;
 const int SPELL_WORD_OF_BALANCE						= 3186;
 const int SPELL_GREENFIRE							= 3187;
+
+//racial spell additions
+const int SPELL_DISGUISE_MEDIUM              = 1951;
+const int SPELL_DISGUISE_SMALL               = 1952;
+const int SPELL_DISGUISE_DWARF               = 1953;
+const int SPELL_DISGUISE_ELF                 = 1954;
+const int SPELL_DISGUISE_HALF_ELF            = 1955;
+const int SPELL_DISGUISE_HALF_ORC            = 1956;
+const int SPELL_DISGUISE_HUMAN               = 1957;
+const int SPELL_DISGUISE_GNOME               = 1958;
+const int SPELL_DISGUISE_HALFLING            = 1959;
+const int SPELL_DISGUISE_OFF                 = 1960;
+const int SPELL_PIXIE_DETECTEVIL             = 1961;
+const int SPELL_PIXIE_DETECTGOOD             = 1962;
+const int SPELL_PIXIE_DETECTCHAOS            = 1963;
+const int SPELL_PIXIE_DETECTLAW              = 1964;
+const int SPELL_DROW_FAERIEFIRE              = 1965;

@@ -18,10 +18,10 @@ void main ()
         iRace == RACIAL_TYPE_ILLITHID ||
         iRace == RACIAL_TYPE_LIZARDFOLK)
     {
-         object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, OBJECT_SELF);
-
          UnarmedFeats(OBJECT_SELF);
          UnarmedFists(OBJECT_SELF);
+
+         object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, OBJECT_SELF);
          
          // The unarmed creature weapon we equip defaults to bludgeoning. (Centaur and Illithid)
          // piercing attacks.

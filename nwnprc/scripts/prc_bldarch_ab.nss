@@ -13,7 +13,7 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
     effect eDam;
 
-    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, GetLocation(OBJECT_SELF));
+    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetLocation(OBJECT_SELF));
     while(GetIsObjectValid(oTarget) && GetLevelByClass(CLASS_TYPE_BLARCHER, oTarget) < 1 )
     {           
          if(!GetIsFriend(oTarget) )
@@ -22,6 +22,6 @@ void main()
               ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
               ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);             
          }
-         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, GetLocation(OBJECT_SELF));
+         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetLocation(OBJECT_SELF));
     }
 }

@@ -1,30 +1,14 @@
 #include "prc_inc_function"
 #include "heartward_inc"
 #include "Soul_inc"
+#include "inc_item_props"
+#include "ft_martialstrike"
 
 // Sanctify_Feat(iType);
 
-void RemoveSpecificsProperty(object oItem, int iType, int iSubType = -1, int iCostVal = -1, int iParamV =-1,int iNum = 1, string sFlag = "")
-{
-  int iRemoved = 0;
-  itemproperty ip = GetFirstItemProperty(oItem);
 
-  while(GetIsItemPropertyValid(ip) && iRemoved < iNum)
-  {
-    if(GetItemPropertyType(ip) == iType && (GetItemPropertySubType(ip) == iSubType || iSubType==-1 )&& (GetItemPropertyCostTableValue(ip) == iCostVal || iCostVal==-1) )
-    {
-      if ( GetItemPropertyParam1Value(ip)==iParamV || iParamV==-1 )
-      {
-        RemoveItemProperty(oItem, ip);
-        iRemoved++;
-      }
-    }
-    ip = GetNextItemProperty(oItem);
-  }
-  SetLocalInt(oItem, sFlag, 0);
-}
 
-void main()
+void Sanctify()
 {
 
    object oItem;
@@ -106,10 +90,10 @@ void main()
 
     if ( GetLocalInt(oItem,"SanctMar"))
     {
-      RemoveSpecificsProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1,IP_CONST_DAMAGETYPE_DIVINE);
-      RemoveSpecificsProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
-      RemoveSpecificsProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_OUTSIDER,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
-      RemoveSpecificsProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1,IP_CONST_DAMAGETYPE_DIVINE);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_OUTSIDER,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
+      RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY);
       DeleteLocalInt(oItem,"SanctMar");
     }
 
@@ -145,18 +129,18 @@ void main()
 
         if ( GetLocalInt(oItem,"SanctMar"))
         {
-            RemoveSpecificsProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1,IP_CONST_DAMAGETYPE_DIVINE);
-            RemoveSpecificsProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
-            RemoveSpecificsProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_OUTSIDER,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
-            RemoveSpecificsProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY);
+            RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1,IP_CONST_DAMAGETYPE_DIVINE);
+            RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
+            RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_OUTSIDER,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
+            RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY);
             DeleteLocalInt(oItem,"SanctMar");
         }
         if ( GetLocalInt(oItem2,"SanctMar"))
         {
-            RemoveSpecificsProperty(oItem2,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1,IP_CONST_DAMAGETYPE_DIVINE);
-            RemoveSpecificsProperty(oItem2,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
-            RemoveSpecificsProperty(oItem2,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_OUTSIDER,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
-            RemoveSpecificsProperty(oItem2,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY);
+            RemoveSpecificProperty(oItem2,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1,IP_CONST_DAMAGETYPE_DIVINE);
+            RemoveSpecificProperty(oItem2,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_UNDEAD,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
+            RemoveSpecificProperty(oItem2,ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP,IP_CONST_RACIALTYPE_OUTSIDER,IP_CONST_DAMAGEBONUS_1d4,IP_CONST_DAMAGETYPE_DIVINE);
+            RemoveSpecificProperty(oItem2,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY);
             DeleteLocalInt(oItem2,"SanctMar");
         }
         return;
@@ -201,5 +185,15 @@ void main()
        SetLocalInt(oItem,"SanctMar",1);
      }
    }
+
+}
+
+
+
+void main()
+{
+
+   Sanctify();
+   if (GetHasFeat(FEAT_HOLY_MARTIAL_STRIKE)) MartialStrike();
 
 }

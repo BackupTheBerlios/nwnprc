@@ -26,6 +26,10 @@ void RedWizardFeats(object oPC = OBJECT_SELF);
 // Bonus Save feats.
 void MageKiller(object oPC = OBJECT_SELF);
 
+// Enforces the proper selection of the Fist of Hextor
+// Brutal Strike feats.
+void Hextor(object oPC = OBJECT_SELF);
+
 // Enforces the proper selection of the Vile feats
 // and prevents illegal stacking of them
 void VileFeats(object oPC = OBJECT_SELF);
@@ -154,6 +158,80 @@ void MageKiller(object oPC = OBJECT_SELF)
 		int nNewXP = nMinXPForLevel - 1000;
 		SetXP(oPC,nNewXP);
 		FloatingTextStringOnCreature("You must select an Improved Save Feat. Please reselect your feats.", oPC, FALSE);
+		DelayCommand(1.0, SetXP(oPC,nOldXP));
+	}
+	
+	}
+}
+
+void Hextor(object oPC = OBJECT_SELF)
+{
+
+	int iHextor = GetLevelByClass(CLASS_TYPE_HEXTOR, oPC);
+	
+	int iAtk = 0;
+	int iDam = 0;
+	int iTotal = 0;
+	int iCheck;
+
+	if (iHextor > 0)
+	{
+
+	iAtk +=		GetHasFeat(FEAT_BSTRIKE_A12, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A11, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A10, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A9, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A8, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A7, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A6, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A5, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A4, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A3, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A2, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_A1, oPC);
+
+	iDam +=		GetHasFeat(FEAT_BSTRIKE_D12, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D11, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D10, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D9, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D8, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D7, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D6, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D5, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D4, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D3, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D2, oPC) + 
+			GetHasFeat(FEAT_BSTRIKE_D1, oPC); 
+
+	iTotal = iAtk + iDam;
+
+	if (iTotal == 12 && iHextor > 29) { iCheck = TRUE; }
+	else if (iTotal == 11 && iHextor > 26 && iHextor < 30) { iCheck = TRUE; }
+	else if (iTotal == 10 && iHextor > 23 && iHextor < 27) { iCheck = TRUE; }
+	else if (iTotal == 9 && iHextor > 20 && iHextor < 24) { iCheck = TRUE; }	
+	else if (iTotal == 8 && iHextor > 19 && iHextor < 21) { iCheck = TRUE; }
+	else if (iTotal == 7 && iHextor > 16 && iHextor < 20) { iCheck = TRUE; }
+	else if (iTotal == 6 && iHextor > 13 && iHextor < 17) { iCheck = TRUE; }
+	else if (iTotal == 5 && iHextor > 10 && iHextor < 14) { iCheck = TRUE; }
+	else if (iTotal == 4 && iHextor > 9 && iHextor < 11) { iCheck = TRUE; }
+	else if (iTotal == 3 && iHextor > 6 && iHextor < 10) { iCheck = TRUE; }
+	else if (iTotal == 2 && iHextor > 3 && iHextor < 7) { iCheck = TRUE; }
+	else if (iTotal == 1 && iHextor > 0) { iCheck = TRUE; }
+	else { iCheck = FALSE; }
+	
+/*
+	FloatingTextStringOnCreature("Fist of Hextor Level: " + IntToString(iHextor), oPC, FALSE);
+	FloatingTextStringOnCreature("Brutal Strike Attack Level: " + IntToString(iAtk), oPC, FALSE);
+	FloatingTextStringOnCreature("Brutal Strike Damage Level: " + IntToString(iDam), oPC, FALSE);
+*/
+	if (iCheck != TRUE)
+	{
+		int nHD = GetHitDice(oPC);
+		int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+		int nOldXP = GetXP(oPC);
+		int nNewXP = nMinXPForLevel - 1000;
+		SetXP(oPC,nNewXP);
+		FloatingTextStringOnCreature("You must select a Brutal Strike Feat. Please reselect your feats.", oPC, FALSE);
 		DelayCommand(1.0, SetXP(oPC,nOldXP));
 	}
 	
@@ -320,6 +398,7 @@ void main()
 	RedWizardFeats(oPC);
 	VileFeats(oPC);
 	Warlord(oPC);
+	Hextor(oPC);
 	Ethran(oPC);
 	UltiRangerFeats(oPC);
 	MageKiller(oPC);

@@ -158,5 +158,7 @@ const   int 	POWER_TRUEMETABOLISM	   	= -1; // FIX ME
 const   int 	POWER_PSIMINDBLANK	   	= -1; // FIX ME
 
 // Level 9 Powers
-
-
+const   int 	POWER_ASSIMILATE	   	= -1; // FIX ME
+const   int 	POWER_ETHEREALNESS	   	= -1; // FIX ME
+const   int 	POWER_MICROCOSM		   	= -1; // FIX ME
+const   int 	POWER_TIMELESSBODY	   	= -1; // FIX ME

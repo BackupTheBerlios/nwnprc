@@ -37,42 +37,6 @@ void main()
    object oPC = OBJECT_SELF;
    object oSkin = GetPCSkin(oPC);
 
-   if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
-   {
-      object oItem ;
-      int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
-      int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
-      int iDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC);
-      int iWis = GetAbilityModifier(ABILITY_WISDOM,oPC);
-      int iCreature = GetLocalInt(oPC, "CreatureFinesse");
-      int iMod = (iWis > iStr) ? (iWis - iStr) : 0;
-      int iXBowEq = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_LIGHTCROSSBOW ||
-                    GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_HEAVYCROSSBOW;
-      
-      if (GetHasFeat(FEAT_WEAPON_FINESSE,oPC) && iWis > iDex && iDex > iStr)
-          iMod = iWis - iDex;
-          
-      if (GetHasFeat(FEAT_ZEN_ARCHERY,oPC) && iXBowEq)
-          iMod = 0;
-
-      SetCompositeAttackBonus(oPC, "IntuitiveAttackR", 0, ATTACK_BONUS_ONHAND);
-      SetCompositeAttackBonus(oPC, "IntuitiveAttackL", 0, ATTACK_BONUS_OFFHAND);
-      
-      if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD && iMod > iCreature)
-      {
-          if (!GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC))) // unarmed
-          {
-              SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iMod, ATTACK_BONUS_ONHAND);
-          }
-          else if (isSimple(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC))) // right hand
-          {
-                  SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iMod, ATTACK_BONUS_ONHAND);
-              if (isSimple(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC))) // left hand
-                  SetCompositeAttackBonus(oPC, "IntuitiveAttackL", iMod, ATTACK_BONUS_OFFHAND);
-          }
-      }
-   }
-
    if (GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))
    {
 
@@ -114,4 +78,39 @@ void main()
 
    }
 
+   if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
+   {
+      object oItem ;
+      int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
+      int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
+      int iDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC);
+      int iWis = GetAbilityModifier(ABILITY_WISDOM,oPC);
+      int iCreature = GetLocalInt(oPC, "CreatureFinesse");
+      int iMod = (iWis > iStr) ? (iWis - iStr) : 0;
+      int iXBowEq = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_LIGHTCROSSBOW ||
+                    GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_HEAVYCROSSBOW;
+      
+      if (GetHasFeat(FEAT_WEAPON_FINESSE,oPC) && iWis > iDex && iDex > iStr)
+          iMod = iWis - iDex;
+          
+      if (GetHasFeat(FEAT_ZEN_ARCHERY,oPC) && iXBowEq)
+          iMod = 0;
+
+      SetCompositeAttackBonus(oPC, "IntuitiveAttackR", 0, ATTACK_BONUS_ONHAND);
+      SetCompositeAttackBonus(oPC, "IntuitiveAttackL", 0, ATTACK_BONUS_OFFHAND);
+      
+      if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD && iMod > iCreature)
+      {
+          if (!GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC))) // unarmed
+          {
+              SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iMod, ATTACK_BONUS_ONHAND);
+          }
+          else if (isSimple(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC))) // right hand
+          {
+                  SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iMod, ATTACK_BONUS_ONHAND);
+              if (isSimple(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC))) // left hand
+                  SetCompositeAttackBonus(oPC, "IntuitiveAttackL", iMod, ATTACK_BONUS_OFFHAND);
+          }
+      }
+   }
 }

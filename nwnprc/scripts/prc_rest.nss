@@ -52,14 +52,10 @@ void main()
             SendMessageToPC(oPC," Lips of Rapture : use "+IntToString(iLips-1));
          }
       
-         if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC)){
+         if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
+         {
             object oFam =  GetLocalObject(oPC, "BONDED");
-    
-            // Remove negative effects
-            RemoveEffects(oFam);
-            int nHeal =  GetMaxHitPoints(oFam);
-            effect eHeal = EffectHeal(nHeal);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oFam);
+            if (GetIsObjectValid(oFam) && !GetIsDead(oFam) && !GetIsInCombat(oFam)) ForceRest(oFam);
          }
 
 		if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
@@ -70,6 +66,20 @@ void main()
  
           if (GetHasFeat(FEAT_SF_CODE,oPC))
             RemoveSpecificProperty(GetPCSkin(oPC),ITEM_PROPERTY_BONUS_FEAT,IP_CONST_FEAT_SF_CODE);
+
+          // begin flurry of swords array
+          if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC))
+          {
+             DeleteLocalInt(oPC, "FLURRY_TARGET_NUMBER");
+
+             int i;
+             for (i = 0 ; i < 10 ; i++)
+             {
+                string sName = "FLURRY_TARGET_" + IntToString(i);
+                SetLocalObject(oPC, sName, OBJECT_INVALID);
+             }
+          }
+          // end flurry or swords array
 
           DelayCommand(1.0,PrcFeats(oPC));
 

@@ -22,7 +22,7 @@
 // This function holds all functions that are supposed to run before the actual
 // spellscript gets run. If this functions returns FALSE, the spell is aborted
 // and the spellscript will not run
-int PsiPreSpellCastCode();
+int PsiPrePowerCastCode();
 
 
 // check if the spell is prohibited from being cast on items
@@ -131,7 +131,7 @@ int PRCRunUserSpecificSpellScript()
 // the order in which the functions are called here DOES MATTER, changing it
 // WILL break the crafting subsystems
 //------------------------------------------------------------------------------
-int PsiPreSpellCastCode()
+int PsiPrePowerCastCode()
 {
    object oTarget = GetSpellTargetObject();
    int nContinue;
@@ -181,14 +181,6 @@ int PsiPreSpellCastCode()
        //-----------------------------------------------------------------------
        if (nContinue) {
            nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft",OBJECT_SELF);
-       }
-
-       //-----------------------------------------------------------------------
-       // Check if spell was used for on a sequencer item
-       //-----------------------------------------------------------------------
-       if (nContinue)
-       {
-            nContinue = (!X2GetSpellCastOnSequencerItem(oTarget));
        }
 
        //-----------------------------------------------------------------------

@@ -30,7 +30,6 @@ Var NWNMINVERSION
 
 !define MUI_ABORTWARNING
 !define MUI_FINISHPAGE_TEXT "The PRC Pack is now installed.  You can now run the PRC installer to add the PRC pack to modules."
-!define MUI_FINISHPAGE_SHOWREADME "$NWNPRCPATH\PRCPack\prc_consortium.htm"
 !define MUI_FINISHPAGE_RUN_TEXT "Install the PRC pack in modules now"
 !define MUI_FINISHPAGE_RUN "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
 !define MUI_FINISHPAGE_RUN_PARAMETERS "$\"PRC Pack.HIF$\""
@@ -69,14 +68,14 @@ Section "PRC Pack" Section1
 	File "..\tlk\prc_consortium.tlk"
 	SetOutPath "$NWNPRCPATH\PRCPack\"
 	File "..\CompiledResources\PRCModuleUpdater.exe"
-	File "..\prc_consortium.htm"
+	
 	SetOutPath "$NWNPATH\erf\"
 	File "..\CompiledResources\prc_consortium.erf"
 	CreateShortCut "$DESKTOP\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
 	CreateDirectory "$SMPROGRAMS\PRC Pack"
 	CreateShortCut "$SMPROGRAMS\PRC Pack\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
 	CreateShortCut "$SMPROGRAMS\PRC Pack\Uninstall.lnk" "$NWNPRCPATH\PRCPack\uninstall.exe"
-	CreateShortCut "$SMPROGRAMS\PRC Pack\Read Me.lnk" "$NWNPRCPATH\PRCPack\prc_consortium.htm"
+	
 
 SectionEnd
 
@@ -129,7 +128,7 @@ Section Uninstall
 	Delete "$NWNPATH\tlk\prc_consortium.tlk"
 	Delete "$NWNPATH\erf\prc_consortium.erf"
 	Delete "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
-	Delete "$NWNPRCPATH\PRCPack\prc_consortium.htm"
+	
 
 	; Remove remaining directories
 	RMDir "$SMPROGRAMS\PRC Pack"

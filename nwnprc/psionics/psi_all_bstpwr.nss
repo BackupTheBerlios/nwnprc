@@ -22,14 +22,31 @@
    Augment: For every 3 additional power points spent, subject gains 2 additional power points.
 */
 
-#include "prc_inc_psifunc"
-#include "prc_inc_psionic"
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "X0_I0_SPELLS"
 
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
 SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
+
+/*
+  Spellcast Hook Code
+  Added 2004-11-02 by Stratovarius
+  If you want to make changes to all powers,
+  check psi_spellhook to find out more
+
+*/
+
+    if (!PsiPrePowerCastCode())
+    {
+    // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+
+// End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
     int nAugCost = 3;

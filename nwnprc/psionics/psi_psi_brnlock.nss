@@ -24,14 +24,31 @@
    Outsiders, and Elementals. Augmenting this power beyond level 2 will waste power points. 
 */
 
-#include "prc_inc_psifunc"
-#include "prc_inc_psionic"
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "X0_I0_SPELLS"
 
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
 SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
+
+/*
+  Spellcast Hook Code
+  Added 2004-11-02 by Stratovarius
+  If you want to make changes to all powers,
+  check psi_spellhook to find out more
+
+*/
+
+    if (!PsiPrePowerCastCode())
+    {
+    // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+
+// End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
     int nAugCost = 2;

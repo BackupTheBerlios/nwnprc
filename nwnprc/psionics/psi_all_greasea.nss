@@ -20,8 +20,9 @@
    This functions as the spell grease.
 */
 
-#include "prc_inc_psifunc"
-#include "prc_inc_psionic"
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "X0_I0_SPELLS"
 
 

@@ -13,8 +13,9 @@ int iCon = GetAbilityScore(OBJECT_SELF, ABILITY_CONSTITUTION) - 1;
     {
 
      object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, "PC_IMAGE");
-     
+     object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oImage);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon), oImage, 0.0);
      ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneParalyze(), oImage, 0.0);
+     DestroyObject(oSkin, 0.1);
     }
 }

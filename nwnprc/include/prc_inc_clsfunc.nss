@@ -64,7 +64,7 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0)
         // Make sure this variable gets deleted as quickly as possible in case it's added in error.
         DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "PRC_Castlevel_Override"));
     }
-
+    ClearAllActions();
     if (GetIsObjectValid(oTarget))
     {
         AssignCommand(OBJECT_SELF, ActionCastSpellAtObject(iSpell, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
@@ -73,6 +73,8 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0)
     {
         AssignCommand(OBJECT_SELF, ActionCastSpellAtLocation(iSpell, lLoc, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
     }
+    AssignCommand(OBJECT_SELF, SetCommandable(TRUE, OBJECT_SELF));
+    SetCommandable(FALSE, OBJECT_SELF);
 }
 
 ////////////////End Generic////////////////

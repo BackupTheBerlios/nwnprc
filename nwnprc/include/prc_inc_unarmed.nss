@@ -217,8 +217,6 @@ void UnarmedFists(object oCreature)
     int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
     int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
     
-    SetCompositeAttackBonus(oCreature, "CreatureFinesse", 0);
-
     if (!GetIsObjectValid(oWeapL))
     {
         if (GetHasItem(oCreature, "NW_IT_CREWPB010"))

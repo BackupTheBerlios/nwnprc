@@ -137,3 +137,6 @@ const int IP_CONST_FEAT_OVERCRITICAL_CREATURE = 272;
 const int IP_CONST_FEAT_EPIC_DR_3             = 273;
 const int IP_CONST_FEAT_EPIC_DR_6             = 274;
 const int IP_CONST_FEAT_EPIC_DR_9             = 275;
+
+//IP_CONST_DAMAGETYPE
+const int IP_CONST_DAMAGETYPE_VILE            = 14;

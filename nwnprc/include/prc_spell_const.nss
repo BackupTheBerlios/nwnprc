@@ -332,3 +332,4 @@ const int SPELL_PIXIE_DETECTGOOD             = 1962;
 const int SPELL_PIXIE_DETECTCHAOS            = 1963;
 const int SPELL_PIXIE_DETECTLAW              = 1964;
 const int SPELL_DROW_FAERIEFIRE              = 1965;
+const int SPELL_AVARIEL_DIVE		     = 1966;

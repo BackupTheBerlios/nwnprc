@@ -17,13 +17,14 @@ void AddFerociousProwess(object oPC)
 	int iAtk = 1;
 	int iDam = 1;
 	
+	SetCompositeAttackBonus(oPC, "BattleRagerAtk", 0);
+	
 	if(GetHasFeat(FEAT_FEROCIOUS_PROW, oPC))
 	{
 		effect eDam = EffectDamageIncrease(iDam, DAMAGE_TYPE_NEGATIVE);
-		effect eAtk = EffectAttackIncrease(iAtk);
 	
 		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oPC, HoursToSeconds(24));
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, HoursToSeconds(24));
+                SetCompositeAttackBonus(oPC, "BattleRagerAtk", iAtk);
 		SetLocalInt(oPC, "BRageProw", iAtk);
 	}
 }

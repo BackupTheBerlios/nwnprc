@@ -283,7 +283,7 @@ void UnarmedFists(object oCreature)
     int iMod = (iDex > iStr) ? (iDex - iStr) : 0;
     int iIntuitive = GetLocalInt(oCreature, "IntuitiveAttackR");
     
-    if (GetHasFeat(FEAT_WEAPON_FINESSE, oCreature) && iMod > iIntuitive)
+    if (GetHasFeat(FEAT_WEAPON_FINESSE, oCreature) && iMod >= iIntuitive)
     {
         SetCompositeAttackBonus(oCreature, "CreatureFinesse", iMod);
         SetCompositeAttackBonus(oCreature, "IntuitiveAttackR", 0);

@@ -65,19 +65,10 @@ void KatanaFinesse(object oPC)
         DeleteLocalInt(oPC, "KatanaFinesseOnL");
     }
 
-    if (iUseR && iUseL)
-    {
+    if (iUseR)
         SetCompositeAttackBonus(oPC, "KatanaFinesseR", bKatFinBon, ATTACK_BONUS_ONHAND);
+    if (iUseL)
         SetCompositeAttackBonus(oPC, "KatanaFinesseL", bKatFinBon, ATTACK_BONUS_OFFHAND);
-    }
-    else if (iUseR)
-    {
-        SetCompositeAttackBonus(oPC, "KatanaFinesseR", bKatFinBon, ATTACK_BONUS_ONHAND);
-    }
-    else if (iUseL)
-    {
-        SetCompositeAttackBonus(oPC, "KatanaFinesseL", bKatFinBon, ATTACK_BONUS_OFFHAND);
-    }
 }
 
 void main()

@@ -130,10 +130,7 @@ void AddBrutalStrikeAtk(object oPC)
 	}
 
 	//if(GetLocalInt(oPC, "HexBSAtk") == iAtk) return;
-	effect eAtk = EffectAttackIncrease(iAtk);
-	eAtk = ExtraordinaryEffect(eAtk);
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, HoursToSeconds(24));
-	SetLocalInt(oPC, "HexBSAtk", iAtk);
+	SetCompositeAttackBonus(oPC, "HexBrutStrikeAtk", iAtk);
 }
 
 void main()
@@ -142,6 +139,8 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oSkin = GetPCSkin(oPC);
 	int iEquip = GetLocalInt(oPC, "ONEQUIP");
+	
+	SetCompositeAttackBonus(oPC, "HexBrutStrikeAtk", 0);
     
 	if (GetHasFeat(FEAT_BSTRIKE_D1, oPC)) AddBrutalStrikeDam(oPC);
 	if (GetHasFeat(FEAT_BSTRIKE_A1, oPC)) AddBrutalStrikeAtk(oPC);

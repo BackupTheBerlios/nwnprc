@@ -306,6 +306,9 @@ void UnarmedFists(object oCreature)
     int iHenshin = GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oCreature);
     int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
     int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
+    
+    if (GetHasFeat(FEAT_SF_CODE,oCreature)) iSacFist = 0;
+    
     int iMonkEq = iMonk + iShou + iSacFist + iHenshin;
     
     if (!GetIsObjectValid(oWeapL))

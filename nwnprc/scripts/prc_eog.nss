@@ -49,7 +49,7 @@ void ApplySightOfGruumsh(object oPC, object oSkin)
      SetCompositeBonus(oSkin, "SightOfGruumshRefBonus",  2, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_REFLEX);
      SetCompositeBonus(oSkin, "SightOfGruumshWillBonus", 2, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_WILL);
 
-     SetLocalInt(oPC, "HasSightOfGruumsh", 1);     
+     SetLocalInt(oPC, "HasSightOfGruumsh", 2);     
 }
 
 void RemoveSightOfGruumsh(object oPC, object oSkin)

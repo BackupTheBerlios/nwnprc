@@ -141,7 +141,7 @@ void main()
 
    int iEnhancement = GetWeaponEnhancement(oWeap);
    int iDamageType = GetWeaponDamageType(oWeap);
-   int iOuts  =(GetRacialType(oTarget)==RACIAL_TYPE_UNDEAD ||GetRacialType(oTarget)== RACIAL_TYPE_OUTSIDER)  ? 1 :0 ;
+   int iOuts  =(MyPRCGetRacialType(oTarget)==RACIAL_TYPE_UNDEAD ||MyPRCGetRacialType(oTarget)== RACIAL_TYPE_OUTSIDER)  ? 1 :0 ;
 
    int iSmit=1;
    int iEpicSmite = GetHasFeat(FEAT_EPIC_GREAT_SMITING_1) ? 2:1;

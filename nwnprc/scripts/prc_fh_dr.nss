@@ -12,13 +12,14 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
+#include "prc_alterations"
 
 void main()
 {
      object oPC = OBJECT_SELF;
      object oFoe = GetLastDamager();
      
-     int iFoeRace = GetRacialType(oFoe);
+     int iFoeRace = MyPRCGetRacialType(oFoe);
      int iHatedFoe = GetLocalInt(oPC, "HatedFoe");
 
      int iDR = GetLocalInt(oPC, "HatedFoeDR");

@@ -11,6 +11,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_class_const"
+#include "prc_alterations"
 
 void main()
 {
@@ -31,7 +32,7 @@ void main()
      iDam = d6(2);
      }
      eDam = EffectDamage(iDam);
-     if (GetRacialType(oTarget)==RACIAL_TYPE_DRAGON)
+     if (MyPRCGetRacialType(oTarget)==RACIAL_TYPE_DRAGON)
      {
          if (GetAlignmentGoodEvil(oTarget)==ALIGNMENT_EVIL)
          {

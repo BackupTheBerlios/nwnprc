@@ -29,7 +29,7 @@ void SmiteChain(object oTarget,float fDelay)
   {
      if (spellsIsTarget(oTargets, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oTargets!=oTarget && GetAlignmentGoodEvil(oTargets)==ALIGNMENT_EVIL)
      {
-         nDam=(GetRacialType(oTargets)==RACIAL_TYPE_UNDEAD ||GetRacialType(oTargets)== RACIAL_TYPE_OUTSIDER) ? d8(2) :d6(2);
+         nDam=(MyPRCGetRacialType(oTargets)==RACIAL_TYPE_UNDEAD ||MyPRCGetRacialType(oTargets)== RACIAL_TYPE_OUTSIDER) ? d8(2) :d6(2);
 
          //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
          //nDam = PRCGetReflexAdjustedDamage(nDam, oTargets, (15+GetAbilityModifier(ABILITY_CHARISMA)), SAVING_THROW_TYPE_DIVINE);
@@ -161,7 +161,7 @@ void main()
    int iEnhancement = GetWeaponEnhancement(oWeap);
    int iDamageType = GetWeaponDamageType(oWeap);
    int iEvil  =1 ;
-   int iOuts  =(GetRacialType(oTarget)==RACIAL_TYPE_UNDEAD ||GetRacialType(oTarget)== RACIAL_TYPE_OUTSIDER)  ? 1 :0 ;
+   int iOuts  =(MyPRCGetRacialType(oTarget)==RACIAL_TYPE_UNDEAD ||MyPRCGetRacialType(oTarget)== RACIAL_TYPE_OUTSIDER)  ? 1 :0 ;
 
    int iSmit=iEvil;
    int iEpicSmite = GetHasFeat(FEAT_EPIC_GREAT_SMITING_1) ? 2:1;

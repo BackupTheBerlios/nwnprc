@@ -39,7 +39,7 @@ void main()
 				EffectBeam(VFX_BEAM_BLACK, OBJECT_SELF, BODY_NODE_HAND, 0 == nTouchAttack), oTarget, 1.0,FALSE);
 			if (nDamage)
 			{
-				effect eEffect = RACIAL_TYPE_UNDEAD == GetRacialType(oTarget) ?
+				effect eEffect = RACIAL_TYPE_UNDEAD == MyPRCGetRacialType(oTarget) ?
 					EffectHeal(nDamage) : SPEffectDamage(nDamage, nDamageType);
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oTarget);
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY), oTarget);

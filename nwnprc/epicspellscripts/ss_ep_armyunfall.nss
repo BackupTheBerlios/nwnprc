@@ -39,7 +39,7 @@ void main()
             eLink = EffectLinkEffects(eLink, eVis2);
             eLink = EffectLinkEffects(eLink, eVis3);
             oTarget = GetNextFactionMember(OBJECT_SELF, FALSE);
-            if (!MatchNonliving(GetRacialType(oTarget)) &&
+            if (!MatchNonliving(MyPRCGetRacialType(oTarget)) &&
                 oTarget != OBJECT_SELF)
             {
                 if (nX > 0)

@@ -1,3 +1,4 @@
+#include "prc_alterations"
 void main()
 {
 
@@ -7,7 +8,7 @@ void main()
     float  fDelay = 1.0;
 
 
-    if (GetRacialType(oTarget)==RACIAL_TYPE_UNDEAD)
+    if (MyPRCGetRacialType(oTarget)==RACIAL_TYPE_UNDEAD)
     {
        //Roll Damage
        int nDamage = d4();

@@ -20,6 +20,7 @@
 //:: Modified January 1, 2004 by Cole Kleinschmit for use as Command Spiders
 
 #include "prc_class_const"
+#include "prc_alterations"
 
 int CanCommand(int nClassLevel, int nTargetHD)
 {
@@ -76,7 +77,7 @@ void RebukeSpider(int nTurnLevel, int nTurnHD, int nVermin, int nClassLevel)
         if(!GetIsFriend(oTarget))
         {
             nHD = GetHitDice(oTarget) + GetTurnResistanceHD(oTarget);
-            nRacial = GetRacialType(oTarget);
+            nRacial = MyPRCGetRacialType(oTarget);
 
             if(nHD <= nTurnLevel && nHD <= (nTurnHD - nHDCount))
             {

@@ -76,10 +76,10 @@ int BiowareHoldPerson (int nPenetr, int nCasterLvl, int nMeta, object oTarget, f
         
         //Make sure the target is a humanoid
         if (GetIsPlayableRacialType(oTarget) ||
-            GetRacialType(oTarget) == RACIAL_TYPE_HUMANOID_GOBLINOID ||
-            GetRacialType(oTarget) == RACIAL_TYPE_HUMANOID_MONSTROUS ||
-            GetRacialType(oTarget) == RACIAL_TYPE_HUMANOID_ORC ||
-            GetRacialType(oTarget) == RACIAL_TYPE_HUMANOID_REPTILIAN)
+            MyPRCGetRacialType(oTarget) == RACIAL_TYPE_HUMANOID_GOBLINOID ||
+            MyPRCGetRacialType(oTarget) == RACIAL_TYPE_HUMANOID_MONSTROUS ||
+            MyPRCGetRacialType(oTarget) == RACIAL_TYPE_HUMANOID_ORC ||
+            MyPRCGetRacialType(oTarget) == RACIAL_TYPE_HUMANOID_REPTILIAN)
         {
 			nValidTarget = 1;
 			

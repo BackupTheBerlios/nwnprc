@@ -48,7 +48,7 @@ void main()
         // Apply effects to the currently selected target.
 
         // * any undead should be healed, not just Friendlies
-        if( GetRacialType(oTarget) == RACIAL_TYPE_UNDEAD )
+        if( MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD )
         {
             //Fire cast spell at event for the specified target
             SignalEvent( oTarget,

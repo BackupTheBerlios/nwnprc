@@ -19,7 +19,7 @@ void main()
      //Declare major variables
     object oTarget = GetSpellTargetObject();
     string str;
-    if(GetRacialType(oTarget) != RACIAL_TYPE_ANIMAL)
+    if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_ANIMAL)
     {
     FloatingTextStrRefOnCreature(16825237,OBJECT_SELF,TRUE);
     IncrementRemainingFeatUses(OBJECT_SELF,FEAT_MIELIKKI);

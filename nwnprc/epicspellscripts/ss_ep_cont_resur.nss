@@ -35,10 +35,10 @@ void main()
         effect eVis = EffectVisualEffect(VFX_FNF_LOS_HOLY_20);
         effect eVisFail = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
         // If the target is of a race that could be resurrected, go ahead.
-        if (GetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT &&
-            GetRacialType(oTarget) != RACIAL_TYPE_OUTSIDER &&
-            GetRacialType(oTarget) != RACIAL_TYPE_UNDEAD &&
-            GetRacialType(oTarget) != RACIAL_TYPE_ELEMENTAL)
+        if (MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT &&
+            MyPRCGetRacialType(oTarget) != RACIAL_TYPE_OUTSIDER &&
+            MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD &&
+            MyPRCGetRacialType(oTarget) != RACIAL_TYPE_ELEMENTAL)
         {
             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis,
                 GetLocation(oTarget));

@@ -74,9 +74,9 @@ void main()
 
      if (GetHasSpellEffect(TEMPUS_ENCHANT_WEAPON,oItem))
      {
-       if ( (GetLocalInt(OBJECT_SELF,"WeapEchant1")==TEMPUS_ABILITY_VICIOUS && GetRacialType(oSpellTarget)==GetLocalInt(OBJECT_SELF,"WeapEchantRace1")) ||
-            (GetLocalInt(OBJECT_SELF,"WeapEchant2")==TEMPUS_ABILITY_VICIOUS && GetRacialType(oSpellTarget)==GetLocalInt(OBJECT_SELF,"WeapEchantRace2")) ||
-            (GetLocalInt(OBJECT_SELF,"WeapEchant3")==TEMPUS_ABILITY_VICIOUS && GetRacialType(oSpellTarget)==GetLocalInt(OBJECT_SELF,"WeapEchantRace3")) )
+       if ( (GetLocalInt(OBJECT_SELF,"WeapEchant1")==TEMPUS_ABILITY_VICIOUS && MyPRCGetRacialType(oSpellTarget)==GetLocalInt(OBJECT_SELF,"WeapEchantRace1")) ||
+            (GetLocalInt(OBJECT_SELF,"WeapEchant2")==TEMPUS_ABILITY_VICIOUS && MyPRCGetRacialType(oSpellTarget)==GetLocalInt(OBJECT_SELF,"WeapEchantRace2")) ||
+            (GetLocalInt(OBJECT_SELF,"WeapEchant3")==TEMPUS_ABILITY_VICIOUS && MyPRCGetRacialType(oSpellTarget)==GetLocalInt(OBJECT_SELF,"WeapEchantRace3")) )
            ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d6()),OBJECT_SELF);
      }
 

@@ -1,3 +1,4 @@
+#include "prc_alterations"
 void main()
 {
     effect eDam;
@@ -8,7 +9,7 @@ void main()
     object oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
     {
-       if (GetRacialType(oTarget)==RACIAL_TYPE_UNDEAD)
+       if (MyPRCGetRacialType(oTarget)==RACIAL_TYPE_UNDEAD)
        {
          //Roll Damage
          int nDamage = d4();

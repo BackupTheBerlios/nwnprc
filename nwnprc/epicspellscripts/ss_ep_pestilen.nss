@@ -44,7 +44,7 @@ void main()
                 fDelay = GetRandomDelay(1.5, 2.5);
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget, 0, fDelay))
                 {
-                    if(GetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
+                    if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                     {
     
                         // Targets all get a Fortitude saving throw

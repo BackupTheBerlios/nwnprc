@@ -69,7 +69,7 @@ void main()
                     DelayCommand(fDelay, SPApplyEffectToObject
                         (DURATION_TYPE_INSTANT, eLink, oTarget));
                     // Do the animation bit if the target dies from blast.
-                    if (!MatchNonliving(GetRacialType(oTarget)))
+                    if (!MatchNonliving(MyPRCGetRacialType(oTarget)))
                     {
                         SetLocalInt(oTarget, "nAnBlasCheckMe", TRUE);
                     }

@@ -1,9 +1,11 @@
+#include "prc_alterations"
+
 void main()
 {
   object oWeapon = GetSpellCastItem();
   object oTarget = GetSpellTargetObject();
   if (GetAlignmentGoodEvil(oTarget)!=ALIGNMENT_EVIL) return;
-  int nRacial = GetRacialType(oTarget);
+  int nRacial = MyPRCGetRacialType(oTarget);
 
   effect eVis =EffectVisualEffect(VFX_IMP_POISON_S);
   effect ePoison = EffectPoison(100);

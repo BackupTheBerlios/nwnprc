@@ -19,7 +19,7 @@ void RunFlensing(object oCaster, object oTarget, int nSaveDC,
 
 	// Figure out what blood color to use.  This is just guessing in my part.
 	int nChunkVfx = VFX_COM_CHUNK_RED_MEDIUM;
-	switch(GetRacialType(oTarget))
+	switch(MyPRCGetRacialType(oTarget))
 	{
 		case RACIAL_TYPE_ABERRATION:
 		case RACIAL_TYPE_HUMANOID_GOBLINOID:

@@ -26,7 +26,7 @@ void main()
 	
 	// If the target is not undead then heal it and remove all harmfull effects.  If
 	// the target is undead then check for SR.
-	if (RACIAL_TYPE_UNDEAD != GetRacialType(oTarget))
+	if (RACIAL_TYPE_UNDEAD != MyPRCGetRacialType(oTarget))
 	{	
 		SPRaiseSpellCastAt(oTarget, FALSE);
 		

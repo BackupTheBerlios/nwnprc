@@ -17,7 +17,7 @@ void main()
     AssignCommand(GetAreaOfEffectCreator(), ActionSpeakString("Something Entered"));
     if(GetIsEnemy(oTarget, GetAreaOfEffectCreator()) &&
        GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL &&
-       (GetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER || GetRacialType(oTarget) == RACIAL_TYPE_UNDEAD))
+       (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER || MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD))
     {
         AssignCommand(oTarget, ActionSpeakString("Entered"));
         //effect eVis = EffectVisualEffect(VFX_IMP_EVIL_HELP);

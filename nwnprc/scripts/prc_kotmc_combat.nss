@@ -11,6 +11,7 @@
 
 #include "inc_item_props"
 #include "prc_class_const"
+#include "prc_alterations"
 
 void main()
 {
@@ -19,7 +20,7 @@ void main()
     object oSkin = GetPCSkin(oPC);
     object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     object oTarget = GetSpellTargetObject();
-    int nRace = GetRacialType(oTarget);
+    int nRace = MyPRCGetRacialType(oTarget);
     int nClass = GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE, oPC);
     int nDur = nClass + 3;
     int nAC;

@@ -53,7 +53,7 @@ void DoRestingStuff(object oPC)
     effect eBlind = EffectBlindness();
     effect eLink = EffectLinkEffects(eZzz, eBlind);
 
-    if (GetRacialType(oPC) == RACIAL_TYPE_ELF)  // Elves apparently don't sleep.
+    if (MyPRCGetRacialType(oPC) == RACIAL_TYPE_ELF)  // Elves apparently don't sleep.
     {
         AssignCommand(oPC, ActionPlayAnimation
             (ANIMATION_LOOPING_SIT_CROSS, 1.0, 25.0));
@@ -61,9 +61,9 @@ void DoRestingStuff(object oPC)
     }
     else
     {   // Constructs, Oozes, and Undead don't rest.
-        if (GetRacialType(oPC) != RACIAL_TYPE_CONSTRUCT &&
-            GetRacialType(oPC) != RACIAL_TYPE_UNDEAD &&
-            GetRacialType(oPC) != RACIAL_TYPE_OOZE)
+        if (MyPRCGetRacialType(oPC) != RACIAL_TYPE_CONSTRUCT &&
+            MyPRCGetRacialType(oPC) != RACIAL_TYPE_UNDEAD &&
+            MyPRCGetRacialType(oPC) != RACIAL_TYPE_OOZE)
         {
             AssignCommand(oPC, ActionPlayAnimation
                 (ANIMATION_LOOPING_SIT_CROSS, 1.0, 2.0));

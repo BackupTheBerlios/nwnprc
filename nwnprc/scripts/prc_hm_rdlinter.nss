@@ -8,6 +8,7 @@
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "nw_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -28,7 +29,7 @@ void main()
     int nCasterLevel = GetCasterLevel(OBJECT_SELF);
     int nDuration = 3 + nCasterLevel/2;
     nDuration = GetScaledDuration(nDuration, oTarget);
-    int nRacial = GetRacialType(oTarget);
+    int nRacial = MyPRCGetRacialType(oTarget);
 
     //Metamagic extend check
     if (nMetaMagic == METAMAGIC_EXTEND)

@@ -14,6 +14,7 @@
 
 #include "prc_class_const"
 #include "prc_feat_const"
+#include "prc_alterations"
 
 
 // Enforces the proper selection of the Red Wizard feats
@@ -198,7 +199,7 @@ void VileFeats(object oPC = OBJECT_SELF)
 
 void Warlord(object oPC = OBJECT_SELF)
 {
-		if (GetHasFeat(FEAT_BLOOD_OF_THE_WARLORD, oPC) && (GetRacialType(oPC) != RACIAL_TYPE_HALFORC))
+		if (GetHasFeat(FEAT_BLOOD_OF_THE_WARLORD, oPC) && (MyPRCGetRacialType(oPC) != RACIAL_TYPE_HALFORC))
 		{
 			int nHD = GetHitDice(oPC);
 			int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;

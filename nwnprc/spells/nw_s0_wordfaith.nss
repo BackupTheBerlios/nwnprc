@@ -93,7 +93,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     //Check if the target is an outsider
                     //GZ: And do nothing anymore. This was not supposed to happen
                     //----------------------------------------------------------
-                    /*if (GetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER || GetRacialType(oTarget) == RACIAL_TYPE_ELEMENTAL)
+                    /*if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER || MyPRCGetRacialType(oTarget) == RACIAL_TYPE_ELEMENTAL)
                     {
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eUnsummon, oTarget));
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));

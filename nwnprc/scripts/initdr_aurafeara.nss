@@ -17,13 +17,14 @@
 // shaken   -2 attack,weapon dmg,save.
 // panicked -2 save + flee away ,50 % drop object holding
 #include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
     //Declare major variables
     object oTarget = GetEnteringObject();
 
-    if (GetRacialType(oTarget)== RACIAL_TYPE_DRAGON || MyPRCGetRacialType(oTarget)== RACIAL_TYPE_DRAGON )
+    if (MyPRCGetRacialType(oTarget)== RACIAL_TYPE_DRAGON || MyPRCGetRacialType(oTarget)== RACIAL_TYPE_DRAGON )
       return;
 
     effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);

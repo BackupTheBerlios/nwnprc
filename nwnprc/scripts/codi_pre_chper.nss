@@ -40,7 +40,7 @@ void main() {
     int nCasterLevel = GetLevelByTypeDivine();
     int nDuration = 2 + nCasterLevel;
     //nDuration = GetScaledDuration(nDuration, oTarget);
-    int nRacial = GetRacialType(oTarget);
+    int nRacial = MyPRCGetRacialType(oTarget);
 
     if(!GetIsReactionTypeFriendly(oTarget))
     {

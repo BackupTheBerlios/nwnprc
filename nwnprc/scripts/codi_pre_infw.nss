@@ -27,7 +27,7 @@ void main()
     int nOcSv = 10 + (nOcLvl/2) + nChaMod;
 
     object oTarget = GetSpellTargetObject();
-    int nRacial = GetRacialType(oTarget);
+    int nRacial = MyPRCGetRacialType(oTarget);
 
     int bHit = TouchAttackRanged(oTarget,FALSE)>0;
 

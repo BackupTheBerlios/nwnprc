@@ -89,7 +89,7 @@ int MyPRCGetRacialType(object oCreature)
     if (nRace)
         return (nRace-1);
 
-    return GetRacialType(oCreature);
+    return MyPRCGetRacialType(oCreature);
 }
 
 

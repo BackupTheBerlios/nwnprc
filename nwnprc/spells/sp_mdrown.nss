@@ -60,9 +60,9 @@ void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay
         if(!MyResistSpell(OBJECT_SELF, oTarget))
         {
             // * certain racial types are immune
-            if ((GetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT)
-                &&(GetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
-                &&(GetRacialType(oTarget) != RACIAL_TYPE_ELEMENTAL))
+            if ((MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT)
+                &&(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
+                &&(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_ELEMENTAL))
             {
                 //Make a fortitude save 
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetSpellSaveDC()))

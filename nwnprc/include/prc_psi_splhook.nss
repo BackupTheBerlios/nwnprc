@@ -75,6 +75,56 @@ int X2RunUserDefinedSpellScript()
     return TRUE;
 }
 
+//------------------------------------------------------------------------------
+// Set the user-specific spell script
+//------------------------------------------------------------------------------
+void PRCSetUserSpecificSpellScript(string sScript)
+{
+    SetLocalString(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT", sScript);
+}
+
+//------------------------------------------------------------------------------
+// Get the user-specific spell script
+//------------------------------------------------------------------------------
+string PRCGetUserSpecificSpellScript()
+{
+    return GetLocalString(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT");
+}
+
+//------------------------------------------------------------------------------
+// Finish the spell, if necessary
+//------------------------------------------------------------------------------
+void PRCSetUserSpecificSpellScriptFinished()
+{
+    SetLocalInt(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT_DONE", TRUE);
+}
+
+//------------------------------------------------------------------------------
+// Figure out if we should finish the spell.
+//------------------------------------------------------------------------------
+int PRCGetUserSpecificSpellScriptFinished()
+{
+    int iRet = GetLocalInt(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT_DONE");
+    DeleteLocalInt(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT_DONE");
+    return iRet;
+}
+
+//------------------------------------------------------------------------------
+// Run a user-specific spell script for classes that use spellhooking.
+//------------------------------------------------------------------------------
+int PRCRunUserSpecificSpellScript()
+{
+    string sScript = PRCGetUserSpecificSpellScript();
+    if (sScript != "")
+    {
+        ExecuteScript(sScript,OBJECT_SELF);
+        if (PRCGetUserSpecificSpellScriptFinished() == TRUE)
+        {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
 
 //------------------------------------------------------------------------------
 // if FALSE is returned by this function, the spell will not be cast

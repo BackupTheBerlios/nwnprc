@@ -6,7 +6,7 @@
 * by Jeremiah Teague
 * spl_rdlawr
 ****************************************************/
-#include "prc_hnshnmystc"
+//#include "prc_hnshnmystc"
 #include "prc_class_const"
 #include "prc_feat_const"
 

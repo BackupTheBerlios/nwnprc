@@ -342,6 +342,8 @@ $(HIF): PRCPackTemplate.hif config.make
 depends:
 	@echo Updating dependencies
 	@tools\makedep -a -w -n -l -s$(SRCPATH) -i$(SRCPATH) -o$(MAKEFILE) $(OBJS)
+	@tools\makedep -a -w -n -l -s$(EPICSPELLSRCPATH) -i$(EPICSPELLSRCPATH) -o$(MAKEFILE) $(EPICSPELLOBJS)
+	@tools\makedep -a -w -n -l -s$(RACESRCPATH) -i$(RACESRCPATH) -o$(MAKEFILE) $(RACEOBJS)
 
 
 # The code below will compile scripts by copying them to the TEMPPATH and doing the

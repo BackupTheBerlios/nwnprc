@@ -2,6 +2,8 @@
 #include "prc_inc_function"
 #include "prc_inc_clsfunc"
 #include "inc_eventhook"
+#include "prc_inc_switch"
+#include "inc_leto_prc"
 
 
 void main()
@@ -32,6 +34,12 @@ void main()
     }
     DelayCommand(0.15, DeleteLocalInt(oPC,"ONENTER"));
 
+    if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))
+        LetoPCEnter(oPC);
+    if(GetPRCSwitch(PRC_LETOSCRIPT_FIX_ABILITIES) && !GetIsDM(oPC))
+        PRCLetoEnter(oPC);   
+    if(GetPRCSwitch(PRC_CONVOCC_ENABLE))
+        ExecuteScript("prc_ccc_enter", OBJECT_SELF);           
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
 }

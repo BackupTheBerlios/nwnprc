@@ -31,7 +31,10 @@ void main()
     
     if(GetPRCSwitch(PRC_XP_USE_PNP_XP))
         {
+            if(GetObjectType(oKiller) == OBJECT_TYPE_TRIGGER)
+                oKiller = GetTrapCreator(oKiller);
             if(oKiller != oPlayer
+                && GetIsObjectValid(oKiller)
                 && !GetIsFriend(oKiller, oPlayer)
                 && (GetIsObjectValid(GetFirstFactionMember(oKiller, TRUE))
                     || GetPRCSwitch(PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS)))

@@ -33,7 +33,6 @@ const string PRC_BREW_POTION_CASTER_LEVEL            = "PRC_BREW_POTION_CASTER_L
 const string PRC_SCRIBE_SCROLL_CASTER_LEVEL          = "PRC_SCRIBE_SCROLL_CASTER_LEVEL";
 const string PRC_CRAFT_WAND_CASTER_LEVEL             = "PRC_CRAFT_WAND_CASTER_LEVEL";
 const string PRC_NPC_HAS_PC_SPELLCASTING             = "PRC_NPC_HAS_PC_SPELLCASTING";
-const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
 const string PRC_ECL_USES_XP_NOT_HD                  = "PRC_ECL_USES_XP_NOT_HD";
 
 // Poison system switches
@@ -78,6 +77,119 @@ const string PRC_XP_MAX_PHYSICAL_DISTANCE            = "PRC_XP_MAX_PHYSICAL_DIST
 const string PRC_XP_MAX_LEVEL_DIFF                   = "PRC_XP_MAX_LEVEL_DIFF";
 const string PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS       = "PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS";
 
+//Database and Letoscript switches
+const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
+const string PRC_DB_PRECACHE                         = "PRC_DB_PRECACHE";
+const string PRC_DB_SQLLITE                          = "PRC_DB_SQLLITE";
+const string PRC_USE_LETOSCRIPT                      = "PRC_USE_LETOSCRIPT";
+const string PRC_LETOSCRIPT_PHEONIX_SYNTAX           = "PRC_LETOSCRIPT_PHEONIX_SYNTAX";
+const string PRC_LETOSCRIPT_FIX_ABILITIES            = "PRC_LETOSCRIPT_FIX_ABILITIES";
+// letoscript needs a string named PRC_LETOSCRIPT_NWN_DIR set to the directory of NWN
+// if it doesnt work, try different slash options // \\ / \
+
+//ConvoCC switches
+const string PRC_CONVOCC_ENABLE                      = "PRC_CONVOCC_ENABLE";
+//this doesnt turn on the database and letoscript as well. 
+//you should do that yourself
+const string PRC_CONVOCC_AVARIEL_WINGS               = "PRC_CONVOCC_AVARIEL_WINGS";
+//Avariel characters have bird wings
+const string PRC_CONVOCC_FEYRI_WINGS                 = "PRC_CONVOCC_FEYRI_WINGS";
+//Fey'ri characters have bat wings
+const string PRC_CONVOCC_FEYRI_TAIL                  = "PRC_CONVOCC_FEYRI_TAIL";
+//Fey'ri characters have a demonic tail
+const string PRC_CONVOCC_DROW_ENFORCE_GENDER         = "PRC_CONVOCC_DROW_ENFORCE_GENDER";
+//Force Drow characters to be of the correct gender for their race
+const string PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS      = "PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS";
+/*Force Gensai clerics to select the relevant elemental
+domain as one of their feats*/
+const string PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD= "PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD";
+//Makes Blood of the Warlord only avliable to orcish characters
+const string PRC_CONVOCC_ENFORCE_FEAT_NIMBUSLIGHT    = "PRC_CONVOCC_ENFORCE_FEAT_NIMBUSLIGHT";
+const string PRC_CONVOCC_ENFORCE_FEAT_HOLYRADIANCE   = "PRC_CONVOCC_ENFORCE_FEAT_HOLYRADIANCE";
+const string PRC_CONVOCC_ENFORCE_FEAT_SERVHEAVEN     = "PRC_CONVOCC_ENFORCE_FEAT_SERVHEAVEN";
+const string PRC_CONVOCC_ENFORCE_FEAT_SAC_VOW        = "PRC_CONVOCC_ENFORCE_FEAT_SAC_VOW";
+const string PRC_CONVOCC_ENFORCE_FEAT_VOW_OBED       = "PRC_CONVOCC_ENFORCE_FEAT_VOW_OBED";
+const string PRC_CONVOCC_ENFORCE_FEAT_THRALL_TO_DEMON= "PRC_CONVOCC_ENFORCE_FEAT_THRALL_TO_DEMON";
+const string PRC_CONVOCC_ENFORCE_FEAT_DISCIPLE_OF_DARKNESS="PRC_CONVOCC_ENFORCE_FEAT_DISCIPLE_OF_DARKNESS";
+const string PRC_CONVOCC_ENFORCE_FEAT_LICHLOVED      = "PRC_CONVOCC_ENFORCE_FEAT_LICHLOVED";
+const string PRC_CONVOCC_ENFORCE_FEAT_EVIL_BRANDS    = "PRC_CONVOCC_ENFORCE_FEAT_EVIL_BRANDS";
+const string PRC_CONVOCC_ENFORCE_FEAT_VILE_WILL_DEFORM="PRC_CONVOCC_ENFORCE_FEAT_VILE_WILL_DEFORM";
+const string PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_OBESE="PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_OBESE";
+const string PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_GAUNT="PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_GAUNT";
+//Enforces the "moral" feats
+const string PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE = "PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE";
+//Female rakshasha use the female rakshasha model
+const string PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE    = "PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE";
+//Female drider use the female drider model
+const string PRC_CONVOCC_DISALLOW_CUSTOMISE_WINGS    = "PRC_CONVOCC_DISALLOW_CUSTOMISE_WINGS";
+//Stops players changing their wings
+const string PRC_CONVOCC_DISALLOW_CUSTOMISE_TAIL     = "PRC_CONVOCC_DISALLOW_CUSTOMISE_TAIL";
+//Stops players changing their tail
+const string PRC_CONVOCC_DISALLOW_CUSTOMISE_MODEL    = "PRC_CONVOCC_DISALLOW_CUSTOMISE_MODEL";
+//Stops players changing their model at all
+const string PRC_CONVOCC_USE_RACIAL_APPEARANCES      = "PRC_CONVOCC_USE_RACIAL_APPEARANCES";
+const string PRC_CONVOCC_USE_RACIAL_PORTRAIT         = "PRC_CONVOCC_USE_RACIAL_PORTRAIT";
+const string PRC_CONVOCC_USE_RACIAL_SOUNDSET         = "PRC_CONVOCC_USE_RACIAL_SOUNDSET";
+/*Players can only change their model / portrait / soundset
+to alternatives of the same race. If you have extra
+content (e.g. from CEP) you must add them to
+SetupRacialAppearances or SetupRacialPortraits or
+SetupRacialSoundsets in prc_ccc_inc_e in order for
+them to be shown on the list.*/
+const string PRC_CONVOCC_ONLY_PLAYER_VOICESETS       = "PRC_CONVOCC_ONLY_PLAYER_VOICESETS";
+/*Players can only select from the player voicesets
+NPC voicesets are not complete, so wont play sounds
+for many things such as emotes.*/
+const string PRC_CONVOCC_RESTRICT_VOICESETS_BY_SEX   = "PRC_CONVOCC_RESTRICT_VOICESETS_BY_SEX";
+//Only allows players to select voiceset of the same gender*/
+const string PRC_CONVOCC_FORCE_KEEP_VOICESET         = "PRC_CONVOCC_FORCE_KEEP_VOICESET";
+/*Skips the select a voiceset step entirely, and players
+have to keep their current voiceset*/
+const string PRC_CONVOCC_ALLOW_TO_KEEP_VOICESET      = "PRC_CONVOCC_ALLOW_TO_KEEP_VOICESET";
+const string PRC_CONVOCC_USE_RACIAL_VOICESET         = "PRC_CONVOCC_USE_RACIAL_VOICESET";
+const string PRC_CONVOCC_ALLOW_TO_KEEP_PORTRAIT      = "PRC_CONVOCC_ALLOW_TO_KEEP_PORTRAIT";
+/*Allow players to keep their exisiting portrait
+The ConvoCC cannot allow players to select custom
+portriats, so the only way for players to have them
+is to select them in the bioware character creator
+and then select to keep them in the ConvoCC.*/
+const string PRC_CONVOCC_FORCE_KEEP_PORTRAIT         = "PRC_CONVOCC_FORCE_KEEP_PORTRAIT";
+/*Skips the select a portrait step entirely, and players
+have to keep their current portrait*/
+const string PRC_CONVOCC_RESTRICT_PORTRAIT_BY_SEX    = "PRC_CONVOCC_RESTRICT_PORTRAIT_BY_SEX";
+/*Only allow players to select portraits of the same gender.
+Most of the NPC portraits do not have a gender so are also
+removed.*/
+const string PRC_CONVOCC_ENABLE_RACIAL_HITDICE       = "PRC_CONVOCC_ENABLE_RACIAL_HITDICE";
+/*This option give players the ability to start with racial
+hit dice for some of the more powerful races. These are
+defined in ECL.2da For these races, players do not pick
+a class in the ConvoCC but instead select 1 or more levels
+in a racial class (such as monsterous humanoid, or outsider).
+This is not a complete ECL system, it mearly gives players
+the racial hit dice component. It does not make any measure
+of the Level Adjustment component. For example, a pixie has
+no racial hit dice, but has a +4 level adjustment.*/
+const string PRC_CONVOCC_ALLOW_HIDDEN_SKIN_COLOURS   = "PRC_CONVOCC_ALLOW_HIDDEN_SKIN_COLOURS";
+const string PRC_CONVOCC_ALLOW_HIDDEN_HAIR_COLOURS   = "PRC_CONVOCC_ALLOW_HIDDEN_HAIR_COLOURS";
+const string PRC_CONVOCC_ALLOW_HIDDEN_TATTOO_COLOURS = "PRC_CONVOCC_ALLOW_HIDDEN_TATTOO_COLOURS";
+/*These enable players to select the hidden skin, hair,
+and tattoo colours (metalics, matt black, matt white).*/
+const string PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER  = "PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER";
+/*This option allows players to keep their skillpoints
+from one level to the next, if they want to. */
+const string PRC_CONVOCC_USE_XP_FOR_NEW_CHAR         = "PRC_CONVOCC_USE_XP_FOR_NEW_CHAR";
+/*This will identify new characters based on X which is
+the same as v1.3 but less secure. */
+const string PRC_CONVOCC_ENCRYPTION_KEY              = "PRC_CONVOCC_ENCRYPTION_KEY";
+/*This is the key used to encrypt characters names if
+USE_XP_FOR_NEW_CHAR is false in order to identify
+returning characters. It should be in the range 1-100.
+If USE_XP_FOR_NEW_CHAR is true, then returning
+characters will be encrypted too, so once everone has
+logged on at least once, USE_XP_FOR_NEW_CHAR can be
+set to false for greater security. */
+
 
 //Checks the state of a PRC switch
 int GetPRCSwitch(string sSwitch);
@@ -94,9 +206,9 @@ void SetPRCSwitch(string sSwitch, int nState)
     SetLocalInt(GetModule(), sSwitch, nState);
 }
 
-void MultisummonPreSummon(object oPC = OBJECT_SELF)
+void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE)
 {
-    if(!GetPRCSwitch(PRC_MUTLISUMMON))
+    if(!GetPRCSwitch(PRC_MUTLISUMMON) && !bOverride)
         return;
     int i=1;
     object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);

@@ -416,9 +416,9 @@ void CheckClericShadowWeave(object oPC)
 void LolthsMeat(object oPC)
 {
      if (GetHasFeat(FEAT_LOLTHS_MEAT, oPC) && 
-         (MyPRCGetRacialType(oPC) != RACIAL_TYPE_DROW_FEMALE || 
-          MyPRCGetRacialType(oPC) != RACIAL_TYPE_DROW_MALE   || 
-          MyPRCGetRacialType(oPC) != RACIAL_TYPE_HALFDROW        ) )
+         (GetRacialType(oPC) != RACIAL_TYPE_DROW_FEMALE || 
+          GetRacialType(oPC) != RACIAL_TYPE_DROW_MALE   || 
+          GetRacialType(oPC) != RACIAL_TYPE_HALFDROW        ) )
      {
           int nHD = GetHitDice(oPC);
           int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;

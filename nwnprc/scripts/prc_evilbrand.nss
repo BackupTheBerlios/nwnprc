@@ -9,7 +9,7 @@
 void EvilBrand(object oPC,int iEquip ,int iLevel)
     {
     object oItem ;
-    object oSkin = GetPCSkin(oPC);
+    object oSkin = GetPCSkin(OBJECT_SELF);
 
     if (iEquip==2)
     {

@@ -14,7 +14,7 @@
 10   Blade_Barrier                     1107     15        6         67500  5          0         0       1          iss_BladeBar      
 11   Bless                             1108     2         1         1500   6          1         1       1          iss_Bless         
 12   Bless_Weapon                      ****     3         1         2250   7          1         1       1          ****              
-13   Bless_Weapon                      1110     10        1         7500   7          1         1       1          is_BlessWeap         
+13   Bless_Weapon                      1110     10        1         7500   7          1         1       1          is_BlessWeap      
 14   Blindness/Deafness                1111     3         2         4500   8          0         1       1          iss_BlindDeaf     
 15   Bulls_Strength                    1112     3         2         4500   9          1         1       1          iss_BullStr       
 16   Bulls_Strength                    1113     10        2         15000  9          1         1       1          iss_BullStr       
@@ -1130,3 +1130,7 @@
 1126 Greenfire                         16830506 10        3         22500  3187       0         1       1          iss_greenfire     
 1127 Major_Magic_Missile               16825924 9         5         25000  2247       0         0       1          is_MagMiss        
 1128 Major_Magic_Missile               16825925 20        5         75000  2247       0         0       1          is_MagMiss        
+1129 Wall_Greater_Dispel_Magic         16825361 15        8         90000  2096       0         1       1          iss_WallFire      
+1130 Nature_Avatar                     16825355 17        9         114750 2097       0         0       1          iss_Awaken        
+1131 Unyielding_Roots                  16825359 17        9         114750 2098       1         1       1          iss_Entangle      
+1132 Blessing_of_bahamut               16825357 7         4         21000  2099       1         1       1          is_GhostVis       

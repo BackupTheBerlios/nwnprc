@@ -45,4 +45,13 @@ void main(){
          break;
       }
    }
+
+    // Who is resting?
+    object oPCESS = GetLastPCRested();
+    // Cancel their rest immediately.
+    AssignCommand(oPCESS, ClearAllActions(FALSE));
+    // Start the special conversation with oPC.
+    AssignCommand(oPCESS,
+    ActionStartConversation(OBJECT_SELF, "_rest_button", TRUE, FALSE));
+
 }

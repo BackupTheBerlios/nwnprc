@@ -55,8 +55,9 @@ void main()
         }
         else
         {
-            sSummon = "prc_tn_ls_shade";
-            eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30 );
+                    sSummon = "summonedgreat006";
+                    eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
+
         }
 
 

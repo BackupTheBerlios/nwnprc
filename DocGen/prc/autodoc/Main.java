@@ -226,9 +226,13 @@ public class Main{
 	 * A freaking pile of these, so they take up space, but simplify the code.
 	 */
 	private static HashMap<Integer, SpellEntry> spells;
-	private static HashMap<Integer, SkillEntry> skills;
 	private static HashMap<Integer, FeatEntry> masterFeats,
 	                                           feats;
+	private static HashMap<Integer, GenericEntry> skills,
+	                                              domains,
+	                                              races,
+	                                              classes;
+	
 	
 	public static void main(String[] args){
 		/* Argument parsing */
@@ -473,7 +477,7 @@ public class Main{
 		       path      = null;
 		boolean errored;
 		
-		skills = new HashMap<Integer, SkillEntry>();
+		skills = new HashMap<Integer, GenericEntry>();
 		Data_2da skills2da = twoDA.get("skills");
 		
 		for(int i = 0; i < skills2da.getEntryCount(); i++){
@@ -507,7 +511,7 @@ public class Main{
 				if(!errored || tolErr){
 					printPage(path, text);
 					// Store a data structure represeting the skill into a hashmap
-					skills.put(i, new SkillEntry(name, text, path, i));
+					skills.put(i, new GenericEntry(name, path, i));
 				}else
 					throw new PageGenerationException("Error(s) encountered while creating page");
 			}catch(PageGenerationException e){
@@ -1289,9 +1293,9 @@ public class Main{
 		}
 		String toReturn = skillTableHeaderTemplate;
 		String temp = null;
-		SkillEntry tempSkill = null;
-		TreeMap<String, SkillEntry> classSkills      = new TreeMap<String, SkillEntry>(),
-		                            crossClassSkills = new TreeMap<String, SkillEntry>();
+		GenericEntry tempSkill = null;
+		TreeMap<String, GenericEntry> classSkills      = new TreeMap<String, GenericEntry>(),
+		                              crossClassSkills = new TreeMap<String, GenericEntry>();
 		
 		for(int i = 0; i < skillTable.getEntryCount(); i++){
 			temp = skillTable.getEntry("ClassSkill", i);

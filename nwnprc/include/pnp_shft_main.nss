@@ -17,6 +17,8 @@
 #include "nw_i0_spells"
 #include "prc_inc_function"
 
+//clears out all extra shifter creature items
+void ClearShifterItems(object oPC);
 //shift from quickslot info
 void QuickShift(object oPC, int iQuickSlot);
 //asign form to your quick slot
@@ -101,7 +103,15 @@ void SetShift_03(object oPC, object oTarget, object oASPC);
 
 int CanShift(object oPC)
 {
+
+
 	int iOutcome = FALSE;
+
+	if (GetLocalInt(oPC, "shifting") == TRUE)
+	{
+		return iOutcome;
+	}
+
 	object oItem = CreateItemOnObject("pnp_shft_tstpkup", oPC);
 	if (GetItemPossessor(oItem) == oPC)
 	{
@@ -128,7 +138,6 @@ int CanShift(object oPC)
         }
         eEff = GetNextEffect(oPC);
     }
-
 	return iOutcome;
 }
 
@@ -160,6 +169,8 @@ void SetQuickSlot(object oPC, int iIndex, int iQuickSlot, int iEpic)
 //   call next stage to start after this stage ends
 void SetShift(object oPC, object oTarget)
 {
+	SetLocalInt(oPC, "shifting", TRUE);
+
     int i=0;
     object oLimbo=GetObjectByTag("Limbo",i);
     location lLimbo;
@@ -195,10 +206,10 @@ void SetShift(object oPC, object oTarget)
     object oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
     int iTemp = GetLocalInt(oHidePC,"nPCShifted");
 
-    if (iTemp)
-    {
+    //if (iTemp)
+    //{
         DelayCommand(0.0, SetShiftTrueForm(oPC));
-    }
+    //}
 
 
 }
@@ -225,7 +236,7 @@ void SetShift_02(object oPC, object oTarget, object oASPC)
         if (GetIsObjectValid(oItem))
         {
 //            AssignCommand(oASPC, DestroyObject(oItem,0.0));
-            DestroyObject(oItem,0.0);
+            DestroyObject(oItem);
         }
     }
     // remove all effect on the clone so
@@ -294,7 +305,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 	{
 		//remove and destroy the weapon we have
 		AssignCommand(oPC, ActionUnequipItem(oWeapCRPC));
-		DestroyObject(oWeapCRPC, 1.0);
+		//DestroyObject(oWeapCRPC, 0.5);
 	}
     if (GetIsObjectValid(oWeapCR)) //if the target has a weapon
 	{
@@ -311,7 +322,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 	{
 		//remove and destroy the weapon we have
 		AssignCommand(oPC, ActionUnequipItem(oWeapCLPC));
-		DestroyObject(oWeapCLPC, 1.0);
+		//DestroyObject(oWeapCLPC, 0.5);
 	}
     if (GetIsObjectValid(oWeapCL)) //if the target has a weapon
 	{
@@ -327,7 +338,7 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 	{
 		//remove and destroy the weapon we have
 		AssignCommand(oPC, ActionUnequipItem(oWeapCBPC));
-		DestroyObject(oWeapCBPC, 1.0);
+		//DestroyObject(oWeapCBPC, 0.5);
 	}
     if (GetIsObjectValid(oWeapCB)) //if the target has a weapon
 	{
@@ -426,25 +437,25 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 		if (GetIsObjectValid(oWeapCR))
 		{
 			int iCR = GetBaseItemType(oWeapCR);
-			if ((iCR = BASE_ITEM_CSLASHWEAPON) || (iCR = BASE_ITEM_CSLSHPRCWEAP))
+			if ((iCR == BASE_ITEM_CSLASHWEAPON) || (iCR == BASE_ITEM_CSLSHPRCWEAP))
 				iDamageType = DAMAGE_TYPE_SLASHING;
-			else if (iCR = BASE_ITEM_CPIERCWEAPON)
+			else if (iCR == BASE_ITEM_CPIERCWEAPON)
 				iDamageType = DAMAGE_TYPE_PIERCING;
 		}
 		else if (GetIsObjectValid(oWeapCL))
 		{
 			int iCL = GetBaseItemType(oWeapCL);
-			if ((iCL = BASE_ITEM_CSLASHWEAPON) || (iCL = BASE_ITEM_CSLSHPRCWEAP))
+			if ((iCL == BASE_ITEM_CSLASHWEAPON) || (iCL == BASE_ITEM_CSLSHPRCWEAP))
 				iDamageType = DAMAGE_TYPE_SLASHING;
-			else if (iCL = BASE_ITEM_CPIERCWEAPON)
+			else if (iCL == BASE_ITEM_CPIERCWEAPON)
 				iDamageType = DAMAGE_TYPE_PIERCING;
 		}
 		else if (GetIsObjectValid(oWeapCB))
 		{
 			int iCB = GetBaseItemType(oWeapCB);
-			if ((iCB = BASE_ITEM_CSLASHWEAPON) || (iCB = BASE_ITEM_CSLSHPRCWEAP))
+			if ((iCB == BASE_ITEM_CSLASHWEAPON) || (iCB == BASE_ITEM_CSLSHPRCWEAP))
 				iDamageType = DAMAGE_TYPE_SLASHING;
-			else if (iCB = BASE_ITEM_CPIERCWEAPON)
+			else if (iCB == BASE_ITEM_CPIERCWEAPON)
 				iDamageType = DAMAGE_TYPE_PIERCING;
 		}
 
@@ -589,8 +600,11 @@ void SetShift_03(object oPC, object oTarget, object oASPC)
 
 
     // Reset any PRC feats that might have been lost from the shift
-    EvalPRCFeats(oPC);
+    DelayCommand(1.0, EvalPRCFeats(oPC));
 
+	DelayCommand(0.5, ClearShifterItems(oPC));
+
+	DelayCommand(3.0, DeleteLocalInt(oPC, "shifting"));
 	SendMessageToPC(oPC, "Finished shifting");
 }
 
@@ -2071,21 +2085,21 @@ void SetShiftTrueForm(object oPC)
     {
         // Remove all the abilities of the object
         AssignCommand(oPC, ActionUnequipItem(oWeapCR));
-        DestroyObject(oWeapCR, 1.0);
+        //DestroyObject(oWeapCR, 0.5);
         //RemoveAllItemProperties(oWeapCR);
     }
     if (GetIsObjectValid(oWeapCL))
     {
         // Remove all the abilities of the object
         AssignCommand(oPC, ActionUnequipItem(oWeapCL));
-        DestroyObject(oWeapCL, 1.0);
+        //DestroyObject(oWeapCL, 0.5);
         //RemoveAllItemProperties(oWeapCL);
     }
     if (GetIsObjectValid(oWeapCB))
     {
-        // Remove all the abilities of the object
+        // Remove all abilities of the object
         AssignCommand(oPC, ActionUnequipItem(oWeapCB));
-        DestroyObject(oWeapCB, 1.0);
+        //DestroyObject(oWeapCB, 0.5);
         //RemoveAllItemProperties(oWeapCB);
     }
     // if the did an epic form remove the special powers
@@ -2138,7 +2152,7 @@ void SetShiftTrueForm(object oPC)
     SetLocalInt(oPC,"RACIAL_TYPE",0);
 
 	// Reset any PRC feats that might have been lost from the shift
-	EvalPRCFeats(oPC);
+//	EvalPRCFeats(oPC);
 	SetLocalInt(oHide,"nPCShifted",FALSE);
 
 	//object oCont = GetItemPossessedBy(oPC, "pnp_shft_sprkbox");
@@ -2151,3 +2165,17 @@ void SetShiftTrueForm(object oPC)
 }
 
 
+void ClearShifterItems(object oPC)
+{
+	object oCheck = GetFirstItemInInventory(oPC);
+	while (GetIsObjectValid(oCheck))
+	{
+		if (GetTag(oCheck) == "pnp_shft_cweap")
+		{
+			if ((oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC)) && (oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC)) && (oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC)))
+				AssignCommand(oPC, DestroyObject(oCheck));
+		}
+		oCheck = GetNextItemInInventory(oPC);
+	}
+
+}

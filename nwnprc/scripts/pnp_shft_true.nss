@@ -37,7 +37,12 @@ void main()
 //			DelayCommand(0.3,ActionEquipItem(oHelm,INVENTORY_SLOT_HEAD));
 		}
 
+		// Reset any PRC feats that might have been lost from the shift
+		DelayCommand(1.0, EvalPRCFeats(OBJECT_SELF));
+		DeleteLocalInt(OBJECT_SELF, "shifting");
+		DelayCommand(0.5, ClearShifterItems(OBJECT_SELF));
 	}
+
 }
 
 

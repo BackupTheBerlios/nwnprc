@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+ 
+  <meta http-equiv="Content-Language" content="en-gb">
+ 
+  <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ 
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+ 
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=windows-1252">
+  <title>Player Resource Consortium</title>
+  
+  <style>
+<!--
+.page
+{
+	background-color: #666666;
+}
+.tborder
+{
+	background-color: #000000;
+	border: 1px solid #000000
+}
+td
+{
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.alt1
+{
+	background-color: #666666;
+}
+.inlineimg { vertical-align: middle; }
+-->
+  </style>
+</head>
+  <body text="#c0c0c0" bgcolor="#000000">
+  
+<p align="center"><u><b><font size="6">Player Resource Consortium</font></b></u></p>
+       
+<p align="center"><u><font size="5"><b>Example alterations</b></font></u></p>
+       
+<p><font size="2">back to <a href="Builder.htm">Builders</a></font></p>
+   
+<p>Here are some examples of what you can do to the PRC. Most of these have
+been  pulled straight from the forum, so may not be 100% accurate or descriptive!</p>
+ 
+<p> <br>
+<u><b>Attack Lichs and Demi-lichs on sight</b></u></p>
+ 
+<p><font face="Fixedsys">void AttackLichOnSight();<br>
+ <br>
+ void AttackLichOnSight()<br>
+ {<br>
+     if(GetLastPerceptionSeen()!=TRUE)<br>
+         return;<br>
+     object oTarget = GetLastPerceived();<br>
+     int nAppearance = GetAppearanceType(oTarget);<br>
+     if(nAppearance == APPEARANCE_TYPE_LICH<br>
+         || nAppearance == 430) //demi-lich<br>
+     SetIsTemporaryEnemy(oTarget);<br>
+ }</font></p>
+ 
+<p>Attach this to the OnPercieved event of townspeople, city guards, etc.
+ Basically, if it sees someone with the appearance of a lich or demi-lich
+(which  is probably a non-disguised PRC lich, or could be a PRC shifter),
+they will be  enemies.<br>
+ Easily extended to other appearances to cope with say, shifters in dragon
+shapes  wandering the city centre.</p>
+ 
+<p> </p>
+  
+<p><u><b>Here is a function designed to stop people mixing elements. </b></u> 
+</p>
+ 
+<p>How non-RP would a Elemental Savant of Fire bonded to an Cold Elemental?
+Or  having levels in both ESFire and ESAcid?<br>
+ <br>
+ Add the following to OnLevelUp:<br>
+ <br>
+ <font face="Fixedsys">if(CheckElementalCompatability(oPC) == FALSE)<br>
+ {<br>
+     int nXP = GetXP(oPC);<br>
+     SetXP(oPC, (GetHitDice(oPC)*(GetHitDice(oPC)-1)*500)-1);<br>
+     DelayCommand(0.1, SetXP(oPC, nXP));<br>
+     SendMessageToPC(oPC, "You cannot mix Elemental classes");<br>
+ }</font></p>
+ 
+<p><br>
+ and put the following function somewhere:<br>
+ <font face="Fixedsys"><br>
+ int CheckElementalCompatability(object oPC)<br>
+ {<br>
+     int nAcidLevel = GetLevelByClass(CLASS_TYPE_ES_ACID, oPC);<br>
+     int nColdLevel = GetLevelByClass(CLASS_TYPE_ES_COLD, oPC);<br>
+     int nElecLevel = GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC);<br>
+     int nFireLevel = GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC);<br>
+ <br>
+     if(nAcidLevel&gt;0 &amp;&amp;<br>
+         (nColdLevel &gt;0 || nElecLevel&gt;0 ||  nFireLevel &gt;0))<br>
+         return FALSE;<br>
+     if(nColdLevel&gt;0 &amp;&amp;<br>
+         (nAcidLevel &gt;0 || nElecLevel&gt;0 ||  nFireLevel &gt;0))<br>
+         return FALSE;<br>
+     if(nElecLevel&gt;0 &amp;&amp;<br>
+         (nColdLevel &gt;0 || nAcidLevel&gt;0 ||  nFireLevel &gt;0))<br>
+         return FALSE;<br>
+     if(nFireLevel&gt;0 &amp;&amp;<br>
+         (nColdLevel &gt;0 || nElecLevel&gt;0 ||  nAcidLevel &gt;0))<br>
+         return FALSE;<br>
+     if(GetHasFeat(FEAT_BONDED_EARTH,oPC) &amp;&amp;<br>
+         (nColdLevel &gt;0 || nElecLevel&gt;0 ||  nFireLevel &gt;0))<br>
+         return FALSE;<br>
+     if(GetHasFeat(FEAT_BONDED_AIR,oPC) &amp;&amp;<br>
+         (nColdLevel &gt;0 || nAcidLevel&gt;0 ||  nFireLevel &gt;0))<br>
+         return FALSE;<br>
+     if(GetHasFeat(FEAT_BONDED_FIRE,oPC) &amp;&amp;<br>
+         (nColdLevel &gt;0 || nElecLevel&gt;0 ||  nAcidLevel &gt;0))<br>
+         return FALSE;<br>
+     if(GetHasFeat(FEAT_BONDED_WATER,oPC) &amp;&amp;<br>
+         (nAcidLevel &gt;0 || nElecLevel&gt;0 ||  nFireLevel &gt;0))<br>
+         return FALSE;<br>
+     return TRUE;<br>
+ }</font><br>
+ <br>
+ Dont forget to include both prc_feats_const and prc_class_const.<br>
+ <br>
+  </p>
+ 
+<p><b><u>Making Lich's Dynamic</u></b><br>
+ <br>
+ 1) Get the HUB races v2 hakpak. <a
+ href="http://nwvault.ign.com/Files/hakpac...803650196.shtml"
+ target="_blank" style="color: rgb(207,207,207);"> http://nwvault.ign.com/Files/hakpac...803650196.shtml</a><br>
+ <br>
+ 2) Add that hakpak to the module. It doesnt conflict with the PRC, but it
+will  with the CEP and many other hakpaks.<br>
+ <br>
+ 3) Change the script pnp_lich_level at about line 110 from APPEARANCE_TYPE_LICH
+ to 506.<br>
+ <br>
+ 4) Change the script pnp_lich_alter at about line 32 from APPEARANCE_TYPE_LICH
+ to 506.<br>
+ <br>
+ 5) Create a copy of prc_scripts.hak and remove pnp_lich_level.* and  pnp_lich_alter.*
+from the copy.<br>
+ <br>
+ 6) Remove prc_scripts.hak from the module, and use the copy instead.<br>
+ <br>
+ 7) Levelup as a lich and enjoy being a dynamic lich!<br>
+ <br>
+ NOTE: The only minor problem I have seen is that you have a bare skeleton
+head  instead of the lich head, but I can live with that. If you cant, you
+just have  to rename the head models I think. SetAppearance gives all body
+parts number  001.</p>
+ 
+<p> </p>
+ 
+<p><u><b>NPCs and the PRC</b></u></p>
+ 
+<p>Ok then, heres a short introduction to getting NPCs to begin to work with
+the  new PRC classes. It covers two problems, Equiping, and Levelup. Before
+we do  either of those, we need to get all the scripts into the module. To
+do this,  copy the prc_scripts.hak into the erf directory and rename it into
+ prc_scripts.erf Then you just import it into you module (Yes, you can!)
+and  remove the reference to prc_scripts.hak from the custom content list.<br>
+ <br>
+ <u>Equip/Unequip problems</u><br>
+ <br>
+ The prc relies on the OnEquip and OnUneqip module events for many feats,
+such as  the duelist presice strike. This checks the item equiped and if
+it meats the  criteria (light and piercing) gives bonus damage. However,
+NPCs dont fire  On(Un)Equip, so how can you get the feat to work properly?
+My solution is not  the most efficient in the world, and is probably highly
+exploitable, but here it  is anway. There are two steps, adding On(Un)Equip
+to NPCs, and getting the  scripts to work with NPCs not PCs.<br>
+ <br>
+ To add the events, I used the Heartbeat event. In here we compare what we
+have  currently equipped with what we used to have equipped. If there is
+a difference,  we trigger the script.<br>
+ <br>
+ Heres the include:</p>
+ 
+<p><font face="Fixedsys"><br>
+ void DoEquipTest();<br>
+ object GetItemLastEquipped();<br>
+ object GetItemLastEquippedBy();<br>
+ object GetItemLastUnequipped();<br>
+ object GetItemLastUnequippedBy();<br>
+ <br>
+ <br>
+ object GetItemLastEquippedBy()<br>
+ {<br>
+     if(GetModule() == OBJECT_SELF)<br>
+         return GetPCItemLastEquippedBy();<br>
+     else<br>
+         return OBJECT_SELF;<br>
+ }<br>
+ <br>
+ object GetItemLastUnequippedBy()<br>
+ {<br>
+     if(GetModule() == OBJECT_SELF)<br>
+         return GetPCItemLastUnequippedBy();<br>
+     else<br>
+         return OBJECT_SELF;<br>
+ }<br>
+ <br>
+ object GetItemLastEquipped()<br>
+ {<br>
+     if(GetModule() == OBJECT_SELF)<br>
+         return GetPCItemLastEquipped();<br>
+     else<br>
+         return GetLocalObject(OBJECT_SELF, "oLastEquipped");<br>
+ }<br>
+ <br>
+ object GetItemLastUnequipped()<br>
+ {<br>
+     if(GetModule() == OBJECT_SELF)<br>
+         return GetPCItemLastUnequipped();<br>
+     else<br>
+         return GetLocalObject(OBJECT_SELF, "oLastUnequipped");<br>
+ }<br>
+ <br>
+ void DoEquipTest()<br>
+ {<br>
+     int i;<br>
+     object oTest;<br>
+     object oItem;<br>
+     for(i=1; i&lt;NUM_INVENTORY_SLOTS;i++)<br>
+     {<br>
+         oItem = GetItemInSlot(i, OBJECT_SELF);<br>
+         oTest = GetLocalObject(OBJECT_SELF, "oSlotItem"+IntToString(i));<br>
+         if(oTest != oItem)<br>
+         {<br>
+              if(GetIsObjectValid(oItem))<br>
+             {<br>
+                  SetLocalObject(OBJECT_SELF, "oLastEquipped", oItem);<br>
+                  ExecuteScript("prc_equip", OBJECT_SELF);<br>
+             }<br>
+              if(GetIsObjectValid(oTest))<br>
+             {<br>
+                  SetLocalObject(OBJECT_SELF, "oLastUnequipped", oTest);<br>
+                  ExecuteScript("prc_unequip", OBJECT_SELF);<br>
+             }<br>
+              SetLocalObject(OBJECT_SELF, "oSlotItem"+IntToString(i), oItem);<br>
+         }<br>
+     }<br>
+ }</font></p>
+ 
+<p><br>
+ All that needs to be done is add DoEquipTest(); to the top of the main function
+ in the heartbeat script.<br>
+ <br>
+ The second part is trickier, getting OnEquiped events to work with NPCs.
+I used  the third party program ReplaceEm. Then I replaced the following<br>
+ <br>
+ GetPCItemLastEquippedBy with GetItemLastEquippedBy<br>
+ GetPCItemLastUnequippedBy with GetPCItemLastUnequippedBy<br>
+ GetPCItemLastEquipped with GetItemLastEquipped<br>
+ GetPCItemLastUnequipped with GetPCItemLastUnequipped<br>
+ <br>
+ across all scripts by running it on the NWN/modules/temp0 directory, filtering
+ for all .nss files. That probably sounds like a foreign language, but its
+easier  to understand once you have a play with ReplaceEm!<br>
+ <br>
+ Then save the module, close it, and reopen it. This will force the toolset
+to  use the replaced versions. Do a full script recompile, this will cause
+a lot of  errors. In all the scripts that have errors, except the spinc_*set,
+add #include  "[whatever you called the include file above]" above void main()
+Do another  recompile of all scripts and the errors should all go away, except
+for spinc_*<br>
+ <br>
+ <u>LevelUp simulation<br>
+ </u><br>
+ Some of the benefits of a class are applied at levelup, or OnClientEnter.
+These  events don't trigger for NPCs, but a similar one does. The easiest
+way to work  with this is to put the OnClientEnter code into the OnSpawn
+script, preferably  at the beginning, just after void main(). So add:<br>
+ <br>
+ GetPCSkin(OBJECT_SELF);<br>
+ EvalPRCFeats(OBJECT_SELF);<br>
+ CheckSpecialPRCRecs(OBJECT_SELF);<br>
+ <br>
+ and remeber to add #include "prc_inc_function" just above void main()<br>
+ <br>
+ However, if your NPC uses LevelUpHenchman to gain levels, then you will
+have to  call EvalPRCFeats, CheckSpecialPRCRecs and ExecuteScript("ft_sanctmartial",
+ [whatever object is leveling]) after every levelup.<br>
+ <br>
+ That's it! Of course, this doesnt mean that the NPC will actually use any
+of its  new powers, but at least it is not missing out on anything. There
+are still some  problems with NPCs<br>
+ <br>
+ 1) They don't use the active powers in any intelligent manner. They may
+use them  as part of the Talent functions, but don't bet on it! Bioware default
+AI is  better for this than most others.<br>
+ <br>
+ 2) The toolset will throw up errors whenever the LevelUp or Character Wizards
+ are used with the new classes. This is due to a lack of toolset ini files
+to  tell it what feats they should be given. Best way is to hand make them,
+but your  doing that anyway, right?<br>
+ <br>
+ 3) New spells may cause them problems, but as with 1, the talent functions
+ should pick them alright. They probably wont take account of any of the
+newer  features though.<br>
+ <br>
+ And plenty of other, more specific, problems.<br>
+  </p>
+ 
+<p> </p>
+  <br>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+ 
+  <meta http-equiv="Content-Language" content="en-gb">
+ 
+  <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ 
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+ 
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=windows-1252">
+  <title>Player Resource Consortium</title>
+  
+  <style>
+<!--
+.page
+{
+	background-color: #666666;
+}
+.tborder
+{
+	background-color: #000000;
+	border: 1px solid #000000
+}
+td
+{
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.alt1
+{
+	background-color: #666666;
+}
+.inlineimg { vertical-align: middle; }
+-->
+  </style>
+</head>
+  <body text="#c0c0c0" bgcolor="#000000">
+  
+<p align="center"><u><b><font size="6">Player Resource Consortium</font></b></u></p>
+       
+<p align="center"><u><font size="5"><b>Working with PRC scripts</b></font></u></p>
+       
+<p><font size="2">back to <a href="Builder.htm">Builders</a></font></p>
+   
+<p><br>
+<b> There is an issue with prc_scripts.hak. The source scripts are not the
+same scripts as the compiled scripts. Which is really wierd becuase when
+the distribution copies are made, the scripts are compiled and the source
+copied straight in. As of 2.2, either the problem will be fixed, or a separate
+script distribution will be made.</b><br>
+</p>
+<p>As you may have noticed, the PRC scripts dont compile with the toolset
+based compiler. For some time now, the PRC has compiled its scripts with
+bioware provided command line compiler. This is located in the utils directoy
+and is named clcompile.exe I suggest that you create a shortcut to that file
+and change it as follows.<br>
+<br>
+</p>
+<ol>
+  <li>Right click on shortcut</li>
+  <li>Go to Properties</li>
+  <li>In the Target box, add double quotes around the text. For example it
+should be something like ["C:\Games\NeverwinterNights\NWN\utils\clcompile.exe"]
+without [ or ].</li>
+  <li>At the end, add the directory you use for NWN, then modules, then temp0,
+then *.nss. For example, ["C:\Games\NeverwinterNights\NWN\utils\clcompile.exe"
+C:\Games\NeverwinterNights\NWN\modules\temp0\*.nss]</li>
+  <li>Then add the same again, but without *.nss. For example, ["C:\Games\NeverwinterNights\NWN\utils\clcompile.exe"
+C:\Games\NeverwinterNights\NWN\modules\temp0\*.nss C:\Games\NeverwinterNights\NWN\modules\temp0\]</li>
+  <li>Then open the toolset and open any module without closing the shortcut
+properties.</li>
+  <li>Once the module is open, close the shortcut properties by clicking
+OK.</li>
+  <li>In the toolset, go to build-&gt;build module and make sure that "advanced
+controls" is checked.</li>
+  <li>Then make sure that "scripts" is not checked.</li>
+  <li>Then click done.</li>
+  <li>Go to Tools-&gt;Options then select ScriptEditor and make sure that
+"Automatically compile scripts on save" is clear.</li>
+  <li>Then click OK.</li>
+</ol>
+<p><br>
+<br>
+From now on, whenever you wish to compile scripts for a module, use the shortcut
+rather than the toolset. You can still use the toolset for every other purpose,
+but dont try and compile in there! Also, you should copy prc_scripts.hak
+to prc_scripts.erf and import it into every module that uses the PRC. This
+will ensure that all the required includes are present. It should also be
+done after every PRC update.<br>
+<br>
+This is not a change that will break biowares toolset compiler, more like
+the compiler is already broken, and this is a workaround.</p>
+  
+</body>
+</html>

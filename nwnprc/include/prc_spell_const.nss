@@ -1,3 +1,5 @@
+const int S = -1;
+
 //spell
 const int SPELL_MAJOR_MAGIC_MISSILE         = 2247;
 const int SPELL_GREAT_WALL_OF_DISPEL        = 2096;

@@ -8,6 +8,7 @@
 #include "inc_item_props"
 #include "prc_class_const"
 #include "prc_misc_const"
+#include "x0_i0_spells"
 
 //:://////////////////////////////////////////////
 //:: Skill Functions

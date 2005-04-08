@@ -35,4 +35,5 @@ void main()
      
      // Execute scripts hooked to this event for the player triggering it
      ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERUNEQUIPITEM);
+     ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONPLAYERUNEQUIPITEM);
 }

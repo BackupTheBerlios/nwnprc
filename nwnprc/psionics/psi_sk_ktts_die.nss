@@ -1,0 +1,44 @@
+//::///////////////////////////////////////////////
+//:: Soulknife: Knife To The Soul - dice used
+//:: psi_sk_ktts_die
+//::///////////////////////////////////////////////
+/*
+    Sets the number of dice from next Psychic Strike
+    enabled hit will be converted to ability damage.
+*/
+//:://////////////////////////////////////////////
+//:: Created By: Ornedan
+//:: Created On: 04.04.2005
+//:://////////////////////////////////////////////
+
+#include "psi_inc_soulkn"
+
+
+//////////////////////////////////////////////////
+/* Local constants                              */
+//////////////////////////////////////////////////
+
+const int FIRST_RADIAL_START  = 2416;
+const int SECOND_RADIAL_START = 2422;
+
+void main()
+{
+    object oPC = OBJECT_SELF;
+    int nID = GetSpellId();
+    int nDice;
+    
+    if(nID > SECOND_RADIAL_START)
+        nDice = 5 + nID - SECOND_RADIAL_START;
+    else
+        nDice = nID - FIRST_RADIAL_START;
+    
+    // DEBUG
+    if(nDice < 1 || nDice > 10)
+        WriteTimestampedLogEntry("Invalid SpellId in psi_sk_ktts_die");
+    
+    
+    SetLocalInt(oPC, KTTS, 
+                GetLocalInt(oPC, KTTS) & KTTS_TYPE_MASK // Use the mask to remove the old die selection
+                | (nDice << 2) // Shift the dice number right by 2 and OR it in
+               );
+}

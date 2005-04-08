@@ -1,0 +1,176 @@
+//::///////////////////////////////////////////////
+//:: Soulknife: Mindblade OnHit
+//:: psi_sk_onhit
+//::///////////////////////////////////////////////
+/*
+    Handles Psychic Strike + Knife To The Soul
+    and various mindblade enhancements that
+    need special handling
+*/
+//:://////////////////////////////////////////////
+//:: Created By: Ornedan
+//:: Created On: 08.04.2005
+//:://////////////////////////////////////////////
+
+#include "psi_inc_soulkn"
+#include "spinc_common"
+#include "psi_inc_psifunc"
+
+// Notes to self
+// - While bladewind is active, lose Psych Strike normally, but store it and affect all based on that (or not)
+
+
+void main()
+{
+    object oPC     = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    object oItem   = GetSpellCastItem();
+    int nFlags = GetLocalInt(oPC, MBLADE_FLAGS);
+    
+    
+    // Handle Psychic Strike
+    if(GetLocalInt(oPC, PSYCHIC_STRIKE) || GetLocalInt(oPC, PSYCHIC_STRIKE + BLADEWIND))
+    {
+        // Check if the target is valid for Psychic Strike
+        int nRacialType = MyPRCGetRacialType(oTarget);
+        if(!(// Non-living
+           nRacialType == RACIAL_TYPE_UNDEAD    ||
+           nRacialType == RACIAL_TYPE_CONSTRUCT ||
+           // Mindless
+           spellsIsMindless(oTarget)            ||
+           // Immune to mind-affecting
+           GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS)))
+        {
+            // Lose Psychic Strike, unless this was a Bladewind attack other than the first
+            if(GetLocalInt(oPC, PSYCHIC_STRIKE))
+            {
+                
+                //FloatingTextStringOnCreature("* " + GetStringByStrRef(16824456) + " *", oPC);
+                // Lose Psychic Strike
+                SetLocalInt(oPC, PSYCHIC_STRIKE, FALSE);
+                // If we are Bladewinding and had Psychic Strike at the start, mark it
+                if(GetLocalInt(oPC, BLADEWIND))
+                {
+                    SetLocalInt(oPC, PSYCHIC_STRIKE + BLADEWIND, TRUE);
+                    DelayCommand(1.0, DeleteLocalInt(oPC, PSYCHIC_STRIKE + BLADEWIND));
+                }
+            }
+            FloatingTextStringOnCreature("* " + GetStringByStrRef(16824456) + " *", oPC); // Remove this and uncomment the one above once testing is done. No other need to spam on bladewind
+            
+            int nPsychDice = (GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC) + 1) / 4;
+            int nKTTSDice  = GetLocalInt(oPC, KTTS) >>> 2;
+            int nKTTSType  = GetLocalInt(oPC, KTTS) & KTTS_TYPE_MASK;
+            
+            // Calculate Psychic Strike dice left unused and apply KTTS
+            if(nKTTSType != KTTS_TYPE_OFF)
+            {
+                nPsychDice -= nKTTSDice;
+                if(nPsychDice < 0){
+                    nKTTSDice += nPsychDice;
+                    nPsychDice = 0;
+                }
+                effect eAbilDam = EffectAbilityDecrease(nKTTSType == KTTS_TYPE_INT ? ABILITY_INTELLIGENCE :
+                                                        nKTTSType == KTTS_TYPE_WIS ? ABILITY_WISDOM :
+                                                        ABILITY_CHARISMA
+                                                        , nKTTSDice);
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
+            }
+            
+            // Apply Psychic Strike damage if there are any dice left
+            if(nPsychDice)
+            {
+                effect eDam = EffectDamage(d8(nPsychDice), DAMAGE_TYPE_MAGICAL);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FROST_L), oTarget);
+            }
+        }// end if - target is valid for Psychic Strike
+    }// end if - try dealing Psychic Strike damage
+    
+    
+    // Apply the various enhancement effects
+    if(nFlags & MBLADE_FLAG_VICIOUS)
+    {// A vicious mindblade creates a flash of disruptive energy whenever it hits, dealing 2d6 damage to the target hit and 1d6 to the wielder.
+        effect eDam = EffectDamage(d6(2), DAMAGE_TYPE_MAGICAL);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+        eDam = EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
+    }
+    if(nFlags & MBLADE_FLAG_MINDCRUSHER)
+    {// Any psionic creature struck by the mindblade loses a number of power points equal to half a roll of the weapon's base damage. If the creature is out of power points must succeed on a DC 17 Will save or take 1d2 points of Wisdom damage.
+        if(GetIsPsionicCharacter(oTarget))
+        {
+            int nPPLoss;
+            switch(GetBaseItemType(oItem))
+            {
+                case BASE_ITEM_SHORTSWORD:   nPPLoss = d6(); break;
+                case BASE_ITEM_LONGSWORD:    nPPLoss = d8(); break;
+                case BASE_ITEM_BASTARDSWORD: nPPLoss = d10(); break;
+                case BASE_ITEM_THROWINGAXE:  nPPLoss = d6(); break;
+                
+                default:
+                    WriteTimestampedLogEntry("Wrong type of item firing psi_sk_onhit: " + IntToString(GetBaseItemType(oItem)));
+                    return;
+            }
+            
+            int nPP = GetLocalInt(oTarget, "PowerPoints");
+            if(nPP > 0)
+            {
+                nPP -= nPPLoss <= nPP ? nPPLoss : nPP;
+                SetLocalInt(oTarget, "PowerPoints", nPP);
+            }
+            else
+            {
+                // Make a DC 17 will save
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, 17))
+                {
+                    effect eAbilDam = EffectAbilityDecrease(ABILITY_WISDOM, d2());
+                    ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
+                }
+            }
+        }
+    }
+    if(nFlags & MBLADE_FLAG_SUPPRESSION)
+    {// When an opponent is struck with a suppressing mindblade, they are subject to a targeted dispel psionics power. The wielder makes a power check (1d20 + 5 + SK level, maximum of +15) against a DC of 11+ manifester level of power to be dispelled.
+        int nCasterLevel = 5 + GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC);
+            nCasterLevel = nCasterLevel > 20 ? 20 : nCasterLevel;
+        effect eVis    = EffectVisualEffect(VFX_IMP_BREACH);
+        effect eImpact = EffectVisualEffect(VFX_FNF_DISPEL);
+        //----------------------------------------------------------------------
+        // Targeted Dispel - Dispel all
+        //----------------------------------------------------------------------
+        if(GetLocalInt(GetModule(),"BIODispel"))
+            spellsDispelMagic(oTarget, nCasterLevel, eVis, eImpact);
+        else
+            spellsDispelMagicMod(oTarget, nCasterLevel, eVis, eImpact);
+    }
+    if(nFlags & MBLADE_FLAG_WOUNDING)
+    {// On hit, the mindblade deals 1 point of Constitution damage to the target. Creatures immune to critical hits are immune to this damage.
+        if(!GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT))
+        {
+            effect eAbilDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, 1);
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
+        }
+    }
+    if(nFlags & MBLADE_FLAG_DISRUPTING)
+    {// On each hit with the mindblade, unless the target succeeds at a DC 3/7 * (SK level + 16) Will save, it is dazed for a round.
+        int nDC = FloatToInt(3.0 / 7.0 * IntToFloat(GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC) + 16));
+        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+        {
+            effect eDaze = EffectDazed();
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eDaze), oTarget, 6.0f);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DAZED_S), oTarget);
+        }
+    }
+    if(nFlags & MBLADE_FLAG_SOULBREAKER)
+    {// On a successfull hit with the mindblade, the target must make a DC 18 fortitude save or gain a negative level.
+        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, 18))
+        {
+            effect eLevelLoss = EffectNegativeLevel(1);
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eLevelLoss), oTarget, HoursToSeconds(24));
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_EVIL_10), oTarget);
+        }
+    }
+}

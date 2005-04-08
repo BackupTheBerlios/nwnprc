@@ -43,6 +43,7 @@ void main()
     // Handle ability skill limited items
     ExecuteScript("prc_equip_rstr", OBJECT_SELF);
     
-    // Execute scripts hooked to this event for the player triggering it
+    // Execute scripts hooked to this event for the creature and item triggering it
 	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYEREQUIPITEM);
+	ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONPLAYEREQUIPITEM);
 }

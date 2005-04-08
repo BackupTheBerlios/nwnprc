@@ -30,6 +30,7 @@ void main()
     if (GetTag(oItem) == "epicspellcast")
         ExecuteScript("_rest_button", oPC);
     
-    // Execute scripts hooked to this event for the player triggering it
+    // Execute scripts hooked to this event for the player and item triggering it
 	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONACTIVATEITEM);
+	ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONACTIVATEITEM);
 }

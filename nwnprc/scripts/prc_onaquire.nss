@@ -10,7 +10,9 @@ void main()
 	// Handle someone acquiring an poisoned item.
 	ExecuteScript("poison_onaquire", OBJECT_SELF);
 	
-	// Execute scripts hooked to this event for the creature triggering it
+	// Execute scripts hooked to this event for the creature and item triggering it
 	object oCreature = GetModuleItemAcquiredBy();
+	object oItem = GetModuleItemAcquired();
 	ExecuteAllScriptsHookedToEvent(oCreature, EVENT_ONACQUIREITEM);
+	ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONACQUIREITEM);
 }

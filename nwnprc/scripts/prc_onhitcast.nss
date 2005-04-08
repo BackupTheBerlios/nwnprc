@@ -275,7 +275,8 @@ void main()
     }
     
     // Execute scripts hooked to this event for the player triggering it
-     ExecuteAllScriptsHookedToEvent(oSpellOrigin, EVENT_ONHIT);
+    ExecuteAllScriptsHookedToEvent(oSpellOrigin, EVENT_ONHIT);
+    ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONHIT);
 }
 
 void SetRancorVar(object oPC)

@@ -1,5 +1,8 @@
-<file:open KRAGUS 'D:\NeverwinterNights\DocGen\Tools\BuildGen\builds\build1.bic'>
 <var:iLink="build1.rar"> 
+<var:iDir="C:/Games/NeverwinterNights/NWN/localvault/*.*">
+<var:playerlist=[]>
+<vault:<var:playerlist> 'C:/Games/NeverwinterNights/NWN/localvault/*.*'>
+<for:vault <var:playerlist>>
 <var:iBuild=18> 
 \n
 \<html\> \n
@@ -398,3 +401,4 @@
 
 \</body\>\n
 \</html\>
+</for>

@@ -1,9 +1,39 @@
-<var:iLink="build1.rar"> 
-<var:iDir="C:/Games/NeverwinterNights/NWN/localvault/*.*">
-<var:playerlist=[]>
-<vault:<var:playerlist> 'C:/Games/NeverwinterNights/NWN/localvault/*.*'>
-<for:vault <var:playerlist>>
 <var:iBuild=18> 
+
+<comment>
+	The directory name uses \\ for a specific reason...
+	When you use / in the file names it converts them to \ instead, in order
+	to remove those \ you need to put them in the initial string as \\
+	
+	So we can each copy/paste our test directories   =)
+	C:\\Games\\NeverwinterNights\\NWN\\localvault\\
+	D:\\NeverwinterNights\\DocGen\\Tools\\BuildGen\\builds\\
+</comment>
+
+<var:iBuildDir="D:\\NeverwinterNights\\DocGen\\Tools\\BuildGen\\builds\\">
+<var:iBuildList= <var:iBuildDir> + "*.*">
+
+<var:playerlist=[]>
+<vault:<var:playerlist> <var:iBuildList> >
+
+<for:vault <var:playerlist>>
+<var:iLink= <~> - <var:iBuildDir> - "bic" + "rar">
+
+<comment>
+	I copied the rar.exe file from the nwnprc tools directory
+	The top variable produces a working command.  
+	
+	I can run this script, copy the var, go into a dos cmd window and run it just fine.
+	
+	What I cannot figure out... is how to get Moneo to run this command properly.
+	
+	Once that works, it will be able to take a directory full of bics
+	and produce all the .rar's and a series of a giant html file with the right links.
+	
+	<var:sCommand= "rar.exe a -ep " + <var:iBuildDir> + <var:iLink> + " " + <~> >
+	<exec:run 'rar.exe a -ep builds/test.rar builds/test.bic'> >
+</comment>
+
 \n
 \<html\> \n
 \<head\> \n
@@ -18,21 +48,10 @@
 \<table class="main_table" cellpadding=5 cellspacing=0\>\n
 \<tr\> \n
 
-<#: \t\<td width=40%\>
-<#: \t\t\ \&nbsp;
-<#: \t\</td\>
-
-<#: Title Info>
-<#: \<tr\>
 \t\<td nowrap width=40%\>\n
 \t\t\<a class="title1" href=<var:iLink>\> <Firstname> <Lastname> \</a\> \n
 
 \t\t\<br\> \<hr\> \n
-
-<#: \</td\>
-<#: \</tr\>
-<#: \<tr\>
-<#: \t\<td colspan=3\>
 
 \t\t <lq:{xql="gender[i=<Gender>]:."}>    \<br\> \n
 \t\t <lq:{xql="racialtypes[i=<Race>]:."}> \<br\> \n
@@ -40,7 +59,7 @@
 
 <if: <LawChaos> gt 65>
   Lawful 
-<else: <LawChaos> lq 65 && <GoodEvil> gq 34>
+<else: <LawChaos> le 65 && <GoodEvil> ge 34>
   Neutral 
 <else:<LawChaos> lt 34>
   Chaotic 
@@ -48,7 +67,7 @@
 
 <if: <GoodEvil> gt 65>
   Good 
-<else: <GoodEvil> lq 65 && <GoodEvil> gq 34>
+<else: <GoodEvil> le 65 && <GoodEvil> ge 34>
   Neutral 
 <else:<GoodEvil> lt 34>
   Evil 
@@ -56,11 +75,6 @@
 
 \n
 \t\t\<br\> \<hr\> \n
-
-<#: \</td\>
-<#: \</tr\>
-<#: \<tr\>
-<#: \t\<td colspan=3\>
 
 <#: List Class Totals>
 <for:field 'ClassList'>
@@ -90,10 +104,7 @@
 </for>
 
 \t\t \<hr\> \n
-
 \t\</td\>\n
-<#: \</tr\>\n
-
 
 \t\<td valign=top\>\n
 \t\t\<table cellpadding=3 cellspacing=0\>\n

@@ -1,4 +1,4 @@
-<file:open KRAGUS 'C:\stuff\moneo-build-4.0.18\builds\hornsinger2.bic'>
+<file:open KRAGUS 'C:\Games\NeverwinterNights\NWN\localvault\trollbarbarian.bic'>
 <var:iBuild=18>
 \<html\>\n
 \n
@@ -105,6 +105,25 @@ table {\n
 <var:iInt=<Int>>
 <var:iWis=<wis>>
 <var:iCha=<Cha>>
+<var:iStr=0+<var:iStr>+<lq:{xql="racialtypes[i=<Race>]:stradjust"}>>
+<var:iDex=0+<var:iDex>+<lq:{xql="racialtypes[i=<Race>]:dexadjust"}>>
+<var:iCon=0+<var:iCon>+<lq:{xql="racialtypes[i=<Race>]:conadjust"}>>
+<var:iInt=0+<var:iInt>+<lq:{xql="racialtypes[i=<Race>]:intadjust"}>>
+<var:iWis=0+<var:iWis>+<lq:{xql="racialtypes[i=<Race>]:wisadjust"}>>
+<var:iCha=0+<var:iCha>+<lq:{xql="racialtypes[i=<Race>]:chaadjust"}>>
+<var:iStrb=<Str>>
+<var:iDexb=<Dex>>
+<var:iConb=<Con>>
+<var:iIntb=<Int>>
+<var:iWisb=<wis>>
+<var:iChab=<Cha>>
+<var:iStrb=0+<var:iStrb>+<lq:{xql="racialtypes[i=<Race>]:stradjust"}>>
+<var:iDexb=0+<var:iDexb>+<lq:{xql="racialtypes[i=<Race>]:dexadjust"}>>
+<var:iConb=0+<var:iConb>+<lq:{xql="racialtypes[i=<Race>]:conadjust"}>>
+<var:iIntb=0+<var:iIntb>+<lq:{xql="racialtypes[i=<Race>]:intadjust"}>>
+<var:iWisb=0+<var:iWisb>+<lq:{xql="racialtypes[i=<Race>]:wisadjust"}>>
+<var:iChab=0+<var:iChab>+<lq:{xql="racialtypes[i=<Race>]:chaadjust"}>>
+
 
 <for:field 'LvlStatList'>
 
@@ -201,12 +220,12 @@ table {\n
 
 
 \<tr\>\<td COLSPAN=3 nowrap class=title2\>Starting Stats\</td\>\<td COLSPAN=3 nowrap class=title2\>Ending Stats\</td\>\n
-\<tr\>\<td width=30%\>STR\</td\>\<td width=10%\><var:iStr>\</td\>\<td width=10% nowrap\><math:floor((<var:iStr>-10)/2)>\</td\>\<td width=30%\>STR\</td\>\<td width=10%\><Str>\</td\>\<td width=10% nowrap\><math:floor((<Str>-10)/2)>\</td\>\</tr\>\n
-\<tr\>\<td\>DEX\</td\>\<td\><var:iDex>\</td\>\<td nowrap\><math:floor((<var:iDex>-10)/2)>\</td\>\<td\>DEX\</td\>\<td\><Dex>\</td\>\<td nowrap\><math:floor((<Dex>-10)/2)>\</td\>\</tr\>\n
-\<tr\>\<td\>CON\</td\>\<td\><var:iCon>\</td\>\<td nowrap\><math:floor((<var:iCon>-10)/2)>\</td\>\<td\>CON\</td\>\<td\><Con>\</td\>\<td nowrap\><math:floor((<Con>-10)/2)>\</td\>\</tr\>\n
-\<tr\>\<td\>INT\</td\>\<td\><var:iInt>\</td\>\<td nowrap\><math:floor((<var:iInt>-10)/2)>\</td\>\<td\>INT\</td\>\<td\><Int>\</td\>\<td nowrap\><math:floor((<Int>-10)/2)>\</td\>\</tr\>\n
-\<tr\>\<td\>WIS\</td\>\<td\><var:iWis>\</td\>\<td nowrap\><math:floor((<var:iWis>-10)/2)>\</td\>\<td\>WIS\</td\>\<td\><Wis>\</td\>\<td nowrap\><math:floor((<Wis>-10)/2)>\</td\>\</tr\>\n
-\<tr\>\<td\>CHA\</td\>\<td\><var:iCha>\</td\>\<td nowrap\><math:floor((<var:iCha>-10)/2)>\</td\>\<td\>CHA\</td\>\<td\><Cha>\</td\>\<td nowrap\><math:floor((<Cha>-10)/2)>\</td\>\</tr\>\n
+\<tr\>\<td width=30%\>STR\</td\>\<td width=10%\><var:iStr>\</td\>\<td width=10% nowrap\><math:floor((<var:iStr>-10)/2)>\</td\>\<td width=30%\>STR\</td\>\<td width=10%\><var:iStrb>\</td\>\<td width=10% nowrap\><math:floor((<var:iStrb>-10)/2)>\</td\>\</tr\>\n
+\<tr\>\<td\>DEX\</td\>\<td\><var:iDex>\</td\>\<td nowrap\><math:floor((<var:iDex>-10)/2)>\</td\>\<td\>DEX\</td\>\<td\><var:iDexb>\</td\>\<td nowrap\><math:floor((<var:iDexb>-10)/2)>\</td\>\</tr\>\n
+\<tr\>\<td\>CON\</td\>\<td\><var:iCon>\</td\>\<td nowrap\><math:floor((<var:iCon>-10)/2)>\</td\>\<td\>CON\</td\>\<td\><var:iConb>\</td\>\<td nowrap\><math:floor((<var:iConb>-10)/2)>\</td\>\</tr\>\n
+\<tr\>\<td\>INT\</td\>\<td\><var:iInt>\</td\>\<td nowrap\><math:floor((<var:iInt>-10)/2)>\</td\>\<td\>INT\</td\>\<td\><var:iIntb>\</td\>\<td nowrap\><math:floor((<var:iIntb>-10)/2)>\</td\>\</tr\>\n
+\<tr\>\<td\>WIS\</td\>\<td\><var:iWis>\</td\>\<td nowrap\><math:floor((<var:iWis>-10)/2)>\</td\>\<td\>WIS\</td\>\<td\><var:iWisb>\</td\>\<td nowrap\><math:floor((<var:iWisb>-10)/2)>\</td\>\</tr\>\n
+\<tr\>\<td\>CHA\</td\>\<td\><var:iCha>\</td\>\<td nowrap\><math:floor((<var:iCha>-10)/2)>\</td\>\<td\>CHA\</td\>\<td\><var:iChab>\</td\>\<td nowrap\><math:floor((<var:iChab>-10)/2)>\</td\>\</tr\>\n
 \<tr\>\<td COLSPAN=3\>AC <ArmorClass>\<br\>HP <MaxHitPoints>\</td\>
 \<td COLSPAN=3 nowrap\>Experience: <Experience>\<br\>Next Level: <lq:{xql="exptable[level=<math:1+<LvlStatList?count>>]:xp"}>\</td\>\</tr\>\n
 \<tr\>\<td COLSPAN=6\>

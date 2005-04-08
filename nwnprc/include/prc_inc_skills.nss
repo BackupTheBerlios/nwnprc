@@ -76,9 +76,10 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
      }
        
      // Simulate "leap of the clouds", or RDD's having wings can "fly"
-     if(GetLevelByClass(CLASS_TYPE_MONK, oPC) >= 7) iMaxJumpDistance *= 100;
-     if(GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC) >= 3) iMaxJumpDistance *= 100;
-     if(GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE, oPC) >= 9) iMaxJumpDistance *= 100;
+     if(GetLevelByClass(CLASS_TYPE_MONK, oPC) >= 7
+        || GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC) >= 3
+        || spellsIsFlying(oPC)) 
+            iMaxJumpDistance *= 100;
       
      // skill 28 = jump
      int iJumpRoll = d20() + GetSkillRank(SKILL_JUMP, oPC) + GetAbilityModifier(ABILITY_STRENGTH, oPC);

@@ -38,6 +38,7 @@
 #include "x2_inc_switches"
 #include "x2_inc_itemprop"
 #include "x0_i0_henchman"
+#include "prc_racial_const"
 
 //* get the hightest spellcasting class level of oCreature)
 int GZGetHighestSpellcastingClassLevel(object oCreature);
@@ -1494,6 +1495,7 @@ int spellsIsFlying(object oCreature)
 {
     int nAppearance = GetAppearanceType(oCreature);
     int bFlying = FALSE;
+    int nRace = GetRacialType(oCreature, oPC);
     switch(nAppearance)
     {
         case APPEARANCE_TYPE_ALLIP:
@@ -1544,6 +1546,11 @@ int spellsIsFlying(object oCreature)
         case 472: // Hive mother
         bFlying = TRUE;
     }
+    if(GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE, oPC) >= 9
+        || GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 5
+        || nRace == RACIAL_TYPE_AVARIEL
+        || nRace == RACIAL_TYPE_FEYRI)
+        bFlying = TRUE;
     return bFlying;
 }
 

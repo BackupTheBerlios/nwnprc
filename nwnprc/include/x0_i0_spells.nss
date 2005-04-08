@@ -1495,7 +1495,7 @@ int spellsIsFlying(object oCreature)
 {
     int nAppearance = GetAppearanceType(oCreature);
     int bFlying = FALSE;
-    int nRace = GetRacialType(oCreature, oPC);
+    int nRace = GetRacialType(oCreature);
     switch(nAppearance)
     {
         case APPEARANCE_TYPE_ALLIP:
@@ -1546,8 +1546,8 @@ int spellsIsFlying(object oCreature)
         case 472: // Hive mother
         bFlying = TRUE;
     }
-    if(GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE, oPC) >= 9
-        || GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 5
+    if(GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE, oCreature) >= 9
+        || GetLevelByClass(CLASS_TYPE_LICH, oCreature) >= 5
         || nRace == RACIAL_TYPE_AVARIEL
         || nRace == RACIAL_TYPE_FEYRI)
         bFlying = TRUE;
@@ -1558,6 +1558,7 @@ int spellsIsFlying(object oCreature)
 int spellsIsMindless(object oCreature)
 {
     int nRacialType = MyPRCGetRacialType(oCreature);
+    int nMindless;
     switch(nRacialType)
     {
         case RACIAL_TYPE_ELEMENTAL:
@@ -1565,9 +1566,12 @@ int spellsIsMindless(object oCreature)
         case RACIAL_TYPE_VERMIN:
         case RACIAL_TYPE_CONSTRUCT:
         case RACIAL_TYPE_OOZE:
-        return TRUE;
+        nMindless = TRUE;
     }
-    return FALSE;
+    if(GetAbilityScore(oCreature, ABILITY_INTELLIGENCE) > 3)
+        nMindless = FALSE;
+    
+    return nMindless;
 }
 
 

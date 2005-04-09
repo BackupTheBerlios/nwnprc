@@ -57,19 +57,19 @@
 \t\t <lq:{xql="racialtypes[i=<Race>]:."}> \<br\> \n
 \t\t
 
-<if: <LawChaos> gt 65>
+<if: <LawfulChaotic> gt 65>
   Lawful 
-<else: <LawChaos> le 65 && <GoodEvil> ge 34>
+<elsif:<LawfulChaotic> le 65 && <LawfulChaotic> ge 34>
   Neutral 
-<else:<LawChaos> lt 34>
+<elsif:<LawfulChaotic> lt 34>
   Chaotic 
 </if>
 
 <if: <GoodEvil> gt 65>
   Good 
-<else: <GoodEvil> le 65 && <GoodEvil> ge 34>
+<elsif:<GoodEvil> le 65 && <GoodEvil> ge 34>
   Neutral 
-<else:<GoodEvil> lt 34>
+<elsif:<GoodEvil> lt 34>
   Evil 
 </if>
 

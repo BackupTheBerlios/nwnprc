@@ -35,6 +35,6 @@ void main()
             oTest = GetItemInSlot(i, oPC);
         }
         if(i<20)
-            ForceUnequip(oPC, oItem, i);
+            DelayCommand(0.3f, ForceUnequip(oPC, oItem, i));
     }
 }

@@ -14,6 +14,7 @@
 #include "inc_eventhook"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
+#include "prc_inc_combat"
 
 
 //////////////////////////////////////////////////
@@ -45,7 +46,7 @@ void main()
             oMbld = CreateItemOnObject("prc_sk_mblade_bs", oPC);
             break;
         case MBLADE_SHAPE_RANGED:
-            oMbld = CreateItemOnObject("prc_sk_mblade_th", oPC);
+            oMbld = CreateItemOnObject("prc_sk_mblade_th", oPC, GetHasFeat(FEAT_MULTIPLE_THROW, oPC) ? GetMainHandAttacks(oPC) : 1);
             break;
 
         default:
@@ -73,7 +74,7 @@ void main()
 
         BuildMindblade(oPC, oMbld);
 
-        AssignCommand(oPC, ActionEquipItem(oMbld, INVENTORY_SLOT_RIGHTHAND));
+        DelayCommand(0.3f, AssignCommand(oPC, ActionEquipItem(oMbld, INVENTORY_SLOT_LEFTHAND)));
 
         AddEventScript(oMbld, EVENT_ITEM_ONHIT, "psi_sk_onhit", TRUE, FALSE);
 

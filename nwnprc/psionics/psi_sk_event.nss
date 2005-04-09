@@ -30,10 +30,10 @@
 
 #include "inc_eventhook"
 #include "psi_inc_soulkn"
-#include "inc_debug"
+//#include "inc_debug"
 
 void DoDestroy(object oItem){
-    DoDebug("DoDestroy running");
+    //DoDebug("DoDestroy running");
     if(GetIsObjectValid(oItem)){
         DestroyObject(oItem);
         AssignCommand(oItem, SetIsDestroyable(TRUE, FALSE, FALSE));
@@ -41,12 +41,16 @@ void DoDestroy(object oItem){
     }
 }
 
-void ForceUnequip(object oPC, object oItem, int nSlot)
+void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE)
 {
+    if(bFirst){
+        DelayCommand(0.3, ForceUnequip(oPC, oItem, nSlot, FALSE));
+        return;
+    }
     if(GetItemInSlot(nSlot, oPC) == oItem)
     {
         AssignCommand(oPC, ActionUnequipItem(oItem));
-        DelayCommand(0.1, ForceUnequip(oPC, oItem, nSlot));
+        DelayCommand(0.1, ForceUnequip(oPC, oItem, nSlot, FALSE));
     }
 }
 
@@ -55,29 +59,36 @@ void main()
     object oPC;
     int nEvent = GetRunningEvent();
     
-    DoDebug("psi_sk_event running");
+    //DoDebug("psi_sk_event running");
     
     if(nEvent == EVENT_ONPLAYERREST_FINISHED)
     {
-        DoDebug("Rest finished, applying new settings");
+        //DoDebug("Rest finished, applying new settings");
         oPC = GetLastBeingRested();
         SetLocalInt(oPC, MBLADE_FLAGS, GetLocalInt(oPC, MBLADE_FLAGS + "_Q"));
     }
     else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
     {
-        DoDebug("Equip");
+        //DoDebug("Equip");
         oPC = GetItemLastEquippedBy();
         object oItem   = GetItemLastEquipped(),
                oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
         
         // Wielding the bastard sword with 2 hands
-        if(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) == oItem &&
+        if(//GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) == oItem &&
            GetBaseItemType(oWeapon) == BASE_ITEM_BASTARDSWORD   &&
            !GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
         {
             SendMessageToPCByStrRef(oPC, 16824510);
-            ForceUnequip(oPC, oItem, INVENTORY_SLOT_LEFTHAND);
+            ForceUnequip(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC), INVENTORY_SLOT_LEFTHAND);
         }
+        /*if(GetBaseItemType(oItem) == BASE_ITEM_BASTARDSWORD &&
+           !GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC) &&
+           GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)))
+        {
+            SendMessageToPCByStrRef(oPC, 16824510);
+            ForceUnequip(oPC, oItem, INVENTORY_SLOT_LEFTHAND);
+        }*/
         
         // Lacking the correct proficiency to wield non-mindblade version of a short sword
         if(GetBaseItemType(oItem) == BASE_ITEM_SHORTSWORD     &&
@@ -132,21 +143,21 @@ void main()
     }
     else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
     {
-        DoDebug("Unequip");
+        //DoDebug("Unequip");
         object oItem = GetItemLastUnequipped();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
             DoDestroy(oItem);
     }
     else if(nEvent == EVENT_ONUNAQUIREITEM)
     {
-        DoDebug("Acquire");
+        //DoDebug("Acquire");
         object oItem = GetModuleItemLost();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
             DoDestroy(oItem);
     }
     else if(nEvent == EVENT_ONPLAYERDEATH)
     {
-        DoDebug("Death");
+        //DoDebug("Death");
         object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, GetLastBeingDied());
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
             DoDestroy(oItem);

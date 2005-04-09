@@ -381,9 +381,9 @@ public final class PageGeneration{
 					if(check.isEpic) other.isEpic = true;
 					if(!check.isClassFeat) other.isClassFeat = false;
 				}catch(NumberFormatException e){
-					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid masterfeat link");
+					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid MASTERFEAT entry");
 				}catch(NullPointerException e){
-					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains a link to nonexistent masterfeat");
+					err_pr.println("Feat " + check.entryNum + ": " + check.name + " MASTERFEAT points to a nonexistent masterfeat entry");
 			}}
 			
 			// Print prerequisites into the entry
@@ -395,12 +395,15 @@ public final class PageGeneration{
 			if(!feats2da.getEntry("SUCCESSOR", check.entryNum).equals("****")){
 				try{
 					other = feats.get(Integer.parseInt(feats2da.getEntry("SUCCESSOR", check.entryNum)));
+					// Check for feats that have themselves as successor
+					if(other == check)
+						err_pr.println("Feat " + check.entryNum + ": " + check.name + " has itself as successor");
 					other.isSuccessor = true;
 					temp += ("<div>\n" + successorFeatHeaderTemplate + "<br /><a href=\"" + other.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + other.name + "</a>\n</div>\n");
 				}catch(NumberFormatException e){
-					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid successor link");
+					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid SUCCESSOR entry");
 				}catch(NullPointerException e){
-					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains a link to nonexistent successor");
+					err_pr.println("Feat " + check.entryNum + ": " + check.name + " SUCCESSOR points to a nonexistent feat entry");
 			}}
 			check.text = check.text.replaceAll("~~~SuccessorFeat~~~", temp);
 		}
@@ -446,14 +449,19 @@ public final class PageGeneration{
 		/* Handle AND prerequisite feats */
 		// Some paranoia about bad entries
 		if(!andReq1Num.equals("****")){
-			try{ andReq1 = feats.get(Integer.parseInt(andReq1Num)); }
-			catch(NumberFormatException e){
-				err_pr.println("Invalid PREREQFEAT1 link in feat " + check.entryNum);
+			try{
+				andReq1 = feats.get(Integer.parseInt(andReq1Num));
+				if(andReq1 == null) err_pr.println("Feat " + check.entryNum + ": " + check.name + " PREREQFEAT1 points to a nonexistent feat entry");
+			}catch(NumberFormatException e){
+				err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid PREREQFEAT1 entry");
 		}}
 		if(!andReq2Num.equals("****")){
-			try{ andReq2 = feats.get(Integer.parseInt(andReq2Num)); }
+			try{
+				andReq2 = feats.get(Integer.parseInt(andReq2Num));
+				if(andReq2 == null) err_pr.println("Feat " + check.entryNum + ": " + check.name + " PREREQFEAT2 points to a nonexistent feat entry");
+			}
 			catch(NumberFormatException e){
-				err_pr.println("Invalid PREREQFEAT2 link in feat " + check.entryNum);
+				err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid PREREQFEAT2 entry");
 		}}
 		// Check if we had at least one valid entry
 		if(andReq1 != null || andReq2 != null){
@@ -479,7 +487,7 @@ public final class PageGeneration{
 				if(!orReqs[i].equals("****")){
 					try{ orReq = feats.get(Integer.parseInt(orReqs[i])); }
 					catch(NumberFormatException e){
-						err_pr.println("Invalid OrReqFeat" + i + " link in feat " + check.entryNum);
+						err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid OrReqFeat" + i + " entry");
 					}
 					if(orReq != null){
 						if(!headerDone){
@@ -488,6 +496,8 @@ public final class PageGeneration{
 						}
 						preReqText += "<br /><a href=\"" + orReq.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + orReq.name + "</a>\n";
 					}
+					else
+						err_pr.println("Feat " + check.entryNum + ": " + check.name + " OrReqFeat" + i + " points to a nonexistent feat entry");
 				}
 			}
 			// End the <div> if we printed anything
@@ -651,10 +661,10 @@ public final class PageGeneration{
 				
 				
 				// Add links to the racial feats
-				featTable = twoDA.get(racialtypes2da.getEntry("FeatsTable", i));
-				if(featTable == null){
-					err_pr.println("Missing RACE_FEAT_*.2da for race " + i + ": " + name);
-					errored = true;
+				try{
+			        featTable = twoDA.get(racialtypes2da.getEntry("FeatsTable", i));
+		        }catch(TwoDAReadException e){
+					throw new PageGenerationException("Failed to read RACE_FEAT_*.2da for race " + i + ": " + name + ":\n" + e);
 				}
 				
 				featList = "";

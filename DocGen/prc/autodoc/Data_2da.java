@@ -249,6 +249,7 @@ public class Data_2da{
 				System.out.println("Invalid parameters");
 				readMe();
 			}
+			verbose = false;
 			file1 = new Data_2da(args[1]);
 			file2 = new Data_2da(args[2]);
 			

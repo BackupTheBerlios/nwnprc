@@ -50,6 +50,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 0;
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
     
+    if (!GetLocalInt(oTarget, "DimAnchor"))
+    {
+    
     if (nMetaPsi > 0) 
     {
     	location lTarget = GetSpellTargetLocation();
@@ -72,5 +75,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, Location(GetArea(oCaster), vOrigin, 0.0), 0.8);
     	DelayCommand(0.1, ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, Location(GetArea(oCaster), vDest, 0.0), 0.7));
     	DelayCommand(0.8, AssignCommand(oCaster, JumpToLocation(lDest)));
+    }
+    
     }
 }

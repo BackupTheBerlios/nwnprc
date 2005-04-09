@@ -7,6 +7,10 @@ void main()
 {
     // Declare major variables
     object oCaster = OBJECT_SELF;
+    
+    if (!GetLocalInt(oCaster, "DimAnchor"))
+    {
+    
     location lTarget = GetSpellTargetLocation();
     location lCaster = GetLocation(oCaster);
     int iLevel       =  GetLevelByClass(CLASS_TYPE_SHADOWLORD,OBJECT_SELF);
@@ -128,6 +132,8 @@ void main()
              }
              iBonus=0;
           }
+        }
+        
         }
 }
 

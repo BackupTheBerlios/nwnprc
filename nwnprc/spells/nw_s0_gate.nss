@@ -36,6 +36,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 // End of Spell Cast Hook
 
+if (!GetLocalInt(OBJECT_SELF, "DimAnchor"))
+{
 
     //Declare major variables
     int nMetaMagic = GetMetaMagicFeat();
@@ -70,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lSpellTargetLOC);
         DelayCommand(3.0, CreateBalor());
     }
-
+}
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name
 }

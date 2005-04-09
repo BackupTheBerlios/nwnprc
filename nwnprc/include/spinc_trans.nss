@@ -9,6 +9,7 @@
 //
 /////////////////////////////////////////////////////////////////////
 
+#include "spinc_common"
 
 //
 // Displays transposition VFX.
@@ -29,6 +30,9 @@ void TransposeVFX(object o1, object o2)
 
 void Transpose(object o1, object o2)
 {
+	if (!GetLocalInt(o1, "DimAnchor") || !GetLocalInt(o2, "DimAnchor"))
+	{
+	
 	// Get the locations of the 2 creatures to swap, keeping the facings
 	// the same.
 	location loc1 = Location(GetArea(o1), GetPosition(o1), GetFacing(o2));
@@ -39,6 +43,8 @@ void Transpose(object o1, object o2)
 	AssignCommand(o1, JumpToLocation(loc2));
 	
 	DelayCommand(0.1, TransposeVFX(o1, o2));
+	
+	}
 }
 
 

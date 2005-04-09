@@ -89,8 +89,8 @@
 85  SneakAttack19                        1040      3    37             0      
 86  SneakAttack20                        1041      3    39             0      
 87  ****                                 ****      **** ****           ****   
-88  ****                                 ****      **** ****           ****   
-89  ****                                 ****      **** ****           ****   
+88  FEAT_LINGERING_DAMAGE                3099      0    -1             0  
+89  Sap                                  31        1    -1             0      
 90  **FeatsGrantedToAll**                ****      **** ****           ****   
 91  FEAT_SHADOW_LORD_CONVO               2360      3    1              1      
 92  FEAT_JUMP                            2884      3    1              1      

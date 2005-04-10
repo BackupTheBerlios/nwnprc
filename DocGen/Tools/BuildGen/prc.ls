@@ -18,7 +18,7 @@
 
 <for:vault <var:playerlist>>
 <var:iLink= <~> - <var:iBuildDir> - "bic" + "rar">
-<var:iText= <var:iLink>-"rar"+"html">
+<var:iText= <var:iBuildDir>+<var:iLink>-"rar"+"html">
 
 <comment>
 	In order for this to output .rar files
@@ -26,7 +26,20 @@
 </comment>
 <var:sCommand= <var:iBuildDir>+"rar.exe a -ep "+<var:iBuildDir>+<var:iLink>+" "+<~>>
 <system:<var:sCommand>>
-
+<var:BicHandle=<var:$fh>>
+<file:create TEXT <var:iText> "text">
+<comment>
+	this is what should be prefixed before each text line
+	<file:write TEXT <qq:
+	and then this has to be added to the end
+	>>
+	so \n becomes <file:write TEXT <qq:\n>>
+	Also, any field reference, e.g. <Lawful> need to be modified
+	so that it reads 
+	<gff:get 'Lawful' <options:handle=<var:BicHandle>>>
+	
+	Its a lot of boring copy/paste, which is why I havnt done it yet ;)
+</comment
 \n
 \<html\> \n
 \<head\> \n
@@ -405,4 +418,6 @@
 
 \</body\>\n
 \</html\>
+<file:save TEXT>
+<file:close TEXT>
 </for>

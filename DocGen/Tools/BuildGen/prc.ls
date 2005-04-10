@@ -7,10 +7,10 @@
 	
 	So we can each copy/paste our test directories   =)
 	C:\\Games\\NeverwinterNights\\NWN\\localvault\\
-	D:\\NeverwinterNights\\DocGen\\Tools\\BuildGen\\builds\\
+	D:\\NeverwinterNights\\DocGen\\Tools\\BuildGen\\builds\\	
 </comment>
 
-<var:iBuildDir="D:\\NeverwinterNights\\DocGen\\Tools\\BuildGen\\builds\\">
+<var:iBuildDir="C:\\Games\\NeverwinterNights\\NWN\\localvault\\">
 <var:iBuildList= <var:iBuildDir> + "*.*">
 
 <var:playerlist=[]>
@@ -18,21 +18,14 @@
 
 <for:vault <var:playerlist>>
 <var:iLink= <~> - <var:iBuildDir> - "bic" + "rar">
+<var:iText= <var:iLink>-"rar"+"html">
 
 <comment>
-	I copied the rar.exe file from the nwnprc tools directory
-	The top variable produces a working command.  
-	
-	I can run this script, copy the var, go into a dos cmd window and run it just fine.
-	
-	What I cannot figure out... is how to get Moneo to run this command properly.
-	
-	Once that works, it will be able to take a directory full of bics
-	and produce all the .rar's and a series of a giant html file with the right links.
-	
-	<var:sCommand= "rar.exe a -ep " + <var:iBuildDir> + <var:iLink> + " " + <~> >
-	<exec:run 'rar.exe a -ep builds/test.rar builds/test.bic'> >
+	In order for this to output .rar files
+	you must copy the rar.exe program into the same directory as the .bic files
 </comment>
+<var:sCommand= <var:iBuildDir>+"rar.exe a -ep "+<var:iBuildDir>+<var:iLink>+" "+<~>>
+<system:<var:sCommand>>
 
 \n
 \<html\> \n

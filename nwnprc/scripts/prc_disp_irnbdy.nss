@@ -20,7 +20,7 @@ void main()
     effect eDrow,eDamRed,eSpell,eMove;
 
     eStr = EffectAbilityIncrease(ABILITY_STRENGTH,6);
-    eDex = EffectAbilityDecrease(ABILITY_DEXTERITY,6);
+    //eDex = EffectAbilityDecrease(ABILITY_DEXTERITY,6);
 
     eCrit = EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT);
     eBlnd = EffectImmunity(IMMUNITY_TYPE_BLINDNESS);
@@ -42,8 +42,9 @@ void main()
 
     //Link Aspect
     //effect eLink = EffectLinkEffects(, eDur);
-    effect eLink = EffectLinkEffects(eStr,eDex);
-    eLink = EffectLinkEffects(eLink,eCrit);
+    //effect eLink = EffectLinkEffects(eStr,eDex);
+    //eLink = EffectLinkEffects(eLink,eCrit);
+    effect eLink = EffectLinkEffects(eStr,eCrit);
     eLink = EffectLinkEffects(eLink,eBlnd);
     eLink = EffectLinkEffects(eLink,ePois);
     eLink = EffectLinkEffects(eLink,eAbil);
@@ -59,8 +60,8 @@ void main()
     eLink = EffectLinkEffects(eLink,eMove);
     eLink = EffectLinkEffects(eLink,eDur);
 
-      //Apply Bonus's
-      ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,OBJECT_SELF);
-      ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink,OBJECT_SELF, RoundsToSeconds(nDuration));
-
+    //Apply Bonus's
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,OBJECT_SELF);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink,OBJECT_SELF, RoundsToSeconds(nDuration));
+    ApplyAbilityDamage(OBJECT_SELF, ABILITY_DEXTERITY, 6, DURATION_TYPE_TEMPORARY, RoundsToSeconds(nDuration));
 }

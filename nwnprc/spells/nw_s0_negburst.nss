@@ -63,12 +63,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         nStr = 1;
     }
     effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, nStr);
-    effect eStr_Low = EffectAbilityDecrease(ABILITY_STRENGTH, nStr);
+    //effect eStr_Low = EffectAbilityDecrease(ABILITY_STRENGTH, nStr);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
     effect eGood = EffectLinkEffects(eStr, eDur);
-    effect eBad = EffectLinkEffects(eStr_Low, eDur2);
+    //effect eBad = EffectLinkEffects(eStr_Low, eDur2);
     
     int nPenetr = CasterLvl + SPGetPenetr();
     
@@ -135,7 +135,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                         //This visual effect is applied to the target object not the location as above.  This visual effect
                         //represents the flame that erupts on the target not on the ground.
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBad, oTarget,0.0f,TRUE,-1,CasterLvl));
+                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDur2, oTarget,0.0f,TRUE,-1,CasterLvl));
+                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nStr, DURATION_TYPE_PERMANENT, 0.0f, TRUE, -1, CasterLvl));
                     }
                 }
             }

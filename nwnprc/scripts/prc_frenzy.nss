@@ -185,13 +185,15 @@ void TurnBasedDamage(object oTarget, object oCaster)
         // code for being winded
         if(nLevel < 10)
         {
-             effect eStrPen = EffectAbilityDecrease(ABILITY_STRENGTH, 2);
-             effect eDexPen = EffectAbilityDecrease(ABILITY_DEXTERITY, 2);
+             //effect eStrPen = EffectAbilityDecrease(ABILITY_STRENGTH, 2);
+             //effect eDexPen = EffectAbilityDecrease(ABILITY_DEXTERITY, 2);
              effect eMove = EffectMovementSpeedDecrease(50);
-             effect eLink2 = EffectLinkEffects(eStrPen, eDexPen);
-             eLink2 = EffectLinkEffects(eLink2, eMove);
+             //effect eLink2 = EffectLinkEffects(eStrPen, eDexPen);
+             //eLink2 = EffectLinkEffects(eLink2, eMove);
              
-             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, OBJECT_SELF, RoundsToSeconds(10));
+             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMove, OBJECT_SELF, RoundsToSeconds(10));
+             ApplyAbilityDamage(OBJECT_SELF, ABILITY_STRENGTH, 2, DURATION_TYPE_TEMPORARY, RoundsToSeconds(10));
+             ApplyAbilityDamage(OBJECT_SELF, ABILITY_DEXTERITY, 2, DURATION_TYPE_TEMPORARY, RoundsToSeconds(10));
         }
               
         return;

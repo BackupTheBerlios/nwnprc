@@ -86,6 +86,8 @@ const string PRC_SPELLSLAB                           = "PRC_SPELLSLAB";
 //3 = Cannot teleport to the Epic Spell Laboratory.
 const string PRC_SPELLSLAB_NOSCROLLS                 = "PRC_SPELLSLAB_NOSCROLLS";
 //disables the sale of scrolls in the epic spell laboratory
+const string PRC_PNP_ABILITY_DAMAGE_EFFECTS          = "PRC_PNP_ABILITY_DAMAGE_EFFECTS";
+// Makes reaching 0 in an ability score have the special effects it should have according to PnP. See inc_abil_damage.nss for more info
 
 // Poison system switches
 const string PRC_USE_TAGBASED_INDEX_FOR_POISON       = "USE_TAGBASED_INDEX_FOR_POISON";

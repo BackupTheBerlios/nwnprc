@@ -20,6 +20,7 @@
 #include "prcsp_spell_adjs"
 #include "prcsp_engine"
 #include "prc_inc_racial"
+#include "inc_abil_damage"
 
 
 // Checks if target is a frenzied Bersker with Deathless Frenzy Active

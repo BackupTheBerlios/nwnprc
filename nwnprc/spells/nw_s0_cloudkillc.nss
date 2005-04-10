@@ -32,7 +32,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Declare major variables
     int nMetaMagic = GetMetaMagicFeat();
     int nDamage = d4();
-    effect eDam;
+    //effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
     object oTarget;
     int nHD = GetHitDice(oTarget);
@@ -65,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 
     //Set damage effect
-    eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage);
+    //eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage);
     //Get the first object in the persistant AOE
     oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
@@ -83,19 +83,22 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 //Any with more than 6 get to save (Fortitued) for half
                 if (nHD < 6)
                 {
-                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_PERMANENT));
                 }
                 else
                 {
                     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                     {
-                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                        //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_PERMANENT));
                     }
                     else
                     {
                         // Halve the damage on succesfull save.
-                        eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage / 2);
-                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                        //eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage / 2);
+                        //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage / 2, DURATION_TYPE_PERMANENT));
                     }
                 }
             }

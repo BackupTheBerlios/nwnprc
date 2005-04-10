@@ -74,7 +74,7 @@ void main()
 
         BuildMindblade(oPC, oMbld);
 
-        DelayCommand(0.3f, AssignCommand(oPC, ActionEquipItem(oMbld, INVENTORY_SLOT_LEFTHAND)));
+        DelayCommand(0.6f, AssignCommand(oPC, ActionEquipItem(oMbld, INVENTORY_SLOT_LEFTHAND)));
 
         AddEventScript(oMbld, EVENT_ITEM_ONHIT, "psi_sk_onhit", TRUE, FALSE);
 

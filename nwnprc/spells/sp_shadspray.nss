@@ -28,7 +28,7 @@ void main()
 	// Build all of the detrimental effectsd, any target that fails its save takes
 	// 2 points of strength damage, is dazed for 1 round, and has it's save against
 	// fear effects lowered by 2.
-	effect eDamage = EffectAbilityDecrease(ABILITY_STRENGTH, 2);
+	//effect eDamage = EffectAbilityDecrease(ABILITY_STRENGTH, 2);
 	effect eDaze = EffectDazed();
 	effect eFear = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_FEAR);
 	
@@ -44,7 +44,8 @@ void main()
 			if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF)))
 			{
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DAZED_S), oTarget);
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+				//SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+				ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 2, DURATION_TYPE_PERMANENT);
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDaze, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLvl);
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFear, oTarget, fDuration,TRUE,-1,nCasterLvl);
 			}

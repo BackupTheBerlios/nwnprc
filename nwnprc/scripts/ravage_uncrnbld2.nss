@@ -20,9 +20,10 @@ void main()
 	// Ravages only affect evil creatures
 	if (GetAlignmentGoodEvil(oTarget)!=ALIGNMENT_EVIL) return;
 	int nExtra = GetRavageExtraDamage(oTarget);
-	effect eDam = EffectAbilityDecrease(ABILITY_STRENGTH, d4(1) + nExtra);
+	//effect eDam = EffectAbilityDecrease(ABILITY_STRENGTH, d4(1) + nExtra);
 	effect eVis = GetRavageVFX();
 	
-	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDam, oTarget, 0.0f, FALSE);
+	//SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDam, oTarget, 0.0f, FALSE);
+	ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, d4(1) + nExtra, DURATION_TYPE_PERMANENT);
 	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 }

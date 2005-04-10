@@ -168,9 +168,10 @@ void main()
                 if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
                 {
                     effect eMind = EffectVisualEffect(VFX_DUR_IOUNSTONE_RED);
-                    effect stun = EffectLinkEffects(EffectAbilityDecrease(ABILITY_CONSTITUTION, d6()), eMind);
+                    //effect stun = EffectLinkEffects(EffectAbilityDecrease(ABILITY_CONSTITUTION, d6()), eMind);
 
-                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, stun, target, RoundsToSeconds(1 + (level / 2)));
+                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, target, RoundsToSeconds(1 + (level / 2)));
+                    ApplyAbilityDamage(target, ABILITY_CONSTITUTION, d6(), DURATION_TYPE_TEMPORARY, RoundsToSeconds(1 + (level / 2)));
                 }
             }
             break;
@@ -178,22 +179,43 @@ void main()
         /* Yellow Mold */
         case 2017:
         {
-            effect damage;
+            //effect damage;
+            int nDamage;
             object target = GetSpellTargetObject();
             int DC = 15 + level;
 
             if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
             {
-                damage = EffectAbilityDecrease(ABILITY_CONSTITUTION, d6(2));
+                //damage = EffectAbilityDecrease(ABILITY_CONSTITUTION, d6(2));
+                nDamage = d6(2);
             }
             else
             {
-                damage = EffectAbilityDecrease(ABILITY_CONSTITUTION, d6());
+                //damage = EffectAbilityDecrease(ABILITY_CONSTITUTION, d6());
+                nDamage  = d6();
             }
             effect eMind = EffectVisualEffect(VFX_DUR_IOUNSTONE_RED);
-            effect paralyze = EffectLinkEffects(damage, eMind);
+            //effect paralyze = EffectLinkEffects(damage, eMind);
 
-            ooze_touch_effect(paralyze, 1 + level);
+            //ooze_touch_effect(paralyze, 1 + level); // Inlined the code to make ApplyAbilityDamage work
+            object oTarget = GetSpellTargetObject();
+
+            if(!GetIsReactionTypeFriendly(oTarget))
+            {
+                //Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                //Make a touch attack to afflict target
+        
+               // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
+                if (TouchAttackMelee(oTarget,GetSpellCastItem() == OBJECT_INVALID)>0)
+                {
+                    effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
+        
+                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, oTarget, RoundsToSeconds(1 + level));
+                    ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_TEMPORARY, RoundsToSeconds(1 + level));
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                }
+            }
             break;
         }
     }

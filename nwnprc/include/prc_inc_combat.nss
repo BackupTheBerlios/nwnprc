@@ -3197,8 +3197,9 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           
           if(GetHasFeat(FEAT_CRIPPLING_STRIKE, oAttacker) )
           {
-               effect eCrippleStrike = EffectAbilityDecrease(ABILITY_STRENGTH, 2);
-               ApplyEffectToObject(DURATION_TYPE_INSTANT, eCrippleStrike, oDefender);
+               //effect eCrippleStrike = EffectAbilityDecrease(ABILITY_STRENGTH, 2);
+               //ApplyEffectToObject(DURATION_TYPE_INSTANT, eCrippleStrike, oDefender);
+               ApplyAbilityDamage(oDefender, ABILITY_STRENGTH, 2, DURATION_TYPE_PERMANENT);
           }
      }
           
@@ -3511,8 +3512,9 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                          eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
                          ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
                          
-                         eEffect = EffectAbilityDecrease(iStat, d2() );
-                         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+                         //eEffect = EffectAbilityDecrease(iStat, d2() );
+                         //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+                         ApplyAbilityDamage(oDefender, iStat, d2(), DURATION_TYPE_PERMANENT);
                     break;
                     
                     // ipParam1 = disease.2da
@@ -3705,8 +3707,9 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                          eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
                          ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
                          
-                         eEffect = EffectAbilityDecrease(iStat, d2() );
-                         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+                         //eEffect = EffectAbilityDecrease(iStat, d2() );
+                         //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+                         ApplyAbilityDamage(oDefender, iStat, d2(), DURATION_TYPE_PERMANENT);
                     break;
                     
                     // ipParam1 = disease.2da

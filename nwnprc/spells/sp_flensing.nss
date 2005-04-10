@@ -45,10 +45,12 @@ void RunFlensing(object oCaster, object oTarget, int nSaveDC,
 	else
 	{
 		eDamage = SPEffectDamage(nDamage);
-		eDamage = EffectLinkEffects(eDamage, 
+		/*eDamage = EffectLinkEffects(eDamage, 
 			EffectAbilityDecrease(ABILITY_CONSTITUTION, nConDrain));
 		eDamage = EffectLinkEffects(eDamage,
-			EffectAbilityDecrease(ABILITY_CHARISMA, nChaDrain));
+			EffectAbilityDecrease(ABILITY_CHARISMA, nChaDrain));*/
+        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nConDrain, DURATION_TYPE_PERMANENT);
+        ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, DURATION_TYPE_PERMANENT);
 	}
 	
 	// Add vfx to the damage effect chain.

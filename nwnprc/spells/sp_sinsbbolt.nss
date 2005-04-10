@@ -53,14 +53,23 @@ void main()
                                    int i;
                                    for (i = 1; i <= nDamage; i++)
                                    {
-                                        effect eDamage = SupernaturalEffect(EffectAbilityDecrease(ABILITY_STRENGTH, nDamage));
+                                        /*effect eDamage = SupernaturalEffect(EffectAbilityDecrease(ABILITY_STRENGTH, nDamage));
                                         eDamage = EffectLinkEffects(eDamage,
-                                             SupernaturalEffect(EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage)));
+                                             SupernaturalEffect(EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage)));*/
                                              
                                         // Recovery is supposed to be 1 pt / day, so apply each point
                                         // individually to make them last the full day.
-                                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDamage, oTarget,
-                                             HoursToSeconds(24) * i,TRUE,-1,nCasterLevel);
+                                        /*SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDamage, oTarget,
+                                             HoursToSeconds(24) * i,TRUE,-1,nCasterLevel);*/
+                                        //------------------------------------------------------------------
+                                        // The trick that allows this spellscript to do stacking ability
+                                        // score damage (which is not possible to do from normal scripts)
+                                        // is that the ability score damage is done from a delaycommanded
+                                        // function which will sever the connection between the effect
+                                        // and the SpellId
+                                        //------------------------------------------------------------------
+                                        DelayCommand(0.01f, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 1, DURATION_TYPE_TEMPORARY, HoursToSeconds(24) * i));
+                                        DelayCommand(0.01f, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, DURATION_TYPE_TEMPORARY, HoursToSeconds(24) * i));
                                    }
                                         
                                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

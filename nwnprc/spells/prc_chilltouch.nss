@@ -89,9 +89,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, iSaveDC, SAVING_THROW_TYPE_NEGATIVE))
                     {
                         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-                        eDur = EffectLinkEffects(eDur, EffectAbilityDecrease(ABILITY_STRENGTH, 1));
+                        //eDur = EffectLinkEffects(eDur, EffectAbilityDecrease(ABILITY_STRENGTH, 1));
                         
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(iTurnDur));
+                        ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 1, DURATION_TYPE_TEMPORARY, RoundsToSeconds(iTurnDur));
                     }
                 }
             }

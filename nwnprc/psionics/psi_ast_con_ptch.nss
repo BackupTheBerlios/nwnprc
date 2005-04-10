@@ -19,15 +19,16 @@
 
 void DoPoison(object oTarget, object oCaster, int nDC, int nDam){
 	//Declare major variables
-	effect eDamage = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
-	effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_IMP_POISON_S), eDamage);
+	//effect eDamage = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
+	//effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_IMP_POISON_S), eDamage);
 
 	// First check for poison immunity, if not, make a fort save versus spells.
 	if(!GetIsImmune(oTarget, IMMUNITY_TYPE_POISON) &&
-	!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON, oCaster))
+	   !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON, oCaster))
 	{
 		//Apply the poison effect and VFX impact
-		SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget, 0.0f, FALSE);
+		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_S), oTarget);
+		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT);
 	}
 }
 

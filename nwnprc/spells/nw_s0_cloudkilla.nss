@@ -41,7 +41,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
     effect eLink = EffectLinkEffects(eConceal, eVis2);
 
     float fDelay= GetRandomDelay(0.5, 1.5);
-    effect eDam;
+    //effect eDam;
     int nDam = d4();
     int nMetaMagic = GetMetaMagicFeat();
 
@@ -59,7 +59,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
     {
        nDam =  nDam + (nDam/2); //Damage/Healing is +50%
     }
-    eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
+    //eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
     if(spellsIsTarget(oTarget,SPELL_TARGET_STANDARDHOSTILE , aoeCreator) )
     {
         //Fire cast spell at event for the specified target
@@ -91,7 +91,8 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
                 }
                 else
                 {
-                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
                 }
             }
@@ -99,14 +100,16 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
             {
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                 {
-                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
                 }
                 else
                 {
                     // Halve the damage on succesfull save.
-                    eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam / 2);
-                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    //eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam / 2);
+                    //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam / 2, DURATION_TYPE_PERMANENT));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
                 }
             }

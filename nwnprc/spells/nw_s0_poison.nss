@@ -24,18 +24,19 @@
 void DoPoison(object oTarget, object oCaster, int nDC, int CasterLvl, int nMetaMagic){
    //Declare major variables
    int nDam = SPGetMetaMagicDamage(-1, 1, 10, 0, 0, nMetaMagic);
-   effect eDamage = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
-   effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_IMP_POISON_L), eDamage);
+   //effect eDamage = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
+   //effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_IMP_POISON_L), eDamage);
    
    // First check for poison immunity, if not, make a fort save versus spells.
    if(!GetIsImmune(oTarget, IMMUNITY_TYPE_POISON) &&
       !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL, oCaster))
    {
        //Apply the poison effect and VFX impact
-       SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,TRUE,-1,CasterLvl);
+       //SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,TRUE,-1,CasterLvl);
+       ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_L), oTarget);
+       ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, 0.0f, TRUE, -1, CasterLvl);
    }
 }
-	
 
 void main()
 {

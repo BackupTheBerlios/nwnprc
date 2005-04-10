@@ -444,15 +444,17 @@ void DoDirgeEffect(object oTarget,int nPenetr)
                 // * increase penalty by 2
                 nGetLastPenalty = nGetLastPenalty + 2;
 
-                effect eStr = EffectAbilityDecrease(ABILITY_STRENGTH, nGetLastPenalty);
-                effect eDex = EffectAbilityDecrease(ABILITY_DEXTERITY, nGetLastPenalty);
+                //effect eStr = EffectAbilityDecrease(ABILITY_STRENGTH, nGetLastPenalty);
+                //effect eDex = EffectAbilityDecrease(ABILITY_DEXTERITY, nGetLastPenalty);
                 //change from sonic effect to bard song...
                 effect eVis =    EffectVisualEffect(VFX_FNF_SOUND_BURST);
-                effect eLink = EffectLinkEffects(eDex, eStr);
+                //effect eLink = EffectLinkEffects(eDex, eStr);
 
                 //Apply damage and visuals
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+                //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+                ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nGetLastPenalty, DURATION_TYPE_PERMANENT);
+                ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, nGetLastPenalty, DURATION_TYPE_PERMANENT);
                 SetLocalInt(oTarget, "X0_L_LASTPENALTY", nGetLastPenalty);
             }
 

@@ -540,8 +540,9 @@ void MakeDrunk(object oTarget, int nPoints)
     else
         AssignCommand(oTarget, ActionPlayAnimation(ANIMATION_LOOPING_PAUSE_DRUNK));
 
-    effect eDumb = EffectAbilityDecrease(ABILITY_INTELLIGENCE, nPoints);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDumb, oTarget, 60.0);
+    //effect eDumb = EffectAbilityDecrease(ABILITY_INTELLIGENCE, nPoints);
+    //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDumb, oTarget, 60.0);
+    ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, nPoints, DURATION_TYPE_TEMPORARY, 60.0);
     AssignCommand(oTarget, SpeakString("*Burp!*"));
 }
 

@@ -69,11 +69,16 @@ void main()
                     nKTTSDice += nPsychDice;
                     nPsychDice = 0;
                 }
-                effect eAbilDam = EffectAbilityDecrease(nKTTSType == KTTS_TYPE_INT ? ABILITY_INTELLIGENCE :
+                /*effect eAbilDam = EffectAbilityDecrease(nKTTSType == KTTS_TYPE_INT ? ABILITY_INTELLIGENCE :
                                                         nKTTSType == KTTS_TYPE_WIS ? ABILITY_WISDOM :
                                                         ABILITY_CHARISMA
-                                                        , nKTTSDice);
-                ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);
+                                                        , nKTTSDice);*/
+                
+                //ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);
+                ApplyAbilityDamage(oTarget, nKTTSType == KTTS_TYPE_INT ? ABILITY_INTELLIGENCE :
+                                            nKTTSType == KTTS_TYPE_WIS ? ABILITY_WISDOM :
+                                            ABILITY_CHARISMA
+                                          , nKTTSDice, DURATION_TYPE_PERMANENT);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
             }
             
@@ -124,8 +129,9 @@ void main()
                 // Make a DC 17 will save
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, 17))
                 {
-                    effect eAbilDam = EffectAbilityDecrease(ABILITY_WISDOM, d2());
-                    ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);
+                    /*effect eAbilDam = EffectAbilityDecrease(ABILITY_WISDOM, d2());
+                    ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);*/
+                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d2(), DURATION_TYPE_PERMANENT);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
                 }
             }
@@ -149,8 +155,9 @@ void main()
     {// On hit, the mindblade deals 1 point of Constitution damage to the target. Creatures immune to critical hits are immune to this damage.
         if(!GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT))
         {
-            effect eAbilDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, 1);
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);
+            /*effect eAbilDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, 1);
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);*/
+            ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, DURATION_TYPE_PERMANENT);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
         }
     }

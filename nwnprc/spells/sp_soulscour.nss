@@ -7,11 +7,13 @@
 void DoSecondaryDrain(object oTarget, int nChaDrain)
 {
      // Build the drain effect.
-     effect eDebuff = EffectAbilityDecrease(ABILITY_CHARISMA, nChaDrain);
-     eDebuff = EffectLinkEffects(eDebuff, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE));
+     /*effect eDebuff = EffectAbilityDecrease(ABILITY_CHARISMA, nChaDrain);
+     eDebuff = EffectLinkEffects(eDebuff, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE));*/
+     effect eVFX = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
           
      // Apply the damage and the damage visible effect to the target.
-     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDebuff, oTarget);
+     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, oTarget);
+     ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, DURATION_TYPE_PERMANENT);
 }
 
 void main()
@@ -47,14 +49,17 @@ void main()
                          1 == nTouchAttack ? 1 : 2, 6);
 
                     // Build the drain effect.
-                    effect eDebuff = EffectAbilityDecrease(ABILITY_CHARISMA, nChaDrain);
+                    /*effect eDebuff = EffectAbilityDecrease(ABILITY_CHARISMA, nChaDrain);
                     eDebuff = EffectLinkEffects(eDebuff, 
                          EffectAbilityDecrease(ABILITY_WISDOM, nWisDrain));
                     eDebuff = EffectLinkEffects(eDebuff,
-                         EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE));
+                         EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE));*/
+                    effect eVFX = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
                          
                     // Apply the damage and the damage visible effect to the target.
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDebuff, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, oTarget);
+                    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, DURATION_TYPE_PERMANENT);
+                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, nWisDrain, DURATION_TYPE_PERMANENT);
                     
                     // Target takes secondary 1d6 cha drain 1 minute later.
                     nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 

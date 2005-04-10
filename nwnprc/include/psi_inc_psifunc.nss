@@ -145,6 +145,9 @@ void LosePsionicFocus(object oLoser = OBJECT_SELF);
 // oCreature    creature to test
 int GetIsPsionicCharacter(object oCreature);
 
+// Performs the respawning operation of the Astral Seed spell
+void AstralSeedRespawn(object oPlayer = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -827,4 +830,57 @@ int GetIsPsionicCharacter(object oCreature)
               GetHasFeat(FEAT_WILD_TALENT, oCreature)
               // Racial psionicity signifying feats go here
              );
+}
+
+void AstralSeedRespawn(object oPlayer = OBJECT_SELF)
+{
+	effect eRes = EffectResurrection();
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRes, oPlayer);
+	object oSeed = GetLocalObject(oPlayer, "ASTRAL_SEED");
+	location lSeed = GetLocation(oSeed);
+	JumpToLocation(lSeed);
+	
+	// effect set
+	effect ePara = EffectCutsceneParalyze();
+	effect eGhost = EffectCutsceneGhost();
+	effect eInvis = EffectEthereal();
+	
+	//Massive effect linkage, go me
+    	effect eSpell = EffectSpellImmunity(SPELL_ALL_SPELLS);
+    	effect eDam1 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID, 100);
+    	effect eDam2 = EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100);
+    	effect eDam3 = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 100);
+    	effect eDam4 = EffectDamageImmunityIncrease(DAMAGE_TYPE_DIVINE, 100);
+    	effect eDam5 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 100);
+    	effect eDam6 = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
+    	effect eDam7 = EffectDamageImmunityIncrease(DAMAGE_TYPE_MAGICAL, 100);
+    	effect eDam8 = EffectDamageImmunityIncrease(DAMAGE_TYPE_NEGATIVE, 100);
+    	effect eDam9 = EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING, 100);
+    	effect eDam10 = EffectDamageImmunityIncrease(DAMAGE_TYPE_POSITIVE, 100);
+    	effect eDam11 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING, 100);
+    	effect eDam12 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SONIC, 100);
+    	
+    	effect eLink = EffectLinkEffects(eSpell, eDam1);
+    	eLink = EffectLinkEffects(eLink, eDam2);
+    	eLink = EffectLinkEffects(eLink, eDam3);
+    	eLink = EffectLinkEffects(eLink, eDam4);
+    	eLink = EffectLinkEffects(eLink, eDam5);
+    	eLink = EffectLinkEffects(eLink, eDam6);
+    	eLink = EffectLinkEffects(eLink, eDam7);
+    	eLink = EffectLinkEffects(eLink, eDam8);
+    	eLink = EffectLinkEffects(eLink, eDam9);
+    	eLink = EffectLinkEffects(eLink, eDam10);
+    	eLink = EffectLinkEffects(eLink, eDam11);
+    	eLink = EffectLinkEffects(eLink, eDam12);
+    	eLink = EffectLinkEffects(eLink, ePara);
+    	eLink = EffectLinkEffects(eLink, eGhost);
+    	eLink = EffectLinkEffects(eLink, eInvis);
+    	
+    	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPlayer, HoursToSeconds(24),TRUE,-1,100);
+    	int nHD = GetHitDice(oPlayer);
+	int nCurrentLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+	nHD -= 1;
+	int nLevelDown = ((nHD * (nHD - 1)) / 2) * 1000;
+	int nNewXP = (nCurrentLevel + nLevelDown)/2;
+	SetXP(oPlayer,nNewXP);	
 }

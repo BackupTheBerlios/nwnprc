@@ -8,6 +8,7 @@
 
 #include "inc_eventhook"
 #include "prc_inc_clsfunc"
+#include "psi_inc_psifunc"
 #include "inc_ecl"
 
 void main()
@@ -45,7 +46,13 @@ void main()
             AssignCommand(oPlayer, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10000, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPlayer));
         }
     }
+    
+    if (GetLocalInt(oPlayer, "AstralSeed"))
+    {
+    	AstralSeedRespawn(oPlayer);
+    }
 
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPlayer, EVENT_ONPLAYERDEATH);
 }
+

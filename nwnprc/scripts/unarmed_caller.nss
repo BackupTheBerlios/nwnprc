@@ -17,7 +17,7 @@
 #include "inc_eventhook"
 
 void main(){
-    PrintString("Executing unarmed_caller");
+    //PrintString("Executing unarmed_caller");
     if(GetLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS))
         UnarmedFeats(OBJECT_SELF);
     if(GetLocalInt(OBJECT_SELF, CALL_UNARMED_FISTS))

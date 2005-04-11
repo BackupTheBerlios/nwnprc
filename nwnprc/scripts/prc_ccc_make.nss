@@ -5,6 +5,12 @@
 #include "prc_ccc_inc"
 #include "inc_encrypt"
 
+void CheckAndBoot(object oPC)
+{
+    if(GetIsObjectValid(GetAreaFromLocation(GetLocation(oPC))))
+        BootPC(oPC);
+}
+
 void main()
 {
     //define some varaibles
@@ -68,55 +74,56 @@ void main()
 
     //clear existing stuff
     string sScript;
-    sScript += "<gff:delete 'FeatList' >";
-    sScript += "<gff:delete 'ClassList' >";
-    sScript += "<gff:delete 'LvlStatList' >";
-    sScript += "<gff:delete 'SkillList' >";
-//    sScript += "<gff:delete 'SkillPoints' >";
-    sScript += "<gff:add 'FeatList' {type='list'}>";
-    sScript += "<gff:add 'ClassList' {type='list'}>";
-    sScript += "<gff:add 'LvlStatList' {type='list'}>";
-    sScript += "<gff:add 'SkillList' {type='list'}>";
+    sScript += LetoDelete("FeatList");
+    sScript += LetoDelete("ClassList");
+    sScript += LetoDelete("LvlStatList");
+    sScript += LetoDelete("SkillList");
+    sScript += LetoAdd("FeatList", "", "list");
+    sScript += LetoAdd("ClassList", "", "list");
+    sScript += LetoAdd("LvlStatList", "", "list");
+    sScript += LetoAdd("SkillList", "", "list");
 
     //Sex
-    sScript += "<gff:set 'Gender' "+IntToString(nSex)+">";
+    sScript += SetGender(nSex);
 
     //Race
-    sScript += "<gff:set 'Race' "+IntToString(nRace)+">";
+    sScript += SetRace(nRace);
 
     //Class
-    sScript += "<gff:add 'ClassList/Class' {type='int' value="+IntToString(nClass)+"}>";
-    sScript += "<gff:add 'ClassList/[0]/ClassLevel' {type='short' value="+IntToString(nLevel+1)+"}>";
-    sScript += "<gff:add 'LvlStatList/LvlStatClass' {type='byte' value="+IntToString(nClass)+"}>";
-    sScript += "<gff:add 'LvlStatList/[0]/EpicLevel' {type='byte' value=0}>";
-    sScript += "<gff:add 'LvlStatList/[0]/LvlStatHitDie' {type='byte' value="+IntToString(nHitPoints)+"}>";
+    sScript += LetoAdd("ClassList/Class", IntToString(nClass), "int");
+    sScript += LetoSet("ClassList/[0]/ClassLevel", IntToString(nLevel+1), "short");
+    sScript += LetoAdd("LvlStatList/LvlStatClass", IntToString(nClass), "byte");
+    sScript += LetoSet("LvlStatList/[0]/EpicLevel", "0", "byte");
+    sScript += LetoSet("LvlStatList/[0]/LvlStatHitDie", IntToString(nHitPoints), "byte");
+    sScript += LetoSet("LvlStatList/[0]/FeatList", "", "list");
+    sScript += LetoSet("LvlStatList/[0]/SkillList", "", "list");
 
     //Alignment
-    sScript += "<gff:set 'LawfulChaotic' "+IntToString(nOrder)+">";
-    sScript += "<gff:set 'GoodEvil' "+IntToString(nMoral)+">";
+    sScript += LetoSet("LawfulChaotic", IntToString(nOrder), "byte");
+    sScript += LetoSet("GoodEvil", IntToString(nMoral), "byte");
 
     //Familiar
     //has a random name
     if(nClass == CLASS_TYPE_WIZARD
         || nClass == CLASS_TYPE_SORCERER)
     {
-        sScript += "<gff:add 'FamiliarType' {type='int' value="+IntToString(nFamiliar)+" setifexists=True}>";
-        sScript += "<gff:add 'FamiliarName' "+RandomName()+">";
+        sScript += LetoSet("FamiliarType", IntToString(nFamiliar), "int");
+        sScript += LetoSet("FamiliarName", RandomName(), "string");
     }
 
     //Animal Companion
     //has a random name
     if(nClass == CLASS_TYPE_DRUID)
     {
-        sScript += "<gff:add 'CompanionType' {type='int' value="+IntToString(nAnimalCompanion)+" setifexists=True}>";
-        sScript += "<gff:add 'CompanionName' "+RandomName()+">";
+        sScript += LetoSet("CompanionType", IntToString(nAnimalCompanion), "int");
+        sScript += LetoSet("CompanionName", RandomName(), "string");
     }
 
     //Domains
     if(nClass == CLASS_TYPE_CLERIC)
     {
-        sScript += "<gff:add 'ClassList/[0]/Domain1' {type='byte' value="+IntToString(nDomain1)+"}>";
-        sScript += "<gff:add 'ClassList/[0]/Domain2' {type='byte' value="+IntToString(nDomain2)+"}>";
+        sScript += LetoSet("ClassList/[0]/Domain1", IntToString(nDomain1), "byte");
+        sScript += LetoSet("ClassList/[0]/Domain2", IntToString(nDomain2), "byte");
     }
 
     //Ability Scores
@@ -129,7 +136,6 @@ void main()
 
     //Feats
     //Make sure the list exists
-    sScript += "<gff:add 'LvlStatList/[0]/FeatList' {type='list'}>";
     //Populate the list from array
     for(i=0;i<array_get_size(oPC, "Feats"); i++)
     {
@@ -140,87 +146,86 @@ void main()
             if(nFeatID == -1)//alertness fix
                 nFeatID = 0;
 //            DoDebug("Feat array positon "+IntToString(i)+" is "+IntToString(nFeatID));
-            sScript += "<gff:add 'FeatList/Feat' {type='word' value="+IntToString(nFeatID)+"}>";
-            sScript += "<gff:add 'LvlStatList/[0]/FeatList/Feat' {type='word' value="+IntToString(nFeatID)+"}>";
+            sScript += LetoAdd("FeatList/Feat", IntToString(nFeatID), "word");
+            sScript += LetoAdd("LvlStatList/[0]/FeatList/Feat", IntToString(nFeatID), "word");
         }
     }
 
     //Skills
-    sScript += "<gff:add 'LvlStatList/[0]/SkillList' {type='list'}>";
     for (i=0;i<SKILLS_2DA_END;i++)
     {
-        sScript += "<gff:add 'SkillList/Rank' {type='byte' value="+IntToString(array_get_int(oPC, "Skills", i))+ "}>";
-        sScript += "<gff:add 'LvlStatList/[0]/SkillList/Rank' {type='char' value="+IntToString(array_get_int(oPC, "Skills", i))+"}>";
+        sScript += LetoAdd("SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");
+        sScript += LetoAdd("LvlStatList/[_]/SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "char");
     }
-    sScript += "<gff:set 'SkillPoints' {value="+IntToString(array_get_int(oPC, "Skills", -1))+ "}>";
-    sScript += "<gff:add 'LvlStatList/[0]/SkillPoints' {type='word' value="+IntToString(array_get_int(oPC, "Skills", -1))+"}>";
+    sScript += LetoSet("SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
+    sScript += LetoAdd("LvlStatList/[_]/SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
 
     //Spells
     if(nClass == CLASS_TYPE_WIZARD)
     {
-        sScript += "<gff:add 'ClassList/[0]/KnownList0' {type='list'}>";
-        sScript += "<gff:add 'ClassList/[0]/KnownList1' {type='list'}>";
-        sScript += "<gff:add 'LvlStatList/[0]/KnownList0' {type='list'}>";
-        sScript += "<gff:add 'LvlStatList/[0]/KnownList1' {type='list'}>";
+        sScript += LetoSet("ClassList/[_]/KnownList0", "", "list");
+        sScript += LetoSet("ClassList/[_]/KnownList1", "", "list");
+        sScript += LetoSet("LvlStatList/[_]/KnownList0", "", "list");
+        sScript += LetoSet("LvlStatList/[_]/KnownList1", "", "list");
         for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
         {
-            sScript += "<gff:add 'ClassList/[0]/KnownList0/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpellLvl0", i))+"}>";
-            sScript += "<gff:add 'LvlStatList/[0]/KnownList0/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpellLvl0", i))+"}>";
+            sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
+            sScript += LetoAdd("LvlStatList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
         }
         for (i=0;i<array_get_size(oPC, "SpellLvl1");i++)
         {
-            sScript += "<gff:add 'ClassList/[0]/KnownList1/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpellLvl1", i))+"}>";
-            sScript += "<gff:add 'LvlStatList/[0]/KnownList1/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpellLvl1", i))+"}>";
+            sScript += LetoAdd("ClassList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
+            sScript += LetoAdd("LvlStatList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
         }
         //throw spellschoool in here too
-        sScript += "<gff:add 'ClassList/[0]/School' {type='byte' value="+IntToString(nSchool)+" setifexists=True}>";
+        sScript += LetoSet("ClassList/[_]/School", IntToString(nSchool), "byte");
     }
     else if (nClass == CLASS_TYPE_BARD)
     {
-        sScript += "<gff:add 'ClassList/[0]/KnownList0' {type='list'}>";
-        sScript += "<gff:add 'ClassList/[0]/SpellsPerDayList' {type='list'}>";
-        sScript += "<gff:add 'LvlStatList/[0]/KnownList0' {type='list'}>";
+        sScript += LetoSet("ClassList/[_]/KnownList0", "", "list");
+        sScript += LetoSet("ClassList/[_]/SpellsPerDayList", "", "list");
+        sScript += LetoSet("LvlStatList/[_]/KnownList0", "", "list");
         for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
         {
-            sScript += "<gff:add 'ClassList/[0]/KnownList0/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpellLvl0", i))+"}>";
-            sScript += "<gff:add 'LvlStatList/[0]/KnownList0/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpellLvl0", i))+"}>";
+            sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
+            sScript += LetoAdd("LvlStatList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
         }
         //spells per day
-        sScript += "<gff:add 'ClassList/[0]/SpellsPerDayList/NumSpellsLeft' {type='word' value="+IntToString(nSpellsPerDay0)+"}>";
+        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList/NumSpellsLeft", IntToString(nSpellsPerDay0), "word");
     }
     else if (nClass == CLASS_TYPE_SORCERER)
     {
-        sScript += "<gff:add 'ClassList/[0]/KnownList0' {type='list'}>";
-        sScript += "<gff:add 'ClassList/[0]/KnownList1' {type='list'}>";
-        sScript += "<gff:add 'LvlStatList/[0]/KnownList0' {type='list'}>";
-        sScript += "<gff:add 'LvlStatList/[0]/KnownList1' {type='list'}>";
-        sScript += "<gff:add 'ClassList/[0]/SpellsPerDayList' {type='list'}>";
+        sScript += LetoSet("ClassList/[_]/KnownList0", "", "list");
+        sScript += LetoSet("ClassList/[_]/KnownList1", "", "list");
+        sScript += LetoSet("ClassList/[_]/SpellsPerDayList", "", "list");
+        sScript += LetoSet("LvlStatList/[_]/KnownList0", "", "list");
+        sScript += LetoSet("LvlStatList/[_]/KnownList1", "", "list");
         for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
         {
-            sScript += "<gff:add 'ClassList/[0]/KnownList0/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpellLvl0", i))+"}>";
-            sScript += "<gff:add 'LvlStatList/[0]/KnownList0/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpellLvl0", i))+"}>";
+            sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
+            sScript += LetoAdd("LvlStatList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
         }
         for (i=0;i<array_get_size(oPC, "SpellLvl1");i++)
         {
-            sScript += "<gff:add 'ClassList/[0]/KnownList1/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpellLvl1", i))+"}>";
-            sScript += "<gff:add 'LvlStatList/[0]/KnownList1/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpellLvl1", i))+"}>";
+            sScript += LetoAdd("ClassList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
+            sScript += LetoAdd("LvlStatList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
         }
         //spells per day
-        sScript += "<gff:add 'ClassList/[0]/SpellsPerDayList/NumSpellsLeft' {type='word' value="+IntToString(nSpellsPerDay0)+"}>";
-        sScript += "<gff:add 'ClassList/[0]/SpellsPerDayList/NumSpellsLeft' {type='word' value="+IntToString(nSpellsPerDay1)+"}>";
+        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList/NumSpellsLeft", IntToString(nSpellsPerDay0), "word");
+        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList/NumSpellsLeft", IntToString(nSpellsPerDay1), "word");
     }
 
     //Appearance stuff
-    sScript += "<gff:set 'Appearance_Type' "+IntToString(nAppearance)+">";
+    sScript += LetoSet("Appearance_Type", IntToString(nAppearance), "word");
     if(nVoiceset != -1) //keep existing portrait
-        sScript += "<gff:set 'SoundSetFile'   "+IntToString(nVoiceset)+">";
-    sScript += "<gff:set 'Color_Skin' "+IntToString(nSkin)+">";
-    sScript += "<gff:set 'Color_Hair' "+IntToString(nHair)+">";
-    sScript += "<gff:set 'Appearance_Head' "+IntToString(nHead)+">";
+        sScript += LetoSet("SoundSetFile", IntToString(nVoiceset), "word");
+    sScript += SetSkinColor(nSkin);
+    sScript += SetHairColor(nHair);
+    sScript += LetoSet("Appearance_Head", IntToString(nHead), "byte");
 //NPCS have and ID, PCs have a resref. resref overrides portrait.
 //    sScript += "<gff:set 'PortraitId'   "+IntToString(nPortrait)+">";
     if(nPortrait != -1) //keep existing portrait
-        sScript += "<gff:set 'Portrait' 'po_"+Get2DACache("portraits","BaseResRef",nPortrait)+"'>";
+        sScript += SetPCPortrait(Get2DACache("portraits","BaseResRef",nPortrait));
 
     //Special abilities
     //since bioware screws this up in 1.64 its not needed
@@ -238,7 +243,7 @@ void main()
     for(i=1;i<=nLevel;i++)
     {
         //class
-        sScript += "<gff:add 'LvlStatList/LvlStatClass' {type='byte' value="+Get2DACache("ECL", "RaceClass", nRace)+"}>";
+        sScript += LetoSet("LvlStatList/LvlStatClass", Get2DACache("ECL", "RaceClass", nRace), "byte");
         //ability
         if(i == 3 || i == 7 || i == 11 || i == 15
                 || i == 19 || i == 23 || i == 27 || i == 31
@@ -247,11 +252,13 @@ void main()
             sScript += AdjustAbility(GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Ability"),i);
         }
         //skills
-        sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/SkillList' {type='list'}>";
+        sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/SkillList", "", "list");
         int j;
         for (j=0;j<SKILLS_2DA_END;j++)
         {
-            sScript += AdjustSkill(j, array_get_int(oPC, "RaceLevel"+IntToString(nLevel)+"Skills", j), i);
+            int nMod = array_get_int(oPC, "RaceLevel"+IntToString(nLevel)+"Skills", j); 
+            if(nMod)
+                sScript += AdjustSkill(j, nMod, i);
         }
         sScript += AdjustSpareSkill(array_get_int(oPC, "RaceLevel"+IntToString(i)+"Skills", -1), i);
         //feat
@@ -264,31 +271,32 @@ void main()
             //alertness correction
             if(nFeatID == -1)
                 nFeatID = 0;
-            sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/FeatList' {type='list'}>";
-            sScript += "<gff:add 'FeatList/Feat' {type='word' value="+IntToString(nFeatID)+"}>";
-            sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/FeatList/Feat' {type='word' value="+IntToString(nFeatID)+"}>";
+            sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/FeatList", "", "list");
+            sScript += LetoAdd("FeatList/Feat", IntToString(nFeatID), "word");
+            sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/FeatList/Feat", IntToString(nFeatID), "word");
         }
         //epic level
         if(nLevel <21)
-            sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/EpicLevel' {type='byte' value=0}>";
+            sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/EpicLevel", "0", "byte");
         else            
-            sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/EpicLevel' {type='byte' value=1}>";
+            sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/EpicLevel", "1", "byte");
         //hitdice
         int nRacialHitPoints = StringToInt(Get2DACache("classes", "HitDie", StringToInt(Get2DACache("ECL", "RacialClass", nRace))));
         //first 3 racial levels get max HP
         if(i > 3)
             nRacialHitPoints = 1+Random(nRacialHitPoints);
-        sScript += "<gff:add 'LvlStatList/["+IntToString(i-1)+"]/LvlStatHitDie' {type='byte' value="+IntToString(nHitPoints)+"}>";
+        sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/LvlStatHitDie", IntToString(nHitPoints), "byte");
     }
     //racial xp
     if(nLevel > 0)
     {
         int nXP = nLevel*(nLevel-1)*500;
         SetXP(oPC, nXP);
+        SetLocalInt(oPC, "sXP_AT_LAST_HEARTBEAT", nXP);//simple XPmod bypassing
     }
 
     //change the tag to mark the player as done
-    sScript += "<gff:set 'Tag' <qq:"+Encrypt(GetName(oPC))+">>";
+    sScript += LetoSet("Tag", Encrypt(GetName(oPC)), "string");
 
     WriteTimestampedLogEntry(sScript);
     SetLocalString(oPC, "LetoScript", sScript);
@@ -305,7 +313,7 @@ void main()
     DelayCommand(3.0, FloatingTextStringOnCreature("2 seconds", oPC, FALSE));
     DelayCommand(4.0, FloatingTextStringOnCreature("1 seconds", oPC, FALSE));
     DelayCommand(5.0, FloatingTextStringOnCreature("Bootage!", oPC, FALSE));
-    DelayCommand(5.0, BootPC(oPC));
+    DelayCommand(5.0, CheckAndBoot(oPC));
     object oClone = GetLocalObject(oPC, "Clone");
     AssignCommand(oClone, SetIsDestroyable(TRUE));
     DestroyObject(oClone);

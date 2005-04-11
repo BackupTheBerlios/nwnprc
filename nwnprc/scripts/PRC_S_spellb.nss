@@ -110,13 +110,17 @@ void main()
             SetLocalString(oPC, "TOKEN10"+IntToString(i-nOffset), sValue);
             SetCustomToken(100+i-nOffset, sValue);
         }
+        SetCustomToken(110, GetStringByStrRef(16824212));//finish
+        SetCustomToken(111, GetStringByStrRef(16824202));//please wait
+        SetCustomToken(112, GetStringByStrRef(16824204));//next
+        SetCustomToken(113, GetStringByStrRef(16824203));//previous
 
 // END OF INSERT FOR THE HEADER
         return;
     }
     else if(nValue == -2)
     {
-	  //end of conversation cleanup
+      //end of conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
@@ -130,7 +134,7 @@ void main()
     }
     else if(nValue == -3)
     {
-	  //abort conversation cleanup
+      //abort conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");

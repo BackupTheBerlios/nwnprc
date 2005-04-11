@@ -72,7 +72,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, "Lawful Good");
+                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(112));
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, 0);
                 i++;
             }
@@ -81,7 +81,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, "Neutral Good");
+                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(115));
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, 1);
                 i++;
             }
@@ -90,7 +90,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, "Chaotic Good");
+                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(118));
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, 2);
                 i++;
             }
@@ -99,7 +99,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, "Lawful Neutral");
+                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(113));
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, 3);
                 i++;
             }
@@ -108,7 +108,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, "True Neutral");
+                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(116));
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, 4);
                 i++;
             }
@@ -117,7 +117,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, "Chaotic Neutral");
+                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(119));
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, 5);
                 i++;
             }
@@ -126,7 +126,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, "Lawful Evil");
+                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(114));
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, 6);
                 i++;
             }
@@ -135,7 +135,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, "Neutral Evil");
+                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(117));
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, 7);
                 i++;
             }
@@ -144,7 +144,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, "Chaotic Evil");
+                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(120));
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, 8);
                 i++;
             }
@@ -176,7 +176,7 @@ void SetupStage()
             if(nStr < 18  && nPoints >= GetCost(nStr+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nStr)+" Strength. Cost "
+                    IntToString(nStr)+" "+GetStringByStrRef(135)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nStr+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "StrAdjust", nRace)+")");
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_STRENGTH);
@@ -185,7 +185,7 @@ void SetupStage()
             if(nDex < 18 && nPoints >= GetCost(nDex+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nDex)+" Dexterity. Cost "
+                    IntToString(nDex)+" "+GetStringByStrRef(133)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nDex+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "DexAdjust", nRace)+")");
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_DEXTERITY);
@@ -194,7 +194,7 @@ void SetupStage()
             if(nCon < 18 && nPoints >= GetCost(nCon+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nCon)+" Constitution. Cost "
+                    IntToString(nCon)+" "+GetStringByStrRef(132)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nCon+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "ConAdjust", nRace)+")");
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_CONSTITUTION);
@@ -203,7 +203,7 @@ void SetupStage()
             if(nInt < 18 && nPoints >= GetCost(nInt+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nInt)+" Intelligence. Cost "
+                    IntToString(nInt)+" "+GetStringByStrRef(134)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nInt+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "IntAdjust", nRace)+")");
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_INTELLIGENCE);
@@ -212,7 +212,7 @@ void SetupStage()
             if(nWis < 18 && nPoints >= GetCost(nWis+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nWis)+" Wisdom. Cost "
+                    IntToString(nWis)+" "+GetStringByStrRef(136)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nWis+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "WisAdjust", nRace)+")");
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_WISDOM);
@@ -221,7 +221,7 @@ void SetupStage()
             if(nCha < 18 && nPoints >= GetCost(nCha+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nCha)+" Charisma. Cost "
+                    IntToString(nCha)+" "+GetStringByStrRef(131)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nCha+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "ChaAdjust", nRace)+")");
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_CHARISMA);

@@ -29,6 +29,9 @@ const int STRREF_ABORT_CONVO_SELECT = 16824212;
 const int STRREF_END_CONVO_SELECT   = 16824213;
 const int LEVEL_STRREF_START        = 16824809;
 const int STRREF_BACK_TO_LSELECT    = 16824205;
+const int STRREF_PLEASE_WAIT        = 16824202;
+const int STRREF_PREVIOUS           = 16824203;
+const int STRREF_NEXT               = 16824204;
 
 //////////////////////////////////////////////////
 /* Function defintions                          */
@@ -137,11 +140,11 @@ void main()
                     array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
                 }
             }
-			SetLocalInt(oPC, "Stage1Setup", TRUE);
+            SetLocalInt(oPC, "Stage1Setup", TRUE);
         }
         // Selection confirmation stage
         else if(nStage == 2)
-        {	
+        {   
             //PrintString("Building confirmation menu");
             //string sToken = "You have selected:\n\n";
             string sToken = GetStringByStrRef(STRREF_SELECTED_HEADER1) + "\n\n";
@@ -162,7 +165,7 @@ void main()
         }
         // Conversation finished stage
         else if(nStage == 3)
-        {	
+        {   
             //PrintString("Building convo finished menu");
             //string sToken = "You will be able to select more powers after you gain another level in a psionic caster class.";
             string sToken = GetStringByStrRef(STRREF_END_HEADER);
@@ -179,6 +182,9 @@ void main()
             SetLocalString(oPC, "TOKEN10"+IntToString(i-nOffset), sValue);
             SetCustomToken(100+i-nOffset, sValue);
         }
+        SetCustomToken(111, GetStringByStrRef(STRREF_PLEASE_WAIT));//please wait
+        SetCustomToken(112, GetStringByStrRef(STRREF_NEXT));//next
+        SetCustomToken(113, GetStringByStrRef(STRREF_PREVIOUS));//previous
         
         /*for(i = 0; i < array_get_size(oPC, "ChoiceTokens"); i++){
             PrintString("ChoiceToken" + IntToString(i) + ": " + array_get_string(oPC, "ChoiceTokens" ,i) + " = " + IntToString(array_get_int(oPC, "ChoiceValues", i)));
@@ -201,7 +207,7 @@ void main()
         DeleteLocalInt(oPC, "nPowerLevelToBrowse");
         int i;
         for(i = 99; i <= 110; i++)
-        	DeleteLocalString(oPC, "TOKEN" + IntToString(i));
+            DeleteLocalString(oPC, "TOKEN" + IntToString(i));
         //restart the convo to pick next power if needed
         ExecuteScript("psi_powergain", oPC);
         return;
@@ -220,7 +226,7 @@ void main()
         DeleteLocalInt(oPC, "nPowerLevelToBrowse");
         int i;
         for(i = 99; i <= 110; i++)
-        	DeleteLocalString(oPC, "TOKEN" + IntToString(i));
+            DeleteLocalString(oPC, "TOKEN" + IntToString(i));
         //restart the conversation
         AssignCommand(oPC, ClearAllActions());
         ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);

@@ -114,91 +114,91 @@ void SetupTokens()
     switch(nStage)
     {
         case STAGE_GENDER:
-            SetToken(99, "Select Gender");
+            SetToken(99, GetStringByStrRef(158));
             break;
         case STAGE_GENDER_CHECK:
             sText = "You have selected:\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("gender", "NAME", GetLocalInt(OBJECT_SELF, "Gender"))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_RACE:
-            SetToken(99, "Select Race ");
+            SetToken(99, GetStringByStrRef(162));
             break;
         case STAGE_RACE_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", GetLocalInt(OBJECT_SELF, "Race"))));
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Description", GetLocalInt(OBJECT_SELF, "Race"))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_CLASS:
             SetToken(99, "Select Class");
             break;
         case STAGE_CLASS_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", GetLocalInt(OBJECT_SELF, "Class"))));
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("classes", "Description", GetLocalInt(OBJECT_SELF, "Class"))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_ALIGNMENT:
-            SetToken(99, "Select Alignment");
+            SetToken(99, GetStringByStrRef(111));
             break;
         case STAGE_ALIGNMENT_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             if(GetLocalInt(OBJECT_SELF, "LawfulChaotic")==85
                 && GetLocalInt(OBJECT_SELF, "GoodEvil")==85)
-                    sText+= "Lawful Good";
+                    sText+= GetStringByStrRef(112);
             else if(GetLocalInt(OBJECT_SELF, "LawfulChaotic")==50
                 && GetLocalInt(OBJECT_SELF, "GoodEvil")==85)
-                    sText+= "Neutral Good";
+                    sText+= GetStringByStrRef(115);
             else if(GetLocalInt(OBJECT_SELF, "LawfulChaotic")==15
                 && GetLocalInt(OBJECT_SELF, "GoodEvil")==85)
-                    sText+= "Chaotic Good";
+                    sText+= GetStringByStrRef(118);
             else if(GetLocalInt(OBJECT_SELF, "LawfulChaotic")==85
                 && GetLocalInt(OBJECT_SELF, "GoodEvil")==50)
-                    sText+= "Lawful Neutral";
+                    sText+= GetStringByStrRef(113);
             else if(GetLocalInt(OBJECT_SELF, "LawfulChaotic")==50
                 && GetLocalInt(OBJECT_SELF, "GoodEvil")==50)
-                    sText+= "True Neutral";
+                    sText+= GetStringByStrRef(116);
             else if(GetLocalInt(OBJECT_SELF, "LawfulChaotic")==15
                 && GetLocalInt(OBJECT_SELF, "GoodEvil")==50)
-                    sText+= "Chaotic Neutral";
+                    sText+= GetStringByStrRef(119);
             else if(GetLocalInt(OBJECT_SELF, "LawfulChaotic")==85
                 && GetLocalInt(OBJECT_SELF, "GoodEvil")==15)
-                    sText+= "Lawful Evil";
+                    sText+= GetStringByStrRef(114);
             else if(GetLocalInt(OBJECT_SELF, "LawfulChaotic")==50
                 && GetLocalInt(OBJECT_SELF, "GoodEvil")==15)
-                    sText+= "Neutral Evil";
+                    sText+= GetStringByStrRef(117);
             else if(GetLocalInt(OBJECT_SELF, "LawfulChaotic")==15
                 && GetLocalInt(OBJECT_SELF, "GoodEvil")==15)
-                    sText+= "Chaotic Evil";
-            sText+= "\nIs this correct?";
+                    sText+= GetStringByStrRef(120);
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_ABILITY:
             SetToken(99, "Select Ability " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining");
             break;
         case STAGE_ABILITY_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             sText+= IntToString(GetLocalInt(OBJECT_SELF, "Str"))+" ("+Get2DACache("racialtypes", "StrAdjust", nRace)+") Strength\n";
             sText+= IntToString(GetLocalInt(OBJECT_SELF, "Dex"))+" ("+Get2DACache("racialtypes", "DexAdjust", nRace)+") Dexterity\n";
             sText+= IntToString(GetLocalInt(OBJECT_SELF, "Con"))+" ("+Get2DACache("racialtypes", "ConAdjust", nRace)+") Constitution\n";
             sText+= IntToString(GetLocalInt(OBJECT_SELF, "Int"))+" ("+Get2DACache("racialtypes", "IntAdjust", nRace)+") Intelligence\n";
             sText+= IntToString(GetLocalInt(OBJECT_SELF, "Wis"))+" ("+Get2DACache("racialtypes", "WisAdjust", nRace)+") Wisdom\n";
             sText+= IntToString(GetLocalInt(OBJECT_SELF, "Cha"))+" ("+Get2DACache("racialtypes", "ChaAdjust", nRace)+") Charisma\n";
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_SKILL:
             SetToken(99, "Select Skills " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining");
             break;
         case STAGE_SKILL_CHECK:
-            sText = "You have selected:\n";
-            if(GetLocalInt(GetModule(), "ALLOW_SKILL_POINT_ROLLOVER"))
+            sText = GetStringByStrRef(16824209)+"\n";
+            if(GetPRCSwitch(PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER))
             {
                     sText+= "Stored skill points:";
                     sText+= " "+IntToString(array_get_int(OBJECT_SELF, "Skills",-1))+"\n";
@@ -211,62 +211,62 @@ void SetupTokens()
                     sText+= " "+IntToString(array_get_int(OBJECT_SELF, "Skills",i))+"\n";
                 }
             }
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_FEAT:
-            SetToken(99, "Select Feat");
+            SetToken(99, GetStringByStrRef(397));
             break;
         case STAGE_FEAT_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", GetLocalInt(OBJECT_SELF, "StartingFeat"))));
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("feat", "Description", GetLocalInt(OBJECT_SELF, "StartingFeat"))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_BONUS_FEAT:
-            SetToken(99, "Select Bonus Feat");
+            SetToken(99, GetStringByStrRef(397));
             break;
         case STAGE_BONUS_FEAT_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", GetLocalInt(OBJECT_SELF, "BonusFeat"))));
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("feat", "Description", GetLocalInt(OBJECT_SELF, "BonusFeat"))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_WIZ_SCHOOL:
-            SetToken(99, "Select Spell School");
+            SetToken(99, GetStringByStrRef(381));
             break;
         case STAGE_WIZ_SCHOOL_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", GetLocalInt(OBJECT_SELF, "School"))));
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("spellschools", "Description", GetLocalInt(OBJECT_SELF, "School"))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_FAMILIAR:
-            SetToken(99, "Select Familiar");
+            SetToken(99, GetStringByStrRef(5607));
             break;
         case STAGE_FAMILIAR_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("hen_familiar", "STRREF", GetLocalInt(OBJECT_SELF, "Familiar"))));
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("hen_familiar", "DESCRIPTION", GetLocalInt(OBJECT_SELF, "Familiar"))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_ANIMALCOMP:
             SetToken(99, "Select Animal Companion");
             break;
         case STAGE_ANIMALCOMP_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("hen_companion", "STRREF", GetLocalInt(OBJECT_SELF, "AnimalCompanion"))));
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("hen_companion", "DESCRIPTION", GetLocalInt(OBJECT_SELF, "AnimalCompanion"))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_DOMAIN1:
@@ -276,7 +276,7 @@ void SetupTokens()
             SetToken(99, "Select second Domain");
             break;
         case STAGE_DOMAIN_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", GetLocalInt(OBJECT_SELF, "Domain1"))));
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", GetLocalInt(OBJECT_SELF, "Domain1"))));
@@ -284,7 +284,7 @@ void SetupTokens()
             sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", GetLocalInt(OBJECT_SELF, "Domain2"))));
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", GetLocalInt(OBJECT_SELF, "Domain2"))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_SPELLS:
@@ -301,12 +301,12 @@ void SetupTokens()
             }
             break;
         case STAGE_SPELLS_CHECK:
-            sText = "You have selected: ";
+            sText = GetStringByStrRef(16824209)+" ";
             for(i=0;i<array_get_size(OBJECT_SELF, "SpellLvl0");i++)
                 sText+= "\n"+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", array_get_int(OBJECT_SELF, "SpellLvl0", i))));
             for(i=0;i<array_get_size(OBJECT_SELF, "SpellLvl1");i++)
                 sText+= "\n"+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", array_get_int(OBJECT_SELF, "SpellLvl1", i))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_APPEARANCE:
@@ -383,8 +383,8 @@ void SetupTokens()
             SetToken(99, "Select an ability to increase.");
             break;
         case STAGE_RACIAL_ABILITY_CHECK:
-            sText = "You have selected:\n";
-            switch(GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Feat"))
+            sText = GetStringByStrRef(16824209)+"\n";
+            switch(GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Ability"))
             {
                 case ABILITY_STRENGTH:
                     sText += "Strength";
@@ -405,14 +405,19 @@ void SetupTokens()
                     sText += "Charisma";
                     break;
             }
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_RACIAL_SKILL:
             SetToken(99, "Select Skills " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining");
             break;
         case STAGE_RACIAL_SKILL_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
+            if(GetPRCSwitch(PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER))
+            {
+                    sText+= "Stored skill points:";
+                    sText+= " "+IntToString(array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills",-1))+"\n";
+            }
             for(i=0;i<SKILLS_2DA_END;i++)
             {
                 if(Get2DACache("skills", "Name", i) != "" && array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills",i) != 0)
@@ -421,24 +426,34 @@ void SetupTokens()
                     sText+= " "+IntToString(array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills",i))+"\n";
                 }
             }
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         case STAGE_RACIAL_FEAT:
             SetToken(99, "Select Feat");
             break;
         case STAGE_RACIAL_FEAT_CHECK:
-            sText = "You have selected:\n";
+            sText = GetStringByStrRef(16824209)+"\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Feat"))));
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("feat", "Description", GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Feat"))));
-            sText+= "\nIs this correct?";
+            sText+= "\n"+GetStringByStrRef(16824210);
             SetToken(99, sText);
             break;
         default:
             SetToken(99, "Error");
             break;
     }
+    SetCustomToken(110, GetStringByStrRef(16824213)); //abort
+    if(nStage == FINAL_STAGE)
+        SetCustomToken(110, GetStringByStrRef(16824212)); //finish
+    SetCustomToken(111, GetStringByStrRef(16824202));//please wait
+    SetCustomToken(112, GetStringByStrRef(16824204));//next
+    SetCustomToken(113, GetStringByStrRef(16824203));//previous
+    ClearAllActions();
+    ActionPauseConversation();
+    //DelayCommand(1.0, ClearAllActions());
+    DelayCommand(0.1, ActionResumeConversation());
 }
 
 void DoCleanup()

@@ -42,7 +42,7 @@ void main()
         effect eParal = EffectCutsceneParalyze();
         eParal = SupernaturalEffect(eParal);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
-        DelayCommand(30.0, BootPC(oPC));
+        AssignCommand(oPC, DelayCommand(10.0, BootPC(oPC)));
         return;
     }
 
@@ -109,9 +109,9 @@ void main()
         AssignCommand(oPC, ActionEquipItem(oClothes, INVENTORY_SLOT_CHEST));
         //start the ConvoCC conversation
         SetLocalString(oPC, "DynConv_Script", "prc_ccc");
-        AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
+        DelayCommand(2.5, AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE)));
         //DISABLE FOR DEBUGGING
-        AssignCommand(oPC, SetCutsceneMode(oPC, TRUE));
+        DelayCommand(2.0, AssignCommand(oPC, ActionDoCommand(SetCutsceneMode(oPC, TRUE))));
         SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
     }
     else

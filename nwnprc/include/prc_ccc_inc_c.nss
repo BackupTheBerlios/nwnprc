@@ -243,7 +243,7 @@ void FeatLoop(int nClassFeatStage = FALSE)
         string sReqSkill2 = PRC_SQLGetData(11);
         string sReqSkillRanks = PRC_SQLGetData(12);
         string sReqSkillRanks2 = PRC_SQLGetData(13);
-        PrintString(sName);
+//PrintString(sName);
         //enforcement testing
         if(sName == "" || sName == "Bad Strref")
         {
@@ -974,7 +974,7 @@ void BonusFeatLoop()
                     sName = "";
             }
         }
-        PrintString(sName);
+        //PrintString(sName);
         
         if(sName != "")
         {          

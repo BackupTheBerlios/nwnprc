@@ -35,28 +35,73 @@ This may make characters illegal, so it is recommended that Enforce Legal Charac
 #include "inc_letoscript"
 
 //general setting a variable in letoscript function
-string LetoSet(string sLocation,string sValue, string sType);
+//adds it if it doesnt exist
+//replaces a value if it does exist
+string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE);
 
 //general adjusting a variable in letoscript function
 //wont work with stringtypes
 string LetoAdjust(string sLocation, int nValue, string sType);
 
-string LetoSet(string sLocation,string sValue, string sType)
+//deleting a field
+string LetoDelete(string sLocation);
+
+string LetoAdd(string sLocation,string sValue, string sType)
+{
+    return LetoSet(sLocation, sValue, sType, TRUE);
+}
+
+string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE)
 {
 //phoenix
 // <gff:add 'FirstName' {type='string' value=<qq:Bob the Minogon> setifexists=True}>
 //unicorn
 // add /FirstName, Value => qq{Bob the Minogon}, Type => gffLocString, SetIfExists => TRUE;
-
+    if(sType != "byte"
+        && sType != "word"
+        && sType != "int"
+        && sType != "dword"
+        && sType != "char"
+        && sType != "short"
+        && sType != "dword64"
+        && sType != "int64"
+        && sType != "float"
+        && sType != "double"
+        && sType != "list")
+    {            
+        //if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
+        //  sValue = "<qq:"+sValue+">";
+        //else
+        //    sValue = "qq{"+sValue+"}";
+        sValue = "'"+sValue+"'";
+    }        
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
-        sValue = "<qq:"+sValue+">";
-    else
-        sValue = "qq{"+sValue+"}";
-    if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
-        return "<gff:add '"+sLocation+"' {type='"+sType+"' value="+sValue+" setifexists=True}>";
+    {
+        string sReturn = "<gff:";
+        //if(bAdd)
+            sReturn +="add";
+        //else            
+        //    sReturn +="set";
+        sReturn += "'"+sLocation+"' {type='"+sType+"' ";
+        if(sType != "list")
+            sReturn += "value="+sValue+" ";
+        if(!bAdd)
+            sReturn += " setifexists=True";
+        sReturn += "}>\n";
+        return  sReturn;
+    }        
 //unicorn
     else
-        return "add /"+sLocation+", Value => "+sValue+", Type => gff"+sType+" SetIfExists => TRUE;";
+    {
+        string sReturn = "add /"+sLocation+", ";
+        if(sType != "list")
+            sReturn += "Value => "+sValue+", ";
+        sReturn += "Type => gff"+sType;
+        if(bAdd)
+            sReturn += ", SetIfExists => TRUE";
+        sReturn += ";\n";
+        return sReturn;
+    }        
 }
 
 string LetoAdjust(string sLocation, int nValue, string sType)
@@ -69,10 +114,24 @@ string LetoAdjust(string sLocation, int nValue, string sType)
     if(nValue >= 0)
         sValue = "+"+sValue;
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
-        return "<gff:set '"+sLocation+"' {type='"+sType+"' value=<gff:get '"+sLocation+"'>"+sValue+")}>";
+        return LetoSet(sLocation, "(<gff:get '"+sLocation+"'>"+sValue+")", sType);
 //unicorn
     else
-        return "/"+sLocation+" = /"+sLocation+sValue+"; ";
+        return LetoSet(sLocation, "(/"+sLocation+sValue+")", sType);
+}
+
+//deleting a field
+string LetoDelete(string sLocation)
+{
+//phoenix
+// <gff:delete 'Str'>
+//unicorn
+// clear /Str;
+    if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
+        return "<gff:delete '"+sLocation+"'>\n";
+    else        
+        return "clear /"+sLocation+";\n";
+
 }
 
 //Returns a script to set a name
@@ -421,8 +480,8 @@ string AdjustSpareSkill(int nScore, int nLevel = 1)
 //<gff:set 'SkillPoints' (<gff:get 'SkillPoints'>+5)>
 //<gff:set 'LvlStatList/[0]/SkillPoints' (<gff:get 'LvlStatList/[0]/SkillPoints'>+5)>
     string sReturn;
-    sReturn += LetoAdjust("SkillPoints", nScore, "byte");
-    sReturn += LetoAdjust("LvlStatList/["+IntToString(nLevel-1)+"]/SkillPoints", nScore, "byte");
+    sReturn += LetoAdjust("SkillPoints", nScore, "word");
+    sReturn += LetoAdjust("LvlStatList/["+IntToString(nLevel-1)+"]/SkillPoints", nScore, "word");
     return sReturn;
 }
 

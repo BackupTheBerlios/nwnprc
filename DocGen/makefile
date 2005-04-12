@@ -1,5 +1,6 @@
 COMPILER = javac
 FLAGS = -Xlint:all -g -source 1.5 -target 1.5
+RUNPARAMS = -Xmx300m -Xms300m -cp imageio_tga_1.1.0.jar\;
 TARGET = prc/autodoc/*.java
 
 
@@ -8,13 +9,19 @@ default:
 
 
 run:
-	java -Xmx300m -Xms300m prc/autodoc/Main
+	java $(RUNPARAMS) prc/autodoc/Main
 
 run_quiet:
-	java -Xmx300m -Xms300m prc/autodoc/Main -q
+	java $(RUNPARAMS) prc/autodoc/Main -q
 
 run_no_spinner:
-	java -Xmx300m -Xms300m prc/autodoc/Main -s
+	java $(RUNPARAMS) prc/autodoc/Main -s
 
 run_log:
-	java -Xmx300m -Xms300m prc/autodoc/Main -s > log.txt
+	java $(RUNPARAMS) prc/autodoc/Main -s > log.txt
+
+run_icons:
+	java $(RUNPARAMS) prc/autodoc/Main -i
+
+run_icons_log:
+	java $(RUNPARAMS) prc/autodoc/Main -is > log.txt

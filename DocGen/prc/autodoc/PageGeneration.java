@@ -1,16 +1,21 @@
 package prc.autodoc;
 
-import java.io.*;
+//import java.io.*;
 import java.util.*;
-import java.util.regex.*;
+//import java.util.regex.*;
 
 /* Static import in order to let me use the enum constants in switches */
 import static prc.autodoc.Main.SpellType.*;
 
 import static prc.autodoc.Main.*;
 
+/**
+ * This class contains the methods for manual page generation.
+ * 
+ * @author Ornedan
+ */
 public final class PageGeneration{
-	private PageGeneration(){}
+	private PageGeneration(){/* No need for instantiation */}
 	
 	/**
 	 * Handles creation of the skill pages.
@@ -48,6 +53,13 @@ public final class PageGeneration{
 					err_pr.println("Invalid description for skill " + i + ": " + name);
 					errored = true;
 				}
+				// Add in the icon
+				String icon = skills2da.getEntry("Icon", i);
+				if(icon.equals("****")){
+					err_pr.println("Icon not defined for skill " + i + ": " + name);
+					errored = true;
+				}
+				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
 				
 				// Build the final path
 				path = skillPath + i + ".html";
@@ -122,6 +134,13 @@ public final class PageGeneration{
 						err_pr.println("Invalid description for spell " + i + ": " + name);
 						errored = true;
 					}
+					// Add in the icon
+					String icon = spells2da.getEntry("IconResRef", i);
+					if(icon.equals("****")){
+						err_pr.println("Icon not defined for spell " + i + ": " + name);
+						errored = true;
+					}
+					text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
 					
 					// Build the path
 					switch(spelltype){
@@ -161,8 +180,8 @@ public final class PageGeneration{
 	 * A small convenience method for wrapping all the normal spell checks into
 	 * one.
 	 *
-	 * @param spells   the Data_2da entry containing spells.2da
-	 * @param entryNum the line number to use for testing
+	 * @param spells2da the Data_2da entry containing spells.2da
+	 * @param entryNum  the line number to use for testing
 	 *
 	 * @return <code>true</code> if any of the class spell level columns contain a number,
 	 *           <code>false</code> otherwise
@@ -183,8 +202,8 @@ public final class PageGeneration{
 	 * A small convenience method for testing if the given entry contains a
 	 * epic spell.
 	 *
-	 * @param spells   the Data_2da entry containing spells.2da
-	 * @param entryNum the line number to use for testing
+	 * @param spells2da the Data_2da entry containing spells.2da
+	 * @param entryNum  the line number to use for testing
 	 *
 	 * @return <code>true</code> if the impactscript name starts with strings specified in settings,
 	 *           <code>false</code> otherwise
@@ -200,8 +219,8 @@ public final class PageGeneration{
 	 * psionic power. Subradial powers are cropped off, only the radial
 	 * master is printed.
 	 *
-	 * @param spells   the Data_2da entry containing spells.2da
-	 * @param entryNum the line number to use for testing
+	 * @param spells2da the Data_2da entry containing spells.2da
+	 * @param entryNum  the line number to use for testing
 	 *
 	 * @return <code>true</code> if the impactscript name starts with strings specified in settings,
 	 *           <code>false</code> otherwise
@@ -267,6 +286,13 @@ public final class PageGeneration{
 					err_pr.println("Invalid description for masterfeat " + i + ": " + name);
 					errored = true;
 				}
+				// Add in the icon
+				String icon = masterFeats2da.getEntry("ICON", i);
+				if(icon.equals("****")){
+					err_pr.println("Icon not defined for masterfeat " + i + ": " + name);
+					errored = true;
+				}
+				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
 				
 				if(!errored || tolErr){
 					// Store the entry to wait for further processing
@@ -305,8 +331,10 @@ public final class PageGeneration{
 		Data_2da feats2da = twoDA.get("feat");
 		
 		for(int i = 0; i < feats2da.getEntryCount(); i++){
-			// Skip blank rows
-			if(feats2da.getEntry("LABEL", i).equals("****")) continue;
+			// Skip blank rows and markers
+			if(feats2da.getEntry("LABEL", i).equals("****") ||
+			   feats2da.getEntry("FEAT", i).equals("****"))
+				continue;
 			// Skip the ISC & Epic spell markers
 			if(feats2da.getEntry("LABEL", i).equals("ReservedForISCAndESS")) continue;
 			errored = false;
@@ -330,6 +358,14 @@ public final class PageGeneration{
 					err_pr.println("Invalid description for feat " + i + ": " + name);
 					errored = true;
 				}
+				// Add in the icon
+				String icon = feats2da.getEntry("ICON", i);
+				if(icon.equals("****")){
+					err_pr.println("Icon not defined for feat " + i + ": " + name);
+					errored = true;
+				}
+				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
+				
 				
 				isEpic = feats2da.getEntry("PreReqEpic", i).equals("1");
 				isClassFeat = !feats2da.getEntry("ALLCLASSESCANUSE", i).equals("1");
@@ -572,6 +608,13 @@ public final class PageGeneration{
 					err_pr.println("Invalid description for domain " + i + ": " + name);
 					errored = true;
 				}
+				// Add in the icon
+				String icon = domains2da.getEntry("Icon", i);
+				if(icon.equals("****")){
+					err_pr.println("Icon not defined for domain " + i + ": " + name);
+					errored = true;
+				}
+				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
 				
 				// Add a link to the granted feat
 				try{
@@ -738,6 +781,13 @@ public final class PageGeneration{
 					err_pr.println("Invalid description for class " + i + ": " + name);
 					errored = true;
 				}
+				// Add in the icon
+				String icon = classes2da.getEntry("Icon", i);
+				if(icon.equals("****")){
+					err_pr.println("Icon not definedfor class " + i + ": " + name);
+					errored = true;
+				}
+				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
 				
 				// Add in the BAB and saving throws table
 				text = text.replaceAll("~~~ClassBABAndSavThrTable~~~", buildBabAndSaveTable(classes2da, i));
@@ -966,6 +1016,9 @@ public final class PageGeneration{
 			else throw new PageGenerationException("Invalid EpicLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
 		}
 		
+		// Base classes have EpicLevel defined as -1, but become epic at L20
+		if(epicLevel == -1) epicLevel = 20;
+		
 		String[] toReturn = {classFeatTableHeaderTemplate,
 		                     classFeatTableHeaderTemplate};
 		String temp = null;
@@ -1001,13 +1054,7 @@ public final class PageGeneration{
 					continue;
 				}else throw new PageGenerationException("FeatIndex entry in " + featTable.getName() + " on row " + i + " points to non-existent feat: " + featTable.getEntry("FeatIndex", i));
 			}
-			// If the feat has a master, replace it with the master in the listing.
-			if(tempFeat.master != null){
-				tempFeat = tempFeat.master;
-				// Only add masterfeats to the list once.
-				if(masterFeatsUsed.contains(tempFeat)) continue;
-				masterFeatsUsed.add(tempFeat);
-			}
+			
 			try{
 				grantedLevel = Integer.parseInt(featTable.getEntry("GrantedOnLevel", i));
 			}catch(NumberFormatException e){
@@ -1016,9 +1063,16 @@ public final class PageGeneration{
 					continue;
 				}else throw new PageGenerationException("Invalid GrantedOnLevel entry in " + featTable.getName() + " on row " + i + ": " + featTable.getEntry("GrantedOnLevel", i));
 			}
-			
 			// Skip feats that can never be gotten
 			if(grantedLevel > 40) continue;
+			
+			// If the feat has a master, replace it with the master in the listing.
+			if(tempFeat.master != null){
+				tempFeat = tempFeat.master;
+				// Only add masterfeats to the list once.
+				if(masterFeatsUsed.contains(tempFeat)) continue;
+				masterFeatsUsed.add(tempFeat);
+			}
 			
 			// Figure out the correct map to place the feat in
 			if(temp.equals("3")){

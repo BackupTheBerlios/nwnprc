@@ -3,6 +3,7 @@ package prc.autodoc;
 import java.io.*;
 import java.util.*;
 import java.util.regex.*;
+import java.util.concurrent.*;
 
 /* Static import in order to let me use the enum constants in switches */
 import static prc.autodoc.Main.SpellType.*;
@@ -54,6 +55,8 @@ public class Main{
 		/**
 		 * See above, except that this one automatically parses the string for
 		 * the number.
+		 * 
+		 * @param num the line number in TLK as string
 		 *
 		 * @return as above, except it returns Bad StrRef in case parsing failed
 		 */
@@ -238,6 +241,10 @@ public class Main{
 	
 	/** A boolean determining whether to spam the user with progress information */
 	public static boolean verbose = true;
+	
+	/** A boolean determining whether to print icons for the pages or not */
+	public static boolean icons = false;
+	
 	/** A decorative spinner to look at while the program is loading big files */
 	public static Spinner spinner = new Spinner();
 	
@@ -259,7 +266,8 @@ public class Main{
 	/** The bases of target paths */
 	public static String mainPath     = null,
 	                     contentPath  = null,
-	                     menuPath     = null;
+	                     menuPath     = null,
+	                     imagePath    = "manual" + fileSeparator + "images" + fileSeparator;
 	
 	/* Data structures for accessing 2das and TLKs */
 	public static TwoDAStore twoDA;
@@ -282,7 +290,8 @@ public class Main{
 	                     spellTemplate                   = null,
 	                     skillTableHeaderTemplate        = null,
 	                     skillTemplate                   = null,
-	                     successorFeatHeaderTemplate     = null;
+	                     successorFeatHeaderTemplate     = null,
+	                     iconTemplate                    = null;
 	
 	
 	/* Data structure used for determining if a previous write has failed
@@ -293,11 +302,11 @@ public class Main{
 	 */
 	public static HashMap<Integer, SpellEntry> spells;
 	public static HashMap<Integer, FeatEntry> masterFeats,
-	                                           feats;
+	                                          feats;
 	public static HashMap<Integer, ClassEntry> classes;
 	public static HashMap<Integer, GenericEntry> skills,
-	                                              domains,
-	                                              races;
+	                                             domains,
+	                                             races;
 	
 	
 	public static void main(String[] args){
@@ -311,6 +320,8 @@ public class Main{
 					tolErr = true;
 				if(opt.contains("q"))
 					verbose = false;
+				if(opt.contains("i"))
+					icons = true;
 				if(opt.contains("s"))
 					spinner.disable();
 				if(opt.contains("?"))
@@ -345,6 +356,18 @@ public class Main{
 			createPages();
 			createMenus();
 		}
+		
+		// Wait for the image conversion to finish before exiting main
+		if (Icons.executor != null){
+			Icons.executor.shutdown();
+			try{
+				Icons.executor.awaitTermination(120, TimeUnit.SECONDS);
+			}catch(InterruptedException e){
+				err_pr.println("Interrupted while waiting for image conversion to finish");
+			}finally{
+				System.exit(0);
+			}
+		}
 	}
 	
 	/**
@@ -352,9 +375,10 @@ public class Main{
 	 */
 	private static void readMe(){
 		System.out.println("Usage:\n"+
-		                   "  java prc/autodoc/Main [--help][-aqs?]\n"+
+		                   "  java prc/autodoc/Main [--help][-aiqs?]\n"+
 		                   "\n"+
 		                   "-a     forces aborting printing on errors\n"+
+		                   "-i     adds icons to pages\n"+
 		                   "-q     quiet mode. Does not print any progress info, only failure messages\n"+
 		                   "-s     disable the spinner. Useful when logging to file\n"+
 		                   "\n"+
@@ -389,6 +413,7 @@ public class Main{
 			skillTableHeaderTemplate        = readTemplate(templatePath + "skilltableheader.html");
 			skillTemplate                   = readTemplate(templatePath + "skill.html");
 			successorFeatHeaderTemplate     = readTemplate(templatePath + "successorfeatheader.html");
+			iconTemplate                    = readTemplate(templatePath + "icon.html");
 		}catch(IOException e){
 			return false;
 		}

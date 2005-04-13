@@ -26,7 +26,7 @@ void PRCLetoEnter(object oPC)
     int i;
     for(i=0;i<6;i++)
     {
-        int nDBValue = GetCampaignInt("PRC", "LetoAbility_"+IntToString(i), oPC);
+        int nDBValue = GetCampaignInt("LetoPRC", "LetoAbility_"+IntToString(i), oPC);
         if(nDBValue != 0)
         {
             int nPersistValue = GetPersistantLocalInt(oPC, "LetoAbility_"+IntToString(i));

@@ -18,15 +18,25 @@
 
 void main(){
     //PrintString("Executing unarmed_caller");
+    int bCont;
     if(GetLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS))
+    {
         UnarmedFeats(OBJECT_SELF);
+        bCont = TRUE;
+    }
     if(GetLocalInt(OBJECT_SELF, CALL_UNARMED_FISTS))
+    {
         UnarmedFists(OBJECT_SELF);
+        bCont = TRUE;
+    }
     
-    DeleteLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS);
-    DeleteLocalInt(OBJECT_SELF, CALL_UNARMED_FISTS);
-    
-    SetLocalInt(OBJECT_SELF, UNARMED_CALLBACK, TRUE);
-    ExecuteAllScriptsHookedToEvent(OBJECT_SELF, CALLBACKHOOK_UNARMED);
-    DeleteLocalInt(OBJECT_SELF, UNARMED_CALLBACK);
+    if(bCont)
+    {
+        DeleteLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS);
+        DeleteLocalInt(OBJECT_SELF, CALL_UNARMED_FISTS);
+        
+        SetLocalInt(OBJECT_SELF, UNARMED_CALLBACK, TRUE);
+        ExecuteAllScriptsHookedToEvent(OBJECT_SELF, CALLBACKHOOK_UNARMED);
+        DeleteLocalInt(OBJECT_SELF, UNARMED_CALLBACK);
+    }
 }

@@ -17,6 +17,13 @@ void main()
 {
     object oPC = OBJECT_SELF;
     
+    // Make sure they are wielding a mindblade
+    if(GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)), 14) != "prc_sk_mblade_")
+    {
+        SendMessageToPCByStrRef(oPC, 16824509);
+        return;
+    }
+    
     /* Play random battle cry */
     int nSwitch = d10();
     switch (nSwitch)

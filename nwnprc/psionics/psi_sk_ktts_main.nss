@@ -24,23 +24,29 @@ const int WIS = 2414;
 const int CHA = 2415;
 
 void main()
-{
+{   
     object oPC = OBJECT_SELF;
     int nSet;
+    int nStrRef;
+    //SendMessageToPC(oPC, "psi_sk_ktts_main running");
     
     switch(GetSpellId())
     {
         case OFF:
             nSet = KTTS_TYPE_OFF;
+            nStrRef = 62495;
             break;
         case INT:
             nSet = KTTS_TYPE_INT;
+            nStrRef = 134;
             break;
         case WIS:
             nSet = KTTS_TYPE_WIS;
+            nStrRef = 136;
             break;
         case CHA:
             nSet = KTTS_TYPE_CHA;
+            nStrRef = 131;
             break;
         
         default:
@@ -52,4 +58,6 @@ void main()
                 GetLocalInt(oPC, KTTS) & ~KTTS_TYPE_MASK // Invert the mask and use it to remove the old type selection
                 | nSet // OR the new selection in
                );
+
+    SendMessageToPC(oPC, GetStringByStrRef(16824514) + " " + GetStringByStrRef(nStrRef));
 }

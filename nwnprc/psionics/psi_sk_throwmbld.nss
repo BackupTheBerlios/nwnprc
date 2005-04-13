@@ -37,7 +37,7 @@ void main()
     ExecuteScript("psi_sk_manifmbld", oPC);
 
     // Queue attacking
-    AssignCommand(oPC, ActionAttack(oTarget));
+    DelayCommand(0.2f, AssignCommand(oPC, ActionAttack(oTarget)));
 
     // Return the old blade setting
     SetLocalInt(oPC, MBLADE_SHAPE, nPrevShape);

@@ -27,6 +27,10 @@
 void BuildMindblade(object oPC, object oMbld);
 
 
+// Tries to delete the given item
+// ==============================
+//void DoDestroy(object oItem);
+
 void main()
 {
     object oPC = OBJECT_SELF;
@@ -81,6 +85,12 @@ void main()
         SetDroppableFlag(oMbld, FALSE);
         SetItemCursedFlag(oMbld, TRUE);
     }
+    // Not dual-wielding, so delete the second mindblade if they have suc
+    else if(GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)), 14) == "prc_sk_mblade_")
+    {
+        MyDestroyObject(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC));
+    }
+        
 
 
     // Hook psi_sk_event to the mindblade-related events it handles
@@ -90,6 +100,16 @@ void main()
     AddEventScript(oPC, EVENT_ONPLAYERDEATH,       "psi_sk_event", TRUE, FALSE);
 }
 
+/*
+void DoDestroy(object oItem){
+    //DoDebug("DoDestroy running");
+    if(GetIsObjectValid(oItem)){
+        DestroyObject(oItem);
+        AssignCommand(oItem, SetIsDestroyable(TRUE, FALSE, FALSE));
+        DelayCommand(0.05f, DoDestroy(oItem));
+    }
+}
+*/
 
 void BuildMindblade(object oPC, object oMbld)
 {

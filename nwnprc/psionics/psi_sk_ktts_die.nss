@@ -20,12 +20,14 @@
 
 const int FIRST_RADIAL_START  = 2416;
 const int SECOND_RADIAL_START = 2422;
+const int STRREF_START        = 16824478;
 
 void main()
 {
     object oPC = OBJECT_SELF;
     int nID = GetSpellId();
     int nDice;
+    //SendMessageToPC(oPC, "psi_sk_ktts_die running");
     
     if(nID > SECOND_RADIAL_START)
         nDice = 5 + nID - SECOND_RADIAL_START;
@@ -41,4 +43,6 @@ void main()
                 GetLocalInt(oPC, KTTS) & KTTS_TYPE_MASK // Use the mask to remove the old die selection
                 | (nDice << 2) // Shift the dice number right by 2 and OR it in
                );
+
+    SendMessageToPC(oPC, GetStringByStrRef(16824515) + " " + GetStringByStrRef(STRREF_START + nDice - 1));
 }

@@ -32,6 +32,7 @@
 #include "psi_inc_soulkn"
 //#include "inc_debug"
 
+/*
 void DoDestroy(object oItem){
     //DoDebug("DoDestroy running");
     if(GetIsObjectValid(oItem)){
@@ -40,6 +41,7 @@ void DoDestroy(object oItem){
         DelayCommand(0.05f, DoDestroy(oItem));
     }
 }
+*/
 
 void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE)
 {
@@ -75,8 +77,8 @@ void main()
                oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
         
         // Wielding the bastard sword with 2 hands
-        if(//GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) == oItem &&
-           GetBaseItemType(oWeapon) == BASE_ITEM_BASTARDSWORD   &&
+        if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)) &&
+           GetBaseItemType(oWeapon) == BASE_ITEM_BASTARDSWORD            &&
            !GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
         {
             SendMessageToPCByStrRef(oPC, 16824510);
@@ -146,23 +148,23 @@ void main()
         //DoDebug("Unequip");
         object oItem = GetItemLastUnequipped();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
-            DoDestroy(oItem);
+            MyDestroyObject(oItem);
     }
     else if(nEvent == EVENT_ONUNAQUIREITEM)
     {
         //DoDebug("Acquire");
         object oItem = GetModuleItemLost();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
-            DoDestroy(oItem);
+            MyDestroyObject(oItem);
     }
     else if(nEvent == EVENT_ONPLAYERDEATH)
     {
         //DoDebug("Death");
         object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, GetLastBeingDied());
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
-            DoDestroy(oItem);
+            MyDestroyObject(oItem);
         oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, GetLastBeingDied());
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
-            DoDestroy(oItem);
+            MyDestroyObject(oItem);
     }
 }

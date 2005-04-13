@@ -67,6 +67,12 @@ void SetToken(int nTokenID, string sString);
 //sTarget and sReplacement must be the same length
 string ReplaceChars(string sString, string sTarget, string sReplacement);
 
+// A wrapper for DestroyObject. Attempts to bypass any conditions that might prevent destroying the object
+// =======================================================================================================
+// oObject  object to destroy
+void MyDestroyObject(object oObject);
+
+
 int HexToInt( string sHex)
 { if( sHex == "") return 0;
   if( GetStringLeft( sHex, 2) == "0x") sHex = GetStringRight( sHex, GetStringLength( sHex) -2);
@@ -240,4 +246,18 @@ string ReplaceChars(string sString, string sTarget, string sReplacement)
             sReturn += GetSubString(sString, i, 1);
     }
     return sReturn;
+}
+
+
+void MyDestroyObject(object oObject)
+{
+    if(GetIsObjectValid(oObject))
+    {
+        SetCommandable(TRUE ,oObject);
+        AssignCommand(oObject, ClearAllActions());
+        AssignCommand(oObject, SetIsDestroyable(TRUE, FALSE, FALSE));
+        // May not necessarily work on first iteration
+        DestroyObject(oObject);
+        DelayCommand(0.1f, MyDestroyObject(oObject));
+    }
 }

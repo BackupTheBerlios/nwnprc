@@ -37,6 +37,7 @@ Hierophant					| Dungeon Master's Guide
 Mystic Theurge					| Dungeon Master's Guide 3.5
 Legendary Dreadnought				| Epic Level Handbook
 Blood Archer					| Evil
+Soulknife                                       | Expanded Psionics Handbook
 Heartwarder					| Faiths and Pantheons
 Ocular Adept					| Faiths And Pantheons
 Champion of Bane (Based on Divine Champion)	| Forgotten Realms Campaign Setting

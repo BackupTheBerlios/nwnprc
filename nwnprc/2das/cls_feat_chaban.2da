@@ -341,3 +341,7 @@
 337 FEAT_EPIC_GREAT_SMITING_10                     833       1    -1             0      
 338 FEAT_IMPROVED_DWARVEN_WARAXE                   954       1    -1             0      
 339 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
+340 OverWCrit_Mindblade                            3615      1    -1             0      
+341 DevCrit_Mindblade                              3616      1    -1             0      
+342 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      
+343 ImpCrit_Mindblade                              3614      1    -1             0      

@@ -256,39 +256,40 @@ void SOL(object oPC)
 
 void ManAtArms(object oPC)
 {
+    int iWF;
 
-  int iWF;
+    // Calculate the total number of Weapon Focus feats the character has
+    iWF = GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,oPC)   +GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE,oPC)  +GetHasFeat(FEAT_WEAPON_FOCUS_CLUB,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_DAGGER,oPC)          +GetHasFeat(FEAT_WEAPON_FOCUS_DART,oPC)        +GetHasFeat(FEAT_WEAPON_FOCUS_DIRE_MACE,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_DOUBLE_AXE,oPC)      +GetHasFeat(FEAT_WEAPON_FOCUS_DWAXE,oPC)       +GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_AXE,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_SWORD,oPC)     +GetHasFeat(FEAT_WEAPON_FOCUS_HALBERD,oPC)     +GetHasFeat(FEAT_WEAPON_FOCUS_HAND_AXE,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW,oPC)  +GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_FLAIL,oPC) +GetHasFeat(FEAT_WEAPON_FOCUS_KAMA,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LONG_SWORD,oPC)  +GetHasFeat(FEAT_WEAPON_FOCUS_RAPIER,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_KATANA,oPC)          +GetHasFeat(FEAT_WEAPON_FOCUS_KUKRI,oPC)       +GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_FLAIL,oPC)     +GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_HAMMER,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_MACE,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_LONGBOW,oPC)         +GetHasFeat(FEAT_WEAPON_FOCUS_MORNING_STAR,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SCIMITAR,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_SCYTHE,oPC)          +GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD,oPC) +GetHasFeat(FEAT_WEAPON_FOCUS_SHORTBOW,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_SHURIKEN,oPC)        +GetHasFeat(FEAT_WEAPON_FOCUS_SICKLE,oPC)      +GetHasFeat(FEAT_WEAPON_FOCUS_SLING,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_SPEAR,oPC)           +GetHasFeat(FEAT_WEAPON_FOCUS_STAFF,oPC)       +GetHasFeat(FEAT_WEAPON_FOCUS_THROWING_AXE,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,oPC)      +GetHasFeat(FEAT_WEAPON_FOCUS_MINDBLADE, oPC);//+GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,oPC);
 
+    // If they are a soulknife, their WF Mindblade might be counting twice due to how it is implemented, so account for it if necessary
+    if(GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)), 14) == "prc_sk_mblade_" ||
+       GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)), 14) == "prc_sk_mblade_")
+        iWF--;
 
-  iWF = GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_CLUB,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_DAGGER,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_DART,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_DIRE_MACE,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_DOUBLE_AXE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_DWAXE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_AXE,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_HALBERD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_HAND_AXE,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_FLAIL,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_KAMA,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LONG_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_RAPIER,oPC);
+    SetLocalInt(oPC, "PRC_PrereqMAA", 1);
 
-
-
-  iWF += GetHasFeat(FEAT_WEAPON_FOCUS_KATANA,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_KUKRI,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_FLAIL,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_HAMMER,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_MACE,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_LONGBOW,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_MORNING_STAR,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_SCIMITAR,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SCYTHE,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SHORTBOW,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SHURIKEN,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_SICKLE,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SLING,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SPEAR,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_STAFF,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_THROWING_AXE,oPC)+
-        GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,oPC);//+GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,oPC);
-
-
-     SetLocalInt(oPC, "PRC_PrereqMAA", 1);
-
-     if (iWF > 3)
-     {
-     SetLocalInt(oPC, "PRC_PrereqMAA", 0);
-     }
-     if (iWF>0)
-       SetLocalInt(oPC, "PRC_PrereqFH", 1);
-     else
-       SetLocalInt(oPC, "PRC_PrereqFH", 2);
+    if (iWF > 3)
+    {
+        SetLocalInt(oPC, "PRC_PrereqMAA", 0);
+    }
+    
+    // Foe Hunters also require at least one weapon focus feat
+    if (iWF > 0)
+        SetLocalInt(oPC, "PRC_PrereqFH", 1);
+    else
+        SetLocalInt(oPC, "PRC_PrereqFH", 2);
 }
 
 void BFZ(object oPC)
@@ -439,56 +440,59 @@ void WWolf(object oPC)
 void RedWizard(object oPC)
 {
 
-  SetLocalInt(oPC, "PRC_PrereqRedWiz", 1);
+    SetLocalInt(oPC, "PRC_PrereqRedWiz", 1);
 
-  int iFeat;
-  int iFocus;
+    int iFeat;
+    int iFocus;
 
-  iFocus =     GetHasFeat(FEAT_RW_TF_ABJ, oPC)+GetHasFeat(FEAT_RW_TF_CON, oPC)+GetHasFeat(FEAT_RW_TF_DIV, oPC)+
-          GetHasFeat(FEAT_RW_TF_ENC, oPC)+GetHasFeat(FEAT_RW_TF_EVO, oPC)+GetHasFeat(FEAT_RW_TF_ILL, oPC)+
-          GetHasFeat(FEAT_RW_TF_NEC, oPC)+GetHasFeat(FEAT_RW_TF_TRS, oPC);
+    iFocus = GetHasFeat(FEAT_RW_TF_ABJ, oPC)+GetHasFeat(FEAT_RW_TF_CON, oPC)+GetHasFeat(FEAT_RW_TF_DIV, oPC)+
+             GetHasFeat(FEAT_RW_TF_ENC, oPC)+GetHasFeat(FEAT_RW_TF_EVO, oPC)+GetHasFeat(FEAT_RW_TF_ILL, oPC)+
+             GetHasFeat(FEAT_RW_TF_NEC, oPC)+GetHasFeat(FEAT_RW_TF_TRS, oPC);
 
-  iFeat +=     GetHasFeat(FEAT_ARCANE_DEFENSE_ABJURATION, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_CONJURATION, oPC) +
-          GetHasFeat(FEAT_ARCANE_DEFENSE_DIVINATION, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_ENCHANTMENT, oPC) +
-          GetHasFeat(FEAT_ARCANE_DEFENSE_EVOCATION, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_ILLUSION, oPC) +
-          GetHasFeat(FEAT_ARCANE_DEFENSE_NECROMANCY, oPC) + GetHasFeat(FEAT_ARCANE_DEFENSE_TRANSMUTATION, oPC) +
-          GetHasFeat(FEAT_BREW_POTION, oPC) + GetHasFeat(FEAT_CRAFT_WAND, oPC) + GetHasFeat(FEAT_EMPOWER_SPELL, oPC) +
-          GetHasFeat(FEAT_COMBAT_CASTING, oPC) + GetHasFeat(FEAT_EXTEND_SPELL, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION, oPC) +
-          GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_CONJURATION, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_DIVINATION, oPC) +
-          GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ENCHATMENT, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_EVOCATION, oPC) +
-          GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ILLUSION, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_NECROMANCY, oPC) +
-          GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_TRANSMUTATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oPC) +
-          GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINIATION, oPC) +
-          GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oPC) +
-          GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oPC) +
-          GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_PENETRATION, oPC) +
-          GetHasFeat(FEAT_MAXIMIZE_SPELL, oPC) + GetHasFeat(FEAT_PRACTISED_SPELLCASTER_WIZARD, oPC) +
-          GetHasFeat(FEAT_QUICKEN_SPELL, oPC) + GetHasFeat(FEAT_SCRIBE_SCROLL, oPC) +
-          GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oPC) +
-          GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oPC) +
-          GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oPC) +
-          GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oPC) + GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oPC) +
-          GetHasFeat(FEAT_SPELL_PENETRATION, oPC) + GetHasFeat(FEAT_STILL_SPELL, oPC);
+    iFeat = GetHasFeat(FEAT_ARCANE_DEFENSE_ABJURATION, oPC)             + GetHasFeat(FEAT_ARCANE_DEFENSE_CONJURATION, oPC) +
+            GetHasFeat(FEAT_ARCANE_DEFENSE_DIVINATION, oPC)             + GetHasFeat(FEAT_ARCANE_DEFENSE_ENCHANTMENT, oPC) +
+            GetHasFeat(FEAT_ARCANE_DEFENSE_EVOCATION, oPC)              + GetHasFeat(FEAT_ARCANE_DEFENSE_ILLUSION, oPC) +
+            GetHasFeat(FEAT_ARCANE_DEFENSE_NECROMANCY, oPC)             + GetHasFeat(FEAT_ARCANE_DEFENSE_TRANSMUTATION, oPC) +
+            GetHasFeat(FEAT_BREW_POTION, oPC)                           + GetHasFeat(FEAT_CRAFT_WAND, oPC) +
+            GetHasFeat(FEAT_EMPOWER_SPELL, oPC)                         + GetHasFeat(FEAT_COMBAT_CASTING, oPC) +
+            GetHasFeat(FEAT_EXTEND_SPELL, oPC)                          + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION, oPC) +
+            GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_CONJURATION, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_DIVINATION, oPC) +
+            GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ENCHATMENT, oPC)  + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_EVOCATION, oPC) +
+            GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ILLUSION, oPC)    + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_NECROMANCY, oPC) +
+            GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_TRANSMUTATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oPC) +
+            GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oPC)       + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINIATION, oPC) +
+            GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oPC)       + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oPC) +
+            GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oPC)          + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oPC) +
+            GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oPC)     + GetHasFeat(FEAT_GREATER_SPELL_PENETRATION, oPC) +
+            GetHasFeat(FEAT_MAXIMIZE_SPELL, oPC)                        + GetHasFeat(FEAT_PRACTISED_SPELLCASTER_WIZARD, oPC) +
+            GetHasFeat(FEAT_QUICKEN_SPELL, oPC)                         + GetHasFeat(FEAT_SCRIBE_SCROLL, oPC) +
+            GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oPC)                + GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oPC) +
+            GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oPC)                + GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oPC) +
+            GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oPC)                 + GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oPC) +
+            GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oPC)                + GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oPC) +
+            GetHasFeat(FEAT_SPELL_PENETRATION, oPC)                     + GetHasFeat(FEAT_STILL_SPELL, oPC);
 
 
-     if (iFeat > 2 && iFocus == 1)
-     {
-     SetLocalInt(oPC, "PRC_PrereqRedWiz", 0);
-     }
+    // At least two arcane feats, one tattoo focus
+    if (iFeat > 2 && iFocus == 1)
+    {
+        SetLocalInt(oPC, "PRC_PrereqRedWiz", 0);
+    }
 }
 
 void FH(object oPC)
 {
-        int iRanger = GetLevelByClass(CLASS_TYPE_RANGER, oPC);
-        int iURanger = GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER, oPC);
+    int iRanger  = GetLevelByClass(CLASS_TYPE_RANGER, oPC);
+    int iURanger = GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER, oPC);
+    
+    // Required that ManAtArms evaluation has happened already. Part of
+    // the Foe Hunter prereqs are determined there
+    int iPrereq = GetLocalInt(oPC, "PRC_PrereqFH");
 
-        int iPrereq = GetLocalInt(oPC, "PRC_PrereqFH");
-
-     if ( iRanger > 0 ||iURanger > 1 )
-     {
-          SetLocalInt(oPC, "PRC_PrereqFH", iPrereq-1);
-     }
-
+    if ( iRanger > 0 || iURanger > 1 )
+    {
+        SetLocalInt(oPC, "PRC_PrereqFH", iPrereq - 1);
+    }
 }
 
 void BloodArcher(object oPC)

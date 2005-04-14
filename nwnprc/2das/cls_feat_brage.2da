@@ -176,3 +176,6 @@
 172 WeapProfMar                                    45        0    -1             0      
 173 FEAT_NEW_POWER_ATTACK                          3143      3    1              1      
 174 FEAT_NEW_IMPROVED_POWER_ATTACK                 3144      3    1              1      
+175 OverWCrit_Mindblade                            3615      1    -1             0      
+176 DevCrit_Mindblade                              3616      1    -1             0      
+177 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      

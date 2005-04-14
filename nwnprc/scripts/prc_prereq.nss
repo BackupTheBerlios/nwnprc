@@ -12,6 +12,7 @@
 #include "prc_inc_sneak"
 #include "prc_alterations"
 #include "inc_newspellbook"
+#include "prc_allow_const"
 
 // this creates a clone of the PC in limbo, removes the effects and equipment,
 // then stores the results of a ability score query onto the PC's hide.
@@ -514,6 +515,24 @@ void Alaghar(object oPC)
     }
 }
 
+void RangerURangerMutex(object oPC)
+{// Ranger and Ultimate Ranger are mutually exclusive. One can only take levels in one of them
+    
+    // Delete the old values. The character may have lost the offending levels
+    DeleteLocalInt(oPC, ALLOW_CLASS_RANGER);
+    DeleteLocalInt(oPC, ALLOW_CLASS_ULTIMATE_RANGER);
+    
+    if(GetLevelByClass(CLASS_TYPE_RANGER) > 0)
+    {
+        SetLocalInt(oPC, ALLOW_CLASS_ULTIMATE_RANGER, 1);
+    }
+    
+    if(GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER) > 0)
+    {
+        SetLocalInt(oPC, ALLOW_CLASS_RANGER, 1);
+    }
+}
+
 // YES, that is main2()... it's the second (delayed) phase of main.
 void main2()
 {
@@ -619,6 +638,7 @@ void main2()
      FH(oPC);
      BloodArcher(oPC);
      Alaghar(oPC);
+     RangerURangerMutex(oPC);
      // Truly massive debug message flood if activated.
      /*
      SendMessageToPC(oPC, "Your true Strength: " + IntToString(GetLocalInt(oHide, "PRC_trueSTR")));

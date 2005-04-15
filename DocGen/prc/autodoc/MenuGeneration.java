@@ -135,12 +135,18 @@ public final class MenuGeneration{
 			if(!masterfeat.isEpic)
 				normalFeatLinks.put(masterfeat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
 				                                                                 masterfeat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
-				                                                      .replaceAll("~~~targetName~~~", masterfeat.name));
+				                                                     .replaceAll("~~~targetName~~~", masterfeat.name));
 			else
 				epicFeatLinks.put(masterfeat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
 				                                                               masterfeat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
 				                                                   .replaceAll("~~~targetName~~~", masterfeat.name));
 		}
+		
+		// Add in a link to the page listing *all* feats
+		normalPrint.append(menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                       (contentPath + "feats" + fileSeparator + "alphasortedfeats.html")
+				                                        .replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                           .replaceAll("~~~targetName~~~", curLanguageData[3]));
 		
 		while(normalFeatLinks.size() > 0)
 			normalPrint.append(normalFeatLinks.remove(normalFeatLinks.firstKey()));

@@ -16,3 +16,7 @@
 <Primo|Work> A description, a given feat list, a spell list, a power list, a bonus feat levels, a bonus feat choices, class only feats.
 <Primo|Work> It would be very nice too if you could add icons to each page for classes, feats, and spells.
 <Ornedan> I'd need a library to convert tga -> some browser compatible format
+
+
+- Link feats to those that have it as prerequisite.
+- Spells, sorted by level, sorted by school.

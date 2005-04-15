@@ -5,8 +5,9 @@ import java.util.*;
  * Data structure for a feat entry.
  */
 public class FeatEntry implements Comparable<FeatEntry>{
-	public TreeMap<String, FeatEntry> childFeats = new TreeMap<String, FeatEntry>();
-	
+	public TreeMap<String, FeatEntry> childFeats       = new TreeMap<String, FeatEntry>(),
+	                                  requiredForFeats = new TreeMap<String, FeatEntry>();
+
 	public FeatEntry master;
 	public String name;
 	public String text;

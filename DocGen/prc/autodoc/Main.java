@@ -175,11 +175,11 @@ public class Main{
 					
 					// Take action based on current mode
 					if(mode == Modes.LANGUAGE){
-						String[] temp = new String[3];
+						String[] temp = new String[4];
 						String result;
 						langMatch.reset(check);
 						// parse the language entry
-						for(int i = 0; i < 3; i++){
+						for(int i = 0; i < 4; i++){
 							if(!langMatch.find())
 								throw new Exception("Missing language parameter");
 							result = langMatch.group();
@@ -198,6 +198,11 @@ public class Main{
 								paraMatch.reset(result);
 								paraMatch.find();
 								temp[2] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("allfeats")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[3] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
 							else
 								throw new Exception("Unknown language parameter encountered\n" + check);
@@ -260,8 +265,11 @@ public class Main{
 	/** The file separator, given it's own constant for ease of use */
 	public static final String fileSeparator = System.getProperty("file.separator");
 	
+	/** Array of the settings for currently used language */
+	public static String[] curLanguageData = null;
+	
 	/** Current language name */
-	private static String curLanguage = null;
+	public static String curLanguage = null;
 	
 	/** The bases of target paths */
 	public static String mainPath     = null,
@@ -291,7 +299,10 @@ public class Main{
 	                     skillTableHeaderTemplate        = null,
 	                     skillTemplate                   = null,
 	                     successorFeatHeaderTemplate     = null,
-	                     iconTemplate                    = null;
+	                     iconTemplate                    = null,
+	                     listEntrySetTemplate            = null,
+	                     listEntryTemplate               = null,
+	                     alphaSortedListTemplate         = null;
 	
 	
 	/* Data structure used for determining if a previous write has failed
@@ -336,14 +347,15 @@ public class Main{
 		// Print the manual files for each language specified
 		for(int i = 0; i < settings.languages.size(); i++){
 			// Set language, path and load TLKs
-			curLanguage = settings.languages.get(i)[0];
+			curLanguageData = settings.languages.get(i);
+			curLanguage = curLanguageData[0];
 			mainPath    = "manual" + fileSeparator + curLanguage + fileSeparator;
 			contentPath = mainPath + "content" + fileSeparator;
 			menuPath    = mainPath + "menus" + fileSeparator;
 			
 			// If we fail on a language, skip to next one
 			try{
-				tlk = new TLKStore(settings.languages.get(i)[1], settings.languages.get(i)[2]);
+				tlk = new TLKStore(curLanguageData[1], curLanguageData[2]);
 			}catch(TLKReadException e){
 				err_pr.println("Failure while reading TLKs for language: " + curLanguage +":\n" + e);
 				continue;
@@ -414,6 +426,9 @@ public class Main{
 			skillTemplate                   = readTemplate(templatePath + "skill.html");
 			successorFeatHeaderTemplate     = readTemplate(templatePath + "successorfeatheader.html");
 			iconTemplate                    = readTemplate(templatePath + "icon.html");
+			listEntrySetTemplate            = readTemplate(templatePath + "listpageentryset.html");
+            listEntryTemplate               = readTemplate(templatePath + "listpageentry.html");
+            alphaSortedListTemplate         = readTemplate(templatePath + "alphasorted_listpage.html");
 		}catch(IOException e){
 			return false;
 		}

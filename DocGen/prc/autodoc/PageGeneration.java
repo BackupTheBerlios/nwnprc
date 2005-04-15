@@ -488,6 +488,7 @@ public final class PageGeneration{
 			try{
 				andReq1 = feats.get(Integer.parseInt(andReq1Num));
 				if(andReq1 == null) err_pr.println("Feat " + check.entryNum + ": " + check.name + " PREREQFEAT1 points to a nonexistent feat entry");
+				else if(andReq1 == check) err_pr.println("Feat " + check.entryNum + ": " + check.name + " has itself as PREREQFEAT1");
 			}catch(NumberFormatException e){
 				err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid PREREQFEAT1 entry");
 		}}
@@ -495,6 +496,7 @@ public final class PageGeneration{
 			try{
 				andReq2 = feats.get(Integer.parseInt(andReq2Num));
 				if(andReq2 == null) err_pr.println("Feat " + check.entryNum + ": " + check.name + " PREREQFEAT2 points to a nonexistent feat entry");
+				else if(andReq2 == check) err_pr.println("Feat " + check.entryNum + ": " + check.name + " has itself as PREREQFEAT2");
 			}
 			catch(NumberFormatException e){
 				err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid PREREQFEAT2 entry");
@@ -526,6 +528,7 @@ public final class PageGeneration{
 						err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid OrReqFeat" + i + " entry");
 					}
 					if(orReq != null){
+						if(orReq == check) err_pr.println("Feat " + check.entryNum + ": " + check.name + " has itself as OrReqFeat" + i);
 						if(!headerDone){
 							preReqText = "<div>\n" + prereqORFeatHeaderTemplate + "\n";
 							headerDone = true;
@@ -548,6 +551,7 @@ public final class PageGeneration{
 	 * A simple method for printing out all the feat pages
 	 */
 	public static void printFeats(){
+		// Print feats
 		for(FeatEntry toPrint : feats.values()){
 			if(verbose) System.out.println("Printing page for " + toPrint.name);
 			try{
@@ -556,6 +560,7 @@ public final class PageGeneration{
 				err_pr.println("Exception when writing page for feat " + toPrint.entryNum + ": " + toPrint.name + ":\n" + e);
 		}}
 		System.gc();
+		// Print masterfeats
 		for(FeatEntry toPrint : masterFeats.values()){
 			if(verbose) System.out.println("Printing page for " + toPrint.name);
 			try{
@@ -564,6 +569,42 @@ public final class PageGeneration{
 				err_pr.println("Exception when writing page for masterfeat " + toPrint.entryNum + ": " + toPrint.name + ":\n" + e);
 		}}
 		System.gc();
+		
+		// Print a page with alphabetically sorted list of all feats
+		TreeMap<String, FeatEntry> sorted = new TreeMap<String, FeatEntry>(String.CASE_INSENSITIVE_ORDER);
+		for(FeatEntry entry : feats.values()) sorted.put(entry.name, entry);
+		String toPrint = alphaSortedListTemplate,
+		       entrySet;
+		FeatEntry entry;
+		char cha = (char)0;
+		boolean addedAny;
+		while(sorted.size() > 0){
+			// Build the list for a single letter
+			entrySet = listEntrySetTemplate.replace("~~~LinkId~~~", new String(new char[]{cha}));
+			addedAny = false;
+			while(sorted.size() > 0 && 
+			      sorted.firstKey().toLowerCase().startsWith(new String(new char[]{cha}))){
+				addedAny = true;
+				entry = sorted.remove(sorted.firstKey());
+				
+				entrySet = entrySet.replace("~~~FeatList~~~", listEntryTemplate.replace("~~~EntryPath~~~",
+						                                                                entry.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+						                                                       .replace("~~~EntryName~~~", entry.name)
+						                                      + "~~~FeatList~~~");
+				//System.out.println(entry.name);
+			}
+			//System.out.println(sorted.firstKey().toLowerCase() + "YAR" + new String(new char[]{cha}));
+			entrySet = entrySet.replace("~~~FeatList~~~", "");
+			cha++;
+			
+			// Add the sublist to the page
+			if(addedAny)
+				toPrint = toPrint.replace("~~~Content~~~", entrySet + "\n" + "~~~Content~~~");
+		}
+		// Clear off the last replacement marker
+		entrySet = toPrint.replace("~~~Content~~~", "");
+		
+		printPage(contentPath + "feats" + fileSeparator + "alphasortedfeats.html", toPrint);
 	}
 	
 	
@@ -1030,7 +1071,10 @@ public final class PageGeneration{
 		HashSet<FeatEntry> masterFeatsUsed = new HashSet<FeatEntry>();
 		// Build alphabetic lists of all the feats
 		for(int i = 0; i < featTable.getEntryCount(); i++){
-			if(featTable.getEntry("FeatLabel", i).equals("****")) continue;
+			// Skip empty rows and comments
+			if(featTable.getEntry("FeatLabel", i).equals("****") ||
+			   featTable.getEntry("FeatIndex", i).equals("****"))
+				continue;
 			temp = featTable.getEntry("List", i);
 			// Yet more validity checking :P
 			if(!(temp.equals("0") || temp.equals("1") || temp.equals("2") || temp.equals("3"))){

@@ -12,7 +12,7 @@
 
 # different laguage tlks
 language:
-	name="english" base="dialog.tlk" prc="prc_consortium.tlk"
+	name="english" base="dialog.tlk" prc="prc_consortium.tlk" allfeats="All Feats"
 
 
 # what string a certain type of spell.2da script name entry starts with. Delimited by | characters

@@ -1,5 +1,5 @@
 xcopy /iey "Main Manual Files" manual
 
-make
+nmake -NOLOGO
 
-make run_icons
+nmake -NOLOGO run_icons

@@ -571,40 +571,51 @@ public final class PageGeneration{
 		System.gc();
 		
 		// Print a page with alphabetically sorted list of all feats
+		
+		printPage(contentPath + "feats" + fileSeparator + "alphasortedfeats.html", buildAllFeatsList());
+	}
+	
+	/**
+	 * Constructs an alphabetically sorted list of all feats.
+	 * 
+	 * @return an html page containing the list
+	 */
+	private static String buildAllFeatsList(){
 		TreeMap<String, FeatEntry> sorted = new TreeMap<String, FeatEntry>(String.CASE_INSENSITIVE_ORDER);
 		for(FeatEntry entry : feats.values()) sorted.put(entry.name, entry);
-		String toPrint = alphaSortedListTemplate,
+		String toReturn = alphaSortedListTemplate,
 		       entrySet;
 		FeatEntry entry;
 		char cha = (char)0;
+		int counter = 0;
 		boolean addedAny;
 		while(sorted.size() > 0){
 			// Build the list for a single letter
-			entrySet = listEntrySetTemplate.replace("~~~LinkId~~~", new String(new char[]{cha}));
+			entrySet = listEntrySetTemplate.replace("~~~LinkId~~~", new String(new char[]{cha}))
+			                               .replace("~~~EntrySetName~~~", new String(new char[]{cha}).toUpperCase());
 			addedAny = false;
 			while(sorted.size() > 0 && 
 			      sorted.firstKey().toLowerCase().startsWith(new String(new char[]{cha}))){
 				addedAny = true;
 				entry = sorted.remove(sorted.firstKey());
 				
-				entrySet = entrySet.replace("~~~FeatList~~~", listEntryTemplate.replace("~~~EntryPath~~~",
+				entrySet = entrySet.replace("~~~FeatList~~~", listEntryTemplate.replace("~~~EvenOrOdd~~~", (counter++ % 2) == 0 ? "even":"odd")
+						                                                       .replace("~~~EntryPath~~~",
 						                                                                entry.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
 						                                                       .replace("~~~EntryName~~~", entry.name)
 						                                      + "~~~FeatList~~~");
-				//System.out.println(entry.name);
 			}
-			//System.out.println(sorted.firstKey().toLowerCase() + "YAR" + new String(new char[]{cha}));
 			entrySet = entrySet.replace("~~~FeatList~~~", "");
 			cha++;
 			
 			// Add the sublist to the page
 			if(addedAny)
-				toPrint = toPrint.replace("~~~Content~~~", entrySet + "\n" + "~~~Content~~~");
+				toReturn = toReturn.replace("~~~Content~~~", entrySet + "\n" + "~~~Content~~~");
 		}
 		// Clear off the last replacement marker
-		entrySet = toPrint.replace("~~~Content~~~", "");
+		toReturn = toReturn.replace("~~~Content~~~", "");
 		
-		printPage(contentPath + "feats" + fileSeparator + "alphasortedfeats.html", toPrint);
+		return toReturn;
 	}
 	
 	

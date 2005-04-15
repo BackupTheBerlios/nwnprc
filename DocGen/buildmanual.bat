@@ -2,4 +2,4 @@ xcopy /iey "Main Manual Files" manual
 
 make
 
-make run
+make run_icons

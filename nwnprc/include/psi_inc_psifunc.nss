@@ -577,6 +577,7 @@ int GetPowerCount(object oPC, int nClass)
 int GetMaxPowerCount(object oPC, int nClass)
 {
     int nLevel = GetLevelByClass(nClass, oPC);
+    	nLevel += GetPsionicPRCLevels(oPC);
     if(!nLevel)
         return 0;
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
@@ -594,14 +595,14 @@ int GetMaxPowerCount(object oPC, int nClass)
                 { nMaxPowers += 2; nFeat++; }
             break;
         case CLASS_TYPE_WILDER:
-            nFeat = FEAT_POWER_KNOWLEDGE_PSYWAR_1;
-            while(nFeat <= FEAT_POWER_KNOWLEDGE_PSYWAR_10 &&
+            nFeat = FEAT_POWER_KNOWLEDGE_WILDER_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_WILDER_10 &&
                   GetHasFeat(nFeat, oPC))
                 { nMaxPowers += 2; nFeat++; }
             break;
         case CLASS_TYPE_PSYWAR:
-            nFeat = FEAT_POWER_KNOWLEDGE_WILDER_1;
-            while(nFeat <= FEAT_POWER_KNOWLEDGE_WILDER_10 &&
+            nFeat = FEAT_POWER_KNOWLEDGE_PSYWAR_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_PSYWAR_10 &&
                   GetHasFeat(nFeat, oPC))
                 { nMaxPowers += 2; nFeat++; }
             break;

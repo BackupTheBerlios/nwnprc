@@ -587,7 +587,7 @@ void main2()
         int nClass = PRCGetClassByPosition(i2, oPC);
         if(GetIsDivineClass(nClass))
         { 
-            int nLevel = PRCGetLevelByPosition(i, oPC);
+            int nLevel = GetLevelByClass(nClass, oPC);
             if (GetFirstDivineClass(oPC) == nClass) 
                 nLevel += GetDivinePRCLevels(oPC);
             int nAbility = GetAbilityForClass(nClass, oPC);                       
@@ -606,7 +606,7 @@ void main2()
         }
         else if(GetIsArcaneClass(nClass))
         { 
-            int nLevel = PRCGetLevelByPosition(i, oPC);
+            int nLevel = GetLevelByClass(nClass, oPC);
             if (GetFirstArcaneClass(oPC) == nClass) 
                 nLevel += GetArcanePRCLevels(oPC);
             int nAbility = GetAbilityForClass(nClass, oPC);                       

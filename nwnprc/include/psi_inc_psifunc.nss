@@ -148,6 +148,22 @@ int GetIsPsionicCharacter(object oCreature);
 // Performs the respawning operation of the Astral Seed spell
 void AstralSeedRespawn(object oPlayer = OBJECT_SELF);
 
+// Returns the equivalent added caster levels from Psionic Prestige Classes.
+int GetPsionicPRCLevels(object oCaster);
+
+// Returns TRUE if nClass is an psionic manifesting class, FALSE otherwise.
+int GetIsPsionicClass(int nClass);
+
+// Returns the CLASS_TYPE of the first Psionic caster class possessed by the character
+// or CLASS_TYPE_INVALID if there is none.
+int GetFirstPsionicClass (object oCaster = OBJECT_SELF);
+
+// Returns the position that the first Psionic class is in, returns 0 if none.
+int GetFirstPsionicClassPosition (object oCaster = OBJECT_SELF);
+
+// Returns the max power level caster can manifest. Should only be used in prc_prereq.
+int GetPowerPrereq(int nLevel, int nSpellLevel, int nAbilityScore, int nClass);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -182,6 +198,7 @@ int GetManifesterLevel(object oCaster)
         //Gets the level of the manifesting class
         SendMessageToPC(oCaster, "Manifesting class: " + IntToString(GetManifestingClass(oCaster)));
         nLevel = GetLevelByClass(GetManifestingClass(oCaster), oCaster);
+        nLevel += GetPsionicPRCLevels(oCaster);
         SendMessageToPC(oCaster, "Level gotten via GetLevelByClass: " + IntToString(nLevel));
     }
 
@@ -883,4 +900,60 @@ void AstralSeedRespawn(object oPlayer = OBJECT_SELF)
 	int nLevelDown = ((nHD * (nHD - 1)) / 2) * 1000;
 	int nNewXP = (nCurrentLevel + nLevelDown)/2;
 	SetXP(oPlayer,nNewXP);	
+}
+
+int GetPsionicPRCLevels (object oCaster)
+{
+	int nLevel = GetLevelByClass(CLASS_TYPE_CEREBREMANCER, oCaster);
+	nLevel += GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE, oCaster);
+	
+	return nLevel;
+}
+
+int GetIsPsionicClass(int nClass)
+{
+    return (nClass==CLASS_TYPE_PSION ||
+            nClass==CLASS_TYPE_PSYWAR ||
+            nClass==CLASS_TYPE_WILDER);
+}
+
+int GetFirstPsionicClassPosition (object oCaster = OBJECT_SELF)
+{
+    if (GetIsPsionicClass(PRCGetClassByPosition(1, oCaster)))
+        return 1;
+    if (GetIsPsionicClass(PRCGetClassByPosition(2, oCaster)))
+        return 2;
+    if (GetIsPsionicClass(PRCGetClassByPosition(3, oCaster)))
+        return 3;
+        
+    return 0;
+}
+
+int GetFirstPsionicClass (object oCaster = OBJECT_SELF)
+{
+    int iPsionicPos = GetFirstPsionicClassPosition(oCaster);
+    if (!iPsionicPos) return CLASS_TYPE_INVALID; // no Psionic casting class
+    
+    return PRCGetClassByPosition(iPsionicPos, oCaster);
+}
+
+int GetPowerPrereq(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
+{
+    //check ability modifier
+    if(nAbilityScore < nSpellLevel+10)
+        return 0;
+        
+    FloatingTextStringOnCreature("Psionic Class: " + IntToString(nClass), OBJECT_SELF, FALSE);  
+        
+    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
+    sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    
+    int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel - 1));
+    
+    FloatingTextStringOnCreature("Max Power Level: " + IntToString(nMaxLevel), OBJECT_SELF, FALSE);    
+    
+    int N = 0;
+    if (nMaxLevel >= nSpellLevel)	N = nSpellLevel;
+    	
+    return N;
 }

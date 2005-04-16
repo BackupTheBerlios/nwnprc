@@ -10,6 +10,7 @@
 
 #include "prc_inc_spells"
 #include "prc_inc_sneak"
+#include "psi_inc_psifunc"
 #include "prc_alterations"
 #include "inc_newspellbook"
 #include "prc_allow_const"
@@ -561,6 +562,9 @@ void main2()
 
         sVariable = "PRC_DivSpell" + IntToString(iCount);
         SetLocalInt(oPC, sVariable, 1);
+        
+        sVariable = "PRC_PsiPower" + IntToString(iCount);
+        SetLocalInt(oPC, sVariable, 1);
      }
      for (iCount = 1; iCount <= 30; iCount++)
      {
@@ -570,14 +574,17 @@ void main2()
 
      // Find the spell levels.
     int i;
+    int i2 = 1;
     int iCha = GetLocalInt(GetPCSkin(oPC), "PRC_trueCHA") - 10;
     int iWis = GetLocalInt(GetPCSkin(oPC), "PRC_trueWIS") - 10;
     int iInt = GetLocalInt(GetPCSkin(oPC), "PRC_trueINT") - 10;
     int nArcHighest;
     int nDivHighest;
-    for(i=1;i<3;i++)
+    int nPsiHighest;
+    //for(i=1;i<3;i++)
+    while(i2 < 3)
     {
-        int nClass = PRCGetClassByPosition(i, oPC);
+        int nClass = PRCGetClassByPosition(i2, oPC);
         if(GetIsDivineClass(nClass))
         { 
             int nLevel = PRCGetLevelByPosition(i, oPC);
@@ -615,7 +622,31 @@ void main2()
                         nArcHighest = i;
                 }
             }
-        }        
+        }  
+        else if(GetIsPsionicClass(nClass))
+        { 
+        
+        FloatingTextStringOnCreature("Psionic Class: TRUE", oPC, FALSE);
+        
+            int nLevel = PRCGetLevelByPosition(i, oPC);
+            if (GetFirstPsionicClass(oPC) == nClass) 
+                nLevel += GetPsionicPRCLevels(oPC);
+            int nAbility = GetAbilityForClass(nClass, oPC);   
+            
+            FloatingTextStringOnCreature("Ability Score: " + IntToString(nAbility), oPC, FALSE);
+                       
+            for(i=1;i<=9;i++)
+            {
+            	int nSlots = GetPowerPrereq(nLevel, i, nAbility, nClass);
+                if(nSlots > 0)
+                {
+                    SetLocalInt(oPC, "PRC_PsiPower"+IntToString(i), 0);
+                    if(i > nPsiHighest)
+                        nPsiHighest = i;
+                }
+            }
+        }         
+    i2 += 1;   
     }
 
      // Find the sneak attack capacity.

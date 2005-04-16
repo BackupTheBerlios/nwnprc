@@ -17,46 +17,47 @@ const int AOE_MOB_ENERGYWALL        = 133;
 const int AOE_MOB_CATAPSI	    = 134;
 
 // Level 1 Powers
-const int POWER_BOLT                = 14001;
-const int POWER_CALLTOMIND          = 14002;
-const int POWER_CHARMPERSON         = 14003;
-const int POWER_CRYSTALSHARD        = 14004;
-const int POWER_DAZE                = 14005;
-const int POWER_DECELERATION        = 14006;
-const int POWER_DEFPRECOG           = 14007;
-const int POWER_DEMORALIZE          = 14008;
-const int POWER_DISABLE             = 14009;
-const int POWER_DISSIPATINGTOUCH    = 14010;
-const int POWER_DISTRACT            = 14011;
-const int POWER_EMPTYMIND           = 14012;
-const int POWER_CONCEALTHOUGHT      = 14013;
-const int POWER_ENERGYRAY_COLD      = 14014;
-const int POWER_ENERGYRAY_ELEC      = 14015;
-const int POWER_ENERGYRAY_FIRE      = 14016;
-const int POWER_ENERGYRAY_SONIC     = 14017;
-const int POWER_ENTANGLE            = 14018;
-const int POWER_FORCESCREEN         = 14019;
-const int POWER_GREASE              = 14020;
-const int POWER_HAMMER              = 14021;
-const int POWER_INERTIALARMOUR      = 14022;
-const int POWER_MINDTHRUST          = 14023;
-const int POWER_MYLIGHT             = 14024;
-const int POWER_OFFPRECOG           = 14025;
-const int POWER_OFFPRESC            = 14026;
-const int POWER_STOMP               = 14027;
-const int POWER_SYNESTHETE          = 14028;
-const int POWER_THICKSKIN           = 14029;
-const int POWER_VIGOR               = 14030;
-const int POWER_EMPATHY             = 14031;
-const int POWER_FARHAND             = 14032;
-const int POWER_MATTERAGITATION     = 14033;
-const int POWER_SKATE               = 14034;
-const int POWER_TELEMPATHICPRO      = 14035;
-const int POWER_ASTRALCONSTRUCT_SLOT1   = 14036;
-const int POWER_ASTRALCONSTRUCT_SLOT2   = 14037;
-const int POWER_ASTRALCONSTRUCT_SLOT3   = 14038;
-const int POWER_ASTRALCONSTRUCT_SLOT4   = 14039;
-const int POWER_CREATESOUND	    = 14040;
+const int POWER_BOLT                		= 14001;
+const int POWER_CALLTOMIND          		= 14002;
+const int POWER_CHARMPERSON         		= 14003;
+const int POWER_CRYSTALSHARD        		= 14004;
+const int POWER_DAZE                		= 14005;
+const int POWER_DECELERATION        		= 14006;
+const int POWER_DEFPRECOG           		= 14007;
+const int POWER_DEMORALIZE          		= 14008;
+const int POWER_DISABLE             		= 14009;
+const int POWER_DISSIPATINGTOUCH    		= 14010;
+const int POWER_DISTRACT            		= 14011;
+const int POWER_EMPTYMIND           		= 14012;
+const int POWER_CONCEALTHOUGHT      		= 14013;
+const int POWER_ENERGYRAY_COLD      		= 14014;
+const int POWER_ENERGYRAY_ELEC      		= 14015;
+const int POWER_ENERGYRAY_FIRE      		= 14016;
+const int POWER_ENERGYRAY_SONIC     		= 14017;
+const int POWER_ENTANGLE            		= 14018;
+const int POWER_FORCESCREEN         		= 14019;
+const int POWER_GREASE              		= 14020;
+const int POWER_HAMMER              		= 14021;
+const int POWER_INERTIALARMOUR      		= 14022;
+const int POWER_MINDTHRUST          		= 14023;
+const int POWER_MYLIGHT             		= 14024;
+const int POWER_OFFPRECOG           		= 14025;
+const int POWER_OFFPRESC            		= 14026;
+const int POWER_STOMP               		= 14027;
+const int POWER_SYNESTHETE          		= 14028;
+const int POWER_THICKSKIN           		= 14029;
+const int POWER_VIGOR               		= 14030;
+const int POWER_EMPATHY             		= 14031;
+const int POWER_FARHAND             		= 14032;
+const int POWER_MATTERAGITATION     		= 14033;
+const int POWER_SKATE               		= 14034;
+const int POWER_TELEMPATHICPRO      		= 14035;
+const int POWER_ASTRALCONSTRUCT_SLOT1		= 14036;
+const int POWER_ASTRALCONSTRUCT_SLOT2		= 14037;
+const int POWER_ASTRALCONSTRUCT_SLOT3		= 14038;
+const int POWER_ASTRALCONSTRUCT_SLOT4		= 14039;
+const int POWER_CREATESOUND	    		= 14040;
+const int POWER_BURST		    		= 14041;
 
 // Level 2 Powers
 const	int	POWER_BESTOWPOWER		= 14051;
@@ -95,6 +96,7 @@ const	int	POWER_DISSOLVEWEAP		= 14083;
 const   int 	POWER_SHAREPAIN		   	= 14084;
 const   int 	POWER_CONTROLAIR	   	= 14085;
 const   int 	POWER_CONTROLSOUND	   	= 14086;
+const   int 	POWER_REPAIRDAMAGE	   	= 14087;
 
 // Level 3 Powers
 const	int	POWER_BODYADJUST		= 14101;
@@ -130,6 +132,7 @@ const   int 	POWER_ENERGYWALL_SONIC		= 14130;
 const   int 	POWER_HUSTLE	   		= 14131;
 const   int 	POWER_TIMEHOP   		= 14132;
 const   int 	POWER_UBIQVISION   		= 14133;
+const   int 	POWER_ECTOCOCOON   		= 14134;
 
 
 // Level 4 Powers
@@ -143,6 +146,8 @@ const   int 	POWER_MINDWIPE		   	= 14157;
 const   int 	POWER_POWERLEECH	   	= 14158;
 const   int 	POWER_PSYCHICREFORMATION   	= 14159;
 const   int 	POWER_TELEKINETICMANEUVER   	= 14160;
+const   int 	POWER_DIMENSIONALANCHOR   	= 14161;
+const   int 	POWER_DISMISSAL		   	= 14162;
 
 // Level 5 Powers
 const	int	POWER_BALEFULTEL		= 14191;
@@ -153,6 +158,7 @@ const   int 	POWER_TRUESEEING	   	= 14195;
 const   int 	POWER_TOWERIRONWILL	   	= 14196;
 const   int 	POWER_CATAPSI		   	= 14197;
 const   int 	POWER_SHATTERMINDBLANK	   	= 14198;
+const   int 	POWER_HAILCRYSTALS	   	= 14199;
 
 // Level 6 Powers
 const	int	POWER_BREATHBLACKDRAGON		= 14231;
@@ -161,6 +167,7 @@ const	int	POWER_CRYSTALLIZE		= 14233;
 const   int 	POWER_FUSEFLESH		   	= 14234;
 const   int 	POWER_RETRIEVE		   	= 14235;
 const   int 	POWER_TEMPORALACCELERATION   	= 14236;
+const   int 	POWER_BANISHMENT	   	= 14237;
 
 // Level 7 Powers
 const	int	POWER_CRISISLIFE		= 14271;
@@ -178,6 +185,8 @@ const   int 	POWER_MOMENTOFPRESCIENCEATTACK 	= 14282;
 const   int 	POWER_MOMENTOFPRESCIENCEARMOUR  = 14283;
 const   int 	POWER_MOMENTOFPRESCIENCESAVES	= 14284;
 const   int 	POWER_MOMENTOFPRESCIENCESKILLS	= 14285;
+const   int 	POWER_ECTOCOCOONMASS		= 14286;
+const   int 	POWER_ETHEREALJAUNT		= 14287;
 
 // Level 8 Powers
 const	int	POWER_RECALLDEATH		= 14301;
@@ -185,9 +194,12 @@ const   int 	POWER_IRONBODY		   	= 14302;
 const   int 	POWER_TRUEMETABOLISM	   	= 14303;
 const   int 	POWER_PSIMINDBLANK	   	= 14304;
 const   int 	POWER_SHADOWBODY	   	= 14305;
+const   int 	POWER_ASTRALSEED	   	= 14306;
+const   int 	POWER_TIMEHOPMASS	   	= 14307;
 
 // Level 9 Powers
 const   int 	POWER_ASSIMILATE	   	= 14331;
 const   int 	POWER_ETHEREALNESS	   	= 14332;
 const   int 	POWER_MICROCOSM		   	= 14333;
 const   int 	POWER_TIMELESSBODY	   	= 14334;
+const   int 	POWER_GENESIS		   	= 14335;

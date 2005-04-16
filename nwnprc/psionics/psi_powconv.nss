@@ -70,6 +70,7 @@ void main()
             
             // Set the tokens
             int nManifestLevel = GetLevelByClass(nClass, oPC);
+            nManifestLevel += GetPsionicPRCLevels(oPC);
             int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel - 1));
             int i;
             for(i = 0; i < nMaxLevel; i++){

@@ -221,6 +221,7 @@ int GetArcanePRCLevels (object oCaster)
               +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
               +  GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster)
               +  GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster)
+              +  GetLevelByClass(CLASS_TYPE_CEREBREMANCER, oCaster)
 
                  +  (GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) + 1) / 2
@@ -265,6 +266,7 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
            +  GetLevelByClass(CLASS_TYPE_STORMLORD, oCaster)
            +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER_DIV, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE, oCaster)
 
                  +  (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2

@@ -9,8 +9,7 @@
    Psion, Psychic Warrior, Wilder. (Soulknife does not have Power Points)
 */
 
-#include "prc_feat_const"
-#include "prc_class_const"
+#include "psi_inc_psifunc"
 #include "inc_utility"
 
 // Returns Bonus Power Points gained from Feats
@@ -89,6 +88,7 @@ int GetPPForClass (object oCaster, int nClass)
 {
     int nPP;
     int nLevel = GetLevelByClass(nClass, oCaster);
+    nLevel += GetPsionicPRCLevels(oCaster);
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
     sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     nPP = StringToInt(Get2DACache(sPsiFile, "PowerPoints", nLevel-1));

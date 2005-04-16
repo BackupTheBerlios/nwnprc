@@ -125,3 +125,5 @@ const int CLASS_TYPE_ALAGHAR                      = 140;
 const int CLASS_TYPE_DIABOLIST                         = 154;
 const int CLASS_TYPE_BLIGHTLORD			= 135;
 const int CLASS_TYPE_CONTENDER	= 129;
+const int CLASS_TYPE_PSYCHIC_THEURGE		= 210;
+const int CLASS_TYPE_CEREBREMANCER		= 211;

@@ -18,12 +18,15 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_DRUID:
         case CLASS_TYPE_RANGER:
         case CLASS_TYPE_PALADIN:
+        case CLASS_TYPE_PSYWAR:
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_ASSASSIN:
         case CLASS_TYPE_WIZARD:
+        case CLASS_TYPE_PSION:
             return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
+        case CLASS_TYPE_WILDER:
             return GetAbilityScore(oPC, ABILITY_CHARISMA);
     }
     return 0;

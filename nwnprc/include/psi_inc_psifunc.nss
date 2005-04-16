@@ -944,16 +944,26 @@ int GetPowerPrereq(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
         return 0;
         
     FloatingTextStringOnCreature("Psionic Class: " + IntToString(nClass), OBJECT_SELF, FALSE);  
+    FloatingTextStringOnCreature("Class Level: " + IntToString(nLevel), OBJECT_SELF, FALSE);  
         
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
     sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     
+    FloatingTextStringOnCreature("Filename: " + sPsiFile, OBJECT_SELF, FALSE);   
+    
     int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel - 1));
     
     FloatingTextStringOnCreature("Max Power Level: " + IntToString(nMaxLevel), OBJECT_SELF, FALSE);    
+    FloatingTextStringOnCreature("Power Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
     
     int N = 0;
-    if (nMaxLevel >= nSpellLevel)	N = nSpellLevel;
+    if (nMaxLevel >= nSpellLevel)	
+    {
+    	FloatingTextStringOnCreature("Max Level > Power Level", OBJECT_SELF, FALSE);
+    	N = nSpellLevel;
+    }
+    
+    FloatingTextStringOnCreature("N: " + IntToString(N), OBJECT_SELF, FALSE);  
     	
     return N;
 }

@@ -625,22 +625,19 @@ void main2()
         }  
         else if(GetIsPsionicClass(nClass))
         { 
-        
-        FloatingTextStringOnCreature("Psionic Class: TRUE", oPC, FALSE);
-        
-            int nLevel = PRCGetLevelByPosition(i, oPC);
+            int nLevel = GetLevelByClass(nClass, oPC);
             if (GetFirstPsionicClass(oPC) == nClass) 
                 nLevel += GetPsionicPRCLevels(oPC);
             int nAbility = GetAbilityForClass(nClass, oPC);   
             
-            FloatingTextStringOnCreature("Ability Score: " + IntToString(nAbility), oPC, FALSE);
-                       
             for(i=1;i<=9;i++)
             {
             	int nSlots = GetPowerPrereq(nLevel, i, nAbility, nClass);
+            	FloatingTextStringOnCreature("nSlots: " + IntToString(nSlots), oPC, FALSE);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_PsiPower"+IntToString(i), 0);
+                    FloatingTextStringOnCreature("Prereq Variable " + IntToString(i) +": " + IntToString(GetLocalInt(oPC, "PRC_PsiPower"+IntToString(i))), oPC, FALSE);
                     if(i > nPsiHighest)
                         nPsiHighest = i;
                 }

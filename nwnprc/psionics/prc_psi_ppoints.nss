@@ -18,10 +18,10 @@
 int GetFeatBonusPP(object oCaster = OBJECT_SELF);
 
 // Returns Bonus Power Points gained from Abilities
-int GetModifierPP (object oCaster = OBJECT_SELF);
+int GetModifierPP (object oCaster, int nFirstPsiClass);
 
 // Returns Power Points derived from a specific class
-int GetPPForClass (object oCaster, int nClass);
+int GetPPForClass (object oCaster, int nClass, int nFirstPsiClass);
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -54,14 +54,18 @@ int GetFeatBonusPP(object oCaster = OBJECT_SELF){
 }
 
 
-int GetModifierPP (object oCaster)
+int GetModifierPP (object oCaster, int nFirstPsiClass)
 {
     int nPP;
     int nBonus;
-    int nPsion = GetLevelByClass(CLASS_TYPE_PSION, oCaster);
-    int nPsychic = GetLevelByClass(CLASS_TYPE_PSYWAR, oCaster);
-    int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oCaster);
-
+    int nPsion   = GetLevelByClass(CLASS_TYPE_PSION, oCaster)
+                 + nFirstPsiClass == CLASS_TYPE_PSION ? GetPsionicPRCLevels(oCaster) : 0;
+    int nPsychic = GetLevelByClass(CLASS_TYPE_PSYWAR, oCaster)
+                 + nFirstPsiClass == CLASS_TYPE_PSYWAR ? GetPsionicPRCLevels(oCaster) : 0;
+    int nWilder  = GetLevelByClass(CLASS_TYPE_WILDER, oCaster)
+                 + nFirstPsiClass == CLASS_TYPE_WILDER ? GetPsionicPRCLevels(oCaster) : 0;
+    
+    
     if (nPsion > 0)
     {
         if (nPsion > 20)	nPsion = 20;
@@ -84,11 +88,11 @@ int GetModifierPP (object oCaster)
     return nPP;
 }
 
-int GetPPForClass (object oCaster, int nClass)
+int GetPPForClass (object oCaster, int nClass, int nFirstPsiClass)
 {
     int nPP;
-    int nLevel = GetLevelByClass(nClass, oCaster);
-    nLevel += GetPsionicPRCLevels(oCaster);
+    int nLevel = GetLevelByClass(nClass, oCaster)
+               + nFirstPsiClass == nClass ? GetPsionicPRCLevels(oCaster) : 0;
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
     sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     nPP = StringToInt(Get2DACache(sPsiFile, "PowerPoints", nLevel-1));
@@ -101,14 +105,16 @@ int GetTotalPP (object oCaster)
 {
     //Variables
     int nPP;
-   
-    nPP += GetPPForClass(oCaster, CLASS_TYPE_PSION);
-    nPP += GetPPForClass(oCaster, CLASS_TYPE_WILDER);
-    nPP += GetPPForClass(oCaster, CLASS_TYPE_PSYWAR);
+    // The character's first psionic class is considered to be the one that +mfl PrCs add to
+    int nFirstPsiClass = GetFirstPsionicClass(oCaster);
+    
+    nPP += GetPPForClass(oCaster, CLASS_TYPE_PSION, nFirstPsiClass);
+    nPP += GetPPForClass(oCaster, CLASS_TYPE_WILDER, nFirstPsiClass);
+    nPP += GetPPForClass(oCaster, CLASS_TYPE_PSYWAR, nFirstPsiClass);
       		  
 //    if (nPP > 343) nPP = 343;
       		  
-    nPP = nPP + GetModifierPP(oCaster);
+    nPP = nPP + GetModifierPP(oCaster, nFirstPsiClass);
     
     nPP += GetFeatBonusPP(oCaster);
     

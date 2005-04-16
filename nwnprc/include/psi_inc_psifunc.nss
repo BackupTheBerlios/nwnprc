@@ -162,7 +162,7 @@ int GetFirstPsionicClass (object oCaster = OBJECT_SELF);
 int GetFirstPsionicClassPosition (object oCaster = OBJECT_SELF);
 
 // Returns the max power level caster can manifest. Should only be used in prc_prereq.
-int GetPowerPrereq(int nLevel, int nSpellLevel, int nAbilityScore, int nClass);
+int GetPowerPrereq(int nLevel, int nAbilityScore, int nClass);
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -197,8 +197,11 @@ int GetManifesterLevel(object oCaster)
     {
         //Gets the level of the manifesting class
         SendMessageToPC(oCaster, "Manifesting class: " + IntToString(GetManifestingClass(oCaster)));
-        nLevel = GetLevelByClass(GetManifestingClass(oCaster), oCaster);
-        nLevel += GetPsionicPRCLevels(oCaster);
+        int nManifestingClass = GetManifestingClass(oCaster);
+        nLevel = GetLevelByClass(nManifestingClass, oCaster);
+        // Add levels from +mfl PrCs only for the first manifesting class
+        nLevel += nManifestingClass == GetFirstPsionicClass(oCaster) ?
+                   GetPsionicPRCLevels(oCaster) : 0;
         SendMessageToPC(oCaster, "Level gotten via GetLevelByClass: " + IntToString(nLevel));
     }
 
@@ -577,7 +580,7 @@ int GetPowerCount(object oPC, int nClass)
 int GetMaxPowerCount(object oPC, int nClass)
 {
     int nLevel = GetLevelByClass(nClass, oPC);
-    	nLevel += GetPsionicPRCLevels(oPC);
+    	nLevel += GetFirstPsionicClass(oPC) == nClass ? GetPsionicPRCLevels(oPC) : 0;
     if(!nLevel)
         return 0;
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
@@ -938,10 +941,10 @@ int GetFirstPsionicClass (object oCaster = OBJECT_SELF)
     return PRCGetClassByPosition(iPsionicPos, oCaster);
 }
 
-int GetPowerPrereq(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
+int GetPowerPrereq(int nLevel, int nAbilityScore, int nClass)
 {
     //check ability modifier
-    if(nAbilityScore < nSpellLevel+10)
+    if(nAbilityScore <= 10)
         return 0;
         
     FloatingTextStringOnCreature("Psionic Class: " + IntToString(nClass), OBJECT_SELF, FALSE);  
@@ -955,8 +958,11 @@ int GetPowerPrereq(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
     int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel - 1));
     
     FloatingTextStringOnCreature("Max Power Level: " + IntToString(nMaxLevel), OBJECT_SELF, FALSE);    
-    FloatingTextStringOnCreature("Power Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
+    //FloatingTextStringOnCreature("Power Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
     
+    // Return the lesser of maximum manifestable according to class and maximum manifestable according to ability
+    return nMaxLevel < nAbilityScore - 10 ? nMaxLevel : nAbilityScore - 10;
+    /*
     int N = 0;
     if (nMaxLevel >= nSpellLevel)	
     {
@@ -967,4 +973,5 @@ int GetPowerPrereq(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
     FloatingTextStringOnCreature("N: " + IntToString(N), OBJECT_SELF, FALSE);  
     	
     return N;
+    */
 }

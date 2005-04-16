@@ -581,6 +581,7 @@ void main2()
     int nArcHighest;
     int nDivHighest;
     int nPsiHighest;
+    int bFirstArcClassFound, bFirstDivClassFound, bFirstPsiClassFound;
     //for(i=1;i<3;i++)
     while(i2 < 3)
     {
@@ -588,8 +589,12 @@ void main2()
         if(GetIsDivineClass(nClass))
         { 
             int nLevel = GetLevelByClass(nClass, oPC);
-            if (GetFirstDivineClass(oPC) == nClass) 
+            if (!bFirstDivClassFound &&
+                GetFirstDivineClass(oPC) == nClass)
+            {
                 nLevel += GetDivinePRCLevels(oPC);
+                bFirstDivClassFound = TRUE;
+            }
             int nAbility = GetAbilityForClass(nClass, oPC);                       
                        
             for(i=1;i<=9;i++)
@@ -607,8 +612,12 @@ void main2()
         else if(GetIsArcaneClass(nClass))
         { 
             int nLevel = GetLevelByClass(nClass, oPC);
-            if (GetFirstArcaneClass(oPC) == nClass) 
+            if (!bFirstArcClassFound &&
+                GetFirstArcaneClass(oPC) == nClass)
+            { 
                 nLevel += GetArcanePRCLevels(oPC);
+                bFirstArcClassFound = TRUE;
+            }
             int nAbility = GetAbilityForClass(nClass, oPC);                       
                        
             for(i=1;i<=9;i++)
@@ -626,10 +635,22 @@ void main2()
         else if(GetIsPsionicClass(nClass))
         { 
             int nLevel = GetLevelByClass(nClass, oPC);
-            if (GetFirstPsionicClass(oPC) == nClass) 
+            if (!bFirstPsiClassFound &&
+                GetFirstPsionicClass(oPC) == nClass) 
+            {
                 nLevel += GetPsionicPRCLevels(oPC);
+                bFirstPsiClassFound = TRUE;
+            }
             int nAbility = GetAbilityForClass(nClass, oPC);   
             
+            int nPsiHighest = GetPowerPrereq(nLevel, nAbility, nClass);
+            
+            for(i = 1; i <= nPsiHighest; i++)
+            {
+                SetLocalInt(oPC, "PRC_PsiPower"+IntToString(i), 0);
+                FloatingTextStringOnCreature("Prereq Variable " + IntToString(i) +": " + IntToString(GetLocalInt(oPC, "PRC_PsiPower"+IntToString(i))), oPC, FALSE);
+            }
+            /*
             for(i=1;i<=9;i++)
             {
             	int nSlots = GetPowerPrereq(nLevel, i, nAbility, nClass);
@@ -642,8 +663,9 @@ void main2()
                         nPsiHighest = i;
                 }
             }
+            */
         }         
-    i2 += 1;   
+        i2 += 1;   
     }
 
      // Find the sneak attack capacity.

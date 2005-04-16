@@ -117,6 +117,8 @@ const string ALLOW_CLASS_RUNESCARRED            = "PRC_Allow_Rune";
 const string ALLOW_CLASS_NIGHTSHADE             = "PRC_AllowNights";
 const string ALLOW_CLASS_DRAGONSONG_LYRIST      = "PRC_AllowDraSong";
 const string ALLOW_CLASS_FAVORED_MILIL          = "PRC_AllowFoM";
+const string ALLOW_CLASS_CEREBREMANCER          = "PRC_AllowCereb";
+const string ALLOW_CLASS_PSYCHIC_THEURGE        = "PRC_AllowPsychic";
 
 
 /*

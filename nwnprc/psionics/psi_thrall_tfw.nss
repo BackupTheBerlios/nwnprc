@@ -1,7 +1,11 @@
 /**
- * Thrallherd: Thrallherd
+ * Thrallherd: Twofold Master
  * 16/04/2005
  * Stratovarius
+ * Type of Feat: Class Specific
+ * Prerequisite: Thrallherd level 10.
+ * Specifics: The Thrallherd gains a second thrall. This thrall's maximum level is equal to the thrallherd's level minus 2.
+ * Use: Selected.
  */
 
 #include "prc_class_const"
@@ -32,16 +36,26 @@ void CleanCopy(object oImage)
 
 void main()
 {
-    if (GetIsObjectValid(GetLocalObject(OBJECT_SELF, "TwofoldMaster"))) return;
     int nMax = GetMaxHenchmen();
     
     int i = 1;
     object oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
     
+    if (GetTag(oHench) == "psi_thrall_twofold")
+    {
+    	FloatingTextStringOnCreature("You are already a Twofold Master", OBJECT_SELF, FALSE);
+    	return;
+    }
+    
     while (GetIsObjectValid(oHench))
     {
     	i += 1;
     	oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
+        if (GetTag(oHench) == "psi_thrall_twofold")
+	{
+	    	FloatingTextStringOnCreature("You are already a Twofold Master", OBJECT_SELF, FALSE);
+	    	return;
+    	}
     }
     
     if (i >= nMax) SetMaxHenchmen(i+1);
@@ -51,10 +65,9 @@ void main()
    int nHD = GetHitDice(OBJECT_SELF);
    int nLevel = nHD - 2;
    
-   object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_wiz", GetSpellTargetLocation(), FALSE, "psi_thrall_thrall");
+   object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_wiz", GetSpellTargetLocation(), FALSE, "psi_thrall_twofold");
    AddHenchman(OBJECT_SELF, oCreature);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
-   SetLocalObject(oCreature, "TwofoldMaster", OBJECT_SELF);
    
    int n;
    for(n=1;n<nLevel;n++)

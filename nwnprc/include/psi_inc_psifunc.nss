@@ -204,8 +204,7 @@ int GetManifesterLevel(object oCaster)
         int nManifestingClass = GetManifestingClass(oCaster);
         nLevel = GetLevelByClass(nManifestingClass, oCaster);
         // Add levels from +mfl PrCs only for the first manifesting class
-        nLevel += nManifestingClass == GetFirstPsionicClass(oCaster) ?
-                   GetPsionicPRCLevels(oCaster) : 0;
+        nLevel += nManifestingClass == GetFirstPsionicClass(oCaster) ? GetPsionicPRCLevels(oCaster) : 0;
         SendMessageToPC(oCaster, "Level gotten via GetLevelByClass: " + IntToString(nLevel));
     }
 
@@ -554,26 +553,43 @@ void DoOverchannelDamage(object oCaster)
 
 int CheckPowerPrereqs(int nFeat, object oPC)
 {
+    // Having the power already automatically disqualifies one from taking it again
     if(GetHasFeat(nFeat, oPC))
+    return FALSE;
+    // We assume that the 2da is correctly formatted, and as such, a prereq slot only contains
+    // data if the previous slots in order also contains data.
+    // ie, no PREREQFEAT2 if PREREQFEAT1 is empty
+    if(Get2DACache("feat", "PREREQFEAT1", nFeat) != "")
+    {
+        if(!GetHasFeat(StringToInt(Get2DACache("feat", "PREREQFEAT1", nFeat)), oPC))
         return FALSE;
-    if(Get2DACache("feat", "PREREQFEAT1", nFeat) != ""
-    && !GetHasFeat(StringToInt(Get2DACache("feat", "PREREQFEAT1", nFeat)), oPC))
+        if(Get2DACache("feat", "PREREQFEAT2", nFeat) != ""
+        && !GetHasFeat(StringToInt(Get2DACache("feat", "PREREQFEAT2", nFeat)), oPC))
         return FALSE;
-    if(Get2DACache("feat", "PREREQFEAT2", nFeat) != ""
-    && !GetHasFeat(StringToInt(Get2DACache("feat", "PREREQFEAT2", nFeat)), oPC))
-        return FALSE;
-    if(   (Get2DACache("feat", "OrReqFeat0", nFeat) != ""
-        && !GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat0", nFeat)), oPC))
-       || (Get2DACache("feat", "OrReqFeat1", nFeat) != ""
-        && !GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat1", nFeat)), oPC))
-       || (Get2DACache("feat", "OrReqFeat2", nFeat) != ""
-        && !GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat2", nFeat)), oPC))
-       || (Get2DACache("feat", "OrReqFeat3", nFeat) != ""
-        && !GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat3", nFeat)), oPC))
-       || (Get2DACache("feat", "OrReqFeat4", nFeat) != ""
-        && !GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat4", nFeat)), oPC))
-       )
-        return FALSE;
+    }
+
+    if(Get2DACache("feat", "OrReqFeat0", nFeat) != "")
+    {
+        if(!GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat0", nFeat)), oPC))
+            return FALSE;
+        if(Get2DACache("feat", "OrReqFeat1", nFeat) != "")
+        {
+            if(!GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat1", nFeat)), oPC))
+                return FALSE;
+            if(Get2DACache("feat", "OrReqFeat2", nFeat) != "")
+            {
+                if(!GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat2", nFeat)), oPC))
+                    return FALSE;
+                if(Get2DACache("feat", "OrReqFeat3", nFeat) != "")
+                {
+                    if(!GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat3", nFeat)), oPC))
+                        return FALSE;
+                    if(Get2DACache("feat", "OrReqFeat4", nFeat) != "")
+                    {
+                        if(!GetHasFeat(StringToInt(Get2DACache("feat", "OrReqFeat4", nFeat)), oPC))
+                            return FALSE;
+    }   }   }   }   }
+
     //if youve reached this far then return TRUE
     return TRUE;
 }

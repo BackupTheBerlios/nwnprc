@@ -67,7 +67,7 @@ void main()
     {
         //DoDebug("Rest finished, applying new settings");
         oPC = GetLastBeingRested();
-        SetLocalInt(oPC, MBLADE_FLAGS, GetLocalInt(oPC, MBLADE_FLAGS + "_Q"));
+        SetPersistantLocalInt(oPC, MBLADE_FLAGS, GetLocalInt(oPC, MBLADE_FLAGS + "_Q"));
     }
     else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
     {

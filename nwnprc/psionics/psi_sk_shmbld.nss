@@ -48,7 +48,7 @@ void main()
             WriteTimestampedLogEntry("Wrong SpellId in Shape Mindblade");
     }
     
-    SetLocalInt(oPC, MBLADE_SHAPE, nShape);
+    SetPersistantLocalInt(oPC, MBLADE_SHAPE, nShape);
     
     // Manifest the new blade
     ExecuteScript("psi_sk_manifmbld", oPC);

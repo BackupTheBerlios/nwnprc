@@ -19,7 +19,7 @@
 int StartingConditional()
 {
     object oPC = GetPCSpeaker();
-    int nFlags = GetLocalInt(oPC, MBLADE_FLAGS);
+    int nFlags = GetPersistantLocalInt(oPC, MBLADE_FLAGS);
     // Build selections
     string sSelect = "";
     int bFirst = 1;

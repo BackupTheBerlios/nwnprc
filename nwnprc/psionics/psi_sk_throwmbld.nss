@@ -32,13 +32,13 @@ void main()
     AssignCommand(oPC, ClearAllActions());
 
     // Create and queue equipping of the throwable blades
-    int nPrevShape = GetLocalInt(oPC, MBLADE_SHAPE);
-    SetLocalInt(oPC, MBLADE_SHAPE, MBLADE_SHAPE_RANGED);
+    int nPrevShape = GetPersistantLocalInt(oPC, MBLADE_SHAPE);
+    SetPersistantLocalInt(oPC, MBLADE_SHAPE, MBLADE_SHAPE_RANGED);
     ExecuteScript("psi_sk_manifmbld", oPC);
 
     // Queue attacking
     DelayCommand(0.2f, AssignCommand(oPC, ActionAttack(oTarget)));
 
     // Return the old blade setting
-    SetLocalInt(oPC, MBLADE_SHAPE, nPrevShape);
+    SetPersistantLocalInt(oPC, MBLADE_SHAPE, nPrevShape);
 }

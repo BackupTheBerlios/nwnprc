@@ -164,6 +164,10 @@ int GetFirstPsionicClassPosition (object oCaster = OBJECT_SELF);
 // Returns the max power level caster can manifest. Should only be used in prc_prereq.
 int GetPowerPrereq(int nLevel, int nAbilityScore, int nClass);
 
+// Returns the amount that the cost of the power is to be reduced by
+// Used for class abilities such as Thrallherd's Psionic Charm/Dominate
+int GetPPCostReduced(int nPP, object oCaster);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -378,6 +382,10 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     // If PP Cost is greater than Manifester level
     if (GetManifesterLevel(oCaster) >= nPPCost && nCanManifest)
     {
+    	// Reduced cost of manifesting a power, but does not allow you to exceed the manifester level cap
+    	// Right now, only used for Thrallherd
+    	nPPCost = GetPPCostReduced(nPPCost, oCaster);
+    
         //If Manifest does not have enough points before hostile modifiers, cancel power
         if (nPPCost > nPP)
         {
@@ -911,6 +919,10 @@ int GetPsionicPRCLevels (object oCaster)
 	int nLevel = GetLevelByClass(CLASS_TYPE_CEREBREMANCER, oCaster);
 	nLevel += GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE, oCaster);
 	
+	// No manifester level boost at level 1 and 10 for Thrallherd
+	nLevel += GetLevelByClass(CLASS_TYPE_THRALLHERD, oCaster) - 1;
+	if (GetLevelByClass(CLASS_TYPE_THRALLHERD, oCaster) >= 10) nLevel -= 1;
+	
 	return nLevel;
 }
 
@@ -974,4 +986,30 @@ int GetPowerPrereq(int nLevel, int nAbilityScore, int nClass)
     	
     return N;
     */
+}
+
+int GetPPCostReduced(int nPP, object oCaster)
+{
+	int nThrall = GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF);
+	int nAugment = GetAugmentLevel(oCaster);
+	int nSpell = GetSpellId();
+	
+	if (GetLocalInt(oCaster, "ThrallCharm") && nSpell == POWER_CHARMPERSON)
+	{
+		DeleteLocalInt(oCaster, "ThrallCharm");
+		nPP -= nThrall;
+	}
+	if (GetLocalInt(oCaster, "ThrallDom") && nSpell == POWER_DOMINATE)
+	{
+		DeleteLocalInt(oCaster, "ThrallDom");
+		nPP -= nThrall;
+	}
+	
+	// Reduced cost for augmenting the Dominate power.
+	if (nThrall >= 7 && nAugment > 0 && nSpell == POWER_DOMINATE) nPP -= 2;
+	if (nThrall >= 9 && nAugment > 2 && nSpell == POWER_DOMINATE) nPP -= 4;
+
+	if (nPP < 1) nPP = 1;	
+	
+	return nPP;
 }

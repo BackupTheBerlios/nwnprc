@@ -30,6 +30,8 @@
 #include "psi_spellhook"
 #include "X0_I0_SPELLS"
 
+int CheckRace(int nAugment, object oTarget, object oCaster);
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
@@ -62,48 +64,15 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	int nRacial = MyPRCGetRacialType(oTarget);
-	int nTargetRace = FALSE;
 	float fDuration = HoursToSeconds(nCaster);
-	
-	if (nMetaPsi == 2)	fDuration *= 2;
-	
-	//Verify that the Racial Type is humanoid
-	if  	((nRacial == RACIAL_TYPE_DWARF) ||
-		(nRacial == RACIAL_TYPE_ELF) ||
-		(nRacial == RACIAL_TYPE_GNOME) ||
-		(nRacial == RACIAL_TYPE_HUMANOID_GOBLINOID) ||
-		(nRacial == RACIAL_TYPE_HALFLING) ||
-		(nRacial == RACIAL_TYPE_HUMAN) ||
-		(nRacial == RACIAL_TYPE_HALFELF) ||
-		(nRacial == RACIAL_TYPE_HALFORC) ||
-		(nRacial == RACIAL_TYPE_HUMANOID_ORC) ||
-		(nRacial == RACIAL_TYPE_HUMANOID_REPTILIAN))
-        {
-		nTargetRace = TRUE;
-	}
-	if	(nAugment >= 1 && (nRacial == RACIAL_TYPE_HUMANOID_MONSTROUS) ||
-		(nRacial == RACIAL_TYPE_FEY) ||
-		(nRacial == RACIAL_TYPE_GIANT) ||
-		(nRacial == RACIAL_TYPE_ANIMAL) ||
-		(nRacial == RACIAL_TYPE_MAGICAL_BEAST) ||
-		(nRacial == RACIAL_TYPE_BEAST))
-	{
-		nTargetRace = TRUE;
-	}
-	if	(nAugment >= 3 && (nRacial == RACIAL_TYPE_ABERRATION) ||
-		(nRacial == RACIAL_TYPE_DRAGON) ||
-		(nRacial == RACIAL_TYPE_OUTSIDER) ||
-		(nRacial == RACIAL_TYPE_ELEMENTAL))
-	{
-		nTargetRace = TRUE;
-	}
+	int nTargetRace = CheckRace(nAugment, oTarget, oCaster);
 	
 	//Augmentation effects to Damage
 	if (nAugment > 0)	nDC += nAugment;
 	
 	// Duration boost
 	if (nAugment >= 5)	fDuration = HoursToSeconds((nCaster * 24));
+	if (nMetaPsi == 2)	fDuration *= 2;
 	
 	if (nTargetRace)
 	{
@@ -129,4 +98,32 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 		}
 	}
     }
+}
+
+int CheckRace(int nAugment, object oTarget, object oCaster)
+{
+
+	int nRacial = MyPRCGetRacialType(oTarget);
+	int nTargetRace = FALSE;
+	//Verify that the Racial Type is humanoid
+	if((nRacial == RACIAL_TYPE_DWARF) || (nRacial == RACIAL_TYPE_ELF) || (nRacial == RACIAL_TYPE_GNOME) || (nRacial == RACIAL_TYPE_HUMANOID_GOBLINOID) || (nRacial == RACIAL_TYPE_HALFLING) || (nRacial == RACIAL_TYPE_HUMAN) || (nRacial == RACIAL_TYPE_HALFELF) || (nRacial == RACIAL_TYPE_HALFORC) || (nRacial == RACIAL_TYPE_HUMANOID_ORC) || (nRacial == RACIAL_TYPE_HUMANOID_REPTILIAN))
+        {
+		nTargetRace = TRUE;
+	}
+	if (nAugment >= 1 || GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF) >= 7)
+	{
+		if (nRacial == RACIAL_TYPE_HUMANOID_MONSTROUS || nRacial == RACIAL_TYPE_FEY || nRacial == RACIAL_TYPE_GIANT || nRacial == RACIAL_TYPE_ANIMAL || nRacial == RACIAL_TYPE_MAGICAL_BEAST || nRacial == RACIAL_TYPE_BEAST)
+		{
+			nTargetRace = TRUE;
+		}
+	}
+	if (nAugment >= 3 || GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF) >= 9)
+	{
+		if (nRacial == RACIAL_TYPE_ABERRATION || nRacial == RACIAL_TYPE_DRAGON || nRacial == RACIAL_TYPE_OUTSIDER || nRacial == RACIAL_TYPE_ELEMENTAL)
+		{
+			nTargetRace = TRUE;
+		}
+	}
+	
+	return nTargetRace;
 }

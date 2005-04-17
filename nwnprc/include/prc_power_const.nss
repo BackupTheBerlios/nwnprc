@@ -148,6 +148,7 @@ const   int 	POWER_PSYCHICREFORMATION   	= 14159;
 const   int 	POWER_TELEKINETICMANEUVER   	= 14160;
 const   int 	POWER_DIMENSIONALANCHOR   	= 14161;
 const   int 	POWER_DISMISSAL		   	= 14162;
+const   int 	POWER_DOMINATE		   	= -1;
 
 // Level 5 Powers
 const	int	POWER_BALEFULTEL		= 14191;

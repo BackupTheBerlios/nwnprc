@@ -35,7 +35,7 @@ function openContent(type)
 		case "skills" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_skills.html"; break;
 		
 		case "spells" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_spells.html"; break;
-		case "epicspells" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_epic_spells.html"; break;
+		case "epicspells" : top.content.location = "../content/manual_content_epicspell.html"; top.contentmenu.location = "manual_menus_epic_spells.html"; break;
 		case "modifiedspells" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_modified_spells.html"; break;
 		case "itemcrafting" : top.content.location = "../content/itemcrafting/manual_itemcrafting_system.html"; top.contentmenu.location = "manual_menus_itemcrafting.html"; break;
 		case "modulebuilding" : top.content.location = "../content/modulebuilding/manual_modulebuilding_overridenfiles.html"; top.contentmenu.location = "manual_menus_modulebuilding.html"; break;

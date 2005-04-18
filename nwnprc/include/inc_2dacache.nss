@@ -359,6 +359,9 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
     //if no waypoiint, use module start
     if (!GetIsObjectValid(oCacheWP))
         lCache = GetStartingLocation();
+    //lower case the 2da and column
+    s2DA = GetStringLowerCase(s2DA);
+    sColumn = GetStringLowerCase(sColumn);
     //get the waypoint for this file
     string sFileWPName = "CACHED_"+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
     object oFileWP = GetWaypointByTag(sFileWPName);
@@ -368,9 +371,7 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
     //check if we should use the database
     int nDB = GetPRCSwitch(PRC_USE_DATABASE);
     string SQL;
-    //lower case the 2da and column
-    s2DA = GetStringLowerCase(s2DA);
-    sColumn = GetStringLowerCase(sColumn);
+    
     
     //sColumn = ReplaceChars(sColumn, "_" , "z");
     string sDBColumn = sColumn;

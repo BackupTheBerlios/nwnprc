@@ -932,14 +932,17 @@ void AstralSeedRespawn(object oPlayer = OBJECT_SELF)
 
 int GetPsionicPRCLevels (object oCaster)
 {
-	int nLevel = GetLevelByClass(CLASS_TYPE_CEREBREMANCER, oCaster);
-	nLevel += GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE, oCaster);
-	
-	// No manifester level boost at level 1 and 10 for Thrallherd
-	nLevel += GetLevelByClass(CLASS_TYPE_THRALLHERD, oCaster) - 1;
-	if (GetLevelByClass(CLASS_TYPE_THRALLHERD, oCaster) >= 10) nLevel -= 1;
-	
-	return nLevel;
+    int nLevel = GetLevelByClass(CLASS_TYPE_CEREBREMANCER, oCaster);
+    nLevel += GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE, oCaster);
+
+    // No manifester level boost at level 1 and 10 for Thrallherd
+    if(GetLevelByClass(CLASS_TYPE_THRALLHERD, oCaster))
+    {
+        nLevel += GetLevelByClass(CLASS_TYPE_THRALLHERD, oCaster) - 1;
+        if (GetLevelByClass(CLASS_TYPE_THRALLHERD, oCaster) >= 10) nLevel -= 1;
+    }
+
+    return nLevel;
 }
 
 int GetIsPsionicClass(int nClass)

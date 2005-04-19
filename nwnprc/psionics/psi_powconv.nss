@@ -70,7 +70,7 @@ void main()
             
             // Set the tokens
             int nManifestLevel = GetLevelByClass(nClass, oPC);
-            nManifestLevel += GetPsionicPRCLevels(oPC);
+                nManifestLevel += nClass == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0;
             int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel - 1));
             int i;
             for(i = 0; i < nMaxLevel; i++){
@@ -102,6 +102,7 @@ void main()
             array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), -1);
             
             int nManifestLevel = GetLevelByClass(nClass, oPC);
+                nManifestLevel += nClass == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0;
             int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel-1));
             int nPowerLevelToBrowse = GetLocalInt(oPC, "nPowerLevelToBrowse");
             //PrintString("Building power list for level " + IntToString(nPowerLevelToBrowse));

@@ -26,11 +26,18 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, IMPENET_DC, IMPENET_S, IMPENET_XP))
     {
         object oTarget = GetSpellTargetObject();
-      int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
+        int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
         int nDuration = nCasterLvl + 10;
+        float fDuration = RoundsToSeconds(nDuration);
         effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
         effect eDur = EffectVisualEffect(VFX_DUR_GLOW_PURPLE);
         effect eProt = EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING, 50);
+        if(GetPRCSwitch(PRC_PNP_IMPENETRABILITY))
+        {
+            eProt = EffectDamageImmunityIncrease
+                (DAMAGE_TYPE_PIERCING, 100);
+            fDuration = HoursToSeconds(20);
+        }            
         effect eLink = EffectLinkEffects(eProt, eDur);
         // if this option has been enabled, the caster will take backlash damage
         if (GetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE) == TRUE)
@@ -51,7 +58,7 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                 eVis, oTarget);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
-                eLink, oTarget, RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
+                eLink, oTarget, fDuration, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
         }
     }
     DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

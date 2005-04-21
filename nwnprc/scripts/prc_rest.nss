@@ -30,6 +30,9 @@ void PrcFeats(object oPC)
 void main()
 {
     object oPC = GetLastBeingRested();
+    //rest kits
+    if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
+        ExecuteScript("sbr_onrest", OBJECT_SELF);
     
     switch(MyGetLastRestEventType()){
         case REST_EVENTTYPE_REST_CANCELLED:{

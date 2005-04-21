@@ -12,6 +12,7 @@
 #include "prc_spell_const"
 #include "prc_racial_const"
 #include "prc_misc_const"
+#include "inc_fileends"
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"
@@ -36,6 +37,16 @@ void DeathlessFrenzyCheck(object oTarget)
      {
           SetImmortal(oTarget, FALSE);
      }
+}
+
+effect EffectShaken()
+{
+    effect eReturn = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
+    int i;
+    eReturn = EffectLinkEffects(eReturn, EffectAttackDecrease(2));
+    eReturn = EffectLinkEffects(eReturn, EffectSavingThrowDecrease(SAVING_THROW_ALL,2));
+    eReturn = EffectLinkEffects(eReturn, EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
+    return eReturn;
 }
 
 

@@ -28,6 +28,7 @@ void EvalPRCFeats(object oPC);
 
 #include "prc_alterations"
 //#include "prc_getcast_lvl"
+#include "inc_persist_loca"
 
 int nbWeaponFocus(object oPC);
 
@@ -103,7 +104,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_ALAGHAR, oPC) > 0)             ExecuteScript("prc_alaghar", oPC);
     if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)       DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
     if(iThrallOfGrazzt > 0)                                      ExecuteScript("tog", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)		ExecuteScript("prc_blightlord", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)      ExecuteScript("prc_blightlord", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
@@ -128,6 +129,7 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)                ExecuteScript("ft_lingdmg", oPC);
 
     if(GetHasFeat(FEAT_ETERNAL_FREEDOM, oPC))                    ExecuteScript("etern_free", oPC);
+    if(GetPersistantLocalInt(oPC, "EpicSpell_TransVital"))       ExecuteScript("trans_vital", oPC);
     if(GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC))               ExecuteScript("psi_combat_manif", oPC);
     if(GetHasFeat(FEAT_WILD_TALENT, oPC))                        ExecuteScript("psi_wild_talent", oPC);
     if(GetHasFeat(FEAT_RAPID_METABOLISM, oPC))                   ExecuteScript("prc_rapid_metab", oPC);
@@ -436,6 +438,11 @@ void DeletePRCLocalInts(object oSkin)
     //Blightlord
     DeleteLocalInt(oSkin, "WntrHeart");
     DeleteLocalInt(oSkin, "BlightBlood");
+    
+    //epic spells
+    //transendent vitality
+    DeleteLocalInt(oSkin, "TransVitalCon");
+    DeleteLocalInt(oSkin, "TransVitalRegen");
 }
 
 void ScrubPCSkin(object oPC, object oSkin)

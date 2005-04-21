@@ -34,6 +34,8 @@ const string PRC_SUMMON_ROUND_PER_LEVEL              = "PRC_SUMMON_ROUND_PER_LEV
 const string PRC_PNP_ELEMENTAL_SWARM                 = "PRC_PNP_ELEMENTAL_SWARM";
 //instead of biowares sequential summons it creates multiple elementals
 //only works if prc_multisummon is on
+const string PRC_PNP_FEAR_AURAS                      = "PRC_PNP_FEAR_AURAS";
+//if you pass a save, you cant be affected by that aura for 24h
 
 // Epic spell switches
 const string PRC_EPIC_INGORE_DEFAULTS                = "PRC_EPIC_INGORE_DEFAULTS";
@@ -60,6 +62,12 @@ const string PRC_EPIC_FAILURE_FRACTION_GOLD          = "PRC_EPIC_FAILURE_FRACTIO
 //usually 2 (i.e half) by default
 const string PRC_EPIC_BOOK_DESTRUCTION               = "PRC_EPIC_BOOK_DESTRUCTION";
 //probablity out of 100 of seeds being destroyed when learnt.
+const string PRC_PNP_UNIMPINGED                      = "PRC_PNP_UNIMPINGED";
+const string PRC_PNP_IMPENETRABILITY                 = "PRC_PNP_IMPENETRABILITY";
+const string PRC_PNP_DULLBLADES                      = "PRC_PNP_DULLBLADES";
+//100%immunity and 20hduration instead of 50% and casterlevel+10 rounds
+const string PRC_PNP_CHAMPIONS_VALOR                  = "PRC_PNP_CHAMPIONS_VALOR";
+//20h instead of rounds per level
 
 // General switches
 const string PRC_STAFF_CASTER_LEVEL                  = "PRC_STAFF_CASTER_LEVEL";

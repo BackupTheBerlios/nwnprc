@@ -33,7 +33,15 @@ void main()
         AADestroyAllImbuedArrows(oPC);
     }
     DelayCommand(0.15, DeleteLocalInt(oPC,"ONENTER"));
-
+    
+    //Anti Forum Troll Code
+    //Thats right, the PRC now has grudges.
+    string sPlayerName = GetStringLowerCase(GetPCPlayerName(oPC));
+    if(sPlayerName == "archfiend")
+    {
+        BlackScreen(oPC);//cant see or do anything
+    }
+    
     if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))
         LetoPCEnter(oPC);
     if(GetPRCSwitch(PRC_LETOSCRIPT_FIX_ABILITIES) && !GetIsDM(oPC))
@@ -42,4 +50,6 @@ void main()
         ExecuteScript("prc_ccc_enter", OBJECT_SELF);           
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
+    
+
 }

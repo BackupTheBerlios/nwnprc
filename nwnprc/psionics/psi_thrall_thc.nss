@@ -141,7 +141,7 @@ void main()
    {
    	LevelUpHenchman(oCreature, CLASS_TYPE_CLERIC, TRUE);
    }   
-   for(n=1;n<3;n++)
+   (n=1;n<nLevel;n++)
    {
    	GenerateBossTreasure(oCreature);
    }    

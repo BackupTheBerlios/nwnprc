@@ -74,7 +74,7 @@ void main()
    {
    	LevelUpHenchman(oCreature, CLASS_TYPE_INVALID, TRUE);
    }   
-   (n=1;n<nLevel;n++)
+   for(n=1;n<nLevel;n++)
    {
    	GenerateBossTreasure(oCreature);
    }    

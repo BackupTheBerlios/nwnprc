@@ -9,11 +9,17 @@ public final class Spinner{
 	private int curState = 0;
 	private boolean active = true;
 	
-	public Spinner(){}
 	
+	/**
+	 * Spins the spinner.
+	 */
 	public void spin(){
 		if(active) System.out.print(states[curState = ++curState % states.length] + "\u0008");
 	}
 	
+	
+	/**
+	 * Turns the spinner off.
+	 */
 	public void disable(){ active = false; }
 }

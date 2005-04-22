@@ -115,8 +115,8 @@ public class Data_TLK{
 	 *
 	 * @param reader       RandomAccessFile read from
 	 * @param stringCount  number of strings in the TLK
-	 *
-	 * @return an array of integers containing the lengths of the strings in this TLK
+	 * @return             an array of integers containing the lengths of the strings in this TLK
+	 * @throws IOException if there is an error while reading from <code>reader</code> 
 	 */
 	private int[] readStringLengths(RandomAccessFile reader, int stringCount) throws IOException{
 		int[] toReturn = new int[stringCount];
@@ -143,6 +143,7 @@ public class Data_TLK{
 	 * @param reader         RandomAccessFile read from
 	 * @param stringLengths  an array of integers containing the lengths of the strings in this TLK
 	 * @param curOffset      the offset to start reading from in the file
+	 * @throws IOException   if there is an error while reading from <code>reader</code> 
 	 */
 	private void readStrings(RandomAccessFile reader, int[] stringLengths, int curOffset) throws IOException{
 		StringBuffer buffer = new StringBuffer(200);
@@ -167,10 +168,10 @@ public class Data_TLK{
 	 * Reads the next 4 bytes into the given array from the TLK and then
 	 * writes them into an integer in inverse order.
 	 *
-	 * @param reader     RandomAccessFile read from
-	 * @param readArray  array of bytes read to. For efficiency of not having to create a new array every time
-	 *
-	 * @return integer read
+	 * @param reader       RandomAccessFile read from
+	 * @param readArray    array of bytes read to. For efficiency of not having to create a new array every time
+	 * @return             integer read
+	 * @throws IOException if there is an error while reading from <code>reader</code> 
 	 */
 	private int readLittleEndianInt(RandomAccessFile reader, byte[] readArray) throws IOException{
 		int toReturn = 0;
@@ -183,6 +184,12 @@ public class Data_TLK{
 		return toReturn;
 	}
 	
+	/**
+	 * The main method, as usual
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception{
 		Data_TLK test = new Data_TLK(args[0]);
 	}

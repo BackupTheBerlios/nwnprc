@@ -71,6 +71,37 @@ public class Main{
 	 * Another data structure class. Stores 2das and handles loading them.
 	 */
 	public static class TwoDAStore{
+		private static class Loader implements Runnable{
+			private String pathToLoad;
+			private List<Data_2da> list;
+			private CountDownLatch latch;
+			/**
+			 * Creates a new Loader to load the given 2da file
+			 * @param pathToLoad path of the 2da to load
+			 * @param list       list to store the loaded data into
+			 * @param latch      latch to countdown on once loading is complete
+			 */
+			public Loader(String pathToLoad, List<Data_2da> list, CountDownLatch latch){
+				this.pathToLoad = pathToLoad;
+				this.list       = list;
+				this.latch      = latch;
+			}
+			
+			/**
+			 * @see java.lang.Runnable#run()
+			 */
+			public void run(){
+				try{
+					Data_2da data = new Data_2da(pathToLoad);
+					list.add(data);
+					latch.countDown();
+				}catch(Exception e){
+					System.err.println("Failure while reading main 2das. Exception data:\n");
+					e.printStackTrace();
+					System.exit(1);
+				}
+			}
+		}
 		private HashMap<String, Data_2da> data = new HashMap<String, Data_2da>();
 		
 		/**
@@ -79,7 +110,35 @@ public class Main{
 		 * that could be done anyway.
 		 */
 		public TwoDAStore(){
+			//long start = System.currentTimeMillis();
+			if(verbose) System.out.print("Loading main 2da files ");
+			boolean oldVerbose = verbose;
+			verbose = false;
+			
+			CountDownLatch latch = new CountDownLatch(7);
+			List<Data_2da> list = Collections.synchronizedList(new ArrayList<Data_2da>());
 			// Read the main 2das
+			new Thread(new Loader("2da" + fileSeparator + "classes.2da",     list, latch)).start();
+			new Thread(new Loader("2da" + fileSeparator + "domains.2da",     list, latch)).start();
+			new Thread(new Loader("2da" + fileSeparator + "feat.2da",        list, latch)).start();
+			new Thread(new Loader("2da" + fileSeparator + "masterfeats.2da", list, latch)).start();
+			new Thread(new Loader("2da" + fileSeparator + "racialtypes.2da", list, latch)).start();
+			new Thread(new Loader("2da" + fileSeparator + "skills.2da",      list, latch)).start();
+			new Thread(new Loader("2da" + fileSeparator + "spells.2da",      list, latch)).start();
+			
+			try {
+				latch.await();
+			} catch (InterruptedException e) {
+				System.err.println("Interrupted while reading main 2das. Exception data:\n");
+				e.printStackTrace();
+				System.exit(1);
+			}
+			
+			for(Data_2da entry : list)
+				data.put(entry.getName(), entry);
+			verbose = oldVerbose;
+			if(verbose) System.out.println("- Done");
+			/*
 			try{
 				data.put("classes",     new Data_2da("2da" + fileSeparator + "classes.2da"));
 				data.put("domains",     new Data_2da("2da" + fileSeparator + "domains.2da"));
@@ -93,6 +152,8 @@ public class Main{
 				e.printStackTrace();
 				System.exit(1);
 			}
+			*/
+			//System.out.println("Time taken: "  + (System.currentTimeMillis() - start));
 		}
 		
 		/**
@@ -113,14 +174,8 @@ public class Main{
 				try{
 					temp = new Data_2da("2da" + fileSeparator + name + ".2da");
 				}catch(IllegalArgumentException e){
-					//err_pr.println(e.toString());
 					throw new TwoDAReadException("Problem with filename when trying to read from 2da:\n" + e);
-				}/* Seems it's better to let this cascade
-				catch(TwoDAReadException e){
-					// Just store a null and toss the exception onwards
-					data.put(name, null);
-					throw e;
-				}*/
+				}
 				data.put(name, temp);
 				return temp;
 			}
@@ -139,9 +194,13 @@ public class Main{
 		private enum Modes{LANGUAGE, SIGNATURE, MODIFIED_SPELL};
 		
 		/* Settings data read in */
+		/** The settings for languages. An ArrayList of String[] containing setting for a specific language */
 		public ArrayList<String[]> languages     = new ArrayList<String[]>();
+		/** An ArrayList of Integers. Indices to spells.2da of standard spells modified by the PRC*/
 		public ArrayList<Integer> modifiedSpells = new ArrayList<Integer>();
+		/** A set of script name prefixes used to find epic spell entries in spells.2da */
 		public String[] epicspellSignatures    = null;
+		/** A set of script name prefixes used to find psionic power entries in spells.2da */
 		public String[] psionicpowerSignatures = null;
 		
 		/**
@@ -256,10 +315,7 @@ public class Main{
 	/** A constant signifying Bad StrRef */
 	public static final String badStrRef = "Bad StrRef";
 	
-	/**
-	 * The container object for general configuration data
-	 * read from file
-	 */
+	/**  The container object for general configuration data read from file */
 	public static Settings settings = new Settings();
 	
 	/** The file separator, given it's own constant for ease of use */
@@ -271,14 +327,18 @@ public class Main{
 	/** Current language name */
 	public static String curLanguage = null;
 	
-	/** The bases of target paths */
-	public static String mainPath     = null,
-	                     contentPath  = null,
-	                     menuPath     = null,
-	                     imagePath    = "manual" + fileSeparator + "images" + fileSeparator;
+	/** The base path.                  <code>"manual" + fileSeparator + curLanguage + fileSeparator</code> */
+	public static String mainPath     = null;
+	/** The path to content directory.  <code>mainPath + "content" + fileSeparator</code> */
+	public static String contentPath  = null;
+	/** The path to menu directory.     <code>mainPath + "mainPath" + fileSeparator</code> */
+	public static String menuPath     = null;
+	/** The path to the image directory. <code>"manual" + fileSeparator + "images" + fileSeparator</code>*/
+	public static String imagePath    = "manual" + fileSeparator + "images" + fileSeparator;
 	
-	/* Data structures for accessing 2das and TLKs */
+	/** Data structures for accessing TLKs */
 	public static TwoDAStore twoDA;
+	/** Data structures for accessing TLKs */
 	public static TLKStore tlk;
 	
 	
@@ -302,15 +362,12 @@ public class Main{
 	                     iconTemplate                    = null,
 	                     listEntrySetTemplate            = null,
 	                     listEntryTemplate               = null,
-	                     alphaSortedListTemplate         = null;
+	                     alphaSortedListTemplate         = null,
+						 requiredForFeatHeaderTemplate   = null,
+						 featPageLinkTemplate            = null;
 	
 	
-	/* Data structure used for determining if a previous write has failed
-	 * Required in order to be able to skip generating dead links in the
-	 * manual.
-	 *
-	 * A freaking pile of these, so they take up space, but simplify the code.
-	 */
+	/* Data structures to store generated entry data in */
 	public static HashMap<Integer, SpellEntry> spells;
 	public static HashMap<Integer, FeatEntry> masterFeats,
 	                                          feats;
@@ -320,6 +377,10 @@ public class Main{
 	                                             races;
 	
 	
+	/**
+	 * Ye olde maine methode
+	 * @param args
+	 */
 	public static void main(String[] args){
 		/* Argument parsing */
 		for(String opt : args){
@@ -329,8 +390,10 @@ public class Main{
 			if(opt.startsWith("-")){
 				if(opt.contains("a"))
 					tolErr = true;
-				if(opt.contains("q"))
+				if(opt.contains("q")){
 					verbose = false;
+					spinner.disable();
+				}
 				if(opt.contains("i"))
 					icons = true;
 				if(opt.contains("s"))
@@ -429,6 +492,8 @@ public class Main{
 			listEntrySetTemplate            = readTemplate(templatePath + "listpageentryset.html");
             listEntryTemplate               = readTemplate(templatePath + "listpageentry.html");
             alphaSortedListTemplate         = readTemplate(templatePath + "alphasorted_listpage.html");
+			requiredForFeatHeaderTemplate   = readTemplate(templatePath + "reqforfeatheader.html");
+			featPageLinkTemplate            = readTemplate(templatePath + "featpagelink.html");
 		}catch(IOException e){
 			return false;
 		}

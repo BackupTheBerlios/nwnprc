@@ -16,14 +16,14 @@ public class Data_2da{
 	private String name;
 	
 	// String matching pattern. Gets a block of non-whitespace OR " followed by any characters until the next "
-	private static Pattern pattern = Pattern.compile("[\\S&&[^\"]]+|\"[^\"]+\"");
-	private static Matcher matcher = pattern.matcher("");
+	private Pattern pattern = Pattern.compile("[\\S&&[^\"]]+|\"[^\"]+\"");
+	private Matcher matcher = pattern.matcher("");
 	
 	/**
 	 * Creates a new Data_2da on the 2da file specified.
-	 *
-	 * @param fileName The relative location of the 2da file to be loaded
-	 *
+	 * 
+	 * @param filePath path to the 2da file to load 
+	 *  
 	 * @throws IllegalArgumentException <code>filePath</code> does not specify a 2da file
 	 * @throws TwoDAReadException       reading the 2da file specified does not succeed,
 	 *                                    or the file does not contain any data
@@ -50,10 +50,14 @@ public class Data_2da{
 		// Create a Scanner for reading the 2da
 		Scanner reader = null;
 		try{
-			reader = new Scanner(baseFile);
-		}catch(FileNotFoundException e){
-			err_pr.println("2da file removed while program was running. Aborting");
-			//System.err.println("2da file removed while program was running. Aborting");
+			// Fully read the file into a byte array
+			RandomAccessFile raf = new RandomAccessFile(baseFile, "r");
+			byte[] bytebuf = new byte[(int)raf.length()];
+			raf.readFully(bytebuf);
+			//reader = new Scanner(baseFile);
+			reader = new Scanner(new String(bytebuf));
+		}catch(Exception e){
+			err_pr.println("File operation failed. Aborting.\nException data:\n" + e);
 			System.exit(1);
 		}
 		
@@ -75,8 +79,8 @@ public class Data_2da{
 	/**
 	 * Reads the data rows from the 2da into the hashmap and
 	 * does validity checking on the 2da while doing so.
-	 *
-	 * @throws IOException If there is something wrong with the 2da file
+	 * 
+	 * @param reader Scanner that the method reads from 
 	 */
 	private void createData(Scanner reader){
 		Scanner rowParser;
@@ -150,7 +154,7 @@ public class Data_2da{
 			else
 				break;
 			
-			if(verbose) spinner.spin();
+			spinner.spin();
 		}
 		
 		// Some validity checking on the 2da. Empty rows allowed only in the end
@@ -160,6 +164,8 @@ public class Data_2da{
 	
 	/**
 	 * Reads rows from the 2da until it finds a row containing non-whitespace characters.
+	 * 
+	 * @param reader Scanner that the method reads from
 	 *
 	 * @return The row found, or null if none were found.
 	 */
@@ -237,6 +243,12 @@ public class Data_2da{
 	
 	
 	
+	/**
+	 * The main method, as usual
+	 * 
+	 * @param args
+	 * @throws Throwable
+	 */
 	public static void main(String[] args) throws Throwable{
 		if(args.length == 0) readMe();
 		for(String elem : args) if(elem.equals("--help")) readMe();
@@ -280,7 +292,7 @@ public class Data_2da{
 	 * Differing number of rows, or row names will cause comparison to abort.
 	 *
 	 * @param file1  Data_2da containing one of the files to be compared
-	 * @param file1  Data_2da containing the other file to be compared
+	 * @param file2  Data_2da containing the other file to be compared
 	 */
 	public static void doComparison(Data_2da file1, Data_2da file2){
 		// Check labels

@@ -435,7 +435,8 @@ public final class PageGeneration{
 					if(other == check)
 						err_pr.println("Feat " + check.entryNum + ": " + check.name + " has itself as successor");
 					other.isSuccessor = true;
-					temp += ("<div>\n" + successorFeatHeaderTemplate + "<br /><a href=\"" + other.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + other.name + "</a>\n</div>\n");
+					temp += successorFeatHeaderTemplate + featPageLinkTemplate.replace("~~~Path~~~", other.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+					                                                          .replace("~~~Name~~~", other.name);
 				}catch(NumberFormatException e){
 					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid SUCCESSOR entry");
 				}catch(NullPointerException e){
@@ -443,17 +444,30 @@ public final class PageGeneration{
 			}}
 			check.text = check.text.replaceAll("~~~SuccessorFeat~~~", temp);
 		}
+		// Another loop over all feats, this time to write the prereq data in
+		if(verbose) System.out.println("Linking feats to those they are prerequisites of");
+		for(FeatEntry check : feats.values()){
+			// Copy the map from FeatEntry. It's contents might have use later on, but iterating will
+			// wipe the map
+			boolean headerDone = false;
+			temp = "";
+			for(FeatEntry req : check.requiredForFeats.values()){
+				if(!headerDone){ temp += requiredForFeatHeaderTemplate; headerDone = true; }
+				temp += featPageLinkTemplate.replace("~~~Path~~~", req.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+                                            .replace("~~~Name~~~", req.name);
+			}
+			
+			check.text = check.text.replaceAll("~~~RequiredForFeatList~~~", temp);
+		}
 		
 		// Add the child links to masterfeat texts
 		for(FeatEntry check : masterFeats.values()){
 			if(verbose) System.out.println("Linking masterfeat " + check.name);
 			temp = "";
-			boolean doOnce = false;
 			for(FeatEntry child : check.childFeats.values()){
-				if(!doOnce){ temp += "<div>\n"; doOnce = true; }
-				temp += "<br /><a href=\"" + child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + child.name + "</a>\n";
+				temp += featPageLinkTemplate.replace("~~~Path~~~", child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+	                                        .replace("~~~Name~~~", child.name);
 			}
-			if(doOnce) temp += "</div>\n";
 			
 			check.text = check.text.replaceAll("~~~MasterFeatChildList~~~", temp);
 		}
@@ -464,6 +478,7 @@ public final class PageGeneration{
 	 * Constructs a text containing links to the prerequisite feats of the
 	 * given feat. Separated from the linkFeats method for improved
 	 * readability.
+	 * Also links the feat to it's prerequisites.
 	 *
 	 * @param check    the feat entry to be examined
 	 * @param feats2da the data structure representing feat.2da
@@ -503,12 +518,17 @@ public final class PageGeneration{
 		}}
 		// Check if we had at least one valid entry
 		if(andReq1 != null || andReq2 != null){
-			preReqText = "<div>\n" + prereqANDFeatHeaderTemplate + "\n"; 
-			if(andReq1 != null)
-				preReqText += "<br /><a href=\"" + andReq1.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + andReq1.name + "</a>\n";
-			if(andReq2 != null)
-				preReqText += "<br /><a href=\"" + andReq2.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + andReq2.name + "</a>\n";
-			preReqText += "</div>\n";
+			preReqText = prereqANDFeatHeaderTemplate; 
+			if(andReq1 != null){
+				preReqText += featPageLinkTemplate.replace("~~~Path~~~", andReq1.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+                                                  .replace("~~~Name~~~", andReq1.name);
+				andReq1.requiredForFeats.put(check.name, check);
+			}
+			if(andReq2 != null){
+				preReqText += featPageLinkTemplate.replace("~~~Path~~~", andReq2.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+                                                  .replace("~~~Name~~~", andReq2.name);
+				andReq2.requiredForFeats.put(check.name, check);
+			}
 		}
 
 		
@@ -530,17 +550,18 @@ public final class PageGeneration{
 					if(orReq != null){
 						if(orReq == check) err_pr.println("Feat " + check.entryNum + ": " + check.name + " has itself as OrReqFeat" + i);
 						if(!headerDone){
-							preReqText = "<div>\n" + prereqORFeatHeaderTemplate + "\n";
+							preReqText = prereqORFeatHeaderTemplate;
 							headerDone = true;
 						}
-						preReqText += "<br /><a href=\"" + orReq.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + orReq.name + "</a>\n";
+						preReqText += featPageLinkTemplate.replace("~~~Path~~~", orReq.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+                                                          .replace("~~~Name~~~", orReq.name);
+						orReq.requiredForFeats.put(check.name, check);
 					}
 					else
 						err_pr.println("Feat " + check.entryNum + ": " + check.name + " OrReqFeat" + i + " points to a nonexistent feat entry");
 				}
 			}
 			// End the <div> if we printed anything
-			if(headerDone) preReqText += "</div>\n";
 		}
 		
 		return preReqText;

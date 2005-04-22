@@ -467,12 +467,13 @@ void UnarmedFists(object oCreature)
     int iHenshin = GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oCreature);
     int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
     int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
+    int iZuoken = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature);
     
     // Sacred Fists who break their code get no benefits.
     if (GetHasFeat(FEAT_SF_CODE,oCreature)) iSacFist = 0;
     
     // The monk adds all these classes.
-    int iMonkEq = iMonk + iShou + iSacFist + iHenshin;
+    int iMonkEq = iMonk + iShou + iSacFist + iHenshin + iZuoken;
 
     // Determine the type of damage the character should do.    
     string sWeapType;

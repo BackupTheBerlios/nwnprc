@@ -40,4 +40,6 @@ void main()
         return;
     if(CheckMissingPowers(oPC, CLASS_TYPE_PSYWAR))
         return;
+    if(CheckMissingPowers(oPC, CLASS_TYPE_FIST_OF_ZUOKEN))
+        return;        
 }

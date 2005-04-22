@@ -99,12 +99,13 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) > 0)      ExecuteScript("prc_arcduel", oPC);
     if(GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oPC) > 0)       ExecuteScript("prc_thayknight", oPC);
     if(GetLevelByClass(CLASS_TYPE_TEMPLE_RAIDER, oPC) > 0)       ExecuteScript("prc_templeraider", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BLARCHER, oPC) > 0)        ExecuteScript("prc_bld_arch", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BLARCHER, oPC) > 0)        	 ExecuteScript("prc_bld_arch", oPC);
     if(GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC) > 0) ExecuteScript("prc_outlawroad", oPC);
     if(GetLevelByClass(CLASS_TYPE_ALAGHAR, oPC) > 0)             ExecuteScript("prc_alaghar", oPC);
     if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)       DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
     if(iThrallOfGrazzt > 0)                                      ExecuteScript("tog", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)      ExecuteScript("prc_blightlord", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)      	 ExecuteScript("prc_blightlord", oPC);
+    if(GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN,oPC) > 0)       ExecuteScript("psi_zuoken", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);

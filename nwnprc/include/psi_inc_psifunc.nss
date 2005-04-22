@@ -245,6 +245,8 @@ int GetAbilityOfClass(int nClass){
             return ABILITY_CHARISMA;
         case CLASS_TYPE_PSYWAR:
             return ABILITY_WISDOM;
+        case CLASS_TYPE_FIST_OF_ZUOKEN:
+            return ABILITY_WISDOM;            
         default:
             return ABILITY_CHARISMA;
     }
@@ -949,7 +951,8 @@ int GetIsPsionicClass(int nClass)
 {
     return (nClass==CLASS_TYPE_PSION ||
             nClass==CLASS_TYPE_PSYWAR ||
-            nClass==CLASS_TYPE_WILDER);
+            nClass==CLASS_TYPE_WILDER ||
+            nClass==CLASS_TYPE_FIST_OF_ZUOKEN);
 }
 
 int GetFirstPsionicClassPosition (object oCaster = OBJECT_SELF)

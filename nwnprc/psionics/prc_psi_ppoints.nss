@@ -64,6 +64,8 @@ int GetModifierPP (object oCaster, int nFirstPsiClass)
                  + (nFirstPsiClass == CLASS_TYPE_PSYWAR ? GetPsionicPRCLevels(oCaster) : 0);
     int nWilder  = GetLevelByClass(CLASS_TYPE_WILDER, oCaster)
                  + (nFirstPsiClass == CLASS_TYPE_WILDER ? GetPsionicPRCLevels(oCaster) : 0);
+    int nZuoken  = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCaster)
+                 + (nFirstPsiClass == CLASS_TYPE_WILDER ? GetPsionicPRCLevels(oCaster) : 0);
     
     
     if (nPsion > 0)
@@ -82,6 +84,12 @@ int GetModifierPP (object oCaster, int nFirstPsiClass)
     {
         if (nWilder > 20)	nWilder = 20;
         nBonus = (nWilder * GetAbilityModifier(ABILITY_CHARISMA, oCaster)) / 2;
+        nPP = nBonus + nPP;
+    }
+    if (nZuoken > 0)
+    {
+        if (nZuoken > 10)	nZuoken = 10;
+        nBonus = (nZuoken * GetAbilityModifier(ABILITY_WISDOM, oCaster)) / 2;
         nPP = nBonus + nPP;
     }
 
@@ -111,6 +119,7 @@ int GetTotalPP (object oCaster)
     nPP += GetPPForClass(oCaster, CLASS_TYPE_PSION, nFirstPsiClass);
     nPP += GetPPForClass(oCaster, CLASS_TYPE_WILDER, nFirstPsiClass);
     nPP += GetPPForClass(oCaster, CLASS_TYPE_PSYWAR, nFirstPsiClass);
+    nPP += GetPPForClass(oCaster, CLASS_TYPE_FIST_OF_ZUOKEN, nFirstPsiClass);
       		  
 //    if (nPP > 343) nPP = 343;
       		  

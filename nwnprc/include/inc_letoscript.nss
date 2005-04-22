@@ -168,7 +168,7 @@ string LetoScript(string sScript, string sType = "SCRIPT", string sPollScript = 
 
 void LetoPCEnter(object oPC)
 {
-    SetLocalString(oPC, "Path", GetBicPath(oPC));
+    SetLocalString(oPC, "Leto_Path", GetBicPath(oPC));
     DeleteLocalString(oPC, "LetoScript");
 }
 
@@ -177,7 +177,7 @@ void LetoPCExit(object oPC)
     string sScript = GetLocalString(oPC, "LetoScript");
     if(sScript != "")
     {
-        string sPath = GetLocalString(oPC, "Path");
+        string sPath = GetLocalString(oPC, "Leto_Path");
         if(sPath == "")
             DoDebug("Path is Null");
         if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
@@ -290,7 +290,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
     {
         if(!nDestroyOriginal)//dont boot
         {
-            string sPath = GetLocalString(oObject, "Path");
+            string sPath = GetLocalString(oObject, "Leto_Path");
             if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
             {
                 sCommand = "<file:open '"+sLetoTag+"' <qq:"+sPath+">>";

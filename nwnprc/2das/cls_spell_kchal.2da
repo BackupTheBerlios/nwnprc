@@ -1,0 +1,30 @@
+2DA V2.0					
+
+	Label	Level	FeatID	IPFeatID	SpellID	ReqFeat
+0	****	****	****	****	****	****
+1     KChBlessWeapon 1 **** **** **** ****	
+1     KChDivineFavor 1 **** **** **** ****	
+1     KChDoom 1 **** **** **** ****	
+1     KChEndureElements 1 **** **** **** ****	
+1     KChMagicWeapon 1 **** **** **** ****	
+1     KChProtEvil 1 **** **** **** ****	
+1     KChRemoveFear 1 **** **** **** ****	
+1     KChSummonI 1 **** **** **** ****	
+1     KChAid 2 **** **** **** ****	
+1     KChBullsStrength 2 **** **** **** ****	
+1     KChConsecrate 2 **** **** **** ****	
+1     KChEndurance 2 **** **** **** ****	
+1     KChResistElements 2 **** **** **** ****	
+1     KChSoundBurst 2 **** **** **** ****	
+1     KChSummonII 2 **** **** **** ****	
+1     KChDispel 3 **** **** **** ****	
+1     KChSummonIII 3 **** **** **** ****	
+1     KChInvisPurge 3 **** **** **** ****	
+1     KChMagicCircleEvil 3 **** **** **** ****	
+1     KChMagicVestment 3 **** **** **** ****	
+1     KChPrayer 3 **** **** **** ****	
+1     KChProtElements 3 **** **** **** ****	
+1     KChSearingLight 3 **** **** **** ****	
+1     KChDissmissal 4 **** **** **** ****	
+1     KChGreaterMagicWeapon 4 **** **** **** ****	
+1     KChLesserPlanarAlly 4 **** **** **** ****	

@@ -157,24 +157,27 @@ object GetPCSkin(object oPC)
     object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
     if (!GetIsObjectValid(oSkin))
     {
-        if ( GetHasItem(oPC, "base_prc_skin"))
+        oSkin = GetLocalObject(oPC, "PRCSkinCache");
+        if(!GetIsObjectValid(oSkin))
         {
-            oSkin = GetItemPossessedBy(oPC,"base_prc_skin");
-            if(!GetLocalInt(oPC, "EquippingPRCSkin")){
+            if(GetHasItem(oPC, "base_prc_skin"))
+            {
+                oSkin = GetItemPossessedBy(oPC, "base_prc_skin");
                 AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
-                SetLocalInt(oPC, "EquippingPRCSkin", TRUE);
-                DelayCommand(0.0f, DeleteLocalInt(oPC, "EquippingPRCSkin"));
             }
-        }
 
-        //Added GetHasItem check to prevent creation of extra skins on module entry
-        else {
-            oSkin = CreateItemOnObject("base_prc_skin", oPC);
-            if(!GetLocalInt(oPC, "EquippingPRCSkin")){
+            //Added GetHasItem check to prevent creation of extra skins on module entry
+            else {
+                oSkin = CreateItemOnObject("base_prc_skin", oPC);
                 AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
-                SetLocalInt(oPC, "EquippingPRCSkin", TRUE);
-                DelayCommand(0.0f, DeleteLocalInt(oPC, "EquippingPRCSkin"));
+
+                // The skin should not be droppable
+                SetDroppableFlag(oSkin, FALSE);
             }
+
+            // Cache the skin reference for further lookups during the same script
+            SetLocalObject(oPC, "PRCSkinCache", oSkin);
+            DelayCommand(0.0f, DeleteLocalObject(oPC, "PRCSkinCache"));
         }
     }
     return oSkin;

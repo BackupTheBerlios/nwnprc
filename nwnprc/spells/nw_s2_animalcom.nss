@@ -19,7 +19,7 @@ void main()
     SummonAnimalCompanion();
     
     //Exalted Companion
-    if (GetHasFeat(FEAT_EXALTED_COMPANION))
+    if (GetHasFeat(FEAT_EXALTED_COMPANION) && GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD)
     {
     	object oComp = GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION);
     	int nHD = GetHitDice(oComp);

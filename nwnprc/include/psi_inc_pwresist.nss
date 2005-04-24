@@ -58,6 +58,15 @@ PRCGetPowerResistance(object oTarget, object oCaster)
             iRacialPowerRes += 5+GetHitDice(oTarget);
         if(iRacialPowerRes > iPowerRes)
             iPowerRes = iRacialPowerRes;
+            
+        // Exalted Companion, can also be used for Celestial Template
+        if (GetLocalInt(oTarget, "CelestialTemplate"))
+        {
+        	int nHD = GetHitDice(oTarget);
+        	int nSR = nHD * 2;
+        	if (nSR > 25) nSR = 25;
+        	if (nSR > iPowerRes) iPowerRes = nSR;
+        }            
         
         // Foe Hunter SR stacks with normal SR 
         // when a Power is cast by their hated enemy

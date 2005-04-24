@@ -1356,10 +1356,14 @@ const int FEAT_ALAG_ROCKBURST                    = 3994;
 
 // Crafting
 const int FEAT_CRAFT_WONDROUS            = 2925;
-const int FEAT_CRAFT_ARMS_ARMOR               = 2926;
-const int FEAT_CRAFT_ROD            = 2927;
+const int FEAT_CRAFT_ARMS_ARMOR          = 2926;
+const int FEAT_CRAFT_ROD            	 = 2927;
 const int FEAT_CRAFT_STAFF               = 2928;
 const int FEAT_FORGE_RING                = 2929;
+
+// Exalted Companion
+const int FEAT_EXALTED_COMPANION         = 4199;
+
 
 
 /*//////////////////////////////////////////////////

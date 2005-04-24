@@ -53,6 +53,15 @@ PRCGetSpellResistance(object oTarget, object oCaster)
             iRacialSpellRes += 5+GetHitDice(oTarget);
         if(iRacialSpellRes > iSpellRes)
             iSpellRes = iRacialSpellRes;
+            
+        // Exalted Companion, can also be used for Celestial Template
+        if (GetLocalInt(oTarget, "CelestialTemplate"))
+        {
+        	int nHD = GetHitDice(oTarget);
+        	int nSR = nHD * 2;
+        	if (nSR > 25) nSR = 25;
+        	if (nSR > iSpellRes) iSpellRes = nSR;
+        }
         
         // Foe Hunter SR stacks with normal SR 
         // when a spell is cast by their hated enemy

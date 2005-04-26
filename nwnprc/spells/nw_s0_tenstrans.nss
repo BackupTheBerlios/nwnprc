@@ -19,6 +19,38 @@
 //: Sep2002: losing hit-points won't get rid of the rest of the bonuses
 
 //:: modified by mr_bumpkin  Dec 4, 2003
+
+/*
+PnP TT:
+Tenser's Transformation 
+Transmutation
+Level: Sor/Wiz 6
+Components: V, S, M
+Casting Time: 1 action
+Range: Personal
+Target: You
+Duration: 1 round/level
+You become a virtual fighting machine—
+stronger, tougher, faster, and more skilled
+in combat. Your mind-set changes so that
+you relish combat and you can’t cast spells,
+even from magic items.
+You gain 1d6 temporary hit points per
+caster level, a +4 natural armor bonus to
+AC, a +2d4 Strength enhancement bonus,
+a +2d4 Dexterity enhancement bonus, a +1
+base attack bonus per two caster levels
+(which may give you an extra attack), a +5
+competence bonus on Fortitude saves, and
+proficiency with all simple and martial
+weapons. You attack opponents with
+melee or ranged weapons if you can, even
+resorting to unarmed attacks if that’s all
+you can do.
+Material Component: A potion of bull’s
+strength, which you drink (and whose
+effects are subsumed by the spell effects).
+*/
 #include "spinc_common"
 
 #include "x2_inc_spellhook"
@@ -37,10 +69,156 @@ int CalculateAttackBonus()
    return (iBonus > 0) ? iBonus : 0;
 }
 
+void PnPTensTransPseudoHB()
+{
+    if(!GetHasSpellEffect(SPELL_TENSERS_TRANSFORMATION))
+    {
+        //remove IPs for simple + martial weapon prof
+        object oSkin = GetPCSkin(OBJECT_SELF);
+        int nSimple;
+        int nMartial;
+        itemproperty ipTest = GetFirstItemProperty(oSkin);
+        while(GetIsItemPropertyValid(ipTest))
+        {
+            if(!nSimple
+                && GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
+                && GetItemPropertyDurationType(ipTest) == DURATION_TYPE_TEMPORARY
+                && GetItemPropertyCostTableValue(ipTest) == IP_CONST_FEAT_WEAPON_PROF_SIMPLE)
+            {               
+                RemoveItemProperty(oSkin, ipTest);
+                nSimple = TRUE;
+            }   
+            if(!nMartial
+                && GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
+                && GetItemPropertyDurationType(ipTest) == DURATION_TYPE_TEMPORARY
+                && GetItemPropertyCostTableValue(ipTest) == IP_CONST_FEAT_WEAPON_PROF_MARTIAL)
+            {               
+                RemoveItemProperty(oSkin, ipTest);
+                nMartial = TRUE;
+            }               
+            ipTest = GetNextItemProperty(oSkin);
+        }
+        //end the pseudoHB
+        return;
+    }        
+    if(GetCurrentAction() != ACTION_ATTACKOBJECT)
+    {
+        ClearAllActions();
+        object oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION, 
+            REPUTATION_TYPE_ENEMY, OBJECT_SELF, 1, 
+                CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN_AND_HEARD, 
+                    CREATURE_TYPE_IS_ALIVE, TRUE);
+        if(GetDistanceToObject(oTarget) > 5.0)
+        {
+            ActionEquipMostDamagingRanged(oTarget); 
+        }
+        else
+        {
+            int nTwoWeapon;
+            if(GetHasFeat(FEAT_AMBIDEXTERITY))
+                nTwoWeapon++;
+            if(GetHasFeat(FEAT_TWO_WEAPON_FIGHTING))
+                nTwoWeapon++;
+            if(GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING))
+                nTwoWeapon++;
+            ActionEquipMostDamagingMelee(oTarget, nTwoWeapon);
+        }
+        ActionAttack(oTarget);
+    }
+    DelayCommand(6.0, PnPTensTransPseudoHB());      
+}
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+
+    if(GetPRCSwitch(PRC_PNP_TENSERS_TRANSFORMATION))
+    {
+    
+        if (!X2PreSpellCastCode())
+        {
+            return;
+        }
+        
+        //Declare major variables
+        int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+        float fDuration = RoundsToSeconds(nCasterLvl);
+        int nMeta = GetMetaMagicFeat();
+        int nHP;
+        int nBAB = nCasterLvl / 2;
+        int nStr = d4(2);
+        int nDex = d4(2);
+        int nCon = d4(2);
+        object oSkin = GetPCSkin(OBJECT_SELF);
+        
+        int nTotalAttacks = (nBAB + GetBaseAttackBonus(OBJECT_SELF)/5)+1;
+        if(nTotalAttacks>5)
+            nTotalAttacks = 5;
+        int nCurrAttacks  = (GetBaseAttackBonus(OBJECT_SELF)/5)+1;
+        if(nCurrAttacks>5)
+            nCurrAttacks = 5;
+        int nAttacks = nTotalAttacks - nCurrAttacks;
+        if(nAttacks > 5)
+            nAttacks = 5;
+        if(nAttacks < 0)
+            nAttacks = 0;
+            
+        
+        //Determine bonus HP
+        nHP += d6(nCasterLvl);
+
+        //Metamagic
+        if(nMeta == METAMAGIC_MAXIMIZE)
+        {
+            nHP = nCasterLvl * 6;
+            nStr = 8;
+            nDex = 8;
+            nCon = 8;
+        }
+        else if(nMeta == METAMAGIC_EMPOWER)
+        {
+            nHP += nHP/2;
+            nStr += nStr/2;
+            nDex += nDex/2;
+            nCon += nCon/2;
+        }
+        else if(nMeta == METAMAGIC_EXTEND)
+        {
+            fDuration *= 2.0;
+        }
+        
+        effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, nStr);
+        effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY, nDex);
+        effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, nCon);
+        effect eBAB = EffectAttackIncrease(nBAB);
+        effect eAttacks = EffectModifyAttacks(nAttacks);
+        effect eHP = EffectTemporaryHitpoints(nHP); //apply separately
+        effect eFort = EffectSavingThrowIncrease(SAVING_THROW_FORT, 5);
+        effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
+        effect eLink;
+        eLink = EffectLinkEffects(eStr, eDex);
+        eLink = EffectLinkEffects(eLink, eCon);
+        eLink = EffectLinkEffects(eLink, eBAB);
+        eLink = EffectLinkEffects(eLink, eAttacks);
+        eLink = EffectLinkEffects(eLink, eFort);
+        itemproperty ipSimple = ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_SIMPLE);
+        itemproperty ipMartial = ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL);
+        
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, OBJECT_SELF, fDuration, TRUE, -1, nCasterLvl);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, fDuration, TRUE, -1, nCasterLvl);
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipSimple, oSkin, fDuration);
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipMartial, oSkin, fDuration);
+        
+        DelayCommand(6.0, PnPTensTransPseudoHB());
+        
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        // Getting rid of the integer used to hold the spells spell school
+        return;
+    }
+
+
 
   //----------------------------------------------------------------------------
   // GZ, Nov 3, 2003

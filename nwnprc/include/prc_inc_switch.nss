@@ -36,6 +36,10 @@ const string PRC_PNP_ELEMENTAL_SWARM                 = "PRC_PNP_ELEMENTAL_SWARM"
 //only works if prc_multisummon is on
 const string PRC_PNP_FEAR_AURAS                      = "PRC_PNP_FEAR_AURAS";
 //if you pass a save, you cant be affected by that aura for 24h
+//not implemented yet
+const string PRC_PNP_TENSERS_TRANSFORMATION          = "PRC_PNP_TENSERS_TRANSFORMATION";
+//not a polymorph but ability bonuses instead
+
 
 // Epic spell switches
 const string PRC_EPIC_INGORE_DEFAULTS                = "PRC_EPIC_INGORE_DEFAULTS";

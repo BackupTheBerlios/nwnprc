@@ -269,11 +269,12 @@ void main()
     }
 
     // Handle poisoned weapons
+    /*
     if(GetLocalInt(oItem, "pois_wpn_uses"))
     {
         ExecuteScript("poison_wpn_onhit", OBJECT_SELF);
     }
-    
+    */
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oSpellOrigin, EVENT_ONHIT);
     ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONHIT);

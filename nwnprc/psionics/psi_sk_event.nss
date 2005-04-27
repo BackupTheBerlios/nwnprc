@@ -68,6 +68,9 @@ void main()
         //DoDebug("Rest finished, applying new settings");
         oPC = GetLastBeingRested();
         SetPersistantLocalInt(oPC, MBLADE_FLAGS, GetLocalInt(oPC, MBLADE_FLAGS + "_Q"));
+        
+        // Make the new settings visible by running the manifesting script
+        DelayCommand(0.5f, ExecuteScript("psi_sk_manifmbld", oPC));
     }
     else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
     {

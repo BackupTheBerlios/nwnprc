@@ -36,5 +36,5 @@ void main()
     SetLocalInt(oPC, BLADEWIND, TRUE);
     DelayCommand(4.0, DeleteLocalInt(oPC, BLADEWIND));
     
-    DoWhirlwindAttack(TRUE, FALSE);
+    DoWhirlwindAttack(TRUE, GetHasFeat(FEAT_IMPROVED_WHIRLWIND, oPC));
 }

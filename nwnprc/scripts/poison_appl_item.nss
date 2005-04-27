@@ -151,6 +151,9 @@ void main()
 	}
 	SetLocalInt(oTarget, "pois_itm_uses", nUses);
     
+    // Eventhook the item
+    AddEventScript(oTarget, EVENT_ITEM_ONACQUIREITEM, "poison_onaquire", TRUE, FALSE);
+    AddEventScript(oTarget, EVENT_ITEM_ONPLAYEREQUIPITEM, "poison_onequip", TRUE, FALSE);
     
     // Inform player
     SendMessageToPC(oPC,

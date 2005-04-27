@@ -12,6 +12,7 @@
 //#include "inc_poison_const"
 #include "spinc_common"
 #include "prc_ipfeat_const"
+#include "inc_eventhook"
 
 
 const int POISONED_WEAPON_CASTERLEVEL = 1;
@@ -55,20 +56,20 @@ void DoPoisonRemovalFromItem(object oItem);
 ****************************************************/
 
 int GetIsContactPoison(int nID){
-	if(nID >= 13 && nID <= 19)
-		return TRUE;
+    if(nID >= 13 && nID <= 19)
+        return TRUE;
     if(nID >= 135 && nID <= 137)
-		return TRUE;
-	
-	// Numbers not in above ranges
-	switch(nID){
-		case 100:
-			return TRUE;
-		default:
-			return FALSE;
-	}
-	
-	return FALSE;
+        return TRUE;
+
+    // Numbers not in above ranges
+    switch(nID){
+        case 100:
+            return TRUE;
+        default:
+            return FALSE;
+    }
+
+    return FALSE;
 }
 
 int GetIsIngestedPoison(int nID){
@@ -77,101 +78,104 @@ int GetIsIngestedPoison(int nID){
     return !(GetIsContactPoison(nID) ||
              GetIsInhaledPoison(nID) ||
              GetIsInjuryPoison(nID));
-    
+
     /*
-	if(nID >= 20 && nID <= 25)
-		return TRUE;
-	
-	// Numbers not in above ranges
-	switch(nID){
-		case 143:
-			return TRUE;
-		default:
-			return FALSE;
-	}
-	
-	return FALSE;
-	*/
+    if(nID >= 20 && nID <= 25)
+    return TRUE;
+
+    // Numbers not in above ranges
+    switch(nID){
+    case 143:
+    return TRUE;
+    default:
+    return FALSE;
+    }
+
+    return FALSE;
+    */
 }
 
 int GetIsInhaledPoison(int nID){
-	if(nID >= 26 && nID <= 28)
-		return TRUE;
-	if(nID >= 138 && nID <= 142)
-		return TRUE;
-    
-	// Numbers not in above ranges
-	switch(nID){
-		case 43:
-			return TRUE;
-		default:
-			return FALSE;
-	}
-	
-	return FALSE;
+    if(nID >= 26 && nID <= 28)
+        return TRUE;
+    if(nID >= 138 && nID <= 142)
+        return TRUE;
+
+    // Numbers not in above ranges
+    switch(nID){
+        case 43:
+            return TRUE;
+        default:
+            return FALSE;
+    }
+
+    return FALSE;
 }
 
 int GetIsInjuryPoison(int nID){
-	if(nID >= 3 && nID <= 12)
-		return TRUE;
-	if(nID >= 29 && nID <= 42)
-		return TRUE;
-	if(nID >= 122 && nID <= 134)
-		return TRUE;
-	if(nID >= 144 && nID <= 146)
-		return TRUE;
-	
-	// Numbers not in above ranges
-	switch(nID){
-		case 0:
-		case 1:
-		case 44:
-		case 101:
-			return TRUE;
-		default:
-			return FALSE;
-	}
-	return FALSE;
+    if(nID >= 3 && nID <= 12)
+        return TRUE;
+    if(nID >= 29 && nID <= 42)
+        return TRUE;
+    if(nID >= 122 && nID <= 134)
+        return TRUE;
+    if(nID >= 144 && nID <= 146)
+        return TRUE;
+
+    // Numbers not in above ranges
+    switch(nID){
+        case 0:
+        case 1:
+        case 44:
+        case 101:
+            return TRUE;
+        default:
+            return FALSE;
+    }
+    return FALSE;
 }
 
 // Handles removing of itemproperties and locals on a poisoned weapon
 void DoPoisonRemovalFromWeapon(object oWeapon)
 {
-	DeleteLocalInt(oWeapon, "pois_wpn_idx");
-	DeleteLocalInt(oWeapon, "pois_wpn_uses");
-	
-	// Remove the UniquePower only if poisoning the weapon added it.
-	if(GetLocalInt(oWeapon, "PoisonedWeapon_DoDelete"))
-		RemoveSpecificProperty(oWeapon,
-		                       ITEM_PROPERTY_ONHITCASTSPELL,
-		                       IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,
-		                       0,
-		                       1,
-		                       "",
-		                       -1,
-		                       DURATION_TYPE_PERMANENT);
+    DeleteLocalInt(oWeapon, "pois_wpn_idx");
+    DeleteLocalInt(oWeapon, "pois_wpn_uses");
+
+    // Remove the UniquePower only if poisoning the weapon added it.
+    if(GetLocalInt(oWeapon, "PoisonedWeapon_DoDelete"))
+        RemoveSpecificProperty(oWeapon,
+                               ITEM_PROPERTY_ONHITCASTSPELL,
+                               IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,
+                               0,
+                               1,
+                               "",
+                               -1,
+                               DURATION_TYPE_PERMANENT);
 }
 
 // Handles removing of itemproperties and locals on a poisoned item
 void DoPoisonRemovalFromItem(object oItem)
 {
-	DeleteLocalInt(oItem, "pois_itm_idx");
-	DeleteLocalInt(oItem, "pois_itm_uses");
-	DeleteLocalInt(oItem, "pois_itm_trap_dc");
-	DeleteLocalObject(oItem, "pois_itm_poisoner");
-	
-	int nSafeCount = GetLocalInt(oItem, "pois_itm_safecount");
-	DeleteLocalInt(oItem, "pois_itm_safecount");
-	int i;
-	for(i = 1; i <= nSafeCount; i++)
-		DeleteLocalObject(oItem, "pois_itm_safe_" + IntToString(i));
-		
-	RemoveSpecificProperty(oItem,
-	                       ITEM_PROPERTY_CAST_SPELL,
-	                       IP_CONST_CASTSPELL_CLEAN_POISON_OFF,
-	                       IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE,
-	                       1,
-	                       "",
-	                       -1,
-	                       DURATION_TYPE_PERMANENT);
+    DeleteLocalInt(oItem, "pois_itm_idx");
+    DeleteLocalInt(oItem, "pois_itm_uses");
+    DeleteLocalInt(oItem, "pois_itm_trap_dc");
+    DeleteLocalObject(oItem, "pois_itm_poisoner");
+
+    int nSafeCount = GetLocalInt(oItem, "pois_itm_safecount");
+    DeleteLocalInt(oItem, "pois_itm_safecount");
+    int i;
+    for(i = 1; i <= nSafeCount; i++)
+        DeleteLocalObject(oItem, "pois_itm_safe_" + IntToString(i));
+
+    RemoveSpecificProperty(oItem,
+                           ITEM_PROPERTY_CAST_SPELL,
+                           IP_CONST_CASTSPELL_CLEAN_POISON_OFF,
+                           IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE,
+                           1,
+                           "",
+                           -1,
+                           DURATION_TYPE_PERMANENT);
+
+    RemoveEventScript(oItem, EVENT_ITEM_ONACQUIREITEM, "poison_onaquire", TRUE, TRUE);
+    RemoveEventScript(oItem, EVENT_ITEM_ONPLAYEREQUIPITEM, "poison_onequip", TRUE, TRUE);
 }

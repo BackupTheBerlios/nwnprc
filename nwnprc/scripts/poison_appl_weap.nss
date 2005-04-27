@@ -204,8 +204,10 @@ void main()
 		nUses = nCount;
 	}
 	SetLocalInt(oTarget, "pois_wpn_uses", nUses);
-	
-	
+
+	// Eventhook the weapon
+    AddEventScript(oTarget, EVENT_ITEM_ONHIT, "poison_wpn_onhit", TRUE, FALSE);
+
 	// Inform player and do VFX
 	SendMessageToPC(oPC,
 	                GetStringByStrRef(STRREF_POISON_APPLY_SUCCESS) + " " +

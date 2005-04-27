@@ -3,33 +3,41 @@
 //:: inc_eventhook
 //:://////////////////////////////////////////////
 /*
-	A system for scheduling scripts to be run on
-	an arbitrary event during runtime (instead of
-	being hardcoded in compilation).
-	
-	Scheduling a script happens by calling
-	AddEventScript with the object the script is
-	to be run on (and on which the data about the
-	script is stored on), an EVENT_* constant
-	determining the event that the script is to be
-	run on and the name of the script to be run.
-	In addition to these, there are control parameters
-	to determine how many times the script is run.
-	
-	See the comments in function prototype section for
-	more details.
-	
-	
-	Added event constants to be used with items. For
-	example, now you can define a script to be fired
-	for The Sword of Foo every time someone equips it.
-	
-	
-	NOTE: Persistence of scripts hooked to non-creatures
-	over module boundaries is not guaranteed. ie, if
-	the player takes abovementioned Sword of Foo to
-	another module, it most likely will lose the locals
-	defining the script hooked into it.
+    A system for scheduling scripts to be run on
+    an arbitrary event during runtime (instead of
+    being hardcoded in compilation).
+    
+    Scheduling a script happens by calling
+    AddEventScript with the object the script is
+    to be run on (and on which the data about the
+    script is stored on), an EVENT_* constant
+    determining the event that the script is to be
+    run on and the name of the script to be run.
+    
+    In addition to these, there is a parameter to
+    control whether the script will be just during
+    the next invocation of the event, or during all
+    invocations from now on until the script is
+    explicitly descheduled.
+    This feature only automatically works when using
+    ExecuteAllScriptsHookedToEvent(). That is, merely
+    viewing the eventscript list does not trigger the
+    effect.
+    
+    See the comments in function prototype section for
+    more details.
+    
+    
+    Added event constants to be used with items. For
+    example, now you can define a script to be fired
+    for The Sword of Foo every time someone equips it.
+    
+    
+    NOTE: Persistence of scripts hooked to non-creatures
+    over module boundaries is not guaranteed. ie, if
+    the player takes abovementioned Sword of Foo to
+    another module, it most likely will lose the locals
+    defining the script hooked into it.
 */
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan
@@ -263,250 +271,275 @@ int wrap_array_exists(object store, string name);
 
 
 void AddEventScript(object oObject, int nEvent, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE){
-	// If an eventhook is running, place the call into queue
-	if(GetLocalInt(GetModule(), "prc_eventhook_running")){
-		int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue", nQueue);
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 1);
-		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oObject);
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
-		SetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_script", sScript);
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bAllowDuplicate));
-		return;
-	}
-		
-	string sArrayName = EventTypeIdToName(nEvent);
-	
-	// Abort if the object given / event isn't valid 
-	if(!GetIsObjectValid(oObject) || sArrayName == "") return;
-	
-	
-	sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
-	
-	// Create the array if necessary
-	if(!wrap_array_exists(oObject, sArrayName)){
-		wrap_array_create(oObject, sArrayName);
-	}
-	
-	// Check for duplicates if necessary
-	int bAdd = TRUE;
-	if(!bAllowDuplicate){
-		int i = 0;
-		for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
-			if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
-				bAdd = FALSE;
-				break;
-			}
-		}
-	}
-	// Add to the array if needed
-	if(bAdd)
-		wrap_array_set_string(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName), sScript);
+    // If an eventhook is running, place the call into queue
+    if(GetLocalInt(GetModule(), "prc_eventhook_running")){
+        int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
+        SetLocalInt(GetModule(),    "prc_eventhook_pending_queue", nQueue);
+        SetLocalInt(GetModule(),    "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 1);
+        SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oObject);
+        SetLocalInt(GetModule(),    "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
+        SetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_script", sScript);
+        SetLocalInt(GetModule(),    "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bAllowDuplicate));
+        return;
+    }
+        
+    string sArrayName = EventTypeIdToName(nEvent);
+    
+    // Abort if the object given / event isn't valid 
+    if(!GetIsObjectValid(oObject) || sArrayName == "") return;
+    
+    
+    sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
+    
+    // Create the array if necessary
+    if(!wrap_array_exists(oObject, sArrayName)){
+        wrap_array_create(oObject, sArrayName);
+    }
+    
+    // Check for duplicates if necessary
+    int bAdd = TRUE;
+    if(!bAllowDuplicate){
+        // Check if a marker is present.
+        if(GetLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName))
+            bAdd = FALSE;
+        else
+        {
+            int i = 0;
+            for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
+                if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
+                    bAdd = FALSE;
+                    break;
+    }   }   }   }
+    // Add to the array if needed
+    if(bAdd)
+    {
+        wrap_array_set_string(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName), sScript);
+        // Add a marker that the script is present
+        SetLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName, TRUE);
+    }
 }
 
 
 void RemoveEventScript(object oObject, int nEvent, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
-	// If an eventhook is running, place the call into queue
-	if(GetLocalInt(GetModule(), "prc_eventhook_running")){
-		int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue", nQueue);
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 2);
-		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oObject);
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
-		SetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_script", sScript);
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bIgnorePermanency));
-		return;
-	}
-	
-	string sArrayNameBase = EventTypeIdToName(nEvent),
-	       sArrayName;
-	
-	// Abort if the object given / event isn't valid 
-	if(!GetIsObjectValid(oObject) || sArrayNameBase == "") return;
-	
-	// Go through one-shot array
-	if(!bPermanent || bIgnorePermanency){
-		sArrayName = sArrayNameBase;
-		// First, check if there is an array to look through at all
-		if(wrap_array_exists(oObject, sArrayName)){
-			int nMoveBackBy = 0;
-			int i = 0;
-			// Loop through the array elements
-			for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
-				// See if we have an entry to remove
-				if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
-					nMoveBackBy++;
-				}
-				// Move the entris in the array back by an amount great enough to overwrite entries containing sScript
-				else if(nMoveBackBy){
-					wrap_array_set_string(oObject, sArrayName, i - nMoveBackBy,
-					                      wrap_array_get_string(oObject, sArrayName, i));
-			}}
-			// Shrink the array by the number of entries removed
-			wrap_array_shrink(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName) + 1 - nMoveBackBy);
-	}}
-	
-	// Go through the permanent array
-	if(bPermanent || bIgnorePermanency){
-		sArrayName = sArrayNameBase + PERMANENCY_SUFFIX;
-		// First, check if there is an array to look through at all
-		if(wrap_array_exists(oObject, sArrayName)){
-			int nMoveBackBy = 0;
-			int i = 0;
-			// Loop through the array elements
-			for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
-				// See if we have an entry to remove
-				if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
-					nMoveBackBy++;
-				}
-				// Move the entris in the array back by an amount great enough to overwrite entries containing sScript
-				else if(nMoveBackBy){
-					wrap_array_set_string(oObject, sArrayName, i - nMoveBackBy,
-					                      wrap_array_get_string(oObject, sArrayName, i));
-			}}
-			// Shrink the array by the number of entries removed
-			wrap_array_shrink(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName) + 1 - nMoveBackBy);
-	}}
+    // If an eventhook is running, place the call into queue
+    if(GetLocalInt(GetModule(), "prc_eventhook_running")){
+        int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
+        SetLocalInt(GetModule(),    "prc_eventhook_pending_queue", nQueue);
+        SetLocalInt(GetModule(),    "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 2);
+        SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oObject);
+        SetLocalInt(GetModule(),    "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
+        SetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_script", sScript);
+        SetLocalInt(GetModule(),    "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bIgnorePermanency));
+        return;
+    }
+    
+    string sArrayNameBase = EventTypeIdToName(nEvent),
+           sArrayName;
+    
+    // Abort if the object given / event isn't valid 
+    if(!GetIsObjectValid(oObject) || sArrayNameBase == "") return;
+    
+    // Go through one-shot array
+    if(!bPermanent || bIgnorePermanency){
+        sArrayName = sArrayNameBase;
+        // First, check if there is an array to look through at all
+        if(wrap_array_exists(oObject, sArrayName)){
+            int nMoveBackBy = 0;
+            int i = 0;
+            // Loop through the array elements
+            for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
+                // See if we have an entry to remove
+                if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
+                    nMoveBackBy++;
+                }
+                // Move the entris in the array back by an amount great enough to overwrite entries containing sScript
+                else if(nMoveBackBy){
+                    wrap_array_set_string(oObject, sArrayName, i - nMoveBackBy,
+                                          wrap_array_get_string(oObject, sArrayName, i));
+            }   }
+            // Shrink the array by the number of entries removed
+            wrap_array_shrink(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName) + 1 - nMoveBackBy);
+
+            // Remove the script presence marker
+            DeleteLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName);
+    }   }
+    
+    // Go through the permanent array
+    if(bPermanent || bIgnorePermanency){
+        sArrayName = sArrayNameBase + PERMANENCY_SUFFIX;
+        // First, check if there is an array to look through at all
+        if(wrap_array_exists(oObject, sArrayName)){
+            int nMoveBackBy = 0;
+            int i = 0;
+            // Loop through the array elements
+            for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
+                // See if we have an entry to remove
+                if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
+                    nMoveBackBy++;
+                }
+                // Move the entris in the array back by an amount great enough to overwrite entries containing sScript
+                else if(nMoveBackBy){
+                    wrap_array_set_string(oObject, sArrayName, i - nMoveBackBy,
+                                          wrap_array_get_string(oObject, sArrayName, i));
+            }   }
+            // Shrink the array by the number of entries removed
+            wrap_array_shrink(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName) + 1 - nMoveBackBy);
+
+            // Remove the script presence marker
+            DeleteLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName);
+    }   }
 }
 
 
 void ClearEventScriptList(object oObject, int nEvent, int bPermanent = FALSE, int bIgnorePermanency = FALSE){
-	// If an eventhook is running, place the call into queue
-	if(GetLocalInt(GetModule(), "prc_eventhook_running")){
-		int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue", nQueue);
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 3);
-		SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oObject);
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
-		SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bIgnorePermanency));
-		return;
-	}
-	
-	string sArrayNameBase = EventTypeIdToName(nEvent),
-	       sArrayName;
-	
-	// Abort if the object given / event isn't valid 
-	if(!GetIsObjectValid(oObject) || sArrayNameBase == "") return;
-	
-	// Go through one-shot array
-	if(!bPermanent || bIgnorePermanency){
-		sArrayName = sArrayNameBase;
-		// First, check if there is an array present
-		if(wrap_array_exists(oObject, sArrayName)){
-			// Shrink the array to 0
-			wrap_array_shrink(oObject, sArrayName, 0);
-	}}
-	
-	// Go through the permanent array
-	if(bPermanent || bIgnorePermanency){
-		sArrayName = sArrayNameBase + PERMANENCY_SUFFIX;
-		// First, check if there is an array present
-		if(wrap_array_exists(oObject, sArrayName)){
-			// Shrink the array to 0
-			wrap_array_shrink(oObject, sArrayName, 0);
-	}}
+    // If an eventhook is running, place the call into queue
+    if(GetLocalInt(GetModule(), "prc_eventhook_running")){
+        int nQueue = GetLocalInt(GetModule(), "prc_eventhook_pending_queue") + 1;
+        SetLocalInt(GetModule(), "prc_eventhook_pending_queue", nQueue);
+        SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_operation", 3);
+        SetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_target", oObject);
+        SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_event", nEvent);
+        SetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(nQueue) + "_flags", ((!!bPermanent) << 1) | (!!bIgnorePermanency));
+        return;
+    }
+    
+    string sArrayNameBase = EventTypeIdToName(nEvent),
+           sArrayName;
+    
+    // Abort if the object given / event isn't valid 
+    if(!GetIsObjectValid(oObject) || sArrayNameBase == "") return;
+    
+    // Go through one-shot array
+    if(!bPermanent || bIgnorePermanency){
+        sArrayName = sArrayNameBase;
+        // First, check if there is an array present
+        if(wrap_array_exists(oObject, sArrayName)){
+            // Remove all markers
+            int i = 0;
+            for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
+                DeleteLocalInt(oObject, "prc_eventhook_script:" + wrap_array_get_string(oObject, sArrayName, i)
+                                        + ";array:" + sArrayName);
+            }
+            // Shrink the array to 0
+            wrap_array_shrink(oObject, sArrayName, 0);
+    }   }
+    
+    // Go through the permanent array
+    if(bPermanent || bIgnorePermanency){
+        sArrayName = sArrayNameBase + PERMANENCY_SUFFIX;
+        // First, check if there is an array present
+        if(wrap_array_exists(oObject, sArrayName)){
+            // Remove all markers
+            int i = 0;
+            for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
+                DeleteLocalInt(oObject, "prc_eventhook_script:" + wrap_array_get_string(oObject, sArrayName, i)
+                                        + ";array:" + sArrayName);
+            }
+            // Shrink the array to 0
+            wrap_array_shrink(oObject, sArrayName, 0);
+    }   }
 }
 
 
 string GetFirstEventScript(object oObject, int nEvent, int bPermanent){
-	string sArrayName = EventTypeIdToName(nEvent);
-	
-	// Abort if the object given / event isn't valid 
-	if(!GetIsObjectValid(oObject) || sArrayName == "") return "";
-	
-	sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
-	
-	SetLocalInt(oObject, sArrayName + "_index", 1);
-	DelayCommand(0.0f, DeleteLocalInt(oObject, sArrayName + "_index"));
-	
-	return wrap_array_get_string(oObject, sArrayName, 0);
+    string sArrayName = EventTypeIdToName(nEvent);
+    
+    // Abort if the object given / event isn't valid 
+    if(!GetIsObjectValid(oObject) || sArrayName == "") return "";
+    
+    sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
+    
+    SetLocalInt(oObject, sArrayName + "_index", 1);
+    DelayCommand(0.0f, DeleteLocalInt(oObject, sArrayName + "_index"));
+    
+    return wrap_array_get_string(oObject, sArrayName, 0);
 }
 
 
 string GetNextEventScript(object oObject, int nEvent, int bPermanent){
-	string sArrayName = GetLocalInt(GetModule(), "prc_eventhook_running") ?
-	                     GetLocalString(GetModule(), "prc_eventhook_running_sArrayName") :
-	                     EventTypeIdToName(nEvent);
-	
-	// Abort if the object given / event isn't valid 
-	if(!GetIsObjectValid(oObject) || sArrayName == "") return "";
-	
-	sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
-	
-	int nIndex = GetLocalInt(oObject, sArrayName + "_index");
-	if(nIndex)
-		SetLocalInt(oObject, sArrayName + "_index", nIndex + 1);
-	else{
-		WriteTimestampedLogEntry("GetNextEventScript called without first calling GetFirstEventScript");
-		return "";
-	}
-	
-	return wrap_array_get_string(oObject, sArrayName, nIndex);
+    string sArrayName = GetLocalInt(GetModule(), "prc_eventhook_running") ?
+                         GetLocalString(GetModule(), "prc_eventhook_running_sArrayName") :
+                         EventTypeIdToName(nEvent);
+    
+    // Abort if the object given / event isn't valid 
+    if(!GetIsObjectValid(oObject) || sArrayName == "") return "";
+    
+    sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
+    
+    int nIndex = GetLocalInt(oObject, sArrayName + "_index");
+    if(nIndex)
+        SetLocalInt(oObject, sArrayName + "_index", nIndex + 1);
+    else{
+        WriteTimestampedLogEntry("GetNextEventScript called without first calling GetFirstEventScript");
+        return "";
+    }
+    
+    return wrap_array_get_string(oObject, sArrayName, nIndex);
 }
 
 
 void ExecuteAllScriptsHookedToEvent(object oObject, int nEvent){
-	// Mark that an eventhook is being run, so calls to modify the
-	// scripts listed are delayd until the eventhook is done.
-	SetLocalInt(GetModule(), "prc_eventhook_running", nEvent);
-	SetLocalString(GetModule(), "prc_eventhook_running_sArrayName", EventTypeIdToName(nEvent));
-	
-	// Loop through the scripts to be fired only once
-	string sScript = GetFirstEventScript(oObject, nEvent, FALSE);
-	while(sScript != ""){
-		ExecuteScript(sScript, OBJECT_SELF);
-		sScript = GetNextEventScript(oObject, nEvent, FALSE);
-	}
-	
-	// Clear the one-shot script list
-	ClearEventScriptList(oObject, nEvent, FALSE, FALSE);
-	
-	// Loop through the persistent scripts
-	sScript = GetFirstEventScript(oObject, nEvent, TRUE);
-	while(sScript != ""){
-		ExecuteScript(sScript, OBJECT_SELF);
-		sScript = GetNextEventScript(oObject, nEvent, TRUE);
-	}
-	
-	// Remove the lock on modifying the script lists
-	DeleteLocalInt(GetModule(), "prc_eventhook_running");
-	DeleteLocalString(GetModule(), "prc_eventhook_running_sArrayName");
-	
-	// Run the delayed commands
-	int nQueued = GetLocalInt(GetModule(), "prc_eventhook_pending_queue"),
-	nOperation, nFlags, i;
-	object oTarget;
-	for(i = 1; i <= nQueued; i++){
-		nOperation = GetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_operation");
-		oTarget = GetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_target");
-		nEvent     = GetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_event");
-		sScript = GetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_script");
-		nFlags     = GetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_flags");
-	
-		switch(nOperation){
-			case 1:
-				AddEventScript(oTarget, nEvent, sScript, nFlags >>> 1, nFlags & 1);
-				break;
-			case 2:
-				RemoveEventScript(oTarget, nEvent, sScript, nFlags >>> 1, nFlags & 1);
-				break;
-			case 3:
-				ClearEventScriptList(oTarget, nEvent, nFlags >>> 1, nFlags & 1);
-				break;
-	
-			default:
-				WriteTimestampedLogEntry("Invalid value in delayed eventhook manipulation operation queue");
-		}
-		
-		DeleteLocalInt   (GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_operation");
-		DeleteLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_target");
-		DeleteLocalInt   (GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_event");
-		DeleteLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_script");
-		DeleteLocalInt   (GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_flags");
-	}
-	
-	DeleteLocalInt(GetModule(), "prc_eventhook_pending_queue");
-	
+    // Mark that an eventhook is being run, so calls to modify the
+    // scripts listed are delayd until the eventhook is done.
+    SetLocalInt(GetModule(), "prc_eventhook_running", nEvent);
+    SetLocalString(GetModule(), "prc_eventhook_running_sArrayName", EventTypeIdToName(nEvent));
+    
+    // Loop through the scripts to be fired only once
+    string sScript = GetFirstEventScript(oObject, nEvent, FALSE);
+    while(sScript != ""){
+        ExecuteScript(sScript, OBJECT_SELF);
+        sScript = GetNextEventScript(oObject, nEvent, FALSE);
+    }
+    
+    // Clear the one-shot script list
+    ClearEventScriptList(oObject, nEvent, FALSE, FALSE);
+    
+    // Loop through the persistent scripts
+    sScript = GetFirstEventScript(oObject, nEvent, TRUE);
+    while(sScript != ""){
+        ExecuteScript(sScript, OBJECT_SELF);
+        sScript = GetNextEventScript(oObject, nEvent, TRUE);
+    }
+    
+    // Remove the lock on modifying the script lists
+    DeleteLocalInt(GetModule(), "prc_eventhook_running");
+    DeleteLocalString(GetModule(), "prc_eventhook_running_sArrayName");
+    
+    // Run the delayed commands
+    int nQueued = GetLocalInt(GetModule(), "prc_eventhook_pending_queue"),
+    nOperation, nFlags, i;
+    object oTarget;
+    for(i = 1; i <= nQueued; i++){
+        nOperation = GetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_operation");
+        oTarget = GetLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_target");
+        nEvent     = GetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_event");
+        sScript = GetLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_script");
+        nFlags     = GetLocalInt(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_flags");
+    
+        switch(nOperation){
+            case 1:
+                AddEventScript(oTarget, nEvent, sScript, nFlags >>> 1, nFlags & 1);
+                break;
+            case 2:
+                RemoveEventScript(oTarget, nEvent, sScript, nFlags >>> 1, nFlags & 1);
+                break;
+            case 3:
+                ClearEventScriptList(oTarget, nEvent, nFlags >>> 1, nFlags & 1);
+                break;
+    
+            default:
+                WriteTimestampedLogEntry("Invalid value in delayed eventhook manipulation operation queue");
+        }
+        
+        DeleteLocalInt   (GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_operation");
+        DeleteLocalObject(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_target");
+        DeleteLocalInt   (GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_event");
+        DeleteLocalString(GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_script");
+        DeleteLocalInt   (GetModule(), "prc_eventhook_pending_queue_" + IntToString(i) + "_flags");
+    }
+    
+    DeleteLocalInt(GetModule(), "prc_eventhook_pending_queue");
+    
 }
 
 
@@ -516,78 +549,78 @@ int GetRunningEvent(){
 
 
 string EventTypeIdToName(int nEvent){
-	switch(nEvent){
-	    // Module events
-		case EVENT_ONACQUIREITEM:
-			return NAME_ONACQUIREITEM;
-		case EVENT_ONACTIVATEITEM:
-			return NAME_ONACTIVATEITEM;
-		case EVENT_ONCLIENTENTER:
-			return NAME_ONCLIENTENTER;
-		case EVENT_ONCLIENTLEAVE:
-			return NAME_ONCLIENTLEAVE;
-		case EVENT_ONCUTSCENEABORT:
-			return NAME_ONCUTSCENEABORT;
-		case EVENT_ONHEARTBEAT:
-			return NAME_ONHEARTBEAT;
-//		case EVENT_ONMODULELOAD:
-//			return NAME_ONMODULELOAD;
-		case EVENT_ONPLAYERDEATH:
-			return NAME_ONPLAYERDEATH;
-		case EVENT_ONPLAYERDYING:
-			return NAME_ONPLAYERDYING;
-		case EVENT_ONPLAYEREQUIPITEM:
-			return NAME_ONPLAYEREQUIPITEM;
-		case EVENT_ONPLAYERLEVELUP:
-			return NAME_ONPLAYERLEVELUP;
-		case EVENT_ONPLAYERREST_CANCELLED:
-			return NAME_ONPLAYERREST_CANCELLED;
-		case EVENT_ONPLAYERREST_STARTED:
-			return NAME_ONPLAYERREST_STARTED;
-		case EVENT_ONPLAYERREST_FINISHED:
-			return NAME_ONPLAYERREST_FINISHED;
-		case EVENT_ONPLAYERUNEQUIPITEM:
-			return NAME_ONPLAYERUNEQUIPITEM;
-		case EVENT_ONPLAYERRESPAWN:
-			return NAME_ONPLAYERRESPAWN;
-		case EVENT_ONUNAQUIREITEM:
-			return NAME_ONUNAQUIREITEM;
-		case EVENT_ONUSERDEFINED:
-			return NAME_ONUSERDEFINED;
-		
-		// NPC events
-		case EVENT_NPC_ONBLOCKED:
-			return NAME_NPC_ONBLOCKED;
-		case EVENT_NPC_ONCOMBATROUNDEND:
-			return NAME_NPC_ONCOMBATROUNDEND;
-		case EVENT_NPC_ONCONVERSATION:
-			return NAME_NPC_ONCONVERSATION;
-		case EVENT_NPC_ONDAMAGED:
-			return NAME_NPC_ONDAMAGED;
-		case EVENT_NPC_ONDEATH:
-			return NAME_NPC_ONDEATH;
-		case EVENT_NPC_ONDISTURBED:
-			return NAME_NPC_ONDISTURBED;
-		case EVENT_NPC_ONHEARTBEAT:
-			return NAME_NPC_ONHEARTBEAT;
-		case EVENT_NPC_ONPERCEPTION:
-			return NAME_NPC_ONPERCEPTION;
-		case EVENT_NPC_ONPHYSICALATTACKED:
-			return NAME_NPC_ONPHYSICALATTACKED;
-		case EVENT_NPC_ONRESTED:
-			return NAME_NPC_ONRESTED;
-//		case EVENT_NPC_ONSPAWN:
-//			return NAME_NPC_ONSPAWN;
-		case EVENT_NPC_ONSPELLCASTAT:
-			return NAME_NPC_ONSPELLCASTAT;
-		
-		// Other events
-		case EVENT_ONHIT:
-			return NAME_ONHIT;
-		case EVENT_ONSPELLCAST:
-			return NAME_ONSPELLCAST;
-		case EVENT_ONPOWERMANIFEST:
-			return NAME_ONPOWERMANIFEST;
+    switch(nEvent){
+        // Module events
+        case EVENT_ONACQUIREITEM:
+            return NAME_ONACQUIREITEM;
+        case EVENT_ONACTIVATEITEM:
+            return NAME_ONACTIVATEITEM;
+        case EVENT_ONCLIENTENTER:
+            return NAME_ONCLIENTENTER;
+        case EVENT_ONCLIENTLEAVE:
+            return NAME_ONCLIENTLEAVE;
+        case EVENT_ONCUTSCENEABORT:
+            return NAME_ONCUTSCENEABORT;
+        case EVENT_ONHEARTBEAT:
+            return NAME_ONHEARTBEAT;
+//        case EVENT_ONMODULELOAD:
+//            return NAME_ONMODULELOAD;
+        case EVENT_ONPLAYERDEATH:
+            return NAME_ONPLAYERDEATH;
+        case EVENT_ONPLAYERDYING:
+            return NAME_ONPLAYERDYING;
+        case EVENT_ONPLAYEREQUIPITEM:
+            return NAME_ONPLAYEREQUIPITEM;
+        case EVENT_ONPLAYERLEVELUP:
+            return NAME_ONPLAYERLEVELUP;
+        case EVENT_ONPLAYERREST_CANCELLED:
+            return NAME_ONPLAYERREST_CANCELLED;
+        case EVENT_ONPLAYERREST_STARTED:
+            return NAME_ONPLAYERREST_STARTED;
+        case EVENT_ONPLAYERREST_FINISHED:
+            return NAME_ONPLAYERREST_FINISHED;
+        case EVENT_ONPLAYERUNEQUIPITEM:
+            return NAME_ONPLAYERUNEQUIPITEM;
+        case EVENT_ONPLAYERRESPAWN:
+            return NAME_ONPLAYERRESPAWN;
+        case EVENT_ONUNAQUIREITEM:
+            return NAME_ONUNAQUIREITEM;
+        case EVENT_ONUSERDEFINED:
+            return NAME_ONUSERDEFINED;
+        
+        // NPC events
+        case EVENT_NPC_ONBLOCKED:
+            return NAME_NPC_ONBLOCKED;
+        case EVENT_NPC_ONCOMBATROUNDEND:
+            return NAME_NPC_ONCOMBATROUNDEND;
+        case EVENT_NPC_ONCONVERSATION:
+            return NAME_NPC_ONCONVERSATION;
+        case EVENT_NPC_ONDAMAGED:
+            return NAME_NPC_ONDAMAGED;
+        case EVENT_NPC_ONDEATH:
+            return NAME_NPC_ONDEATH;
+        case EVENT_NPC_ONDISTURBED:
+            return NAME_NPC_ONDISTURBED;
+        case EVENT_NPC_ONHEARTBEAT:
+            return NAME_NPC_ONHEARTBEAT;
+        case EVENT_NPC_ONPERCEPTION:
+            return NAME_NPC_ONPERCEPTION;
+        case EVENT_NPC_ONPHYSICALATTACKED:
+            return NAME_NPC_ONPHYSICALATTACKED;
+        case EVENT_NPC_ONRESTED:
+            return NAME_NPC_ONRESTED;
+//        case EVENT_NPC_ONSPAWN:
+//            return NAME_NPC_ONSPAWN;
+        case EVENT_NPC_ONSPELLCASTAT:
+            return NAME_NPC_ONSPELLCASTAT;
+        
+        // Other events
+        case EVENT_ONHIT:
+            return NAME_ONHIT;
+        case EVENT_ONSPELLCAST:
+            return NAME_ONSPELLCAST;
+        case EVENT_ONPOWERMANIFEST:
+            return NAME_ONPOWERMANIFEST;
 
         // Item events
         case EVENT_ITEM_ONACQUIREITEM:
@@ -605,14 +638,14 @@ string EventTypeIdToName(int nEvent){
 
         // Callbackhooks
         case CALLBACKHOOK_UNARMED:
-			return NAME_CALLBACKHOOK_UNARMED;
+            return NAME_CALLBACKHOOK_UNARMED;
 
-		default:
-		    WriteTimestampedLogEntry("Unknown event id passed to EventTypeIdToName: " + IntToString(nEvent) + "\nAdding a name constant for it recommended.");
-		    return "prc_event_array_" + IntToString(nEvent);
-	}
-	
-	return ""; // Never going to reach this, but the compiler doesn't realize that :P
+        default:
+            WriteTimestampedLogEntry("Unknown event id passed to EventTypeIdToName: " + IntToString(nEvent) + "\nAdding a name constant for it recommended.");
+            return "prc_event_array_" + IntToString(nEvent);
+    }
+    
+    return ""; // Never going to reach this, but the compiler doesn't realize that :P
 }
 
 

@@ -70,7 +70,9 @@ const int ABILITY_DAMAGE_EFFECT_KNOCKDOWN = 2;
 // nDurationType    one of the DURATION_TYPE_* contants
 //
 // The following are passed to SPApplyEffectToObject:
-// fDuration        if temporary, the duration
+// fDuration        if temporary, the duration. If this is -1, the damage
+//                  will be applied so that it wears off at the rate of 1 point
+//                  per ingame day.
 // bDispellable     is the effect dispellable
 // nSpellID         ID of spell causing damage
 // nCasterLevel     casterlevel of the effect being applied
@@ -106,6 +108,12 @@ void ApplyAbilityDamage(object oTarget, int nAbility, int nAmount, int nDuration
 
     // First, apply the whole damage as an effect
     //SendMessageToPC(GetFirstPC(), "Applying " + IntToString(nAmount) + " damage to stat " + IntToString(nAbility));
+    if(nDurationType == DURATION_TYPE_TEMPORARY && fDuration == -1.0f)
+    {
+        int i;
+        for(; i < nAmount; i++)
+            DelayCommand(0.01f, SPApplyEffectToObject(nDurationType, bDispellable ? EffectAbilityDecrease(nAbility, 1) : SupernaturalEffect(EffectAbilityDecrease(nAbility, nAmount)), oTarget, HoursToSeconds(24) * i, bDispellable, nSpellID, nCasterLevel, oSource));
+    }
     SPApplyEffectToObject(nDurationType, bDispellable ? EffectAbilityDecrease(nAbility, nAmount) : SupernaturalEffect(EffectAbilityDecrease(nAbility, nAmount)), oTarget, fDuration, bDispellable, nSpellID, nCasterLevel, oSource);
 
     // The system is off by default

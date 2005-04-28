@@ -312,7 +312,8 @@ int GetIsDivineClass (int nClass)
             nClass==CLASS_TYPE_BLACKGUARD ||
             nClass==CLASS_TYPE_SOLDIER_OF_LIGHT ||
             nClass==CLASS_TYPE_VASSAL ||
-            nClass==CLASS_TYPE_KNIGHT_MIDDLECIRCLE);
+            nClass==CLASS_TYPE_KNIGHT_MIDDLECIRCLE ||
+            nClass==CLASS_TYPE_KNIGHT_CHALICE);
 }
 
 int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF)

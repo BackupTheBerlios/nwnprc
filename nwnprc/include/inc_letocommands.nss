@@ -750,11 +750,11 @@ string RemoveSpellFromMemorized(int nClassPos, int nSpellLevel, int nSlot, int n
 
 string AddFeat(int nFeat, int nLevel = 1)
 {
-//<gff:add 'FeatList/[_]/Feat' 3>
-//<gff:add 'LvlStatList/[0]/FeatList/[_]/Feat' 3>
-    string sReturn = "<gff:add 'Featlist/[_]/Feat' ";
+//<gff:add 'FeatList/Feat' 3>
+//<gff:add 'LvlStatList/[0]/FeatList/Feat' 3>
+    string sReturn = "<gff:add 'Featlist/Feat' ";
     sReturn += IntToString(nFeat)+ ">";
-    sReturn += "<gff:add 'LvlStatList/["+IntToString(nLevel-1)+"]/Featlist/[_]/Feat' ";
+    sReturn += "<gff:add 'LvlStatList/["+IntToString(nLevel-1)+"]/Featlist/Feat' ";
     sReturn += IntToString(nFeat)+ ">";
     return sReturn;
 }

@@ -75,6 +75,7 @@ TEXTURESHAK				= $(OUTPATH)\prc_textures.hak
 CRAFT2DASHAK			= $(OUTPATH)\prc_craft2das.hak
 RACEHAK					= $(OUTPATH)\prc_race.hak
 PSIONICSHAK				= $(OUTPATH)\prc_psionics.hak
+NEWSPELLBOOKHAK				= $(OUTPATH)\prc_newspellbook.hak
 
 # The NSIS script used to build setup.exe
 INSTALLSCRIPT	= Setup\install.nsi
@@ -128,6 +129,8 @@ RACESRCPATH			= $(MAKERACESRCPATH)
 RACEOBJSPATH		= $(MAKERACEOBJSPATH)
 PSIONICSSRCPATH		= $(MAKEPSIONICSSRCPATH)
 PSIONICSOBJSPATH	= $(MAKEPSIONICSOBJSPATH)
+NEWSPELLBOOKSRCPATH		= $(MAKENEWSPELLBOOKPATH)
+NEWSPELLBOOKOBJSPATH		= $(MAKENEWSPELLBOOKOBJSPATH)
 # TEMPPATH			= $(MAKETEMPPATH)
 MISCPATH            = $(MAKEMISCPATH)
 
@@ -179,6 +182,10 @@ PSIONICSSCRIPTS=~~~psionicsscripts~~~
 
 PSIONICSOBJS=~~~psionicsobjs~~~
 
+NEWSPELLBOOKSCRIPTS=~~~newspellbook~~~
+
+NEWSPELLBOOKOBJS=~~~newspellbookobjs~~~
+
 #
 # Top level virtual rules that just associate pretty text names with various
 # targets
@@ -196,7 +203,7 @@ hak110: $(ERF110) $(HAK) install
 
 # Rule to build the 2.0 haks
 hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) \
-	$(SPELLSHAK) $(EPICSPELLSCRIPTSHAK) $(RACEHAK) $(PSIONICSHAK) \
+	$(SPELLSHAK) $(EPICSPELLSCRIPTSHAK) $(RACEHAK) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) \
 	$(CRAFT2DASHAK) $(INCLUDEHAK) $(HIF) install 
 
 # Rule to build the NSIS installer.
@@ -220,7 +227,7 @@ installcontent:
 	-@copy /y "$(HAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(ERF)" "$(NWN_ERF)" >nul
 	-@copy /y "$(INCLUDEHAK)" "$(NWN_HAK)" >nul
-	@copy /y "$(TLK)" "$(NWN_TLK)" >nul
+	-@copy /y "$(TLK)" "$(NWN_TLK)" >nul
 	-@copy /y "$(SCRIPTSHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(SPELLSHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(2DASHAK)" "$(NWN_HAK)" >nul
@@ -230,6 +237,7 @@ installcontent:
 	-@copy /y "$(EPICSPELLSCRIPTSHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(RACEHAK)" "$(NWN_HAK)" >nul
 	-@copy /y "$(PSIONICSHAK)" "$(NWN_HAK)" >nul
+	-@copy /y "$(NEWSPELLBOOKHAK)" "$(NWN_HAK)" >nul
 	-@copy /y $(HIF) "$(NWN_HAK)" >nul
 
 # Rule to install all the override files.  This one is a bit tricky, the '!'
@@ -251,7 +259,7 @@ installoverrides: $(OVERRIDEFILES)
 $(RAR): $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(MISCHAK) $(ERF) \
 	$(OVERRIDEFILES) $(TLK) $(MISCRESOURCES) $(CRAFT2DASHAK) \
 	$(EPICSPELLSCRIPTSHAK) $(SPELLSHAK) $(RACEHAK) $(INCLUDEHAK) \
-	$(HIF) $(PSIONICSHAK)
+	$(HIF) $(PSIONICSHAK) $(NEWSPELLBOOKHAK)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(RARCOMPILER)" a -ep -inul $@ $**
@@ -358,6 +366,18 @@ $(PSIONICSHAK): $(PSIONICSSCRIPTS) $(PSIONICSOBJS)
 #	@"$(ERFCOMPILER)" -c $@ howto.txt >nul
 #	!@"$(ERFCOMPILER)" -u $@ $** >nul
 
+# Rule to build the 2.0 scripts HAK file.
+$(NEWSPELLBOOKHAK): $(NEWSPELLBOOKSCRIPTS) $(NEWSPELLBOOKOBJS)
+	@echo $(@F)
+	-@del "$@"
+	@"$(ERFCOMPILER)" -c $@ $(NEWSPELLBOOKSCRIPTS)
+	@"$(ERFCOMPILER)" -u $@ $(NEWSPELLBOOKOBJS) >nul
+# At some point we may need to use the below method to generate the hak
+# it will add the files to the hak one at a time to prevent command line
+# too long errors, but it runs orders of magnitude slower.
+#	@"$(ERFCOMPILER)" -c $@ howto.txt >nul
+#	!@"$(ERFCOMPILER)" -u $@ $** >nul
+
 # Rule to build the 2.0 2das HAK file.
 $(2DASHAK): $(2DAS)
 	@echo $(@F)
@@ -406,6 +426,7 @@ depends:
 	@tools\makedep -a -w -n -l -s$(EPICSPELLSRCPATH) -i$(NSSINCLUDE) -o$(MAKEFILE) $(EPICSPELLOBJS)
 	@tools\makedep -a -w -n -l -s$(RACESRCPATH) -i$(NSSINCLUDE) -o$(MAKEFILE) $(RACEOBJS)
 	@tools\makedep -a -w -n -l -s$(PSIONICSSRCPATH) -i$(NSSINCLUDE) -o$(MAKEFILE) $(PSIONICSOBJS)
+	@tools\makedep -a -w -n -l -s$(NEWSPELLBOOKSRCPATH) -i$(NSSINCLUDE) -o$(MAKEFILE) $(NEWSPELLBOOKOBJS)
 
 
 # The code below will compile scripts by copying them to the TEMPPATH and doing the
@@ -437,6 +458,10 @@ depends:
 {$(PSIONICSSRCPATH)\}.nss{$(PSIONICSOBJSPATH)\}.ncs:
 	@echo $(<F)
 	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
+	
+{$(NEWSPELLBOOKSRCPATH)\}.nss{$(NEWSPELLBOOKOBJSPATH)\}.ncs:
+	@echo $(<F)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"		
 
 #################################################################################
 # Depends updates will go here. DO NOT ADD ANYTING BELOW THIS LINE!

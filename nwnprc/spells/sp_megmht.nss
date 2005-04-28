@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////
 //
-// Mangle of Egragious Might - +4 bonus to stats, attacks,
+// Mangle of Egregious Might - +4 bonus to stats, attacks,
 // saves, AC for 10 min / level.
 //
 //////////////////////////////////////////////////////////////
@@ -19,45 +19,45 @@ void main()
 
     //Signal the spell cast at event
     SPRaiseSpellCastAt(oTarget, FALSE);
-    
+
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     // Boost stats, AC, attacks, stats, and saves by 4, and add the buff visual effect.
     // Shouldn't stack with itself. ~ Lock.
-   if (!GetHasSpellEffect(SPELL_MANTLE_OF_EGREG_MIGHT))
+    if (!GetHasSpellEffect(SPELL_MANTLE_OF_EGREG_MIGHT, oTarget))
     {
-    effect eList = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
-    effect eMore = EffectAbilityIncrease(ABILITY_DEXTERITY, 4);
-    eList = EffectLinkEffects (eList, eMore);
-    eMore = EffectAbilityIncrease(ABILITY_CONSTITUTION, 4);
-    eList = EffectLinkEffects (eList, eMore);
-    eMore = EffectAbilityIncrease(ABILITY_INTELLIGENCE, 4);
-    eList = EffectLinkEffects (eList, eMore);
-    eMore = EffectAbilityIncrease(ABILITY_WISDOM, 4);
-    eList = EffectLinkEffects (eList, eMore);
-    eMore = EffectAbilityIncrease(ABILITY_CHARISMA, 4);
-    eList = EffectLinkEffects (eList, eMore);
-    eMore = EffectACIncrease (4);
-    eList = EffectLinkEffects (eList, eMore);
-    eMore = EffectAttackIncrease (4);
-    eList = EffectLinkEffects (eList, eMore);
-    eMore = EffectSavingThrowIncrease (SAVING_THROW_ALL, 4);
-    eList = EffectLinkEffects (eList, eMore);
-    eMore = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    eList = EffectLinkEffects (eList, eMore);
-    SetLocalInt(oTarget, "EgragiousM", 2);
-     // Get duration, 10 min / level unless extended.
-    float fDuration = SPGetMetaMagicDuration(TenMinutesToSeconds(nCasterLvl));
+        effect eList = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
+        effect eMore = EffectAbilityIncrease(ABILITY_DEXTERITY, 4);
+        eList = EffectLinkEffects (eList, eMore);
+        eMore = EffectAbilityIncrease(ABILITY_CONSTITUTION, 4);
+        eList = EffectLinkEffects (eList, eMore);
+        eMore = EffectAbilityIncrease(ABILITY_INTELLIGENCE, 4);
+        eList = EffectLinkEffects (eList, eMore);
+        eMore = EffectAbilityIncrease(ABILITY_WISDOM, 4);
+        eList = EffectLinkEffects (eList, eMore);
+        eMore = EffectAbilityIncrease(ABILITY_CHARISMA, 4);
+        eList = EffectLinkEffects (eList, eMore);
+        eMore = EffectACIncrease (4);
+        eList = EffectLinkEffects (eList, eMore);
+        eMore = EffectAttackIncrease (4);
+        eList = EffectLinkEffects (eList, eMore);
+        eMore = EffectSavingThrowIncrease (SAVING_THROW_ALL, 4);
+        eList = EffectLinkEffects (eList, eMore);
+        eMore = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        eList = EffectLinkEffects (eList, eMore);
+        //SetLocalInt(oTarget, "EgragiousM", 2); Does not seem to be used anywhere else - Ornedan
+        // Get duration, 10 min / level unless extended.
+        float fDuration = SPGetMetaMagicDuration(TenMinutesToSeconds(nCasterLvl));
 
-    // Build the list of fancy visual effects to apply when the spell goes off.
-    effect eVisList = EffectVisualEffect(VFX_IMP_AC_BONUS);
-    eMore = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
-    eVisList = EffectLinkEffects (eVisList, eMore);
+        // Build the list of fancy visual effects to apply when the spell goes off.
+        effect eVisList = EffectVisualEffect(VFX_IMP_AC_BONUS);
+        eMore = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
+        eVisList = EffectLinkEffects (eVisList, eMore);
 
-    // Apply effects and VFX to target
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eList, oTarget, fDuration,TRUE,-1,nCasterLvl);
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisList, oTarget);
-   }
+        // Apply effects and VFX to target
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eList, oTarget, fDuration,TRUE,-1,nCasterLvl);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisList, oTarget);
+    }
 
     SPSetSchool();
 }

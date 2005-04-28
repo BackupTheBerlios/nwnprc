@@ -10,8 +10,16 @@
 void main()
 {
     SetModuleSwitch (MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS, TRUE);
+    ExecuteScript("prc_companion", OBJECT_SELF);
    
     DoEpicSpellDefaults();
+    if(GetPRCSwitch(PRC_CONVOCC_ENABLE))
+    {
+        SetPRCSwitch(PRC_USE_DATABASE, TRUE);
+        SetPRCSwitch(PRC_DB_PRECACHE, TRUE);
+        SetPRCSwitch(PRC_USE_LETOSCRIPT, TRUE);
+    }   
+    
     if(GetPRCSwitch(PRC_USE_DATABASE))
     {
         PRC_SQLInit();
@@ -24,4 +32,5 @@ void main()
         
         
     ExecuteScript("look2daint", OBJECT_SELF);
+    
 }

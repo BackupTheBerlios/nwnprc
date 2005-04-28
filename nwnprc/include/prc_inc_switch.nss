@@ -103,6 +103,12 @@ const string PRC_PNP_ABILITY_DAMAGE_EFFECTS          = "PRC_PNP_ABILITY_DAMAGE_E
 const string PRC_SUPPLY_BASED_REST                   = "PRC_SUPPLY_BASED_REST";
 //turns on the included version of supply based rest by demitious
 //see inc_sbr_readme for details
+const string PRC_COMPANION_IN_USE                    = "PRC_COMPANION_IN_USE";
+//DO NOT SET THIS SWITCH, the companion does it automatically
+//it is only here to be used by other scripts
+const string PRC_CEP_COMPANION_IN_USE                    = "PRC_CEP_COMPANION_IN_USE";
+//DO NOT SET THIS SWITCH, the companion does it automatically
+//it is only here to be used by other scripts
 
 // Poison system switches
 const string PRC_USE_TAGBASED_INDEX_FOR_POISON       = "USE_TAGBASED_INDEX_FOR_POISON";

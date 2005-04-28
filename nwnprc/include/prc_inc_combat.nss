@@ -88,7 +88,7 @@
 //:://////////////////////////////////////////////
 //:: Known Bugs:
 //:://////////////////////////////////////////////
-//::
+//:: 
 //:://////////////////////////////////////////////
 
 // #include "prc_feat_const"   <-- Inherited
@@ -175,6 +175,12 @@ int GetMeleeAttackers15ft(object oPC = OBJECT_SELF);
 // Returns true if melee attacker is in range to attack target
 int GetIsInMeleeRange(object oDefender, object oAttacker);
 
+// Returns the unarmed weapon of an unarmed fighter
+object GetUnarmedWeapon(object oPC);
+
+// Returns true/false if player is unarmed
+int GetIsUnarmed(object oPC);
+
 // Returns true/false if player is a monk and has a monk weapon equipped
 int GetHasMonkWeaponEquipped(object oPC);
 
@@ -182,7 +188,7 @@ int GetHasMonkWeaponEquipped(object oPC);
 int GetMainHandAttacks(object oPC);
 
 // Returns number of attacks per round for off-hand
-int GetOffHandAttacks(object oPC);
+int GetOffHandAttacks(object oPC, int iBonusAttacks = 0);
 
 // Returns a specific alignment property.
 // Returns a line number from iprp_alignment.2da
@@ -410,6 +416,7 @@ struct AttackLoopVars
 int iCleaveAttacks = 0;
 int iCircleKick = 0;
 int bFirstAttack = TRUE;
+int bUseMonkAttackMod = FALSE;
 
 int bIsVorpalWeaponEquiped = FALSE;
 int iVorpalSaveDC = 0;
@@ -515,13 +522,19 @@ int GetIsTwoHandedMeleeWeapon(object oWeap)
 int GetIsSimpleWeapon(object oWeap)
 {
       int iType= GetBaseItemType(oWeap);
-
       switch (iType)
       {            
         case BASE_ITEM_MORNINGSTAR:
         case BASE_ITEM_QUARTERSTAFF:
         case BASE_ITEM_SHORTSPEAR:
         case BASE_ITEM_HEAVYCROSSBOW:
+        case BASE_ITEM_INVALID:
+        case BASE_ITEM_CBLUDGWEAPON:
+        case BASE_ITEM_CPIERCWEAPON:
+        case BASE_ITEM_CSLASHWEAPON:
+        case BASE_ITEM_CSLSHPRCWEAP:
+        case BASE_ITEM_GLOVES:
+        case BASE_ITEM_BRACER:
           return 1;
           break;
         case BASE_ITEM_CLUB:  
@@ -534,9 +547,9 @@ int GetIsSimpleWeapon(object oWeap)
           return 2;
           break;
       }
+      
       return 0;
 }
-
 
 int GetFeatByWeaponType(int iType, string sFeat)
 {
@@ -999,7 +1012,46 @@ int GetIsInMeleeRange(object oDefender, object oAttacker)
      if(fDistance >= FeetToMeters(10.0) ) bReturn = FALSE;
      
      return bReturn;
-} 
+}
+
+object GetUnarmedWeapon(object oPC)
+{
+      object oGlove = GetItemInSlot(INVENTORY_SLOT_ARMS, oPC);
+      object oCritterR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
+      object oCritterL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
+      object oCritterB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
+      
+      // if they have a claw weapon of some sort
+      if( GetIsObjectValid(oCritterR) )
+      {
+           // should emulate how rare a critters special attack is
+           // by making them random with 5:5:2 ratio
+           // can be tweaked though
+           int iRandom = d12();
+           if(iRandom <= 5)                        return oCritterR;
+           else if(iRandom > 5 && iRandom <= 10 
+                   && GetIsObjectValid(oCritterL)) return oCritterL;
+           else if(iRandom > 10 
+                   && GetIsObjectValid(oCritterB)) return oCritterB;
+           else
+                                                   return oCritterR;
+      }
+      else if( GetIsObjectValid(oGlove) )          return oGlove;
+      
+      // if no gloves or claws return invalid object
+      return OBJECT_INVALID;
+}
+
+int GetIsUnarmed(object oPC)
+{
+      object oWeap  = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);      
+      if( GetBaseItemType(oWeap) == BASE_ITEM_INVALID )
+      {
+          return 1;
+      }
+      
+      return 0;
+}
 
 int GetHasMonkWeaponEquipped(object oPC)
 {
@@ -1007,7 +1059,7 @@ int GetHasMonkWeaponEquipped(object oPC)
     int iMonkLevel = GetLevelByClass(CLASS_TYPE_MONK, oPC);
     object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     
-    if(iMonkLevel > 1 && GetBaseItemType(oWeapR) == BASE_ITEM_INVALID || GetBaseItemType(oWeapR) == BASE_ITEM_KAMA)
+    if(iMonkLevel >= 1 && (GetIsUnarmed(oPC) || GetBaseItemType(oWeapR) == BASE_ITEM_KAMA) )
     {
          bIsMonkWeapon = TRUE;
     }
@@ -1030,21 +1082,32 @@ int GetMainHandAttacks(object oPC)
     int iNumAttacks = ( (iBAB - 1) / 5 ) + 1;    
     if(iNumAttacks > 4)  iNumAttacks = 4;
     
+    int iMonkLevel = 0;
     int iNumMonkAttack = 0;
     if( GetHasMonkWeaponEquipped(oPC) )
     {
-         int iMonkLevel = GetLevelByClass(CLASS_TYPE_MONK, oPC);
-         switch(iMonkLevel)
-         {
-              case 1:  iNumMonkAttack = 1;
-              case 6:  iNumMonkAttack = 2;
-              case 10: iNumMonkAttack = 3;
-              case 14: iNumMonkAttack = 4;
-              case 18: iNumMonkAttack = 5;
-         }
+         // add in unarmed PrC's so that they stack for number of unarmed attacks
+         iMonkLevel = GetLevelByClass(CLASS_TYPE_MONK, oPC);
+         iMonkLevel += GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC);
+         iMonkLevel += GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oPC);
+         iMonkLevel += GetLevelByClass(CLASS_TYPE_RED_AVENGER, oPC);
+         iMonkLevel += GetLevelByClass(CLASS_TYPE_SHOU, oPC);
+         iMonkLevel += GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC);
+         iMonkLevel += GetLevelByClass(CLASS_TYPE_SACREDFIST, oPC);
+         iMonkLevel += GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC);
+         
+         if(iMonkLevel < 6)                             iNumMonkAttack = 1;
+         else if (iMonkLevel >= 6  && iMonkLevel < 10)  iNumMonkAttack = 2;
+         else if (iMonkLevel >= 10 && iMonkLevel < 14)  iNumMonkAttack = 3;
+         else if (iMonkLevel >= 14 && iMonkLevel < 18)  iNumMonkAttack = 4;
+         else if (iMonkLevel >= 18 )                    iNumMonkAttack = 5;
     }
     
-    if(iNumMonkAttack > iNumAttacks) iNumAttacks = iNumMonkAttack;
+    if(iNumMonkAttack > iNumAttacks)
+    {
+         iNumAttacks = iNumMonkAttack;
+         bUseMonkAttackMod = TRUE;
+    }
     
     // crossbows special rules
     // if they don't have rapid reload, then only 1 attack per round
@@ -1056,15 +1119,18 @@ int GetMainHandAttacks(object oPC)
          iNumAttacks = 1;
     }
     
+    //string test = "iMonkLevel = " + IntToString(iMonkLevel) + " iNumAttacks = " + IntToString(iNumAttacks) + " iNumMonkAttack = " + IntToString(iNumMonkAttack);
+    //FloatingTextStringOnCreature(test, oPC);
+    
     return iNumAttacks;
 }
 
-int GetOffHandAttacks(object oPC)
+int GetOffHandAttacks(object oPC, int iBonusAttacks = 0)
 {
      object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
      object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 
-     int iMainHandAttacks =  GetMainHandAttacks(oPC);
+     int iMainHandAttacks =  GetMainHandAttacks(oPC) + iBonusAttacks;
      int iOffHandAttacks = 0;
      
      int bIsMeleeWeaponR = FALSE;
@@ -1097,6 +1163,9 @@ int GetOffHandAttacks(object oPC)
           // prevents dual kama monk abuse
           iOffHandAttacks = 0;
      }
+
+     //string test = "iOffHandAttacks = " + IntToString(iOffHandAttacks);
+     //FloatingTextStringOnCreature(test, oPC);
      
      return iOffHandAttacks;
 }
@@ -3328,7 +3397,8 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      }
      
      // Devestating Critical
-     if(bIsCritical && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID))
+     if(bIsCritical && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) && 
+        GetHasFeat(GetFeatByWeaponType(GetBaseItemType(oWeapon), "DevastatingCrit"), oAttacker) )
      {
            // DC = 10 + 1/2 char level + str mod.
           int iStr = GetAbilityModifier(ABILITY_STRENGTH, oAttacker);
@@ -4016,7 +4086,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           if( sAttackVars.bIsRangedWeapon )
           {
                SetItemStackSize(sAttackVars.oAmmo, (GetItemStackSize(sAttackVars.oAmmo) - 1) );
-          }
+          }        
           
           // code for circle kick
           if(GetHasFeat(FEAT_CIRCLE_KICK, oAttacker) &&
@@ -4026,17 +4096,25 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           {
                // Find nearest enemy creature within 10 feet
                int iVal = 1;
-               int bNoEnemyInRange = FALSE;
+               int bHasValidTarget = FALSE;
+               int bIsWithinRange = TRUE;
+               
                object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
-               while(oTarget != oDefender || !bNoEnemyInRange )
+               while(GetIsObjectValid(oTarget) && !bHasValidTarget && bIsWithinRange )
                {
                     iVal += 1;
                     oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
+                    
+                    // will cause the loop to end on a valid target
+                    if(oTarget != oDefender && GetIsInMeleeRange(oDefender, oAttacker) )
+                         bHasValidTarget = TRUE;
+                    
+                    // will cause the loop to end if there are no valid enemies within range
                     if(!GetIsInMeleeRange(oDefender, oAttacker) )
-                         bNoEnemyInRange = TRUE;
+                         bIsWithinRange = FALSE;
                }
                
-               if(!bNoEnemyInRange)
+               if(bHasValidTarget)
                {
                     iAttackRoll = GetAttackRoll(oTarget, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0, iTouchAttackType);
                     if(iAttackRoll == 2)      eDamage = GetAttackDamage(oTarget, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, TRUE, iNumDice, iNumSides, iCritMult);
@@ -4052,8 +4130,9 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                     {
                          sMes = "*Circle Kick Miss*"; 
                          FloatingTextStringOnCreature(sMes, oAttacker, FALSE);                  
-                    }
+                    } 
                }
+               
                iCircleKick = 1;
           }
      }
@@ -4064,7 +4143,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           // if enemy is dead find a new target
           int iVal = 1;
           object oNewDefender = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
-          while( !GetIsObjectValid(oNewDefender) || GetCurrentHitPoints(oNewDefender) < 1)
+          while( GetIsObjectValid(oNewDefender) )
           {
                iVal += 1;
                oNewDefender = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1); 
@@ -4104,19 +4183,25 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           }
      }
      
+     if(iBonusAttacks == 0)
+     {
+          iBonusAttacks --;
+     }
      // Has the same number of main and off-hand attacks left
      // thus the player has attacked with both main and off-hand
      // and should now have -5 to their next attack iterations.
-     if(iOffHandAttacks > 0 && iMainAttacks == iOffHandAttacks && !bIsCleaveAttack)
+     else if(iOffHandAttacks > 0 && iMainAttacks == iOffHandAttacks && iBonusAttacks < 0 && !bIsCleaveAttack)
      {
-          iMod -= 5;
+          if(!bUseMonkAttackMod) iMod -= 5;
+          else                   iMod -= 3;
      }
-     else if(iOffHandAttacks == 0 && iBonusAttacks == 0 && !bIsCleaveAttack)
+     else if(iOffHandAttacks == 0 && iBonusAttacks < 0 && !bIsCleaveAttack)
      {
           // if iOffHandAttacks = 0  and iBonusAttacks <= 0
           // then the player only has main hand attacks
           // thus they should have their attack decremented
-          iMod -= 5;
+          if(!bUseMonkAttackMod) iMod -= 5;
+          else                   iMod -= 3;
      }
 
      // go back to main part of loop
@@ -4136,7 +4221,7 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
      }
           
      // perform main attack first, then off-hand attack
-     if(iBonusAttacks == 0 && iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
+     else if(iBonusAttacks < 0 && iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
      {
           iMainAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE, iTouchAttackType);
@@ -4313,7 +4398,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      object oItem;
      
      // Check for extra main hand attacks 
-     int iBonusMainHandAttacks = 0;
+     int iBonusAttacks = 0;
      for (nInventorySlot = 0; nInventorySlot < NUM_INVENTORY_SLOTS; nInventorySlot++)
      {
           oItem = GetItemInSlot(nInventorySlot, oAttacker);
@@ -4325,35 +4410,35 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      }  
      if( GetHasEffect(EFFECT_TYPE_HASTE, oAttacker) || bHasHaste)
      {
-          iBonusMainHandAttacks += 1;
+          iBonusAttacks += 1;
      }
      if( GetHasSpellEffect(SPELL_FURIOUS_ASSAULT, oAttacker) )
      {
-          iBonusMainHandAttacks += 1;
+          iBonusAttacks += 1;
           iAttackPenalty -= 2;
      }
      if( GetHasSpellEffect(SPELL_MARTIAL_FLURRY, oAttacker) )
      {
-          iBonusMainHandAttacks += 1;
+          iBonusAttacks += 1;
           iAttackPenalty -= 2;
      }     
      if( GetHasSpellEffect(SPELL_ONE_STRIKE_TWO_CUTS, oAttacker) )
      {
-          iBonusMainHandAttacks += 1;
+          iBonusAttacks += 1;
      }  
      if( GetLastAttackMode(oAttacker) ==  COMBAT_MODE_FLURRY_OF_BLOWS )
      {
-          iBonusMainHandAttacks += 1;
+          iBonusAttacks += 1;
           iAttackPenalty -= 2;
      } 
      if( GetLastAttackMode(oAttacker) ==  COMBAT_MODE_RAPID_SHOT )
      {
-          iBonusMainHandAttacks += 1;
+          iBonusAttacks += 1;
           iAttackPenalty -= 2;
      }
      if( GetHasSpellEffect(SPELL_EXTRASHOT, oAttacker) )
      {
-          iBonusMainHandAttacks += 1;
+          iBonusAttacks += 1;
      }
 
      // only run if using two weapons
@@ -4380,7 +4465,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);
           // if there is no ammunition search inventory for ammo
           if(sAttackVars.oAmmo == OBJECT_INVALID || 
-             GetItemStackSize(sAttackVars.oAmmo) <= (iMainHandAttacks + iBonusMainHandAttacks) )
+             GetItemStackSize(sAttackVars.oAmmo) <= (iMainHandAttacks + iBonusAttacks) )
           {
                int bNotEquipped = TRUE;
                int iNeededAmmoType;
@@ -4470,7 +4555,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      
      // determines the delay between effect application
      // to make the system run like the normal combat system.
-     sAttackVars.fDelay = (6.0 / (iMainHandAttacks + iBonusMainHandAttacks + iOffHandAttacks));
+     sAttackVars.fDelay = (6.0 / (iMainHandAttacks + iBonusAttacks + iOffHandAttacks));
      sAttackVars.iMainAttackBonus = sAttackVars.iMainAttackBonus + iAttackPenalty;
      sAttackVars.iOffHandAttackBonus = sAttackVars.iOffHandAttackBonus + iAttackPenalty;
      
@@ -4478,7 +4563,13 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      // used in AttackLoopLogic to decrement attack bonus for attacks.
      if(bEffectAllAttacks)  iMod += iAttackBonusMod;
      
-     AttackLoopMain(oDefender, oAttacker, iBonusMainHandAttacks, iMainHandAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
+     // Debug statements
+     //string test  = " iBonusAttacks = " + IntToString(iBonusAttacks);
+     //       test += " iMainHandAttacks = " + IntToString(iMainHandAttacks);
+     //       test += " iOffHandAttacks = " + IntToString(iOffHandAttacks);
+     //FloatingTextStringOnCreature(test, oAttacker);
+     
+     AttackLoopMain(oDefender, oAttacker, iBonusAttacks, iMainHandAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
 }
 
 void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, string sMessageSuccess = "", string sMessageFailure = "", int iTouchAttackType = FALSE)
@@ -4642,7 +4733,7 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
      sAttackVars.iOffHandCritMult = 0;
           
      int iAttackPenalty = 0;
-     int iBonusMainHandAttacks = 0;
+     int iBonusAttacks = 0;
 
      // Code to equip new ammo 
      // Equips new ammo if they don't have enough ammo for the whole attack round
@@ -4652,7 +4743,7 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
           sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);
           // if there is no ammunition search inventory for ammo
           if(sAttackVars.oAmmo == OBJECT_INVALID || 
-             GetItemStackSize(sAttackVars.oAmmo) <= (iMainHandAttacks + iBonusMainHandAttacks) )
+             GetItemStackSize(sAttackVars.oAmmo) <= (iMainHandAttacks + iBonusAttacks) )
           {
                int bNotEquipped = TRUE;
                int iNeededAmmoType;

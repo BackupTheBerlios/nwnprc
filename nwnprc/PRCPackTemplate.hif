@@ -68,6 +68,7 @@ erf : prc_consortium.erf
 module.Hak : prc_include.hak
 module.Hak : prc_2das.hak
 module.Hak : prc_scripts.hak
+module.Hak : prc_newspellbook.hak
 module.Hak : prc_spells.hak
 module.Hak : prc_epicspells.hak
 module.Hak : prc_psionics.hak

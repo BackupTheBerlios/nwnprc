@@ -75,7 +75,7 @@ TEXTURESHAK				= $(OUTPATH)\prc_textures.hak
 CRAFT2DASHAK			= $(OUTPATH)\prc_craft2das.hak
 RACEHAK					= $(OUTPATH)\prc_race.hak
 PSIONICSHAK				= $(OUTPATH)\prc_psionics.hak
-NEWSPELLBOOKHAK				= $(OUTPATH)\prc_newspellbook.hak
+NEWSPELLBOOKHAK			= $(OUTPATH)\prc_newspellbook.hak
 
 # The NSIS script used to build setup.exe
 INSTALLSCRIPT	= Setup\install.nsi
@@ -369,7 +369,7 @@ $(PSIONICSHAK): $(PSIONICSSCRIPTS) $(PSIONICSOBJS)
 # Rule to build the 2.0 scripts HAK file.
 $(NEWSPELLBOOKHAK): $(NEWSPELLBOOKSCRIPTS) $(NEWSPELLBOOKOBJS)
 	@echo $(@F)
-	-@del "$@"
+	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $(NEWSPELLBOOKSCRIPTS)
 	@"$(ERFCOMPILER)" -u $@ $(NEWSPELLBOOKOBJS) >nul
 # At some point we may need to use the below method to generate the hak

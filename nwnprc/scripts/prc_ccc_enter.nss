@@ -46,7 +46,7 @@ void main()
         return;
     }
 
-    string sEncrypt = Encrypt(GetName(oPC));
+    string sEncrypt = Encrypt(oPC);
 
     //if using XP for new characters, set returning characters tags to encrypted
     //then you can turn off using XP after all characters have logged on.

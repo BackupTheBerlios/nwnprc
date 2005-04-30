@@ -296,7 +296,7 @@ void main()
     }
 
     //change the tag to mark the player as done
-    sScript += LetoSet("Tag", Encrypt(GetName(oPC)), "string");
+    sScript += LetoSet("Tag", Encrypt(oPC), "string");
 
     WriteTimestampedLogEntry(sScript);
     SetLocalString(oPC, "LetoScript", sScript);

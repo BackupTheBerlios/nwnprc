@@ -15,6 +15,7 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_SOLDIER_OF_LIGHT:
         case CLASS_TYPE_KNIGHT_MIDDLECIRCLE:
         case CLASS_TYPE_KNIGHT_CHALICE:
+        case CLASS_TYPE_VIGILANT:
         case CLASS_TYPE_CLERIC:
         case CLASS_TYPE_DRUID:
         case CLASS_TYPE_RANGER:

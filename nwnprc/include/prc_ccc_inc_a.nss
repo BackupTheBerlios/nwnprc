@@ -157,7 +157,10 @@ void SetupStage()
             //first setup
             if(GetLocalInt(OBJECT_SELF, "Str") == 0)
             {
-                SetLocalInt(OBJECT_SELF, "Points", 30);
+                nPoints = GetPRCSwitch(PRC_CONVOCC_STAT_POINTS);
+                if(nPoints == 0)
+                    nPoints = 30;
+                SetLocalInt(OBJECT_SELF, "Points", nPoints);
                 //add race bonuses
                 SetLocalInt(OBJECT_SELF, "Str", 8);
                 SetLocalInt(OBJECT_SELF, "Dex", 8);
@@ -171,7 +174,6 @@ void SetupStage()
                 nInt = GetLocalInt(OBJECT_SELF, "Int");
                 nWis = GetLocalInt(OBJECT_SELF, "Wis");
                 nCha = GetLocalInt(OBJECT_SELF, "Cha");
-                nPoints = GetLocalInt(OBJECT_SELF, "Points");
             }
             if(nStr < 18  && nPoints >= GetCost(nStr+1))
             {

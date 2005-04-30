@@ -315,6 +315,9 @@ If USE_XP_FOR_NEW_CHAR is true, then returning
 characters will be encrypted too, so once everone has
 logged on at least once, USE_XP_FOR_NEW_CHAR can be
 set to false for greater security. */
+const string PRC_CONVOCC_STAT_POINTS                 = "PRC_CONVOCC_STAT_POINTS";
+//as requested, an option to alter the inital 30 points
+//at character creation
 
 
 //Checks the state of a PRC switch

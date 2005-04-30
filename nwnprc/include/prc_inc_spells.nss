@@ -268,7 +268,7 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER_DIV, oCaster)
            +  GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE, oCaster)
 
-                 +  (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) + 1) / 2
+//           +  (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) + 1) / 2 this has its own spellbook now
            +  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
@@ -278,7 +278,7 @@ int GetDivinePRCLevels (object oCaster)
            +  (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oCaster) + 1) / 2
 
-                 +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
+           +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 
    if (!GetHasFeat(FEAT_SF_CODE, oCaster))
    {
@@ -314,7 +314,7 @@ int GetIsDivineClass (int nClass)
             nClass==CLASS_TYPE_VASSAL ||
             nClass==CLASS_TYPE_KNIGHT_MIDDLECIRCLE ||
             nClass==CLASS_TYPE_KNIGHT_CHALICE ||
-            nClass==CLASS_TYPE_KNIGHT_VIGILANT);
+            nClass==CLASS_TYPE_VIGILANT);
 }
 
 int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF)

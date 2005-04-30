@@ -1,13 +1,35 @@
-2DA V2.0					
+2DA V2.0
 
-	Label	Level	FeatID	IPFeatID	SpellID	ReqFeat
-0	****	****	****	****	****	****
-1	VigExpeditiousRetreat 1 **** **** **** ****	
-2	VigResistElements 1 **** **** **** ****
-3	VigProtectionFromElements 2 **** **** **** ****
-4	VigSilence 2 **** **** **** ****
-5	VigEndurance 3 **** **** **** ****
-6	VigNeutralizePoison 3 **** **** **** ****
-7	VigRemoveDisease 3 **** **** **** ****
-8	VigSpikeGrowth 3 **** **** **** ****
-9     VigFreedomOfMovement 4 **** **** **** ****
+           Label                             Level FeatID IPFeatID SpellID ReqFeat 
+0          ****                              ****  ****   ****     ****    ****    
+1          VigExpeditiousRetreat             1     20326  10725    13326   ****    
+2          VigExpeditiousRetreatStil         3     20327  10726    13327   37      
+3          VigExpeditiousRetreatSilent       3     20328  10727    13328   33      
+4          VigExpeditiousRetreatExtended     3     20329  10728    13329   12      
+5          VigResistElements                 1     20330  10729    13330   ****    
+6          VigResistElementsStil             3     20331  10730    13331   37      
+7          VigResistElementsSilent           3     20332  10731    13332   33      
+8          VigResistElementsExtended         3     20333  10732    13333   12      
+9          VigProtectionFromElements         2     20334  10733    13334   ****    
+10         VigProtectionFromElementsStil     3     20335  10734    13335   37      
+11         VigProtectionFromElementsSilent   3     20336  10735    13336   33      
+12         VigProtectionFromElementsExtended 3     20337  10736    13337   12      
+13         VigSilence                        2     20338  10737    13338   ****    
+14         VigSilenceStil                    3     20339  10738    13339   37      
+15         VigSilenceSilent                  3     20340  10739    13340   33      
+16         VigSilenceExtended                3     20341  10740    13341   12      
+17         VigEndurance                      3     20342  10741    13342   ****    
+18         VigEnduranceStil                  4     20343  10742    13343   37      
+19         VigEnduranceSilent                4     20344  10743    13344   33      
+20         VigEnduranceExtended              4     20345  10744    13345   12      
+21         VigNeutralizePoison               3     20346  10745    13346   ****    
+22         VigNeutralizePoisonStil           4     20347  10746    13347   37      
+23         VigNeutralizePoisonSilent         4     20348  10747    13348   33      
+24         VigRemoveDisease                  3     20349  10748    13349   ****    
+25         VigRemoveDiseaseStil              4     20350  10749    13350   37      
+26         VigRemoveDiseaseSilent            4     20351  10750    13351   33      
+27         VigSpikeGrowth                    3     20352  10751    13352   ****    
+28         VigSpikeGrowthStil                4     20353  10752    13353   37      
+29         VigSpikeGrowthSilent              4     20354  10753    13354   33      
+30         VigSpikeGrowthExtended            4     20355  10754    13355   12      
+31         VigFreedomOfMovement              4     20356  10755    13356   ****    

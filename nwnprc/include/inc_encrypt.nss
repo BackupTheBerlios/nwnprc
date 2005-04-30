@@ -1,6 +1,8 @@
 string Encrypt(string sName)
 {
     int nKey = GetPRCSwitch(PRC_CONVOCC_ENCRYPTION_KEY);
+    if(nKey = 0)
+        nKey = 50;
     string sReturn;
     int nLength = GetStringLength(sName);
     if(nLength == 0)

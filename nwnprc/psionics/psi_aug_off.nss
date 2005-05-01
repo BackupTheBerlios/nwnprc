@@ -1,0 +1,18 @@
+//::///////////////////////////////////////////////
+//:: Augment Psionics - Augment Off
+//:: psi_aug_off
+//:://////////////////////////////////////////////
+/*
+    Sets augmentation to 0.
+*/
+//:://////////////////////////////////////////////
+//:: Created By: Ornedan
+//:: Created On: 01.05.2005
+//:://////////////////////////////////////////////
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    SetLocalInt(oCaster, "Augment", 0);
+    FloatingTextStrRefOnCreature(16823588, oCaster, FALSE);
+}

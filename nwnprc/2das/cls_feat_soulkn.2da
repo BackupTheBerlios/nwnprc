@@ -357,8 +357,8 @@
 353 **FeatsGrantedToAll**                           ****      **** ****           ****   
 354 FEAT_SHADOW_LORD_CONVO                          2360      3    1              1      
 355 FEAT_JUMP                                       2884      3    1              1      
-356 FEAT_NEW_POWER_ATTACK                           3143      3    1              1      
-357 FEAT_NEW_IMPROVED_POWER_ATTACK                  3144      3    1              1      
+356 FEAT_NEW_POWER_ATTACK                           3143      0    99             1      
+357 FEAT_NEW_IMPROVED_POWER_ATTACK                  3144      0    99             1      
 358 ****                                            ****      **** ****           ****   
 359 **GeneralActivatableFeats**                     ****      **** ****           ****   
 360 FEAT_THRALL_TO_DEMON                            2616      0    -1             1      

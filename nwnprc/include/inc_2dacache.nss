@@ -114,7 +114,7 @@ void PRCMakeTables()
     {
         SQL += "PRAGMA page_size=4096; ";
     }
-    
+    PRC_SQLExecDirect(SQL); SQL = "";
     SQL+= "CREATE TABLE ";
     SQL+= "cached2da_feat ( ";
     SQL+= "rowid int(55),";
@@ -161,6 +161,7 @@ void PRCMakeTables()
     SQL+= "MinFortSave varchar(255) DEFAULT '_',";
     SQL+= "PreReqEpic varchar(255) DEFAULT '_',";
     SQL+= "ReqAction varchar(255) DEFAULT '_'); "; 
+    PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE ";
     SQL+= "cached2da_soundset ( ";
@@ -170,6 +171,7 @@ void PRCMakeTables()
     SQL+= "STRREF varchar(255) DEFAULT '_', ";
     SQL+= "GENDER varchar(255) DEFAULT '_', ";
     SQL+= "TYPE varchar(255) ); ";
+    PRC_SQLExecDirect(SQL); SQL = "";
       
     SQL+= "CREATE TABLE ";
     SQL+= "cached2da_portraits ( ";
@@ -180,6 +182,7 @@ void PRCMakeTables()
     SQL+= "InanimateType varchar(255) DEFAULT '_', ";   
     SQL+= "Plot varchar(255) DEFAULT '_', ";   
     SQL+= "LowGore varchar(255) DEFAULT '_'); ";  
+    PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE ";
     SQL+= "cached2da_appearance ( ";
@@ -220,6 +223,7 @@ void PRCMakeTables()
     SQL+= "BODY_BAG varchar(255) DEFAULT '_', ";
     SQL+= "TARGETABLE  varchar(255) DEFAULT '_'";
     SQL+= "); ";
+    PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE ";
     SQL+= "cached2da_spells ( ";
@@ -279,6 +283,7 @@ void PRCMakeTables()
     SQL+= "Counter1 varchar(255) DEFAULT '_', ";
     SQL+= "Counter2 varchar(255) DEFAULT '_', ";
     SQL+= "HasProjectile varchar(255) DEFAULT '_'); ";
+    PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE cached2da_cls_feat ( ";
     SQL+= "rowid int(55),";
@@ -289,6 +294,7 @@ void PRCMakeTables()
     SQL+= "List varchar(255) DEFAULT '_', ";
     SQL+= "GrantedOnLevel varchar(255) DEFAULT '_', ";
     SQL+= "OnMenu varchar(255) DEFAULT '_'); ";
+    PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE cached2da_classes ( ";
     SQL+= "rowid int(55),";
@@ -347,8 +353,10 @@ void PRCMakeTables()
     SQL+= "DivSpellLvlMod varchar(255) DEFAULT '_', ";   
     SQL+= "EpicLevel varchar(255) DEFAULT '_', ";   
     SQL+= "Package varchar(255) DEFAULT '_'); "; 
+    PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE cached2da ( file varchar(255) DEFAULT '_', column varchar(255) DEFAULT '_', rowid int(55), data varchar(255) DEFAULT '_'); ";
+    PRC_SQLExecDirect(SQL); SQL = "";
     
     //indexs
     SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_feat (rowid); ";
@@ -506,7 +514,7 @@ void Cache_Class_Feat(string sFile, int nRow = 0)
 {
     if(nRow == 0)
     {
-        string SQL = "SELECT rowid FROM 2dacache_cls_feat WHERE (file = '"+GetStringLowerCase(sFile)+") ORDER BY rowid DESC LIMIT 1";
+        string SQL = "SELECT rowid FROM cached2da_cls_feat WHERE (file = '"+GetStringLowerCase(sFile)+"') ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));

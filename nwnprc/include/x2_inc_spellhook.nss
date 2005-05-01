@@ -94,7 +94,6 @@ int RedWizRestrictedSchool()
 
     int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, OBJECT_SELF);
     int nSpell = GetSpellId();
-    int iSchool = GetSpellSchool(nSpell);
     int iRWRes1;
     int iRWRes2;
 
@@ -118,6 +117,7 @@ int RedWizRestrictedSchool()
     
     if (iRedWizard > 0)
     {
+        int iSchool = GetSpellSchool(nSpell);
         if (iSchool == iRWRes1) 
         {
             FloatingTextStringOnCreature("You cannot cast spells of your prohibited schools. Spell terminated.", OBJECT_SELF, FALSE);

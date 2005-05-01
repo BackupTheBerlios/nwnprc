@@ -2,30 +2,11 @@ string Encrypt(object oPC)
 {
     string sName = GetName(oPC);
     int nKey = GetPRCSwitch(PRC_CONVOCC_ENCRYPTION_KEY);
-    if(nKey = 0)
-        nKey = 50;
+    if(nKey == 0)
+        nKey = 10;
     string sReturn;
-    int nLength = GetStringLength(sName);
-    if(nLength == 0)
-        return "";
-    while(nLength < 500)
-    {
-        sName += sName;
-        nLength = GetStringLength(sName);
-    }
-    sName = GetStringLeft(sName, 500);
-    nLength = GetStringLength(sName);
-    int nTest;
-    while(GetStringLength(sReturn) < 10)
-    {
-        while(nTest < nLength)
-        {
-            string sTest = GetStringLeft(GetStringRight(sName, nTest), 1);
-            if(sTest != " ")
-                sReturn += sTest;
-            nTest += nKey;
-        }
-        nTest = 0;
-    }
+    
+    //I need a good algorithm :(
+    sReturn = sName;
     return sReturn;
 }

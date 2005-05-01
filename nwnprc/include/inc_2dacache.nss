@@ -14,7 +14,11 @@ void PRC_SQLCommit();
 
 void PRC_SQLCommit()
 {
-    DelayCommand(600.0, PRC_SQLCommit());
+    int nInterval = GetPRCSwitch(PRC_DB_SQLLITE_INTERVAL);
+    if(nInterval == 0)
+        nInterval = 600;
+    float fDelay = IntToFloat(nInterval);
+    DelayCommand(fDelay, PRC_SQLCommit());
     string SQL = "COMMIT";
     PRC_SQLExecDirect(SQL);
     SQL = "BEGIN IMMEDIATE";
@@ -106,7 +110,13 @@ string PRC_SQLGetData(int iCol)
 void PRCMakeTables()
 {
     string SQL;
-    SQL = "cached2da_feat ( ";
+    if(GetPRCSwitch(PRC_DB_SQLLITE))
+    {
+        SQL += "PRAGMA page_size=4096; ";
+    }
+    
+    SQL+= "CREATE TABLE ";
+    SQL+= "cached2da_feat ( ";
     SQL+= "rowid int(55),";
     SQL+= "LABEL varchar(255) DEFAULT '_',";
     SQL+= "FEAT varchar(255) DEFAULT '_',";
@@ -150,32 +160,29 @@ void PRCMakeTables()
     SQL+= "MaxLevel varchar(255) DEFAULT '_',";
     SQL+= "MinFortSave varchar(255) DEFAULT '_',";
     SQL+= "PreReqEpic varchar(255) DEFAULT '_',";
-    SQL+= "ReqAction varchar(255) DEFAULT '_')"; 
-    SQL = "CREATE TABLE "+GetStringLowerCase(SQL);
-    PRC_SQLExecDirect(SQL);
+    SQL+= "ReqAction varchar(255) DEFAULT '_'); "; 
 
-    SQL = "cached2da_soundset ( ";
+    SQL+= "CREATE TABLE ";
+    SQL+= "cached2da_soundset ( ";
     SQL+= "rowid int(55),";
     SQL+= "LABEL varchar(255) DEFAULT '_', ";
     SQL+= "RESREF varchar(255) DEFAULT '_', ";
     SQL+= "STRREF varchar(255) DEFAULT '_', ";
     SQL+= "GENDER varchar(255) DEFAULT '_', ";
-    SQL+= "TYPE varchar(255) )";
-    SQL = "CREATE TABLE "+GetStringLowerCase(SQL);
-    PRC_SQLExecDirect(SQL);
+    SQL+= "TYPE varchar(255) ); ";
       
-    SQL = "cached2da_portraits ( ";
+    SQL+= "CREATE TABLE ";
+    SQL+= "cached2da_portraits ( ";
     SQL+= "rowid int(55),";
     SQL+= "BaseResRef varchar(255) DEFAULT '_', ";     
     SQL+= "Sex varchar(255) DEFAULT '_', ";    
     SQL+= "Race varchar(255) DEFAULT '_', ";   
     SQL+= "InanimateType varchar(255) DEFAULT '_', ";   
     SQL+= "Plot varchar(255) DEFAULT '_', ";   
-    SQL+= "LowGore varchar(255) DEFAULT '_')";    
-    SQL = "CREATE TABLE "+GetStringLowerCase(SQL);
-    PRC_SQLExecDirect(SQL);    
+    SQL+= "LowGore varchar(255) DEFAULT '_'); ";  
 
-    SQL = "cached2da_appearance ( ";
+    SQL+= "CREATE TABLE ";
+    SQL+= "cached2da_appearance ( ";
     SQL+= "rowid int(55),";
     SQL+= "LABEL varchar(255) DEFAULT '_', ";
     SQL+= "STRING_REF varchar(255) DEFAULT '_', ";
@@ -212,11 +219,10 @@ void PRCMakeTables()
     SQL+= "HEAD_NAME varchar(255) DEFAULT '_', ";
     SQL+= "BODY_BAG varchar(255) DEFAULT '_', ";
     SQL+= "TARGETABLE  varchar(255) DEFAULT '_'";
-    SQL+= ")";
-    SQL = "CREATE TABLE "+GetStringLowerCase(SQL);
-    PRC_SQLExecDirect(SQL);
+    SQL+= "); ";
 
-    SQL = "cached2da_spells ( ";
+    SQL+= "CREATE TABLE ";
+    SQL+= "cached2da_spells ( ";
     SQL+= "rowid int(55),";
     SQL+= "Label varchar(255) DEFAULT '_', ";
     SQL+= "Name varchar(255) DEFAULT '_', ";
@@ -272,11 +278,9 @@ void PRCMakeTables()
     SQL+= "FeatID varchar(255) DEFAULT '_', ";
     SQL+= "Counter1 varchar(255) DEFAULT '_', ";
     SQL+= "Counter2 varchar(255) DEFAULT '_', ";
-    SQL+= "HasProjectile varchar(255) DEFAULT '_')";
-    SQL = "CREATE TABLE "+GetStringLowerCase(SQL);
-    PRC_SQLExecDirect(SQL);
+    SQL+= "HasProjectile varchar(255) DEFAULT '_'); ";
 
-    SQL = "CREATE TABLE cached2da_cls_feat ( ";
+    SQL+= "CREATE TABLE cached2da_cls_feat ( ";
     SQL+= "rowid int(55),";
     SQL+= "file varchar(255),";
     SQL+= "class varchar(255) DEFAULT '_', ";
@@ -284,10 +288,9 @@ void PRCMakeTables()
     SQL+= "FeatIndex varchar(255) DEFAULT '_', ";
     SQL+= "List varchar(255) DEFAULT '_', ";
     SQL+= "GrantedOnLevel varchar(255) DEFAULT '_', ";
-    SQL+= "OnMenu varchar(255) DEFAULT '_')";
-    PRC_SQLExecDirect(SQL);
+    SQL+= "OnMenu varchar(255) DEFAULT '_'); ";
 
-    SQL = "CREATE TABLE cached2da_classes ( ";
+    SQL+= "CREATE TABLE cached2da_classes ( ";
     SQL+= "rowid int(55),";
     SQL+= "Label varchar(255) DEFAULT '_', ";              
     SQL+= "Name varchar(255) DEFAULT '_', ";    
@@ -343,10 +346,17 @@ void PRCMakeTables()
     SQL+= "ArcSpellLvlMod varchar(255) DEFAULT '_', ";   
     SQL+= "DivSpellLvlMod varchar(255) DEFAULT '_', ";   
     SQL+= "EpicLevel varchar(255) DEFAULT '_', ";   
-    SQL+= "Package varchar(255) DEFAULT '_')"; 
-    PRC_SQLExecDirect(SQL);
+    SQL+= "Package varchar(255) DEFAULT '_'); "; 
 
-    SQL = "CREATE TABLE cached2da ( file varchar(255) DEFAULT '_', column varchar(255) DEFAULT '_', rowid int(55), data varchar(255) DEFAULT '_')";
+    SQL+= "CREATE TABLE cached2da ( file varchar(255) DEFAULT '_', column varchar(255) DEFAULT '_', rowid int(55), data varchar(255) DEFAULT '_'); ";
+    
+    //indexs
+    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_feat (rowid); ";
+    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_spells (rowid); ";
+    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_cls_feat (rowid); ";
+    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_appearance (rowid); ";
+    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_portrait (rowid); ";
+    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_soundset (rowid); ";
     PRC_SQLExecDirect(SQL);
 
 }
@@ -591,6 +601,13 @@ void Cache_Classes(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Done());
+    if(nRow % 100 == 0)
+    {
+        string SQL = "COMMIT";
+        PRC_SQLExecDirect(SQL);
+        SQL = "BEGIN IMMEDIATE";
+        PRC_SQLExecDirect(SQL);
+    }
 }
 
 void Cache_Feat(int nRow = 0)
@@ -645,11 +662,19 @@ void Cache_Feat(int nRow = 0)
         Get2DACache("feat", "MaxLevel", nRow);
         Get2DACache("feat", "MinFortSave", nRow);
         Get2DACache("feat", "PreReqEpic", nRow);
+        Get2DACache("feat", "ReqAction", nRow);
         nRow++;
         DelayCommand(0.01, Cache_Feat(nRow));
     }
     else 
         DelayCommand(1.0, Cache_Classes());
+    if(nRow % 100 == 0)
+    {
+        string SQL = "COMMIT";
+        PRC_SQLExecDirect(SQL);
+        SQL = "BEGIN IMMEDIATE";
+        PRC_SQLExecDirect(SQL);
+    }
 }
 
 void Cache_Spells(int nRow = 0)
@@ -723,6 +748,13 @@ void Cache_Spells(int nRow = 0)
     }
     else
         DelayCommand(0.1, Cache_Feat());
+    if(nRow % 100 == 0)
+    {
+        string SQL = "COMMIT";
+        PRC_SQLExecDirect(SQL);
+        SQL = "BEGIN IMMEDIATE";
+        PRC_SQLExecDirect(SQL);
+    }
 }
 
 void Cache_Portraits(int nRow = 0)
@@ -747,6 +779,13 @@ void Cache_Portraits(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Spells());
+    if(nRow % 100 == 0)
+    {
+        string SQL = "COMMIT";
+        PRC_SQLExecDirect(SQL);
+        SQL = "BEGIN IMMEDIATE";
+        PRC_SQLExecDirect(SQL);
+    }
 }
 
 void Cache_Soundset(int nRow = 0)
@@ -769,7 +808,14 @@ void Cache_Soundset(int nRow = 0)
         DelayCommand(0.1, Cache_Soundset(nRow));
     }
     else
-    DelayCommand(1.0, Cache_Portraits());
+        DelayCommand(1.0, Cache_Portraits());
+    if(nRow % 100 == 0)
+    {
+        string SQL = "COMMIT";
+        PRC_SQLExecDirect(SQL);
+        SQL = "BEGIN IMMEDIATE";
+        PRC_SQLExecDirect(SQL);
+    }
 }
 
 void Cache_Appearance(int nRow = 0)
@@ -823,6 +869,13 @@ void Cache_Appearance(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Soundset());
+    if(nRow % 100 == 0)
+    {
+        string SQL = "COMMIT";
+        PRC_SQLExecDirect(SQL);
+        SQL = "BEGIN IMMEDIATE";
+        PRC_SQLExecDirect(SQL);
+    }
 }
 
 void Cache_2da_data()

@@ -17,10 +17,10 @@ void PRCLetoExit(object oPC)
             int nOldIpValue = GetPersistantLocalInt(oPC, "LetoAbility_"+IntToString(ipSubType));
             SetCampaignInt("LetoPRC", "LetoAbility_"+IntToString(ipSubType)+sPath, ipValue);
             SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+AdjustAbility(ipSubType, ipValue-nOldIpValue));
-            PrintString(sPath);
-            PrintString("LetoAbility_"+IntToString(ipSubType)+sPath);
-            PrintString(IntToString(ipValue));
-            PrintString(IntToString(nOldIpValue));
+            //PrintString(sPath);
+            //PrintString("LetoAbility_"+IntToString(ipSubType)+sPath);
+            //PrintString(IntToString(ipValue));
+            //PrintString(IntToString(nOldIpValue));
         }
         ipTest = GetNextItemProperty(oSkin);
     }
@@ -35,16 +35,16 @@ void PRCLetoEnter(object oPC)
         sPath = GetBicPath(oPC);
         SetLocalString(oPC, "Leto_Path", sPath);
     }*/
-    PrintString(sPath);
+    //PrintString(sPath);
     for(i=0;i<6;i++)
     {
-        PrintString("LetoAbility_"+IntToString(i)+sPath);
+        //PrintString("LetoAbility_"+IntToString(i)+sPath);
         int nDBValue = GetCampaignInt("LetoPRC", "LetoAbility_"+IntToString(i)+sPath);
-        PrintString(IntToString(nDBValue));
+        //PrintString(IntToString(nDBValue));
         if(nDBValue)
         {
             int nPersistValue = GetPersistantLocalInt(oPC, "LetoAbility_"+IntToString(i));
-            PrintString(IntToString(nPersistValue));
+            //PrintString(IntToString(nPersistValue));
             SetPersistantLocalInt(oPC, "LetoAbility_"+IntToString(i), nPersistValue + nDBValue);
             DeleteCampaignVariable("LetoPRC", "LetoAbility_"+IntToString(i)+sPath);
         }

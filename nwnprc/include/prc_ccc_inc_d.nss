@@ -460,7 +460,7 @@ int SetupSkillToken(int nSkill, int nPosition)
     {
         sName += " (Class Skill)";
         if(nPoints >= 1
-            && nStoredPoints < nLevel+3)//this is the class limit
+            && nStoredPoints <= nLevel+3)//this is the class limit
             bValid = 1;
         else
             bValid = 2;
@@ -469,7 +469,7 @@ int SetupSkillToken(int nSkill, int nPosition)
     {//crossclass
         sName += " (Cross-class Skill)";
         if(nPoints >= 2
-            && nStoredPoints < (nLevel+3)/2)//this is the class limit
+            && nStoredPoints <= (nLevel+3)/2)//this is the class limit
             bValid = 1;
         else
             bValid = 2;

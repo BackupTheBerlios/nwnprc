@@ -204,8 +204,18 @@ const string PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS       = "PRC_XP_GIVE_XP_TO_NON_PC
 
 //Database and Letoscript switches
 const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
+//set this if you are using NWNX and any sort of database
 const string PRC_DB_PRECACHE                         = "PRC_DB_PRECACHE";
+//this will precache 2da files into the database
+//the first time this runs it will lag a lot for a long time
+//after than it will be much faster
 const string PRC_DB_SQLLITE                          = "PRC_DB_SQLLITE";
+//set this if you are using SQLite (the built-in database in NWNX-ODBC2)
+//this will use transactions
+const string PRC_DB_SQLLITE_INTERVAL                 = "PRC_DB_SQLLITE_INTERVAL";
+//this is the interval of each transaction. By default it is 600 seconds.
+//shorter will mean slower, but less data lost in the event of a server crash.
+//longer is visa versa.
 const string PRC_USE_LETOSCRIPT                      = "PRC_USE_LETOSCRIPT";
 const string PRC_LETOSCRIPT_PHEONIX_SYNTAX           = "PRC_LETOSCRIPT_PHEONIX_SYNTAX";
 const string PRC_LETOSCRIPT_FIX_ABILITIES            = "PRC_LETOSCRIPT_FIX_ABILITIES";

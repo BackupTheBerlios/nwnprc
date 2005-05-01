@@ -72,9 +72,9 @@ void main()
                 {
                     string sFile = Get2DACache("classes", "FeatsTable", nSpellClass);
                     sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
-                    int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID));
+                    int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID));
                     array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                        GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID))));
+                        GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
                 }
             }
         }
@@ -93,9 +93,9 @@ void main()
                     && (Get2DACache(sFile, "ReqFeat", i)=="" 
                         || GetHasFeat(StringToInt(Get2DACache(sFile, "ReqFeat", i)), oPC)))
                 {
-                    int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", i));
+                    int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", i));
                     array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                        GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID))));
+                        GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
                     array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
                 }
             }

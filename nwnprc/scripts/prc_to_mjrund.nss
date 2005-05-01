@@ -3,7 +3,9 @@
  * 2004/07/12
  * Stratovarius
  */
+
 #include "prc_inc_switch"
+#include "prc_inc_clsfunc"
 
 void main()
 {
@@ -14,4 +16,6 @@ void main()
    MultisummonPreSummon(OBJECT_SELF);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());
+   object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
+   CorpseCrafter(OBJECT_SELF, oSummon);
 }

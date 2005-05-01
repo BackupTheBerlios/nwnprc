@@ -18,6 +18,7 @@
 
 #include "x2_inc_spellhook"
 #include "prc_inc_switch"
+#include "prc_inc_clsfunc"
 
 void main()
 {
@@ -74,7 +75,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     MultisummonPreSummon();
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
     //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
-
+   object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
+   CorpseCrafter(OBJECT_SELF, oSummon); 
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

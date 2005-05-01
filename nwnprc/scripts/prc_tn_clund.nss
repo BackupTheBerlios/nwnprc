@@ -4,8 +4,7 @@
  * Stratovarius
  */
 
-#include "prc_class_const"
-#include "prc_feat_const"
+#include "prc_inc_clsfunc"
 
 void main()
 {
@@ -26,5 +25,6 @@ void main()
 
    oCreature = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
    AddHenchman(OBJECT_SELF, oCreature);
+   CorpseCrafter(OBJECT_SELF, oCreature);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
 }

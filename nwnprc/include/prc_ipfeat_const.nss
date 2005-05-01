@@ -111,6 +111,7 @@ const int IP_CONST_FEAT_EVASION         = 386;
 const int IP_CONST_FEAT_IMPEVASION      = 387;
 const int IP_CONST_FEAT_GREAT_CLEAVE    = 260;
 const int IP_CONST_FEAT_PSIONIC_FOCUS   = 259;
+const int IP_CONST_FEAT_IMPROVED_INIT   = 261;
 
 const int IP_CONST_FEAT_WEAPON_FOCUS_CLUB                           = 100;
 const int IP_CONST_FEAT_WEAPON_FOCUS_DAGGER                         = 101;

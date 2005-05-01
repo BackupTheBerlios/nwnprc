@@ -255,6 +255,14 @@ const int FEAT_PERNICIOUSMAGIC                         = 2962;
 const int FEAT_INSIDIOUSMAGIC                          = 2963;
 const int FEAT_UNHOLY_STRIKE                           = 3451;
 
+//Corpsecrafter
+const int FEAT_CORPSECRAFTER                           = 4014;
+const int FEAT_BOLSTER_RESISTANCE                      = 4015;
+const int FEAT_DEADLY_CHILL                            = 4016;
+const int FEAT_DESTRUCTION_RETRIBUTION                 = 4017;
+const int FEAT_HARDENED_FLESH                          = 4018;
+const int FEAT_NIMBLE_BONES                            = 4019;
+
 //Vile
 const int FEAT_VILE_MARTIAL_CLUB          = 3357;
 const int FEAT_VILE_MARTIAL_DAGGER        = 3358;

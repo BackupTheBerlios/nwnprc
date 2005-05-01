@@ -6,8 +6,7 @@
  * Lockindal Linantal
  */
 
-#include "prc_class_const"
-#include "prc_feat_const"
+#include "prc_inc_clsfunc"
 #include "prc_inc_switch"
 
 void main()
@@ -33,4 +32,6 @@ void main()
    effect eSum = EffectSummonCreature(sSummon, VFX_NONE);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummonB, GetSpellTargetLocation());
    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());
+   object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
+   CorpseCrafter(OBJECT_SELF, oSummon);   
 }

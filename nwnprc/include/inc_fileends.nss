@@ -6,6 +6,7 @@ const int PORTRAITS_2DA_END     = 1100;
 const int SKILLS_2DA_END        = 50;
 const int CLASS_FEAT_2DA_END    = 600;
 const int CLASS_SKILLS_2DA_END  = 50;
+const int CLASS_POWER_2DA_END   = 140;
 const int FEAT_2DA_END          = 5200;
 const int CLASS_PREREQ_2DA_END  = 25;
 const int FAMILIAR_2DA_END      = 20;

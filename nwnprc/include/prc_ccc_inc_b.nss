@@ -98,6 +98,12 @@ void ChoiceSelected(int nChoiceNo)
                 ApplyEffectAtLocation(DURATION_TYPE_INSTANT,
                     EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1),
                         GetLocation(OBJECT_SELF));
+                //set tattoos to 1 so they show
+                array_create(OBJECT_SELF, "Tattoo");
+                for(i=1;i<=18;i++)
+                {
+                    array_set_int(OBJECT_SELF, "Tattoo",  i,1);
+                }
                 DoCloneLetoscript();
                 DoRotatingCamera();
                 //racial bonuses
@@ -263,32 +269,43 @@ void ChoiceSelected(int nChoiceNo)
 
         case STAGE_SKILL:
             array_create(OBJECT_SELF, "Skills");
-            //increase the points in that skill
-            array_set_int(OBJECT_SELF, "Skills", array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo),
-                array_get_int(OBJECT_SELF, "Skills", array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo))+1);
-            //decrease points remaining
-            if(TestStringAgainstPattern("**Cross**", array_get_string(OBJECT_SELF, "ChoiceTokens", nChoiceNo)))
-                nPoints -= 2 ;//cross class skill
-            else
-                nPoints -= 1;//class
-            SetLocalInt(OBJECT_SELF, "Points", nPoints);
-            //check if finished
-            if(nPoints <= 0)
-                nStage++;
-            else //then recreate the tokens
+            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -2)
             {
-                if(nPoints > 1)
-                    SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo), nChoiceNo);
+                //save all remaining            
+                array_set_int(OBJECT_SELF, "Skills", -1,
+                    array_get_int(OBJECT_SELF, "Skills", -1)+GetLocalInt(OBJECT_SELF, "Points"));
+                SetLocalInt(OBJECT_SELF, "Points", 0);
+                nStage++;
+            }
+            else
+            {
+                //increase the points in that skill
+                array_set_int(OBJECT_SELF, "Skills", array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo),
+                    array_get_int(OBJECT_SELF, "Skills", array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo))+1);
+                //decrease points remaining
+                if(TestStringAgainstPattern("**Cross**", array_get_string(OBJECT_SELF, "ChoiceTokens", nChoiceNo)))
+                    nPoints -= 2 ;//cross class skill
                 else
+                    nPoints -= 1;//class
+                SetLocalInt(OBJECT_SELF, "Points", nPoints);
+                //check if finished
+                if(nPoints <= 0)
+                    nStage++;
+                else //then recreate the tokens
                 {
-                    for(i=0;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
+                    if(nPoints > 1)
+                        SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo), nChoiceNo);
+                    else
                     {
-                        if(!SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValue", i), i))
-                            i--;
+                        for(i=0;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
+                        {
+                            if(!SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValue", i), i))
+                                i--;
+                        }
                     }
                 }
+    //          array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
             }
-//          array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
             break;
         case STAGE_SKILL_CHECK:
             if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
@@ -666,6 +683,8 @@ void ChoiceSelected(int nChoiceNo)
             else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 2)
             {
                 ActionExamine(oClone);
+                DelayCommand(1.0, ActionExamine(oClone));
+                DelayCommand(2.0, ActionExamine(GetLocalObject(OBJECT_SELF, "Clone")));
             }
             break;
         case STAGE_SKIN_CHECK:

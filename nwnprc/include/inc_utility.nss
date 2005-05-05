@@ -1,6 +1,5 @@
 #include "inc_array"
 #include "inc_array_b"
-#include "inc_array_c"
 #include "inc_heap"
 #include "inc_2dacache"
 

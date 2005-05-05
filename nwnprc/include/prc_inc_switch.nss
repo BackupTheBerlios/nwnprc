@@ -239,7 +239,6 @@ const string PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS      = "PRC_CONVOCC_GENSAI_ENFOR
 /*Force Gensai clerics to select the relevant elemental
 domain as one of their feats*/
 const string PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD= "PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD";
-//Makes Blood of the Warlord only avliable to orcish characters
 const string PRC_CONVOCC_ENFORCE_FEAT_NIMBUSLIGHT    = "PRC_CONVOCC_ENFORCE_FEAT_NIMBUSLIGHT";
 const string PRC_CONVOCC_ENFORCE_FEAT_HOLYRADIANCE   = "PRC_CONVOCC_ENFORCE_FEAT_HOLYRADIANCE";
 const string PRC_CONVOCC_ENFORCE_FEAT_SERVHEAVEN     = "PRC_CONVOCC_ENFORCE_FEAT_SERVHEAVEN";
@@ -252,7 +251,9 @@ const string PRC_CONVOCC_ENFORCE_FEAT_EVIL_BRANDS    = "PRC_CONVOCC_ENFORCE_FEAT
 const string PRC_CONVOCC_ENFORCE_FEAT_VILE_WILL_DEFORM="PRC_CONVOCC_ENFORCE_FEAT_VILE_WILL_DEFORM";
 const string PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_OBESE="PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_OBESE";
 const string PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_GAUNT="PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_GAUNT";
-//Enforces the "moral" feats
+//enforce feats seaparately
+const string PRC_CONVOCC_ENFORCE_FEATS               = "PRC_CONVOCC_ENFORCE_FEATS";
+//enforce all the feats together
 const string PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE = "PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE";
 //Female rakshasha use the female rakshasha model
 const string PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE    = "PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE";
@@ -344,6 +345,7 @@ void SetPRCSwitch(string sSwitch, int nState)
 {
     SetLocalInt(GetModule(), sSwitch, nState);
 }
+
 
 void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE)
 {

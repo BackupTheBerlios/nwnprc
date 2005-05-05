@@ -417,7 +417,14 @@ int SetupSkillToken(int nSkill, int nPosition)
     int i;
     int nLevel = GetLocalInt(OBJECT_SELF, "Level");
     //special case for stored skill points
-    if(nSkill == -1)
+    if(nSkill == -2)
+    {
+        string sName = "Store all remaining points.";
+        array_set_string(OBJECT_SELF, "ChoiceTokens",nPosition,sName);
+        array_set_int(OBJECT_SELF, "ChoiceValue",nPosition,nSkill);
+        return TRUE;
+    }
+    else if(nSkill == -1)
     {
         int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkill);
         for(i=1;i<=nLevel;i++)
@@ -570,6 +577,24 @@ void DoCloneLetoscript()
     StackedLetoScript(SetHairColor(nHair));
     StackedLetoScript(SetTatooColor(nTattooColour1, 1));
     StackedLetoScript(SetTatooColor(nTattooColour2, 2));
+    StackedLetoScript(LetoSet("BodyPart_Neck",   IntToString(array_get_int(OBJECT_SELF, "Tattoo",  1)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_Torso",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  2)), "byte"));
+    //StackedLetoScript(LetoSet("BodyPart_Belt",   array_get_int(OBJECT_SELF, "Tattoo",  3), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_Pelvis", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  4)), "byte"));
+    //StackedLetoScript(LetoSet("BodyPart_LShoul", array_get_int(OBJECT_SELF, "Tattoo",  5), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_LBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  6)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_LFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  7)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_LHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  8)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_LThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  9)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_LShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 10)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_LFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 11)), "byte"));
+    //StackedLetoScript(LetoSet("BodyPart_RShoul", array_get_int(OBJECT_SELF, "Tattoo", 12), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_RBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 13)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_RFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 14)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_RHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 15)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_RThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 16)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_RShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 17)), "byte"));
+    StackedLetoScript(LetoSet("BodyPart_RFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 18)), "byte"));
     if(nHead != -1)
     {
         StackedLetoScript("<gff:set 'Appearance_Head' "+IntToString(nHead)+">");
@@ -657,7 +682,9 @@ void SwitchTattoo(int nPart)
 {
     int nTattooed = array_get_int(OBJECT_SELF, "Tattoo", nPart);
     nTattooed++;
-    if(nTattooed > 2)
-        nTattooed = 0;
+    if(nTattooed == 1)
+        nTattooed = 2;
+    else if(nTattooed == 2)
+        nTattooed = 1;
     array_set_int(OBJECT_SELF, "Tattoo", nPart, nTattooed);
 }

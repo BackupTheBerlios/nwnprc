@@ -95,7 +95,10 @@ void SkillLoop()
     i = GetLocalInt(OBJECT_SELF, "i");
     if(i==0
         && GetPRCSwitch(PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER))
+    {        
+        SetupSkillToken(-2, array_get_size(OBJECT_SELF, "ChoiceValue"));
         SetupSkillToken(-1, array_get_size(OBJECT_SELF, "ChoiceValue"));
+    }        
     string sFile = Get2DACache("classes", "SkillsTable", nClass);
     if(i < SKILLS_2DA_END)
     {

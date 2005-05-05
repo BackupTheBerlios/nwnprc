@@ -60,6 +60,8 @@ void main()
     int         nSkin =             GetLocalInt(oPC, "Skin");
     int         nHair =             GetLocalInt(oPC, "Hair");
     int         nHead =             GetLocalInt(oPC, "Head");
+    int         nTattooColour1 =    GetLocalInt(oPC, "TattooColour1");
+    int         nTattooColour2 =    GetLocalInt(oPC, "TattooColour2");
 
     int         nLevel =            GetLocalInt(oPC, "Level");
 
@@ -226,6 +228,23 @@ void main()
 //    sScript += "<gff:set 'PortraitId'   "+IntToString(nPortrait)+">";
     if(nPortrait != -1) //keep existing portrait
         sScript += SetPCPortrait(Get2DACache("portraits","BaseResRef",nPortrait));
+    sScript += SetTatooColor(nTattooColour1, 1);
+    sScript += SetTatooColor(nTattooColour2, 2);
+    sScript += LetoSet("BodyPart_Neck",   IntToString(array_get_int(OBJECT_SELF, "Tattoo",  1)), "byte");
+    sScript += LetoSet("BodyPart_Torso",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  2)), "byte");
+    sScript += LetoSet("BodyPart_Pelvis", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  4)), "byte");
+    sScript += LetoSet("BodyPart_LBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  6)), "byte");
+    sScript += LetoSet("BodyPart_LFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  7)), "byte");
+    sScript += LetoSet("BodyPart_LHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  8)), "byte");
+    sScript += LetoSet("BodyPart_LThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  9)), "byte");
+    sScript += LetoSet("BodyPart_LShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 10)), "byte");
+    sScript += LetoSet("BodyPart_LFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 11)), "byte");
+    sScript += LetoSet("BodyPart_RBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 13)), "byte");
+    sScript += LetoSet("BodyPart_RFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 14)), "byte");
+    sScript += LetoSet("BodyPart_RHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 15)), "byte");
+    sScript += LetoSet("BodyPart_RThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 16)), "byte");
+    sScript += LetoSet("BodyPart_RShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 17)), "byte");
+    sScript += LetoSet("BodyPart_RFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 18)), "byte");
 
     //Special abilities
     //since bioware screws this up in 1.64 its not needed
@@ -287,6 +306,11 @@ void main()
             nRacialHitPoints = 1+Random(nRacialHitPoints);
         sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/LvlStatHitDie", IntToString(nHitPoints), "byte");
     }
+
+    //change the tag to mark the player as done
+    sScript += LetoSet("Tag", Encrypt(oPC), "string");
+    //give an XP so the XP switch works
+    SetXP(oPC, 1);
     //racial xp
     if(nLevel > 0)
     {
@@ -294,9 +318,6 @@ void main()
         SetXP(oPC, nXP);
         SetLocalInt(oPC, "sXP_AT_LAST_HEARTBEAT", nXP);//simple XPmod bypassing
     }
-
-    //change the tag to mark the player as done
-    sScript += LetoSet("Tag", Encrypt(oPC), "string");
 
     WriteTimestampedLogEntry(sScript);
     SetLocalString(oPC, "LetoScript", sScript);

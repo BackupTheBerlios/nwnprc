@@ -361,7 +361,8 @@ void PRCMakeTables()
     //indexs
     SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_feat (rowid); ";
     SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_spells (rowid); ";
-    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_cls_feat (rowid); ";
+    SQL+= "CREATE INDEX rowindex ON cached2da_cls_feat (FeatIndex); ";
+    SQL+= "CREATE INDEX rowindex ON cached2da_cls_feat (file); ";
     SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_appearance (rowid); ";
     SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_portrait (rowid); ";
     SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_soundset (rowid); ";
@@ -504,21 +505,19 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
 
 void Cache_Done()
 {
-    if(GetLocalInt(GetModule(), "2dacache_cls_feat_count"))
-        DelayCommand(1.0, Cache_Done());
-    else
-        WriteTimestampedLogEntry("2da caching complete");
+    WriteTimestampedLogEntry("2da caching complete");
 }
 
-void Cache_Class_Feat(string sFile, int nRow = 0)
+void Cache_Class_Feat(int nClass, int nRow = 0)
 {
-    if(nRow == 0)
+    string sFile = Get2DACache("classes", "FeatsTable", nClass);
+/*    if(nRow == 0)
     {
         string SQL = "SELECT rowid FROM cached2da_cls_feat WHERE (file = '"+GetStringLowerCase(sFile)+"') ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
-    }
+    } */
     if(sFile != ""
         && sFile == "****"
         && nRow < CLASS_FEAT_2DA_END)
@@ -529,11 +528,21 @@ void Cache_Class_Feat(string sFile, int nRow = 0)
         Get2DACache(sFile, "GrantedOnLevel", nRow); 
         Get2DACache(sFile, "OnMenu", nRow); 
         nRow++;
-        DelayCommand(0.1, Cache_Class_Feat(sFile, nRow));
+        DelayCommand(0.1, Cache_Class_Feat(nClass, nRow));
     }
     else
-        SetLocalInt(GetModule(), "2dacache_cls_feat_count", 
-            GetLocalInt(GetModule(), "2dacache_cls_feat_count")-1); 
+    {
+        if(nClass == 254)
+            Cache_Done();
+        else
+        {
+            string SQL = "COMMIT";
+            PRC_SQLExecDirect(SQL);
+            SQL = "BEGIN IMMEDIATE";
+            PRC_SQLExecDirect(SQL);
+            Cache_Class_Feat(nClass+1);
+        }            
+    }
 }
 
 void Cache_Classes(int nRow = 0)
@@ -555,7 +564,7 @@ void Cache_Classes(int nRow = 0)
         Get2DACache("classes", "Icon", nRow);  
         Get2DACache("classes", "HitDie", nRow);  
         Get2DACache("classes", "AttackBonusTable", nRow);  
-        string sFile = Get2DACache("classes", "FeatsTable", nRow);  
+        Get2DACache("classes", "FeatsTable", nRow);  
         Get2DACache("classes", "SavingThrowTable", nRow);  
         Get2DACache("classes", "SkillsTable", nRow);  
         Get2DACache("classes", "BonusFeatsTable", nRow);  
@@ -603,12 +612,9 @@ void Cache_Classes(int nRow = 0)
         Get2DACache("classes", "Package", nRow);      
         nRow++;
         DelayCommand(0.1, Cache_Classes(nRow));
-        DelayCommand(0.1, Cache_Class_Feat(sFile));
-        SetLocalInt(GetModule(), "2dacache_cls_feat_count", 
-            GetLocalInt(GetModule(), "2dacache_cls_feat_count")+1);
     }
     else
-        DelayCommand(1.0, Cache_Done());
+        DelayCommand(1.0, Cache_Class_Feat(0));
     if(nRow % 100 == 0)
     {
         string SQL = "COMMIT";

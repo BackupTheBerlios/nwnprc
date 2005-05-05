@@ -1,10 +1,12 @@
+
+
+//make the array of tokens for that stage
+void SetupStage();
+
 #include "inc_utility"
 #include "prc_ccc_inc_b"
 #include "prc_ccc_inc_e"
 #include "prc_ccc_inc_f"
-
-//make the array of tokens for that stage
-void SetupStage();
 
 void SetupStage()
 {
@@ -645,23 +647,23 @@ void SetupStage()
             break;
         case STAGE_TAIL:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
+            /*array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                     "none");
             array_set_int(OBJECT_SELF, "ChoiceValue",
                 array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    0);
+                    0);*/
             TailLoop();
             array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
             break;
         case STAGE_WINGS:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
+            /*array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                     "none");
             array_set_int(OBJECT_SELF, "ChoiceValue",
                 array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    0);
+                    0);*/
             WingLoop();
             array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
             break;

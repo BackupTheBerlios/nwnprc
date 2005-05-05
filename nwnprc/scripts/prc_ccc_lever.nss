@@ -5,8 +5,8 @@
 
 void main()
 {
+    object oPC = GetLastUsedBy();
 
-    object oPC = GetEnteringObject();
     if(GetIsDM(oPC))
         return;//dont mess with DMs
 
@@ -39,10 +39,6 @@ void main()
 
     if(bBoot)
     {
-        effect eParal = EffectCutsceneParalyze();
-        eParal = SupernaturalEffect(eParal);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
-        AssignCommand(oPC, DelayCommand(10.0, BootPC(oPC)));
         return;
     }
 
@@ -58,9 +54,9 @@ void main()
         SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+sScript);
     }
 
-    if((GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetXP(oPC) == 0)
-        || (GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetTag(oPC) != sEncrypt))
+    if(GetXP(oPC) <= 100)
     {
+        SetXP(oPC, 0);
         //first entry
         // Check Equip Items and get rid of them
         int i;
@@ -117,5 +113,6 @@ void main()
     else
     {
         //its a returning character, dont do anything
+        FloatingTextStringOnCreature("You are too developed to re-level your character.", oPC, FALSE);
     }
 }

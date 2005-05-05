@@ -1,3 +1,5 @@
+#include "prc_ccc_inc_a"
+
 void AddAppearance(int i)
 {
     string sName;
@@ -148,12 +150,8 @@ void SetupRacialAppearances()
     }
     else
     {
-    array_set_string(OBJECT_SELF, "ChoiceTokens",
-        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-            "You cannot change your appearance");
-    array_set_int(OBJECT_SELF, "ChoiceValue",
-        array_get_size(OBJECT_SELF, "ChoiceValue"),
-            StringToInt(Get2DACache("racialtypes", "Appearance", nRace)));
+        SetLocalInt(OBJECT_SELF, "Stage", GetLocalInt(OBJECT_SELF, "Stage")+2);
+        SetupStage();
     }
 }
 
@@ -183,12 +181,8 @@ void SetupRacialPortrait()
     }
     else
     {
-    array_set_string(OBJECT_SELF, "ChoiceTokens",
-        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-            "You cannot change your portrait");
-    array_set_int(OBJECT_SELF, "ChoiceValue",
-        array_get_size(OBJECT_SELF, "ChoiceValue"),
-            -1);
+        SetLocalInt(OBJECT_SELF, "Stage", GetLocalInt(OBJECT_SELF, "Stage")+2);
+        SetupStage();
     }
 }
 
@@ -216,11 +210,7 @@ void SetupRacialSoundset()
     }
     else
     {
-        array_set_string(OBJECT_SELF, "ChoiceTokens",
-            array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                "You cannot change your soundset");
-        array_set_int(OBJECT_SELF, "ChoiceValue",
-            array_get_size(OBJECT_SELF, "ChoiceValue"),
-                -1);
+        SetLocalInt(OBJECT_SELF, "Stage", GetLocalInt(OBJECT_SELF, "Stage")+2);
+        SetupStage();
     }
 }

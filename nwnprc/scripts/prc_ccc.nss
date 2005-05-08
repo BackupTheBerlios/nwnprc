@@ -49,6 +49,7 @@ void main()
         DoCleanup();
         SetCutsceneMode(oPC, FALSE);
         AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
+        ForceRest(oPC);
         return;
     }
     else

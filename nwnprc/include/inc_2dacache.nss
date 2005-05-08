@@ -520,7 +520,7 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
     } */
     if(sFile != ""
         && sFile == "****"
-        && nRow < CLASS_FEAT_2DA_END)
+        && nRow < GetPRCSwitch(FILE_END_CLASS_FEAT))
     {
         Get2DACache(sFile, "FeatLabel", nRow); 
         Get2DACache(sFile, "FeatIndex", nRow); 
@@ -554,7 +554,7 @@ void Cache_Classes(int nRow = 0)
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
     }
-    if(nRow < CLASS_2DA_END)
+    if(nRow < GetPRCSwitch(FILE_END_CLASSES))
     {
         Get2DACache("classes", "Label", nRow);  
         Get2DACache("classes", "Name", nRow);  
@@ -633,7 +633,7 @@ void Cache_Feat(int nRow = 0)
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
     }
-    if(nRow < FEAT_2DA_END)
+    if(nRow < GetPRCSwitch(FILE_END_FEAT))
     {
         Get2DACache("feat", "LABEL", nRow);
         Get2DACache("feat", "FEAT", nRow);
@@ -700,7 +700,7 @@ void Cache_Spells(int nRow = 0)
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
     }
-    if(nRow < SPELLS_2DA_END)
+    if(nRow < GetPRCSwitch(FILE_END_SPELLS))
     {
         Get2DACache("spells", "Label", nRow);
         Get2DACache("spells", "Name", nRow);
@@ -780,7 +780,7 @@ void Cache_Portraits(int nRow = 0)
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
     }
-    if(nRow < PORTRAITS_2DA_END)
+    if(nRow < GetPRCSwitch(FILE_END_PORTRAITS))
     {
         Get2DACache("portraits", "BaseResRef", nRow);     
         Get2DACache("portraits", "Sex", nRow);    
@@ -811,7 +811,7 @@ void Cache_Soundset(int nRow = 0)
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
     }
-    if(nRow < SOUNDSET_2DA_END)
+    if(nRow < GetPRCSwitch(FILE_END_SOUNDSET))
     {
         Get2DACache("soundset", "LABEL", nRow);                    
         Get2DACache("soundset", "RESREF", nRow);        
@@ -841,7 +841,7 @@ void Cache_Appearance(int nRow = 0)
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
     }
-    if(nRow < APPEARANCE_2DA_END)
+    if(nRow < GetPRCSwitch(FILE_END_APPEARANCE))
     {
         Get2DACache("appearance", "LABEL", nRow);
         Get2DACache("appearance", "STRING_REF", nRow);

@@ -7,6 +7,7 @@
 #include "prc_inc_switch"
 #include "inc_letoscript"
 #include "inc_leto_prc"
+#include "inc_time"
 
 void main()
 {
@@ -16,5 +17,6 @@ void main()
         PRCLetoExit(oPC);  
     if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))
         LetoPCExit(oPC);     
+    AssignCommand(GetModule(), DelayCommand(0.1, RecalculateTime()));        
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTLEAVE);
 }

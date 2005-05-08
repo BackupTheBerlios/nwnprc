@@ -154,7 +154,7 @@ void main()
     }
 
     //Skills
-    for (i=0;i<SKILLS_2DA_END;i++)
+    for (i=0;i<GetPRCSwitch(FILE_END_SKILLS);i++)
     {
         sScript += LetoAdd("SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");
         sScript += LetoAdd("LvlStatList/[_]/SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "char");
@@ -273,7 +273,7 @@ void main()
         //skills
         sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/SkillList", "", "list");
         int j;
-        for (j=0;j<SKILLS_2DA_END;j++)
+        for (j=0;j<GetPRCSwitch(FILE_END_SKILLS);j++)
         {
             int nMod = array_get_int(oPC, "RaceLevel"+IntToString(nLevel)+"Skills", j); 
             if(nMod)

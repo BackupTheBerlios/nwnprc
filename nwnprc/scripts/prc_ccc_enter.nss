@@ -46,7 +46,8 @@ void main()
         return;
     }
 
-    string sEncrypt = Encrypt(oPC);
+    string sEncrypt;
+    sEncrypt= Encrypt(oPC);
 
     //if using XP for new characters, set returning characters tags to encrypted
     //then you can turn off using XP after all characters have logged on.
@@ -57,9 +58,37 @@ void main()
         string sScript = "<gff:set 'Tag' <qq:"+sEncrypt+">>";
         SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+sScript);
     }
+    
+    if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEATS))
+    {
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_NIMBUSLIGHT, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_HOLYRADIANCE, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_SERVHEAVEN, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_SAC_VOW, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_VOW_OBED, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_THRALL_TO_DEMON, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_DISCIPLE_OF_DARKNESS, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_LICHLOVED, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_EVIL_BRANDS, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_VILE_WILL_DEFORM, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_OBESE, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_GAUNT, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_LOLTHS_MEAT, TRUE);
+    }
+    if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_PNP_RACIAL))
+    {
+        SetPRCSwitch(PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_DROW_ENFORCE_GENDER, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_FEYRI_TAIL, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_FEYRI_WINGS, TRUE);
+        SetPRCSwitch(PRC_CONVOCC_AVARIEL_WINGS, TRUE);
+    }
 
     if((GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetXP(oPC) == 0)
-        || (GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetTag(oPC) != sEncrypt))
+        || (!GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetTag(oPC) != sEncrypt))
     {
         //first entry
         // Check Equip Items and get rid of them
@@ -98,6 +127,8 @@ void main()
             DestroyObject(oItem);
             oItem = GetNextItemInInventory(oPC);
         }
+        //rest them so that they loose cutscene invisible
+        ForceRest(oPC);
         //Take their Gold
         int nAmount = GetGold(oPC);
         if(nAmount > 0)

@@ -26,6 +26,7 @@ void ChoiceSelected(int nChoiceNo)
     object oClone = GetLocalObject(OBJECT_SELF, "Clone");
 
     int nLevel = GetLocalInt(OBJECT_SELF, "Level");
+    int nQTMCount;
 
     int i;
     string sFile;
@@ -102,7 +103,7 @@ void ChoiceSelected(int nChoiceNo)
                 array_create(OBJECT_SELF, "Tattoo");
                 for(i=1;i<=18;i++)
                 {
-                    array_set_int(OBJECT_SELF, "Tattoo",  i,1);
+                    array_set_int(OBJECT_SELF, "Tattoo",  i, 1);
                 }
                 DoCloneLetoscript();
                 DoRotatingCamera();
@@ -352,24 +353,26 @@ void ChoiceSelected(int nChoiceNo)
                         array_get_size(OBJECT_SELF, "Feats"),
                             GetLocalInt(OBJECT_SELF, "StartingFeat"));
                 //qtm shortcut
+                nQTMCount = GetPRCSwitch(PRC_CONVOCC_BONUS_FEATS);
                 for(i=0;i<array_get_size(OBJECT_SELF, "Feats");i++)
                 {
-                    if(array_get_int(OBJECT_SELF, "Feats", i) == FEAT_QUICK_TO_MASTER
-                        && GetLocalInt(OBJECT_SELF, "QTMFeat")==FALSE)
-                    {
-                        //flag QTMFeat as used
-                        SetLocalInt(OBJECT_SELF, "QTMFeat", TRUE);
-                        //force the list to regenerate
-                        //alows for prerequisites being met
-                        array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
-                        array_set_int(OBJECT_SELF, "StagesSetup", nStage-1, FALSE);
-                        array_delete(OBJECT_SELF, "ChoiceValue");
-                        array_delete(OBJECT_SELF, "ChoiceTokens");
-                        //slide back 2 stages, so it can be set forward and still be reduced by 1
-                        nStage--;
-                        nStage--;
-                        break;
-                    }
+                    if(array_get_int(OBJECT_SELF, "Feats", i) == FEAT_QUICK_TO_MASTER)
+                        nQTMCount++;
+                }
+                nQTMCount -= GetLocalInt(OBJECT_SELF, "QTMFeat");
+                if(nQTMCount)
+                {
+                    //flag QTMFeat as used
+                    SetLocalInt(OBJECT_SELF, "QTMFeat", GetLocalInt(OBJECT_SELF, "QTMFeat")+1);
+                    //force the list to regenerate
+                    //alows for prerequisites being met
+                    array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
+                    array_set_int(OBJECT_SELF, "StagesSetup", nStage-1, FALSE);
+                    array_delete(OBJECT_SELF, "ChoiceValue");
+                    array_delete(OBJECT_SELF, "ChoiceTokens");
+                    //slide back 2 stages, so it can be set forward and still be reduced by 1
+                    nStage--;
+                    nStage--;          
                 }
                 nStage++;
             }

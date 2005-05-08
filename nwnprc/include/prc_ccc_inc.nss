@@ -76,8 +76,6 @@ int GetCost(int nAbilityScore);
 //or the cost saved by dropping from that score
 int GetCost(int nAbilityScore)
 {
-    if(nAbilityScore >18)
-        return -1;
     int nCost = (nAbilityScore-11)/2;
     if(nCost < 1)
         nCost = 1;
@@ -203,7 +201,7 @@ void SetupTokens()
                     sText+= "Stored skill points:";
                     sText+= " "+IntToString(array_get_int(OBJECT_SELF, "Skills",-1))+"\n";
             }
-            for(i=0;i<SKILLS_2DA_END;i++)
+            for(i=0;i<GetPRCSwitch(FILE_END_SKILLS);i++)
             {
                 if(Get2DACache("skills", "Name", i) != "" && array_get_int(OBJECT_SELF, "Skills",i) != 0)
                 {
@@ -358,7 +356,7 @@ void SetupTokens()
             SetToken(99, "Is this set of wings correct?");
             break;
         case STAGE_TATTOOPART:
-            SetToken(99, "Select a bondypart to alter the tattoo of.");
+            SetToken(99, "Select a bodypart to alter the tattoo of.");
             break;
         case STAGE_TATTOOPART_CHECK:
             SetToken(99, "Is this tattoo placement correct?");
@@ -418,7 +416,7 @@ void SetupTokens()
                     sText+= "Stored skill points:";
                     sText+= " "+IntToString(array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills",-1))+"\n";
             }
-            for(i=0;i<SKILLS_2DA_END;i++)
+            for(i=0;i<GetPRCSwitch(FILE_END_SKILLS);i++)
             {
                 if(Get2DACache("skills", "Name", i) != "" && array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills",i) != 0)
                 {

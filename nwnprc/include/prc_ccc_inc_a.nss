@@ -31,6 +31,7 @@ void SetupStage()
     int nWis = GetLocalInt(OBJECT_SELF, "Wis");
     int nCha = GetLocalInt(OBJECT_SELF, "Cha");
     int nPoints = GetLocalInt(OBJECT_SELF, "Points");
+    int nMaxStat;
 
     //switch to different stages
     int i;
@@ -40,7 +41,7 @@ void SetupStage()
     {
         case STAGE_GENDER:
             sName = Get2DACache("gender", "NAME", i);
-            while(i < GENDER_2DA_END)
+            while(i < GetPRCSwitch(FILE_END_GENDER))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens",
                     array_get_size(OBJECT_SELF, "ChoiceTokens"),
@@ -177,7 +178,10 @@ void SetupStage()
                 nWis = GetLocalInt(OBJECT_SELF, "Wis");
                 nCha = GetLocalInt(OBJECT_SELF, "Cha");
             }
-            if(nStr < 18  && nPoints >= GetCost(nStr+1))
+            nMaxStat = GetPRCSwitch(PRC_CONVOCC_MAX_STAT);
+            if(nMaxStat == 0)
+                nMaxStat = 18;
+            if(nStr < nMaxStat  && nPoints >= GetCost(nStr+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
                     IntToString(nStr)+" "+GetStringByStrRef(135)+". "+GetStringByStrRef(137)+" "
@@ -186,7 +190,7 @@ void SetupStage()
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_STRENGTH);
                 i++;
             }
-            if(nDex < 18 && nPoints >= GetCost(nDex+1))
+            if(nDex < nMaxStat && nPoints >= GetCost(nDex+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
                     IntToString(nDex)+" "+GetStringByStrRef(133)+". "+GetStringByStrRef(137)+" "
@@ -195,7 +199,7 @@ void SetupStage()
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_DEXTERITY);
                 i++;
             }
-            if(nCon < 18 && nPoints >= GetCost(nCon+1))
+            if(nCon < nMaxStat && nPoints >= GetCost(nCon+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
                     IntToString(nCon)+" "+GetStringByStrRef(132)+". "+GetStringByStrRef(137)+" "
@@ -204,7 +208,7 @@ void SetupStage()
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_CONSTITUTION);
                 i++;
             }
-            if(nInt < 18 && nPoints >= GetCost(nInt+1))
+            if(nInt < nMaxStat && nPoints >= GetCost(nInt+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
                     IntToString(nInt)+" "+GetStringByStrRef(134)+". "+GetStringByStrRef(137)+" "
@@ -213,7 +217,7 @@ void SetupStage()
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_INTELLIGENCE);
                 i++;
             }
-            if(nWis < 18 && nPoints >= GetCost(nWis+1))
+            if(nWis < nMaxStat && nPoints >= GetCost(nWis+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
                     IntToString(nWis)+" "+GetStringByStrRef(136)+". "+GetStringByStrRef(137)+" "
@@ -222,7 +226,7 @@ void SetupStage()
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_WISDOM);
                 i++;
             }
-            if(nCha < 18 && nPoints >= GetCost(nCha+1))
+            if(nCha < nMaxStat && nPoints >= GetCost(nCha+1))
             {
                 array_set_string(OBJECT_SELF, "ChoiceTokens", i,
                     IntToString(nCha)+" "+GetStringByStrRef(131)+". "+GetStringByStrRef(137)+" "
@@ -260,7 +264,7 @@ void SetupStage()
                 break;
             }
             sName = Get2DACache("hen_familiar", "STRREF", i);
-            while(i < FAMILIAR_2DA_END)
+            while(i < GetPRCSwitch(FILE_END_FAMILIAR))
             {
                 if(sName != "")
                 {
@@ -290,7 +294,7 @@ void SetupStage()
                 break;
             }
             sName = Get2DACache("hen_companion", "STRREF", i);
-            while(i < ANIMALCOMP_2DA_END)
+            while(i < GetPRCSwitch(FILE_END_ANIMALCOMP))
             {
                 if(sName != "")
                 {
@@ -320,22 +324,22 @@ void SetupStage()
                 break;
             }
             sName = Get2DACache("domains", "Name", i);
-            while(i < DOMAINS_2DA_END)
+            while(i < GetPRCSwitch(FILE_END_DOMAINS))
             {
                 if(sName != "")
                 {
                     if((nRace == RACIAL_TYPE_AIR_GEN
-                        && i != 0
-                        && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
+                            && i != 0
+                            && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
                         || (nRace == RACIAL_TYPE_EARTH_GEN
-                        && i != 5
-                        && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
+                            && i != 5
+                            && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
                         || (nRace == RACIAL_TYPE_FIRE_GEN
-                        && i != 7
-                        && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
+                            && i != 7
+                            && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
                         || (nRace == RACIAL_TYPE_WATER_GEN
-                        && i != 21
-                        && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
+                            && i != 21
+                            && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
                         )
                     {
                     }
@@ -368,7 +372,7 @@ void SetupStage()
                 break;
             }
             sName = Get2DACache("domains", "Name", i);
-            while(i < DOMAINS_2DA_END)
+            while(i < GetPRCSwitch(FILE_END_DOMAINS))
             {
                 if(sName != "" &&
                     GetLocalInt(OBJECT_SELF, "Domain1") != i)
@@ -465,7 +469,7 @@ void SetupStage()
             }
             else
             {
-                for(i=0;i<SPELLSCHOOL_2DA_END;i++)
+                for(i=0;i<GetPRCSwitch(FILE_END_SPELLSCHOOL);i++)
                 {
                     if(StringToInt(Get2DACache("spellschools", "StringRef", i)) != 0)
                     {

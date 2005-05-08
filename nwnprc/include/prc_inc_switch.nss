@@ -74,6 +74,12 @@ const string PRC_PNP_CHAMPIONS_VALOR                  = "PRC_PNP_CHAMPIONS_VALOR
 //20h instead of rounds per level
 
 // General switches
+const string PRC_COMPANION_IN_USE                    = "PRC_COMPANION_IN_USE";
+//DO NOT SET THIS SWITCH, the companion does it automatically
+//it is only here to be used by other scripts
+const string PRC_CEP_COMPANION_IN_USE                = "PRC_CEP_COMPANION_IN_USE";
+//DO NOT SET THIS SWITCH, the companion does it automatically
+//it is only here to be used by other scripts
 const string PRC_STAFF_CASTER_LEVEL                  = "PRC_STAFF_CASTER_LEVEL";
 //spells cast from magic staffs use the wielders casterlevel rather than the
 //items if the wielders casterlevel is higher.
@@ -103,15 +109,44 @@ const string PRC_PNP_ABILITY_DAMAGE_EFFECTS          = "PRC_PNP_ABILITY_DAMAGE_E
 const string PRC_SUPPLY_BASED_REST                   = "PRC_SUPPLY_BASED_REST";
 //turns on the included version of supply based rest by demitious
 //see inc_sbr_readme for details
+const string PRC_PNP_REST_HEALING                   = "PRC_PNP_REST_HEALING";
+//charaters only gain a number of hitpoints equal to their level from resting
+const string PRC_PNP_REST_TIME                   = "PRC_PNP_REST_HEALING";
+//resting causes time to advance
+//see inc_time for details
 const string PRC_PNP_SPELL_SCHOOLS                   = "PRC_PNP_SPELL_SCHOOLS";
 //wizards use PnP spellschools instead of biowares
 //must be generalists, but no way to enforce that
-const string PRC_COMPANION_IN_USE                    = "PRC_COMPANION_IN_USE";
-//DO NOT SET THIS SWITCH, the companion does it automatically
-//it is only here to be used by other scripts
-const string PRC_CEP_COMPANION_IN_USE                = "PRC_CEP_COMPANION_IN_USE";
-//DO NOT SET THIS SWITCH, the companion does it automatically
-//it is only here to be used by other scripts
+//not completed yet
+
+//file end switches
+const string FILE_END_MANUAL                         = "FILE_END_MANUAL";
+//if this is set it will disable the defaults and the module builder must set them
+//manually
+//otherwise it will set the automatically, and will take the PRC companion into account
+//including CEP if its the CEP/PRC companion
+const string FILE_END_CLASSES                        = "FILE_END_CLASSES";
+const string FILE_END_RACIALTYPES                    = "FILE_END_RACIALTYPES";
+const string FILE_END_GENDER                         = "FILE_END_GENDER";
+const string FILE_END_PORTRAITS                      = "FILE_END_PORTRAITS";
+const string FILE_END_SKILLS                         = "FILE_END_SKILLS";
+const string FILE_END_CLASS_FEAT                     = "FILE_END_CLASS_FEAT";
+const string FILE_END_CLASS_SKILLS                   = "FILE_END_CLASS_SKILLS";
+const string FILE_END_CLASS_POWER                    = "FILE_END_CLASS_POWER";
+const string FILE_END_FEAT                           = "FILE_END_FEAT";
+const string FILE_END_CLASS_PREREQ                   = "FILE_END_CLASS_PREREQ";
+const string FILE_END_FAMILIAR                       = "FILE_END_FAMILIAR";
+const string FILE_END_ANIMALCOMP                     = "FILE_END_ANIMALCOMP";
+const string FILE_END_DOMAINS                        = "FILE_END_DOMAINS";
+const string FILE_END_SOUNDSET                       = "FILE_END_SOUNDSET";
+const string FILE_END_SPELLS                         = "FILE_END_SPELLS";
+const string FILE_END_SPELLSCHOOL                    = "FILE_END_SPELLSCHOOL";
+const string FILE_END_APPEARANCE                     = "FILE_END_APPEARANCE";
+const string FILE_END_WINGS                          = "FILE_END_WINGS";
+const string FILE_END_TAILS                          = "FILE_END_TAILS";
+const string FILE_END_PACKAGE                        = "FILE_END_PACKAGE";
+const string FILE_END_RACE_FEAT                      = "FILE_END_RACE_FEAT";
+//these will be set by default unless FILE_END_MANUAL is turned on
 
 // Poison system switches
 const string PRC_USE_TAGBASED_INDEX_FOR_POISON       = "USE_TAGBASED_INDEX_FOR_POISON";
@@ -238,6 +273,12 @@ const string PRC_CONVOCC_DROW_ENFORCE_GENDER         = "PRC_CONVOCC_DROW_ENFORCE
 const string PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS      = "PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS";
 /*Force Gensai clerics to select the relevant elemental
 domain as one of their feats*/
+const string PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE = "PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE";
+//Female rakshasha use the female rakshasha model
+const string PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE    = "PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE";
+//Female drider use the female drider model
+const string PRC_CONVOCC_ENFORCE_PNP_RACIAL          = "PRC_CONVOCC_ENFORCE_PNP_RACIAL";
+//enforce all the racial things together
 const string PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD= "PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD";
 const string PRC_CONVOCC_ENFORCE_FEAT_NIMBUSLIGHT    = "PRC_CONVOCC_ENFORCE_FEAT_NIMBUSLIGHT";
 const string PRC_CONVOCC_ENFORCE_FEAT_HOLYRADIANCE   = "PRC_CONVOCC_ENFORCE_FEAT_HOLYRADIANCE";
@@ -251,13 +292,10 @@ const string PRC_CONVOCC_ENFORCE_FEAT_EVIL_BRANDS    = "PRC_CONVOCC_ENFORCE_FEAT
 const string PRC_CONVOCC_ENFORCE_FEAT_VILE_WILL_DEFORM="PRC_CONVOCC_ENFORCE_FEAT_VILE_WILL_DEFORM";
 const string PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_OBESE="PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_OBESE";
 const string PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_GAUNT="PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_GAUNT";
+const string PRC_CONVOCC_ENFORCE_FEAT_LOLTHS_MEAT   = "PRC_CONVOCC_ENFORCE_FEAT_LOLTHS_MEAT";
 //enforce feats seaparately
 const string PRC_CONVOCC_ENFORCE_FEATS               = "PRC_CONVOCC_ENFORCE_FEATS";
 //enforce all the feats together
-const string PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE = "PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE";
-//Female rakshasha use the female rakshasha model
-const string PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE    = "PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE";
-//Female drider use the female drider model
 const string PRC_CONVOCC_DISALLOW_CUSTOMISE_WINGS    = "PRC_CONVOCC_DISALLOW_CUSTOMISE_WINGS";
 //Stops players changing their wings
 const string PRC_CONVOCC_DISALLOW_CUSTOMISE_TAIL     = "PRC_CONVOCC_DISALLOW_CUSTOMISE_TAIL";
@@ -266,7 +304,9 @@ const string PRC_CONVOCC_DISALLOW_CUSTOMISE_MODEL    = "PRC_CONVOCC_DISALLOW_CUS
 //Stops players changing their model at all
 const string PRC_CONVOCC_USE_RACIAL_APPEARANCES      = "PRC_CONVOCC_USE_RACIAL_APPEARANCES";
 const string PRC_CONVOCC_USE_RACIAL_PORTRAIT         = "PRC_CONVOCC_USE_RACIAL_PORTRAIT";
-const string PRC_CONVOCC_USE_RACIAL_SOUNDSET         = "PRC_CONVOCC_USE_RACIAL_SOUNDSET";
+//const string PRC_CONVOCC_USE_RACIAL_SOUNDSET         = "PRC_CONVOCC_USE_RACIAL_SOUNDSET";
+//this isnt actually used, removed to avoid confusion
+const string PRC_CONVOCC_USE_RACIAL_VOICESET         = "PRC_CONVOCC_USE_RACIAL_VOICESET";
 /*Players can only change their model / portrait / soundset
 to alternatives of the same race. If you have extra
 content (e.g. from CEP) you must add them to
@@ -283,7 +323,6 @@ const string PRC_CONVOCC_FORCE_KEEP_VOICESET         = "PRC_CONVOCC_FORCE_KEEP_V
 /*Skips the select a voiceset step entirely, and players
 have to keep their current voiceset*/
 const string PRC_CONVOCC_ALLOW_TO_KEEP_VOICESET      = "PRC_CONVOCC_ALLOW_TO_KEEP_VOICESET";
-const string PRC_CONVOCC_USE_RACIAL_VOICESET         = "PRC_CONVOCC_USE_RACIAL_VOICESET";
 const string PRC_CONVOCC_ALLOW_TO_KEEP_PORTRAIT      = "PRC_CONVOCC_ALLOW_TO_KEEP_PORTRAIT";
 /*Allow players to keep their exisiting portrait
 The ConvoCC cannot allow players to select custom
@@ -329,6 +368,16 @@ set to false for greater security. */
 const string PRC_CONVOCC_STAT_POINTS                 = "PRC_CONVOCC_STAT_POINTS";
 //as requested, an option to alter the inital 30 points
 //at character creation
+const string PRC_CONVOCC_BONUS_FEATS                 = "PRC_CONVOCC_BONUS_FEATS";
+//as requirested, if set this will give a bonus number of feats equal to this value
+//similar to human Quick To Master feat.
+const string PRC_CONVOCC_MAX_STAT                    = "PRC_CONVOCC_MAX_STAT";
+//as requested, this will cap the maximum a stat can start at, excluding racial modifies
+//if not set it will default to 18
+const string PRC_CONVOCC_SKILL_MUTLIPLIER            = "PRC_CONVOCC_SKILL_MUTLIPLIER";
+//as requested, this will change the skill point multplier at level 1, defaulting to 4
+const string PRC_CONVOCC_SKILL_BONUS                 = "PRC_CONVOCC_SKILL_BONUS";
+//as requested, this will give a bonus to skill points after multiplication
 
 
 //Checks the state of a PRC switch
@@ -373,4 +422,45 @@ void DoEpicSpellDefaults()
     SetPRCSwitch(PRC_EPIC_XP_FRACTION, 25);
     SetPRCSwitch(PRC_EPIC_FAILURE_FRACTION_GOLD, 2);
     SetPRCSwitch(PRC_EPIC_BOOK_DESTRUCTION, 50);
+}
+
+void SetDefaultFileEnds()
+{
+    if(GetPRCSwitch(FILE_END_MANUAL))
+        return;
+    SetPRCSwitch(FILE_END_CLASSES,      255);
+    SetPRCSwitch(FILE_END_RACIALTYPES,  255);
+    SetPRCSwitch(FILE_END_GENDER,       2);
+    SetPRCSwitch(FILE_END_PORTRAITS,    1100);
+    SetPRCSwitch(FILE_END_SKILLS,       50);
+    SetPRCSwitch(FILE_END_CLASS_FEAT,   600);
+    SetPRCSwitch(FILE_END_CLASS_SKILLS, 50);
+    SetPRCSwitch(FILE_END_CLASS_POWER,  150);
+    SetPRCSwitch(FILE_END_FEAT,         22000);
+    SetPRCSwitch(FILE_END_CLASS_PREREQ, 25);
+    SetPRCSwitch(FILE_END_FAMILIAR,     20);
+    SetPRCSwitch(FILE_END_ANIMALCOMP,   20);
+    SetPRCSwitch(FILE_END_DOMAINS,      70);
+    SetPRCSwitch(FILE_END_SOUNDSET,     450);
+    SetPRCSwitch(FILE_END_SPELLS,       16000);
+    SetPRCSwitch(FILE_END_SPELLSCHOOL,  10);
+    SetPRCSwitch(FILE_END_APPEARANCE,   500);
+    SetPRCSwitch(FILE_END_WINGS,        10);
+    SetPRCSwitch(FILE_END_TAILS,        10);
+    SetPRCSwitch(FILE_END_PACKAGE,      150);
+    SetPRCSwitch(FILE_END_RACE_FEAT,    30);
+    //Companion alone
+    if(GetPRCSwitch(PRC_COMPANION_IN_USE))
+    {
+        SetPRCSwitch(FILE_END_APPEARANCE,   2100);
+        SetPRCSwitch(FILE_END_SOUNDSET,     1000);
+        SetPRCSwitch(FILE_END_PORTRAITS,    3550);
+    }
+    //Companion with CEP
+    if(GetPRCSwitch(PRC_CEP_COMPANION_IN_USE))
+    {
+        SetPRCSwitch(FILE_END_APPEARANCE,   2100);
+        SetPRCSwitch(FILE_END_SOUNDSET,     1000);
+        SetPRCSwitch(FILE_END_PORTRAITS,    3550);
+    }
 }

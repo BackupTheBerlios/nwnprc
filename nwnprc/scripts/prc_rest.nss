@@ -17,6 +17,7 @@
 #include "psi_inc_ac_manif"
 #include "inc_eventhook"
 #include "inc_prc_npc"
+#include "inc_time"
 
 void PrcFeats(object oPC)
 {
@@ -64,6 +65,10 @@ void main()
                 }
             }
             */
+            if(GetPRCSwitch(PRC_PNP_REST_HEALING))
+            {
+                SetLocalInt(oPC, "PnP_Rest_InitialHP", GetCurrentHitPoints(oPC));
+            }
             // Execute scripts hooked to this event for the player triggering it
             ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_STARTED);
             break;
@@ -113,6 +118,16 @@ void main()
             }
             // end flurry or swords array
 
+            if(GetPRCSwitch(PRC_PNP_REST_HEALING))
+            {
+                int nHP = GetLocalInt(oPC, "PnP_Rest_InitialHP");
+                nHP += GetHitDice(oPC);
+                int nCurrentHP = GetCurrentHitPoints(oPC);
+                int nDamage = nCurrentHP-nHP;
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, 
+                    EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPC);
+            }
+            
             DelayCommand(1.0,PrcFeats(oPC));
 
             // New Spellbooks

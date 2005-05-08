@@ -13,6 +13,7 @@ void main()
     ExecuteScript("prc_companion", OBJECT_SELF);
    
     DoEpicSpellDefaults();
+    SetDefaultFileEnds();
     if(GetPRCSwitch(PRC_CONVOCC_ENABLE))
     {
         SetPRCSwitch(PRC_USE_DATABASE, TRUE);
@@ -27,7 +28,7 @@ void main()
         if(GetPRCSwitch(PRC_DB_PRECACHE))
             Cache_2da_data();
         if(GetPRCSwitch(PRC_DB_SQLLITE))
-            DelayCommand(600.0, PRC_SQLCommit());
+            DelayCommand(IntToFloat(GetPRCSwitch(PRC_DB_SQLLITE_INTERVAL)), PRC_SQLCommit());
     }        
         
         

@@ -18,17 +18,24 @@
 void main()
 {
     object oCreature = OBJECT_SELF;
-    int bPnP = GetPRCSwitch(PRC_PNP_RAPID_METABOLISM);
     
     if(GetCurrentThread() == "")
     {
         if(GetThreadState("RapidMetabolism", oCreature) == THREAD_STATE_DEAD)
-            if(!SpawnNewThread("RapidMetabolism", "prc_rapid_metab", bPnP ? HoursToSeconds(24) : TurnsToSeconds(1), oCreature))
+        {
+            float fInterval = TurnsToSeconds(1);
+            if(GetPRCSwitch(PRC_PNP_RAPID_METABOLISM))
+                fInterval = HoursToSeconds(24);
+            if(!SpawnNewThread("RapidMetabolism", "prc_rapid_metab", fInterval, oCreature))
                 WriteTimestampedLogEntry("Failed to spawn thread for Rapid Metabolism on " + GetName(oCreature));
+        }                
     }
     else
     {
-        effect eHeal = EffectHeal((bPnP ? GetHitDice(oCreature) : 1) + GetAbilityModifier(ABILITY_CONSTITUTION, oCreature));
+        int nHP = 1;
+        if(GetPRCSwitch(PRC_PNP_RAPID_METABOLISM))
+            nHP = GetHitDice(oCreature);
+        effect eHeal = EffectHeal(nHP + GetAbilityModifier(ABILITY_CONSTITUTION, oCreature));
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oCreature);
     }
 }

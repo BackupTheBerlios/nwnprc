@@ -26,7 +26,7 @@ void ClassLoop()
     int i = GetLocalInt(OBJECT_SELF, "i");
     if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
         return;
-    if(i < CLASS_2DA_END)
+    if(i < GetPRCSwitch(FILE_END_CLASSES))
     {
         if(CheckClassRequirements(i))
         {
@@ -42,7 +42,7 @@ void ClassLoop()
         SetLocalInt(OBJECT_SELF, "i", i);
         if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
         {
-            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(CLASS_2DA_END));
+            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(GetPRCSwitch(FILE_END_CLASSES)));
             FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
             SetLocalInt(OBJECT_SELF, "Percentage",1);
             DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
@@ -87,7 +87,11 @@ void SkillLoop()
                    i=999999;
                 }
             }
-            nPoints *= 4;
+            if(GetPRCSwitch(PRC_CONVOCC_SKILL_MUTLIPLIER))
+                nPoints *= GetPRCSwitch(PRC_CONVOCC_SKILL_MUTLIPLIER);
+            else
+                nPoints *= 4;
+            nPoints += GetPRCSwitch(PRC_CONVOCC_SKILL_BONUS);
         }
         SetLocalInt(OBJECT_SELF, "Points", nPoints);
     }
@@ -97,10 +101,10 @@ void SkillLoop()
         && GetPRCSwitch(PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER))
     {        
         SetupSkillToken(-2, array_get_size(OBJECT_SELF, "ChoiceValue"));
-        SetupSkillToken(-1, array_get_size(OBJECT_SELF, "ChoiceValue"));
+        //SetupSkillToken(-1, array_get_size(OBJECT_SELF, "ChoiceValue"));
     }        
     string sFile = Get2DACache("classes", "SkillsTable", nClass);
-    if(i < SKILLS_2DA_END)
+    if(i < GetPRCSwitch(FILE_END_SKILLS))
     {
         SetupSkillToken(i, array_get_size(OBJECT_SELF, "ChoiceValue"));
         i++;
@@ -296,6 +300,7 @@ void FeatLoop(int nClassFeatStage = FALSE)
             && (nRow == FEAT_EB_ARM
                 || nRow == FEAT_EB_CHEST
                 || nRow == FEAT_EB_HAND
+                || nRow == FEAT_EB_NECK
                 || nRow == FEAT_EB_HEAD)
             && nMoral > 20)
             sName = "";
@@ -310,6 +315,11 @@ void FeatLoop(int nClassFeatStage = FALSE)
         else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_VILE_DEFORM_GAUNT)
             && nRow == FEAT_VILE_DEFORM_GAUNT
             && nMoral > 20)
+            sName = "";
+        else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_FEAT_LOLTHS_MEAT)
+            && nRow == 2441 //lolths meat
+            && nRace != 163
+            && nRace != 164)
             sName = "";
         else if(sPreReqFeat1 != "****")
         {
@@ -498,9 +508,9 @@ void FeatLoop(int nClassFeatStage = FALSE)
     }
     int n2daLimit;
     if(nClassFeatStage)
-        n2daLimit = CLASS_FEAT_2DA_END;
+        n2daLimit = GetPRCSwitch(FILE_END_CLASS_FEAT);
     else
-        n2daLimit = FEAT_2DA_END;
+        n2daLimit = GetPRCSwitch(FILE_END_FEAT);
 
     if(!bAtLeastOneResult)
     {
@@ -560,7 +570,7 @@ void SpellLoop()
     if(i==0 && nClass == CLASS_TYPE_WIZARD)
     {
         //add all cantrips
-        SQL = "SELECT rowid FROM cached2da_spells WHERE (Wiz_Sorc = 0) AND (School != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
+        SQL = "SELECT rowid FROM cached2da_spells WHERE (Wiz_Sorc = 0) AND (School != '"+sOpposition+"')";
         PRC_SQLExecDirect(SQL);
         while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
         {
@@ -990,7 +1000,7 @@ void BonusFeatLoop()
         }                
     }
     int n2daLimit;
-    n2daLimit = CLASS_FEAT_2DA_END;
+    n2daLimit = GetPRCSwitch(FILE_END_CLASS_FEAT);
 
     if(!bAtLeastOneResult)
     {
@@ -1026,7 +1036,7 @@ void RaceLoop()
     int nFeatIsAll;
     string sFeatTest;
     int bNoAdd;
-    if(i < RACE_2DA_END)
+    if(i < GetPRCSwitch(FILE_END_RACIALTYPES))
     {
         //check its name (which will be a tlk reference)
         sFeatName = Get2DACache("racialtypes", "name", i);
@@ -1057,7 +1067,7 @@ void RaceLoop()
         DelayCommand(0.01,RaceLoop());
         if(GetLocalInt(oPC, "Percentage") == 0)
         {
-            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(RACE_2DA_END));
+            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(GetPRCSwitch(FILE_END_RACIALTYPES)));
             FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
             SetLocalInt(OBJECT_SELF, "Percentage",1);
             DelayCommand(1.0, DeleteLocalInt(oPC, "Percentage"));
@@ -1072,7 +1082,7 @@ void RaceLoop()
 
 void DoClassFeat(string sClassFeatTable, int i=0)
 {
-    if(i<CLASS_FEAT_2DA_END)
+    if(i<GetPRCSwitch(FILE_END_CLASS_FEAT))
     {
         if(Get2DACache(sClassFeatTable, "FeatIndex", i) != ""
             && Get2DACache(sClassFeatTable, "List", i) == "3"
@@ -1106,7 +1116,7 @@ void AppearanceLoop()
                     nRow);
     }
 
-    if(i > APPEARANCE_2DA_END)
+    if(i > GetPRCSwitch(FILE_END_APPEARANCE))
     {
         DeleteLocalInt(OBJECT_SELF, "i");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
@@ -1117,13 +1127,13 @@ void AppearanceLoop()
 
     i += 100;
     SetLocalInt(OBJECT_SELF, "i", i);
-    if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
+    /*if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
     {
-        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(APPEARANCE_2DA_END));
+        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(GetPRCSwitch(FILE_END_APPEARANCE)));
         FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
         SetLocalInt(OBJECT_SELF, "Percentage",1);
         DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
-    }
+    }*/
 
     DelayCommand(0.01, AppearanceLoop());
 }
@@ -1156,7 +1166,7 @@ void SoundsetLoop()
         }                    
     }
 
-    if(i > SOUNDSET_2DA_END)
+    if(i > GetPRCSwitch(FILE_END_SOUNDSET))
     {
         DeleteLocalInt(OBJECT_SELF, "i");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
@@ -1167,13 +1177,13 @@ void SoundsetLoop()
 
     i += 100;
     SetLocalInt(OBJECT_SELF, "i", i);
-    if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
+    /*if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
     {
-        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(SOUNDSET_2DA_END));
+        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(GetPRCSwitch(FILE_END_SOUNDSET)));
         FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
         SetLocalInt(OBJECT_SELF, "Percentage",1);
         DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
-    }
+    }*/
 
     DelayCommand(0.01, SoundsetLoop());
 }
@@ -1206,7 +1216,7 @@ void PortraitLoop()
         }                    
     }
 
-    if(i > PORTRAITS_2DA_END)
+    if(i > GetPRCSwitch(FILE_END_PORTRAITS))
     {
         DeleteLocalInt(OBJECT_SELF, "i");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
@@ -1217,13 +1227,13 @@ void PortraitLoop()
 
     i += 100;
     SetLocalInt(OBJECT_SELF, "i", i);
-    if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
+    /*if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
     {
-        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(PORTRAITS_2DA_END));
+        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(GetPRCSwitch(FILE_END_PORTRAITS)));
         FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
         SetLocalInt(OBJECT_SELF, "Percentage",1);
         DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
-    }
+    }*/
 
     DelayCommand(0.01, PortraitLoop());
 }
@@ -1231,7 +1241,7 @@ void PortraitLoop()
 void WingLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    if(i > WINGS_2DA_END)
+    if(i > GetPRCSwitch(FILE_END_WINGS))
     {
         DeleteLocalInt(OBJECT_SELF, "i");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
@@ -1255,7 +1265,7 @@ void WingLoop()
         SetLocalInt(OBJECT_SELF, "i", i);
         if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
         {
-            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(WINGS_2DA_END));
+            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(GetPRCSwitch(FILE_END_WINGS)));
             FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
             SetLocalInt(OBJECT_SELF, "Percentage",1);
             DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
@@ -1267,7 +1277,7 @@ void WingLoop()
 void TailLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    if(i > TAILS_2DA_END)
+    if(i > GetPRCSwitch(FILE_END_TAILS))
     {
         DeleteLocalInt(OBJECT_SELF, "i");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
@@ -1291,7 +1301,7 @@ void TailLoop()
         SetLocalInt(OBJECT_SELF, "i", i);
         if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
         {
-            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(TAILS_2DA_END));
+            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(GetPRCSwitch(FILE_END_TAILS)));
             FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
             SetLocalInt(OBJECT_SELF, "Percentage",1);
             DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));

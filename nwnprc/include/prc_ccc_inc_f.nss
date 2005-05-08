@@ -220,24 +220,24 @@ void SetupTattooColours()
 void SetupTattooParts()
 {
     AddColour("Done", 0);
-    AddColour("Neck", 1);
+    //AddColour("Neck", 1);
     AddColour("Torso", 2);
     //AddColour("Belt", 3);
-    AddColour("Pelvis", 4);
+    //AddColour("Pelvis", 4);
     //AddColour("Left shoulder", 5);
     AddColour("Left bicep", 6);
     AddColour("Left forearm", 7);
-    AddColour("Left hand", 8);
+    //AddColour("Left hand", 8);
     AddColour("Left thigh", 9);
     AddColour("Left shin", 10);
-    AddColour("Left foot", 11);
+    //AddColour("Left foot", 11);
     //AddColour("Right shoulder", 12);
     AddColour("Right bicep", 13);
     AddColour("Right forearm", 14);
-    AddColour("Right hand", 15);
+    //AddColour("Right hand", 15);
     AddColour("Right thigh", 16);
     AddColour("Right shin", 17);
-    AddColour("Right foot", 18);
+    //AddColour("Right foot", 18);
 }
 
 void AddHead(int nHead)

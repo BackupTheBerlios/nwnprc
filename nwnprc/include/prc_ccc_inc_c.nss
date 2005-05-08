@@ -84,11 +84,10 @@ void SkillLoop()
                if(array_get_int(OBJECT_SELF, "Feats", i) == FEAT_QUICK_TO_MASTER)
                {
                    nPoints++;
-                   i=999999;
                 }
             }
-            int nMultiplier = GetPRCSwitch(PRC_CONVOCC_SKILL_MUTLIPLIER);
-            if(!nMultiplier)
+            int nMultiplier = GetPRCSwitch(PRC_CONVOCC_SKILL_MULTIPLIER);
+            if(nMultiplier == 0)
                 nMultiplier = 4;
             nPoints *= nMultiplier;
             nPoints += GetPRCSwitch(PRC_CONVOCC_SKILL_BONUS);

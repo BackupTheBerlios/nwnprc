@@ -374,7 +374,7 @@ const string PRC_CONVOCC_BONUS_FEATS                 = "PRC_CONVOCC_BONUS_FEATS"
 const string PRC_CONVOCC_MAX_STAT                    = "PRC_CONVOCC_MAX_STAT";
 //as requested, this will cap the maximum a stat can start at, excluding racial modifies
 //if not set it will default to 18
-const string PRC_CONVOCC_SKILL_MUTLIPLIER            = "PRC_CONVOCC_SKILL_MUTLIPLIER";
+const string PRC_CONVOCC_SKILL_MULTIPLIER            = "PRC_CONVOCC_SKILL_MULTIPLIER";
 //as requested, this will change the skill point multplier at level 1, defaulting to 4
 const string PRC_CONVOCC_SKILL_BONUS                 = "PRC_CONVOCC_SKILL_BONUS";
 //as requested, this will give a bonus to skill points after multiplication

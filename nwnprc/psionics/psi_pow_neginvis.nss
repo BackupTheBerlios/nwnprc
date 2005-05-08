@@ -53,65 +53,65 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (nSurge > 0)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
+        
+        PsychicEnervation(oCaster, nSurge);
     }
     
     if (nMetaPsi > 0) 
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	location lTarget = GetSpellTargetLocation();
-	float fWidth = DoWiden(RADIUS_SIZE_COLOSSAL, nMetaPsi);
-    	float fDelay;
-		
-    	effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
-    	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
+        int nDC = GetManifesterDC(oCaster);
+        int nCaster = GetManifesterLevel(oCaster);
+        location lTarget = GetSpellTargetLocation();
+        float fWidth = DoWiden(RADIUS_SIZE_COLOSSAL, nMetaPsi);
+        float fDelay;
 
-    	oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
-	while (GetIsObjectValid(oTarget))
-	{
-		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-		fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-		
-	        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD))
-	        {
-		        
-    			if (GetHasSpellEffect(SPELL_IMPROVED_INVISIBILITY, oTarget) == TRUE)
-    			{
-    			    RemoveAnySpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget);
-    			}
-    			else
-    			if (GetHasSpellEffect(SPELL_INVISIBILITY, oTarget) == TRUE)
-    			{
-    			    RemoveAnySpellEffects(SPELL_INVISIBILITY, oTarget);
-    			}
-		
-    			effect eInvis = GetFirstEffect(oTarget);
+        effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
-			int bIsImprovedInvis = FALSE;
-    			while(GetIsEffectValid(eInvis))
-    			{
-    			    if (GetEffectType(eInvis) == EFFECT_TYPE_IMPROVEDINVISIBILITY)
-    			    {
-    		        	bIsImprovedInvis = TRUE;
-        		    }
-        			//check for invisibility
-        			if(GetEffectType(eInvis) == EFFECT_TYPE_INVISIBILITY || bIsImprovedInvis)
-        			{
-        			    //remove invisibility
-        			    RemoveEffect(oTarget, eInvis);
-        			    if (bIsImprovedInvis)
-        			    {
-        			        RemoveSpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget, oTarget);
-        			    }
-        			}
-        			//Get Next Effect
-        			eInvis = GetNextEffect(oTarget);
-    			}
-               	}		
-	}
-	//Select the next target within the spell shape.
-	oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
+        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
+        while (GetIsObjectValid(oTarget))
+        {
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+            fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
+
+            if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD))
+            {
+
+                if (GetHasSpellEffect(SPELL_IMPROVED_INVISIBILITY, oTarget) == TRUE)
+                {
+                    RemoveAnySpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget);
+                }
+                else
+                if (GetHasSpellEffect(SPELL_INVISIBILITY, oTarget) == TRUE)
+                {
+                    RemoveAnySpellEffects(SPELL_INVISIBILITY, oTarget);
+                }
+
+                effect eInvis = GetFirstEffect(oTarget);
+
+                int bIsImprovedInvis = FALSE;
+                while(GetIsEffectValid(eInvis))
+                {
+                    if (GetEffectType(eInvis) == EFFECT_TYPE_IMPROVEDINVISIBILITY)
+                    {
+                        bIsImprovedInvis = TRUE;
+                    }
+                    //check for invisibility
+                    if(GetEffectType(eInvis) == EFFECT_TYPE_INVISIBILITY || bIsImprovedInvis)
+                    {
+                        //remove invisibility
+                        RemoveEffect(oTarget, eInvis);
+                        if (bIsImprovedInvis)
+                        {
+                            RemoveSpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget, oTarget);
+                        }
+                    }
+                    //Get Next Effect
+                    eInvis = GetNextEffect(oTarget);
+                }
+            }   
+            //Select the next target within the spell shape.
+            oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));    
+        }
     }
 }

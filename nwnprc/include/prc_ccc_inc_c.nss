@@ -87,10 +87,10 @@ void SkillLoop()
                    i=999999;
                 }
             }
-            if(GetPRCSwitch(PRC_CONVOCC_SKILL_MUTLIPLIER))
-                nPoints *= GetPRCSwitch(PRC_CONVOCC_SKILL_MUTLIPLIER);
-            else
-                nPoints *= 4;
+            int nMultiplier = GetPRCSwitch(PRC_CONVOCC_SKILL_MUTLIPLIER);
+            if(!nMultiplier)
+                nMultiplier = 4;
+            nPoints *= nMultiplier;
             nPoints += GetPRCSwitch(PRC_CONVOCC_SKILL_BONUS);
         }
         SetLocalInt(OBJECT_SELF, "Points", nPoints);

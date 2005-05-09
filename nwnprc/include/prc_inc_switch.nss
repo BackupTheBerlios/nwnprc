@@ -39,6 +39,9 @@ const string PRC_PNP_FEAR_AURAS                      = "PRC_PNP_FEAR_AURAS";
 //not implemented yet
 const string PRC_PNP_TENSERS_TRANSFORMATION          = "PRC_PNP_TENSERS_TRANSFORMATION";
 //not a polymorph but ability bonuses instead
+const string PRC_PNP_BLACK_BLADE_OF_DISASTER         = "PRC_PNP_BLACK_BLADE_OF_DISASTER";
+//less powerful, more PnP accurate version
+//caster must concentrate to maintain it
 
 
 // Epic spell switches

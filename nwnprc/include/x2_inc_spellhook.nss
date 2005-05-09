@@ -304,7 +304,7 @@ void X2BreakConcentrationSpells()
     // * At the moment we got only one concentration spell, black blade of disaster
 
     object oAssoc = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
-    if (GetIsObjectValid(oAssoc) && GetIsPC(OBJECT_SELF)) // only applies to PCS
+    if (GetIsObjectValid(oAssoc))
     {
         if(GetTag(oAssoc) == "x2_s_bblade") // black blade of disaster
         {
@@ -433,7 +433,12 @@ int X2PreSpellCastCode()
     //---------------------------------------------------------------------------
     // Break any spell require maintaining concentration (only black blade of
     // disaster)
-    // /*REM*/ X2BreakConcentrationSpells();
+    // /*REM*/ 
+    if(GetPRCSwitch(PRC_PNP_BLACK_BLADE_OF_DISASTER))
+        X2BreakConcentrationSpells();
+        //this is also in summon HB
+        //but needed here to handle quickend spells
+        //Disintegrate is cast from the blade so doenst end the summon
     //---------------------------------------------------------------------------
 
     //---------------------------------------------------------------------------

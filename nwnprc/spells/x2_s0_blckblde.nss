@@ -18,6 +18,45 @@
 #include "x2_i0_spells"
 #include "prc_inc_switch"
 
+void DoPnPAttack(object oSummon)
+{
+    object oTarget = GetAttackTarget(oSummon);
+    if(GetIsObjectValid(oTarget)
+        && GetDistanceBetween(oTarget, oSummon) < 5.0)
+    {
+        int nAttackResult = TouchAttackMelee(oTarget);
+        if(nAttackResult)
+        {
+            //hit or critical hit
+            //touch attacks are only crit on 20
+            //BBoD is crit on 18-20
+            //so 2/20ths of attacks that hit, but not crit, will be turned into crits
+            if(nAttackResult == 1 & d20(1)>=19)
+                nAttackResult = 2;
+            int nDamage = d12(2);
+            if(nAttackResult == 2)
+                nDamage *=2; //critical doubles damage
+            //its magical damage because the description is unclear
+            AssignCommand(oSummon, ApplyEffectToObject(
+                DURATION_TYPE_INSTANT, EffectDamage(nDamage, 
+                    DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_FIVE), oTarget));
+        }
+        if(nAttackResult == 2)
+        {
+            //critical hit
+            //cast disintegrate
+            int nLevel = GetLocalInt(oSummon, "BBoD_Level");
+            
+            SetLocalInt(oSummon, "PRC_Castlevel_Override", nLevel);
+            AssignCommand(oSummon, ClearAllActions());
+            // Make sure this variable gets deleted as quickly as possible in case it's added in error.
+            AssignCommand(oSummon, DelayCommand(1.0, DeleteLocalInt(oSummon, "PRC_Castlevel_Override")));
+            AssignCommand(oSummon, ActionCastSpellAtObject(3111, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        }
+    }
+    DelayCommand(6.0, DoPnPAttack(oSummon));
+}
+
 //Creates the weapon that the creature will be using.
 void spellsCreateItemForSummoned()
 {
@@ -58,19 +97,42 @@ void spellsCreateItemForSummoned()
            nStat = 0;
         }
     }
-
-    object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
+    int i = 1;
+    object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, i);
+    while(GetIsObjectValid(oSummon))
+    {
+        GetAssociate(ASSOCIATE_TYPE_SUMMONED, i);
+        i++;
+    }
     // Make the blade require concentration
     SetLocalInt(oSummon,"X2_L_CREATURE_NEEDS_CONCENTRATION",TRUE);
     SetPlotFlag (oSummon,TRUE);
     object oWeapon;
     //Create item on the creature, epuip it and add properties.
     oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oSummon);
-    if (nStat > 0)
+    if (nStat > 0 && !GetPRCSwitch(PRC_PNP_BLACK_BLADE_OF_DISASTER))
     {
         IPSetWeaponEnhancementBonus(oWeapon, nStat);
     }
     SetDroppableFlag(oWeapon, FALSE);
+    
+    if(GetPRCSwitch(PRC_PNP_BLACK_BLADE_OF_DISASTER))
+    {
+        itemproperty ipTest = GetFirstItemProperty(oWeapon);
+        while(GetIsItemPropertyValid(ipTest))
+        {
+            ipTest = GetNextItemProperty(oWeapon);
+        }
+        itemproperty ipNoDam = ItemPropertyNoDamage();
+        AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
+        itemproperty ipVFX = ItemPropertyVisualEffect(ITEM_VISUAL_ELECTRICAL);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ipVFX, oWeapon);
+        //store the level on the summon
+        SetLocalInt(oSummon, "BBoD_Level", GetLocalInt(OBJECT_SELF, "BBoD_Level"));
+        DeleteLocalInt(OBJECT_SELF, "BBoD_Level");
+        //attacks are handled through a pseudoHB
+        DoPnPAttack(oSummon);
+    }
 }
 
 #include "x2_inc_spellhook"
@@ -103,19 +165,20 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_3);
     //Make metamagic check for extend
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-    {
         nDuration = nDuration *2;//Duration is +100%
-    }
     //Apply the VFX impact and summon effect
     MultisummonPreSummon();
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
     
-        float fDuration = RoundsToSeconds(nDuration);
-        if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
+    float fDuration = RoundsToSeconds(nDuration);
+    if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
         fDuration = RoundsToSeconds(nDuration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), fDuration);
     DelayCommand(1.5, spellsCreateItemForSummoned());
-
+    if(GetPRCSwitch(PRC_PNP_BLACK_BLADE_OF_DISASTER))
+    {
+        SetLocalInt(OBJECT_SELF, "BBoD_Level", PRCGetCasterLevel(OBJECT_SELF));
+    }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Erasing the variable used to store the spell's spell school

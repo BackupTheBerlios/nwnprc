@@ -33,14 +33,15 @@ void main()
         while (GetIsObjectValid(oTarget))
         {
             nX = GetMaxHitPoints(oTarget) - GetCurrentHitPoints(oTarget);
+            if(nX < 0) //account for temporary HP
+                nX = 0;
             eRez = EffectResurrection();
             eHeal = EffectHeal(nX);
             eLink = EffectLinkEffects(eHeal, eVis);
             eLink = EffectLinkEffects(eLink, eVis2);
             eLink = EffectLinkEffects(eLink, eVis3);
-            oTarget = GetNextFactionMember(OBJECT_SELF, FALSE);
-            if (!MatchNonliving(MyPRCGetRacialType(oTarget)) &&
-                oTarget != OBJECT_SELF)
+            if (nX && //make sure they can be healed
+                !MatchNonliving(MyPRCGetRacialType(oTarget)))
             {
                 if (nX > 0)
                 {
@@ -53,6 +54,7 @@ void main()
                     nAlly++;
                 }
             }
+            oTarget = GetNextFactionMember(OBJECT_SELF, FALSE);
         }
         if (GetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE) == TRUE)
         {

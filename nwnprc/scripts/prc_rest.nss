@@ -132,7 +132,16 @@ void main()
 
             // New Spellbooks
             DelayCommand(0.01, CheckNewSpellbooks(oPC));
-
+            // PnP spellschools
+            if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
+                && GetLevelByClass(CLASS_TYPE_WIZARD, oPC))
+            {
+                //need to put a check in to make sure the player
+                //memorized one spell of their specialized
+                //school for each spell level
+                //also need to remove spells of prohibited schools
+            }
+            
             // Execute scripts hooked to this event for the player triggering it
             ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_FINISHED);
 

@@ -138,23 +138,37 @@ int RedWizardFeats(object oPC = OBJECT_SELF)
      int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oPC);
      int iRWRes;
      int iRWSpec;
+     
+     if((GetHasFeat(FEAT_RW_TF_ABJ, oPC) && GetHasFeat(2265, oPC))
+        || (GetHasFeat(FEAT_RW_TF_CON, oPC) && GetHasFeat(2266, oPC))
+        || (GetHasFeat(FEAT_RW_TF_DIV, oPC) && GetHasFeat(2267, oPC))
+        || (GetHasFeat(FEAT_RW_TF_ENC, oPC) && GetHasFeat(2268, oPC))
+        || (GetHasFeat(FEAT_RW_TF_EVO, oPC) && GetHasFeat(2269, oPC))
+        || (GetHasFeat(FEAT_RW_TF_ILL, oPC) && GetHasFeat(2270, oPC))
+        || (GetHasFeat(FEAT_RW_TF_NEC, oPC) && GetHasFeat(2271, oPC))
+        || (GetHasFeat(FEAT_RW_TF_TRS, oPC) && GetHasFeat(2272, oPC)))
+      {
+
+           FloatingTextStringOnCreature("You cannot select an Opposition School as a Tattoo Focus. Please reselect your feats.", oPC, FALSE);
+           return FALSE;
+      }
 
 
-          iRWSpec     += (GetHasFeat(FEAT_RW_TF_ABJ, oPC))
-                   +     (GetHasFeat(FEAT_RW_TF_CON, oPC))
-                   +     (GetHasFeat(FEAT_RW_TF_DIV, oPC))
-                   +     (GetHasFeat(FEAT_RW_TF_ENC, oPC))
-                   +     (GetHasFeat(FEAT_RW_TF_EVO, oPC))
-                   +     (GetHasFeat(FEAT_RW_TF_ILL, oPC))
-                   +     (GetHasFeat(FEAT_RW_TF_NEC, oPC))
-                   +     (GetHasFeat(FEAT_RW_TF_TRS, oPC));
+      iRWSpec  +=    (GetHasFeat(FEAT_RW_TF_ABJ, oPC))
+               +     (GetHasFeat(FEAT_RW_TF_CON, oPC))
+               +     (GetHasFeat(FEAT_RW_TF_DIV, oPC))
+               +     (GetHasFeat(FEAT_RW_TF_ENC, oPC))
+               +     (GetHasFeat(FEAT_RW_TF_EVO, oPC))
+               +     (GetHasFeat(FEAT_RW_TF_ILL, oPC))
+               +     (GetHasFeat(FEAT_RW_TF_NEC, oPC))
+               +     (GetHasFeat(FEAT_RW_TF_TRS, oPC));
 
-          if (iRWSpec > 1)
-          {
+      if (iRWSpec > 1)
+      {
 
-               FloatingTextStringOnCreature("You may only have one Tattoo Focus. Please reselect your feats.", oPC, FALSE);
-               return FALSE;
-          }
+           FloatingTextStringOnCreature("You may only have one Tattoo Focus. Please reselect your feats.", oPC, FALSE);
+           return FALSE;
+      }
 
 
      if (iRedWizard > 0)
@@ -174,6 +188,19 @@ int RedWizardFeats(object oPC = OBJECT_SELF)
                FloatingTextStringOnCreature("You must have 2 Restricted Schools. Please reselect your feats.", oPC, FALSE);
                return FALSE;
           }
+          if((GetHasFeat(FEAT_RW_RES_ABJ, oPC) && GetHasFeat(2265, oPC))
+            || (GetHasFeat(FEAT_RW_RES_CON, oPC) && GetHasFeat(2266, oPC))
+            || (GetHasFeat(FEAT_RW_RES_DIV, oPC) && GetHasFeat(2267, oPC))
+            || (GetHasFeat(FEAT_RW_RES_ENC, oPC) && GetHasFeat(2268, oPC))
+            || (GetHasFeat(FEAT_RW_RES_EVO, oPC) && GetHasFeat(2269, oPC))
+            || (GetHasFeat(FEAT_RW_RES_ILL, oPC) && GetHasFeat(2270, oPC))
+            || (GetHasFeat(FEAT_RW_RES_NEC, oPC) && GetHasFeat(2271, oPC))
+            || (GetHasFeat(FEAT_RW_RES_TRS, oPC) && GetHasFeat(2272, oPC)))
+          {
+
+               FloatingTextStringOnCreature("You cannot select an Opposition School as a Restricted School. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+          }          
      }
      return TRUE;
 }

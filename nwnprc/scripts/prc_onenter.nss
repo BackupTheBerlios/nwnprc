@@ -47,7 +47,7 @@ void main()
     if(GetPRCSwitch(PRC_LETOSCRIPT_FIX_ABILITIES) && !GetIsDM(oPC))
         PRCLetoEnter(oPC);   
     if(GetPRCSwitch(PRC_CONVOCC_ENABLE))
-        ExecuteScript("prc_ccc_enter", OBJECT_SELF);           
+        ExecuteScript("prc_ccc_enter", OBJECT_SELF);   
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
     

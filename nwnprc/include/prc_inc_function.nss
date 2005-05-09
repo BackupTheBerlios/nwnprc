@@ -99,12 +99,12 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) > 0)      ExecuteScript("prc_arcduel", oPC);
     if(GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oPC) > 0)       ExecuteScript("prc_thayknight", oPC);
     if(GetLevelByClass(CLASS_TYPE_TEMPLE_RAIDER, oPC) > 0)       ExecuteScript("prc_templeraider", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BLARCHER, oPC) > 0)        	 ExecuteScript("prc_bld_arch", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BLARCHER, oPC) > 0)            ExecuteScript("prc_bld_arch", oPC);
     if(GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC) > 0) ExecuteScript("prc_outlawroad", oPC);
     if(GetLevelByClass(CLASS_TYPE_ALAGHAR, oPC) > 0)             ExecuteScript("prc_alaghar", oPC);
     if(GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE,oPC) > 0)       DelayCommand(0.1,ExecuteScript("prc_knghtch", oPC));
     if(iThrallOfGrazzt > 0)                                      ExecuteScript("tog", oPC);
-    if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)      	 ExecuteScript("prc_blightlord", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)           ExecuteScript("prc_blightlord", oPC);
     if(GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN,oPC) > 0)       ExecuteScript("psi_zuoken", oPC);
 
     // Feats are checked here
@@ -135,6 +135,24 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_WILD_TALENT, oPC))                        ExecuteScript("psi_wild_talent", oPC);
     if(GetHasFeat(FEAT_RAPID_METABOLISM, oPC))                   ExecuteScript("prc_rapid_metab", oPC);
     if(GetHasFeat(FEAT_PSIONIC_HOLE, oPC))                       ExecuteScript("psi_psionic_hole", oPC);
+    
+    //PnP Spell Schools
+    if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
+        && GetLevelByClass(CLASS_TYPE_WIZARD, oPC)
+        && !GetHasFeat(2273)
+        && !GetHasFeat(2274)
+        && !GetHasFeat(2276)
+        && !GetHasFeat(2277)
+        && !GetHasFeat(2278)
+        && !GetHasFeat(2279)
+        && !GetHasFeat(2280)
+        && !GetHasFeat(2281)
+        )
+    {
+        SetLocalString(oPC, "DynConv_Script", "prc_pnp_school");
+        ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
+    }
+    
     
     // Miscellaneous
     ExecuteScript("prc_wyzfeat", oPC);

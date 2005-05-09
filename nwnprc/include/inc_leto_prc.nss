@@ -24,6 +24,31 @@ void PRCLetoExit(object oPC)
         }
         ipTest = GetNextItemProperty(oSkin);
     }
+    
+    if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
+        && GetLevelByClass(CLASS_TYPE_WIZARD, oPC))
+    {
+        if(GetHasFeat(2274)
+            || GetHasFeat(2276)
+            || GetHasFeat(2277)
+            || GetHasFeat(2278)
+            || GetHasFeat(2279)
+            || GetHasFeat(2280)
+            || GetHasFeat(2281))
+        {
+            //set school to PnP school
+            string sScript;
+            sScript = "<for:field /ClassList><if:~/Class=10><gff:set ~/School '9'></if></for>";
+            SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+sScript);
+        }
+        else if(GetHasFeat(2273))
+        {
+            //set school to generalist
+            string sScript;
+            sScript = "<for:field /ClassList><if:~/Class=10><gff:set ~/School '0'></if></for>";
+            SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+sScript);
+        }
+    }
 }
 
 void PRCLetoEnter(object oPC)

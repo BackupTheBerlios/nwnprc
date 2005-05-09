@@ -394,9 +394,41 @@ int X2PreSpellCastCode()
         }
     }
     //Pnp Tensers Transformation
-    if(GetPRCSwitch(PRC_PNP_TENSERS_TRANSFORMATION)
+    if(nContinue
+        && GetPRCSwitch(PRC_PNP_TENSERS_TRANSFORMATION)
         && GetHasSpellEffect(SPELL_TENSERS_TRANSFORMATION))
         nContinue = FALSE;
+    //Pnp spellschools
+    if(nContinue
+        && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
+        && GetLevelByClass(CLASS_TYPE_WIZARD))
+    {       
+        int nSchool = GetSpellSchool(GetSpellId());
+        if(nSchool == SPELL_SCHOOL_ABJURATION
+            && GetHasFeat(2265))
+            nContinue = FALSE;
+        else if(nSchool == SPELL_SCHOOL_CONJURATION
+            && GetHasFeat(2266))
+            nContinue = FALSE;
+        else if(nSchool == SPELL_SCHOOL_DIVINATION
+            && GetHasFeat(2267))
+            nContinue = FALSE;
+        else if(nSchool == SPELL_SCHOOL_ENCHANTMENT
+            && GetHasFeat(2268))
+            nContinue = FALSE;
+        else if(nSchool == SPELL_SCHOOL_EVOCATION
+            && GetHasFeat(2269))
+            nContinue = FALSE;
+        else if(nSchool == SPELL_SCHOOL_ILLUSION
+            && GetHasFeat(2270))
+            nContinue = FALSE;
+        else if(nSchool == SPELL_SCHOOL_NECROMANCY
+            && GetHasFeat(2271))
+            nContinue = FALSE;
+        else if(nSchool == SPELL_SCHOOL_TRANSMUTATION
+            && GetHasFeat(2272))
+            nContinue = FALSE;
+    }        
 
     //---------------------------------------------------------------------------
     // Break any spell require maintaining concentration (only black blade of
@@ -509,9 +541,9 @@ int X2PreSpellCastCode()
                 (GetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
             {
                 SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
-                // Make sure this variable gets deleted as quickly as possible in case it's added in error.
-                DelayCommand(1.0, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
                 AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+                // Make sure this variable gets deleted as quickly as possible in case it's added in error.
+                AssignCommand(oFam, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
             }
         }
     }

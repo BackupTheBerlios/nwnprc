@@ -1,3 +1,7 @@
+#include "inc_utility"
+#include "inc_array"
+#include "inc_item_props"
+
 //This used Bitwise math 
 //this thread should help if you dont understand bitwise math
 //http://nwn.bioware.com/forums/viewtopic.html?topic=391126&forum=47
@@ -13,10 +17,10 @@ void AddSchool(int nSchool, int nSchool2 = 0, int nSchool3 = 0)
         sName += ", "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool2)));
         sName += ", and "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool3)));
     }       
-    array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+    array_set_string(OBJECT_SELF, "ChoiceTokens", array_get_size(OBJECT_SELF, "ChoiceTokens"),
         sName);      
-    nValue = nSchool | (nSchool2 << 4) | (nSchool3 << 8);
-    array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), nValue);
+    int nValue = nSchool | (nSchool2 << 4) | (nSchool3 << 8);
+    array_set_int(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues"), nValue);
 }
 
 int GetIPFromSchool(int nSchool)
@@ -32,7 +36,8 @@ int GetIPFromSchool(int nSchool)
         case SPELL_SCHOOL_ILLUSION:     return 247;
         case SPELL_SCHOOL_NECROMANCY:   return 248;
         case SPELL_SCHOOL_TRANSMUTATION:return 249;
-    }       
+    }    
+    return 0;
 }
 
 int GetIPFromOppSchool(int nSchool)
@@ -47,7 +52,8 @@ int GetIPFromOppSchool(int nSchool)
         case SPELL_SCHOOL_ILLUSION:     return 238;
         case SPELL_SCHOOL_NECROMANCY:   return 239;
         case SPELL_SCHOOL_TRANSMUTATION:return 240;
-    }       
+    }   
+    return 0;
 }
 
 void main()
@@ -215,6 +221,7 @@ void main()
                                         && b == SPELL_SCHOOL_ENCHANTMENT
                                         && c == SPELL_SCHOOL_ILLUSION))
                                 {
+                                 //do nothing
                                 }
                                 else
                                     AddSchool(a,b,c);
@@ -222,7 +229,7 @@ void main()
                         }
                     }
                     break;
-                }                    
+                //                    
                 SetCustomToken(99, "Select a set of opposition school(s).");
             }
             if(nStage == 3)//confirmation
@@ -271,6 +278,7 @@ void main()
         SetCustomToken(113, GetStringByStrRef(16824203));//previous
 
 // END OF INSERT FOR THE HEADER
+
         return;
     }
     if(nValue == -2)
@@ -318,9 +326,9 @@ void main()
     }
     if(nStage == 1)//select opposing school(s)
     {
-        nSchool1 = nValue & 15;
-        nSchool2 = (nValue & 240) >> 4;
-        nSchool3 = (nValue & 3840) >> 8;
+        int nSchool1 = nValue & 15;
+        int nSchool2 = (nValue & 240) >> 4;
+        int nSchool3 = (nValue & 3840) >> 8;
         SetLocalInt(oPC, "School1", nSchool1); 
         SetLocalInt(oPC, "School2", nSchool2); 
         SetLocalInt(oPC, "School3", nSchool3); 

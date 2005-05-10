@@ -14,17 +14,22 @@ void PRC_SQLCommit();
 
 string PRC_SQL_Retrieve(string sName)
 {
+    sName = ReplaceChars(sName,"'", "~");
     //check that 2da row exisits
     string SQL = "SELECT value FROM prc_data WHERE name = "+sName;
     PRC_SQLExecDirect(SQL);
     string sReturn;
     if(PRC_SQLFetch() == PRC_SQL_SUCCESS)
         sReturn = PRC_SQLGetData(1);
+        
+    sReturn = ReplaceChars(sReturn,"~", "'");
     return sReturn;    
 }
 
 void PRC_SQL_Store(string sName, string sValue)
 {
+    sValue = ReplaceChars(sValue,"'", "~");
+    sName = ReplaceChars(sName,"'", "~");
     //check that 2da row exisits
     string SQL = "SELECT value FROM prc_data WHERE name = "+sName;
     PRC_SQLExecDirect(SQL);

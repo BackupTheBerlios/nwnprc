@@ -10,18 +10,20 @@
 #include "prc_inc_clsfunc"
 #include "psi_inc_psifunc"
 #include "inc_ecl"
+#include "inc_2dacache"
 
 void main()
 {
     // Unsummon the bonded summoner familiar
+    //not needed now that its a summon (hopefully!)
     object oPlayer = GetLastBeingDied();
-    object Asso = GetLocalObject(oPlayer, "BONDED");
+    /*object Asso = GetLocalObject(oPlayer, "BONDED");
     if (GetIsObjectValid(Asso))
     {
         effect eVis = EffectVisualEffect(VFX_IMP_UNSUMMON);
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetLocation(Asso));
         DestroyObject(Asso);
-    }
+    }*/
 
     // Do Lolth's Meat for the killer
     object oKiller = MyGetLastKiller();
@@ -46,12 +48,19 @@ void main()
             AssignCommand(oPlayer, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10000, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPlayer));
         }
     }
+
+    if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oPlayer))
+    {
+        if(GetPRCSwitch(PRC_USE_DATABASE))
+            PRC_SQL_Store(GetPCPlayerName(oPlayer)+GetName(oPlayer)+"_Dead",  "1");
+        else
+            SetCampaignInt(GetName(GetModule()), GetPCPlayerName(oPlayer)+GetName(oPlayer)+"_Dead",  1);                    
+    }
     
     if (GetLocalInt(oPlayer, "AstralSeed"))
     {
-    	AstralSeedRespawn(oPlayer);
+        AstralSeedRespawn(oPlayer);
     }
-
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPlayer, EVENT_ONPLAYERDEATH);
 }

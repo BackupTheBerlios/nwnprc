@@ -1,7 +1,6 @@
 #include "inc_array"
 #include "inc_array_b"
 #include "inc_heap"
-#include "inc_2dacache"
 
 //takes a hex string "0x####" and returns the integer base 10 equivalent
 //Full credit to Axe Murderer
@@ -71,6 +70,7 @@ string ReplaceChars(string sString, string sTarget, string sReplacement);
 // oObject  object to destroy
 void MyDestroyObject(object oObject);
 
+#include "inc_2dacache"
 
 int HexToInt( string sHex)
 { if( sHex == "") return 0;

@@ -383,9 +383,9 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     // If PP Cost is greater than Manifester level
     if (GetManifesterLevel(oCaster) >= nPPCost && nCanManifest)
     {
-    	// Reduced cost of manifesting a power, but does not allow you to exceed the manifester level cap
-    	// Right now, only used for Thrallherd
-    	nPPCost = GetPPCostReduced(nPPCost, oCaster);
+        // Reduced cost of manifesting a power, but does not allow you to exceed the manifester level cap
+        // Right now, only used for Thrallherd
+        nPPCost = GetPPCostReduced(nPPCost, oCaster);
     
         //If Manifest does not have enough points before hostile modifiers, cancel power
         if (nPPCost > nPP)
@@ -606,7 +606,7 @@ int GetPowerCount(object oPC, int nClass)
 int GetMaxPowerCount(object oPC, int nClass)
 {
     int nLevel = GetLevelByClass(nClass, oPC);
-    	nLevel += GetFirstPsionicClass(oPC) == nClass ? GetPsionicPRCLevels(oPC) : 0;
+        nLevel += GetFirstPsionicClass(oPC) == nClass ? GetPsionicPRCLevels(oPC) : 0;
     if(!nLevel)
         return 0;
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
@@ -749,11 +749,11 @@ float DoWiden(float fWidth, int nMetaPsi)
 {
     if (nMetaPsi == 2)
     {
-        if (fWidth == RADIUS_SIZE_SMALL)	fWidth = RADIUS_SIZE_MEDIUM;
-        if (fWidth == RADIUS_SIZE_MEDIUM)	fWidth = RADIUS_SIZE_LARGE;
-        if (fWidth == RADIUS_SIZE_LARGE)	fWidth = RADIUS_SIZE_HUGE;
-        if (fWidth == RADIUS_SIZE_HUGE)		fWidth = RADIUS_SIZE_GARGANTUAN;
-        if (fWidth == RADIUS_SIZE_GARGANTUAN)	fWidth = RADIUS_SIZE_COLOSSAL;
+        if (fWidth == RADIUS_SIZE_SMALL)    fWidth = RADIUS_SIZE_MEDIUM;
+        if (fWidth == RADIUS_SIZE_MEDIUM)   fWidth = RADIUS_SIZE_LARGE;
+        if (fWidth == RADIUS_SIZE_LARGE)    fWidth = RADIUS_SIZE_HUGE;
+        if (fWidth == RADIUS_SIZE_HUGE)     fWidth = RADIUS_SIZE_GARGANTUAN;
+        if (fWidth == RADIUS_SIZE_GARGANTUAN)   fWidth = RADIUS_SIZE_COLOSSAL;
         else fWidth *= 2;
     }
 
@@ -881,55 +881,65 @@ int GetIsPsionicCharacter(object oCreature)
 
 void AstralSeedRespawn(object oPlayer = OBJECT_SELF)
 {
-	effect eRes = EffectResurrection();
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRes, oPlayer);
-	object oSeed = GetLocalObject(oPlayer, "ASTRAL_SEED");
-	location lSeed = GetLocation(oSeed);
-	JumpToLocation(lSeed);
-	
-	// effect set
-	effect ePara = EffectCutsceneParalyze();
-	effect eGhost = EffectCutsceneGhost();
-	effect eInvis = EffectEthereal();
-	
-	//Massive effect linkage, go me
-    	effect eSpell = EffectSpellImmunity(SPELL_ALL_SPELLS);
-    	effect eDam1 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID, 100);
-    	effect eDam2 = EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100);
-    	effect eDam3 = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 100);
-    	effect eDam4 = EffectDamageImmunityIncrease(DAMAGE_TYPE_DIVINE, 100);
-    	effect eDam5 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 100);
-    	effect eDam6 = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
-    	effect eDam7 = EffectDamageImmunityIncrease(DAMAGE_TYPE_MAGICAL, 100);
-    	effect eDam8 = EffectDamageImmunityIncrease(DAMAGE_TYPE_NEGATIVE, 100);
-    	effect eDam9 = EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING, 100);
-    	effect eDam10 = EffectDamageImmunityIncrease(DAMAGE_TYPE_POSITIVE, 100);
-    	effect eDam11 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING, 100);
-    	effect eDam12 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SONIC, 100);
-    	
-    	effect eLink = EffectLinkEffects(eSpell, eDam1);
-    	eLink = EffectLinkEffects(eLink, eDam2);
-    	eLink = EffectLinkEffects(eLink, eDam3);
-    	eLink = EffectLinkEffects(eLink, eDam4);
-    	eLink = EffectLinkEffects(eLink, eDam5);
-    	eLink = EffectLinkEffects(eLink, eDam6);
-    	eLink = EffectLinkEffects(eLink, eDam7);
-    	eLink = EffectLinkEffects(eLink, eDam8);
-    	eLink = EffectLinkEffects(eLink, eDam9);
-    	eLink = EffectLinkEffects(eLink, eDam10);
-    	eLink = EffectLinkEffects(eLink, eDam11);
-    	eLink = EffectLinkEffects(eLink, eDam12);
-    	eLink = EffectLinkEffects(eLink, ePara);
-    	eLink = EffectLinkEffects(eLink, eGhost);
-    	eLink = EffectLinkEffects(eLink, eInvis);
-    	
-    	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPlayer, HoursToSeconds(24),TRUE,-1,100);
-    	int nHD = GetHitDice(oPlayer);
-	int nCurrentLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-	nHD -= 1;
-	int nLevelDown = ((nHD * (nHD - 1)) / 2) * 1000;
-	int nNewXP = (nCurrentLevel + nLevelDown)/2;
-	SetXP(oPlayer,nNewXP);	
+    effect eRes = EffectResurrection();
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRes, oPlayer);
+    object oSeed = GetLocalObject(oPlayer, "ASTRAL_SEED");
+    location lSeed = GetLocation(oSeed);
+    JumpToLocation(lSeed);
+    
+    // effect set
+    effect ePara = EffectCutsceneParalyze();
+    effect eGhost = EffectCutsceneGhost();
+    effect eInvis = EffectEthereal();
+    
+    //Massive effect linkage, go me
+    effect eSpell = EffectSpellImmunity(SPELL_ALL_SPELLS);
+    effect eDam1 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID, 100);
+    effect eDam2 = EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100);
+    effect eDam3 = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 100);
+    effect eDam4 = EffectDamageImmunityIncrease(DAMAGE_TYPE_DIVINE, 100);
+    effect eDam5 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 100);
+    effect eDam6 = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
+    effect eDam7 = EffectDamageImmunityIncrease(DAMAGE_TYPE_MAGICAL, 100);
+    effect eDam8 = EffectDamageImmunityIncrease(DAMAGE_TYPE_NEGATIVE, 100);
+    effect eDam9 = EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING, 100);
+    effect eDam10 = EffectDamageImmunityIncrease(DAMAGE_TYPE_POSITIVE, 100);
+    effect eDam11 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING, 100);
+    effect eDam12 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SONIC, 100);
+
+    effect eLink = EffectLinkEffects(eSpell, eDam1);
+    eLink = EffectLinkEffects(eLink, eDam2);
+    eLink = EffectLinkEffects(eLink, eDam3);
+    eLink = EffectLinkEffects(eLink, eDam4);
+    eLink = EffectLinkEffects(eLink, eDam5);
+    eLink = EffectLinkEffects(eLink, eDam6);
+    eLink = EffectLinkEffects(eLink, eDam7);
+    eLink = EffectLinkEffects(eLink, eDam8);
+    eLink = EffectLinkEffects(eLink, eDam9);
+    eLink = EffectLinkEffects(eLink, eDam10);
+    eLink = EffectLinkEffects(eLink, eDam11);
+    eLink = EffectLinkEffects(eLink, eDam12);
+    eLink = EffectLinkEffects(eLink, ePara);
+    eLink = EffectLinkEffects(eLink, eGhost);
+    eLink = EffectLinkEffects(eLink, eInvis);
+
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPlayer, HoursToSeconds(24),TRUE,-1,100);
+    int nHD = GetHitDice(oPlayer);
+    int nCurrentLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+    nHD -= 1;
+    int nLevelDown = ((nHD * (nHD - 1)) / 2) * 1000;
+    int nNewXP = (nCurrentLevel + nLevelDown)/2;
+    SetXP(oPlayer,nNewXP);  
+    
+    //pw death hook
+    ExecuteScript("prc_pw_astralseed", oPlayer);
+    if(GetPRCSwitch(PRC_PW_DEATH_TRACKING)&&GetIsPC(oPlayer))
+    {
+        if(GetPRCSwitch(PRC_USE_DATABASE))
+            PRC_SQL_Store(GetPCPlayerName(oPlayer)+GetName(oPlayer)+"_Dead",  "0");
+        else
+            SetCampaignInt(GetName(GetModule()), GetPCPlayerName(oPlayer)+GetName(oPlayer)+"_Dead",  0);                    
+    }        
 }
 
 int GetPsionicPRCLevels (object oCaster)
@@ -998,40 +1008,40 @@ int GetPowerPrereq(int nLevel, int nAbilityScore, int nClass)
     return nMaxLevel < nAbilityScore - 10 ? nMaxLevel : nAbilityScore - 10;
     /*
     int N = 0;
-    if (nMaxLevel >= nSpellLevel)	
+    if (nMaxLevel >= nSpellLevel)   
     {
-    	FloatingTextStringOnCreature("Max Level > Power Level", OBJECT_SELF, FALSE);
-    	N = nSpellLevel;
+        FloatingTextStringOnCreature("Max Level > Power Level", OBJECT_SELF, FALSE);
+        N = nSpellLevel;
     }
     
     FloatingTextStringOnCreature("N: " + IntToString(N), OBJECT_SELF, FALSE);  
-    	
+        
     return N;
     */
 }
 
 int GetPPCostReduced(int nPP, object oCaster)
 {
-	int nThrall = GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF);
-	int nAugment = GetAugmentLevel(oCaster);
-	int nSpell = GetSpellId();
-	
-	if (GetLocalInt(oCaster, "ThrallCharm") && nSpell == POWER_CHARMPERSON)
-	{
-		DeleteLocalInt(oCaster, "ThrallCharm");
-		nPP -= nThrall;
-	}
-	if (GetLocalInt(oCaster, "ThrallDom") && nSpell == POWER_DOMINATE)
-	{
-		DeleteLocalInt(oCaster, "ThrallDom");
-		nPP -= nThrall;
-	}
-	
-	// Reduced cost for augmenting the Dominate power.
-	if (nThrall >= 7 && nAugment > 0 && nSpell == POWER_DOMINATE) nPP -= 2;
-	if (nThrall >= 9 && nAugment > 2 && nSpell == POWER_DOMINATE) nPP -= 4;
+    int nThrall = GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF);
+    int nAugment = GetAugmentLevel(oCaster);
+    int nSpell = GetSpellId();
+    
+    if (GetLocalInt(oCaster, "ThrallCharm") && nSpell == POWER_CHARMPERSON)
+    {
+        DeleteLocalInt(oCaster, "ThrallCharm");
+        nPP -= nThrall;
+    }
+    if (GetLocalInt(oCaster, "ThrallDom") && nSpell == POWER_DOMINATE)
+    {
+        DeleteLocalInt(oCaster, "ThrallDom");
+        nPP -= nThrall;
+    }
+    
+    // Reduced cost for augmenting the Dominate power.
+    if (nThrall >= 7 && nAugment > 0 && nSpell == POWER_DOMINATE) nPP -= 2;
+    if (nThrall >= 9 && nAugment > 2 && nSpell == POWER_DOMINATE) nPP -= 4;
 
-	if (nPP < 1) nPP = 1;	
-	
-	return nPP;
+    if (nPP < 1) nPP = 1;   
+    
+    return nPP;
 }

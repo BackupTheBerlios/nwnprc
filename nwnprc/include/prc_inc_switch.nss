@@ -121,6 +121,9 @@ const string PRC_PNP_SPELL_SCHOOLS                   = "PRC_PNP_SPELL_SCHOOLS";
 //wizards use PnP spellschools instead of biowares
 //must be generalists, but no way to enforce that
 //not completed yet
+const string PRC_PLAYER_TIME                         = "PRC_PLAYER_TIME";
+//players have how far ahead of the module clock they are
+//and when all players are ahead, the module clock advances to catch up
 
 //file end switches
 const string FILE_END_MANUAL                         = "FILE_END_MANUAL";
@@ -190,9 +193,11 @@ const string PRC_PW_TIME                             = "PRC_PW_TIME";
 const string PRC_PW_PC_AUTOEXPORT                    = "PRC_PW_PC_AUTOEXPORT";
 //int is number of rounds between exporting all characters
 const string PRC_PW_HP_TRACKING                      = "PRC_PW_HP_TRACKING";
+//HP is stored in the DB every HB and restored on Logon
+const string PRC_PW_LOCATION_TRACKING                = "PRC_PW_LOCATION_TRACKING";
+//Location is stored in the DB every HB and restored on Logon
 const string PRC_PW_DEATH_TRACKING                   = "PRC_PW_DEATH_TRACKING";
 const string PRC_PW_SPELL_TRACKING                   = "PRC_PW_SPELL_TRACKING";
-const string PRC_PW_LOCATION_TRACKING                = "PRC_PW_LOCATION_TRACKING";
 
 // XP system switches 
 const string PRC_XP_USE_SIMPLE_LA                    = "PRC_XP_USE_SIMPLE_LA";

@@ -13,6 +13,8 @@ void AdvanceTimeForPlayer(object oPC, float fSeconds);
 
 void RecalculateTime()
 {
+    if(!GetPRCSwitch(PRC_PLAYER_TIME))
+        return;
     object oPC = GetFirstPC();
     float fLowestAhead = GetLocalFloat(oPC, "TimeAhead");
     while(GetIsObjectValid(oPC))
@@ -23,6 +25,8 @@ void RecalculateTime()
     }
     if(fLowestAhead == 0.0)
         return;
+    if(fLowestAhead > 6.0)
+        fLowestAhead = 6.0;//dont skip more than a round at a time
     SetTime(GetTimeHour(), GetTimeMinute(), 
         GetTimeSecond()+FloatToInt(fLowestAhead), GetTimeMillisecond());    
     oPC = GetFirstPC();   
@@ -31,6 +35,7 @@ void RecalculateTime()
         SetLocalFloat(oPC, "TimeAhead", GetLocalFloat(oPC, "TimeAhead")-fLowestAhead);
         oPC = GetNextPC();    
     }     
+    DelayCommand(0.01, RecalculateTime());//do it again untill caught up
 }
 
 

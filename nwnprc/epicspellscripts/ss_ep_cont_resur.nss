@@ -60,34 +60,41 @@ void main()
 
 void ContingencyResurrect(object oTarget, int nCount, object oCaster = OBJECT_SELF)
 {
-        effect eRez = EffectResurrection();
-        effect eHea = EffectHeal(GetMaxHitPoints(oTarget) + 10);
-        effect eVis = EffectVisualEffect(VFX_IMP_RAISE_DEAD);
-        if (GetLocalInt(oCaster, "nContingentRez") > 0)
-        {   // If the target isn't dead.
-            if (!GetIsDead(oTarget))
-            {
-                if (nCount >= 10) nCount = 0;
-                if (nCount == 1)
-                    FloatingTextStringOnCreature("*Contingency active*",
-                        oTarget, FALSE);
-                nCount++;
-                DelayCommand(6.0, ContingencyResurrect(oTarget, nCount));
-            }
-            else // Resurrect the target, and end the contingency.
-            {
-                FloatingTextStringOnCreature("*Contingency triggered*", oTarget);
-                ApplyEffectAtLocation
-                    (DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRez, oTarget);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHea, oTarget);
-                SetLocalInt(oCaster, "nContingentRez",
-                    GetLocalInt(oCaster, "nContingentRez") - 1);
-                ContingencyResurrect(oTarget, nCount);
-                ExecuteScript("prc_pw_contress", oTarget);
-            }
+    effect eRez = EffectResurrection();
+    effect eHea = EffectHeal(GetMaxHitPoints(oTarget) + 10);
+    effect eVis = EffectVisualEffect(VFX_IMP_RAISE_DEAD);
+    if (GetLocalInt(oCaster, "nContingentRez") > 0)
+    {   // If the target isn't dead.
+        if (!GetIsDead(oTarget))
+        {
+            if (nCount >= 10) nCount = 0;
+            if (nCount == 1)
+                FloatingTextStringOnCreature("*Contingency active*",
+                    oTarget, FALSE);
+            nCount++;
+            DelayCommand(6.0, ContingencyResurrect(oTarget, nCount));
         }
-        else // Make the spell slot available to the original caster again.
-            RestoreSpellSlotForCaster(oCaster);
+        else // Resurrect the target, and end the contingency.
+        {
+            FloatingTextStringOnCreature("*Contingency triggered*", oTarget);
+            ApplyEffectAtLocation
+                (DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRez, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHea, oTarget);
+            SetLocalInt(oCaster, "nContingentRez",
+                GetLocalInt(oCaster, "nContingentRez") - 1);
+            ContingencyResurrect(oTarget, nCount);
+            ExecuteScript("prc_pw_contress", oTarget);
+            if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oTarget))
+            {
+                if(GetPRCSwitch(PRC_USE_DATABASE))
+                    PRC_SQL_Store(GetPCPlayerName(oTarget)+GetName(oTarget)+"_Dead",  "0");
+                else
+                    SetCampaignInt(GetName(GetModule()), GetPCPlayerName(oTarget)+GetName(oTarget)+"_Dead",  0);                    
+            }        
+        }
+    }
+    else // Make the spell slot available to the original caster again.
+        RestoreSpellSlotForCaster(oCaster);
 }
 

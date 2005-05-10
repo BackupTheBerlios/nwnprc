@@ -58,7 +58,7 @@ void main()
         if(nHP != 0)  // 0 is not stored yet i.e. first logon
         {
             int nDamage=GetCurrentHitPoints(oPC)-nHP;
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nHP), oPC);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDamage), oPC);
         }
         
     }     
@@ -101,6 +101,21 @@ void main()
         location lLoc = Location(oArea, vPos, fLocFacing);
         DelayCommand(1.0, AssignCommand(oPC, ActionJumpToLocation(lLoc)));
     }
+    if(GetPRCSwitch(PRC_PW_DEATH_TRACKING))
+    {
+        int nHP;
+        if(GetPRCSwitch(PRC_USE_DATABASE))
+            nHP = StringToInt(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_Dead"));
+        else
+            nHP = GetCampaignInt(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_Dead");                    
+        if(nHP == 1)
+        {
+            int nDamage=9999;
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDamage), oPC);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC);
+        }
+            
+    }     
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
     

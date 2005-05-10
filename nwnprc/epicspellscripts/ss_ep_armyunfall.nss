@@ -9,6 +9,7 @@
 #include "nw_i0_spells"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
+#include "inc_2dacache"
 
 //#include "prc_alterations"
 
@@ -49,6 +50,13 @@ void main()
                     {
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRez, oTarget);
                         ExecuteScript("prc_pw_armyunfall", oTarget);
+                        if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oTarget))
+                        {
+                            if(GetPRCSwitch(PRC_USE_DATABASE))
+                                PRC_SQL_Store(GetPCPlayerName(oTarget)+GetName(oTarget)+"_Dead",  "0");
+                            else
+                                SetCampaignInt(GetName(GetModule()), GetPCPlayerName(oTarget)+GetName(oTarget)+"_Dead",  0);                    
+                        }        
                     }                        
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
                     nAlly++;

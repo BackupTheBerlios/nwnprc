@@ -48,6 +48,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRaise, oTarget); 
         ExecuteScript("prc_pw_raisedead", OBJECT_SELF);
+        if(GetPRCSwitch(PRC_PW_DEATH_TRACKING)&&GetIsPC(oTarget))
+        {
+            if(GetPRCSwitch(PRC_USE_DATABASE))
+                PRC_SQL_Store(GetPCPlayerName(oTarget)+GetName(oTarget)+"_Dead",  "0");
+            else
+                SetCampaignInt(GetName(GetModule()), GetPCPlayerName(oTarget)+GetName(oTarget)+"_Dead",  0);                    
+        }        
     }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

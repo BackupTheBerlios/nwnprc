@@ -32,7 +32,16 @@ itemproperty ItemPropertyTrueCasterLevel(int nSpell, int nLevel)
         ipReturn = GetNextItemProperty(oItem);
     }
     if(!GetIsItemPropertyValid(ipReturn))
-        PrintString("ItemPropertyTrueCasterLevel "+IntToString(nSpell)+" "+IntToString(nLevel)+" is not valid");
+    {
+        string sMessage = "ItemPropertyTrueCasterLevel "+IntToString(nSpell)+" "+IntToString(nLevel)+" is not valid";
+        if(GetIsObjectValid(oChest))
+            sMessage += "\n oChest is valid.";
+        if(GetIsObjectValid(oItem))
+            sMessage += "\n oItem is valid.";
+        sMessage += "\n sResRef is "+sResRef+".";
+        PrintString(sMessage);
+        SendMessageToPC(GetFirstPC(), sMessage);
+    }        
     return ipReturn;
 }
 

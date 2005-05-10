@@ -184,6 +184,16 @@ const string PRC_SPELL_SNEAK_DISABLE                 = "PRC_SPELL_SNEAK_DISABLE"
 const string PRC_3_5e_FIST_DAMAGE                    = "PRC_3_5e_FIST_DAMAGE";
 const string PRC_BRAWLER_SIZE                        = "PRC_BRAWLER_SIZE";
 
+// Persistent World swtichtes
+const string PRC_PW_TIME                             = "PRC_PW_TIME";
+//persistant time tracking
+const string PRC_PW_PC_AUTOEXPORT                    = "PRC_PW_PC_AUTOEXPORT";
+//int is number of rounds between exporting all characters
+const string PRC_PW_HP_TRACKING                      = "PRC_PW_HP_TRACKING";
+const string PRC_PW_DEATH_TRACKING                   = "PRC_PW_DEATH_TRACKING";
+const string PRC_PW_SPELL_TRACKING                   = "PRC_PW_SPELL_TRACKING";
+const string PRC_PW_LOCATION_TRACKING                = "PRC_PW_LOCATION_TRACKING";
+
 // XP system switches 
 const string PRC_XP_USE_SIMPLE_LA                    = "PRC_XP_USE_SIMPLE_LA";
 //this modifies the amount of XP a character recieves based on LA

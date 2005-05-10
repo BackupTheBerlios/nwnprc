@@ -12,6 +12,31 @@ int PRC_SQLFetch();
 string PRC_SQLGetData(int iCol);
 void PRC_SQLCommit();
 
+string PRC_SQL_Retrieve(string sName)
+{
+    //check that 2da row exisits
+    string SQL = "SELECT value FROM prc_data WHERE name = "+sName;
+    PRC_SQLExecDirect(SQL);
+    string sReturn;
+    if(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+        sReturn = PRC_SQLGetData(1);
+    return sReturn;    
+}
+
+void PRC_SQL_Store(string sName, string sValue)
+{
+    //check that 2da row exisits
+    string SQL = "SELECT value FROM prc_data WHERE name = "+sName;
+    PRC_SQLExecDirect(SQL);
+    //if the row exists, then update it
+    //otherwise insert a new row
+    if(PRC_SQLFetch() == PRC_SQL_SUCCESS
+        && PRC_SQLGetData(1) != "")
+        SQL = "UPDATE prc_data SET  value = '"+sValue+"'  WHERE  name = "+sName;
+    else
+        SQL = "INSERT INTO prc_data * VALUES ('"+sName+"' , '"+sValue+"')";
+}
+
 void PRC_SQLCommit()
 {
     int nInterval = GetPRCSwitch(PRC_DB_SQLLITE_INTERVAL);
@@ -116,7 +141,7 @@ void PRCMakeTables()
     }
     PRC_SQLExecDirect(SQL); SQL = "";
     SQL+= "CREATE TABLE ";
-    SQL+= "cached2da_feat ( ";
+    SQL+= "prc_cached2da_feat ( ";
     SQL+= "rowid int(55),";
     SQL+= "LABEL varchar(255) DEFAULT '_',";
     SQL+= "FEAT varchar(255) DEFAULT '_',";
@@ -164,7 +189,7 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE ";
-    SQL+= "cached2da_soundset ( ";
+    SQL+= "prc_cached2da_soundset ( ";
     SQL+= "rowid int(55),";
     SQL+= "LABEL varchar(255) DEFAULT '_', ";
     SQL+= "RESREF varchar(255) DEFAULT '_', ";
@@ -174,7 +199,7 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
       
     SQL+= "CREATE TABLE ";
-    SQL+= "cached2da_portraits ( ";
+    SQL+= "prc_cached2da_portraits ( ";
     SQL+= "rowid int(55),";
     SQL+= "BaseResRef varchar(255) DEFAULT '_', ";     
     SQL+= "Sex varchar(255) DEFAULT '_', ";    
@@ -185,7 +210,7 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE ";
-    SQL+= "cached2da_appearance ( ";
+    SQL+= "prc_cached2da_appearance ( ";
     SQL+= "rowid int(55),";
     SQL+= "LABEL varchar(255) DEFAULT '_', ";
     SQL+= "STRING_REF varchar(255) DEFAULT '_', ";
@@ -226,7 +251,7 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE ";
-    SQL+= "cached2da_spells ( ";
+    SQL+= "prc_cached2da_spells ( ";
     SQL+= "rowid int(55),";
     SQL+= "Label varchar(255) DEFAULT '_', ";
     SQL+= "Name varchar(255) DEFAULT '_', ";
@@ -285,7 +310,7 @@ void PRCMakeTables()
     SQL+= "HasProjectile varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
-    SQL+= "CREATE TABLE cached2da_cls_feat ( ";
+    SQL+= "CREATE TABLE prc_cached2da_cls_feat ( ";
     SQL+= "rowid int(55),";
     SQL+= "file varchar(255),";
     SQL+= "class varchar(255) DEFAULT '_', ";
@@ -296,7 +321,7 @@ void PRCMakeTables()
     SQL+= "OnMenu varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
-    SQL+= "CREATE TABLE cached2da_classes ( ";
+    SQL+= "CREATE TABLE prc_cached2da_classes ( ";
     SQL+= "rowid int(55),";
     SQL+= "Label varchar(255) DEFAULT '_', ";              
     SQL+= "Name varchar(255) DEFAULT '_', ";    
@@ -358,14 +383,19 @@ void PRCMakeTables()
     SQL+= "CREATE TABLE cached2da ( file varchar(255) DEFAULT '_', column varchar(255) DEFAULT '_', rowid int(55), data varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
     
+    //non2dacaching table
+    SQL = "CREATE TABLE prc_data (name varchar(255) DEFAULT '_', value varchar(255) DEFAULT '_')";
+    PRC_SQLExecDirect(SQL);
+    
     //indexs
-    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_feat (rowid); ";
-    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_spells (rowid); ";
-    SQL+= "CREATE INDEX rowindex ON cached2da_cls_feat (FeatIndex); ";
-    SQL+= "CREATE INDEX rowindex ON cached2da_cls_feat (file); ";
-    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_appearance (rowid); ";
-    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_portrait (rowid); ";
-    SQL+= "CREATE UNIQUE INDEX rowindex ON cached2da_soundset (rowid); ";
+    SQL+= "CREATE UNIQUE INDEX rowindex ON prc_cached2da_feat (rowid); ";
+    SQL+= "CREATE UNIQUE INDEX rowindex ON prc_cached2da_spells (rowid); ";
+    SQL+= "CREATE INDEX rowindex ON prc_cached2da_cls_feat (FeatIndex); ";
+    SQL+= "CREATE INDEX rowindex ON prc_cached2da_cls_feat (file); ";
+    SQL+= "CREATE UNIQUE INDEX rowindex ON prc_cached2da_appearance (rowid); ";
+    SQL+= "CREATE UNIQUE INDEX rowindex ON prc_cached2da_portrait (rowid); ";
+    SQL+= "CREATE UNIQUE INDEX rowindex ON prc_cached2da_soundset (rowid); ";
+    SQL+= "CREATE UNIQUE INDEX nameindex ON prc_data (name); ";
     PRC_SQLExecDirect(SQL);
 
 }
@@ -408,9 +438,9 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
                 || s2DA == "appearance"
                 || s2DA == "portraits"
                 || s2DA == "classes")
-                SQL = "SELECT "+sDBColumn+" FROM cached2da_"+s2DA+" WHERE ( rowid = "+IntToString(nRow)+" )";
+                SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_"+s2DA+" WHERE ( rowid = "+IntToString(nRow)+" )";
             else if(TestStringAgainstPattern("cls_feat_**", s2DA))
-                SQL = "SELECT "+sDBColumn+" FROM cached2da_cls_feat WHERE ( rowid = "+IntToString(nRow)+" ) AND ( file = '"+s2DA+"' )";
+                SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_cls_feat WHERE ( rowid = "+IntToString(nRow)+" ) AND ( file = '"+s2DA+"' )";
             else
                 SQL = "SELECT data FROM cached2da WHERE ( file = '"+s2DA+"' ) AND ( column = '"+sDBColumn+"' ) AND ( rowid = "+IntToString(nRow)+" )";
             
@@ -454,35 +484,35 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
                     || s2DA == "classes")
                 {
                     //check that 2da row exisits
-                    SQL = "SELECT rowid FROM cached2da_"+s2DA+" WHERE rowid="+IntToString(nRow);
+                    SQL = "SELECT rowid FROM prc_cached2da_"+s2DA+" WHERE rowid="+IntToString(nRow);
                     PRC_SQLExecDirect(SQL);
                     //if the row exists, then update it
                     //otherwise insert a new row
                     if(PRC_SQLFetch() == PRC_SQL_SUCCESS
                         && PRC_SQLGetData(1) != "")
                     {
-                        SQL = "UPDATE cached2da_"+s2DA+" SET  "+sDBColumn+" = '"+s+"'  WHERE  rowid = "+IntToString(nRow)+" ";
+                        SQL = "UPDATE prc_cached2da_"+s2DA+" SET  "+sDBColumn+" = '"+s+"'  WHERE  rowid = "+IntToString(nRow)+" ";
                     }
                     else
                     {
-                        SQL = "INSERT INTO cached2da_"+s2DA+" (rowid, "+sDBColumn+") VALUES ("+IntToString(nRow)+" , '"+s+"')";
+                        SQL = "INSERT INTO prc_cached2da_"+s2DA+" (rowid, "+sDBColumn+") VALUES ("+IntToString(nRow)+" , '"+s+"')";
                     }                        
                 }
                 else if(TestStringAgainstPattern("cls_feat_**", s2DA))
                 {
                     //check that 2da row exisits
-                    SQL = "SELECT rowid FROM cached2da_"+GetStringLeft(s2DA, 8)+" WHERE (rowid="+IntToString(nRow)+") AND (file='"+s2DA+"')";
+                    SQL = "SELECT rowid FROM prc_cached2da_"+GetStringLeft(s2DA, 8)+" WHERE (rowid="+IntToString(nRow)+") AND (file='"+s2DA+"')";
                     PRC_SQLExecDirect(SQL);
                     //if the row exists, then update it
                     //otherwise insert a new row
                     if(PRC_SQLFetch() == PRC_SQL_SUCCESS
                         && PRC_SQLGetData(1) != "")
                     {
-                        SQL = "UPDATE cached2da_cls_feat SET  "+sDBColumn+" = '"+s+"'WHERE (rowid = "+IntToString(nRow)+") AND (file='"+s2DA+"')";
+                        SQL = "UPDATE prc_cached2da_cls_feat SET  "+sDBColumn+" = '"+s+"'WHERE (rowid = "+IntToString(nRow)+") AND (file='"+s2DA+"')";
                     }
                     else
                     {
-                        SQL = "INSERT INTO cached2da_cls_feat (rowid, "+sDBColumn+", file) VALUES ("+IntToString(nRow)+" , '"+s+"', '"+s2DA+"')";
+                        SQL = "INSERT INTO prc_cached2da_cls_feat (rowid, "+sDBColumn+", file) VALUES ("+IntToString(nRow)+" , '"+s+"', '"+s2DA+"')";
                     }                        
                 }
                 else
@@ -513,7 +543,7 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
     string sFile = Get2DACache("classes", "FeatsTable", nClass);
 /*    if(nRow == 0)
     {
-        string SQL = "SELECT rowid FROM cached2da_cls_feat WHERE (file = '"+GetStringLowerCase(sFile)+"') ORDER BY rowid DESC LIMIT 1";
+        string SQL = "SELECT rowid FROM prc_cached2da_cls_feat WHERE (file = '"+GetStringLowerCase(sFile)+"') ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
@@ -549,7 +579,7 @@ void Cache_Classes(int nRow = 0)
 {
     if(nRow == 0)
     {
-        string SQL = "SELECT rowid FROM cached2da_classes ORDER BY rowid DESC LIMIT 1";
+        string SQL = "SELECT rowid FROM prc_cached2da_classes ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
@@ -628,7 +658,7 @@ void Cache_Feat(int nRow = 0)
 {
     if(nRow == 0)
     {
-        string SQL = "SELECT rowid FROM cached2da_feat ORDER BY rowid DESC LIMIT 1";
+        string SQL = "SELECT rowid FROM prc_cached2da_feat ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
@@ -695,7 +725,7 @@ void Cache_Spells(int nRow = 0)
 {
     if(nRow == 0)
     {
-        string SQL = "SELECT rowid FROM cached2da_spells ORDER BY rowid DESC LIMIT 1";
+        string SQL = "SELECT rowid FROM prc_cached2da_spells ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
@@ -775,7 +805,7 @@ void Cache_Portraits(int nRow = 0)
 {
     if(nRow == 0)
     {
-        string SQL = "SELECT rowid FROM cached2da_portraits ORDER BY rowid DESC LIMIT 1";
+        string SQL = "SELECT rowid FROM prc_cached2da_portraits ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
@@ -806,7 +836,7 @@ void Cache_Soundset(int nRow = 0)
 {
     if(nRow == 0)
     {
-        string SQL = "SELECT rowid FROM cached2da_soundset ORDER BY rowid DESC LIMIT 1";
+        string SQL = "SELECT rowid FROM prc_cached2da_soundset ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));
@@ -836,7 +866,7 @@ void Cache_Appearance(int nRow = 0)
 {
     if(nRow == 0)
     {
-        string SQL = "SELECT rowid FROM cached2da_appearance ORDER BY rowid DESC LIMIT 1";
+        string SQL = "SELECT rowid FROM prc_cached2da_appearance ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1));

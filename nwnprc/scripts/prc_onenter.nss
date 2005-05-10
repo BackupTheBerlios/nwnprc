@@ -47,7 +47,60 @@ void main()
     if(GetPRCSwitch(PRC_LETOSCRIPT_FIX_ABILITIES) && !GetIsDM(oPC))
         PRCLetoEnter(oPC);   
     if(GetPRCSwitch(PRC_CONVOCC_ENABLE))
-        ExecuteScript("prc_ccc_enter", OBJECT_SELF);   
+        ExecuteScript("prc_ccc_enter", OBJECT_SELF);         
+    if(GetPRCSwitch(PRC_PW_HP_TRACKING))
+    {
+        int nHP;
+        if(GetPRCSwitch(PRC_USE_DATABASE))
+            nHP = StringToInt(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_HP"));
+        else
+            nHP = GetCampaignInt(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_HP");                    
+        if(nHP>0)
+        {
+            int nDamage=GetCurrentHitPoints(oPC)-nHP;
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nHP), oPC);
+        }
+        
+    }     
+    if(GetPRCSwitch(PRC_PW_LOCATION_TRACKING))
+    {
+        float fLocX;
+        float fLocY;
+        float fLocZ;
+        float fLocFacing;
+        string sLocTag;
+        string sLocResRef;
+        if(GetPRCSwitch(PRC_USE_DATABASE))
+        {
+            fLocX = StringToFloat(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocX"));
+            fLocY = StringToFloat(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocY"));
+            fLocZ = StringToFloat(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocY"));
+            fLocFacing = StringToFloat(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocF"));
+            sLocTag = PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocT");
+            sLocResRef = PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocR");
+        }                
+        else
+        {
+            fLocX = StringToFloat(GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocX"));
+            fLocY = StringToFloat(GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocY"));
+            fLocZ = StringToFloat(GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocY"));
+            fLocFacing = StringToFloat(GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocF"));
+            sLocTag = GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocT");
+            sLocResRef = GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocR");
+        }    
+        vector vPos = Vector(fLocX, fLocY, fLocZ);
+        int i;
+        object oArea = GetObjectByTag(sLocTag, i);
+        while(GetIsObjectValid(oArea))
+        {
+            if(GetResRef(oArea) == sLocResRef)
+                break;//end while loop
+            i++;
+            oArea = GetObjectByTag(sLocTag, i);
+        }
+        location lLoc = Location(oArea, vPos, fLocFacing);
+        DelayCommand(1.0, AssignCommand(oPC, ActionJumpToLocation(lLoc)));
+    }
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
     

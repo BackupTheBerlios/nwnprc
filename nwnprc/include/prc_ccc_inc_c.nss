@@ -186,13 +186,13 @@ void FeatLoop(int nClassFeatStage = FALSE)
     string SQL;
     if(nClassFeatStage == TRUE)
     {
-        SQL = "SELECT cached2da_cls_feat.FeatIndex, cached2da_feat.FEAT, cached2da_feat.PREREQFEAT1, cached2da_feat.PREREQFEAT2, cached2da_feat.OrReqFeat0,"
-            +" cached2da_feat.OrReqFeat1, cached2da_feat.OrReqFeat2, cached2da_feat.OrReqFeat3, cached2da_feat.OrReqFeat4, cached2da_feat.REQSKILL, cached2da_feat.REQSKILL2,"
-            +" cached2da_feat.ReqSkillMinRanks, cached2da_feat.ReqSkillMinRanks2"
-            +" FROM cached2da_cls_feat INNER JOIN cached2da_feat"
+        SQL = "SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_feat.FEAT, prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2, prc_cached2da_feat.OrReqFeat0,"
+            +" prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4, prc_cached2da_feat.REQSKILL, prc_cached2da_feat.REQSKILL2,"
+            +" prc_cached2da_feat.ReqSkillMinRanks, prc_cached2da_feat.ReqSkillMinRanks2"
+            +" FROM prc_cached2da_cls_feat INNER JOIN prc_cached2da_feat"
             +" WHERE (FEAT != '****')"  
-            +" AND (cached2da_cls_feat.file = '"+sFeatList+"')"
-            +" AND (cached2da_cls_feat.List <= 1)"
+            +" AND (prc_cached2da_cls_feat.file = '"+sFeatList+"')"
+            +" AND (prc_cached2da_cls_feat.List <= 1)"
             +" AND ((PreReqEpic = '****') OR (PreReqEpic = 0))"
             +" AND ((ALLCLASSESCANUSE = 0) OR (ALLCLASSESCANUSE = '****'))"
             +" AND (MINATTACKBONUS <= "+IntToString(nBAB)+")"
@@ -205,15 +205,15 @@ void FeatLoop(int nClassFeatStage = FALSE)
             +" AND (MINCHA <= "+IntToString(nCha)+")"
             +" AND ((MaxLevel = '****') OR (MaxLevel > "+IntToString(nLevel)+"))"
             +" AND (MinFortSave <= "+IntToString(nFortSave)+")"
-            +" AND (cached2da_cls_feat.FeatIndex != '****')" 
-            +" AND (cached2da_feat.rowid = cached2da_cls_feat.FeatIndex)" 
+            +" AND (prc_cached2da_cls_feat.FeatIndex != '****')" 
+            +" AND (prc_cached2da_feat.rowid = prc_cached2da_cls_feat.FeatIndex)" 
             +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
     }
     else
     {
         SQL = "SELECT rowid, FEAT, PREREQFEAT1, PREREQFEAT2, OrReqFeat0,"
             +" OrReqFeat1, OrReqFeat2, OrReqFeat3, OrReqFeat4, REQSKILL, REQSKILL2,"
-            +" ReqSkillMinRanks, ReqSkillMinRanks2 FROM cached2da_feat"
+            +" ReqSkillMinRanks, ReqSkillMinRanks2 FROM prc_cached2da_feat"
             +" WHERE (FEAT != '****')"  
             +" AND ((PreReqEpic = '****') OR (PreReqEpic = 0))"
             +" AND (ALLCLASSESCANUSE = 1)"
@@ -569,7 +569,7 @@ void SpellLoop()
     if(i==0 && nClass == CLASS_TYPE_WIZARD)
     {
         //add all cantrips
-        SQL = "SELECT rowid FROM cached2da_spells WHERE (Wiz_Sorc = 0) AND (School != '"+sOpposition+"')";
+        SQL = "SELECT rowid FROM prc_cached2da_spells WHERE (Wiz_Sorc = 0) AND (School != '"+sOpposition+"')";
         PRC_SQLExecDirect(SQL);
         while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
         {
@@ -585,13 +585,13 @@ void SpellLoop()
     {
         case CLASS_TYPE_WIZARD:
             nSpellLevel = 1;
-            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE (Wiz_Sorc = 1) AND (School != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
+            SQL = "SELECT rowid, Name FROM prc_cached2da_spells WHERE (Wiz_Sorc = 1) AND (School != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
             break;
         case CLASS_TYPE_SORCERER:
-            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE (Wiz_Sorc = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
+            SQL = "SELECT rowid, Name FROM prc_cached2da_spells WHERE (Wiz_Sorc = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
             break;
         case CLASS_TYPE_BARD:
-            SQL = "SELECT rowid, Name FROM cached2da_spells WHERE (Bard = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
+            SQL = "SELECT rowid, Name FROM prc_cached2da_spells WHERE (Bard = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
             break;
     }
     PRC_SQLExecDirect(SQL);
@@ -706,13 +706,13 @@ void BonusFeatLoop()
         
     int i = GetLocalInt(OBJECT_SELF, "i");
     string SQL;
-        SQL = "SELECT cached2da_cls_feat.FeatIndex, cached2da_feat.FEAT, cached2da_feat.PREREQFEAT1, cached2da_feat.PREREQFEAT2, cached2da_feat.OrReqFeat0,"
-            +" cached2da_feat.OrReqFeat1, cached2da_feat.OrReqFeat2, cached2da_feat.OrReqFeat3, cached2da_feat.OrReqFeat4, cached2da_feat.REQSKILL, cached2da_feat.REQSKILL2,"
-            +" cached2da_feat.ReqSkillMinRanks, cached2da_feat.ReqSkillMinRanks2"
-            +" FROM cached2da_cls_feat INNER JOIN cached2da_feat"
+        SQL = "SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_feat.FEAT, prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2, prc_cached2da_feat.OrReqFeat0,"
+            +" prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4, prc_cached2da_feat.REQSKILL, prc_cached2da_feat.REQSKILL2,"
+            +" prc_cached2da_feat.ReqSkillMinRanks, prc_cached2da_feat.ReqSkillMinRanks2"
+            +" FROM prc_cached2da_cls_feat INNER JOIN prc_cached2da_feat"
             +" WHERE (FEAT != '****')"  
-            +" AND (cached2da_cls_feat.file = '"+sFeatList+"')"
-            +" AND ((cached2da_cls_feat.List = 2) OR (cached2da_cls_feat.List = 1))"
+            +" AND (prc_cached2da_cls_feat.file = '"+sFeatList+"')"
+            +" AND ((prc_cached2da_cls_feat.List = 2) OR (prc_cached2da_cls_feat.List = 1))"
             +" AND ((PreReqEpic = '****') OR (PreReqEpic = 0))"
             +" AND ((ALLCLASSESCANUSE = 0) OR (ALLCLASSESCANUSE = '****'))"
             +" AND ((MINATTACKBONUS = '****') OR (MINATTACKBONUS <= "+IntToString(nBAB)+"))"
@@ -725,8 +725,8 @@ void BonusFeatLoop()
             +" AND ((MINCHA = '****') OR (MINCHA <= "+IntToString(nCha)+"))"
             +" AND ((MaxLevel = '****') OR (MaxLevel > "+IntToString(nLevel)+"))"
             +" AND ((MinFortSave = '****') OR (MinFortSave <= "+IntToString(nFortSave)+"))"
-            +" AND (cached2da_cls_feat.FeatIndex != '****')" 
-            +" AND (cached2da_feat.rowid = cached2da_cls_feat.FeatIndex)" 
+            +" AND (prc_cached2da_cls_feat.FeatIndex != '****')" 
+            +" AND (prc_cached2da_feat.rowid = prc_cached2da_cls_feat.FeatIndex)" 
             +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
         
     PRC_SQLExecDirect(SQL);
@@ -1100,7 +1100,7 @@ void DoClassFeat(string sClassFeatTable, int i=0)
 void AppearanceLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT rowid, STRING_REF FROM cached2da_appearance WHERE (STRING_REF != '****') LIMIT 100 OFFSET "+IntToString(i);
+    string SQL = "SELECT rowid, STRING_REF FROM prc_cached2da_appearance WHERE (STRING_REF != '****') LIMIT 100 OFFSET "+IntToString(i);
     PRC_SQLExecDirect(SQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
@@ -1141,7 +1141,7 @@ void AppearanceLoop()
 void SoundsetLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT rowid, STRREF, TYPE, GENDER FROM cached2da_soundset WHERE (RESREF != '****') LIMIT 100 OFFSET "+IntToString(i);
+    string SQL = "SELECT rowid, STRREF, TYPE, GENDER FROM prc_cached2da_soundset WHERE (RESREF != '****') LIMIT 100 OFFSET "+IntToString(i);
     PRC_SQLExecDirect(SQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
@@ -1190,7 +1190,7 @@ void SoundsetLoop()
 void PortraitLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT rowid, BaseResRef, Race, SEX FROM cached2da_portraits WHERE (InanimateType = '****') AND (BaseResRef != '****') LIMIT 100 OFFSET "+IntToString(i);
+    string SQL = "SELECT rowid, BaseResRef, Race, SEX FROM prc_cached2da_portraits WHERE (InanimateType = '****') AND (BaseResRef != '****') LIMIT 100 OFFSET "+IntToString(i);
     PRC_SQLExecDirect(SQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {

@@ -55,7 +55,7 @@ void main()
             nHP = StringToInt(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_HP"));
         else
             nHP = GetCampaignInt(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_HP");                    
-        if(nHP>0)
+        if(nHP != 0)  // 0 is not stored yet i.e. first logon
         {
             int nDamage=GetCurrentHitPoints(oPC)-nHP;
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nHP), oPC);

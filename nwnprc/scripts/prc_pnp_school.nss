@@ -80,7 +80,7 @@ void main()
         if(nStage == 0) //select a school
         {
             int i;
-            for(i=0; i< SPELLSCHOOL_2DA_END; i++)
+            for(i=0; i< GetPRCSwitch(FILE_END_SPELLSCHOOL); i++)
             {
                 array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
                     GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", i))));
@@ -255,7 +255,7 @@ void main()
                     sName += ", and "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool3)));
                 }       
     
-                string sText = "You have selected "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", i)))
+                string sText = "You have selected "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool)))
                     +" as your specialist school.\n";
                 if(nSchool != SPELL_SCHOOL_GENERAL)                  
                     sText += "You have selected "+sName+" as your opposition school(s).\n";

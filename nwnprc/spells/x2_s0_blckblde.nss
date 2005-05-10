@@ -17,6 +17,8 @@
 
 #include "x2_i0_spells"
 #include "prc_inc_switch"
+#include "spinc_common"
+#include "prc_inc_sp_tch"
 
 void DoPnPAttack(object oSummon)
 {
@@ -48,13 +50,49 @@ void DoPnPAttack(object oSummon)
             int nLevel = GetLocalInt(oSummon, "BBoD_Level");
             
             SetLocalInt(oSummon, "PRC_Castlevel_Override", nLevel);
-            AssignCommand(oSummon, ClearAllActions());
             // Make sure this variable gets deleted as quickly as possible in case it's added in error.
             AssignCommand(oSummon, DelayCommand(1.0, DeleteLocalInt(oSummon, "PRC_Castlevel_Override")));
-            AssignCommand(oSummon, ActionCastSpellAtObject(3111, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+            
+            // Make SR check
+           if (!SPResistSpell(OBJECT_SELF, oTarget))
+           {
+                // Generate the RTA beam.     
+                AssignCommand(oSummon, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, 
+                EffectBeam(VFX_BEAM_DISINTEGRATE, OBJECT_SELF, BODY_NODE_HAND), oTarget, 1.0,FALSE));
+
+                // Fort save or die time, but we implement death by doing massive damage
+                // since disintegrate works on constructs, undead, etc.  At some point EffectDie()
+                // should be tested to see if it works on non-living targets, and if it does it should
+                // be used instead.
+                // Test done. Result: It does kill them.
+                int nDamage = 9999;
+                if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
+                {
+                     nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == nAttackResult ? 5 : 10, 6); 
+                }
+                else
+                {
+                     // If FB passes saving throw it survives, else it dies
+                     DeathlessFrenzyCheck(oTarget);
+
+                     // For targets with > 9999 HP. Uncomment if you have such in your module and would like Disintegrate
+                     // to be sure to blast them
+                     //DelayCommand(0.30, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget));
+                }
+
+                // Apply damage effect and VFX impact, and if the target is dead then apply
+                // the fancy rune circle too.
+                if (nDamage >= GetCurrentHitPoints (oTarget)) 
+                     DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_2), oTarget));
+                //DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), oTarget));
+                DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGBLUE), oTarget));
+                ApplyTouchAttackDamage(OBJECT_SELF, oTarget, nAttackResult, nDamage, DAMAGE_TYPE_MAGICAL);
+           }            
+            
         }
     }
-    DelayCommand(6.0, DoPnPAttack(oSummon));
+    if(GetIsObjectValid(oSummon))
+        DelayCommand(6.0, DoPnPAttack(oSummon));
 }
 
 //Creates the weapon that the creature will be using.
@@ -98,10 +136,10 @@ void spellsCreateItemForSummoned()
         }
     }
     int i = 1;
-    object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, i);
+    object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
     while(GetIsObjectValid(oSummon))
     {
-        GetAssociate(ASSOCIATE_TYPE_SUMMONED, i);
+        GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
         i++;
     }
     // Make the blade require concentration

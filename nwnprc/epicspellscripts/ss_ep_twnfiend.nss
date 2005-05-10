@@ -25,7 +25,7 @@ void main()
         // effect eSummon;
         effect eVis = EffectVisualEffect(460);
         effect eVis2 = EffectVisualEffect(VFX_IMP_UNSUMMON);
-        if(GetPRCSwitch(PRC_MUTLISUMMON))
+        if(GetPRCSwitch(PRC_MULTISUMMON))
         {
             effect eSummon = EffectSummonCreature("twinfiend_demon", 460);
             MultisummonPreSummon();

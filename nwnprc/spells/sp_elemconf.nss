@@ -38,7 +38,7 @@ void main()
     float fDuration = RoundsToSeconds(Duration);
     if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
         fDuration = RoundsToSeconds(Duration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
-    if(GetPRCSwitch(PRC_MUTLISUMMON))
+    if(GetPRCSwitch(PRC_MULTISUMMON))
     {
         Summon=EffectSummonCreature("NW_FIREHUGE",VFX_NONE,0.0,1);
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, Summon, GetSpellTargetLocation(), fDuration);

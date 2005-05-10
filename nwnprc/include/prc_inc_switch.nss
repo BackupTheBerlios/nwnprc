@@ -26,7 +26,7 @@ const string PRC_TIMESTOP_BLANK_PC                   = "PRC_TIMESTOP_BLANK_PC";
 //prc_timestop_local must be enabled
 //pcs cant see anything while stopped
 //this might look to the player like their PC crashed
-const string PRC_MUTLISUMMON                         = "PRC_MULTISUMMON";
+const string PRC_MULTISUMMON                         = "PRC_MULTISUMMON";
 //second or subsequent summons dont destroy the first
 //can cause lag with high numbers of summons and/or tight spaces
 const string PRC_SUMMON_ROUND_PER_LEVEL              = "PRC_SUMMON_ROUND_PER_LEVEL";
@@ -401,7 +401,7 @@ void SetPRCSwitch(string sSwitch, int nState)
 
 void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE)
 {
-    if(!GetPRCSwitch(PRC_MUTLISUMMON) && !bOverride)
+    if(!GetPRCSwitch(PRC_MULTISUMMON) && !bOverride)
         return;
     int i=1;
     object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);

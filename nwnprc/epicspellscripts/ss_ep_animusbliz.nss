@@ -103,7 +103,7 @@ void DoAnimationBit(location lTarget, object oCaster)
             if (GetIsDead(oTarget) &&
                 GetLocalInt(oTarget, "nAnBlizCheckMe") == TRUE)
             {
-                if(GetPRCSwitch(PRC_MUTLISUMMON))
+                if(GetPRCSwitch(PRC_MULTISUMMON))
                 {
                     MultisummonPreSummon(oCaster);
                     AssignCommand(oCaster, ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, 

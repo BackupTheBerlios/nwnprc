@@ -10,7 +10,7 @@ void sp_summon(string creature, int impactVfx)
 	float fDuration = SPGetMetaMagicDuration(HoursToSeconds(24));
 
 	// Apply impact VFX and summon effects.
-	if(GetPRCSwitch(PRC_MUTLISUMMON))
+	if(GetPRCSwitch(PRC_MULTISUMMON))
 		MultisummonPreSummon();
 	if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
 		fDuration = SPGetMetaMagicDuration(RoundsToSeconds(PRCGetCasterLevel()*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL)));

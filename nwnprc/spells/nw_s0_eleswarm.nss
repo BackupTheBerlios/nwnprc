@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR",SPELL_SCHOOL_CONJURATION);
     int nMetaMagic = GetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     if(GetPRCSwitch(PRC_PNP_ELEMENTAL_SWARM) 
-        && GetPRCSwitch(PRC_MUTLISUMMON))
+        && GetPRCSwitch(PRC_MULTISUMMON))
     {
         float fDuration = IntToFloat(60*10*CasterLvl);
         float fDelay = 600.0;

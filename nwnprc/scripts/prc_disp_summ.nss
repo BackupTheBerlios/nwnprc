@@ -28,7 +28,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     effect eSummon2 = EffectSummonCreature("erinyes", VFX_NONE, fDelay, 0);
 
     //if(GetLevelByClass(CLASS_TYPE_DISPATER,OBJECT_SELF) >= 9)
-        //SetPRCSwitch(PRC_MUTLISUMMON, 3);
+        //SetPRCSwitch(PRC_MULTISUMMON, 3);
     
     if(iRoll == 3)
     {

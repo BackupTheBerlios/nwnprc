@@ -29,4 +29,5 @@
 25 IPRP_SKILLCOST   SkillCost            0          
 26 IPRP_SPELLCSTR   SpellCasterLevel     0          
 27 IPRP_ARCSPELL    ArcaneSpellFailure   0          
-28 iprp_casterlvl   Casterlevel          0          
+28 iprp_casterlvl   Casterlevel          0  
+29 iprp_metamagic   Metamagic            0        

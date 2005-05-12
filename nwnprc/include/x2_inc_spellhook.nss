@@ -428,7 +428,54 @@ int X2PreSpellCastCode()
         else if(nSchool == SPELL_SCHOOL_TRANSMUTATION
             && GetHasFeat(2272))
             nContinue = FALSE;
+        if(!nContinue)
+            FloatingTextStringOnCreature("You cannot cast spells of an opposition school.", OBJECT_SELF, FALSE); 
     }        
+    //Pnp somatic components
+    if(nContinue
+        && (GetPRCSwitch(PRC_PNP_SOMATIC_COMPOMENTS)
+            || GetPRCSwitch(PRC_PNP_SOMATIC_ITEMS)))
+    {
+        int nSpellId = GetSpellId();
+        int nHandFree;
+        int nHandRequired;
+        object oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
+        if(!GetIsObjectValid(oItem)
+            || GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD)
+            nHandFree = TRUE;
+        oItem = GetSpellCastItem();   
+        //check item is not equiped
+        if(!nHandFree 
+            && GetIsObjectValid(oItem)
+            && GetPRCSwitch(PRC_PNP_SOMATIC_COMPOMENTS))
+        {
+            int nSlot;
+            nHandRequired = TRUE;
+            for(nSlot = 0; nSlot<NUM_INVENTORY_SLOTS; nSlot++)
+            {
+                if(GetItemInSlot(nSlot) == oItem)
+                    nHandRequired = FALSE;
+            }
+        }   
+        //check its a real spell and that it requires a free hand
+        if(!nHandFree 
+            && !nHandRequired
+            && !GetIsObjectValid(oItem)
+            && GetPRCSwitch(PRC_PNP_SOMATIC_COMPOMENTS))
+        {
+            string sComponent = Get2DACache("spells", "VS", nSpellId);
+            if(sComponent == "VS"
+                || sComponent == "SV"
+                || sComponent == "S")            
+                nHandRequired = TRUE;
+        }     
+        
+        if(nHandRequired && nHandFree)
+        {
+            nContinue = FALSE;   
+            FloatingTextStringOnCreature("You do not have any free hands.", OBJECT_SELF, FALSE);   
+        }            
+    }
 
     //---------------------------------------------------------------------------
     // Break any spell require maintaining concentration (only black blade of
@@ -474,8 +521,8 @@ int X2PreSpellCastCode()
     // Check for the new restricted itemproperties
     //---------------------------------------------------------------------------
     if(nContinue
-    && GetIsObjectValid(GetSpellCastItem())
-    && !CheckPRCLimitations(GetSpellCastItem(), OBJECT_SELF))
+        && GetIsObjectValid(GetSpellCastItem())
+        && !CheckPRCLimitations(GetSpellCastItem(), OBJECT_SELF))
     {
         SendMessageToPC(OBJECT_SELF, "You cannot use "+GetName(GetSpellCastItem()));
         nContinue = FALSE;

@@ -80,19 +80,23 @@ void main()
 
             // To heal up enslaved creatures...
             object oSlave = GetLocalObject(oPC, "EnslavedCreature");
-            if (GetIsObjectValid(oSlave) && !GetIsDead(oSlave) && !GetIsInCombat(oSlave)) ForceRest(oSlave);
+            if (GetIsObjectValid(oSlave) && !GetIsDead(oSlave) && !GetIsInCombat(oSlave)) 
+                    AssignCommand(oSlave, ActionRest());
+                    //ForceRest(oSlave);
+
+            if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
+            {
+                object oFam =  GetLocalObject(oPC, "BONDED");
+                if (GetIsObjectValid(oFam) && !GetIsDead(oFam) && !GetIsInCombat(oFam)) 
+                    //ForceRest(oFam);
+                    AssignCommand(oFam, ActionRest());
+            }
 
             if (GetHasFeat(FEAT_LIPS_RAPTUR,oPC)){
                 int iLips=GetAbilityModifier(ABILITY_CHARISMA,oPC)+1;
                 if (iLips<2)iLips=1;
                 SetLocalInt(oPC,"FEAT_LIPS_RAPTUR",iLips);
                 SendMessageToPC(oPC," Lips of Rapture : use "+IntToString(iLips-1));
-            }
-
-            if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
-            {
-                object oFam =  GetLocalObject(oPC, "BONDED");
-                if (GetIsObjectValid(oFam) && !GetIsDead(oFam) && !GetIsInCombat(oFam)) ForceRest(oFam);
             }
 
             if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||

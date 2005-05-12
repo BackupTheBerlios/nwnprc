@@ -26,11 +26,6 @@ const string PRC_TIMESTOP_BLANK_PC                   = "PRC_TIMESTOP_BLANK_PC";
 //prc_timestop_local must be enabled
 //pcs cant see anything while stopped
 //this might look to the player like their PC crashed
-const string PRC_MULTISUMMON                         = "PRC_MULTISUMMON";
-//second or subsequent summons dont destroy the first
-//can cause lag with high numbers of summons and/or tight spaces
-const string PRC_SUMMON_ROUND_PER_LEVEL              = "PRC_SUMMON_ROUND_PER_LEVEL";
-//summons last for a number of rounds equal to caster level, rather than 24h or other timings
 const string PRC_PNP_ELEMENTAL_SWARM                 = "PRC_PNP_ELEMENTAL_SWARM";
 //instead of biowares sequential summons it creates multiple elementals
 //only works if prc_multisummon is on
@@ -42,7 +37,8 @@ const string PRC_PNP_TENSERS_TRANSFORMATION          = "PRC_PNP_TENSERS_TRANSFOR
 const string PRC_PNP_BLACK_BLADE_OF_DISASTER         = "PRC_PNP_BLACK_BLADE_OF_DISASTER";
 //less powerful, more PnP accurate version
 //caster must concentrate to maintain it
-
+const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
+//traps are only shown, not disarmed
 
 // Epic spell switches
 const string PRC_EPIC_INGORE_DEFAULTS                = "PRC_EPIC_INGORE_DEFAULTS";
@@ -124,6 +120,23 @@ const string PRC_PNP_SPELL_SCHOOLS                   = "PRC_PNP_SPELL_SCHOOLS";
 const string PRC_PLAYER_TIME                         = "PRC_PLAYER_TIME";
 //players have how far ahead of the module clock they are
 //and when all players are ahead, the module clock advances to catch up
+const string PRC_PNP_SOMATIC_COMPOMENTS              = "PRC_PNP_SOMATIC_COMPOMENTS";
+//you must have at least 1 hand free to cast spells with somatic components
+//this means at most a small shield in the off hand
+//no dual weilded weapons, though ranged and doublehanded are OK
+const string PRC_PNP_SOMATIC_ITEMS                   = "PRC_PNP_SOMATIC_ITEMS";
+//you must have at least 1 hand free to use items that you do not have equiped
+//this means at most a small shield in the off hand
+//no dual weilded weapons, though ranged and doublehanded are OK
+const string PRC_MULTISUMMON                         = "PRC_MULTISUMMON";
+//second or subsequent summons dont destroy the first
+//can cause lag with high numbers of summons and/or tight spaces
+const string PRC_SUMMON_ROUND_PER_LEVEL              = "PRC_SUMMON_ROUND_PER_LEVEL";
+//summons last for a number of rounds equal to caster level, rather than 24h or other timings
+const string PRC_PNP_FAMILIARS                       = "PRC_PNP_FAMILIARS";
+//familiars follow PnP rules rather than biowares
+//this makes them a lot weaker and less suited for combat
+//includes bonded summoner familiars
 
 //file end switches
 const string FILE_END_MANUAL                         = "FILE_END_MANUAL";

@@ -43,7 +43,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
         {
             SetTrapDetectedBy(oTrap, OBJECT_SELF);
             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTrap));
-            DelayCommand(2.0, SetTrapDisabled(oTrap));
+            if(!GetPRCSwitch(PRC_PNP_FIND_TRAPS))
+                DelayCommand(2.0, SetTrapDisabled(oTrap));
         }
         nCnt++;
         oTrap = GetNearestObject(OBJECT_TYPE_TRIGGER | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, OBJECT_SELF, nCnt);

@@ -22,7 +22,7 @@
 18 ELE_COMPANION_ELD                  3337      3    9              0      
 19 POLYMORPH_ELEM                     3338      3    10             1      
 20 ELEMENTALTYPE_SUBTYPE              3340      3    10             0      
-21 Familiar                           3161      3    1              1      
+21 Familiar                           303       3    1              1      
 22 WeapProfSim                        46        0    -1             0      
 23 WeapProfEx                         44        0    -1             0      
 24 WeapProfMar                        45        0    -1             0      

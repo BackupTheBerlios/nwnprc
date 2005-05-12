@@ -65,6 +65,8 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0)
         // Make sure this variable gets deleted as quickly as possible in case it's added in error.
         DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "PRC_Castlevel_Override"));
     }
+    SetLocalInt(OBJECT_SELF, "UsingActionCastSpell", TRUE);
+    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));
 //    ClearAllActions();
     if (GetIsObjectValid(oTarget))
     {
@@ -923,16 +925,16 @@ int FeatIniDmg(object oItem)
     itemproperty ip = GetFirstItemProperty(oItem);
     while (GetIsItemPropertyValid(ip))
     { 
-	if (GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT)
+    if (GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT)
         {
 
           if (GetItemPropertySubType(ip)==IP_CONST_FEAT_WeapFocCreature) return 1;
         }
-	ip = GetNextItemProperty(oItem);
+    ip = GetNextItemProperty(oItem);
     }
     return 0;
 }
-	
+    
 
 void AddIniDmg(object oPC)
 {
@@ -1110,7 +1112,7 @@ void MartialStrike()
 
    if (iEquip==2)
    {
-   	
+    
      if (!GetHasFeat(FEAT_HOLY_MARTIAL_STRIKE)) return;
      
      oItem=GetItemLastEquipped();
@@ -1175,7 +1177,7 @@ void MartialStrike()
    }
    else
    {
-   	
+    
      if (!GetHasFeat(FEAT_HOLY_MARTIAL_STRIKE)) return;
      
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
@@ -1231,7 +1233,7 @@ void UnholyStrike()
 
    if (iEquip==2)
    {
-   	
+    
      if (!GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
      
      oItem=GetItemLastEquipped();
@@ -1297,7 +1299,7 @@ void UnholyStrike()
    }
    else
    {
-   	
+    
      if (!GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
      
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
@@ -2294,54 +2296,54 @@ int SpellToOnHitCastSpell(int iSpell)
 
 void CorpseCrafter(object oPC, object oSummon)
 {
-	if (GetHasFeat(FEAT_CORPSECRAFTER, oPC))
-	{
-		int nHD = GetHitDice(oSummon);
-		effect eHP = EffectTemporaryHitpoints(nHD * 2);
-		effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
-		eHP = SupernaturalEffect(eHP);
-		eStr = SupernaturalEffect(eStr);
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT, eHP, oSummon);
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT, eStr, oSummon);
-	}
-	if (GetHasFeat(FEAT_BOLSTER_RESISTANCE, oPC))
-	{
-		effect eTurn = EffectTurnResistanceIncrease(4);
-		eTurn = SupernaturalEffect(eTurn);
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT, eTurn, oSummon);
-	}
-	if (GetHasFeat(FEAT_DEADLY_CHILL, oPC))
-	{
-		effect eChill = EffectDamageIncrease(DAMAGE_BONUS_1d6, DAMAGE_TYPE_COLD);
-		eChill = SupernaturalEffect(eChill);
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT, eChill, oSummon);
-	}
-	if (GetHasFeat(FEAT_HARDENED_FLESH, oPC))
-	{
-		effect eAC = EffectACIncrease(2);
-		eAC = SupernaturalEffect(eAC);
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAC, oSummon);
-	}	
-	if (GetHasFeat(FEAT_NIMBLE_BONES, oPC))
-	{
-		// Make sure they have a hide to apply the feat to
-		object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
-		if (!GetIsObjectValid(oSkin))
-		{
-			oSkin = CreateItemOnObject("base_prc_skin", oPC);
-			AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
-			SetDroppableFlag(oSkin, FALSE);
-		}
-		itemproperty iInit = ItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_INIT);
-		AddItemProperty(DURATION_TYPE_PERMANENT, iInit, oSkin);
-		
-		// Speed boost, average speed is 30 feet, so a 10 foot boost is a 33% boost
-		effect eSpeed = EffectMovementSpeedIncrease(33);
-		eSpeed = SupernaturalEffect(eSpeed);
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpeed, oSummon);		
-	}
-	if (GetHasFeat(FEAT_DESTRUCTION_RETRIBUTION, oPC))
-	{
-		SetLocalInt(oSummon, "DestructionRetribution", TRUE);
-	}
+    if (GetHasFeat(FEAT_CORPSECRAFTER, oPC))
+    {
+        int nHD = GetHitDice(oSummon);
+        effect eHP = EffectTemporaryHitpoints(nHD * 2);
+        effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
+        eHP = SupernaturalEffect(eHP);
+        eStr = SupernaturalEffect(eStr);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eHP, oSummon);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eStr, oSummon);
+    }
+    if (GetHasFeat(FEAT_BOLSTER_RESISTANCE, oPC))
+    {
+        effect eTurn = EffectTurnResistanceIncrease(4);
+        eTurn = SupernaturalEffect(eTurn);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eTurn, oSummon);
+    }
+    if (GetHasFeat(FEAT_DEADLY_CHILL, oPC))
+    {
+        effect eChill = EffectDamageIncrease(DAMAGE_BONUS_1d6, DAMAGE_TYPE_COLD);
+        eChill = SupernaturalEffect(eChill);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eChill, oSummon);
+    }
+    if (GetHasFeat(FEAT_HARDENED_FLESH, oPC))
+    {
+        effect eAC = EffectACIncrease(2);
+        eAC = SupernaturalEffect(eAC);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAC, oSummon);
+    }   
+    if (GetHasFeat(FEAT_NIMBLE_BONES, oPC))
+    {
+        // Make sure they have a hide to apply the feat to
+        object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
+        if (!GetIsObjectValid(oSkin))
+        {
+            oSkin = CreateItemOnObject("base_prc_skin", oPC);
+            AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
+            SetDroppableFlag(oSkin, FALSE);
+        }
+        itemproperty iInit = ItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_INIT);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iInit, oSkin);
+        
+        // Speed boost, average speed is 30 feet, so a 10 foot boost is a 33% boost
+        effect eSpeed = EffectMovementSpeedIncrease(33);
+        eSpeed = SupernaturalEffect(eSpeed);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpeed, oSummon);      
+    }
+    if (GetHasFeat(FEAT_DESTRUCTION_RETRIBUTION, oPC))
+    {
+        SetLocalInt(oSummon, "DestructionRetribution", TRUE);
+    }
 }

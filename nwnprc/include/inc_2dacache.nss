@@ -12,36 +12,6 @@ int PRC_SQLFetch();
 string PRC_SQLGetData(int iCol);
 void PRC_SQLCommit();
 
-string PRC_SQL_Retrieve(string sName)
-{
-    sName = ReplaceChars(sName,"'", "~");
-    //check that 2da row exisits
-    string SQL = "SELECT value FROM prc_data WHERE name = "+sName;
-    PRC_SQLExecDirect(SQL);
-    string sReturn;
-    if(PRC_SQLFetch() == PRC_SQL_SUCCESS)
-        sReturn = PRC_SQLGetData(1);
-        
-    sReturn = ReplaceChars(sReturn,"~", "'");
-    return sReturn;    
-}
-
-void PRC_SQL_Store(string sName, string sValue)
-{
-    sValue = ReplaceChars(sValue,"'", "~");
-    sName = ReplaceChars(sName,"'", "~");
-    //check that 2da row exisits
-    string SQL = "SELECT value FROM prc_data WHERE name = "+sName;
-    PRC_SQLExecDirect(SQL);
-    //if the row exists, then update it
-    //otherwise insert a new row
-    if(PRC_SQLFetch() == PRC_SQL_SUCCESS
-        && PRC_SQLGetData(1) != "")
-        SQL = "UPDATE prc_data SET  value = '"+sValue+"'  WHERE  name = "+sName;
-    else
-        SQL = "INSERT INTO prc_data * VALUES ('"+sName+"' , '"+sValue+"')";
-}
-
 void PRC_SQLCommit()
 {
     int nInterval = GetPRCSwitch(PRC_DB_SQLLITE_INTERVAL);

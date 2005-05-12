@@ -530,22 +530,37 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     int iSpellId = GetSpellId();
     int bIsStaff = FALSE;
     int nItemLevel;
+    object oItem = GetSpellCastItem();
 
     // Item Spells
-    if (GetItemPossessor(GetSpellCastItem()) == oCaster)
+    if (GetItemPossessor(oItem) == oCaster)
     {
         //SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
         if(GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)
-            && GetBaseItemType(GetSpellCastItem()) == BASE_ITEM_MAGICSTAFF)
+            && GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF)
         {
             nItemLevel = GetCasterLevel(oCaster);
             bIsStaff = TRUE;
+            //SendMessageToPC(oCaster, "Staff casting at user caster level");
         }
         else
         {
-            return GetCasterLevel(oCaster);
+            //code for getting new ip type
+            int nOverrideLevel;
+            itemproperty ipTest = GetFirstItemProperty(oItem);
+            while(GetIsItemPropertyValid(ipTest) && !nOverrideLevel)
+            {
+                if(GetItemPropertyType(ipTest) == 85
+                    && GetItemPropertySubType(ipTest) == iSpellId
+                    )
+                    nOverrideLevel = GetItemPropertyCostTableValue (ipTest);
+                ipTest = GetNextItemProperty(oItem);
+            }
+            if(nOverrideLevel)
+                return GetCasterLevel(oCaster);
+            else
+                return nOverrideLevel;
         }
-        //SendMessageToPC(oCaster, "Staff casting at user caster level");
     }
 
     // For when you want to assign the caster level.

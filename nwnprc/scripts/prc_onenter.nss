@@ -4,6 +4,7 @@
 #include "inc_eventhook"
 #include "prc_inc_switch"
 #include "inc_leto_prc"
+#include "inc_time"                   
 
 
 void main()
@@ -50,11 +51,7 @@ void main()
         ExecuteScript("prc_ccc_enter", OBJECT_SELF);         
     if(GetPRCSwitch(PRC_PW_HP_TRACKING))
     {
-        int nHP;
-        if(GetPRCSwitch(PRC_USE_DATABASE))
-            nHP = StringToInt(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_HP"));
-        else
-            nHP = GetCampaignInt(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_HP");                    
+        int nHP = GetPersistantLocalInt(oPC, "persist_HP");                   
         if(nHP != 0)  // 0 is not stored yet i.e. first logon
         {
             int nDamage=GetCurrentHitPoints(oPC)-nHP;
@@ -62,60 +59,67 @@ void main()
         }
         
     }     
+    if(GetPRCSwitch(PRC_PW_TIME))
+    {
+        int nYear   = GetPersistantLocalInt(oPC, "persist_Time_Year");
+        int nMonth  = GetPersistantLocalInt(oPC, "persist_Time_Month");
+        int nDay    = GetPersistantLocalInt(oPC, "persist_Time_Day");
+        int nHour   = GetPersistantLocalInt(oPC, "persist_Time_Hour");
+        int nMinute = GetPersistantLocalInt(oPC, "persist_Time_Minute");
+        int nSecond = GetPersistantLocalInt(oPC, "persist_Time_Second");
+        if(GetPRCSwitch(PRC_PLAYER_TIME))
+        {
+            nYear   -= GetCalendarYear();
+            nMonth  -= GetCalendarMonth();
+            nDay    -= GetCalendarDay();
+            nHour   -= GetTimeHour();
+            nMinute -= GetTimeMinute();
+            nSecond -= GetTimeSecond();
+            nSecond = nSecond+((nMinute*60)+FloatToInt(HoursToSeconds(nHour))+(nDay*24*60)+(nMonth*28*24*60)+(nYear*12*28*24*60));
+            AdvanceTimeForPlayer(oPC, IntToFloat(nSecond));
+        }
+        else if(GetIsObjectValid(GetFirstPC()) && !GetIsObjectValid(GetNextPC()))
+        {
+            //first pc logging on
+            SetCalendar(nYear, nMonth, nDay);
+            SetTime(nHour, nMinute, nSecond, 0);//dont care about milliseconds
+        }
+    }
     if(GetPRCSwitch(PRC_PW_LOCATION_TRACKING))
     {
-        float fLocX;
-        float fLocY;
-        float fLocZ;
-        float fLocFacing;
-        string sLocTag;
-        string sLocResRef;
-        if(GetPRCSwitch(PRC_USE_DATABASE))
-        {
-            fLocX = StringToFloat(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocX"));
-            fLocY = StringToFloat(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocY"));
-            fLocZ = StringToFloat(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocY"));
-            fLocFacing = StringToFloat(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocF"));
-            sLocTag = PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocT");
-            sLocResRef = PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_LocR");
-        }                
-        else
-        {
-            fLocX = StringToFloat(GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocX"));
-            fLocY = StringToFloat(GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocY"));
-            fLocZ = StringToFloat(GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocY"));
-            fLocFacing = StringToFloat(GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocF"));
-            sLocTag = GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocT");
-            sLocResRef = GetCampaignString(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_LocR");
-        }    
-        vector vPos = Vector(fLocX, fLocY, fLocZ);
-        int i;
-        object oArea = GetObjectByTag(sLocTag, i);
-        while(GetIsObjectValid(oArea))
-        {
-            if(GetResRef(oArea) == sLocResRef)
-                break;//end while loop
-            i++;
-            oArea = GetObjectByTag(sLocTag, i);
-        }
-        location lLoc = Location(oArea, vPos, fLocFacing);
+        location lLoc = GetPersistantLocalLocation(oPC, "persist_loc"); 
         DelayCommand(1.0, AssignCommand(oPC, ActionJumpToLocation(lLoc)));
     }
     if(GetPRCSwitch(PRC_PW_DEATH_TRACKING))
     {
-        int nHP;
-        if(GetPRCSwitch(PRC_USE_DATABASE))
-            nHP = StringToInt(PRC_SQL_Retrieve(GetPCPlayerName(oPC)+GetName(oPC)+"_Dead"));
-        else
-            nHP = GetCampaignInt(GetName(GetModule()), GetPCPlayerName(oPC)+GetName(oPC)+"_Dead");                    
-        if(nHP == 1)
+        int bDead = GetPersistantLocalInt(oPC, "persist_dead");                     
+        if(bDead == 1)
         {
             int nDamage=9999;
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDamage), oPC);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC);
         }
             
-    }     
+    }    
+    if(GetPRCSwitch(PRC_PW_SPELL_TRACKING))
+    {
+        string sSpellList = GetPersistantLocalString(oPC, "persist_spells"); 
+        string sTest;
+        string sChar;
+        while(GetStringLength(sSpellList))
+        {
+            sChar = GetStringLeft(sSpellList,1);
+            if(sChar == "|")
+            {
+                int nSpell = StringToInt(sTest);
+                DecrementRemainingSpellUses(oPC, nSpell);
+                sTest == "";
+            }
+            else
+                sTest += sChar;
+            sSpellList = GetStringRight(sSpellList, GetStringLength(sSpellList)+1);
+        }
+    }
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
     

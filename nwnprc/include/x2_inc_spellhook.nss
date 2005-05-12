@@ -599,6 +599,19 @@ int X2PreSpellCastCode()
             }
         }
     }
+    
+    if(GetPRCSwitch(PRC_PW_SPELL_TRACKING))
+    {
+        if(GetLocalInt(OBJECT_SELF, "UsingActionCastSpell"))
+        {
+        }
+        else
+        {
+            string sSpell = IntToString(GetSpellId())+"|";
+            string sStored = GetPersistantLocalString(OBJECT_SELF, "persist_spells");
+            SetPersistantLocalString(OBJECT_SELF, "persist_spells", sStored+sSpell); 
+        }
+    }
 
     return nContinue;
 }

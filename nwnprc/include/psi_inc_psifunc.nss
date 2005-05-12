@@ -933,13 +933,8 @@ void AstralSeedRespawn(object oPlayer = OBJECT_SELF)
     
     //pw death hook
     ExecuteScript("prc_pw_astralseed", oPlayer);
-    if(GetPRCSwitch(PRC_PW_DEATH_TRACKING)&&GetIsPC(oPlayer))
-    {
-        if(GetPRCSwitch(PRC_USE_DATABASE))
-            PRC_SQL_Store(GetPCPlayerName(oPlayer)+GetName(oPlayer)+"_Dead",  "0");
-        else
-            SetCampaignInt(GetName(GetModule()), GetPCPlayerName(oPlayer)+GetName(oPlayer)+"_Dead",  0);                    
-    }        
+    if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oPlayer))
+        SetPersistantLocalInt(oPlayer, "persist_dead", FALSE);     
 }
 
 int GetPsionicPRCLevels (object oCaster)

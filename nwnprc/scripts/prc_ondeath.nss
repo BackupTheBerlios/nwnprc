@@ -49,13 +49,9 @@ void main()
         }
     }
 
+
     if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oPlayer))
-    {
-        if(GetPRCSwitch(PRC_USE_DATABASE))
-            PRC_SQL_Store(GetPCPlayerName(oPlayer)+GetName(oPlayer)+"_Dead",  "1");
-        else
-            SetCampaignInt(GetName(GetModule()), GetPCPlayerName(oPlayer)+GetName(oPlayer)+"_Dead",  1);                    
-    }
+        SetPersistantLocalInt(oPlayer, "persist_dead", TRUE);   
     
     if (GetLocalInt(oPlayer, "AstralSeed"))
     {

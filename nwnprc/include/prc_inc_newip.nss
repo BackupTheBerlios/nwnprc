@@ -21,11 +21,10 @@ itemproperty ItemPropertyTrueCasterLevel(int nSpell, int nLevel)
 {
     itemproperty ipReturn;
     string sResRef = "prc_ip85_"+IntToString(nSpell);
-    object oChest = GetObjectByTag("HeartOfChaos");//use the crafting chest
+    object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
     object oItem = CreateItemOnObject(sResRef, oChest);
     DestroyObject(oItem);
-    ipReturn = GetFirstItemProperty(oItem);
-    ipReturn = GetNextItemProperty(oItem);//first ip is duplicated
+    ipReturn = GetFirstItemProperty(oItem);    
     int i;
     for(i=0;i<nLevel;i++)
     {

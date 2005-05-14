@@ -6,24 +6,6 @@ void PRCLetoExit(object oPC)
 {
     object oSkin = GetPCSkin(oPC);
     itemproperty ipTest = GetFirstItemProperty(oSkin);
-    while(GetIsItemPropertyValid(ipTest))
-    {
-        int ipType = GetItemPropertyType(ipTest);
-        if(ipType == ITEM_PROPERTY_ABILITY_BONUS)
-        {
-            int ipSubType = GetItemPropertySubType(ipTest);
-            int ipValue = GetItemPropertyCostTableValue(ipTest);
-            string sPath = GetName(oPC);//GetLocalString(oPC, "Leto_Path");
-            int nOldIpValue = GetPersistantLocalInt(oPC, "LetoAbility_"+IntToString(ipSubType));
-            SetCampaignInt("LetoPRC", "LetoAbility_"+IntToString(ipSubType)+sPath, ipValue);
-            SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+AdjustAbility(ipSubType, ipValue-nOldIpValue));
-            //PrintString(sPath);
-            //PrintString("LetoAbility_"+IntToString(ipSubType)+sPath);
-            //PrintString(IntToString(ipValue));
-            //PrintString(IntToString(nOldIpValue));
-        }
-        ipTest = GetNextItemProperty(oSkin);
-    }
     
     if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD, oPC))
@@ -49,6 +31,30 @@ void PRCLetoExit(object oPC)
             SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+sScript);
         }
     }
+    
+    
+    if(GetLocalInt(oSkin,"nPCShifted"))
+        return;
+    while(GetIsItemPropertyValid(ipTest))
+    {
+        int ipType = GetItemPropertyType(ipTest);
+        if(ipType == ITEM_PROPERTY_ABILITY_BONUS)
+        {
+            int ipSubType = GetItemPropertySubType(ipTest);
+            int ipValue = GetItemPropertyCostTableValue(ipTest);
+            string sPath = GetName(oPC);//GetLocalString(oPC, "Leto_Path");
+            int nOldIpValue = GetPersistantLocalInt(oPC, "LetoAbility_"+IntToString(ipSubType));
+            SetCampaignInt("LetoPRC", "LetoAbility_"+IntToString(ipSubType)+sPath, ipValue);
+            SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+AdjustAbility(ipSubType, ipValue-nOldIpValue));
+            //PrintString(sPath);
+            //PrintString("LetoAbility_"+IntToString(ipSubType)+sPath);
+            //PrintString(IntToString(ipValue));
+            //PrintString(IntToString(nOldIpValue));
+        }
+        ipTest = GetNextItemProperty(oSkin);
+    }
+    
+
 }
 
 void PRCLetoEnter(object oPC)

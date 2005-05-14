@@ -32,7 +32,7 @@ void main()
      object oItem = GetItemLastUnequipped();
      object oPC   = GetItemLastUnequippedBy();
      DoTimestopUnEquip();
-     DelayCommand(0.2,PrcFeats(oPC));
+     /*DelayCommand(0.2,*/PrcFeats(oPC)/*)*/; // Removed delay since it has the possiblity of screwing up association between the event and the objects involved - Ornedan
      
      // Execute scripts hooked to this event for the player triggering it
      ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERUNEQUIPITEM);

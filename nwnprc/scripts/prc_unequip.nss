@@ -14,6 +14,7 @@
 #include "x2_inc_intweapon"
 #include "inc_item_props"
 #include "inc_eventhook"
+#include "inc_timestop"
 
 void PrcFeats(object oPC)
 {
@@ -30,7 +31,7 @@ void main()
 {
      object oItem = GetItemLastUnequipped();
      object oPC   = GetItemLastUnequippedBy();
-    
+     DoTimestopUnEquip();
      DelayCommand(0.2,PrcFeats(oPC));
      
      // Execute scripts hooked to this event for the player triggering it

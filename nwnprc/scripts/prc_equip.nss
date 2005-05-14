@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 #include "prc_inc_function"
 #include "inc_eventhook"
+#include "inc_timestop"
 
 
 void PrcFeats(object oPC)
@@ -33,7 +34,7 @@ void main()
     object oItem = GetItemLastEquipped();
     object oPC   = GetItemLastEquippedBy();
   
-	
+    
     //DelayCommand(0.3, PrcFeats(oPC));
     PrcFeats(oPC);
     
@@ -42,8 +43,10 @@ void main()
 
     // Handle ability skill limited items
     ExecuteScript("prc_equip_rstr", OBJECT_SELF);
+    //timestop noncombat equip
+    DoTimestopEquip();
     
     // Execute scripts hooked to this event for the creature and item triggering it
-	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYEREQUIPITEM);
-	ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONPLAYEREQUIPITEM);
+    ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYEREQUIPITEM);
+    ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONPLAYEREQUIPITEM);
 }

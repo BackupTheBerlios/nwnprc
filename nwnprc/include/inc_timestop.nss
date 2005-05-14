@@ -1,5 +1,6 @@
 #include "x2_inc_itemprop"
 #include "prc_inc_switch"
+#include "inc_prc_npc"
 
 const int VFX_PER_NEW_TIMESTOP = 140;
 void DoTimestopEquip();
@@ -18,22 +19,30 @@ void RemoveTimestopEquip()
 
 void DoTimestopEquip()
 {
-    object oPC = GetPCItemLastEquippedBy();
-    if(!GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE)
-        && !GetHasSpellEffect(SPELL_TIME_STOP, oPC)
-        && !GetHasSpellEffect(4032, oPC))
-        return;
-    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetPCItemLastEquipped(),9999.0);
+    object oPC = GetItemLastEquippedBy();
+    if(GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE)
+        && (GetHasSpellEffect(SPELL_TIME_STOP, oPC) 
+            || GetHasSpellEffect(4032, oPC)))
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemLastEquipped(),9999.0);
+/*    else if(GetHasSpellEffect(POWER_ID, oPC))
+    {
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemLastEquipped(),9999.0);
+        //stuff for AC negation
+    }*/
 }
 
 void DoTimestopUnEquip()
 {
-    object oPC = GetPCItemLastUnequippedBy();
-    if(!GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE)
-        && !GetHasSpellEffect(SPELL_TIME_STOP, oPC)
-        && !GetHasSpellEffect(4032, oPC))
-        return;
-    IPRemoveMatchingItemProperties(GetPCItemLastUnequipped(), ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_TEMPORARY);
+    object oPC = GetItemLastUnequippedBy();
+    if(GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE)
+        && (GetHasSpellEffect(SPELL_TIME_STOP, oPC)
+            ||GetHasSpellEffect(4032, oPC)))
+        IPRemoveMatchingItemProperties(GetItemLastUnequipped(), ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_TEMPORARY);
+/*    else if(GetHasSpellEffect(POWER_ID, oPC))
+    {
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemLastEquipped(),9999.0);
+        //stuff for AC negation removal
+    }*/
 }
 
 void ApplyTSToObject(object oTarget)
@@ -54,7 +63,7 @@ void RemoveTSFromObject(object oTarget)
     while(GetIsEffectValid(eTest))
     {
         if(GetEffectSpellId(eTest) == SPELL_TIME_STOP
-		|| GetEffectSpellId(eTest) == 4032)//epic TS
+        || GetEffectSpellId(eTest) == 4032)//epic TS
             RemoveEffect(oTarget, eTest);
         eTest = GetNextEffect(oTarget);
     }

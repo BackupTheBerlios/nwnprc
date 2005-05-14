@@ -13,11 +13,8 @@
 //:: Created On: 20-10-2004
 //:://////////////////////////////////////////////
 
-//#include "x2_inc_itemprop" - Inherited from x2_inc_craft
 #include "x2_inc_craft"
 #include "prc_inc_spells"
-#include "x2_inc_spellhook"
-//#include "prc_class_const"
 #include "prc_inc_switch"
 #include "prc_inc_itmrstr"
 #include "psi_inc_psifunc"
@@ -66,7 +63,12 @@ int PsiPrePowerCastCode()
    	if (nPP < 0)	nPP = 0;
    	DelayCommand(1.0, SetLocalInt(OBJECT_SELF, "PowerPoints", nPP));
    }   
-
+   // Ectoplasmic Form conc check
+   if (GetLocalInt(oTarget, "EctoForm"))
+   {
+   	int nPower = GetPowerLevel(OBJECT_SELF);
+   	nContinue = GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, (20 + nPower));
+   } 
    if (nContinue)
    {
 	//---------------------------------------------------------------------------

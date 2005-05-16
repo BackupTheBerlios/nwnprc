@@ -1274,8 +1274,13 @@ object MyFirstObjectInShape(int nShape,
 //has the metamagic feat the function gets and returns TRUE or FALSE accordingly
 //Also used by the new spellbooks for the same purpose
 /* replaced by wrapper for GetMetaMagicFeat instead
+   Not necessarily. This may still be a usefule level of abstraction - Ornedan
+   */
 int CheckMetaMagic(int nMeta,int nMMagic)
 {
+    return nMeta & nMMagic;
+}
+    /*
     int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
     int nFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
     int nNewSpellMetamagic = GetLocalInt(OBJECT_SELF, "NewSpellMetamagic");
@@ -1321,7 +1326,7 @@ int PRCGetMetaMagicFeat()
         itemproperty ipTest = GetFirstItemProperty(oItem);
         while(GetIsItemPropertyValid(ipTest))
         {
-            if(GetItemPropertyType(ipTest) == 92
+            if(GetItemPropertyType(ipTest) == 92 // TODO: Constant this
                 && GetItemPropertySubType(ipTest) == iSpellId)
             {               
                 int nCostValue = GetItemPropertyCostTableValue (ipTest);

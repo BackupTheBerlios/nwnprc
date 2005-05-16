@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     int nDuration = CasterLvl / 2;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eImpact = EffectVisualEffect(257);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
     //Make sure duration does no equal 0
@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         nDuration = 1;
     }
     //Check Extend metamagic feat.
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if(CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
        nDuration = nDuration *2;    //Duration is +100%
     }

@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     effect eLink = EffectLinkEffects(eMind, eCharm);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     
     //int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int CasterLvl = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, OBJECT_SELF) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, OBJECT_SELF);
@@ -65,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     nDuration = GetScaledDuration(nDuration, oTarget);
     int nRacial = MyPRCGetRacialType(oTarget);
     //Make Metamagic check for extend
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if(nMetaMagic & METAMAGIC_EXTEND)
     {
         nDuration = nDuration * 2;
     }

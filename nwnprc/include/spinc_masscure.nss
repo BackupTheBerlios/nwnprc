@@ -104,7 +104,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
 
     //Make metamagic checks
     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, TRUE);
-    if (nMetaMagic & METAMAGIC_MAXIMIZE || iBlastFaith)
+    if((nMetaMagic & METAMAGIC_MAXIMIZE) || iBlastFaith)
     {
         nDamage = nMaximized + nExtraDamage;
         // * if low or normal difficulty then MAXMIZED is doubled.
@@ -113,7 +113,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
             nDamage = nDamage + nExtraDamage;
         }
     }
-    if (nMetaMagic & METAMAGIC_EMPOWER || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
+    if((nMetaMagic & METAMAGIC_EMPOWER) || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
     {
         nDamage = nDamage + (nDamage/2);
     }

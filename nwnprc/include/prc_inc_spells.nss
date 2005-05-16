@@ -151,14 +151,18 @@ int ChannelChecker(string sSpell, object oTarget);
 //If a spell is being channeled, we store its target and its name
 void StoreSpellVariables(string sString,int nDuration);
 
-//Wrapper for The MaximizeOrEmpower function that checks for metamagic feats
+//Replacement for The MaximizeOrEmpower function that checks for metamagic feats
 //in channeled spells as well
-int MyMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0);
+int PRCMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0);
 
 //This checks if the spell is channeled and if there are multiple spells
 //channeled, which one is it. Then it checks in either case if the spell
 //has the metamagic feat the function gets and returns TRUE or FALSE accordingly
-int CheckMetaMagic(int nMeta,int nMMagic);
+//int CheckMetaMagic(int nMeta,int nMMagic);
+//not needed now there is PRCGetMetaMagicFeat()
+
+//wrapper for biowares GetMetaMagicFeat()
+int PRCGetMetaMagicFeat();
 
 //GetFirstObjectInShape wrapper for changing the AOE of the channeled spells (Spellsword Channel Spell)
 object MyFirstObjectInShape(int nShape, float fSize, location lTarget, int bLineOfSight=FALSE, int nObjectFilter=OBJECT_TYPE_CREATURE, vector vOrigin=[0.0,0.0,0.0]);
@@ -1269,6 +1273,7 @@ object MyFirstObjectInShape(int nShape,
 //channeled, which one is it. Then it checks in either case if the spell
 //has the metamagic feat the function gets and returns TRUE or FALSE accordingly
 //Also used by the new spellbooks for the same purpose
+/* replaced by wrapper for GetMetaMagicFeat instead
 int CheckMetaMagic(int nMeta,int nMMagic)
 {
     int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
@@ -1277,60 +1282,105 @@ int CheckMetaMagic(int nMeta,int nMMagic)
     if(nChannel == 1)
     {
         if(nFeat == nMMagic)
-        {
             return TRUE;
-        }
         else
-        {    
             return FALSE;
-        }
     } 
     else if(nNewSpellMetamagic != 0)
     {
         if(nNewSpellMetamagic == nMMagic)
-        {
             return TRUE;
-        }
         else
-        {    
             return FALSE;
-        }
     } 
     else    
     {
         if(nMeta == nMMagic)
-        {
             return TRUE;
-        }
         else
-        {
             return FALSE;
-        }
     } 
 }
-
+*/
+int PRCGetMetaMagicFeat()
+{
+    int nFeat = GetMetaMagicFeat();
+    int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
+    int nSSFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
+    int nNewSpellMetamagic = GetLocalInt(OBJECT_SELF, "NewSpellMetamagic");
+    if(nChannel == 1)
+        nFeat |= nSSFeat; //bitwise "addition" equivalent to nFeat = (nFeat | nSSFeat)
+    else if(nNewSpellMetamagic)
+        nFeat |= nNewSpellMetamagic;
+    if(GetIsObjectValid(GetSpellCastItem()))
+    {
+        object oItem = GetSpellCastItem();
+        int iSpellId = GetSpellId();
+        //check item for metamagic
+        int nItemMetaMagic;
+        itemproperty ipTest = GetFirstItemProperty(oItem);
+        while(GetIsItemPropertyValid(ipTest))
+        {
+            if(GetItemPropertyType(ipTest) == 92
+                && GetItemPropertySubType(ipTest) == iSpellId)
+            {               
+                int nCostValue = GetItemPropertyCostTableValue (ipTest);
+                switch(nCostValue)
+                {
+                    case 0:
+                        nItemMetaMagic |= METAMAGIC_NONE;
+                        break;
+                    case 1:
+                        nItemMetaMagic |= METAMAGIC_QUICKEN;
+                        break;
+                    case 2:
+                        nItemMetaMagic |= METAMAGIC_EMPOWER;
+                        break;
+                    case 3:
+                        nItemMetaMagic |= METAMAGIC_EXTEND;
+                        break;
+                    case 4:
+                        nItemMetaMagic |= METAMAGIC_MAXIMIZE;
+                        break;
+                    case 5:
+                        nItemMetaMagic |= METAMAGIC_SILENT;
+                        break;
+                    case 6:
+                        nItemMetaMagic |= METAMAGIC_STILL;
+                        break;
+                }
+                
+            }               
+            ipTest = GetNextItemProperty(oItem);
+        }
+        nFeat |= nItemMetaMagic;
+    }
+    return nFeat;
+}
 
 
 //Wrapper for The MaximizeOrEmpower function that checks for metamagic feats
 //in channeled spells as well
-int MyMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0)
+int PRCMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0)
 {
     int i = 0;
     int nDamage = 0;
     int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
     int nFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
+    int nDiceDamage;
     for (i=1; i<=nNumberOfDice; i++)
     {
-        nDamage = nDamage + Random(nDice) + 1;
+        nDiceDamage = nDiceDamage + Random(nDice) + 1;
     }
+    nDamage = nDiceDamage;
     //Resolve metamagic
-//    if (nMeta == METAMAGIC_MAXIMIZE || nFeat == METAMAGIC_MAXIMIZE)
-    if (CheckMetaMagic(nMeta, METAMAGIC_MAXIMIZE))
+    if (nMeta & METAMAGIC_MAXIMIZE || nFeat & METAMAGIC_MAXIMIZE)
+//    if ((nMeta & METAMAGIC_MAXIMIZE))
     {
         nDamage = nDice * nNumberOfDice;
     }
-//    else if (nMeta == METAMAGIC_EMPOWER || nFeat == METAMAGIC_EMPOWER)
-    else if (CheckMetaMagic(nMeta, METAMAGIC_EMPOWER))
+    if (nMeta & METAMAGIC_EMPOWER || nFeat & METAMAGIC_EMPOWER)
+//    else if ((nMeta & METAMAGIC_EMPOWER))
     {
        nDamage = nDamage + nDamage / 2;
     }

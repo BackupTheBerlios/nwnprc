@@ -30,10 +30,10 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
     effect ePoly;
     int nPoly;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDuration = GetLevelByClass(CLASS_TYPE_DRUID);
     //Enter Metamagic conditions
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2; //Duration is +100%
     }

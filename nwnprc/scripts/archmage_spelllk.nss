@@ -8,7 +8,7 @@
 void main()
 {
     object focus = GetItemPossessedBy(OBJECT_SELF, "ArchmagesFocusofPower");
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     string nSpellLevel = Get2DACache("spells", "Wiz_Sorc", GetSpellId());
     string nEpicSpell = Get2DACache("spells", "Innate", GetSpellId());
 

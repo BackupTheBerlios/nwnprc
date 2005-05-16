@@ -593,7 +593,7 @@ int X2PreSpellCastCode()
                 (GetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
             {
                 SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
-                AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, GetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+                AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
                 // Make sure this variable gets deleted as quickly as possible in case it's added in error.
                 AssignCommand(oFam, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
             }

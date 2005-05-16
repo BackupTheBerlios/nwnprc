@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     int nCasterLvl = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     float fDelay;
     effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_M);
@@ -79,11 +79,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Roll damage for each target
                 nDamage = d6(nCasterLvl);
                 //Resolve metamagic
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                     nDamage = 6 * nCasterLvl;
                 }
-                else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                else if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                    nDamage = nDamage + nDamage / 2;
                 }

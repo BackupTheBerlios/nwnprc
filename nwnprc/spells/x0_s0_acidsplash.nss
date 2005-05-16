@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             
                  // perform attack roll for ray and deal proper damage
-                 int nDamage =  MyMaximizeOrEmpower(3, 1, GetMetaMagicFeat());
+                 int nDamage =  PRCMaximizeOrEmpower(3, 1, PRCGetMetaMagicFeat());
                  ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ACID));
                  PRCBonusDamage(oTarget);
              }

@@ -48,8 +48,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         effect eSummon = SetSummonEffect(nSpellID);
 
     //Make metamagic check for extend
-    int nMetaMagic = GetMetaMagicFeat();
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2;   //Duration is +100%
     }

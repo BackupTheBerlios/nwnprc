@@ -42,7 +42,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     int nDamage2;
     
@@ -83,11 +83,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                       //Roll Damage
                       nDamage = d6(nCasterLevel);
                       //Enter Metamagic conditions
-                      if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                      if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                       {
                          nDamage = 6 * nCasterLevel;//Damage is at max
                       }
-                      else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                      else if ((nMetaMagic & METAMAGIC_EMPOWER))
                       {
                          nDamage = nDamage + (nDamage/2);//Damage/Healing is +50%
                       }

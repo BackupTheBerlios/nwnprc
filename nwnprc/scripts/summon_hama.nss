@@ -16,7 +16,7 @@
 void main()
 {
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDuration = GetCasterLevel(OBJECT_SELF);
     object oPC = OBJECT_SELF;
     effect eSummon = EffectSummonCreature("NW_DMVROCK");
@@ -28,7 +28,7 @@ void main()
 
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_GATE);
     //Make metamagic check for extend
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
         nDuration = nDuration *2;   //Duration is +100%
     }

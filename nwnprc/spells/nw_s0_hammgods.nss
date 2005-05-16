@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     
 
     int nCasterLvl = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eDam;
     effect eDaze = EffectDazed();
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
@@ -89,11 +89,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Roll damage
                 nDamage = d8(nDamageDice);
                 //Make metamagic checks
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                     nDamage = 8 * nDamageDice;
                 }
-                else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                else if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                     nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
                 }

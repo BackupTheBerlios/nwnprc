@@ -40,7 +40,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLevel = GetLevelByClass(CLASS_TYPE_CLERIC);
     // was going to let +1 ECL affect this, but it shouldn't.   It's a class feature of clerics not a spell as such.
 

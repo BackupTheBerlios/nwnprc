@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     int nDamage, nHeal;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nTouch = TouchAttackMelee(oTarget);
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     effect eVis = EffectVisualEffect(246);
@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             {
              /*   nDamage = GetCurrentHitPoints(oTarget) - d4(1);
                 //Check for metamagic
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                     nDamage = GetCurrentHitPoints(oTarget) - 1;
                 } */

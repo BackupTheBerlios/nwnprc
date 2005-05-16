@@ -37,7 +37,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     effect eLink = EffectLinkEffects(eDur, eParal);
     effect eDam;
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     int nAC = GetAC(oTarget);
     int nHits = d4();
@@ -62,11 +62,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 {
                     nDamage = nDamage + d6();
                     //Enter Metamagic conditions
-                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                     {
                         nDamage = 12;//Damage is at max
                     }
-                    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                    else if ((nMetaMagic & METAMAGIC_EMPOWER))
                     {
                         nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                     }

@@ -43,7 +43,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
     float fDelay= GetRandomDelay(0.5, 1.5);
     //effect eDam;
     int nDam = d4();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
 	  object aoeCreator = GetAreaOfEffectCreator();
     int CasterLvl = PRCGetCasterLevel(aoeCreator);
@@ -51,11 +51,11 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
     //int nPenetr = SPGetPenetrAOE(aoeCreator,CasterLvl);
     
     //Enter Metamagic conditions
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
     {
        nDam = 4;//Damage is at max
     }
-    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+    else if ((nMetaMagic & METAMAGIC_EMPOWER))
     {
        nDam =  nDam + (nDam/2); //Damage/Healing is +50%
     }

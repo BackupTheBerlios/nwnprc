@@ -226,6 +226,8 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         {
             itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpellID, PRCGetCasterLevel());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
+            itemproperty ipMeta = ItemPropertyMetamagic(nSpellID, PRCGetMetaMagicFeat());
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
         }
     }
     return oTarget;
@@ -286,6 +288,8 @@ object CICraftCraftWand(object oCreator, int nSpellID )
         {
             itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpellID, PRCGetCasterLevel());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
+            itemproperty ipMeta = ItemPropertyMetamagic(nSpellID, PRCGetMetaMagicFeat());
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
         }
 
         int nType = CI_GetClassMagicType(GetLastSpellCastClass());
@@ -399,6 +403,8 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
         {
             itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpellID, PRCGetCasterLevel());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
+            itemproperty ipMeta = ItemPropertyMetamagic(nSpellID, PRCGetMetaMagicFeat());
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
         }
         
         if (oTarget == OBJECT_INVALID)
@@ -419,6 +425,32 @@ int CICraftCheckBrewPotion(object oSpellTarget, object oCaster)
     object oCaster      = OBJECT_SELF;
     int    nID          = GetSpellId();
     int    nLevel       = CIGetSpellInnateLevel(nID,TRUE);
+    if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
+    {
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        switch(nMetaMagic)
+        {
+            case METAMAGIC_EMPOWER:
+                nLevel += 2;
+                break;
+            case METAMAGIC_EXTEND:
+                nLevel += 1;
+                break;
+            case METAMAGIC_MAXIMIZE:
+                nLevel += 3;
+                break;
+/*            case METAMAGIC_QUICKEN:
+                nLevel += 1;
+                break;
+            case METAMAGIC_SILENT:
+                nLevel += 5;
+                break;
+            case METAMAGIC_STILL:
+                nLevel += 6;
+                break;
+These dont work as IPs since they are hardcoded */                
+        }
+    }
 
     // -------------------------------------------------------------------------
     // check if brew potion feat is there
@@ -536,6 +568,33 @@ int CICraftCheckScribeScroll(object oSpellTarget, object oCaster)
     float fExperienceCost = 0.04 * nCost;
     int nGoldCost = nCost ;
 
+    if(GetPRCSwitch(PRC_SCRIBE_SCROLL_CASTER_LEVEL))
+    {
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        switch(nMetaMagic)
+        {
+            case METAMAGIC_EMPOWER:
+                nLevel += 2;
+                break;
+            case METAMAGIC_EXTEND:
+                nLevel += 1;
+                break;
+            case METAMAGIC_MAXIMIZE:
+                nLevel += 3;
+                break;
+/*            case METAMAGIC_QUICKEN:
+                nLevel += 1;
+                break;
+            case METAMAGIC_SILENT:
+                nLevel += 5;
+                break;
+            case METAMAGIC_STILL:
+                nLevel += 6;
+                break;
+These dont work as IPs since they are hardcoded */                
+        }
+    }
+
     // -------------------------------------------------------------------------
     // Does Player have enough gold?
     // -------------------------------------------------------------------------
@@ -616,6 +675,32 @@ int CICraftCheckCraftWand(object oSpellTarget, object oCaster)
     }
 
     int nLevel = CIGetSpellInnateLevel(nID,TRUE);
+    if(GetPRCSwitch(PRC_CRAFT_WAND_CASTER_LEVEL))
+    {
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        switch(nMetaMagic)
+        {
+            case METAMAGIC_EMPOWER:
+                nLevel += 2;
+                break;
+            case METAMAGIC_EXTEND:
+                nLevel += 1;
+                break;
+            case METAMAGIC_MAXIMIZE:
+                nLevel += 3;
+                break;
+/*            case METAMAGIC_QUICKEN:
+                nLevel += 1;
+                break;
+            case METAMAGIC_SILENT:
+                nLevel += 5;
+                break;
+            case METAMAGIC_STILL:
+                nLevel += 6;
+                break;
+These dont work as IPs since they are hardcoded */                
+        }
+    }    
 
     // -------------------------------------------------------------------------
     // check if spell is below maxlevel for brew potions

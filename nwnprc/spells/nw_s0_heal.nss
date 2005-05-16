@@ -65,10 +65,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 {
                     //Roll damage
                     nModify = d4();
-                    nMetaMagic = GetMetaMagicFeat();
+                    nMetaMagic = PRCGetMetaMagicFeat();
                     //Make metamagic check
                     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, TRUE);
-                    if (nMetaMagic == METAMAGIC_MAXIMIZE || iBlastFaith)
+                    if (nMetaMagic & METAMAGIC_MAXIMIZE || iBlastFaith)
                     {
                         nModify = 1;
                     }

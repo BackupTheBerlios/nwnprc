@@ -35,7 +35,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_COM_BLOOD_LRG_RED);
      object aoeCreator = GetAreaOfEffectCreator();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nLevel = PRCGetCasterLevel(aoeCreator);
     int CasterLvl = nLevel;
 
@@ -53,11 +53,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //Roll Damage
         int nDamage = d6(nLevel);
         //Enter Metamagic conditions
-        if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+        if ((nMetaMagic & METAMAGIC_MAXIMIZE))
         {
             nDamage = nLevel * 6;//Damage is at max
         }
-        else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+        else if ((nMetaMagic & METAMAGIC_EMPOWER))
         {
             nDamage = nDamage + (nDamage/2);
         }

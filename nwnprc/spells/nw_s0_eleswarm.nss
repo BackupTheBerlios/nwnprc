@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR",SPELL_SCHOOL_CONJURATION);
 
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     if(GetPRCSwitch(PRC_PNP_ELEMENTAL_SWARM) 
         && GetPRCSwitch(PRC_MULTISUMMON))
@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR",SPELL_SCHOOL_CONJURATION);
             fDelay = RoundsToSeconds(1);
         }       
         //Check for metamagic duration
-        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+        if ((nMetaMagic & METAMAGIC_EXTEND))
             fDuration = fDuration * 2.0;  //Duration is +100%     
         MultisummonPreSummon();
         int i;
@@ -135,7 +135,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR",SPELL_SCHOOL_CONJURATION);
         if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
             fDuration = RoundsToSeconds(CasterLvl);
         //Check for metamagic duration
-        if(CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+        if((nMetaMagic & METAMAGIC_EXTEND))
             fDuration = fDuration * 2.0;  //Duration is +100%       
         //Set the summoning effect
         eSummon = EffectSwarm(FALSE, "NW_SW_AIRGREAT", "NW_SW_WATERGREAT","NW_SW_EARTHGREAT","NW_SW_FIREGREAT");

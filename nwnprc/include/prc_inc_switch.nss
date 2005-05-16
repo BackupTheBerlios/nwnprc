@@ -90,6 +90,7 @@ const string PRC_CRAFT_WAND_CASTER_LEVEL             = "PRC_CRAFT_WAND_CASTER_LE
 //casterlevel of the spellcast who created them. Normally under bioware, it is possible
 //for a level 3 caster to produce level 9 items and for a level 40 caster to only produce
 //level 5 items.
+//this also allows metamagic to apply to crafting. i.e you produce a wand of maximized fireball
 const string PRC_NPC_HAS_PC_SPELLCASTING             = "PRC_NPC_HAS_PC_SPELLCASTING";
 //NPCs go through spellhooking as if they are PCs
 const string PRC_ECL_USES_XP_NOT_HD                  = "PRC_ECL_USES_XP_NOT_HD";

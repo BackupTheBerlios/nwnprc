@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     float fDelay;
     effect eExplode = EffectVisualEffect(VFX_FNF_HORRID_WILTING);
@@ -86,11 +86,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     //Roll damage for each target
                     nDamage = d8(nCasterLvl);
                     //Resolve metamagic
-                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                     {
                         nDamage = 8 * nCasterLvl;
                     }
-                    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                    else if ((nMetaMagic & METAMAGIC_EMPOWER))
                     {
                        nDamage = nDamage + nDamage / 2;
                     }

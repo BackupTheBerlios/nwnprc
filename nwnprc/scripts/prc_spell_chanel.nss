@@ -71,7 +71,7 @@ if (oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))
 //spell the caster level of the spellsword and the metamagic feat.
 int nSpell = GetSpellId();
 int nClevel =(PRCGetCasterLevel(oPC));
-int nFeat = GetMetaMagicFeat();
+int nFeat = PRCGetMetaMagicFeat();
 
 
 //This stops the original spellscript (and all craft item code)

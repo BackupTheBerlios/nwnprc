@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         nCasterLevel = 20;
     }
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     float fDelay;
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetSpellTargetLocation());
@@ -76,11 +76,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         nDamage = d8() + nCasterLevel;
         //Enter Metamagic conditions
         int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_NEGATIVE, FALSE);
-        if (nMetaMagic == METAMAGIC_MAXIMIZE || iBlastFaith)
+        if (nMetaMagic & METAMAGIC_MAXIMIZE || iBlastFaith)
         {
             nDamage = 8 + nCasterLevel;
         }
-        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+        if ((nMetaMagic & METAMAGIC_EMPOWER))
         {
             nDamage = nDamage + (nDamage/2) + nCasterLevel;
         }

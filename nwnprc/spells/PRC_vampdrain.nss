@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     //Declare major variables
     object oTarget = GetSpellTargetObject();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDDice = nCasterLevel /4;
@@ -56,10 +56,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //--------------------------------------------------------------------------
     //Enter Metamagic conditions
     //--------------------------------------------------------------------------
-    nDamage = MyMaximizeOrEmpower(6,nDDice,nMetaMagic);
+    nDamage = PRCMaximizeOrEmpower(6,nDDice,nMetaMagic);
     int nDuration = nCasterLevel/3;
 
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration *= 2;
     }

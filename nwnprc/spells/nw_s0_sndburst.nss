@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_SONIC);
 
     int nCasterLevel = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     effect eStun = EffectStunned();
     effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
@@ -84,11 +84,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(2),TRUE,-1,CasterLvl);
                 }
                 //Make meta magic checks
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                     nDamage = 8;
                 }
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                     nDamage = nDamage + (nDamage/2);
                 }

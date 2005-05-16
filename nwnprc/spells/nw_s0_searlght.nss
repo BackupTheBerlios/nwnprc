@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     //Declare major variables
     object oCaster = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
@@ -104,11 +104,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             }
 
             //Make metamagic checks
-            if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+            if ((nMetaMagic & METAMAGIC_MAXIMIZE))
             {
                 nDamage = nMax * nCasterLevel;
             }
-            if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+            if ((nMetaMagic & METAMAGIC_EMPOWER))
             {
                 nDamage = nDamage + (nDamage/2);
             }

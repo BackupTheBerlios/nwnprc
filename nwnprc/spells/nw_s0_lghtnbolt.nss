@@ -54,7 +54,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         nCasterLevel = 10;
     }
     int nDamage;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Set the lightning stream to start at the caster's hands
     effect eLightning = EffectBeam(VFX_BEAM_LIGHTNING, OBJECT_SELF, BODY_NODE_HAND);
     effect eVis  = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
@@ -88,11 +88,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         //Roll damage
                         nDamage =  d6(nCasterLevel);
                         //Enter Metamagic conditions
-                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                        if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                         {
                              nDamage = 6 * nCasterLevel;//Damage is at max
                         }
-                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                        if ((nMetaMagic & METAMAGIC_EMPOWER))
                         {
                              nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                         }

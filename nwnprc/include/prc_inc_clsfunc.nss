@@ -1353,7 +1353,7 @@ void spellsCureMod(int nCasterLvl ,int nDamage, int nMaxExtraDamage, int nMaximi
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     int nHeal;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eVis = EffectVisualEffect(vfx_impactHurt);
     effect eVis2 = EffectVisualEffect(vfx_impactHeal);
     effect eHeal, eDam;
@@ -1376,7 +1376,7 @@ void spellsCureMod(int nCasterLvl ,int nDamage, int nMaxExtraDamage, int nMaximi
 
     //Make metamagic checks
     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, TRUE);
-    if (nMetaMagic == METAMAGIC_MAXIMIZE || iBlastFaith)
+    if (nMetaMagic & METAMAGIC_MAXIMIZE || iBlastFaith)
     {
         nDamage = nMaximized + nExtraDamage;
         // * if low or normal difficulty then MAXMIZED is doubled.
@@ -1385,7 +1385,7 @@ void spellsCureMod(int nCasterLvl ,int nDamage, int nMaxExtraDamage, int nMaximi
             nDamage = nDamage + nExtraDamage;
         }
     }
-    if (nMetaMagic == METAMAGIC_EMPOWER || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
+    if (nMetaMagic & METAMAGIC_EMPOWER || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
     {
         nDamage = nDamage + (nDamage/2);
     }

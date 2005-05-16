@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     object oTarget = GetSpellTargetObject();
     int nHeal;
     int nDamage = d8(4);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eVis = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
     effect eVis2 = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
     effect eHeal, eDam;
@@ -67,7 +67,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     CasterLvl +=SPGetPenetr();
     //Make metamagic checks
     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, TRUE);
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE) || iBlastFaith)
+    if ((nMetaMagic & METAMAGIC_MAXIMIZE) || iBlastFaith)
     {
         nDamage = 32 + nExtraDamage;
         // * if low or normal difficulty then MAXMIZED is doubled.
@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             nDamage = nDamage + nExtraDamage;
         }
     }
-    if (nMetaMagic == METAMAGIC_EMPOWER || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
+    if (nMetaMagic & METAMAGIC_EMPOWER || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
     {
         nDamage = nDamage + (nDamage/2);
     }

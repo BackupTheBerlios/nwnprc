@@ -61,14 +61,14 @@ void main()
     //--------------------------------------------------------------------------
     // Calculate the duration
     //--------------------------------------------------------------------------
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 
     int nDuration = CasterLvl ;
     int nPenetr =  CasterLvl + SPGetPenetr();
 
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
        nDuration = nDuration * 2;
     }
@@ -132,7 +132,7 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         //----------------------------------------------------------------------
         // Calculate Damage
         //----------------------------------------------------------------------
-        int nDamage = MyMaximizeOrEmpower(6,2,nMetaMagic);
+        int nDamage = PRCMaximizeOrEmpower(6,2,nMetaMagic);
         nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
         effect eDam = EffectDamage(nDamage, EleDmg);
         effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);

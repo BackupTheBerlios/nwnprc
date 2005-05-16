@@ -33,17 +33,17 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int iTurnDur = PRCGetCasterLevel(OBJECT_SELF) + d4();
     int iPenetr = PRCGetCasterLevel(OBJECT_SELF) + SPGetPenetr();
     int iSaveDC = GetSpellSaveDC() + GetChangesToSaveDC(oTarget, OBJECT_SELF);
-    int iMeta = GetMetaMagicFeat();
+    int iMeta = PRCGetMetaMagicFeat();
     
-    if (CheckMetaMagic(iMeta, METAMAGIC_EXTEND))
+    if ((iMeta & METAMAGIC_EXTEND))
     {
         iTurnDur = iTurnDur * 2;
     }
-    else if (CheckMetaMagic(iMeta, METAMAGIC_EMPOWER))
+    else if ((iMeta & METAMAGIC_EMPOWER))
     {
         iNegDam = iNegDam + iNegDam / 2;
     }
-    else if (CheckMetaMagic(iMeta, METAMAGIC_MAXIMIZE))
+    else if ((iMeta & METAMAGIC_MAXIMIZE))
     {
         iNegDam = 6;
     }

@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
@@ -78,11 +78,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     //Roll damage
                     nDamage = d6(3) + nCasterLvl;
                     //Make metamagic checks
-                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                     {
                         nDamage = 18 + nCasterLvl;
                     }
-                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                    if ((nMetaMagic & METAMAGIC_EMPOWER))
                     {
                         nDamage = nDamage + (nDamage/2);
                     }

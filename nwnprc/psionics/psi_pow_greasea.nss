@@ -34,7 +34,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
  ActionDoCommand(SetAllAoEInts(SPELL_GREASE,OBJECT_SELF, GetManifesterDC(GetAreaOfEffectCreator())));
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eVis = EffectVisualEffect(VFX_IMP_SLOW);
     effect eSlow = EffectMovementSpeedDecrease(50);
     effect eLink = EffectLinkEffects(eVis, eSlow);

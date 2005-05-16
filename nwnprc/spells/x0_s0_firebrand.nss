@@ -85,7 +85,7 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
 {
     object oTarget = OBJECT_INVALID;
     int nDamage = 0;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCnt = 1;
     effect eMissile = EffectVisualEffect(nMIRV);
     effect eVis = EffectVisualEffect(nVIS);
@@ -184,11 +184,11 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
                         //Roll damage
                         int nDam = d6(nD6Dice);
                         //Enter Metamagic conditions
-                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                        if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                         {
                              nDam = nD6Dice*6;//Damage is at max
                         }
-                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                        if ((nMetaMagic & METAMAGIC_EMPOWER))
                         {
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }

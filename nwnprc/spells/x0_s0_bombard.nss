@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     CasterLvl +=SPGetPenetr();
     
     
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     float fDelay;
     effect eExplode = EffectVisualEffect(VFX_FNF_METEOR_SWARM);
@@ -82,11 +82,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 //Roll damage for each target
                 nDamage = d8(nCasterLvl);
                 //Resolve metamagic
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                     nDamage = 8 * nCasterLvl;
                 }
-                else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                else if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                    nDamage = nDamage + nDamage / 2;
                 }

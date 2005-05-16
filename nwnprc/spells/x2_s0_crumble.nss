@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     int  nCasterLvl =PRCGetCasterLevel(oCaster);
     int  nType      = GetObjectType(oTarget);
     int  nRacial    = MyPRCGetRacialType(oTarget);
-    int  nMetaMagic = GetMetaMagicFeat();
+    int  nMetaMagic = PRCGetMetaMagicFeat();
 
     //Minimum caster level of 1, maximum of 15.
     if(nCasterLvl == 0)
@@ -77,12 +77,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     int nDam = d6(nCasterLvl);
 
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
     {
         nDam = 6*nCasterLvl;
     }
 
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+    if ((nMetaMagic & METAMAGIC_EMPOWER))
     {
         nDam = nDam + nDam/2;
     }

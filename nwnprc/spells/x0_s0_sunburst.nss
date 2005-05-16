@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
     int nCasterLvl = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage = 0;
     float fDelay;
     effect eExplode = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
@@ -96,11 +96,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
                 {
                     //Roll damage for each target
-                    nDamage = MyMaximizeOrEmpower(6, nCasterLvl, nMetaMagic);
+                    nDamage = PRCMaximizeOrEmpower(6, nCasterLvl, nMetaMagic);
                 }
                 else
                 {
-                    nDamage = MyMaximizeOrEmpower(6, 6, nMetaMagic);
+                    nDamage = PRCMaximizeOrEmpower(6, 6, nMetaMagic);
                }
                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);

@@ -54,7 +54,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     int nCasterLvl = CasterLvl;
     int nDamage = 0;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCnt;
     effect eMissile = EffectVisualEffect(VFX_IMP_MIRV);
     effect eVis = EffectVisualEffect(VFX_IMP_MAGBLUE);
@@ -83,11 +83,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Roll damage
                 int nDam = d4(1) + 1;
                 //Enter Metamagic conditions
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                       nDam = 5;//Damage is at max
                 }
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                       nDam = nDam + nDam/2; //Damage/Healing is +50%
                 }

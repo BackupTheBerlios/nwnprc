@@ -77,7 +77,7 @@ void RunImpact(object oTarget, object oCaster)
         //----------------------------------------------------------------------
         // Calculate Damage
         //----------------------------------------------------------------------
-        int nDamage = MaximizeOrEmpower(6,2, METAMAGIC_NONE);
+        int nDamage = PRCMaximizeOrEmpower(6,2, METAMAGIC_NONE);
         effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
         effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
         eDam = EffectLinkEffects(eVis,eDam); // flare up

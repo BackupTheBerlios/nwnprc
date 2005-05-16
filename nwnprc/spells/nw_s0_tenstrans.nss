@@ -144,7 +144,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         //Declare major variables
         int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
         float fDuration = RoundsToSeconds(nCasterLvl);
-        int nMeta = GetMetaMagicFeat();
+        int nMeta = PRCGetMetaMagicFeat();
         int nHP;
         int nBAB = nCasterLvl / 2;
         int nStr = d4(2);
@@ -169,21 +169,21 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         nHP += d6(nCasterLvl);
 
         //Metamagic
-        if(nMeta == METAMAGIC_MAXIMIZE)
+        if(nMeta & METAMAGIC_MAXIMIZE)
         {
             nHP = nCasterLvl * 6;
             nStr = 8;
             nDex = 8;
             nCon = 8;
         }
-        else if(nMeta == METAMAGIC_EMPOWER)
+        else if(nMeta & METAMAGIC_EMPOWER)
         {
             nHP += nHP/2;
             nStr += nStr/2;
             nDex += nDex/2;
             nCon += nCon/2;
         }
-        else if(nMeta == METAMAGIC_EXTEND)
+        else if(nMeta & METAMAGIC_EXTEND)
         {
             fDuration *= 2.0;
         }
@@ -250,7 +250,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Declare major variables
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
-    int nMeta = GetMetaMagicFeat();
+    int nMeta = PRCGetMetaMagicFeat();
     int nHP, nCnt;
 
     //Determine bonus HP
@@ -260,15 +260,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     }
 
     //Metamagic
-    if(nMeta == METAMAGIC_MAXIMIZE)
+    if(nMeta & METAMAGIC_MAXIMIZE)
     {
         nHP = CasterLvl * 6;
     }
-    else if(nMeta == METAMAGIC_EMPOWER)
+    else if(nMeta & METAMAGIC_EMPOWER)
     {
         nHP = nHP + (nHP/2);
     }
-    else if(nMeta == METAMAGIC_EXTEND)
+    else if(nMeta & METAMAGIC_EXTEND)
     {
         nDuration *= 2;
     }

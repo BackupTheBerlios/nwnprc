@@ -28,7 +28,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
 
     //Declare major variables
     int nRounds;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eHold = EffectParalyze();
     effect eDur = EffectVisualEffect(476 );
     eHold = EffectLinkEffects(eDur, eHold);
@@ -64,7 +64,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
                     int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
                     if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC) , SAVING_THROW_TYPE_MIND_SPELLS))
                     {
-                       nRounds = MyMaximizeOrEmpower(6, 1, nMetaMagic);
+                       nRounds = PRCMaximizeOrEmpower(6, 1, nMetaMagic);
                        fDelay = GetRandomDelay(0.75, 1.75);
                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHold, oTarget, RoundsToSeconds(nRounds),FALSE));
                     }

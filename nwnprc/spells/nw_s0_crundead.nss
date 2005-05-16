@@ -42,14 +42,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = nCasterLevel;
     nDuration = 24;
     effect eSummon;
     //effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     //Check for metamagic extend
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2;   //Duration is +100%
     }

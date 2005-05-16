@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     int nCasterLvl = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     float fDelay;
     effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
@@ -78,11 +78,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                  //Roll damage for each target
                  nDamage = d4(nCasterLvl);
                  //Resolve metamagic
-                 if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                 if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                  {
                      nDamage = 4 * nCasterLvl;
                  }
-                 else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                 else if ((nMetaMagic & METAMAGIC_EMPOWER))
                  {
                      nDamage = nDamage + nDamage / 2;
                  }
@@ -94,7 +94,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                      //represents the flame that erupts on the target not on the ground.
                      DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
      
-                     int nDamage =  MyMaximizeOrEmpower(3, 1, GetMetaMagicFeat());
+                     int nDamage =  PRCMaximizeOrEmpower(3, 1, PRCGetMetaMagicFeat());
                      ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_COLD));
                      PRCBonusDamage(oTarget);
                  }

@@ -42,7 +42,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
     //Declare major variables
     int nDamage = d6(3);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     object oTarget = GetSpellTargetObject();
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_DEATH);
@@ -61,11 +61,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                 if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)),SAVING_THROW_TYPE_DEATH))
                 {
                      //Check for metamagic
-                     if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                     if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                      {
                         nDamage = 18;
                      }
-                     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                     if ((nMetaMagic & METAMAGIC_EMPOWER))
                      {
                         nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
                      }

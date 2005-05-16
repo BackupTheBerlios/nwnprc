@@ -40,13 +40,13 @@ if (!GetLocalInt(OBJECT_SELF, "DimAnchor"))
 {
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = nCasterLevel;
     effect eSummon;
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_GATE);
     //Make metamagic extend check
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2;   //Duration is +100%
     }

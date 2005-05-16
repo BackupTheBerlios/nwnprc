@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
   int nCasterLvl = CasterLvl;
   int nDamage, nDamage2;
-  int nMetaMagic = GetMetaMagicFeat();
+  int nMetaMagic = PRCGetMetaMagicFeat();
   effect eStrike = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_FIRE);
   effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
   effect eHoly;
@@ -88,11 +88,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
            {
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                 nDamage =  d6(nCasterLvl);
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                      nDamage = 6 * nCasterLvl;
                 }
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                       nDamage = nDamage + (nDamage/2);
                 }

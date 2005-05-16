@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
   int nCasterLvl = CasterLvl;
   int nDamagen, nModify, nHurt, nHP;
-  int nMetaMagic = GetMetaMagicFeat();
+  int nMetaMagic = PRCGetMetaMagicFeat();
   effect eKill;
   effect eHeal;
   effect eVis = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
@@ -95,11 +95,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     nModify = d8() + nCasterLvl;
                     //Make metamagic check
                     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, FALSE);
-                    if (nMetaMagic == METAMAGIC_MAXIMIZE || iBlastFaith)
+                    if (nMetaMagic & METAMAGIC_MAXIMIZE || iBlastFaith)
                     {
                         nModify = 8 + nCasterLvl;
                     }
-                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                    if ((nMetaMagic & METAMAGIC_EMPOWER))
 	                {
 	                    nModify += (nModify/2); //Damage/Healing is +50%
 	                }
@@ -128,11 +128,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 nHP = d8();
                 //Enter Metamagic conditions
                 int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, FALSE);
-                if (nMetaMagic == METAMAGIC_MAXIMIZE || iBlastFaith)
+                if (nMetaMagic & METAMAGIC_MAXIMIZE || iBlastFaith)
                 {
                     nHP = 8;//Damage is at max
                 }
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                     nHP = nHP + (nHP/2); //Damage/Healing is +50%
                 }

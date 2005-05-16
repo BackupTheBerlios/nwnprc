@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 
     int nCasterLevel = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     if(nCasterLevel > 3)
     {
         nCasterLevel = (nCasterLevel-3)/3;
@@ -61,11 +61,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int nDamage = d6(2 + nCasterLevel);
 
     //Enter Metamagic conditions
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
     {
         nDamage = 6 * (2 + nCasterLevel);//Damage is at max
     }
-    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+    else if ((nMetaMagic & METAMAGIC_EMPOWER))
     {
         nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
     }

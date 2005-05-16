@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_COLD);
 
     int nCasterLvl = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage, nDamage2, nDamage3;
     int nVariable = nCasterLvl/3;
     float fDelay;
@@ -77,13 +77,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 nDamage2 = d6(2);
                 nDamage3 = d6(nVariable);
                 //Resolve metamagic
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                     nDamage = 18;
                     nDamage2 = 12;
                     nDamage3 = 6 * nVariable;
                 }
-                else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                else if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                    nDamage = nDamage + (nDamage / 2);
                    nDamage2 = nDamage2 + (nDamage2 / 2);

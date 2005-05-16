@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     int nCasterLvl = CasterLvl/2;
     int nRounds = d4(1);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
     effect eDeaf = EffectDeaf();
     //Minimum caster level of 1, maximum of 15.
@@ -75,11 +75,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Roll damage
             int nDam = d4(nCasterLvl);
             //Enter Metamagic conditions
-            if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+            if ((nMetaMagic & METAMAGIC_MAXIMIZE))
             {
                 nDam = 4 * nCasterLvl; //Damage is at max
             }
-            if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+            if ((nMetaMagic & METAMAGIC_EMPOWER))
             {
                 nDam = nDam + nDam/2; //Damage/Healing is +50%
             }

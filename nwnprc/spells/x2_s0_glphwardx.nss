@@ -97,11 +97,11 @@ ActionDoCommand(SetAllAoEInts(SPELL_GLYPH_OF_WARDING,OBJECT_SELF, GetSpellSaveDC
                     nDamage = d8(nDice);
                     //Enter Metamagic conditions
 
-                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                     {
                         nDamage = 8 * 5;//Damage is at max
                     }
-                    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                    else if ((nMetaMagic & METAMAGIC_EMPOWER))
                     {
                         nDamage = nDamage + (nDamage/2);//Damage/Healing is +50%
                     }

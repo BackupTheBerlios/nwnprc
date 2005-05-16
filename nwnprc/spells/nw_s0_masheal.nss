@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
   effect eVis2 = EffectVisualEffect(VFX_IMP_HEALING_G);
   effect eStrike = EffectVisualEffect(VFX_FNF_LOS_HOLY_10);
   int nTouch, nModify, nDamage, nHeal;
-  int nMetaMagic = GetMetaMagicFeat();
+  int nMetaMagic = PRCGetMetaMagicFeat();
   float fDelay;
   location lLoc =  GetSpellTargetLocation();
 
@@ -84,7 +84,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                         nModify = d4();
                         //make metamagic check
                         int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, FALSE);
-                        if (nMetaMagic == METAMAGIC_MAXIMIZE || iBlastFaith)
+                        if (nMetaMagic & METAMAGIC_MAXIMIZE || iBlastFaith)
                         {
                             nModify = 1;
                         }

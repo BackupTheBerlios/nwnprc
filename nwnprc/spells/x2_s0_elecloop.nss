@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     location lTarget    = GetSpellTargetLocation();
     effect   eStrike    = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
-    int      nMetaMagic = GetMetaMagicFeat();
+    int      nMetaMagic = PRCGetMetaMagicFeat();
     float    fDelay;
     effect   eBeam;
     int      nDamage;
@@ -118,7 +118,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             {
 
                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
-                nPotential = MyMaximizeOrEmpower(6, nNumDice, nMetaMagic);
+                nPotential = PRCMaximizeOrEmpower(6, nNumDice, nMetaMagic);
                 nPotential += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                 nDamage    = PRCGetReflexAdjustedDamage(nPotential, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_ELECTRICITY);
 

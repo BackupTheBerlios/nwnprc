@@ -192,11 +192,11 @@ int MaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0)
         nDamage = nDamage + Random(nDice) + 1;
     }
     //Resolve metamagic
-    if (nMeta == METAMAGIC_MAXIMIZE)
+    if (nMeta & METAMAGIC_MAXIMIZE)
     {
         nDamage = nDice * nNumberOfDice;
     }
-    else if (nMeta == METAMAGIC_EMPOWER)
+    else if (nMeta & METAMAGIC_EMPOWER)
     {
        nDamage = nDamage + nDamage / 2;
     }
@@ -220,7 +220,7 @@ void DoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDamage = 0;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCnt;
     effect eMissile;
     effect eVis = EffectVisualEffect(vSmallHit);
@@ -425,7 +425,7 @@ int GetSizeModifier(object oCreature)
 
 void DoDirgeEffect(object oTarget,int nPenetr)
 {    //Declare major variables
-//    int nMetaMagic = GetMetaMagicFeat();
+//    int nMetaMagic = PRCGetMetaMagicFeat();
 
    // SpawnScriptDebugger();
 
@@ -478,7 +478,7 @@ void DoCamoflage(object oTarget)
 {
     //Declare major variables
     effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
     effect eHide = EffectSkillIncrease(SKILL_HIDE, 10);
 
@@ -486,7 +486,7 @@ void DoCamoflage(object oTarget)
     effect eLink = EffectLinkEffects(eHide, eDur);
 
     int nDuration = PRCGetCasterLevel(OBJECT_SELF); // * Duration 1 turn/level
-     if (nMetaMagic == METAMAGIC_EXTEND)    //Duration is +100%
+     if (nMetaMagic & METAMAGIC_EXTEND)    //Duration is +100%
     {
          nDuration = nDuration * 2;
     }
@@ -519,7 +519,7 @@ void DoSpikeGrowthEffect(object oTarget,int nPenetr)
         //Spell resistance check
         if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
         {
-            int nMetaMagic = GetMetaMagicFeat();
+            int nMetaMagic = PRCGetMetaMagicFeat();
             int nDam = MaximizeOrEmpower(4, 1, nMetaMagic);
             nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
 
@@ -564,7 +564,7 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
 {
     //Declare major variables
     object oTarget = GetSpellTargetObject();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nTouch = TouchAttackMelee(oTarget);
 
     int CasterLvl;
@@ -584,12 +584,12 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
 
         //Check for metamagic
     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_NEGATIVE, TRUE);
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE) || iBlastFaith)
+    if ((nMetaMagic & METAMAGIC_MAXIMIZE) || iBlastFaith)
     {
         nDamage = nMaximized;
     }
     else
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+    if ((nMetaMagic & METAMAGIC_EMPOWER))
     {
         nDamage = nDamage + (nDamage / 2);
     }
@@ -657,7 +657,7 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
     object oTarget = OBJECT_INVALID;
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 //    int nDamage = 0;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCnt = 1;
     effect eMissile = EffectVisualEffect(nMIRV);
     effect eVis = EffectVisualEffect(nVIS);
@@ -754,11 +754,11 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
                         //Roll damage
                         int nDam = d6(nD6Dice);
                         //Enter Metamagic conditions
-                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                        if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                         {
                              nDam = nD6Dice*6;//Damage is at max
                         }
-                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                        if ((nMetaMagic & METAMAGIC_EMPOWER))
                         {
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }
@@ -834,7 +834,7 @@ void DoMagicFang(int nPower, int nDamagePower,int nCasterLevel)
     RemoveSpellEffects(453, GetMaster(oTarget), oTarget);
 
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
     effect eAttack = EffectAttackIncrease(nPower);
     effect eDamage = EffectDamageIncrease(nPower);
@@ -848,7 +848,7 @@ void DoMagicFang(int nPower, int nDamagePower,int nCasterLevel)
     eLink = EffectLinkEffects(eLink, eReduction);
 
     int nDuration = nCasterLevel; // * Duration 1 turn/level
-     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))    //Duration is +100%
+     if ((nMetaMagic & METAMAGIC_EXTEND))    //Duration is +100%
     {
          nDuration = nDuration * 2;
     }
@@ -1214,9 +1214,9 @@ void spellApplyMindBlank(object oTarget, int nSpellId, float fDelay=0.0)
     effect eSearch = GetFirstEffect(oTarget);
     int bValid;
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
         nDuration = nDuration *2; //Duration is +100%
     }

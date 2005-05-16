@@ -197,12 +197,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
     effect eSummon = EffectSummonCreature("x2_s_bblade");
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_3);
     //Make metamagic check for extend
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
         nDuration = nDuration *2;//Duration is +100%
     //Apply the VFX impact and summon effect
     MultisummonPreSummon();

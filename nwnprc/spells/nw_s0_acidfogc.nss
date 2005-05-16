@@ -28,7 +28,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
  ActionDoCommand(SetAllAoEInts(SPELL_ACID_FOG,OBJECT_SELF, GetSpellSaveDC()));
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage = d6(2);
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
@@ -36,11 +36,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     float fDelay;
 
         //Enter Metamagic conditions
-        if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+        if ((nMetaMagic & METAMAGIC_MAXIMIZE))
         {
             nDamage = 12;//Damage is at max
         }
-        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+        if ((nMetaMagic & METAMAGIC_EMPOWER))
         {
             nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
         }

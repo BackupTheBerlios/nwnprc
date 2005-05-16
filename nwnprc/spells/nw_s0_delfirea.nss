@@ -32,7 +32,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     object oCaster = GetAreaOfEffectCreator();
     location lTarget = GetLocation(OBJECT_SELF);
     int nDamage;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(oCaster);
 
     int nCasterLevel = CasterLvl;
@@ -71,11 +71,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
                         nDamage = d6(nCasterLevel);
                         //Enter Metamagic conditions
-                        if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                        if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                         {
                             nDamage = 6 * nCasterLevel;//Damage is at max
                         }
-                        else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                        else if ((nMetaMagic & METAMAGIC_EMPOWER))
                         {
                             nDamage = nDamage + (nDamage/2);//Damage/Healing is +50%
                         }

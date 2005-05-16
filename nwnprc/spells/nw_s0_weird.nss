@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     
 
     int nCasterLvl =CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     float fDelay;
     
@@ -90,11 +90,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                                 //Roll damage
                                 nDamage = d6(3);
                                 //Make metamagic check
-                                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                                 {
                                     nDamage = 18;
                                 }
-                                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                                if ((nMetaMagic & METAMAGIC_EMPOWER))
                                 {
                                     nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
                                 }

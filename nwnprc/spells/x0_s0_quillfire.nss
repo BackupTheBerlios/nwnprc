@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nCasterLvl = CasterLvl;
     int nDamage = 0;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCnt;
     effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
 
@@ -64,11 +64,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                 //Roll damage
                 int nDam = d8(1);
                 //Enter Metamagic conditions
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                       nDam = 8;//Damage is at max
                 }
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                       nDam = nDam + nDam/2; //Damage/Healing is +50%
                 }

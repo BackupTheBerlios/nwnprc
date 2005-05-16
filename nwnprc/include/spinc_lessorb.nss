@@ -7,7 +7,7 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
 
      object oTarget = GetSpellTargetObject();
      int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-     int nMetaMagic = GetMetaMagicFeat();
+     int nMetaMagic = PRCGetMetaMagicFeat();
 
      int nDice = (nCasterLvl + 1)/2;
      if (nDice > 5) nDice = 5;

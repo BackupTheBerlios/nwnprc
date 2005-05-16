@@ -2,14 +2,16 @@
 #include "prc_inc_switch"
 #include "inc_debug"
 
-//constants defining directories
+//defining directories
 //must be changed to each install
-//alternativly it will use a local string on the module named NWN_DIR if set
-//in preference to the constant
+//it will use a local string on the module named NWN_DIR if set
+
+
 const string DB_NAME = "PRCNWNXLeto";
 const string DB_GATEWAY_VAR = "PRCNWNXLeto";
 
 //set this to true if using build 18 or earlier of letoscript.dll
+//again this is a PRC switch
 
 
 /*YOU MUST ADD THE FOLLOWING TO YOUR ON CLIENT EXIT EVENT
@@ -19,63 +21,11 @@ const string DB_GATEWAY_VAR = "PRCNWNXLeto";
 
 */
 
-//Script Types
-//taken from the build03.18 release notes
-/*
-SCRIPT, taking a LetoScript script as a parameter. Example:
+/*YOU MUST ADD THE FOLLOWING TO YOUR ON CLIENT ENTER EVENT
 
-void main()
-{
-    SendMessageToAllDMs("Firing LetoScript test...");
+    object oPC = GetExitingObject();
+    LetoPCEnter(oPC);
 
-    string LetoTest;
-    SetLocalString(GetModule(), "NWNX!LETO!SCRIPT", "<file:open BOB 'g:/nwn/localvault/bob.bic'><FirstName> <LastName>");
-    LetoTest = GetLocalString(GetModule(), "NWNX!LETO!SCRIPT");
-
-    SendMessageToAllDMs("Result: #" + LetoTest + "#");
-}
-
-
-SPAWN, taking a LetoScript script as a parameter. Unlike SCRIPT, this
-creates a new thread that runs (simultaneously) in the background while
-your server goes on doing its business. Running a SCRIPT that takes 10
-seconds to complete means your server will hang for 10 seconds while it
-waits for the script to complete. Running the same script as a SPAWN means
-the server doesn't hang at all, but the script runs "in the background"
-instead (and still takes 10 seconds to complete). The result you get back
-from SPAWN is the ThreadId created for your script. Record it! Unless you
-POLL for that ThreadId, the thread will hang around indefinitely, costing
-system resources, until NWNX is shut down. Note that SPAWN does not share
-the state that SCRIPT maintains. That is, you cannot operate on a handle
-that you have previously opened in a SCRIPT. (In fact, allowing SPAWN and
-QFORGET to share state with SCRIPT could have disastrous consequences, and
-force scripters using NWNX-Leto to write "thread safe" LetoScript!)
-
-POLL, taking a ThreadId as a parameter. The result will tell you whether
-this thread is still working, or has completed. You will get one of three
-results: "Error: ### not done." (### is your ThreadId) if the thread is
-still working, "Error: ..." for some other error (... is the exact error),
-or you will not get "Error:" at the beginning of the string, and instead
-you will get the result of your script. ZombieBench provides a very good
-example of how to use POLL correctly.
-
-QFORGET, taking a LetoScript script as a parameter. This is a "Queue and
-Forget" version of SPAWN. Like SPAWN, the script is queued (it will not
-run until all previous SPAWN and QFORGET scripts have completed), but you
-cannot POLL for a QFORGET thread, and upon completion the thread is
-automatically terminated. You would use QFORGET when you want to multithread
-a script, but you don't care what the results are, and you don't need to
-wait for it to complete to do something else (such as RCO). There is no
-result from QFORGET (just an empty string).
-
-FFORGET, taking a LetoScript script as a parameter. This is the "Fire and
-Forget" version of SPAWN, but unlike QFORGET, the thread is created and
-the script run immediately, rather than being put at the end of the queue.
-Although this sounds like a tempting alternative to QFORGET for a script
-you want completed quickly, EXTREME CAUTION must be exercised when using
-FFORGET. It is unstable and prone to cause exceptions in the script it
-runs. There should be no danger to NWNX itself - although even that isn't
-a guarantee.
 */
 
 //instanty runs the letoscript sScript
@@ -169,6 +119,7 @@ string LetoScript(string sScript, string sType = "SCRIPT", string sPollScript = 
 void LetoPCEnter(object oPC)
 {
     SetLocalString(oPC, "Leto_Path", GetBicPath(oPC));
+    SetLocalString(oPC, "PCPlayerName", GetPCPlayerName(oPC));
     DeleteLocalString(oPC, "LetoScript");
 }
 
@@ -189,10 +140,19 @@ void LetoPCExit(object oPC)
         }
         else
         {
-            //unicorn syntax
-            sScript  = "%char= '"+sPath+"'; "+sScript;
-            sScript += "%char = '>'; ";
-            sScript += "close %char; ";
+            if(GetPRCSwitch(PRC_LETOSCRIPT_GETNEWESTBIC))
+            {
+                sScript  = "%char =  FindNewestBic(qq{"+GetNWNDir()+GetLocalString(oPC, "PCPlayerName")+"}); "+sScript;
+                sScript += "%char = '>'; ";
+                sScript += "close %char; ";
+            }
+            else
+            {
+                //unicorn syntax
+                sScript  = "%char= '"+sPath+"'; "+sScript;
+                sScript += "%char = '>'; ";
+                sScript += "close %char; ";
+            }
         }
         string sScriptResult = LetoScript(sScript);
         SetLocalString(GetModule(), "LetoResult", sScriptResult);
@@ -242,9 +202,16 @@ DoDebug(GetName(GetAreaFromLocation(lLoc)));
         }
         else
         {
-            string sSQL = "SELECT blob FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1";
-            SetLocalString(GetModule(), "NWNX!ODBC!SETSCORCOSQL", sSQL);
-            oReturn = RetrieveCampaignObject("NWNX", "-", lLoc);
+            if(GetPRCSwitch(PRC_LETOSCRIPT_UNICORN_SQL))
+            {
+                string sSQL = "SELECT blob FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1";
+                SetLocalString(GetModule(), "NWNX!ODBC!SETSCORCOSQL", sSQL);
+                oReturn = RetrieveCampaignObject("NWNX", "-", lLoc);
+            }
+            else
+            {
+                oReturn = RetrieveCampaignObject(DB_NAME, DB_GATEWAY_VAR, lLoc);
+            }
         }
 DoDebug(GetName(oReturn));        
         SetLocalString(GetModule(), "LetoResult", sResult);
@@ -311,7 +278,18 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
         else//boot
         {
             SetLocalString(oObject, "LetoScript", GetLocalString(oObject, "LetoScript")+sScript);
-            BootPC(oObject);
+            if(GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_IP) == "")
+            {
+                BootPC(oObject);
+            }
+            else
+            {
+                ActivatePortal(oObject, 
+                    GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_IP),
+                    GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_PASSWORD),
+                    "", //waypoint, may need to change
+                    TRUE);
+            }                
             return oReturn;
         }
     }
@@ -335,35 +313,46 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
         }
         else
         {
-            //unicorn
-            //Put object into DB
-            string sSQL = "SELECT "+DB_GATEWAY_VAR+" FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1";
-            PRC_SQLExecDirect(sSQL);
-
-            if (PRC_SQLFetch() == PRC_SQL_SUCCESS)
+            if(GetPRCSwitch(PRC_LETOSCRIPT_UNICORN_SQL))
             {
-                // row exists
-                sSQL = "UPDATE "+DB_NAME+" SET val=%s WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR;
-                SetLocalString(GetModule(), "NWNX!ODBC!SETSCORCOSQL", sSQL);
+                //unicorn
+                //Put object into DB
+                string sSQL = "SELECT "+DB_GATEWAY_VAR+" FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1";
+                PRC_SQLExecDirect(sSQL);
+
+                if (PRC_SQLFetch() == PRC_SQL_SUCCESS)
+                {
+                    // row exists
+                    sSQL = "UPDATE "+DB_NAME+" SET val=%s WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR;
+                    SetLocalString(GetModule(), "NWNX!ODBC!SETSCORCOSQL", sSQL);
+                }
+                else
+                {
+                    // row doesn't exist
+                    // assume table doesnt exist too
+                    sSQL = "CREATE TABLE "+DB_NAME+" ( "+DB_GATEWAY_VAR+" TEXT, blob BLOB )";
+                    PRC_SQLExecDirect(sSQL);
+                    sSQL = "INSERT INTO "+DB_NAME+" ("+DB_GATEWAY_VAR+", blob) VALUES" +
+                        "("+DB_GATEWAY_VAR+", %s)";
+                    SetLocalString(GetModule(), "NWNX!ODBC!SETSCORCOSQL", sSQL);
+                }
+                StoreCampaignObject ("NWNX", "-", oObject);
+                // Reaquire DB with new object in it
+                //force data to be written to disk
+                sSQL = "COMMIT";
+                PRC_SQLExecDirect(sSQL);
+                sCommand += "sql.connect 'root', '' or die $!; ";
+                sCommand += "sql.query 'SELECT blob FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1'; ";
+                sCommand += "sql.retrieve %"+sLetoTag+"; ";
             }
             else
             {
-                // row doesn't exist
-                // assume table doesnt exist too
-                sSQL = "CREATE TABLE "+DB_NAME+" ( "+DB_GATEWAY_VAR+" TEXT, blob BLOB )";
-                PRC_SQLExecDirect(sSQL);
-                sSQL = "INSERT INTO "+DB_NAME+" ("+DB_GATEWAY_VAR+", blob) VALUES" +
-                    "("+DB_GATEWAY_VAR+", %s)";
-                SetLocalString(GetModule(), "NWNX!ODBC!SETSCORCOSQL", sSQL);
+                //Put object into DB
+                StoreCampaignObject(DB_NAME, DB_GATEWAY_VAR, oObject);
+                sCommand += "%"+sLetoTag+"; ";
+                //Extract object from DB
+                sCommand += "extract qq{"+GetNWNDir()+DB_NAME+".fpt}, '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";            
             }
-            StoreCampaignObject ("NWNX", "-", oObject);
-            // Reaquire DB with new object in it
-            //force data to be written to disk
-            sSQL = "COMMIT";
-            PRC_SQLExecDirect(sSQL);
-            sCommand += "sql.connect 'root', '' or die $!; ";
-            sCommand += "sql.query 'SELECT blob FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1'; ";
-            sCommand += "sql.retrieve %"+sLetoTag+"; ";
         }
         //store their location
         lLoc = GetLocation(oObject);
@@ -389,10 +378,18 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
             }
             else
             {
-                //unicorn
-                sCommand += "sql.query 'SELECT blob FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1'; ";
-                sCommand += "sql.store %"+sLetoTag+"; ";
-                sCommand += "close %"+sLetoTag+"; ";
+                if(GetPRCSwitch(PRC_LETOSCRIPT_UNICORN_SQL))
+                {
+                    //unicorn
+                    sCommand += "sql.query 'SELECT blob FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1'; ";
+                    sCommand += "sql.store %"+sLetoTag+"; ";
+                    sCommand += "close %"+sLetoTag+"; ";
+                }
+                else
+                {
+                    sCommand += "inject qq{"+GetNWNDir()+DB_NAME+".fpt}, '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";
+                    sCommand += "close %"+sLetoTag+"; ";
+                }
             }
         }
 
@@ -413,15 +410,28 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
             }
             else
             {
-                string sSQL = "SELECT blob FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1";
-                SetLocalString(GetModule(), "NWNX!ODBC!SETSCORCOSQL", sSQL);
-                if(GetObjectType(oObject) == OBJECT_TYPE_CREATURE)
+                if(GetPRCSwitch(PRC_LETOSCRIPT_UNICORN_SQL))
                 {
-                    oReturn = RetrieveCampaignObject("NWNX", "-", lLimbo);
-                    AssignCommand(oReturn, JumpToLocation(lLoc));
-                }
+                    string sSQL = "SELECT blob FROM "+DB_NAME+" WHERE "+DB_GATEWAY_VAR+"="+DB_GATEWAY_VAR+" LIMIT 1";
+                    SetLocalString(GetModule(), "NWNX!ODBC!SETSCORCOSQL", sSQL);
+                    if(GetObjectType(oObject) == OBJECT_TYPE_CREATURE)
+                    {
+                        oReturn = RetrieveCampaignObject("NWNX", "-", lLimbo);
+                        AssignCommand(oReturn, JumpToLocation(lLoc));
+                    }
+                    else
+                        oReturn = RetrieveCampaignObject("NWNX", "-", lLoc);
+                }       
                 else
-                    oReturn = RetrieveCampaignObject("NWNX", "-", lLoc);
+                {
+                    if(GetObjectType(oObject) == OBJECT_TYPE_CREATURE)
+                    {
+                        oReturn = RetrieveCampaignObject(DB_NAME, DB_GATEWAY_VAR, lLimbo);
+                        AssignCommand(oReturn, JumpToLocation(lLoc));
+                    }
+                    else
+                        oReturn = RetrieveCampaignObject(DB_NAME, DB_GATEWAY_VAR, lLoc);                    
+                }
             }
         }
         else if(nDestroyOriginal && sType == "SPAWN")

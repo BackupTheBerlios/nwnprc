@@ -710,10 +710,10 @@ string AddSpellToMemorized(int nClassPos, int nSpellLevel, int nSlot, int nSpell
 //<gff:add 'ClassList/[0]/MemorizedList3/[3]/Ready'          {type='byte' value='0'   setifexists=True}>
 //<gff:add 'ClassList/[0]/MemorizedList3/[3]/SpellMetaMagic' {type='byte' value='0'   setifexists=True}>
 
-    string sScript = "<gff:add 'ClassList/["+IntToString(nClassPos)+"]/MemorizedList"+IntToString(nSpellLevel)+"/["+IntToString(nSlot)+"]/Spell' {type='word' value="+IntToString(nSpell)+" setifexists=True}>";
-    sScript +=       "<gff:add 'ClassList/["+IntToString(nClassPos)+"]/MemorizedList"+IntToString(nSpellLevel)+"/["+IntToString(nSlot)+"]/SpellFlags' {type='byte' value=1 setifexists=True}>";
-    sScript +=       "<gff:add 'ClassList/["+IntToString(nClassPos)+"]/MemorizedList"+IntToString(nSpellLevel)+"/["+IntToString(nSlot)+"]/Ready' {type='byte' value=1 setifexists=True}>";
-    sScript +=       "<gff:add 'ClassList/["+IntToString(nClassPos)+"]/MemorizedList"+IntToString(nSpellLevel)+"/["+IntToString(nSlot)+"]/SpellMetaMagic' {type='byte' value=0 setifexists=True}>";
+    string sScript = LetoAdd("ClassList/["+IntToString(nClassPos)+"]/MemorizedList"+IntToString(nSpellLevel)+"/["+IntToString(nSlot)+"]/Spell", IntToString(nSpell), "word");
+    sScript       += LetoAdd("ClassList/["+IntToString(nClassPos)+"]/MemorizedList"+IntToString(nSpellLevel)+"/["+IntToString(nSlot)+"]/SpellFlags", IntToString(1), "byte");
+    sScript       += LetoAdd("ClassList/["+IntToString(nClassPos)+"]/MemorizedList"+IntToString(nSpellLevel)+"/["+IntToString(nSlot)+"]/Ready", IntToString(1), "byte");
+    sScript       += LetoAdd("ClassList/["+IntToString(nClassPos)+"]/MemorizedList"+IntToString(nSpellLevel)+"/["+IntToString(nSlot)+"]/SpellMetaMagic", IntToString(0), "byte");
     return sScript;
 }
 
@@ -724,16 +724,11 @@ string AddSpellToKnown(int nClassPos, int nSpellLevel, int nSpell)
 //<gff:add 'ClassList/[0]/KnownList3/[_]/Ready'          {type='byte' value='0'   setifexists=True}>
 //<gff:add 'ClassList/[0]/KnownList3/[_]/SpellMetaMagic' {type='byte' value='0'   setifexists=True}>
 
-    string sScript = "<gff:add 'ClassList/["+IntToString(nClassPos)+"]/KnownList"+IntToString(nSpellLevel)+"/Spell' {type='word' value="+IntToString(nSpell)+"}>";
+    string sScript = LetoAdd("ClassList/["+IntToString(nClassPos)+"]/KnownList"+IntToString(nSpellLevel)+"/Spell", IntToString(nSpell), "word");    
     return sScript;
 }
 
-string RemoveSpellFromKnown(int nClassPos, int nSpellLevel, int nSpell)
-{
-//<gff:replace {name='ClassList/[1]/KnownList2' value=25 DeleteParent}>
-    string sScript = "<gff:replace {name='ClassList/["+IntToString(nClassPos)+"]/KnownList"+IntToString(nSpellLevel)+"' value=25 DeleteParent}>";
-    return sScript;
-}
+//THESE FUNCTIONS BELOW DO NOT WORK WITH UNICORN SYNTAX YET
 
 string RemoveSpellFromMemorized(int nClassPos, int nSpellLevel, int nSlot, int nSpell)
 {
@@ -757,6 +752,13 @@ string AddFeat(int nFeat, int nLevel = 1)
     sReturn += "<gff:add 'LvlStatList/["+IntToString(nLevel-1)+"]/Featlist/Feat' ";
     sReturn += IntToString(nFeat)+ ">";
     return sReturn;
+}
+
+string RemoveSpellFromKnown(int nClassPos, int nSpellLevel, int nSpell)
+{
+//<gff:replace {name='ClassList/[1]/KnownList2' value=25 DeleteParent}>
+    string sScript = "<gff:replace {name='ClassList/["+IntToString(nClassPos)+"]/KnownList"+IntToString(nSpellLevel)+"' value=25 DeleteParent}>";
+    return sScript;
 }
 
 string RemoveFeat(int nFeat)
@@ -794,4 +796,3 @@ string AddSpecialAbility(int iSpell = -1, int iAmount = 1, int iLevel = 1)
 
     return script;
 }
-

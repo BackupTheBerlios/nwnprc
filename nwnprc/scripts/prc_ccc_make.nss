@@ -8,7 +8,20 @@
 void CheckAndBoot(object oPC)
 {
     if(GetIsObjectValid(GetAreaFromLocation(GetLocation(oPC))))
-        BootPC(oPC);
+    {            
+        if(GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_IP) == "")
+        {
+            BootPC(oPC);
+        }
+        else
+        {
+            ActivatePortal(oPC, 
+                GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_IP),
+                GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_PASSWORD),
+                "", //waypoint, may need to change
+                TRUE);
+        }      
+    }
 }
 
 void main()

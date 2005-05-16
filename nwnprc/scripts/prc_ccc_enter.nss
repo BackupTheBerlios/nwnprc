@@ -55,7 +55,7 @@ void main()
         && GetTag(oPC) != sEncrypt
         && GetXP(oPC) > 0)
     {
-        string sScript = "<gff:set 'Tag' <qq:"+sEncrypt+">>";
+        string sScript = LetoSet("Tag", sEncrypt, "string");
         SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+sScript);
     }
     
@@ -130,11 +130,7 @@ void main()
         //rest them so that they loose cutscene invisible
         ForceRest(oPC);
         //Take their Gold
-        int nAmount = GetGold(oPC);
-        if(nAmount > 0)
-        {
-            AssignCommand(oPC,TakeGoldFromCreature(nAmount,oPC,TRUE));
-        }
+        AssignCommand(oPC,TakeGoldFromCreature(GetGold(oPC),oPC,TRUE));
         //preserve the PCs dignity by giving them clothes
         //object oClothes = CreateItemOnObject("nw_cloth022", oPC);
         //AssignCommand(oPC, ActionEquipItem(oClothes, INVENTORY_SLOT_CHEST));

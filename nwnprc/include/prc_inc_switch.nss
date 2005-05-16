@@ -213,6 +213,7 @@ const string PRC_PW_LOCATION_TRACKING                = "PRC_PW_LOCATION_TRACKING
 const string PRC_PW_DEATH_TRACKING                   = "PRC_PW_DEATH_TRACKING";
 //being dead is stored via persistant locals and restored on logon
 const string PRC_PW_SPELL_TRACKING                   = "PRC_PW_SPELL_TRACKING";
+//spells cast are tracked via persistant locals and restored on logon
 
 // XP system switches 
 const string PRC_XP_USE_SIMPLE_LA                    = "PRC_XP_USE_SIMPLE_LA";
@@ -286,10 +287,27 @@ const string PRC_DB_SQLLITE_INTERVAL                 = "PRC_DB_SQLLITE_INTERVAL"
 //longer is visa versa.
 const string PRC_USE_LETOSCRIPT                      = "PRC_USE_LETOSCRIPT";
 const string PRC_LETOSCRIPT_PHEONIX_SYNTAX           = "PRC_LETOSCRIPT_PHEONIX_SYNTAX";
+//set this to 1 if using build 18
 const string PRC_LETOSCRIPT_FIX_ABILITIES            = "PRC_LETOSCRIPT_FIX_ABILITIES";
+//set this to 1 to have letoscript change stat boosts on the hide to permanent ones
+const string PRC_LETOSCRIPT_NWN_DIR                  = "PRC_LETOSCRIPT_NWN_DIR";
 // letoscript needs a string named PRC_LETOSCRIPT_NWN_DIR set to the directory of NWN
 // if it doesnt work, try different slash options // \\ / \
-const string PRC_LETOSCRIPT_NWN_DIR                  = "PRC_LETOSCRIPT_NWN_DIR";
+const string PRC_LETOSCRIPT_UNICORN_SQL              = "PRC_LETOSCRIPT_UNICORN_SQL";
+//switch so that unicorn will use the SQL database for SCO/RCO
+//must have the zeoslib.dlls installed for this
+//UNTESTED!!!
+const string PRC_LETOSCRIPT_PORTAL_IP                = "PRC_LETOSCRIPT_PORTAL_IP";
+const string PRC_LETOSCRIPT_PORTAL_PASSWORD          = "PRC_LETOSCRIPT_PORTAL_PASSWORD";
+//these are strings not ints
+//if the ip is set, letoscript will use ActivatePortal instead of booting
+//the IP and Password must be correct or bad things will happen
+//if your IP is non-static make sure this is kept up to date
+//see the lexicon entry on ActivatePortal for more information
+const string PRC_LETOSCRIPT_GETNEWESTBIC             = "PRC_LETOSCRIPT_GETNEWESTBIC";
+//if set you must be using unicorn
+//will use getnewest bic instead of filename reconstruction (which fails if multiple characters
+//have the same name)
 
 //ConvoCC switches
 const string PRC_CONVOCC_ENABLE                      = "PRC_CONVOCC_ENABLE";

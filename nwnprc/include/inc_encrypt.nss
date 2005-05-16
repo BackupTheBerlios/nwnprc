@@ -6,7 +6,16 @@ string Encrypt(object oPC)
         nKey = 10;
     string sReturn;
     
-    //I need a good algorithm :(
-    sReturn = sName;
+    int nLastKey = GetCampaignInt("CCC_keys", "LastKey");
+    int nPlayerKey = GetCampaignInt("CCC_keys", "PlayerKey", oPC);
+    sReturn = IntToString(nKey*nPlayerKey);
+    if(sReturn == "0")
+    {
+        nLastKey++;
+        sReturn = IntToString(nKey*nLastKey);
+        SetCampaignInt("CCC_keys", "PlayerKey", nLastKey, oPC);
+        SetCampaignInt("CCC_keys", "LastKey", nLastKey);
+    }
+
     return sReturn;
 }

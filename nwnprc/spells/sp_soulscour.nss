@@ -13,7 +13,7 @@ void DoSecondaryDrain(object oTarget, int nChaDrain)
           
      // Apply the damage and the damage visible effect to the target.
      SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, oTarget);
-     ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, DURATION_TYPE_PERMANENT);
+     ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, TRUE, DURATION_TYPE_PERMANENT);
 }
 
 void main()
@@ -58,8 +58,8 @@ void main()
                          
                     // Apply the damage and the damage visible effect to the target.
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, oTarget);
-                    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, DURATION_TYPE_PERMANENT);
-                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, nWisDrain, DURATION_TYPE_PERMANENT);
+                    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, TRUE, DURATION_TYPE_PERMANENT);
+                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, nWisDrain, TRUE, DURATION_TYPE_PERMANENT);
                     
                     // Target takes secondary 1d6 cha drain 1 minute later.
                     nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 

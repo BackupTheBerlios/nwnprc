@@ -110,7 +110,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
             //Apply the VFX impact and effects
             DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
             //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oTarget, HoursToSeconds(24),TRUE,-1,nCaster);
-            ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nDamage, DURATION_TYPE_TEMPORARY, HoursToSeconds(24), TRUE, -1, nCaster);
+            ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nDamage, TRUE, DURATION_TYPE_TEMPORARY, HoursToSeconds(24), TRUE, -1, nCaster);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7 ,FALSE);
         }
     }

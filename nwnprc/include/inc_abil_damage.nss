@@ -34,6 +34,7 @@
 #include "inc_threads"
 #include "inc_dispel"
 #include "prc_inc_racial"
+#include "inc_item_props"
 
 /*
 [00:55] <Stratovarius> yup
@@ -68,6 +69,8 @@ const int ABILITY_DAMAGE_EFFECT_KNOCKDOWN = 2;
 // nAbility         one of the ABILITY_* constants
 // nAmount          how much to reduce the ability score by
 // nDurationType    one of the DURATION_TYPE_* contants
+// bHealable        whether the damage is healable by normal means or not
+//                  Implemented by applying the damage as an iprop on the hide
 //
 // The following are passed to SPApplyEffectToObject:
 // fDuration        if temporary, the duration. If this is -1, the damage
@@ -77,9 +80,25 @@ const int ABILITY_DAMAGE_EFFECT_KNOCKDOWN = 2;
 // nSpellID         ID of spell causing damage
 // nCasterLevel     casterlevel of the effect being applied
 // oSource          object causing the ability damage
-void ApplyAbilityDamage(object oTarget, int nAbility, int nAmount, int nDurationType, float fDuration = 0.0f, int bDispellable = FALSE,
-                        int nSpellID = -1, int nCasterLevel = -1, object oSource = OBJECT_SELF);
+void ApplyAbilityDamage(object oTarget, int nAbility, int nAmount, int nDurationType, int bHealable = TRUE,
+                        float fDuration = 0.0f, int bDispellable = FALSE, int nSpellID = -1, int nCasterLevel = -1, object oSource = OBJECT_SELF);
 
+
+// Gets the amount of unhealable ability damage suffered by the creature to given ability
+// ======================================================================================
+// oTarget          the creature about to take ability damage
+// nAbility         one of the ABILITY_* constants
+int GetUnhealableAbilityDamage(object oTarget, int nAbility);
+
+
+
+// Removes the specified amount of normally unhealable ability damage from the target
+// ==================================================================================
+// oTarget      the creature to restore
+// nAbility     ability to restore, one of the ABILITY_* constants
+// nAmount      amount to restore the ability by, should be > 0 for the function
+//              to have any effect
+void RecoverUnhealableAbilityDamage(object oTarget, int nAbility, int nAmount);
 
 
 // Internal function. Called by a threadscript. Handles checking if any ability that has reached 0 has been restored
@@ -96,8 +115,8 @@ void DoDexCheck(object oCreature, int bFirstPart);
 
 
 
-void ApplyAbilityDamage(object oTarget, int nAbility, int nAmount, int nDurationType, float fDuration = 0.0f, int bDispellable = FALSE,
-                        int nSpellID = -1, int nCasterLevel = -1, object oSource = OBJECT_SELF)
+void ApplyAbilityDamage(object oTarget, int nAbility, int nAmount, int nDurationType, int bHealable = TRUE,
+                        float fDuration = 0.0f, int bDispellable = FALSE, int nSpellID = -1, int nCasterLevel = -1, object oSource = OBJECT_SELF)
 {
     // Immunity check
     if(GetIsImmune(oTarget, IMMUNITY_TYPE_ABILITY_DECREASE, oSource))
@@ -108,13 +127,55 @@ void ApplyAbilityDamage(object oTarget, int nAbility, int nAmount, int nDuration
 
     // First, apply the whole damage as an effect
     //SendMessageToPC(GetFirstPC(), "Applying " + IntToString(nAmount) + " damage to stat " + IntToString(nAbility));
-    if(nDurationType == DURATION_TYPE_TEMPORARY && fDuration == -1.0f)
+    if(bHealable)
     {
-        int i;
-        for(; i < nAmount; i++)
-            DelayCommand(0.01f, SPApplyEffectToObject(nDurationType, bDispellable ? EffectAbilityDecrease(nAbility, 1) : SupernaturalEffect(EffectAbilityDecrease(nAbility, nAmount)), oTarget, HoursToSeconds(24) * i, bDispellable, nSpellID, nCasterLevel, oSource));
+        // Is the damage temporary and specified to heal at the PnP rate
+        if(nDurationType == DURATION_TYPE_TEMPORARY && fDuration == -1.0f)
+        {
+            int i;
+            for(; i < nAmount; i++)
+                DelayCommand(0.01f, SPApplyEffectToObject(nDurationType, bDispellable ? EffectAbilityDecrease(nAbility, 1) : SupernaturalEffect(EffectAbilityDecrease(nAbility, nAmount)), oTarget, HoursToSeconds(24) * i, bDispellable, nSpellID, nCasterLevel, oSource));
+        }
+        else
+            SPApplyEffectToObject(nDurationType, bDispellable ? EffectAbilityDecrease(nAbility, nAmount) : SupernaturalEffect(EffectAbilityDecrease(nAbility, nAmount)), oTarget, fDuration, bDispellable, nSpellID, nCasterLevel, oSource);
     }
-    SPApplyEffectToObject(nDurationType, bDispellable ? EffectAbilityDecrease(nAbility, nAmount) : SupernaturalEffect(EffectAbilityDecrease(nAbility, nAmount)), oTarget, fDuration, bDispellable, nSpellID, nCasterLevel, oSource);
+    // Non-healable damage
+    else
+    {
+        int nIPType;
+        string sVarName = "PRC_UnhealableAbilityDamage_";
+        switch(nAbility)
+        {
+            case ABILITY_STRENGTH:      nIPType = IP_CONST_ABILITY_STR; sVarName += "STR"; break;
+            case ABILITY_DEXTERITY:     nIPType = IP_CONST_ABILITY_DEX; sVarName += "DEX"; break;
+            case ABILITY_CONSTITUTION:  nIPType = IP_CONST_ABILITY_CON; sVarName += "CON"; break;
+            case ABILITY_INTELLIGENCE:  nIPType = IP_CONST_ABILITY_INT; sVarName += "INT"; break;
+            case ABILITY_WISDOM:        nIPType = IP_CONST_ABILITY_WIS; sVarName += "WIS"; break;
+            case ABILITY_CHARISMA:      nIPType = IP_CONST_ABILITY_CHA; sVarName += "CHA"; break;
+            
+            default:
+                WriteTimestampedLogEntry("Unknown nAbility passed to ApplyAbilityDamage: " + IntToString(nAbility));
+                return;
+        }
+        
+        // Apply the damage
+        SetCompositeBonus(GetPCSkin(oTarget), sVarName, nAmount, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, nIPType);
+        
+        // Schedule recovering if the damage is temporary
+        if(nDurationType == DURATION_TYPE_TEMPORARY)
+        {
+            // If the damage is specified to heal at the PnP rate, schedule one point to heal per day
+            if(fDuration == -1.0f)
+            {
+                int i;
+                for(i = 1; i <= nAmount; i++)
+                    DelayCommand(HoursToSeconds(24) * i, RecoverUnhealableAbilityDamage(oTarget, nAbility, 1));
+            }
+            // Schedule everything to heal at once
+            else
+                DelayCommand(fDuration, RecoverUnhealableAbilityDamage(oTarget, nAbility, nAmount));
+        }
+    }
 
     // The system is off by default
     if(!GetPRCSwitch(PRC_PNP_ABILITY_DAMAGE_EFFECTS))
@@ -333,4 +394,51 @@ void DoDexCheck(object oCreature, int bFirstPart)
         // Apply CutscenePara back in either case. Next monitor call will remove it if it's supposed to be gone
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneParalyze(), oCreature);
     }
+}
+
+
+int GetUnhealableAbilityDamage(object oTarget, int nAbility)
+{
+    int nIPType;
+    string sVarName = "PRC_UnhealableAbilityDamage_";
+    switch(nAbility)
+    {
+        case ABILITY_STRENGTH:      sVarName += "STR"; break;
+        case ABILITY_DEXTERITY:     sVarName += "DEX"; break;
+        case ABILITY_CONSTITUTION:  sVarName += "CON"; break;
+        case ABILITY_INTELLIGENCE:  sVarName += "INT"; break;
+        case ABILITY_WISDOM:        sVarName += "WIS"; break;
+        case ABILITY_CHARISMA:      sVarName += "CHA"; break;
+        
+        default:
+            WriteTimestampedLogEntry("Unknown nAbility passed to GetUnhealableAbilityDamage: " + IntToString(nAbility));
+            return FALSE;
+    }
+    
+    return GetLocalInt(oTarget, sVarName);
+}
+
+
+void RecoverUnhealableAbilityDamage(object oTarget, int nAbility, int nAmount)
+{
+    int nIPType, nNewVal;
+    string sVarName = "PRC_UnhealableAbilityDamage_";
+    switch(nAbility)
+    {
+        case ABILITY_STRENGTH:      nIPType = IP_CONST_ABILITY_STR; sVarName += "STR"; break;
+        case ABILITY_DEXTERITY:     nIPType = IP_CONST_ABILITY_DEX; sVarName += "DEX"; break;
+        case ABILITY_CONSTITUTION:  nIPType = IP_CONST_ABILITY_CON; sVarName += "CON"; break;
+        case ABILITY_INTELLIGENCE:  nIPType = IP_CONST_ABILITY_INT; sVarName += "INT"; break;
+        case ABILITY_WISDOM:        nIPType = IP_CONST_ABILITY_WIS; sVarName += "WIS"; break;
+        case ABILITY_CHARISMA:      nIPType = IP_CONST_ABILITY_CHA; sVarName += "CHA"; break;
+        
+        default:
+            WriteTimestampedLogEntry("Unknown nAbility passed to ApplyAbilityDamage: " + IntToString(nAbility));
+            return;
+    }
+    
+    nNewVal = GetLocalInt(oTarget, sVarName) - nAmount;
+    if(nNewVal < 0) nNewVal = 0;
+    
+    SetCompositeBonus(GetPCSkin(oTarget), sVarName, nNewVal , ITEM_PROPERTY_DECREASED_ABILITY_SCORE, nIPType);
 }

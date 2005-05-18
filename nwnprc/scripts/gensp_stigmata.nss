@@ -87,7 +87,7 @@ void main()
 
     // After the permanent version has worn off, apply it as temporary effect, wearing off at rate of 1 point per day on it's own
     // The 0.3 is a fudge factor for making sure the effects do not overlap even if the game happens to lag a bit
-    DelayCommand(HoursToSeconds(1) + 0.3f, ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, nStigmataDamage, DURATION_TYPE_TEMPORARY, -1.0f));
+    DelayCommand(HoursToSeconds(1) + 0.3f, ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, nStigmataDamage, TRUE, DURATION_TYPE_TEMPORARY, -1.0f));
 
     // Some decorative VFX on the user
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR), oPC, HoursToSeconds(1));

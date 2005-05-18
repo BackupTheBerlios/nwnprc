@@ -544,7 +544,7 @@ void MakeDrunk(object oTarget, int nPoints)
 
     //effect eDumb = EffectAbilityDecrease(ABILITY_INTELLIGENCE, nPoints);
     //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDumb, oTarget, 60.0);
-    ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, nPoints, DURATION_TYPE_TEMPORARY, 60.0);
+    ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, nPoints, TRUE, DURATION_TYPE_TEMPORARY, 60.0);
     AssignCommand(oTarget, SpeakString("*Burp!*"));
 }
 

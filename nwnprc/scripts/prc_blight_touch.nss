@@ -43,9 +43,9 @@ void main()
     {
         //Apply the VFX impact and effects
         //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCon, oTarget);
-        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, iPenalty, DURATION_TYPE_PERMANENT);
+        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, iPenalty, TRUE, DURATION_TYPE_PERMANENT);
         //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCha, oTarget);
-        ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, iPenalty, DURATION_TYPE_PERMANENT);
+        ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, iPenalty, TRUE, DURATION_TYPE_PERMANENT);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

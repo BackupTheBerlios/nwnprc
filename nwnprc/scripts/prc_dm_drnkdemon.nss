@@ -40,9 +40,9 @@ void main()
     //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWis, oPC, fSec);
     //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInt, oPC, fSec);
     //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDex, oPC, fSec);
-    ApplyAbilityDamage(oPC, ABILITY_WISDOM, 1, DURATION_TYPE_TEMPORARY, fSec);
-    ApplyAbilityDamage(oPC, ABILITY_INTELLIGENCE, 1, DURATION_TYPE_TEMPORARY, fSec);
-    ApplyAbilityDamage(oPC, ABILITY_DEXTERITY, 1, DURATION_TYPE_TEMPORARY, fSec);
+    ApplyAbilityDamage(oPC, ABILITY_WISDOM, 1, TRUE, DURATION_TYPE_TEMPORARY, fSec);
+    ApplyAbilityDamage(oPC, ABILITY_INTELLIGENCE, 1, TRUE, DURATION_TYPE_TEMPORARY, fSec);
+    ApplyAbilityDamage(oPC, ABILITY_DEXTERITY, 1, TRUE, DURATION_TYPE_TEMPORARY, fSec);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStr, oPC, fSec);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCns, oPC, fSec);
 

@@ -67,6 +67,6 @@ void main()
 		int nDam = d4();
 		//effect eDamage = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
 		//SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDamage, OBJECT_SELF, 0.0f, FALSE, SPELL_PESTILENCE, nCasterLvl, oCaster);
-		ApplyAbilityDamage(OBJECT_SELF, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, 0.0f, FALSE, SPELL_PESTILENCE, nCasterLvl, oCaster);
+		ApplyAbilityDamage(OBJECT_SELF, ABILITY_CONSTITUTION, nDam, TRUE, DURATION_TYPE_PERMANENT, 0.0f, FALSE, SPELL_PESTILENCE, nCasterLvl, oCaster);
 	}// end else - failed save
 }

@@ -3268,7 +3268,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           {
                //effect eCrippleStrike = EffectAbilityDecrease(ABILITY_STRENGTH, 2);
                //ApplyEffectToObject(DURATION_TYPE_INSTANT, eCrippleStrike, oDefender);
-               ApplyAbilityDamage(oDefender, ABILITY_STRENGTH, 2, DURATION_TYPE_PERMANENT);
+               ApplyAbilityDamage(oDefender, ABILITY_STRENGTH, 2, TRUE, DURATION_TYPE_PERMANENT);
           }
      }
           
@@ -3584,7 +3584,7 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                          
                          //eEffect = EffectAbilityDecrease(iStat, d2() );
                          //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
-                         ApplyAbilityDamage(oDefender, iStat, d2(), DURATION_TYPE_PERMANENT);
+                         ApplyAbilityDamage(oDefender, iStat, d2(), TRUE, DURATION_TYPE_PERMANENT);
                     break;
                     
                     // ipParam1 = disease.2da
@@ -3779,7 +3779,7 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                          
                          //eEffect = EffectAbilityDecrease(iStat, d2() );
                          //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
-                         ApplyAbilityDamage(oDefender, iStat, d2(), DURATION_TYPE_PERMANENT);
+                         ApplyAbilityDamage(oDefender, iStat, d2(), TRUE, DURATION_TYPE_PERMANENT);
                     break;
                     
                     // ipParam1 = disease.2da

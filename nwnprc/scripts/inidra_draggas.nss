@@ -56,7 +56,7 @@ void main()
                 //Apply the VFX impact and effects
                 DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                 //DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
-                DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nDamStrike, DURATION_TYPE_PERMANENT));
+                DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nDamStrike, TRUE, DURATION_TYPE_PERMANENT));
              }
         }
         //Get next target in spell area

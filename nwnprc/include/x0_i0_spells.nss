@@ -453,8 +453,8 @@ void DoDirgeEffect(object oTarget,int nPenetr)
                 //Apply damage and visuals
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
-                ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nGetLastPenalty, DURATION_TYPE_PERMANENT);
-                ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, nGetLastPenalty, DURATION_TYPE_PERMANENT);
+                ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nGetLastPenalty, TRUE, DURATION_TYPE_PERMANENT);
+                ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, nGetLastPenalty, TRUE, DURATION_TYPE_PERMANENT);
                 SetLocalInt(oTarget, "X0_L_LASTPENALTY", nGetLastPenalty);
             }
 

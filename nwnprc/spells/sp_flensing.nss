@@ -49,8 +49,8 @@ void RunFlensing(object oCaster, object oTarget, int nSaveDC,
 			EffectAbilityDecrease(ABILITY_CONSTITUTION, nConDrain));
 		eDamage = EffectLinkEffects(eDamage,
 			EffectAbilityDecrease(ABILITY_CHARISMA, nChaDrain));*/
-        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nConDrain, DURATION_TYPE_PERMANENT);
-        ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, DURATION_TYPE_PERMANENT);
+        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nConDrain, TRUE, DURATION_TYPE_PERMANENT);
+        ApplyAbilityDamage(oTarget, ABILITY_CHARISMA,     nChaDrain, TRUE, DURATION_TYPE_PERMANENT);
 	}
 	
 	// Add vfx to the damage effect chain.

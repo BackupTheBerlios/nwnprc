@@ -199,6 +199,15 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oPC, "PRC_ClassLevelInPos1");
     DeleteLocalInt(oPC, "PRC_ClassLevelInPos2");
     DeleteLocalInt(oPC, "PRC_ClassLevelInPos3");
+    
+    // Unhealable ability damage
+    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_STR");
+    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_DEX");
+    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_CON");
+    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_INT");
+    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_WIS");
+    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_CHA");
+    
 
     // In order to work with the PRC system we need to delete some locals for each
     // PRC that has a hide

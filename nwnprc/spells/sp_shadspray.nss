@@ -45,7 +45,7 @@ void main()
 			{
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DAZED_S), oTarget);
 				//SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
-				ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 2, DURATION_TYPE_PERMANENT);
+				ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 2, TRUE, DURATION_TYPE_PERMANENT);
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDaze, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLvl);
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFear, oTarget, fDuration,TRUE,-1,nCasterLvl);
 			}

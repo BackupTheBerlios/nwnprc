@@ -92,7 +92,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         //eDur = EffectLinkEffects(eDur, EffectAbilityDecrease(ABILITY_STRENGTH, 1));
                         
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(iTurnDur));
-                        ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 1, DURATION_TYPE_TEMPORARY, RoundsToSeconds(iTurnDur));
+                        ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 1, TRUE, DURATION_TYPE_TEMPORARY, RoundsToSeconds(iTurnDur));
                     }
                 }
             }

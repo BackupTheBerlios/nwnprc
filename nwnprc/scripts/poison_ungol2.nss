@@ -19,7 +19,6 @@ void main()
     //effect eDrain = EffectAbilityDecrease(ABILITY_CHARISMA, 1);
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
 
-    //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDrain, oTarget);
-    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 1, DURATION_TYPE_PERMANENT);
+    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 1, TRUE, DURATION_TYPE_PERMANENT);
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 }

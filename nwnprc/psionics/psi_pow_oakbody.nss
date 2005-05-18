@@ -108,6 +108,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget);
-        ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 2, DURATION_TYPE_TEMPORARY, fDur, TRUE, -1, nCaster);
+        ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 2, TRUE, DURATION_TYPE_TEMPORARY, fDur, TRUE, -1, nCaster);
     }
 }

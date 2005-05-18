@@ -34,7 +34,7 @@ void DoPoison(object oTarget, object oCaster, int nDC, int CasterLvl, int nMetaM
        //Apply the poison effect and VFX impact
        //SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,TRUE,-1,CasterLvl);
        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_L), oTarget);
-       ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, 0.0f, TRUE, -1, CasterLvl);
+       ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, TRUE, DURATION_TYPE_PERMANENT, 0.0f, TRUE, -1, CasterLvl);
    }
 }
 

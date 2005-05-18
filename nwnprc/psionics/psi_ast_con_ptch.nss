@@ -28,7 +28,7 @@ void DoPoison(object oTarget, object oCaster, int nDC, int nDam){
 	{
 		//Apply the poison effect and VFX impact
 		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_S), oTarget);
-		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT);
+		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, TRUE, DURATION_TYPE_PERMANENT);
 	}
 }
 

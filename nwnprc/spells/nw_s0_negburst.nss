@@ -136,7 +136,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                         //represents the flame that erupts on the target not on the ground.
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDur2, oTarget,0.0f,TRUE,-1,CasterLvl));
-                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nStr, DURATION_TYPE_PERMANENT, 0.0f, TRUE, -1, CasterLvl));
+                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nStr, TRUE, DURATION_TYPE_PERMANENT, 0.0f, TRUE, -1, CasterLvl));
                     }
                 }
             }

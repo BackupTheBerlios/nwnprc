@@ -48,6 +48,7 @@ void main()
                                    SPGetSpellSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_NEGATIVE);
 
                               // Apply str/con drain if any.
+                              /*
                               if(nDamage > 0)
                               {
                                    int i;
@@ -68,12 +69,17 @@ void main()
                                         // function which will sever the connection between the effect
                                         // and the SpellId
                                         //------------------------------------------------------------------
-                                        DelayCommand(0.01f, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 1, DURATION_TYPE_TEMPORARY, HoursToSeconds(24) * i));
-                                        DelayCommand(0.01f, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, DURATION_TYPE_TEMPORARY, HoursToSeconds(24) * i));
+                                        /*
+                                        DelayCommand(0.01f, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH,     1, TRUE, DURATION_TYPE_TEMPORARY, HoursToSeconds(24) * i));
+                                        DelayCommand(0.01f, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, TRUE, DURATION_TYPE_TEMPORARY, HoursToSeconds(24) * i));
                                    }
                                         
                                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                              }
+                              }*/
+                              
+                              ApplyAbilityDamage(oTarget, ABILITY_STRENGTH,     nDamage, TRUE, DURATION_TYPE_TEMPORARY, -1.0);
+                              ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, TRUE, DURATION_TYPE_TEMPORARY, -1.0);
+                              SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                          }
 
                          SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);

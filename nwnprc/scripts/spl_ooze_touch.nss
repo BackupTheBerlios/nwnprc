@@ -171,7 +171,7 @@ void main()
                     //effect stun = EffectLinkEffects(EffectAbilityDecrease(ABILITY_CONSTITUTION, d6()), eMind);
 
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, target, RoundsToSeconds(1 + (level / 2)));
-                    ApplyAbilityDamage(target, ABILITY_CONSTITUTION, d6(), DURATION_TYPE_TEMPORARY, RoundsToSeconds(1 + (level / 2)));
+                    ApplyAbilityDamage(target, ABILITY_CONSTITUTION, d6(), TRUE, DURATION_TYPE_TEMPORARY, RoundsToSeconds(1 + (level / 2)));
                 }
             }
             break;
@@ -212,7 +212,7 @@ void main()
                     effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
         
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, oTarget, RoundsToSeconds(1 + level));
-                    ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_TEMPORARY, RoundsToSeconds(1 + level));
+                    ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, TRUE, DURATION_TYPE_TEMPORARY, RoundsToSeconds(1 + level));
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 }
             }

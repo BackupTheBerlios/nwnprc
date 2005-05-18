@@ -192,8 +192,8 @@ void TurnBasedDamage(object oTarget, object oCaster)
              //eLink2 = EffectLinkEffects(eLink2, eMove);
              
              ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMove, OBJECT_SELF, RoundsToSeconds(10));
-             ApplyAbilityDamage(OBJECT_SELF, ABILITY_STRENGTH, 2, DURATION_TYPE_TEMPORARY, RoundsToSeconds(10));
-             ApplyAbilityDamage(OBJECT_SELF, ABILITY_DEXTERITY, 2, DURATION_TYPE_TEMPORARY, RoundsToSeconds(10));
+             ApplyAbilityDamage(OBJECT_SELF, ABILITY_STRENGTH, 2, TRUE, DURATION_TYPE_TEMPORARY, RoundsToSeconds(10));
+             ApplyAbilityDamage(OBJECT_SELF, ABILITY_DEXTERITY, 2, TRUE, DURATION_TYPE_TEMPORARY, RoundsToSeconds(10));
         }
               
         return;

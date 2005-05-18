@@ -63,5 +63,5 @@ void main()
     //Apply Bonus's
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,OBJECT_SELF);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink,OBJECT_SELF, RoundsToSeconds(nDuration));
-    ApplyAbilityDamage(OBJECT_SELF, ABILITY_DEXTERITY, 6, DURATION_TYPE_TEMPORARY, RoundsToSeconds(nDuration));
+    ApplyAbilityDamage(OBJECT_SELF, ABILITY_DEXTERITY, 6, TRUE, DURATION_TYPE_TEMPORARY, RoundsToSeconds(nDuration));
 }

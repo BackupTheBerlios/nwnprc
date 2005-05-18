@@ -80,7 +80,7 @@ void main()
                 ApplyAbilityDamage(oTarget, nKTTSType == KTTS_TYPE_INT ? ABILITY_INTELLIGENCE :
                                             nKTTSType == KTTS_TYPE_WIS ? ABILITY_WISDOM :
                                             ABILITY_CHARISMA
-                                          , nKTTSDice, DURATION_TYPE_PERMANENT);
+                                          , nKTTSDice, TRUE, DURATION_TYPE_PERMANENT);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
             }
             
@@ -136,7 +136,7 @@ void main()
                 {
                     /*effect eAbilDam = EffectAbilityDecrease(ABILITY_WISDOM, d2());
                     ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);*/
-                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d2(), DURATION_TYPE_PERMANENT);
+                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d2(), TRUE, DURATION_TYPE_PERMANENT);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
                 }
             }
@@ -164,7 +164,7 @@ void main()
         {
             /*effect eAbilDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, 1);
             ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);*/
-            ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, DURATION_TYPE_PERMANENT);
+            ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, TRUE, DURATION_TYPE_PERMANENT);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
         }
     }

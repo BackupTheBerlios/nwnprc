@@ -68,7 +68,7 @@ void main()
 					int nStrDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 2, 6);
 					/*SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, 
 						EffectAbilityDecrease(ABILITY_STRENGTH, nStrDrain), oTarget, fDuration,TRUE,-1,nCasterLevel);*/
-                    ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nStrDrain, DURATION_TYPE_TEMPORARY, fDuration, TRUE, -1, nCasterLevel);
+                    ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nStrDrain, TRUE, DURATION_TYPE_TEMPORARY, fDuration, TRUE, -1, nCasterLevel);
 					SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
 						EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
 				}

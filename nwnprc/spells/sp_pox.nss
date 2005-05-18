@@ -74,7 +74,7 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 						//eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage);
 						// Apply effects to the currently selected target.
 						//DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDam, oTarget, 0.0f, FALSE, -1, nCasterLvl));
-						DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_PERMANENT, 0.0f, FALSE, -1, nCasterLvl));
+						DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, TRUE, DURATION_TYPE_PERMANENT, 0.0f, FALSE, -1, nCasterLvl));
 						DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 					}// end if - fort save
 				}// end if - spell resist

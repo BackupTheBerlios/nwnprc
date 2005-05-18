@@ -381,7 +381,7 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    {
         ipRet = ItemPropertyDamageBonus(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP)
+   else if (nPropID == ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP)
    {
         ipRet = ItemPropertyDamageBonusVsAlign(nParam1, nParam2, nParam3);
    }
@@ -389,7 +389,7 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    {
         ipRet = ItemPropertyDamageBonusVsRace(nParam1, nParam2, nParam3);
    }
-   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT)
+   else if (nPropID == ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT)
    {
         ipRet = ItemPropertyDamageBonusVsSAlign(nParam1, nParam2, nParam3);
    }

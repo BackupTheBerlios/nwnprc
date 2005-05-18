@@ -1,3 +1,7 @@
+// The error code 5 prevention entry. Comment out or uncomment as necessary
+const int COMPILER_BREAKS_ON_ME_OR_NOT = 0xffffffff;
+
+
 // skill based feats
 const int FEAT_JUMP = 2884;
 
@@ -798,15 +802,15 @@ const int FEAT_SHADOWSPELLLV21    = 3317;
 const int FEAT_SHADOWSPELLLV31    = 3320;
 
 // Frenzied Berserker Feats
-const int FEAT_FRENZY = 4300;
-const int FEAT_REMOVE_FRENZY = 4309;
-const int FEAT_GREATER_FRENZY = 4305;
-const int FEAT_INSPIRE_FRENZY = 4306;
-const int FEAT_REMAIN_CONSCIOUS = 4313;
-const int FEAT_DEATHLESS_FRENZY = 4314;
-const int FEAT_REMOVE_S_POWER_ATTACK = 4310;
-const int FEAT_SUPREME_POWER_ATTACK = 4311;
-const int FEAT_INTIMIDATING_RAGE = 4312;
+const int FEAT_FRENZY                       = 4300;
+const int FEAT_REMOVE_FRENZY                = 4309;
+const int FEAT_GREATER_FRENZY               = 4305;
+const int FEAT_INSPIRE_FRENZY               = 4306;
+const int FEAT_REMAIN_CONSCIOUS             = 4313;
+const int FEAT_DEATHLESS_FRENZY             = 4314;
+const int FEAT_FREBZK_IMPROVED_POWER_ATTACK = 4310;
+const int FEAT_SUPREME_POWER_ATTACK         = 4311;
+const int FEAT_INTIMIDATING_RAGE            = 4312;
 
 // Eye of Gruumsh Feats
 const int FEAT_COMMAND_THE_HORDE = 4600;

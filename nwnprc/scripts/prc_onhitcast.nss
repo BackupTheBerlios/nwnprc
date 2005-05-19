@@ -93,7 +93,7 @@ void main()
         }
     }
     /// Blood Archer Acidic Blood
-    if (nBArcher > 2)
+    if (nBArcher >= 2)
     {
         if (GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
         {

@@ -34,7 +34,7 @@
     - If this is nonzero, a DEX check is rolled against Handle_DC
       in the poison's column in poison.2da.
     - Possessing the Use Poison feat will always pass this check.
-    - Default: The static 5% failure chance from DMG is used.
+    - Default: A static 5% failure chance is used, as per the DMG.
     
     
     The following switches determine the amount of uses (successfull hits)
@@ -53,8 +53,9 @@
     - Size of dice used to determine number of uses. Any number
       greater than 1 works.
     - Values less than 2 on the module switch will disable the die roll.
-    - Same with override on items, except if it's 0, in which case the module
-      value will be used.
+      Overridden by value defined by the item.
+    - Similarly for the override if it is defined. (0 in override counts
+      as not defined)
 
 
 */

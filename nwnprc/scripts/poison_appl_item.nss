@@ -62,7 +62,10 @@
     PRC_USES_PER_ITEM_POISON_DIE
     - Size of dice used to determine number of uses. Any number
       greater than 1 works.
-    - Values less than 2 will be treated as 2.
+    - Values less than 2 on the module switch will disable the die roll.
+      Overridden by value defined by the item.
+    - Similarly for the override if it is defined. (0 in override counts
+      as not defined)
 
 */
 //:://////////////////////////////////////////////

@@ -342,8 +342,10 @@ const int POLY_SHAPEDRAGONPRYS  = 132;
 
 
 //Active Feats
-
-const int FEAT_FIST_OF_IRON = 3145;
+const int FEAT_FIST_OF_IRON               = 3145;
+const int FEAT_POWER_ATTACK_SINGLE_RADIAL = 3143;
+const int FEAT_POWER_ATTACK_FIVES_RADIAL  = 3144;
+const int FEAT_POWER_ATTACK_QUICKS_RADIAL = 3179;
 
 // Werewolf Template
 const int FEAT_PRESTIGE_WOLF_FORM                  = 3518;

@@ -18,7 +18,7 @@ void main()
 {
     object oPC   = GetItemLastEquippedBy();
     object oItem = GetItemLastEquipped();
-    int nPower   = GetLocalInt(oPC, "PowerAttackActive");
+    int nPower   = GetLocalInt(oPC, "PRC_PowerAttackSpellID");
 
 
     RemoveSpellEffects(nPower, oPC, oPC);

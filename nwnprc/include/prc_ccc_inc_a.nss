@@ -330,16 +330,16 @@ void SetupStage()
                 {
                     if((nRace == RACIAL_TYPE_AIR_GEN
                             && i != 0
-                            && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
+                            && GetPRCSwitch(PRC_CONVOCC_GENASI_ENFORCE_DOMAINS))
                         || (nRace == RACIAL_TYPE_EARTH_GEN
                             && i != 5
-                            && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
+                            && GetPRCSwitch(PRC_CONVOCC_GENASI_ENFORCE_DOMAINS))
                         || (nRace == RACIAL_TYPE_FIRE_GEN
                             && i != 7
-                            && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
+                            && GetPRCSwitch(PRC_CONVOCC_GENASI_ENFORCE_DOMAINS))
                         || (nRace == RACIAL_TYPE_WATER_GEN
                             && i != 21
-                            && GetPRCSwitch(PRC_CONVOCC_GENSAI_ENFORCE_DOMAINS))
+                            && GetPRCSwitch(PRC_CONVOCC_GENASI_ENFORCE_DOMAINS))
                         )
                     {
                     }

@@ -174,8 +174,9 @@
 170 FEAT_EPIC_GREAT_STRENGTH_10                    823       1    -1             0      
 171 WeapProfSim                                    46        0    -1             0      
 172 WeapProfMar                                    45        0    -1             0      
-173 FEAT_NEW_POWER_ATTACK                          3143      3    1              1      
-174 FEAT_NEW_IMPROVED_POWER_ATTACK                 3144      3    1              1      
-175 OverWCrit_Mindblade                            3615      1    -1             0      
-176 DevCrit_Mindblade                              3616      1    -1             0      
-177 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      
+173 FEAT_NEW_POWER_ATTACK                          3143      0    99             1      
+174 FEAT_NEW_IMPROVED_POWER_ATTACK                 3144      0    99             1      
+175 FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL            3179      0    99             1      
+176 OverWCrit_Mindblade                            3615      1    -1             0      
+177 DevCrit_Mindblade                              3616      1    -1             0      
+178 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      

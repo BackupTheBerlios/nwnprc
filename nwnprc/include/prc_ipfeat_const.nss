@@ -113,6 +113,10 @@ const int IP_CONST_FEAT_GREAT_CLEAVE    = 260;
 const int IP_CONST_FEAT_PSIONIC_FOCUS   = 259;
 const int IP_CONST_FEAT_IMPROVED_INIT   = 261;
 
+const int IP_CONST_FEAT_POWER_ATTACK_SINGLE_RADIAL     = 252;
+const int IP_CONST_FEAT_POWER_ATTACK_FIVES_RADIAL      = 253;
+const int IP_CONST_FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL = 262;
+
 const int IP_CONST_FEAT_WEAPON_FOCUS_CLUB                           = 100;
 const int IP_CONST_FEAT_WEAPON_FOCUS_DAGGER                         = 101;
 const int IP_CONST_FEAT_WEAPON_FOCUS_DART                           = 102;

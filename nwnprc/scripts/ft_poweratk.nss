@@ -3,22 +3,42 @@
 //:: ft_poweratk
 //::///////////////////////////////////////////////
 /*
-
+    This script handles the PRC power attack feats.
+    
+<Ornedan> For PA, I was thinking 3 radials
+<Ornedan> One for the presets
+<Ornedan> One for +0, +1, +2, +3, +4
+<Ornedan> One for +0, +5, +10, +15, +20
+<Ornedan> And a bunch of switches to control it:
+<Ornedan> PRC_POWER_ATTACK - 3 values:
+<Ornedan> -1 -- Disabled. Never apply the PRC PA feats to hide
+<Ornedan> 0 -- Default. As it is now, you can't go higher than the equivalent BW feat you have
+<Ornedan> 1 -- Full PnP. Ignores the BW IPA
+<Ornedan> PRC_POWER_ATTACK_STACK_WITH_BW
+<Ornedan> 0 - Default. Allow people to use both at the same time
+<Ornedan> 1 - Add the BW effects in when limiting to BAB
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 
-//#include "prc_spell_const"
-//#include "inc_combat2"
 #include "nw_i0_spells"
-//#include "x2_i0_spells"
 #include "inc_addragebonus"
 #include "inc_eventhook"
+#include "prc_inc_switch"
 
-int BonusAtk(int iDmg)
+/*
+const int SINGLE_START = 2171;
+const int SINGLE_LAST  = 2175;
+const int FIVES_START  = 2177;
+const int FIVES_LAST   = 2181;
+*/
+
+// Converts the given amount of bonus damage to equivalent DAMAGE_BONUS constant
+// Due to the bonus cap, bonuses are cropped to +20
+int BonusAtk(int nDmg)
 {
-    switch (iDmg)
+    switch (nDmg)
     {
         case 1:  return DAMAGE_BONUS_1;
         case 2:  return DAMAGE_BONUS_2;
@@ -29,87 +49,120 @@ int BonusAtk(int iDmg)
         case 7:  return DAMAGE_BONUS_7;
         case 8:  return DAMAGE_BONUS_8;
         case 9:  return DAMAGE_BONUS_9;
-        case 10:  return DAMAGE_BONUS_10;
-        case 11:  return DAMAGE_BONUS_11;
-        case 12:  return DAMAGE_BONUS_12;
-        case 13:  return DAMAGE_BONUS_13;
-        case 14:  return DAMAGE_BONUS_14;
-        case 15:  return DAMAGE_BONUS_15;
-        case 16:  return DAMAGE_BONUS_16;
-        case 17:  return DAMAGE_BONUS_17;
-        case 18:  return DAMAGE_BONUS_18;
-        case 19:  return DAMAGE_BONUS_19;
-        case 20:  return DAMAGE_BONUS_20;
+        case 10: return DAMAGE_BONUS_10;
+        case 11: return DAMAGE_BONUS_11;
+        case 12: return DAMAGE_BONUS_12;
+        case 13: return DAMAGE_BONUS_13;
+        case 14: return DAMAGE_BONUS_14;
+        case 15: return DAMAGE_BONUS_15;
+        case 16: return DAMAGE_BONUS_16;
+        case 17: return DAMAGE_BONUS_17;
+        case 18: return DAMAGE_BONUS_18;
+        case 19: return DAMAGE_BONUS_19;
+        case 20: return DAMAGE_BONUS_20;
     }
-    if (iDmg>20) return DAMAGE_BONUS_20;
+    if(nDmg > 20) return DAMAGE_BONUS_20;
 
-    return 0;
+    return -1; // Invalid value received
 }
 
+/*
+int CalculatePower(object oUser)
+{
+    int nPower = GetLocalInt(oUser, "PRC_PowerAttack_Level");
+    int nSID = GetSpellID();
+    
+    // Changing the value of +0,+1,+2,+3,+4 radial
+    if(nSID >= SINGLE_START && <= SINGLE_LAST)
+    {
+        // Extract the old fives value
+        nPower = (nPower / 5) * 5;
+        // Add in the new single value
+        nPower += nSID - SINGLE_START;
+    }
+    // Changing the value of +0,+5,+10,+15,+20 radial
+    else if(nSID >= FIVES_START && <= FIVES_LAST)
+    {
+        // Extract the old single value
+        nPower = nPower % 5;
+        // Add in the new fives value
+        nPower += (nSID - FIVES_START) * 5;
+    }
+    // Unknown SpellId
+    else
+    {
+        WriteTimestampedLogEntry("ft_poweratk called with unknown SpellID: " + IntToString(nSID));
+        nPower = 0;
+    }
 
+    // Cache the new PA level
+    SetLocalInt(oUser, "PRC_PowerAttack_Level", nPower);
+    
+    return nPower;
+}
+*/
 void main()
 {
     object oUser = OBJECT_SELF;
-    int nPower = GetSpellId();
-
-    // Requires the appropriate BW PA feat.
-    if(!GetHasFeat(FEAT_POWER_ATTACK))
-    {
-        FloatingTextStrRefOnCreature(16823148, oUser, FALSE); //Prereq: Power Attack feat
+    int nPower = GetLocalInt(oUser, "PRC_PowerAttack_Level");
+    
+    // The PRC Power Attack must be active for this to do anything
+    if(GetPRCSwitch(PRC_POWER_ATTACK) == PRC_POWER_ATTACK_DISABLED)
         return;
-    }
-    if(nPower > SPELL_POWER_ATTACK5 && !GetHasFeat(FEAT_IMPROVED_POWER_ATTACK))
-    {
-        FloatingTextStrRefOnCreature(16823149, oUser, FALSE); // Prereq: Improved Power Attack feat
-        return;
-    }
 
-    // This script is for the melee weapon PA. If Power Shot is implemented using the same script
-    // at some future date, change this.
-    if(GetWeaponRanged(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oUser)))
+    // Get the old Power Attack, if any
+    int nOld = GetLocalInt(oUser, "PRC_PowerAttackSpellID");
+    
+    // Remove effects from it
+    if(nOld)
     {
-        FloatingTextStrRefOnCreature(16823150, oUser, FALSE); // You may not use this feat with a ranged weapon.
-        return;
+        RemoveSpellEffects(nOld, oUser, oUser);
+        DeleteLocalInt(oUser, "PRC_PowerAttackSpellID");
     }
-
-    // Check if the character has PA active.
-    int bActive = GetLocalInt(oUser, "PowerAttackActive");
-    /*
-    int bActive = GetHasSpellEffect(SPELL_POWER_ATTACK1,oUser)  ? SPELL_POWER_ATTACK1 :
-                  GetHasSpellEffect(SPELL_POWER_ATTACK2,oUser)  ? SPELL_POWER_ATTACK2 :
-                  GetHasSpellEffect(SPELL_POWER_ATTACK3,oUser)  ? SPELL_POWER_ATTACK3 :
-                  GetHasSpellEffect(SPELL_POWER_ATTACK4,oUser)  ? SPELL_POWER_ATTACK4 :
-                  GetHasSpellEffect(SPELL_POWER_ATTACK5,oUser)  ? SPELL_POWER_ATTACK5 :
-                  GetHasSpellEffect(SPELL_POWER_ATTACK6,oUser)  ? SPELL_POWER_ATTACK6 :
-                  GetHasSpellEffect(SPELL_POWER_ATTACK7,oUser)  ? SPELL_POWER_ATTACK7 :
-                  GetHasSpellEffect(SPELL_POWER_ATTACK8,oUser)  ? SPELL_POWER_ATTACK8 :
-                  GetHasSpellEffect(SPELL_POWER_ATTACK9,oUser)  ? SPELL_POWER_ATTACK9 :
-                  GetHasSpellEffect(SPELL_POWER_ATTACK10,oUser) ? SPELL_POWER_ATTACK10: 
-                  0; // None active*/
-
-    // Activate Power Attack
-    if(!bActive)
+    
+    // Activate Power Attack if the new value is non-zero
+    if(nPower)
     {
+        // Requires the appropriate BW PA feat.
+        if(!GetHasFeat(FEAT_POWER_ATTACK))
+        {
+            FloatingTextStrRefOnCreature(16823148, oUser, FALSE); //Prereq: Power Attack feat
+            return;
+        }
+        if(nPower > SPELL_POWER_ATTACK5            &&                   // If the power attack is in BW IPA range
+           !GetHasFeat(FEAT_IMPROVED_POWER_ATTACK) &&                   // And they don't have IPA
+           GetPRCSwitch(PRC_POWER_ATTACK) != PRC_POWER_ATTACK_FULL_PNP) // And full PnP PA which ignores BW IPA isn't active
+        {
+            FloatingTextStrRefOnCreature(16823149, oUser, FALSE); // Prereq: Improved Power Attack feat
+            return;
+        }
+    
+        // This script is for the melee weapon PA. If Power Shot is implemented using the same script
+        // at some future date, change this.
+        if(GetWeaponRanged(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oUser)))
+        {
+            FloatingTextStrRefOnCreature(16823150, oUser, FALSE); // You may not use this feat with a ranged weapon.
+            return;
+        }
+
+        
+        // All checks are done, initialize variables for calculating the effect.
         int nDamageBonusType = GetDamageTypeOfWeapon(INVENTORY_SLOT_RIGHTHAND, oUser);
         int nDmg, nHit, nDex, nTemp;
         effect eDamage;
         effect eToHit;
 
-        if      (nPower == SPELL_POWER_ATTACK1)  nHit = 1;
-        else if (nPower == SPELL_POWER_ATTACK2)  nHit = 2;
-        else if (nPower == SPELL_POWER_ATTACK3)  nHit = 3;
-        else if (nPower == SPELL_POWER_ATTACK4)  nHit = 4;
-        else if (nPower == SPELL_POWER_ATTACK5)  nHit = 5;
-        else if (nPower == SPELL_POWER_ATTACK6)  nHit = 6;
-        else if (nPower == SPELL_POWER_ATTACK7)  nHit = 7;
-        else if (nPower == SPELL_POWER_ATTACK8)  nHit = 8;
-        else if (nPower == SPELL_POWER_ATTACK9)  nHit = 9;
-        else if (nPower == SPELL_POWER_ATTACK10) nHit = 10;
+        // Initialize the calculation with the power attack value given by the user.
+        nHit = nPower;
 
+        // Check if we are set to care about BW power attack being active
+        if(GetPRCSwitch(PRC_POWER_ATTACK_STACK_WITH_BW))
+        {
+            nTemp += GetActionMode(oUser, ACTION_MODE_POWER_ATTACK) ? 5 : 0;
+            nTemp += GetActionMode(oUser, ACTION_MODE_IMPROVED_POWER_ATTACK) ? 10 : 0;
+        }
         // The attack bonus paid to PA is limited to one's BAB
-        if(GetBaseAttackBonus(oUser) < (nHit + 
-                                        (GetActionMode(oUser, ACTION_MODE_POWER_ATTACK) ? 5 : 0) +
-                                        (GetActionMode(oUser, ACTION_MODE_IMPROVED_POWER_ATTACK ? 10 : 0))))
+        if(GetBaseAttackBonus(oUser) < (nHit + nTemp))
         {
             nHit = GetBaseAttackBonus(oUser) - ((GetActionMode(oUser, ACTION_MODE_POWER_ATTACK) ? 5 : 0) +
                                                 (GetActionMode(oUser, ACTION_MODE_IMPROVED_POWER_ATTACK ? 10 : 0)));
@@ -141,11 +194,11 @@ void main()
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oUser);
         
         // Cache the spellid of the power attack used. Also acts as a marker
-        SetLocalInt(oUser, "PowerAttackActive", nPower);
+        SetLocalInt(oUser, "PRC_PowerAttackSpellID", GetSpellId());
         AddEventScript(oUser, EVENT_ONPLAYEREQUIPITEM, "prc_powatk_equ", TRUE, FALSE);
 
         //                  Power Attack                                      Activated
-        string sMes = "*" + GetStringByStrRef(417) + IntToString(nHit) + " " + GetStringByStrRef(63798) + "*";
+        string sMes = "*" + GetStringByStrRef(417) + " " + IntToString(nHit) + " " + GetStringByStrRef(63798) + "*";
         FloatingTextStringOnCreature(sMes, oUser, FALSE);
 
         if (GetHasFeat(FEAT_FAVORED_POWER_ATTACK, oUser))
@@ -156,7 +209,6 @@ void main()
     // Turn Power Attack off
     else
     {
-        RemoveSpellEffects(nPower, oUser, oUser);
         RemoveEventScript(oUser, EVENT_ONPLAYEREQUIPITEM, "prc_powatk_equ", TRUE);
 
         //                   Power Attack Mode Deactivated

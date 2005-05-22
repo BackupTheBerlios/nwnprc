@@ -17,7 +17,7 @@ void main()
 {
     object oPC = OBJECT_SELF;
 
-    SetLocalInt(oPC, "ChangeAugmentQuickselect", GetLocalInt(oPC, "ChangeAugmentQuickselect") + 1);
+    SetLocalInt(oPC, "ChangeAugmentQuickselect", TRUE);
     SendMessageToPCByStrRef(oPC, 16824183);
     // Ten seconds to change the selection
     DelayCommand(10.0f, DeleteLocalInt(oPC, "ChangeAugmentQuickselect"));

@@ -576,7 +576,9 @@ int X2PreSpellCastCode()
 
 
     //spellsharing for bonded summoner
-    if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
+    if (nContinue 
+        && GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER) 
+        && !GetPRCSwitch(PRC_PNP_FAMILIARS))
     {
         object oFam = GetLocalObject(OBJECT_SELF, "BONDED");
         // Run the ShareSpell code to duplicate the spell on the familiar
@@ -598,6 +600,20 @@ int X2PreSpellCastCode()
                 AssignCommand(oFam, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
             }
         }
+    }
+    //Pnp familiar spellsharing
+    if(nContinue 
+        && GetPRCSwitch(PRC_PNP_FAMILIARS) 
+        && !GetIsObjectValid(GetSpellCastItem())
+        && oTarget == OBJECT_SELF
+        && GetHasFeat(FEAT_SUMMON_FAMILIAR))
+    {
+        object oFam = GetLocalObject(OBJECT_SELF, "Familiar");
+        SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
+        AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        // Make sure this variable gets deleted as quickly as possible in case it's added in error.
+        AssignCommand(oFam, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
+    
     }
     
     if(GetPRCSwitch(PRC_PW_SPELL_TRACKING))

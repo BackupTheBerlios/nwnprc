@@ -317,6 +317,7 @@ void main()
 
     if(GetPRCSwitch(PRC_PNP_FAMILIARS))
     {
+        object oPC = OBJECT_SELF;
         int nFamiliarType = GetPersistantLocalInt(OBJECT_SELF, "PnPFamiliarType");
         string sResRef;
         effect eBonus;
@@ -324,16 +325,20 @@ void main()
         {
             case 0:
                 //start conversation
+                SetLocalString(OBJECT_SELF, "DynConv_Script", "prc_pnp_fam_conv");
+                ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
                 return;
                 break;
             case FAMILIAR_PNP_BAT:
                 eBonus = EffectSkillIncrease(SKILL_LISTEN, 3);
+                sResRef = "prc_pnpfam_bat";
                 break;
             case FAMILIAR_PNP_CAT:
                 eBonus = EffectSkillIncrease(SKILL_MOVE_SILENTLY, 3);
                 break;
             case FAMILIAR_PNP_HAWK:
                 eBonus = EffectSkillIncrease(SKILL_SPOT, 3);
+                sResRef = "prc_pnpfam_hawk";
                 break;
             case FAMILIAR_PNP_LIZARD:
                 eBonus = EffectSkillIncrease(SKILL_JUMP, 3);
@@ -363,8 +368,76 @@ void main()
             effect eInvalid;
             eBonus = eInvalid;
         }
+        //this is the masters bonus
         eBonus = SupernaturalEffect(eBonus);
-        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBonus, OBJECT_SELF);
+        if(!GetHasFeatEffect(FEAT_SUMMON_FAMILIAR, oPC))
+            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBonus, OBJECT_SELF);
+        effect eInvalid;
+        eBonus = eInvalid;
+        
+        //spawn the familiar
+        object oFam;
+        oFam = RetrieveCampaignObject("prc_data", "Familiar", GetLocation(OBJECT_SELF), oPC);
+        if(!GetIsObjectValid(oFam))
+            oFam = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetLocation(OBJECT_SELF));
+        if(!GetIsObjectValid(oFam))
+            return;//something odd going on here
+        
+        //familiar basics
+        int nABBonus = GetBaseAttackBonus(OBJECT_SELF)-GetBaseAttackBonus(oFam);
+        int nAttacks = (GetBaseAttackBonus(OBJECT_SELF)/5)+1;
+        if(nAttacks > 5)
+            nAttacks = 5;
+        SetBaseAttackBonus(nAttacks, oFam);
+        //temporary HP for the moment, have to think of a better idea later
+        int nHPBonus = (GetMaxHitPoints(OBJECT_SELF)/2)-GetMaxHitPoints(oFam);
+        int i;
+        for(i=0;i<GetPRCSwitch(FILE_END_SKILLS);i++)
+        {
+            int nBonus = GetSkillRank(i, OBJECT_SELF)-GetSkillRank(i, oFam);
+            eBonus = EffectLinkEffects(eBonus, EffectSkillIncrease(i, nBonus));
+        }
+        //saving throws
+        int nSaveRefBonus = GetReflexSavingThrow(OBJECT_SELF)-GetReflexSavingThrow(oFam);        
+        int nSaveFortBonus = GetFortitudeSavingThrow(OBJECT_SELF)-GetFortitudeSavingThrow(oFam);        
+        int nSaveWillBonus = GetWillSavingThrow(OBJECT_SELF)-GetWillSavingThrow(oFam); 
+        
+        
+        //scaling bonuses
+        int nFamLevel = GetLevelByClass(CLASS_TYPE_WIZARD)
+            +GetLevelByClass(CLASS_TYPE_SORCERER)
+                +GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER);
+        int nACBonus = nFamLevel/2;
+        int nIntBonus = nFamLevel/2;
+        int nSRBonus;
+        if(nFamLevel>11)
+            nSRBonus = nFamLevel+5;
+            
+        //effect doing
+        eBonus = EffectLinkEffects(eBonus, EffectACIncrease(nACBonus, AC_NATURAL_BONUS));
+        eBonus = EffectLinkEffects(eBonus, EffectAbilityIncrease(ABILITY_INTELLIGENCE, nIntBonus));
+        eBonus = EffectLinkEffects(eBonus, EffectSpellResistanceIncrease(nSRBonus));
+        eBonus = EffectLinkEffects(eBonus, EffectAttackIncrease(nABBonus));
+        eBonus = EffectLinkEffects(eBonus, EffectTemporaryHitpoints(nHPBonus));
+        eBonus = EffectLinkEffects(eBonus, EffectSavingThrowIncrease(SAVING_THROW_REFLEX, nSaveRefBonus));
+        eBonus = EffectLinkEffects(eBonus, EffectSavingThrowIncrease(SAVING_THROW_FORT, nSaveFortBonus));
+        eBonus = EffectLinkEffects(eBonus, EffectSavingThrowIncrease(SAVING_THROW_WILL, nSaveWillBonus));
+        //skills were linked earlier
+        eBonus = SupernaturalEffect(eBonus);
+        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBonus, oFam);  
+        
+        //add the familiar as a henchman
+        int nMaxHenchmen = GetMaxHenchmen();
+        SetMaxHenchmen(99);
+        AddHenchman(oFam, OBJECT_SELF);
+        SetMaxHenchmen(nMaxHenchmen);
+        //mark it as a familiar
+        SetLocalInt(oFam, "IsFamiliar", TRUE);
+        //link the owner to its familiar
+        SetLocalObject(OBJECT_SELF, "Familiar", oFam);
+        //raisable
+        AssignCommand(oFam, SetIsDestroyable(FALSE, TRUE, TRUE));
+        //dont do normal familiars too
         return;
     }
 

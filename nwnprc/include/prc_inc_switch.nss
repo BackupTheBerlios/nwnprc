@@ -325,6 +325,13 @@ const string PRC_SUMMON_ROUND_PER_LEVEL              = "PRC_SUMMON_ROUND_PER_LEV
 const string PRC_PNP_FAMILIARS                       = "PRC_PNP_FAMILIARS";
 
 /**
+ * This disables the ability to heal Bioware familiars by feading them
+ * through the conversation
+ */
+const string PRC_PNP_FAMILIAR_FEEDING                = "PRC_PNP_FAMILIAR_FEEDING";
+
+
+/**
  * Sets the behaviour of the PRC Power Attack. Set this to either
  * PRC_POWER_ATTACK_DISABLED or PRC_POWER_ATTACK_FULL_PNP if you give
  * it a value.

@@ -44,31 +44,32 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
    
     //Declare major variables
     object oTarget = GetSpellTargetObject();
+    int nDC = SPGetSpellSaveDC(oTarget, OBJECT_SELF);
     int nRand = Random(7)+1;
     int nDisease;
     //Use a random seed to determine the disease that will be delivered.
     switch (nRand)
     {
         case 1:
-            nDisease = DISEASE_BLINDING_SICKNESS;
+            nDisease = DISEASE_CONTAGION_BLINDING_SICKNESS;
         break;
         case 2:
-            nDisease = DISEASE_CACKLE_FEVER;
+            nDisease = DISEASE_CONTAGION_CACKLE_FEVER;
         break;
         case 3:
-            nDisease = DISEASE_FILTH_FEVER;
+            nDisease = DISEASE_CONTAGION_FILTH_FEVER;
         break;
         case 4:
-            nDisease = DISEASE_MINDFIRE;
+            nDisease = DISEASE_CONTAGION_MINDFIRE;
         break;
         case 5:
-            nDisease = DISEASE_RED_ACHE;
+            nDisease = DISEASE_CONTAGION_RED_ACHE;
         break;
         case 6:
-            nDisease = DISEASE_SHAKES;
+            nDisease = DISEASE_CONTAGION_SHAKES;
         break;
         case 7:
-            nDisease = DISEASE_SLIMY_DOOM;
+            nDisease = DISEASE_CONTAGION_SLIMY_DOOM;
         break;
     }
     if(!GetIsReactionTypeFriendly(oTarget))
@@ -77,11 +78,17 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CONTAGION));
         effect eDisease = EffectDisease(nDisease);
         //Make SR check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl + SPGetPenetr()))
+        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, CasterLvl + SPGetPenetr()))
         {
-            //The effect is permament because the disease subsystem has its own internal resolution
-            //system in place.
-            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDisease, oTarget,0.0f,TRUE,-1,CasterLvl);
+            // Make the real first save against the spell's DC
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+            {
+                //The effect is permament because the disease subsystem has its own internal resolution
+                //system in place.
+                // The first disease save is against an impossible fake DC, since at this point the
+                // target has already failed their real first save.
+                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDisease, oTarget, 0.0f, TRUE, -1, CasterLvl);
+            }
         }
     }
 

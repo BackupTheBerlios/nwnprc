@@ -2,7 +2,7 @@
 //:: Generic eventhook include
 //:: inc_eventhook
 //:://////////////////////////////////////////////
-/*
+/** @file
     A system for scheduling scripts to be run on
     an arbitrary event during runtime (instead of
     being hardcoded in compilation).
@@ -42,7 +42,7 @@
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan
 //:: Created On: 28.02.2005
-//:: Modified On: 08.04.2005
+//:: Modified On: 26.05.2005
 //:://////////////////////////////////////////////
 
 #include "inc_utility"
@@ -168,86 +168,98 @@ const string PERMANENCY_SUFFIX = "_permanent";
 /* Function prototypes                          */
 //////////////////////////////////////////////////
 
-// Adds the given script to be fired when the event next occurs for the given object
-// =================================================================================
-// oObject          The object that the script is to be fired for
-// nEvent           One of the EVENT_* constants defined in "inc_eventhook",
-//                  (or any number, but then need to be a bit more careful, since the system won't complain if you typo it)
-// sScript          The script to be fired on the event
-// bPermanent       Unless this is set, the script will be only fired once, after which it
-//                  is removed from the list
-//
-// bAllowDuplicate  This being set makes the function first check if a script with
-//                  the same name is already queued for the event and avoids adding a
-//                  duplicate. This will not remove duplicates already present, though.
-//
-// NOTE! Do not add a script that calls ExecuteAllScriptsHookedToEvent() to an eventhook.
-// It will result in recursive loop.
+/** 
+ * Adds the given script to be fired when the event next occurs for the given object.
+ * NOTE! Do not add a script that calls ExecuteAllScriptsHookedToEvent() to an eventhook.
+ * It will result in recursive infinite loop.
+ *
+ * @param oObject          The object that the script is to be fired for
+ * @param nEvent           One of the EVENT_* constants defined in "inc_eventhook",
+ *                         (or any number, but then need to be a bit more careful, since the system won't complain if you typo it)
+ * @param sScript          The script to be fired on the event
+ * @param bPermanent       Unless this is set, the script will be only fired once, after which it
+ *                         is removed from the list
+ *
+ * @param bAllowDuplicate  This being set makes the function first check if a script with
+ *                         the same name is already queued for the event and avoids adding a
+ *                         duplicate. This will not remove duplicates already present, though.
+ */
 void AddEventScript(object oObject, int nEvent, string sScript, int bPermanent = FALSE, int bAllowDuplicate = TRUE);
 
-// Removes all instances of the given script from the given eventhook
-// ==================================================================
-// oObject          The object that the script is to be removed from the list for.
-// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
-// sScript          The script to be removed from the event
-//
-// bPermanent       Depending on the state of this switch, the script is either removed
-//                  from the one-shot or permanent list.
-//
-// bIgnorePermanency Setting this to true will make the function clear the script from
-//                   both one-shot and permanent lists, regardless of the value of bPermanent
+/**
+ * Removes all instances of the given script from the given eventhook
+ *
+ * @param oObject          The object that the script is to be removed from the list for.
+ * @param nEvent           One of the EVENT_* constants defined in "inc_eventhook"
+ * @param sScript          The script to be removed from the event
+ *
+ * @param bPermanent       Depending on the state of this switch, the script is either removed
+ *                         from the one-shot or permanent list.
+ *
+ * @param bIgnorePermanency Setting this to true will make the function clear the script from
+ *                          both one-shot and permanent lists, regardless of the value of bPermanent
+ */
 void RemoveEventScript(object oObject, int nEvent, string sScript, int bPermanent = FALSE, int bIgnorePermanency = FALSE);
 
-// Removes all scripts in the given eventhook
-// ==========================================
-// oObject          The object to clear script list for.
-// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
-//
-// bPermanent       Depending on the state of this switch, the scripts are either removed
-//                  from the one-shot or permanent list.
-//
-// bIgnorePermanency Setting this to true will make the function clear both one-shot and
-//                   permanent lists, regardless of the value of bPermanent
+/**
+ * Removes all scripts in the given eventhook
+ *
+ * @param oObject           The object to clear script list for.
+ * @param nEvent            One of the EVENT_* constants defined in "inc_eventhook"
+ *
+ * @param bPermanent        Depending on the state of this switch, the scripts are either removed
+ *                          from the one-shot or permanent list.
+ *
+ * @param bIgnorePermanency Setting this to true will make the function clear both one-shot and
+ *                          permanent lists, regardless of the value of bPermanent
+ */
 void ClearEventScriptList(object oObject, int nEvent, int bPermanent = FALSE, int bIgnorePermanency = FALSE);
 
-// Gets the first script hooked to the given event
-// ===============================================
-// oObject          The object to get a script for.
-// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
-// bPermanent       Which list to get the first script from.
-//
-// This must be called before any calls to GetNextEventScript() are made.
-// Returns the name of the first script stored, or "", if one was not found.
+/**
+ * Gets the first script hooked to the given event.
+ * This must be called before any calls to GetNextEventScript() are made.
+ *
+ * @param oObject          The object to get a script for.
+ * @param nEvent           One of the EVENT_* constants defined in "inc_eventhook"
+ * @param bPermanent       Which list to get the first script from.
+ *
+ * @return The name of the first script stored, or "" if one was not found.
+ */
 string GetFirstEventScript(object oObject, int nEvent, int bPermanent);
 
-// Gets the next script hooked to the given event
-// ==============================================
-// oObject          The object to get a script for.
-// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
-// bPermanent       Which list to get the first script from.
-//
-// You should call GetFirstEventScript before calling this.
-// Returns the name of the next script in the list, or "" if there are no more scripts
-// left. Also returns "" if GetFirstEventScript hasn't been called.
+/**
+ * Gets the next script hooked to the given event.
+ * You should call GetFirstEventScript before calling this.
+ *
+ * @param oObject          The object to get a script for.
+ * @param nEvent           One of the EVENT_* constants defined in "inc_eventhook"
+ * @param bPermanent       Which list to get the first script from.
+ * 
+ * @return                 The name of the next script in the list, or "" if there are no more scripts
+ *                         left. Also returns "" if GetFirstEventScript hasn't been called.
+ */
 string GetNextEventScript(object oObject, int nEvent, int bPermanent);
 
-// Executes all scripts in both the one-shot and permanent hooks and
-// clears scripts off the one-shot hook afterwards
-// =================================================================
-// oObject          The object to execute listed scripts for.
-// nEvent           One of the EVENT_* constants defined in "inc_eventhook"
-//
-// All the scripts will be ExecuteScripted on OBJECT_SELF, so they will
-// behave as if being in the script slot for that event.
-//
-// It is recommended this be used instead of manually going through
-// the script lists with Get(First|Next)EventScript.
+/**
+ * Executes all scripts in both the one-shot and permanent hooks and
+ * clears scripts off the one-shot hook afterwards.
+ * It is recommended this be used instead of manually going through
+ * the script lists with Get(First|Next)EventScript.
+ *
+ * All the scripts will be ExecuteScripted on OBJECT_SELF, so they will
+ * behave as if being in the script slot for that event.
+ *
+ * @param oObject          The object to execute listed scripts for.
+ * @param nEvent           One of the EVENT_* constants defined in "inc_eventhook"
+ */
 void ExecuteAllScriptsHookedToEvent(object oObject, int nEvent);
 
-// Gets the event currently being run via ExecuteAllScriptsHookedToEvent
-// =====================================================================
-// Returns one of the EVENT_* constants if an ExecuteAllScriptsHookedToEvent
-// is being run, FALSE otherwise.
+/**
+ * Gets the event currently being run via ExecuteAllScriptsHookedToEvent
+ *
+ * @return One of the EVENT_* constants if an ExecuteAllScriptsHookedToEvent
+ *         is being run, FALSE otherwise.
+ */
 int GetRunningEvent();
 
 
@@ -343,8 +355,10 @@ void RemoveEventScript(object oObject, int nEvent, string sScript, int bPermanen
     // Go through one-shot array
     if(!bPermanent || bIgnorePermanency){
         sArrayName = sArrayNameBase;
-        // First, check if there is an array to look through at all
-        if(wrap_array_exists(oObject, sArrayName)){
+        // First, check if there is an array to look through at all and that the script is in the array
+        if(wrap_array_exists(oObject, sArrayName) &&
+           GetLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName)
+           ){
             int nMoveBackBy = 0;
             int i = 0;
             // Loop through the array elements
@@ -368,8 +382,10 @@ void RemoveEventScript(object oObject, int nEvent, string sScript, int bPermanen
     // Go through the permanent array
     if(bPermanent || bIgnorePermanency){
         sArrayName = sArrayNameBase + PERMANENCY_SUFFIX;
-        // First, check if there is an array to look through at all
-        if(wrap_array_exists(oObject, sArrayName)){
+        // First, check if there is an array to look through at all and that the script is in the array
+        if(wrap_array_exists(oObject, sArrayName) &&
+           GetLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName)
+           ){
             int nMoveBackBy = 0;
             int i = 0;
             // Loop through the array elements
@@ -378,7 +394,7 @@ void RemoveEventScript(object oObject, int nEvent, string sScript, int bPermanen
                 if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
                     nMoveBackBy++;
                 }
-                // Move the entris in the array back by an amount great enough to overwrite entries containing sScript
+                // Move the entries in the array back by an amount great enough to overwrite entries containing sScript
                 else if(nMoveBackBy){
                     wrap_array_set_string(oObject, sArrayName, i - nMoveBackBy,
                                           wrap_array_get_string(oObject, sArrayName, i));

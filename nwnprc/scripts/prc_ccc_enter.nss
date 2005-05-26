@@ -24,13 +24,19 @@ void main()
     }
 
     //check that letoscript is setup correctly
-    StackedLetoScript("<FirstName> <LastName>");
+    string sScript;
+    if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
+        sScript = LetoGet("FirstName")+" "+LetoGet("LastName");
+    else
+        sScript = LetoGet("FirstName")+"print ' ';\n"+LetoGet("LastName");
+    StackedLetoScript(sScript);
     RunStackedLetoScriptOnObject(oPC, "LETOTEST", "SCRIPT", "", FALSE);
     string sResult = GetLocalString(GetModule(), "LetoResult");
     string sName = GetName(oPC);
-    if(sResult != sName
-        && sResult != sName+" "
-        && sResult != " "+sName)
+    if((    sResult != sName
+         && sResult != sName+" "
+         && sResult != " "+sName)
+         )
     {
         SendMessageToPC(oPC, "Letoscript is not setup correctly. Please check that you have changed the directory in inc_letoscript to the correct one.");
         WriteTimestampedLogEntry("Letoscript is not setup correctly. Please check that you have changed the directory in inc_letoscript to the correct one.");

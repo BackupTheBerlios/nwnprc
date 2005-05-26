@@ -560,7 +560,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
                     nOverrideLevel = GetItemPropertyCostTableValue (ipTest);
                 ipTest = GetNextItemProperty(oItem);
             }
-            if(nOverrideLevel)
+            if(!nOverrideLevel)
                 return GetCasterLevel(oCaster);
             else
                 return nOverrideLevel;

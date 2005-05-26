@@ -353,17 +353,17 @@ void PRCMakeTables()
     SQL+= "DivSpellLvlMod varchar(255) DEFAULT '_', ";   
     SQL+= "EpicLevel varchar(255) DEFAULT '_', ";   
     SQL+= "Package varchar(255) DEFAULT '_'); "; 
-    PRC_SQLExecDirect(SQL); SQL = "";
+    PRC_SQLExecDirect(SQL);
 
-    SQL+= "CREATE TABLE cached2da ( file varchar(255) DEFAULT '_', column varchar(255) DEFAULT '_', rowid int(55), data varchar(255) DEFAULT '_'); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
+    SQL = "CREATE TABLE prc_cached2da ( file varchar(255) DEFAULT '_', column varchar(255) DEFAULT '_', rowid int(55), data varchar(255) DEFAULT '_'); ";
+    PRC_SQLExecDirect(SQL);
     
     //non2dacaching table
     SQL = "CREATE TABLE prc_data (name varchar(255) DEFAULT '_', value varchar(255) DEFAULT '_')";
     PRC_SQLExecDirect(SQL);
     
     //indexs
-    SQL+= "CREATE UNIQUE INDEX rowindex ON prc_cached2da_feat (rowid); ";
+    SQL = "CREATE UNIQUE INDEX rowindex ON prc_cached2da_feat (rowid); ";
     SQL+= "CREATE UNIQUE INDEX rowindex ON prc_cached2da_spells (rowid); ";
     SQL+= "CREATE INDEX rowindex ON prc_cached2da_cls_feat (FeatIndex); ";
     SQL+= "CREATE INDEX rowindex ON prc_cached2da_cls_feat (file); ";
@@ -417,7 +417,7 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
             else if(TestStringAgainstPattern("cls_feat_**", s2DA))
                 SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_cls_feat WHERE ( rowid = "+IntToString(nRow)+" ) AND ( file = '"+s2DA+"' )";
             else
-                SQL = "SELECT data FROM cached2da WHERE ( file = '"+s2DA+"' ) AND ( column = '"+sDBColumn+"' ) AND ( rowid = "+IntToString(nRow)+" )";
+                SQL = "SELECT data FROM prc_cached2da WHERE ( file = '"+s2DA+"' ) AND ( column = '"+sDBColumn+"' ) AND ( rowid = "+IntToString(nRow)+" )";
             
             PRC_SQLExecDirect(SQL);
             // if there is an error, table is not built or is not initialized
@@ -492,7 +492,7 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
                 }
                 else
                 {
-                    SQL = "INSERT INTO cached2da VALUES ('"+s2DA+"' , '"+sDBColumn+"' , '"+IntToString(nRow)+"' , '"+s+"')";
+                    SQL = "INSERT INTO prc_cached2da VALUES ('"+s2DA+"' , '"+sDBColumn+"' , '"+IntToString(nRow)+"' , '"+s+"')";
                 }    
                 PRC_SQLExecDirect(SQL);
             }
@@ -524,7 +524,7 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
         nRow = StringToInt(PRC_SQLGetData(1));
     } */
     if(sFile != ""
-        && sFile == "****"
+        && sFile != "****"
         && nRow < GetPRCSwitch(FILE_END_CLASS_FEAT))
     {
         Get2DACache(sFile, "FeatLabel", nRow); 

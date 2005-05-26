@@ -42,7 +42,6 @@ const string  X2_CI_CRAFTSKILL_CONV ="x2_p_craftskills";
 const int     X2_CI_BREWPOTION_FEAT_ID        = 944;                    // Brew Potion feat simulation
 const int     X2_CI_BREWPOTION_MAXLEVEL       = 3;                      // Max Level for potions
 const int     X2_CI_BREWPOTION_COSTMODIFIER   = 50;                     // gp Brew Potion XPCost Modifier
-
 const string  X2_CI_BREWPOTION_NEWITEM_RESREF = "x2_it_pcpotion";       // ResRef for new potion item
 
 // Scribe Scroll related constants

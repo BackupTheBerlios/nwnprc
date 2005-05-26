@@ -46,6 +46,9 @@ string LetoAdjust(string sLocation, int nValue, string sType);
 //deleting a field
 string LetoDelete(string sLocation);
 
+//get a gield
+string LetoGet(string sLocation);
+
 string LetoAdd(string sLocation,string sValue, string sType)
 {
     return LetoSet(sLocation, sValue, sType, TRUE);
@@ -131,6 +134,20 @@ string LetoDelete(string sLocation)
         return "<gff:delete '"+sLocation+"'>\n";
     else        
         return "clear /"+sLocation+";\n";
+
+}
+
+//deleting a field
+string LetoGet(string sLocation)
+{
+//phoenix
+// <Str>
+//unicorn
+// /Str;
+    if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
+        return "<"+sLocation+"'>\n";
+    else        
+        return "print /"+sLocation+";\n";
 
 }
 

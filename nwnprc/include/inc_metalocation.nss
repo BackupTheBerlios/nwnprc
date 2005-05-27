@@ -57,7 +57,6 @@ struct metalocation{
     string sModule;
     };
 
-
 /**
  * Converts a standard location to equivalent metalocation.
  *
@@ -90,21 +89,30 @@ location MetalocationToLocation(struct metalocation mlocL);
 int GetIsMetalocationInModule(struct metalocation mlocL);
 
 /**
- * Stores the given metalocation persistantly, so that it will remain in the
- * character data over character exports.
+ * Stores the given metalocation on the given object. Behaves as other normal
+ * local variables do.
  *
  * @param oObject The object to store the metalocation on.
  * @param sName   The local variable name the metalocation will be stored as.
  * @param mlocL   The metalocation to store.
+ */
+void SetLocalMetalocation(object oObject, string sName, struct metalocation mlocL);
+
+/**
+ * Stores the given metalocation persistantly, so that it will remain in the
+ * character data over character exports.
+ *
+ * @param oCreature The creature to store the metalocation on.
+ * @param sName     The local variable name the metalocation will be stored as.
+ * @param mlocL     The metalocation to store.
  *
  * @see inc_persist_loca
  */
-void SetPersistantLocalMetalocation(object oObject, string sName,
+void SetPersistantLocalMetalocation(object oCreature, string sName,
                                     struct metalocation mlocL);
 
 /**
- * Retrieves the metalocation persistantly stored on the given object under
- * the given name.
+ * Retrieves the metalocation stored on the given object under the given name.
  * NOTE! If there was no metalocation stored with the given name, the returned
  * value will have all it's fields blank.
  * 
@@ -112,7 +120,40 @@ void SetPersistantLocalMetalocation(object oObject, string sName,
  * @param sName   The name the metalocation was stored under.
  * @return        A copy of the stored metalocation.
  */
-struct metalocation GetPersistantLocalMetalocation(object oObject, string sName);
+struct metalocation GetLocalMetalocation(object oObject, string sName);
+
+/**
+ * Retrieves the metalocation persistantly stored on the given creature under
+ * the given name.
+ * NOTE! If there was no metalocation stored with the given name, the returned
+ * value will have all it's fields blank.
+ * 
+ * @param oCreature The creature the metalocation was stored on.
+ * @param sName     The name the metalocation was stored under.
+ * @return          A copy of the stored metalocation.
+ *
+ * @see inc_persist_loca
+ */
+struct metalocation GetPersistantLocalMetalocation(object oCreature, string sName);
+
+/**
+ * Deletes the metalocation stored with the given name on the given object.
+ *
+ * @param oObject The object the metalocation was stored on.
+ * @param sName   The name the metalocation was stored under.
+ */
+void DeleteLocalMetalocation(object oObject, string sName);
+
+/**
+ * Deletes the metalocation persistantly stored with the given name on
+ * the given creature.
+ *
+ * @param oCreature The creature the metalocation was stored on.
+ * @param sName     The name the metalocation was stored under.
+ *
+ * @see inc_persist_loca
+ */
+void DeletePersistantLocalMetalocation(object oCreature, string sName);
 
 /**
  * Creates a map pin based on the given metalocation. It will be created at the
@@ -123,6 +164,13 @@ struct metalocation GetPersistantLocalMetalocation(object oObject, string sName)
  */
 void CreateMapPinFromMetalocation(struct metalocation mlocL, object oPC);
 
+/**
+ * Creates a metalocation with all constituents having null-equivalent values.
+ * Used when there is a need to return an invalid metalocation.
+ *
+ * @return A metalocation that has a null-equivalent in each field.
+ */
+struct metalocation GetNullMetalocation();
 
 
 //////////////////////////////////////////////////
@@ -188,16 +236,20 @@ void SetLocalMetalocation(object oObject, string sName, struct metalocation mloc
     SetLocalString(oObject, "Metalocation_" + sName + "_Module",     mlocL.sModule);
 }
 
-void SetPersistantLocalMetalocation(object oObject, string sName, struct metalocation mlocL)
+void SetPersistantLocalMetalocation(object oCreature, string sName,
+                                    struct metalocation mlocL)
 {
-    SetPersistantLocalString(oObject, "Metalocation_" + sName + "_AreaTag",    mlocL.sAreaTag);
-    SetPersistantLocalString(oObject, "Metalocation_" + sName + "_AreaResRef", mlocL.sAreaResRef);
-    SetPersistantLocalFloat(oObject,  "Metalocation_" + sName + "_X",          mlocL.vCoords.x);
-    SetPersistantLocalFloat(oObject,  "Metalocation_" + sName + "_Y",          mlocL.vCoords.y);
-    SetPersistantLocalFloat(oObject,  "Metalocation_" + sName + "_Z",          mlocL.vCoords.z);
-    SetPersistantLocalFloat(oObject,  "Metalocation_" + sName + "_Facing",     mlocL.fFacing);
-    SetPersistantLocalString(oObject, "Metalocation_" + sName + "_Name",       mlocL.sName);
-    SetPersistantLocalString(oObject, "Metalocation_" + sName + "_Module",     mlocL.sModule);
+    // Persistant operations fail on non-creatures.
+    if(GetObjectType(oCreature) != OBJECT_TYPE_CREATURE) return;
+    
+    SetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaTag",    mlocL.sAreaTag);
+    SetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaResRef", mlocL.sAreaResRef);
+    SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_X",          mlocL.vCoords.x);
+    SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Y",          mlocL.vCoords.y);
+    SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Z",          mlocL.vCoords.z);
+    SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Facing",     mlocL.fFacing);
+    SetPersistantLocalString(oCreature, "Metalocation_" + sName + "_Name",       mlocL.sName);
+    SetPersistantLocalString(oCreature, "Metalocation_" + sName + "_Module",     mlocL.sModule);
 }
 
 struct metalocation GetLocalMetalocation(object oObject, string sName)
@@ -216,20 +268,50 @@ struct metalocation GetLocalMetalocation(object oObject, string sName)
     return mlocL;
 }
 
-struct metalocation GetPersistantLocalMetalocation(object oObject, string sName)
+struct metalocation GetPersistantLocalMetalocation(object oCreature, string sName)
 {
+    // Persistant operations fail on non-creatures.
+    if(GetObjectType(oCreature) != OBJECT_TYPE_CREATURE) return GetNullMetalocation();
+    
     struct metalocation mlocL;
-    mlocL.sAreaTag    = GetPersistantLocalString(oObject, "Metalocation_" + sName + "_AreaTag");
-    mlocL.sAreaResRef = GetPersistantLocalString(oObject, "Metalocation_" + sName + "_AreaResRef");
-    mlocL.vCoords = Vector(GetPersistantLocalFloat(oObject, "Metalocation_" + sName + "_X"),
-                           GetPersistantLocalFloat(oObject, "Metalocation_" + sName + "_Y"),
-                           GetPersistantLocalFloat(oObject, "Metalocation_" + sName + "_Z")
+    mlocL.sAreaTag    = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaTag");
+    mlocL.sAreaResRef = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaResRef");
+    mlocL.vCoords = Vector(GetPersistantLocalFloat(oCreature, "Metalocation_" + sName + "_X"),
+                           GetPersistantLocalFloat(oCreature, "Metalocation_" + sName + "_Y"),
+                           GetPersistantLocalFloat(oCreature, "Metalocation_" + sName + "_Z")
                            );
-    mlocL.fFacing = GetPersistantLocalFloat(oObject,  "Metalocation_" + sName + "_Facing");
-    mlocL.sName   = GetPersistantLocalString(oObject, "Metalocation_" + sName + "_Name");
-    mlocL.sModule = GetPersistantLocalString(oObject, "Metalocation_" + sName + "_Module");
+    mlocL.fFacing = GetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Facing");
+    mlocL.sName   = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_Name");
+    mlocL.sModule = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_Module");
     
     return mlocL;
+}
+
+void DeleteLocalMetalocation(object oObject, string sName)
+{
+    DeleteLocalString(oObject, "Metalocation_" + sName + "_AreaTag");
+    DeleteLocalString(oObject, "Metalocation_" + sName + "_AreaResRef");
+    DeleteLocalFloat(oObject,  "Metalocation_" + sName + "_X");
+    DeleteLocalFloat(oObject,  "Metalocation_" + sName + "_Y");
+    DeleteLocalFloat(oObject,  "Metalocation_" + sName + "_Z");
+    DeleteLocalFloat(oObject,  "Metalocation_" + sName + "_Facing");
+    DeleteLocalString(oObject, "Metalocation_" + sName + "_Name");
+    DeleteLocalString(oObject, "Metalocation_" + sName + "_Module");
+}
+
+void DeletePersistantLocalMetalocation(object oCreature, string sName)
+{
+    // Persistant operations fail on non-creatures.
+    if(GetObjectType(oCreature) != OBJECT_TYPE_CREATURE) return;
+
+    DeletePersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaTag");
+    DeletePersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaResRef");
+    DeletePersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_X");
+    DeletePersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Y");
+    DeletePersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Z");
+    DeletePersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Facing");
+    DeletePersistantLocalString(oCreature, "Metalocation_" + sName + "_Name");
+    DeletePersistantLocalString(oCreature, "Metalocation_" + sName + "_Module");
 }
 
 
@@ -264,6 +346,17 @@ void CreateMapPinFromMetalocation(struct metalocation mlocL, object oPC)
     SetLocalObject(oPC, "NW_MAP_PIN_AREA_" + IntToString(nID), GetAreaFromLocation(MetalocationToLocation(mlocL)));
 }
 
+struct metalocation GetNullMetalocation()
+{
+    struct metalocation mlocL;
+    mlocL.sAreaTag    = "";
+    mlocL.sAreaResRef = "";
+    mlocL.vCoords     = Vector(0.0f, 0.0f, 0.0f);
+    mlocL.fFacing     = 0.0f;
+    mlocL.sName       = "";
+    mlocL.sModule     = "";
+    return mlocL;
+}
 
 
 //void main(){} // Test main

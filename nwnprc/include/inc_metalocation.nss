@@ -69,10 +69,13 @@ struct metalocation LocationToMetalocation(location locL, string sName = "");
 /**
  * Convert a metalocation to equivalent standard location.
  * 
- * NOTE! Will return the current module's starting location if the given
- * metalocation is not valid or not within current module.
- * As such, it is recommended that you run GetIsMetalocationInModule()
- * on the metalocation before using this.
+ * NOTE!
+ * If the metalocation is not in current module, the current module's starting
+ * location will be returned. As such, it is recommended that you run
+ * GetIsMetalocationInModule() on the metalocation before using this.
+ *
+ * If the metalocation is not valid, the returned location will also
+ * not be valid.
  *
  * @param mlocL The metalocation to convert.
  * @return      The location created from mlocL.
@@ -87,6 +90,17 @@ location MetalocationToLocation(struct metalocation mlocL);
  *              FALSE otherwise.
  */
 int GetIsMetalocationInModule(struct metalocation mlocL);
+
+/**
+ * Extracts an area reference from the given metalocation. If the metalocation
+ * is not in the current module, or does not refere to a valid area,
+ * OBJECT_INVALID is returned.
+ *
+ * @param mlocL The metalocation from which to extract the area reference.
+ * @return      An object reference to the area containing the metalocation or
+ *              OBJECT_INVALID in case of error.
+ */
+object GetAreaFromMetalocation(struct metalocation mlocL);
 
 /**
  * Stores the given metalocation on the given object. Behaves as other normal
@@ -114,7 +128,7 @@ void SetPersistantLocalMetalocation(object oCreature, string sName,
 /**
  * Retrieves the metalocation stored on the given object under the given name.
  * NOTE! If there was no metalocation stored with the given name, the returned
- * value will have all it's fields blank.
+ * value will have all it's fields contain null-equivalents.
  * 
  * @param oObject The object the metalocation was stored on.
  * @param sName   The name the metalocation was stored under.
@@ -126,7 +140,7 @@ struct metalocation GetLocalMetalocation(object oObject, string sName);
  * Retrieves the metalocation persistantly stored on the given creature under
  * the given name.
  * NOTE! If there was no metalocation stored with the given name, the returned
- * value will have all it's fields blank.
+ * value will have all it's fields contain null-equivalents.
  * 
  * @param oCreature The creature the metalocation was stored on.
  * @param sName     The name the metalocation was stored under.
@@ -188,7 +202,7 @@ struct metalocation LocationToMetalocation(location locL, string sName = "")
     mlocL.sName       = sName;
     mlocL.sModule     = GetName(GetModule());
     //mlocL.nAssociatedMapPinID = -1;
-    
+
     return mlocL;
 }
 
@@ -197,23 +211,10 @@ location MetalocationToLocation(struct metalocation mlocL)
     // Check whether the metalocation is in this module
     if(!GetIsMetalocationInModule(mlocL))
         return GetStartingLocation(); // Must return a valid location, so return starting location.
-    
+
     // Get the area
-    object oArea = GetObjectByTag(mlocL.sAreaTag);
-    // Multiple areas with same tag?
-    if(GetResRef(oArea) != mlocL.sAreaResRef)
-    {
-        int i = 1;
-        oArea = GetObjectByTag(mlocL.sAreaTag, i);
-        while(GetIsObjectValid(oArea) && GetResRef(oArea) != mlocL.sAreaResRef)
-            oArea = GetObjectByTag(mlocL.sAreaTag, ++i);
-        
-        
-        if(!GetIsObjectValid(oArea))
-            // No such area in the module, so return starting location
-            return GetStartingLocation();
-    }
-    
+    object oArea = GetAreaFromMetalocation(mlocL);
+
     // Construct and return the location
     return Location(oArea, mlocL.vCoords, mlocL.fFacing);
 }
@@ -223,6 +224,25 @@ int GetIsMetalocationInModule(struct metalocation mlocL)
     return GetName(GetModule()) == mlocL.sModule;
 }
 
+object GetAreaFromMetalocation(struct metalocation mlocL)
+{
+    if(!GetIsMetalocationInModule(mlocL) return OBJECT_INVALID;
+
+    object oArea = GetObjectByTag(mlocL.sAreaTag, 0);
+    // Multiple areas with same tag?
+    if(GetResRef(oArea) != mlocL.sAreaResRef)
+    {
+        int i = 1;
+        oArea = GetObjectByTag(mlocL.sAreaTag, i);
+        while(GetIsObjectValid(oArea) && GetResRef(oArea) != mlocL.sAreaResRef)
+            oArea = GetObjectByTag(mlocL.sAreaTag, ++i);
+
+        // Make sure that if the object reference is not valid, it is OBJECT_INVALID
+        if(!GetIsObjectValid(oArea)) return OBJECT_INVALID;
+    }
+
+    return oArea;
+}
 
 void SetLocalMetalocation(object oObject, string sName, struct metalocation mlocL)
 {
@@ -241,7 +261,7 @@ void SetPersistantLocalMetalocation(object oCreature, string sName,
 {
     // Persistant operations fail on non-creatures.
     if(GetObjectType(oCreature) != OBJECT_TYPE_CREATURE) return;
-    
+
     SetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaTag",    mlocL.sAreaTag);
     SetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaResRef", mlocL.sAreaResRef);
     SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_X",          mlocL.vCoords.x);
@@ -264,7 +284,7 @@ struct metalocation GetLocalMetalocation(object oObject, string sName)
     mlocL.fFacing = GetLocalFloat(oObject,  "Metalocation_" + sName + "_Facing");
     mlocL.sName   = GetLocalString(oObject, "Metalocation_" + sName + "_Name");
     mlocL.sModule = GetLocalString(oObject, "Metalocation_" + sName + "_Module");
-    
+
     return mlocL;
 }
 
@@ -272,7 +292,7 @@ struct metalocation GetPersistantLocalMetalocation(object oCreature, string sNam
 {
     // Persistant operations fail on non-creatures.
     if(GetObjectType(oCreature) != OBJECT_TYPE_CREATURE) return GetNullMetalocation();
-    
+
     struct metalocation mlocL;
     mlocL.sAreaTag    = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaTag");
     mlocL.sAreaResRef = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaResRef");
@@ -283,7 +303,7 @@ struct metalocation GetPersistantLocalMetalocation(object oCreature, string sNam
     mlocL.fFacing = GetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Facing");
     mlocL.sName   = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_Name");
     mlocL.sModule = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_Module");
-    
+
     return mlocL;
 }
 

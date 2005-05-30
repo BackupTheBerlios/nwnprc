@@ -1,7 +1,3 @@
-#include "prc_inc_switch"
-#include "inc_utility"
-#include "inc_fileends"
-
 const int PRC_SQL_ERROR = 0;
 const int PRC_SQL_SUCCESS = 1;
 
@@ -11,6 +7,10 @@ void PRC_SQLExecDirect(string sSQL);
 int PRC_SQLFetch();
 string PRC_SQLGetData(int iCol);
 void PRC_SQLCommit();
+
+#include "prc_inc_switch"
+#include "inc_utility"
+#include "inc_fileends"
 
 void PRC_SQLCommit()
 {
@@ -516,13 +516,13 @@ void Cache_Done()
 void Cache_Class_Feat(int nClass, int nRow = 0)
 {
     string sFile = Get2DACache("classes", "FeatsTable", nClass);
-/*    if(nRow == 0)
+    if(nRow == 0)
     {
         string SQL = "SELECT rowid FROM prc_cached2da_cls_feat WHERE (file = '"+GetStringLowerCase(sFile)+"') ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1));
-    } */
+        nRow = StringToInt(PRC_SQLGetData(1))+1;
+    } 
     if(sFile != ""
         && sFile != "****"
         && nRow < GetPRCSwitch(FILE_END_CLASS_FEAT))
@@ -534,6 +534,13 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
         Get2DACache(sFile, "OnMenu", nRow); 
         nRow++;
         DelayCommand(0.1, Cache_Class_Feat(nClass, nRow));
+        if(nRow >= GetPRCSwitch(FILE_END_CLASS_FEAT))
+        {
+            string SQL = "COMMIT";
+            PRC_SQLExecDirect(SQL);
+            SQL = "BEGIN IMMEDIATE";
+            PRC_SQLExecDirect(SQL);
+        }            
     }
     else
     {
@@ -541,10 +548,6 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
             Cache_Done();
         else
         {
-            string SQL = "COMMIT";
-            PRC_SQLExecDirect(SQL);
-            SQL = "BEGIN IMMEDIATE";
-            PRC_SQLExecDirect(SQL);
             Cache_Class_Feat(nClass+1);
         }            
     }
@@ -557,7 +560,7 @@ void Cache_Classes(int nRow = 0)
         string SQL = "SELECT rowid FROM prc_cached2da_classes ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1));
+        nRow = StringToInt(PRC_SQLGetData(1))+1;
     }
     if(nRow < GetPRCSwitch(FILE_END_CLASSES))
     {
@@ -636,7 +639,7 @@ void Cache_Feat(int nRow = 0)
         string SQL = "SELECT rowid FROM prc_cached2da_feat ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1));
+        nRow = StringToInt(PRC_SQLGetData(1))+1;
     }
     if(nRow < GetPRCSwitch(FILE_END_FEAT))
     {
@@ -703,7 +706,7 @@ void Cache_Spells(int nRow = 0)
         string SQL = "SELECT rowid FROM prc_cached2da_spells ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1));
+        nRow = StringToInt(PRC_SQLGetData(1))+1;
     }
     if(nRow < GetPRCSwitch(FILE_END_SPELLS))
     {
@@ -783,7 +786,7 @@ void Cache_Portraits(int nRow = 0)
         string SQL = "SELECT rowid FROM prc_cached2da_portraits ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1));
+        nRow = StringToInt(PRC_SQLGetData(1))+1;
     }
     if(nRow < GetPRCSwitch(FILE_END_PORTRAITS))
     {
@@ -814,7 +817,7 @@ void Cache_Soundset(int nRow = 0)
         string SQL = "SELECT rowid FROM prc_cached2da_soundset ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1));
+        nRow = StringToInt(PRC_SQLGetData(1))+1;
     }
     if(nRow < GetPRCSwitch(FILE_END_SOUNDSET))
     {
@@ -844,7 +847,7 @@ void Cache_Appearance(int nRow = 0)
         string SQL = "SELECT rowid FROM prc_cached2da_appearance ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1));
+        nRow = StringToInt(PRC_SQLGetData(1))+1;
     }
     if(nRow < GetPRCSwitch(FILE_END_APPEARANCE))
     {

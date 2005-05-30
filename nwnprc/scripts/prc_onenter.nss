@@ -4,7 +4,8 @@
 #include "inc_eventhook"
 #include "prc_inc_switch"
 #include "inc_leto_prc"
-#include "inc_time"                   
+#include "inc_time"    
+#include "inc_metalocation"
 
 
 void main()
@@ -48,7 +49,8 @@ void main()
     if(GetPRCSwitch(PRC_LETOSCRIPT_FIX_ABILITIES) && !GetIsDM(oPC))
         PRCLetoEnter(oPC);   
     if(GetPRCSwitch(PRC_CONVOCC_ENABLE))
-        ExecuteScript("prc_ccc_enter", OBJECT_SELF);         
+        ExecuteScript("prc_ccc_enter", OBJECT_SELF);    
+    //PW tracking starts here
     if(GetPRCSwitch(PRC_PW_HP_TRACKING))
     {
         int nHP = GetPersistantLocalInt(oPC, "persist_HP");                   
@@ -89,6 +91,19 @@ void main()
     {
         location lLoc = GetPersistantLocalLocation(oPC, "persist_loc"); 
         DelayCommand(1.0, AssignCommand(oPC, ActionJumpToLocation(lLoc)));
+    }
+    if(GetPRCSwitch(PRC_PW_MAPPIN_TRACKING)
+        && !GetLocalInt(oPC, "PRC_PW_MAPPIN_TRACKING_Done"))
+    {
+        //this local is set so that this is only done once per server session
+        SetLocalInt(oPC, "PRC_PW_MAPPIN_TRACKING_Done", TRUE);
+        int nCount = GetPersistantLocalInt(oPC, "MapPinCount");
+        int i;
+        for(i=1; i<=nCount; i++)
+        {
+            struct metalocation mlocLoc = GetPersistantLocalMetalocation(oPC, "MapPin_"+IntToString(i));
+            CreateMapPinFromMetalocation(mlocLoc, oPC);
+        }
     }
     if(GetPRCSwitch(PRC_PW_DEATH_TRACKING))
     {

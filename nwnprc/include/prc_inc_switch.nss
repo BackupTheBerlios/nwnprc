@@ -377,6 +377,20 @@ const int PRC_POWER_ATTACK_FULL_PNP = 1;
 const string PRC_POWER_ATTACK_STACK_WITH_BW          = "PRC_POWER_ATTACK_STACK_WITH_BW";
 
 
+/*
+ * Disabling specific feat and/or skills
+ * Each of these has 2 parts. One part is a variable defining the size of the list
+ * The other part is the list itself. The numbers are the row numbers in feat.2da or skills.2da
+ * For example, if you want to disable Knockdown and Improved Knockdown you would set
+ * the variables as follows:
+ * PRC_DISABLE_FEAT_COUNT = 2
+ * PRC_DISABLE_FEAT_1     = 23
+ * PRC_DISABLE_FEAT_2     = 17
+ */
+const string PRC_DISABLE_FEAT_COUNT                  = "PRC_DISABLE_FEAT_COUNT";
+const string PRC_DISABLE_FEAT_                       = "PRC_DISABLE_FEAT_";
+const string PRC_DISABLE_SKILL_COUNT                 = "PRC_DISABLE_SKILL_COUNT";
+const string PRC_DISABLE_SKILL_                      = "PRC_DISABLE_SKILL_";
 
 
 /******************************************************************************\
@@ -655,6 +669,11 @@ const string PRC_PW_HP_TRACKING                      = "PRC_PW_HP_TRACKING";
  * on logon.
  */
 const string PRC_PW_LOCATION_TRACKING                = "PRC_PW_LOCATION_TRACKING";
+
+/**
+ * Player places map pins are tracked via persistant locals and restored on logon
+ */
+const string PRC_PW_MAPPIN_TRACKING                   = "PRC_PW_MAPPIN_TRACKING";
 
 /**
  * Being dead is stored via persistant locals and restored on logon.

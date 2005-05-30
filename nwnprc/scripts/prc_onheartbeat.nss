@@ -6,6 +6,7 @@
 #include "inc_eventhook"
 #include "inc_ecl"
 #include "inc_2dacache"
+#include "inc_metalocation"
 
 void main()
 {
@@ -79,5 +80,16 @@ void main()
             SetPersistantLocalLocation(oPC, "persist_loc", GetLocation(oPC));
             oPC = GetNextPC();
         }
+    }
+    if(GetPRCSwitch(PRC_PW_MAPPIN_TRACKING))
+    {
+        int nMapPinCount = GetNumberOfMapPins(oPC);
+        int i;
+        for(i=1;i<=nMapPinCount;i++)
+        {
+            struct metalocation mLoc= CreateMetalocationFromMapPin(oPC, i);
+            SetPersistantLocalMetalocation(oPC, "MapPin_"+IntToString(i), mLoc);
+        }
+        SetPersistantLocalInt(oPC, "MapPinCount", nMapPinCount);
     }
 }

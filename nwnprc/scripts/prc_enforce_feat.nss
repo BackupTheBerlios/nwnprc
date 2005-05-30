@@ -57,6 +57,9 @@ int GenasaiFocus(object oPC = OBJECT_SELF);
 // have 8d6 sneak attack
 int LingeringDamage(object oPC = OBJECT_SELF);
 
+// check for server restricted feats/skills
+int PWSwitchRestructions(object oPC = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -640,6 +643,37 @@ int LingeringDamage(object oPC = OBJECT_SELF)
      return TRUE;
 }
 
+// check for server restricted feats/skills
+int PWSwitchRestructions(object oPC = OBJECT_SELF)
+{
+    int nReturn = TRUE;
+    string sMessage;
+    int nFeatCount = GetPRCSwitch(PRC_DISABLE_FEAT_COUNT);
+    int i;
+    for(i=1;i<nFeatCount;i++)
+    {
+        int nFeat = GetPRCSwitch(PRC_DISABLE_FEAT_+IntToString(i));
+        if(GetHasFeat(nFeat, oPC))
+        {
+            nReturn = FALSE;
+            sMessage += "You cannot take "+GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat)))+" in this module.\n";
+        }
+    }
+    
+    int nSkillCount = GetPRCSwitch(PRC_DISABLE_SKILL_COUNT);
+    for(i=1;i<nSkillCount;i++)
+    {
+        int nSkill = GetPRCSwitch(PRC_DISABLE_SKILL_+IntToString(i));
+        if(GetSkillRank(nSkill, oPC))
+        {
+            nReturn = FALSE;
+            sMessage += "You cannot take "+GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", nSkill)))+" in this module.\n";
+        }
+    }
+    FloatingTextStringOnCreature(sMessage, oPC);
+    return nReturn;
+}
+
 void main()
 {
         //Declare Major Variables
@@ -658,6 +692,7 @@ void main()
          || !LolthsMeat(oPC)
          || !LingeringDamage(oPC) 
          || !ManAtArmsFeats(oPC) 
+         || !PWSwitchRestructions(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

@@ -174,7 +174,7 @@ void main()
              ExecuteScript("race_azer_flame", oPC);
          }
     }
-    
+/* Bioware reads size based on appearance    
     //-1AC, -1 ATT, -4hide
     if(GetHasFeat(FEAT_LARGE))
     {
@@ -198,7 +198,7 @@ void main()
         SetCompositeBonus(oSkin, "RacialSize_Attack", 2, ITEM_PROPERTY_ATTACK_BONUS);
         SetCompositeBonus(oSkin, "RacialSize_SkillHide", 8, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }
-
+*/
     //regeneration 5PH/round
     if(GetHasFeat(FEAT_REGEN5))
     {

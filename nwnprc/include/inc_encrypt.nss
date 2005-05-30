@@ -1,3 +1,5 @@
+#include "prc_inc_switch"
+
 string Encrypt(object oPC)
 {
     string sName = GetName(oPC);

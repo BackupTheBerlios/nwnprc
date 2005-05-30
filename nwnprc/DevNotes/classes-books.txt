@@ -17,7 +17,7 @@ Knight of the Chalice				| Complete Warrior
 Ravager						| Complete Warrior
 Spellsword					| Complete Warrior
 Thayan Knight					| Complete Warrior
-Ultimate Ranger					| Custom Class - Author: Szatany (Wizards.COMmunity Boards)
+Ultimate Ranger					| Custom Class - Author: Szatany (Wizards.COMmunity Boards) http://boards1.wizards.com/showthread.php?s=&threadid=169174
 Brawler						| Custom Class - Author: WodahsEht
 Minstrel of the Edge				| Custom Class - Author: WodahsEht
 Hospitaler					| Defenders of the Faith

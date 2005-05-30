@@ -179,12 +179,44 @@ void DeletePersistantLocalMetalocation(object oCreature, string sName);
 void CreateMapPinFromMetalocation(struct metalocation mlocL, object oPC);
 
 /**
+ * Creates a metalocation based on the given map pin. 
+ *
+ * @param oPC   The player character in whose map pin array to use
+ * @param nPinNo   The position of the map pin to use
+ */
+struct metalocation CreateMetalocationFromMapPin(object oPC, int nPinNo);
+
+/**
  * Creates a metalocation with all constituents having null-equivalent values.
  * Used when there is a need to return an invalid metalocation.
  *
  * @return A metalocation that has a null-equivalent in each field.
  */
 struct metalocation GetNullMetalocation();
+
+/**
+ * Gets the size of a players map pin array
+ *
+ * @param oPC   The player character in whose map pin array to get the size of.
+ */
+int GetNumberOfMapPins(object oPC);
+
+/**
+ * Gets the area of a players specific map pin
+ *
+ * @param oPC   The player character in whose map pin array to get the area of.
+ * @param nPinNo   The number of the map pin to remove.
+ */
+object  GetAreaOfMapPin(object oPC, int nPinNo);
+
+/**
+ * Deletes a players specific map pin
+ *
+ * @param oPC   The player character in whose map pin array to get the size of.
+ */
+void DeleteMapPin(object oPC, int nPinNo);
+
+
 
 
 //////////////////////////////////////////////////
@@ -226,7 +258,7 @@ int GetIsMetalocationInModule(struct metalocation mlocL)
 
 object GetAreaFromMetalocation(struct metalocation mlocL)
 {
-    if(!GetIsMetalocationInModule(mlocL) return OBJECT_INVALID;
+    if(!GetIsMetalocationInModule(mlocL)) return OBJECT_INVALID;
 
     object oArea = GetObjectByTag(mlocL.sAreaTag, 0);
     // Multiple areas with same tag?
@@ -358,6 +390,18 @@ Local object "NW_MAP_PIN_AREA_#"
 */
 void CreateMapPinFromMetalocation(struct metalocation mlocL, object oPC)
 {
+    if(!GetIsObjectValid(oPC))
+        return;
+    //check no other map pins at that location
+    int nPinCount = GetNumberOfMapPins(oPC);
+    int i;
+    for(i=1;i<nPinCount;i++)
+    {
+        struct metalocation mlocTest = CreateMetalocationFromMapPin(oPC, i);
+        if(mlocTest == mlocL)
+            return;//duplicate detected, abort
+    }
+    //create that map pin
     int nID = GetLocalInt(oPC, "NW_TOTAL_MAP_PINS") + 1;
     SetLocalInt(oPC, "NW_TOTAL_MAP_PINS", nID);
     SetLocalString(oPC, "NW_MAP_PIN_NRTY_" + IntToString(nID), mlocL.sName);
@@ -365,6 +409,77 @@ void CreateMapPinFromMetalocation(struct metalocation mlocL, object oPC)
     SetLocalFloat( oPC, "NW_MAP_PIN_YPOS_" + IntToString(nID), mlocL.vCoords.y);
     SetLocalObject(oPC, "NW_MAP_PIN_AREA_" + IntToString(nID), GetAreaFromLocation(MetalocationToLocation(mlocL)));
 }
+
+struct metalocation CreateMetalocationFromMapPin(object oPC, int nPinNo)
+{
+    //sanity checks
+    if(!GetIsObjectValid(oPC))
+        return GetNullMetalocation();
+    if(nPinNo < 1)
+        return GetNullMetalocation();
+    int nPinCount = GetNumberOfMapPins(oPC);
+    if(nPinCount < 1)
+        return GetNullMetalocation();
+    if(nPinCount < nPinNo)
+        return GetNullMetalocation();
+    //variables    
+    struct metalocation mlocReturn;
+    string sID = IntToString(nPinNo);
+    location lLoc;
+    object oArea = GetLocalObject(oPC,"NW_MAP_PIN_AREA_"+sID);
+    float  fX    = GetLocalFloat( oPC,"NW_MAP_PIN_XPOS_"+sID);
+    float  fY    = GetLocalFloat( oPC,"NW_MAP_PIN_YPOS_"+sID);
+    string sName = GetLocalString(oPC,"NW_MAP_PIN_NRTY_"+sID);
+    lLoc = Location(oArea, Vector(fX, fY, 0.0), 0.0);
+    mlocReturn = LocationToMetalocation(lLoc, sName);
+    return mlocReturn;
+}
+
+int GetNumberOfMapPins(object oPC)
+{
+    return GetLocalInt(oPC, "NW_TOTAL_MAP_PINS");
+}
+
+object  GetAreaOfMapPin(object oPC, int nPinNo)
+{
+    return GetLocalObject(oPC, "NW_MAP_PIN_AREA_"+IntToString(nPinNo));
+}
+
+void DeleteMapPin(object oPC, int nPinNo)
+{
+    //sanity checks
+    if(nPinNo < 1)
+        return;
+    if(!GetIsObjectValid(oPC))
+        return;
+    int nPinCount = GetNumberOfMapPins(oPC);
+    if(nPinCount < 1)
+        return;
+    if(nPinCount < nPinNo)
+        return;
+    //delete the pin    
+    DeleteLocalString(oPC, "NW_MAP_PIN_NRTY_"+IntToString(nPinNo));
+    DeleteLocalFloat( oPC, "NW_MAP_PIN_XPOS_"+IntToString(nPinNo));
+    DeleteLocalFloat( oPC, "NW_MAP_PIN_YPOS_"+IntToString(nPinNo));
+    DeleteLocalObject(oPC, "NW_MAP_PIN_AREA_"+IntToString(nPinNo));
+    //move the other ones up
+    int i = nPinNo+1;
+    for (i=nPinNo+1;i<nPinCount;i++)
+    {
+        SetLocalString(oPC, "NW_MAP_PIN_NRTY_"+IntToString(i), GetLocalString(oPC, "NW_MAP_PIN_NRTY_"+IntToString(i+1)));
+        SetLocalFloat( oPC, "NW_MAP_PIN_XPOS_"+IntToString(i), GetLocalFloat (oPC, "NW_MAP_PIN_XPOS_"+IntToString(i+1)));
+        SetLocalFloat( oPC, "NW_MAP_PIN_YPOS_"+IntToString(i), GetLocalFloat (oPC, "NW_MAP_PIN_YPOS_"+IntToString(i+1)));
+        SetLocalObject(oPC, "NW_MAP_PIN_AREA_"+IntToString(i), GetLocalObject(oPC, "NW_MAP_PIN_AREA_"+IntToString(i+1)));
+    }
+    //delete the last pin, since the list is shorter now
+    DeleteLocalString(oPC, "NW_MAP_PIN_NRTY_"+IntToString(nPinCount));
+    DeleteLocalFloat( oPC, "NW_MAP_PIN_XPOS_"+IntToString(nPinCount));
+    DeleteLocalFloat( oPC, "NW_MAP_PIN_YPOS_"+IntToString(nPinCount));
+    DeleteLocalObject(oPC, "NW_MAP_PIN_AREA_"+IntToString(nPinCount));
+    //fix the overall count
+    SetLocalInt(oPC, "NW_TOTAL_MAP_PINS", nPinCount-1);
+}
+
 
 struct metalocation GetNullMetalocation()
 {

@@ -29,33 +29,33 @@ void main()
             array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
                 "Bat");
             array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 1);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Cat");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 2);
+//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+//                "Cat");
+//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 2);
             array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
                 "Hawk");
             array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 3);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Lizard");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 4);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Owl");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 5);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Rat");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 6);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Raven");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 7);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Snake");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 8);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Toad");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 9);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Weasel");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 10);
+//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+//                "Lizard");
+//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 4);
+//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+//                "Owl");
+//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 5);
+//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+//                "Rat");
+//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 6);
+//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+//                "Raven");
+//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 7);
+//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+//                "Snake");
+//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 8);
+//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+//                "Toad");
+//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 9);
+//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+//                "Weasel");
+//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 10);
         }
         //do token setup
         int nOffset = GetLocalInt(oPC, "ChoiceOffset");

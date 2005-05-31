@@ -1,7 +1,7 @@
 2DA V2.0
 
       LABEL         ReqType    ReqParam1        ReqParam2   
-0     Arcane        ARCSPELL   3                ****        
+0     ScriptVar     VAR        PRC_ArcSpell3    0        
 1     Base_Attack   BAB        4                ****        
 2     ArmProfHvy    FEAT       2                ****        
 3     ArmProfLgt    FEAT       3                ****        

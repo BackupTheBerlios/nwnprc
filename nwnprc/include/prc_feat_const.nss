@@ -346,6 +346,7 @@ const int FEAT_FIST_OF_IRON               = 3145;
 const int FEAT_POWER_ATTACK_SINGLE_RADIAL = 3143;
 const int FEAT_POWER_ATTACK_FIVES_RADIAL  = 3144;
 const int FEAT_POWER_ATTACK_QUICKS_RADIAL = 3179;
+const int FEAT_TELEPORT_MANAGEMENT_RADIAL = 4235;
 
 // Werewolf Template
 const int FEAT_PRESTIGE_WOLF_FORM                  = 3518;
@@ -1471,22 +1472,47 @@ const int FEAT_PRC_EPIC_MIGHT_RAGE               = 3516;
 //////////////////////////////////////////////////*/
 
 //Psion
-const int FEAT_PSION_DIS_EGOIST                  = 3554;
-const int FEAT_PSION_DIS_KINETICIST              = 3555;
-const int FEAT_PSION_DIS_NOMAD                   = 3556;
-const int FEAT_PSION_DIS_SEER               = 3557;
-const int FEAT_PSION_DIS_SHAPER                  = 3558;
-const int FEAT_PSION_DIS_TELEPATH           = 3559;
+const int FEAT_PSION_DIS_EGOIST                     = 3554;
+const int FEAT_PSION_DIS_KINETICIST                 = 3555;
+const int FEAT_PSION_DIS_NOMAD                      = 3556;
+const int FEAT_PSION_DIS_SEER                       = 3557;
+const int FEAT_PSION_DIS_SHAPER                     = 3558;
+const int FEAT_PSION_DIS_TELEPATH                   = 3559;
 
 //Wilder
-const int FEAT_WILDER_SURGING_EUPHORIA_1         = 3568;
-const int FEAT_WILDER_SURGING_EUPHORIA_2         = 3569;
-const int FEAT_WILDER_SURGING_EUPHORIA_3         = 3570;
-const int FEAT_WILDER_VOLATILE_MIND_1            = 3571;
-const int FEAT_WILDER_VOLATILE_MIND_2            = 3572;
-const int FEAT_WILDER_VOLATILE_MIND_3            = 3573;
-const int FEAT_WILDER_VOLATILE_MIND_4            = 3574;
+const int FEAT_WILDER_SURGING_EUPHORIA_1            = 3568;
+const int FEAT_WILDER_SURGING_EUPHORIA_2            = 3569;
+const int FEAT_WILDER_SURGING_EUPHORIA_3            = 3570;
+const int FEAT_WILDER_VOLATILE_MIND_1               = 3571;
+const int FEAT_WILDER_VOLATILE_MIND_2               = 3572;
+const int FEAT_WILDER_VOLATILE_MIND_3               = 3573;
+const int FEAT_WILDER_VOLATILE_MIND_4               = 3574;
 
+// Soulknife
+const int FEAT_MINDBLADE                            = 3600;
+const int FEAT_MANIFEST_MINDBLADE                   = 3601;
+const int FEAT_WEAPON_FOCUS_MINDBLADE               = 3602;
+const int FEAT_GREATER_WEAPON_FOCUS_MINDBLADE       = 3603;
+const int FEAT_THROW_MINDBLADE                      = 3604;
+const int FEAT_PSYCHIC_STRIKE                       = 3605;
+const int FEAT_FREE_DRAW                            = 3606;
+const int FEAT_SHAPE_MINDBLADE                      = 3607;
+const int FEAT_MINDBLADE_ENHANCEMENT                = 3608;
+const int FEAT_BLADEWIND                            = 3609;
+const int FEAT_KNIFE_TO_THE_SOUL                    = 3610;
+const int FEAT_KNIFE_TO_THE_SOUL_RADIAL1            = 3611;
+const int FEAT_KNIFE_TO_THE_SOUL_RADIAL2            = 3612;
+const int FEAT_EPIC_SOULKNIFE                       = 3613;
+const int FEAT_IMPROVED_CRITICAL_MINDBLADE          = 3614;
+const int FEAT_OVERWHELMING_CRITICAL_MINDBLADE      = 3615;
+const int FEAT_DEVASTATING_CRITICAL_MINDBLADE       = 3616;
+const int FEAT_WEAPON_SPECIALIZATION_MINDBLADE      = 3617;
+const int FEAT_EPIC_WEAPON_FOCUS_MINDBLADE          = 3618;
+const int FEAT_EPIC_WEAPON_SPECIALIZATION_MINDBLADE = 3619;
+const int FEAT_MULTIPLE_THROW                       = 3620;
+
+/* DEPRECATED
+   TODO: Check that these are not used anywhere and remove
 //Psion - Nomad Powers
 const int FEAT_NOMAD_BALE_TELEPORT          = 3553;
 
@@ -1594,6 +1620,8 @@ const int FEAT_ALL_DARKVISION            = 3586;
 
 //All Class Level Six
 const int FEAT_ALL_BLACK_DRAGON_BREATH           = 3576;
+
+*/
 
 //Psionic Feats
 const int FEAT_MENTAL_RESISTANCE            = 4812;
@@ -1740,24 +1768,3 @@ const int FEAT_SPLIT_PSIONIC_RAY            = 4941;
 const int FEAT_TWIN_POWER                   = 4942;
 const int FEAT_WIDEN_POWER                  = 4943;
 
-const int FEAT_MINDBLADE                            = 3600;
-const int FEAT_MANIFEST_MINDBLADE                   = 3601;
-const int FEAT_WEAPON_FOCUS_MINDBLADE               = 3602;
-const int FEAT_GREATER_WEAPON_FOCUS_MINDBLADE       = 3603;
-const int FEAT_THROW_MINDBLADE                      = 3604;
-const int FEAT_PSYCHIC_STRIKE                       = 3605;
-const int FEAT_FREE_DRAW                            = 3606;
-const int FEAT_SHAPE_MINDBLADE                      = 3607;
-const int FEAT_MINDBLADE_ENHANCEMENT                = 3608;
-const int FEAT_BLADEWIND                            = 3609;
-const int FEAT_KNIFE_TO_THE_SOUL                    = 3610;
-const int FEAT_KNIFE_TO_THE_SOUL_RADIAL1            = 3611;
-const int FEAT_KNIFE_TO_THE_SOUL_RADIAL2            = 3612;
-const int FEAT_EPIC_SOULKNIFE                       = 3613;
-const int FEAT_IMPROVED_CRITICAL_MINDBLADE          = 3614;
-const int FEAT_OVERWHELMING_CRITICAL_MINDBLADE      = 3615;
-const int FEAT_DEVASTATING_CRITICAL_MINDBLADE       = 3616;
-const int FEAT_WEAPON_SPECIALIZATION_MINDBLADE      = 3617;
-const int FEAT_EPIC_WEAPON_FOCUS_MINDBLADE          = 3618;
-const int FEAT_EPIC_WEAPON_SPECIALIZATION_MINDBLADE = 3619;
-const int FEAT_MULTIPLE_THROW                       = 3620;

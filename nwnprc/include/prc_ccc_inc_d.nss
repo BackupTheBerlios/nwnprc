@@ -560,16 +560,16 @@ void DoCloneLetoscript()
     int         nSex =              GetLocalInt(OBJECT_SELF, "Gender");
     int         nTattooColour1 =    GetLocalInt(OBJECT_SELF, "TattooColour1");
     int         nTattooColour2 =    GetLocalInt(OBJECT_SELF, "TattooColour2");
-    StackedLetoScript("<gff:set 'Gender' "+IntToString(nSex)+">");
+    StackedLetoScript(LetoSet("Gender", IntToString(nSex), "byte"));
     if(nAppearance != -1)
     {
-        StackedLetoScript("<gff:set 'Appearance_Type' '"+IntToString(nAppearance)+"'>");
+        StackedLetoScript(LetoSet("Appearance_Type", IntToString(nAppearance), "word"));
     }
-    StackedLetoScript("<gff:set 'SoundSetFile' '"+IntToString(nSoundset)+"'>");
+    StackedLetoScript(LetoSet("SoundSetFile", IntToString(nSoundset), "word"));
     if(nPortrait != -1)
     {
 //        StackedLetoScript("<gff:set 'PortraitId' '"+IntToString(nPortrait)+"'>");
-        StackedLetoScript("<gff:set 'Portrait' 'po_"+Get2DACache("portraits","BaseResRef",nPortrait)+"'>");
+        StackedLetoScript(LetoSet("Portrait", "po_"+Get2DACache("portraits","BaseResRef",nPortrait), "resref"));
     }
     StackedLetoScript(SetWings(nWings));
     StackedLetoScript(SetTail(nTail));
@@ -597,7 +597,7 @@ void DoCloneLetoscript()
     //StackedLetoScript(LetoSet("BodyPart_RFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 18)), "byte"));
     if(nHead != -1)
     {
-        StackedLetoScript("<gff:set 'Appearance_Head' "+IntToString(nHead)+">");
+        StackedLetoScript(LetoSet("Appearance_Head", IntToString(nHead), "byte"));
     }
     string sResult;
     RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);

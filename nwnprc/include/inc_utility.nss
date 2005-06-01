@@ -305,10 +305,14 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
     int nSkillRank;  //get the current value at the end, after effects are applied
     if(bSynergy)
     {
-        if(nSkill == SKILL_SET_TRAP)
-            nSkillRank +=  ((GetSkill(oObject, SKILL_DISABLE_TRAP, FALSE, FALSE, FALSE, FALSE, FALSE)/5)*2);
-        else if(nSkill == SKILL_DISABLE_TRAP)
-            nSkillRank +=  ((GetSkill(oObject, SKILL_SET_TRAP, FALSE, FALSE, FALSE, FALSE, FALSE)/5)*2);
+        if(nSkill == SKILL_SET_TRAP
+            && GetSkill(oObject, SKILL_DISABLE_TRAP, FALSE, FALSE, FALSE,
+                FALSE, FALSE, FALSE, FALSE) >= 5)
+                nSkillRank += 2;
+        if(nSkill == SKILL_DISABLE_TRAP
+            && GetSkill(oObject, SKILL_SET_TRAP, FALSE, FALSE, FALSE,
+                FALSE, FALSE, FALSE, FALSE) >= 5)
+                nSkillRank += 2;
     }
     if(bSize)
         nSkillRank += (GetCreatureSize(oObject)-3)*(0-4);

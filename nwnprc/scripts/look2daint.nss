@@ -1,3326 +1,376 @@
+#include "inc_2dacache"
 void main()
 {
-/*
-Removed because no longer needed since move to more general 2da caching
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_0", "750");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_0", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_0", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_0", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_0", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_0", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_0", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_0", "1");
+PreCache("spells", "Name", 2250, "16823166"); PreCache("spells", "School", 2250, "G");  PreCache("spells", "VS", 2250, "vs"); PreCache("spells", "Bard", 2250, "0");    PreCache("spells", "Cleric", 2250, "0");  PreCache("spells", "Druid", 2250, "0");   PreCache("spells", "Paladin", 2250, "1"); PreCache("spells", "Ranger", 2250, "1");  PreCache("spells", "Wiz_Sorc", 2250, "0");    PreCache("spells", "Innate", 2250, "1");
+PreCache("spells", "Name", 151, "901");   PreCache("spells", "School", 151, "A");   PreCache("spells", "VS", 151, "vs");  PreCache("spells", "Bard", 151, "0"); PreCache("spells", "Cleric", 151, "0");   PreCache("spells", "Druid", 151, "0");    PreCache("spells", "Paladin", 151, "1");  PreCache("spells", "Ranger", 151, "****");    PreCache("spells", "Wiz_Sorc", 151, "0"); PreCache("spells", "Innate", 151, "1");
+PreCache("spells", "Name", 174, "924");   PreCache("spells", "School", 174, "C");   PreCache("spells", "VS", 174, "vs");  PreCache("spells", "Bard", 174, "1"); PreCache("spells", "Cleric", 174, "1");   PreCache("spells", "Druid", 174, "1");    PreCache("spells", "Paladin", 174, "****");   PreCache("spells", "Ranger", 174, "1");   PreCache("spells", "Wiz_Sorc", 174, "1"); PreCache("spells", "Innate", 174, "1");
+PreCache("spells", "Name", 365, "6331");  PreCache("spells", "School", 365, "T");   PreCache("spells", "VS", 365, "vs");  PreCache("spells", "Bard", 365, "2"); PreCache("spells", "Cleric", 365, "2");   PreCache("spells", "Druid", 365, "1");    PreCache("spells", "Paladin", 365, "****");   PreCache("spells", "Ranger", 365, "1");   PreCache("spells", "Wiz_Sorc", 365, "2"); PreCache("spells", "Innate", 365, "2");
+PreCache("spells", "Name", 9, "759"); PreCache("spells", "School", 9, "T"); PreCache("spells", "VS", 9, "vs");    PreCache("spells", "Bard", 9, "2");   PreCache("spells", "Cleric", 9, "2"); PreCache("spells", "Druid", 9, "2");  PreCache("spells", "Paladin", 9, "2");    PreCache("spells", "Ranger", 9, "****");  PreCache("spells", "Wiz_Sorc", 9, "2");   PreCache("spells", "Innate", 9, "2");
+PreCache("spells", "Name", 150, "900");   PreCache("spells", "School", 150, "A");   PreCache("spells", "VS", 150, "vs");  PreCache("spells", "Bard", 150, "****");  PreCache("spells", "Cleric", 150, "2");   PreCache("spells", "Druid", 150, "2");    PreCache("spells", "Paladin", 150, "2");  PreCache("spells", "Ranger", 150, "1");   PreCache("spells", "Wiz_Sorc", 150, "2"); PreCache("spells", "Innate", 150, "2");
+PreCache("spells", "Name", 175, "925");   PreCache("spells", "School", 175, "C");   PreCache("spells", "VS", 175, "vs");  PreCache("spells", "Bard", 175, "2"); PreCache("spells", "Cleric", 175, "2");   PreCache("spells", "Druid", 175, "2");    PreCache("spells", "Paladin", 175, "****");   PreCache("spells", "Ranger", 175, "2");   PreCache("spells", "Wiz_Sorc", 175, "2"); PreCache("spells", "Innate", 175, "2");
+PreCache("spells", "Name", 176, "926");   PreCache("spells", "School", 176, "C");   PreCache("spells", "VS", 176, "vs");  PreCache("spells", "Bard", 176, "3"); PreCache("spells", "Cleric", 176, "3");   PreCache("spells", "Druid", 176, "3");    PreCache("spells", "Paladin", 176, "****");   PreCache("spells", "Ranger", 176, "3");   PreCache("spells", "Wiz_Sorc", 176, "3"); PreCache("spells", "Innate", 176, "3");
+PreCache("spells", "Name", 41, "791");    PreCache("spells", "School", 41, "A");    PreCache("spells", "VS", 41, "vs");   PreCache("spells", "Bard", 41, "3");  PreCache("spells", "Cleric", 41, "3");    PreCache("spells", "Druid", 41, "4"); PreCache("spells", "Paladin", 41, "3");   PreCache("spells", "Ranger", 41, "****"); PreCache("spells", "Wiz_Sorc", 41, "3");  PreCache("spells", "Innate", 41, "3");
+PreCache("spells", "Name", 3125, "16830261"); PreCache("spells", "School", 3125, "T");  PreCache("spells", "VS", 3125, "vs"); PreCache("spells", "Bard", 3125, "4");    PreCache("spells", "Cleric", 3125, "4");  PreCache("spells", "Druid", 3125, "3");   PreCache("spells", "Paladin", 3125, "****");  PreCache("spells", "Ranger", 3125, "3");  PreCache("spells", "Wiz_Sorc", 3125, "4");    PreCache("spells", "Innate", 3125, "4");
+PreCache("spells", "Name", 177, "927");   PreCache("spells", "School", 177, "C");   PreCache("spells", "VS", 177, "vs");  PreCache("spells", "Bard", 177, "4"); PreCache("spells", "Cleric", 177, "4");   PreCache("spells", "Druid", 177, "4");    PreCache("spells", "Paladin", 177, "****");   PreCache("spells", "Ranger", 177, "4");   PreCache("spells", "Wiz_Sorc", 177, "4"); PreCache("spells", "Innate", 177, "4");
+PreCache("spells", "Name", 32, "782");    PreCache("spells", "School", 32, "C");    PreCache("spells", "VS", 32, "vs");   PreCache("spells", "Bard", 32, "1");  PreCache("spells", "Cleric", 32, "1");    PreCache("spells", "Druid", 32, "1"); PreCache("spells", "Paladin", 32, "1");   PreCache("spells", "Ranger", 32, "1");    PreCache("spells", "Wiz_Sorc", 32, "****");   PreCache("spells", "Innate", 32, "1");
+PreCache("spells", "Name", 34, "784");    PreCache("spells", "School", 34, "C");    PreCache("spells", "VS", 34, "vs");   PreCache("spells", "Bard", 34, "2");  PreCache("spells", "Cleric", 34, "2");    PreCache("spells", "Druid", 34, "3"); PreCache("spells", "Paladin", 34, "3");   PreCache("spells", "Ranger", 34, "3");    PreCache("spells", "Wiz_Sorc", 34, "****");   PreCache("spells", "Innate", 34, "2");
+PreCache("spells", "Name", 35, "785");    PreCache("spells", "School", 35, "C");    PreCache("spells", "VS", 35, "vs");   PreCache("spells", "Bard", 35, "3");  PreCache("spells", "Cleric", 35, "3");    PreCache("spells", "Druid", 35, "4"); PreCache("spells", "Paladin", 35, "4");   PreCache("spells", "Ranger", 35, "4");    PreCache("spells", "Wiz_Sorc", 35, "****");   PreCache("spells", "Innate", 35, "3");
+PreCache("spells", "Name", 126, "876");   PreCache("spells", "School", 126, "C");   PreCache("spells", "VS", 126, "vs");  PreCache("spells", "Bard", 126, "4"); PreCache("spells", "Cleric", 126, "4");   PreCache("spells", "Druid", 126, "3");    PreCache("spells", "Paladin", 126, "4");  PreCache("spells", "Ranger", 126, "3");   PreCache("spells", "Wiz_Sorc", 126, "****");  PreCache("spells", "Innate", 126, "3");
+PreCache("spells", "Name", 100, "850");   PreCache("spells", "School", 100, "V");   PreCache("spells", "VS", 100, "v");   PreCache("spells", "Bard", 100, "0"); PreCache("spells", "Cleric", 100, "0");   PreCache("spells", "Druid", 100, "0");    PreCache("spells", "Paladin", 100, "****");   PreCache("spells", "Ranger", 100, "****");    PreCache("spells", "Wiz_Sorc", 100, "0"); PreCache("spells", "Innate", 100, "0");
+PreCache("spells", "Name", 50, "800");    PreCache("spells", "School", 50, "A");    PreCache("spells", "VS", 50, "vs");   PreCache("spells", "Bard", 50, "****");   PreCache("spells", "Cleric", 50, "1");    PreCache("spells", "Druid", 50, "1"); PreCache("spells", "Paladin", 50, "1");   PreCache("spells", "Ranger", 50, "****"); PreCache("spells", "Wiz_Sorc", 50, "1");  PreCache("spells", "Innate", 50, "1");
+PreCache("spells", "Name", 321, "5114");  PreCache("spells", "School", 321, "A");   PreCache("spells", "VS", 321, "vs");  PreCache("spells", "Bard", 321, "1"); PreCache("spells", "Cleric", 321, "1");   PreCache("spells", "Druid", 321, "****"); PreCache("spells", "Paladin", 321, "1");  PreCache("spells", "Ranger", 321, "****");    PreCache("spells", "Wiz_Sorc", 321, "1"); PreCache("spells", "Innate", 321, "1");
+PreCache("spells", "Name", 544, "3767");  PreCache("spells", "School", 544, "T");   PreCache("spells", "VS", 544, "vs");  PreCache("spells", "Bard", 544, "1"); PreCache("spells", "Cleric", 544, "1");   PreCache("spells", "Druid", 544, "****"); PreCache("spells", "Paladin", 544, "1");  PreCache("spells", "Ranger", 544, "****");    PreCache("spells", "Wiz_Sorc", 544, "1"); PreCache("spells", "Innate", 544, "1");
+PreCache("spells", "Name", 66, "816");    PreCache("spells", "School", 66, "C");    PreCache("spells", "VS", 66, "vs");   PreCache("spells", "Bard", 66, "1");  PreCache("spells", "Cleric", 66, "****"); PreCache("spells", "Druid", 66, "1"); PreCache("spells", "Paladin", 66, "****");    PreCache("spells", "Ranger", 66, "1");    PreCache("spells", "Wiz_Sorc", 66, "1");  PreCache("spells", "Innate", 66, "1");
+PreCache("spells", "Name", 165, "915");   PreCache("spells", "School", 165, "E");   PreCache("spells", "VS", 165, "vs");  PreCache("spells", "Bard", 165, "1"); PreCache("spells", "Cleric", 165, "****");    PreCache("spells", "Druid", 165, "1");    PreCache("spells", "Paladin", 165, "****");   PreCache("spells", "Ranger", 165, "2");   PreCache("spells", "Wiz_Sorc", 165, "1"); PreCache("spells", "Innate", 165, "1");
+PreCache("spells", "Name", 94, "844");    PreCache("spells", "School", 94, "A");    PreCache("spells", "VS", 94, "s");    PreCache("spells", "Bard", 94, "1");  PreCache("spells", "Cleric", 94, "2");    PreCache("spells", "Druid", 94, "2"); PreCache("spells", "Paladin", 94, "****");    PreCache("spells", "Ranger", 94, "****"); PreCache("spells", "Wiz_Sorc", 94, "2");  PreCache("spells", "Innate", 94, "2");
+PreCache("spells", "Name", 354, "5371");  PreCache("spells", "School", 354, "T");   PreCache("spells", "VS", 354, "vs");  PreCache("spells", "Bard", 354, "2"); PreCache("spells", "Cleric", 354, "2");   PreCache("spells", "Druid", 354, "****"); PreCache("spells", "Paladin", 354, "2");  PreCache("spells", "Ranger", 354, "****");    PreCache("spells", "Wiz_Sorc", 354, "2"); PreCache("spells", "Innate", 354, "2");
+PreCache("spells", "Name", 137, "887");   PreCache("spells", "School", 137, "A");   PreCache("spells", "VS", 137, "vs");  PreCache("spells", "Bard", 137, "****");  PreCache("spells", "Cleric", 137, "3");   PreCache("spells", "Druid", 137, "3");    PreCache("spells", "Paladin", 137, "****");   PreCache("spells", "Ranger", 137, "2");   PreCache("spells", "Wiz_Sorc", 137, "3"); PreCache("spells", "Innate", 137, "3");
+PreCache("spells", "Name", 322, "5115");  PreCache("spells", "School", 322, "A");   PreCache("spells", "VS", 322, "vs");  PreCache("spells", "Bard", 322, "3"); PreCache("spells", "Cleric", 322, "3");   PreCache("spells", "Druid", 322, "****"); PreCache("spells", "Paladin", 322, "3");  PreCache("spells", "Ranger", 322, "****");    PreCache("spells", "Wiz_Sorc", 322, "3"); PreCache("spells", "Innate", 322, "3");
+PreCache("spells", "Name", 545, "3769");  PreCache("spells", "School", 545, "T");   PreCache("spells", "VS", 545, "vs");  PreCache("spells", "Bard", 545, "3"); PreCache("spells", "Cleric", 545, "4");   PreCache("spells", "Druid", 545, "****"); PreCache("spells", "Paladin", 545, "3");  PreCache("spells", "Ranger", 545, "****");    PreCache("spells", "Wiz_Sorc", 545, "3"); PreCache("spells", "Innate", 545, "3");
+PreCache("spells", "Name", 179, "928");   PreCache("spells", "School", 179, "C");   PreCache("spells", "VS", 179, "vs");  PreCache("spells", "Bard", 179, "5"); PreCache("spells", "Cleric", 179, "5");   PreCache("spells", "Druid", 179, "5");    PreCache("spells", "Paladin", 179, "****");   PreCache("spells", "Ranger", 179, "****");    PreCache("spells", "Wiz_Sorc", 179, "5"); PreCache("spells", "Innate", 179, "5");
+PreCache("spells", "Name", 67, "817");    PreCache("spells", "School", 67, "A");    PreCache("spells", "VS", 67, "vs");   PreCache("spells", "Bard", 67, "5");  PreCache("spells", "Cleric", 67, "6");    PreCache("spells", "Druid", 67, "6"); PreCache("spells", "Paladin", 67, "****");    PreCache("spells", "Ranger", 67, "****"); PreCache("spells", "Wiz_Sorc", 67, "6");  PreCache("spells", "Innate", 67, "5");
+PreCache("spells", "Name", 180, "929");   PreCache("spells", "School", 180, "C");   PreCache("spells", "VS", 180, "vs");  PreCache("spells", "Bard", 180, "6"); PreCache("spells", "Cleric", 180, "6");   PreCache("spells", "Druid", 180, "6");    PreCache("spells", "Paladin", 180, "****");   PreCache("spells", "Ranger", 180, "****");    PreCache("spells", "Wiz_Sorc", 180, "6"); PreCache("spells", "Innate", 180, "6");
+PreCache("spells", "Name", 3119, "16830249"); PreCache("spells", "School", 3119, "T");  PreCache("spells", "VS", 3119, "vs"); PreCache("spells", "Bard", 3119, "6");    PreCache("spells", "Cleric", 3119, "6");  PreCache("spells", "Druid", 3119, "6");   PreCache("spells", "Paladin", 3119, "****");  PreCache("spells", "Ranger", 3119, "****");   PreCache("spells", "Wiz_Sorc", 3119, "6");    PreCache("spells", "Innate", 3119, "6");
+PreCache("spells", "Name", 2096, "16825361"); PreCache("spells", "School", 2096, "A");  PreCache("spells", "VS", 2096, "vs"); PreCache("spells", "Bard", 2096, "5");    PreCache("spells", "Cleric", 2096, "8");  PreCache("spells", "Druid", 2096, "8");   PreCache("spells", "Paladin", 2096, "****");  PreCache("spells", "Ranger", 2096, "****");   PreCache("spells", "Wiz_Sorc", 2096, "8");    PreCache("spells", "Innate", 2096, "8");
+PreCache("spells", "Name", 147, "897");   PreCache("spells", "School", 147, "C");   PreCache("spells", "VS", 147, "vs");  PreCache("spells", "Bard", 147, "3"); PreCache("spells", "Cleric", 147, "3");   PreCache("spells", "Druid", 147, "3");    PreCache("spells", "Paladin", 147, "****");   PreCache("spells", "Ranger", 147, "3");   PreCache("spells", "Wiz_Sorc", 147, "****");  PreCache("spells", "Innate", 147, "3");
+PreCache("spells", "Name", 62, "812");    PreCache("spells", "School", 62, "A");    PreCache("spells", "VS", 62, "vs");   PreCache("spells", "Bard", 62, "****");   PreCache("spells", "Cleric", 62, "4");    PreCache("spells", "Druid", 62, "4"); PreCache("spells", "Paladin", 62, "4");   PreCache("spells", "Ranger", 62, "4");    PreCache("spells", "Wiz_Sorc", 62, "****");   PreCache("spells", "Innate", 62, "4");
+PreCache("spells", "Name", 416, "56");    PreCache("spells", "School", 416, "V");   PreCache("spells", "VS", 416, "v");   PreCache("spells", "Bard", 416, "0"); PreCache("spells", "Cleric", 416, "****");    PreCache("spells", "Druid", 416, "0");    PreCache("spells", "Paladin", 416, "****");   PreCache("spells", "Ranger", 416, "****");    PreCache("spells", "Wiz_Sorc", 416, "0"); PreCache("spells", "Innate", 416, "0");
+PreCache("spells", "Name", 155, "905");   PreCache("spells", "School", 155, "N");   PreCache("spells", "VS", 155, "vs");  PreCache("spells", "Bard", 155, "1"); PreCache("spells", "Cleric", 155, "1");   PreCache("spells", "Druid", 155, "****"); PreCache("spells", "Paladin", 155, "****");   PreCache("spells", "Ranger", 155, "****");    PreCache("spells", "Wiz_Sorc", 155, "1"); PreCache("spells", "Innate", 155, "1");
+PreCache("spells", "Name", 36, "786");    PreCache("spells", "School", 36, "V");    PreCache("spells", "VS", 36, "v");    PreCache("spells", "Bard", 36, "2");  PreCache("spells", "Cleric", 36, "2");    PreCache("spells", "Druid", 36, "****");  PreCache("spells", "Paladin", 36, "****");    PreCache("spells", "Ranger", 36, "****"); PreCache("spells", "Wiz_Sorc", 36, "2");  PreCache("spells", "Innate", 36, "2");
+PreCache("spells", "Name", 355, "5370");  PreCache("spells", "School", 355, "T");   PreCache("spells", "VS", 355, "vs");  PreCache("spells", "Bard", 355, "2"); PreCache("spells", "Cleric", 355, "2");   PreCache("spells", "Druid", 355, "****"); PreCache("spells", "Paladin", 355, "****");   PreCache("spells", "Ranger", 355, "****");    PreCache("spells", "Wiz_Sorc", 355, "2"); PreCache("spells", "Innate", 355, "2");
+PreCache("spells", "Name", 356, "5369");  PreCache("spells", "School", 356, "T");   PreCache("spells", "VS", 356, "vs");  PreCache("spells", "Bard", 356, "2"); PreCache("spells", "Cleric", 356, "2");   PreCache("spells", "Druid", 356, "****"); PreCache("spells", "Paladin", 356, "****");   PreCache("spells", "Ranger", 356, "****");    PreCache("spells", "Wiz_Sorc", 356, "2"); PreCache("spells", "Innate", 356, "2");
+PreCache("spells", "Name", 8, "758"); PreCache("spells", "School", 8, "E"); PreCache("spells", "VS", 8, "v"); PreCache("spells", "Bard", 8, "2");   PreCache("spells", "Cleric", 8, "3"); PreCache("spells", "Druid", 8, "****");   PreCache("spells", "Paladin", 8, "****"); PreCache("spells", "Ranger", 8, "****");  PreCache("spells", "Wiz_Sorc", 8, "2");   PreCache("spells", "Innate", 8, "2");
+PreCache("spells", "Name", 13, "763");    PreCache("spells", "School", 13, "T");    PreCache("spells", "VS", 13, "vs");   PreCache("spells", "Bard", 13, "2");  PreCache("spells", "Cleric", 13, "****"); PreCache("spells", "Druid", 13, "****");  PreCache("spells", "Paladin", 13, "****");    PreCache("spells", "Ranger", 13, "2");    PreCache("spells", "Wiz_Sorc", 13, "2");  PreCache("spells", "Innate", 13, "2");
+PreCache("spells", "Name", 3153, "16830376"); PreCache("spells", "School", 3153, "N");  PreCache("spells", "VS", 3153, "vs"); PreCache("spells", "Bard", 3153, "2");    PreCache("spells", "Cleric", 3153, "****");   PreCache("spells", "Druid", 3153, "****");    PreCache("spells", "Paladin", 3153, "****");  PreCache("spells", "Ranger", 3153, "2");  PreCache("spells", "Wiz_Sorc", 3153, "2");    PreCache("spells", "Innate", 3153, "2");
+PreCache("spells", "Name", 83, "833");    PreCache("spells", "School", 83, "E");    PreCache("spells", "VS", 83, "vs");   PreCache("spells", "Bard", 83, "2");  PreCache("spells", "Cleric", 83, "2");    PreCache("spells", "Druid", 83, "****");  PreCache("spells", "Paladin", 83, "****");    PreCache("spells", "Ranger", 83, "****"); PreCache("spells", "Wiz_Sorc", 83, "3");  PreCache("spells", "Innate", 83, "2");
+PreCache("spells", "Name", 377, "6343");  PreCache("spells", "School", 377, "D");   PreCache("spells", "VS", 377, "vs");  PreCache("spells", "Bard", 377, "3"); PreCache("spells", "Cleric", 377, "2");   PreCache("spells", "Druid", 377, "****"); PreCache("spells", "Paladin", 377, "****");   PreCache("spells", "Ranger", 377, "****");    PreCache("spells", "Wiz_Sorc", 377, "3"); PreCache("spells", "Innate", 377, "3");
+PreCache("spells", "Name", 21, "771");    PreCache("spells", "School", 21, "N");    PreCache("spells", "VS", 21, "s");    PreCache("spells", "Bard", 21, "2");  PreCache("spells", "Cleric", 21, "3");    PreCache("spells", "Druid", 21, "****");  PreCache("spells", "Paladin", 21, "****");    PreCache("spells", "Ranger", 21, "****"); PreCache("spells", "Wiz_Sorc", 21, "3");  PreCache("spells", "Innate", 21, "2");
+PreCache("spells", "Name", 3154, "16830378"); PreCache("spells", "School", 3154, "N");  PreCache("spells", "VS", 3154, "vs"); PreCache("spells", "Bard", 3154, "3");    PreCache("spells", "Cleric", 3154, "****");   PreCache("spells", "Druid", 3154, "****");    PreCache("spells", "Paladin", 3154, "****");  PreCache("spells", "Ranger", 3154, "3");  PreCache("spells", "Wiz_Sorc", 3154, "3");    PreCache("spells", "Innate", 3154, "3");
+PreCache("spells", "Name", 27, "777");    PreCache("spells", "School", 27, "N");    PreCache("spells", "VS", 27, "vs");   PreCache("spells", "Bard", 27, "****");   PreCache("spells", "Cleric", 27, "3");    PreCache("spells", "Druid", 27, "3"); PreCache("spells", "Paladin", 27, "****");    PreCache("spells", "Ranger", 27, "****"); PreCache("spells", "Wiz_Sorc", 27, "4");  PreCache("spells", "Innate", 27, "3");
+PreCache("spells", "Name", 4, "754"); PreCache("spells", "School", 4, "T"); PreCache("spells", "VS", 4, "vs");    PreCache("spells", "Bard", 4, "3");   PreCache("spells", "Cleric", 4, "3"); PreCache("spells", "Druid", 4, "****");   PreCache("spells", "Paladin", 4, "****"); PreCache("spells", "Ranger", 4, "****");  PreCache("spells", "Wiz_Sorc", 4, "4");   PreCache("spells", "Innate", 4, "3");
+PreCache("spells", "Name", 145, "895");   PreCache("spells", "School", 145, "D");   PreCache("spells", "VS", 145, "vs");  PreCache("spells", "Bard", 145, "****");  PreCache("spells", "Cleric", 145, "3");   PreCache("spells", "Druid", 145, "****"); PreCache("spells", "Paladin", 145, "3");  PreCache("spells", "Ranger", 145, "****");    PreCache("spells", "Wiz_Sorc", 145, "4"); PreCache("spells", "Innate", 145, "3");
+PreCache("spells", "Name", 146, "896");   PreCache("spells", "School", 146, "A");   PreCache("spells", "VS", 146, "vs");  PreCache("spells", "Bard", 146, "3"); PreCache("spells", "Cleric", 146, "3");   PreCache("spells", "Druid", 146, "****"); PreCache("spells", "Paladin", 146, "****");   PreCache("spells", "Ranger", 146, "****");    PreCache("spells", "Wiz_Sorc", 146, "4"); PreCache("spells", "Innate", 146, "3");
+PreCache("spells", "Name", 368, "6334");  PreCache("spells", "School", 368, "V");   PreCache("spells", "VS", 368, "vs");  PreCache("spells", "Bard", 368, "6"); PreCache("spells", "Cleric", 368, "****");    PreCache("spells", "Druid", 368, "5");    PreCache("spells", "Paladin", 368, "****");   PreCache("spells", "Ranger", 368, "****");    PreCache("spells", "Wiz_Sorc", 368, "4"); PreCache("spells", "Innate", 368, "4");
+PreCache("spells", "Name", 40, "790");    PreCache("spells", "School", 40, "A");    PreCache("spells", "VS", 40, "vs");   PreCache("spells", "Bard", 40, "4");  PreCache("spells", "Cleric", 40, "4");    PreCache("spells", "Druid", 40, "****");  PreCache("spells", "Paladin", 40, "****");    PreCache("spells", "Ranger", 40, "****"); PreCache("spells", "Wiz_Sorc", 40, "5");  PreCache("spells", "Innate", 40, "4");
+PreCache("spells", "Name", 82, "832");    PreCache("spells", "School", 82, "E");    PreCache("spells", "VS", 82, "vs");   PreCache("spells", "Bard", 82, "4");  PreCache("spells", "Cleric", 82, "****"); PreCache("spells", "Druid", 82, "4"); PreCache("spells", "Paladin", 82, "****");    PreCache("spells", "Ranger", 82, "****"); PreCache("spells", "Wiz_Sorc", 82, "5");  PreCache("spells", "Innate", 82, "4");
+PreCache("spells", "Name", 369, "6335");  PreCache("spells", "School", 369, "A");   PreCache("spells", "VS", 369, "vs");  PreCache("spells", "Bard", 369, "6"); PreCache("spells", "Cleric", 369, "****");    PreCache("spells", "Druid", 369, "6");    PreCache("spells", "Paladin", 369, "****");   PreCache("spells", "Ranger", 369, "****");    PreCache("spells", "Wiz_Sorc", 369, "5"); PreCache("spells", "Innate", 369, "5");
+PreCache("spells", "Name", 2122, "16825365"); PreCache("spells", "School", 2122, "N");  PreCache("spells", "VS", 2122, "vs"); PreCache("spells", "Bard", 2122, "****"); PreCache("spells", "Cleric", 2122, "5");  PreCache("spells", "Druid", 2122, "5");   PreCache("spells", "Paladin", 2122, "****");  PreCache("spells", "Ranger", 2122, "****");   PreCache("spells", "Wiz_Sorc", 2122, "6");    PreCache("spells", "Innate", 2122, "5");
+PreCache("spells", "Name", 186, "936");   PreCache("spells", "School", 186, "D");   PreCache("spells", "VS", 186, "vs");  PreCache("spells", "Bard", 186, "****");  PreCache("spells", "Cleric", 186, "5");   PreCache("spells", "Druid", 186, "7");    PreCache("spells", "Paladin", 186, "****");   PreCache("spells", "Ranger", 186, "****");    PreCache("spells", "Wiz_Sorc", 186, "6"); PreCache("spells", "Innate", 186, "5");
+PreCache("spells", "Name", 3121, "16830253"); PreCache("spells", "School", 3121, "T");  PreCache("spells", "VS", 3121, "vs"); PreCache("spells", "Bard", 3121, "6");    PreCache("spells", "Cleric", 3121, "6");  PreCache("spells", "Druid", 3121, "****");    PreCache("spells", "Paladin", 3121, "****");  PreCache("spells", "Ranger", 3121, "****");   PreCache("spells", "Wiz_Sorc", 3121, "6");    PreCache("spells", "Innate", 3121, "6");
+PreCache("spells", "Name", 3123, "16830257"); PreCache("spells", "School", 3123, "T");  PreCache("spells", "VS", 3123, "vs"); PreCache("spells", "Bard", 3123, "6");    PreCache("spells", "Cleric", 3123, "6");  PreCache("spells", "Druid", 3123, "****");    PreCache("spells", "Paladin", 3123, "****");  PreCache("spells", "Ranger", 3123, "****");   PreCache("spells", "Wiz_Sorc", 3123, "6");    PreCache("spells", "Innate", 3123, "6");
+PreCache("spells", "Name", 3124, "16830259"); PreCache("spells", "School", 3124, "T");  PreCache("spells", "VS", 3124, "vs"); PreCache("spells", "Bard", 3124, "6");    PreCache("spells", "Cleric", 3124, "6");  PreCache("spells", "Druid", 3124, "****");    PreCache("spells", "Paladin", 3124, "****");  PreCache("spells", "Ranger", 3124, "****");   PreCache("spells", "Wiz_Sorc", 3124, "6");    PreCache("spells", "Innate", 3124, "6");
+PreCache("spells", "Name", 3113, "16830242"); PreCache("spells", "School", 3113, "T");  PreCache("spells", "VS", 3113, "vs"); PreCache("spells", "Bard", 3113, "****"); PreCache("spells", "Cleric", 3113, "6");  PreCache("spells", "Druid", 3113, "6");   PreCache("spells", "Paladin", 3113, "****");  PreCache("spells", "Ranger", 3113, "****");   PreCache("spells", "Wiz_Sorc", 3113, "7");    PreCache("spells", "Innate", 3113, "6");
+PreCache("spells", "Name", 181, "930");   PreCache("spells", "School", 181, "C");   PreCache("spells", "VS", 181, "vs");  PreCache("spells", "Bard", 181, "****");  PreCache("spells", "Cleric", 181, "7");   PreCache("spells", "Druid", 181, "7");    PreCache("spells", "Paladin", 181, "****");   PreCache("spells", "Ranger", 181, "****");    PreCache("spells", "Wiz_Sorc", 181, "7"); PreCache("spells", "Innate", 181, "7");
+PreCache("spells", "Name", 182, "931");   PreCache("spells", "School", 182, "C");   PreCache("spells", "VS", 182, "vs");  PreCache("spells", "Bard", 182, "****");  PreCache("spells", "Cleric", 182, "8");   PreCache("spells", "Druid", 182, "8");    PreCache("spells", "Paladin", 182, "****");   PreCache("spells", "Ranger", 182, "****");    PreCache("spells", "Wiz_Sorc", 182, "8"); PreCache("spells", "Innate", 182, "8");
+PreCache("spells", "Name", 178, "932");   PreCache("spells", "School", 178, "C");   PreCache("spells", "VS", 178, "vs");  PreCache("spells", "Bard", 178, "****");  PreCache("spells", "Cleric", 178, "9");   PreCache("spells", "Druid", 178, "9");    PreCache("spells", "Paladin", 178, "****");   PreCache("spells", "Ranger", 178, "****");    PreCache("spells", "Wiz_Sorc", 178, "9"); PreCache("spells", "Innate", 178, "9");
+PreCache("spells", "Name", 33, "783");    PreCache("spells", "School", 33, "C");    PreCache("spells", "VS", 33, "vs");   PreCache("spells", "Bard", 33, "0");  PreCache("spells", "Cleric", 33, "0");    PreCache("spells", "Druid", 33, "0"); PreCache("spells", "Paladin", 33, "****");    PreCache("spells", "Ranger", 33, "****"); PreCache("spells", "Wiz_Sorc", 33, "****");   PreCache("spells", "Innate", 33, "0");
+PreCache("spells", "Name", 189, "939");   PreCache("spells", "School", 189, "T");   PreCache("spells", "VS", 189, "vs");  PreCache("spells", "Bard", 189, "****");  PreCache("spells", "Cleric", 189, "0");   PreCache("spells", "Druid", 189, "0");    PreCache("spells", "Paladin", 189, "1");  PreCache("spells", "Ranger", 189, "****");    PreCache("spells", "Wiz_Sorc", 189, "****");  PreCache("spells", "Innate", 189, "0");
+PreCache("spells", "Name", 1, "751"); PreCache("spells", "School", 1, "E"); PreCache("spells", "VS", 1, "vs");    PreCache("spells", "Bard", 1, "****");    PreCache("spells", "Cleric", 1, "2"); PreCache("spells", "Druid", 1, "****");   PreCache("spells", "Paladin", 1, "2");    PreCache("spells", "Ranger", 1, "3"); PreCache("spells", "Wiz_Sorc", 1, "****");    PreCache("spells", "Innate", 1, "2");
+PreCache("spells", "Name", 31, "781");    PreCache("spells", "School", 31, "C");    PreCache("spells", "VS", 31, "vs");   PreCache("spells", "Bard", 31, "4");  PreCache("spells", "Cleric", 31, "4");    PreCache("spells", "Druid", 31, "5"); PreCache("spells", "Paladin", 31, "****");    PreCache("spells", "Ranger", 31, "****"); PreCache("spells", "Wiz_Sorc", 31, "****");   PreCache("spells", "Innate", 31, "4");
+PreCache("spells", "Name", 38, "788");    PreCache("spells", "School", 38, "N");    PreCache("spells", "VS", 38, "vs");   PreCache("spells", "Bard", 38, "****");   PreCache("spells", "Cleric", 38, "4");    PreCache("spells", "Druid", 38, "5"); PreCache("spells", "Paladin", 38, "4");   PreCache("spells", "Ranger", 38, "****"); PreCache("spells", "Wiz_Sorc", 38, "****");   PreCache("spells", "Innate", 38, "4");
+PreCache("spells", "Name", 80, "830");    PreCache("spells", "School", 80, "C");    PreCache("spells", "VS", 80, "vs");   PreCache("spells", "Bard", 80, "5");  PreCache("spells", "Cleric", 80, "5");    PreCache("spells", "Druid", 80, "6"); PreCache("spells", "Paladin", 80, "****");    PreCache("spells", "Ranger", 80, "****"); PreCache("spells", "Wiz_Sorc", 80, "****");   PreCache("spells", "Innate", 80, "5");
+PreCache("spells", "Name", 3135, "16830276"); PreCache("spells", "School", 3135, "C");  PreCache("spells", "VS", 3135, "vs"); PreCache("spells", "Bard", 3135, "5");    PreCache("spells", "Cleric", 3135, "5");  PreCache("spells", "Druid", 3135, "6");   PreCache("spells", "Paladin", 3135, "****");  PreCache("spells", "Ranger", 3135, "****");   PreCache("spells", "Wiz_Sorc", 3135, "****"); PreCache("spells", "Innate", 3135, "5");
+PreCache("spells", "Name", 3136, "16830278"); PreCache("spells", "School", 3136, "C");  PreCache("spells", "VS", 3136, "vs"); PreCache("spells", "Bard", 3136, "6");    PreCache("spells", "Cleric", 3136, "6");  PreCache("spells", "Druid", 3136, "7");   PreCache("spells", "Paladin", 3136, "****");  PreCache("spells", "Ranger", 3136, "****");   PreCache("spells", "Wiz_Sorc", 3136, "****"); PreCache("spells", "Innate", 3136, "6");
+PreCache("spells", "Name", 37, "787");    PreCache("spells", "School", 37, "E");    PreCache("spells", "VS", 37, "vs");   PreCache("spells", "Bard", 37, "0");  PreCache("spells", "Cleric", 37, "****"); PreCache("spells", "Druid", 37, "****");  PreCache("spells", "Paladin", 37, "****");    PreCache("spells", "Ranger", 37, "****"); PreCache("spells", "Wiz_Sorc", 37, "0");  PreCache("spells", "Innate", 37, "0");
+PreCache("spells", "Name", 371, "6337");  PreCache("spells", "School", 371, "N");   PreCache("spells", "VS", 371, "vs");  PreCache("spells", "Bard", 371, "****");  PreCache("spells", "Cleric", 371, "2");   PreCache("spells", "Druid", 371, "****"); PreCache("spells", "Paladin", 371, "****");   PreCache("spells", "Ranger", 371, "****");    PreCache("spells", "Wiz_Sorc", 371, "1"); PreCache("spells", "Innate", 371, "1");
+PreCache("spells", "Name", 16, "766");    PreCache("spells", "School", 16, "E");    PreCache("spells", "VS", 16, "vs");   PreCache("spells", "Bard", 16, "1");  PreCache("spells", "Cleric", 16, "****"); PreCache("spells", "Druid", 16, "****");  PreCache("spells", "Paladin", 16, "****");    PreCache("spells", "Ranger", 16, "****"); PreCache("spells", "Wiz_Sorc", 16, "1");  PreCache("spells", "Innate", 16, "1");
+PreCache("spells", "Name", 86, "836");    PreCache("spells", "School", 86, "D");    PreCache("spells", "VS", 86, "vs");   PreCache("spells", "Bard", 86, "1");  PreCache("spells", "Cleric", 86, "****"); PreCache("spells", "Druid", 86, "****");  PreCache("spells", "Paladin", 86, "****");    PreCache("spells", "Ranger", 86, "****"); PreCache("spells", "Wiz_Sorc", 86, "1");  PreCache("spells", "Innate", 86, "2");
+PreCache("spells", "Name", 102, "852");   PreCache("spells", "School", 102, "C");   PreCache("spells", "VS", 102, "vs");  PreCache("spells", "Bard", 102, "1"); PreCache("spells", "Cleric", 102, "****");    PreCache("spells", "Druid", 102, "****"); PreCache("spells", "Paladin", 102, "****");   PreCache("spells", "Ranger", 102, "****");    PreCache("spells", "Wiz_Sorc", 102, "1"); PreCache("spells", "Innate", 102, "1");
+PreCache("spells", "Name", 456, "2675");  PreCache("spells", "School", 456, "T");   PreCache("spells", "VS", 456, "vs");  PreCache("spells", "Bard", 456, "1"); PreCache("spells", "Cleric", 456, "****");    PreCache("spells", "Druid", 456, "****"); PreCache("spells", "Paladin", 456, "****");   PreCache("spells", "Ranger", 456, "****");    PreCache("spells", "Wiz_Sorc", 456, "1"); PreCache("spells", "Innate", 456, "1");
+PreCache("spells", "Name", 49, "799");    PreCache("spells", "School", 49, "T");    PreCache("spells", "VS", 49, "vs");   PreCache("spells", "Bard", 49, "****");   PreCache("spells", "Cleric", 49, "2");    PreCache("spells", "Druid", 49, "****");  PreCache("spells", "Paladin", 49, "****");    PreCache("spells", "Ranger", 49, "****"); PreCache("spells", "Wiz_Sorc", 49, "2");  PreCache("spells", "Innate", 49, "2");
+PreCache("spells", "Name", 527, "2767");  PreCache("spells", "School", 527, "T");   PreCache("spells", "VS", 527, "vs");  PreCache("spells", "Bard", 527, "****");  PreCache("spells", "Cleric", 527, "2");   PreCache("spells", "Druid", 527, "****"); PreCache("spells", "Paladin", 527, "****");   PreCache("spells", "Ranger", 527, "****");    PreCache("spells", "Wiz_Sorc", 527, "2"); PreCache("spells", "Innate", 527, "2");
+PreCache("spells", "Name", 419, "59");    PreCache("spells", "School", 419, "I");   PreCache("spells", "VS", 419, "vs");  PreCache("spells", "Bard", 419, "****");  PreCache("spells", "Cleric", 419, "3");   PreCache("spells", "Druid", 419, "****"); PreCache("spells", "Paladin", 419, "****");   PreCache("spells", "Ranger", 419, "****");    PreCache("spells", "Wiz_Sorc", 419, "2"); PreCache("spells", "Innate", 419, "2");
+PreCache("spells", "Name", 90, "840");    PreCache("spells", "School", 90, "I");    PreCache("spells", "VS", 90, "vs");   PreCache("spells", "Bard", 90, "2");  PreCache("spells", "Cleric", 90, "****"); PreCache("spells", "Druid", 90, "****");  PreCache("spells", "Paladin", 90, "****");    PreCache("spells", "Ranger", 90, "****"); PreCache("spells", "Wiz_Sorc", 90, "2");  PreCache("spells", "Innate", 90, "2");
+PreCache("spells", "Name", 120, "870");   PreCache("spells", "School", 120, "I");   PreCache("spells", "VS", 120, "vs");  PreCache("spells", "Bard", 120, "2"); PreCache("spells", "Cleric", 120, "****");    PreCache("spells", "Druid", 120, "****"); PreCache("spells", "Paladin", 120, "****");   PreCache("spells", "Ranger", 120, "****");    PreCache("spells", "Wiz_Sorc", 120, "2"); PreCache("spells", "Innate", 120, "2");
+PreCache("spells", "Name", 157, "907");   PreCache("spells", "School", 157, "D");   PreCache("spells", "VS", 157, "vs");  PreCache("spells", "Bard", 157, "2"); PreCache("spells", "Cleric", 157, "****");    PreCache("spells", "Druid", 157, "****"); PreCache("spells", "Paladin", 157, "****");   PreCache("spells", "Ranger", 157, "****");    PreCache("spells", "Wiz_Sorc", 157, "2"); PreCache("spells", "Innate", 157, "2");
+PreCache("spells", "Name", 436, "502");   PreCache("spells", "School", 436, "E");   PreCache("spells", "VS", 436, "v");   PreCache("spells", "Bard", 436, "1"); PreCache("spells", "Cleric", 436, "****");    PreCache("spells", "Druid", 436, "****"); PreCache("spells", "Paladin", 436, "****");   PreCache("spells", "Ranger", 436, "****");    PreCache("spells", "Wiz_Sorc", 436, "2"); PreCache("spells", "Innate", 436, "2");
+PreCache("spells", "Name", 457, "2678");  PreCache("spells", "School", 457, "E");   PreCache("spells", "VS", 457, "vs");  PreCache("spells", "Bard", 457, "2"); PreCache("spells", "Cleric", 457, "****");    PreCache("spells", "Druid", 457, "****"); PreCache("spells", "Paladin", 457, "****");   PreCache("spells", "Ranger", 457, "****");    PreCache("spells", "Wiz_Sorc", 457, "2"); PreCache("spells", "Innate", 457, "2");
+PreCache("spells", "Name", 569, "3794");  PreCache("spells", "School", 569, "V");   PreCache("spells", "VS", 569, "vs");  PreCache("spells", "Bard", 569, "2"); PreCache("spells", "Cleric", 569, "****");    PreCache("spells", "Druid", 569, "****"); PreCache("spells", "Paladin", 569, "****");   PreCache("spells", "Ranger", 569, "****");    PreCache("spells", "Wiz_Sorc", 569, "2"); PreCache("spells", "Innate", 569, "2");
+PreCache("spells", "Name", 3142, "16830290"); PreCache("spells", "School", 3142, "C");  PreCache("spells", "VS", 3142, "vs"); PreCache("spells", "Bard", 3142, "2");    PreCache("spells", "Cleric", 3142, "****");   PreCache("spells", "Druid", 3142, "****");    PreCache("spells", "Paladin", 3142, "****");  PreCache("spells", "Ranger", 3142, "****");   PreCache("spells", "Wiz_Sorc", 3142, "2");    PreCache("spells", "Innate", 3142, "2");
+PreCache("spells", "Name", 3184, "16830459"); PreCache("spells", "School", 3184, "T");  PreCache("spells", "VS", 3184, "vs"); PreCache("spells", "Bard", 3184, "****"); PreCache("spells", "Cleric", 3184, "****");   PreCache("spells", "Druid", 3184, "3");   PreCache("spells", "Paladin", 3184, "****");  PreCache("spells", "Ranger", 3184, "****");   PreCache("spells", "Wiz_Sorc", 3184, "3");    PreCache("spells", "Innate", 3184, "3");
+PreCache("spells", "Name", 20, "770");    PreCache("spells", "School", 20, "D");    PreCache("spells", "VS", 20, "vs");   PreCache("spells", "Bard", 20, "3");  PreCache("spells", "Cleric", 20, "****"); PreCache("spells", "Druid", 20, "****");  PreCache("spells", "Paladin", 20, "****");    PreCache("spells", "Ranger", 20, "****"); PreCache("spells", "Wiz_Sorc", 20, "3");  PreCache("spells", "Innate", 20, "3");
+PreCache("spells", "Name", 75, "2682");   PreCache("spells", "School", 75, "V");    PreCache("spells", "VS", 75, "vs");   PreCache("spells", "Bard", 75, "3");  PreCache("spells", "Cleric", 75, "****"); PreCache("spells", "Druid", 75, "****");  PreCache("spells", "Paladin", 75, "****");    PreCache("spells", "Ranger", 75, "****"); PreCache("spells", "Wiz_Sorc", 75, "3");  PreCache("spells", "Innate", 75, "3");
+PreCache("spells", "Name", 78, "828");    PreCache("spells", "School", 78, "T");    PreCache("spells", "VS", 78, "vs");   PreCache("spells", "Bard", 78, "3");  PreCache("spells", "Cleric", 78, "****"); PreCache("spells", "Druid", 78, "****");  PreCache("spells", "Paladin", 78, "****");    PreCache("spells", "Ranger", 78, "****"); PreCache("spells", "Wiz_Sorc", 78, "3");  PreCache("spells", "Innate", 78, "3");
+PreCache("spells", "Name", 92, "842");    PreCache("spells", "School", 92, "I");    PreCache("spells", "VS", 92, "vs");   PreCache("spells", "Bard", 92, "3");  PreCache("spells", "Cleric", 92, "****"); PreCache("spells", "Druid", 92, "****");  PreCache("spells", "Paladin", 92, "****");    PreCache("spells", "Ranger", 92, "****"); PreCache("spells", "Wiz_Sorc", 92, "3");  PreCache("spells", "Innate", 92, "3");
+PreCache("spells", "Name", 166, "916");   PreCache("spells", "School", 166, "T");   PreCache("spells", "VS", 166, "vs");  PreCache("spells", "Bard", 166, "3"); PreCache("spells", "Cleric", 166, "****");    PreCache("spells", "Druid", 166, "****"); PreCache("spells", "Paladin", 166, "****");   PreCache("spells", "Ranger", 166, "****");    PreCache("spells", "Wiz_Sorc", 166, "3"); PreCache("spells", "Innate", 166, "3");
+PreCache("spells", "Name", 458, "2679");  PreCache("spells", "School", 458, "I");   PreCache("spells", "VS", 458, "v");   PreCache("spells", "Bard", 458, "3"); PreCache("spells", "Cleric", 458, "****");    PreCache("spells", "Druid", 458, "****"); PreCache("spells", "Paladin", 458, "****");   PreCache("spells", "Ranger", 458, "****");    PreCache("spells", "Wiz_Sorc", 458, "3"); PreCache("spells", "Innate", 458, "3");
+PreCache("spells", "Name", 539, "3757");  PreCache("spells", "School", 539, "T");   PreCache("spells", "VS", 539, "vs");  PreCache("spells", "Bard", 539, "3"); PreCache("spells", "Cleric", 539, "****");    PreCache("spells", "Druid", 539, "****"); PreCache("spells", "Paladin", 539, "****");   PreCache("spells", "Ranger", 539, "****");    PreCache("spells", "Wiz_Sorc", 539, "3"); PreCache("spells", "Innate", 539, "3");
+PreCache("spells", "Name", 3133, "16830272"); PreCache("spells", "School", 3133, "E");  PreCache("spells", "VS", 3133, "vs"); PreCache("spells", "Bard", 3133, "2");    PreCache("spells", "Cleric", 3133, "****");   PreCache("spells", "Druid", 3133, "****");    PreCache("spells", "Paladin", 3133, "****");  PreCache("spells", "Ranger", 3133, "****");   PreCache("spells", "Wiz_Sorc", 3133, "3");    PreCache("spells", "Innate", 3133, "2");
+PreCache("spells", "Name", 3126, "16830263"); PreCache("spells", "School", 3126, "T");  PreCache("spells", "VS", 3126, "vs"); PreCache("spells", "Bard", 3126, "****"); PreCache("spells", "Cleric", 3126, "4");  PreCache("spells", "Druid", 3126, "****");    PreCache("spells", "Paladin", 3126, "****");  PreCache("spells", "Ranger", 3126, "****");   PreCache("spells", "Wiz_Sorc", 3126, "4");    PreCache("spells", "Innate", 3126, "4");
+PreCache("spells", "Name", 172, "922");   PreCache("spells", "School", 172, "A");   PreCache("spells", "VS", 172, "vs");  PreCache("spells", "Bard", 172, "****");  PreCache("spells", "Cleric", 172, "****");    PreCache("spells", "Druid", 172, "4");    PreCache("spells", "Paladin", 172, "****");   PreCache("spells", "Ranger", 172, "****");    PreCache("spells", "Wiz_Sorc", 172, "4"); PreCache("spells", "Innate", 172, "4");
+PreCache("spells", "Name", 191, "941");   PreCache("spells", "School", 191, "V");   PreCache("spells", "VS", 191, "vs");  PreCache("spells", "Bard", 191, "****");  PreCache("spells", "Cleric", 191, "****");    PreCache("spells", "Druid", 191, "5");    PreCache("spells", "Paladin", 191, "****");   PreCache("spells", "Ranger", 191, "****");    PreCache("spells", "Wiz_Sorc", 191, "4"); PreCache("spells", "Innate", 191, "4");
+PreCache("spells", "Name", 15, "765");    PreCache("spells", "School", 15, "E");    PreCache("spells", "VS", 15, "vs");   PreCache("spells", "Bard", 15, "3");  PreCache("spells", "Cleric", 15, "****"); PreCache("spells", "Druid", 15, "****");  PreCache("spells", "Paladin", 15, "****");    PreCache("spells", "Ranger", 15, "****"); PreCache("spells", "Wiz_Sorc", 15, "4");  PreCache("spells", "Innate", 15, "3");
+PreCache("spells", "Name", 26, "776");    PreCache("spells", "School", 26, "E");    PreCache("spells", "VS", 26, "vs");   PreCache("spells", "Bard", 26, "3");  PreCache("spells", "Cleric", 26, "****"); PreCache("spells", "Druid", 26, "****");  PreCache("spells", "Paladin", 26, "****");    PreCache("spells", "Ranger", 26, "****"); PreCache("spells", "Wiz_Sorc", 26, "4");  PreCache("spells", "Innate", 26, "3");
+PreCache("spells", "Name", 54, "804");    PreCache("spells", "School", 54, "N");    PreCache("spells", "VS", 54, "vs");   PreCache("spells", "Bard", 54, "3");  PreCache("spells", "Cleric", 54, "****"); PreCache("spells", "Druid", 54, "****");  PreCache("spells", "Paladin", 54, "****");    PreCache("spells", "Ranger", 54, "****"); PreCache("spells", "Wiz_Sorc", 54, "4");  PreCache("spells", "Innate", 54, "3");
+PreCache("spells", "Name", 88, "838");    PreCache("spells", "School", 88, "I");    PreCache("spells", "VS", 88, "vs");   PreCache("spells", "Bard", 88, "4");  PreCache("spells", "Cleric", 88, "****"); PreCache("spells", "Druid", 88, "****");  PreCache("spells", "Paladin", 88, "****");    PreCache("spells", "Ranger", 88, "****"); PreCache("spells", "Wiz_Sorc", 88, "4");  PreCache("spells", "Innate", 88, "4");
+PreCache("spells", "Name", 130, "880");   PreCache("spells", "School", 130, "T");   PreCache("spells", "VS", 130, "v");   PreCache("spells", "Bard", 130, "****");  PreCache("spells", "Cleric", 130, "****");    PreCache("spells", "Druid", 130, "****"); PreCache("spells", "Paladin", 130, "****");   PreCache("spells", "Ranger", 130, "4");   PreCache("spells", "Wiz_Sorc", 130, "4"); PreCache("spells", "Innate", 130, "4");
+PreCache("spells", "Name", 2, "752"); PreCache("spells", "School", 2, "N"); PreCache("spells", "VS", 2, "vs");    PreCache("spells", "Bard", 2, "****");    PreCache("spells", "Cleric", 2, "3"); PreCache("spells", "Druid", 2, "****");   PreCache("spells", "Paladin", 2, "****"); PreCache("spells", "Ranger", 2, "****");  PreCache("spells", "Wiz_Sorc", 2, "5");   PreCache("spells", "Innate", 2, "3");
+PreCache("spells", "Name", 45, "795");    PreCache("spells", "School", 45, "E");    PreCache("spells", "VS", 45, "vs");   PreCache("spells", "Bard", 45, "4");  PreCache("spells", "Cleric", 45, "****"); PreCache("spells", "Druid", 45, "****");  PreCache("spells", "Paladin", 45, "****");    PreCache("spells", "Ranger", 45, "****"); PreCache("spells", "Wiz_Sorc", 45, "5");  PreCache("spells", "Innate", 45, "4");
+PreCache("spells", "Name", 118, "868");   PreCache("spells", "School", 118, "E");   PreCache("spells", "VS", 118, "vs");  PreCache("spells", "Bard", 118, "5"); PreCache("spells", "Cleric", 118, "****");    PreCache("spells", "Druid", 118, "****"); PreCache("spells", "Paladin", 118, "****");   PreCache("spells", "Ranger", 118, "****");    PreCache("spells", "Wiz_Sorc", 118, "5"); PreCache("spells", "Innate", 118, "5");
+PreCache("spells", "Name", 528, "2796");  PreCache("spells", "School", 528, "N");   PreCache("spells", "VS", 528, "vs");  PreCache("spells", "Bard", 528, "****");  PreCache("spells", "Cleric", 528, "6");   PreCache("spells", "Druid", 528, "****"); PreCache("spells", "Paladin", 528, "****");   PreCache("spells", "Ranger", 528, "****");    PreCache("spells", "Wiz_Sorc", 528, "6"); PreCache("spells", "Innate", 528, "6");
+PreCache("spells", "Name", 3122, "16830255"); PreCache("spells", "School", 3122, "T");  PreCache("spells", "VS", 3122, "vs"); PreCache("spells", "Bard", 3122, "****"); PreCache("spells", "Cleric", 3122, "6");  PreCache("spells", "Druid", 3122, "****");    PreCache("spells", "Paladin", 3122, "****");  PreCache("spells", "Ranger", 3122, "****");   PreCache("spells", "Wiz_Sorc", 3122, "6");    PreCache("spells", "Innate", 3122, "6");
+PreCache("spells", "Name", 74, "824");    PreCache("spells", "School", 74, "T");    PreCache("spells", "VS", 74, "vs");   PreCache("spells", "Bard", 74, "****");   PreCache("spells", "Cleric", 74, "****"); PreCache("spells", "Druid", 74, "6"); PreCache("spells", "Paladin", 74, "****");    PreCache("spells", "Ranger", 74, "****"); PreCache("spells", "Wiz_Sorc", 74, "6");  PreCache("spells", "Innate", 74, "6");
+PreCache("spells", "Name", 113, "863");   PreCache("spells", "School", 113, "E");   PreCache("spells", "VS", 113, "vs");  PreCache("spells", "Bard", 113, "6"); PreCache("spells", "Cleric", 113, "****");    PreCache("spells", "Druid", 113, "****"); PreCache("spells", "Paladin", 113, "****");   PreCache("spells", "Ranger", 113, "****");    PreCache("spells", "Wiz_Sorc", 113, "6"); PreCache("spells", "Innate", 113, "6");
+PreCache("spells", "Name", 121, "871");   PreCache("spells", "School", 121, "I");   PreCache("spells", "VS", 121, "s");   PreCache("spells", "Bard", 121, "5"); PreCache("spells", "Cleric", 121, "****");    PreCache("spells", "Druid", 121, "****"); PreCache("spells", "Paladin", 121, "****");   PreCache("spells", "Ranger", 121, "****");    PreCache("spells", "Wiz_Sorc", 121, "6"); PreCache("spells", "Innate", 121, "5");
+PreCache("spells", "Name", 376, "6342");  PreCache("spells", "School", 376, "D");   PreCache("spells", "VS", 376, "vs");  PreCache("spells", "Bard", 376, "4"); PreCache("spells", "Cleric", 376, "****");    PreCache("spells", "Druid", 376, "****"); PreCache("spells", "Paladin", 376, "****");   PreCache("spells", "Ranger", 376, "****");    PreCache("spells", "Wiz_Sorc", 376, "6"); PreCache("spells", "Innate", 376, "5");
+PreCache("spells", "Name", 3120, "16830251"); PreCache("spells", "School", 3120, "T");  PreCache("spells", "VS", 3120, "vs"); PreCache("spells", "Bard", 3120, "6");    PreCache("spells", "Cleric", 3120, "****");   PreCache("spells", "Druid", 3120, "****");    PreCache("spells", "Paladin", 3120, "****");  PreCache("spells", "Ranger", 3120, "****");   PreCache("spells", "Wiz_Sorc", 3120, "6");    PreCache("spells", "Innate", 3120, "6");
+PreCache("spells", "Name", 3134, "16830274"); PreCache("spells", "School", 3134, "E");  PreCache("spells", "VS", 3134, "vs"); PreCache("spells", "Bard", 3134, "5");    PreCache("spells", "Cleric", 3134, "****");   PreCache("spells", "Druid", 3134, "****");    PreCache("spells", "Paladin", 3134, "****");  PreCache("spells", "Ranger", 3134, "****");   PreCache("spells", "Wiz_Sorc", 3134, "6");    PreCache("spells", "Innate", 3134, "5");
+PreCache("spells", "Name", 28, "778");    PreCache("spells", "School", 28, "N");    PreCache("spells", "VS", 28, "vs");   PreCache("spells", "Bard", 28, "****");   PreCache("spells", "Cleric", 28, "6");    PreCache("spells", "Druid", 28, "****");  PreCache("spells", "Paladin", 28, "****");    PreCache("spells", "Ranger", 28, "****"); PreCache("spells", "Wiz_Sorc", 28, "7");  PreCache("spells", "Innate", 28, "7");
+PreCache("spells", "Name", 430, "387");   PreCache("spells", "School", 430, "A");   PreCache("spells", "VS", 430, "vs");  PreCache("spells", "Bard", 430, "****");  PreCache("spells", "Cleric", 430, "6");   PreCache("spells", "Druid", 430, "****"); PreCache("spells", "Paladin", 430, "****");   PreCache("spells", "Ranger", 430, "****");    PreCache("spells", "Wiz_Sorc", 430, "7"); PreCache("spells", "Innate", 430, "6");
+PreCache("spells", "Name", 56, "806");    PreCache("spells", "School", 56, "N");    PreCache("spells", "VS", 56, "vs");   PreCache("spells", "Bard", 56, "****");   PreCache("spells", "Cleric", 56, "****"); PreCache("spells", "Druid", 56, "8"); PreCache("spells", "Paladin", 56, "****");    PreCache("spells", "Ranger", 56, "****"); PreCache("spells", "Wiz_Sorc", 56, "7");  PreCache("spells", "Innate", 56, "7");
+PreCache("spells", "Name", 30, "780");    PreCache("spells", "School", 30, "N");    PreCache("spells", "VS", 30, "vs");   PreCache("spells", "Bard", 30, "****");   PreCache("spells", "Cleric", 30, "6");    PreCache("spells", "Druid", 30, "****");  PreCache("spells", "Paladin", 30, "****");    PreCache("spells", "Ranger", 30, "****"); PreCache("spells", "Wiz_Sorc", 30, "8");  PreCache("spells", "Innate", 30, "6");
+PreCache("spells", "Name", 443, "2364");  PreCache("spells", "School", 443, "T");   PreCache("spells", "VS", 443, "v");   PreCache("spells", "Bard", 443, "****");  PreCache("spells", "Cleric", 443, "6");   PreCache("spells", "Druid", 443, "****"); PreCache("spells", "Paladin", 443, "****");   PreCache("spells", "Ranger", 443, "****");    PreCache("spells", "Wiz_Sorc", 443, "8"); PreCache("spells", "Innate", 443, "7");
+PreCache("spells", "Name", 134, "884");   PreCache("spells", "School", 134, "D");   PreCache("spells", "VS", 134, "vs");  PreCache("spells", "Bard", 134, "****");  PreCache("spells", "Cleric", 134, "****");    PreCache("spells", "Druid", 134, "8");    PreCache("spells", "Paladin", 134, "****");   PreCache("spells", "Ranger", 134, "****");    PreCache("spells", "Wiz_Sorc", 134, "8"); PreCache("spells", "Innate", 134, "8");
+PreCache("spells", "Name", 427, "385");   PreCache("spells", "School", 427, "V");   PreCache("spells", "VS", 427, "vs");  PreCache("spells", "Bard", 427, "****");  PreCache("spells", "Cleric", 427, "****");    PreCache("spells", "Druid", 427, "8");    PreCache("spells", "Paladin", 427, "****");   PreCache("spells", "Ranger", 427, "****");    PreCache("spells", "Wiz_Sorc", 427, "8"); PreCache("spells", "Innate", 427, "8");
+PreCache("spells", "Name", 51, "801");    PreCache("spells", "School", 51, "N");    PreCache("spells", "VS", 51, "vs");   PreCache("spells", "Bard", 51, "****");   PreCache("spells", "Cleric", 51, "9");    PreCache("spells", "Druid", 51, "****");  PreCache("spells", "Paladin", 51, "****");    PreCache("spells", "Ranger", 51, "****"); PreCache("spells", "Wiz_Sorc", 51, "9");  PreCache("spells", "Innate", 51, "9");
+PreCache("spells", "Name", 63, "813");    PreCache("spells", "School", 63, "C");    PreCache("spells", "VS", 63, "vs");   PreCache("spells", "Bard", 63, "****");   PreCache("spells", "Cleric", 63, "9");    PreCache("spells", "Druid", 63, "****");  PreCache("spells", "Paladin", 63, "****");    PreCache("spells", "Ranger", 63, "****"); PreCache("spells", "Wiz_Sorc", 63, "9");  PreCache("spells", "Innate", 63, "9");
+PreCache("spells", "Name", 161, "911");   PreCache("spells", "School", 161, "T");   PreCache("spells", "VS", 161, "vs");  PreCache("spells", "Bard", 161, "****");  PreCache("spells", "Cleric", 161, "****");    PreCache("spells", "Druid", 161, "9");    PreCache("spells", "Paladin", 161, "****");   PreCache("spells", "Ranger", 161, "****");    PreCache("spells", "Wiz_Sorc", 161, "9"); PreCache("spells", "Innate", 161, "9");
+PreCache("spells", "Name", 6, "756"); PreCache("spells", "School", 6, "E"); PreCache("spells", "VS", 6, "vs");    PreCache("spells", "Bard", 6, "****");    PreCache("spells", "Cleric", 6, "1"); PreCache("spells", "Druid", 6, "****");   PreCache("spells", "Paladin", 6, "1");    PreCache("spells", "Ranger", 6, "****");  PreCache("spells", "Wiz_Sorc", 6, "****");    PreCache("spells", "Innate", 6, "1");
+PreCache("spells", "Name", 414, "53");    PreCache("spells", "School", 414, "V");   PreCache("spells", "VS", 414, "vs");  PreCache("spells", "Bard", 414, "****");  PreCache("spells", "Cleric", 414, "1");   PreCache("spells", "Druid", 414, "****"); PreCache("spells", "Paladin", 414, "1");  PreCache("spells", "Ranger", 414, "****");    PreCache("spells", "Wiz_Sorc", 414, "****");  PreCache("spells", "Innate", 414, "1");
+PreCache("spells", "Name", 97, "847");    PreCache("spells", "School", 97, "C");    PreCache("spells", "VS", 97, "vs");   PreCache("spells", "Bard", 97, "****");   PreCache("spells", "Cleric", 97, "2");    PreCache("spells", "Druid", 97, "2"); PreCache("spells", "Paladin", 97, "****");    PreCache("spells", "Ranger", 97, "****"); PreCache("spells", "Wiz_Sorc", 97, "****");   PreCache("spells", "Innate", 97, "2");
+PreCache("spells", "Name", 149, "899");   PreCache("spells", "School", 149, "C");   PreCache("spells", "VS", 149, "vs");  PreCache("spells", "Bard", 149, "****");  PreCache("spells", "Cleric", 149, "2");   PreCache("spells", "Druid", 149, "****"); PreCache("spells", "Paladin", 149, "2");  PreCache("spells", "Ranger", 149, "****");    PreCache("spells", "Wiz_Sorc", 149, "****");  PreCache("spells", "Innate", 149, "2");
+PreCache("spells", "Name", 163, "913");   PreCache("spells", "School", 163, "I");   PreCache("spells", "VS", 163, "vs");  PreCache("spells", "Bard", 163, "2"); PreCache("spells", "Cleric", 163, "2");   PreCache("spells", "Druid", 163, "****"); PreCache("spells", "Paladin", 163, "****");   PreCache("spells", "Ranger", 163, "****");    PreCache("spells", "Wiz_Sorc", 163, "****");  PreCache("spells", "Innate", 163, "2");
+PreCache("spells", "Name", 167, "917");   PreCache("spells", "School", 167, "V");   PreCache("spells", "VS", 167, "vs");  PreCache("spells", "Bard", 167, "2"); PreCache("spells", "Cleric", 167, "2");   PreCache("spells", "Druid", 167, "****"); PreCache("spells", "Paladin", 167, "****");   PreCache("spells", "Ranger", 167, "****");    PreCache("spells", "Wiz_Sorc", 167, "****");  PreCache("spells", "Innate", 167, "2");
+PreCache("spells", "Name", 3157, "16830384"); PreCache("spells", "School", 3157, "E");  PreCache("spells", "VS", 3157, "vs"); PreCache("spells", "Bard", 3157, "****"); PreCache("spells", "Cleric", 3157, "2");  PreCache("spells", "Druid", 3157, "****");    PreCache("spells", "Paladin", 3157, "2"); PreCache("spells", "Ranger", 3157, "****");   PreCache("spells", "Wiz_Sorc", 3157, "****"); PreCache("spells", "Innate", 3157, "2");
+PreCache("spells", "Name", 91, "841");    PreCache("spells", "School", 91, "V");    PreCache("spells", "VS", 91, "vs");   PreCache("spells", "Bard", 91, "****");   PreCache("spells", "Cleric", 91, "3");    PreCache("spells", "Druid", 91, "****");  PreCache("spells", "Paladin", 91, "****");    PreCache("spells", "Ranger", 91, "3");    PreCache("spells", "Wiz_Sorc", 91, "****");   PreCache("spells", "Innate", 91, "3");
+PreCache("spells", "Name", 133, "883");   PreCache("spells", "School", 133, "C");   PreCache("spells", "VS", 133, "vs");  PreCache("spells", "Bard", 133, "****");  PreCache("spells", "Cleric", 133, "3");   PreCache("spells", "Druid", 133, "****"); PreCache("spells", "Paladin", 133, "3");  PreCache("spells", "Ranger", 133, "****");    PreCache("spells", "Wiz_Sorc", 133, "****");  PreCache("spells", "Innate", 133, "3");
+PreCache("spells", "Name", 129, "879");   PreCache("spells", "School", 129, "N");   PreCache("spells", "VS", 129, "vs");  PreCache("spells", "Bard", 129, "****");  PreCache("spells", "Cleric", 129, "4");   PreCache("spells", "Druid", 129, "3");    PreCache("spells", "Paladin", 129, "****");   PreCache("spells", "Ranger", 129, "****");    PreCache("spells", "Wiz_Sorc", 129, "****");  PreCache("spells", "Innate", 129, "3");
+PreCache("spells", "Name", 3162, "16830394"); PreCache("spells", "School", 3162, "C");  PreCache("spells", "VS", 3162, "vs"); PreCache("spells", "Bard", 3162, "****"); PreCache("spells", "Cleric", 3162, "4");  PreCache("spells", "Druid", 3162, "5");   PreCache("spells", "Paladin", 3162, "****");  PreCache("spells", "Ranger", 3162, "****");   PreCache("spells", "Wiz_Sorc", 3162, "****"); PreCache("spells", "Innate", 3162, "4");
+PreCache("spells", "Name", 61, "811");    PreCache("spells", "School", 61, "V");    PreCache("spells", "VS", 61, "vs");   PreCache("spells", "Bard", 61, "****");   PreCache("spells", "Cleric", 61, "5");    PreCache("spells", "Druid", 61, "4"); PreCache("spells", "Paladin", 61, "****");    PreCache("spells", "Ranger", 61, "****"); PreCache("spells", "Wiz_Sorc", 61, "****");   PreCache("spells", "Innate", 61, "4");
+PreCache("spells", "Name", 164, "914");   PreCache("spells", "School", 164, "N");   PreCache("spells", "VS", 164, "vs");  PreCache("spells", "Bard", 164, "****");  PreCache("spells", "Cleric", 164, "5");   PreCache("spells", "Druid", 164, "5");    PreCache("spells", "Paladin", 164, "****");   PreCache("spells", "Ranger", 164, "****");    PreCache("spells", "Wiz_Sorc", 164, "****");  PreCache("spells", "Innate", 164, "5");
+PreCache("spells", "Name", 168, "918");   PreCache("spells", "School", 168, "A");   PreCache("spells", "VS", 168, "vs");  PreCache("spells", "Bard", 168, "****");  PreCache("spells", "Cleric", 168, "5");   PreCache("spells", "Druid", 168, "5");    PreCache("spells", "Paladin", 168, "****");   PreCache("spells", "Ranger", 168, "****");    PreCache("spells", "Wiz_Sorc", 168, "****");  PreCache("spells", "Innate", 168, "5");
+PreCache("spells", "Name", 525, "3874");  PreCache("spells", "School", 525, "C");   PreCache("spells", "VS", 525, "vs");  PreCache("spells", "Bard", 525, "****");  PreCache("spells", "Cleric", 525, "5");   PreCache("spells", "Druid", 525, "5");    PreCache("spells", "Paladin", 525, "****");   PreCache("spells", "Ranger", 525, "****");    PreCache("spells", "Wiz_Sorc", 525, "****");  PreCache("spells", "Innate", 525, "5");
+PreCache("spells", "Name", 77, "827");    PreCache("spells", "School", 77, "N");    PreCache("spells", "VS", 77, "vs");   PreCache("spells", "Bard", 77, "****");   PreCache("spells", "Cleric", 77, "6");    PreCache("spells", "Druid", 77, "7"); PreCache("spells", "Paladin", 77, "****");    PreCache("spells", "Ranger", 77, "****"); PreCache("spells", "Wiz_Sorc", 77, "****");   PreCache("spells", "Innate", 77, "6");
+PreCache("spells", "Name", 79, "829");    PreCache("spells", "School", 79, "C");    PreCache("spells", "VS", 79, "vs");   PreCache("spells", "Bard", 79, "****");   PreCache("spells", "Cleric", 79, "6");    PreCache("spells", "Druid", 79, "7"); PreCache("spells", "Paladin", 79, "****");    PreCache("spells", "Ranger", 79, "****"); PreCache("spells", "Wiz_Sorc", 79, "****");   PreCache("spells", "Innate", 79, "6");
+PreCache("spells", "Name", 1790, "16826216"); PreCache("spells", "School", 1790, "T");  PreCache("spells", "VS", 1790, "vs"); PreCache("spells", "Bard", 1790, "6");    PreCache("spells", "Cleric", 1790, "6");  PreCache("spells", "Druid", 1790, "****");    PreCache("spells", "Paladin", 1790, "****");  PreCache("spells", "Ranger", 1790, "****");   PreCache("spells", "Wiz_Sorc", 1790, "****"); PreCache("spells", "Innate", 1790, "6");
+PreCache("spells", "Name", 374, "6340");  PreCache("spells", "School", 374, "C");   PreCache("spells", "VS", 374, "vs");  PreCache("spells", "Bard", 374, "****");  PreCache("spells", "Cleric", 374, "7");   PreCache("spells", "Druid", 374, "6");    PreCache("spells", "Paladin", 374, "****");   PreCache("spells", "Ranger", 374, "****");    PreCache("spells", "Wiz_Sorc", 374, "****");  PreCache("spells", "Innate", 374, "7");
+PreCache("spells", "Name", 3137, "16830280"); PreCache("spells", "School", 3137, "C");  PreCache("spells", "VS", 3137, "vs"); PreCache("spells", "Bard", 3137, "****"); PreCache("spells", "Cleric", 3137, "7");  PreCache("spells", "Druid", 3137, "8");   PreCache("spells", "Paladin", 3137, "****");  PreCache("spells", "Ranger", 3137, "****");   PreCache("spells", "Wiz_Sorc", 3137, "****"); PreCache("spells", "Innate", 3137, "7");
+PreCache("spells", "Name", 57, "807");    PreCache("spells", "School", 57, "V");    PreCache("spells", "VS", 57, "vs");   PreCache("spells", "Bard", 57, "****");   PreCache("spells", "Cleric", 57, "8");    PreCache("spells", "Druid", 57, "7"); PreCache("spells", "Paladin", 57, "****");    PreCache("spells", "Ranger", 57, "****"); PreCache("spells", "Wiz_Sorc", 57, "****");   PreCache("spells", "Innate", 57, "7");
+PreCache("spells", "Name", 2887, "16826310"); PreCache("spells", "School", 2887, "N");  PreCache("spells", "VS", 2887, "vs"); PreCache("spells", "Bard", 2887, "****"); PreCache("spells", "Cleric", 2887, "8");  PreCache("spells", "Druid", 2887, "7");   PreCache("spells", "Paladin", 2887, "****");  PreCache("spells", "Ranger", 2887, "****");   PreCache("spells", "Wiz_Sorc", 2887, "****"); PreCache("spells", "Innate", 2887, "7");
+PreCache("spells", "Name", 183, "933");   PreCache("spells", "School", 183, "V");   PreCache("spells", "VS", 183, "vs");  PreCache("spells", "Bard", 183, "****");  PreCache("spells", "Cleric", 183, "8");   PreCache("spells", "Druid", 183, "8");    PreCache("spells", "Paladin", 183, "****");   PreCache("spells", "Ranger", 183, "****");    PreCache("spells", "Wiz_Sorc", 183, "****");  PreCache("spells", "Innate", 183, "7");
+PreCache("spells", "Name", 114, "864");   PreCache("spells", "School", 114, "C");   PreCache("spells", "VS", 114, "vs");  PreCache("spells", "Bard", 114, "****");  PreCache("spells", "Cleric", 114, "8");   PreCache("spells", "Druid", 114, "9");    PreCache("spells", "Paladin", 114, "****");   PreCache("spells", "Ranger", 114, "****");    PreCache("spells", "Wiz_Sorc", 114, "****");  PreCache("spells", "Innate", 114, "8");
+PreCache("spells", "Name", 426, "384");   PreCache("spells", "School", 426, "V");   PreCache("spells", "VS", 426, "vs");  PreCache("spells", "Bard", 426, "****");  PreCache("spells", "Cleric", 426, "8");   PreCache("spells", "Druid", 426, "9");    PreCache("spells", "Paladin", 426, "****");   PreCache("spells", "Ranger", 426, "****");    PreCache("spells", "Wiz_Sorc", 426, "****");  PreCache("spells", "Innate", 426, "8");
+PreCache("spells", "Name", 3138, "16830282"); PreCache("spells", "School", 3138, "C");  PreCache("spells", "VS", 3138, "vs"); PreCache("spells", "Bard", 3138, "****"); PreCache("spells", "Cleric", 3138, "8");  PreCache("spells", "Druid", 3138, "9");   PreCache("spells", "Paladin", 3138, "****");  PreCache("spells", "Ranger", 3138, "****");   PreCache("spells", "Wiz_Sorc", 3138, "****"); PreCache("spells", "Innate", 3138, "8");
+PreCache("spells", "Name", 173, "923");   PreCache("spells", "School", 173, "C");   PreCache("spells", "VS", 173, "vs");  PreCache("spells", "Bard", 173, "****");  PreCache("spells", "Cleric", 173, "9");   PreCache("spells", "Druid", 173, "9");    PreCache("spells", "Paladin", 173, "****");   PreCache("spells", "Ranger", 173, "****");    PreCache("spells", "Wiz_Sorc", 173, "****");  PreCache("spells", "Innate", 173, "9");
+PreCache("spells", "Name", 53, "803");    PreCache("spells", "School", 53, "T");    PreCache("spells", "VS", 53, "vs");   PreCache("spells", "Bard", 53, "****");   PreCache("spells", "Cleric", 53, "****"); PreCache("spells", "Druid", 53, "1"); PreCache("spells", "Paladin", 53, "****");    PreCache("spells", "Ranger", 53, "1");    PreCache("spells", "Wiz_Sorc", 53, "****");   PreCache("spells", "Innate", 53, "1");
+PreCache("spells", "Name", 421, "340");   PreCache("spells", "School", 421, "T");   PreCache("spells", "VS", 421, "vs");  PreCache("spells", "Bard", 421, "****");  PreCache("spells", "Cleric", 421, "****");    PreCache("spells", "Druid", 421, "1");    PreCache("spells", "Paladin", 421, "****");   PreCache("spells", "Ranger", 421, "1");   PreCache("spells", "Wiz_Sorc", 421, "****");  PreCache("spells", "Innate", 421, "1");
+PreCache("spells", "Name", 452, "2670");  PreCache("spells", "School", 452, "C");   PreCache("spells", "VS", 452, "vs");  PreCache("spells", "Bard", 452, "****");  PreCache("spells", "Cleric", 452, "****");    PreCache("spells", "Druid", 452, "1");    PreCache("spells", "Paladin", 452, "****");   PreCache("spells", "Ranger", 452, "1");   PreCache("spells", "Wiz_Sorc", 452, "****");  PreCache("spells", "Innate", 452, "1");
+PreCache("spells", "Name", 81, "831");    PreCache("spells", "School", 81, "E");    PreCache("spells", "VS", 81, "vs");   PreCache("spells", "Bard", 81, "****");   PreCache("spells", "Cleric", 81, "****"); PreCache("spells", "Druid", 81, "2"); PreCache("spells", "Paladin", 81, "****");    PreCache("spells", "Ranger", 81, "2");    PreCache("spells", "Wiz_Sorc", 81, "****");   PreCache("spells", "Innate", 81, "2");
+PreCache("spells", "Name", 420, "283");   PreCache("spells", "School", 420, "T");   PreCache("spells", "VS", 420, "vs");  PreCache("spells", "Bard", 420, "****");  PreCache("spells", "Cleric", 420, "****");    PreCache("spells", "Druid", 420, "2");    PreCache("spells", "Paladin", 420, "****");   PreCache("spells", "Ranger", 420, "2");   PreCache("spells", "Wiz_Sorc", 420, "****");  PreCache("spells", "Innate", 420, "2");
+PreCache("spells", "Name", 453, "2923");  PreCache("spells", "School", 453, "C");   PreCache("spells", "VS", 453, "vs");  PreCache("spells", "Bard", 453, "****");  PreCache("spells", "Cleric", 453, "****");    PreCache("spells", "Druid", 453, "3");    PreCache("spells", "Paladin", 453, "****");   PreCache("spells", "Ranger", 453, "3");   PreCache("spells", "Wiz_Sorc", 453, "****");  PreCache("spells", "Innate", 453, "3");
+PreCache("spells", "Name", 455, "2674");  PreCache("spells", "School", 455, "T");   PreCache("spells", "VS", 455, "vs");  PreCache("spells", "Bard", 455, "****");  PreCache("spells", "Cleric", 455, "****");    PreCache("spells", "Druid", 455, "4");    PreCache("spells", "Paladin", 455, "****");   PreCache("spells", "Ranger", 455, "4");   PreCache("spells", "Wiz_Sorc", 455, "****");  PreCache("spells", "Innate", 455, "4");
+PreCache("spells", "Name", 144, "894");   PreCache("spells", "School", 144, "C");   PreCache("spells", "VS", 144, "vs");  PreCache("spells", "Bard", 144, "****");  PreCache("spells", "Cleric", 144, "****");    PreCache("spells", "Druid", 144, "****"); PreCache("spells", "Paladin", 144, "****");   PreCache("spells", "Ranger", 144, "****");    PreCache("spells", "Wiz_Sorc", 144, "0"); PreCache("spells", "Innate", 144, "0");
+PreCache("spells", "Name", 424, "383");   PreCache("spells", "School", 424, "C");   PreCache("spells", "VS", 424, "vs");  PreCache("spells", "Bard", 424, "****");  PreCache("spells", "Cleric", 424, "****");    PreCache("spells", "Druid", 424, "****"); PreCache("spells", "Paladin", 424, "****");   PreCache("spells", "Ranger", 424, "****");    PreCache("spells", "Wiz_Sorc", 424, "0"); PreCache("spells", "Innate", 424, "0");
+PreCache("spells", "Name", 439, "1852");  PreCache("spells", "School", 439, "V");   PreCache("spells", "VS", 439, "vs");  PreCache("spells", "Bard", 439, "****");  PreCache("spells", "Cleric", 439, "****");    PreCache("spells", "Druid", 439, "****"); PreCache("spells", "Paladin", 439, "****");   PreCache("spells", "Ranger", 439, "****");    PreCache("spells", "Wiz_Sorc", 439, "0"); PreCache("spells", "Innate", 439, "0");
+PreCache("spells", "Name", 10, "760");    PreCache("spells", "School", 10, "T");    PreCache("spells", "VS", 10, "vs");   PreCache("spells", "Bard", 10, "****");   PreCache("spells", "Cleric", 10, "****"); PreCache("spells", "Druid", 10, "****");  PreCache("spells", "Paladin", 10, "****");    PreCache("spells", "Ranger", 10, "****"); PreCache("spells", "Wiz_Sorc", 10, "1");  PreCache("spells", "Innate", 10, "1");
+PreCache("spells", "Name", 24, "774");    PreCache("spells", "School", 24, "I");    PreCache("spells", "VS", 24, "vs");   PreCache("spells", "Bard", 24, "****");   PreCache("spells", "Cleric", 24, "****"); PreCache("spells", "Druid", 24, "****");  PreCache("spells", "Paladin", 24, "****");    PreCache("spells", "Ranger", 24, "****"); PreCache("spells", "Wiz_Sorc", 24, "1");  PreCache("spells", "Innate", 24, "1");
+PreCache("spells", "Name", 107, "857");   PreCache("spells", "School", 107, "V");   PreCache("spells", "VS", 107, "vs");  PreCache("spells", "Bard", 107, "****");  PreCache("spells", "Cleric", 107, "****");    PreCache("spells", "Druid", 107, "****"); PreCache("spells", "Paladin", 107, "****");   PreCache("spells", "Ranger", 107, "****");    PreCache("spells", "Wiz_Sorc", 107, "1"); PreCache("spells", "Innate", 107, "1");
+PreCache("spells", "Name", 143, "893");   PreCache("spells", "School", 143, "N");   PreCache("spells", "VS", 143, "s");   PreCache("spells", "Bard", 143, "****");  PreCache("spells", "Cleric", 143, "****");    PreCache("spells", "Druid", 143, "****"); PreCache("spells", "Paladin", 143, "****");   PreCache("spells", "Ranger", 143, "****");    PreCache("spells", "Wiz_Sorc", 143, "1"); PreCache("spells", "Innate", 143, "1");
+PreCache("spells", "Name", 415, "55");    PreCache("spells", "School", 415, "D");   PreCache("spells", "VS", 415, "v");   PreCache("spells", "Bard", 415, "****");  PreCache("spells", "Cleric", 415, "****");    PreCache("spells", "Druid", 415, "****"); PreCache("spells", "Paladin", 415, "****");   PreCache("spells", "Ranger", 415, "****");    PreCache("spells", "Wiz_Sorc", 415, "1"); PreCache("spells", "Innate", 415, "1");
+PreCache("spells", "Name", 417, "57");    PreCache("spells", "School", 417, "A");   PreCache("spells", "VS", 417, "vs");  PreCache("spells", "Bard", 417, "****");  PreCache("spells", "Cleric", 417, "****");    PreCache("spells", "Druid", 417, "****"); PreCache("spells", "Paladin", 417, "****");   PreCache("spells", "Ranger", 417, "****");    PreCache("spells", "Wiz_Sorc", 417, "1"); PreCache("spells", "Innate", 417, "1");
+PreCache("spells", "Name", 521, "3865");  PreCache("spells", "School", 521, "V");   PreCache("spells", "VS", 521, "vs");  PreCache("spells", "Bard", 521, "****");  PreCache("spells", "Cleric", 521, "****");    PreCache("spells", "Druid", 521, "****"); PreCache("spells", "Paladin", 521, "****");   PreCache("spells", "Ranger", 521, "****");    PreCache("spells", "Wiz_Sorc", 521, "1"); PreCache("spells", "Innate", 521, "1");
+PreCache("spells", "Name", 522, "3867");  PreCache("spells", "School", 522, "A");   PreCache("spells", "VS", 522, "vs");  PreCache("spells", "Bard", 522, "****");  PreCache("spells", "Cleric", 522, "****");    PreCache("spells", "Druid", 522, "****"); PreCache("spells", "Paladin", 522, "****");   PreCache("spells", "Ranger", 522, "****");    PreCache("spells", "Wiz_Sorc", 522, "1"); PreCache("spells", "Innate", 522, "1");
+PreCache("spells", "Name", 534, "3739");  PreCache("spells", "School", 534, "V");   PreCache("spells", "VS", 534, "vs");  PreCache("spells", "Bard", 534, "****");  PreCache("spells", "Cleric", 534, "****");    PreCache("spells", "Druid", 534, "****"); PreCache("spells", "Paladin", 534, "****");   PreCache("spells", "Ranger", 534, "****");    PreCache("spells", "Wiz_Sorc", 534, "1"); PreCache("spells", "Innate", 534, "1");
+PreCache("spells", "Name", 543, "3765");  PreCache("spells", "School", 543, "V");   PreCache("spells", "VS", 543, "vs");  PreCache("spells", "Bard", 543, "****");  PreCache("spells", "Cleric", 543, "****");    PreCache("spells", "Druid", 543, "****"); PreCache("spells", "Paladin", 543, "****");   PreCache("spells", "Ranger", 543, "****");    PreCache("spells", "Wiz_Sorc", 543, "1"); PreCache("spells", "Innate", 543, "1");
+PreCache("spells", "Name", 1791, "16826218"); PreCache("spells", "School", 1791, "N");  PreCache("spells", "VS", 1791, "vs"); PreCache("spells", "Bard", 1791, "****"); PreCache("spells", "Cleric", 1791, "****");   PreCache("spells", "Druid", 1791, "****");    PreCache("spells", "Paladin", 1791, "****");  PreCache("spells", "Ranger", 1791, "****");   PreCache("spells", "Wiz_Sorc", 1791, "1");    PreCache("spells", "Innate", 1791, "1");
+PreCache("spells", "Name", 3109, "16830234"); PreCache("spells", "School", 3109, "V");  PreCache("spells", "VS", 3109, "vs"); PreCache("spells", "Bard", 3109, "****"); PreCache("spells", "Cleric", 3109, "****");   PreCache("spells", "Druid", 3109, "****");    PreCache("spells", "Paladin", 3109, "****");  PreCache("spells", "Ranger", 3109, "****");   PreCache("spells", "Wiz_Sorc", 3109, "1");    PreCache("spells", "Innate", 3109, "1");
+PreCache("spells", "Name", 3144, "16830348"); PreCache("spells", "School", 3144, "C");  PreCache("spells", "VS", 3144, "vs"); PreCache("spells", "Bard", 3144, "****"); PreCache("spells", "Cleric", 3144, "****");   PreCache("spells", "Druid", 3144, "****");    PreCache("spells", "Paladin", 3144, "****");  PreCache("spells", "Ranger", 3144, "****");   PreCache("spells", "Wiz_Sorc", 3144, "1");    PreCache("spells", "Innate", 3144, "1");
+PreCache("spells", "Name", 3145, "16830352"); PreCache("spells", "School", 3145, "C");  PreCache("spells", "VS", 3145, "vs"); PreCache("spells", "Bard", 3145, "****"); PreCache("spells", "Cleric", 3145, "****");   PreCache("spells", "Druid", 3145, "****");    PreCache("spells", "Paladin", 3145, "****");  PreCache("spells", "Ranger", 3145, "****");   PreCache("spells", "Wiz_Sorc", 3145, "1");    PreCache("spells", "Innate", 3145, "1");
+PreCache("spells", "Name", 3146, "16830356"); PreCache("spells", "School", 3146, "C");  PreCache("spells", "VS", 3146, "vs"); PreCache("spells", "Bard", 3146, "****"); PreCache("spells", "Cleric", 3146, "****");   PreCache("spells", "Druid", 3146, "****");    PreCache("spells", "Paladin", 3146, "****");  PreCache("spells", "Ranger", 3146, "****");   PreCache("spells", "Wiz_Sorc", 3146, "1");    PreCache("spells", "Innate", 3146, "1");
+PreCache("spells", "Name", 3147, "16830360"); PreCache("spells", "School", 3147, "C");  PreCache("spells", "VS", 3147, "vs"); PreCache("spells", "Bard", 3147, "****"); PreCache("spells", "Cleric", 3147, "****");   PreCache("spells", "Druid", 3147, "****");    PreCache("spells", "Paladin", 3147, "****");  PreCache("spells", "Ranger", 3147, "****");   PreCache("spells", "Wiz_Sorc", 3147, "1");    PreCache("spells", "Innate", 3147, "1");
+PreCache("spells", "Name", 3148, "16830364"); PreCache("spells", "School", 3148, "C");  PreCache("spells", "VS", 3148, "vs"); PreCache("spells", "Bard", 3148, "****"); PreCache("spells", "Cleric", 3148, "****");   PreCache("spells", "Druid", 3148, "****");    PreCache("spells", "Paladin", 3148, "****");  PreCache("spells", "Ranger", 3148, "****");   PreCache("spells", "Wiz_Sorc", 3148, "1");    PreCache("spells", "Innate", 3148, "1");
+PreCache("spells", "Name", 3150, "16830370"); PreCache("spells", "School", 3150, "C");  PreCache("spells", "VS", 3150, "v");  PreCache("spells", "Bard", 3150, "****"); PreCache("spells", "Cleric", 3150, "****");   PreCache("spells", "Druid", 3150, "****");    PreCache("spells", "Paladin", 3150, "****");  PreCache("spells", "Ranger", 3150, "****");   PreCache("spells", "Wiz_Sorc", 3150, "1");    PreCache("spells", "Innate", 3150, "1");
+PreCache("spells", "Name", 3175, "16830441"); PreCache("spells", "School", 3175, "E");  PreCache("spells", "VS", 3175, "vs"); PreCache("spells", "Bard", 3175, "****"); PreCache("spells", "Cleric", 3175, "****");   PreCache("spells", "Druid", 3175, "****");    PreCache("spells", "Paladin", 3175, "****");  PreCache("spells", "Ranger", 3175, "****");   PreCache("spells", "Wiz_Sorc", 3175, "1");    PreCache("spells", "Innate", 3175, "1");
+PreCache("spells", "Name", 3178, "16830447"); PreCache("spells", "School", 3178, "V");  PreCache("spells", "VS", 3178, "vs"); PreCache("spells", "Bard", 3178, "****"); PreCache("spells", "Cleric", 3178, "****");   PreCache("spells", "Druid", 3178, "****");    PreCache("spells", "Paladin", 3178, "****");  PreCache("spells", "Ranger", 3178, "****");   PreCache("spells", "Wiz_Sorc", 3178, "1");    PreCache("spells", "Innate", 3178, "1");
+PreCache("spells", "Name", 3183, "16830457"); PreCache("spells", "School", 3183, "C");  PreCache("spells", "VS", 3183, "vs"); PreCache("spells", "Bard", 3183, "****"); PreCache("spells", "Cleric", 3183, "****");   PreCache("spells", "Druid", 3183, "****");    PreCache("spells", "Paladin", 3183, "****");  PreCache("spells", "Ranger", 3183, "****");   PreCache("spells", "Wiz_Sorc", 3183, "1");    PreCache("spells", "Innate", 3183, "1");
+PreCache("spells", "Name", 64, "814");    PreCache("spells", "School", 64, "N");    PreCache("spells", "VS", 64, "vs");   PreCache("spells", "Bard", 64, "****");   PreCache("spells", "Cleric", 64, "****"); PreCache("spells", "Druid", 64, "****");  PreCache("spells", "Paladin", 64, "****");    PreCache("spells", "Ranger", 64, "****"); PreCache("spells", "Wiz_Sorc", 64, "2");  PreCache("spells", "Innate", 64, "2");
+PreCache("spells", "Name", 93, "843");    PreCache("spells", "School", 93, "T");    PreCache("spells", "VS", 93, "v");    PreCache("spells", "Bard", 93, "****");   PreCache("spells", "Cleric", 93, "****"); PreCache("spells", "Druid", 93, "****");  PreCache("spells", "Paladin", 93, "****");    PreCache("spells", "Ranger", 93, "****"); PreCache("spells", "Wiz_Sorc", 93, "2");  PreCache("spells", "Innate", 93, "2");
+PreCache("spells", "Name", 115, "865");   PreCache("spells", "School", 115, "C");   PreCache("spells", "VS", 115, "vs");  PreCache("spells", "Bard", 115, "****");  PreCache("spells", "Cleric", 115, "****");    PreCache("spells", "Druid", 115, "****"); PreCache("spells", "Paladin", 115, "****");   PreCache("spells", "Ranger", 115, "****");    PreCache("spells", "Wiz_Sorc", 115, "2"); PreCache("spells", "Innate", 115, "2");
+PreCache("spells", "Name", 192, "942");   PreCache("spells", "School", 192, "C");   PreCache("spells", "VS", 192, "vs");  PreCache("spells", "Bard", 192, "****");  PreCache("spells", "Cleric", 192, "****");    PreCache("spells", "Druid", 192, "****"); PreCache("spells", "Paladin", 192, "****");   PreCache("spells", "Ranger", 192, "****");    PreCache("spells", "Wiz_Sorc", 192, "2"); PreCache("spells", "Innate", 192, "2");
+PreCache("spells", "Name", 518, "3859");  PreCache("spells", "School", 518, "V");   PreCache("spells", "VS", 518, "vs");  PreCache("spells", "Bard", 518, "****");  PreCache("spells", "Cleric", 518, "****");    PreCache("spells", "Druid", 518, "****"); PreCache("spells", "Paladin", 518, "****");   PreCache("spells", "Ranger", 518, "****");    PreCache("spells", "Wiz_Sorc", 518, "2"); PreCache("spells", "Innate", 518, "2");
+PreCache("spells", "Name", 519, "3861");  PreCache("spells", "School", 519, "N");   PreCache("spells", "VS", 519, "vs");  PreCache("spells", "Bard", 519, "****");  PreCache("spells", "Cleric", 519, "****");    PreCache("spells", "Druid", 519, "****"); PreCache("spells", "Paladin", 519, "****");   PreCache("spells", "Ranger", 519, "****");    PreCache("spells", "Wiz_Sorc", 519, "2"); PreCache("spells", "Innate", 519, "2");
+PreCache("spells", "Name", 520, "3863");  PreCache("spells", "School", 520, "V");   PreCache("spells", "VS", 520, "vs");  PreCache("spells", "Bard", 520, "****");  PreCache("spells", "Cleric", 520, "****");    PreCache("spells", "Druid", 520, "****"); PreCache("spells", "Paladin", 520, "****");   PreCache("spells", "Ranger", 520, "****");    PreCache("spells", "Wiz_Sorc", 520, "2"); PreCache("spells", "Innate", 520, "2");
+PreCache("spells", "Name", 542, "3763");  PreCache("spells", "School", 542, "V");   PreCache("spells", "VS", 542, "vs");  PreCache("spells", "Bard", 542, "****");  PreCache("spells", "Cleric", 542, "****");    PreCache("spells", "Druid", 542, "****"); PreCache("spells", "Paladin", 542, "****");   PreCache("spells", "Ranger", 542, "****");    PreCache("spells", "Wiz_Sorc", 542, "2"); PreCache("spells", "Innate", 542, "2");
+PreCache("spells", "Name", 3149, "16830368"); PreCache("spells", "School", 3149, "C");  PreCache("spells", "VS", 3149, "v");  PreCache("spells", "Bard", 3149, "****"); PreCache("spells", "Cleric", 3149, "****");   PreCache("spells", "Druid", 3149, "****");    PreCache("spells", "Paladin", 3149, "****");  PreCache("spells", "Ranger", 3149, "****");   PreCache("spells", "Wiz_Sorc", 3149, "2");    PreCache("spells", "Innate", 3149, "2");
+PreCache("spells", "Name", 3158, "16830386"); PreCache("spells", "School", 3158, "V");  PreCache("spells", "VS", 3158, "vs"); PreCache("spells", "Bard", 3158, "****"); PreCache("spells", "Cleric", 3158, "****");   PreCache("spells", "Druid", 3158, "****");    PreCache("spells", "Paladin", 3158, "****");  PreCache("spells", "Ranger", 3158, "****");   PreCache("spells", "Wiz_Sorc", 3158, "2");    PreCache("spells", "Innate", 3158, "2");
+PreCache("spells", "Name", 3165, "16830423"); PreCache("spells", "School", 3165, "V");  PreCache("spells", "VS", 3165, "vs"); PreCache("spells", "Bard", 3165, "****"); PreCache("spells", "Cleric", 3165, "****");   PreCache("spells", "Druid", 3165, "****");    PreCache("spells", "Paladin", 3165, "****");  PreCache("spells", "Ranger", 3165, "****");   PreCache("spells", "Wiz_Sorc", 3165, "2");    PreCache("spells", "Innate", 3165, "2");
+PreCache("spells", "Name", 3166, "16830425"); PreCache("spells", "School", 3166, "C");  PreCache("spells", "VS", 3166, "vs"); PreCache("spells", "Bard", 3166, "****"); PreCache("spells", "Cleric", 3166, "****");   PreCache("spells", "Druid", 3166, "****");    PreCache("spells", "Paladin", 3166, "****");  PreCache("spells", "Ranger", 3166, "****");   PreCache("spells", "Wiz_Sorc", 3166, "2");    PreCache("spells", "Innate", 3166, "2");
+PreCache("spells", "Name", 3170, "16830431"); PreCache("spells", "School", 3170, "I");  PreCache("spells", "VS", 3170, "vs"); PreCache("spells", "Bard", 3170, "****"); PreCache("spells", "Cleric", 3170, "****");   PreCache("spells", "Druid", 3170, "****");    PreCache("spells", "Paladin", 3170, "****");  PreCache("spells", "Ranger", 3170, "****");   PreCache("spells", "Wiz_Sorc", 3170, "2");    PreCache("spells", "Innate", 3170, "2");
+PreCache("spells", "Name", 3171, "16830433"); PreCache("spells", "School", 3171, "V");  PreCache("spells", "VS", 3171, "vs"); PreCache("spells", "Bard", 3171, "****"); PreCache("spells", "Cleric", 3171, "****");   PreCache("spells", "Druid", 3171, "****");    PreCache("spells", "Paladin", 3171, "****");  PreCache("spells", "Ranger", 3171, "****");   PreCache("spells", "Wiz_Sorc", 3171, "2");    PreCache("spells", "Innate", 3171, "2");
+PreCache("spells", "Name", 58, "808");    PreCache("spells", "School", 58, "V");    PreCache("spells", "VS", 58, "vs");   PreCache("spells", "Bard", 58, "****");   PreCache("spells", "Cleric", 58, "****"); PreCache("spells", "Druid", 58, "****");  PreCache("spells", "Paladin", 58, "****");    PreCache("spells", "Ranger", 58, "****"); PreCache("spells", "Wiz_Sorc", 58, "3");  PreCache("spells", "Innate", 58, "3");
+PreCache("spells", "Name", 59, "809");    PreCache("spells", "School", 59, "C");    PreCache("spells", "VS", 59, "vs");   PreCache("spells", "Bard", 59, "****");   PreCache("spells", "Cleric", 59, "****"); PreCache("spells", "Druid", 59, "****");  PreCache("spells", "Paladin", 59, "****");    PreCache("spells", "Ranger", 59, "****"); PreCache("spells", "Wiz_Sorc", 59, "3");  PreCache("spells", "Innate", 59, "3");
+PreCache("spells", "Name", 101, "851");   PreCache("spells", "School", 101, "V");   PreCache("spells", "VS", 101, "vs");  PreCache("spells", "Bard", 101, "****");  PreCache("spells", "Cleric", 101, "****");    PreCache("spells", "Druid", 101, "****"); PreCache("spells", "Paladin", 101, "****");   PreCache("spells", "Ranger", 101, "****");    PreCache("spells", "Wiz_Sorc", 101, "3"); PreCache("spells", "Innate", 101, "3");
+PreCache("spells", "Name", 171, "921");   PreCache("spells", "School", 171, "C");   PreCache("spells", "VS", 171, "vs");  PreCache("spells", "Bard", 171, "****");  PreCache("spells", "Cleric", 171, "****");    PreCache("spells", "Druid", 171, "****"); PreCache("spells", "Paladin", 171, "****");   PreCache("spells", "Ranger", 171, "****");    PreCache("spells", "Wiz_Sorc", 171, "3"); PreCache("spells", "Innate", 171, "3");
+PreCache("spells", "Name", 188, "938");   PreCache("spells", "School", 188, "N");   PreCache("spells", "VS", 188, "vs");  PreCache("spells", "Bard", 188, "****");  PreCache("spells", "Cleric", 188, "****");    PreCache("spells", "Druid", 188, "****"); PreCache("spells", "Paladin", 188, "****");   PreCache("spells", "Ranger", 188, "****");    PreCache("spells", "Wiz_Sorc", 188, "3"); PreCache("spells", "Innate", 188, "3");
+PreCache("spells", "Name", 370, "6336");  PreCache("spells", "School", 370, "N");   PreCache("spells", "VS", 370, "vs");  PreCache("spells", "Bard", 370, "****");  PreCache("spells", "Cleric", 370, "****");    PreCache("spells", "Druid", 370, "****"); PreCache("spells", "Paladin", 370, "****");   PreCache("spells", "Ranger", 370, "****");    PreCache("spells", "Wiz_Sorc", 370, "3"); PreCache("spells", "Innate", 370, "3");
+PreCache("spells", "Name", 523, "3869");  PreCache("spells", "School", 523, "C");   PreCache("spells", "VS", 523, "vs");  PreCache("spells", "Bard", 523, "****");  PreCache("spells", "Cleric", 523, "****");    PreCache("spells", "Druid", 523, "****"); PreCache("spells", "Paladin", 523, "****");   PreCache("spells", "Ranger", 523, "****");    PreCache("spells", "Wiz_Sorc", 523, "3"); PreCache("spells", "Innate", 523, "3");
+PreCache("spells", "Name", 526, "3879");  PreCache("spells", "School", 526, "V");   PreCache("spells", "VS", 526, "vs");  PreCache("spells", "Bard", 526, "****");  PreCache("spells", "Cleric", 526, "****");    PreCache("spells", "Druid", 526, "****"); PreCache("spells", "Paladin", 526, "****");   PreCache("spells", "Ranger", 526, "****");    PreCache("spells", "Wiz_Sorc", 526, "3"); PreCache("spells", "Innate", 526, "3");
+PreCache("spells", "Name", 3105, "16830226"); PreCache("spells", "School", 3105, "V");  PreCache("spells", "VS", 3105, "vs"); PreCache("spells", "Bard", 3105, "****"); PreCache("spells", "Cleric", 3105, "****");   PreCache("spells", "Druid", 3105, "****");    PreCache("spells", "Paladin", 3105, "****");  PreCache("spells", "Ranger", 3105, "****");   PreCache("spells", "Wiz_Sorc", 3105, "3");    PreCache("spells", "Innate", 3105, "3");
+PreCache("spells", "Name", 3127, "16830265"); PreCache("spells", "School", 3127, "V");  PreCache("spells", "VS", 3127, "vs"); PreCache("spells", "Bard", 3127, "****"); PreCache("spells", "Cleric", 3127, "****");   PreCache("spells", "Druid", 3127, "****");    PreCache("spells", "Paladin", 3127, "****");  PreCache("spells", "Ranger", 3127, "****");   PreCache("spells", "Wiz_Sorc", 3127, "3");    PreCache("spells", "Innate", 3127, "3");
+PreCache("spells", "Name", 3141, "16830288"); PreCache("spells", "School", 3141, "V");  PreCache("spells", "VS", 3141, "vs"); PreCache("spells", "Bard", 3141, "****"); PreCache("spells", "Cleric", 3141, "****");   PreCache("spells", "Druid", 3141, "****");    PreCache("spells", "Paladin", 3141, "****");  PreCache("spells", "Ranger", 3141, "****");   PreCache("spells", "Wiz_Sorc", 3141, "3");    PreCache("spells", "Innate", 3141, "3");
+PreCache("spells", "Name", 3168, "16830427"); PreCache("spells", "School", 3168, "V");  PreCache("spells", "VS", 3168, "vs"); PreCache("spells", "Bard", 3168, "****"); PreCache("spells", "Cleric", 3168, "****");   PreCache("spells", "Druid", 3168, "****");    PreCache("spells", "Paladin", 3168, "****");  PreCache("spells", "Ranger", 3168, "****");   PreCache("spells", "Wiz_Sorc", 3168, "3");    PreCache("spells", "Innate", 3168, "3");
+PreCache("spells", "Name", 3174, "16830439"); PreCache("spells", "School", 3174, "C");  PreCache("spells", "VS", 3174, "vs"); PreCache("spells", "Bard", 3174, "****"); PreCache("spells", "Cleric", 3174, "****");   PreCache("spells", "Druid", 3174, "****");    PreCache("spells", "Paladin", 3174, "****");  PreCache("spells", "Ranger", 3174, "****");   PreCache("spells", "Wiz_Sorc", 3174, "3");    PreCache("spells", "Innate", 3174, "3");
+PreCache("spells", "Name", 47, "797");    PreCache("spells", "School", 47, "V");    PreCache("spells", "VS", 47, "vs");   PreCache("spells", "Bard", 47, "****");   PreCache("spells", "Cleric", 47, "****"); PreCache("spells", "Druid", 47, "****");  PreCache("spells", "Paladin", 47, "****");    PreCache("spells", "Ranger", 47, "****"); PreCache("spells", "Wiz_Sorc", 47, "4");  PreCache("spells", "Innate", 47, "4");
+PreCache("spells", "Name", 52, "802");    PreCache("spells", "School", 52, "N");    PreCache("spells", "VS", 52, "vs");   PreCache("spells", "Bard", 52, "****");   PreCache("spells", "Cleric", 52, "****"); PreCache("spells", "Druid", 52, "****");  PreCache("spells", "Paladin", 52, "****");    PreCache("spells", "Ranger", 52, "****"); PreCache("spells", "Wiz_Sorc", 52, "4");  PreCache("spells", "Innate", 52, "4");
+PreCache("spells", "Name", 98, "848");    PreCache("spells", "School", 98, "A");    PreCache("spells", "VS", 98, "vs");   PreCache("spells", "Bard", 98, "****");   PreCache("spells", "Cleric", 98, "****"); PreCache("spells", "Druid", 98, "****");  PreCache("spells", "Paladin", 98, "****");    PreCache("spells", "Ranger", 98, "****"); PreCache("spells", "Wiz_Sorc", 98, "4");  PreCache("spells", "Innate", 98, "4");
+PreCache("spells", "Name", 119, "869");   PreCache("spells", "School", 119, "A");   PreCache("spells", "VS", 119, "vs");  PreCache("spells", "Bard", 119, "****");  PreCache("spells", "Cleric", 119, "****");    PreCache("spells", "Druid", 119, "****"); PreCache("spells", "Paladin", 119, "****");   PreCache("spells", "Ranger", 119, "****");    PreCache("spells", "Wiz_Sorc", 119, "4"); PreCache("spells", "Innate", 119, "4");
+PreCache("spells", "Name", 127, "877");   PreCache("spells", "School", 127, "I");   PreCache("spells", "VS", 127, "vs");  PreCache("spells", "Bard", 127, "****");  PreCache("spells", "Cleric", 127, "****");    PreCache("spells", "Druid", 127, "****"); PreCache("spells", "Paladin", 127, "****");   PreCache("spells", "Ranger", 127, "****");    PreCache("spells", "Wiz_Sorc", 127, "4"); PreCache("spells", "Innate", 127, "4");
+PreCache("spells", "Name", 159, "909");   PreCache("spells", "School", 159, "I");   PreCache("spells", "VS", 159, "vs");  PreCache("spells", "Bard", 159, "****");  PreCache("spells", "Cleric", 159, "****");    PreCache("spells", "Druid", 159, "****"); PreCache("spells", "Paladin", 159, "****");   PreCache("spells", "Ranger", 159, "****");    PreCache("spells", "Wiz_Sorc", 159, "4"); PreCache("spells", "Innate", 159, "4");
+PreCache("spells", "Name", 375, "6341");  PreCache("spells", "School", 375, "C");   PreCache("spells", "VS", 375, "vs");  PreCache("spells", "Bard", 375, "****");  PreCache("spells", "Cleric", 375, "****");    PreCache("spells", "Druid", 375, "****"); PreCache("spells", "Paladin", 375, "****");   PreCache("spells", "Ranger", 375, "****");    PreCache("spells", "Wiz_Sorc", 375, "4"); PreCache("spells", "Innate", 375, "4");
+PreCache("spells", "Name", 447, "2377");  PreCache("spells", "School", 447, "V");   PreCache("spells", "VS", 447, "vs");  PreCache("spells", "Bard", 447, "****");  PreCache("spells", "Cleric", 447, "****");    PreCache("spells", "Druid", 447, "****"); PreCache("spells", "Paladin", 447, "****");   PreCache("spells", "Ranger", 447, "****");    PreCache("spells", "Wiz_Sorc", 447, "4"); PreCache("spells", "Innate", 447, "4");
+PreCache("spells", "Name", 3100, "16830216"); PreCache("spells", "School", 3100, "V");  PreCache("spells", "VS", 3100, "vs"); PreCache("spells", "Bard", 3100, "****"); PreCache("spells", "Cleric", 3100, "****");   PreCache("spells", "Druid", 3100, "****");    PreCache("spells", "Paladin", 3100, "****");  PreCache("spells", "Ranger", 3100, "****");   PreCache("spells", "Wiz_Sorc", 3100, "4");    PreCache("spells", "Innate", 3100, "4");
+PreCache("spells", "Name", 3101, "16830218"); PreCache("spells", "School", 3101, "V");  PreCache("spells", "VS", 3101, "vs"); PreCache("spells", "Bard", 3101, "****"); PreCache("spells", "Cleric", 3101, "****");   PreCache("spells", "Druid", 3101, "****");    PreCache("spells", "Paladin", 3101, "****");  PreCache("spells", "Ranger", 3101, "****");   PreCache("spells", "Wiz_Sorc", 3101, "4");    PreCache("spells", "Innate", 3101, "4");
+PreCache("spells", "Name", 3102, "16830220"); PreCache("spells", "School", 3102, "V");  PreCache("spells", "VS", 3102, "vs"); PreCache("spells", "Bard", 3102, "****"); PreCache("spells", "Cleric", 3102, "****");   PreCache("spells", "Druid", 3102, "****");    PreCache("spells", "Paladin", 3102, "****");  PreCache("spells", "Ranger", 3102, "****");   PreCache("spells", "Wiz_Sorc", 3102, "4");    PreCache("spells", "Innate", 3102, "4");
+PreCache("spells", "Name", 3103, "16830222"); PreCache("spells", "School", 3103, "V");  PreCache("spells", "VS", 3103, "vs"); PreCache("spells", "Bard", 3103, "****"); PreCache("spells", "Cleric", 3103, "****");   PreCache("spells", "Druid", 3103, "****");    PreCache("spells", "Paladin", 3103, "****");  PreCache("spells", "Ranger", 3103, "****");   PreCache("spells", "Wiz_Sorc", 3103, "4");    PreCache("spells", "Innate", 3103, "4");
+PreCache("spells", "Name", 3104, "16830224"); PreCache("spells", "School", 3104, "V");  PreCache("spells", "VS", 3104, "vs"); PreCache("spells", "Bard", 3104, "****"); PreCache("spells", "Cleric", 3104, "****");   PreCache("spells", "Druid", 3104, "****");    PreCache("spells", "Paladin", 3104, "****");  PreCache("spells", "Ranger", 3104, "****");   PreCache("spells", "Wiz_Sorc", 3104, "4");    PreCache("spells", "Innate", 3104, "4");
+PreCache("spells", "Name", 3110, "16830236"); PreCache("spells", "School", 3110, "V");  PreCache("spells", "VS", 3110, "vs"); PreCache("spells", "Bard", 3110, "****"); PreCache("spells", "Cleric", 3110, "****");   PreCache("spells", "Druid", 3110, "****");    PreCache("spells", "Paladin", 3110, "****");  PreCache("spells", "Ranger", 3110, "****");   PreCache("spells", "Wiz_Sorc", 3110, "4");    PreCache("spells", "Innate", 3110, "4");
+PreCache("spells", "Name", 3173, "16830437"); PreCache("spells", "School", 3173, "A");  PreCache("spells", "VS", 3173, "vs"); PreCache("spells", "Bard", 3173, "****"); PreCache("spells", "Cleric", 3173, "****");   PreCache("spells", "Druid", 3173, "****");    PreCache("spells", "Paladin", 3173, "****");  PreCache("spells", "Ranger", 3173, "****");   PreCache("spells", "Wiz_Sorc", 3173, "4");    PreCache("spells", "Innate", 3173, "4");
+PreCache("spells", "Name", 3177, "16830445"); PreCache("spells", "School", 3177, "N");  PreCache("spells", "VS", 3177, "vs"); PreCache("spells", "Bard", 3177, "****"); PreCache("spells", "Cleric", 3177, "****");   PreCache("spells", "Druid", 3177, "****");    PreCache("spells", "Paladin", 3177, "****");  PreCache("spells", "Ranger", 3177, "****");   PreCache("spells", "Wiz_Sorc", 3177, "4");    PreCache("spells", "Innate", 3177, "4");
+PreCache("spells", "Name", 3185, "16830461"); PreCache("spells", "School", 3185, "C");  PreCache("spells", "VS", 3185, "vs"); PreCache("spells", "Bard", 3185, "****"); PreCache("spells", "Cleric", 3185, "****");   PreCache("spells", "Druid", 3185, "****");    PreCache("spells", "Paladin", 3185, "****");  PreCache("spells", "Ranger", 3185, "****");   PreCache("spells", "Wiz_Sorc", 3185, "4");    PreCache("spells", "Innate", 3185, "4");
+PreCache("spells", "Name", 23, "773");    PreCache("spells", "School", 23, "C");    PreCache("spells", "VS", 23, "vs");   PreCache("spells", "Bard", 23, "****");   PreCache("spells", "Cleric", 23, "****"); PreCache("spells", "Druid", 23, "****");  PreCache("spells", "Paladin", 23, "****");    PreCache("spells", "Ranger", 23, "****"); PreCache("spells", "Wiz_Sorc", 23, "5");  PreCache("spells", "Innate", 23, "5");
+PreCache("spells", "Name", 25, "775");    PreCache("spells", "School", 25, "V");    PreCache("spells", "VS", 25, "vs");   PreCache("spells", "Bard", 25, "****");   PreCache("spells", "Cleric", 25, "****"); PreCache("spells", "Druid", 25, "****");  PreCache("spells", "Paladin", 25, "****");    PreCache("spells", "Ranger", 25, "****"); PreCache("spells", "Wiz_Sorc", 25, "5");  PreCache("spells", "Innate", 25, "5");
+PreCache("spells", "Name", 55, "805");    PreCache("spells", "School", 55, "D");    PreCache("spells", "VS", 55, "vs");   PreCache("spells", "Bard", 55, "****");   PreCache("spells", "Cleric", 55, "****"); PreCache("spells", "Druid", 55, "****");  PreCache("spells", "Paladin", 55, "****");    PreCache("spells", "Ranger", 55, "****"); PreCache("spells", "Wiz_Sorc", 55, "5");  PreCache("spells", "Innate", 55, "5");
+PreCache("spells", "Name", 71, "821");    PreCache("spells", "School", 71, "I");    PreCache("spells", "VS", 71, "vs");   PreCache("spells", "Bard", 71, "****");   PreCache("spells", "Cleric", 71, "****"); PreCache("spells", "Druid", 71, "****");  PreCache("spells", "Paladin", 71, "****");    PreCache("spells", "Ranger", 71, "****"); PreCache("spells", "Wiz_Sorc", 71, "5");  PreCache("spells", "Innate", 71, "5");
+PreCache("spells", "Name", 95, "845");    PreCache("spells", "School", 95, "A");    PreCache("spells", "VS", 95, "vs");   PreCache("spells", "Bard", 95, "****");   PreCache("spells", "Cleric", 95, "****"); PreCache("spells", "Druid", 95, "****");  PreCache("spells", "Paladin", 95, "****");    PreCache("spells", "Ranger", 95, "****"); PreCache("spells", "Wiz_Sorc", 95, "5");  PreCache("spells", "Innate", 95, "5");
+PreCache("spells", "Name", 96, "846");    PreCache("spells", "School", 96, "C");    PreCache("spells", "VS", 96, "vs");   PreCache("spells", "Bard", 96, "****");   PreCache("spells", "Cleric", 96, "****"); PreCache("spells", "Druid", 96, "****");  PreCache("spells", "Paladin", 96, "****");    PreCache("spells", "Ranger", 96, "****"); PreCache("spells", "Wiz_Sorc", 96, "5");  PreCache("spells", "Innate", 96, "5");
+PreCache("spells", "Name", 99, "849");    PreCache("spells", "School", 99, "A");    PreCache("spells", "VS", 99, "vs");   PreCache("spells", "Bard", 99, "****");   PreCache("spells", "Cleric", 99, "****"); PreCache("spells", "Druid", 99, "****");  PreCache("spells", "Paladin", 99, "****");    PreCache("spells", "Ranger", 99, "****"); PreCache("spells", "Wiz_Sorc", 99, "5");  PreCache("spells", "Innate", 99, "5");
+PreCache("spells", "Name", 440, "1895");  PreCache("spells", "School", 440, "V");   PreCache("spells", "VS", 440, "vs");  PreCache("spells", "Bard", 440, "****");  PreCache("spells", "Cleric", 440, "****");    PreCache("spells", "Druid", 440, "****"); PreCache("spells", "Paladin", 440, "****");   PreCache("spells", "Ranger", 440, "****");    PreCache("spells", "Wiz_Sorc", 440, "5"); PreCache("spells", "Innate", 440, "5");
+PreCache("spells", "Name", 459, "2683");  PreCache("spells", "School", 459, "V");   PreCache("spells", "VS", 459, "vs");  PreCache("spells", "Bard", 459, "****");  PreCache("spells", "Cleric", 459, "****");    PreCache("spells", "Druid", 459, "****"); PreCache("spells", "Paladin", 459, "****");   PreCache("spells", "Ranger", 459, "****");    PreCache("spells", "Wiz_Sorc", 459, "5"); PreCache("spells", "Innate", 459, "5");
+PreCache("spells", "Name", 516, "3853");  PreCache("spells", "School", 516, "V");   PreCache("spells", "VS", 516, "vs");  PreCache("spells", "Bard", 516, "****");  PreCache("spells", "Cleric", 516, "****");    PreCache("spells", "Druid", 516, "****"); PreCache("spells", "Paladin", 516, "****");   PreCache("spells", "Ranger", 516, "****");    PreCache("spells", "Wiz_Sorc", 516, "5"); PreCache("spells", "Innate", 516, "5");
+PreCache("spells", "Name", 524, "3871");  PreCache("spells", "School", 524, "C");   PreCache("spells", "VS", 524, "vs");  PreCache("spells", "Bard", 524, "****");  PreCache("spells", "Cleric", 524, "****");    PreCache("spells", "Druid", 524, "****"); PreCache("spells", "Paladin", 524, "****");   PreCache("spells", "Ranger", 524, "****");    PreCache("spells", "Wiz_Sorc", 524, "5"); PreCache("spells", "Innate", 524, "5");
+PreCache("spells", "Name", 2247, "16826070"); PreCache("spells", "School", 2247, "V");  PreCache("spells", "VS", 2247, "vs"); PreCache("spells", "Bard", 2247, "****"); PreCache("spells", "Cleric", 2247, "****");   PreCache("spells", "Druid", 2247, "****");    PreCache("spells", "Paladin", 2247, "****");  PreCache("spells", "Ranger", 2247, "****");   PreCache("spells", "Wiz_Sorc", 2247, "5");    PreCache("spells", "Innate", 2247, "5");
+PreCache("spells", "Name", 3159, "16830388"); PreCache("spells", "School", 3159, "V");  PreCache("spells", "VS", 3159, "vs"); PreCache("spells", "Bard", 3159, "****"); PreCache("spells", "Cleric", 3159, "****");   PreCache("spells", "Druid", 3159, "****");    PreCache("spells", "Paladin", 3159, "****");  PreCache("spells", "Ranger", 3159, "****");   PreCache("spells", "Wiz_Sorc", 3159, "5");    PreCache("spells", "Innate", 3159, "5");
+PreCache("spells", "Name", 3172, "16830435"); PreCache("spells", "School", 3172, "N");  PreCache("spells", "VS", 3172, "vs"); PreCache("spells", "Bard", 3172, "****"); PreCache("spells", "Cleric", 3172, "****");   PreCache("spells", "Druid", 3172, "****");    PreCache("spells", "Paladin", 3172, "****");  PreCache("spells", "Ranger", 3172, "****");   PreCache("spells", "Wiz_Sorc", 3172, "5");    PreCache("spells", "Innate", 3172, "5");
+PreCache("spells", "Name", 0, "750"); PreCache("spells", "School", 0, "C"); PreCache("spells", "VS", 0, "vs");    PreCache("spells", "Bard", 0, "****");    PreCache("spells", "Cleric", 0, "****");  PreCache("spells", "Druid", 0, "****");   PreCache("spells", "Paladin", 0, "****"); PreCache("spells", "Ranger", 0, "****");  PreCache("spells", "Wiz_Sorc", 0, "6");   PreCache("spells", "Innate", 0, "6");
+PreCache("spells", "Name", 14, "764");    PreCache("spells", "School", 14, "V");    PreCache("spells", "VS", 14, "vs");   PreCache("spells", "Bard", 14, "****");   PreCache("spells", "Cleric", 14, "****"); PreCache("spells", "Druid", 14, "****");  PreCache("spells", "Paladin", 14, "****");    PreCache("spells", "Ranger", 14, "****"); PreCache("spells", "Wiz_Sorc", 14, "6");  PreCache("spells", "Innate", 14, "6");
+PreCache("spells", "Name", 18, "768");    PreCache("spells", "School", 18, "N");    PreCache("spells", "VS", 18, "vs");   PreCache("spells", "Bard", 18, "****");   PreCache("spells", "Cleric", 18, "****"); PreCache("spells", "Druid", 18, "****");  PreCache("spells", "Paladin", 18, "****");    PreCache("spells", "Ranger", 18, "****"); PreCache("spells", "Wiz_Sorc", 18, "6");  PreCache("spells", "Innate", 18, "6");
+PreCache("spells", "Name", 65, "815");    PreCache("spells", "School", 65, "A");    PreCache("spells", "VS", 65, "vs");   PreCache("spells", "Bard", 65, "****");   PreCache("spells", "Cleric", 65, "****"); PreCache("spells", "Druid", 65, "****");  PreCache("spells", "Paladin", 65, "****");    PreCache("spells", "Ranger", 65, "****"); PreCache("spells", "Wiz_Sorc", 65, "6");  PreCache("spells", "Innate", 65, "6");
+PreCache("spells", "Name", 72, "822");    PreCache("spells", "School", 72, "A");    PreCache("spells", "VS", 72, "vs");   PreCache("spells", "Bard", 72, "****");   PreCache("spells", "Cleric", 72, "****"); PreCache("spells", "Druid", 72, "****");  PreCache("spells", "Paladin", 72, "****");    PreCache("spells", "Ranger", 72, "****"); PreCache("spells", "Wiz_Sorc", 72, "6");  PreCache("spells", "Innate", 72, "6");
+PreCache("spells", "Name", 128, "878");   PreCache("spells", "School", 128, "C");   PreCache("spells", "VS", 128, "vs");  PreCache("spells", "Bard", 128, "****");  PreCache("spells", "Cleric", 128, "****");    PreCache("spells", "Druid", 128, "****"); PreCache("spells", "Paladin", 128, "****");   PreCache("spells", "Ranger", 128, "****");    PreCache("spells", "Wiz_Sorc", 128, "6"); PreCache("spells", "Innate", 128, "6");
+PreCache("spells", "Name", 158, "908");   PreCache("spells", "School", 158, "I");   PreCache("spells", "VS", 158, "vs");  PreCache("spells", "Bard", 158, "****");  PreCache("spells", "Cleric", 158, "****");    PreCache("spells", "Druid", 158, "****"); PreCache("spells", "Paladin", 158, "****");   PreCache("spells", "Ranger", 158, "****");    PreCache("spells", "Wiz_Sorc", 158, "6"); PreCache("spells", "Innate", 158, "6");
+PreCache("spells", "Name", 184, "934");   PreCache("spells", "School", 184, "T");   PreCache("spells", "VS", 184, "vs");  PreCache("spells", "Bard", 184, "****");  PreCache("spells", "Cleric", 184, "****");    PreCache("spells", "Druid", 184, "****"); PreCache("spells", "Paladin", 184, "****");   PreCache("spells", "Ranger", 184, "****");    PreCache("spells", "Wiz_Sorc", 184, "6"); PreCache("spells", "Innate", 184, "6");
+PreCache("spells", "Name", 448, "2378");  PreCache("spells", "School", 448, "V");   PreCache("spells", "VS", 448, "vs");  PreCache("spells", "Bard", 448, "****");  PreCache("spells", "Cleric", 448, "****");    PreCache("spells", "Druid", 448, "****"); PreCache("spells", "Paladin", 448, "****");   PreCache("spells", "Ranger", 448, "****");    PreCache("spells", "Wiz_Sorc", 448, "6"); PreCache("spells", "Innate", 448, "6");
+PreCache("spells", "Name", 460, "2684");  PreCache("spells", "School", 460, "V");   PreCache("spells", "VS", 460, "vs");  PreCache("spells", "Bard", 460, "****");  PreCache("spells", "Cleric", 460, "****");    PreCache("spells", "Druid", 460, "****"); PreCache("spells", "Paladin", 460, "****");   PreCache("spells", "Ranger", 460, "****");    PreCache("spells", "Wiz_Sorc", 460, "6"); PreCache("spells", "Innate", 460, "6");
+PreCache("spells", "Name", 485, "3044");  PreCache("spells", "School", 485, "T");   PreCache("spells", "VS", 485, "vs");  PreCache("spells", "Bard", 485, "****");  PreCache("spells", "Cleric", 485, "****");    PreCache("spells", "Druid", 485, "****"); PreCache("spells", "Paladin", 485, "****");   PreCache("spells", "Ranger", 485, "****");    PreCache("spells", "Wiz_Sorc", 485, "6"); PreCache("spells", "Innate", 485, "6");
+PreCache("spells", "Name", 486, "3046");  PreCache("spells", "School", 486, "T");   PreCache("spells", "VS", 486, "vs");  PreCache("spells", "Bard", 486, "****");  PreCache("spells", "Cleric", 486, "****");    PreCache("spells", "Druid", 486, "****"); PreCache("spells", "Paladin", 486, "****");   PreCache("spells", "Ranger", 486, "****");    PreCache("spells", "Wiz_Sorc", 486, "6"); PreCache("spells", "Innate", 486, "6");
+PreCache("spells", "Name", 3106, "16830228"); PreCache("spells", "School", 3106, "V");  PreCache("spells", "VS", 3106, "vs"); PreCache("spells", "Bard", 3106, "****"); PreCache("spells", "Cleric", 3106, "****");   PreCache("spells", "Druid", 3106, "****");    PreCache("spells", "Paladin", 3106, "****");  PreCache("spells", "Ranger", 3106, "****");   PreCache("spells", "Wiz_Sorc", 3106, "6");    PreCache("spells", "Innate", 3106, "6");
+PreCache("spells", "Name", 3111, "16830238"); PreCache("spells", "School", 3111, "T");  PreCache("spells", "VS", 3111, "vs"); PreCache("spells", "Bard", 3111, "****"); PreCache("spells", "Cleric", 3111, "****");   PreCache("spells", "Druid", 3111, "****");    PreCache("spells", "Paladin", 3111, "****");  PreCache("spells", "Ranger", 3111, "****");   PreCache("spells", "Wiz_Sorc", 3111, "6");    PreCache("spells", "Innate", 3111, "6");
+PreCache("spells", "Name", 39, "789");    PreCache("spells", "School", 39, "V");    PreCache("spells", "VS", 39, "vs");   PreCache("spells", "Bard", 39, "****");   PreCache("spells", "Cleric", 39, "****"); PreCache("spells", "Druid", 39, "****");  PreCache("spells", "Paladin", 39, "****");    PreCache("spells", "Ranger", 39, "****"); PreCache("spells", "Wiz_Sorc", 39, "7");  PreCache("spells", "Innate", 39, "7");
+PreCache("spells", "Name", 123, "873");   PreCache("spells", "School", 123, "T");   PreCache("spells", "VS", 123, "vs");  PreCache("spells", "Bard", 123, "****");  PreCache("spells", "Cleric", 123, "****");    PreCache("spells", "Druid", 123, "****"); PreCache("spells", "Paladin", 123, "****");   PreCache("spells", "Ranger", 123, "****");    PreCache("spells", "Wiz_Sorc", 123, "7"); PreCache("spells", "Innate", 123, "7");
+PreCache("spells", "Name", 132, "882");   PreCache("spells", "School", 132, "D");   PreCache("spells", "VS", 132, "v");   PreCache("spells", "Bard", 132, "****");  PreCache("spells", "Cleric", 132, "****");    PreCache("spells", "Druid", 132, "****"); PreCache("spells", "Paladin", 132, "****");   PreCache("spells", "Ranger", 132, "****");    PreCache("spells", "Wiz_Sorc", 132, "7"); PreCache("spells", "Innate", 132, "7");
+PreCache("spells", "Name", 135, "885");   PreCache("spells", "School", 135, "V");   PreCache("spells", "VS", 135, "vs");  PreCache("spells", "Bard", 135, "****");  PreCache("spells", "Cleric", 135, "****");    PreCache("spells", "Druid", 135, "****"); PreCache("spells", "Paladin", 135, "****");   PreCache("spells", "Ranger", 135, "****");    PreCache("spells", "Wiz_Sorc", 135, "7"); PreCache("spells", "Innate", 135, "7");
+PreCache("spells", "Name", 141, "891");   PreCache("spells", "School", 141, "E");   PreCache("spells", "VS", 141, "vs");  PreCache("spells", "Bard", 141, "****");  PreCache("spells", "Cleric", 141, "****");    PreCache("spells", "Druid", 141, "****"); PreCache("spells", "Paladin", 141, "****");   PreCache("spells", "Ranger", 141, "****");    PreCache("spells", "Wiz_Sorc", 141, "7"); PreCache("spells", "Innate", 141, "7");
+PreCache("spells", "Name", 160, "910");   PreCache("spells", "School", 160, "I");   PreCache("spells", "VS", 160, "vs");  PreCache("spells", "Bard", 160, "****");  PreCache("spells", "Cleric", 160, "****");    PreCache("spells", "Druid", 160, "****"); PreCache("spells", "Paladin", 160, "****");   PreCache("spells", "Ranger", 160, "****");    PreCache("spells", "Wiz_Sorc", 160, "7"); PreCache("spells", "Innate", 160, "7");
+PreCache("spells", "Name", 169, "919");   PreCache("spells", "School", 169, "A");   PreCache("spells", "VS", 169, "vs");  PreCache("spells", "Bard", 169, "****");  PreCache("spells", "Cleric", 169, "****");    PreCache("spells", "Druid", 169, "****"); PreCache("spells", "Paladin", 169, "****");   PreCache("spells", "Ranger", 169, "****");    PreCache("spells", "Wiz_Sorc", 169, "7"); PreCache("spells", "Innate", 169, "7");
+PreCache("spells", "Name", 461, "2685");  PreCache("spells", "School", 461, "V");   PreCache("spells", "VS", 461, "vs");  PreCache("spells", "Bard", 461, "****");  PreCache("spells", "Cleric", 461, "****");    PreCache("spells", "Druid", 461, "****"); PreCache("spells", "Paladin", 461, "****");   PreCache("spells", "Ranger", 461, "****");    PreCache("spells", "Wiz_Sorc", 461, "7"); PreCache("spells", "Innate", 461, "7");
+PreCache("spells", "Name", 515, "3850");  PreCache("spells", "School", 515, "V");   PreCache("spells", "VS", 515, "vs");  PreCache("spells", "Bard", 515, "****");  PreCache("spells", "Cleric", 515, "****");    PreCache("spells", "Druid", 515, "****"); PreCache("spells", "Paladin", 515, "****");   PreCache("spells", "Ranger", 515, "****");    PreCache("spells", "Wiz_Sorc", 515, "7"); PreCache("spells", "Innate", 515, "7");
+PreCache("spells", "Name", 3107, "16830230"); PreCache("spells", "School", 3107, "E");  PreCache("spells", "VS", 3107, "vs"); PreCache("spells", "Bard", 3107, "****"); PreCache("spells", "Cleric", 3107, "****");   PreCache("spells", "Druid", 3107, "****");    PreCache("spells", "Paladin", 3107, "****");  PreCache("spells", "Ranger", 3107, "****");   PreCache("spells", "Wiz_Sorc", 3107, "7");    PreCache("spells", "Innate", 3107, "7");
+PreCache("spells", "Name", 3143, "16830345"); PreCache("spells", "School", 3143, "C");  PreCache("spells", "VS", 3143, "vs"); PreCache("spells", "Bard", 3143, "****"); PreCache("spells", "Cleric", 3143, "****");   PreCache("spells", "Druid", 3143, "****");    PreCache("spells", "Paladin", 3143, "****");  PreCache("spells", "Ranger", 3143, "****");   PreCache("spells", "Wiz_Sorc", 3143, "7");    PreCache("spells", "Innate", 3143, "7");
+PreCache("spells", "Name", 3176, "16830443"); PreCache("spells", "School", 3176, "E");  PreCache("spells", "VS", 3176, "vs"); PreCache("spells", "Bard", 3176, "****"); PreCache("spells", "Cleric", 3176, "****");   PreCache("spells", "Druid", 3176, "****");    PreCache("spells", "Paladin", 3176, "****");  PreCache("spells", "Ranger", 3176, "****");   PreCache("spells", "Wiz_Sorc", 3176, "7");    PreCache("spells", "Innate", 3176, "7");
+PreCache("spells", "Name", 69, "819");    PreCache("spells", "School", 69, "C");    PreCache("spells", "VS", 69, "vs");   PreCache("spells", "Bard", 69, "****");   PreCache("spells", "Cleric", 69, "****"); PreCache("spells", "Druid", 69, "****");  PreCache("spells", "Paladin", 69, "****");    PreCache("spells", "Ranger", 69, "****"); PreCache("spells", "Wiz_Sorc", 69, "8");  PreCache("spells", "Innate", 69, "8");
+PreCache("spells", "Name", 89, "839");    PreCache("spells", "School", 89, "V");    PreCache("spells", "VS", 89, "vs");   PreCache("spells", "Bard", 89, "****");   PreCache("spells", "Cleric", 89, "****"); PreCache("spells", "Druid", 89, "****");  PreCache("spells", "Paladin", 89, "****");    PreCache("spells", "Ranger", 89, "****"); PreCache("spells", "Wiz_Sorc", 89, "8");  PreCache("spells", "Innate", 89, "8");
+PreCache("spells", "Name", 110, "860");   PreCache("spells", "School", 110, "I");   PreCache("spells", "VS", 110, "vs");  PreCache("spells", "Bard", 110, "****");  PreCache("spells", "Cleric", 110, "****");    PreCache("spells", "Druid", 110, "****"); PreCache("spells", "Paladin", 110, "****");   PreCache("spells", "Ranger", 110, "****");    PreCache("spells", "Wiz_Sorc", 110, "8"); PreCache("spells", "Innate", 110, "8");
+PreCache("spells", "Name", 111, "861");   PreCache("spells", "School", 111, "E");   PreCache("spells", "VS", 111, "v");   PreCache("spells", "Bard", 111, "****");  PreCache("spells", "Cleric", 111, "****");    PreCache("spells", "Druid", 111, "****"); PreCache("spells", "Paladin", 111, "****");   PreCache("spells", "Ranger", 111, "****");    PreCache("spells", "Wiz_Sorc", 111, "8"); PreCache("spells", "Innate", 111, "8");
+PreCache("spells", "Name", 117, "867");   PreCache("spells", "School", 117, "A");   PreCache("spells", "VS", 117, "vs");  PreCache("spells", "Bard", 117, "****");  PreCache("spells", "Cleric", 117, "****");    PreCache("spells", "Druid", 117, "****"); PreCache("spells", "Paladin", 117, "****");   PreCache("spells", "Ranger", 117, "****");    PreCache("spells", "Wiz_Sorc", 117, "8"); PreCache("spells", "Innate", 117, "8");
+PreCache("spells", "Name", 367, "6333");  PreCache("spells", "School", 367, "N");   PreCache("spells", "VS", 367, "vs");  PreCache("spells", "Bard", 367, "****");  PreCache("spells", "Cleric", 367, "****");    PreCache("spells", "Druid", 367, "****"); PreCache("spells", "Paladin", 367, "****");   PreCache("spells", "Ranger", 367, "****");    PreCache("spells", "Wiz_Sorc", 367, "8"); PreCache("spells", "Innate", 367, "8");
+PreCache("spells", "Name", 462, "2686");  PreCache("spells", "School", 462, "V");   PreCache("spells", "VS", 462, "vs");  PreCache("spells", "Bard", 462, "****");  PreCache("spells", "Cleric", 462, "****");    PreCache("spells", "Druid", 462, "****"); PreCache("spells", "Paladin", 462, "****");   PreCache("spells", "Ranger", 462, "****");    PreCache("spells", "Wiz_Sorc", 462, "8"); PreCache("spells", "Innate", 462, "8");
+PreCache("spells", "Name", 541, "3761");  PreCache("spells", "School", 541, "T");   PreCache("spells", "VS", 541, "vs");  PreCache("spells", "Bard", 541, "****");  PreCache("spells", "Cleric", 541, "****");    PreCache("spells", "Druid", 541, "****"); PreCache("spells", "Paladin", 541, "****");   PreCache("spells", "Ranger", 541, "****");    PreCache("spells", "Wiz_Sorc", 541, "8"); PreCache("spells", "Innate", 541, "8");
+PreCache("spells", "Name", 3112, "16830240"); PreCache("spells", "School", 3112, "T");  PreCache("spells", "VS", 3112, "vs"); PreCache("spells", "Bard", 3112, "****"); PreCache("spells", "Cleric", 3112, "****");   PreCache("spells", "Druid", 3112, "****");    PreCache("spells", "Paladin", 3112, "****");  PreCache("spells", "Ranger", 3112, "****");   PreCache("spells", "Wiz_Sorc", 3112, "8");    PreCache("spells", "Innate", 3112, "8");
+PreCache("spells", "Name", 3169, "16830429"); PreCache("spells", "School", 3169, "V");  PreCache("spells", "VS", 3169, "vs"); PreCache("spells", "Bard", 3169, "****"); PreCache("spells", "Cleric", 3169, "****");   PreCache("spells", "Druid", 3169, "****");    PreCache("spells", "Paladin", 3169, "****");  PreCache("spells", "Ranger", 3169, "****");   PreCache("spells", "Wiz_Sorc", 3169, "8");    PreCache("spells", "Innate", 3169, "8");
+PreCache("spells", "Name", 44, "794");    PreCache("spells", "School", 44, "E");    PreCache("spells", "VS", 44, "vs");   PreCache("spells", "Bard", 44, "****");   PreCache("spells", "Cleric", 44, "****"); PreCache("spells", "Druid", 44, "****");  PreCache("spells", "Paladin", 44, "****");    PreCache("spells", "Ranger", 44, "****"); PreCache("spells", "Wiz_Sorc", 44, "9");  PreCache("spells", "Innate", 44, "9");
+PreCache("spells", "Name", 73, "823");    PreCache("spells", "School", 73, "A");    PreCache("spells", "VS", 73, "vs");   PreCache("spells", "Bard", 73, "****");   PreCache("spells", "Cleric", 73, "****"); PreCache("spells", "Druid", 73, "****");  PreCache("spells", "Paladin", 73, "****");    PreCache("spells", "Ranger", 73, "****"); PreCache("spells", "Wiz_Sorc", 73, "9");  PreCache("spells", "Innate", 73, "9");
+PreCache("spells", "Name", 116, "866");   PreCache("spells", "School", 116, "V");   PreCache("spells", "VS", 116, "vs");  PreCache("spells", "Bard", 116, "****");  PreCache("spells", "Cleric", 116, "****");    PreCache("spells", "Druid", 116, "****"); PreCache("spells", "Paladin", 116, "****");   PreCache("spells", "Ranger", 116, "****");    PreCache("spells", "Wiz_Sorc", 116, "9"); PreCache("spells", "Innate", 116, "9");
+PreCache("spells", "Name", 122, "872");   PreCache("spells", "School", 122, "A");   PreCache("spells", "VS", 122, "v");   PreCache("spells", "Bard", 122, "****");  PreCache("spells", "Cleric", 122, "****");    PreCache("spells", "Druid", 122, "****"); PreCache("spells", "Paladin", 122, "****");   PreCache("spells", "Ranger", 122, "****");    PreCache("spells", "Wiz_Sorc", 122, "9"); PreCache("spells", "Innate", 122, "9");
+PreCache("spells", "Name", 131, "881");   PreCache("spells", "School", 131, "D");   PreCache("spells", "VS", 131, "v");   PreCache("spells", "Bard", 131, "****");  PreCache("spells", "Cleric", 131, "****");    PreCache("spells", "Druid", 131, "****"); PreCache("spells", "Paladin", 131, "****");   PreCache("spells", "Ranger", 131, "****");    PreCache("spells", "Wiz_Sorc", 131, "9"); PreCache("spells", "Innate", 131, "9");
+PreCache("spells", "Name", 185, "935");   PreCache("spells", "School", 185, "T");   PreCache("spells", "VS", 185, "v");   PreCache("spells", "Bard", 185, "****");  PreCache("spells", "Cleric", 185, "****");    PreCache("spells", "Druid", 185, "****"); PreCache("spells", "Paladin", 185, "****");   PreCache("spells", "Ranger", 185, "****");    PreCache("spells", "Wiz_Sorc", 185, "9"); PreCache("spells", "Innate", 185, "9");
+PreCache("spells", "Name", 190, "940");   PreCache("spells", "School", 190, "N");   PreCache("spells", "VS", 190, "v");   PreCache("spells", "Bard", 190, "****");  PreCache("spells", "Cleric", 190, "****");    PreCache("spells", "Druid", 190, "****"); PreCache("spells", "Paladin", 190, "****");   PreCache("spells", "Ranger", 190, "****");    PreCache("spells", "Wiz_Sorc", 190, "9"); PreCache("spells", "Innate", 190, "9");
+PreCache("spells", "Name", 193, "943");   PreCache("spells", "School", 193, "I");   PreCache("spells", "VS", 193, "vs");  PreCache("spells", "Bard", 193, "****");  PreCache("spells", "Cleric", 193, "****");    PreCache("spells", "Druid", 193, "****"); PreCache("spells", "Paladin", 193, "****");   PreCache("spells", "Ranger", 193, "****");    PreCache("spells", "Wiz_Sorc", 193, "9"); PreCache("spells", "Innate", 193, "9");
+PreCache("spells", "Name", 463, "2687");  PreCache("spells", "School", 463, "V");   PreCache("spells", "VS", 463, "vs");  PreCache("spells", "Bard", 463, "****");  PreCache("spells", "Cleric", 463, "****");    PreCache("spells", "Druid", 463, "****"); PreCache("spells", "Paladin", 463, "****");   PreCache("spells", "Ranger", 463, "****");    PreCache("spells", "Wiz_Sorc", 463, "9"); PreCache("spells", "Innate", 463, "9");
+PreCache("spells", "Name", 533, "3737");  PreCache("spells", "School", 533, "C");   PreCache("spells", "VS", 533, "vs");  PreCache("spells", "Bard", 533, "****");  PreCache("spells", "Cleric", 533, "****");    PreCache("spells", "Druid", 533, "****"); PreCache("spells", "Paladin", 533, "****");   PreCache("spells", "Ranger", 533, "****");    PreCache("spells", "Wiz_Sorc", 533, "9"); PreCache("spells", "Innate", 533, "9");
+PreCache("spells", "Name", 3108, "16830232"); PreCache("spells", "School", 3108, "E");  PreCache("spells", "VS", 3108, "vs"); PreCache("spells", "Bard", 3108, "****"); PreCache("spells", "Cleric", 3108, "****");   PreCache("spells", "Druid", 3108, "****");    PreCache("spells", "Paladin", 3108, "****");  PreCache("spells", "Ranger", 3108, "****");   PreCache("spells", "Wiz_Sorc", 3108, "9");    PreCache("spells", "Innate", 3108, "8");
+PreCache("spells", "Name", 3180, "16830451"); PreCache("spells", "School", 3180, "C");  PreCache("spells", "VS", 3180, "vs"); PreCache("spells", "Bard", 3180, "****"); PreCache("spells", "Cleric", 3180, "****");   PreCache("spells", "Druid", 3180, "****");    PreCache("spells", "Paladin", 3180, "****");  PreCache("spells", "Ranger", 3180, "****");   PreCache("spells", "Wiz_Sorc", 3180, "9");    PreCache("spells", "Innate", 3180, "9");
+PreCache("spells", "Name", 431, "388");   PreCache("spells", "School", 431, "N");   PreCache("spells", "VS", 431, "vs");  PreCache("spells", "Bard", 431, "****");  PreCache("spells", "Cleric", 431, "0");   PreCache("spells", "Druid", 431, "****"); PreCache("spells", "Paladin", 431, "****");   PreCache("spells", "Ranger", 431, "****");    PreCache("spells", "Wiz_Sorc", 431, "****");  PreCache("spells", "Innate", 431, "0");
+PreCache("spells", "Name", 46, "796");    PreCache("spells", "School", 46, "E");    PreCache("spells", "VS", 46, "vs");   PreCache("spells", "Bard", 46, "****");   PreCache("spells", "Cleric", 46, "1");    PreCache("spells", "Druid", 46, "****");  PreCache("spells", "Paladin", 46, "****");    PreCache("spells", "Ranger", 46, "****"); PreCache("spells", "Wiz_Sorc", 46, "****");   PreCache("spells", "Innate", 46, "1");
+PreCache("spells", "Name", 148, "898");   PreCache("spells", "School", 148, "A");   PreCache("spells", "VS", 148, "vs");  PreCache("spells", "Bard", 148, "****");  PreCache("spells", "Cleric", 148, "1");   PreCache("spells", "Druid", 148, "****"); PreCache("spells", "Paladin", 148, "****");   PreCache("spells", "Ranger", 148, "****");    PreCache("spells", "Wiz_Sorc", 148, "****");  PreCache("spells", "Innate", 148, "1");
+PreCache("spells", "Name", 154, "904");   PreCache("spells", "School", 154, "A");   PreCache("spells", "VS", 154, "vs");  PreCache("spells", "Bard", 154, "****");  PreCache("spells", "Cleric", 154, "1");   PreCache("spells", "Druid", 154, "****"); PreCache("spells", "Paladin", 154, "****");   PreCache("spells", "Ranger", 154, "****");    PreCache("spells", "Wiz_Sorc", 154, "****");  PreCache("spells", "Innate", 154, "1");
+PreCache("spells", "Name", 418, "58");    PreCache("spells", "School", 418, "A");   PreCache("spells", "VS", 418, "vs");  PreCache("spells", "Bard", 418, "****");  PreCache("spells", "Cleric", 418, "1");   PreCache("spells", "Druid", 418, "****"); PreCache("spells", "Paladin", 418, "****");   PreCache("spells", "Ranger", 418, "****");    PreCache("spells", "Wiz_Sorc", 418, "****");  PreCache("spells", "Innate", 418, "1");
+PreCache("spells", "Name", 432, "389");   PreCache("spells", "School", 432, "N");   PreCache("spells", "VS", 432, "vs");  PreCache("spells", "Bard", 432, "****");  PreCache("spells", "Cleric", 432, "1");   PreCache("spells", "Druid", 432, "****"); PreCache("spells", "Paladin", 432, "****");   PreCache("spells", "Ranger", 432, "****");    PreCache("spells", "Wiz_Sorc", 432, "****");  PreCache("spells", "Innate", 432, "1");
+PreCache("spells", "Name", 449, "2663");  PreCache("spells", "School", 449, "E");   PreCache("spells", "VS", 449, "vs");  PreCache("spells", "Bard", 449, "****");  PreCache("spells", "Cleric", 449, "1");   PreCache("spells", "Druid", 449, "****"); PreCache("spells", "Paladin", 449, "****");   PreCache("spells", "Ranger", 449, "****");    PreCache("spells", "Wiz_Sorc", 449, "****");  PreCache("spells", "Innate", 449, "1");
+PreCache("spells", "Name", 450, "2666");  PreCache("spells", "School", 450, "A");   PreCache("spells", "VS", 450, "vs");  PreCache("spells", "Bard", 450, "****");  PreCache("spells", "Cleric", 450, "1");   PreCache("spells", "Druid", 450, "****"); PreCache("spells", "Paladin", 450, "****");   PreCache("spells", "Ranger", 450, "****");    PreCache("spells", "Wiz_Sorc", 450, "****");  PreCache("spells", "Innate", 450, "1");
+PreCache("spells", "Name", 3151, "16830372"); PreCache("spells", "School", 3151, "A");  PreCache("spells", "VS", 3151, "vs"); PreCache("spells", "Bard", 3151, "****"); PreCache("spells", "Cleric", 3151, "1");  PreCache("spells", "Druid", 3151, "****");    PreCache("spells", "Paladin", 3151, "****");  PreCache("spells", "Ranger", 3151, "****");   PreCache("spells", "Wiz_Sorc", 3151, "****"); PreCache("spells", "Innate", 3151, "1");
+PreCache("spells", "Name", 433, "390");   PreCache("spells", "School", 433, "N");   PreCache("spells", "VS", 433, "vs");  PreCache("spells", "Bard", 433, "****");  PreCache("spells", "Cleric", 433, "2");   PreCache("spells", "Druid", 433, "****"); PreCache("spells", "Paladin", 433, "****");   PreCache("spells", "Ranger", 433, "****");    PreCache("spells", "Wiz_Sorc", 433, "****");  PreCache("spells", "Innate", 433, "2");
+PreCache("spells", "Name", 2167, "16825353"); PreCache("spells", "School", 2167, "E");  PreCache("spells", "VS", 2167, "v");  PreCache("spells", "Bard", 2167, "****"); PreCache("spells", "Cleric", 2167, "2");  PreCache("spells", "Druid", 2167, "****");    PreCache("spells", "Paladin", 2167, "****");  PreCache("spells", "Ranger", 2167, "****");   PreCache("spells", "Wiz_Sorc", 2167, "****"); PreCache("spells", "Innate", 2167, "2");
+PreCache("spells", "Name", 3161, "16830392"); PreCache("spells", "School", 3161, "N");  PreCache("spells", "VS", 3161, "vs"); PreCache("spells", "Bard", 3161, "****"); PreCache("spells", "Cleric", 3161, "2");  PreCache("spells", "Druid", 3161, "****");    PreCache("spells", "Paladin", 3161, "****");  PreCache("spells", "Ranger", 3161, "****");   PreCache("spells", "Wiz_Sorc", 3161, "****"); PreCache("spells", "Innate", 3161, "2");
+PreCache("spells", "Name", 125, "875");   PreCache("spells", "School", 125, "A");   PreCache("spells", "VS", 125, "vs");  PreCache("spells", "Bard", 125, "****");  PreCache("spells", "Cleric", 125, "3");   PreCache("spells", "Druid", 125, "****"); PreCache("spells", "Paladin", 125, "****");   PreCache("spells", "Ranger", 125, "****");    PreCache("spells", "Wiz_Sorc", 125, "****");  PreCache("spells", "Innate", 125, "3");
+PreCache("spells", "Name", 156, "906");   PreCache("spells", "School", 156, "V");   PreCache("spells", "VS", 156, "vs");  PreCache("spells", "Bard", 156, "****");  PreCache("spells", "Cleric", 156, "3");   PreCache("spells", "Druid", 156, "****"); PreCache("spells", "Paladin", 156, "****");   PreCache("spells", "Ranger", 156, "****");    PreCache("spells", "Wiz_Sorc", 156, "****");  PreCache("spells", "Innate", 156, "3");
+PreCache("spells", "Name", 434, "391");   PreCache("spells", "School", 434, "N");   PreCache("spells", "VS", 434, "vs");  PreCache("spells", "Bard", 434, "****");  PreCache("spells", "Cleric", 434, "3");   PreCache("spells", "Druid", 434, "****"); PreCache("spells", "Paladin", 434, "****");   PreCache("spells", "Ranger", 434, "****");    PreCache("spells", "Wiz_Sorc", 434, "****");  PreCache("spells", "Innate", 434, "3");
+PreCache("spells", "Name", 546, "3771");  PreCache("spells", "School", 546, "T");   PreCache("spells", "VS", 546, "vs");  PreCache("spells", "Bard", 546, "****");  PreCache("spells", "Cleric", 546, "3");   PreCache("spells", "Druid", 546, "****"); PreCache("spells", "Paladin", 546, "****");   PreCache("spells", "Ranger", 546, "****");    PreCache("spells", "Wiz_Sorc", 546, "****");  PreCache("spells", "Innate", 546, "3");
+PreCache("spells", "Name", 548, "3781");  PreCache("spells", "School", 548, "V");   PreCache("spells", "VS", 548, "vs");  PreCache("spells", "Bard", 548, "****");  PreCache("spells", "Cleric", 548, "3");   PreCache("spells", "Druid", 548, "****"); PreCache("spells", "Paladin", 548, "****");   PreCache("spells", "Ranger", 548, "****");    PreCache("spells", "Wiz_Sorc", 548, "****");  PreCache("spells", "Innate", 548, "3");
+PreCache("spells", "Name", 549, "3783");  PreCache("spells", "School", 549, "A");   PreCache("spells", "VS", 549, "vs");  PreCache("spells", "Bard", 549, "****");  PreCache("spells", "Cleric", 549, "3");   PreCache("spells", "Druid", 549, "****"); PreCache("spells", "Paladin", 549, "****");   PreCache("spells", "Ranger", 549, "****");    PreCache("spells", "Wiz_Sorc", 549, "****");  PreCache("spells", "Innate", 549, "3");
+PreCache("spells", "Name", 3152, "16830374"); PreCache("spells", "School", 3152, "A");  PreCache("spells", "VS", 3152, "vs"); PreCache("spells", "Bard", 3152, "****"); PreCache("spells", "Cleric", 3152, "3");  PreCache("spells", "Druid", 3152, "****");    PreCache("spells", "Paladin", 3152, "****");  PreCache("spells", "Ranger", 3152, "****");   PreCache("spells", "Wiz_Sorc", 3152, "****"); PreCache("spells", "Innate", 3152, "3");
+PreCache("spells", "Name", 3155, "16830380"); PreCache("spells", "School", 3155, "N");  PreCache("spells", "VS", 3155, "vs"); PreCache("spells", "Bard", 3155, "****"); PreCache("spells", "Cleric", 3155, "3");  PreCache("spells", "Druid", 3155, "****");    PreCache("spells", "Paladin", 3155, "****");  PreCache("spells", "Ranger", 3155, "****");   PreCache("spells", "Wiz_Sorc", 3155, "****"); PreCache("spells", "Innate", 3155, "3");
+PreCache("spells", "Name", 3164, "16830398"); PreCache("spells", "School", 3164, "N");  PreCache("spells", "VS", 3164, "vs"); PreCache("spells", "Bard", 3164, "****"); PreCache("spells", "Cleric", 3164, "3");  PreCache("spells", "Druid", 3164, "****");    PreCache("spells", "Paladin", 3164, "****");  PreCache("spells", "Ranger", 3164, "****");   PreCache("spells", "Wiz_Sorc", 3164, "****"); PreCache("spells", "Innate", 3164, "3");
+PreCache("spells", "Name", 42, "792");    PreCache("spells", "School", 42, "V");    PreCache("spells", "VS", 42, "vs");   PreCache("spells", "Bard", 42, "****");   PreCache("spells", "Cleric", 42, "4");    PreCache("spells", "Druid", 42, "****");  PreCache("spells", "Paladin", 42, "****");    PreCache("spells", "Ranger", 42, "****"); PreCache("spells", "Wiz_Sorc", 42, "****");   PreCache("spells", "Innate", 42, "4");
+PreCache("spells", "Name", 76, "826");    PreCache("spells", "School", 76, "V");    PreCache("spells", "VS", 76, "vs");   PreCache("spells", "Bard", 76, "****");   PreCache("spells", "Cleric", 76, "4");    PreCache("spells", "Druid", 76, "****");  PreCache("spells", "Paladin", 76, "****");    PreCache("spells", "Ranger", 76, "****"); PreCache("spells", "Wiz_Sorc", 76, "****");   PreCache("spells", "Innate", 76, "4");
+PreCache("spells", "Name", 152, "902");   PreCache("spells", "School", 152, "C");   PreCache("spells", "VS", 152, "vs");  PreCache("spells", "Bard", 152, "****");  PreCache("spells", "Cleric", 152, "4");   PreCache("spells", "Druid", 152, "****"); PreCache("spells", "Paladin", 152, "****");   PreCache("spells", "Ranger", 152, "****");    PreCache("spells", "Wiz_Sorc", 152, "****");  PreCache("spells", "Innate", 152, "4");
+PreCache("spells", "Name", 435, "392");   PreCache("spells", "School", 435, "N");   PreCache("spells", "VS", 435, "vs");  PreCache("spells", "Bard", 435, "****");  PreCache("spells", "Cleric", 435, "4");   PreCache("spells", "Druid", 435, "****"); PreCache("spells", "Paladin", 435, "****");   PreCache("spells", "Ranger", 435, "****");    PreCache("spells", "Wiz_Sorc", 435, "****");  PreCache("spells", "Innate", 435, "4");
+PreCache("spells", "Name", 3140, "16830286"); PreCache("spells", "School", 3140, "C");  PreCache("spells", "VS", 3140, "vs"); PreCache("spells", "Bard", 3140, "****"); PreCache("spells", "Cleric", 3140, "4");  PreCache("spells", "Druid", 3140, "****");    PreCache("spells", "Paladin", 3140, "****");  PreCache("spells", "Ranger", 3140, "****");   PreCache("spells", "Wiz_Sorc", 3140, "****"); PreCache("spells", "Innate", 3140, "4");
+PreCache("spells", "Name", 3163, "16830396"); PreCache("spells", "School", 3163, "A");  PreCache("spells", "VS", 3163, "vs"); PreCache("spells", "Bard", 3163, "****"); PreCache("spells", "Cleric", 3163, "4");  PreCache("spells", "Druid", 3163, "****");    PreCache("spells", "Paladin", 3163, "****");  PreCache("spells", "Ranger", 3163, "****");   PreCache("spells", "Wiz_Sorc", 3163, "****"); PreCache("spells", "Innate", 3163, "4");
+PreCache("spells", "Name", 19, "769");    PreCache("spells", "School", 19, "N");    PreCache("spells", "VS", 19, "vs");   PreCache("spells", "Bard", 19, "****");   PreCache("spells", "Cleric", 19, "5");    PreCache("spells", "Druid", 19, "****");  PreCache("spells", "Paladin", 19, "****");    PreCache("spells", "Ranger", 19, "****"); PreCache("spells", "Wiz_Sorc", 19, "****");   PreCache("spells", "Innate", 19, "5");
+PreCache("spells", "Name", 142, "892");   PreCache("spells", "School", 142, "C");   PreCache("spells", "VS", 142, "vs");  PreCache("spells", "Bard", 142, "****");  PreCache("spells", "Cleric", 142, "5");   PreCache("spells", "Druid", 142, "****"); PreCache("spells", "Paladin", 142, "****");   PreCache("spells", "Ranger", 142, "****");    PreCache("spells", "Wiz_Sorc", 142, "****");  PreCache("spells", "Innate", 142, "5");
+PreCache("spells", "Name", 517, "3857");  PreCache("spells", "School", 517, "T");   PreCache("spells", "VS", 517, "vs");  PreCache("spells", "Bard", 517, "****");  PreCache("spells", "Cleric", 517, "5");   PreCache("spells", "Druid", 517, "****"); PreCache("spells", "Paladin", 517, "****");   PreCache("spells", "Ranger", 517, "****");    PreCache("spells", "Wiz_Sorc", 517, "****");  PreCache("spells", "Innate", 517, "5");
+PreCache("spells", "Name", 3139, "16830284"); PreCache("spells", "School", 3139, "T");  PreCache("spells", "VS", 3139, "vs"); PreCache("spells", "Bard", 3139, "****"); PreCache("spells", "Cleric", 3139, "5");  PreCache("spells", "Druid", 3139, "****");    PreCache("spells", "Paladin", 3139, "****");  PreCache("spells", "Ranger", 3139, "****");   PreCache("spells", "Wiz_Sorc", 3139, "****"); PreCache("spells", "Innate", 3139, "5");
+PreCache("spells", "Name", 3156, "16830382"); PreCache("spells", "School", 3156, "N");  PreCache("spells", "VS", 3156, "vs"); PreCache("spells", "Bard", 3156, "****"); PreCache("spells", "Cleric", 3156, "5");  PreCache("spells", "Druid", 3156, "****");    PreCache("spells", "Paladin", 3156, "****");  PreCache("spells", "Ranger", 3156, "****");   PreCache("spells", "Wiz_Sorc", 3156, "****"); PreCache("spells", "Innate", 3156, "5");
+PreCache("spells", "Name", 3179, "16830449"); PreCache("spells", "School", 3179, "N");  PreCache("spells", "VS", 3179, "vs"); PreCache("spells", "Bard", 3179, "****"); PreCache("spells", "Cleric", 3179, "5");  PreCache("spells", "Druid", 3179, "****");    PreCache("spells", "Paladin", 3179, "****");  PreCache("spells", "Ranger", 3179, "****");   PreCache("spells", "Wiz_Sorc", 3179, "****"); PreCache("spells", "Innate", 3179, "5");
+PreCache("spells", "Name", 5, "755"); PreCache("spells", "School", 5, "V"); PreCache("spells", "VS", 5, "vs");    PreCache("spells", "Bard", 5, "****");    PreCache("spells", "Cleric", 5, "6"); PreCache("spells", "Druid", 5, "****");   PreCache("spells", "Paladin", 5, "****"); PreCache("spells", "Ranger", 5, "****");  PreCache("spells", "Wiz_Sorc", 5, "****");    PreCache("spells", "Innate", 5, "6");
+PreCache("spells", "Name", 451, "2667");  PreCache("spells", "School", 451, "C");   PreCache("spells", "VS", 451, "vs");  PreCache("spells", "Bard", 451, "****");  PreCache("spells", "Cleric", 451, "6");   PreCache("spells", "Druid", 451, "****"); PreCache("spells", "Paladin", 451, "****");   PreCache("spells", "Ranger", 451, "****");    PreCache("spells", "Wiz_Sorc", 451, "****");  PreCache("spells", "Innate", 451, "6");
+PreCache("spells", "Name", 70, "820");    PreCache("spells", "School", 70, "N");    PreCache("spells", "VS", 70, "vs");   PreCache("spells", "Bard", 70, "****");   PreCache("spells", "Cleric", 70, "7");    PreCache("spells", "Druid", 70, "****");  PreCache("spells", "Paladin", 70, "****");    PreCache("spells", "Ranger", 70, "****"); PreCache("spells", "Wiz_Sorc", 70, "****");   PreCache("spells", "Innate", 70, "7");
+PreCache("spells", "Name", 153, "903");   PreCache("spells", "School", 153, "C");   PreCache("spells", "VS", 153, "vs");  PreCache("spells", "Bard", 153, "****");  PreCache("spells", "Cleric", 153, "7");   PreCache("spells", "Druid", 153, "****"); PreCache("spells", "Paladin", 153, "****");   PreCache("spells", "Ranger", 153, "****");    PreCache("spells", "Wiz_Sorc", 153, "****");  PreCache("spells", "Innate", 153, "7");
+PreCache("spells", "Name", 194, "944");   PreCache("spells", "School", 194, "V");   PreCache("spells", "VS", 194, "v");   PreCache("spells", "Bard", 194, "****");  PreCache("spells", "Cleric", 194, "7");   PreCache("spells", "Druid", 194, "****"); PreCache("spells", "Paladin", 194, "****");   PreCache("spells", "Ranger", 194, "****");    PreCache("spells", "Wiz_Sorc", 194, "****");  PreCache("spells", "Innate", 194, "7");
+PreCache("spells", "Name", 366, "6332");  PreCache("spells", "School", 366, "N");   PreCache("spells", "VS", 366, "vs");  PreCache("spells", "Bard", 366, "****");  PreCache("spells", "Cleric", 366, "7");   PreCache("spells", "Druid", 366, "****"); PreCache("spells", "Paladin", 366, "****");   PreCache("spells", "Ranger", 366, "****");    PreCache("spells", "Wiz_Sorc", 366, "****");  PreCache("spells", "Innate", 366, "7");
+PreCache("spells", "Name", 29, "779");    PreCache("spells", "School", 29, "N");    PreCache("spells", "VS", 29, "vs");   PreCache("spells", "Bard", 29, "****");   PreCache("spells", "Cleric", 29, "8");    PreCache("spells", "Druid", 29, "****");  PreCache("spells", "Paladin", 29, "****");    PreCache("spells", "Ranger", 29, "****"); PreCache("spells", "Wiz_Sorc", 29, "****");   PreCache("spells", "Innate", 29, "8");
+PreCache("spells", "Name", 323, "5116");  PreCache("spells", "School", 323, "A");   PreCache("spells", "VS", 323, "vs");  PreCache("spells", "Bard", 323, "****");  PreCache("spells", "Cleric", 323, "8");   PreCache("spells", "Druid", 323, "****"); PreCache("spells", "Paladin", 323, "****");   PreCache("spells", "Ranger", 323, "****");    PreCache("spells", "Wiz_Sorc", 323, "****");  PreCache("spells", "Innate", 323, "8");
+PreCache("spells", "Name", 87, "837");    PreCache("spells", "School", 87, "V");    PreCache("spells", "VS", 87, "vs");   PreCache("spells", "Bard", 87, "****");   PreCache("spells", "Cleric", 87, "9");    PreCache("spells", "Druid", 87, "****");  PreCache("spells", "Paladin", 87, "****");    PreCache("spells", "Ranger", 87, "****"); PreCache("spells", "Wiz_Sorc", 87, "****");   PreCache("spells", "Innate", 87, "9");
+PreCache("spells", "Name", 444, "2365");  PreCache("spells", "School", 444, "A");   PreCache("spells", "VS", 444, "vs");  PreCache("spells", "Bard", 444, "****");  PreCache("spells", "Cleric", 444, "9");   PreCache("spells", "Druid", 444, "****"); PreCache("spells", "Paladin", 444, "****");   PreCache("spells", "Ranger", 444, "****");    PreCache("spells", "Wiz_Sorc", 444, "****");  PreCache("spells", "Innate", 444, "9");
+PreCache("spells", "Name", 3, "753"); PreCache("spells", "School", 3, "T"); PreCache("spells", "VS", 3, "vs");    PreCache("spells", "Bard", 3, "****");    PreCache("spells", "Cleric", 3, "****");  PreCache("spells", "Druid", 3, "2");  PreCache("spells", "Paladin", 3, "****"); PreCache("spells", "Ranger", 3, "****");  PreCache("spells", "Wiz_Sorc", 3, "****");    PreCache("spells", "Innate", 3, "2");
+PreCache("spells", "Name", 17, "767");    PreCache("spells", "School", 17, "E");    PreCache("spells", "VS", 17, "vs");   PreCache("spells", "Bard", 17, "****");   PreCache("spells", "Cleric", 17, "****"); PreCache("spells", "Druid", 17, "2"); PreCache("spells", "Paladin", 17, "****");    PreCache("spells", "Ranger", 17, "****"); PreCache("spells", "Wiz_Sorc", 17, "****");   PreCache("spells", "Innate", 17, "2");
+PreCache("spells", "Name", 60, "810");    PreCache("spells", "School", 60, "V");    PreCache("spells", "VS", 60, "vs");   PreCache("spells", "Bard", 60, "****");   PreCache("spells", "Cleric", 60, "****"); PreCache("spells", "Druid", 60, "2"); PreCache("spells", "Paladin", 60, "****");    PreCache("spells", "Ranger", 60, "****"); PreCache("spells", "Wiz_Sorc", 60, "****");   PreCache("spells", "Innate", 60, "2");
+PreCache("spells", "Name", 422, "359");   PreCache("spells", "School", 422, "T");   PreCache("spells", "VS", 422, "vs");  PreCache("spells", "Bard", 422, "****");  PreCache("spells", "Cleric", 422, "****");    PreCache("spells", "Druid", 422, "2");    PreCache("spells", "Paladin", 422, "****");   PreCache("spells", "Ranger", 422, "****");    PreCache("spells", "Wiz_Sorc", 422, "****");  PreCache("spells", "Innate", 422, "2");
+PreCache("spells", "Name", 11, "761");    PreCache("spells", "School", 11, "V");    PreCache("spells", "VS", 11, "vs");   PreCache("spells", "Bard", 11, "****");   PreCache("spells", "Cleric", 11, "****"); PreCache("spells", "Druid", 11, "3"); PreCache("spells", "Paladin", 11, "****");    PreCache("spells", "Ranger", 11, "****"); PreCache("spells", "Wiz_Sorc", 11, "****");   PreCache("spells", "Innate", 11, "3");
+PreCache("spells", "Name", 43, "793");    PreCache("spells", "School", 43, "E");    PreCache("spells", "VS", 43, "vs");   PreCache("spells", "Bard", 43, "****");   PreCache("spells", "Cleric", 43, "****"); PreCache("spells", "Druid", 43, "3"); PreCache("spells", "Paladin", 43, "****");    PreCache("spells", "Ranger", 43, "****"); PreCache("spells", "Wiz_Sorc", 43, "****");   PreCache("spells", "Innate", 43, "3");
+PreCache("spells", "Name", 425, "1773");  PreCache("spells", "School", 425, "T");   PreCache("spells", "VS", 425, "vs");  PreCache("spells", "Bard", 425, "****");  PreCache("spells", "Cleric", 425, "****");    PreCache("spells", "Druid", 425, "3");    PreCache("spells", "Paladin", 425, "****");   PreCache("spells", "Ranger", 425, "****");    PreCache("spells", "Wiz_Sorc", 425, "****");  PreCache("spells", "Innate", 425, "3");
+PreCache("spells", "Name", 454, "2671");  PreCache("spells", "School", 454, "T");   PreCache("spells", "VS", 454, "vs");  PreCache("spells", "Bard", 454, "****");  PreCache("spells", "Cleric", 454, "****");    PreCache("spells", "Druid", 454, "3");    PreCache("spells", "Paladin", 454, "****");   PreCache("spells", "Ranger", 454, "****");    PreCache("spells", "Wiz_Sorc", 454, "****");  PreCache("spells", "Innate", 454, "3");
+PreCache("spells", "Name", 513, "3844");  PreCache("spells", "School", 513, "N");   PreCache("spells", "VS", 513, "vs");  PreCache("spells", "Bard", 513, "****");  PreCache("spells", "Cleric", 513, "****");    PreCache("spells", "Druid", 513, "3");    PreCache("spells", "Paladin", 513, "****");   PreCache("spells", "Ranger", 513, "****");    PreCache("spells", "Wiz_Sorc", 513, "****");  PreCache("spells", "Innate", 513, "3");
+PreCache("spells", "Name", 514, "3848");  PreCache("spells", "School", 514, "N");   PreCache("spells", "VS", 514, "vs");  PreCache("spells", "Bard", 514, "****");  PreCache("spells", "Cleric", 514, "****");    PreCache("spells", "Druid", 514, "3");    PreCache("spells", "Paladin", 514, "****");   PreCache("spells", "Ranger", 514, "****");    PreCache("spells", "Wiz_Sorc", 514, "****");  PreCache("spells", "Innate", 514, "3");
+PreCache("spells", "Name", 3187, "16830503"); PreCache("spells", "School", 3187, "V");  PreCache("spells", "VS", 3187, "vs"); PreCache("spells", "Bard", 3187, "****"); PreCache("spells", "Cleric", 3187, "****");   PreCache("spells", "Druid", 3187, "3");   PreCache("spells", "Paladin", 3187, "****");  PreCache("spells", "Ranger", 3187, "****");   PreCache("spells", "Wiz_Sorc", 3187, "****"); PreCache("spells", "Innate", 3187, "3");
+PreCache("spells", "Name", 363, "6329");  PreCache("spells", "School", 363, "T");   PreCache("spells", "VS", 363, "vs");  PreCache("spells", "Bard", 363, "****");  PreCache("spells", "Cleric", 363, "****");    PreCache("spells", "Druid", 363, "5");    PreCache("spells", "Paladin", 363, "****");   PreCache("spells", "Ranger", 363, "****");    PreCache("spells", "Wiz_Sorc", 363, "****");  PreCache("spells", "Innate", 363, "5");
+PreCache("spells", "Name", 438, "1774");  PreCache("spells", "School", 438, "T");   PreCache("spells", "VS", 438, "vs");  PreCache("spells", "Bard", 438, "****");  PreCache("spells", "Cleric", 438, "****");    PreCache("spells", "Druid", 438, "5");    PreCache("spells", "Paladin", 438, "****");   PreCache("spells", "Ranger", 438, "****");    PreCache("spells", "Wiz_Sorc", 438, "****");  PreCache("spells", "Innate", 438, "5");
+PreCache("spells", "Name", 446, "2368");  PreCache("spells", "School", 446, "T");   PreCache("spells", "VS", 446, "vs");  PreCache("spells", "Bard", 446, "****");  PreCache("spells", "Cleric", 446, "****");    PreCache("spells", "Druid", 446, "5");    PreCache("spells", "Paladin", 446, "****");   PreCache("spells", "Ranger", 446, "****");    PreCache("spells", "Wiz_Sorc", 446, "****");  PreCache("spells", "Innate", 446, "5");
+PreCache("spells", "Name", 529, "3881");  PreCache("spells", "School", 529, "C");   PreCache("spells", "VS", 529, "vs");  PreCache("spells", "Bard", 529, "****");  PreCache("spells", "Cleric", 529, "****");    PreCache("spells", "Druid", 529, "5");    PreCache("spells", "Paladin", 529, "****");   PreCache("spells", "Ranger", 529, "****");    PreCache("spells", "Wiz_Sorc", 529, "****");  PreCache("spells", "Innate", 529, "5");
+PreCache("spells", "Name", 437, "508");   PreCache("spells", "School", 437, "T");   PreCache("spells", "VS", 437, "vs");  PreCache("spells", "Bard", 437, "****");  PreCache("spells", "Cleric", 437, "****");    PreCache("spells", "Druid", 437, "6");    PreCache("spells", "Paladin", 437, "****");   PreCache("spells", "Ranger", 437, "****");    PreCache("spells", "Wiz_Sorc", 437, "****");  PreCache("spells", "Innate", 437, "6");
+PreCache("spells", "Name", 512, "3837");  PreCache("spells", "School", 512, "T");   PreCache("spells", "VS", 512, "vs");  PreCache("spells", "Bard", 512, "****");  PreCache("spells", "Cleric", 512, "****");    PreCache("spells", "Druid", 512, "6");    PreCache("spells", "Paladin", 512, "****");   PreCache("spells", "Ranger", 512, "****");    PreCache("spells", "Wiz_Sorc", 512, "****");  PreCache("spells", "Innate", 512, "6");
+PreCache("spells", "Name", 547, "3778");  PreCache("spells", "School", 547, "C");   PreCache("spells", "VS", 547, "vs");  PreCache("spells", "Bard", 547, "****");  PreCache("spells", "Cleric", 547, "****");    PreCache("spells", "Druid", 547, "6");    PreCache("spells", "Paladin", 547, "****");   PreCache("spells", "Ranger", 547, "****");    PreCache("spells", "Wiz_Sorc", 547, "****");  PreCache("spells", "Innate", 547, "6");
+PreCache("spells", "Name", 2886, "16826308"); PreCache("spells", "School", 2886, "N");  PreCache("spells", "VS", 2886, "vs"); PreCache("spells", "Bard", 2886, "****"); PreCache("spells", "Cleric", 2886, "****");   PreCache("spells", "Druid", 2886, "6");   PreCache("spells", "Paladin", 2886, "****");  PreCache("spells", "Ranger", 2886, "****");   PreCache("spells", "Wiz_Sorc", 2886, "****"); PreCache("spells", "Innate", 2886, "6");
+PreCache("spells", "Name", 364, "6330");  PreCache("spells", "School", 364, "C");   PreCache("spells", "VS", 364, "vs");  PreCache("spells", "Bard", 364, "****");  PreCache("spells", "Cleric", 364, "****");    PreCache("spells", "Druid", 364, "7");    PreCache("spells", "Paladin", 364, "****");   PreCache("spells", "Ranger", 364, "****");    PreCache("spells", "Wiz_Sorc", 364, "****");  PreCache("spells", "Innate", 364, "7");
+PreCache("spells", "Name", 372, "6338");  PreCache("spells", "School", 372, "T");   PreCache("spells", "VS", 372, "vs");  PreCache("spells", "Bard", 372, "****");  PreCache("spells", "Cleric", 372, "****");    PreCache("spells", "Druid", 372, "7");    PreCache("spells", "Paladin", 372, "****");   PreCache("spells", "Ranger", 372, "****");    PreCache("spells", "Wiz_Sorc", 372, "****");  PreCache("spells", "Innate", 372, "7");
+PreCache("spells", "Name", 3186, "16830463"); PreCache("spells", "School", 3186, "V");  PreCache("spells", "VS", 3186, "v");  PreCache("spells", "Bard", 3186, "****"); PreCache("spells", "Cleric", 3186, "****");   PreCache("spells", "Druid", 3186, "7");   PreCache("spells", "Paladin", 3186, "****");  PreCache("spells", "Ranger", 3186, "****");   PreCache("spells", "Wiz_Sorc", 3186, "****"); PreCache("spells", "Innate", 3186, "7");
+PreCache("spells", "Name", 124, "874");   PreCache("spells", "School", 124, "T");   PreCache("spells", "VS", 124, "vs");  PreCache("spells", "Bard", 124, "****");  PreCache("spells", "Cleric", 124, "****");    PreCache("spells", "Druid", 124, "8");    PreCache("spells", "Paladin", 124, "****");   PreCache("spells", "Ranger", 124, "****");    PreCache("spells", "Wiz_Sorc", 124, "****");  PreCache("spells", "Innate", 124, "8");
+PreCache("spells", "Name", 423, "382");   PreCache("spells", "School", 423, "C");   PreCache("spells", "VS", 423, "vs");  PreCache("spells", "Bard", 423, "****");  PreCache("spells", "Cleric", 423, "****");    PreCache("spells", "Druid", 423, "8");    PreCache("spells", "Paladin", 423, "****");   PreCache("spells", "Ranger", 423, "****");    PreCache("spells", "Wiz_Sorc", 423, "****");  PreCache("spells", "Innate", 423, "8");
+PreCache("spells", "Name", 48, "798");    PreCache("spells", "School", 48, "C");    PreCache("spells", "VS", 48, "vs");   PreCache("spells", "Bard", 48, "****");   PreCache("spells", "Cleric", 48, "****"); PreCache("spells", "Druid", 48, "9"); PreCache("spells", "Paladin", 48, "****");    PreCache("spells", "Ranger", 48, "****"); PreCache("spells", "Wiz_Sorc", 48, "****");   PreCache("spells", "Innate", 48, "9");
+PreCache("spells", "Name", 2097, "16825355"); PreCache("spells", "School", 2097, "E");  PreCache("spells", "VS", 2097, "vs"); PreCache("spells", "Bard", 2097, "****"); PreCache("spells", "Cleric", 2097, "****");   PreCache("spells", "Druid", 2097, "9");   PreCache("spells", "Paladin", 2097, "****");  PreCache("spells", "Ranger", 2097, "****");   PreCache("spells", "Wiz_Sorc", 2097, "****"); PreCache("spells", "Innate", 2097, "9");
+PreCache("spells", "Name", 2098, "16825359"); PreCache("spells", "School", 2098, "E");  PreCache("spells", "VS", 2098, "vs"); PreCache("spells", "Bard", 2098, "****"); PreCache("spells", "Cleric", 2098, "****");   PreCache("spells", "Druid", 2098, "9");   PreCache("spells", "Paladin", 2098, "****");  PreCache("spells", "Ranger", 2098, "****");   PreCache("spells", "Wiz_Sorc", 2098, "****"); PreCache("spells", "Innate", 2098, "9");
+PreCache("spells", "Name", 3182, "16830455"); PreCache("spells", "School", 3182, "C");  PreCache("spells", "VS", 3182, "vs"); PreCache("spells", "Bard", 3182, "****"); PreCache("spells", "Cleric", 3182, "****");   PreCache("spells", "Druid", 3182, "9");   PreCache("spells", "Paladin", 3182, "****");  PreCache("spells", "Ranger", 3182, "****");   PreCache("spells", "Wiz_Sorc", 3182, "****"); PreCache("spells", "Innate", 3182, "9");
+PreCache("spells", "Name", 373, "6339");  PreCache("spells", "School", 373, "E");   PreCache("spells", "VS", 373, "v");   PreCache("spells", "Bard", 373, "4"); PreCache("spells", "Cleric", 373, "****");    PreCache("spells", "Druid", 373, "****"); PreCache("spells", "Paladin", 373, "****");   PreCache("spells", "Ranger", 373, "****");    PreCache("spells", "Wiz_Sorc", 373, "****");  PreCache("spells", "Innate", 373, "3");
+PreCache("spells", "Name", 429, "386");   PreCache("spells", "School", 429, "T");   PreCache("spells", "VS", 429, "vs");  PreCache("spells", "Bard", 429, "****");  PreCache("spells", "Cleric", 429, "****");    PreCache("spells", "Druid", 429, "****"); PreCache("spells", "Paladin", 429, "2");  PreCache("spells", "Ranger", 429, "****");    PreCache("spells", "Wiz_Sorc", 429, "****");  PreCache("spells", "Innate", 429, "2");
+PreCache("spells", "Name", 441, "2362");  PreCache("spells", "School", 441, "A");   PreCache("spells", "VS", 441, "vs");  PreCache("spells", "Bard", 441, "3"); PreCache("spells", "Cleric", 441, "****");    PreCache("spells", "Druid", 441, "****"); PreCache("spells", "Paladin", 441, "****");   PreCache("spells", "Ranger", 441, "****");    PreCache("spells", "Wiz_Sorc", 441, "****");  PreCache("spells", "Innate", 441, "3");
+PreCache("spells", "Name", 442, "2363");  PreCache("spells", "School", 442, "T");   PreCache("spells", "VS", 442, "v");   PreCache("spells", "Bard", 442, "1"); PreCache("spells", "Cleric", 442, "****");    PreCache("spells", "Druid", 442, "****"); PreCache("spells", "Paladin", 442, "****");   PreCache("spells", "Ranger", 442, "****");    PreCache("spells", "Wiz_Sorc", 442, "****");  PreCache("spells", "Innate", 442, "1");
+PreCache("spells", "Name", 445, "2366");  PreCache("spells", "School", 445, "V");   PreCache("spells", "VS", 445, "vs");  PreCache("spells", "Bard", 445, "6"); PreCache("spells", "Cleric", 445, "****");    PreCache("spells", "Druid", 445, "****"); PreCache("spells", "Paladin", 445, "****");   PreCache("spells", "Ranger", 445, "****");    PreCache("spells", "Wiz_Sorc", 445, "****");  PreCache("spells", "Innate", 445, "6");
+PreCache("spells", "Name", 535, "3743");  PreCache("spells", "School", 535, "T");   PreCache("spells", "VS", 535, "vs");  PreCache("spells", "Bard", 535, "****");  PreCache("spells", "Cleric", 535, "****");    PreCache("spells", "Druid", 535, "****"); PreCache("spells", "Paladin", 535, "****");   PreCache("spells", "Ranger", 535, "3");   PreCache("spells", "Wiz_Sorc", 535, "****");  PreCache("spells", "Innate", 535, "3");
+PreCache("spells", "Name", 536, "3750");  PreCache("spells", "School", 536, "T");   PreCache("spells", "VS", 536, "vs");  PreCache("spells", "Bard", 536, "****");  PreCache("spells", "Cleric", 536, "****");    PreCache("spells", "Druid", 536, "****"); PreCache("spells", "Paladin", 536, "1");  PreCache("spells", "Ranger", 536, "****");    PreCache("spells", "Wiz_Sorc", 536, "****");  PreCache("spells", "Innate", 536, "1");
+PreCache("spells", "Name", 537, "3753");  PreCache("spells", "School", 537, "T");   PreCache("spells", "VS", 537, "vs");  PreCache("spells", "Bard", 537, "****");  PreCache("spells", "Cleric", 537, "****");    PreCache("spells", "Druid", 537, "****"); PreCache("spells", "Paladin", 537, "1");  PreCache("spells", "Ranger", 537, "****");    PreCache("spells", "Wiz_Sorc", 537, "****");  PreCache("spells", "Innate", 537, "1");
+PreCache("spells", "Name", 538, "3755");  PreCache("spells", "School", 538, "V");   PreCache("spells", "VS", 538, "vs");  PreCache("spells", "Bard", 538, "****");  PreCache("spells", "Cleric", 538, "****");    PreCache("spells", "Druid", 538, "****"); PreCache("spells", "Paladin", 538, "4");  PreCache("spells", "Ranger", 538, "****");    PreCache("spells", "Wiz_Sorc", 538, "****");  PreCache("spells", "Innate", 538, "4");
+PreCache("spells", "Name", 2099, "16825357"); PreCache("spells", "School", 2099, "A");  PreCache("spells", "VS", 2099, "vs"); PreCache("spells", "Bard", 2099, "****"); PreCache("spells", "Cleric", 2099, "****");   PreCache("spells", "Druid", 2099, "****");    PreCache("spells", "Paladin", 2099, "3"); PreCache("spells", "Ranger", 2099, "****");   PreCache("spells", "Wiz_Sorc", 2099, "****"); PreCache("spells", "Innate", 2099, "3");
+PreCache("spells", "Name", 3160, "16830390"); PreCache("spells", "School", 3160, "A");  PreCache("spells", "VS", 3160, "vs"); PreCache("spells", "Bard", 3160, "****"); PreCache("spells", "Cleric", 3160, "****");   PreCache("spells", "Druid", 3160, "****");    PreCache("spells", "Paladin", 3160, "1"); PreCache("spells", "Ranger", 3160, "****");   PreCache("spells", "Wiz_Sorc", 3160, "****"); PreCache("spells", "Innate", 3160, "1");
+PreCache("spells", "Name", 3181, "16830453"); PreCache("spells", "School", 3181, "A");  PreCache("spells", "VS", 3181, "vs"); PreCache("spells", "Bard", 3181, "****"); PreCache("spells", "Cleric", 3181, "****");   PreCache("spells", "Druid", 3181, "****");    PreCache("spells", "Paladin", 3181, "2"); PreCache("spells", "Ranger", 3181, "****");   PreCache("spells", "Wiz_Sorc", 3181, "****"); PreCache("spells", "Innate", 3181, "2");
 
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_1", "751");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_1", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_1", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_1", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_2", "752");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_2", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_2", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_2", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3", "753");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_4", "754");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_4", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_4", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_4", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_4", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_4", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_4", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_4", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_5", "755");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_5", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_5", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_5", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_5", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_5", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_5", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_5", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_6", "756");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_6", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_6", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_6", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_6", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_6", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_6", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_6", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_8", "758");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_8", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_8", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_8", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_8", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_8", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_8", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_8", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_9", "759");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_9", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_9", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_9", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_9", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_9", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_9", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_9", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_10", "760");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_10", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_10", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_10", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_10", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_10", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_10", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_10", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_11", "761");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_11", "Electricity");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_11", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_11", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_11", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_11", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_11", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_11", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_13", "763");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_13", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_13", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_13", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_13", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_13", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_13", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_13", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_14", "764");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_14", "Electricity");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_14", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_14", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_14", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_14", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_14", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_14", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_15", "765");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_15", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_15", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_15", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_15", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_15", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_15", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_15", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_16", "766");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_16", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_16", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_16", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_16", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_16", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_16", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_16", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_17", "767");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_17", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_17", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_17", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_17", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_17", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_17", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_17", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_18", "768");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_18", "Death");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_18", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_18", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_18", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_18", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_18", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_18", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_19", "769");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_19", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_19", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_19", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_19", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_19", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_19", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_19", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_20", "770");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_20", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_20", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_20", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_20", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_20", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_20", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_20", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_21", "771");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_21", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_21", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_21", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_21", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_21", "s");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_21", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_21", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_23", "773");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_23", "Poison");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_23", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_23", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_23", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_23", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_23", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_23", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_24", "774");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_24", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_24", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_24", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_24", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_24", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_24", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_24", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_25", "775");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_25", "Cold");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_25", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_25", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_25", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_25", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_25", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_25", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_26", "776");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_26", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_26", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_26", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_26", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_26", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_26", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_26", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_27", "777");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_27", "Disease");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_27", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_27", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_27", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_27", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_27", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_27", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_28", "778");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_28", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_28", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_28", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_28", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_28", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_28", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_28", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_29", "779");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_29", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_29", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_29", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_29", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_29", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_29", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_29", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_30", "780");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_30", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_30", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_30", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_30", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_30", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_30", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_30", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_31", "781");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_31", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_31", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_31", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_31", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_31", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_31", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_31", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_32", "782");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_32", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_32", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_32", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_32", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_32", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_32", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_32", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_33", "783");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_33", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_33", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_33", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_33", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_33", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_33", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_33", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_34", "784");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_34", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_34", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_34", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_34", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_34", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_34", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_34", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_35", "785");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_35", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_35", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_35", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_35", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_35", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_35", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_35", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_36", "786");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_36", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_36", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_36", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_36", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_36", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_36", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_36", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_37", "787");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_37", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_37", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_37", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_37", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_37", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_37", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_37", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_38", "788");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_38", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_38", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_38", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_38", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_38", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_38", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_38", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_39", "789");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_39", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_39", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_39", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_39", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_39", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_39", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_39", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_40", "790");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_40", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_40", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_40", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_40", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_40", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_40", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_40", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_41", "791");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_41", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_41", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_41", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_41", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_41", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_41", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_41", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_42", "792");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_42", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_42", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_42", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_42", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_42", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_42", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_42", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_43", "793");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_43", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_43", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_43", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_43", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_43", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_43", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_43", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_44", "794");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_44", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_44", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_44", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_44", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_44", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_44", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_44", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_45", "795");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_45", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_45", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_45", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_45", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_45", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_45", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_45", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_46", "796");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_46", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_46", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_46", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_46", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_46", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_46", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_46", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_47", "797");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_47", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_47", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_47", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_47", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_47", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_47", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_47", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_48", "798");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_48", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_48", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_48", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_48", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_48", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_48", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_48", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_49", "799");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_49", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_49", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_49", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_49", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_49", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_49", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_49", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_50", "800");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_50", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_50", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_50", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_50", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_50", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_50", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_50", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_51", "801");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_51", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_51", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_51", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_51", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_51", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_51", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_51", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_52", "802");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_52", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_52", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_52", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_52", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_52", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_52", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_52", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_53", "803");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_53", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_53", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_53", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_53", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_53", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_53", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_53", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_54", "804");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_54", "Fear");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_54", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_54", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_54", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_54", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_54", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_54", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_55", "805");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_55", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_55", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_55", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_55", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_55", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_55", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_55", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_56", "806");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_56", "Death");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_56", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_56", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_56", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_56", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_56", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_56", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_57", "807");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_57", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_57", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_57", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_57", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_57", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_57", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_57", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_58", "808");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_58", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_58", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_58", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_58", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_58", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_58", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_58", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_59", "809");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_59", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_59", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_59", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_59", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_59", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_59", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_59", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_60", "810");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_60", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_60", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_60", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_60", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_60", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_60", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_60", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_61", "811");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_61", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_61", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_61", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_61", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_61", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_61", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_61", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_62", "812");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_62", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_62", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_62", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_62", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_62", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_62", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_62", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_63", "813");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_63", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_63", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_63", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_63", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_63", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_63", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_63", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_64", "814");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_64", "Poison");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_64", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_64", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_64", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_64", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_64", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_64", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_65", "815");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_65", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_65", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_65", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_65", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_65", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_65", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_65", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_66", "816");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_66", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_66", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_66", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_66", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_66", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_66", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_66", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_67", "817");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_67", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_67", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_67", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_67", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_67", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_67", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_67", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_69", "819");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_69", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_69", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_69", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_69", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_69", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_69", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_69", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_70", "820");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_70", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_70", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_70", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_70", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_70", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_70", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_70", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_71", "821");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_71", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_71", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_71", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_71", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_71", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_71", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_71", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_72", "822");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_72", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_72", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_72", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_72", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_72", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_72", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_72", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_73", "823");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_73", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_73", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_73", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_73", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_73", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_73", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_73", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_74", "824");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_74", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_74", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_74", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_74", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_74", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_74", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_74", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_75", "2682");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_75", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_75", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_75", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_75", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_75", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_75", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_75", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_76", "826");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_76", "Divine");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_76", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_76", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_76", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_76", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_76", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_76", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_77", "827");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_77", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_77", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_77", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_77", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_77", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_77", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_77", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_78", "828");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_78", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_78", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_78", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_78", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_78", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_78", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_78", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_79", "829");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_79", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_79", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_79", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_79", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_79", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_79", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_79", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_80", "830");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_80", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_80", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_80", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_80", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_80", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_80", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_80", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_81", "831");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_81", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_81", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_81", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_81", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_81", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_81", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_81", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_82", "832");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_82", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_82", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_82", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_82", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_82", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_82", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_82", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_83", "833");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_83", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_83", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_83", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_83", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_83", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_83", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_83", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_86", "836");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_86", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_86", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_86", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_86", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_86", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_86", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_86", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_87", "837");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_87", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_87", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_87", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_87", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_87", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_87", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_87", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_88", "838");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_88", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_88", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_88", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_88", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_88", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_88", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_88", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_89", "839");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_89", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_89", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_89", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_89", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_89", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_89", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_89", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_90", "840");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_90", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_90", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_90", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_90", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_90", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_90", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_90", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_91", "841");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_91", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_91", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_91", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_91", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_91", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_91", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_91", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_92", "842");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_92", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_92", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_92", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_92", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_92", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_92", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_92", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_93", "843");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_93", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_93", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_93", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_93", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_93", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_93", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_93", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_94", "844");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_94", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_94", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_94", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_94", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_94", "s");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_94", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_94", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_95", "845");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_95", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_95", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_95", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_95", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_95", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_95", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_95", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_96", "846");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_96", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_96", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_96", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_96", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_96", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_96", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_96", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_97", "847");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_97", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_97", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_97", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_97", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_97", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_97", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_97", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_98", "848");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_98", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_98", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_98", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_98", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_98", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_98", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_98", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_99", "849");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_99", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_99", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_99", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_99", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_99", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_99", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_99", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_100", "850");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_100", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_100", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_100", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_100", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_100", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_100", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_100", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_101", "851");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_101", "Electricity");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_101", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_101", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_101", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_101", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_101", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_101", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_102", "852");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_102", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_102", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_102", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_102", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_102", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_102", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_102", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_107", "857");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_107", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_107", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_107", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_107", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_107", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_107", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_107", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_110", "860");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_110", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_110", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_110", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_110", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_110", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_110", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_110", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_111", "861");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_111", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_111", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_111", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_111", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_111", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_111", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_111", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_113", "863");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_113", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_113", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_113", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_113", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_113", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_113", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_113", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_114", "864");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_114", "Postive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_114", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_114", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_114", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_114", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_114", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_114", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_115", "865");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_115", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_115", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_115", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_115", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_115", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_115", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_115", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_116", "866");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_116", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_116", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_116", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_116", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_116", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_116", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_116", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_117", "867");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_117", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_117", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_117", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_117", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_117", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_117", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_117", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_118", "868");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_118", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_118", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_118", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_118", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_118", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_118", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_118", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_119", "869");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_119", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_119", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_119", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_119", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_119", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_119", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_119", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_120", "870");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_120", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_120", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_120", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_120", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_120", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_120", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_120", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_121", "871");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_121", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_121", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_121", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_121", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_121", "s");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_121", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_121", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_122", "872");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_122", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_122", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_122", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_122", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_122", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_122", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_122", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_123", "873");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_123", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_123", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_123", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_123", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_123", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_123", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_123", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_124", "874");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_124", "Postive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_124", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_124", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_124", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_124", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_124", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_124", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_125", "875");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_125", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_125", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_125", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_125", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_125", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_125", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_125", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_126", "876");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_126", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_126", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_126", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_126", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_126", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_126", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_126", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_127", "877");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_127", "Fear");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_127", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_127", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_127", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_127", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_127", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_127", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_128", "878");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_128", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_128", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_128", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_128", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_128", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_128", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_128", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_129", "879");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_129", "Poison");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_129", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_129", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_129", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_129", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_129", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_129", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_130", "880");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_130", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_130", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_130", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_130", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_130", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_130", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_130", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_131", "881");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_131", "Death");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_131", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_131", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_131", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_131", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_131", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_131", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_132", "882");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_132", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_132", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_132", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_132", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_132", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_132", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_132", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_133", "883");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_133", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_133", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_133", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_133", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_133", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_133", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_133", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_134", "884");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_134", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_134", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_134", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_134", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_134", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_134", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_134", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_135", "885");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_135", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_135", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_135", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_135", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_135", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_135", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_135", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_137", "887");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_137", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_137", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_137", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_137", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_137", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_137", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_137", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_141", "891");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_141", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_141", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_141", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_141", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_141", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_141", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_141", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_142", "892");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_142", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_142", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_142", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_142", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_142", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_142", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_142", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_143", "893");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_143", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_143", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_143", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_143", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_143", "s");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_143", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_143", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_144", "894");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_144", "Cold");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_144", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_144", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_144", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_144", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_144", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_144", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_145", "895");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_145", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_145", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_145", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_145", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_145", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_145", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_145", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_146", "896");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_146", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_146", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_146", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_146", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_146", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_146", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_146", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_147", "897");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_147", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_147", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_147", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_147", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_147", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_147", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_147", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_148", "898");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_148", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_148", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_148", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_148", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_148", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_148", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_148", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_149", "899");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_149", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_149", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_149", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_149", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_149", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_149", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_149", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_150", "900");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_150", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_150", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_150", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_150", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_150", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_150", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_150", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_151", "901");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_151", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_151", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_151", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_151", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_151", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_151", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_151", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_152", "902");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_152", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_152", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_152", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_152", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_152", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_152", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_152", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_153", "903");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_153", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_153", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_153", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_153", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_153", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_153", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_153", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_154", "904");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_154", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_154", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_154", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_154", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_154", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_154", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_154", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_155", "905");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_155", "Fear");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_155", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_155", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_155", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_155", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_155", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_155", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_156", "906");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_156", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_156", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_156", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_156", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_156", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_156", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_156", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_157", "907");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_157", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_157", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_157", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_157", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_157", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_157", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_157", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_158", "908");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_158", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_158", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_158", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_158", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_158", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_158", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_158", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_159", "909");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_159", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_159", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_159", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_159", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_159", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_159", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_159", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_160", "910");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_160", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_160", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_160", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_160", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_160", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_160", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_160", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_161", "911");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_161", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_161", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_161", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_161", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_161", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_161", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_161", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_163", "913");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_163", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_163", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_163", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_163", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_163", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_163", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_163", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_164", "914");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_164", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_164", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_164", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_164", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_164", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_164", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_164", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_165", "915");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_165", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_165", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_165", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_165", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_165", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_165", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_165", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_166", "916");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_166", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_166", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_166", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_166", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_166", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_166", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_166", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_167", "917");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_167", "Sonic");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_167", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_167", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_167", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_167", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_167", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_167", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_168", "918");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_168", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_168", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_168", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_168", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_168", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_168", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_168", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_169", "919");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_169", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_169", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_169", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_169", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_169", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_169", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_169", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_171", "921");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_171", "Poison");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_171", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_171", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_171", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_171", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_171", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_171", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_172", "922");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_172", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_172", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_172", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_172", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_172", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_172", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_172", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_173", "923");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_173", "Electricity");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_173", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_173", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_173", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_173", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_173", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_173", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_174", "924");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_174", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_174", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_174", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_174", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_174", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_174", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_174", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_175", "925");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_175", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_175", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_175", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_175", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_175", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_175", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_175", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_176", "926");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_176", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_176", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_176", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_176", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_176", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_176", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_176", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_177", "927");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_177", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_177", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_177", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_177", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_177", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_177", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_177", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_178", "932");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_178", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_178", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_178", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_178", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_178", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_178", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_178", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_179", "928");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_179", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_179", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_179", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_179", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_179", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_179", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_179", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_180", "929");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_180", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_180", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_180", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_180", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_180", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_180", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_180", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_181", "930");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_181", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_181", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_181", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_181", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_181", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_181", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_181", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_182", "931");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_182", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_182", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_182", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_182", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_182", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_182", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_182", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_183", "933");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_183", "Divine");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_183", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_183", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_183", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_183", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_183", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_183", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_184", "934");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_184", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_184", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_184", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_184", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_184", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_184", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_184", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_185", "935");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_185", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_185", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_185", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_185", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_185", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_185", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_185", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_186", "936");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_186", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_186", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_186", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_186", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_186", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_186", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_186", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_188", "938");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_188", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_188", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_188", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_188", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_188", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_188", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_188", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_189", "939");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_189", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_189", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_189", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_189", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_189", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_189", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_189", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_190", "940");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_190", "Sonic");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_190", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_190", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_190", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_190", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_190", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_190", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_191", "941");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_191", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_191", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_191", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_191", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_191", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_191", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_191", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_192", "942");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_192", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_192", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_192", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_192", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_192", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_192", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_192", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_193", "943");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_193", "Fear");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_193", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_193", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_193", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_193", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_193", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_193", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_194", "944");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_194", "Divine");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_194", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_194", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_194", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_194", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_194", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_194", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_321", "5114");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_321", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_321", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_321", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_321", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_321", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_321", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_321", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_322", "5115");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_322", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_322", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_322", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_322", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_322", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_322", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_322", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_323", "5116");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_323", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_323", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_323", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_323", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_323", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_323", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_323", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_354", "5371");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_354", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_354", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_354", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_354", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_354", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_354", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_354", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_355", "5370");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_355", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_355", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_355", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_355", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_355", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_355", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_355", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_356", "5369");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_356", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_356", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_356", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_356", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_356", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_356", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_356", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_363", "6329");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_363", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_363", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_363", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_363", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_363", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_363", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_363", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_364", "6330");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_364", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_364", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_364", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_364", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_364", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_364", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_364", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_365", "6331");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_365", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_365", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_365", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_365", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_365", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_365", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_365", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_366", "6332");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_366", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_366", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_366", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_366", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_366", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_366", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_366", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_367", "6333");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_367", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_367", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_367", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_367", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_367", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_367", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_367", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_368", "6334");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_368", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_368", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_368", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_368", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_368", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_368", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_368", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_369", "6335");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_369", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_369", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_369", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_369", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_369", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_369", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_369", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_370", "6336");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_370", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_370", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_370", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_370", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_370", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_370", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_370", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_371", "6337");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_371", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_371", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_371", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_371", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_371", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_371", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_371", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_372", "6338");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_372", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_372", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_372", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_372", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_372", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_372", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_372", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_373", "6339");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_373", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_373", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_373", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_373", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_373", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_373", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_373", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_374", "6340");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_374", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_374", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_374", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_374", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_374", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_374", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_374", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_375", "6341");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_375", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_375", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_375", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_375", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_375", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_375", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_375", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_376", "6342");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_376", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_376", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_376", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_376", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_376", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_376", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_376", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_377", "6343");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_377", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_377", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_377", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_377", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_377", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_377", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_377", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_414", "53");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_414", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_414", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_414", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_414", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_414", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_414", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_414", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_415", "55");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_415", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_415", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_415", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_415", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_415", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_415", "D");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_415", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_416", "56");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_416", "Cold");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_416", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_416", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_416", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_416", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_416", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_416", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_417", "57");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_417", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_417", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_417", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_417", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_417", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_417", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_417", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_418", "58");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_418", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_418", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_418", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_418", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_418", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_418", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_418", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_419", "59");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_419", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_419", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_419", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_419", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_419", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_419", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_419", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_420", "283");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_420", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_420", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_420", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_420", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_420", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_420", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_420", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_421", "340");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_421", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_421", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_421", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_421", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_421", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_421", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_421", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_422", "359");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_422", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_422", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_422", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_422", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_422", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_422", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_422", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_423", "382");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_423", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_423", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_423", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_423", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_423", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_423", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_423", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_424", "383");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_424", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_424", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_424", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_424", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_424", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_424", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_424", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_425", "1773");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_425", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_425", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_425", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_425", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_425", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_425", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_425", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_426", "384");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_426", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_426", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_426", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_426", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_426", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_426", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_426", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_427", "385");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_427", "Divine");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_427", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_427", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_427", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_427", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_427", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_427", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_429", "386");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_429", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_429", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_429", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_429", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_429", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_429", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_429", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_430", "387");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_430", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_430", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_430", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_430", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_430", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_430", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_430", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_431", "388");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_431", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_431", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_431", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_431", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_431", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_431", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_431", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_432", "389");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_432", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_432", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_432", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_432", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_432", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_432", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_432", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_433", "390");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_433", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_433", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_433", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_433", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_433", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_433", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_433", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_434", "391");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_434", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_434", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_434", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_434", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_434", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_434", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_434", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_435", "392");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_435", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_435", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_435", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_435", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_435", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_435", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_435", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_436", "502");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_436", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_436", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_436", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_436", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_436", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_436", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_436", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_437", "508");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_437", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_437", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_437", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_437", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_437", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_437", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_437", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_438", "1774");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_438", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_438", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_438", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_438", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_438", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_438", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_438", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_439", "1852");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_439", "Electricity");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_439", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_439", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_439", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_439", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_439", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_439", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_440", "1895");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_440", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_440", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_440", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_440", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_440", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_440", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_440", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_441", "2362");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_441", "Sonic");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_441", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_441", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_441", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_441", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_441", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_441", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_442", "2363");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_442", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_442", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_442", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_442", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_442", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_442", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_442", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_443", "2364");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_443", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_443", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_443", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_443", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_443", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_443", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_443", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_444", "2365");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_444", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_444", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_444", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_444", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_444", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_444", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_444", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_445", "2366");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_445", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_445", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_445", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_445", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_445", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_445", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_445", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_446", "2368");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_446", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_446", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_446", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_446", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_446", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_446", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_446", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_447", "2377");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_447", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_447", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_447", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_447", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_447", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_447", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_447", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_448", "2378");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_448", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_448", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_448", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_448", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_448", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_448", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_448", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_449", "2663");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_449", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_449", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_449", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_449", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_449", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_449", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_449", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_450", "2666");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_450", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_450", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_450", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_450", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_450", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_450", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_450", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_451", "2667");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_451", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_451", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_451", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_451", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_451", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_451", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_451", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_452", "2670");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_452", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_452", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_452", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_452", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_452", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_452", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_452", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_453", "2923");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_453", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_453", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_453", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_453", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_453", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_453", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_453", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_454", "2671");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_454", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_454", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_454", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_454", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_454", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_454", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_454", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_455", "2674");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_455", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_455", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_455", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_455", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_455", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_455", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_455", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_456", "2675");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_456", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_456", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_456", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_456", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_456", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_456", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_456", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_457", "2678");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_457", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_457", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_457", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_457", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_457", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_457", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_457", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_458", "2679");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_458", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_458", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_458", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_458", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_458", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_458", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_458", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_459", "2683");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_459", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_459", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_459", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_459", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_459", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_459", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_459", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_460", "2684");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_460", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_460", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_460", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_460", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_460", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_460", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_460", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_461", "2685");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_461", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_461", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_461", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_461", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_461", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_461", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_461", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_462", "2686");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_462", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_462", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_462", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_462", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_462", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_462", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_462", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_463", "2687");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_463", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_463", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_463", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_463", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_463", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_463", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_463", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_485", "3044");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_485", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_485", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_485", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_485", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_485", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_485", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_485", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_486", "3046");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_486", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_486", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_486", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_486", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_486", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_486", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_486", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_512", "3837");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_512", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_512", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_512", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_512", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_512", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_512", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_512", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_513", "3844");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_513", "Disease");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_513", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_513", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_513", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_513", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_513", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_513", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_514", "3848");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_514", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_514", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_514", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_514", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_514", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_514", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_514", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_515", "3850");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_515", "Sonic");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_515", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_515", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_515", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_515", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_515", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_515", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_516", "3853");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_516", "Electricity");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_516", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_516", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_516", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_516", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_516", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_516", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_517", "3857");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_517", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_517", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_517", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_517", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_517", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_517", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_517", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_518", "3859");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_518", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_518", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_518", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_518", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_518", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_518", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_518", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_519", "3861");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_519", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_519", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_519", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_519", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_519", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_519", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_519", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_520", "3863");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_520", "Electricity");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_520", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_520", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_520", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_520", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_520", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_520", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_521", "3865");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_521", "Sonic");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_521", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_521", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_521", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_521", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_521", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_521", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_522", "3867");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_522", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_522", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_522", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_522", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_522", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_522", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_522", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_523", "3869");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_523", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_523", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_523", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_523", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_523", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_523", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_523", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_524", "3871");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_524", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_524", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_524", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_524", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_524", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_524", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_524", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_525", "3874");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_525", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_525", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_525", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_525", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_525", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_525", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_525", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_526", "3879");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_526", "Electricity");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_526", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_526", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_526", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_526", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_526", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_526", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_527", "2767");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_527", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_527", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_527", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_527", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_527", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_527", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_527", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_528", "2796");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_528", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_528", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_528", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_528", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_528", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_528", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_528", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_529", "3881");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_529", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_529", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_529", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_529", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_529", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_529", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_529", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_533", "3737");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_533", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_533", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_533", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_533", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_533", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_533", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_533", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_534", "3739");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_534", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_534", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_534", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_534", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_534", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_534", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_534", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_535", "3743");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_535", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_535", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_535", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_535", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_535", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_535", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_535", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_536", "3750");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_536", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_536", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_536", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_536", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_536", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_536", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_536", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_537", "3753");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_537", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_537", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_537", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_537", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_537", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_537", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_537", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_538", "3755");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_538", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_538", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_538", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_538", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_538", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_538", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_538", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_539", "3757");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_539", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_539", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_539", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_539", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_539", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_539", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_539", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_541", "3761");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_541", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_541", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_541", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_541", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_541", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_541", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_541", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_542", "3763");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_542", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_542", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_542", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_542", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_542", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_542", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_542", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_543", "3765");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_543", "Cold");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_543", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_543", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_543", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_543", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_543", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_543", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_544", "3767");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_544", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_544", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_544", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_544", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_544", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_544", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_544", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_545", "3769");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_545", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_545", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_545", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_545", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_545", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_545", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_545", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_546", "3771");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_546", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_546", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_546", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_546", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_546", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_546", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_546", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_547", "3778");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_547", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_547", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_547", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_547", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_547", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_547", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_547", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_548", "3781");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_548", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_548", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_548", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_548", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_548", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_548", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_548", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_549", "3783");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_549", "Sonic");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_549", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_549", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_549", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_549", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_549", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_549", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_569", "3794");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_569", "Poison");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_569", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_569", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_569", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_569", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_569", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_569", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_1790", "16826216");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_1790", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_1790", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1790", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1790", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1790", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1790", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_1790", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_1791", "16826218");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_1791", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_1791", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_1791", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_1791", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_1791", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_1791", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_1791", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_2096", "16825361");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_2096", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_2096", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2096", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2096", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2096", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2096", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_2096", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_2097", "16825355");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_2097", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_2097", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2097", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2097", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2097", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2097", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_2097", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_2098", "16825359");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_2098", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_2098", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2098", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2098", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2098", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2098", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_2098", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_2099", "16825357");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_2099", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_2099", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2099", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2099", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2099", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2099", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_2099", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_2122", "16825365");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_2122", "Disease");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_2122", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2122", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2122", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2122", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2122", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_2122", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_2167", "16825353");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_2167", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_2167", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2167", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2167", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2167", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2167", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_2167", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_2247", "16826070");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_2247", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_2247", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2247", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2247", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2247", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2247", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_2247", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_2250", "16823166");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_2250", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_2250", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_2250", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_2250", "0");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_2250", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_2250", "G");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_2250", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3100", "16830216");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3100", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3100", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3100", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3100", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3100", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3100", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3100", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3101", "16830218");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3101", "Cold");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3101", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3101", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3101", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3101", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3101", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3101", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3102", "16830220");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3102", "Electricity");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3102", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3102", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3102", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3102", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3102", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3102", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3103", "16830222");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3103", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3103", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3103", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3103", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3103", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3103", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3103", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3104", "16830224");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3104", "Sonic");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3104", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3104", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3104", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3104", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3104", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3104", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3105", "16830226");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3105", "Cold");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3105", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3105", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3105", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3105", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3105", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3105", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3106", "16830228");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3106", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3106", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3106", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3106", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3106", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3106", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3106", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3107", "16830230");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3107", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3107", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3107", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3107", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3107", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3107", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3107", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3108", "16830232");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3108", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3108", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3108", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3108", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3108", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3108", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3108", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3109", "16830234");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3109", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3109", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3109", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3109", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3109", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3109", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3109", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3110", "16830236");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3110", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3110", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3110", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3110", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3110", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3110", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3110", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3111", "16830238");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3111", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3111", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3111", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3111", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3111", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3111", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3111", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3112", "16830240");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3112", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3112", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3112", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3112", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3112", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3112", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3112", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3113", "16830242");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3113", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3113", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3113", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3113", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3113", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3113", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3113", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3119", "16830249");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3119", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3119", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3119", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3119", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3119", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3119", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3119", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3120", "16830251");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3120", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3120", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3120", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3120", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3120", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3120", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3120", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3121", "16830253");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3121", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3121", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3121", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3121", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3121", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3121", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3121", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3122", "16830255");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3122", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3122", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3122", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3122", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3122", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3122", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3122", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3123", "16830257");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3123", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3123", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3123", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3123", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3123", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3123", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3123", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3124", "16830259");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3124", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3124", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3124", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3124", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3124", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3124", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3124", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3125", "16830261");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3125", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3125", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3125", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3125", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3125", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3125", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3125", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3126", "16830263");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3126", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3126", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3126", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3126", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3126", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3126", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3126", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3127", "16830265");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3127", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3127", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3127", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3127", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3127", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3127", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3127", "");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3133", "16830272");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3133", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3133", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3133", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3133", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3133", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3133", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3133", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3134", "16830274");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3134", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3134", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3134", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3134", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3134", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3134", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3134", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3135", "16830276");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3135", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3135", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3135", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3135", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3135", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3135", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3135", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3136", "16830278");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3136", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3136", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3136", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3136", "6");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3136", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3136", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3136", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3137", "16830280");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3137", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3137", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3137", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3137", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3137", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3137", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3137", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3138", "16830282");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3138", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3138", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3138", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3138", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3138", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3138", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3138", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3139", "16830284");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3139", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3139", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3139", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3139", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3139", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3139", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3139", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3140", "16830286");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3140", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3140", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3140", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3140", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3140", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3140", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3140", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3141", "16830288");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3141", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3141", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3141", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3141", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3141", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3141", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3141", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3142", "16830290");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3142", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3142", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3142", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3142", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3142", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3142", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3142", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3143", "16830345");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3143", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3143", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3143", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3143", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3143", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3143", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3143", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3144", "16830348");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3144", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3144", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3144", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3144", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3144", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3144", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3144", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3145", "16830352");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3145", "Cold");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3145", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3145", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3145", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3145", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3145", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3145", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3146", "16830356");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3146", "Electricity");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3146", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3146", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3146", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3146", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3146", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3146", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3147", "16830360");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3147", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3147", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3147", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3147", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3147", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3147", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3147", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3148", "16830364");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3148", "Sonic");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3148", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3148", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3148", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3148", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3148", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3148", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3149", "16830368");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3149", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3149", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3149", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3149", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3149", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3149", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3149", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3150", "16830370");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3150", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3150", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3150", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3150", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3150", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3150", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3150", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3151", "16830372");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3151", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3151", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3151", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3151", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3151", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3151", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3151", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3152", "16830374");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3152", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3152", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3152", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3152", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3152", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3152", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3152", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3153", "16830376");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3153", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3153", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3153", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3153", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3153", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3153", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3153", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3154", "16830378");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3154", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3154", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3154", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3154", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3154", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3154", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3154", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3155", "16830380");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3155", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3155", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3155", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3155", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3155", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3155", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3155", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3156", "16830382");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3156", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3156", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3156", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3156", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3156", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3156", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3156", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3157", "16830384");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3157", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3157", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3157", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3157", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3157", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3157", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3157", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3158", "16830386");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3158", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3158", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3158", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3158", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3158", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3158", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3158", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3159", "16830388");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3159", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3159", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3159", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3159", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3159", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3159", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3159", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3160", "16830390");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3160", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3160", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3160", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3160", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3160", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3160", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3160", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3161", "16830392");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3161", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3161", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3161", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3161", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3161", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3161", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3161", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3162", "16830394");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3162", "Positive");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3162", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3162", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3162", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3162", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3162", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3162", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3163", "16830396");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3163", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3163", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3163", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3163", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3163", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3163", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3163", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3164", "16830398");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3164", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3164", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3164", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3164", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3164", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3164", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3164", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3165", "16830423");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3165", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3165", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3165", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3165", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3165", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3165", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3165", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3166", "16830425");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3166", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3166", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3166", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3166", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3166", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3166", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3166", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3168", "16830427");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3168", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3168", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3168", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3168", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3168", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3168", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3168", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3169", "16830429");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3169", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3169", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3169", "8");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3169", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3169", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3169", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3169", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3170", "16830431");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3170", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3170", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3170", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3170", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3170", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3170", "I");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3170", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3171", "16830433");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3171", "Cold");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3171", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3171", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3171", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3171", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3171", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3171", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3172", "16830435");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3172", "Fire");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3172", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3172", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3172", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3172", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3172", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3172", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3173", "16830437");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3173", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3173", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3173", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3173", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3173", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3173", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3173", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3174", "16830439");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3174", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3174", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3174", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3174", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3174", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3174", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3174", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3175", "16830441");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3175", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3175", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3175", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3175", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3175", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3175", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3175", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3176", "16830443");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3176", "Mind_Affecting");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3176", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3176", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3176", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3176", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3176", "E");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3176", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3177", "16830445");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3177", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3177", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3177", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3177", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3177", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3177", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3177", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3178", "16830447");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3178", "Cold");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3178", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3178", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3178", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3178", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3178", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3178", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3179", "16830449");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3179", "Negative");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3179", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3179", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3179", "5");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3179", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3179", "N");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3179", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3180", "16830451");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3180", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3180", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3180", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3180", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3180", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3180", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3180", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3181", "16830453");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3181", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3181", "2");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3181", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3181", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3181", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3181", "A");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3181", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3182", "16830455");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3182", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3182", "9");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3182", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3182", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3182", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3182", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3182", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3183", "16830457");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3183", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3183", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3183", "1");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3183", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3183", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3183", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3183", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3184", "16830459");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3184", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3184", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3184", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3184", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3184", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3184", "T");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3184", "0");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3185", "16830461");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3185", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3185", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3185", "4");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3185", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3185", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3185", "C");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3185", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3186", "16830463");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3186", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3186", "7");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3186", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3186", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3186", "v");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3186", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3186", "1");
-
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_NAME_3187", "16830503");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_TYPE_3187", "Acid");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_INNATE_LEVEL_3187", "3");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_LEVEL_3187", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_CLERIC_LEVEL_3187", "");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_VS_3187", "vs");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_SCHOOL_3187", "V");
-    SetLocalString(GetModule(), "PRC_PACK_SPELL_HOSTILESETTING_3187", "1");
-*/
 }

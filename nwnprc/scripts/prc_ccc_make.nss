@@ -161,8 +161,8 @@ void main()
             if(nFeatID == -1)//alertness fix
                 nFeatID = 0;
 //            DoDebug("Feat array positon "+IntToString(i)+" is "+IntToString(nFeatID));
-            sScript += LetoAdd("FeatList/Feat", IntToString(nFeatID), "word");
-            sScript += LetoAdd("LvlStatList/[0]/FeatList/Feat", IntToString(nFeatID), "word");
+            sScript += LetoSet("FeatList/Feat", IntToString(nFeatID), "word");
+            sScript += LetoSet("LvlStatList/[0]/FeatList/Feat", IntToString(nFeatID), "word");
         }
     }
 

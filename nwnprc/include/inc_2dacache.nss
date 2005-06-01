@@ -375,6 +375,25 @@ void PRCMakeTables()
 
 }
 
+void PreCache(string s2DA, string sColumn, int nRow, string sValue)
+{
+    //get the waypoint htat marks the cache
+    object oCacheWP = GetObjectByTag("CACHEWP");
+    location lCache = GetLocation(oCacheWP);
+    //if no waypoiint, use module start
+    if (!GetIsObjectValid(oCacheWP))
+        lCache = GetStartingLocation();
+    //lower case the 2da and column
+    s2DA = GetStringLowerCase(s2DA);
+    sColumn = GetStringLowerCase(sColumn);
+    //get the waypoint for this file
+    string sFileWPName = "CACHED_"+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
+    object oFileWP = GetWaypointByTag(sFileWPName);
+    if (!GetIsObjectValid(oFileWP))
+        oFileWP = CreateObject(OBJECT_TYPE_WAYPOINT,"NW_WAYPOINT001",lCache,FALSE,sFileWPName);
+    SetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow), sValue);
+}
+
 string Get2DACache(string s2DA, string sColumn, int nRow)
 {
     //get the waypoint htat marks the cache
@@ -548,7 +567,7 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
             Cache_Done();
         else
         {
-            Cache_Class_Feat(nClass+1);
+            DelayCommand(0.1, Cache_Class_Feat(nClass+1)); //need to delay to prevent TMI
         }            
     }
 }

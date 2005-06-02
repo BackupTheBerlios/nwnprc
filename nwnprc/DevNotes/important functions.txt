@@ -412,7 +412,7 @@ spinc_common
 //		oTarget - object to apply the effect on.
 //		fDuration - duration of the effect, only used for some duration types.
 //		bDispellable - flag to indicate whether spell is dispellable or not, default TRUE.
-//		nSpellID - ID of spell being cast, if -1 GetSpellId() is used.
+//		nSpellID - ID of spell being cast, if -1 PRCGetSpellId() is used.
 //		nCasterLevel - effective caster level, if -1 GetCasterLevel() is used.
 //		oCaster - caster object.
 /*

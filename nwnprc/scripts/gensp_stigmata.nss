@@ -32,7 +32,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     object oTarget = GetSpellTargetObject();
-    int nSpell = GetSpellId();
+    int nSpell = PRCGetSpellId();
     int nStigmataDamage;
 
     // Cannot use twice within an hour, check for marker local
@@ -52,7 +52,7 @@ void main()
     }
 
     // Get the Con damage to be dealt
-    switch(GetSpellId())
+    switch(PRCGetSpellId())
     {
         case SPELL_STIGMATA2: nStigmataDamage = 2; break;
         case SPELL_STIGMATA3: nStigmataDamage = 4; break;
@@ -60,7 +60,7 @@ void main()
         case SPELL_STIGMATA5: nStigmataDamage = 8; break;
 
         default:
-            WriteTimestampedLogEntry("Unknown SpellID in gensp_stigmata: " + IntToString(GetSpellId()));
+            WriteTimestampedLogEntry("Unknown SpellID in gensp_stigmata: " + IntToString(PRCGetSpellId()));
             return;
     }
 

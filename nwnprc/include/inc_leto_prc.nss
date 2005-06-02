@@ -81,3 +81,53 @@ void PRCLetoEnter(object oPC)
         }
     }
 }
+
+void PRCLetoLevelup(object oPC)
+{
+    int bChange;
+    int nClass = -1;
+    //so we know what the last level taken was
+    int nLevel = GetHitDice(oPC);
+    if(GetPRCSwitch(PRC_NO_HP_REROLL))
+    {
+        //first 3 levels are always maxed
+        if(nLevel > 3)
+        {
+            //add the command to get the last class to the stack
+            StackedLetoScript(LetoGet("LvlStatList/["+IntToString(nLevel)+"]/LvlStatClass"));
+            //run that command on the PC
+            //need this long command to put nDestroyOriginal to false
+            //this means that the PC wont be booted, since we are only reading his .bic at the moment
+            RunStackedLetoScriptOnObject(oPC, "OBJECT", "SCRIPT", "", FALSE);
+            //the return from leto is stored as nClass
+            nClass = StringToInt(GetLocalString(GetModule(), "LetoResult"));
+
+            //now the 2da lookup to get the maximum hp
+            //uses the same cache system as the ConvoCC
+            int nHP = Random(StringToInt(Get2DACache("classes", "HitDie", nClass)))+1;
+            //this is the letoscript we need to run to fix the HP
+            StackedLetoScript(LetoSet("LvlStatList/["+IntToString(nLevel)+"]/LvlStatHitDie", IntToString(nHP),  "byte"));
+            bChange = TRUE;
+        }
+    }
+    if(GetPRCSwitch(PRC_NO_FREE_WIZ_SPELLS))
+    {
+        if(nClass == -1)
+        {
+            //add the command to get the last class to the stack
+            StackedLetoScript(LetoGet("LvlStatList/["+IntToString(nLevel)+"]/LvlStatClass"));
+            //run that command on the PC
+            //need this long command to put nDestroyOriginal to false
+            //this means that the PC wont be booted, since we are only reading his .bic at the moment
+            RunStackedLetoScriptOnObject(oPC, "OBJECT", "SCRIPT", "", FALSE);
+            //the return from leto is stored as nClass
+            nClass = StringToInt(GetLocalString(GetModule(), "LetoResult"));        
+        }
+        if(nClass == CLASS_TYPE_WIZARD)
+        {
+            //string sScript
+        }
+    }
+    if(bChange)
+        RunStackedLetoScriptOnObject(oPC, "OBJECT", "SCRIPT", "", TRUE);
+}

@@ -24,6 +24,7 @@
 // Modified 2004/01/30 (Brian Greinke)
 // PnP shifter uses "real" mindflayer calcs now
 #include "x2_inc_itemprop"
+#include "prc_inc_spells"
 void main()
 {
     //Declare major variables
@@ -54,11 +55,11 @@ void main()
     effect eLink = EffectLinkEffects(eDam, eVis);
     eLink = EffectLinkEffects(eLink, eDur);
     //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));
     effect eImpact = EffectVisualEffect(VFX_IMP_AC_BONUS);
 
     //Apply the VFX impact and effects
-    if (!GetHasSpellEffect(GetSpellId(),OBJECT_SELF))
+    if (!GetHasSpellEffect(PRCGetSpellId(),OBJECT_SELF))
     {
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
     }

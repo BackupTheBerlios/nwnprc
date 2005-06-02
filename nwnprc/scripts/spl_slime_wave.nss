@@ -27,7 +27,7 @@ void main()
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
             //Signal spell cast at event to fire.
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
 
             //Calculate the delay time on the application of effects based on the distance
             //between the caster and the target

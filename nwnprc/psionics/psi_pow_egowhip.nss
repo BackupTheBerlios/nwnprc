@@ -89,7 +89,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
             nDC += (nAugment * 2);
         }
 
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
 
         //Check for Power Resistance
         if (PRCMyResistPower(oCaster, oTarget, nPen))

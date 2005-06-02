@@ -93,7 +93,7 @@ int RedWizRestrictedSchool()
 {
 
     int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, OBJECT_SELF);
-    int nSpell = GetSpellId();
+    int nSpell = PRCGetSpellId();
     int iRWRes1;
     int iRWRes2;
 
@@ -152,7 +152,7 @@ int X2UseMagicDeviceCheck()
 //------------------------------------------------------------------------------
 int X2CastOnItemWasAllowed(object oItem)
 {
-    int bAllow = (Get2DACache(X2_CI_CRAFTING_SP_2DA,"CastOnItems",GetSpellId()) == "1");
+    int bAllow = (Get2DACache(X2_CI_CRAFTING_SP_2DA,"CastOnItems",PRCGetSpellId()) == "1");
     if (!bAllow)
     {
         FloatingTextStrRefOnCreature(83453, OBJECT_SELF); // not cast spell on item
@@ -265,7 +265,7 @@ int X2GetSpellCastOnSequencerItem(object oItem)
     }
 
     // Check if the spell is marked as hostile in spells.2da
-    int nHostile = StringToInt(Get2DACache("spells","HostileSetting",GetSpellId()));
+    int nHostile = StringToInt(Get2DACache("spells","HostileSetting",PRCGetSpellId()));
     if(nHostile ==1)
     {
         FloatingTextStrRefOnCreature(83885,OBJECT_SELF);
@@ -280,7 +280,7 @@ int X2GetSpellCastOnSequencerItem(object oItem)
         effect eVisual = EffectVisualEffect(VFX_IMP_BREACH);
         nNumberOfTriggers++;
         //NOTE: I add +1 to the SpellId to spell 0 can be used to trap failure
-        int nSID = GetSpellId()+1;
+        int nSID = PRCGetSpellId()+1;
         SetLocalInt(oItem, "X2_L_SPELLTRIGGER" + IntToString(nNumberOfTriggers), nSID);
         SetLocalInt(oItem, "X2_L_SPELLTRIGGER_L" + IntToString(nNumberOfTriggers), PRCGetCasterLevel(OBJECT_SELF));
         SetLocalInt(oItem, "X2_L_NUMTRIGGERS", nNumberOfTriggers);
@@ -403,7 +403,7 @@ int X2PreSpellCastCode()
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD))
     {       
-        int nSchool = GetSpellSchool(GetSpellId());
+        int nSchool = GetSpellSchool(PRCGetSpellId());
         if(nSchool == SPELL_SCHOOL_ABJURATION
             && GetHasFeat(2265))
             nContinue = FALSE;
@@ -436,7 +436,7 @@ int X2PreSpellCastCode()
         && (GetPRCSwitch(PRC_PNP_SOMATIC_COMPOMENTS)
             || GetPRCSwitch(PRC_PNP_SOMATIC_ITEMS)))
     {
-        int nSpellId = GetSpellId();
+        int nSpellId = GetSpellId(); //use the original spellID
         int nHandFree;
         int nHandRequired;
         object oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
@@ -590,12 +590,12 @@ int X2PreSpellCastCode()
             // spell has to be wiz/sorc and cast on self to be shared
             if ((oTarget == OBJECT_SELF) && (bIsWizSorc) &&
                 (!GetIsObjectValid(GetSpellCastItem())) && // no item spells
-                (GetSpellId()!=SPELL_SHAPECHANGE) &&       // no polymorphs
-                (GetSpellId()!=SPELL_POLYMORPH_SELF) &&
-                (GetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
+                (PRCGetSpellId()!=SPELL_SHAPECHANGE) &&       // no polymorphs
+                (PRCGetSpellId()!=SPELL_POLYMORPH_SELF) &&
+                (PRCGetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
             {
                 SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
-                AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+                AssignCommand(oFam, ActionCastSpellAtObject (PRCGetSpellId(), oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
                 // Make sure this variable gets deleted as quickly as possible in case it's added in error.
                 AssignCommand(oFam, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
             }
@@ -610,7 +610,7 @@ int X2PreSpellCastCode()
     {
         object oFam = GetLocalObject(OBJECT_SELF, "Familiar");
         SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
-        AssignCommand(oFam, ActionCastSpellAtObject (GetSpellId(), oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        AssignCommand(oFam, ActionCastSpellAtObject (PRCGetSpellId(), oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         // Make sure this variable gets deleted as quickly as possible in case it's added in error.
         AssignCommand(oFam, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
     
@@ -623,7 +623,7 @@ int X2PreSpellCastCode()
         }
         else
         {
-            string sSpell = IntToString(GetSpellId())+"|";
+            string sSpell = IntToString(GetSpellId())+"|"; //use original spellID
             string sStored = GetPersistantLocalString(OBJECT_SELF, "persist_spells");
             SetPersistantLocalString(OBJECT_SELF, "persist_spells", sStored+sSpell); 
         }

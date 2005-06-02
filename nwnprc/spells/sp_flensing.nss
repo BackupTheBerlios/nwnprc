@@ -99,7 +99,7 @@ void main()
 			// and we need a real object reference.
 			object oCaster = OBJECT_SELF;
 			DelayCommand(1.0, RunFlensing(oCaster, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), 
-				SPGetMetaMagic(), GetSpellId(), fDuration));
+				SPGetMetaMagic(), PRCGetSpellId(), fDuration));
 		}
 	}
 

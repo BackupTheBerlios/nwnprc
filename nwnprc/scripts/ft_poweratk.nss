@@ -194,7 +194,7 @@ void main()
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oUser);
         
         // Cache the spellid of the power attack used. Also acts as a marker
-        SetLocalInt(oUser, "PRC_PowerAttackSpellID", GetSpellId());
+        SetLocalInt(oUser, "PRC_PowerAttackSpellID", PRCGetSpellId());
         AddEventScript(oUser, EVENT_ONPLAYEREQUIPITEM, "prc_powatk_equ", TRUE, FALSE);
 
         //                  Power Attack                                      Activated

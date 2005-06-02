@@ -503,7 +503,7 @@ int MySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
         }
     }
 
-    nSpellID = GetSpellId();
+    nSpellID = PRCGetSpellId();
 
     /*
         return 0 = FAILED SAVE

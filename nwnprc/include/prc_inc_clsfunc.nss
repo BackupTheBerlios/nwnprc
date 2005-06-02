@@ -67,17 +67,18 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0)
     }
     SetLocalInt(OBJECT_SELF, "UsingActionCastSpell", TRUE);
     DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));
-//    ClearAllActions();
+///* done via ExecuteScript instead
     if (GetIsObjectValid(oTarget))
-    {
         AssignCommand(OBJECT_SELF, ActionCastSpellAtObject(iSpell, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-    }
     else
-    {
         AssignCommand(OBJECT_SELF, ActionCastSpellAtLocation(iSpell, lLoc, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-    }
-//    AssignCommand(OBJECT_SELF, SetCommandable(TRUE, OBJECT_SELF));
-//    SetCommandable(FALSE, OBJECT_SELF);
+//*/    
+/* The problem with this approace is that the effects are then applies by the original spell, which could go wrong. What to do?
+    SetLocalInt(OBJECT_SELF, "SpellIDOverride", GetSpellId());
+    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "SpellIDOverride"));
+    string sScript = Get2DACache("spells", "ImpactScript", iSpell);
+    ExecuteScript(sScript, OBJECT_SELF);
+*/    
 }
 
 ////////////////End Generic////////////////

@@ -53,7 +53,7 @@ void main()
         while (GetIsEffectValid(eWind))
         {
             if (GetEffectType(eWind) == EFFECT_TYPE_ABILITY_DECREASE || GetEffectType(eWind) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE)
-                if (GetEffectSpellId(eWind) == GetSpellId())
+                if (GetEffectSpellId(eWind) == PRCGetSpellId())
                     RemoveEffect(oTarget, eWind);
             eWind = GetNextEffect(oTarget);
         }

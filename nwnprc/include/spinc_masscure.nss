@@ -26,7 +26,7 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
 //	int nBonusHP = nCasterLvl > nBonusCap ? nBonusCap : nCasterLvl;
 
 	// Get the spell ID if it was not given.
-	if (-1 == nSpellID) nSpellID = GetSpellId();
+	if (-1 == nSpellID) nSpellID = PRCGetSpellId();
 	
 	// Apply the burst vfx.
 	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_HOLY_20), GetSpellTargetLocation());

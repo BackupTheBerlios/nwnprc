@@ -16,6 +16,7 @@
 //:://////////////////////////////////////////////
 
 #include "x2_inc_itemprop"
+#include "prc_inc_spells"
 void main()
 {
     object oItem = GetSpellCastItem();
@@ -23,7 +24,7 @@ void main()
 
     int i = 0;
     int nSpellId = -1;
-    int nMode = GetSpellId();
+    int nMode = PRCGetSpellId();
 
     int iMax = IPGetItemSequencerProperty(oItem);
 

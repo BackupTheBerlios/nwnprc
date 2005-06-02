@@ -237,7 +237,7 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
 // -----------------------------------------------------------------------------
 int CIGetCraftGPCost(int nLevel, int nMod)
 {
-    int nLvlRow =   IPGetIPConstCastSpellFromSpellID(GetSpellId());
+    int nLvlRow =   IPGetIPConstCastSpellFromSpellID(PRCGetSpellId());
     int nCLevel = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
     //PRC modification
     if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
@@ -422,7 +422,7 @@ int CICraftCheckBrewPotion(object oSpellTarget, object oCaster)
 
     object oSpellTarget = GetSpellTargetObject();
     object oCaster      = OBJECT_SELF;
-    int    nID          = GetSpellId();
+    int    nID          = PRCGetSpellId();
     int    nLevel       = CIGetSpellInnateLevel(nID,TRUE);
     if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
     {
@@ -539,7 +539,7 @@ These dont work as IPs since they are hardcoded */
 // -----------------------------------------------------------------------------
 int CICraftCheckScribeScroll(object oSpellTarget, object oCaster)
 {
-    int  nID = GetSpellId();
+    int  nID = PRCGetSpellId();
 
     // -------------------------------------------------------------------------
     // check if scribe scroll feat is there
@@ -653,7 +653,7 @@ These dont work as IPs since they are hardcoded */
 int CICraftCheckCraftWand(object oSpellTarget, object oCaster)
 {
 
-    int nID = GetSpellId();
+    int nID = PRCGetSpellId();
 
     // -------------------------------------------------------------------------
     // check if craft wand feat is there

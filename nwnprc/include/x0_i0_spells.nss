@@ -278,14 +278,14 @@ void DoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit
             if ((nRacialType != RACIAL_TYPE_ALL) && (nRacialType == MyPRCGetRacialType(oTarget)))
             {
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
                 //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget); VISUALS outrace the grenade, looks bad
             }
             else
             if ((nRacialType == RACIAL_TYPE_ALL) )
             {
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
                 //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget); VISUALS outrace the grenade, looks bad
             }
 
@@ -328,7 +328,7 @@ void DoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit
                 if ((nRacialType != RACIAL_TYPE_ALL) && (nRacialType == MyPRCGetRacialType(oTarget)))
                 {
                     // Apply effects to the currently selected target.
-                    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                     //This visual effect is applied to the target object not the location as above.  This visual effect
                     //represents the flame that erupts on the target not on the ground.
@@ -337,7 +337,7 @@ void DoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit
                 else
                 if ((nRacialType == RACIAL_TYPE_ALL) )
                 {
-                    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                 }
@@ -432,7 +432,7 @@ void DoDirgeEffect(object oTarget,int nPenetr)
     if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, GetAreaOfEffectCreator()))
     {
         //Fire cast spell at event for the target
-        SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), PRCGetSpellId()));
         //Spell resistance check
         if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
@@ -854,7 +854,7 @@ void DoMagicFang(int nPower, int nDamagePower,int nCasterLevel)
     }
 
     //Fire spell cast at event for target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));
     //Apply VFX impact and bonus effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration));
@@ -1328,7 +1328,7 @@ void doAura(int nAlign, int nVis1, int nVis2, int nDamageType)
     eLink = EffectLinkEffects(eLink, eEvil);
 
     //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));
 
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
@@ -1356,7 +1356,7 @@ void spellsStinkingCloud(object oTarget = OBJECT_INVALID)
         {
 
                 //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
                 //Make a Fort Save
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_POISON))
                 {
@@ -1372,7 +1372,7 @@ void spellsStinkingCloud(object oTarget = OBJECT_INVALID)
        spellsGenericAreaOfEffect(GetAreaOfEffectCreator(),
             GetLocation(OBJECT_SELF), // * not relevent for persistent area of effect
             SHAPE_CONE, 0.0,          // * not relevent for persistent area of effect
-            GetSpellId(), eImpact, eLink, eVis,
+            PRCGetSpellId(), eImpact, eLink, eVis,
             DURATION_TYPE_TEMPORARY, RoundsToSeconds(2), SPELL_TARGET_STANDARDHOSTILE,
             TRUE, FALSE, 0, 0, 0, FALSE, OBJECT_TYPE_CREATURE,
             TRUE, FALSE, SAVING_THROW_FORT, SAVING_THROW_TYPE_POISON);
@@ -1622,7 +1622,7 @@ void spellsDispelMagic(object oTarget, int nCasterLevel, effect eVis, effect eIm
 
     effect eDispel;
     float fDelay = GetRandomDelay(0.1, 0.3);
-    int nId = GetSpellId();
+    int nId = PRCGetSpellId();
 
     //--------------------------------------------------------------------------
     // Fire hostile event only if the target is hostile...
@@ -1740,7 +1740,7 @@ void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel)
 {
     object oCreator = GetAreaOfEffectCreator(oTargetAoE);
     int nChance;
-    int nId   = GetSpellId();
+    int nId   = PRCGetSpellId();
     if ( nId == SPELL_LESSER_DISPEL )
     {
         nChance = 25;

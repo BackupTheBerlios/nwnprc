@@ -18,13 +18,13 @@ effect SetSummonEffect(int nSpellID);
 
 #include "prc_class_const"
 #include "prc_spell_const"
-#include "prc_inc_switch"
+#include "prc_alterations"
 
 void main()
 {
 
     //Declare major variables
-    int nSpellID = GetSpellId();
+    int nSpellID = PRCGetSpellId();
 
     //Debug
     //SpeakString("Spell ID:"+IntToString(nSpellID));

@@ -37,6 +37,7 @@ Note: I am not using the effective level of the spell for DC calculation but
 
 #include "x2_inc_switches"
 #include "x2_inc_itemprop"
+#include "prc_inc_spells"
 
 int X2_UMD()
 {
@@ -98,7 +99,7 @@ int X2_UMD()
         return TRUE;
     }
 
-    int nSpellID = GetSpellId();
+    int nSpellID = PRCGetSpellId();
 
     // -------------------------------------------------------------------------
     // if we knew that spell we could also cast it from an item (may be redundant)

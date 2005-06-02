@@ -14,13 +14,6 @@
    be necessary, except when new casting feats are created.
 */
 
-#include "prc_inc_sneak"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "lookup_2da_spell"
-#include "prc_inc_switch"
-#include "inc_vfx_const"
-
 // Added by Primogenitor
 // part of the replacement for GetClassByPosition and GetLevelByPosition
 // since those always return CLASS_TYPE_INVALID for non-bioware classes
@@ -162,7 +155,12 @@ int PRCMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0
 //not needed now there is PRCGetMetaMagicFeat()
 
 //wrapper for biowares GetMetaMagicFeat()
+//used for spellsword and items
 int PRCGetMetaMagicFeat();
+
+//wrapper for biowares PRCGetSpellId()
+//used for actioncastspell
+int PRCGetSpellId();
 
 //GetFirstObjectInShape wrapper for changing the AOE of the channeled spells (Spellsword Channel Spell)
 object MyFirstObjectInShape(int nShape, float fSize, location lTarget, int bLineOfSight=FALSE, int nObjectFilter=OBJECT_TYPE_CREATURE, vector vOrigin=[0.0,0.0,0.0]);
@@ -197,6 +195,13 @@ const int  TYPE_DIVINE   = -2;
 //const int  TYPE_DRUID    = 12;
 //const int  TYPE_RANGER   = 13;
 //const int  TYPE_PALADIN  = 14;
+
+#include "prc_inc_sneak"
+#include "prc_feat_const"
+#include "prc_class_const"
+#include "lookup_2da_spell"
+#include "prc_inc_switch"
+#include "inc_vfx_const"
 
 
 // ---------------
@@ -454,7 +459,7 @@ int GetLevelByTypeArcaneFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
     int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
     int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
 
-    if (iSpellID = -1) iSpellID = GetSpellId();
+    if (iSpellID = -1) iSpellID = PRCGetSpellId();
 
     int iBoost = TrueNecromancy(oCaster, iSpellID, "ARCANE") + 
                  ShadowWeave(oCaster, iSpellID) +
@@ -494,7 +499,7 @@ int GetLevelByTypeDivineFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
     int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
     int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
 
-    if (iSpellID = -1) iSpellID = GetSpellId();
+    if (iSpellID = -1) iSpellID = PRCGetSpellId();
 
     int iBoost = TrueNecromancy(oCaster, iSpellID, "DIVINE") + 
                  ShadowWeave(oCaster, iSpellID) +
@@ -531,7 +536,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 {
     int iCastingClass = GetLastSpellCastClass(); // might be CLASS_TYPE_INVALID
     
-    int iSpellId = GetSpellId();
+    int iSpellId = PRCGetSpellId();
     int bIsStaff = FALSE;
     int nItemLevel;
     object oItem = GetSpellCastItem();
@@ -784,7 +789,7 @@ int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
         }
     }
 
-    nSpellID = GetSpellId();
+    nSpellID = PRCGetSpellId();
 
     /*
         return 0 = FAILED SAVE
@@ -922,7 +927,7 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
      int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
      int iTK = GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oTarget);
      int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
-     int nSpell = GetSpellId();
+     int nSpell = PRCGetSpellId();
      
      // Handle the target having Force of Will and being targeted by a psionic power
      if(nSavingThrow != SAVING_THROW_WILL        &&
@@ -1005,7 +1010,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
      
      int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oTarget);
      int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
-     int nSpell = GetSpellId();
+     int nSpell = PRCGetSpellId();
      
      if (iRedWizard > 0)
      {
@@ -1320,7 +1325,7 @@ int PRCGetMetaMagicFeat()
     if(GetIsObjectValid(GetSpellCastItem()))
     {
         object oItem = GetSpellCastItem();
-        int iSpellId = GetSpellId();
+        int iSpellId = PRCGetSpellId();
         //check item for metamagic
         int nItemMetaMagic;
         itemproperty ipTest = GetFirstItemProperty(oItem);
@@ -1392,6 +1397,15 @@ int PRCMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0
     return nDamage + nBonus;
 }
 
+int PRCGetSpellId()
+{
+    int nID = GetLocalInt(OBJECT_SELF, "SpellIDOverride");
+    if(nID == 0)
+        return GetSpellId();
+    if(nID == -1)
+        nID = 0;
+    return nID;
+}
 
 
 //This function returns 1 only if the object oTarget is the object

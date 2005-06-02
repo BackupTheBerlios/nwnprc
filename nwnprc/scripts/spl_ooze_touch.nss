@@ -39,7 +39,7 @@ void ooze_touch_fungus()
         nDuration = GetLevelByClass(CLASS_TYPE_OOZEMASTER);
 
         //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));
 
         //Apply the VFX impact and effects
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration));
@@ -53,7 +53,7 @@ int ooze_touch_damage(effect eDamage)
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
         //Make a touch attack to afflict target
 
        // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
@@ -75,7 +75,7 @@ int ooze_touch_effect(effect eDamage, int time)
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
         //Make a touch attack to afflict target
 
        // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
@@ -96,7 +96,7 @@ void main()
     object target = GetSpellTargetObject();
     int level = GetLevelByClass(CLASS_TYPE_OOZEMASTER);
 
-    switch (GetSpellId())
+    switch (PRCGetSpellId())
     {
         /* Brown Mold */
         case 2010:
@@ -203,7 +203,7 @@ void main()
             if(!GetIsReactionTypeFriendly(oTarget))
             {
                 //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
                 //Make a touch attack to afflict target
         
                // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property

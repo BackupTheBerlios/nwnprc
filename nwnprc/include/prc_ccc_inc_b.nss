@@ -474,7 +474,6 @@ void ChoiceSelected(int nChoiceNo)
             {
                 case CLASS_TYPE_WIZARD:
                     array_create(OBJECT_SELF, "SpellLvl1");
-                    array_create(OBJECT_SELF, "SpellLvl0");
                     //add spell to array of selected ones
                     array_set_int(OBJECT_SELF, "SpellLvl1",
                         array_get_size(OBJECT_SELF, "SpellLvl1"),

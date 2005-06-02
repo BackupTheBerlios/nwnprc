@@ -569,6 +569,7 @@ void SpellLoop()
     if(i==0 && nClass == CLASS_TYPE_WIZARD)
     {
         //add all cantrips
+        array_create(OBJECT_SELF, "SpellLvl0");
         SQL = "SELECT rowid FROM prc_cached2da_spells WHERE (Wiz_Sorc = 0) AND (School != '"+sOpposition+"')";
         PRC_SQLExecDirect(SQL);
         while(PRC_SQLFetch() == PRC_SQL_SUCCESS)

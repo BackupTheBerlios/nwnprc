@@ -123,7 +123,8 @@ void main()
         || nClass == CLASS_TYPE_SORCERER)
     {
         sScript += LetoSet("FamiliarType", IntToString(nFamiliar), "int");
-        sScript += LetoSet("FamiliarName", RandomName(), "string");
+        if(GetFamiliarName(oPC) == "")
+            sScript += LetoSet("FamiliarName", RandomName(), "string");
     }
 
     //Animal Companion
@@ -131,6 +132,7 @@ void main()
     if(nClass == CLASS_TYPE_DRUID)
     {
         sScript += LetoSet("CompanionType", IntToString(nAnimalCompanion), "int");
+        if(GetAnimalCompanionName(oPC) == "")
         sScript += LetoSet("CompanionName", RandomName(), "string");
     }
 

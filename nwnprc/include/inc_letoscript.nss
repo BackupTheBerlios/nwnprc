@@ -351,7 +351,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                 StoreCampaignObject(DB_NAME, DB_GATEWAY_VAR, oObject);
                 sCommand += "%"+sLetoTag+"; ";
                 //Extract object from DB
-                sCommand += "extract qq{"+GetNWNDir()+DB_NAME+".fpt}, '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";            
+                sCommand += "extract qq{"+GetNWNDir()+"database/"+DB_NAME+".fpt}, '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";            
             }
         }
         //store their location
@@ -387,7 +387,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                 }
                 else
                 {
-                    sCommand += "inject qq{"+GetNWNDir()+DB_NAME+".fpt}, '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";
+                    sCommand += "inject qq{"+GetNWNDir()+"database/"+DB_NAME+".fpt}, '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";
                     sCommand += "close %"+sLetoTag+"; ";
                 }
             }

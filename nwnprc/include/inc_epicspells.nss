@@ -13,6 +13,7 @@
 #include "inc_epicspelldef"
 #include "inc_epicspellfunc"
 #include "prc_inc_switch"
+#include "inc_time"
 
 /*
 CONSTANTS FOR OPTIONAL FEATURES
@@ -634,6 +635,12 @@ void DoSpellResearch(object oCaster, int nSpellDC, int nSpellIP, string sSchool,
         DelayCommand(fDelay, SendMessageToPC(oCaster, MES_RESEARCH_SUCCESS));
         DelayCommand(fDelay, GiveFeat(oCaster, nSpellIP));
         DelayCommand(fDelay, DestroyObject(oBook));
+        //research time
+        //1 day per 50,000GP +1
+        int nDays = (nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER))/50000;
+        nDays++;
+        float fSeconds = HoursToSeconds(24*nDays);
+        AdvanceTimeForPlayer(oCaster, fSeconds);
     }
     else
     {

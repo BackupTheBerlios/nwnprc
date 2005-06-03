@@ -140,6 +140,7 @@ void EvalPRCFeats(object oPC)
     //PnP Spell Schools
     if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD, oPC)
+        && !GetLocalInt(oPC,"ONENTER")
         && !GetHasFeat(2273)
         && !GetHasFeat(2274)
         && !GetHasFeat(2276)

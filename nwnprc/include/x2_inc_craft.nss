@@ -18,6 +18,7 @@
 #include "inc_utility"
 #include "prc_inc_newip"
 #include "prc_inc_spells"
+#include "inc_time"
 
 struct craft_struct
 {
@@ -521,7 +522,8 @@ These dont work as IPs since they are hardcoded */
         TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
         SetXP(oCaster, nNewXP);
         DestroyObject (oSpellTarget);
-        FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
+        FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful 
+        AdvanceTimeForPlayer(oCaster, HoursToSeconds(24));
         return TRUE;
      }
      else
@@ -635,6 +637,7 @@ These dont work as IPs since they are hardcoded */
         SetXP(oCaster, nNewXP);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
+        AdvanceTimeForPlayer(oCaster, HoursToSeconds((nGoldCost/5000)*24));
         return TRUE;
      }
      else
@@ -754,6 +757,7 @@ These dont work as IPs since they are hardcoded */
         SetXP(oCaster, nNewXP);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
+        AdvanceTimeForPlayer(oCaster, HoursToSeconds((nGoldCost/5000)*24));
         return TRUE;
      }
      else

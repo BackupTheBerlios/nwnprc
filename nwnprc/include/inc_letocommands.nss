@@ -46,7 +46,7 @@ string LetoAdjust(string sLocation, int nValue, string sType);
 //deleting a field
 string LetoDelete(string sLocation);
 
-//get a gield
+//get a field
 string LetoGet(string sLocation);
 
 string LetoAdd(string sLocation,string sValue, string sType)
@@ -76,6 +76,7 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE)
         //  sValue = "<qq:"+sValue+">";
         //else
         //    sValue = "qq{"+sValue+"}";
+        //wrap strings in quotes, so it doest go awry
         sValue = "'"+sValue+"'";
     }        
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))

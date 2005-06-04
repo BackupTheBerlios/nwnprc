@@ -65,6 +65,10 @@ const int DEBUG = TRUE;
 string GetNWNDir()
 {
     string sReturn = GetLocalString(GetModule(), PRC_LETOSCRIPT_NWN_DIR);
+    if(GetStringRight(sReturn, 1) != "\"
+        && GetStringRight(sReturn, 1) != "/")
+        sReturn += "\";
+        //" this is here so textpad doesnt go screwy becasue it escapes the quotes above.
     return sReturn;
 }
 
@@ -142,7 +146,7 @@ void LetoPCExit(object oPC)
         {
             if(GetPRCSwitch(PRC_LETOSCRIPT_GETNEWESTBIC))
             {
-                sScript  = "%char =  FindNewestBic(qq{"+GetNWNDir()+GetLocalString(oPC, "PCPlayerName")+"}); "+sScript;
+                sScript  = "%char =  FindNewestBic(qq{"+GetNWNDir()+"servervault/"+GetLocalString(oPC, "PCPlayerName")+"}); "+sScript;
                 sScript += "%char = '>'; ";
                 sScript += "close %char; ";
             }

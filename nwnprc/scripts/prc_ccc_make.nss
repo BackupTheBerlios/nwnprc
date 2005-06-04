@@ -106,41 +106,41 @@ void main()
 
     //Class
     sScript += LetoAdd("ClassList/Class", IntToString(nClass), "int");
-    sScript += LetoSet("ClassList/[0]/ClassLevel", IntToString(nLevel+1), "short");
+    sScript += LetoAdd("ClassList/[0]/ClassLevel", IntToString(nLevel+1), "short");
     sScript += LetoAdd("LvlStatList/LvlStatClass", IntToString(nClass), "byte");
-    sScript += LetoSet("LvlStatList/[0]/EpicLevel", "0", "byte");
-    sScript += LetoSet("LvlStatList/[0]/LvlStatHitDie", IntToString(nHitPoints), "byte");
-    sScript += LetoSet("LvlStatList/[0]/FeatList", "", "list");
-    sScript += LetoSet("LvlStatList/[0]/SkillList", "", "list");
+    sScript += LetoAdd("LvlStatList/[0]/EpicLevel", "0", "byte");
+    sScript += LetoAdd("LvlStatList/[0]/LvlStatHitDie", IntToString(nHitPoints), "byte");
+    sScript += LetoAdd("LvlStatList/[0]/FeatList", "", "list");
+    sScript += LetoAdd("LvlStatList/[0]/SkillList", "", "list");
 
     //Alignment
-    sScript += LetoSet("LawfulChaotic", IntToString(nOrder), "byte");
-    sScript += LetoSet("GoodEvil", IntToString(nMoral), "byte");
+    sScript += LetoAdd("LawfulChaotic", IntToString(nOrder), "byte");
+    sScript += LetoAdd("GoodEvil", IntToString(nMoral), "byte");
 
     //Familiar
     //has a random name
     if(nClass == CLASS_TYPE_WIZARD
         || nClass == CLASS_TYPE_SORCERER)
     {
-        sScript += LetoSet("FamiliarType", IntToString(nFamiliar), "int");
+        sScript += LetoAdd("FamiliarType", IntToString(nFamiliar), "int");
         if(GetFamiliarName(oPC) == "")
-            sScript += LetoSet("FamiliarName", RandomName(), "string");
+            sScript += LetoAdd("FamiliarName", RandomName(), "string");
     }
 
     //Animal Companion
     //has a random name
     if(nClass == CLASS_TYPE_DRUID)
     {
-        sScript += LetoSet("CompanionType", IntToString(nAnimalCompanion), "int");
+        sScript += LetoAdd("CompanionType", IntToString(nAnimalCompanion), "int");
         if(GetAnimalCompanionName(oPC) == "")
-        sScript += LetoSet("CompanionName", RandomName(), "string");
+        sScript += LetoAdd("CompanionName", RandomName(), "string");
     }
 
     //Domains
     if(nClass == CLASS_TYPE_CLERIC)
     {
-        sScript += LetoSet("ClassList/[0]/Domain1", IntToString(nDomain1), "byte");
-        sScript += LetoSet("ClassList/[0]/Domain2", IntToString(nDomain2), "byte");
+        sScript += LetoAdd("ClassList/[0]/Domain1", IntToString(nDomain1), "byte");
+        sScript += LetoAdd("ClassList/[0]/Domain2", IntToString(nDomain2), "byte");
     }
 
     //Ability Scores
@@ -163,8 +163,8 @@ void main()
             if(nFeatID == -1)//alertness fix
                 nFeatID = 0;
 //            DoDebug("Feat array positon "+IntToString(i)+" is "+IntToString(nFeatID));
-            sScript += LetoSet("FeatList/Feat", IntToString(nFeatID), "word");
-            sScript += LetoSet("LvlStatList/[0]/FeatList/Feat", IntToString(nFeatID), "word");
+            sScript += LetoAdd("FeatList/Feat", IntToString(nFeatID), "word");
+            sScript += LetoAdd("LvlStatList/[0]/FeatList/Feat", IntToString(nFeatID), "word");
         }
     }
 
@@ -174,16 +174,16 @@ void main()
         sScript += LetoAdd("SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");
         sScript += LetoAdd("LvlStatList/[_]/SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "char");
     }
-    sScript += LetoSet("SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
+    sScript += LetoAdd("SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
     sScript += LetoAdd("LvlStatList/[_]/SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
 
     //Spells
     if(nClass == CLASS_TYPE_WIZARD)
     {
-        sScript += LetoSet("ClassList/[_]/KnownList0", "", "list");
-        sScript += LetoSet("ClassList/[_]/KnownList1", "", "list");
-        sScript += LetoSet("LvlStatList/[_]/KnownList0", "", "list");
-        sScript += LetoSet("LvlStatList/[_]/KnownList1", "", "list");
+        sScript += LetoAdd("ClassList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("ClassList/[_]/KnownList1", "", "list");
+        sScript += LetoAdd("LvlStatList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("LvlStatList/[_]/KnownList1", "", "list");
         for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
         {
             sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
@@ -195,13 +195,13 @@ void main()
             sScript += LetoAdd("LvlStatList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
         }
         //throw spellschoool in here too
-        sScript += LetoSet("ClassList/[_]/School", IntToString(nSchool), "byte");
+        sScript += LetoAdd("ClassList/[_]/School", IntToString(nSchool), "byte");
     }
     else if (nClass == CLASS_TYPE_BARD)
     {
-        sScript += LetoSet("ClassList/[_]/KnownList0", "", "list");
-        sScript += LetoSet("ClassList/[_]/SpellsPerDayList", "", "list");
-        sScript += LetoSet("LvlStatList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("ClassList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList", "", "list");
+        sScript += LetoAdd("LvlStatList/[_]/KnownList0", "", "list");
         for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
         {
             sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
@@ -212,11 +212,11 @@ void main()
     }
     else if (nClass == CLASS_TYPE_SORCERER)
     {
-        sScript += LetoSet("ClassList/[_]/KnownList0", "", "list");
-        sScript += LetoSet("ClassList/[_]/KnownList1", "", "list");
-        sScript += LetoSet("ClassList/[_]/SpellsPerDayList", "", "list");
-        sScript += LetoSet("LvlStatList/[_]/KnownList0", "", "list");
-        sScript += LetoSet("LvlStatList/[_]/KnownList1", "", "list");
+        sScript += LetoAdd("ClassList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("ClassList/[_]/KnownList1", "", "list");
+        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList", "", "list");
+        sScript += LetoAdd("LvlStatList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("LvlStatList/[_]/KnownList1", "", "list");
         for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
         {
             sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
@@ -233,33 +233,33 @@ void main()
     }
 
     //Appearance stuff
-    sScript += LetoSet("Appearance_Type", IntToString(nAppearance), "word");
+    sScript += LetoAdd("Appearance_Type", IntToString(nAppearance), "word");
     if(nVoiceset != -1) //keep existing portrait
-        sScript += LetoSet("SoundSetFile", IntToString(nVoiceset), "word");
+        sScript += LetoAdd("SoundSetFile", IntToString(nVoiceset), "word");
     sScript += SetSkinColor(nSkin);
     sScript += SetHairColor(nHair);
-    sScript += LetoSet("Appearance_Head", IntToString(nHead), "byte");
+    sScript += LetoAdd("Appearance_Head", IntToString(nHead), "byte");
 //NPCS have and ID, PCs have a resref. resref overrides portrait.
 //    sScript += "<gff:set 'PortraitId'   "+IntToString(nPortrait)+">";
     if(nPortrait != -1) //keep existing portrait
         sScript += SetPCPortrait(Get2DACache("portraits","BaseResRef",nPortrait));
     sScript += SetTatooColor(nTattooColour1, 1);
     sScript += SetTatooColor(nTattooColour2, 2);
-    sScript += LetoSet("BodyPart_Neck",   IntToString(array_get_int(OBJECT_SELF, "Tattoo",  1)), "byte");
-    sScript += LetoSet("BodyPart_Torso",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  2)), "byte");
-    sScript += LetoSet("BodyPart_Pelvis", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  4)), "byte");
-    sScript += LetoSet("BodyPart_LBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  6)), "byte");
-    sScript += LetoSet("BodyPart_LFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  7)), "byte");
-    sScript += LetoSet("BodyPart_LHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  8)), "byte");
-    sScript += LetoSet("BodyPart_LThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  9)), "byte");
-    sScript += LetoSet("BodyPart_LShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 10)), "byte");
-    sScript += LetoSet("BodyPart_LFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 11)), "byte");
-    sScript += LetoSet("BodyPart_RBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 13)), "byte");
-    sScript += LetoSet("BodyPart_RFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 14)), "byte");
-    sScript += LetoSet("BodyPart_RHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 15)), "byte");
-    sScript += LetoSet("BodyPart_RThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 16)), "byte");
-    sScript += LetoSet("BodyPart_RShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 17)), "byte");
-    sScript += LetoSet("BodyPart_RFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 18)), "byte");
+    sScript += LetoAdd("BodyPart_Neck",   IntToString(array_get_int(OBJECT_SELF, "Tattoo",  1)), "byte");
+    sScript += LetoAdd("BodyPart_Torso",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  2)), "byte");
+    sScript += LetoAdd("BodyPart_Pelvis", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  4)), "byte");
+    sScript += LetoAdd("BodyPart_LBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  6)), "byte");
+    sScript += LetoAdd("BodyPart_LFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  7)), "byte");
+    sScript += LetoAdd("BodyPart_LHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  8)), "byte");
+    sScript += LetoAdd("BodyPart_LThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  9)), "byte");
+    sScript += LetoAdd("BodyPart_LShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 10)), "byte");
+    sScript += LetoAdd("BodyPart_LFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 11)), "byte");
+    sScript += LetoAdd("BodyPart_RBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 13)), "byte");
+    sScript += LetoAdd("BodyPart_RFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 14)), "byte");
+    sScript += LetoAdd("BodyPart_RHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 15)), "byte");
+    sScript += LetoAdd("BodyPart_RThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 16)), "byte");
+    sScript += LetoAdd("BodyPart_RShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 17)), "byte");
+    sScript += LetoAdd("BodyPart_RFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 18)), "byte");
 
     //Special abilities
     //since bioware screws this up in 1.64 its not needed
@@ -277,7 +277,7 @@ void main()
     for(i=1;i<=nLevel;i++)
     {
         //class
-        sScript += LetoSet("LvlStatList/LvlStatClass", Get2DACache("ECL", "RaceClass", nRace), "byte");
+        sScript += LetoAdd("LvlStatList/LvlStatClass", Get2DACache("ECL", "RaceClass", nRace), "byte");
         //ability
         if(i == 3 || i == 7 || i == 11 || i == 15
                 || i == 19 || i == 23 || i == 27 || i == 31
@@ -286,7 +286,7 @@ void main()
             sScript += AdjustAbility(GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Ability"),i);
         }
         //skills
-        sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/SkillList", "", "list");
+        sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/SkillList", "", "list");
         int j;
         for (j=0;j<GetPRCSwitch(FILE_END_SKILLS);j++)
         {
@@ -305,25 +305,25 @@ void main()
             //alertness correction
             if(nFeatID == -1)
                 nFeatID = 0;
-            sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/FeatList", "", "list");
+            sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/FeatList", "", "list");
             sScript += LetoAdd("FeatList/Feat", IntToString(nFeatID), "word");
             sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/FeatList/Feat", IntToString(nFeatID), "word");
         }
         //epic level
         if(nLevel <21)
-            sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/EpicLevel", "0", "byte");
+            sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/EpicLevel", "0", "byte");
         else            
-            sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/EpicLevel", "1", "byte");
+            sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/EpicLevel", "1", "byte");
         //hitdice
         int nRacialHitPoints = StringToInt(Get2DACache("classes", "HitDie", StringToInt(Get2DACache("ECL", "RacialClass", nRace))));
         //first 3 racial levels get max HP
         if(i > 3)
             nRacialHitPoints = 1+Random(nRacialHitPoints);
-        sScript += LetoSet("LvlStatList/["+IntToString(i-1)+"]/LvlStatHitDie", IntToString(nHitPoints), "byte");
+        sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/LvlStatHitDie", IntToString(nHitPoints), "byte");
     }
 
     //change the tag to mark the player as done
-    sScript += LetoSet("Tag", Encrypt(oPC), "string");
+    sScript += LetoAdd("Tag", Encrypt(oPC), "string");
     //give an XP so the XP switch works
     SetXP(oPC, 1);
     //racial xp

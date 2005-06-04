@@ -37,7 +37,7 @@ This may make characters illegal, so it is recommended that Enforce Legal Charac
 //general setting a variable in letoscript function
 //adds it if it doesnt exist
 //replaces a value if it does exist
-string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE);
+string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE);
 
 //general adjusting a variable in letoscript function
 //wont work with stringtypes
@@ -51,10 +51,10 @@ string LetoGet(string sLocation);
 
 string LetoAdd(string sLocation,string sValue, string sType)
 {
-    return LetoSet(sLocation, sValue, sType, TRUE);
+    return LetoSet(sLocation, sValue, sType, FALSE);
 }
 
-string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE)
+string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE)
 {
 //phoenix
 // <gff:add 'FirstName' {type='string' value=<qq:Bob the Minogon> setifexists=True}>
@@ -72,12 +72,12 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE)
         && sType != "double"
         && sType != "list")
     {            
-        //if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
-        //  sValue = "<qq:"+sValue+">";
-        //else
-        //    sValue = "qq{"+sValue+"}";
+        if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
+          sValue = "<qq:"+sValue+">";
+        else
+            sValue = "qq{"+sValue+"}";
         //wrap strings in quotes, so it doest go awry
-        sValue = "'"+sValue+"'";
+        //sValue = "'"+sValue+"'";
     }        
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
     {
@@ -91,7 +91,7 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE)
             sReturn += "value="+sValue+" ";
         if(!bAdd)
             sReturn += " setifexists=True";
-        sReturn += "}>\n";
+        sReturn += "}>";
         return  sReturn;
     }        
 //unicorn
@@ -103,7 +103,7 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE)
         sReturn += "Type => gff"+sType;
         if(bAdd)
             sReturn += ", SetIfExists => TRUE";
-        sReturn += ";\n";
+        sReturn += ";";
         return sReturn;
     }        
 }
@@ -132,9 +132,9 @@ string LetoDelete(string sLocation)
 //unicorn
 // clear /Str;
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
-        return "<gff:delete '"+sLocation+"'>\n";
+        return "<gff:delete '"+sLocation+"'>";
     else        
-        return "clear /"+sLocation+";\n";
+        return "clear /"+sLocation+";";
 
 }
 
@@ -148,7 +148,7 @@ string LetoGet(string sLocation)
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
         return "<"+sLocation+">\n";
     else        
-        return "print /"+sLocation+";\n";
+        return "print /"+sLocation+";";
 
 }
 

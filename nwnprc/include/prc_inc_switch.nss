@@ -255,6 +255,11 @@ const string PRC_SPELLSLAB                           = "PRC_SPELLSLAB";
 const string PRC_SPELLSLAB_NOSCROLLS                 = "PRC_SPELLSLAB_NOSCROLLS";
 
 /**
+ * Disables the sale of crafting recipes from the epic spell laboratory.
+ */
+const string PRC_SPELLSLAB_NORECIPES                 = "PRC_SPELLSLAB_NORECIPES";
+
+/**
  * Makes reaching 0 in an ability score have the special effects it should have
  * according to PnP.
  *
@@ -340,6 +345,7 @@ const string PRC_NO_HP_REROLL                        = "PRC_NO_HP_REROLL";
  * This disables the 2 free spells wizards get at levelup
  * The GUI still shows, but it does nothing or rather its effects are undone afterwards
  * It requires letoscript to work.
+ * not implemented yet
  */
 const string PRC_NO_FREE_WIZ_SPELLS                        = "PRC_NO_FREE_WIZ_SPELLS";
 

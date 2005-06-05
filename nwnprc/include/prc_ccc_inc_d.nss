@@ -658,6 +658,12 @@ void DoRotatingCamera()
     object oPC = OBJECT_SELF;
     if(!GetIsObjectValid(oPC))
         return;
+    if(GetLocalInt(oPC, "StopRotatingCamera"))
+    {
+        DeleteLocalInt(oPC, "StopRotatingCamera");
+        DeleteLocalFloat(oPC, "DoRotatingCamera");
+        return;
+    }
     float fDirection = GetLocalFloat(oPC, "DoRotatingCamera");
     fDirection += 30.0;
     if(fDirection > 360.0)

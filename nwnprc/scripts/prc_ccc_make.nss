@@ -336,20 +336,15 @@ void main()
 
     WriteTimestampedLogEntry(sScript);
     SetLocalString(oPC, "LetoScript", sScript);
+    SetLocalInt(oPC, "StopRotatingCamera", TRUE);
     SetCutsceneMode(oPC, FALSE);
     DoCleanup();
     //do anti-hacker stuff
     SetPlotFlag(oPC, FALSE);
     SetImmortal(oPC, FALSE);
     AssignCommand(oPC, SetIsDestroyable(TRUE));
-    AssignCommand(oPC, ActionRest());
-    DelayCommand(0.0, FloatingTextStringOnCreature("5 seconds", oPC, FALSE));
-    DelayCommand(1.0, FloatingTextStringOnCreature("4 seconds", oPC, FALSE));
-    DelayCommand(2.0, FloatingTextStringOnCreature("3 seconds", oPC, FALSE));
-    DelayCommand(3.0, FloatingTextStringOnCreature("2 seconds", oPC, FALSE));
-    DelayCommand(4.0, FloatingTextStringOnCreature("1 seconds", oPC, FALSE));
-    DelayCommand(5.0, FloatingTextStringOnCreature("Bootage!", oPC, FALSE));
-    DelayCommand(5.0, CheckAndBoot(oPC));
+    ForceRest(oPC);
+    CheckAndBoot(oPC);
     object oClone = GetLocalObject(oPC, "Clone");
     AssignCommand(oClone, SetIsDestroyable(TRUE));
     DestroyObject(oClone);

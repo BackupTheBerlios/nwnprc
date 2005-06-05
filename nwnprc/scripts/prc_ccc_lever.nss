@@ -24,7 +24,12 @@ void main()
     }
 
     //check that letoscript is setup correctly
-    StackedLetoScript("<FirstName> <LastName>");
+    string sScript;
+    if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
+        sScript = LetoGet("FirstName")+" "+LetoGet("LastName");
+    else
+        sScript = LetoGet("FirstName")+"print ' '; "+LetoGet("LastName");
+    StackedLetoScript(sScript);
     RunStackedLetoScriptOnObject(oPC, "LETOTEST", "SCRIPT", "", FALSE);
     string sResult = GetLocalString(GetModule(), "LetoResult");
     string sName = GetName(oPC);
@@ -50,11 +55,12 @@ void main()
         && GetTag(oPC) != sEncrypt
         && GetXP(oPC) > 0)
     {
-        string sScript = "<gff:set 'Tag' <qq:"+sEncrypt+">>";
+        string sScript = LetoSet("Tag", sEncrypt, "string");
         SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+sScript);
     }
-
-    if(GetXP(oPC) <= 100)
+    
+    if((GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetXP(oPC) == 0)
+        || (!GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetTag(oPC) != sEncrypt))
     {
         SetXP(oPC, 0);
         //first entry

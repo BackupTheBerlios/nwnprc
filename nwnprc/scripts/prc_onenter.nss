@@ -6,6 +6,7 @@
 #include "inc_leto_prc"
 #include "inc_time"    
 #include "inc_metalocation"
+#include "x2_inc_switches"
 
 
 void main()
@@ -18,6 +19,12 @@ void main()
     //hopefully in the next update
     //  -Aaon Graywolf
     object oPC = GetEnteringObject();
+    
+    //do this first so other things dont interfere with it
+    if(GetPRCSwitch(PRC_CONVOCC_ENABLE)
+        && ExecuteScriptAndReturnInt("prc_ccc_enter", OBJECT_SELF))
+        return;  
+    
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
     DeletePRCLocalInts(oSkin);
@@ -47,9 +54,7 @@ void main()
     if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))
         LetoPCEnter(oPC);
     if(GetPRCSwitch(PRC_LETOSCRIPT_FIX_ABILITIES) && !GetIsDM(oPC))
-        PRCLetoEnter(oPC);   
-    if(GetPRCSwitch(PRC_CONVOCC_ENABLE))
-        ExecuteScript("prc_ccc_enter", OBJECT_SELF);    
+        PRCLetoEnter(oPC);     
     //PW tracking starts here
     if(GetPRCSwitch(PRC_PW_HP_TRACKING))
     {

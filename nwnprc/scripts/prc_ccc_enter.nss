@@ -1,17 +1,25 @@
-
 #include "inc_encrypt"
 #include "prc_inc_switch"
 #include "inc_letoscript"
 #include "prc_ccc_inc"
+#include "x2_inc_switches"
+
+void CheckAndBoot(object oPC)
+{
+    if(GetIsObjectValid(GetAreaFromLocation(GetLocation(oPC))))
+        BootPC(oPC);
+}
 
 void main()
 {
+    SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
 
     object oPC = GetEnteringObject();
     if(GetIsDM(oPC))
         return;//dont mess with DMs
 
 
+    SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
     if(!GetPRCSwitch(PRC_CONVOCC_ENABLE))
         return;
 
@@ -29,7 +37,7 @@ void main()
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
         sScript = LetoGet("FirstName")+" "+LetoGet("LastName");
     else
-        sScript = LetoGet("FirstName")+"print ' ';\n"+LetoGet("LastName");
+        sScript = LetoGet("FirstName")+"print ' '; "+LetoGet("LastName");
     StackedLetoScript(sScript);
     RunStackedLetoScriptOnObject(oPC, "LETOTEST", "SCRIPT", "", FALSE);
     string sResult = GetLocalString(GetModule(), "LetoResult");
@@ -49,7 +57,7 @@ void main()
         effect eParal = EffectCutsceneParalyze();
         eParal = SupernaturalEffect(eParal);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
-        AssignCommand(oPC, DelayCommand(10.0, BootPC(oPC)));
+        AssignCommand(oPC, DelayCommand(10.0, CheckAndBoot(oPC)));
         return;
     }
 
@@ -147,9 +155,11 @@ void main()
         //DISABLE FOR DEBUGGING
         DelayCommand(2.0, AssignCommand(oPC, ActionDoCommand(SetCutsceneMode(oPC, TRUE))));
         SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
+        SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
     }
     else
     {
         //its a returning character, dont do anything
+        SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
     }
 }

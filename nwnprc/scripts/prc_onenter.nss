@@ -21,7 +21,9 @@ void main()
     object oPC = GetEnteringObject();
     
     //do this first so other things dont interfere with it
-    if(GetPRCSwitch(PRC_CONVOCC_ENABLE)
+    if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))
+        LetoPCEnter(oPC);    
+    if(GetPRCSwitch(PRC_CONVOCC_ENABLE) && !GetIsDM(oPC)
         && ExecuteScriptAndReturnInt("prc_ccc_enter", OBJECT_SELF))
         return;  
     
@@ -51,10 +53,10 @@ void main()
         BlackScreen(oPC);//cant see or do anything
     }
     
-    if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))
-        LetoPCEnter(oPC);
+
     if(GetPRCSwitch(PRC_LETOSCRIPT_FIX_ABILITIES) && !GetIsDM(oPC))
-        PRCLetoEnter(oPC);     
+        PRCLetoEnter(oPC);   
+        
     //PW tracking starts here
     if(GetPRCSwitch(PRC_PW_HP_TRACKING))
     {
@@ -137,7 +139,7 @@ void main()
             }
             else
                 sTest += sChar;
-            sSpellList = GetStringRight(sSpellList, GetStringLength(sSpellList)+1);
+            sSpellList = GetStringRight(sSpellList, GetStringLength(sSpellList)-1);
         }
     }
     // Execute scripts hooked to this event for the player triggering it

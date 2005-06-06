@@ -32,6 +32,6 @@ void main()
     }        
         
         
-    ExecuteScript("look2daint", OBJECT_SELF);
+    DelayCommand(1.0, ExecuteScript("look2daint", OBJECT_SELF));//helps avoid TMI errors
     
 }

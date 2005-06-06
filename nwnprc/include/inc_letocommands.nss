@@ -91,7 +91,7 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE)
             sReturn += "value="+sValue+" ";
         if(!bAdd)
             sReturn += " setifexists=True";
-        sReturn += "}>";
+        sReturn += "}> ";
         return  sReturn;
     }        
 //unicorn
@@ -103,7 +103,7 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE)
         sReturn += "Type => gff"+sType;
         if(bAdd)
             sReturn += ", SetIfExists => TRUE";
-        sReturn += ";";
+        sReturn += "; ";
         return sReturn;
     }        
 }
@@ -132,9 +132,9 @@ string LetoDelete(string sLocation)
 //unicorn
 // clear /Str;
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
-        return "<gff:delete '"+sLocation+"'>";
+        return "<gff:delete '"+sLocation+"'> ";
     else        
-        return "clear /"+sLocation+";";
+        return "clear /"+sLocation+"; ";
 
 }
 

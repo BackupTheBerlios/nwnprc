@@ -37,7 +37,8 @@ void main()
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
         sScript = LetoGet("FirstName")+" "+LetoGet("LastName");
     else
-        sScript = LetoGet("FirstName")+"print ' '; "+LetoGet("LastName");
+        sScript = LetoGet("FirstName")+"print ' ';"+LetoGet("LastName");
+        
     StackedLetoScript(sScript);
     RunStackedLetoScriptOnObject(oPC, "LETOTEST", "SCRIPT", "", FALSE);
     string sResult = GetLocalString(GetModule(), "LetoResult");

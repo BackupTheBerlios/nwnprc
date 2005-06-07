@@ -39,6 +39,15 @@ void SetupStage()
     string sFile;
     switch(nStage)
     {
+        case STAGE_INTRODUCTION:
+                array_set_string(OBJECT_SELF, "ChoiceTokens",
+                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
+                        "continue");
+                array_set_int(OBJECT_SELF, "ChoiceValue",
+                    array_get_size(OBJECT_SELF, "ChoiceValue"),
+                        0);
+            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            break;
         case STAGE_GENDER:
             sName = Get2DACache("gender", "NAME", i);
             while(i < GetPRCSwitch(FILE_END_GENDER))

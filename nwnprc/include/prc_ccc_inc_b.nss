@@ -33,6 +33,9 @@ void ChoiceSelected(int nChoiceNo)
     switch(nStage)
     {
         //simple stages
+        case STAGE_INTRODUCTION:
+            nStage++;
+            break;
         case STAGE_GENDER:
             SetLocalInt(OBJECT_SELF, "Gender",
                 array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
@@ -991,7 +994,8 @@ void ChoiceSelected(int nChoiceNo)
         nStage++;
     }
     if(nStage == STAGE_WIZ_SCHOOL
-        && nClass != CLASS_TYPE_WIZARD)
+        && (nClass != CLASS_TYPE_WIZARD
+            || GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)))
     {
         nStage++;
         nStage++;
@@ -1005,8 +1009,9 @@ void ChoiceSelected(int nChoiceNo)
         nStage++;
     }
     if(nStage == STAGE_FAMILIAR
-        && nClass != CLASS_TYPE_WIZARD
-        && nClass != CLASS_TYPE_SORCERER)
+        && ((nClass != CLASS_TYPE_WIZARD && nClass != CLASS_TYPE_SORCERER)
+            || GetPRCSwitch(PRC_PNP_FAMILIARS))
+        )
     {
         nStage++;
         nStage++;

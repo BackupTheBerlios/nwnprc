@@ -11,15 +11,16 @@
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
+#include "x0_i0_spells"
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, A_STONE_DC, A_STONE_S, A_STONE_XP))
@@ -42,22 +43,25 @@ void main()
                 SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
             {
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,
-                    GetSpellId()));
+                    PRCGetSpellId()));
                 fDelay = GetRandomDelay(1.5, 2.5);
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 {
-
+//Use bioware petrify command
+                    DoPetrification(PRCGetCasterLevel(), OBJECT_SELF, oTarget, GetSpellId(), nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF));
+/*
                     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),
                         SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                     {
                         DelayCommand(fDelay, SPApplyEffectToObject
                             (DURATION_TYPE_INSTANT, eLink, oTarget));
                     }
+*/                    
                 }
             }
            oTarget = GetNextObjectInShape(SHAPE_SPHERE,
                 RADIUS_SIZE_LARGE, lTarget);
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

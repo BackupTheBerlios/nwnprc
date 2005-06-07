@@ -5,25 +5,6 @@
 #include "prc_ccc_inc"
 #include "inc_encrypt"
 
-void CheckAndBoot(object oPC)
-{
-    if(GetIsObjectValid(GetAreaFromLocation(GetLocation(oPC))))
-    {            
-        if(GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_IP) == "")
-        {
-            BootPC(oPC);
-        }
-        else
-        {
-            ActivatePortal(oPC, 
-                GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_IP),
-                GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_PASSWORD),
-                "", //waypoint, may need to change
-                TRUE);
-        }      
-    }
-}
-
 void main()
 {
     //define some varaibles
@@ -334,18 +315,27 @@ void main()
         SetLocalInt(oPC, "sXP_AT_LAST_HEARTBEAT", nXP);//simple XPmod bypassing
     }
 
-    WriteTimestampedLogEntry(sScript);
-    SetLocalString(oPC, "LetoScript", sScript);
     SetLocalInt(oPC, "StopRotatingCamera", TRUE);
     SetCutsceneMode(oPC, FALSE);
     DoCleanup();
+    object oClone = GetLocalObject(oPC, "Clone");
+    AssignCommand(oClone, SetIsDestroyable(TRUE));
+    DestroyObject(oClone);
     //do anti-hacker stuff
     SetPlotFlag(oPC, FALSE);
     SetImmortal(oPC, FALSE);
     AssignCommand(oPC, SetIsDestroyable(TRUE));
     ForceRest(oPC);
-    CheckAndBoot(oPC);
-    object oClone = GetLocalObject(oPC, "Clone");
-    AssignCommand(oClone, SetIsDestroyable(TRUE));
-    DestroyObject(oClone);
+    StackedLetoScript(sScript);
+    if(GetLocalInt(oPC, "NewCohort"))
+    {
+        object oCopy = CopyObject(oPC, GetLocation(oPC));   
+        StackedLetoScript(SetCreautreName(RandomName(), FALSE));
+        StackedLetoScript(SetCreautreName(RandomName(), TRUE));
+        if(nPortrait != -1)
+            StackedLetoScript(SetNPCPortrait(nPortrait));
+        RunStackedLetoScriptOnObject(oCopy, "OBJECT", "SPAWN"); 
+    }
+    else
+        RunStackedLetoScriptOnObject(oPC, "OBJECT", "SPAWN");
 }

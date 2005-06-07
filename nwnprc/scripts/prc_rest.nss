@@ -132,6 +132,26 @@ void main()
                     EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPC);
             }
             
+            int nSpellCount = GetPRCSwitch(PRC_DISABLE_SPELL_COUNT);
+            int i;
+            string sMessage;
+            for(i=1;i<nSpellCount;i++)
+            {
+                int nSpell = GetPRCSwitch(PRC_DISABLE_SPELL_+IntToString(i));
+                int nMessage;
+                while(GetHasSpell(nSpell, oPC))
+                {
+                    if(!nMessage)
+                    {
+                        sMessage += "You cannot use "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpell)))+" in this module.\n";
+                        nMessage = TRUE;
+                    }   
+                    DecrementRemainingSpellUses(oPC, nSpell);
+                }
+            }
+            if(sMessage != "")
+                FloatingTextStringOnCreature(sMessage, oPC, TRUE);
+            
             DelayCommand(1.0,PrcFeats(oPC));
 
             // New Spellbooks

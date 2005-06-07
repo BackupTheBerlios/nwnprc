@@ -23,39 +23,44 @@ void DoClassFeat(string sClassFeatTable, int i=0);
 
 void ClassLoop()
 {
-    int i = GetLocalInt(OBJECT_SELF, "i");
     if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
         return;
-    if(i < GetPRCSwitch(FILE_END_CLASSES))
+    int nReali = GetLocalInt(OBJECT_SELF, "i");
+    string SQL = "SELECT rowid FROM prc_cached2da_classes WHERE (PlayerClass = 1) LIMIT 25 OFFSET "+IntToString(nReali); 
+    PRC_SQLExecDirect(SQL);
+    int bAtLeastOneResult;
+    array_create(OBJECT_SELF, "temp_classes");
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {   
+        bAtLeastOneResult = TRUE;
+        int nClass = StringToInt(PRC_SQLGetData(1));
+        array_set_int(OBJECT_SELF, "temp_classes", array_get_size(OBJECT_SELF, "temp_classes"), nClass);
+    }
+    int i;
+    for(i=0;i<array_get_size(OBJECT_SELF, "temp_classes");i++)
     {
-        if(CheckClassRequirements(i))
+        int nClass = array_get_int(OBJECT_SELF, "temp_classes", i);
+        if(CheckClassRequirements(nClass))
         {
-            string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", i)));
+            string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass)));
             array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                    sName);
             array_set_int(OBJECT_SELF, "ChoiceValue",
                 array_get_size(OBJECT_SELF, "ChoiceValue"),
-                   i);
-        }
-        i++;
-        SetLocalInt(OBJECT_SELF, "i", i);
-        if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
-        {
-            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(GetPRCSwitch(FILE_END_CLASSES)));
-            FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
-            SetLocalInt(OBJECT_SELF, "Percentage",1);
-            DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
+                   nClass);
         }
     }
-    else
+    array_delete(OBJECT_SELF, "temp_classes");
+    
+    if(!bAtLeastOneResult)
     {
         FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
-        DeleteLocalInt(OBJECT_SELF, "Percentage");
         DeleteLocalInt(OBJECT_SELF, "i");
         return;
     }
+    SetLocalInt(OBJECT_SELF, "i", nReali+25);
     DelayCommand(0.01, ClassLoop());
 }
 
@@ -1028,56 +1033,57 @@ void BonusFeatLoop()
 
 void RaceLoop()
 {
-    object oPC = OBJECT_SELF;
-    int i = GetLocalInt(oPC, "i");
-    int j;
-    int bReturn;
-    string sFeatName = Get2DACache("racialtypes", "name", i);
-    int nFeatIsAll;
-    string sFeatTest;
-    int bNoAdd;
-    if(i < GetPRCSwitch(FILE_END_RACIALTYPES))
+
+    if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
+        return;
+    int nReali = GetLocalInt(OBJECT_SELF, "i");
+    string SQL = "SELECT rowid FROM prc_cached2da_racialtypes WHERE (PlayerRace = 1) LIMIT 25 OFFSET "+IntToString(nReali); 
+    PRC_SQLExecDirect(SQL);
+    int bAtLeastOneResult;
+    array_create(OBJECT_SELF, "temp_races");
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {   
+        bAtLeastOneResult = TRUE;
+        int nRace = StringToInt(PRC_SQLGetData(1));
+        array_set_int(OBJECT_SELF, "temp_races", array_get_size(OBJECT_SELF, "temp_races"), nRace);
+    }
+    int i;
+    for(i=0;i<array_get_size(OBJECT_SELF, "temp_races");i++)
     {
-        //check its name (which will be a tlk reference)
-        sFeatName = Get2DACache("racialtypes", "name", i);
-        //if it has a name, its not an empty row
+        int nRace = array_get_int(OBJECT_SELF, "temp_races", i);
         int bIsTakeable = TRUE;
-        if(i == RACIAL_TYPE_DROW_FEMALE
+        
+        if(nRace == RACIAL_TYPE_DROW_FEMALE
             && GetLocalInt(OBJECT_SELF, "Gender") == GENDER_MALE
             && GetPRCSwitch(PRC_CONVOCC_DROW_ENFORCE_GENDER))
             bIsTakeable = FALSE;
-        if(i == RACIAL_TYPE_DROW_MALE
+        if(nRace == RACIAL_TYPE_DROW_MALE
             && GetLocalInt(OBJECT_SELF, "Gender") == GENDER_FEMALE
             && GetPRCSwitch(PRC_CONVOCC_DROW_ENFORCE_GENDER))
             bIsTakeable = FALSE;
-        if(sFeatName != ""
-            && Get2DACache("racialtypes", "PlayerRace", i) == "1"
-            && bIsTakeable)
+            
+        if(bIsTakeable)
         {
+            string sName = GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nRace)));
             array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    GetStringByStrRef(StringToInt(sFeatName)));
+                   sName);
             array_set_int(OBJECT_SELF, "ChoiceValue",
                 array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    i);
+                   nRace);
         }
-        i++;
-        //prepare for next thing
-        SetLocalInt(oPC, "i",i);
-        DelayCommand(0.01,RaceLoop());
-        if(GetLocalInt(oPC, "Percentage") == 0)
-        {
-            int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(GetPRCSwitch(FILE_END_RACIALTYPES)));
-            FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
-            SetLocalInt(OBJECT_SELF, "Percentage",1);
-            DelayCommand(1.0, DeleteLocalInt(oPC, "Percentage"));
-        }
+    }
+    array_delete(OBJECT_SELF, "temp_races");
+    
+    if(!bAtLeastOneResult)
+    {
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+        DeleteLocalInt(OBJECT_SELF, "i");
         return;
     }
-   FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
-   DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
-   DeleteLocalInt(OBJECT_SELF, "Percentage");
-   DeleteLocalInt(OBJECT_SELF, "i");
+    SetLocalInt(OBJECT_SELF, "i", nReali+25);
+    DelayCommand(0.01, RaceLoop());
 }
 
 void DoClassFeat(string sClassFeatTable, int i=0)

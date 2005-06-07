@@ -354,6 +354,33 @@ void PRCMakeTables()
     SQL+= "EpicLevel varchar(255) DEFAULT '_', ";   
     SQL+= "Package varchar(255) DEFAULT '_'); "; 
     PRC_SQLExecDirect(SQL);
+    
+    SQL+= "CREATE TABLE prc_cached2da_racialtypes ( ";
+    SQL+= "rowid int(55),";
+    SQL+= "Label varchar(255) DEFAULT '_', ";              
+    SQL+= "Abrev  varchar(255) DEFAULT '_', ";              
+    SQL+= "Name varchar(255) DEFAULT '_', ";              
+    SQL+= "ConverName varchar(255) DEFAULT '_', ";              
+    SQL+= "ConverNameLower varchar(255) DEFAULT '_', ";              
+    SQL+= "NamePlural varchar(255) DEFAULT '_', ";              
+    SQL+= "Description varchar(255) DEFAULT '_', ";              
+    SQL+= "Appearance varchar(255) DEFAULT '_', ";              
+    SQL+= "StrAdjust varchar(255) DEFAULT '_', ";              
+    SQL+= "DexAdjust varchar(255) DEFAULT '_', ";              
+    SQL+= "IntAdjust varchar(255) DEFAULT '_', ";              
+    SQL+= "ChaAdjust varchar(255) DEFAULT '_', ";              
+    SQL+= "WisAdjust varchar(255) DEFAULT '_', ";              
+    SQL+= "ConAdjust varchar(255) DEFAULT '_', ";              
+    SQL+= "Endurance varchar(255) DEFAULT '_', ";              
+    SQL+= "Favored varchar(255) DEFAULT '_', ";              
+    SQL+= "FeatsTable varchar(255) DEFAULT '_', ";              
+    SQL+= "Biography varchar(255) DEFAULT '_', ";              
+    SQL+= "PlayerRace varchar(255) DEFAULT '_', ";              
+    SQL+= "Constant varchar(255) DEFAULT '_', ";              
+    SQL+= "AGE varchar(255) DEFAULT '_', ";              
+    SQL+= "ToolsetDefaultClass varchar(255) DEFAULT '_', ";              
+    SQL+= "CRModifier varchar(255) DEFAULT '_')"; 
+    PRC_SQLExecDirect(SQL);
 
     SQL = "CREATE TABLE prc_cached2da ( file varchar(255) DEFAULT '_', column varchar(255) DEFAULT '_', rowid int(55), data varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL);
@@ -431,7 +458,8 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
                 || s2DA == "soundsets"
                 || s2DA == "appearance"
                 || s2DA == "portraits"
-                || s2DA == "classes")
+                || s2DA == "classes"
+                || s2DA == "racialtypes")
                 SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_"+s2DA+" WHERE ( rowid = "+IntToString(nRow)+" )";
             else if(TestStringAgainstPattern("cls_feat_**", s2DA))
                 SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_cls_feat WHERE ( rowid = "+IntToString(nRow)+" ) AND ( file = '"+s2DA+"' )";
@@ -475,7 +503,8 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
                     || s2DA == "soundset"
                     || s2DA == "appearance"
                     || s2DA == "portraits"
-                    || s2DA == "classes")
+                    || s2DA == "classes"
+                    || s2DA == "racialtypes")
                 {
                     //check that 2da row exisits
                     SQL = "SELECT rowid FROM prc_cached2da_"+s2DA+" WHERE rowid="+IntToString(nRow);
@@ -651,6 +680,56 @@ void Cache_Classes(int nRow = 0)
     }
 }
 
+void Cache_RacialTypes(int nRow = 0)
+{
+    if(nRow == 0)
+    {
+        string SQL = "SELECT rowid FROM prc_cached2da_racialtypes ORDER BY rowid DESC LIMIT 1";
+        PRC_SQLExecDirect(SQL);
+        PRC_SQLFetch();
+        nRow = StringToInt(PRC_SQLGetData(1))+1;
+    }
+    if(nRow < GetPRCSwitch(FILE_END_RACIALTYPES))
+    {
+        Get2DACache("racialtypes", "Label", nRow);   
+        Get2DACache("racialtypes", "Abrev", nRow);   
+        Get2DACache("racialtypes", "Name", nRow);   
+        Get2DACache("racialtypes", "ConverName", nRow);   
+        Get2DACache("racialtypes", "ConverNameLower", nRow);   
+        Get2DACache("racialtypes", "NamePlural", nRow);   
+        Get2DACache("racialtypes", "Description", nRow);   
+        Get2DACache("racialtypes", "Appearance", nRow);   
+        Get2DACache("racialtypes", "StrAdjust", nRow);   
+        Get2DACache("racialtypes", "DexAdjust", nRow);   
+        Get2DACache("racialtypes", "IntAdjust", nRow);   
+        Get2DACache("racialtypes", "ChaAdjust", nRow);   
+        Get2DACache("racialtypes", "WisAdjust", nRow);   
+        Get2DACache("racialtypes", "ConAdjust", nRow);   
+        Get2DACache("racialtypes", "Endurance", nRow);   
+        Get2DACache("racialtypes", "Favored", nRow);   
+        Get2DACache("racialtypes", "FeatsTable", nRow);   
+        Get2DACache("racialtypes", "Biography", nRow);   
+        Get2DACache("racialtypes", "PlayerRace", nRow);   
+        Get2DACache("racialtypes", "Constant", nRow);   
+        Get2DACache("racialtypes", "AGE", nRow);   
+        Get2DACache("racialtypes", "ToolsetDefaultClass", nRow);   
+        Get2DACache("racialtypes", "CRModifier", nRow);   
+        
+        nRow++;
+        DelayCommand(0.1, Cache_RacialTypes(nRow));
+    }
+    else
+        DelayCommand(1.0, Cache_Classes(0));
+    if(nRow % 100 == 0)
+    {
+        string SQL = "COMMIT";
+        PRC_SQLExecDirect(SQL);
+        SQL = "BEGIN IMMEDIATE";
+        PRC_SQLExecDirect(SQL);
+    }
+}
+
+
 void Cache_Feat(int nRow = 0)
 {
     if(nRow == 0)
@@ -708,7 +787,7 @@ void Cache_Feat(int nRow = 0)
         DelayCommand(0.01, Cache_Feat(nRow));
     }
     else 
-        DelayCommand(1.0, Cache_Classes());
+        DelayCommand(1.0, Cache_RacialTypes());
     if(nRow % 100 == 0)
     {
         string SQL = "COMMIT";

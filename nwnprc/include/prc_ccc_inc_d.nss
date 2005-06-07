@@ -357,6 +357,7 @@ int CheckClassRequirements(int nClassID)
     //this checks for base classes
     if(Get2DACache("classes", "EpicLevel", nClassID) != "-1")
         return FALSE;
+    //alignment changes are checked for in alignment        
 
     //anything else is good
     return TRUE;

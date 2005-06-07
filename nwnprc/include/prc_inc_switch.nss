@@ -399,6 +399,7 @@ const string PRC_POWER_ATTACK_STACK_WITH_BW          = "PRC_POWER_ATTACK_STACK_W
  * Disabling specific feat and/or skills
  * Each of these has 2 parts. One part is a variable defining the size of the list
  * The other part is the list itself. The numbers are the row numbers in feat.2da or skills.2da
+ * or spells.2da.
  * For example, if you want to disable Knockdown and Improved Knockdown you would set
  * the variables as follows:
  * PRC_DISABLE_FEAT_COUNT = 2
@@ -409,6 +410,8 @@ const string PRC_DISABLE_FEAT_COUNT                  = "PRC_DISABLE_FEAT_COUNT";
 const string PRC_DISABLE_FEAT_                       = "PRC_DISABLE_FEAT_";
 const string PRC_DISABLE_SKILL_COUNT                 = "PRC_DISABLE_SKILL_COUNT";
 const string PRC_DISABLE_SKILL_                      = "PRC_DISABLE_SKILL_";
+const string PRC_DISABLE_SPELL_COUNT                 = "PRC_DISABLE_SPELL_COUNT";
+const string PRC_DISABLE_SPELL_                      = "PRC_DISABLE_SPELL_";
 
 
 /******************************************************************************\

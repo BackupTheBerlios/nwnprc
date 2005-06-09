@@ -16,80 +16,97 @@ void main()
     // Race Pack Code
     ExecuteScript("race_hb", GetModule() );
 
-    // Execute hooked HB scripts for all players
-    object oPC = GetFirstPC();
+    /* Loop over all players, executing various things */
+    // Cache switch values to variables. This is one of the places where optimization
+    // counts, so also reserve the space for variables used in the loop outside it
+    // so as not to waste time reserving them every iteration.
+    int bPWTime             = GetPRCSwitch(PRC_PW_TIME),
+        bPWPCAutoexport     = GetPRCSwitch(PRC_PW_PC_AUTOEXPORT),
+        bPWHPTracking       = GetPRCSwitch(PRC_PW_HP_TRACKING),
+        bPWLocationTracking = GetPRCSwitch(PRC_PW_LOCATION_TRACKING),
+        bPWMappinTracking   = GetPRCSwitch(PRC_PW_MAPPIN_TRACKING);
+    int bHasPoly;
+    effect eTest;
+    int nMapPinCount, i;
+    // Run some autoexport stuff first. This determines if it needs to loop over players at all
+    if(bPWPCAutoexport)
+    {
+        if(GetLocalInt(GetModule(), "AutoexportCount") == bPWPCAutoexport)
+            DeleteLocalInt(GetModule(), "AutoexportCount");
+        else
+        {
+            SetLocalInt(GetModule(), "AutoexportCount", GetLocalInt(GetModule(), "AutoexportCount") + 1);
+            bPWPCAutoexport = FALSE;
+        }
+    }
+
+    // Start looping
+    object oPC = GetFirstPC(); // Init the PC object
     while(GetIsObjectValid(oPC))
     {
+        // Eventhook
         ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONHEARTBEAT);
+        // ECL
         ApplyECLToXP(oPC);
-        oPC = GetNextPC();
-    }
-    if(GetPRCSwitch(PRC_PW_TIME))
-    {
-        //store it on all PCs separately
-        object oPC = GetFirstPC();
-        while(GetIsObjectValid(oPC))
+        
+        // Check if the character has lost a level since last HB
+        if(GetHitDice(oPC) != GetLocalInt(oPC, "PRC_HitDiceTracking"))
         {
+            if(GetHitDice(oPC) < GetLocalInt(oPC, "PRC_HitDiceTracking"))
+                DelayCommand(0.0f, ExecuteScript("prc_onleveldown", oPC));
+
+            SetLocalInt(oPC, "PRC_HitDiceTracking", GetHitDice(oPC));
+        }
+
+        // Persistent World time tracking
+        if(bPWTime)
+        {
+            //store it on all PCs separately
             SetPersistantLocalInt(oPC, "persist_Time_Year", GetCalendarYear());
             SetPersistantLocalInt(oPC, "persist_Time_Month", GetCalendarMonth());
             SetPersistantLocalInt(oPC, "persist_Time_Day", GetCalendarDay());
             SetPersistantLocalInt(oPC, "persist_Time_Hour", GetTimeHour());
             SetPersistantLocalInt(oPC, "persist_Time_Minute", GetTimeMinute());
             SetPersistantLocalInt(oPC, "persist_Time_Second", GetTimeSecond());
-            oPC = GetNextPC();
         }
-    }
-    if(GetPRCSwitch(PRC_PW_PC_AUTOEXPORT))
-    {
-        if(GetLocalInt(GetModule(), "AutoexportCount") == GetPRCSwitch(PRC_PW_PC_AUTOEXPORT))
+        // Automatic character export every 6n seconds
+        if(bPWPCAutoexport)
         {
-            object oPC = GetFirstPC();
-            while(GetIsObjectValid(oPC))
+            bHasPoly = FALSE;
+            eTest = GetFirstEffect(oPC);
+            while(!bHasPoly && GetIsEffectValid(eTest))
             {
-                int nHasPoly;
-                effect eTest = GetFirstEffect(oPC);
-                while(GetIsEffectValid(eTest) && !nHasPoly)
-                {
-                    if(GetEffectType(eTest) == EFFECT_TYPE_POLYMORPH)
-                        nHasPoly = TRUE;
+                if(GetEffectType(eTest) == EFFECT_TYPE_POLYMORPH)
+                    bHasPoly = TRUE;
+                else
                     eTest = GetNextEffect(oPC);
-                }
-                if(!nHasPoly)
-                    ExportSingleCharacter(oPC);
-                oPC = GetNextPC();
             }
-            DeleteLocalInt(GetModule(), "AutoexportCount");
+            if(!bHasPoly)
+                ExportSingleCharacter(oPC);
         }
-        else
-            SetLocalInt(GetModule(), "AutoexportCount", GetLocalInt(GetModule(), "AutoexportCount")+1);
-    }
-    if(GetPRCSwitch(PRC_PW_HP_TRACKING))
-    {
-        object oPC = GetFirstPC();
-        while(GetIsObjectValid(oPC))
-        {   
+        // Persistant hit point tracking
+        if(bPWHPTracking)
+        {
             SetPersistantLocalInt(oPC, "persist_HP", GetCurrentHitPoints(oPC));
-            oPC = GetNextPC();
         }
-    }
-    if(GetPRCSwitch(PRC_PW_LOCATION_TRACKING))
-    {
-        object oPC = GetFirstPC();
-        while(GetIsObjectValid(oPC))
+        // Persistant location tracking
+        if(bPWLocationTracking)
         {
             SetPersistantLocalLocation(oPC, "persist_loc", GetLocation(oPC));
-            oPC = GetNextPC();
         }
-    }
-    if(GetPRCSwitch(PRC_PW_MAPPIN_TRACKING))
-    {
-        int nMapPinCount = GetNumberOfMapPins(oPC);
-        int i;
-        for(i=1;i<=nMapPinCount;i++)
+        // Persistant map pin tracking
+        if(bPWMappinTracking)
         {
-            struct metalocation mLoc= CreateMetalocationFromMapPin(oPC, i);
-            SetPersistantLocalMetalocation(oPC, "MapPin_"+IntToString(i), mLoc);
+            nMapPinCount = GetNumberOfMapPins(oPC);
+            for(i = 1; i <= nMapPinCount; i++)
+            {
+                struct metalocation mLoc = CreateMetalocationFromMapPin(oPC, i);
+                SetPersistantLocalMetalocation(oPC, "MapPin_" + IntToString(i), mLoc);
+            }
+            SetPersistantLocalInt(oPC, "MapPinCount", nMapPinCount);
         }
-        SetPersistantLocalInt(oPC, "MapPinCount", nMapPinCount);
+
+        // Get the next PC for the loop
+        oPC = GetNextPC();
     }
 }

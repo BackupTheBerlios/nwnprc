@@ -87,6 +87,8 @@ const int EVENT_ONPLAYERRESPAWN          = 17;
 const string NAME_ONPLAYERRESPAWN        = "prc_event_array_onplayerrespawn";
 const int EVENT_ONUNAQUIREITEM           = 18;
 const string NAME_ONUNAQUIREITEM         = "prc_event_array_onunaquireitem";
+const int EVENT_ONPLAYERLEVELDOWN        = 35;
+const string NAME_ONPLAYERLEVELDOWN      = "prc_event_array_onplayerleveldown";
 
 // This has special handling. See prc_onuserdef.nss
 const int EVENT_ONUSERDEFINED            = 19;
@@ -604,6 +606,8 @@ string EventTypeIdToName(int nEvent){
             return NAME_ONUNAQUIREITEM;
         case EVENT_ONUSERDEFINED:
             return NAME_ONUSERDEFINED;
+        case EVENT_ONPLAYERLEVELDOWN:
+            return NAME_ONPLAYERLEVELDOWN;
         
         // NPC events
         case EVENT_NPC_ONBLOCKED:

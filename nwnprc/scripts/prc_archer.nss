@@ -12,7 +12,7 @@ void Equip(object oPC,int bBowSpec,object oSkin,int bXShot)
 
   if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
 
-  SetCompositeAttackBonus(oPC, "ArcherBowSpec", bBowSpec);
+    SetCompositeAttackBonus(oPC, "ArcherBowSpec", bBowSpec);
 
   if (bXShot && !GetHasSpellEffect(SPELL_EXTRASHOT,oPC))
   {
@@ -21,14 +21,14 @@ void Equip(object oPC,int bBowSpec,object oSkin,int bXShot)
 
 }
 
-void UnEquip(oPC) //(object oPC,int bBowSpec,object oSkin,int bXShot)
+void UnEquip(object oPC,int bBowSpec,object oSkin,int bXShot)
 {
-  //object oWeap = GetItemLastUnequipped();
-  //int iType = GetBaseItemType(oWeap);
+  object oWeap = GetItemLastUnequipped();
+  int iType = GetBaseItemType(oWeap);
 
-  //if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
+  if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
 
-  if (GetHasSpellEffect(SPELL_EXTRASHOT,oPC))
+  if ( GetHasSpellEffect(SPELL_EXTRASHOT,oPC))
           RemoveSpellEffects(SPELL_EXTRASHOT,oPC,oPC);
 }
 
@@ -55,6 +55,6 @@ void main()
     SetCompositeAttackBonus(oPC, "ArcherBowSpec", 0);
 
     if (iEquip !=1) Equip(oPC,bBowSpec,oSkin,bXShot);
-    //if (iEquip ==1) UnEquip(oPC,bBowSpec,oSkin,bXShot);
-    if (iEquip ==1) UnEquip(oPC);
+    if (iEquip ==1) UnEquip(oPC,bBowSpec,oSkin,bXShot);
+
 }

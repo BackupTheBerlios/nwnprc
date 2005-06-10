@@ -10,17 +10,8 @@ void SetupStage();
 
 void SetupStage()
 {
-    int nStage  = GetLocalInt(OBJECT_SELF, "Stage");
-    array_create(OBJECT_SELF, "StagesSetup");
-    if(array_get_int(OBJECT_SELF, "StagesSetup", nStage))
-        return;
-    //stage has changed, clear the choice array
-    array_delete(OBJECT_SELF, "ChoiceTokens");
-    array_create(OBJECT_SELF, "ChoiceTokens");
-    array_delete(OBJECT_SELF, "ChoiceValue");
-    array_create(OBJECT_SELF, "ChoiceValue");
-    DeleteLocalInt(OBJECT_SELF, "ChoiceOffset");
     //setup variables
+    int nStage  = GetLocalInt(OBJECT_SELF, "Stage");
     int nRace = GetLocalInt(OBJECT_SELF, "Race");
     int nClass = GetLocalInt(OBJECT_SELF, "Class");
     int nGender = GetLocalInt(OBJECT_SELF, "Gender");

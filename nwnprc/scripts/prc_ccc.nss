@@ -22,8 +22,19 @@ void main()
     if(nValue == -1)
     {
         //to the header
+        int nStage  = GetLocalInt(OBJECT_SELF, "Stage");
+        array_create(OBJECT_SELF, "StagesSetup");
+        if(array_get_int(OBJECT_SELF, "StagesSetup", nStage))
+            return;
+        //stage has changed, clear the choice array
+        array_delete(OBJECT_SELF, "ChoiceTokens");
+        array_create(OBJECT_SELF, "ChoiceTokens");
+        array_delete(OBJECT_SELF, "ChoiceValue");
+        array_create(OBJECT_SELF, "ChoiceValue");
+        DeleteLocalInt(OBJECT_SELF, "ChoiceOffset");
         SetupStage();
         SetupTokens();
+        SetupHeader();
         ExecuteScript("prc_ccc_debug", OBJECT_SELF);
         return;
     }

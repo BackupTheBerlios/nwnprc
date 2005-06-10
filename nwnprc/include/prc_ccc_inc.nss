@@ -91,9 +91,20 @@ int GetCost(int nAbilityScore)
 //also sets locals equal to each token
 //locals follow "TOKEN_#" pattern
 void SetupTokens();
-
+void SetupHeader();
 
 void SetupTokens()
+{
+    int i;
+    int nOffset = GetLocalInt(OBJECT_SELF, "ChoiceOffset");
+    //choices
+    for (i=0;i<10;i++)
+    {
+        SetToken(100+i, array_get_string(OBJECT_SELF, "ChoiceTokens", nOffset+i));
+    }
+}
+
+void SetupHeader()
 {
     int nStage  = GetLocalInt(OBJECT_SELF, "Stage");
     int nOffset = GetLocalInt(OBJECT_SELF, "ChoiceOffset");
@@ -103,11 +114,6 @@ void SetupTokens()
     string sText;
     int i;
 
-    //choices
-    for (i=0;i<10;i++)
-    {
-        SetToken(100+i, array_get_string(OBJECT_SELF, "ChoiceTokens", nOffset+i));
-    }
 
     //header
     switch(nStage)

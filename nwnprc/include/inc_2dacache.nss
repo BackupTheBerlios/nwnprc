@@ -355,7 +355,7 @@ void PRCMakeTables()
     SQL+= "Package varchar(255) DEFAULT '_'); "; 
     PRC_SQLExecDirect(SQL);
     
-    SQL+= "CREATE TABLE prc_cached2da_racialtypes ( ";
+    SQL = "CREATE TABLE prc_cached2da_racialtypes ( ";
     SQL+= "rowid int(55),";
     SQL+= "Label varchar(255) DEFAULT '_', ";              
     SQL+= "Abrev  varchar(255) DEFAULT '_', ";              

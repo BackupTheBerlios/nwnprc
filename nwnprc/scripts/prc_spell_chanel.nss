@@ -53,8 +53,13 @@ void main()
     object oWeapon = GetSpellTargetObject();
 
 
-if (oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))
+if (oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC)
+    &&!GetIsObjectValid(GetSpellCastItem()))
 {
+    //weapon buffs are never stored
+    if(X2CastOnItemWasAllowed(oWeapon))
+        return;
+        
 
 //If the target is an equiped ranged weapon, we inform the spellsword
 //that channeling doesnt work with ranged weapons and exit the function
@@ -65,7 +70,6 @@ if (oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))
         PRCSetUserSpecificSpellScriptFinished();
         return;
         }
-
 
 //If the target is an equiped melee weapon, we get the spell ID of the casted
 //spell the caster level of the spellsword and the metamagic feat.
@@ -117,7 +121,7 @@ PRCSetUserSpecificSpellScriptFinished();
         }
     if(mSpell == 2)
         {
-        StoreSpells(nSpell ,nClevel ,oWeapon , oPC,"2", nFeat);
+        StoreSpells(nSpell ,nClevel ,oWeapon , oPC,"3", nFeat);
         SetLocalInt(oPC,"multispell",0);
         }
     }

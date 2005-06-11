@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- PRC Crafting sytem v2.0 TLK -->
+
+<tlk offset="47195" sex="m">
+	<tlk lang="en">
+		<entry id="0">divine</entry>
+		<entry id="1">arcane</entry>
+		<entry id="2">psionic</entry>
+		<entry id="3">Helper/Tools</entry>
+		<entry id="4">alternative</entry>
+		<entry id="5">OK</entry>
+		<entry id="6">Missing</entry>
+		<entry id="7">Failed</entry>
+		<entry id="8">All requirements are available.</entry>
+		<entry id="9">Some requirements are missing.</entry>
+		<entry id="10">Market price</entry>
+		<entry id="11">Gold cost</entry>
+		<entry id="12">Experience cost</entry>
+		<entry id="13">check DC</entry>
+		<entry id="14">You're trying to write a recipe.</entry>
+		<entry id="15">You can't understand how to replicate this object.</entry>
+		<entry id="16">You can't use this to craft an object.</entry>
+		<entry id="17">This isn't a valid recipe.</entry>
+		<entry id="18">Craft Item</entry>
+		<entry id="19">Use this ability on a recipe created with "Examine Recipe or Item" to craft a new item. Note that there's no confirmation; use "Examine Recipe or Item" to know the requisites without doing anything.</entry>
+		<entry id="20">Examine Item or Recipe</entry>
+		<entry id="21">Use this ability on an object to obtain a recipe from it (if available).
+Use it on a recipe to read it and know the requisites.</entry>
+		<entry id="22">Spell</entry>
+		<entry id="23">Feat</entry>
+		<entry id="24">Please wait before crafting new objects.</entry>
+		<entry id="25">Item Crafting Recipe</entry>
+		<entry id="26">This scroll contains the recipe to create an item.  To determine the item that this scroll makes, use 'Examine Item or Recipe' on it.</entry>
+		<entry id="27">Sorry, but the Crafting System has been disabled by the module administrator.</entry>
+		<entry id="28">Special</entry>
+		<entry id="29">You need 1 GP to write a recipe.</entry>
+	</tlk>
+
+	<tlk lang="it">
+		<entry id="0">divino</entry>
+		<entry id="1">arcano</entry>
+		<entry id="2">psionico</entry>
+		<entry id="3">Aiutante/arnesi</entry>
+		<entry id="4">alternativo</entry>
+		<entry id="5">OK</entry>
+		<entry id="6">Mancante</entry>
+		<entry id="7">Fallito</entry>
+		<entry id="8">Tutti i requisiti sono disponibili.</entry>
+		<entry id="9">Mancano alcuni requisiti.</entry>
+		<entry id="10">Prezzo di mercato</entry>
+		<entry id="11">Costo in oro</entry>
+		<entry id="12">Costo in PX</entry>
+		<entry id="13">tiro CD</entry>
+		<entry id="14">Stai provando a scrivere una ricetta.</entry>
+		<entry id="15">Non riesci a capire come fare per replicare quest'oggetto.</entry>
+		<entry id="16">Non puoi usare questo per creare un oggetto.</entry>
+		<entry id="17">Il bersaglio dev'essere una ricetta.</entry>
+		<entry id="18">Crea Oggetto</entry>
+		<entry id="19">Usa quest'abilità su una ricetta creata con "Esamina Ricetta o Oggetto" per creare un nuovo oggetto. Nota che non c'è nessun messaggio di conferma; usa "Esamina Ricetta o Oggetto" per conoscere i requisiti senza fare nulla.</entry>
+		<entry id="20">Esamina Ricetta o Oggetto</entry>
+		<entry id="21">Usa quest'abilità su un oggetto per ottenere da esso (se disponibile).
+Usala su una ricetta per leggerla e conoscerne i requisiti.</entry>
+		<entry id="22">Incantesimo</entry>
+		<entry id="23">Talento</entry>
+		<entry id="24">Sei pregato di attendere prima di creare nuovi oggetti.</entry>
+		<entry id="25">Ricetta per la Creazione di Oggetti</entry>
+		<entry id="26">Questa pergamena contiene le istruzioni per creare un oggetto. Per determinare di che oggetto si tratta, usa 'Esamina Ricetta o Oggetto' su di essa.</entry>
+		<entry id="27">Siamo spiacenti, ma il Sistema di Creazione Oggetti è stato disabilitato dall'amministratore del modulo.</entry>
+		<entry id="28">Speciale</entry>
+		<entry id="29">Hai bisogno di 1 MO per scrivere una ricetta.</entry>
+	</tlk>
+</tlk>

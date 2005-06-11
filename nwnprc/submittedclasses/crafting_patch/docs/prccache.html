@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+	<title></title>
+</head>
+<body> 
+
+<center><b><big><big>PRC SQL Support and 2DA Caching System</big></big></b><br><br>
+by CRV§ADER//KY</center><br>
+<br><div align="justify">
+
+<a href="#intro">Introduction</a><br>
+<a href="#reqs">Requirements</a><br>
+<a href="#setup">Setup</a><br>
+<a href="#external">External caching for feat.2da and spells.2da</a><br>
+<a href="#api">2DA Cache API</a><br>
+<a href="#editing">Editing the 2DAs</a><br>
+<a href="#faq">FAQ</a><br>
+<br>
+<br>
+
+<a name="intro"><b>Introduction</b></a><br>
+<br>
+<b>Quick note:</b> If you aren't the administrator of a dedicated NWN server, you probably couldn't care less about this document.<br>
+<br>
+<br>
+Starting from version 2.3, the PRC natively supports NWNX2 and connections to an SQL server (either ODBC or MySQL). This is because some of its parts, such as the crafting system, can gain considerable speed increments from it. Essentially, this system will take care of autonomously initializing and testing an SQL connection, if available.<br>
+<br>
+Enabling PRC support to NWNX2/ODBC implies a couple of things:<br>
+<b>1)</b> Now aps_include.nss can be found inside the PRC HAKs, so you should delete your own copy.<br>
+<b>2)</b> If you activate the PRC SQL support, you should no longer issue any SQLInit() call in the OnModuleLoad event.<br>
+<br>
+Accessing the 2DA files in NWN using the Get2DAString() function is deadly slow: in fact, you may easily arrive to some <i>seconds</i> for a single access to feat.2da or spells.2da, even on a very powerful server.<br>
+Plus, if you need sequential access to a 2DA (i.e. read a recipe), you'll have to multiply the access time for every access you make. This will, in most cases, completely lock the server for some seconds - which is obviously not acceptable.<br>
+<br>
+As a workaround to this problem the PRC 2DA Caching System has been created. It requires a working ODBC or MySQL connection via NWNX2 and transparently stores the 2DA values on your ODBC database, which is generally 100 to 10,000 times faster than 2DAs. Some 2DAs are pre-cached whenever you upgrade the PRC; the content of others, instead, is cached on the fly the first time you try to access it.<br>
+<br>
+The 2DA Caching System is estensively used by some PRC parts or additions, like the Crafting System or the convocc, and may be used elsewhere as well. As a rule of thumb, if you have an ODBC connection for your server it's always a good idea to enable it. If you're not running a dedicated server you won't be able tu use it (and probably won't need it, either).<br>
+<br>
+<br>
+<a name="reqs"><b>Requirements</b></a>
+<ul>
+	<li>A working MySQL or ODBC connection through NWNX2.</li>
+</ul>
+Get2DACache() calls will still work if you don't have it, and/or if the whole PRC SQL Support is disabled, but they won't have any benefits against Get2DAString().<br>
+<br>
+<br>
+
+<a name="setup"><b>Setup</b></a><br>
+<br>
+The PRC SQL Support and 2DA Caching System is controlled by the following module variables:<br>
+<br>
+<table border="1">
+	<tr>
+		<td><b>Name</b></td>
+		<td><b>Type</b></td>
+		<td><b>Description</b></td>
+	</tr>
+	<tr>
+		<td>PRC_USE_SQL</td>
+		<td>int</td>
+		<td align="justify">Enable generic SQL support for the PRC scripts. You shall NOT issue SQLInit() from your scripts any more; the PRC scripts will do it instead. Please note that the SQL server will take a couple of seconds to initialize. This switch enables generic 2DA caching support, too. This will require some batch processing (around 2 minutes) every time you'll upgrade the PRC.</td>
+	</tr>
+	<tr>
+		<td>PRCCACHE_CC</td>
+		<td>int</td>
+		<td align="justify">Enable pre-caching for those 2das that are exclusively accessed by the character creator. This will increase the build time by up to 10 minutes. feat.2da and spells.2da are far too big to be read from inside the game (it would take 20-25 hours of batch processing for them alone) and have to be manually upgraded from an external program (see below).</td>
+	</tr>
+	<tr>
+		<td>HaveSQLServer</td>
+		<td>int</td>
+		<td align="justify">This flag is set to TRUE by the PRC SQL initialization script if a working ODBC/MySQL connection is available. You can test this flag in your scripts wherever you please.</td>
+	</tr>
+	<tr>
+		<td>PRC_OnLoad_AfterSQL</td>
+		<td>string</td>
+		<td align="justify">You may define the name of a custom script that will be called <i>AFTER</i> the SQL server has been initialized by the PRC. You may use it to initialize some aspects of your server (i.e. a persistent calendar). Note that it will be called if no database connection is available, too; you'll have to test HaveSQLServer to know it.</td>
+	</tr>
+</table>
+
+<br>
+<br>
+<a name="external"><b>External caching for feat.2da and spells.2da</b></a><br>
+<br>
+feat.2da and spells.2da are simply too large to be cached from inside the game, so doing it will be a bit tricky.<br>
+If you're not using PRCCACHE_CC, you can safely skip this section.<br>
+<br>
+<b>1)</b> Launch the dedicated server and wait for the completion of the in-game caching routine.<br>
+<b>2)</b> Now the server will run, but you'll get periodic warnings that the cache for spells.2da and feat.2da is out of date. The convocc won't be able to run until you update them, but everything else should be fine (just a bit slower).<br>
+<b>3)</b> Open a UNIX shell (or the DOS prompt) and move to your NWN "utils" folder.<br>
+<b>4)</b> Open prc_featspells.sh in a text editor and edit the constants for your needs.<br>
+<b>5a)</b> If you're using the DOS prompt, you will have to manually issue the commands that you find inside it (sorry, but I don't know how to write a .BAT file).<br>
+<b>5b)</b> If you're using a UNIX shell (read the FAQ below if you don't have one), just launch
+<pre>sh ./prc_featspells.2da</pre>
+<b>6)</b> Do everything again every time that the 2DA cache is rebuilt (that is, every time you modify the 2DAs or you update the PRC).<br>
+<br>
+Alternatively to points 3 through 5, you may want to check out on NWVault or on the PRC forums if some good soul has released a pre-generated SQL script for the latest PRC version. Keep in mind, however, that it WON'T work if you've made any modifications to feat.2da or spells.2da.<br>
+<br>
+<br>
+
+<a name="api"><b>2DA Cache API</b></a><br>
+<pre><span style="color: green;">#include "prccache"</span>
+
+<span style="color: grey;">//Wrapper for Bioware's Get2daString; it will use a database if enabled
+//Note that you CAN'T USE IT while any other SQL query is in progress,
+//or it will overwrite the results!</span>
+<span style="color: red;">string</span> Get2DACache(<span style="color: red;">string</span> datafile, <span style="color: red;">string</span> column, <span style="color: red;">int</span> row);
+
+<span style="color: grey;">//Force cache refresh of a 2DA entry
+//Note that it won't autonomously check for USE_2DA_DB_CACHE.
+//In general, you'll never need this one.</span>
+<span style="color: red;">void</span> Set2DACache(<span style="color: red;">string</span> datafile, <span style="color: red;">string</span> column, <span style="color: red;">int</span> row);
+</pre>
+<br>
+
+<a name="editing"><b>Editing the 2DAs</b></a><br>
+<br>
+If you intend to edit any 2DAs (and I mean any, not only those that have been modified by the PRC) between PRC upgrades, you'll have to override a special 2DA, <i>prc_version.2da</i>, that lets the PRC determine if the 2DA cache is up to date or if it has to be rebuilt. Such file can be found inside <i>prc_2da.hak</i>.<br>
+<pre>2DA V2.0
+
+   NWNVersion   PRCVersion  ModVersion
+0  1.65         2.3a        0</pre>
+NWNVersion and PRCVersion must coincide, respectively, with the version of the NWN server and that of the PRC haks. ModVersion must be changed every time you modify any 2DAs; this means that whenever you release an updated verion of myserver.hak, which contains at least one 2DA file, you'll have to write a modified version of prc_version.2da that overrides that of the PRC (that is, the HAK that contains it must be at a higher level than prc_2da.hak).<br>
+<br>
+Additionally, if you're using PRCCACHE_CC and you've made some really heavy additions to the 2DAs (100+ lines), you may want to double check the constants in <i>prccache.nss</i> (included in <i>prc_include.hak</i>) and eventually recompile the PRC. The system is already CEP-compatible.<br>
+<br>
+<br>
+
+<a name="faq"><b>FAQ</b></a><br>
+<br>
+<b>Q)</b> I'm not the administrator of a dedicated server. Should I care about this?<br>
+<b>A)</b> No.<br>
+<br>
+
+<b>Q)</b> Where do I get NWNX2? How does it work? How do I install it?<br>
+<b>A)</b> The answer is in the NWNX2 manual <a href="http://www.nwnx.org/" target="_new">here</a>.<br>
+<br>
+
+<b>Q)</b> Does the PRC <i>require</i> NWNX2 now?<br>
+<b>A)</b> No, it will continue to work without it just fine.<br>
+<br>
+
+<b>Q)</b> Why should I let the PRC initialize the SQL server instead of doing it by myself?<br>
+<b>A)</b> Because some PRC components require it. Those are, at the moment, the 2DA Caching System, the Crafting System and the in-game Character Creator (convocc). More may be added in the future.<br>
+<br>
+
+<b>Q)</b> I've done so and now ODBC connectivity doesn't work any more!<br>
+<b>A)</b> Did you remember to remove SQLInit() from your own scripts?<br>
+<br>
+
+<b>Q)</b> I previously modified aps_include.nss at the point that it's not compatible with the standard one any more, so either I break my own scripts or the PRC ones!<br>
+<b>A)</b> Here you learn an important rule: if you ever modify a library and you break compatibility with the standard one, <b>thou shalt rename it</b>. Now, rename your own aps_include to aps_include2 and change <span style="color: green;">#include "aps_include"</span> in all your scripts to <span style="color: green;">#include "aps_include2"</span>.<br>
+<br>
+
+<b>Q)</b> I can't access my old aps_include any more! The PRC one overwrites it!<br>
+<b>A)</b> That's because HAKs have a higher priority than in-game resources. Remove prc_include.hak from the HAKs list, rename your script, and then re-add it.<br>
+<br>
+
+<b>Q)</b> I'm currently using the Bioware database for my persistency scripts. Should I upgrade to MySQL just for this?<br>
+<b>A)</b> If you plan to use the crafting system and want to manage more than 2-3 contemporaneous players, it's a really good idea. If you want to use the convocc, you <i>have</i> to.<br>
+<br>
+
+<b>Q)</b> Hey, but older versions of the convocc didn't require MySQL!<br>
+<b>A)</b> Older version of the convocc used to take 1 hour for the first initialization and 5 to 20 minutes for the next ones, too.<br>
+<br>
+
+<b>Q)</b> I'm currently using Get2DAString() in my scripts. Should I replace it with Get2DACache() everywhere?<br>
+<b>A)</b> Yes. Doing so won't have any negative effects in any case and, if the 2DA caching system is active, you may get a significative performance boost.<br>
+<br>
+
+<b>Q)</b> Aaargh! I've done so and now when I try to compile my scripts I get lots of compilation errors!<br>
+<b>A)</b> You probably forgot to put <span style="color: green;">#include "prccache"</span> at the top of them, and/or you're using an outdated PRC version.<br>
+<br>
+
+<b>Q)</b> I don't use Get2DAString() anywhere in my scripts. Why should I enable this?<br>
+<b>A)</b> You don't use it, but the PRC does. At the moment, the PRC Crafting System massively relies on the 2DA Caching System and Primogenitor's convocc won't work without it. Other PRC components may use it in the future.<br>
+<br>
+
+<b>Q)</b> I don't use any of those. Should I enable it in any case?<br>
+<b>A)</b> There may be some performance gains here and there. If two minutes of your life every month of so is unacceptable for you, you may want to run some benchmarks or simply not enable it.<br>
+<br>
+
+<b>Q)</b> Why can't you pre-cache feat.da and spells.2da like you do for many other files?<br>
+<b>A)</b> Because 2DA access time grows exponentially with the size of the 2DA. I've calculated that it would take around 14 hours to cache feat.2da <i>alone</i> on a Pentium 2000 running a Win2K dedicated server this way.<br>
+<br>
+
+<b>Q)</b> I don't have UNIX! How am I supposed to run a bash script?<br>
+<b>A)</b> You may use <a href="http://crusaderky.altervista.org/downloads.php#KY-MinGW" target="_new">MinGW/MSYS</a> or, more simply, manually issue the commands using a DOS shell.<br>
+<br>
+
+<b>Q)</b> I know how to write a .BAT script! Do you want me to translate your bash script?<br>
+<b>A)</b> Please. I'll be happy to include it in the next PRC release.<br>
+<br>
+
+<b>Q)</b> I don't know how to use a UNIX or a DOS shell and I'm too lazy to learn how. Could you release a shiny graphical interface with dancing paperclips for me?<br>
+<b>A)</b> Sorry, but I've better things to do. Maybe in the future, but don't count on it too much.<br>
+<br>
+
+</div>
+</body>
+</html>

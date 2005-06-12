@@ -194,11 +194,11 @@
 190 FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP           999       1    -1             0      
 191 FEAT_EPIC_IMPROVED_COMBAT_CASTING              696       1    -1             0      
 192 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
-193 FEAT_CRAFT_WONDROUS_ITEM                       2925      0    3              1      
-194 FEAT_CRAFT_MAGIC_ARMS_AND_ARMOR                2926      0    5              1      
-195 FEAT_CRAFT_ROD                                 2927      0    9              1      
-196 FEAT_CRAFT_STAFF                               2928      0    12             1      
-197 FEAT_FORGE_RING                                2929      0    12             1      
+193 FEAT_CRAFT_WONDROUS_ITEM                       2925      0    3              0      
+194 FEAT_CRAFT_MAGIC_ARMS_AND_ARMOR                2926      0    5              0      
+195 FEAT_CRAFT_ROD                                 2927      0    9              0      
+196 FEAT_CRAFT_STAFF                               2928      0    12             0      
+197 FEAT_FORGE_RING                                2929      0    12             0      
 198 FEAT_HAND_HEALER                               3167      0    -1             0      
 199 FEAT_EPIC_DIVINE_VIGOR                         3115      0    -1             1      
 200 FEAT_DIVINE_VIGOR                              3116      0    -1             1      
@@ -211,7 +211,7 @@
 207 OverWCrit_Mindblade                            3615      1    -1             0      
 208 DevCrit_Mindblade                              3616      1    -1             0      
 209 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      
-210 ****                                           ****      **** ****           ****   
+82  FEAT_CRAFT_CONSTRUCT                2920      0    -1             0   
 211 ****                                           ****      **** ****           ****   
 212 ****                                           ****      **** ****           ****   
 213 ****                                           ****      **** ****           ****   

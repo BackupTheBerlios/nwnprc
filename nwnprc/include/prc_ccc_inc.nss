@@ -123,6 +123,7 @@ void SetupHeader()
             sText+= "This is a replicate of the bioware character creator, but it will allow you to select custom content at level 1.\n";
             sText+= "Simply follow the step by step instructions and select what you want. ";
             sText+= "If you dont get all the options you think you should at a stage, select one, then select No at the confirmation step";
+            SetToken(99, sText);
             break;
         case STAGE_GENDER:
             SetToken(99, GetStringByStrRef(158));

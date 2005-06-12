@@ -8,16 +8,13 @@ string Encrypt(object oPC)
         nKey = 10;
     string sReturn;
     
-    int nLastKey = GetCampaignInt("CCC_keys", "LastKey");
-    int nPlayerKey = GetCampaignInt("CCC_keys", "PlayerKey", oPC);
-    sReturn = IntToString(nKey*nPlayerKey);
-    if(sReturn == "0")
+    string sPublicCDKey = GetPCPublicCDKey(oPC);
+    int nKeyTotal;
+    int i;
+    for(i=1;i<GetStringLength(sPublicCDKey);i++)
     {
-        nLastKey++;
-        sReturn = IntToString(nKey*nLastKey);
-        SetCampaignInt("CCC_keys", "PlayerKey", nLastKey, oPC);
-        SetCampaignInt("CCC_keys", "LastKey", nLastKey);
+        nKeyTotal += StringToInt(GetStringLeft(GetStringRight(sPublicCDKey, i),1));
     }
-
+    sReturn = IntToString(nKeyTotal);
     return sReturn;
 }

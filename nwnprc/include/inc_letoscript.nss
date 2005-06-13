@@ -155,7 +155,7 @@ void LetoPCExit(object oPC)
             else
             {
                 //unicorn syntax
-                sScript  = "%char= '"+sPath+"'; "+sScript;
+                sScript  = "%char= qq{"+sPath+"}; "+sScript;
                 sScript += "%char = '>'; ";
                 sScript += "close %char; ";
             }

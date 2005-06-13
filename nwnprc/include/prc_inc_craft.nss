@@ -1239,9 +1239,11 @@ string GetRecipeTagFromItem(string sResRef)
         {
             //Cache item_to_ireq into module variables
             int row;
-            for (row = 0; row <= GetPRCSwitch(FILE_END_ITEM_TO_IREQ); row++) {
+            for (row = 0; row <= GetPRCSwitch(FILE_END_ITEM_TO_IREQ); row++) 
+            {
                 string sResRefRead = Get2DACache("item_to_ireq", "L_RESREF"  , row);
-                if (sResRefRead != "") {
+                if (sResRefRead != "") 
+                {
                     string sTagRead    = Get2DACache("item_to_ireq", "RECIPE_TAG", row);
                     SetLocalString(oModule, "item_to_ireq" + sResRefRead, sTagRead);
                 }

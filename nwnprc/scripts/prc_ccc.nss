@@ -19,6 +19,7 @@ void main()
         nValue --;//correct for 1 based to zero based
 
 
+    SetupTokens();
     if(nValue == -1)
     {
         //to the header

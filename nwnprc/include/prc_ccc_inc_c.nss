@@ -1037,20 +1037,13 @@ void RaceLoop()
     if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
         return;
     int nReali = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT rowid FROM prc_cached2da_racialtypes WHERE (PlayerRace = 1) LIMIT 25 OFFSET "+IntToString(nReali); 
+    string SQL = "SELECT rowid, Name FROM prc_cached2da_racialtypes WHERE (PlayerRace = 1) LIMIT 25 OFFSET "+IntToString(nReali); 
     PRC_SQLExecDirect(SQL);
     int bAtLeastOneResult;
-    array_create(OBJECT_SELF, "temp_races");
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {   
         bAtLeastOneResult = TRUE;
         int nRace = StringToInt(PRC_SQLGetData(1));
-        array_set_int(OBJECT_SELF, "temp_races", array_get_size(OBJECT_SELF, "temp_races"), nRace);
-    }
-    int i;
-    for(i=0;i<array_get_size(OBJECT_SELF, "temp_races");i++)
-    {
-        int nRace = array_get_int(OBJECT_SELF, "temp_races", i);
         int bIsTakeable = TRUE;
         
         if(nRace == RACIAL_TYPE_DROW_FEMALE
@@ -1064,16 +1057,16 @@ void RaceLoop()
             
         if(bIsTakeable)
         {
-            string sName = GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nRace)));
+            string sName = GetStringByStrRef(StringToInt(PRC_SQLGetData(2)));
             array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                    sName);
+PrintString("adding "+sName);
             array_set_int(OBJECT_SELF, "ChoiceValue",
                 array_get_size(OBJECT_SELF, "ChoiceValue"),
                    nRace);
         }
     }
-    array_delete(OBJECT_SELF, "temp_races");
     
     if(!bAtLeastOneResult)
     {
@@ -1115,11 +1108,11 @@ void AppearanceLoop()
         string sName = GetStringByStrRef(nStrRef);
         int nRow = StringToInt(PRC_SQLGetData(1));
         array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    nRow);
+            array_get_size(OBJECT_SELF, "ChoiceTokens"),
+                sName);
+        array_set_int(OBJECT_SELF, "ChoiceValue",
+            array_get_size(OBJECT_SELF, "ChoiceValue"),
+                nRow);
     }
 
     if(i > GetPRCSwitch(FILE_END_APPEARANCE))

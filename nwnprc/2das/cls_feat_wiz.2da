@@ -81,11 +81,11 @@
 77  FEAT_CRAFT_ROD                      2927      0    9              0      
 78  FEAT_CRAFT_STAFF                    2928      0    12             0      
 79  FEAT_FORGE_RING                     2929      0    12             0      
-80  FEAT_ALTERNATE_FORM                 2931      3    7              0      
+80  FEAT_ALTERNATE_FORM                 2931      3    99             0      
 81  ESS_Rest                            4399      0    99             2      
-82  FEAT_CRAFT_CONSTRUCT                2920      0    -1             0   
-83  ****                                ****      ***  ****           ****   
-84  ****                                ****      ***  ****           ****   
+82  FEAT_CRAFT_CONSTRUCT                2920      0    -1             0      
+97  FEAT_CRAFT_ITEM                           2899      3    1              1   
+97  FEAT_READ_RECIPE                          2919      3    1              1  
 85  ****                                ****      ***  ****           ****   
 86  ****                                ****      ***  ****           ****   
 87  ****                                ****      ***  ****           ****   

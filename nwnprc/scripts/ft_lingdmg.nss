@@ -3,26 +3,26 @@
 //:: ft_lingdmg
 //:://////////////////////////////////////////////
 /*
-	Sets up adding and removing OnHit: CastSpell
-	- Unique Power to weapons equipped by the feat
-	possessor. This is done by the script adding
-	itself via the eventhook to OnPlayerEquipItem
-	and OnPlayerUnEquipItem events.
-	
-	The script also adds itself to be run during
-	OnHit event, where it will deal the lingering
-	sneak attack damage.
-	
-	
-	Should Lingering Damage apply to unarmed strike, too ?
-	Also, should there be some text notification when
-	the damage is dealt, like with PerformAttackRound?
-	 - Ornedan
+    Sets up adding and removing OnHit: CastSpell
+    - Unique Power to weapons equipped by the feat
+    possessor. This is done by the script adding
+    itself via the eventhook to OnPlayerEquipItem
+    and OnPlayerUnEquipItem events.
+    
+    The script also adds itself to be run during
+    OnHit event, where it will deal the lingering
+    sneak attack damage.
+    
+    
+    Should Lingering Damage apply to unarmed strike, too ?
+    Also, should there be some text notification when
+    the damage is dealt, like with PerformAttackRound?
+     - Ornedan
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-
+#include "prc_alterations"
 #include "inc_eventhook"
 #include "prc_inc_combat"
 

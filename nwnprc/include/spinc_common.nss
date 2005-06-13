@@ -49,7 +49,7 @@
 //      oTarget - object to apply the effect on.
 //      fDuration - duration of the effect, only used for some duration types.
 //      bDispellable - flag to indicate whether spell is dispellable or not, default TRUE.
-//      nSpellID - ID of spell being cast, if -1 GetSpellId() is used.
+//      nSpellID - ID of spell being cast, if -1 PRCGetSpellId() is used.
 //      nCasterLevel - effective caster level, if -1 GetCasterLevel() is used.
 //      oCaster - caster object.
 
@@ -57,10 +57,9 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
     int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
 
 ///////////////////////////////////////////////////////////////////////////
-
+#include "prc_inc_function"
 #include "X2_I0_SPELLS"
 #include "x2_inc_spellhook" 
-#include "prc_alterations"
 
 
 // Coding issues with this one, need a collection of targets for napalm effect.
@@ -174,7 +173,7 @@ int SPGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF)
 //      oTarget - object to apply the effect on.
 //      fDuration - duration of the effect, only used for some duration types.
 //      bDispellable - flag to indicate whether spell is dispellable or not, default TRUE.
-//      nSpellID - ID of spell being cast, if -1 GetSpellId() is used.
+//      nSpellID - ID of spell being cast, if -1 PRCGetSpellId() is used.
 //      nCasterLevel - effective caster level, if -1 GetCasterLevel() is used.
 //      oCaster - caster object.
 /*
@@ -195,7 +194,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
     {
 //      ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
         // We need the extra arguments for the PRC code, get them if defaults were passed in.
-        if (-1 == nSpellID) nSpellID = GetSpellId();
+        if (-1 == nSpellID) nSpellID = PRCGetSpellId();
         if (-1 == nCasterLevel) nCasterLevel = PRCGetCasterLevel(oCaster);
 
         // Invoke the PRC apply function passing the extra data.
@@ -265,11 +264,11 @@ void SPSetSchool(int nSchool = SPELL_SCHOOL_GENERAL)
 // Function to raise the spell cast at event.
 //      oTarget - Target of the spell.
 //      bHostile - TRUE if the spell is a hostile act.
-//      nSpellID - Spell ID or -1 if GetSpellId() should be used.
+//      nSpellID - Spell ID or -1 if PRCGetSpellId() should be used.
 //      oCaster - Object doing the casting.
 void SPRaiseSpellCastAt(object oTarget, int bHostile = TRUE, int nSpellID = -1, object oCaster = OBJECT_SELF)
 {
-    if (-1 == nSpellID) nSpellID = GetSpellId();
+    if (-1 == nSpellID) nSpellID = PRCGetSpellId();
     
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, bHostile));

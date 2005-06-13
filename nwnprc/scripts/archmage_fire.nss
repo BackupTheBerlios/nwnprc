@@ -1,3 +1,4 @@
+#include "prc_inc_function"
 #include "lookup_2da_spell"
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -13,14 +14,14 @@ void main()
     object oTarget = GetLocalObject(OBJECT_SELF, "arcane_fire_target");
     int nCasterLvl = GetLevelByClass(CLASS_TYPE_ARCHMAGE, OBJECT_SELF);
     int nDamage = 0;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCnt;
     effect eMissile = EffectVisualEffect(VFX_IMP_MIRV);
     effect eVis = EffectVisualEffect(VFX_IMP_MAGBLUE);
     float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
     float fDelay = fDist/(3.0 * log(fDist) + 2.0);
     float fDelay2, fTime;
-    string nSpellLevel = lookup_spell_level(GetSpellId());
+    string nSpellLevel = lookup_spell_level(PRCGetSpellId());
 
     /* Whatever happens next we must restore the hook */
     PRCSetUserSpecificSpellScript(GetLocalString(OBJECT_SELF, "archmage_save_overridespellscript"));

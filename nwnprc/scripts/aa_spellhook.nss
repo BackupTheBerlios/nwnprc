@@ -21,20 +21,22 @@
 //Last Edited : 7-26-2004                                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
+//Required include for Imbue Arrow functionality.
+#include "prc_inc_function"
+#include "prc_inc_clsfunc"
+
 //Default includes.  Useful for spellhooking functions.
 #include "x2_inc_spellhook"
 #include "x2_inc_switches"
 
-//Required include for Imbue Arrow functionality.
-#include "prc_inc_clsfunc"
 
 void main()
 {
     //Required for use with Imbue Arrow ability.  Copy into spellhook if they
     //don't already exist.
     object oTarget = GetSpellTargetObject();
-    int    iSpell  = GetSpellId();
-    int    iLevel  = GetCasterLevel(OBJECT_SELF);
+    int    iSpell  = PRCGetSpellId();
+    int    iLevel  = PRCGetCasterLevel(OBJECT_SELF);
 
     //Imbue Arrow functionality.  If copying to new spellhook, start copy here ...
     if (GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW))

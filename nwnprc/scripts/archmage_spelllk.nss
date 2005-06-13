@@ -1,3 +1,4 @@
+#include "prc_inc_function"
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
@@ -9,8 +10,8 @@ void main()
 {
     object focus = GetItemPossessedBy(OBJECT_SELF, "ArchmagesFocusofPower");
     int nMetaMagic = PRCGetMetaMagicFeat();
-    string nSpellLevel = Get2DACache("spells", "Wiz_Sorc", GetSpellId());
-    string nEpicSpell = Get2DACache("spells", "Innate", GetSpellId());
+    string nSpellLevel = Get2DACache("spells", "Wiz_Sorc", PRCGetSpellId());
+    string nEpicSpell = Get2DACache("spells", "Innate", PRCGetSpellId());
 
     /* Whatever happens next we must restore the hook */
     PRCSetUserSpecificSpellScript(GetLocalString(OBJECT_SELF, "spelllike_save_overridespellscript"));
@@ -39,7 +40,7 @@ void main()
     SetLocalInt(focus, "spell_like_setup", 0);
 
     /* Store all the info needed */
-    SetLocalInt(focus, "spell_like_spell", GetSpellId());
+    SetLocalInt(focus, "spell_like_spell", PRCGetSpellId());
     SetLocalInt(focus, "spell_like_meta", nMetaMagic);
     SetLocalInt(focus, "spell_like_present", TRUE);
 

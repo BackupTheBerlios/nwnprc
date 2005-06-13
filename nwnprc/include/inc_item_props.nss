@@ -115,6 +115,8 @@ void IPEnhancementBonusToDamageBonus(object oWeap);
 // * iSubType: IP_CONST_DAMAGETYPE*  -- leave blank to use the weapon's damage type.
 // * 
 // * LocalInts from SetCompositeDamageBonus() need to be added to
+// * DeletePRCLocalInts() in prc_inc_function.
+// * LocalInts from SetCompositeDamageBonusT() need to be added to
 // * DeletePRCLocalIntsT() in inc_item_props.
 void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubType = -1); // for temporary bonuses
 
@@ -913,8 +915,8 @@ int TotalAndRemoveDamagePropertyT(object oItem, int iSubType)
 
     while(GetIsItemPropertyValid(ip))
     {
-    	iPropertyValue = GetItemPropertyCostTableValue(ip);
-    	
+        iPropertyValue = GetItemPropertyCostTableValue(ip);
+        
         if((GetItemPropertyType(ip) == ITEM_PROPERTY_DAMAGE_BONUS) &&
            (GetItemPropertySubType(ip) == iSubType) &&
            ((iPropertyValue < 6) || (iPropertyValue > 15)))

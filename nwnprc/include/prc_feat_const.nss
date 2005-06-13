@@ -1380,6 +1380,20 @@ const int FEAT_CRAFT_CONSTRUCT           = 2920;
 // Exalted Companion
 const int FEAT_EXALTED_COMPANION         = 4199;
 
+// Size changes
+const int FEAT_SIZE_DECREASE_1          = 2287;
+const int FEAT_SIZE_DECREASE_2          = 2288;
+const int FEAT_SIZE_DECREASE_3          = 2289;
+const int FEAT_SIZE_DECREASE_4          = 2290;
+const int FEAT_SIZE_DECREASE_5          = 2291;
+const int FEAT_SIZE_DECREASE_6          = 2292;
+const int FEAT_SIZE_INCREASE_1          = 2293;
+const int FEAT_SIZE_INCREASE_2          = 2294;
+const int FEAT_SIZE_INCREASE_3          = 2295;
+const int FEAT_SIZE_INCREASE_4          = 2296;
+const int FEAT_SIZE_INCREASE_5          = 2297;
+const int FEAT_SIZE_INCREASE_6          = 2298;
+
 
 
 /*//////////////////////////////////////////////////

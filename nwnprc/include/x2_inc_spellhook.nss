@@ -20,6 +20,7 @@
 //:://////////////////////////////////////////////
 
 //#include "x2_inc_itemprop" - Inherited from x2_inc_craft
+#include "prc_alterations"
 #include "x2_inc_craft"
 #include "prc_inc_spells"
 //#include "prc_class_const"

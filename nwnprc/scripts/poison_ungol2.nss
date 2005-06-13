@@ -10,6 +10,7 @@
 //:: Created On: December 24, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_inc_function"
 #include "inc_abil_damage"
 
 void main()

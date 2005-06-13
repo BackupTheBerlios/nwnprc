@@ -156,7 +156,7 @@ string LetoGet(string sLocation)
 //if bLastName is true, then its a last name
 //otherwise its a first name.
 //this only works with creatures
-string SetCreautreName(string sName, int bLastName = FALSE);
+string SetCreatureName(string sName, int bLastName = FALSE);
 
 //Returns a script to set a name
 //this only works with items

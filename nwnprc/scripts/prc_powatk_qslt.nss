@@ -14,7 +14,7 @@
 //:: Created On: 22.05.2005
 //:://////////////////////////////////////////////
 
-#include "inc_persist_loca"
+#include "prc_alterations"
 
 
 void main()
@@ -25,7 +25,7 @@ void main()
     if(GetLocalInt(oPC, "ChangePowerAttackQuickselect"))
     {// Change the quickselection
         int nVal = GetLocalInt(oPC, "PRC_PowerAttack_Level");
-        SetPersistantLocalInt(oPC, "PRC_PowerAttackQuickselect_" + IntToString(GetSpellId()), nVal);
+        SetPersistantLocalInt(oPC, "PRC_PowerAttackQuickselect_" + IntToString(PRCGetSpellId()), nVal);
         DeleteLocalInt(oPC, "ChangePowerAttackQuickselect");
         //                                     Quickselection set to
         SendMessageToPC(oPC, GetStringByStrRef(16824182) + " " + IntToString(nVal));
@@ -33,7 +33,7 @@ void main()
     // Change the augmentation level
     else
     {
-        int nVal = GetPersistantLocalInt(oPC, "PRC_PowerAttackQuickselect_" + IntToString(GetSpellId()));
+        int nVal = GetPersistantLocalInt(oPC, "PRC_PowerAttackQuickselect_" + IntToString(PRCGetSpellId()));
         SetLocalInt(oPC, "PRC_PowerAttack_Level", nVal);
         
         // Run the power attack applying script

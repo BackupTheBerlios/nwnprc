@@ -10,6 +10,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
@@ -211,7 +212,7 @@ int FindUnarmedDamage(object oCreature)
          bLargeSize  = FALSE;
          bHugeSize   = FALSE;
          
-         switch (GetCreatureSize(oCreature))
+         switch (PRCGetCreatureSize(oCreature))
          {
               case CREATURE_SIZE_TINY:   bTinySize   = TRUE; break;
               case CREATURE_SIZE_SMALL:  bSmallSize  = TRUE; break;

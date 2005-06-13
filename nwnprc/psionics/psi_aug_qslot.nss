@@ -14,6 +14,7 @@
 //:: Created On: 01.05.2005
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "inc_persist_loca"
 
 /*
@@ -30,14 +31,14 @@ void main()
     if(GetLocalInt(oPC, "ChangeAugmentQuickselect"))
     {// Change the quickselection
         int nVal = GetLocalInt(oPC, "Augment");
-        SetPersistantLocalInt(oPC, "AugmentQuickselect_" + IntToString(GetSpellId()), nVal);
+        SetPersistantLocalInt(oPC, "AugmentQuickselect_" + IntToString(PRCGetSpellId()), nVal);
         DeleteLocalInt(oPC, "ChangeAugmentQuickselect");
         SendMessageToPC(oPC, GetStringByStrRef(16824182) + " " + IntToString(nVal));
     }
     // Change the augmentation level
     else
     {
-        int nVal = GetPersistantLocalInt(oPC, "AugmentQuickselect_" + IntToString(GetSpellId()));
+        int nVal = GetPersistantLocalInt(oPC, "AugmentQuickselect_" + IntToString(PRCGetSpellId()));
         SetLocalInt(oPC, "Augment", nVal);
         FloatingTextStringOnCreature(GetStringByStrRef(16823589) + " " + IntToString(nVal), oPC, FALSE);
     }

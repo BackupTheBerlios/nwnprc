@@ -11,6 +11,7 @@
 //:: Created On: 09.04.2005
 //:://////////////////////////////////////////////
 
+#include "prc_inc_function"
 #include "inc_abil_damage"
 
 

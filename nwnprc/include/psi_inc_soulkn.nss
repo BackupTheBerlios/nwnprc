@@ -11,6 +11,7 @@
 //:: Created On: 06.04.2005
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "prc_class_const"
 #include "inc_persist_loca"
 

@@ -33,12 +33,12 @@
 //Added code into spellsInflictTouchAttack to maximize for Faith Healing and Blast Infidel
 //Aaon Graywolf - Jan 6, 2003
 
+#include "prc_alterations"
 //#include "NW_I0_SPELLS"
 //#include "x0_i0_match"
 #include "x2_inc_switches"
 #include "x2_inc_itemprop"
 #include "x0_i0_henchman"
-#include "prc_racial_const"
 
 //* get the hightest spellcasting class level of oCreature)
 int GZGetHighestSpellcastingClassLevel(object oCreature);
@@ -390,7 +390,7 @@ int GetCasterAbilityModifier(object oCaster)
 //:://////////////////////////////////////////////
 int GetSizeModifier(object oCreature)
 {
-    int nSize = GetCreatureSize(oCreature);
+    int nSize = PRCGetCreatureSize(oCreature);
     int nModifier = 0;
     switch (nSize)
     {

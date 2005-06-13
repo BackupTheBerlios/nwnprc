@@ -108,6 +108,9 @@ struct ireqreport
 
     //percentage of owned items (from 0.0 to 1.0)
     float ItemOR;
+    
+    //message for that recipe
+    string message;
 };
 
 struct convocc_req {
@@ -431,6 +434,7 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
         else
             sMessage += GetStringByStrRef(STRREF_SOMEREQSMISSING);
         SendMessageToPC(OBJECT_SELF, sMessage);
+        report.message += "\n"+sMessage;
     }
 
     if (report.consume) {
@@ -589,6 +593,7 @@ struct ireqreport CheckReqResult(struct ireqreport report, string sReqParam1, st
         if (report.stacksize >1)
             sMessage += " x" + IntToString(report.stacksize);
         SendMessageToPC(OBJECT_SELF, sMessage);
+        report.message += "\n"+sMessage;
     }
 
     if (oTempObject != OBJECT_INVALID) {
@@ -628,14 +633,17 @@ struct ireqreport CheckReqCasterLevel(struct ireqreport report, string sReqParam
         if      (extras == "DIV") sMessage += " (" + GetStringByStrRef(STRREF_DIVINE ) + ") ";
         else if (extras == "ARC") sMessage += " (" + GetStringByStrRef(STRREF_ARCANE ) + ") ";
         else if (extras == "PSI") sMessage += " (" + GetStringByStrRef(STRREF_PSIONIC) + ") ";
+        if(GetModule() != OBJECT_SELF)
+        {
+            sMessage += ": ";
+            if (nResult == TRUE)
+                sMessage += GetStringByStrRef(STRREF_OK);
+            else
+                sMessage += GetStringByStrRef(STRREF_MISSING);
 
-        sMessage += ": ";
-        if (nResult == TRUE)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
-
-        SendMessageToPC(OBJECT_SELF, sMessage);
+            SendMessageToPC(OBJECT_SELF, sMessage);
+        }
+        report.message += "\n"+sMessage;
     }
 
     report.ANDparams &= nResult;
@@ -655,13 +663,17 @@ struct ireqreport CheckReqLevel(struct ireqreport report, string sReqParam1, str
         string sMessage = "* " + GetClassName(nRequiredClass) + " " + GetStringByStrRef(STRREF_LEVEL) + " " + sReqParam2;
         if (extras == "OR")
             sMessage += " (" + GetStringByStrRef(STRREF_OR) + ")";
-        sMessage += ": ";
+        if(GetModule() != OBJECT_SELF)
+        {
+            sMessage += ": ";
 
-        if (nResult == TRUE)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
-        SendMessageToPC(OBJECT_SELF, sMessage);
+            if (nResult == TRUE)
+                sMessage += GetStringByStrRef(STRREF_OK);
+            else
+                sMessage += GetStringByStrRef(STRREF_MISSING);
+            SendMessageToPC(OBJECT_SELF, sMessage);
+        }
+        report.message += "\n"+sMessage;
     }
 
     if (extras == "OR") {
@@ -694,19 +706,23 @@ struct ireqreport CheckReqFeat(struct ireqreport report, string sReqParam1, stri
 {
     int nFeat =  StringToInt(sReqParam1);
     int nResult = GetHasFeat(nFeat);
-
+    string sMessage;
     if (report.display) {
         string sMessage = "* " + GetStringByStrRef(STRREF_FEAT) + ": " + GetFeatName(nFeat);
         if (extras == "OR")
             sMessage += " (" + GetStringByStrRef(STRREF_OR) + ")";
-        sMessage += ": ";
+        if(GetModule() != OBJECT_SELF)
+        {
+            sMessage += ": ";
 
-        if (nResult == TRUE)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
-            SendMessageToPC(OBJECT_SELF, sMessage);
+            if (nResult == TRUE)
+                sMessage += GetStringByStrRef(STRREF_OK);
+            else
+                sMessage += GetStringByStrRef(STRREF_MISSING);
+                SendMessageToPC(OBJECT_SELF, sMessage);
+        }    
     }
+        report.message += "\n"+sMessage;
 
     if (extras == "OR") {
         if (report.FeatOR == -1)
@@ -725,19 +741,25 @@ struct ireqreport CheckReqSpell(struct ireqreport report, string sReqParam1, str
     int nSpell = StringToInt(sReqParam1);
     int nResult = (GetLocalInt(report.recipe, "Spell" + IntToString(nSpell)) > 0 || GetHasSpell(nSpell) > 0);
 
+    string sMessage;
     if (report.display) 
     {
-        string sMessage = "* " + GetStringByStrRef(STRREF_SPELL) + ": " + GetSpellName(nSpell);
+        sMessage = "* " + GetStringByStrRef(STRREF_SPELL) + ": " + GetSpellName(nSpell);
         if (extras == "OR")
             sMessage += " (" + GetStringByStrRef(STRREF_OR) + ")";
-        sMessage += ": ";
+            
+        if(GetModule() != OBJECT_SELF)
+        {
+            sMessage += ": ";
 
-        if (nResult == TRUE)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
-        SendMessageToPC(OBJECT_SELF, sMessage);
+            if (nResult == TRUE)
+                sMessage += GetStringByStrRef(STRREF_OK);
+            else
+                sMessage += GetStringByStrRef(STRREF_MISSING);
+            SendMessageToPC(OBJECT_SELF, sMessage);
+        }
     }
+    report.message += "\n"+sMessage;
 
     if (report.consume && nResult && (extras != "OR" || report.SpellOR != 1))
     {
@@ -773,26 +795,30 @@ struct ireqreport CheckReqSkill(struct ireqreport report, string sReqParam1, str
     } else
         nResult = (GetSkillRank(nSkill) >= nDC);
 
-
+    string sMessage;
     if (report.display) {
-        string sMessage = "* " + GetSkillName(nSkill);
+        sMessage = "* " + GetSkillName(nSkill);
         if (extras == "OR")
             sMessage += " " + sReqParam2 + " (" + GetStringByStrRef(STRREF_OR) + ")";
         else if (extras == "DC")
             sMessage += " " + GetStringByStrRef(STRREF_CHECKDC) + sReqParam2;
         else
             sMessage += " " + sReqParam2;
-        sMessage += ": ";
+        if(GetModule() != OBJECT_SELF)
+        {
+            sMessage += ": ";
 
-        if (nResult == TRUE)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else if (extras == "DC")
-            sMessage += GetStringByStrRef(STRREF_FAILED);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
+            if (nResult == TRUE)
+                sMessage += GetStringByStrRef(STRREF_OK);
+            else if (extras == "DC")
+                sMessage += GetStringByStrRef(STRREF_FAILED);
+            else
+                sMessage += GetStringByStrRef(STRREF_MISSING);
 
-        SendMessageToPC(OBJECT_SELF, sMessage);
+            SendMessageToPC(OBJECT_SELF, sMessage);
+        }
     }
+    report.message += "\n"+sMessage;
 
     if (extras == "OR") {
         if (report.SkillOR == -1)
@@ -846,7 +872,8 @@ struct ireqreport CheckReqItem(struct ireqreport report, string sReqParam1, stri
             sMessage += " x" + IntToString(nRequiredStackSize);
         if (extras == "OR")
             sMessage += " (" + GetStringByStrRef(STRREF_OR) + ")";
-        sMessage += ": ";
+        if(GetModule() != OBJECT_SELF)
+            sMessage += ": ";
     }
 
     SetPlotFlag(oTempObject, FALSE);
@@ -854,7 +881,8 @@ struct ireqreport CheckReqItem(struct ireqreport report, string sReqParam1, stri
 
     //Cycle through all objects in inventory until an adequate amount is reached
     oTempObject = GetFirstItemInInventory(OBJECT_SELF);
-    while (oTempObject != OBJECT_INVALID && nOwnedStackSize < nRequiredStackSize) {
+    while (oTempObject != OBJECT_INVALID && nOwnedStackSize < nRequiredStackSize) 
+    {
         string sTempResRef = GetResRef(oTempObject);
         if (sTempResRef == sReqParam1) {
             int nTempStackSize = GetItemStackSize(oTempObject);
@@ -888,13 +916,15 @@ struct ireqreport CheckReqItem(struct ireqreport report, string sReqParam1, stri
     }
 
 
-    if (report.display) {
+    if (report.display && GetModule() != OBJECT_SELF) 
+    {
         if (nOwnedStackSize >= nRequiredStackSize)
             sMessage += GetStringByStrRef(STRREF_OK);
         else
             sMessage += GetStringByStrRef(STRREF_MISSING);
         SendMessageToPC(OBJECT_SELF, sMessage);
     }
+    report.message += "\n"+sMessage;
 
 
     if (extras == "OR")
@@ -927,7 +957,7 @@ struct ireqreport CheckReqHelper(struct ireqreport report, string sReqParam1, st
     }
         
     int nResult = (oHelper != OBJECT_INVALID);
-
+    string sMessage;
     if (report.display) {
         //Get Helper's name
         string sHelperName;
@@ -937,17 +967,21 @@ struct ireqreport CheckReqHelper(struct ireqreport report, string sReqParam1, st
         else
             sHelperName = GetName(oSampleHelper);
 
-        string sMessage = "* " + GetStringByStrRef(STRREF_HELPER) + ": " + sHelperName;
+        sMessage = "* " + GetStringByStrRef(STRREF_HELPER) + ": " + sHelperName;
         if (extras == "OR")
             sMessage += " (" + GetStringByStrRef(STRREF_OR) + ")";
-        sMessage += ": ";
+        if(GetModule() != OBJECT_SELF)
+        {
+            sMessage += ": ";
 
-        if (nResult)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
-        SendMessageToPC(OBJECT_SELF, sMessage);
+            if (nResult)
+                sMessage += GetStringByStrRef(STRREF_OK);
+            else
+                sMessage += GetStringByStrRef(STRREF_MISSING);
+            SendMessageToPC(OBJECT_SELF, sMessage);
+        }
     }
+    report.message += "\n"+sMessage;
 
     if (extras == "OR") {
         if (report.HelperOR == -1)
@@ -971,27 +1005,32 @@ struct ireqreport CheckReqScript(struct ireqreport report, string sReqParam1, st
     ExecuteScript(sReqParam1, OBJECT_SELF);
     
     int nResult = PRCCraft_GetReturnValue();
-    
+    string sMessage;
     if (report.display) 
     {
-        string sMessage = "* " + GetStringByStrRef(STRREF_SPECIAL) + ": ";
-        
+        sMessage = "* " + GetStringByStrRef(STRREF_SPECIAL);
+        sMessage += ": ";
+
         string sCaption = PRCCraft_GetCaption();
         if (sCaption != "")
             sMessage = sCaption;
-            
+
         if (extras == "OR")
             sMessage += " (" + GetStringByStrRef(STRREF_OR) + ")";
-        
-        if (sCaption != "" || extras == "OR")
-            sMessage += ": ";
 
-        if (nResult)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
-        SendMessageToPC(OBJECT_SELF, sMessage);
+        if(GetModule() != OBJECT_SELF)
+        {
+            if (sCaption != "" || extras == "OR")
+                sMessage += ": ";
+
+            if (nResult)
+                sMessage += GetStringByStrRef(STRREF_OK);
+            else
+                sMessage += GetStringByStrRef(STRREF_MISSING);
+            SendMessageToPC(OBJECT_SELF, sMessage);
+        }
     }
+    report.message += "\n"+sMessage;
 
     if (extras == "OR") {
         if (report.ScriptOR == -1)
@@ -1012,21 +1051,27 @@ struct ireqreport CheckReqRace(struct ireqreport report, string sReqParam1, stri
 
     if (sReqParam2 != "")
         nResult &= (GetSubRace(OBJECT_SELF) == sReqParam2);
-
-    if (report.display) {
-        string sMessage = "* " + GetStringByStrRef(STRREF_RACE) + ": ";
+    string sMessage;
+    if (report.display) 
+    {
+        sMessage = "* " + GetStringByStrRef(STRREF_RACE);
+        sMessage += ": ";
         if (sReqParam2 == "")
             sMessage += GetRacialTypeName(nRace);
         else
             sMessage += sReqParam2;
-        sMessage += ": ";
+        if(GetModule() != OBJECT_SELF)
+        {
+            sMessage += ": ";
 
-        if (nResult == TRUE)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
-        SendMessageToPC(OBJECT_SELF, sMessage);
+            if (nResult == TRUE)
+                sMessage += GetStringByStrRef(STRREF_OK);
+            else
+                sMessage += GetStringByStrRef(STRREF_MISSING);
+            SendMessageToPC(OBJECT_SELF, sMessage);
+        }
     }
+    report.message += "\n"+sMessage;
 
     if (report.Race == -1)
         report.Race = nResult;
@@ -1040,16 +1085,21 @@ struct ireqreport CheckReqRace(struct ireqreport report, string sReqParam1, stri
 struct ireqreport CheckReqAlign(struct ireqreport report, string sReqParam1, string sReqParam2, string extras="")
 {
     int nResult = (GetAlign(OBJECT_SELF) == sReqParam1);
-
+    string sMessage;
     if (report.display) {
-        string sMessage = "* " + GetStringByStrRef(STRREF_ALIGNMENT) + ": " + GetLocalizedAlignment(sReqParam1) + ": ";
+        sMessage = "* " + GetStringByStrRef(STRREF_ALIGNMENT);
+        if(GetModule() != OBJECT_SELF)
+        {
+            sMessage += ": " + GetLocalizedAlignment(sReqParam1) + ": ";
 
-        if (nResult == TRUE)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
+            if (nResult == TRUE)
+                sMessage += GetStringByStrRef(STRREF_OK);
+            else
+                sMessage += GetStringByStrRef(STRREF_MISSING);
+        }       
         SendMessageToPC(OBJECT_SELF, sMessage);
     }
+    report.message += "\n"+sMessage;
 
     if (report.Align == -1)
         report.Align = nResult;
@@ -1064,29 +1114,33 @@ struct ireqreport CheckReqArea(struct ireqreport report, string sReqParam1, stri
 {
     string sCurrentArea = GetTag(GetArea(OBJECT_SELF));
     int nResult = (FindSubString(sCurrentArea, sReqParam1) != -1);
-
-    if (report.display) {
+    string sMessage;
+    if (report.display) 
+    {
         object oRefArea = OBJECT_INVALID;
         if (sReqParam2 != "")
             oRefArea = GetObjectByTag(sReqParam2);
         if (oRefArea == OBJECT_INVALID)
             oRefArea = GetObjectByTag(sReqParam1);
 
-        string sMessage = "* " + GetStringByStrRef(STRREF_AREA) + ": ";
+        sMessage = "* " + GetStringByStrRef(STRREF_AREA) + ": ";
         if (oRefArea != OBJECT_INVALID)
             sMessage += GetName(oRefArea);
         else
             sMessage += sReqParam1;     //just display the TAG
 
-        sMessage += ": ";
+        if(GetModule() != OBJECT_SELF)
+        {
+            sMessage += ": ";
 
-        if (nResult == TRUE)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
+            if (nResult == TRUE)
+                sMessage += GetStringByStrRef(STRREF_OK);
+            else
+                sMessage += GetStringByStrRef(STRREF_MISSING);
+        }    
         SendMessageToPC(OBJECT_SELF, sMessage);
-
     }
+    report.message += "\n"+sMessage;
 
     if (report.Area == -1)
         report.Area = nResult;
@@ -1100,16 +1154,19 @@ struct ireqreport CheckReqArea(struct ireqreport report, string sReqParam1, stri
 struct ireqreport CheckReqDeity(struct ireqreport report, string sReqParam1, string sReqParam2, string extras="")
 {
     int nResult = (GetDeity(OBJECT_SELF) == sReqParam1);
+    string sMessage;
+    sMessage = "* " + GetStringByStrRef(STRREF_DEITY) + ": " + sReqParam1 + ": ";
 
-    if (report.display) {
-        string sMessage = "* " + GetStringByStrRef(STRREF_DEITY) + ": " + sReqParam1 + ": ";
+    if (nResult == TRUE)
+        sMessage += GetStringByStrRef(STRREF_OK);
+    else
+        sMessage += GetStringByStrRef(STRREF_MISSING);
+    if(GetModule() == OBJECT_SELF)
+        sMessage = "* " + GetStringByStrRef(STRREF_DEITY);
 
-        if (nResult == TRUE)
-            sMessage += GetStringByStrRef(STRREF_OK);
-        else
-            sMessage += GetStringByStrRef(STRREF_MISSING);
+    if (report.display) 
         SendMessageToPC(OBJECT_SELF, sMessage);
-    }
+    report.message += "\n"+sMessage;
 
     if (report.Deity == -1)
         report.Deity = nResult;

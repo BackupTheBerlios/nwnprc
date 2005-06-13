@@ -348,6 +348,7 @@ void main()
                 break;
             case FAMILIAR_PNP_RAT:
                 eBonus = EffectSavingThrowIncrease(SAVING_THROW_FORT, 3);
+                sResRef = "prc_pnpfam_rat";
                 break;
             case FAMILIAR_PNP_RAVEN:
                 eBonus = EffectSkillIncrease(SKILL_APPRAISE, 3);

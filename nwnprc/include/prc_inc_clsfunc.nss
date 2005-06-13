@@ -7,6 +7,7 @@
 */
 
 // Include Files:
+#include "prc_inc_function"
 #include "x2_inc_itemprop"
 #include "prc_class_const"
 #include "prc_feat_const"
@@ -220,7 +221,7 @@ void RemoveDrunkenRageEffects(object oTarget = OBJECT_SELF)
 int GetSizeModifier(object oTarget)
 {
 int nSizeMod = 0;
-switch(GetCreatureSize(oTarget))
+switch(PRCGetCreatureSize(oTarget))
     {
     case CREATURE_SIZE_HUGE:
         {

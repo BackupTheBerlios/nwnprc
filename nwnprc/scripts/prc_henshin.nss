@@ -9,6 +9,7 @@
 */
 
 // Include fiels:
+#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "inc_item_props"

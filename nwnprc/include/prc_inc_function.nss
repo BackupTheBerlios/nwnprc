@@ -24,10 +24,9 @@
 //--------------------------------------------------------------------------
 void EvalPRCFeats(object oPC);
 
-
+int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int iDisplayFeedback);
 
 #include "prc_alterations"
-//#include "prc_getcast_lvl"
 #include "inc_persist_loca"
 
 int nbWeaponFocus(object oPC);
@@ -155,6 +154,20 @@ void EvalPRCFeats(object oPC)
         ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
     }
     
+    //size changes
+    if(GetHasFeat(FEAT_SIZE_DECREASE_1)
+        || GetHasFeat(FEAT_SIZE_DECREASE_2)
+        || GetHasFeat(FEAT_SIZE_DECREASE_3)
+        || GetHasFeat(FEAT_SIZE_DECREASE_4)
+        || GetHasFeat(FEAT_SIZE_DECREASE_5)
+        || GetHasFeat(FEAT_SIZE_DECREASE_6)
+        || GetHasFeat(FEAT_SIZE_INCREASE_1)
+        || GetHasFeat(FEAT_SIZE_INCREASE_2)
+        || GetHasFeat(FEAT_SIZE_INCREASE_3)
+        || GetHasFeat(FEAT_SIZE_INCREASE_4)
+        || GetHasFeat(FEAT_SIZE_INCREASE_5)
+        || GetHasFeat(FEAT_SIZE_INCREASE_6))
+        ExecuteScript("prc_size", oPC);
     
     // Miscellaneous
     ExecuteScript("prc_wyzfeat", oPC);
@@ -473,6 +486,14 @@ void DeletePRCLocalInts(object oSkin)
     //transendent vitality
     DeleteLocalInt(oSkin, "TransVitalCon");
     DeleteLocalInt(oSkin, "TransVitalRegen");
+    
+    //size changes
+    DeleteLocalInt(oSkin, "SizeChangesStr");
+    DeleteLocalInt(oSkin, "SizeChangesDex");
+    DeleteLocalInt(oSkin, "SizeChangesCon");
+    DeleteLocalInt(oSkin, "SizeChangesACN");
+    DeleteLocalInt(oSkin, "SizeChangesACD");
+    DeleteLocalInt(oSkin, "SizeChangesAB");
 }
 
 void ScrubPCSkin(object oPC, object oSkin)
@@ -481,7 +502,8 @@ void ScrubPCSkin(object oPC, object oSkin)
     itemproperty ip = GetFirstItemProperty(oSkin);
     while (GetIsItemPropertyValid(ip)) {
         // Insert Logic here to determine if we spare a property
-        if (GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT) {
+        if (GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT) 
+        {
             // Check for specific Bonus Feats
             // Reference iprp_feats.2da
             int st = GetItemPropertySubType(ip);
@@ -506,49 +528,6 @@ void ScrubPCSkin(object oPC, object oSkin)
     if (iCode)
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(381),oSkin);
 
-}
-
-int CompareAlignment(object oSource, object oTarget)
-{
-    int iStepDif;
-    int iGE1 = GetAlignmentGoodEvil(oSource);
-    int iLC1 = GetAlignmentLawChaos(oSource);
-    int iGE2 = GetAlignmentGoodEvil(oTarget);
-    int iLC2 = GetAlignmentLawChaos(oTarget);
-
-    if(iGE1 == ALIGNMENT_GOOD){
-        if(iGE2 == ALIGNMENT_NEUTRAL)
-            iStepDif += 1;
-        if(iGE2 == ALIGNMENT_EVIL)
-            iStepDif += 2;
-    }
-    if(iGE1 == ALIGNMENT_NEUTRAL){
-        if(iGE2 != ALIGNMENT_NEUTRAL)
-            iStepDif += 1;
-    }
-    if(iGE1 == ALIGNMENT_EVIL){
-        if(iLC2 == ALIGNMENT_NEUTRAL)
-            iStepDif += 1;
-        if(iLC2 == ALIGNMENT_GOOD)
-            iStepDif += 2;
-    }
-    if(iLC1 == ALIGNMENT_LAWFUL){
-        if(iLC2 == ALIGNMENT_NEUTRAL)
-            iStepDif += 1;
-        if(iLC2 == ALIGNMENT_CHAOTIC)
-            iStepDif += 2;
-    }
-    if(iLC1 == ALIGNMENT_NEUTRAL){
-        if(iLC2 != ALIGNMENT_NEUTRAL)
-            iStepDif += 1;
-    }
-    if(iLC1 == ALIGNMENT_CHAOTIC){
-        if(iLC2 == ALIGNMENT_NEUTRAL)
-            iStepDif += 1;
-        if(iLC2 == ALIGNMENT_LAWFUL)
-            iStepDif += 2;
-    }
-    return iStepDif;
 }
 
 int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int iDisplayFeedback)
@@ -581,68 +560,6 @@ int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int
 
     if(iDisplayFeedback) FloatingTextStringOnCreature(sFeedback, oCaster);
     return iRetVal;
-}
-
-///////////////////////////////////////////////////////////////
-//  GetArmorType
-///////////////////////////////////////////////////////////////
-const int ARMOR_TYPE_CLOTH      = 0;
-const int ARMOR_TYPE_LIGHT      = 1;
-const int ARMOR_TYPE_MEDIUM     = 2;
-const int ARMOR_TYPE_HEAVY      = 3;
-
-// returns -1 on error, or base AC of armor
-int GetItemACBase(object oArmor)
-{
-    int nBonusAC = 0;
-
-    // oItem is not armor then return an error
-    if(GetBaseItemType(oArmor) != BASE_ITEM_ARMOR)
-        return -1;
-
-    // check each itemproperty for AC Bonus
-    itemproperty ipAC = GetFirstItemProperty(oArmor);
-
-    while(GetIsItemPropertyValid(ipAC))
-    {
-        int nType = GetItemPropertyType(ipAC);
-
-        // check for ITEM_PROPERTY_AC_BONUS
-        if(nType == ITEM_PROPERTY_AC_BONUS)
-        {
-            nBonusAC = GetItemPropertyCostTableValue(ipAC);
-            break;
-        }
-
-        // get next itemproperty
-        ipAC = GetNextItemProperty(oArmor);
-    }
-
-    // return base AC
-    return GetItemACValue(oArmor) - nBonusAC;
-}
-
-// returns -1 on error, or the const int ARMOR_TYPE_*
-int GetArmorType(object oArmor)
-{
-    int nType = -1;
-
-    // get and check Base AC
-    switch(GetItemACBase(oArmor) )
-    {
-        case 0: nType = ARMOR_TYPE_CLOTH;   break;
-        case 1: nType = ARMOR_TYPE_LIGHT;   break;
-        case 2: nType = ARMOR_TYPE_LIGHT;   break;
-        case 3: nType = ARMOR_TYPE_LIGHT;   break;
-        case 4: nType = ARMOR_TYPE_MEDIUM;  break;
-        case 5: nType = ARMOR_TYPE_MEDIUM;  break;
-        case 6: nType = ARMOR_TYPE_HEAVY;   break;
-        case 7: nType = ARMOR_TYPE_HEAVY;   break;
-        case 8: nType = ARMOR_TYPE_HEAVY;   break;
-    }
-
-    // return type
-    return nType;
 }
 
 void FeatUsePerDay(object oPC,int iFeat, int iAbiMod = ABILITY_CHARISMA, int iMod = 0)

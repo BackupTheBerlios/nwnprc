@@ -100,8 +100,9 @@ void main()
 
     //Familiar
     //has a random name
-    if(nClass == CLASS_TYPE_WIZARD
+    if((nClass == CLASS_TYPE_WIZARD
         || nClass == CLASS_TYPE_SORCERER)
+            && !GetPRCSwitch(PRC_PNP_FAMILIARS))
     {
         sScript += LetoAdd("FamiliarType", IntToString(nFamiliar), "int");
         if(GetFamiliarName(oPC) == "")
@@ -114,7 +115,7 @@ void main()
     {
         sScript += LetoAdd("CompanionType", IntToString(nAnimalCompanion), "int");
         if(GetAnimalCompanionName(oPC) == "")
-        sScript += LetoAdd("CompanionName", RandomName(), "string");
+            sScript += LetoAdd("CompanionName", RandomName(), "string");
     }
 
     //Domains
@@ -175,8 +176,11 @@ void main()
             sScript += LetoAdd("ClassList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
             sScript += LetoAdd("LvlStatList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
         }
-        //throw spellschoool in here too
-        sScript += LetoAdd("ClassList/[_]/School", IntToString(nSchool), "byte");
+        //throw spellschoool in here too        
+        if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
+            sScript += LetoAdd("ClassList/[_]/School", IntToString(9), "byte");
+        else    
+            sScript += LetoAdd("ClassList/[_]/School", IntToString(nSchool), "byte");
     }
     else if (nClass == CLASS_TYPE_BARD)
     {
@@ -330,8 +334,8 @@ void main()
     if(GetLocalInt(oPC, "NewCohort"))
     {
         object oCopy = CopyObject(oPC, GetLocation(oPC));   
-        StackedLetoScript(SetCreautreName(RandomName(), FALSE));
-        StackedLetoScript(SetCreautreName(RandomName(), TRUE));
+        StackedLetoScript(SetCreatureName(RandomName(), FALSE));
+        StackedLetoScript(SetCreatureName(RandomName(), TRUE));
         if(nPortrait != -1)
             StackedLetoScript(SetNPCPortrait(nPortrait));
         RunStackedLetoScriptOnObject(oCopy, "OBJECT", "SPAWN"); 

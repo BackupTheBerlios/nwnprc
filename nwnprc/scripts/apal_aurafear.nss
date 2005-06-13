@@ -13,6 +13,7 @@
 //:: Created On: May 25, 2001
 //:://////////////////////////////////////////////
 
+#include "prc_inc_function"
 #include "spinc_common"
 #include "prc_inc_clsfunc"
 
@@ -21,8 +22,8 @@ void main()
  
     if(GetHasSpellEffect(SPELL_ANTIPAL_AURAFEAR))
     {
-    	RemoveEffectsFromSpell(OBJECT_SELF,SPELL_ANTIPAL_AURAFEAR);
-    	return;
+        RemoveEffectsFromSpell(OBJECT_SELF,SPELL_ANTIPAL_AURAFEAR);
+        return;
     }
     
     effect eImmu = EffectImmunity(IMMUNITY_TYPE_FEAR);

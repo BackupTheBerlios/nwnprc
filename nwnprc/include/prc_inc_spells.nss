@@ -202,7 +202,7 @@ const int  TYPE_DIVINE   = -2;
 #include "lookup_2da_spell"
 #include "prc_inc_switch"
 #include "inc_vfx_const"
-
+#include "prc_alterations"
 
 // ---------------
 // BEGIN FUNCTIONS

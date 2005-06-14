@@ -1,7 +1,7 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Staff_of_Valmaxian	    RESULT      nw_novel008      ****        
+0     Staff_of_Valmaxian	    RESULT      nw_it_novel008      ****        
 1     Caster_Level_15th             CASTERLVL   15               ****        
 2     CraftStaff		    FEAT        2928             ****           
 3     Chain_Lightning		    SPELL	14		 ****

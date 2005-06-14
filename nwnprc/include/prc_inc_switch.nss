@@ -746,6 +746,8 @@ const string PRC_XP_USE_PNP_XP                       = "PRC_XP_USE_PNP_XP";
 /**
  * This value is divided by 100 when applied so a value of 100 is equivalent to 1.0
  * slider for PnP XP system, multiplier for final XP amount
+ * This can also be set on individual PCs for the same result. If it is not set, then 
+ * it defaults to 1.0. If you want 0.0 then set it to -1
  */
 const string PRC_XP_SLIDER_x100                      = "PRC_XP_SLIDER_x100";
 

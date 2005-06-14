@@ -135,9 +135,15 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
     
     //now the module slider
     nXPAward = FloatToInt(IntToFloat(nXPAward)*IntToFloat(GetPRCSwitch(PRC_XP_SLIDER_x100))/100.0);
+    //now the individual slider
+    float fPCAdjust = IntToFloat(GetLocalInt(oPC, PRC_XP_SLIDER_x100))/100.0;
+    if(fPCAdjust = 0.0)
+        fPCAdjust = 1.0;
+    nXPAward = FloatToInt(IntToFloat(nXPAward)*fPCAdjust);
+    if(nXPAward < 0)
+        return;    
     
-    //actually give the XP
-    
+    //actually give the XP    
     if(GetIsPC(oPC))
     {
         if(GetPRCSwitch(PRC_XP_USE_SETXP))

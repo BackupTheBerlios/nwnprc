@@ -274,7 +274,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
             }
             else
             {
-                sCommand = "%"+sLetoTag+" = '"+sPath+"'; ";
+                sCommand = "%"+sLetoTag+" = qq{"+sPath+"}; ";
                 sScript = sCommand+sScript;
                 sCommand = "close %"+sLetoTag+"; ";
                 sScript = sScript+sCommand;

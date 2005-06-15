@@ -142,6 +142,17 @@ void main()
             sSpellList = GetStringRight(sSpellList, GetStringLength(sSpellList)-1);
         }
     }
+    //check for persistant golems
+    if(persistant_array_exists(oPC, "GolemList"))
+    {
+        int i;
+        for(i=1;i<persistant_array_get_size(oPC, "GolemList");i++)
+        {
+            string sResRef = persistant_array_get_string(oPC, "GolemList",i);
+            effect eSummon = SupernaturalEffect(EffectSummonCreature(sResRef));
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSummon, oPC);
+        }    
+    }
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
     

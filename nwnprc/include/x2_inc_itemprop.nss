@@ -299,7 +299,7 @@ object IPGetIPWorkContainer(object oCaller = OBJECT_SELF)
     object oRet = GetObjectByTag(X2_IP_WORK_CONTAINER_TAG);
     if (oRet == OBJECT_INVALID)
     {
-        oRet = CreateObject(OBJECT_TYPE_PLACEABLE,X2_IP_WORK_CONTAINER_TAG,GetLocation(oCaller));
+        oRet = CreateObject(OBJECT_TYPE_PLACEABLE,X2_IP_WORK_CONTAINER_TAG,GetStartingLocation());
         effect eInvis =  EffectVisualEffect( VFX_DUR_CUTSCENE_INVISIBILITY);
         eInvis = ExtraordinaryEffect(eInvis);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT,eInvis,oRet);

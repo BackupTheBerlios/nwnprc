@@ -429,10 +429,13 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
         string sMessage = GetStringByStrRef(STRREF_MARKETPRICE) + ": " + IntToString(report.marketprice) + "\n";
         sMessage += GetStringByStrRef(STRREF_GPCOST) + ": " + IntToString(report.GPcost) + "\n";
         sMessage += GetStringByStrRef(STRREF_XPCOST) + ": " + IntToString(report.XPcost) + "\n";
+        if(GetModule() != OBJECT_SELF)
+        {
         if (report.result != "")
             sMessage += GetStringByStrRef(STRREF_ALLREQSOK);
         else
             sMessage += GetStringByStrRef(STRREF_SOMEREQSMISSING);
+        }    
         SendMessageToPC(OBJECT_SELF, sMessage);
         report.message += "\n"+sMessage;
     }
@@ -593,7 +596,8 @@ struct ireqreport CheckReqResult(struct ireqreport report, string sReqParam1, st
         if (report.stacksize >1)
             sMessage += " x" + IntToString(report.stacksize);
         SendMessageToPC(OBJECT_SELF, sMessage);
-        report.message += "\n"+sMessage;
+        if(GetModule() != OBJECT_SELF)
+            report.message += "\n"+sMessage;
     }
 
     if (oTempObject != OBJECT_INVALID) {
@@ -708,7 +712,7 @@ struct ireqreport CheckReqFeat(struct ireqreport report, string sReqParam1, stri
     int nResult = GetHasFeat(nFeat);
     string sMessage;
     if (report.display) {
-        string sMessage = "* " + GetStringByStrRef(STRREF_FEAT) + ": " + GetFeatName(nFeat);
+        sMessage = "* " + GetStringByStrRef(STRREF_FEAT) + ": " + GetFeatName(nFeat);
         if (extras == "OR")
             sMessage += " (" + GetStringByStrRef(STRREF_OR) + ")";
         if(GetModule() != OBJECT_SELF)
@@ -722,7 +726,7 @@ struct ireqreport CheckReqFeat(struct ireqreport report, string sReqParam1, stri
                 SendMessageToPC(OBJECT_SELF, sMessage);
         }    
     }
-        report.message += "\n"+sMessage;
+    report.message += "\n"+sMessage;
 
     if (extras == "OR") {
         if (report.FeatOR == -1)

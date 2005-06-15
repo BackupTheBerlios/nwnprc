@@ -137,7 +137,7 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
     nXPAward = FloatToInt(IntToFloat(nXPAward)*IntToFloat(GetPRCSwitch(PRC_XP_SLIDER_x100))/100.0);
     //now the individual slider
     float fPCAdjust = IntToFloat(GetLocalInt(oPC, PRC_XP_SLIDER_x100))/100.0;
-    if(fPCAdjust = 0.0)
+    if(fPCAdjust == 0.0)
         fPCAdjust = 1.0;
     nXPAward = FloatToInt(IntToFloat(nXPAward)*fPCAdjust);
     if(nXPAward < 0)

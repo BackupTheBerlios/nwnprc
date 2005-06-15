@@ -398,6 +398,13 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                 }
             }
         }
+        else
+        {
+            if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
+                sCommand += "<file:close "+sLetoTag+">";
+            else
+                sCommand += "close %"+sLetoTag+"; ";        
+        }
 
         sScript = sScript + sCommand;
         sScriptResult = LetoScript(sScript, sType, sPollScript);

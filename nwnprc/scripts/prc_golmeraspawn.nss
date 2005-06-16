@@ -92,8 +92,8 @@ void main()
     }
     TakeGoldFromCreature(nCost, oPC, TRUE);
     sResRef += IntToString(nGolemHD);
-    effect eSummon = SupernaturalEffect(EffectSummon(sResRef));
+    effect eSummon = SupernaturalEffect(EffectSummonCreature(sResRef));
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSummon, oPC);
     persistant_array_create(oPC, "GolemList");
-    persistant_array_set_string(oPC, "GolemList", persistant_array_get_size(oPC, "GolemList"), nResRef);
+    persistant_array_set_string(oPC, "GolemList", persistant_array_get_size(oPC, "GolemList"), sResRef);
 }

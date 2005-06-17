@@ -204,7 +204,7 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl+SPGetPenetr()))
                 {
-                    eDam = EffectDamage(nDamage,DAMAGE_TYPE_NEGATIVE);
+                    eDam = EffectDamage(nDamage,DAMAGE_TYPE_POSITIVE);
                     //Apply the VFX impact and effects
                     DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

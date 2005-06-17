@@ -81,6 +81,12 @@ const string PRC_PNP_BLACK_BLADE_OF_DISASTER         = "PRC_PNP_BLACK_BLADE_OF_D
  */
 const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
 
+/**
+ * By request, set this to use the 1.65 behaviour for implosion, phantasmal killer,
+ * and weird (death immunity counts)
+ */
+const string PRC_165_DEATH_IMMUNITY                  = "PRC_165_DEATH_IMMUNITY";
+
 
 /******************************************************************************\
 *                               Epic Spell switches                            *

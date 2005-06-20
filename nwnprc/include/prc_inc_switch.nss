@@ -1,3 +1,13 @@
+/**
+ * @file
+ * This file defines names of switches that can be used to modify
+ * the behaviour of certain parts of the PRC pack.
+ * It also contains functions for getting and setting the values of
+ * these switches and in addition some functions dealing with the
+ * implementation of certain switches.
+ */
+
+
 /******************************************************************************\
 *                                  Spell switches                              *
 \******************************************************************************/
@@ -678,6 +688,18 @@ const string PRC_BRAWLER_SIZE                        = "PRC_BRAWLER_SIZE";
 
 
 /******************************************************************************\
+*                           Teleport System Switches                           *
+\******************************************************************************/
+
+/**
+ * Defines the maximum number of teleport target locations a PC may store.
+ * Default: 50
+ */
+const string PRC_TELEPORT_MAX_TARGET_LOCATIONS       = "PRC_TELEPORT_MAX_TARGET_LOCATIONS";
+
+
+
+/******************************************************************************\
 *                          Persistent World switches                           *
 \******************************************************************************/
 
@@ -1232,45 +1254,53 @@ const string PRC_CONVOCC_SKILL_BONUS                 = "PRC_CONVOCC_SKILL_BONUS"
 // Function protypes //
 ///////////////////////
 
-// Checks the state of a PRC switch
-// ================================
-// sSwitch  One of the PRC_* constant strings defined in prc_inc_switch
-//
-// NOTE: This will only work with switches that use integer values. You
-// must get the value of non-integer-valued switches manually.
+
+/** 
+ * Checks the state of a PRC switch.
+ * NOTE: This will only work with switches that use integer values. You
+ * must get the value of non-integer-valued switches manually.
+ *
+ * @param sSwitch  One of the PRC_* constant strings defined in prc_inc_switch
+ * @return         The value of the switch queried
+ */
 int GetPRCSwitch(string sSwitch);
 
-// Sets a PRC switch state
-// =======================
-// sSwitch  One of the PRC_* constant strings defined in prc_inc_switch
-// nState   The integer value to set the switch to
-//
-// NOTE: As this will only set switches with integer values, you will need
-// to manually set the (few) switches that should have a value other than
-// integer.
+/**
+ * Sets a PRC switch state.
+ * NOTE: As this will only set switches with integer values, you will need
+ * to manually set the (few) switches that should have a value other than
+ * integer.
+ *
+ * @param sSwitch  One of the PRC_* constant strings defined in prc_inc_switch
+ * @param nState   The integer value to set the switch to
+ */
 void SetPRCSwitch(string sSwitch, int nState);
 
-// Multisummon code, to be run before the summoning effect is applied.
-// ===================================================================
-// oPC          The creature casting the summoning spell
-// bOverride    If this is set, ignores the value of PRC_MULTISUMMON switch
-//
-// Normally, this will only perform the multisummon trick of setting
-// pre-existing summons indestructable if PRC_MULTISUMMON is set.
+/**
+ * Multisummon code, to be run before the summoning effect is applied.
+ * Normally, this will only perform the multisummon trick of setting
+ * pre-existing summons indestructable if PRC_MULTISUMMON is set.
+ *
+ * @param oPC          The creature casting the summoning spell
+ * @param bOverride    If this is set, ignores the value of PRC_MULTISUMMON switch
+ */
 void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE);
 
 
-// Sets the epic spell switches to their default values.
-// =====================================================
-//
-// If PRC_EPIC_INGORE_DEFAULTS is set, this does nothing.
+/**
+ * Sets the epic spell switches to their default values.
+ *
+ * If PRC_EPIC_INGORE_DEFAULTS is set, this does nothing.
+ */
 void DoEpicSpellDefaults();
 
-// Sets the file end markers to their default values.
-// ==================================================
-//
-// If FILE_END_MANUAL is set, this does nothing.
+/**
+ * Sets the file end markers to their default values.
+ *
+ * If FILE_END_MANUAL is set, this does nothing.
+ */
 void SetDefaultFileEnds();
+
 
 //////////////////////////
 // Function definitions //

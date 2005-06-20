@@ -216,6 +216,15 @@ object  GetAreaOfMapPin(object oPC, int nPinNo);
  */
 void DeleteMapPin(object oPC, int nPinNo);
 
+/**
+ * Creates a string from a metalocation that is of the following format:
+ * NameOfMetalocation - NameOfMetalocationArea (Xcoord, Ycoord)
+ *
+ * @param mlocL  The metalocation to make a string from.
+ * @return       The created string.
+ */
+string MetalocationToString(struct metalocation mlocL);
+
 
 
 
@@ -493,5 +502,12 @@ struct metalocation GetNullMetalocation()
     return mlocL;
 }
 
+
+string MetalocationToString(struct metalocation mlocL)
+{
+    return mlocL.sName + " - " + GetName(GetAreaFromMetalocation(mlocL))
+            + " (" + FloatToString(mlocL.vCoords.x) + ", " + FloatToString(mlocL.vCoords.y) + ")"
+            + (GetIsMetalocationInModule(mlocL) ? "" : (" " + GetStringByStrRef(16825269)+ " "/*" Not in module "*/));
+}
 
 //void main(){} // Test main

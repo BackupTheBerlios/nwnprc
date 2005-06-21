@@ -1,4 +1,5 @@
 #include "inc_2dacache"
+/*
 void main()
 {
 PreCache("spells", "Name", 2250, "16823166"); PreCache("spells", "School", 2250, "G");  PreCache("spells", "VS", 2250, "vs"); PreCache("spells", "Bard", 2250, "0");    PreCache("spells", "Cleric", 2250, "0");  PreCache("spells", "Druid", 2250, "0");   PreCache("spells", "Paladin", 2250, "1"); PreCache("spells", "Ranger", 2250, "1");  PreCache("spells", "Wiz_Sorc", 2250, "0");    PreCache("spells", "Innate", 2250, "1");
@@ -374,3 +375,4 @@ PreCache("spells", "Name", 3160, "16830390"); PreCache("spells", "School", 3160,
 PreCache("spells", "Name", 3181, "16830453"); PreCache("spells", "School", 3181, "A");  PreCache("spells", "VS", 3181, "vs"); PreCache("spells", "Bard", 3181, "****"); PreCache("spells", "Cleric", 3181, "****");   PreCache("spells", "Druid", 3181, "****");    PreCache("spells", "Paladin", 3181, "2"); PreCache("spells", "Ranger", 3181, "****");   PreCache("spells", "Wiz_Sorc", 3181, "****"); PreCache("spells", "Innate", 3181, "2");
 
 }
+*/

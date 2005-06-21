@@ -52,7 +52,7 @@
     >- "**(bash|open|unlock)**(chest|door)**" will match strings like "open the door please" or "he just bashed that chest!" 
     
     If several patterns would match the same string, the one
-    added last using AddPattern will be the one matched.
+    added first using AddPattern will be the one matched.
 */
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan

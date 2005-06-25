@@ -34,8 +34,8 @@ void main()
         array_create(OBJECT_SELF, "ChoiceValue");
         DeleteLocalInt(OBJECT_SELF, "ChoiceOffset");
         SetupStage();
-        SetupTokens();
         SetupHeader();
+        SetupTokens();
         ExecuteScript("prc_ccc_debug", OBJECT_SELF);
         return;
     }

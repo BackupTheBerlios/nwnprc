@@ -1,5 +1,6 @@
 #include "inc_utility"
 #include "inc_fileends"
+#include "inc_dynconv"
 
 
 
@@ -85,24 +86,7 @@ int GetCost(int nAbilityScore)
 
 
 
-//sets tokens for conversation
-// 99 is main line
-//100-109 is choices
-//also sets locals equal to each token
-//locals follow "TOKEN_#" pattern
-void SetupTokens();
 void SetupHeader();
-
-void SetupTokens()
-{
-    int i;
-    int nOffset = GetLocalInt(OBJECT_SELF, "ChoiceOffset");
-    //choices
-    for (i=0;i<10;i++)
-    {
-        SetToken(100+i, array_get_string(OBJECT_SELF, "ChoiceTokens", nOffset+i));
-    }
-}
 
 void SetupHeader()
 {
@@ -529,6 +513,7 @@ void DoCleanup()
     array_delete(oPC, "ChoiceValue");
     array_delete(oPC, "SpellLvl1");
     array_delete(oPC, "SpellLvl0");
+        DeleteLocalString(oPC, "DynConv_Script");
 }
 
 /*

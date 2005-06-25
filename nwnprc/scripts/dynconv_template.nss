@@ -12,9 +12,9 @@
 //:: Modified On: dd.mm.yyyy
 //:://////////////////////////////////////////////
 
-
 #include "prc_alterations"
 #include "inc_utility"
+#include "inc_dynconv"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -22,19 +22,9 @@
 
 const int STAGE_ENTRY = 0;
 
-//////////////////////////////////////////////////
-/* Function defintions                          */
-//////////////////////////////////////////////////
-
-void AddChoice(string sText, int nValue)
-{
-    array_set_string(OBJECT_SELF, "ChoiceTokens", array_get_size(OBJECT_SELF, "ChoiceTokens"), sText);
-    array_set_int   (OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues"), nValue);
-}
-
 void main()
 {
-    object oPC = OBJECT_SELF; 
+    object oPC = GetPCSpeaker(); 
     /* Get the value of the local variable set by the conversation script calling
      * this script. Values:
      * -3   Conversation aborted
@@ -61,25 +51,23 @@ void main()
         // The stage is used to determine the active conversation node.
         // 0 is the entry node.
         int nStage = GetLocalInt(oPC, "Stage");
-// INSERT CODE HERE FOR THE HEADER
-// token    99     = header
-// token 100 - 109 = player choices
-// array named ChoiceTokens for strings                        \_ The function AddChoice can be used for easy manipulation of these
-// array named ChoiceValues for ints associated with responces /
-// variable named nStage determines the current conversation node
+        array_create(oPC, "StagesSetup");
+        if(array_get_int(oPC, "StagesSetup", nStage))
+            return; //this stops list duplication when scrolling
+            
+        // token        99 = header             This must be set directly
+        // token 100 - 109 = player choices     This is set automatically from the arrays
+        // array named ChoiceTokens for strings                        \_ The function AddChoice can be used for easy manipulation of these
+        // array named ChoiceValues for ints associated with responces /
+        // variable named nStage determines the current conversation node
         if(nStage == STAGE_ENTRY)
         {
+            array_set_int(oPC, "StagesSetup", nStage, TRUE); //this lets it know that its setup so dont set it up again
         }
-// END OF INSERT FOR THE HEADER
+        //add more stages for more nodes with Else If clauses
+        
         //do token setup
-        int nOffset = GetLocalInt(oPC, "ChoiceOffset");
-        int i;
-        for(i=nOffset; i<nOffset+10; i++)
-        {
-            string sValue = array_get_string(oPC, "ChoiceTokens" ,i);
-            SetLocalString(oPC, "TOKEN10"+IntToString(i-nOffset), sValue);
-            SetCustomToken(100+i-nOffset, sValue);
-        }
+        SetupTokens();
         SetCustomToken(110, GetStringByStrRef(16824212));//finish
         SetCustomToken(111, GetStringByStrRef(16824202));//please wait
         SetCustomToken(112, GetStringByStrRef(16824204));//next
@@ -89,39 +77,49 @@ void main()
     }
     else if(nValue == -2)
     {
-      //end of conversation cleanup
+        //end of conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
+        DeleteLocalString(oPC, "DynConv_Script");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
+        array_delete(oPC, "StagesSetup");
         DeleteLocalInt(oPC, "Stage");
+        //add any other locals set through this conversation
         return;
     }
     else if(nValue == -3)
     {
-      //abort conversation cleanup
+        //abort conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
+        DeleteLocalString(oPC, "DynConv_Script");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
+        array_delete(oPC, "StagesSetup");
         DeleteLocalInt(oPC, "Stage");
+        //add any other locals set through this conversation
         return;
     }
+    SetupTokens();
     int nChoice = array_get_int(oPC, "ChoiceValues", nValue);
     int nStage = GetLocalInt(oPC, "Stage");
-// INSERT CODE HERE FOR PC RESPONSES
-// variable named nChoice is the value of the player's choice as stored when building the choice list
-// variable named nStage determines the current conversation node
+    int nOldStage;
+    // INSERT CODE HERE FOR PC RESPONSES
+    // variable named nChoice is the value of the player's choice as stored when building the choice list
+    // variable named nStage determines the current conversation node
     if(nStage == STAGE_ENTRY)
     {
         //move to another stage based on response
         //nStage = STAGE_FOO;
     }
-// END OF INSERT FOR THE HEADER
-    // Clean up the old choice data
-    array_delete(oPC, "ChoiceTokens");
-    array_delete(oPC, "ChoiceValues");
-    array_create(oPC, "ChoiceTokens");
-    array_create(oPC, "ChoiceValues");
-    DeleteLocalInt(oPC, "ChoiceOffset");
+    // Clean up the old choice data if stage changed
+    if(nStage != nOldStage)
+    {
+        array_delete(oPC, "ChoiceTokens");
+        array_delete(oPC, "ChoiceValues");
+        array_create(oPC, "ChoiceTokens");
+        array_create(oPC, "ChoiceValues");
+        DeleteLocalInt(oPC, "ChoiceOffset");
+    }
 
     // Store the new stage value
     SetLocalInt(oPC, "Stage", nStage);

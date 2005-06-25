@@ -139,7 +139,6 @@ void EvalPRCFeats(object oPC)
     //PnP Spell Schools
     if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD, oPC)
-        && !GetLocalInt(oPC,"ONENTER")
         && !GetHasFeat(2273)
         && !GetHasFeat(2274)
         && !GetHasFeat(2276)
@@ -151,7 +150,7 @@ void EvalPRCFeats(object oPC)
         )
     {
         SetLocalString(oPC, "DynConv_Script", "prc_pnp_school");
-        ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
+        AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
     }
     
     //size changes

@@ -1,5 +1,6 @@
 #include "inc_utility"
 #include "inc_persist_loca"
+#include "inc_dynconv"
 
 void main()
 {
@@ -13,10 +14,13 @@ void main()
     if(nValue > 0)
         nValue --;//correct for 1 based to zero based
 
-
+    SetupTokens();
     if(nValue == -1)
     {
         int nStage = GetLocalInt(oPC, "Stage");
+        array_create(oPC, "StagesSetup");
+        if(array_get_int(oPC, "StagesSetup", nStage))
+            return;
 // INSERT CODE HERE FOR THE HEADER
 // AND PC RESPONSES
 // token no 99 = header
@@ -56,16 +60,10 @@ void main()
 //            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
 //                "Weasel");
 //            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 10);
+            array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
         //do token setup
-        int nOffset = GetLocalInt(oPC, "ChoiceOffset");
-        int i;
-        for(i=nOffset; i<nOffset+10; i++)
-        {
-            string sValue = array_get_string(oPC, "ChoiceTokens" ,i);
-            SetLocalString(oPC, "TOKEN10"+IntToString(i-nOffset), sValue);
-            SetCustomToken(100+i-nOffset, sValue);
-        }
+        SetupTokens();
         SetCustomToken(110, GetStringByStrRef(16824212));//finish
         SetCustomToken(111, GetStringByStrRef(16824202));//please wait
         SetCustomToken(112, GetStringByStrRef(16824204));//next
@@ -78,6 +76,7 @@ void main()
     {
       //end of conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
+        DeleteLocalString(oPC, "DynConv_Script");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
         DeleteLocalInt(oPC, "Stage");
@@ -87,6 +86,7 @@ void main()
     {
       //abort conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
+        DeleteLocalString(oPC, "DynConv_Script");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
         DeleteLocalInt(oPC, "Stage");

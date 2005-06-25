@@ -1,6 +1,7 @@
 #include "inc_utility"
 #include "inc_array"
 #include "inc_item_props"
+#include "inc_dynconv"
 
 //This used Bitwise math 
 //this thread should help if you dont understand bitwise math
@@ -68,15 +69,18 @@ void main()
     if(nValue > 0)
         nValue --;//correct for 1 based to zero based
 
-
+    SetupTokens();
     if(nValue == -1)
     {
         int nStage = GetLocalInt(oPC, "Stage");
-// INSERT CODE HERE FOR THE HEADER
-// AND PC RESPONSES
-// token no 99 = header
-// array named ChoiceTokens for strings
-// array named ChoiceValues for ints associated with responces
+        array_create(oPC, "StagesSetup");
+        if(array_get_int(oPC, "StagesSetup", nStage))
+            return;
+        // INSERT CODE HERE FOR THE HEADER
+        // AND PC RESPONSES
+        // token no 99 = header
+        // array named ChoiceTokens for strings
+        // array named ChoiceValues for ints associated with responces
         if(nStage == 0) //select a school
         {
             int i;
@@ -87,8 +91,9 @@ void main()
                 array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
             }
             SetCustomToken(99, "Select a specialist school.");
+            array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
-        if(nStage == 1)//select oposing school(s)
+        else if(nStage == 1)//select oposing school(s)
         {
             int nSchool = GetLocalInt(oPC, "School");
             int a,b,c;
@@ -229,49 +234,43 @@ void main()
                         }
                     }
                     break;
-                //                    
-                SetCustomToken(99, "Select a set of opposition school(s).");
             }
-            if(nStage == 3)//confirmation
+            SetCustomToken(99, "Select a set of opposition school(s).");
+            array_set_int(oPC, "StagesSetup", nStage, TRUE);
+        }
+        else if(nStage == 3)//confirmation
+        {
+            int nSchool  = GetLocalInt(oPC, "School" );
+            int nSchool1 = GetLocalInt(oPC, "School1");
+            int nSchool2 = GetLocalInt(oPC, "School2");
+            int nSchool3 = GetLocalInt(oPC, "School3");
+            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+                "Yes");
+            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), TRUE);
+            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
+                "No");
+            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), FALSE);
+
+            string sName;
+            sName += GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool1)));
+            if(nSchool2 && !nSchool3)  
+                sName += " and "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool2)));
+            if(nSchool2 && nSchool3)  
             {
-                int nSchool  = GetLocalInt(oPC, "School" );
-                int nSchool1 = GetLocalInt(oPC, "School1");
-                int nSchool2 = GetLocalInt(oPC, "School2");
-                int nSchool3 = GetLocalInt(oPC, "School3");
-                array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                    "Yes");
-                array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), TRUE);
-                array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                    "No");
-                array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), FALSE);
-                
-                string sName;
-                sName += GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool1)));
-                if(nSchool2 && !nSchool3)  
-                    sName += " and "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool2)));
-                if(nSchool2 && nSchool3)  
-                {
-                    sName += ", "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool2)));
-                    sName += ", and "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool3)));
-                }       
-    
-                string sText = "You have selected "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool)))
-                    +" as your specialist school.\n";
-                if(nSchool != SPELL_SCHOOL_GENERAL)                  
-                    sText += "You have selected "+sName+" as your opposition school(s).\n";
-                sText += "Is this correct?";
-                SetCustomToken(99, sText);
-            }
+                sName += ", "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool2)));
+                sName += ", and "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool3)));
+            }       
+
+            string sText = "You have selected "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool)))
+                +" as your specialist school.\n";
+            if(nSchool != SPELL_SCHOOL_GENERAL)                  
+                sText += "You have selected "+sName+" as your opposition school(s).\n";
+            sText += "Is this correct?";
+            SetCustomToken(99, sText);
+            array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
         //do token setup
-        int nOffset = GetLocalInt(oPC, "ChoiceOffset");
-        int i;
-        for(i=nOffset; i<nOffset+10; i++)
-        {
-            string sValue = array_get_string(oPC, "ChoiceTokens" ,i);
-            SetLocalString(oPC, "TOKEN10"+IntToString(i-nOffset), sValue);
-            SetCustomToken(100+i-nOffset, sValue);
-        }
+        SetupTokens();
         SetCustomToken(110, GetStringByStrRef(16824212));//finish
         SetCustomToken(111, GetStringByStrRef(16824202));//please wait
         SetCustomToken(112, GetStringByStrRef(16824204));//next
@@ -287,6 +286,7 @@ void main()
         DeleteLocalInt(oPC, "DynConv_Var");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
+        array_delete(oPC, "StageSetup");
         DeleteLocalInt(oPC, "Stage");
         DeleteLocalInt(oPC, "School");
         DeleteLocalInt(oPC, "School1");
@@ -300,6 +300,7 @@ void main()
         DeleteLocalInt(oPC, "DynConv_Var");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
+        array_delete(oPC, "StageSetup");
         DeleteLocalInt(oPC, "Stage");
         DeleteLocalInt(oPC, "School");
         DeleteLocalInt(oPC, "School1");
@@ -324,7 +325,7 @@ void main()
         array_create(oPC, "ChoiceValues");
         DeleteLocalInt(oPC, "ChoiceOffset");
     }
-    if(nStage == 1)//select opposing school(s)
+    else if(nStage == 1)//select opposing school(s)
     {
         int nSchool1 = nValue & 15;
         int nSchool2 = (nValue & 240) >> 4;
@@ -339,7 +340,7 @@ void main()
         array_create(oPC, "ChoiceValues");
         DeleteLocalInt(oPC, "ChoiceOffset");
     }
-    if(nStage == 2)//confirmation
+    else if(nStage == 2)//confirmation
     {
         if(nValue == TRUE)
         {

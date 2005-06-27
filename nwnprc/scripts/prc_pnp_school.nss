@@ -20,8 +20,19 @@ void AddSchool(int nSchool, int nSchool2 = 0, int nSchool3 = 0)
     }       
     array_set_string(OBJECT_SELF, "ChoiceTokens", array_get_size(OBJECT_SELF, "ChoiceTokens"),
         sName);      
-    int nValue = nSchool | (nSchool2 << 4) | (nSchool3 << 8);
+    int nValue = nSchool + (nSchool2 << 4) + (nSchool3 << 8);
     array_set_int(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues"), nValue);
+    
+    string sMessage;
+    sMessage += "sName = "+sName+"\n";
+    sMessage += "nValue = "+IntToString(nValue)+"\n";
+    sMessage += "nSchool = "+IntToString(nSchool)+"\n";
+    sMessage += "nSchool2 = "+IntToString(nSchool2)+"\n";
+    sMessage += "nSchool3 = "+IntToString(nSchool3)+"\n";
+    sMessage += "nSchool2 << 4 = "+IntToString(nSchool2 << 4)+"\n";
+    sMessage += "nSchool3 << 8 = "+IntToString(nSchool3 << 8)+"\n";    
+    SendMessageToPC(GetFirstPC(), sMessage);
+    PrintString(sMessage);
 }
 
 int GetIPFromSchool(int nSchool)
@@ -61,8 +72,8 @@ void main()
 {
     object oPC = OBJECT_SELF;
     int nValue = GetLocalInt(oPC, "DynConv_Var");
-            array_create(oPC, "ChoiceTokens");
-            array_create(oPC, "ChoiceValues");
+    array_create(oPC, "ChoiceTokens");
+    array_create(oPC, "ChoiceValues");
 
     if(nValue == 0)
         return;
@@ -84,7 +95,7 @@ void main()
         if(nStage == 0) //select a school
         {
             int i;
-            for(i=0; i< GetPRCSwitch(FILE_END_SPELLSCHOOL); i++)
+            for(i=0; i< 9; i++) //use 9 to force original schools only
             {
                 array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
                     GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", i))));
@@ -238,7 +249,7 @@ void main()
             SetCustomToken(99, "Select a set of opposition school(s).");
             array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
-        else if(nStage == 3)//confirmation
+        else if(nStage == 2)//confirmation
         {
             int nSchool  = GetLocalInt(oPC, "School" );
             int nSchool1 = GetLocalInt(oPC, "School1");
@@ -269,6 +280,12 @@ void main()
             SetCustomToken(99, sText);
             array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
+        else if(nStage == 3)//completion
+        {
+            //end stage, do not set responces
+            string sText = "Your PnP Spell Schools are now setup";
+            SetCustomToken(99, sText);
+        }
         //do token setup
         SetupTokens();
         SetCustomToken(110, GetStringByStrRef(16824212));//finish
@@ -280,13 +297,13 @@ void main()
 
         return;
     }
-    if(nValue == -2)
+    else if(nValue == -2)
     {
       //end of conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
-        array_delete(oPC, "StageSetup");
+        array_delete(oPC, "StagesSetup");
         DeleteLocalInt(oPC, "Stage");
         DeleteLocalInt(oPC, "School");
         DeleteLocalInt(oPC, "School1");
@@ -294,13 +311,13 @@ void main()
         DeleteLocalInt(oPC, "School3");
         return;
     }
-    if(nValue == -3)
+    else if(nValue == -3)
     {
       //abort conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
-        array_delete(oPC, "StageSetup");
+        array_delete(oPC, "StagesSetup");
         DeleteLocalInt(oPC, "Stage");
         DeleteLocalInt(oPC, "School");
         DeleteLocalInt(oPC, "School1");
@@ -308,6 +325,7 @@ void main()
         DeleteLocalInt(oPC, "School3");
         return;
     }
+    nValue += GetLocalInt(oPC, "ChoiceOffset");
     nValue = array_get_int(oPC, "ChoiceValues", nValue);
     int nStage = GetLocalInt(oPC, "Stage");
     if(nStage == 0)//select a school
@@ -339,6 +357,16 @@ void main()
         array_create(oPC, "ChoiceTokens");
         array_create(oPC, "ChoiceValues");
         DeleteLocalInt(oPC, "ChoiceOffset");
+    string sMessage;
+    sMessage += "nValue = "+IntToString(nValue)+"\n";
+    sMessage += "nSchool1 = "+IntToString(nSchool1)+"\n";
+    sMessage += "nSchool2 = "+IntToString(nSchool2)+"\n";
+    sMessage += "nSchool3 = "+IntToString(nSchool3)+"\n";
+    sMessage += "nValue & 240 = "+IntToString(nValue & 240)+"\n";
+    sMessage += "nValue & 3840 = "+IntToString(nValue & 3840)+"\n";    
+    SendMessageToPC(GetFirstPC(), sMessage);
+    PrintString(sMessage);
+        
     }
     else if(nStage == 2)//confirmation
     {
@@ -365,6 +393,9 @@ void main()
         else
         {
             nStage = 0;
+            array_set_int(oPC, "StagesSetup", 0, FALSE);
+            array_set_int(oPC, "StagesSetup", 1, FALSE);
+            array_set_int(oPC, "StagesSetup", 2, FALSE);
         }
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");

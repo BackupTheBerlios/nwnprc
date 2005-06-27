@@ -469,17 +469,29 @@ void SetupStage()
             }
             else
             {
-                for(i=0;i<GetPRCSwitch(FILE_END_SPELLSCHOOL);i++)
+                if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
                 {
-                    if(StringToInt(Get2DACache("spellschools", "StringRef", i)) != 0)
+                        array_set_string(OBJECT_SELF, "ChoiceTokens",
+                            array_get_size(OBJECT_SELF, "ChoiceTokens"),
+                                GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", 9))));
+                        array_set_int(OBJECT_SELF, "ChoiceValue",
+                            array_get_size(OBJECT_SELF, "ChoiceValue"),
+                                9);                
+                }
+                else
+                {
+                    for(i=0;i<9;i++)
                     {
-                    array_set_string(OBJECT_SELF, "ChoiceTokens",
-                        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                            GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", i))));
-                    array_set_int(OBJECT_SELF, "ChoiceValue",
-                        array_get_size(OBJECT_SELF, "ChoiceValue"),
-                            i);
+                        if(StringToInt(Get2DACache("spellschools", "StringRef", i)) != 0)
+                        {
+                        array_set_string(OBJECT_SELF, "ChoiceTokens",
+                            array_get_size(OBJECT_SELF, "ChoiceTokens"),
+                                GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", i))));
+                        array_set_int(OBJECT_SELF, "ChoiceValue",
+                            array_get_size(OBJECT_SELF, "ChoiceValue"),
+                                i);
 
+                        }
                     }
                 }
             }

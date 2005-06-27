@@ -100,7 +100,7 @@ void main()
         return;
     }
     SetupTokens();
-    int nChoice = array_get_int(oPC, "ChoiceValues", nValue);
+    int nChoice = array_get_int(oPC, "ChoiceValues", nValue+GetLocalInt(oPC, "ChoiceOffset"));
     int nStage = GetLocalInt(oPC, "Stage");
     int nOldStage;
     // INSERT CODE HERE FOR PC RESPONSES

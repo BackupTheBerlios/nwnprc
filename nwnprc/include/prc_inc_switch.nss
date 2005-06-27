@@ -303,7 +303,8 @@ const string PRC_PNP_REST_TIME                   = "PRC_PNP_REST_HEALING";
 /**
  * Wizards use PnP spellschools instead of Bioware's
  * They must be generalists, but there is no way to enforce that
- * NOTE: Not completed yet
+ * If letoscript is enabled, then all wizards will be set to PnP Spellschool as their school
+ * plus the ConvoCC will set it if this switch is on
  */
 const string PRC_PNP_SPELL_SCHOOLS                   = "PRC_PNP_SPELL_SCHOOLS";
 
@@ -429,6 +430,14 @@ const string PRC_DISABLE_SKILL_                      = "PRC_DISABLE_SKILL_";
 const string PRC_DISABLE_SPELL_COUNT                 = "PRC_DISABLE_SPELL_COUNT";
 const string PRC_DISABLE_SPELL_                      = "PRC_DISABLE_SPELL_";
 
+/*
+ * Setting this will stop the GUI automatically appearing when a player is petrified on
+ * hardcore
+ * You can use a script named "prc_pw_petrific" which will always be run at petrification
+ * (regardless of this switch) on hardcore to pop up the GUI as you want it, rather than 
+ * being forced to use biowares
+*/
+const string PRC_NO_PETRIFY_GUI                      = "PRC_NO_PETRIFY_GUI";
 
 /******************************************************************************\
 *                               File End switches                              *

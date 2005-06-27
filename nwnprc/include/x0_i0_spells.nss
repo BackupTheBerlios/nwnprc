@@ -1057,7 +1057,9 @@ void DoPetrification(int nPower, object oSource, object oTarget, int nSpellID, i
                     if (bShowPopup == TRUE)
                     {
                         // * under hardcore rules or higher, this is an instant death
-                        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);                        
+                        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget); 
+                        //only pop up death panel if switch is not set
+                        if(!GetPRCSwitch(PRC_NO_PETRIFY_GUI))
                         DelayCommand(2.75, PopUpDeathGUIPanel(oTarget, FALSE , TRUE, 40579));
                         //run the PRC Ondeath code
                         //no way to run the normal module ondeath code too

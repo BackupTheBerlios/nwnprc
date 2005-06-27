@@ -55,21 +55,28 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     
     if (nMetaPsi > 0) 
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-		
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-	
+        int nDC = GetManifesterDC(oCaster);
+        int nCaster = GetManifesterLevel(oCaster);
+        int nPen = GetPsiPenetration(oCaster);
+
+        //Check for Power Resistance
+        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        {
+
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+            //use bioware petrify effect instead
+            //that works better for henchmen, DMs, etc
+            //as well as not petrifying undead, constructs, etc
+            //and putting all petrification code in one place, so builder hooks can work
+            DoPetrification(nCaster, oCaster, oTarget, GetSpellId(), nDC);
 
-               	if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
-               	{
-               		SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectPetrify(), oTarget);
-              	}
-	}
+            /*
+            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
+            {
+                //SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectPetrify(), oTarget);
+            }
+            */
+        }
     }
 }

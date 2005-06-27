@@ -26,6 +26,7 @@
 <li><a href="#Installer">PRC Installer</a> </li>
 <li><a href="#Updater">PRC Module Updater</a> </li>
 <li><a href="#Java CC">java Character Creator</a> </li>
+<li><a href="#Java CC">General Questions</a> </li>
 </ol>
 
 <br><br>
@@ -147,7 +148,9 @@ the &quot;Settings&quot; screen.
 
 <br><br><b>A:</b> Use the toolset to place a creature and change its
 appearance to your desire. Then note down the head number from the properties
-and use that in the CC.
+and use that in the CC. This picture should help clarify it:
+
+<center> <img border="0" src="CCParts.jpg" /> </center>
 
 <br><br><b>Q:</b> I want to use CEP for my appearance.
 
@@ -155,21 +158,34 @@ and use that in the CC.
 &quot;Settings&quot; screen, and set the custom tlk file to a CEP &amp; PRC merged tlk file.
 
 <br><br><b>Q:</b> I get an error message XYZ
+<br><br><b>Q:</b> The java CC disapperes while loading
 
 <br><br><b>A:</b> Try uninstalling java and WinRAR and following the exact
 steps described in this document. If that still doesn't work you could try
 making a batch file. To do so open notepad and type:
 
-<br><br>java -jar cc.jar
+<br><br>java -Xmx150M -Xms150M -jar CC.jar
 
 <br><br>Then save it as &quot;cc.bat&quot; (including the quote marks) in the
 same directory as cc.jar and then run the batch file by double-clicking on it.
 
-<center>
 <br><br>
-	<a href="pg12.htm">Previous Page</a>
-</center>
 <br><br>
+<a name="General Questions">
+<div><h2>General Questions</h2></div>
+</a>
+
+<br><br><b>Q:</b> Why doesn't racial Spell Resistance show on the character sheet?
+
+<br><br><b>A:</b> Because the PRC has a scripted SR system, to allow for various features.
+You should see &quot;X was affected by the spell.&quot; or similar messages.
+
+<br><br><b>Q:</b> Why doesn't X show on the character sheet?
+
+<br><br><b>A:</b> Because the character sheet is rather buggy. Additional attacks for example,
+often do not show. However, the combat logs will be correct, so you can use those numbers to
+measure your character against.
+
 </div>
 
 </body>

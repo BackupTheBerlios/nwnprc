@@ -125,10 +125,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                         // * I have less than 4HD, I die.
                         
                         DeathlessFrenzyCheck(oTarget);
+                         effect eDeath = EffectDeath();
+                         if(!GetPRCSwitch(PRC_165_DEATH_IMMUNITY))
+                            eDeath = SupernaturalEffect(eDeath);
 
                         //Apply VFX impact and death effect
                         //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget));
-                        effect eDeath = EffectDeath();
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));
                     }
                }

@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     location lTarget;
     effect eVis = EffectVisualEffect(VFX_IMP_DEATH);
     effect eWail = EffectVisualEffect(VFX_FNF_WAIL_O_BANSHEES);
-    int nCnt = 0;
+    int nCnt = 1;
     
     nCasterLevel +=SPGetPenetr();
     

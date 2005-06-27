@@ -36,6 +36,18 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         RemoveAnySpellEffects(SPELL_INVISIBILITY, oTarget);
     }
+    else 
+    if (GetHasSpellEffect(SPELLABILITY_AS_INVISIBILITY, oTarget) == TRUE) 
+    { 
+        RemoveAnySpellEffects(SPELLABILITY_AS_INVISIBILITY , oTarget); 
+    } 
+    else 
+    if(GetHasSpellEffect(SPELLABILITY_AS_IMPROVED_INVISIBLITY , oTarget) == TRUE) 
+    { 
+        RemoveAnySpellEffects(SPELLABILITY_AS_IMPROVED_INVISIBLITY , oTarget); 
+    }
+
+    
 
     effect eInvis = GetFirstEffect(oTarget);
 

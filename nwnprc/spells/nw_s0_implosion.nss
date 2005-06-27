@@ -43,6 +43,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     //Declare major variables
     object oTarget;
     effect eDeath = EffectDeath(TRUE);
+     if(!GetPRCSwitch(PRC_165_DEATH_IMMUNITY))
+        eDeath = SupernaturalEffect(eDeath);
     effect eImplode= EffectVisualEffect(VFX_FNF_IMPLOSION);
     float fDelay;
     

@@ -32,6 +32,13 @@
 
 void main()
 {
+    //check it its supposed to run
+    if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, OBJECT_SELF) < 2
+        || !GetPRCSwitch(PRC_USE_NEW_IMBUE_ARROW))
+    {    
+        SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
+        return;
+    }    
     //Required for use with Imbue Arrow ability.  Copy into spellhook if they
     //don't already exist.
     object oTarget = GetSpellTargetObject();
@@ -39,32 +46,17 @@ void main()
     int    iLevel  = PRCGetCasterLevel(OBJECT_SELF);
 
     //Imbue Arrow functionality.  If copying to new spellhook, start copy here ...
-    if (GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW))
+    int iResult = AAImbueArrow(oTarget, iSpell, iLevel);
+
+    if (iResult == 1)
     {
-        int iResult = AAImbueArrow(oTarget, iSpell, iLevel);
-
-        if (iResult == 1)
-        {
-            FloatingTextStringOnCreature("* Imbue Arrow success *", OBJECT_SELF);
-
-            //Stops the original spell script from firing.
-            PRCSetUserSpecificSpellScriptFinished();
-
-            //If you want the spellhook to end here, uncomment the following line.
-            //return;
-        }
-        else if (iResult == 0)
-        {
-            FloatingTextStringOnCreature("* Imbue Arrow failure *", OBJECT_SELF);
-
-            //Stops the original spell script from firing.  May be removed, if
-            //you have other spells that may affect arrows.
-            PRCSetUserSpecificSpellScriptFinished();
-
-            //If you want the spellhook to end here, uncomment the following line.
-            //return;
-        }
+        FloatingTextStringOnCreature("* Imbue Arrow success *", OBJECT_SELF);
+        //Stops the original spell script from firing.
+        SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
     }
-    //... and end copy here.  Paste in front of any other code in the existing
-    //spellhook, but inside the void main().
+    else if (iResult == 0)
+    {
+        FloatingTextStringOnCreature("* Imbue Arrow failure *", OBJECT_SELF);
+        SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
+    }
 }

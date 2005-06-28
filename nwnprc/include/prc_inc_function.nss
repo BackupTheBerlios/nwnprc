@@ -135,6 +135,14 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_RAPID_METABOLISM, oPC))                   ExecuteScript("prc_rapid_metab", oPC);
     if(GetHasFeat(FEAT_PSIONIC_HOLE, oPC))                       ExecuteScript("psi_psionic_hole", oPC);
     if(GetHasFeat(FEAT_POWER_ATTACK, oPC))                       ExecuteScript("prc_powatk_eval", oPC);
+    if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
+        && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
+        && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC))
+    {
+        //add the old feat to the hide
+        object oSkin = GetPCSkin(oPC);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(390), oSkin); 
+    }
     
     //PnP Spell Schools
     if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)

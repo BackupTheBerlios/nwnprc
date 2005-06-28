@@ -64,9 +64,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster),fDuration);
             AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oCaster),fDuration);            
             DelayCommand(fDuration, RemoveTimestopEquip());
+            /*
             string sSpellscript = PRCGetUserSpecificSpellScript();
             DelayCommand(fDuration, PRCSetUserSpecificSpellScript(sSpellscript));
             PRCSetUserSpecificSpellScript("tsspellscript");
+            */
+            //integrated into main spellhook
         }
     }
 

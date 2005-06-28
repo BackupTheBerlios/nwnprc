@@ -58,7 +58,7 @@ void SafeGetRecipeTagFromItem(string sResRef, int nRow = 0)
 
 void main()
 {
-    if (GetLocalInt(GetModule(), "PRC_DISABLE_CRAFT")) {
+    if (GetPRCSwitch(PRC_DISABLE_CRAFT)) {
         SendMessageToPCByStrRef(OBJECT_SELF, STRREF_CRAFTDISABLED);
         return;
     }

@@ -1429,48 +1429,48 @@ int spellsIsImmuneToPetrification(object oCreature)
     int bImmune = FALSE;
     switch (nAppearance)
     {
-    case APPEARANCE_TYPE_BASILISK:
-    case APPEARANCE_TYPE_COCKATRICE:
-    case APPEARANCE_TYPE_MEDUSA:
-    case APPEARANCE_TYPE_ALLIP:
-    case APPEARANCE_TYPE_ELEMENTAL_AIR:
-    case APPEARANCE_TYPE_ELEMENTAL_AIR_ELDER:
-    case APPEARANCE_TYPE_ELEMENTAL_EARTH:
-    case APPEARANCE_TYPE_ELEMENTAL_EARTH_ELDER:
-    case APPEARANCE_TYPE_ELEMENTAL_FIRE:
-    case APPEARANCE_TYPE_ELEMENTAL_FIRE_ELDER:
-    case APPEARANCE_TYPE_ELEMENTAL_WATER:
-    case APPEARANCE_TYPE_ELEMENTAL_WATER_ELDER:
-    case APPEARANCE_TYPE_GOLEM_STONE:
-    case APPEARANCE_TYPE_GOLEM_IRON:
-    case APPEARANCE_TYPE_GOLEM_CLAY:
-    case APPEARANCE_TYPE_GOLEM_BONE:
-    case APPEARANCE_TYPE_GORGON:
-    case APPEARANCE_TYPE_HEURODIS_LICH:
-    case APPEARANCE_TYPE_LANTERN_ARCHON:
-    case APPEARANCE_TYPE_SHADOW:
-    case APPEARANCE_TYPE_SHADOW_FIEND:
-    case APPEARANCE_TYPE_SHIELD_GUARDIAN:
-    case APPEARANCE_TYPE_SKELETAL_DEVOURER:
-    case APPEARANCE_TYPE_SKELETON_CHIEFTAIN:
-    case APPEARANCE_TYPE_SKELETON_COMMON:
-    case APPEARANCE_TYPE_SKELETON_MAGE:
-    case APPEARANCE_TYPE_SKELETON_PRIEST:
-    case APPEARANCE_TYPE_SKELETON_WARRIOR:
-    case APPEARANCE_TYPE_SKELETON_WARRIOR_1:
-    case APPEARANCE_TYPE_SPECTRE:
-    case APPEARANCE_TYPE_WILL_O_WISP:
-    case APPEARANCE_TYPE_WRAITH:
-    case APPEARANCE_TYPE_BAT_HORROR:
-    case 405: // Dracolich:
-    case 415: // Alhoon
-    case 418: // shadow dragon
-    case 420: // mithral golem
-    case 421: // admantium golem
-    case 430: // Demi Lich
-    case 469: // animated chest
-    case 474: // golems
-    case 475: // golems
+        case APPEARANCE_TYPE_BASILISK:
+        case APPEARANCE_TYPE_COCKATRICE:
+        case APPEARANCE_TYPE_MEDUSA:
+        case APPEARANCE_TYPE_ALLIP:
+        case APPEARANCE_TYPE_ELEMENTAL_AIR:
+        case APPEARANCE_TYPE_ELEMENTAL_AIR_ELDER:
+        case APPEARANCE_TYPE_ELEMENTAL_EARTH:
+        case APPEARANCE_TYPE_ELEMENTAL_EARTH_ELDER:
+        case APPEARANCE_TYPE_ELEMENTAL_FIRE:
+        case APPEARANCE_TYPE_ELEMENTAL_FIRE_ELDER:
+        case APPEARANCE_TYPE_ELEMENTAL_WATER:
+        case APPEARANCE_TYPE_ELEMENTAL_WATER_ELDER:
+        case APPEARANCE_TYPE_GOLEM_STONE:
+        case APPEARANCE_TYPE_GOLEM_IRON:
+        case APPEARANCE_TYPE_GOLEM_CLAY:
+        case APPEARANCE_TYPE_GOLEM_BONE:
+        case APPEARANCE_TYPE_GORGON:
+        case APPEARANCE_TYPE_HEURODIS_LICH:
+        case APPEARANCE_TYPE_LANTERN_ARCHON:
+        case APPEARANCE_TYPE_SHADOW:
+        case APPEARANCE_TYPE_SHADOW_FIEND:
+        case APPEARANCE_TYPE_SHIELD_GUARDIAN:
+        case APPEARANCE_TYPE_SKELETAL_DEVOURER:
+        case APPEARANCE_TYPE_SKELETON_CHIEFTAIN:
+        case APPEARANCE_TYPE_SKELETON_COMMON:
+        case APPEARANCE_TYPE_SKELETON_MAGE:
+        case APPEARANCE_TYPE_SKELETON_PRIEST:
+        case APPEARANCE_TYPE_SKELETON_WARRIOR:
+        case APPEARANCE_TYPE_SKELETON_WARRIOR_1:
+        case APPEARANCE_TYPE_SPECTRE:
+        case APPEARANCE_TYPE_WILL_O_WISP:
+        case APPEARANCE_TYPE_WRAITH:
+        case APPEARANCE_TYPE_BAT_HORROR:
+        case 405: // Dracolich:
+        case 415: // Alhoon
+        case 418: // shadow dragon
+        case 420: // mithral golem
+        case 421: // admantium golem
+        case 430: // Demi Lich
+        case 469: // animated chest
+        case 474: // golems
+        case 475: // golems
         bImmune = TRUE;
     }
     
@@ -1499,7 +1499,6 @@ int spellsIsFlying(object oCreature)
 {
     int nAppearance = GetAppearanceType(oCreature);
     int bFlying = FALSE;
-    int nRace = GetRacialType(oCreature);
     switch(nAppearance)
     {
         case APPEARANCE_TYPE_ALLIP:
@@ -1550,10 +1549,12 @@ int spellsIsFlying(object oCreature)
         case 472: // Hive mother
         bFlying = TRUE;
     }
-    if(GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE, oCreature) >= 9
-        || GetLevelByClass(CLASS_TYPE_LICH, oCreature) >= 5
-        || nRace == RACIAL_TYPE_AVARIEL
-        || nRace == RACIAL_TYPE_FEYRI)
+    int nRace = GetRacialType(oCreature);
+    if(!bFlying
+        && (GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE, oCreature) >= 9
+            || GetLevelByClass(CLASS_TYPE_LICH, oCreature) >= 5
+            || nRace == RACIAL_TYPE_AVARIEL
+            || nRace == RACIAL_TYPE_FEYRI))
         bFlying = TRUE;
     return bFlying;
 }

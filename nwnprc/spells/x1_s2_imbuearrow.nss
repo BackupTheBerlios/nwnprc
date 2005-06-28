@@ -14,17 +14,20 @@
 
 void main()
 {
-
-    string sScript =  PRCGetUserSpecificSpellScript();
-    if (sScript != "aa_spellhook")
-    {
-        SetLocalString(OBJECT_SELF,"temp_spell_at_inst",sScript);
-        PRCSetUserSpecificSpellScript("aa_spellhook");
-    }
-
-    //Reroute feat to conversation, only for PCs.
+    //modified by primogenitor
+    //removed conversation etc, now in main spellhook instead
+    //this feat will be applied as a bonus feat on the hide
+    //when the switch PRC_USE_NEW_IMBUE_ARROW is off
+    /*//Reroute feat to conversation, only for PCs.
     if (GetIsPC(OBJECT_SELF))
     {
+
+        string sScript =  PRCGetUserSpecificSpellScript();
+        if (sScript != "aa_spellhook")
+        {
+            SetLocalString(OBJECT_SELF,"temp_spell_at_inst",sScript);
+            PRCSetUserSpecificSpellScript("aa_spellhook");
+        }
         //If in combat, can't converse.
         if (GetIsInCombat())
         {
@@ -36,7 +39,7 @@ void main()
         }
     }
     else
-    {
+    {*/
 
     ////////////////////////////////////////////////////////////////////////////
     // DEFAULT IMBUE ARROW SCRIPT                                             //
@@ -98,7 +101,7 @@ void main()
         {
 
             //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), TRUE));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), TRUE));
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr(), fDelay))
@@ -128,7 +131,7 @@ void main()
     // END DEFAULT                                                            //
     ////////////////////////////////////////////////////////////////////////////
 
-    }
+    //}
 }
 
 

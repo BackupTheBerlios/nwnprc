@@ -30,14 +30,12 @@ void main()
         {
             SetCustomToken(99, "Please select a familiar.\nAll familiars will cost 100GP to summon.");
 
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Bat");
+            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), "Bat");
             array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 1);
 //            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
 //                "Cat");
 //            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 2);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Hawk");
+            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), "Hawk");
             array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 3);
 //            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
 //                "Lizard");
@@ -62,6 +60,10 @@ void main()
 //            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 10);
             array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
+        else
+        {
+            SetCustomToken(99, "Familiar selected, summoning...");  
+        }
         //do token setup
         SetupTokens();
         SetCustomToken(110, GetStringByStrRef(16824212));//finish
@@ -79,6 +81,7 @@ void main()
         DeleteLocalString(oPC, "DynConv_Script");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
+        array_delete(oPC, "StagesSetup");
         DeleteLocalInt(oPC, "Stage");
         return;
     }
@@ -89,9 +92,11 @@ void main()
         DeleteLocalString(oPC, "DynConv_Script");
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
+        array_delete(oPC, "StagesSetup");
         DeleteLocalInt(oPC, "Stage");
         return;
     }
+    nValue += GetLocalInt(oPC, "ChoiceOffset");
     nValue = array_get_int(oPC, "ChoiceValues", nValue);
     int nStage = GetLocalInt(oPC, "Stage");
     if(nStage == 0)

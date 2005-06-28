@@ -24,13 +24,13 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
-	int nDuration = d4(2)+2;
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+    int nDuration = d4(2)+2;
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, GR_TIME_DC, GR_TIME_S, GR_TIME_XP))
@@ -58,9 +58,11 @@ void main()
                 AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster),fDuration);
                 AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oCaster),fDuration);            
                 DelayCommand(fDuration, RemoveTimestopEquip());
+                /*
                 string sSpellscript = PRCGetUserSpecificSpellScript();
                 DelayCommand(fDuration, PRCSetUserSpecificSpellScript(sSpellscript));
                 PRCSetUserSpecificSpellScript("tsspellscript");
+                    now in main spellhook*/ 
             }
         }
 
@@ -69,6 +71,6 @@ void main()
         DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, OBJECT_SELF, fDuration, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

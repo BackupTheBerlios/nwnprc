@@ -59,53 +59,55 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         
     if (nSurge > 0)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
+        
+        PsychicEnervation(oCaster, nSurge);
     }
     
     if (nMetaPsi > 0) 
     {
-	int nCaster = GetManifesterLevel(oCaster);
-	int nDC = GetManifesterDC(oCaster);
-	int nDur = 1;
-	
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Duration
-	if (nAugment > 0) nDur += nAugment;
-	
-	if (nMetaPsi == 2)	nDur *= 2;
-	
-	location lTarget = GetSpellTargetLocation();
-	effect eVis = EffectVisualEffect(VFX_FNF_TIME_STOP);
-	effect eTime = EffectTimeStop();
-	if(GetPRCSwitch(PRC_TIMESTOP_LOCAL))
-	{
-		eTime = EffectAreaOfEffect(VFX_PER_NEW_TIMESTOP);
-		eTime = EffectLinkEffects(eTime, EffectEthereal());
-		if(GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE))
-	        {
-	            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCaster),RoundsToSeconds(nDur));
-	            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster),RoundsToSeconds(nDur));
-	            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_BULLETS, oCaster),RoundsToSeconds(nDur));
-	            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_ARROWS, oCaster),RoundsToSeconds(nDur));
-	            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_BOLTS, oCaster),RoundsToSeconds(nDur));
-	            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oCaster),RoundsToSeconds(nDur));
-	            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster),RoundsToSeconds(nDur));
-	            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oCaster),RoundsToSeconds(nDur));            
-	            DelayCommand(RoundsToSeconds(nDur), RemoveTimestopEquip());
-	            string sSpellscript = PRCGetUserSpecificSpellScript();
-	            DelayCommand(RoundsToSeconds(nDur), PRCSetUserSpecificSpellScript(sSpellscript));
-	            PRCSetUserSpecificSpellScript("tsspellscript");
-	        }
-	}
-	
-	//Fire cast spell at event for the specified target
-	SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_TIME_STOP, FALSE));
-		
-	//Apply the VFX impact and effects
-	DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, OBJECT_SELF, RoundsToSeconds(nDur),TRUE,-1,nCaster));
-    	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
-	
+    int nCaster = GetManifesterLevel(oCaster);
+    int nDC = GetManifesterDC(oCaster);
+    int nDur = 1;
+    
+    if (nSurge > 0) nAugment += nSurge;
+    
+    //Augmentation effects to Duration
+    if (nAugment > 0) nDur += nAugment;
+    
+    if (nMetaPsi == 2)  nDur *= 2;
+    
+    location lTarget = GetSpellTargetLocation();
+    effect eVis = EffectVisualEffect(VFX_FNF_TIME_STOP);
+    effect eTime = EffectTimeStop();
+    if(GetPRCSwitch(PRC_TIMESTOP_LOCAL))
+    {
+        eTime = EffectAreaOfEffect(VFX_PER_NEW_TIMESTOP);
+        eTime = EffectLinkEffects(eTime, EffectEthereal());
+        if(GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE))
+            {
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCaster),RoundsToSeconds(nDur));
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster),RoundsToSeconds(nDur));
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_BULLETS, oCaster),RoundsToSeconds(nDur));
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_ARROWS, oCaster),RoundsToSeconds(nDur));
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_BOLTS, oCaster),RoundsToSeconds(nDur));
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oCaster),RoundsToSeconds(nDur));
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster),RoundsToSeconds(nDur));
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oCaster),RoundsToSeconds(nDur));            
+                /*
+                DelayCommand(RoundsToSeconds(nDur), RemoveTimestopEquip());
+                string sSpellscript = PRCGetUserSpecificSpellScript();
+                DelayCommand(RoundsToSeconds(nDur), PRCSetUserSpecificSpellScript(sSpellscript));
+                PRCSetUserSpecificSpellScript("tsspellscript");
+                    now in main spellhook */
+            }
+    }
+    
+    //Fire cast spell at event for the specified target
+    SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_TIME_STOP, FALSE));
+        
+    //Apply the VFX impact and effects
+    DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, OBJECT_SELF, RoundsToSeconds(nDur),TRUE,-1,nCaster));
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
+    
     }
 }

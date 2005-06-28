@@ -387,18 +387,29 @@ int X2PreSpellCastCode()
     // Chapter 2 of Hordes of the Underdark.
     //---------------------------------------------------------------------------
     if (!GetIsPC(OBJECT_SELF)
-    && !GetPRCSwitch(PRC_NPC_HAS_PC_SPELLCASTING))
-    {
-        if( !GetIsDMPossessed(OBJECT_SELF) && !GetLocalInt(GetArea(OBJECT_SELF), "X2_L_WILD_MAGIC"))
-        {
+        && !GetPRCSwitch(PRC_NPC_HAS_PC_SPELLCASTING)
+        && !GetIsDMPossessed(OBJECT_SELF)
+        && !GetLocalInt(GetArea(OBJECT_SELF), "X2_L_WILD_MAGIC"))
             return TRUE;
-        }
-    }
+            
     //Pnp Tensers Transformation
     if(nContinue
         && GetPRCSwitch(PRC_PNP_TENSERS_TRANSFORMATION)
         && GetHasSpellEffect(SPELL_TENSERS_TRANSFORMATION))
         nContinue = FALSE;
+    //PnP Timestop    
+    if(nContinue
+        && GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE)
+        && (GetHasSpellEffect(SPELL_TIME_STOP) 
+            || GetHasSpellEffect(4032)          //epic spell: Greater Timestop
+            || GetHasSpellEffect(14236))        //psionic power: Temporal Acceleration
+        && (!GetIsObjectValid(oTarget) 
+            || oTarget != OBJECT_SELF
+            || Get2DACache("spells", "HostileSetting", GetSpellId()) == "1")
+        )
+    {
+        nContinue = FALSE;
+    }        
     //Pnp spellschools
     if(nContinue
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
@@ -493,31 +504,25 @@ int X2PreSpellCastCode()
     // Run Red Wizard School Restriction Check
     //---------------------------------------------------------------------------
     if (nContinue)
-    nContinue = RedWizRestrictedSchool();
+        nContinue = RedWizRestrictedSchool();
 
+    //---------------------------------------------------------------------------
+    // Run use magic device skill check
+    //---------------------------------------------------------------------------
     if (nContinue)
-    {
-        //---------------------------------------------------------------------------
-        // Run use magic device skill check
-        //---------------------------------------------------------------------------
         nContinue = X2UseMagicDeviceCheck();
-    }
 
+    //-----------------------------------------------------------------------
+    // run any user defined spellscript here
+    //-----------------------------------------------------------------------
     if (nContinue)
-    {
-        //-----------------------------------------------------------------------
-        // run any user defined spellscript here
-        //-----------------------------------------------------------------------
         nContinue = X2RunUserDefinedSpellScript();
-    }
 
+    //-----------------------------------------------------------------------
+    // run any object-specific spellscript here
+    //-----------------------------------------------------------------------
     if (nContinue)
-    {
-        //-----------------------------------------------------------------------
-        // run any object-specific spellscript here
-        //-----------------------------------------------------------------------
         nContinue = PRCRunUserSpecificSpellScript();
-    }
     //---------------------------------------------------------------------------
     // Check for the new restricted itemproperties
     //---------------------------------------------------------------------------
@@ -539,17 +544,20 @@ int X2PreSpellCastCode()
         //-----------------------------------------------------------------------
         // Check if spell was used to trigger item creation feat
         //-----------------------------------------------------------------------
-        if (nContinue) {
+        if (nContinue) 
             nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft",OBJECT_SELF);
-        }
 
         //-----------------------------------------------------------------------
         // Check if spell was used for on a sequencer item
         //-----------------------------------------------------------------------
         if (nContinue)
-        {
             nContinue = (!X2GetSpellCastOnSequencerItem(oTarget));
-        }
+            
+        //-----------------------------------------------------------------------
+        // Check if spell was used for Arcane Archer Imbue Arror
+        //-----------------------------------------------------------------------
+        if (nContinue)
+            nContinue = !ExecuteScriptAndReturnInt("aa_spellhook",OBJECT_SELF);
 
         //-----------------------------------------------------------------------
         // * Execute item OnSpellCast At routing script if activated
@@ -559,9 +567,7 @@ int X2PreSpellCastCode()
             SetUserDefinedItemEventNumber(X2_ITEM_EVENT_SPELLCAST_AT);
             int nRet =   ExecuteScriptAndReturnInt(GetUserDefinedItemEventScriptName(oTarget),OBJECT_SELF);
             if (nRet == X2_EXECUTE_SCRIPT_END)
-            {
                 return FALSE;
-            }
         }
 
         //-----------------------------------------------------------------------
@@ -569,9 +575,8 @@ int X2PreSpellCastCode()
         // from being cast on items. We do this because we can not predict how
         // all the hundreds spells in NWN will react when cast on items
         //-----------------------------------------------------------------------
-        if (nContinue) {
+        if (nContinue)
             nContinue = X2CastOnItemWasAllowed(oTarget);
-        }
     }
 
 
@@ -610,10 +615,10 @@ int X2PreSpellCastCode()
         && GetHasFeat(FEAT_SUMMON_FAMILIAR))
     {
         object oFam = GetLocalObject(OBJECT_SELF, "Familiar");
-        SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel());
+        AssignCommand(oFam, ActionDoCommand(SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel())));
         AssignCommand(oFam, ActionCastSpellAtObject (PRCGetSpellId(), oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         // Make sure this variable gets deleted as quickly as possible in case it's added in error.
-        AssignCommand(oFam, DeleteLocalInt(oFam, "PRC_Castlevel_Override"));
+        AssignCommand(oFam, ActionDoCommand(DeleteLocalInt(oFam, "PRC_Castlevel_Override")));
     
     }
     

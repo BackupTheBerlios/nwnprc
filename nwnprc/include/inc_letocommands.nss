@@ -51,7 +51,7 @@ string LetoGet(string sLocation);
 
 string LetoAdd(string sLocation,string sValue, string sType)
 {
-    return LetoSet(sLocation, sValue, sType, FALSE);
+    return LetoSet(sLocation, sValue, sType, TRUE);
 }
 
 string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE)

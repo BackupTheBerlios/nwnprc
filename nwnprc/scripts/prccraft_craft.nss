@@ -19,41 +19,41 @@ void FinishItem(string sResRef, int nStackSize, int nResultType, string sResultA
 {
     object oResult;
 
-	if (nResultType == RESULT_TYPE_ITEM)
-	{
- 		oResult = CreateItemOnObject(sResRef, OBJECT_SELF, nStackSize);
-	}
-	else if (nResultType == RESULT_TYPE_SCRIPT)
-	{
-		PRCCraft_SetArguments(sResultArgs);
-		PRCCraft_SetConsume(TRUE);	
-		ExecuteScript(sResRef, OBJECT_SELF);
-	}
-	else 
-	{
-		//get a location in front of the caster
-		vector vPC = GetPosition(OBJECT_SELF);
-		float fAngle = GetFacing(OBJECT_SELF);
-	
-		const float fDistance = 2.0;
+    if (nResultType == RESULT_TYPE_ITEM)
+    {
+        oResult = CreateItemOnObject(sResRef, OBJECT_SELF, nStackSize);
+    }
+    else if (nResultType == RESULT_TYPE_SCRIPT)
+    {
+        PRCCraft_SetArguments(sResultArgs);
+        PRCCraft_SetConsume(TRUE);  
+        ExecuteScript(sResRef, OBJECT_SELF);
+    }
+    else 
+    {
+        //get a location in front of the caster
+        vector vPC = GetPosition(OBJECT_SELF);
+        float fAngle = GetFacing(OBJECT_SELF);
+    
+        const float fDistance = 2.0;
 
-		vector vSpawn;
-		vSpawn.z = vPC.z;
-		vSpawn.x = vPC.x + (fDistance * cos(fAngle));
-		if (vSpawn.x < 0.0)
-			vSpawn.x = 0.0;
-		vSpawn.y = vPC.y + (fDistance * sin(fAngle));
-		if (vSpawn.y < 0.0)
-			vSpawn.y = 0.0;
+        vector vSpawn;
+        vSpawn.z = vPC.z;
+        vSpawn.x = vPC.x + (fDistance * cos(fAngle));
+        if (vSpawn.x < 0.0)
+            vSpawn.x = 0.0;
+        vSpawn.y = vPC.y + (fDistance * sin(fAngle));
+        if (vSpawn.y < 0.0)
+            vSpawn.y = 0.0;
 
-		fAngle += 180.0;
-		if (fAngle >= 360.0)
-			fAngle -= 360.0;
+        fAngle += 180.0;
+        if (fAngle >= 360.0)
+            fAngle -= 360.0;
 
-		location lSpawn = Location(GetArea(OBJECT_SELF), vSpawn, fAngle);	
+        location lSpawn = Location(GetArea(OBJECT_SELF), vSpawn, fAngle);   
 
-		oResult = CreateObject(nResultType == RESULT_TYPE_PLACEABLE ? OBJECT_TYPE_PLACEABLE : OBJECT_TYPE_CREATURE, sResRef, lSpawn);
-	}
+        oResult = CreateObject(nResultType == RESULT_TYPE_PLACEABLE ? OBJECT_TYPE_PLACEABLE : OBJECT_TYPE_CREATURE, sResRef, lSpawn);
+    }
 
     if (GetIsObjectValid(oResult))
         SetIdentified(oResult, TRUE);
@@ -64,11 +64,11 @@ void FinishItem(string sResRef, int nStackSize, int nResultType, string sResultA
 
 void main()
 {
-	if (GetLocalInt(GetModule(), "PRC_DISABLE_CRAFT")) {
-	    SendMessageToPCByStrRef(OBJECT_SELF, STRREF_CRAFTDISABLED);
-	    return;
-	}
-	
+    if (GetPRCSwitch(PRC_DISABLE_CRAFT)) {
+        SendMessageToPCByStrRef(OBJECT_SELF, STRREF_CRAFTDISABLED);
+        return;
+    }
+    
     object oTarget = GetSpellTargetObject();
     int nTargetType = GetObjectType(oTarget);
     struct ireqreport iReport;
@@ -100,9 +100,9 @@ void main()
 
                 //disable crafting for some time (default: disabled)
                 object oModule = GetModule();
-                int nDelay = FloatToInt(GetLocalFloat(oModule, "PRC_CraftTimerMultiplier") * IntToFloat(iReport.marketprice));
-                nDelay = min(nDelay, GetLocalInt(oModule, "PRC_CraftTimerMin"));
-                nDelay = max(nDelay, GetLocalInt(oModule, "PRC_CraftTimerMax"));
+                int nDelay = FloatToInt((IntToFloat(GetPRCSwitch(PRC_CRAFT_TIMER_MULTIPLIER))/100) * IntToFloat(iReport.marketprice));
+                nDelay = min(nDelay, GetPRCSwitch(PRC_CRAFT_TIMER_MIN));
+                nDelay = max(nDelay, GetPRCSwitch(PRC_CRAFT_TIMER_MAX));
 
                 SetCraftTimer(nDelay);
             }

@@ -93,9 +93,17 @@ const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
 
 /**
  * By request, set this to use the 1.65 behaviour for implosion, phantasmal killer,
- * and weird (death immunity counts)
+ * and weird, i.e. death immunity counts
+ * This is in addition to the extra immunities 1.66 adds
  */
 const string PRC_165_DEATH_IMMUNITY                  = "PRC_165_DEATH_IMMUNITY";
+
+/*
+ * This turns on the new improved imbue arrow functionallity
+ * so all the player has to do is cast the spell at an arrow in their inventory
+ * If this is off, players get the default bioware imbue arrow as a bonus feat on their hides
+*/
+const string PRC_USE_NEW_IMBUE_ARROW                 = "PRC_USE_NEW_IMBUE_ARROW";
 
 
 /******************************************************************************\
@@ -693,6 +701,41 @@ const string PRC_3_5e_FIST_DAMAGE                    = "PRC_3_5e_FIST_DAMAGE";
  * Default: A Brawler's size is ignored.
  */
 const string PRC_BRAWLER_SIZE                        = "PRC_BRAWLER_SIZE";
+
+
+
+
+/******************************************************************************\
+*                           Craft System Switches                           *
+\******************************************************************************/
+
+/*
+ * Completely disable the PRC Crafting System
+ */
+const string PRC_DISABLE_CRAFT                       = "PRC_DISABLE_CRAFT";
+
+
+/*
+ * Multiply the delay (in seconds) after the creation of an item in which a PC 
+ * can't craft anything. This is divided by 100 to get a float.
+ * Normally, it's set to the market price of the item. Set 
+ * it to less than 100 to reduce it instead. (default: 0.0).
+ */
+const string PRC_CRAFT_TIMER_MULTIPLIER              = "PRC_CRAFT_TIMER_MULTIPLIER";
+
+/*
+ * Absolute maximum delay (in seconds) where crafting is disabled for a PC, 
+ * regardless of the item's market price. By default it's 0 (meaning that there's 
+ * no delay at all).
+ */
+const string PRC_CRAFT_TIMER_MAX                     = "PRC_CRAFT_TIMER_MAX";
+
+/*
+ * Absolute minimum delay (in seconds) where crafting is disabled for a PC, 
+ * regardless of the item's market price. By default it's 0 (meaning that there's 
+ * no delay at all).
+ */
+const string PRC_CRAFT_TIMER_MIN                     = "PRC_CRAFT_TIMER_MIN";
 
 
 

@@ -22,7 +22,8 @@ void DoTimestopEquip()
     object oPC = GetItemLastEquippedBy();
     if(GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE)
         && (GetHasSpellEffect(SPELL_TIME_STOP, oPC) 
-            || GetHasSpellEffect(4032, oPC)))
+            || GetHasSpellEffect(4032, oPC)
+            || GetHasSpellEffect(14236, oPC)))
         AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemLastEquipped(),9999.0);
 /*    else if(GetHasSpellEffect(POWER_ID, oPC))
     {
@@ -36,7 +37,8 @@ void DoTimestopUnEquip()
     object oPC = GetItemLastUnequippedBy();
     if(GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE)
         && (GetHasSpellEffect(SPELL_TIME_STOP, oPC)
-            ||GetHasSpellEffect(4032, oPC)))
+            ||GetHasSpellEffect(4032, oPC)
+            || GetHasSpellEffect(14236, oPC)))
         IPRemoveMatchingItemProperties(GetItemLastUnequipped(), ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_TEMPORARY);
 /*    else if(GetHasSpellEffect(POWER_ID, oPC))
     {
@@ -63,7 +65,9 @@ void RemoveTSFromObject(object oTarget)
     while(GetIsEffectValid(eTest))
     {
         if(GetEffectSpellId(eTest) == SPELL_TIME_STOP
-        || GetEffectSpellId(eTest) == 4032)//epic TS
+            || GetEffectSpellId(eTest) == 4032//epic TS
+            || GetEffectSpellId(eTest) == 14236//psionic:temporal acceleration
+            )
             RemoveEffect(oTarget, eTest);
         eTest = GetNextEffect(oTarget);
     }

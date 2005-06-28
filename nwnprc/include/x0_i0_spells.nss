@@ -485,7 +485,7 @@ void DoCamoflage(object oTarget)
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eLink = EffectLinkEffects(eHide, eDur);
 
-    int nDuration = PRCGetCasterLevel(OBJECT_SELF); // * Duration 1 turn/level
+    int nDuration = 10*PRCGetCasterLevel(OBJECT_SELF); // * Duration 10 turn/level
      if (nMetaMagic & METAMAGIC_EXTEND)    //Duration is +100%
     {
          nDuration = nDuration * 2;
@@ -1481,6 +1481,12 @@ int spellsIsImmuneToPetrification(object oCreature)
         case RACIAL_TYPE_CONSTRUCT:
         case RACIAL_TYPE_OOZE:
         case RACIAL_TYPE_UNDEAD:
+        bImmune = TRUE;
+    }
+
+    // 03/07/2005 CraigW - Petrification immunity can also be granted as an item property.
+    if ( ResistSpell(OBJECT_SELF,oCreature) == 2 )
+    {
         bImmune = TRUE;
     }
 

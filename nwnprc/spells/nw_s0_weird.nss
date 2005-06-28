@@ -76,62 +76,68 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                //Make an SR Check
                if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                {
-                    if(GetHitDice(oTarget) >= 4)
+                    if ( !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS,OBJECT_SELF) &&
+                         !GetIsImmune(oTarget, IMMUNITY_TYPE_FEAR,OBJECT_SELF))
                     {
-                        int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
-                        //Make a Will save against mind-affecting
-                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+                        if(GetHitDice(oTarget) >= 4)
                         {
-                            //Make a fortitude save against death
-                            if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
+                            int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                            //Make a Will save against mind-affecting
+                            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                             {
-                                // * I made my saving throw but I still have to take the 3d6 damage
-
-                                //Roll damage
-                                nDamage = d6(3);
-                                //Make metamagic check
-                                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
+                                //Make a fortitude save against death
+                                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                                 {
-                                    nDamage = 18;
+                                    // * I made my saving throw but I still have to take the 3d6 damage
+
+                                    //Roll damage
+                                    nDamage = d6(3);
+                                    //Make metamagic check
+                                    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
+                                    {
+                                        nDamage = 18;
+                                    }
+                                    if ((nMetaMagic & METAMAGIC_EMPOWER))
+                                    {
+                                        nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
+                                    }
+
+                                    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+
+                                    //Set damage effect
+                                    eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+                                    //Apply VFX Impact and damage effect
+                                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                                 }
-                                if ((nMetaMagic & METAMAGIC_EMPOWER))
+                                else
                                 {
-                                    nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
+                                    // * I failed BOTH saving throws. Now I die.
+
+                                    DeathlessFrenzyCheck(oTarget);
+
+                                    //Apply VFX impact and death effect
+                                    //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget));
+                                    effect eDeath = EffectDeath();
+                                     if(!GetPRCSwitch(PRC_165_DEATH_IMMUNITY))
+                                        eDeath = SupernaturalEffect(eDeath);
+                                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));
                                 }
-                                
-                                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-                                
-                                //Set damage effect
-                                eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-                                //Apply VFX Impact and damage effect
-                                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                            }
-                            else
-                            {
-                                // * I failed BOTH saving throws. Now I die.
-                                
-                                DeathlessFrenzyCheck(oTarget);
+                            } // Will save
+                        }
+                        else
+                        {
+                            // * I have less than 4HD, I die.
 
-                                //Apply VFX impact and death effect
-                                //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget));
-                                effect eDeath = EffectDeath();
-                                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));
-                            }
-                        } // Will save
-                    }
-                    else
-                    {
-                        // * I have less than 4HD, I die.
-                        
-                        DeathlessFrenzyCheck(oTarget);
-                         effect eDeath = EffectDeath();
-                         if(!GetPRCSwitch(PRC_165_DEATH_IMMUNITY))
-                            eDeath = SupernaturalEffect(eDeath);
+                            DeathlessFrenzyCheck(oTarget);
+                             effect eDeath = EffectDeath();
+                             if(!GetPRCSwitch(PRC_165_DEATH_IMMUNITY))
+                                eDeath = SupernaturalEffect(eDeath);
 
-                        //Apply VFX impact and death effect
-                        //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget));
-                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));
+                            //Apply VFX impact and death effect
+                            //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget));
+                            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));
+                        }
                     }
                }
         }

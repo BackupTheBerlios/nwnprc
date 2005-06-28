@@ -579,7 +579,7 @@ string SetSoundset(int nSoundsetID)
 //<gff:add 'SoundSetFile' {value=2 setifexists=True}>
 //unicorn
 // /SoundSetFile = 2;
-    return LetoSet("SoundSetFile", IntToString(nSoundsetID), "byte");
+    return LetoSet("SoundSetFile", IntToString(nSoundsetID), "word");
 }
 
 string SetPCPortrait(string sPortrait)

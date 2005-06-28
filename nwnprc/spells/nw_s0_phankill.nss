@@ -66,34 +66,38 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
             //Make a Will save
             if (!PRCMySavingThrow2(SAVING_THROW_WILL,  oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
             {
-                //Make a Fort save
-                if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)),SAVING_THROW_TYPE_DEATH))
+                // Immunity to fear, makes you immune to Phantasmal Killer.
+                if ( GetIsImmune( oTarget, IMMUNITY_TYPE_FEAR ) == FALSE )
                 {
-                     //Check for metamagic
-                     if ((nMetaMagic & METAMAGIC_MAXIMIZE))
-                     {
-                        nDamage = 18;
-                     }
-                     if ((nMetaMagic & METAMAGIC_EMPOWER))
-                     {
-                        nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
-                     }
-                     nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-                     //Set the damage property
-                     eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-                     //Apply the damage effect and VFX impact
-                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
-                }
-                else
-                {
-                     DeathlessFrenzyCheck(oTarget);
-                     effect eDeath = EffectDeath();
-                     if(!GetPRCSwitch(PRC_165_DEATH_IMMUNITY))
-                        eDeath = SupernaturalEffect(eDeath);
-                     //Apply the death effect and VFX impact
-                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
-                     //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    //Make a Fort save
+                    if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)),SAVING_THROW_TYPE_DEATH))
+                    {
+                         //Check for metamagic
+                         if ((nMetaMagic & METAMAGIC_MAXIMIZE))
+                         {
+                            nDamage = 18;
+                         }
+                         if ((nMetaMagic & METAMAGIC_EMPOWER))
+                         {
+                            nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
+                         }
+                         nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                         //Set the damage property
+                         eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+                         //Apply the damage effect and VFX impact
+                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+                    }
+                    else
+                    {
+                         DeathlessFrenzyCheck(oTarget);
+                         effect eDeath = EffectDeath();
+                         if(!GetPRCSwitch(PRC_165_DEATH_IMMUNITY))
+                            eDeath = SupernaturalEffect(eDeath);
+                         //Apply the death effect and VFX impact
+                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
+                         //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    }
                 }
             }
         }

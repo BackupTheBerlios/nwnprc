@@ -51,6 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_HOLY_30);
 
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nScale = CasterLvl/ 3;
     // * must fall between +1 and +5
     if (nScale < 1)
@@ -68,6 +69,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     eLink = EffectLinkEffects(eLink, eDur);
 
     int nDuration = 1; // * Duration 1 turn
+    if ( nMetaMagic & METAMAGIC_EXTEND )
+    {
+        nDuration = nDuration * 2;
+    }
 
     //Apply Impact
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());

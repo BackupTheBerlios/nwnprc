@@ -69,7 +69,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     {
         SignalEvent(GetItemPossessor(oMyWeapon), EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
 
-        if (GetBaseItemType(oMyWeapon) == BASE_ITEM_QUARTERSTAFF)
+        if (GetBaseItemType(oMyWeapon) == BASE_ITEM_QUARTERSTAFF
+            || GetBaseItemType(oMyWeapon) == BASE_ITEM_MAGICSTAFF)
         {
             if (nDuration>0)
             {

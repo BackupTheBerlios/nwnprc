@@ -61,50 +61,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
         nDuration = nDuration *2;   //Duration is +100%
     }
-    //Check to see if a valid target has been chosen
-    if (GetIsObjectValid(oTarget))
-    {
-        if(!GetIsReactionTypeFriendly(oTarget))
-        {
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_GREATER_PLANAR_BINDING));
-            //Check for racial type
-            if(nRacial == RACIAL_TYPE_OUTSIDER)
-            {
-                //Allow will save to negate hold effect
-                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, ((GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))+5)))
-                {
-                    //Apply the hold effect
-                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration/2));
-                }
-            }
-        }
-    }
-    else
-    {
-        //If the ground was clicked on summon an outsider based on alignment
-        int nAlign = GetAlignmentGoodEvil(OBJECT_SELF);
-        float fDelay = 3.0;
-        switch (nAlign)
-        {
-            case ALIGNMENT_EVIL:
-                eSummon = EffectSummonCreature("NW_S_VROCK", VFX_FNF_SUMMON_GATE, 3.0);
-                //eGate = EffectVisualEffect(VFX_FNF_SUMMON_GATE);
-            break;
-            case ALIGNMENT_GOOD:
-                eSummon = EffectSummonCreature("NW_S_VROCK", VFX_FNF_SUMMON_GATE, 3.0);
-                //eGate = EffectVisualEffect(VFX_FNF_SUMMON_CELESTIAL);
-            break;
-            case ALIGNMENT_NEUTRAL:
-                eSummon = EffectSummonCreature("NW_S_VROCK", VFX_FNF_SUMMON_GATE, 3.0);
-                //eGate = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_3);
-                fDelay = 1.0;
-            break;
-        }
-        //Apply the VFX impact and summon effect
-        MultisummonPreSummon(OBJECT_SELF);
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), RoundsToSeconds(nDuration));
-    }
+    eSummon = EffectSummonCreature("NW_S_VROCK", VFX_FNF_SUMMON_GATE, 3.0);
+    if(GetPRCSwitch(PRC_COMPANION_IN_USE))
+        eSummon = EffectSummonCreature("prc_gelugon", VFX_FNF_SUMMON_GATE, 3.0);
+    //Apply the VFX impact and summon effect
+    MultisummonPreSummon(OBJECT_SELF);
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), RoundsToSeconds(nDuration));
 
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

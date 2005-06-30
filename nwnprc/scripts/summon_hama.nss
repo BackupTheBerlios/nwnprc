@@ -20,10 +20,14 @@ void main()
     int nDuration = GetCasterLevel(OBJECT_SELF);
     object oPC = OBJECT_SELF;
     effect eSummon = EffectSummonCreature("NW_DMVROCK");
+    if(GetPRCSwitch(PRC_COMPANION_IN_USE))
+        eSummon = EffectSummonCreature("prc_hamatula");
 
     if (GetHasFeat(FEAT_IMP_SUMMON_HAMATULA, oPC))
     {
         eSummon = EffectSummonCreature("NW_DEMON");
+        if(GetPRCSwitch(PRC_COMPANION_IN_USE))
+            eSummon = EffectSwarm(FALSE, "prc_hamatula", "prc_hamatula");
     }
 
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_GATE);

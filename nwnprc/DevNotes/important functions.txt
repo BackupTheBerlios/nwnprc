@@ -1,10 +1,47 @@
 Updated 18/9/04 by Primogenitor
+Updated 2005/07/01 by paradox_42
 
 If this is more than 1 month old, prod me to update it!
 
 
 DO NOT RELY ON THIS FILE
 It is a guide only, if in doubt, look at the actual code.
+
+
+
+New polymorph/shifter include
+-----------------------------
+
+For using the shifters shape changing code when not a shifter
+
+#include "inc_prc_poly"
+
+---
+
+// used to shift by resref
+// oPC = PC to shift/polymorph
+// sResRef = ResRef of Target to shift/polymorph into
+// iExtraAbilitys = gives epic shifter orb with target spell-like abilitys on it (TRUE = extra; FALSE = non)
+int PRC_Polymorph_ResRef(object oPC, string sResRef, int iExtraAbilitys);
+
+// used to shift by Object
+// oPC = PC to shift/polymorph
+// oTarget = Target object to shift/polymorph into
+// iExtraAbilitys = gives epic shifter orb with target spell-like abilitys on it (TRUE = extra; FALSE = non)
+// iDeleteTarget = delete the target object after shift done (TRUE = delete; FALSE = leave)
+// iUseClone = use the ResRef of the target object to create a clone to shift into (TRUE = use clone; FALSE = use target object)
+int PRC_Polymorph_Object(object oPC, object oTarget, int iExtraAbilitys, int iDeleteTarget, int iUseClone);
+
+// used to check for shifted
+// oPC = PC to check if shifted or not
+// returns 1 if shifted
+int PRC_Polymorph_Check(object oPC);
+
+// used to unshift the PC
+// oPC = PC to unshift/unpolymorph
+int PRC_UnPolymorph(object oPC);
+
+---
 
 
 

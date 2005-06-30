@@ -21,26 +21,7 @@
 #include "inc_utility"
 
 
-//notes for using the shifter code for other classes
-//
-//step 1.  run the StoreAppearance() function before you do any shifting.
-//         this only needs to be run once at the begining (like lvl up etc).
-//step 2.  run CanShift() function to check your not gona get any probs
-//         when shifting. if it returns false i suggest you dont shift
-//step 3.  if you want the target NPC object to be deleted after shift,
-//         set a local int ("pnp_shifter_deleteme") on the target to 1
-//         else leave it out.
-//step 4.  if you want the shift to be an epic shift (get extra abliltys
-//         from the shift) set a local int ("EpicShift") on the PC to 1.
-//step 5.  run the SetShift() function and pass it the PC and target objects.
-//step 6.  to unshift ether give the PC (as a part of their class lvling)
-//         the true form feat from the shifter class, or run the
-//         pnp_shft_true script file from your own code.
-//
-//if you want the shift to be a copy of a creature the PC is interacting
-//with i suggest you create a clone (use resref) of the target in the
-//limbo area. this way your not gona get any negatives from a half-dead,
-//cursed, etc target.
+//see inc_prc_poly.nss for using shifter code for other spells/abilitys
 
 
 //clears out all extra shifter creature items
@@ -109,7 +90,8 @@ int IsKnownCreature( object oPC, string sTemplate );
 void ShiftFromKnownArray(int nIndex,int iEpic, object oPC);
 //delete form from spark
 void DeleteFromKnownArray(int nIndex, object oPC);
-
+//store the appearance of the pc away for unshifting
+void StoreAppearance(object oPC);
 // Transforms the oPC into the oTarget
 // Assumes oTarget is already a valid target
 // this is 2 stage

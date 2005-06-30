@@ -33,8 +33,10 @@
 void main()
 {
     //check it its supposed to run
+    //is AA, switch is on, not cast from item
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, OBJECT_SELF) < 2
-        || !GetPRCSwitch(PRC_USE_NEW_IMBUE_ARROW))
+        || !GetPRCSwitch(PRC_USE_NEW_IMBUE_ARROW)
+        || GetIsObjectValid(GetSpellCastItem()))
     {    
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
         return;

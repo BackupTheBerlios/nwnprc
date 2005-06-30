@@ -224,13 +224,15 @@ void main()
         ApplyEffectToObject(DURATION_TYPE_INSTANT,eDam,oSpellTarget);
     }
 
-    //spellsword
-    if(GetLocalInt(oItem, "spell") == 1 && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    //spellsword & arcane archer
+    if(GetLocalInt(oItem, "spell") == 1 
+        && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
 
         object oPC = oSpellOrigin;
-
-        SetLocalInt(oPC,"spellswd_aoe",1);
+        //Arcane Archer uses same code, but can do AoE damage
+        if(GetBaseItemType(oItem) != BASE_ITEM_ARROW) 
+            SetLocalInt(oPC,"spellswd_aoe",1);
         SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_1"));
         string sSpellString1 = GetLocalString(oItem,"spellscript1");
         ExecuteScript(sSpellString1,oPC);

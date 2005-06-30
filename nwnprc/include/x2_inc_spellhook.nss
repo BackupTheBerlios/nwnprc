@@ -554,10 +554,16 @@ int X2PreSpellCastCode()
             nContinue = (!X2GetSpellCastOnSequencerItem(oTarget));
             
         //-----------------------------------------------------------------------
-        // Check if spell was used for Arcane Archer Imbue Arror
+        // Check if spell was used for Arcane Archer Imbue Arrow
         //-----------------------------------------------------------------------
         if (nContinue)
             nContinue = !ExecuteScriptAndReturnInt("aa_spellhook",OBJECT_SELF);
+            
+        //-----------------------------------------------------------------------
+        // Check if spell was used for Spellsword ChannelSpell
+        //-----------------------------------------------------------------------
+        if (nContinue)
+            nContinue = !ExecuteScriptAndReturnInt("prc_spell_channel",OBJECT_SELF);            
 
         //-----------------------------------------------------------------------
         // * Execute item OnSpellCast At routing script if activated

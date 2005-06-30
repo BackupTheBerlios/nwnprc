@@ -12,6 +12,7 @@
 
 #include "inc_item_props"
 #include "prc_feat_const"
+#include "prc_class_const"
 
 // * Applies the Spellsword's Spell Failure reduction on object's skin.
 // * iLevel = IP_CONST_ARCANE_SPELL_FAILURE_*
@@ -52,16 +53,28 @@ void main()
     if(bSpells > 0)  SpellswordIgnoreSpellFailure(oPC, oSkin, bSpells, "SpellswordSFBonusNormal");
     if(bSpells2 > 0) SpellswordIgnoreSpellFailure(oPC, oSkin, bSpells2, "SpellswordSFBonusEpic");
     //DelayCommand(5.0,SpeakString("ASF is "+IntToString(GetArcaneSpellFailure(oPC))));
-object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
-if(GetLocalInt(oItem,"spell")==1 && GetLocalInt(oPC,"ONREST") == 1)
-{
+    object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
+    if(GetLocalInt(oItem,"spell")==1 && GetLocalInt(oPC,"ONREST") == 1)
+    {
         DeleteLocalString(oItem,"spellscript1");
         DeleteLocalString(oItem,"spellscript2");
         DeleteLocalString(oItem,"spellscript3");
         DeleteLocalString(oItem,"spellscript4");
+        DeleteLocalString(oItem,"metamagic_feat_1");
+        DeleteLocalString(oItem,"metamagic_feat_2");
+        DeleteLocalString(oItem,"metamagic_feat_3");
+        DeleteLocalString(oItem,"metamagic_feat_4");
         DeleteLocalInt(oItem,"spell");
         DeleteLocalInt(oPC,"spellswd_aoe");
         DeleteLocalInt(oPC,"spell_metamagic");
-}
+    }
+    //set the charges remaining
+    if(GetLocalInt(oPC, "ONREST")
+        && GetLastRestEventType() == REST_EVENTTYPE_REST_FINISHED
+        && GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) > 3)      
+    {    
+        int nUses = (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC)/2)+1;
+        SetPersistantLocalInt(oPC, "spellswordchannelcharges", nUses);
+    }    
 }
 

@@ -1802,10 +1802,10 @@ int SpellToOnHitCastSpell(int iSpell);
 //                              IMPLEMENTATION                                //
 ////////////////////////////////////////////////////////////////////////////////
 
-object AACreateImbuedArrow(object oArrow, int iOnHitSpell, int iSpellLevel, float fDuration, object oArcher = OBJECT_SELF)
+object AACreateImbuedArrow(object oArrow, int iSpell, int iSpellLevel, float fDuration, object oArcher = OBJECT_SELF)
 {
     //Construct the imbued arrow's new tag.
-    string sNewTag   = GetStringUpperCase(GetStringLeft(AA_IMBUED_ARROW, 13)) + IntToString(iOnHitSpell);
+    string sNewTag   = GetStringUpperCase(GetStringLeft(AA_IMBUED_ARROW, 13)) + IntToString(iSpell);
     object oNewArrow = CreateObject(OBJECT_TYPE_ITEM, AA_IMBUED_ARROW, GetLocation(OBJECT_SELF), FALSE, sNewTag);
 
     //Debug statement.
@@ -1839,14 +1839,30 @@ object AACreateImbuedArrow(object oArrow, int iOnHitSpell, int iSpellLevel, floa
 
     //Debug statement.
     //SendMessageToPC(oArcher, "OLD ARROW DESTROYED!");
-
+//modified to use spellsword code    
+/*
     //Add OnHit: Cast Spell to new arrow.
     itemproperty ipSpell = ItemPropertyOnHitCastSpell(iOnHitSpell, iSpellLevel);
 
     AddItemProperty(DURATION_TYPE_TEMPORARY, ipSpell, oNewArrow, fDuration);
+*/
+    int nFeat = PRCGetMetaMagicFeat();
+    //If there are charges left for the day, we apply the temporary item property
+    //on hit cast spell (with a 10 RL hours duration) and mark the weapon with a local int
+    //so that we can find out if there is a spell stored on the weapon.
+    string sSpellScript = Get2DACache("spells","ImpactScript",iSpell);
+    string sSpellString = "1"; //only one spell at a time
+    itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,iSpellLevel);
+    IPSafeAddItemProperty(oNewArrow,ipTest,36000.0);
+    SetLocalInt(oNewArrow,"spell",1);
+
+    //we store the script of the spell channeled and its metamagic feat on the weapon.
+    SetLocalString(oNewArrow,"spellscript"+sSpellString,sSpellScript);
+    SetLocalInt(oNewArrow,"metamagic_feat_"+sSpellString,nFeat);
+//end of spellsword code hijack
 
     //Copy new arrow to archer's inventory.
-    object oImbuedArrow = CopyItem(oNewArrow, oArcher);
+    object oImbuedArrow = CopyItem(oNewArrow, oArcher, TRUE);
 
     //Debug statement.
     //if (GetIsObjectValid(oImbuedArrow))
@@ -1895,9 +1911,9 @@ int AAImbueArrow(object oArrow, int iSpell, int iSpellLevel)
 
         //Check for other OnHitCastSpell properties.  If found, abort the imbue.
         if (GetItemHasItemProperty(oArrow, ITEM_PROPERTY_ONHITCASTSPELL))
-        {
             bContinue = FALSE;
-        }
+        else if (GetLocalInt(oArrow, "spell")) //using the new imbue system
+            bContinue = FALSE;
         else
         {
             //Check for other temporary properties on the arrow.  If found, abort
@@ -1919,10 +1935,10 @@ int AAImbueArrow(object oArrow, int iSpell, int iSpellLevel)
         if (bContinue)
         {
             //Spell must be valid.
-            int iISpell = SpellToOnHitCastSpell(iSpell);
+            //int iISpell = SpellToOnHitCastSpell(iSpell);
 
-            if (iISpell > -1)
-            {
+            //if (iISpell > -1)
+            //{
                 //Find out which stack of arrows was targetted.
                 int bEquip = FALSE;
                 if (GetItemInSlot(INVENTORY_SLOT_ARROWS) == oArrow)
@@ -1934,7 +1950,7 @@ int AAImbueArrow(object oArrow, int iSpell, int iSpellLevel)
                 float  fDuration    = TurnsToSeconds(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER));
 
                 //Create the imbued arrow in the player's inventory.
-                object oImbuedArrow = AACreateImbuedArrow(oArrow, iISpell, iSpellLevel, fDuration);
+                object oImbuedArrow = AACreateImbuedArrow(oArrow, iSpell, iSpellLevel, fDuration);
 
                 //Allows the player to target equipped arrows and have the new
                 //arrow become equipped after imbueing.
@@ -1950,7 +1966,7 @@ int AAImbueArrow(object oArrow, int iSpell, int iSpellLevel)
 
                 //The imbueing was successful, so return a TRUE.
                 return TRUE;
-            }
+            //}
         }
 
         //Imbue didn't happen, either because the spell was wrong, or because
@@ -1985,6 +2001,11 @@ void AAImbueExpire(object oArrow)
         {
             DestroyObject(oArrow);
         }
+        
+        //clear up the new variables
+        DeleteLocalString(oArrow,"spellscript1");
+        DeleteLocalString(oArrow,"metamagic_feat_1");
+        DeleteLocalInt(oArrow,"spell");
     }
 }
 

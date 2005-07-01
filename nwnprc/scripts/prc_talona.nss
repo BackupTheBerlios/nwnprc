@@ -1,4 +1,4 @@
-#include "inc_abil_damage"
+#include "prc_alterations"
 
 void main()
 {

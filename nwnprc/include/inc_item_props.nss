@@ -2,14 +2,16 @@
 //:: [Item Property Function]
 //:: [inc_item_props.nss]
 //:://////////////////////////////////////////////
-//:: This file defines several functions used to
-//:: manipulate item properties.  In particular,
-//:: It defines functions used in the prc_* files
-//:: to apply passive feat bonuses.
-//::
-//:: Take special note of SetCompositeBonus.  This
-//:: function is crucial for allowing bonuses of the
-//:: same type from different PRCs to stack.
+/** @file
+    This file defines several functions used to
+    manipulate item properties.  In particular,
+    It defines functions used in the prc_* files
+    to apply passive feat bonuses.
+
+    Take special note of SetCompositeBonus.  This
+    function is crucial for allowing bonuses of the
+    same type from different PRCs to stack.
+*/
 //:://////////////////////////////////////////////
 //:: Created By: Aaon Graywolf
 //:: Created On: Dec 19, 2003
@@ -23,135 +25,223 @@
 //#include "inc_utility"
 #include "inc_prc_npc"
 
-// * Checks to see if oPC has an item created by sRes in his/her inventory
-int GetHasItem(object oPC, string sRes);
+//////////////////////////////
+// Function Prototypes      //
+//////////////////////////////
 
-// * Sets up the pcskin object on oPC
-// * If it already exists, simply return it
-// * Otherwise, create and equip it
+/**
+ * Checks to see if oPC has an item created by sResRef in his/her/it's inventory
+ *
+ * @param oPC     The creature whose inventory to search.
+ * @param sResRef The resref to look for in oPC's items.
+ * @return        TRUE if any items matching sResRef were found, FALSE otherwise.
+ */
+int GetHasItem(object oPC, string sResRef);
+
+/**
+ * Sets up the pcskin object on oPC.
+ * If it already exists, simply return it. Otherwise, create and equip it.
+ *
+ * @param oPC The creature whose skin object to look for.
+ * @return    Either the skin found or the skin created.
+ */
 object GetPCSkin(object oPC);
 
-// * Checks oItem for all properties matching iType and iSubType
-// * Removes all these properties and returns their total CostTableVal.
-// * This function should only be used for Item Properties that have
-// * simple integer CostTableVals, such as AC, Save/Skill Bonuses, etc.
-// * iType = ITEM_PROPERTY_* of bonus
-// * iSubType = IP_CONST_* of bonus SubType if applicable
+/**
+ * Checks oItem for all properties matching iType and iSubType. Removes all 
+ * these properties and returns their total CostTableVal.
+ * This function should only be used for Item Properties that have simple
+ * integer CostTableVals, such as AC, Save/Skill Bonuses, etc.
+ *
+ * @param oItem    The item on which to look for the itemproperties. Usually a
+ *                 skin object.
+ * @param iType    ITEM_PROPERTY_* constant of the itemproperty to look for.
+ * @param iSubType IP_CONST_* constant of itemproperty SubType if applicable.
+ * @return         The total CostTableValue of the itemproperties found
+ *                 matching iType and iSubType.
+ */
 int TotalAndRemoveProperty(object oItem, int iType, int iSubType = -1);
 
-// * Used to roll bonuses from multiple sources into a single property
-// * Only supports properties which have simple integer CostTableVals.
-// * See the switch for a list of supported types.  Some important properties
-// * that CANNOT be composited are SpellResistance, DamageBonus, DamageReduction
-// * DamageResistance and MassiveCritical, as these use constants instead of
-// * integers for CostTableVals.
-// *
-// * oPC = Object wearing / using the item
-// * oItem = Object to apply bonus to
-// * sBonus = String name of the source for this bonus
-// * iVal = Integer value to set this bonus to
-// * iType: ITEM_PROPERTY_* of bonus
-// * iSubType: IP_CONST_* of bonus SubType if applicable
-// * 
-// * LocalInts from SetCompositeBonus() when applied to the skin need to be
-// * added to DeletePRCLocalInts() in prc_inc_function. When applied to equipment,
-// * the LocalInts need to be added to DeletePRCLocalIntsT() in inc_item_props.
-// *
-// * Use SetCompositeBonus for the skin, SetCompositeBonusT for other equipment.
+/**
+ * Used to roll bonuses from multiple sources into a single property.
+ * Only supports properties which have simple integer CostTableVals.
+ * See the code for a list of supported types.  Some important properties
+ * that CANNOT be composited are SpellResistance, DamageBonus, DamageReduction
+ * DamageResistance and MassiveCritical, as these use 2da-referencing constants
+ * instead of integers for CostTableVals.
+ *
+ * LocalInts from SetCompositeBonus() when applied to the skin need to be
+ * added to DeletePRCLocalInts() in prc_inc_function in order for the system to
+ * properly clear the properties when the itemproperties are removed using
+ * ScrubPCSkin().
+ * When applied to equipment, the LocalInts need to be added to
+ * DeletePRCLocalIntsT() in inc_item_props.
+ *
+ * Use SetCompositeBonus() for the skin, SetCompositeBonusT() for other equipment.
+ *
+ *
+ * @param oPC      Object wearing / using the item
+ * @param oItem    Object to apply bonus to
+ * @param sBonus   String name of the source for this bonus
+ * @param iVal     Integer value to set this bonus to
+ * @param iType    ITEM_PROPERTY_* constant of itemproperty to apply
+ * @param iSubType IP_CONST_* constant of itemproperty SubType if applicable
+ */
 void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSubType = -1);
-void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iSubType = -1); // for temporary bonuses
 
-// * Returns the total Bonus AC of oItem
+/**
+ * See SetCompositeBonus(). This is an equivalent, except it applies the itemproperties as
+ * temporary ones with duration of 9999 seconds.
+ */
+void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iSubType = -1);
+
+/**
+ * Calculates the total Bonus AC granted by itemproperties on an item.
+ *
+ * @param oItem The item to calculate AC bonus given by.
+ * @return      The total of all AC bonus itemproperties on oItem.
+ */
 int GetACBonus(object oItem);
 
-// * Returns the Base AC (i.e. AC without bonuses) of oItem
+/**
+ * Calculates the Base AC (i.e. AC without bonuses) of an item
+ *
+ * @param oItem The item to calculate base AC for.
+ * @return      The base AC, as calculated by removing the value returned by
+ *              GetACBonus() on the item from the value returned by GetItemACValue().
+ */
 int GetBaseAC(object oItem);
 
-// * Returns the opposite element from iElem or -1 if iElem is not valid
-// * Can be useful for determining elemental strengths and weaknesses
-// * iElem = IP_CONST_DAMAGETYPE_*
+/**
+ * Returns the opposite element from iElem or -1 if iElem is not valid
+ * Can be useful for determining elemental strengths and weaknesses
+ *
+ * @param iElem IP_CONST_DAMAGETYPE_* constant.
+ * @return      IP_CONST_DAMAGETYPE_* constant of the opposing damage type.
+ */
 int GetOppositeElement(int iElem);
 
-// * Used to find the damage type done by any given weapon using 2da lookups.  Returns
-// * IP_CONST_DAMAGETYPE_BLUDGEONING
-// * IP_CONST_DAMAGETYPE_PIERCING
-// * IP_CONST_DAMAGETYPE_SLASHING
-// * 
-// * If this is given a non-weapon item, it returns -1.  It will probably screw up if it is not an item.
-// * Only useful for item properties!
-int GetItemPropertyDamageType(object oItem);
+/**
+ * Used to find the damage type done by any given weapon using 2da lookups.
+ * Only usable on weapon items.
+ *
+ * @param oWeapon The weapon whose damage type to examine.
+ * @return        One of IP_CONST_DAMAGETYPE_BLUDGEONING,
+ *                       IP_CONST_DAMAGETYPE_PIERCING,
+ *                       IP_CONST_DAMAGETYPE_SLASHING
+ *                if used on a weapon item. Otherwise -1.
+ */
+int GetItemPropertyDamageType(object oWeapon);
 
-// * Used to find the damage type done by any given weapon using 2da lookups.  Returns
-// * DAMAGE_TYPE_BLUDGEONING
-// * DAMAGE_TYPE_PIERCING
-// * DAMAGE_TYPE_SLASHING
-// * 
-// * If this is given a non-weapon item, it returns -1.  It will probably screw up if it is not an item.
-// * Only useful for damage effects!
-int GetItemDamageType(object oItem);
+/**
+ * Used to find the damage type done by any given weapon using 2da lookups.
+ * Only usable on weapon items.
+ *
+ * @param oWeapon The weapon whose damage type to examine.
+ * @return        One of DAMAGE_TYPE_BLUDGEONING,
+ *                       DAMAGE_TYPE_PIERCING,
+ *                       DAMAGE_TYPE_SLASHING
+ *                if used on a weapon item. Otherwise -1.
+ */
+int GetItemDamageType(object oWeapon);
 
-// * To ensure a damage bonus stacks with any existing enhancement bonus,
-// * create a temporary damage bonus on the weapon.  You do not want to do this
-// * if the weapon is of the "slashing and piercing" type, because the
-// * enhancement bonus is considered "physical", not "slashing" or "piercing".
-// *
-// * Because of this strange Bioware behavior, you'll want to only call this code as such:
-// *
-// * if (StringToInt(Get2DACache("baseitems","WeaponType",GetBaseItemType(oWeapon))) != 4)
-// * {
-// *     IPEnhancementBonusToDamageBonus(oWeapon);
-// * }
+/**
+ * To ensure a damage bonus stacks with any existing enhancement bonus,
+ * create a temporary damage bonus on the weapon.  You do not want to do this
+ * if the weapon is of the "slashing and piercing" type, because the
+ * enhancement bonus is considered "physical", not "slashing" or "piercing".
+ *
+ * Because of this strange Bioware behavior, you'll want to only call this code as such:
+ *
+ * if (StringToInt(Get2DACache("baseitems","WeaponType",GetBaseItemType(oWeapon))) != 4)
+ * {
+ *     IPEnhancementBonusToDamageBonus(oWeapon);
+ * }
+ *
+ *
+ * @param oWeap The weapon to perform the operation on.
+ */
 void IPEnhancementBonusToDamageBonus(object oWeap);
 
-// * Used to roll bonuses from multiple sources into a single property
-// * Only supports damage bonuses in a linear fashion - +1 through +20.
-// *
-// * Note: If you do not define iSubType, the damage applied will most likely not
-// * stack with any enhancement bonus.  See IPEnhancementBonusToDamageBonus() above.
-// *
-// * oItem = Object to apply bonus to
-// * sBonus = String name of the source for this bonus
-// * iVal = Integer value to set this bonus to (damage +1 through +20)
-// * iSubType: IP_CONST_DAMAGETYPE*  -- leave blank to use the weapon's damage type.
-// * 
-// * LocalInts from SetCompositeDamageBonus() need to be added to
-// * DeletePRCLocalInts() in prc_inc_function.
-// * LocalInts from SetCompositeDamageBonusT() need to be added to
-// * DeletePRCLocalIntsT() in inc_item_props.
+/**
+ * Used to roll bonuses from multiple sources into a single property
+ * Only supports damage bonuses in a linear fashion - +1 through +20.
+ *
+ * Note: If you do not define iSubType, the damage applied will most likely not
+ * stack with any enhancement bonus.  See IPEnhancementBonusToDamageBonus() above.
+ *
+ * LocalInts from SetCompositeDamageBonus() need to be added to
+ * DeletePRCLocalInts() in prc_inc_function.
+ * LocalInts from SetCompositeDamageBonusT() need to be added to
+ * DeletePRCLocalIntsT() in inc_item_props.
+ *
+ *
+ * @param oItem    Object to apply bonus to
+ * @param sBonus   String name of the source for this bonus
+ * @param iVal     Integer value to set this bonus to (damage +1 through +20)
+ * @param iSubType IP_CONST_DAMAGETYPE* constant -- leave blank to use the weapon's damage type.
+ */
 void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubType = -1); // for temporary bonuses
 
-// Removes a specific property from an item
-void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCostVal = -1, int iNum = 1, string sFlag = "", int iParam1 = -1, int iDuration = DURATION_TYPE_PERMANENT);
+/**
+ * Removes a number of itemproperties matching the parameters.
+ *
+ * @param oItem     The item to remove itemproperties from.
+ * @param iType     ITEM_PROPERTY_* constant.
+ * @param iSubType  IP_CONST_* constant of the itemproperty subtype or -1 to
+ *                  match all possible subtypes. Also use -1 if the itemproperty
+ *                  has no subtypes.
+ * @param iCostVal  CostTableValue of the itemproperty to remove. Again, -1 for
+ *                  any.
+ * @param iNum      How many matching itemproperties to remove. -1 for all. Defaults
+ *                  to 1.
+ * @param sFlag     Name of a local integer on the item to set to 0 when this is run.
+ *                  If anyone knows why the fuck this is done, please write here - Ornedan
+ * @param iParam1   Param1 value of the itemproperty to remove. Again, -1 for any.
+ * @param iDuration DURATION_TYPE_* constant. The duration type of the itemproperty.
+ *                  Again, -1 for any.
+ */
+void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCostVal = -1, int iNum = 1,
+                            string sFlag = "", int iParam1 = -1, int iDuration = DURATION_TYPE_PERMANENT);
 
-// * Keeps track of Attack Bonus effects and stacks them appropriately... you cannot set up
-// * "special" attack bonuses against races or alignments, but it will keep seperate tabs on
-// * on-hand attack bonuses and off-hand attack bonuses.
-// *
-// * NOTE: This attack bonus is an effect on the creature, not an item property.  Item Property
-// * attacks have the downside that they pierce DR, whereas effects do not.
-// *
-// * NOTE: DO *NOT* USE THIS FUNCTION WITH SPELL/SLA EFFECTS.  They stack fine on their own.
-// *
-// * oPC - PC/NPC you wish to apply an attack bonus effect to
-// * sBonus - the unique name you wish to give this attack bonus
-// * iVal - the amount the attack bonus should be (there is a hardcoded limit of 20)
-// * iSubType - ATTACK_BONUS_MISC applies to both hands, ATTACK_BONUS_ONHAND applies to the right (main)
-// *    hand, and ATTACK_BONUS_OFFHAND applies to the left (off) hand
-// * 
-// * LocalInts in and finally SetCompositeAttackBonus() need to be added to
-// * DeletePRCLocalInts() in prc_inc_function.
+/**
+ *Keeps track of Attack Bonus effects and stacks them appropriately... you cannot set up
+ * "special" attack bonuses against races or alignments, but it will keep seperate tabs on
+ * on-hand attack bonuses and off-hand attack bonuses.
+ *
+ * NOTE: This attack bonus is an effect on the creature, not an item property.  Item Property
+ * attacks have the downside that they pierce DR, whereas effects do not.
+ *
+ * NOTE: DO *NOT* USE THIS FUNCTION WITH SPELL/SLA EFFECTS.  They stack fine on their own.
+ *
+ * LocalInts in and finally SetCompositeAttackBonus() need to be added to
+ * DeletePRCLocalInts() in prc_inc_function.
+ *
+ *
+ * @param oPC      PC/NPC you wish to apply an attack bonus effect to
+ * @param sBonus   The unique name you wish to give this attack bonus
+ * @param iVal     The amount the attack bonus should be (there is a hardcoded limit of 20)
+ * @param iSubType ATTACK_BONUS_MISC applies to both hands, ATTACK_BONUS_ONHAND applies to the right (main)
+ *                 hand, and ATTACK_BONUS_OFFHAND applies to the left (off) hand
+ */
 void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC);
+
+
 
 #include "inc_persist_loca"
 
-int GetHasItem(object oPC, string sRes)
+//////////////////////////////
+// Function Definitions     //
+//////////////////////////////
+
+int GetHasItem(object oPC, string sResRef)
 {
     object oItem = GetFirstItemInInventory(oPC);
 
-    while(GetIsObjectValid(oItem) && GetResRef(oItem) != sRes)
+    while(GetIsObjectValid(oItem) && GetResRef(oItem) != sResRef)
         oItem = GetNextItemInInventory(oPC);
 
-    return GetResRef(oItem) == sRes;
+    return GetResRef(oItem) == sResRef;
 }
 
 object GetPCSkin(object oPC)
@@ -200,17 +290,19 @@ int TotalAndRemoveProperty(object oItem, int iType, int iSubType = -1)
     return total;
 }
 
-void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCostVal = -1, int iNum = 1, string sFlag = "", int iParam1 = -1, int iDuration = DURATION_TYPE_PERMANENT)
+void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCostVal = -1, int iNum = 1,
+                            string sFlag = "", int iParam1 = -1, int iDuration = DURATION_TYPE_PERMANENT)
 {
     int iRemoved = 0;
     itemproperty ip = GetFirstItemProperty(oItem);
-    while(GetIsItemPropertyValid(ip) && iRemoved < iNum){
-        int bMatch = GetItemPropertyType(ip) == iType;
-            bMatch = GetItemPropertySubType(ip) == iSubType || iSubType == -1 ? bMatch : FALSE;
-            bMatch = GetItemPropertyCostTableValue(ip) == iCostVal || iCostVal == -1 ? bMatch : FALSE;
-            bMatch = GetItemPropertyParam1Value(ip) == iParam1 || iParam1 == -1 ? bMatch : FALSE;
-            bMatch = GetItemPropertyDurationType(ip) == iDuration ? bMatch : FALSE;
-        if(bMatch){
+    while(GetIsItemPropertyValid(ip) && (iRemoved < iNum || iNum == -1)){
+        if(GetItemPropertyType(ip)            == iType                          &&
+           (GetItemPropertyDurationType(ip)   == iDuration || iDuration == -1)  &&
+           (GetItemPropertySubType(ip)        == iSubType  || iSubType  == -1)  &&
+           (GetItemPropertyCostTableValue(ip) == iCostVal  || iCostVal  == -1)  &&
+           (GetItemPropertyParam1Value(ip)    == iParam1   || iParam1   == -1)
+          )
+        {
             RemoveItemProperty(oItem, ip);
             iRemoved++;
         }
@@ -849,36 +941,44 @@ void SetCompositeBonusT(object oItem, string sBonus, int iVal, int iType, int iS
     SetLocalInt(oItem, sBonus, iVal);
 }
 
-int GetItemPropertyDamageType(object oItem)
+int GetItemPropertyDamageType(object oWeapon)
 {
-   int iWeaponType = GetBaseItemType(oItem);
-   //int iDamageType = StringToInt(Get2DACache("baseitems","WeaponType",iWeaponType));
-   int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
-   switch(iDamageType)
-   {
-      case 0: return -1; break;
-      case 1: return IP_CONST_DAMAGETYPE_PIERCING; break;
-      case 2: return IP_CONST_DAMAGETYPE_BLUDGEONING; break;
-      case 3: return IP_CONST_DAMAGETYPE_SLASHING; break;
-      case 4: return IP_CONST_DAMAGETYPE_SLASHING; break; // slashing & piercing... slashing bonus.
-   }
-   return -1;
+    if(GetObjectType(oWeapon) != OBJECT_TYPE_ITEM)
+        return -1;
+
+    int iWeaponType = GetBaseItemType(oWeapon);
+    //int iDamageType = StringToInt(Get2DACache("baseitems","WeaponType",iWeaponType));
+    int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
+    switch(iDamageType)
+    {
+        case 1: return IP_CONST_DAMAGETYPE_PIERCING;    break;
+        case 2: return IP_CONST_DAMAGETYPE_BLUDGEONING; break;
+        case 3: return IP_CONST_DAMAGETYPE_SLASHING;    break;
+        case 4: return IP_CONST_DAMAGETYPE_SLASHING;    break; // slashing & piercing... slashing bonus.
+
+        default: return -1;
+    }
+    return -1;
 }
 
-int GetItemDamageType(object oItem)
+int GetItemDamageType(object oWeapon)
 {
-   int iWeaponType = GetBaseItemType(oItem);
-   //int iDamageType = StringToInt( Get2DACache("baseitems","WeaponType",iWeaponType) );
-   int iDamageType = StringToInt( Get2DAString("baseitems","WeaponType",iWeaponType) );
-   switch(iDamageType)
-   {
-      case 0: return -1; break;
-      case 1: return DAMAGE_TYPE_PIERCING; break;
-      case 2: return DAMAGE_TYPE_BLUDGEONING; break;
-      case 3: return DAMAGE_TYPE_SLASHING; break;
-      case 4: return DAMAGE_TYPE_SLASHING; break; // slashing & piercing... slashing bonus.
-   }
-   return -1;
+    if(GetObjectType(oWeapon) != OBJECT_TYPE_ITEM)
+        return -1;
+
+    int iWeaponType = GetBaseItemType(oWeapon);
+    //int iDamageType = StringToInt( Get2DACache("baseitems","WeaponType",iWeaponType) );
+    int iDamageType = StringToInt( Get2DAString("baseitems","WeaponType",iWeaponType) );
+    switch(iDamageType)
+    {
+        case 1: return DAMAGE_TYPE_PIERCING;    break;
+        case 2: return DAMAGE_TYPE_BLUDGEONING; break;
+        case 3: return DAMAGE_TYPE_SLASHING;    break;
+        case 4: return DAMAGE_TYPE_SLASHING;    break; // slashing & piercing... slashing bonus.
+
+        default: return -1;
+    }
+    return -1;
 }
 
 // To ensure the damage bonus stacks with any existing enhancement bonus,
@@ -892,7 +992,7 @@ void IPEnhancementBonusToDamageBonus(object oWeap)
     int iBonus = 0;
     int iTemp;
 
-    if (GetLocalInt(oWeap, "IPEnh") || !GetIsObjectValid(oWeap)) return;    
+    if (GetLocalInt(oWeap, "IPEnh") || !GetIsObjectValid(oWeap)) return;
 
     itemproperty ip = GetFirstItemProperty(oWeap);
     while(GetIsItemPropertyValid(ip))
@@ -902,7 +1002,7 @@ void IPEnhancementBonusToDamageBonus(object oWeap)
             iBonus = iTemp > iBonus ? iTemp : iBonus;
         ip = GetNextItemProperty(oWeap);
     }
-    
+
     SetCompositeDamageBonusT(oWeap,"IPEnh",iBonus);
 }
 

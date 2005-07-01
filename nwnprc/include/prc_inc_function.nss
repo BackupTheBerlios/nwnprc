@@ -32,7 +32,7 @@ int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int
 int nbWeaponFocus(object oPC);
 
 void EvalPRCFeats(object oPC)
-{   
+{
     //Elemental savant is sort of four classes in one, so we'll take care
     //of them all at once.
     int iElemSavant =  GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC);
@@ -43,7 +43,7 @@ void EvalPRCFeats(object oPC)
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESC, oPC);
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESE, oPC);
         iElemSavant += GetLevelByClass(CLASS_TYPE_DIVESA, oPC);
-    
+
     int iThrallOfGrazzt =  GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, oPC);
         iThrallOfGrazzt += GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oPC);
 
@@ -136,8 +136,8 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_PSIONIC_HOLE, oPC))                       ExecuteScript("psi_psionic_hole", oPC);
     if(GetHasFeat(FEAT_POWER_ATTACK, oPC))                       ExecuteScript("prc_powatk_eval", oPC);
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
-        && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
-        && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC))
+        && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC)
+        && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
     {
         //add the old feat to the hide
         object oSkin = GetPCSkin(oPC);
@@ -161,7 +161,7 @@ void EvalPRCFeats(object oPC)
         SetLocalString(oPC, "DynConv_Script", "prc_pnp_school");
         AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
     }
-    
+
     //size changes
     if(GetHasFeat(FEAT_SIZE_DECREASE_1, oPC)
         || GetHasFeat(FEAT_SIZE_DECREASE_2, oPC)
@@ -176,7 +176,7 @@ void EvalPRCFeats(object oPC)
         || GetHasFeat(FEAT_SIZE_INCREASE_5, oPC)
         || GetHasFeat(FEAT_SIZE_INCREASE_6, oPC))
         ExecuteScript("prc_size", oPC);
-    
+
     // Miscellaneous
     ExecuteScript("prc_wyzfeat", oPC);
     ExecuteScript("onenter_ess", oPC);
@@ -184,7 +184,7 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("race_skin", oPC);
     ExecuteScript("race_unarmed", oPC);
     ExecuteScript("psi_powergain", oPC);
-    
+
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.
     ExecuteScript("unarmed_caller", oPC); 
@@ -222,18 +222,19 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oPC, "PRC_ClassLevelInPos1");
     DeleteLocalInt(oPC, "PRC_ClassLevelInPos2");
     DeleteLocalInt(oPC, "PRC_ClassLevelInPos3");
-    
-    // Unhealable ability damage
-    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_STR");
-    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_DEX");
-    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_CON");
-    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_INT");
-    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_WIS");
-    DeleteLocalInt(oPC, "PRC_UnhealableAbilityDamage_CHA");
-    
+
 
     // In order to work with the PRC system we need to delete some locals for each
     // PRC that has a hide
+
+    // Unhealable ability damage
+    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_STR");
+    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_DEX");
+    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_CON");
+    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_INT");
+    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_WIS");
+    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_CHA");
+
     // Duelist
     DeleteLocalInt(oSkin,"DiscMephResist");
     DeleteLocalInt(oSkin,"GraceBonus");
@@ -536,6 +537,8 @@ void ScrubPCSkin(object oPC, object oSkin)
     if (iCode)
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(381),oSkin);
 
+    // Schedule restoring the unhealable ability damage
+    DelayCommand(0.0f, ReApplyUnhealableAbilityDamage(oPC));
 }
 
 int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int iDisplayFeedback)

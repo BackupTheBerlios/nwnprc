@@ -44,7 +44,7 @@ void main()
 
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
-    DeletePRCLocalInts(oSkin);     
+    DeletePRCLocalInts(oSkin);
 
     //All of the PRC feats have been hooked into EvalPRCFeats
     //The code is pretty similar, but much more modular, concise
@@ -55,7 +55,7 @@ void main()
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the newly leveled up player meets.
     ExecuteScript("prc_prereq", oPC);
-    
+
     // Execute scripts hooked to this event for the player triggering it
-	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERLEVELDOWN);
+    ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERLEVELDOWN);
 }

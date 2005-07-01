@@ -8,7 +8,7 @@
     locations on a PC. In addition, there is a function
     for starting a conversation for the PC to select a
     location from their array.
-    
+
     All the operations work only on PCs, as there is no
     AI that could have NPCs take any advantage of the
     system.
@@ -156,6 +156,9 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
     // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
     if(!GetIsPC(oPC)) return;
 
+    // Make sure the PC has the feats for marking locations
+    ExecuteScript("prc_tp_mgmt_eval", oPC);
+
     // Handle possible quickselection
     if(GetLocalInt(oPC, "PRC_Teleport_Quickselection"))
     {
@@ -182,12 +185,12 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
     else
     {
         if(bForce) AssignCommand(oPC, ClearAllActions(TRUE));
-    
+
         SetLocalString(oPC, "PRC_TeleportTargetSelection_CallbackScript", sCallbackScript);
         SetLocalString(oPC, "PRC_TeleportTargetSelection_ReturnStoreName", sCallbackVar);
         SetLocalInt(oPC, "PRC_TeleportTargetSelection_ReturnAsMetalocation", bMeta);
         SetLocalInt(oPC, "PRC_TeleportTargetSelection_DisallowConversationAbort", bForce);
-        
+
         SetLocalString(oPC, "DynConv_Script", "prc_teleprt_conv");
         AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
     }
@@ -326,6 +329,7 @@ int AddTeleportTargetLocationAsMeta(object oPC, struct metalocation mlocToAdd)
     SetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME, nInd + 1);
     return TRUE;
 }
+
 
 
 //void main(){} // Test main

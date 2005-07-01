@@ -31,31 +31,30 @@ void main()
         // and our powers are gone, shift back to true form so we dont confuse the player
         if ( (GetTrueForm(oPC) != GetAppearanceType(oPC)) && !(GetLocalInt(oHidePC,"nPCShifted")) )
         {
-		// added a check to see if the player is under a polymorph effect. if they are dont unshift
-		// if this script was not run when the player entered the server they may not get it until
-		// they try to use polymorph. if they do they would be auto unpolymorphed.
-		effect eEff = GetFirstEffect(oPC);
-		int iNoGo = FALSE;
-		while (GetIsEffectValid(eEff))
-		{
-			int eType = GetEffectType(eEff);
-			if (eType == EFFECT_TYPE_POLYMORPH)
+			// added a check to see if the player is under a polymorph effect. if they are dont unshift
+			// if this script was not run when the player entered the server they may not get it until
+			// they try to use polymorph. if they do they would be auto unpolymorphed.
+			effect eEff = GetFirstEffect(oPC);
+			int iNoGo = FALSE;
+			while (GetIsEffectValid(eEff))
 			{
-				iNoGo = TRUE;
+				int eType = GetEffectType(eEff);
+				if (eType == EFFECT_TYPE_POLYMORPH)
+				{
+					iNoGo = TRUE;
+				}
+				eEff = GetNextEffect(oPC);
 			}
-			eEff = GetNextEffect(oPC);
-		}
-		if (!iNoGo)
-			SetShiftTrueForm(oPC);
-
+			if (!iNoGo)
+				SetShiftTrueForm(oPC);
         }
-	// Set a local on the pc so we dont have to do this more than once
-	SetLocalInt(oPC,"SHIFTOnEnterHit",1);
+		// Set a local on the pc so we dont have to do this more than once
+		SetLocalInt(oPC,"SHIFTOnEnterHit",1);
     }
 
     // Make sure we are not doing this io intesive loop more than once per level
     if (nShifterLevel <= GetLocalInt(oPC,"ShifterDefaultListLevel"))
-	return;
+		return;
 
     string sShifterFile = "shifterlist";
     string sCreatureResRef = "";
@@ -70,12 +69,12 @@ void main()
         nShiftLevelFile = StringToInt(sShifterLevel);
         if ((nShiftLevelFile <= nShifterLevel) && (sShifterLevel != ""))
         {
-		// The creature is a standard that we apply to the shifters spark of life list
-		sCreatureResRef = Get2DACache(sShifterFile,"CResRef",i);
+			// The creature is a standard that we apply to the shifters spark of life list
+			sCreatureResRef = Get2DACache(sShifterFile,"CResRef",i);
 	        sCreatureName = Get2DACache(sShifterFile,"CreatureName",i);
 	        RecognizeCreature( oPC, sCreatureResRef, sCreatureName);
         }
-	i++;
+		i++;
     }
 
     // Set a local on the PC so we dont do this more than once per level

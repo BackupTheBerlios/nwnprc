@@ -13,7 +13,7 @@ void main()
 		DelayCommand(1.0, EvalPRCFeats(OBJECT_SELF));
 		//clean up
 		DeleteLocalInt(OBJECT_SELF, "shifting");
-		DelayCommand(1.5, ClearShifterItems(OBJECT_SELF));
+		//DelayCommand(1.5, ClearShifterItems(OBJECT_SELF));
 	}
 
 }

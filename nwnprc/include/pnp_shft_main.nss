@@ -23,7 +23,8 @@
 
 //see inc_prc_poly.nss for using shifter code for other spells/abilitys
 
-
+//unequips then destroys items
+void ClearCreatureItem(object oPC, object oTarget);
 //clears out all extra shifter creature items
 void ClearShifterItems(object oPC);
 //shift from quickslot info
@@ -200,7 +201,7 @@ void SetShift(object oPC, object oTarget)
 	SetLocalInt(oPC, "shifting", TRUE);
 
     SetShiftTrueForm(oPC);
-    DelayCommand(0.1, SetShift_02(oPC, oTarget));
+    DelayCommand(0.10, SetShift_02(oPC, oTarget));
 }
 // stage 1 end:
 //   the shifter is unshifted if need be
@@ -244,13 +245,14 @@ void SetShift_02(object oPC, object oTarget)
         ScrubPCSkin(oPC, oHidePC); //clean off all old props
 		CopyAllItemProperties(oHidePC, oHide); //copy all target props to our hide
     }
-    DelayCommand(0.2, AssignCommand(oPC, ActionEquipItem(oHidePC, INVENTORY_SLOT_CARMOUR))); //reequip the hide to get item props to update properly
+    DelayCommand(0.05, AssignCommand(oPC, ActionEquipItem(oHidePC, INVENTORY_SLOT_CARMOUR))); //reequip the hide to get item props to update properly
 
     //copy targets right creature weapon
     if (GetIsObjectValid(oWeapCRPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
-		AssignCommand(oPC, ActionUnequipItem(oWeapCRPC));
+		DelayCommand(0.90, ClearCreatureItem(oPC, oWeapCRPC));
+		//AssignCommand(oPC, ActionUnequipItem(oWeapCRPC));
 	}
     if (GetIsObjectValid(oWeapCR)) //if the target has a weapon
 	{
@@ -264,7 +266,8 @@ void SetShift_02(object oPC, object oTarget)
     if (GetIsObjectValid(oWeapCLPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
-		AssignCommand(oPC, ActionUnequipItem(oWeapCLPC));
+		DelayCommand(0.90, ClearCreatureItem(oPC, oWeapCLPC));
+		//AssignCommand(oPC, ActionUnequipItem(oWeapCLPC));
 	}
     if (GetIsObjectValid(oWeapCL)) //if the target has a weapon
 	{
@@ -277,7 +280,8 @@ void SetShift_02(object oPC, object oTarget)
     if (GetIsObjectValid(oWeapCBPC)) //if we still have a creature weapon
 	{
 		//remove and destroy the weapon we have
-		AssignCommand(oPC, ActionUnequipItem(oWeapCBPC));
+		DelayCommand(0.90, ClearCreatureItem(oPC, oWeapCBPC));
+		//AssignCommand(oPC, ActionUnequipItem(oWeapCBPC));
 	}
     if (GetIsObjectValid(oWeapCB)) //if the target has a weapon
 	{
@@ -631,9 +635,9 @@ void SetShift_02(object oPC, object oTarget)
     if (GetLocalInt(oPC,"EpicShift"))
     {
         // Create some sort of usable item to represent monster spells
-        object oEpicPowersItem = GetItemPossessedBy(oPC,"EpicShifterPowers");
-        if (!GetIsObjectValid(oEpicPowersItem))
-            oEpicPowersItem = CreateItemOnObject("epicshifterpower",oPC);
+        object oEpicPowersItem; // = GetItemPossessedBy(oPC,"EpicShifterPowers");
+        //if (!GetIsObjectValid(oEpicPowersItem))
+        oEpicPowersItem = CreateItemOnObject("epicshifterpower",oPC);
         SetItemSpellPowers(oEpicPowersItem,oTarget);
     }
 
@@ -656,7 +660,7 @@ void SetShift_02(object oPC, object oTarget)
     // Reset any PRC feats that might have been lost from the shift
     DelayCommand(1.0, EvalPRCFeats(oPC));
 
-	DelayCommand(1.5, ClearShifterItems(oPC));
+	//DelayCommand(1.5, ClearShifterItems(oPC));
 
 	DelayCommand(3.0, DeleteLocalInt(oPC, "shifting"));
 	SendMessageToPC(oPC, "Finished shifting");
@@ -1961,9 +1965,6 @@ int GetTrueForm(object oPC)
 {
     int nRace = GetRacialType(OBJECT_SELF);
     int nPCForm;
-	//nPCForm = StringToInt(Get2DACache("racialtypes", "Appearance", nRace));
-
-//    object oSparkOfLife = GetItemPossessedBy( oPC, "sparkoflife" );
     int iIsStored = GetPersistantLocalInt( oPC, "AppearanceIsStored" );
     int iStoredAppearance = GetPersistantLocalInt( oPC, "AppearanceStored" );
 
@@ -1976,32 +1977,6 @@ int GetTrueForm(object oPC)
 		nPCForm = GetAppearanceType(oPC);
 	}
 
-
-//		switch (nRace)
-//		{
-//		case RACIAL_TYPE_DWARF:
-//			nPCForm = APPEARANCE_TYPE_DWARF;
-//			break;
-//		case RACIAL_TYPE_ELF:
-//			nPCForm = APPEARANCE_TYPE_ELF;
-//			break;
-//		case RACIAL_TYPE_GNOME:
-//			nPCForm = APPEARANCE_TYPE_GNOME;
-//			break;
-//		case RACIAL_TYPE_HALFELF:
-//			nPCForm = APPEARANCE_TYPE_HALF_ELF;
-//			break;
-//		case RACIAL_TYPE_HALFLING:
-//			nPCForm = APPEARANCE_TYPE_HALFLING;
-//			break;
-//		case RACIAL_TYPE_HALFORC:
-//			nPCForm = APPEARANCE_TYPE_HALF_ORC;
-//			break;
-//		case RACIAL_TYPE_HUMAN:
-//			nPCForm = APPEARANCE_TYPE_HUMAN;
-//			break;
-//		}
-//	}
     return nPCForm;
 }
 
@@ -2011,7 +1986,7 @@ int GetTrueForm(object oPC)
 int SetShiftEpic(object oPC, object oTarget)
 {
 
-    SetLocalInt(oPC,"EpicShift",1); //this makes the setshift_3 script do the epic shifter stuff that used to be here
+    SetLocalInt(oPC,"EpicShift",1); //this makes the setshift_2 script do the epic shifter stuff that used to be here
 
     SetShift(oPC, oTarget);
 
@@ -2137,6 +2112,7 @@ void SetShiftTrueForm(object oPC)
         // Remove all the abilities of the object
         ScrubPCSkin(oPC,oHide);
         DeletePRCLocalInts(oHide);
+	    AssignCommand(oPC, ActionEquipItem(oHide, INVENTORY_SLOT_CARMOUR)); //reequip the hide to get item props to update properly
     }
 
     itemproperty ipUnarmed = ItemPropertyMonsterDamage(2);
@@ -2144,24 +2120,28 @@ void SetShiftTrueForm(object oPC)
     if (GetIsObjectValid(oWeapCR))
     {
         //remove creature weapons
-        AssignCommand(oPC,ActionUnequipItem(oWeapCR));
+		DelayCommand(0.90, ClearCreatureItem(oPC, oWeapCR));
+        //AssignCommand(oPC,ActionUnequipItem(oWeapCR));
     }
     if (GetIsObjectValid(oWeapCL))
     {
         //remove creature weapons
-        AssignCommand(oPC,ActionUnequipItem(oWeapCL));
+		DelayCommand(0.90, ClearCreatureItem(oPC, oWeapCL));
+        //AssignCommand(oPC,ActionUnequipItem(oWeapCL));
 
     }
     if (GetIsObjectValid(oWeapCB))
     {
         //remove creature weapons
-        AssignCommand(oPC,ActionUnequipItem(oWeapCB));
+		DelayCommand(0.90, ClearCreatureItem(oPC, oWeapCB));
+        //AssignCommand(oPC,ActionUnequipItem(oWeapCB));
     }
     // if the did an epic form remove the special powers
     object oEpicPowersItem = GetItemPossessedBy(oPC,"EpicShifterPowers");
     if (GetIsObjectValid(oEpicPowersItem))
     {
-        RemoveAllItemProperties(oEpicPowersItem);
+		DelayCommand(0.90, ClearCreatureItem(oPC, oEpicPowersItem));
+        //RemoveAllItemProperties(oEpicPowersItem);
         RemoveAuraEffect( oPC );
     }
 
@@ -2232,5 +2212,10 @@ void ClearShifterItems(object oPC)
 		}
 		oCheck = GetNextItemInInventory(oPC);
 	}
+}
 
+void ClearCreatureItem(object oPC, object oTarget)
+{
+	AssignCommand(oPC, ActionUnequipItem(oTarget));
+	DelayCommand(0.10, AssignCommand(oPC, DestroyObject(oTarget)));
 }

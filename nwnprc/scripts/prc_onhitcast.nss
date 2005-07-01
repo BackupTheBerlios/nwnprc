@@ -269,6 +269,23 @@ void main()
     {
         DoRend(oSpellTarget, oSpellOrigin, oItem);
     }
+    
+    //handle other OnHit:CastSpell properties
+    itemproperty ipTest = GetFirstItemProperty(oItem);
+    while(GetIsItemPropertyValid(ipTest))
+    {
+        if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_ONHITCASTSPELL)
+        {
+            int nIPSpell = GetItemPropertySubType(ipTest);
+            if(nIPSpell == 125)
+                continue; //abort if its OnHit:CastSpell:UniquePower otherwise it would TMI.
+            int nSpell   = StringToInt(Get2DACache("iprp_onhitspell", "SpellIndex", nIPSpell));
+            int nLevel   = GetItemPropertyCostTableValue(ipTest);
+            string sScript = Get2DACache("spells", "ImpactScript", nSpell);
+            ExecuteScript(sScript,oSpellOrigin);         
+        }
+        ipTest = GetNextItemProperty(oItem);
+    }
 
     // Handle poisoned weapons
     /*

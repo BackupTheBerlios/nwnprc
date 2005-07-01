@@ -20,7 +20,7 @@ int PRC_Polymorph_Object(object oPC, object oTarget, int iExtraAbilitys, int iDe
 
 // used to check for shifted
 // oPC = PC to check if shifted or not
-// returns 1 if shifted
+// returns TRUE if shifted
 int PRC_Polymorph_Check(object oPC);
 
 // used to unshift the PC

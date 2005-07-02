@@ -234,33 +234,48 @@ void main()
         if(GetBaseItemType(oItem) != BASE_ITEM_ARROW) 
             SetLocalInt(oPC,"spellswd_aoe",1);
             
-        SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_1"));
-        string sSpellString1 = GetLocalString(oItem,"spellscript1");
-        ExecuteScript(sSpellString1,oPC);
-
-        SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_2"));
-        string sSpellString2 = GetLocalString(oItem,"spellscript2");
-        ExecuteScript(sSpellString2,oPC);
-
-        SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_3"));
-        string sSpellString3 = GetLocalString(oItem,"spellscript3");
-        ExecuteScript(sSpellString3,oPC);
-
-        SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_4"));
-        string sSpellString4 = GetLocalString(oItem,"spellscript4");
-        ExecuteScript(sSpellString4,oPC);
-        DeleteLocalString(oItem,"spellscript1");
-        DeleteLocalString(oItem,"spellscript2");
-        DeleteLocalString(oItem,"spellscript3");
-        DeleteLocalString(oItem,"spellscript4");
+        int nSpellMetamagic1 = GetLocalInt(oItem,"metamagic_feat_1");
+        int nSpellMetamagic2 = GetLocalInt(oItem,"metamagic_feat_2");
+        int nSpellMetamagic3 = GetLocalInt(oItem,"metamagic_feat_3");
+        int nSpellMetamagic4 = GetLocalInt(oItem,"metamagic_feat_4");
         DeleteLocalString(oItem,"metamagic_feat_1");
         DeleteLocalString(oItem,"metamagic_feat_2");
         DeleteLocalString(oItem,"metamagic_feat_3");
         DeleteLocalString(oItem,"metamagic_feat_4");
+        string sSpellString1 = GetLocalString(oItem,"spellscript1");
+        string sSpellString2 = GetLocalString(oItem,"spellscript2");
+        string sSpellString3 = GetLocalString(oItem,"spellscript3");
+        string sSpellString4 = GetLocalString(oItem,"spellscript4");
+        DeleteLocalString(oItem,"spellscript1");
+        DeleteLocalString(oItem,"spellscript2");
+        DeleteLocalString(oItem,"spellscript3");
+        DeleteLocalString(oItem,"spellscript4");
+        
         DeleteLocalInt(oItem,"spell");
+        
+        if(sSpellString1 != "")
+        {
+            SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic1);
+            ExecuteScript(sSpellString1,oPC);
+        }    
+        if(sSpellString2 != "")
+        {
+            SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic2);
+            ExecuteScript(sSpellString2,oPC);
+        }    
+        if(sSpellString3 != "")
+        {
+            SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic3);
+            ExecuteScript(sSpellString3,oPC);
+        }
+        if(sSpellString4 != "")
+        {
+            SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic4);
+            ExecuteScript(sSpellString4,oPC);
+        }    
+        
         DeleteLocalInt(oPC,"spellswd_aoe");
         DeleteLocalInt(oPC,"spell_metamagic");
-
     }
 
     // Handle Rend. Creature weapon damage + 1.5x STR bonus.
@@ -283,7 +298,10 @@ void main()
         {
             int nIPSpell = GetItemPropertySubType(ipTest);
             if(nIPSpell == 125)
+            {   
+                ipTest = GetNextItemProperty(oItem);
                 continue; //abort if its OnHit:CastSpell:UniquePower otherwise it would TMI.
+            }    
             int nSpell   = StringToInt(Get2DACache("iprp_onhitspell", "SpellIndex", nIPSpell));
             int nLevel   = GetItemPropertyCostTableValue(ipTest);
             string sScript = Get2DACache("spells", "ImpactScript", nSpell);

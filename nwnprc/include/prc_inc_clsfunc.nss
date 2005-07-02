@@ -1819,7 +1819,7 @@ object AACreateImbuedArrow(object oArrow, int iSpell, int iSpellLevel, float fDu
     string sSpellScript = Get2DACache("spells","ImpactScript",iSpell);
     string sSpellString = "1"; //only one spell at a time
     itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,iSpellLevel);
-    IPSafeAddItemProperty(oArrow,ipTest,36000.0);
+    IPSafeAddItemProperty(oArrow,ipTest,fDuration);
     SetLocalInt(oArrow,"spell",1);
 
     //we store the script of the spell channeled and its metamagic feat on the weapon.

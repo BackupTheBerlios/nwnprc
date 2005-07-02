@@ -673,7 +673,101 @@ const string PRC_PNP_RAPID_METABOLISM                = "PRC_PNP_RAPID_METABOLISM
  */
 const string PRC_PSI_IMP_METAPSIONICS_USE_SUM        = "PRC_PSI_IMP_METAPSIONICS_USE_SUM";
 
+/******************************************************************************\
+*                               PnP shifter switches                              *
+\******************************************************************************/
 
+/*
+ * These are used to restrict what forms the PnP shifter can use
+ * Remember, mimicing uses the targetting instance, whereas
+ * shifting into that form again later creats a new instance from
+ * the resref. Thus if you modify creatures after they have been
+ * placed from the palette, odd things may happen.
+ *
+ * Also if you give any monster the "Anomalous Form" feat, the players 
+ * will not be able to take that monsters shape.
+ */
+ 
+/*
+ * if set to 1 uses CR for target level checks instead of HD
+ */
+const string PNP_SHFT_USECR                     = "PNP_SHFT_USECR";
+/*
+ * if set to 1 cannot take huge shapes
+ */
+const string PNP_SHFT_S_HUGE                    = "PNP_SHFT_S_HUGE";
+/*
+ * if set to 1 cannot take large shapes
+ */
+const string PNP_SHFT_S_LARGE                   = "PNP_SHFT_S_LARGE";
+/*
+ * if set to 1 cannot take medium shapes
+ */
+const string PNP_SHFT_S_MEDIUM                  = "PNP_SHFT_S_MEDIUM";
+/*
+ * if set to 1 cannot take small shapes
+ */
+const string PNP_SHFT_S_SMALL                   = "PNP_SHFT_S_SMALL";
+/*
+ * if set to 1 cannot take tiny shapes
+ */
+const string PNP_SHFT_S_TINY                    = "PNP_SHFT_S_TINY";
+/*
+ * if set to 1 cannot take outsider shapes
+ */
+const string PNP_SHFT_F_OUTSIDER                = "PNP_SHFT_F_OUTSIDER";
+/*
+ * if set to 1 cannot take elemental shapes
+ */
+const string PNP_SHFT_F_ELEMENTAL               = "PNP_SHFT_F_ELEMENTAL";
+/*
+ * if set to 1 cannot take construct shapes
+ */
+const string PNP_SHFT_F_CONSTRUCT               = "PNP_SHFT_F_CONSTRUCT";
+/*
+ * if set to 1 cannot take undead shapes
+ */
+const string PNP_SHFT_F_UNDEAD                  = "PNP_SHFT_F_UNDEAD";
+/*
+ * if set to 1 cannot take dragon shapes
+ */
+const string PNP_SHFT_F_DRAGON                  = "PNP_SHFT_F_DRAGON";
+/*
+ * if set to 1 cannot take aberration shapes
+ */
+const string PNP_SHFT_F_ABERRATION              = "PNP_SHFT_F_ABERRATION";
+/*
+ * if set to 1 cannot take ooze shapes
+ */
+const string PNP_SHFT_F_OOZE                    = "PNP_SHFT_F_OOZE";
+/*
+ * if set to 1 cannot take magical beast shapes
+ */
+const string PNP_SHFT_F_MAGICALBEAST            = "PNP_SHFT_F_MAGICALBEAST";
+/*
+ * if set to 1 cannot take giant shapes
+ */
+const string PNP_SHFT_F_GIANT                   = "PNP_SHFT_F_GIANT";
+/*
+ * if set to 1 cannot take vermin shapes
+ */
+const string PNP_SHFT_F_VERMIN                  = "PNP_SHFT_F_VERMIN";
+/*
+ * if set to 1 cannot take beast shapes
+ */
+const string PNP_SHFT_F_BEAST                   = "PNP_SHFT_F_BEAST";
+/*
+ * if set to 1 cannot take animal shapes
+ */
+const string PNP_SHFT_F_ANIMAL                  = "PNP_SHFT_F_ANIMAL";
+/*
+ * if set to 1 cannot take monstrous humanoid shapes
+ */
+const string PNP_SHFT_F_MONSTROUSHUMANOID       = "PNP_SHFT_F_MONSTROUSHUMANOID";
+/*
+ * if set to 1 cannot take humanoid shapes
+ */
+const string PNP_SHFT_F_HUMANOID                = "PNP_SHFT_F_HUMANOID";
 
 /******************************************************************************\
 *                            Combat System Switches                            *
@@ -1415,7 +1509,7 @@ void SetDefaultFileEnds()
     SetPRCSwitch(FILE_END_ANIMALCOMP,   20);
     SetPRCSwitch(FILE_END_DOMAINS,      70);
     SetPRCSwitch(FILE_END_SOUNDSET,     450);
-    SetPRCSwitch(FILE_END_SPELLS,       16000);
+    SetPRCSwitch(FILE_END_SPELLS,       15400);
     SetPRCSwitch(FILE_END_SPELLSCHOOL,  10);
     SetPRCSwitch(FILE_END_APPEARANCE,   500);
     SetPRCSwitch(FILE_END_WINGS,        10);

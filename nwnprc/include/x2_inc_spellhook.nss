@@ -563,7 +563,7 @@ int X2PreSpellCastCode()
         // Check if spell was used for Spellsword ChannelSpell
         //-----------------------------------------------------------------------
         if (nContinue)
-            nContinue = !ExecuteScriptAndReturnInt("prc_spell_channel",OBJECT_SELF);            
+            nContinue = !ExecuteScriptAndReturnInt("prc_spell_chanel",OBJECT_SELF);            
 
         //-----------------------------------------------------------------------
         // * Execute item OnSpellCast At routing script if activated

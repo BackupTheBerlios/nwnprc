@@ -28,11 +28,13 @@ int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int
 
 #include "prc_alterations"
 #include "inc_persist_loca"
+#include "NW_I0_GENERIC"
 
 int nbWeaponFocus(object oPC);
 
 void EvalPRCFeats(object oPC)
-{
+{   
+    object oSkin = GetPCSkin(oPC);
     //Elemental savant is sort of four classes in one, so we'll take care
     //of them all at once.
     int iElemSavant =  GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC);
@@ -140,7 +142,6 @@ void EvalPRCFeats(object oPC)
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
     {
         //add the old feat to the hide
-        object oSkin = GetPCSkin(oPC);
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(390), oSkin); 
     }
     
@@ -156,6 +157,8 @@ void EvalPRCFeats(object oPC)
         && !GetHasFeat(2279, oPC)
         && !GetHasFeat(2280, oPC)
         && !GetHasFeat(2281, oPC)
+        && !GetHasEffect(EFFECT_TYPE_POLYMORPH, oPC) //so it doesnt pop up on polymorphing
+        && !GetLocalInt(oSkin, "nPCShifted") //so it doenst pop up on shifting
         )
     {
         SetLocalString(oPC, "DynConv_Script", "prc_pnp_school");

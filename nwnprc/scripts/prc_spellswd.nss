@@ -68,6 +68,21 @@ void main()
         DeleteLocalInt(oPC,"spellswd_aoe");
         DeleteLocalInt(oPC,"spell_metamagic");
     }
+    oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
+    if(GetLocalInt(oItem,"spell")==1 && GetLocalInt(oPC,"ONREST") == 1)
+    {
+        DeleteLocalString(oItem,"spellscript1");
+        DeleteLocalString(oItem,"spellscript2");
+        DeleteLocalString(oItem,"spellscript3");
+        DeleteLocalString(oItem,"spellscript4");
+        DeleteLocalString(oItem,"metamagic_feat_1");
+        DeleteLocalString(oItem,"metamagic_feat_2");
+        DeleteLocalString(oItem,"metamagic_feat_3");
+        DeleteLocalString(oItem,"metamagic_feat_4");
+        DeleteLocalInt(oItem,"spell");
+        DeleteLocalInt(oPC,"spellswd_aoe");
+        DeleteLocalInt(oPC,"spell_metamagic");
+    }
     //set the charges remaining
     if(GetLocalInt(oPC, "ONREST")
         && GetLastRestEventType() == REST_EVENTTYPE_REST_FINISHED
@@ -75,6 +90,7 @@ void main()
     {    
         int nUses = (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC)/2)+1;
         SetPersistantLocalInt(oPC, "spellswordchannelcharges", nUses);
+        //SendMessageToPC(oPC, IntToString(nUses)+" uses of channel spell left");
     }    
 }
 

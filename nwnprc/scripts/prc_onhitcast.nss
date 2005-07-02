@@ -233,6 +233,7 @@ void main()
         //Arcane Archer uses same code, but can do AoE damage
         if(GetBaseItemType(oItem) != BASE_ITEM_ARROW) 
             SetLocalInt(oPC,"spellswd_aoe",1);
+            
         SetLocalInt(oPC,"spell_metamagic",GetLocalInt(oItem,"metamagic_feat_1"));
         string sSpellString1 = GetLocalString(oItem,"spellscript1");
         ExecuteScript(sSpellString1,oPC);
@@ -252,6 +253,10 @@ void main()
         DeleteLocalString(oItem,"spellscript2");
         DeleteLocalString(oItem,"spellscript3");
         DeleteLocalString(oItem,"spellscript4");
+        DeleteLocalString(oItem,"metamagic_feat_1");
+        DeleteLocalString(oItem,"metamagic_feat_2");
+        DeleteLocalString(oItem,"metamagic_feat_3");
+        DeleteLocalString(oItem,"metamagic_feat_4");
         DeleteLocalInt(oItem,"spell");
         DeleteLocalInt(oPC,"spellswd_aoe");
         DeleteLocalInt(oPC,"spell_metamagic");

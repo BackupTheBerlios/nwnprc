@@ -59,18 +59,22 @@ void main()
     object oWeapon = GetSpellTargetObject();
 
 
-    if (oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC)
+    if ((oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC) 
+            || oWeapon == GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC))
         && !GetIsObjectValid(GetSpellCastItem()))
     {
         //weapon buffs are never stored
         if(X2CastOnItemWasAllowed(oWeapon))
+        {
+            SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
             return;
+        }    
         
         //If the target is an equiped ranged weapon, we inform the spellsword
         //that channeling doesnt work with ranged weapons and exit the function
         if(!IPGetIsMeleeWeapon(oWeapon))
         {
-            //FloatingTextStringOnCreature("Spell Channeling doesnt work with ranged weapons",oPC);
+            FloatingTextStringOnCreature("Spell Channeling doesnt work with ranged weapons",oPC);
             //DelayCommand(1.5,FloatingTextStringOnCreature("Equip a melee weapon and try again",oPC));
             //PRCSetUserSpecificSpellScriptFinished();
             SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);

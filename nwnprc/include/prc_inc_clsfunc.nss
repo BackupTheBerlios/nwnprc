@@ -1804,6 +1804,30 @@ int SpellToOnHitCastSpell(int iSpell);
 
 object AACreateImbuedArrow(object oArrow, int iSpell, int iSpellLevel, float fDuration, object oArcher = OBJECT_SELF)
 {
+//modified to use spellsword code    
+//use existing arrow because otherwise the new arrow will cease to exist when fired, since its a stack of 1
+/*
+    //Add OnHit: Cast Spell to new arrow.
+    itemproperty ipSpell = ItemPropertyOnHitCastSpell(iOnHitSpell, iSpellLevel);
+
+    AddItemProperty(DURATION_TYPE_TEMPORARY, ipSpell, oNewArrow, fDuration);
+*/
+    int nFeat = PRCGetMetaMagicFeat();
+    //If there are charges left for the day, we apply the temporary item property
+    //on hit cast spell (with a 10 RL hours duration) and mark the weapon with a local int
+    //so that we can find out if there is a spell stored on the weapon.
+    string sSpellScript = Get2DACache("spells","ImpactScript",iSpell);
+    string sSpellString = "1"; //only one spell at a time
+    itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,iSpellLevel);
+    IPSafeAddItemProperty(oArrow,ipTest,36000.0);
+    SetLocalInt(oArrow,"spell",1);
+
+    //we store the script of the spell channeled and its metamagic feat on the weapon.
+    SetLocalString(oArrow,"spellscript"+sSpellString,sSpellScript);
+    SetLocalInt(oArrow,"metamagic_feat_"+sSpellString,nFeat);
+//end of spellsword code hijack
+
+/*
     //Construct the imbued arrow's new tag.
     string sNewTag   = GetStringUpperCase(GetStringLeft(AA_IMBUED_ARROW, 13)) + IntToString(iSpell);
     object oNewArrow = CreateObject(OBJECT_TYPE_ITEM, AA_IMBUED_ARROW, GetLocation(OBJECT_SELF), FALSE, sNewTag);
@@ -1839,27 +1863,6 @@ object AACreateImbuedArrow(object oArrow, int iSpell, int iSpellLevel, float fDu
 
     //Debug statement.
     //SendMessageToPC(oArcher, "OLD ARROW DESTROYED!");
-//modified to use spellsword code    
-/*
-    //Add OnHit: Cast Spell to new arrow.
-    itemproperty ipSpell = ItemPropertyOnHitCastSpell(iOnHitSpell, iSpellLevel);
-
-    AddItemProperty(DURATION_TYPE_TEMPORARY, ipSpell, oNewArrow, fDuration);
-*/
-    int nFeat = PRCGetMetaMagicFeat();
-    //If there are charges left for the day, we apply the temporary item property
-    //on hit cast spell (with a 10 RL hours duration) and mark the weapon with a local int
-    //so that we can find out if there is a spell stored on the weapon.
-    string sSpellScript = Get2DACache("spells","ImpactScript",iSpell);
-    string sSpellString = "1"; //only one spell at a time
-    itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,iSpellLevel);
-    IPSafeAddItemProperty(oNewArrow,ipTest,36000.0);
-    SetLocalInt(oNewArrow,"spell",1);
-
-    //we store the script of the spell channeled and its metamagic feat on the weapon.
-    SetLocalString(oNewArrow,"spellscript"+sSpellString,sSpellScript);
-    SetLocalInt(oNewArrow,"metamagic_feat_"+sSpellString,nFeat);
-//end of spellsword code hijack
 
     //Copy new arrow to archer's inventory.
     object oImbuedArrow = CopyItem(oNewArrow, oArcher, TRUE);
@@ -1874,6 +1877,8 @@ object AACreateImbuedArrow(object oArrow, int iSpell, int iSpellLevel, float fDu
     DestroyObject(oNewArrow);
 
     return oImbuedArrow;
+*/
+    return oArrow;
 }
 
 void AADestroyAllImbuedArrows(object oArcher)
@@ -1995,11 +2000,11 @@ void AAImbueExpire(object oArrow)
 
         if (iStack > 1)
         {
-            SetItemStackSize(oArrow, iStack - 1);
+//            SetItemStackSize(oArrow, iStack - 1);
         }
         else
         {
-            DestroyObject(oArrow);
+//            DestroyObject(oArrow);
         }
         
         //clear up the new variables

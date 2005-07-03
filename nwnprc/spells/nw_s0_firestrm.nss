@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int nCasterLevel = CasterLvl;
     if(nCasterLevel > 20)
     {
-        nCasterLevel == 20;
+        nCasterLevel = 20; //bugfix, was == 20
     }
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
     effect eFireStorm = EffectVisualEffect(VFX_FNF_FIRESTORM);

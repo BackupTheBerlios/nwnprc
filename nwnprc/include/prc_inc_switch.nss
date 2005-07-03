@@ -843,6 +843,52 @@ const string PRC_CRAFT_TIMER_MIN                     = "PRC_CRAFT_TIMER_MIN";
  */
 const string PRC_TELEPORT_MAX_TARGET_LOCATIONS       = "PRC_TELEPORT_MAX_TARGET_LOCATIONS";
 
+/**
+ * If this is set, all teleportation spells fail.
+ * Default: Off
+ */
+const string PRC_DISABLE_TELEPORTATION              = "PRC_DISABLE_TELEPORTATION";
+
+/**
+ * If a local integer variable by this name is set on an area, that area
+ * cannot be either teleported to or teleported from or both, depending on
+ * the value of the variable.
+ * 
+ * Possible values:
+ * PRC_DISABLE_TELEPORTATION_FROM_AREA, 
+ * PRC_DISABLE_TELEPORTATION_TO_AREA,
+ * PRC_DISABLE_TELEPORTATION_TO_AND_FROM_AREA
+ */
+const string PRC_DISABLE_TELEPORTATION_IN_AREA      = "PRC_DISABLE_TELEPORTATION_IN_AREA";
+
+/**
+ * A value of PRC_DISABLE_TELEPORTATION_IN_AREA. This disables teleporting
+ * away from the area in question.
+ */
+const int PRC_DISABLE_TELEPORTATION_FROM_AREA        = 0x1;
+
+/**
+ * A value of PRC_DISABLE_TELEPORTATION_IN_AREA. This disables teleporting
+ * into the area in question.
+ */ 
+const int PRC_DISABLE_TELEPORTATION_TO_AREA          = 0x2;
+
+/**
+ * A value of PRC_DISABLE_TELEPORTATION_IN_AREA. This disables both teleporting
+ * into and out of the area in question.
+ */ 
+const int PRC_DISABLE_TELEPORTATION_TO_AND_FROM_AREA = PRC_DISABLE_TELEPORTATION_FROM_AREA | 
+                                                       PRC_DISABLE_TELEPORTATION_TO_AREA;
+
+/**
+ * If a variable by this name is non-zero on a creature, that creature cannot
+ * teleport. If you use this in your own scripts, please do not set it to
+ * a static value or directly remove it.
+ * Instead, increase it's value by one when the disabling occurs and decrease
+ * by one when the disabling turns off. This is required in order to be able to
+ * handle overlapping sources of forbiddance.
+ */
+const string PRC_DISABLE_CREATURE_TELEPORT           = "PRC_DISABLE_CREATURE_TELEPORT";
 
 
 /******************************************************************************\

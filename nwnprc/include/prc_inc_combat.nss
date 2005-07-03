@@ -109,6 +109,7 @@
 #include "prc_inc_util"
 #include "inc_utility"
 #include "prc_inc_switch"
+#include "prc_feat_const"
 
 // constant ints for touch attacks
 // using these helps determing which type of touch attack to perform.
@@ -910,6 +911,10 @@ int GetFeatByWeaponType(int iType, string sFeat)
 
 int GetWeaponCriticalRange(object oPC, object oWeap)
 {
+    //no weapon, touch attacks mainly
+    if(!GetIsObjectValid(oWeap))
+        return 20;
+        
     int iType = GetBaseItemType(oWeap);
     int nThreat = StringToInt(Get2DACache("baseitems", "CritThreat", iType));
     int bKeen = GetItemHasItemProperty(oWeap, ITEM_PROPERTY_KEEN);
@@ -950,6 +955,10 @@ int GetWeaponCriticalRange(object oPC, object oWeap)
 
 int GetWeaponCritcalMultiplier(object oPC, object oWeap)
 {
+    //no weapon, touch attacks mainly
+    if(!GetIsObjectValid(oWeap))
+        return 2;
+        
      int iWeaponType = GetBaseItemType(oWeap);
      int iCriticalMultiplier = StringToInt(Get2DACache("baseitems", "CritHitMult", iWeaponType));     
      int bIsWeaponOfChoice = GetHasFeat(GetFeatByWeaponType(iWeaponType, "WeaponOfChoice"), oPC);
@@ -1853,6 +1862,9 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
          GetHasEffect(EFFECT_TYPE_FRIGHTENED, oDefender)  )    iAttackBonus += 2;
 
      int bIsMeleeWeapon = !GetWeaponRanged(oWeapon);
+     if(iTouchAttackType == TOUCH_ATTACK_RANGED
+        || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
+        bIsMeleeWeapon = FALSE;
      int bIsKnockedDown = GetHasFeatEffect(FEAT_KNOCKDOWN, oDefender) || GetHasFeatEffect(FEAT_IMPROVED_KNOCKDOWN, oDefender);
 
      // +4 to attack in melee against a helpless target.
@@ -1876,6 +1888,18 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
           if(bLizTrain && iEnemyRace == RACIAL_TYPE_HUMANOID_REPTILIAN)   iAttackBonus += 1;
      }
      
+     //Weapon Focus: Ray
+     if((iTouchAttackType == TOUCH_ATTACK_RANGED 
+            || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
+        && GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_RAY, oAttacker))
+        iAttackBonus += 2;
+        
+     //Epic Weapon Focus: Ray
+     if((iTouchAttackType == TOUCH_ATTACK_RANGED 
+            || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
+        && GetHasFeat(FEAT_WEAPON_FOCUS_RAY, oAttacker))
+        iAttackBonus += 1;
+     
      int iDiceRoll = d20();
      int iEnemyAC = GetDefenderAC(oDefender, oAttacker, iTouchAttackType);
      
@@ -1894,9 +1918,9 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      sFeedback +=  GetName(oAttacker);
      
      // show proper message for touch attacks or normal attacks.
-     if(iTouchAttackType == TOUCH_ATTACK_RANGED) 
+     if(iTouchAttackType == TOUCH_ATTACK_RANGED || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL) 
           sFeedback += COLOR_PURPLE + " attempts ranged touch attack on ";
-     else if(iTouchAttackType == TOUCH_ATTACK_RANGED) 
+     else if(iTouchAttackType == TOUCH_ATTACK_MELEE|| iTouchAttackType == TOUCH_ATTACK_MELEE_SPELL) 
           sFeedback += COLOR_PURPLE + " attempts touch attack on ";
      else
           sFeedback += COLOR_ORANGE + " attacks ";

@@ -1,7 +1,7 @@
 #include "inc_item_props"
 #include "prc_feat_const"
 #include "prc_class_const"
-#include "inc_combat"
+#include "prc_inc_combat"
 
 // Checks to see if weapon is metal
 int IsItemMetal(object oItem)
@@ -72,13 +72,13 @@ void RemoveIronPower(object oPC, object oWeap)
 void IronPower(object oPC, object oWeap, int iBonusType)
 {
 
-	int iBonus = 0;
+    int iBonus = 0;
 
-	if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 4)
-         	iBonus = 1;
+    if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 4)
+            iBonus = 1;
 
-	if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 8)
-         	iBonus = 2;
+    if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 8)
+            iBonus = 2;
 
       //Stack with Enchantment on Weapon
       //int iEnch = 0;

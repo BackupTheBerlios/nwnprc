@@ -17,7 +17,7 @@
 //::
 
 #include "NW_I0_GENERIC"
-#include "inc_combat"
+#include "prc_inc_combat"
 
 ///Checks to see if weapon is metal///
 int IsItemMetal(object oItem)
@@ -64,8 +64,8 @@ void main()
         object oPC = OBJECT_SELF;
         object oTarget = GetSpellTargetObject();
         object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
-        int iEnch = GetWeaponEnhancement(oWeapon);
-        int iAB = GetWeaponAtkBonusIP(oWeapon,oTarget);
+        int iEnch = GetWeaponEnhancement(oWeapon, oPC, oTarget);
+        int iAB = GetWeaponAttackBonusItemProperty(oWeapon, oPC);
 
     int iHit = TouchAttackMelee(oTarget);
      if (iHit > 0)

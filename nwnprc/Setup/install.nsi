@@ -65,6 +65,8 @@ Section "PRC Pack" Section1
 	File "..\CompiledResources\prc_scripts.hak"
 	File "..\CompiledResources\prc_textures.hak"
 	File "..\CompiledResources\prc_include.hak"
+	File "..\CompiledResources\prc_psionics.hak"
+	File "..\CompiledResources\prc_newspellbook.hak"
 	SetOutPath "$NWNPATH\tlk\"
 	File "..\tlk\prc_consortium.tlk"
 	SetOutPath "$NWNPRCPATH\PRCPack\"
@@ -127,6 +129,8 @@ Section Uninstall
 	Delete "$NWNPATH\hak\prc_scripts.hak"
 	Delete "$NWNPATH\hak\prc_textures.hak"
 	Delete "$NWNPATH\hak\prc_include.hak"
+	Delete "$NWNPATH\hak\prc_psionics.hak"
+	Delete "$NWNPATH\hak\prc_newspellbook.hak"
 	Delete "$NWNPATH\tlk\prc_consortium.tlk"
 	Delete "$NWNPATH\erf\prc_consortium.erf"
 	Delete "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
@@ -144,7 +148,7 @@ Function .onInit
 	; Minimum version of NWN that the installer requires, just set
 	; the string to the part after the 1., i.e. for 1.62 set the
 	; string to "62"
-	StrCpy $NWNMINVERSION "62"
+	StrCpy $NWNMINVERSION "66"
 
 	; Read the NWN intall path and installed version from the registry.  If we get any
 	; errors assume NWN is not installed correctly.

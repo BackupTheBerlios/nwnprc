@@ -49,9 +49,9 @@ void DoPnPAttack(object oSummon)
             //cast disintegrate
             int nLevel = GetLocalInt(oSummon, "BBoD_Level");
             
-            SetLocalInt(oSummon, "PRC_Castlevel_Override", nLevel);
+            SetLocalInt(oSummon, PRC_CASTERLEVEL_OVERRIDE, nLevel);
             // Make sure this variable gets deleted as quickly as possible in case it's added in error.
-            AssignCommand(oSummon, DelayCommand(1.0, DeleteLocalInt(oSummon, "PRC_Castlevel_Override")));
+            AssignCommand(oSummon, DelayCommand(1.0, DeleteLocalInt(oSummon, PRC_CASTERLEVEL_OVERRIDE)));
             
             // Make SR check
            if (!SPResistSpell(OBJECT_SELF, oTarget))

@@ -105,6 +105,30 @@ const string PRC_165_DEATH_IMMUNITY                  = "PRC_165_DEATH_IMMUNITY";
 */
 const string PRC_USE_NEW_IMBUE_ARROW                 = "PRC_USE_NEW_IMBUE_ARROW";
 
+/*
+ * This is for builders. It should not be set on the module, but should be set on players/creatures.
+ * When this is set, it will override spell DC for all spells cast (including SLAs and items)
+*/
+const string PRC_DC_OVERRIDE                         = "PRC_DC_OVERRIDE";
+
+/*
+ * This is for builders. It should not be set on the module, but should be set on players/creatures.
+ * When this is set, it will add to spell DC for all spells cast (including SLAs and items)
+*/
+const string PRC_DC_ADJUSTMENT                       = "PRC_DC_ADJUSTMENT";
+
+/*
+ * This is for builders. It should not be set on the module, but should be set on players/creatures.
+ * When this is set, it will override spell casterlevel for all spells cast (including SLAs and items)
+*/
+const string PRC_CASTERLEVEL_OVERRIDE                = "PRC_CASTERLEVEL_OVERRIDE";
+
+/*
+ * This is for builders. It should not be set on the module, but should be set on players/creatures.
+ * When this is set, it will add to spell casterlevel for all spells cast (including SLAs and items)
+*/
+const string PRC_CASTERLEVEL_ADJUSTMENT              = "PRC_CASTERLEVEL_ADJUSTMENT";
+
 
 /******************************************************************************\
 *                               Epic Spell switches                            *

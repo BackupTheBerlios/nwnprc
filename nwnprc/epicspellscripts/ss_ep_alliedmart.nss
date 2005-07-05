@@ -1,3 +1,7 @@
+// The error code 5 prevention entry. Comment out or uncomment as necessary. 
+//Part Deux, Primogenitor 05/07/05
+const int COMPILER_BREAKS_ON_ME_OR_NOT_AGAIN = 0xffffffff;
+
 //:://////////////////////////////////////////////
 //:: FileName: "ss_ep_alliedmart"
 /*   Purpose: Allied Martyr - The subject of this spell willingly allows all
@@ -17,12 +21,12 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, AL_MART_DC, AL_MART_S, AL_MART_XP))
@@ -56,5 +60,5 @@ void main()
 
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

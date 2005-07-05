@@ -540,7 +540,19 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     int bIsStaff = FALSE;
     int nItemLevel;
     object oItem = GetSpellCastItem();
+    int nAdjust = GetLocalInt(oCaster, PRC_CASTERLEVEL_ADJUSTMENT);//this is for builder use
+    //DelayCommand(1.0, DeleteLocalInt(oCaster, "PRC_Castlevel_Adjustment"));
 
+
+    // For when you want to assign the caster level.
+    if (GetLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE))
+    {
+        //SendMessageToPC(oCaster, "Forced-level casting at level " + IntToString(GetCasterLevel(oCaster)));
+
+        //DelayCommand(1.0, DeleteLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE));
+        return GetLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE)+nAdjust;
+    }
+    
     // Item Spells
     if (GetItemPossessor(oItem) == oCaster)
     {
@@ -566,19 +578,10 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
                 ipTest = GetNextItemProperty(oItem);
             }
             if(!nOverrideLevel)
-                return GetCasterLevel(oCaster);
+                return GetCasterLevel(oCaster)+nAdjust;
             else
-                return nOverrideLevel;
+                return nOverrideLevel+nAdjust;
         }
-    }
-
-    // For when you want to assign the caster level.
-    if (GetLocalInt(oCaster, "PRC_Castlevel_Override") != 0)
-    {
-        //SendMessageToPC(oCaster, "Forced-level casting at level " + IntToString(GetCasterLevel(oCaster)));
-
-        DelayCommand(1.0, DeleteLocalInt(oCaster, "PRC_Castlevel_Override"));
-        return GetLocalInt(oCaster, "PRC_Castlevel_Override");
     }
 
     if (GetIsArcaneClass(iCastingClass)) // Arcane Spells
@@ -601,12 +604,12 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
         if(bIsStaff)
         {
             if(iArcLevel > nItemLevel)
-                return iArcLevel;
+                return iArcLevel+nAdjust;
             else
-                return nItemLevel;
+                return nItemLevel+nAdjust;
         }
         else
-            return iArcLevel;
+            return iArcLevel+nAdjust;
     }
 
     else if (GetIsDivineClass(iCastingClass)) // Divine Spells
@@ -627,19 +630,19 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
         if(bIsStaff)
         {
             if(iDivLevel > nItemLevel)
-                return iDivLevel;
+                return iDivLevel+nAdjust;
             else
-                return nItemLevel;
+                return nItemLevel+nAdjust;
         }
         else
-            return iDivLevel;
+            return iDivLevel+nAdjust;
     }
 
     else // Spell-Like Abilities
     {
         //SendMessageToPC(oCaster, "SLA casting at level " + IntToString(GetCasterLevel(oCaster)));
 
-        return GetCasterLevel(oCaster);
+        return GetCasterLevel(oCaster)+nAdjust;
     }
 }
 
@@ -984,22 +987,22 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 
      }
 
-        //racial pack code
-        if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
-        { nDC -= 1+(GetHitDice(oTarget)/5); }
-        else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )
-        {    nDC -= 1+(GetHitDice(oTarget)/5);  }
-        else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY )
-        {
-            if(GetHasFeat(FEAT_HARD_AIR, oTarget))
-                nDC -= 1+(GetHitDice(oTarget)/5);
-            else if(GetHasFeat(FEAT_HARD_ELEC, oTarget))
-                nDC -= 2;
-        }
-        else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
-        {   nDC -= 3;  }
-        else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
-        {   nDC -= 1+(GetHitDice(oTarget)/5);  }
+    //racial pack code
+    if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
+    { nDC -= 1+(GetHitDice(oTarget)/5); }
+    else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )
+    {    nDC -= 1+(GetHitDice(oTarget)/5);  }
+    else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY )
+    {
+        if(GetHasFeat(FEAT_HARD_AIR, oTarget))
+            nDC -= 1+(GetHitDice(oTarget)/5);
+        else if(GetHasFeat(FEAT_HARD_ELEC, oTarget))
+            nDC -= 2;
+    }
+    else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
+    {   nDC -= 3;  }
+    else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
+    {   nDC -= 1+(GetHitDice(oTarget)/5);  }
 
      return BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 }

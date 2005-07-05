@@ -95,7 +95,7 @@ int GetHeartWarderDC(int spell_id, object oCaster = OBJECT_SELF)
     if (!GetHasFeat(FEAT_VOICE_SIREN, oCaster)) return 0;
 
     // Bonus Requires Verbal Spells
-    string VS = lookup_spell_vs(GetSpellId());
+    string VS = lookup_spell_vs(PRCGetSpellId());
     if (VS != "v" && VS != "vs")
         return 0;
 
@@ -176,7 +176,7 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
 
     if (iRedWizard > 0)
     {
-        int nSpell = GetSpellId();
+        int nSpell = PRCGetSpellId();
         string sSpellSchool = lookup_spell_school(nSpell);
         int iSpellSchool;
         int iRWSpec;
@@ -233,7 +233,7 @@ int TattooFocus(int spell_id, object oCaster = OBJECT_SELF)
 {
 
         int nDC;
-        int nSpell = GetSpellId();
+        int nSpell = PRCGetSpellId();
         string sSpellSchool = lookup_spell_school(nSpell);
         int iSpellSchool;
         int iRWSpec;
@@ -272,7 +272,7 @@ int ShadowWeaveDC(int spell_id, object oCaster = OBJECT_SELF)
 
     if (iShadow > 0)
     {
-        int nSpell = GetSpellId();
+        int nSpell = PRCGetSpellId();
         string sSpellSchool = lookup_spell_school(nSpell);
         int iSpellSchool;
         
@@ -309,14 +309,29 @@ int ShadowWeaveDC(int spell_id, object oCaster = OBJECT_SELF)
 
 int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/)
 {
-    int spell_id = GetSpellId();
-    int nDC = ElementalSavantDC(spell_id, oCaster);
-    nDC += GetHierophantSLAAdjustment(spell_id, oCaster);
-    nDC += GetHeartWarderDC(spell_id, oCaster);
-    nDC += GetSpellPowerBonus(oCaster);
-    nDC += ShadowWeaveDC(spell_id, oCaster);
-    nDC += RedWizardDC(spell_id, oCaster);
-    nDC += TattooFocus(spell_id, oCaster);
+    int spell_id = PRCGetSpellId();
+    int nDC;
+    // For when you want to assign the caster DC.
+    if (GetLocalInt(oCaster, PRC_DC_OVERRIDE) != 0)
+    {
+        int nOriginalDC = GetSpellSaveDC();
+        //all spellscripts add this automatically so we need to remove it
+        nDC = GetLocalInt(oCaster, PRC_DC_OVERRIDE)-nOriginalDC;
+        //SendMessageToPC(oCaster, "Forced-DC casting at DC " + nDC;
+        return nDC;
+    }
+    else
+    {
+        nDC = ElementalSavantDC(spell_id, oCaster);
+        nDC += GetHierophantSLAAdjustment(spell_id, oCaster);
+        nDC += GetHeartWarderDC(spell_id, oCaster);
+        nDC += GetSpellPowerBonus(oCaster);
+        nDC += ShadowWeaveDC(spell_id, oCaster);
+        nDC += RedWizardDC(spell_id, oCaster);
+        nDC += TattooFocus(spell_id, oCaster);
+        nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
+    }   
 
     return nDC;
+    
 }

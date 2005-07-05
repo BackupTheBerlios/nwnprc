@@ -1,7 +1,8 @@
-#include "inc_2dacache"
-/*
+//#include "inc_2dacache"
+
 void main()
 {
+/*
 PreCache("spells", "Name", 2250, "16823166"); PreCache("spells", "School", 2250, "G");  PreCache("spells", "VS", 2250, "vs"); PreCache("spells", "Bard", 2250, "0");    PreCache("spells", "Cleric", 2250, "0");  PreCache("spells", "Druid", 2250, "0");   PreCache("spells", "Paladin", 2250, "1"); PreCache("spells", "Ranger", 2250, "1");  PreCache("spells", "Wiz_Sorc", 2250, "0");    PreCache("spells", "Innate", 2250, "1");
 PreCache("spells", "Name", 151, "901");   PreCache("spells", "School", 151, "A");   PreCache("spells", "VS", 151, "vs");  PreCache("spells", "Bard", 151, "0"); PreCache("spells", "Cleric", 151, "0");   PreCache("spells", "Druid", 151, "0");    PreCache("spells", "Paladin", 151, "1");  PreCache("spells", "Ranger", 151, "****");    PreCache("spells", "Wiz_Sorc", 151, "0"); PreCache("spells", "Innate", 151, "1");
 PreCache("spells", "Name", 174, "924");   PreCache("spells", "School", 174, "C");   PreCache("spells", "VS", 174, "vs");  PreCache("spells", "Bard", 174, "1"); PreCache("spells", "Cleric", 174, "1");   PreCache("spells", "Druid", 174, "1");    PreCache("spells", "Paladin", 174, "****");   PreCache("spells", "Ranger", 174, "1");   PreCache("spells", "Wiz_Sorc", 174, "1"); PreCache("spells", "Innate", 174, "1");
@@ -373,6 +374,5 @@ PreCache("spells", "Name", 538, "3755");  PreCache("spells", "School", 538, "V")
 PreCache("spells", "Name", 2099, "16825357"); PreCache("spells", "School", 2099, "A");  PreCache("spells", "VS", 2099, "vs"); PreCache("spells", "Bard", 2099, "****"); PreCache("spells", "Cleric", 2099, "****");   PreCache("spells", "Druid", 2099, "****");    PreCache("spells", "Paladin", 2099, "3"); PreCache("spells", "Ranger", 2099, "****");   PreCache("spells", "Wiz_Sorc", 2099, "****"); PreCache("spells", "Innate", 2099, "3");
 PreCache("spells", "Name", 3160, "16830390"); PreCache("spells", "School", 3160, "A");  PreCache("spells", "VS", 3160, "vs"); PreCache("spells", "Bard", 3160, "****"); PreCache("spells", "Cleric", 3160, "****");   PreCache("spells", "Druid", 3160, "****");    PreCache("spells", "Paladin", 3160, "1"); PreCache("spells", "Ranger", 3160, "****");   PreCache("spells", "Wiz_Sorc", 3160, "****"); PreCache("spells", "Innate", 3160, "1");
 PreCache("spells", "Name", 3181, "16830453"); PreCache("spells", "School", 3181, "A");  PreCache("spells", "VS", 3181, "vs"); PreCache("spells", "Bard", 3181, "****"); PreCache("spells", "Cleric", 3181, "****");   PreCache("spells", "Druid", 3181, "****");    PreCache("spells", "Paladin", 3181, "2"); PreCache("spells", "Ranger", 3181, "****");   PreCache("spells", "Wiz_Sorc", 3181, "****"); PreCache("spells", "Innate", 3181, "2");
-
-}
 */
+}

@@ -56,9 +56,9 @@ void main()
                 bSuccess = TRUE;
                 nSpellId --; // I added +1 to the spellID when the sequencer was created, so I have to remove it here
                 //modified to use the PRCs casterlevel override to cheatcast at the right level
-                ActionDoCommand(SetLocalInt(oPC, "PRC_Castlevel_Override", nLevel));
+                ActionDoCommand(SetLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE, nLevel));
                 ActionCastSpellAtObject(nSpellId, oPC, METAMAGIC_ANY, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
-                ActionDoCommand(DeleteLocalInt(oPC, "PRC_Castlevel_Override"));
+                ActionDoCommand(DeleteLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE));
             }
         }
         if (!bSuccess)

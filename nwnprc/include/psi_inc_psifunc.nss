@@ -181,21 +181,22 @@ int GetManifestingClass(object oCaster)
 int GetManifesterLevel(object oCaster)
 {
     int nLevel;
+    int nAdjust = GetLocalInt(oCaster, PRC_CASTERLEVEL_ADJUSTMENT);
     // Item Spells
     if (GetItemPossessor(GetSpellCastItem()) == oCaster)
     {
         SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
 
-        return GetCasterLevel(oCaster);
+        return GetCasterLevel(oCaster)+nAdjust;
     }
 
     // For when you want to assign the caster level.
-    else if (GetLocalInt(oCaster, "PRC_Castlevel_Override") != 0)
+    else if (GetLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE) != 0)
     {
         SendMessageToPC(oCaster, "Forced-level manifesting at level " + IntToString(GetCasterLevel(oCaster)));
 
-        DelayCommand(1.0, DeleteLocalInt(oCaster, "PRC_Castlevel_Override"));
-        nLevel = GetLocalInt(oCaster, "PRC_Castlevel_Override");
+        DelayCommand(1.0, DeleteLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE));
+        nLevel = GetLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE);
     }
     else
     {
@@ -220,7 +221,9 @@ int GetManifesterLevel(object oCaster)
     // Adding overchannel
     int nOverchannel = GetLocalInt(oCaster, "Overchannel");
     if(nOverchannel > 0) nLevel += nOverchannel;
-
+    
+    nLevel += nAdjust;
+    
     FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oCaster, FALSE);
 
     return nLevel;
@@ -486,7 +489,7 @@ void PsychicEnervation(object oCaster, int nWildSurge)
 
 int GetIsTelepathyPower()
 {
-    int nSpell = GetSpellId();
+    int nSpell = PRCGetSpellId();
     if (nSpell == 2371 || nSpell == 2373 || nSpell == 2374)
     {
         return TRUE;
@@ -649,13 +652,13 @@ void UsePower(int nPower, int nClass, int bIgnorePP = FALSE, int nLevelOverride 
 
     //DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "ManifestingClass")); Commented out since it will always be refreshed when a new power is manifested -Ornedan
     //set the spell power
-    SetLocalInt(OBJECT_SELF, "PowerLevel", StringToInt(lookup_spell_innate(GetSpellId())));
+    SetLocalInt(OBJECT_SELF, "PowerLevel", StringToInt(lookup_spell_innate(PRCGetSpellId())));
     //pass in the spell
     //override level
     if(nLevelOverride != 0)
     {
-        SetLocalInt(OBJECT_SELF, "PRC_Castlevel_Override", nLevelOverride);
-        //DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "PRC_Castlevel_Override")); Commented out since it will be removed once it has been used and moreover, one second delay is too short-Ornedan
+        SetLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE, nLevelOverride);
+        //DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE)); Commented out since it will be removed once it has been used and moreover, one second delay is too short-Ornedan
     }
     //Ignore power points?
     SetLocalInt(OBJECT_SELF, "IgnorePowerPoints", bIgnorePP);
@@ -1019,7 +1022,7 @@ int GetPPCostReduced(int nPP, object oCaster)
 {
     int nThrall = GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF);
     int nAugment = GetAugmentLevel(oCaster);
-    int nSpell = GetSpellId();
+    int nSpell = PRCGetSpellId();
     
     if (GetLocalInt(oCaster, "ThrallCharm") && nSpell == POWER_CHARMPERSON)
     {

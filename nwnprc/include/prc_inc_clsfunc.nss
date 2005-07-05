@@ -62,9 +62,9 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0)
     
     if (iCasterLev != 0)
     {
-        SetLocalInt(OBJECT_SELF, "PRC_Castlevel_Override", iCasterLev);
+        SetLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE, iCasterLev);
         // Make sure this variable gets deleted as quickly as possible in case it's added in error.
-        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "PRC_Castlevel_Override"));
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));
     }
     SetLocalInt(OBJECT_SELF, "UsingActionCastSpell", TRUE);
     DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));

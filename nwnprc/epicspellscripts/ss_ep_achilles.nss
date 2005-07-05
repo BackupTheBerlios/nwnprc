@@ -14,22 +14,22 @@
 /*
     March 17, 2004- Boneshank - added RunHeel() func to keep CON penalty
 */
-
-#include "nw_i0_spells"
-#include "x2_inc_spellhook"
-#include "inc_epicspells"
 #include "prc_alterations"
+#include "inc_epicspells"
+#include "inc_dispel"
+#include "x2_inc_spellhook"
+#include "nw_i0_spells"
 
 void RunHeel(object oTarget, int nDuration);
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, ACHHEEL_DC, ACHHEEL_S, ACHHEEL_XP))
@@ -62,7 +62,7 @@ void main()
         RunHeel(oPC, nDuration);
     }
 
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 void RunHeel(object oTarget, int nDuration)

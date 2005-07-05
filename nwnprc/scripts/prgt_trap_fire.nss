@@ -8,9 +8,9 @@ void main()
     struct trap tTrap = GetLocalTrap(OBJECT_SELF, "TrapSettings");
     if(tTrap.nSpellID)
     {
-        SetLocalInt(OBJECT_SELF, "PRC_Castlevel_Override", tTrap.nSpellLevel);
+        SetLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE, tTrap.nSpellLevel);
         ActionCastSpellAtObject(tTrap.nSpellID, oTarget, METAMAGIC_NONE, TRUE);
-        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "PRC_Castlevel_Override"));
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));
     }
     else
     {

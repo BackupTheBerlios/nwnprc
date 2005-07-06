@@ -15,6 +15,7 @@
 #include "prc_inc_function"
 #include "prc_feat_const"
 #include "psi_inc_psifunc"
+#include "prc_inc_skills"
 
 void main()
 {
@@ -28,5 +29,6 @@ void main()
     effect eJump = EffectSkillIncrease(SKILL_JUMP, 10);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eJump, oPC, 6.0f);
     
-    AssignCommand(oPC, ActionCastSpellAtLocation(SPELL_JUMP, GetSpellTargetLocation(), METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+    PerformJump(oPC, GetSpellTargetLocation(), TRUE);
+    //AssignCommand(oPC, ActionCastSpellAtLocation(SPELL_JUMP, GetSpellTargetLocation(), METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
 }

@@ -69,6 +69,13 @@ int PsiPrePowerCastCode()
    	int nPower = GetPowerLevel(OBJECT_SELF);
    	nContinue = GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, (20 + nPower));
    } 
+   
+    //---------------------------------------------------------------------------
+    // Run Ectoplasmic Shambler Concentration Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = EShamConc();  
+        
    if (nContinue)
    {
 	//---------------------------------------------------------------------------

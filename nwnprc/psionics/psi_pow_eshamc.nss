@@ -1,8 +1,8 @@
 /*
    ----------------
-   Ectoplasmic Shambler
+   Ectoplasmic Shambler, Heartbeat
    
-   prc_pow_eshama
+   prc_pow_eshamc
    ----------------
 
    23/2/04 by Stratovarius
@@ -35,12 +35,20 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int nDam = (GetManifesterLevel(GetAreaOfEffectCreator())/2);
     effect eVis = EffectVisualEffect(VFX_IMP_HEAD_MIND);
     effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+    effect eBlind = EffectBlindness();
     effect eLink = EffectLinkEffects(eVis, eDam);
-    object oTarget = GetEnteringObject();
-    float fDelay = GetRandomDelay(1.0, 2.2);
     
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+    object oTarget = GetFirstInPersistentObject(OBJECT_SELF, OBJECT_TYPE_CREATURE);
+    while (GetIsObjectValid(oTarget))
+    {
 
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBlind, oTarget, 6.0,TRUE,-1,GetManifesterLevel(GetAreaOfEffectCreator()));
+
+    //Select the next target within the spell shape.
+    oTarget = GetNextInPersistentObject(OBJECT_SELF, OBJECT_TYPE_CREATURE);
+    }    
+    
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name
 }

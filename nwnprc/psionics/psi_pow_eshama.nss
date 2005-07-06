@@ -39,9 +39,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
     effect eLink = EffectLinkEffects(eVis, eDam);
     object oTarget = GetEnteringObject();
-    float fDelay = GetRandomDelay(1.0, 2.2);
+    effect eBlind = EffectBlindness();
     
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBlind, oTarget, 6.0,TRUE,-1,GetManifesterLevel(GetAreaOfEffectCreator()));
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+    SetLocalInt(oTarget, "EShamConc", TRUE);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

@@ -138,6 +138,20 @@ int RedWizRestrictedSchool()
     return TRUE;
 }
 
+int EShamConc()
+{
+	int nConc = GetLocalInt(OBJECT_SELF, "EShamConc");
+	string nSpellLevel = lookup_spell_level(PRCGetSpellId());
+	int nTest = TRUE;
+	
+	if (nConc)
+	{
+		 nTest = GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, (15 + StringToInt(nSpellLevel)));
+		 if (!nTest)  FloatingTextStringOnCreature("Ectoplasmic Shambler has disrupted your concentration.", OBJECT_SELF, FALSE);
+	}
+	return nTest;
+}
+
 
 int X2UseMagicDeviceCheck()
 {
@@ -505,6 +519,12 @@ int X2PreSpellCastCode()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = RedWizRestrictedSchool();
+        
+    //---------------------------------------------------------------------------
+    // Run Ectoplasmic Shambler Concentration Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = EShamConc();        
 
     //---------------------------------------------------------------------------
     // Run use magic device skill check

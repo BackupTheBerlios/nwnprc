@@ -57,56 +57,59 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (nSurge > 0)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
+        
+        PsychicEnervation(oCaster, nSurge);
     }
     
     if (nMetaPsi > 0) 
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	location lTarget = GetSpellTargetLocation();
-	effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
-	int nDice = 13;
-	int nDiceSize = 6;
-	float fWidth = DoWiden(15.0, nMetaPsi);
-	
-    	float fDelay;
-		
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) 
-	{
-		nDice += nAugment;
-	}
-	
-    	effect eFNF = EffectVisualEffect(VFX_FNF_HOWL_MIND);
-    	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
+    int nDC = GetManifesterDC(oCaster);
+    int nCaster = GetManifesterLevel(oCaster);
+    int nPen = GetPsiPenetration(oCaster);
+    location lTarget = GetSpellTargetLocation();
+    effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
+    int nDice = 13;
+    int nDiceSize = 6;
+    float fWidth = DoWiden(15.0, nMetaPsi);
+    
+        float fDelay;
+        
+    if (nSurge > 0) nAugment += nSurge;
+    
+    //Augmentation effects to Damage
+    if (nAugment > 0) 
+    {
+        nDice += nAugment;
+    }
+    
+        effect eFNF = EffectVisualEffect(VFX_FNF_HOWL_MIND);
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
-	oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
-	while (GetIsObjectValid(oTarget))
-	{
-		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-		fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-		
-		if (PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-		       	if (nAugment > 0) nDice += nAugment;
-		      	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-                   	nDamage += nDice;
-		
-		        if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-		        {
-			        nDamage /= 2;
-	               	}		
-			effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);	               	
-	               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-	               	DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-		}
-		//Select the next target within the spell shape.
-		oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
-	}
+    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
+    while (GetIsObjectValid(oTarget))
+    {
+        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
+        {
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
+            fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
+
+            if (PRCMyResistPower(oCaster, oTarget, nPen))
+            {
+                if (nAugment > 0) nDice += nAugment;
+                int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
+                    nDamage += nDice;
+
+                if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                {
+                    nDamage /= 2;
+                }       
+                effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);                   
+                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+            }
+        }
+        //Select the next target within the spell shape.
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
+    }
     }
 }

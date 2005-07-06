@@ -58,42 +58,42 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (nSurge > 0)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
+        
+        PsychicEnervation(oCaster, nSurge);
     }
     
     if (nMetaPsi > 0) 
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-    	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCaster);
-    	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2; 
-	
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) 	nDC += (nAugment/2);
-	
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
+        int nDC = GetManifesterDC(oCaster);
+        int nCaster = GetManifesterLevel(oCaster);
+        int nPen = GetPsiPenetration(oCaster);
+        object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCaster);
+        int nDur = nCaster;
+        if (nMetaPsi == 2)  nDur *= 2; 
+
+        if (nSurge > 0) nAugment += nSurge;
+
+        //Augmentation effects to Damage
+        if (nAugment > 0)   nDC += (nAugment/2);
+
+        //Check for Power Resistance
+        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        {
             //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            
-                //Make a saving throw check
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-                {
-			SetLocalInt(oCaster, "SharePain", TRUE);
-			SetLocalObject(oCaster, "SharePainTarget", oTarget);
-			IPSafeAddItemProperty(oArmor, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), RoundsToSeconds(nDur), X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-					
-			effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-			DelayCommand(RoundsToSeconds(nDur), DeleteLocalInt(oCaster, "SharePain"));
-			DelayCommand(RoundsToSeconds(nDur), DeleteLocalObject(oCaster, "SharePainTarget"));
-		}
-	}
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
+
+            //Make a saving throw check
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+            {
+                SetLocalInt(oCaster, "SharePain", TRUE);
+                SetLocalObject(oCaster, "SharePainTarget", oTarget);
+                IPSafeAddItemProperty(oArmor, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), RoundsToSeconds(nDur), X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+
+                effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                DelayCommand(RoundsToSeconds(nDur), DeleteLocalInt(oCaster, "SharePain"));
+                DelayCommand(RoundsToSeconds(nDur), DeleteLocalObject(oCaster, "SharePainTarget"));
+            }
+        }
     }
 }

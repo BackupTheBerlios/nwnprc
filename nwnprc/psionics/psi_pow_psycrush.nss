@@ -57,40 +57,42 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     
     if (nMetaPsi > 0) 
     {
-	int nDC = (GetManifesterDC(oCaster) - 4);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nCrush = GetCurrentHitPoints(oTarget) - 1;
-	int nDamage = d6(3);
-	effect eStun = EffectStunned();
-	effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
-    	effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-	
-	//Augmentation effects to DC/Damage/Caster Level
-	if (nAugment > 0)	nDamage += d6(nAugment);
-	
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-	effect eCrush = EffectDamage(nCrush, DAMAGE_TYPE_POSITIVE);
-	
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-	
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        int nDC = (GetManifesterDC(oCaster) - 4);
+        int nCaster = GetManifesterLevel(oCaster);
+        int nPen = GetPsiPenetration(oCaster);
+        int nCrush = GetCurrentHitPoints(oTarget) - 1;
+        int nDamage = d6(3);
+        effect eStun = EffectStunned();
+        effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
+            effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
 
-               	if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
-               	{
-               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eCrush, oTarget);
-               		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStun, oTarget, RoundsToSeconds(1),TRUE,-1,nCaster);
-               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-               	}
-               	else 
-               	{
-               		//Apply the VFX impact and effects
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
-               	}
-	}
+        //Augmentation effects to DC/Damage/Caster Level
+        if (nAugment > 0)   nDamage += d6(nAugment);
+
+        effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+        effect eCrush = EffectDamage(nCrush, DAMAGE_TYPE_POSITIVE);
+
+        //Check for Power Resistance
+        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        {
+    
+            //Fire cast spell at event for the specified target
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
+
+            //why would it be death type?
+            //if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
+            if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+            {
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eCrush, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStun, oTarget, RoundsToSeconds(1),TRUE,-1,nCaster);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            }
+            else 
+            {
+                //Apply the VFX impact and effects
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+            }
+        }
     }
 }

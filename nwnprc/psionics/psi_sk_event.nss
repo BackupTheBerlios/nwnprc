@@ -30,7 +30,7 @@
 
 #include "inc_eventhook"
 #include "psi_inc_soulkn"
-//#include "inc_debug"
+#include "inc_debug"
 
 /*
 void DoDestroy(object oItem){
@@ -65,7 +65,7 @@ void main()
     
     if(nEvent == EVENT_ONPLAYERREST_FINISHED)
     {
-        //DoDebug("Rest finished, applying new settings");
+        DoDebug("Rest finished, applying new mindblade settings");
         oPC = GetLastBeingRested();
         SetPersistantLocalInt(oPC, MBLADE_FLAGS, GetLocalInt(oPC, MBLADE_FLAGS + "_Q"));
         
@@ -148,26 +148,38 @@ void main()
     }
     else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
     {
-        //DoDebug("Unequip");
+        DoDebug("OnUnequip");
         object oItem = GetItemLastUnequipped();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
+        {
+            DoDebug("Destroying unequipped mindblade");
             MyDestroyObject(oItem);
+        }
     }
     else if(nEvent == EVENT_ONUNAQUIREITEM)
     {
-        //DoDebug("Acquire");
+        DoDebug("OnAcquire");
         object oItem = GetModuleItemLost();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
+        {
+            DoDebug("Destroying lost mindblade");
             MyDestroyObject(oItem);
+        }
     }
     else if(nEvent == EVENT_ONPLAYERDEATH)
     {
-        //DoDebug("Death");
+        DoDebug("OnDeath");
         object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, GetLastBeingDied());
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
+        {
+            DoDebug("Destroying mindblade from right hand");
             MyDestroyObject(oItem);
+        }
         oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, GetLastBeingDied());
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
+        {
+            DoDebug("Destroying mindblade from left hand");
             MyDestroyObject(oItem);
+        }
     }
 }

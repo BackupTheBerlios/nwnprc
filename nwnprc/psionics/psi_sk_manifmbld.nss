@@ -24,7 +24,7 @@
 // Handles adding in the enhancement bonuses and specials
 // ======================================================
 // oMbld    mindblade item
-void BuildMindblade(object oPC, object oMbld);
+void BuildMindblade(object oPC, object oMbld, int nMbldType);
 
 
 // Tries to delete the given item
@@ -36,31 +36,37 @@ void main()
     WriteTimestampedLogEntry("Starting psi_sk_manifmbld");
     object oPC = OBJECT_SELF;
     object oMbld;
+    int nMbldType = GetPersistantLocalInt(oPC, MBLADE_SHAPE);
 
     // Generate the item based on type selection
-    switch(GetPersistantLocalInt(oPC, MBLADE_SHAPE))
+    switch(nMbldType)
     {
-        case MBLADE_SHAPE_SHORTSWORD:
         case MBLADE_SHAPE_DUAL_SHORTSWORDS:
+            SendMessageToPC(oPC, "psi_sk_manifmbld: First of dual shortswords - ");
+        case MBLADE_SHAPE_SHORTSWORD:
+            SendMessageToPC(oPC, "psi_sk_manifmbld: Created shortsword");
             oMbld = CreateItemOnObject("prc_sk_mblade_ss", oPC);
             break;
         case MBLADE_SHAPE_LONGSWORD:
+            SendMessageToPC(oPC, "psi_sk_manifmbld: Created longsword");
             oMbld = CreateItemOnObject("prc_sk_mblade_ls", oPC);
             break;
         case MBLADE_SHAPE_BASTARDSWORD:
+            SendMessageToPC(oPC, "psi_sk_manifmbld: Created bastardsword");
             oMbld = CreateItemOnObject("prc_sk_mblade_bs", oPC);
             break;
         case MBLADE_SHAPE_RANGED:
+            SendMessageToPC(oPC, "psi_sk_manifmbld: Created throwing mindblade");
             oMbld = CreateItemOnObject("prc_sk_mblade_th", oPC, GetHasFeat(FEAT_MULTIPLE_THROW, oPC) ? GetMainHandAttacks(oPC) : 1);
             break;
 
         default:
-            WriteTimestampedLogEntry("Invalid value in MBLADE_SHAPE for " + GetName(oPC) + ": " + IntToString(GetLocalInt(oPC, MBLADE_SHAPE)));
+            WriteTimestampedLogEntry("Invalid value in MBLADE_SHAPE for " + GetName(oPC) + ": " + IntToString(nMbldType));
             return;
     }
 
     // Construct the bonuses
-    BuildMindblade(oPC, oMbld);
+    DelayCommand(0.25f, BuildMindblade(oPC, oMbld, nMbldType));
 
     // Force equip
     AssignCommand(oPC, ActionEquipItem(oMbld, INVENTORY_SLOT_RIGHTHAND));
@@ -73,14 +79,16 @@ void main()
     SetItemCursedFlag(oMbld, TRUE);
 
     // Generate the second mindblade if set to dual shortswords
-    if(GetLocalInt(oPC, MBLADE_SHAPE) == MBLADE_SHAPE_DUAL_SHORTSWORDS)
+    if(nMbldType == MBLADE_SHAPE_DUAL_SHORTSWORDS)
     {
         oMbld = CreateItemOnObject("prc_sk_mblade_ss", oPC);
 
-        DelayCommand(0.1f, BuildMindblade(oPC, oMbld)); // Delay a bit to prevent a lag spike
+        SendMessageToPC(oPC, "psi_sk_manifmbld: Created second mindblade - is valid: " + (GetIsObjectValid(oMbld) ? "TRUE":"FALSE"));
 
-        DelayCommand(0.6f, AssignCommand(oPC, ActionEquipItem(oMbld, INVENTORY_SLOT_LEFTHAND)));
-
+        DelayCommand(0.5f, BuildMindblade(oPC, oMbld, nMbldType)); // Delay a bit to prevent a lag spike
+        //BuildMindblade(oPC, oMbld, nMbldType);
+        AssignCommand(oPC, ActionDoCommand(ActionEquipItem(oMbld, INVENTORY_SLOT_LEFTHAND)));
+        //AssignCommand(oPC, ActionEquipItem(oMbld, INVENTORY_SLOT_LEFTHAND));
         AddEventScript(oMbld, EVENT_ITEM_ONHIT, "psi_sk_onhit", TRUE, FALSE);
 
         SetDroppableFlag(oMbld, FALSE);
@@ -103,7 +111,7 @@ void main()
 }
 
 
-void BuildMindblade(object oPC, object oMbld)
+void BuildMindblade(object oPC, object oMbld, int nMbldType)
 {
     /* Add normal stuff and VFX */
     /// Add enhancement bonus
@@ -124,7 +132,7 @@ void BuildMindblade(object oPC, object oMbld)
                 (nSKLevel - 20) / 5 + 5: // Boni are granted +1 / 5 levels epic
                 nSKLevel / 4;            // Boni are granget +1 / 4 levels pre-epic
         // Dual mindblades have one lower bonus
-        nEnh -= GetLocalInt(oPC, MBLADE_SHAPE) == MBLADE_SHAPE_DUAL_SHORTSWORDS ? 1 : 0;
+        nEnh -= nMbldType == MBLADE_SHAPE_DUAL_SHORTSWORDS ? 1 : 0;
     }
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(nEnh), oMbld);
 
@@ -143,10 +151,10 @@ void BuildMindblade(object oPC, object oMbld)
     // Some optimization, since this script seems particularly heavy.
     // Do string comparison only once, and store the result in an integer,
     // which is lighter to compare
-    int nMbldType = sTag == "prc_sk_mblade_ss" ? MBLADE_SHAPE_SHORTSWORD   :
+    /*int nMbldType = sTag == "prc_sk_mblade_ss" ? MBLADE_SHAPE_SHORTSWORD   :
                     sTag == "prc_sk_mblade_ls" ? MBLADE_SHAPE_LONGSWORD    :
                     sTag == "prc_sk_mblade_bs" ? MBLADE_SHAPE_BASTARDSWORD :
-                                                 MBLADE_SHAPE_RANGED;
+                                                 MBLADE_SHAPE_RANGED;*/
     // Weapon Focus
     if(GetHasFeat(FEAT_WEAPON_FOCUS_MINDBLADE, oPC))
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_WEAPON_FOCUS_SHORT_SWORD :
@@ -200,7 +208,7 @@ void BuildMindblade(object oPC, object oMbld)
     // does not have the feat. Therefore, we need to grant it as a bonus feat on the blade.
     if(GetHasFeat(FEAT_BLADEWIND, oPC))
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_WHIRLWIND), oMbld);
-    
+
 
     /// Apply the enhancements
     int nFlags = GetPersistantLocalInt(oPC, MBLADE_FLAGS);
@@ -221,7 +229,7 @@ void BuildMindblade(object oPC, object oMbld)
     /*if(nFlags & MBLADE_FLAG_VICIOUS)
     { OnHit
     }*/
-    if(nFlags & MBLADE_FLAG_PSYCHOKINETIC)
+    if(nFlags & MBLADE_FLAG_PSYCHOKINETIC && !(nFlags & MBLADE_FLAG_PSYCHOKINETICBURST)) // Only Psychokinetic
     {
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_MAGICAL, IP_CONST_DAMAGEBONUS_1d4), oMbld);
         bLight = TRUE;
@@ -235,12 +243,13 @@ void BuildMindblade(object oPC, object oMbld)
     }
     if(nFlags & MBLADE_FLAG_COLLISION)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PHYSICAL, IP_CONST_DAMAGEBONUS_5), oMbld);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE, IP_CONST_DAMAGEBONUS_5), oMbld);
+        SendMessageToPC(oPC, "Added Collision damage");
     }
     /*if(nFlags & MBLADE_FLAG_MINDCRUSHER )
     { OnHit 
     }*/
-    if(nFlags & MBLADE_FLAG_PSYCHOKINETICBURST)
+    if(nFlags & MBLADE_FLAG_PSYCHOKINETICBURST && !(nFlags & MBLADE_FLAG_PSYCHOKINETIC)) // Only Psychokinetic Burst
     {
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_MAGICAL, IP_CONST_DAMAGEBONUS_1d4), oMbld);
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyMassiveCritical(IP_CONST_DAMAGEBONUS_1d6), oMbld);
@@ -258,6 +267,12 @@ void BuildMindblade(object oPC, object oMbld)
     if(nFlags & MBLADE_FLAG_SOULBREAKER)
     {
     }*/
+    if((nFlags & MBLADE_FLAG_PSYCHOKINETICBURST) && (nFlags & MBLADE_FLAG_PSYCHOKINETIC)) // Both Psychokinetic and Psychokinetic Burst
+    {
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_MAGICAL, IP_CONST_DAMAGEBONUS_1d8), oMbld);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyMassiveCritical(IP_CONST_DAMAGEBONUS_1d6), oMbld);
+        bLight = TRUE;
+    }
     
     if(bLight)
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyLight(IP_CONST_LIGHTBRIGHTNESS_NORMAL, IP_CONST_LIGHTCOLOR_WHITE), oMbld);

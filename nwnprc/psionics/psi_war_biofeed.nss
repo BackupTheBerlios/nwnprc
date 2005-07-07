@@ -1,3 +1,7 @@
+// The error code 5 prevention entry. Comment out or uncomment as necessary. 
+//Part 3, Primogenitor 05/07/05
+const int COMPILER_BREAKS_ON_ME_OR_NOT_III = 0xffffffff;
+
 /*
    ----------------
    Biofeedback

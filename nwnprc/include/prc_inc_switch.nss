@@ -324,13 +324,13 @@ const string PRC_SUPPLY_BASED_REST                   = "PRC_SUPPLY_BASED_REST";
 /**
  * Charaters only gain a number of hitpoints equal to their level from resting.
  */
-const string PRC_PNP_REST_HEALING                   = "PRC_PNP_REST_HEALING";
+const string PRC_PNP_REST_HEALING                    = "PRC_PNP_REST_HEALING";
 
 /**
  * Resting causes game time to advance.
  * See inc_time.nss for details
  */
-const string PRC_PNP_REST_TIME                   = "PRC_PNP_REST_HEALING";
+const string PRC_PNP_REST_TIME                       = "PRC_PNP_REST_TIME";
 
 /**
  * Wizards use PnP spellschools instead of Bioware's

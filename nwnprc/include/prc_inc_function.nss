@@ -186,9 +186,7 @@ void EvalPRCFeats(object oPC)
         ExecuteScript("prc_size", oPC);
         
     //ACP system
-    if(!GetHasFeat(FEAT_ACP_FEAT, oPC)
-        && GetPRCSwitch(PRC_ACP_MANUAL))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_ACP_FEAT), oSkin);
+    ExecuteScript("acp_auto", oPC);
 
     // Miscellaneous
     ExecuteScript("prc_wyzfeat", oPC);

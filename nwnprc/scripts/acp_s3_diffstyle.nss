@@ -21,7 +21,7 @@ void LockThisFeat()
     float fDelay = IntToFloat(GetPRCSwitch(PRC_ACP_DELAY))*60.0;
     if(fDelay == 0.0)
         fDelay = 90.0;
-    if(fDelay = -60.0)
+    if(fDelay == -60.0)
         fDelay = 0.0;
     DelayCommand(fDelay, DeleteLocalInt(OBJECT_SELF, sLock)); //Lock persists 1 min times switchval
 }
@@ -54,11 +54,13 @@ void SetCustomFightingStyle(int iStyle) //Sets character phenotype to 5,6,7 or 8
 
     //If we are at phenotype 0 or one of the styles themselves, we go ahead
     //and set the creature's phenotype accordingly! (safe thanks to previous 'if')
-    else if (GetPhenoType(OBJECT_SELF) == 0 || GetPhenoType(OBJECT_SELF) == 5 
-        || GetPhenoType(OBJECT_SELF) == 6 ||
-             GetPhenoType(OBJECT_SELF) == 7 || GetPhenoType(OBJECT_SELF) == 8)
+    else if (GetPhenoType(OBJECT_SELF) == 0 
+        || GetPhenoType(OBJECT_SELF) == 5 
+        || GetPhenoType(OBJECT_SELF) == 6 
+        || GetPhenoType(OBJECT_SELF) == 7 
+        || GetPhenoType(OBJECT_SELF) == 8)
     {
-        SetPhenoType(iStyle, oPCOBJECT_SELF;
+        SetPhenoType(iStyle, OBJECT_SELF);
         LockThisFeat(); // Lock use!
     }
 

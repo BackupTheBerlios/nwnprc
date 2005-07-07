@@ -97,7 +97,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-		if (!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS)
+		if (!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
 		{
 	               	if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
         	       	{

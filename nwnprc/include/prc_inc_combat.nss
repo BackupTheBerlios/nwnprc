@@ -329,24 +329,36 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
 // making them recursive until the AttackLoopMain stops calling AttackLoopLogic
 void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE);
 
-// Performs a full attack round and can add in bonus damage damage/effects
-// Will perform all attacks and accounts for weapontype, haste, twf, tempest twf, etc.
-//
-// eSpecialEffect -  any special Vfx or other effects the attack should use IF successful.
-// eDuration - Changes the duration of the applied effect(s)
-//           0.0 = DURATION_TYPE_INSTANT, effect lasts 0.0 seconds.
-//          >0.0 = DURATION_TYPE_TEMPORARY, effect lasts the amount of time put in here.
-//          <0.0 = DURATION_TYPE_PERMAMENT!!!!!  Effect lasts until dispelled.  
-// iAttackBonusMod is the attack modifier - Will effect all attacks if bEffectAllAttacks is on
-// iDamageModifier - should be either a DAMAGE_BONUS_* constant or an int of damage.
-//                   Give an int if the attack effects ONLY the first attack!
-// iDamageType = DAMAGE_TYPE_*
-// bEffectAllAttacks - If FALSE will only effect first attack, otherwise effects all attacks.
-// sMessageSuccess - message to display on a successful hit. (i.e. "*Sneak Attack Hit*")
-// sMessageFailure - message to display on a failure to hit. (i.e. "*Sneak Attack Miss*")
-// bApplyTouchToAll - Applies a touch attack to all attacks - FALSE if only first attack is a touch attack.
-// iTouchAttackType - TOUCH_ATTACK_* const - melee, ranged, spell melee, spell ranged
-void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE);
+/**
+ * Performs a full attack round and can add in bonus damage damage/effects.
+ * Will perform all attacks and accounts for weapontype, haste, twf, tempest twf, etc.
+ *
+ * @param oDefender      The object being attacked.
+ * @param oAttacker      The object doing the attacks.
+ *
+ * @param eSpecialEffect Any special Vfx or other effects the attack should use IF successful.
+ * @param eDuration      Changes the duration of the applied effect(s)
+ *                       0.0 = DURATION_TYPE_INSTANT, effect lasts 0.0 seconds.
+ *                      >0.0 = DURATION_TYPE_TEMPORARY, effect lasts the amount of time put in here.
+ *                      <0.0 = DURATION_TYPE_PERMAMENT!!!!!  Effect lasts until dispelled.
+ 
+ * @param iAttackBonusMod  Is the attack modifier - Will effect all attacks if bEffectAllAttacks is on.
+ * @param iDamageModifier  Should be either a DAMAGE_BONUS_* constant or an integer amount of damage.
+ *                         Give an integer if the attack effects ONLY the first attack!
+ * @param iDamageType      DAMAGE_TYPE_* constant.
+ *
+ * @param bEffectAllAttacks  If FALSE will only effect first attack, otherwise effects all attacks.
+ *
+ * @param sMessageSuccess  Message to display on a successful hit. (i.e. "*Sneak Attack Hit*")
+ * @param sMessageFailure  Message to display on a failure to hit. (i.e. "*Sneak Attack Miss*")
+ *
+ * @param bApplyTouchToAll  Applies a touch attack to all attacks - FALSE if only first attack is a touch attack.
+ * @param iTouchAttackType  TOUCH_ATTACK_* const - melee, ranged, spell melee, spell ranged
+ *
+ * @param bInstantAttack    If TRUE, all attacks are performed at the same time, instead of over a round.
+ *                          Default: FALSE
+ */
+void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE, int bInstantAttack = FALSE);
 
 // Performs a single attack and can add in bonus damage damage/effects
 //
@@ -1418,7 +1430,7 @@ int GetMagicalAttackBonus(object oAttacker)
                          iMagicBonus -= 15;
                          break;
                }
-                              
+               /* Power Attack handled differently now. The AB calculation is done in GetAttackBonus() - Ornedan
                // prevents power shot and power attack from stacking
                if(!GetHasFeatEffect(FEAT_PA_POWERSHOT, oAttacker) &&
                   !GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT, oAttacker) &&
@@ -1461,6 +1473,7 @@ int GetMagicalAttackBonus(object oAttacker)
                               break;
                     }
                }
+               */
           }
           
           eEffect = GetNextEffect(oAttacker);
@@ -1751,6 +1764,9 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
                 if(bHasAbsoluteAmbidex)        iAttackPenalty -= 2;
                 
                 iAttackBonus -= iAttackPenalty;
+                
+                // Handle the PRC Power Attack BA pay, if any.
+                iAttackBonus -= GetLocalInt(oAttacker, "PRC_PowerAttack_Level");
            }
      }
      // Ranged Specific Rules
@@ -1801,7 +1817,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
 
      // support for power attack and expertise modes
      int iCombatMode = GetLastAttackMode(oAttacker);
-     if( iCombatMode == COMBAT_MODE_POWER_ATTACK &&
+     if( iCombatMode == COMBAT_MODE_POWER_ATTACK /*&&      // Whether BW and PRC power attacks stack or not is handled by the PRC PA script now - Ornedan
          !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK10) && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK9)  && 
@@ -1812,11 +1828,11 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
          !GetHasSpellEffect(SPELL_POWER_ATTACK4)  && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK3)  && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK2)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK1) )
+         !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
      {
           iAttackBonus -= 5;
      }
-     else if( iCombatMode == COMBAT_MODE_IMPROVED_POWER_ATTACK &&
+     else if( iCombatMode == COMBAT_MODE_IMPROVED_POWER_ATTACK /*&&
          !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK10) && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK9)  && 
@@ -1827,7 +1843,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
          !GetHasSpellEffect(SPELL_POWER_ATTACK4)  && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK3)  && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK2)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK1) )
+         !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
      {
           iAttackBonus -= 10;
      }
@@ -2905,6 +2921,7 @@ struct BonusDamage GetMagicalBonusDamage(object oAttacker)
                          break;
                }
 
+               /*
                // prevents power shot and power attack from stacking
                if(!GetHasFeatEffect(FEAT_PA_POWERSHOT, oAttacker) &&
                   !GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT, oAttacker) &&
@@ -2947,6 +2964,7 @@ struct BonusDamage GetMagicalBonusDamage(object oAttacker)
                               break;
                     }
                }
+               */
 
           }
           else if (eType == EFFECT_TYPE_DAMAGE_DECREASE)
@@ -3035,6 +3053,9 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
           if(iMainHand == 1)     iStr /= 2;
           
           iDamage += iStr;
+          
+          // Handle the damage bonus from PRC Power Attack
+          iDamage += GetLocalInt(oAttacker, "PRC_PowerAttack_DamageBonus");
      }
 
      // weapon specializations
@@ -3046,7 +3067,7 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
 
      // support for power attack and expertise modes
      int iCombatMode = GetLastAttackMode(oAttacker);
-     if( iCombatMode == COMBAT_MODE_POWER_ATTACK &&
+     if( iCombatMode == COMBAT_MODE_POWER_ATTACK /*&&
          !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK10) && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK9)  && 
@@ -3057,11 +3078,11 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
          !GetHasSpellEffect(SPELL_POWER_ATTACK4)  && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK3)  && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK2)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK1) )
+         !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
      {
           iDamage += 5;
      }
-     else if( iCombatMode == COMBAT_MODE_IMPROVED_POWER_ATTACK &&
+     else if( iCombatMode == COMBAT_MODE_IMPROVED_POWER_ATTACK /*&&
          !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK10) && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK9)  && 
@@ -3072,7 +3093,7 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
          !GetHasSpellEffect(SPELL_POWER_ATTACK4)  && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK3)  && 
          !GetHasSpellEffect(SPELL_POWER_ATTACK2)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK1) )
+         !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
      {
           iDamage += 10;
      }
@@ -4257,7 +4278,7 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
      }
 }
 
-void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE)
+void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE, int bInstantAttack = FALSE)
 {
      // create struct for attack loop logic
      struct AttackLoopVars sAttackVars;
@@ -4582,6 +4603,10 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      sAttackVars.fDelay = (6.0 / (iMainHandAttacks + iBonusAttacks + iOffHandAttacks));
      sAttackVars.iMainAttackBonus = sAttackVars.iMainAttackBonus + iAttackPenalty;
      sAttackVars.iOffHandAttackBonus = sAttackVars.iOffHandAttackBonus + iAttackPenalty;
+     
+     // If the full attack is to happen at once
+     if(bInstantAttack)
+        sAttackVars.fDelay = 0.075; // Have some delay in order to avoid being a total resource hog
      
      // sets iMods to iAttackBonusMod
      // used in AttackLoopLogic to decrement attack bonus for attacks.

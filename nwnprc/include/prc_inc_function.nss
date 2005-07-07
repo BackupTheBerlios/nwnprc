@@ -179,6 +179,11 @@ void EvalPRCFeats(object oPC)
         || GetHasFeat(FEAT_SIZE_INCREASE_5, oPC)
         || GetHasFeat(FEAT_SIZE_INCREASE_6, oPC))
         ExecuteScript("prc_size", oPC);
+        
+    //ACP system
+    if(!GetHasFeat(FEAT_ACP_FEAT, oPC)
+        && GetPRCSwitch(PRC_ACP_MANUAL))
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_ACP_FEAT), oSkin);
 
     // Miscellaneous
     ExecuteScript("prc_wyzfeat", oPC);

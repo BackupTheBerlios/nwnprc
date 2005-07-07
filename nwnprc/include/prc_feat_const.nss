@@ -1783,3 +1783,5 @@ const int FEAT_SPLIT_PSIONIC_RAY            = 4941;
 const int FEAT_TWIN_POWER                   = 4942;
 const int FEAT_WIDEN_POWER                  = 4943;
 
+//ACP feat
+const int FEAT_ACP_FEAT                     = 2892;

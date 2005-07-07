@@ -471,6 +471,50 @@ const string PRC_DISABLE_SPELL_                      = "PRC_DISABLE_SPELL_";
 */
 const string PRC_NO_PETRIFY_GUI                      = "PRC_NO_PETRIFY_GUI";
 
+
+/******************************************************************************\
+*                               ACP switches                              *
+\******************************************************************************/
+/*
+ * This is a set of settings for Ragnaroks Alternate Combat animations Pack (ACP)
+ * Main hak:
+ * http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=5895
+ * CEP heads:
+ * http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=5934
+ * CEP robes:
+ * http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=5950
+ * (credit to USAgreco66kg for those CEP files)
+ * Note on haks: You should not add the acp_2da hak if you have the PRC installed 
+ * already. Plus, once you press the OK button to add the ACP haks, make sure
+ * you press cancel as soon as it appears. Otherwise, the toolset will crash
+ * as it tries to compile the PRC scripts.
+ */
+ 
+/*
+ * Set this to give players radial feats to change combat animations
+ */
+const string PRC_ACP_MANUAL                          = "PRC_ACP_MANUAL";
+
+/*
+ * Set this so that players will change combat animations automatically
+ * based on weapons equiped and class
+ */
+const string PRC_ACP_AUTOMATIC                       = "PRC_ACP_AUTOMATIC";
+
+/*
+ * Set this so that NPCs will change combat animations automatically
+ * based on weapons equiped and class
+ */
+const string PRC_ACP_NPC_AUTOMATIC                   = "PRC_ACP_NPC_AUTOMATIC";
+
+/*
+ * Set this for a number of minutes delay betwen changing animations
+ * This is useful to stop people spamming the server with changes
+ * If not set, it defaults to 90 seconds. To set to zero, set var to -1
+ */
+const string PRC_ACP_DELAY                           = "PRC_ACP_DELAY";
+
+
 /******************************************************************************\
 *                               File End switches                              *
 \******************************************************************************/

@@ -97,12 +97,14 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-               	if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-               	{
-               		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
-               		DelayCommand((HoursToSeconds(1) + 1.0), DieMaggot(GetSpellId(), oCaster, oTarget));
-               	}
+		if (!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS)
+		{
+	               	if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+        	       	{
+               			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
+               			DelayCommand((HoursToSeconds(1) + 1.0), DieMaggot(GetSpellId(), oCaster, oTarget));
+	               	}
+		}
 	}
     }
 }

@@ -330,6 +330,7 @@
 326 FEAT_NEW_POWER_ATTACK               3143      0    99             1      
 327 FEAT_NEW_IMPROVED_POWER_ATTACK      3144      0    99             1      
 328 FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL 3179      0    99             1      
+17  ACP_FEAT                                        2892      0    99             1
 329 ****                                ****      **** ****           ****   
 330 **GeneralActivatableFeats**         ****      **** ****           ****   
 331 FEAT_THRALL_TO_DEMON                2616      0    -1             1      

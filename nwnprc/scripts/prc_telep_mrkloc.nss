@@ -31,14 +31,14 @@ void main()
 
     location lToStore = GetLocation(oPC);
     float fTime = GetLocalFloat(oPC, "PRC_Teleport_NamingListenerDuration");
-    if(fTime > 0.0f)
+    if(fTime >= 0.0f)
     {
         SpawnListener("prc_telep_lname", lToStore, "**", oPC, fTime);
         DelayCommand(fTime, Aux(oPC, lToStore));
     }
     else
     {
-        Aux(oPC, lToStore);
+        DelayCommand(0.0f, Aux(oPC, lToStore));
     }
 
     // Set the name of the location to be "Unnamed". If the user speaks a name, it will override this.

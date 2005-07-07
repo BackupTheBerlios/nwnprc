@@ -58,7 +58,7 @@ location GetDimensionDoorLocation(object oCaster, int nCasterLvl)
             GetSpellTargetLocation();                 // Teleporting to a spot on the ground
 }
 
-void main()//TODO: Look at greater teleport for group teleport code. Also, gaoneng for VFX
+void main()
 {   
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
     // Spellhook

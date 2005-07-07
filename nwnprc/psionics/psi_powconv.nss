@@ -207,6 +207,7 @@ void main()
         DeleteLocalInt(oPC, "Stage1Setup");
         DeleteLocalInt(oPC, "nPowerFeat");
         DeleteLocalInt(oPC, "nPowerLevelToBrowse");
+        DeleteLocalInt(oPC, "PowerListChoiceOffset");
         int i;
         for(i = 99; i <= 110; i++)
             DeleteLocalString(oPC, "TOKEN" + IntToString(i));
@@ -226,6 +227,7 @@ void main()
         DeleteLocalInt(oPC, "Stage1Setup");
         DeleteLocalInt(oPC, "nPowerFeat");
         DeleteLocalInt(oPC, "nPowerLevelToBrowse");
+        DeleteLocalInt(oPC, "PowerListChoiceOffset");
         int i;
         for(i = 99; i <= 110; i++)
             DeleteLocalString(oPC, "TOKEN" + IntToString(i));
@@ -258,6 +260,7 @@ void main()
         else
         {
             SetLocalInt(oPC, "nPower", nValue);
+            SetLocalInt(oPC, "PowerListChoiceOffset", GetLocalInt(oPC, "ChoiceOffset"));
             nStage++;
             //PrintString("Going to power selection confirmation");
         }
@@ -283,6 +286,14 @@ void main()
             if(!persistant_array_exists(oPC, "PsiPowerCount"))
                 persistant_array_create(oPC, "PsiPowerCount");
             persistant_array_set_int(oPC, "PsiPowerCount", nClass, persistant_array_get_int(oPC, "PsiPowerCount", nClass)+1);
+
+            // Delete the offset
+            DeleteLocalInt(oPC, "ChoiceOffset");
+        }
+        // Restore the old offset if no power was selected, so the user returns to the same position in the power list
+        else
+        {
+            SetLocalInt(oPC, "ChoiceOffset", GetLocalInt(oPC, "PowerListChoiceOffset"));
         }
 
         int nCurrentPowers = GetPowerCount(oPC, nClass);
@@ -298,8 +309,6 @@ void main()
         array_delete(oPC, "ChoiceValues");
         array_create(oPC, "ChoiceTokens");
         array_create(oPC, "ChoiceValues");
-        DeleteLocalInt(oPC, "ChoiceOffset");
-
     }
     SetLocalInt(oPC, "Stage", nStage);
 }

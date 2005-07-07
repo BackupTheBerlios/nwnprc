@@ -136,9 +136,10 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     }
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(nEnh), oMbld);
 
-    // Handle Greater Weapon Focus (mindblade) here. It grants +1 to attack with any shape of mindblade
+    // Handle Greater Weapon Focus (mindblade) here. It grants +1 to attack with any shape of mindblade.
+    // Because of stacking issues, the actual value granted is enhancement bonus + 1.
     if(GetHasFeat(FEAT_GREATER_WEAPON_FOCUS_MINDBLADE, oPC))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(1), oMbld);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(nEnh + 1), oMbld);
 
     /// Add in VFX
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyVisualEffect(GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD ? ITEM_VISUAL_HOLY :

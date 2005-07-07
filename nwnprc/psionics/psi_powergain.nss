@@ -16,7 +16,8 @@ int CheckMissingPowers(object oPC, int nClass)
     {
         SetLocalString(oPC, "DynConv_Script", "psi_powconv");
         SetLocalInt(oPC, "nClass", nClass);
-        ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
+        AssignCommand(oPC, ClearAllActions());
+        AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
         return TRUE;
     }
     return FALSE;

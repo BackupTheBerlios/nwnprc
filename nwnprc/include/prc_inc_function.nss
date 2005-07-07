@@ -146,6 +146,10 @@ void EvalPRCFeats(object oPC)
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(390), oSkin); 
     }
     
+    // Add the teleport management feats. Maybe change this to apply only to those capable of casting teleportation spells in the future
+    if(TRUE)
+        ExecuteScript("prc_tp_mgmt_eval", oPC);
+    
     //PnP Spell Schools
     if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD, oPC)

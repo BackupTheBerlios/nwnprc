@@ -47,8 +47,12 @@ struct metalocation{
     /// Resref of the area the location is in. Used to differentiate between
     /// areas with the same tag.
     string sAreaResRef;
-    /// The coordinates of the location within the area.
-    vector vCoords;
+    /// The X coordinate of the location within the area.
+    float fX;
+    /// The Y coordinate of the location within the area.
+    float fY;
+    /// The Z coordinate of the location within the area.
+    float fZ;
     /// The direction the location is facing.
     float  fFacing;
     /// The metalocation may be named and the name is stored in this member.
@@ -245,9 +249,12 @@ struct metalocation LocationToMetalocation(location locL, string sName = "")
 {
     struct metalocation mlocL;
     object oArea = GetAreaFromLocation(locL);
+    vector vCoords = GetPositionFromLocation(locL);
     mlocL.sAreaTag    = GetTag(oArea);
     mlocL.sAreaResRef = GetResRef(oArea);
-    mlocL.vCoords     = GetPositionFromLocation(locL);
+    mlocL.fX          = vCoords.x;
+    mlocL.fY          = vCoords.y;
+    mlocL.fZ          = vCoords.z;
     mlocL.fFacing     = GetFacingFromLocation(locL);
     mlocL.sName       = sName;
     mlocL.sModule     = GetName(GetModule());
@@ -266,7 +273,7 @@ location MetalocationToLocation(struct metalocation mlocL)
     object oArea = GetAreaFromMetalocation(mlocL);
 
     // Construct and return the location
-    return Location(oArea, mlocL.vCoords, mlocL.fFacing);
+    return Location(oArea, Vector(mlocL.fX, mlocL.fY, mlocL.fZ), mlocL.fFacing);
 }
 
 int GetIsMetalocationInModule(struct metalocation mlocL)
@@ -298,9 +305,9 @@ void SetLocalMetalocation(object oObject, string sName, struct metalocation mloc
 {
     SetLocalString(oObject, "Metalocation_" + sName + "_AreaTag",    mlocL.sAreaTag);
     SetLocalString(oObject, "Metalocation_" + sName + "_AreaResRef", mlocL.sAreaResRef);
-    SetLocalFloat(oObject,  "Metalocation_" + sName + "_X",          mlocL.vCoords.x);
-    SetLocalFloat(oObject,  "Metalocation_" + sName + "_Y",          mlocL.vCoords.y);
-    SetLocalFloat(oObject,  "Metalocation_" + sName + "_Z",          mlocL.vCoords.z);
+    SetLocalFloat(oObject,  "Metalocation_" + sName + "_X",          mlocL.fX);
+    SetLocalFloat(oObject,  "Metalocation_" + sName + "_Y",          mlocL.fY);
+    SetLocalFloat(oObject,  "Metalocation_" + sName + "_Z",          mlocL.fZ);
     SetLocalFloat(oObject,  "Metalocation_" + sName + "_Facing",     mlocL.fFacing);
     SetLocalString(oObject, "Metalocation_" + sName + "_Name",       mlocL.sName);
     SetLocalString(oObject, "Metalocation_" + sName + "_Module",     mlocL.sModule);
@@ -311,12 +318,11 @@ void SetPersistantLocalMetalocation(object oCreature, string sName,
 {
     // Persistant operations fail on non-creatures.
     if(GetObjectType(oCreature) != OBJECT_TYPE_CREATURE) return;
-
     SetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaTag",    mlocL.sAreaTag);
     SetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaResRef", mlocL.sAreaResRef);
-    SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_X",          mlocL.vCoords.x);
-    SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Y",          mlocL.vCoords.y);
-    SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Z",          mlocL.vCoords.z);
+    SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_X",          mlocL.fX);
+    SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Y",          mlocL.fY);
+    SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Z",          mlocL.fZ);
     SetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Facing",     mlocL.fFacing);
     SetPersistantLocalString(oCreature, "Metalocation_" + sName + "_Name",       mlocL.sName);
     SetPersistantLocalString(oCreature, "Metalocation_" + sName + "_Module",     mlocL.sModule);
@@ -327,11 +333,10 @@ struct metalocation GetLocalMetalocation(object oObject, string sName)
     struct metalocation mlocL;
     mlocL.sAreaTag    = GetLocalString(oObject, "Metalocation_" + sName + "_AreaTag");
     mlocL.sAreaResRef = GetLocalString(oObject, "Metalocation_" + sName + "_AreaResRef");
-    mlocL.vCoords = Vector(GetLocalFloat(oObject, "Metalocation_" + sName + "_X"),
-                           GetLocalFloat(oObject, "Metalocation_" + sName + "_Y"),
-                           GetLocalFloat(oObject, "Metalocation_" + sName + "_Z")
-                           );
-    mlocL.fFacing = GetLocalFloat(oObject,  "Metalocation_" + sName + "_Facing");
+    mlocL.fX      = GetLocalFloat(oObject, "Metalocation_" + sName + "_X");
+    mlocL.fY      = GetLocalFloat(oObject, "Metalocation_" + sName + "_Y");
+    mlocL.fZ      = GetLocalFloat(oObject, "Metalocation_" + sName + "_Z");
+    mlocL.fFacing = GetLocalFloat(oObject, "Metalocation_" + sName + "_Facing");
     mlocL.sName   = GetLocalString(oObject, "Metalocation_" + sName + "_Name");
     mlocL.sModule = GetLocalString(oObject, "Metalocation_" + sName + "_Module");
 
@@ -346,11 +351,10 @@ struct metalocation GetPersistantLocalMetalocation(object oCreature, string sNam
     struct metalocation mlocL;
     mlocL.sAreaTag    = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaTag");
     mlocL.sAreaResRef = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_AreaResRef");
-    mlocL.vCoords = Vector(GetPersistantLocalFloat(oCreature, "Metalocation_" + sName + "_X"),
-                           GetPersistantLocalFloat(oCreature, "Metalocation_" + sName + "_Y"),
-                           GetPersistantLocalFloat(oCreature, "Metalocation_" + sName + "_Z")
-                           );
-    mlocL.fFacing = GetPersistantLocalFloat(oCreature,  "Metalocation_" + sName + "_Facing");
+    mlocL.fX      = GetPersistantLocalFloat(oCreature, "Metalocation_" + sName + "_X");
+    mlocL.fY      = GetPersistantLocalFloat(oCreature, "Metalocation_" + sName + "_Y");
+    mlocL.fZ      = GetPersistantLocalFloat(oCreature, "Metalocation_" + sName + "_Z");
+    mlocL.fFacing = GetPersistantLocalFloat(oCreature, "Metalocation_" + sName + "_Facing");
     mlocL.sName   = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_Name");
     mlocL.sModule = GetPersistantLocalString(oCreature, "Metalocation_" + sName + "_Module");
 
@@ -423,8 +427,8 @@ void CreateMapPinFromMetalocation(struct metalocation mlocL, object oPC)
     int nID = GetLocalInt(oPC, "NW_TOTAL_MAP_PINS") + 1;
     SetLocalInt(oPC, "NW_TOTAL_MAP_PINS", nID);
     SetLocalString(oPC, "NW_MAP_PIN_NRTY_" + IntToString(nID), mlocL.sName);
-    SetLocalFloat( oPC, "NW_MAP_PIN_XPOS_" + IntToString(nID), mlocL.vCoords.x);
-    SetLocalFloat( oPC, "NW_MAP_PIN_YPOS_" + IntToString(nID), mlocL.vCoords.y);
+    SetLocalFloat( oPC, "NW_MAP_PIN_XPOS_" + IntToString(nID), mlocL.fX);
+    SetLocalFloat( oPC, "NW_MAP_PIN_YPOS_" + IntToString(nID), mlocL.fY);
     SetLocalObject(oPC, "NW_MAP_PIN_AREA_" + IntToString(nID), GetAreaFromLocation(MetalocationToLocation(mlocL)));
 }
 
@@ -504,7 +508,9 @@ struct metalocation GetNullMetalocation()
     struct metalocation mlocL;
     mlocL.sAreaTag    = "";
     mlocL.sAreaResRef = "";
-    mlocL.vCoords     = Vector(0.0f, 0.0f, 0.0f);
+    mlocL.fX          = 0.0f;
+    mlocL.fY          = 0.0f;
+    mlocL.fZ          = 0.0f;
     mlocL.fFacing     = 0.0f;
     mlocL.sName       = "";
     mlocL.sModule     = "";
@@ -513,11 +519,13 @@ struct metalocation GetNullMetalocation()
 
 int GetIsMetalocationValid(struct metalocation mlocL)
 {
-    return mlocL.sAreaTag    != ""                       &&
-           mlocL.sAreaResRef != ""                       &&
-           mlocL.vCoords     != Vector(0.0f, 0.0f, 0.0f) &&
-           mlocL.fFacing     != 0.0f                     &&
-           mlocL.sModule     != ""                       &&
+    return mlocL.sAreaTag    != ""   &&
+           mlocL.sAreaResRef != ""   &&
+           mlocL.fX          != 0.0f &&
+           mlocL.fY          != 0.0f &&
+           mlocL.fZ          != 0.0f &&
+           mlocL.fFacing     != 0.0f &&
+           mlocL.sModule     != ""   &&
            GetIsMetalocationInModule(mlocL);
 }
 
@@ -525,7 +533,7 @@ int GetIsMetalocationValid(struct metalocation mlocL)
 string MetalocationToString(struct metalocation mlocL)
 {
     return mlocL.sName + " - " + GetName(GetAreaFromMetalocation(mlocL))
-            + " (" + FloatToString(mlocL.vCoords.x) + ", " + FloatToString(mlocL.vCoords.y) + ")"
+            + " (" + FloatToString(mlocL.fX) + ", " + FloatToString(mlocL.fY) + ", " + FloatToString(mlocL.fZ) + ")"
             + (GetIsMetalocationInModule(mlocL) ? "" : (" " + GetStringByStrRef(16825269)+ " "/*" Not in module "*/));
 }
 

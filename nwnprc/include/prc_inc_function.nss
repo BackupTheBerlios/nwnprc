@@ -29,7 +29,7 @@ int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int
 #include "prc_alterations"
 #include "inc_persist_loca"
 #include "NW_I0_GENERIC"
-#include "inc_ipfeat_const"
+#include "prc_ipfeat_const"
 
 int nbWeaponFocus(object oPC);
 

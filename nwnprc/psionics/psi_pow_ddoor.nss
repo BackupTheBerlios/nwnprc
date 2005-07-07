@@ -116,7 +116,7 @@ void main()
         // Make the caster animate for the second of delay
         AssignCommand(oManifester, ClearAllActions());
         //AssignCommand(oCaster, ActionPlayAnimation(ANIMATION_LOOPING_CONJURE1, 1.0f, 1.0f));
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS), oManifester, 1.0f);
+        //ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS), oManifester, 1.0f);
         
         // First, spawn a circle of ligntning around the caster
         BeamPolygon(DURATION_TYPE_TEMPORARY, VFX_BEAM_LIGHTNING, lManifester,

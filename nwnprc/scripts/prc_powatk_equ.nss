@@ -18,18 +18,9 @@ void main()
 {
     object oPC   = GetItemLastEquippedBy();
     object oItem = GetItemLastEquipped();
-    int nPower   = GetLocalInt(oPC, "PRC_PowerAttackSpellID");
 
-
-    RemoveSpellEffects(nPower, oPC, oPC);
-    RemoveEventScript(oPC, EVENT_ONPLAYEREQUIPITEM, "prc_powatk_equ", TRUE);
-
-    //                   Power Attack Mode Deactivated
-    string sMes = "* " + GetStringByStrRef(58282) +  " *";
-    FloatingTextStringOnCreature(sMes, oPC, FALSE);
-
-    if(GetHasFeat(FEAT_FAVORED_POWER_ATTACK, oPC))
-    {
-        ActionCastSpellAtObject(SPELL_UR_FAVORITE_ENEMY, oPC, METAMAGIC_ANY, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
-    }
+    if(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oItem &&
+       GetWeaponRanged(oItem)
+       )
+        ExecuteScript("prc_powatk_off", oPC);
 }

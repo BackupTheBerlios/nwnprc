@@ -20,7 +20,7 @@
 
 #include "inc_metalocation"
 #include "inc_utility"
-
+#include "prc_inc_switch"
 
 
 //////////////////////////////////////////////////
@@ -53,7 +53,7 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
  * the iteration counter for calls to GetNextStoredTeleportTargetLocation().
  *
  * @param oPC The PC on whose array to operate.
- * @return    The first element of the array or null metalocation if the
+ * @return    The first element of the array or the location of oPC if the
  *            array is empty.
  */
 struct metalocation GetFirstStoredTeleportTargetLocation(object oPC);
@@ -91,6 +91,25 @@ struct metalocation GetNthStoredTeleportTargetLocation(object oPC, int nInd);
  * @return    The number of locations stored in the array.
  */
 int GetNumberOfStoredTeleportTargetLocations(object oPC);
+
+/**
+ * Checks whether the PC has a teleport quickselection active and if so,
+ * whether it contains a valid metalocation.
+ *
+ * @param oPC The PC whose quickselection to check.
+ * @return    TRUE if the PC has a quickselection active and it is
+ *            a valid metalocation, FALSE otherwise.
+ */
+int GetHasTeleportQuickSelectionActive(object oPC);
+
+/**
+ * Gets the given creature's active teleport quickselection, if any.
+ *
+ * @param oPC The PC whose quickselection to check.
+ * @return    The PC's active quickselection, or null metalocation 
+ *            if there is none.
+ */
+struct metalocation GetTeleportQuickSelection(object oPC); 
 
 /**
  * Removes the teleport target location last returned by GetFirstStoredTeleportTargetLocation
@@ -137,13 +156,52 @@ int AddTeleportTargetLocation(object oPC, location locToAdd, string sName);
  */
 int AddTeleportTargetLocationAsMeta(object oPC, struct metalocation mlocToAdd);
 
+/**
+ * This function checks whether the given creature can teleport from
+ * it's current location. It is intended to be run within teleport
+ * spellscripts.
+ *
+ * @param oCreature A creature casting a teleportation spell.
+ * @param lTarget   The location the creature is going to teleport to.
+ * @param bInform   If this is true, the creature is sent a message if
+ *                  it is not allowed to teleport.
+ * @return          TRUE if the creature can teleport, FALSE if it can't.
+ */
+int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE);
+
+/**
+ * Common code for teleportation spells that:
+ * 1) Always teleport the caster.
+ * 2) Can be used to teleport other willing targets within touch range.
+ * 2b) The amount of these additional targets is limited to
+ *     1 / 3 caster|manifester levels.
+ *
+ * The results will be stored in a local array on the caster,
+ * retrievable using functions from inc_array.
+ * The name of the array is contained within the constant PRC_TELEPORTING_OBJECTS_ARRAY.
+ *
+ * @param oCaster      The object casting the teleportation spell
+ * @param nCasterLvl   The caster level of oCaster when casting the spell in question.
+ * @param bSelfOrParty If this is TRUE, willing creatures (party members)
+ *                     within 10ft of oCaster are taken along. If FALSE,
+ *                     only the caster is teleported.
+ */
+void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty);
+
+
+/**
+ * The name of the array where 
+ */
+const string PRC_TELEPORTING_OBJECTS_ARRAY    = "PRC_TeleportingObjectList";
 
 
 //////////////////////////////////////////////////
 /* Internal Constants - nothing to see here :D  */
 //////////////////////////////////////////////////
 
-const string PRC_TELEPORT_ARRAY_NAME = "PRC_TeleportLocation_Array";
+const string PRC_TELEPORT_ARRAY_NAME           = "PRC_TeleportLocation_Array";
+const string PRC_TELEPORT_CREATE_MAP_PINS      = "PRC_Teleport_CreateMapPins";
+const string PRC_TELEPORT_NAMING_TIMER_VARNAME = "PRC_Teleport_NamingListenerDuration";
 const int NUM_TELEPORT_QUICKSELECTS = 2;
 
 //////////////////////////////////////////////////
@@ -181,7 +239,23 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
         DeleteLocalInt(oPC, "PRC_Teleport_Quickselection");
         DeleteLocalMetalocation(oPC, "PRC_Teleport_Quickselection");
     }
-    // No quickselection was active, so run the conversation to find out where the user wants to go
+    // We have to go look at the stored array, so make sure it contains at least one entry
+    else if(!GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME))
+    {
+        // Store it under the requested name
+        // Store the return value
+        if(bMeta)
+            SetLocalMetalocation(oPC, sCallbackVar, LocationToMetalocation(GetLocation(oPC)));
+        else
+            SetLocalLocation(oPC, sCallbackVar, GetLocation(oPC));
+
+        // Break the script execution association between this one and the callback script
+        // by delaying it. Probably unnecessary, but it will clear potential interference
+        // caused by things done in this execution
+        DelayCommand(0.2f, ExecuteScript(sCallbackScript, oPC));
+    }
+    // No quickselection was active and there is at least one location to select, so run the
+    // conversation to find out where the user wants to go
     else
     {
         if(bForce) AssignCommand(oPC, ClearAllActions(TRUE));
@@ -203,7 +277,7 @@ struct metalocation GetFirstStoredTeleportTargetLocation(object oPC)
 
     // Return null if the array is empty
     if(!GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME))
-        return GetNullMetalocation();
+        return LocationToMetalocation(GetLocation(oPC), "Error: No stored locations! Returned current location of " + GetName(oPC));
 
     // Set the iterator value for subsequent calls to GetNextStoredTeleportTargetLocation()
     SetLocalInt(oPC, "PRC_Teleport_Array_Iterator", 1);
@@ -253,6 +327,19 @@ int GetNumberOfStoredTeleportTargetLocations(object oPC)
     if(!GetIsPC(oPC)) return 0;
 
     return GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME);
+}
+
+int GetHasTeleportQuickSelectionActive(object oPC)
+{
+    return GetLocalInt(oPC, "PRC_Teleport_Quickselection") &&
+           GetIsMetalocationValid(GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection"));
+}
+
+struct metalocation GetTeleportQuickSelection(object oPC)
+{
+    return GetHasTeleportQuickSelectionActive(oPC) ?
+             GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection") :
+             GetNullMetalocation();
 }
 
 void RemoveCurrentTeleportTargetLocation(object oPC)
@@ -330,6 +417,105 @@ int AddTeleportTargetLocationAsMeta(object oPC, struct metalocation mlocToAdd)
     return TRUE;
 }
 
+int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE)
+{
+    int bReturn = TRUE;
+    // First, check global switch to turn off teleporting
+    if(GetPRCSwitch(PRC_DISABLE_TELEPORTATION))
+        bReturn = FALSE;
+
+    // Check forbiddance variable on the current area
+    if(GetLocalInt(GetArea(oCreature), PRC_DISABLE_TELEPORTATION_IN_AREA) & PRC_DISABLE_TELEPORTATION_FROM_AREA)
+        bReturn = FALSE;
+    // Check forbiddance variable on the target area
+    if(GetLocalInt(GetAreaFromLocation(lTarget), PRC_DISABLE_TELEPORTATION_IN_AREA) & PRC_DISABLE_TELEPORTATION_TO_AREA)
+        bReturn = FALSE;
+
+    // Check forbiddance variable on the creature
+    if(GetLocalInt(oCreature, PRC_DISABLE_CREATURE_TELEPORT))
+        bReturn = FALSE;
+
+    // Tell the creature about failure, if necessary
+    if(bInform & !bReturn)
+        SendMessageToPCByStrRef(oCreature, 16825298); // "Something prevents you from teleporting!"
+
+    return bReturn;
+}
+
+void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
+{
+    // Store list of objects to teleport in an array on the caster
+    // First, null the array    
+    array_delete(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY);
+    array_create(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY);
+
+    // Init array index variable
+    int i = 0;
+
+    // Casting Dimension Door always teleports at least the caster
+    array_set_object(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY, i++, oCaster);
+
+    // If teleporting party, get all faction members fitting in within 10 feet. (Should be dependent on caster size,
+    // but that would mean < Small creatures could not teleport their party at all and even Mediums with their 5 foot
+    // range might have trouble with the distance calculation code)
+    if(bSelfOrParty)
+    {
+        // Carry amount variables
+        int nMaxCarry = nCasterLvl / 3,
+            nCarry    = 0,
+            nIncrease;
+
+        location lSelf = GetLocation(oCaster);
+        object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lSelf);
+        while(GetIsObjectValid(oTarget))
+        {
+            // Check if the target is member of the same faction as the caster. If it is, teleport it along.
+            if(GetFactionLeader(oTarget) == GetFactionLeader(oCaster))
+            {
+                // Calculate how many carry slots the creature would take
+                nIncrease = GetCreatureSize(oTarget) == CREATURE_SIZE_HUGE ? 4 :
+                             GetCreatureSize(oTarget) == CREATURE_SIZE_LARGE ? 2 :
+                             1;
+                // Add it if the caster can carry it
+                if(nCarry + nIncrease <= nMaxCarry)
+                {
+                    nCarry += nIncrease;
+                    array_set_object(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY, i++, oTarget);
+                }
+                // Otherwise inform the caster that they couldn't take the creature along
+                else // "You do not have anough carrying capacity to teleport X"
+                    SendMessageToPC(oCaster, GetStringByStrRef(16825302) + " " + GetName(oTarget));
+            }
+
+            oTarget = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lSelf);
+        }
+    }
+    /*
+    // Targeting one other being in addition to self. If it's hostile, it gets SR and a Will save.
+    else if(nSpellID = SPELLID_TELEPORT_TARGET)
+    {
+        object oTarget = GetSpellTargetObject();
+        if(GetIsHostile())
+        {
+            SPRaiseSpellCastAt(oTarget, TRUE, nSpellID); // Let the target know it was cast a spell at
+
+            //SR
+            if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+            {
+                // Will save
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_SPELL))
+                {
+                    array_set_object(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY, i++, oTarget);
+        }   }   }
+        // Not hostile, just add it to the list.
+        else
+        {
+            SPRaiseSpellCastAt(oTarget, FALSE, nSpellID); // Let the target know it was cast a spell at
+            array_set_object(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY, i++, oTarget);
+        }
+    }
+    */
+}
 
 
 //void main(){} // Test main

@@ -118,6 +118,7 @@ void main()
     {
         RemoveSpellEffects(nOld, oUser, oUser);
         DeleteLocalInt(oUser, "PRC_PowerAttackSpellID");
+        DeleteLocalInt(oUser, "PRC_PowerAttack_DamageBonus");
     }
     
     // Activate Power Attack if the new value is non-zero
@@ -184,7 +185,7 @@ void main()
                 GetHasFeat(FEAT_FREBZK_IMPROVED_POWER_ATTACK, oUser) ? FloatToInt(1.5 * nHit) :
                 nHit;
         
-        // Calculate the damage. Supreme Power Attack doubles the dama
+        // Calculate the damage. Supreme Power Attack doubles the damage
         nDmg = BonusAtk(nTemp + nDex);
 
         eDamage = EffectDamageIncrease(nDmg, nDamageBonusType);
@@ -195,6 +196,9 @@ void main()
         
         // Cache the spellid of the power attack used. Also acts as a marker
         SetLocalInt(oUser, "PRC_PowerAttackSpellID", PRCGetSpellId());
+        // Cache the amount of damage granted. This is used by the PRC combat engine
+        SetLocalInt(oUser, "PRC_PowerAttack_DamageBonus", nDmg);
+        // Add an eventscript that makes sure the PC does not use a ranged weapon with Power Attack
         AddEventScript(oUser, EVENT_ONPLAYEREQUIPITEM, "prc_powatk_equ", TRUE, FALSE);
 
         //                  Power Attack                                      Activated

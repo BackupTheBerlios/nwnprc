@@ -10,7 +10,7 @@
 #include "spinc_common"
 #include "psi_inc_psifunc"
 #include "psi_inc_ac_const"
-#include "inc_gaoneng_draw"
+#include "inc_draw"
 
 
 //////////////////////////////////////////////////
@@ -155,7 +155,7 @@ void DoDespawnAux(object oManifester, float fDur){
     }
     SetLocalInt(oConstruct, "UnsummonScheduled", TRUE);
     // DEBUG //
-    SendMessageToPC(oManifester, "Found the just added astral construct: " + (oConstruct != OBJECT_INVALID ? "true":"false") + "\nSummon name: " + GetName(oConstruct) + "\nTotal summons: " + IntToString(i));
+    SendMessageToPC(oManifester, "Found the just added astral construct: " + (GetIsObjectValid(oConstruct) ? "true":"false") + "\nSummon name: " + GetName(oConstruct) + "\nTotal summons: " + IntToString(i));
     // DEBUG //
 	// Schedule unsummoning. Done this way to skip the default unsummoning VFX.
 	DelayCommand(fDur - 2.0, DoDespawn(oConstruct));

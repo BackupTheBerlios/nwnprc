@@ -136,19 +136,20 @@ const   int 	POWER_ECTOCOCOON   		= 14134;
 
 
 // Level 4 Powers
-const	int	POWER_INERTBARRIER		= 14151;
-const	int	POWER_STEADFASTPERCEP		= 14152;
-const   int 	POWER_DIMENSIONDOOR	   	= 14153;
-const   int 	POWER_EMPATHICFEEDBACK	   	= 14154;
-const   int 	POWER_ENERGYADAPTION	   	= 14155;
-const   int 	POWER_FREEDOM		   	= 14156;
-const   int 	POWER_MINDWIPE		   	= 14157;
-const   int 	POWER_POWERLEECH	   	= 14158;
-const   int 	POWER_PSYCHICREFORMATION   	= 14159;
-const   int 	POWER_TELEKINETICMANEUVER   	= 14160;
-const   int 	POWER_DIMENSIONALANCHOR   	= 14161;
-const   int 	POWER_DISMISSAL		   	= 14162;
-const   int 	POWER_DOMINATE		   	= -1;
+const int POWER_INERTBARRIER            = 14151;
+const int POWER_STEADFASTPERCEP         = 14152;
+const int POWER_EMPATHICFEEDBACK        = 14154;
+const int POWER_ENERGYADAPTION          = 14155;
+const int POWER_FREEDOM                 = 14156;
+const int POWER_MINDWIPE                = 14157;
+const int POWER_POWERLEECH              = 14158;
+const int POWER_PSYCHICREFORMATION      = 14159;
+const int POWER_TELEKINETICMANEUVER     = 14160;
+const int POWER_DIMENSIONALANCHOR       = 14161;
+const int POWER_DISMISSAL               = 14162;
+const int POWER_DIMENSIONDOOR_SELFONLY  = 14163;
+const int POWER_DIMENSIONDOOR_PARTY     = 14164;
+const int POWER_DOMINATE                = -1;
 
 // Level 5 Powers
 const	int	POWER_BALEFULTEL		= 14191;

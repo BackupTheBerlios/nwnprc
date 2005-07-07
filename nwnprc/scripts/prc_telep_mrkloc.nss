@@ -49,6 +49,12 @@ void main()
 void Aux(object oPC, location lToStore)
 {
     string sName = GetLocalString(oPC, "PRC_Teleport_LocationBeingStored_Name");
+    DeleteLocalString(oPC, "PRC_Teleport_LocationBeingStored_Name");
+    
+    struct metalocation mlocToStore = LocationToMetalocation(lToStore, sName);
+    
+    if(GetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS))
+        CreateMapPinFromMetalocation(mlocToStore, oPC);
 
-    AddTeleportTargetLocation(oPC, lToStore, sName);
+    AddTeleportTargetLocationAsMeta(oPC, mlocToStore);
 }

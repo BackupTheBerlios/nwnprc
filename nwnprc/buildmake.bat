@@ -72,7 +72,7 @@ dir /b race2das               | tools\ssed -R "$! {s/$/ \\/g};s/^/race2das\\/g" 
 dir /b others                 | tools\ssed -R "$! {s/$/ \\/g};s/^/others\\/g"           >others.temp
 dir /b craft2das              | tools\ssed -R "$! {s/$/ \\/g};s/^/craft2das\\/g"        >craft2das.temp
 dir /b include                | tools\ssed -R "$! {s/$/ \\/g};s/^/include\\/g"          >include.temp
-dir /b newspellbook\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/newspellbook\\/g" >newspellbook.temp
+dir /b newspellbook\*.nss     | tools\ssed -R "$! {s/$/ \\/g};s/^/newspellbook\\/g"     >newspellbook.temp
 
 REM use FINDSTR to find script files with "void main()" or "int StartingConditional()"
 REM in them, these are the ones we want to compile.
@@ -81,7 +81,7 @@ FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" spells\*
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/epicspellscripts\\/epicspellobjs\\/g" >epicspellobjs.temp
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" racescripts\*.nss      | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/racescripts\\/raceobjs\\/g"           >raceobjs.temp
 FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" psionics\*.nss         | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/psionics\\/psionicsobjs\\/g"          >psionicsobjs.temp
-FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" newspellbook\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/newspellbook\\/newspellbookobjs\\/g" >newspellbookobjs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" newspellbook\*.nss     | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/newspellbook\\/newspellbookobjs\\/g"  >newspellbookobjs.temp
 
 REM Now using our generic makefile as a base, glue all of the temp files into it making
 REM a fully formatted makefile we can run nmake on.

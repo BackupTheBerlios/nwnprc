@@ -27,6 +27,7 @@ const int STAGE_QUICKSLOT_LIST             = 4;
 //const int STAGE_QUICKSLOT_ACTION_SELECTION = 5;
 const int STAGE_OPTIONS_LIST               = 6;
 const int STAGE_LISTENER_TIME              = 7;
+const int STAGE_MAPPIN                     = 8;
 
 const int CHOICE_BACK_TO_MAIN      = -1;
 
@@ -38,6 +39,9 @@ const int CHOICE_5S                = 5;
 const int CHOICE_10S               = 10;
 const int CHOICE_15S               = 15;
 const int CHOICE_20S               = 20;
+
+const int CHOICE_YES               = 1;
+const int CHOICE_NO                = 0;
 
 const int STRREF_BACK_TO_MAIN = 16824794;  // "Back to main menu"
 
@@ -94,7 +98,7 @@ void main()
             AddChoice(GetStringByStrRef(16825274), STAGE_QUICKSLOT_LIST); // "List quickselections."
             AddChoice(GetStringByStrRef(16825275), STAGE_OPTIONS_LIST);   // "Show options."
         }
-        if(nStage == STAGE_LOCATION_LIST)
+        else if(nStage == STAGE_LOCATION_LIST)
         {
             SetCustomToken(99, GetStringByStrRef(16825276)); // "Select a location to manipulate."
             AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN);
@@ -109,7 +113,7 @@ void main()
                 AddChoice(MetalocationToString(mlocL), i);
             }
         }
-        if(nStage == STAGE_LOCATION_ACTION_SELECTION)
+        else if(nStage == STAGE_LOCATION_ACTION_SELECTION)
         {
             SetCustomToken(99, GetStringByStrRef(16825277) + // "Select action to perform on the location."
                                "\n" + MetalocationToString(GetNthStoredTeleportTargetLocation(oPC, GetLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex"))));
@@ -118,7 +122,7 @@ void main()
             AddChoice(GetStringByStrRef(16825278), CHOICE_STORE_QUICKSELECT); // "Store location in a quickslot."
             AddChoice(GetStringByStrRef(16825279), CHOICE_DELETE_LOCATION);   // "Delete location."
         }
-        if(nStage == STAGE_QUICKSLOT_SELECTION)
+        else if(nStage == STAGE_QUICKSLOT_SELECTION)
         {
             SetCustomToken(99, GetStringByStrRef(16825280)); // "Select quickslot to store the location in."
             AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN);
@@ -140,7 +144,7 @@ void main()
                 AddChoice(sToken, i);
             }
         }
-        if(nStage == STAGE_QUICKSLOT_LIST)
+        else if(nStage == STAGE_QUICKSLOT_LIST)
         {
             SetCustomToken(99, GetStringByStrRef(16825281)); // "A list of the contents of your quickslots. Selecting a quickslot empties it."
             AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN);
@@ -159,15 +163,17 @@ void main()
                 }
             }
         }
-        if(nStage == STAGE_OPTIONS_LIST)
+        else if(nStage == STAGE_OPTIONS_LIST)
         {
             SetCustomToken(99, GetStringByStrRef(16825283)); // "Select option to modify"
             AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN);
 
             //        Listener duration
-            AddChoice(GetStringByStrRef(16825284) + " " + IntToString(FloatToInt(GetLocalFloat(oPC, "PRC_Teleport_NamingListenerDuration"))) + "s", STAGE_LISTENER_TIME);
+            AddChoice(GetStringByStrRef(16825284) + ": " + IntToString(FloatToInt(GetLocalFloat(oPC, "PRC_Teleport_NamingListenerDuration"))) + "s", STAGE_LISTENER_TIME);
+            //        Create map pins for marked locations                                                                     Yes                       No
+            AddChoice(GetStringByStrRef(16825299) + ": " + (GetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS) ? GetStringByStrRef(4752) : GetStringByStrRef(4753)), STAGE_MAPPIN);
         }
-        if(nStage == STAGE_LISTENER_TIME)
+        else if(nStage == STAGE_LISTENER_TIME)
         {
             SetCustomToken(99, GetStringByStrRef(16825290)); // "Select how long the game will wait for you to speak a name when marking a location."
             AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN);
@@ -177,6 +183,14 @@ void main()
             AddChoice(GetStringByStrRef(16825287), CHOICE_10S); // "10 seconds"
             AddChoice(GetStringByStrRef(16825288), CHOICE_15S); // "15 seconds"
             AddChoice(GetStringByStrRef(16825289), CHOICE_20S); // "20 seconds"
+        }
+        else if(nStage == STAGE_MAPPIN)
+        {
+            SetCustomToken(99, GetStringByStrRef(16825301)); // "Select whether you want map pins to be automatically to be created at locations you mark. Note that they may not appear immediately, but only after you re-enter the area."
+            AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN);
+
+            AddChoice(GetStringByStrRef(4752), CHOICE_YES); // "Yes"
+            AddChoice(GetStringByStrRef(4753), CHOICE_NO); // "No"
         }
 // END OF INSERT FOR THE HEADER
         //do token setup
@@ -229,7 +243,7 @@ void main()
         // Stage to move to is the value of the choice
         nStage = nChoice;
     }
-    if(nStage == STAGE_LOCATION_LIST)
+    else if(nStage == STAGE_LOCATION_LIST)
     {
         if(nChoice == CHOICE_BACK_TO_MAIN)
             nStage = STAGE_MAIN;
@@ -241,7 +255,7 @@ void main()
             SetLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex", nChoice);
         }
     }
-    if(nStage == STAGE_LOCATION_ACTION_SELECTION)
+    else if(nStage == STAGE_LOCATION_ACTION_SELECTION)
     {
         if(nChoice == CHOICE_BACK_TO_MAIN)
         {
@@ -259,7 +273,7 @@ void main()
             nStage = STAGE_MAIN;
         }
     }
-    if(nStage == STAGE_QUICKSLOT_SELECTION)
+    else if(nStage == STAGE_QUICKSLOT_SELECTION)
     {
         if(nChoice != CHOICE_BACK_TO_MAIN)
         {
@@ -270,26 +284,32 @@ void main()
         DeleteLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex");
         nStage = STAGE_MAIN;
     }
-    if(nStage == STAGE_QUICKSLOT_LIST)
+    else if(nStage == STAGE_QUICKSLOT_LIST)
     {
         if(nChoice != CHOICE_BACK_TO_MAIN)
             DeleteLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice));
 
         nStage = STAGE_MAIN;
     }
-    if(nStage == STAGE_OPTIONS_LIST)
+    else if(nStage == STAGE_OPTIONS_LIST)
     {
         if(nChoice == CHOICE_BACK_TO_MAIN)
             nStage = STAGE_MAIN;
         else
             nStage = nChoice;
     }
-    if(nStage == STAGE_LISTENER_TIME)
+    else if(nStage == STAGE_LISTENER_TIME)
     {
         if(nChoice != CHOICE_BACK_TO_MAIN)
         {
             SetLocalFloat(oPC, "PRC_Teleport_NamingListenerDuration", IntToFloat(nChoice));
         }
+
+        nStage = STAGE_MAIN;
+    }
+    else if(nStage == STAGE_MAPPIN)
+    {
+        SetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS, nChoice);
 
         nStage = STAGE_MAIN;
     }

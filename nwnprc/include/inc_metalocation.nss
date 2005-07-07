@@ -195,6 +195,15 @@ struct metalocation CreateMetalocationFromMapPin(object oPC, int nPinNo);
 struct metalocation GetNullMetalocation();
 
 /**
+ * Checks whether the given metalocation is valid. That is, not null and
+ * in the current module.
+ *
+ * @param mlocL The metalocation to test.
+ * @return      TRUE if the metalocation is valid, FALSE otherwise.
+ */
+int GetIsMetalocationValid(struct metalocation mlocL);
+
+/**
  * Gets the size of a players map pin array
  *
  * @param oPC   The player character in whose map pin array to get the size of.
@@ -449,7 +458,7 @@ int GetNumberOfMapPins(object oPC)
     return GetLocalInt(oPC, "NW_TOTAL_MAP_PINS");
 }
 
-object  GetAreaOfMapPin(object oPC, int nPinNo)
+object GetAreaOfMapPin(object oPC, int nPinNo)
 {
     return GetLocalObject(oPC, "NW_MAP_PIN_AREA_"+IntToString(nPinNo));
 }
@@ -500,6 +509,16 @@ struct metalocation GetNullMetalocation()
     mlocL.sName       = "";
     mlocL.sModule     = "";
     return mlocL;
+}
+
+int GetIsMetalocationValid(struct metalocation mlocL)
+{
+    return mlocL.sAreaTag    != ""                       &&
+           mlocL.sAreaResRef != ""                       &&
+           mlocL.vCoords     != Vector(0.0f, 0.0f, 0.0f) &&
+           mlocL.fFacing     != 0.0f                     &&
+           mlocL.sModule     != ""                       &&
+           GetIsMetalocationInModule(mlocL);
 }
 
 

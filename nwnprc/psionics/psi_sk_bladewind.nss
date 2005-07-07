@@ -10,7 +10,6 @@
 //:: Created On: 04.04.2005
 //:://////////////////////////////////////////////
 
-#include "inc_gaoneng_draw"
 #include "psi_inc_soulkn"
 
 void main()

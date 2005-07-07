@@ -1,139 +1,119 @@
+//:://////////////////////////////////////////////
+//:: Telflammar Shadowlord: Shadow Jump
+//:: tfshad_jump
+//:://////////////////////////////////////////////
+/** @file
+    Shadow Jump (Su):
+    A Telflammar Shadowlord can travel between
+    shadows as if by means of a Dimension Door spell.
+    The limitation is that the magical transport
+    must begin and end in an area with at least some
+    shadow or darkness. The shadowlord can jump up
+    to a total of 20 feet per class level per day
+    in this way. This amount can be split up among
+    many jumps, but each jump, no matter how small,
+    counts as a 10-foot increment.
+    
+    
+    The shadow requirement is waived, since it's not
+    possible to detect without builder intervention.
+    This script also contains an implementation of
+    Shadow Pounce.
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+
 #include "spinc_common"
 #include "inc_item_props"
-#include "inc_combat2"
+#include "prc_inc_combat"
 #include "prc_inc_sneak"
+#include "prc_inc_teleport"
 
 void main()
 {
     // Declare major variables
-    object oCaster = OBJECT_SELF;
-    
-    if (!GetLocalInt(oCaster, "DimAnchor"))
-    {
-    
+    object oCaster   = OBJECT_SELF;
     location lTarget = GetSpellTargetLocation();
     location lCaster = GetLocation(oCaster);
-    int iLevel       =  GetLevelByClass(CLASS_TYPE_SHADOWLORD,OBJECT_SELF);
-    int iMaxDis      =  iLevel*6;
-    int iDistance    =  FloatToInt(GetDistanceBetweenLocations(lCaster,lTarget));
-    int iLeftUse = 1;
+    effect eVis      = EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
+    float fDistance  = GetDistanceBetweenLocations(lCaster,lTarget);
+    int iLevel       = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oCaster);
 
-    int iFeat=FEAT_SHADOWJUMP-1+GetLevelByClass(CLASS_TYPE_SHADOWLORD,OBJECT_SELF);
+    // Get the feat ID
+    int iFeat = FEAT_SHADOWJUMP - 1 + GetLevelByClass(CLASS_TYPE_SHADOWLORD, oCaster);
 
-    object oTarget=GetSpellTargetObject();
-    location lDest;
-    if (GetIsObjectValid(oTarget)) lDest=GetLocation(oTarget);
-    else lDest=GetSpellTargetLocation();
-    effect eVis=EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
-    vector vOrigin=GetPositionFromLocation(GetLocation(oCaster));
-    vector vDest=GetPositionFromLocation(lDest);
-
-    while (GetHasFeat(iFeat,OBJECT_SELF))
+    // Check if we're targeting some creature instead of just a spot on the floor
+    object oTarget = GetSpellTargetObject();
+    if(GetIsObjectValid(oTarget))
+        lTarget = GetLocation(oTarget);
+    
+    // Check if teleportation is possible
+    if(!GetCanTeleport(oCaster, lTarget, TRUE))
     {
-      DecrementRemainingFeatUses(OBJECT_SELF,iFeat);
-      iLeftUse++;
+        IncrementRemainingFeatUses(oCaster, iFeat);
+        return;
+    }
+    
+    vector vOrigin = GetPositionFromLocation(GetLocation(oCaster));
+    vector vDest   = GetPositionFromLocation(lTarget);
+
+    // Calculate the amount of jump range remaining
+    int iLeftUse = 1; // Init to 1 to account for the use taken by the engine when activating the feat
+    while(GetHasFeat(iFeat, oCaster))
+    {
+        DecrementRemainingFeatUses(oCaster, iFeat);
+        iLeftUse++;
     }
 
-    int nCount=iLeftUse-1;
-    while (nCount)
+    // Return the feat uses for now.
+    /// @TODO This is inefficient, make it so that the uses are only returned after calculating how many will be left after the jump.
+    int nCount = iLeftUse;
+    while(nCount)
     {
-      IncrementRemainingFeatUses(OBJECT_SELF,iFeat);
-      nCount--;
+        IncrementRemainingFeatUses(oCaster, iFeat);
+        nCount--;
     }
 
-    if ( iMaxDis>iLeftUse*3) iMaxDis=iLeftUse*3;
+    // Calculate the maximum distance jumpable
+    float fMaxDis = FeetToMeters(iLeftUse * 20.0);
 
-    if  (iDistance>iMaxDis)
-    {
-        FloatingTextStringOnCreature("Distance too Far", OBJECT_SELF);
-        IncrementRemainingFeatUses(OBJECT_SELF,iFeat);
+    // If the target is too far, abort
+    if(fDistance > fMaxDis)
+    {//                              "Your target is too far!"
+        FloatingTextStrRefOnCreature(16825300, oCaster);
         return;
     }
 
-    iDistance=(iDistance-3)/3;
-    while (iDistance)
+    // Reduce feat uses based on the distance teleported
+    nCount = FloatToInt(fDistance / FeetToMeters(10.0));
+    // The minimum of 10 feet
+    if(!nCount) nCount = 1;
+    // Take away the required number of uses.
+    while(nCount)
     {
-      DecrementRemainingFeatUses(OBJECT_SELF,iFeat);
-      iDistance--;
+        DecrementRemainingFeatUses(oCaster, iFeat);
+        nCount--;
     }
 
 
+    // Calculate the locations to apply the VFX at
+    vOrigin = Vector(vOrigin.x + 2.0, vOrigin.y - 0.2, vOrigin.z);
+    vDest   = Vector(vDest.x + 2.0, vDest.y - 0.2, vDest.z);
 
-    vOrigin=Vector(vOrigin.x+2.0, vOrigin.y-0.2, vOrigin.z);
-    vDest=Vector(vDest.x+2.0, vDest.y-0.2, vDest.z);
-
+    // Do VFX
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, Location(GetArea(oCaster), vOrigin, 0.0), 0.8);
     DelayCommand(0.1, ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, Location(GetArea(oCaster), vDest, 0.0), 0.7));
-    DelayCommand(0.8, AssignCommand(oCaster, JumpToLocation(lDest)));
 
-        if (iLevel<4)
-        {
-           // Caster cannot move for 1 turn now.
-           SendMessageToPC(oCaster, "Shadow Jump complete");
-           //DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oCaster, fDuration));
-        }
-        else
-        {
-           object oTarget = GetSpellTargetObject();
-           object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
-           int iEnhancement = GetWeaponEnhancement(oWeap);
-           int iDamageType = GetWeaponDamageType(oWeap);
-           if  ( GetObjectType(oTarget)!= OBJECT_TYPE_CREATURE) return;
+    // Schedule the jump itself
+    DelayCommand(0.8, AssignCommand(oCaster, JumpToLocation(lTarget)));
 
-           int iAttacks=NbAtk(OBJECT_SELF);
-           int iSneakAttack,iDeathAttack ;
-           int iBonus = 0;
-           int iNextAttackPenalty = 0;
-           int iDamage = 0;
-
-           effect eDamage;
-
-           if (!GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT))
-           {
-            iSneakAttack = GetTotalSneakAttackDice(OBJECT_SELF);
-            iDeathAttack = GetAssassinSneak(OBJECT_SELF);
-            iBonus=d6(iSneakAttack);
-            
-           }
-
-
-            float fDelay = 1.5f;
-
-           //Perform a full round of attacks
-           for(iAttacks; iAttacks > 0; iAttacks--)
-           {
-
-             //Roll to hit
-             int iHit = DoMeleeAttack(OBJECT_SELF, oWeap, oTarget, iBonus + iNextAttackPenalty, TRUE, fDelay);
-
-             if(iHit > 0)
-             {
-                //Check to see if we rolled a critical and determine damage accordingly
-                if(iHit == 2 && !GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT))
-                    iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, TRUE) + iBonus;
-                else
-                    iDamage = GetMeleeWeaponDamage(OBJECT_SELF, oWeap, FALSE) + iBonus;
-
-                //Apply the damage
-                eDamage = EffectDamage(iDamage, DAMAGE_TYPE_PIERCING, iEnhancement);
-                DelayCommand(fDelay + 0.1, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-
-                if (iDeathAttack && iBonus)
-                {
-                    if (!FortitudeSave(oTarget,10+GetLevelByClass(CLASS_TYPE_ASSASSIN,OBJECT_SELF)+GetLevelByClass(CLASS_TYPE_SHADOWLORD,OBJECT_SELF)+GetAbilityModifier(ABILITY_INTELLIGENCE,OBJECT_SELF),SAVING_THROW_TYPE_DEATH))
-                    {
-                       DeathlessFrenzyCheck(oTarget);
-                       DelayCommand(fDelay + 0.2, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(TRUE), oTarget));
-                    }
-                }
-
-                iNextAttackPenalty -= 5;
-                fDelay += 0.5;
-             }
-             iBonus=0;
-          }
-        }
+    // Class level 4 gives the Shadow Pounce ability, which gives one a full attack at the end of a jump
+    if (iLevel >= 4)
+    {
+        object oTarget = GetSpellTargetObject();
         
-        }
+        DelayCommand(1.0f, PerformAttackRound(oTarget, oCaster, EffectVisualEffect(-1), 0.0, 0, 0, 0, FALSE, "", "", FALSE, FALSE, TRUE));
+    }
 }
 

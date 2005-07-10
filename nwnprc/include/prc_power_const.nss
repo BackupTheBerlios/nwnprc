@@ -97,6 +97,7 @@ const   int 	POWER_SHAREPAIN		   	= 14084;
 const   int 	POWER_CONTROLAIR	   	= 14085;
 const   int 	POWER_CONTROLSOUND	   	= 14086;
 const   int 	POWER_REPAIRDAMAGE	   	= 14087;
+const   int 	POWER_AVERSION		   	= 14088;
 
 // Level 3 Powers
 const	int	POWER_BODYADJUST		= 14101;
@@ -133,23 +134,25 @@ const   int 	POWER_HUSTLE	   		= 14131;
 const   int 	POWER_TIMEHOP   		= 14132;
 const   int 	POWER_UBIQVISION   		= 14133;
 const   int 	POWER_ECTOCOCOON   		= 14134;
+const   int 	POWER_CRISISBREATH   		= 14135;
+const   int 	POWER_EMPATHICTRANSFERHOSTILE	= 14136;
 
 
 // Level 4 Powers
-const int POWER_INERTBARRIER            = 14151;
-const int POWER_STEADFASTPERCEP         = 14152;
-const int POWER_EMPATHICFEEDBACK        = 14154;
-const int POWER_ENERGYADAPTION          = 14155;
-const int POWER_FREEDOM                 = 14156;
-const int POWER_MINDWIPE                = 14157;
-const int POWER_POWERLEECH              = 14158;
-const int POWER_PSYCHICREFORMATION      = 14159;
-const int POWER_TELEKINETICMANEUVER     = 14160;
-const int POWER_DIMENSIONALANCHOR       = 14161;
-const int POWER_DISMISSAL               = 14162;
-const int POWER_DIMENSIONDOOR_SELFONLY  = 14163;
-const int POWER_DIMENSIONDOOR_PARTY     = 14164;
-const int POWER_DOMINATE                = -1;
+const int POWER_INERTBARRIER            	= 14151;
+const int POWER_STEADFASTPERCEP         	= 14152;
+const int POWER_EMPATHICFEEDBACK        	= 14154;
+const int POWER_ENERGYADAPTION          	= 14155;
+const int POWER_FREEDOM                 	= 14156;
+const int POWER_MINDWIPE                	= 14157;
+const int POWER_POWERLEECH              	= 14158;
+const int POWER_PSYCHICREFORMATION      	= 14159;
+const int POWER_TELEKINETICMANEUVER     	= 14160;
+const int POWER_DIMENSIONALANCHOR       	= 14161;
+const int POWER_DISMISSAL               	= 14162;
+const int POWER_DIMENSIONDOOR_SELFONLY  	= 14163;
+const int POWER_DIMENSIONDOOR_PARTY     	= 14164;
+const int POWER_DOMINATE                	= 14165;
 
 // Level 5 Powers
 const	int	POWER_BALEFULTEL		= 14191;
@@ -205,3 +208,4 @@ const   int 	POWER_ETHEREALNESS	   	= 14332;
 const   int 	POWER_MICROCOSM		   	= 14333;
 const   int 	POWER_TIMELESSBODY	   	= 14334;
 const   int 	POWER_GENESIS		   	= 14335;
+const   int 	POWER_PSYCHICCHIR	   	= 14336;

@@ -130,9 +130,9 @@ void main()
             FloatingTextStrRefOnCreature(16823148, oUser, FALSE); //Prereq: Power Attack feat
             return;
         }
-        if(nPower > SPELL_POWER_ATTACK5            &&                   // If the power attack is in BW IPA range
+        if(nPower > 5                              &&                   // If the power attack is in BW IPA range
            !GetHasFeat(FEAT_IMPROVED_POWER_ATTACK) &&                   // And they don't have IPA
-           GetPRCSwitch(PRC_POWER_ATTACK) != PRC_POWER_ATTACK_FULL_PNP) // And full PnP PA which ignores BW IPA isn't active
+           GetPRCSwitch(PRC_POWER_ATTACK) != PRC_POWER_ATTACK_FULL_PNP) // And full PnP PA, which ignores BW IPA isn't active
         {
             FloatingTextStrRefOnCreature(16823149, oUser, FALSE); // Prereq: Improved Power Attack feat
             return;

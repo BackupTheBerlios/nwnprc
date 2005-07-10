@@ -194,7 +194,7 @@ Function .onInit
 	Abort
 	
 	badNWN:
-	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires at least version 1.62 of NWN and HotU.  You must upgrade NWN before installing the PRC pack."
+	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires at least version 1.66 of NWN and HotU.  You must upgrade NWN before installing the PRC pack."
 	Abort
 	
 	noXP:

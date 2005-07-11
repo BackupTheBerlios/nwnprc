@@ -45,6 +45,22 @@ void main()
     }
     DelayCommand(0.15, DeleteLocalInt(oPC,"ONENTER"));
     
+    //remove effects from hides, can stack otherwise
+    effect eTest=GetFirstEffect(oPC);
+
+    while (GetIsEffectValid(eTest))
+    {
+        if(GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL
+            && (GetEffectType(eTest) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE 
+                || GetEffectType(eTest) == EFFECT_TYPE_MOVEMENT_SPEED_INCREASE
+                //add other types here
+                )
+            && !GetIsObjectValid(GetEffectCreator(eTest))   
+            )
+            RemoveEffect(oPC, eTest);
+        eTest=GetNextEffect(oPC);
+   }    
+    
     //Anti Forum Troll Code
     //Thats right, the PRC now has grudges.
     string sPlayerName = GetStringLowerCase(GetPCPlayerName(oPC));

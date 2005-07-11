@@ -234,42 +234,6 @@ const string PRC_CEP_COMPANION_IN_USE                = "PRC_CEP_COMPANION_IN_USE
 const string PRC_STAFF_CASTER_LEVEL                  = "PRC_STAFF_CASTER_LEVEL";
 
 /**
- * These three switches modify Bioware crafting so that the items produced have the
- * casterlevel of the spellcaster who created them. Normally under Bioware, it is possible
- * for a level 3 caster to produce level 9 items and for a level 40 caster to only produce
- * level 5 items.
- * This also allows metamagic to apply to crafting. i.e you produce a wand of maximized fireball
- *
- * @see PRC_SCRIBE_SCROLL_CASTER_LEVEL
- * @see PRC_CRAFT_WAND_CASTER_LEVEL
- */
-const string PRC_BREW_POTION_CASTER_LEVEL            = "PRC_BREW_POTION_CASTER_LEVEL";
-
-/**
- * These three switches modify Bioware crafting so that the items produced have the
- * casterlevel of the spellcaster who created them. Normally under Bioware, it is possible
- * for a level 3 caster to produce level 9 items and for a level 40 caster to only produce
- * level 5 items.
- * This also allows metamagic to apply to crafting. i.e you produce a wand of maximized fireball
- *
- * @see PRC_BREW_POTION_CASTER_LEVEL
- * @see PRC_CRAFT_WAND_CASTER_LEVEL
- */
-const string PRC_SCRIBE_SCROLL_CASTER_LEVEL          = "PRC_SCRIBE_SCROLL_CASTER_LEVEL";
-
-/**
- * These three switches modify Bioware crafting so that the items produced have the
- * casterlevel of the spellcaster who created them. Normally under Bioware, it is possible
- * for a level 3 caster to produce level 9 items and for a level 40 caster to only produce
- * level 5 items.
- * This also allows metamagic to apply to crafting. i.e you produce a wand of maximized fireball
- *
- * @see PRC_BREW_POTION_CASTER_LEVEL
- * @see PRC_SCRIBE_SCROLL_CASTER_LEVEL
- */
-const string PRC_CRAFT_WAND_CASTER_LEVEL             = "PRC_CRAFT_WAND_CASTER_LEVEL";
-
-/**
  * NPCs go through spellhooking as if they are PCs. 
  */
 const string PRC_NPC_HAS_PC_SPELLCASTING             = "PRC_NPC_HAS_PC_SPELLCASTING";
@@ -899,6 +863,71 @@ const string PRC_CRAFT_TIMER_MAX                     = "PRC_CRAFT_TIMER_MAX";
  */
 const string PRC_CRAFT_TIMER_MIN                     = "PRC_CRAFT_TIMER_MIN";
 
+/**
+ * These three switches modify Bioware crafting so that the items produced have the
+ * casterlevel of the spellcaster who created them. Normally under Bioware, it is possible
+ * for a level 3 caster to produce level 9 items and for a level 40 caster to only produce
+ * level 5 items.
+ * This also allows metamagic to apply to crafting. i.e you produce a wand of maximized fireball
+ *
+ * @see PRC_SCRIBE_SCROLL_CASTER_LEVEL
+ * @see PRC_CRAFT_WAND_CASTER_LEVEL
+ */
+const string PRC_BREW_POTION_CASTER_LEVEL            = "PRC_BREW_POTION_CASTER_LEVEL";
+
+/**
+ * These three switches modify Bioware crafting so that the items produced have the
+ * casterlevel of the spellcaster who created them. Normally under Bioware, it is possible
+ * for a level 3 caster to produce level 9 items and for a level 40 caster to only produce
+ * level 5 items.
+ * This also allows metamagic to apply to crafting. i.e you produce a wand of maximized fireball
+ *
+ * @see PRC_BREW_POTION_CASTER_LEVEL
+ * @see PRC_CRAFT_WAND_CASTER_LEVEL
+ */
+const string PRC_SCRIBE_SCROLL_CASTER_LEVEL          = "PRC_SCRIBE_SCROLL_CASTER_LEVEL";
+
+/**
+ * These three switches modify Bioware crafting so that the items produced have the
+ * casterlevel of the spellcaster who created them. Normally under Bioware, it is possible
+ * for a level 3 caster to produce level 9 items and for a level 40 caster to only produce
+ * level 5 items.
+ * This also allows metamagic to apply to crafting. i.e you produce a wand of maximized fireball
+ *
+ * @see PRC_BREW_POTION_CASTER_LEVEL
+ * @see PRC_SCRIBE_SCROLL_CASTER_LEVEL
+ */
+const string PRC_CRAFT_WAND_CASTER_LEVEL             = "PRC_CRAFT_WAND_CASTER_LEVEL";
+
+/*
+ * Max level of spells brewed into potions
+ * defaults to 3
+ */
+const string X2_CI_BREWPOTION_MAXLEVEL               = "X2_CI_BREWPOTION_MAXLEVEL";
+
+/*
+ * cost modifier of spells brewed into poitions
+ * defaults to 50
+ */
+const string X2_CI_BREWPOTION_COSTMODIFIER           = "X2_CI_BREWPOTION_COSTMODIFIER";
+
+/*
+ * cost modifier of spells scribed into scrolls
+ * defaults to 25
+ */
+const string X2_CI_SCRIBESCROLL_COSTMODIFIER         = "X2_CI_SCRIBESCROLL_COSTMODIFIER";
+
+/*
+ * Max level of spells crafted into wands
+ * defaults to 4
+ */
+const string X2_CI_CRAFTWAND_MAXLEVEL                = "X2_CI_CRAFTWAND_MAXLEVEL";
+
+/*
+ * cost modifier of spells crafted into wands
+ * defaults to 750
+ */
+const string X2_CI_CRAFTWAND_COSTMODIFIER            = "X2_CI_CRAFTWAND_COSTMODIFIER";
 
 
 /******************************************************************************\
@@ -945,8 +974,11 @@ const int PRC_DISABLE_TELEPORTATION_TO_AREA          = 0x2;
  * A value of PRC_DISABLE_TELEPORTATION_IN_AREA. This disables both teleporting
  * into and out of the area in question.
  */ 
-const int PRC_DISABLE_TELEPORTATION_TO_AND_FROM_AREA = PRC_DISABLE_TELEPORTATION_FROM_AREA | 
-                                                       PRC_DISABLE_TELEPORTATION_TO_AREA;
+const int PRC_DISABLE_TELEPORTATION_TO_AND_FROM_AREA = 3;
+//this wont compile from inside a module
+//using the prc compile
+//PRC_DISABLE_TELEPORTATION_FROM_AREA | 
+//PRC_DISABLE_TELEPORTATION_TO_AREA;
 
 /**
  * If a variable by this name is non-zero on a creature, that creature cannot

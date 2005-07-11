@@ -39,21 +39,23 @@ struct craft_receipe_struct
 const string  X2_CI_CRAFTSKILL_CONV ="x2_p_craftskills";
 
 // Brew Potion related Constants
+/* moved to be code switches
 
-const int     X2_CI_BREWPOTION_FEAT_ID        = 944;                    // Brew Potion feat simulation
 const int     X2_CI_BREWPOTION_MAXLEVEL       = 3;                      // Max Level for potions
 const int     X2_CI_BREWPOTION_COSTMODIFIER   = 50;                     // gp Brew Potion XPCost Modifier
-const string  X2_CI_BREWPOTION_NEWITEM_RESREF = "x2_it_pcpotion";       // ResRef for new potion item
 
 // Scribe Scroll related constants
-const int     X2_CI_SCRIBESCROLL_FEAT_ID        = 945;
 const int     X2_CI_SCRIBESCROLL_COSTMODIFIER   = 25;                 // Scribescroll Cost Modifier
-const string  X2_CI_SCRIBESCROLL_NEWITEM_RESREF = "x2_it_pcscroll";   // ResRef for new scroll item
 
 // Craft Wand related constants
-const int     X2_CI_CRAFTWAND_FEAT_ID        = 946;
 const int     X2_CI_CRAFTWAND_MAXLEVEL       = 4;
 const int     X2_CI_CRAFTWAND_COSTMODIFIER   = 750;
+*/
+const int     X2_CI_BREWPOTION_FEAT_ID        = 944;                    // Brew Potion feat simulation
+const string  X2_CI_BREWPOTION_NEWITEM_RESREF = "x2_it_pcpotion";       // ResRef for new potion item
+const int     X2_CI_SCRIBESCROLL_FEAT_ID        = 945;
+const string  X2_CI_SCRIBESCROLL_NEWITEM_RESREF = "x2_it_pcscroll";   // ResRef for new scroll item
+const int     X2_CI_CRAFTWAND_FEAT_ID        = 946;
 const string  X2_CI_CRAFTWAND_NEWITEM_RESREF = "x2_it_pcwand";
 
 // 2da for the craftskills
@@ -464,7 +466,10 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     // check if spell is below maxlevel for brew potions
     // -------------------------------------------------------------------------
-    if (nLevel > X2_CI_BREWPOTION_MAXLEVEL)
+    int nPotionMaxLevel = GetPRCSwitch(X2_CI_BREWPOTION_MAXLEVEL);
+    if(nPotionMaxLevel == 0)
+        nPotionMaxLevel = 3;
+    if (nLevel > nPotionMaxLevel)
     {
         FloatingTextStrRefOnCreature(76416, oCaster);
         return TRUE;
@@ -482,7 +487,10 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     // XP/GP Cost Calculation
     // -------------------------------------------------------------------------
-    int nCost = CIGetCraftGPCost(nLevel, X2_CI_BREWPOTION_COSTMODIFIER);
+    int nCostModifier = GetPRCSwitch(X2_CI_BREWPOTION_COSTMODIFIER);
+    if(nCostModifier == 0)
+        nCostModifier = 50;
+    int nCost = CIGetCraftGPCost(nLevel, nCostModifier);
     float nExperienceCost = 0.04  * nCost; // xp = 1/25 of gp value
     int nGoldCost = nCost ;
 
@@ -565,7 +573,10 @@ int CICraftCheckScribeScroll(object oSpellTarget, object oCaster)
     // XP/GP Cost Calculation
     // -------------------------------------------------------------------------
     int  nLevel    = CIGetSpellInnateLevel(nID,TRUE);
-    int nCost = CIGetCraftGPCost(nLevel, X2_CI_SCRIBESCROLL_COSTMODIFIER);
+    int nCostModifier = GetPRCSwitch(X2_CI_SCRIBESCROLL_COSTMODIFIER);
+    if(nCostModifier == 0)
+        nCostModifier = 25;
+    int nCost = CIGetCraftGPCost(nLevel, nCostModifier);
     float fExperienceCost = 0.04 * nCost;
     int nGoldCost = nCost ;
 
@@ -705,9 +716,12 @@ These dont work as IPs since they are hardcoded */
     }    
 
     // -------------------------------------------------------------------------
-    // check if spell is below maxlevel for brew potions
+    // check if spell is below maxlevel for craft want
     // -------------------------------------------------------------------------
-    if (nLevel > X2_CI_CRAFTWAND_MAXLEVEL)
+    int nMaxLevel = GetPRCSwitch(X2_CI_CRAFTWAND_MAXLEVEL);
+    if(nMaxLevel == 0)
+        nMaxLevel = 4;
+    if (nLevel > nMaxLevel)
     {
         FloatingTextStrRefOnCreature(83623, oCaster);
         return TRUE;
@@ -716,7 +730,10 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     // XP/GP Cost Calculation
     // -------------------------------------------------------------------------
-    int nCost = CIGetCraftGPCost( nLevel, X2_CI_CRAFTWAND_COSTMODIFIER);
+    int nCostMod = GetPRCSwitch(X2_CI_CRAFTWAND_COSTMODIFIER);
+    if(nCostMod == 0)
+        nCostMod = 750;
+    int nCost = CIGetCraftGPCost( nLevel, nCostMod);
     float nExperienceCost = 0.04 * nCost;
     int nGoldCost = nCost;
 

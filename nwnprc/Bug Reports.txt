@@ -18,15 +18,21 @@ Knight of the middle Circle: Spellbook: Aid: Casting this spell has no effect, n
 
 Knight of the middle Circle: Spellbook: Divine Protection: Casting this spell has no effect, nothing happens and the spell icon is not removed from the quickslot.
 
+Soulknife: Psychic Strike works on atleast one thing it shouldn't: Web barriers.
+
+Soulknife: Feats: Devastating Critical Mindblade: Minor bug, appears to be a typo in this feat's name. It currently reads, "Devastating Critical: midblade"
+
+Soulknife: Mindblade Enhancement: Not really a bug... If you have both Psychokenetic and Psychokinetic Burst mindblade enhancements, the total magical damage added is 1d8 rather than (1d4 + 1d4) 2d4. Very minor point, dunno if this is because that's what source material specifies, or just "because".
+
+Psionic Feat: the feat was called Speed of Thought? The one that grants 25pct movement speed increase while not in heavy armor and in psionic focus. Anyway, the bug is that you retain the movement speed increase in heavy armor, IF you go into focus without it. And it stays even if you use the ability to end psionic-focus-using abilities. Not sure if that part's intended or not.
+
+Power Attack: 3)dosnt give the negative ab to bonus attacks (ie the one from haste) but does give them the extra damage. *Ornedan: BioBug.
+
 ____________________________________________
 
 Alpha 2 Bug Reports:
 
 Soulknife: +1 weapon at level 40, so the overall performance of my Soulknife was quite mediocre.
-	
-Soulknife: Psychic Strike works on atleast one thing it shouldn't: Web barriers.
-
-Soulknife: Feats: Devastating Critical Mindblade: Minor bug, appears to be a typo in this feat's name. It currently reads, "Devastating Critical: midblade"
 
 Soulknife: Mindblade Enhancement: Collision: Minor bug, appears to be a typo in this feature's description. It currently reads, "The mindblade deals increases it's mass at the end of each swing..."
 
@@ -36,17 +42,11 @@ Soulknife: Mindblade Enhancement: Suppression: Minor bug, appears to be a typo i
 
 Soulknife: Mindblade Enhancement: Minor bug, "Lucky" and "Defending", while available to be added to the mindblade, was not listed on the description menu. Also, since it had no obvious effect on the mindblade after i added it, rested, and manifested a new mindblade, i have no idea what it does or if it's even working, since no description.
 
-Soulknife: Mindblade Enhancement: Not really a bug... If you have both Psychokenetic and Psychokinetic Burst mindblade enhancements, the total magical damage added is 1d8 rather than (1d4 + 1d4) 2d4. Very minor point, dunno if this is because that's what source material specifies, or just "because".
-
-Psionic Feat: the feat was called Speed of Thought? The one that grants 25pct movement speed increase while not in heavy armor and in psionic focus. Anyway, the bug is that you retain the movement speed increase in heavy armor, IF you go into focus without it. And it stays even if you use the ability to end psionic-focus-using abilities. Not sure if that part's intended or not.
-
 Complete Warrior Samurai: Missing Heavy Armor Pro
 
 CW Samurai: kiai smite: says it adds charisma bonus too ab and damage for the next attack.... it's adding charisma bonus to damage and 2x charisma bonus to ab the ab is being added as a temp weapon prop so it wont stack with any weapon mods, http://forums.netgamers.co.uk/showpost.php?p=53929&postcount=13
 
 CW Samurai: The frightful presence is a bit troublesome (from aser)
-
-Power Attack: 3)dosnt give the negative ab to bonus attacks (ie the one from haste) but does give them the extra damage
 
 Thrall of Graz'zt: The Vrock and the Balor are properly feated/armed, but the other three summons all lack the required weapons they seem to have feats for.
 
@@ -82,7 +82,7 @@ Domains: Unfinished, need lot of work.
 
 Psionic Feats: Boost Construct, Mental Resistance, Wild/Hidden Talent, Epic Expanded Knowledge, Expanded Knowledge, incomplete.
 
-Psionic Feats: Psionic Weapon, Greater Psionic Weapon and Deep impact use up psionic Focus but do nothing. Mental leap doesn't seem to work either, instead of jumping to the place you click, your character walks over.
+Psionic Feats: Psionic Weapon, Greater Psionic Weapon and Deep impact use up psionic Focus but do nothing. Mental leap doesn't seem to work either, instead of jumping to the place you click, your character walks over. *Ornedan: Mental Leap fixed.
 
 Psionic Feats: The feat problem I mentioned earlier (with 2 becoming 1) happens whenever you take 2 feats that have the same non-unique name, such as the one that gives you more power points (don't remember the name). Like I said, I don't know that it's fixable without making these feats into a bunch of feats with unique names (which would take a ton of space and be a pain) so it might just be something you want to warn people about.
 

@@ -28,10 +28,16 @@ void main()
      int iHalf = iDamageTaken/2;
      object oTarget = GetLocalObject(oCaster, "SharePainTarget");
      
+     
+     effect eVisHeal = EffectVisualEffect(VFX_IMP_HEALING_L);
      effect eHeal = EffectHeal(iHalf);
      ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oCaster);
+     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oCaster);
+     
      effect eDam = EffectDamage(iHalf, DAMAGE_TYPE_POSITIVE);
+     effect eVisHarm = EffectVisualEffect(VFX_IMP_HARM);
      ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHarm, oTarget);
      
      if (GetIsDead(oTarget))	DeleteLocalInt(oCaster, "SharePain");
 }

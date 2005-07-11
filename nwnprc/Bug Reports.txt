@@ -6,6 +6,18 @@ Blackguard Spellbook: I tested the Spell level III again and it seems the spells
 
 Soldier of Light: Vassal Of Bahamut Holy Sword was listed as a choice as a 1st level spell for my soldier of light. (other problems possible?)
 
+Knight of the middle Circle: Spellbook: Greater Magic Weapon: Unlike the regular spell of the same name, you cannot target yourself or others. You can target your weapon if you open your inventory, but casting it in such fashion has no effect. The spell icon is not removed from the quickslot.
+
+Knight of the middle Circle: Spellbook: Bless Weapon: Unlike the regular spell of the same name, you cannot target yourself to cast, you must open inventory and directly target your weapon. It will work, then. As a side note, it adds divine damage. Shouldn't it be positive? I could be mistaken on that.
+
+Knight of the middle Circle: Spellbook: Divine Favor: Minor bug, unlike the regular spell of the same name, it doesn't auto-cast on yourself, you must target yourself with it. You can target other creatures as well, but the effect will still apply to you (which is good, but the extra click isn't).
+
+Knight of the middle Circle: Spellbook: Magic Weapon: Unlike the regular spell of the same name, you cannot target yourself or others. You can target your weapon if you open your inventory, then it will work.
+
+Knight of the middle Circle: Spellbook: Aid: Casting this spell has no effect, nothing happens and the spell icon is not removed from the quickslot.
+
+Knight of the middle Circle: Spellbook: Divine Protection: Casting this spell has no effect, nothing happens and the spell icon is not removed from the quickslot.
+
 ____________________________________________
 
 Alpha 2 Bug Reports:

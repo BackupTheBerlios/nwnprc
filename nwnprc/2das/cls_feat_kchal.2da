@@ -57,7 +57,7 @@
 53         DivineShield                       414       0    -1             1      
 54         FEAT_EPIC_DIVINE_SHIELD            3548      0    -1             1      
 55         FEAT_EPIC_DIVINE_MIGHT             3120      0    -1             1      
-56         Spellbook                          1999      0    1              1      
+56         Spellbook                          1999      3    1              1      
 57         KChBlessWeapon                     20234     0    99             1      
 58         KChBlessWeaponStill                20235     0    99             1      
 59         KChBlessWeaponSilent               20236     0    99             1      

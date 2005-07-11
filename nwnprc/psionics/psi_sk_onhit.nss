@@ -33,13 +33,18 @@ void main()
     {
         // Check if the target is valid for Psychic Strike
         int nRacialType = MyPRCGetRacialType(oTarget);
-        if(!(// Non-living
-           nRacialType == RACIAL_TYPE_UNDEAD    ||
-           nRacialType == RACIAL_TYPE_CONSTRUCT ||
-           // Mindless
-           spellsIsMindless(oTarget)            ||
-           // Immune to mind-affecting
-           GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS)))
+        if(// A creature
+           GetObjectType(oTarget) == OBJECT_TYPE_CREATURE 
+           && !( // And not
+             // Non-living or
+             nRacialType == RACIAL_TYPE_UNDEAD              ||
+             nRacialType == RACIAL_TYPE_CONSTRUCT           ||
+             // Mindless or
+             spellsIsMindless(oTarget)                      ||
+             // Immune to mind-affecting
+             GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS)
+             )
+           )
         {
             // Lose Psychic Strike, unless this was a Bladewind attack other than the first
             if(GetLocalInt(oPC, PSYCHIC_STRIKE))

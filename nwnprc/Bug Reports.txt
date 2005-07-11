@@ -1,3 +1,13 @@
+Fixed issues:
+
+Knight of the Chalice: All spells 1st - 4th appear as Alertness.
+
+Blackguard Spellbook: I tested the Spell level III again and it seems the spells are not linked as they should be: If you chose Summon Creature II, you become Contagion insteand. If you chose Protection from Elements, you become Summon Creature III. If you chose Contagion, you become Cure Serious Wounds. If you chose Inflict Serious Wounds, then you become Protection from Elements.
+
+Soldier of Light: Vassal Of Bahamut Holy Sword was listed as a choice as a 1st level spell for my soldier of light. (other problems possible?)
+
+____________________________________________
+
 Alpha 2 Bug Reports:
 
 Soulknife: +1 weapon at level 40, so the overall performance of my Soulknife was quite mediocre.
@@ -40,8 +50,6 @@ Thrall of Graz'zt: Bug: The magical damage dealt in lvl 2 of said class (spell b
 
 Vassal of Bahamut: Can select the spellbook, can select the spell levels, and also can select the spell slots. But the Vassal of Bahamut cannot cast, nor use its spells.
 
-Knight of the Chalice: All spells 1st - 4th appear as Alertness.
-
 Knight of the Chalice: Knight of the Chalice Consecrated Aura says "Something Entered" when activated. Also, when used again (presumably to toggle it off) it stays on, says "Something Entered" again, and the visual effect stacks. Sometimes it says "Something Entered" twice. Keep using it and you'll have a VERY bright yellow aura  It never appears to turn off. Additionally, when cast it says, "casts Holy Aura (versus demons)". Knight of the Chalice SLA "Magic Circle Against Evil"'s discription simply reads: "This is more then i can bear." When using Knight of the Chalice SLA "Holy Aura (versus demons)" the cast text says: "using Elaborate Parry: Parry Bonus".
 
 prc_gen_listener: Listener, appearing when it shouldn't.
@@ -59,10 +67,6 @@ Talontar Blightlord: Requirements: I had access to the Talontar Blightlord while
 Talontar Blightlord: Blightspawn Companion: Unfinished
 
 Domains: Unfinished, need lot of work.
-
-Blackguard Spellbook: I tested the Spell level III again and it seems the spells are not linked as they should be: If you chose Summon Creature II, you become Contagion insteand. If you chose Protection from Elements, you become Summon Creature III. If you chose Contagion, you become Cure Serious Wounds. If you chose Inflict Serious Wounds, then you become Protection from Elements.
-
-Soldier of Light: Vassal Of Bahamut Holy Sword was listed as a choice as a 1st level spell for my soldier of light. (other problems possible?)
 
 Psionic Feats: Boost Construct, Mental Resistance, Wild/Hidden Talent, Epic Expanded Knowledge, Expanded Knowledge, incomplete.
 

@@ -1,0 +1,17 @@
+2DA V2.0
+
+   LABEL       ReqType ReqParam1 ReqParam2 
+0  Alertness   FEAT    0         ****      
+1  Base_Attack BAB     5         ****  
+1  Lore        SKILL   7         2
+2  Illithid    RACE    225       ****      
+3  Ogre        RACE    212       ****      
+4  Goblin      RACE    213       ****      
+5  Orc         RACE    214       ****      
+6  Kobold      RACE    215       ****      
+7  Gnoll       RACE    216       ****      
+8  Bugbear     RACE    217       ****      
+9  Minotaur    RACE    218       ****      
+10 Lizardfolk  RACE    219       ****      
+11 Hobgoblin   RACE    221       ****      
+12 Troll       RACE    231       ****      

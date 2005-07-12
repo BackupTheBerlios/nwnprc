@@ -54,6 +54,7 @@ void CleanCopy(object oImage)
      {
         SetDroppableFlag(oItem, FALSE);
         SetItemCursedFlag(oItem, TRUE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_80_PERCENT), oItem);
         oItem = GetNextItemInInventory(oImage);
      }
      int i;
@@ -61,6 +62,7 @@ void CleanCopy(object oImage)
      {
         oItem = GetItemInSlot(i, oImage);
         SetDroppableFlag(oItem, FALSE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_80_PERCENT), oItem);
         SetItemCursedFlag(oItem, TRUE);
      }
      TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);

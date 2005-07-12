@@ -113,6 +113,9 @@ void main()
 
 void BuildMindblade(object oPC, object oMbld, int nMbldType)
 {
+    // For the purposes of this function, dual shortswords is the same as single shortsword
+    if(nMbldType == MBLADE_SHAPE_DUAL_SHORTSWORDS) nMbldType = MBLADE_SHAPE_SHORTSWORD;
+
     /* Add normal stuff and VFX */
     /// Add enhancement bonus
     int nSKLevel = GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC);
@@ -215,13 +218,14 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     int nFlags = GetPersistantLocalInt(oPC, MBLADE_FLAGS);
     int bLight = FALSE;
 
-    if(nFlags & MBLADE_FLAG_LUCKY)
+    /*if(nFlags & MBLADE_FLAG_LUCKY)
     {
         WriteTimestampedLogEntry("Mindblade enhancement Lucky activated. Please bugreport");
-    }
+    }*/
     if(nFlags & MBLADE_FLAG_DEFENDING)
     {
-        WriteTimestampedLogEntry("Mindblade enhancement Defending activated. Please bugreport");
+        //WriteTimestampedLogEntry("Mindblade enhancement Defending activated. Please bugreport");
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(2), oMbld);
     }
     if(nFlags & MBLADE_FLAG_KEEN)
     {
@@ -244,7 +248,7 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     }
     if(nFlags & MBLADE_FLAG_COLLISION)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE, IP_CONST_DAMAGEBONUS_5), oMbld);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, IP_CONST_DAMAGEBONUS_5), oMbld);
         SendMessageToPC(oPC, "Added Collision damage");
     }
     /*if(nFlags & MBLADE_FLAG_MINDCRUSHER )
@@ -270,7 +274,7 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     }*/
     if((nFlags & MBLADE_FLAG_PSYCHOKINETICBURST) && (nFlags & MBLADE_FLAG_PSYCHOKINETIC)) // Both Psychokinetic and Psychokinetic Burst
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_MAGICAL, IP_CONST_DAMAGEBONUS_1d8), oMbld);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_MAGICAL, IP_CONST_DAMAGEBONUS_2d4), oMbld);
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyMassiveCritical(IP_CONST_DAMAGEBONUS_1d6), oMbld);
         bLight = TRUE;
     }

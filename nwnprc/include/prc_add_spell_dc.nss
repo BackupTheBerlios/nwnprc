@@ -309,7 +309,7 @@ int ShadowWeaveDC(int spell_id, object oCaster = OBJECT_SELF)
 
 int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/)
 {
-    int spell_id = PRCGetSpellId();
+/*    int spell_id = PRCGetSpellId();
     int nDC;
     // For when you want to assign the caster DC.
     if (GetLocalInt(oCaster, PRC_DC_OVERRIDE) != 0)
@@ -332,6 +332,16 @@ int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/)
         nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     }   
 
-    return nDC;
+    return nDC;*/
     
+    int spell_id = GetSpellId();
+    int nDC = ElementalSavantDC(spell_id, oCaster);
+    nDC += GetHierophantSLAAdjustment(spell_id, oCaster);
+    nDC += GetHeartWarderDC(spell_id, oCaster);
+    nDC += GetSpellPowerBonus(oCaster);
+    nDC += ShadowWeaveDC(spell_id, oCaster);
+    nDC += RedWizardDC(spell_id, oCaster);
+    nDC += TattooFocus(spell_id, oCaster);
+
+    return nDC;
 }

@@ -22,10 +22,14 @@
 #include "x2_inc_spellhook"
 
 
-void  AddHolyAvengerEffectToWeapon(object oMyWeapon, float fDuration)
+void  AddHolyAvengerEffectToWeapon(object oMyWeapon, float fDuration, int nLevel)
 {
    //IPSafeAddItemProperty(oMyWeapon,ItemPropertyEnhancementBonus(2), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING ,FALSE,TRUE);
-   IPSafeAddItemProperty(oMyWeapon,ItemPropertyHolyAvenger(), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING,TRUE,TRUE);
+   //IPSafeAddItemProperty(oMyWeapon,ItemPropertyHolyAvenger(), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING,TRUE,TRUE);
+   IPSafeAddItemProperty(oMyWeapon,ItemPropertyEnhancementBonus(2), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING ,TRUE,TRUE);
+   IPSafeAddItemProperty(oMyWeapon,ItemPropertyEnhancementBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, 5), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING,TRUE,TRUE);
+   IPSafeAddItemProperty(oMyWeapon,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DISPEL_MAGIC, nLevel), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING,TRUE,TRUE);
+   
    return;
 }
 
@@ -55,10 +59,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Declare major variables
     effect eVis = EffectVisualEffect(VFX_IMP_GOOD_HELP);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    int nDuration = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nLevel = PRCGetCasterLevel(OBJECT_SELF);
+    int nDuration = nLevel;
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
-   if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+   if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration * 2; //Duration is +100%
     }
@@ -69,14 +74,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     if(GetIsObjectValid(oMyWeapon) )
     {
-        SignalEvent(oMyWeapon, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+        SignalEvent(oMyWeapon, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));
 
         if (nDuration>0)
         {
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oMyWeapon));
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, GetItemPossessor(oMyWeapon), RoundsToSeconds(nDuration));
 
-            AddHolyAvengerEffectToWeapon(oMyWeapon, RoundsToSeconds(nDuration));
+            AddHolyAvengerEffectToWeapon(oMyWeapon, RoundsToSeconds(nDuration), nLevel);
         }
         TLVFXPillar(VFX_IMP_GOOD_HELP, GetLocation(GetSpellTargetObject()), 4, 0.0f, 6.0f);
         DelayCommand(1.0f, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect( VFX_IMP_SUPER_HEROISM),GetLocation(GetSpellTargetObject())));

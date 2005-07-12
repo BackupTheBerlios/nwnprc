@@ -4,6 +4,8 @@
 #include "prc_inc_spells"
 #include "prc_inc_clsfunc"
 
+const int SPELLBOOK_ROW_COUNT = 150;
+
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID);
 
 int GetAbilityForClass(int nClass, object oPC)
@@ -41,9 +43,9 @@ int GetNewSpellbookCasterLevel(int nClass, object oCaster = OBJECT_SELF)
     { 
         if (GetFirstDivineClass(oCaster) == nClass) 
             nLevel += GetDivinePRCLevels(oCaster);
-        nLevel += TrueNecromancy(oCaster, GetSpellId(), "DIVINE") 
-                  +  ShadowWeave(oCaster, GetSpellId()) 
-                  +  FireAdept(oCaster, GetSpellId());
+        nLevel += TrueNecromancy(oCaster, PRCGetSpellId(), "DIVINE") 
+                  +  ShadowWeave(oCaster, PRCGetSpellId()) 
+                  +  FireAdept(oCaster, PRCGetSpellId());
                   
         nLevel += PractisedSpellcasting(oCaster, nClass, nLevel); //gotta be the last one
     }
@@ -51,9 +53,9 @@ int GetNewSpellbookCasterLevel(int nClass, object oCaster = OBJECT_SELF)
     { 
         if (GetFirstArcaneClass(oCaster) == nClass) 
             nLevel += GetArcanePRCLevels(oCaster);
-        nLevel += TrueNecromancy(oCaster, GetSpellId(), "ARCANE") 
-                  +  ShadowWeave(oCaster, GetSpellId()) 
-                  +  FireAdept(oCaster, GetSpellId());
+        nLevel += TrueNecromancy(oCaster, PRCGetSpellId(), "ARCANE") 
+                  +  ShadowWeave(oCaster, PRCGetSpellId()) 
+                  +  FireAdept(oCaster, PRCGetSpellId());
                   
         nLevel += PractisedSpellcasting(oCaster, nClass, nLevel); //gotta be the last one
     }
@@ -72,6 +74,8 @@ void WipeSpellbookHideFeats(object oPC)
             RemoveItemProperty(oHide, ipTest);
         ipTest = GetNextItemProperty(oHide);
     }
+    //remove persistant locals used to track when all spells cast
+    persistant_array_delete(oPC, "NewSpellbookAllCast");
 }
 
 int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
@@ -127,7 +131,7 @@ void RemoveSpellUse(object oPC, int nSpellID, int nClass)
     sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
     int nSpellbookID;
     int i;
-    for(i=1; i<150; i++)
+    for(i=1; i<SPELLBOOK_ROW_COUNT; i++)
     {
         if(StringToInt(Get2DACache(sFile, "SpellID", i)) == nSpellID)
         {
@@ -158,6 +162,19 @@ void RemoveSpellUse(object oPC, int nSpellID, int nClass)
     for(i=0;i<nCount;i++)
     {
         DelayCommand(0.01, AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nIPFeatID), oSkin));
+    }
+    string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
+    string sMessage = "You have "+IntToString(nCount)+" castings of "+sSpellName+" left.";
+    SendMessageToPC(oPC, sMessage);
+    //no castings left
+    //record and re-add the feat
+    //otherwise it wipes all the quickslots
+    if(nCount == 0)
+    {
+        DelayCommand(0.01, AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nIPFeatID), oSkin));
+        persistant_array_create(oPC, "NewSpellbookAllCast");
+        persistant_array_set_int(oPC, "NewSpellbookAllCast", 
+            persistant_array_get_size(oPC, "NewSpellbookAllCast"), nSpellID);
     }
 }
 
@@ -198,6 +215,21 @@ void CheckNewSpellbooks(object oPC)
 
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
 {
+    //check if all cast    
+    int nAllUsed = FALSE;
+    int i;
+    for(i=0; i<persistant_array_get_size(OBJECT_SELF, "NewSpellbookAllCast"); i++)
+    {
+        if(persistant_array_get_int(OBJECT_SELF, "NewSpellbookAllCast", i) == nSpellID)
+            nAllUsed = TRUE;
+    }           
+    if(nAllUsed)
+    {
+        string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
+        string sMessage = "You have no castings of "+sSpellName+" remaining";
+        SendMessageToPC(OBJECT_SELF, sMessage);
+        return;
+    }
     //get the level
     int nLevel = GetNewSpellbookCasterLevel(nClass);
     //set metamagic
@@ -206,5 +238,5 @@ void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
     //pass in the spell
     ActionCastSpell(nSpellID, nLevel);
     //remove it from the spellbook
-    RemoveSpellUse(OBJECT_SELF, GetSpellId(), nClass);
+    RemoveSpellUse(OBJECT_SELF, PRCGetSpellId(), nClass);
 }

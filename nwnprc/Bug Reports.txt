@@ -1,3 +1,9 @@
+Alpha 3 Bug Reports:
+
+
+
+____________________________________________
+
 Fixed issues:
 
 Knight of the Chalice: All spells 1st - 4th appear as Alertness.
@@ -56,6 +62,8 @@ Vassal of Bahamut: Spellbook: Divine Favor: Targetable on others as well as your
 
 Vassal of Bahamut: Spellbook: Holy Sword: Adds an OnHit Unique Power Level 1, don't know what it does, not sure if this is intentional or not. This property does not fade when you rest, and seems to be added to any weapon you equip for the duration, but is not removed from previous weapons when you unequip them. This also applies to Holy Sword as cast by Paladin.
 
+Thrallherd: Feats: Thrallherd & Twofold Master: Many (most?) of the fighter, rogue, and cleric thralls appear to be encumbered by their own equipment.
+
 ____________________________________________
 
 Alpha 2 Bug Reports:
@@ -63,9 +71,7 @@ Alpha 2 Bug Reports:
 Wilder: I don't know what causes this (memory issue?), but after excessive use of powers (maybe) this happens:
 Script <power script name eg. psi_pow_enrayc>, OID ffffffff, Tag: , ERROR: TOO MANY INSTRUCTIONS
 
- Thrallherd: Script: Received this error in-game: [SEE ATTACHED IMAGE] This was within a few rounds after the two thrall clerics i had at the time died and i'd just used the teleporter back to the safe side of the module. Did not appear to have any obvious negative impact, i could still summon two more thralls.
-
-Thrallherd: Feats: Thrallherd & Twofold Master: Many (most?) of the fighter, rogue, and cleric thralls appear to be encumbered by their own equipment.
+Thrallherd: Script: Received this error in-game: [SEE ATTACHED IMAGE] This was within a few rounds after the two thrall clerics i had at the time died and i'd just used the teleporter back to the safe side of the module. Did not appear to have any obvious negative impact, i could still summon two more thralls.
 
 Thrallherd: Pre-reqs: Was able to take levels in Thrallherd as a Keneticist Discipline psion who hadn't yet chosen any powers to manifest at all. I have a very tenuous (at best ) grasp on psionics atm, but it SEEMED like this violated the "Must be able to manifest a Telepath Discipline power" requirement. I could be wrong though!
 

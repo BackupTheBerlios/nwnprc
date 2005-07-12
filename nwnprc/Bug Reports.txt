@@ -34,6 +34,28 @@ Vassal of Bahamut: Can select the spellbook, can select the spell levels, and al
 
 Wilder: prc_power_const has the constants for psionic mind blank and true metabolism interchanged (according to spell.2da), causing the wrong script to be called (and the wrong power to be manifested). This would likely affect the psion class as well.
 
+Soldier of Light: Spellbook: Shield of Faith: Typo. It says "Sheild" instead of "Shield" in the 'casting' and 'cast' messages, as well as in the spellbook itself.
+
+Vassal of Bahamut: Spellbook: all spells: There is a typo in the 'casting' and 'casts' message for all VoB spells, as well as the spellbook listings. It says "Bahmut" instead of "Bahamut".
+
+Soldier of Light: Spellbook: Protection from Evil: Desription just says, "Why, thank you!"
+
+Soldier of Light: Spellbook: Magic Circle Against Evil: Description just says, "This is more then i can bear."
+
+Soldier of Light: Spellbook: Greater Magic Weapon: Description just says, "Now let's all look around us." You cannot target yourself or other creatures with this spell, instead you must open your inventory and cast directly at your weapon.
+
+Soldier of Light: Spellbook: Holy Sword: Appears to have no effect for Soldier's of Light with no paladin levels.
+
+Vassal of Bahamut: Spellbook: Protection from Evil: The description of this spell simply says, "Why, thank you!"
+
+Vassal of Bahamut: Spellbook: Magic Circle Against Evil: The description of this spell simply says, "This is more then i can bear."
+
+Vassal of Bahamut: Spellbook: Divine Power: This spell is targetable and castable on other creatures, instead of automatically being caster-only.
+
+Vassal of Bahamut: Spellbook: Divine Favor: Targetable on others as well as yourself, but effects only effect the caster regardless of target (which is good, but the extra step isn't )
+
+Vassal of Bahamut: Spellbook: Holy Sword: Adds an OnHit Unique Power Level 1, don't know what it does, not sure if this is intentional or not. This property does not fade when you rest, and seems to be added to any weapon you equip for the duration, but is not removed from previous weapons when you unequip them. This also applies to Holy Sword as cast by Paladin.
+
 ____________________________________________
 
 Alpha 2 Bug Reports:
@@ -46,28 +68,6 @@ Script <power script name eg. psi_pow_enrayc>, OID ffffffff, Tag: , ERROR: TOO M
 Thrallherd: Feats: Thrallherd & Twofold Master: Many (most?) of the fighter, rogue, and cleric thralls appear to be encumbered by their own equipment.
 
 Thrallherd: Pre-reqs: Was able to take levels in Thrallherd as a Keneticist Discipline psion who hadn't yet chosen any powers to manifest at all. I have a very tenuous (at best ) grasp on psionics atm, but it SEEMED like this violated the "Must be able to manifest a Telepath Discipline power" requirement. I could be wrong though!
-
-Soldier of Light: Spellbook: Shield of Faith: Typo. It says "Sheild" instead of "Shield" in the 'casting' and 'cast' messages, as well as in the spellbook itself.
-
-Soldier of Light: Spellbook: Protection from Evil: Desription just says, "Why, thank you!"
-
-Soldier of Light: Spellbook: Greater Magic Weapon: Description just says, "Now let's all look around us." You cannot target yourself or other creatures with this spell, instead you must open your inventory and cast directly at your weapon.
-
-Soldier of Light: Spellbook: Magic Circle Against Evil: Description just says, "This is more then i can bear."
-
-Soldier of Light: Spellbook: Holy Sword: Appears to have no effect for Soldier's of Light with no paladin levels.
-
-Vassal of Bahamut: Spellbook: Protection from Evil: The description of this spell simply says, "Why, thank you!"
-
-Vassal of Bahamut: Spellbook: Magic Circle Against Evil: The description of this spell simply says, "This is more then i can bear."
-
-Vassal of Bahamut: Spellbook: Divine Power: This spell is targetable and castable on other creatures, instead of automatically being caster-only.
-
-Vassal of Bahamut: Spellbook: Holy Sword: Adds an OnHit Unique Power Level 1, don't know what it does, not sure if this is intentional or not. This property does not fade when you rest, and seems to be added to any weapon you equip for the duration, but is not removed from previous weapons when you unequip them. This also applies to Holy Sword as cast by Paladin.
-
-Vassal of Bahamut: Spellbook: Divine Favor: Targetable on others as well as yourself, but effects only effect the caster regardless of target (which is good, but the extra step isn't )
-
-Vassal of Bahamut: Spellbook: all spells: There is a typo in the 'casting' and 'casts' message for all VoB spells, as well as the spellbook listings. It says "Bahmut" instead of "Bahamut".
 
 Soulknife: +1 weapon at level 40, so the overall performance of my Soulknife was quite mediocre.
 

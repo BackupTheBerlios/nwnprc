@@ -83,13 +83,13 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	   	SetIdentified(oAmmo, TRUE);    	
     		AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PIERCING, nBonus), oAmmo, 99999.9);
     	}
-    	if (GetBaseItemType(oWeapon) == BASE_ITEM_SLING)
+    	else if (GetBaseItemType(oWeapon) == BASE_ITEM_SLING)
     	{
     	   	oAmmo = CreateItemOnObject("NW_WAMBU001", oTarget, 99);
     	   	SetIdentified(oAmmo, TRUE);    	
     		AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, nBonus), oAmmo, 99999.9);
     	}
-    	else 
+    	else if (GetBaseItemType(oWeapon) == BASE_ITEM_LIGHTCROSSBOW || GetBaseItemType(oWeapon) == BASE_ITEM_HEAVYCROSSBOW)
     	{
     	   	oAmmo = CreateItemOnObject("NW_WAMBO001", oTarget, 99);
     	   	SetIdentified(oAmmo, TRUE);    	

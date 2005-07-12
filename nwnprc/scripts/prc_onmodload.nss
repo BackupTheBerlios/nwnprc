@@ -20,6 +20,14 @@ void main()
         SetPRCSwitch(PRC_DB_PRECACHE, TRUE);
         SetPRCSwitch(PRC_USE_LETOSCRIPT, TRUE);
     }   
+    if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE))
+    {
+        location lLoc = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
+        //only get it if one doesnt already exist (saved games)
+        if(GetIsObjectValid(GetObjectByTag("Bioware2DACache")))
+            DestroyObject(GetObjectByTag("Bioware2DACache"));
+        RetrieveCampaignObject("PRC2da", "CacheChest", lLoc);
+    }
     
     if(GetPRCSwitch(PRC_USE_DATABASE))
     {

@@ -108,8 +108,16 @@ const string PRC_USE_NEW_IMBUE_ARROW                 = "PRC_USE_NEW_IMBUE_ARROW"
 /*
  * This is for builders. It should not be set on the module, but should be set on players/creatures.
  * When this is set, it will override spell DC for all spells cast (including SLAs and items)
+ * This will overrule all feats, racial bonuses, etc that would effect DC
 */
-const string PRC_DC_OVERRIDE                         = "PRC_DC_OVERRIDE";
+const string PRC_DC_TOTAL_OVERRIDE                   = "PRC_DC_TOTAL_OVERRIDE";
+
+/*
+ * This is for builders. It should not be set on the module, but should be set on players/creatures.
+ * When this is set, it will override spell DC for all spells cast (including SLAs and items)
+ * This will ony override base DC+spelllevel+statmod, feats race etc are added on top of this
+*/
+const string PRC_DC_BASE_OVERRIDE                   = "PRC_DC_BASE_OVERRIDE";
 
 /*
  * This is for builders. It should not be set on the module, but should be set on players/creatures.
@@ -1199,6 +1207,12 @@ const string PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS       = "PRC_XP_GIVE_XP_TO_NON_PC
  * Set this if you are using NWNX and any sort of database.
  */
 const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
+
+/**
+ * Set this if you want to use the bioware db for 2da caching
+ * the value is the number of Hbs between caching runs
+ */
+const string PRC_USE_BIOWARE_DATABASE                = "PRC_USE_BIOWARE_DATABASE";
 
 /**
  * This will precache 2da files into the database.

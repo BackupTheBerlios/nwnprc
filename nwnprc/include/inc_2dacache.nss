@@ -441,20 +441,33 @@ void PreCache(string s2DA, string sColumn, int nRow, string sValue)
 
 string Get2DACache(string s2DA, string sColumn, int nRow)
 {
-    //get the waypoint htat marks the cache
-    object oCacheWP = GetObjectByTag("CACHEWP");
-    location lCache = GetLocation(oCacheWP);
-    //if no waypoiint, use module start
+    //get the chest that contains the cache
+    object oCacheWP = GetObjectByTag("Bioware2DACache");
+    //if no chest, use HEARTOFCHAOS in limbo as a location to make a new one
     if (!GetIsObjectValid(oCacheWP))
-        lCache = GetStartingLocation();
+        oCacheWP = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2", 
+            GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
     //lower case the 2da and column
     s2DA = GetStringLowerCase(s2DA);
     sColumn = GetStringLowerCase(sColumn);
-    //get the waypoint for this file
+    
+    //get the token for this file
     string sFileWPName = "CACHED_"+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
-    object oFileWP = GetWaypointByTag(sFileWPName);
+    object oFileWP = GetFirstItemInInventory(oCacheWP);
+    while(GetIsObjectValid(oFileWP)
+        && GetTag(oFileWP) != sFileWPName)
+    {
+        oFileWP = GetNextItemInInventory(oCacheWP);
+    }
+    //token doesnt exist make it
     if (!GetIsObjectValid(oFileWP))
-        oFileWP = CreateObject(OBJECT_TYPE_WAYPOINT,"NW_WAYPOINT001",lCache,FALSE,sFileWPName);
+    {
+        oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
+        DestroyObject(oFileWP);
+        oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);
+        //CreateObject(OBJECT_TYPE_WAYPOINT,"NW_WAYPOINT001",lCache,FALSE,sFileWPName);
+    }    
+    
     string s = GetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow));
     //check if we should use the database
     int nDB = GetPRCSwitch(PRC_USE_DATABASE);

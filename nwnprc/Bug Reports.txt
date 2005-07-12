@@ -4,68 +4,6 @@ Alpha 3 Bug Reports:
 
 ____________________________________________
 
-Fixed issues:
-
-Knight of the Chalice: All spells 1st - 4th appear as Alertness.
-
-Blackguard Spellbook: I tested the Spell level III again and it seems the spells are not linked as they should be: If you chose Summon Creature II, you become Contagion insteand. If you chose Protection from Elements, you become Summon Creature III. If you chose Contagion, you become Cure Serious Wounds. If you chose Inflict Serious Wounds, then you become Protection from Elements.
-
-Soldier of Light: Vassal Of Bahamut Holy Sword was listed as a choice as a 1st level spell for my soldier of light. (other problems possible?)
-
-Knight of the middle Circle: Spellbook: Greater Magic Weapon: Unlike the regular spell of the same name, you cannot target yourself or others. You can target your weapon if you open your inventory, but casting it in such fashion has no effect. The spell icon is not removed from the quickslot.
-
-Knight of the middle Circle: Spellbook: Bless Weapon: Unlike the regular spell of the same name, you cannot target yourself to cast, you must open inventory and directly target your weapon. It will work, then. As a side note, it adds divine damage. Shouldn't it be positive? I could be mistaken on that.
-
-Knight of the middle Circle: Spellbook: Divine Favor: Minor bug, unlike the regular spell of the same name, it doesn't auto-cast on yourself, you must target yourself with it. You can target other creatures as well, but the effect will still apply to you (which is good, but the extra click isn't).
-
-Knight of the middle Circle: Spellbook: Magic Weapon: Unlike the regular spell of the same name, you cannot target yourself or others. You can target your weapon if you open your inventory, then it will work.
-
-Knight of the middle Circle: Spellbook: Aid: Casting this spell has no effect, nothing happens and the spell icon is not removed from the quickslot.
-
-Knight of the middle Circle: Spellbook: Divine Protection: Casting this spell has no effect, nothing happens and the spell icon is not removed from the quickslot.
-
-Soulknife: Psychic Strike works on atleast one thing it shouldn't: Web barriers.
-
-Soulknife: Feats: Devastating Critical Mindblade: Minor bug, appears to be a typo in this feat's name. It currently reads, "Devastating Critical: midblade"
-
-Soulknife: Mindblade Enhancement: Not really a bug... If you have both Psychokenetic and Psychokinetic Burst mindblade enhancements, the total magical damage added is 1d8 rather than (1d4 + 1d4) 2d4. Very minor point, dunno if this is because that's what source material specifies, or just "because".
-
-Psionic Feat: the feat was called Speed of Thought? The one that grants 25pct movement speed increase while not in heavy armor and in psionic focus. Anyway, the bug is that you retain the movement speed increase in heavy armor, IF you go into focus without it. And it stays even if you use the ability to end psionic-focus-using abilities. Not sure if that part's intended or not.
-
-Power Attack: 3)dosnt give the negative ab to bonus attacks (ie the one from haste) but does give them the extra damage. *Ornedan: BioBug.
-
-Complete Warrior Samurai: Missing Heavy Armor Pro
-
-Vassal of Bahamut: Can select the spellbook, can select the spell levels, and also can select the spell slots. But the Vassal of Bahamut cannot cast, nor use its spells.
-
-Wilder: prc_power_const has the constants for psionic mind blank and true metabolism interchanged (according to spell.2da), causing the wrong script to be called (and the wrong power to be manifested). This would likely affect the psion class as well.
-
-Soldier of Light: Spellbook: Shield of Faith: Typo. It says "Sheild" instead of "Shield" in the 'casting' and 'cast' messages, as well as in the spellbook itself.
-
-Vassal of Bahamut: Spellbook: all spells: There is a typo in the 'casting' and 'casts' message for all VoB spells, as well as the spellbook listings. It says "Bahmut" instead of "Bahamut".
-
-Soldier of Light: Spellbook: Protection from Evil: Desription just says, "Why, thank you!"
-
-Soldier of Light: Spellbook: Magic Circle Against Evil: Description just says, "This is more then i can bear."
-
-Soldier of Light: Spellbook: Greater Magic Weapon: Description just says, "Now let's all look around us." You cannot target yourself or other creatures with this spell, instead you must open your inventory and cast directly at your weapon.
-
-Soldier of Light: Spellbook: Holy Sword: Appears to have no effect for Soldier's of Light with no paladin levels.
-
-Vassal of Bahamut: Spellbook: Protection from Evil: The description of this spell simply says, "Why, thank you!"
-
-Vassal of Bahamut: Spellbook: Magic Circle Against Evil: The description of this spell simply says, "This is more then i can bear."
-
-Vassal of Bahamut: Spellbook: Divine Power: This spell is targetable and castable on other creatures, instead of automatically being caster-only.
-
-Vassal of Bahamut: Spellbook: Divine Favor: Targetable on others as well as yourself, but effects only effect the caster regardless of target (which is good, but the extra step isn't )
-
-Vassal of Bahamut: Spellbook: Holy Sword: Adds an OnHit Unique Power Level 1, don't know what it does, not sure if this is intentional or not. This property does not fade when you rest, and seems to be added to any weapon you equip for the duration, but is not removed from previous weapons when you unequip them. This also applies to Holy Sword as cast by Paladin.
-
-Thrallherd: Feats: Thrallherd & Twofold Master: Many (most?) of the fighter, rogue, and cleric thralls appear to be encumbered by their own equipment.
-
-____________________________________________
-
 Alpha 2 Bug Reports:
 
 Wilder: I don't know what causes this (memory issue?), but after excessive use of powers (maybe) this happens:
@@ -132,3 +70,66 @@ Mighty Contender of Kord: not a big bug just have to wait before taking this cla
 Psionic System: Report of repeated use of the same power causing lag (not being cached)
 
 Corpse Crafter Feats: Not applied to bioware undead yet.
+
+____________________________________________
+
+
+Fixed issues:
+
+Knight of the Chalice: All spells 1st - 4th appear as Alertness.
+
+Blackguard Spellbook: I tested the Spell level III again and it seems the spells are not linked as they should be: If you chose Summon Creature II, you become Contagion insteand. If you chose Protection from Elements, you become Summon Creature III. If you chose Contagion, you become Cure Serious Wounds. If you chose Inflict Serious Wounds, then you become Protection from Elements.
+
+Soldier of Light: Vassal Of Bahamut Holy Sword was listed as a choice as a 1st level spell for my soldier of light. (other problems possible?)
+
+Knight of the middle Circle: Spellbook: Greater Magic Weapon: Unlike the regular spell of the same name, you cannot target yourself or others. You can target your weapon if you open your inventory, but casting it in such fashion has no effect. The spell icon is not removed from the quickslot.
+
+Knight of the middle Circle: Spellbook: Bless Weapon: Unlike the regular spell of the same name, you cannot target yourself to cast, you must open inventory and directly target your weapon. It will work, then. As a side note, it adds divine damage. Shouldn't it be positive? I could be mistaken on that.
+
+Knight of the middle Circle: Spellbook: Divine Favor: Minor bug, unlike the regular spell of the same name, it doesn't auto-cast on yourself, you must target yourself with it. You can target other creatures as well, but the effect will still apply to you (which is good, but the extra click isn't).
+
+Knight of the middle Circle: Spellbook: Magic Weapon: Unlike the regular spell of the same name, you cannot target yourself or others. You can target your weapon if you open your inventory, then it will work.
+
+Knight of the middle Circle: Spellbook: Aid: Casting this spell has no effect, nothing happens and the spell icon is not removed from the quickslot.
+
+Knight of the middle Circle: Spellbook: Divine Protection: Casting this spell has no effect, nothing happens and the spell icon is not removed from the quickslot.
+
+Soulknife: Psychic Strike works on atleast one thing it shouldn't: Web barriers.
+
+Soulknife: Feats: Devastating Critical Mindblade: Minor bug, appears to be a typo in this feat's name. It currently reads, "Devastating Critical: midblade"
+
+Soulknife: Mindblade Enhancement: Not really a bug... If you have both Psychokenetic and Psychokinetic Burst mindblade enhancements, the total magical damage added is 1d8 rather than (1d4 + 1d4) 2d4. Very minor point, dunno if this is because that's what source material specifies, or just "because".
+
+Psionic Feat: the feat was called Speed of Thought? The one that grants 25pct movement speed increase while not in heavy armor and in psionic focus. Anyway, the bug is that you retain the movement speed increase in heavy armor, IF you go into focus without it. And it stays even if you use the ability to end psionic-focus-using abilities. Not sure if that part's intended or not.
+
+Power Attack: 3)dosnt give the negative ab to bonus attacks (ie the one from haste) but does give them the extra damage. *Ornedan: BioBug.
+
+Complete Warrior Samurai: Missing Heavy Armor Pro
+
+Vassal of Bahamut: Can select the spellbook, can select the spell levels, and also can select the spell slots. But the Vassal of Bahamut cannot cast, nor use its spells.
+
+Wilder: prc_power_const has the constants for psionic mind blank and true metabolism interchanged (according to spell.2da), causing the wrong script to be called (and the wrong power to be manifested). This would likely affect the psion class as well.
+
+Soldier of Light: Spellbook: Shield of Faith: Typo. It says "Sheild" instead of "Shield" in the 'casting' and 'cast' messages, as well as in the spellbook itself.
+
+Vassal of Bahamut: Spellbook: all spells: There is a typo in the 'casting' and 'casts' message for all VoB spells, as well as the spellbook listings. It says "Bahmut" instead of "Bahamut".
+
+Soldier of Light: Spellbook: Protection from Evil: Desription just says, "Why, thank you!"
+
+Soldier of Light: Spellbook: Magic Circle Against Evil: Description just says, "This is more then i can bear."
+
+Soldier of Light: Spellbook: Greater Magic Weapon: Description just says, "Now let's all look around us." You cannot target yourself or other creatures with this spell, instead you must open your inventory and cast directly at your weapon.
+
+Soldier of Light: Spellbook: Holy Sword: Appears to have no effect for Soldier's of Light with no paladin levels.
+
+Vassal of Bahamut: Spellbook: Protection from Evil: The description of this spell simply says, "Why, thank you!"
+
+Vassal of Bahamut: Spellbook: Magic Circle Against Evil: The description of this spell simply says, "This is more then i can bear."
+
+Vassal of Bahamut: Spellbook: Divine Power: This spell is targetable and castable on other creatures, instead of automatically being caster-only.
+
+Vassal of Bahamut: Spellbook: Divine Favor: Targetable on others as well as yourself, but effects only effect the caster regardless of target (which is good, but the extra step isn't )
+
+Vassal of Bahamut: Spellbook: Holy Sword: Adds an OnHit Unique Power Level 1, don't know what it does, not sure if this is intentional or not. This property does not fade when you rest, and seems to be added to any weapon you equip for the duration, but is not removed from previous weapons when you unequip them. This also applies to Holy Sword as cast by Paladin.
+
+Thrallherd: Feats: Thrallherd & Twofold Master: Many (most?) of the fighter, rogue, and cleric thralls appear to be encumbered by their own equipment.

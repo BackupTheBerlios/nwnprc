@@ -81,7 +81,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 		int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
 
-		effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
+		effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
 
 		SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 

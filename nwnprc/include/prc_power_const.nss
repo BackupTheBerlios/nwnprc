@@ -1,13 +1,27 @@
 //real power spell constants
 
 // Metapsionics
-const int METAPSIONIC_CHAIN         = 2;
-const int METAPSIONIC_EMPOWER       = 4;
-const int METAPSIONIC_EXTEND        = 8;
-const int METAPSIONIC_MAXIMIZE      = 16;
-const int METAPSIONIC_SPLIT         = 32;
-const int METAPSIONIC_TWIN          = 64;
-const int METAPSIONIC_WIDEN         = 128;
+const int METAPSIONIC_NONE          = 0x0;
+const int METAPSIONIC_CHAIN         = 0x2;
+const int METAPSIONIC_EMPOWER       = 0x4;
+const int METAPSIONIC_EXTEND        = 0x8;
+const int METAPSIONIC_MAXIMIZE      = 0x10;
+const int METAPSIONIC_SPLIT         = 0x20;
+const int METAPSIONIC_TWIN          = 0x40;
+const int METAPSIONIC_WIDEN         = 0x80;
+
+/// A constant with value equal to the lowest metapsionic constant. Used when looping over metapsionic flag variables
+const int METAPSIONIC_MIN           = 0x2;
+/// A constant with value equal to the highest metapsionic constant. Used when looping over metapsionic flag variables
+const int METAPSIONIC_MAX           = 0x80;
+
+// Psionic Disciplines
+const int DISCIPLINE_PSYCHOMETABOLISM = 1;
+const int DISCIPLINE_PSYCHOKINESIS    = 2;
+const int DISCIPLINE_PSYCHOPORTATION  = 3;
+const int DISCIPLINE_CLAIRSENTIENCE   = 4;
+const int DISCIPLINE_METACREATIVITY   = 5;
+const int DISCIPLINE_TELEPATHY        = 6;
 
 
 //Psionic VFX Persistent

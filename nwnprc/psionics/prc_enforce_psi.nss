@@ -1,4 +1,4 @@
-/*
+/** @file
    ----------------
    prc_enforce_psi
    ----------------
@@ -19,41 +19,47 @@
 
 string PLEASE_RESELECT = GetStringByStrRef(16826471); //"Please reselect your feats."
 
-// Enforces the proper selection of the Psion feats
-// that are used to determine discipline.
-// You must have only one discipline.
-//
-// Returns TRUE if needed to relevel
+/**
+ * Enforces the proper selection of the Psion feats that are used to determine discipline.
+ * A character must have only one discipline.
+ *
+ * @param oPC The PC whose feats to check.
+ * @return    TRUE if needed to relevel, FALSE otherwise.
+ */
 int PsionDiscipline(object oPC = OBJECT_SELF);
 
 
-// Enforces feats that require one to *not* be a psionic character
-// ===============================================================
-// oPC  character, whose feats to check
-//
-// Returns TRUE if needed to relevel
+/**
+ * Enforces feats that require one to *not* be a psionic character.
+ *
+ * @param oPC The PC whose feats to check.
+ * @return    TRUE if needed to relevel, FALSE otherwise.
+ */
 int AntiPsionicFeats(object oPC);
 
 
-// Enforces feats that require one to be a psionic character
-// =========================================================
-// oPC  character, whose feats to check
-//
-// Returns TRUE if needed to relevel
+/**
+ * Enforces feats that require one to be a psionic character.
+ *
+ * @param oPC The PC whose feats to check.
+ * @return    TRUE if needed to relevel, FALSE otherwise.
+ */
 int PsionicFeats(object oPC);
 
-// Enforces feats that require one to be an epic psionic character
-// ===============================================================
-// oPC  character, whose feats to check
-//
-// Returns TRUE if needed to relevel
+/**
+ * Enforces feats that require one to be an epic psionic character.
+ *
+ * @param oPC The PC whose feats to check.
+ * @return    TRUE if needed to relevel, FALSE otherwise.
+ */
 int EpicPsionicFeats(object oPC);
 
-// Checks the requirement of at least one metapsionic feat of Split Psionic Ray
-// ============================================================================
-// oPC  character, whose feats to check
-//
-// Returns TRUE if needed to relevel
+/**
+ * Checks the requirement of at least one metapsionic feat of Split Psionic Ray
+ *
+ * @param oPC The PC whose feats to check.
+ * @return    TRUE if needed to relevel, FALSE otherwise.
+ */
 int SplitPsionicRay(object oPC);
 
 // ---------------
@@ -78,14 +84,8 @@ int PsionDiscipline(object oPC = OBJECT_SELF)
 
           if (nDisc != 1)
           {
-               /*int nHD = GetHitDice(oPC);
-               int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-               int nOldXP = GetXP(oPC);
-               int nNewXP = nMinXPForLevel - 1000;
-               SetXP(oPC,nNewXP);         //You may only have 1 Discipline.
-               */
+               //                           "You may only have 1 Discipline."
                FloatingTextStringOnCreature(GetStringByStrRef(16826470) + " " + PLEASE_RESELECT, oPC, FALSE);
-               //DelayCommand(1.0, SetXP(oPC,nOldXP));
                return TRUE;
           }
      }
@@ -112,17 +112,17 @@ int AntiPsionicFeats(object oPC)
                                    //You are a psionic character and may not take
         FloatingTextStringOnCreature(GetStringByStrRef(16826473) + " " + sFeats + ". " + PLEASE_RESELECT, oPC, FALSE);
     }
-    
+
     return bRelevel;
-}    
+}
 
 int PsionicFeats(object oPC)
 {
     int bRelevel = FALSE,
         bFirst   = 1;
     string sFeats = "";
-    
-    
+
+
     if(GetHasFeat(FEAT_BOOST_CONSTRUCT))              { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826476); }
     if(GetHasFeat(FEAT_COMBAT_MANIFESTATION))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826432); }
     if(GetHasFeat(FEAT_MENTAL_LEAP))                  { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826434); }
@@ -155,43 +155,44 @@ int PsionicFeats(object oPC)
     if(GetHasFeat(FEAT_FELL_SHOT))                    { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826516); }
     // Only check for the first Expanded Knowledge feat - NOT IN YET
     //if(GetHasFeat(FEAT_EXPANDED_KNOWLEDGE_1))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826520); }
-    
+
     if(bRelevel)
     {
                                    //You are not a psionic character and may not take
         FloatingTextStringOnCreature(GetStringByStrRef(16826472) + " " + sFeats + ". " + PLEASE_RESELECT, oPC, FALSE);
     }
-    
+
     return bRelevel;
 }
 
 
 int EpicPsionicFeats(object oPC)
 {
-    int bCanManifMax = GetLevelByClass(CLASS_TYPE_PSION, oPC)  >= 17 ||
-                       GetLevelByClass(CLASS_TYPE_WILDER, oPC) >= 18 ||
-                       GetLevelByClass(CLASS_TYPE_PSYWAR, oPC) >= 16;
-    
+    int bCanManifMax = (GetLevelByClass(CLASS_TYPE_PSION, oPC)          + (CLASS_TYPE_PSION          == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0)) >= 17 ||
+                       (GetLevelByClass(CLASS_TYPE_WILDER, oPC)         + (CLASS_TYPE_WILDER         == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0)) >= 18 ||
+                       (GetLevelByClass(CLASS_TYPE_PSYWAR, oPC)         + (CLASS_TYPE_PSYWAR         == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0)) >= 16 ||
+                       (GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC) + (CLASS_TYPE_FIST_OF_ZUOKEN == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0)) >= 9;
+
     int bRelevel = FALSE,
         bFirst   = 1;
     string sManifLimitedFeats = "";
-    
+
     // Not in yet
     //if(GetHasFeat(FEAT_EPIC_EXPANDED_KNOWLEDGE_1)) sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826522);
     if(GetHasFeat(FEAT_IMPROVED_MANIFESTATION_1))  sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826526);
     if(GetHasFeat(FEAT_POWER_KNOWLEDGE_PSION_1))   sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826528);
     if(GetHasFeat(FEAT_POWER_KNOWLEDGE_PSYWAR_1))  sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826529);
     if(GetHasFeat(FEAT_POWER_KNOWLEDGE_WILDER_1))  sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826530);
-    
+
     if(GetHasFeat(FEAT_EPIC_PSIONIC_FOCUS_1))      sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826518);
-    
-    
+
+
     if(!bCanManifMax && bFirst < 1)
     {
         bRelevel = TRUE;           //You do not have the ability to manifest powers of the normal maximum power level in at least one psionic class and may not take 
         FloatingTextStringOnCreature(GetStringByStrRef(16826469) + " " + sManifLimitedFeats + ". " + PLEASE_RESELECT, oPC, FALSE);
     }
-    
+
     if(GetHasFeat(FEAT_IMPROVED_METAPSIONICS_1))
     {
        int nMetaPsi = GetHasFeat(FEAT_CHAIN_POWER,       oPC) +
@@ -201,15 +202,15 @@ int EpicPsionicFeats(object oPC)
                       GetHasFeat(FEAT_SPLIT_PSIONIC_RAY, oPC) +
                       GetHasFeat(FEAT_TWIN_POWER,        oPC) +
                       GetHasFeat(FEAT_WIDEN_POWER,       oPC);
-        
+
         if(nMetaPsi < 4)
         {
             bRelevel = TRUE;           //You do not posses 4 metapsionic feats and may not take Improved Metapsionics.
             FloatingTextStringOnCreature(GetStringByStrRef(16826468) + " " + PLEASE_RESELECT, oPC, FALSE);
         }        
     }
-    
-    
+
+
     return bRelevel;
 }
 
@@ -228,7 +229,7 @@ int SplitPsionicRay(object oPC)
         FloatingTextStringOnCreature(GetStringByStrRef(16826546) + " " + PLEASE_RESELECT, oPC, FALSE);
         return TRUE;
     }
-    
+
     return FALSE;
 }
 

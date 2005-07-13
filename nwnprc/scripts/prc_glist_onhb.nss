@@ -60,11 +60,12 @@ void main()
     if(GetLocalInt(oListener, "PRC_GenericListener_HasLimitedDuration"))
     {
         int nDeathTimer = GetLocalInt(oListener, "PRC_GenericListener_DestroyTimer") - 1;
-        if(nDeathTimer <= 0) // TODO: Division by 6 in spawn. Also a local to determine if self-destruct is used at all.
+        if(nDeathTimer <= 0)
         {
             DestroyListener(oListener);
         }
 
+        SetLocalInt(oListener, "PRC_GenericListener_DestroyTimer", nDeathTimer);
         DoDebug("Listener duration left: " + IntToString(nDeathTimer * 6));
     }
 }

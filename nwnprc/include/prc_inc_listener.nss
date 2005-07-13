@@ -190,8 +190,9 @@ void DestroyListener(object oListener, int bFirst = TRUE)
 {
     if(bFirst)
     {
-        int i, nMax = GetLocalInt(oListener, "PRC_GenericListener_FreePattern");
-        for(; i < nMax; i++)
+        int nMax = GetLocalInt(oListener, "PRC_GenericListener_FreePattern");
+        int i;
+        for(i = 0; i < nMax; i++)
         {
             SetListenPattern(oListener, "", i);
             DeleteLocalString(oListener, "PRC_GenericListener_ListenScript_" + IntToString(i));

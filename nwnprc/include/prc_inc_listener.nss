@@ -113,9 +113,11 @@ void AddPattern(object oListener, string sPattern, string sScriptToCall);
  *    automatically.
  *
  * @param oListener     The listener object to destroy.
+ * @param bFirst        Whether the function is being run for the first time,
+ *                      or it has already recuresed. When calling, always leave
+ *                      this to default (ie, TRUE).
  */
-void DestroyListener(object oListener);
-
+void DestroyListener(object oListener, int bFirst = TRUE);
 
 //////////////////////////////////////////////////
 /* Function defintions                          */
@@ -139,7 +141,10 @@ object SpawnListener(string sScriptToCall, location lSpawnAt,
     AssignCommand(oListener, SetIsDestroyable(FALSE, FALSE, FALSE));
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oListener);
     // Or seen
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oListener);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oListener, 9999.0f);
+
+    // Set the number of heartbeats until refreshing the invisbility VFX
+    SetLocalInt(oListener, "PRC_GenericListener_VFXRefreshTimer", 1500);
 
     // The actual listening part
     SetListening(oListener, TRUE);
@@ -161,6 +166,10 @@ object SpawnListener(string sScriptToCall, location lSpawnAt,
     if(fTTL > 0.0f)
     {
         DelayCommand(fTTL, DestroyListener(oListener));
+
+        // Paranoia - also set a timer so that the listener destroys itself on hearbeat once it's time is up
+        SetLocalInt(oListener, "PRC_GenericListener_HasLimitedDuration", TRUE);
+        SetLocalInt(oListener, "PRC_GenericListener_DestroyTimer", FloatToInt(fTTL + 6.0f) / 6);
     }
 
     return oListener;
@@ -177,14 +186,25 @@ void AddPattern(object oListener, string sPattern, string sScriptToCall)
     SetLocalInt(oListener, "PRC_GenericListener_FreePattern", nPattern + 1);
 }
 
-void DestroyListener(object oListener)
+void DestroyListener(object oListener, int bFirst = TRUE)
 {
-    int i, nMax = GetLocalInt(oListener, "PRC_GenericListener_FreePattern");
-    for(; i < nMax; i++)
+    if(bFirst)
     {
-        SetListenPattern(oListener, "", i);
-        DeleteLocalString(oListener, "PRC_GenericListener_ListenScript_" + IntToString(i));
+        int i, nMax = GetLocalInt(oListener, "PRC_GenericListener_FreePattern");
+        for(; i < nMax; i++)
+        {
+            SetListenPattern(oListener, "", i);
+            DeleteLocalString(oListener, "PRC_GenericListener_ListenScript_" + IntToString(i));
+        }
+
+        SetCommandable(TRUE, oListener);
+        AssignCommand(oListener, ClearAllActions());
     }
 
-    MyDestroyObject(oListener);
+    AssignCommand(oListener, SetIsDestroyable(TRUE, FALSE, FALSE));
+    AssignCommand(oListener, DestroyObject(oListner));
+
+    DestroyObject(oListener);
+
+    DelayCommand(0.5f, DestroyListener(oListener, FALSE));
 }

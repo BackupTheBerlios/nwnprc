@@ -1,10 +1,11 @@
 /*
-	Sarrukh Knock
+    Sarrukh Knock
 */
+#include "prc_inc_racial"
 #include "prc_inc_clsfunc"
 void main()
 {
     int CasterLvl = 14;
 
-    ActionCastSpell(SPELL_BLESS, CasterLvl);
+    DoRacialSLA(SPELL_BLESS, CasterLvl);
 }

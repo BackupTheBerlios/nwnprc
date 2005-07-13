@@ -66,7 +66,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
         //Get the distance between the explosion and the target to calculate delay
         fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
         
@@ -87,7 +87,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                      nDamage = nDamage + nDamage / 2;
                  }
                  //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()  + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_COLD);
+                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_COLD);
                  if(nDamage > 0)
                  {
                      //This visual effect is applied to the target object not the location as above.  This visual effect

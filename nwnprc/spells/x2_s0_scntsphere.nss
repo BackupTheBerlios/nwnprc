@@ -77,12 +77,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
             //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Roll damage for each target
                 nDamage = d6(nCasterLvl);
                 //Resolve metamagic
@@ -96,7 +96,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()  + nDC), SAVING_THROW_TYPE_ELECTRICITY);
+                nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC), SAVING_THROW_TYPE_ELECTRICITY);
                 //Set the damage effect
                 eDam = EffectDamage(nDamage, EleDmg);
                 if(nDamage > 0)

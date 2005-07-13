@@ -16,7 +16,7 @@ void RunSpell(object oCaster, object oTarget, int nMetaMagic, int nSpellID,
      // If the target is dead then there is no point in going any further.
     if (GetIsDead(oTarget)) return;
 
-     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,oCaster), SAVING_THROW_TYPE_SPELL))
+     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,oCaster), SAVING_THROW_TYPE_SPELL))
      {
           // Give feedback that a save was made.
           SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
@@ -78,7 +78,7 @@ void main()
                // Stick OBJECT_SELF into a local because it's a function under the hood,
                // and we need a real object reference.
                object oCaster = OBJECT_SELF;
-               DelayCommand(0.5, RunSpell(oCaster, oTarget, SPGetMetaMagic(), GetSpellId(), fDuration,nCasterLvl));
+               DelayCommand(0.5, RunSpell(oCaster, oTarget, SPGetMetaMagic(), PRCGetSpellId(), fDuration,nCasterLvl));
           }
      }
 

@@ -40,7 +40,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     effect eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
     effect eXpl = EffectVisualEffect(VFX_FNF_BLINDDEAF);
     //Check for metamagic extend
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
          nDuration = nDuration * 2;
     }
@@ -78,9 +78,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
             //Make SR check
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Make Fort save
-                if (!/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ nDC)))
+                if (!/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC)))
                 {
                     //Apply the linked effects and the VFX impact
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);

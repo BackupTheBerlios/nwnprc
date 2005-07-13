@@ -35,7 +35,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     effect eLink = EffectLinkEffects(eDur, eParal);
     effect eDam;
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     int nAC = GetAC(oTarget);
     int nHits = d4();
@@ -53,11 +53,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             {
                 nDamage = nDamage + d6(1);
                 //Enter Metamagic conditions
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                     nDamage = 6;//Damage is at max
                 }
-                else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                else if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                     nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                 }
@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_PLUS_TWO);
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
             PRCBonusDamage(oTarget);
-            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,(GetAreaOfEffectCreator()))), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,(GetAreaOfEffectCreator()))), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
             {
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(1),FALSE));
             }

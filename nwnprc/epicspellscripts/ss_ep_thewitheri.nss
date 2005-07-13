@@ -16,19 +16,17 @@ void DoWithering(object oTarget, int nDC, int nDuration);
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, THEWITH_DC, THEWITH_S, THEWITH_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, THEWITH_S) + 10;
         int nDuration = 60; // Lasts 20 rounds, but fires thrice per round.
         effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
         //Fire cast spell at event for the specified target
@@ -38,10 +36,10 @@ void main()
         if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
         {
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            DoWithering(oTarget, nDC, nDuration);
+            DoWithering(oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget)+10, nDuration);
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 void DoWithering(object oTarget, int nDC, int nDuration)

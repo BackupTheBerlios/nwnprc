@@ -67,7 +67,7 @@ if (!X2PreSpellCastCode()) return;
     while(GetIsObjectValid(oTarget))
     {
         fDelay = GetSpellEffectDelay(lTarget, oTarget);
-        nDC = SPGetSpellSaveDC(oTarget, OBJECT_SELF);
+        nDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
         
         if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {

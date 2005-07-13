@@ -48,10 +48,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     eLink = EffectLinkEffects(eLink, eDur);
 
     effect eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDuration = 2;
     //check meta magic for extend
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = 4;
     }
@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
                {
                     //Make Will Save to negate effect
-                    if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
+                    if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
                     {
                         //Apply VFX Impact and daze effect
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);

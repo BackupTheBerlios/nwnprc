@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     int nHD = d4(CasterLvl); //Roll to see how many HD worth of creature will be killed
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCurrentHD;
     int bAlreadyAffected;
     int nMax = 10;// maximun hd creature affected, set this to 9 so that a lower HD creature is chosen automatically
@@ -65,11 +65,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     string sIdentifier = GetTag(OBJECT_SELF);
 
     //Enter Metamagic conditions
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
     {
         nHD = 4 * CasterLvl;
     }
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+    if ((nMetaMagic & METAMAGIC_EMPOWER))
     {
         nHD = nHD + (nHD/2); //Damage/Healing is +50%
     }
@@ -125,9 +125,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             fDelay = GetRandomDelay();
             if(!MyPRCResistSpell(OBJECT_SELF, oLowest,CasterLvl, fDelay))
             {
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Make a Fort Save versus death effects
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oLowest, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oLowest, nDC, SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                 {
                     DeathlessFrenzyCheck(oTarget); 
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oLowest));

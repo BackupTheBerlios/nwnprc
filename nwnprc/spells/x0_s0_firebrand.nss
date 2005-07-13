@@ -178,7 +178,7 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
                 //--------------------------------------------------------------
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterlvl, fDelay))
                 {
-                    int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                    int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     for (i=1; i <= nExtraMissiles + nRemainder; i++)
                     {
                         //Roll damage
@@ -199,7 +199,7 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
 
                               // Adjust damage for reflex save / evasion / imp evasion
                               nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, 
-                                   GetSpellSaveDC() + nDC, SAVING_THROW_TYPE_FIRE);
+                                   nDC, SAVING_THROW_TYPE_FIRE);
 
                               // Always apply missle but only apply impact/damage if we really have damage.                                 
                               DelayCommand(fDelay2, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget));

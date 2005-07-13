@@ -11,6 +11,7 @@
 //:: Created On: Jan 7, 2002
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "prc_inc_function"
 #include "spinc_common"
 #include "x2_inc_spellhook"

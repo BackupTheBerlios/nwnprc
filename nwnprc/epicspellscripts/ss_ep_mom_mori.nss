@@ -10,12 +10,12 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, MORI_DC, MORI_S, MORI_XP))
@@ -23,12 +23,10 @@ void main()
         //Declare major variables
         object oTarget = GetSpellTargetObject();
         int nDamage;
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + 10 + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, MORI_S);
         effect eDam;
         effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
         effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
         if (GetObjectType(oTarget) == OBJECT_TYPE_CREATURE &&
             GetHitDice(oTarget) < 50 && oTarget != OBJECT_SELF)
         {
@@ -36,7 +34,7 @@ void main()
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
                {
                  //Make Fortitude save
-                 if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSpellDC, SAVING_THROW_TYPE_DEATH))
+                 if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget)+10, SAVING_THROW_TYPE_DEATH))
                  {
                     //Apply the death effect and VFX impact
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
@@ -56,5 +54,5 @@ void main()
         }
         else SendMessageToPC(OBJECT_SELF, "Spell failure - the target was not valid.");
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

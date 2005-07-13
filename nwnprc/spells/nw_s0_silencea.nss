@@ -42,9 +42,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     object oCaster = GetAreaOfEffectCreator();
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
 
-
-    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
-    {
+    //silence affects everyone, friend or foe
+    //if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
+    //{
           int bHostile;
           if(!MyPRCResistSpell(oCaster,oTarget,nPenetr))
           {
@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                 SignalEvent(oTarget, EventSpellCastAt(oCaster, SPELL_SILENCE,bHostile));
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,FALSE);
           }
-     }
+    // }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the integer used to hold the spells spell school

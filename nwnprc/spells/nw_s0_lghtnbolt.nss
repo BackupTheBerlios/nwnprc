@@ -84,7 +84,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                    //Make an SR check
                    if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
                    {
-                        int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                        int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                         //Roll damage
                         nDamage =  d6(nCasterLevel);
                         //Enter Metamagic conditions
@@ -98,7 +98,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         }
                         nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                         //Adjust damage based on Reflex Save, Evasion and Improved Evasion
-                        nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, GetSpellSaveDC()+nDC,SAVING_THROW_TYPE_ELECTRICITY);
+                        nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC,SAVING_THROW_TYPE_ELECTRICITY);
                         //Set damage effect
                         eDamage = EffectDamage(nDamage, EleDmg);
                         if(nDamage > 0)

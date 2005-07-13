@@ -503,7 +503,7 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
             if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
             {
                 // Will save
-                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_SPELL))
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_SPELL))
                 {
                     array_set_object(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY, i++, oTarget);
         }   }   }

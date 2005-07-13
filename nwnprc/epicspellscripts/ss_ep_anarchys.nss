@@ -22,18 +22,17 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, ANARCHY_DC, ANARCHY_S, ANARCHY_XP))
     {
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
-        int nSaveDC = GetEpicSpellSaveDC(OBJECT_SELF)  + GetDCSchoolFocusAdjustment(OBJECT_SELF, ANARCHY_S);       
         float fDuration = RoundsToSeconds(20);
         effect eVis = EffectVisualEffect(VFX_FNF_HOWL_MIND );
         effect eConf = EffectConfused();
@@ -62,8 +61,8 @@ void main()
                         SPELL_CONFUSION));
                     if(!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                     {
-
-                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF),
+                        int nSaveDC = GetEpicSpellSaveDC(OBJECT_SELF, oTarget, SPELL_EPIC_ANARCHY);       
+                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC,
                             SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
                         {
                             DelayCommand(fDelay, SPApplyEffectToObject
@@ -87,6 +86,6 @@ void main()
             AdjustAlignment(OBJECT_SELF, ALIGNMENT_CHAOTIC, d10());
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

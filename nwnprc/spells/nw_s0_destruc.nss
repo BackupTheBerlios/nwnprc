@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
         {
             //Make a saving throw check
-            if(!/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
+            if(!/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
             {
                 DeathlessFrenzyCheck(oTarget);
                 

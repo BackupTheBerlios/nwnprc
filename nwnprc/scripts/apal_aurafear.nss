@@ -13,9 +13,7 @@
 //:: Created On: May 25, 2001
 //:://////////////////////////////////////////////
 
-#include "prc_inc_function"
-#include "spinc_common"
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void main()
 {

@@ -4,38 +4,38 @@ void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay
 
 void main()
 {
-	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-	if (!X2PreSpellCastCode()) return;
+    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+    if (!X2PreSpellCastCode()) return;
     
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	// Get the spell target location as opposed to the spell target.
-	location lTarget = GetSpellTargetLocation();
+    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    
+    // Get the spell target location as opposed to the spell target.
+    location lTarget = GetSpellTargetLocation();
 
-	// Get the effective caster level.
-	int nCasterLvl = PRCGetCasterLevel();
+    // Get the effective caster level.
+    int nCasterLvl = PRCGetCasterLevel();
 
-	// Apply a fancy effect for such a high level spell.
-	//ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SOUND_BURST), lTarget);
-	
-	float fDelay;
-	
-	// Declare the spell shape, size and the location.  Capture the first target object in the shape.
-	// Cycle through the targets within the spell shape until an invalid object is captured.
-	int nTargets = 0;
-	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	while (GetIsObjectValid(oTarget))
-	{
-		fDelay = GetSpellEffectDelay(lTarget, oTarget);
-		
-		// Run the Bioware drown code.
-		object oCaster = OBJECT_SELF;
-		BioWareDrown (nCasterLvl, oCaster, oTarget, fDelay);
-		
-		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	}
-	
-	SPSetSchool();
+    // Apply a fancy effect for such a high level spell.
+    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SOUND_BURST), lTarget);
+    
+    float fDelay;
+    
+    // Declare the spell shape, size and the location.  Capture the first target object in the shape.
+    // Cycle through the targets within the spell shape until an invalid object is captured.
+    int nTargets = 0;
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    while (GetIsObjectValid(oTarget))
+    {
+        fDelay = GetSpellEffectDelay(lTarget, oTarget);
+        
+        // Run the Bioware drown code.
+        object oCaster = OBJECT_SELF;
+        BioWareDrown (nCasterLvl, oCaster, oTarget, fDelay);
+        
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    }
+    
+    SPSetSchool();
 }
 
 //
@@ -51,9 +51,9 @@ void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay
     effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
     effect eDam;
     //Check faction of target
-	if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
-//	if(!GetIsReactionTypeFriendly(oTarget))
-	{
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
+//  if(!GetIsReactionTypeFriendly(oTarget))
+    {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 437));
         //Make SR Check
@@ -65,7 +65,7 @@ void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay
                 &&(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_ELEMENTAL))
             {
                 //Make a fortitude save 
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetSpellSaveDC()))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, oCaster)))
                 {
                     nDam = FloatToInt(nDam * 0.9);
                     eDam = EffectDamage(nDam, DAMAGE_TYPE_BLUDGEONING);

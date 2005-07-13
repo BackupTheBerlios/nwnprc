@@ -6,17 +6,7 @@
     Stratovarius
 */
 
-// Include Files:
-#include "prc_inc_function"
-#include "x2_inc_itemprop"
-#include "prc_class_const"
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
-#include "inc_item_props"
-#include "nw_i0_spells"
-#include "pnp_shft_poly"
-#include "x2_inc_spellhook"
-#include "inc_prc_npc"
+
 
 ////////////////Begin Generic////////////////
 
@@ -43,7 +33,21 @@ void ActionCastSpellOnSelf(int iSpell);
 // This function should only be used when SLA's are meant to simulate true
 // spellcasting abilities, such as those seen when using feats with subradials
 // to simulate spellbooks.
-void ActionCastSpell(int iSpell, int iCasterLev = 0);
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0);
+
+// Include Files:
+#include "prc_alterations"
+#include "prcsp_engine"
+#include "prc_inc_function"
+#include "x2_inc_itemprop"
+#include "prc_class_const"
+#include "prc_feat_const"
+#include "prc_ipfeat_const"
+#include "inc_item_props"
+#include "nw_i0_spells"
+#include "pnp_shft_poly"
+#include "x2_inc_spellhook"
+#include "inc_prc_npc"
 
 void ActionCastSpellOnSelf(int iSpell)
 {
@@ -55,26 +59,37 @@ void ActionCastSpellOnSelf(int iSpell)
     DestroyObject(oCastingObject, 6.0);
 }
 
-void ActionCastSpell(int iSpell, int iCasterLev = 0)
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0)
 {
     object oTarget = GetSpellTargetObject();
     location lLoc = GetSpellTargetLocation();
     
+    //set the overriding values
     if (iCasterLev != 0)
-    {
-        SetLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE, iCasterLev);
-        // Make sure this variable gets deleted as quickly as possible in case it's added in error.
-        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));
-    }
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE, iCasterLev));
+    if (iTotalDC != 0)
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_DC_TOTAL_OVERRIDE, iTotalDC));
+    if (iBaseDC != 0)
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE, iBaseDC));
     SetLocalInt(OBJECT_SELF, "UsingActionCastSpell", TRUE);
     DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));
-///* done via ExecuteScript instead
+
+    //cast the spell
     if (GetIsObjectValid(oTarget))
-        AssignCommand(OBJECT_SELF, ActionCastSpellAtObject(iSpell, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        ActionCastSpellAtObject(iSpell, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
     else
-        AssignCommand(OBJECT_SELF, ActionCastSpellAtLocation(iSpell, lLoc, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-//*/    
-/* The problem with this approace is that the effects are then applies by the original spell, which could go wrong. What to do?
+        ActionCastSpellAtLocation(iSpell, lLoc, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+    //clean up afterwards
+    if (iCasterLev != 0)
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));
+    if (iTotalDC != 0)
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_TOTAL_OVERRIDE));
+    if (iBaseDC != 0)
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
+
+
+/* 
+//The problem with this approace is that the effects are then applies by the original spell, which could go wrong. What to do?
     SetLocalInt(OBJECT_SELF, "SpellIDOverride", GetSpellId());
     DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "SpellIDOverride"));
     string sScript = Get2DACache("spells", "ImpactScript", iSpell);
@@ -134,7 +149,7 @@ void DrunkenMasterCreateEmptyBottle(object oTarget, int nBeverage);
 int AddDrunkenMasterSkinProperties(object oPC, object oSkin);
 
 // Determines the DC needed to save against the cast spell-like ability
-// replace GetSpellSaveDC
+// replace PRCGetSaveDC
 int GetSpellDCSLA(object oCaster, int iSpelllvl,int iAbi = ABILITY_WISDOM);
 
 // Functions:

@@ -54,9 +54,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Make a SR check
             if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             {
-                int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
+                int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
                 //Make a Fort Save
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_POISON))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_POISON))
                 {
                    fDelay = GetRandomDelay(0.75, 1.75);
                    //Apply the VFX impact and linked effects

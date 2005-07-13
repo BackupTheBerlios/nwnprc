@@ -26,12 +26,12 @@ void RemoveDomination(object oCreature, object oSlaver = OBJECT_SELF)
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, ENSLAVE_DC, ENSLAVE_S, ENSLAVE_XP))
@@ -39,7 +39,6 @@ void main()
         //Declare major variables
         object oTarget = GetSpellTargetObject();
         object oOldSlave = GetLocalObject(OBJECT_SELF, "EnslavedCreature");
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, ENSLAVE_S) + GetChangesToSaveDC(oTarget,OBJECT_SELF);
         effect eDom = EffectCutsceneDominated();
         effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -59,7 +58,7 @@ void main()
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) && !GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE) && !GetIsPC(oTarget))
             {
                 //Make a Will Save
-                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget), SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     //Release old slave
                     if (GetIsObjectValid(oOldSlave)) RemoveDomination(oOldSlave);

@@ -18,22 +18,20 @@ void RunWorm(object oTarget, int nRoundsRemaining);
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, SP_WORM_DC, SP_WORM_S, SP_WORM_XP))
     {
         object oTarget = GetSpellTargetObject();
         int nDuration = FloatToInt(HoursToSeconds(20) / 6);
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, SP_WORM_S);
         effect eVis = EffectVisualEffect(VFX_IMP_HEAD_MIND);
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
         if (GetObjectType(oTarget) == OBJECT_TYPE_CREATURE &&
             oTarget != OBJECT_SELF)
         {
@@ -43,7 +41,7 @@ void main()
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
                 {
                      //Make Will save
-                     if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC,
+                     if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget),
                         SAVING_THROW_TYPE_MIND_SPELLS))
                      {
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT,
@@ -55,7 +53,7 @@ void main()
             }
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 void RunWorm(object oTarget, int nRoundsRemaining)

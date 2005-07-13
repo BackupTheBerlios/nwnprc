@@ -1,15 +1,20 @@
-#include "prc_class_const"
-#include "prc_feat_const"
-#include "lookup_2da_spell"
-//#include "prcsp_archmaginc"
-#include "prc_add_spl_pen"
-
-#include "prc_inc_spells"
 
 // Use this function to get the adjustments to a spell or SLAs saving throw
 // from the various class effects
 // Update this function if any new classes change saving throws
-int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/);
+int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1);
+
+//called just from above and from inc_epicspells
+int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellID = -1);
+
+#include "prc_inc_spells"
+#include "prc_class_const"
+#include "prc_feat_const"
+#include "lookup_2da_spell"
+#include "prcsp_archmaginc"
+#include "prc_alterations"
+#include "prc_add_spl_pen"
+
 
 
 // Check for CLASS_TYPE_HIEROPHANT > 0 in caller
@@ -306,42 +311,38 @@ int ShadowWeaveDC(int spell_id, object oCaster = OBJECT_SELF)
     return nDC;
 }
 
-
-int GetChangesToSaveDC(object oTarget, object oCaster/* = OBJECT_SELF*/)
+int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
-/*    int spell_id = PRCGetSpellId();
-    int nDC;
-    // For when you want to assign the caster DC.
-    if (GetLocalInt(oCaster, PRC_DC_OVERRIDE) != 0)
+    if(nSpellID == -1)
+        nSpellID = PRCGetSpellId();
+    //10+spelllevel+stat(cha default)
+    int nDC = GetSpellSaveDC(); 
+    // For when you want to assign the caster DC
+    //this does take feat/race/class into account, it only overrides the baseDC
+    if (GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE) != 0)
     {
-        int nOriginalDC = GetSpellSaveDC();
-        //all spellscripts add this automatically so we need to remove it
-        nDC = GetLocalInt(oCaster, PRC_DC_OVERRIDE)-nOriginalDC;
-        //SendMessageToPC(oCaster, "Forced-DC casting at DC " + nDC;
-        return nDC;
+        nDC = GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE);
+        //SendMessageToPC(oCaster, "Forced Base-DC casting at DC " + nDC;
     }
-    else
-    {
-        nDC = ElementalSavantDC(spell_id, oCaster);
-        nDC += GetHierophantSLAAdjustment(spell_id, oCaster);
-        nDC += GetHeartWarderDC(spell_id, oCaster);
-        nDC += GetSpellPowerBonus(oCaster);
-        nDC += ShadowWeaveDC(spell_id, oCaster);
-        nDC += RedWizardDC(spell_id, oCaster);
-        nDC += TattooFocus(spell_id, oCaster);
-        nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
-    }   
-
-    return nDC;*/
-    
-    int spell_id = GetSpellId();
-    int nDC = ElementalSavantDC(spell_id, oCaster);
-    nDC += GetHierophantSLAAdjustment(spell_id, oCaster);
-    nDC += GetHeartWarderDC(spell_id, oCaster);
-    nDC += GetSpellPowerBonus(oCaster);
-    nDC += ShadowWeaveDC(spell_id, oCaster);
-    nDC += RedWizardDC(spell_id, oCaster);
-    nDC += TattooFocus(spell_id, oCaster);
-
+    nDC += GetChangesToSaveDC(oTarget, oCaster, nSpellID);
     return nDC;
+    
+}
+
+//called just from above and from inc_epicspells
+int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellID = -1)
+{
+    if(nSpellID == -1)
+        nSpellID = PRCGetSpellId();
+    int nDC;
+    nDC += ElementalSavantDC(nSpellID, oCaster);
+    nDC += GetHierophantSLAAdjustment(nSpellID, oCaster);
+    nDC += GetHeartWarderDC(nSpellID, oCaster);
+    nDC += GetSpellPowerBonus(oCaster);
+    nDC += ShadowWeaveDC(nSpellID, oCaster);
+    nDC += RedWizardDC(nSpellID, oCaster);
+    nDC += TattooFocus(nSpellID, oCaster);
+    nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
+    return nDC;
+    
 }

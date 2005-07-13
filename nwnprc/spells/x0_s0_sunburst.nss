@@ -103,14 +103,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     nDamage = PRCMaximizeOrEmpower(6, 6, nMetaMagic);
                }
                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     
                 // * if a vampire then destroy it
                 if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_VAMPIRE_MALE || GetAppearanceType(oTarget) == APPEARANCE_TYPE_VAMPIRE_FEMALE || GetStringLowerCase(GetSubRace(oTarget)) == "vampire" )
                 {
                     // SpeakString("I vampire");
                     // * if reflex saving throw fails no blindness
-                    if (!ReflexSave(oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_SPELL))
+                    if (!ReflexSave(oTarget, (nDC), SAVING_THROW_TYPE_SPELL))
                     {
                         effect eDead = EffectDamage(GetCurrentHitPoints(oTarget));
                         //SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FLAME_M), oTarget);
@@ -124,7 +124,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
                 if (bDoNotDoDamage == FALSE)
                     //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_SPELL);
+                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_SPELL);
 
                 // * Do damage
                 if ((nDamage > 0) && (bDoNotDoDamage == FALSE))
@@ -139,7 +139,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
                         // * if reflex saving throw fails apply blindness
-                        if (!ReflexSave(oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_SPELL))
+                        if (!ReflexSave(oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
                         {
                             effect eBlindness = EffectBlindness();
                             SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlindness, oTarget,0.0f,TRUE,-1,CasterLvl);

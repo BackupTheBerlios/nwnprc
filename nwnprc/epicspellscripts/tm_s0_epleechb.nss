@@ -17,16 +17,14 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     //Declare major variables
     object oCaster = GetAreaOfEffectCreator();
     object oTarget;
     int nDamage;
     float fDelay;
-    int nDC = GetEpicSpellSaveDC(oCaster) +// Boneshank - added.
-              GetDCSchoolFocusAdjustment(oCaster, LEECH_F_S);
             
     //Capture the first target object in the shape.
     oTarget = GetFirstInPersistentObject();
@@ -35,7 +33,7 @@ void main()
     // If oCaster is not valid
     if( !GetIsObjectValid(oCaster) )
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         DestroyObject( OBJECT_SELF );
         return;
     }
@@ -82,7 +80,7 @@ void main()
                     SendMessageToPC(oCaster, "Not resisted.");
                     nDamage = d6(4);
                     //Adjust damage for Save
-                    if( PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC+GetChangesToSaveDC(oTarget,oCaster) , //B-chngd to nDC
+                    if( PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetEpicSpellSaveDC(GetAreaOfEffectCreator(), oTarget) , //B-chngd to nDC
                         SAVING_THROW_TYPE_NEGATIVE, oCaster, fDelay) )
                     {
                         nDamage /= 2;
@@ -117,5 +115,5 @@ void main()
     //Select the next target within the spell shape.
     oTarget = GetNextInPersistentObject();
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

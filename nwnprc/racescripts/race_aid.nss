@@ -1,10 +1,11 @@
 /*
-	Hound Archon Aid
+    Hound Archon Aid
 */
+#include "prc_inc_racial"
 #include "prc_inc_clsfunc"
 void main()
 {
     int CasterLvl = 6;
 
-    ActionCastSpell(SPELL_AID, CasterLvl);
+    DoRacialSLA(SPELL_AID, CasterLvl);
 }

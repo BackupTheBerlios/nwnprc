@@ -233,10 +233,18 @@ void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
     //get the level
     int nLevel = GetNewSpellbookCasterLevel(nClass);
     //set metamagic
-    SetLocalInt(OBJECT_SELF, "NewSpellMetamagic", nMetamagic);
-    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "NewSpellMetamagic"));
-    //pass in the spell
+    ActionDoCommand(SetLocalInt(OBJECT_SELF, "NewSpellMetamagic", nMetamagic));
+    //set the DC
+    //uses GetSpellId to get the fake spellID not the real one
+    int nDC = 10
+        +StringToInt(Get2DACache("Spells", "Innate", GetSpellId()))
+        +((GetAbilityForClass(nClass, OBJECT_SELF)-10)/2);
+    ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE, nDC));
+    //cast the spells
     ActionCastSpell(nSpellID, nLevel);
+    //cleanup
+    ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "NewSpellMetamagic"));
+    ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
     //remove it from the spellbook
     RemoveSpellUse(OBJECT_SELF, PRCGetSpellId(), nClass);
 }

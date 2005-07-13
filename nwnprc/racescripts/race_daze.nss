@@ -1,6 +1,7 @@
 /*
-	Racepack Daze
+    Racepack Daze
 */
+#include "prc_inc_racial"
 #include "prc_inc_clsfunc"
 #include "prc_racial_const"
 void main()
@@ -9,5 +10,5 @@ void main()
     if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_GITHYANKI) { CasterLvl = 3; }
     else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_GITHZERAI) { CasterLvl = 3; }    
     
-    ActionCastSpell(SPELL_DAZE, CasterLvl);
+    DoRacialSLA(SPELL_DAZE, CasterLvl);
 }

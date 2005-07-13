@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Make an SR check
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay) && (oTarget != OBJECT_SELF))
             {
-                 int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Blind the target if they are less than 9 HD
                 nHD = GetHitDice(oTarget);
                 if (nHD <= 8)
@@ -140,7 +140,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
             nDamage = 20;
             nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             nVis = VFX_IMP_FLAME_S;
-            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC),SAVING_THROW_TYPE_FIRE);
+            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC,SAVING_THROW_TYPE_FIRE);
             ePrism = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, ePrism, oTarget));
         break;
@@ -148,7 +148,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
             nDamage = 40;
             nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             nVis = VFX_IMP_ACID_L;
-            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC),SAVING_THROW_TYPE_ACID);
+            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC),SAVING_THROW_TYPE_ACID);
             ePrism = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, ePrism, oTarget));
         break;
@@ -156,7 +156,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
             nDamage = 80;
             nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             nVis = VFX_IMP_LIGHTNING_S;
-            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC),SAVING_THROW_TYPE_ELECTRICITY);
+            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC),SAVING_THROW_TYPE_ELECTRICITY);
             ePrism = EffectDamage(nDamage, DAMAGE_TYPE_ELECTRICAL);
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, ePrism, oTarget));
         break;
@@ -169,7 +169,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
         case 5: //Paralyze
             {
                 effect eDur2 = EffectVisualEffect(VFX_DUR_PARALYZED);
-                if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ nDC)) == 0)
+                if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC)) == 0)
                 {
                     ePrism = EffectParalyze();
                     eLink = EffectLinkEffects(eDur, ePrism);
@@ -185,7 +185,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
                 eLink = EffectLinkEffects(eMind, ePrism);
                 eLink = EffectLinkEffects(eLink, eDur);
 
-                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                 {
                     nVis = VFX_IMP_CONFUSION_S;
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(10),TRUE,-1,CasterLvl));
@@ -194,7 +194,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
         break;
         case 7: //Death
             {
-                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
+                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                 {
                     DeathlessFrenzyCheck(oTarget);
                     

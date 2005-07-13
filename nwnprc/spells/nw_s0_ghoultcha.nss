@@ -21,6 +21,7 @@
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
+#include "prc_alterations"
 
 void main()
 {
@@ -45,7 +46,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     if(!GetIsReactionTypeFriendly(oTarget) || GetAreaOfEffectCreator() != oTarget)
     {
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget) && !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()))))
+        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget) 
+            && !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,GetAreaOfEffectCreator())))
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(2+d6()));
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

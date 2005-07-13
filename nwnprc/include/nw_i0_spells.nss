@@ -16,10 +16,6 @@
 
 //Added code into spellsCure to maximize for Faith Healing and Blast Infidel
 //Aaon Graywolf - Jan 6, 2003
-
-#include "prc_inc_function"
-#include "inc_dispel"
-
 // GZ: Number of spells in GetSpellBreachProtections
 const int NW_I0_SPELLS_MAX_BREACH = 33;
 
@@ -89,6 +85,11 @@ int AmIAHumanoid(object oTarget);
 // * the originating spell ID. If not specified, SPELL_GREATER_SPELL_BREACH
 // * is used
 void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1);
+
+
+#include "prcsp_engine"
+#include "prc_inc_function"
+#include "inc_dispel"
 
 
 // * Returns true if Target is a humanoid

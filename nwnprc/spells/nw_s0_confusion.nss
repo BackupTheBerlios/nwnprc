@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     int nDuration = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_20);
     effect eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
     effect eConfuse = EffectConfused();
@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     eLink = EffectLinkEffects(eLink, eDur);
 
     //Perform metamagic checks
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration * 2;
     }
@@ -80,9 +80,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
            //Make SR Check and faction check
            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr , fDelay))
            {
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Make Will Save
-                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                 {
                    //Apply linked effect and VFX Impact
                    nDuration = GetScaledDuration(CasterLvl, oTarget);

@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nDuration+SPGetPenetr()))
         {
             // Make Fortitude save to negate
-            if (!/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (10+ GetAbilityModifier(ABILITY_INTELLIGENCE)+GetChangesToSaveDC(oTarget,OBJECT_SELF))))
+            if (!/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF))))
             {
 
                 //Apply visual and effects

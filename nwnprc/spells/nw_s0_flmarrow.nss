@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
   
-    int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+    int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 
     int nCasterLvl = CasterLvl;
@@ -101,7 +101,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     
                     if(nCnt == 1) nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                     
-                    nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
+                    nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, (nDC), SAVING_THROW_TYPE_FIRE);
                 
                     // only add sneak attack damage to first projectile
                     if(nCnt == 1)  nDam += SpellSneakAttackDamage(OBJECT_SELF, oTarget);

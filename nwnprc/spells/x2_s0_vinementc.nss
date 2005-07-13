@@ -59,9 +59,9 @@ ActionDoCommand(SetAllAoEInts(SPELL_VINE_MINE_ENTANGLE,OBJECT_SELF, GetSpellSave
                 {
                     if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
                     {
-                        int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
+                        int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
                         //Make reflex save
-                        int n =   PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + nDC),SAVING_THROW_TYPE_NONE,GetAreaOfEffectCreator() );
+                        int n =   PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (nDC),SAVING_THROW_TYPE_NONE,GetAreaOfEffectCreator() );
                         if(n == 0)
                         {
                            //Apply linked effects

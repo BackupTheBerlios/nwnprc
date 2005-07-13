@@ -27,8 +27,6 @@ void main()
         int nDam, nDamGoodEvil, nDamLawChaos, nCount;
         location lTarget;
 
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, GODSMIT_S) + GetChangesToSaveDC(oTarget,OBJECT_SELF);
-
         // if this option has been enabled, the caster will take backlash damage
         if (GetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE) == TRUE)
         {
@@ -40,7 +38,7 @@ void main()
         }
 
         //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
         //Roll damage
         if (GetAlignmentGoodEvil(OBJECT_SELF) != GetAlignmentGoodEvil(oTarget))
         { nDamGoodEvil = d8(nSpellPower); }
@@ -62,7 +60,7 @@ void main()
 
         //Set damage effect
 
-        if (PRCMySavingThrow(SAVING_THROW_FORT,oTarget,nSpellDC,SAVING_THROW_TYPE_SPELL,OBJECT_SELF) != 0 )
+        if (PRCMySavingThrow(SAVING_THROW_FORT,oTarget,GetEpicSpellSaveDC(OBJECT_SELF, oTarget),SAVING_THROW_TYPE_SPELL,OBJECT_SELF) != 0 )
         {
             nDam /=2;
         }

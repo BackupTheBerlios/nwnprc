@@ -45,7 +45,7 @@ void main()
                               int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 3, nBonusDam);
                               nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                               nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, 
-                                   SPGetSpellSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_NEGATIVE);
+                                   PRCGetSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_NEGATIVE);
 
                               // Apply str/con drain if any.
                               /*

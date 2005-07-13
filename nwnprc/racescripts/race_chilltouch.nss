@@ -1,6 +1,7 @@
 /*
-	Racepack Chill Touch
+    Racepack Chill Touch
 */
+#include "prc_inc_racial"
 #include "prc_inc_clsfunc"
 #include "prc_racial_const"
 #include "prc_spell_const"
@@ -11,6 +12,6 @@ void main()
     else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_FROST_DWARF) { CasterLvl = GetHitDice(OBJECT_SELF); }
     else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_ZAKYA_RAKSHASA) { CasterLvl = 7; }
 
-    ActionCastSpell(SPELL_CHILL_TOUCH, CasterLvl);
+    DoRacialSLA(SPELL_CHILL_TOUCH, CasterLvl);
 }
 

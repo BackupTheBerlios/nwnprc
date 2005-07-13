@@ -21,7 +21,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
      SPSetSchool(nSchool);
      
      // Get the spell ID if it was not given.
-     if (-1 == nSpellID) nSpellID = GetSpellId();
+     if (-1 == nSpellID) nSpellID = PRCGetSpellId();
      
      // Get effective caster level and hand it to the SR engine.  Then
      // cap it at our die cap.
@@ -60,7 +60,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
                //Make SR check, and appropriate saving throw(s).
                if(!SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay) && (oTarget != OBJECT_SELF))
                {
-                       int nSaveDC = SPGetSpellSaveDC(oTarget,OBJECT_SELF);
+                       int nSaveDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     // Roll damage for each target
                     int nDamage = SPGetMetaMagicDamage(nDamageType, nCasterLvl, nDieSize, nBonusDam);
                     nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);

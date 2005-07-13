@@ -81,12 +81,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                     {
                         if(GetHitDice(oTarget) >= 4)
                         {
-                            int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                            int nDC =PRCGetSaveDC(oTarget,OBJECT_SELF);
                             //Make a Will save against mind-affecting
-                            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+                            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                             {
                                 //Make a fortitude save against death
-                                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
+                                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                                 {
                                     // * I made my saving throw but I still have to take the 3d6 damage
 

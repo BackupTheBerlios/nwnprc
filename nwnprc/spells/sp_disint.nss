@@ -32,7 +32,7 @@ void main()
                     // be used instead.
                     // Test done. Result: It does kill them.
                     int nDamage = 9999;
-                    if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
+                    if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
                     {
                          nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == nTouchAttack ? 5 : 10, 6); 
                     }

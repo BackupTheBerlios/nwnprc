@@ -79,8 +79,8 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     //Declare major variables
     int nDamage;
@@ -89,15 +89,12 @@ void main()
     float fDelay;
     oTarget = GetFirstInPersistentObject
         ( OBJECT_SELF,OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE );
-    // Boneshank - Added in the nDC formula.
-    int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +
-	      GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(),  "V");
     //Declare and assign personal impact visual effect.
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
 
     if( !GetIsObjectValid(GetAreaOfEffectCreator()) )
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         DestroyObject(OBJECT_SELF);
         return;
     }
@@ -114,7 +111,7 @@ void main()
 
             //Adjust damage for Fort Save:  How does one avoid lava and not leave the area?
             // Flying, I guess:  To bad NWN doesn't have a "Z" Axis. :D
-            if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()) , // B- ch to nDC
+            if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetEpicSpellSaveDC(GetAreaOfEffectCreator(), oTarget, SPELL_EPIC_MAGMA_B) , // B- ch to nDC
                     SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator()) )
             {
                 // Apply effects to the currently selected target.
@@ -140,14 +137,14 @@ void main()
                 int nCounterIncrease = nMagmaBurstCounter +1;
                 SetLocalInt( oTarget, "MagmaBurst", nCounterIncrease );
                 if( nCounterIncrease >= 5 )
-                    DoPetrification(GetTotalCastingLevel
-                        (GetAreaOfEffectCreator()), OBJECT_SELF, oTarget,
-                        GetSpellId(), nDC + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()) );  // Boneshank - changed to nDC
+                    DoPetrification(GetTotalCastingLevel(GetAreaOfEffectCreator()), 
+                        OBJECT_SELF, oTarget, PRCGetSpellId(), 
+                        GetEpicSpellSaveDC(GetAreaOfEffectCreator(), oTarget));
             }
         }
         //Select the next target within the spell shape.
         oTarget = GetNextInPersistentObject
             (OBJECT_SELF,OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

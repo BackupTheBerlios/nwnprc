@@ -2,30 +2,30 @@
 
 void main()
 {
-	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-	if (!X2PreSpellCastCode()) return;
+    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+    if (!X2PreSpellCastCode()) return;
     
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-  	object oTarget = GetSpellTargetObject();
-  	int nCasterLvl = PRCGetCasterLevel();
-  	int nMetaMagic = GetMetaMagicFeat();
+    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    object oTarget = GetSpellTargetObject();
+    int nCasterLvl = PRCGetCasterLevel();
+    int nMetaMagic = PRCGetMetaMagicFeat();
         int nPenetr = nCasterLvl + SPGetPenetr();
         
-  	int nMissiles = nCasterLvl/2;
-  	float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
-  	float fDelay = fDist/(3.0 * log(fDist) + 2.0);
-  	float fDelay2, fTime;
-  	int nCnt;
+    int nMissiles = nCasterLvl/2;
+    float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
+    float fDelay = fDist/(3.0 * log(fDist) + 2.0);
+    float fDelay2, fTime;
+    int nCnt;
 
         effect eBolt = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
-  	effect eMissile = EffectVisualEffect(VFX_BEAM_EVIL);
-  	effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-  	effect eDazed=EffectDazed();
+    effect eMissile = EffectVisualEffect(VFX_BEAM_EVIL);
+    effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+    effect eDazed=EffectDazed();
 
-  	effect eVis2 = EffectVisualEffect(VFX_IMP_DAZED_S);
+    effect eVis2 = EffectVisualEffect(VFX_IMP_DAZED_S);
 
 
-  	//Fire cast spell at event for the specified target
+    //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_RAY_OF_ENFEEBLEMENT));
         //Limit missiles to 7
         if (nMissiles > 7) nMissiles = 7;
@@ -39,11 +39,11 @@ void main()
                 //Roll damage
                 int nDam = d8(2);
                 //Enter Metamagic conditions
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                 {
                       nDam = 16;//Damage is at max
                 }
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                       nDam = nDam + nDam/2; //Damage/Healing is +50%
                 }
@@ -69,7 +69,7 @@ void main()
 
             }
              //Make reflex save
-                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetSpellSaveDC()+GetChangesToSaveDC(oTarget,OBJECT_SELF)))
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF)))
                 {
                    DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,6.0));
 
@@ -92,5 +92,5 @@ void main()
 
 
         SPSetSchool();
-	
+    
 }

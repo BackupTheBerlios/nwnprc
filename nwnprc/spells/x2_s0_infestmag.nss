@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //--------------------------------------------------------------------------
     // This spell no longer stacks. If there is one of that type, thats ok
     //--------------------------------------------------------------------------
-    if (GetHasSpellEffect(GetSpellId(),oTarget) )
+    if (GetHasSpellEffect(PRCGetSpellId(),oTarget) )
     {
         FloatingTextStrRefOnCreature(100775,OBJECT_SELF,FALSE);
         return;
@@ -64,12 +64,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //--------------------------------------------------------------------------
     // Calculate the duration
     //--------------------------------------------------------------------------
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     int nDuration  = 10 + CasterLvl;
 
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
        nDuration = nDuration * 2;
     }
@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //--------------------------------------------------------------------------
     float  fDist   = GetDistanceToObject(oTarget);
     float  fDelay  = fDist/25.0;
-    int    nDC     = GetSpellSaveDC()  + GetChangesToSaveDC(oTarget,OBJECT_SELF);
+    int    nDC     = PRCGetSaveDC(oTarget,OBJECT_SELF);
     effect eDur = EffectVisualEffect   ( VFX_DUR_FLIES );
 
     CasterLvl +=SPGetPenetr();
@@ -89,7 +89,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     if(!GetIsReactionTypeFriendly(oTarget))
     {
 
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
 
         if(MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay) == 0)
         {
@@ -131,11 +131,11 @@ void RunInfestImpact(object oTarget, object oCaster, int nSaveDC, int nMetaMagic
             effect eVis    = EffectVisualEffect   ( VFX_IMP_DISEASE_S );
             int    nDamage = d4(1);
 
-            if ( nMetaMagic == METAMAGIC_MAXIMIZE )
+            if ( nMetaMagic & METAMAGIC_MAXIMIZE )
             {
                 nDamage = 4;
             }
-            else if ( nMetaMagic == METAMAGIC_EMPOWER )
+            else if ( nMetaMagic & METAMAGIC_EMPOWER )
             {
                 nDamage = nDamage + (nDamage/2);
             }

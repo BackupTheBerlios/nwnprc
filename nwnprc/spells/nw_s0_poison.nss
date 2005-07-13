@@ -60,7 +60,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
    object oCaster = OBJECT_SELF;
    object oTarget = GetSpellTargetObject();
    int CasterLvl = PRCGetCasterLevel(oCaster);
-   int nDC = 10 + (CasterLvl / 2) + GetAbilityModifier(ABILITY_WISDOM);
+   int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
+   //not sure why it was doing this instead Primogenitor
+        //10 + (CasterLvl / 2) + GetAbilityModifier(ABILITY_WISDOM);
    int nMetaMagic = SPGetMetaMagic();
    
     

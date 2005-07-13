@@ -40,12 +40,12 @@ void Depetrify(object oTarget)
     
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     object oTarget = GetSpellTargetObject();
@@ -55,16 +55,14 @@ void main()
         if (GetCanCastSpell(OBJECT_SELF, NAILSKY_DC, NAILSKY_S, NAILSKY_XP))
         {
             //Declare major variables
-            int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
-                GetDCSchoolFocusAdjustment(OBJECT_SELF, NAILSKY_S);
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            RunNailedToTheSky(oTarget, nSpellDC);
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
+            RunNailedToTheSky(oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget));
         }
     }
     else
     FloatingTextStringOnCreature
         ("*Invalid target for spell*", OBJECT_SELF, FALSE);
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 void RunNailedToTheSky(object oTarget, int nDC)

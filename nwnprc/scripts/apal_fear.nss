@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         CasterLvl = CasterLvl + 1;
     }    
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     float fDuration = RoundsToSeconds(CasterLvl);
     int nDamage;
     effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);
@@ -63,7 +63,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     
     object oTarget;
     //Check for metamagic extend
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
         fDuration = fDuration * 2.0;    //Duration is +100%
     }
@@ -82,7 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
             {
                 //Make a will save
-                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_FEAR, OBJECT_SELF, fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_FEAR, OBJECT_SELF, fDelay))
                 {
                     //Apply the linked effects and the VFX impact
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,CasterLvl));

@@ -73,7 +73,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     eLink = EffectLinkEffects(eLink, eDur);
 
     //Meta Magic
-    if(GetMetaMagicFeat() == METAMAGIC_EXTEND)
+    if(PRCGetMetaMagicFeat() & METAMAGIC_EXTEND)
     {
        nLevel *= 2;
     }
@@ -87,10 +87,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && oTarget != OBJECT_SELF)
         {
-           int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+           int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WAR_CRY));
            //Make SR and Will saves
-           if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr)  && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_FEAR))
+           if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr)  && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_FEAR))
             {
                 DelayCommand(0.01,SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(4),TRUE,-1,CasterLvl));
             }
@@ -98,7 +98,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     }
     //Apply bonus and VFX effects to bard.
-    RemoveSpellEffects(GetSpellId(),OBJECT_SELF,OBJECT_SELF);
+    RemoveSpellEffects(PRCGetSpellId(),OBJECT_SELF,OBJECT_SELF);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     DelayCommand(0.01,SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nLevel),TRUE,-1,CasterLvl));
     SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_WAR_CRY, FALSE));

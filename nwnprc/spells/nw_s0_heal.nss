@@ -73,13 +73,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                         nModify = 1;
                     }
                     //Figure out the amount of damage to inflict
+                    nDamage = 10;
                     nDamage = nDamage * nCasterLvl;
 
                     if (nDamage > 150 && !GetPRCSwitch(PRC_BIOWARE_HEAL))
                         nDamage = 150;
 
                     // Will save for half damage
-                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
+                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
                         nDamage /= 2;
 
                     // Cannot drop you below nModify hp
@@ -101,9 +102,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HEAL, FALSE));
         //Figure out how much to heal
-        nHeal = GetMaxHitPoints(oTarget);
-	  if(nHeal > 150 && !GetPRCSwitch(PRC_BIOWARE_HEAL))
-		nHeal = 150;
+        nHeal = 10;
+        nHeal = nHeal * nCasterLvl;
+      if(nHeal > 150 && !GetPRCSwitch(PRC_BIOWARE_HEAL))
+        nHeal = 150;
         //Set the heal effect
         eHeal = EffectHeal(nHeal);
         //Apply the heal effect and the VFX impact

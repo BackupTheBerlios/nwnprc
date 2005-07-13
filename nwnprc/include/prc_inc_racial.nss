@@ -1,13 +1,21 @@
 // Useful includes for dealing with races.
 
-#include "prc_class_const"
-#include "prc_feat_const"
-#include "prc_racial_const"
-
 //function prototypes
 //use this to get class/race adjusted racial type back to one of the bioware bases
 //includes shifter changed forms
 int MyPRCGetRacialType(object oTarget);
+
+//routes to action cast spell, but puts a wrapper around to tell other functions its a 
+//SLA, so dont craft etc
+//also defaults th totalDC to 10+spellevel+chamod
+void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0);
+
+#include "prc_class_const"
+#include "prc_feat_const"
+#include "prc_racial_const"
+#include "prc_inc_clsfunc"
+#include "inc_2dacache"
+
 
 int MyPRCGetRacialType(object oCreature)
 {
@@ -88,4 +96,20 @@ int MyPRCGetRacialType(object oCreature)
         return (nRace-1);
 
     return GetRacialType(oCreature);
+}
+
+
+//routes to action cast spell, but puts a wrapper around to tell other functions its a 
+//SLA, so dont craft etc
+//also defaults th totalDC to 10+spellevel+chamod
+void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
+{
+    if(nTotalDC == 0)
+        nTotalDC = 10
+            +StringToInt(Get2DACache("spells", "Innate", nSpellID))   
+            +GetAbilityModifier(ABILITY_CHARISMA);
+            
+    ActionDoCommand(SetLocalInt(OBJECT_SELF, "SpellIsSLA", TRUE));
+    ActionCastSpell(nSpellID, nCasterlevel, 0, nTotalDC);
+    ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "SpellIsSLA"));
 }

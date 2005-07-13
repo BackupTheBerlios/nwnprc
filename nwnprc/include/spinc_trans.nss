@@ -37,10 +37,10 @@ void DoTransposition(int bAllowHostile);
 //
 void TransposeVFX(object o1, object o2)
 {
-	// Apply vfx to the creatures moving.
-	effect eVis = EffectVisualEffect(VFX_IMP_HEALING_X);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, o1);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, o2);
+    // Apply vfx to the creatures moving.
+    effect eVis = EffectVisualEffect(VFX_IMP_HEALING_X);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, o1);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, o2);
 }
 
 
@@ -68,31 +68,31 @@ void Transpose(object o1, object o2)
 
 void DoTransposition(int bAllowHostile)
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-	if (!X2PreSpellCastCode()) return;
+    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+    if (!X2PreSpellCastCode()) return;
     
-	
-	object oTarget = GetSpellTargetObject();
-	if (!GetIsDead(oTarget))
-	{
-		// Get the spell target.  If he has the same faction leader we do (i.e. he's in the party)
-		// or he's a hostile target and hostiles are allowed then we will do the switch.
-		int bParty = GetFactionLeader(oTarget) == GetFactionLeader(OBJECT_SELF);
-		if (bParty || (bAllowHostile && spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF)))
-		{
-			// Targets outside the party get a will save and SR to resist.
-			if (bParty || 
-				(!SPResistSpell(OBJECT_SELF, oTarget) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF))))
-			{
-				//Fire cast spell at event for the specified target
-				SPRaiseSpellCastAt(oTarget, !bParty);
+    
+    object oTarget = GetSpellTargetObject();
+    if (!GetIsDead(oTarget))
+    {
+        // Get the spell target.  If he has the same faction leader we do (i.e. he's in the party)
+        // or he's a hostile target and hostiles are allowed then we will do the switch.
+        int bParty = GetFactionLeader(oTarget) == GetFactionLeader(OBJECT_SELF);
+        if (bParty || (bAllowHostile && spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF)))
+        {
+            // Targets outside the party get a will save and SR to resist.
+            if (bParty || 
+                (!SPResistSpell(OBJECT_SELF, oTarget) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF))))
+            {
+                //Fire cast spell at event for the specified target
+                SPRaiseSpellCastAt(oTarget, !bParty);
 
-				// Move the creatures.
-				DelayCommand(0.1, Transpose(OBJECT_SELF, oTarget));
-			}
-		}		
-	}
-		
-	SPSetSchool();
+                // Move the creatures.
+                DelayCommand(0.1, Transpose(OBJECT_SELF, oTarget));
+            }
+        }       
+    }
+        
+    SPSetSchool();
 }

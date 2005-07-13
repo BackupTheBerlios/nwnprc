@@ -140,8 +140,7 @@ int SPResistSpell(object oCaster, object oTarget,int nCasterLevel = 0, float fDe
 //      oCaster - caster object.
 int SPGetSpellSaveDC(object oTarget , object oCaster )
 {
-//  return GetSpellSaveDC();
-    return GetSpellSaveDC() + GetChangesToSaveDC(oTarget,oCaster);
+    return PRCGetSaveDC(oTarget,oCaster);
 }
 
 // Get altered damage type for energy sub feats.

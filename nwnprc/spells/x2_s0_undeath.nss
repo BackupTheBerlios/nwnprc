@@ -26,10 +26,10 @@
 
 void DoUndeadToDeath(object oCreature,int CasterLvl)
 {
-    SignalEvent(oCreature, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+    SignalEvent(oCreature, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
     SetLocalInt(oCreature,"X2_EBLIGHT_I_AM_DEAD", TRUE);
 
-    if (!PRCMySavingThrow(SAVING_THROW_WILL,oCreature,(GetSpellSaveDC() + GetChangesToSaveDC(oCreature,OBJECT_SELF)),SAVING_THROW_TYPE_NONE,OBJECT_SELF))
+    if (!PRCMySavingThrow(SAVING_THROW_WILL,oCreature,(PRCGetSaveDC(oCreature,OBJECT_SELF)),SAVING_THROW_TYPE_NONE,OBJECT_SELF))
     {
        float fDelay = GetRandomDelay(0.2f,0.4f);
        if (!MyPRCResistSpell(OBJECT_SELF, oCreature,CasterLvl, fDelay))
@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
         return;
     }
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
 
 // End of Spell Cast Hook
@@ -98,11 +98,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
      object oLow;
      int nHDLeft = nLevel *d4();
     //Enter Metamagic conditions
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
     {
         nHDLeft = 4 * PRCGetCasterLevel(OBJECT_SELF);//Damage is at max
     }
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+    if ((nMetaMagic & METAMAGIC_EMPOWER))
     {
         nHDLeft += (nHDLeft/2); //Damage/Healing is +50%
     }

@@ -21,11 +21,11 @@
 void main()
 {
 
-    ActionDoCommand(SetAllAoEInts(4054, OBJECT_SELF, GetSpellSaveDC() ) );
 
     object oTarget = GetEnteringObject();
     object oCaster = GetAreaOfEffectCreator();
-    int nDC = GetEpicSpellSaveDC(oCaster) + GetChangesToSaveDC(oTarget,oCaster) + GetDCSchoolFocusAdjustment(oCaster, RAINFIR_S);
+    int nDC = GetEpicSpellSaveDC(oCaster, oTarget, SPELL_EPIC_RAINFIR);
+    ActionDoCommand(SetAllAoEInts(4054, OBJECT_SELF, PRCGetSaveDC(oTarget, oCaster) ) );
     int nDamage;
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);

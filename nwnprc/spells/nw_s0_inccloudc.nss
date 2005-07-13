@@ -78,9 +78,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                      nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                 }
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-                int nDC = GetChangesToSaveDC(oTarget,aoeCreator);
+                int nDC = PRCGetSaveDC(oTarget,aoeCreator);
                 //Adjust damage for Reflex Save, Evasion and Improved Evasion
-                nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, GetSpellSaveDC()+nDC,SAVING_THROW_TYPE_FIRE, aoeCreator);
+                nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC,SAVING_THROW_TYPE_FIRE, aoeCreator);
                 // Apply effects to the currently selected target.
                 eDam = EffectDamage(nDamage, EleDmg);
                 if(nDamage > 0)

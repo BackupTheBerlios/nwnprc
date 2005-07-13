@@ -22,8 +22,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //Required include for Imbue Arrow functionality.
-#include "prc_inc_function"
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 //Default includes.  Useful for spellhooking functions.
 #include "x2_inc_spellhook"

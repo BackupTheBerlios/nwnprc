@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
    
     //Declare major variables
     object oTarget = GetSpellTargetObject();
-    int nDC = SPGetSpellSaveDC(oTarget, OBJECT_SELF);
+    int nDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
     int nRand = Random(7)+1;
     int nDisease;
     //Use a random seed to determine the disease that will be delivered.

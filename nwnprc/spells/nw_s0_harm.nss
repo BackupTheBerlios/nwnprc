@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         //Figure out the amount of damage to heal
         nHeal = 10 * nCasterLvl;
         if (nHeal > 150 && !GetPRCSwitch(PRC_BIOWARE_HARM))
-	    nHeal = 150;
+        nHeal = 150;
         //Set the heal effect
         eHeal = EffectHeal(nHeal);
         //Apply heal effect and VFX impact
@@ -83,19 +83,20 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 {
                     nDamage = GetCurrentHitPoints(oTarget) - 1;
                 } */
+                nDamage = 10;
                 nDamage = nDamage * nCasterLvl;
 
                 if (nDamage > 150 && !GetPRCSwitch(PRC_BIOWARE_HARM))
                     nDamage = 150;
 
                 // Will save for half damage
-                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
                     nDamage /= 2;
 
                 // Cannot drop you below 1 hp
                 if (nDamage > GetCurrentHitPoints(oTarget) - 1)
                     nDamage = GetCurrentHitPoints(oTarget) - 1;
-		
+        
                 eDam = EffectDamage(nDamage,DAMAGE_TYPE_NEGATIVE);
 
                 //Apply the VFX impact and effects

@@ -54,7 +54,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     eLink = EffectLinkEffects(eLink, eDur);
 
     effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     float fDelay;
     int nAmount = nHD * 2;
     //Check for metamagic extend
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nCasterLevel;
     }
@@ -106,9 +106,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                     //Make an SR check
                     if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
                     {
-                        int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                        int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                         //Make a Will save to negate
-                        if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS))
+                        if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_MIND_SPELLS))
                         {
                             //Apply the linked effects and the VFX impact
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl));

@@ -79,9 +79,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 //Make SR check
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel)) //, 0.1))
                 {
-                    int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                    int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     //Make a fortitude save to avoid death
-                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DEATH)) //, OBJECT_SELF, 3.0))
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_DEATH)) //, OBJECT_SELF, 3.0))
                     {
                         DeathlessFrenzyCheck(oTarget);
                         

@@ -26,10 +26,36 @@ void EvalPRCFeats(object oPC);
 
 int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int iDisplayFeedback);
 
+void ScrubPCSkin(object oPC, object oSkin);
+
+void DeletePRCLocalInts(object oSkin);
+
 #include "prc_alterations"
+// Generic includes
+#include "prcsp_engine"
+#include "inc_utility"
+#include "x2_inc_switches"
+#include "prc_feat_const"
+#include "prc_class_const"
+#include "prc_spell_const"
+#include "prc_racial_const"
+#include "prc_ipfeat_const"
+#include "prc_misc_const"
+#include "inc_fileends"
+
+// PRC Spell Engine Utility Functions
+#include "lookup_2da_spell"
+#include "prc_inc_spells"
+#include "prcsp_reputation"
+#include "prcsp_archmaginc"
+#include "prcsp_spell_adjs"
+#include "prc_inc_clsfunc"
+#include "prc_inc_racial"
+#include "inc_abil_damage"
 #include "inc_persist_loca"
 #include "NW_I0_GENERIC"
-#include "prc_ipfeat_const"
+#include "inc_abil_damage"
+
 
 int nbWeaponFocus(object oPC);
 

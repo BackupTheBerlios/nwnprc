@@ -113,10 +113,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
 
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
 
                 //Check that a reflex save was made.
-                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_DIVINE, OBJECT_SELF, 1.0) == 0)
+                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (nDC), SAVING_THROW_TYPE_DIVINE, OBJECT_SELF, 1.0) == 0)
                 {
                     DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nBlindLength),TRUE,-1,CasterLvl));
                 }

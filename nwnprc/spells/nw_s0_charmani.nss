@@ -50,14 +50,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     effect eLink = EffectLinkEffects(eMind, eCharm);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = 2  + CasterLvl/3;
     nDuration = GetScaledDuration(nDuration, oTarget);
     int nRacial = MyPRCGetRacialType(oTarget);
     int nPenetr = CasterLvl + SPGetPenetr();
     //Meta magic duration check
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration * 2;
     }
@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                 (nRacial == RACIAL_TYPE_HUMANOID_REPTILIAN))
             {
                 //Make Will Save
-                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
+                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     //Apply impact effects and linked duration and charm effect
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);

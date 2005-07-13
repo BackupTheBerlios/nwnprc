@@ -84,7 +84,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
        if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
        {
-            int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+            int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
             //Roll damage for each target
             nDamage = d8() + CasterLvl;
             //Resolve metamagic
@@ -97,7 +97,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             {
                nDamage = nDamage + (nDamage / 2);
             }
-            if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_NEGATIVE, OBJECT_SELF, fDelay))
+            if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_NEGATIVE, OBJECT_SELF, fDelay))
             {
                 nDamage /= 2;
             }

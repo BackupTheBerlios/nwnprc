@@ -26,7 +26,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
      SPSetSchool(nSchool);
      
      // Get the spell ID if it was not given.
-     if (-1 == nSpellID) nSpellID = GetSpellId();
+     if (-1 == nSpellID) nSpellID = PRCGetSpellId();
      
      // Adjust the damage type of necessary.
      nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
@@ -71,7 +71,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
                    //Make an SR check
                    if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
                  {
-                    int nSaveDC = SPGetSpellSaveDC(oTarget,OBJECT_SELF);
+                    int nSaveDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                               // Roll damage for each target
                               int nDamage = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
                               
@@ -103,7 +103,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
                               // target has improved evasion then it's harder as the damage is halved even on a failed
                               // save, so we have to catch that case.
                               fKnockdownTarget = fDoKnockdown && !GetIsDead(oTarget) &&
-                                   GetCreatureSize(oTarget) <= CREATURE_SIZE_LARGE &&
+                                   PRCGetCreatureSize(oTarget) <= CREATURE_SIZE_LARGE &&
                                    (nFullDamage == nDamage || (0 != nDamage && GetHasFeat(FEAT_IMPROVED_EVASION, oTarget)));
                          }
                     

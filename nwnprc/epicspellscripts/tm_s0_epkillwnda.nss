@@ -16,8 +16,8 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     //Declare variables
     effect eVis = EffectVisualEffect( VFX_IMP_DEATH );
@@ -26,10 +26,6 @@ void main()
     
     //Get the first object entering the area
     object oTarget = GetEnteringObject();
-    
-    int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) + // Boneshank - added.
-		GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()) +
-        GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), TOLO_KW_S);
 
 
     if( spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE,
@@ -42,7 +38,7 @@ void main()
         if( !MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
         {
             //Make a fortitude save (-4) to avoid death
-            if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4,
+            if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetEpicSpellSaveDC(GetAreaOfEffectCreator(), oTarget)+4,
                 SAVING_THROW_TYPE_DEATH, GetAreaOfEffectCreator()) )
             {
                 //Apply the delay VFX impact and death effect
@@ -54,5 +50,5 @@ void main()
             }
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

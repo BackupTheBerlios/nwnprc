@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     int bContinueLoop;
     int nHD = 4 + d4();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCurrentHD;
     int bAlreadyAffected;
     int nMax = 9;// maximun hd creature affected
@@ -74,15 +74,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
     string sSpellLocal = "BIOWARE_SPELL_LOCAL_SLEEP_" + ObjectToString(OBJECT_SELF);
     //Enter Metamagic conditions
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
     {
         nHD = 8;//Damage is at max
     }
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+    if ((nMetaMagic & METAMAGIC_EMPOWER))
     {
         nHD = nHD + (nHD/2); //Damage/Healing is +50%
     }
-    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    else if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2;   //Duration is +100%
     }
@@ -134,9 +134,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             //Make SR check
             if (!MyPRCResistSpell(OBJECT_SELF, oLowest,nPenetr))
             {
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Make Fort save
-                if(!PRCMySavingThrow(SAVING_THROW_WILL, oLowest, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_MIND_SPELLS))
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oLowest, (nDC), SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oLowest);
                     if (GetIsImmune(oLowest, IMMUNITY_TYPE_SLEEP) == FALSE)

@@ -35,7 +35,6 @@ void main()
         effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
         effect eVis2 = EffectVisualEffect(VFX_IMP_ACID_L);
         effect eVis3 = EffectVisualEffect(VFX_IMP_SONIC);
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, HELBALL_S);
 
  
         // if this option has been enabled, the caster will take damage for casting
@@ -66,7 +65,7 @@ void main()
             if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
             {
 
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
 
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20 + 0.5f;
                //Roll damage for each target
@@ -76,7 +75,7 @@ void main()
                 nDamage4 = d6(10);
 
                 // no we don't care about evasion. there is no evasion to hellball
-                if (PRCMySavingThrow(SAVING_THROW_REFLEX,oTarget,nSpellDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),SAVING_THROW_TYPE_SPELL,OBJECT_SELF,fDelay) >0)
+                if (PRCMySavingThrow(SAVING_THROW_REFLEX,oTarget,GetEpicSpellSaveDC(OBJECT_SELF, oTarget),SAVING_THROW_TYPE_SPELL,OBJECT_SELF,fDelay) >0)
                 {
                     nDamage1 /=2;
                     nDamage2 /=2;

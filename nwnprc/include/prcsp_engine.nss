@@ -1,6 +1,3 @@
-#include "prc_inc_racial"
-#include "prc_feat_const"
-#include "prc_class_const"
 
 // Module Constants
 const float CACHE_TIMEOUT_CAST = 2.0;
@@ -12,19 +9,29 @@ const int SPELL_RESIST_PASS = 1;
 const int SPELL_RESIST_GLOBE = 2;
 const int SPELL_RESIST_MANTLE = 3;
 
+int MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDelay = 0.0);
+
+#include "prc_inc_racial"
+#include "prc_feat_const"
+#include "prc_class_const"
+#include "prcsp_reputation"
+#include "prcsp_archmaginc"
+#include "prcsp_spell_adjs"
+
+
 //
-//	This function is a wrapper should someone wish to rewrite the Bioware
-//	version. This is where it should be done.
+//  This function is a wrapper should someone wish to rewrite the Bioware
+//  version. This is where it should be done.
 //
 int
 PRCResistSpell(object oCaster, object oTarget)
 {
-	return ResistSpell(oCaster, oTarget);
+    return ResistSpell(oCaster, oTarget);
 }
 
 //
-//	This function is a wrapper should someone wish to rewrite the Bioware
-//	version. This is where it should be done.
+//  This function is a wrapper should someone wish to rewrite the Bioware
+//  version. This is where it should be done.
 //
 int 
 PRCGetSpellResistance(object oTarget, object oCaster)
@@ -57,10 +64,10 @@ PRCGetSpellResistance(object oTarget, object oCaster)
         // Exalted Companion, can also be used for Celestial Template
         if (GetLocalInt(oTarget, "CelestialTemplate"))
         {
-        	int nHD = GetHitDice(oTarget);
-        	int nSR = nHD * 2;
-        	if (nSR > 25) nSR = 25;
-        	if (nSR > iSpellRes) iSpellRes = nSR;
+            int nHD = GetHitDice(oTarget);
+            int nSR = nHD * 2;
+            if (nSR > 25) nSR = 25;
+            if (nSR > iSpellRes) iSpellRes = nSR;
         }
         
         // Foe Hunter SR stacks with normal SR 
@@ -69,78 +76,77 @@ PRCGetSpellResistance(object oTarget, object oCaster)
         {
              iSpellRes += 15 + GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oTarget);
         }
-	
-	return iSpellRes;
+    
+    return iSpellRes;
 }
 
 //
-//	If a spell is resisted, display the effect
+//  If a spell is resisted, display the effect
 //
 void
 PRCShowSpellResist(object oCaster, object oTarget, int nResist, float fDelay = 0.0)
 {
-	// If either caster/target is a PC send them a message
-	if (GetIsPC(oCaster))
-	{
-		string message = nResist == SPELL_RESIST_FAIL ?
-			"Target is affected by the spell." : "Target resisted the spell.";
-		SendMessageToPC(oCaster, message);
-	}
-	if (GetIsPC(oTarget))
-	{
-		string message = nResist == SPELL_RESIST_FAIL ?
-			"You are affected by the spell." : "You resisted the spell.";
-		SendMessageToPC(oTarget, message);
-	}
-	
-	if (nResist != SPELL_RESIST_FAIL) {
-		// Default to a standard resistance
-		int eve = VFX_IMP_MAGIC_RESISTANCE_USE;
+    // If either caster/target is a PC send them a message
+    if (GetIsPC(oCaster))
+    {
+        string message = nResist == SPELL_RESIST_FAIL ?
+            "Target is affected by the spell." : "Target resisted the spell.";
+        SendMessageToPC(oCaster, message);
+    }
+    if (GetIsPC(oTarget))
+    {
+        string message = nResist == SPELL_RESIST_FAIL ?
+            "You are affected by the spell." : "You resisted the spell.";
+        SendMessageToPC(oTarget, message);
+    }
+    
+    if (nResist != SPELL_RESIST_FAIL) {
+        // Default to a standard resistance
+        int eve = VFX_IMP_MAGIC_RESISTANCE_USE;
 
-		// Check for other resistances
-		if (nResist == SPELL_RESIST_GLOBE)
-			eve = VFX_IMP_GLOBE_USE;
-		else if (nResist == SPELL_RESIST_MANTLE)
-			eve = VFX_IMP_SPELL_MANTLE_USE;
+        // Check for other resistances
+        if (nResist == SPELL_RESIST_GLOBE)
+            eve = VFX_IMP_GLOBE_USE;
+        else if (nResist == SPELL_RESIST_MANTLE)
+            eve = VFX_IMP_SPELL_MANTLE_USE;
 
-		// Render the effect
-		DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT,
-			EffectVisualEffect(eve), oTarget));
-	}
+        // Render the effect
+        DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT,
+            EffectVisualEffect(eve), oTarget));
+    }
 }
 
 //
-//	This function overrides the BioWare MyResistSpell.
-//	TODO: Change name to PRCMyResistSpell.
+//  This function overrides the BioWare MyResistSpell.
+//  TODO: Change name to PRCMyResistSpell.
 //
-int
-MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDelay = 0.0)
+int MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDelay = 0.0)
 {
-	int nResist;
+    int nResist;
 
-	// Check if the archmage shape mastery applies to this target
-	if (CheckMasteryOfShapes(oCaster, oTarget))
-		nResist = SPELL_RESIST_MANTLE;
-	else {
-		// Check immunities and mantles, otherwise ignore the result completely
-		nResist = PRCResistSpell(oCaster, oTarget);
-		if (nResist <= SPELL_RESIST_PASS) {
-			nResist = SPELL_RESIST_FAIL;
+    // Check if the archmage shape mastery applies to this target
+    if (CheckMasteryOfShapes(oCaster, oTarget))
+        nResist = SPELL_RESIST_MANTLE;
+    else {
+        // Check immunities and mantles, otherwise ignore the result completely
+        nResist = PRCResistSpell(oCaster, oTarget);
+        if (nResist <= SPELL_RESIST_PASS) {
+            nResist = SPELL_RESIST_FAIL;
 
-			// Because the version of this function was recently changed to
-			// optionally allow the caster level, we must calculate it here.
-			// The result will be cached for a period of time.
-			if (!nEffCasterLvl) {
-				nEffCasterLvl = GetLocalInt(oCaster, CASTER_LEVEL_TAG);
-				if (!nEffCasterLvl) {
-					nEffCasterLvl = PRCGetCasterLevel(oCaster) + SPGetPenetr();
-					SetLocalInt(oCaster, CASTER_LEVEL_TAG, nEffCasterLvl);
-					DelayCommand(CACHE_TIMEOUT_CAST,
-						DeleteLocalInt(oCaster, CASTER_LEVEL_TAG));
-				}
-			}
-			
-			// Pernicious Magic
+            // Because the version of this function was recently changed to
+            // optionally allow the caster level, we must calculate it here.
+            // The result will be cached for a period of time.
+            if (!nEffCasterLvl) {
+                nEffCasterLvl = GetLocalInt(oCaster, CASTER_LEVEL_TAG);
+                if (!nEffCasterLvl) {
+                    nEffCasterLvl = PRCGetCasterLevel(oCaster) + SPGetPenetr();
+                    SetLocalInt(oCaster, CASTER_LEVEL_TAG, nEffCasterLvl);
+                    DelayCommand(CACHE_TIMEOUT_CAST,
+                        DeleteLocalInt(oCaster, CASTER_LEVEL_TAG));
+                }
+            }
+            
+            // Pernicious Magic
                         // +4 caster level vs SR Weave user (not Evoc & Trans spells)
                         int iWeav;
                         if (GetHasFeat(FEAT_PERNICIOUSMAGIC,oCaster))
@@ -155,13 +161,13 @@ MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDel
                         }
 
 
-			// A tie favors the caster.
-			if ((nEffCasterLvl + d20(1)+iWeav) < PRCGetSpellResistance(oTarget, oCaster))
-				nResist = SPELL_RESIST_PASS;
-		}
+            // A tie favors the caster.
+            if ((nEffCasterLvl + d20(1)+iWeav) < PRCGetSpellResistance(oTarget, oCaster))
+                nResist = SPELL_RESIST_PASS;
+        }
     }
 
-	PRCShowSpellResist(oCaster, oTarget, nResist, fDelay);
+    PRCShowSpellResist(oCaster, oTarget, nResist, fDelay);
 
     return nResist;
 }

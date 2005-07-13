@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
-    int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+    int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 
     int nCasterLevel = CasterLvl;
@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, 1.0))
         {
             nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
+            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC), SAVING_THROW_TYPE_FIRE);
             effect eDam = EffectDamage(nDamage, EleDmg);
             if(nDamage > 0)
             {

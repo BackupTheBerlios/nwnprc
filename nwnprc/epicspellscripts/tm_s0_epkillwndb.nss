@@ -17,17 +17,15 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     object oCaster = GetAreaOfEffectCreator();
     
     //Declare variables
     effect eVis = EffectVisualEffect( VFX_IMP_DEATH );
 //    effect eVis = EffectVisualEffect( VFX_COM_CHUNK_RED_MEDIUM ); // Alternative Death VFX
-    float fDelay;
-    int nDC = GetEpicSpellSaveDC(oCaster) + // Boneshank - added.
-		GetDCSchoolFocusAdjustment(oCaster, TOLO_KW_S);        
+    float fDelay;      
         //Get the first object in the persistent area
     object oTarget = GetFirstInPersistentObject();
 
@@ -48,7 +46,7 @@ void main()
             {
 
                 //Make a fortitude save (-4) to avoid death
-                if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC+4+GetChangesToSaveDC(oTarget,oCaster),
+                if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetEpicSpellSaveDC(GetAreaOfEffectCreator(), oTarget)+4,
                     SAVING_THROW_TYPE_DEATH, oCaster) )
                 {
                     //Apply the delay VFX impact and death effect
@@ -63,5 +61,5 @@ void main()
         //Get next target in spell area
         oTarget = GetNextInPersistentObject();
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

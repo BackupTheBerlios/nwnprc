@@ -70,16 +70,16 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         if (GetIsEnemy(oTarget))
         {
             //Signal spell cast at event
-            SignalEvent(oTarget, EventSpellCastAt(oTarget,  GetSpellId()));
+            SignalEvent(oTarget, EventSpellCastAt(oTarget,  PRCGetSpellId()));
             //Make SR Check
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
             {
-               int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+               int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     //Make Will Save
-                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC)))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC)))
                 {
                     // wont stack
-                    if (!GetHasSpellEffect(GetSpellId(), oTarget))
+                    if (!GetHasSpellEffect(PRCGetSpellId(), oTarget))
                         {
                              SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
                              SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eCurse, oTarget);

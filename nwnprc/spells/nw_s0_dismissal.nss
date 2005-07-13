@@ -61,8 +61,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
         {
             //Is the creature a summoned associate
             if((GetAssociate(ASSOCIATE_TYPE_SUMMONED, oMaster) == oTarget &&
-			    GetStringLeft(GetTag(oTarget), 14) != "psi_astral_con"
-			   )                                                                ||
+                GetStringLeft(GetTag(oTarget), 14) != "psi_astral_con"
+               )                                                                ||
                GetAssociate(ASSOCIATE_TYPE_FAMILIAR, oMaster) == oTarget        ||
                GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION, oMaster) == oTarget ||
                GetTag(oTarget)=="BONDFAMILIAR"
@@ -70,7 +70,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
              {
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DISMISSAL));
                  //Make SR and will save checks
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)) + 6))
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl) 
+                    && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)+ 6))
                 {
                      //Apply the VFX and delay the destruction of the summoned monster so
                      //that the script and VFX can play.

@@ -10,7 +10,7 @@
 //        nSaveType - SAVING_THROW_xxx of type of save to use
 //        bCasterImmune - Indicates whether the caster is immune to the spell
 //        nSchool - SPELL_SCHOOL_xxx of the spell's school
-//        nSpellID - ID # of the spell, if -1 GetSpellId() is used
+//        nSpellID - ID # of the spell, if -1 PRCGetSpellId() is used
 //        fAOEDuration - if > 0, then nBurstEffect should be an AOE_xxx vfx, it
 //             will be played at the target location for this duration.  If this is
 //             0 then nBurstEffect should be a VFX_xxx vfx.
@@ -26,7 +26,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
      SPSetSchool(nSchool);
      
      // Get the spell ID if it was not given.
-     if (-1 == nSpellID) nSpellID = GetSpellId();
+     if (-1 == nSpellID) nSpellID = PRCGetSpellId();
      
      // Get the spell target location as opposed to the spell target.
      location lTarget = GetSpellTargetLocation();
@@ -69,7 +69,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                     fDelay = GetSpellEffectDelay(lTarget, oTarget);
                     if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
                     {
-                         int nSaveDC = SPGetSpellSaveDC(oTarget, OBJECT_SELF);
+                         int nSaveDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
 
                          int nDam = 0;
                          int nDam2 = 0;

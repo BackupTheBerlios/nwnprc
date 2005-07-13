@@ -71,7 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Make SR Check
             if (!MyPRCResistSpell(aoeCreator, oTarget,CasterLvl) )
             {
-                int nDC = GetChangesToSaveDC(oTarget,aoeCreator);
+                int nDC = PRCGetSaveDC(oTarget,aoeCreator);
                 //Roll Damage
                 int nDamage = d6(nLevel);
                 //Enter Metamagic conditions
@@ -84,7 +84,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     nDamage = nDamage + (nDamage/2);
                 }
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC()+ nDC)))
+                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC))
                 {
                     nDamage = nDamage/2;
                 }

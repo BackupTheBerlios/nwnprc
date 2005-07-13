@@ -12,7 +12,7 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
      int nPenetr = nCasterLvl + SPGetPenetr();
 
      // Get the spell ID if it was not given.
-     if (-1 == nSpellID) nSpellID = GetSpellId();
+     if (-1 == nSpellID) nSpellID = PRCGetSpellId();
      
      // Adjust the damage type of necessary.
      nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
@@ -34,7 +34,7 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
                // Let the target make a fort save, if they succeed half damage and no bad effect, if they fail
                // then full damage and the bad effect.
                int nSaved = 0;
-               if (FortitudeSave(oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF), nSaveType))
+               if (FortitudeSave(oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF), nSaveType))
                {
                     nSaved = 1;
                     nDamage /= 2;

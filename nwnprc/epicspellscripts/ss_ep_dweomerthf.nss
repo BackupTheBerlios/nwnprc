@@ -16,29 +16,27 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, DWEO_TH_DC, DWEO_TH_S, DWEO_TH_XP))
     {
         object oTarget = GetSpellTargetObject();
         int nTargetSpell;
-        int nSpellDC = GetEpicSpellSaveDC(OBJECT_SELF) + 5 + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, DWEO_TH_S);
         effect eVis = EffectVisualEffect(VFX_IMP_DISPEL);
         effect eVis2 = EffectVisualEffect(VFX_IMP_DOOM);
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
         if (GetObjectType(oTarget) == OBJECT_TYPE_CREATURE &&
             oTarget != OBJECT_SELF)
         {
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
             {
-                 if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nSpellDC,
+                 if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget)+5,
                     SAVING_THROW_TYPE_NONE))
                  {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT,
@@ -64,6 +62,6 @@ void main()
             }
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

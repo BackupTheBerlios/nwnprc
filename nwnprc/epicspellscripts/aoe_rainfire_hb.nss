@@ -29,7 +29,6 @@ ActionDoCommand(SetAllAoEInts(4054,OBJECT_SELF, GetSpellSaveDC()));
    
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
     float fDelay;
-    int nDC = GetEpicSpellSaveDC(oCaster)  + GetDCSchoolFocusAdjustment(oCaster, RAINFIR_S);
     oTarget = GetFirstInPersistentObject
         (OBJECT_SELF, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
 
@@ -46,8 +45,8 @@ ActionDoCommand(SetAllAoEInts(4054,OBJECT_SELF, GetSpellSaveDC()));
                     EventSpellCastAt(oCaster, SPELL_INCENDIARY_CLOUD));
                 nDamage = d6(1);
                 eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
-                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC+ GetChangesToSaveDC(oTarget,oCaster),
-                SAVING_THROW_TYPE_FIRE, oCaster, fDelay))
+                int nDC = GetEpicSpellSaveDC(oCaster, oTarget, SPELL_EPIC_RAINFIR);
+                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE, oCaster, fDelay))
                 {
                     DelayCommand(fDelay,
                         SPApplyEffectToObject

@@ -50,7 +50,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nCasterLvl = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     float fDelay;
     effect eExplode = EffectVisualEffect(VFX_FNF_LOS_NORMAL_20);
@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         {
             {
                 //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
                 //Get the distance between the explosion and the target to calculate delay
                 fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
 
@@ -100,8 +100,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                             AssignCommand(oTarget, ActionCloseDoor(oTarget));
                     }
                 }
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl) && !/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC)))
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
+                if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl) 
+                    && !/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC)))
                 {
 
                     effect eKnockdown = EffectKnockdown();

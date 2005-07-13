@@ -26,7 +26,6 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, A_STONE_DC, A_STONE_S, A_STONE_XP))
     {
         float fDelay;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, A_STONE_S);
         effect eExplode = EffectVisualEffect(VFX_FNF_NATURES_BALANCE);
         effect eVis = EffectVisualEffect(VFX_COM_CHUNK_STONE_MEDIUM);
         effect eStone = EffectPetrify();
@@ -48,9 +47,9 @@ void main()
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 {
 //Use bioware petrify command
-                    DoPetrification(PRCGetCasterLevel(), OBJECT_SELF, oTarget, GetSpellId(), nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF));
+                    DoPetrification(PRCGetCasterLevel(), OBJECT_SELF, oTarget, PRCGetSpellId(), GetEpicSpellSaveDC(OBJECT_SELF, oTarget));
 /*
-                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget),
                         SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                     {
                         DelayCommand(fDelay, SPApplyEffectToObject

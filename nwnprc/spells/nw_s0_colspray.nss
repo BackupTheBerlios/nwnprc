@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nHD;
     int nDuration;
     float fDelay;
@@ -81,20 +81,20 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/30;
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay) && oTarget != OBJECT_SELF)
             {
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
-                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))
                 {
                       nDuration = 3 + d4();
                       //Enter Metamagic conditions
-                      if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                      if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                       {
                          nDuration = 7;//Damage is at max
                       }
-                      else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                      else if ((nMetaMagic & METAMAGIC_EMPOWER))
                       {
                          nDuration = nDuration + (nDuration/2); //Damage/Healing is +50%
                       }
-                      else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+                      else if ((nMetaMagic & METAMAGIC_EXTEND))
                       {
                          nDuration = nDuration *2;  //Duration is +100%
                       }

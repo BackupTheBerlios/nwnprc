@@ -27,7 +27,7 @@
 //:://////////////////////////////////////////////
 
 //:: modifications by mr_bumpkin on Dec 4, 2003
-//:: changed all instances of GetSpellSaveDC to GetSpellSaveDC + GetChangesToSaveDC
+//:: changed all instances of GetSpellSaveDC to PRCGetSaveDC
 //:: changed all instances of myResistSpell to myPRCResistSpell
 
 //Added code into spellsInflictTouchAttack to maximize for Faith Healing and Blast Infidel
@@ -438,7 +438,7 @@ void DoDirgeEffect(object oTarget,int nPenetr)
         {
 
             //Make a Fortitude Save to avoid the effects of the movement hit.
-            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_ALL, GetAreaOfEffectCreator()))
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,GetAreaOfEffectCreator()), SAVING_THROW_ALL, GetAreaOfEffectCreator()))
             {
                 int nGetLastPenalty = GetLocalInt(oTarget, "X0_L_LASTPENALTY");
                 // * increase penalty by 2
@@ -534,7 +534,7 @@ void DoSpikeGrowthEffect(object oTarget,int nPenetr)
            if (GetHasSpellEffect(453, oTarget) == FALSE)
            {
                 //Make a Reflex Save to avoid the effects of the movement hit.
-                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_ALL, GetAreaOfEffectCreator(), fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, PRCGetSaveDC(oTarget,GetAreaOfEffectCreator()), SAVING_THROW_ALL, GetAreaOfEffectCreator(), fDelay))
                 {
                     effect eSpeed = EffectMovementSpeedDecrease(30);
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSpeed, oTarget, HoursToSeconds(24));
@@ -619,8 +619,8 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
             {
                 int nDamageTotal = nDamage + nExtraDamage;
                 // A succesful will save halves the damage
-                if (nDC == 0) nDC = GetSpellSaveDC() ;
-                if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_ALL,OBJECT_SELF))
+                if (nDC == 0) nDC = PRCGetSaveDC(oTarget, OBJECT_SELF) ;
+                if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_ALL,OBJECT_SELF))
                 {
                     nDamageTotal = nDamageTotal / 2;
                 }
@@ -769,7 +769,7 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
                         // Reflex save was not being calculated for Firebrand
                         if(nReflexSave)
                         {
-                            nDam = GetReflexAdjustedDamage(nDam, oTarget, GetSpellSaveDC(), SAVING_THROW_TYPE_FIRE);
+                            nDam = GetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_FIRE);
                         }
 
                         fTime = fDelay;
@@ -1140,12 +1140,12 @@ void spellsGenericAreaOfEffect(
             }
           if(!nResistSpellSuccess)
           {
-                int nDC = GetChangesToSaveDC(oTarget,oCaster);
+                int nDC = PRCGetSaveDC(oTarget, oCaster);
                 int nSavingThrowSuccess = FALSE;
                 // * actually roll saving throw if told to
                 if (nSavingThrowType != SAVING_THROW_NONE)
                 {
-                  nSavingThrowSuccess = PRCMySavingThrow(nSavingThrowType, oTarget, (GetSpellSaveDC() + nDC), nSavingThrowSubType);
+                  nSavingThrowSuccess = PRCMySavingThrow(nSavingThrowType, oTarget, nDC, nSavingThrowSubType);
                 }
                 if (!nSavingThrowSuccess)
                 {
@@ -1360,7 +1360,7 @@ void spellsStinkingCloud(object oTarget = OBJECT_INVALID)
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
                 //Make a Fort Save
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_POISON))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,GetAreaOfEffectCreator()), SAVING_THROW_TYPE_POISON))
                 {
                    float fDelay = GetRandomDelay(0.75, 1.75);
                    //Apply the VFX impact and linked effects

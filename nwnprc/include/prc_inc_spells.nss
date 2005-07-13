@@ -753,6 +753,15 @@ int FireAdept (object oCaster, int iSpellID)
 
 int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0)
 {
+    
+    // For when you want to assign the caster DC
+    //this does not take feat/race/class into account, it is an absolute override
+    if (GetLocalInt(oSaveVersus, PRC_DC_TOTAL_OVERRIDE) != 0)
+    {
+        nDC = GetLocalInt(oSaveVersus, PRC_DC_TOTAL_OVERRIDE);
+        //SendMessageToPC(oCaster, "Forced-DC casting at DC " + nDC;
+    }
+    
     // -------------------------------------------------------------------------
     // GZ: sanity checks to prevent wrapping around
     // -------------------------------------------------------------------------
@@ -928,9 +937,6 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 {
 
      object oCaster = GetLastSpellCaster();
-     int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
-     int iTK = GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oTarget);
-     int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
      int nSpell = PRCGetSpellId();
      
      // Handle the target having Force of Will and being targeted by a psionic power
@@ -948,13 +954,18 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         SendMessageToPC(oTarget, "Force Of Will used");
      }
      
+      int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
+     int iTK = GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oTarget);
+     //Thayan Knights auto-fail mind spells cast by red wizards
      if (iRW > 0 && iTK > 0 && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS)
      {
           return 0;
      }
      
-     if (iRedWizard > 0)
+     if (iRW > 0)
      {
+        //Red Wizards recieve a bonus against their specialist schools
+        // this is done by lowering the DC of spells cast against them
           int iRWSpec;
           if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
           else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
@@ -967,28 +978,26 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 
           if (GetSpellSchool(nSpell) == iRWSpec)
           {
-          
-               if (iRedWizard > 28)          nDC = nDC - 14;
-               else if (iRedWizard > 26)     nDC = nDC - 13;
-               else if (iRedWizard > 24)     nDC = nDC - 12;
-               else if (iRedWizard > 22)     nDC = nDC - 11;
-               else if (iRedWizard > 20)     nDC = nDC - 10;
-               else if (iRedWizard > 18)     nDC = nDC - 9;
-               else if (iRedWizard > 16)     nDC = nDC - 8;
-               else if (iRedWizard > 14)     nDC = nDC - 7;
-               else if (iRedWizard > 12)     nDC = nDC - 6;
-               else if (iRedWizard > 10)     nDC = nDC - 5;
-               else if (iRedWizard > 8) nDC = nDC - 4;
-               else if (iRedWizard > 6) nDC = nDC - 3;
-               else if (iRedWizard > 2) nDC = nDC - 2;
-               else if (iRedWizard > 0) nDC = nDC - 1;
-          
+               if (iRW > 28)         nDC = nDC - 14;
+               else if (iRW > 26)    nDC = nDC - 13;
+               else if (iRW > 24)    nDC = nDC - 12;
+               else if (iRW > 22)    nDC = nDC - 11;
+               else if (iRW > 20)    nDC = nDC - 10;
+               else if (iRW > 18)    nDC = nDC - 9;
+               else if (iRW > 16)    nDC = nDC - 8;
+               else if (iRW > 14)    nDC = nDC - 7;
+               else if (iRW > 12)    nDC = nDC - 6;
+               else if (iRW > 10)    nDC = nDC - 5;
+               else if (iRW > 8)     nDC = nDC - 4;
+               else if (iRW > 6)     nDC = nDC - 3;
+               else if (iRW > 2)     nDC = nDC - 2;
+               else if (iRW > 0)     nDC = nDC - 1;          
           }
-
-
      }
 
     //racial pack code
+    //this works by lowering the DC rather than adding to the save
+    //same net effect but slightly different numbers
     if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
     { nDC -= 1+(GetHitDice(oTarget)/5); }
     else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )

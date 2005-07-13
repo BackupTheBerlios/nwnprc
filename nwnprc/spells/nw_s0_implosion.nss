@@ -68,9 +68,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
            //Make SR check
            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
            {
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Make Reflex save
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, ((GetSpellSaveDC()+ nDC)+3), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC+3), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                 {
                     DeathlessFrenzyCheck(oTarget);
                     

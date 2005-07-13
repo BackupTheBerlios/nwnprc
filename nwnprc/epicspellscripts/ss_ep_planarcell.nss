@@ -16,12 +16,12 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, PLANCEL_DC, PLANCEL_S, PLANCEL_XP))
@@ -29,8 +29,6 @@ void main()
         object oTarget = GetSpellTargetObject();
         location lTarget = GetSpellTargetLocation();
         location lCell;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, PLANCEL_S);
         effect eVis1 = EffectVisualEffect(VFX_FNF_IMPLOSION);
         effect eVis2 = EffectVisualEffect(VFX_FNF_SUMMON_GATE);
         // If there is a cell location, and the target is a valid creature.
@@ -42,7 +40,7 @@ void main()
             lCell = GetLocalLocation(OBJECT_SELF, "lPlanarCell");
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
             {
-                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget)))
                 {
                     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis1, lTarget);
                     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis2, lTarget);
@@ -80,5 +78,5 @@ void main()
                 "You must prepare a new cell to teleport creatures to.");
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

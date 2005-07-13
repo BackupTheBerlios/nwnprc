@@ -53,10 +53,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
                 if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
                 {
-                    int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
+                    int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
 
                     //Make a Fortitude Save to avoid the effects of the entangle.
-                    if(!/*Reflex Save*/ PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC() + nDC)))
+                    if(!/*Reflex Save*/ PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (nDC)))
                     {
                         //Entangle effect and Web VFX impact
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWeb, oTarget, RoundsToSeconds(1));

@@ -25,14 +25,14 @@ void main()
     effect eLink = EffectLinkEffects(eMind, eCharm);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLevel = GetCasterLevel(OBJECT_SELF);
     int nDuration = 3 + nCasterLevel/2;
     nDuration = GetScaledDuration(nDuration, oTarget);
     int nRacial = MyPRCGetRacialType(oTarget);
 
     //Metamagic extend check
-    if (nMetaMagic == METAMAGIC_EXTEND)
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
         nDuration = nDuration * 2;
     }
@@ -41,7 +41,7 @@ void main()
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHARM_MONSTER, FALSE));
             // Make Will save vs Mind-Affecting
-            if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetSpellSaveDC(), SAVING_THROW_TYPE_MIND_SPELLS))
+            if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
             {
                 //Apply impact and linked effect
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));

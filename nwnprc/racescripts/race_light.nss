@@ -1,6 +1,7 @@
 /*
     Racepack Light
 */
+#include "prc_inc_racial"
 #include "prc_inc_clsfunc"
 #include "prc_racial_const"
 void main()
@@ -14,6 +15,6 @@ void main()
         CasterLvl = 1;
     }
 
-    ActionCastSpell(SPELL_LIGHT, CasterLvl);
+    DoRacialSLA(SPELL_LIGHT, CasterLvl);
 }
 

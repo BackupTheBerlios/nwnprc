@@ -40,7 +40,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     //Declare major varibles
     object oTarget = GetSpellTargetObject();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     int nDuration = CasterLvl;
@@ -61,10 +61,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             // Make Fortitude save to negate
-            if (!/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
+            if (!/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
             {
                 //Metamagic check for duration
-                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+                if ((nMetaMagic & METAMAGIC_EXTEND))
                 {
                     nDuration = nDuration * 2;
                 }

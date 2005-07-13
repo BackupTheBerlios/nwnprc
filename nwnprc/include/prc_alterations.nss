@@ -40,12 +40,14 @@ const int SAVING_THROW_NONE = 4;
 int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE, int bAbilityMod = TRUE, int bEffect = TRUE, int bArmor = TRUE, int bShield = TRUE, int bFeat = TRUE);
 
 // Generic includes
+#include "prcsp_engine"
 #include "inc_utility"
 #include "x2_inc_switches"
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
 #include "prc_racial_const"
+#include "prc_ipfeat_const"
 #include "prc_misc_const"
 #include "inc_fileends"
 
@@ -55,8 +57,11 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 #include "prcsp_reputation"
 #include "prcsp_archmaginc"
 #include "prcsp_spell_adjs"
-#include "prcsp_engine"
+#include "prc_inc_clsfunc"
 #include "prc_inc_racial"
+#include "inc_abil_damage"
+#include "inc_persist_loca"
+#include "NW_I0_GENERIC"
 #include "inc_abil_damage"
 
 

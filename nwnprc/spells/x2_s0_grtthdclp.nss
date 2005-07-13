@@ -66,12 +66,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oTarget != OBJECT_SELF)
         {
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
 
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
 
-            int nDC = GetSpellSaveDC()  + GetChangesToSaveDC(oTarget,OBJECT_SELF);
+            int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
             if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
             {
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDeaf, oTarget, RoundsToSeconds(10)));

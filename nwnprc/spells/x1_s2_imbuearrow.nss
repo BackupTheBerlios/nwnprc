@@ -110,7 +110,7 @@ void main()
                 nDamage = d6(nCasterLvl);
                 //Resolve metamagic
                 //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                nDamage = GetReflexAdjustedDamage(nDamage, oTarget, GetSpellSaveDC(), SAVING_THROW_TYPE_FIRE);
+                nDamage = GetReflexAdjustedDamage(nDamage, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_FIRE);
                 //Set the damage effect
                 eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
                 if(nDamage > 0)

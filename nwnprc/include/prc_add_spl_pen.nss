@@ -1,11 +1,13 @@
-#include "prcsp_archmaginc"
-#include "prc_inc_spells"
 
 
 // Use this function to get the adjustments to a spell or SLAs spell penetration
 // from the various class effects
 // Update this function if any new classes change spell pentration
 int add_spl_pen(object oCaster = OBJECT_SELF);
+
+#include "prc_inc_spells"
+#include "prc_alterations"
+#include "prcsp_archmaginc"
 
 int GetHeartWarderPene(int spell_id, object oCaster = OBJECT_SELF) {
     // Guard Expensive Calculations
@@ -99,7 +101,7 @@ int RedWizardSP(int spell_id, object oCaster = OBJECT_SELF)
 
     if (iRedWizard > 0)
     {
-        int nSpell = GetSpellId();
+        int nSpell = PRCGetSpellId();
         string sSpellSchool = lookup_spell_school(nSpell);
         int iSpellSchool;
         int iRWSpec;
@@ -189,7 +191,7 @@ int ShadowWeavePen(int spell_id, object oCaster = OBJECT_SELF)
 
     if (iShadow > 0)
     {
-        int nSpell = GetSpellId();
+        int nSpell = PRCGetSpellId();
         string sSpellSchool = lookup_spell_school(nSpell);
         int iSpellSchool;
         
@@ -224,7 +226,7 @@ int ShadowWeavePen(int spell_id, object oCaster = OBJECT_SELF)
 }
 int add_spl_pen(object oCaster = OBJECT_SELF)
 {
-    int spell_id = GetSpellId();
+    int spell_id = PRCGetSpellId();
     int nSP = ElementalSavantSP(spell_id, oCaster);
     nSP += GetHeartWarderPene(spell_id, oCaster);
     nSP += RedWizardSP(spell_id, oCaster);

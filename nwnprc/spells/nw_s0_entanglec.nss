@@ -33,7 +33,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     object oCreator;
     int bValid;
 
-	object aoeCreator = GetAreaOfEffectCreator();
+    object aoeCreator = GetAreaOfEffectCreator();
     int CasterLvl = PRCGetCasterLevel(aoeCreator);
 
     int nPenetr = SPGetPenetrAOE(aoeCreator,CasterLvl);
@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                     if(!MyPRCResistSpell(aoeCreator, oTarget,nPenetr))
                     {
                         //Make reflex save
-                        if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,aoeCreator))))
+                        if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget,aoeCreator))))
                         {
                            //Apply linked effects
                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(2),FALSE);

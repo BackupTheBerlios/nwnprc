@@ -17,8 +17,8 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     //Declare major variables
     object oCaster = GetAreaOfEffectCreator();
@@ -27,9 +27,6 @@ void main()
     float fDelay;
         //Capture the first target object in the shape.
     oTarget = GetEnteringObject();
-    int nDC = GetEpicSpellSaveDC(oCaster) +// Boneshank - added.
-		GetChangesToSaveDC(oTarget,oCaster) +
-        GetDCSchoolFocusAdjustment(oCaster, LEECH_F_S);
 
     //Declare and assign personal impact visual effect.
     effect eVisHeal = EffectVisualEffect( VFX_IMP_HEALING_M );
@@ -71,7 +68,7 @@ void main()
                 //Roll damage.
                 nDamage = d6(4);
                //Adjust damage for Save
-                if( PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC,
+                if( PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetEpicSpellSaveDC(GetAreaOfEffectCreator(), oTarget),
                     SAVING_THROW_TYPE_NEGATIVE, oCaster, fDelay) )
                 {
                     nDamage /= 2;
@@ -103,5 +100,5 @@ void main()
             }
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

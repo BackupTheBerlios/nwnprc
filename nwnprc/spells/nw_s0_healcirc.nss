@@ -91,7 +91,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 //Make SR check
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
-                    int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                    int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     nModify = d8() + nCasterLvl;
                     //Make metamagic check
                     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, FALSE);
@@ -100,11 +100,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                         nModify = 8 + nCasterLvl;
                     }
                     if ((nMetaMagic & METAMAGIC_EMPOWER))
-	                {
-	                    nModify += (nModify/2); //Damage/Healing is +50%
-	                }
+                    {
+                        nModify += (nModify/2); //Damage/Healing is +50%
+                    }
                     //Make Fort save
-                    if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
+                    if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
                     {
                         nModify /= 2;
                     }

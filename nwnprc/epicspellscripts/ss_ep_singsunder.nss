@@ -16,19 +16,17 @@ object GetSunderTarget(object oTarget);
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, SINGSUN_DC, SINGSUN_S, SINGSUN_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, SINGSUN_S);
         effect eImp = EffectVisualEffect(VFX_IMP_BREACH);
         effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
         object oItem = GetSunderTarget(oTarget);
@@ -40,7 +38,7 @@ void main()
             if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
             {
                 // Will save.
-                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget)))
                 {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
@@ -52,7 +50,7 @@ void main()
             SendMessageToPC(OBJECT_SELF,
                 "That creature has nothing equipped to sunder!");
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 object GetSunderTarget(object oTarget)

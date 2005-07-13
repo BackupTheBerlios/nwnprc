@@ -70,13 +70,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
             //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
             //Get the distance between the target and caster to delay the application of effects
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20.0;
             //Make SR check, and appropriate saving throw(s).
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay) && (oTarget != OBJECT_SELF))
             {
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Detemine damage
                 nDamage = d6(nCasterLevel);
                 //Enter Metamagic conditions
@@ -90,7 +90,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 //Adjust damage according to Reflex Save, Evasion or Improved Evasion
-                nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_ACID);
+                nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC), SAVING_THROW_TYPE_ACID);
 
                 // Apply effects to the currently selected target.
                 effect eAcid = EffectDamage(nDamage, EleDmg);

@@ -20,8 +20,8 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     object oCaster = GetAreaOfEffectCreator();
 
@@ -34,9 +34,6 @@ void main()
     float fDelay;
     // Boneshank - Added in the nDC formula.
     oTarget = GetEnteringObject();
-    int nDC = GetEpicSpellSaveDC(oCaster) +
-		GetChangesToSaveDC(oTarget,oCaster) +
-		GetDCSchoolFocusAdjustment(oCaster, MAGMA_B_S);
 
     
 
@@ -54,7 +51,7 @@ void main()
 
             //Adjust damage for Fort Save:  How does one avoid lava and not leave the area?
             // Flying, I guess:  To bad NWN doesn't have a "Z" Axis. :D
-            if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC,
+            if( !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetEpicSpellSaveDC(GetAreaOfEffectCreator(), oTarget),
                 SAVING_THROW_TYPE_FIRE, oCaster) )
             {
                 // Apply effects to the currently selected target.
@@ -76,5 +73,5 @@ void main()
             SetLocalInt( oTarget, "MagmaBurst", 1 );
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

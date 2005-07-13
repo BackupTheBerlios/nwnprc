@@ -61,7 +61,7 @@ void DoGreenfire(int nDamageType, object oCaster, object oTarget)
                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                if (!HasHeartbeatFired())
                     nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, 
-                         SPGetSpellSaveDC(oTarget,oCaster), SAVING_THROW_TYPE_ACID);
+                         PRCGetSaveDC(oTarget,oCaster), SAVING_THROW_TYPE_ACID);
                          
                // If we really did damage apply it to the target.
                if (nDamage > 0)

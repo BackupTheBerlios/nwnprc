@@ -80,7 +80,7 @@ float GetRandomDelay(float fMinimumTime = 0.4, float MaximumTime = 1.1);
 void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1);
 
 void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
-	int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
+    int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,7 +182,7 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
 
     effect eDispel;
     float fDelay = GetRandomDelay(0.1, 0.3);
-    int nId = GetSpellId();
+    int nId = PRCGetSpellId();
 
     //--------------------------------------------------------------------------
     // Fire hostile event only if the target is hostile...
@@ -253,7 +253,7 @@ void spellsDispelAoEMod(object oTargetAoE, object oCaster, int nCasterLevel)
    if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
 
    int iDice = d20(1);
-//   SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(GetSpellId())+" T "+GetName(oTargetAoE));
+//   SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(PRCGetSpellId())+" T "+GetName(oTargetAoE));
 //   SendMessageToPC(GetFirstPC(), "Dispell :"+IntToString(iDice + nCasterLevel)+" vs DC :"+IntToString(11 + GetLocalInt(oTargetAoE, "X2_AoE_Caster_Level")+ModWeave)+" Weave :"+IntToString(ModWeave)+" "+SchoolWeave);
 
    if(iDice + nCasterLevel >= GetLocalInt(oTargetAoE, "X2_AoE_Caster_Level")+ModWeave)
@@ -646,11 +646,11 @@ void PRCSPApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, in
 }
 
 void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
-	int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
+    int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
 {
-	// PRC pack does not use version 2.0 of Bumpkin's PRC script package, so there is no
-	// PRCSPApplyEffectToObject() method.  So just call the bioware default.
-//	SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
+    // PRC pack does not use version 2.0 of Bumpkin's PRC script package, so there is no
+    // PRCSPApplyEffectToObject() method.  So just call the bioware default.
+//  SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
 
         // Extraordinary/Supernatural effects are not supposed to be dispellable.
         if (GetEffectSubType(eEffect) == SUBTYPE_EXTRAORDINARY || GetEffectSubType(eEffect) == SUBTYPE_SUPERNATURAL)
@@ -658,26 +658,26 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
             bDispellable = FALSE;
         }
 
-	// Instant duration effects can use BioWare code, the PRC code doesn't care about those, as
-	// well as any non-dispellable effect.
-	if (DURATION_TYPE_INSTANT == nDurationType || !bDispellable || GetLocalInt(GetModule(),"BIODispel"))
-	{
-		ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-	}
-	else
-	{
-//		SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-		// We need the extra arguments for the PRC code, get them if defaults were passed in.
-		if (-1 == nSpellID) nSpellID = GetSpellId();
-		if (-1 == nCasterLevel) nCasterLevel = PRCGetCasterLevel(oCaster);
+    // Instant duration effects can use BioWare code, the PRC code doesn't care about those, as
+    // well as any non-dispellable effect.
+    if (DURATION_TYPE_INSTANT == nDurationType || !bDispellable || GetLocalInt(GetModule(),"BIODispel"))
+    {
+        ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
+    }
+    else
+    {
+//      SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
+        // We need the extra arguments for the PRC code, get them if defaults were passed in.
+        if (-1 == nSpellID) nSpellID = PRCGetSpellId();
+        if (-1 == nCasterLevel) nCasterLevel = PRCGetCasterLevel(oCaster);
 
-		// Invoke the PRC apply function passing the extra data.
-		PRCSPApplyEffectToObject(nSpellID, nCasterLevel, oCaster, nDurationType, eEffect, oTarget, fDuration);
-	}
+        // Invoke the PRC apply function passing the extra data.
+        PRCSPApplyEffectToObject(nSpellID, nCasterLevel, oCaster, nDurationType, eEffect, oTarget, fDuration);
+    }
 }
 
 // Sets up all of the AoE's int values, but only if they aren't already set.
-// When called in a function nMetamagic should be GetMetamagicFeat(), and nBaseSaveDC should be GetSpellSaveDC()
+// When called in a function nMetamagic should be GetMetamagicFeat(), and nBaseSaveDC should be PRCGetSaveDC()
 void SetAllAoEInts(int SpellID, object oAoE, int nBaseSaveDC ,int SpecDispel = 0 , int nCasterLevel = 0)
 {
     if(GetLocalInt(oAoE, "X2_AoE_Is_Modified") != 1)
@@ -694,21 +694,9 @@ void SetAllAoEInts(int SpellID, object oAoE, int nBaseSaveDC ,int SpecDispel = 0
        ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Caster_Level", nCasterLevel));
        ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_SpellID", SpellID));
        ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Weave", GetHasFeat(FEAT_SHADOWWEAVE,GetAreaOfEffectCreator())));
-      // ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Save_DC", (nBaseSaveDC + GetChangesToSaveDC(GetAreaOfEffectCreator()))));
-      // ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Modify_Spell_Penetr", ExecuteScriptAndReturnInt("add_spell_penetr", GetAreaOfEffectCreator())));
-      // ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Modify_Elemental_Damage", ChangedElementalDamage(GetAreaOfEffectCreator(), 0)));
-      // ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Store_Metamagic", nMetamagic));
        if (SpecDispel) ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_SpecDispel", SpecDispel));
        ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Is_Modified", 1));
-       
-
-      // The AoE object is deleted after the duration runs out anyway, so I don't
-      // think it will be necessary to actually delete these.
     }
-    
- //      SendMessageToPC(GetFirstPC(), "X2_AoE_Caster_Level:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_Caster_Level")));
- //  SendMessageToPC(GetFirstPC(), "X2_AoE_SpellID:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_SpellID")));
- //  SendMessageToPC(GetFirstPC(), "X2_AoE_Weave:"+ IntToString(GetLocalInt(oAoE, "X2_AoE_Weave")));
  
 }
 

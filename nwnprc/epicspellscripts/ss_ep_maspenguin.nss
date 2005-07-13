@@ -17,12 +17,12 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, MASSPEN_DC, MASSPEN_S, MASSPEN_XP))
@@ -36,7 +36,6 @@ void main()
         effect ePolymorph = EffectPolymorph(POLYMORPH_TYPE_PENGUIN, TRUE);
         effect eLink = EffectLinkEffects(eDuration, ePolymorph);
         location lTarget = GetSpellTargetLocation();
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetDCSchoolFocusAdjustment(OBJECT_SELF, MASSPEN_S);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eDuration,
             lTarget, 10.0);
@@ -50,21 +49,21 @@ void main()
             {
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,
-                    GetSpellId()));
+                    PRCGetSpellId()));
                 fDelay = GetRandomDelay(1.5, 2.5);
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 {
-                    if(GetCreatureSize(oTarget) == CREATURE_SIZE_TINY ||
-                        GetCreatureSize(oTarget) == CREATURE_SIZE_SMALL ||
-                        GetCreatureSize(oTarget) == CREATURE_SIZE_MEDIUM)
+                    if(PRCGetCreatureSize(oTarget) == CREATURE_SIZE_TINY ||
+                        PRCGetCreatureSize(oTarget) == CREATURE_SIZE_SMALL ||
+                        PRCGetCreatureSize(oTarget) == CREATURE_SIZE_MEDIUM)
                     {
 
                         // Targets all get a Fortitude saving throw
-                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),
+                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget),
                             SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                         {
-							//this command will make shore that polymorph plays nice with the shifter
-							ShifterCheck(oTarget);
+                            //this command will make shore that polymorph plays nice with the shifter
+                            ShifterCheck(oTarget);
 
                             // Apply effects to the currently selected target.
                             DelayCommand(fDelay, SPApplyEffectToObject
@@ -81,5 +80,5 @@ void main()
                 RADIUS_SIZE_LARGE, lTarget);
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

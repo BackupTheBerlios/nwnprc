@@ -50,7 +50,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     eLink = EffectLinkEffects(eLink, eDur);
 
     effect eVis = EffectVisualEffect(VFX_IMP_DOMINATE_S);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nCasterLevel = CasterLvl;
     int nDuration = 3 + nCasterLevel;
@@ -68,10 +68,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
            {
                 //Will Save for spell negation
-                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
+                if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     //Check for Metamagic extension
-                    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+                    if ((nMetaMagic & METAMAGIC_EXTEND))
                     {
                         nDuration = nDuration * 2;
                     }

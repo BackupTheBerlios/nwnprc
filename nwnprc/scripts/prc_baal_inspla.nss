@@ -35,7 +35,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
      // March 2003. Removed this as part of the reputation pass
-     //            if((GetSpellId() == 340 && !GetIsFriend(oTarget)) || GetSpellId() == 25)
+     //            if((PRCGetSpellId() == 340 && !GetIsFriend(oTarget)) || PRCGetSpellId() == 25)
             {
                 //Fire cast spell at event for the specified target
                 //SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CONE_OF_COLD));
@@ -49,7 +49,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
                     //Adjust damage according to Reflex Save, Evasion or Improved Evasion
-                  //  nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(OBJECT_SELF)), SAVING_THROW_TYPE_DISEASE);
 
                     // Apply effects to the currently selected target.
                     effect eBite = EffectDamage(nDamage,DAMAGE_TYPE_MAGICAL);

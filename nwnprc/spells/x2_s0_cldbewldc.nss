@@ -65,10 +65,10 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUD_OF_BEWILDERMENT,OBJECT_SELF, GetSpellS
             {
                 if (!GetHasSpellEffect(SPELL_CLOUD_OF_BEWILDERMENT,oTarget))
                 {
-                       int nDC = GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator());
+                       int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
 
                     //Make a Fort Save
-                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + nDC), SAVING_THROW_TYPE_POISON))
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_POISON))
                     {
                        nRounds = d6(1);
                        fDelay = GetRandomDelay(0.75, 1.75);

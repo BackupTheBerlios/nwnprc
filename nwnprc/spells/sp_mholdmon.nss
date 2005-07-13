@@ -5,41 +5,41 @@ int BiowareHoldMonster (int nPenetr, int nCasterLvl, int nMeta, object oTarget, 
 
 void main()
 {
-	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-	if (!X2PreSpellCastCode()) return;
+    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+    if (!X2PreSpellCastCode()) return;
     
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+    SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 
-	// Get the spell target location as opposed to the spell target.
-	location lTarget = GetSpellTargetLocation();
+    // Get the spell target location as opposed to the spell target.
+    location lTarget = GetSpellTargetLocation();
 
-	// Get the effective caster level.
-	int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-	int nPenetr = nCasterLvl+SPGetPenetr();
+    // Get the effective caster level.
+    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nPenetr = nCasterLvl+SPGetPenetr();
 
-	// Apply a fancy effect for such a high level spell.
-	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SOUND_BURST), lTarget);
-	
-	int nMetaMagic = GetMetaMagicFeat();
-	float fDelay;
-	
-	// Declare the spell shape, size and the location.  Capture the first target object in the shape.
-	// Cycle through the targets within the spell shape until an invalid object is captured.
-	int nTargets = 0;
-	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	while (GetIsObjectValid(oTarget))
-	{
-		fDelay = GetSpellEffectDelay(lTarget, oTarget);
-		
-		// Run the Bioware hold person script on the target, if the target is a valid target for the script increment
-		// our target count and check to see if we've used up all our targets, if we have then exit out of the loop.
-		if (BiowareHoldMonster (nPenetr,nCasterLvl, nMetaMagic, oTarget, fDelay)) nTargets++;
-		if (nTargets >= nCasterLvl) break;
-		
-		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	}
-	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+    // Apply a fancy effect for such a high level spell.
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SOUND_BURST), lTarget);
+    
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    float fDelay;
+    
+    // Declare the spell shape, size and the location.  Capture the first target object in the shape.
+    // Cycle through the targets within the spell shape until an invalid object is captured.
+    int nTargets = 0;
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    while (GetIsObjectValid(oTarget))
+    {
+        fDelay = GetSpellEffectDelay(lTarget, oTarget);
+        
+        // Run the Bioware hold person script on the target, if the target is a valid target for the script increment
+        // our target count and check to see if we've used up all our targets, if we have then exit out of the loop.
+        if (BiowareHoldMonster (nPenetr,nCasterLvl, nMetaMagic, oTarget, fDelay)) nTargets++;
+        if (nTargets >= nCasterLvl) break;
+        
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    }
+    
+    SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 }
 
 
@@ -52,12 +52,12 @@ void main()
 
 int BiowareHoldMonster (int nPenetr, int nCasterLvl, int nMeta, object oTarget, float fDelay)
 {
-	int nValidTarget = 0;
-	
+    int nValidTarget = 0;
+    
     //Declare major variables
 //    int nDuration = nCasterLvl;
 //    nDuration = GetScaledDuration(nDuration, oTarget);
-	float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(GetScaledDuration(nCasterLvl, oTarget)));
+    float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(GetScaledDuration(nCasterLvl, oTarget)));
     effect eParal = EffectParalyze();
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     effect eDur2 = EffectVisualEffect(VFX_DUR_PARALYZED);
@@ -69,20 +69,20 @@ int BiowareHoldMonster (int nPenetr, int nCasterLvl, int nMeta, object oTarget, 
 
 
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
-	{
-		nValidTarget = 1;
-		
+    {
+        nValidTarget = 1;
+        
         //Fire cast spell at event for the specified target
-		SPRaiseSpellCastAt(oTarget);
+        SPRaiseSpellCastAt(oTarget);
        //Make SR check
        if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
-	   {
+       {
             //Make Will save
-            if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget,OBJECT_SELF)))
+            if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF)))
             {
                 //Check for metamagic extend
 /*
-                if (nMeta == METAMAGIC_EXTEND)
+                if (nMeta & METAMAGIC_EXTEND)
                 {
                     nDuration = nDuration * 2;
                 }

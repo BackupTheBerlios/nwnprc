@@ -27,8 +27,6 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ANBLAST_DC, ANBLAST_S, ANBLAST_XP))
     {
         float fDelay;
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, ANBLAST_S);
         int nDam;
         effect eExplode = EffectVisualEffect(VFX_IMP_PULSE_COLD);
         effect eVis = EffectVisualEffect(VFX_IMP_FROST_L);
@@ -53,14 +51,13 @@ void main()
                 SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
             {
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,
-                    GetSpellId()));
+                    PRCGetSpellId()));
                 fDelay = GetRandomDelay();
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 {
-
                     nDam = d6(10);
                     // Reflex save for half damage.
-                    if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC + GetChangesToSaveDC(oTarget,OBJECT_SELF),
+                    if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget),
                         SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                         nDam /= 2;
                     eDam = EffectDamage(nDam, DAMAGE_TYPE_COLD);

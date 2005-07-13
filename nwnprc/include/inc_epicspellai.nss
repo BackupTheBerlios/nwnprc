@@ -360,8 +360,7 @@ object GetSuitableTaget(int nSpellID)
             oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
                     REPUTATION_TYPE_ENEMY,OBJECT_SELF, i);
                 while(GetFortitudeSavingThrow(oTarget)+10 >
-                        GetEpicSpellSaveDC(OBJECT_SELF) +
-                            GetDCSchoolFocusAdjustment(OBJECT_SELF, A_STONE_S)
+                        GetEpicSpellSaveDC(OBJECT_SELF, oTarget, nSpellID)
                     && GetDistanceToObject(oTarget) < fDist
                     && i < 10)
                 {
@@ -381,8 +380,7 @@ object GetSuitableTaget(int nSpellID)
             oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
                     REPUTATION_TYPE_ENEMY,OBJECT_SELF, i);
                 while(GetFortitudeSavingThrow(oTarget)+10 >
-                        GetEpicSpellSaveDC(OBJECT_SELF) +
-                            GetDCSchoolFocusAdjustment(OBJECT_SELF, MASSPEN_S)
+                        GetEpicSpellSaveDC(OBJECT_SELF, oTarget, nSpellID)
                     && GetDistanceToObject(oTarget) < fDist
                     && i < 10)
                 {
@@ -402,8 +400,7 @@ object GetSuitableTaget(int nSpellID)
             oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
                     REPUTATION_TYPE_ENEMY,OBJECT_SELF, i);
                 while(GetWillSavingThrow(oTarget)+10 >
-                        GetEpicSpellSaveDC(OBJECT_SELF) +
-                            GetDCSchoolFocusAdjustment(OBJECT_SELF, ENSLAVE_S)
+                        GetEpicSpellSaveDC(OBJECT_SELF, oTarget, nSpellID)
                     && GetDistanceToObject(oTarget) < fDist
                     && i < 10)
                 {
@@ -422,8 +419,7 @@ object GetSuitableTaget(int nSpellID)
             oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
                     REPUTATION_TYPE_ENEMY,OBJECT_SELF, i);
                 while(GetWillSavingThrow(oTarget)+10 >
-                        GetEpicSpellSaveDC(OBJECT_SELF) +
-                            GetDCSchoolFocusAdjustment(OBJECT_SELF, NAILSKY_S)
+                        GetEpicSpellSaveDC(OBJECT_SELF, oTarget, nSpellID)
                     && GetDistanceToObject(oTarget) < fDist
                     && i < 10)
                 {
@@ -460,8 +456,7 @@ object GetSuitableTaget(int nSpellID)
             oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
                     REPUTATION_TYPE_ENEMY,OBJECT_SELF, i);
                 while(GetWillSavingThrow(oTarget)+10 >
-                        GetEpicSpellSaveDC(OBJECT_SELF) +
-                            GetDCSchoolFocusAdjustment(OBJECT_SELF, LEECH_F_S)
+                        GetEpicSpellSaveDC(OBJECT_SELF, oTarget, nSpellID)
                     && GetDistanceToObject(oTarget) < fDist
                     && GetRacialType(oTarget) == RACIAL_TYPE_UNDEAD
                     && i < 10)
@@ -522,8 +517,7 @@ object GetSuitableTaget(int nSpellID)
                     && GetDistanceToObject(oTarget) < fDist
                     && i < 10
                     && GetFortitudeSavingThrow(oTarget)+10 >
-                        GetEpicSpellSaveDC(OBJECT_SELF) +
-                            GetDCSchoolFocusAdjustment(OBJECT_SELF, THEWITH_S))
+                        GetEpicSpellSaveDC(OBJECT_SELF, oTarget, nSpellID))
                 {
                     i++;
                     oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
@@ -544,8 +538,7 @@ object GetSuitableTaget(int nSpellID)
                     && GetDistanceToObject(oTarget) < fDist
                     && i < 10
                     && GetWillSavingThrow(oTarget)+10 >
-                        GetEpicSpellSaveDC(OBJECT_SELF) +
-                            GetDCSchoolFocusAdjustment(OBJECT_SELF, PSION_S_S))
+                        GetEpicSpellSaveDC(OBJECT_SELF, oTarget, nSpellID))
                 {
                     i++;
                     oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
@@ -602,7 +595,7 @@ object GetSuitableTaget(int nSpellID)
                 && GetIsEnemy(oTarget)
                 && GetWillSavingThrow(oTarget)+10 >
                     GetEpicSpellSaveDC(OBJECT_SELF) +
-                        GetDCSchoolFocusAdjustment(OBJECT_SELF, SP_WORM_S))
+                        GetEpicSpellSaveDC(OBJECT_SELF, oTarget, nSpellID))
                 return oTarget;
             else
             {
@@ -615,8 +608,7 @@ object GetSuitableTaget(int nSpellID)
                     && GetDistanceToObject(oTarget) < fDist
                     && i < 10
                     && GetWillSavingThrow(oTarget)+10 >
-                        GetEpicSpellSaveDC(OBJECT_SELF) +
-                            GetDCSchoolFocusAdjustment(OBJECT_SELF, SP_WORM_S))
+                        GetEpicSpellSaveDC(OBJECT_SELF, oTarget, nSpellID))
                 {
                     i++;
                     oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,

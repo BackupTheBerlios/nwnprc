@@ -60,12 +60,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     float fDelay;
     //Set off fire and forget visual
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eNature, GetLocation(OBJECT_SELF));
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2;   //Duration is +100%
     }
@@ -81,11 +81,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
               SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NATURES_BALANCE, FALSE));
               nRand = d8(3) + nCasterLevel;
               //Enter Metamagic conditions
-              if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+              if ((nMetaMagic & METAMAGIC_MAXIMIZE))
               {
                  nRand = 24 + nCasterLevel;//Damage is at max
               }
-              else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+              else if ((nMetaMagic & METAMAGIC_EMPOWER))
               {
                  nRand = nRand + nRand/2; //Damage/Healing is +50%
               }
@@ -101,9 +101,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NATURES_BALANCE));
             if(!GetIsReactionTypeFriendly(oTarget))
             {
-                int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Check for saving throw
-                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ nDC)))
+                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC)))
                 {
                       nCasterLevel /= 5;
                       if(nCasterLevel == 0)
@@ -112,11 +112,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                       }
                       nRand = d4(nCasterLevel);
                       //Enter Metamagic conditions
-                      if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+                      if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                       {
                          nRand = 4 * nCasterLevel;//Damage is at max
                       }
-                      else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+                      else if ((nMetaMagic & METAMAGIC_EMPOWER))
                       {
                          nRand = nRand + (nRand/2); //Damage/Healing is +50%
                       }

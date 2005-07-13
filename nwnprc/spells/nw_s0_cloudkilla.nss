@@ -45,7 +45,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
     int nDam = d4();
     int nMetaMagic = PRCGetMetaMagicFeat();
 
-	  object aoeCreator = GetAreaOfEffectCreator();
+      object aoeCreator = GetAreaOfEffectCreator();
     int CasterLvl = PRCGetCasterLevel(aoeCreator);
 
     //int nPenetr = SPGetPenetrAOE(aoeCreator,CasterLvl);
@@ -84,7 +84,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
             else if (nHD >= 4 && nHD <= 6)
             {
                 //Make a save or die
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                 {
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
@@ -98,7 +98,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
             }
             else
             {
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                 {
                     //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                     DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, TRUE, DURATION_TYPE_PERMANENT));

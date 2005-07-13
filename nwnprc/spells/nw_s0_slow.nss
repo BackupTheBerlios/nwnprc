@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     effect eVis = EffectVisualEffect(VFX_IMP_SLOW);
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     nLevel +=SPGetPenetr();
     //Metamagic check for extend
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2;   //Duration is +100%
     }
@@ -74,10 +74,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
         {
-            int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+            int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SLOW));
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nLevel) && !/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + nDC)))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nLevel) && !/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC)))
             {
                 //Apply the slow effect and VFX impact
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);

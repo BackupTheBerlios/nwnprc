@@ -91,11 +91,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                       {
                          nDamage = nDamage + (nDamage/2);//Damage/Healing is +50%
                       }
-                       int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                       int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                       //Save versus both holy and fire damage
                       nDamage2 += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-                      nDamage2 = PRCGetReflexAdjustedDamage(nDamage/2, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_DIVINE);
-                      nDamage = PRCGetReflexAdjustedDamage(nDamage/2, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_FIRE);
+                      nDamage2 = PRCGetReflexAdjustedDamage(nDamage/2, oTarget, (nDC), SAVING_THROW_TYPE_DIVINE);
+                      nDamage = PRCGetReflexAdjustedDamage(nDamage/2, oTarget, (nDC), SAVING_THROW_TYPE_FIRE);
                     if(nDamage > 0)
                     {
                           // Apply effects to the currently selected target.  For this spell we have used

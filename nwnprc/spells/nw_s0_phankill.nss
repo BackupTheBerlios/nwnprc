@@ -64,13 +64,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
             // I've made a copy of the function in this script, with an edit to return the proper
             // value if the spell was resisted.
             //Make a Will save
-            if (!PRCMySavingThrow2(SAVING_THROW_WILL,  oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
+            if (!PRCMySavingThrow2(SAVING_THROW_WILL,  oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
             {
                 // Immunity to fear, makes you immune to Phantasmal Killer.
                 if ( GetIsImmune( oTarget, IMMUNITY_TYPE_FEAR ) == FALSE )
                 {
                     //Make a Fort save
-                    if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)),SAVING_THROW_TYPE_DEATH))
+                    if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF),SAVING_THROW_TYPE_DEATH))
                     {
                          //Check for metamagic
                          if ((nMetaMagic & METAMAGIC_MAXIMIZE))

@@ -19,14 +19,6 @@
 //:: Updated On: 2003-10-25
 //:://////////////////////////////////////////////
 
-//#include "x2_inc_itemprop" - Inherited from x2_inc_craft
-#include "prc_alterations"
-#include "x2_inc_craft"
-#include "prc_inc_spells"
-//#include "prc_class_const"
-#include "prc_inc_switch"
-#include "prc_inc_itmrstr"
-#include "inc_utility"
 
 const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 
@@ -89,6 +81,14 @@ int PRCRunUserSpecificSpellScript();
 string PRCGetUserSpecificSpellScript();
 int PRCGetUserSpecificSpellScriptFinished();
 
+//#include "x2_inc_itemprop" - Inherited from x2_inc_craft
+#include "prc_alterations"
+#include "x2_inc_craft"
+#include "prc_inc_spells"
+//#include "prc_class_const"
+#include "prc_inc_switch"
+#include "prc_inc_itmrstr"
+#include "inc_utility"
 
 int RedWizRestrictedSchool()
 {
@@ -140,16 +140,16 @@ int RedWizRestrictedSchool()
 
 int EShamConc()
 {
-	int nConc = GetLocalInt(OBJECT_SELF, "EShamConc");
-	string nSpellLevel = lookup_spell_level(PRCGetSpellId());
-	int nTest = TRUE;
-	
-	if (nConc)
-	{
-		 nTest = GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, (15 + StringToInt(nSpellLevel)));
-		 if (!nTest)  FloatingTextStringOnCreature("Ectoplasmic Shambler has disrupted your concentration.", OBJECT_SELF, FALSE);
-	}
-	return nTest;
+    int nConc = GetLocalInt(OBJECT_SELF, "EShamConc");
+    string nSpellLevel = lookup_spell_level(PRCGetSpellId());
+    int nTest = TRUE;
+    
+    if (nConc)
+    {
+         nTest = GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, (15 + StringToInt(nSpellLevel)));
+         if (!nTest)  FloatingTextStringOnCreature("Ectoplasmic Shambler has disrupted your concentration.", OBJECT_SELF, FALSE);
+    }
+    return nTest;
 }
 
 

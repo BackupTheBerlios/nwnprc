@@ -49,12 +49,12 @@ ActionDoCommand(SetAllAoEInts(SPELL_BATTLETIDE,OBJECT_SELF, GetSpellSaveDC()));
     if(spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, oCreator))
     {
         //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
         //Make a SR check
         if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
             //Make a Fort Save
-            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_NEGATIVE))
+            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_NEGATIVE))
             {
                fDelay = GetRandomDelay(0.75, 1.75);
                //Apply the VFX impact and linked effects
@@ -66,7 +66,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_BATTLETIDE,OBJECT_SELF, GetSpellSaveDC()));
     else if(oTarget == oCreator)
     {
         //Apply the VFX impact and linked effects
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget,0.0f,FALSE);
     }

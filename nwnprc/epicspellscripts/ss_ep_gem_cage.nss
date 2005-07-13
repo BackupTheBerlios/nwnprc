@@ -19,19 +19,17 @@ int GetNeededGemValue(int nHD);
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, GEMCAGE_DC, GEMCAGE_S, GEMCAGE_XP))
     {
         object oTarget = GetSpellTargetObject();
-        int nDC = GetEpicSpellSaveDC(OBJECT_SELF) + GetChangesToSaveDC(oTarget,OBJECT_SELF) +
-            GetDCSchoolFocusAdjustment(OBJECT_SELF, GEMCAGE_S);
         if (!GetPlotFlag(oTarget) &&   // Plot creatures cannot be Caged, ever.
             !GetIsDM(oTarget) &&       // Neither can DM's.
             !GetIsPC(oTarget))         // And neither can other players.
@@ -83,7 +81,7 @@ void main()
                 // Spell Resistance check:
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), 1.0))
                 {   // Will Saving Throw.
-                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget)))
                     {   // Choose the Gem Cage VFX based on gem value.
                         int nVis = 799;
                         if (GetGoldPieceValue(oGem) > 1600) nVis = 800;
@@ -124,7 +122,7 @@ void main()
             FloatingTextStringOnCreature("*Spell failed! Invalid target.*",
                 OBJECT_SELF, FALSE);
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 int GetNeededGemValue(int nHD)

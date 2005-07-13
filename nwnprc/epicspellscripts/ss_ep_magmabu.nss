@@ -20,13 +20,13 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     // Spell Cast Hook
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     if (GetCanCastSpell(OBJECT_SELF, MAGMA_B_DC, MAGMA_B_S, MAGMA_B_XP))
@@ -48,7 +48,6 @@ void main()
         effect eImpact4 = EffectVisualEffect( VFX_FNF_FIRESTORM );
         effect eVis = EffectVisualEffect( VFX_IMP_FLAME_M );
         effect eDam;
-        int nDC = GetEpicSpellSaveDC(GetAreaOfEffectCreator()) +  GetDCSchoolFocusAdjustment(GetAreaOfEffectCreator(), MAGMA_B_S);
         // Direct Impact is handled first.  (20d8) - reflex.
         // Apply the explosion at the location captured above.
         ApplyEffectAtLocation( DURATION_TYPE_INSTANT, eImpact, lTarget );
@@ -72,7 +71,7 @@ void main()
                 {
                     nDamage = d8(20);
                     //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-                    nDamage = PRCGetReflexAdjustedDamage( nDamage, oTarget, nDC+ GetChangesToSaveDC(oTarget,GetAreaOfEffectCreator()), SAVING_THROW_TYPE_FIRE );
+                    nDamage = PRCGetReflexAdjustedDamage( nDamage, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget), SAVING_THROW_TYPE_FIRE );
                     //Set the damage effect
                     eDam = EffectDamage( nDamage, DAMAGE_TYPE_FIRE );
                     if( nDamage > 0 )
@@ -93,5 +92,5 @@ void main()
         //Create the AoE object at the location for the next effects
         ApplyEffectAtLocation( DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nDuration) );
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

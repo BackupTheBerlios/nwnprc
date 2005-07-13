@@ -89,11 +89,11 @@ ActionDoCommand(SetAllAoEInts(SPELL_GLYPH_OF_WARDING,OBJECT_SELF, GetSpellSaveDC
             if (spellsIsTarget(oTarget,SPELL_TARGET_STANDARDHOSTILE,oCreator))
             {
                 //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(oCreator, GetSpellId()));
+                SignalEvent(oTarget, EventSpellCastAt(oCreator, PRCGetSpellId()));
                 //Make SR check
                 if (!MyPRCResistSpell(oCreator, oTarget,nPenetr))
                 {
-                    int nDC = GetChangesToSaveDC(oTarget,oCreator);
+                    int nDC = PRCGetSaveDC(oTarget,oCreator);
                     nDamage = d8(nDice);
                     //Enter Metamagic conditions
 
@@ -108,7 +108,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_GLYPH_OF_WARDING,OBJECT_SELF, GetSpellSaveDC
                     nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
 
                     //Change damage according to Reflex, Evasion and Improved Evasion
-                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetSpellSaveDC()  + nDC), SAVING_THROW_TYPE_SONIC, oCreator);
+                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC), SAVING_THROW_TYPE_SONIC, oCreator);
 
 
                     //----------------------------------------------------------

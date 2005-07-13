@@ -82,7 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             {
                 if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                 {
-                    int nDC = GetChangesToSaveDC(oTarget,OBJECT_SELF);
+                    int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     //Roll damage for each target
                     nDamage = d8(nCasterLvl);
                     //Resolve metamagic
@@ -94,7 +94,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     {
                        nDamage = nDamage + nDamage / 2;
                     }
-                    if(/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ nDC), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
+                    if(/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
                     {
                         nDamage = nDamage/2;
                     }

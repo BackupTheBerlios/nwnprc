@@ -203,7 +203,7 @@ void DoSpellResearch(object oCaster, int nSpellDC, int nSpellIP, string sSchool,
 void UnequipAnyImmunityItems(object oTarget, int nImmType);
 
 // Finds a given spell's DC
-int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF);
+int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INVALID, int nSpellID = -1);
 
 /******************************************************************************
 FUNCTION BODIES
@@ -748,18 +748,26 @@ int GetDCSchoolFocusAdjustment(object oPC, string sChool)
     return nNewDC;
 }
 
-int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF)
+int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INVALID, int nSpellID = -1)
 {
     int iDiv = GetCasterLvl(TYPE_DIVINE,   oCaster);
     int iWiz = GetCasterLvl(CLASS_TYPE_WIZARD,   oCaster);
     int iSor = GetCasterLvl(CLASS_TYPE_SORCERER, oCaster);
     int iBest = 0;
     int iAbility;
+    if(nSpellID == -1)
+        nSpellID = PRCGetSpellId();
 
     if (iDiv > iBest) { iAbility = ABILITY_WISDOM;       iBest = iDiv; }
     if (iWiz > iBest) { iAbility = ABILITY_INTELLIGENCE; iBest = iWiz; }
     if (iSor > iBest) { iAbility = ABILITY_CHARISMA;     iBest = iSor; }
     
-    if (iBest)   return 20 + GetAbilityModifier(iAbility, oCaster);
-    else         return 20; // DC = 20 if the epic spell is cast some other way.
+    int nDC;
+    if (iBest)   nDC =  20 + GetAbilityModifier(iAbility, oCaster);
+    else         nDC =  20; // DC = 20 if the epic spell is cast some other way.
+    
+    nDC += GetDCSchoolFocusAdjustment(oCaster, Get2DACache("spells", "school", nSpellID));
+    nDC += GetChangesToSaveDC(oTarget, oCaster);
+    
+    return nDC;
 }

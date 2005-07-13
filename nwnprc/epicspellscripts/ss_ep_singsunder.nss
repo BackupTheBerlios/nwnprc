@@ -32,6 +32,7 @@ void main()
         effect eImp = EffectVisualEffect(VFX_IMP_BREACH);
         effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
         object oItem = GetSunderTarget(oTarget);
+	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
         // Does the target have an equipped item to sunder?
         if (oItem != OBJECT_INVALID)
         {

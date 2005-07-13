@@ -669,17 +669,17 @@ const string PRC_PRGT_XP_SCRIPT_DISARMED             = "PRC_PRGT_XP_SCRIPT_DISAR
 const string PRC_PRGT_XP_SCRIPT_RECOVERED            = "PRC_PRGT_XP_SCRIPT_RECOVERED";
 
 /**
- * TODO: Write description.
+ * @TODO: Write description.
  */
 const string PRC_PRGT_XP_AWARD_FOR_TRIGGERED         = "PRC_PRGT_XP_AWARD_FOR_TRIGGERED";
 
 /**
- * TODO: Write description.
+ * @TODO: Write description.
  */
 const string PRC_PRGT_XP_AWARD_FOR_RECOVERED         = "PRC_PRGT_XP_AWARD_FOR_RECOVERED";
 
 /**
- * TODO: Write description.
+ * @TODO: Write description.
  */
 const string PRC_PRGT_XP_AWARD_FOR_DISARMED          = "PRC_PRGT_XP_AWARD_FOR_DISARMED";
 
@@ -712,6 +712,14 @@ const string PRC_PNP_RAPID_METABOLISM                = "PRC_PNP_RAPID_METABOLISM
  *          metapsionic used with power being manifested.
  */
 const string PRC_PSI_IMP_METAPSIONICS_USE_SUM        = "PRC_PSI_IMP_METAPSIONICS_USE_SUM";
+
+
+/**
+ * A switch a player can personally toggle. If this is set, their augmentation level
+ * is considered to be the amount of PP they are willing to pay for augmentation.
+ * Default: A player's augmentation level is the number of times to augment the power.
+ */
+const string PRC_PLAYER_SWITCH_AUGMENT_IS_PP         = "PRC_PLAYER_SWITCH_AUGMENT_IS_PP";
 
 /******************************************************************************\
 *                               PnP shifter switches                              *

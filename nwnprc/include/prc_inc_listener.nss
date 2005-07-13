@@ -202,7 +202,7 @@ void DestroyListener(object oListener, int bFirst = TRUE)
     }
 
     AssignCommand(oListener, SetIsDestroyable(TRUE, FALSE, FALSE));
-    AssignCommand(oListener, DestroyObject(oListner));
+    AssignCommand(oListener, DestroyObject(oListener));
 
     DestroyObject(oListener);
 

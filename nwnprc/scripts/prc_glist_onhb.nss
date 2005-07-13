@@ -21,20 +21,50 @@
 
 void main()
 {
+    object oListener = OBJECT_SELF;
     // Check if we are listening to a single creature or an area
-    if(GetLocalInt(OBJECT_SELF, "PRC_GenericListener_ListenToSingle"))
+    if(GetLocalInt(oListener, "PRC_GenericListener_ListenToSingle"))
     {
-        object oListeningTo = GetLocalObject(OBJECT_SELF, "PRC_GenericListener_ListeningTo");
+        object oListeningTo = GetLocalObject(oListener, "PRC_GenericListener_ListeningTo");
         if(!GetIsObjectValid(oListeningTo))
-            DestroyListener(OBJECT_SELF);
+            DestroyListener(oListener);
 
-        DoDebug("Listener distance to listened: " + FloatToString(GetDistanceBetween(OBJECT_SELF, oListeningTo))
-                + ". In the same area: " + (GetArea(OBJECT_SELF) == GetArea(oListeningTo) ? "TRUE":"FALSE"));
+        DoDebug("Listener distance to listened: " + FloatToString(GetDistanceBetween(oListener, oListeningTo))
+                + ". In the same area: " + (GetArea(oListener) == GetArea(oListeningTo) ? "TRUE":"FALSE"));
     }
     // An area. Just make sure the listener stays there
     else
     {
-        if(GetLocation(OBJECT_SELF) != GetLocalLocation(OBJECT_SELF, "PRC_GenericListener_ListeningLocation"))
-            AssignCommand(OBJECT_SELF, JumpToLocation(GetLocalLocation(OBJECT_SELF, "PRC_GenericListener_ListeningLocation")));
+        if(GetLocation(oListener) != GetLocalLocation(oListener, "PRC_GenericListener_ListeningLocation"))
+            AssignCommand(oListener, JumpToLocation(GetLocalLocation(oListener, "PRC_GenericListener_ListeningLocation")));
+    }
+
+    // Handle timers
+    int nVFXTimer = GetLocalInt(oListener, "PRC_GenericListener_VFXRefreshTimer") - 1;
+    if(!nVFXTimer)
+    {
+        // Loop and remove the previous invisibility effect
+        effect eTest = GetFirstEffect(oListener);
+        while(GetIsEffectValid(eTest))
+        {
+            if(GetEffectType(eTest) == EFFECT_TYPE_VISUALEFFECT)
+                RemoveEffect(oListener, eTest);
+            eTest = GetNextEffect(oListener);
+        }
+
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oListener, 9999.0f);
+        nVFXTimer = 1500;
+    }
+    SetLocalInt(oListener, "PRC_GenericListener_VFXRefreshTimer", nVFXTimer);
+
+    if(GetLocalInt(oListener, "PRC_GenericListener_HasLimitedDuration"))
+    {
+        int nDeathTimer = GetLocalInt(oListener, "PRC_GenericListener_DestroyTimer") - 1;
+        if(nDeathTimer <= 0) // TODO: Division by 6 in spawn. Also a local to determine if self-destruct is used at all.
+        {
+            DestroyListener(oListener);
+        }
+
+        DoDebug("Listener duration left: " + IntToString(nDeathTimer * 6));
     }
 }

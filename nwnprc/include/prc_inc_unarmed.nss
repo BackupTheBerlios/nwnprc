@@ -186,6 +186,7 @@ int FindUnarmedDamage(object oCreature)
     int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
     int iSacredFist = GetLevelByClass(CLASS_TYPE_SACREDFIST, oCreature);
     int iHenshin = GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oCreature);
+    int iZuoken = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature);
     int iMonkDamage = 0;
     int iShouDamage = 0;
     int iBrawlerDamage = 0;
@@ -236,6 +237,9 @@ int FindUnarmedDamage(object oCreature)
 
     // Shou Disciple stacks with monk levels (or uses monk progression.)
     if (iShou) iMonk += iShou;
+
+    // Fist of Zuoken stacks with monk levels (or uses monk progression.)
+    if (iZuoken) iMonk += iZuoken;
   
     // In 3.0e, Monk progression stops after level 16:
     if (iMonk > 16 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) ) iMonk = 16;

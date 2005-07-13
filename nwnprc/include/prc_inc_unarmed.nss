@@ -10,14 +10,6 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
-#include "prc_class_const"
-#include "prc_racial_const"
-#include "prc_spell_const"
-#include "inc_item_props"
-#include "prc_inc_switch"
 
 
 //////////////////////////////////////////////////
@@ -87,6 +79,15 @@ void UnarmedFeats(object oCreature);
 // When the callback is running, a local int UNARMED_CALLBACK will be
 // set on OBJECT_SELF
 void UnarmedFists(object oCreature);
+
+#include "prc_alterations"
+#include "prc_feat_const"
+#include "prc_ipfeat_const"
+#include "prc_class_const"
+#include "prc_racial_const"
+#include "prc_spell_const"
+#include "inc_item_props"
+#include "prc_inc_switch"
 
 //////////////////////////////////////////////////
 /* Function defintions                          */

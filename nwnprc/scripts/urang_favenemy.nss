@@ -1,5 +1,6 @@
+
+#include "prc_alterations"
 #include "prc_class_const"
-#include "inc_combat"
 #include "prc_feat_const"
 #include "nw_i0_spells"
 
@@ -61,8 +62,8 @@ void FavEn(int iFeat,int iBonus ,int nLevel, int iDmgType, int iFEAC, int iFERE,
   if (iFEAC) eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectACIncrease(nLevel) ,nRacial));
   if (iFERE) eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectSavingThrowIncrease(SAVING_THROW_ALL,nLevel,SAVING_THROW_TYPE_SPELL) ,nRacial));
   if (GetHasFeat(FEAT_EPIC_BANE_OF_ENEMIES, oPC)) {
-  	eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectAttackIncrease(2) ,nRacial));
-  	eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectDamageIncrease(DAMAGE_BONUS_2d6,iBaneDmgType) ,nRacial));
+    eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectAttackIncrease(2) ,nRacial));
+    eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectDamageIncrease(DAMAGE_BONUS_2d6,iBaneDmgType) ,nRacial));
   }
  ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eLink),oPC);
  

@@ -42,7 +42,7 @@ void main()
                for (nCnt = 1; nCnt <= nMissiles; nCnt++)
                {
                     int nDamage = 0;
-                    int nTouchAttack = TouchAttackRanged(oTarget);
+                    int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
                     if (nTouchAttack > 0)
                          nDamage = SPGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? 1 : 2, 4, 1);
                          

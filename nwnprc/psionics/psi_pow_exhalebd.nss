@@ -25,6 +25,7 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "X0_I0_SPELLS"
+#include "prc_inc_combat"
 
 void main()
 {
@@ -56,33 +57,33 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
     
     if (nMetaPsi > 0) 
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
-	int nDice = 3;
-	int nDiceSize = 6;
-			
-	//Augmentation effects to Damage
-	if (nAugment > 0) nDice += nAugment;
-	
-	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
-	
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	
-	// Perform the Touch Attach
-	int nTouchAttack = TouchAttackRanged(oTarget);
-	if (nTouchAttack > 0)
-	{
-		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nPen))
-		{		
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-		}
-	}
-	
+    int nDC = GetManifesterDC(oCaster);
+    int nCaster = GetManifesterLevel(oCaster);
+    int nPen = GetPsiPenetration(oCaster);
+    effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
+    int nDice = 3;
+    int nDiceSize = 6;
+            
+    //Augmentation effects to Damage
+    if (nAugment > 0) nDice += nAugment;
+    
+    int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
+    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
+    
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+    
+    // Perform the Touch Attach
+    int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    if (nTouchAttack > 0)
+    {
+        //Check for Power Resistance
+        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        {       
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        }
+    }
+    
 
     }
 }

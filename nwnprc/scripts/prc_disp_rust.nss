@@ -67,7 +67,7 @@ void main()
         int iEnch = GetWeaponEnhancement(oWeapon, oPC, oTarget);
         int iAB = GetWeaponAttackBonusItemProperty(oWeapon, oPC);
 
-    int iHit = TouchAttackMelee(oTarget);
+    int iHit = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
      if (iHit > 0)
       {
         if (GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oTarget) != OBJECT_INVALID)

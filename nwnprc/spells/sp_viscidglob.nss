@@ -17,11 +17,11 @@ void main()
         SPRaiseSpellCastAt(oTarget);
         
         int CasterLvl = PRCGetCasterLevel();
-
+        
         if (!SPResistSpell(OBJECT_SELF, oTarget,CasterLvl+SPGetPenetr()))
         {
             // Make touch attack, saving result for possible critical
-            int nTouchAttack = TouchAttackRanged(oTarget);
+            int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
             if (nTouchAttack > 0)
             {
                 // Impact vfx.
@@ -38,7 +38,6 @@ void main()
                     eEffect = EffectLinkEffects(eEffect,
                         EffectVisualEffect(VFX_DUR_GLOW_LIGHT_GREEN));
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oTarget, fDuration,TRUE,-1,CasterLvl);
-
                     // If target is medium or smaller may not take any actions either.                      
                     if (PRCGetCreatureSize(oTarget) <= CREATURE_SIZE_MEDIUM)
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectParalyze(), 

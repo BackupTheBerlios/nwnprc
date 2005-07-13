@@ -56,28 +56,28 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
     
     if (nMetaPsi > 0) 
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nDice = 4;
-	int nDiceSize = 6;
-	effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
-			
-	//Augmentation effects to Damage
-	if (nAugment > 0) nDice += nAugment;
-	
-	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
-	
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	
-	// Perform the Touch Attach
-	int nTouchAttack = TouchAttackMelee(oTarget);
-	if (nTouchAttack > 0)
-	{
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	}
-	
+    int nDC = GetManifesterDC(oCaster);
+    int nCaster = GetManifesterLevel(oCaster);
+    int nDice = 4;
+    int nDiceSize = 6;
+    effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
+            
+    //Augmentation effects to Damage
+    if (nAugment > 0) nDice += nAugment;
+    
+    int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
+    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
+    
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+    
+    // Perform the Touch Attach
+    int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+    if (nTouchAttack > 0)
+    {
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    }
+    
 
     }
 }

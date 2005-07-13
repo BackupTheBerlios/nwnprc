@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MASS_HEAL));
             //Make a touch attack
-            nTouch = TouchAttackRanged(oTarget);
+            nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
             if (nTouch > 0)
             {
                 if(!GetIsReactionTypeFriendly(oTarget))
@@ -91,16 +91,16 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                         //Detemine the damage to inflict to the undead
                         nDamage =  10 * nCasterLvl;
 
-			if (nDamage > 250 && !GetPRCSwitch(PRC_BIOWARE_MASS_HEAL))
-			    nDamage = 250;
+            if (nDamage > 250 && !GetPRCSwitch(PRC_BIOWARE_MASS_HEAL))
+                nDamage = 250;
 
                         // Will save for half damage
-			if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
-	                    nDamage /= 2;
+            if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF))))
+                        nDamage /= 2;
 
                         // Cannot drop you below nModify hp
-			if (nDamage > GetCurrentHitPoints(oTarget) - nModify)
-			    nDamage = GetCurrentHitPoints(oTarget) - nModify;
+            if (nDamage > GetCurrentHitPoints(oTarget) - nModify)
+                nDamage = GetCurrentHitPoints(oTarget) - nModify;
 
                         //Set the damage effect
                         eKill = EffectDamage(nDamage, DAMAGE_TYPE_POSITIVE);
@@ -121,8 +121,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MASS_HEAL, FALSE));
                 //Determine amount to heal
                 nHeal = 10 * CasterLvl;
-		    if(nHeal > 250 && !GetPRCSwitch(PRC_BIOWARE_MASS_HEAL))
-			nHeal = 250;
+            if(nHeal > 250 && !GetPRCSwitch(PRC_BIOWARE_MASS_HEAL))
+            nHeal = 250;
                 //Set the damage effect
                 eHeal = EffectHeal(nHeal);
                 //Apply the VFX impact and heal effect

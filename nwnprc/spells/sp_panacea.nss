@@ -17,7 +17,6 @@ void main()
 
     // Get the target and raise the spell cast event.
     object oTarget = GetSpellTargetObject();
-
     // Compute the damage to add to the dice roll.
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nAdd = nCasterLvl;
@@ -74,7 +73,7 @@ void main()
         
         if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
-            int nTouch = TouchAttackMelee(oTarget);
+            int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
             if (nTouch > 0)
             {
                 // Roll the damage (allowing for a critical) and let the target make a will save to

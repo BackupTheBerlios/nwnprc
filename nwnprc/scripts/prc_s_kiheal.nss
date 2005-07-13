@@ -46,7 +46,7 @@ void main()
     if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD || GetLevelByClass(CLASS_TYPE_UNDEAD,oTarget)>0)
     {
         //Make a ranged touch attack
-        nTouch = TouchAttackMelee(oTarget,TRUE);
+        nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
 
         int nResist = MyResistSpell(OBJECT_SELF,oTarget);
         if (nResist == 0 )

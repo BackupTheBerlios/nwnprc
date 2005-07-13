@@ -23,7 +23,7 @@ void main()
     int nOcSv = 10 + (nOcLvl/2) + nChaMod;
 
     object oTarget = GetSpellTargetObject();
-    int bHit = TouchAttackRanged(oTarget,FALSE)>0;
+    int bHit = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
 
     if(bHit) {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_OA_SLOWRAY, TRUE));

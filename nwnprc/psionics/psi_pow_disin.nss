@@ -27,6 +27,7 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "X0_I0_SPELLS"
+#include "prc_inc_combat"
 
 void main()
 {
@@ -58,45 +59,45 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (nSurge > 0)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
+        
+        PsychicEnervation(oCaster, nSurge);
     }
     
     if (nMetaPsi > 0) 
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nDice = 22;
-	int nDiceSize = 6;
-	
-	effect eRay = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
-		
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) nDice += (2 * nAugment);
-	
-		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	
-	// Perform the Touch Attach
-	int nTouchAttack = TouchAttackRanged(oTarget);
-	if (nTouchAttack > 0)
-	{
-		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-			if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
-			{
-				nDice = 5;
-			}
-			int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
-			effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
-		}
-	}
-	
+    int nDC = GetManifesterDC(oCaster);
+    int nCaster = GetManifesterLevel(oCaster);
+    int nPen = GetPsiPenetration(oCaster);
+    int nDice = 22;
+    int nDiceSize = 6;
+    
+    effect eRay = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
+        
+    if (nSurge > 0) nAugment += nSurge;
+    
+    //Augmentation effects to Damage
+    if (nAugment > 0) nDice += (2 * nAugment);
+    
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+    
+    // Perform the Touch Attach
+    int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    if (nTouchAttack > 0)
+    {
+        //Check for Power Resistance
+        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        {
+            if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
+            {
+                nDice = 5;
+            }
+            int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
+            effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
+        }
+    }
+    
 
     }
 }

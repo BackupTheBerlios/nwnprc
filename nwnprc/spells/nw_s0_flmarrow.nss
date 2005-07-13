@@ -82,7 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         for (nCnt = 1; nCnt <= nMissiles; nCnt++)
         {
             // causes them each to make a ranged touch attack
-            iAttackRoll = TouchAttackRanged(oTarget);
+            iAttackRoll = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
             if(iAttackRoll > 0)
             {
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))

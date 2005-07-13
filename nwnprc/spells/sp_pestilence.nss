@@ -34,7 +34,6 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
     }
 
 // End of Spell Cast Hook
-
     object oCaster = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(oCaster);
@@ -64,7 +63,7 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
             SignalEvent(oTarget, EventSpellCastAt(oCaster, SPELL_PESTILENCE));
             
             //Make touch attack
-            if(TouchAttackMelee(oTarget) > 0)
+            if(GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL))
             {
                 //Make sure the target is a living one
                 if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
@@ -92,7 +91,6 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
             }// end if - touch attack
         }// end if - is the target valid
     }// end else - the caster is diseased
-    
 // Getting rid of the integer used to hold the spells spell school
 SPSetSchool();
 }

@@ -40,7 +40,7 @@ void main()
         iTargetRace != RACIAL_TYPE_VERMIN &&
         !iBeholder)
      {
-           int iHitEnemy = TouchAttackRanged(oTarget, TRUE);
+           int iHitEnemy = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
            
            if(iHitEnemy > 0)
            {    

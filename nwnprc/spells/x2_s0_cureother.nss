@@ -104,7 +104,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Check that the target is undead
     else
     {
-        int nTouch = TouchAttackMelee(oTarget);
+        int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
         if (nTouch > 0)
         {
             if(!GetIsReactionTypeFriendly(oTarget))

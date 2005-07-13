@@ -1,61 +1,48 @@
-#include "prc_spell_const"
-#include "inc_combat2"
+#include "prc_alterations"
+#include "prc_inc_combat"
 
 void main()
 {
-   int nSpellId = GetSpellId();
-   object oTarget = GetSpellTargetObject();
-   object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
-   int iEnhancement = GetWeaponRangeEnhancement(oWeap,OBJECT_SELF);
-   int iDamageType = GetWeaponDamageType(oWeap);
-   int iBonusA = 2;
-   int iDamage =0;
+    object oTarget = GetSpellTargetObject();
+    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
+    int iBonusA;
 
-   if (!GetWeaponRanged(oWeap)) return;
+    //check for non-ranged weapon
+    if (!GetWeaponRanged(oWeap)) 
+    {
+        SendMessageToPC(OBJECT_SELF, "You can only use Pinpoint Accuracy with a ranged weapon");
+        return;
+    }
 
-   effect eArrow = EffectVisualEffect(357);
-   ApplyEffectToObject(DURATION_TYPE_INSTANT, eArrow, oTarget);
-//   SendMessageToPC(OBJECT_SELF,"GetSpellId"+IntToString(nSpellId));
+    //arrow vfx
+    effect eArrow = EffectVisualEffect(NORMAL_ARROW);
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eArrow, oTarget);
 
-   if (nSpellId == SPELL_PINPOINTACCURACY4) iBonusA = 4;
-   else if (nSpellId == SPELL_PINPOINTACCURACY6) iBonusA = 6;
+    //spell ID determines level of effect    
+    int nSpellId = GetSpellId();
+    switch (nSpellId)
+    {
+        case SPELL_PINPOINTACCURACY2: iBonusA = 2; break;
+        case SPELL_PINPOINTACCURACY4: iBonusA = 4; break;
+        case SPELL_PINPOINTACCURACY6: iBonusA = 6; break;
+    }
 
-   int Attack  = NbAtk(OBJECT_SELF);
-       Attack += GetHasSpellEffect(SPELL_EXTRASHOT);
-
-   int iBonusD = GetHasFeat(FEAT_PERFECTSHOT) ? d4(Attack):0;
-       iBonusD = GetHasFeat(FEAT_PERFECTSHOT2)? d6(Attack):iBonusD;
-
-   effect eDamage;
-
-   float fDelay = 0.0;
-   
-   SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), TRUE));
-
-   //Perform 1 attack
-
-   //Roll to hit
-   int iHit = DoRangedAttackS(OBJECT_SELF, oWeap, oTarget, iBonusA , TRUE, fDelay);
-
-   int Immune = GetIsImmune(oTarget,IMMUNITY_TYPE_CRITICAL_HIT);
-
-   if(iHit > 0)
-   {
-
-      if (Immune && iHit==2) iHit=1;
-      
-      //Check to see if we rolled a critical and determine damage accordingly
-      if(iHit == 2 )
-          iDamage = GetRangedWeaponDamageS(OBJECT_SELF, oWeap, TRUE,0,GetHasFeat(FEAT_KILLINGSHOT) ? 2:0) + iBonusD;
-      else
-          iDamage = GetRangedWeaponDamageS(OBJECT_SELF, oWeap, FALSE)+ iBonusD;
-
-      //Apply the damage
-      eDamage = AddDmgEffectMulti(iDamage,DAMAGE_TYPE_PIERCING, GetWeaponAmmu(oWeap,OBJECT_SELF),oTarget,iEnhancement,iHit);
-
-//      eDamage = AddDmgEffect(EffectDamage(iDamage, iDamageType, iEnhancement) ,  GetWeaponAmmu(oWeap,OBJECT_SELF),oTarget,iEnhancement);
-      DelayCommand(fDelay +2.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-   }
-
-
+    //Perfect shot adds extra damage
+    int nDamage;
+    int nLostAttacks = GetMainHandAttacks(OBJECT_SELF)-1;
+    if(GetHasFeat(FEAT_PERFECTSHOT2))
+        nDamage = d6(nLostAttacks);
+    else if(GetHasFeat(FEAT_PERFECTSHOT))
+        nDamage = d4(nLostAttacks);
+    
+    //killing shot increases critical range by 2
+    //this is fudged into the main combat functions
+    if(GetHasFeat(FEAT_KILLINGSHOT))
+    {
+        SetLocalInt(OBJECT_SELF, "KillingShotCritical", TRUE);
+        DelayCommand(0.1, DeleteLocalInt(OBJECT_SELF, "KillingShotCritical"));
+    }
+    
+    effect eInvalid;
+    PerformAttack(oTarget, OBJECT_SELF, eInvalid, 0.0, iBonusA, nDamage, DAMAGE_TYPE_PIERCING, "*Pinpoint Accuracy Hit*", "*Pinpoint Accuracy Miss*");
 }

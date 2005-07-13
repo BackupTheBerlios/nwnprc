@@ -1,5 +1,6 @@
 
 #include "prc_inc_sp_tch"
+#include "prc_inc_combat"
 
 void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
 {
@@ -27,7 +28,7 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
           // Handbook, bit powerful but that's how it is in the PnP book.
           
           // Make touch attack, saving result for possible critical
-          int nTouchAttack = TouchAttackRanged(oTarget);
+          int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
           if (nTouchAttack > 0)
           {
                // Roll the damage, doing double damage on a crit.

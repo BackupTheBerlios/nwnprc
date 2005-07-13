@@ -60,7 +60,7 @@ void main()
     }
     else if (GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
     {
-        int bHit = TouchAttackRanged(oTarget,FALSE)>0;
+        int bHit = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
         if(bHit) {
             location lSelf = GetLocation(OBJECT_SELF);
             float fDist;

@@ -1,4 +1,4 @@
-#include "inc_combat"
+#include "prc_alterations"
 #include "inc_item_props"
 #include "inc_prc_npc"
 
@@ -34,7 +34,7 @@ void EnchantCW(object oPC, object oWeap)
          
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 6)
          iBonus += 1;
-	 
+     
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 8)
          iBonus += 1;
                
@@ -51,7 +51,7 @@ void main()
   if (GetHasFeat(FEAT_AD_APPARENT_DEFENSE, oPC)) ApparentDefense(oPC, oSkin);
   
   if (GetLocalInt(oWeap,"CHOSEN_WEAPON") == 2)
-  	EnchantCW(oPC, oWeap);
+    EnchantCW(oPC, oWeap);
   
   if (GetLocalInt(oPC,"ONEQUIP") == 1)
         RemoveEnchantCW(oPC, GetItemLastUnequipped());

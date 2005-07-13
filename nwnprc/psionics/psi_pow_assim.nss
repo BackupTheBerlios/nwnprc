@@ -80,9 +80,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
         
-        int nTouchAttack = TouchAttackMelee(oTarget);
-    	if (nTouchAttack > 0)
-    	{
+        int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+        if (nTouchAttack > 0)
+        {
             //Check for Power Resistance
             if (PRCMyResistPower(oCaster, oTarget, nPen))
             {
@@ -105,7 +105,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
                 }
-                else 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
+                else    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
             }// end if - resist failed
         }// end if - touch attack succeeded
     }// end if - could manifest

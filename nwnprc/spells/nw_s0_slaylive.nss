@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         //Make SR check
         if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
         {  
-            int iAttackRoll = TouchAttackMelee(oTarget);
+            int iAttackRoll = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
             //Make melee touch attack
             if(iAttackRoll)
             {

@@ -10,12 +10,12 @@
 //:: Created On: April 09, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "x2_i0_spells"
 
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
-#include "inc_combat2"
 
 void main()
 {
@@ -33,8 +33,8 @@ void main()
      {
          FloatingTextStringOnCreature("*No Bow Equipped*", OBJECT_SELF, FALSE);
          RemoveSpellEffects(SPELL_PA_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-	 RemoveSpellEffects(SPELL_PA_IMP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-	 RemoveSpellEffects(SPELL_PA_SUP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+     RemoveSpellEffects(SPELL_PA_IMP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+     RemoveSpellEffects(SPELL_PA_SUP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
          return;
      }
      

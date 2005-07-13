@@ -31,24 +31,24 @@ void main()
     effect eRay;
 
 
-	int nTouchAttack = TouchAttackRanged(oTarget);
-	if (nTouchAttack > 0)
-	{
+    int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    if (nTouchAttack > 0)
+    {
 
-		if(!GetIsReactionTypeFriendly(oTarget))
-		{
-		
-		//Fire cast spell at event for the specified target
-		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
-		eRay = EffectBeam(VFX_BEAM_FIRE, OBJECT_SELF, BODY_NODE_HAND);
-		//Apply the VFX impact and effects
-		DelayCommand(0.5, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-	
-	        }
+        if(!GetIsReactionTypeFriendly(oTarget))
+        {
+        
+        //Fire cast spell at event for the specified target
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
+        eRay = EffectBeam(VFX_BEAM_FIRE, OBJECT_SELF, BODY_NODE_HAND);
+        //Apply the VFX impact and effects
+        DelayCommand(0.5, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+    
+            }
 
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7);
 
-	}
+    }
 
 }

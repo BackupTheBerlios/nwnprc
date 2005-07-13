@@ -16,7 +16,7 @@ void main()
           SPRaiseSpellCastAt(oTarget);
 
           // Make the touch attack.                 
-          int nTouchAttack = TouchAttackRanged(oTarget);
+          int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
           if (nTouchAttack > 0)
           {
                // Make SR check

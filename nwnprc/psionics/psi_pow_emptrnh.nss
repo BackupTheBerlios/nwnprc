@@ -57,41 +57,41 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
    
     if (nMetaPsi > 0) 
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nCap = 50;
-	int nMax = GetMaxHitPoints(oCaster);
-	int nCur = GetCurrentHitPoints(oCaster);
-	int nDamage = (nMax - nCur);
-	
-	//Augmentation effects to HD
-	if (nAugment > 0) nCap += (nAugment * 10);
-	// Max you can transfer
-	if (nCap > 90) nCap = 90;
-	// Cant exceed the max
-	if (nDamage > nCap) nDamage = nCap;
+    int nDC = GetManifesterDC(oCaster);
+    int nCaster = GetManifesterLevel(oCaster);
+    int nPen = GetPsiPenetration(oCaster);
+    int nCap = 50;
+    int nMax = GetMaxHitPoints(oCaster);
+    int nCur = GetCurrentHitPoints(oCaster);
+    int nDamage = (nMax - nCur);
+    
+    //Augmentation effects to HD
+    if (nAugment > 0) nCap += (nAugment * 10);
+    // Max you can transfer
+    if (nCap > 90) nCap = 90;
+    // Cant exceed the max
+    if (nDamage > nCap) nDamage = nCap;
 
-        int nTouch = TouchAttackMelee(oTarget);
+        int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
         if (nTouch > 0)
         {
-		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-				
-			//Fire cast spell at event for the specified target
-        		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-        	    
-        		//Make a saving throw check
-        		if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-        		{
-				nDamage /= 2;	
-			}
-			effect eHeal = EffectHeal(nDamage);
-			effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_POSITIVE);
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oCaster);
-		}
-	}
+        //Check for Power Resistance
+        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        {
+                
+            //Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                
+                //Make a saving throw check
+                if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                {
+                nDamage /= 2;   
+            }
+            effect eHeal = EffectHeal(nDamage);
+            effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_POSITIVE);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oCaster);
+        }
+    }
     }
 }

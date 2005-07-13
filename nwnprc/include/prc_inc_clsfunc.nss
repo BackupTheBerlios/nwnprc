@@ -48,6 +48,7 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 #include "pnp_shft_poly"
 #include "x2_inc_spellhook"
 #include "inc_prc_npc"
+#include "prc_inc_combat"
 
 void ActionCastSpellOnSelf(int iSpell)
 {
@@ -1425,7 +1426,7 @@ void spellsCureMod(int nCasterLvl ,int nDamage, int nMaxExtraDamage, int nMaximi
     //Check that the target is undead
     else
     {
-        int nTouch = TouchAttackMelee(oTarget);
+        int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
         if (nTouch > 0)
         {
             if(!GetIsReactionTypeFriendly(oTarget))

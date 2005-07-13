@@ -56,39 +56,39 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
     
     if (nMetaPsi > 0) 
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-			
-	effect eVis = EffectVisualEffect(246);
-	int nTargetPP = GetLocalInt(oTarget, "PowerPoints");
-	
-	// Perform the Touch Attach
-	int nTouchAttack = TouchAttackMelee(oTarget);
-	if (nTouchAttack > 0)
-	{
-		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-		        //Fire cast spell at event for the specified target
-		        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	               	if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-	               	{
-	               		if (nTargetPP != 0)
-	               		{
-	               			nTargetPP -= (2 * nCaster);
-	               			if (nTargetPP < 0) nTargetPP = 0;
-	               			SetLocalInt(oTarget, "PowerPoints", nTargetPP);
-	               		}
-	               		else
-	               		{
-	               			ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 2, DURATION_TYPE_PERMANENT);
-                    			ApplyAbilityDamage(oTarget, ABILITY_WISDOM, 2, DURATION_TYPE_PERMANENT);
-                    			ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, 2, DURATION_TYPE_PERMANENT);
-                    		}
-	               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	              	}
-		}
-	}
+    int nDC = GetManifesterDC(oCaster);
+    int nCaster = GetManifesterLevel(oCaster);
+    int nPen = GetPsiPenetration(oCaster);
+            
+    effect eVis = EffectVisualEffect(246);
+    int nTargetPP = GetLocalInt(oTarget, "PowerPoints");
+    
+    // Perform the Touch Attach
+    int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+    if (nTouchAttack > 0)
+    {
+        //Check for Power Resistance
+        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        {
+                //Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+                    if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                    {
+                        if (nTargetPP != 0)
+                        {
+                            nTargetPP -= (2 * nCaster);
+                            if (nTargetPP < 0) nTargetPP = 0;
+                            SetLocalInt(oTarget, "PowerPoints", nTargetPP);
+                        }
+                        else
+                        {
+                            ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 2, DURATION_TYPE_PERMANENT);
+                                ApplyAbilityDamage(oTarget, ABILITY_WISDOM, 2, DURATION_TYPE_PERMANENT);
+                                ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, 2, DURATION_TYPE_PERMANENT);
+                            }
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    }
+        }
+    }
     }
 }

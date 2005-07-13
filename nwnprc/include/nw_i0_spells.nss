@@ -16,6 +16,7 @@
 
 //Added code into spellsCure to maximize for Faith Healing and Blast Infidel
 //Aaon Graywolf - Jan 6, 2003
+
 // GZ: Number of spells in GetSpellBreachProtections
 const int NW_I0_SPELLS_MAX_BREACH = 33;
 
@@ -90,6 +91,7 @@ void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1);
 #include "prcsp_engine"
 #include "prc_inc_function"
 #include "inc_dispel"
+#include "prc_inc_combat"
 
 
 // * Returns true if Target is a humanoid
@@ -196,7 +198,7 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
     //Check that the target is undead
     else
     {
-        int nTouch = TouchAttackMelee(oTarget);
+        int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
         if (nTouch > 0)
         {
             if(!GetIsReactionTypeFriendly(oTarget))

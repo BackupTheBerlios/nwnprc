@@ -91,26 +91,6 @@
 //:: 
 //:://////////////////////////////////////////////
 
-// #include "prc_feat_const"   <-- Inherited
-// #include "prc_class_const"  <-- Inherited
-// #include "prc_spell_const"  <-- Inherited 
-// #include "x2_inc_switches"  <-- Inherited
-// #include "prc_alterations"  <-- Inherited
-// #include "X2_I0_SPELLS"     <-- Inherited
-// #include "x2_inc_spellhook" <-- Inherited
-// #include "prc_ipfeat_const" <-- Inherited
-// #include "nw_i0_generic"    <-- Inherited
-
-#include "x2_inc_itemprop"
-#include "prc_inc_racial"
-#include "prc_inc_function"
-#include "prc_inc_sneak"
-#include "prc_inc_unarmed"
-#include "prc_inc_util"
-#include "inc_utility"
-#include "prc_inc_switch"
-#include "prc_feat_const"
-
 // constant ints for touch attacks
 // using these helps determing which type of touch attack to perform.
 // using the spell versions if your spell does not use a weapon.
@@ -433,6 +413,29 @@ int bUseMonkAttackMod = FALSE;
 
 int bIsVorpalWeaponEquiped = FALSE;
 int iVorpalSaveDC = 0;
+
+
+
+// #include "prc_feat_const"   <-- Inherited
+// #include "prc_class_const"  <-- Inherited
+// #include "prc_spell_const"  <-- Inherited 
+// #include "x2_inc_switches"  <-- Inherited
+// #include "prc_alterations"  <-- Inherited
+// #include "X2_I0_SPELLS"     <-- Inherited
+// #include "x2_inc_spellhook" <-- Inherited
+// #include "prc_ipfeat_const" <-- Inherited
+// #include "nw_i0_generic"    <-- Inherited
+
+#include "x2_inc_itemprop"
+#include "prc_inc_racial"
+#include "prc_inc_function"
+#include "prc_inc_sneak"
+#include "prc_inc_unarmed"
+#include "prc_inc_util"
+#include "inc_utility"
+#include "prc_inc_switch"
+#include "prc_feat_const"
+#include "inc_abil_damage"
 
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
@@ -1921,7 +1924,14 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      
      int iType = GetBaseItemType(oWeapon);
      int iCritThreat = GetWeaponCriticalRange(oAttacker, oWeapon);
-
+     
+    //If using Killing Shot, ciritical range improves by 2;
+    if(GetLocalInt(oAttacker, "KillingShotCritical") )
+    {
+        iCritThreat -= 2;
+        DeleteLocalInt(oAttacker, "KillingShotCritical");
+    }    
+    
      // print off-hand of off-hand attack
      string sFeedback ="";
      if(iMainHand == 1) sFeedback += COLOR_ORANGE + "Off Hand : ";
@@ -1978,7 +1988,15 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
           sFeedback += "*Critical Hit*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + "): ";
           
           //Roll again to see if we scored a critical hit
-          iDiceRoll = d20();
+          //FistOfRaziels of over level 3 automatically confirm critical hits 
+          //when smiting evil
+          if(GetLocalInt(oAttacker, "FistOfRazielSpecialSmiteCritical") )
+          {
+               iDiceRoll = 10000;
+               DeleteLocalInt(oAttacker, "FistOfRazielSpecialSmiteCritical");
+          }   
+          else    
+               iDiceRoll = d20();
           if(!GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT) )
           {
                sFeedback += "*Threat Roll*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
@@ -2004,6 +2022,19 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      {
          sFeedback += "*Miss*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
          iReturn = 0;
+     }
+     
+     //arrow VFX
+     //this is done with crossbows and other ranged weapons
+     //at least you see some projectile rather than none at all
+     if(GetWeaponRanged(oWeapon))
+     {
+        if(iReturn == 1 || iReturn == 2)
+            AssignCommand(oAttacker, ApplyEffectToObject(DURATION_TYPE_INSTANT, 
+                EffectVisualEffect(NORMAL_ARROW, FALSE), oDefender));
+        else        
+            AssignCommand(oAttacker, ApplyEffectToObject(DURATION_TYPE_INSTANT, 
+                EffectVisualEffect(NORMAL_ARROW, TRUE), oDefender));
      }
 
      if(bShowFeedback) DelayCommand(fDelay, SendMessageToPC(oAttacker, sFeedback));     

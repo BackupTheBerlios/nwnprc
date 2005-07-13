@@ -60,7 +60,7 @@ void main()
     //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
 
     //Make a ranged touch attack
-    int nTouch = TouchAttackRanged(oTarget);
+    int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
     if(nTouch > 0)
     {
         if(nTouch == 2)

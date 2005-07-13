@@ -82,7 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
-            int iAttackRoll = TouchAttackRanged(oTarget);
+            int iAttackRoll = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
             if(iAttackRoll > 0)
             {
                  //Spell resistance

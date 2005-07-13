@@ -67,18 +67,18 @@ void main()
 // evil paladins should not heal non-undead, they should do damage, and heal undead. ~ Lock
 
      if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL)
-	{
-	 if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD || GetLevelByClass(CLASS_TYPE_UNDEAD,oTarget)>0)
-	 {
-	  SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS, FALSE));
+    {
+     if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD || GetLevelByClass(CLASS_TYPE_UNDEAD,oTarget)>0)
+     {
+      SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS, FALSE));
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eEVis2, oTarget);
        }
        else
-	 {
+     {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS));
         //Make a ranged touch attack
-        nTouch = TouchAttackMelee(oTarget,TRUE);
+        nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
 
         //----------------------------------------------------------------------
         // GZ: The PhB classifies Lay on Hands as spell like ability, so it is
@@ -100,7 +100,7 @@ void main()
             }
         }
        }
-	}
+    }
 
     //--------------------------------------------------------------------------
     // A good-aligned paladin can use his lay on hands ability to damage undead creatures
@@ -114,7 +114,7 @@ if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD || GetAlignmentGoodEvil(
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS));
         //Make a ranged touch attack
-        nTouch = TouchAttackMelee(oTarget,TRUE);
+        nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
 
         //----------------------------------------------------------------------
         // GZ: The PhB classifies Lay on Hands as spell like ability, so it is

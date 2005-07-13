@@ -57,7 +57,7 @@ int ooze_touch_damage(effect eDamage)
         //Make a touch attack to afflict target
 
        // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
-        if (TouchAttackMelee(oTarget,GetSpellCastItem() == OBJECT_INVALID)>0)
+        if (GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL))
         {
             effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
 
@@ -79,7 +79,7 @@ int ooze_touch_effect(effect eDamage, int time)
         //Make a touch attack to afflict target
 
        // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
-        if (TouchAttackMelee(oTarget,GetSpellCastItem() == OBJECT_INVALID)>0)
+        if (GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL))
         {
             effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
 
@@ -207,7 +207,7 @@ void main()
                 //Make a touch attack to afflict target
         
                // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
-                if (TouchAttackMelee(oTarget,GetSpellCastItem() == OBJECT_INVALID)>0)
+                if (GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL))
                 {
                     effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
         

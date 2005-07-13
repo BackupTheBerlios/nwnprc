@@ -25,6 +25,7 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "X0_I0_SPELLS"
+#include "prc_inc_combat"
 
 void main()
 {
@@ -56,30 +57,30 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     
     if (nMetaPsi > 0) 
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	effect eRay = EffectBeam(VFX_BEAM_MIND, OBJECT_SELF, BODY_NODE_HAND);
-	effect eVis = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
-	float fDur = 60.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;
-	
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	
-	// Perform the Touch Attach
-	int nTouchAttack = TouchAttackRanged(oTarget);
-	if (nTouchAttack > 0)
-	{
-		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
-			SetLocalInt(oTarget, "DimAnchor", TRUE);
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur,TRUE,-1,nCaster);
-			DelayCommand(fDur, DeleteLocalInt(oTarget, "DimAnchor"));
-		}
-	}
-	
+    int nDC = GetManifesterDC(oCaster);
+    int nCaster = GetManifesterLevel(oCaster);
+    int nPen = GetPsiPenetration(oCaster);
+    effect eRay = EffectBeam(VFX_BEAM_MIND, OBJECT_SELF, BODY_NODE_HAND);
+    effect eVis = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
+    float fDur = 60.0 * nCaster;
+    if (nMetaPsi == 2)  fDur *= 2;
+    
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+    
+    // Perform the Touch Attach
+    int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    if (nTouchAttack > 0)
+    {
+        //Check for Power Resistance
+        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        {
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
+            SetLocalInt(oTarget, "DimAnchor", TRUE);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur,TRUE,-1,nCaster);
+            DelayCommand(fDur, DeleteLocalInt(oTarget, "DimAnchor"));
+        }
+    }
+    
 
     }
 }

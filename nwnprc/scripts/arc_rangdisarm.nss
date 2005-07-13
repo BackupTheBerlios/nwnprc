@@ -1,9 +1,47 @@
 //#include "nw_i0_spells"    - inherited from spinc_common
 //#include "prc_spell_const" - inherited from spinc_common
 #include "spinc_common"
-#include "inc_combat2"
+#include "prc_inc_combat"
 
+void main()
+{
+   int nSpellId     = GetSpellId();
+   object oTarget   = GetSpellTargetObject();
+   object oWeap     = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
 
+   if (!GetWeaponRanged(oWeap))
+   {
+       FloatingTextStringOnCreature("*You must use a ranged weapon.*", OBJECT_SELF, FALSE);
+       return;
+   }
+   
+   // Let the target know they were done a hostile action at
+   SPRaiseSpellCastAt(oTarget, TRUE, nSpellId);
+   
+   if (!GetIsCreatureDisarmable(oTarget) || GetPlotFlag(oTarget))
+   {
+       FloatingTextStringOnCreature("*That target is not disarmable.*", OBJECT_SELF, FALSE);       
+       return;
+   }
+   
+   int nAttack = GetAttackBonus(oTarget, OBJECT_SELF, oWeap)-6;
+   int iHit = GetAttackRoll(oTarget, OBJECT_SELF, oWeap, 0, nAttack);
+   if(iHit)
+   {
+        //do discipline check
+        if(!GetIsSkillSuccessful(oTarget, SKILL_DISCIPLINE, nAttack+d20()))
+        {
+            object oTargWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+            CopyObject(oTargWeap, GetLocation(oTarget));
+            DestroyObject(oTargWeap);
+            FloatingTextStringOnCreature("*Target disarmed!*", OBJECT_SELF, FALSE);
+        }
+        else
+            FloatingTextStringOnCreature("*Disarm unsuccessful.*", OBJECT_SELF, FALSE);
+   }
+}
+
+/*
 int RangedAttackBonus(object oPC, object oWeap, object oTarget, int iMod = 0)
 {
     //Declare in instantiate major variables
@@ -72,7 +110,6 @@ int RangedAttackBonus(object oPC, object oWeap, object oTarget, int iMod = 0)
 
     return iAttackBonus;
 }
-
 void main()
 {
    int nSpellId     = GetSpellId();
@@ -92,7 +129,7 @@ void main()
    // Let the target know they were done a hostile action at
    SPRaiseSpellCastAt(oTarget, TRUE, nSpellId);
    
-   if (!GetIsCreatureDisarmable(oTarget))
+   if (!GetIsCreatureDisarmable(oTarget) || GetIsPlot(oTarget))
    {
        FloatingTextStringOnCreature("*That target is not disarmable.*", OBJECT_SELF, FALSE);       
        return;
@@ -131,3 +168,4 @@ void main()
        FloatingTextStringOnCreature("*Disarm unsuccessful.*", OBJECT_SELF, FALSE);
    }
 }
+*/

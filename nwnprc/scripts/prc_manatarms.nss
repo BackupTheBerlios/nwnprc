@@ -1,6 +1,7 @@
+
+#include "prc_alterations"
 #include "inc_item_props"
 #include "prc_feat_const"
-#include "inc_combat"
 #include "prc_inc_clsfunc"
 #include "nw_i0_spells"
 

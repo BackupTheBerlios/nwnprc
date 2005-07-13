@@ -27,38 +27,14 @@ void main()
 
 }
 */
+#include "prc_alterations"
 #include "NW_I0_GENERIC"
-#include "inc_combat"
 void main()
 {
-  object oPC = OBJECT_SELF;
+    object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
-    object oItem1 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
-    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
     int iMod = 20;
-
-    int iEnhancement = GetWeaponEnhancement(oWeap);
-    int iDamageType = GetWeaponDamageType(oWeap);
-
-    int iReturn = DoMeleeAttack(oPC,oWeap,oTarget,iMod,TRUE, 0.0);
-
-    if(iReturn = 2)
-    {
-       int iDamage = GetMeleeWeaponDamage(oPC,oWeap,TRUE,0);
-       effect eDam = EffectDamage(iDamage,iDamageType,iEnhancement);
-       ApplyEffectToObject(DURATION_TYPE_INSTANT,eDam,oTarget);
-       FloatingTextStringOnCreature("Critical Unstoppable Attack",OBJECT_SELF);
-       ActionAttack(oTarget);
-
-    }
-
-    else
-    {
-       int iDamage = GetMeleeWeaponDamage(oPC,oWeap,FALSE,0);
-       effect eDam = EffectDamage(iDamage,iDamageType,iEnhancement);
-       ApplyEffectToObject(DURATION_TYPE_INSTANT,eDam,oTarget);
-       FloatingTextStringOnCreature("Unstoppable Attack",OBJECT_SELF);
-       ActionAttack(oTarget);
-
-    }
+    effect eInvalid;
+    PerformAttackRound(oTarget, oPC, eInvalid, 0.0, 20, 0, 0, FALSE, 
+        "*Unstoppable Attack Hit*", "*Unstoppable Attack Missed");
 }

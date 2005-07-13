@@ -55,7 +55,7 @@ void main()
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MAGIC_MISSILE));
 
         //Make ranged touch attack check
-        if (TouchAttackRanged(oTarget, TRUE))
+        if (GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL))
         {
                 //Roll damage
                 int nDam = d6(nCasterLvl + StringToInt(nSpellLevel));

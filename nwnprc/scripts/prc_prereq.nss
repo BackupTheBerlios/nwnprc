@@ -369,6 +369,24 @@ void Stormlord(object oPC)
      }
 }
 
+void Blightlord(object oPC)
+{
+     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+
+
+     if (iCleric)
+     {
+     SetLocalInt(oPC, "PRC_PrereqBlightL", 1);
+     int iBlight = GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
+          {
+          if (iBlight>1)
+               {
+               SetLocalInt(oPC, "PRC_PrereqBlightL", 0);
+               }
+          }
+     }
+}
+
 void ShadowAdept(object oPC)
 {
      int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
@@ -679,6 +697,7 @@ void main2()
      ManAtArms(oPC);
      SOL(oPC);
      Stormlord(oPC);
+     Blightlord(oPC);
      EOG(oPC);
      RedWizard(oPC);
      ShadowAdept(oPC);

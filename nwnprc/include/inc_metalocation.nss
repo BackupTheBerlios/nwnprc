@@ -533,8 +533,8 @@ int GetIsMetalocationValid(struct metalocation mlocL)
 string MetalocationToString(struct metalocation mlocL)
 {
     return mlocL.sName + " - " + GetName(GetAreaFromMetalocation(mlocL))
-            + " (" + FloatToString(mlocL.fX) + ", " + FloatToString(mlocL.fY) + ", " + FloatToString(mlocL.fZ) + ")"
-            + (GetIsMetalocationInModule(mlocL) ? "" : (" " + GetStringByStrRef(16825269)+ " "/*" Not in module "*/));
+            + " (" + IntToString(FloatToInt(mlocL.fX)) + ", " + IntToString(FloatToInt(mlocL.fY)) + ", " + IntToString(FloatToInt(mlocL.fZ)) + ")"
+            + (GetIsMetalocationInModule(mlocL) ? "" : (" " + GetStringByStrRef(16825269)/*" Not in module "*/));
 }
 
 //void main(){} // Test main

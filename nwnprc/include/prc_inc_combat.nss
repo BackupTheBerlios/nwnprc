@@ -3539,7 +3539,12 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
           else if(ipType == ITEM_PROPERTY_ONHITCASTSPELL)
           {
                ipSpellID = StringToInt( Get2DACache("iprp_onhitspell", "SpellIndex", ipSubType) );
-               ActionCastSpellAtObject(ipSpellID, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+               AssignCommand(oAttacker, ActionCastSpellAtObject(ipSpellID, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+               
+               // Store the weapon for retrieval in spellscripts.
+               SetLocalObject(oAttacker, "PRC_CombatSystem_OnHitCastSpell_Item", oItem);
+               // Cleanup
+               DelayCommand(1.5f, DeleteLocalInt(oAttacker, "PRC_CombatSystem_OnHitCastSpell_Item"));
           }
           
           else if(ipType == ITEM_PROPERTY_ON_HIT_PROPERTIES)
@@ -4286,24 +4291,28 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
 
 void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE)
 {
+     //SendMessageToPC(oAttacker, "Entered AttackLoopMain()");
      // turn off touch attack if var says it only applies to first attack
      if (bFirstAttack && !bApplyTouchToAll) iTouchAttackType == FALSE;
      
      // perform all bonus attacks
      if(iBonusAttacks > 0)
      {
+          //SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic");
           iBonusAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE, iTouchAttackType);
      }
           
      // perform main attack first, then off-hand attack
-     else if(iBonusAttacks < 0 && iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
+     else if(iBonusAttacks <= 0 && iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
      {
+          //SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic");
           iMainAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE, iTouchAttackType);
      }
      else if(iOffHandAttacks > 0)
      {
+          //SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic - offhand");
           iOffHandAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 1, FALSE, iTouchAttackType);
      }

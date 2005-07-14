@@ -27,9 +27,19 @@ void main()
     object oItem   = GetSpellCastItem();
     int nFlags = GetLocalInt(oPC, MBLADE_FLAGS);
     
+    // Scripted combat system
+    if(!GetIsObjectValid(oItem))
+    {
+        oItem = GetLocalObject(oPC, "PRC_CombatSystem_OnHitCastSpell_Item");
+    }
     
+    int bMainHandPStrk = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oItem && GetLocalInt(oPC, PSYCHIC_STRIKE_MAINH);
+    int bOffHandPStrk  = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)  == oItem && GetLocalInt(oPC, PSYCHIC_STRIKE_OFFH);
+
+    SendMessageToPC(oPC, "Debug: starting main part of psi_sk_onhit");
+
     // Handle Psychic Strike
-    if(GetLocalInt(oPC, PSYCHIC_STRIKE) || GetLocalInt(oPC, PSYCHIC_STRIKE + BLADEWIND))
+    if(bMainHandPStrk || bOffHandPStrk || GetLocalInt(oPC, "PRC_Soulknife_BladewindAndPStrike"))
     {
         // Check if the target is valid for Psychic Strike
         int nRacialType = MyPRCGetRacialType(oTarget);
@@ -47,16 +57,20 @@ void main()
            )
         {
             // Lose Psychic Strike, unless this was a Bladewind attack other than the first
-            if(GetLocalInt(oPC, PSYCHIC_STRIKE))
+            if(bMainHandPStrk)
+                SetLocalInt(oPC, PSYCHIC_STRIKE_MAINH, FALSE);
+            if(bOffHandPStrk)
+                SetLocalInt(oPC, PSYCHIC_STRIKE_OFFH, FALSE);
+            // If we are Bladewinding and had Psychic Strike at the start, mark it
+            if((bMainHandPStrk || bOffHandPStrk) && GetLocalInt(oPC, BLADEWIND))
             {
-                // Lose Psychic Strike
-                SetLocalInt(oPC, PSYCHIC_STRIKE, FALSE);
-                // If we are Bladewinding and had Psychic Strike at the start, mark it
-                if(GetLocalInt(oPC, BLADEWIND))
-                {
-                    SetLocalInt(oPC, PSYCHIC_STRIKE + BLADEWIND, TRUE);
-                    DelayCommand(1.0, DeleteLocalInt(oPC, PSYCHIC_STRIKE + BLADEWIND));
-                }
+                // When Bladewinding, lose both main and offhand charges
+                SetLocalInt(oPC, PSYCHIC_STRIKE_MAINH, FALSE);
+                SetLocalInt(oPC, PSYCHIC_STRIKE_OFFH, FALSE);
+
+                // Mark the Bladewind so that every target hit gets Psychic Striked
+                SetLocalInt(oPC, "PRC_Soulknife_BladewindAndPStrike", TRUE);
+                DelayCommand(1.0, DeleteLocalInt(oPC, "PRC_Soulknife_BladewindAndPStrike"));
             }
             FloatingTextStringOnCreature("* " + GetStringByStrRef(16824456) + " *", oPC);// * Psychic Strike *
             
@@ -76,12 +90,6 @@ void main()
                 
                 //SendMessageToPC(oPC, "KTTS - Type: " + IntToString(nKTTSType) + "; Dice: " + IntToString(nKTTSDice));
                 
-                /*effect eAbilDam = EffectAbilityDecrease(nKTTSType == KTTS_TYPE_INT ? ABILITY_INTELLIGENCE :
-                                                        nKTTSType == KTTS_TYPE_WIS ? ABILITY_WISDOM :
-                                                        ABILITY_CHARISMA
-                                                        , nKTTSDice);*/
-                
-                //ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);
                 ApplyAbilityDamage(oTarget, nKTTSType == KTTS_TYPE_INT ? ABILITY_INTELLIGENCE :
                                             nKTTSType == KTTS_TYPE_WIS ? ABILITY_WISDOM :
                                             ABILITY_CHARISMA
@@ -167,8 +175,6 @@ void main()
         //SendMessageToPC(oPC, "Wounding");
         if(!GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT))
         {
-            /*effect eAbilDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, 1);
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);*/
             ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, TRUE, DURATION_TYPE_PERMANENT);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
         }

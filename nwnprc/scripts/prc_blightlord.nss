@@ -3,7 +3,7 @@
 #include "prc_ipfeat_const"
 #include "prc_class_const"
 
-/*void BLKGlaive(object oPC,int iEquip)
+void BLKGlaive(object oPC,int iEquip)
 {
 	FloatingTextStringOnCreature("Black Glaive is firing", OBJECT_SELF, FALSE);
 	object oItem;
@@ -11,16 +11,17 @@
 	if (iEquip==2)        // On Equip
 	{
 		FloatingTextStringOnCreature("Black Glaive is equipped", OBJECT_SELF, FALSE);
+		FloatingTextStringOnCreature("Value of BKGlaive: " + IntToString(GetLocalInt(oPC,"BKGlaive")), OBJECT_SELF, FALSE);
 		
 		oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-		if ( GetLocalInt(oItem,"BKGlaive")) return;
+		if (GetLocalInt(oPC,"BKGlaive")) return;
 
 		if (GetBaseItemType(oItem)==BASE_ITEM_HALBERD)
 		{
 			FloatingTextStringOnCreature("Black Glaive is a Halberd", OBJECT_SELF, FALSE);
 			AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_COLD,IP_CONST_DAMAGEBONUS_1d6),oItem,9999.0);
-			SetLocalInt(oItem,"BKGlaive",1);
-			//DelayCommand(1.0, DeleteLocalInt(oItem, "BKGlaive"));
+			SetLocalInt(oPC,"BKGlaive",1);
+			FloatingTextStringOnCreature("Value of BKGlaive: " + IntToString(GetLocalInt(oPC,"BKGlaive")), OBJECT_SELF, FALSE);
 			FloatingTextStringOnCreature("Applied Blightlord Cold Damage", OBJECT_SELF, FALSE);
 		}
 	}
@@ -34,31 +35,34 @@
 		//if (GetBaseItemType(oItem)!=BASE_ITEM_HALBERD) return;
 
 		FloatingTextStringOnCreature("Unequipped item is a Halberd", OBJECT_SELF, FALSE);
+		
+		FloatingTextStringOnCreature("Value of BKGlaive: " + IntToString(GetLocalInt(oPC,"BKGlaive")), OBJECT_SELF, FALSE);
 
-		if (GetLocalInt(oItem,"BKGlaive"))
+		if (GetLocalInt(oPC,"BKGlaive"))
 		{
 			RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_COLD,IP_CONST_DAMAGEBONUS_1d6,1,"",-1,DURATION_TYPE_TEMPORARY);
 			FloatingTextStringOnCreature("Removed Blightlord Cold Damage", OBJECT_SELF, FALSE);		
-			DeleteLocalInt(oItem,"BKGlaive");
+			DeleteLocalInt(oPC,"BKGlaive");
+			FloatingTextStringOnCreature("Value of BKGlaive: " + IntToString(GetLocalInt(oPC,"BKGlaive")), OBJECT_SELF, FALSE);
 		}
 	}
-	else
+	/*else
 	{
 		FloatingTextStringOnCreature("Black Glaive is in Else statement", OBJECT_SELF, FALSE);
 		
 		oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-		//if (GetLocalInt(oItem,"BKGlaive")) return;
+		//if (GetLocalInt(oPC,"BKGlaive")) return;
 
 		if (GetBaseItemType(oItem)==BASE_ITEM_HALBERD)
 		{
 			FloatingTextStringOnCreature("Black Glaive is an ELSE Halberd", OBJECT_SELF, FALSE);
 			AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_COLD,IP_CONST_DAMAGEBONUS_1d6),oItem,9999.0);
-			//SetLocalInt(oItem,"BKGlaive",1);
+			//SetLocalInt(oPC,"BKGlaive",1);
 			FloatingTextStringOnCreature("Applied Blightlord Cold Damage", OBJECT_SELF, FALSE);
 		}
-	}
+	}*/
 }
-*/
+/*
 
 void RemoveBlackGlaive(object oPC, object oWeap)
 {
@@ -78,7 +82,7 @@ void AddBlackGlaive(object oPC, object oWeap)
     DelayCommand(0.1, AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_COLD, IP_CONST_DAMAGEBONUS_1d6), oWeap, 999999.0));
     SetLocalInt(oWeap, "BlackGlaive", TRUE);
 }
-
+*/
 void Corrupt(object oPC, int iEquip)
 {
 	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
@@ -158,21 +162,21 @@ void main()
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     	object oUnequip = GetItemLastUnequipped();
     	int iEquip = GetLocalInt(oPC, "ONEQUIP");
-	
+/*	
     	if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD) >= 6)
     	{
     	   	if (iEquip == 1)    RemoveBlackGlaive(oPC, oUnequip);
     		if (iEquip == 2)    AddBlackGlaive(oPC, oWeap);
     	}
-
+*/
 
 	SendMessageToPC(oPC, "Blightlord Main is Firing");
 	if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD) >= 1)
       		BltBlood(oPC, oSkin);
-/*
+
 	if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD) >= 6)
         	BLKGlaive(oPC, GetLocalInt(oPC,"ONEQUIP"));
-*/
+
 	if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD) >= 8)
         	Corrupt(oPC, GetLocalInt(oPC,"ONEQUIP"));
 

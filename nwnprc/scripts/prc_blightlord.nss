@@ -40,6 +40,7 @@ void BLKGlaive(object oPC,int iEquip)
 
 		if (GetLocalInt(oPC,"BKGlaive"))
 		{
+SpawnScriptDebugger();
 			RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_COLD,IP_CONST_DAMAGEBONUS_1d6,1,"",-1,DURATION_TYPE_TEMPORARY);
 			FloatingTextStringOnCreature("Removed Blightlord Cold Damage", OBJECT_SELF, FALSE);		
 			DeleteLocalInt(oPC,"BKGlaive");

@@ -62,7 +62,7 @@ int MyGetLastRestEventType();
 
 object GetItemLastEquippedBy()
 {
-    if(GetModule() == OBJECT_SELF)
+    if(GetModule() == OBJECT_SELF || GetIsPC(OBJECT_SELF)) // prc_inc_function runs the class scripts on the PC instead of the module
         return GetPCItemLastEquippedBy();
     else
         return OBJECT_SELF;
@@ -70,7 +70,7 @@ object GetItemLastEquippedBy()
 
 object GetItemLastUnequippedBy()
 {
-    if(GetModule() == OBJECT_SELF)
+    if(GetModule() == OBJECT_SELF || GetIsPC(OBJECT_SELF))
         return GetPCItemLastUnequippedBy();
     else
         return OBJECT_SELF;
@@ -78,7 +78,7 @@ object GetItemLastUnequippedBy()
 
 object GetItemLastEquipped()
 {
-    if(GetModule() == OBJECT_SELF)
+    if(GetModule() == OBJECT_SELF || GetIsPC(OBJECT_SELF))
         return GetPCItemLastEquipped();
     else
         return GetLocalObject(OBJECT_SELF, "oLastEquipped");
@@ -86,7 +86,7 @@ object GetItemLastEquipped()
 
 object GetItemLastUnequipped()
 {
-    if(GetModule() == OBJECT_SELF)
+    if(GetModule() == OBJECT_SELF || GetIsPC(OBJECT_SELF))
         return GetPCItemLastUnequipped();
     else
         return GetLocalObject(OBJECT_SELF, "oLastUnequipped");
@@ -120,14 +120,14 @@ void DoEquipTest()
 
 
 object MyGetLastKiller(){
-    if(GetModule() == OBJECT_SELF)
+    if(GetModule() == OBJECT_SELF || GetIsPC(OBJECT_SELF))
         return GetLastHostileActor();
     else
         return GetLastKiller();
 }
 
 object GetLastBeingDied(){
-    if(GetModule() == OBJECT_SELF)
+    if(GetModule() == OBJECT_SELF || GetIsPC(OBJECT_SELF))
         return GetLastPlayerDied();
     else
         return OBJECT_SELF;
@@ -135,14 +135,14 @@ object GetLastBeingDied(){
 
 
 object GetLastBeingRested(){
-    if(GetModule() == OBJECT_SELF)
+    if(GetModule() == OBJECT_SELF || GetIsPC(OBJECT_SELF))
         return GetLastPCRested();
     else
         return OBJECT_SELF;
 }
 
 int MyGetLastRestEventType(){
-    if(GetModule() == OBJECT_SELF)
+    if(GetModule() == OBJECT_SELF || GetIsPC(OBJECT_SELF))
         return GetLastRestEventType();
     else
         return GetLocalInt(OBJECT_SELF, "prc_rest_eventtype");

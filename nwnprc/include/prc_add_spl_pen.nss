@@ -224,6 +224,26 @@ int ShadowWeavePen(int spell_id, object oCaster = OBJECT_SELF)
     //SendMessageToPC(GetFirstPC(), "Your Spell Pen modifier is " + IntToString(nSP));
     return nSP;
 }
+
+int KOTCSpellPenVsDemons(object oCaster)
+{
+	int nSP = 0;
+	int iKOTC = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster);
+	object oTarget = GetSpellTargetObject();
+	
+	if (iKOTC >= 1)
+    	{
+    		if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
+    		{
+    			if (GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+    			{
+				nSP = 2;
+    			}
+    		}
+    	}
+    	return nSP;
+}
+
 int add_spl_pen(object oCaster = OBJECT_SELF)
 {
     int spell_id = PRCGetSpellId();
@@ -233,6 +253,7 @@ int add_spl_pen(object oCaster = OBJECT_SELF)
     nSP += GetSpellPowerBonus(oCaster);
     nSP += GetSpellPenetreFocusSchool(oCaster);
     nSP += ShadowWeavePen(spell_id,oCaster);
+    nSP += KOTCSpellPenVsDemons(oCaster);
         
     return nSP;
 }

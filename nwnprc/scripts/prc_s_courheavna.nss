@@ -11,34 +11,41 @@
 
 #include "x0_i0_spells"
 
+void HeavenDevotion(object oTarget)
+{
+	effect eMind = VersusRacialTypeEffect(EffectSavingThrowIncrease(SAVING_THROW_WILL, 4, SAVING_THROW_TYPE_MIND_SPELLS), RACIAL_TYPE_OUTSIDER);
+	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eMind, oTarget);
+}
+
 void main()
 {
     object oTarget = GetEnteringObject();
     if(GetIsFriend(oTarget, GetAreaOfEffectCreator()))
     {
         //Declare major variables
-        int nDuration = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, OBJECT_SELF);
-        //effect eVis = EffectVisualEffect(VFX_IMP_EVIL_HELP);
-        effect eIFear = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_FEAR), RACIAL_TYPE_OUTSIDER);
-        effect eICharm = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_CHARM), RACIAL_TYPE_OUTSIDER);
-        effect eIConf = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_CONFUSED), RACIAL_TYPE_OUTSIDER);
-        effect eIDaze = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_DAZED), RACIAL_TYPE_OUTSIDER);
-        effect eIDomin = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_DOMINATE), RACIAL_TYPE_OUTSIDER);
-        effect eIMind = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS), RACIAL_TYPE_OUTSIDER);
-        effect eISleep = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_SLEEP), RACIAL_TYPE_OUTSIDER);
-        effect eIStun = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_STUN), RACIAL_TYPE_OUTSIDER);
+        effect eFear = VersusRacialTypeEffect(EffectImmunity(IMMUNITY_TYPE_FEAR), RACIAL_TYPE_OUTSIDER);
+        effect eSave = VersusRacialTypeEffect(EffectSavingThrowIncrease(SAVING_THROW_WILL, 4, SAVING_THROW_TYPE_FEAR), RACIAL_TYPE_OUTSIDER);
         effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
 
-        effect eLink = EffectLinkEffects(eIFear, eICharm);
-               eLink = EffectLinkEffects(eLink, eIConf);
-               eLink = EffectLinkEffects(eLink, eIDaze);
-               eLink = EffectLinkEffects(eLink, eIDomin);
-               eLink = EffectLinkEffects(eLink, eIMind);
-               eLink = EffectLinkEffects(eLink, eISleep);
-               eLink = EffectLinkEffects(eLink, eIStun);
-               eLink = EffectLinkEffects(eLink, eDur);
+        effect eLink = EffectLinkEffects(eDur, eFear);
+        effect eLink2 = EffectLinkEffects(eDur, eSave);
 
         //Apply the VFX impact and effects
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+        // Caster is immune to fear from outsiders
+        // Allies get +4 bonus vs fear from outsiders.
+        if (oTarget == GetAreaOfEffectCreator())
+        {
+        	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+        }
+        else
+        {
+        	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget);
+        }
+        
+        // Heavenly Devotion for allies
+        if (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, GetAreaOfEffectCreator()) >= 5)
+        {
+        	HeavenDevotion(oTarget);
+        }
      }
 }

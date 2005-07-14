@@ -152,6 +152,26 @@ int EShamConc()
     return nTest;
 }
 
+int KOTCHeavenDevotion(object oTarget)
+{
+    int iKOTC = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oTarget);
+    int nTest = TRUE;
+
+    if (iKOTC >= 5)
+    {
+    	if (MyPRCGetRacialType(OBJECT_SELF) == RACIAL_TYPE_OUTSIDER)
+    	{
+    		if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL)
+    		{
+    			if (GetSpellSchool(GetSpellId()) == SPELL_SCHOOL_ENCHANTMENT)
+    			{
+    				nTest = FALSE;
+    			}
+    		}
+    	}
+    }    
+    return nTest;
+}
 
 int X2UseMagicDeviceCheck()
 {
@@ -524,7 +544,13 @@ int X2PreSpellCastCode()
     // Run Ectoplasmic Shambler Concentration Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = EShamConc();        
+        nContinue = EShamConc();      
+        
+    //---------------------------------------------------------------------------
+    // Run Knight of the Chalice Heavenly Devotion check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = KOTCHeavenDevotion(oTarget);            
 
     //---------------------------------------------------------------------------
     // Run use magic device skill check

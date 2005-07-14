@@ -311,6 +311,24 @@ int ShadowWeaveDC(int spell_id, object oCaster = OBJECT_SELF)
     return nDC;
 }
 
+int KOTCSpellFocusVsDemons(object oTarget, object oCaster)
+{
+	int nDC = 0;
+	int iKOTC = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster);
+	
+	if (iKOTC >= 1)
+    	{
+    		if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
+    		{
+    			if (GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+    			{
+				nDC = 2;
+    			}
+    		}
+    	}
+    	return nDC;
+}
+
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
     if(nSpellID == -1)
@@ -342,6 +360,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += ShadowWeaveDC(nSpellID, oCaster);
     nDC += RedWizardDC(nSpellID, oCaster);
     nDC += TattooFocus(nSpellID, oCaster);
+    nDC += KOTCSpellFocusVsDemons(oTarget, oCaster);
     nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     return nDC;
     

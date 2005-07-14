@@ -13,17 +13,31 @@
 
 void main()
 {
-      //Declare major variables including Area of Effect Object
-    effect eAOE = EffectAreaOfEffect(113);
-    effect eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eGood = EffectVisualEffect(VFX_IMP_GOOD_HELP);
+     string sMes = "";
+     object oPC = OBJECT_SELF;
+     
+     if(!GetHasSpellEffect(GetSpellId()))
+     { 
+	//Declare major variables including Area of Effect Object
+    	effect eAOE = EffectAreaOfEffect(113);
+    	effect eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
+    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    	effect eGood = EffectVisualEffect(VFX_IMP_GOOD_HELP);
+    	effect eLink = EffectLinkEffects(eAOE, eVis);
+    	eLink = EffectLinkEffects(eLink, eDur);
+	
+    	object oTarget = GetSpellTargetObject();
+	
+    	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+    	ApplyEffectToObject(DURATION_TYPE_INSTANT, eGood, oTarget);
+     	sMes = "*Courage of Heaven Activated*";
+     }
+     else     
+     {
+	// Removes effects
+	RemoveSpellEffects(GetSpellId(), oPC, oPC);
+	sMes = "*Courage of Heaven Deactivated*";
+     }
 
-    effect eLink = EffectLinkEffects(eAOE, eVis);
-    eLink = EffectLinkEffects(eLink, eDur);
-
-    object oTarget = GetSpellTargetObject();
-
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eGood, oTarget);
+     FloatingTextStringOnCreature(sMes, oPC, FALSE);
 }

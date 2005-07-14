@@ -2,7 +2,7 @@
 //:: Soulknife includes
 //:: psi_inc_soulkn
 //::///////////////////////////////////////////////
-/*
+/** @file
     Constants and common functions used by
     Soulknife scripts.
 */
@@ -20,11 +20,12 @@
 /* Constant declarations                        */
 //////////////////////////////////////////////////
 
-const string MBLADE_SHAPE   = "PRC_PSI_SK_MindbladeShape";
-const string FREEDRAW_USED  = "PRC_PSI_SK_FreeDraw_Used";
-const string PSYCHIC_STRIKE = "PRC_PSI_SK_PsychisStrike";
-const string KTTS           = "PRC_PSI_SK_KnifeToTheSoul";
-const string BLADEWIND      = "PRC_PSI_SK_Bladewind_Active";
+const string MBLADE_SHAPE        = "PRC_PSI_SK_MindbladeShape";
+const string FREEDRAW_USED        = "PRC_PSI_SK_FreeDraw_Used";
+const string PSYCHIC_STRIKE_MAINH = "PRC_PSI_SK_PsychisStrike_MainHand";
+const string PSYCHIC_STRIKE_OFFH  = "PRC_PSI_SK_PsychisStrike_OffHand";
+const string KTTS                 = "PRC_PSI_SK_KnifeToTheSoul";
+const string BLADEWIND            = "PRC_PSI_SK_Bladewind_Active";
 
 const int KTTS_TYPE_MASK    = 3; // 2 LSB
 const int KTTS_TYPE_OFF     = 0;

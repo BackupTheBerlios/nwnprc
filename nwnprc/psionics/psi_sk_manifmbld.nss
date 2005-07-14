@@ -94,7 +94,7 @@ void main()
         SetDroppableFlag(oMbld, FALSE);
         SetItemCursedFlag(oMbld, TRUE);
     }
-    // Not dual-wielding, so delete the second mindblade if they have suc
+    // Not dual-wielding, so delete the second mindblade if they have such
     else if(GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)), 14) == "prc_sk_mblade_")
     {
         MyDestroyObject(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC));

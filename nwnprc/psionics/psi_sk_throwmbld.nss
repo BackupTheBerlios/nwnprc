@@ -15,6 +15,7 @@
 //:://////////////////////////////////////////////
 
 #include "psi_inc_soulkn"
+#include "prc_inc_combat"
 
 void main()
 {
@@ -22,7 +23,7 @@ void main()
     object oTarget = GetSpellTargetObject();
 
     if(GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)), 14) != "prc_sk_mblade_")
-    {
+    {// "You must have a mindblade manifested to use this feat."
         SendMessageToPCByStrRef(oPC, 16824509);
         return;
     }
@@ -37,7 +38,8 @@ void main()
     ExecuteScript("psi_sk_manifmbld", oPC);
 
     // Queue attacking
-    DelayCommand(0.2f, AssignCommand(oPC, ActionAttack(oTarget)));
+    //DelayCommand(0.2f, AssignCommand(oPC, ActionAttack(oTarget)));
+    DelayCommand(0.4f, AssignCommand(oPC, PerformAttackRound(oTarget, oPC, EffectVisualEffect(-1))));
 
     // Return the old blade setting
     SetPersistantLocalInt(oPC, MBLADE_SHAPE, nPrevShape);

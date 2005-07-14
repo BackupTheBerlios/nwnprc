@@ -53,6 +53,11 @@ void main()
     oSpellOrigin = OBJECT_SELF;
     oSpellTarget = GetSpellTargetObject();
     oItem        = GetSpellCastItem();
+    // Scripted combat system
+    if(!GetIsObjectValid(oItem))
+    {
+        oItem = GetLocalObject(oSpellOrigin, "PRC_CombatSystem_OnHitCastSpell_Item");
+    }
     nVassal    = GetLevelByClass(CLASS_TYPE_VASSAL, OBJECT_SELF);
     nBArcher   = GetLevelByClass(CLASS_TYPE_BLARCHER, OBJECT_SELF);
     nFoeHunter = GetLevelByClass(CLASS_TYPE_FOE_HUNTER, OBJECT_SELF);

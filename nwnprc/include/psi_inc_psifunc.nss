@@ -304,7 +304,10 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     // Epic feat Improved Metapsionics - 2 PP per.
     int nImpMetapsiReduction, i = FEAT_IMPROVED_METAPSIONICS_1, bUseSum = GetPRCSwitch(PRC_PSI_IMP_METAPSIONICS_USE_SUM);
     while(i < FEAT_IMPROVED_METAPSIONICS_10 && GetHasFeat(i, oCaster))
+    {
         nImpMetapsiReduction += 2;
+        i++;
+    }
 
 
     // Ability score check
@@ -662,6 +665,10 @@ void UsePower(int nPower, int nClass, int bIgnorePP = FALSE, int nLevelOverride 
     }
     //Ignore power points?
     SetLocalInt(OBJECT_SELF, "IgnorePowerPoints", bIgnorePP);
+
+    //SendMessageToPC(OBJECT_SELF, "Clearing all actions in preparation for second stage of the power.");
+    //AssignCommand(OBJECT_SELF, ClearAllActions());
+
     ActionCastSpell(nPower, nLevelOverride);
 }
 
@@ -857,7 +864,6 @@ int GetPsionicFocusUsingFeatsActive(object oCreature = OBJECT_SELF)
     if(GetLocalInt(oCreature, "PowerPenetrationActive"))    nFeats++;
     if(GetLocalInt(oCreature, "PsionicEndowmentActive"))    nFeats++;
     
-    // TODO: Add in metapsionics here
     if(GetLocalInt(oCreature, "PsiMetaChain"))   nFeats++;
     if(GetLocalInt(oCreature, "PsiMetaEmpower")) nFeats++;
     if(GetLocalInt(oCreature, "PsiMetaExtend"))  nFeats++;
@@ -874,9 +880,10 @@ int GetPsionicFocusUsingFeatsActive(object oCreature = OBJECT_SELF)
 
 int GetIsPsionicCharacter(object oCreature)
 {
-    return !!(GetLevelByClass(CLASS_TYPE_PSION, oCreature)  ||
-              GetLevelByClass(CLASS_TYPE_PSYWAR, oCreature) ||
-              GetLevelByClass(CLASS_TYPE_WILDER, oCreature) ||
+    return !!(GetLevelByClass(CLASS_TYPE_PSION,          oCreature) ||
+              GetLevelByClass(CLASS_TYPE_PSYWAR,         oCreature) ||
+              GetLevelByClass(CLASS_TYPE_WILDER,         oCreature) ||
+              GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature) ||
               GetHasFeat(FEAT_WILD_TALENT, oCreature)
               // Racial psionicity signifying feats go here
              );

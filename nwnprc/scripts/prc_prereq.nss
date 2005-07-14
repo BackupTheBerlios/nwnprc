@@ -134,6 +134,16 @@ void Hathran(object oPC)
     }
 }
 
+void Kord(object oPC)
+{
+     SetLocalInt(oPC, "PRC_PrereqKord", 1);
+
+     if (GetFortitudeSavingThrow(oPC) >= 6)
+     {
+     	SetLocalInt(oPC, "PRC_PrereqKord", 0);
+     }
+}
+
 void Shifter(object oPC, int iArcSpell, int iDivSpell)
 {
 
@@ -709,6 +719,7 @@ void main2()
      Rava(oPC);
      WWolf(oPC);
      FH(oPC);
+     Kord(oPC);
      BloodArcher(oPC);
      Alaghar(oPC);
      RangerURangerMutex(oPC);

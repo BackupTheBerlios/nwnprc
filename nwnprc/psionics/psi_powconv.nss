@@ -107,6 +107,7 @@ void main()
             int nPowerLevelToBrowse = GetLocalInt(oPC, "nPowerLevelToBrowse");
             //PrintString("Building power list for level " + IntToString(nPowerLevelToBrowse));
             int i;
+            //SpawnScriptDebugger();
             for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
             {
                 int nPowerLevel = StringToInt(Get2DACache(sPowerFile, "Level", i));

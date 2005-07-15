@@ -601,8 +601,6 @@ void main2()
      }
 
      // Find the spell levels.
-    int i;
-    int i2 = 1;
     int iCha = GetLocalInt(GetPCSkin(oPC), "PRC_trueCHA") - 10;
     int iWis = GetLocalInt(GetPCSkin(oPC), "PRC_trueWIS") - 10;
     int iInt = GetLocalInt(GetPCSkin(oPC), "PRC_trueINT") - 10;
@@ -611,9 +609,12 @@ void main2()
     int nPsiHighest;
     int bFirstArcClassFound, bFirstDivClassFound, bFirstPsiClassFound;
     //for(i=1;i<3;i++)
-    while(i2 < 3)
+    int nSpellLevel;
+    int nClassSlot = 1;
+    while(nClassSlot <= 3)
     {
-        int nClass = PRCGetClassByPosition(i2, oPC);
+        int nClass = PRCGetClassByPosition(nClassSlot, oPC);
+        nClassSlot += 1;
         if(GetIsDivineClass(nClass))
         { 
             int nLevel = GetLevelByClass(nClass, oPC);
@@ -625,15 +626,15 @@ void main2()
             }
             int nAbility = GetAbilityForClass(nClass, oPC);                       
                        
-            for(i=1;i<=9;i++)
+            for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                int nSlots = GetSlotCount(nLevel, i, nAbility, nClass);
+                int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
-                    SetLocalInt(oPC, "PRC_AllSpell"+IntToString(i), 0);
-                    SetLocalInt(oPC, "PRC_DivSpell"+IntToString(i), 0);
-                    if(i > nDivHighest)
-                        nDivHighest = i;
+                    SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
+                    SetLocalInt(oPC, "PRC_DivSpell"+IntToString(nSpellLevel), 0);
+                    if(nSpellLevel > nDivHighest)
+                        nDivHighest = nSpellLevel;
                 }
             }
         }
@@ -648,15 +649,15 @@ void main2()
             }
             int nAbility = GetAbilityForClass(nClass, oPC);                       
                        
-            for(i=1;i<=9;i++)
+            for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                int nSlots = GetSlotCount(nLevel, i, nAbility, nClass);
+                int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
-                    SetLocalInt(oPC, "PRC_AllSpell"+IntToString(i), 0);
-                    SetLocalInt(oPC, "PRC_ArcSpell"+IntToString(i), 0);
-                    if(i > nArcHighest)
-                        nArcHighest = i;
+                    SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
+                    SetLocalInt(oPC, "PRC_ArcSpell"+IntToString(nSpellLevel), 0);
+                    if(nSpellLevel > nArcHighest)
+                        nArcHighest = nSpellLevel;
                 }
             }
         }  
@@ -673,10 +674,10 @@ void main2()
             
             int nPsiHighest = GetPowerPrereq(nLevel, nAbility, nClass);
             
-            for(i = 1; i <= nPsiHighest; i++)
+            for(nSpellLevel = 1; nSpellLevel <= nPsiHighest; nSpellLevel++)
             {
-                SetLocalInt(oPC, "PRC_PsiPower"+IntToString(i), 0);
-                FloatingTextStringOnCreature("Prereq Variable " + IntToString(i) +": " + IntToString(GetLocalInt(oPC, "PRC_PsiPower"+IntToString(i))), oPC, FALSE);
+                SetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel), 0);
+                FloatingTextStringOnCreature("Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel))), oPC, FALSE);
             }
             /*
             for(i=1;i<=9;i++)
@@ -693,7 +694,6 @@ void main2()
             }
             */
         }         
-        i2 += 1;   
     }
 
      // Find the sneak attack capacity.

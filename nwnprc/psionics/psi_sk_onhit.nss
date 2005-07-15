@@ -25,7 +25,7 @@ void main()
     object oPC     = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
     object oItem   = GetSpellCastItem();
-    int nFlags = GetLocalInt(oPC, MBLADE_FLAGS);
+    int nFlags = GetPersistantLocalInt(oPC, MBLADE_FLAGS);
     
     // Scripted combat system
     if(!GetIsObjectValid(oItem))
@@ -36,7 +36,7 @@ void main()
     int bMainHandPStrk = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oItem && GetLocalInt(oPC, PSYCHIC_STRIKE_MAINH);
     int bOffHandPStrk  = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)  == oItem && GetLocalInt(oPC, PSYCHIC_STRIKE_OFFH);
 
-    SendMessageToPC(oPC, "Debug: starting main part of psi_sk_onhit");
+    //SendMessageToPC(oPC, "Debug: starting main part of psi_sk_onhit");
 
     // Handle Psychic Strike
     if(bMainHandPStrk || bOffHandPStrk || GetLocalInt(oPC, "PRC_Soulknife_BladewindAndPStrike"))

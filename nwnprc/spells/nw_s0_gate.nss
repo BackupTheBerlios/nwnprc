@@ -62,7 +62,7 @@ if (!GetLocalInt(OBJECT_SELF, "DimAnchor"))
         float fSeconds = RoundsToSeconds(nDuration);
         if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
             fSeconds = RoundsToSeconds(nDuration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
-        DelayCommand(3.0, MultisummonPreSummon());
+        DelayCommand(6.0, MultisummonPreSummon());
         DelayCommand(3.0, ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lSpellTargetLOC, fSeconds));
 
     }

@@ -19,8 +19,14 @@
 // Applies the effect to the target from the Energy Retort power.
 void PsiEnergyRetort(object oCaster, object oTarget);
 
+// Applies the effects to the target from the Fate Link power
+void FateLink(object oCaster);
 
+// Applies the effects to the target from the Share Pain, and Share Pain, Forced powers
+void SharePain(object oCaster);
 
+// Applies the effects to the target from the Empathic Feedback power
+void EmpathicFeedback(object oPC);
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -100,3 +106,71 @@ void PsiEnergyRetort(object oCaster, object oTarget)
     }
 }
 
+void FateLink(object oCaster)
+{
+	object oTarget = GetLocalObject(oCaster, "FatedPartner");
+	int nDam = GetTotalDamageDealt();
+	int nDC;
+	effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+	ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+	
+	if (GetIsDead(oCaster))
+	{
+		nDC = GetLocalInt(oTarget, "FateLinkDC");
+		effect eDrain = EffectNegativeLevel(2);
+		if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+		{
+			ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDrain, oTarget);
+		}
+	}
+	if (GetIsDead(oTarget))
+	{
+		nDC = GetLocalInt(oCaster, "FateLinkDC");
+		effect eDrain = EffectNegativeLevel(2);
+		if (!PRCMySavingThrow(SAVING_THROW_WILL, oCaster, nDC, SAVING_THROW_TYPE_NONE))
+		{
+			ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDrain, oCaster);
+		}
+	}	
+}
+
+void SharePain(object oCaster)
+{
+     int iDamageTaken = GetTotalDamageDealt();
+     int iHalf = iDamageTaken/2;
+     object oTarget = GetLocalObject(oCaster, "SharePainTarget");
+     
+     effect eVisHeal = EffectVisualEffect(VFX_IMP_HEALING_L);
+     effect eHeal = EffectHeal(iHalf);
+     ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oCaster);
+     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oCaster);
+     
+     effect eDam = EffectDamage(iHalf, DAMAGE_TYPE_POSITIVE);
+     effect eVisHarm = EffectVisualEffect(VFX_IMP_HARM);
+     ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHarm, oTarget);
+     
+     if (GetIsDead(oTarget))	DeleteLocalInt(oCaster, "SharePain");
+}
+
+void EmpathicFeedback(object oPC)
+{
+     object oFoe = GetLastDamager();
+     
+     int iDR = GetLocalInt(oPC, "EmpathicFeedback");
+     int iDamageTaken = GetTotalDamageDealt();
+     
+     int nDam = 0;
+          
+     if (iDR > iDamageTaken)
+     {
+     	nDam = iDamageTaken;
+     }
+     else
+     {
+     	nDam = iDR;
+     }
+          
+     effect eDam = EffectDamage(nDam, DAMAGE_TYPE_POSITIVE);
+     ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oFoe);
+}

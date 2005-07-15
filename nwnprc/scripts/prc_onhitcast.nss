@@ -185,7 +185,11 @@ void main()
             SetLocalInt(oSpellOrigin, "PsiRetortVarRunning", 1);
         }
     }
-
+    
+    if (GetIsObjectValid(GetLocalObject(oSpellOrigin, "FatedPartner")))
+    {
+    	DelayCommand(0.01, FateLink(oSpellOrigin));
+    }
 
     if(GetLocalInt(oItem, "DissolvingWeaponDamage"))
     {
@@ -209,13 +213,13 @@ void main()
     // Share Pain and Share Pain, Forced
     if(GetLocalInt(oSpellOrigin, "SharePain") == TRUE && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
-        DelayCommand(0.01, ExecuteScript("psi_sharepain",OBJECT_SELF));
+        DelayCommand(0.01, SharePain(oSpellOrigin));
     }
 
     // Empathic Feedback
     if(GetLocalInt(oSpellOrigin, "EmpathicFeedback") == TRUE && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
-        DelayCommand(0.01, ExecuteScript("psi_empathicfeed",OBJECT_SELF));
+        DelayCommand(0.01, EmpathicFeedback(oSpellOrigin));
     }
     /*//////////////////////////////////////////////////
     //////////////// END PSIONICS //////////////////////

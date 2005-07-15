@@ -75,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	location lTargetLocation = GetSpellTargetLocation();
     	int nDice = 13;
 	int nDiceSize = 6;
-	float fWidth = DoWiden(120.0, nMetaPsi);
+	float fWidth = DoWiden(35.0, nMetaPsi);
 	
 	
 	if (nSurge > 0) nAugment += nSurge;

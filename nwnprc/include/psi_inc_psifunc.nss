@@ -386,8 +386,8 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     /// /APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE HERE ///
 
 
-    // If PP Cost is greater than Manifester level
-    if (GetManifesterLevel(oCaster) >= nPPCost && nCanManifest)
+    // If PP Cost is greater than Manifester level, with no addition for Wild Surge (i.e. no double boosting).
+    if ((GetManifesterLevel(oCaster) - GetLocalInt(oCaster, "WildSurge")) >= nPPCost && nCanManifest)
     {
         // Reduced cost of manifesting a power, but does not allow you to exceed the manifester level cap
         // Right now, only used for Thrallherd

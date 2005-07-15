@@ -41,7 +41,12 @@ void KatanaFinesse(object oPC)
     int iUseR = FALSE;
     int iUseL = FALSE;
 
-    if(bKatFin && bKatFinBon && GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
+    if(bKatFin && bKatFinBon &&
+       (GetBaseItemType(oWeap) == BASE_ITEM_KATANA
+         || // Hack - Assume a Soulknife with Iaijutsu Master levels using bastard sword shape has it shaped like a katana
+        (GetStringLeft(GetTag(oWeap), 14) == "prc_sk_mblade_" && GetBaseItemType(oWeap) == BASE_ITEM_BASTARDSWORD)
+        )
+       )
     {
         iUseR = TRUE;
         if (!GetLocalInt(oPC, "KatanaFinesseOnR")) SendMessageToPC(oPC, "Katana Finesse On -- Main Hand.");
@@ -53,7 +58,12 @@ void KatanaFinesse(object oPC)
         DeleteLocalInt(oPC, "KatanaFinesseOnR");
     }
 
-    if(bKatFin && bKatFinBon && GetBaseItemType(oWeap2) == BASE_ITEM_KATANA)
+    if(bKatFin && bKatFinBon &&
+       (GetBaseItemType(oWeap2) == BASE_ITEM_KATANA
+         || // Hack - Assume a Soulknife with Iaijutsu Master levels using bastard sword shape has it shaped like a katana
+        (GetStringLeft(GetTag(oWeap2), 14) == "prc_sk_mblade_" && GetBaseItemType(oWeap) == BASE_ITEM_BASTARDSWORD)
+        )
+       )
     {
         iUseL = TRUE;
         if (!GetLocalInt(oPC, "KatanaFinesseOnL")) SendMessageToPC(oPC, "Katana Finesse On -- Off Hand.");

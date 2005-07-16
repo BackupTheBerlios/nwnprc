@@ -66,6 +66,55 @@ void DoEnergyDrain(object oTarget,int nDamage)
 	}
 }
 
+// This function is here because the commands in it need to be delayed for GetIsDead to return true.
+
+void DeathDelay(object oTarget, string sTarget, string sName)
+{
+
+	if (GetIsDead(oTarget))	RecognizeCreature(OBJECT_SELF, sTarget, sName);
+
+	// Soul Slave Feat
+	if (GetLevelByClass(CLASS_TYPE_SOUL_EATER, OBJECT_SELF) > 8)
+	{
+		FloatingTextStringOnCreature("Class level is greater than 8", OBJECT_SELF, FALSE);
+		// Make sure its dead before raising it as a henchman
+		if (GetIsDead(oTarget))
+		{
+			FloatingTextStringOnCreature("Target is Dead", OBJECT_SELF, FALSE);
+			
+    			int nMax = GetMaxHenchmen();
+       			int i = 1;
+    			object oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
+    			effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
+    			
+    			// Count the number of henchmen
+    			while (GetIsObjectValid(oHench))
+    			{
+    				i += 1;
+    				oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
+    			}
+    			FloatingTextStringOnCreature("Henchmen total: " + IntToString(i), OBJECT_SELF, FALSE);
+    
+    			if (i >= nMax) SetMaxHenchmen(i+1);
+
+			object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "soul_wight_test", GetSpellTargetLocation());
+			ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+
+			AddHenchman(OBJECT_SELF, oCreature);
+			int nTargetLevelUp = GetHitDice(OBJECT_SELF) - 1;
+			int nWightLevel = GetLevelByPosition(1, oCreature);
+
+			while (nWightLevel < nTargetLevelUp)
+			{
+				nWightLevel += 1;
+				LevelUpHenchman(oCreature, CLASS_TYPE_UNDEAD, FALSE, PACKAGE_UNDEAD);
+			}
+			// Reset henchmen to the module max
+			SetMaxHenchmen(nMax);
+		}
+	} 
+}
+
 void main()
 {
 
@@ -111,71 +160,6 @@ void main()
 	}
 
 
-	// Soul Slave Feat
-
-	if (GetLevelByClass(CLASS_TYPE_SOUL_EATER, OBJECT_SELF) > 8)
-	{
-		if (nLevel < 3)
-		{
-			string sSummon = "soul_wight_test";
-			 
-			RecognizeCreature(OBJECT_SELF, sTarget, sName);
-
-			if (GetMaxHenchmen() < 3)
-			{
-			SetMaxHenchmen(3);
-			}
-
-			object oCreature = CreateObject(OBJECT_TYPE_CREATURE,
-							sSummon,GetSpellTargetLocation());
-
-			AddHenchman(OBJECT_SELF, oCreature);
-			object oMaster = GetMaster(oCreature);
-			int nTargetLevelUp = GetLevelByPosition(1, OBJECT_SELF) 
-				+ GetLevelByPosition(2, OBJECT_SELF) +
-				 GetLevelByPosition(3, OBJECT_SELF) - 1;
-			int nWightLevel = GetLevelByPosition(1, oCreature);
-
-
-			if (nWightLevel < nTargetLevelUp)
-			{
-				LevelUpHenchman(oCreature, CLASS_TYPE_UNDEAD, FALSE, PACKAGE_UNDEAD);
-			}
-
-		}
-		DoEnergyDrain(oTarget, nDamage);
-	}
-
-	else if (GetLevelByClass(CLASS_TYPE_SOUL_EATER, OBJECT_SELF) >= 7)
-	{
-		if(nLevel < 3)
-		{
-			RecognizeCreature(OBJECT_SELF, sTarget, sName);
-		}
-		DoEnergyDrain(oTarget, nDamage);
-	}
-
-
-	else if (GetLevelByClass(CLASS_TYPE_SOUL_EATER, OBJECT_SELF) >= 6)
-	{
-
-		if (nLevel < 2)
-		{
-			//SendMessageToPC(OBJECT_SELF, "Preforming Inner Conditional Level 6"); 
-			RecognizeCreature(OBJECT_SELF, sTarget, sName);
-		}
-		DoEnergyDrain(oTarget, nDamage);
-	}
- 
-        else
-        {
-		//SendMessageToPC(OBJECT_SELF, "Preforming ELSE");
-	    
-		DoEnergyDrain(oTarget, nDamage);
-
-        }
-
-
-    
-    
+	DoEnergyDrain(oTarget, nDamage);  
+    	DelayCommand(0.5, DeathDelay(oTarget, sTarget, sName));
 }

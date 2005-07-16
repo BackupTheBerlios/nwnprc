@@ -485,9 +485,10 @@ void Maester(object oPC)
     		
     int nSkill = FALSE;
     
-    if (GetSkillRank(SKILL_CRAFT_ARMOR, oPC) >= 8) nSkill = TRUE;
-    if (GetSkillRank(SKILL_CRAFT_TRAP, oPC) >= 8) nSkill = TRUE;
-    if (GetSkillRank(SKILL_CRAFT_WEAPON, oPC) >= 8) nSkill = TRUE;
+    // No Int bonus to skills, just want the base ranks (and yes I know this allows items at the moment)
+    if ((GetSkillRank(SKILL_CRAFT_ARMOR, oPC) - GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)) >= 8) nSkill = TRUE;
+    if ((GetSkillRank(SKILL_CRAFT_TRAP, oPC) - GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)) >= 8) nSkill = TRUE;
+    if ((GetSkillRank(SKILL_CRAFT_WEAPON, oPC) - GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)) >= 8) nSkill = TRUE;
 
     // At least two crafting feats
     if (iFeat >= 2 && nSkill)

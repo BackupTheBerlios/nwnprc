@@ -75,7 +75,11 @@ void WipeSpellbookHideFeats(object oPC)
         ipTest = GetNextItemProperty(oHide);
     }
     //remove persistant locals used to track when all spells cast
-    persistant_array_delete(oPC, "NewSpellbookAllCast");
+    int i;
+    for(i=0;i<255;i++)
+    {
+        persistant_array_delete(oPC, "NewSpellbookMem_"+IntToString(i));    
+    }
 }
 
 int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
@@ -120,9 +124,16 @@ void AddSpellUse(object oPC, int nSpellbookID, int nClass)
 {
     string sFile = Get2DACache("classes", "FeatsTable", nClass);
     sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
-    int nIPFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID));
     object oSkin = GetPCSkin(oPC);
-    AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nIPFeatID), oSkin);
+    int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID));
+    if(!GetHasFeat(nFeatID, oPC))
+    {
+        int nIPFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID));
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nIPFeatID), oSkin);
+    }    
+    persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
+    persistant_array_set_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID,
+        persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID)+1); 
 }
 
 void RemoveSpellUse(object oPC, int nSpellID, int nClass)
@@ -141,41 +152,16 @@ void RemoveSpellUse(object oPC, int nSpellID, int nClass)
     }
     if(nSpellbookID != i)
         return;
-    int nIPFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID));
-    object oSkin = GetPCSkin(oPC);
-    itemproperty ipTest = GetFirstItemProperty(oSkin);
-    int nCount;
-    while(GetIsItemPropertyValid(ipTest))
-    {
-        if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
-            && GetItemPropertySubType(ipTest) == nIPFeatID)
-        {
-            RemoveItemProperty(oSkin, ipTest);
-            nCount++;
-        }
-        ipTest = GetNextItemProperty(oSkin);
-    }
-    //have to remove all and then replace them
-    //otherwise the gui doesnt recognise the feats till the item is reequiped
-    //this would wipe bonus spells from int bonuses (and others)
-    nCount--;
-    for(i=0;i<nCount;i++)
-    {
-        DelayCommand(0.01, AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nIPFeatID), oSkin));
-    }
+    //get uses remaining    
+    persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
+    int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID); 
+    //reduce by 1
+    if(nCount > 1)
+        persistant_array_set_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID, nCount-1); ;
+    
     string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
     string sMessage = "You have "+IntToString(nCount)+" castings of "+sSpellName+" left.";
-    SendMessageToPC(oPC, sMessage);
-    //no castings left
-    //record and re-add the feat
-    //otherwise it wipes all the quickslots
-    if(nCount == 0)
-    {
-        DelayCommand(0.01, AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nIPFeatID), oSkin));
-        persistant_array_create(oPC, "NewSpellbookAllCast");
-        persistant_array_set_int(oPC, "NewSpellbookAllCast", 
-            persistant_array_get_size(oPC, "NewSpellbookAllCast"), nSpellID);
-    }
+    SendMessageToPC(oPC, sMessage);    
 }
 
 void SetupSpells(object oPC, int nClass)
@@ -215,15 +201,21 @@ void CheckNewSpellbooks(object oPC)
 
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
 {
-    //check if all cast    
-    int nAllUsed = FALSE;
-    int i;
-    for(i=0; i<persistant_array_get_size(OBJECT_SELF, "NewSpellbookAllCast"); i++)
+    //get the spellbook ID
+    int i, nSpellbookID;
+    string sFile = Get2DACache("classes", "FeatsTable", nClass);
+    sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+    for(i=1; i<SPELLBOOK_ROW_COUNT; i++)
     {
-        if(persistant_array_get_int(OBJECT_SELF, "NewSpellbookAllCast", i) == nSpellID)
-            nAllUsed = TRUE;
-    }           
-    if(nAllUsed)
+        if(StringToInt(Get2DACache(sFile, "SpellID", i)) == nSpellID)
+        {
+            nSpellbookID = i;
+            break;
+        }
+    }
+    //check if all cast  
+    int nCount = persistant_array_get_int(OBJECT_SELF, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);     
+    if(!nCount)
     {
         string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
         string sMessage = "You have no castings of "+sSpellName+" remaining";

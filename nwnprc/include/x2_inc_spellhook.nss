@@ -159,16 +159,16 @@ int KOTCHeavenDevotion(object oTarget)
 
     if (iKOTC >= 5)
     {
-    	if (MyPRCGetRacialType(OBJECT_SELF) == RACIAL_TYPE_OUTSIDER)
-    	{
-    		if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL)
-    		{
-    			if (GetSpellSchool(GetSpellId()) == SPELL_SCHOOL_ENCHANTMENT)
-    			{
-    				nTest = FALSE;
-    			}
-    		}
-    	}
+        if (MyPRCGetRacialType(OBJECT_SELF) == RACIAL_TYPE_OUTSIDER)
+        {
+            if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL)
+            {
+                if (GetSpellSchool(GetSpellId()) == SPELL_SCHOOL_ENCHANTMENT)
+                {
+                    nTest = FALSE;
+                }
+            }
+        }
     }    
     return nTest;
 }
@@ -400,6 +400,25 @@ void X2DoBreakConcentrationCheck()
     }
 }
 
+int CounterspellExploitCheck()
+{
+    if(GetCurrentAction(OBJECT_SELF) ==  31)
+    {
+        AssignCommand(OBJECT_SELF, ClearAllActions());
+        SendMessageToPC(OBJECT_SELF,"Because of the infinite spell casting exploit, you cannot use counterspell in this manner.");
+        return TRUE;
+    }
+    return FALSE;
+}
+void VoidCounterspellExploitCheck()
+{
+    if(GetCurrentAction(OBJECT_SELF) ==  31)
+    {
+        AssignCommand(OBJECT_SELF, ClearAllActions());
+        SendMessageToPC(OBJECT_SELF,"Because of the infinite spell casting exploit, you cannot use counterspell in this manner.");
+    }
+}
+
 //------------------------------------------------------------------------------
 // if FALSE is returned by this function, the spell will not be cast
 // the order in which the functions are called here DOES MATTER, changing it
@@ -426,6 +445,23 @@ int X2PreSpellCastCode()
         && !GetLocalInt(GetArea(OBJECT_SELF), "X2_L_WILD_MAGIC"))
             return TRUE;
             
+    //counterspell exploit check    
+    if(nContinue = TRUE
+        && CounterspellExploitCheck())
+        nContinue = FALSE;
+    DelayCommand(0.1,VoidCounterspellExploitCheck());
+    DelayCommand(0.2,VoidCounterspellExploitCheck());
+    DelayCommand(0.3,VoidCounterspellExploitCheck());
+    DelayCommand(0.4,VoidCounterspellExploitCheck());
+    DelayCommand(0.5,VoidCounterspellExploitCheck());
+    DelayCommand(0.6,VoidCounterspellExploitCheck());
+    DelayCommand(0.7,VoidCounterspellExploitCheck());
+    DelayCommand(0.8,VoidCounterspellExploitCheck());
+    DelayCommand(0.9,VoidCounterspellExploitCheck());
+    DelayCommand(1.0,VoidCounterspellExploitCheck());
+    DelayCommand(2.0,VoidCounterspellExploitCheck());
+    DelayCommand(3.0,VoidCounterspellExploitCheck());
+        
     //Pnp Tensers Transformation
     if(nContinue
         && GetPRCSwitch(PRC_PNP_TENSERS_TRANSFORMATION)

@@ -75,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Make a SR check
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
-                int nDC = (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF));
+                int nDC = (PRCGetSaveDC(oTarget,OBJECT_SELF));
                 //Roll damage
                 nDamage = d8();
                 //Make a Will roll to avoid being stunned

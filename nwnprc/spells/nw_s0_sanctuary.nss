@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     object oTarget = GetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_DUR_SANCTUARY);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eSanc = EffectSanctuary((GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)));
+    effect eSanc = EffectSanctuary((PRCGetSaveDC(oTarget,OBJECT_SELF)));
 
     effect eLink = EffectLinkEffects(eVis, eSanc);
     eLink = EffectLinkEffects(eLink, eDur);

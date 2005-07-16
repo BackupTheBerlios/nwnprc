@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                 &&(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_ELEMENTAL))
             {
                 //Make a fortitude save
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF))))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF))))
                 {
                     nDam = FloatToInt(nDam * 0.9);
                     eDam = EffectDamage(nDam, DAMAGE_TYPE_BLUDGEONING);

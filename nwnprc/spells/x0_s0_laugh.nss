@@ -76,7 +76,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         if (spellsIsMindless(oTarget) == FALSE)   {
             if ( !GetIsImmune(oTarget,IMMUNITY_TYPE_MIND_SPELLS ))   {
 
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl) && !/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, ((GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF))-nModifier), SAVING_THROW_TYPE_MIND_SPELLS))
+        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl) 
+            && !/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, ((PRCGetSaveDC(oTarget,OBJECT_SELF))-nModifier), SAVING_THROW_TYPE_MIND_SPELLS))
         {
             effect eDur = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
 

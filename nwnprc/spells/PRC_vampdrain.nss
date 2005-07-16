@@ -110,7 +110,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 {
                     if(MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel) == 0)
                     {
-                    if(/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE, OBJECT_SELF, fDelay))
+                    if(/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE, OBJECT_SELF, fDelay))
                     {
                         nDamage = nDamage/2;
                     }

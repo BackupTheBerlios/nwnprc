@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //--------------------------------------------------------------------------
     int nLevel = PRCGetCasterLevel(OBJECT_SELF);
 
-    int nDC = (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF));
+    int nDC = (PRCGetSaveDC(oTarget,OBJECT_SELF));
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 
 

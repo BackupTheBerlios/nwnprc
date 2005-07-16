@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     if (MyPRCResistSpell(OBJECT_SELF,oTarget,nCasterLvl+SPGetPenetr()) <1)
     {
-       DoPetrification(nCasterLvl, OBJECT_SELF, oTarget, GetSpellId(), (GetSpellSaveDC() + GetChangesToSaveDC(oTarget,OBJECT_SELF)));
+       DoPetrification(nCasterLvl, OBJECT_SELF, oTarget, GetSpellId(), (PRCGetSaveDC(oTarget,OBJECT_SELF)));
      }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

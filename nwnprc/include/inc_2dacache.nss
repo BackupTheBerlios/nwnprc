@@ -453,18 +453,20 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
     
     //get the token for this file
     string sFileWPName = "CACHED_"+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
-    object oFileWP = GetFirstItemInInventory(oCacheWP);
+/*    object oFileWP = GetFirstItemInInventory(oCacheWP);
     while(GetIsObjectValid(oFileWP)
         && GetTag(oFileWP) != sFileWPName)
     {
         oFileWP = GetNextItemInInventory(oCacheWP);
     }
+*/  object oFileWP = GetObjectByTag(sFileWPName);    
     //token doesnt exist make it
     if (!GetIsObjectValid(oFileWP))
     {
-        oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
-        DestroyObject(oFileWP);
-        oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);
+        //oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
+        //DestroyObject(oFileWP);
+        //oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);
+        oFileWP = CreateItemOnObject("hidetoken", oCacheWP, 10);
         //CreateObject(OBJECT_TYPE_WAYPOINT,"NW_WAYPOINT001",lCache,FALSE,sFileWPName);
     }    
     

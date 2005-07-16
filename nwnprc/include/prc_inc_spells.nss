@@ -1017,7 +1017,17 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
     {   nDC -= 1+(GetHitDice(oTarget)/5);  }
 
-     return BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+     int nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+     
+     // Second Chance power in psionics
+     if (nSaveRoll == 0 && GetLocalInt(oTarget, "SecondChance") && !GetLocalInt(oTarget, "SecondChanceTimer"))
+     {
+     	// Can't use this ability again for a round
+     	SetLocalInt(oTarget, "SecondChanceTimer", TRUE);
+     	nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+     	DelayCommand(6.0, DeleteLocalInt(oTarget, "SecondChanceTimer"));
+     }
+     return nSaveRoll;
 }
 
 

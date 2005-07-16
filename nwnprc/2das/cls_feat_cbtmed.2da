@@ -1,0 +1,11 @@
+2DA V2.0                                                                               
+                                                                                       
+    FeatLabel                          FeatIndex   List   GrantedOnLevel   OnMenu
+1   Healing_Kicker_1_Sanct             ????        3      1                1  
+2   Defensive_Casting                  ????        3      2                0 
+3   Field_Healer                       ????        3      2                0
+4   Healing_Kicker_2_RefSv             ????        3      3                1  
+5   Mobility                           26          1      3                0  
+3   Evasion                            206         1      4                0      
+4   Healing_Kicker_3_Aid               ????        3      5                1      
+5   Spontaneous_Heal                   ????        3      5                1      

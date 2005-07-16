@@ -29,7 +29,8 @@ void main()
    if(iHit)
    {
         //do discipline check
-        if(!GetIsSkillSuccessful(oTarget, SKILL_DISCIPLINE, nAttack+d20()))
+        //if(!GetIsSkillSuccessful(oTarget, SKILL_DISCIPLINE, nAttack+d20()))
+        if(GetSkill(oTarget, SKILL_DISCIPLINE)+d20() < nAttack)
         {
             object oTargWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
             CopyObject(oTargWeap, GetLocation(oTarget));
@@ -39,6 +40,8 @@ void main()
         else
             FloatingTextStringOnCreature("*Disarm unsuccessful.*", OBJECT_SELF, FALSE);
    }
+   else
+        FloatingTextStringOnCreature("*Disarm missed.*", OBJECT_SELF, FALSE);
 }
 
 /*

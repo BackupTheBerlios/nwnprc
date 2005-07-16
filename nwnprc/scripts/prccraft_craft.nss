@@ -103,6 +103,9 @@ void main()
                 int nDelay = FloatToInt((IntToFloat(GetPRCSwitch(PRC_CRAFT_TIMER_MULTIPLIER))/100) * IntToFloat(iReport.marketprice));
                 nDelay = min(nDelay, GetPRCSwitch(PRC_CRAFT_TIMER_MIN));
                 nDelay = max(nDelay, GetPRCSwitch(PRC_CRAFT_TIMER_MAX));
+                
+                // Maester class cuts crafting time in half.
+                if (GetLevelByClass(CLASS_TYPE_MAESTER, OBJECT_SELF) > 0) nDelay /= 2;
 
                 SetCraftTimer(nDelay);
             }

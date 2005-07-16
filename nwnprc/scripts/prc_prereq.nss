@@ -466,6 +466,36 @@ void WWolf(object oPC)
     }
 }
 
+void Maester(object oPC)
+{
+
+    SetLocalInt(oPC, "PRC_PrereqMaester", 1);
+
+    int iFeat;
+
+    iFeat = 	  GetHasFeat(FEAT_BREW_POTION, oPC) 
+    		+ GetHasFeat(FEAT_CRAFT_WAND, oPC) 
+    		+ GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)
+    		+ GetHasFeat(FEAT_CRAFT_WONDROUS, oPC)
+    		+ GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC)
+    		+ GetHasFeat(FEAT_CRAFT_ROD, oPC)
+    		+ GetHasFeat(FEAT_CRAFT_STAFF, oPC)
+    		+ GetHasFeat(FEAT_FORGE_RING, oPC)
+    		+ GetHasFeat(FEAT_CRAFT_CONSTRUCT, oPC);
+    		
+    int nSkill = FALSE;
+    
+    if (GetSkillRank(SKILL_CRAFT_ARMOR, oPC) >= 8) nSkill = TRUE;
+    if (GetSkillRank(SKILL_CRAFT_TRAP, oPC) >= 8) nSkill = TRUE;
+    if (GetSkillRank(SKILL_CRAFT_WEAPON, oPC) >= 8) nSkill = TRUE;
+
+    // At least two crafting feats
+    if (iFeat >= 2 && nSkill)
+    {
+        SetLocalInt(oPC, "PRC_PrereqMaester", 0);
+    }
+}
+
 void RedWizard(object oPC)
 {
 
@@ -721,6 +751,7 @@ void main2()
      FH(oPC);
      Kord(oPC);
      BloodArcher(oPC);
+     Maester(oPC);
      Alaghar(oPC);
      RangerURangerMutex(oPC);
      // Truly massive debug message flood if activated.

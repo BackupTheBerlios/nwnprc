@@ -1,0 +1,14 @@
+2DA V2.0
+
+    FeatLabel                           FeatIndex List GrantedOnLevel OnMenu 
+41  FEAT_SCRIBE_SCROLL                  945       1    -1              0      
+42  FEAT_BREW_POTION                    944       1    -1              0      
+43  FEAT_CRAFT_WAND                     946       1    -1              0      
+75  FEAT_CRAFT_WONDROUS_ITEM            2925      1    -1              0      
+76  FEAT_CRAFT_MAGIC_ARMS_AND_ARMOR     2926      1    -1              0      
+77  FEAT_CRAFT_ROD                      2927      1    -1              0      
+78  FEAT_CRAFT_STAFF                    2928      1    -1             0      
+79  FEAT_FORGE_RING                     2929      1    -1             0      
+82  FEAT_CRAFT_CONSTRUCT                2920      1    -1             0      
+83  FEAT_CRAFT_ITEM                     2899      3    1              1      
+84  FEAT_READ_RECIPE                    2919      3    1              1      

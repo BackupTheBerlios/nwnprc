@@ -131,3 +131,5 @@ const int CLASS_TYPE_THRALLHERD			= 212;
 const int CLASS_TYPE_FIST_OF_ZUOKEN		= 213;
 const int CLASS_TYPE_SOUL_EATER 		= 201;
 const int CLASS_TYPE_MAESTER	 		= 168;
+const int CLASS_TYPE_COMBAT_MEDIC 		= 169;
+const int CLASS_TYPE_OLLAM	 		= 170;

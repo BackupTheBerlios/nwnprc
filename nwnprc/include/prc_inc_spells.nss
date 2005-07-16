@@ -231,6 +231,7 @@ int GetArcanePRCLevels (object oCaster)
               +  GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster)
               +  GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster)
               +  GetLevelByClass(CLASS_TYPE_CEREBREMANCER, oCaster)
+              +  GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)
 
                  +  (GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) + 1) / 2
@@ -277,8 +278,9 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER_DIV, oCaster)
            +  GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE, oCaster)
            +  GetLevelByClass(CLASS_TYPE_ALAGHAR, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oCaster)
 
-//           +  (GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster) + 1) / 2 this has its own spellbook now
+           +  (GetLevelByClass(CLASS_TYPE_OLLAM, oCaster) + 1) / 2 
            +  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2

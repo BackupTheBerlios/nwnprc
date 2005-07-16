@@ -134,6 +134,7 @@ void EvalPRCFeats(object oPC)
     if(iThrallOfGrazzt > 0)                                      ExecuteScript("tog", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)           ExecuteScript("prc_blightlord", oPC);
     if(GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN,oPC) > 0)       ExecuteScript("psi_zuoken", oPC);
+    if(GetLevelByClass(CLASS_TYPE_OLLAM,oPC) > 0)       	 ExecuteScript("psi_ollam", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
@@ -511,6 +512,9 @@ void DeletePRCLocalInts(object oSkin)
 
     //Alaghar
     DeleteLocalInt(oSkin, "SilverbeardAC");
+    
+    //Ollam
+    DeleteLocalInt(oSkin, "OllamLore");
 
     //psionics
     DeleteLocalInt(oSkin, "Combat_Mani");

@@ -279,6 +279,7 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE, oCaster)
            +  GetLevelByClass(CLASS_TYPE_ALAGHAR, oCaster)
            +  GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_BLIGHTLORD, oCaster)
 
            +  (GetLevelByClass(CLASS_TYPE_OLLAM, oCaster) + 1) / 2 
            +  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2

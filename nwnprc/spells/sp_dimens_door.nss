@@ -41,14 +41,20 @@ const int SPELLID_TELEPORT_PARTY     = 2892;
 
 location GetDimensionDoorLocation(object oCaster, int nCasterLvl)
 {
+    //SendMessageToPC(oCaster, "Running GetDimensionDoorLocation()");
     if(GetHasTeleportQuickSelectionActive(oCaster))
     {
+        SendMessageToPC(oCaster, "Debug: Quickselect is active");
         location lTest = MetalocationToLocation(GetTeleportQuickSelection(oCaster));
 
         if(GetArea(oCaster) == GetAreaFromLocation(lTest))
         {
+            SendMessageToPC(oCaster, "Debug: Quickselect is in same area");
             if(GetDistanceBetweenLocations(GetLocation(oCaster), lTest) <= FeetToMeters(400.0 + 40.0 * nCasterLvl))
+            {
+                SendMessageToPC(oCaster, "Debug: Quickselect is in range");
                 return lTest;
+            }
         }
     }
 
@@ -59,7 +65,7 @@ location GetDimensionDoorLocation(object oCaster, int nCasterLvl)
 }
 
 void main()
-{   
+{
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
     // Spellhook
     if(!X2PreSpellCastCode()) return;
@@ -95,43 +101,27 @@ void main()
         
         // Make the caster animate for the second of delay
         AssignCommand(oCaster, ClearAllActions());
+        AssignCommand(oCaster, SetFacingPoint(GetPositionFromLocation(lTarget)));
         AssignCommand(oCaster, ActionPlayAnimation(ANIMATION_LOOPING_CONJURE1, 1.0f, 1.0f));
         
         // First, spawn a circle of ligntning around the caster
-        BeamPolygon(DURATION_TYPE_TEMPORARY, VFX_BEAM_LIGHTNING, lCaster,
+        BeamPolygon(DURATION_TYPE_PERMANENT, VFX_BEAM_LIGHTNING, lCaster,
                     nSpellID == SPELLID_TELEPORT_PARTY ? FeetToMeters(10.0) : FeetToMeters(3.0), // Single TP: 3ft radius; Party TP: 10ft radius
-                    15, 1.0, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0);
+                    15, 1.5, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0);
+        
         
         //BeamPolygon(1, 73, lCaster, 5.0, 8, 3.0, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0);
-        
+
         // After a moment, draw a line from the caster to the destination
         DelayCommand(1.0, DrawLineFromVectorToVector(DURATION_TYPE_INSTANT, VFX_IMP_WIND, GetArea(oCaster), GetPositionFromLocation(lCaster), GetPositionFromLocation(lTarget), 0.0,
-                                   FloatToInt(GetDistanceBetweenLocations(lCaster, lTarget)), // One VFX every 5 meters
-                                   0.5));
+                                                     FloatToInt(GetDistanceBetweenLocations(lCaster, lTarget)), // One VFX every 5 meters
+                                                     0.5));
         // Then, spawn a circle of ligtning at the destination
         DelayCommand(0.5, BeamPolygon(DURATION_TYPE_TEMPORARY, VFX_BEAM_LIGHTNING, lTarget, nSpellID == SPELLID_TELEPORT_PARTY ? FeetToMeters(10.0) : FeetToMeters(3.0), 15, 2.0, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0));
     }
-    
-    
-    
-    /*
-    // Check if we could manifest, and whether there it is possible to make the teleport
-    if(nMetaPsi > 0 && GetCanTeleport(oCaster, lTarget))
-    {
-        effect eVis    = EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
-        // Calculate the locations to apply the VFX at
-        vector vOrigin = GetPositionFromLocation(GetLocation(oCaster));
-        vector vDest   = GetPositionFromLocation(lTarget);
-        vOrigin = Vector(vOrigin.x + 2.0, vOrigin.y - 0.2, vOrigin.z);
-        vDest   = Vector(vDest.x   + 2.0, vDest.y   - 0.2, vDest.z);
 
-        // Apply the VFX
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, Location(GetArea(oCaster), vOrigin, 0.0), 0.8);
-        DelayCommand(0.1, ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, Location(GetArea(oCaster), vDest, 0.0), 0.7));
-        
-        // Schedule the actual location change
-        DelayCommand(0.4, AssignCommand(oCaster, JumpToLocation(lDest)));
-    }
-    */
+
+    // Cleanup
+    array_delete(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY);
     SPSetSchool();
 }

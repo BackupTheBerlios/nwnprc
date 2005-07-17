@@ -402,9 +402,9 @@ void X2DoBreakConcentrationCheck()
 
 int CounterspellExploitCheck()
 {
-    if(GetCurrentAction(OBJECT_SELF) ==  31)
+    if(GetCurrentAction(OBJECT_SELF) ==  ACTION_COUNTERSPELL)
     {
-        AssignCommand(OBJECT_SELF, ClearAllActions());
+        ClearAllActions();
         SendMessageToPC(OBJECT_SELF,"Because of the infinite spell casting exploit, you cannot use counterspell in this manner.");
         return TRUE;
     }
@@ -412,9 +412,9 @@ int CounterspellExploitCheck()
 }
 void VoidCounterspellExploitCheck()
 {
-    if(GetCurrentAction(OBJECT_SELF) ==  31)
+    if(GetCurrentAction(OBJECT_SELF) ==  ACTION_COUNTERSPELL)
     {
-        AssignCommand(OBJECT_SELF, ClearAllActions());
+        ClearAllActions();
         SendMessageToPC(OBJECT_SELF,"Because of the infinite spell casting exploit, you cannot use counterspell in this manner.");
     }
 }
@@ -446,7 +446,8 @@ int X2PreSpellCastCode()
             return TRUE;
             
     //counterspell exploit check    
-    if(nContinue = TRUE
+    
+    if(nContinue
         && CounterspellExploitCheck())
         nContinue = FALSE;
     DelayCommand(0.1,VoidCounterspellExploitCheck());
@@ -650,7 +651,8 @@ int X2PreSpellCastCode()
         //-----------------------------------------------------------------------
         // * Execute item OnSpellCast At routing script if activated
         //-----------------------------------------------------------------------
-        if (GetModuleSwitchValue(MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS) == TRUE)
+        if (nContinue
+            && GetModuleSwitchValue(MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS) == TRUE)
         {
             SetUserDefinedItemEventNumber(X2_ITEM_EVENT_SPELLCAST_AT);
             int nRet =   ExecuteScriptAndReturnInt(GetUserDefinedItemEventScriptName(oTarget),OBJECT_SELF);

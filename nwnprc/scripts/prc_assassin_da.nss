@@ -51,6 +51,8 @@ void main()
     SetLocalFloat(oPC,"PRC_ASSN_DEATHATTACK_APPLY",fApplyDATime );
     // save the race off so we know what racial type to slay
     SetLocalInt(oPC,"PRC_ASSN_TARGET_RACE",nType);
+    //Save the target
+    SetLocalObject(oPC, "PRC_DA_TARGET", oTarget);
     
     // Kick off a function to count down till they get the DA
     SendMessageToPC(oPC,"You begin to study your target");

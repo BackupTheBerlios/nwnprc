@@ -134,7 +134,8 @@ void EvalPRCFeats(object oPC)
     if(iThrallOfGrazzt > 0)                                      ExecuteScript("tog", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)           ExecuteScript("prc_blightlord", oPC);
     if(GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN,oPC) > 0)       ExecuteScript("psi_zuoken", oPC);
-    if(GetLevelByClass(CLASS_TYPE_OLLAM,oPC) > 0)       	 ExecuteScript("psi_ollam", oPC);
+    if(GetLevelByClass(CLASS_TYPE_OLLAM,oPC) > 0)       	 ExecuteScript("prc_ollam", oPC);
+    if(GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC) > 0)       	 ExecuteScript("prc_cbtmed", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
@@ -516,6 +517,10 @@ void DeletePRCLocalInts(object oSkin)
     //Ollam
     DeleteLocalInt(oSkin, "OllamLore");
 
+    //Combat Medic
+    DeleteLocalInt(oSkin, "CbtMed_Concentration");
+    DeleteLocalInt(oSkin, "CbtMed_Heal");
+
     //psionics
     DeleteLocalInt(oSkin, "Combat_Mani");
     DeleteLocalInt(oSkin, "PsionicDodge");
@@ -797,5 +802,8 @@ void FeatSpecialUsePerDay(object oPC)
     FeatDiabolist(oPC);
     FeatAlaghar(oPC);
     FeatUsePerDay(oPC,FEAT_SA_SHIELDSHADOW,-1,GetCasterLvl(TYPE_ARCANE,oPC));
+    FeatUsePerDay(oPC, FEAT_HEALING_KICKER_1, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC));
+    FeatUsePerDay(oPC, FEAT_HEALING_KICKER_2, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC));
+    FeatUsePerDay(oPC, FEAT_HEALING_KICKER_3, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC));
 
 }

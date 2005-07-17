@@ -1369,6 +1369,11 @@ const int FEAT_CLANGEDDINS_MIGHT                 = 3992;
 const int FEAT_ALAG_SILVERBEARD                  = 3993;
 const int FEAT_ALAG_ROCKBURST                    = 3994;
 
+// Combat Medic
+const int FEAT_HEALING_KICKER_1                  = 3540;
+const int FEAT_HEALING_KICKER_2                  = 3541;
+const int FEAT_HEALING_KICKER_3                  = 3542;
+
 // Crafting
 const int FEAT_CRAFT_WONDROUS            = 2925;
 const int FEAT_CRAFT_ARMS_ARMOR          = 2926;

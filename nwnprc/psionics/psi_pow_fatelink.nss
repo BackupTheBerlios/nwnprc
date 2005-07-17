@@ -1,0 +1,148 @@
+/*
+   ----------------
+   Fate Link
+   
+   prc_pow_fatelink
+   ----------------
+
+   15/7/05 by Stratovarius
+
+   Class: Psion (Seer)
+   Power Level: 4
+   Range: Close
+   Target: Two Creatures
+   Duration: 10 Min/level
+   Saving Throw: Will negates
+   Power Resistance: Yes
+   Power Point Cost: 5
+   
+   You temporarily link the fates of any two creatures, if both fail their saving throws. If either linked creature experiences 
+   pain, both feel it. When one loses hit points, the other loses the same amount. If one creature is subjected to an effect to 
+   which it is immune (such as a type of energy damage), the linked creature is not subjected to it either. If one dies, the 
+   other must immediately succeed on a Fortitude save against this power’s save DC or gain two negative levels.
+   
+   Augment: For every 2 additional power points spent, this power's DC increases by 1.
+*/
+
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
+#include "X0_I0_SPELLS"
+
+void ApplyOnHitToCreature(object oTarget, float fDur)
+{
+	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
+	object oHide = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oTarget);
+	
+	if (GetIsObjectValid(oArmor))
+	{
+		IPSafeAddItemProperty(oArmor, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+	}
+	else if (GetIsObjectValid(oHide))
+	{
+		IPSafeAddItemProperty(oHide, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+	}	
+	else 
+	{
+		oHide = CreateItemOnObject("base_prc_skin", oTarget);
+                AssignCommand(oTarget, ActionEquipItem(oHide, INVENTORY_SLOT_CARMOUR));
+                DelayCommand(0.2, IPSafeAddItemProperty(oHide, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE));
+        }
+}
+
+void main()
+{
+DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
+SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
+
+/*
+  Spellcast Hook Code
+  Added 2004-11-02 by Stratovarius
+  If you want to make changes to all powers,
+  check psi_spellhook to find out more
+
+*/
+
+    if (!PsiPrePowerCastCode())
+    {
+    // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+
+// End of Spell Cast Hook
+
+	object oCaster = OBJECT_SELF;
+	int nAugCost = 2;
+	int nAugment = GetAugmentLevel(oCaster);
+	object oFirstTarget = GetSpellTargetObject();
+	int nMetaPsi = GetCanManifest(oCaster, nAugCost, oFirstTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, METAPSIONIC_TWIN, 0);
+
+	if (nMetaPsi > 0)
+	{
+		int nDC = GetManifesterDC(oCaster);
+		int nCaster = GetManifesterLevel(oCaster);
+		int nPen = GetPsiPenetration(oCaster);
+		effect eVis = EffectVisualEffect(VFX_IMP_HEAD_MIND);
+		int nTargetsLeft = 2;
+		string sVariable;
+    		float fDur = 600.0 * nCaster;
+		if (nMetaPsi == 2)	fDur *= 2;  		
+
+		//Augmentation effects to Damage
+		if (nAugment > 0)
+		{
+			nDC += nAugment;
+		}
+
+		location lTarget = GetSpellTargetLocation();
+		//Declare the spell shape, size and the location.  Capture the first target object in the shape.
+		object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+
+		//Cycle through the targets within the spell shape until you run out of targets.
+		while (GetIsObjectValid(oAreaTarget) && nTargetsLeft > 0)
+		{
+			if (spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oAreaTarget != OBJECT_SELF)
+			{
+				//Fire cast spell at event for the specified target
+				SignalEvent(oAreaTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+
+				if (PRCMyResistPower(oCaster, oAreaTarget, nPen))
+				{
+					if (!PRCMySavingThrow(SAVING_THROW_WILL, oAreaTarget, nDC, SAVING_THROW_TYPE_NONE))
+					{
+						SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);
+						sVariable = "FateLinkTarget" + IntToString(nTargetsLeft);
+						SetLocalObject(oCaster, sVariable, oAreaTarget);
+					}
+				}
+					
+				 // Use up a target slot only if we actually did something to it
+				nTargetsLeft -= 1;
+			}
+				
+		//Select the next target within the spell shape.
+		oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+		}
+		
+		
+		// Check to see if both targets failed their save
+		if (GetIsObjectValid(GetLocalObject(oCaster, "FateLinkTarget1")) && GetIsObjectValid(GetLocalObject(oCaster, "FateLinkTarget2")))
+		{
+			object oTarget1 = GetLocalObject(oCaster, "FateLinkTarget1");
+			object oTarget2 = GetLocalObject(oCaster, "FateLinkTarget2");
+			DeleteLocalObject(oCaster, "FateLinkTarget1");
+			DeleteLocalObject(oCaster, "FateLinkTarget2");
+			SetLocalObject(oTarget1, "FatedPartner", oTarget2);
+			SetLocalObject(oTarget2, "FatedPartner", oTarget1);
+			SetLocalInt(oTarget1, "FateLinkDC", nDC);
+			SetLocalInt(oTarget2, "FateLinkDC", nDC);
+			ApplyOnHitToCreature(oTarget1, fDur);
+			ApplyOnHitToCreature(oTarget2, fDur);
+			// Clean up all the variables
+			DelayCommand(fDur, DeleteLocalObject(oTarget1, "FatedPartner"));
+			DelayCommand(fDur, DeleteLocalObject(oTarget2, "FatedPartner"));
+			DelayCommand(fDur, DeleteLocalObject(oTarget1, "FateLinkDC"));
+			DelayCommand(fDur, DeleteLocalObject(oTarget2, "FateLinkDC"));
+		}			
+	}
+}

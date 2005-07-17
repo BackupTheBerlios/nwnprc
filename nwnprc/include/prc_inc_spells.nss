@@ -290,6 +290,7 @@ int GetDivinePRCLevels (object oCaster)
            +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oCaster) + 1) / 2
+	   +  (GetLevelByClass(CLASS_TYPE_CONTENDER, oCaster) + 1) / 2
 
            +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 

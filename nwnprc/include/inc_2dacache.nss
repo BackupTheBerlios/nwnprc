@@ -1,7 +1,7 @@
 const int PRC_SQL_ERROR = 0;
 const int PRC_SQL_SUCCESS = 1;
 
-string Get2DACache(string s2DA, string sColumn, int nRow);
+string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = FALSE);
 void PRC_SQLInit();
 void PRC_SQLExecDirect(string sSQL);
 int PRC_SQLFetch();
@@ -422,37 +422,27 @@ void PRCMakeTables()
 
 void PreCache(string s2DA, string sColumn, int nRow, string sValue)
 {
-    //get the waypoint htat marks the cache
-    object oCacheWP = GetObjectByTag("CACHEWP");
-    location lCache = GetLocation(oCacheWP);
-    //if no waypoiint, use module start
-    if (!GetIsObjectValid(oCacheWP))
-        lCache = GetStartingLocation();
-    //lower case the 2da and column
-    s2DA = GetStringLowerCase(s2DA);
-    sColumn = GetStringLowerCase(sColumn);
-    //get the waypoint for this file
-    string sFileWPName = "CACHED_"+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
-    object oFileWP = GetWaypointByTag(sFileWPName);
-    if (!GetIsObjectValid(oFileWP))
-        oFileWP = CreateObject(OBJECT_TYPE_WAYPOINT,"NW_WAYPOINT001",lCache,FALSE,sFileWPName);
-    SetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow), sValue);
+    Get2DACache(s2DA, sColumn, nRow, sValue);
 }
 
-string Get2DACache(string s2DA, string sColumn, int nRow)
+string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = FALSE)
 {
     //get the chest that contains the cache
     object oCacheWP = GetObjectByTag("Bioware2DACache");
     //if no chest, use HEARTOFCHAOS in limbo as a location to make a new one
     if (!GetIsObjectValid(oCacheWP))
+    {
         oCacheWP = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2", 
             GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
+if(nDebug) PrintString("Cache chest does not exist, creating new one");            
+    }        
     //lower case the 2da and column
     s2DA = GetStringLowerCase(s2DA);
     sColumn = GetStringLowerCase(sColumn);
     
     //get the token for this file
     string sFileWPName = "CACHED_"+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
+if(nDebug) PrintString("token tag is "+sFileWPName);
 /*    object oFileWP = GetFirstItemInInventory(oCacheWP);
     while(GetIsObjectValid(oFileWP)
         && GetTag(oFileWP) != sFileWPName)
@@ -463,14 +453,25 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
     //token doesnt exist make it
     if (!GetIsObjectValid(oFileWP))
     {
-        //oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
-        //DestroyObject(oFileWP);
-        //oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);
-        oFileWP = CreateItemOnObject("hidetoken", oCacheWP, 10);
+if(nDebug) PrintString("token does not exist, creating new one");    
+        oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
+        DestroyObject(oFileWP);
+        oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);
+        
+        //dont use this becuase it doesnt change the tag
+        //oFileWP = CreateItemOnObject("hidetoken", oCacheWP);
+        //this isnt needed cause its items in a container now
         //CreateObject(OBJECT_TYPE_WAYPOINT,"NW_WAYPOINT001",lCache,FALSE,sFileWPName);
     }    
     
-    string s = GetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow));
+    //store to check if pushed in
+    string sPushed = s;
+    if(s == "")
+        s = GetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow));
+        
+if(nDebug) PrintString("live cached value is "+s);            
+if(nDebug) PrintString("pushed cached value is "+sPushed);            
+        
     //check if we should use the database
     int nDB = GetPRCSwitch(PRC_USE_DATABASE);
     string SQL;
@@ -480,128 +481,131 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
     string sDBColumn = sColumn;
      
     //if its not locally cached already
-    if (s == "")
+    //look in DB
+    if (s == "" && nDB)
     {
-        //check the database
-        if(nDB)
+        if(s2DA == "feat"
+            || s2DA == "spells"
+            || s2DA == "portraits"
+            || s2DA == "soundsets"
+            || s2DA == "appearance"
+            || s2DA == "portraits"
+            || s2DA == "classes"
+            || s2DA == "racialtypes"
+            || s2DA == "item_to_ireq")
+            SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_"+s2DA+" WHERE ( rowid = "+IntToString(nRow)+" )";
+        else if(TestStringAgainstPattern("cls_feat_**", s2DA))
+            SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_cls_feat WHERE ( rowid = "+IntToString(nRow)+" ) AND ( file = '"+s2DA+"' )";
+        else if(TestStringAgainstPattern("ireq_**", s2DA))
+            SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_ireq WHERE ( rowid = "+IntToString(nRow)+" ) AND ( file = '"+s2DA+"' )";
+        else
+            SQL = "SELECT data FROM prc_cached2da WHERE ( file = '"+s2DA+"' ) AND ( column = '"+sDBColumn+"' ) AND ( rowid = "+IntToString(nRow)+" )";
+
+        PRC_SQLExecDirect(SQL);
+        // if there is an error, table is not built or is not initialized
+
+        //THIS LINE CRASHES NWSERVER for any colum other than the first one. 
+        //WISH I KNEW WHY!!!!!    
+        //update: its because its returning a null data. 
+        //the work around is to specify a default for all columns when creating the table
+        if(!PRC_SQLFetch())           
         {
-            if(s2DA == "feat"
-                || s2DA == "spells"
-                || s2DA == "portraits"
-                || s2DA == "soundsets"
-                || s2DA == "appearance"
-                || s2DA == "portraits"
-                || s2DA == "classes"
-                || s2DA == "racialtypes"
-                || s2DA == "item_to_ireq")
-                SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_"+s2DA+" WHERE ( rowid = "+IntToString(nRow)+" )";
-            else if(TestStringAgainstPattern("cls_feat_**", s2DA))
-                SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_cls_feat WHERE ( rowid = "+IntToString(nRow)+" ) AND ( file = '"+s2DA+"' )";
-            else if(TestStringAgainstPattern("ireq_**", s2DA))
-                SQL = "SELECT "+sDBColumn+" FROM prc_cached2da_ireq WHERE ( rowid = "+IntToString(nRow)+" ) AND ( file = '"+s2DA+"' )";
-            else
-                SQL = "SELECT data FROM prc_cached2da WHERE ( file = '"+s2DA+"' ) AND ( column = '"+sDBColumn+"' ) AND ( rowid = "+IntToString(nRow)+" )";
-            
-            PRC_SQLExecDirect(SQL);
-            // if there is an error, table is not built or is not initialized
-            
-            //THIS LINE CRASHES NWSERVER for any colum other than the first one. 
-            //WISH I KNEW WHY!!!!!    
-            //update: its because its returning a null data. 
-            //the work around is to specify a default for all columns when creating the table
-            if(!PRC_SQLFetch())           
-            {
-                //WriteTimestampedLogEntry("Error getting table from DB");
-            }
-            else
-            {
-                //table exists, and no problems accessing it
-                s = PRC_SQLGetData(1);
-                if(s == "_")
-                    s="";
-            }
-            
+            //WriteTimestampedLogEntry("Error getting table from DB");
         }
-        //entry didnt exist in the database
-        if(s == "")
+        else
         {
-            //fetch from the 2da file
-            s = Get2DAString(s2DA, sColumn, nRow);
-            if (s == "")
-                s = "****";
-            if(nDB)
-            {
-                //store it in the database
-                //use specific tables for certain 2das
-                if(s2DA == "feat"
-                    || s2DA == "spells"
-                    || s2DA == "portraits"
-                    || s2DA == "soundset"
-                    || s2DA == "appearance"
-                    || s2DA == "portraits"
-                    || s2DA == "classes"
-                    || s2DA == "racialtypes"
-                    || s2DA == "item_to_ireq")
-                {
-                    //check that 2da row exisits
-                    SQL = "SELECT rowid FROM prc_cached2da_"+s2DA+" WHERE rowid="+IntToString(nRow);
-                    PRC_SQLExecDirect(SQL);
-                    //if the row exists, then update it
-                    //otherwise insert a new row
-                    if(PRC_SQLFetch() == PRC_SQL_SUCCESS
-                        && PRC_SQLGetData(1) != "")
-                    {
-                        SQL = "UPDATE prc_cached2da_"+s2DA+" SET  "+sDBColumn+" = '"+s+"'  WHERE  rowid = "+IntToString(nRow)+" ";
-                    }
-                    else
-                    {
-                        SQL = "INSERT INTO prc_cached2da_"+s2DA+" (rowid, "+sDBColumn+") VALUES ("+IntToString(nRow)+" , '"+s+"')";
-                    }                        
-                }
-                else if(TestStringAgainstPattern("cls_feat_**", s2DA))
-                {
-                    //check that 2da row exisits
-                    SQL = "SELECT rowid FROM prc_cached2da_cls_feat WHERE (rowid="+IntToString(nRow)+") AND (file='"+s2DA+"')";
-                    PRC_SQLExecDirect(SQL);
-                    //if the row exists, then update it
-                    //otherwise insert a new row
-                    if(PRC_SQLFetch() == PRC_SQL_SUCCESS
-                        && PRC_SQLGetData(1) != "")
-                    {
-                        SQL = "UPDATE prc_cached2da_cls_feat SET  "+sDBColumn+" = '"+s+"'WHERE (rowid = "+IntToString(nRow)+") AND (file='"+s2DA+"')";
-                    }
-                    else
-                    {
-                        SQL = "INSERT INTO prc_cached2da_cls_feat (rowid, "+sDBColumn+", file) VALUES ("+IntToString(nRow)+" , '"+s+"', '"+s2DA+"')";
-                    }                        
-                }
-                else if(TestStringAgainstPattern("ireq_**", s2DA))
-                {
-                    //check that 2da row exisits
-                    SQL = "SELECT rowid FROM prc_cached2da_ireq WHERE (rowid="+IntToString(nRow)+") AND (file='"+s2DA+"')";
-                    PRC_SQLExecDirect(SQL);
-                    //if the row exists, then update it
-                    //otherwise insert a new row
-                    if(PRC_SQLFetch() == PRC_SQL_SUCCESS
-                        && PRC_SQLGetData(1) != "")
-                    {
-                        SQL = "UPDATE prc_cached2da_ireq SET  "+sDBColumn+" = '"+s+"'WHERE (rowid = "+IntToString(nRow)+") AND (file='"+s2DA+"')";
-                    }
-                    else
-                    {
-                        SQL = "INSERT INTO prc_cached2da_ireq (rowid, "+sDBColumn+", file) VALUES ("+IntToString(nRow)+" , '"+s+"', '"+s2DA+"')";
-                    }                        
-                }
-                else
-                {
-                    SQL = "INSERT INTO prc_cached2da VALUES ('"+s2DA+"' , '"+sDBColumn+"' , '"+IntToString(nRow)+"' , '"+s+"')";
-                }    
-                PRC_SQLExecDirect(SQL);
-            }
+            //table exists, and no problems accessing it
+            s = PRC_SQLGetData(1);
+            if(s == "_")
+                s="";
+            //if its already in the DB, dont store it again    
+            if(s != "")
+                nDB = FALSE;
         }
-        //store it on the waypoint
-        SetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow), s);
+    }    
+    //entry didnt exist in the database
+    if(s == "")
+    {
+        //fetch from the 2da file
+        s = Get2DAString(s2DA, sColumn, nRow);
+        if (s == "")
+            s = "****";        
     }
+    
+    if(nDB)
+    {
+        //store it in the database
+        //use specific tables for certain 2das
+        if(s2DA == "feat"
+            || s2DA == "spells"
+            || s2DA == "portraits"
+            || s2DA == "soundset"
+            || s2DA == "appearance"
+            || s2DA == "portraits"
+            || s2DA == "classes"
+            || s2DA == "racialtypes"
+            || s2DA == "item_to_ireq")
+        {
+            //check that 2da row exisits
+            SQL = "SELECT rowid FROM prc_cached2da_"+s2DA+" WHERE rowid="+IntToString(nRow);
+            PRC_SQLExecDirect(SQL);
+            //if the row exists, then update it
+            //otherwise insert a new row
+            if(PRC_SQLFetch() == PRC_SQL_SUCCESS
+                && PRC_SQLGetData(1) != "")
+            {
+                SQL = "UPDATE prc_cached2da_"+s2DA+" SET  "+sDBColumn+" = '"+s+"'  WHERE  rowid = "+IntToString(nRow)+" ";
+            }
+            else
+            {
+                SQL = "INSERT INTO prc_cached2da_"+s2DA+" (rowid, "+sDBColumn+") VALUES ("+IntToString(nRow)+" , '"+s+"')";
+            }                        
+        }
+        else if(TestStringAgainstPattern("cls_feat_**", s2DA))
+        {
+            //check that 2da row exisits
+            SQL = "SELECT rowid FROM prc_cached2da_cls_feat WHERE (rowid="+IntToString(nRow)+") AND (file='"+s2DA+"')";
+            PRC_SQLExecDirect(SQL);
+            //if the row exists, then update it
+            //otherwise insert a new row
+            if(PRC_SQLFetch() == PRC_SQL_SUCCESS
+                && PRC_SQLGetData(1) != "")
+            {
+                SQL = "UPDATE prc_cached2da_cls_feat SET  "+sDBColumn+" = '"+s+"'WHERE (rowid = "+IntToString(nRow)+") AND (file='"+s2DA+"')";
+            }
+            else
+            {
+                SQL = "INSERT INTO prc_cached2da_cls_feat (rowid, "+sDBColumn+", file) VALUES ("+IntToString(nRow)+" , '"+s+"', '"+s2DA+"')";
+            }                        
+        }
+        else if(TestStringAgainstPattern("ireq_**", s2DA))
+        {
+            //check that 2da row exisits
+            SQL = "SELECT rowid FROM prc_cached2da_ireq WHERE (rowid="+IntToString(nRow)+") AND (file='"+s2DA+"')";
+            PRC_SQLExecDirect(SQL);
+            //if the row exists, then update it
+            //otherwise insert a new row
+            if(PRC_SQLFetch() == PRC_SQL_SUCCESS
+                && PRC_SQLGetData(1) != "")
+            {
+                SQL = "UPDATE prc_cached2da_ireq SET  "+sDBColumn+" = '"+s+"'WHERE (rowid = "+IntToString(nRow)+") AND (file='"+s2DA+"')";
+            }
+            else
+            {
+                SQL = "INSERT INTO prc_cached2da_ireq (rowid, "+sDBColumn+", file) VALUES ("+IntToString(nRow)+" , '"+s+"', '"+s2DA+"')";
+            }                        
+        }
+        else
+        {
+            SQL = "INSERT INTO prc_cached2da VALUES ('"+s2DA+"' , '"+sDBColumn+"' , '"+IntToString(nRow)+"' , '"+s+"')";
+        }    
+        PRC_SQLExecDirect(SQL);
+    }
+    //store it on the waypoint
+    SetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow), s);
+
+if(nDebug) PrintString("returned value is "+s);
+    
     if (s=="****")
         return "";
     else

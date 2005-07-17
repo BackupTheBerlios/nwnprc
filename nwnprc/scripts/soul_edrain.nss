@@ -66,8 +66,17 @@ void DoEnergyDrain(object oTarget,int nDamage)
 	}
 }
 
-// This function is here because the commands in it need to be delayed for GetIsDead to return true.
+void LevelUpWight(int nLevel, object oCreature)
+{
+	int n;
+	for(n=1;n<nLevel;n++)
+	{
+		LevelUpHenchman(oCreature, CLASS_TYPE_INVALID, TRUE);
+		//FloatingTextStringOnCreature("Leveled up Henchmen", OBJECT_SELF, FALSE);
+	} 
+}
 
+// This function is here because the commands in it need to be delayed for GetIsDead to return true.
 void DeathDelay(object oTarget, string sTarget, string sName)
 {
 
@@ -80,7 +89,7 @@ void DeathDelay(object oTarget, string sTarget, string sName)
 		// Make sure its dead before raising it as a henchman
 		if (GetIsDead(oTarget))
 		{
-			FloatingTextStringOnCreature("Target is Dead", OBJECT_SELF, FALSE);
+			//FloatingTextStringOnCreature("Target is Dead", OBJECT_SELF, FALSE);
 			
     			int nMax = GetMaxHenchmen();
        			int i = 1;
@@ -93,7 +102,7 @@ void DeathDelay(object oTarget, string sTarget, string sName)
     				i += 1;
     				oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
     			}
-    			FloatingTextStringOnCreature("Henchmen total: " + IntToString(i), OBJECT_SELF, FALSE);
+    			//FloatingTextStringOnCreature("Henchmen total: " + IntToString(i), OBJECT_SELF, FALSE);
     
     			if (i >= nMax) SetMaxHenchmen(i+1);
 
@@ -101,14 +110,10 @@ void DeathDelay(object oTarget, string sTarget, string sName)
 			ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
 
 			AddHenchman(OBJECT_SELF, oCreature);
-			int nTargetLevelUp = GetHitDice(OBJECT_SELF) - 1;
-			int nWightLevel = GetLevelByPosition(1, oCreature);
-
-			while (nWightLevel < nTargetLevelUp)
-			{
-				nWightLevel += 1;
-				LevelUpHenchman(oCreature, CLASS_TYPE_UNDEAD, FALSE, PACKAGE_UNDEAD);
-			}
+			int nTargetLevelUp = GetHitDice(OBJECT_SELF) - 3;
+			
+			// Needs to be delayed because it was firing before creature spawned
+			DelayCommand(1.0, LevelUpWight(nTargetLevelUp, oCreature));
 			// Reset henchmen to the module max
 			SetMaxHenchmen(nMax);
 		}

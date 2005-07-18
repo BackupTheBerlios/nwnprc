@@ -38,6 +38,13 @@ void main()
     object oMbld;
     int nMbldType = GetPersistantLocalInt(oPC, MBLADE_SHAPE);
     int nHand = GetPersistantLocalInt(oPC, MBLADE_HAND);
+    
+    // If this is the very first time a PC is manifesting a mindblade, initialise the hand to be main hand
+    if(!nHand)
+    {
+        nHand = INVENTORY_SLOT_RIGHTHAND;
+        SetPersistantLocalInt(oPC, MBLADE_HAND, INVENTORY_SLOT_RIGHTHAND);
+    }
 
     // Generate the item based on type selection
     switch(nMbldType)
@@ -108,7 +115,7 @@ void main()
             nOtherHand = INVENTORY_SLOT_RIGHTHAND;
         // Check it's contents and take action if necessary
         if(GetStringLeft(GetTag(GetItemInSlot(nOtherHand, oPC)), 14) == "prc_sk_mblade_")
-            MyDestroyObject(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC));
+            MyDestroyObject(GetItemInSlot(nOtherHand, oPC));
     }
 
 

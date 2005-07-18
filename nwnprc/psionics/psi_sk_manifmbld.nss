@@ -33,30 +33,33 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType);
 
 void main()
 {
-    WriteTimestampedLogEntry("Starting psi_sk_manifmbld");
+    //WriteTimestampedLogEntry("Starting psi_sk_manifmbld");
     object oPC = OBJECT_SELF;
     object oMbld;
     int nMbldType = GetPersistantLocalInt(oPC, MBLADE_SHAPE);
+    int nHand = GetPersistantLocalInt(oPC, MBLADE_HAND);
 
     // Generate the item based on type selection
     switch(nMbldType)
     {
         case MBLADE_SHAPE_DUAL_SHORTSWORDS:
-            SendMessageToPC(oPC, "psi_sk_manifmbld: First of dual shortswords - ");
+            //SendMessageToPC(oPC, "psi_sk_manifmbld: First of dual shortswords - ");
+            // The first of dual mindblades always goes to mainhand
+            nHand = INVENTORY_SLOT_RIGHTHAND;
         case MBLADE_SHAPE_SHORTSWORD:
-            SendMessageToPC(oPC, "psi_sk_manifmbld: Created shortsword");
+            //SendMessageToPC(oPC, "psi_sk_manifmbld: Created shortsword");
             oMbld = CreateItemOnObject("prc_sk_mblade_ss", oPC);
             break;
         case MBLADE_SHAPE_LONGSWORD:
-            SendMessageToPC(oPC, "psi_sk_manifmbld: Created longsword");
+            //SendMessageToPC(oPC, "psi_sk_manifmbld: Created longsword");
             oMbld = CreateItemOnObject("prc_sk_mblade_ls", oPC);
             break;
         case MBLADE_SHAPE_BASTARDSWORD:
-            SendMessageToPC(oPC, "psi_sk_manifmbld: Created bastardsword");
+            //SendMessageToPC(oPC, "psi_sk_manifmbld: Created bastardsword");
             oMbld = CreateItemOnObject("prc_sk_mblade_bs", oPC);
             break;
         case MBLADE_SHAPE_RANGED:
-            SendMessageToPC(oPC, "psi_sk_manifmbld: Created throwing mindblade");
+            //SendMessageToPC(oPC, "psi_sk_manifmbld: Created throwing mindblade");
             oMbld = CreateItemOnObject("prc_sk_mblade_th", oPC, GetHasFeat(FEAT_MULTIPLE_THROW, oPC) ? GetMainHandAttacks(oPC) : 1);
             break;
 
@@ -69,7 +72,7 @@ void main()
     DelayCommand(0.25f, BuildMindblade(oPC, oMbld, nMbldType));
 
     // Force equip
-    AssignCommand(oPC, ActionEquipItem(oMbld, INVENTORY_SLOT_RIGHTHAND));
+    AssignCommand(oPC, ActionEquipItem(oMbld, nHand));
 
     // Hook the mindblade into OnHit event
     AddEventScript(oMbld, EVENT_ITEM_ONHIT, "psi_sk_onhit", TRUE, FALSE);
@@ -83,7 +86,7 @@ void main()
     {
         oMbld = CreateItemOnObject("prc_sk_mblade_ss", oPC);
 
-        SendMessageToPC(oPC, "psi_sk_manifmbld: Created second mindblade - is valid: " + (GetIsObjectValid(oMbld) ? "TRUE":"FALSE"));
+        //SendMessageToPC(oPC, "psi_sk_manifmbld: Created second mindblade - is valid: " + (GetIsObjectValid(oMbld) ? "TRUE":"FALSE"));
 
         DelayCommand(0.5f, BuildMindblade(oPC, oMbld, nMbldType)); // Delay a bit to prevent a lag spike
         //BuildMindblade(oPC, oMbld, nMbldType);
@@ -95,11 +98,18 @@ void main()
         SetItemCursedFlag(oMbld, TRUE);
     }
     // Not dual-wielding, so delete the second mindblade if they have such
-    else if(GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)), 14) == "prc_sk_mblade_")
+    else
     {
-        MyDestroyObject(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC));
+        // Get the other hand
+        int nOtherHand;
+        if(nHand == INVENTORY_SLOT_RIGHTHAND)
+            nOtherHand = INVENTORY_SLOT_LEFTHAND;
+        else
+            nOtherHand = INVENTORY_SLOT_RIGHTHAND;
+        // Check it's contents and take action if necessary
+        if(GetStringLeft(GetTag(GetItemInSlot(nOtherHand, oPC)), 14) == "prc_sk_mblade_")
+            MyDestroyObject(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC));
     }
-        
 
 
     // Hook psi_sk_event to the mindblade-related events it handles
@@ -107,15 +117,12 @@ void main()
     AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "psi_sk_event", TRUE, FALSE);
     AddEventScript(oPC, EVENT_ONUNAQUIREITEM,      "psi_sk_event", TRUE, FALSE);
     AddEventScript(oPC, EVENT_ONPLAYERDEATH,       "psi_sk_event", TRUE, FALSE);
-    WriteTimestampedLogEntry("Finished psi_sk_manifmbld");
+    //WriteTimestampedLogEntry("Finished psi_sk_manifmbld");
 }
 
 
 void BuildMindblade(object oPC, object oMbld, int nMbldType)
 {
-    // For the purposes of this function, dual shortswords is the same as single shortsword
-    if(nMbldType == MBLADE_SHAPE_DUAL_SHORTSWORDS) nMbldType = MBLADE_SHAPE_SHORTSWORD;
-
     /* Add normal stuff and VFX */
     /// Add enhancement bonus
     int nSKLevel = GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC);
@@ -150,15 +157,12 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
                                                                         ITEM_VISUAL_SONIC
                                                                      ), oMbld);
 
-    /// Add in common feats
+    /* Add in common feats */
     string sTag = GetTag(oMbld);
-    // Some optimization, since this script seems particularly heavy.
-    // Do string comparison only once, and store the result in an integer,
-    // which is lighter to compare
-    /*int nMbldType = sTag == "prc_sk_mblade_ss" ? MBLADE_SHAPE_SHORTSWORD   :
-                    sTag == "prc_sk_mblade_ls" ? MBLADE_SHAPE_LONGSWORD    :
-                    sTag == "prc_sk_mblade_bs" ? MBLADE_SHAPE_BASTARDSWORD :
-                                                 MBLADE_SHAPE_RANGED;*/
+    // For the purposes of the rest of this function, dual shortswords is the same as single shortsword
+    if(nMbldType == MBLADE_SHAPE_DUAL_SHORTSWORDS) nMbldType = MBLADE_SHAPE_SHORTSWORD;
+ 
+ 
     // Weapon Focus
     if(GetHasFeat(FEAT_WEAPON_FOCUS_MINDBLADE, oPC))
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_WEAPON_FOCUS_SHORT_SWORD :
@@ -214,7 +218,7 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_WHIRLWIND), oMbld);
 
 
-    /// Apply the enhancements
+    /* Apply the enhancements */
     int nFlags = GetPersistantLocalInt(oPC, MBLADE_FLAGS);
     int bLight = FALSE;
 

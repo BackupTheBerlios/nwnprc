@@ -2,7 +2,7 @@
 //:: Poisoned Food eating hook script
 //:: poison_eat_hook
 //::///////////////////////////////////////////////
-/*
+/** @file
     The item used to trigger this should contain two
     local ints:
     pois_food_idx  - The number of poison to use. Matched

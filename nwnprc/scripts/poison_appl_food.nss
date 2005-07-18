@@ -1,8 +1,8 @@
 //::///////////////////////////////////////////////
 //:: Poison Food spellscript
-//:: poison_appl_item
+//:: poison_appl_food
 //::///////////////////////////////////////////////
-/*
+/** @file
     Applies a poison to the targeted food item based on
     local integer "pois_idx" on the item being cast from.
     The last 3 letters of the item's tag will be used instead
@@ -75,7 +75,11 @@ void main()
     }
     
     // Make sure the target is some type of food or drink
-    if(!ExecuteScriptAndReturnInt("poison_is_food", oTarget))
+    // Get the name of the script to run from a switch. If it's not present, use default
+    string sIsFoodScriptName = GetLocalString(GetModule(), PRC_POISON_IS_FOOD_SCRIPT_NAME);
+    if(sIsFoodScriptName == "") sIsFoodScriptName = "poison_is_food";
+    // Run it
+    if(!ExecuteScriptAndReturnInt(sIsFoodScriptName, oTarget))
     {
     	SendMessageToPCByStrRef(oPC, STRREF_TARGET_NOT_FOOD);       // "Target is not food."
     	return;

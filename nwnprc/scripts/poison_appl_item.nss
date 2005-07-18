@@ -2,7 +2,7 @@
 //:: Poison Item spellscript
 //:: poison_appl_item
 //::///////////////////////////////////////////////
-/*
+/** @file
     Applies a poison to the targeted item based on
     local integer "pois_idx" on the item being cast from.
     The last 3 characters of the item's tag will be used

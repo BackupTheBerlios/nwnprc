@@ -77,8 +77,32 @@ int GetArmorType(object oArmor);
 //returns the number of steps on both axis that the alignments differ
 int CompareAlignment(object oSource, object oTarget);
 
+/**
+ * Repeatedly assigns an equipping action to equip the given item until
+ * it is equipped. Used for getting around the fact that a player can
+ * cancel the action. They will give up eventually :D
+ *
+ * WARNING: Note that forcing an equip into offhand when mainhand is empty
+ * will result in an infinite loop. So will attempting to equip an item
+ * into a slot it can't be equipped in.
+ * 
+ * @param oPC   The creature to do the equipping.
+ * @param oItem The item to equip.
+ * @param nSlot INVENTORY_SLOT_* constant of the slot to equip into.
+ */
 void ForceEquip(object oPC, object oItem, int nSlot);
-void ForceUnequip(object oPC, object oItem, int nSlot);
+
+/**
+ * Repeatedly attempts to unequip the given item until it is no longer
+ * in the slot given. Used for getting around the fact that a player can
+ * cancel the action. They will give up eventually :D
+ *
+ * @param oPC    The creature to do the unequipping.
+ * @param oItem  The item to unequip.
+ * @param nSlot  INVENTORY_SLOT_* constant of the slot containing oItem.
+ * @param bFirst Leave this to TRUE when calling, see code for reason.
+ */
+void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE);
 
 
 
@@ -386,12 +410,17 @@ int CompareAlignment(object oSource, object oTarget)
 }
 
 
-void ForceUnequip(object oPC, object oItem, int nSlot)
+void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE)
 {
-    if(GetItemInSlot(nSlot, oPC) == oItem)
+    // Delay the first unequipping call to avoid a bug that occurs when an object that was just equipped is unequipped right away
+    // - The item is not unequipped properly, leaving some of it's effects in the creature's stats and on it's model.
+    if(bFirst){
+        DelayCommand(0.5, ForceUnequip(oPC, oItem, nSlot, FALSE));
+    }
+    else if(GetItemInSlot(nSlot, oPC) == oItem)
     {
         AssignCommand(oPC, ActionUnequipItem(oItem));
-        DelayCommand(0.1, ForceUnequip(oPC, oItem, nSlot));
+        DelayCommand(0.1, ForceUnequip(oPC, oItem, nSlot, FALSE));
     }
 }
 

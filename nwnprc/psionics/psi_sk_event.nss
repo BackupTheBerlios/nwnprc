@@ -31,6 +31,7 @@
 #include "inc_eventhook"
 #include "psi_inc_soulkn"
 #include "inc_debug"
+#include "inc_utility"
 
 /*
 void DoDestroy(object oItem){
@@ -42,19 +43,6 @@ void DoDestroy(object oItem){
     }
 }
 */
-
-void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE)
-{
-    if(bFirst){
-        DelayCommand(0.3, ForceUnequip(oPC, oItem, nSlot, FALSE));
-        return;
-    }
-    if(GetItemInSlot(nSlot, oPC) == oItem)
-    {
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        DelayCommand(0.1, ForceUnequip(oPC, oItem, nSlot, FALSE));
-    }
-}
 
 void main()
 {

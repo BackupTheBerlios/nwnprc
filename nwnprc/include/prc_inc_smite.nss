@@ -20,12 +20,15 @@ Undead
 Infidel
     Champion of Bane
     Champion of Torm
+CW Samurai
+    Kiai
 */
 
 const int SMITE_TYPE_GOOD       = 1;
 const int SMITE_TYPE_EVIL       = 2;
 const int SMITE_TYPE_UNDEAD     = 3;
-const int SMITE_TYPE_INFIDEL    = 4;    
+const int SMITE_TYPE_INFIDEL    = 4;   
+const int SMITE_TYPE_KIAI       = 5;     
 
 //this calculates damage and stuff from class and type
 //takes epic smiting feats etc into account
@@ -55,6 +58,7 @@ void DoSmite(object oPC, object oTarget, int nType)
         case SMITE_TYPE_EVIL:
         {
             eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+            nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
             nDamage = GetLevelByClass(CLASS_TYPE_PALADIN, oPC)
                 +GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oPC);
             nDamageType = DAMAGE_TYPE_DIVINE;
@@ -132,6 +136,7 @@ void DoSmite(object oPC, object oTarget, int nType)
         case SMITE_TYPE_GOOD:
         {
             eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+            nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
             nDamage = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, oPC)
                 +GetLevelByClass(CLASS_TYPE_BLACKGUARD, oPC);
             nDamageType = DAMAGE_TYPE_DIVINE;
@@ -149,6 +154,7 @@ void DoSmite(object oPC, object oTarget, int nType)
         case SMITE_TYPE_UNDEAD:
         {
             eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+            nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
             nDamage = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT, oPC);
             nDamageType = DAMAGE_TYPE_POSITIVE;
             sFailedTarget = "Smite Failed: target is not Undead";
@@ -166,6 +172,7 @@ void DoSmite(object oPC, object oTarget, int nType)
         {
             eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
             nDamage = GetLevelByClass(CLASS_TYPE_DIVINE_CHAMPION, oPC);
+            nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
             string sDeity = "Torm";
             if(GetLevelByClass(CLASS_TYPE_CHAMPION_BANE, oPC) > nDamage)
             {
@@ -182,6 +189,25 @@ void DoSmite(object oPC, object oTarget, int nType)
             if(GetStringLowerCase(GetDeity(oPC))    != GetStringLowerCase(sDeity))
                 nSmiterInvalid = TRUE;
         }    
+        break;
+            
+        case SMITE_TYPE_KIAI:
+        {
+            eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+            nDamage = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+            if(nDamage < 1)
+                nDamage = 1;
+            nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+            if(nAttack < 1)
+                nAttack = 1;
+            nDamageType = DAMAGE_TYPE_DIVINE;
+            sFailedTarget = "Taget cannot be invalid";
+            sFailedSmiter = "Smite Failed: you are not Lawful";    
+            sHit =  "Kiai Smite Hit";
+            sMiss = "Kiai Smite Missed";
+            if(GetAlignmentLawChaos(OBJECT_SELF)    != ALIGNMENT_LAWFUL)
+                nSmiterInvalid = TRUE;
+        }        
         break;
     }
     

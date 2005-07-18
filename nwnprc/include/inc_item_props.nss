@@ -22,8 +22,6 @@
 
 //I know its messy, but this is the easiest place to hook this in
 //Primogentior
-//#include "inc_utility"
-#include "inc_prc_npc"
 
 //////////////////////////////
 // Function Prototypes      //
@@ -229,6 +227,8 @@ void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType =
 
 
 #include "inc_persist_loca"
+#include "inc_utility"
+#include "inc_prc_npc"
 
 //////////////////////////////
 // Function Definitions     //
@@ -255,13 +255,13 @@ object GetPCSkin(object oPC)
             if(GetHasItem(oPC, "base_prc_skin"))
             {
                 oSkin = GetItemPossessedBy(oPC, "base_prc_skin");
-                AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
+                ForceEquip(oPC, oSkin, INVENTORY_SLOT_CARMOUR);
             }
 
             //Added GetHasItem check to prevent creation of extra skins on module entry
             else {
                 oSkin = CreateItemOnObject("base_prc_skin", oPC);
-                AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
+                ForceEquip(oPC, oSkin, INVENTORY_SLOT_CARMOUR);
 
                 // The skin should not be droppable
                 SetDroppableFlag(oSkin, FALSE);

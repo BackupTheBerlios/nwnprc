@@ -11,6 +11,7 @@
 //:: Created On: 22.05.2005
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 
 const int START = 2177; // Spells.2da of 0
 
@@ -18,7 +19,7 @@ void main()
 {
     object oPC = OBJECT_SELF;
     int nPower = GetLocalInt(oPC, "PRC_PowerAttack_Level");
-    int nSID = GetSpellId();
+    int nSID = PRCGetSpellId();
     
     // Extract the old single value
     nPower = nPower % 5;

@@ -1,5 +1,6 @@
 #include "inc_prc_npc"
 #include "prc_inc_itmrstr"
+#include "inc_utility"
 
 /*
 Script to handle removal of items with the ability
@@ -8,15 +9,6 @@ or skill restriction itemproperties.
 Fired from prc_equip
 
 */
-
-void ForceUnequip(object oPC, object oItem, int nSlot)
-{
-    if(GetItemInSlot(nSlot, oPC) == oItem)
-    {
-        AssignCommand(oPC, ActionUnequipItem(oItem));
-        DelayCommand(0.1, ForceUnequip(oPC, oItem, nSlot));
-    }
-}
 
 void main()
 {

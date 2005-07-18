@@ -476,6 +476,8 @@ const string PRC_ACP_AUTOMATIC                       = "PRC_ACP_AUTOMATIC";
 /*
  * Set this so that NPCs will change combat animations automatically
  * based on weapons equiped and class
+ * This can either be set on the module for a global setting
+ * or set on individual NPCs for specific individuals
  */
 const string PRC_ACP_NPC_AUTOMATIC                   = "PRC_ACP_NPC_AUTOMATIC";
 

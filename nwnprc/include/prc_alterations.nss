@@ -50,6 +50,7 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 #include "prc_ipfeat_const"
 #include "prc_misc_const"
 #include "inc_fileends"
+#include "inc_acp"
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"

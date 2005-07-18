@@ -1,9 +1,3 @@
-#include "inc_array"
-#include "inc_array_b"
-#include "inc_heap"
-
-#include "inc_2dacache"
-
 //takes a hex string "0x####" and returns the integer base 10 equivalent
 //Full credit to Axe Murderer
 int HexToInt( string sHex);
@@ -82,6 +76,18 @@ int GetArmorType(object oArmor);
 
 //returns the number of steps on both axis that the alignments differ
 int CompareAlignment(object oSource, object oTarget);
+
+void ForceEquip(object oPC, object oItem, int nSlot);
+void ForceUnequip(object oPC, object oItem, int nSlot);
+
+
+
+#include "inc_array"
+#include "inc_array_b"
+#include "inc_heap"
+
+#include "inc_2dacache"
+
 
 int HexToInt( string sHex)
 { if( sHex == "") return 0;
@@ -377,4 +383,23 @@ int CompareAlignment(object oSource, object oTarget)
             iStepDif += 2;
     }
     return iStepDif;
+}
+
+
+void ForceUnequip(object oPC, object oItem, int nSlot)
+{
+    if(GetItemInSlot(nSlot, oPC) == oItem)
+    {
+        AssignCommand(oPC, ActionUnequipItem(oItem));
+        DelayCommand(0.1, ForceUnequip(oPC, oItem, nSlot));
+    }
+}
+
+void ForceEquip(object oPC, object oItem, int nSlot)
+{
+    if(GetItemInSlot(nSlot, oPC) != oItem)
+    {
+        AssignCommand(oPC, ActionEquipItem(oItem, nSlot));
+        DelayCommand(0.1, ForceEquip(oPC, oItem, nSlot));
+    }
 }

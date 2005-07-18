@@ -128,8 +128,10 @@ void main()
                 nHP += GetHitDice(oPC);
                 int nCurrentHP = GetCurrentHitPoints(oPC);
                 int nDamage = nCurrentHP-nHP;
-                ApplyEffectToObject(DURATION_TYPE_INSTANT, 
-                    EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPC);
+                //check its a positive number
+                if(nDamage > 0)
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, 
+                        EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPC);
             }
             
             int nSpellCount = GetPRCSwitch(PRC_DISABLE_SPELL_COUNT);

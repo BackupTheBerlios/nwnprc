@@ -11,6 +11,7 @@
 //:: Created On: 04.04.2005
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "psi_inc_soulkn"
 
 void main()
@@ -31,5 +32,5 @@ void main()
         nHand = INVENTORY_SLOT_RIGHTHAND;
     }
     // Store the new value
-    SetPersistantLocalInt(oPC, MBLADE_HAND, nShape);
+    SetPersistantLocalInt(oPC, MBLADE_HAND, nHand);
 }

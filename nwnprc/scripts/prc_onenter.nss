@@ -7,6 +7,7 @@
 #include "inc_time"    
 #include "inc_metalocation"
 #include "x2_inc_switches"
+#include "prc_inc_teleport"
 
 
 void main()
@@ -169,8 +170,11 @@ void main()
             ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSummon, oPC);
         }    
     }
+
+    // Create map pins from marked teleport locations if the PC has requested that such be done.
+    if(GetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS))
+        DelayCommand(10.0f, TeleportLocationsToMapPins(oPC));
+    
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
-    
-
 }

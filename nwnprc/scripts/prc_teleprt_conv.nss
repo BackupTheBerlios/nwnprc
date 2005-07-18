@@ -16,6 +16,14 @@
 
 
 //////////////////////////////////////////////////
+/* Constant defintions                          */
+//////////////////////////////////////////////////
+
+const int STAGE_MAIN           = 0;
+const int STAGE_SELECTION_MADE = 1;
+
+
+//////////////////////////////////////////////////
 /* Function defintions                          */
 //////////////////////////////////////////////////
 
@@ -44,7 +52,7 @@ void main()
         int nStage = GetLocalInt(oPC, "Stage");
 
         // Build the list of choices
-        if(nStage == 0 && !GetLocalInt(oPC, "PRC_TeleportSelectionConvo_Setup"))
+        if(nStage == STAGE_MAIN && !GetLocalInt(oPC, "PRC_TeleportSelectionConvo_Setup"))
         {
             // Set the header text
             string sToken = GetStringByStrRef(16825270); // "Select location to use"
@@ -77,8 +85,13 @@ void main()
             SetLocalInt(oPC, "PRC_TeleportSelectionConvo_Setup", TRUE);
         }
         // The user made their selection
-        else if(nStage == 1)
+        else if(nStage == STAGE_SELECTION_MADE)
         {
+            // Set the header text
+            string sToken = GetStringByStrRef(16825306); // "Selection made. Select finish to continue."
+            SetCustomToken(99, sToken);
+
+            // Get the metalocation to store
             int nReturn = GetLocalInt(oPC, "PRC_TeleportSelectionConvo_Selection");
             struct metalocation mlocL = nReturn < 0 ? // Is it a quickselection?
                                         GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(-nReturn)) :
@@ -116,18 +129,20 @@ void main()
     // Conversation ended normally
     else if(nValue == -2)
     {
-        // Check if the selection has been made yet, or if the user is allowed to exit without making a selection
-        if(GetLocalInt(oPC, "PRC_TeleportSelectionMade") ||
-           !GetLocalInt(oPC, "PRC_TeleportTargetSelection_DisallowConversationAbort")
+        // Check if the user is allowed to exit the conversation without making a selection
+        if(!GetLocalInt(oPC, "PRC_TeleportSelectionMade") &&
+           GetLocalInt(oPC, "PRC_TeleportTargetSelection_DisallowConversationAbort")
            )
         {
             AssignCommand(oPC, ClearAllActions(TRUE));
-            ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
+            AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
         }
         else
         {
             // Schedule the callback script to be run
-            DelayCommand(0.1f, ExecuteScript(GetLocalString(oPC, "PRC_TeleportTargetSelection_CallbackScript"), oPC));
+            //SendMessageToPC(oPC, "Running script " + GetLocalString(oPC, "PRC_TeleportTargetSelection_CallbackScript"));
+            string sScript = GetLocalString(oPC, "PRC_TeleportTargetSelection_CallbackScript");
+            DelayCommand(0.3f, ExecuteScript(sScript, oPC));
             
             DeleteLocalInt(oPC, "DynConv_Var");
             array_delete(oPC, "ChoiceTokens");
@@ -156,7 +171,7 @@ void main()
         if(GetLocalInt(oPC, "PRC_TeleportTargetSelection_DisallowConversationAbort"))
         {
             AssignCommand(oPC, ClearAllActions(TRUE));
-            ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
+            AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
         }
         // Cleanup
         else
@@ -183,7 +198,7 @@ void main()
     }
     nValue = array_get_int(oPC, "ChoiceValues", nValue);
     int nStage = GetLocalInt(oPC, "Stage");
-    if(nStage == 0)
+    if(nStage == STAGE_MAIN)
     {
         nStage = 1;
         array_delete(oPC, "ChoiceTokens");

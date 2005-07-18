@@ -107,7 +107,8 @@ void main()
         // First, spawn a circle of ligntning around the caster
         BeamPolygon(DURATION_TYPE_PERMANENT, VFX_BEAM_LIGHTNING, lCaster,
                     nSpellID == SPELLID_TELEPORT_PARTY ? FeetToMeters(10.0) : FeetToMeters(3.0), // Single TP: 3ft radius; Party TP: 10ft radius
-                    15, 1.5, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0);
+                    nSpellID == SPELLID_TELEPORT_PARTY ? 15 : 10, // More nodes for the group VFX
+                    1.5, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0);
         
         
         //BeamPolygon(1, 73, lCaster, 5.0, 8, 3.0, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0);
@@ -117,7 +118,10 @@ void main()
                                                      FloatToInt(GetDistanceBetweenLocations(lCaster, lTarget)), // One VFX every 5 meters
                                                      0.5));
         // Then, spawn a circle of ligtning at the destination
-        DelayCommand(0.5, BeamPolygon(DURATION_TYPE_TEMPORARY, VFX_BEAM_LIGHTNING, lTarget, nSpellID == SPELLID_TELEPORT_PARTY ? FeetToMeters(10.0) : FeetToMeters(3.0), 15, 2.0, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0));
+        DelayCommand(0.5, BeamPolygon(DURATION_TYPE_TEMPORARY, VFX_BEAM_LIGHTNING, lTarget,
+                          nSpellID == SPELLID_TELEPORT_PARTY ? FeetToMeters(10.0) : FeetToMeters(3.0),
+                          nSpellID == SPELLID_TELEPORT_PARTY ? 15 : 10,
+                          1.5, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0));
     }
 
 

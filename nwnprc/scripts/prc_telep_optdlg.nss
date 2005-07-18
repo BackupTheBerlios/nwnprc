@@ -130,7 +130,7 @@ void main()
             int i;
             struct metalocation mlocL;
             string sToken;
-            for(i = 1; i < NUM_TELEPORT_QUICKSELECTS; i++)
+            for(i = 1; i <= NUM_TELEPORT_QUICKSELECTS; i++)
             {//          Quickselection
                 sToken = GetStringByStrRef(16825271) + " " + IntToString(i) + ": ";
                 if(GetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i)))
@@ -216,6 +216,9 @@ void main()
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
         DeleteLocalInt(oPC, "Stage");
+        int i;
+        for(i = 99; i <= 110; i++)
+            DeleteLocalString(oPC, "TOKEN" + IntToString(i));
         
         DeleteLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex");
         
@@ -228,6 +231,9 @@ void main()
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
         DeleteLocalInt(oPC, "Stage");
+        int i;
+        for(i = 99; i <= 110; i++)
+            DeleteLocalString(oPC, "TOKEN" + IntToString(i));
         
         DeleteLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex");
         
@@ -277,6 +283,7 @@ void main()
     {
         if(nChoice != CHOICE_BACK_TO_MAIN)
         {
+            SetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice), TRUE);
             SetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice),
                                  GetNthStoredTeleportTargetLocation(oPC, GetLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex")));
         }
@@ -287,7 +294,10 @@ void main()
     else if(nStage == STAGE_QUICKSLOT_LIST)
     {
         if(nChoice != CHOICE_BACK_TO_MAIN)
+        {
+            DeleteLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice));
             DeleteLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice));
+        }
 
         nStage = STAGE_MAIN;
     }
@@ -310,6 +320,10 @@ void main()
     else if(nStage == STAGE_MAPPIN)
     {
         SetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS, nChoice);
+
+        // Create map pins from existing teleport locations.
+        if(nChoice)
+            TeleportLocationsToMapPins(oPC);
 
         nStage = STAGE_MAIN;
     }

@@ -223,8 +223,7 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
         // Get the quickselected metalocation
         struct metalocation mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection");
 
-        // Store it under the requested name
-        // Store the return value
+        // Store the return value under the requested name and as the requested type
         if(bMeta)
             SetLocalMetalocation(oPC, sCallbackVar, mlocL);
         else
@@ -241,9 +240,10 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
     }
     // We have to go look at the stored array, so make sure it contains at least one entry
     else if(!GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME))
-    {
-        // Store it under the requested name
-        // Store the return value
+    {// "You do not have any locations marked for teleporting to!"
+        SendMessageToPCByStrRef(oPC, 16825305);
+        
+        // Store the PC's location
         if(bMeta)
             SetLocalMetalocation(oPC, sCallbackVar, LocationToMetalocation(GetLocation(oPC)));
         else
@@ -331,6 +331,9 @@ int GetNumberOfStoredTeleportTargetLocations(object oPC)
 
 int GetHasTeleportQuickSelectionActive(object oPC)
 {
+    //SendMessageToPC(oPC, "GetLocalInt(oPC, PRC_Teleport_Quickselection): " + IntToString(GetLocalInt(oPC, "PRC_Teleport_Quickselection")));
+    //SendMessageToPC(oPC, "GetIsMetalocationValid(GetLocalMetalocation(oPC, PRC_Teleport_Quickselection)): " + IntToString(GetIsMetalocationValid(GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection"))));
+
     return GetLocalInt(oPC, "PRC_Teleport_Quickselection") &&
            GetIsMetalocationValid(GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection"));
 }
@@ -351,16 +354,8 @@ void RemoveCurrentTeleportTargetLocation(object oPC)
     int nInd = GetLocalInt(oPC, "PRC_Teleport_Array_Iterator");
     if(!nInd) return;
 
-    // Get the index of the last element in the array and move elements back if needed
-    int nMax = GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME) - 1;
-    for(; nInd < nMax; nInd++)
-        SetPersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_" + IntToString(nInd),
-                                       GetPersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_" + IntToString(nInd + 1))
-                                       );
-
-    // Remove the last element and mark the size change
-    DeletePersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_" + IntToString(nMax));
-    SetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME, nMax);
+    // Remove the location
+    RemoveNthTeleportTargetLocation(oPC, nInd);
 
     // Delete the iteration counter to keep potential errors down.
     DeleteLocalInt(oPC, "PRC_Teleport_Array_Iterator");
@@ -378,12 +373,18 @@ void RemoveNthTeleportTargetLocation(object oPC, int nInd)
     // Get the index of the last element in the array and move elements back if needed
     int nMax = GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME) - 1;
     for(; nInd < nMax; nInd++)
+    {        
         SetPersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_" + IntToString(nInd),
                                        GetPersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_" + IntToString(nInd + 1))
                                        );
+        // Move the map pin existence marker if it's present
+        if(GetLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME + "_HasMapPin_" + IntToString(nInd + 1)))
+            SetLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME + "_HasMapPin_" + IntToString(nInd), TRUE);
+    }
 
     // Remove the last element and mark the size change
     DeletePersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_" + IntToString(nMax));
+    DeleteLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME + "_HasMapPin_" + IntToString(nMax));
     SetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME, nMax);
 
     // Delete the iteration counter to keep potential errors down.
@@ -399,6 +400,13 @@ int AddTeleportTargetLocationAsMeta(object oPC, struct metalocation mlocToAdd)
 {
     // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
     if(!GetIsPC(oPC)) return FALSE;
+    
+    // Make sure the metalocation is valid
+    if(!GetIsMetalocationValid(mlocToAdd))
+    {// "Location could not be marked due to technical limitations - unable to uniquely identify area."
+        SendMessageToPCByStrRef(oPC, 16825304);
+        return FALSE;
+    }
 
     // Array size check. If no limit is defined via switch, default to 50.
     int nInd = GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME); // Array elements begin at index 0
@@ -416,6 +424,23 @@ int AddTeleportTargetLocationAsMeta(object oPC, struct metalocation mlocToAdd)
     SetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME, nInd + 1);
     return TRUE;
 }
+
+void TeleportLocationsToMapPins(object oPC)
+{
+    // Iterate over all stored metalocations
+    int nMax = GetNumberOfStoredTeleportTargetLocations(oPC);
+    int i;
+    for(; i < nMax; i++)
+    {
+        // Add map pins to those locations that do not already have one
+        if(!GetLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME + "_HasMapPin_" + IntToString(i)))
+        {
+            CreateMapPinFromMetalocation(GetNthStoredTeleportTargetLocation(oPC, i) , oPC);
+            SetLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME + "_HasMapPin_" + IntToString(i), TRUE);
+        }
+    }
+}
+
 
 int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE)
 {

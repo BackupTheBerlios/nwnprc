@@ -33,10 +33,12 @@ void main()
     // Get this quickslot's metalocation
     mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nInd));
 
+    if(!GetIsMetalocationValid(mlocL)) SendMessageToPC(oPC, "Not valid!");
+
     // Set it as the active quickselection
     SetLocalInt(oPC, "PRC_Teleport_Quickselection", TRUE); // Mark quickselection as active
     SetLocalMetalocation(oPC, "PRC_Teleport_Quickselection", mlocL);
     
     //              Teleport location quickselection set to
-    SendMessageToPC(oPC, GetStringByStrRef(16825292) + " " + MetalocationToString(mlocL));
+    SendMessageToPC(oPC, GetStringByStrRef(16825293) + " " + MetalocationToString(mlocL));
 }

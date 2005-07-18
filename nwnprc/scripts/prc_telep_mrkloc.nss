@@ -57,4 +57,8 @@ void Aux(object oPC, location lToStore)
         CreateMapPinFromMetalocation(mlocToStore, oPC);
 
     AddTeleportTargetLocationAsMeta(oPC, mlocToStore);
+    
+    // Tell the user the location was added
+    //                   "Added teleport location: "
+    SendMessageToPC(oPC, GetStringByStrRef(16825303) + " "+ MetalocationToString(mlocToStore));
 }

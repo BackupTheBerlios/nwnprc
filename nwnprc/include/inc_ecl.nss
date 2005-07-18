@@ -192,7 +192,7 @@ void ApplyECLToXP(object oPC)
         int iCurXP = GetXP(oPC);
         if(!GetIsPC(oPC))
             iCurXP = GetLocalInt(oPC, "NPC_XP");
-        int iLastXP = GetLocalInt(oPC, sXP_AT_LAST_HEARTBEAT);
+        int iLastXP = GetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT);
         if(iLastXP != iCurXP)
         {
             int iPCLvl = GetHitDice(oPC);
@@ -206,7 +206,7 @@ void ApplyECLToXP(object oPC)
                 SetXP(oPC, newXP);
             else
                 SetLocalInt(oPC, "NPC_XP", newXP);
-            SetLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, newXP);
+            SetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, newXP);
         }
     }
 }

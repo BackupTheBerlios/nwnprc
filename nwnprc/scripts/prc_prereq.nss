@@ -497,6 +497,38 @@ void Maester(object oPC)
     }
 }
 
+void CombatMedic(object oPC)
+{
+    //The combat medic can only be taken if able to cast Cure Light Wounds. With druids and
+    //clerics, that's no problem - they get it at first level. Paladins and rangers are a bit more
+    //complicated, due to their bonus spells and later spell gains.
+
+    SetLocalInt(oPC, "PRC_PrereqCbtMed", 1);
+    object oSkin = GetPCSkin(oPC);
+
+    if (GetLevelByClass(CLASS_TYPE_CLERIC) || GetLevelByClass(CLASS_TYPE_DRUID))
+        SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+        
+    if (GetLevelByClass(CLASS_TYPE_PALADIN))
+    {
+        if(GetLocalInt(oSkin, "PRC_trueWIS") > 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 4)
+            SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+        
+        else if (GetLocalInt(oSkin, "PRC_trueWIS") == 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 6)
+            SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+    }
+    
+    if (GetLevelByClass(CLASS_TYPE_RANGER))
+        {
+            if(GetLocalInt(oSkin, "PRC_trueWIS") > 11 && GetLevelByClass(CLASS_TYPE_RANGER) >= 4)
+                SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+            
+            else if (GetLocalInt(oSkin, "PRC_trueWIS") == 11 && GetLevelByClass(CLASS_TYPE_RANGER) >= 6)
+                SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+    }        
+
+}
+
 void RedWizard(object oPC)
 {
 
@@ -767,6 +799,7 @@ void main2()
      Kord(oPC);
      BloodArcher(oPC);
      Maester(oPC);
+     CombatMedic(oPC);
      Alaghar(oPC);
      RangerURangerMutex(oPC);
      DragonDis(oPC);

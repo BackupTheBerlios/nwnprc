@@ -188,7 +188,7 @@ void main()
     
     if (GetIsObjectValid(GetLocalObject(oSpellOrigin, "FatedPartner")))
     {
-    	DelayCommand(0.01, FateLink(oSpellOrigin));
+        DelayCommand(0.01, FateLink(oSpellOrigin));
     }
 
     if(GetLocalInt(oItem, "DissolvingWeaponDamage"))
@@ -243,6 +243,8 @@ void main()
         if(GetBaseItemType(oItem) != BASE_ITEM_ARROW) 
             SetLocalInt(oPC,"spellswd_aoe",1);
             
+        SetLocalInt(oPC, "AttackHasHit", TRUE);    
+            
         int nSpellMetamagic1 = GetLocalInt(oItem,"metamagic_feat_1");
         int nSpellMetamagic2 = GetLocalInt(oItem,"metamagic_feat_2");
         int nSpellMetamagic3 = GetLocalInt(oItem,"metamagic_feat_3");
@@ -285,6 +287,7 @@ void main()
         
         DeleteLocalInt(oPC,"spellswd_aoe");
         DeleteLocalInt(oPC,"spell_metamagic");
+        DeleteLocalInt(oPC, "AttackHasHit"); 
     }
 
     // Handle Rend. Creature weapon damage + 1.5x STR bonus.

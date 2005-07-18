@@ -23,7 +23,7 @@ void main()
     int nOcSv = 10 + (nOcLvl/2) + nChaMod;
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = GetLevelByTypeDivine();
-    int bHit = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    int bHit = PRCDoRangedTouchAttack(oTarget);;
 
     if(bHit) {
         if (MyResistSpell(OBJECT_SELF,oTarget) <1)

@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MASS_HEAL));
             //Make a touch attack
-            nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+            nTouch = PRCDoRangedTouchAttack(oTarget);;
             if (nTouch > 0)
             {
                 if(!GetIsReactionTypeFriendly(oTarget))

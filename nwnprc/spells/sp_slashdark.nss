@@ -30,7 +30,7 @@ void main()
           {
                // Make the touch attack and roll damage if it hits.
                int nDamage = 0;
-               int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+               int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
                if (nTouchAttack > 0)
                     nDamage = SPGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? nDice : (nDice * 2), 8);
 

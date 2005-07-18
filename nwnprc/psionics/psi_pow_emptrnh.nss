@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     // Cant exceed the max
     if (nDamage > nCap) nDamage = nCap;
 
-        int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+        int nTouch = PRCDoMeleeTouchAttack(oTarget);;
         if (nTouch > 0)
         {
         //Check for Power Resistance

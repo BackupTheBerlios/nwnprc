@@ -13,7 +13,7 @@ int ooze_ranged_damage(effect eDamage, int splash_type)
         //Make a touch attack to afflict target
 
        // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
-        if (GetAttackRoll(target, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL))
+        if (PRCDoRangedTouchAttack(target))
         {
             effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
 

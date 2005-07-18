@@ -19,7 +19,7 @@ void main()
     object oTarget = GetSpellTargetObject();
 
     // Gotta hit first
-    if(GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL)<1)
+    if(PRCDoMeleeTouchAttack(oTarget)<1)
         return;
 
     // Gotta be a living critter

@@ -26,7 +26,7 @@ void DoPnPAttack(object oSummon)
     if(GetIsObjectValid(oTarget)
         && GetDistanceBetween(oTarget, oSummon) < 5.0)
     {
-        int nAttackResult = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+        int nAttackResult = PRCDoMeleeTouchAttack(oTarget);;
         if(nAttackResult)
         {
             //hit or critical hit

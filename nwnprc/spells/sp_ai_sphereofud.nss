@@ -11,7 +11,7 @@ void DoDisintegrate(object oCaster, object oTarget, int nSpellSaveDC)
     if (!SPResistSpell(oCaster, oTarget))
     {
         // Make the touch attack.               
-        int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+        int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);;
         if (nTouchAttack > 0)
         {
             // Generate the RTA beam.   

@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     object oTarget = GetSpellTargetObject();
     int nDamage, nHeal;
     int nMetaMagic = PRCGetMetaMagicFeat();
-    int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+    int nTouch = PRCDoMeleeTouchAttack(oTarget);;
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     effect eVis = EffectVisualEffect(246);
     effect eVis2 = EffectVisualEffect(VFX_IMP_HEALING_G);

@@ -1,6 +1,23 @@
+int PRCDoRangedTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF);
+int PRCDoMeleeTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF);
 
 #include "prc_inc_sneak"
 #include "prc_inc_switch"
+#include "prc_inc_combat"
+
+int PRCDoRangedTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF)
+{
+    if(GetLocalInt(oCaster, "AttackHasHit"))
+        return GetLocalInt(oCaster, "AttackHasHit");
+    return GetAttackRoll(oTarget, oCaster, OBJECT_INVALID, 0, 0,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+}
+
+int PRCDoMeleeTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF)
+{
+    if(GetLocalInt(oCaster, "AttackHasHit"))
+        return GetLocalInt(oCaster, "AttackHasHit");
+    return GetAttackRoll(oTarget, oCaster, OBJECT_INVALID, 0, 0,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+}
 
 // return sneak attack damage for a spell
 // requires caster, target, and spell damage type

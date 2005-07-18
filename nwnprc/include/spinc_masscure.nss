@@ -145,7 +145,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
     {
         // COMMENT OUT BIOWARE CODE
         int nTouch = 1;
-        //int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+        //int nTouch = PRCDoMeleeTouchAttack(oTarget);;
         if (nTouch > 0)
         {
             if(!GetIsReactionTypeFriendly(oTarget))

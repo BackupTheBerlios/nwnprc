@@ -7,8 +7,8 @@
 //it will use a local string on the module named NWN_DIR if set
 
 
-const string DB_NAME = "PRCNWNXLeto";
-const string DB_GATEWAY_VAR = "PRCNWNXLeto";
+const string DB_NAME = "prcnwnxleto";
+const string DB_GATEWAY_VAR = "prcnwnxleto";
 
 //set this to true if using build 18 or earlier of letoscript.dll
 //again this is a PRC switch

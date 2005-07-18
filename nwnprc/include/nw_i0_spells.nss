@@ -92,6 +92,7 @@ void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1);
 #include "prc_inc_function"
 #include "inc_dispel"
 #include "prc_inc_combat"
+#include "prc_inc_sp_tch"
 
 
 // * Returns true if Target is a humanoid
@@ -198,7 +199,7 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
     //Check that the target is undead
     else
     {
-        int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+        int nTouch = PRCDoMeleeTouchAttack(oTarget);;
         if (nTouch > 0)
         {
             if(!GetIsReactionTypeFriendly(oTarget))

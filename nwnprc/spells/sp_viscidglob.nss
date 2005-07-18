@@ -21,7 +21,7 @@ void main()
         if (!SPResistSpell(OBJECT_SELF, oTarget,CasterLvl+SPGetPenetr()))
         {
             // Make touch attack, saving result for possible critical
-            int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+            int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
             if (nTouchAttack > 0)
             {
                 // Impact vfx.

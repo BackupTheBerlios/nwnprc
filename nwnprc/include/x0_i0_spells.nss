@@ -250,7 +250,7 @@ void DoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit
         happening away from where the grenade hits.
         We could convert everything to splash...
         */
-            nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+            nTouch = PRCDoRangedTouchAttack(oTarget);;
 
     }
     else
@@ -566,7 +566,7 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
-    int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+    int nTouch = PRCDoMeleeTouchAttack(oTarget);;
 
     int CasterLvl;
     if ( ModCasterlevel == 0)

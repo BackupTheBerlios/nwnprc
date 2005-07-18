@@ -78,7 +78,7 @@ void main()
      {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS));
         //Make a ranged touch attack
-        nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+        nTouch = PRCDoMeleeTouchAttack(oTarget);;
 
         //----------------------------------------------------------------------
         // GZ: The PhB classifies Lay on Hands as spell like ability, so it is
@@ -114,7 +114,7 @@ if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD || GetAlignmentGoodEvil(
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS));
         //Make a ranged touch attack
-        nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+        nTouch = PRCDoMeleeTouchAttack(oTarget);;
 
         //----------------------------------------------------------------------
         // GZ: The PhB classifies Lay on Hands as spell like ability, so it is

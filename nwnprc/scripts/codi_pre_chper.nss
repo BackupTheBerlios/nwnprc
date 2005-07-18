@@ -48,7 +48,7 @@ void main() {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_OA_CHPERRAY, TRUE));
         //Make SR Check
-        int bHit = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+        int bHit = PRCDoRangedTouchAttack(oTarget);;
         if(bHit) {
             if (!MyResistSpell(OBJECT_SELF, oTarget))
             {

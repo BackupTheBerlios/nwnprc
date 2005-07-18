@@ -77,7 +77,7 @@ void main(){
         // First, check if it's a valid one.
         if(GetIsObjectValid(oTarget) == TRUE)
         {
-            int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+            int nTouch = PRCDoRangedTouchAttack(oTarget);;
             
             if (nTouch > 0)
             {

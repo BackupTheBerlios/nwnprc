@@ -63,7 +63,7 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
             SignalEvent(oTarget, EventSpellCastAt(oCaster, SPELL_PESTILENCE));
             
             //Make touch attack
-            if(GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL))
+            if(PRCDoMeleeTouchAttack(oTarget))
             {
                 //Make sure the target is a living one
                 if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)

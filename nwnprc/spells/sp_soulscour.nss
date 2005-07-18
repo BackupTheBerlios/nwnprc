@@ -37,7 +37,7 @@ void main()
           SPRaiseSpellCastAt(oTarget);
 
           // Make touch attack, saving result for possible critical
-          int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+          int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);;
           if (nTouchAttack > 0)
           {
                if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))

@@ -50,7 +50,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     
     iNegDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
     
-    int iAttackRoll = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+    int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);;
     if (iAttackRoll > 0)
     {
         if (!GetIsReactionTypeFriendly(oTarget))

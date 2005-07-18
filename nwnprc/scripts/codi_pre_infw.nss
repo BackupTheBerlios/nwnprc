@@ -29,7 +29,7 @@ void main()
     object oTarget = GetSpellTargetObject();
     int nRacial = MyPRCGetRacialType(oTarget);
 
-    int bHit = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    int bHit = PRCDoRangedTouchAttack(oTarget);;
 
     //if(!GetIsReactionTypeFriendly(oTarget) || nRacial == RACIAL_TYPE_UNDEAD)
     //{

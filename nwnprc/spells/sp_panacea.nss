@@ -73,7 +73,7 @@ void main()
         
         if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
-            int nTouch = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+            int nTouch = PRCDoMeleeTouchAttack(oTarget);;
             if (nTouch > 0)
             {
                 // Roll the damage (allowing for a critical) and let the target make a will save to

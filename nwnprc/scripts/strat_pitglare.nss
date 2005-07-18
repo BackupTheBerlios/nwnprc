@@ -31,7 +31,7 @@ void main()
     effect eRay;
 
 
-    int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
     if (nTouchAttack > 0)
     {
 

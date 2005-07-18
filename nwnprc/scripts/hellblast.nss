@@ -12,7 +12,7 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
     effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
    //Main Spell Body
-   int iHit = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+   int iHit = PRCDoMeleeTouchAttack(oTarget);;
    if (iHit > 0)
    {
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);

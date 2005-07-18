@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ELECTRIC_JOLT));
 
-        int iAttackRoll = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+        int iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
         if(iAttackRoll > 0)
         {
              //Make SR Check
@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             
                  // perform attack roll for ray and deal proper damage
                  int nDamage =  PRCMaximizeOrEmpower(3, 1, PRCGetMetaMagicFeat());
-                 int iAttackRoll = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+                 int iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
                  ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL));
                  PRCBonusDamage(oTarget);
              }

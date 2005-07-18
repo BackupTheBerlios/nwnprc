@@ -28,7 +28,7 @@ void main()
 
     //Link effects
 
-    if(GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_MELEE_SPELL))
+    if(PRCDoMeleeTouchAttack(oTarget))
     {
         //Saving Throw
 

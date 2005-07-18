@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
     
     // Perform the Touch Attach
-    int nTouchAttack = GetAttackRoll(oTarget, OBJECT_SELF, OBJECT_INVALID, 0, 0,0,TRUE, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
     if (nTouchAttack > 0)
     {
         //Check for Power Resistance

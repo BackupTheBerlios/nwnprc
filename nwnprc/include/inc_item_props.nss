@@ -111,6 +111,11 @@ int GetACBonus(object oItem);
 int GetBaseAC(object oItem);
 
 /**
+ * Gets the itemproperty number of a specific SR value
+ */
+int GetSRByValue(int nValue);
+
+/**
  * Returns the opposite element from iElem or -1 if iElem is not valid
  * Can be useful for determining elemental strengths and weaknesses
  *
@@ -1209,4 +1214,79 @@ void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType =
     DelayCommand(0.1, AssignCommand(oCastingObject, ActionCastSpellAtObject(iSpl, oPC, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE)));
 
     DestroyObject(oCastingObject, 6.0);
+}
+
+int GetSRByValue(int nValue)
+{
+    switch(nValue)
+    {
+        case  1: return 52;
+        case  2: return 53;
+        case  3: return 54;
+        case  4: return 55;
+        case  5: return 56;
+        case  6: return 57;
+        case  7: return 58;
+        case  8: return 59;
+        case  9: return 60;
+        case 10: return  0;
+        case 12: return  1;
+        case 14: return  2;
+        case 16: return  3;
+        case 18: return  4;
+        case 20: return  5;
+        case 22: return  6;
+        case 24: return  7;
+        case 26: return  8;
+        case 28: return  9;
+        case 30: return 10;
+        case 32: return 11;
+        case 34: return 12;
+        case 36: return 13;
+        case 38: return 14;
+        case 40: return 15;
+        case 42: return 16;
+        case 44: return 17;
+        case 46: return 18;
+        case 48: return 19;
+        case 50: return 20;
+        case 52: return 21;
+        case 54: return 22;
+        case 56: return 23;
+        case 58: return 24;
+        case 60: return 25;
+        case 11: return 26;
+        case 13: return 27;
+        case 15: return 28;
+        case 17: return 29;
+        case 19: return 30;
+        case 21: return 31;
+        case 23: return 32;
+        case 25: return 33;
+        case 27: return 34;
+        case 29: return 35;
+        case 31: return 36;
+        case 33: return 37;
+        case 35: return 38;
+        case 37: return 39;
+        case 39: return 40;
+        case 41: return 41;
+        case 43: return 42;
+        case 45: return 43;
+        case 47: return 44;
+        case 49: return 45;
+        case 51: return 46;
+        case 53: return 47;
+        case 55: return 48;
+        case 57: return 49;
+        case 59: return 50;
+        case 61: return 51;
+    }
+    if(nValue < 1)
+        return -1;
+    if(nValue > 98)
+        return 61;//99 max
+    if(nValue > 61)
+        return 51;//61 flat cap
+    return -1;      
 }

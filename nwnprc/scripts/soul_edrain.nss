@@ -2,12 +2,18 @@
 #include "inc_soul_shift"
 #include "prc_inc_combat"
 
+void DeathDelay(object oTarget, string sTarget, string sName);
+
 void DoEnergyDrain(object oTarget,int nDamage)
 {
 	if (GetIsImmune(oTarget, IMMUNITY_TYPE_NEGATIVE_LEVEL))
 	{
 		SendMessageToPC(OBJECT_SELF, "Cannot drain " + GetName(oTarget) +" is immune.");
 	}
+	else if (GetIsDead(oTarget))
+	{
+		SendMessageToPC(OBJECT_SELF, "Cannot drain: " + GetName(oTarget) +" is dead.");
+	}	
 	else
 	{
 		int nLevelMod = GetLocalInt(oTarget, "TargetLevel");
@@ -62,7 +68,9 @@ void DoEnergyDrain(object oTarget,int nDamage)
         		EffectSkillIncrease(SKILL_ALL_SKILLS, 2), OBJECT_SELF,
         		HoursToSeconds(24));
 	        }
-
+	        string sTarget = GetResRef(oTarget);
+		string sName = GetName(oTarget);
+	        DelayCommand(0.5, DeathDelay(oTarget, sTarget, sName));
 	}
 }
 
@@ -166,5 +174,4 @@ void main()
 
 
 	DoEnergyDrain(oTarget, nDamage);  
-    	DelayCommand(0.5, DeathDelay(oTarget, sTarget, sName));
 }

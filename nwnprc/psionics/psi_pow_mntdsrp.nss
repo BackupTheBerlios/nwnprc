@@ -11,7 +11,7 @@
    Power Level: 2
    Range: 10 ft
    Area: 10 ft radius centered on caster
-   Duration: 1 Min/level
+   Duration: 1 Round
    Saving Throw: Will negates
    Power Resistance: Yes
    Power Point Cost: 3
@@ -66,8 +66,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
 	float fWidth = DoWiden(RADIUS_SIZE_LARGE, nMetaPsi);
-	float fDur = 60.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;
+	int nDur = 1;
+	if (nMetaPsi == 2)	nDur *= 2;
 
 	if (nSurge > 0) nAugment += nSurge;
 	
@@ -100,7 +100,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
 		                {
 		                        //Apply VFX Impact and daze effect
-		                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+		                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
 		               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 		                }
 			}

@@ -90,22 +90,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	
  	if(nSize <= nAllowedSize)
     	{
-		
-		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-			
-		    //Fire cast spell at event for the specified target
-	            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	            
-	                //Make a saving throw check
-	                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-	                {
-	                        //Apply VFX Impact and daze effect
-	                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-                		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	                }
-		}
+	    //Fire cast spell at event for the specified target
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+            //Apply VFX Impact and daze effect
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
+	    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 	}
     }
 }

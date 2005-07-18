@@ -60,12 +60,13 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	int nBonus = 2;
     	float fDur = 60.0 * nCaster;
 	if (nMetaPsi == 2)	fDur *= 2;
-
+	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oCaster);
+	int nType = GetWeaponDamageType(oWeap);
 
     	// Augmentation effects to armour class
 	if (nAugment > 0)	nBonus += nAugment;
 	
-    	effect eDamage = EffectDamageIncrease(nBonus, DAMAGE_TYPE_MAGICAL);
+    	effect eDamage = EffectDamageIncrease(nBonus, DAMAGE_TYPE_BASE_WEAPON);
    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     	effect eLink = EffectLinkEffects(eDamage, eDur);
 

@@ -134,8 +134,9 @@ void EvalPRCFeats(object oPC)
     if(iThrallOfGrazzt > 0)                                      ExecuteScript("tog", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)           ExecuteScript("prc_blightlord", oPC);
     if(GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN,oPC) > 0)       ExecuteScript("psi_zuoken", oPC);
-    if(GetLevelByClass(CLASS_TYPE_OLLAM,oPC) > 0)       	 ExecuteScript("prc_ollam", oPC);
-    if(GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC) > 0)       	 ExecuteScript("prc_cbtmed", oPC);
+    if(GetLevelByClass(CLASS_TYPE_OLLAM,oPC) > 0)            ExecuteScript("prc_ollam", oPC);
+    if(GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC) > 0)            ExecuteScript("prc_cbtmed", oPC);
+    if(GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_dradis", oPC));
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
@@ -166,6 +167,9 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_RAPID_METABOLISM, oPC))                   ExecuteScript("prc_rapid_metab", oPC);
     if(GetHasFeat(FEAT_PSIONIC_HOLE, oPC))                       ExecuteScript("psi_psionic_hole", oPC);
     if(GetHasFeat(FEAT_POWER_ATTACK, oPC))                       ExecuteScript("prc_powatk_eval", oPC);
+    if(GetHasFeat(FAST_HEALING_1, oPC) >0)                       ExecuteScript("prc_fastheal", oPC);
+    if(GetHasFeat(FAST_HEALING_2, oPC) >0)                       ExecuteScript("prc_fastheal", oPC);
+    if(GetHasFeat(FAST_HEALING_3, oPC) >0)                       ExecuteScript("prc_fastheal", oPC);
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
         && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC)
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))

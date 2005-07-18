@@ -140,7 +140,7 @@ void Kord(object oPC)
 
      if (GetFortitudeSavingThrow(oPC) >= 6)
      {
-     	SetLocalInt(oPC, "PRC_PrereqKord", 0);
+        SetLocalInt(oPC, "PRC_PrereqKord", 0);
      }
 }
 
@@ -473,16 +473,16 @@ void Maester(object oPC)
 
     int iFeat;
 
-    iFeat = 	  GetHasFeat(FEAT_BREW_POTION, oPC) 
-    		+ GetHasFeat(FEAT_CRAFT_WAND, oPC) 
-    		+ GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)
-    		+ GetHasFeat(FEAT_CRAFT_WONDROUS, oPC)
-    		+ GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC)
-    		+ GetHasFeat(FEAT_CRAFT_ROD, oPC)
-    		+ GetHasFeat(FEAT_CRAFT_STAFF, oPC)
-    		+ GetHasFeat(FEAT_FORGE_RING, oPC)
-    		+ GetHasFeat(FEAT_CRAFT_CONSTRUCT, oPC);
-    		
+    iFeat =       GetHasFeat(FEAT_BREW_POTION, oPC) 
+            + GetHasFeat(FEAT_CRAFT_WAND, oPC) 
+            + GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)
+            + GetHasFeat(FEAT_CRAFT_WONDROUS, oPC)
+            + GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC)
+            + GetHasFeat(FEAT_CRAFT_ROD, oPC)
+            + GetHasFeat(FEAT_CRAFT_STAFF, oPC)
+            + GetHasFeat(FEAT_FORGE_RING, oPC)
+            + GetHasFeat(FEAT_CRAFT_CONSTRUCT, oPC);
+            
     int nSkill = FALSE;
     
     // No Int bonus to skills, just want the base ranks (and yes I know this allows items at the moment)
@@ -595,6 +595,20 @@ void RangerURangerMutex(object oPC)
     {
         SetLocalInt(oPC, ALLOW_CLASS_RANGER, 1);
     }
+}
+
+void DragonDis(object oPC)
+{
+     int dBlud = GetLevelByClass(CLASS_TYPE_BARD, oPC) +
+                 GetLevelByClass(CLASS_TYPE_SORCERER, oPC) +
+                 GetHasFeat(DRAGON_BLOODED,oPC);
+
+     SetLocalInt(oPC, "PRC_DraAllow", 0);
+
+     if ( dBlud >= 1)
+     {
+        SetLocalInt(oPC, "PRC_DraAllow", 1);
+     }
 }
 
 // YES, that is main2()... it's the second (delayed) phase of main.
@@ -713,8 +727,8 @@ void main2()
             /*
             for(i=1;i<=9;i++)
             {
-            	int nSlots = GetPowerPrereq(nLevel, i, nAbility, nClass);
-            	FloatingTextStringOnCreature("nSlots: " + IntToString(nSlots), oPC, FALSE);
+                int nSlots = GetPowerPrereq(nLevel, i, nAbility, nClass);
+                FloatingTextStringOnCreature("nSlots: " + IntToString(nSlots), oPC, FALSE);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_PsiPower"+IntToString(i), 0);
@@ -755,6 +769,7 @@ void main2()
      Maester(oPC);
      Alaghar(oPC);
      RangerURangerMutex(oPC);
+     DragonDis(oPC);
      // Truly massive debug message flood if activated.
      /*
      SendMessageToPC(oPC, "Your true Strength: " + IntToString(GetLocalInt(oHide, "PRC_trueSTR")));

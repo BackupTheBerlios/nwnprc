@@ -674,6 +674,69 @@ int PWSwitchRestructions(object oPC = OBJECT_SELF)
     return nReturn;
 }
 
+int DraDisFeats(object oPC = OBJECT_SELF)
+{
+
+     int bLd = (GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE, oPC));
+
+     int iBld = 0;
+     int dBlood = 0;
+
+     if (bLd > 1)
+     {
+
+        iBld +=   GetHasFeat(FEAT_RED_DRAGON, oPC) +
+            GetHasFeat(FEAT_SILVER_DRAGON, oPC) +
+            GetHasFeat(FEAT_BLACK_DRAGON, oPC) +
+            GetHasFeat(FEAT_BLUE_DRAGON, oPC) +
+            GetHasFeat(FEAT_GREEN_DRAGON, oPC) +
+            GetHasFeat(FEAT_WHITE_DRAGON, oPC) +
+            GetHasFeat(FEAT_BRASS_DRAGON, oPC) +
+            GetHasFeat(FEAT_BRONZE_DRAGON, oPC) +
+            GetHasFeat(FEAT_COPPER_DRAGON, oPC) +
+            GetHasFeat(FEAT_GOLD_DRAGON, oPC) +
+            GetHasFeat(FEAT_AMETHYST_DRAGON, oPC) +
+            GetHasFeat(FEAT_CRYSTAL_DRAGON, oPC) +
+            GetHasFeat(FEAT_EMERALD_DRAGON, oPC) +
+            GetHasFeat(FEAT_SAPPHIRE_DRAGON, oPC) +
+            GetHasFeat(FEAT_TOPAZ_DRAGON, oPC) +
+            GetHasFeat(FEAT_BATTLE_DRAGON, oPC) +
+            GetHasFeat(FEAT_BROWN_DRAGON, oPC) +
+            GetHasFeat(FEAT_CHAOS_DRAGON, oPC) +
+            GetHasFeat(FEAT_DEEP_DRAGON, oPC) +
+            GetHasFeat(FEAT_ETHEREAL_DRAGON, oPC) +
+            GetHasFeat(FEAT_FANG_DRAGON, oPC) +
+            GetHasFeat(FEAT_HOWLING_DRAGON, oPC) +
+            GetHasFeat(FEAT_OCEANUS_DRAGON, oPC) +
+            GetHasFeat(FEAT_PYROCLASTIC_DRAGON, oPC) +
+            GetHasFeat(FEAT_RADIANT_DRAGON, oPC) +
+            GetHasFeat(FEAT_RUST_DRAGON, oPC) +
+            GetHasFeat(FEAT_SHADOW_DRAGON, oPC) +
+            GetHasFeat(FEAT_SONG_DRAGON, oPC) +
+            GetHasFeat(FEAT_STYX_DRAGON, oPC) +
+            GetHasFeat(FEAT_TARTIAN_DRAGON, oPC) +
+            GetHasFeat(FEAT_CHIANG_LUNG_DRAGON, oPC) +
+            GetHasFeat(FEAT_LI_LUNG_DRAGON, oPC) +
+            GetHasFeat(FEAT_LUNG_WANG_DRAGON, oPC) +
+            GetHasFeat(FEAT_PAN_LUNG_DRAGON, oPC) +
+            GetHasFeat(FEAT_SHEN_LUNG_DRAGON, oPC) +
+            GetHasFeat(FEAT_TIEN_LUNG_DRAGON, oPC) +
+            GetHasFeat(FEAT_TUN_MI_LUNG_DRAGON, oPC) +
+            GetHasFeat(FEAT_YU_LUNG_DRAGON, oPC);
+
+        /*
+        FloatingTextStringOnCreature("Dragon Disciple Level: " + IntToString(bLd), oPC, FALSE);
+        FloatingTextStringOnCreature("Draconic Blood: " + IntToString(iBld), oPC, FALSE);
+        */
+        if (iBld >1)
+        {
+            FloatingTextStringOnCreature("You cannot select more than one Draconic Heritage.", oPC, FALSE);
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
 void main()
 {
         //Declare Major Variables
@@ -693,6 +756,7 @@ void main()
          || !LingeringDamage(oPC) 
          || !ManAtArmsFeats(oPC) 
          || !PWSwitchRestructions(oPC)
+         || !DraDisFeats(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

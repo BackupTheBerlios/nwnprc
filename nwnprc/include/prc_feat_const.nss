@@ -1385,6 +1385,62 @@ const int FEAT_CRAFT_CONSTRUCT           = 2920;
 // Exalted Companion
 const int FEAT_EXALTED_COMPANION         = 4199;
 
+// Dragon Disciple
+const int FEAT_RED_DRAGON                        = 4100;
+const int FEAT_SILVER_DRAGON                     = 4101;
+const int FEAT_BLACK_DRAGON                      = 4102;
+const int FEAT_BLUE_DRAGON                       = 4103;
+const int FEAT_GREEN_DRAGON                      = 4104;
+const int FEAT_WHITE_DRAGON                      = 4105;
+const int FEAT_BRASS_DRAGON                      = 4106;
+const int FEAT_BRONZE_DRAGON                     = 4107;
+const int FEAT_COPPER_DRAGON                     = 4108;
+const int FEAT_GOLD_DRAGON                       = 4109;
+const int FEAT_AMETHYST_DRAGON                   = 4110;
+const int FEAT_CRYSTAL_DRAGON                    = 4111;
+const int FEAT_EMERALD_DRAGON                    = 4112;
+const int FEAT_SAPPHIRE_DRAGON                   = 4113;
+const int FEAT_TOPAZ_DRAGON                      = 4114;
+const int FEAT_BATTLE_DRAGON                     = 4115;
+const int FEAT_BROWN_DRAGON                      = 4116;
+const int FEAT_CHAOS_DRAGON                      = 4117;
+const int FEAT_DEEP_DRAGON                       = 4118;
+const int FEAT_ETHEREAL_DRAGON                   = 4119;
+const int FEAT_FANG_DRAGON                       = 4120;
+const int FEAT_HOWLING_DRAGON                    = 4121;
+const int FEAT_OCEANUS_DRAGON                    = 4122;
+const int FEAT_PYROCLASTIC_DRAGON                = 4123;
+const int FEAT_RADIANT_DRAGON                    = 4124;
+const int FEAT_RUST_DRAGON                       = 4125;
+const int FEAT_SHADOW_DRAGON                     = 4126;
+const int FEAT_SONG_DRAGON                       = 4127;
+const int FEAT_STYX_DRAGON                       = 4128;
+const int FEAT_TARTIAN_DRAGON                    = 4129;
+const int FEAT_DRACONIC_IMMUNITY                 = 4130;
+const int FEAT_CHIANG_LUNG_DRAGON                = 4131;
+const int FEAT_LI_LUNG_DRAGON                    = 4132;
+const int FEAT_LUNG_WANG_DRAGON                  = 4133;
+const int FEAT_PAN_LUNG_DRAGON                   = 4134;
+const int FEAT_SHEN_LUNG_DRAGON                  = 4135;
+const int FEAT_TIEN_LUNG_DRAGON                  = 4136;
+const int FEAT_TUN_MI_LUNG_DRAGON                = 4137;
+const int FEAT_YU_LUNG_DRAGON                    = 4138; 
+const int FEAT_DRAGON_DIS_BREATH_2               = 4139;
+const int FEAT_DRAGON_DIS_BREATH_3               = 4140;
+const int FEAT_DRAGON_DIS_BREATH_4               = 4141;
+const int FEAT_DRAGON_DIS_BREATH_5               = 4142;
+const int FEAT_DRAGON_DIS_BREATH_6               = 4143;
+const int FEAT_DRAGON_DIS_BREATH_7               = 4144;
+const int DRACONIC_ARMOR_AUG_1                   = 4148;
+const int DRACONIC_SPELLRESIST                   = 4149;
+const int DRACONIC_ARMOR_AUG_2                   = 4150;
+const int DRAGON_BLOODED                         = 4151;
+
+// Fast Healing
+const int FAST_HEALING_1                         = 4145;
+const int FAST_HEALING_2                         = 4146;
+const int FAST_HEALING_3                         = 4147;
+
 // Size changes
 const int FEAT_SIZE_DECREASE_1          = 2287;
 const int FEAT_SIZE_DECREASE_2          = 2288;
@@ -1507,6 +1563,7 @@ const int FEAT_WILDER_VOLATILE_MIND_1               = 3571;
 const int FEAT_WILDER_VOLATILE_MIND_2               = 3572;
 const int FEAT_WILDER_VOLATILE_MIND_3               = 3573;
 const int FEAT_WILDER_VOLATILE_MIND_4               = 3574;
+const int FEAT_WILDER_ELUDE_TOUCH                   = 3567;
 
 // Soulknife
 const int FEAT_MINDBLADE                            = 3600;

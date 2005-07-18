@@ -1587,7 +1587,8 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
           iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_BOOTS, oDefender) );
           
           // remove bonus AC from having tumble skill.
-          int iTumble = GetSkillRank(SKILL_TUMBLE, oDefender);
+          // this is only for ranks, not items/feats/etc
+          int iTumble = GetSkill(oDefender, SKILL_TUMBLE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
           iTumble -= iDexMod;
           iTumble /= 5;
           iAC -= iTumble;
@@ -1658,6 +1659,10 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
           // remove shield bonus - only if it has not been removed already
           if(!bIsHelpless && !bIsStunned)
                iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oDefender) );
+               
+          //wilders get to add cha bonus to touch attacks only
+          if(GetHasFeat(FEAT_WILDER_ELUDE_TOUCH, oDefender))
+            iAC += GetAbilityModifier(ABILITY_CHARISMA, oDefender);
      }
    
      return iAC;
@@ -1676,7 +1681,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      int iCha = GetAbilityModifier(ABILITY_CHARISMA, oAttacker);
      int iWis = GetAbilityModifier(ABILITY_WISDOM, oAttacker);
      
-     int bIsRangedWeapon = GetWeaponRanged(oWeap) || iTouchAttackType == TOUCH_ATTACK_RANGED;
+     int bIsRangedWeapon = GetWeaponRanged(oWeap) || iTouchAttackType == TOUCH_ATTACK_RANGED || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL;
      
      int bFinesse = GetHasFeat(FEAT_WEAPON_FINESSE, oAttacker);
      int bKatanaFinesse = GetHasFeat(FEAT_KATANA_FINESSE, oAttacker);
@@ -1718,6 +1723,13 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      {
           if(iWis > bTempBonus) bTempBonus = iWis;     
      }
+     
+     //touch attacks use dex, not str
+     if(iTouchAttackType == TOUCH_ATTACK_RANGED
+        || iTouchAttackType == TOUCH_ATTACK_MELEE
+        || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL
+        || iTouchAttackType == TOUCH_ATTACK_MELEE_SPELL)
+        if(iDex > bTempBonus) bTempBonus = iDex;
      
      iAttackBonus += bTempBonus;
      

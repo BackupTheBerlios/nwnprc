@@ -131,6 +131,10 @@ int SpellStrikeDamage(object oTarget, object oCaster);
 //  Adds the bonus damage from both Spell Betrayal and Spellstrike together
 int ApplySpellBetrayalStrikeDamage(object oTarget, object oCaster, int bShowTextString = TRUE);
 
+// Added by GaiaWerewolf
+// Checks if a spell is a healing spell
+int GetIsHealingSpell(int nSpellId);
+
 
 // -----------------
 // BEGIN SPELLSWORD
@@ -1474,3 +1478,67 @@ effect ChannelingVisual()
 }
 
 ////////////////End Spellsword//////////////////
+
+/* Healing spell filter
+ *
+ * This function will take a spell ID, run it through a list of existing healing spells
+ * and return TRUE if the spell ID corresponded to one of them. This is needed for at least
+ * the Healing Kicker ability of the Combat Medic, which adds an extra effect to the next
+ * healing spell cast.
+ *
+ * The list of spells is by no means authoritative - it's not 100% clear whether some spells
+ * make the cut or not (see Nature's balance, for instance) and the list may expand in the
+ * future. Revise and add on as necessary.
+ *
+ * Author: GaiaWerewolf
+ * Date: 18 July 2005
+ */
+int GetIsHealingSpell(int nSpellId)
+{
+    if (  nSpellId == SPELL_CURE_CRITICAL_WOUNDS
+       || nSpellId == SPELL_CURE_LIGHT_WOUNDS
+       || nSpellId == SPELL_CURE_MINOR_WOUNDS
+       || nSpellId == SPELL_CURE_MODERATE_WOUNDS
+       || nSpellId == SPELL_CURE_SERIOUS_WOUNDS
+       || nSpellId == SPELL_GREATER_RESTORATION
+       || nSpellId == SPELL_HEAL
+       || nSpellId == SPELL_HEALING_CIRCLE
+       || nSpellId == SPELL_MASS_HEAL
+       || nSpellId == SPELL_MONSTROUS_REGENERATION
+       || nSpellId == SPELL_REGENERATE
+       //End of stock NWN spells
+       || nSpellId == SPELL_FOM_DIVINE_SONG_CURELIGHT
+       || nSpellId == SPELL_FOM_DIVINE_SONG_CUREMODERATE
+       || nSpellId == SPELL_FOM_DIVINE_SONG_CURESERIOUS
+       || nSpellId == SPELL_FOM_DIVINE_SONG_CURECRITICAL
+       || nSpellId == SPELL_FOM_DIVINE_SONG_MONSTREGEN
+       || nSpellId == SPELL_CORRUPTER_CURE_LIGHT_WOUNDS
+       || nSpellId == SPELL_CORRUPTER_CURE_MODERATE_WOUNDS
+       || nSpellId == SPELL_CORRUPTER_CURE_SERIOUS_WOUNDS
+       || nSpellId == SPELL_MASS_CURE_LIGHT
+       || nSpellId == SPELL_MASS_CURE_MODERATE
+       || nSpellId == SPELL_MASS_CURE_SERIOUS
+       || nSpellId == SPELL_MASS_CURE_CRITICAL
+       || nSpellId == SPELL_PANACEA
+       //End of PRC spells which have a defined constant
+       //Start of spells from Primogenitor's spellbook system
+       || nSpellId == 13001 || nSpellId == 13002
+       || nSpellId == 13003 || nSpellId == 13004
+       || nSpellId == 13005 || nSpellId == 13030
+       || nSpellId == 13031 || nSpellId == 13032
+       || nSpellId == 13033 || nSpellId == 13045
+       || nSpellId == 13046 || nSpellId == 13047
+       || nSpellId == 13070 || nSpellId == 13125
+       || nSpellId == 13126 || nSpellId == 13127
+       || nSpellId == 13128 || nSpellId == 13129
+       || nSpellId == 13152 || nSpellId == 13153
+       || nSpellId == 13154 || nSpellId == 13155
+       || nSpellId == 13175 || nSpellId == 13176
+       || nSpellId == 13177 || nSpellId == 13189
+       || nSpellId == 13202 || nSpellId == 13203
+       || nSpellId == 13204 || nSpellId == 13205
+       || nSpellId == 13230 )
+        return TRUE;
+
+    return FALSE;
+}

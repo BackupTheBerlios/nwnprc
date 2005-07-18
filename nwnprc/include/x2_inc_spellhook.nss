@@ -30,6 +30,12 @@ const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 int RedWizRestrictedSchool();
 
 
+// This function checks whether the Combat Medic's Healing Kicker
+// feats are active, and if so imbues the spell target with additional
+// beneficial effects.
+void CombatMedicHealingKicker();
+
+
 // Use Magic Device Check.
 // Returns TRUE if the Spell is allowed to be cast, either because the
 // character is allowed to cast it or he has won the required UMD check
@@ -171,6 +177,77 @@ int KOTCHeavenDevotion(object oTarget)
         }
     }    
     return nTest;
+}
+
+void CombatMedicHealingKicker()
+{
+    int nSpellId = PRCGetSpellId();
+    if (!GetIsHealingSpell(nSpellId)) //If the spell that was just cast isn't healing, stop now
+        return;
+
+    object oTarget = GetSpellTargetObject();
+
+    //Three if/elseif statements. They check which of the healing kickers we use.
+    //If no Healing Kicker localints are set, this if block should be ignored.
+    if (GetLocalInt(OBJECT_SELF, "Heal_Kicker1") && oTarget != OBJECT_SELF)
+    {
+        /* Sanctuary effect, with special DC and 1 round duration
+         * Script stuff taken from the spell by the same name
+         */
+        int nDC = 15 + GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, OBJECT_SELF) + GetAbilityModifier(ABILITY_WISDOM, OBJECT_SELF);
+
+        effect eVis = EffectVisualEffect(VFX_DUR_SANCTUARY);
+        effect eSanc = EffectSanctuary(nDC);
+        effect eLink = EffectLinkEffects(eVis, eSanc);
+
+        //Apply the Sanctuary VFX impact and effects
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+
+            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_1);
+            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_2);
+            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_3);
+    }
+    else if (GetLocalInt(OBJECT_SELF, "Heal_Kicker2") && oTarget != OBJECT_SELF)
+    {
+        /* Reflex save increase, 1 round duration
+         */
+        int nRefs = GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, OBJECT_SELF);
+
+        effect eSpeed = EffectVisualEffect(VFX_IMP_HASTE);
+        effect eRefs = EffectSavingThrowIncrease(SAVING_THROW_REFLEX, nRefs);
+
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eSpeed, oTarget);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRefs, oTarget, 6.0);
+
+            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_1);
+            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_2);
+            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_3);
+    }
+    else if (GetLocalInt(OBJECT_SELF, "Heal_Kicker3") && oTarget != OBJECT_SELF)
+    {
+        /* Aid effect, with special HP bonus and 1 minute duration
+         * Script stuff taken from the spell by the same name
+         */
+        int nBonus = 8 + GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, OBJECT_SELF);
+
+        effect eAttack = EffectAttackIncrease(1);
+        effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, 1, SAVING_THROW_TYPE_FEAR);
+        effect eLink = EffectLinkEffects(eAttack, eSave);
+
+        effect eHP = EffectTemporaryHitpoints(nBonus);
+
+        effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
+
+        //Apply the Aid VFX impact and effects
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 60.0);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, 60.0);
+
+            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_1);
+            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_2);
+            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_3);
+    }
+
 }
 
 int X2UseMagicDeviceCheck()
@@ -724,6 +801,10 @@ int X2PreSpellCastCode()
             SetPersistantLocalString(OBJECT_SELF, "persist_spells", sStored+sSpell); 
         }
     }
+    
+    //Combat medic healing kicker
+    if(nContinue && GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC))
+        CombatMedicHealingKicker();
 
     return nContinue;
 }

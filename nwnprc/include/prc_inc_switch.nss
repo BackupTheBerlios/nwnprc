@@ -657,6 +657,19 @@ const string PRC_USES_PER_WEAPON_POISON_COUNT        = "PRC_USES_PER_WEAPON_POIS
  */
 const string PRC_USES_PER_WEAPON_POISON_DIE          = "PRC_USES_PER_WEAPON_POISON_DIE";
 
+/**
+ * This is the name of the script to be run when someone attempts to poison food to
+ * check if the targeted item is food. The default script returns FALSE for everything,
+ * so you must define your own to have this functionality.
+ *
+ * This switch has string values instead of integers.
+ *
+ * Default: poison_is_food
+ * 
+ * @see poison_is_food
+ */
+const string PRC_POISON_IS_FOOD_SCRIPT_NAME          = "PRC_POISON_IS_FOOD_SCRIPT_NAME";
+
 
 
 /******************************************************************************\

@@ -96,9 +96,40 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
 
     eVis = EffectVisualEffect(494);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
+    
+    float fRange = 10.0;//meters not feet!
+    int nSize = PRCGetCreatureSize(OBJECT_SELF);
+    switch(nSize)
+    {
+        case CREATURE_SIZE_FINE:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_DIMINUTIVE:  fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_TINY:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_SMALL:       fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_MEDIUM:      fRange = FeetToMeters(30.0); break;
+        //PnP says 30, but I think this doesnt fit the progression so Ive made it 40
+        //Primogenitor
+        case CREATURE_SIZE_LARGE:       fRange = FeetToMeters(40.0); break; 
+        case CREATURE_SIZE_HUGE:        fRange = FeetToMeters(50.0); break;
+        case CREATURE_SIZE_GARGANTUAN:  fRange = FeetToMeters(60.0); break;
+        case CREATURE_SIZE_COLOSSAL:    fRange = FeetToMeters(70.0); break;
+    }
+    
+    int nBreathShape = SHAPE_SPELLCONE;
+    
+    //these are lines not cones
+    if(GetHasFeat(FEAT_BLACK_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BLUE_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BRASS_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BRONZE_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_COPPER_DRAGON, OBJECT_SELF)
+        )
+    {
+        nBreathShape = SHAPE_SPELLCYLINDER;
+        fRange *= 2.0; //double the range
+    }
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
 
     while(GetIsObjectValid(oTarget))
     {
@@ -110,18 +141,8 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, SAVETH))
-            {
-                nPersonalDamage  = nPersonalDamage/2;
-                if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-                {
-                    nPersonalDamage = 0;
-                }
-            }
-            else if(GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-            {
-                nPersonalDamage = nPersonalDamage/2;
-            }
+            nPersonalDamage = PRCGetReflexAdjustedDamage(nPersonalDamage, oTarget, nSaveDC, SAVETH);
+            
             if (nPersonalDamage > 0)
             {
                 //Set Damage and VFX
@@ -133,7 +154,7 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
     }
 }
 
@@ -239,18 +260,7 @@ void RandomBreath(object oPC ,object oSkin ,int dChaos ,int nSaveDC ,int nLevel 
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, chSaveth))
-            {
-                nPersonalDamage  = nPersonalDamage/2;
-                if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-                {
-                    nPersonalDamage = 0;
-                }
-            }
-            else if(GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-            {
-                nPersonalDamage = nPersonalDamage/2;
-            }
+            nPersonalDamage = PRCGetReflexAdjustedDamage(nPersonalDamage, oTarget, nSaveDC, chSaveth);
             if (nPersonalDamage > 0)
             {
                 //Set Damage and VFX
@@ -323,22 +333,14 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, chSaveth))
-            {
-                nPersonalDamage  = nPersonalDamage/2;
-                if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-                {
-                    nPersonalDamage = 0;
-                }
-            }
-            else if(GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-            {
-                nPersonalDamage = nPersonalDamage/2;
-            }
+            nPersonalDamage = PRCGetReflexAdjustedDamage(nPersonalDamage, oTarget, nSaveDC, chSaveth);
             if (nPersonalDamage > 0)
             {
                 //Set Damage and VFX
-                eBreath = EffectDamage(nPersonalDamage, pyclBreath);
+                //eBreath = EffectDamage(nPersonalDamage, pyclBreath);
+                effect eBreath1 = EffectDamage(nPersonalDamage/2, DAMAGE_TYPE_FIRE);
+                effect eBreath2 = EffectDamage(nPersonalDamage/2, DAMAGE_TYPE_SONIC);
+                eBreath = EffectLinkEffects(eBreath2, eBreath1);
                 eVis = EffectVisualEffect(chVisual);
                 //Apply the VFX impact and effects
                 DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
@@ -407,6 +409,17 @@ void main()
     //Declare main variables. 
     object oPC = OBJECT_SELF; 
     object oSkin = GetPCSkin(oPC); 
+    if(GetLocalInt(oPC, "DragonDiscipleBreathLock"))
+    {
+        SendMessageToPC(oPC, "You cannot use your breath weapon again so soon");
+        IncrementRemainingFeatUses(oPC, FEAT_DRAGON_DIS_BREATH);
+        return;
+    }   
+    SetLocalInt(oPC, "DragonDiscipleBreathLock", TRUE);
+    float fDelay = RoundsToSeconds(d4());
+    //put metabreath delay calculation in here
+    DelayCommand(fDelay, DeleteLocalInt(oPC, "DragonDiscipleBreathLock"));
+    DelayCommand(fDelay, SendMessageToPC(oPC, "Your breath weapon is ready now"));
     
     int cBoost = GetAbilityModifier(ABILITY_CONSTITUTION)>0 ? GetAbilityModifier(ABILITY_CONSTITUTION):0;
     int nSaveDC;

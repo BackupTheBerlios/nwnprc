@@ -64,7 +64,9 @@ void LargeResist(object oPC ,object oSkin ,int bResisEle ,int lResis)
 //Adds Spell Resistance of 20+Level to all Dragon Disciples at level 18.
 void SpellResis(object oPC ,object oSkin ,int nLevel) 
 { 
-
+    int nSR = 20+nLevel;
+    nSR = GetSRByValue(nSR);
+    DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusSpellResistance(nSR),oSkin)); 
 } 
 
 //Adds True Seeing to all Dragon Disciples at level 20.

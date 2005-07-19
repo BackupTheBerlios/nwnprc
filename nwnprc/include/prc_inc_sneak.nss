@@ -117,7 +117,7 @@ int GetRogueSneak(object oPC)
    if(GetBaseItemType(oWeapon) == BASE_ITEM_SLING)
    {
       // Halfling Warslinger
-      //iClassLevel = GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oPC);
+      iClassLevel = GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oPC);
    }
 
    // Infiltrator

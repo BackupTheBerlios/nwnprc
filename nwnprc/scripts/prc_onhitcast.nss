@@ -33,6 +33,8 @@
 
 void SetRancorVar(object oPC);
 void SetPsiEnRetortVar(object oPC);
+void SetImprovedRicochetVar(object oPC);
+void DoImprovedRicochet(object oPC, object oTarget);
 
 void main()
 {
@@ -129,6 +131,23 @@ void main()
             DelayCommand(0.01, ExecuteScript("prc_fb_deathless", OBJECT_SELF) );
         }
     }
+    
+    // Warsling Sniper Improved Ricochet
+    if ((GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oSpellOrigin) == 6) > 0 && GetLocalInt(oSpellOrigin, "CanRicochet") != 2 && GetBaseItemType(oItem) == BASE_ITEM_BULLET)
+    {
+        DoImprovedRicochet(oSpellOrigin, oSpellTarget);
+
+        // Deactivates Ability
+        SetLocalInt(oSpellOrigin, "CanRicochet", 2);
+
+        // Prevents the heartbeat script from running multiple times
+        if(GetLocalInt(oSpellOrigin, "ImpRicochetVarRunning") != 1)
+        {
+            DelayCommand(6.0, SetImprovedRicochetVar(oSpellOrigin) );
+            SetLocalInt(oSpellOrigin, "ImpRicochetVarRunning", 1);
+        }
+    }  	
+
 
     // Foe Hunter Damage Resistance
     if(nFoeHunter > 1 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
@@ -384,3 +403,48 @@ void SetPsiEnRetortVar(object oPC)
     }
 }
 
+void DoImprovedRicochet(object oPC, object oTarget)
+{
+	int nTargetsLeft = 1;
+	effect eVis = EffectVisualEffect(VFX_IMP_DUST_EXPLOSION);
+
+	location lTarget = GetLocation(oTarget);
+	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
+	object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+
+	//Cycle through the targets within the spell shape until you run out of targets.
+	while (GetIsObjectValid(oAreaTarget) && nTargetsLeft > 0)
+	{
+		if (spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oAreaTarget != OBJECT_SELF && oAreaTarget != oTarget)
+		{
+			PerformAttack(oTarget, oPC, eVis, 0.0, -2, 0, 0, "*Improved Ricochet Hit*", "*Improved Ricochet Missed*");
+			 // Use up a target slot only if we actually did something to it
+			nTargetsLeft -= 1;
+		}
+			
+	//Select the next target within the spell shape.
+	oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+	}	
+}
+
+void SetImprovedRicochetVar(object oPC)
+{
+    // Turn Retort on
+    SetLocalInt(oPC, "CanRicochet", 1);
+
+    // Turn Retort off after one attack is made
+    DelayCommand(0.01, SetLocalInt(oPC, "CanRicochet", 0));
+
+    // Call again if the character is still in combat.
+    // this allows the ability to keep running even if the
+    // player does not score a retort hit during the allotted time
+    if( GetIsFighting(oPC) )
+    {
+        DelayCommand(6.0, SetImprovedRicochetVar(oPC));
+    }
+    else
+    {
+        DelayCommand(2.0, SetLocalInt(oPC, "CanRicochet", 1));
+        DelayCommand(2.1, SetLocalInt(oPC, "ImpRicochetVarRunning", 2));
+    }
+}

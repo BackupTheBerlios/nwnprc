@@ -15,6 +15,25 @@
 #include "NW_I0_SPELLS"
 #include "inc_item_props" 
 
+int IsLineBreath()
+{
+    if(GetHasFeat(FEAT_BLACK_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BLUE_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BRASS_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BRONZE_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_COPPER_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_AMETHYST_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BROWN_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_CHAOS_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_OCEANUS_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_RADIANT_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_RUST_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_STYX_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_TARTIAN_DRAGON, OBJECT_SELF)
+        )
+        return TRUE;
+    return FALSE;       
+}
 
 //This is the main breath attack script.  33 out of 38 Dragon Disciple
 //types use this script for breath attacks.  All basic breath attacks
@@ -117,12 +136,7 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
     int nBreathShape = SHAPE_SPELLCONE;
     
     //these are lines not cones
-    if(GetHasFeat(FEAT_BLACK_DRAGON, OBJECT_SELF)
-        || GetHasFeat(FEAT_BLUE_DRAGON, OBJECT_SELF)
-        || GetHasFeat(FEAT_BRASS_DRAGON, OBJECT_SELF)
-        || GetHasFeat(FEAT_BRONZE_DRAGON, OBJECT_SELF)
-        || GetHasFeat(FEAT_COPPER_DRAGON, OBJECT_SELF)
-        )
+    if(IsLineBreath())
     {
         nBreathShape = SHAPE_SPELLCYLINDER;
         fRange *= 2.0; //double the range
@@ -243,12 +257,38 @@ void RandomBreath(object oPC ,object oSkin ,int dChaos ,int nSaveDC ,int nLevel 
     effect eVis, eBreath;
 
     int nPersonalDamage;
+    
+    float fRange = 10.0;//meters not feet!
+    int nSize = PRCGetCreatureSize(OBJECT_SELF);
+    switch(nSize)
+    {
+        case CREATURE_SIZE_FINE:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_DIMINUTIVE:  fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_TINY:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_SMALL:       fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_MEDIUM:      fRange = FeetToMeters(30.0); break;
+        //PnP says 30, but I think this doesnt fit the progression so Ive made it 40
+        //Primogenitor
+        case CREATURE_SIZE_LARGE:       fRange = FeetToMeters(40.0); break; 
+        case CREATURE_SIZE_HUGE:        fRange = FeetToMeters(50.0); break;
+        case CREATURE_SIZE_GARGANTUAN:  fRange = FeetToMeters(60.0); break;
+        case CREATURE_SIZE_COLOSSAL:    fRange = FeetToMeters(70.0); break;
+    }
+    
+    int nBreathShape = SHAPE_SPELLCONE;
+    
+    //these are lines not cones
+    if(IsLineBreath())
+    {
+        nBreathShape = SHAPE_SPELLCYLINDER;
+        fRange *= 2.0; //double the range
+    }
 
     eVis = EffectVisualEffect(494);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
 
     while(GetIsObjectValid(oTarget))
     {
@@ -272,7 +312,7 @@ void RandomBreath(object oPC ,object oSkin ,int dChaos ,int nSaveDC ,int nLevel 
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
     }
 }
 
@@ -316,12 +356,37 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
     effect eVis, eBreath;
 
     int nPersonalDamage;
+    float fRange = 10.0;//meters not feet!
+    int nSize = PRCGetCreatureSize(OBJECT_SELF);
+    switch(nSize)
+    {
+        case CREATURE_SIZE_FINE:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_DIMINUTIVE:  fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_TINY:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_SMALL:       fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_MEDIUM:      fRange = FeetToMeters(30.0); break;
+        //PnP says 30, but I think this doesnt fit the progression so Ive made it 40
+        //Primogenitor
+        case CREATURE_SIZE_LARGE:       fRange = FeetToMeters(40.0); break; 
+        case CREATURE_SIZE_HUGE:        fRange = FeetToMeters(50.0); break;
+        case CREATURE_SIZE_GARGANTUAN:  fRange = FeetToMeters(60.0); break;
+        case CREATURE_SIZE_COLOSSAL:    fRange = FeetToMeters(70.0); break;
+    }
+    
+    int nBreathShape = SHAPE_SPELLCONE;
+    
+    //these are lines not cones
+    if(IsLineBreath())
+    {
+        nBreathShape = SHAPE_SPELLCYLINDER;
+        fRange *= 2.0; //double the range
+    }
 
     eVis = EffectVisualEffect(494);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
 
     while(GetIsObjectValid(oTarget))
     {
@@ -348,7 +413,7 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
     }
 }
 
@@ -363,12 +428,37 @@ void ShadowBreath(object oPC ,object oSkin ,int dShadow ,int nSaveDC ,int nLevel
     effect eVis, sDrain;
 
     int shadowDrain;
+    float fRange = 10.0;//meters not feet!
+    int nSize = PRCGetCreatureSize(OBJECT_SELF);
+    switch(nSize)
+    {
+        case CREATURE_SIZE_FINE:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_DIMINUTIVE:  fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_TINY:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_SMALL:       fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_MEDIUM:      fRange = FeetToMeters(30.0); break;
+        //PnP says 30, but I think this doesnt fit the progression so Ive made it 40
+        //Primogenitor
+        case CREATURE_SIZE_LARGE:       fRange = FeetToMeters(40.0); break; 
+        case CREATURE_SIZE_HUGE:        fRange = FeetToMeters(50.0); break;
+        case CREATURE_SIZE_GARGANTUAN:  fRange = FeetToMeters(60.0); break;
+        case CREATURE_SIZE_COLOSSAL:    fRange = FeetToMeters(70.0); break;
+    }
+
+    int nBreathShape = SHAPE_SPELLCONE;
+
+    //these are lines not cones
+    if(IsLineBreath())
+    {
+        nBreathShape = SHAPE_SPELLCYLINDER;
+        fRange *= 2.0; //double the range
+    }
 
     eVis = EffectVisualEffect(494);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
 
     while(GetIsObjectValid(oTarget))
     {
@@ -380,14 +470,7 @@ void ShadowBreath(object oPC ,object oSkin ,int dShadow ,int nSaveDC ,int nLevel
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay
             fDelay = GetDistanceBetween(oPC, oTarget)/20;
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, SAVING_THROW_TYPE_NONE))
-            {
-                shadowDrain  = 0;
-                if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-                {
-                    shadowDrain = 0;
-                }
-            }
+            shadowDrain = PRCGetReflexAdjustedDamage(shadowDrain, oTarget, nSaveDC, SAVING_THROW_TYPE_NEGATIVE);
             if (shadowDrain > 0)
             {
                 //Set Damage and VFX
@@ -399,7 +482,7 @@ void ShadowBreath(object oPC ,object oSkin ,int dShadow ,int nSaveDC ,int nLevel
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
     }
 }
 

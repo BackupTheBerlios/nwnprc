@@ -70,7 +70,7 @@ void gao_CreateTextGrid(object oNode, float fFontHeight, float fFontWidth, objec
       {
          g = IntToFloat(j-1);
          vLedNode = vPos - fFontWidth*g*vFacing + f*Vector(0.0, 0.0, fFontHeight);
-         oLedNode = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", Location(oArea, vLedNode, fFacing), FALSE, "PSC_X_TEXTMESSAGE");
+         oLedNode = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", Location(oArea, vLedNode, fFacing), FALSE, "PSC_X_TEXTMESSAGE");
          AssignCommand(oLedNode, ActionDoCommand(SetLocalObject(oNode, "led" + IntToString(j) + IntToString(i), oLedNode)));
          if (fLifetime == 0.0)
          {

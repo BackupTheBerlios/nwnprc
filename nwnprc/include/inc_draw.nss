@@ -2169,7 +2169,7 @@ object ObjectPlaceEllipticalSpring(string sTemplate, location lCenter, float fRa
    if (fTime<0.0) fTime = 12.0;
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fWait<1.0) fWait = 1.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    fRadiusStartOuter = (fRadiusStartOuter == 0.0) ? 0.01 : (fRadiusStartOuter < 0.0) ? -fRadiusStartOuter : fRadiusStartOuter ;
    fRadiusStartInner = (fRadiusStartInner == 0.0) ? 0.01 : (fRadiusStartInner < 0.0) ? -fRadiusStartInner : fRadiusStartInner ;
    fRadiusEndOuter = (fRadiusEndOuter == 0.0) ? 0.01 : (fRadiusEndOuter < 0.0) ? -fRadiusEndOuter : fRadiusEndOuter ;
@@ -2185,7 +2185,7 @@ object ObjectPlaceEllipticalSpring(string sTemplate, location lCenter, float fRa
    location lPos;
    float f, x, y, z, fAngle, fElliRadius, fElliAngle, fRadiusOuter, fRadiusInner, fEccentric;
 
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<nFrequency; i++)
    {
@@ -2232,7 +2232,7 @@ object ObjectPlaceSpring(string sTemplate, location lCenter, float fRadiusStart,
    if (fTime<0.0) fTime = 12.0;
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fWait<1.0) fWait = 1.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fTheta = 360.0*fRev/IntToFloat(nFrequency); // angle between each node
    float fDecay = (fRadiusStart - fRadiusEnd)/IntToFloat(nFrequency); // change in radius per node
    float fGrowth = (fHeightStart - fHeightEnd)/IntToFloat(nFrequency); // change in height per node
@@ -2243,7 +2243,7 @@ object ObjectPlaceSpring(string sTemplate, location lCenter, float fRadiusStart,
    location lPos;
    float f, x, y, z, fAngle;
 
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<nFrequency; i++)
    {
@@ -2297,7 +2297,7 @@ object ObjectPlacePolygonalSpring(string sTemplate, location lCenter, float fRad
    if (fTime<0.0) fTime = 12.0;
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fRev==0.0) fRev = 5.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fEta = (fRev > 0.0) ? 360.0/IntToFloat(nSides) : -360.0/IntToFloat(nSides); // angle of segment
    float fSidesToDraw = (fRev > 0.0) ? fRev*IntToFloat(nSides) : -fRev*IntToFloat(nSides); // total number of sides to draw including revolutions as float value
    int nSidesToDraw = FloatToInt(fSidesToDraw); // total number of sides to draw including revolutions as int value
@@ -2310,7 +2310,7 @@ object ObjectPlacePolygonalSpring(string sTemplate, location lCenter, float fRad
    object oArea = GetAreaFromLocation(lCenter);
    float f, g, x1, y1, z1, fAngle1, x2, y2, z2, fAngle2;
 
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<nSidesToDraw; i++)
    {
@@ -2369,7 +2369,7 @@ object ObjectPlacePentaclicSpring(string sTemplate, location lCenter, float fRad
    if (fTime<0.0) fTime = 12.0;
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fRev==0.0) fRev = 5.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fSidesToDraw = (fRev > 0.0) ? fRev*5.0 : -fRev*5.0;
    int nSidesToDraw = FloatToInt(fSidesToDraw); // total number of sides to draw including revolutions
    int nFrequencyPerSide = FloatToInt(IntToFloat(nFrequency)/fSidesToDraw);
@@ -2382,7 +2382,7 @@ object ObjectPlacePentaclicSpring(string sTemplate, location lCenter, float fRad
    float f, g, x1, y1, z1, fAngle1, x2, y2, z2, fAngle2;
    float fStarangle = (fRev > 0.0) ? 144.0 : -144.0;
 
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<nSidesToDraw; i++)
    {
@@ -2440,7 +2440,7 @@ object ObjectPlaceHemisphere(string sTemplate, location lCenter, float fRadiusSt
    if (fTime<0.0) fTime = 12.0;
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fRev==0.0) fRev = 5.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fTheta = 360.0*fRev/IntToFloat(nFrequency); // angle between each node
    float fDecay = (fRadiusStart - fRadiusEnd)/IntToFloat(nFrequency); // change in radius per node
    float fDelay = fTime/IntToFloat(nFrequency);
@@ -2451,7 +2451,7 @@ object ObjectPlaceHemisphere(string sTemplate, location lCenter, float fRadiusSt
    float f, x, y, z, fAngle, fSphereRadius, fSphereAngle;
    float fEffectiveHeight = fHeightEnd - fHeightStart;
 
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<nFrequency; i++)
    {
@@ -2496,7 +2496,7 @@ object ObjectPlacePolygonalHemisphere(string sTemplate, location lCenter, float 
    if (fTime<0.0) fTime = 12.0;
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fRev==0.0) fRev = 5.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fEta = (fRev > 0.0) ? 360.0/IntToFloat(nSides) : -360.0/IntToFloat(nSides); // angle of segment
    float fSidesToDraw = (fRev > 0.0) ? fRev*IntToFloat(nSides) : -fRev*IntToFloat(nSides); // total number of sides to draw including revolutions as float value
    int nSidesToDraw = FloatToInt(fSidesToDraw); // total number of sides to draw including revolutions as int value
@@ -2508,7 +2508,7 @@ object ObjectPlacePolygonalHemisphere(string sTemplate, location lCenter, float 
    float f, g, x1, y1, z1, fAngle1, x2, y2, z2, fAngle2, fSphereRadius1, fSphereAngle1, fSphereRadius2, fSphereAngle2;
    float fEffectiveHeight = fHeightEnd - fHeightStart;
 
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<nSidesToDraw; i++)
    {
@@ -2560,7 +2560,7 @@ object ObjectPlaceToroidalSpring(string sTemplate, location lCenter, float fRadi
    if (fWait<1.0) fWait = 1.0;
    if (fTime<0.0) fTime = 12.0;
    if (fLifetime<0.0) fLifetime = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fRadiusStart = (fRadiusStartOuter + fRadiusStartInner)*0.5;
    float fRadiusEnd = (fRadiusEndOuter + fRadiusEndInner)*0.5;
    float fToricRadiusStart = (fRadiusStartOuter - fRadiusStartInner)*0.5;
@@ -2576,7 +2576,7 @@ object ObjectPlaceToroidalSpring(string sTemplate, location lCenter, float fRadi
    location lPos;
    float f, x, y, z, fAngle, fToricAngle, fToricRadius;
 
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<nFrequency; i++)
    {
@@ -2620,7 +2620,7 @@ object ObjectPlaceStellaOctangula(string sTemplate, location lCenter, float fRad
    if (fTime<0.0) fTime = 6.0;
    if (nFrequency<1) nFrequency = 60;
    if (fLifetime<0.0) fLifetime = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    vector vCenter = GetPositionFromLocation(lCenter);
    object oArea = GetAreaFromLocation(lCenter);
    float fSigma = fRadius*2.0/3.0;
@@ -2633,7 +2633,7 @@ object ObjectPlaceStellaOctangula(string sTemplate, location lCenter, float fRad
    else if (sAxis == "y") vTop = vCenter + Vector(3.0*fSigma, 0.0, 0.0);
    else                   vTop = vCenter + Vector(0.0, 0.0, 3.0*fSigma);
 
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<6; i++)
    {
@@ -2694,7 +2694,7 @@ object ObjectPlaceIcosahedron(string sTemplate, location lCenter, float fRadius,
    if (fTime<0.0) fTime = 6.0;
    if (nFrequency<1) nFrequency = 60;
    if (fLifetime<0.0) fLifetime = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    vector vCenter = GetPositionFromLocation(lCenter);
    object oArea = GetAreaFromLocation(lCenter);
    float fSigma1 = fRadius*0.55278640450004206071816526625413;
@@ -2708,7 +2708,7 @@ object ObjectPlaceIcosahedron(string sTemplate, location lCenter, float fRadius,
    else if (sAxis == "y") vTop = vCenter + Vector(2.0*fSigma1 + fSigma2, 0.0, 0.0);
    else                   vTop = vCenter + Vector(0.0, 0.0, 2.0*fSigma1 + fSigma2);
 
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<20; i++)
    {
@@ -2798,7 +2798,7 @@ object ObjectPlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadi
    if (fTime<0.0) fTime = 12.0;
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fWait<1.0) fWait = 1.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fTheta = 360.0*fRev/IntToFloat(nFrequency); // angle between each node
    float fGrowth = (fHeightStart - fHeightEnd)/IntToFloat(nFrequency); // change in height per node
    float fDelay = fTime/IntToFloat(nFrequency);
@@ -2808,7 +2808,7 @@ object ObjectPlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadi
    location lPos;
    float f, x, y, z, fAngle, fDist;
 
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<nFrequency; i++)
    {
@@ -2847,7 +2847,7 @@ object ObjectPlaceHypocycloidSpring(string sTemplate, location lCenter, float fR
    if (fTime < 0.0) fTime = 12.0;
    if (fLifetime < 0.0) fLifetime = 0.0;
    if (fWait < 1.0) fWait = 1.0;
-   if (sTemplate == "") sTemplate = "invisobj";
+   if (sTemplate == "") sTemplate = "prc_invisobj";
    if (fRoulette == 0.0) fRoulette = 3.0;
    float fTheta = 360.0*fRev/IntToFloat(nFrequency); // angle between each node
    float fGrowth = (fHeightStart - fHeightEnd)/IntToFloat(nFrequency); // change in height per node
@@ -2860,7 +2860,7 @@ object ObjectPlaceHypocycloidSpring(string sTemplate, location lCenter, float fR
    float fBeta = fAlpha/fRoulette; // DIVIDE BY ZERO
 
    float f, x, y, z, fAngle, fDist;
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<nFrequency; i++)
    {
@@ -2901,7 +2901,7 @@ object ObjectPlaceEpicycloidSpring(string sTemplate, location lCenter, float fRa
    if (fTime < 0.0) fTime = 12.0;
    if (fLifetime < 0.0) fLifetime = 0.0;
    if (fWait < 1.0) fWait = 1.0;
-   if (sTemplate == "") sTemplate = "invisobj";
+   if (sTemplate == "") sTemplate = "prc_invisobj";
    if (fRoulette == 0.0) fRoulette = 3.0;
    float fTheta = 360.0*fRev/IntToFloat(nFrequency); // angle between each node
    float fGrowth = (fHeightStart - fHeightEnd)/IntToFloat(nFrequency); // change in height per node
@@ -2914,7 +2914,7 @@ object ObjectPlaceEpicycloidSpring(string sTemplate, location lCenter, float fRa
    float fBeta = fAlpha/fRoulette;
 
    float f, x, y, z, fAngle, fDist;
-   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
    for (i=0; i<nFrequency; i++)
    {
@@ -2963,7 +2963,7 @@ object ObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, 
    if (fTime<0.0) fTime = 6.0;
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fRev==0.0) fRev = 5.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fEta = (fRev > 0.0) ? 360.0/IntToFloat(nSides) : -360.0/IntToFloat(nSides); // angle of segment
    float fSidesToDraw = (fRev > 0.0) ? fRev*IntToFloat(nSides) : -fRev*IntToFloat(nSides); // total number of sides to draw including revolutions as float value
    int nSidesToDraw = FloatToInt(fSidesToDraw); // total number of sides to draw including revolutions as int value
@@ -2978,7 +2978,7 @@ object ObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, 
    location lPos;
    float fWait = 1.0;
 
-   oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", nSidesToDraw + 1)));
 
    for (i=0; i<=nSidesToDraw; i++)
@@ -3024,7 +3024,7 @@ object ObjectBeamPolygon(int nDurationType, int nVFX, location lCenter, float fR
    if (fTime<0.0) fTime = 6.0;
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fRev==0.0) fRev = 1.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fEta = (fRev > 0.0) ? 360.0/IntToFloat(nSides) : -360.0/IntToFloat(nSides); // angle of segment
    float fSidesToDraw = (fRev > 0.0) ? fRev*IntToFloat(nSides) : -fRev*IntToFloat(nSides); // total number of sides to draw including revolutions as float value
    int nSidesToDraw = FloatToInt(fSidesToDraw); // total number of sides to draw including revolutions as int value
@@ -3037,7 +3037,7 @@ object ObjectBeamPolygon(int nDurationType, int nVFX, location lCenter, float fR
    location lPos;
    float fWait = 1.0;
 
-   oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", nSidesToDraw)));
 
    for (i=0; i<nSidesToDraw; i++)
@@ -3077,7 +3077,7 @@ object ObjectBeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, 
    if (fRev==0.0) fRev = 5.0;
    if (fDuration<0.0) fDuration = 0.0;
    if (fDuration2<0.0) fDuration2 = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fSidesToDraw = (fRev > 0.0) ? fRev*5.0 : -fRev*5.0;
    int nSidesToDraw = FloatToInt(fSidesToDraw); // total number of sides to draw including revolutions
    float fDecay = (fRadiusStart - fRadiusEnd)/fSidesToDraw; // change in radius per side
@@ -3092,7 +3092,7 @@ object ObjectBeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, 
    location lPos;
    float fWait = 1.0;
 
-   oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", nSidesToDraw+1)));
 
    for (i=0; i<=nSidesToDraw; i++)
@@ -3137,7 +3137,7 @@ object ObjectBeamPentacle(int nDurationType, int nVFX, location lCenter, float f
    if (fDuration<0.0) fDuration = 0.0;
    if (fDuration2<0.0) fDuration2 = 0.0;
    if (fRev==0.0) fRev = 1.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fSidesToDraw = (fRev > 0.0) ? fRev*5.0 : -fRev*5.0;
    int nSidesToDraw = FloatToInt(fSidesToDraw); // total number of sides to draw including revolutions
    float fDelayPerSide = fTime/fSidesToDraw;
@@ -3150,7 +3150,7 @@ object ObjectBeamPentacle(int nDurationType, int nVFX, location lCenter, float f
    location lPos;
    float fWait = 1.0;
 
-   oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", nSidesToDraw)));
 
    for (i=0; i<nSidesToDraw; i++)
@@ -3188,7 +3188,7 @@ object ObjectBeamLineFromCenter(int nDurationType, int nVFX, location lCenter, f
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fDuration<0.0) fDuration = 0.0;
    if (fDuration2<0.0) fDuration2 = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    object oArea = GetAreaFromLocation(lCenter);
    vector vCenter = GetPositionFromLocation(lCenter);
    vector vPos = fLength*AngleToVector(fDirection);
@@ -3199,7 +3199,7 @@ object ObjectBeamLineFromCenter(int nDurationType, int nVFX, location lCenter, f
    else if (sAxis == "y") vPos2 = vCenter + Vector(vPos.z, vPos.x, vPos.y);
    else                   vPos2 = vCenter + Vector(vPos.x, vPos.y, vPos.z);
 
-   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", 2)));
 
    gao_ActionCreateLocalObject(sTemplate, lCenter, "store0", oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
@@ -3227,7 +3227,7 @@ object ObjectBeamLineToCenter(int nDurationType, int nVFX, location lCenter, flo
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fDuration<0.0) fDuration = 0.0;
    if (fDuration2<0.0) fDuration2 = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    object oArea = GetAreaFromLocation(lCenter);
    vector vCenter = GetPositionFromLocation(lCenter);
    vector vPos = fLength*AngleToVector(fDirection);
@@ -3238,7 +3238,7 @@ object ObjectBeamLineToCenter(int nDurationType, int nVFX, location lCenter, flo
    else if (sAxis == "y") vPos2 = vCenter + Vector(vPos.z, vPos.x, vPos.y);
    else                   vPos2 = vCenter + Vector(vPos.x, vPos.y, vPos.z);
 
-   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", 2)));
 
    DelayCommand(fTime, gao_ActionCreateLocalObject(sTemplate, lCenter, "store0", oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
@@ -3269,7 +3269,7 @@ object ObjectBeamPolygonalHemisphere(int nDurationType, int nVFX, location lCent
    if (fTime<0.0) fTime = 6.0;
    if (fLifetime<0.0) fLifetime = 0.0;
    if (fRev==0.0) fRev = 5.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    float fEta = (fRev > 0.0) ? 360.0/IntToFloat(nSides) : -360.0/IntToFloat(nSides); // angle of segment
    float fSidesToDraw = (fRev > 0.0) ? fRev*IntToFloat(nSides) : -fRev*IntToFloat(nSides); // total number of sides to draw including revolutions as float value
    int nSidesToDraw = FloatToInt(fSidesToDraw); // total number of sides to draw including revolutions as int value
@@ -3283,7 +3283,7 @@ object ObjectBeamPolygonalHemisphere(int nDurationType, int nVFX, location lCent
    location lPos;
    float fWait = 1.0;
 
-   oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", nSidesToDraw+1)));
 
    for (i=0; i<=nSidesToDraw; i++)
@@ -3325,7 +3325,7 @@ object ObjectBeamStellaOctangula(int nDurationType, int nVFX, location lCenter, 
    if (fWait2<1.0) fWait2 = 1.0;
    if (fTime<0.0) fTime = 6.0;
    if (fLifetime<0.0) fLifetime = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    vector vCenter = GetPositionFromLocation(lCenter);
    object oArea = GetAreaFromLocation(lCenter);
    float fSigma = fRadius*2.0/3.0;
@@ -3337,7 +3337,7 @@ object ObjectBeamStellaOctangula(int nDurationType, int nVFX, location lCenter, 
    string sNumber, sNumber1;
    vector vPos;
 
-   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", 8)));
 
    gao_ActionCreateLocalObject(sTemplate, lCenter, "store7", oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
@@ -3415,7 +3415,7 @@ object ObjectBeamIcosahedron(int nDurationType, int nVFX, location lCenter, floa
    if (fWait2<1.0) fWait2 = 1.0;
    if (fTime<0.0) fTime = 6.0;
    if (fLifetime<0.0) fLifetime = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    vector vCenter = GetPositionFromLocation(lCenter);
    object oArea = GetAreaFromLocation(lCenter);
    float fSigma1 = fRadius*0.55278640450004206071816526625413;
@@ -3428,7 +3428,7 @@ object ObjectBeamIcosahedron(int nDurationType, int nVFX, location lCenter, floa
    string sNumber, sNumber1;
    vector vPos;
 
-   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", 12)));
 
    gao_ActionCreateLocalObject(sTemplate, lCenter, "store11", oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
@@ -3519,7 +3519,7 @@ object ObjectBeamDodecahedron(int nDurationType, int nVFX, location lCenter, flo
    if (fWait2<1.0) fWait2 = 1.0;
    if (fTime<0.0) fTime = 6.0;
    if (fLifetime<0.0) fLifetime = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    vector vCenter = GetPositionFromLocation(lCenter);
    object oArea = GetAreaFromLocation(lCenter);
    float fSigma1 = fRadius*0.205345527708233877044469071674; // Rd - rd
@@ -3533,7 +3533,7 @@ object ObjectBeamDodecahedron(int nDurationType, int nVFX, location lCenter, flo
    string sNumber1, sNumber2;
    vector vPos;
 
-   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", 20)));
 
    for (i=0; i<20; i++)
@@ -3626,7 +3626,7 @@ object ObjectBeamTriacontahedron(int nDurationType, int nVFX, location lCenter, 
    if (fWait2<1.0) fWait2 = 1.0;
    if (fTime<0.0) fTime = 6.0;
    if (fLifetime<0.0) fLifetime = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    vector vCenter = GetPositionFromLocation(lCenter);
    object oArea = GetAreaFromLocation(lCenter);
    float fSigma1 = fRadius*0.55278640450004206071816526625413;
@@ -3643,7 +3643,7 @@ object ObjectBeamTriacontahedron(int nDurationType, int nVFX, location lCenter, 
    string sNumber1, sNumber2;
    vector vPos;
 
-   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", 32)));
 
    gao_ActionCreateLocalObject(sTemplate, lCenter, "store31", oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
@@ -3766,7 +3766,7 @@ object ObjectBeamCuboctahedron(int nDurationType, int nVFX, location lCenter, fl
    if (fWait2<1.0) fWait2 = 1.0;
    if (fTime<0.0) fTime = 6.0;
    if (fLifetime<0.0) fLifetime = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    vector vCenter = GetPositionFromLocation(lCenter);
    object oArea = GetAreaFromLocation(lCenter);
    float fSigma = fRadius*0.70710678118654752440084436210485;
@@ -3778,7 +3778,7 @@ object ObjectBeamCuboctahedron(int nDurationType, int nVFX, location lCenter, fl
    string sNumber1, sNumber2;
    vector vPos;
 
-   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", 12)));
 
    for (i=0; i<12; i++)
@@ -3864,7 +3864,7 @@ object ObjectBeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location 
    if (fWait2<1.0) fWait2 = 1.0;
    if (fTime<0.0) fTime = 6.0;
    if (fLifetime<0.0) fLifetime = 0.0;
-   if (sTemplate=="") sTemplate = "invisobj";
+   if (sTemplate=="") sTemplate = "prc_invisobj";
    vector vCenter = GetPositionFromLocation(lCenter);
    object oArea = GetAreaFromLocation(lCenter);
    float fSigma1 = fRadius*0.50544946512442356216037311029756;
@@ -3878,7 +3878,7 @@ object ObjectBeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location 
    string sNumber1, sNumber2;
    vector vPos;
 
-   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "invisobj", lCenter, FALSE, sTag);
+   object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
    AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", 24)));
 
    for (i=0; i<24; i++)

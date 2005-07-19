@@ -14,3 +14,4 @@
 4  PowerAtk         FEAT     28             ****
 5  Base_Attack      BAB      6              ****
 6  ScriptVar        VAR      PRC_PrereqAlag 0
+10 ScriptVar        VAR      PRC_AllowAlag 0         

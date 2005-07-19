@@ -118,6 +118,7 @@ int GetRogueSneak(object oPC)
    {
       // Halfling Warslinger
       iClassLevel = GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oPC);
+      if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
    }
 
    // Infiltrator

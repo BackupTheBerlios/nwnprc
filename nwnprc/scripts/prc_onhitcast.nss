@@ -417,7 +417,7 @@ void DoImprovedRicochet(object oPC, object oTarget)
 	{
 		if (spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oAreaTarget != OBJECT_SELF && oAreaTarget != oTarget)
 		{
-			PerformAttack(oTarget, oPC, eVis, 0.0, -2, 0, 0, "*Improved Ricochet Hit*", "*Improved Ricochet Missed*");
+			PerformAttack(oAreaTarget, oPC, eVis, 0.0, -2, 0, 0, "*Improved Ricochet Hit*", "*Improved Ricochet Missed*");
 			 // Use up a target slot only if we actually did something to it
 			nTargetsLeft -= 1;
 		}

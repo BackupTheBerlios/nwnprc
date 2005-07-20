@@ -99,13 +99,6 @@ const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
 const string PRC_165_DEATH_IMMUNITY                  = "PRC_165_DEATH_IMMUNITY";
 
 /*
- * This turns on the new improved imbue arrow functionallity
- * so all the player has to do is cast the spell at an arrow in their inventory
- * If this is off, players get the default bioware imbue arrow as a bonus feat on their hides
-*/
-const string PRC_USE_NEW_IMBUE_ARROW                 = "PRC_USE_NEW_IMBUE_ARROW";
-
-/*
  * This is for builders. It should not be set on the module, but should be set on players/creatures.
  * When this is set, it will override spell DC for all spells cast (including SLAs and items)
  * This will overrule all feats, racial bonuses, etc that would effect DC
@@ -137,6 +130,22 @@ const string PRC_CASTERLEVEL_OVERRIDE                = "PRC_CASTERLEVEL_OVERRIDE
 */
 const string PRC_CASTERLEVEL_ADJUSTMENT              = "PRC_CASTERLEVEL_ADJUSTMENT";
 
+/******************************************************************************\
+*                                  Class switches                              *
+\******************************************************************************/
+
+/*
+ * This turns on the new improved imbue arrow functionallity
+ * so all the player has to do is cast the spell at an arrow in their inventory
+ * If this is off, players get the default bioware imbue arrow as a bonus feat on their hides
+*/
+const string PRC_USE_NEW_IMBUE_ARROW                 = "PRC_USE_NEW_IMBUE_ARROW";
+
+/*
+ * If this is set, the Dragon Disciple size increases at level 15 and 25 will be disabled
+ * Players will still recieve the feats, but they will not do anything.
+*/
+const string PRC_DRAGON_DISCIPLE_SIZE_CHANGES        = "PRC_DRAGON_DISCIPLE_SIZE_CHANGES";
 
 /******************************************************************************\
 *                               Epic Spell switches                            *

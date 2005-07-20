@@ -1435,6 +1435,8 @@ const int DRACONIC_ARMOR_AUG_1                   = 4148;
 const int DRACONIC_SPELLRESIST                   = 4149;
 const int DRACONIC_ARMOR_AUG_2                   = 4150;
 const int DRAGON_BLOODED                         = 4151;
+const int FEAT_DRACONIC_SIZE_INCREASE_1          = 4152;
+const int FEAT_DRACONIC_SIZE_INCREASE_2          = 4153;
 
 // Fast Healing
 const int FAST_HEALING_1                         = 4145;

@@ -113,7 +113,7 @@ effect EffectShaken()
 }
 
 // Get the size (CREATURE_SIZE_*) of oCreature.
-//including any PRC size modification feats
+//including any PRC size modification feats / spells
 int PRCGetCreatureSize(object oObject = OBJECT_SELF)
 {
     int nSize = GetCreatureSize(oObject);
@@ -142,6 +142,14 @@ int PRCGetCreatureSize(object oObject = OBJECT_SELF)
         nSize +=  2;
     else if(GetHasFeat(FEAT_SIZE_INCREASE_1))
         nSize +=  1;
+    
+    if(!GetPRCSwitch(PRC_DRAGON_DISCIPLE_SIZE_CHANGES))
+    {
+        if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_2))
+            nSize +=  2;
+        else if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_1))
+            nSize +=  1;    
+    }    
         
     if(nSize < CREATURE_SIZE_FINE)
         nSize = CREATURE_SIZE_FINE;

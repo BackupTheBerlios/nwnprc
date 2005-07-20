@@ -7,6 +7,32 @@
 const int SPELLBOOK_ROW_COUNT = 150;
 
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID);
+int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1);
+string GetFileForClass(int nClass);
+
+
+string GetFileForClass(int nClass)
+{
+    string sFile = Get2DACache("classes", "FeatsTable", nClass);
+    sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+    return sFile;
+}
+
+int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1)
+{
+    if(sFile == "" && nClass != -1)
+        sFile = GetFileForClass(nClass);
+        
+    int i;
+    for(i=1; i<SPELLBOOK_ROW_COUNT; i++)
+    {
+        if(StringToInt(Get2DACache(sFile, "SpellID", i)) == nSpell)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
 
 int GetAbilityForClass(int nClass, object oPC)
 {
@@ -122,8 +148,7 @@ int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
 
 void AddSpellUse(object oPC, int nSpellbookID, int nClass)
 {
-    string sFile = Get2DACache("classes", "FeatsTable", nClass);
-    sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+    string sFile = GetFileForClass(nClass);
     object oSkin = GetPCSkin(oPC);
     int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID));
     if(!GetHasFeat(nFeatID, oPC))
@@ -138,19 +163,9 @@ void AddSpellUse(object oPC, int nSpellbookID, int nClass)
 
 void RemoveSpellUse(object oPC, int nSpellID, int nClass)
 {
-    string sFile = Get2DACache("classes", "FeatsTable", nClass);
-    sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
-    int nSpellbookID;
-    int i;
-    for(i=1; i<SPELLBOOK_ROW_COUNT; i++)
-    {
-        if(StringToInt(Get2DACache(sFile, "SpellID", i)) == nSpellID)
-        {
-            nSpellbookID = i;
-            break;
-        }
-    }
-    if(nSpellbookID != i)
+    string sFile = GetFileForClass(nClass);
+    int nSpellbookID = SpellToSpellbookID(nSpellID, sFile);
+    if(nSpellbookID == -1)
         return;
     //get uses remaining    
     persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
@@ -202,17 +217,7 @@ void CheckNewSpellbooks(object oPC)
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
 {
     //get the spellbook ID
-    int i, nSpellbookID;
-    string sFile = Get2DACache("classes", "FeatsTable", nClass);
-    sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
-    for(i=1; i<SPELLBOOK_ROW_COUNT; i++)
-    {
-        if(StringToInt(Get2DACache(sFile, "SpellID", i)) == nSpellID)
-        {
-            nSpellbookID = i;
-            break;
-        }
-    }
+    int nSpellbookID = SpellToSpellbookID(nSpellID, GetFileForClass(nClass));
     //check if all cast  
     int nCount = persistant_array_get_int(OBJECT_SELF, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);     
     if(!nCount)

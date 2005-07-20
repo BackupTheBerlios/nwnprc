@@ -30,7 +30,19 @@ void PrcFeats(object oPC)
 
 void main()
 {
-    object oPC = GetLastBeingRested();
+    object oPC;
+    
+    //This IF statement is for the PRCForceRest wrapper, which will execute the prc_rest
+    //script directly on the target -- which then is referenced as OBJECT_SELF. This is
+    //necessary since the OnRest event will not fire when ForceRest is used.
+    if (GetIsPC(OBJECT_SELF) && GetLocalInt(OBJECT_SELF, "PRC_ForceRested"))
+    {
+        oPC = OBJECT_SELF;
+        DeleteLocalInt(OBJECT_SELF, "PRC_ForceRested");
+    }
+    else
+    	oPC = GetLastBeingRested();
+    
     //rest kits
     if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
         ExecuteScript("sbr_onrest", OBJECT_SELF);

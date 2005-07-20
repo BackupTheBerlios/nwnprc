@@ -14,6 +14,14 @@ float MetersToFeet(float fMeters);
 // returns the float time in seconds to close the given distance
 float GetTimeToCloseDistance(float fMeters, object oPC, int bIsRunning = FALSE);
 
+/* PRC ForceRest wrapper
+ * 
+ * ForceRest does not trigger the module's OnRest event, nor will the targeted player show up
+ * when GetLastPCRested is used. This wrapper can be used to ForceRest a target, while still
+ * running the PRC's OnRest script.
+ */
+void PRCForceRest(object oPC);
+
 ///////////////////////////////////////////////////////////////////////////////
 //  FUNCTION DEFINITIONS
 ///////////////////////////////////////////////////////////////////////////////
@@ -100,4 +108,13 @@ float GetTimeToCloseDistance(float fMeters, object oPC, int bIsRunning = FALSE)
      fTime = fMeters / fSpeed;
      
      return fTime;
+}
+
+void PRCForceRest(object oPC)
+{
+    ForceRest(oPC);
+    
+    SetLocalInt(oPC, "PRC_ForceRested", 1);
+    
+    ExecuteScript("prc_rest", oPC);
 }

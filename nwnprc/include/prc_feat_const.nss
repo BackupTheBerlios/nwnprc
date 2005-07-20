@@ -1438,6 +1438,24 @@ const int DRAGON_BLOODED                         = 4151;
 const int FEAT_DRACONIC_SIZE_INCREASE_1          = 4152;
 const int FEAT_DRACONIC_SIZE_INCREASE_2          = 4153;
 
+// Complete Adv Ninja
+const int FEAT_EPIC_ACROBATICS_8 	= 2484;
+const int FEAT_EPIC_ACROBATICS_10	= 2485;
+const int FEAT_EPIC_ACROBATICS_12	= 2486;
+const int FEAT_EPIC_NINJA_CA		= 2487;
+const int FEAT_KI_POWER 		= 2488;
+const int FEAT_ACROBATICS_2 		= 2489;
+const int FEAT_ACROBATICS_4 		= 2490;
+const int FEAT_ACROBATICS_6		= 2491;
+const int FEAT_GHOST_SIGHT		= 2492;
+const int FEAT_GHOST_STEP		= 2493;
+const int FEAT_GHOST_STRIKE		= 2494;
+const int FEAT_GHOST_WALK		= 2495;
+const int FEAT_GREAT_LEAP		= 2496;
+const int FEAT_GREATER_KI_DODGE		= 2497;
+const int FEAT_KI_DODGE			= 2498;
+const int FEAT_GHOST_STEP_2  		= 2499;
+
 // Fast Healing
 const int FAST_HEALING_1                         = 4145;
 const int FAST_HEALING_2                         = 4146;

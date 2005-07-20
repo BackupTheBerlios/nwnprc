@@ -134,6 +134,7 @@ void EvalPRCFeats(object oPC)
     if(iThrallOfGrazzt > 0)                                      ExecuteScript("tog", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)           ExecuteScript("prc_blightlord", oPC);
     if(GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN,oPC) > 0)       ExecuteScript("psi_zuoken", oPC);
+    if(GetLevelByClass(CLASS_TYPE_NINJA, oPC) > 0)               ExecuteScript("prc_ninjca", oPC);
     if(GetLevelByClass(CLASS_TYPE_OLLAM,oPC) > 0)            	 ExecuteScript("prc_ollam", oPC);
     if(GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC) > 0)        ExecuteScript("prc_cbtmed", oPC);
     if(GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_dradis", oPC));
@@ -542,6 +543,10 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "WntrHeart");
     DeleteLocalInt(oSkin, "BlightBlood");
     
+    // Ninja
+    DeleteLocalInt(oSkin, "KiPowerWillBonus");
+    DeleteLocalInt(oSkin, "AcroJumpBonus");
+    DeleteLocalInt(oSkin, "AcroTumbBonus");
     //epic spells
     //transendent vitality
     DeleteLocalInt(oSkin, "TransVitalCon");
@@ -793,6 +798,36 @@ void FeatAlaghar(object oPC)
     FeatUsePerDay(oPC, FEAT_ALAG_ROCKBURST, -1, iRockburst);
 }
 
+void FeatNinja (object oPC)
+{
+	int nUsesLeft = (GetLevelByClass(CLASS_TYPE_NINJA, oPC)/ 2);
+	if (nUsesLeft < 1)
+		nUsesLeft = 1;
+		
+	while(GetHasFeat(FEAT_KI_POWER, oPC))
+		DecrementRemainingFeatUses(oPC, FEAT_KI_POWER);
+	while(GetHasFeat(FEAT_GHOST_STEP, oPC))
+		DecrementRemainingFeatUses(oPC, FEAT_GHOST_STEP);
+	while(GetHasFeat(FEAT_GHOST_STRIKE, oPC))
+		DecrementRemainingFeatUses(oPC, FEAT_GHOST_STRIKE);
+	while(GetHasFeat(FEAT_GHOST_WALK, oPC))
+		DecrementRemainingFeatUses(oPC, FEAT_GHOST_WALK);
+	while(GetHasFeat(FEAT_KI_DODGE, oPC))
+		DecrementRemainingFeatUses(oPC, FEAT_KI_DODGE);
+		
+	if (GetAbilityModifier(ABILITY_WISDOM, oPC) > 0)
+		nUsesLeft += GetAbilityModifier(ABILITY_WISDOM, oPC);
+	int nUses = 0;
+	for (;nUses < nUsesLeft;nUses++)
+	{
+		IncrementRemainingFeatUses(oPC, FEAT_KI_POWER);
+		IncrementRemainingFeatUses(oPC, FEAT_GHOST_STEP);
+		IncrementRemainingFeatUses(oPC, FEAT_GHOST_STRIKE);
+		IncrementRemainingFeatUses(oPC, FEAT_GHOST_WALK);
+		IncrementRemainingFeatUses(oPC, FEAT_KI_DODGE);
+	}
+	SetLocalInt(oPC, "prc_ninja_ki", nUsesLeft);
+}
 void FeatSpecialUsePerDay(object oPC)
 {
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);
@@ -810,5 +845,5 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_1, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC));
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_2, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC));
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_3, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC));
-
+    FeatNinja(oPC);
 }

@@ -3962,7 +3962,9 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
      // Since we are attacking, remove sanctuary / invisibility effects.
      // Only bother to do this on the first attack... 
      // as they won't have the effect anymore on subsequent iterations.
-     if(bFirstAttack && 
+
+     // FrikaC: Ghost strike doesn't cancel ethereal / invisible
+     if(bFirstAttack && !GetLocalInt(oAttacker, "prc_ghost_strike") &&
           (GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker) ||
            GetHasEffect(EFFECT_TYPE_SANCTUARY, oAttacker) 
           )

@@ -134,3 +134,4 @@ const int CLASS_TYPE_MAESTER	 		= 168;
 const int CLASS_TYPE_COMBAT_MEDIC 		= 169;
 const int CLASS_TYPE_OLLAM	 		= 170;
 const int CLASS_TYPE_HALFLING_WARSLINGER	= 171;
+const int CLASS_TYPE_NINJA 			= 141;

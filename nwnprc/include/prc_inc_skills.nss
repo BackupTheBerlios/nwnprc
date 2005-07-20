@@ -8,6 +8,7 @@
 #include "inc_item_props"
 #include "prc_class_const"
 #include "prc_misc_const"
+#include "prc_inc_clsfunc"
 #include "x0_i0_spells"
 
 //:://////////////////////////////////////////////
@@ -59,6 +60,15 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
      // running jumps require at least 20 feet run length
      if (iDistance >= 18 && !bIsInHeavyArmor)  bIsRunningJump = TRUE;
      
+     int iBonus = 0;
+     if (GetHasFeat(FEAT_GREAT_LEAP, oPC))
+     {
+     	if (Ninja_AbilitiesEnabled(oPC))
+     	{
+     		bIsRunningJump = TRUE;
+     		iBonus = 4;
+     	}
+     }
      // PnP rules are height * 6 for run and height * 2 for jump.
      // I can't get height so that is assumed to be 6.
      // Changed maxed jump distance because the NwN distance is rather short
@@ -83,7 +93,7 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
             iMaxJumpDistance *= 100;
       
      // skill 28 = jump
-     int iJumpRoll = d20() + GetSkillRank(SKILL_JUMP, oPC) + GetAbilityModifier(ABILITY_STRENGTH, oPC);
+     int iJumpRoll = d20() + GetSkillRank(SKILL_JUMP, oPC) + iBonus + GetAbilityModifier(ABILITY_STRENGTH, oPC);
      
      if(GetRacialType(oPC) == RACIAL_TYPE_HALFLING) iJumpRoll += 2;
      if(GetSkillRank(SKILL_TUMBLE, oPC) >= 5) iJumpRoll += 2;

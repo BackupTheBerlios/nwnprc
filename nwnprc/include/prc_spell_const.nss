@@ -219,6 +219,9 @@ const int SPELL_CORRUPTER_OWLS_WISDOM                = 2067;
 const int SPELL_CORRUPTER_CATS_GRACE                 = 2064;
 const int SPELL_CORRUPTER_DESECRATE                  = 2065;
 const int SPELL_CORRUPTER_MAGIC_CIRCLE_AGAINST_GOOD  = 2073;
+
+// Complete Adv Ninja
+const int SPELL_GHOST_STEP 		= 2742;
 						  
 // Spell Feat Generic
 const int SPELL_MANYSHOT2                   = 2246;

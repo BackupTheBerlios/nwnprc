@@ -99,6 +99,10 @@ int GetRogueSneak(object oPC)
    iClassLevel = GetLevelByClass(CLASS_TYPE_TEMPLE_RAIDER, oPC);
    if (iClassLevel>= 2) iRogueSneak += (iClassLevel + 1) / 3;
    
+   // Ninja
+   iClassLevel = GetLevelByClass(CLASS_TYPE_NINJA, oPC);
+   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
+   
    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
    {
       // Peerless Archer

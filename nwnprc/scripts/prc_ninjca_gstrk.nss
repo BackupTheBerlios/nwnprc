@@ -35,6 +35,5 @@ void main()
      SetLocalInt(oPC, "prc_ghost_strike", 1);
      
      PerformAttackRound(oTarget, oPC, eCon, 0.0, 0, 0, 0, FALSE, sSuccess, sMiss);
-	ActionAttack(oTarget);
      DeleteLocalInt(oPC, "prc_ghost_strike");
 }

@@ -135,7 +135,11 @@ object GetHideToken(object oPC)
 
         // Cache the token so that there needn't be multiple loops over an inventory
         SetLocalObject(oPC, "PRC_HideTokenCache", oToken);
-        //DelayCommand(0.0f, DeleteLocalObject(oPC, "PRC_HideTokenCache")); - If the cache reference is found to break under any conditions, uncomment this.
+        //- If the cache reference is found to break under any conditions, uncomment this.
+        //looks like logging off then back on without the server rebooting breaks it
+        //I guess because the token gets a new ID, but the local still points to the old one
+        //Ive changed it to delete the local in OnClientEnter. Primogenitor
+        //DelayCommand(1.0f, DeleteLocalObject(oPC, "PRC_HideTokenCache")); 
     }
     return oToken;
 }

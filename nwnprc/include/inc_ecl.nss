@@ -201,7 +201,7 @@ void ApplyECLToXP(object oPC)
             float fXPDif = IntToFloat(iCurXP - iLastXP);
             int iXPDif = FloatToInt(fXPDif * fXPRatio);
             int newXP = iCurXP - iXPDif;
-            SendMessageToPC(oPC, "Level Adjustment Reducing XP by " + IntToString(iXPDif));
+            SendMessageToPC(oPC, "Level Adjustment +"+IntToString(iLvlAdj)+". Reducing XP by " + IntToString(iXPDif));
             if(GetIsPC(oPC))
                 SetXP(oPC, newXP);
             else

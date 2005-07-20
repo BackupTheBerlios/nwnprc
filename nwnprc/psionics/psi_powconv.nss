@@ -280,10 +280,18 @@ void main()
         {
             //PrintString("Power taken");
             int nPower = GetLocalInt(oPC, "nPower");
-            int nPowerFeatIP = StringToInt(Get2DACache(sPowerFile, "IPFeatID", nPower));
             object oSkin = GetPCSkin(oPC);
+            //first feat
+            int nPowerFeatIP = StringToInt(Get2DACache(sPowerFile, "IPFeatID", nPower));
             itemproperty ipFeat = ItemPropertyBonusFeat(nPowerFeatIP);
             IPSafeAddItemProperty(oSkin, ipFeat);
+            //second feat
+            string sPowerFeat2IP = Get2DACache(sPowerFile, "IPFeatID2", nPower);
+            if(sPowerFeat2IP != "")
+            {
+                ipFeat = ItemPropertyBonusFeat(StringToInt(sPowerFeat2IP));
+                IPSafeAddItemProperty(oSkin, ipFeat);
+            }
             if(!persistant_array_exists(oPC, "PsiPowerCount"))
                 persistant_array_create(oPC, "PsiPowerCount");
             persistant_array_set_int(oPC, "PsiPowerCount", nClass, persistant_array_get_int(oPC, "PsiPowerCount", nClass)+1);

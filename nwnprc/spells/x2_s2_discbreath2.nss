@@ -14,7 +14,7 @@ Moved breath VFX so when different ones for different colors are done they can b
 Moved to a new script so its not lost permanently. Feel free to refer to this if you want.
 
 Primogenitor
-*/
+
 
 
 //::///////////////////////////////////////////////
@@ -22,9 +22,7 @@ Primogenitor
 //:: x2_s2_discbreath
 //:: Copyright (c) 2003Bioware Corp.
 //:://////////////////////////////////////////////
-/*
 
-*/
 //:://////////////////////////////////////////////
 //:: Created By: Georg Zoeller (modified by Silver)
 //:: Created On: June, 17, 2003 (June, 7, 2005)
@@ -568,3 +566,5 @@ void main()
     effect eVis = EffectVisualEffect(494);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
 }
+
+*/

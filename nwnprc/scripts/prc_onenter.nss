@@ -162,6 +162,7 @@ void main()
     //check for persistant golems
     if(persistant_array_exists(oPC, "GolemList"))
     {
+        MultisummonPreSummon(oPC, TRUE);
         int i;
         for(i=1;i<persistant_array_get_size(oPC, "GolemList");i++)
         {

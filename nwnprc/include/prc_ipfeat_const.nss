@@ -491,3 +491,6 @@ const int IP_CONST_MONSTERDAMAGE_7d4 = 58;
 
 //ACP feat
 const int IP_CONST_ACP_FEAT = 98;
+
+// Improved Combat Casting
+const int IP_CONST_IMP_CC = 97;

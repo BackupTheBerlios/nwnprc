@@ -394,4 +394,5 @@ const int SPELL_FEAT_SPEED_OF_THOUGHT_BONUS     = 2820;
 const int FOOBAR = -1; //- Remove once it's removal no longer causes compiling nw_s0_tenstrans to smash the compiler
 const int SPELL_JUMP                    = 2727;  
 
-
+// Havoc Mage
+const int SPELL_BATTLECAST 		= 2025;

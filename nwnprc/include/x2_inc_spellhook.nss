@@ -91,7 +91,7 @@ int PRCGetUserSpecificSpellScriptFinished();
 #include "prc_alterations"
 #include "x2_inc_craft"
 #include "prc_inc_spells"
-//#include "prc_class_const"
+#include "prc_inc_combat"
 #include "prc_inc_switch"
 #include "prc_inc_itmrstr"
 #include "inc_utility"
@@ -248,6 +248,27 @@ void CombatMedicHealingKicker()
             DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_3);
     }
 
+}
+
+
+// Performs the attack portion of the battlecast ability for the havoc mage
+void Battlecast()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	effect eVis = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_HOLY);
+	int nLevel = GetLevelByClass(CLASS_TYPE_HAVOC_MAGE, oPC);
+	string sSpellLevel = lookup_spell_level(PRCGetSpellId());
+	int nSpellLevel = StringToInt(sSpellLevel);
+	
+	
+	// Make sure the levels are right for both the caster and the spells.
+	// Level 8 spells and under at level 5
+	if (nLevel == 5 && 8 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
+	// Level 4 spells and under at level 3
+	else if (nLevel >= 3 && 4 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
+	// Level 2 spells and under at level 1
+	else if (nLevel >= 1 && 2 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
 }
 
 int X2UseMagicDeviceCheck()
@@ -805,6 +826,10 @@ int X2PreSpellCastCode()
     //Combat medic healing kicker
     if(nContinue && GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC))
         CombatMedicHealingKicker();
+
+    // Havoc Mage Battlecast
+    if(nContinue && GetLevelByClass(CLASS_TYPE_HAVOC_MAGE))
+        Battlecast();
 
     return nContinue;
 }

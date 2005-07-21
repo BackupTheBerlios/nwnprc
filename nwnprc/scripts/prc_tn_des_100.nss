@@ -23,13 +23,13 @@ void main()
 	effect eVis = EffectVisualEffect(VFX_TN_DES_100);
     	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, OBJECT_SELF, HoursToSeconds(99));
     	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, OBJECT_SELF, HoursToSeconds(99));
-     	nMes = "*Lesser Desecrate Activated*";
+     	nMes = "*Major Desecrate Activated*";
      }
      else     
      {
 	// Removes effects
 	RemoveSpellEffects(SPELL_DES_100, oPC, oPC);
-	nMes = "*Lesser Desecrate Deactivated*";
+	nMes = "*Major Desecrate Deactivated*";
      }
 
      FloatingTextStringOnCreature(nMes, oPC, FALSE);

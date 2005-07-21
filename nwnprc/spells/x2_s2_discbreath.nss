@@ -1,19 +1,76 @@
+/*
+This is the edited script I had made changes to before Silver reverted to 
+the original. It has:
+
+Round delays for metabreath/multiple uses
+Line breath (working)
+Pyroclastic being 50% of each
+PRCGetReflexAdjustedDamage to interact better with other systems
+Range dependant on size
+Less code duplication by using dedicated functions. Easier to fix/find bugs.
+Moved breath VFX so when different ones for different colors are done they can be easily implemented
+
+
+Moved to a new script so its not lost permanently. Feel free to refer to this if you want.
+
+Primogenitor
+
+
+
 //::///////////////////////////////////////////////
 //:: Breath Weapon for Dragon Disciple Class
 //:: x2_s2_discbreath
 //:: Copyright (c) 2003Bioware Corp.
 //:://////////////////////////////////////////////
-/*
 
-*/
 //:://////////////////////////////////////////////
 //:: Created By: Georg Zoeller (modified by Silver)
 //:: Created On: June, 17, 2003 (June, 7, 2005)
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "NW_I0_SPELLS"
 #include "inc_item_props" 
 
+int IsLineBreath()
+{
+    if(GetHasFeat(FEAT_BLACK_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BLUE_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BRASS_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BRONZE_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_COPPER_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_AMETHYST_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_BROWN_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_CHAOS_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_OCEANUS_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_RADIANT_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_RUST_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_STYX_DRAGON, OBJECT_SELF)
+        || GetHasFeat(FEAT_TARTIAN_DRAGON, OBJECT_SELF)
+        )
+        return TRUE;
+    return FALSE;       
+}
+
+float GetRangeFromSize(int nSize)
+{
+    float fRange = 10.0;
+    switch(nSize)
+    {
+        case CREATURE_SIZE_FINE:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_DIMINUTIVE:  fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_TINY:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_SMALL:       fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_MEDIUM:      fRange = FeetToMeters(30.0); break;
+        //PnP says 30, but I think this doesnt fit the progression so Ive made it 40
+        //Primogenitor
+        case CREATURE_SIZE_LARGE:       fRange = FeetToMeters(40.0); break; 
+        case CREATURE_SIZE_HUGE:        fRange = FeetToMeters(50.0); break;
+        case CREATURE_SIZE_GARGANTUAN:  fRange = FeetToMeters(60.0); break;
+        case CREATURE_SIZE_COLOSSAL:    fRange = FeetToMeters(70.0); break;
+    }
+    return fRange;
+}
 
 //This is the main breath attack script.  33 out of 38 Dragon Disciple
 //types use this script for breath attacks.  All basic breath attacks
@@ -93,11 +150,21 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
 
     int nPersonalDamage;
 
-    eVis = EffectVisualEffect(494);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
+    float fRange = 10.0;//meters not feet!
+    int nSize = PRCGetCreatureSize(OBJECT_SELF);
+    fRange = GetRangeFromSize(nSize);
+    
+    int nBreathShape = SHAPE_SPELLCONE;
+    
+    //these are lines not cones
+    if(IsLineBreath())
+    {
+        nBreathShape = SHAPE_SPELLCYLINDER;
+        fRange *= 2.0; //double the range
+    }
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
 
     while(GetIsObjectValid(oTarget))
     {
@@ -109,18 +176,8 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, SAVETH))
-            {
-                nPersonalDamage  = nPersonalDamage/2;
-                if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-                {
-                    nPersonalDamage = 0;
-                }
-            }
-            else if(GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-            {
-                nPersonalDamage = nPersonalDamage/2;
-            }
+            nPersonalDamage = PRCGetReflexAdjustedDamage(nPersonalDamage, oTarget, nSaveDC, SAVETH);
+            
             if (nPersonalDamage > 0)
             {
                 //Set Damage and VFX
@@ -132,7 +189,7 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
     }
 }
 
@@ -221,12 +278,22 @@ void RandomBreath(object oPC ,object oSkin ,int dChaos ,int nSaveDC ,int nLevel 
     effect eVis, eBreath;
 
     int nPersonalDamage;
-
-    eVis = EffectVisualEffect(494);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
+    
+    float fRange = 10.0;//meters not feet!
+    int nSize = PRCGetCreatureSize(OBJECT_SELF);
+    fRange = GetRangeFromSize(nSize);
+    
+    int nBreathShape = SHAPE_SPELLCONE;
+    
+    //these are lines not cones
+    if(IsLineBreath())
+    {
+        nBreathShape = SHAPE_SPELLCYLINDER;
+        fRange *= 2.0; //double the range
+    }
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
 
     while(GetIsObjectValid(oTarget))
     {
@@ -238,18 +305,7 @@ void RandomBreath(object oPC ,object oSkin ,int dChaos ,int nSaveDC ,int nLevel 
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, chSaveth))
-            {
-                nPersonalDamage  = nPersonalDamage/2;
-                if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-                {
-                    nPersonalDamage = 0;
-                }
-            }
-            else if(GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-            {
-                nPersonalDamage = nPersonalDamage/2;
-            }
+            nPersonalDamage = PRCGetReflexAdjustedDamage(nPersonalDamage, oTarget, nSaveDC, chSaveth);
             if (nPersonalDamage > 0)
             {
                 //Set Damage and VFX
@@ -261,7 +317,7 @@ void RandomBreath(object oPC ,object oSkin ,int dChaos ,int nSaveDC ,int nLevel 
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
     }
 }
 
@@ -305,12 +361,21 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
     effect eVis, eBreath;
 
     int nPersonalDamage;
-
-    eVis = EffectVisualEffect(494);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
+    float fRange = 10.0;//meters not feet!
+    int nSize = PRCGetCreatureSize(OBJECT_SELF);
+    fRange = GetRangeFromSize(nSize);
+    
+    int nBreathShape = SHAPE_SPELLCONE;
+    
+    //these are lines not cones
+    if(IsLineBreath())
+    {
+        nBreathShape = SHAPE_SPELLCYLINDER;
+        fRange *= 2.0; //double the range
+    }
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
 
     while(GetIsObjectValid(oTarget))
     {
@@ -322,22 +387,14 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, chSaveth))
-            {
-                nPersonalDamage  = nPersonalDamage/2;
-                if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-                {
-                    nPersonalDamage = 0;
-                }
-            }
-            else if(GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-            {
-                nPersonalDamage = nPersonalDamage/2;
-            }
+            nPersonalDamage = PRCGetReflexAdjustedDamage(nPersonalDamage, oTarget, nSaveDC, chSaveth);
             if (nPersonalDamage > 0)
             {
                 //Set Damage and VFX
-                eBreath = EffectDamage(nPersonalDamage, pyclBreath);
+                //eBreath = EffectDamage(nPersonalDamage, pyclBreath);
+                effect eBreath1 = EffectDamage(nPersonalDamage/2, DAMAGE_TYPE_FIRE);
+                effect eBreath2 = EffectDamage(nPersonalDamage/2, DAMAGE_TYPE_SONIC);
+                eBreath = EffectLinkEffects(eBreath2, eBreath1);
                 eVis = EffectVisualEffect(chVisual);
                 //Apply the VFX impact and effects
                 DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
@@ -345,7 +402,7 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF);
     }
 }
 
@@ -360,12 +417,34 @@ void ShadowBreath(object oPC ,object oSkin ,int dShadow ,int nSaveDC ,int nLevel
     effect eVis, sDrain;
 
     int shadowDrain;
+    float fRange = 10.0;//meters not feet!
+    int nSize = PRCGetCreatureSize(OBJECT_SELF);
+    switch(nSize)
+    {
+        case CREATURE_SIZE_FINE:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_DIMINUTIVE:  fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_TINY:        fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_SMALL:       fRange = FeetToMeters(30.0); break;
+        case CREATURE_SIZE_MEDIUM:      fRange = FeetToMeters(30.0); break;
+        //PnP says 30, but I think this doesnt fit the progression so Ive made it 40
+        //Primogenitor
+        case CREATURE_SIZE_LARGE:       fRange = FeetToMeters(40.0); break; 
+        case CREATURE_SIZE_HUGE:        fRange = FeetToMeters(50.0); break;
+        case CREATURE_SIZE_GARGANTUAN:  fRange = FeetToMeters(60.0); break;
+        case CREATURE_SIZE_COLOSSAL:    fRange = FeetToMeters(70.0); break;
+    }
 
-    eVis = EffectVisualEffect(494);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
+    int nBreathShape = SHAPE_SPELLCONE;
+
+    //these are lines not cones
+    if(IsLineBreath())
+    {
+        nBreathShape = SHAPE_SPELLCYLINDER;
+        fRange *= 2.0; //double the range
+    }
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
 
     while(GetIsObjectValid(oTarget))
     {
@@ -377,14 +456,7 @@ void ShadowBreath(object oPC ,object oSkin ,int dShadow ,int nSaveDC ,int nLevel
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay
             fDelay = GetDistanceBetween(oPC, oTarget)/20;
-            if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, nSaveDC, SAVING_THROW_TYPE_NONE))
-            {
-                shadowDrain  = 0;
-                if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-                {
-                    shadowDrain = 0;
-                }
-            }
+            shadowDrain = PRCGetReflexAdjustedDamage(shadowDrain, oTarget, nSaveDC, SAVING_THROW_TYPE_NEGATIVE);
             if (shadowDrain > 0)
             {
                 //Set Damage and VFX
@@ -396,7 +468,7 @@ void ShadowBreath(object oPC ,object oSkin ,int dShadow ,int nSaveDC ,int nLevel
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
     }
 }
 
@@ -406,6 +478,17 @@ void main()
     //Declare main variables. 
     object oPC = OBJECT_SELF; 
     object oSkin = GetPCSkin(oPC); 
+    if(GetLocalInt(oPC, "DragonDiscipleBreathLock"))
+    {
+        SendMessageToPC(oPC, "You cannot use your breath weapon again so soon");
+        IncrementRemainingFeatUses(oPC, FEAT_DRAGON_DIS_BREATH);
+        return;
+    }   
+    SetLocalInt(oPC, "DragonDiscipleBreathLock", TRUE);
+    float fDelay = RoundsToSeconds(d4());
+    //put metabreath delay calculation in here
+    DelayCommand(fDelay, DeleteLocalInt(oPC, "DragonDiscipleBreathLock"));
+    DelayCommand(fDelay, SendMessageToPC(oPC, "Your breath weapon is ready now"));
     
     int cBoost = GetAbilityModifier(ABILITY_CONSTITUTION)>0 ? GetAbilityModifier(ABILITY_CONSTITUTION):0;
     int nSaveDC;
@@ -415,73 +498,25 @@ void main()
     
     //Sets the save DC for Dragon Breath attacks.  This is a reflex save to halve the damage.
     //Save is 10+CON+1/2 DD level.  Gains +1 at level 13, and every 3 levels after.
-    if (nLevel <13)
-    {
-        nSaveDC = (10 + ((nLevel)/2) + cBoost);
-    }
-    else if (nLevel <16)
-    {
-        nSaveDC = (11 + ((nLevel)/2) + cBoost);
-    }
-    else if (nLevel <19)
-    {
-        nSaveDC = (12 + ((nLevel)/2) + cBoost);
-    }
-    else if (nLevel <22)
-    {
-        nSaveDC = (13 + ((nLevel)/2) + cBoost);
-    }
-    else if (nLevel <25)
-    {
-        nSaveDC = (14 + ((nLevel)/2) + cBoost);
-    }
-    else if (nLevel <28)
-    {
-        nSaveDC = (15 + ((nLevel)/2) + cBoost);
-    }
-    else if (nLevel <31)
-    {
-        nSaveDC = (16 + ((nLevel)/2) + cBoost);
-    }
+    if (nLevel <13)        nSaveDC = (10 + ((nLevel)/2) + cBoost);
+    else if (nLevel <16)   nSaveDC = (11 + ((nLevel)/2) + cBoost);
+    else if (nLevel <19)   nSaveDC = (12 + ((nLevel)/2) + cBoost);
+    else if (nLevel <22)   nSaveDC = (13 + ((nLevel)/2) + cBoost);
+    else if (nLevel <25)   nSaveDC = (14 + ((nLevel)/2) + cBoost);
+    else if (nLevel <28)   nSaveDC = (15 + ((nLevel)/2) + cBoost);
+    else                   nSaveDC = (16 + ((nLevel)/2) + cBoost);
 
     //Sets damage levels for Dragon Breath attacks.  2d10 at level 3, 
     //4d10 at level 7, and then an additional 2d10 every 3 levels (10, 13, 16, ect)
-    if (nLevel <7)
-    {
-        nDamageDice = 2;
-    }
-    else if (nLevel <10)
-    {
-        nDamageDice = 4;
-    }
-    else if (nLevel <13)
-    {
-        nDamageDice = 6;
-    }
-    else if (nLevel <16)
-    {
-        nDamageDice = 8;
-    }
-    else if (nLevel <19)
-    {
-        nDamageDice = 10;
-    }
-    else if (nLevel <22)
-    {
-        nDamageDice = 12;
-    }
-    else if (nLevel <25)
-    {
-        nDamageDice = 14;
-    }
-    else if (nLevel <28)
-    {
-        nDamageDice = 16;
-    }
-    else if (nLevel <31)
-    {
-        nDamageDice = 18;
-    }
+    if (nLevel <7)        nDamageDice = 2;
+    else if (nLevel <10)  nDamageDice = 4;
+    else if (nLevel <13)  nDamageDice = 6;
+    else if (nLevel <16)  nDamageDice = 8;
+    else if (nLevel <19)  nDamageDice = 10;
+    else if (nLevel <22)  nDamageDice = 12;
+    else if (nLevel <25)  nDamageDice = 14;
+    else if (nLevel <28)  nDamageDice = 16;
+    else                  nDamageDice = 18;
     int nDamage = d10(nDamageDice);
 
     //Only Dragons with Breath Weapons will have damage caused by their breath attack.
@@ -521,9 +556,15 @@ void main()
     int dChaos = GetHasFeat(FEAT_CHAOS_DRAGON, OBJECT_SELF);
     int dPyCla = GetHasFeat(FEAT_PYROCLASTIC_DRAGON, OBJECT_SELF);
     int dShadow = GetHasFeat(FEAT_SHADOW_DRAGON, OBJECT_SELF);
-	
+    
     if (DBREED>0) BreathAttack(oPC,oSkin,DBREED,nSaveDC,nLevel,nDamage);
     if (dChaos>0) RandomBreath(oPC,oSkin,dChaos,nSaveDC,nLevel,nDamage);
     if (dPyCla>0) sonfireBreath(oPC,oSkin,dShadow,nSaveDC,nLevel,nDamage);
     if (dShadow>0) ShadowBreath(oPC,oSkin,dShadow,nSaveDC,nLevel);
+    
+    //breath VFX
+    effect eVis = EffectVisualEffect(494);
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
 }
+
+*/

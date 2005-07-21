@@ -86,6 +86,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	if (nAugment > 0) 
 	{
 		nDC += nAugment/2;
+		nDice += nAugment;
 	}
 	
     	effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
@@ -101,7 +102,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		{
 		       	if (oTarget != OBJECT_SELF)
 			{
-		       		if (nAugment > 0) nDice += nAugment;
 		      		int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
                    		nDamage += nDice;
                    		

@@ -70,8 +70,7 @@ void main()
                     array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), "empty");
                 else
                 {
-                    string sFile = Get2DACache("classes", "FeatsTable", nSpellClass);
-                    sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+                    string sFile = GetFileForClass(nSpellClass);
                     int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID));
                     array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
                         GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
@@ -84,8 +83,7 @@ void main()
             SetCustomToken(99, "Select a spell");
             int nSpellLevel = GetLocalInt(oPC, "SpellLevel");
             int nSpellClass = GetLocalInt(oPC, "SpellClass");
-            string sFile = Get2DACache("classes", "FeatsTable", nSpellClass);
-            sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+            string sFile = GetFileForClass(nSpellClass);
             int i;
             for(i=1;i<200;i++)
             {

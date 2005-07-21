@@ -72,7 +72,21 @@ void SpellResis(object oPC ,object oSkin ,int nLevel)
 //Adds True Seeing to all Dragon Disciples at level 20.
 void SeeTrue(object oPC ,object oSkin ,int nLevel) 
 { 
-    DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyTrueSeeing(),oSkin)); 
+    if(GetPRCSwitch(PRC_PNP_TRUESEEING))
+    {
+        effect eSight = EffectSeeInvisible();
+        int nSpot = GetPRCSwitch(PRC_PNP_TRUESEEING_SPOT_BONUS);
+        if(nSpot == 0)
+            nSpot = 15;
+        effect eSpot = EffectSkillIncrease(SKILL_SPOT, nSpot);
+        effect eUltra = EffectUltravision();
+        eSight = EffectLinkEffects(eSight, eSpot);
+        eSight = EffectLinkEffects(eSight, eUltra);
+        eSight = SupernaturalEffect(eSight);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSight, oPC);
+    }
+    else    
+        DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyTrueSeeing(),oSkin)); 
 } 
 
 void main() 
@@ -148,9 +162,11 @@ void main()
     
     int nLevel = GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC);
     
-    int thickScale = GetHasFeat(DRACONIC_ARMOR_AUG_2,oPC) ? 2 :
-                     GetHasFeat(DRACONIC_ARMOR_AUG_1,oPC) ? 1 :
-                     -1;
+    int thickScale = -1;
+    if(GetHasFeat(DRACONIC_ARMOR_AUG_2,oPC)) 
+        thickScale = 2;
+    else if(GetHasFeat(DRACONIC_ARMOR_AUG_1,oPC))
+        thickScale = 1;
  
     SetCompositeBonus(oSkin, "ScaleThicken", thickScale, ITEM_PROPERTY_AC_BONUS);
                 

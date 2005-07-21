@@ -27,7 +27,7 @@ Primogenitor
 //:: Created By: Georg Zoeller (modified by Silver)
 //:: Created On: June, 17, 2003 (June, 7, 2005)
 //:://////////////////////////////////////////////
-
+*/
 #include "prc_alterations"
 #include "NW_I0_SPELLS"
 #include "inc_item_props" 
@@ -567,4 +567,3 @@ void main()
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
 }
 
-*/

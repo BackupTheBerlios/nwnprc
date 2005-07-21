@@ -402,7 +402,7 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF);
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
     }
 }
 

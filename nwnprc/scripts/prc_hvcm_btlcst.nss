@@ -4,6 +4,7 @@
 #include "prc_spell_const"
 #include "prc_ipfeat_const"
 #include "inc_item_props"
+#include "nw_i0_spells"
 
 void main()
 {

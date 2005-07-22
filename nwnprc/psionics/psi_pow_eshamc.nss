@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
 
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBlind, oTarget, 6.0,TRUE,-1,GetManifesterLevel(GetAreaOfEffectCreator()));
+	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
     //Select the next target within the spell shape.
     oTarget = GetNextInPersistentObject(OBJECT_SELF, OBJECT_TYPE_CREATURE);

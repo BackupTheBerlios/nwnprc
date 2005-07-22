@@ -41,7 +41,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     object oTarget = GetEnteringObject();
     effect eBlind = EffectBlindness();
     
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBlind, oTarget, 6.0,TRUE,-1,GetManifesterLevel(GetAreaOfEffectCreator()));
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlind, oTarget);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
     SetLocalInt(oTarget, "EShamConc", TRUE);
 

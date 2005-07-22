@@ -261,14 +261,17 @@ void Battlecast()
 	string sSpellLevel = lookup_spell_level(PRCGetSpellId());
 	int nSpellLevel = StringToInt(sSpellLevel);
 	
-	
-	// Make sure the levels are right for both the caster and the spells.
-	// Level 8 spells and under at level 5
-	if (nLevel == 5 && 8 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
-	// Level 4 spells and under at level 3
-	else if (nLevel >= 3 && 4 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
-	// Level 2 spells and under at level 1
-	else if (nLevel >= 1 && 2 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
+	// Don't want to smack allies upside the head when casting a spell.
+	if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC) && oTarget != oPC)
+	{
+		// Make sure the levels are right for both the caster and the spells.
+		// Level 8 spells and under at level 5
+		if (nLevel == 5 && 8 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
+		// Level 4 spells and under at level 3
+		else if (nLevel >= 3 && 4 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
+		// Level 2 spells and under at level 1
+		else if (nLevel >= 1 && 2 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
+	}
 }
 
 int X2UseMagicDeviceCheck()

@@ -102,10 +102,10 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
                 if (GetIsDead(oTarget))
                 {
                     eHP = EffectTemporaryHitpoints(nDamage);
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oCaster, HoursToSeconds(1),TRUE,-1,nCaster);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oCaster, HoursToSeconds(1),TRUE,-1,nCaster);
                 }
-                else    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
+                else    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oCaster, HoursToSeconds(1),TRUE,-1,nCaster);
             }// end if - resist failed
         }// end if - touch attack succeeded
     }// end if - could manifest

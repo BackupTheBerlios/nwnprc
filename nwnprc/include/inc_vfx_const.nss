@@ -3,8 +3,8 @@
 //:: inc_vfx_const
 //::///////////////////////////////////////////////
 /*
-	Constants for vfx present in visualeffects.2da that
-	do not have a constant defined by bioware.
+    Constants for vfx present in visualeffects.2da that
+    do not have a constant defined by bioware.
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -347,3 +347,6 @@ const int VFX_IMP_REDUCE_ABILITY_SCORE_CYA       = 1225;
 const int VFX_IMP_REDUCE_ABILITY_SCORE_BLU       = 1226;
 const int VFX_IMP_REDUCE_ABILITY_SCORE_PUR       = 1227;
 const int VFX_IMP_REDUCE_ABILITY_SCORE_SOUNDFX   = 1228;
+
+//Baelnorn eyes by Tenjac
+const int VFX_BAELN_EYES            = 808; 

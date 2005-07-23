@@ -1439,22 +1439,22 @@ const int FEAT_DRACONIC_SIZE_INCREASE_1          = 4152;
 const int FEAT_DRACONIC_SIZE_INCREASE_2          = 4153;
 
 // Complete Adv Ninja
-const int FEAT_EPIC_ACROBATICS_8 	= 2484;
-const int FEAT_EPIC_ACROBATICS_10	= 2485;
-const int FEAT_EPIC_ACROBATICS_12	= 2486;
-const int FEAT_EPIC_NINJA_CA		= 2487;
-const int FEAT_KI_POWER 		= 2488;
-const int FEAT_ACROBATICS_2 		= 2489;
-const int FEAT_ACROBATICS_4 		= 2490;
-const int FEAT_ACROBATICS_6		= 2491;
-const int FEAT_GHOST_SIGHT		= 2492;
-const int FEAT_GHOST_STEP		= 2493;
-const int FEAT_GHOST_STRIKE		= 2494;
-const int FEAT_GHOST_WALK		= 2495;
-const int FEAT_GREAT_LEAP		= 2496;
-const int FEAT_GREATER_KI_DODGE		= 2497;
-const int FEAT_KI_DODGE			= 2498;
-const int FEAT_GHOST_STEP_2  		= 2499;
+const int FEAT_EPIC_ACROBATICS_8    = 2484;
+const int FEAT_EPIC_ACROBATICS_10   = 2485;
+const int FEAT_EPIC_ACROBATICS_12   = 2486;
+const int FEAT_EPIC_NINJA_CA        = 2487;
+const int FEAT_KI_POWER         = 2488;
+const int FEAT_ACROBATICS_2         = 2489;
+const int FEAT_ACROBATICS_4         = 2490;
+const int FEAT_ACROBATICS_6     = 2491;
+const int FEAT_GHOST_SIGHT      = 2492;
+const int FEAT_GHOST_STEP       = 2493;
+const int FEAT_GHOST_STRIKE     = 2494;
+const int FEAT_GHOST_WALK       = 2495;
+const int FEAT_GREAT_LEAP       = 2496;
+const int FEAT_GREATER_KI_DODGE     = 2497;
+const int FEAT_KI_DODGE         = 2498;
+const int FEAT_GHOST_STEP_2         = 2499;
 
 // Fast Healing
 const int FAST_HEALING_1                         = 4145;
@@ -1867,3 +1867,23 @@ const int FEAT_WIDEN_POWER                  = 4943;
 
 //ACP feat
 const int FEAT_ACP_FEAT                     = 2892;
+
+//Baelnorn
+const int FEAT_BAELN_PROP = 3538;
+const int FEAT_BAELN_TOUCH = 3539;
+const int FEAT_BAELN_ABIL = 3540;
+const int FEAT_PROJECTION = 3541;
+const int FEAT_BAELN_DEF = 3542;
+const int FEAT_UNDEAD_HD = 3543;
+const int FEAT_TURN_RESISTANCE = 3544;
+const int FEAT_IMPROVED_TURN_RESISTANCE = 3545;
+const int FEAT_IMMUNITY_ABILITY_DECREASE = 3546;
+const int FEAT_IMMUNITY_CRITICAL = 3547;
+const int FEAT_IMMUNITY_DEATH = 3991;
+const int FEAT_IMMUNITY_DISEASE = 3992;
+const int FEAT_IMMUNITY_MIND_SPELLS = 3993;
+const int FEAT_IMMUNITY_PARALYSIS = 3994;
+const int FEAT_IMMUNITY_POISON = 3995;
+const int FEAT_IMMUNITY_SNEAKATTACK = 3996;
+const int FEAT_POSITIVE_ENERGY_RESISTANCE = 3997;
+const int FEAT_TURNING_IMMUNITY = 3998;

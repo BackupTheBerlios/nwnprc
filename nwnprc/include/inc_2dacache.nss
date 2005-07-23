@@ -8,6 +8,10 @@ int PRC_SQLFetch();
 string PRC_SQLGetData(int iCol);
 void PRC_SQLCommit();
 
+// Problems can arise with SQL commands if variables or values have single quotes
+// in their names. These functions are a replace these quote with the tilde character
+string ReplaceSingleChars(string sString, string sTarget, string sReplace);
+
 #include "prc_inc_switch"
 #include "inc_utility"
 #include "inc_fileends"
@@ -105,6 +109,28 @@ string PRC_SQLGetData(int iCol)
     }
 
     return sColValue;
+}
+
+
+string ReplaceSingleChars(string sString, string sTarget, string sReplace)
+{
+    if (FindSubString(sString, sTarget) == -1) // not found
+        return sString;
+
+    int i;
+    string sReturn = "";
+    string sChar;
+
+    // Loop over every character and replace special characters
+    for (i = 0; i < GetStringLength(sString); i++)
+    {
+        sChar = GetSubString(sString, i, 1);
+        if (sChar == sTarget)
+            sReturn += sReplace;
+        else
+            sReturn += sChar;
+    }
+    return sReturn;
 }
 
 void PRCMakeTables()

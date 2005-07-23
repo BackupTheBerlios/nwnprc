@@ -6,6 +6,10 @@
  * these switches and in addition some functions dealing with the
  * implementation of certain switches.
  */
+ 
+ /* This variable MUST be updated with every new version of the PRC!!! */
+ 
+ const string PRC_VERSION                           = "PRC 2.3 alpha 6";
 
 
 /******************************************************************************\
@@ -1243,6 +1247,8 @@ const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
 /**
  * Set this if you want to use the bioware db for 2da caching
  * the value is the number of Hbs between caching runs
+ * Defaults to 600 (10 mins) if not set
+ * cache will be flushed automatically when the PRC version changes
  */
 const string PRC_USE_BIOWARE_DATABASE                = "PRC_USE_BIOWARE_DATABASE";
 
@@ -1256,7 +1262,7 @@ const string PRC_DB_PRECACHE                         = "PRC_DB_PRECACHE";
 
 /**
  * Set this if you are using SQLite (the built-in database in NWNX-ODBC2).
- * This will use transactions.
+ * This will use transactions and SQLite specific syntax.
  */
 const string PRC_DB_SQLLITE                          = "PRC_DB_SQLLITE";
 
@@ -1266,6 +1272,13 @@ const string PRC_DB_SQLLITE                          = "PRC_DB_SQLLITE";
  * Longer is visa versa.
  */
 const string PRC_DB_SQLLITE_INTERVAL                 = "PRC_DB_SQLLITE_INTERVAL";
+
+/**
+ * Set this if you are using MySQL.
+ * This will not use transactions and will use MySQL specific syntax
+ */
+const string PRC_DB_MYSQL                            = "PRC_DB_MYSQL";
+
 
 /**
  * TODO: Write description.

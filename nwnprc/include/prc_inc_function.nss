@@ -139,6 +139,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC) > 0)        ExecuteScript("prc_cbtmed", oPC);
     if(GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_dradis", oPC));
     if(GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oPC) > 0)        ExecuteScript("prc_warsling", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BAELNORN,oPC) > 0)             ExecuteScript("prc_baelnorn", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);

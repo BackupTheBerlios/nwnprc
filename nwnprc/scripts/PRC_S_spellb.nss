@@ -22,7 +22,7 @@ void main()
         if(nStage == 0)
         {
             //select spell class
-            SetCustomToken(99, "Select a spell book");
+            SetCustomToken(99, "Select a spell book:");
             int i;
             for(i=12;i<=255;i++)
             {
@@ -38,11 +38,26 @@ void main()
         if(nStage == 1)
         {
             //select spell level
-            SetCustomToken(99, "Select a spell level");
             int nSpellClass = GetLocalInt(oPC, "SpellClass");
+            string sFile = GetFileForClass(nSpellClass);
             int nClassLevel = GetLevelByClass(nSpellClass, oPC);
             int nAbilityScore = GetAbilityForClass(nSpellClass, oPC);
+            string sMessage;
             int i;
+            sMessage += "You have remaining:\n";
+            int nArraySize = persistant_array_get_size(oPC, "NewSpellbookMem_"+IntToString(nSpellClass));     
+            for(i=0;i<nArraySize;i++)
+            {
+                int nUses = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nSpellClass), i);
+                if(nUses > 0)
+                {
+                    int nSpellID = StringToInt(Get2DACache(sFile, "SpellID", i));
+                    string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
+                    sMessage += "  "+IntToString(nUses)+" "+sSpellName+"\n";
+                }
+            }
+            sMessage += "\nSelect a spell level:";
+            SetCustomToken(99, sMessage);
             for(i=0;i<=9;i++)
             {
                 if(GetSlotCount(nClassLevel, i, nAbilityScore, nSpellClass))
@@ -55,7 +70,7 @@ void main()
         else if(nStage == 2)
         {
             //select spell slot
-            SetCustomToken(99, "Select a spell slot");
+            SetCustomToken(99, "Select a spell slot:");
             int nSpellClass = GetLocalInt(oPC, "SpellClass");
             int nSpellLevel = GetLocalInt(oPC, "SpellLevel");
             int nClassLevel = GetLevelByClass(nSpellClass, oPC);
@@ -80,7 +95,7 @@ void main()
         else if(nStage == 3 && !GetLocalInt(oPC, "Stage3Setup"))
         {
             //select spell
-            SetCustomToken(99, "Select a spell");
+            SetCustomToken(99, "Select a spell:");
             int nSpellLevel = GetLocalInt(oPC, "SpellLevel");
             int nSpellClass = GetLocalInt(oPC, "SpellClass");
             string sFile = GetFileForClass(nSpellClass);

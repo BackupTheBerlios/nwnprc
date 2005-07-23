@@ -146,7 +146,7 @@ string LetoGet(string sLocation)
 //unicorn
 // /Str;
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
-        return "<"+sLocation+">\n";
+        return "<"+sLocation+">";
     else        
         return "print /"+sLocation+";";
 

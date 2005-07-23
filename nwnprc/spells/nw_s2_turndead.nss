@@ -135,13 +135,24 @@ void RebukeUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int 
                     bValid = TRUE;
                 }
 
+                
+                //PROJECTION CHECK
+                //this must be just before the results
+                if (GetLocalInt(oTarget, "BaelnornProjection_Active"))
+                {
+                    bValid = FALSE;
+                }
+                //TURN IMMUNITY CHECK
+                else if(GetHasFeat(FEAT_TURNING_IMMUNITY, oTarget))
+                {
+                    bValid = FALSE;
+                }
+                
                 //Apply results of the turn
                 if( bValid == TRUE)
                 {
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    //if(IntToFloat(nClassLevel)/2.0 >= IntToFloat(nHD))
-                    //{
-
+                    
                     if((nClassLevel/2) >= nHD && CanCommand(nClassLevel, nHD))
                     {
                         //Fire cast spell at event for the specified target
@@ -247,6 +258,18 @@ void TurnUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int nC
                     bValid = TRUE;
                 }
 
+                //PROJECTION CHECK
+                //this must be just before the results
+                if (GetLocalInt(oTarget, "BaelnornProjection_Active"))
+                {
+                    bValid = FALSE;
+                }
+                //TURN IMMUNITY CHECK
+                else if(GetHasFeat(FEAT_TURNING_IMMUNITY, oTarget))
+                {
+                    bValid = FALSE;
+                }
+                
                 //Apply results of the turn
                 if( bValid == TRUE)
                 {
@@ -294,6 +317,7 @@ void main()
     int nHospLevel = GetLevelByClass(CLASS_TYPE_HOSPITALER);
     int nSolLevel = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT);
     int nTNLevel = GetLevelByClass(CLASS_TYPE_TRUENECRO);
+    int nBaelnLevel = GetLevelByClass(CLASS_TYPE_BAELNORN);
     int nTotalLevel =  GetHitDice(OBJECT_SELF);
 
     int nTurnLevel = nClericLevel;
@@ -327,6 +351,12 @@ void main()
     {
       nClassLevel += nSolLevel;
       nTurnLevel  += nSolLevel;
+    }
+    //Baelnorn
+    if (nAlign == ALIGNMENT_GOOD)
+    {
+        nClassLevel += nBaelnLevel;
+        nTurnLevel  += nBaelnLevel;
     }
 
     //Flags for bonus turning types
@@ -363,7 +393,7 @@ void main()
     }
     if (nAlign != ALIGNMENT_EVIL && (GetHasSpellEffect(SPELL_ANTIPAL_DESECRATE) || GetHasSpellEffect(SPELL_DES_20)||GetHasSpellEffect(SPELL_DES_100)))
     {
-    	 nTurnCheck -= 3;
+         nTurnCheck -= 3;
     }
     //Determine the maximum HD of the undead that can be turned.
     if(nTurnCheck <= 0)

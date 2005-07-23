@@ -666,8 +666,8 @@ void UsePower(int nPower, int nClass, int bIgnorePP = FALSE, int nLevelOverride 
     //Ignore power points?
     SetLocalInt(OBJECT_SELF, "IgnorePowerPoints", bIgnorePP);
 
-    //SendMessageToPC(OBJECT_SELF, "Clearing all actions in preparation for second stage of the power.");
-    //AssignCommand(OBJECT_SELF, ClearAllActions());
+    SendMessageToPC(OBJECT_SELF, "Clearing all actions in preparation for second stage of the power.");
+    /*AssignCommand(OBJECT_SELF, */ClearAllActions()/*)*/;
 
     ActionCastSpell(nPower, nLevelOverride);
 }

@@ -1456,6 +1456,15 @@ const int FEAT_GREATER_KI_DODGE     = 2497;
 const int FEAT_KI_DODGE         = 2498;
 const int FEAT_GHOST_STEP_2         = 2499;
 
+//Alienist
+const int FEAT_SUMMON_ALIEN                      = 1572;
+const int FEAT_ALIEN_BLESSING                    = 1573;
+const int FEAT_MAD_CERTAINTY                     = 1574;
+const int FEAT_PSEUDONATURAL_FAMILIAR            = 1575;
+const int FEAT_EXTRA_SUMMONING                   = 1576;
+const int FEAT_INSANE_CERTAINTY                  = 1577;
+const int FEAT_TRANSCENDENCE                     = 1578;
+
 // Fast Healing
 const int FAST_HEALING_1                         = 4145;
 const int FAST_HEALING_2                         = 4146;

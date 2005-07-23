@@ -49,6 +49,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
         eSummon = EffectSummonCreature("NW_S_WOLFDIRE");
     }
+    if(GetHasFeat(FEAT_SUMMON_ALIEN))
+    {
+        eSummon = EffectSummonCreature("PSEUDOBOARDIRE");
+        if(GetHasFeat(FEAT_ANIMAL_DOMAIN_POWER))
+        {
+            eSummon = EffectSummonCreature("PSEUDODIREWOLF");
+        }
+    }
     //Make metamagic check for extend
     if ((nMetaMagic & METAMAGIC_EXTEND))
     {

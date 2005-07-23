@@ -41,9 +41,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
     effect eSummon = EffectSummonCreature("NW_S_beardire");
+    int nRoll = d4();
     if(GetHasFeat(FEAT_ANIMAL_DOMAIN_POWER))
     {
-        int nRoll = d4();
         switch (nRoll)
         {
             case 1:
@@ -61,6 +61,31 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             case 4:
                 eSummon = EffectSummonCreature("NW_S_FIREHUGE");
             break;
+        }
+    }
+    if(GetHasFeat(FEAT_SUMMON_ALIEN))
+    {
+        eSummon = EffectSummonCreature("PSEUDOBEARDIRE");
+        if(GetHasFeat(FEAT_ANIMAL_DOMAIN_POWER))
+        {
+            switch (nRoll)
+            {
+                case 1:
+                    eSummon = EffectSummonCreature("PSEUDOAIRHUGE");
+                break;
+
+                case 2:
+                    eSummon = EffectSummonCreature("PSEUDOWATERHUGE");
+                break;
+
+                case 3:
+                    eSummon = EffectSummonCreature("PSEUDOEARTHHUGE");
+                break;
+
+                case 4:
+                    eSummon = EffectSummonCreature("PSEUDOFIREHUGE");
+                break;
+            }
         }
     }
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_2);

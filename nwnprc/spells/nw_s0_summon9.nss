@@ -44,6 +44,29 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     effect eSummon;
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_3);
     int nRoll = d4();
+    if(GetHasFeat(FEAT_SUMMON_ALIEN))
+    {
+        switch (nRoll)
+        {
+            case 1:
+                eSummon = EffectSummonCreature("PSEUDOAIRELDER");
+            break;
+
+            case 2:
+                eSummon = EffectSummonCreature("PSEUDOWATERELDER");
+            break;
+
+            case 3:
+                eSummon = EffectSummonCreature("PSEUDOEARTHELDER");
+            break;
+
+            case 4:
+                eSummon = EffectSummonCreature("PSEUDOFIREELDER");
+            break;
+
+        }
+    }
+    else
     switch (nRoll)
     {
         case 1:

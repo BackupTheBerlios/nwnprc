@@ -43,6 +43,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
     effect eSummon = EffectSummonCreature("NW_S_badgerdire");
+    if(GetHasFeat(FEAT_SUMMON_ALIEN))
+    {
+        eSummon = EffectSummonCreature("PSEUDODIREBADG");
+        if(GetHasFeat(FEAT_ANIMAL_DOMAIN_POWER))
+        {
+            eSummon = EffectSummonCreature("PSEUDOBOARDIRE");
+        }
+    }
     if(GetHasFeat(FEAT_ANIMAL_DOMAIN_POWER))
     {
         eSummon = EffectSummonCreature("NW_S_BOARDIRE");

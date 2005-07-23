@@ -23,6 +23,7 @@ public final class CodeGen{
 	
 	
 	private static String prefix,
+	                      suffix,
 	                      template;
 	private static Data_2da[] data;
 	
@@ -31,20 +32,22 @@ public final class CodeGen{
 			readMe();
 	
 		prefix = args[0];
-		template = readTemplate(args[1]);
+		suffix = args[1];
+		template = readTemplate(args[2]);
 		
-		data = new Data_2da[args.length - 2];
+		data = new Data_2da[args.length - 3];
 		for(int i = 0; i < data.length; i++)
-			data[i] = new Data_2da(args[i + 2]);
+			data[i] = new Data_2da(args[i + 3]);
 		
 		doCreation(new Script(template, prefix), 0);
 	}
 	
 	private static void readMe(){
 		System.out.println("Usage:\n"+
-		                   "\tjava CodeGen namePrefix templatePath 2daPaths...\n"+
+		                   "\tjava CodeGen namePrefix nameSuffix templatePath 2daPaths...\n"+
 		                   "\n"+
 		                   "namePrefix\tprefix that all the resulting filenames will share\n"+
+		                   "nameSuffix\tsuffix that all the resulting filenames will share\n"+
 		                   "templatePath\tlocation of the template to use. May be absolute or relative\n"+
 		                   "2daPaths\tone or more 2da files to use fill the template with\n"+
 		                   "\n\n"+
@@ -97,10 +100,10 @@ public final class CodeGen{
 	
 	
 	private static void printScript(Script toPrint) throws Exception{
-		File target = new File(toPrint.name + ".nss");
+		File target = new File(toPrint.name + suffix);
 		// Clean up old version if necessary
 		if(target.exists()){
-			System.out.println("Deleting previous version of " + toPrint.name + ".nss");
+			System.out.println("Deleting previous version of " + target.getName());
 			target.delete();
 		}
 		target.createNewFile();

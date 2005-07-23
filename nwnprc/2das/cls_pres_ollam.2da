@@ -8,9 +8,6 @@
 4     ShieldDwarf   RACE      154              ****        
 5     Urdunnir      RACE      155              ****        
 6     WildDwarf     RACE      156              ****        
-7     Dodge         FEAT      10               ****        
-8     Toughness     FEAT      40               ****        
-9     Base_Attack   BAB       7                ****        
 10    ScriptVar     VAR       PRC_AllowOllam   0           
 11    Lore          SKILL     7                10          
 12    Perform       SKILL     11               5           

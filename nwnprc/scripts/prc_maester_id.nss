@@ -14,6 +14,11 @@
 int LoreItem(object item)
 {
 	int id=0;
+	if (!GetIdentified(item))
+	{	
+		id=1;
+  		SetIdentified(item,TRUE);
+  	}
 	int gp = GetGoldPieceValue(item);
 	int nLore;
 
@@ -54,7 +59,7 @@ int LoreItem(object item)
  		gp = gp / 100000;
  		nLore = gp + 31;
  	}
-
+	if (id) SetIdentified(item,FALSE);
 	return nLore;
 }
 

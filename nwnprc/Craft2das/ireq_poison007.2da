@@ -1,0 +1,5 @@
+2DA V2.0
+
+  LABEL           ReqType ReqParam1    ReqParam2 
+0 Wyvern_Poison   RESULT  2dapoison007 ****      
+1 CraftPoisonRank SKILL   22           25        

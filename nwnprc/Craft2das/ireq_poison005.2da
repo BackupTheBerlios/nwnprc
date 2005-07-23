@@ -1,0 +1,5 @@
+2DA V2.0
+
+  LABEL              ReqType ReqParam1    ReqParam2 
+0 Purple_Worm_Poison RESULT  2dapoison005 ****      
+1 CraftPoisonRank    SKILL   22           20        

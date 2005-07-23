@@ -1,0 +1,5 @@
+2DA V2.0
+
+  LABEL           ReqType ReqParam1    ReqParam2 
+0 Terinav_Root    RESULT  2dapoison017 ****      
+1 CraftPoisonRank SKILL   22           25        

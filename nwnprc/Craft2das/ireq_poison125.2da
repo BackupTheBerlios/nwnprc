@@ -1,0 +1,5 @@
+2DA V2.0
+
+  LABEL                 ReqType ReqParam1    ReqParam2 
+0 Huge_Centipede_Poison RESULT  2dapoison125 ****      
+1 CraftPoisonRank       SKILL   22           20        

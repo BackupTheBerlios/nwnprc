@@ -295,7 +295,7 @@ int GetDivinePRCLevels (object oCaster)
            +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oCaster) + 1) / 2
-	   +  (GetLevelByClass(CLASS_TYPE_CONTENDER, oCaster) + 1) / 2
+       +  (GetLevelByClass(CLASS_TYPE_CONTENDER, oCaster) + 1) / 2
 
            +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 
@@ -333,6 +333,7 @@ int GetIsDivineClass (int nClass)
             nClass==CLASS_TYPE_VASSAL ||
             nClass==CLASS_TYPE_KNIGHT_MIDDLECIRCLE ||
             nClass==CLASS_TYPE_KNIGHT_CHALICE ||
+            nClass==CLASS_TYPE_ANTI_PALADIN ||
             nClass==CLASS_TYPE_VIGILANT);
 }
 
@@ -721,15 +722,15 @@ int TrueNecromancy (object oCaster, int iSpellID, string sType)
 
 int StormMagic(object oCaster)
 {
-	if (!GetHasFeat(FEAT_STORMMAGIC,oCaster)) return 0;
-	
-	object oArea = GetArea(oCaster);
-	
-	if (GetWeather(oArea) == WEATHER_RAIN || GetWeather(oArea) == WEATHER_SNOW)
-	{
-		return 1;
-	}
-	return 0;
+    if (!GetHasFeat(FEAT_STORMMAGIC,oCaster)) return 0;
+    
+    object oArea = GetArea(oCaster);
+    
+    if (GetWeather(oArea) == WEATHER_RAIN || GetWeather(oArea) == WEATHER_SNOW)
+    {
+        return 1;
+    }
+    return 0;
 }
 
 int ShadowWeave (object oCaster, int iSpellID)
@@ -1045,10 +1046,10 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
      // Second Chance power in psionics
      if (nSaveRoll == 0 && GetLocalInt(oTarget, "SecondChance") && !GetLocalInt(oTarget, "SecondChanceTimer"))
      {
-     	// Can't use this ability again for a round
-     	SetLocalInt(oTarget, "SecondChanceTimer", TRUE);
-     	nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
-     	DelayCommand(6.0, DeleteLocalInt(oTarget, "SecondChanceTimer"));
+        // Can't use this ability again for a round
+        SetLocalInt(oTarget, "SecondChanceTimer", TRUE);
+        nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+        DelayCommand(6.0, DeleteLocalInt(oTarget, "SecondChanceTimer"));
      }
      return nSaveRoll;
 }

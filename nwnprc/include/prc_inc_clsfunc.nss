@@ -2426,7 +2426,7 @@ int Ninja_AbilitiesEnabled (object oPC)
 {
 	object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 
-	if (GetItemACValue(GetItemInSlot(INVENTORY_SLOT_CHEST, oPC)) != 0 ||
+	if (GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, oPC)) > 0 ||
 		GetBaseItemType(oLefthand) == BASE_ITEM_SMALLSHIELD ||
 		GetBaseItemType(oLefthand) == BASE_ITEM_LARGESHIELD ||
 		GetBaseItemType(oLefthand) == BASE_ITEM_TOWERSHIELD)

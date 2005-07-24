@@ -1470,6 +1470,10 @@ const int FAST_HEALING_1                         = 4145;
 const int FAST_HEALING_2                         = 4146;
 const int FAST_HEALING_3                         = 4147;
 
+// General Feats
+const int FEAT_STORMMAGIC			 = 4182;
+const int FEAT_MAGICAL_APTITUDE			 = 4416;
+
 // Size changes
 const int FEAT_SIZE_DECREASE_1          = 2287;
 const int FEAT_SIZE_DECREASE_2          = 2288;

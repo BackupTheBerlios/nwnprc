@@ -162,7 +162,7 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
        && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)         ExecuteScript("ft_gtwf", oPC);
     if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)                ExecuteScript("ft_lingdmg", oPC);
-
+    if(GetHasFeat(FEAT_MAGICAL_APTITUDE, oPC))			 ExecuteScript("prc_magaptitude", oPC);
     if(GetHasFeat(FEAT_ETERNAL_FREEDOM, oPC))                    ExecuteScript("etern_free", oPC);
     if(GetPersistantLocalInt(oPC, "EpicSpell_TransVital"))       ExecuteScript("trans_vital", oPC);
     if(GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC))               ExecuteScript("psi_combat_manif", oPC);
@@ -536,8 +536,6 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "Combat_Mani");
     DeleteLocalInt(oSkin, "PsionicDodge");
 
-    // future PRCs Go below here
-    
     // Thrall of Graz'zt
     DeleteLocalInt(oSkin, "Dark_Charm_AE");
     DeleteLocalInt(oSkin, "Dark_Charm_PF");
@@ -552,6 +550,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "KiPowerWillBonus");
     DeleteLocalInt(oSkin, "AcroJumpBonus");
     DeleteLocalInt(oSkin, "AcroTumbBonus");
+    
     //epic spells
     //transendent vitality
     DeleteLocalInt(oSkin, "TransVitalCon");
@@ -564,6 +563,12 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "SizeChangesACN");
     DeleteLocalInt(oSkin, "SizeChangesACD");
     DeleteLocalInt(oSkin, "SizeChangesAB");
+    
+    // Magical Aptitude
+    DeleteLocalInt(oSkin, "MagicalAptitudeSpellcraft");
+    DeleteLocalInt(oSkin, "MagicalAptitudeUMD");    
+    
+    // future PRCs Go below here
 }
 
 void ScrubPCSkin(object oPC, object oSkin)

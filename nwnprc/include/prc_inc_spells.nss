@@ -179,6 +179,7 @@ object MyNextObjectInShape(int nShape, float fSize, location lTarget, int bLineO
 // Functions mostly only useful within the scope of this include
 int ArchmageSpellPower (object oCaster);
 int TrueNecromancy (object oCaster, int iSpellID, string sType);
+int StormMagic(object oCaster);
 int ShadowWeave (object oCaster, int iSpellID);
 string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
 int FireAdept (object oCaster, int iSpellID);
@@ -472,7 +473,8 @@ int GetLevelByTypeArcaneFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
 
     int iBoost = TrueNecromancy(oCaster, iSpellID, "ARCANE") + 
                  ShadowWeave(oCaster, iSpellID) +
-                 FireAdept(oCaster, iSpellID);
+                 FireAdept(oCaster, iSpellID) +
+                 StormMagic(oCaster);
 
     if (iClass1 == iFirstArcane) iClass1Lev += GetArcanePRCLevels(oCaster);
     if (iClass2 == iFirstArcane) iClass2Lev += GetArcanePRCLevels(oCaster);
@@ -512,7 +514,8 @@ int GetLevelByTypeDivineFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
 
     int iBoost = TrueNecromancy(oCaster, iSpellID, "DIVINE") + 
                  ShadowWeave(oCaster, iSpellID) +
-                 FireAdept(oCaster, iSpellID);
+                 FireAdept(oCaster, iSpellID) +
+                 StormMagic(oCaster);
 
     if (iClass1 == CLASS_TYPE_PALADIN || iClass1 == CLASS_TYPE_RANGER) iClass1Lev = iClass1Lev / 2;
     if (iClass2 == CLASS_TYPE_PALADIN || iClass2 == CLASS_TYPE_RANGER) iClass2Lev = iClass2Lev / 2;
@@ -605,7 +608,8 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 
         iArcLevel += TrueNecromancy(oCaster, iSpellId, "ARCANE")
                   +  ShadowWeave(oCaster, iSpellId) 
-                  +  FireAdept(oCaster, iSpellId);
+                  +  FireAdept(oCaster, iSpellId)
+                  +  StormMagic(oCaster);
 
         iArcLevel += PractisedSpellcasting(oCaster, iCastingClass, iArcLevel); //gotta be the last one
 
@@ -631,7 +635,8 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 
         iDivLevel += TrueNecromancy(oCaster, iSpellId, "DIVINE") 
                   +  ShadowWeave(oCaster, iSpellId) 
-                  +  FireAdept(oCaster, iSpellId);
+                  +  FireAdept(oCaster, iSpellId)
+                  +  StormMagic(oCaster);
                   
         iDivLevel += PractisedSpellcasting(oCaster, iCastingClass, iDivLevel); //gotta be the last one
 
@@ -712,6 +717,19 @@ int TrueNecromancy (object oCaster, int iSpellID, string sType)
     if (sType == "DIVINE") return iSorLevel + iWizLevel + iTNLevel; // cleric levels already added.
    
     return 0;
+}
+
+int StormMagic(object oCaster)
+{
+	if (!GetHasFeat(FEAT_STORMMAGIC,oCaster)) return 0;
+	
+	object oArea = GetArea(oCaster);
+	
+	if (GetWeather(oArea) == WEATHER_RAIN || GetWeather(oArea) == WEATHER_SNOW)
+	{
+		return 1;
+	}
+	return 0;
 }
 
 int ShadowWeave (object oCaster, int iSpellID)

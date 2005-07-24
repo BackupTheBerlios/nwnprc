@@ -23,10 +23,11 @@ void DoClassFeat(string sClassFeatTable, int i=0);
 
 void ClassLoop()
 {
+    string q = PRC_SQLGetTick();
     if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
         return;
     int nReali = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT rowid FROM prc_cached2da_classes WHERE (PlayerClass = 1) LIMIT 25 OFFSET "+IntToString(nReali); 
+    string SQL = "SELECT "+q+"rowid"+q+" FROM "+q+"prc_cached2da_classes"+q+" WHERE ("+q+"PlayerClass"+q+" = 1) LIMIT 25 OFFSET "+IntToString(nReali); 
     PRC_SQLExecDirect(SQL);
     int bAtLeastOneResult;
     array_create(OBJECT_SELF, "temp_classes");
@@ -187,51 +188,52 @@ void FeatLoop(int nClassFeatStage = FALSE)
     string sFeatList = Get2DACache("classes", "FeatsTable", nClass);   
     sFeatList = GetStringLowerCase(sFeatList);
         
+    string q = PRC_SQLGetTick();    
     int i = GetLocalInt(OBJECT_SELF, "i");
     string SQL;
     if(nClassFeatStage == TRUE)
     {
-        SQL = "SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_feat.FEAT, prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2, prc_cached2da_feat.OrReqFeat0,"
-            +" prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4, prc_cached2da_feat.REQSKILL, prc_cached2da_feat.REQSKILL2,"
-            +" prc_cached2da_feat.ReqSkillMinRanks, prc_cached2da_feat.ReqSkillMinRanks2"
-            +" FROM prc_cached2da_cls_feat INNER JOIN prc_cached2da_feat"
+        SQL = "SELECT "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"FEAT"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"PREREQFEAT1"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"PREREQFEAT2"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat0"+q+","
+            +" "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat1"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat2"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat3"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat4"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"REQSKILL"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"REQSKILL2"+q+","
+            +" "+q+"prc_cached2da_feat"+q+"."+q+"ReqSkillMinRanks"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"ReqSkillMinRanks2"+q+""
+            +" FROM "+q+"prc_cached2da_cls_feat"+q+" INNER JOIN "+q+"prc_cached2da_feat"+q+""
             +" WHERE (FEAT != '****')"  
-            +" AND (prc_cached2da_cls_feat.file = '"+sFeatList+"')"
-            +" AND (prc_cached2da_cls_feat.List <= 1)"
-            +" AND ((PreReqEpic = '****') OR (PreReqEpic = 0))"
-            +" AND ((ALLCLASSESCANUSE = 0) OR (ALLCLASSESCANUSE = '****'))"
-            +" AND (MINATTACKBONUS <= "+IntToString(nBAB)+")"
-            +" AND (MINSPELLLVL <= "+IntToString(nCasterLevel)+")"
-            +" AND (MINSTR <= "+IntToString(nStr)+")"
-            +" AND (MINDEX <= "+IntToString(nDex)+")"
-            +" AND (MINCON <= "+IntToString(nCon)+")"
-            +" AND (MININT <= "+IntToString(nInt)+")"
-            +" AND (MINWIS <= "+IntToString(nWis)+")"
-            +" AND (MINCHA <= "+IntToString(nCha)+")"
-            +" AND ((MaxLevel = '****') OR (MaxLevel > "+IntToString(nLevel)+"))"
-            +" AND (MinFortSave <= "+IntToString(nFortSave)+")"
-            +" AND (prc_cached2da_cls_feat.FeatIndex != '****')" 
-            +" AND (prc_cached2da_feat.rowid = prc_cached2da_cls_feat.FeatIndex)" 
+            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"file"+q+" = '"+sFeatList+"')"
+            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"List"+q+" <= 1)"
+            +" AND (("+q+"PreReqEpic"+q+" = '****') OR ("+q+"PreReqEpic"+q+" = 0))"
+            +" AND (("+q+"ALLCLASSESCANUSE"+q+" = 0) OR ("+q+"ALLCLASSESCANUSE"+q+" = '****'))"
+            +" AND ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+")"
+            +" AND ("+q+"MINSPELLLVL"+q+" <= "+IntToString(nCasterLevel)+")"
+            +" AND ("+q+"MINSTR"+q+" <= "+IntToString(nStr)+")"
+            +" AND ("+q+"MINDEX"+q+" <= "+IntToString(nDex)+")"
+            +" AND ("+q+"MINCON"+q+" <= "+IntToString(nCon)+")"
+            +" AND ("+q+"MININT"+q+" <= "+IntToString(nInt)+")"
+            +" AND ("+q+"MINWIS"+q+" <= "+IntToString(nWis)+")"
+            +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
+            +" AND (("+q+"MaxLevel"+q+" = '****') OR ("+q+"MaxLevel"+q+" > "+IntToString(nLevel)+"))"
+            +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
+            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+" != '****')" 
+            +" AND ("+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+" = "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+")" 
             +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
     }
     else
     {
-        SQL = "SELECT rowid, FEAT, PREREQFEAT1, PREREQFEAT2, OrReqFeat0,"
-            +" OrReqFeat1, OrReqFeat2, OrReqFeat3, OrReqFeat4, REQSKILL, REQSKILL2,"
-            +" ReqSkillMinRanks, ReqSkillMinRanks2 FROM prc_cached2da_feat"
-            +" WHERE (FEAT != '****')"  
-            +" AND ((PreReqEpic = '****') OR (PreReqEpic = 0))"
-            +" AND (ALLCLASSESCANUSE = 1)"
-            +" AND (MINATTACKBONUS <= "+IntToString(nBAB)+")"
-            +" AND (MINSPELLLVL <= "+IntToString(nCasterLevel)+")"
-            +" AND (MINSTR <= "+IntToString(nStr)+")"
-            +" AND (MINDEX <= "+IntToString(nDex)+")"
-            +" AND (MINCON <= "+IntToString(nCon)+")"
-            +" AND (MININT <= "+IntToString(nInt)+")"
-            +" AND (MINWIS <= "+IntToString(nWis)+")"
-            +" AND (MINCHA <= "+IntToString(nCha)+")"
-            +" AND ((MaxLevel = '****') OR (MaxLevel > "+IntToString(nLevel)+"))"
-            +" AND (MinFortSave <= "+IntToString(nFortSave)+")"
+        SQL = "SELECT "+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "+q+"OrReqFeat0"+q+","
+            +" "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "+q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+","
+            +" "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+" FROM "+q+"prc_cached2da_feat"+q+""
+            +" WHERE ("+q+"FEAT"+q+" != '****')"  
+            +" AND (("+q+"PreReqEpic"+q+" = '****') OR ("+q+"PreReqEpic"+q+" = 0))"
+            +" AND ("+q+"ALLCLASSESCANUSE"+q+" = 1)"
+            +" AND ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+")"
+            +" AND ("+q+"MINSPELLLVL"+q+" <= "+IntToString(nCasterLevel)+")"
+            +" AND ("+q+"MINSTR"+q+" <= "+IntToString(nStr)+")"
+            +" AND ("+q+"MINDEX"+q+" <= "+IntToString(nDex)+")"
+            +" AND ("+q+"MINCON"+q+" <= "+IntToString(nCon)+")"
+            +" AND ("+q+"MININT"+q+" <= "+IntToString(nInt)+")"
+            +" AND ("+q+"MINWIS"+q+" <= "+IntToString(nWis)+")"
+            +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
+            +" AND (("+q+"MaxLevel"+q+" = '****') OR ("+q+"MaxLevel"+q+" > "+IntToString(nLevel)+"))"
+            +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
             +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
     }    
         
@@ -566,6 +568,8 @@ void SpellLoop()
     int nClass = GetLocalInt(OBJECT_SELF, "Class");
     string SQL;
     
+    string q = PRC_SQLGetTick();
+    
     //get spellschool
     int nSchool = GetLocalInt(OBJECT_SELF, "School");
     //get opposition school
@@ -575,7 +579,7 @@ void SpellLoop()
     {
         //add all cantrips
         array_create(OBJECT_SELF, "SpellLvl0");
-        SQL = "SELECT rowid FROM prc_cached2da_spells WHERE (Wiz_Sorc = 0) AND (School != '"+sOpposition+"')";
+        SQL = "SELECT "+q+"rowid"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = 0) AND ("+q+"School"+q+" != '"+sOpposition+"')";
         PRC_SQLExecDirect(SQL);
         while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
         {
@@ -591,13 +595,13 @@ void SpellLoop()
     {
         case CLASS_TYPE_WIZARD:
             nSpellLevel = 1;
-            SQL = "SELECT rowid, Name FROM prc_cached2da_spells WHERE (Wiz_Sorc = 1) AND (School != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
+            SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = 1) AND ("+q+"School"+q+" != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
             break;
         case CLASS_TYPE_SORCERER:
-            SQL = "SELECT rowid, Name FROM prc_cached2da_spells WHERE (Wiz_Sorc = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
+            SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
             break;
         case CLASS_TYPE_BARD:
-            SQL = "SELECT rowid, Name FROM prc_cached2da_spells WHERE (Bard = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
+            SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Bard"+q+" = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
             break;
     }
     PRC_SQLExecDirect(SQL);
@@ -710,29 +714,30 @@ void BonusFeatLoop()
     string sFeatList = Get2DACache("classes", "FeatsTable", nClass);   
     sFeatList = GetStringLowerCase(sFeatList);
         
+    string q = PRC_SQLGetTick();    
     int i = GetLocalInt(OBJECT_SELF, "i");
     string SQL;
-        SQL = "SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_feat.FEAT, prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2, prc_cached2da_feat.OrReqFeat0,"
-            +" prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4, prc_cached2da_feat.REQSKILL, prc_cached2da_feat.REQSKILL2,"
-            +" prc_cached2da_feat.ReqSkillMinRanks, prc_cached2da_feat.ReqSkillMinRanks2"
-            +" FROM prc_cached2da_cls_feat INNER JOIN prc_cached2da_feat"
-            +" WHERE (FEAT != '****')"  
-            +" AND (prc_cached2da_cls_feat.file = '"+sFeatList+"')"
-            +" AND ((prc_cached2da_cls_feat.List = 2) OR (prc_cached2da_cls_feat.List = 1))"
-            +" AND ((PreReqEpic = '****') OR (PreReqEpic = 0))"
-            +" AND ((ALLCLASSESCANUSE = 0) OR (ALLCLASSESCANUSE = '****'))"
-            +" AND ((MINATTACKBONUS = '****') OR (MINATTACKBONUS <= "+IntToString(nBAB)+"))"
-            +" AND ((MINSPELLLVL = '****') OR (MINSPELLLVL <= "+IntToString(nCasterLevel)+"))"
-            +" AND ((MINSTR = '****') OR (MINSTR <= "+IntToString(nStr)+"))"
-            +" AND ((MINDEX = '****') OR (MINDEX <= "+IntToString(nDex)+"))"
-            +" AND ((MINCON = '****') OR (MINCON <= "+IntToString(nCon)+"))"
-            +" AND ((MININT = '****') OR (MININT <= "+IntToString(nInt)+"))"
-            +" AND ((MINWIS = '****') OR (MINWIS <= "+IntToString(nWis)+"))"
-            +" AND ((MINCHA = '****') OR (MINCHA <= "+IntToString(nCha)+"))"
-            +" AND ((MaxLevel = '****') OR (MaxLevel > "+IntToString(nLevel)+"))"
-            +" AND ((MinFortSave = '****') OR (MinFortSave <= "+IntToString(nFortSave)+"))"
-            +" AND (prc_cached2da_cls_feat.FeatIndex != '****')" 
-            +" AND (prc_cached2da_feat.rowid = prc_cached2da_cls_feat.FeatIndex)" 
+        SQL = "SELECT "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"FEAT"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"PREREQFEAT1"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"PREREQFEAT2"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat0"+q+","
+            +" "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat1"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat2"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat3"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat4"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"REQSKILL"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"REQSKILL2"+q+","
+            +" "+q+"prc_cached2da_feat"+q+"."+q+"ReqSkillMinRanks"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"ReqSkillMinRanks2"+q+""
+            +" FROM "+q+"prc_cached2da_cls_feat"+q+" INNER JOIN "+q+"prc_cached2da_feat"+q+""
+            +" WHERE ("+q+"FEAT"+q+" != '****')"  
+            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"file"+q+" = '"+sFeatList+"')"
+            +" AND (("+q+"prc_cached2da_cls_feat"+q+"."+q+"List"+q+" = 2) OR ("+q+"prc_cached2da_cls_feat"+q+"."+q+"List"+q+" = 1))"
+            +" AND (("+q+"PreReqEpic"+q+" = '****') OR ("+q+"PreReqEpic"+q+" = 0))"
+            +" AND (("+q+"ALLCLASSESCANUSE"+q+" = 0) OR ("+q+"ALLCLASSESCANUSE"+q+" = '****'))"
+            +" AND (("+q+"MINATTACKBONUS"+q+" = '****') OR ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+"))"
+            +" AND (("+q+"MINSPELLLVL"+q+" = '****') OR ("+q+"MINSPELLLVL"+q+" <= "+IntToString(nCasterLevel)+"))"
+            +" AND (("+q+"MINSTR"+q+" = '****') OR ("+q+"MINSTR"+q+" <= "+IntToString(nStr)+"))"
+            +" AND (("+q+"MINDEX"+q+" = '****') OR ("+q+"MINDEX"+q+" <= "+IntToString(nDex)+"))"
+            +" AND (("+q+"MINCON"+q+" = '****') OR ("+q+"MINCON"+q+" <= "+IntToString(nCon)+"))"
+            +" AND (("+q+"MININT"+q+" = '****') OR ("+q+"MININT"+q+" <= "+IntToString(nInt)+"))"
+            +" AND (("+q+"MINWIS"+q+" = '****') OR ("+q+"MINWIS"+q+" <= "+IntToString(nWis)+"))"
+            +" AND (("+q+"MINCHA"+q+" = '****') OR ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+"))"
+            +" AND (("+q+"MaxLevel"+q+" = '****') OR ("+q+"MaxLevel"+q+" > "+IntToString(nLevel)+"))"
+            +" AND (("+q+"MinFortSave"+q+" = '****') OR ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+"))"
+            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+" != '****')" 
+            +" AND ("+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+" = "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+")" 
             +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
         
     PRC_SQLExecDirect(SQL);
@@ -1036,8 +1041,9 @@ void RaceLoop()
 
     if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
         return;
+    string q = PRC_SQLGetTick();    
     int nReali = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT rowid, Name FROM prc_cached2da_racialtypes WHERE (PlayerRace = 1) LIMIT 25 OFFSET "+IntToString(nReali); 
+    string SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_racialtypes"+q+" WHERE ("+q+"PlayerRace"+q+" = 1) LIMIT 25 OFFSET "+IntToString(nReali); 
     PRC_SQLExecDirect(SQL);
     int bAtLeastOneResult;
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
@@ -1100,7 +1106,8 @@ void DoClassFeat(string sClassFeatTable, int i=0)
 void AppearanceLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT rowid, STRING_REF FROM prc_cached2da_appearance WHERE (STRING_REF != '****') LIMIT 100 OFFSET "+IntToString(i);
+    string q = PRC_SQLGetTick();
+    string SQL = "SELECT "+q+"rowid"+q+", "+q+"STRING_REF"+q+" FROM "+q+"prc_cached2da_appearance"+q+" WHERE ("+q+"STRING_REF"+q+" != '****') LIMIT 100 OFFSET "+IntToString(i);
     PRC_SQLExecDirect(SQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
@@ -1141,7 +1148,8 @@ void AppearanceLoop()
 void SoundsetLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT rowid, STRREF, TYPE, GENDER FROM prc_cached2da_soundset WHERE (RESREF != '****') LIMIT 100 OFFSET "+IntToString(i);
+    string q = PRC_SQLGetTick();
+    string SQL = "SELECT "+q+"rowid"+q+", "+q+"STRREF"+q+", "+q+"TYPE"+q+", "+q+"GENDER"+q+" FROM "+q+"prc_cached2da_soundset"+q+" WHERE ("+q+"RESREF"+q+" != '****') LIMIT 100 OFFSET "+IntToString(i);
     PRC_SQLExecDirect(SQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
@@ -1190,7 +1198,8 @@ void SoundsetLoop()
 void PortraitLoop()
 {
     int i = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT rowid, BaseResRef, Race, SEX FROM prc_cached2da_portraits WHERE (InanimateType = '****') AND (BaseResRef != '****') LIMIT 100 OFFSET "+IntToString(i);
+    string q = PRC_SQLGetTick();
+    string SQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+", "+q+"Race"+q+", "+q+"SEX"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') LIMIT 100 OFFSET "+IntToString(i);
     PRC_SQLExecDirect(SQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {

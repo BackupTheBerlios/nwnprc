@@ -1,7 +1,7 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Adventurer's_Robes             RESULT      nw_mcloth011     ****        
+0    Adventurers_Robes             RESULT      nw_mcloth011     ****        
 1    Caster_Level_5th               CASTERLVL   5                ****        
 2    CraftWonderousItems            FEAT        2925             ****
 3    Mage_Armor  		    SPELL	102		 ****

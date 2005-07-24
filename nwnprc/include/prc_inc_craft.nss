@@ -1281,9 +1281,10 @@ string GetRecipeTagFromItem(string sResRef)
 {
     if (GetPRCSwitch(PRC_USE_DATABASE)) 
     {
+        string q = PRC_SQLGetTick();
         //NWNX2/SQL
         //string sQuery = "SELECT file FROM prccache_reqs WHERE ReqType='RESULT' AND ReqParam1='" + sResRef + "'";
-        string sQuery = "SELECT recipe_tag FROM prc_cached2da_item_to_ireq WHERE l_resref='"+sResRef+"'";
+        string sQuery = "SELECT "+q+"recipe_tag"+q+" FROM "+q+"prc_cached2da_item_to_ireq"+q+" WHERE "+q+"l_resref"+q+"='"+sResRef+"'";
         PRC_SQLExecDirect(sQuery);
         if (PRC_SQLFetch() == PRC_SQL_ERROR)
             return "";
@@ -1327,9 +1328,11 @@ struct convocc_req convocc_GetReqs(string file, int row)
     if (GetPRCSwitch(PRC_USE_DATABASE)) 
     {
         //NWNX2/SQL
-        if (row == 0) {
+        if (row == 0) 
+        {
             //string sQuery = "SELECT reqtype,reqparam1,reqparam2 FROM prccache_reqs WHERE file='" + file + "' ORDER BY ID";
-        string sQuery = "SELECT reqtype, reqparam1, reqparam2 FROM prc_cached2da_ireq WHERE file='" + file + "'";
+            string q = PRC_SQLGetTick();
+            string sQuery = "SELECT "+q+"reqtype"+q+", "+q+"reqparam1"+q+", "+q+"reqparam2"+q+" FROM "+q+"prc_cached2da_ireq"+q+" WHERE "+q+"file"+q+"='" + file + "'";
             PRC_SQLExecDirect(sQuery);
         }
 

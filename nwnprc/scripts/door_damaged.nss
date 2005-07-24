@@ -4,7 +4,14 @@ void main()
     //heal the damage done
     effect eHeal = EffectHeal(GetMaxHitPoints());
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, OBJECT_SELF);
-    
+ 
+    //check its not between spawns
+    if(GetPlotFlag(OBJECT_SELF))
+    {
+        return;
+    }
+ 
+ 
     int nCurrentHP = GetLocalInt(OBJECT_SELF, "DoorHP");    
     //check if it hasnt been initialized
     if(nCurrentHP == 0)
@@ -22,6 +29,7 @@ void main()
         float fDelay = GetLocalFloat(OBJECT_SELF, "DoorRespawnTime");
         if(fDelay == 0.0)
             fDelay = IntToFloat(GetWillSavingThrow(OBJECT_SELF))*60.0;
+        SetLocalFloat(OBJECT_SELF, "DoorRespawnTime", fDelay);    
     }
     nCurrentHP -= nDamage;
     //check if it should be destroyed

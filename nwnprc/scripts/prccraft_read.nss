@@ -28,7 +28,8 @@ void SafeGetRecipeTagFromItem(string sResRef, int nRow = 0)
     if (GetPRCSwitch(PRC_USE_DATABASE)) 
     {
         //NWNX2/SQL
-        string sQuery = "SELECT recipe_tag FROM prc_cached2da_item_to_ireq WHERE l_resref='"+sResRef+"'";
+        string q = PRC_SQLGetTick();
+        string sQuery = "SELECT "+q+"recipe_tag"+q+" FROM "+q+"prc_cached2da_item_to_ireq"+q+" WHERE "+q+"l_resref"+q+"='"+sResRef+"'";
         PRC_SQLExecDirect(sQuery);
         if (PRC_SQLFetch() == PRC_SQL_ERROR)
             return;

@@ -555,8 +555,11 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     object oItem = GetSpellCastItem();
     int nAdjust = GetLocalInt(oCaster, PRC_CASTERLEVEL_ADJUSTMENT);//this is for builder use
     //DelayCommand(1.0, DeleteLocalInt(oCaster, "PRC_Castlevel_Adjustment"));
-
-
+    int iArcLevel;
+    int iDivLevel;
+    int iReturnLevel;
+    int iItemLevel;
+    
     // For when you want to assign the caster level.
     if (GetLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE))
     {
@@ -573,92 +576,64 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
         if(GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)
             && GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF)
         {
-            nItemLevel = GetCasterLevel(oCaster);
-            bIsStaff = TRUE;
-            //SendMessageToPC(oCaster, "Staff casting at user caster level");
+            iCastingClass = GetFirstArcaneClass(oCaster);//sets it to an arcane class
         }
         else
         {
+            iItemLevel = GetCasterLevel(oCaster);
             //code for getting new ip type
-            int nOverrideLevel;
             itemproperty ipTest = GetFirstItemProperty(oItem);
-            while(GetIsItemPropertyValid(ipTest) && !nOverrideLevel)
+            while(GetIsItemPropertyValid(ipTest) && !iItemLevel)
             {
                 if(GetItemPropertyType(ipTest) == 85
                     && GetItemPropertySubType(ipTest) == iSpellId
                     )
-                    nOverrideLevel = GetItemPropertyCostTableValue (ipTest);
+                    iItemLevel = GetItemPropertyCostTableValue (ipTest);
                 ipTest = GetNextItemProperty(oItem);
             }
-            if(!nOverrideLevel)
-                return GetCasterLevel(oCaster)+nAdjust;
-            else
-                return nOverrideLevel+nAdjust;
         }
     }
-
-    if (GetIsArcaneClass(iCastingClass)) // Arcane Spells
+    
+    iArcLevel = GetLevelByClass(iCastingClass, oCaster);
+    if (GetFirstArcaneClass(oCaster) == iCastingClass)
     {
-        int iArcLevel = GetLevelByClass(iCastingClass, oCaster);
-
-        if (GetFirstArcaneClass(oCaster) == iCastingClass)
-        {
-            iArcLevel += GetArcanePRCLevels(oCaster) 
-                      +  ArchmageSpellPower(oCaster);
-        }
-
-        iArcLevel += TrueNecromancy(oCaster, iSpellId, "ARCANE")
-                  +  ShadowWeave(oCaster, iSpellId) 
-                  +  FireAdept(oCaster, iSpellId)
-                  +  StormMagic(oCaster);
-
-        iArcLevel += PractisedSpellcasting(oCaster, iCastingClass, iArcLevel); //gotta be the last one
-
-        //SendMessageToPC(oCaster, "Arcane casting at level " + IntToString(iArcLevel));
-        if(bIsStaff)
-        {
-            if(iArcLevel > nItemLevel)
-                return iArcLevel+nAdjust;
-            else
-                return nItemLevel+nAdjust;
-        }
-        else
-            return iArcLevel+nAdjust;
+        iArcLevel += GetArcanePRCLevels(oCaster) 
+                  +  ArchmageSpellPower(oCaster);
     }
+    iArcLevel += TrueNecromancy(oCaster, iSpellId, "ARCANE")
+              +  ShadowWeave(oCaster, iSpellId) 
+              +  FireAdept(oCaster, iSpellId)
+              +  StormMagic(oCaster);
+    iArcLevel += PractisedSpellcasting(oCaster, iCastingClass, iArcLevel); //gotta be the last one
+   
 
-    else if (GetIsDivineClass(iCastingClass)) // Divine Spells
-    {
-        int iDivLevel = GetLevelByClass(iCastingClass, oCaster);
+    iDivLevel = GetLevelByClass(iCastingClass, oCaster);
+    if (iCastingClass == CLASS_TYPE_RANGER 
+        || iCastingClass == CLASS_TYPE_PALADIN
+        || iCastingClass == CLASS_TYPE_ANTI_PALADIN) 
+        iDivLevel = iDivLevel / 2;
+    if (GetFirstDivineClass(oCaster) == iCastingClass) 
+        iDivLevel += GetDivinePRCLevels(oCaster);
+    iDivLevel += TrueNecromancy(oCaster, iSpellId, "DIVINE") 
+              +  ShadowWeave(oCaster, iSpellId) 
+              +  FireAdept(oCaster, iSpellId)
+              +  StormMagic(oCaster);
+    iDivLevel += PractisedSpellcasting(oCaster, iCastingClass, iDivLevel); //gotta be the last one
 
-        if (iCastingClass == CLASS_TYPE_RANGER || iCastingClass == CLASS_TYPE_PALADIN) iDivLevel = iDivLevel / 2;
-
-        if (GetFirstDivineClass(oCaster) == iCastingClass) iDivLevel += GetDivinePRCLevels(oCaster);
-
-        iDivLevel += TrueNecromancy(oCaster, iSpellId, "DIVINE") 
-                  +  ShadowWeave(oCaster, iSpellId) 
-                  +  FireAdept(oCaster, iSpellId)
-                  +  StormMagic(oCaster);
-                  
-        iDivLevel += PractisedSpellcasting(oCaster, iCastingClass, iDivLevel); //gotta be the last one
-
-        //SendMessageToPC(oCaster, "Divine casting at level " + IntToString(iDivLevel));
-        if(bIsStaff)
-        {
-            if(iDivLevel > nItemLevel)
-                return iDivLevel+nAdjust;
-            else
-                return nItemLevel+nAdjust;
-        }
-        else
-            return iDivLevel+nAdjust;
-    }
-
-    else // Spell-Like Abilities
-    {
-        //SendMessageToPC(oCaster, "SLA casting at level " + IntToString(GetCasterLevel(oCaster)));
-
-        return GetCasterLevel(oCaster)+nAdjust;
-    }
+    if(GetIsArcaneClass(iCastingClass))
+        iReturnLevel = iArcLevel;
+    else if(GetIsDivineClass(iCastingClass))
+        iReturnLevel = iDivLevel;  
+    //items override arcane/divine    
+    if(iItemLevel)
+        iReturnLevel = iItemLevel;
+    //at this point it must be a SLA or similar    
+    if(!iReturnLevel)
+        iReturnLevel = GetCasterLevel(oCaster);
+        
+    iReturnLevel += nAdjust;  
+    
+    return iReturnLevel;
 }
 
 int PractisedSpellcasting (object oCaster, int iCastingClass, int iCastingLevels)

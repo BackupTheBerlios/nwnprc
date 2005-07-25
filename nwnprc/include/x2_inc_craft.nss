@@ -167,14 +167,14 @@ int CI_GetClassMagicType(int nClass)
                 return X2_CI_MAGICTYPE_DIVINE; break;
         case CLASS_TYPE_PALADIN:
                 return X2_CI_MAGICTYPE_DIVINE; break;
+        case CLASS_TYPE_RANGER:
+                return X2_CI_MAGICTYPE_DIVINE; break;
         case CLASS_TYPE_BARD:
                 return X2_CI_MAGICTYPE_ARCANE; break;
         case CLASS_TYPE_SORCERER:
                 return X2_CI_MAGICTYPE_ARCANE; break;
         case CLASS_TYPE_WIZARD:
                 return X2_CI_MAGICTYPE_ARCANE; break;
-        case CLASS_TYPE_RANGER:
-                return X2_CI_MAGICTYPE_DIVINE; break;
     }
     return X2_CI_MAGICTYPE_INVALID;
 }
@@ -294,7 +294,7 @@ object CICraftCraftWand(object oCreator, int nSpellID )
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
         }
 
-        int nType = CI_GetClassMagicType(GetLastSpellCastClass());
+        int nType = CI_GetClassMagicType(PRCGetLastSpellCastClass());
         itemproperty ipLimit;
 
         if (nType == X2_CI_MAGICTYPE_DIVINE)
@@ -365,7 +365,7 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
      }
 
     // get scroll resref from scrolls lookup 2da
-    int nClass =GetLastSpellCastClass ();
+    int nClass =PRCGetLastSpellCastClass ();
     string sClass = "Wiz_Sorc";
     switch (nClass)
     {

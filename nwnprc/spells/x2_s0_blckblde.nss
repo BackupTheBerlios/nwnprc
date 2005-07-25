@@ -108,7 +108,7 @@ void spellsCreateItemForSummoned()
     }
      else
     {
-        int nClass = GetLastSpellCastClass();
+        int nClass = PRCGetLastSpellCastClass();
         int nLevel = GetLevelByClass(nClass);
 
         int nStat;

@@ -20,7 +20,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
 // Check for CLASS_TYPE_HIEROPHANT > 0 in caller
 int GetWasLastSpellHieroSLA(int spell_id, object oCaster = OBJECT_SELF)
 {
-    int iAbility = GetLastSpellCastClass() == CLASS_TYPE_INVALID;
+    int iAbility = PRCGetLastSpellCastClass() == CLASS_TYPE_INVALID;
     int iSpell   = spell_id == SPELL_HOLY_AURA ||
                    spell_id == SPELL_UNHOLY_AURA ||
                    spell_id == SPELL_BANISHMENT ||
@@ -313,20 +313,20 @@ int ShadowWeaveDC(int spell_id, object oCaster = OBJECT_SELF)
 
 int KOTCSpellFocusVsDemons(object oTarget, object oCaster)
 {
-	int nDC = 0;
-	int iKOTC = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster);
-	
-	if (iKOTC >= 1)
-    	{
-    		if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
-    		{
-    			if (GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
-    			{
-				nDC = 2;
-    			}
-    		}
-    	}
-    	return nDC;
+    int nDC = 0;
+    int iKOTC = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster);
+    
+    if (iKOTC >= 1)
+        {
+            if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
+            {
+                if (GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+                {
+                nDC = 2;
+                }
+            }
+        }
+        return nDC;
 }
 
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)

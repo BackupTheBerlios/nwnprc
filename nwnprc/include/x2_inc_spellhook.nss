@@ -254,24 +254,24 @@ void CombatMedicHealingKicker()
 // Performs the attack portion of the battlecast ability for the havoc mage
 void Battlecast()
 {
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	effect eVis = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_HOLY);
-	int nLevel = GetLevelByClass(CLASS_TYPE_HAVOC_MAGE, oPC);
-	string sSpellLevel = lookup_spell_level(PRCGetSpellId());
-	int nSpellLevel = StringToInt(sSpellLevel);
-	
-	// Don't want to smack allies upside the head when casting a spell.
-	if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC) && oTarget != oPC)
-	{
-		// Make sure the levels are right for both the caster and the spells.
-		// Level 8 spells and under at level 5
-		if (nLevel == 5 && 8 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
-		// Level 4 spells and under at level 3
-		else if (nLevel >= 3 && 4 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
-		// Level 2 spells and under at level 1
-		else if (nLevel >= 1 && 2 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
-	}
+    object oPC = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    effect eVis = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_HOLY);
+    int nLevel = GetLevelByClass(CLASS_TYPE_HAVOC_MAGE, oPC);
+    string sSpellLevel = lookup_spell_level(PRCGetSpellId());
+    int nSpellLevel = StringToInt(sSpellLevel);
+    
+    // Don't want to smack allies upside the head when casting a spell.
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC) && oTarget != oPC)
+    {
+        // Make sure the levels are right for both the caster and the spells.
+        // Level 8 spells and under at level 5
+        if (nLevel == 5 && 8 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
+        // Level 4 spells and under at level 3
+        else if (nLevel >= 3 && 4 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
+        // Level 2 spells and under at level 1
+        else if (nLevel >= 1 && 2 >= nSpellLevel) PerformAttack(oTarget, oPC, eVis, 0.0, 0, 0, 0, "*Battlecast Hit*", "*Battlecast Missed*");
+    }
 }
 
 int X2UseMagicDeviceCheck()
@@ -781,8 +781,8 @@ int X2PreSpellCastCode()
         // Run the ShareSpell code to duplicate the spell on the familiar
         if (GetIsObjectValid(oFam))
         {
-            int bIsWizSorc = (GetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
-            GetLastSpellCastClass() == CLASS_TYPE_SORCERER);
+            int bIsWizSorc = (PRCGetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
+                PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER);
 
             // spell has to be wiz/sorc and cast on self to be shared
             if ((oTarget == OBJECT_SELF) && (bIsWizSorc) &&

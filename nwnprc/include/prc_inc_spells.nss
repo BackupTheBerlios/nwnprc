@@ -135,6 +135,8 @@ int ApplySpellBetrayalStrikeDamage(object oTarget, object oCaster, int bShowText
 // Checks if a spell is a healing spell
 int GetIsHealingSpell(int nSpellId);
 
+//to override for custom spellcasting classes
+int PRCGetLastSpellCastClass();
 
 // -----------------
 // BEGIN SPELLSWORD
@@ -545,9 +547,17 @@ int GetLevelByTypeDivineFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
     return iBest;
 }
 
+int PRCGetLastSpellCastClass()
+{
+    int nClass;
+    if(GetLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE))
+        return GetLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE);
+    return GetLastSpellCastClass();    
+}
+
 int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 {
-    int iCastingClass = GetLastSpellCastClass(); // might be CLASS_TYPE_INVALID
+    int iCastingClass = PRCGetLastSpellCastClass(); // might be CLASS_TYPE_INVALID
     
     int iSpellId = PRCGetSpellId();
     int bIsStaff = FALSE;

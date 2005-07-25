@@ -134,6 +134,12 @@ const string PRC_CASTERLEVEL_OVERRIDE                = "PRC_CASTERLEVEL_OVERRIDE
 */
 const string PRC_CASTERLEVEL_ADJUSTMENT              = "PRC_CASTERLEVEL_ADJUSTMENT";
 
+/*
+ * Mostly internal, but builders may find a use for it
+ * Used to override GetLastSpellCastClass();
+*/
+const string PRC_CASTERCLASS_OVERRIDE                = "PRC_CASTERCLASS_OVERRIDE";
+
 /******************************************************************************\
 *                                  Class switches                              *
 \******************************************************************************/

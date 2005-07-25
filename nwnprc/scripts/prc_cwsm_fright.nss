@@ -47,32 +47,12 @@ eLink = EffectLinkEffects(eLink,eVis2);
   if(!GetIsObjectValid(oItem2) && !GetIsObjectValid(oItem1))
    {
 
-   //Searches Inventory for Katana and Shortsword and Equips them
-   while(!GetIsObjectValid(oItem2) || !GetIsObjectValid(oItem1))
-   {
-   	if(GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
-	{
-     		oItem2 = oWeap;
-		ActionEquipItem(oWeap,INVENTORY_SLOT_RIGHTHAND);
-	}
-   
-	if(GetBaseItemType(oWeap) == BASE_ITEM_SHORTSWORD)
-	{
-		oItem1 = oWeap;
-		ActionEquipItem(oWeap,INVENTORY_SLOT_LEFTHAND);
-	}
-      
-	oWeap = GetNextItemInInventory(oPC);
-   }
-
-
     //Determine enemies in the radius around the samurai
     oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     while (GetIsObjectValid(oTarget))
      {
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && oTarget != OBJECT_SELF)
         {
-
         //Make a will save
           if(!PRCMySavingThrow(SAVING_THROW_WILL,oTarget,nDC, SAVING_THROW_TYPE_FEAR, OBJECT_SELF))
           {
@@ -90,5 +70,8 @@ eLink = EffectLinkEffects(eLink,eVis2);
         }
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
      }
+	ExecuteScript("prc_cwsm_left", oPC);
+	DelayCommand(0.1,ExecuteScript("prc_cwsm_right", oPC));
+	//ExecuteScript("prc_cwsm_right", oPC);
     }
 }

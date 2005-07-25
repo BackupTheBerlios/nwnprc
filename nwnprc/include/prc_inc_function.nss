@@ -838,6 +838,29 @@ void FeatNinja (object oPC)
     }
     SetLocalInt(oPC, "prc_ninja_ki", nUsesLeft);
 }
+
+void FeatContender(object oPC)
+{
+    int iContenderLevel = GetLevelByClass(CLASS_TYPE_CONTENDER);
+    int iMod;
+    FloatingTextStringOnCreature("Domain Decrement Subroutine",OBJECT_SELF);
+
+if(iContenderLevel > 0)
+    iMod = GetAbilityModifier(ABILITY_STRENGTH, oPC);
+else
+    iMod = 1;
+
+    //if(iMod < 1)
+//	iMod = 1;
+
+    int iDif = 50 - iMod;
+    int i = 0;
+    while(iDif > 0)
+    {
+        DecrementRemainingFeatUses(oPC, FEAT_STRENGTH_DOMAIN_POWER);
+        iDif += -1;
+    }
+}
 void FeatSpecialUsePerDay(object oPC)
 {
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);
@@ -856,4 +879,5 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_2, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC));
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_3, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC));
     FeatNinja(oPC);
+    FeatContender(oPC);
 }

@@ -841,7 +841,7 @@ void FeatNinja (object oPC)
 
 void FeatContender(object oPC)
 {
-    int iContenderLevel = GetLevelByClass(CLASS_TYPE_CONTENDER);
+    int iContenderLevel = GetLevelByClass(CLASS_TYPE_CONTENDER, oPC);
     int iMod;
     FloatingTextStringOnCreature("Domain Decrement Subroutine",OBJECT_SELF);
 
@@ -850,11 +850,8 @@ if(iContenderLevel > 0)
 else
     iMod = 1;
 
-    //if(iMod < 1)
-//	iMod = 1;
-
     int iDif = 50 - iMod;
-    int i = 0;
+    
     while(iDif > 0)
     {
         DecrementRemainingFeatUses(oPC, FEAT_STRENGTH_DOMAIN_POWER);

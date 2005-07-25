@@ -162,7 +162,7 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
        && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)         ExecuteScript("ft_gtwf", oPC);
     if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)                ExecuteScript("ft_lingdmg", oPC);
-    if(GetHasFeat(FEAT_MAGICAL_APTITUDE, oPC))			 ExecuteScript("prc_magaptitude", oPC);
+    if(GetHasFeat(FEAT_MAGICAL_APTITUDE, oPC))           ExecuteScript("prc_magaptitude", oPC);
     if(GetHasFeat(FEAT_ETERNAL_FREEDOM, oPC))                    ExecuteScript("etern_free", oPC);
     if(GetPersistantLocalInt(oPC, "EpicSpell_TransVital"))       ExecuteScript("trans_vital", oPC);
     if(GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC))               ExecuteScript("psi_combat_manif", oPC);
@@ -206,19 +206,7 @@ void EvalPRCFeats(object oPC)
     }
 
     //size changes
-    if(GetHasFeat(FEAT_SIZE_DECREASE_1, oPC)
-        || GetHasFeat(FEAT_SIZE_DECREASE_2, oPC)
-        || GetHasFeat(FEAT_SIZE_DECREASE_3, oPC)
-        || GetHasFeat(FEAT_SIZE_DECREASE_4, oPC)
-        || GetHasFeat(FEAT_SIZE_DECREASE_5, oPC)
-        || GetHasFeat(FEAT_SIZE_DECREASE_6, oPC)
-        || GetHasFeat(FEAT_SIZE_INCREASE_1, oPC)
-        || GetHasFeat(FEAT_SIZE_INCREASE_2, oPC)
-        || GetHasFeat(FEAT_SIZE_INCREASE_3, oPC)
-        || GetHasFeat(FEAT_SIZE_INCREASE_4, oPC)
-        || GetHasFeat(FEAT_SIZE_INCREASE_5, oPC)
-        || GetHasFeat(FEAT_SIZE_INCREASE_6, oPC))
-        ExecuteScript("prc_size", oPC);
+    ExecuteScript("prc_size", oPC);
         
     //ACP system
     ExecuteScript("acp_auto", oPC);

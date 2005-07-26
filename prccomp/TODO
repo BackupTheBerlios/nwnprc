@@ -1,0 +1,16 @@
+The PRC Companion CVS has recently been cleaned, it had a boatload of junk. I'm restoring it to a cleaner state which can then be easier maintained. Here are some of the things left to do:
+
+- Create hi-res elemental textures for the creatures section (currently, there's only dinky ugly textures in the creatures/tga/ subdirectory) and create a DDS copy in the appropriate folder
+
+- add 2da files along with bare lines, if possible
+
+- add creature blueprints :P
+
+- add the rest of the creature content. That's the most important right now.
+
+- possibly add decompiled models to the cvs repository, they're compiled right now.
+
+If a task is not in this list, tell me.
+
+
+~GaiaWerewolf

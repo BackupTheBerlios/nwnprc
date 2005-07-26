@@ -18,7 +18,7 @@
 // NOTE: The spell script must refer to the PC as GetSpellTargetObject()
 // otherwise this function WILL NOT WORK.  Do not make any assumptions
 // about the PC being OBJECT_SELF.
-void ActionCastSpellOnSelf(int iSpell);
+void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE);
 
 // This is a wrapper function that causes OBJECT_SELF to fire the defined spell
 // at the defined level.  The target is automatically the object or location
@@ -33,7 +33,7 @@ void ActionCastSpellOnSelf(int iSpell);
 // This function should only be used when SLA's are meant to simulate true
 // spellcasting abilities, such as those seen when using feats with subradials
 // to simulate spellbooks.
-void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0);
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, int nMetaMagic = METAMAGIC_NONE);
 
 // Include Files:
 #include "prc_alterations"
@@ -51,17 +51,17 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 #include "prc_inc_combat"
 #include "prc_inc_sp_tch"
 
-void ActionCastSpellOnSelf(int iSpell)
+void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE)
 {
     object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(OBJECT_SELF));
     object oTarget = OBJECT_SELF;
 
-    AssignCommand(oCastingObject, ActionCastSpellAtObject(iSpell, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+    AssignCommand(oCastingObject, ActionCastSpellAtObject(iSpell, oTarget, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
     
     DestroyObject(oCastingObject, 6.0);
 }
 
-void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0)
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, int nMetaMagic = METAMAGIC_NONE)
 {
     object oTarget = GetSpellTargetObject();
     location lLoc = GetSpellTargetLocation();
@@ -78,9 +78,9 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 
     //cast the spell
     if (GetIsObjectValid(oTarget))
-        ActionCastSpellAtObject(iSpell, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+        ActionCastSpellAtObject(iSpell, oTarget, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
     else
-        ActionCastSpellAtLocation(iSpell, lLoc, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+        ActionCastSpellAtLocation(iSpell, lLoc, nMetaMagic, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
     //clean up afterwards
     if (iCasterLev != 0)
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));

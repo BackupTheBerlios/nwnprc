@@ -25,3 +25,6 @@ run_icons:
 
 run_icons_log:
 	java $(RUNPARAMS) prc/autodoc/Main -is > log.txt
+
+jar:
+	jar -cvfm prc.jar prc\prc.mf prc\*

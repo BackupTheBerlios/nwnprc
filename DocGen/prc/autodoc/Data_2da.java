@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.*;
 
+//import javax.swing.text.LabelView;
+
 import static prc.autodoc.Main.*;
 
 /**
@@ -11,24 +13,103 @@ import static prc.autodoc.Main.*;
  * PRC automated manual generator.
  */
 public class Data_2da{
-	private HashMap<String, ArrayList<String>> mainData = new HashMap<String, ArrayList<String>>();
-	private int entries = 0;
-	private String name;
-	
 	// String matching pattern. Gets a block of non-whitespace OR " followed by any characters until the next "
-	private Pattern pattern = Pattern.compile("[\\S&&[^\"]]+|\"[^\"]+\"");
-	private Matcher matcher = pattern.matcher("");
+	private static Pattern pattern = Pattern.compile("[\\S&&[^\"]]+|\"[^\"]+\"");
+	private static Matcher matcher = pattern.matcher("");
+
+	private HashMap<String, ArrayList<String>> mainData = new LinkedHashMap<String, ArrayList<String>>();
+	//private int entries = 0;
+	private String name;
+	private String defaultValue;
+
+	
+	/**
+	 * Creates a new, empty Data_2da with the specified name.
+	 * 
+	 * @param name The new 2da file's name.
+	 */
+	public Data_2da(String name){
+		this(name, "");
+	}
+	
+	/**
+	 * Creates a new, empty Data_2da with the specified name and default value.
+	 * 
+	 * @param name         the new 2da file's name
+	 * @param defaultValue the new 2da file's default value
+	 */
+	public Data_2da(String name, String defaultValue){
+		this.name = name;
+		this.defaultValue = defaultValue;
+	}
+	
+	
+	/**
+	 * Saves the 2da represented by this object to file.
+	 * 
+	 * @param path the directory to save the file in. If this is "" or null,
+	 *              the current directory is used.
+	 * @param allowOverWrite if <code>TRUE</code> and a file with the same name as this 2da 
+	 *                         exists at <code>path</code>, it is overwritten.
+	 *                         If <code>FALSE</code> and in the same situation, an IOException is
+	 *                         thrown
+	 * 
+	 * @throws IOException if cannot overwrite, or the underlying IO throws one 
+	 */
+	public void save2da(String path, boolean allowOverWrite) throws IOException{
+		String CRLF = "\r\n";
+		if(path == null || path.equals(""))
+			path = "." + File.pathSeparator;
+		
+		File file = new File(path + name);
+		if(file.exists() && !allowOverWrite)
+			throw new IOException("File existst already: " + file.getAbsolutePath());
+		
+		FileWriter fw = new FileWriter(file, false);
+		
+		// Write the header and default lines
+		fw.write("2DA V2.0" + CRLF);
+		if(!defaultValue.equals(""))
+			fw.write("DEFAULT: " + defaultValue + CRLF);
+		else
+			fw.write(CRLF);
+		
+		String[] labels = this.getLabels();
+		
+		// Write the labels row
+		for(String label : labels){
+			fw.write(" " + label);
+		}
+		fw.write(CRLF);
+		
+		// Write the data
+		for(int i = 0; i < this.getEntryCount(); i++){
+			fw.write(i + " ");
+			for(String label : labels){
+				fw.write(" " + mainData.get(label).get(i));
+			}
+			fw.write(CRLF);
+		}
+		
+		fw.flush();
+		fw.close();
+	}
 	
 	/**
 	 * Creates a new Data_2da on the 2da file specified.
 	 * 
 	 * @param filePath path to the 2da file to load 
+	 * @return a Data_2da instance containing the read 2da
 	 *  
 	 * @throws IllegalArgumentException <code>filePath</code> does not specify a 2da file
 	 * @throws TwoDAReadException       reading the 2da file specified does not succeed,
 	 *                                    or the file does not contain any data
 	 */
-	public Data_2da(String filePath){
+	public static Data_2da load2da(String filePath){
+	//public Data_2da(String filePath){
+		Data_2da toReturn;
+		String name, defaultValue = "";
+		
 		// Some paranoia checking for bad parameters
 		if(!filePath.toLowerCase().endsWith("2da"))
 			throw new IllegalArgumentException("Non-2da filename passed to Data_2da: " + filePath);
@@ -40,9 +121,11 @@ public class Data_2da{
 			throw new IllegalArgumentException("Nonexistent file passed to Data_2da: " + filePath);
 		if(!baseFile.isFile())
 			throw new IllegalArgumentException("Nonfile passed to Data_2da: " + filePath);
+
 		
 		// Drop the path from the filename
 		name = baseFile.getName().substring(0, baseFile.getName().length() - 4);
+		//toReturn = new Data_2da(baseFile.getName().substring(0, baseFile.getName().length() - 4));
 		
 		// Tell the user what we are doing
 		if(verbose) System.out.print("Reading 2da file: " + name + " ");
@@ -62,18 +145,42 @@ public class Data_2da{
 		}
 		
 		// Check the 2da header
-		String data = getNextNonEmptyRow(reader);
+		//String data = getNextNonEmptyRow(reader);
+		if(!reader.hasNextLine())
+			throw new TwoDAReadException("Empty file: " + name + "!");
+		String data = reader.nextLine();
 		if(!data.contains("2DA V2.0"))
 			throw new TwoDAReadException("2da header missing or invalid: " + name);
 		
+		// Get the default - though it's not used by this implementation, it should not be lost by opening and resaving a file
+		if(!reader.hasNextLine())
+			throw new TwoDAReadException("No contents after header in 2da file " + name + "!");
+		data = reader.nextLine();
+		matcher.reset(data);
+		if(matcher.find()){ // Non-blank default line
+			data = matcher.group();
+			if(data.trim().equalsIgnoreCase("DEFAULT:")){
+				if(matcher.find())
+					defaultValue = matcher.group();
+				else
+					throw new TwoDAReadException("Malformed default line in 2da file " + name + "!");
+			}
+			else
+				throw new TwoDAReadException("Malformed default line in 2da file " + name + "!");
+		}
+		
+		// Initialise the return object
+		toReturn = new Data_2da(name, defaultValue);
+		
 		// Start the actual reading
 		try{
-			createData(reader);
+			toReturn.createData(reader);
 		}catch(TwoDAReadException e){
-			throw new TwoDAReadException("Exception occurred when reading 2da file: " + name + "\n" + e, e);
+			throw new TwoDAReadException("Exception occurred when reading 2da file: " + toReturn.getName() + "\n" + e, e);
 		}
 		
 		if(verbose) System.out.println("- Done");
+		return toReturn;
 	}
 	
 	/**
@@ -84,12 +191,14 @@ public class Data_2da{
 	 */
 	private void createData(Scanner reader){
 		Scanner rowParser;
+		String data;
 		int line = 0;
 		
 		// Find the labels row
-		String data = getNextNonEmptyRow(reader);
-		if(data == null)
+		//String data = getNextNonEmptyRow(reader);
+		if(!reader.hasNextLine())
 			throw new TwoDAReadException("No labels found in 2da file!");
+		data = reader.nextLine();
 		
 		// Parse the labels
 		String[] labels = data.trim().split("\\p{javaWhitespace}+");
@@ -101,9 +210,10 @@ public class Data_2da{
 		}
 		
 		// Skip empty rows until the data starts
-		data = getNextNonEmptyRow(reader);
-		if(data == null)
+		//data = getNextNonEmptyRow(reader);
+		if(!reader.hasNextLine())
 			throw new TwoDAReadException("No data in 2da file!");
+		data = reader.nextLine();
 		
 		while(true){
 			//rowParser = new Scanner(data);
@@ -140,7 +250,7 @@ public class Data_2da{
 				throw new TwoDAReadException("Too long 2da line: " + line);
 			
 			// Increment the entry counter
-			entries++;
+			//entries++;
 			
 			/* Get the next line if there is one, or break the loop
 			 * A bit ugly, but I couldn't figure an easy way of making the loop go right
@@ -163,13 +273,14 @@ public class Data_2da{
 	}
 	
 	/**
-	 * Reads rows from the 2da until it finds a row containing non-whitespace characters.
+	 * Reads rows from a Scanner pointed at a 2da file until it finds a
+	 * row containing non-whitespace characters.
 	 * 
 	 * @param reader Scanner that the method reads from
 	 *
 	 * @return The row found, or null if none were found.
 	 */
-	private String getNextNonEmptyRow(Scanner reader){
+	private static String getNextNonEmptyRow(Scanner reader){
 		String toReturn = null;
 		while(reader.hasNextLine()){
 			toReturn = reader.nextLine();
@@ -190,23 +301,13 @@ public class Data_2da{
 	 */
 	public String[] getLabels(){
 		// For some reason, it won't let me cast the keyset directly into a String[]
-		Object[] temp = mainData.keySet().toArray();
+		/*Object[] temp = mainData.keySet().toArray();
 		String[] toReturn = new String[temp.length];
-		for(int i = 0; i < temp.length; i++) toReturn[i] = (String)temp[i];
+		for(int i = 0; i < temp.length; i++) toReturn[i] = (String)temp[i];*/
+		/*String[] toReturn = (String[])mainData.keySet().toArray();
 		return toReturn;
-	}
-	
-	/**
-	 * Get the 2da entry on the given row and column
-	 *
-	 * @param label the label of the column to get
-	 * @param row   the number of the row to get
-	 *
-	 * @return String represeting the 2da entry or <code>null</code> if the column does not exist
-	 */
-	public String getEntry(String label, int row){
-		ArrayList<String> column = mainData.get(label.toLowerCase());
-		return column != null ? column.get(row) : null;
+		*/
+		return (String[])mainData.keySet().toArray();
 	}
 	
 	/**
@@ -224,12 +325,28 @@ public class Data_2da{
 	}
 	
 	/**
-	 * Get number of entries in this 2da
+	 * Get the 2da entry on the given row and column
+	 *
+	 * @param label the label of the column to get
+	 * @param row   the number of the row to get
+	 *
+	 * @return String represeting the 2da entry or <code>null</code> if the column does not exist
+	 */
+	public String getEntry(String label, int row){
+		ArrayList<String> column = mainData.get(label.toLowerCase());
+		return column != null ? column.get(row) : null;
+	}
+	
+	/**
+	 * Get number of entries in this 2da. Works by returning the size of one of the columns in the 2da.
 	 *
 	 * @return integer equal to the number of entries in this 2da
 	 */
 	public int getEntryCount(){
-		return entries;
+		Iterator<ArrayList<String>> iter = mainData.values().iterator();
+		if(!iter.hasNext())
+			return 0;
+		return iter.next().size(); 
 	}
 	
 	/**
@@ -239,6 +356,118 @@ public class Data_2da{
 	 */
 	public String getName(){
 		return name;
+	}
+	
+	/**
+	 * Sets the 2da entry on the given row and column
+	 *
+	 * @param label the label of the column to get
+	 * @param row   the number of the row to get, as string
+	 * @param entry the new contents of the entry. If this is null or empty, it is replaced with ****
+	 *
+	 * @throws NumberFormatException if <code>row</code> cannot be converted to an integer
+	 */
+	public void setEntry(String label, String row, String entry){
+		this.setEntry(label, Integer.parseInt(row), entry);
+	}
+	
+	/**
+	 * Sets the 2da entry on the given row and column
+	 *
+	 * @param label the label of the column to get
+	 * @param row   the number of the row to get, as string
+	 * @param entry the new contents of the entry. If this is null or empty, it is replaced with ****
+	 */
+	public void setEntry(String label, int row, String entry){
+		if(entry == null || entry.equals(""))
+			entry = "****";
+		mainData.get(label.toLowerCase()).set(row, entry);
+	}
+	
+	/**
+	 * Appends a new, empty row to the end of the 2da file, with entries defaulting to ****
+	 */
+	public void appendRow(){
+		String[] labels = this.getLabels();
+		
+		for(String label : labels){
+			mainData.get(label).add("****");
+		}
+	}
+	
+	/**
+	 * Adds a new, empty row to the given index in the 2da file. The row currently at the index and all
+	 * subsequent rows have their index increased by one.
+	 * The entries default to ****.
+	 * 
+	 * @param index the index where the new row will be located
+	 * 
+	 * @throws NumberFormatException if <code>index</code> cannot be converted to an integer
+	 */
+	public void insertRow(String index){
+		insertRow(Integer.parseInt(index));
+	}
+	
+	/**
+	 * Adds a new, empty row to the given index in the 2da file. The row currently at the index and all
+	 * subsequent rows have their index increased by one.
+	 * The entries default to ****.
+	 * 
+	 * @param index the index where the new row will be located
+	 */
+	public void insertRow(int index){
+		String[] labels = this.getLabels();
+		
+		for(String label : labels){
+			mainData.get(label).add(index, "****");
+		}
+	}
+	
+	/**
+	 * Removes the row at the given index. All subsequent rows have their indexed shifted down by one.
+	 * 
+	 * @param index the index of the row to remove
+	 * 
+	 * @throws NumberFormatException if <code>index</code> cannot be converted to an integer
+	 */
+	public void removeRow(String index){
+		removeRow(Integer.parseInt(index));
+	}
+	
+	/**
+	 * Removes the row at the given index. All subsequent rows have their indexed shifted down by one.
+	 * 
+	 * @param index the index of the row to remove
+	 */
+	public void removeRow(int index){
+		String[] labels = this.getLabels();
+		
+		for(String label : labels){
+			mainData.get(label).remove(index);
+		}
+	}
+	
+	/**
+	 * Adds a new column to the 2da file.
+	 * 
+	 * @param label the name of the column to add
+	 */
+	public void addColumn(String label){
+		ArrayList<String> column = new ArrayList<String>();
+		mainData.put(label, column);
+		
+		for(int i = 0; i < this.getEntryCount(); i++){
+			column.add("****");
+		}
+	}
+	
+	/**
+	 * Removes the column with the given label from the 2da.
+	 * 
+	 * @param label the name of the column to remove
+	 */
+	public void removeColumn(String label){
+		mainData.remove(label);
 	}
 	
 	
@@ -262,8 +491,8 @@ public class Data_2da{
 				readMe();
 			}
 			verbose = false;
-			file1 = new Data_2da(args[1]);
-			file2 = new Data_2da(args[2]);
+			file1 = load2da(args[1]);
+			file2 = load2da(args[2]);
 			
 			doComparison(file1, file2);
 		}
@@ -272,7 +501,7 @@ public class Data_2da{
 				System.out.println("Invalid parameters");
 				readMe();
 			}
-			file1 = new Data_2da(args[0]);
+			file1 = load2da(args[0]);
 		}
 	}
 	

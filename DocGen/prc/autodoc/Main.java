@@ -92,7 +92,7 @@ public class Main{
 			 */
 			public void run(){
 				try{
-					Data_2da data = new Data_2da(pathToLoad);
+					Data_2da data = Data_2da.load2da(pathToLoad);
 					list.add(data);
 					latch.countDown();
 				}catch(Exception e){
@@ -172,7 +172,7 @@ public class Main{
 			else{
 				Data_2da temp = null;
 				try{
-					temp = new Data_2da("2da" + fileSeparator + name + ".2da");
+					temp = Data_2da.load2da("2da" + fileSeparator + name + ".2da");
 				}catch(IllegalArgumentException e){
 					throw new TwoDAReadException("Problem with filename when trying to read from 2da:\n" + e);
 				}

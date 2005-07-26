@@ -21,6 +21,8 @@ public class Data_2da{
 	//private int entries = 0;
 	private String name;
 	private String defaultValue;
+	/** Used for storing the original case of the labels. The ones used in the hashmap are lowercase */
+	private String[] realLabels;
 
 	
 	/**
@@ -59,9 +61,9 @@ public class Data_2da{
 	public void save2da(String path, boolean allowOverWrite) throws IOException{
 		String CRLF = "\r\n";
 		if(path == null || path.equals(""))
-			path = "." + File.pathSeparator;
+			path = "." + File.separator;
 		
-		File file = new File(path + name);
+		File file = new File(path + name + ".2da");
 		if(file.exists() && !allowOverWrite)
 			throw new IOException("File existst already: " + file.getAbsolutePath());
 		
@@ -74,19 +76,22 @@ public class Data_2da{
 		else
 			fw.write(CRLF);
 		
-		String[] labels = this.getLabels();
-		
-		// Write the labels row
-		for(String label : labels){
+		// Write the labels row using the original case
+		for(String label : realLabels){
 			fw.write(" " + label);
 		}
 		fw.write(CRLF);
 		
 		// Write the data
+		String[] labels = this.getLabels();
+		String toWrite;
 		for(int i = 0; i < this.getEntryCount(); i++){
 			fw.write(i + " ");
 			for(String label : labels){
-				fw.write(" " + mainData.get(label).get(i));
+				toWrite = mainData.get(label).get(i);
+				if(toWrite.indexOf(" ") != -1)
+					toWrite = "\"" + toWrite + "\"";
+				fw.write(" " + toWrite);
 			}
 			fw.write(CRLF);
 		}
@@ -201,7 +206,9 @@ public class Data_2da{
 		data = reader.nextLine();
 		
 		// Parse the labels
-		String[] labels = data.trim().split("\\p{javaWhitespace}+");
+		realLabels = data.trim().split("\\p{javaWhitespace}+");
+		String[] labels = new String[realLabels.length];
+		System.arraycopy(realLabels, 0, labels, 0, realLabels.length);
 		
 		// Create the row containers and the main store
 		for(int i = 0; i < labels.length; i++){
@@ -301,13 +308,12 @@ public class Data_2da{
 	 */
 	public String[] getLabels(){
 		// For some reason, it won't let me cast the keyset directly into a String[]
-		/*Object[] temp = mainData.keySet().toArray();
+//		return (String[])(mainData.keySet().toArray());
+		Object[] temp = mainData.keySet().toArray();
 		String[] toReturn = new String[temp.length];
-		for(int i = 0; i < temp.length; i++) toReturn[i] = (String)temp[i];*/
-		/*String[] toReturn = (String[])mainData.keySet().toArray();
+		for(int i = 0; i < temp.length; i++) toReturn[i] = (String)temp[i];
+		/*String[] toReturn = (String[])mainData.keySet().toArray();*/
 		return toReturn;
-		*/
-		return (String[])mainData.keySet().toArray();
 	}
 	
 	/**

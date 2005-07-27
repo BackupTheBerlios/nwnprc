@@ -1,5 +1,5 @@
-%store = 'C:\Games\NeverwinterNights\NWN\modules\temp0\prc_wiz_recipe.utm' or die $!;
-meta dir=> 'C:\Documents and Settings\user\Desktop\PRC Stuff\prc\Craft2das' or die $!;
+%store = '.\prc_wiz_recipe.utm' or die $!;
+meta dir=> '..\..\Craft2das' or die $!;
 $i = 0;
 $max = 753;
 $x = 0;

@@ -235,6 +235,8 @@ void main()
         //restart the conversation
         AssignCommand(oPC, ClearAllActions());
         ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
+        //restart the convo to pick next power if needed
+        ExecuteScript("psi_powergain", oPC);
         return;
     }
     nValue += GetLocalInt(oPC, "ChoiceOffset");

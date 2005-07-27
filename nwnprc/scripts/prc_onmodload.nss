@@ -21,18 +21,19 @@ void main()
         SetPRCSwitch(PRC_USE_LETOSCRIPT, TRUE);
     }   
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE) == 0)
-        SetPRCSwitch(PRC_USE_BIOWARE_DATABASE, 600);
+        SetPRCSwitch(PRC_USE_BIOWARE_DATABASE, 100);;//100 HBs = 600sec = 10min
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE))    
     {
         //check PRC version
-        if(GetCampaignString("prc2da", "version") != PRC_VERSION)
-            DestroyCampaignDatabase("prc2da");
-            
+        if(GetCampaignString("prc_data", "version") != PRC_VERSION)
+            DestroyCampaignDatabase("prc_data");
+        SetCampaignString("prc_data", "version", PRC_VERSION);
+        
         location lLoc = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
         //only get it if one doesnt already exist (saved games)
         if(GetIsObjectValid(GetObjectByTag("Bioware2DACache")))
             DestroyObject(GetObjectByTag("Bioware2DACache"));
-        RetrieveCampaignObject("prc2da", "CacheChest", lLoc);
+        RetrieveCampaignObject("prc_data", "CacheChest", lLoc);
     }
     
     if(GetPRCSwitch(PRC_USE_DATABASE))

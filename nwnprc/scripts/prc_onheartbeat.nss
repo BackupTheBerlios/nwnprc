@@ -54,7 +54,7 @@ void main()
         if(bBiowareDBCache)
         {
             object o2daCache = GetObjectByTag("Bioware2DACache");
-            StoreCampaignObject("PRC2da", "CacheChest", o2daCache);
+            StoreCampaignObject("prc_data", "CacheChest", o2daCache);
         }
     }
 

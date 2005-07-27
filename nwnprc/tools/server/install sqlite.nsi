@@ -68,10 +68,6 @@ Section "PRC Pack" Section1
 	File "odbc2 changelog.txt"
 	File "odbc2src.exe"
 	
-	;SQLite specific things
-	File "..\sqlite\sqlite.exe"
-	File "..\sqlite\makedb.exe"
-	
 	;Precacher specifics
 	File "..\precacher\libjcc.dll"
 	File "..\precacher\pbdwe90.dll"
@@ -83,6 +79,8 @@ Section "PRC Pack" Section1
 	File "..\precacher\precacher sqlite.ini"
 	File "..\precacher\precacher.bat"
 	File "..\precacher\precacher.exe"
+	File "..\precacher\sqlite.exe"
+	File "..\precacher\makedb sqlite.exe"
 	
 	;erf for manipulating hak/erf erc
 	File "..\erf.exe"
@@ -145,10 +143,6 @@ Section Uninstall
 	Delete "$NWNPATH\odbc2 changelog.txt"
 	Delete "$NWNPATH\odbc2src.exe"
 	
-		;SQLite specific things
-	Delete "$NWNPATH\sqlite.exe"
-	Delete "$NWNPATH\makedb.exe"
-	
 	;Precacher specifics
 	Delete "$NWNPATH\libjcc.dll"
 	Delete "$NWNPATH\pbdwe90.dll"
@@ -160,6 +154,8 @@ Section Uninstall
 	Delete "$NWNPATH\precacher sqlite.ini"
 	Delete "$NWNPATH\precacher.bat"
 	Delete "$NWNPATH\precacher.exe"
+	Delete "$NWNPATH\sqlite.exe"
+	Delete "$NWNPATH\makedb sqlite.exe"
 	
 	;erf for manipulating hak/erf erc
 	Delete "$NWNPATH\erf.exe"

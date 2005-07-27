@@ -538,6 +538,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "KiPowerWillBonus");
     DeleteLocalInt(oSkin, "AcroJumpBonus");
     DeleteLocalInt(oSkin, "AcroTumbBonus");
+    DeleteLocalInt(oSkin, "NinjaACBonus");
     
     //epic spells
     //transendent vitality

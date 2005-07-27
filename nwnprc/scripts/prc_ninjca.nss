@@ -57,14 +57,25 @@ void main()
 	bAcro  = GetHasFeat(FEAT_EPIC_ACROBATICS_8, oPC) ? 8 : bAcro;
 	bAcro  = GetHasFeat(FEAT_EPIC_ACROBATICS_10, oPC) ? 10 : bAcro;
 	bAcro  = GetHasFeat(FEAT_EPIC_ACROBATICS_12, oPC) ? 12 : bAcro;
-
+	if (!bEnabled)
+		SendMessageToPC(oPC, "Your Ninja abilities are disabled because of encumbrance or armor.");
+	
 	Ninja_GhostSight(oPC, GetHasFeat(FEAT_GHOST_SIGHT, oPC));
-
 	if (bKiPower)
 		SetCompositeBonus(oSkin, "KiPowerWillBonus", 2, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_WILL);
 	else
 		SetCompositeBonus(oSkin, "KiPowerWillBonus", 0, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_WILL);
-	
+
+	if ((GetLevelByClass(CLASS_TYPE_MONK, oPC) > 0) || !bEnabled)
+	{
+		SetCompositeBonus(oSkin, "NinjaACBonus", 0, ITEM_PROPERTY_AC_BONUS);
+	//	SendMessageToPC(oPC, "Setting to 0. Disabled.");
+	}
+	else
+	{
+		SetCompositeBonus(oSkin, "NinjaACBonus", GetAbilityModifier(ABILITY_WISDOM, oPC), ITEM_PROPERTY_AC_BONUS);
+	//	SendMessageToPC(oPC, "Setting to "+IntToString(GetAbilityModifier(ABILITY_WISDOM, oPC)));
+	}
 	if (bAcro)
 	{
 		SetCompositeBonus(oSkin, "AcroJumpBonus", bAcro, ITEM_PROPERTY_SKILL_BONUS, SKILL_JUMP);

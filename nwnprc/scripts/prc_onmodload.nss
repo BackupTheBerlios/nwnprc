@@ -27,7 +27,7 @@ void main()
         SetPRCSwitch(PRC_USE_LETOSCRIPT, TRUE);
     }   
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE) == 0)
-        SetPRCSwitch(PRC_USE_BIOWARE_DATABASE, 100);;//100 HBs = 600sec = 10min
+        SetPRCSwitch(PRC_USE_BIOWARE_DATABASE, 100);//100 HBs = 600sec = 10min
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE))    
     {
         //check PRC version

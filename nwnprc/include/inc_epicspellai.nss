@@ -1,6 +1,6 @@
 #include "inc_epicspells"
 #include "inc_epicspelldef"
-#include "inc_epicspellfunc"
+#include "inc_epicspellfnc"
 #include "inc_utilityfuncs"
 #include "inc_utility"
 /*

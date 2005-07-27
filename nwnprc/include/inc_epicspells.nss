@@ -11,7 +11,7 @@
 #include "prc_inc_spells"
 #include "prc_class_const"
 #include "inc_epicspelldef"
-#include "inc_epicspellfunc"
+#include "inc_epicspellfnc"
 #include "prc_inc_switch"
 #include "inc_time"
 

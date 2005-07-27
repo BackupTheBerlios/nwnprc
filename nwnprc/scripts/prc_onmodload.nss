@@ -9,6 +9,12 @@
 
 void main()
 {
+    //looks like there is some sort of issue with reloading a saved game
+    //this shold stop this event firing for reloads
+    if(GetLocalInt(GetModule(), "prc_mod_load_done"))
+        return;
+    SetLocalInt(GetModule(), "prc_mod_load_done", TRUE);    
+    
     SetModuleSwitch (MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS, TRUE);
     ExecuteScript("prc_companion", OBJECT_SELF);
    

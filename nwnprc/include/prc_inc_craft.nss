@@ -427,8 +427,10 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
 
     if (report.display) {
         string sMessage = GetStringByStrRef(STRREF_MARKETPRICE) + ": " + IntToString(report.marketprice) + "\n";
-        sMessage += GetStringByStrRef(STRREF_GPCOST) + ": " + IntToString(report.GPcost) + "\n";
-        sMessage += GetStringByStrRef(STRREF_XPCOST) + ": " + IntToString(report.XPcost) + "\n";
+        sMessage += GetStringByStrRef(STRREF_GPCOST) + ": " + IntToString(report.GPcost) + " - ";
+        sMessage += (nOwnedGold < report.GPcost ? GetStringByStrRef(STRREF_FAILED) : GetStringByStrRef(STRREF_OK)) + "\n";
+        sMessage += GetStringByStrRef(STRREF_XPCOST) + ": " + IntToString(report.XPcost) + " - ";
+        sMessage += (nOwnedXP < report.XPcost   ? GetStringByStrRef(STRREF_FAILED) : GetStringByStrRef(STRREF_OK)) + "\n";
         if(GetModule() != OBJECT_SELF)
         {
         if (report.result != "")

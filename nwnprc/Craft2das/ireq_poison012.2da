@@ -1,5 +1,5 @@
 2DA V2.0
 
-  LABEL           ReqType ReqParam1    ReqParam2 
-0 Deathblade      RESULT  2dapoison012 ****      
-1 CraftPoisonRank SKILL   22           25        
+  LABEL           ReqType ReqParam1    ReqParam2
+0 Deathblade      RESULT  2dapoison012 ****     
+1 CraftPoisonRank SKILLDC 22           25       

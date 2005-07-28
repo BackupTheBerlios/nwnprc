@@ -1,5 +1,5 @@
 2DA V2.0
 
-  LABEL             ReqType ReqParam1    ReqParam2 
-0 Giant_Wasp_Poison RESULT  2dapoison009 ****      
-1 CraftPoisonRank   SKILL   22           20        
+  LABEL             ReqType ReqParam1    ReqParam2
+0 Giant_Wasp_Poison RESULT  2dapoison009 ****     
+1 CraftPoisonRank   SKILLDC 22           20       

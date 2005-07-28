@@ -1,5 +1,5 @@
 2DA V2.0
 
-  LABEL           ReqType ReqParam1    ReqParam2 
-0 Jade_Water      RESULT  2dapoison144 ****      
-1 CraftPoisonRank SKILL   22           18        
+  LABEL           ReqType ReqParam1    ReqParam2
+0 Jade_Water      RESULT  2dapoison144 ****     
+1 CraftPoisonRank SKILLDC 22           18       

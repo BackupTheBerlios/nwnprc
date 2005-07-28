@@ -1,5 +1,5 @@
 2DA V2.0
 
-  LABEL               ReqType ReqParam1    ReqParam2 
-0 Black_Lotus_Extract RESULT  2dapoison019 ****      
-1 CraftPoisonRank     SKILL   22           35        
+  LABEL               ReqType ReqParam1    ReqParam2
+0 Black_Lotus_Extract RESULT  2dapoison019 ****     
+1 CraftPoisonRank     SKILLDC 22           35       

@@ -1,5 +1,5 @@
 2DA V2.0
 
-  LABEL           ReqType ReqParam1    ReqParam2 
-0 Id_Moss         RESULT  2dapoison021 ****      
-1 CraftPoisonRank SKILL   22           15        
+  LABEL           ReqType ReqParam1    ReqParam2
+0 Id_Moss         RESULT  2dapoison021 ****     
+1 CraftPoisonRank SKILLDC 22           15       

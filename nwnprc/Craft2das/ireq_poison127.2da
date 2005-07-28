@@ -1,5 +1,5 @@
 2DA V2.0
 
-  LABEL                     ReqType ReqParam1    ReqParam2 
-0 Colossal_Centipede_Poison RESULT  2dapoison127 ****      
-1 CraftPoisonRank           SKILL   22           30        
+  LABEL                     ReqType ReqParam1    ReqParam2
+0 Colossal_Centipede_Poison RESULT  2dapoison127 ****     
+1 CraftPoisonRank           SKILLDC 22           30       

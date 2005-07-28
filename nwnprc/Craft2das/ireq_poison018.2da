@@ -1,5 +1,5 @@
 2DA V2.0
 
-  LABEL                       ReqType ReqParam1    ReqParam2 
-0 Carrion_Crawler_Brain_Juice RESULT  2dapoison018 ****      
-1 CraftPoisonRank             SKILL   22           15        
+  LABEL                       ReqType ReqParam1    ReqParam2
+0 Carrion_Crawler_Brain_Juice RESULT  2dapoison018 ****     
+1 CraftPoisonRank             SKILLDC 22           15       

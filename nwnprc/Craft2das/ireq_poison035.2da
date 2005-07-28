@@ -1,5 +1,5 @@
 2DA V2.0
 
-  LABEL              ReqType ReqParam1    ReqParam2 
-0 Small_Spider_Venom RESULT  2dapoison035 ****      
-1 CraftPoisonRank    SKILL   22           15        
+  LABEL              ReqType ReqParam1    ReqParam2
+0 Small_Spider_Venom RESULT  2dapoison035 ****     
+1 CraftPoisonRank    SKILLDC 22           15       

@@ -1,5 +1,5 @@
 2DA V2.0
 
-  LABEL           ReqType ReqParam1    ReqParam2 
-0 Arsenic         RESULT  2dapoison023 ****      
-1 CraftPoisonRank SKILL   22           11        
+  LABEL           ReqType ReqParam1    ReqParam2
+0 Arsenic         RESULT  2dapoison023 ****     
+1 CraftPoisonRank SKILLDC 22           11       

@@ -80,6 +80,26 @@ void main()
     DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
+void DoSpawnBit(object oCaster, object oTarget, string sSkel)
+{
+    if(GetPRCSwitch(PRC_MULTISUMMON))
+    {
+        MultisummonPreSummon(oCaster);
+        AssignCommand(oCaster, ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, 
+            EffectSummonCreature(sSkel, VFX_FNF_SUMMON_UNDEAD), GetLocation(oTarget)));
+    }
+    else
+    {
+        SetMaxHenchmen(999);
+        object oSkel = CreateObject(OBJECT_TYPE_CREATURE, sSkel,
+            GetLocation(oTarget));
+        AddHenchman(oCaster, oSkel);
+        SetAssociateListenPatterns(oSkel);
+        DetermineCombatRound(oSkel);
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD), GetLocation(oTarget));
+    }
+}    
+
 void DoAnimationBit(location lTarget, object oCaster)
 {
     int nX = 0;
@@ -96,22 +116,8 @@ void DoAnimationBit(location lTarget, object oCaster)
             if (GetIsDead(oTarget) &&
                 GetLocalInt(oTarget, "nAnBlasCheckMe") == TRUE)
             {
-                if(GetPRCSwitch(PRC_MULTISUMMON))
-                {
-                    MultisummonPreSummon(oCaster);
-                    AssignCommand(oCaster, ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, 
-                        EffectSummonCreature(sSkel, VFX_FNF_SUMMON_UNDEAD), GetLocation(oTarget)));
-                }
-                else
-                {
-                    nH++;
-                    SetMaxHenchmen(nH);
-                    oSkel = CreateObject(OBJECT_TYPE_CREATURE, sSkel,
-                        GetLocation(oTarget));
-                    AddHenchman(oCaster, oSkel);
-                    SetAssociateListenPatterns(oSkel);
-                    DetermineCombatRound(oSkel);
-                }
+                float fDelay = IntToFloat(Random(60))/10.0;
+                DelayCommand(fDelay, DoSpawnBit(oCaster, oTarget, sSkel));
                 nX++;
             }
         }
@@ -119,5 +125,5 @@ void DoAnimationBit(location lTarget, object oCaster)
         oTarget = GetNextObjectInShape(SHAPE_SPHERE,
             RADIUS_SIZE_HUGE, lTarget);
     }
-    SetMaxHenchmen(nM);
+    DelayCommand(10.0, SetMaxHenchmen(nM));
 }

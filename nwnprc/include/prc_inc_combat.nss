@@ -2341,13 +2341,13 @@ int GetMonkEnhancement(object oWeapon, object oDefender, object oAttacker)
 
 int GetDamagePowerConstant(object oWeapon, object oDefender, object oAttacker)
 {
-     int iDamagePower = GetMonkEnhancement(oWeapon, oDefender, oAttacker);
+     int iDamagePower = GetMonkEnhancement(oWeapon, oDefender, oAttacker);     
 
      // Determine Damage Power (Enhancement Bonus of Weapon)
      // Damage Power 6 is Magical and hits everything
      // So for +6 and higher are actually 7-21, so add +1
      if(iDamagePower > 5) iDamagePower += 1;
-     if(iDamagePower <0 ) iDamagePower = 0;
+     if(iDamagePower < 0 ) iDamagePower = 0;
      
      return iDamagePower;
 }

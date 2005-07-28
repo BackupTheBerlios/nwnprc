@@ -28,165 +28,178 @@ void PrcFeats(object oPC)
      FeatSpecialUsePerDay(oPC);
 }
 
+void RestCancelled(object oPC)
+{
+    DelayCommand(1.0,PrcFeats(oPC));
+    // Execute scripts hooked to this event for the player triggering it
+    ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_CANCELLED);
+}
+
+void RestStarted(object oPC)
+{
+    if (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC)){
+        SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
+        SetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON", 0);
+    }
+    if (GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW))
+    {
+        //Destroy imbued arrows.
+        AADestroyAllImbuedArrows(oPC);
+    }
+    /* Left here in case the multisummon trick is ever broken. In that case, use this to make Astral Constructs get unsummoned properly
+    if(GetHasFeat(whatever feat determines if the PC can manifest Astral Construct here)){
+        int i = 1;
+        object oCheck = GetHenchman(oPC, i);
+        while(oCheck != OBJECT_INVALID){
+            if(GetStringLeft(GetTag(oCheck), 14) == "psi_astral_con")
+                DoDespawn(oCheck);
+            i++;
+            oCheck = GetHenchman(oPC, i);
+        }
+    }
+    */
+    if(GetPRCSwitch(PRC_PNP_REST_HEALING))
+    {
+        SetLocalInt(oPC, "PnP_Rest_InitialHP", GetCurrentHitPoints(oPC));
+    }
+    // Execute scripts hooked to this event for the player triggering it
+    ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_STARTED);
+}
+
+void RestFinished(object oPC)
+{
+    //Restore Power Points for Psionics
+    ExecuteScript("prc_psi_ppoints", oPC);
+
+    // To heal up enslaved creatures...
+    object oSlave = GetLocalObject(oPC, "EnslavedCreature");
+    if (GetIsObjectValid(oSlave) && !GetIsDead(oSlave) && !GetIsInCombat(oSlave)) 
+            AssignCommand(oSlave, ActionRest());
+            //ForceRest(oSlave);
+
+    if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
+    {
+        object oFam =  GetLocalObject(oPC, "BONDED");
+        if (GetIsObjectValid(oFam) && !GetIsDead(oFam) && !GetIsInCombat(oFam)) 
+            //ForceRest(oFam);
+            AssignCommand(oFam, ActionRest());
+    }
+
+    if (GetHasFeat(FEAT_LIPS_RAPTUR,oPC)){
+        int iLips=GetAbilityModifier(ABILITY_CHARISMA,oPC)+1;
+        if (iLips<2)iLips=1;
+        SetLocalInt(oPC,"FEAT_LIPS_RAPTUR",iLips);
+        SendMessageToPC(oPC," Lips of Rapture : use "+IntToString(iLips-1));
+    }
+
+    if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
+    GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC)) {
+        FloatingTextStringOnCreature("*You feel refreshed*", oPC, FALSE);
+        ReplenishSlots(oPC);
+    }
+
+    if (GetHasFeat(FEAT_SF_CODE,oPC))
+        RemoveSpecificProperty(GetPCSkin(oPC),ITEM_PROPERTY_BONUS_FEAT,IP_CONST_FEAT_SF_CODE);
+
+    // begin flurry of swords array
+    if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC))
+    {
+        DeleteLocalInt(oPC, "FLURRY_TARGET_NUMBER");
+
+        int i;
+        for (i = 0 ; i < 10 ; i++)
+        {
+            string sName = "FLURRY_TARGET_" + IntToString(i);
+            SetLocalObject(oPC, sName, OBJECT_INVALID);
+        }
+    }
+    // end flurry or swords array
+
+    if(GetPRCSwitch(PRC_PNP_REST_HEALING))
+    {
+        int nHP = GetLocalInt(oPC, "PnP_Rest_InitialHP");
+        nHP += GetHitDice(oPC);
+        int nCurrentHP = GetCurrentHitPoints(oPC);
+        int nDamage = nCurrentHP-nHP;
+        //check its a positive number
+        if(nDamage > 0)
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, 
+                EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPC);
+    }
+    
+    int nSpellCount = GetPRCSwitch(PRC_DISABLE_SPELL_COUNT);
+    int i;
+    string sMessage;
+    for(i=1;i<nSpellCount;i++)
+    {
+        int nSpell = GetPRCSwitch(PRC_DISABLE_SPELL_+IntToString(i));
+        int nMessage;
+        while(GetHasSpell(nSpell, oPC))
+        {
+            if(!nMessage)
+            {
+                sMessage += "You cannot use "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpell)))+" in this module.\n";
+                nMessage = TRUE;
+            }   
+            DecrementRemainingSpellUses(oPC, nSpell);
+        }
+    }
+    if(sMessage != "")
+        FloatingTextStringOnCreature(sMessage, oPC, TRUE);
+    
+    DelayCommand(1.0,PrcFeats(oPC));
+
+    // New Spellbooks
+    DelayCommand(0.01, CheckNewSpellbooks(oPC));
+    // PnP spellschools
+    if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
+        && GetLevelByClass(CLASS_TYPE_WIZARD, oPC))
+    {
+        //need to put a check in to make sure the player
+        //memorized one spell of their specialized
+        //school for each spell level
+        //also need to remove spells of prohibited schools
+    }
+    
+    // Execute scripts hooked to this event for the player triggering it
+    ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_FINISHED);
+}
+
 void main()
 {
-    object oPC;
-    
-    //This IF statement is for the PRCForceRest wrapper, which will execute the prc_rest
-    //script directly on the target -- which then is referenced as OBJECT_SELF. This is
-    //necessary since the OnRest event will not fire when ForceRest is used.
-    if (GetIsPC(OBJECT_SELF) && GetLocalInt(OBJECT_SELF, "PRC_ForceRested"))
-    {
-        oPC = OBJECT_SELF;
-        DeleteLocalInt(OBJECT_SELF, "PRC_ForceRested");
-    }
-    else
-    	oPC = GetLastBeingRested();
+    object oPC = GetLastBeingRested();
     
     //rest kits
     if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
         ExecuteScript("sbr_onrest", OBJECT_SELF);
     
-    switch(MyGetLastRestEventType()){
-        case REST_EVENTTYPE_REST_CANCELLED:{
-            DelayCommand(1.0,PrcFeats(oPC));
-            // Execute scripts hooked to this event for the player triggering it
-            ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_CANCELLED);
-            break;
-        }
-        case REST_EVENTTYPE_REST_STARTED:{
-
-            if (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC)){
-                SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
-                SetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON", 0);
+    // Handle the PRCForceRest() wrapper
+    if(GetLocalInt(oPC, "PRC_ForceRested"))
+    {
+        RestStarted(oPC);
+        // A minor delay to break the script association and to lessen TMI chances
+        DelayCommand(0.1f, RestFinished(oPC));
+        // Clear the flag
+        DeleteLocalInt(oPC, "PRC_ForceRested");
+    }
+    else
+    {
+        switch(MyGetLastRestEventType()){
+            case REST_EVENTTYPE_REST_CANCELLED:{
+                RestCancelled(oPC);
+                break;
             }
-            if (GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW))
-            {
-                //Destroy imbued arrows.
-                AADestroyAllImbuedArrows(oPC);
+            case REST_EVENTTYPE_REST_STARTED:{
+                RestStarted(oPC);
+                break;
             }
-            /* Commented out until the feat constant is determined
-            if(GetHasFeat(whatever feat determines if the PC can manifest Astral Construct here)){
-                int i = 1;
-                object oCheck = GetHenchman(oPC, i);
-                while(oCheck != OBJECT_INVALID){
-                    if(GetStringLeft(GetTag(oCheck), 14) == "psi_astral_con")
-                        DoDespawn(oCheck);
-                    i++;
-                    oCheck = GetHenchman(oPC, i);
-                }
+            case REST_EVENTTYPE_REST_FINISHED:{
+                RestFinished(oPC);
+                break;
             }
-            */
-            if(GetPRCSwitch(PRC_PNP_REST_HEALING))
-            {
-                SetLocalInt(oPC, "PnP_Rest_InitialHP", GetCurrentHitPoints(oPC));
+            case REST_EVENTTYPE_REST_INVALID:{
+                break;
             }
-            // Execute scripts hooked to this event for the player triggering it
-            ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_STARTED);
-            break;
-        }
-        case REST_EVENTTYPE_REST_FINISHED:{
-
-            //Restore Power Points for Psionics
-            ExecuteScript("prc_psi_ppoints", oPC);
-
-            // To heal up enslaved creatures...
-            object oSlave = GetLocalObject(oPC, "EnslavedCreature");
-            if (GetIsObjectValid(oSlave) && !GetIsDead(oSlave) && !GetIsInCombat(oSlave)) 
-                    AssignCommand(oSlave, ActionRest());
-                    //ForceRest(oSlave);
-
-            if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
-            {
-                object oFam =  GetLocalObject(oPC, "BONDED");
-                if (GetIsObjectValid(oFam) && !GetIsDead(oFam) && !GetIsInCombat(oFam)) 
-                    //ForceRest(oFam);
-                    AssignCommand(oFam, ActionRest());
-            }
-
-            if (GetHasFeat(FEAT_LIPS_RAPTUR,oPC)){
-                int iLips=GetAbilityModifier(ABILITY_CHARISMA,oPC)+1;
-                if (iLips<2)iLips=1;
-                SetLocalInt(oPC,"FEAT_LIPS_RAPTUR",iLips);
-                SendMessageToPC(oPC," Lips of Rapture : use "+IntToString(iLips-1));
-            }
-
-            if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
-            GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC)) {
-                FloatingTextStringOnCreature("*You feel refreshed*", oPC, FALSE);
-                ReplenishSlots(oPC);
-            }
-
-            if (GetHasFeat(FEAT_SF_CODE,oPC))
-                RemoveSpecificProperty(GetPCSkin(oPC),ITEM_PROPERTY_BONUS_FEAT,IP_CONST_FEAT_SF_CODE);
-
-            // begin flurry of swords array
-            if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC))
-            {
-                DeleteLocalInt(oPC, "FLURRY_TARGET_NUMBER");
-
-                int i;
-                for (i = 0 ; i < 10 ; i++)
-                {
-                    string sName = "FLURRY_TARGET_" + IntToString(i);
-                    SetLocalObject(oPC, sName, OBJECT_INVALID);
-                }
-            }
-            // end flurry or swords array
-
-            if(GetPRCSwitch(PRC_PNP_REST_HEALING))
-            {
-                int nHP = GetLocalInt(oPC, "PnP_Rest_InitialHP");
-                nHP += GetHitDice(oPC);
-                int nCurrentHP = GetCurrentHitPoints(oPC);
-                int nDamage = nCurrentHP-nHP;
-                //check its a positive number
-                if(nDamage > 0)
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, 
-                        EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPC);
-            }
-            
-            int nSpellCount = GetPRCSwitch(PRC_DISABLE_SPELL_COUNT);
-            int i;
-            string sMessage;
-            for(i=1;i<nSpellCount;i++)
-            {
-                int nSpell = GetPRCSwitch(PRC_DISABLE_SPELL_+IntToString(i));
-                int nMessage;
-                while(GetHasSpell(nSpell, oPC))
-                {
-                    if(!nMessage)
-                    {
-                        sMessage += "You cannot use "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpell)))+" in this module.\n";
-                        nMessage = TRUE;
-                    }   
-                    DecrementRemainingSpellUses(oPC, nSpell);
-                }
-            }
-            if(sMessage != "")
-                FloatingTextStringOnCreature(sMessage, oPC, TRUE);
-            
-            DelayCommand(1.0,PrcFeats(oPC));
-
-            // New Spellbooks
-            DelayCommand(0.01, CheckNewSpellbooks(oPC));
-            // PnP spellschools
-            if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
-                && GetLevelByClass(CLASS_TYPE_WIZARD, oPC))
-            {
-                //need to put a check in to make sure the player
-                //memorized one spell of their specialized
-                //school for each spell level
-                //also need to remove spells of prohibited schools
-            }
-            
-            // Execute scripts hooked to this event for the player triggering it
-            ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_FINISHED);
-
-            break;
-        }
-        case REST_EVENTTYPE_REST_INVALID:{
-            break;
         }
     }
 }

@@ -139,7 +139,13 @@ object GetLastBeingDied(){
 
 object GetLastBeingRested(){
     if(GetModule() == OBJECT_SELF || GetIsPC(OBJECT_SELF))
-        return GetLastPCRested();
+    {
+        // Account for the PRCForceRest() wrapper
+        if(GetLocalInt(OBJECT_SELF, "PRC_ForceRested"))
+            return OBJECT_SELF;
+        else
+            return GetLastPCRested();
+    }
     else
         return OBJECT_SELF;
 }

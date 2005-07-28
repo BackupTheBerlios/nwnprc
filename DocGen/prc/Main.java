@@ -16,10 +16,11 @@ public class Main {
 	public static void main(String[] args) throws Throwable{
 		if(args.length == 0)
 			readMe();
-		for(String arg : args)
+
+/*		for(String arg : args)
 			if(arg.equals("-?") || arg.equals("--help"))
 				readMe();
-
+*/
 		String toCall = args[0];
 		String[] paramsToPass = new String[args.length - 1];
 		System.arraycopy(args, 1, paramsToPass, 0, paramsToPass.length);

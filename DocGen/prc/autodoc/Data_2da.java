@@ -45,20 +45,36 @@ public class Data_2da{
 		this.defaultValue = defaultValue;
 	}
 	
+	/**
+	 * Saves the 2da represented by this object to file. Equivalent to calling 
+	 * <code>save2da(path, false, false)</code>.
+	 * 
+	 * @param path the directory to save the file in. If this is "" or null,
+	 *              the current directory is used.
+	 * @throws IOException if <code>true</code> and a file with the same name as this 2da 
+	 *                         exists at <code>path</code>, it is overwritten.
+	 *                         If <code>false</code> and in the same situation, an IOException is
+	 *                         thrown.
+	 */
+	public void save2da(String path) throws IOException{
+		save2da(path, false, false);
+	}
 	
 	/**
 	 * Saves the 2da represented by this object to file.
 	 * 
 	 * @param path the directory to save the file in. If this is "" or null,
 	 *              the current directory is used.
-	 * @param allowOverWrite if <code>TRUE</code> and a file with the same name as this 2da 
+	 * @param allowOverWrite if <code>true</code> and a file with the same name as this 2da 
 	 *                         exists at <code>path</code>, it is overwritten.
-	 *                         If <code>FALSE</code> and in the same situation, an IOException is
-	 *                         thrown
+	 *                         If <code>false</code> and in the same situation, an IOException is
+	 *                         thrown.
+	 * @param evenColumns if <code>true</code>, every entry in a column will be padded until they
+	 *                         start from the same position
 	 * 
 	 * @throws IOException if cannot overwrite, or the underlying IO throws one 
 	 */
-	public void save2da(String path, boolean allowOverWrite) throws IOException{
+	public void save2da(String path, boolean allowOverWrite, boolean evenColumns) throws IOException{
 		String CRLF = "\r\n";
 		if(path == null || path.equals(""))
 			path = "." + File.separator;
@@ -68,6 +84,37 @@ public class Data_2da{
 			throw new IOException("File existst already: " + file.getAbsolutePath());
 		
 		FileWriter fw = new FileWriter(file, false);
+		String[] labels = this.getLabels();
+		String toWrite;
+		
+		// Get the amount of padding used, if any
+		int[] widths = new int[labels.length + 1];
+		if(evenColumns){
+			ArrayList<String> column;
+			int pad;
+			for(int i = 0; i < labels.length; i++){
+				pad = labels[i].length();
+				column = mainData.get(labels[i]);
+				for(int j = 0; j < this.getEntryCount(); j++){
+					toWrite = column.get(j);
+					if(toWrite.indexOf(" ") != -1)
+						toWrite = "\"" + toWrite + "\"";
+					if(toWrite.length() > pad) pad = toWrite.length();
+				}
+				/*
+				buf = new StringBuffer();
+				for(; pad > 0; pad--) buf.append(" ");
+				paddings[i] = buf.toString();
+				*/
+				widths[i] = pad;
+			}
+			widths[widths.length - 1] = new Integer(this.getEntryCount()).toString().length();
+			
+			//for(int i = 0; i < widths.length; i++) if(widths[i] > 0) widths[i] -= 2;
+		}/*
+		else
+			for(int i = 0; i < paddings.length; i++) paddings[i] = "";
+		*/
 		
 		// Write the header and default lines
 		fw.write("2DA V2.0" + CRLF);
@@ -77,21 +124,25 @@ public class Data_2da{
 			fw.write(CRLF);
 		
 		// Write the labels row using the original case
-		for(String label : realLabels){
-			fw.write(" " + label);
+		for(int i = 0; i < widths[widths.length - 1]; i++) fw.write(" ");
+		for(int i = 0; i < realLabels.length; i++){
+			fw.write(" " + realLabels[i]);
+			for(int j = 0; j < widths[i] - realLabels[i].length(); j++) fw.write(" ");
 		}
 		fw.write(CRLF);
 		
+		
+		
 		// Write the data
-		String[] labels = this.getLabels();
-		String toWrite;
 		for(int i = 0; i < this.getEntryCount(); i++){
-			fw.write(i + " ");
-			for(String label : labels){
-				toWrite = mainData.get(label).get(i);
+			fw.write("" + i);
+			for(int j = 0; j < widths[widths.length - 1] - new Integer(i).toString().length(); j++) fw.write(" ");
+			for(int j = 0; j < labels.length; j++){
+				toWrite = mainData.get(labels[j]).get(i);
 				if(toWrite.indexOf(" ") != -1)
 					toWrite = "\"" + toWrite + "\"";
 				fw.write(" " + toWrite);
+				for(int k = 0; k < widths[j] - toWrite.length(); k++) fw.write(" ");
 			}
 			fw.write(CRLF);
 		}

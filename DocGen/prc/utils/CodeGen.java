@@ -29,6 +29,12 @@ public final class CodeGen{
 	                      template;
 	private static Data_2da[] data;
 	
+	/**
+	 * The main method, as usual.
+	 * 
+	 * @param args do I really need to exapain this?
+	 * @throws Exception this is a simple tool, just let all failures blow up 
+	 */
 	public static void main(String[] args) throws Exception{
 		if(args.length == 0 || args[0].equals("--help") || args[0].equals("-?"))
 			readMe();
@@ -39,7 +45,7 @@ public final class CodeGen{
 		
 		data = new Data_2da[args.length - 3];
 		for(int i = 0; i < data.length; i++)
-			data[i] = new Data_2da(args[i + 3]);
+			data[i] = Data_2da.load2da(args[i + 3]);
 		
 		doCreation(new Script(template, prefix), 0);
 	}

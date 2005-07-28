@@ -3,16 +3,16 @@
 //:: inc_prc_npc
 //:://////////////////////////////////////////////
 /*
-	Wrapper functions for getters used in module
-	events. Used to make the PRC evaluations
-	happening in events to work for NPCs, too.
-	
-	Event currently supported:
-	OnEquip
-	OnUnequip
-	OnDeath
-	OnRest
-	
+    Wrapper functions for getters used in module
+    events. Used to make the PRC evaluations
+    happening in events to work for NPCs, too.
+    
+    Event currently supported:
+    OnEquip
+    OnUnequip
+    OnDeath
+    OnRest
+    
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -114,6 +114,9 @@ void DoEquipTest()
                 ExecuteScript("prc_unequip", OBJECT_SELF);
             }
             SetLocalObject(OBJECT_SELF, "oSlotItem"+IntToString(i), oItem);
+            // to avoid lag, only run this on 1 item per HB
+            // so we abort this now and prc_npc_hb will run it again in 6 seconds
+            return;
         }
     }
 }

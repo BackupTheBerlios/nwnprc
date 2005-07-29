@@ -140,6 +140,7 @@ void DoPoisonRemovalFromWeapon(object oWeapon)
 {
     DeleteLocalInt(oWeapon, "pois_wpn_idx");
     DeleteLocalInt(oWeapon, "pois_wpn_uses");
+    RemoveEventScript(oWeapon, EVENT_ITEM_ONHIT, "poison_wpn_onhit", TRUE, TRUE);
 
     // Remove the UniquePower only if poisoning the weapon added it.
     if(GetLocalInt(oWeapon, "PoisonedWeapon_DoDelete"))

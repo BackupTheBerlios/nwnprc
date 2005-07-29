@@ -77,6 +77,7 @@ void main()
     
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
     int armorType = GetArmorType(oArmor);
+    if (oArmor == OBJECT_INVALID) armorType = ARMOR_TYPE_LIGHT;
     
     string nMes = "";
 
@@ -94,7 +95,7 @@ void main()
          }  
     }
     // Removes effects is armor is not light
-    else if( armorType > ARMOR_TYPE_LIGHT )
+    else if( armorType != ARMOR_TYPE_LIGHT )
     {
          RemoveAbsAmbidex(oPC);    
          RemoveTwoWeaponDefense(oPC, oSkin);

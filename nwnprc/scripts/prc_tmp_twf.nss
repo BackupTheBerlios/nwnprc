@@ -20,12 +20,12 @@ int isNotShield(object oItem)
 {
      int isNotAShield = 1;
      
-     if(GetBaseItemType(oItem) == BASE_ITEM_LARGESHIELD)       isNotAShield == 0;
-     else if (GetBaseItemType(oItem) == BASE_ITEM_TOWERSHIELD) isNotAShield == 0;
-     else if (GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD) isNotAShield == 0;
+     if(GetBaseItemType(oItem) == BASE_ITEM_LARGESHIELD)       isNotAShield = 0;
+     else if (GetBaseItemType(oItem) == BASE_ITEM_TOWERSHIELD) isNotAShield = 0;
+     else if (GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD) isNotAShield = 0;
      
      // Added torches to the check as they should not count either
-     else if (GetBaseItemType(oItem) == BASE_ITEM_TORCH) isNotAShield == 0;
+     else if (GetBaseItemType(oItem) == BASE_ITEM_TORCH) isNotAShield = 0;
      
      return isNotAShield;
 }
@@ -42,6 +42,7 @@ void main()
           object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
           
           int armorType = GetArmorType(oArmor);
+          if (oArmor == OBJECT_INVALID) armorType = ARMOR_TYPE_LIGHT;
           int tempestLevel = GetLevelByClass(CLASS_TYPE_TEMPEST, oPC);
           int monkLevel = GetLevelByClass(CLASS_TYPE_MONK, oPC);
           int numAddAttacks = 0;
@@ -85,7 +86,7 @@ void main()
           }
           
           // If feat is on a tempest, check armor type
-          if(tempestLevel > 4 && armorType < ARMOR_TYPE_MEDIUM)
+          if(tempestLevel > 4 && armorType == ARMOR_TYPE_LIGHT)
           {
                if(oWeapR != OBJECT_INVALID  && oWeapL != OBJECT_INVALID && isNotShield(oWeapL) )
               {

@@ -86,20 +86,22 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
     //count the size of the party
     
     float fPartyCount;
+    int nAssociateType;
     object oTest = GetFirstFactionMember(oPC, FALSE);
     while(GetIsObjectValid(oTest))
     {
-        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_NONE)
+        nAssociateType = GetAssociateType(oTest);
+        if     (nAssociateType == ASSOCIATE_TYPE_NONE)
             fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_PC_PARTY_COUNT_x100))/100.0;
-        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_HENCHMAN)
+        else if(nAssociateType == ASSOCIATE_TYPE_HENCHMAN)
             fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_HENCHMAN_PARTY_COUNT_x100))/100.0;
-        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_DOMINATED)
+        else if(nAssociateType == ASSOCIATE_TYPE_DOMINATED)
             fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_DOMINATED_PARTY_COUNT_x100))/100.0;
-        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_ANIMALCOMPANION)
+        else if(nAssociateType == ASSOCIATE_TYPE_ANIMALCOMPANION)
             fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_ANIMALCOMPANION_PARTY_COUNT_x100))/100.0;
-        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_FAMILIAR)
+        else if(nAssociateType == ASSOCIATE_TYPE_FAMILIAR)
             fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_FAMILIAR_PARTY_COUNT_x100))/100.0;
-        if(GetAssociateType(oTest) == ASSOCIATE_TYPE_SUMMONED)
+        else if(nAssociateType == ASSOCIATE_TYPE_SUMMONED)
             fPartyCount += IntToFloat(GetPRCSwitch(PRC_XP_SUMMONED_PARTY_COUNT_x100))/100.0;
         oTest = GetNextFactionMember(oPC, FALSE);
     }

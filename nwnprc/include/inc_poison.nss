@@ -39,12 +39,19 @@ const int STRREF_ACQUIRE_SPOT_SUCCESS1       = 16826253;
 const int STRREF_ACQUIRE_SPOT_SUCCESS2       = 16826254;
 const int STRREF_ONEQUIP_CLEAN_ITEM          = 16826255;
 
+const int POISON_TYPE_CONTACT  = 0;
+const int POISON_TYPE_INGESTED = 1;
+const int POISON_TYPE_INHALED  = 2;
+const int POISON_TYPE_INJURY   = 3;
 
-// A set of functions for getting the poison's type.
-int GetIsContactPoison(int nID);
-int GetIsIngestedPoison(int nID);
-int GetIsInhaledPoison(int nID);
-int GetIsInjuryPoison(int nID);
+/**
+ * Gets the type of the given poison.
+ *
+ * @param nPoison POISON_* constant
+ * @return        POISON_TYPE_* constant
+ */
+int GetPoisonType(int nPoison);
+
 
 // Poison removal handlers
 void DoPoisonRemovalFromWeapon(object oWeapon);
@@ -55,84 +62,9 @@ void DoPoisonRemovalFromItem(object oItem);
 ************** The implementations ******************
 ****************************************************/
 
-int GetIsContactPoison(int nID){
-    if(nID >= 13 && nID <= 19)
-        return TRUE;
-    if(nID >= 135 && nID <= 137)
-        return TRUE;
-
-    // Numbers not in above ranges
-    switch(nID){
-        case 100:
-            return TRUE;
-        default:
-            return FALSE;
-    }
-
-    return FALSE;
-}
-
-int GetIsIngestedPoison(int nID){
-    // Anything that isn't of the other 4 types is an ingested poison
-    // This may be incorrect, but it prevents typeless poisons
-    return !(GetIsContactPoison(nID) ||
-             GetIsInhaledPoison(nID) ||
-             GetIsInjuryPoison(nID));
-
-    /*
-    if(nID >= 20 && nID <= 25)
-    return TRUE;
-
-    // Numbers not in above ranges
-    switch(nID){
-    case 143:
-    return TRUE;
-    default:
-    return FALSE;
-    }
-
-    return FALSE;
-    */
-}
-
-int GetIsInhaledPoison(int nID){
-    if(nID >= 26 && nID <= 28)
-        return TRUE;
-    if(nID >= 138 && nID <= 142)
-        return TRUE;
-
-    // Numbers not in above ranges
-    switch(nID){
-        case 43:
-            return TRUE;
-        default:
-            return FALSE;
-    }
-
-    return FALSE;
-}
-
-int GetIsInjuryPoison(int nID){
-    if(nID >= 3 && nID <= 12)
-        return TRUE;
-    if(nID >= 29 && nID <= 42)
-        return TRUE;
-    if(nID >= 122 && nID <= 134)
-        return TRUE;
-    if(nID >= 144 && nID <= 146)
-        return TRUE;
-
-    // Numbers not in above ranges
-    switch(nID){
-        case 0:
-        case 1:
-        case 44:
-        case 101:
-            return TRUE;
-        default:
-            return FALSE;
-    }
-    return FALSE;
+int GetPoisonType(int nPoison)
+{
+    return StringToInt(Get2DACache("poison", "Poison_Type", nPoison));
 }
 
 // Handles removing of itemproperties and locals on a poisoned weapon

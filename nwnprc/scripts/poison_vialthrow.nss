@@ -5,15 +5,15 @@
 /*
     This is a script for the grenadelike use of a
     poison item.
-    
+
     The number of poison used is gotten from
     local integer "pois_idx" on the item being cast from.
     The last 3 letters of the item's tag will be used instead
     if the following module switch is set:
-    
+
     PRC_USE_TAGBASED_INDEX_FOR_POISON
-    
-    
+
+
     If the poison used is an inhaled poison, any
     creatures in a RADIUS_SIZE_MEDIUM will be effected.
     A contact poison will only affect a targeted creature.
@@ -38,18 +38,18 @@ void main(){
     string sTag = GetTag(oItem);
     location lTarget = GetSpellTargetLocation();
     float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
-    
-    
-    // Get the 2da row to lookup the poison from 
+
+
+    // Get the 2da row to lookup the poison from
     int nPoisonIdx;
     if(GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON))
         nPoisonIdx = StringToInt(GetStringRight(GetTag(oItem), 3));
     else
         nPoisonIdx = GetLocalInt(oItem, "pois_idx");
-    
-    
+
+
     /** Do paranoia **/
-    
+
     if (nPoisonIdx < 0)
     {
         WriteTimestampedLogEntry ("Error: Item with resref " +GetResRef(oItem)+ ", tag " +GetTag(oItem) + " has the Poison Vial spellscript attached but "
@@ -57,28 +57,29 @@ void main(){
                                    + " contains an invalid value!");
         return;
     }
-    
-    if(!GetIsContactPoison(nPoisonIdx) &&
-       !GetIsInhaledPoison(nPoisonIdx))
+
+    if(GetPoisonType(nPoisonIdx) != POISON_TYPE_CONTACT &&
+       GetPoisonType(nPoisonIdx) != POISON_TYPE_INHALED
+       )
     {
         SendMessageToPC(oPC, GetName(oItem) +" " + GetStringByStrRef(STRREF_SHATTER_HARMLESS)); // * Nothing happens *
         WriteTimestampedLogEntry ("Error: Item with resref " +GetResRef(oItem)+ ", tag " +GetTag(oItem) + ", pois_idx " + IntToString(nPoisonIdx) + " has the Poison Vial spellscript attached but the poison is not a valid one for this script!");
         return;
     }
-    
-    
+
+
     /** All is OK. Following mostly ripped from DoGrenade in x0_i0_spells **/
-    
+
     effect ePoison = EffectPoison(nPoisonIdx);
-    
-    if(GetIsContactPoison(nPoisonIdx))
+
+    if(GetPoisonType(nPoisonIdx) == POISON_TYPE_CONTACT)
     {
         // This was a contact poison, so we only affect one target.
         // First, check if it's a valid one.
         if(GetIsObjectValid(oTarget) == TRUE)
         {
             int nTouch = PRCDoRangedTouchAttack(oTarget);;
-            
+
             if (nTouch > 0)
             {
                 SignalEvent(oTarget, EventSpellCastAt(oPC, SPELL_GRENADE_POISONVIAL));
@@ -92,13 +93,13 @@ void main(){
         //Apply the explosion at the location captured above.
         effect eExplode = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
-        
+
         object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         //Cycle through the targets within the spell shape until an invalid object is captured.
         while (GetIsObjectValid(oTarget))
         {
             float fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-            
+
             // Apply effects to the currently selected target.
             SignalEvent(oTarget, EventSpellCastAt(oPC, SPELL_GRENADE_POISONVIAL));
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoison, oTarget, 0.0f, FALSE, SPELL_GRENADE_POISONVIAL, 1, oPC));

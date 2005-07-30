@@ -6,9 +6,9 @@
  * these switches and in addition some functions dealing with the
  * implementation of certain switches.
  */
- 
+
  /* This variable MUST be updated with every new version of the PRC!!! */
- 
+
  const string PRC_VERSION                           = "PRC 2.3 alpha 7";
 
 
@@ -198,7 +198,7 @@ const string PRC_EPIC_BACKLASH_DAMAGE                = "PRC_EPIC_BACKLASH_DAMAGE
 const string PRC_EPIC_FOCI_ADJUST_DC                 = "PRC_EPIC_FOCI_ADJUST_DC";
 
 /**
- * DC multiplier for gold to research. 
+ * DC multiplier for gold to research.
  * Defaults to: 9000 as per PnP
  */
 const string PRC_EPIC_GOLD_MULTIPLIER                = "PRC_EPIC_GOLD_MULTIPLIER";
@@ -261,7 +261,7 @@ const string PRC_CEP_COMPANION_IN_USE                = "PRC_CEP_COMPANION_IN_USE
 const string PRC_STAFF_CASTER_LEVEL                  = "PRC_STAFF_CASTER_LEVEL";
 
 /**
- * NPCs go through spellhooking as if they are PCs. 
+ * NPCs go through spellhooking as if they are PCs.
  */
 const string PRC_NPC_HAS_PC_SPELLCASTING             = "PRC_NPC_HAS_PC_SPELLCASTING";
 
@@ -280,10 +280,10 @@ const string PRC_DISABLE_DEMILICH                    = "PRC_DISABLE_DEMILICH";
  * Defines the possible uses of the Epic Spell Laboratory. Values as follows:
  *
  * 0 = (default) Can teleport to the Epic Spell Laboratory, merchant sells all
- *     epic spells and new wizard scrolls. 
+ *     epic spells and new wizard scrolls.
  * 1 = Can teleport to the Epic Spell Laboratory, merchant sells only the epic
- *     spells available in HotU and new wizard scrolls. 
- * 2 = Can teleport to the Epic Spell Laboratory, but the merchant is unavailable. 
+ *     spells available in HotU and new wizard scrolls.
+ * 2 = Can teleport to the Epic Spell Laboratory, but the merchant is unavailable.
  * 3 = Cannot teleport to the Epic Spell Laboratory.
  */
 const string PRC_SPELLSLAB                           = "PRC_SPELLSLAB";
@@ -457,7 +457,7 @@ const string PRC_DISABLE_SPELL_                      = "PRC_DISABLE_SPELL_";
  * Setting this will stop the GUI automatically appearing when a player is petrified on
  * hardcore
  * You can use a script named "prc_pw_petrific" which will always be run at petrification
- * (regardless of this switch) on hardcore to pop up the GUI as you want it, rather than 
+ * (regardless of this switch) on hardcore to pop up the GUI as you want it, rather than
  * being forced to use biowares
 */
 const string PRC_NO_PETRIFY_GUI                      = "PRC_NO_PETRIFY_GUI";
@@ -475,12 +475,12 @@ const string PRC_NO_PETRIFY_GUI                      = "PRC_NO_PETRIFY_GUI";
  * CEP robes:
  * http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=5950
  * (credit to USAgreco66kg for those CEP files)
- * Note on haks: You should not add the acp_2da hak if you have the PRC installed 
+ * Note on haks: You should not add the acp_2da hak if you have the PRC installed
  * already. Plus, once you press the OK button to add the ACP haks, make sure
  * you press cancel as soon as it appears. Otherwise, the toolset will crash
  * as it tries to compile the PRC scripts.
  */
- 
+
 /*
  * Set this to give players radial feats to change combat animations
  */
@@ -685,18 +685,28 @@ const string PRC_USES_PER_WEAPON_POISON_DIE          = "PRC_USES_PER_WEAPON_POIS
  *
  * This switch has string values instead of integers.
  *
- * Default: poison_is_food
- * 
+ * Default: poison_is_food <- an example script, just returns false
+ *
  * @see poison_is_food
  */
 const string PRC_POISON_IS_FOOD_SCRIPT_NAME          = "PRC_POISON_IS_FOOD_SCRIPT_NAME";
 
+/**
+ * This switch determines whether a creature equipping a poisoned item is assumed to be
+ * acting smartly in that it attempts to clean the item first. If it's not set, the
+ * creature just directly equips the item and gets poisoned.
+ *
+ * Default: Off, the creature gets poisoned without any checks
+ *
+ * @see poison_onequip
+ */
+const string PRC_POISON_ALLOW_CLEAN_IN_EQUIP         = "PRC_POISON_ALLOW_CLEAN_IN_EQUIP";
 
 
 /******************************************************************************\
 *                             PRGT system switches                             *
 \******************************************************************************/
- 
+
 //these three are strings not switches
 const string PRC_PRGT_XP_SCRIPT_TRIGGERED            = "PRC_PRGT_XP_SCRIPT_TRIGGERED";
 const string PRC_PRGT_XP_SCRIPT_DISARMED             = "PRC_PRGT_XP_SCRIPT_DISARMED";
@@ -766,10 +776,10 @@ const string PRC_PLAYER_SWITCH_AUGMENT_IS_PP         = "PRC_PLAYER_SWITCH_AUGMEN
  * the resref. Thus if you modify creatures after they have been
  * placed from the palette, odd things may happen.
  *
- * Also if you give any monster the "Anomalous Form" feat, the players 
+ * Also if you give any monster the "Anomalous Form" feat, the players
  * will not be able to take that monsters shape.
  */
- 
+
 /*
  * if set to 1 uses CR for target level checks instead of HD
  */
@@ -892,23 +902,23 @@ const string PRC_DISABLE_CRAFT                       = "PRC_DISABLE_CRAFT";
 
 
 /*
- * Multiply the delay (in seconds) after the creation of an item in which a PC 
+ * Multiply the delay (in seconds) after the creation of an item in which a PC
  * can't craft anything. This is divided by 100 to get a float.
- * Normally, it's set to the market price of the item. Set 
+ * Normally, it's set to the market price of the item. Set
  * it to less than 100 to reduce it instead. (default: 0.0).
  */
 const string PRC_CRAFT_TIMER_MULTIPLIER              = "PRC_CRAFT_TIMER_MULTIPLIER";
 
 /*
- * Absolute maximum delay (in seconds) where crafting is disabled for a PC, 
- * regardless of the item's market price. By default it's 0 (meaning that there's 
+ * Absolute maximum delay (in seconds) where crafting is disabled for a PC,
+ * regardless of the item's market price. By default it's 0 (meaning that there's
  * no delay at all).
  */
 const string PRC_CRAFT_TIMER_MAX                     = "PRC_CRAFT_TIMER_MAX";
 
 /*
- * Absolute minimum delay (in seconds) where crafting is disabled for a PC, 
- * regardless of the item's market price. By default it's 0 (meaning that there's 
+ * Absolute minimum delay (in seconds) where crafting is disabled for a PC,
+ * regardless of the item's market price. By default it's 0 (meaning that there's
  * no delay at all).
  */
 const string PRC_CRAFT_TIMER_MIN                     = "PRC_CRAFT_TIMER_MIN";
@@ -1000,9 +1010,9 @@ const string PRC_DISABLE_TELEPORTATION              = "PRC_DISABLE_TELEPORTATION
  * If a local integer variable by this name is set on an area, that area
  * cannot be either teleported to or teleported from or both, depending on
  * the value of the variable.
- * 
+ *
  * Possible values:
- * PRC_DISABLE_TELEPORTATION_FROM_AREA, 
+ * PRC_DISABLE_TELEPORTATION_FROM_AREA,
  * PRC_DISABLE_TELEPORTATION_TO_AREA,
  * PRC_DISABLE_TELEPORTATION_TO_AND_FROM_AREA
  */
@@ -1017,17 +1027,17 @@ const int PRC_DISABLE_TELEPORTATION_FROM_AREA        = 0x1;
 /**
  * A value of PRC_DISABLE_TELEPORTATION_IN_AREA. This disables teleporting
  * into the area in question.
- */ 
+ */
 const int PRC_DISABLE_TELEPORTATION_TO_AREA          = 0x2;
 
 /**
  * A value of PRC_DISABLE_TELEPORTATION_IN_AREA. This disables both teleporting
  * into and out of the area in question.
- */ 
+ */
 const int PRC_DISABLE_TELEPORTATION_TO_AND_FROM_AREA = 3;
 //this wont compile from inside a module
 //using the prc compile
-//PRC_DISABLE_TELEPORTATION_FROM_AREA | 
+//PRC_DISABLE_TELEPORTATION_FROM_AREA |
 //PRC_DISABLE_TELEPORTATION_TO_AREA;
 
 /**
@@ -1048,7 +1058,7 @@ const string PRC_DISABLE_CREATURE_TELEPORT           = "PRC_DISABLE_CREATURE_TEL
 /**
  * Persistant time tracking.
  * This is done on a player-by-player basis if PRC_PLAYER_TIME is on.
- * 
+ *
  * TODO: Elaborate
  */
 const string PRC_PW_TIME                             = "PRC_PW_TIME";
@@ -1116,7 +1126,7 @@ const string PRC_XP_USE_PNP_XP                       = "PRC_XP_USE_PNP_XP";
 /**
  * This value is divided by 100 when applied so a value of 100 is equivalent to 1.0
  * slider for PnP XP system, multiplier for final XP amount
- * This can also be set on individual PCs for the same result. If it is not set, then 
+ * This can also be set on individual PCs for the same result. If it is not set, then
  * it defaults to 1.0. If you want 0.0 then set it to -1
  */
 const string PRC_XP_SLIDER_x100                      = "PRC_XP_SLIDER_x100";
@@ -1219,7 +1229,7 @@ const string PRC_XP_GIVE_XP_TO_NPCS                  = "PRC_XP_GIVE_XP_TO_NPCS";
 const string PRC_XP_MUST_BE_IN_AREA                  = "PRC_XP_MUST_BE_IN_AREA";
 
 /**
- * Maximum distance that a PC must be to gain XP. 
+ * Maximum distance that a PC must be to gain XP.
  * Helps stop powerlevelling by detering low level characters hanging around
  * with 1 very strong char.
  */
@@ -1612,7 +1622,7 @@ const string PRC_CONVOCC_SKILL_BONUS                 = "PRC_CONVOCC_SKILL_BONUS"
 ///////////////////////
 
 
-/** 
+/**
  * Checks the state of a PRC switch.
  * NOTE: This will only work with switches that use integer values. You
  * must get the value of non-integer-valued switches manually.
@@ -1693,7 +1703,7 @@ void DoEpicSpellDefaults()
 {
     if(GetPRCSwitch(PRC_EPIC_INGORE_DEFAULTS))
         return;
-    SetPRCSwitch(PRC_EPIC_XP_COSTS, TRUE);        
+    SetPRCSwitch(PRC_EPIC_XP_COSTS, TRUE);
     SetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE, TRUE);
     SetPRCSwitch(PRC_EPIC_FOCI_ADJUST_DC, TRUE);
     SetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER, 9000);

@@ -18,6 +18,8 @@ const int SPELL_HEXTOR_DAMAGE			= 2729;
 const int SPELL_THAYANKNIGHT_DAMAGE		= 2730;
 const int SPELL_MANATARMS_DAMAGE		= 2731;
 const int SPELL_KNIGHTCHALICE_DAMAGE		= 2733;
+const int SPELL_SWASH_DAMAGE                    = 3210;
+const int SPELL_SWASH_DAMAGE_B                  = 3211;
 
 //heartwarder
 const int SPELL_LIPS_RAPTUR      = 2210;

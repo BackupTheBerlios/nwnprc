@@ -1621,6 +1621,45 @@ const int FEAT_EPIC_WEAPON_FOCUS_MINDBLADE          = 3618;
 const int FEAT_EPIC_WEAPON_SPECIALIZATION_MINDBLADE = 3619;
 const int FEAT_MULTIPLE_THROW                       = 3620;
 
+// Swashbuckler
+const int FEAT_SWASH_GRACE1                         = 1900;
+const int FEAT_SWASH_GRACE2                         = 1901;
+const int FEAT_SWASH_GRACE3                         = 1902;
+const int FEAT_SWASH_GRACE4                         = 1903;
+const int FEAT_SWASH_GRACE5                         = 1904;
+const int INSIGHTFUL_STRIKE                         = 1905;
+const int SWASH_DODGE_1                             = 1906;
+const int SWASH_DODGE_2                             = 1907;
+const int SWASH_DODGE_3                             = 1908;
+const int SWASH_DODGE_4                             = 1909;
+const int SWASH_DODGE_5                             = 1910;
+const int SWASH_DODGE_6                             = 1911;
+const int SWASH_DODGE_7                             = 1912;
+const int SWASH_DODGE_8                             = 1913;
+const int SWASH_LUCKY                               = 1914;
+const int WEAKENING_CRITICAL                        = 1915;
+const int WOUNDING_CRITICAL                         = 1916;
+
+//Marshal
+const int MIN_AUR_FORT                         = 1919;
+const int MIN_AUR_WILL                         = 1920;
+const int MIN_AUR_REF                          = 1921;
+const int MIN_AUR_CHA                          = 1922;
+const int MIN_AUR_CON                          = 1923;
+const int MIN_AUR_DEX                          = 1924;
+const int MIN_AUR_INT                          = 1925;
+const int MIN_AUR_STR                          = 1926;
+const int MIN_AUR_WIS                          = 1927;
+const int MIN_AUR_CAST                         = 1928;
+const int MIN_AUR_AOW                          = 1929;
+const int MAJ_AUR_MOT_ARDOR                    = 1930;
+const int MAJ_AUR_MOT_CARE                     = 1931;
+const int MAJ_AUR_RES_TROOPS                   = 1932;
+const int MAJ_AUR_MOT_URGE                     = 1933;
+const int MAJ_AUR_HARD_SOLDIER                 = 1934;
+const int MAJ_AUR_MOT_ATTACK                   = 1935;
+const int MAJ_AUR_STEAD_HAND                   = 1936;
+const int GRANT_MOVE_ACTION                    = 1937;
 /* DEPRECATED
    TODO: Check that these are not used anywhere and remove
 //Psion - Nomad Powers

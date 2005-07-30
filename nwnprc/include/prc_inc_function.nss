@@ -140,6 +140,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_dradis", oPC));
     if(GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oPC) > 0)        ExecuteScript("prc_warsling", oPC);
     if(GetLevelByClass(CLASS_TYPE_BAELNORN,oPC) > 0)             ExecuteScript("prc_baelnorn", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0)         DelayCommand(0.1,ExecuteScript("prc_swashbuckler", oPC));
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
@@ -555,7 +556,11 @@ void DeletePRCLocalInts(object oSkin)
     
     // Magical Aptitude
     DeleteLocalInt(oSkin, "MagicalAptitudeSpellcraft");
-    DeleteLocalInt(oSkin, "MagicalAptitudeUMD");    
+    DeleteLocalInt(oSkin, "MagicalAptitudeUMD");  
+    
+    //Swashbuckler
+    DeleteLocalInt(oSkin, "SwashGrace");
+    DeleteLocalInt(oSkin, "SwashAC");
     
     // future PRCs Go below here
 }

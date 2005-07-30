@@ -60,6 +60,8 @@ int LingeringDamage(object oPC = OBJECT_SELF);
 // check for server restricted feats/skills
 int PWSwitchRestructions(object oPC = OBJECT_SELF);
 
+// Applies when a Marshal can select a Major or Minor Aura
+int MarshalAuraLimit(object oPC = OBJECT_SELF);
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -737,6 +739,90 @@ int DraDisFeats(object oPC = OBJECT_SELF)
     return TRUE;
 }
 
+int MarshalAuraLimit(object oPC = OBJECT_SELF)
+{
+    int mArsh = (GetLevelByClass(CLASS_TYPE_MARSHAL, oPC));
+    int MinAur = 0;
+    int MajAur = 0;
+    
+    if (mArsh > 1)
+    {
+         MinAur +=   GetHasFeat(MIN_AUR_FORT, oPC) +
+                     GetHasFeat(MIN_AUR_WILL, oPC) +
+                     GetHasFeat(MIN_AUR_REF, oPC) +
+                     GetHasFeat(MIN_AUR_CHA, oPC) +
+                     GetHasFeat(MIN_AUR_CON, oPC) +
+                     GetHasFeat(MIN_AUR_DEX, oPC) +
+                     GetHasFeat(MIN_AUR_INT, oPC) +
+                     GetHasFeat(MIN_AUR_WIS, oPC) +
+                     GetHasFeat(MIN_AUR_STR, oPC) +
+                     GetHasFeat(MIN_AUR_CAST, oPC) +
+                     GetHasFeat(MIN_AUR_AOW, oPC);
+         MajAur +=   GetHasFeat(MAJ_AUR_MOT_ARDOR, oPC) +
+                     GetHasFeat(MAJ_AUR_MOT_CARE, oPC) +
+                     GetHasFeat(MAJ_AUR_RES_TROOPS, oPC) +
+                     GetHasFeat(MAJ_AUR_MOT_URGE, oPC) +
+                     GetHasFeat(MAJ_AUR_HARD_SOLDIER, oPC) +
+                     GetHasFeat(MAJ_AUR_MOT_ATTACK, oPC) +
+                     GetHasFeat(MAJ_AUR_STEAD_HAND, oPC);
+        /*
+        FloatingTextStringOnCreature("Marshal Level: " + IntToString(mArsh), oPC, FALSE);
+        FloatingTextStringOnCreature("Minor Aura: " + IntToString(MinAur), oPC, FALSE);
+        FloatingTextStringOnCreature("Major Aura: " + IntToString(MajAur), oPC, FALSE);
+        */
+        if ((mArsh == 2) && (MinAur == 2))
+	    {
+	    FloatingTextStringOnCreature("You must select a Major Aura this level.", oPC, FALSE);
+	    return FALSE;
+            }
+        if ((mArsh == 3) && (MinAur == 1))
+	    {
+	    FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
+	    return FALSE;
+            }
+        if ((mArsh == 7) && (MinAur == 3))
+	    {
+	    FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
+	    return FALSE;
+            }
+        if ((mArsh == 12) && (MinAur == 5))
+	    {
+	    FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
+	    return FALSE;
+            }
+        if ((mArsh == 14) && (MinAur == 7))
+	    {
+	    FloatingTextStringOnCreature("You must select a Major Aura this level.", oPC, FALSE);
+	    return FALSE;
+            }
+        if ((mArsh == 15) && (MinAur == 6))
+	    {
+	    FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
+	    return FALSE;
+            }
+        if ((mArsh == 19) && (MinAur == 7))
+	    {
+	    FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
+	    return FALSE;
+            }
+        if ((mArsh == 20) && (MinAur == 9))
+ 	    {
+ 	    FloatingTextStringOnCreature("You must select a Major Aura this level.", oPC, FALSE);
+ 	    return FALSE;
+            }
+        if ((mArsh > 20) && (MinAur > 8))
+	    {
+	    FloatingTextStringOnCreature("You cannot learn any new Marshal Auras.", oPC, FALSE);
+	    return FALSE;
+            }
+        if ((mArsh > 20) && (MinAur > 5))
+	    {
+	    FloatingTextStringOnCreature("You cannot learn any new Marshal Auras.", oPC, FALSE);
+	    return FALSE;
+            }
+    }
+    return TRUE;
+}
 void main()
 {
         //Declare Major Variables
@@ -757,6 +843,7 @@ void main()
          || !ManAtArmsFeats(oPC) 
          || !PWSwitchRestructions(oPC)
          || !DraDisFeats(oPC)
+         || !MarshalAuraLimit(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

@@ -78,7 +78,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	if (nStatType == 2 && nStatNum == 2) nAbil = ABILITY_WISDOM;
 	if (nStatType == 2 && nStatNum == 3) nAbil = ABILITY_CHARISMA;
 	
-	ApplyAbilityDamage(oTarget, nAbil, nBurn, DURATION_TYPE_PERMANENT);
+	ApplyAbilityDamage(oTarget, nAbil, nBurn, DURATION_TYPE_PERMANENT, FALSE);
         effect eStr = EffectAbilityIncrease(ABILITY_DEXTERITY,nBurn);
     	effect eLink = EffectLinkEffects(eStr, eDur);
 

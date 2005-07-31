@@ -86,7 +86,7 @@ void main()
           }
           
           // If feat is on a tempest, check armor type
-          if(tempestLevel > 4 && armorType == ARMOR_TYPE_LIGHT)
+          if(tempestLevel > 4 && armorType < ARMOR_TYPE_MEDIUM)
           {
                if(oWeapR != OBJECT_INVALID  && oWeapL != OBJECT_INVALID && isNotShield(oWeapL) )
               {

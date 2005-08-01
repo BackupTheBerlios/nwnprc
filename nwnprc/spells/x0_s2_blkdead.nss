@@ -29,7 +29,7 @@ void main()
      eSummon = EffectSummonCreature("NW_S_GHAST",VFX_FNF_SUMMON_UNDEAD);
 
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
-       object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
-   CorpseCrafter(OBJECT_SELF, oSummon); 
+//       object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
+//   CorpseCrafter(OBJECT_SELF, oSummon); 
     
 }

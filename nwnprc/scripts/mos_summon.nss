@@ -16,22 +16,22 @@ void main()
     object oCreature;
     int nClass = GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, OBJECT_SELF);
 
-    if (nClass > 29)	        sSummon = "prc_mos_39";
-    else if (nClass > 26)	sSummon = "prc_mos_36";
-    else if (nClass > 23)	sSummon = "prc_mos_33";
-    else if (nClass > 20)	sSummon = "prc_mos_30";
-    else if (nClass > 17)	sSummon = "prc_mos_27";
-    else if (nClass > 14)	sSummon = "prc_mos_24";
-    else if (nClass > 11)	sSummon = "prc_mos_21";
-    else if (nClass > 9)	sSummon = "prc_mos_spectre2";
-    else if (nClass > 7)	sSummon = "prc_mos_spectre1";
-    else if (nClass > 5)	sSummon = "prc_mos_wraith";
-    else                 	sSummon = "prc_mos_allip";
+    if (nClass > 29)            sSummon = "prc_mos_39";
+    else if (nClass > 26)   sSummon = "prc_mos_36";
+    else if (nClass > 23)   sSummon = "prc_mos_33";
+    else if (nClass > 20)   sSummon = "prc_mos_30";
+    else if (nClass > 17)   sSummon = "prc_mos_27";
+    else if (nClass > 14)   sSummon = "prc_mos_24";
+    else if (nClass > 11)   sSummon = "prc_mos_21";
+    else if (nClass > 9)    sSummon = "prc_mos_spectre2";
+    else if (nClass > 7)    sSummon = "prc_mos_spectre1";
+    else if (nClass > 5)    sSummon = "prc_mos_wraith";
+    else                    sSummon = "prc_mos_allip";
 
    MultisummonPreSummon(OBJECT_SELF);
    effect eSum = EffectSummonCreature(sSummon, VFX_NONE);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummonB, GetSpellTargetLocation());
    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());
-   object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
-   CorpseCrafter(OBJECT_SELF, oSummon);   
+//   object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
+//   CorpseCrafter(OBJECT_SELF, oSummon);   
 }

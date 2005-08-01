@@ -16,6 +16,6 @@ void main()
    MultisummonPreSummon(OBJECT_SELF);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());
-   object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
-   CorpseCrafter(OBJECT_SELF, oSummon);
+//   object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
+//   CorpseCrafter(OBJECT_SELF, oSummon);
 }

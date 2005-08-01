@@ -121,8 +121,8 @@ void main()
         object oSelf = OBJECT_SELF;
         DelayCommand(1.0,PMUpgradeSummon(oSelf,sScript));
     }
-       object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
-   CorpseCrafter(OBJECT_SELF, oSummon); 
+//       object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
+//   CorpseCrafter(OBJECT_SELF, oSummon); 
 }
 
 

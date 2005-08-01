@@ -2397,42 +2397,42 @@ void CorpseCrafter(object oPC, object oSummon)
 
 int GetIsEncumbered (object oPC)
 {
-	// FIXME: 2da lookups are SLOW.
-	int iStrength = GetAbilityScore(oPC, ABILITY_STRENGTH);
-	if (iStrength > 50)
-		return FALSE; // encumbrance.2da doesn't go that high, so automatic success
-	if (GetWeight(oPC) > StringToInt(Get2DAString("encumbrance", "Normal", iStrength)))
-		return TRUE;
-	return FALSE;
+    // FIXME: 2da lookups are SLOW.
+    int iStrength = GetAbilityScore(oPC, ABILITY_STRENGTH);
+    if (iStrength > 50)
+        return FALSE; // encumbrance.2da doesn't go that high, so automatic success
+    if (GetWeight(oPC) > StringToInt(Get2DACache("encumbrance", "Normal", iStrength)))
+        return TRUE;
+    return FALSE;
 }
 void Ninja_DecrementKi (object oPC, int iExcept = -1)
 {
-	if (iExcept != FEAT_KI_POWER)
-		DecrementRemainingFeatUses(oPC, FEAT_KI_POWER);
-	if (iExcept != FEAT_GHOST_STEP)
-		DecrementRemainingFeatUses(oPC, FEAT_GHOST_STEP);
-	if (iExcept != FEAT_GHOST_STRIKE)
-		DecrementRemainingFeatUses(oPC, FEAT_GHOST_STRIKE);
-	if (iExcept != FEAT_GHOST_WALK)
-		DecrementRemainingFeatUses(oPC, FEAT_GHOST_WALK);
-	if (iExcept != FEAT_KI_DODGE)
-		DecrementRemainingFeatUses(oPC, FEAT_KI_DODGE);
-	// for testing only
-	SetLocalInt(oPC, "prc_ninja_ki", GetLocalInt(oPC, "prc_ninja_ki") - 1);
-	ExecuteScript("prc_ninjca", oPC);
+    if (iExcept != FEAT_KI_POWER)
+        DecrementRemainingFeatUses(oPC, FEAT_KI_POWER);
+    if (iExcept != FEAT_GHOST_STEP)
+        DecrementRemainingFeatUses(oPC, FEAT_GHOST_STEP);
+    if (iExcept != FEAT_GHOST_STRIKE)
+        DecrementRemainingFeatUses(oPC, FEAT_GHOST_STRIKE);
+    if (iExcept != FEAT_GHOST_WALK)
+        DecrementRemainingFeatUses(oPC, FEAT_GHOST_WALK);
+    if (iExcept != FEAT_KI_DODGE)
+        DecrementRemainingFeatUses(oPC, FEAT_KI_DODGE);
+    // for testing only
+    SetLocalInt(oPC, "prc_ninja_ki", GetLocalInt(oPC, "prc_ninja_ki") - 1);
+    ExecuteScript("prc_ninjca", oPC);
 }
 
 int Ninja_AbilitiesEnabled (object oPC)
 {
-	object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+    object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 
-	if (GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, oPC)) > 0 ||
-		GetBaseItemType(oLefthand) == BASE_ITEM_SMALLSHIELD ||
-		GetBaseItemType(oLefthand) == BASE_ITEM_LARGESHIELD ||
-		GetBaseItemType(oLefthand) == BASE_ITEM_TOWERSHIELD)
-		return FALSE;
-	// all Ki powers will not function when encumbered
-	if (GetIsEncumbered(oPC))
-		return FALSE;
-	return TRUE;
+    if (GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, oPC)) > 0 ||
+        GetBaseItemType(oLefthand) == BASE_ITEM_SMALLSHIELD ||
+        GetBaseItemType(oLefthand) == BASE_ITEM_LARGESHIELD ||
+        GetBaseItemType(oLefthand) == BASE_ITEM_TOWERSHIELD)
+        return FALSE;
+    // all Ki powers will not function when encumbered
+    if (GetIsEncumbered(oPC))
+        return FALSE;
+    return TRUE;
 }

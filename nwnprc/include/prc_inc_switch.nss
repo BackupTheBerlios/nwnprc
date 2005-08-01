@@ -18,6 +18,7 @@
 
 /** Bioware True Seeing can see stealthed creatures.
  * This replaces the trueseeing effect with a See Invisible + Ultravision + Spot bonus.
+ * This affects the spell and power True Seeing and the Dragon Disciple class
  */
 const string PRC_PNP_TRUESEEING                      = "PRC_PNP_TRUESEEING";
 

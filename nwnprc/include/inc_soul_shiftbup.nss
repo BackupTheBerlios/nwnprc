@@ -175,10 +175,10 @@ void ShiftFromKnownArray(int nIndex,int iEpic, object oPC)
 // addition of the iEpic peramiter
 int SetShiftFromTemplateValidate(object oPC, string sTemplate, int iEpic)
 {
-	if (!CanShift(oPC))
-	{
-		return FALSE;
-	}
+    if (!CanShift(oPC))
+    {
+        return FALSE;
+    }
     int bRetValue = FALSE;
     int in_list = IsKnownCreature( oPC, sTemplate );
 
@@ -238,25 +238,25 @@ int CanShift(object oPC)
 {
 
 
-	int iOutcome = FALSE;
+    int iOutcome = FALSE;
 
-	if (GetLocalInt(oPC, "shifting") == TRUE)
-	{
-		return iOutcome;
-	}
+    if (GetLocalInt(oPC, "shifting") == TRUE)
+    {
+        return iOutcome;
+    }
 
-	object oItem = CreateItemOnObject("pnp_shft_tstpkup", oPC);
-	if (GetItemPossessor(oItem) == oPC)
-	{
-		iOutcome = TRUE;
-	}
-	else
-	{
-		SendMessageToPC(oPC, "Your inventory is too full to allow you to unshift.");
-		SendMessageToPC(oPC, "Please make room enough for an armor-sized item and then try again.");
-	}
+    object oItem = CreateItemOnObject("pnp_shft_tstpkup", oPC);
+    if (GetItemPossessor(oItem) == oPC)
+    {
+        iOutcome = TRUE;
+    }
+    else
+    {
+        SendMessageToPC(oPC, "Your inventory is too full to allow you to unshift.");
+        SendMessageToPC(oPC, "Please make room enough for an armor-sized item and then try again.");
+    }
 
-	DestroyObject(oItem);
+    DestroyObject(oItem);
 
     //there are issues with shifting will polymorphed
     effect eEff = GetFirstEffect(oPC);
@@ -265,13 +265,13 @@ int CanShift(object oPC)
         int eType = GetEffectType(eEff);
         if (eType == EFFECT_TYPE_POLYMORPH)
         {
-			SendMessageToPC(oPC, "Shifting when polymorphed has been disabled.");
-			SendMessageToPC(oPC, "Please cancel your polymorph first.");
-			return FALSE;
+            SendMessageToPC(oPC, "Shifting when polymorphed has been disabled.");
+            SendMessageToPC(oPC, "Please cancel your polymorph first.");
+            return FALSE;
         }
         eEff = GetNextEffect(oPC);
     }
-	return iOutcome;
+    return iOutcome;
 }
 
 
@@ -301,7 +301,7 @@ int SetShiftEpic(object oPC, object oTarget)
 //   call next stage to start after this stage ends
 void SetShift(object oPC, object oTarget)
 {
-	SetLocalInt(oPC, "shifting", TRUE);
+    SetLocalInt(oPC, "shifting", TRUE);
 
     DelayCommand(0.1,SetShift_02(oPC, oTarget));
     SetShiftTrueForm(oPC);
@@ -333,7 +333,7 @@ void SetShift_02(object oPC, object oTarget)
     object oWeapCBPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC);
 
 
-	//creature item handling
+    //creature item handling
     if (!GetIsObjectValid(oHidePC)) //if you dont got a hide
     {
         oHidePC = CopyObject(oHide,GetLocation(oPC),oPC);  //copy the targets hide
@@ -348,51 +348,51 @@ void SetShift_02(object oPC, object oTarget)
     else // if you do have a hide
     {
         ScrubPCSkin(oPC,oHidePC); //clean off all old props
-		CopyAllItemProperties(oHidePC,oHide); //copy all target props to our hide
+        CopyAllItemProperties(oHidePC,oHide); //copy all target props to our hide
         DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oHidePC,INVENTORY_SLOT_CARMOUR)));  //reequip the hide to get item props to update properly
     }
 
     //copy targets right creature weapon
     if (GetIsObjectValid(oWeapCRPC)) //if we still have a creature weapon
-	{
-		//remove and destroy the weapon we have
-		AssignCommand(oPC,ActionUnequipItem(oWeapCRPC));
+    {
+        //remove and destroy the weapon we have
+        AssignCommand(oPC,ActionUnequipItem(oWeapCRPC));
 
-	}
+    }
     if (GetIsObjectValid(oWeapCR)) //if the target has a weapon
-	{
-		oWeapCRPC = CreateItemOnObject("pnp_shft_cweap", oPC); //create a shifter blank creature weapon
-		CopyAllItemProperties(oWeapCRPC,oWeapCR); //copy all target props over
-		SetIdentified(oWeapCRPC,TRUE); //id so we dont get any funny stuff when equiping
-		DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R))); //reequip the item to get item props to update properly
-	}
+    {
+        oWeapCRPC = CreateItemOnObject("pnp_shft_cweap", oPC); //create a shifter blank creature weapon
+        CopyAllItemProperties(oWeapCRPC,oWeapCR); //copy all target props over
+        SetIdentified(oWeapCRPC,TRUE); //id so we dont get any funny stuff when equiping
+        DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCRPC,INVENTORY_SLOT_CWEAPON_R))); //reequip the item to get item props to update properly
+    }
 
     //copy targets left creature weapon
     if (GetIsObjectValid(oWeapCLPC)) //if we still have a creature weapon
-	{
-		//remove and destroy the weapon we have
-		AssignCommand(oPC,ActionUnequipItem(oWeapCLPC));
-	}
+    {
+        //remove and destroy the weapon we have
+        AssignCommand(oPC,ActionUnequipItem(oWeapCLPC));
+    }
     if (GetIsObjectValid(oWeapCL)) //if the target has a weapon
-	{
-		oWeapCLPC = CreateItemOnObject("pnp_shft_cweap", oPC); //create a shifter blank creature weapon
-		CopyAllItemProperties(oWeapCLPC,oWeapCL); //copy all target props over
-		SetIdentified(oWeapCLPC,TRUE); //id so we dont get any funny stuff when equiping
-		DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L))); //reequip the item to get item props to update properly
-	}
+    {
+        oWeapCLPC = CreateItemOnObject("pnp_shft_cweap", oPC); //create a shifter blank creature weapon
+        CopyAllItemProperties(oWeapCLPC,oWeapCL); //copy all target props over
+        SetIdentified(oWeapCLPC,TRUE); //id so we dont get any funny stuff when equiping
+        DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCLPC,INVENTORY_SLOT_CWEAPON_L))); //reequip the item to get item props to update properly
+    }
     //copy targets special creature weapons
     if (GetIsObjectValid(oWeapCBPC)) //if we still have a creature weapon
-	{
-		//remove and destroy the weapon we have
-		AssignCommand(oPC,ActionUnequipItem(oWeapCBPC));
-	}
+    {
+        //remove and destroy the weapon we have
+        AssignCommand(oPC,ActionUnequipItem(oWeapCBPC));
+    }
     if (GetIsObjectValid(oWeapCB)) //if the target has a weapon
-	{
-		oWeapCBPC = CreateItemOnObject("pnp_shft_cweap", oPC); //create a shifter blank creature weapon
-		CopyAllItemProperties(oWeapCBPC,oWeapCB); //copy all target props over
-		SetIdentified(oWeapCBPC,TRUE); //id so we dont get any funny stuff when equiping
-		DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B))); //reequip the item to get item props to update properly
-	}
+    {
+        oWeapCBPC = CreateItemOnObject("pnp_shft_cweap", oPC); //create a shifter blank creature weapon
+        CopyAllItemProperties(oWeapCBPC,oWeapCB); //copy all target props over
+        SetIdentified(oWeapCBPC,TRUE); //id so we dont get any funny stuff when equiping
+        DelayCommand(0.2,AssignCommand(oPC,ActionEquipItem(oWeapCBPC,INVENTORY_SLOT_CWEAPON_B))); //reequip the item to get item props to update properly
+    }
 
     // Get the Targets str, dex, and con
     int nTStr = GetAbilityScore(oTarget,ABILITY_STRENGTH);
@@ -417,34 +417,34 @@ void SetShift_02(object oPC, object oTarget)
     // get remaining bonus/penelty for later
     if (nStrDelta > 12)
     {
-		iRemainingSTR = nStrDelta - 12;
+        iRemainingSTR = nStrDelta - 12;
         nStrDelta = 12;
-	}
+    }
     if (nStrDelta < -10)
     {
-		iRemainingSTR = nStrDelta + 10;
+        iRemainingSTR = nStrDelta + 10;
         nStrDelta = -10;
-	}
+    }
     if (nDexDelta > 12)
     {
-		iRemainingDEX = nDexDelta - 12;
+        iRemainingDEX = nDexDelta - 12;
         nDexDelta = 12;
-	}
+    }
     if (nDexDelta < -10)
     {
         iRemainingDEX = nDexDelta + 10;
-		nDexDelta = -10;
-	}
+        nDexDelta = -10;
+    }
     if (nConDelta > 12)
     {
-		iRemainingCON = nConDelta - 12;
+        iRemainingCON = nConDelta - 12;
         nConDelta = 12;
-	}
+    }
     if (nConDelta < -10)
     {
         iRemainingCON = nConDelta + 10;
         nConDelta = -10;
-	}
+    }
 
     // Big problem with < 0 to abilities, if they have immunity to ability drain
     // the - to the ability wont do anything
@@ -463,149 +463,149 @@ void SetShift_02(object oPC, object oTarget)
     else
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDecreaseAbility(IP_CONST_ABILITY_CON,nConDelta*-1),oHidePC);
 
-	//add extra str bonuses to pc as attack bonues and damage bonus
-	int iExtSTRBon;
-	effect eAttackIncrease;
-	effect eDamageIncrease;
-	if (iRemainingSTR != 0)
-	{
-		int iDamageType = DAMAGE_TYPE_BLUDGEONING;
-		iExtSTRBon = FloatToInt(iRemainingSTR/2.0);
+    //add extra str bonuses to pc as attack bonues and damage bonus
+    int iExtSTRBon;
+    effect eAttackIncrease;
+    effect eDamageIncrease;
+    if (iRemainingSTR != 0)
+    {
+        int iDamageType = DAMAGE_TYPE_BLUDGEONING;
+        iExtSTRBon = FloatToInt(iRemainingSTR/2.0);
 
-		if (GetIsObjectValid(oWeapCR))
-		{
-			int iCR = GetBaseItemType(oWeapCR);
-			if ((iCR == BASE_ITEM_CSLASHWEAPON) || (iCR == BASE_ITEM_CSLSHPRCWEAP))
-				iDamageType = DAMAGE_TYPE_SLASHING;
-			else if (iCR == BASE_ITEM_CPIERCWEAPON)
-				iDamageType = DAMAGE_TYPE_PIERCING;
-		}
-		else if (GetIsObjectValid(oWeapCL))
-		{
-			int iCL = GetBaseItemType(oWeapCL);
-			if ((iCL == BASE_ITEM_CSLASHWEAPON) || (iCL == BASE_ITEM_CSLSHPRCWEAP))
-				iDamageType = DAMAGE_TYPE_SLASHING;
-			else if (iCL == BASE_ITEM_CPIERCWEAPON)
-				iDamageType = DAMAGE_TYPE_PIERCING;
-		}
-		else if (GetIsObjectValid(oWeapCB))
-		{
-			int iCB = GetBaseItemType(oWeapCB);
-			if ((iCB == BASE_ITEM_CSLASHWEAPON) || (iCB == BASE_ITEM_CSLSHPRCWEAP))
-				iDamageType = DAMAGE_TYPE_SLASHING;
-			else if (iCB == BASE_ITEM_CPIERCWEAPON)
-				iDamageType = DAMAGE_TYPE_PIERCING;
-		}
+        if (GetIsObjectValid(oWeapCR))
+        {
+            int iCR = GetBaseItemType(oWeapCR);
+            if ((iCR == BASE_ITEM_CSLASHWEAPON) || (iCR == BASE_ITEM_CSLSHPRCWEAP))
+                iDamageType = DAMAGE_TYPE_SLASHING;
+            else if (iCR == BASE_ITEM_CPIERCWEAPON)
+                iDamageType = DAMAGE_TYPE_PIERCING;
+        }
+        else if (GetIsObjectValid(oWeapCL))
+        {
+            int iCL = GetBaseItemType(oWeapCL);
+            if ((iCL == BASE_ITEM_CSLASHWEAPON) || (iCL == BASE_ITEM_CSLSHPRCWEAP))
+                iDamageType = DAMAGE_TYPE_SLASHING;
+            else if (iCL == BASE_ITEM_CPIERCWEAPON)
+                iDamageType = DAMAGE_TYPE_PIERCING;
+        }
+        else if (GetIsObjectValid(oWeapCB))
+        {
+            int iCB = GetBaseItemType(oWeapCB);
+            if ((iCB == BASE_ITEM_CSLASHWEAPON) || (iCB == BASE_ITEM_CSLSHPRCWEAP))
+                iDamageType = DAMAGE_TYPE_SLASHING;
+            else if (iCB == BASE_ITEM_CPIERCWEAPON)
+                iDamageType = DAMAGE_TYPE_PIERCING;
+        }
 
-		int iDamageB;
-		switch (iExtSTRBon)
-		{
-		case 0:
-			iDamageB = 0;
-		   	break;
-		case 1:
-		case -1:
-			iDamageB = DAMAGE_BONUS_1;
-			break;
-		case 2:
-		case -2:
-			iDamageB = DAMAGE_BONUS_2;
-			break;
-		case 3:
-		case -3:
-			iDamageB = DAMAGE_BONUS_3;
-			break;
-		case 4:
-		case -4:
-			iDamageB = DAMAGE_BONUS_4;
-			break;
-		case 5:
-		case -5:
-			iDamageB = DAMAGE_BONUS_5;
-			break;
-		case 6:
-		case -6:
-			iDamageB = DAMAGE_BONUS_6;
-			break;
-		case 7:
-		case -7:
-			iDamageB = DAMAGE_BONUS_7;
-			break;
-		case 8:
-		case -8:
-			iDamageB = DAMAGE_BONUS_8;
-			break;
-		case 9:
-		case -9:
-			iDamageB = DAMAGE_BONUS_9;
-			break;
-		case 10:
-		case -10:
-			iDamageB = DAMAGE_BONUS_10;
-			break;
-		case 11:
-		case -11:
-			iDamageB = DAMAGE_BONUS_11;
-			break;
-		case 12:
-		case -12:
-			iDamageB = DAMAGE_BONUS_12;
-			break;
-		case 13:
-		case -13:
-			iDamageB = DAMAGE_BONUS_13;
-			break;
-		case 14:
-		case -14:
-			iDamageB = DAMAGE_BONUS_14;
-			break;
-		case 15:
-		case -15:
-			iDamageB = DAMAGE_BONUS_15;
-			break;
-		case 16:
-		case -16:
-			iDamageB = DAMAGE_BONUS_16;
-			break;
-		case 17:
-		case -17:
-			iDamageB = DAMAGE_BONUS_17;
-			break;
-		case 18:
-		case -18:
-			iDamageB = DAMAGE_BONUS_18;
-			break;
-		case 19:
-		case -19:
-			iDamageB = DAMAGE_BONUS_19;
-			break;
-		default:
-		    iDamageB = DAMAGE_BONUS_20;
-		    break;
-		}
+        int iDamageB;
+        switch (iExtSTRBon)
+        {
+        case 0:
+            iDamageB = 0;
+            break;
+        case 1:
+        case -1:
+            iDamageB = DAMAGE_BONUS_1;
+            break;
+        case 2:
+        case -2:
+            iDamageB = DAMAGE_BONUS_2;
+            break;
+        case 3:
+        case -3:
+            iDamageB = DAMAGE_BONUS_3;
+            break;
+        case 4:
+        case -4:
+            iDamageB = DAMAGE_BONUS_4;
+            break;
+        case 5:
+        case -5:
+            iDamageB = DAMAGE_BONUS_5;
+            break;
+        case 6:
+        case -6:
+            iDamageB = DAMAGE_BONUS_6;
+            break;
+        case 7:
+        case -7:
+            iDamageB = DAMAGE_BONUS_7;
+            break;
+        case 8:
+        case -8:
+            iDamageB = DAMAGE_BONUS_8;
+            break;
+        case 9:
+        case -9:
+            iDamageB = DAMAGE_BONUS_9;
+            break;
+        case 10:
+        case -10:
+            iDamageB = DAMAGE_BONUS_10;
+            break;
+        case 11:
+        case -11:
+            iDamageB = DAMAGE_BONUS_11;
+            break;
+        case 12:
+        case -12:
+            iDamageB = DAMAGE_BONUS_12;
+            break;
+        case 13:
+        case -13:
+            iDamageB = DAMAGE_BONUS_13;
+            break;
+        case 14:
+        case -14:
+            iDamageB = DAMAGE_BONUS_14;
+            break;
+        case 15:
+        case -15:
+            iDamageB = DAMAGE_BONUS_15;
+            break;
+        case 16:
+        case -16:
+            iDamageB = DAMAGE_BONUS_16;
+            break;
+        case 17:
+        case -17:
+            iDamageB = DAMAGE_BONUS_17;
+            break;
+        case 18:
+        case -18:
+            iDamageB = DAMAGE_BONUS_18;
+            break;
+        case 19:
+        case -19:
+            iDamageB = DAMAGE_BONUS_19;
+            break;
+        default:
+            iDamageB = DAMAGE_BONUS_20;
+            break;
+        }
 
-		if (iRemainingSTR > 0)
-		{
-			eAttackIncrease = EffectAttackIncrease(iDamageB, ATTACK_BONUS_MISC);
-			eDamageIncrease = EffectDamageIncrease(iDamageB, iDamageType);
-		}
-		else if (iRemainingSTR < 0)
-		{
-			eAttackIncrease = EffectAttackDecrease(iDamageB, ATTACK_BONUS_MISC);
-			eDamageIncrease = EffectDamageDecrease(iDamageB, iDamageType);
-		}
+        if (iRemainingSTR > 0)
+        {
+            eAttackIncrease = EffectAttackIncrease(iDamageB, ATTACK_BONUS_MISC);
+            eDamageIncrease = EffectDamageIncrease(iDamageB, iDamageType);
+        }
+        else if (iRemainingSTR < 0)
+        {
+            eAttackIncrease = EffectAttackDecrease(iDamageB, ATTACK_BONUS_MISC);
+            eDamageIncrease = EffectDamageDecrease(iDamageB, iDamageType);
+        }
 
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eAttackIncrease),oPC);
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eDamageIncrease),oPC);
-	}
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eAttackIncrease),oPC);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eDamageIncrease),oPC);
+    }
 
-	//add extra con bonus as temp HP
-	if (iRemainingCON > 0)
-	{
-		int iExtCONBon = FloatToInt(iRemainingCON/2.0);
-		effect eTemporaryHitpoints = EffectTemporaryHitpoints(iExtCONBon * GetCharacterLevel(oPC));
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eTemporaryHitpoints),oPC);
-	}
+    //add extra con bonus as temp HP
+    if (iRemainingCON > 0)
+    {
+        int iExtCONBon = FloatToInt(iRemainingCON/2.0);
+        effect eTemporaryHitpoints = EffectTemporaryHitpoints(iExtCONBon * GetCharacterLevel(oPC));
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eTemporaryHitpoints),oPC);
+    }
 
     // Apply the natural AC bonus to the hide
     // First get the AC from the target
@@ -625,64 +625,64 @@ void SetShift_02(object oPC, object oTarget)
         ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eAC),oPC);
     }
 
-	//add extra dex bonus as dodge ac
-	if (iRemainingDEX != 0)
-	{
-		int iExtDEXBon = FloatToInt(iRemainingDEX/2.0);
-		effect eACIncrease;
-		if (iRemainingDEX > 0)
-		{
-			object oPCArmour = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-			if (GetIsObjectValid(oPCArmour))
-			{
-				int iACArmour = GetItemACValue(oPCArmour);
-				int iMaxDexBon;
-				int iCurentDexBon;
-				iCurentDexBon = FloatToInt(((nPCDex + nStrDelta)-10.0)/2.0);
-				switch (iACArmour)
-				{
-				case 8:
-				case 7:
-				case 6:
-					iMaxDexBon = 1;
-					break;
-				case 5:
-					iMaxDexBon = 2;
-					break;
-				case 4:
-				case 3:
-					iMaxDexBon = 4;
-					break;
-				case 2:
-					iMaxDexBon = 6;
-					break;
-				case 1:
-					iMaxDexBon = 8;
-					break;
-				default:
-					iMaxDexBon = 100;
-					break;
-				}
-				if (iCurentDexBon > iMaxDexBon)
-				{
-					iExtDEXBon = 0;
-				}
-				else
-				{
-					if ((iExtDEXBon+iCurentDexBon) > iMaxDexBon)
-					{
-						iExtDEXBon = iMaxDexBon - iCurentDexBon;
-					}
-				}
-			}
-			eACIncrease = EffectACIncrease(iExtDEXBon);
-		}
-		else if (iRemainingDEX < 0)
-		{
-			eACIncrease = EffectACDecrease(iExtDEXBon * -1);
-		}
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eACIncrease),oPC);
-	}
+    //add extra dex bonus as dodge ac
+    if (iRemainingDEX != 0)
+    {
+        int iExtDEXBon = FloatToInt(iRemainingDEX/2.0);
+        effect eACIncrease;
+        if (iRemainingDEX > 0)
+        {
+            object oPCArmour = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+            if (GetIsObjectValid(oPCArmour))
+            {
+                int iACArmour = GetItemACValue(oPCArmour);
+                int iMaxDexBon;
+                int iCurentDexBon;
+                iCurentDexBon = FloatToInt(((nPCDex + nStrDelta)-10.0)/2.0);
+                switch (iACArmour)
+                {
+                case 8:
+                case 7:
+                case 6:
+                    iMaxDexBon = 1;
+                    break;
+                case 5:
+                    iMaxDexBon = 2;
+                    break;
+                case 4:
+                case 3:
+                    iMaxDexBon = 4;
+                    break;
+                case 2:
+                    iMaxDexBon = 6;
+                    break;
+                case 1:
+                    iMaxDexBon = 8;
+                    break;
+                default:
+                    iMaxDexBon = 100;
+                    break;
+                }
+                if (iCurentDexBon > iMaxDexBon)
+                {
+                    iExtDEXBon = 0;
+                }
+                else
+                {
+                    if ((iExtDEXBon+iCurentDexBon) > iMaxDexBon)
+                    {
+                        iExtDEXBon = iMaxDexBon - iCurentDexBon;
+                    }
+                }
+            }
+            eACIncrease = EffectACIncrease(iExtDEXBon);
+        }
+        else if (iRemainingDEX < 0)
+        {
+            eACIncrease = EffectACDecrease(iExtDEXBon * -1);
+        }
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eACIncrease),oPC);
+    }
 
     // Apply any feats the target has to the hide as a bonus feat
     for (i = 0; i< 500; i++)
@@ -763,10 +763,10 @@ void SetShift_02(object oPC, object oTarget)
     // Reset any PRC feats that might have been lost from the shift
     DelayCommand(1.0, EvalPRCFeats(oPC));
 
-	DelayCommand(1.5, ClearShifterItems(oPC));
+    DelayCommand(1.5, ClearShifterItems(oPC));
 
-	DelayCommand(3.0, DeleteLocalInt(oPC, "shifting"));
-	SendMessageToPC(oPC, "Finished shifting");
+    DelayCommand(3.0, DeleteLocalInt(oPC, "shifting"));
+    SendMessageToPC(oPC, "Finished shifting");
 }
 
 
@@ -802,7 +802,7 @@ void SetShiftTrueForm(object oPC)
 
         // Remove all abilities of the object
 //        RemoveAllItemProperties(oWeapCR);
-//       	AddItemProperty(DURATION_TYPE_PERMANENT, ipUnarmed, oWeapCR);
+//          AddItemProperty(DURATION_TYPE_PERMANENT, ipUnarmed, oWeapCR);
     }
     if (GetIsObjectValid(oWeapCL))
     {
@@ -861,7 +861,7 @@ void SetShiftTrueForm(object oPC)
         }
         if (eType == EFFECT_TYPE_POLYMORPH)
         {
-        	RemoveEffect(oPC,eEff);
+            RemoveEffect(oPC,eEff);
         }
         eEff = GetNextEffect(oPC);
     }
@@ -871,19 +871,19 @@ void SetShiftTrueForm(object oPC)
     // Set race back to unused
     SetLocalInt(oPC,"RACIAL_TYPE",0);
 
-	// Reset any PRC feats that might have been lost from the shift
-//	EvalPRCFeats(oPC);
-	SetLocalInt(oHide,"nPCShifted",FALSE);
+    // Reset any PRC feats that might have been lost from the shift
+//  EvalPRCFeats(oPC);
+    SetLocalInt(oHide,"nPCShifted",FALSE);
 
-	//object oCont = GetItemPossessedBy(oPC, "pnp_shft_sprkbox");
-	//if (GetIsObjectValid(oCont))
-	//{
-	//	object oSpark = GetItemPossessedBy(oPC, "soul_prism");
-	//	DelayCommand(0.3, AssignCommand(oPC, ActionTakeItem(oSpark, oCont)));
-	//	DestroyObject(oCont, 0.7);
-	//}
-	
-	DelayCommand(1.0, ClearShifterItems(oPC));
+    //object oCont = GetItemPossessedBy(oPC, "pnp_shft_sprkbox");
+    //if (GetIsObjectValid(oCont))
+    //{
+    //  object oSpark = GetItemPossessedBy(oPC, "soul_prism");
+    //  DelayCommand(0.3, AssignCommand(oPC, ActionTakeItem(oSpark, oCont)));
+    //  DestroyObject(oCont, 0.7);
+    //}
+    
+    DelayCommand(1.0, ClearShifterItems(oPC));
 }
 
 
@@ -891,18 +891,18 @@ void SetShiftTrueForm(object oPC)
 
 void ClearShifterItems(object oPC)
 {
-	object oCheck = GetFirstItemInInventory(oPC);
-	while (GetIsObjectValid(oCheck))
-	{
-		if (GetTag(oCheck) == "pnp_shft_cweap")
-		{
-			if ((oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC)) &&
-				 (oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC)) && 
-				(oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC)))
-				AssignCommand(oPC, DestroyObject(oCheck));
-		}
-		oCheck = GetNextItemInInventory(oPC);
-	}
+    object oCheck = GetFirstItemInInventory(oPC);
+    while (GetIsObjectValid(oCheck))
+    {
+        if (GetTag(oCheck) == "pnp_shft_cweap")
+        {
+            if ((oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC)) &&
+                 (oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC)) && 
+                (oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC)))
+                AssignCommand(oPC, DestroyObject(oCheck));
+        }
+        oCheck = GetNextItemInInventory(oPC);
+    }
 
 
 }
@@ -1036,7 +1036,7 @@ void SetShiftTrueForm(object oPC)
 
         // Remove all abilities of the object
 //        RemoveAllItemProperties(oWeapCR);
-//       	AddItemProperty(DURATION_TYPE_PERMANENT, ipUnarmed, oWeapCR);
+//          AddItemProperty(DURATION_TYPE_PERMANENT, ipUnarmed, oWeapCR);
     }
     if (GetIsObjectValid(oWeapCL))
     {
@@ -1095,7 +1095,7 @@ void SetShiftTrueForm(object oPC)
         }
         if (eType == EFFECT_TYPE_POLYMORPH)
         {
-        	RemoveEffect(oPC,eEff);
+            RemoveEffect(oPC,eEff);
         }
         eEff = GetNextEffect(oPC);
     }
@@ -1105,19 +1105,19 @@ void SetShiftTrueForm(object oPC)
     // Set race back to unused
     SetLocalInt(oPC,"RACIAL_TYPE",0);
 
-	// Reset any PRC feats that might have been lost from the shift
-//	EvalPRCFeats(oPC);
-	SetLocalInt(oHide,"nPCShifted",FALSE);
+    // Reset any PRC feats that might have been lost from the shift
+//  EvalPRCFeats(oPC);
+    SetLocalInt(oHide,"nPCShifted",FALSE);
 
-	//object oCont = GetItemPossessedBy(oPC, "pnp_shft_sprkbox");
-	//if (GetIsObjectValid(oCont))
-	//{
-	//	object oSpark = GetItemPossessedBy(oPC, "soul_prism");
-	//	DelayCommand(0.3, AssignCommand(oPC, ActionTakeItem(oSpark, oCont)));
-	//	DestroyObject(oCont, 0.7);
-	//}
-	
-	DelayCommand(1.0, ClearShifterItems(oPC));
+    //object oCont = GetItemPossessedBy(oPC, "pnp_shft_sprkbox");
+    //if (GetIsObjectValid(oCont))
+    //{
+    //  object oSpark = GetItemPossessedBy(oPC, "soul_prism");
+    //  DelayCommand(0.3, AssignCommand(oPC, ActionTakeItem(oSpark, oCont)));
+    //  DestroyObject(oCont, 0.7);
+    //}
+    
+    DelayCommand(1.0, ClearShifterItems(oPC));
 }
 */
 
@@ -2265,32 +2265,32 @@ int GetTrueForm(object oPC)
 {
     int nRace = GetRacialType(OBJECT_SELF);
     int nPCForm;
-	nPCForm = StringToInt(Get2DAString("racialtypes", "Appearance", nRace));
-//		switch (nRace)
-//		{
-//		case RACIAL_TYPE_DWARF:
-//			nPCForm = APPEARANCE_TYPE_DWARF;
-//			break;
-//		case RACIAL_TYPE_ELF:
-//			nPCForm = APPEARANCE_TYPE_ELF;
-//			break;
-//		case RACIAL_TYPE_GNOME:
-//			nPCForm = APPEARANCE_TYPE_GNOME;
-//			break;
-//		case RACIAL_TYPE_HALFELF:
-//			nPCForm = APPEARANCE_TYPE_HALF_ELF;
-//			break;
-//		case RACIAL_TYPE_HALFLING:
-//			nPCForm = APPEARANCE_TYPE_HALFLING;
-//			break;
-//		case RACIAL_TYPE_HALFORC:
-//			nPCForm = APPEARANCE_TYPE_HALF_ORC;
-//			break;
-//		case RACIAL_TYPE_HUMAN:
-//			nPCForm = APPEARANCE_TYPE_HUMAN;
-//			break;
-//		}
-//	}
+    nPCForm = StringToInt(Get2DACache("racialtypes", "Appearance", nRace));
+//      switch (nRace)
+//      {
+//      case RACIAL_TYPE_DWARF:
+//          nPCForm = APPEARANCE_TYPE_DWARF;
+//          break;
+//      case RACIAL_TYPE_ELF:
+//          nPCForm = APPEARANCE_TYPE_ELF;
+//          break;
+//      case RACIAL_TYPE_GNOME:
+//          nPCForm = APPEARANCE_TYPE_GNOME;
+//          break;
+//      case RACIAL_TYPE_HALFELF:
+//          nPCForm = APPEARANCE_TYPE_HALF_ELF;
+//          break;
+//      case RACIAL_TYPE_HALFLING:
+//          nPCForm = APPEARANCE_TYPE_HALFLING;
+//          break;
+//      case RACIAL_TYPE_HALFORC:
+//          nPCForm = APPEARANCE_TYPE_HALF_ORC;
+//          break;
+//      case RACIAL_TYPE_HUMAN:
+//          nPCForm = APPEARANCE_TYPE_HUMAN;
+//          break;
+//      }
+//  }
     return nPCForm;
 }
 

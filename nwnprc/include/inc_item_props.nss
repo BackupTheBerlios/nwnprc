@@ -952,8 +952,8 @@ int GetItemPropertyDamageType(object oWeapon)
         return -1;
 
     int iWeaponType = GetBaseItemType(oWeapon);
-    //int iDamageType = StringToInt(Get2DACache("baseitems","WeaponType",iWeaponType));
-    int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
+    int iDamageType = StringToInt(Get2DACache("baseitems","WeaponType",iWeaponType));
+    //int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
     switch(iDamageType)
     {
         case 1: return IP_CONST_DAMAGETYPE_PIERCING;    break;
@@ -972,8 +972,8 @@ int GetItemDamageType(object oWeapon)
         return -1;
 
     int iWeaponType = GetBaseItemType(oWeapon);
-    //int iDamageType = StringToInt( Get2DACache("baseitems","WeaponType",iWeaponType) );
-    int iDamageType = StringToInt( Get2DAString("baseitems","WeaponType",iWeaponType) );
+    int iDamageType = StringToInt( Get2DACache("baseitems","WeaponType",iWeaponType) );
+    //int iDamageType = StringToInt( Get2DAString("baseitems","WeaponType",iWeaponType) );
     switch(iDamageType)
     {
         case 1: return DAMAGE_TYPE_PIERCING;    break;

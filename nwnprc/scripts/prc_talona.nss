@@ -18,8 +18,8 @@ void main()
         //Apply the VFX impact and effects
         //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCon, oPC);
         //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCha, oPC);
-        ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, iPenalty, TRUE, DURATION_TYPE_PERMANENT);
-        ApplyAbilityDamage(oPC, ABILITY_CHARISMA, iPenalty, TRUE, DURATION_TYPE_PERMANENT);
+        ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, iPenalty, DURATION_TYPE_PERMANENT, TRUE);
+        ApplyAbilityDamage(oPC, ABILITY_CHARISMA,     iPenalty, DURATION_TYPE_PERMANENT, TRUE);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
     }
 }

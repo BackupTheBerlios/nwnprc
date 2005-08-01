@@ -1,7 +1,7 @@
 /*
    ----------------
    Iron Body
-   
+
    prc_pow_ironbody
    ----------------
 
@@ -15,7 +15,7 @@
    Saving Throw: None
    Power Resistance: No
    Power Point Cost: 15
-   
+
    You transform into a body of living iron. This grants you Damage Reduction 15/+5, Immunity to Blindness, Deafness,
    Disease, Poison, Stunning, Critical Hits, Ability Drain, Electricity, Drowning, 50% Fire Immunity, 50% Acid Immunity,
    +6 to Strength, -6 Dexterity, 50% Arcane Spell Failure and 50% movement speed.
@@ -110,6 +110,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget);
-        ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 6, DURATION_TYPE_TEMPORARY, FALSE, fDur, -1, nCaster);
+        ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 6, DURATION_TYPE_TEMPORARY, FALSE, fDur, TRUE, -1, nCaster);
     }
 }

@@ -28,7 +28,7 @@ void main()
 	//eEffect = EffectLinkEffects(eEffect, EffectAbilityDecrease(ABILITY_CHARISMA, 4));
 	eEffect = EffectLinkEffects(eEffect, EffectVisualEffect(VFX_DUR_PARALYZED));
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oTarget, fDuration,TRUE,-1,nCasterLvl);
-	ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 4, TRUE, DURATION_TYPE_TEMPORARY, fDuration, TRUE, -1, nCasterLvl);
+	ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 4, DURATION_TYPE_TEMPORARY, TRUE, fDuration, TRUE, -1, nCasterLvl);
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DEATH_L), oTarget);
 
 	SPSetSchool();

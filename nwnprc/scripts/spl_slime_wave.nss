@@ -47,7 +47,7 @@ void main()
                 effect eMind = EffectVisualEffect(VFX_DUR_IOUNSTONE_RED);
                 //effect stun = EffectLinkEffects(EffectAbilityDecrease(ABILITY_CONSTITUTION, d6()), eMind);
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, oTarget, RoundsToSeconds(nDuration));
-                ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, d6(), TRUE, DURATION_TYPE_TEMPORARY, RoundsToSeconds(nDuration));
+                ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, d6(), DURATION_TYPE_TEMPORARY, TRUE, RoundsToSeconds(nDuration));
 
                 //----------------------------------------------------------------------
                 // Apply the VFX that is used to track the spells duration

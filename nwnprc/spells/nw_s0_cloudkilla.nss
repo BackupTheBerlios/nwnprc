@@ -26,7 +26,7 @@ void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
-    
+
 ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
 
     //Declare major variables
@@ -49,7 +49,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
     int CasterLvl = PRCGetCasterLevel(aoeCreator);
 
     //int nPenetr = SPGetPenetrAOE(aoeCreator,CasterLvl);
-    
+
     //Enter Metamagic conditions
     if ((nMetaMagic & METAMAGIC_MAXIMIZE))
     {
@@ -64,10 +64,10 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
     {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CLOUDKILL));
-        
+
         //Concealement by fog happens no matter what
         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eConceal, oTarget, 0.0f, FALSE);
-        
+
         //Cloudkill doesn't allow SR - Ornedan
         //Make SR Check
         //if(!MyPRCResistSpell(aoeCreator, oTarget, nPenetr, fDelay))
@@ -92,7 +92,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
                 else
                 {
                     //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, TRUE, DURATION_TYPE_PERMANENT));
+                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, TRUE));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
                 }
             }
@@ -101,7 +101,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                 {
                     //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, TRUE, DURATION_TYPE_PERMANENT));
+                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, TRUE));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
                 }
                 else
@@ -109,7 +109,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
                     // Halve the damage on succesfull save.
                     //eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam / 2);
                     //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam / 2, TRUE, DURATION_TYPE_PERMANENT));
+                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam / 2, DURATION_TYPE_PERMANENT, TRUE));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
                 }
             }

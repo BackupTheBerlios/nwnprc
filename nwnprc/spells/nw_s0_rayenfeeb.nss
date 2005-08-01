@@ -70,7 +70,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_RAY_OF_ENFEEBLEMENT));
         eRay = EffectBeam(VFX_BEAM_ODD, OBJECT_SELF, BODY_NODE_HAND);
-        
+
         // attack roll
         int iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
         if(iAttackRoll > 0)
@@ -102,10 +102,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                    //Apply the ability damage effect and VFX impact
                     //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFeeb, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
-                    ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nLoss, TRUE, DURATION_TYPE_TEMPORARY, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
+                    ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nLoss, DURATION_TYPE_TEMPORARY, TRUE, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,FALSE);
                 }
-                
+
                 ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, 0, DAMAGE_TYPE_NEGATIVE);
              }
          }

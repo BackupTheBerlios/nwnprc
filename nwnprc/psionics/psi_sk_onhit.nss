@@ -26,13 +26,13 @@ void main()
     object oTarget = GetSpellTargetObject();
     object oItem   = GetSpellCastItem();
     int nFlags = GetPersistantLocalInt(oPC, MBLADE_FLAGS);
-    
+
     // Scripted combat system
     if(!GetIsObjectValid(oItem))
     {
         oItem = GetLocalObject(oPC, "PRC_CombatSystem_OnHitCastSpell_Item");
     }
-    
+
     int bMainHandPStrk = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oItem && GetLocalInt(oPC, PSYCHIC_STRIKE_MAINH);
     int bOffHandPStrk  = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)  == oItem && GetLocalInt(oPC, PSYCHIC_STRIKE_OFFH);
 
@@ -44,7 +44,7 @@ void main()
         // Check if the target is valid for Psychic Strike
         int nRacialType = MyPRCGetRacialType(oTarget);
         if(// A creature
-           GetObjectType(oTarget) == OBJECT_TYPE_CREATURE 
+           GetObjectType(oTarget) == OBJECT_TYPE_CREATURE
            && !( // And not
              // Non-living or
              nRacialType == RACIAL_TYPE_UNDEAD              ||
@@ -73,11 +73,11 @@ void main()
                 DelayCommand(1.0, DeleteLocalInt(oPC, "PRC_Soulknife_BladewindAndPStrike"));
             }
             FloatingTextStringOnCreature("* " + GetStringByStrRef(16824456) + " *", oPC);// * Psychic Strike *
-            
+
             int nPsychDice = (GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC) + 1) / 4;
             int nKTTSDice  = GetLocalInt(oPC, KTTS) >>> 2;
             int nKTTSType  = GetLocalInt(oPC, KTTS) & KTTS_TYPE_MASK;
-            
+
             // Calculate Psychic Strike dice left unused and apply KTTS
             if(nKTTSType != KTTS_TYPE_OFF && nKTTSDice > 0)
             {
@@ -87,16 +87,16 @@ void main()
                     nPsychDice = 0;
                 }
                 FloatingTextStringOnCreature("* " + GetStringByStrRef(16824466) + " *", oPC); // * Knife to the Soul *
-                
+
                 //SendMessageToPC(oPC, "KTTS - Type: " + IntToString(nKTTSType) + "; Dice: " + IntToString(nKTTSDice));
-                
+
                 ApplyAbilityDamage(oTarget, nKTTSType == KTTS_TYPE_INT ? ABILITY_INTELLIGENCE :
                                             nKTTSType == KTTS_TYPE_WIS ? ABILITY_WISDOM :
                                             ABILITY_CHARISMA
-                                          , nKTTSDice, TRUE, DURATION_TYPE_PERMANENT);
+                                          , nKTTSDice, DURATION_TYPE_PERMANENT, TRUE);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
             }
-            
+
             // Apply Psychic Strike damage if there are any dice left
             if(nPsychDice)
             {
@@ -106,9 +106,9 @@ void main()
             }
         }// end if - target is valid for Psychic Strike
     }// end if - try dealing Psychic Strike damage
-    
+
     //SendMessageToPC(oPC, "Flags: " + IntToString(nFlags));
-    
+
     // Apply the various enhancement effects
     if(nFlags & MBLADE_FLAG_VICIOUS)
     {// A vicious mindblade creates a flash of disruptive energy whenever it hits, dealing 2d6 damage to the target hit and 1d6 to the wielder.
@@ -130,12 +130,12 @@ void main()
                 case BASE_ITEM_LONGSWORD:    nPPLoss = d8(); break;
                 case BASE_ITEM_BASTARDSWORD: nPPLoss = d10(); break;
                 case BASE_ITEM_THROWINGAXE:  nPPLoss = d6(); break;
-                
+
                 default:
                     WriteTimestampedLogEntry("Wrong type of item firing psi_sk_onhit: " + IntToString(GetBaseItemType(oItem)));
                     return;
             }
-            
+
             int nPP = GetLocalInt(oTarget, "PowerPoints");
             if(nPP > 0)
             {
@@ -149,7 +149,7 @@ void main()
                 {
                     /*effect eAbilDam = EffectAbilityDecrease(ABILITY_WISDOM, d2());
                     ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);*/
-                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d2(), TRUE, DURATION_TYPE_PERMANENT);
+                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d2(), DURATION_TYPE_PERMANENT, TRUE);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
                 }
             }
@@ -175,7 +175,7 @@ void main()
         //SendMessageToPC(oPC, "Wounding");
         if(!GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT))
         {
-            ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, TRUE, DURATION_TYPE_PERMANENT);
+            ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, DURATION_TYPE_PERMANENT, TRUE);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
         }
     }

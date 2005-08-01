@@ -7,8 +7,8 @@
 //:: Code based on Aaon Graywolf's inc_combat.nss
 //:: and Soul Taker's additions in inc_combat2.nss
 //:://////////////////////////////////////////////
-//:: Adds a great deal of additional functionality 
-//:: to the older combat system to make combat simulation 
+//:: Adds a great deal of additional functionality
+//:: to the older combat system to make combat simulation
 //:: more accurate and much easier to use.
 //:://////////////////////////////////////////////
 //:: Current Features:
@@ -29,23 +29,23 @@
 //:://////////////////////////////////////////////
 //:: Support for the following feats:
 //:://////////////////////////////////////////////
-//:: Weapon Focus, Epic Weapon Focus, Epic Prowess, 
+//:: Weapon Focus, Epic Weapon Focus, Epic Prowess,
 //:: Improved Critical, Overwhelming Critical, Devestating Critical
 //:: Weapon Specialization, Epic Weapon Specialization,
-//:: Weapon Finesse, Inuitive Attack, Zen Archery, 
+//:: Weapon Finesse, Inuitive Attack, Zen Archery,
 //::
 //:: Expertise, Improved Expertise,
 //:: Cleave, Great Cleave, Circle Kick,
 //:: Power Attack, Improved Power Attack, Supreme Power Attack,
 //:: Power Shot, Improved Power Shot, Supreme Power Shot,
-//:: 
+//::
 //:: Rapid Shot, Rapid Reload, Extra Shot, Flurry of Blows,
-//:: Martial Flurry, Furious Assult, One Strike Two Cuts, 
-//:: 
+//:: Martial Flurry, Furious Assult, One Strike Two Cuts,
+//::
 //:: Epic Dodge, Self Concealment I-V, Blind Fight, Crippling Strike
 //::
 //:: All Arcane Archer and Weapon Master Feats.
-//:: Favored Enemy, Bane of Enemies, 
+//:: Favored Enemy, Bane of Enemies,
 //:: Battle Training, Divine Might, Bard Song, Thundering Rage
 //::
 //:: Note: If you notice any feats missing let Oni5115 know
@@ -57,7 +57,7 @@
 //:://////////////////////////////////////////////
 //:: Coup De Grace does not take into account bonus damage [Except from touch attack spells]
 //:: Calculation of Enemey AC does not take into account bonus vs. racial type or alignment type.
-//:: 
+//::
 //:://////////////////////////////////////////////
 //:: Tested:
 //:://////////////////////////////////////////////
@@ -65,14 +65,14 @@
 //:: Elemental Information and Damage
 //:: Sneak Attack Functions
 //:: On Hit: Cast Spell
-//:: On Hit: Unique Power 
+//:: On Hit: Unique Power
 //:: On Hit: properties
 //:: Perform Attack Round
 //:://////////////////////////////////////////////
 //:: Things to Test:
 //:://////////////////////////////////////////////
 //:: On Hit: Slay Race/Alignment Group/Alignment
-//::         Wounding, Disease, Poison, 
+//::         Wounding, Disease, Poison,
 //::         [Duration abilities] sleep, stun, hold, etc..
 //::         Dark Fire and Flame Weapon
 //::         Unique Power - should test more of the abilities to make sure it works right
@@ -83,12 +83,12 @@
 //::
 //:: Unarmed Damage Calculation
 //:: Cleave, Great Cleave, and Cirlce Kick
-//:: 
+//::
 //:: Blinding Speed (should count as haste effect)
 //:://////////////////////////////////////////////
 //:: Known Bugs:
 //:://////////////////////////////////////////////
-//:: 
+//::
 //:://////////////////////////////////////////////
 
 // constant ints for touch attacks
@@ -100,7 +100,7 @@ const int TOUCH_ATTACK_MELEE_SPELL  = 3;
 const int TOUCH_ATTACK_RANGED_SPELL = 4;
 
 const string COLOR_BLUE         = "<cfÌþ>";    // used by saving throws.
-const string COLOR_DARK_BLUE    = "<c fþ>";    // used for electric damage.                                           
+const string COLOR_DARK_BLUE    = "<c fþ>";    // used for electric damage.
 const string COLOR_GRAY         = "<c™™™>";    // used for negative damage.
 const string COLOR_GREEN        = "<c þ >";    // used for acid damage.
 const string COLOR_LIGHT_BLUE   = "<c™þþ>";    // used for the player's name, and cold damage.
@@ -120,7 +120,7 @@ const string COLOR_YELLOW       = "<cþþ >";    // used for healing, and sent mes
 // Returns DAMAGE_TYPE_* const of weapon
 int GetWeaponDamageType(object oWeap);
 
-// returns true if weapon is two-handed 
+// returns true if weapon is two-handed
 // does not include double weapons
 int GetIsTwoHandedMeleeWeapon(object oWeap);
 
@@ -184,7 +184,7 @@ int GetItemPropAlignment(int iGoodEvil,int iLawChaos);
 // checks for all the spells and determines the proper bonuses/penalties
 int GetMagicalAttackBonus(object oAttacker);
 
-// Returns Weapon Attack bonus or penalty 
+// Returns Weapon Attack bonus or penalty
 // inlcuding race and alignment checks
 int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender);
 
@@ -201,9 +201,9 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
 // Works for both Ranged and Melee Attacks
 // iMainHand 0 = main; 1 = off-hand
 // iAttackBonus 0 = calculate it; Anything else and it will use that value and will not calculate it.
-// This is mainly for when you call PerformAttackRound to do multiple attacks, 
+// This is mainly for when you call PerformAttackRound to do multiple attacks,
 // so that it does not have to recalculate all the bonuses for every attack made.
-// int iMod = 0;  iMod just modifies the attack roll.  
+// int iMod = 0;  iMod just modifies the attack roll.
 // If you are coding an attack that reduces the attack roll, put the number in the iMod slot.
 // bShowFeedback tells the script to show the script feedback
 // fDelay is the amount of time to delay the display of feedback
@@ -270,7 +270,7 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
 // sSpellBonusDamage  = result of a call to GetMagicalBonusDamage
 // iMainHand 0 = main; 1 = off-hand
 // iDamage 0 = calculate the GetWeaponDamagePerRound; Anything else and it will use that value
-// and will not calculate it.  This is mainly for when you call PerformAttackRound 
+// and will not calculate it.  This is mainly for when you call PerformAttackRound
 // to do multiple attacks,  so that it does not have to recalculate all the bonuses
 // for every attack made.
 // bIsCritical = FALSE is not a critical; true is a critcal hit. (Function checks for crit immunity).
@@ -321,7 +321,7 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
  *                       0.0 = DURATION_TYPE_INSTANT, effect lasts 0.0 seconds.
  *                      >0.0 = DURATION_TYPE_TEMPORARY, effect lasts the amount of time put in here.
  *                      <0.0 = DURATION_TYPE_PERMAMENT!!!!!  Effect lasts until dispelled.
- 
+
  * @param iAttackBonusMod  Is the attack modifier - Will effect all attacks if bEffectAllAttacks is on.
  * @param iDamageModifier  Should be either a DAMAGE_BONUS_* constant or an integer amount of damage.
  *                         Give an integer if the attack effects ONLY the first attack!
@@ -346,7 +346,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
 // eDuration - Changes the duration of the applied effect(s)
 //           0.0 = DURATION_TYPE_INSTANT, effect lasts 0.0 seconds.
 //          >0.0 = DURATION_TYPE_TEMPORARY, effect lasts the amount of time put in here.
-//          <0.0 = DURATION_TYPE_PERMAMENT!!!!!  Effect lasts until dispelled.  
+//          <0.0 = DURATION_TYPE_PERMAMENT!!!!!  Effect lasts until dispelled.
 // iAttackBonusMod is the attack modifier - Will effect all attacks if bEffectAllAttacks is on
 // iDamageModifier - should be either a DAMAGE_BONUS_* constant or an int of damage.
 //                   Give an int if the attack effects ONLY the first attack!
@@ -377,32 +377,32 @@ struct BonusDamage
 
 struct AttackLoopVars
 {
-     // these variables don't change during the attack loop logic, they are just 
+     // these variables don't change during the attack loop logic, they are just
      // recursively passed back to the function.
 
      // the delay of the functions recursion and the duration of the eSpecialEffect
      float fDelay, eDuration;
-     
+
      // does the special effect apply to all attacks? is it a ranged weapon?
      int bEffectAllAttacks, bIsRangedWeapon;
-     
+
      // Ammo if it is a ranged weapon, and both main and off-hand weapons
      object oAmmo, oWeaponR, oWeaponL;
-     
+
      // all the main hand weapon data
      int iMainNumDice, iMainNumSides, iMainCritMult, iMainAttackBonus, iMainWeaponDamageRound;
-     
+
      // all the off hand weapon data
-     int iOffHandNumDice, iOffHandNumSides, iOffHandCritMult, iOffHandAttackBonus, iOffHandWeaponDamageRound; 
+     int iOffHandNumDice, iOffHandNumSides, iOffHandCritMult, iOffHandAttackBonus, iOffHandWeaponDamageRound;
 
      // special effect applied on first attack, or all attacks
      effect eSpecialEffect;
 
      //  the damage modifier and damage type for extra damage from special attacks
      int iDamageModifier, iDamageType;
-     
+
      // string displayed on a successful hit, or a miss
-     string sMessageSuccess, sMessageFailure;     
+     string sMessageSuccess, sMessageFailure;
 };
 
 // Vars needed to pass between AttackLoopMain and AttackLoopLogic
@@ -418,7 +418,7 @@ int iVorpalSaveDC = 0;
 
 // #include "prc_feat_const"   <-- Inherited
 // #include "prc_class_const"  <-- Inherited
-// #include "prc_spell_const"  <-- Inherited 
+// #include "prc_spell_const"  <-- Inherited
 // #include "x2_inc_switches"  <-- Inherited
 // #include "prc_alterations"  <-- Inherited
 // #include "X2_I0_SPELLS"     <-- Inherited
@@ -444,7 +444,7 @@ int iVorpalSaveDC = 0;
 int GetWeaponDamageType(object oWeap)
 {
     int iType = GetBaseItemType(oWeap);
-    
+
     switch(iType)
     {
         case BASE_ITEM_BASTARDSWORD:
@@ -498,7 +498,7 @@ int GetWeaponDamageType(object oWeap)
         case BASE_ITEM_BULLET:
            return DAMAGE_TYPE_BLUDGEONING;
     }
-    
+
     if(oWeap == OBJECT_INVALID)
     {
          // For Fists
@@ -515,7 +515,7 @@ int GetIsTwoHandedMeleeWeapon(object oWeap)
 
     switch(iType)
     {
-        case BASE_ITEM_GREATAXE: 
+        case BASE_ITEM_GREATAXE:
              iReturn = 1;
              break;
         case BASE_ITEM_GREATSWORD:
@@ -531,7 +531,7 @@ int GetIsTwoHandedMeleeWeapon(object oWeap)
              iReturn = 1;
              break;
     }
-    
+
     return iReturn;
 }
 
@@ -539,7 +539,7 @@ int GetIsSimpleWeapon(object oWeap)
 {
       int iType= GetBaseItemType(oWeap);
       switch (iType)
-      {            
+      {
         case BASE_ITEM_MORNINGSTAR:
         case BASE_ITEM_QUARTERSTAFF:
         case BASE_ITEM_SHORTSPEAR:
@@ -553,7 +553,7 @@ int GetIsSimpleWeapon(object oWeap)
         case BASE_ITEM_BRACER:
           return 1;
           break;
-        case BASE_ITEM_CLUB:  
+        case BASE_ITEM_CLUB:
         case BASE_ITEM_DAGGER:
         case BASE_ITEM_LIGHTMACE:
         case BASE_ITEM_SICKLE:
@@ -563,7 +563,7 @@ int GetIsSimpleWeapon(object oWeap)
           return 2;
           break;
       }
-      
+
       return 0;
 }
 
@@ -876,7 +876,7 @@ int GetFeatByWeaponType(int iType, string sFeat)
                 case BASE_ITEM_WHIP: return -1;
                 //case BASE_ITEM_WHIP: return FEAT_EPIC_DEVASTATING_CRITICAL_WHIP;
             }
-            
+
         else if(sFeat == "WeaponOfChoice")
             switch(iType)
             {
@@ -920,7 +920,7 @@ int GetFeatByWeaponType(int iType, string sFeat)
                 case BASE_ITEM_WHIP: return -1;
                 //case BASE_ITEM_WHIP: return FEAT_WEAPON_OF_CHOICE_WHIP;
             }
-            
+
     return -1;
 }
 
@@ -929,7 +929,7 @@ int GetWeaponCriticalRange(object oPC, object oWeap)
     //no weapon, touch attacks mainly
     if(!GetIsObjectValid(oWeap))
         return 20;
-        
+
     int iType = GetBaseItemType(oWeap);
     int nThreat = StringToInt(Get2DACache("baseitems", "CritThreat", iType));
     int bKeen = GetItemHasItemProperty(oWeap, ITEM_PROPERTY_KEEN);
@@ -937,7 +937,7 @@ int GetWeaponCriticalRange(object oPC, object oWeap)
     int bIsWeaponOfChoice = GetHasFeat(GetFeatByWeaponType(iType, "WeaponOfChoice"), oPC);
     int bRangedWeap = FALSE;
     object oAmmo;
-      
+
     if( GetBaseItemType(oWeap) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeap) == BASE_ITEM_SHORTBOW )
     {
           oAmmo = GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC);
@@ -953,13 +953,13 @@ int GetWeaponCriticalRange(object oPC, object oWeap)
          oAmmo = GetItemInSlot(INVENTORY_SLOT_BULLETS, oPC);
          bRangedWeap = TRUE;
     }
-    
+
     if(bRangedWeap)
     {
          // check ammo for keen
          bKeen = GetItemHasItemProperty(oAmmo, ITEM_PROPERTY_KEEN);
     }
-    
+
     if(bIsWeaponOfChoice && GetLevelByClass(CLASS_TYPE_WEAPON_MASTER, oPC) > 7)
                  nThreat *= 2;
     if(bKeen)    nThreat *= 2;
@@ -973,23 +973,23 @@ int GetWeaponCritcalMultiplier(object oPC, object oWeap)
     //no weapon, touch attacks mainly
     if(!GetIsObjectValid(oWeap))
         return 2;
-        
+
      int iWeaponType = GetBaseItemType(oWeap);
-     int iCriticalMultiplier = StringToInt(Get2DACache("baseitems", "CritHitMult", iWeaponType));     
+     int iCriticalMultiplier = StringToInt(Get2DACache("baseitems", "CritHitMult", iWeaponType));
      int bIsWeaponOfChoice = GetHasFeat(GetFeatByWeaponType(iWeaponType, "WeaponOfChoice"), oPC);
-     
+
      if(bIsWeaponOfChoice && GetHasFeat(FEAT_INCREASE_MULTIPLIER, oPC) )
      {
           iCriticalMultiplier += 1;
      }
-     
+
      return iCriticalMultiplier;
 }
 
 object GetAmmunitionFromWeapon(object oWeapon, object oAttacker)
 {
      object oAmmo;
-          
+
      // returns the proper ammunition slot based on oWeapon
      switch (GetBaseItemType(oWeapon) )
      {
@@ -1011,7 +1011,7 @@ object GetAmmunitionFromWeapon(object oWeapon, object oAttacker)
                oAmmo = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oAttacker);
                break;
      }
-     
+
      return oAmmo;
 }
 
@@ -1034,7 +1034,7 @@ int GetIsInMeleeRange(object oDefender, object oAttacker)
      int bReturn = TRUE;
      float fDistance = GetDistanceBetween(oDefender, oAttacker);
      if(fDistance >= FeetToMeters(10.0) ) bReturn = FALSE;
-     
+
      return bReturn;
 }
 
@@ -1044,7 +1044,7 @@ object GetUnarmedWeapon(object oPC)
       object oCritterR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
       object oCritterL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
       object oCritterB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
-      
+
       // if they have a claw weapon of some sort
       if( GetIsObjectValid(oCritterR) )
       {
@@ -1053,27 +1053,27 @@ object GetUnarmedWeapon(object oPC)
            // can be tweaked though
            int iRandom = d12();
            if(iRandom <= 5)                        return oCritterR;
-           else if(iRandom > 5 && iRandom <= 10 
+           else if(iRandom > 5 && iRandom <= 10
                    && GetIsObjectValid(oCritterL)) return oCritterL;
-           else if(iRandom > 10 
+           else if(iRandom > 10
                    && GetIsObjectValid(oCritterB)) return oCritterB;
            else
                                                    return oCritterR;
       }
       else if( GetIsObjectValid(oGlove) )          return oGlove;
-      
+
       // if no gloves or claws return invalid object
       return OBJECT_INVALID;
 }
 
 int GetIsUnarmed(object oPC)
 {
-      object oWeap  = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);      
+      object oWeap  = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
       if( GetBaseItemType(oWeap) == BASE_ITEM_INVALID )
       {
           return 1;
       }
-      
+
       return 0;
 }
 
@@ -1082,12 +1082,12 @@ int GetHasMonkWeaponEquipped(object oPC)
     int bIsMonkWeapon = FALSE;
     int iMonkLevel = GetLevelByClass(CLASS_TYPE_MONK, oPC);
     object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    
+
     if(iMonkLevel >= 1 && (GetIsUnarmed(oPC) || GetBaseItemType(oWeapR) == BASE_ITEM_KAMA) )
     {
          bIsMonkWeapon = TRUE;
     }
-    
+
     return bIsMonkWeapon;
 }
 
@@ -1095,17 +1095,17 @@ int GetMainHandAttacks(object oPC)
 {
     int iBAB = GetBaseAttackBonus(oPC);
     int iCharLevel = GetHitDice(oPC);
-    
+
     if (iCharLevel > 20)
     {
-         iCharLevel -= 20;      
-         iCharLevel /= 2;      
+         iCharLevel -= 20;
+         iCharLevel /= 2;
          iBAB -= iCharLevel;
     }
-    
-    int iNumAttacks = ( (iBAB - 1) / 5 ) + 1;    
+
+    int iNumAttacks = ( (iBAB - 1) / 5 ) + 1;
     if(iNumAttacks > 4)  iNumAttacks = 4;
-    
+
     int iMonkLevel = 0;
     int iNumMonkAttack = 0;
     if( GetHasMonkWeaponEquipped(oPC) )
@@ -1119,33 +1119,33 @@ int GetMainHandAttacks(object oPC)
          iMonkLevel += GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC);
          iMonkLevel += GetLevelByClass(CLASS_TYPE_SACREDFIST, oPC);
          iMonkLevel += GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC);
-         
+
          if(iMonkLevel < 6)                             iNumMonkAttack = 1;
          else if (iMonkLevel >= 6  && iMonkLevel < 10)  iNumMonkAttack = 2;
          else if (iMonkLevel >= 10 && iMonkLevel < 14)  iNumMonkAttack = 3;
          else if (iMonkLevel >= 14 && iMonkLevel < 18)  iNumMonkAttack = 4;
          else if (iMonkLevel >= 18 )                    iNumMonkAttack = 5;
     }
-    
+
     if(iNumMonkAttack > iNumAttacks)
     {
          iNumAttacks = iNumMonkAttack;
          bUseMonkAttackMod = TRUE;
     }
-    
+
     // crossbows special rules
     // if they don't have rapid reload, then only 1 attack per round
     object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    if(GetBaseItemType(oWeapR) == BASE_ITEM_HEAVYCROSSBOW || 
+    if(GetBaseItemType(oWeapR) == BASE_ITEM_HEAVYCROSSBOW ||
        GetBaseItemType(oWeapR) == BASE_ITEM_LIGHTCROSSBOW &&
        !GetHasFeat(FEAT_RAPID_RELOAD, oPC) )
     {
          iNumAttacks = 1;
     }
-    
+
     //string test = "iMonkLevel = " + IntToString(iMonkLevel) + " iNumAttacks = " + IntToString(iNumAttacks) + " iNumMonkAttack = " + IntToString(iNumMonkAttack);
     //FloatingTextStringOnCreature(test, oPC);
-    
+
     return iNumAttacks;
 }
 
@@ -1156,12 +1156,12 @@ int GetOffHandAttacks(object oPC, int iBonusAttacks = 0)
 
      int iMainHandAttacks =  GetMainHandAttacks(oPC) + iBonusAttacks;
      int iOffHandAttacks = 0;
-     
+
      int bIsMeleeWeaponR = FALSE;
      int bIsMeleeWeaponL = FALSE;
 
-     if(oWeapR != OBJECT_INVALID && 
-        oWeapL != OBJECT_INVALID && 
+     if(oWeapR != OBJECT_INVALID &&
+        oWeapL != OBJECT_INVALID &&
         !GetWeaponRanged(oWeapR) &&
         GetBaseItemType(oWeapL) != BASE_ITEM_LARGESHIELD &&
         GetBaseItemType(oWeapL) != BASE_ITEM_SMALLSHIELD &&
@@ -1169,19 +1169,19 @@ int GetOffHandAttacks(object oPC, int iBonusAttacks = 0)
      {
           // they are wielding two weapons so at least 1 off-hand attack
           iOffHandAttacks = 1;
-          
+
           if(GetLevelByClass(CLASS_TYPE_RANGER, oPC) > 8 )    iOffHandAttacks = 2;
           if(GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING) )  iOffHandAttacks = 2;
           if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING) )   iOffHandAttacks = 3;
           if(GetHasFeat(FEAT_SUPREME_TWO_WEAPON_FIGHTING) )   iOffHandAttacks = 4;
           if(GetHasFeat(FEAT_PERFECT_TWO_WEAPON_FIGHTING) )   iOffHandAttacks = iMainHandAttacks;
-          
+
           if(iOffHandAttacks > iMainHandAttacks)
           {
                iOffHandAttacks = iMainHandAttacks;
           }
      }
-     
+
      if( GetHasMonkWeaponEquipped(oPC) )
      {
           // prevents dual kama monk abuse
@@ -1190,14 +1190,14 @@ int GetOffHandAttacks(object oPC, int iBonusAttacks = 0)
 
      //string test = "iOffHandAttacks = " + IntToString(iOffHandAttacks);
      //FloatingTextStringOnCreature(test, oPC);
-     
+
      return iOffHandAttacks;
 }
 
 int GetItemPropAlignment(int iGoodEvil,int iLawChaos)
 {
    int Align;
-   
+
    switch(iGoodEvil)
    {
     case ALIGNMENT_GOOD:
@@ -1221,7 +1221,7 @@ int GetItemPropAlignment(int iGoodEvil,int iLawChaos)
     case ALIGNMENT_CHAOTIC:
         Align += 6;
         break;
-   }   
+   }
    return Align;
 }
 
@@ -1235,16 +1235,16 @@ int GetMagicalAttackBonus(object oAttacker)
      int nType = 0;
      int nSpell = 0;
      int iVal = 0;
-     
+
      object eCaster;
-     
+
      effect eEffect = GetFirstEffect(oAttacker);
-     
+
      while(GetIsEffectValid(eEffect))
      {
           nType = GetEffectType(eEffect);
           nSpell = GetEffectSpellId(eEffect);
-          
+
           if(nType == EFFECT_TYPE_ATTACK_INCREASE)
           {
                 int iBonus = 0;
@@ -1253,11 +1253,11 @@ int GetMagicalAttackBonus(object oAttacker)
                     case SPELL_AID:
                          iMagicBonus += 1;
                          break;
-                         
+
                     case SPELL_BLESS:
                          iMagicBonus += 1;
                          break;
-                    
+
                     case SPELL_PRAYER:
                          iMagicBonus += 1;
                          break;
@@ -1269,19 +1269,19 @@ int GetMagicalAttackBonus(object oAttacker)
                     case SPELL_BATTLETIDE:
                          iMagicBonus += 2;
                          break;
-                    
+
                     case SPELL_TRUE_STRIKE:
                          iMagicBonus += 20;
-                         break;    
-                         
+                         break;
+
                     case SPELL_DIVINE_PROTECTION:
                          iMagicBonus += 1;
                          break;
-                    
+
                     case SPELL_CREATE_MAGIC_TATOO:
                          iMagicBonus += 2;
                          break;
-                    
+
                     case SPELL_RECITATION:
                          iMagicBonus += 2;
                          break;
@@ -1291,22 +1291,22 @@ int GetMagicalAttackBonus(object oAttacker)
                          iBonus /= 3;
                          if(iBonus == 0) iBonus = 1;
                          if(iBonus > 5) iBonus = 5;
-                         
+
                          iMagicBonus += iBonus;
                          break;
-                         
+
                     case SPELL_DIVINE_POWER:
                          iBonus = GetHitDice(oAttacker) - GetBaseAttackBonus(oAttacker);
                          iMagicBonus += iBonus;
                          break;
-                    
+
                     // Cleric War Domain Power
                     case 380:
                           iBonus = GetLevelByClass(CLASS_TYPE_CLERIC, oAttacker);
                           iBonus /= 5;
                           iBonus = iBonus + 1;
-          
-                          iMagicBonus += iBonus; 
+
+                          iMagicBonus += iBonus;
                           break;
 
                      // SPELL_DIVINE_WRATH
@@ -1316,11 +1316,11 @@ int GetMagicalAttackBonus(object oAttacker)
                          iBonus -= 1;
                          if(iBonus < 0) iBonus = 0;
                          else           iBonus *= 2;
-                         
+
                          iBonus += 3;
                          iMagicBonus += iBonus;
                          break;
-                          
+
                     case SPELL_TENSERS_TRANSFORMATION:
                          iBonus = GetLevelByClass(CLASS_TYPE_SORCERER, oAttacker) + GetLevelByClass(CLASS_TYPE_WIZARD, oAttacker);
                          iBonus /= 2;
@@ -1334,7 +1334,7 @@ int GetMagicalAttackBonus(object oAttacker)
                          {
                               int nLvl = GetLevelByClass(CLASS_TYPE_BARD, eCaster);
                               int iPerform = GetSkillRank(SKILL_PERFORM, eCaster);
-                              
+
                               if(nLvl >= 8 && iPerform >= 15) iMagicBonus += 2;
                               else                            iMagicBonus += 1;
                          }
@@ -1342,10 +1342,10 @@ int GetMagicalAttackBonus(object oAttacker)
                          {
                               iMagicBonus += 1;
                          }
-                         break;  
+                         break;
                }
           }
-          
+
           else if(nType == EFFECT_TYPE_ATTACK_DECREASE)
           {
                switch(nSpell)
@@ -1373,7 +1373,7 @@ int GetMagicalAttackBonus(object oAttacker)
                     case SPELL_SCARE:
                          iMagicBonus -= 2;
                          break;
-                
+
                     case SPELL_RECITATION:
                          iMagicBonus -= 2;
                          break;
@@ -1381,7 +1381,7 @@ int GetMagicalAttackBonus(object oAttacker)
                      case SPELL_BATTLETIDE:
                           iMagicBonus -= 2;
                           break;
-                
+
                     case SPELL_CURSE_OF_PETTY_FAILING:
                          iMagicBonus -= 2;
                          break;
@@ -1389,20 +1389,20 @@ int GetMagicalAttackBonus(object oAttacker)
                     case SPELL_LEGIONS_CURSE_OF_PETTY_FAILING:
                          iMagicBonus -= 2;
                          break;
-                         
+
                     case SPELL_BESTOW_CURSE:
                          iMagicBonus -= 4;
                          break;
-                     
+
                     // SPELL_HELLINFERNO
                     case 762:
                          iMagicBonus -= 4;
                          break;
-                
+
                     case SPELL_BIGBYS_INTERPOSING_HAND:
                          iMagicBonus -= 10;
-                         break;           
-                     
+                         break;
+
                     // Bard's Curse Song
                     case 644:
                          eCaster = GetEffectCreator(eEffect);
@@ -1410,7 +1410,7 @@ int GetMagicalAttackBonus(object oAttacker)
                          {
                               int nLvl = GetLevelByClass(CLASS_TYPE_BARD, eCaster);
                               int iPerform = GetSkillRank(SKILL_PERFORM, eCaster);
-                              
+
                               if(nLvl >= 8 && iPerform >= 15) iMagicBonus -= 2;
                               else                            iMagicBonus -= 1;
                          }
@@ -1470,7 +1470,7 @@ int GetMagicalAttackBonus(object oAttacker)
                               break;
                          case SPELL_POWER_ATTACK1:
                               iMagicBonus -= 1;
-                              break; 
+                              break;
                          case SPELL_SUPREME_POWER_ATTACK:
                               iMagicBonus -= 10;
                               break;
@@ -1478,10 +1478,10 @@ int GetMagicalAttackBonus(object oAttacker)
                }
                */
           }
-          
+
           eEffect = GetNextEffect(oAttacker);
-     }     
-     
+     }
+
      return iVal;
 }
 
@@ -1528,9 +1528,9 @@ int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender)
                    bIsPenalty = FALSE;
                 }
                 break;
-                
+
             case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
-                if(GetItemPropertySubType(ip) == iRace )   
+                if(GetItemPropertySubType(ip) == iRace )
                 {
                      iTemp = GetItemPropertyCostTableValue(ip);
                      bIsPenalty = FALSE;
@@ -1540,7 +1540,7 @@ int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender)
                      iTemp = 0;
                 }
                 break;
-                
+
             case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
                 if(GetItemPropertySubType(ip) == iAlignSpecific )
                 {
@@ -1551,9 +1551,9 @@ int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender)
                 {
                      iTemp = 0;
                 }
-                break;   
+                break;
         }
-        
+
         if(iTemp > iBonus || bIsPenalty)  iBonus = iTemp;
         ip = GetNextItemProperty(oWeap);
     }
@@ -1565,17 +1565,17 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 {
      int iAC = GetAC(oDefender);
      int iDexMod = GetAbilityModifier(ABILITY_DEXTERITY, oDefender);
-     
+
      int bIsHelpless =  GetIsHelpless(oDefender);
      int bGetIsDeniedDexBonus = GetIsDeniedDexBonusToAC(oDefender, oAttacker);
      int bIsStunned = GetHasEffect(EFFECT_TYPE_STUNNED, oDefender);
-     
+
      // helpless enemies have an effective dexterity of 0 (for -5 ac)
      if(bIsHelpless)
      {
           iAC -= 5;
      }
-     
+
      // remove the dexterity modifier to AC, based on armor limits
      if(bGetIsDeniedDexBonus || bIsHelpless )
      {
@@ -1585,14 +1585,14 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 
           // remove any bonus AC from boots (it's Dodge AC)
           iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_BOOTS, oDefender) );
-          
+
           // remove bonus AC from having tumble skill.
           // this is only for ranks, not items/feats/etc
           int iTumble = GetSkill(oDefender, SKILL_TUMBLE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
           iTumble -= iDexMod;
           iTumble /= 5;
           iAC -= iTumble;
-          
+
           // change the max dex mod based on armor value
           if(iArmorType == 8)       iDexMax = 1;
           else if(iArmorType == 7)  iDexMax = 1;
@@ -1601,16 +1601,16 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
           else if(iArmorType == 3)  iDexMax = 4;
           else if(iArmorType == 2)  iDexMax = 6;
           else if(iArmorType == 1)  iDexMax = 8;
-          
+
           // if their dex mod exceeds the max for their current armor
           if(iDexMod > iDexMax) iDexMod = iDexMax;
-          
+
           // remove any dex bonus to AC
           iAC -= iDexMod;
-          
+
           // remove any bonuses applied to PrC Skins
           iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_CARMOUR, oDefender) );
-          
+
           // if the skin AC bonus was racial "natural" AC, add it back in.
           // but only if it is not a touch attack
           if(!bIsTouchAttack)
@@ -1639,7 +1639,7 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
                else if( GetHasFeat(FEAT_NATARM_22) ) iAC += 22;
           }
      }
-     
+
      // if helpless or stunned, can't use shield
      if(bIsHelpless || bIsStunned)
      {
@@ -1652,19 +1652,19 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
      {
           // remove Armor AC
           iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_CHEST, oDefender) );
-          
+
           // remove natural armor AC
           iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_NECK, oDefender) );
-          
+
           // remove shield bonus - only if it has not been removed already
           if(!bIsHelpless && !bIsStunned)
                iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oDefender) );
-               
+
           //wilders get to add cha bonus to touch attacks only
           if(GetHasFeat(FEAT_WILDER_ELUDE_TOUCH, oDefender))
             iAC += GetAbilityModifier(ABILITY_CHARISMA, oDefender);
      }
-   
+
      return iAC;
 }
 
@@ -1675,21 +1675,21 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      int iBAB = GetBaseAttackBonus(oAttacker);
      int iWeaponAttackBonus = GetWeaponAttackBonusItemProperty(oWeap, oDefender);
      int iWeaponType = GetBaseItemType(oWeap);
-     
+
      int iStr = GetAbilityModifier(ABILITY_STRENGTH, oAttacker);
-     int iDex = GetAbilityModifier(ABILITY_DEXTERITY, oAttacker);    
+     int iDex = GetAbilityModifier(ABILITY_DEXTERITY, oAttacker);
      int iCha = GetAbilityModifier(ABILITY_CHARISMA, oAttacker);
      int iWis = GetAbilityModifier(ABILITY_WISDOM, oAttacker);
-     
+
      int bIsRangedWeapon = GetWeaponRanged(oWeap) || iTouchAttackType == TOUCH_ATTACK_RANGED || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL;
-     
+
      int bFinesse = GetHasFeat(FEAT_WEAPON_FINESSE, oAttacker);
      int bKatanaFinesse = GetHasFeat(FEAT_KATANA_FINESSE, oAttacker);
      int bInuitiveAttack = GetHasFeat(FEAT_INTUITIVE_ATTACK, oAttacker);
      int bZenArchery = GetHasFeat(FEAT_ZEN_ARCHERY, oAttacker);
      int bPointBlankShot = GetHasFeat(FEAT_POINT_BLANK_SHOT,oAttacker);
      int bIsInMelee = GetMeleeAttackers15ft(oAttacker);
-     
+
      // cache result, might increase speed if this is an issue
      int bLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iWeaponType)) <= 2 || iWeaponType == BASE_ITEM_RAPIER;
      int bSimple = GetIsSimpleWeapon(oWeap);
@@ -1699,87 +1699,87 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      int bFocus = GetHasFeat(GetFeatByWeaponType(iWeaponType, "Focus"), oAttacker);
      int bEpicFocus = GetHasFeat(GetFeatByWeaponType(iWeaponType, "EpicFocus"), oAttacker);
      int bEpicProwess = GetHasFeat(FEAT_EPIC_PROWESS, oAttacker);
-     
+
      int bWeaponOfChoice = GetHasFeat(GetFeatByWeaponType(iWeaponType, "WeaponOfChoice"), oAttacker);
-      
+
      // increases attack bonus from feats
      iAttackBonus += iBAB;
      iAttackBonus += iWeaponAttackBonus;
      if(bFocus) iAttackBonus       += 1;
      if(bEpicFocus) iAttackBonus   += 2;
      if(bEpicProwess) iAttackBonus += 1;
-     
+
      int bTempBonus = 0;
      // increases attack bonus from stats for melee
      // first check for weapon finesse or katana finesse and if str or dex is greater
      if((bFinesse && bLight && !bIsRangedWeapon) || (bKatanaFinesse && !bIsRangedWeapon))
      {
           if(iStr > bTempBonus) bTempBonus = iStr;
-          if(iDex > bTempBonus) bTempBonus = iDex;           
+          if(iDex > bTempBonus) bTempBonus = iDex;
      }
-     
+
      // if they have intuitive attack feat, checks if wisdom is highest
      if(bInuitiveAttack &&  !bIsRangedWeapon && bSimple)
      {
-          if(iWis > bTempBonus) bTempBonus = iWis;     
+          if(iWis > bTempBonus) bTempBonus = iWis;
      }
-     
+
      //touch attacks use dex, not str
      if(iTouchAttackType == TOUCH_ATTACK_RANGED
         || iTouchAttackType == TOUCH_ATTACK_MELEE
         || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL
         || iTouchAttackType == TOUCH_ATTACK_MELEE_SPELL)
         if(iDex > bTempBonus) bTempBonus = iDex;
-     
+
      iAttackBonus += bTempBonus;
-     
+
      // Melee Specific Rules
      if(!bIsRangedWeapon)
      {
            // Two Weapon Fighting Penalties
            // NwN only allows melee weapons to be dual wielded
            object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oAttacker);
-           
+
            if((oWeapL != OBJECT_INVALID) && (GetBaseItemType(oWeapL) != BASE_ITEM_LARGESHIELD) && (GetBaseItemType(oWeapL) != BASE_ITEM_SMALLSHIELD) && (GetBaseItemType(oWeapL) != BASE_ITEM_TOWERSHIELD) && (GetBaseItemType(oWeapL) != BASE_ITEM_TORCH))
            {
                 // has two weapons
                 // Absolute ambidex is covered in AB on player scripts
-                
+
                 object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oAttacker);
                 int armorType = GetArmorType(oArmor);
                 int bHasTWF;
                 int bHasAmbidex;
-                
+
                 // since there is no way to determine the value of AB effects
                 // applied to a PC, I had to add Absolute Ambidexterity here
-                
+
                 int bHasAbsoluteAmbidex;
-                
+
                 if(GetHasFeat(FEAT_AMBIDEXTERITY, oAttacker) )        bHasTWF = TRUE;
                 if(GetHasFeat(FEAT_TWO_WEAPON_FIGHTING, oAttacker) )  bHasAmbidex = TRUE;
                 if(GetHasFeat(FEAT_ABSOLUTE_AMBIDEX, oAttacker) )     bHasAbsoluteAmbidex = TRUE;
-                
+
                 if(GetLevelByClass(CLASS_TYPE_RANGER, oAttacker) > 1 && armorType < ARMOR_TYPE_MEDIUM)
                 {
                      bHasTWF = TRUE;
                      bHasAmbidex = TRUE;
                 }
-                
+
                 int iOffHandWeapType = GetBaseItemType(oWeapL);
                 int bOffHandLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iOffHandWeapType)) <= 2 || iOffHandWeapType == BASE_ITEM_RAPIER;
-                
+
                 int iAttackPenalty;
-                
+
                 if(iMainHand)   iAttackPenalty = 6;
                 else            iAttackPenalty = 10;
-                
+
                 if(bHasAmbidex && !iMainHand)  iAttackPenalty -= 4;
                 if(bHasTWF)                    iAttackPenalty -= 2;
                 if(bOffHandLight)              iAttackPenalty -= 2;
                 if(bHasAbsoluteAmbidex)        iAttackPenalty -= 2;
-                
+
                 iAttackBonus -= iAttackPenalty;
-                
+
                 // Handle the PRC Power Attack BA pay, if any.
                 iAttackBonus -= GetLocalInt(oAttacker, "PRC_PowerAttack_Level");
            }
@@ -1789,8 +1789,8 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      {
           // range penalty not yet accounted for as the 2da's are messed up
           // the range increment for throwing axes is 63, while it's 20 for bows???
-          
-          // dex or wis bonus          
+
+          // dex or wis bonus
           if(bZenArchery && iWis > iDex)   iAttackBonus += iWis;
           else                             iAttackBonus += iDex;
 
@@ -1799,11 +1799,11 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
                if(bPointBlankShot)         iAttackBonus += 1;
                else                        iAttackBonus -= 4;
           }
-          
+
           // Halfling +1 bonus for throwing weapons
           int bHasGoodAIM = GetHasFeat(FEAT_GOOD_AIM, oAttacker);
           int bHasThrowingWeapon = FALSE;
-    
+
           // returns Throwing Weapons
           switch ( GetBaseItemType(oWeap) )
           {
@@ -1812,60 +1812,60 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
                     break;
                case BASE_ITEM_SHURIKEN:
                     bHasThrowingWeapon = TRUE;
-                    break;                   
+                    break;
                case BASE_ITEM_THROWINGAXE:
                     bHasThrowingWeapon = TRUE;
                     break;
           }
-          
+
           if(bHasGoodAIM && bHasThrowingWeapon)  iAttackBonus += 1;
      }
-     
+
      // adds weapon enhancement to the bonus
      iAttackBonus += iEnhancement;
-     
+
      // code for adding bonus of Weapon of Choice
      if(bWeaponOfChoice)  iAttackBonus += (GetLevelByClass(CLASS_TYPE_WEAPON_MASTER, oAttacker) / 5);
-     
+
      // Adds all spell bonuses / penalties on the PC
      iAttackBonus += GetMagicalAttackBonus(oAttacker);
 
      // support for power attack and expertise modes
      int iCombatMode = GetLastAttackMode(oAttacker);
      if( iCombatMode == COMBAT_MODE_POWER_ATTACK /*&&      // Whether BW and PRC power attacks stack or not is handled by the PRC PA script now - Ornedan
-         !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK10) && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK9)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK8)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK7)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK6)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK5)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK4)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK3)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK2)  && 
+         !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK10) &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK9)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK8)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK7)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK6)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK5)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK4)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK3)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK2)  &&
          !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
      {
           iAttackBonus -= 5;
      }
      else if( iCombatMode == COMBAT_MODE_IMPROVED_POWER_ATTACK /*&&
-         !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK10) && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK9)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK8)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK7)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK6)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK5)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK4)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK3)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK2)  && 
+         !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK10) &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK9)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK8)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK7)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK6)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK5)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK4)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK3)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK2)  &&
          !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
      {
           iAttackBonus -= 10;
      }
-     
+
      if(iCombatMode == COMBAT_MODE_EXPERTISE) iAttackBonus -= 5;
      else if(iCombatMode == COMBAT_MODE_IMPROVED_EXPERTISE) iAttackBonus -= 10;
-     
+
      return iAttackBonus;
 }
 
@@ -1875,21 +1875,21 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      {
          iAttackBonus = GetAttackBonus(oDefender, oAttacker, oWeapon, iMainHand, iTouchAttackType);
      }
-     
+
      iAttackBonus += iMod;
 
      // Moved this to GetAttackRoll since it needs to be checked
      // every attack instead of each round.
      // add bonus +2 for flanking, invisible attacker, attacking blind opponent
      if( GetIsFlanked(oDefender, oAttacker) ) iAttackBonus += 2;
-     if((      GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)           || 
+     if((      GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)           ||
                GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)   &&
-               !GetHasFeat(FEAT_BLIND_FIGHT, oDefender)                  ) || 
+               !GetHasFeat(FEAT_BLIND_FIGHT, oDefender)                  ) ||
          GetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender)
        ) iAttackBonus += 2;
-     
+
      // +2 attack bonus if they are stunned or frightened
-     if( GetHasEffect(EFFECT_TYPE_STUNNED, oDefender)   || 
+     if( GetHasEffect(EFFECT_TYPE_STUNNED, oDefender)   ||
          GetHasEffect(EFFECT_TYPE_FRIGHTENED, oDefender)  )    iAttackBonus += 2;
 
      int bIsMeleeWeapon = !GetWeaponRanged(oWeapon);
@@ -1900,11 +1900,11 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
 
      // +4 to attack in melee against a helpless target.
      if( GetIsHelpless(oDefender) && bIsMeleeWeapon) iAttackBonus += 4;
-     
+
      // +4 attack bonus to a prone target (in melee) / -4 in ranged combat
      if(bIsKnockedDown && bIsMeleeWeapon)  iAttackBonus += 4;
      if(bIsKnockedDown && !bIsMeleeWeapon) iAttackBonus -= 4;
-       
+
      // Battle training (Gnomes and Dwarves)
      // adds +1 based on enemy race
      if(MyPRCGetRacialType(oAttacker) == RACIAL_TYPE_DWARF || MyPRCGetRacialType(oAttacker) == RACIAL_TYPE_GNOME)
@@ -1913,72 +1913,72 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
           int bGobTrain = GetHasFeat(FEAT_BATTLE_TRAINING_VERSUS_GOBLINS, oAttacker);
           int bLizTrain = GetHasFeat(FEAT_BATTLE_TRAINING_VERSUS_REPTILIANS, oAttacker);
           int iEnemyRace = MyPRCGetRacialType(oDefender);
-     
+
           if(bOrcTrain && iEnemyRace == RACIAL_TYPE_HUMANOID_ORC)         iAttackBonus += 1;
           if(bGobTrain && iEnemyRace == RACIAL_TYPE_HUMANOID_GOBLINOID)   iAttackBonus += 1;
           if(bLizTrain && iEnemyRace == RACIAL_TYPE_HUMANOID_REPTILIAN)   iAttackBonus += 1;
      }
-     
+
      //Weapon Focus: Ray
-     if((iTouchAttackType == TOUCH_ATTACK_RANGED 
+     if((iTouchAttackType == TOUCH_ATTACK_RANGED
             || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
         && GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_RAY, oAttacker))
         iAttackBonus += 2;
-        
+
      //Epic Weapon Focus: Ray
-     if((iTouchAttackType == TOUCH_ATTACK_RANGED 
+     if((iTouchAttackType == TOUCH_ATTACK_RANGED
             || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
         && GetHasFeat(FEAT_WEAPON_FOCUS_RAY, oAttacker))
         iAttackBonus += 1;
-     
+
      int iDiceRoll = d20();
      int iEnemyAC = GetDefenderAC(oDefender, oAttacker, iTouchAttackType);
-     
+
      int iType = GetBaseItemType(oWeapon);
      int iCritThreat = GetWeaponCriticalRange(oAttacker, oWeapon);
-     
+
     //If using Killing Shot, ciritical range improves by 2;
     if(GetLocalInt(oAttacker, "KillingShotCritical") )
     {
         iCritThreat -= 2;
         DeleteLocalInt(oAttacker, "KillingShotCritical");
-    }    
-    
+    }
+
      // print off-hand of off-hand attack
      string sFeedback ="";
      if(iMainHand == 1) sFeedback += COLOR_ORANGE + "Off Hand : ";
-     
+
      // change color of attacker if it is Player or NPC
      if(GetIsPC(oAttacker)) sFeedback += COLOR_LIGHT_BLUE;
      else                   sFeedback += COLOR_LIGHT_PURPLE;
-     
+
      // display name of attacker
      sFeedback +=  GetName(oAttacker);
-     
+
      // show proper message for touch attacks or normal attacks.
-     if(iTouchAttackType == TOUCH_ATTACK_RANGED || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL) 
+     if(iTouchAttackType == TOUCH_ATTACK_RANGED || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
           sFeedback += COLOR_PURPLE + " attempts ranged touch attack on ";
-     else if(iTouchAttackType == TOUCH_ATTACK_MELEE|| iTouchAttackType == TOUCH_ATTACK_MELEE_SPELL) 
+     else if(iTouchAttackType == TOUCH_ATTACK_MELEE|| iTouchAttackType == TOUCH_ATTACK_MELEE_SPELL)
           sFeedback += COLOR_PURPLE + " attempts touch attack on ";
      else
           sFeedback += COLOR_ORANGE + " attacks ";
-     
+
      sFeedback +=  GetName(oDefender) + ": ";
-          
+
      int iReturn = 0;
      // roll concealment check
      int iConcealment = GetIsConcealed(oDefender, oAttacker);
      int iConcealRoll = d100();
      int bEnemyIsConcealed = FALSE;
-     
+
      if(iConcealRoll <= iConcealment)
      {
           // Those with blind-fight get a re-roll
-          if( GetHasFeat(FEAT_BLIND_FIGHT, oAttacker) ) 
+          if( GetHasFeat(FEAT_BLIND_FIGHT, oAttacker) )
           {
                iConcealRoll = d100();
           }
-          
+
           if(iConcealRoll <= iConcealment)
           {
                bEnemyIsConcealed = TRUE;
@@ -1998,16 +1998,16 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      if( (iDiceRoll >= iCritThreat && ((iDiceRoll + iAttackBonus) > iEnemyAC) || iDiceRoll == 20)  && iDiceRoll != 1 && !bEnemyIsConcealed)
      {
           sFeedback += "*Critical Hit*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + "): ";
-          
+
           //Roll again to see if we scored a critical hit
-          //FistOfRaziels of over level 3 automatically confirm critical hits 
+          //FistOfRaziels of over level 3 automatically confirm critical hits
           //when smiting evil
           if(GetLocalInt(oAttacker, "FistOfRazielSpecialSmiteCritical") )
           {
                iDiceRoll = 10000;
                DeleteLocalInt(oAttacker, "FistOfRazielSpecialSmiteCritical");
-          }   
-          else    
+          }
+          else
                iDiceRoll = d20();
           if(!GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT) )
           {
@@ -2035,21 +2035,21 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
          sFeedback += "*Miss*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
          iReturn = 0;
      }
-     
+
      //arrow VFX
      //this is done with crossbows and other ranged weapons
      //at least you see some projectile rather than none at all
      if(GetWeaponRanged(oWeapon))
      {
         if(iReturn == 1 || iReturn == 2)
-            AssignCommand(oAttacker, ApplyEffectToObject(DURATION_TYPE_INSTANT, 
+            AssignCommand(oAttacker, ApplyEffectToObject(DURATION_TYPE_INSTANT,
                 EffectVisualEffect(NORMAL_ARROW, FALSE), oDefender));
-        else        
-            AssignCommand(oAttacker, ApplyEffectToObject(DURATION_TYPE_INSTANT, 
+        else
+            AssignCommand(oAttacker, ApplyEffectToObject(DURATION_TYPE_INSTANT,
                 EffectVisualEffect(NORMAL_ARROW, TRUE), oDefender));
      }
 
-     if(bShowFeedback) DelayCommand(fDelay, SendMessageToPC(oAttacker, sFeedback));     
+     if(bShowFeedback) DelayCommand(fDelay, SendMessageToPC(oAttacker, sFeedback));
      return iReturn;
 }
 
@@ -2062,20 +2062,20 @@ int GetFavoredEnemeyDamageBonus(object oDefender, object oAttacker)
      int iDamageBonus = 0;
      int bIsFavoredEnemy = FALSE;
      int bCanHaveFavoredEnemy = FALSE;
-     
+
      if(GetLevelByClass(CLASS_TYPE_HARPER, oAttacker) )   bCanHaveFavoredEnemy = TRUE;
      else if(GetLevelByClass(CLASS_TYPE_RANGER, oAttacker) )   bCanHaveFavoredEnemy = TRUE;
-     
+
      // Additional PRC's
      // else if(GetLevelByClass(CLASS_TYPE_*, oAttacker) )   bCanHaveFavoredEnemy = TRUE;
-     
+
      // Exit if the class can not have a favored enemy
      // Prevents lots of useless code from running
      if(!bCanHaveFavoredEnemy)
      {
           return iDamageBonus;
      }
-     
+
      float fDistance = GetDistanceBetween(oAttacker, oDefender);
      if(fDistance <= FeetToMeters(30.0f) )
      {
@@ -2098,120 +2098,120 @@ int GetFavoredEnemeyDamageBonus(object oDefender, object oAttacker)
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_HALFLING)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_HALFELF, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_HALFELF)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_HALFORC, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_HALFORC)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_HUMAN, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_HUMAN)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_ABERRATION, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_ABERRATION)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_ANIMAL, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_ANIMAL)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_BEAST, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_BEAST)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_CONSTRUCT, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_CONSTRUCT)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_DRAGON, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_DRAGON)     bIsFavoredEnemy = TRUE;
-          }          
-          if(GetHasFeat(FEAT_FAVORED_ENEMY_GOBLINOID, oAttacker)) 
+          }
+          if(GetHasFeat(FEAT_FAVORED_ENEMY_GOBLINOID, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_HUMANOID_GOBLINOID)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_MONSTROUS, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_HUMANOID_MONSTROUS)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_ORC, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_HUMANOID_ORC)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_REPTILIAN, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_HUMANOID_REPTILIAN)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_ELEMENTAL, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_ELEMENTAL)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_FEY, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_FEY)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_GIANT, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_GIANT)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_MAGICAL_BEAST, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_MAGICAL_BEAST)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_OUTSIDER, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_OUTSIDER)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_SHAPECHANGER, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_SHAPECHANGER)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_UNDEAD, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_UNDEAD)     bIsFavoredEnemy = TRUE;
-          }          
+          }
           if(GetHasFeat(FEAT_FAVORED_ENEMY_VERMIN, oAttacker))
           {
                iDamageBonus += 1;
                if(MyPRCGetRacialType(oDefender) == RACIAL_TYPE_VERMIN)     bIsFavoredEnemy = TRUE;
           }
      }
-     
+
      if(!bIsFavoredEnemy)
      {
           iDamageBonus = 0;
      }
-     
+
      // add in 2d6 damage for bane of enemies
      if(bIsFavoredEnemy && GetHasFeat(FEAT_EPIC_BANE_OF_ENEMIES, oAttacker))
      {
           iDamageBonus += d6(2);
      }
-     
+
      return iDamageBonus;
 }
 
@@ -2221,12 +2221,12 @@ int GetMightyWeaponBonus(object oWeap)
      int iTemp = 0;
      itemproperty ip = GetFirstItemProperty(oWeap);
      while(GetIsItemPropertyValid(ip))
-     {     
+     {
           if(GetItemPropertyType(ip) == ITEM_PROPERTY_MIGHTY)
                iTemp = GetItemPropertyCostTableValue(ip);
-               
+
           if(iTemp > iMighty) iMighty = iTemp;
-          
+
           ip = GetNextItemProperty(oWeap);
      }
      return iMighty;
@@ -2239,16 +2239,16 @@ int GetWeaponEnhancement(object oWeapon, object oDefender, object oAttacker)
      int bIsPenalty = FALSE;
 
      int iRace = MyPRCGetRacialType(oDefender);
-     
+
      int iGoodEvil = GetAlignmentGoodEvil(oDefender);
      int iLawChaos = GetAlignmentLawChaos(oDefender);
      int iAlignSp  = GetItemPropAlignment(iGoodEvil,iLawChaos);
-     int iAlignGr; 
+     int iAlignGr;
 
      itemproperty ip = GetFirstItemProperty(oWeapon);
      while(GetIsItemPropertyValid(ip))
      {
-         int iItemPropType = GetItemPropertyType(ip);        
+         int iItemPropType = GetItemPropertyType(ip);
          switch(iItemPropType)
          {
              case ITEM_PROPERTY_ENHANCEMENT_BONUS:
@@ -2275,23 +2275,23 @@ int GetWeaponEnhancement(object oWeapon, object oDefender, object oAttacker)
                   if(GetItemPropertySubType(ip) == iRace) iTemp = GetItemPropertyCostTableValue(ip);
                   else                                    iTemp = 0;
                   break;
-             
+
              // detects holy avenger property and adds proper enhancement bonus
              case ITEM_PROPERTY_HOLY_AVENGER:
                   iTemp = 5;
                   break;
- 
+
              case ITEM_PROPERTY_DECREASED_ENHANCEMENT_MODIFIER:
                   iTemp = (GetDamageByConstant(GetItemPropertyCostTableValue(ip), TRUE)) * -1;
                   bIsPenalty = TRUE;
                   break;
          }
-        
+
          if(iTemp > iEnhancement || bIsPenalty)   iEnhancement = iTemp;
-         
+
          ip = GetNextItemProperty(oWeapon);
      }
-    
+
      // if defaults are still set then the bonus is 0
      if(iEnhancement == -1 && !bIsPenalty) iEnhancement == 0;
 
@@ -2301,15 +2301,15 @@ int GetWeaponEnhancement(object oWeapon, object oDefender, object oAttacker)
          // Adds ammo bonus if it is higher than weapon bonus
          int iAmmoEnhancement = GetAmmunitionEnhancement(oWeapon, oDefender, oAttacker);
          if(iAmmoEnhancement > iEnhancement) iEnhancement = iAmmoEnhancement;
-          
+
          // Arcane Archer Enchant Arrow Bonus
          int iAALevel = GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oAttacker);
          int iAAEnchantArrow = 0;
-          
+
          if(iAALevel > 0) iAAEnchantArrow = ((iAALevel + 1) / 2);
          if(iAAEnchantArrow > iEnhancement) iEnhancement = iAAEnchantArrow;
      }
-        
+
      return iEnhancement;
 }
 
@@ -2317,7 +2317,7 @@ int GetMonkEnhancement(object oWeapon, object oDefender, object oAttacker)
 {
      int iMonkEnhancement = GetWeaponEnhancement(oWeapon, oDefender, oAttacker);
      int iTemp;
-     
+
      // returns enhancement bonus for ki strike
      if(GetBaseItemType(oWeapon) == BASE_ITEM_GLOVES ||
         GetBaseItemType(oWeapon) == BASE_ITEM_CBLUDGWEAPON ||
@@ -2331,24 +2331,24 @@ int GetMonkEnhancement(object oWeapon, object oDefender, object oAttacker)
                int iMonkLevel = GetLevelByClass(CLASS_TYPE_MONK, oAttacker);
                iTemp = 1;
                if(iMonkLevel > 12) iTemp = 2;
-               if(iMonkLevel > 15) iTemp = 3;   
-          }        
+               if(iMonkLevel > 15) iTemp = 3;
+          }
           if(iTemp > iMonkEnhancement) iMonkEnhancement = iTemp;
      }
-     
+
      return iMonkEnhancement;
 }
 
 int GetDamagePowerConstant(object oWeapon, object oDefender, object oAttacker)
 {
-     int iDamagePower = GetMonkEnhancement(oWeapon, oDefender, oAttacker);     
+     int iDamagePower = GetMonkEnhancement(oWeapon, oDefender, oAttacker);
 
      // Determine Damage Power (Enhancement Bonus of Weapon)
      // Damage Power 6 is Magical and hits everything
      // So for +6 and higher are actually 7-21, so add +1
      if(iDamagePower > 5) iDamagePower += 1;
      if(iDamagePower < 0 ) iDamagePower = 0;
-     
+
      return iDamagePower;
 }
 
@@ -2357,16 +2357,16 @@ int GetAmmunitionEnhancement(object oWeapon, object oDefender, object oAttacker)
     int iTemp;
     int iBonus, iDamageType;
     int iType = GetBaseItemType(oWeapon);
-    
+
 
     int iRace = MyPRCGetRacialType(oDefender);
-     
+
     int iGoodEvil = GetAlignmentGoodEvil(oDefender);
     int iLawChaos = GetAlignmentLawChaos(oDefender);
     int iAlignSp  = GetItemPropAlignment(iGoodEvil, iLawChaos);
-    int iAlignGr; 
-    
-    object oAmmu = GetAmmunitionFromWeapon(oWeapon, oAttacker);    
+    int iAlignGr;
+
+    object oAmmu = GetAmmunitionFromWeapon(oWeapon, oAttacker);
     int iBase = GetBaseItemType(oAmmu);
 
     //Get Damage Bonus Properties from oWeapon
@@ -2394,7 +2394,7 @@ int GetAmmunitionEnhancement(object oWeapon, object oDefender, object oAttacker)
           {
                iAlignGr = GetItemPropertySubType(ip);
                iDamageType = GetItemPropertyParam1Value(ip);
-                    
+
                int bIsAttackingAlignment = FALSE;
 
                if (iAlignGr == ALIGNMENT_NEUTRAL)
@@ -2403,7 +2403,7 @@ int GetAmmunitionEnhancement(object oWeapon, object oDefender, object oAttacker)
                }
                else if (iAlignGr == iGoodEvil || iAlignGr == iLawChaos || iAlignGr == IP_CONST_ALIGNMENTGROUP_ALL)
                     bIsAttackingAlignment = FALSE;
-                         
+
                if(bIsAttackingAlignment)
                {
                     if ( (iBase == BASE_ITEM_BOLT || iBase == BASE_ITEM_ARROW) && iDamageType == IP_CONST_DAMAGETYPE_PIERCING )
@@ -2415,16 +2415,16 @@ int GetAmmunitionEnhancement(object oWeapon, object oDefender, object oAttacker)
                     {
                          iTemp = GetDamageByConstant(iCostVal, TRUE);
                          iBonus = iTemp> iBonus ? iTemp:iBonus ;
-                    }                    
+                    }
                }
           }
           if(iPropType == ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT)
           {
                if(GetItemPropertySubType(ip) == iAlignSp) iTemp = GetItemPropertyCostTableValue(ip);
                else                                       iTemp = 0;
-                
+
                iDamageType = GetItemPropertyParam1Value(ip);
-                    
+
                if ( (iBase == BASE_ITEM_BOLT || iBase == BASE_ITEM_ARROW) && iDamageType == IP_CONST_DAMAGETYPE_PIERCING )
                {
                     iTemp = GetDamageByConstant(iCostVal, TRUE);
@@ -2434,15 +2434,15 @@ int GetAmmunitionEnhancement(object oWeapon, object oDefender, object oAttacker)
                {
                     iTemp = GetDamageByConstant(iCostVal, TRUE);
                     iBonus = iTemp> iBonus ? iTemp:iBonus ;
-               }                 
+               }
           }
           if(iPropType == ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP)
           {
                if(GetItemPropertySubType(ip) == iRace) iTemp = GetItemPropertyCostTableValue(ip);
                else                                    iTemp = 0;                                      iTemp = 0;
-                
+
                iDamageType = GetItemPropertyParam1Value(ip);
-                    
+
                if ( (iBase == BASE_ITEM_BOLT || iBase == BASE_ITEM_ARROW) && iDamageType == IP_CONST_DAMAGETYPE_PIERCING )
                {
                     iTemp = GetDamageByConstant(iCostVal, TRUE);
@@ -2452,9 +2452,9 @@ int GetAmmunitionEnhancement(object oWeapon, object oDefender, object oAttacker)
                {
                     iTemp = GetDamageByConstant(iCostVal, TRUE);
                     iBonus = iTemp> iBonus ? iTemp:iBonus ;
-               }                 
+               }
           }
-          ip = GetNextItemProperty(oWeapon);    
+          ip = GetNextItemProperty(oWeapon);
      }
      return iBonus;
 }
@@ -2681,7 +2681,7 @@ struct BonusDamage GetItemPropertyDamageConstant(int iDamageType, int iTemp, str
                {
                     if(iTemp > weapBonusDam.dam_Pos) weapBonusDam.dam_Pos = iTemp;
                }
-               break;               
+               break;
           case IP_CONST_DAMAGETYPE_MAGICAL:
                if (iTemp > 5 && iTemp < 16) // is a dice constant
                {
@@ -2723,28 +2723,28 @@ struct BonusDamage GetItemPropertyDamageConstant(int iDamageType, int iTemp, str
                }
                break;
      }
-     
+
      return weapBonusDam;
 }
 
 struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
 {
      struct BonusDamage weapBonusDam;
-     
+
      int iDamageType;
-     int iTemp;     
-  
+     int iTemp;
+
      int iRace = MyPRCGetRacialType(oTarget);
-     
+
      int iGoodEvil = GetAlignmentGoodEvil(oTarget);
      int iLawChaos = GetAlignmentLawChaos(oTarget);
      int iAlignSp  = GetItemPropAlignment(iGoodEvil,iLawChaos);
-     int iAlignGr;    
-     
+     int iAlignGr;
+
      int iSpellType;
-  
+
   itemproperty ip = GetFirstItemProperty(oWeapon);
-     
+
      while(GetIsItemPropertyValid(ip))
      {
           int ipType = GetItemPropertyType(ip);
@@ -2760,7 +2760,7 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
                          weapBonusDam = GetItemPropertyDamageConstant(iDamageType, iTemp, weapBonusDam);
                     }
                     break;
-                    
+
                case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
                     iAlignGr = GetItemPropertySubType(ip);
                     iDamageType = -1;
@@ -2771,11 +2771,11 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
                     }
                     else if (iAlignGr == iGoodEvil || iAlignGr == iLawChaos || iAlignGr == IP_CONST_ALIGNMENTGROUP_ALL)
                          iDamageType = GetItemPropertyParam1Value(ip);
-                  
+
                     // changed so that it returns the ItemProperty Value instead of the actualy damage
                     //iTemp = GetDamageByConstant(GetItemPropertyCostTableValue(ip),TRUE);
                     iTemp = GetItemPropertyCostTableValue(ip);
-                  
+
                     // stores the constants in the struct file
                     // utility function that prevents the same code from being rewritten for each property.
                     weapBonusDam = GetItemPropertyDamageConstant(iDamageType, iTemp, weapBonusDam);
@@ -2784,7 +2784,7 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
                case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
                     if(GetItemPropertySubType(ip) == iRace) iTemp = GetItemPropertyCostTableValue(ip);
                     else                                    iTemp = 0;
-                 
+
                     iDamageType = GetItemPropertyParam1Value(ip);
 
                     weapBonusDam = GetItemPropertyDamageConstant(iDamageType, iTemp, weapBonusDam);
@@ -2793,25 +2793,25 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
                case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
                     if(GetItemPropertySubType(ip) == iAlignSp) iTemp = GetItemPropertyCostTableValue(ip);
                     else                                       iTemp = 0;
-                
+
                     iDamageType = GetItemPropertyParam1Value(ip);
-                
+
                     weapBonusDam = GetItemPropertyDamageConstant(iDamageType, iTemp, weapBonusDam);
                     break;
 
                case ITEM_PROPERTY_DAMAGE_BONUS:
                     iTemp = GetItemPropertyCostTableValue(ip);
                     iDamageType = GetItemPropertySubType(ip);
-                    
+
                     weapBonusDam = GetItemPropertyDamageConstant(iDamageType, iTemp, weapBonusDam);
                     break;
-               
+
                // Removed until new On Hit System is tested.
                /*
                case ITEM_PROPERTY_ONHITCASTSPELL:
                     iSpellType = GetItemPropertySubType(ip);
                     iDamageType = GetItemPropertyCostTableValue(ip);
-                    
+
                     switch(iSpellType)
                     {
                          // dark fire 1d6 + X dmg.  X = CasterLevel/2
@@ -2821,7 +2821,7 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
                                    iDamageType = IP_CONST_DAMAGETYPE_FIRE;
                                    iTemp = IP_CONST_DAMAGEBONUS_1d6;
                                    weapBonusDam = GetItemPropertyDamageConstant(iDamageType, iTemp, weapBonusDam);
-                              
+
                                    iTemp = iDamageType;
                                    iTemp /= 2;
                                    if(iTemp > 10) iTemp = 10;
@@ -2837,39 +2837,39 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
                                    iDamageType = IP_CONST_DAMAGETYPE_FIRE;
                                    iTemp = IP_CONST_DAMAGEBONUS_1d4;
                                    weapBonusDam = GetItemPropertyDamageConstant(iDamageType, iTemp, weapBonusDam);
-                              
+
                                    iTemp = iDamageType;
                                    iTemp /= 2;
                                    if(iTemp > 10) iTemp = 10;
                                    iTemp = IPGetDamageBonusConstantFromNumber(iTemp);
                                    weapBonusDam.dam_Fire = 0;
                                    weapBonusDam = GetItemPropertyDamageConstant(iDamageType, iTemp, weapBonusDam);
-                              }                              
+                              }
                               break;
                     }
-                    
+
                     break;
                  */
             }
             ip = GetNextItemProperty(oWeapon);
-     }      
-                    
+     }
+
      return weapBonusDam;
 }
 
 struct BonusDamage GetMagicalBonusDamage(object oAttacker)
 {
      struct BonusDamage spellBonusDam;
-     
+
      effect eEffect;
      int nDamage, eType, eSpellID;
-     
+
      object eEffectCreator;
      int nCharismaBonus, nLvl;
 
      eEffect = GetFirstEffect(oAttacker);
      while (GetIsEffectValid(eEffect) )
-     {     
+     {
           eType = GetEffectType(eEffect);
 
           if (eType == EFFECT_TYPE_DAMAGE_INCREASE)
@@ -2885,11 +2885,11 @@ struct BonusDamage GetMagicalBonusDamage(object oAttacker)
                     case SPELL_WAR_CRY:
                          spellBonusDam.dam_Slash += 2;
                          break;
-                
+
                     case SPELL_BATTLETIDE:
                          spellBonusDam.dam_Mag += 2;
                          break;
-                         
+
                     // Bard Song
                     case 411:
                          eEffectCreator = GetEffectCreator(eEffect);
@@ -2898,7 +2898,7 @@ struct BonusDamage GetMagicalBonusDamage(object oAttacker)
                          {
                               int nLvl = GetLevelByClass(CLASS_TYPE_BARD, eEffectCreator);
                               int iPerform = GetSkillRank(SKILL_PERFORM, eEffectCreator);
-                              
+
                               if (nLvl>=14 && iPerform>= 21)      nDamage = 3;
                               else if (nLvl>= 3 && iPerform>= 9)  nDamage = 2;
                          }
@@ -2908,13 +2908,13 @@ struct BonusDamage GetMagicalBonusDamage(object oAttacker)
                     case SPELL_DIVINE_MIGHT:
                          nDamage = 1 + GetHasFeat(FEAT_EPIC_DIVINE_MIGHT, GetEffectCreator(eEffect));
                          nCharismaBonus = GetAbilityModifier(ABILITY_CHARISMA,GetEffectCreator(eEffect)) * nDamage;
-                         
+
                          if(nCharismaBonus > 1) nDamage = nCharismaBonus;
                          else                   nDamage = 1;
-                         
+
                          spellBonusDam.dam_Div += nDamage;
                          break;
-                    
+
                     // Divine Wrath
                     case 622:
                          //  magical
@@ -2927,8 +2927,8 @@ struct BonusDamage GetMagicalBonusDamage(object oAttacker)
                          else if (nLvl > 5)  nDamage = 12;
                          else if (nLvl > 4)  nDamage = 10;
                          else if (nLvl > 3)  nDamage = 8;
-                         else if (nLvl > 2)  nDamage = 6;    
-                         else if (nLvl > 1)  nDamage = 4;  
+                         else if (nLvl > 2)  nDamage = 6;
+                         else if (nLvl > 1)  nDamage = 4;
 
                          spellBonusDam.dam_Mag += nDamage;
                          break;
@@ -2940,25 +2940,25 @@ struct BonusDamage GetMagicalBonusDamage(object oAttacker)
 
                          nDamage = 1;
                          if (GetIsObjectValid(eEffectCreator))
-                         {                               
+                         {
                                nLvl = GetLevelByClass(CLASS_TYPE_PALADIN, oAttacker) + GetLevelByClass(CLASS_TYPE_CLERIC, oAttacker);
                                nDamage = nLvl/3;
-                               
+
                                if(nDamage < 1) nDamage = 1;
                                if(nDamage > 5) nDamage = 5;
                          }
                          spellBonusDam.dam_Div += nDamage;
-                         break;                       
-                    
-                    // Power Shot 
+                         break;
+
+                    // Power Shot
                     case SPELL_PA_POWERSHOT:
                          spellBonusDam.dam_Pier += 5;
                          break;
-                
+
                     case SPELL_PA_IMP_POWERSHOT:
                          spellBonusDam.dam_Pier += 10;
                          break;
-                
+
                     case SPELL_PA_SUP_POWERSHOT:
                          spellBonusDam.dam_Pier += 15;
                          break;
@@ -3028,37 +3028,37 @@ struct BonusDamage GetMagicalBonusDamage(object oAttacker)
                          spellBonusDam.dam_Mag -= 2;
                          break;
 
-                    case SPELL_PRAYER:         
+                    case SPELL_PRAYER:
                          spellBonusDam.dam_Slash -= 1;
                          break;
 
                     case SPELL_SCARE:
                          spellBonusDam.dam_Mag -= 2;
                          break;
-                    
+
                     // Hell Inferno
                     case 762:
                          spellBonusDam.dam_Mag -= 4;
                          break;
-                    
+
                     // Curse Song
                     case 644:
                          eEffectCreator = GetEffectCreator(eEffect);
                          nDamage = 1;
-                         
+
                          if (GetIsObjectValid(eEffectCreator))
                          {
                               nLvl = GetLevelByClass(CLASS_TYPE_BARD, eEffectCreator);
                               int iPerform = GetSkillRank(SKILL_PERFORM, eEffectCreator);
-                              
+
                               if (nLvl>=14 && iPerform>= 21)      nDamage = 3;
-                              else if (nLvl>= 3 && iPerform>= 9)  nDamage = 2;    
+                              else if (nLvl>= 3 && iPerform>= 9)  nDamage = 2;
                          }
                          spellBonusDam.dam_Blud -= nDamage;
                }
           }
           eEffect = GetNextEffect(oAttacker);
-     }     
+     }
      return spellBonusDam;
 }
 
@@ -3068,13 +3068,13 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
      int iWeaponType = GetBaseItemType(oWeap);
      int bSpec = GetHasFeat(GetFeatByWeaponType(iWeaponType, "Specialization"), oAttacker);
      int bESpec = GetHasFeat(GetFeatByWeaponType(iWeaponType, "EpicSpecialization"), oAttacker);
-    
+
      int iStr = GetAbilityModifier(ABILITY_STRENGTH, oAttacker);
      int iEnhancement = GetWeaponEnhancement(oWeap, oDefender, oAttacker);
-     
+
      int bIsRangedWeapon = GetWeaponRanged(oWeap);
      int bIsTwoHandedMelee = GetIsTwoHandedMeleeWeapon(oWeap);
-     
+
      // ranged weapon specific rules
      if(bIsRangedWeapon)
      {
@@ -3091,12 +3091,12 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
      {
           // double str bonus to damage
           if(bIsTwoHandedMelee)  iStr *= 2;
-          
+
           // off-hand weapons deal half str bonus
           if(iMainHand == 1)     iStr /= 2;
-          
+
           iDamage += iStr;
-          
+
           // Handle the damage bonus from PRC Power Attack
           iDamage += GetLocalInt(oAttacker, "PRC_PowerAttack_DamageBonus");
      }
@@ -3104,43 +3104,43 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
      // weapon specializations
      if(bSpec) iDamage += 2;
      if(bESpec) iDamage += 4;
-     
+
      // adds enhancement bonus to damage
      iDamage += iEnhancement;
 
      // support for power attack and expertise modes
      int iCombatMode = GetLastAttackMode(oAttacker);
      if( iCombatMode == COMBAT_MODE_POWER_ATTACK /*&&
-         !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK10) && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK9)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK8)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK7)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK6)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK5)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK4)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK3)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK2)  && 
+         !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK10) &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK9)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK8)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK7)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK6)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK5)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK4)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK3)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK2)  &&
          !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
      {
           iDamage += 5;
      }
      else if( iCombatMode == COMBAT_MODE_IMPROVED_POWER_ATTACK /*&&
-         !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK10) && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK9)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK8)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK7)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK6)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK5)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK4)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK3)  && 
-         !GetHasSpellEffect(SPELL_POWER_ATTACK2)  && 
+         !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK10) &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK9)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK8)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK7)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK6)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK5)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK4)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK3)  &&
+         !GetHasSpellEffect(SPELL_POWER_ATTACK2)  &&
          !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
      {
           iDamage += 10;
      }
-     
+
      // calculates bonus damage for Favored Enemies
      // this is just added each round to help prevent lag
      // can be moved if this becomes an issue of course.
@@ -3154,19 +3154,19 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      int iWeaponDamage = 0;
      int iBonusWeaponDamage = 0;
      int iMassCritBonusDamage = 0;
-     
+
      int iWeaponType = GetBaseItemType(oWeapon);
-          
+
      // only read the data if it is not already given
      if(iNumSides == 0) iNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iWeaponType));
-     if(iNumDice  == 0) iNumDice  = StringToInt(Get2DACache("baseitems", "NumDice", iWeaponType)); 
+     if(iNumDice  == 0) iNumDice  = StringToInt(Get2DACache("baseitems", "NumDice", iWeaponType));
      if(iCriticalMultiplier == 0)  iCriticalMultiplier = GetWeaponCritcalMultiplier(oAttacker, oWeapon);
 
      // Returns proper unarmed damage if they are a monk
      // or have a creature weapon from a PrC class. - Brawler, Shou, IoDM, etc.
      // Note: When using PerformAttackRound gloves are passed to this function
      //       as oWeapon, so this will not be called twice.
-     if(iWeaponType == BASE_ITEM_INVALID && GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oAttacker) != OBJECT_INVALID || 
+     if(iWeaponType == BASE_ITEM_INVALID && GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oAttacker) != OBJECT_INVALID ||
         iWeaponType == BASE_ITEM_INVALID && GetLevelByClass(CLASS_TYPE_MONK, oAttacker) )
      {
           int iDamage = FindUnarmedDamage(oAttacker);
@@ -3256,7 +3256,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           iNumSides = 3;
           iNumDice  = 1;
      }
-     
+
      //Roll the base damage dice.
      if(iNumSides == 2)  iWeaponDamage += d2(iNumDice);
      if(iNumSides == 3)  iWeaponDamage += d3(iNumDice);
@@ -3264,9 +3264,9 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      if(iNumSides == 6)  iWeaponDamage += d6(iNumDice);
      if(iNumSides == 8)  iWeaponDamage += d8(iNumDice);
      if(iNumSides == 10) iWeaponDamage += d10(iNumDice);
-     if(iNumSides == 12) iWeaponDamage += d12(iNumDice);   
+     if(iNumSides == 12) iWeaponDamage += d12(iNumDice);
      if(iNumSides == 20) iWeaponDamage += d20(iNumDice);
-     
+
      // Determine Masssive Critcal Bonuses
      if(bIsCritical && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) )
      {
@@ -3286,12 +3286,12 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                }
                ip = GetNextItemProperty(oWeapon);
           }
-          
+
           if(GetHasFeat(FEAT_EPIC_THUNDERING_RAGE, oAttacker) && GetHasFeatEffect(FEAT_BARBARIAN_RAGE, oAttacker) )
           {
                iMassCritBonusDamage += d8(2);
           }
-          
+
           // if player has Overwhelming Critical with this weapon type.
           if(GetHasFeat(GetFeatByWeaponType(GetBaseItemType(oWeapon), "OverwhelmingCrit"), oAttacker) )
           {
@@ -3301,16 +3301,16 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                iMassCritBonusDamage += d6(iOCDice);
           }
      }
-     
+
      // Get bonus damage
      if(iDamage != 0) iBonusWeaponDamage = iDamage;
      else             iBonusWeaponDamage = GetWeaponDamagePerRound(oDefender, oAttacker, oWeapon, iMainHand);
 
      iWeaponDamage += iBonusWeaponDamage;
-     
+
      // PnP Rules State:
      // Extra Damage over and above a weapons normal damage
-     // such as that dealt by a sneak attack or special ability of 
+     // such as that dealt by a sneak attack or special ability of
      // a flaming sword are not multiplied when you score a critical hit
      // so no magical effects or bonuses are doubled.
 
@@ -3321,9 +3321,9 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           iWeaponDamage *= iCriticalMultiplier;
           iWeaponDamage += iMassCritBonusDamage;
      }
-     
-     // add weapon bonus melee damage     
-     iWeaponDamage += GetDamageByConstant(sWeaponBonusDamage.dam_Blud, TRUE); 
+
+     // add weapon bonus melee damage
+     iWeaponDamage += GetDamageByConstant(sWeaponBonusDamage.dam_Blud, TRUE);
      iWeaponDamage += GetDamageByConstant(sWeaponBonusDamage.dam_Pier, TRUE);
      iWeaponDamage += GetDamageByConstant(sWeaponBonusDamage.dam_Slash, TRUE);
 
@@ -3331,14 +3331,14 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      iWeaponDamage += GetDamageByConstant(sWeaponBonusDamage.dice_Blud, TRUE);
      iWeaponDamage += GetDamageByConstant(sWeaponBonusDamage.dice_Pier, TRUE);
      iWeaponDamage += GetDamageByConstant(sWeaponBonusDamage.dice_Slash, TRUE);
-     
+
      // damage from spells is stored as solid number
      iWeaponDamage += sSpellBonusDamage.dam_Blud;
      iWeaponDamage += sSpellBonusDamage.dam_Pier;
-     iWeaponDamage += sSpellBonusDamage.dam_Slash;     
+     iWeaponDamage += sSpellBonusDamage.dam_Slash;
      iWeaponDamage += sSpellBonusDamage.dice_Blud;
      iWeaponDamage += sSpellBonusDamage.dice_Pier;
-     iWeaponDamage += sSpellBonusDamage.dice_Slash; 
+     iWeaponDamage += sSpellBonusDamage.dice_Slash;
 
      // Logic to determine if enemy can be sneak attacked
      // and to add sneak attack damage
@@ -3349,43 +3349,43 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           {
                iWeaponDamage += GetSneakAttackDamage(iSneakDice);
                string nMes = "*Sneak Attack*";
-               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE); 
+               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
           }
-          
+
           if(GetHasFeat(FEAT_CRIPPLING_STRIKE, oAttacker) )
           {
                //effect eCrippleStrike = EffectAbilityDecrease(ABILITY_STRENGTH, 2);
                //ApplyEffectToObject(DURATION_TYPE_INSTANT, eCrippleStrike, oDefender);
-               ApplyAbilityDamage(oDefender, ABILITY_STRENGTH, 2, TRUE, DURATION_TYPE_PERMANENT);
+               ApplyAbilityDamage(oDefender, ABILITY_STRENGTH, 2, DURATION_TYPE_PERMANENT, TRUE);
           }
      }
-          
+
      int iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
      int iDamageType = GetWeaponDamageType(oWeapon);
-     
+
      // just in case damage is somehow less than 1
      if(iWeaponDamage < 1) iWeaponDamage = 1;
-     
+
      effect eEffect = EffectDamage(iWeaponDamage, iDamageType, iDamagePower);
-     
+
      // Elemental damage effects
      int iAcid, iCold, iFire, iElec, iSon;
      int iDiv, iNeg, iPos;
      int iMag;
-     
+
      iAcid  = sSpellBonusDamage.dam_Acid;
      iAcid += GetDamageByConstant(sWeaponBonusDamage.dam_Acid, TRUE);
-     
+
      iCold  = sSpellBonusDamage.dam_Cold;
      iCold += GetDamageByConstant(sWeaponBonusDamage.dam_Cold, TRUE);
-    
+
      iFire  = sSpellBonusDamage.dam_Fire;
-     iFire += GetDamageByConstant(sWeaponBonusDamage.dam_Fire, TRUE); 
-     
+     iFire += GetDamageByConstant(sWeaponBonusDamage.dam_Fire, TRUE);
+
      iElec  = sSpellBonusDamage.dam_Elec;
      iElec += GetDamageByConstant(sWeaponBonusDamage.dam_Elec, TRUE);
 
-     iSon  = sSpellBonusDamage.dam_Son;    
+     iSon  = sSpellBonusDamage.dam_Son;
      iSon += GetDamageByConstant(sWeaponBonusDamage.dam_Son, TRUE);
 
      iDiv  = sSpellBonusDamage.dam_Div;
@@ -3399,28 +3399,28 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
      iMag  = sSpellBonusDamage.dam_Mag;
      iMag += GetDamageByConstant(sWeaponBonusDamage.dam_Mag, TRUE);
-     
+
      // Magical damage is not multiplied by criticals, at least not in PnP
-     // Since it is in NwN, I left it default on in a switch.  
+     // Since it is in NwN, I left it default on in a switch.
      // Can be turned off to better emulate PnP rules.
-     if(  bIsCritical && 
+     if(  bIsCritical &&
           !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) &&
           !GetPRCSwitch(PRC_PNP_ELEMENTAL_DAMAGE)
        )
      {
-          iAcid *= iCriticalMultiplier;
+          iAcid *=iCriticalMultiplier;
           iCold *= iCriticalMultiplier;
           iFire *= iCriticalMultiplier;
           iElec *= iCriticalMultiplier;
           iSon *= iCriticalMultiplier;
-          
+
           iDiv *= iCriticalMultiplier;
           iNeg *= iCriticalMultiplier;
           iPos *= iCriticalMultiplier;
-          
+
           iMag *= iCriticalMultiplier;
      }
-     
+
      iAcid += GetDamageByConstant(sSpellBonusDamage.dice_Acid, TRUE);
      iAcid += GetDamageByConstant(sWeaponBonusDamage.dice_Acid, TRUE);
 
@@ -3428,7 +3428,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      iCold += GetDamageByConstant(sWeaponBonusDamage.dice_Cold, TRUE);
 
      iFire += GetDamageByConstant(sSpellBonusDamage.dice_Fire, TRUE);
-     iFire += GetDamageByConstant(sWeaponBonusDamage.dice_Fire, TRUE); 
+     iFire += GetDamageByConstant(sWeaponBonusDamage.dice_Fire, TRUE);
 
      iElec += GetDamageByConstant(sSpellBonusDamage.dice_Elec, TRUE);
      iElec += GetDamageByConstant(sWeaponBonusDamage.dice_Elec, TRUE);
@@ -3447,7 +3447,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
      iMag += GetDamageByConstant(sSpellBonusDamage.dice_Mag, TRUE);
      iMag += GetDamageByConstant(sWeaponBonusDamage.dice_Mag, TRUE);
-     
+
      // create eLink starting with the melee weapon damage effect
      // then add all the other possible effects.
      effect eLink = eEffect;
@@ -3472,38 +3472,38 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
           iSaveDC += iAcid + iCold + iFire + iElec + iSon;
           iSaveDC += iDiv + iNeg + iPos;
           iSaveDC += iMag;
- 
+
           if( FortitudeSave(oDefender, iSaveDC, SAVING_THROW_TYPE_NONE, oAttacker) )
           {
                string nMes = "*Coup De Grace*";
-               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE); 
+               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
 
                // circumvents death immunity... since anyone CDG'ed is dead.
                effect eDeath = EffectDamage(DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
                ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oDefender);
-          } 
+          }
      }
-     
+
      // Devestating Critical
-     if(bIsCritical && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) && 
+     if(bIsCritical && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) &&
         GetHasFeat(GetFeatByWeaponType(GetBaseItemType(oWeapon), "DevastatingCrit"), oAttacker) )
      {
            // DC = 10 + 1/2 char level + str mod.
           int iStr = GetAbilityModifier(ABILITY_STRENGTH, oAttacker);
           int iLevelMod = GetHitDice(oAttacker) / 2;
           int iSaveDC = 10 + iStr + iLevelMod;
- 
+
           if( FortitudeSave(oDefender, iSaveDC, SAVING_THROW_TYPE_NONE, oAttacker) )
           {
                string nMes = "*Devestating Critical*";
-               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE); 
+               FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
 
                // circumvents death immunity... since anyone CDG'ed is dead.
                effect eDeath = EffectDamage(DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
                ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oDefender);
-          }          
+          }
      }
-     
+
      return eLink;
 }
 
@@ -3516,7 +3516,7 @@ void ApplyOnHitDurationAbiltiies(object oDefender, int iDurationVal, effect eAbi
      int iChance   = StringToInt( Get2DACache("iprp_onhitdur", "EffectChance", iDurationVal) );
      int iDuration = StringToInt( Get2DACache("iprp_onhitdur", "DurationRounds", iDurationVal) );
      int iRoll = d100();
-     
+
      if(iRoll <= iChance)
      {
          effect eLink = EffectLinkEffects(eAbility, eVis);
@@ -3531,9 +3531,9 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
      int ipSubType = 0;
      int ipParam1  = 0;
      int ipSpellID = 0;
-     
+
      string sMes = "";
-     
+
      itemproperty ip = GetFirstItemProperty(oItem);
      while(GetIsItemPropertyValid(ip))
      {
@@ -3541,30 +3541,30 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
           ipSubType = GetItemPropertySubType(ip);
           ipParam1 = GetItemPropertyParam1Value(ip);
           ipType = GetItemPropertyType(ip);
-         
+
           if(ipType == ITEM_PROPERTY_REGENERATION_VAMPIRIC)
           {
                effect eHeal = EffectHeal(ipCostVal);
-               ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oAttacker, 0.0);              
+               ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oAttacker, 0.0);
           }
-         
+
           else if(ipType == ITEM_PROPERTY_ONHITCASTSPELL)
           {
                ipSpellID = StringToInt( Get2DACache("iprp_onhitspell", "SpellIndex", ipSubType) );
                AssignCommand(oAttacker, ActionCastSpellAtObject(ipSpellID, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-               
+
                // Store the weapon for retrieval in spellscripts.
                SetLocalObject(oAttacker, "PRC_CombatSystem_OnHitCastSpell_Item", oItem);
                // Cleanup
                DelayCommand(1.5f, DeleteLocalInt(oAttacker, "PRC_CombatSystem_OnHitCastSpell_Item"));
           }
-          
+
           else if(ipType == ITEM_PROPERTY_ON_HIT_PROPERTIES)
           {
                // covers poison, vorpal, stun, disease, etc.
                // ipSubType = IP_CONST_ONHIT_*
                // ipCostVal = IP_CONST_ONHIT_SAVEDC_*
-               
+
                // change to proper save DC
                if(ipCostVal < 10)
                {
@@ -3573,30 +3573,30 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                         case 0: ipCostVal = 14;
                                 break;
                         case 1: ipCostVal = 16;
-                                break;                     
+                                break;
                         case 2: ipCostVal = 18;
-                                break;                     
+                                break;
                         case 3: ipCostVal = 20;
-                                break;                     
+                                break;
                         case 4: ipCostVal = 22;
-                                break;                     
+                                break;
                         case 5: ipCostVal = 24;
-                                break;                     
+                                break;
                         case 6: ipCostVal = 26;
-                                break;        
+                                break;
                    }
                }
-               
+
                // sMes += " | I have On Hit: ";
-               
+
                effect eEffect;
                effect eVis;
-               
+
                // alignment code
                int iGoodEvil = GetAlignmentGoodEvil(oDefender);
                int iLawChaos = GetAlignmentLawChaos(oDefender);
                int iAlignSpecific = GetItemPropAlignment(iGoodEvil, iLawChaos);
-                
+
                switch (ipSubType)
                {
                     // set global vars for vorpal
@@ -3604,37 +3604,37 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                          bIsVorpalWeaponEquiped = TRUE;
                          iVorpalSaveDC = ipCostVal;
                     break;
-                    
+
                     // ipParam1 should be the ammout of levels to drain
                     case IP_CONST_ONHIT_LEVELDRAIN:
                          if( !FortitudeSave(oDefender, ipCostVal, SAVING_THROW_TYPE_NEGATIVE) )
                          {
                               if(ipParam1 < 1) ipParam1 = 1;
-                              
+
                               eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
                               ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-                              
+
                               eEffect = SupernaturalEffect( EffectNegativeLevel(ipParam1) );
                               ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
                          }
                     break;
-                    
+
                     // NEEDS TESTING
                     case IP_CONST_ONHIT_WOUNDING:
                          if( !FortitudeSave(oDefender, ipCostVal, SAVING_THROW_TYPE_NONE) )
                          {
                               if(ipParam1 < 1) ipParam1 = 1;
                               ipParam1 *= -1;
-                              
+
                               eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
                               ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-                              
+
                               // in theory this will drain them 1 HP per round.
                               eEffect = ExtraordinaryEffect( EffectRegenerate(ipParam1, 6.0 ) );
                               ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oDefender, 9999.0);
                          }
                     break;
-                    
+
                     case IP_CONST_ONHIT_KNOCK:
                          ActionCastSpellAtObject(SPELL_KNOCK, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
                     break;
@@ -3644,23 +3644,23 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                     break;
 
                     case IP_CONST_ONHIT_DISPELMAGIC:
-                         ActionCastSpellAtObject(SPELL_DISPEL_MAGIC, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);                    
+                         ActionCastSpellAtObject(SPELL_DISPEL_MAGIC, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
                     break;
-                       
+
                     case IP_CONST_ONHIT_GREATERDISPEL:
-                         ActionCastSpellAtObject(SPELL_GREATER_DISPELLING, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);                    
+                         ActionCastSpellAtObject(SPELL_GREATER_DISPELLING, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
                     break;
-                    
+
                     case IP_CONST_ONHIT_MORDSDISJUNCTION:
-                         ActionCastSpellAtObject(SPELL_MORDENKAINENS_DISJUNCTION, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);                    
+                         ActionCastSpellAtObject(SPELL_MORDENKAINENS_DISJUNCTION, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
                     break;
 
                     // ipParam1 = iprp_abilities.2da
                     // both have the same effect in game
                     // this "poison" property is 1d2 ability damage
                     // not the actial poison.2da poison abilities.
-                    case IP_CONST_ONHIT_ITEMPOISON:   
-                    case IP_CONST_ONHIT_ABILITYDRAIN:  
+                    case IP_CONST_ONHIT_ITEMPOISON:
+                    case IP_CONST_ONHIT_ABILITYDRAIN:
                          int iStat;
                          switch (ipParam1)
                          {
@@ -3674,91 +3674,91 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
 
                          eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
                          ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-                         
+
                          //eEffect = EffectAbilityDecrease(iStat, d2() );
                          //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
-                         ApplyAbilityDamage(oDefender, iStat, d2(), TRUE, DURATION_TYPE_PERMANENT);
+                         ApplyAbilityDamage(oDefender, iStat, d2(), DURATION_TYPE_PERMANENT, TRUE);
                     break;
-                    
+
                     // ipParam1 = disease.2da
                     case IP_CONST_ONHIT_DISEASE:
                          string iDiseaseType = Get2DACache("disease", "Type", ipParam1);
                          eEffect = EffectDisease(ipParam1);
-                         
+
                          if(iDiseaseType == "EXTRA")      eEffect = ExtraordinaryEffect(eEffect);
                          else if(iDiseaseType == "SUPER") eEffect = SupernaturalEffect(eEffect);
-                         
+
                          eVis = EffectVisualEffect(VFX_IMP_DISEASE_S);
                          ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
                          ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
                     break;
-                    
+
                     // ipParam1 =  IPRP_ALIGNMENT
-                    case IP_CONST_ONHIT_SLAYALIGNMENT:                         
+                    case IP_CONST_ONHIT_SLAYALIGNMENT:
                          // ipParam1 - specific alignment
                          if(ipParam1 == iAlignSpecific)
                          {
                               eVis = EffectVisualEffect(VFX_IMP_DEATH);
                               ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-                    
+
                               // circumvent death immunity
                               eEffect = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
-                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);                              
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);
                          }
                     break;
-                    
+
                     // ipParam1 =  IPRP_ALIGNGRP
-                    case IP_CONST_ONHIT_SLAYALIGNMENTGROUP:               
+                    case IP_CONST_ONHIT_SLAYALIGNMENTGROUP:
                          // ipParam1 - alignment group
                          if(ipParam1 == iGoodEvil || ipParam1 == iLawChaos || ipParam1 == IP_CONST_ALIGNMENTGROUP_ALL)
                          {
                               eVis = EffectVisualEffect(VFX_IMP_DEATH);
                               ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-                    
+
                               // circumvent death immunity
                               eEffect = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
-                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);                              
-                         }                         
+                              ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);
+                         }
                     break;
-                    
+
                     // ipParam1 =  racialtypes.2da
                     case IP_CONST_ONHIT_SLAYRACE:
                          if(ipParam1 == MyPRCGetRacialType(oDefender) )
                          {
                               eVis = EffectVisualEffect(VFX_IMP_DEATH);
                               ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-                    
+
                               // circumvent death immunity
                               eEffect = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
                               ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);
                          }
                     break;
- 
+
                     // ipParam1 = iprp_onhitdur.2da
-                    case IP_CONST_ONHIT_BLINDNESS: 
+                    case IP_CONST_ONHIT_BLINDNESS:
                          eEffect = EffectBlindness();
                          eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
-                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);                    
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
 
                     case IP_CONST_ONHIT_CONFUSION:
                          eEffect = EffectConfused();
                          eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
-                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);                    
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
-                       
+
                     case IP_CONST_ONHIT_DAZE:
                          eEffect = EffectDazed();
                          eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
                          ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
-                       
+
                     case IP_CONST_ONHIT_DEAFNESS:
                          eEffect = EffectDeaf();
                          eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
                          ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
-                       
+
                     case IP_CONST_ONHIT_DOOM:
                          effect eSaves = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2);
                          effect eAttack = EffectAttackDecrease(2);
@@ -3769,9 +3769,9 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                          eLink = EffectLinkEffects(eLink, eSaves);
                          eLink = EffectLinkEffects(eLink, eSkill);
                          eVis = EffectVisualEffect(VFX_IMP_DOOM);
-                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eLink, eVis);                    
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eLink, eVis);
                     break;
-                       
+
                     case IP_CONST_ONHIT_FEAR:
                          eEffect = EffectFrightened();
                          eVis = EffectVisualEffect(VFX_IMP_HEAD_EVIL);
@@ -3795,29 +3795,29 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                          eVis = EffectVisualEffect(VFX_IMP_SLEEP);
                          ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
-                       
+
                     case IP_CONST_ONHIT_SLOW:
                          eEffect = EffectSlow();
                          eVis = EffectVisualEffect(VFX_IMP_SLOW);
                          ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
-                       
+
                     case IP_CONST_ONHIT_STUN:
                          eEffect = EffectStunned();
                          eVis = EffectVisualEffect(VFX_IMP_STUN);
                          ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
                }
-                  
-               // sMes += " and Param1 = " + IntToString(ipParam1); 
+
+               // sMes += " and Param1 = " + IntToString(ipParam1);
           }
-          
+
           // much like above but for creature weapons
           else if(ipType == ITEM_PROPERTY_ON_MONSTER_HIT)
           {
                effect eEffect;
                effect eVis;
-               
+
                switch(ipSubType)
                {
                     // ipParam1 should be the ammout of levels to drain
@@ -3825,25 +3825,25 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                          if( !FortitudeSave(oDefender, ipCostVal, SAVING_THROW_TYPE_NEGATIVE) )
                          {
                               if(ipParam1 < 1) ipParam1 = 1;
-                              
+
                               eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
                               ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-                              
+
                               eEffect = SupernaturalEffect( EffectNegativeLevel(ipParam1) );
                               ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
                          }
                     break;
-                    
+
                     // NEEDS TESTING
                     case IP_CONST_ONMONSTERHIT_WOUNDING:
                          if( !FortitudeSave(oDefender, ipCostVal, SAVING_THROW_TYPE_NONE) )
                          {
                               if(ipParam1 < 1) ipParam1 = 1;
                               ipParam1 *= -1;
-                              
+
                               eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
                               ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-                              
+
                               // in theory this will drain them 1 HP per round.
                               eEffect = ExtraordinaryEffect( EffectRegenerate(ipParam1, 6.0 ) );
                               ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oDefender, 9999.0);
@@ -3854,8 +3854,8 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                     // both have the same effect in game
                     // this "poison" property is 1d2 ability damage
                     // not the actial poison.2da poison abilities.
-                    case IP_CONST_ONMONSTERHIT_POISON:   
-                    case IP_CONST_ONMONSTERHIT_ABILITYDRAIN:  
+                    case IP_CONST_ONMONSTERHIT_POISON:
+                    case IP_CONST_ONMONSTERHIT_ABILITYDRAIN:
                          int iStat;
                          switch (ipParam1)
                          {
@@ -3869,20 +3869,20 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
 
                          eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
                          ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-                         
+
                          //eEffect = EffectAbilityDecrease(iStat, d2() );
                          //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
-                         ApplyAbilityDamage(oDefender, iStat, d2(), TRUE, DURATION_TYPE_PERMANENT);
+                         ApplyAbilityDamage(oDefender, iStat, d2(), DURATION_TYPE_PERMANENT, TRUE);
                     break;
-                    
+
                     // ipParam1 = disease.2da
                     case IP_CONST_ONMONSTERHIT_DISEASE:
                          string iDiseaseType = Get2DACache("disease", "Type", ipParam1);
                          eEffect = EffectDisease(ipParam1);
-                         
+
                          if(iDiseaseType == "EXTRA")      eEffect = ExtraordinaryEffect(eEffect);
                          else if(iDiseaseType == "SUPER") eEffect = SupernaturalEffect(eEffect);
-                         
+
                          eVis = EffectVisualEffect(VFX_IMP_DISEASE_S);
                          ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
                          ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
@@ -3891,7 +3891,7 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                     case IP_CONST_ONMONSTERHIT_CONFUSION:
                          eEffect = EffectConfused();
                          eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
-                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);                    
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
 
                     case IP_CONST_ONMONSTERHIT_DOOM:
@@ -3904,9 +3904,9 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                          eLink = EffectLinkEffects(eLink, eSaves);
                          eLink = EffectLinkEffects(eLink, eSkill);
                          eVis = EffectVisualEffect(VFX_IMP_DOOM);
-                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eLink, eVis);                    
+                         ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eLink, eVis);
                     break;
-                       
+
                     case IP_CONST_ONMONSTERHIT_FEAR:
                          eEffect = EffectFrightened();
                          eVis = EffectVisualEffect(VFX_IMP_HEAD_EVIL);
@@ -3918,7 +3918,7 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                          eVis = EffectVisualEffect(VFX_IMP_SLOW);
                          ApplyOnHitDurationAbiltiies(oDefender, ipParam1, eEffect, eVis);
                     break;
-                       
+
                     case IP_CONST_ONMONSTERHIT_STUN:
                          eEffect = EffectStunned();
                          eVis = EffectVisualEffect(VFX_IMP_STUN);
@@ -3926,20 +3926,20 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                     break;
                }
           }
-          
+
           // poisons from poison.2da
           else if(ipType == ITEM_PROPERTY_POISON)
           {
                effect ePoison = EffectPoison( ipSubType );
                ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoison, oDefender);
-               
+
                effect eVis = EffectVisualEffect(VFX_IMP_POISON_L);
                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
           }
-        
+
          ip = GetNextItemProperty(oItem);
      }
-     
+
      FloatingTextStringOnCreature(sMes, oAttacker);
 }
 
@@ -3948,8 +3948,8 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
      // if there is no valid target, then no attack
      if( !GetIsObjectValid(oDefender) )
      {
-         return;                  
-     }  
+         return;
+     }
 
      // If they are not within melee range
      // Move to the new target so that you can attack next round.
@@ -3958,29 +3958,29 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
          AssignCommand(oAttacker, ActionMoveToLocation(GetLocation(oDefender), TRUE) );
          return;
      }
-     
+
      // Since we are attacking, remove sanctuary / invisibility effects.
-     // Only bother to do this on the first attack... 
+     // Only bother to do this on the first attack...
      // as they won't have the effect anymore on subsequent iterations.
 
      // FrikaC: Ghost strike doesn't cancel ethereal / invisible
      if(bFirstAttack && !GetLocalInt(oAttacker, "prc_ghost_strike") &&
           (GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker) ||
-           GetHasEffect(EFFECT_TYPE_SANCTUARY, oAttacker) 
+           GetHasEffect(EFFECT_TYPE_SANCTUARY, oAttacker)
           )
-       ) 
+       )
      {
           effect eEffect = GetFirstEffect(oAttacker);
           while (GetIsEffectValid(eEffect) )
           {
-               if(GetEffectType(eEffect) == EFFECT_TYPE_INVISIBILITY || 
+               if(GetEffectType(eEffect) == EFFECT_TYPE_INVISIBILITY ||
                   GetEffectType(eEffect) == EFFECT_TYPE_SANCTUARY )
                     RemoveEffect(oAttacker, eEffect);
 
                eEffect = GetNextEffect(oAttacker);
           }
      }
-     
+
      // take the player out of stealth mode
      if(bFirstAttack && GetActionMode(oAttacker, ACTION_MODE_STEALTH) )
      {
@@ -3991,12 +3991,12 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
      string sMes = "";
      int iAttackRoll = 0;
      int bIsCritcal = FALSE;
-     
+
      // set duration type of special effect based on passed value
      int iDurationType = DURATION_TYPE_INSTANT;
      if (sAttackVars.eDuration > 0.0) iDurationType = DURATION_TYPE_TEMPORARY;
      if (sAttackVars.eDuration < 0.0) iDurationType = DURATION_TYPE_PERMANENT;
-     
+
      // check defender HP and validity before attacking
      if(GetCurrentHitPoints(oDefender) > 0 || GetIsObjectValid(oDefender))
      {
@@ -4007,8 +4007,8 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           int iNumDice  = sAttackVars.iMainNumDice;
           int iNumSides = sAttackVars.iMainNumSides;
           int iCritMult = sAttackVars.iMainCritMult;
-          struct BonusDamage sWeaponDamage = sMainWeaponDamage;          
-          
+          struct BonusDamage sWeaponDamage = sMainWeaponDamage;
+
           // if attack is from left hand set vars to left hand values
           if (iMainHand == 1)
           {
@@ -4020,7 +4020,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
               iCritMult = sAttackVars.iOffHandCritMult;
               sWeaponDamage = sOffHandWeaponDamage;
           }
-          
+
           // animation code
           if(!sAttackVars.bIsRangedWeapon)
           {
@@ -4028,7 +4028,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           else
           {
           }
- 
+
           // Coup De Grace
           // Automatic critical hit: Fort save DC: 10 + damage dealt
           // Note: The rest of the code is in GetAttackDamage
@@ -4037,28 +4037,28 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           {
                // make hit a crit
                iAttackRoll     = 2;
-               
+
                // remove all other attacks this round
                // you give up all other attacks to make a coupe de grace
                iBonusAttacks   = 0;
                iMainAttacks    = 0;
                iOffHandAttacks = 0;
-               
+
                // apply the CDG if spell ability
                if(iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL || iTouchAttackType == TOUCH_ATTACK_MELEE_SPELL)
                {
                     // DC = 10 + damage dealt.
                     int iSaveDC = 10;
                     int iDamage = sAttackVars.iDamageModifier;
-                    
+
                     // if the attack effects all attacks use DAMAGE_BONUS_* const
                     if(sAttackVars.bEffectAllAttacks) iDamage = GetDamageByConstant(sAttackVars.iDamageModifier, FALSE);
                     iSaveDC += iDamage;
-                    
+
                     if( FortitudeSave(oDefender, iSaveDC, SAVING_THROW_TYPE_NONE, oAttacker) )
                     {
                          string nMes = "*Coup De Grace*";
-                         FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE); 
+                         FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
 
                          // circumvents death immunity... since anyone CDG'ed is dead.
                          effect eDeath = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
@@ -4069,23 +4069,23 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           else
           {
                // code to perform normal attack roll
-               iAttackRoll = GetAttackRoll(oDefender, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0, iTouchAttackType);               
+               iAttackRoll = GetAttackRoll(oDefender, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0, iTouchAttackType);
           }
 
           if(iAttackRoll == 2) bIsCritcal = TRUE;
-          
+
           // only calculate damage if it is not a touch attack spell
           if(iTouchAttackType != TOUCH_ATTACK_RANGED_SPELL && iTouchAttackType != TOUCH_ATTACK_MELEE_SPELL)
                eDamage = GetAttackDamage(oDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, bIsCritcal, iNumDice, iNumSides, iCritMult);
-          
+
           // if you hit enemy
           if(iAttackRoll > 0)
           {
               ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oDefender);
-              
+
               // apply any on hit abilities from attackers weapon to defender
               ApplyOnHitAbilities(oDefender, oAttacker, oWeapon);
-              
+
               // apply any on hit abilities from defenders armor to attacker
               object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oDefender);
               if( GetIsObjectValid(oArmor) ) ApplyOnHitAbilities(oAttacker, oDefender, oArmor);
@@ -4097,20 +4097,20 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                    {
                         string nMes = "*Vorpal Blade*";
                         FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
-                        
+
                         effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-                        
-                        effect eDeath = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);                   
+
+                        effect eDeath = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oDefender);
                     }
               }
-              
+
               // reset vorpal variables
               bIsVorpalWeaponEquiped = FALSE;
-              iVorpalSaveDC = 0; 
+              iVorpalSaveDC = 0;
           }
-          
+
           // if special effect applies to all attacks and you hit them
           if(sAttackVars.bEffectAllAttacks && iAttackRoll > 0)
           {
@@ -4120,15 +4120,15 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                     int iDamagePower = DAMAGE_POWER_NORMAL;
                     if(!TOUCH_ATTACK_RANGED_SPELL && !TOUCH_ATTACK_MELEE_SPELL)
                          iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
-                    
-                    // the damage given should be a DAMAGE_BONUS_* const.  
+
+                    // the damage given should be a DAMAGE_BONUS_* const.
                     // calculate proper damage from the const.
                     int iDamage = GetDamageByConstant(sAttackVars.iDamageModifier, FALSE);
-                    
+
                     effect eBonusDamage = EffectDamage(iDamage, sAttackVars.iDamageType, iDamagePower);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, oDefender);
                }
-               
+
                // apply any special bonus effects
                ApplyEffectToObject(iDurationType, sAttackVars.eSpecialEffect, oDefender, sAttackVars.eDuration);
                FloatingTextStringOnCreature(sAttackVars.sMessageSuccess, oAttacker, FALSE);
@@ -4162,27 +4162,27 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                FloatingTextStringOnCreature(sAttackVars.sMessageFailure, oAttacker, FALSE);
                bFirstAttack = FALSE;
           }
-          
+
           // if this attack is a cleave attack
           if(bIsCleaveAttack && iAttackRoll > 0)
           {
               if(GetHasFeat(FEAT_GREAT_CLEAVE, oAttacker)) sMes = "*Great Cleave Hit*";
               else if(GetHasFeat(FEAT_CLEAVE, oAttacker))  sMes = "*Cleave Attack Hit*";
-              FloatingTextStringOnCreature(sMes, oAttacker, FALSE);            
+              FloatingTextStringOnCreature(sMes, oAttacker, FALSE);
           }
           else if(bIsCleaveAttack)
           {
               if(GetHasFeat(FEAT_GREAT_CLEAVE, oAttacker)) sMes = "*Great Cleave Miss*";
-              else if(GetHasFeat(FEAT_CLEAVE, oAttacker))  sMes = "*Cleave Attack Miss*"; 
-              FloatingTextStringOnCreature(sMes, oAttacker, FALSE);            
-          }          
+              else if(GetHasFeat(FEAT_CLEAVE, oAttacker))  sMes = "*Cleave Attack Miss*";
+              FloatingTextStringOnCreature(sMes, oAttacker, FALSE);
+          }
 
           // Code to remove ammo from inventory after an attack is made
           if( sAttackVars.bIsRangedWeapon )
           {
                SetItemStackSize(sAttackVars.oAmmo, (GetItemStackSize(sAttackVars.oAmmo) - 1) );
-          }        
-          
+          }
+
           // code for circle kick
           if(GetHasFeat(FEAT_CIRCLE_KICK, oAttacker) &&
              GetHasMonkWeaponEquipped(oAttacker) &&
@@ -4193,57 +4193,57 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                int iVal = 1;
                int bHasValidTarget = FALSE;
                int bIsWithinRange = TRUE;
-               
+
                object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
                while(GetIsObjectValid(oTarget) && !bHasValidTarget && bIsWithinRange )
                {
                     iVal += 1;
                     oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
-                    
+
                     // will cause the loop to end on a valid target
                     if(oTarget != oDefender && GetIsInMeleeRange(oDefender, oAttacker) )
                          bHasValidTarget = TRUE;
-                    
+
                     // will cause the loop to end if there are no valid enemies within range
                     if(!GetIsInMeleeRange(oDefender, oAttacker) )
                          bIsWithinRange = FALSE;
                }
-               
+
                if(bHasValidTarget)
                {
                     iAttackRoll = GetAttackRoll(oTarget, oAttacker, oWeapon, iMainHand, iAttackBonus, iMod, TRUE, 0.0, iTouchAttackType);
                     if(iAttackRoll == 2)      eDamage = GetAttackDamage(oTarget, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, TRUE, iNumDice, iNumSides, iCritMult);
                     else if(iAttackRoll == 1) eDamage = GetAttackDamage(oTarget, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iMainHand, iWeaponDamageRound, FALSE, iNumDice, iNumSides, iCritMult);
-               
+
                     if(iAttackRoll > 0)
-                    {            
+                    {
                          ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
-                         sMes = "*Circle Kick Hit*"; 
+                         sMes = "*Circle Kick Hit*";
                          FloatingTextStringOnCreature(sMes, oAttacker, FALSE);
                     }
                     else
                     {
-                         sMes = "*Circle Kick Miss*"; 
-                         FloatingTextStringOnCreature(sMes, oAttacker, FALSE);                  
-                    } 
+                         sMes = "*Circle Kick Miss*";
+                         FloatingTextStringOnCreature(sMes, oAttacker, FALSE);
+                    }
                }
-               
+
                iCircleKick = 1;
           }
      }
 
      // checks hp of enemy to see if they are alive still or not
      if(GetCurrentHitPoints(oDefender) < 1 || !GetIsObjectValid(oDefender))
-     { 
+     {
           // if enemy is dead find a new target
           int iVal = 1;
           object oNewDefender = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
           while( GetIsObjectValid(oNewDefender) )
           {
                iVal += 1;
-               oNewDefender = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1); 
+               oNewDefender = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, iVal, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);
           }
-          
+
           oDefender = oNewDefender;
 
           // if there is no new valid target, then no more attacks
@@ -4252,8 +4252,8 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
               oDefender = OBJECT_INVALID;
               oNewDefender = OBJECT_INVALID;
               SendMessageToPC(oAttacker, "No new valid targets to attack!");
-              return;                  
-          }      
+              return;
+          }
 
           if(!GetIsInMeleeRange(oDefender, oAttacker) && !sAttackVars.bIsRangedWeapon )
           {
@@ -4264,20 +4264,20 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           else if(!sAttackVars.bIsRangedWeapon)
           {
                //check for cleave
-               if( GetHasFeat(FEAT_GREAT_CLEAVE, oAttacker) || 
+               if( GetHasFeat(FEAT_GREAT_CLEAVE, oAttacker) ||
                    (GetHasFeat(FEAT_CLEAVE, oAttacker) && iCleaveAttacks == 0)
                  )
                {
                     // perform cleave
                     // recall this function with Cleave = TRUE
                     iCleaveAttacks += 1;
-                    
+
                     AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, iMainHand, TRUE);
                     return;
                }
           }
      }
-     
+
      if(iBonusAttacks == 0)
      {
           iBonusAttacks --;
@@ -4308,7 +4308,7 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
      //SendMessageToPC(oAttacker, "Entered AttackLoopMain()");
      // turn off touch attack if var says it only applies to first attack
      if (bFirstAttack && !bApplyTouchToAll) iTouchAttackType == FALSE;
-     
+
      // perform all bonus attacks
      if(iBonusAttacks > 0)
      {
@@ -4316,7 +4316,7 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
           iBonusAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE, iTouchAttackType);
      }
-          
+
      // perform main attack first, then off-hand attack
      else if(iBonusAttacks <= 0 && iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
      {
@@ -4336,57 +4336,57 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
 {
      // create struct for attack loop logic
      struct AttackLoopVars sAttackVars;
-     
+
      // set variables required in attack loop logic
      sAttackVars.oWeaponR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oAttacker);
      sAttackVars.oWeaponL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oAttacker);
      sAttackVars.bIsRangedWeapon = GetWeaponRanged(sAttackVars.oWeaponR);
-     
+
      sAttackVars.iDamageModifier = iDamageModifier;
      sAttackVars.iDamageType = iDamageType;
-     
+
      sAttackVars.eSpecialEffect = eSpecialEffect;
      sAttackVars.eDuration = eDuration;
      sAttackVars.bEffectAllAttacks = bEffectAllAttacks;
      sAttackVars.sMessageSuccess = sMessageSuccess;
      sAttackVars.sMessageFailure = sMessageFailure;
-     
+
      // are they using a two handed weapon?
      int bIsTwoHandedMeleeWeapon = GetIsTwoHandedMeleeWeapon(sAttackVars.oWeaponR);
-     
+
      // are they unarmed?
      int bIsUnarmed = FALSE;
      if(GetBaseItemType(sAttackVars.oWeaponR) == BASE_ITEM_INVALID) bIsUnarmed = TRUE;
-     
+
      // if player is unarmed use gloves as weapon
      if(bIsUnarmed) sAttackVars.oWeaponR = GetItemInSlot(INVENTORY_SLOT_ARMS, oAttacker);
-     
+
      // is the player is using two weapons?
      int bIsUsingTwoWeapons = FALSE;
      if(!sAttackVars.bIsRangedWeapon && !bIsUnarmed && GetBaseItemType(sAttackVars.oWeaponL) != BASE_ITEM_INVALID )  bIsUsingTwoWeapons = TRUE;
-     
+
      // determine attack bonus and num attacks
      sAttackVars.iMainAttackBonus = GetAttackBonus(oDefender, oAttacker, sAttackVars.oWeaponR, 0);
-     
+
      // number of attacks with main hand
      int iMainHandAttacks = GetMainHandAttacks(oAttacker);
-     
+
      // Determine physical damage per round (cached for multiple use)
      sAttackVars.iMainWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponR, 0);
-     
+
      // varaibles that store extra damage dealt
      struct BonusDamage sSpellBonusDamage = GetMagicalBonusDamage(oAttacker);
      struct BonusDamage sMainWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponR, oDefender);
-     
+
      // get weapon information
      int iMainWeaponType = GetBaseItemType(sAttackVars.oWeaponR);
      sAttackVars.iMainNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iMainWeaponType));
      sAttackVars.iMainNumDice = StringToInt(Get2DACache("baseitems", "NumDice", iMainWeaponType));
      sAttackVars.iMainCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponR);
-     
+
      // Returns proper unarmed damage if they are a monk
      // or have a creature weapon from a PrC class. - Brawler, Shou, IoDM, etc.
-     if(bIsUnarmed && GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oAttacker) != OBJECT_INVALID || 
+     if(bIsUnarmed && GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oAttacker) != OBJECT_INVALID ||
         bIsUnarmed && GetLevelByClass(CLASS_TYPE_MONK, oAttacker) )
      {
           int iDamage = FindUnarmedDamage(oAttacker);
@@ -4476,37 +4476,37 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           sAttackVars.iMainNumSides = 3;
           sAttackVars.iMainNumDice  = 1;
      }
-     
+
      //SendMessageToPC(oAttacker, "Weapon does " + IntToString(iMainNumDice) + "d" + IntToString(iMainNumSides) + "Damage and has a crit multiplier of " + IntToString(iMainCritMult));
-     
+
      // off-hand variables
      int iOffHandWeaponType = 0;
      sAttackVars.iOffHandAttackBonus = 0;
      int iOffHandAttacks = 0;
-     
+
      sAttackVars.iOffHandWeaponDamageRound = 0;
      struct BonusDamage sOffHandWeaponDamage;
-     
+
      sAttackVars.iOffHandNumSides = 0;
      sAttackVars.iOffHandNumDice = 0;
      sAttackVars.iOffHandCritMult = 0;
-          
+
      int iAttackPenalty = 0;
      int bHasHaste = FALSE;
      int nInventorySlot;
      object oItem;
-     
-     // Check for extra main hand attacks 
+
+     // Check for extra main hand attacks
      int iBonusAttacks = 0;
      for (nInventorySlot = 0; nInventorySlot < NUM_INVENTORY_SLOTS; nInventorySlot++)
      {
           oItem = GetItemInSlot(nInventorySlot, oAttacker);
-     
+
         if(GetIsObjectValid(oItem) )
         {
              if(GetItemHasItemProperty(oItem, ITEM_PROPERTY_HASTE) )  bHasHaste = TRUE;
         }
-     }  
+     }
      if( GetHasEffect(EFFECT_TYPE_HASTE, oAttacker) || bHasHaste)
      {
           iBonusAttacks += 1;
@@ -4520,16 +4520,16 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      {
           iBonusAttacks += 1;
           iAttackPenalty -= 2;
-     }     
+     }
      if( GetHasSpellEffect(SPELL_ONE_STRIKE_TWO_CUTS, oAttacker) )
      {
           iBonusAttacks += 1;
-     }  
+     }
      if( GetLastAttackMode(oAttacker) ==  COMBAT_MODE_FLURRY_OF_BLOWS )
      {
           iBonusAttacks += 1;
           iAttackPenalty -= 2;
-     } 
+     }
      if( GetLastAttackMode(oAttacker) ==  COMBAT_MODE_RAPID_SHOT )
      {
           iBonusAttacks += 1;
@@ -4547,23 +4547,23 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           iOffHandAttacks = GetOffHandAttacks(oAttacker);
           sOffHandWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponL, oDefender);
           sAttackVars.iOffHandWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponL, 1);
-          
+
           iOffHandWeaponType = GetBaseItemType(sAttackVars.oWeaponL);
           sAttackVars.iOffHandNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iOffHandWeaponType));
           sAttackVars.iOffHandNumDice = StringToInt(Get2DACache("baseitems", "NumDice", iOffHandWeaponType));
           sAttackVars.iOffHandCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponL);
-          
+
           //SendMessageToPC(oAttacker, "Off Hand Weapon does " + IntToString(iOffHandNumDice) + "d" + IntToString(iOffHandNumSides) + "Damage and has a crit multiplier of " + IntToString(iOffHandCritMult));
      }
 
-     // Code to equip new ammo 
+     // Code to equip new ammo
      // Equips new ammo if they don't have enough ammo for the whole attack round
-     // or if they have no ammo equipped.     
+     // or if they have no ammo equipped.
      if(sAttackVars.bIsRangedWeapon)
      {
           sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);
           // if there is no ammunition search inventory for ammo
-          if(sAttackVars.oAmmo == OBJECT_INVALID || 
+          if(sAttackVars.oAmmo == OBJECT_INVALID ||
              GetItemStackSize(sAttackVars.oAmmo) <= (iMainHandAttacks + iBonusAttacks) )
           {
                int bNotEquipped = TRUE;
@@ -4599,7 +4599,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
                          iAmmoSlot = INVENTORY_SLOT_RIGHTHAND;
                          break;
                }
-               
+
                object oItem = GetFirstItemInInventory(oAttacker);
                while (GetIsObjectValid(oItem) == TRUE && bNotEquipped)
                {
@@ -4610,127 +4610,127 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
                          bNotEquipped = FALSE;
                     }
                     oItem = GetNextItemInInventory(oAttacker);
-               }          
+               }
           }
- 
-          sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);        
+
+          sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);
           struct BonusDamage sAmmoDamage = GetWeaponBonusDamage(sAttackVars.oAmmo, oDefender);
-          
+
           // if these values are better than the weapon, then use these.
-          if(sAmmoDamage.dam_Acid > sMainWeaponDamage.dam_Acid) sMainWeaponDamage.dam_Acid = sAmmoDamage.dam_Acid;          
+          if(sAmmoDamage.dam_Acid > sMainWeaponDamage.dam_Acid) sMainWeaponDamage.dam_Acid = sAmmoDamage.dam_Acid;
           if(sAmmoDamage.dam_Cold > sMainWeaponDamage.dam_Cold) sMainWeaponDamage.dam_Cold = sAmmoDamage.dam_Cold;
           if(sAmmoDamage.dam_Fire > sMainWeaponDamage.dam_Fire) sMainWeaponDamage.dam_Fire = sAmmoDamage.dam_Fire;
           if(sAmmoDamage.dam_Elec > sMainWeaponDamage.dam_Elec) sMainWeaponDamage.dam_Elec = sAmmoDamage.dam_Elec;
           if(sAmmoDamage.dam_Son  > sMainWeaponDamage.dam_Son)  sMainWeaponDamage.dam_Son  = sAmmoDamage.dam_Son;
-          
+
           if(sAmmoDamage.dam_Div > sMainWeaponDamage.dam_Div) sMainWeaponDamage.dam_Div = sAmmoDamage.dam_Div;
           if(sAmmoDamage.dam_Neg > sMainWeaponDamage.dam_Neg) sMainWeaponDamage.dam_Neg = sAmmoDamage.dam_Neg;
           if(sAmmoDamage.dam_Pos > sMainWeaponDamage.dam_Pos) sMainWeaponDamage.dam_Pos = sAmmoDamage.dam_Pos;
-          
+
           if(sAmmoDamage.dam_Mag > sMainWeaponDamage.dam_Mag) sMainWeaponDamage.dam_Mag = sAmmoDamage.dam_Mag;
-          
+
           if(sAmmoDamage.dam_Blud > sMainWeaponDamage.dam_Blud) sMainWeaponDamage.dam_Blud = sAmmoDamage.dam_Blud;
           if(sAmmoDamage.dam_Pier > sMainWeaponDamage.dam_Pier) sMainWeaponDamage.dam_Pier = sAmmoDamage.dam_Pier;
           if(sAmmoDamage.dam_Slash > sMainWeaponDamage.dam_Slash) sMainWeaponDamage.dam_Slash = sAmmoDamage.dam_Slash;
-          
-          if(sAmmoDamage.dice_Acid > sMainWeaponDamage.dice_Acid) sMainWeaponDamage.dice_Acid = sAmmoDamage.dice_Acid;          
+
+          if(sAmmoDamage.dice_Acid > sMainWeaponDamage.dice_Acid) sMainWeaponDamage.dice_Acid = sAmmoDamage.dice_Acid;
           if(sAmmoDamage.dice_Cold > sMainWeaponDamage.dice_Cold) sMainWeaponDamage.dice_Cold = sAmmoDamage.dice_Cold;
           if(sAmmoDamage.dice_Fire > sMainWeaponDamage.dice_Fire) sMainWeaponDamage.dice_Fire = sAmmoDamage.dice_Fire;
           if(sAmmoDamage.dice_Elec > sMainWeaponDamage.dice_Elec) sMainWeaponDamage.dice_Elec = sAmmoDamage.dice_Elec;
           if(sAmmoDamage.dice_Son  > sMainWeaponDamage.dice_Son)  sMainWeaponDamage.dice_Son  = sAmmoDamage.dice_Son;
-          
+
           if(sAmmoDamage.dice_Div > sMainWeaponDamage.dice_Div) sMainWeaponDamage.dice_Div = sAmmoDamage.dice_Div;
           if(sAmmoDamage.dice_Neg > sMainWeaponDamage.dice_Neg) sMainWeaponDamage.dice_Neg = sAmmoDamage.dice_Neg;
           if(sAmmoDamage.dice_Pos > sMainWeaponDamage.dice_Pos) sMainWeaponDamage.dice_Pos = sAmmoDamage.dice_Pos;
-          
+
           if(sAmmoDamage.dice_Mag > sMainWeaponDamage.dice_Mag) sMainWeaponDamage.dice_Mag = sAmmoDamage.dice_Mag;
-          
+
           if(sAmmoDamage.dice_Blud > sMainWeaponDamage.dice_Blud) sMainWeaponDamage.dice_Blud = sAmmoDamage.dice_Blud;
           if(sAmmoDamage.dice_Pier > sMainWeaponDamage.dice_Pier) sMainWeaponDamage.dice_Pier = sAmmoDamage.dice_Pier;
-          if(sAmmoDamage.dice_Slash > sMainWeaponDamage.dice_Slash) sMainWeaponDamage.dice_Slash = sAmmoDamage.dice_Slash;    
+          if(sAmmoDamage.dice_Slash > sMainWeaponDamage.dice_Slash) sMainWeaponDamage.dice_Slash = sAmmoDamage.dice_Slash;
      }
-     
+
      int iMod = 0;
-     
+
      // determines the delay between effect application
      // to make the system run like the normal combat system.
      sAttackVars.fDelay = (6.0 / (iMainHandAttacks + iBonusAttacks + iOffHandAttacks));
      sAttackVars.iMainAttackBonus = sAttackVars.iMainAttackBonus + iAttackPenalty;
      sAttackVars.iOffHandAttackBonus = sAttackVars.iOffHandAttackBonus + iAttackPenalty;
-     
+
      // If the full attack is to happen at once
      if(bInstantAttack)
         sAttackVars.fDelay = 0.075; // Have some delay in order to avoid being a total resource hog
-     
+
      // sets iMods to iAttackBonusMod
      // used in AttackLoopLogic to decrement attack bonus for attacks.
      if(bEffectAllAttacks)  iMod += iAttackBonusMod;
-     
+
      // Debug statements
      //string test  = " iBonusAttacks = " + IntToString(iBonusAttacks);
      //       test += " iMainHandAttacks = " + IntToString(iMainHandAttacks);
      //       test += " iOffHandAttacks = " + IntToString(iOffHandAttacks);
      //FloatingTextStringOnCreature(test, oAttacker);
-     
+
      AttackLoopMain(oDefender, oAttacker, iBonusAttacks, iMainHandAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
 }
 
 void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, string sMessageSuccess = "", string sMessageFailure = "", int iTouchAttackType = FALSE)
-{     
+{
      // create struct for attack loop logic
      struct AttackLoopVars sAttackVars;
-     
+
      // set variables required in attack loop logic
      sAttackVars.oWeaponR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oAttacker);
      sAttackVars.oWeaponL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oAttacker);
      sAttackVars.bIsRangedWeapon = GetWeaponRanged(sAttackVars.oWeaponR);
-     
+
      sAttackVars.iDamageModifier = iDamageModifier;
      sAttackVars.iDamageType = iDamageType;
-     
+
      sAttackVars.eSpecialEffect = eSpecialEffect;
      sAttackVars.eDuration = eDuration;
      sAttackVars.bEffectAllAttacks = FALSE;
      sAttackVars.sMessageSuccess = sMessageSuccess;
      sAttackVars.sMessageFailure = sMessageFailure;
-     
+
      // are they using a two handed weapon?
      int bIsTwoHandedMeleeWeapon = GetIsTwoHandedMeleeWeapon(sAttackVars.oWeaponR);
-     
+
      // are they unarmed?
      int bIsUnarmed = FALSE;
      if(GetBaseItemType(sAttackVars.oWeaponR) == BASE_ITEM_INVALID) bIsUnarmed = TRUE;
-     
+
      // if player is unarmed use gloves as weapon
      if(bIsUnarmed) sAttackVars.oWeaponR = GetItemInSlot(INVENTORY_SLOT_ARMS, oAttacker);
-     
+
      // is the player is using two weapons?
      int bIsUsingTwoWeapons = FALSE;
      if(!sAttackVars.bIsRangedWeapon && !bIsUnarmed && GetBaseItemType(sAttackVars.oWeaponL) != BASE_ITEM_INVALID )  bIsUsingTwoWeapons = TRUE;
-     
+
      // determine attack bonus and num attacks
      sAttackVars.iMainAttackBonus = GetAttackBonus(oDefender, oAttacker, sAttackVars.oWeaponR, 0);
-     
+
      // number of attacks with main hand
      // only 1 attack is made period
      int iMainHandAttacks = 1;
-     
+
      // Determine physical damage per round (cached for multiple use)
      sAttackVars.iMainWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponR, 0);
-     
+
      // varaibles that store extra damage dealt
      struct BonusDamage sSpellBonusDamage = GetMagicalBonusDamage(oAttacker);
      struct BonusDamage sMainWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponR, oDefender);
-     
+
      // get weapon information
      int iMainWeaponType = GetBaseItemType(sAttackVars.oWeaponR);
      sAttackVars.iMainNumSides = StringToInt(Get2DACache("baseitems", "DieToRoll", iMainWeaponType));
      sAttackVars.iMainNumDice = StringToInt(Get2DACache("baseitems", "NumDice", iMainWeaponType));
      sAttackVars.iMainCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponR);
-     
+
      // Returns proper unarmed damage if they are a monk
      // or have a creature weapon from a PrC class. - Brawler, Shou, IoDM, etc.
-     if(bIsUnarmed && GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oAttacker) != OBJECT_INVALID || 
+     if(bIsUnarmed && GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oAttacker) != OBJECT_INVALID ||
         bIsUnarmed && GetLevelByClass(CLASS_TYPE_MONK, oAttacker) )
      {
           int iDamage = FindUnarmedDamage(oAttacker);
@@ -4820,32 +4820,32 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
           sAttackVars.iMainNumSides = 3;
           sAttackVars.iMainNumDice  = 1;
      }
-     
+
      //SendMessageToPC(oAttacker, "Weapon does " + IntToString(iMainNumDice) + "d" + IntToString(iMainNumSides) + "Damage and has a crit multiplier of " + IntToString(iMainCritMult));
-     
+
      // off-hand variables set to null, just to make sure they are there
      int iOffHandWeaponType = 0;
      sAttackVars.iOffHandAttackBonus = 0;
      int iOffHandAttacks = 0;
-     
+
      sAttackVars.iOffHandWeaponDamageRound = 0;
      struct BonusDamage sOffHandWeaponDamage;
-     
+
      sAttackVars.iOffHandNumSides = 0;
      sAttackVars.iOffHandNumDice = 0;
      sAttackVars.iOffHandCritMult = 0;
-          
+
      int iAttackPenalty = 0;
      int iBonusAttacks = 0;
 
-     // Code to equip new ammo 
+     // Code to equip new ammo
      // Equips new ammo if they don't have enough ammo for the whole attack round
-     // or if they have no ammo equipped.     
+     // or if they have no ammo equipped.
      if(sAttackVars.bIsRangedWeapon)
      {
           sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);
           // if there is no ammunition search inventory for ammo
-          if(sAttackVars.oAmmo == OBJECT_INVALID || 
+          if(sAttackVars.oAmmo == OBJECT_INVALID ||
              GetItemStackSize(sAttackVars.oAmmo) <= (iMainHandAttacks + iBonusAttacks) )
           {
                int bNotEquipped = TRUE;
@@ -4881,7 +4881,7 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
                          iAmmoSlot = INVENTORY_SLOT_RIGHTHAND;
                          break;
                }
-               
+
                object oItem = GetFirstItemInInventory(oAttacker);
                while (GetIsObjectValid(oItem) == TRUE && bNotEquipped)
                {
@@ -4892,58 +4892,58 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
                          bNotEquipped = FALSE;
                     }
                     oItem = GetNextItemInInventory(oAttacker);
-               }          
+               }
           }
- 
-          sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);        
+
+          sAttackVars.oAmmo = GetAmmunitionFromWeapon(sAttackVars.oWeaponR, oAttacker);
           struct BonusDamage sAmmoDamage = GetWeaponBonusDamage(sAttackVars.oAmmo, oDefender);
-          
+
           // if these values are better than the weapon, then use these.
-          if(sAmmoDamage.dam_Acid > sMainWeaponDamage.dam_Acid) sMainWeaponDamage.dam_Acid = sAmmoDamage.dam_Acid;          
+          if(sAmmoDamage.dam_Acid > sMainWeaponDamage.dam_Acid) sMainWeaponDamage.dam_Acid = sAmmoDamage.dam_Acid;
           if(sAmmoDamage.dam_Cold > sMainWeaponDamage.dam_Cold) sMainWeaponDamage.dam_Cold = sAmmoDamage.dam_Cold;
           if(sAmmoDamage.dam_Fire > sMainWeaponDamage.dam_Fire) sMainWeaponDamage.dam_Fire = sAmmoDamage.dam_Fire;
           if(sAmmoDamage.dam_Elec > sMainWeaponDamage.dam_Elec) sMainWeaponDamage.dam_Elec = sAmmoDamage.dam_Elec;
           if(sAmmoDamage.dam_Son  > sMainWeaponDamage.dam_Son)  sMainWeaponDamage.dam_Son  = sAmmoDamage.dam_Son;
-          
+
           if(sAmmoDamage.dam_Div > sMainWeaponDamage.dam_Div) sMainWeaponDamage.dam_Div = sAmmoDamage.dam_Div;
           if(sAmmoDamage.dam_Neg > sMainWeaponDamage.dam_Neg) sMainWeaponDamage.dam_Neg = sAmmoDamage.dam_Neg;
           if(sAmmoDamage.dam_Pos > sMainWeaponDamage.dam_Pos) sMainWeaponDamage.dam_Pos = sAmmoDamage.dam_Pos;
-          
+
           if(sAmmoDamage.dam_Mag > sMainWeaponDamage.dam_Mag) sMainWeaponDamage.dam_Mag = sAmmoDamage.dam_Mag;
-          
+
           if(sAmmoDamage.dam_Blud > sMainWeaponDamage.dam_Blud) sMainWeaponDamage.dam_Blud = sAmmoDamage.dam_Blud;
           if(sAmmoDamage.dam_Pier > sMainWeaponDamage.dam_Pier) sMainWeaponDamage.dam_Pier = sAmmoDamage.dam_Pier;
           if(sAmmoDamage.dam_Slash > sMainWeaponDamage.dam_Slash) sMainWeaponDamage.dam_Slash = sAmmoDamage.dam_Slash;
-          
-          if(sAmmoDamage.dice_Acid > sMainWeaponDamage.dice_Acid) sMainWeaponDamage.dice_Acid = sAmmoDamage.dice_Acid;          
+
+          if(sAmmoDamage.dice_Acid > sMainWeaponDamage.dice_Acid) sMainWeaponDamage.dice_Acid = sAmmoDamage.dice_Acid;
           if(sAmmoDamage.dice_Cold > sMainWeaponDamage.dice_Cold) sMainWeaponDamage.dice_Cold = sAmmoDamage.dice_Cold;
           if(sAmmoDamage.dice_Fire > sMainWeaponDamage.dice_Fire) sMainWeaponDamage.dice_Fire = sAmmoDamage.dice_Fire;
           if(sAmmoDamage.dice_Elec > sMainWeaponDamage.dice_Elec) sMainWeaponDamage.dice_Elec = sAmmoDamage.dice_Elec;
           if(sAmmoDamage.dice_Son  > sMainWeaponDamage.dice_Son)  sMainWeaponDamage.dice_Son  = sAmmoDamage.dice_Son;
-          
+
           if(sAmmoDamage.dice_Div > sMainWeaponDamage.dice_Div) sMainWeaponDamage.dice_Div = sAmmoDamage.dice_Div;
           if(sAmmoDamage.dice_Neg > sMainWeaponDamage.dice_Neg) sMainWeaponDamage.dice_Neg = sAmmoDamage.dice_Neg;
           if(sAmmoDamage.dice_Pos > sMainWeaponDamage.dice_Pos) sMainWeaponDamage.dice_Pos = sAmmoDamage.dice_Pos;
-          
+
           if(sAmmoDamage.dice_Mag > sMainWeaponDamage.dice_Mag) sMainWeaponDamage.dice_Mag = sAmmoDamage.dice_Mag;
-          
+
           if(sAmmoDamage.dice_Blud > sMainWeaponDamage.dice_Blud) sMainWeaponDamage.dice_Blud = sAmmoDamage.dice_Blud;
           if(sAmmoDamage.dice_Pier > sMainWeaponDamage.dice_Pier) sMainWeaponDamage.dice_Pier = sAmmoDamage.dice_Pier;
-          if(sAmmoDamage.dice_Slash > sMainWeaponDamage.dice_Slash) sMainWeaponDamage.dice_Slash = sAmmoDamage.dice_Slash;    
+          if(sAmmoDamage.dice_Slash > sMainWeaponDamage.dice_Slash) sMainWeaponDamage.dice_Slash = sAmmoDamage.dice_Slash;
      }
-     
+
      int iMod = 0;
-     
+
      // determines the delay between effect application
      // to make the system run like the normal combat system.
      sAttackVars.fDelay = 0.1;
      sAttackVars.iMainAttackBonus = sAttackVars.iMainAttackBonus + iAttackPenalty;
      sAttackVars.iOffHandAttackBonus = sAttackVars.iOffHandAttackBonus + iAttackPenalty;
-     
+
      // sets iMods to iAttackBonusMod
      // used in AttackLoopLogic to decrement attack bonus for attacks.
      iMod += iAttackBonusMod;
-     
+
      // run this with no bonus or off-hand attacks, and only 1 main hand attack
-     AttackLoopMain(oDefender, oAttacker, 0, 1, 0, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage); 
+     AttackLoopMain(oDefender, oAttacker, 0, 1, 0, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
 }

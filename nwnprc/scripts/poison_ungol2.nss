@@ -2,8 +2,9 @@
 //:: Ungol Dust On Hit
 //:: poison_ungol2
 //:://////////////////////////////////////////////
-/*
-    1 Point Permenent Charisma Damage
+/** @file
+    1 point permanent Charisma damage and
+    1d6 points of temporary Charisma damage.
 */
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan
@@ -16,10 +17,9 @@
 void main()
 {
     object oTarget = OBJECT_SELF;
-
-    //effect eDrain = EffectAbilityDecrease(ABILITY_CHARISMA, 1);
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
 
-    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 1, TRUE, DURATION_TYPE_PERMANENT);
+    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 1, DURATION_TYPE_PERMANENT, TRUE);
+    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, d6(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 }

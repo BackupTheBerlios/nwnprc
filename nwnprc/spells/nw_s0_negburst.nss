@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     object oCaster = OBJECT_SELF;
     int CasterLvl = PRCGetCasterLevel(oCaster);
 
-    
+
 
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
@@ -69,9 +69,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     effect eGood = EffectLinkEffects(eStr, eDur);
     //effect eBad = EffectLinkEffects(eStr_Low, eDur2);
-    
+
     int nPenetr = CasterLvl + SPGetPenetr();
-    
+
 
     //Get the spell target location as opposed to the spell target.
     location lTarget = GetSpellTargetLocation();
@@ -136,7 +136,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                         //represents the flame that erupts on the target not on the ground.
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDur2, oTarget,0.0f,TRUE,-1,CasterLvl));
-                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nStr, TRUE, DURATION_TYPE_PERMANENT, 0.0f, TRUE, -1, CasterLvl));
+                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nStr, DURATION_TYPE_PERMANENT, TRUE, 0.0f, TRUE, -1, CasterLvl));
                     }
                 }
             }
@@ -145,7 +145,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
        //Select the next target within the spell shape.
        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget);
     }
-    
+
 
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

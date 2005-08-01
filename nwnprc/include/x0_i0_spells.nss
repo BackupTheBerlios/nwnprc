@@ -454,8 +454,8 @@ void DoDirgeEffect(object oTarget,int nPenetr)
                 //Apply damage and visuals
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
-                ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nGetLastPenalty, TRUE, DURATION_TYPE_PERMANENT);
-                ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, nGetLastPenalty, TRUE, DURATION_TYPE_PERMANENT);
+                ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nGetLastPenalty, DURATION_TYPE_PERMANENT, TRUE);
+                ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, nGetLastPenalty, DURATION_TYPE_PERMANENT, TRUE);
                 SetLocalInt(oTarget, "X0_L_LASTPENALTY", nGetLastPenalty);
             }
 
@@ -570,7 +570,7 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
 
     int CasterLvl;
     if ( ModCasterlevel == 0)
-       CasterLvl  = PRCGetCasterLevel(OBJECT_SELF); 
+       CasterLvl  = PRCGetCasterLevel(OBJECT_SELF);
     else
        CasterLvl = ModCasterlevel;
 
@@ -579,7 +579,7 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
     {
         nExtraDamage = nMaxExtraDamage;
     }
-    
+
     CasterLvl +=SPGetPenetr();
 
 
@@ -763,9 +763,9 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
                         {
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }
-                        
+
                         if(i == 1) nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-                        
+
                         // Jan. 29, 2004 - Jonathan Epp
                         // Reflex save was not being calculated for Firebrand
                         if(nReflexSave)
@@ -1058,7 +1058,7 @@ void DoPetrification(int nPower, object oSource, object oTarget, int nSpellID, i
                     if (bShowPopup == TRUE)
                     {
                         // * under hardcore rules or higher, this is an instant death
-                        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget); 
+                        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
                         //only pop up death panel if switch is not set
                         if(!GetPRCSwitch(PRC_NO_PETRIFY_GUI))
                         DelayCommand(2.75, PopUpDeathGUIPanel(oTarget, FALSE , TRUE, 40579));
@@ -1119,7 +1119,7 @@ void spellsGenericAreaOfEffect(
     float fDelay = 0.0;
 
     int nPenetr = PRCGetCasterLevel(oCaster);
-    
+
 
     //Get the first target in the radius around the caster
     if (bPersistentObject == TRUE)
@@ -1474,7 +1474,7 @@ int spellsIsImmuneToPetrification(object oCreature)
         case 475: // golems
         bImmune = TRUE;
     }
-    
+
     int nRacialType = MyPRCGetRacialType(oCreature);
     switch(nRacialType)
     {
@@ -1582,7 +1582,7 @@ int spellsIsMindless(object oCreature)
     }
     if(GetAbilityScore(oCreature, ABILITY_INTELLIGENCE) > 3)
         nMindless = FALSE;
-    
+
     return nMindless;
 }
 

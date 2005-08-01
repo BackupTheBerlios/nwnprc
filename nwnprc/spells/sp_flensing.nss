@@ -10,7 +10,7 @@
 void RunFlensing(object oCaster, object oTarget, int nSaveDC,
     int nMetaMagic, int nSpellID, float fDuration)
 {
-    // If our timer spell effect has worn off (or been dispelled) then we are 
+    // If our timer spell effect has worn off (or been dispelled) then we are
     // done, just exit.
     if (GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster)) return;
 
@@ -45,21 +45,21 @@ void RunFlensing(object oCaster, object oTarget, int nSaveDC,
     else
     {
         eDamage = SPEffectDamage(nDamage);
-        /*eDamage = EffectLinkEffects(eDamage, 
+        /*eDamage = EffectLinkEffects(eDamage,
             EffectAbilityDecrease(ABILITY_CONSTITUTION, nConDrain));
         eDamage = EffectLinkEffects(eDamage,
             EffectAbilityDecrease(ABILITY_CHARISMA, nChaDrain));*/
-        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nConDrain, TRUE, DURATION_TYPE_PERMANENT);
-        ApplyAbilityDamage(oTarget, ABILITY_CHARISMA,     nChaDrain, TRUE, DURATION_TYPE_PERMANENT);
+        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nConDrain, DURATION_TYPE_PERMANENT, TRUE);
+        ApplyAbilityDamage(oTarget, ABILITY_CHARISMA,     nChaDrain, DURATION_TYPE_PERMANENT, TRUE);
     }
-    
+
     // Add vfx to the damage effect chain.
     eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY));
     eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(nChunkVfx));
-    
+
     // Apply the damage and vfx to the target.
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
-    
+
     // Decrement our duration counter by a round and if we still have time left keep
     // going.
     fDuration -= RoundsToSeconds(1);
@@ -88,17 +88,17 @@ void main()
 
             // Apply a persistent vfx to the target, we make him glow red.
             // RunFlensing uses our persistant vfx to determine it's duration.
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, 
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
                 EffectVisualEffect(VFX_DUR_GLOW_RED), oTarget, fDuration,FALSE);
-            
+
             // Apply impact vfx.
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                 EffectVisualEffect(VFX_IMP_DEATH), oTarget);
-                        
+
             // Stick OBJECT_SELF into a local because it's a function under the hood,
             // and we need a real object reference.
             object oCaster = OBJECT_SELF;
-            DelayCommand(1.0, RunFlensing(oCaster, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF), 
+            DelayCommand(1.0, RunFlensing(oCaster, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF),
                 SPGetMetaMagic(), PRCGetSpellId(), fDuration));
         }
     }

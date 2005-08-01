@@ -10,21 +10,21 @@ void DoSecondaryDrain(object oTarget, int nChaDrain)
      /*effect eDebuff = EffectAbilityDecrease(ABILITY_CHARISMA, nChaDrain);
      eDebuff = EffectLinkEffects(eDebuff, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE));*/
      effect eVFX = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
-          
+
      // Apply the damage and the damage visible effect to the target.
      SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, oTarget);
-     ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, TRUE, DURATION_TYPE_PERMANENT);
+     ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, DURATION_TYPE_PERMANENT, TRUE);
 }
 
 void main()
 {
      // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
      if (!X2PreSpellCastCode()) return;
-    
+
      SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 
      object oTarget = GetSpellTargetObject();
-     
+
      // Determine damage dice.
      int nCasterLvl = PRCGetCasterLevel();
      int nDice = nCasterLvl;
@@ -43,34 +43,34 @@ void main()
                if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
                {
                     // 2da cha drain, 1d6 wis drain.
-                    int nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 
+                    int nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL,
                          1 == nTouchAttack ? 2 : 4, 6);
-                    int nWisDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 
+                    int nWisDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL,
                          1 == nTouchAttack ? 1 : 2, 6);
 
                     // Build the drain effect.
                     /*effect eDebuff = EffectAbilityDecrease(ABILITY_CHARISMA, nChaDrain);
-                    eDebuff = EffectLinkEffects(eDebuff, 
+                    eDebuff = EffectLinkEffects(eDebuff,
                          EffectAbilityDecrease(ABILITY_WISDOM, nWisDrain));
                     eDebuff = EffectLinkEffects(eDebuff,
                          EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE));*/
                     effect eVFX = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
-                         
+
                     // Apply the damage and the damage visible effect to the target.
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, oTarget);
-                    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, TRUE, DURATION_TYPE_PERMANENT);
-                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, nWisDrain, TRUE, DURATION_TYPE_PERMANENT);
-                    
+                    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, DURATION_TYPE_PERMANENT, TRUE);
+                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM,   nWisDrain, DURATION_TYPE_PERMANENT, TRUE);
+
                     // Target takes secondary 1d6 cha drain 1 minute later.
-                    nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 
+                    nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL,
                          1 == nTouchAttack ? 1 : 2, 6);
                     DelayCommand(MinutesToSeconds(1), DoSecondaryDrain(oTarget, nChaDrain));
-                    
+
                     // apply sneak damage if appropriate
                     ApplyTouchAttackDamage(OBJECT_SELF, oTarget, nTouchAttack, 0, DAMAGE_TYPE_NEGATIVE);
                }
           }
      }
-     
+
      SPSetSchool();
 }

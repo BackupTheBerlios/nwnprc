@@ -4,9 +4,9 @@
 //Area of Effect / Target: Small
 //Save: Fortitude negates
 //Spell Resistance: Yes
-//You cause a multitude of ribbonlike shadows to explode outward in the 
-//target area.  Creatures in the area take 2 points of strength 
-//damage, are dazed for 1 round, and suffer a -2 penalty to saves vs. 
+//You cause a multitude of ribbonlike shadows to explode outward in the
+//target area.  Creatures in the area take 2 points of strength
+//damage, are dazed for 1 round, and suffer a -2 penalty to saves vs.
 //fear effects.  The fear penalty lasts for 1 round / level.
 void main()
 {
@@ -15,14 +15,14 @@ void main()
 
     SPSetSchool(SPELL_SCHOOL_ILLUSION);
 
-    // Apply a burst visual effect at the target location.    
+    // Apply a burst visual effect at the target location.
     location lTarget = GetSpellTargetLocation();
 //TODO: NEED VFX
     effect eImpact = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_GREASE);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
 
-    // Determine the spell's duration.   
-    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF); 
+    // Determine the spell's duration.
+    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
 
     // Build all of the detrimental effectsd, any target that fails its save takes
@@ -31,7 +31,7 @@ void main()
     //effect eDamage = EffectAbilityDecrease(ABILITY_STRENGTH, 2);
     effect eDaze = EffectDazed();
     effect eFear = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_FEAR);
-    
+
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget);
     while(GetIsObjectValid(oTarget))
     {
@@ -45,12 +45,12 @@ void main()
             {
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DAZED_S), oTarget);
                 //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
-                ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 2, TRUE, DURATION_TYPE_PERMANENT);
+                ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 2, DURATION_TYPE_PERMANENT, TRUE);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDaze, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLvl);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFear, oTarget, fDuration,TRUE,-1,nCasterLvl);
             }
         }
-        
+
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget);
     }
 

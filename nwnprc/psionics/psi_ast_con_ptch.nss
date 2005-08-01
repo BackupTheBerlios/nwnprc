@@ -6,8 +6,8 @@
    Fort save vs DC 10 + 0.5 * AC's HD + AC's Cha mod
    On failed save, 1 Con damage
    1 minute later, regardless of first save, a second
-   save versus same DC, on fail 1d2 Con damage 
-    
+   save versus same DC, on fail 1d2 Con damage
+
 */
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan
@@ -28,7 +28,7 @@ void DoPoison(object oTarget, object oCaster, int nDC, int nDam){
 	{
 		//Apply the poison effect and VFX impact
 		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_S), oTarget);
-		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, TRUE, DURATION_TYPE_PERMANENT);
+		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, TRUE);
 	}
 }
 

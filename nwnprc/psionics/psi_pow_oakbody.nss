@@ -1,7 +1,7 @@
 /*
    ----------------
    Oak Body
-   
+
    prc_pow_oakbody
    ----------------
 
@@ -15,12 +15,12 @@
    Saving Throw: None
    Power Resistance: No
    Power Point Cost: P/W 13, PsyWar 9
-   
+
    You gain the advantages of a living oak. This grants you Damage Reduction 10/+2, +5 Natural Armour, Immunity to Blindness, Deafness,
-   Disease, Poison, Stunning, 50% Cold Immunity, +4 to Strength, Immunity to Drown, 50% Fire Vulnerability, -2 Dexterity, 
+   Disease, Poison, Stunning, 50% Cold Immunity, +4 to Strength, Immunity to Drown, 50% Fire Vulnerability, -2 Dexterity,
    25% Arcane Spell Failure and 50% movement speed.
-   
-   Augment: For every additional power point spent, this power's duration increases by 1 minute.  
+
+   Augment: For every additional power point spent, this power's duration increases by 1 minute.
 */
 
 #include "psi_inc_psifunc"
@@ -108,6 +108,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget);
-        ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 2, DURATION_TYPE_TEMPORARY, FALSE, fDur, -1, nCaster);
+        ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 2, DURATION_TYPE_TEMPORARY, FALSE, fDur, TRUE, -1, nCaster);
     }
 }

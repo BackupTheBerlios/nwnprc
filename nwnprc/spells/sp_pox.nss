@@ -41,8 +41,8 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
     int nCount = 0;
     int nDC, nDamage;
     float fDelay;
-    
-    
+
+
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, locTarget);
     //Cycle through the targets within the spell shape until an invalid object is captured.
@@ -55,26 +55,26 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_POX));
             //Get a random delay
             fDelay = GetRandomDelay(0.5, 1.0);
-            
+
             //Only living targets
             if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
             {
                 //We have a valid target, increment counter
                 nCount++;
-                
+
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay))
-                {   
+                {
                     nDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
                     //Roll damage for each target and resolve metamagic
                     nDamage = SPGetMetaMagicDamage(-1, 1, 4, 0, 0, nMetaMagic);
-                    
+
                     if(/*Fort Save*/ !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                     {
                         //Set the damage effect
                         //eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage);
                         // Apply effects to the currently selected target.
                         //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDam, oTarget, 0.0f, FALSE, -1, nCasterLvl));
-                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, TRUE, DURATION_TYPE_PERMANENT, 0.0f, FALSE, -1, nCasterLvl));
+                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_PERMANENT, TRUE, 0.0f, FALSE, -1, nCasterLvl));
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                     }// end if - fort save
                 }// end if - spell resist

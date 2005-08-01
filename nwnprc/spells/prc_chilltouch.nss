@@ -34,7 +34,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int iPenetr = PRCGetCasterLevel(OBJECT_SELF) + SPGetPenetr();
     int iSaveDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
     int iMeta = PRCGetMetaMagicFeat();
-    
+
     if ((iMeta & METAMAGIC_EXTEND))
     {
         iTurnDur = iTurnDur * 2;
@@ -47,16 +47,16 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         iNegDam = 6;
     }
-    
+
     iNegDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-    
+
     int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);;
     if (iAttackRoll > 0)
     {
         if (!GetIsReactionTypeFriendly(oTarget))
         {
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_GHOUL_TOUCH));
-        
+
             if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
             {
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget, iPenetr) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, iSaveDC))
@@ -66,7 +66,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
                     eDur = EffectLinkEffects(eDur, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR));
                     eDur = EffectLinkEffects(eDur, EffectTurned());
-                    
+
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(iTurnDur));
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis1, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
@@ -78,10 +78,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                     effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
                     //effect eDam = EffectDamage(iNegDam, iEleDmg);
-                
+
                     //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    
+
                     // apply damage + sneak damage
                     ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, iNegDam, iEleDmg);
                     PRCBonusDamage(oTarget);
@@ -90,9 +90,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     {
                         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
                         //eDur = EffectLinkEffects(eDur, EffectAbilityDecrease(ABILITY_STRENGTH, 1));
-                        
+
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(iTurnDur));
-                        ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 1, TRUE, DURATION_TYPE_TEMPORARY, RoundsToSeconds(iTurnDur));
+                        ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 1, DURATION_TYPE_TEMPORARY, TRUE, RoundsToSeconds(iTurnDur));
                     }
                 }
             }

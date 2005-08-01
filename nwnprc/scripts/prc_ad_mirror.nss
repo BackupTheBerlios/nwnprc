@@ -81,7 +81,7 @@ void main2()
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage);
         //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCon, oImage);
-        ApplyAbilityDamage(oImage, ABILITY_CONSTITUTION, iCon, TRUE, DURATION_TYPE_PERMANENT);
+        ApplyAbilityDamage(oImage, ABILITY_CONSTITUTION, iCon, DURATION_TYPE_PERMANENT, TRUE);
         DelayCommand(3.0f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGhost, oImage));
 
         ChangeToStandardFaction(oImage, STANDARD_FACTION_DEFENDER);

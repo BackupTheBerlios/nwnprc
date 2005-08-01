@@ -26,7 +26,7 @@ void DoPoison(object oTarget, object oCaster, int nDC, int CasterLvl, int nMetaM
    int nDam = SPGetMetaMagicDamage(-1, 1, 10, 0, 0, nMetaMagic);
    //effect eDamage = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
    //effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_IMP_POISON_L), eDamage);
-   
+
    // First check for poison immunity, if not, make a fort save versus spells.
    if(!GetIsImmune(oTarget, IMMUNITY_TYPE_POISON) &&
       !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL, oCaster))
@@ -34,7 +34,7 @@ void DoPoison(object oTarget, object oCaster, int nDC, int CasterLvl, int nMetaM
        //Apply the poison effect and VFX impact
        //SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,TRUE,-1,CasterLvl);
        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_L), oTarget);
-       ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, TRUE, DURATION_TYPE_PERMANENT, 0.0f, TRUE, -1, CasterLvl);
+       ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, TRUE, 0.0f, TRUE, -1, CasterLvl);
    }
 }
 
@@ -64,10 +64,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
    //not sure why it was doing this instead Primogenitor
         //10 + (CasterLvl / 2) + GetAbilityModifier(ABILITY_WISDOM);
    int nMetaMagic = SPGetMetaMagic();
-   
-    
+
+
    int nTouch = PRCDoMeleeTouchAttack(oTarget);;// Was a constant 1. No idea why - Ornedan
-    
+
    if(!GetIsReactionTypeFriendly(oTarget))
    {
        //Fire cast spell at event for the specified target
@@ -80,13 +80,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
            {
                // Primary damage
                DoPoison(oTarget, oCaster, nDC, CasterLvl, nMetaMagic);
-               
+
                // Secondary damage
                DelayCommand(MinutesToSeconds(1), DoPoison(oTarget, oCaster, nDC, CasterLvl, nMetaMagic));
            }
        }
    }
-    
+
    // Getting rid of the integer used to hold the spells spell school
    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

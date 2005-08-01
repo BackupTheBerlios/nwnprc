@@ -57,7 +57,7 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE)
     object oTarget = OBJECT_SELF;
 
     AssignCommand(oCastingObject, ActionCastSpellAtObject(iSpell, oTarget, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-    
+
     DestroyObject(oCastingObject, 6.0);
 }
 
@@ -65,7 +65,7 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 {
     object oTarget = GetSpellTargetObject();
     location lLoc = GetSpellTargetLocation();
-    
+
     //set the overriding values
     if (iCasterLev != 0)
         ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE, iCasterLev));
@@ -90,13 +90,13 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
 
 
-/* 
+/*
 //The problem with this approace is that the effects are then applies by the original spell, which could go wrong. What to do?
     SetLocalInt(OBJECT_SELF, "SpellIDOverride", GetSpellId());
     DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "SpellIDOverride"));
     string sScript = Get2DACache("spells", "ImpactScript", iSpell);
     ExecuteScript(sScript, OBJECT_SELF);
-*/    
+*/
 }
 
 ////////////////End Generic////////////////
@@ -563,7 +563,7 @@ void MakeDrunk(object oTarget, int nPoints)
 
     //effect eDumb = EffectAbilityDecrease(ABILITY_INTELLIGENCE, nPoints);
     //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDumb, oTarget, 60.0);
-    ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, nPoints, TRUE, DURATION_TYPE_TEMPORARY, 60.0);
+    ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, nPoints, DURATION_TYPE_TEMPORARY, TRUE, 60.0);
     AssignCommand(oTarget, SpeakString("*Burp!*"));
 }
 
@@ -943,7 +943,7 @@ int FeatIniDmg(object oItem)
 {
     itemproperty ip = GetFirstItemProperty(oItem);
     while (GetIsItemPropertyValid(ip))
-    { 
+    {
     if (GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT)
         {
 
@@ -953,7 +953,7 @@ int FeatIniDmg(object oItem)
     }
     return 0;
 }
-    
+
 
 void AddIniDmg(object oPC)
 {
@@ -987,7 +987,7 @@ void AddIniDmg(object oPC)
      AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE,2),oCweapR,9999.0);
    }*/
 
-   
+
    if ( oCweapB != OBJECT_INVALID && !FeatIniDmg(oCweapB))
    {
       iDmg =  MonsterDamage(oCweapB);
@@ -1090,25 +1090,25 @@ void ImpCrit(object oPC,object oSkin)
 int CanCastSpell(int iSpelllvl = 0,int iAbi = ABILITY_WISDOM,int iASF = 0,object oCaster=OBJECT_SELF)
 {
    string iMsg =" You cant cast your spell because your ability score is too low";
-   int iScore = GetAbilityScore(oCaster,iAbi); 
+   int iScore = GetAbilityScore(oCaster,iAbi);
    if (iScore < 10 + iSpelllvl)
    {
        FloatingTextStringOnCreature(iMsg, oCaster, FALSE);
        return 0;
-   }  
+   }
    if (iASF)
    {
-     int ASF = GetArcaneSpellFailure(oCaster); 
+     int ASF = GetArcaneSpellFailure(oCaster);
      int idice = d100(1);
      if (idice <= ASF && idice!=100)
      {
         FloatingTextStringOnCreature("Spell failed due to arcane spell failure (roll:"+IntToString(idice)+")", oCaster, FALSE);
-        return 0; 
+        return 0;
      }
-      
+
    }
-   
-   return 1;     
+
+   return 1;
 }
 
 
@@ -1131,9 +1131,9 @@ void MartialStrike()
 
    if (iEquip==2)
    {
-    
+
      if (!GetHasFeat(FEAT_HOLY_MARTIAL_STRIKE)) return;
-     
+
      oItem=GetItemLastEquipped();
      iType= GetBaseItemType(oItem);
 
@@ -1196,9 +1196,9 @@ void MartialStrike()
    }
    else
    {
-    
+
      if (!GetHasFeat(FEAT_HOLY_MARTIAL_STRIKE)) return;
-     
+
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
      iType= GetBaseItemType(oItem);
 
@@ -1221,7 +1221,7 @@ void MartialStrike()
           oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
           break;
      }
-    
+
      if (!GetLocalInt(oItem,"MartialStrik"))
      {
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_2d6),oItem,9999.0);
@@ -1252,9 +1252,9 @@ void UnholyStrike()
 
    if (iEquip==2)
    {
-    
+
      if (!GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
-     
+
      oItem=GetItemLastEquipped();
      iType= GetBaseItemType(oItem);
 
@@ -1318,9 +1318,9 @@ void UnholyStrike()
    }
    else
    {
-    
+
      if (!GetHasFeat(FEAT_UNHOLY_STRIKE)) return;
-     
+
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
      iType= GetBaseItemType(oItem);
 
@@ -1343,7 +1343,7 @@ void UnholyStrike()
           oItem=GetItemInSlot(INVENTORY_SLOT_BULLETS);
           break;
      }
-    
+
      if (!GetLocalInt(oItem,"UnholyStrik"))
      {
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_GOOD,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_2d6),oItem,9999.0);
@@ -1550,9 +1550,9 @@ void LycanthropePoly(object oPC, int nPoly)
 
     //check if a shifter and if shifted then unshift
     ShifterCheck(oPC);
-    
+
     ClearAllActions(); // prevents an exploit
-    
+
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoly, oPC);
@@ -1615,10 +1615,10 @@ void StoreSongRecipient(object oRecipient, object oSinger, int iSongID, int iDur
 
     // Store the recipient into the current used slot
     SetLocalObject(oSinger, sRecip, oRecipient);
-   
+
     // Store the song information
     SetLocalInt(oSinger, sSong, iSongID);
-   
+
     // Store the index of creatures we're on
     SetLocalInt(oSinger, sIndex, iIndex);
 }
@@ -1636,7 +1636,7 @@ void RemoveOldSongEffects(object oSinger, int iSongID)
     string sIndex;
     string sRecip;
     string sSong;
-    
+
     if (GetHasFeat(FEAT_MINSTREL_GREATER_MINSTREL_SONG, oSinger))
     {
         // If you use the same song twice in a row you
@@ -1651,25 +1651,25 @@ void RemoveOldSongEffects(object oSinger, int iSongID)
     {
         iSlot = 0;
     }
-    
+
     // Save the toggle we're on for later.
     SetLocalInt(oSinger, "SONG_SLOT", iSlot);
 
-    // Find the proper variable names based on slot     
+    // Find the proper variable names based on slot
     sIndex = "SONG_INDEX_" + IntToString(iSlot);
     sSong = "SONG_IN_USE_" + IntToString(iSlot);
-    
+
     // Store the local variables into script variables
     iNumRecip = GetLocalInt(oSinger, sIndex);
     iSongInUse = GetLocalInt(oSinger, sSong);
-    
+
     // Reset the local variables
     SetLocalInt(oSinger, sIndex, 0);
     SetLocalInt(oSinger, sSong, 0);
-    
+
     // Removes any effects from the caster first
     RemoveSongEffects(iSongInUse, oSinger, oSinger);
-    
+
     // Removes any effects from the recipients
     for (iIndex = 1 ; iIndex <= iNumRecip ; iIndex++)
     {
@@ -1821,7 +1821,7 @@ int SpellToOnHitCastSpell(int iSpell);
 
 object AACreateImbuedArrow(object oArrow, int iSpell, int iSpellLevel, float fDuration, object oArcher = OBJECT_SELF)
 {
-//modified to use spellsword code    
+//modified to use spellsword code
 //use existing arrow because otherwise the new arrow will cease to exist when fired, since its a stack of 1
 /*
     //Add OnHit: Cast Spell to new arrow.
@@ -2023,7 +2023,7 @@ void AAImbueExpire(object oArrow)
         {
 //            DestroyObject(oArrow);
         }
-        
+
         //clear up the new variables
         DeleteLocalString(oArrow,"spellscript1");
         DeleteLocalString(oArrow,"metamagic_feat_1");
@@ -2368,7 +2368,7 @@ void CorpseCrafter(object oPC, object oSummon)
         effect eAC = EffectACIncrease(2);
         eAC = SupernaturalEffect(eAC);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAC, oSummon);
-    }   
+    }
     if (GetHasFeat(FEAT_NIMBLE_BONES, oPC))
     {
         // Make sure they have a hide to apply the feat to
@@ -2381,11 +2381,11 @@ void CorpseCrafter(object oPC, object oSummon)
         }
         itemproperty iInit = ItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_INIT);
         AddItemProperty(DURATION_TYPE_PERMANENT, iInit, oSkin);
-        
+
         // Speed boost, average speed is 30 feet, so a 10 foot boost is a 33% boost
         effect eSpeed = EffectMovementSpeedIncrease(33);
         eSpeed = SupernaturalEffect(eSpeed);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpeed, oSummon);      
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpeed, oSummon);
     }
     if (GetHasFeat(FEAT_DESTRUCTION_RETRIBUTION, oPC))
     {

@@ -7,7 +7,7 @@
     In exchange, all allies in short radius are
     healed by their HD * ConDam / 2 and are
     cured of diseases.
-    
+
     The constitution damage cannot be healed for an
     hour, so it is applied to hide for that duration.
     Once the hour has run out, the damage is applied
@@ -87,7 +87,7 @@ void main()
 
     // After the permanent version has worn off, apply it as temporary effect, wearing off at rate of 1 point per day on it's own
     // The 0.3 is a fudge factor for making sure the effects do not overlap even if the game happens to lag a bit
-    DelayCommand(HoursToSeconds(1) + 0.3f, ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, nStigmataDamage, TRUE, DURATION_TYPE_TEMPORARY, -1.0f));
+    DelayCommand(HoursToSeconds(1) + 0.3f, ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, nStigmataDamage, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
 
     // Some decorative VFX on the user
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR), oPC, HoursToSeconds(1));
@@ -121,7 +121,7 @@ void main()
             effect eHeal = EffectLinkEffects(EffectVisualEffect(VFX_IMP_HEALING_X), EffectHeal(GetHitDice(oSecondary) * nStigmataDamage / 2));
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oSecondary);
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR), oSecondary, TurnsToSeconds(1));
-        
+
             // Since forcing a resave is not possible, and this implementation will be somewhat poorer compared to
             // the PnP version due to inability to store charges, the diseases will just be removed
             effect eCheck = GetFirstEffect(oSecondary);
@@ -131,11 +131,11 @@ void main()
                     RemoveEffect(oSecondary, eCheck);
                 eCheck = GetNextEffect(oSecondary);
             }
-            
+
             // Mark one more target slot as used
             nTargets--;
         }
-        
+
         // Get next potential target
         oSecondary = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, GetLocation(oPC));
     }

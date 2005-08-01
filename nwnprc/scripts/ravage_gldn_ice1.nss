@@ -21,7 +21,7 @@ void main()
 	if (GetAlignmentGoodEvil(oTarget)!=ALIGNMENT_EVIL) return;
 	int nExtra = GetRavageExtraDamage(oTarget);
 	effect eVis = GetRavageVFX();
-	
-	ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, d6(1) + nExtra, TRUE, DURATION_TYPE_PERMANENT);
+
+	ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, d6(1) + nExtra, DURATION_TYPE_PERMANENT, TRUE);
 	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 }

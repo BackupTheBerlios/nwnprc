@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
     effect eRay = EffectBeam(VFX_BEAM_MIND, OBJECT_SELF, BODY_NODE_HAND);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     int nPenetr = CasterLvl + SPGetPenetr();
-    
+
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         //Fire cast spell at event for the specified target
@@ -94,7 +94,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
                   //Apply the VFX impact and ability damage effect.
                   //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
                   SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFeeb, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
-                  ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, nLoss, TRUE, DURATION_TYPE_TEMPORARY, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
+                  ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, nLoss, DURATION_TYPE_TEMPORARY, TRUE, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
                   SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.0,FALSE);
                   SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             }

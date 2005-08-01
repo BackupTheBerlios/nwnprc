@@ -4,13 +4,13 @@ void main()
 {
      // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
      if (!X2PreSpellCastCode()) return;
-    
+
      SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-     
+
     // Set the lightning stream to start at the caster's hands
     effect eBolt = EffectBeam(VFX_BEAM_BLACK, OBJECT_SELF, BODY_NODE_HAND);
     effect eVis  = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
-    
+
     object oTarget = GetSpellTargetObject();
     location lTarget = GetLocation(oTarget);
     object oNextTarget, oTarget2;
@@ -22,7 +22,7 @@ void main()
      int nBonusDam = nCasterLevel / 4;
      if (nBonusDam > 3) nBonusDam = 3;
      int nPenetr = nCasterLevel + SPGetPenetr();
-     
+
     oTarget2 = GetNearestObject(OBJECT_TYPE_CREATURE, OBJECT_SELF, nCnt);
     while(GetIsObjectValid(oTarget2) && GetDistanceToObject(oTarget2) <= 30.0)
     {
@@ -44,7 +44,7 @@ void main()
                               // Roll the drain damage and adjust for a reflex save/evasion.
                               int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 3, nBonusDam);
                               nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-                              nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, 
+                              nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget,
                                    PRCGetSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_NEGATIVE);
 
                               // Apply str/con drain if any.
@@ -57,7 +57,7 @@ void main()
                                         /*effect eDamage = SupernaturalEffect(EffectAbilityDecrease(ABILITY_STRENGTH, nDamage));
                                         eDamage = EffectLinkEffects(eDamage,
                                              SupernaturalEffect(EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage)));*/
-                                             
+
                                         // Recovery is supposed to be 1 pt / day, so apply each point
                                         // individually to make them last the full day.
                                         /*SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDamage, oTarget,
@@ -73,12 +73,12 @@ void main()
                                         DelayCommand(0.01f, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH,     1, TRUE, DURATION_TYPE_TEMPORARY, HoursToSeconds(24) * i));
                                         DelayCommand(0.01f, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, TRUE, DURATION_TYPE_TEMPORARY, HoursToSeconds(24) * i));
                                    }
-                                        
+
                                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                               }*/
-                              
-                              ApplyAbilityDamage(oTarget, ABILITY_STRENGTH,     nDamage, TRUE, DURATION_TYPE_TEMPORARY, -1.0);
-                              ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, TRUE, DURATION_TYPE_TEMPORARY, -1.0);
+
+                              ApplyAbilityDamage(oTarget, ABILITY_STRENGTH,     nDamage, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
+                              ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
                               SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                          }
 
@@ -89,14 +89,14 @@ void main()
                          eBolt = EffectBeam(VFX_BEAM_BLACK, oNextTarget, BODY_NODE_CHEST);
                     }
                }
-           
+
                //Get the next object in the lightning cylinder
                oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE, GetPosition(OBJECT_SELF));
           }
-        
+
           nCnt++;
         oTarget2 = GetNearestObject(OBJECT_TYPE_CREATURE, OBJECT_SELF, nCnt);
      }
-     
+
      SPSetSchool();
 }

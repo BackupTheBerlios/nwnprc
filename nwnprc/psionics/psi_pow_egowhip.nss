@@ -1,7 +1,7 @@
 /*
     ----------------
     Ego Whip
-    
+
     psi_all_egowhip
     ----------------
 
@@ -15,9 +15,9 @@
     Saving Throw: Will half
     Power Resistance: Yes
     Power Point Cost: 3
- 
-    Your rapid mental lashings assault the ego of the target, debilitating its confidence. 
-    The target takes 1d4 points of Charisma damage, or half that amount on a save (minimum 1). 
+
+    Your rapid mental lashings assault the ego of the target, debilitating its confidence.
+    The target takes 1d4 points of Charisma damage, or half that amount on a save (minimum 1).
     A target that fails its save is also dazed for one round.
 
     Augment: For every 4 additional power points spent, this power's Charisma damage increases by 1d4,
@@ -110,7 +110,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
             //Apply the VFX impact and effects
             DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
             //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDam, oTarget, HoursToSeconds(24),TRUE,-1,nCaster);
-            ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nDamage, TRUE, DURATION_TYPE_TEMPORARY, HoursToSeconds(24), TRUE, -1, nCaster);
+            ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nDamage, DURATION_TYPE_TEMPORARY, TRUE, HoursToSeconds(24), TRUE, -1, nCaster);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7 ,FALSE);
         }
     }

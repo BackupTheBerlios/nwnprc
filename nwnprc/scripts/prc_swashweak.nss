@@ -1,12 +1,26 @@
 #include "prc_feat_const"
 
 void main()
-{
-   if (GetIsImmune(GetSpellTargetObject(),IMMUNITY_TYPE_CRITICAL_HIT)) return;
+{ 
    object oWeap=GetSpellCastItem();
    int nThreat = 20;
    int dice=d20();
+   int HealInt = GetIsImmune(GetSpellTargetObject(),IMMUNITY_TYPE_CRITICAL_HIT) ? 1 : 0;
+       HealInt = GetIsImmune(GetSpellTargetObject(),IMMUNITY_TYPE_SNEAK_ATTACK) ? 1 : HealInt;
+   int CritImm = GetIsImmune(GetSpellTargetObject(),IMMUNITY_TYPE_CRITICAL_HIT) ? 1 : 0;
 
+//if the target is immune to either Sneak attacks or Critical hits, heal the players INT bonus
+//to them to balance the int damage problem.
+ if (HealInt>0)
+    {
+    ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectHeal(GetAbilityModifier(ABILITY_INTELLIGENCE, OBJECT_SELF)),GetSpellTargetObject());
+    }
+
+
+//if the target is immune to critical hits, the rest of this does not apply!
+//However, it still applies if they are immune to sneak attack.
+ if (CritImm<1)
+   {
    if (GetBaseItemType(oWeap)==BASE_ITEM_HANDAXE)
         {
         if (GetItemHasItemProperty(oWeap, ITEM_PROPERTY_KEEN) == TRUE)
@@ -937,6 +951,6 @@ void main()
                  }
              }
         }
-
+   }
 
 }

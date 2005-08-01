@@ -65,7 +65,7 @@ void main()
     nFoeHunter = GetLevelByClass(CLASS_TYPE_FOE_HUNTER, OBJECT_SELF);
 
     //// Swashbuckler Weakening and Wounding Criticals
-    if(GetHasFeat(WEAKENING_CRITICAL, OBJECT_SELF))
+    if(GetHasFeat(INSIGHTFUL_STRIKE, OBJECT_SELF))
         ExecuteScript("prc_swashweak", OBJECT_SELF);    
 
     //// Stormlord Shocking & Thundering Spear

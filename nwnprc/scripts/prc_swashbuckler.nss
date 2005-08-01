@@ -84,7 +84,7 @@ void SmartWound(object oPC, object oSkin, int iStrike, int iEquip)
 //This makes a unique on hit which calls on the "prc_swashweak" scripts
 //to simulate a critical hit roll percentage.  On success, it deals 
 //2 STR damage (and 2 CON damage at level 19)
-void CritSTR(object oPC, object oSkin,int WeakCrit, int iEquip)
+void CritSTR(object oPC, object oSkin,int iStrike, int iEquip)
 {
   object oItem ;
   object oItemb ;
@@ -170,5 +170,5 @@ void main()
     if (sGrace>0) Grace(oPC,oSkin,sGrace);
     if (sDodge>0) Dodge(oPC,oSkin,sDodge);
     if (iStrike>0) SmartWound(oPC,oSkin,iStrike,iEquip);
-    if (WeakCrit>0) CritSTR(oPC,oSkin,WeakCrit,iEquip);
+    if (iStrike>0) CritSTR(oPC,oSkin,iStrike,iEquip);
 }

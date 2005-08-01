@@ -24,6 +24,7 @@ void ElImmune(object oPC ,object oSkin ,int bResisEle ,int iType)
 } 
 
 //Adds poison immunity for certain dragon types.
+//also adds immunity to level drain for shadow dragons.
 void PoisImmu(object oPC ,object oSkin ,int bResisEle ,int pImmune) 
 { 
     DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyImmunityMisc(pImmune),oSkin));  
@@ -112,7 +113,6 @@ void main()
                 GetHasFeat(FEAT_BRONZE_DRAGON, oPC)    ? IP_CONST_DAMAGETYPE_ELECTRICAL : 
                 GetHasFeat(FEAT_OCEANUS_DRAGON, oPC)   ? IP_CONST_DAMAGETYPE_ELECTRICAL : 
                 GetHasFeat(FEAT_SAPPHIRE_DRAGON, oPC)  ? IP_CONST_DAMAGETYPE_ELECTRICAL : 
-                GetHasFeat(FEAT_SHADOW_DRAGON, oPC)    ? IP_CONST_DAMAGETYPE_ELECTRICAL : 
                 GetHasFeat(FEAT_SONG_DRAGON, oPC)      ? IP_CONST_DAMAGETYPE_ELECTRICAL : 
                 GetHasFeat(FEAT_SHEN_LUNG_DRAGON, oPC) ? IP_CONST_DAMAGETYPE_ELECTRICAL : 
                 GetHasFeat(FEAT_CRYSTAL_DRAGON, oPC)   ? IP_CONST_DAMAGETYPE_COLD : 
@@ -129,6 +129,7 @@ void main()
                   GetHasFeat(FEAT_SONG_DRAGON, oPC)       ? IP_CONST_IMMUNITYMISC_POISON : 
                   GetHasFeat(FEAT_STYX_DRAGON, oPC)       ? IP_CONST_IMMUNITYMISC_POISON : 
                   GetHasFeat(FEAT_SHEN_LUNG_DRAGON, oPC)  ? IP_CONST_IMMUNITYMISC_POISON : 
+                  GetHasFeat(FEAT_SHADOW_DRAGON, oPC)     ? IP_CONST_IMMUNITYMISC_LEVEL_ABIL_DRAIN : 
                    -1; // If none match, make the itemproperty invalid 
                    
     int dImmune = GetHasFeat(FEAT_STYX_DRAGON, oPC)       ? IP_CONST_IMMUNITYMISC_DISEASE : 

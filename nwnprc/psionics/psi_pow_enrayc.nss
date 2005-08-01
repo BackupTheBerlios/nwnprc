@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
     nDamage += nDice;
     
-    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_COLD);
+    //effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_COLD);
     
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
     
@@ -90,7 +90,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         //Check for Power Resistance
         if (PRCMyResistPower(oCaster, oTarget, nPen))
         {
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            ApplyTouchAttackDamage(oCaster, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_COLD, TRUE);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
         }

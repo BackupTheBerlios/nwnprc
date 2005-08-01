@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
+    int nAugCost = 1;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     object oTarget = OBJECT_SELF;
@@ -73,7 +73,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
-	float fWidth = DoWiden(RADIUS_SIZE_SMALL, nMetaPsi);
+	float fWidth = DoWiden(FeetToMeters(5.0), nMetaPsi);
 	
 	location lTarget = GetSpellTargetLocation();
 	effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
@@ -94,6 +94,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	if (nAugment > 0) 
 	{
 		nDC += nAugment;
+		nDice += nAugment;
 	}
 	
 	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
@@ -105,7 +106,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		
 		if (PRCMyResistPower(oCaster, oTarget, nPen))
 		{
-		       	if (nAugment > 0) nDice += nAugment;
 		      	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
                    	nDamage += nDice;
                    	

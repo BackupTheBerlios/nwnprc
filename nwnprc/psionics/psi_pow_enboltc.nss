@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 // End of Spell Cast Hook
 
     object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
+    int nAugCost = 1;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     object oTarget = GetSpellTargetObject();
@@ -81,6 +81,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	if (nAugment > 0) 
 	{
 		nDC += nAugment/2;
+		nDice += nAugment;
 	}
 	
     effect eBeam = EffectBeam(VFX_BEAM_COLD, OBJECT_SELF, BODY_NODE_HAND);
@@ -108,7 +109,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
                    //Make an SR check
                    if (PRCMyResistPower(oCaster, oTarget, nPen))
                    {
-                   	if (nAugment > 0) nDice += nAugment;
                    	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
                    	nDamage += nDice;
                    	

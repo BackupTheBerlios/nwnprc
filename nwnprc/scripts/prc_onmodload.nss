@@ -18,6 +18,7 @@ void main()
     SetModuleSwitch (MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS, TRUE);
     ExecuteScript("prc_companion", OBJECT_SELF);
    
+    CreateSwitchNameArray();
     DoEpicSpellDefaults();
     SetDefaultFileEnds();
     if(GetPRCSwitch(PRC_CONVOCC_ENABLE))

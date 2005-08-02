@@ -652,15 +652,20 @@ int PractisedSpellcasting (object oCaster, int iCastingClass, int iCastingLevels
     if (iAdjustment > 4) iAdjustment = 4;
     if (iAdjustment < 0) iAdjustment = 0;
     
-    if (iCastingClass == CLASS_TYPE_BARD && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_BARD, oCaster))
+    if (iCastingClass == CLASS_TYPE_BARD 
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_BARD, oCaster))
         return iAdjustment;
-    if (iCastingClass == CLASS_TYPE_SORCERER && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_SORCERER, oCaster))
+    if (iCastingClass == CLASS_TYPE_SORCERER 
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_SORCERER, oCaster))
         return iAdjustment;
-    if (iCastingClass == CLASS_TYPE_WIZARD && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_WIZARD, oCaster))
+    if (iCastingClass == CLASS_TYPE_WIZARD 
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_WIZARD, oCaster))
         return iAdjustment;
-    if (iCastingClass == CLASS_TYPE_CLERIC && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_CLERIC, oCaster))
+    if (iCastingClass == CLASS_TYPE_CLERIC 
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_CLERIC, oCaster))
         return iAdjustment;
-    if (iCastingClass == CLASS_TYPE_DRUID && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_DRUID, oCaster))
+    if (iCastingClass == CLASS_TYPE_DRUID 
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_DRUID, oCaster))
         return iAdjustment;
 
     return 0;    

@@ -771,58 +771,100 @@ int MarshalAuraLimit(object oPC = OBJECT_SELF)
         FloatingTextStringOnCreature("Major Aura: " + IntToString(MajAur), oPC, FALSE);
         */
         if ((mArsh == 2) && (MinAur == 2))
-	    {
-	    FloatingTextStringOnCreature("You must select a Major Aura this level.", oPC, FALSE);
-	    return FALSE;
+        {
+        FloatingTextStringOnCreature("You must select a Major Aura this level.", oPC, FALSE);
+        return FALSE;
             }
         if ((mArsh == 3) && (MinAur == 1))
-	    {
-	    FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
-	    return FALSE;
+        {
+        FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
+        return FALSE;
             }
         if ((mArsh == 7) && (MinAur == 3))
-	    {
-	    FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
-	    return FALSE;
+        {
+        FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
+        return FALSE;
             }
         if ((mArsh == 12) && (MinAur == 5))
-	    {
-	    FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
-	    return FALSE;
+        {
+        FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
+        return FALSE;
             }
         if ((mArsh == 14) && (MinAur == 7))
-	    {
-	    FloatingTextStringOnCreature("You must select a Major Aura this level.", oPC, FALSE);
-	    return FALSE;
+        {
+        FloatingTextStringOnCreature("You must select a Major Aura this level.", oPC, FALSE);
+        return FALSE;
             }
         if ((mArsh == 15) && (MinAur == 6))
-	    {
-	    FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
-	    return FALSE;
+        {
+        FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
+        return FALSE;
             }
         if ((mArsh == 19) && (MinAur == 7))
-	    {
-	    FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
-	    return FALSE;
+        {
+        FloatingTextStringOnCreature("You must select a Minor Aura this level.", oPC, FALSE);
+        return FALSE;
             }
         if ((mArsh == 20) && (MinAur == 9))
- 	    {
- 	    FloatingTextStringOnCreature("You must select a Major Aura this level.", oPC, FALSE);
- 	    return FALSE;
+        {
+        FloatingTextStringOnCreature("You must select a Major Aura this level.", oPC, FALSE);
+        return FALSE;
             }
         if ((mArsh > 20) && (MinAur > 8))
-	    {
-	    FloatingTextStringOnCreature("You cannot learn any new Marshal Auras.", oPC, FALSE);
-	    return FALSE;
+        {
+        FloatingTextStringOnCreature("You cannot learn any new Marshal Auras.", oPC, FALSE);
+        return FALSE;
             }
         if ((mArsh > 20) && (MinAur > 5))
-	    {
-	    FloatingTextStringOnCreature("You cannot learn any new Marshal Auras.", oPC, FALSE);
-	    return FALSE;
+        {
+        FloatingTextStringOnCreature("You cannot learn any new Marshal Auras.", oPC, FALSE);
+        return FALSE;
             }
     }
     return TRUE;
 }
+
+//this is a rough calculation to stop the 41 spellslot levels bugs
+int FortySpellSlotLevels(object oPC)
+{
+    int i;
+    int nArcSpellslotLevel;
+    int nDivSpellslotLevel;
+    for(i=1;i<=3;i++)
+    {
+        int nClass = PRCGetClassByPosition(i, oPC);
+        //spellcasting prc
+        int nArcSpellMod = StringToInt(Get2DACache("classes", "ArcSpellLvlMod", nClass));
+        int nDivSpellMod = StringToInt(Get2DACache("classes", "DivSpellLvlMod", nClass));
+        if(nArcSpellMod)
+            nArcSpellslotLevel += (GetLevelByClass(nClass, oPC)+1)/nArcSpellMod;
+        if(nDivSpellMod)
+            nDivSpellslotLevel += (GetLevelByClass(nClass, oPC)+1)/nDivSpellMod;
+        //spellcasting base class
+        //bioware only
+        if(nClass == CLASS_TYPE_BARD
+            || nClass == CLASS_TYPE_WIZARD
+            || nClass == CLASS_TYPE_SORCERER
+            )
+            nArcSpellslotLevel += GetLevelByClass(nClass);
+        if(nClass == CLASS_TYPE_CLERIC
+            || nClass == CLASS_TYPE_DRUID
+            || nClass == CLASS_TYPE_RANGER
+            || nClass == CLASS_TYPE_PALADIN
+            )
+            nDivSpellslotLevel += GetLevelByClass(nClass);
+            
+    }
+    
+    if(nArcSpellslotLevel > 40
+        || nDivSpellslotLevel > 40)
+    {
+        FloatingTextStringOnCreature("You cannot take this class as it would break your spellcasting.", oPC, FALSE);
+        return FALSE;
+    }
+    return TRUE;
+}
+
 void main()
 {
         //Declare Major Variables
@@ -844,6 +886,7 @@ void main()
          || !PWSwitchRestructions(oPC)
          || !DraDisFeats(oPC)
          || !MarshalAuraLimit(oPC)
+         || !FortySpellSlotLevels(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

@@ -163,7 +163,7 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
        && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)         ExecuteScript("ft_gtwf", oPC);
     if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)                ExecuteScript("ft_lingdmg", oPC);
-    if(GetHasFeat(FEAT_MAGICAL_APTITUDE, oPC))           ExecuteScript("prc_magaptitude", oPC);
+    if(GetHasFeat(FEAT_MAGICAL_APTITUDE, oPC))                   ExecuteScript("prc_magaptitude", oPC);
     if(GetHasFeat(FEAT_ETERNAL_FREEDOM, oPC))                    ExecuteScript("etern_free", oPC);
     if(GetPersistantLocalInt(oPC, "EpicSpell_TransVital"))       ExecuteScript("trans_vital", oPC);
     if(GetHasFeat(FEAT_COMBAT_MANIFESTATION, oPC))               ExecuteScript("psi_combat_manif", oPC);
@@ -171,9 +171,9 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_RAPID_METABOLISM, oPC))                   ExecuteScript("prc_rapid_metab", oPC);
     if(GetHasFeat(FEAT_PSIONIC_HOLE, oPC))                       ExecuteScript("psi_psionic_hole", oPC);
     if(GetHasFeat(FEAT_POWER_ATTACK, oPC))                       ExecuteScript("prc_powatk_eval", oPC);
-    if(GetHasFeat(FAST_HEALING_1, oPC) >0)                       ExecuteScript("prc_fastheal", oPC);
-    if(GetHasFeat(FAST_HEALING_2, oPC) >0)                       ExecuteScript("prc_fastheal", oPC);
-    if(GetHasFeat(FAST_HEALING_3, oPC) >0)                       ExecuteScript("prc_fastheal", oPC);
+    if(GetHasFeat(FAST_HEALING_1, oPC)
+        || GetHasFeat(FAST_HEALING_2, oPC)
+        || GetHasFeat(FAST_HEALING_3, oPC))                      ExecuteScript("prc_fastheal", oPC);
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
         && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC)
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
@@ -205,7 +205,13 @@ void EvalPRCFeats(object oPC)
         SetLocalString(oPC, "DynConv_Script", "prc_pnp_school");
         AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
     }
-
+    
+    //switch convo feat
+    if(!GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO))        
+    {
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(229), oSkin); 
+    }
+    
     //size changes
     ExecuteScript("prc_size", oPC);
         

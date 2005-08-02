@@ -650,6 +650,7 @@ void UsePower(int nPower, int nClass, int bIgnorePP = FALSE, int nLevelOverride 
 {
     //SpawnScriptDebugger();
     SendMessageToPC(OBJECT_SELF, "UsePower: nPower = " + IntToString(nPower) + "; nClass = " + IntToString(nClass) + "; bIgnorePP = " + (bIgnorePP ? "true":"false") + "; nLevelOverride = " + IntToString(nLevelOverride));
+    PrintString("UsePower: nPower = " + IntToString(nPower) + "; nClass = " + IntToString(nClass) + "; bIgnorePP = " + (bIgnorePP ? "true":"false") + "; nLevelOverride = " + IntToString(nLevelOverride));
     //set the class
     SetLocalInt(OBJECT_SELF, "ManifestingClass", nClass);
 

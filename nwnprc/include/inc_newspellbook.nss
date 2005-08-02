@@ -36,6 +36,32 @@ int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1)
     return -1;
 }
 
+int GetSpellslotLevel(int nClass, object oPC)
+{
+    int nLevel = GetLevelByClass(nClass, oPC);
+    int nArcSpellslotLevel;
+    int nDivSpellslotLevel;
+    int i;
+    for(i=1;i<=3;i++)
+    {
+        int nTempClass = PRCGetClassByPosition(i, oPC);
+        //spellcasting prc
+        int nArcSpellMod = StringToInt(Get2DACache("classes", "ArcSpellLvlMod", nTempClass));
+        int nDivSpellMod = StringToInt(Get2DACache("classes", "DivSpellLvlMod", nTempClass));
+        //cos of the biobug, this is +1 before dividing
+        //yeah its screwy, go bitch at bioware ;)
+        if(nArcSpellMod)
+            nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nArcSpellMod;
+        if(nDivSpellMod)
+            nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nDivSpellMod;        
+    }
+    if(GetFirstArcaneClass(oPC) == nClass)
+        nLevel += nArcSpellslotLevel;
+    if(GetFirstDivineClass(oPC) == nClass)
+        nLevel += nDivSpellslotLevel;
+    return nLevel;
+}
+
 int GetAbilityForClass(int nClass, object oPC)
 {
     switch(nClass)
@@ -63,32 +89,6 @@ int GetAbilityForClass(int nClass, object oPC)
             return GetAbilityScore(oPC, ABILITY_CHARISMA);
     }
     return 0;
-}
-
-int GetNewSpellbookCasterLevel(int nClass, object oCaster = OBJECT_SELF)
-{
-    int nLevel = GetLevelByClass(nClass, oCaster);
-    if(GetIsDivineClass(nClass))
-    { 
-        if (GetFirstDivineClass(oCaster) == nClass) 
-            nLevel += GetDivinePRCLevels(oCaster);
-        nLevel += TrueNecromancy(oCaster, PRCGetSpellId(), "DIVINE") 
-                  +  ShadowWeave(oCaster, PRCGetSpellId()) 
-                  +  FireAdept(oCaster, PRCGetSpellId());
-                  
-        nLevel += PractisedSpellcasting(oCaster, nClass, nLevel); //gotta be the last one
-    }
-    if(GetIsArcaneClass(nClass))
-    { 
-        if (GetFirstArcaneClass(oCaster) == nClass) 
-            nLevel += GetArcanePRCLevels(oCaster);
-        nLevel += TrueNecromancy(oCaster, PRCGetSpellId(), "ARCANE") 
-                  +  ShadowWeave(oCaster, PRCGetSpellId()) 
-                  +  FireAdept(oCaster, PRCGetSpellId());
-                  
-        nLevel += PractisedSpellcasting(oCaster, nClass, nLevel); //gotta be the last one
-    }
-    return nLevel;
 }
 
 void WipeSpellbookHideFeats(object oPC)
@@ -233,17 +233,14 @@ void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
         SendMessageToPC(oPC, sMessage);
         return;
     }
-    //get the level
-    int nLevel = GetNewSpellbookCasterLevel(nClass);
-    //set the DC
     //uses GetSpellId to get the fake spellID not the real one
+    //this is only the BASE DC, feats etc are added on top of this
     int nDC = 10
         +StringToInt(Get2DACache("Spells", "Innate", PRCGetSpellId()))
         +((GetAbilityForClass(nClass, oPC)-10)/2);
-    //set the class
-    ActionDoCommand(SetLocalInt(oPC, PRC_CASTERCLASS_OVERRIDE, nClass));
     //cast the spell
-    ActionCastSpell(nSpellID, nLevel, nDC, 0, nMetamagic);
+    //dont need to override level, the spellscript will calculate it
+    ActionCastSpell(nSpellID, 0, nDC, 0, nMetamagic, nClass);
     //cleanup
     ActionDoCommand(DeleteLocalInt(oPC, PRC_CASTERCLASS_OVERRIDE));
     //remove it from the spellbook

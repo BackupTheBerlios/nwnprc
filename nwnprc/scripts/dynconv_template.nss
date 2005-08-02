@@ -102,7 +102,7 @@ void main()
     SetupTokens();
     int nChoice = array_get_int(oPC, "ChoiceValues", nValue+GetLocalInt(oPC, "ChoiceOffset"));
     int nStage = GetLocalInt(oPC, "Stage");
-    int nOldStage;
+    int nOldStage = nStage;
     // INSERT CODE HERE FOR PC RESPONSES
     // variable named nChoice is the value of the player's choice as stored when building the choice list
     // variable named nStage determines the current conversation node

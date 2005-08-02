@@ -51,8 +51,8 @@ void DoSmite(object oPC, object oTarget, int nType)
     string sMiss;
     string sFailedTarget;
     string sFailedSmiter;
-    int nTargetInvalid;
-    int nSmiterInvalid;
+    int nTargetInvalid = !GetIsObjectValid(oTarget);
+    int nSmiterInvalid = !GetIsObjectValid(oPC);
     switch(nType)
     {
         case SMITE_TYPE_EVIL:
@@ -127,7 +127,7 @@ void DoSmite(object oPC, object oTarget, int nType)
                         nTargetCount --;       
                     }
                     i++;
-                    GetNearestCreature(CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, oPC, i);
+                    oSecondTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, oPC, i);
                 }
             }
         }        
@@ -171,9 +171,10 @@ void DoSmite(object oPC, object oTarget, int nType)
         case SMITE_TYPE_INFIDEL:
         {
             eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
-            nDamage = GetLevelByClass(CLASS_TYPE_DIVINE_CHAMPION, oPC);
+            nDamage = GetLevelByClass(CLASS_TYPE_DIVINE_CHAMPION, oPC); //CoT
             nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
             string sDeity = "Torm";
+            //if bane levels higher, use that
             if(GetLevelByClass(CLASS_TYPE_CHAMPION_BANE, oPC) > nDamage)
             {
                 nDamage = GetLevelByClass(CLASS_TYPE_CHAMPION_BANE, oPC); 
@@ -242,9 +243,7 @@ void DoSmite(object oPC, object oTarget, int nType)
             iEpicSmite = GetHasFeat(FEAT_EPIC_GREAT_SMITING_9) ? 10:iEpicSmite;
             iEpicSmite = GetHasFeat(FEAT_EPIC_GREAT_SMITING_10)? 11:iEpicSmite;
         nDamage *= iEpicSmite;
-        //add charisma modifier, if positive
-        nAttack = GetAbilityModifier(ABILITY_CHARISMA)>0 ? GetAbilityModifier(ABILITY_CHARISMA):0;
-        
+                
         //whew, now we can do the actual smite through the combat engine
         PerformAttackRound(oTarget, oPC, eSmite, 0.0, nAttack, nDamage, nDamageType, FALSE, sHit, sMiss);
     }

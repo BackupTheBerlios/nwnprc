@@ -33,7 +33,7 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE);
 // This function should only be used when SLA's are meant to simulate true
 // spellcasting abilities, such as those seen when using feats with subradials
 // to simulate spellbooks.
-void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, int nMetaMagic = METAMAGIC_NONE);
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID);
 
 // Include Files:
 #include "prc_alterations"
@@ -61,7 +61,7 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE)
     DestroyObject(oCastingObject, 6.0);
 }
 
-void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, int nMetaMagic = METAMAGIC_NONE)
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID)
 {
     object oTarget = GetSpellTargetObject();
     location lLoc = GetSpellTargetLocation();
@@ -73,6 +73,8 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_DC_TOTAL_OVERRIDE, iTotalDC));
     if (iBaseDC != 0)
         ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE, iBaseDC));
+    if (nClass != CLASS_TYPE_INVALID)
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE, nClass));
     SetLocalInt(OBJECT_SELF, "UsingActionCastSpell", TRUE);
     DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));
 
@@ -88,6 +90,8 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_TOTAL_OVERRIDE));
     if (iBaseDC != 0)
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
+    if (nClass != CLASS_TYPE_INVALID)
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE));
 
 
 /*

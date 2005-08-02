@@ -21,6 +21,7 @@
 //////////////////////////////////////////////////
 
 const int STAGE_ENTRY = 0;
+const int STAGE_VALUE = 1;
 
 void main()
 {
@@ -61,12 +62,39 @@ void main()
         // array named ChoiceValues for ints associated with responces /
         // variable named nStage determines the current conversation node
         if(nStage == STAGE_ENTRY)
-        {
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), 
-                "Spell Switches");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceTokens"), 
-                1);
+        {       
+            SetCustomToken(99, "Select a variable to modify. \nSee prc_inc_switches for descriptions.");
+            object oWP = GetWaypointByTag("PRC_Switch_Name_WP");
+            if(!GetIsObjectValid(oWP))
+                oWP = CreateObject(OBJECT_TYPE_WAYPOINT, "NW_WAYPOINT001", GetStartingLocation(), FALSE, "PRC_Switch_Name_WP");
+            int i;
+            for(i=0;i<array_get_size(oWP, "Switch_Name"); i++)
+            {
+                AddChoice(array_get_string(oWP, "Switch_Name", i), i);
+            }
             array_set_int(oPC, "StagesSetup", nStage, TRUE); //this lets it know that its setup so dont set it up again
+        }
+        else if(nStage == STAGE_VALUE)
+        {
+            string sVarName = GetLocalString(oPC, "VariableName");
+            int nVal = GetPRCSwitch(sVarName);
+            AddChoice("-10", -10);
+            AddChoice("-5", -5);
+            AddChoice("-4", -4);
+            AddChoice("-3", -3);
+            AddChoice("-2", -2);
+            AddChoice("-1", -1);
+            AddChoice("+1", 1);
+            AddChoice("+2", 2);
+            AddChoice("+3", 3);
+            AddChoice("+4", 4);
+            AddChoice("+5", 5);
+            AddChoice("+10", 10);
+            AddChoice("Back", 99999);
+            string sDescription = "CurrentValue is: "+IntToString(nVal)+"\n";
+            sDescription += "CurrentVariable is: "+sVarName+"\n";
+            sDescription += "Select an ammount to modify the variable by:";
+            SetCustomToken(99, sDescription);            
         }
         //add more stages for more nodes with Else If clauses
         
@@ -89,6 +117,7 @@ void main()
         array_delete(oPC, "StagesSetup");
         DeleteLocalInt(oPC, "Stage");
         //add any other locals set through this conversation
+        DeleteLocalString(oPC, "VariableName");
         return;
     }
     else if(nValue == -3)
@@ -101,19 +130,33 @@ void main()
         array_delete(oPC, "StagesSetup");
         DeleteLocalInt(oPC, "Stage");
         //add any other locals set through this conversation
+        DeleteLocalString(oPC, "VariableName");
         return;
     }
     SetupTokens();
     int nChoice = array_get_int(oPC, "ChoiceValues", nValue+GetLocalInt(oPC, "ChoiceOffset"));
     int nStage = GetLocalInt(oPC, "Stage");
-    int nOldStage;
+    int nOldStage = nStage;
     // INSERT CODE HERE FOR PC RESPONSES
     // variable named nChoice is the value of the player's choice as stored when building the choice list
     // variable named nStage determines the current conversation node
     if(nStage == STAGE_ENTRY)
     {
         //move to another stage based on response
-        //nStage = STAGE_FOO;
+        SetLocalString(oPC, "VariableName", array_get_string(oPC, "ChoiceValues", nValue+GetLocalInt(oPC, "ChoiceOffset"))); 
+        nStage = STAGE_VALUE;
+    }
+    else if(nStage == STAGE_VALUE)
+    {
+        if(nChoice == 99999)
+        {
+            nStage = STAGE_ENTRY;
+        }
+        else
+        {
+            string sVarName = GetLocalString(oPC, "VariableName");
+            SetPRCSwitch(sVarName, GetPRCSwitch(sVarName)+nChoice);
+        }       
     }
     // Clean up the old choice data if stage changed
     if(nStage != nOldStage)

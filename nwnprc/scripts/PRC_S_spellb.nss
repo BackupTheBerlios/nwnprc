@@ -40,7 +40,7 @@ void main()
             //select spell level
             int nSpellClass = GetLocalInt(oPC, "SpellClass");
             string sFile = GetFileForClass(nSpellClass);
-            int nClassLevel = GetLevelByClass(nSpellClass, oPC);
+            int nClassLevel = GetSpellslotLevel(nSpellClass, oPC);
             int nAbilityScore = GetAbilityForClass(nSpellClass, oPC);
             string sMessage;
             int i;
@@ -73,7 +73,7 @@ void main()
             SetCustomToken(99, "Select a spell slot:");
             int nSpellClass = GetLocalInt(oPC, "SpellClass");
             int nSpellLevel = GetLocalInt(oPC, "SpellLevel");
-            int nClassLevel = GetLevelByClass(nSpellClass, oPC);
+            int nClassLevel = GetSpellslotLevel(nSpellClass, oPC);
             int nAbilityScore = GetAbilityForClass(nSpellClass, oPC);
             int nSlots = GetSlotCount(nClassLevel, nSpellLevel, nAbilityScore, nSpellClass);
             int nSlot;

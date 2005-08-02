@@ -28,6 +28,9 @@ void SharePain(object oCaster);
 // Applies the effects to the target from the Empathic Feedback power
 void EmpathicFeedback(object oPC);
 
+// Does the concentration check on damage for the Energy Current power.
+void EnergyCurrent(object oCaster);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -173,4 +176,27 @@ void EmpathicFeedback(object oPC)
           
      effect eDam = EffectDamage(nDam, DAMAGE_TYPE_POSITIVE);
      ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oFoe);
+}
+
+void EnergyCurrent(object oCaster)
+{
+	int nElement = GetLocalInt(oCaster, "PsiEnCurrent");
+	int iDamageTaken = GetTotalDamageDealt();
+	int nSpell;
+     
+     	// DC is 10 + spell level
+	int nCheck = GetIsSkillSuccessful(oCaster, SKILL_CONCENTRATION, (10 + iDamageTaken));
+	
+	// If the check is failed, remove the spell.
+	if (!nCheck)
+	{
+		// Replace these with the proper spell Ids when they are added
+		if (nElement == 1) nSpell = -1;
+		if (nElement == 2) nSpell = -1;
+		if (nElement == 3) nSpell = -1;
+		if (nElement == 4) nSpell = -1;
+		
+		RemoveSpellEffects(nSpell, oCaster, oCaster);
+		DeleteLocalInt(oCaster, "PsiEnCurrent");
+	}
 }

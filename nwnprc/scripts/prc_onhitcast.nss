@@ -242,6 +242,12 @@ void main()
     {
         DelayCommand(0.01, EmpathicFeedback(oSpellOrigin));
     }
+    
+    // Energy Current
+    if(GetLocalInt(oSpellOrigin, "PsiEnCurrent") > 0 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+    {
+        DelayCommand(0.01, EnergyCurrent(oSpellOrigin));
+    }    
     /*//////////////////////////////////////////////////
     //////////////// END PSIONICS //////////////////////
     //////////////////////////////////////////////////*/

@@ -3,13 +3,5 @@
 
 void main()
 {
-    //get the level
-    int nLevel = GetNewSpellbookCasterLevel(CLASS_TYPE_BLACKGUARD);
-    //set metamagic
-    SetLocalInt(OBJECT_SELF, "NewSpellMetamagic", 0);
-    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "NewSpellMetamagic"));
-    //pass in the spell
-    ActionCastSpell(SPELL_CURE_SERIOUS_WOUNDS, nLevel);
-    //remove it from the spellbook
-    RemoveSpellUse(OBJECT_SELF, GetSpellId(), CLASS_TYPE_BLACKGUARD);
+    NewSpellbookSpell(CLASS_TYPE_BLACKGUARD, METAMAGIC_NONE, SPELL_CURE_SERIOUS_WOUNDS);
 }

@@ -1681,7 +1681,9 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      int iCha = GetAbilityModifier(ABILITY_CHARISMA, oAttacker);
      int iWis = GetAbilityModifier(ABILITY_WISDOM, oAttacker);
 
-     int bIsRangedWeapon = GetWeaponRanged(oWeap) || iTouchAttackType == TOUCH_ATTACK_RANGED || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL;
+     int bIsRangedWeapon = GetWeaponRanged(oWeap);
+     //removed since they arent a ranged WEAPON
+     // || iTouchAttackType == TOUCH_ATTACK_RANGED || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL;
 
      int bFinesse = GetHasFeat(FEAT_WEAPON_FINESSE, oAttacker);
      int bKatanaFinesse = GetHasFeat(FEAT_KATANA_FINESSE, oAttacker);
@@ -1691,7 +1693,9 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      int bIsInMelee = GetMeleeAttackers15ft(oAttacker);
 
      // cache result, might increase speed if this is an issue
-     int bLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iWeaponType)) <= 2 || iWeaponType == BASE_ITEM_RAPIER;
+     int bLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iWeaponType)) < GetCreatureSize(oAttacker);
+     if(iWeaponType == BASE_ITEM_RAPIER)
+        bLight = 1 < GetCreatureSize(oAttacker);
      int bSimple = GetIsSimpleWeapon(oWeap);
      // uses GetMonkEnhancement in case a glove/creature weapon is passed as oWeapon
      int iEnhancement = GetMonkEnhancement(oWeap, oDefender, oAttacker);
@@ -1709,12 +1713,21 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      if(bEpicFocus) iAttackBonus   += 2;
      if(bEpicProwess) iAttackBonus += 1;
 
+     //this is the attack bonus from ability for melee combat only
+     //ranged combat goes further down
      int bTempBonus = 0;
-     // increases attack bonus from stats for melee
-     // first check for weapon finesse or katana finesse and if str or dex is greater
-     if((bFinesse && bLight && !bIsRangedWeapon) || (bKatanaFinesse && !bIsRangedWeapon))
+     
+     //str normally unless exceptional circumstances
+     if(!bIsRangedWeapon)
      {
           if(iStr > bTempBonus) bTempBonus = iStr;
+     }      
+      
+     // increases attack bonus from stats for melee
+     // first check for weapon finesse or katana finesse and if str or dex is greater
+     if((bFinesse && bLight && !bIsRangedWeapon) 
+        || (bKatanaFinesse && !bIsRangedWeapon))
+     {
           if(iDex > bTempBonus) bTempBonus = iDex;
      }
 
@@ -1729,7 +1742,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
         || iTouchAttackType == TOUCH_ATTACK_MELEE
         || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL
         || iTouchAttackType == TOUCH_ATTACK_MELEE_SPELL)
-        if(iDex > bTempBonus) bTempBonus = iDex;
+        bTempBonus = iDex;
 
      iAttackBonus += bTempBonus;
 
@@ -1863,6 +1876,20 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
           iAttackBonus -= 10;
      }
 
+
+     //Handle touch attacks and weapon focus
+     //Epic Weapon Focus: Ray
+     if((iTouchAttackType == TOUCH_ATTACK_RANGED
+            || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
+        && GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_RAY, oAttacker))
+        iAttackBonus += 2;
+
+     //Weapon Focus: Ray
+     if((iTouchAttackType == TOUCH_ATTACK_RANGED
+            || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
+        && GetHasFeat(FEAT_WEAPON_FOCUS_RAY, oAttacker))
+        iAttackBonus += 1;
+
      if(iCombatMode == COMBAT_MODE_EXPERTISE) iAttackBonus -= 5;
      else if(iCombatMode == COMBAT_MODE_IMPROVED_EXPERTISE) iAttackBonus -= 10;
 
@@ -1918,18 +1945,6 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
           if(bGobTrain && iEnemyRace == RACIAL_TYPE_HUMANOID_GOBLINOID)   iAttackBonus += 1;
           if(bLizTrain && iEnemyRace == RACIAL_TYPE_HUMANOID_REPTILIAN)   iAttackBonus += 1;
      }
-
-     //Weapon Focus: Ray
-     if((iTouchAttackType == TOUCH_ATTACK_RANGED
-            || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
-        && GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_RAY, oAttacker))
-        iAttackBonus += 2;
-
-     //Epic Weapon Focus: Ray
-     if((iTouchAttackType == TOUCH_ATTACK_RANGED
-            || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
-        && GetHasFeat(FEAT_WEAPON_FOCUS_RAY, oAttacker))
-        iAttackBonus += 1;
 
      int iDiceRoll = d20();
      int iEnemyAC = GetDefenderAC(oDefender, oAttacker, iTouchAttackType);
@@ -3451,6 +3466,9 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      // create eLink starting with the melee weapon damage effect
      // then add all the other possible effects.
      effect eLink = eEffect;
+/*
+Primogenitor - non-physical damage doesnt make sense with damage power
+
      if (iAcid > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iAcid, DAMAGE_TYPE_ACID, iDamagePower)), EffectVisualEffect(VFX_COM_HIT_ACID));
      if (iCold > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iCold, DAMAGE_TYPE_COLD, iDamagePower)), EffectVisualEffect(VFX_COM_HIT_FROST ));
      if (iFire > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iFire, DAMAGE_TYPE_FIRE, iDamagePower)), EffectVisualEffect(VFX_IMP_FLAME_S));
@@ -3462,6 +3480,19 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
      if (iPos  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iPos, DAMAGE_TYPE_POSITIVE, iDamagePower)), EffectVisualEffect(VFX_COM_HIT_DIVINE));
 
      if (iMag  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iMag, DAMAGE_TYPE_MAGICAL, iDamagePower)), EffectVisualEffect(VFX_COM_HIT_DIVINE));
+*/
+
+     if (iAcid > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iAcid, DAMAGE_TYPE_ACID)), EffectVisualEffect(VFX_COM_HIT_ACID));
+     if (iCold > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iCold, DAMAGE_TYPE_COLD)), EffectVisualEffect(VFX_COM_HIT_FROST ));
+     if (iFire > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iFire, DAMAGE_TYPE_FIRE)), EffectVisualEffect(VFX_IMP_FLAME_S));
+     if (iElec > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iElec, DAMAGE_TYPE_ELECTRICAL)), EffectVisualEffect(VFX_COM_HIT_ELECTRICAL ));
+     if (iSon  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iSon, DAMAGE_TYPE_SONIC)), EffectVisualEffect(VFX_COM_HIT_SONIC ));
+
+     if (iDiv  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iDiv, DAMAGE_TYPE_DIVINE)), EffectVisualEffect(VFX_COM_HIT_DIVINE));
+     if (iNeg  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iNeg, DAMAGE_TYPE_NEGATIVE)), EffectVisualEffect(VFX_COM_HIT_NEGATIVE ));
+     if (iPos  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iPos, DAMAGE_TYPE_POSITIVE)), EffectVisualEffect(VFX_COM_HIT_DIVINE));
+
+     if (iMag  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iMag, DAMAGE_TYPE_MAGICAL)), EffectVisualEffect(VFX_COM_HIT_DIVINE));
 
      // the rest of the code for a Coup De Grace
      if( GetIsHelpless(oDefender) && !GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, oAttacker) && bFirstAttack )
@@ -4305,14 +4336,14 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
 
 void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE)
 {
-     //SendMessageToPC(oAttacker, "Entered AttackLoopMain()");
+     SendMessageToPC(oAttacker, "Entered AttackLoopMain()");
      // turn off touch attack if var says it only applies to first attack
      if (bFirstAttack && !bApplyTouchToAll) iTouchAttackType == FALSE;
 
      // perform all bonus attacks
      if(iBonusAttacks > 0)
      {
-          //SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic");
+          SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic");
           iBonusAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE, iTouchAttackType);
      }
@@ -4320,13 +4351,13 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
      // perform main attack first, then off-hand attack
      else if(iBonusAttacks <= 0 && iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
      {
-          //SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic");
+          SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic");
           iMainAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE, iTouchAttackType);
      }
      else if(iOffHandAttacks > 0)
      {
-          //SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic - offhand");
+          SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic - offhand");
           iOffHandAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 1, FALSE, iTouchAttackType);
      }
@@ -4475,9 +4506,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           // unarmed non-monk 1d3 damage
           sAttackVars.iMainNumSides = 3;
           sAttackVars.iMainNumDice  = 1;
-     }
-
-     //SendMessageToPC(oAttacker, "Weapon does " + IntToString(iMainNumDice) + "d" + IntToString(iMainNumSides) + "Damage and has a crit multiplier of " + IntToString(iMainCritMult));
+     }     
 
      // off-hand variables
      int iOffHandWeaponType = 0;
@@ -4553,7 +4582,6 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           sAttackVars.iOffHandNumDice = StringToInt(Get2DACache("baseitems", "NumDice", iOffHandWeaponType));
           sAttackVars.iOffHandCritMult = GetWeaponCritcalMultiplier(oAttacker, sAttackVars.oWeaponL);
 
-          //SendMessageToPC(oAttacker, "Off Hand Weapon does " + IntToString(iOffHandNumDice) + "d" + IntToString(iOffHandNumSides) + "Damage and has a crit multiplier of " + IntToString(iOffHandCritMult));
      }
 
      // Code to equip new ammo
@@ -4820,8 +4848,6 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
           sAttackVars.iMainNumSides = 3;
           sAttackVars.iMainNumDice  = 1;
      }
-
-     //SendMessageToPC(oAttacker, "Weapon does " + IntToString(iMainNumDice) + "d" + IntToString(iMainNumSides) + "Damage and has a crit multiplier of " + IntToString(iMainCritMult));
 
      // off-hand variables set to null, just to make sure they are there
      int iOffHandWeaponType = 0;

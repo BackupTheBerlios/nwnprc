@@ -256,13 +256,24 @@ void Battlecast()
 {
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
+    //if its not being cast on a hostile target or its at a location
+    //get the nearest living seen hostile insead
+    if(!spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC)
+        || !GetIsObjectValid(oTarget))
+    {
+        oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oPC, 1,
+            CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY,
+            CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN);
+    }
     effect eVis = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_HOLY);
     int nLevel = GetLevelByClass(CLASS_TYPE_HAVOC_MAGE, oPC);
     string sSpellLevel = lookup_spell_level(PRCGetSpellId());
     int nSpellLevel = StringToInt(sSpellLevel);
     
     // Don't want to smack allies upside the head when casting a spell.
-    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC) && oTarget != oPC)
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC) 
+        && oTarget != oPC
+        && GetDistanceToObject(oTarget) < FeetToMeters(15.0))
     {
         // Make sure the levels are right for both the caster and the spells.
         // Level 8 spells and under at level 5

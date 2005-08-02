@@ -472,7 +472,7 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDe
     {
         oCacheWP = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2", 
             GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
-if(nDebug) PrintString("Cache chest does not exist, creating new one");            
+if(nDebug) PrintString("Get2DACache: Cache chest does not exist, creating new one");            
     }        
     //lower case the 2da and column
     s2DA = GetStringLowerCase(s2DA);
@@ -480,7 +480,7 @@ if(nDebug) PrintString("Cache chest does not exist, creating new one");
     
     //get the token for this file
     string sFileWPName = "CACHED_"+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
-if(nDebug) PrintString("token tag is "+sFileWPName);
+if(nDebug) PrintString("Get2DACache: token tag is "+sFileWPName);
 /*    object oFileWP = GetFirstItemInInventory(oCacheWP);
     while(GetIsObjectValid(oFileWP)
         && GetTag(oFileWP) != sFileWPName)
@@ -491,7 +491,7 @@ if(nDebug) PrintString("token tag is "+sFileWPName);
     //token doesnt exist make it
     if (!GetIsObjectValid(oFileWP))
     {
-if(nDebug) PrintString("token does not exist, creating new one");    
+if(nDebug) PrintString("Get2DACache: token does not exist, creating new one");    
         oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
         DestroyObject(oFileWP);
         oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);
@@ -507,8 +507,8 @@ if(nDebug) PrintString("token does not exist, creating new one");
     if(s == "")
         s = GetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow));
         
-if(nDebug) PrintString("live cached value is "+s);            
-if(nDebug) PrintString("pushed cached value is "+sPushed);            
+if(nDebug) PrintString("Get2DACache: live cached value is "+s);            
+if(nDebug) PrintString("Get2DACache: pushed cached value is "+sPushed);            
         
     //check if we should use the database
     int nDB = GetPRCSwitch(PRC_USE_DATABASE);
@@ -646,7 +646,7 @@ if(nDebug) PrintString("pushed cached value is "+sPushed);
     //store it on the waypoint
     SetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow), s);
 
-if(nDebug) PrintString("returned value is "+s);
+if(nDebug) PrintString("Get2DACache: returned value is "+s);
     
     if (s=="****")
         return "";

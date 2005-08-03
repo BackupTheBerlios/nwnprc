@@ -1,7 +1,7 @@
 const int PRC_SQL_ERROR = 0;
 const int PRC_SQL_SUCCESS = 1;
 
-string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = FALSE);
+string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = TRUE);
 void PRC_SQLInit();
 void PRC_SQLExecDirect(string sSQL);
 int PRC_SQLFetch();
@@ -76,7 +76,7 @@ string PRC_SQLGetTick()
         sTick = "";
     else
         sTick = "`";
-    return sTick;    
+    return sTick;
 }
 
 string PRC_SQLGetData(int iCol)
@@ -149,9 +149,9 @@ void PRCMakeTables()
     string SQL;
     if(GetPRCSwitch(PRC_DB_SQLLITE))
         SQL += "PRAGMA page_size=4096; ";
-        
+
     string q = PRC_SQLGetTick();
-    
+
     PRC_SQLExecDirect(SQL); SQL = "";
     SQL+= "CREATE TABLE ";
     SQL+= ""+q+"prc_cached2da_feat"+q+" ( ";
@@ -198,7 +198,7 @@ void PRCMakeTables()
     SQL+= ""+q+"MaxLevel"+q+" varchar(255) DEFAULT '_',";
     SQL+= ""+q+"MinFortSave"+q+" varchar(255) DEFAULT '_',";
     SQL+= ""+q+"PreReqEpic"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"ReqAction"+q+" varchar(255) DEFAULT '_'); "; 
+    SQL+= ""+q+"ReqAction"+q+" varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE ";
@@ -210,16 +210,16 @@ void PRCMakeTables()
     SQL+= ""+q+"GENDER"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"TYPE"+q+" varchar(255) ); ";
     PRC_SQLExecDirect(SQL); SQL = "";
-      
+
     SQL+= "CREATE TABLE ";
     SQL+= ""+q+"prc_cached2da_portraits"+q+" ( ";
     SQL+= ""+q+"rowid"+q+" varchar(255),";
-    SQL+= ""+q+"BaseResRef"+q+" varchar(255) DEFAULT '_', ";     
-    SQL+= ""+q+"Sex"+q+" varchar(255) DEFAULT '_', ";    
-    SQL+= ""+q+"Race"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"InanimateType"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"Plot"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"LowGore"+q+" varchar(255) DEFAULT '_'); ";  
+    SQL+= ""+q+"BaseResRef"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Sex"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Race"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"InanimateType"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Plot"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"LowGore"+q+" varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE ";
@@ -336,8 +336,8 @@ void PRCMakeTables()
 
     SQL+= "CREATE TABLE "+q+"prc_cached2da_classes"+q+" ( ";
     SQL+= ""+q+"rowid"+q+" varchar(255),";
-    SQL+= ""+q+"Label"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"Name"+q+" varchar(255) DEFAULT '_', ";    
+    SQL+= ""+q+"Label"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Name"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"Plural"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"Lower"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"Description"+q+" varchar(255) DEFAULT '_', ";
@@ -350,74 +350,74 @@ void PRCMakeTables()
     SQL+= ""+q+"BonusFeatsTable"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"SkillPointBase"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"SpellGainTable"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SpellKnownTable"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"PlayerClass"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"SpellCaster"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"Str"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"Dex"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"Con"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"Wis"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"Int"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"Cha"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"PrimaryAbil"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"AlignRestrict"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"AlignRstrctType"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"InvertRestrict"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"Constant"+q+" varchar(255) DEFAULT '_', ";                      
-    SQL+= ""+q+"EffCRLvl01"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl02"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl03"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl04"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl05"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl06"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl07"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl08"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl09"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl10"+q+"varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl11"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl12"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl13"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl14"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl15"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl16"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl17"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl18"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl19"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EffCRLvl20"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"PreReqTable"+q+" varchar(255) DEFAULT '_', ";       
-    SQL+= ""+q+"MaxLevel"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"XPPenalty"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"ArcSpellLvlMod"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"DivSpellLvlMod"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"EpicLevel"+q+" varchar(255) DEFAULT '_', ";   
-    SQL+= ""+q+"Package"+q+" varchar(255) DEFAULT '_'); "; 
+    SQL+= ""+q+"SpellKnownTable"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"PlayerClass"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"SpellCaster"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Str"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Dex"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Con"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Wis"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Int"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Cha"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"PrimaryAbil"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"AlignRestrict"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"AlignRstrctType"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"InvertRestrict"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Constant"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl01"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl02"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl03"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl04"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl05"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl06"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl07"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl08"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl09"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl10"+q+"varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl11"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl12"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl13"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl14"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl15"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl16"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl17"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl18"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl19"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EffCRLvl20"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"PreReqTable"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"MaxLevel"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"XPPenalty"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"ArcSpellLvlMod"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"DivSpellLvlMod"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"EpicLevel"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Package"+q+" varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
-    
+
     SQL = "CREATE TABLE "+q+"prc_cached2da_racialtypes"+q+" ( ";
     SQL+= ""+q+"rowid"+q+" varchar(255),";
-    SQL+= ""+q+"Label"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"Abrev"+q+"  varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"Name"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"ConverName"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"ConverNameLower"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"NamePlural"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"Description"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"Appearance"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"StrAdjust"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"DexAdjust"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"IntAdjust"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"ChaAdjust"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"WisAdjust"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"ConAdjust"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"Endurance"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"Favored"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"FeatsTable"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"Biography"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"PlayerRace"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"Constant"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"AGE"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"ToolsetDefaultClass"+q+" varchar(255) DEFAULT '_', ";              
-    SQL+= ""+q+"CRModifier"+q+" varchar(255) DEFAULT '_');"; 
+    SQL+= ""+q+"Label"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Abrev"+q+"  varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Name"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"ConverName"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"ConverNameLower"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"NamePlural"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Description"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Appearance"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"StrAdjust"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"DexAdjust"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"IntAdjust"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"ChaAdjust"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"WisAdjust"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"ConAdjust"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Endurance"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Favored"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"FeatsTable"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Biography"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"PlayerRace"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"Constant"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"AGE"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"ToolsetDefaultClass"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"CRModifier"+q+" varchar(255) DEFAULT '_');";
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE "+q+"prc_cached2da_ireq"+q+" ( ";
@@ -434,15 +434,15 @@ void PRCMakeTables()
     SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"L_RESREF"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"RECIPE_TAG"+q+" varchar(255) DEFAULT '_'); ";
-    PRC_SQLExecDirect(SQL); SQL = "";    
+    PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL = "CREATE TABLE "+q+"prc_cached2da"+q+" ("+q+"file"+q+" varchar(255) DEFAULT '_', "+q+"column"+q+" varchar(255) DEFAULT '_', "+q+"rowid"+q+" varchar(255), "+q+"data"+q+" varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
-    
+
     //non2dacaching table
     SQL = "CREATE TABLE "+q+"prc_data"+q+" ("+q+"name"+q+" varchar(255) DEFAULT '_', "+q+"value"+q+" varchar(255) DEFAULT '_')";
     PRC_SQLExecDirect(SQL); SQL = "";
-    
+
     //indexs
     SQL+= "CREATE UNIQUE INDEX "+q+"spellsrowindex"+q+"  ON "+q+"prc_cached2da_spells"+q+" ("+q+"rowid"+q+"); ";
     SQL = "CREATE UNIQUE INDEX "+q+"featrowindex"+q+"  ON "+q+"prc_cached2da_feat"+q+" ("+q+"rowid"+q+"); ";
@@ -470,14 +470,14 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDe
     //if no chest, use HEARTOFCHAOS in limbo as a location to make a new one
     if (!GetIsObjectValid(oCacheWP))
     {
-        oCacheWP = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2", 
+        oCacheWP = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2",
             GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
-if(nDebug) PrintString("Get2DACache: Cache chest does not exist, creating new one");            
-    }        
+if(nDebug) PrintString("Get2DACache: Cache chest does not exist, creating new one");
+    }
     //lower case the 2da and column
     s2DA = GetStringLowerCase(s2DA);
     sColumn = GetStringLowerCase(sColumn);
-    
+
     //get the token for this file
     string sFileWPName = "CACHED_"+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
 if(nDebug) PrintString("Get2DACache: token tag is "+sFileWPName);
@@ -487,43 +487,43 @@ if(nDebug) PrintString("Get2DACache: token tag is "+sFileWPName);
     {
         oFileWP = GetNextItemInInventory(oCacheWP);
     }
-*/  object oFileWP = GetObjectByTag(sFileWPName);    
+*/  object oFileWP = GetObjectByTag(sFileWPName);
     //token doesnt exist make it
     if (!GetIsObjectValid(oFileWP))
     {
-if(nDebug) PrintString("Get2DACache: token does not exist, creating new one");    
+if(nDebug) PrintString("Get2DACache: token does not exist, creating new one");
         oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
         DestroyObject(oFileWP);
         oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);
-        
+
         //dont use this becuase it doesnt change the tag
         //oFileWP = CreateItemOnObject("hidetoken", oCacheWP);
         //this isnt needed cause its items in a container now
         //CreateObject(OBJECT_TYPE_WAYPOINT,"NW_WAYPOINT001",lCache,FALSE,sFileWPName);
-    }    
-    
+    }
+
     //store to check if pushed in
     string sPushed = s;
     if(s == "")
         s = GetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow));
-        
-if(nDebug) PrintString("Get2DACache: live cached value is "+s);            
-if(nDebug) PrintString("Get2DACache: pushed cached value is "+sPushed);            
-        
+
+if(nDebug) PrintString("Get2DACache: live cached value is "+s);
+if(nDebug) PrintString("Get2DACache: pushed cached value is "+sPushed);
+
     //check if we should use the database
     int nDB = GetPRCSwitch(PRC_USE_DATABASE);
     string SQL;
-    
-    
+
+
     //sColumn = ReplaceChars(sColumn, "_" , "z");
     string sDBColumn = sColumn;
-     
+
     //if its not locally cached already
     //look in DB
     if (s == "" && nDB)
     {
         string q = PRC_SQLGetTick();
-    
+
         if(s2DA == "feat"
             || s2DA == "spells"
             || s2DA == "portraits"
@@ -544,11 +544,11 @@ if(nDebug) PrintString("Get2DACache: pushed cached value is "+sPushed);
         PRC_SQLExecDirect(SQL);
         // if there is an error, table is not built or is not initialized
 
-        //THIS LINE CRASHES NWSERVER for any colum other than the first one. 
-        //WISH I KNEW WHY!!!!!    
-        //update: its because its returning a null data. 
+        //THIS LINE CRASHES NWSERVER for any colum other than the first one.
+        //WISH I KNEW WHY!!!!!
+        //update: its because its returning a null data.
         //the work around is to specify a default for all columns when creating the table
-        if(!PRC_SQLFetch())           
+        if(!PRC_SQLFetch())
         {
             //WriteTimestampedLogEntry("Error getting table from DB");
         }
@@ -558,24 +558,24 @@ if(nDebug) PrintString("Get2DACache: pushed cached value is "+sPushed);
             s = PRC_SQLGetData(1);
             if(s == "_")
                 s="";
-            //if its already in the DB, dont store it again    
+            //if its already in the DB, dont store it again
             if(s != "")
                 nDB = FALSE;
         }
-    }    
+    }
     //entry didnt exist in the database
     if(s == "")
     {
         //fetch from the 2da file
         s = Get2DAString(s2DA, sColumn, nRow);
         if (s == "")
-            s = "****";        
+            s = "****";
     }
-    
+
     if(nDB)
     {
         string q = PRC_SQLGetTick();
-        
+
         //store it in the database
         //use specific tables for certain 2das
         if(s2DA == "feat"
@@ -601,7 +601,7 @@ if(nDebug) PrintString("Get2DACache: pushed cached value is "+sPushed);
             else
             {
                 SQL = "INSERT INTO "+q+"prc_cached2da_"+s2DA+""+q+" ("+q+"rowid"+q+", "+q+""+sDBColumn+""+q+") VALUES ("+IntToString(nRow)+" , '"+s+"')";
-            }                        
+            }
         }
         else if(TestStringAgainstPattern("cls_feat_**", s2DA))
         {
@@ -618,7 +618,7 @@ if(nDebug) PrintString("Get2DACache: pushed cached value is "+sPushed);
             else
             {
                 SQL = "INSERT INTO "+q+"prc_cached2da_cls_feat"+q+" ("+q+"rowid"+q+", "+q+""+sDBColumn+""+q+", "+q+"file"+q+") VALUES ("+IntToString(nRow)+" , '"+s+"', '"+s2DA+"')";
-            }                        
+            }
         }
         else if(TestStringAgainstPattern("ireq_**", s2DA))
         {
@@ -635,19 +635,19 @@ if(nDebug) PrintString("Get2DACache: pushed cached value is "+sPushed);
             else
             {
                 SQL = "INSERT INTO "+q+"prc_cached2da_ireq"+q+" ("+q+"rowid"+q+", "+q+""+sDBColumn+""+q+", "+q+"file"+q+") VALUES ("+IntToString(nRow)+" , '"+s+"', '"+s2DA+"')";
-            }                        
+            }
         }
         else
         {
             SQL = "INSERT INTO "+q+"prc_cached2da"+q+" VALUES ('"+s2DA+"' , '"+sDBColumn+"' , '"+IntToString(nRow)+"' , '"+s+"')";
-        }    
+        }
         PRC_SQLExecDirect(SQL);
     }
     //store it on the waypoint
     SetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow), s);
 
 if(nDebug) PrintString("Get2DACache: returned value is "+s);
-    
+
     if (s=="****")
         return "";
     else
@@ -670,20 +670,20 @@ void Cache_Ireq(int nItem, int nRow = 0)
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1))+1;
-    } 
-    
+    }
+
     if(sFile != ""
         && sFile != "****"
         && nRow < GetPRCSwitch(FILE_END_IREQ))
     {
-        Get2DACache(sFile, "LABEL", nRow); 
-        Get2DACache(sFile, "ReqType", nRow); 
-        Get2DACache(sFile, "ReqParam1", nRow); 
-        Get2DACache(sFile, "ReqParam2", nRow); 
+        Get2DACache(sFile, "LABEL", nRow);
+        Get2DACache(sFile, "ReqType", nRow);
+        Get2DACache(sFile, "ReqParam1", nRow);
+        Get2DACache(sFile, "ReqParam2", nRow);
         nRow++;
         DelayCommand(0.1, Cache_Ireq(nItem, nRow));
         if(nRow >= GetPRCSwitch(FILE_END_IREQ))
-        {   
+        {
             if(GetPRCSwitch(PRC_DB_SQLLITE))
             {
                 string SQL = "COMMIT";
@@ -691,7 +691,7 @@ void Cache_Ireq(int nItem, int nRow = 0)
                 SQL = "BEGIN IMMEDIATE";
                 PRC_SQLExecDirect(SQL);
             }
-        }            
+        }
     }
     else
     {
@@ -700,7 +700,7 @@ void Cache_Ireq(int nItem, int nRow = 0)
         else
         {
             DelayCommand(0.1, Cache_Ireq(nItem+1)); //need to delay to prevent TMI
-        }            
+        }
     }
 }
 
@@ -715,9 +715,9 @@ void Cache_Item_To_Ireq(int nRow = 0)
     }
     if(nRow < GetPRCSwitch(FILE_END_ITEM_TO_IREQ))
     {
-        Get2DACache("item_to_ireq", "Label", nRow);  
-        Get2DACache("item_to_ireq", "L_RESREF", nRow);  
-        Get2DACache("item_to_ireq", "RECIPE_TAG", nRow);  
+        Get2DACache("item_to_ireq", "Label", nRow);
+        Get2DACache("item_to_ireq", "L_RESREF", nRow);
+        Get2DACache("item_to_ireq", "RECIPE_TAG", nRow);
         nRow++;
         DelayCommand(0.01, Cache_Item_To_Ireq(nRow));
     }
@@ -731,7 +731,7 @@ void Cache_Item_To_Ireq(int nRow = 0)
             PRC_SQLExecDirect(SQL);
             SQL = "BEGIN IMMEDIATE";
             PRC_SQLExecDirect(SQL);
-        }    
+        }
     }
 }
 
@@ -744,16 +744,16 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
         PRC_SQLExecDirect(SQL);
         PRC_SQLFetch();
         nRow = StringToInt(PRC_SQLGetData(1))+1;
-    } 
+    }
     if(sFile != ""
         && sFile != "****"
         && nRow < GetPRCSwitch(FILE_END_CLASS_FEAT))
     {
-        Get2DACache(sFile, "FeatLabel", nRow); 
-        Get2DACache(sFile, "FeatIndex", nRow); 
-        Get2DACache(sFile, "List", nRow); 
-        Get2DACache(sFile, "GrantedOnLevel", nRow); 
-        Get2DACache(sFile, "OnMenu", nRow); 
+        Get2DACache(sFile, "FeatLabel", nRow);
+        Get2DACache(sFile, "FeatIndex", nRow);
+        Get2DACache(sFile, "List", nRow);
+        Get2DACache(sFile, "GrantedOnLevel", nRow);
+        Get2DACache(sFile, "OnMenu", nRow);
         nRow++;
         DelayCommand(0.1, Cache_Class_Feat(nClass, nRow));
         if(nRow >= GetPRCSwitch(FILE_END_CLASS_FEAT))
@@ -764,8 +764,8 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
                 PRC_SQLExecDirect(SQL);
                 SQL = "BEGIN IMMEDIATE";
                 PRC_SQLExecDirect(SQL);
-            }    
-        }            
+            }
+        }
     }
     else
     {
@@ -774,7 +774,7 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
         else
         {
             DelayCommand(0.1, Cache_Class_Feat(nClass+1)); //need to delay to prevent TMI
-        }            
+        }
     }
 }
 
@@ -789,60 +789,60 @@ void Cache_Classes(int nRow = 0)
     }
     if(nRow < GetPRCSwitch(FILE_END_CLASSES))
     {
-        Get2DACache("classes", "Label", nRow);  
-        Get2DACache("classes", "Name", nRow);  
-        Get2DACache("classes", "Plural", nRow);  
-        Get2DACache("classes", "Lower", nRow);  
-        Get2DACache("classes", "Description", nRow);  
-        Get2DACache("classes", "Icon", nRow);  
-        Get2DACache("classes", "HitDie", nRow);  
-        Get2DACache("classes", "AttackBonusTable", nRow);  
-        Get2DACache("classes", "FeatsTable", nRow);  
-        Get2DACache("classes", "SavingThrowTable", nRow);  
-        Get2DACache("classes", "SkillsTable", nRow);  
-        Get2DACache("classes", "BonusFeatsTable", nRow);  
-        Get2DACache("classes", "SkillPointBase", nRow);  
-        Get2DACache("classes", "SpellGainTable", nRow);  
-        Get2DACache("classes", "SpellKnownTable", nRow);  
+        Get2DACache("classes", "Label", nRow);
+        Get2DACache("classes", "Name", nRow);
+        Get2DACache("classes", "Plural", nRow);
+        Get2DACache("classes", "Lower", nRow);
+        Get2DACache("classes", "Description", nRow);
+        Get2DACache("classes", "Icon", nRow);
+        Get2DACache("classes", "HitDie", nRow);
+        Get2DACache("classes", "AttackBonusTable", nRow);
+        Get2DACache("classes", "FeatsTable", nRow);
+        Get2DACache("classes", "SavingThrowTable", nRow);
+        Get2DACache("classes", "SkillsTable", nRow);
+        Get2DACache("classes", "BonusFeatsTable", nRow);
+        Get2DACache("classes", "SkillPointBase", nRow);
+        Get2DACache("classes", "SpellGainTable", nRow);
+        Get2DACache("classes", "SpellKnownTable", nRow);
         Get2DACache("classes", "PlayerClass", nRow);
-        Get2DACache("classes", "SpellCaster", nRow);     
-        Get2DACache("classes", "Str", nRow);          
-        Get2DACache("classes", "Dex", nRow);     
-        Get2DACache("classes", "Con", nRow);     
-        Get2DACache("classes", "Wis", nRow);     
-        Get2DACache("classes", "Int", nRow);     
-        Get2DACache("classes", "Cha", nRow);     
-        Get2DACache("classes", "PrimaryAbil", nRow);     
-        Get2DACache("classes", "AlignRestrict", nRow);     
-        Get2DACache("classes", "AlignRstrctType", nRow);     
-        Get2DACache("classes", "InvertRestrict", nRow);     
-        Get2DACache("classes", "Constant", nRow);        
-        Get2DACache("classes", "EffCRLvl01", nRow);        
-        Get2DACache("classes", "EffCRLvl02", nRow);        
-        Get2DACache("classes", "EffCRLvl03", nRow);        
-        Get2DACache("classes", "EffCRLvl04", nRow);        
-        Get2DACache("classes", "EffCRLvl05", nRow);        
-        Get2DACache("classes", "EffCRLvl06", nRow);        
-        Get2DACache("classes", "EffCRLvl07", nRow);        
-        Get2DACache("classes", "EffCRLvl08", nRow);        
-        Get2DACache("classes", "EffCRLvl09", nRow);        
-        Get2DACache("classes", "EffCRLvl10", nRow);        
-        Get2DACache("classes", "EffCRLvl12", nRow);        
-        Get2DACache("classes", "EffCRLvl13", nRow);        
-        Get2DACache("classes", "EffCRLvl14", nRow);        
-        Get2DACache("classes", "EffCRLvl15", nRow);        
-        Get2DACache("classes", "EffCRLvl16", nRow);        
-        Get2DACache("classes", "EffCRLvl17", nRow);        
-        Get2DACache("classes", "EffCRLvl18", nRow);        
-        Get2DACache("classes", "EffCRLvl19", nRow);        
-        Get2DACache("classes", "EffCRLvl20", nRow);        
-        Get2DACache("classes", "PreReqTable", nRow);        
-        Get2DACache("classes", "MaxLevel", nRow);        
-        Get2DACache("classes", "XPPenalty", nRow);        
-        Get2DACache("classes", "ArcSpellLvlMod", nRow);        
-        Get2DACache("classes", "DivSpellLvlMod", nRow);        
-        Get2DACache("classes", "EpicLevel", nRow);        
-        Get2DACache("classes", "Package", nRow);      
+        Get2DACache("classes", "SpellCaster", nRow);
+        Get2DACache("classes", "Str", nRow);
+        Get2DACache("classes", "Dex", nRow);
+        Get2DACache("classes", "Con", nRow);
+        Get2DACache("classes", "Wis", nRow);
+        Get2DACache("classes", "Int", nRow);
+        Get2DACache("classes", "Cha", nRow);
+        Get2DACache("classes", "PrimaryAbil", nRow);
+        Get2DACache("classes", "AlignRestrict", nRow);
+        Get2DACache("classes", "AlignRstrctType", nRow);
+        Get2DACache("classes", "InvertRestrict", nRow);
+        Get2DACache("classes", "Constant", nRow);
+        Get2DACache("classes", "EffCRLvl01", nRow);
+        Get2DACache("classes", "EffCRLvl02", nRow);
+        Get2DACache("classes", "EffCRLvl03", nRow);
+        Get2DACache("classes", "EffCRLvl04", nRow);
+        Get2DACache("classes", "EffCRLvl05", nRow);
+        Get2DACache("classes", "EffCRLvl06", nRow);
+        Get2DACache("classes", "EffCRLvl07", nRow);
+        Get2DACache("classes", "EffCRLvl08", nRow);
+        Get2DACache("classes", "EffCRLvl09", nRow);
+        Get2DACache("classes", "EffCRLvl10", nRow);
+        Get2DACache("classes", "EffCRLvl12", nRow);
+        Get2DACache("classes", "EffCRLvl13", nRow);
+        Get2DACache("classes", "EffCRLvl14", nRow);
+        Get2DACache("classes", "EffCRLvl15", nRow);
+        Get2DACache("classes", "EffCRLvl16", nRow);
+        Get2DACache("classes", "EffCRLvl17", nRow);
+        Get2DACache("classes", "EffCRLvl18", nRow);
+        Get2DACache("classes", "EffCRLvl19", nRow);
+        Get2DACache("classes", "EffCRLvl20", nRow);
+        Get2DACache("classes", "PreReqTable", nRow);
+        Get2DACache("classes", "MaxLevel", nRow);
+        Get2DACache("classes", "XPPenalty", nRow);
+        Get2DACache("classes", "ArcSpellLvlMod", nRow);
+        Get2DACache("classes", "DivSpellLvlMod", nRow);
+        Get2DACache("classes", "EpicLevel", nRow);
+        Get2DACache("classes", "Package", nRow);
         nRow++;
         DelayCommand(0.1, Cache_Classes(nRow));
     }
@@ -871,30 +871,30 @@ void Cache_RacialTypes(int nRow = 0)
     }
     if(nRow < GetPRCSwitch(FILE_END_RACIALTYPES))
     {
-        Get2DACache("racialtypes", "Label", nRow);   
-        Get2DACache("racialtypes", "Abrev", nRow);   
-        Get2DACache("racialtypes", "Name", nRow);   
-        Get2DACache("racialtypes", "ConverName", nRow);   
-        Get2DACache("racialtypes", "ConverNameLower", nRow);   
-        Get2DACache("racialtypes", "NamePlural", nRow);   
-        Get2DACache("racialtypes", "Description", nRow);   
-        Get2DACache("racialtypes", "Appearance", nRow);   
-        Get2DACache("racialtypes", "StrAdjust", nRow);   
-        Get2DACache("racialtypes", "DexAdjust", nRow);   
-        Get2DACache("racialtypes", "IntAdjust", nRow);   
-        Get2DACache("racialtypes", "ChaAdjust", nRow);   
-        Get2DACache("racialtypes", "WisAdjust", nRow);   
-        Get2DACache("racialtypes", "ConAdjust", nRow);   
-        Get2DACache("racialtypes", "Endurance", nRow);   
-        Get2DACache("racialtypes", "Favored", nRow);   
-        Get2DACache("racialtypes", "FeatsTable", nRow);   
-        Get2DACache("racialtypes", "Biography", nRow);   
-        Get2DACache("racialtypes", "PlayerRace", nRow);   
-        Get2DACache("racialtypes", "Constant", nRow);   
-        Get2DACache("racialtypes", "AGE", nRow);   
-        Get2DACache("racialtypes", "ToolsetDefaultClass", nRow);   
-        Get2DACache("racialtypes", "CRModifier", nRow);   
-        
+        Get2DACache("racialtypes", "Label", nRow);
+        Get2DACache("racialtypes", "Abrev", nRow);
+        Get2DACache("racialtypes", "Name", nRow);
+        Get2DACache("racialtypes", "ConverName", nRow);
+        Get2DACache("racialtypes", "ConverNameLower", nRow);
+        Get2DACache("racialtypes", "NamePlural", nRow);
+        Get2DACache("racialtypes", "Description", nRow);
+        Get2DACache("racialtypes", "Appearance", nRow);
+        Get2DACache("racialtypes", "StrAdjust", nRow);
+        Get2DACache("racialtypes", "DexAdjust", nRow);
+        Get2DACache("racialtypes", "IntAdjust", nRow);
+        Get2DACache("racialtypes", "ChaAdjust", nRow);
+        Get2DACache("racialtypes", "WisAdjust", nRow);
+        Get2DACache("racialtypes", "ConAdjust", nRow);
+        Get2DACache("racialtypes", "Endurance", nRow);
+        Get2DACache("racialtypes", "Favored", nRow);
+        Get2DACache("racialtypes", "FeatsTable", nRow);
+        Get2DACache("racialtypes", "Biography", nRow);
+        Get2DACache("racialtypes", "PlayerRace", nRow);
+        Get2DACache("racialtypes", "Constant", nRow);
+        Get2DACache("racialtypes", "AGE", nRow);
+        Get2DACache("racialtypes", "ToolsetDefaultClass", nRow);
+        Get2DACache("racialtypes", "CRModifier", nRow);
+
         nRow++;
         DelayCommand(0.1, Cache_RacialTypes(nRow));
     }
@@ -969,7 +969,7 @@ void Cache_Feat(int nRow = 0)
         nRow++;
         DelayCommand(0.01, Cache_Feat(nRow));
     }
-    else 
+    else
         DelayCommand(1.0, Cache_RacialTypes());
     if(nRow % 100 == 0)
     {
@@ -1077,11 +1077,11 @@ void Cache_Portraits(int nRow = 0)
     }
     if(nRow < GetPRCSwitch(FILE_END_PORTRAITS))
     {
-        Get2DACache("portraits", "BaseResRef", nRow);     
-        Get2DACache("portraits", "Sex", nRow);    
-        Get2DACache("portraits", "Race", nRow);   
-        Get2DACache("portraits", "InanimateType", nRow);   
-        Get2DACache("portraits", "Plot", nRow);   
+        Get2DACache("portraits", "BaseResRef", nRow);
+        Get2DACache("portraits", "Sex", nRow);
+        Get2DACache("portraits", "Race", nRow);
+        Get2DACache("portraits", "InanimateType", nRow);
+        Get2DACache("portraits", "Plot", nRow);
         Get2DACache("portraits", "LowGore", nRow);
         nRow++;
         DelayCommand(0.1, Cache_Portraits(nRow));
@@ -1111,10 +1111,10 @@ void Cache_Soundset(int nRow = 0)
     }
     if(nRow < GetPRCSwitch(FILE_END_SOUNDSET))
     {
-        Get2DACache("soundset", "LABEL", nRow);                    
-        Get2DACache("soundset", "RESREF", nRow);        
-        Get2DACache("soundset", "STRREF", nRow);   
-        Get2DACache("soundset", "GENDER", nRow);   
+        Get2DACache("soundset", "LABEL", nRow);
+        Get2DACache("soundset", "RESREF", nRow);
+        Get2DACache("soundset", "STRREF", nRow);
+        Get2DACache("soundset", "GENDER", nRow);
         Get2DACache("soundset", "TYPE", nRow);
         nRow++;
         DelayCommand(0.1, Cache_Soundset(nRow));

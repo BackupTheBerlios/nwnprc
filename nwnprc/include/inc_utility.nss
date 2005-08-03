@@ -419,6 +419,7 @@ void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE)
     }
     else if(GetItemInSlot(nSlot, oPC) == oItem)
     {
+        AssignCommand(oPC, ClearAllActions());
         AssignCommand(oPC, ActionUnequipItem(oItem));
         DelayCommand(0.1, ForceUnequip(oPC, oItem, nSlot, FALSE));
     }
@@ -428,6 +429,7 @@ void ForceEquip(object oPC, object oItem, int nSlot)
 {
     if(GetItemInSlot(nSlot, oPC) != oItem)
     {
+        AssignCommand(oPC, ClearAllActions());
         AssignCommand(oPC, ActionEquipItem(oItem, nSlot));
         DelayCommand(0.1, ForceEquip(oPC, oItem, nSlot));
     }

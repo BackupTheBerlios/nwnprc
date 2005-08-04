@@ -115,3 +115,17 @@ module.Cache : prc_onrespawn
 module.Cache : prc_onunaquire
 module.Cache : prc_unequip
 module.Cache : prc_onuserdef
+# Cache bioware summon AI scripts
+module.Cache : nw_ch_ac5
+module.Cache : nw_ch_ace
+module.Cache : nw_ch_ac3
+module.Cache : nw_ch_ac4
+module.Cache : nw_ch_ac6
+module.Cache : nw_ch_ac7
+module.Cache : nw_ch_ac8
+module.Cache : nw_ch_ac1
+module.Cache : nw_ch_ac2
+module.Cache : nw_ch_aca
+module.Cache : nw_ch_summon_9
+module.Cache : nw_ch_acb
+module.Cache : nw_ch_acd

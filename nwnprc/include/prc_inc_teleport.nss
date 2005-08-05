@@ -23,6 +23,28 @@
 #include "prc_inc_switch"
 
 
+///////////////////////
+/* Public Constants  */
+///////////////////////
+
+/**
+ * The name of the array where GetTeleportingObjects() stores the creatures it has
+ * determined should teleport with the current spell.
+ */
+const string PRC_TELEPORTING_OBJECTS_ARRAY    = "PRC_TeleportingObjectList";
+
+/**
+ * The number of the teleport quickselection slots. Also the index number of the highest slot,
+ * as they are numbered starting from 1.
+ */
+const int PRC_NUM_TELEPORT_QUICKSELECTS      = 2;
+
+/**
+ * A constant for the value of slot parameter used when accessing the active quickselection.
+ */
+const int PRC_TELEPORT_ACTIVE_QUICKSELECTION = -1;
+
+
 //////////////////////////////////////////////////
 /* Function prototypes                          */
 //////////////////////////////////////////////////
@@ -96,20 +118,57 @@ int GetNumberOfStoredTeleportTargetLocations(object oPC);
  * Checks whether the PC has a teleport quickselection active and if so,
  * whether it contains a valid metalocation.
  *
- * @param oPC The PC whose quickselection to check.
- * @return    TRUE if the PC has a quickselection active and it is
- *            a valid metalocation, FALSE otherwise.
+ * @param oPC   The PC whose quickselection to check.
+ * @param nSlot The quickselection slot to check. Valid values are PRC_TELEPORT_ACTIVE_QUICKSELECTION,
+ *              which checks the active quickselection and numbers from 1 to PRC_NUM_TELEPORT_QUICKSELECTS.
+ *
+ * @return      TRUE if the PC has a quickselection active and it is
+ *              a valid metalocation, FALSE otherwise.
  */
-int GetHasTeleportQuickSelectionActive(object oPC);
+int GetHasTeleportQuickSelection(object oPC, int nSlot = PRC_TELEPORT_ACTIVE_QUICKSELECTION);
 
 /**
  * Gets the given creature's active teleport quickselection, if any.
  *
- * @param oPC The PC whose quickselection to check.
- * @return    The PC's active quickselection, or null metalocation 
- *            if there is none.
+ * @param oPC    The PC whose quickselection to check.
+ * @param bClear Whether to clear the quickselection after getting it.
+ * @return       The PC's active quickselection, or null metalocation 
+ *               if there is none.
  */
-struct metalocation GetTeleportQuickSelection(object oPC); 
+struct metalocation GetActiveTeleportQuickSelection(object oPC, int bClear = FALSE);
+
+/**
+ * Gets the contents of one of the given creature's quickselect slots. Or the
+ * active quickselection if the slot parameter is -1.
+ *
+ * @param oPC   The PC whose quickselection to get.
+ * @param nSlot The slot to get from. Valid values are PRC_TELEPORT_ACTIVE_QUICKSELECTION,
+ *              which returns the active quickselection and numbers from 1 to PRC_NUM_TELEPORT_QUICKSELECTS.
+ *
+ * @return      The quickselection in the given slot, or null metalocation if the
+ *              slot was empty. Also returns null metalocation on error.
+ */
+struct metalocation GetTeleportQuickSelection(object oPC, int nSlot = PRC_TELEPORT_ACTIVE_QUICKSELECTION);
+
+/**
+ * Sets one of the PC's teleport quickselections to the given value.
+ * Has no effect on error.
+ *
+ * @param oPC   The PC whose quickselection to set.
+ * @param mlocL The metalocation to be stored.
+ *
+ * @param nSlot The slot to store the metalocation in. Valid values are PRC_TELEPORT_ACTIVE_QUICKSELECTION,
+ *              which sets the active quickselection and numbers from 1 to PRC_NUM_TELEPORT_QUICKSELECTS.
+ */
+void SetTeleportQuickSelection(object oPC, struct metalocation mlocL, int nSlot = PRC_TELEPORT_ACTIVE_QUICKSELECTION);
+
+/**
+ * Deletes the contents of a teleport quickselection slot on the given creature.
+ *
+ * @param oPC   The PC whose quickselection to delete.
+ * @param nSlot The quickselection slot to clear.
+ */
+void RemoveTeleportQuickSelection(object oPC, int nSlot = PRC_TELEPORT_ACTIVE_QUICKSELECTION);
 
 /**
  * Removes the teleport target location last returned by GetFirstStoredTeleportTargetLocation
@@ -157,6 +216,16 @@ int AddTeleportTargetLocation(object oPC, location locToAdd, string sName);
 int AddTeleportTargetLocationAsMeta(object oPC, struct metalocation mlocToAdd);
 
 /**
+ * Creates a map pin for each of the given PC's teleport target locations that do not
+ * have a map pin created for them yet. Is not totally reliable.
+ * Known problems:
+ * Cannot detect if a map pin created for a location has been deleted.
+ *
+ * @param oPC The PC for whom to create the map pins.
+ */
+void TeleportLocationsToMapPins(object oPC);
+
+/**
  * This function checks whether the given creature can teleport from
  * it's current location. It is intended to be run within teleport
  * spellscripts.
@@ -189,20 +258,17 @@ int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE);
 void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty);
 
 
-/**
- * The name of the array where 
- */
-const string PRC_TELEPORTING_OBJECTS_ARRAY    = "PRC_TeleportingObjectList";
-
-
 //////////////////////////////////////////////////
 /* Internal Constants - nothing to see here :D  */
 //////////////////////////////////////////////////
 
+/// Internal constant - Name of the array where the teleport target locations are stored.
 const string PRC_TELEPORT_ARRAY_NAME           = "PRC_TeleportLocation_Array";
+/// Internal constant - Name of personal switch telling whether to create map pins for a particular PC's stored locations.
 const string PRC_TELEPORT_CREATE_MAP_PINS      = "PRC_Teleport_CreateMapPins";
+/// Internal constant - Name of personal switch telling how long the listener will wait for the player to speak a name when a new location is stored.
 const string PRC_TELEPORT_NAMING_TIMER_VARNAME = "PRC_Teleport_NamingListenerDuration";
-const int NUM_TELEPORT_QUICKSELECTS = 2;
+
 
 //////////////////////////////////////////////////
 /* Function defintions                          */
@@ -211,17 +277,17 @@ const int NUM_TELEPORT_QUICKSELECTS = 2;
 void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCallbackVar,
                                   int bMeta = FALSE, int bForce = TRUE)
 {
-    // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
-    if(!GetIsPC(oPC)) return;
+/*    // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
+    if(!GetIsPC(oPC)) return;*/
 
     // Make sure the PC has the feats for marking locations
     ExecuteScript("prc_tp_mgmt_eval", oPC);
 
     // Handle possible quickselection
-    if(GetLocalInt(oPC, "PRC_Teleport_Quickselection"))
+    if(GetHasTeleportQuickSelection(oPC, PRC_TELEPORT_ACTIVE_QUICKSELECTION))
     {
-        // Get the quickselected metalocation
-        struct metalocation mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection");
+        // Get the quickselected metalocation and clear it
+        struct metalocation mlocL = GetActiveTeleportQuickSelection(oPC, TRUE);
 
         // Store the return value under the requested name and as the requested type
         if(bMeta)
@@ -233,10 +299,6 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
         // by delaying it. Probably unnecessary, but it will clear potential interference
         // caused by things done in this execution
         DelayCommand(0.2f, ExecuteScript(sCallbackScript, oPC));
-
-        // Clear the quickselection
-        DeleteLocalInt(oPC, "PRC_Teleport_Quickselection");
-        DeleteLocalMetalocation(oPC, "PRC_Teleport_Quickselection");
     }
     // We have to go look at the stored array, so make sure it contains at least one entry
     else if(!GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME))
@@ -272,9 +334,6 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
 
 struct metalocation GetFirstStoredTeleportTargetLocation(object oPC)
 {
-    // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
-    if(!GetIsPC(oPC)) return GetNullMetalocation();
-
     // Return null if the array is empty
     if(!GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME))
         return LocationToMetalocation(GetLocation(oPC), "Error: No stored locations! Returned current location of " + GetName(oPC));
@@ -289,9 +348,6 @@ struct metalocation GetFirstStoredTeleportTargetLocation(object oPC)
 
 struct metalocation GetNextStoredTeleportTargetLocation(object oPC)
 {
-    // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
-    if(!GetIsPC(oPC)) return GetNullMetalocation();
-
     // Return null if GetFirstStoredTeleportTargetLocation() hasn't been called previously
     int nInd = GetLocalInt(oPC, "PRC_Teleport_Array_Iterator");
     if(!nInd) return GetNullMetalocation();
@@ -310,9 +366,6 @@ struct metalocation GetNextStoredTeleportTargetLocation(object oPC)
 
 struct metalocation GetNthStoredTeleportTargetLocation(object oPC, int nInd)
 {
-    // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
-    if(!GetIsPC(oPC)) return GetNullMetalocation();
-
     // If out of lower or upper bound, return null
     if(nInd < 0 || nInd > GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME) - 1)
         return GetNullMetalocation();
@@ -323,33 +376,80 @@ struct metalocation GetNthStoredTeleportTargetLocation(object oPC, int nInd)
 
 int GetNumberOfStoredTeleportTargetLocations(object oPC)
 {
-    // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
-    if(!GetIsPC(oPC)) return 0;
-
     return GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME);
 }
 
-int GetHasTeleportQuickSelectionActive(object oPC)
+int GetHasTeleportQuickSelection(object oPC, int nSlot = PRC_TELEPORT_ACTIVE_QUICKSELECTION)
 {
     //SendMessageToPC(oPC, "GetLocalInt(oPC, PRC_Teleport_Quickselection): " + IntToString(GetLocalInt(oPC, "PRC_Teleport_Quickselection")));
     //SendMessageToPC(oPC, "GetIsMetalocationValid(GetLocalMetalocation(oPC, PRC_Teleport_Quickselection)): " + IntToString(GetIsMetalocationValid(GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection"))));
+    if(nSlot < -1 || !nSlot || nSlot > PRC_NUM_TELEPORT_QUICKSELECTS)
+        return FALSE;
 
-    return GetLocalInt(oPC, "PRC_Teleport_Quickselection") &&
-           GetIsMetalocationValid(GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection"));
+    if(nSlot == PRC_TELEPORT_ACTIVE_QUICKSELECTION)
+        return GetLocalInt(oPC, "PRC_Teleport_Quickselection");/* &&
+            GetIsMetalocationValid(GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection"));*/
+    else
+        return GetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nSlot));
 }
 
-struct metalocation GetTeleportQuickSelection(object oPC)
+struct metalocation GetActiveTeleportQuickSelection(object oPC, int bClear = FALSE)
 {
-    return GetHasTeleportQuickSelectionActive(oPC) ?
-             GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection") :
-             GetNullMetalocation();
+    if(GetHasTeleportQuickSelection(oPC, PRC_TELEPORT_ACTIVE_QUICKSELECTION))
+    {
+        struct metalocation mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_Quickselection");
+        if(bClear)
+            RemoveTeleportQuickSelection(oPC, PRC_TELEPORT_ACTIVE_QUICKSELECTION);
+        return mlocL;
+    }
+    else
+        return GetNullMetalocation();
+}
+
+struct metalocation GetTeleportQuickSelection(object oPC, int nSlot = PRC_TELEPORT_ACTIVE_QUICKSELECTION)
+{
+    // Make sure the slot is within allowed range
+    if(nSlot < -1 || !nSlot || nSlot > PRC_NUM_TELEPORT_QUICKSELECTS)
+        return GetNullMetalocation();
+
+    // The active quickselection was asked
+    if(nSlot == PRC_TELEPORT_ACTIVE_QUICKSELECTION)
+        return GetActiveTeleportQuickSelection(oPC, FALSE);
+    // The contents of a slot were asked, an the slot in question is not empty
+    else if(GetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nSlot)))
+        return GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nSlot));
+    // The slot is empty
+    else
+        return GetNullMetalocation();
+}
+
+void SetTeleportQuickSelection(object oPC, struct metalocation mlocL, int nSlot = PRC_TELEPORT_ACTIVE_QUICKSELECTION)
+{
+    // Make sure the slot is within allowed range
+    if(nSlot < -1 || !nSlot || nSlot > PRC_NUM_TELEPORT_QUICKSELECTS)
+        return;
+
+    // Set either the active selection, or a slot depending on nSlot
+    if(nSlot == PRC_TELEPORT_ACTIVE_QUICKSELECTION)
+    {
+        SetLocalInt(oPC, "PRC_Teleport_Quickselection", TRUE); // Mark quickselection as active
+        SetLocalMetalocation(oPC, "PRC_Teleport_Quickselection", mlocL);
+    }
+    else
+    {
+        SetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nSlot), TRUE); // Mark quickselection as existing
+        SetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nSlot), mlocL);
+    }
+}
+
+void RemoveTeleportQuickSelection(object oPC, int nSlot = PRC_TELEPORT_ACTIVE_QUICKSELECTION)
+{
+    DeleteLocalInt(oPC, "PRC_Teleport_Quickselection");
+    DeleteLocalMetalocation(oPC, "PRC_Teleport_Quickselection");
 }
 
 void RemoveCurrentTeleportTargetLocation(object oPC)
 {
-    // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
-    if(!GetIsPC(oPC)) return;
-
     // Return if GetFirstStoredTeleportTargetLocation() or GetNextStoredTeleportTargetLocation() hasn't been called previously.
     int nInd = GetLocalInt(oPC, "PRC_Teleport_Array_Iterator");
     if(!nInd) return;
@@ -363,9 +463,6 @@ void RemoveCurrentTeleportTargetLocation(object oPC)
 
 void RemoveNthTeleportTargetLocation(object oPC, int nInd)
 {
-    // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
-    if(!GetIsPC(oPC)) return;
-
     // If out of lower or upper bound, return
     if(nInd < 0 || nInd > GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME) - 1)
         return;
@@ -398,9 +495,6 @@ int AddTeleportTargetLocation(object oPC, location locToAdd, string sName)
 
 int AddTeleportTargetLocationAsMeta(object oPC, struct metalocation mlocToAdd)
 {
-    // The system is only useful to PCs. If it is at some point implemented for NPCs, change this.
-    if(!GetIsPC(oPC)) return FALSE;
-    
     // Make sure the metalocation is valid
     if(!GetIsMetalocationValid(mlocToAdd))
     {// "Location could not be marked due to technical limitations - unable to uniquely identify area."
@@ -427,6 +521,9 @@ int AddTeleportTargetLocationAsMeta(object oPC, struct metalocation mlocToAdd)
 
 void TeleportLocationsToMapPins(object oPC)
 {
+    // This function is only useful for PCs
+    if(!GetIsPC(oPC)) return;
+
     // Iterate over all stored metalocations
     int nMax = GetNumberOfStoredTeleportTargetLocations(oPC);
     int i;
@@ -495,13 +592,14 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
         while(GetIsObjectValid(oTarget))
         {
             // Check if the target is member of the same faction as the caster. If it is, teleport it along.
-            if(GetFactionLeader(oTarget) == GetFactionLeader(oCaster))
+            if(GetFactionLeader(oTarget) == GetFactionLeader(oCaster) && oTarget != oCaster)
             {
                 // Calculate how many carry slots the creature would take
                 nIncrease = GetCreatureSize(oTarget) == CREATURE_SIZE_HUGE ? 4 :
                              GetCreatureSize(oTarget) == CREATURE_SIZE_LARGE ? 2 :
                              1;
-                // Add it if the caster can carry it
+
+                // Add others if the caster can carry them
                 if(nCarry + nIncrease <= nMaxCarry)
                 {
                     nCarry += nIncrease;

@@ -5,7 +5,7 @@
 /** @file
     This file defines a function for using a
     simple generic listener creature.
-    
+
     The listener is limited to a single listening
     pattern by default, but as an object is returned,
     you may add your own if you so wish using
@@ -21,23 +21,23 @@
     will spawn near it and attempt to stay next to
     it. And the listener will only pass on strings
     spoken by the specified object.
-    
+
     When the listener hears a string that it is
     supposed to act on, it will ExecuteScript() the
     script attached to the event on itself.
     Use GetLastSpeaker() to retrieve the object
     that spoke the string and GetMatchedSubstringsCount()
     & GetMatchedSubstring() to retrieve the spoken string.
-    
-    
+
+
     If a time to live is specified (fTTL > 0), the listener
     will destroy itself once that time has run out.
     It will also destroy itself if it has been set to listen
     to a particular object and that object ceases being valid.
-    
-    
+
+
     Regarding the patterns used, taken from NWN Lexicon:
-    
+
     >From Noel (Bioware):
     >** will match zero or more characters
     >*w one or more whitespace
@@ -49,8 +49,8 @@
     >
     >- setting a creature to listen for "**" will match any string
     >- telling him to listen for "**funk**" will match any string that contains the word "funk".
-    >- "**(bash|open|unlock)**(chest|door)**" will match strings like "open the door please" or "he just bashed that chest!" 
-    
+    >- "**(bash|open|unlock)**(chest|door)**" will match strings like "open the door please" or "he just bashed that chest!"
+
     If several patterns would match the same string, the one
     added first using AddPattern will be the one matched.
 */
@@ -60,6 +60,7 @@
 //:://////////////////////////////////////////////
 
 #include "inc_utility"
+#include "x0_i0_position"
 
 
 //////////////////////////////////////////////////
@@ -87,11 +88,16 @@
  * @param fTTL          How long the listener will exist. Once this runs out, the listener will self-destruct. A
  *                      value of 0.0f or less means the listener is permanent (unless the object it is listening
  *                      to ceases being valid if one was specified).
+ *                      NOTE: Due to some weirdness in when the listener actually starts listening, it won't
+ *                      actually hear anything for the first 3 or so seconds of it's existence.
+ *                      seconds of this duration
+ * @param bNotify       If this is TRUE, the listener will give a notice when it's spawned to either the target it's
+ *                      listening to, or everyone in the area it's listening in.
  *
  * @return  The newly created listener.
  */
 object SpawnListener(string sScriptToCall, location lSpawnAt,
-                     string sPattern = "**", object oListenTo = OBJECT_INVALID, float fTTL = 0.0f);
+                     string sPattern = "**", object oListenTo = OBJECT_INVALID, float fTTL = 0.0f, int bNotify = TRUE);
 
 /**
  * Adds a new pattern for the specified listener to listen to. Not recommended for use with
@@ -124,7 +130,7 @@ void DestroyListener(object oListener, int bFirst = TRUE);
 //////////////////////////////////////////////////
 
 object SpawnListener(string sScriptToCall, location lSpawnAt,
-                     string sPattern = "**", object oListenTo = OBJECT_INVALID, float fTTL = 0.0f)
+                     string sPattern = "**", object oListenTo = OBJECT_INVALID, float fTTL = 0.0f, int bNotify = TRUE)
 {
     // Check for whether we are listening to a single object or at a location
     if(GetIsObjectValid(oListenTo)) // Use GetIsObjectValid instead of direct comparison to OBJECT_INVALID, because using an invalid location may crash the game.
@@ -133,7 +139,10 @@ object SpawnListener(string sScriptToCall, location lSpawnAt,
     object oListener = CreateObject(OBJECT_TYPE_CREATURE, "prc_gen_listener", lSpawnAt);
     // Paranoia check
     if(!GetIsObjectValid(oListener))
+    {
+        WriteTimestampedLogEntry("Error in SpawnListener(" + sScriptToCall + ", " + LocationToString(lSpawnAt) + ", " + sPattern + ", " + ObjectToString(oListenTo) + "-" + GetName(oListenTo) + FloatToString(fTTL) + ") - created listener is invalid!");
         return OBJECT_INVALID;
+    }
 
     // A few more tricks to make sure the listener will will not be affected by anything
     SetImmortal(oListener, TRUE);
@@ -155,7 +164,7 @@ object SpawnListener(string sScriptToCall, location lSpawnAt,
     {
         SetLocalInt(oListener, "PRC_GenericListener_ListenToSingle", TRUE);
         SetLocalObject(oListener, "PRC_GenericListener_ListeningTo", oListenTo);
-        
+
         // Make the listener start following the target
         AssignCommand(oListener, ActionForceFollowObject(oListenTo));
     }
@@ -171,6 +180,10 @@ object SpawnListener(string sScriptToCall, location lSpawnAt,
         SetLocalInt(oListener, "PRC_GenericListener_HasLimitedDuration", TRUE);
         SetLocalInt(oListener, "PRC_GenericListener_DestroyTimer", FloatToInt(fTTL + 6.0f) / 6);
     }
+
+    // Should we send a notice that the listener is working
+    if(!bNotify)
+        SetLocalInt(oListener, "PRC_GenericListener_NoNotification", TRUE);
 
     return oListener;
 }

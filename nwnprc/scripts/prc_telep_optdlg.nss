@@ -130,12 +130,14 @@ void main()
             int i;
             struct metalocation mlocL;
             string sToken;
-            for(i = 1; i <= NUM_TELEPORT_QUICKSELECTS; i++)
+            for(i = 1; i <= PRC_NUM_TELEPORT_QUICKSELECTS; i++)
             {//          Quickselection
                 sToken = GetStringByStrRef(16825271) + " " + IntToString(i) + ": ";
-                if(GetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i)))
+                //if(GetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i)))
+                if(GetHasTeleportQuickSelection(oPC, i))
                 {
-                    mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i));
+                    //mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i));
+                    mlocL = GetTeleportQuickSelection(oPC, i);
                     sToken += MetalocationToString(mlocL);
                 }
                 else
@@ -152,12 +154,14 @@ void main()
             int i;
             struct metalocation mlocL;
             string sToken;
-            for(i = 1; i < NUM_TELEPORT_QUICKSELECTS; i++)
+            for(i = 1; i <= PRC_NUM_TELEPORT_QUICKSELECTS; i++)
             {//          Quickselection
                 sToken = GetStringByStrRef(16825271) + " " + IntToString(i) + ": ";
-                if(GetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i)))
+                //if(GetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i)))
+                if(GetHasTeleportQuickSelection(oPC, i))
                 {
-                    mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i));
+                    //mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i));
+                    mlocL = GetTeleportQuickSelection(oPC, i);
                     sToken += MetalocationToString(mlocL);
                     AddChoice(sToken, i);
                 }
@@ -283,9 +287,10 @@ void main()
     {
         if(nChoice != CHOICE_BACK_TO_MAIN)
         {
-            SetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice), TRUE);
+            /*SetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice), TRUE);
             SetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice),
-                                 GetNthStoredTeleportTargetLocation(oPC, GetLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex")));
+                                 GetNthStoredTeleportTargetLocation(oPC, GetLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex")));*/
+            SetTeleportQuickSelection(oPC, GetNthStoredTeleportTargetLocation(oPC, GetLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex")), nChoice);
         }
 
         DeleteLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex");
@@ -295,8 +300,9 @@ void main()
     {
         if(nChoice != CHOICE_BACK_TO_MAIN)
         {
-            DeleteLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice));
-            DeleteLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice));
+            /*DeleteLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice));
+            DeleteLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(nChoice));*/
+            RemoveTeleportQuickSelection(oPC, nChoice);
         }
 
         nStage = STAGE_MAIN;

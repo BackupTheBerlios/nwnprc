@@ -12,15 +12,14 @@
 //:: Created On: 31.05.2005
 //:://////////////////////////////////////////////
 
-#include "inc_metalocation"
+#include "prc_inc_teleport"
 
 void main()
 {
     object oPC = OBJECT_SELF;
 
     // Clear the quickselection
-    DeleteLocalInt(oPC, "PRC_Teleport_Quickselection");
-    DeleteLocalMetalocation(oPC, "PRC_Teleport_Quickselection");
+    RemoveTeleportQuickSelection(oPC, PRC_TELEPORT_ACTIVE_QUICKSELECTION);
     
     SendMessageToPCByStrRef(oPC, 16825291); // "Teleport quickselection deactivated"
 }

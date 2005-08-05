@@ -16,6 +16,7 @@
 
 void main()
 {
+//SendMessageToPC(GetFirstPC(), "Running prc_glist_onconv");
     // If listening to a single creature, check whether it was the one speaking
     if(GetLocalInt(OBJECT_SELF, "PRC_GenericListener_ListenToSingle") &&
        GetLastSpeaker() != GetLocalObject(OBJECT_SELF, "PRC_GenericListener_ListeningTo"))

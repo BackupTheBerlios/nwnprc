@@ -62,12 +62,14 @@ void main()
             struct metalocation mlocL;
             // Print the quickselections up front
 
-            for(i = 1; i < NUM_TELEPORT_QUICKSELECTS; i++)
+            for(i = 1; i <= PRC_NUM_TELEPORT_QUICKSELECTS; i++)
             {//          Quickselection
                 sToken = GetStringByStrRef(16825271) + " " + IntToString(i) + ": ";
-                if(GetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i)))
+                //if(GetLocalInt(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i)))
+                if(GetHasTeleportQuickSelection(oPC, i))
                 {
-                    mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i));
+                    //mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i));
+                    mlocL = GetTeleportQuickSelection(oPC, i);
                     sToken += MetalocationToString(mlocL);
                     AddChoice(oPC, sToken, -i);
                 }
@@ -94,7 +96,8 @@ void main()
             // Get the metalocation to store
             int nReturn = GetLocalInt(oPC, "PRC_TeleportSelectionConvo_Selection");
             struct metalocation mlocL = nReturn < 0 ? // Is it a quickselection?
-                                        GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(-nReturn)) :
+                                        //GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(-nReturn)) :
+                                        GetTeleportQuickSelection(oPC, -nReturn) :
                                         GetNthStoredTeleportTargetLocation(oPC, nReturn);
             // Store the return value
             if(GetLocalInt(oPC, "PRC_TeleportTargetSelection_ReturnAsMetalocation"))

@@ -108,7 +108,7 @@ struct ireqreport
 
     //percentage of owned items (from 0.0 to 1.0)
     float ItemOR;
-    
+
     //message for that recipe
     string message;
 };
@@ -236,8 +236,8 @@ void prccache_error(string msg)
 //MISC FUNCTIONS
 
 // Do THESE ones require an explanation? ;)
-int max(int a, int b) {return (a > b ? a : b);}
-int min(int a, int b) {return (a < b ? a : b);}
+//int max(int a, int b) {return (a > b ? a : b);} - Moved to inc_utility - Ornedan
+//int min(int a, int b) {return (a < b ? a : b);}
 
 
 //VARIABLES
@@ -325,7 +325,7 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
         SetLocalString(OBJECT_SELF, "ReqParam1" + IntToString(RowsRead), req.ReqParam1);
         SetLocalString(OBJECT_SELF, "ReqParam2" + IntToString(RowsRead), req.ReqParam2);
     }
-    
+
 
     //process the lines. This has to be done AFTER reading them since we'll make some
     //extra DB accesses here with Get*Name()
@@ -334,12 +334,12 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
         req.ReqType   = GetLocalString(OBJECT_SELF, "ReqType"   + IntToString(RowsProcessed));
         req.ReqParam1 = GetLocalString(OBJECT_SELF, "ReqParam1" + IntToString(RowsProcessed));
         req.ReqParam2 = GetLocalString(OBJECT_SELF, "ReqParam2" + IntToString(RowsProcessed));
-        
+
         DeleteLocalString(OBJECT_SELF, "ReqType"   + IntToString(RowsProcessed));
         DeleteLocalString(OBJECT_SELF, "ReqParam1" + IntToString(RowsProcessed));
         DeleteLocalString(OBJECT_SELF, "ReqParam2" + IntToString(RowsProcessed));
 
-        
+
         if      (req.ReqType == "RESULT")       report = CheckReqResult     (report, req.ReqParam1, req.ReqParam2);
 
         else if (req.ReqType == "CASTERLVL")    report = CheckReqCasterLevel(report, req.ReqParam1, req.ReqParam2, "ANY");
@@ -437,7 +437,7 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
             sMessage += GetStringByStrRef(STRREF_ALLREQSOK);
         else
             sMessage += GetStringByStrRef(STRREF_SOMEREQSMISSING);
-        }    
+        }
         SendMessageToPC(OBJECT_SELF, sMessage);
         report.message += "\n"+sMessage;
     }
@@ -449,7 +449,7 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
             SetXP(OBJECT_SELF, GetXP(OBJECT_SELF) - report.XPcost);
         }
     }
-    
+
     return report;
 }
 
@@ -490,7 +490,7 @@ void PRCCraft_SetConsume(int nValue)
 /*******************
  * timer functions *
  *******************/
- 
+
 
 //oPC won't be able to craft anything for the next nDelay seconds
 void SetCraftTimer(int nDelay, object oPC = OBJECT_SELF)
@@ -525,14 +525,14 @@ struct ireqreport CheckReqResult(struct ireqreport report, string sReqParam1, st
     report.result = sReqParam1;
     string sResultName = "";
 
-    if (oTempContainer == OBJECT_INVALID) 
+    if (oTempContainer == OBJECT_INVALID)
     {
         prccache_error("CheckReqResult: no temporary container!! Are you sure you have HotU or the PRC Compatibility Pack?");
         report.result = "";
         return report;
     }
 
-    //try inventory item 
+    //try inventory item
     object oTempObject = CreateItemOnObject(report.result, oTempContainer, 1);
     if (oTempObject != OBJECT_INVALID)
     {
@@ -558,19 +558,19 @@ struct ireqreport CheckReqResult(struct ireqreport report, string sReqParam1, st
         oTempObject = CreateObject(OBJECT_TYPE_PLACEABLE, report.result, lLimbo);
 
         //try creature
-        if (oTempObject == OBJECT_INVALID) 
+        if (oTempObject == OBJECT_INVALID)
         {
             report.result_type = RESULT_TYPE_CREATURE;
             oTempObject = CreateObject(OBJECT_TYPE_CREATURE, report.result, lLimbo);
         }
-    
+
         if (oTempObject != OBJECT_INVALID)
             sResultName = GetName(oTempObject);
 
         report.stacksize = 1;
         report.marketprice = 0;
     }
-    
+
     if (oTempObject == OBJECT_INVALID)
     {
         //try script
@@ -585,14 +585,14 @@ struct ireqreport CheckReqResult(struct ireqreport report, string sReqParam1, st
         report.stacksize = 1;
         report.marketprice = 0;
     }
-    
+
     if (oTempObject == OBJECT_INVALID && sResultName == "") {
         prccache_error("Trying to craft an invalid object: " + sReqParam1);
         report.result = "";
         return report;
     }
 
-    if (report.display) 
+    if (report.display)
     {
         string sMessage = sResultName;
         if (report.stacksize >1)
@@ -630,9 +630,9 @@ struct ireqreport CheckReqCasterLevel(struct ireqreport report, string sReqParam
             GetLevelByTypeDivineFeats (OBJECT_SELF)),
             GetLevelByTypePsionicFeats(OBJECT_SELF));
     }
-    
+
     nResult = (nLevel >= nRequiredCasterLevel);
-    
+
     if (report.display) {
         string sMessage =  "* " + GetStringByStrRef(STRREF_CASTERLEVEL) + " " + sReqParam1;
 
@@ -726,7 +726,7 @@ struct ireqreport CheckReqFeat(struct ireqreport report, string sReqParam1, stri
             else
                 sMessage += GetStringByStrRef(STRREF_MISSING);
                 SendMessageToPC(OBJECT_SELF, sMessage);
-        }    
+        }
     }
     report.message += "\n"+sMessage;
 
@@ -748,12 +748,12 @@ struct ireqreport CheckReqSpell(struct ireqreport report, string sReqParam1, str
     int nResult = (GetLocalInt(report.recipe, "Spell" + IntToString(nSpell)) > 0 || GetHasSpell(nSpell) > 0);
 
     string sMessage;
-    if (report.display) 
+    if (report.display)
     {
         sMessage = "* " + GetStringByStrRef(STRREF_SPELL) + ": " + GetSpellName(nSpell);
         if (extras == "OR")
             sMessage += " (" + GetStringByStrRef(STRREF_OR) + ")";
-            
+
         if(GetModule() != OBJECT_SELF)
         {
             sMessage += ": ";
@@ -773,7 +773,7 @@ struct ireqreport CheckReqSpell(struct ireqreport report, string sReqParam1, str
             DecrementRemainingSpellUses(OBJECT_SELF, nSpell);   //consume only if it's not been already cast on recipe
     }
 
-    if (extras == "OR") 
+    if (extras == "OR")
     {
         if (report.SpellOR == -1)
             report.SpellOR = nResult;
@@ -887,7 +887,7 @@ struct ireqreport CheckReqItem(struct ireqreport report, string sReqParam1, stri
 
     //Cycle through all objects in inventory until an adequate amount is reached
     oTempObject = GetFirstItemInInventory(OBJECT_SELF);
-    while (oTempObject != OBJECT_INVALID && nOwnedStackSize < nRequiredStackSize) 
+    while (oTempObject != OBJECT_INVALID && nOwnedStackSize < nRequiredStackSize)
     {
         string sTempResRef = GetResRef(oTempObject);
         if (sTempResRef == sReqParam1) {
@@ -922,7 +922,7 @@ struct ireqreport CheckReqItem(struct ireqreport report, string sReqParam1, stri
     }
 
 
-    if (report.display && GetModule() != OBJECT_SELF) 
+    if (report.display && GetModule() != OBJECT_SELF)
     {
         if (nOwnedStackSize >= nRequiredStackSize)
             sMessage += GetStringByStrRef(STRREF_OK);
@@ -961,7 +961,7 @@ struct ireqreport CheckReqHelper(struct ireqreport report, string sReqParam1, st
             oHelper = GetNextItemInInventory(OBJECT_SELF);
         }
     }
-        
+
     int nResult = (oHelper != OBJECT_INVALID);
     string sMessage;
     if (report.display) {
@@ -1006,13 +1006,13 @@ struct ireqreport CheckReqScript(struct ireqreport report, string sReqParam1, st
     PRCCraft_SetCaption("");
     PRCCraft_SetReturnValue(FALSE);
     PRCCraft_SetArguments(sReqParam2);
-    PRCCraft_SetConsume(report.consume);    
+    PRCCraft_SetConsume(report.consume);
 
     ExecuteScript(sReqParam1, OBJECT_SELF);
-    
+
     int nResult = PRCCraft_GetReturnValue();
     string sMessage;
-    if (report.display) 
+    if (report.display)
     {
         sMessage = "* " + GetStringByStrRef(STRREF_SPECIAL);
         sMessage += ": ";
@@ -1058,7 +1058,7 @@ struct ireqreport CheckReqRace(struct ireqreport report, string sReqParam1, stri
     if (sReqParam2 != "")
         nResult &= (GetSubRace(OBJECT_SELF) == sReqParam2);
     string sMessage;
-    if (report.display) 
+    if (report.display)
     {
         sMessage = "* " + GetStringByStrRef(STRREF_RACE);
         sMessage += ": ";
@@ -1102,7 +1102,7 @@ struct ireqreport CheckReqAlign(struct ireqreport report, string sReqParam1, str
                 sMessage += GetStringByStrRef(STRREF_OK);
             else
                 sMessage += GetStringByStrRef(STRREF_MISSING);
-        }       
+        }
         SendMessageToPC(OBJECT_SELF, sMessage);
     }
     report.message += "\n"+sMessage;
@@ -1121,7 +1121,7 @@ struct ireqreport CheckReqArea(struct ireqreport report, string sReqParam1, stri
     string sCurrentArea = GetTag(GetArea(OBJECT_SELF));
     int nResult = (FindSubString(sCurrentArea, sReqParam1) != -1);
     string sMessage;
-    if (report.display) 
+    if (report.display)
     {
         object oRefArea = OBJECT_INVALID;
         if (sReqParam2 != "")
@@ -1143,7 +1143,7 @@ struct ireqreport CheckReqArea(struct ireqreport report, string sReqParam1, stri
                 sMessage += GetStringByStrRef(STRREF_OK);
             else
                 sMessage += GetStringByStrRef(STRREF_MISSING);
-        }    
+        }
         SendMessageToPC(OBJECT_SELF, sMessage);
     }
     report.message += "\n"+sMessage;
@@ -1170,7 +1170,7 @@ struct ireqreport CheckReqDeity(struct ireqreport report, string sReqParam1, str
     if(GetModule() == OBJECT_SELF)
         sMessage = "* " + GetStringByStrRef(STRREF_DEITY);
 
-    if (report.display) 
+    if (report.display)
         SendMessageToPC(OBJECT_SELF, sMessage);
     report.message += "\n"+sMessage;
 
@@ -1281,7 +1281,7 @@ int GetAvailXP(object oTarget=OBJECT_SELF)
 
 string GetRecipeTagFromItem(string sResRef)
 {
-    if (GetPRCSwitch(PRC_USE_DATABASE)) 
+    if (GetPRCSwitch(PRC_USE_DATABASE))
     {
         string q = PRC_SQLGetTick();
         //NWNX2/SQL
@@ -1296,17 +1296,17 @@ string GetRecipeTagFromItem(string sResRef)
 
     else {
         //Plain slow 2DA
-        
+
         object oModule = GetModule();
-        
-        if (GetLocalInt(oModule, "PRC_cache_item_to_ireq") == FALSE) 
+
+        if (GetLocalInt(oModule, "PRC_cache_item_to_ireq") == FALSE)
         {
             //Cache item_to_ireq into module variables
             int row;
-            for (row = 0; row <= GetPRCSwitch(FILE_END_ITEM_TO_IREQ); row++) 
+            for (row = 0; row <= GetPRCSwitch(FILE_END_ITEM_TO_IREQ); row++)
             {
                 string sResRefRead = Get2DACache("item_to_ireq", "L_RESREF"  , row);
-                if (sResRefRead != "") 
+                if (sResRefRead != "")
                 {
                     string sTagRead    = Get2DACache("item_to_ireq", "RECIPE_TAG", row);
                     SetLocalString(oModule, "item_to_ireq" + sResRefRead, sTagRead);
@@ -1314,7 +1314,7 @@ string GetRecipeTagFromItem(string sResRef)
             }
             SetLocalInt(GetModule(), "PRC_cache_item_to_ireq", TRUE);
         }
-        
+
         //Test the cached item_to_ireq
         return GetLocalString(oModule, "item_to_ireq" + sResRef);
     }
@@ -1327,10 +1327,10 @@ struct convocc_req convocc_GetReqs(string file, int row)
 {
     struct convocc_req req;
 
-    if (GetPRCSwitch(PRC_USE_DATABASE)) 
+    if (GetPRCSwitch(PRC_USE_DATABASE))
     {
         //NWNX2/SQL
-        if (row == 0) 
+        if (row == 0)
         {
             //string sQuery = "SELECT reqtype,reqparam1,reqparam2 FROM prccache_reqs WHERE file='" + file + "' ORDER BY ID";
             string q = PRC_SQLGetTick();
@@ -1350,7 +1350,7 @@ struct convocc_req convocc_GetReqs(string file, int row)
 
     else {
         //Plain slow 2DA
-        while (1) 
+        while (1)
         {
             req.ReqType  = Get2DACache(file, "ReqType", row);
             if (req.ReqType != "")

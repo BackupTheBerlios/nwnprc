@@ -218,6 +218,7 @@ void main()
                                                  GetLocalFloat(oCaster, "PRC_Spell_DimensionDoor_Distance")
                                                  )
                         );
+        CleanLocals(oCaster);
     }
 
     // Cleanup

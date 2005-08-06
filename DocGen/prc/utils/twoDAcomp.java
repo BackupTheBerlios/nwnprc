@@ -9,8 +9,8 @@ import java.util.*;
 public class twoDAcomp{
 	
 	public static void main(String[] args) throws Exception{
-		File[] prc2das = new File(".\\prc2das\\").listFiles();
-		File[] nor2das = new File(".\\2das\\").listFiles();
+		File[] prc2das = new File("." + File.separator + "prc2da" + File.separator).listFiles();
+		File[] nor2das = new File("." + File.separator + "2da" + File.separator).listFiles();
 		
 		
 		HashMap<String, File> cont = new HashMap<String, File>();

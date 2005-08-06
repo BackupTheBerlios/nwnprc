@@ -6,7 +6,7 @@ import java.io.File;
 
 public class DuplicateSubradials{
 	public static void main(String[] args){
-		Data_2da feats = Data_2da.load2da("2das" + File.separator + "spells.2da");
+		Data_2da feats = Data_2da.load2da("." + File.separator + "2da" + File.separator + "spells.2da");
 		HashSet<Integer> subrads = new HashSet<Integer>();
 		ArrayList<Integer> duplicates = new ArrayList<Integer>();
 		String entry;

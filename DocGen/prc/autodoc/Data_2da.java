@@ -162,7 +162,6 @@ public class Data_2da{
 	 *                                    or the file does not contain any data
 	 */
 	public static Data_2da load2da(String filePath){
-	//public Data_2da(String filePath){
 		Data_2da toReturn;
 		String name, defaultValue = "";
 		

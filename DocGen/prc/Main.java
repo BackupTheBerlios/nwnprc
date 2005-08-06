@@ -34,6 +34,9 @@ public class Main {
 		else if(args[0].equals("codegen")){
 			prc.utils.CodeGen.main(paramsToPass);
 		}
+		else if(args[0].equals("radials")){
+			prc.utils.Radials.main(paramsToPass);
+		}
 		else if(args[0].equals("duplicatesubrad")){
 			prc.utils.DuplicateSubradials.main(paramsToPass);
 		}
@@ -51,6 +54,7 @@ public class Main {
 		                   "             manual     - Generates the manual\n"+
 						   "             2da        - Either verifies a single 2da file or compares two\n"+
 						   "             codegen    - Autogenerates scripts (or other files)\n"+
+						   "             radials    - Generates subradial FeatID values\n"+
 						   "             duplicatesubrad  - Seeks through spells.2da and prints lines\n"+
 						   "                                containing duplicate subradial values\n"+
 		                   "\n"+

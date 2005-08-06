@@ -21,7 +21,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 /*
   Spellcast Hook Code
@@ -44,16 +43,16 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eAOE = EffectAreaOfEffect(AOE_PER_ENTANGLE);
     location lTarget = GetSpellTargetLocation();
     int nDuration = 3 + PRCGetCasterLevel(OBJECT_SELF) / 2;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Make sure duration does no equal 0
-    if (nDuration < 1)
+    if(nDuration < 1)
     {
         nDuration = 1;
     }
     //Check Extend metamagic feat.
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if(CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
-       nDuration = nDuration *2;    //Duration is +100%
+       nDuration = nDuration * 2;    //Duration is +100%
     }
     //Create an instance of the AOE Object using the Apply Effect function
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nDuration));

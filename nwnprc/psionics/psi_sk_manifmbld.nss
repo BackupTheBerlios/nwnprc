@@ -33,12 +33,12 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType);
 
 void main()
 {
-    //WriteTimestampedLogEntry("Starting psi_sk_manifmbld");
+    WriteTimestampedLogEntry("Starting psi_sk_manifmbld");
     object oPC = OBJECT_SELF;
     object oMbld;
     int nMbldType = GetPersistantLocalInt(oPC, MBLADE_SHAPE);
     int nHand = GetPersistantLocalInt(oPC, MBLADE_HAND);
-    
+
     // If this is the very first time a PC is manifesting a mindblade, initialise the hand to be main hand
     if(!nHand)
     {
@@ -76,7 +76,7 @@ void main()
     }
 
     // Construct the bonuses
-    DelayCommand(0.25f, BuildMindblade(oPC, oMbld, nMbldType));
+    /*DelayCommand(0.25f, */BuildMindblade(oPC, oMbld, nMbldType)/*)*/;
 
     // Force equip
     AssignCommand(oPC, ActionEquipItem(oMbld, nHand));
@@ -124,7 +124,7 @@ void main()
     AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "psi_sk_event", TRUE, FALSE);
     AddEventScript(oPC, EVENT_ONUNAQUIREITEM,      "psi_sk_event", TRUE, FALSE);
     AddEventScript(oPC, EVENT_ONPLAYERDEATH,       "psi_sk_event", TRUE, FALSE);
-    //WriteTimestampedLogEntry("Finished psi_sk_manifmbld");
+    DelayCommand(0.01f, WriteTimestampedLogEntry("Finished psi_sk_manifmbld"));
 }
 
 
@@ -145,7 +145,7 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     }
     else
     {
-        nEnh = nSKLevel > 20 ? 
+        nEnh = nSKLevel > 20 ?
                 (nSKLevel - 20) / 5 + 5: // Boni are granted +1 / 5 levels epic
                 nSKLevel / 4;            // Boni are granget +1 / 4 levels pre-epic
         // Dual mindblades have one lower bonus
@@ -162,21 +162,21 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyVisualEffect(GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD ? ITEM_VISUAL_HOLY :
                                                                        GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL ? ITEM_VISUAL_EVIL :
                                                                         ITEM_VISUAL_SONIC
-                                                                     ), oMbld);
+                                                                      ), oMbld);
 
     /* Add in common feats */
     string sTag = GetTag(oMbld);
     // For the purposes of the rest of this function, dual shortswords is the same as single shortsword
     if(nMbldType == MBLADE_SHAPE_DUAL_SHORTSWORDS) nMbldType = MBLADE_SHAPE_SHORTSWORD;
- 
- 
+
     // Weapon Focus
+    /* Every soulknife has this, so it's automatically on the weapons now. Uncomment if for some reason another class with the mindblade class feature is added
     if(GetHasFeat(FEAT_WEAPON_FOCUS_MINDBLADE, oPC))
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_WEAPON_FOCUS_SHORT_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_WEAPON_FOCUS_LONG_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_WEAPON_FOCUS_BASTARD_SWORD :
                                                                                                                 IP_CONST_FEAT_WEAPON_FOCUS_THROWING_AXE
-                                                                      ), oMbld);
+                                                                      ), oMbld);*/
     // Improved Critical
     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_MINDBLADE, oPC))
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_IMPROVED_CRITICAL_SHORT_SWORD :
@@ -218,6 +218,13 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
                                                                        nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_EPIC_WEAPON_SPECIALIZATION_LONG_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_EPIC_WEAPON_SPECIALIZATION_BASTARD_SWORD :
                                                                                                                 IP_CONST_FEAT_EPIC_WEAPON_SPECIALIZATION_THROWING_AXE
+                                                                      ), oMbld);
+    // Weapon of Choice
+    if(GetHasFeat(FEAT_WEAPON_OF_CHOICE_MINDBLADE, oPC) && nMbldType != MBLADE_SHAPE_RANGED)
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_WEAPON_OF_CHOICE_SHORTSWORD :
+                                                                       nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_WEAPON_OF_CHOICE_LONGSWORD :
+                                                                       nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_WEAPON_OF_CHOICE_BASTARDSWORD :
+                                                                                                                -1 // This shouldn't ever be reached
                                                                       ), oMbld);
     // Bladewind: Due to some moron @ BioWare, calls to DoWhirlwindAttack() do not do anything if one
     // does not have the feat. Therefore, we need to grant it as a bonus feat on the blade.
@@ -263,7 +270,7 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
         SendMessageToPC(oPC, "Added Collision damage");
     }
     /*if(nFlags & MBLADE_FLAG_MINDCRUSHER )
-    { OnHit 
+    { OnHit
     }*/
     if(nFlags & MBLADE_FLAG_PSYCHOKINETICBURST && !(nFlags & MBLADE_FLAG_PSYCHOKINETIC)) // Only Psychokinetic Burst
     {
@@ -289,7 +296,7 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyMassiveCritical(IP_CONST_DAMAGEBONUS_1d6), oMbld);
         bLight = TRUE;
     }
-    
+
     if(bLight)
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyLight(IP_CONST_LIGHTBRIGHTNESS_NORMAL, IP_CONST_LIGHTCOLOR_WHITE), oMbld);
 }

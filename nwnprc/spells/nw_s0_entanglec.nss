@@ -30,7 +30,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eEntangle = EffectVisualEffect(VFX_DUR_ENTANGLE);
     //Link Entangle and Hold effects
     effect eLink = EffectLinkEffects(eHold, eEntangle);
-    object oCreator;
     int bValid;
 
     object aoeCreator = GetAreaOfEffectCreator();

@@ -18,7 +18,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
  ActionDoCommand(SetAllAoEInts(SPELL_ENTANGLE,OBJECT_SELF, GetSpellSaveDC()));
 
@@ -36,7 +35,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             {
                 if(GetEffectType(eAOE) == EFFECT_TYPE_ENTANGLE)
                 {
-                    //If the effect was created by the Acid_Fog then remove it
+                    //If the effect was created by the Entagle then remove it
                     if(GetEffectSpellId(eAOE) == SPELL_ENTANGLE)
                     {
                         RemoveEffect(oTarget, eAOE);

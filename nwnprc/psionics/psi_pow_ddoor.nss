@@ -79,7 +79,7 @@ location GetDimensionDoorLocation(object oCaster, int nCasterLvl, location lBase
         if(vTarget.y < 0.0f) vTarget.y = 0.0f;
 
         return Location(GetAreaFromLocation(lBaseTarget), vTarget, GetFacingFromLocation(lBaseTarget));
-    }
+    }/*
     else if(GetHasTeleportQuickSelection(oCaster, PRC_TELEPORT_ACTIVE_QUICKSELECTION))
     {
 //SendMessageToPC(oCaster, "Debug: Quickselect is active");
@@ -96,7 +96,7 @@ location GetDimensionDoorLocation(object oCaster, int nCasterLvl, location lBase
                 return lTest;
             }
         }
-    }
+    }*/
 
     // Just return the spell's base target location
     return lBaseTarget;
@@ -221,5 +221,6 @@ void main()
                                                  GetLocalFloat(oCaster, "PRC_Spell_DimensionDoor_Distance")
                                                  )
                         );
+        CleanLocals(oCaster)
     }
 }

@@ -1,8 +1,8 @@
 /*
    ----------------
-   Dimension Door, Psionic: Party within 10ft
+   Dimension Door, Psionic: Party within 10ft, Direction & Distance
 
-   psi_wld_ddoor_b
+   psi_war_ddoor_d
    ----------------
 
    19/2/04 by Stratovarius
@@ -36,5 +36,5 @@
 
 void main()
 {
-    UsePower(POWER_DIMENSIONDOOR_PARTY, CLASS_TYPE_WILDER);
+    UsePower(POWER_DIMENSIONDOOR_PARTY_DIRDIST, CLASS_TYPE_PSYWAR);
 }

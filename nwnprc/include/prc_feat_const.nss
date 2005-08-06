@@ -1424,7 +1424,7 @@ const int FEAT_PAN_LUNG_DRAGON                   = 4134;
 const int FEAT_SHEN_LUNG_DRAGON                  = 4135;
 const int FEAT_TIEN_LUNG_DRAGON                  = 4136;
 const int FEAT_TUN_MI_LUNG_DRAGON                = 4137;
-const int FEAT_YU_LUNG_DRAGON                    = 4138; 
+const int FEAT_YU_LUNG_DRAGON                    = 4138;
 const int FEAT_DRAGON_DIS_BREATH_2               = 4139;
 const int FEAT_DRAGON_DIS_BREATH_3               = 4140;
 const int FEAT_DRAGON_DIS_BREATH_4               = 4141;
@@ -1620,6 +1620,8 @@ const int FEAT_WEAPON_SPECIALIZATION_MINDBLADE      = 3617;
 const int FEAT_EPIC_WEAPON_FOCUS_MINDBLADE          = 3618;
 const int FEAT_EPIC_WEAPON_SPECIALIZATION_MINDBLADE = 3619;
 const int FEAT_MULTIPLE_THROW                       = 3620;
+const int FEAT_CHANGE_HANDEDNESS                    = 3621;
+const int FEAT_WEAPON_OF_CHOICE_MINDBLADE           = 3622;
 
 // Swashbuckler
 const int FEAT_SWASH_GRACE1                         = 1900;

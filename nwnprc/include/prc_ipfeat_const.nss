@@ -101,7 +101,7 @@ const int IP_CONST_FEAT_SPELL10         = 256;
 //These are defined by bioware in 1.66
 //so dont compile in 1.65
 //I didnt mean to commit them, honest!
-//Im running the beta at the moment, so they wont compile 
+//Im running the beta at the moment, so they wont compile
 //for me unless I comment them out.
 //const int IP_CONST_FEAT_MOBILITY        = 27; // needed to compile.. removed why?
 //const int IP_CONST_FEAT_WHIRLWIND       = 29; // also needed to compile...
@@ -367,6 +367,38 @@ const int IP_CONST_FEAT_EPIC_OVERWHELMING_CRITICAL_DWAXE            = 16237;
 const int IP_CONST_FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP             = 16238;
 const int IP_CONST_FEAT_EPIC_OVERWHELMING_CRITICAL_MINDBLADE        = 16239;
 
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_SICKLE                     = 16250;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_KAMA                       = 16251;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_KUKRI                      = 16252;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_CLUB                       = 16253;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_DAGGER                     = 16254;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_LIGHTMACE                  = 16255;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_MORNINGSTAR                = 16256;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_QUARTERSTAFF               = 16257;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_SHORTSPEAR                 = 16258;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_SHORTSWORD                 = 16259;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_RAPIER                     = 16260;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_SCIMITAR                   = 16261;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_LONGSWORD                  = 16262;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_GREATSWORD                 = 16263;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_HANDAXE                    = 16264;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_BATTLEAXE                  = 16265;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_GREATAXE                   = 16266;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_HALBERD                    = 16267;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_LIGHTHAMMER                = 16268;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_LIGHTFLAIL                 = 16269;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_WARHAMMER                  = 16270;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_HEAVYFLAIL                 = 16271;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_SCYTHE                     = 16272;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_KATANA                     = 16273;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_BASTARDSWORD               = 16274;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_DIREMACE                   = 16275;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_DOUBLEAXE                  = 16276;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_TWOBLADEDSWORD             = 16277;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_DWAXE                      = 16278;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_WHIP                       = 16279;
+const int IP_CONST_FEAT_WEAPON_OF_CHOICE_MINDBLADE                  = 16280;
+
 
 // IP_CONST_CASTSPELL
 
@@ -481,10 +513,10 @@ const int IP_CONST_DAMAGESOAK_49_HP = 50;
 
 //IP_CONST_DAMAGERESIST
 const int IP_CONST_DAMAGERESIST_500 = 20; // immunity alternative
-const int IP_CONST_DAMAGERESIST_1 = 21; 
-const int IP_CONST_DAMAGERESIST_2 = 22; 
-const int IP_CONST_DAMAGERESIST_3 = 23; 
-const int IP_CONST_DAMAGERESIST_4 = 24; 
+const int IP_CONST_DAMAGERESIST_1 = 21;
+const int IP_CONST_DAMAGERESIST_2 = 22;
+const int IP_CONST_DAMAGERESIST_3 = 23;
+const int IP_CONST_DAMAGERESIST_4 = 24;
 
 // IP_CONST_MONSTERDAMAGE
 const int IP_CONST_MONSTERDAMAGE_7d4 = 58;

@@ -4,7 +4,7 @@
 #include "inc_eventhook"
 #include "prc_inc_switch"
 #include "inc_leto_prc"
-#include "inc_time"    
+#include "inc_time"
 #include "inc_metalocation"
 #include "x2_inc_switches"
 #include "prc_inc_teleport"
@@ -20,14 +20,24 @@ void main()
     //hopefully in the next update
     //  -Aaon Graywolf
     object oPC = GetEnteringObject();
-    
+
+    // Since OnEnter event fires for the PC when loading a saved game (no idea why,
+    // since it makes saving and reloading change the state of the module),
+    // make sure that the event gets run only once
+    if(GetLocalInt(oPC, "PRC_ModuleOnEnterDone"))
+        return;
+    // Use a local integer to mark the event as done for the PC, so that it gets
+    // cleared when the character is saved.
+    else
+        SetLocalInt(oPC, "PRC_ModuleOnEnterDone", TRUE);
+
     //do this first so other things dont interfere with it
     if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))
-        LetoPCEnter(oPC);    
+        LetoPCEnter(oPC);
     if(GetPRCSwitch(PRC_CONVOCC_ENABLE) && !GetIsDM(oPC)
         && ExecuteScriptAndReturnInt("prc_ccc_enter", OBJECT_SELF))
-        return;  
-    
+        return;
+
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
     DeletePRCLocalInts(oSkin);
@@ -45,23 +55,23 @@ void main()
         AADestroyAllImbuedArrows(oPC);
     }
     DelayCommand(0.15, DeleteLocalInt(oPC,"ONENTER"));
-    
+
     //remove effects from hides, can stack otherwise
     effect eTest=GetFirstEffect(oPC);
 
     while (GetIsEffectValid(eTest))
     {
         if(GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL
-            && (GetEffectType(eTest) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE 
+            && (GetEffectType(eTest) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE
                 || GetEffectType(eTest) == EFFECT_TYPE_MOVEMENT_SPEED_INCREASE
                 //add other types here
                 )
-            && !GetIsObjectValid(GetEffectCreator(eTest))   
+            && !GetIsObjectValid(GetEffectCreator(eTest))
             )
             RemoveEffect(oPC, eTest);
         eTest=GetNextEffect(oPC);
-   }    
-    
+   }
+
     //Anti Forum Troll Code
     //Thats right, the PRC now has grudges.
     string sPlayerName = GetStringLowerCase(GetPCPlayerName(oPC));
@@ -69,22 +79,22 @@ void main()
     {
         BlackScreen(oPC);//cant see or do anything
     }
-    
+
 
     if(GetPRCSwitch(PRC_LETOSCRIPT_FIX_ABILITIES) && !GetIsDM(oPC))
-        PRCLetoEnter(oPC);   
-        
+        PRCLetoEnter(oPC);
+
     //PW tracking starts here
     if(GetPRCSwitch(PRC_PW_HP_TRACKING))
     {
-        int nHP = GetPersistantLocalInt(oPC, "persist_HP");                   
+        int nHP = GetPersistantLocalInt(oPC, "persist_HP");
         if(nHP != 0)  // 0 is not stored yet i.e. first logon
         {
             int nDamage=GetCurrentHitPoints(oPC)-nHP;
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDamage), oPC);
         }
-        
-    }     
+
+    }
     if(GetPRCSwitch(PRC_PW_TIME))
     {
         int nYear   = GetPersistantLocalInt(oPC, "persist_Time_Year");
@@ -113,7 +123,7 @@ void main()
     }
     if(GetPRCSwitch(PRC_PW_LOCATION_TRACKING))
     {
-        location lLoc = GetPersistantLocalLocation(oPC, "persist_loc"); 
+        location lLoc = GetPersistantLocalLocation(oPC, "persist_loc");
         DelayCommand(1.0, AssignCommand(oPC, ActionJumpToLocation(lLoc)));
     }
     if(GetPRCSwitch(PRC_PW_MAPPIN_TRACKING)
@@ -131,18 +141,18 @@ void main()
     }
     if(GetPRCSwitch(PRC_PW_DEATH_TRACKING))
     {
-        int bDead = GetPersistantLocalInt(oPC, "persist_dead");                     
+        int bDead = GetPersistantLocalInt(oPC, "persist_dead");
         if(bDead == 1)
         {
             int nDamage=9999;
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDamage), oPC);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC);
         }
-            
-    }    
+
+    }
     if(GetPRCSwitch(PRC_PW_SPELL_TRACKING))
     {
-        string sSpellList = GetPersistantLocalString(oPC, "persist_spells"); 
+        string sSpellList = GetPersistantLocalString(oPC, "persist_spells");
         string sTest;
         string sChar;
         while(GetStringLength(sSpellList))
@@ -169,13 +179,13 @@ void main()
             string sResRef = persistant_array_get_string(oPC, "GolemList",i);
             effect eSummon = SupernaturalEffect(EffectSummonCreature(sResRef));
             ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSummon, oPC);
-        }    
+        }
     }
 
     // Create map pins from marked teleport locations if the PC has requested that such be done.
     if(GetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS))
         DelayCommand(10.0f, TeleportLocationsToMapPins(oPC));
-    
+
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
 }

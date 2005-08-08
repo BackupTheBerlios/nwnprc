@@ -90,6 +90,13 @@ Section "PRC Pack" Section1
 	CreateShortCut "$SMPROGRAMS\PRC Pack\NWNX2.lnk" "$NWNPATH\NWNX2.exe"
 	CreateShortCut "$SMPROGRAMS\PRC Pack\Server Uninstall.lnk" "$NWNPRCPATH\PRCPack\Server Uninstall.exe"
 	
+	; Now try to output the dir to a 2da file
+	FileOpen  $2da "$NWNPATH\override\directory.2da" w
+	FileWrite $2da "2DA V2.0$\n"
+	FileWrite $2da "$\n"
+	FileWrite $2da "   Dir$\n"	
+	FileWrite $2da "0  $\"$NWNPATH$\"$\n"
+	FileClose $2da	
 
 SectionEnd
 
@@ -142,6 +149,7 @@ Section Uninstall
 	Delete "$NWNPATH\nwnxsrc.exe"
 	Delete "$NWNPATH\odbc2 changelog.txt"
 	Delete "$NWNPATH\odbc2src.exe"
+        Delete "$NWNPATH\Override\directory.2da"
 	
 	;Precacher specifics
 	Delete "$NWNPATH\libjcc.dll"
@@ -204,19 +212,6 @@ Function .onInit
 	Call GetParent
 	Pop $NWNPRCPATH
 	
-	; Make sure that 1.1 or later of the .NET framework is installed.
-	Call IsDotNETInstalled
-	Pop $0
-	StrCmp $0 1 foundNETFramework noNETFramework
-
-	foundNETFramework:
-	Return
-	
-	noNETFramework:
-	MessageBox MB_OK|MB_ICONEXCLAMATION "The .NET Framework 1.1 is not installed on your PC.  The PRC pack cannot be installed until the .NET Framwwork 1.1 is installed.  Use Windows Update to install the .NET Framework 1.1 or later, or download it from the following web page."
-	ExecShell open "http://www.microsoft.com/downloads/details.aspx?FamilyID=262d25e3-f589-4842-8157-034d1e7cf3a3&DisplayLang=en"
-	Abort
-	
 	badNWN:
 	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires at least version 1.66 of NWN and HotU.  You must upgrade NWN before installing the PRC pack."
 	Abort
@@ -267,64 +262,3 @@ FunctionEnd
      Exch $R0
      
  FunctionEnd
- 
- ; IsDotNETInstalled
- ;
- ; Usage:
- ;   Call IsDotNETInstalled
- ;   Pop $0
- ;   StrCmp $0 1 found.NETFramework no.NETFramework
-
- Function IsDotNETInstalled
-   Push $0
-   Push $1
-   Push $2
-   Push $3
-   Push $4
-
-   ReadRegStr $4 HKEY_LOCAL_MACHINE \
-     "Software\Microsoft\.NETFramework" "InstallRoot"
-   # remove trailing back slash
-   Push $4
-   Exch $EXEDIR
-   Exch $EXEDIR
-   Pop $4
-   # if the root directory doesn't exist .NET is not installed
-   IfFileExists $4 0 noDotNET
-
-   StrCpy $0 0
-
-   EnumStart:
-
-     EnumRegKey $2 HKEY_LOCAL_MACHINE \
-       "Software\Microsoft\.NETFramework\Policy"  $0
-     IntOp $0 $0 + 1
-     StrCmp $2 "" noDotNET
-		 StrCmp $2 "v1.0" EnumStart
-
-     StrCpy $1 0
-
-     EnumPolicy:
-
-       EnumRegValue $3 HKEY_LOCAL_MACHINE \
-         "Software\Microsoft\.NETFramework\Policy\$2" $1
-       IntOp $1 $1 + 1
-        StrCmp $3 "" EnumStart
-         IfFileExists "$4\$2.$3" foundDotNET EnumPolicy
-
-   noDotNET:
-     StrCpy $0 0
-     Goto done
-
-   foundDotNET:
-     StrCpy $0 1
-
-   done:
-     Pop $4
-     Pop $3
-     Pop $2
-     Pop $1
-     Exch $0
- FunctionEnd
- 
-; eof

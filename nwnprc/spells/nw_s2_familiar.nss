@@ -33,6 +33,7 @@ const int FAMILIAR_PNP_RAVEN = 7;
 const int FAMILIAR_PNP_SNAKE = 8;
 const int FAMILIAR_PNP_TOAD = 9;
 const int FAMILIAR_PNP_WEASEL = 10;
+void ElementalFamiliar2(string iSize, string iType);
 
 void ElementalFamiliar()
 {
@@ -80,8 +81,23 @@ void ElementalFamiliar()
     {
         i++;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
+SendMessageToPC(OBJECT_SELF, "oSummon "+IntToString(i)+" = "+GetName(oSummon));        
+    }
+    DelayCommand(0.1, ElementalFamiliar2(iSize, iType));
+}    
+    
+void ElementalFamiliar2(string iSize, string iType)
+{
+    int i=1;
+    object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
+    while(GetIsObjectValid(oSummon))
+    {
+        i++;
+        oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
+SendMessageToPC(OBJECT_SELF, "oSummon "+IntToString(i)+" = "+GetName(oSummon));        
     }
     object oEle = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i-1);
+SendMessageToPC(OBJECT_SELF, "oEle "+IntToString(i-1)+" = "+GetName(oSummon));    
     //need to check this worked
     
     
@@ -442,14 +458,14 @@ void main()
         return;
     }
 
-    SummonFamiliar();
-    object oFam = GetAssociate(ASSOCIATE_TYPE_FAMILIAR);
-
     if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
         ElementalFamiliar();
+    else    
+        SummonFamiliar();
 
     if (GetLevelByClass(CLASS_TYPE_DIABOLIST) >= 2)
     {
+        object oFam = GetAssociate(ASSOCIATE_TYPE_FAMILIAR);
         if (GetAppearanceType(oFam) != APPEARANCE_TYPE_IMP)
         {
             DestroyObject(oFam, 0.5);

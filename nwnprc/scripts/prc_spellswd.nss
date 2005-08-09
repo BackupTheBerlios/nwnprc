@@ -85,12 +85,11 @@ void main()
     }
     //set the charges remaining
     if(GetLocalInt(oPC, "ONREST")
-        && GetLastRestEventType() == REST_EVENTTYPE_REST_FINISHED
         && GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) > 3)      
     {    
         int nUses = (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC)/2)+1;
         SetPersistantLocalInt(oPC, "spellswordchannelcharges", nUses);
-        //SendMessageToPC(oPC, IntToString(nUses)+" uses of channel spell left");
+        SendMessageToPC(oPC, IntToString(nUses)+" uses of channel spell left");
     }    
 }
 

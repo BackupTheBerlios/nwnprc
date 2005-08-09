@@ -12,17 +12,18 @@ void CheckAndBoot(object oPC)
 
 void main()
 {
-    SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
 
     object oPC = GetEnteringObject();
     if(GetIsDM(oPC))
         return;//dont mess with DMs
 
 
-    SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
+    
     if(!GetPRCSwitch(PRC_CONVOCC_ENABLE))
         return;
 
+    SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
+    
     int bBoot;
     //check that its a multiplayer game
     if(GetPCPublicCDKey(oPC) == "")

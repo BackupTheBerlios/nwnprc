@@ -24,7 +24,7 @@ void PrcFeats(object oPC)
      SetLocalInt(oPC,"ONREST",1);
      DeletePRCLocalIntsT(oPC);
      EvalPRCFeats(oPC);
-     DeleteLocalInt(oPC,"ONREST");
+     DelayCommand(1.0, DeleteLocalInt(oPC,"ONREST"));
      FeatSpecialUsePerDay(oPC);
 }
 
@@ -62,6 +62,15 @@ void RestStarted(object oPC)
     {
         SetLocalInt(oPC, "PnP_Rest_InitialHP", GetCurrentHitPoints(oPC));
     }
+    //clean up bonded summon
+    if(GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
+    {
+        object oEle = GetLocalObject(oPC, "BONDED");
+        effect eSummon = EffectVisualEffect(VFX_IMP_UNSUMMON);
+        ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, GetLocation(oEle));
+        AssignCommand(oEle, SetIsDestroyable(TRUE));
+        DestroyObject(oEle);
+    }
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_STARTED);
 }
@@ -76,14 +85,6 @@ void RestFinished(object oPC)
     if (GetIsObjectValid(oSlave) && !GetIsDead(oSlave) && !GetIsInCombat(oSlave)) 
             AssignCommand(oSlave, ActionRest());
             //ForceRest(oSlave);
-
-    if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
-    {
-        object oFam =  GetLocalObject(oPC, "BONDED");
-        if (GetIsObjectValid(oFam) && !GetIsDead(oFam) && !GetIsInCombat(oFam)) 
-            //ForceRest(oFam);
-            AssignCommand(oFam, ActionRest());
-    }
 
     if (GetHasFeat(FEAT_LIPS_RAPTUR,oPC)){
         int iLips=GetAbilityModifier(ABILITY_CHARISMA,oPC)+1;
@@ -147,7 +148,8 @@ void RestFinished(object oPC)
     if(sMessage != "")
         FloatingTextStringOnCreature(sMessage, oPC, TRUE);
     
-    DelayCommand(1.0,PrcFeats(oPC));
+    //DelayCommand(1.0,PrcFeats(oPC));
+    PrcFeats(oPC);
 
     // New Spellbooks
     DelayCommand(0.01, CheckNewSpellbooks(oPC));

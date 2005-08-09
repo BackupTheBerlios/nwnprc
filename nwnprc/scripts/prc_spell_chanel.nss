@@ -51,6 +51,7 @@ void main()
     int nUses = GetPersistantLocalInt(oPC,"spellswordchannelcharges");
     if(nUses == 0)
     {
+        FloatingTextStringOnCreature("You have no Channel Spell uses remaining.",oPC);
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
         return;    
     }
@@ -65,7 +66,7 @@ void main()
     {
         //weapon buffs are never stored
         if(X2CastOnItemWasAllowed(oWeapon))
-        {
+        {            
             SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
             return;
         }    
@@ -74,7 +75,7 @@ void main()
         //that channeling doesnt work with ranged weapons and exit the function
         if(!IPGetIsMeleeWeapon(oWeapon))
         {
-            FloatingTextStringOnCreature("Spell Channeling doesnt work with ranged weapons",oPC);
+            FloatingTextStringOnCreature("Spell Channeling does not work with anything other than melee weapons",oPC);
             //DelayCommand(1.5,FloatingTextStringOnCreature("Equip a melee weapon and try again",oPC));
             //PRCSetUserSpecificSpellScriptFinished();
             SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);

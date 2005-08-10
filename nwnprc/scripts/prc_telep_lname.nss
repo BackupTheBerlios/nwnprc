@@ -20,6 +20,8 @@ void main()
     // Store the spoken value
     string sName = GetMatchedSubstring(0);
     SetLocalString(GetLastSpeaker(), "PRC_Teleport_LocationBeingStored_Name", sName);
+    //                               "Name gotten:"
+    SendMessageToPC(GetLastSpeaker(), GetStringByStrRef(16825307) + " " + sName);
 
     // Destroy the listener
     DestroyListener(OBJECT_SELF);

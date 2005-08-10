@@ -31,7 +31,7 @@ void main()
 
     location lToStore = GetLocation(oPC);
     float fTime = GetLocalFloat(oPC, "PRC_Teleport_NamingListenerDuration");
-    if(fTime >= 0.0f)
+    if(fTime > 0.0f)
     {
         SpawnListener("prc_telep_lname", lToStore, "**", oPC, fTime);
         DelayCommand(fTime, Aux(oPC, lToStore));
@@ -50,14 +50,14 @@ void Aux(object oPC, location lToStore)
 {
     string sName = GetLocalString(oPC, "PRC_Teleport_LocationBeingStored_Name");
     DeleteLocalString(oPC, "PRC_Teleport_LocationBeingStored_Name");
-    
+
     struct metalocation mlocToStore = LocationToMetalocation(lToStore, sName);
-    
+
     if(GetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS))
         CreateMapPinFromMetalocation(mlocToStore, oPC);
 
     AddTeleportTargetLocationAsMeta(oPC, mlocToStore);
-    
+
     // Tell the user the location was added
     //                   "Added teleport location: "
     SendMessageToPC(oPC, GetStringByStrRef(16825303) + " "+ MetalocationToString(mlocToStore));

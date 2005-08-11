@@ -37,7 +37,6 @@
 33  FEAT_WEAPON_OF_CHOICE_WHIP                     1000      2    1              0      
 34  FEAT_WEAPON_OF_CHOICE_MINDBLADE                3622      2    1              0      
 35  DefArrow                                       8         0    -1             0      
-36  Ambidex                                        1         0    -1             0      
 37  FEAT_EPIC_ARMOR_SKIN                           490       1    -1             0      
 38  FEAT_EPIC_DAMAGE_REDUCTION_3                   492       1    -1             0      
 39  FEAT_EPIC_DAMAGE_REDUCTION_6                   493       1    -1             0      
@@ -174,9 +173,7 @@
 170 FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP           999       1    -1             0      
 171 FEAT_EPIC_WEAPON_FOCUS_WHIP                    997       1    -1             0      
 172 FEAT_EPIC_BLINDING_SPEED                       491       1    -1             1      
-173 DefArrow                                       8         0    -1             0      
 174 TwoWeap                                        41        0    -1             0      
-175 Ambidex                                        1         0    -1             0      
 176 WeapProfEx                                     44        0    -1             0      
 177 WeapProfSim                                    46        0    -1             0      
 178 WeapProfMar                                    45        0    -1             0      

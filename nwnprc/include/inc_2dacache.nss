@@ -463,7 +463,7 @@ void PreCache(string s2DA, string sColumn, int nRow, string sValue)
     Get2DACache(s2DA, sColumn, nRow, sValue);
 }
 
-string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = TRUE)
+string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = FALSE)
 {
     //get the chest that contains the cache
     object oCacheWP = GetObjectByTag("Bioware2DACache");

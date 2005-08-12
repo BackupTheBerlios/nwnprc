@@ -45,11 +45,15 @@ void main()
     array_create(oPC, "ChoiceValues");
 
     int nClass = GetLocalInt(oPC, "nClass");
+    /*
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
     sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     string sPowerFile = Get2DACache("classes", "FeatsTable", nClass);
     sPowerFile = GetStringLeft(sPowerFile, 4)+"psipw"+GetStringRight(sPowerFile, GetStringLength(sPowerFile)-8);
-
+    */
+    string sPsiFile = GetPsionicFileName(nClass);
+    string sPowerFile = GetPsiBookFileName(nClass);
+    
     if(nValue == 0)
         return;
     if(nValue > 0)

@@ -9,13 +9,6 @@
    Psion, Psychic Warrior, Wilder. (Soulknife does not have Manifester levels)
 */
 
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_power_const"
-#include "lookup_2da_spell"
-#include "prc_inc_clsfunc"
-#include "inc_eventhook"
-
 // Returns the Manifesting Class
 // GetCasterClass wont work, so the casting class is set via a localint
 int GetManifestingClass(object oCaster = OBJECT_SELF);
@@ -168,10 +161,42 @@ int GetPowerPrereq(int nLevel, int nAbilityScore, int nClass);
 // Used for class abilities such as Thrallherd's Psionic Charm/Dominate
 int GetPPCostReduced(int nPP, object oCaster);
 
+//returns the cls_psbk_* file for that class
+string GetPsionicFileName(int nClass);
+
+//returns the cls_psipw_* file for that class
+string GetPsiBookFileName(int nClass);
+
+//returns TRUE if oPC has the power in any psionic class
+//does not include via a racial psi-like ability
+int GetHasPower(int nPower, object oPC = OBJECT_SELF);
+
+
+#include "prc_feat_const"
+#include "prc_class_const"
+#include "prc_power_const"
+#include "lookup_2da_spell"
+#include "prc_inc_clsfunc"
+#include "inc_eventhook"
+#include "nw_i0_spells"
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
 
+string GetPsionicFileName(int nClass)
+{
+    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
+    sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    return sPsiFile;
+}
+
+string GetPsiBookFileName(int nClass)
+{
+    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
+    sPsiFile = GetStringLeft(sPsiFile, 4)+"psipw"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    return sPsiFile;
+}
 
 int GetManifestingClass(object oCaster)
 {
@@ -1050,4 +1075,20 @@ int GetPPCostReduced(int nPP, object oCaster)
     if (nPP < 1) nPP = 1;   
     
     return nPP;
+}
+
+int GetHasPower(int nPower, object oPC = OBJECT_SELF)
+{
+    if((GetLevelByClass(CLASS_TYPE_PSION, oPC)
+            && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_PSION), oPC))
+        ||(GetLevelByClass(CLASS_TYPE_PSYWAR, oPC)
+            && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_PSYWAR), oPC))
+        ||(GetLevelByClass(CLASS_TYPE_WILDER, oPC)
+            && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_WILDER), oPC))
+        ||(GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC)
+            && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_FIST_OF_ZUOKEN), oPC))
+        //add new psionic classes here    
+        )    
+        return TRUE;
+    return FALSE;        
 }

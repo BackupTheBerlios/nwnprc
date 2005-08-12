@@ -7,15 +7,53 @@
     lookups.
 */
 
+//nClass is the class to do this for
+//nMin is the row to start at
+//sSourceColumn is the column you want to lookup by
+//sDestComumn is the column you want returned
+//sVarNameBase is the root of the variables and tag of token
+//nLoopSize is the number of rows per call
+void MakeLookupLoop(int nClass, int nMin, string sSourceColumn, 
+    string sDestColumn, string sVarNameBase, int nLoopSize = 100);
 
 int GetPowerFromSpellID(int nSpellID);
 void MakePowerFromSpellID();
+int GetClassFeatFromPower(int nPowerID, int nClass);
+void MakeClassFeatFromPower();
 
-void MakePowerFromSpellID()
+
+#include "inc_2dacache"
+#include "psi_inc_psifunc"
+
+void MakeLookupLoopMaster()
+{
+    //now the loops
+    DelayCommand(1.0, MakeLookupLoop(CLASS_TYPE_PSION,          0   , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
+    DelayCommand(1.1, MakeLookupLoop(CLASS_TYPE_PSION,          100 , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
+    DelayCommand(1.2, MakeLookupLoop(CLASS_TYPE_PSION,          0   , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
+    DelayCommand(1.3, MakeLookupLoop(CLASS_TYPE_PSION,          100 , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
+    DelayCommand(1.4, MakeLookupLoop(CLASS_TYPE_PSYWAR,         0   , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
+    DelayCommand(1.5, MakeLookupLoop(CLASS_TYPE_PSYWAR,         100 , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
+    DelayCommand(1.6, MakeLookupLoop(CLASS_TYPE_PSYWAR,         0   , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
+    DelayCommand(1.7, MakeLookupLoop(CLASS_TYPE_PSYWAR,         100 , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
+    DelayCommand(1.8, MakeLookupLoop(CLASS_TYPE_WILDER,         0   , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
+    DelayCommand(1.9, MakeLookupLoop(CLASS_TYPE_WILDER,         100 , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
+    DelayCommand(2.0, MakeLookupLoop(CLASS_TYPE_WILDER,         0   , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
+    DelayCommand(2.1, MakeLookupLoop(CLASS_TYPE_WILDER,         100 , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
+    DelayCommand(2.2, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN, 0   , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
+    DelayCommand(2.3, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN, 100 , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
+    DelayCommand(2.4, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN,   0 , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
+    DelayCommand(2.5, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN, 100 , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
+    //add new psionic classes here
+}
+
+void MakeLookupLoop(int nClass, int nMin, string sSourceColumn, 
+    string sDestColumn, string sVarNameBase, int nLoopSize = 100)
 {
     //get the token to store it on
     //this is piggybacked into 2da caching
-    object oWP = GetObjectByTag("PRC_GetPowerFromSpellID");
+    string sTag = "PRC_"+sVarNameBase;
+    object oWP = GetObjectByTag(sTag);
     if(!GetIsObjectValid(oWP))
     {
         object oChest = GetObjectByTag("Bioware2DACache");
@@ -24,25 +62,38 @@ void MakePowerFromSpellID()
             oChest = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2",
                 GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");     
         }
-        oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, "PRC_GetPowerFromSpellID");
-        DestroyObject(oFileWP);
-        oWP = CopyObject(oWP, GetLocation(oChest), oChest, "PRC_GetPowerFromSpellID");
+        oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, sTag);
+        DestroyObject(oWP);
+        oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
     }
     
-    //now the loops
-    int i;
-    for(i=0;i<250;i++)
+    string sFile = GetPsiBookFileName(nClass);
+    int i = nMin;
+    for(i=nMin;i<nMin+nLoopSize;i++)
     {
-        int nSpellID = StringToInt(Get2DACache("cls_psipw_psion", "SpellID", i));
-        int nPower   = StringToInt(Get2DACache("cls_psipw_psion", "RealSpellID", i));
+        int nSpellID = StringToInt(Get2DACache(sFile, sSourceColumn, i));
+        int nPower   = StringToInt(Get2DACache(sFile, sDestColumn,   i));
         if(nSpellID != 0 && nPower != 0)
-            SetLocalInt(oWP, "PRC_GetPowerFromSpellID_"+IntToString(nSpellID), nPower); 
+            SetLocalInt(oWP, sVarNameBase+"_"+IntToString(nSpellID), nPower); 
     }
+
 }
 
 int GetPowerFromSpellID(int nSpellID)
 {
     object oWP = GetObjectByTag("PRC_GetPowerFromSpellID");
     int nPower = GetLocalInt(oWP, "PRC_GetPowerFromSpellID_"+IntToString(nSpellID));
+    if(nPower == 0)
+        nPower = -1;
     return nPower;
+}
+
+int GetClassFeatFromPower(int nPowerID, int nClass)
+{
+    string sLabel = "PRC_GetClassFeatFromPower_"+IntToString(nClass);
+    object oWP = GetObjectByTag(sLabel);
+    int nPower = GetLocalInt(oWP, sLabel+"_"+IntToString(nPowerID));
+    if(nPower == 0)
+        nPower = -1;
+    return nPower;    
 }

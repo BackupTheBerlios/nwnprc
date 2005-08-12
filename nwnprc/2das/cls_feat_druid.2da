@@ -225,8 +225,8 @@
 221 FEAT_NEW_IMPROVED_POWER_ATTACK            3144      0    99             1      
 222 FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL       3179      0    99             1      
 223 ACP_FEAT                                  2892      0    99             1      
-224 TeleportManagementRadial                  4235      0    99             1      
-225 ****                                      ****      **** ****           ****   
+224 TeleportManagementRadial                  4235      0    99             1         
+225 SWITCH_FEAT                               2285      0    99             1   
 226 **GeneralActivatableFeats**               ****      **** ****           ****   
 227 FEAT_THRALL_TO_DEMON                      2616      0    -1             1      
 228 FEAT_HOLYRADIANCE                         3164      0    -1             1      

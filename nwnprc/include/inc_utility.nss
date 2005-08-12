@@ -554,19 +554,33 @@ int CompareAlignment(object oSource, object oTarget)
 
 void ForceEquip(object oPC, object oItem, int nSlot)
 {
+    //sanity checks
+    if(!GetIsObjectValid(oPC)) return;
+    if(!GetIsObjectValid(oItem)) return;
+    if(GetIsObjectValid(GetLocalObject(oPC, "ForceEquip"+IntToString(nSlot)))
+        && GetLocalObject(oPC, "ForceEquip"+IntToString(nSlot)) != oItem)
+        return;
     if(GetItemInSlot(nSlot, oPC) != oItem)
     {
         AssignCommand(oPC, ClearAllActions());
         AssignCommand(oPC, ActionEquipItem(oItem, nSlot));
         DelayCommand(0.2, ForceEquip(oPC, oItem, nSlot));
+        SetLocalObject(oPC, "ForceEquip"+IntToString(nSlot), oItem);
     }
+    else
+        DeleteLocalObject(oPC, "ForceEquip"+IntToString(nSlot));
 }
 
 void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE)
 {
+    //sanity checks
+    if(!GetIsObjectValid(oPC)) return;
+    if(!GetIsObjectValid(oItem)) return;
+    
     // Delay the first unequipping call to avoid a bug that occurs when an object that was just equipped is unequipped right away
     // - The item is not unequipped properly, leaving some of it's effects in the creature's stats and on it's model.
-    if(bFirst){
+    if(bFirst)
+    {
         DelayCommand(0.5, ForceUnequip(oPC, oItem, nSlot, FALSE));
     }
     else if(GetItemInSlot(nSlot, oPC) == oItem)

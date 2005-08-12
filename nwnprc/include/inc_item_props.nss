@@ -260,13 +260,17 @@ object GetPCSkin(object oPC)
             if(GetHasItem(oPC, "base_prc_skin"))
             {
                 oSkin = GetItemPossessedBy(oPC, "base_prc_skin");
+                //possible lag culprit?
                 ForceEquip(oPC, oSkin, INVENTORY_SLOT_CARMOUR);
+                //AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
             }
 
             //Added GetHasItem check to prevent creation of extra skins on module entry
             else {
                 oSkin = CreateItemOnObject("base_prc_skin", oPC);
+                //possible lag culprit?
                 ForceEquip(oPC, oSkin, INVENTORY_SLOT_CARMOUR);
+                //AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
 
                 // The skin should not be droppable
                 SetDroppableFlag(oSkin, FALSE);

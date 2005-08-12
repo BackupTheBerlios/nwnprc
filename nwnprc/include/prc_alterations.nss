@@ -65,6 +65,7 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 #include "NW_I0_GENERIC"
 #include "inc_abil_damage"
 #include "prc_inc_combat"
+#include "inc_lookups"
 
 
 

@@ -2,6 +2,7 @@
 // Stub function for possible later use.
 //
 
+#include "prc_alterations"
 #include "x2_inc_switches"
 #include "inc_threads"
 #include "prc_inc_switch"
@@ -51,9 +52,17 @@ void main()
             Cache_2da_data();
         if(GetPRCSwitch(PRC_DB_SQLLITE))
             DelayCommand(IntToFloat(GetPRCSwitch(PRC_DB_SQLLITE_INTERVAL)), PRC_SQLCommit());
-    }        
-        
-        
-    DelayCommand(10.0, ExecuteScript("look2daint", OBJECT_SELF));//helps avoid TMI errors
+    }   
     
+    //check for letoscript dir
+    if(GetLocalString(GetModule(), PRC_LETOSCRIPT_NWN_DIR) == "")
+    {    
+        string sDir = Get2DACache("directory", "Dir", 0);
+        if(sDir != "")
+            SetLocalString(GetModule(), PRC_LETOSCRIPT_NWN_DIR, sDir);
+    }    
+    
+    //delay the 2da lookup stuff
+    DelayCommand(10.0, ExecuteScript("look2daint", OBJECT_SELF));//helps avoid TMI errors
+    DelayCommand(10.0, MakeLookupLoopMaster());
 }

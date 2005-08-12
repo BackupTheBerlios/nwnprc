@@ -234,4 +234,6 @@
 144   FEAT_DROW_DARKNESS                     4682        0      99               1        
 145   FEAT_DROW_FAERIE_FIRE                  4683        0      99               1     
 146   MINOR_AURA                             1938        3      1                1
-147   MAJOR_AURA                             1939        3      2                1
+147   MAJOR_AURA                             1939        3      2                1   
+148 SWITCH_FEAT                                     2285      0    99             1      
+149 SILVER_FORMAT_THIS_FILE_PROPERLY                                     ****      ****    ****            ****

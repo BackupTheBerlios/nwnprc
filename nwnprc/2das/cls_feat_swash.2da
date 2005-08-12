@@ -344,4 +344,6 @@
 343   FEAT_DUERGAR_INVIS                     4681        0      99               1        
 344   FEAT_DROW_DARKNESS                     4682        0      99               1        
 345   FEAT_DROW_FAERIE_FIRE                  4683        0      99               1     
-346   Greater_Psionic_Shot                   4825        0      -1               1        
+346   Greater_Psionic_Shot                   4825        0      -1               1     
+347 SWITCH_FEAT                                     2285      0    99             1      
+348 SILVER_FORMAT_THIS_FILE_PROPERLY                                     ****      ****    ****             ****   

@@ -33,10 +33,19 @@ struct trap
 struct trap GetLocalTrap(object oObject, string sVarName);
 void SetLocalTrap(object oObject, string sVarName, struct trap tTrap);
 void DeleteLocalTrap(object oObject, string sVarName);
-struct trap CreateRandomTrap();
+struct trap CreateRandomTrap(int nCR = -1);
 
-struct trap CreateRandomTrap()
+#include "inc_ecl"
+
+struct trap CreateRandomTrap(int nCR = -1)
 {
+    if(nCR == -1)
+    {
+        nCR = GetECL(GetFirstPC());
+        nCR += Random(5)-2;
+        if(nCR < 1)
+            nCR = 1;
+    }       
     struct trap tReturn;
     switch(Random(26))
     {
@@ -68,14 +77,14 @@ struct trap CreateRandomTrap()
         case 25: tReturn.nDamageType = DAMAGE_TYPE_SONIC; break;
     }
 
-    tReturn.nRadius = 5;
-    tReturn.nDamageDice = 2;
+    tReturn.nRadius = 5+(nCR/2);
+    tReturn.nDamageDice = 1*nCR;
     tReturn.nDamageSize = 6;
-    tReturn.nDetectDC = 10;
-    tReturn.nDisarmDC = 20;
+    tReturn.nDetectDC = 15+nCR;
+    tReturn.nDisarmDC = 15+nCR;
     tReturn.nDetectAOE = VFX_PER_15M_INVIS;
     tReturn.nTrapAOE = VFX_PER_5M_INVIS;
-    tReturn.nCR = 4;
+    tReturn.nCR = nCR;
     tReturn.sResRef = "prgt_invis";
     tReturn.sTriggerScript = "prgt_trap_fire";
 
@@ -141,7 +150,7 @@ struct trap GetLocalTrap(object oObject, string sVarName)
     struct trap tReturn;
     tReturn.nDetectDC       = GetLocalInt(oObject, sVarName+".nDetectDC");
     tReturn.nDisarmDC       = GetLocalInt(oObject, sVarName+".nDisarmDC");
-    tReturn.nDetectAOE  = GetLocalInt(oObject, sVarName+".nDetectAOE");
+    tReturn.nDetectAOE      = GetLocalInt(oObject, sVarName+".nDetectAOE");
     tReturn.nTrapAOE        = GetLocalInt(oObject, sVarName+".nTrapAOE");
     tReturn.sResRef         = GetLocalString(oObject, sVarName+".sResRef");
     tReturn.sTriggerScript  = GetLocalString(oObject, sVarName+".sTriggerScript");

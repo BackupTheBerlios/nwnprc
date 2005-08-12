@@ -228,11 +228,13 @@ int CompareAlignment(object oSource, object oTarget);
  * will result in an infinite loop. So will attempting to equip an item
  * into a slot it can't be equipped in.
  *
- * @param oPC   The creature to do the equipping.
- * @param oItem The item to equip.
- * @param nSlot INVENTORY_SLOT_* constant of the slot to equip into.
+ * @param oPC     The creature to do the equipping.
+ * @param oItem   The item to equip.
+ * @param nSlot   INVENTORY_SLOT_* constant of the slot to equip into.
+ * @param nThCall Internal parameter, leave as default. This determines
+ *                how many times ForceEquip has called itself.
  */
-void ForceEquip(object oPC, object oItem, int nSlot);
+void ForceEquip(object oPC, object oItem, int nSlot, int nThCall = 0);
 
 /**
  * Repeatedly attempts to unequip the given item until it is no longer
@@ -552,41 +554,77 @@ int CompareAlignment(object oSource, object oTarget)
     return iStepDif;
 }
 
-void ForceEquip(object oPC, object oItem, int nSlot)
+void ForceEquip(object oPC, object oItem, int nSlot, int nThCall = 0)
 {
-    //sanity checks
+    // Sanity checks
+    // Make sure the parameters are valid
     if(!GetIsObjectValid(oPC)) return;
     if(!GetIsObjectValid(oItem)) return;
-    if(GetIsObjectValid(GetLocalObject(oPC, "ForceEquip"+IntToString(nSlot)))
-        && GetLocalObject(oPC, "ForceEquip"+IntToString(nSlot)) != oItem)
+    // Make sure that the object we are attempting equipping is the latest one to be ForceEquipped into this slot
+    if(GetIsObjectValid(GetLocalObject(oPC, "ForceEquipToSlot_" + IntToString(nSlot)))
+        &&
+       GetLocalObject(oPC, "ForceEquipToSlot_" + IntToString(nSlot)) != oItem
+       )
         return;
+
+    float fDelay;
+
+    // Check if the equipping has already happened
     if(GetItemInSlot(nSlot, oPC) != oItem)
     {
-        AssignCommand(oPC, ClearAllActions());
-        AssignCommand(oPC, ActionEquipItem(oItem, nSlot));
-        DelayCommand(0.2, ForceEquip(oPC, oItem, nSlot));
-        SetLocalObject(oPC, "ForceEquip"+IntToString(nSlot), oItem);
+        // Test and increment the control counter
+        if(!nThCall++)
+        {
+            // First, try to do the equipping non-intrusively and give the target a reasonable amount of time to do it
+            AssignCommand(oPC, ActionEquipItem(oItem, nSlot));
+            fDelay = 1.0f;
+            // Store the item to be equipped in a local variable to prevent contest between two different calls to ForceEquip
+            SetLocalObject(oPC, "ForceEquipToSlot_" + IntToString(nSlot), oItem);
+        }
+        else
+        {
+            // Nuke the target's action queue. This should result in "immediate" equipping of the item
+            AssignCommand(oPC, ClearAllActions());
+            AssignCommand(oPC, ActionEquipItem(oItem, nSlot));
+            // Use a lenghtening delay in order to attempt handling lag and possible other interference. From 0.1s to 1s
+            fDelay = min(nThCall, 10) / 10.0f;
+        }
+
+        // Loop
+        DelayCommand(fDelay, ForceEquip(oPC, oItem, nSlot, nThCall));
     }
+    // It has, so clean up
     else
-        DeleteLocalObject(oPC, "ForceEquip"+IntToString(nSlot));
+        DeleteLocalObject(oPC, "ForceEquipToSlot_" + IntToString(nSlot));
 }
 
-void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE)
+void ForceUnequip(object oPC, object oItem, int nSlot, int nThCall = 0)
 {
-    //sanity checks
+    // Sanity checks
     if(!GetIsObjectValid(oPC)) return;
     if(!GetIsObjectValid(oItem)) return;
-    
+
+    float fDelay;
+
     // Delay the first unequipping call to avoid a bug that occurs when an object that was just equipped is unequipped right away
     // - The item is not unequipped properly, leaving some of it's effects in the creature's stats and on it's model.
-    if(bFirst)
+    if(!nThCall)
     {
-        DelayCommand(0.5, ForceUnequip(oPC, oItem, nSlot, FALSE));
+        //DelayCommand(0.5, ForceUnequip(oPC, oItem, nSlot, FALSE));
+        fDelay = 0.5;
     }
     else if(GetItemInSlot(nSlot, oPC) == oItem)
     {
-        AssignCommand(oPC, ClearAllActions());
+        // Attempt to avoid interference by not clearing actions before the first attempt
+        if(nThCall > 1)
+            AssignCommand(oPC, ClearAllActions());
+
         AssignCommand(oPC, ActionUnequipItem(oItem));
-        DelayCommand(0.1, ForceUnequip(oPC, oItem, nSlot, FALSE));
+
+        // Ramp up the delay if the action is not getting through. Might let whatever is intefering finish
+        fDelay = min(nThCall, 10) / 10.0f;
     }
+
+    // Loop
+    DelayCommand(fDelay, ForceUnequip(oPC, oItem, nSlot, ++nThCall));
 }

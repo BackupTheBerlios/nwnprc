@@ -1,0 +1,41 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+<title>Player Resource Consortium :: Manual :: Module Building :: Respawning Traps</title>
+<link type="text/css" href="../../../styles/manual_common.css" rel="stylesheet">
+<link type="text/css" href="../../../styles/manual_content_common.css" rel="stylesheet">
+</head>
+<body scroll="auto">
+<br>
+<div><h1>:: Module Building :: Respawning Traps ::</h1></div>
+<br>
+<div class="div_paddedcontent">
+<br>PRC v2.3 includes a novel spawning ground trap system. This system has several unique attributes:
+<ul><li>Does not require any toolset placed objects.</li>
+<li>Vast selection of trap types.</li>
+<li>Can have a random trap type.</li>
+<li>Ability to create new trap types purely from scripting.</li>
+<li>Easily award XP (or other rewards) from the trap, either from the PRC XP system or via custom scripting.</li>
+<li>Spell-casting traps any arbitrary caster level.</li>
+<li>Can be hooked up to NPC events so they can lay traps too.</li>
+<li>Can be set to automatically respawn after a period of time.</li></ul>
+<br>The way the system works internally is fairly complex, but the outline is this:
+<ul><li>Two invisible auras are created, one as a trigger, and one as a detection area.</li>
+<li>This auras have certain attributes set on them when created such as detection and disarm DCs.</li>
+<li>Every 6 seconds a creature is in the detection trigger in detect mode, there is a chance to reveal the trap.</li>
+<li>When the trap is detected, a grid of invisible placeables are spawned inside the trigger aura.</li>
+<li>Each of these invisible placeables are trapped, this gives off a red glow to display where the trap is.</li>
+<li>If detected or not, the trap goes off when a creature enters the trigger aura. The exception to this
+is if the creature is moving to disarm, flag, or recover one of the trapped invisible placeables.</li>
+<li>If a creature is inside the trigger aura and not disarming, flagging, or recovering, the trap goes off.</li>
+<li>When the trap is triggered, there are several things that can happed.
+	<ul><li>If there is a custom script assigned to the trap, it will be run.</li>
+	<li>If there is a spell assigned to the trap, it will be cast.</li>
+	<li>Otherwise, the trap will do its pre-set damage, VFX, etc.</li></ul></li>
+<li>After a trap has triggered, again several things could happen.
+	<ul><li>The trap could be destroyed entirely, for a one-shot trap.</li>
+	<li>The trap may stay around untill disarmed.</li>
+	<li>The trap may be destroyed for a time and respawn later.</li></ul></li></ul>
+</div>
+</body>
+</html>

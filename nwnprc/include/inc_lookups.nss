@@ -28,22 +28,22 @@ void MakeClassFeatFromPower();
 void MakeLookupLoopMaster()
 {
     //now the loops
-    DelayCommand(1.0, MakeLookupLoop(CLASS_TYPE_PSION,          0   , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
-    DelayCommand(1.1, MakeLookupLoop(CLASS_TYPE_PSION,          100 , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
-    DelayCommand(1.2, MakeLookupLoop(CLASS_TYPE_PSION,          0   , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
-    DelayCommand(1.3, MakeLookupLoop(CLASS_TYPE_PSION,          100 , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
-    DelayCommand(1.4, MakeLookupLoop(CLASS_TYPE_PSYWAR,         0   , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
-    DelayCommand(1.5, MakeLookupLoop(CLASS_TYPE_PSYWAR,         100 , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
-    DelayCommand(1.6, MakeLookupLoop(CLASS_TYPE_PSYWAR,         0   , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
-    DelayCommand(1.7, MakeLookupLoop(CLASS_TYPE_PSYWAR,         100 , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
-    DelayCommand(1.8, MakeLookupLoop(CLASS_TYPE_WILDER,         0   , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
-    DelayCommand(1.9, MakeLookupLoop(CLASS_TYPE_WILDER,         100 , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
-    DelayCommand(2.0, MakeLookupLoop(CLASS_TYPE_WILDER,         0   , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
-    DelayCommand(2.1, MakeLookupLoop(CLASS_TYPE_WILDER,         100 , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
-    DelayCommand(2.2, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN, 0   , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
-    DelayCommand(2.3, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN, 100 , "SpellID", "RealSpellID", "PRC_GetPowerFromSpellID"));
-    DelayCommand(2.4, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN,   0 , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
-    DelayCommand(2.5, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN, 100 , "RealSpellID", "FeatID",  "PRC_GetPowerFromSpellID"));
+    DelayCommand(1.0, MakeLookupLoop(CLASS_TYPE_PSION,          0   , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(1.1, MakeLookupLoop(CLASS_TYPE_PSION,          100 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(1.2, MakeLookupLoop(CLASS_TYPE_PSION,          0   , "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_PSION)));
+    DelayCommand(1.3, MakeLookupLoop(CLASS_TYPE_PSION,          100 , "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_PSION)));
+    DelayCommand(1.4, MakeLookupLoop(CLASS_TYPE_PSYWAR,         0   , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(1.5, MakeLookupLoop(CLASS_TYPE_PSYWAR,         100 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(1.6, MakeLookupLoop(CLASS_TYPE_PSYWAR,         0   , "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_PSYWAR)));
+    DelayCommand(1.7, MakeLookupLoop(CLASS_TYPE_PSYWAR,         100 , "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_PSYWAR)));
+    DelayCommand(1.8, MakeLookupLoop(CLASS_TYPE_WILDER,         0   , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(1.9, MakeLookupLoop(CLASS_TYPE_WILDER,         100 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(2.0, MakeLookupLoop(CLASS_TYPE_WILDER,         0   , "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_WILDER)));
+    DelayCommand(2.1, MakeLookupLoop(CLASS_TYPE_WILDER,         100 , "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_WILDER)));
+    DelayCommand(2.2, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN, 0   , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(2.3, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN, 100 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(2.4, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN,   0 , "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_FIST_OF_ZUOKEN)));
+    DelayCommand(2.5, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN, 100 , "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_FIST_OF_ZUOKEN)));
     //add new psionic classes here
 }
 
@@ -62,9 +62,19 @@ void MakeLookupLoop(int nClass, int nMin, string sSourceColumn,
             oChest = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2",
                 GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");     
         }
+        if(!GetIsObjectValid(oChest))
+        {
+            oChest = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2",
+                GetStartingLocation(), FALSE, "Bioware2DACache");     
+        }
         oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, sTag);
         DestroyObject(oWP);
         oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
+    }
+    if(!GetIsObjectValid(oWP))
+    {
+        PrintString("Problem creating token for "+sTag);
+        return;
     }
     
     string sFile = GetPsiBookFileName(nClass);
@@ -74,7 +84,8 @@ void MakeLookupLoop(int nClass, int nMin, string sSourceColumn,
         int nSpellID = StringToInt(Get2DACache(sFile, sSourceColumn, i));
         int nPower   = StringToInt(Get2DACache(sFile, sDestColumn,   i));
         if(nSpellID != 0 && nPower != 0)
-            SetLocalInt(oWP, sVarNameBase+"_"+IntToString(nSpellID), nPower); 
+            SetLocalInt(oWP, sTag+"_"+IntToString(nSpellID), nPower); 
+            
     }
 
 }

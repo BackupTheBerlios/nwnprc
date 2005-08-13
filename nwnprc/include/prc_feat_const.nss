@@ -1662,6 +1662,8 @@ const int MAJ_AUR_HARD_SOLDIER                 = 1934;
 const int MAJ_AUR_MOT_ATTACK                   = 1935;
 const int MAJ_AUR_STEAD_HAND                   = 1936;
 const int GRANT_MOVE_ACTION                    = 1937;
+const int MINOR_AURA                           = 1938;
+const int MAJOR_AURA                           = 1939;
 /* DEPRECATED
    TODO: Check that these are not used anywhere and remove
 //Psion - Nomad Powers

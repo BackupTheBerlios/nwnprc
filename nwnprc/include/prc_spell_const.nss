@@ -7,6 +7,32 @@ const int SPELL_CONCECRATE                  = 2167;
 const int SPELL_SOL_CONCECRATE              = 2108;
 const int SPELL_BLACKLIGHT                  = 2091;
 
+//marshal
+const int SPELL_MINAUR_DEMFORT              = 3500;
+const int SPELL_MINAUR_FORCEWILL            = 3501;
+const int SPELL_MINAUR_WATCHEYE             = 3502;
+const int SPELL_MINAUR_BOOSTCHA             = 3503;
+const int SPELL_MINAUR_BOOSTCON             = 3504;
+const int SPELL_MINAUR_BOOSTDEX             = 3505;
+const int SPELL_MINAUR_BOOSTINT             = 3506;
+const int SPELL_MINAUR_BOOSTSTR             = 3507;
+const int SPELL_MINAUR_BOOSTWIS             = 3508;
+const int SPELL_MINAUR_DETCAST              = 3509;
+const int SPELL_MINAUR_ARTOFWAR             = 3510;
+const int SPELL_MAJAUR_MOT_ARDOR            = 3511;
+const int SPELL_MINAUR_MOT_CARE             = 3512;
+const int SPELL_MINAUR_RES_TROOPS           = 3513;
+const int SPELL_MINAUR_MOT_URGE             = 3514;
+const int SPELL_MINAUR_HARD_SOLDIER         = 3515;
+const int SPELL_MINAUR_MOT_ATTACK           = 3516;
+const int SPELL_MINAUR_STEAD_HAND           = 3517;
+const int SPELL_GRANT_MOVE_ACTION           = 3518;
+const int SPELL_MAJAUR_MOT_CHA              = 3519;
+const int SPELL_MAJAUR_MOT_CON              = 3520;
+const int SPELL_MAJAUR_MOT_DEX              = 3521;
+const int SPELL_MAJAUR_MOT_INT              = 3522;
+const int SPELL_MAJAUR_MOT_STR              = 3523;
+const int SPELL_MAJAUR_MOT_WIS              = 3524;
 //oozemaster
 const int SPELL_SLIME_WAVE = 2023;
 

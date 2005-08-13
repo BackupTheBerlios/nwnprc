@@ -6,3 +6,4 @@
 2     NarrowMind   FEAT      4808                  ****        
 3     ScriptVar    VAR       PRC_PsiPower3         0           
 4     ScriptVar    VAR       PRC_AllowThrallherd   0           
+5     ScriptVar    VAR       PRC_PrereqThrallherd  0           

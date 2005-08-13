@@ -611,6 +611,18 @@ void Alaghar(object oPC)
     }
 }
 
+void Thrallherd(object oPC)
+{
+    SetLocalInt(oPC, "PRC_PrereqThrallherd", 1);
+
+    if (GetHasPower(POWER_CHARMPERSON, oPC) || GetHasPower(POWER_AVERSION, oPC) || GetHasPower(POWER_BRAINLOCK, oPC) || 
+    	GetHasPower(POWER_CRISISBREATH, oPC) || GetHasPower(POWER_EMPATHICTRANSFERHOSTILE, oPC) || GetHasPower(POWER_DOMINATE, oPC) || 
+    	GetHasPower(POWER_CRISISLIFE, oPC) || GetHasPower(POWER_PSYCHICCHIR, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
+    }
+}
+
 void RangerURangerMutex(object oPC)
 {// Ranger and Ultimate Ranger are mutually exclusive. One can only take levels in one of them
     
@@ -803,6 +815,7 @@ void main2()
      Alaghar(oPC);
      RangerURangerMutex(oPC);
      DragonDis(oPC);
+     Thrallherd(oPC);
      // Truly massive debug message flood if activated.
      /*
      SendMessageToPC(oPC, "Your true Strength: " + IntToString(GetLocalInt(oHide, "PRC_trueSTR")));

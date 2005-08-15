@@ -50,7 +50,7 @@ void MakeLookupLoopMaster()
     
     //new spellbook lookups
     DelayCommand(2.6, MakeLookupLoop(CLASS_TYPE_BLACKGUARD,       0 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
-    DelayCommand(2.7, MakeLookupLoop(CLASS_TYPE_ANTIPALADIN,      0 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(2.7, MakeLookupLoop(CLASS_TYPE_ANTI_PALADIN,      0 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(2.8, MakeLookupLoop(CLASS_TYPE_SOLDIER_OF_LIGHT, 0 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(2.9, MakeLookupLoop(CLASS_TYPE_KNIGHT_MIDDLECIRCLE,0,"SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(3.0, MakeLookupLoop(CLASS_TYPE_KNIGHT_CHALICE,   0 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));

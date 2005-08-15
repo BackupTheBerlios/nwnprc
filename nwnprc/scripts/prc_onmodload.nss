@@ -10,6 +10,8 @@
 
 void main()
 {
+    //this triggers NWNX on Linux
+    SetLocalInt(GetModule(), "NWNX!INIT", 1);
     //looks like there is some sort of issue with reloading a saved game
     //this shold stop this event firing for reloads
     if(GetLocalInt(GetModule(), "prc_mod_load_done"))

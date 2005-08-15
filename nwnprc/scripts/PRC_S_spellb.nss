@@ -1,12 +1,11 @@
 #include "inc_newspellbook"
-
-
+#include "inc_dynconv"
 void main()
 {
     object oPC = OBJECT_SELF;
     int nValue = GetLocalInt(oPC, "DynConv_Var");
-            array_create(oPC, "ChoiceTokens");
-            array_create(oPC, "ChoiceValues");
+    array_create(oPC, "ChoiceTokens");
+    array_create(oPC, "ChoiceValues");
 
     if(nValue == 0)
         return;
@@ -17,6 +16,9 @@ void main()
     if(nValue == -1)
     {
         int nStage = GetLocalInt(oPC, "Stage");
+        array_create(oPC, "StagesSetup");
+        if(array_get_int(oPC, "StagesSetup", nStage))
+            return; //this stops list duplication when scrolling
 // INSERT CODE HERE FOR THE HEADER
 // token no 50
         if(nStage == 0)
@@ -34,6 +36,7 @@ void main()
                     array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
                 }
             }
+            array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
         if(nStage == 1)
         {
@@ -66,6 +69,7 @@ void main()
                     array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
                 }
             }
+            array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
         else if(nStage == 2)
         {
@@ -91,6 +95,7 @@ void main()
                         GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
                 }
             }
+            array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
         else if(nStage == 3 && !GetLocalInt(oPC, "Stage3Setup"))
         {
@@ -113,16 +118,10 @@ void main()
                 }
             }
             SetLocalInt(oPC, "Stage3Setup", TRUE);
+            array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
         //do token setup
-        int nOffset = GetLocalInt(oPC, "ChoiceOffset");
-        int i;
-        for(i=nOffset; i<nOffset+10; i++)
-        {
-            string sValue = array_get_string(oPC, "ChoiceTokens" ,i);
-            SetLocalString(oPC, "TOKEN10"+IntToString(i-nOffset), sValue);
-            SetCustomToken(100+i-nOffset, sValue);
-        }
+        SetupTokens();
         SetCustomToken(110, GetStringByStrRef(16824212));//finish
         SetCustomToken(111, GetStringByStrRef(16824202));//please wait
         SetCustomToken(112, GetStringByStrRef(16824204));//next
@@ -159,7 +158,7 @@ void main()
         DeleteLocalInt(oPC, "Stage3Setup");
         return;
     }
-    nValue = array_get_int(oPC, "ChoiceValues", nValue);
+    nValue = array_get_int(oPC, "ChoiceValues", nValue+GetLocalInt(oPC, "ChoiceOffset"));
     int nStage = GetLocalInt(oPC, "Stage");
     if(nStage == 0)
     {

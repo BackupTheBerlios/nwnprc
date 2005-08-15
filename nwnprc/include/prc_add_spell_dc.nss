@@ -340,7 +340,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
     if (GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE) != 0)
     {
         nDC = GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE);
-        //SendMessageToPC(oCaster, "Forced Base-DC casting at DC " + nDC;
+        SendMessageToPC(oCaster, "Forced Base-DC casting at DC " + nDC;
     }
     nDC += GetChangesToSaveDC(oTarget, oCaster, nSpellID);
     return nDC;

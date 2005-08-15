@@ -100,7 +100,7 @@ void WipeSpellbookHideFeats(object oPC)
         if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
             && GetItemPropertySubType(ipTest) > 10400
             && GetItemPropertySubType(ipTest) < 10592)
-            RemoveItemProperty(oHide, ipTest);
+            DelayCommand(1.0, RemoveItemProperty(oHide, ipTest));
         ipTest = GetNextItemProperty(oHide);
     }
     //remove persistant locals used to track when all spells cast
@@ -241,8 +241,6 @@ void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
     //cast the spell
     //dont need to override level, the spellscript will calculate it
     ActionCastSpell(nSpellID, 0, nDC, 0, nMetamagic, nClass);
-    //cleanup
-    ActionDoCommand(DeleteLocalInt(oPC, PRC_CASTERCLASS_OVERRIDE));
     //remove it from the spellbook
     RemoveSpellUse(oPC, PRCGetSpellId(), nClass);
 }

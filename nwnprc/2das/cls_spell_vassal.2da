@@ -1,55 +1,55 @@
 2DA V2.0
 
-   Label                              Level FeatID IPFeatID SpellID ReqFeat 
-0  ****                               ****  ****   ****     ****    ****   
-29 VOBShield_of_Faith                 1     20102  10570    13102   ****      
-26 VOBShield_of_FaithSilent           2     20099  10567    13099   33      
-27 VOBShield_of_FaithStill            2     20100  10568    13100   37      
-28 VOBShield_of_FaithExtend           2     20101  10569    13101   12    
-33 VOBProtection_from_Evil            1     20106  10574    13106   ****      
-30 VOBProtection_from_EvilSilent      2     20103  10571    13103   33      
-31 VOBProtection_from_EvilStill       2     20104  10572    13104   37      
-32 VOBProtection_from_EvilExtend      2     20105  10573    13105   12     
-37 VOBEndure_Elements                 1     20110  10578    13110   ****     
-34 VOBEndure_ElementsSilent           2     20107  10575    13107   33      
-35 VOBEndure_ElementsStill            2     20108  10576    13108   37      
-36 VOBEndure_ElementsExtend           2     20109  10577    13109   12      
-41 VOBDivine_Favor                    1     20114  10582    13114   ****    
-38 VOBDivine_FavorSilent              2     20111  10579    13111   33      
-39 VOBDivine_FavorStill               2     20112  10580    13112   37      
-40 VOBDivine_FavorExtend              2     20113  10581    13113   12     
-45 VOBBless_Weapon                    1     20118  10586    13118   ****     
-42 VOBBless_WeaponSilent              2     20115  10583    13115   33      
-43 VOBBless_WeaponStill               2     20116  10584    13116   37      
-44 VOBBless_WeaponExtend              2     20117  10585    13117   12     
-49 VOBBless                           1     20122  10590    13122   ****    
-46 VOBBlessSilent                     2     20119  10587    13119   33      
-47 VOBBlessStill                      2     20120  10588    13120   37      
-48 VOBBlessExtend                     2     20121  10589    13121   12     
-15 VOBResist_Elements                 2     20088  10556    13088   ****     
-12 VOBResist_ElementsSilent           3     20085  10553    13085   33      
-13 VOBResist_ElementsStill            3     20086  10554    13086   37      
-14 VOBResist_ElementsExtend           3     20087  10555    13087   12    
-20 VOBBulls_Strength                  2     20093  10561    13093   ****       
-16 VOBBulls_StrengthSilent            3     20089  10557    13089   33      
-17 VOBBulls_StrengthStill             3     20090  10558    13090   37      
-18 VOBBulls_StrengthExtend            3     20091  10559    13091   12      
-19 VOBBulls_StrengthEmpower           4     20092  10560    13092   11     
-25 VOBEndurance                       2     20098  10566    13098   ****     
-21 VOBEnduranceSilent                 3     20094  10562    13094   33      
-22 VOBEnduranceStill                  3     20095  10563    13095   37      
-23 VOBEnduranceExtend                 3     20096  10564    13096   12      
-24 VOBEnduranceEmpower                4     20097  10565    13097   11      
-50 VOBDivine_Power                    4     20123  10591    13123   ****  
-3  VOBSearing_Light                   3     20076  10544    13076   ****    
-1  VOBSearing_LightSilent             4     20074  10542    13074   33      
-2  VOBSearing_LightStill              4     20075  10543    13075   37     
-7  VOBProtection_from_Elements        3     20080  10548    13080   ****     
-4  VOBProtection_from_ElementsExtend  4     20077  10545    13077   12      
-5  VOBProtection_from_ElementsSilent  4     20078  10546    13078   33      
-6  VOBProtection_from_ElementsStill   4     20079  10547    13079   37      
-11 VOBMagic_Circle_against_Evil       3     20084  10552    13084   ****    
-8  VOBMagicCircleAgainstEvilSilent    4     20081  10549    13081   33      
-9  VOBMagic_Circle_against_EvilStill  4     20082  10550    13082   37      
-10 VOBMagic_Circle_against_EvilExtend 4     20083  10551    13083   12       
-51 VOBHoly_Sword                      4     20124  10592    13124   ****    
+   Label                              Level FeatID IPFeatID SpellID RealSpellID ReqFeat 
+0  ****                               ****  ****   ****     ****    ****	****   
+29 VOBShield_of_Faith                 1     20102  10570    13102   450	        ****      
+26 VOBShield_of_FaithSilent           2     20099  10567    13099   450	        33      
+27 VOBShield_of_FaithStill            2     20100  10568    13100   450	        37      
+28 VOBShield_of_FaithExtend           2     20101  10569    13101   450  	12    
+33 VOBProtection_from_Evil            1     20106  10574    13106   138	        ****      
+30 VOBProtection_from_EvilSilent      2     20103  10571    13103   138	        33      
+31 VOBProtection_from_EvilStill       2     20104  10572    13104   138 	37      
+32 VOBProtection_from_EvilExtend      2     20105  10573    13105   138 	12     
+37 VOBEndure_Elements                 1     20110  10578    13110   50  	****     
+34 VOBEndure_ElementsSilent           2     20107  10575    13107   50  	33      
+35 VOBEndure_ElementsStill            2     20108  10576    13108   50   	37      
+36 VOBEndure_ElementsExtend           2     20109  10577    13109   50     	12      
+41 VOBDivine_Favor                    1     20114  10582    13114   414 	****    
+38 VOBDivine_FavorSilent              2     20111  10579    13111   414 	33      
+39 VOBDivine_FavorStill               2     20112  10580    13112   414 	37      
+40 VOBDivine_FavorExtend              2     20113  10581    13113   414 	12     
+45 VOBBless_Weapon                    1     20118  10586    13118   537 	****     
+42 VOBBless_WeaponSilent              2     20115  10583    13115   537 	33      
+43 VOBBless_WeaponStill               2     20116  10584    13116   537 	37      
+44 VOBBless_WeaponExtend              2     20117  10585    13117   537 	12     
+49 VOBBless                           1     20122  10590    13122   6   	****    
+46 VOBBlessSilent                     2     20119  10587    13119   6   	33      
+47 VOBBlessStill                      2     20120  10588    13120   6   	37      
+48 VOBBlessExtend                     2     20121  10589    13121   6   	12     
+15 VOBResist_Elements                 2     20088  10556    13088   137 	****     
+12 VOBResist_ElementsSilent           3     20085  10553    13085   137 	33      
+13 VOBResist_ElementsStill            3     20086  10554    13086   137 	37      
+14 VOBResist_ElementsExtend           3     20087  10555    13087   137 	12    
+20 VOBBulls_Strength                  2     20093  10561    13093   9   	****       
+16 VOBBulls_StrengthSilent            3     20089  10557    13089   9   	33      
+17 VOBBulls_StrengthStill             3     20090  10558    13090   9   	37      
+18 VOBBulls_StrengthExtend            3     20091  10559    13091   9   	12      
+19 VOBBulls_StrengthEmpower           4     20092  10560    13092   9    	11     
+25 VOBEndurance                       2     20098  10566    13098   49  	****     
+21 VOBEnduranceSilent                 3     20094  10562    13094   49  	33      
+22 VOBEnduranceStill                  3     20095  10563    13095   49  	37      
+23 VOBEnduranceExtend                 3     20096  10564    13096   49  	12      
+24 VOBEnduranceEmpower                4     20097  10565    13097   49  	11    
+3  VOBSearing_Light                   3     20076  10544    13076   156 	****    
+1  VOBSearing_LightSilent             4     20074  10542    13074   156 	33      
+2  VOBSearing_LightStill              4     20075  10543    13075   156 	37     
+7  VOBProtection_from_Elements        3     20080  10548    13080   150 	****     
+4  VOBProtection_from_ElementsExtend  4     20077  10545    13077   150 	12      
+5  VOBProtection_from_ElementsSilent  4     20078  10546    13078   150 	33      
+6  VOBProtection_from_ElementsStill   4     20079  10547    13079   150 	37      
+11 VOBMagic_Circle_against_Evil       3     20084  10552    13084   104 	****    
+8  VOBMagicCircleAgainstEvilSilent    4     20081  10549    13081   104 	33      
+9  VOBMagic_Circle_against_EvilStill  4     20082  10550    13082   104 	37      
+10 VOBMagic_Circle_against_EvilExtend 4     20083  10551    13083   104 	12       
+51 VOBHoly_Sword                      4     20124  10592    13124   538 	****     
+50 VOBDivine_Power                    4     20123  10591    13123   42  	****   

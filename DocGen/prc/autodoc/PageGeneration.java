@@ -11,12 +11,12 @@ import static prc.autodoc.Main.*;
 
 /**
  * This class contains the methods for manual page generation.
- * 
+ *
  * @author Ornedan
  */
 public final class PageGeneration{
 	private PageGeneration(){/* No need for instantiation */}
-	
+
 	/**
 	 * Handles creation of the skill pages.
 	 */
@@ -26,10 +26,10 @@ public final class PageGeneration{
 		       text      = null,
 		       path      = null;
 		boolean errored;
-		
+
 		skills = new HashMap<Integer, GenericEntry>();
 		Data_2da skills2da = twoDA.get("skills");
-		
+
 		for(int i = 0; i < skills2da.getEntryCount(); i++){
 			errored = false;
 			try{
@@ -40,7 +40,7 @@ public final class PageGeneration{
 					err_pr.println("Invalid name entry for skill " + i);
 					errored = true;
 				}
-				
+
 				// Start building the entry data. First, place in the name
 				text = skillTemplate;
 				text = text.replaceAll("~~~SkillName~~~",
@@ -60,10 +60,10 @@ public final class PageGeneration{
 					errored = true;
 				}
 				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
-				
+
 				// Build the final path
 				path = skillPath + i + ".html";
-				
+
 				// Check if we had any errors. If we did, and the error tolerance flag isn't up, skip printing this page
 				if(!errored || tolErr){
 					printPage(path, text);
@@ -79,10 +79,10 @@ public final class PageGeneration{
 		// hits the memory limit
 		System.gc();
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Prints normal & epic spells and psionic powers.
 	 * As of now, all of these are similar enough to share the same
@@ -94,17 +94,17 @@ public final class PageGeneration{
 		String spellPath = contentPath + "spells" + fileSeparator,
 		       epicPath  = contentPath + "epic_spells" + fileSeparator,
 		       psiPath   = contentPath + "psionic_powers" + fileSeparator;
-		
+
 		String path = null,
 		       name = null,
 		       text = null;
 		boolean errored;
-		
+
 		SpellType spelltype = NONE;
-		
+
 		spells = new HashMap<Integer, SpellEntry>();
 		Data_2da spells2da = twoDA.get("spells");
-		
+
 		for(int i = 0; i < spells2da.getEntryCount(); i++){
 			spelltype = NONE;
 			errored = false;
@@ -112,7 +112,7 @@ public final class PageGeneration{
 				if(isNormalSpell(spells2da, i))       spelltype = NORMAL;
 				else if(isEpicSpell(spells2da, i))    spelltype = EPIC;
 				else if(isPsionicPower(spells2da, i)) spelltype = PSIONIC;
-				
+
 				if(spelltype != NONE){
 					name = tlk.get(spells2da.getEntry("Name", i))
 					          .replaceAll("/", " / ");
@@ -122,7 +122,7 @@ public final class PageGeneration{
 						err_pr.println("Invalid name entry for spell " + i);
 						errored = true;
 					}
-					
+
 					// Start building the entry data. First, place in the name
 					text = spellTemplate;
 					text = text.replaceAll("~~~SpellName~~~", name);
@@ -141,7 +141,7 @@ public final class PageGeneration{
 						errored = true;
 					}
 					text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
-					
+
 					// Build the path
 					switch(spelltype){
 						case NORMAL:
@@ -153,11 +153,11 @@ public final class PageGeneration{
 						case PSIONIC:
 							path = psiPath + i + ".html";
 							break;
-						
+
 						default:
 							throw new AssertionError("This message should not be seen");
 					}
-					
+
 					// Check if we had any errors. If we did, and the error tolerance flag isn't up, skip printing this page
 					if(!errored || tolErr){
 						// Print the page
@@ -175,7 +175,7 @@ public final class PageGeneration{
 		// hits the memory limit
 		System.gc();
 	}
-	
+
 	/**
 	 * A small convenience method for wrapping all the normal spell checks into
 	 * one.
@@ -193,11 +193,11 @@ public final class PageGeneration{
 		if(!spells2da.getEntry("Paladin", entryNum).equals("****"))  return true;
 		if(!spells2da.getEntry("Ranger", entryNum).equals("****"))   return true;
 		if(!spells2da.getEntry("Wiz_Sorc", entryNum).equals("****")) return true;
-		
+
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * A small convenience method for testing if the given entry contains a
 	 * epic spell.
@@ -213,7 +213,7 @@ public final class PageGeneration{
 			if(spells2da.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
 		return false;
 	}
-	
+
 	/**
 	 * A small convenience method for testing if the given entry contains a
 	 * psionic power. Subradial powers are cropped off, only the radial
@@ -246,8 +246,8 @@ public final class PageGeneration{
 			if(spells2da.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * Build the preliminary list of master feats, without the child feats
 	 * linked in.
@@ -258,15 +258,15 @@ public final class PageGeneration{
 		       text     = null;
 		FeatEntry entry = null;
 		boolean errored;
-		
+
 		masterFeats = new HashMap<Integer, FeatEntry>();
 		Data_2da masterFeats2da = twoDA.get("masterfeats");
-		
+
 		for(int i = 0; i < masterFeats2da.getEntryCount(); i++){
 			// Skip blank rows
 			if(masterFeats2da.getEntry("LABEL", i).equals("****")) continue;
 			errored = false;
-			
+
 			try{
 				name = tlk.get(masterFeats2da.getEntry("STRREF", i));
 				if(verbose) System.out.println("Generating preliminary data for " + name);
@@ -274,7 +274,7 @@ public final class PageGeneration{
 					err_pr.println("Invalid name entry for masterfeat " + i);
 					errored = true;
 				}
-				
+
 				// Build the entry data
 				text = mFeatTemplate;
 				text = text.replaceAll("~~~FeatName~~~",
@@ -293,7 +293,7 @@ public final class PageGeneration{
 					errored = true;
 				}
 				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
-				
+
 				if(!errored || tolErr){
 					// Store the entry to wait for further processing
 					// Masterfeats start as class feats and are converted into general feats if any child
@@ -308,8 +308,8 @@ public final class PageGeneration{
 		}
 		System.gc();
 	}
-	
-	
+
+
 	/**
 	 * Build the preliminary list of feats, without master / successor / predecessor feats
 	 * linked in.
@@ -326,10 +326,10 @@ public final class PageGeneration{
 		boolean isEpic      = false,
 		        isClassFeat = false;
 		boolean errored;
-		
+
 		feats = new HashMap<Integer, FeatEntry>();
 		Data_2da feats2da = twoDA.get("feat");
-		
+
 		for(int i = 0; i < feats2da.getEntryCount(); i++){
 			// Skip blank rows and markers
 			if(feats2da.getEntry("LABEL", i).equals("****") ||
@@ -338,7 +338,7 @@ public final class PageGeneration{
 			// Skip the ISC & Epic spell markers
 			if(feats2da.getEntry("LABEL", i).equals("ReservedForISCAndESS")) continue;
 			errored = false;
-			
+
 			try{
 				name = tlk.get(feats2da.getEntry("FEAT", i));
 				if(verbose) System.out.println("Generating preliminary data for " + name);
@@ -346,7 +346,7 @@ public final class PageGeneration{
 					err_pr.println("Invalid name entry for feat " + i);
 					errored = true;
 				}
-				
+
 				// Build the entry data
 				text = featTemplate;
 				text = text.replaceAll("~~~FeatName~~~",
@@ -365,11 +365,11 @@ public final class PageGeneration{
 					errored = true;
 				}
 				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
-				
-				
+
+
 				isEpic = feats2da.getEntry("PreReqEpic", i).equals("1");
 				isClassFeat = !feats2da.getEntry("ALLCLASSESCANUSE", i).equals("1");
-				
+
 				// Get the path
 				if(isEpic){
 					if(isClassFeat) path = classEpicPath + i + ".html";
@@ -378,7 +378,7 @@ public final class PageGeneration{
 					if(isClassFeat) path = classFeatPath + i + ".html";
 					else            path = featPath + i + ".html";
 				}
-				
+
 				if(!errored || tolErr){
 					// Create the entry data structure
 					entry = new FeatEntry(name , text, path, i, isEpic, isClassFeat);
@@ -392,8 +392,8 @@ public final class PageGeneration{
 		}
 		System.gc();
 	}
-	
-	
+
+
 	/**
 	 * Builds the master - child, predecessor - successor and prerequisite links
 	 * and modifies the entry texts accordingly.
@@ -402,9 +402,9 @@ public final class PageGeneration{
 		FeatEntry other = null;
 		String temp = null;
 		Data_2da feats2da = twoDA.get("feat");
-		
+
 		//path.replace(contentPath, "../");
-		
+
 		// Link normal feats to each other and to masterfeats
 		for(FeatEntry check : feats.values()){
 			if(verbose) System.out.println("Linking feat " + check.name);
@@ -421,11 +421,11 @@ public final class PageGeneration{
 				}catch(NullPointerException e){
 					err_pr.println("Feat " + check.entryNum + ": " + check.name + " MASTERFEAT points to a nonexistent masterfeat entry");
 			}}
-			
+
 			// Print prerequisites into the entry
 			temp = buildPrerequisites(check, feats2da);
 			check.text = check.text.replaceAll("~~~PrerequisiteFeatList~~~", temp);
-			
+
 			// Print the successor, if any, into the entry
 			temp = "";
 			if(!feats2da.getEntry("SUCCESSOR", check.entryNum).equals("****")){
@@ -456,10 +456,10 @@ public final class PageGeneration{
 				temp += featPageLinkTemplate.replace("~~~Path~~~", req.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
                                             .replace("~~~Name~~~", req.name);
 			}
-			
+
 			check.text = check.text.replaceAll("~~~RequiredForFeatList~~~", temp);
 		}
-		
+
 		// Add the child links to masterfeat texts
 		for(FeatEntry check : masterFeats.values()){
 			if(verbose) System.out.println("Linking masterfeat " + check.name);
@@ -468,12 +468,12 @@ public final class PageGeneration{
 				temp += featPageLinkTemplate.replace("~~~Path~~~", child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
 	                                        .replace("~~~Name~~~", child.name);
 			}
-			
+
 			check.text = check.text.replaceAll("~~~MasterFeatChildList~~~", temp);
 		}
 		System.gc();
 	}
-	
+
 	/**
 	 * Constructs a text containing links to the prerequisite feats of the
 	 * given feat. Separated from the linkFeats method for improved
@@ -496,7 +496,7 @@ public final class PageGeneration{
 		                   feats2da.getEntry("OrReqFeat3", check.entryNum),
 		                   feats2da.getEntry("OrReqFeat4", check.entryNum)};
 		String preReqText = "";
-		
+
 		/* Handle AND prerequisite feats */
 		// Some paranoia about bad entries
 		if(!andReq1Num.equals("****")){
@@ -518,7 +518,7 @@ public final class PageGeneration{
 		}}
 		// Check if we had at least one valid entry
 		if(andReq1 != null || andReq2 != null){
-			preReqText = prereqANDFeatHeaderTemplate; 
+			preReqText = prereqANDFeatHeaderTemplate;
 			if(andReq1 != null){
 				preReqText += featPageLinkTemplate.replace("~~~Path~~~", andReq1.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
                                                   .replace("~~~Name~~~", andReq1.name);
@@ -531,13 +531,13 @@ public final class PageGeneration{
 			}
 		}
 
-		
+
 		/* Handle OR prerequisite feats */
 		// First, check if there are any
 		boolean printOrReqs = false;
 		for(String orReqCheck : orReqs)
 			if(!orReqCheck.equals("****")) printOrReqs = true;
-		
+
 		if(printOrReqs){
 			boolean headerDone = false;
 			// Loop through each req and see if it's a valid link
@@ -563,11 +563,11 @@ public final class PageGeneration{
 			}
 			// End the <div> if we printed anything
 		}
-		
+
 		return preReqText;
 	}
-	
-	
+
+
 	/**
 	 * A simple method for printing out all the feat pages
 	 */
@@ -590,15 +590,15 @@ public final class PageGeneration{
 				err_pr.println("Exception when writing page for masterfeat " + toPrint.entryNum + ": " + toPrint.name + ":\n" + e);
 		}}
 		System.gc();
-		
+
 		// Print a page with alphabetically sorted list of all feats
-		
+
 		printPage(contentPath + "feats" + fileSeparator + "alphasortedfeats.html", buildAllFeatsList());
 	}
-	
+
 	/**
 	 * Constructs an alphabetically sorted list of all feats.
-	 * 
+	 *
 	 * @return an html page containing the list
 	 */
 	private static String buildAllFeatsList(){
@@ -615,11 +615,11 @@ public final class PageGeneration{
 			entrySet = listEntrySetTemplate.replace("~~~LinkId~~~", new String(new char[]{cha}))
 			                               .replace("~~~EntrySetName~~~", new String(new char[]{cha}).toUpperCase());
 			addedAny = false;
-			while(sorted.size() > 0 && 
+			while(sorted.size() > 0 &&
 			      sorted.firstKey().toLowerCase().startsWith(new String(new char[]{cha}))){
 				addedAny = true;
 				entry = sorted.remove(sorted.firstKey());
-				
+
 				entrySet = entrySet.replace("~~~FeatList~~~", listEntryTemplate.replace("~~~EvenOrOdd~~~", (counter++ % 2) == 0 ? "even":"odd")
 						                                                       .replace("~~~EntryPath~~~",
 						                                                                entry.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
@@ -628,18 +628,18 @@ public final class PageGeneration{
 			}
 			entrySet = entrySet.replace("~~~FeatList~~~", "");
 			cha++;
-			
+
 			// Add the sublist to the page
 			if(addedAny)
 				toReturn = toReturn.replace("~~~Content~~~", entrySet + "\n" + "~~~Content~~~");
 		}
 		// Clear off the last replacement marker
 		toReturn = toReturn.replace("~~~Content~~~", "");
-		
+
 		return toReturn;
 	}
-	
-	
+
+
 	/**
 	 * Handles creation of the domain pages.
 	 * Kills page generation on bad strref for name.
@@ -654,10 +654,10 @@ public final class PageGeneration{
 		FeatEntry grantedFeat   = null;
 		SpellEntry grantedSpell = null;
 		boolean errored;
-		
+
 		domains = new HashMap<Integer, GenericEntry>();
 		Data_2da domains2da = twoDA.get("domains");
-		
+
 		for(int i = 0; i < domains2da.getEntryCount(); i++){
 			// Skip blank rows
 			if(domains2da.getEntry("LABEL", i).equals("****")) continue;
@@ -669,7 +669,7 @@ public final class PageGeneration{
 					err_pr.println("Invalid name entry for domain " + i);
 					errored = true;
 				}
-				
+
 				// Build the entry data
 				text = domainTemplate;
 				text = text.replaceAll("~~~DomainName~~~",
@@ -688,7 +688,7 @@ public final class PageGeneration{
 					errored = true;
 				}
 				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
-				
+
 				// Add a link to the granted feat
 				try{
 					grantedFeat = feats.get(Integer.parseInt(domains2da.getEntry("GrantedFeat", i)));
@@ -701,7 +701,7 @@ public final class PageGeneration{
 					err_pr.println("GrantedFeat entry for domain " + i + ": " + name + " points to non-existent feat: " + domains2da.getEntry("GrantedFeat", i));
 					errored = true;
 				}
-				
+
 				// Add links to the granted spells
 				spellList = "";
 				for(int j = 1; j <= 9; j++){
@@ -719,7 +719,7 @@ public final class PageGeneration{
 					}
 				}
 				text = text.replaceAll("~~~DomainSpellList~~~", spellList);
-				
+
 				// Build path and print
 				path = domainPath + i + ".html";
 				if(!errored || tolErr){
@@ -733,8 +733,8 @@ public final class PageGeneration{
 		}
 		System.gc();
 	}
-	
-	
+
+
 	/**
 	 * Handles creation of the race pages.
 	 */
@@ -747,10 +747,10 @@ public final class PageGeneration{
 		FeatEntry grantedFeat = null;
 		Data_2da featTable    = null;
 		boolean errored;
-		
+
 		races = new HashMap<Integer, GenericEntry>();
 		Data_2da racialtypes2da = twoDA.get("racialtypes");
-		
+
 		for(int i = 0; i < racialtypes2da.getEntryCount(); i++){
 			// Skip non-player races
 			if(!racialtypes2da.getEntry("PlayerRace", i).equals("1")) continue;
@@ -762,7 +762,7 @@ public final class PageGeneration{
 					err_pr.println("Invalid name entry for race " + i);
 					errored = true;
 				}
-				
+
 				// Build the entry data
 				text = raceTemplate;
 				text = text.replaceAll("~~~RaceName~~~",
@@ -774,15 +774,15 @@ public final class PageGeneration{
 					err_pr.println("Invalid description for race " + i + ": " + name);
 					errored = true;
 				}
-				
-				
+
+
 				// Add links to the racial feats
 				try{
 			        featTable = twoDA.get(racialtypes2da.getEntry("FeatsTable", i));
 		        }catch(TwoDAReadException e){
 					throw new PageGenerationException("Failed to read RACE_FEAT_*.2da for race " + i + ": " + name + ":\n" + e);
 				}
-				
+
 				featList = "";
 				for(int j = 0; j < featTable.getEntryCount(); j++){
 					try{
@@ -797,7 +797,7 @@ public final class PageGeneration{
 					}
 				}
 				text = text.replaceAll("~~~RaceFeats~~~", featList);
-				
+
 				// Build path and print
 				path = racePath + i + ".html";
 				if(!errored || tolErr){
@@ -811,8 +811,8 @@ public final class PageGeneration{
 		}
 		System.gc();
 	}
-	
-	
+
+
 	/**
 	 * Handles creation of the class pages.
 	 * Subsections handled by several following methods.
@@ -825,12 +825,12 @@ public final class PageGeneration{
 		       path      = null,
 		       temp      = null;
 		String[] tempArr = null;
-		
+
 		boolean errored;
-		
+
 		classes = new HashMap<Integer, ClassEntry>();
 		Data_2da classes2da = twoDA.get("classes");
-		
+
 		for(int i = 0; i < classes2da.getEntryCount(); i++){
 			// Skip non-player classes
 			if(!classes2da.getEntry("PlayerClass", i).equals("1")) continue;
@@ -842,7 +842,7 @@ public final class PageGeneration{
 					err_pr.println("Invalid name entry for class " + i);
 					errored = true;
 				}
-				
+
 				// Build the entry data
 				text = classTemplate;
 				text = text.replaceAll("~~~ClassName~~~",
@@ -861,18 +861,18 @@ public final class PageGeneration{
 					errored = true;
 				}
 				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
-				
+
 				// Add in the BAB and saving throws table
 				text = text.replaceAll("~~~ClassBABAndSavThrTable~~~", buildBabAndSaveTable(classes2da, i));
-				
+
 				// Add in the skills table
 				text = text.replaceAll("~~~ClassSkillTable~~~", buildSkillTable(classes2da, i));
-				
+
 				// Add in the feat tables
 				tempArr = buildClassFeatTables(classes2da, i);
 				text = text.replaceAll("~~~ClassBonusFeatTable~~~", tempArr[0]);
 				text = text.replaceAll("~~~ClassSelectableFeatTable~~~", tempArr[1]);
-				
+
 				/* Check whether this is a base or a prestige class. No prestige
 				 * class should give exp penalty (nor should any base class not give it),
 				 * so it gan be used as an indicator.
@@ -888,7 +888,7 @@ public final class PageGeneration{
 					path = baseClassPath + i + ".html";
 				else
 					path = prestigeClassPath + i + ".html";
-				
+
 				if(!errored || tolErr){
 					printPage(path, text);
 					classes.put(i, new ClassEntry(name, path, temp.equals("1"), i));
@@ -900,8 +900,8 @@ public final class PageGeneration{
 		}
 		System.gc();
 	}
-	
-	
+
+
 	/**
 	 * Constructs the html table of levels and their bab + saving throw bonus values.
 	 *
@@ -933,9 +933,9 @@ public final class PageGeneration{
 			}
 			else throw new PageGenerationException("Failed to read CLS_SAVTHR_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
 		}
-		
+
 		String toReturn = "";
-		
+
 		/* Determine maximum level to print bab & save values to
 		 * The maximum level of the class, or the last non-epic level
 		 * whichever is lower
@@ -951,13 +951,13 @@ public final class PageGeneration{
 			if(tolErr) err_pr.println("Invalid EpicLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
 			else throw new PageGenerationException("Invalid EpicLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
 		}
-		
+
 		// base classes have special notation for the epic level limit
 		if(epicLevel == -1)
 			maxToPrint = 20;
 		else
 			maxToPrint = maxLevel > epicLevel ? epicLevel : maxLevel;
-		
+
 		// If the class has any pre-epic levels
 		if(maxToPrint > 0){
 			toReturn += babAndSavthrTableHeaderTemplate + "\n";
@@ -973,10 +973,10 @@ public final class PageGeneration{
 			}
 			toReturn += "</table>\n";
 		}
-		
+
 		return toReturn;
 	}
-	
+
 	/**
 	 * Constructs the html table of the class & cross-class skills of this class.
 	 * TreeMaps are used to arrange the printed skills in alphabetic order.
@@ -1004,7 +1004,7 @@ public final class PageGeneration{
 		GenericEntry tempSkill = null;
 		TreeMap<String, GenericEntry> classSkills      = new TreeMap<String, GenericEntry>(),
 		                              crossClassSkills = new TreeMap<String, GenericEntry>();
-		
+
 		for(int i = 0; i < skillTable.getEntryCount(); i++){
 			temp = skillTable.getEntry("ClassSkill", i);
 			// Yet more validity checking :P
@@ -1014,7 +1014,7 @@ public final class PageGeneration{
 					continue;
 				}else throw new PageGenerationException("Invalid ClassSkill entry in " + skillTable.getName() + " on row " + i);
 			}
-			
+
 			try{
 				tempSkill = skills.get(Integer.parseInt(skillTable.getEntry("SkillIndex", i)));
 			}catch(NumberFormatException e){
@@ -1029,34 +1029,34 @@ public final class PageGeneration{
 					continue;
 				}else throw new PageGenerationException("SkillIndex entry in " + skillTable.getName() + " on row " + i + " points to non-existent skill");
 			}
-			
-			if(temp.equals("0")) classSkills.put(tempSkill.name, tempSkill);
+
+			if(temp.equals("1")) classSkills.put(tempSkill.name, tempSkill);
 			else            crossClassSkills.put(tempSkill.name, tempSkill);
 		}
-		
+
 		while(classSkills.size() > 0 || crossClassSkills.size() > 0){
 			toReturn += "<tr>\n";
-			
+
 			if(classSkills.size() > 0){
 				tempSkill = classSkills.remove(classSkills.firstKey());
 				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempSkill.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempSkill.name + "</a>");
 			}else
 				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
-			
+
 			if(crossClassSkills.size() > 0){
 				tempSkill = crossClassSkills.remove(crossClassSkills.firstKey());
 				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempSkill.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempSkill.name + "</a>");
 			}else
 				toReturn += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
-			
+
 			toReturn += "</tr>\n";
 		}
-		
+
 		toReturn += "</table>\n";
 		return toReturn;
 	}
-	
-	
+
+
 	/**
 	 * Constructs the html table of the bonus and selectable class feats of the given class.
 	 * TreeMaps are used to arrange the printed feats in alphabetic order.
@@ -1081,17 +1081,17 @@ public final class PageGeneration{
 		}
 		int epicLevel = 40,
 		    grantedLevel = 0;
-		
-		try{ 
+
+		try{
 			epicLevel = Integer.parseInt(classes2da.getEntry("EpicLevel", entryNum));
 		}catch(NumberFormatException e){
 			if(tolErr) err_pr.println("Invalid EpicLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
 			else throw new PageGenerationException("Invalid EpicLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
 		}
-		
+
 		// Base classes have EpicLevel defined as -1, but become epic at L20
 		if(epicLevel == -1) epicLevel = 20;
-		
+
 		String[] toReturn = {classFeatTableHeaderTemplate,
 		                     classFeatTableHeaderTemplate};
 		String temp = null;
@@ -1115,7 +1115,7 @@ public final class PageGeneration{
 					continue;
 				}else throw new PageGenerationException("Invalid List entry in " + featTable.getName() + " on row " + i + ": " + temp);
 			}
-			
+
 			try{
 				tempFeat = feats.get(Integer.parseInt(featTable.getEntry("FeatIndex", i)));
 			}catch(NumberFormatException e){
@@ -1130,7 +1130,7 @@ public final class PageGeneration{
 					continue;
 				}else throw new PageGenerationException("FeatIndex entry in " + featTable.getName() + " on row " + i + " points to non-existent feat: " + featTable.getEntry("FeatIndex", i));
 			}
-			
+
 			try{
 				grantedLevel = Integer.parseInt(featTable.getEntry("GrantedOnLevel", i));
 			}catch(NumberFormatException e){
@@ -1141,7 +1141,7 @@ public final class PageGeneration{
 			}
 			// Skip feats that can never be gotten
 			if(grantedLevel > 40) continue;
-			
+
 			// If the feat has a master, replace it with the master in the listing.
 			if(tempFeat.master != null){
 				tempFeat = tempFeat.master;
@@ -1149,7 +1149,7 @@ public final class PageGeneration{
 				if(masterFeatsUsed.contains(tempFeat)) continue;
 				masterFeatsUsed.add(tempFeat);
 			}
-			
+
 			// Figure out the correct map to place the feat in
 			if(temp.equals("3")){
 				if(tempFeat.isEpic || grantedLevel > epicLevel) epicBonusFeats.put(tempFeat.name, tempFeat);
@@ -1159,48 +1159,48 @@ public final class PageGeneration{
 				else                                            normalSelectableFeats.put(tempFeat.name, tempFeat);
 			}
 		}
-		
+
 		// Build the bonus feat table
 		while(normalBonusFeats.size() > 0 || epicBonusFeats.size() > 0){
 			toReturn[0] += "<tr>\n";
-			
+
 			if(normalBonusFeats.size() > 0){
 				tempFeat = normalBonusFeats.remove(normalBonusFeats.firstKey());
 				toReturn[0] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempFeat.name + "</a>");
 			}else
 				toReturn[0] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
-			
+
 			if(epicBonusFeats.size() > 0){
 				tempFeat = epicBonusFeats.remove(epicBonusFeats.firstKey());
 				toReturn[0] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempFeat.name + "</a>");
 			}else
 				toReturn[0] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
-			
+
 			toReturn[0] += "</tr>\n";
 		}
-		
+
 		// Build the selectable feat table
 		while(normalSelectableFeats.size() > 0 || epicSelectableFeats.size() > 0){
 			toReturn[1] += "<tr>\n";
-			
+
 			if(normalSelectableFeats.size() > 0){
 				tempFeat = normalSelectableFeats.remove(normalSelectableFeats.firstKey());
 				toReturn[1] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempFeat.name + "</a>");
 			}else
 				toReturn[1] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
-			
+
 			if(epicSelectableFeats.size() > 0){
 				tempFeat = epicSelectableFeats.remove(epicSelectableFeats.firstKey());
 				toReturn[1] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "<a href=\"" + tempFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/") + "\" target=\"content\">" + tempFeat.name + "</a>");
 			}else
 				toReturn[1] += classTablesEntryTemplate.replaceAll("~~~Entry~~~", "&nbsp;");
-			
+
 			toReturn[1] += "</tr>\n";
 		}
-		
+
 		toReturn[0] += "</table>\n";
 		toReturn[1] += "</table>\n";
-		
+
 		return toReturn;
 	}
 }

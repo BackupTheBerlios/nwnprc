@@ -289,7 +289,7 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_BLIGHTLORD, oCaster)
 
            +  (GetLevelByClass(CLASS_TYPE_OLLAM, oCaster) + 1) / 2 
-           +  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2
+           //+  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2
@@ -336,7 +336,8 @@ int GetIsDivineClass (int nClass)
             nClass==CLASS_TYPE_KNIGHT_MIDDLECIRCLE ||
             nClass==CLASS_TYPE_KNIGHT_CHALICE ||
             nClass==CLASS_TYPE_ANTI_PALADIN ||
-            nClass==CLASS_TYPE_VIGILANT);
+            nClass==CLASS_TYPE_VIGILANT ||
+            nClass==CLASS_TYPE_OCULAR);
 }
 
 int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF)
@@ -520,9 +521,18 @@ int GetLevelByTypeDivineFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
                  FireAdept(oCaster, iSpellID) +
                  StormMagic(oCaster);
 
-    if (iClass1 == CLASS_TYPE_PALADIN || iClass1 == CLASS_TYPE_RANGER) iClass1Lev = iClass1Lev / 2;
-    if (iClass2 == CLASS_TYPE_PALADIN || iClass2 == CLASS_TYPE_RANGER) iClass2Lev = iClass2Lev / 2;
-    if (iClass3 == CLASS_TYPE_PALADIN || iClass3 == CLASS_TYPE_RANGER) iClass3Lev = iClass3Lev / 2;
+    if (iClass1 == CLASS_TYPE_PALADIN 
+        || iClass1 == CLASS_TYPE_RANGER
+        || iClass3 == CLASS_TYPE_ANTI_PALADIN) 
+        iClass1Lev = iClass1Lev / 2;
+    if (iClass2 == CLASS_TYPE_PALADIN 
+        || iClass2 == CLASS_TYPE_RANGER
+        || iClass3 == CLASS_TYPE_ANTI_PALADIN) 
+        iClass2Lev = iClass2Lev / 2;
+    if (iClass3 == CLASS_TYPE_PALADIN 
+        || iClass3 == CLASS_TYPE_RANGER
+        || iClass3 == CLASS_TYPE_ANTI_PALADIN) 
+        iClass3Lev = iClass3Lev / 2;
 
     if (iClass1 == iFirstDivine) iClass1Lev += GetDivinePRCLevels(oCaster);
     if (iClass2 == iFirstDivine) iClass2Lev += GetDivinePRCLevels(oCaster);
@@ -1531,7 +1541,9 @@ int GetIsHealingSpell(int nSpellId)
        || nSpellId == SPELL_PANACEA
        //End of PRC spells which have a defined constant
        //Start of spells from Primogenitor's spellbook system
-       || nSpellId == 13001 || nSpellId == 13002
+//this is not needed, since it fake casts the normal spells listed above    
+//Primogenitor
+/*       || nSpellId == 13001 || nSpellId == 13002
        || nSpellId == 13003 || nSpellId == 13004
        || nSpellId == 13005 || nSpellId == 13030
        || nSpellId == 13031 || nSpellId == 13032
@@ -1546,7 +1558,8 @@ int GetIsHealingSpell(int nSpellId)
        || nSpellId == 13177 || nSpellId == 13189
        || nSpellId == 13202 || nSpellId == 13203
        || nSpellId == 13204 || nSpellId == 13205
-       || nSpellId == 13230 )
+       || nSpellId == 13230 */
+       )
         return TRUE;
 
     return FALSE;

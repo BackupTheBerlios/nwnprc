@@ -187,12 +187,12 @@ void main()
             if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
             {
                 //damage = EffectAbilityDecrease(ABILITY_CONSTITUTION, d6(2));
-                nDamage = d6(2);
+                nDamage = d4(2);
             }
             else
             {
                 //damage = EffectAbilityDecrease(ABILITY_CONSTITUTION, d6());
-                nDamage  = d6();
+                nDamage  = d4();
             }
             effect eMind = EffectVisualEffect(VFX_DUR_IOUNSTONE_RED);
             //effect paralyze = EffectLinkEffects(damage, eMind);

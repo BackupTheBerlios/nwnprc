@@ -57,6 +57,10 @@ void MakeLookupLoopMaster()
     DelayCommand(3.0, MakeLookupLoop(CLASS_TYPE_KNIGHT_CHALICE,   0 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(3.1, MakeLookupLoop(CLASS_TYPE_VIGILANT,         0 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(3.2, MakeLookupLoop(CLASS_TYPE_VASSAL,           0 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(3.3, MakeLookupLoop(CLASS_TYPE_OCULAR,          0 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(3.4, MakeLookupLoop(CLASS_TYPE_OCULAR,        100 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(3.5, MakeLookupLoop(CLASS_TYPE_OCULAR,        200 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(3.6, MakeLookupLoop(CLASS_TYPE_OCULAR,        300 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
 }
 
 void MakeLookupLoop(int nClass, int nMin, string sSourceColumn, 
@@ -89,7 +93,19 @@ void MakeLookupLoop(int nClass, int nMin, string sSourceColumn,
         return;
     }
     
-    string sFile = GetPsiBookFileName(nClass);
+    string sFile; 
+    if(nClass == CLASS_TYPE_PSION
+        || nClass == CLASS_TYPE_PSYWAR
+        || nClass == CLASS_TYPE_WILDER
+        || nClass == CLASS_TYPE_FIST_OF_ZUOKEN 
+        )
+        sFile = GetPsiBookFileName(nClass);
+    else
+    {
+        sFile = Get2DACache("classes", "FeatsTable", nClass);
+        sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+    }   
+    
     int i = nMin;
     for(i=nMin;i<nMin+nLoopSize;i++)
     {

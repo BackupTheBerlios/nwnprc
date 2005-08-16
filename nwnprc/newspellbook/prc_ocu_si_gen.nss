@@ -4,5 +4,5 @@
 
 void main()
 {
-    NewSpellbookSpell(CLASS_TYPE_OCCULAR, METAMAGIC_SILENT, GetPowerFromSpellID(PRCGetSpellId()));
+    NewSpellbookSpell(CLASS_TYPE_OCULAR, METAMAGIC_SILENT, GetPowerFromSpellID(PRCGetSpellId()));
 }

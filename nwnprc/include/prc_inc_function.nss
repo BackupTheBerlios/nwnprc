@@ -159,6 +159,10 @@ void EvalPRCFeats(object oPC)
        GetHasFeat(FEAT_SHURIKENMASTERY, oPC))                    ExecuteScript("prc_weapmas", oPC);
     if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC) ||
        GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))                    ExecuteScript("prc_intuiatk", oPC);
+       
+    if(GetHasFeat(FEAT_FORCE_PERSONALITY, oPC))                  ExecuteScript("prc_ft_forcepers", oPC);
+    if(GetHasFeat(FEAT_INSIGHTFUL_REFLEXES, oPC))                ExecuteScript("prc_ft_insghtref", oPC);
+    if(GetHasFeat(FEAT_TACTILE_TRAPSMITH, oPC))                  ExecuteScript("prc_ft_tacttrap", oPC);
 
     if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
        && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)         ExecuteScript("ft_gtwf", oPC);

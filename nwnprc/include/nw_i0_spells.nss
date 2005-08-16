@@ -180,7 +180,10 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
     {
         nDamage = nDamage + (nDamage/2);
     }
-
+    
+    // The caster is the one who called the script, so OBJECT_SELF should work
+    // Applies the Augment Healing feat, which adds 2 points of healing per spell level.
+    if (GetHasFeat(FEAT_AUGMENT_HEALING, OBJECT_SELF)) nDamage += (StringToInt(lookup_spell_level(PRCGetSpellId())) * 2);
 
     if (MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
     {

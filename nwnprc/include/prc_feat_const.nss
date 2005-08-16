@@ -259,6 +259,17 @@ const int FEAT_PERNICIOUSMAGIC                         = 2962;
 const int FEAT_INSIDIOUSMAGIC                          = 2963;
 const int FEAT_UNHOLY_STRIKE                           = 3451;
 
+// Magic of Faerun
+const int FEAT_SPELL_GIRDING                           = 2456;
+
+// Complete Adventurer
+const int FEAT_FORCE_PERSONALITY                       = 2457;
+const int FEAT_INSIGHTFUL_REFLEXES                     = 2458;
+const int FEAT_TACTILE_TRAPSMITH                       = 2459;
+
+// Complete Divine
+const int FEAT_AUGMENT_HEALING                         = 2460;
+
 //Corpsecrafter
 const int FEAT_CORPSECRAFTER                           = 4014;
 const int FEAT_BOLSTER_RESISTANCE                      = 4015;

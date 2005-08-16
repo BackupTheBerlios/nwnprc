@@ -247,18 +247,20 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
 void spellsDispelAoEMod(object oTargetAoE, object oCaster, int nCasterLevel)
 {
    int ModWeave;
-   int nBuffer;
+   int nBuffer = 0;
+   int nGirding = 0;
    string SchoolWeave = lookup_spell_school(GetLocalInt(oTargetAoE, "X2_AoE_SpellID"));
    int Weave = GetHasFeat(FEAT_SHADOWWEAVE,oCaster)+ GetLocalInt(oCaster, "X2_AoE_SpecDispel");
    if (GetLocalInt(oTargetAoE, " X2_Effect_Weave_ID_") && !Weave) ModWeave = 4;
    if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
    if (GetLocalInt(oTargetAoE, "DispellingBuffer")) nBuffer = 5;
+   if (GetHasFeat(FEAT_SPELL_GIRDING, oTargetAoE)) nGirding = 2;
 
    int iDice = d20(1);
 //   SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(PRCGetSpellId())+" T "+GetName(oTargetAoE));
 //   SendMessageToPC(GetFirstPC(), "Dispell :"+IntToString(iDice + nCasterLevel)+" vs DC :"+IntToString(11 + GetLocalInt(oTargetAoE, "X2_AoE_Caster_Level")+ModWeave)+" Weave :"+IntToString(ModWeave)+" "+SchoolWeave);
 
-   if(iDice + nCasterLevel >= GetLocalInt(oTargetAoE, "X2_AoE_Caster_Level")+ModWeave+nBuffer)
+   if(iDice + nCasterLevel >= GetLocalInt(oTargetAoE, "X2_AoE_Caster_Level")+ModWeave+nBuffer+nGirding)
    {
      DestroyObject(oTargetAoE);
    }
@@ -297,6 +299,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
   object oEffectCaster;
   int ModWeave;
   int nBuffer;
+  int nGirding = 0;
 
   string sSelf = "Dispelled: ";
   string sCast = "Dispelled on "+GetName(oTarget)+": ";
@@ -319,11 +322,12 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
       nEffectCastLevel = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry));
       if (GetLocalInt(oTarget, " X2_Effect_Weave_ID_"+ IntToString(nCurrentEntry)) && !Weave) ModWeave = 4;
       if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
+      if (GetHasFeat(FEAT_SPELL_GIRDING, oTarget)) nGirding = 2;
 
       int iDice = d20(1);
 //      SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(nEffectSpellID)+" T "+GetName(oTarget)+" C "+GetName(oEffectCaster));
 //      SendMessageToPC(GetFirstPC(), "Dispell :"+ IntToString(iDice + nCasterLevel)+" vs DC :"+IntToString(11 + nEffectCastLevel+ModWeave)+" Mod Weave"+IntToString(ModWeave)+" "+SchoolWeave);
-      if(iDice + nCasterLevel >= 11 + nEffectCastLevel+ModWeave+nBuffer)
+      if(iDice + nCasterLevel >= 11 + nEffectCastLevel+ModWeave+nBuffer+nGirding)
       {
         if(nEffectSpellID != SPELL_INFESTATION_OF_MAGGOTS)
         {// If it isn't infestation of maggots we remove it one way, if it is, we remove it another.
@@ -406,6 +410,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
   object oEffectCaster;
   int ModWeave;
   int nBuffer;
+  int nGirding = 0;
 
   int nLastEntry = GetLocalInt(oTarget, "X2_Effects_Index_Number");
   effect eToDispel;
@@ -430,12 +435,13 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
       nEffectCasterLevel = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex));
       if (GetLocalInt(oTarget, " X2_Effect_Weave_ID_"+ IntToString(nIndex)) && !Weave) ModWeave = 4;
       if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
+      if (GetHasFeat(FEAT_SPELL_GIRDING, oTarget)) nGirding = 2;
       
       int iDice = d20(1);
  //     SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(nEffectSpellID)+" T "+GetName(oTarget)+" C "+GetName(GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex))));
  //     SendMessageToPC(GetFirstPC(), "Dispell :"+IntToString(iDice + nCasterLevel)+" vs DC :"+IntToString(11 + nEffectCasterLevel+ModWeave)+" Weave :"+IntToString(ModWeave)+" "+SchoolWeave);
 
-      if(iDice + nCasterLevel >= 11 + nEffectCasterLevel+ModWeave+nBuffer)
+      if(iDice + nCasterLevel >= 11 + nEffectCasterLevel+ModWeave+nBuffer+nGirding)
       {
         sList += SpellName+", ";
         oEffectCaster = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex));
@@ -486,7 +492,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
     ModWeave =0;
     if (GetLocalInt(oTarget, " XP2_L_SPELL_WEAVE" +IntToString (SPELL_INFESTATION_OF_MAGGOTS)) && !Weave) ModWeave = 4;
     
-    if(d20(1) + nCasterLevel >= bHasInfestationEffects + 11+ModWeave)
+    if(d20(1) + nCasterLevel >= bHasInfestationEffects + 11+ModWeave+nBuffer+nGirding)
     {
       DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));
       DeleteLocalInt(oTarget,"XP2_L_SPELL_CASTER_LVL_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));

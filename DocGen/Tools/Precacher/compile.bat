@@ -1,1 +1,1 @@
-javac precacher.java
+javac precacher.java -> errors.log

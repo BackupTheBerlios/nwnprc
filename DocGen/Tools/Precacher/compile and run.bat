@@ -1,4 +1,4 @@
-javac precacher.java
+javac precacher.java -> errors.log
 pause
-java precacher
+java precacher -> out.sql
 pause

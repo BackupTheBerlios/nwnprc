@@ -1,2 +1,2 @@
-java precacher
+java precacher -> out.sql
 pause

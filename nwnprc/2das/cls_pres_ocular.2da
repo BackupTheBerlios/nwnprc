@@ -2,5 +2,5 @@
 
       LABEL           ReqType   ReqParam1       ReqParam2   
 0     Concentration   SKILL     1               8           
-1     Toughness       FEAT      40              ****        
+1     Endurance       FEAT      2568            ****        
 2     ScriptVar       VAR       PRC_AllowOccAd   0           

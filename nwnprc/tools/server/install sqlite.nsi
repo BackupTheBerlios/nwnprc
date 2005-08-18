@@ -80,7 +80,11 @@ Section "PRC Pack" Section1
 	File "..\precacher\precacher.bat"
 	File "..\precacher\precacher.exe"
 	File "..\precacher\sqlite.exe"
+	File "..\precacher\7za.exe"
+	File "..\precacher\bioware2das.7z"
 	File "..\precacher\makedb sqlite.exe"
+	File "..\ssed.exe"
+	File "..\precacher\ssedscript.txt"
 	
 	;erf for manipulating hak/erf erc
 	File "..\erf.exe"
@@ -163,7 +167,11 @@ Section Uninstall
 	Delete "$NWNPATH\precacher.bat"
 	Delete "$NWNPATH\precacher.exe"
 	Delete "$NWNPATH\sqlite.exe"
+	Delete "$NWNPATH\7za.exe"
+	Delete "$NWNPATH\bioware2das.7z"
 	Delete "$NWNPATH\makedb sqlite.exe"
+	Delete "$NWNPATH\ssed.exe"
+	Delete "$NWNPATH\ssedscript.txt"
 	
 	;erf for manipulating hak/erf erc
 	Delete "$NWNPATH\erf.exe"

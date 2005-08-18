@@ -61,6 +61,7 @@ void MakeLookupLoopMaster()
     DelayCommand(3.4, MakeLookupLoop(CLASS_TYPE_OCULAR,        100 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(3.5, MakeLookupLoop(CLASS_TYPE_OCULAR,        200 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(3.6, MakeLookupLoop(CLASS_TYPE_OCULAR,        300 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(3.7, MakeLookupLoop(CLASS_TYPE_OCULAR,        400 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
 }
 
 void MakeLookupLoop(int nClass, int nMin, string sSourceColumn, 

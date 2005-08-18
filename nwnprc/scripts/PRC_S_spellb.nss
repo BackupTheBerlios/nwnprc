@@ -108,6 +108,7 @@ void main()
             for(i=1;i<200;i++)
             {
                 if(StringToInt(Get2DACache(sFile, "Level", i)) == nSpellLevel
+                    && Get2DACache(sFile, "Level", i) != ""
                     && (Get2DACache(sFile, "ReqFeat", i)=="" 
                         || GetHasFeat(StringToInt(Get2DACache(sFile, "ReqFeat", i)), oPC)))
                 {

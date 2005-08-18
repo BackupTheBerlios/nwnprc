@@ -46,6 +46,7 @@ void main()
     if(nValue > 0)
         nValue --; // Correct for zero-based array indices in the ChoiceValues array
 
+    SetupTokens();
 
     if(nValue == -1)
     {

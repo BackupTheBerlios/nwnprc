@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         effect eDR = EffectDamageReduction(10, DAMAGE_POWER_PLUS_TWO);
         effect eDrown = EffectSpellImmunity(SPELL_DROWN);
         effect eAC = EffectACIncrease(5, AC_NATURAL_BONUS);
-        effect eSpell = EffectSpellFailure(50,SPELL_SCHOOL_GENERAL);
+        effect eSpell = EffectSpellFailure(25,SPELL_SCHOOL_GENERAL);
 
         effect eVis1 = EffectVisualEffect(VFX_DUR_FREEDOM_OF_MOVEMENT);
         effect eVis2 = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);

@@ -11,7 +11,7 @@
 
 #include "inc_array"
 
- const string PRC_VERSION                           = "PRC 2.3 alpha 8";
+ const string PRC_VERSION                           = "PRC 2.3 alpha 9";
 
 
 /******************************************************************************\
@@ -1739,7 +1739,7 @@ void SetDefaultFileEnds()
     SetPRCSwitch(FILE_END_SKILLS,       50);
     SetPRCSwitch(FILE_END_CLASS_FEAT,   600);
     SetPRCSwitch(FILE_END_CLASS_SKILLS, 50);
-    SetPRCSwitch(FILE_END_CLASS_POWER,  150);
+    SetPRCSwitch(FILE_END_CLASS_POWER,  180);
     SetPRCSwitch(FILE_END_FEAT,         22000);
     SetPRCSwitch(FILE_END_CLASS_PREREQ, 25);
     SetPRCSwitch(FILE_END_FAMILIAR,     20);

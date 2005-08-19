@@ -60,19 +60,19 @@ REM generate temporary files for each of the source sets
 REM scripts, graphics files, 2das, and misc. other files.
 REM each of these temp files will be stuffed into a macro
 REM in the makefile.
-dir /b erf                    | tools\ssed -R "$! {s/$/ \\/g};s/^/erf\\/g"              >erffiles.temp
-dir /b scripts\*.nss          | tools\ssed -R "$! {s/$/ \\/g};s/^/scripts\\/g"          >scripts.temp
-dir /b spells\*.nss           | tools\ssed -R "$! {s/$/ \\/g};s/^/spells\\/g"           >spells.temp
-dir /b epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/epicspellscripts\\/g" >epicspellscripts.temp
-dir /b racescripts\*.nss      | tools\ssed -R "$! {s/$/ \\/g};s/^/racescripts\\/g"      >racescripts.temp
-dir /b psionics\*.nss         | tools\ssed -R "$! {s/$/ \\/g};s/^/psionics\\/g"         >psionics.temp
-dir /b gfx                    | tools\ssed -R "$! {s/$/ \\/g};s/^/gfx\\/g"              >gfx.temp
-dir /b 2das                   | tools\ssed -R "$! {s/$/ \\/g};s/^/2das\\/g"             >2das.temp
-dir /b race2das               | tools\ssed -R "$! {s/$/ \\/g};s/^/race2das\\/g"         >race2das.temp
-dir /b others                 | tools\ssed -R "$! {s/$/ \\/g};s/^/others\\/g"           >others.temp
-dir /b craft2das              | tools\ssed -R "$! {s/$/ \\/g};s/^/craft2das\\/g"        >craft2das.temp
-dir /b include                | tools\ssed -R "$! {s/$/ \\/g};s/^/include\\/g"          >include.temp
-dir /b newspellbook\*.nss     | tools\ssed -R "$! {s/$/ \\/g};s/^/newspellbook\\/g"     >newspellbook.temp
+dir /b erf                    | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/erf\\/g"              >erffiles.temp
+dir /b scripts\*.nss          | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/scripts\\/g"          >scripts.temp
+dir /b spells\*.nss           | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/spells\\/g"           >spells.temp
+dir /b epicspellscripts\*.nss | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/epicspellscripts\\/g" >epicspellscripts.temp
+dir /b racescripts\*.nss      | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/racescripts\\/g"      >racescripts.temp
+dir /b psionics\*.nss         | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/psionics\\/g"         >psionics.temp
+dir /b gfx                    | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/gfx\\/g"              >gfx.temp
+dir /b 2das                   | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/2das\\/g"             >2das.temp
+dir /b race2das               | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/race2das\\/g"         >race2das.temp
+dir /b others                 | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/others\\/g"           >others.temp
+dir /b craft2das              | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/craft2das\\/g"        >craft2das.temp
+dir /b include                | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/include\\/g"          >include.temp
+dir /b newspellbook\*.nss     | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/newspellbook\\/g"     >newspellbook.temp
 
 REM use FINDSTR to find script files with "void main()" or "int StartingConditional()"
 REM in them, these are the ones we want to compile.

@@ -256,6 +256,17 @@ void Battlecast()
 {
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
+    
+    // Get the item used to cast the spell
+    object oItem = GetSpellCastItem();
+    
+    // Battlecast only works on spells cast by the Havoc Mage, not by items he uses.
+    if (oItem != OBJECT_INVALID) 
+    {
+    	FloatingTextStringOnCreature("You do not gain Battlecast from Items.", OBJECT_SELF, FALSE);
+    	return;
+    }
+    
     //if its not being cast on a hostile target or its at a location
     //get the nearest living seen hostile insead
     if(!spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC)

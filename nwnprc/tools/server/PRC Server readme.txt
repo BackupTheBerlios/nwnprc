@@ -1,4 +1,4 @@
-PRC Server Pack
+PRC Server Pack v1.1
 
 This is an self-installing server package for the PRC. This should only be installed after the main PRC packages. It includes:
 
@@ -14,7 +14,8 @@ SQLite is avaliable from www.sqlite.org
 The Precacher was made for the PRC by Yuritch
 
 
-When this installer package is run, it will extract the required files to your NWN directory automatically. Then it will precache the 2da files into the database for you. There are three steps to this, firstly they must be extracted from prc_2das.hak. Secondly, the precacher tool will convert them into a single large SQL statement. Then finally, the SQL statement will be executed by SQLite.
+When this installer package is run, it will extract the required files to your NWN directory automatically. Then it will precache the 2da files into the database for you. There are three steps to this, firstly the bioware 2das must be extracted from bioware2das.7z and the PRC 2das extracted
+from prc_2das.hak. Secondly, the precacher tool will convert them into a single large SQL statement. Then finally, the SQL statement will be executed by SQLite.
 
 When there is a PRC update, you can simply run the "precacher sqlite.bat" file in your NWN directory to re-cache the updated 2da files without having to re-installer the server pack.
 
@@ -28,13 +29,33 @@ This picture, http://i3.photobucket.com/albums/y68/Primogenitor/switches.jpg may
 Some suggested switches for a server are:
 
 PRC_USE_DATABASE		INT	1			This will turn on the database
+
 PRC_USE_LETOSCRIPT 		INT	1			This will turn on Letoscript
+
 PRC_LETOSCRIPT_NWN_DIR		STRING 	[your NWN directory]	This tells Letoscript where to find NWN
+                                                                You only need to set this if it fails to autodetct it
+
 PRC_LETOSCRIPT_FIX_ABILITIES	INT	1			This will use letoscript to bypass the +12 ability cap
 
-you may also wish to use:
-PRC_CONVOCC_ENABLE		INT	1			This will turn on the Conversation Character Creator, so races and base classes can be used in servervault.
-PRC_LETOSCRIPT_PORTAL_IP	STRING	[your servers IP]
-PRC_LETOSCRIPT_PORTAL_PASSWORD  STRING	[your servers password]	These two can be used by Letoscirpt to avoid booting your character.
-PRC_LETOSCRIPT_GETNEWESTBIC	INT	1			This uses a different method to get bic files which may avoid conflicts if players have two characters named the same.
 
+you may also wish to use:
+
+PRC_CONVOCC_ENABLE		INT	1			This will turn on the Conversation Character Creator, so 
+								races and base classes can be used in servervault.
+
+PRC_LETOSCRIPT_PORTAL_IP	STRING	[your servers IP]
+PRC_LETOSCRIPT_PORTAL_PASSWORD  STRING	[your servers password]	These two can be used by Letoscirpt to avoid booting your 
+								character.
+
+PRC_LETOSCRIPT_GETNEWESTBIC	INT	1			This uses a different method to get bic files which may 
+								avoid conflicts if players have two characters named the 
+								same.
+
+
+Changelog
+v1.1 	Fixed issue with incorect version of SQLite
+     	Added SSed step to filter output from precacher to be SQLite compatible
+	Added bioware 2das to the cacher
+	Added override\directoory.2da creation
+
+v1.0 	Initial Release

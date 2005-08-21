@@ -37,9 +37,13 @@ void BaelnAbil (object oSkin, int nLevel)
     {
         case 4:
             SetCompositeBonus(oSkin, "BaelnAbilC", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_CHARISMA);
+		SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
+		SetCompositeBonus(oSkin, "BaelnAbilW", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_WISDOM);
         case 3:
             SetCompositeBonus(oSkin, "BaelnAbilW", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_WISDOM);
+		SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
         case 2:
+		SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
         case 1:
             SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
             break;
@@ -100,11 +104,10 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     int nLevel = GetLevelByClass(CLASS_TYPE_BAELNORN, oPC); 
+    int nBonus = nLevel * 2;
 
-    BaelnProp(oSkin, nLevel * 2);
+    BaelnProp(oSkin, nBonus);
     BaelnAbil(oSkin, nLevel);
     BaelnDef(oSkin, nLevel);
-
-    effect eBaelnEyes = EffectVisualEffect(VFX_BAELN_EYES); 
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eBaelnEyes, oPC);
+    
 }

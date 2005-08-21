@@ -163,6 +163,20 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_FORCE_PERSONALITY, oPC))                  ExecuteScript("prc_ft_forcepers", oPC);
     if(GetHasFeat(FEAT_INSIGHTFUL_REFLEXES, oPC))                ExecuteScript("prc_ft_insghtref", oPC);
     if(GetHasFeat(FEAT_TACTILE_TRAPSMITH, oPC))                  ExecuteScript("prc_ft_tacttrap", oPC);
+    
+    //Baelnorn & Undead
+    if(GetHasFeat(FEAT_UNDEAD_HD))                               ExecuteScript("prc_ud_hitdice", oPC);
+    if(GetHasFeat(FEAT_TURN_RESISTANCE))                         ExecuteScript("prc_turnres", oPC);
+    if(GetHasFeat(FEAT_IMPROVED_TURN_RESISTANCE))                ExecuteScript("prc_imp_turnres", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_ABILITY_DECREASE))               ExecuteScript("prc_ui_abildrain", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_CRITICAL))                       ExecuteScript("prc_ui_critical", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_DEATH))                          ExecuteScript("prc_ui_death", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_DISEASE))                        ExecuteScript("prc_ui_disease", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_MIND_SPELLS))                    ExecuteScript("prc_ui_mind", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_PARALYSIS))                      ExecuteScript("prc_ui_paral", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_POISON))                         ExecuteScript("prc_ui_poison", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_SNEAKATTACK))                    ExecuteScript("prc_ui_snattack", oPC);
+    if(GetHasFeat(FEAT_POSITIVE_ENERGY_RESISTANCE ))             ExecuteScript("prc_ud_poe", oPC);    
 
     if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
        && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)         ExecuteScript("ft_gtwf", oPC);
@@ -519,6 +533,25 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"PSA_Persuade");
     DeleteLocalInt(oSkin,"PSA_Lorespell_Lore");
     DeleteLocalInt(oSkin,"PSA_Lorespell_Spell");
+ 
+    // Baelnorn
+    DeleteLocalInt(oSkin, "BaelnDefA");
+
+    DeleteLocalInt(oSkin, "BaelnPropSp");
+    DeleteLocalInt(oSkin, "BaelnPropH");
+    DeleteLocalInt(oSkin, "BaelnPropL");
+    DeleteLocalInt(oSkin, "BaelnPropM");
+    DeleteLocalInt(oSkin, "BaelnPropS");
+    DeleteLocalInt(oSkin, "BaelnPropP");
+
+    DeleteLocalInt(oSkin, "BaelnAbilC");
+    DeleteLocalInt(oSkin, "BaelnAbilW");
+    DeleteLocalInt(oSkin, "BaelnAbilI");
+
+    //Undead
+    DeleteLocalInt(oSkin, "HD");
+    DeleteLocalInt(oSkin, "TurnRes");
+    DeleteLocalInt(oSkin, "ImpTurnRes");
 
 
     //Alaghar

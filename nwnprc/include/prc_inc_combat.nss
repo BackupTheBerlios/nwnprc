@@ -4006,7 +4006,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           {
                if(GetEffectType(eEffect) == EFFECT_TYPE_INVISIBILITY ||
                   GetEffectType(eEffect) == EFFECT_TYPE_SANCTUARY )
-                    RemoveEffect(oAttacker, eEffect);
+                    DelayCommand(0.01 RemoveEffect(oAttacker, eEffect));
 
                eEffect = GetNextEffect(oAttacker);
           }

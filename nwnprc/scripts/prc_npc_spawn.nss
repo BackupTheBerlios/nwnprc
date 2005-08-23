@@ -5,7 +5,7 @@
 
 #include "prc_alterations"
 
-void main()
+void ChecksOnMaster()
 {
     if(MyPRCGetRacialType(OBJECT_SELF)==RACIAL_TYPE_UNDEAD)
     {
@@ -14,5 +14,13 @@ void main()
         {
             CorpseCrafter(oMaster, OBJECT_SELF);
         }
-    }    
+    } 
+
+}
+
+void main()
+{
+    //this has to be delayed since
+    //master is not valid onSpawn for summons
+    DelayCommand(0.1, ChecksOnMaster());
 }

@@ -24,11 +24,11 @@ void main()
     int iChaMod = GetAbilityModifier(ABILITY_CHARISMA,oPC);
     int iSkill = GetSkillRank(SKILL_IAIJUTSU_FOCUS,oPC)+ d20(); //Iaijutsu Focus Check
 
-	if(GetHasFeat(FEAT_SKILL_FOCUS_IAI))
-		if(GetHasFeat(FEAT_EPIC_SKILL_FOCUS_IAI))
-			iSkill = iSkill + 13;
-		else
-			iSkill = iSkill + 3;
+    if(GetHasFeat(FEAT_SKILL_FOCUS_IAI))
+        if(GetHasFeat(FEAT_EPIC_SKILL_FOCUS_IAI))
+            iSkill = iSkill + 13;
+        else
+            iSkill = iSkill + 3;
     string OneKat;
     int iDie = 0;
 
@@ -62,6 +62,7 @@ void main()
                    (GetStringLeft(GetTag(oWeap), 14) == "prc_sk_mblade_" && GetBaseItemType(oWeap) == BASE_ITEM_BASTARDSWORD)
                    )
                 {
+                    /*
                     int iCriticalMultiplier = GetWeaponCritcalMultiplier(oPC, oWeap);
                     struct BonusDamage sWeaponBonusDamage = GetWeaponBonusDamage(oWeap, oTarget);
                     struct BonusDamage sSpellBonusDamage = GetMagicalBonusDamage(oPC);
@@ -101,6 +102,11 @@ void main()
                         ActionEquipItem(oWeap,INVENTORY_SLOT_RIGHTHAND);
                         ActionAttack(oTarget);
                     }
+                    */
+                    ActionEquipItem(oWeap,INVENTORY_SLOT_RIGHTHAND);
+                    effect eVFX;
+                    //this is an action to make sure the "katana" is equiped
+                    ActionDoCommand(PerformAttackRound(oTarget, oPC, eVFX, 0.0, 0, nDamage, DAMAGE_TYPE_SLASHING, FALSE, "*Iaijutsu Hit*", "*Iaijutsu Miss"));
                 }
                 oWeap = GetNextItemInInventory(oPC);
             }

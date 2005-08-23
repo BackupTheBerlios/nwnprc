@@ -185,7 +185,24 @@ void main()
     // Create map pins from marked teleport locations if the PC has requested that such be done.
     if(GetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS))
         DelayCommand(10.0f, TeleportLocationsToMapPins(oPC));
+        
+    if(GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD)
+        && !GetXP(oPC))
+    {
+        int nRealRace = GetRacialType(oPC);
+        int nRacialHD = StringToInt(Get2DACache("ECL", "RaceHD", nRealRace));
+        int nRacialClass = StringToInt(Get2DACache("ECL", "RaceClass", nRealRace));
+        if(nRacialHD)
+        {
+            int i;
+            for(i=0;i<nRacialHD;i++)
+            {
+                LevelUpHenchman(oPC, nRacialClass, TRUE);
+            }    
+        }
+    }
 
     // Execute scripts hooked to this event for the player triggering it
+    //How can this work? The PC isnt a valid object before this. - Primogenitor
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
 }

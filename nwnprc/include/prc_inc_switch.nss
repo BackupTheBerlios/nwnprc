@@ -1119,6 +1119,14 @@ const string PRC_PW_SPELL_TRACKING                   = "PRC_PW_SPELL_TRACKING";
  */
 const string PRC_XP_USE_SIMPLE_LA                    = "PRC_XP_USE_SIMPLE_LA";
 
+/**
+ * Any new characters entering the module are automatically given racial hit dice
+ * Unlike PnP, they do not get to select what feats/skills the racial HD grant
+ * Instead the default bioware package will be used.
+ * Do not use if the ConvoCCs racial hit dice option is in use.
+ */
+const string PRC_XP_USE_SIMPLE_RACIAL_HD             = "PRC_XP_USE_SIMPLE_RACIAL_HD";
+
 
 /**
  * Enables PRC XP system.

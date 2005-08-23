@@ -4006,7 +4006,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           {
                if(GetEffectType(eEffect) == EFFECT_TYPE_INVISIBILITY ||
                   GetEffectType(eEffect) == EFFECT_TYPE_SANCTUARY )
-                    DelayCommand(0.01 RemoveEffect(oAttacker, eEffect));
+                    DelayCommand(0.01, RemoveEffect(oAttacker, eEffect));
 
                eEffect = GetNextEffect(oAttacker);
           }
@@ -4349,7 +4349,7 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
      }
 
      // perform main attack first, then off-hand attack
-     else if(iBonusAttacks <= 0 && iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
+     else if(iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
      {
           SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic");
           iMainAttacks --;

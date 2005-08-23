@@ -17,17 +17,17 @@ void main()
         float fRadius = IntToFloat(tTrap.nRadius);
 
         effect eTrapVFX;
-        if(!tTrap.nTrapVFX)
+        if(tTrap.nTrapVFX)
             eTrapVFX = EffectVisualEffect(tTrap.nTrapVFX);
         if(GetIsEffectValid(eTrapVFX))
             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eTrapVFX, GetLocation(OBJECT_SELF));
 
         effect eTargetVFX;
-        if(!tTrap.nTargetVFX)
+        if(tTrap.nTargetVFX)
             eTargetVFX = EffectVisualEffect(tTrap.nTargetVFX);
 
         effect eBeamVFX;
-        if(!tTrap.nBeamVFX)
+        if(tTrap.nBeamVFX)
             eBeamVFX = EffectBeam(tTrap.nBeamVFX, OBJECT_SELF, BODY_NODE_CHEST);
 
         int i = 1;

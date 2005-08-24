@@ -1,8 +1,9 @@
 2DA V2.0
 
    FeatLabel                          FeatIndex List GrantedOnLevel OnMenu 
-0  WarStrike                          2443      3    1              1      
-1  CommandSpiders                     2442      3    2              1      
+0  WarStrike                          2443      3    1              1     
+1  TurnUndead                         294       3    2              1       
+1  CommandSpiders                     2442      3    2              0      
 2  SelvBless                          2447      3    3              0      
 3  SelvWrath                          2444      3    4              1      
 4  SelvWrath                          2445      3    7              1      

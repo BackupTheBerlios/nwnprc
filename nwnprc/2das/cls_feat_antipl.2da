@@ -17,7 +17,8 @@
 13         Shield                                         32        3    1              0      
 14         WeapProfMar                                    45        3    1              0      
 15         DivineGrace                                    217       3    2              0      
-16         FEAT_AP_TURN_OUTSIDER                          3486      3    4              1      
+16         FEAT_AP_TURN_OUTSIDER                          3486      3    4              0   
+14         TurnUndead                                     294       3    4              1         
 17         FEAT_AP_SMITEGOOD1                             3459      3    1              1      
 18         FEAT_AP_SMITEGOOD2                             3460      3    5              1      
 19         FEAT_AP_SMITEGOOD3                             3461      3    10             1      

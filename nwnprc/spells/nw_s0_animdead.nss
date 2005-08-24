@@ -80,7 +80,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         int i = 1;
         int nTotalHD;
         int nMaxHD = nCasterLevel*4;
-        object oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i)
+        object oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
         while(GetIsObjectValid(oSummonTest))
         {
             i++;
@@ -97,7 +97,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         }
         else
         {
-            FloatingTextStringOnCreature("You cannot summon more undead at this time.", OBJECT_SELF)
+            FloatingTextStringOnCreature("You cannot summon more undead at this time.", OBJECT_SELF);
         }
     }
     else

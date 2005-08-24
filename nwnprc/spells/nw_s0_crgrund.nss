@@ -46,6 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = nCasterLevel;
     nDuration = 24;
+    string sResRef;
     //effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     //Make metamagic extend check
     if ((nMetaMagic & METAMAGIC_EXTEND))
@@ -71,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         //A) allow time to dominate properly 
         //B) allow time for corpsecrafter to run
         effect eDom = EffectCutsceneDominated();
-        eDom = SupernaturalEffect(EffectLinkEffect(eDom, EffectCutsceneImmobilize()));
+        eDom = SupernaturalEffect(EffectLinkEffects(eDom, EffectCutsceneImmobilize()));
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDom, oSummon, 3.0);
     }
     else

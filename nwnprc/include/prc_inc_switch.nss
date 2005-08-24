@@ -99,6 +99,25 @@ const string PRC_PNP_BLACK_BLADE_OF_DISASTER         = "PRC_PNP_BLACK_BLADE_OF_D
 const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
 
 /**
+ * Undead summons are permanent, but can only have 4HD/casterlevel in total
+ * Does not enforce the requirement for a corpse
+ */
+const string PRC_PNP_ANIMATE_DEAD                    = "PRC_PNP_ANIMATE_DEAD";
+
+/*
+ * Undead created by Create Undead and Create Greater Undead are 
+ * not automatically under the casters control
+ * If this is set, the undead are permanently created
+ */
+const string PRC_CREATE_UNDEAD_UNCONTROLLED          = "PRC_CREATE_UNDEAD_UNCONTROLLED";
+
+/*
+ * Undead created by Create Undead and Create Greater Undead are 
+ * not removed on resting etc
+ */
+const string PRC_CREATE_UNDEAD_PERMANENT             = "PRC_CREATE_UNDEAD_PERMANENT";
+
+/**
  * By request, set this to use the 1.65 behaviour for implosion, phantasmal killer,
  * and weird, i.e. death immunity counts
  * This is in addition to the extra immunities 1.66 adds
@@ -1805,6 +1824,9 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_TENSERS_TRANSFORMATION);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_BLACK_BLADE_OF_DISASTER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_FIND_TRAPS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ANIMATE_DEAD);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CREATE_UNDEAD_PERMANENT);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CREATE_UNDEAD_UNCONTROLLED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_165_DEATH_IMMUNITY);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_USE_NEW_IMBUE_ARROW);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DRAGON_DISCIPLE_SIZE_CHANGES);
@@ -1908,6 +1930,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PW_DEATH_TRACKING);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PW_SPELL_TRACKING);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_XP_USE_SIMPLE_LA);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_XP_USE_SIMPLE_RACIAL_HD);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_XP_USE_SETXP);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_USE_DATABASE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_USE_BIOWARE_DATABASE);

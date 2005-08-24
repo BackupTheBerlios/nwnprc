@@ -47,6 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int nDuration = 24;
     //effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     effect eSummon;
+    int nHD;
     //Metamagic extension if needed
     if ((nMetaMagic & METAMAGIC_EXTEND))
     {
@@ -57,21 +58,50 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         //Tyrant Fog Zombie
         eSummon = EffectSummonCreature("NW_S_ZOMBTYRANT",VFX_FNF_SUMMON_UNDEAD);
+        nHD = 4;
     }
     else if ((nCasterLevel >= 6) && (nCasterLevel <= 9))
     {
         //Skeleton Warrior
         eSummon = EffectSummonCreature("NW_S_SKELWARR",VFX_FNF_SUMMON_UNDEAD);
+        nHD = 6;
     }
     else
     {
         //Skeleton Chieftain
         eSummon = EffectSummonCreature("NW_S_SKELCHIEF",VFX_FNF_SUMMON_UNDEAD);
+        nHD = 7;
     }
     //Apply the summon visual and summon the two undead.
     //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
     MultisummonPreSummon();
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
+    if(GetPRCSwitch(PRC_PNP_ANIMATE_DEAD))
+    {
+        int i = 1;
+        int nTotalHD;
+        int nMaxHD = nCasterLevel*4;
+        object oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i)
+        while(GetIsObjectValid(oSummonTest))
+        {
+            i++;
+            if(GetResRef(oSummonTest)=="NW_S_ZOMBTYRANT"
+                || GetResRef(oSummonTest)=="NW_S_SKELWARR"
+                || GetResRef(oSummonTest)=="NW_S_SKELCHIEF")
+                nTotalHD += GetHitDice(oSummonTest);
+            oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
+        }
+        if((nTotalHD+nHD)<=nMaxHD)
+        {        
+            eSummon = ExtraordinaryEffect(eSummon);
+            ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, GetSpellTargetLocation());
+        }
+        else
+        {
+            FloatingTextStringOnCreature("You cannot summon more undead at this time.", OBJECT_SELF)
+        }
+    }
+    else
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

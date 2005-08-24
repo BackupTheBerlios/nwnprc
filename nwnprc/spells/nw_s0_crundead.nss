@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = nCasterLevel;
     nDuration = 24;
-    effect eSummon;
+    string sResRef
     //effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     //Check for metamagic extend
     if ((nMetaMagic & METAMAGIC_EXTEND))
@@ -55,25 +55,37 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }
     //Set the summoned undead to the appropriate template based on the caster level
     if (nCasterLevel <= 11)
-    {
-        eSummon = EffectSummonCreature("NW_S_GHOUL",VFX_FNF_SUMMON_UNDEAD);
-    }
+        sResRef = "NW_S_GHOUL";
     else if ((nCasterLevel >= 12) && (nCasterLevel <= 13))
-    {
-        eSummon = EffectSummonCreature("NW_S_GHAST",VFX_FNF_SUMMON_UNDEAD);
-    }
+        sResRef = "NW_S_GHAST";
     else if ((nCasterLevel >= 14) && (nCasterLevel <= 15))
-    {
-        eSummon = EffectSummonCreature("NW_S_WIGHT",VFX_FNF_SUMMON_UNDEAD); // change later
-    }
+        sResRef = "NW_S_WIGHT";
     else if ((nCasterLevel >= 16))
-    {
-        eSummon = EffectSummonCreature("NW_S_SPECTRE",VFX_FNF_SUMMON_UNDEAD);
-    }
+        sResRef = "NW_S_SPECTRE";
+    effect eSummon = EffectSummonCreature(sResRef,VFX_FNF_SUMMON_UNDEAD);
 
     //Apply VFX impact and summon effect
     MultisummonPreSummon();
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
+    if(GetPRCSwitch(PRC_CREATE_UNDEAD_UNCONTROLLED))
+    {
+        object oSummon = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetSpellTargetLocation());
+        //this is to 
+        //A) allow time to dominate properly 
+        //B) allow time for corpsecrafter to run
+        effect eDom = EffectCutsceneDominated();
+        eDom = SupernaturalEffect(EffectLinkEffect(eDom, EffectCutsceneImmobilize()));
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDom, oSummon, 3.0);
+    }
+    else
+    {
+        if(GetPRCSwitch(PRC_CREATE_UNDEAD_PERMANENT))
+        {
+            eSummon = ExtraordinaryEffect(eSummon);
+            ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, GetSpellTargetLocation());
+        }
+        else
+            ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
+    }    
     //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
 //   object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
 //   DelayCommand(0.5, CorpseCrafter(OBJECT_SELF, oSummon)); 

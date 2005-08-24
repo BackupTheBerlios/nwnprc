@@ -46,7 +46,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = nCasterLevel;
     nDuration = 24;
-    effect eSummon;
     //effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     //Make metamagic extend check
     if ((nMetaMagic & METAMAGIC_EXTEND))
@@ -55,27 +54,36 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }
     //Determine undead to summon based on level
     if (nCasterLevel <= 15)
-    {
-        eSummon = EffectSummonCreature("NW_S_VAMPIRE",VFX_FNF_SUMMON_UNDEAD);
-    }
+        sResRef = "NW_S_VAMPIRE";
     else if ((nCasterLevel >= 16) && (nCasterLevel <= 17))
-    {
-        eSummon = EffectSummonCreature("NW_S_DOOMKGHT",VFX_FNF_SUMMON_UNDEAD);
-    }
+        sResRef = "NW_S_DOOMKGHT";
     else if ((nCasterLevel >= 18) && (nCasterLevel <= 19))
+        sResRef = "NW_S_LICH";
+    else
+        sResRef = "NW_S_MUMCLERIC";
+    effect eSummon = EffectSummonCreature(sResRef,VFX_FNF_SUMMON_UNDEAD);
+    //Apply summon effect and VFX impact.
+    MultisummonPreSummon();
+    if(GetPRCSwitch(PRC_CREATE_UNDEAD_UNCONTROLLED))
     {
-        eSummon = EffectSummonCreature("NW_S_LICH",VFX_FNF_SUMMON_UNDEAD);
+        object oSummon = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetSpellTargetLocation());
+        //this is to 
+        //A) allow time to dominate properly 
+        //B) allow time for corpsecrafter to run
+        effect eDom = EffectCutsceneDominated();
+        eDom = SupernaturalEffect(EffectLinkEffect(eDom, EffectCutsceneImmobilize()));
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDom, oSummon, 3.0);
     }
     else
     {
-        eSummon = EffectSummonCreature("NW_S_MUMCLERIC",VFX_FNF_SUMMON_UNDEAD);
-    }
-    //Apply summon effect and VFX impact.
-    MultisummonPreSummon();
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
-    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
-//       object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
-//   DelayCommand(0.5, CorpseCrafter(OBJECT_SELF, oSummon)); ; 
+        if(GetPRCSwitch(PRC_CREATE_UNDEAD_PERMANENT))
+        {
+            eSummon = ExtraordinaryEffect(eSummon);
+            ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, GetSpellTargetLocation());
+        }
+        else
+            ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
+    }   
 
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

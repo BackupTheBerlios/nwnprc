@@ -2,6 +2,9 @@
 const int COMPILER_BREAKS_ON_ME_OR_NOT = 0xffffffff;
 
 
+//missing bioware ones
+const int FEAT_EPIC_PLANAR_TURNING = 854;
+
 // skill based feats
 const int FEAT_JUMP = 2884;
 
@@ -1482,8 +1485,8 @@ const int FAST_HEALING_2                         = 4146;
 const int FAST_HEALING_3                         = 4147;
 
 // General Feats
-const int FEAT_STORMMAGIC			 = 4182;
-const int FEAT_MAGICAL_APTITUDE			 = 4416;
+const int FEAT_STORMMAGIC            = 4182;
+const int FEAT_MAGICAL_APTITUDE          = 4416;
 
 // Size changes
 const int FEAT_SIZE_DECREASE_1          = 2287;

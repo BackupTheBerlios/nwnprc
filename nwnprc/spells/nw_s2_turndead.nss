@@ -13,438 +13,418 @@
 //:: Created On: Nov 2, 2001
 //:: Updated On: Jul 15, 2003 - Georg Zoeller
 //:://////////////////////////////////////////////
-//:: MODIFIED MARCH 5 2003 for Blackguards
-//:: MODIFIED JULY 24 2003 for Planar Turning to include turn resistance hd
-//:: Modified November 29, 2003 for Evil Cleric Rebuke/Command by Wes Baran
-//:: Modified December 29, 2003 for 1.61 patch
-
-// Checks to see if an evil cleric has control 'slots' to command
-// the specified undead
-// if TRUE, the cleric has enough levels of control to control the undead
-// if FALSE, the cleric will rebuke the undead instead
+/*
+These classes all stack for determining turning:
+Cleric
+Paladin-2
+Blackguard-2
+True Necromancer
+Soldier of Light
+Hospitalier-2
+Balenorm
+Drow Judicator
+*/
 
 #include "prc_alterations"
+#include "inc_target_list"
 
-// Checks to see if an evil cleric has control 'slots' to command
-// the specified undead
-// if TRUE, the cleric has enough levels of control to control the undead
-// if FALSE, the cleric will rebuke the undead instead
-int CanCommand(int nClassLevel, int nTargetHD) {
-    int nSlots = GetLocalInt(OBJECT_SELF, "wb_clr_comm_slots");
-    int nNew = nSlots + nTargetHD;
-    //FloatingTextStringOnCreature("The variable is " + IntToString(nSlots), OBJECT_SELF);
-    if(nClassLevel >= nNew) {
-        return TRUE;
-    }
-    return FALSE;
-}
+//gets the number of class levels that count for turning
+int GetTurningClassLevel(int bUndeadOnly = FALSE);
 
-void AddCommand(int nTargetHD) {
-    int nSlots = GetLocalInt(OBJECT_SELF, "wb_clr_comm_slots");
-    SetLocalInt(OBJECT_SELF, "wb_clr_comm_slots", nSlots + nTargetHD);
-}
+//this does the check and adjusts the highest HD of undead turned
+int GetTurningCheckResult(int nLevel, int nChaMod);
 
-void SubCommand(int nTargetHD) {
-    int nSlots = GetLocalInt(OBJECT_SELF, "wb_clr_comm_slots");
-    SetLocalInt(OBJECT_SELF, "wb_clr_comm_slots", nSlots - nTargetHD);
-}
+//this creates the list of targets that are affected
+//use the inc_target_list functions
+void MakeTurningTargetList(int nTurningMaxHD, int nTurningTotalHD);
 
-void RebukeUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int nConstructs, int nOutsider, int nClassLevel, int nPlanar) {
-    //Gets all creatures in a 20m radius around the caster and rebukes them or not.  If the creatures
-    //HD are 1/2 or less of the nClassLevel then the creature is commanded (dominated).
-    int nCnt = 1;
-    int nHD, nRacial, nHDCount, bValid, nDamage;
-    nHDCount = 0;
-    effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
-    effect eVisTurn = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
-    effect eDamage;
-    effect eTurned = EffectCutsceneParalyze();
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    effect eLink = EffectLinkEffects(eVisTurn, eTurned);
-    eLink = EffectLinkEffects(eLink, eDur);
+//tests if the target can be turned by self
+//includes race, domains, etc.
+int GetCanTurn(object oTarget);
 
-    effect eDeath = SupernaturalEffect(EffectCutsceneDominated());
-    effect eDomin = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-    effect eDeathLink = EffectLinkEffects(eDeath, eDomin);
+//gets the equivalent HD total for turning purposes
+//includes turn resistance and SR for outsiders
+int GetHitDiceForTurning(object oTarget);
 
-    effect eImpactVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_30);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpactVis, GetLocation(OBJECT_SELF));
+//the main turning function once targets have been listed
+//routs to turn/destroy/rebuke/command as appropaite
+void DoTurnAttempt(object oTarget, int nTurningMaxHD, int nLevel);
 
-    int iMastery = GetHasFeat(FEAT_UNDEAD_MASTERY);
-    
-    if (iMastery) nTurnHD*= 10;
-    
-    //Get nearest enemy within 20m (60ft)
-    //Why are you using GetNearest instead of MyFirstObjectInShape
-    // Because ability description says "gets closest first" :P
-    object oTarget = GetNearestCreature(CREATURE_TYPE_PLAYER_CHAR, PLAYER_CHAR_NOT_PC , OBJECT_SELF, nCnt);
-    while(GetIsObjectValid(oTarget) && nHDCount < nTurnHD && GetDistanceToObject(oTarget) <= 20.0)
-    {
-        if(!GetIsFriend(oTarget))
-        {
-            nHD = GetHitDice(oTarget) + GetTurnResistanceHD(oTarget);
-            nRacial = MyPRCGetRacialType(oTarget);
-            
-            
+//various sub-turning effect funcions
 
-            if (nRacial == RACIAL_TYPE_OUTSIDER )
-            {
-                if (nPlanar)
-                {
-                     //Planar turning decreases spell resistance against turning by 1/2
-                     nHD = GetHitDice(oTarget) + (GetSpellResistance(oTarget) /2) + GetTurnResistanceHD(oTarget);
-                }
-                else
-                {
-                    nHD = GetHitDice(oTarget) + (GetSpellResistance(oTarget) + GetTurnResistanceHD(oTarget) );
-                }
-            }
-            else //(full turn resistance)
-            {
-                  nHD = GetHitDice(oTarget) + GetTurnResistanceHD(oTarget);
-            }
-            
-            if (iMastery && nRacial != RACIAL_TYPE_UNDEAD) nHD*= 10;
-
-            if(nHD <= nTurnLevel && nHD <= (nTurnHD - nHDCount))
-            {
-                //Check the various domain turning types
-                if(nRacial == RACIAL_TYPE_UNDEAD)
-                {
-                    bValid = TRUE;
-                }
-                else if (nRacial == RACIAL_TYPE_VERMIN && nVermin > 0)
-                {
-                    bValid = TRUE;
-                }
-                else if (nRacial == RACIAL_TYPE_ELEMENTAL && nElemental > 0)
-                {
-                    bValid = TRUE;
-                }
-                else if (nRacial == RACIAL_TYPE_CONSTRUCT && nConstructs > 0)
-                {
-                    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_TURN_UNDEAD));
-                    nDamage = d3(nTurnLevel);
-                    eDamage = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-                    nHDCount += nHD;
-                }
-                else if (nRacial == RACIAL_TYPE_OUTSIDER && nOutsider > 0)
-                {
-                    bValid = TRUE;
-                }
-
-                
-                //PROJECTION CHECK
-                //this must be just before the results
-                if (GetLocalInt(oTarget, "BaelnornProjection_Active"))
-                {
-                    bValid = FALSE;
-                }
-                //TURN IMMUNITY CHECK
-                else if(GetHasFeat(FEAT_TURNING_IMMUNITY, oTarget))
-                {
-                    bValid = FALSE;
-                }
-                
-                //Apply results of the turn
-                if( bValid == TRUE)
-                {
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    
-                    if((nClassLevel/2) >= nHD && CanCommand(nClassLevel, nHD))
-                    {
-                        //Fire cast spell at event for the specified target
-                        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_TURN_UNDEAD));
-                        //Destroy the target
-                        DelayCommand(0.1f, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDeathLink, oTarget, RoundsToSeconds(nClassLevel + 5)));
-                        //AssignCommand(oTarget, ClearAllActions());
-                        //SetIsTemporaryFriend(oTarget, OBJECT_SELF, TRUE, RoundsToSeconds(nClassLevel + 5));
-                        AddCommand(nHD);
-                        DelayCommand(RoundsToSeconds(nClassLevel + 5), SubCommand(nHD));
-                    }
-                    else
-                    {
-                        //Turn the target
-                        //Fire cast spell at event for the specified target
-                        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_TURN_UNDEAD));
-                        //AssignCommand(oTarget, ActionMoveAwayFromObject(OBJECT_SELF, TRUE));
-                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nClassLevel + 5));
-                    }
-                    nHDCount = nHDCount + nHD;
-                }
-            }
-            bValid = FALSE;
-        }
-        nCnt++;
-        oTarget = GetNearestCreature(CREATURE_TYPE_PLAYER_CHAR, PLAYER_CHAR_NOT_PC, OBJECT_SELF, nCnt);
-    }
-}
-
-void TurnUndead(int nTurnLevel, int nTurnHD, int nVermin, int nElemental, int nConstructs, int nOutsider, int nClassLevel, int nPlanar) {
-    //Gets all creatures in a 20m radius around the caster and turns them or not.  If the creatures
-    //HD are 1/2 or less of the nClassLevel then the creature is destroyed.
-    int nCnt = 1;
-    int nHD, nRacial, nHDCount, bValid, nDamage;
-    nHDCount = 0;
-    effect eVis = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
-    effect eVisTurn = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR);
-    effect eDamage;
-    effect eTurned = EffectTurned();
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    effect eLink = EffectLinkEffects(eVisTurn, eTurned);
-    eLink = EffectLinkEffects(eLink, eDur);
-
-    effect eDeath = SupernaturalEffect(EffectDeath(TRUE));
-
-    effect eImpactVis = EffectVisualEffect(VFX_FNF_LOS_HOLY_30);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpactVis, GetLocation(OBJECT_SELF)); 
-     
-    //Get nearest enemy within 20m (60ft)
-    //Why are you using GetNearest instead of MyFirstObjectInShape
-    // Because ability description says "gets closest first" :P
-    object oTarget = GetNearestCreature(CREATURE_TYPE_PLAYER_CHAR, PLAYER_CHAR_NOT_PC , OBJECT_SELF, nCnt);
-    while(GetIsObjectValid(oTarget) && nHDCount < nTurnHD && GetDistanceToObject(oTarget) <= 20.0)
-    {
-        if(!GetIsFriend(oTarget))
-        {
-            nHD = GetHitDice(oTarget) + GetTurnResistanceHD(oTarget);
-            nRacial = MyPRCGetRacialType(oTarget);
-
-            if (nRacial == RACIAL_TYPE_OUTSIDER )
-            {
-                if (nPlanar)
-                {
-                     //Planar turning decreases spell resistance against turning by 1/2
-                     nHD = GetHitDice(oTarget) + (GetSpellResistance(oTarget) /2) + GetTurnResistanceHD(oTarget);
-                }
-                else
-                {
-                    nHD = GetHitDice(oTarget) + (GetSpellResistance(oTarget) + GetTurnResistanceHD(oTarget) );
-                }
-            }
-            else //(full turn resistance)
-            {
-                  nHD = GetHitDice(oTarget) + GetTurnResistanceHD(oTarget);
-            }
-
-            if(nHD <= nTurnLevel && nHD <= (nTurnHD - nHDCount))
-            {
-                //Check the various domain turning types
-                if(nRacial == RACIAL_TYPE_UNDEAD)
-                {
-                    bValid = TRUE;
-                }
-                else if (nRacial == RACIAL_TYPE_VERMIN && nVermin > 0)
-                {
-                    bValid = TRUE;
-                }
-                else if (nRacial == RACIAL_TYPE_ELEMENTAL && nElemental > 0)
-                {
-                    bValid = TRUE;
-                }
-                else if (nRacial == RACIAL_TYPE_CONSTRUCT && nConstructs > 0)
-                {
-                    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_TURN_UNDEAD));
-                    nDamage = d3(nTurnLevel);
-                    eDamage = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-                    nHDCount += nHD;
-                }
-                else if (nRacial == RACIAL_TYPE_OUTSIDER && nOutsider > 0)
-                {
-                    bValid = TRUE;
-                }
-
-                //PROJECTION CHECK
-                //this must be just before the results
-                if (GetLocalInt(oTarget, "BaelnornProjection_Active"))
-                {
-                    bValid = FALSE;
-                }
-                //TURN IMMUNITY CHECK
-                else if(GetHasFeat(FEAT_TURNING_IMMUNITY, oTarget))
-                {
-                    bValid = FALSE;
-                }
-                
-                //Apply results of the turn
-                if( bValid == TRUE)
-                {
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    //if(IntToFloat(nClassLevel)/2.0 >= IntToFloat(nHD))
-                    //{
-
-                    if((nClassLevel/2) >= nHD)
-                    {
-                        //Fire cast spell at event for the specified target
-                        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_TURN_UNDEAD));
-                        //Destroy the target
-                        DelayCommand(0.1f, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));
-                    }
-                    else
-                    {
-                        //Turn the target
-                        //Fire cast spell at event for the specified target
-                        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_TURN_UNDEAD));
-                        AssignCommand(oTarget, ActionMoveAwayFromObject(OBJECT_SELF, TRUE));
-                        // Added by SoulTaker and Modified by Starlight
-                        // 2004-5-16
-                        // Check whether Exalted Turning exist
-                        // if yes, all turned undead take 3d6 damage also
-                        if (GetHasFeat(FEAT_EXALTED_TURNING) && nRacial == RACIAL_TYPE_UNDEAD)
-                           ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(3), DAMAGE_TYPE_DIVINE), oTarget);
-
-                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nClassLevel + 5));
-                    }
-                    nHDCount = nHDCount + nHD;
-                }
-            }
-            bValid = FALSE;
-        }
-        nCnt++;
-        oTarget = GetNearestCreature(CREATURE_TYPE_PLAYER_CHAR, PLAYER_CHAR_NOT_PC, OBJECT_SELF, nCnt);
-    }
-}
+void DoTurn(object oTarget);
+void DoDestroy(object oTarget);
+void DoRebuke(object oTarget);
+void DoCommand(object oTarget, int nLevel);
 
 void main()
 {
-    int nClericLevel = GetLevelByClass(CLASS_TYPE_CLERIC);
-    int nPaladinLevel = GetLevelByClass(CLASS_TYPE_PALADIN);
-    int nBlackguardlevel = GetLevelByClass(CLASS_TYPE_BLACKGUARD);
-    int nHospLevel = GetLevelByClass(CLASS_TYPE_HOSPITALER);
-    int nSolLevel = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT);
-    int nTNLevel = GetLevelByClass(CLASS_TYPE_TRUENECRO);
-    int nBaelnLevel = GetLevelByClass(CLASS_TYPE_BAELNORN);
-    int nTotalLevel =  GetHitDice(OBJECT_SELF);
-
-    int nTurnLevel = nClericLevel;
-    int nClassLevel = nClericLevel;
-
-    int nAlign = GetAlignmentGoodEvil(OBJECT_SELF);
-
-    // GZ: Since paladin levels stack when turning, blackguard levels should stack as well
-    // GZ: but not with the paladin levels (thus else if).
-    if(nTNLevel > 0)    
-    {
-        nClassLevel += (nTNLevel);
-        nTurnLevel  += (nTNLevel);
-    }
-    if((nBlackguardlevel - 2) > 0 && (nBlackguardlevel > nPaladinLevel))
-    {
-        nClassLevel += (nBlackguardlevel - 2);
-        nTurnLevel  += (nBlackguardlevel - 2);
-    }
-    else if((nPaladinLevel - 2) > 0)
-    {
-        nClassLevel += (nPaladinLevel -2);
-        nTurnLevel  += (nPaladinLevel - 2);
-    }
-    if((nHospLevel - 2) > 0)
-    {
-        nClassLevel += (nHospLevel -2);
-        nTurnLevel  += (nHospLevel - 2);
-    }
-    if ( nAlign == ALIGNMENT_GOOD) 
-    {
-      nClassLevel += nSolLevel;
-      nTurnLevel  += nSolLevel;
-    }
-    //Baelnorn
-    if (nAlign == ALIGNMENT_GOOD)
-    {
-        nClassLevel += nBaelnLevel;
-        nTurnLevel  += nBaelnLevel;
-    }
-
-    //Flags for bonus turning types
-    int nElemental = GetHasFeat(FEAT_AIR_DOMAIN_POWER) + GetHasFeat(FEAT_EARTH_DOMAIN_POWER) + GetHasFeat(FEAT_FIRE_DOMAIN_POWER) + GetHasFeat(FEAT_WATER_DOMAIN_POWER);
-    int nVermin = GetHasFeat(FEAT_PLANT_DOMAIN_POWER) + GetHasFeat(FEAT_ANIMAL_COMPANION);
-    int nConstructs = GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER);
-    int nOutsider = GetHasFeat(FEAT_GOOD_DOMAIN_POWER) + GetHasFeat(FEAT_EVIL_DOMAIN_POWER);
-    int nPlanar = GetHasFeat(854);
-
-    //Flag for improved turning ability
-    int nSun = GetHasFeat(FEAT_SUN_DOMAIN_POWER);
-    int nMaster = GetHasFeat(FEAT_MASTER_OF_ENERGY);
-
-    //Make a turning check roll, modify if have the Sun Domain
-    int nChrMod = GetAbilityModifier(ABILITY_CHARISMA);
-    int nTurnCheck = d20() + nChrMod;              //The roll to apply to the max HD of undead that can be turned --> nTurnLevel
-    int nTurnHD = d6(2) + nChrMod + nClassLevel;   //The number of HD of undead that can be turned.
-
+    //casters level for turning
+    int nLevel = GetTurningClassLevel();
+        
+    //casters charimsa modifier
+    int nChaMod = GetAbilityModifier(ABILITY_CHARISMA);
+    //Heartwarder adds two to cha checks
     if (GetHasFeat(FEAT_HEART_PASSION))
-    {
-      nTurnCheck +=2;
-      nTurnHD +=2;
-    }
-
-    if(nMaster == TRUE)
-    {
-        nTurnCheck += 4;
-        nTurnHD += 4;
-    }
-    if(nSun == TRUE)
-    {
-        nTurnCheck += d4();
-        nTurnHD += d6();
-    }
-    if (nAlign != ALIGNMENT_EVIL && (GetHasSpellEffect(SPELL_ANTIPAL_DESECRATE) || GetHasSpellEffect(SPELL_DES_20)||GetHasSpellEffect(SPELL_DES_100)))
-    {
-         nTurnCheck -= 3;
-    }
-    //Determine the maximum HD of the undead that can be turned.
-    if(nTurnCheck <= 0)
-    {
-        nTurnLevel -= 4;
-    }
-    else if(nTurnCheck >= 1 && nTurnCheck <= 3)
-    {
-        nTurnLevel -= 3;
-    }
-    else if(nTurnCheck >= 4 && nTurnCheck <= 6)
-    {
-        nTurnLevel -= 2;
-    }
-    else if(nTurnCheck >= 7 && nTurnCheck <= 9)
-    {
-        nTurnLevel -= 1;
-    }
-    else if(nTurnCheck >= 10 && nTurnCheck <= 12)
-    {
-        //Stays the same
-    }
-    else if(nTurnCheck >= 13 && nTurnCheck <= 15)
-    {
-        nTurnLevel += 1;
-    }
-    else if(nTurnCheck >= 16 && nTurnCheck <= 18)
-    {
-        nTurnLevel += 2;
-    }
-    else if(nTurnCheck >= 19 && nTurnCheck <= 21)
-    {
-        nTurnLevel += 3;
-    }
-    else if(nTurnCheck >= 22)
-    {
-        nTurnLevel += 4;
-    }
+        nChaMod +=2;
     
-    int nEmpower = GetHasFeat(FEAT_EMPOWER_TURNING);
-    int nMaximize = GetHasFeat(FEAT_MAXIMIZE_TURNING) && nAlign == ALIGNMENT_GOOD ;
+    //key values for turning
+    int nTurningTotalHD = d6(2)+nLevel+nChaMod;
+    int nTurningMaxHD = GetTurningCheckResult(nLevel, nChaMod);
     
-    if (nMaximize)
-      nTurnHD *= 2;
-    else
-      nTurnHD = nEmpower ? nTurnHD+nTurnHD/2 : nTurnHD;
-
-    if(nAlign == ALIGNMENT_EVIL) {
-        RebukeUndead(nTurnLevel, nTurnHD, nVermin, nElemental, nConstructs, nOutsider, nClassLevel, nPlanar);
-    }
-    else {
-        TurnUndead(nTurnLevel, nTurnHD, nVermin, nElemental, nConstructs, nOutsider, nClassLevel, nPlanar);
+    //these stack but dont multiply
+    //so use a bonus amount and then add that on later
+    int nBonusTurningTotalHD;
+    int nBonusTurningMaxHD;
+    //apply maximize turning
+    //+100% if good
+    if(GetHasFeat(FEAT_MAXIMIZE_TURNING) 
+        && GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD)
+        nBonusTurningTotalHD += nTurningTotalHD;
+    //apply empowered turning
+    //+50%
+    if(GetHasFeat(FEAT_EMPOWER_TURNING))
+        nBonusTurningTotalHD += nTurningTotalHD/2;
+    //sun domain
+    //+d6 total +d4 max
+    //Nope, now its PnP :)
+    //Destroys any undead that would be turned/rebuked/dominated
+    //Usable once per day
+    /*
+    if(GetHasFeat(FEAT_SUN_DOMAIN_POWER))
+    {
+        nBonusTurningTotalHD +=d6();
+        nBonusTurningMaxHD +=d4();
+    }*/
+    //add bonus HD    
+    nTurningTotalHD += nBonusTurningTotalHD;    
+    nTurningMaxHD   += nBonusTurningMaxHD;   
+    
+    SendMessageToPC(OBJECT_SELF, "You are turning "+IntToString(nTurningTotalHD)+"HD of creatures whose HD is equal or less than "+IntToString(nTurningMaxHD));
+    
+    //Undead Mastery multiplies total HD by 10
+    //non-undead have thier HD score multiplied by 10 to compensate
+    if(GetHasFeat(FEAT_UNDEAD_MASTERY))
+        nTurningTotalHD *= 10;        
+        
+    //assemble the list of targets to try to turn
+    MakeTurningTargetList(nTurningMaxHD, nTurningTotalHD);
+    
+    //cycle through target list
+    object oTarget = GetTargetListHead(OBJECT_SELF);
+    while(GetIsObjectValid(oTarget))
+    {
+        DoTurnAttempt(oTarget, nTurningMaxHD, nLevel);
+        oTarget = GetTargetListHead(OBJECT_SELF);
     }
 }
+
+void DoTurnAttempt(object oTarget, int nTurningMaxHD, int nLevel)
+{ 
+    //signal the event
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+    
+    //constructs are damaged not turned/destroyed/rebuked/commanded
+    if(MyPRCGetRacialType(oTarget)==RACIAL_TYPE_CONSTRUCT)
+    {
+        int nDamage = d3(nTurningMaxHD);
+        effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+        eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_SUNSTRIKE));
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+    }
+    else
+    {
+        //sun domain
+        //destroys instead of turn/rebuke/command
+        //useable once per day only
+        if(GetLocalInt(OBJECT_SELF, "UsingSunDomain"))
+        {
+            DoDestroy(oTarget);
+        }
+        else
+        {
+            int nTargetHD = GetHitDiceForTurning(oTarget);
+            //if evil command/rebuke
+            //if not evil destroy/turn
+            if(GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL)
+            {
+                //if half of level, command
+                //otherwise rebuke
+                if(nTargetHD < nLevel/2)    DoCommand(oTarget, nLevel);
+                else                        DoRebuke(oTarget);
+            }
+            else
+            {
+                //if half of level, destroy
+                //otherwise turn
+                if(nTargetHD < nLevel/2)    DoDestroy(oTarget);
+                else                        DoTurn(oTarget);
+            }
+        }
+    }
+    
+    // Check for Exalted Turning
+    //take 3d6 damage if they do
+    if (GetHasFeat(FEAT_EXALTED_TURNING)
+        && GetAlignmentGoodEvil(OBJECT_SELF) != ALIGNMENT_EVIL)
+    {
+        effect eDamage = EffectDamage(d6(3), DAMAGE_TYPE_DIVINE);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+    }   
+}
+
+void DoTurn(object oTarget)
+{
+    //create the effect 
+    effect eTurn = EffectTurned();
+    eTurn = EffectLinkEffects(eTurn, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR));
+    eTurn = EffectLinkEffects(eTurn, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
+    //apply the effect for 60 seconds
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTurn, oTarget, 60.0);
+}
+
+void DoDestroy(object oTarget)
+{
+    //create the effect 
+    //supernatural so it penetrates immunity to death
+    effect eDestroy = SupernaturalEffect(EffectDeath());
+    //apply the effect
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDestroy, oTarget);
+}
+
+void DoRebuke(object oTarget)
+{
+    //rebuke effect
+    //The character is frozen in fear and can take no actions. 
+    //A cowering character takes a -2 penalty to Armor Class and loses 
+    //her Dexterity bonus (if any). 
+    //create the effect 
+    effect eRebuke = EffectEntangle(); //this removes dex bonus
+    eRebuke = EffectLinkEffects(eRebuke, EffectACDecrease(2));
+    eRebuke = EffectLinkEffects(eRebuke, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR));
+    eRebuke = EffectLinkEffects(eRebuke, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
+    //apply the effect for 60 seconds
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRebuke, oTarget, 60.0);    
+    //handle unable to take actions
+    AssignCommand(oTarget, ClearAllActions());
+    DelayCommand(60.0, SetCommandable(TRUE));
+    SetCommandable(FALSE);
+}
+
+void DoCommand(object oTarget, int nLevel)
+{    
+    //Undead Mastery multiplies total HD by 10
+    //non-undead have thier HD score multiplied by 10 to compensate
+    if(GetHasFeat(FEAT_UNDEAD_MASTERY))
+        nLevel *= 10;   
+    int i;
+    int nCommandedTotalHD;
+    object oTest = GetAssociate(ASSOCIATE_TYPE_DOMINATED, OBJECT_SELF, i);
+    while(GetIsObjectValid(oTest))
+    {
+        if(GetHasSpellEffect(GetSpellId(), oTest))
+            nCommandedTotalHD += GetHitDiceForTurning(oTest);
+        i++;
+        oTest = GetAssociate(ASSOCIATE_TYPE_DOMINATED, OBJECT_SELF, i);
+    }
+    if(nCommandedTotalHD+GetHitDiceForTurning(oTarget) <= nLevel)
+    {
+        //create the effect 
+        //supernatural dominated vs cutscenedominated
+        //supernatural will last over resting
+        effect eCommand = SupernaturalEffect(EffectDominated());
+        eCommand = EffectLinkEffects(eCommand, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED));
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand, oTarget);        
+    }
+    //not enough commanding power left
+    //rebuke instead
+    else
+        DoRebuke(oTarget);
+}
+
+
+void MakeTurningTargetList(int nTurningMaxHD, int nTurningTotalHD)
+{
+    int nHDCount;
+    int i = 1;
+    object oTest = GetNearestObject(OBJECT_TYPE_CREATURE, OBJECT_SELF, i);
+    while(GetIsObjectValid(oTest)
+        && GetDistanceToObject(oTest) < FeetToMeters(60.0)
+        && nHDCount <= nTurningTotalHD)
+    {
+        int nTargetHD = GetHitDiceForTurning(oTest);
+        if(GetCanTurn(oTest)
+            && nTargetHD <= nTurningMaxHD
+            && nHDCount+nTargetHD <= nTurningTotalHD)
+        {    
+            AddToTargetList(oTest, OBJECT_SELF, INSERTION_BIAS_DISTANCE);
+            nHDCount += nTargetHD;
+        }    
+        
+        //move to next test
+        i++;
+        oTest = GetNearestObject(OBJECT_TYPE_CREATURE, OBJECT_SELF, i);
+    }
+}
+
+int GetCanTurn(object oTarget)
+{
+    //is not an enemy
+    if(!spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE ,OBJECT_SELF))
+        return FALSE;
+        
+    //already turned
+//NOTE: At the moment this breaks down in "turning conflicts" where clerics try to
+//turn each others undead. Fix later.
+    if(GetHasSpellEffect(GetSpellId(), oTarget))
+        return FALSE;
+        
+    //can turn the targets race
+    int nTargetRace = MyPRCGetRacialType(oTarget);
+    switch(nTargetRace)
+    {
+        case RACIAL_TYPE_UNDEAD:
+            //drow judicators cant turn undead on their own
+            //so check that it has at least 1 level in another class with turning
+            if(!GetTurningClassLevel(TRUE))
+                return FALSE;               
+            break;
+        case RACIAL_TYPE_OUTSIDER:  
+            if(!GetHasFeat(FEAT_GOOD_DOMAIN_POWER)
+                && !GetHasFeat(FEAT_EVIL_DOMAIN_POWER)
+                && !GetHasFeat(FEAT_EPIC_PLANAR_TURNING)
+                && !GetLevelByClass(CLASS_TYPE_ANTI_PALADIN))
+                return FALSE;
+            break;
+        case RACIAL_TYPE_ELEMENTAL:  
+            if(!GetHasFeat(FEAT_AIR_DOMAIN_POWER)
+                && !GetHasFeat(FEAT_EARTH_DOMAIN_POWER)
+                && !GetHasFeat(FEAT_FIRE_DOMAIN_POWER)
+                && !GetHasFeat(FEAT_WATER_DOMAIN_POWER))
+                return FALSE;
+            break;
+        case RACIAL_TYPE_VERMIN: 
+            if(!GetHasFeat(FEAT_PLANT_DOMAIN_POWER)
+                && !GetLevelByClass(CLASS_TYPE_JUDICATOR))
+                return FALSE;
+            break;
+        case RACIAL_TYPE_CONSTRUCT: 
+            //constructs are damaged rather than turned, but deal with that later
+            if(!GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER))
+                return FALSE;
+            break;
+        default: return FALSE;
+    }
+    
+    //PROJECTION CHECK
+    if (GetLocalInt(oTarget, "BaelnornProjection_Active"))
+        return FALSE;
+        
+    //TURN IMMUNITY CHECK
+    if(GetHasFeat(FEAT_TURNING_IMMUNITY, oTarget))
+        return FALSE;
+        
+    return TRUE;
+}
+
+int GetTurningCheckResult(int nLevel, int nChaMod)
+{
+    int nScore = d20()+nChaMod;
+    switch(nScore)
+    {
+        case  0: 
+            return nLevel-4;
+        case  1:
+        case  2:
+        case  3:
+            return nLevel-3;        
+        case  4:
+        case  5:
+        case  6:
+            return nLevel-2;
+        case  7:
+        case  8:
+        case  9:
+            return nLevel-1;
+        case 10:
+        case 11:
+        case 12:
+            return nLevel;
+        case 13:
+        case 14:
+        case 15:
+            return nLevel+1;
+        case 16:
+        case 17:
+        case 18:
+            return nLevel+2;
+        case 19:
+        case 20:
+        case 21:
+            return nLevel+3;             
+        default:
+            if(nScore < 0)
+                return nLevel-4;
+            else
+                return nLevel+4;
+    }
+    //somethings gone wrong here
+    return 0;
+}
+
+int GetTurningClassLevel(int bUndeadOnly = FALSE)
+{
+    int nLevel;
+    //full classes
+    nLevel += GetLevelByClass(CLASS_TYPE_CLERIC);
+    nLevel += GetLevelByClass(CLASS_TYPE_TRUENECRO);
+    nLevel += GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT);
+    nLevel += GetLevelByClass(CLASS_TYPE_BAELNORN);
+    //offset classes
+    if(GetLevelByClass(CLASS_TYPE_PALADIN)-2>0)
+        nLevel += GetLevelByClass(CLASS_TYPE_PALADIN)-2;
+    if(GetLevelByClass(CLASS_TYPE_BLACKGUARD)-2>0)
+        nLevel += GetLevelByClass(CLASS_TYPE_BLACKGUARD)-2;
+    if(GetLevelByClass(CLASS_TYPE_HOSPITALER)-2>0)
+        nLevel += GetLevelByClass(CLASS_TYPE_HOSPITALER)-2;
+    //not undead turning classes    
+    if(!bUndeadOnly)
+    {
+        nLevel += GetLevelByClass(CLASS_TYPE_JUDICATOR);
+        if(GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)-3>0)
+            nLevel += GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)-3;
+    }    
+    return nLevel;
+}
+
+int GetHitDiceForTurning(object oTarget)
+{
+    
+    //Hit Dice
+    int nHD = GetHitDice(oTarget);
+    
+    //Turn Resistance
+    nHD += GetTurnResistanceHD(oTarget);
+    
+    //Outsiders get SR (halved if turner has planar turning)
+    if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
+    {   
+        int nSR = PRCGetSpellResistance(oTarget, OBJECT_SELF);
+        if(GetHasFeat(FEAT_EPIC_PLANAR_TURNING))
+            nSR /= 2;
+        nHD += nSR;
+    }
+    
+    //if the player has Undead Mastery
+    //multiple non-undead by 10
+    //this is because turning HD is multiplied by 10 for everything
+    //so non-undead must be multiplied by 10 to compensate
+    //this must be last
+    if(GetHasFeat(FEAT_UNDEAD_MASTERY)
+        && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
+        nHD *= 10;
+        
+    //return the total
+    return nHD;
+}
+

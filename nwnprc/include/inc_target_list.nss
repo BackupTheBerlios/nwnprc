@@ -107,7 +107,7 @@ const string TARGET_LIST_PURGE_CALLED = "TargetListPurgeCalled";
 
 int GetIsInsertPosition(object oInsert, object oCompare, object oCaster, int nInsertionBias, int bDescendingOrder);
 
-
+void PurgeTargetList(object oCaster);
 
 //////////////////////////////////////////////////
 /* function definitions                         */

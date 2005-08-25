@@ -43,6 +43,24 @@ int max(int a, int b);
 int min(int a, int b);
 
 /**
+ * Returns the greater of the two values passed to it.
+ *
+ * @param a A float
+ * @param b Another float
+ * @return  The greater of a and b
+ */
+float fmax(float a, float b);
+
+/**
+ * Returns the lesser of the two values passed to it.
+ *
+ * @param a A float
+ * @param b Another float
+ * @return  The lesser of a and b
+ */
+float fmin(float a, float b);
+
+/**
  * Gets the absolute value of a float
  *
  * @param f  A float value
@@ -264,6 +282,10 @@ void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE);
 int max(int a, int b) {return (a > b ? a : b);}
 
 int min(int a, int b) {return (a < b ? a : b);}
+
+float fmax(float a, float b) {return (a > b ? a : b);}
+
+float fmin(float a, float b) {return (a < b ? a : b);}
 
 float fabs(float f) {return (f < 0.0f ? -f : f);}
 

@@ -44,19 +44,19 @@ const int MBLADE_SHAPE_RANGED           = 4; // Actual shape is throwing axe
 const string MBLADE_FLAGS   = "PRC_PSI_SK_MindbladeFlags";
 const int MBLADE_FLAG_COUNT = 13;
 
-const int MBLADE_FLAG_LUCKY                 = 1;
-const int MBLADE_FLAG_DEFENDING             = 2;
-const int MBLADE_FLAG_KEEN                  = 4;
-const int MBLADE_FLAG_VICIOUS               = 8;
-const int MBLADE_FLAG_PSYCHOKINETIC         = 16;
-const int MBLADE_FLAG_MIGHTYCLEAVING        = 32;
-const int MBLADE_FLAG_COLLISION             = 64;
-const int MBLADE_FLAG_MINDCRUSHER           = 128;
-const int MBLADE_FLAG_PSYCHOKINETICBURST    = 256;
-const int MBLADE_FLAG_SUPPRESSION           = 512;
-const int MBLADE_FLAG_WOUNDING              = 1024;
-const int MBLADE_FLAG_DISRUPTING            = 2048;
-const int MBLADE_FLAG_SOULBREAKER           = 4096;
+const int MBLADE_FLAG_LUCKY                 = 0x1;
+const int MBLADE_FLAG_DEFENDING             = 0x2;
+const int MBLADE_FLAG_KEEN                  = 0x4;
+const int MBLADE_FLAG_VICIOUS               = 0x8;
+const int MBLADE_FLAG_PSYCHOKINETIC         = 0x10;
+const int MBLADE_FLAG_MIGHTYCLEAVING        = 0x20;
+const int MBLADE_FLAG_COLLISION             = 0x40;
+const int MBLADE_FLAG_MINDCRUSHER           = 0x80;
+const int MBLADE_FLAG_PSYCHOKINETICBURST    = 0x100;
+const int MBLADE_FLAG_SUPPRESSION           = 0x200;
+const int MBLADE_FLAG_WOUNDING              = 0x400;
+const int MBLADE_FLAG_DISRUPTING            = 0x800;
+const int MBLADE_FLAG_SOULBREAKER           = 0x1000;
 
 
 
@@ -115,11 +115,11 @@ int GetFlagCost(int nFlag)
         case MBLADE_FLAG_WOUNDING:              return 2;
         case MBLADE_FLAG_DISRUPTING:            return 3;
         case MBLADE_FLAG_SOULBREAKER:           return 4;
-        
+
         default:
             WriteTimestampedLogEntry("Unknown flag passed to GetFlagCost: " + IntToString(nFlag));
     }
-    
+
     return 0;
 }
 
@@ -168,7 +168,7 @@ int StartingConditional()
         SetCustomToken(~~~TokenNum~~~, GetStringByStrRef(62476)); // Add
         nReturn = TRUE;
     }
-    
+
     return nReturn;
 }
 

@@ -60,7 +60,7 @@ void DeletePRCLocalInts(object oSkin);
 int nbWeaponFocus(object oPC);
 
 void EvalPRCFeats(object oPC)
-{   
+{
     object oSkin = GetPCSkin(oPC);
     //Elemental savant is sort of four classes in one, so we'll take care
     //of them all at once.
@@ -197,13 +197,13 @@ void EvalPRCFeats(object oPC)
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
     {
         //add the old feat to the hide
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(390), oSkin); 
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(390), oSkin);
     }
-    
+
     // Add the teleport management feats. Maybe change this to apply only to those capable of casting teleportation spells in the future
     if(TRUE)
         ExecuteScript("prc_tp_mgmt_eval", oPC);
-    
+
     //PnP Spell Schools
     if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD, oPC)
@@ -223,16 +223,16 @@ void EvalPRCFeats(object oPC)
         SetLocalString(oPC, "DynConv_Script", "prc_pnp_school");
         AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
     }
-    
+
     //switch convo feat
-    if(!GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO))        
+    if(!GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO))
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(229), oSkin); 
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(229), oSkin);
     }
-    
+
     //size changes
     ExecuteScript("prc_size", oPC);
-        
+
     //ACP system
     ExecuteScript("acp_auto", oPC);
 
@@ -246,7 +246,7 @@ void EvalPRCFeats(object oPC)
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.
-    ExecuteScript("unarmed_caller", oPC); 
+    ExecuteScript("unarmed_caller", oPC);
 }
 
 void DeletePRCLocalInts(object oSkin)
@@ -281,10 +281,10 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oPC, "PRC_ClassLevelInPos1");
     DeleteLocalInt(oPC, "PRC_ClassLevelInPos2");
     DeleteLocalInt(oPC, "PRC_ClassLevelInPos3");
-    
+
     //persistant local token object cache
     //looks like logging off then back on without the server rebooting breaks it
-    //I guess because the token gets a new ID, but the local still points to the old one    
+    //I guess because the token gets a new ID, but the local still points to the old one
     DeleteLocalObject(oPC, "PRC_HideTokenCache");
 
     // In order to work with the PRC system we need to delete some locals for each
@@ -556,7 +556,7 @@ void DeletePRCLocalInts(object oSkin)
 
     //Alaghar
     DeleteLocalInt(oSkin, "SilverbeardAC");
-    
+
     //Ollam
     DeleteLocalInt(oSkin, "OllamLore");
 
@@ -573,22 +573,22 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "Dark_Charm_PF");
     DeleteLocalInt(oSkin, "Dark_Charm_PS");
     DeleteLocalInt(oSkin, "Dark_Charm_BL");
-    
+
     //Blightlord
     DeleteLocalInt(oSkin, "WntrHeart");
     DeleteLocalInt(oSkin, "BlightBlood");
-    
+
     // Ninja
     DeleteLocalInt(oSkin, "KiPowerWillBonus");
     DeleteLocalInt(oSkin, "AcroJumpBonus");
     DeleteLocalInt(oSkin, "AcroTumbBonus");
     DeleteLocalInt(oSkin, "NinjaACBonus");
-    
+
     //epic spells
     //transendent vitality
     DeleteLocalInt(oSkin, "TransVitalCon");
     DeleteLocalInt(oSkin, "TransVitalRegen");
-    
+
     //size changes
     DeleteLocalInt(oSkin, "SizeChangesStr");
     DeleteLocalInt(oSkin, "SizeChangesDex");
@@ -596,11 +596,11 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "SizeChangesACN");
     DeleteLocalInt(oSkin, "SizeChangesACD");
     DeleteLocalInt(oSkin, "SizeChangesAB");
-    
+
     // Magical Aptitude
     DeleteLocalInt(oSkin, "MagicalAptitudeSpellcraft");
-    DeleteLocalInt(oSkin, "MagicalAptitudeUMD");  
-    
+    DeleteLocalInt(oSkin, "MagicalAptitudeUMD");
+
     //Swashbuckler
     DeleteLocalInt(oSkin, "SwashGrace");
     DeleteLocalInt(oSkin, "SwashAC");
@@ -611,23 +611,25 @@ void DeletePRCLocalInts(object oSkin)
 void ScrubPCSkin(object oPC, object oSkin)
 {
     int iCode = GetHasFeat(FEAT_SF_CODE,oPC);
+    int st;
     itemproperty ip = GetFirstItemProperty(oSkin);
     while (GetIsItemPropertyValid(ip)) {
         // Insert Logic here to determine if we spare a property
-        if (GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT) 
+        if (GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT)
         {
             // Check for specific Bonus Feats
             // Reference iprp_feats.2da
-            int st = GetItemPropertySubType(ip);
+            st = GetItemPropertySubType(ip);
 
             // Spare 400 through 570 and 398 -- epic spells & spell effects
             //also spare the new spellbook feats (1000-12000)
             //also spare the psionic feats (12000+)
             //also spare Pnp spellschool feats (231-249
-            if ((st < 400 || st > 570) 
+            if ((st < 400 || st > 570)
                 && st != 398
                 && st < 1000
                 && (st < 231 || st > 249)
+                && (st == FEAT_POWER_ATTACK_QUICKS_RADIAL && !GetHasFeat(FEAT_POWER_ATTACK, oPC)) // Remove the PRC Power Attack radial if the character no longer has Power Attack
                 )
                 RemoveItemProperty(oSkin, ip);
         }
@@ -820,7 +822,7 @@ void SpellKotMC(object oPC)
 void FeatDiabolist(object oPC)
 {
    int Diabol = GetLevelByClass(CLASS_TYPE_DIABOLIST, oPC);
-   
+
    if (!Diabol) return;
 
    int iUse = (Diabol + 3)/3;
@@ -833,7 +835,7 @@ void FeatDiabolist(object oPC)
 void FeatAlaghar(object oPC)
 {
     int iAlagharLevel = GetLevelByClass(CLASS_TYPE_ALAGHAR, oPC);
-    
+
     if (!iAlagharLevel) return;
 
     int iClangStrike = iAlagharLevel/3;
@@ -850,7 +852,7 @@ void FeatNinja (object oPC)
     int nUsesLeft = (GetLevelByClass(CLASS_TYPE_NINJA, oPC)/ 2);
     if (nUsesLeft < 1)
         nUsesLeft = 1;
-        
+
     while(GetHasFeat(FEAT_KI_POWER, oPC))
         DecrementRemainingFeatUses(oPC, FEAT_KI_POWER);
     while(GetHasFeat(FEAT_GHOST_STEP, oPC))
@@ -861,7 +863,7 @@ void FeatNinja (object oPC)
         DecrementRemainingFeatUses(oPC, FEAT_GHOST_WALK);
     while(GetHasFeat(FEAT_KI_DODGE, oPC))
         DecrementRemainingFeatUses(oPC, FEAT_KI_DODGE);
-        
+
     if (GetAbilityModifier(ABILITY_WISDOM, oPC) > 0)
         nUsesLeft += GetAbilityModifier(ABILITY_WISDOM, oPC);
     int nUses = 0;
@@ -888,7 +890,7 @@ else
     iMod = 1;
 
     int iDif = 50 - iMod;
-    
+
     while(iDif > 0)
     {
         DecrementRemainingFeatUses(oPC, FEAT_STRENGTH_DOMAIN_POWER);

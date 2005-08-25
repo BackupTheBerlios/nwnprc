@@ -223,6 +223,8 @@ const int POWER_SHADOWBODY                  = 14305;
 const int POWER_ASTRALSEED                  = 14306;
 const int POWER_TIMEHOPMASS                 = 14307;
 const int POWER_HYPERCOGNITION              = 14308;
+const int POWER_GREATER_TELEPORT_SELFONLY   = 14309;
+const int POWER_GREATER_TELEPORT_PARTY      = 14310;
 
 // Level 9 Powers
 const int POWER_ASSIMILATE                  = 14331;

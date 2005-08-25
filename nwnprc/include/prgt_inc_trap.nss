@@ -1,13 +1,12 @@
-const int VFX_PER_5M_INVIS  = 190;
-const int VFX_PER_10M_INVIS = 191;
-const int VFX_PER_15M_INVIS = 192;
-const int VFX_PER_20M_INVIS = 193;
-const int VFX_PER_25M_INVIS = 194;
-const int VFX_PER_30M_INVIS = 195;
-const int VFX_PER_35M_INVIS = 196;
-const int VFX_PER_40M_INVIS = 197;
-const int VFX_PER_45M_INVIS = 198;
-const int VFX_PER_50M_INVIS = 199;
+/** @file
+ *
+ * @todo: Primo, could you fill in the comments for this file?
+ *
+ * @author Primogenitor
+ */
+
+#include "prc_misc_const"
+
 
 struct trap
 {
@@ -45,7 +44,7 @@ struct trap CreateRandomTrap(int nCR = -1)
         nCR += Random(5)-2;
         if(nCR < 1)
             nCR = 1;
-    }       
+    }
     struct trap tReturn;
     switch(Random(26))
     {

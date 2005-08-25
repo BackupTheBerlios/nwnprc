@@ -31,7 +31,7 @@ void main()
     {
         LolthMeat(oKiller);
     }
-    
+
     if(GetPRCSwitch(PRC_XP_USE_PNP_XP))
     {
         if(GetObjectType(oKiller) == OBJECT_TYPE_TRIGGER)
@@ -45,14 +45,15 @@ void main()
             GiveXPRewardToParty(oKiller, oPlayer);
             //bypass bioware XP system
             AssignCommand(oPlayer, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectResurrection(), oPlayer));
-            AssignCommand(oPlayer, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10000, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPlayer));
+            //AssignCommand(oPlayer, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10000, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPlayer));
+            AssignCommand(oPlayer, ApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(EffectDeath()), oPlayer));
         }
     }
 
 
     if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oPlayer))
-        SetPersistantLocalInt(oPlayer, "persist_dead", TRUE);   
-    
+        SetPersistantLocalInt(oPlayer, "persist_dead", TRUE);
+
     if (GetLocalInt(oPlayer, "AstralSeed"))
     {
         AstralSeedRespawn(oPlayer);

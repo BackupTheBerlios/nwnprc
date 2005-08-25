@@ -14,6 +14,7 @@
 
 #include "prc_inc_teleport"
 #include "inc_utility"
+#include "inc_eventhook"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -28,6 +29,7 @@ const int STAGE_QUICKSLOT_LIST             = 4;
 const int STAGE_OPTIONS_LIST               = 6;
 const int STAGE_LISTENER_TIME              = 7;
 const int STAGE_MAPPIN                     = 8;
+const int STAGE_ONREST_MARKLOCATION        = 9;
 
 const int CHOICE_BACK_TO_MAIN      = -1;
 
@@ -57,7 +59,7 @@ void AddChoice(string sText, int nValue)
 
 void main()
 {
-    object oPC = OBJECT_SELF; 
+    object oPC = OBJECT_SELF;
     /* Get the value of the local variable set by the conversation script calling
      * this script. Values:
      * -3   Conversation aborted
@@ -67,7 +69,7 @@ void main()
      * 1+   Index of user's choice from the ChoiceValues array +1
      */
     int nValue = GetLocalInt(oPC, "DynConv_Var");
-    
+
     // Reset the choice arrays
     array_create(oPC, "ChoiceTokens");
     array_create(oPC, "ChoiceValues");
@@ -102,7 +104,7 @@ void main()
         {
             SetCustomToken(99, GetStringByStrRef(16825276)); // "Select a location to manipulate."
             AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN);
-            
+
             // List all stored locations
             int i, nMax = GetNumberOfStoredTeleportTargetLocations(oPC);
             string sToken;
@@ -176,6 +178,8 @@ void main()
             AddChoice(GetStringByStrRef(16825284) + ": " + IntToString(FloatToInt(GetLocalFloat(oPC, "PRC_Teleport_NamingListenerDuration"))) + "s", STAGE_LISTENER_TIME);
             //        Create map pins for marked locations                                                                     Yes                       No
             AddChoice(GetStringByStrRef(16825299) + ": " + (GetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS) ? GetStringByStrRef(4752) : GetStringByStrRef(4753)), STAGE_MAPPIN);
+            //        Mark resting locations
+            AddChoice(GetStringByStrRef(16825308) + ": " + (GetLocalInt(oPC, PRC_TELEPORT_ONREST_MARKLOCATION) ? GetStringByStrRef(4752) : GetStringByStrRef(4753)), STAGE_ONREST_MARKLOCATION);
         }
         else if(nStage == STAGE_LISTENER_TIME)
         {
@@ -191,6 +195,14 @@ void main()
         else if(nStage == STAGE_MAPPIN)
         {
             SetCustomToken(99, GetStringByStrRef(16825301)); // "Select whether you want map pins to be automatically to be created at locations you mark. Note that they may not appear immediately, but only after you re-enter the area."
+            AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN);
+
+            AddChoice(GetStringByStrRef(4752), CHOICE_YES); // "Yes"
+            AddChoice(GetStringByStrRef(4753), CHOICE_NO); // "No"
+        }
+        else if(nStage == STAGE_ONREST_MARKLOCATION)
+        {
+            SetCustomToken(99, GetStringByStrRef(16825309)); // "Select whether you want that whenever you rest, the location will be automatically marked.\nWARNING: The location is always stored in the first slot, so if you delete it, next time you rest whatever is now in the first slot will be overwritten."
             AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN);
 
             AddChoice(GetStringByStrRef(4752), CHOICE_YES); // "Yes"
@@ -223,9 +235,9 @@ void main()
         int i;
         for(i = 99; i <= 110; i++)
             DeleteLocalString(oPC, "TOKEN" + IntToString(i));
-        
+
         DeleteLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex");
-        
+
         return;
     }
     else if(nValue == -3)
@@ -238,9 +250,9 @@ void main()
         int i;
         for(i = 99; i <= 110; i++)
             DeleteLocalString(oPC, "TOKEN" + IntToString(i));
-        
+
         DeleteLocalInt(oPC, "ManipulatedTeleportTargetLocationIndex");
-        
+
         return;
     }
     int nChoice = array_get_int(oPC, "ChoiceValues", nValue);
@@ -330,6 +342,55 @@ void main()
         // Create map pins from existing teleport locations.
         if(nChoice)
             TeleportLocationsToMapPins(oPC);
+
+        nStage = STAGE_MAIN;
+    }
+    else if(nStage == STAGE_ONREST_MARKLOCATION)
+    {
+        if(nChoice != CHOICE_BACK_TO_MAIN)
+        {
+            // Do not move locations if the option is already active
+            if(nChoice == CHOICE_YES && GetLocalInt(oPC, PRC_TELEPORT_ONREST_MARKLOCATION) != CHOICE_YES)
+            {
+                // Array size check. If no limit is defined via switch, default to 50.
+                int nNum = GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME); // Array elements begin at index 0
+                int nMax = GetPRCSwitch(PRC_TELEPORT_MAX_TARGET_LOCATIONS) ?
+                            GetPRCSwitch(PRC_TELEPORT_MAX_TARGET_LOCATIONS) :
+                            50;
+                if(nNum >= nMax)
+                    // You have reached the maximum allowed teleport locations (              ).\nYou must remove at least one stored location before you can add new locations.
+                    SendMessageToPC(oPC, GetStringByStrRef(16825294) + IntToString(nMax) + GetStringByStrRef(16825295));
+
+                // Move all the existing locations up by one
+                int i;
+                for(i = nNum; i > 0; i--)
+                {
+                    SetPersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_" + IntToString(i),
+                                                   GetPersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_" + IntToString(i - 1))
+                                                   );
+                    // Move the map pin existence marker if it's present
+                    if(GetLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME + "_HasMapPin_" + IntToString(i - 1)))
+                        SetLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME + "_HasMapPin_" + IntToString(i), TRUE);
+                }
+
+                // Store a null metalocation in the first slot
+                SetPersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_0", GetNullMetalocation());
+
+                // Store the increased array size
+                SetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME, nNum + 1);
+
+                // Hook into OnRest-Finished event
+                AddEventScript(oPC, EVENT_ONPLAYERREST_FINISHED, "prc_telep_mrkrst", TRUE, FALSE);
+            }
+            else if(nChoice == CHOICE_NO)
+            {
+                // Delete the location and unhook from OnRest
+                RemoveNthTeleportTargetLocation(oPC, 0);
+                RemoveEventScript(oPC, EVENT_ONPLAYERREST_FINISHED, "prc_telep_mrkrst", TRUE, FALSE);
+            }
+
+            SetLocalInt(oPC, PRC_TELEPORT_ONREST_MARKLOCATION, nChoice);
+        }
 
         nStage = STAGE_MAIN;
     }

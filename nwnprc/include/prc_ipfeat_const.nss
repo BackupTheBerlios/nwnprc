@@ -98,13 +98,8 @@ const int IP_CONST_FEAT_KI_STRIKE = 254;
 
 const int IP_CONST_FEAT_REND            = 255;
 const int IP_CONST_FEAT_SPELL10         = 256;
-//These are defined by bioware in 1.66
-//so dont compile in 1.65
-//I didnt mean to commit them, honest!
-//Im running the beta at the moment, so they wont compile
-//for me unless I comment them out.
-//const int IP_CONST_FEAT_MOBILITY        = 27; // needed to compile.. removed why?
-//const int IP_CONST_FEAT_WHIRLWIND       = 29; // also needed to compile...
+//const int IP_CONST_FEAT_MOBILITY        = 27; // Provided by Bioware in 1.66
+//const int IP_CONST_FEAT_WHIRLWIND       = 29; // ------------||-------------
 const int IP_CONST_FEAT_BLINDFIGHT      = 257;
 const int IP_CONST_FEAT_SPRINGATTACK    = 258;
 const int IP_CONST_FEAT_EVASION         = 386;
@@ -118,6 +113,8 @@ const int IP_CONST_FEAT_POWER_ATTACK_FIVES_RADIAL      = 253;
 const int IP_CONST_FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL = 262;
 
 const int IP_CONST_FEAT_TELEPORT_MANAGEMENT_RADIAL     = 263;
+
+const int IP_CONST_FEAT_EPIC_REST                                   = 399;
 
 const int IP_CONST_FEAT_WEAPON_FOCUS_CLUB                           = 100;
 const int IP_CONST_FEAT_WEAPON_FOCUS_DAGGER                         = 101;
@@ -459,7 +456,7 @@ const int IP_CONST_ONHIT_SAVEDC_19 = 19;
 // Creature Epic Criticals
 const int IP_CONST_FEAT_DEVCRITICAL_CREATURE    = 271;
 const int IP_CONST_FEAT_OVERCRITICAL_CREATURE   = 272;
-//const int IP_CONST_FEAT_WEAPON_PROF_CREATURE    = 38;    // needed for prc_inc_un/armed
+//const int IP_CONST_FEAT_WEAPON_PROF_CREATURE    = 38;    // provided by Bioware in 1.66
 
 // Epic DR
 const int IP_CONST_FEAT_EPIC_DR_3             = 273;

@@ -132,7 +132,7 @@ int GetHasTeleportQuickSelection(object oPC, int nSlot = PRC_TELEPORT_ACTIVE_QUI
  *
  * @param oPC    The PC whose quickselection to check.
  * @param bClear Whether to clear the quickselection after getting it.
- * @return       The PC's active quickselection, or null metalocation 
+ * @return       The PC's active quickselection, or null metalocation
  *               if there is none.
  */
 struct metalocation GetActiveTeleportQuickSelection(object oPC, int bClear = FALSE);
@@ -268,6 +268,8 @@ const string PRC_TELEPORT_ARRAY_NAME           = "PRC_TeleportLocation_Array";
 const string PRC_TELEPORT_CREATE_MAP_PINS      = "PRC_Teleport_CreateMapPins";
 /// Internal constant - Name of personal switch telling how long the listener will wait for the player to speak a name when a new location is stored.
 const string PRC_TELEPORT_NAMING_TIMER_VARNAME = "PRC_Teleport_NamingListenerDuration";
+/// Internal constant - Name of personal swithc telling whether to automatically store the latest location the character rested at
+const string PRC_TELEPORT_ONREST_MARKLOCATION  = "PRC_Teleport_OnRest_MarkLocation";
 
 
 //////////////////////////////////////////////////
@@ -304,7 +306,7 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
     else if(!GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME))
     {// "You do not have any locations marked for teleporting to!"
         SendMessageToPCByStrRef(oPC, 16825305);
-        
+
         // Store the PC's location
         if(bMeta)
             SetLocalMetalocation(oPC, sCallbackVar, LocationToMetalocation(GetLocation(oPC)));
@@ -470,7 +472,7 @@ void RemoveNthTeleportTargetLocation(object oPC, int nInd)
     // Get the index of the last element in the array and move elements back if needed
     int nMax = GetPersistantLocalInt(oPC, PRC_TELEPORT_ARRAY_NAME) - 1;
     for(; nInd < nMax; nInd++)
-    {        
+    {
         SetPersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_" + IntToString(nInd),
                                        GetPersistantLocalMetalocation(oPC, PRC_TELEPORT_ARRAY_NAME + "_" + IntToString(nInd + 1))
                                        );
@@ -507,7 +509,7 @@ int AddTeleportTargetLocationAsMeta(object oPC, struct metalocation mlocToAdd)
     int nMax = GetPRCSwitch(PRC_TELEPORT_MAX_TARGET_LOCATIONS) ?
                 GetPRCSwitch(PRC_TELEPORT_MAX_TARGET_LOCATIONS) :
                 50;
-    if(nInd > nMax)
+    if(nInd >= nMax)
     {// You have reached the maximum allowed teleport locations (              ).\nYou must remove at least one stored location before you can add new locations.
         SendMessageToPC(oPC, GetStringByStrRef(16825294) + IntToString(nMax) + GetStringByStrRef(16825295));
         return FALSE;
@@ -567,7 +569,7 @@ int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE)
 void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
 {
     // Store list of objects to teleport in an array on the caster
-    // First, null the array    
+    // First, null the array
     array_delete(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY);
     array_create(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY);
 

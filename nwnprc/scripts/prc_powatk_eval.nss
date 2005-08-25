@@ -24,6 +24,7 @@ void main()
 
     if(GetHasFeat(FEAT_POWER_ATTACK) && !GetHasFeat(FEAT_POWER_ATTACK_QUICKS_RADIAL))
     {
+        SendMessageToPC(oPC, "Debug: Adding the PRC Power Attack radials");
         object oSkin = GetPCSkin(oPC);
 
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_POWER_ATTACK_SINGLE_RADIAL),     oSkin);

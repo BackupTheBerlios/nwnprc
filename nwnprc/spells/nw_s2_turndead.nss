@@ -17,6 +17,7 @@
 These classes all stack for determining turning:
 Cleric
 Paladin-2
+Anti-Paladin-2
 Blackguard-2
 True Necromancer
 Soldier of Light
@@ -49,6 +50,8 @@ int GetHitDiceForTurning(object oTarget);
 //the main turning function once targets have been listed
 //routs to turn/destroy/rebuke/command as appropaite
 void DoTurnAttempt(object oTarget, int nTurningMaxHD, int nLevel);
+
+int GetCommandedTotalHD();
 
 //various sub-turning effect funcions
 
@@ -83,7 +86,8 @@ void main()
         nBonusTurningTotalHD += nTurningTotalHD;
     //apply empowered turning
     //+50%
-    if(GetHasFeat(FEAT_EMPOWER_TURNING))
+    //only if maximize doesnt apply
+    else if(GetHasFeat(FEAT_EMPOWER_TURNING))
         nBonusTurningTotalHD += nTurningTotalHD/2;
     //sun domain
     //+d6 total +d4 max
@@ -100,13 +104,37 @@ void main()
     nTurningTotalHD += nBonusTurningTotalHD;    
     nTurningMaxHD   += nBonusTurningMaxHD;   
     
+    //zone of animation effect
+    // You can use a rebuke or command undead attempt to animate 
+    //corpses within range of your rebuke or command attempt. 
+    //You animate a total number of HD of undead equal to the 
+    //number of undead that would be commanded by your result 
+    //(though you can’t animate more undead than there are available 
+    //corpses within range). You can’t animate more undead with 
+    //any single attempt than the maximum number you can command 
+    //(including any undead already under your command). These 
+    //undead are automatically under your command, though your 
+    //normal limit of commanded undead still applies. If the 
+    //corpses are relatively fresh, the animated undead are zombies.  
+    //Otherwise, they are skeletons. 
+    if(GetLocalInt(OBJECT_SELF, "UsingZoneOfAnimation"))
+    {
+        effect eVFX = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
+        int nHDCount = GetCommandedTotalHD();
+        while(nHDCount < nTurningMaxHD)
+        {
+            location lLoc = GetRandomCircleLocation(GetLocation(OBJECT_SELF), FeetToMeters(60.0));
+            //skeletal blackguard
+            string sResRef = "x2_s_bguard_18"; 
+            object oCreated = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lLoc);
+            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVFX, lLoc);
+            nHDCount += GetHitDiceForTurning(oCreated);
+        }
+        return;
+    }
+    
     SendMessageToPC(OBJECT_SELF, "You are turning "+IntToString(nTurningTotalHD)+"HD of creatures whose HD is equal or less than "+IntToString(nTurningMaxHD));
     
-    //Undead Mastery multiplies total HD by 10
-    //non-undead have thier HD score multiplied by 10 to compensate
-    if(GetHasFeat(FEAT_UNDEAD_MASTERY))
-        nTurningTotalHD *= 10;        
-        
     //assemble the list of targets to try to turn
     MakeTurningTargetList(nTurningMaxHD, nTurningTotalHD);
     
@@ -119,8 +147,33 @@ void main()
     }
 }
 
+//private function
+//only used by DoTurnAttempt
+//TRUE == Turn
+//FALSE == Rebuke
+int GetIsTurnNotRebuke(object oTarget)
+{
+    if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
+    {
+        if((GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD
+                && GetAlignmentGoodEvil(oTarget) == ALIGNMENT_GOOD)
+            || (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL
+                && GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL) 
+        )   
+            return FALSE;
+        else
+            return TRUE;
+    }
+    else if(GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL)
+    {
+        return FALSE;
+    }
+    return TRUE;    
+}
+
 void DoTurnAttempt(object oTarget, int nTurningMaxHD, int nLevel)
 { 
+
     //signal the event
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
     
@@ -144,22 +197,20 @@ void DoTurnAttempt(object oTarget, int nTurningMaxHD, int nLevel)
         else
         {
             int nTargetHD = GetHitDiceForTurning(oTarget);
-            //if evil command/rebuke
-            //if not evil destroy/turn
-            if(GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL)
-            {
-                //if half of level, command
-                //otherwise rebuke
-                if(nTargetHD < nLevel/2)    DoCommand(oTarget, nLevel);
-                else                        DoRebuke(oTarget);
-            }
-            else
+            if(GetIsTurnNotRebuke(oTarget))
             {
                 //if half of level, destroy
                 //otherwise turn
                 if(nTargetHD < nLevel/2)    DoDestroy(oTarget);
-                else                        DoTurn(oTarget);
+                else                        DoTurn(oTarget);            
             }
+            else
+            {
+                //if half of level, command
+                //otherwise rebuke
+                if(nTargetHD < nLevel/2)    DoCommand(oTarget, nLevel);
+                else                        DoRebuke(oTarget);            
+            }            
         }
     }
     
@@ -214,25 +265,27 @@ void DoRebuke(object oTarget)
 void DoCommand(object oTarget, int nLevel)
 {    
     //Undead Mastery multiplies total HD by 10
-    //non-undead have thier HD score multiplied by 10 to compensate
+    //non-undead have their HD score multiplied by 10 to compensate
     if(GetHasFeat(FEAT_UNDEAD_MASTERY))
         nLevel *= 10;   
-    int i;
-    int nCommandedTotalHD;
-    object oTest = GetAssociate(ASSOCIATE_TYPE_DOMINATED, OBJECT_SELF, i);
-    while(GetIsObjectValid(oTest))
-    {
-        if(GetHasSpellEffect(GetSpellId(), oTest))
-            nCommandedTotalHD += GetHitDiceForTurning(oTest);
-        i++;
-        oTest = GetAssociate(ASSOCIATE_TYPE_DOMINATED, OBJECT_SELF, i);
-    }
-    if(nCommandedTotalHD+GetHitDiceForTurning(oTarget) <= nLevel)
+        
+    int nCommandedTotalHD = GetCommandedTotalHD();
+    
+    int nTargetHD = GetHitDiceForTurning(oTarget);
+    //undead mastery only applies to undead
+    //so non-undead have thier HD multiplied by 10
+    if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD
+        && GetHasFeat(FEAT_UNDEAD_MASTERY))
+        nTargetHD *= 10;
+        
+    if(nCommandedTotalHD + nTargetHD <= nLevel)
     {
         //create the effect 
         //supernatural dominated vs cutscenedominated
         //supernatural will last over resting
-        effect eCommand = SupernaturalEffect(EffectDominated());
+        //Why not use both?
+        //effect eCommand = SupernaturalEffect(EffectDominated());
+        effect eCommand = SupernaturalEffect(EffectCutsceneDominated());
         eCommand = EffectLinkEffects(eCommand, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED));
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand, oTarget);        
     }
@@ -415,16 +468,27 @@ int GetHitDiceForTurning(object oTarget)
         nHD += nSR;
     }
     
-    //if the player has Undead Mastery
-    //multiple non-undead by 10
-    //this is because turning HD is multiplied by 10 for everything
-    //so non-undead must be multiplied by 10 to compensate
-    //this must be last
-    if(GetHasFeat(FEAT_UNDEAD_MASTERY)
-        && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
-        nHD *= 10;
-        
     //return the total
     return nHD;
 }
 
+int GetCommandedTotalHD()
+{
+    int i;
+    int nCommandedTotalHD;
+    object oTest = GetAssociate(ASSOCIATE_TYPE_DOMINATED, OBJECT_SELF, i);
+    while(GetIsObjectValid(oTest))
+    {
+        if(GetHasSpellEffect(GetSpellId(), oTest))
+        {
+            int nTestHD = GetHitDiceForTurning(oTest);
+            if(MyPRCGetRacialType(oTest) != RACIAL_TYPE_UNDEAD
+                && GetHasFeat(FEAT_UNDEAD_MASTERY))
+                nTestHD *= 10;
+            nCommandedTotalHD += nTestHD;
+        }    
+        i++;
+        oTest = GetAssociate(ASSOCIATE_TYPE_DOMINATED, OBJECT_SELF, i);
+    }
+    return nCommandedTotalHD;
+}

@@ -238,7 +238,8 @@
 234 FEAT_DISCIPLE_OF_DARKNESS                 4012      0    -1             1      
 235 FEAT_BLOOD_OF_THE_WARLORD                 4608      0    -1             1      
 236 Cloak_Dance                               4817      0    -1             1      
-237 Reckless_Offense                          4816      0    -1             1      
+237 Reckless_Offense                          4816      0    -1             1       
+32 ZoneOfAnimation                                 2891      0    -1             1     
 238 ****                                      ****      **** ****           ****   
 239 **PsionicFeats**                          ****      **** ****           ****   
 240 Psionic_Focus                             4818      0    99             1      

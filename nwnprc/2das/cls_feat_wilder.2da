@@ -165,7 +165,8 @@
 161 FEAT_DISCIPLE_OF_DARKNESS           4012      0    -1             1      
 162 FEAT_BLOOD_OF_THE_WARLORD           4608      0    -1             1      
 163 Cloak_Dance                         4817      0    -1             1      
-164 Reckless_Offense                    4816      0    -1             1      
+164 Reckless_Offense                    4816      0    -1             1       
+32 ZoneOfAnimation                                 2891      0    -1             1     
 165 ****                                ****      **** ****           ****   
 166 **PsionicFeats**                    ****      **** ****           ****   
 167 Mental_Leap                         4809      1    -1             1      

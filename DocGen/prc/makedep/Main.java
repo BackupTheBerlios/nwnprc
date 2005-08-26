@@ -28,11 +28,13 @@ public class Main {
 	 */
 	public static void main(String[] args){
 		//Set<String> files = new HashSet<String>();
+		Map<String, NSSNode> debugMap = scripts;
 		// Parse arguments
 		int i = 0;
 		String arg;
-		while(i++ < args.length){
+		while(i < args.length){
 			arg = args[i];
+			i++;
 			if(arg.equals("-a"))
 				append = true;
 			else if(arg.startsWith("-i"))
@@ -52,7 +54,7 @@ public class Main {
 			//files.add(args[i]);
 			temp = NSSNode.getScriptName(args[i]);
 			if(!scripts.containsKey(temp))
-				scripts.put(NSSNode.getScriptName(temp), new NSSNode(temp));
+				scripts.put(temp, new NSSNode(args[i]));
 			else{
 				System.err.println("Duplicate script file: " + temp);
 				error = true;
@@ -70,6 +72,7 @@ public class Main {
 		for(String fileName : files){
 			parseContainer.put(NSSNode.getScriptName(fileName), new NSSNode(fileName));
 		}*/
+		NSSNode[] debugArr = debugMap.values().toArray(new NSSNode[0]);
 		for(NSSNode script: scripts.values())
 			script.linkDirect();
 		
@@ -78,8 +81,10 @@ public class Main {
 		
 		
 		// Start a depth-first-search to find all the include trees
-		for(NSSNode node : scripts.values())
+		for(NSSNode node : scripts.values()){
 			node.linkFullyAndGetIncludes(null);
+			node.printSelf(oStrm, append);
+		}
 	}
 	
 	/**
@@ -104,18 +109,22 @@ public class Main {
 	 */
 	private static void getFiles(String pathList/*, Set<String> fileNameSet*/){
 		String[] paths = pathList.split(";");
-		String[] files;
+		File[] files;
 		String temp;
 		for(String path : paths){
-			files = new File(path).list(new FilenameFilter(){
+			files = new File(path).listFiles(new FileFilter(){
+				public boolean accept(File file){
+					return file.getName().endsWith(".nss");
+				}
+			});/* list(new FilenameFilter(){
 				public boolean accept(File dir, String name){
 					return name.endsWith(".nss");
 				}
-			});
-			for(String file: files){
-				temp = NSSNode.getScriptName(file);
+			});*/
+			for(File file: files){
+				temp = NSSNode.getScriptName(file.getName());
 				if(!scripts.containsKey(temp))
-					scripts.put(NSSNode.getScriptName(temp), new NSSNode(temp));
+					scripts.put(temp, new NSSNode(file.getPath()));
 				else{
 					System.err.println("Duplicate script file: " + temp);
 					error = true;

@@ -15,8 +15,10 @@ public class NSSNode {
 	
 	public STATES state = STATES.UNSTARTED;
 	
-	private HashSet<NSSNode> adjenct = new HashSet<NSSNode>();
-	public HashSet<NSSNode> includes;// = new HashSet<NSSNode>();
+	private HashSet<NSSNode> adjenct = new LinkedHashSet<NSSNode>();
+	public HashSet<NSSNode> includes = new LinkedHashSet<NSSNode>();
+	
+	private LinkedList<NSSNode> mergeLater = new LinkedList<NSSNode>();
 	
 	public String fileName;
 	//private NSSNode parent;
@@ -28,11 +30,14 @@ public class NSSNode {
 	 */
 	public NSSNode(String fileName) {
 		// Make sure the file exists
-		if(new File(fileName).exists()){
+		if(!new File(fileName).exists()){
 			Main.error = true;
 			System.err.println("Missing script file: " + fileName);
 			return;
 		}
+		
+//		 Each node is dependent on itself
+		includes.add(this);
 		
 		this.fileName = fileName;
 	}
@@ -42,7 +47,8 @@ public class NSSNode {
 	 */
 	public void linkDirect(){
 		// Load the text for this file
-		char[] cArray = new char[(int)new File(fileName).length()];
+		File file = new File(fileName);
+		char[] cArray = new char[(int)file.length()];
 		try{
 			FileReader fr = new FileReader(fileName);
 			fr.read(cArray);
@@ -55,8 +61,15 @@ public class NSSNode {
 		
 		String[] directIncludes = NWScript.findIncludes(new String(cArray));
 		
-		for(String name : directIncludes)
-			adjenct.add(Main.scripts.get(name));
+		for(String name : directIncludes){
+			NSSNode adj = Main.scripts.get(name);
+			if(adj != null)
+				adjenct.add(adj);
+			else{
+				System.out.println("Script file not found: " + name);
+				Main.error = true;
+			}
+		}
 	}
 
 	/**
@@ -66,24 +79,39 @@ public class NSSNode {
 		if(state != STATES.UNSTARTED)
 			if(state == STATES.DONE)
 				return includes;
-			else
+			else{
+				// TODO: Add to a list to merge include lists later once this node is done
+				mergeLater.add(caller);
 				return null;
+			}
 		
 		// Mark the node as work-in-progress, so it won't be handled again
 		state = STATES.WORKING;
 		// Initialize the includes list for this script with the direct includes
-		includes = new HashSet<NSSNode>(adjenct);
+		includes.addAll(adjenct);
+		
 		// See if we came to this node from another. If so, mark it for use during the recursion
 		/*if(caller != null)
 			parent = caller;*/
 		
 		HashSet<NSSNode> temp;
 		for(NSSNode adj : adjenct){
-			temp = linkFullyAndGetIncludes(adj);
+			temp = adj.linkFullyAndGetIncludes(this);
 			if(temp != null)
 				includes.addAll(temp);
 		}
-			
+		
+		// Remove self node if it's gotten in somehow
+		/*
+		if(includes.contains(this)){
+			System.err.println("Debug: File has itself in it's include list: " + fileName);
+			includes.remove(this);
+		}*/
+		
+		// Do the delayed include list merges
+		for(NSSNode node : mergeLater)
+			node.includes.addAll(this.includes);
+		
 		/*
 		// Cleanup
 		parent = null;
@@ -109,6 +137,19 @@ public class NSSNode {
 		return path;
 	}
 	
+	public void printSelf(PrintStream strm, boolean append) {
+		if(append){
+			strm.append(fileName.replace(".nss", ".ncs") + ":"/* + fileName*/);
+			for(NSSNode include : includes)
+				strm.append(" " + include.fileName);
+			strm.append("\n");
+		}else{
+			strm.print(fileName.replace(".nss", ".ncs") + ":"/* + fileName*/);
+			for(NSSNode include : includes)
+				strm.print(" " + include.fileName);
+			strm.print("\n");
+		}
+	}
 	
 	/**
 	 * A test main.
@@ -120,5 +161,6 @@ public class NSSNode {
 		System.out.println(getScriptName("boo.nss"));
 		System.out.println(getScriptName("lar\\floob.nss"));
 	}
-
+	
+	public String toString(){return fileName;}
 }

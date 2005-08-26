@@ -27,8 +27,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args){
-		//Set<String> files = new HashSet<String>();
-		Map<String, NSSNode> debugMap = scripts;
+		//Map<String, NSSNode> debugMap = scripts;
 		// Parse arguments
 		int i = 0;
 		String arg;
@@ -64,15 +63,8 @@ public class Main {
 		// Terminate if errored
 		if(error) System.exit(1);
 		
-		// Load the files concurrently. I suspect it will give a slight performance boost
-		//Map<String, NSSNode> parsecontainer = Collections.synchronizedMap(new HashMap<String, NSSNode>());
-		//Map<String, NSSNode> parseContainer = new HashMap<String, NSSNode>(files.size());
-		
-		/*
-		for(String fileName : files){
-			parseContainer.put(NSSNode.getScriptName(fileName), new NSSNode(fileName));
-		}*/
-		NSSNode[] debugArr = debugMap.values().toArray(new NSSNode[0]);
+		// TODO: Load the files concurrently. I suspect it will give a slight performance boost
+		//NSSNode[] debugArr = debugMap.values().toArray(new NSSNode[0]);
 		for(NSSNode script: scripts.values())
 			script.linkDirect();
 		
@@ -93,7 +85,7 @@ public class Main {
 	private static void readMe(){
 		System.out.println("Usage:   makedep [-aio?] nssfile+\n" +
 				           "Options:\n" +
-				           "-a                Append to outputfile\n"+
+				           "-a                Append to outputfile. This option must be defined before -o\n"+
 				           "-iPATH[;PATH...]  Include contents of directories\n"+
 				           "-oFILE            Use FILE as outputfile, stdout assumed\n"+
 				           "-?, --help        This text");
@@ -142,7 +134,7 @@ public class Main {
 	 */
 	private static void setOutput(String outFileName){
 		try{
-			oStrm = new PrintStream(outFileName);
+			oStrm = new PrintStream(new FileOutputStream(outFileName, append), true);
 		}catch(FileNotFoundException e){
 			System.err.println("Missing output file " + outFileName + "\nTerminating!");
 			System.exit(1);

@@ -13,15 +13,12 @@ import java.util.*;
 public class NSSNode {
 	public static enum STATES{UNSTARTED, WORKING, DONE};
 	
-	public STATES state = STATES.UNSTARTED;
-	
-	private HashSet<NSSNode> adjenct = new LinkedHashSet<NSSNode>();
-	public HashSet<NSSNode> includes = new LinkedHashSet<NSSNode>();
-	
+	private STATES state = STATES.UNSTARTED;
 	private LinkedList<NSSNode> mergeLater = new LinkedList<NSSNode>();
+	private HashSet<NSSNode> adjenct = new LinkedHashSet<NSSNode>();
 	
+	public HashSet<NSSNode> includes = new LinkedHashSet<NSSNode>();
 	public String fileName;
-	//private NSSNode parent;
 	
 	/**
 	 * Creates a new, unlinked NSSNode
@@ -90,10 +87,6 @@ public class NSSNode {
 		// Initialize the includes list for this script with the direct includes
 		includes.addAll(adjenct);
 		
-		// See if we came to this node from another. If so, mark it for use during the recursion
-		/*if(caller != null)
-			parent = caller;*/
-		
 		HashSet<NSSNode> temp;
 		for(NSSNode adj : adjenct){
 			temp = adj.linkFullyAndGetIncludes(this);
@@ -101,21 +94,10 @@ public class NSSNode {
 				includes.addAll(temp);
 		}
 		
-		// Remove self node if it's gotten in somehow
-		/*
-		if(includes.contains(this)){
-			System.err.println("Debug: File has itself in it's include list: " + fileName);
-			includes.remove(this);
-		}*/
-		
 		// Do the delayed include list merges
 		for(NSSNode node : mergeLater)
 			node.includes.addAll(this.includes);
 		
-		/*
-		// Cleanup
-		parent = null;
-		*/
 		state = STATES.DONE;
 		return includes;
 	}
@@ -138,16 +120,17 @@ public class NSSNode {
 	}
 	
 	public void printSelf(PrintStream strm, boolean append) {
+		String lineSeparator = System.getProperty("line.separator");
 		if(append){
 			strm.append(fileName.replace(".nss", ".ncs") + ":"/* + fileName*/);
 			for(NSSNode include : includes)
 				strm.append(" " + include.fileName);
-			strm.append("\n");
+			strm.append(lineSeparator + lineSeparator);
 		}else{
 			strm.print(fileName.replace(".nss", ".ncs") + ":"/* + fileName*/);
 			for(NSSNode include : includes)
 				strm.print(" " + include.fileName);
-			strm.print("\n");
+			strm.print(lineSeparator + lineSeparator);
 		}
 	}
 	

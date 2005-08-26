@@ -258,8 +258,8 @@ void DoRebuke(object oTarget)
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRebuke, oTarget, 60.0);    
     //handle unable to take actions
     AssignCommand(oTarget, ClearAllActions());
-    DelayCommand(60.0, SetCommandable(TRUE));
-    SetCommandable(FALSE);
+    AssignCommand(oTarget, DelayCommand(60.0, SetCommandable(TRUE)));
+    AssignCommand(oTarget, SetCommandable(FALSE));
 }
 
 void DoCommand(object oTarget, int nLevel)

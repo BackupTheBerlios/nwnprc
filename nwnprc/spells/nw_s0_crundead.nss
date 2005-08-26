@@ -70,11 +70,16 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         object oSummon = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetSpellTargetLocation());
         //this is to 
+        //make it hostile
+        ChangeToStandardFaction(oSummon, STANDARD_FACTION_HOSTILE);
         //A) allow time to dominate properly 
         //B) allow time for corpsecrafter to run
         effect eDom = EffectCutsceneDominated();
         eDom = SupernaturalEffect(EffectLinkEffects(eDom, EffectCutsceneImmobilize()));
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDom, oSummon, 3.0);
+        //visual
+        effect eVFX = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVFX, GetSpellTargetLocation());
     }
     else
     {

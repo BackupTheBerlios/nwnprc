@@ -40,6 +40,9 @@ public class Main {
 		else if(args[0].equals("duplicatesubrad")){
 			prc.utils.DuplicateSubradials.main(paramsToPass);
 		}
+		else if(args[0].equals("makedep")){
+			prc.makedep.Main.main(paramsToPass);
+		}
 	}
 	
 	
@@ -57,6 +60,7 @@ public class Main {
 						   "             radials    - Generates subradial FeatID values\n"+
 						   "             duplicatesubrad  - Seeks through spells.2da and prints lines\n"+
 						   "                                containing duplicate subradial values\n"+
+						   "             makedep    - Builds include dependency lists\n"+
 		                   "\n"+
 						   "parameters  a list of parameters passed to the class called\n"+
 						   "\n"+

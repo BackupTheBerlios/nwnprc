@@ -5,26 +5,32 @@ import java.io.*;
 
 
 /**
+ * Calculates nwscript dependencies.
+ * 
  * Usage:   makedep [-aio?] nssfile+
  * Options:
- *    -a                Append to outputfile
- *    -iPATH[;PATH...]  Include contents of directories
- *    -oFILE            Use FILE as outputfile, stdout assumed
- *    -?, --help        This text
+ * -a                Append to outputfile. This option must be defined before -o
+ * -n                Ignore include file if not found
+ * -iPATH[,PATH...]  Include contents of directories
+ * -oFILE            Use FILE as outputfile, stdout assumed
+ * -?, --help        This text
  * 
  * 
- * @author heikki
+ * @author Ornedan
  */
 public class Main {
 
 	static Map<String, NSSNode> scripts = new LinkedHashMap<String, NSSNode>();
 	
 	protected static boolean append = false,
+	                         ignoreMissing = false,
 	                         error = false;
 	static PrintStream oStrm = System.out; 
 	
 	/**
-	 * @param args
+	 * Main method. Entrypoint to the program
+	 * 
+	 * @param args The arguments. See readMe() for accepted ones
 	 */
 	public static void main(String[] args){
 		//Map<String, NSSNode> debugMap = scripts;
@@ -33,9 +39,10 @@ public class Main {
 		String arg;
 		while(i < args.length){
 			arg = args[i];
-			i++;
 			if(arg.equals("-a"))
 				append = true;
+			else if(arg.equals("-n"))
+				ignoreMissing = true;
 			else if(arg.startsWith("-i"))
 				getFiles(arg.substring(2));
 			else if(arg.startsWith("-o"))
@@ -44,6 +51,7 @@ public class Main {
 				readMe();
 			else
 				break;
+			i++;
 		}
 		
 		// Add the remaining params to source list
@@ -86,7 +94,8 @@ public class Main {
 		System.out.println("Usage:   makedep [-aio?] nssfile+\n" +
 				           "Options:\n" +
 				           "-a                Append to outputfile. This option must be defined before -o\n"+
-				           "-iPATH[;PATH...]  Include contents of directories\n"+
+				           "-n                Ignore include file if not found\n"+
+				           "-iPATH[,PATH...]  Include contents of directories\n"+
 				           "-oFILE            Use FILE as outputfile, stdout assumed\n"+
 				           "-?, --help        This text");
 		System.exit(0);
@@ -96,11 +105,10 @@ public class Main {
 	 * Looks in the directories specified by the given list for .nss
 	 * files and adds them to the sources list.
 	 * 
-	 * @param pathList ;-separated list of directories to look in
-	 * @param fileNameSet Set to place the script names into
+	 * @param pathList comma-separated list of directories to look in
 	 */
-	private static void getFiles(String pathList/*, Set<String> fileNameSet*/){
-		String[] paths = pathList.split(";");
+	private static void getFiles(String pathList){
+		String[] paths = pathList.split(",");
 		File[] files;
 		String temp;
 		for(String path : paths){
@@ -108,11 +116,7 @@ public class Main {
 				public boolean accept(File file){
 					return file.getName().endsWith(".nss");
 				}
-			});/* list(new FilenameFilter(){
-				public boolean accept(File dir, String name){
-					return name.endsWith(".nss");
-				}
-			});*/
+			});
 			for(File file: files){
 				temp = NSSNode.getScriptName(file.getName());
 				if(!scripts.containsKey(temp))

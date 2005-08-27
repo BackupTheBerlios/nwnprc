@@ -1,11 +1,12 @@
 package prc.makedep;
 
-//import static prc.makedep.NWScript.STATES;
 import java.util.*;
 import java.util.regex.*;
 
 
 /** 
+ * A class for parsing NWScript files.
+ * 
  * @author Ornedan
  */
 public class NWScript {
@@ -44,8 +45,6 @@ public class NWScript {
 		TreeSet<String> list = new TreeSet<String>();
 		
 		removeComments(wip);
-		
-		//System.out.println(wip);
 		
 		// Parse for remaining #include statements
 		//#include[ \t\x0B\f\r]*"(.*)"

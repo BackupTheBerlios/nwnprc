@@ -547,6 +547,7 @@ public class Data_2da{
 				readMe();
 			}
 			verbose = false;
+			spinner.disable();
 			file1 = load2da(args[1]);
 			file2 = load2da(args[2]);
 			

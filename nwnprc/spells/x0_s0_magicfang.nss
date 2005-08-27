@@ -51,7 +51,39 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
 
-    DoMagicFang(1, DAMAGE_POWER_PLUS_ONE,nCasterLevel);
+    //DoMagicFang(1, DAMAGE_POWER_PLUS_ONE,nCasterLevel);
+    //PRCversion
+    int nPower = 1;
+    int nDamagePower = DAMAGE_POWER_PLUS_ONE;
+    object oTarget = GetSpellTargetObject();
+    //remove other magic fang effects
+    RemoveSpellEffects(452, OBJECT_SELF, oTarget);
+    RemoveSpellEffects(453, OBJECT_SELF, oTarget);
+    effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+
+    effect eAttack = EffectAttackIncrease(nPower);
+    effect eDamage = EffectDamageIncrease(nPower);
+    effect eReduction = EffectDamageReduction(nPower, nDamagePower); // * doing this because
+                                                                     // * it creates a true
+                                                                     // * enhancement bonus
+
+    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    effect eLink = EffectLinkEffects(eAttack, eDur);
+    eLink = EffectLinkEffects(eLink, eDamage);
+    eLink = EffectLinkEffects(eLink, eReduction);
+
+    float fDuration = TurnsToSeconds(nCasterLevel); // * Duration 1 minute/level
+     if ((nMetaMagic & METAMAGIC_EXTEND))    //Duration is +100%
+    {
+         fDuration = fDuration * 2.0;
+    }
+
+    //Fire spell cast at event for target
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));
+    //Apply VFX impact and bonus effects
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Erasing the variable used to store the spell's spell school

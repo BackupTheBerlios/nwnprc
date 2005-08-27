@@ -63,7 +63,56 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         case 4: nDamagePower = DAMAGE_POWER_PLUS_FOUR; break;
         case 5: nDamagePower = DAMAGE_POWER_PLUS_FIVE; break;
     }
-    DoMagicFang(nPower, nDamagePower,nCasterLevel);
+    //DoMagicFang(nPower, nDamagePower,nCasterLevel);
+    //PRCversion
+    object oTarget = GetSpellTargetObject();
+    //only works if you have nothing in right & left hands
+    if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget))
+        || GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)))
+    {
+        FloatingTextStrRefOnCreature(8962, OBJECT_SELF, FALSE);
+        return; // has neither an animal companion
+    }
+    //only works if target has monk levels
+    //or has a creature weapon
+    if(!GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTarget))
+        && !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget))
+        && !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTarget))
+        && !GetLevelByClass(CLASS_TYPE_MONK, oTarget))
+    {
+        FloatingTextStrRefOnCreature(8962, OBJECT_SELF, FALSE);
+        return; // has neither an animal companion
+    }    
+        
+    //remove other magic fang effects
+    RemoveSpellEffects(452, OBJECT_SELF, oTarget);
+    RemoveSpellEffects(453, OBJECT_SELF, oTarget);
+    effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+
+    effect eAttack = EffectAttackIncrease(nPower);
+    effect eDamage = EffectDamageIncrease(nPower);
+    effect eReduction = EffectDamageReduction(nPower, nDamagePower); // * doing this because
+                                                                     // * it creates a true
+                                                                     // * enhancement bonus
+
+    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    effect eLink = EffectLinkEffects(eAttack, eDur);
+    eLink = EffectLinkEffects(eLink, eDamage);
+    eLink = EffectLinkEffects(eLink, eReduction);
+    
+    float fDuration = HoursToSeconds(nCasterLevel); // * Duration 1 hour/level
+     if ((nMetaMagic & METAMAGIC_EXTEND))    //Duration is +100%
+    {
+         fDuration = fDuration * 2.0;
+    }
+
+    //Fire spell cast at event for target
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));
+    //Apply VFX impact and bonus effects
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
+
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Erasing the variable used to store the spell's spell school

@@ -552,22 +552,41 @@ int MySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
 
 effect CreateProtectionFromAlignmentLink(int nAlignment, int nPower = 1)
 {
-    int nFinal = nPower * 2;
-    effect eAC = EffectACIncrease(nFinal, AC_DEFLECTION_BONUS);
-    eAC = VersusAlignmentEffect(eAC, ALIGNMENT_ALL, nAlignment);
-    effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nFinal);
-    eSave = VersusAlignmentEffect(eSave,ALIGNMENT_ALL, nAlignment);
-    effect eImmune = EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS);
-    eImmune = VersusAlignmentEffect(eImmune,ALIGNMENT_ALL, nAlignment);
+    int nAlignmentLC;
+    int nAlignmentGE;
     effect eDur;
-    if(nAlignment == ALIGNMENT_EVIL)
+    if(nAlignment == ALIGNMENT_LAWFUL)
     {
+        nAlignmentLC = ALIGNMENT_LAWFUL;
+        nAlignmentGE = ALIGNMENT_ALL;
+        eDur = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
+    }
+    else if(nAlignment == ALIGNMENT_CHAOTIC)
+    {
+        nAlignmentLC = ALIGNMENT_CHAOTIC;
+        nAlignmentGE = ALIGNMENT_ALL;
         eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
     }
     else if(nAlignment == ALIGNMENT_GOOD)
     {
+        nAlignmentLC = ALIGNMENT_ALL;
+        nAlignmentGE = ALIGNMENT_GOOD;
         eDur = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
     }
+    else if(nAlignment == ALIGNMENT_EVIL)
+    {
+        nAlignmentLC = ALIGNMENT_ALL;
+        nAlignmentGE = ALIGNMENT_EVIL;
+        eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
+    }
+
+    int nFinal = nPower * 2;
+    effect eAC = EffectACIncrease(nFinal, AC_DEFLECTION_BONUS);
+    eAC = VersusAlignmentEffect(eAC, nAlignmentLC, nAlignmentGE);
+    effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nFinal);
+    eSave = VersusAlignmentEffect(eSave,nAlignmentLC, nAlignmentGE);
+    effect eImmune = EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS);
+    eImmune = VersusAlignmentEffect(eImmune,nAlignmentLC, nAlignmentGE);
 
     effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eLink = EffectLinkEffects(eImmune, eSave);

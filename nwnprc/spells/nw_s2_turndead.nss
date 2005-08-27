@@ -477,7 +477,8 @@ int GetCommandedTotalHD()
     int i;
     int nCommandedTotalHD;
     object oTest = GetAssociate(ASSOCIATE_TYPE_DOMINATED, OBJECT_SELF, i);
-    while(GetIsObjectValid(oTest))
+    object oOldTest = OBJECT_INVALID;
+    while(GetIsObjectValid(oTest) && oTest != oOldTest)
     {
         if(GetHasSpellEffect(GetSpellId(), oTest))
         {
@@ -488,6 +489,7 @@ int GetCommandedTotalHD()
             nCommandedTotalHD += nTestHD;
         }    
         i++;
+        oOldTest = oTest;
         oTest = GetAssociate(ASSOCIATE_TYPE_DOMINATED, OBJECT_SELF, i);
     }
     return nCommandedTotalHD;

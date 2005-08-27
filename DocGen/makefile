@@ -3,7 +3,8 @@ FLAGS = -Xlint:all -g -source 1.5 -target 1.5
 RUNPARAMS = -Xmx300m -Xms300m -cp imageio_tga_1.1.0.jar\;
 TARGET = prc/*.java \
          prc/autodoc/*.java \
-         prc/utils/*.java
+         prc/utils/*.java \
+         prc/makedep/*.java
 
 
 default:

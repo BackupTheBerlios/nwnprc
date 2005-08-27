@@ -49,8 +49,12 @@ public class NWScript {
 		// Parse for remaining #include statements
 		//#include[ \t\x0B\f\r]*"(.*)"
 		matcher.reset(wip);
-		while(matcher.find())
+		//String debug;
+		while(matcher.find()){
+			//debug = matcher.group(1);
+			//list.add(debug);
 			list.add(matcher.group(1));
+		}
 		
 		
 		return list.toArray(new String[0]);

@@ -1,3 +1,7 @@
+/**
+ * A system for calculating nwscript dependencies. Makes some assumptions specific
+ * to the PRC setup.
+ */
 package prc.makedep;
 
 import java.util.*;
@@ -7,11 +11,11 @@ import java.io.*;
 /**
  * Calculates nwscript dependencies.
  * 
- * Usage:   makedep [-aio?] nssfile+
+ * Usage:   makedep [-aio?] targetlist
  * Options:
  * -a                Append to outputfile. This option must be defined before -o
  * -n                Ignore include file if not found
- * -iPATH[,PATH...]  Include contents of directories
+ * -sPATH[,PATH...]  List of source directories
  * -oFILE            Use FILE as outputfile, stdout assumed
  * -?, --help        This text
  * 
@@ -43,7 +47,7 @@ public class Main {
 				append = true;
 			else if(arg.equals("-n"))
 				ignoreMissing = true;
-			else if(arg.startsWith("-i"))
+			else if(arg.startsWith("-s"))
 				getFiles(arg.substring(2));
 			else if(arg.startsWith("-o"))
 				setOutput(arg.substring(2));
@@ -54,6 +58,7 @@ public class Main {
 			i++;
 		}
 		
+		/*
 		// Add the remaining params to source list
 		String temp;
 		for(; i < args.length; i++){
@@ -67,6 +72,32 @@ public class Main {
 				error = true;
 			}
 		}
+		*/
+		// Parse the target file list
+		HashMap<String, String> targetList = new LinkedHashMap<String, String>();
+		File targetListFile;// = new File(args[i]);
+		Scanner scan;
+		String targetName;
+		for(; i < args.length; i++){
+			targetListFile = new File(args[i]);
+			// Read the contents
+			try {
+				scan = new Scanner(targetListFile);
+			} catch (FileNotFoundException e) {
+				System.err.println("Could not find file: " + args[i]);
+				error = true;
+				continue;
+			}
+			
+			while(scan.hasNextLine()){
+				targetName = scan.nextLine().toLowerCase();
+				// Strip everything after the .ncs from the line
+				targetName = targetName.substring(0, targetName.indexOf(".ncs") + 4);
+				targetList.put(NSSNode.getScriptName(targetName), targetName);
+			}
+		}
+		
+		
 		
 		// Terminate if errored
 		if(error) System.exit(1);
@@ -83,7 +114,12 @@ public class Main {
 		// Start a depth-first-search to find all the include trees
 		for(NSSNode node : scripts.values()){
 			node.linkFullyAndGetIncludes(null);
-			node.printSelf(oStrm, append);
+			//node.printSelf(oStrm, append);
+		}
+		
+		// Do the printing
+		for(String target : targetList.keySet()){
+			scripts.get(target.toLowerCase()).printSelf(oStrm, append, targetList.get(target));
 		}
 	}
 	
@@ -91,13 +127,17 @@ public class Main {
 	 * Prints usage and terminates.
 	 */
 	private static void readMe(){
-		System.out.println("Usage:   makedep [-aio?] nssfile+\n" +
+		System.out.println("Usage:   makedep [-aio?] targetlist+\n" +
 				           "Options:\n" +
 				           "-a                Append to outputfile. This option must be defined before -o\n"+
 				           "-n                Ignore include file if not found\n"+
-				           "-iPATH[,PATH...]  Include contents of directories\n"+
+				           "-sPATH[,PATH...]  List of source directories\n"+
 				           "-oFILE            Use FILE as outputfile, stdout assumed\n"+
-				           "-?, --help        This text");
+				           "-?, --help        This text\n"+
+				           "\n"+
+				           "targetlist is the name of a file containing a list of object files to calculate\n"+
+				           "dependencies for. One filename per line."
+				           );
 		System.exit(0);
 	}
 	
@@ -118,7 +158,7 @@ public class Main {
 				}
 			});
 			for(File file: files){
-				temp = NSSNode.getScriptName(file.getName());
+				temp = NSSNode.getScriptName(file.getName()).toLowerCase();
 				if(!scripts.containsKey(temp))
 					scripts.put(temp, new NSSNode(file.getPath()));
 				else{

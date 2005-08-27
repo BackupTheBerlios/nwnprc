@@ -30,7 +30,12 @@ public class NSSNode {
 	 * So, if a circular include is found, it is added here so that this node's includes
 	 * can be added to it's list once the DFS returns to this node.
 	 */
-	private LinkedList<NSSNode> mergeLater = new LinkedList<NSSNode>();
+	private HashSet<NSSNode> mergeLater = new HashSet<NSSNode>();
+	
+	/**
+	 * A container for marking files that are already being handled during a merging cascade.
+	 */
+	private static HashSet<NSSNode> inMerge;
 	
 	/**
 	 * The nodes included directly by this node via #include statements.
@@ -45,6 +50,11 @@ public class NSSNode {
 	private HashSet<NSSNode> includes = new LinkedHashSet<NSSNode>();
 	
 	/**
+	 * The first node to call linkFullyAndGetIncludes() on this node.
+	 */
+	public NSSNode priCaller;
+	
+	/**
 	 * The path used to reference this file.
 	 */
 	public String fileName;
@@ -55,6 +65,7 @@ public class NSSNode {
 	 * @param fileName
 	 */
 	public NSSNode(String fileName) {
+		fileName = fileName.toLowerCase();
 		// Make sure the file exists
 		if(!new File(fileName).exists()){
 			Main.error = true;
@@ -85,9 +96,16 @@ public class NSSNode {
 			return;
 		}
 		
+		/* Debuggage
+		if(fileName.indexOf("psi_inc_psifunc") != -1)
+			System.currentTimeMillis();
+		//*/
+			
+		
 		String[] directIncludes = NWScript.findIncludes(new String(cArray));
 		
 		for(String name : directIncludes){
+			name = name.toLowerCase();
 			NSSNode adj = Main.scripts.get(name);
 			if(adj != null)
 				adjenct.add(adj);
@@ -112,12 +130,26 @@ public class NSSNode {
 				return includes;
 			else{
 				// Add to a list to merge include lists later once this node is done
-				mergeLater.add(caller);
+				NSSNode toMergeLater = caller;
+				while(toMergeLater != this){
+					mergeLater.add(toMergeLater);
+					toMergeLater = toMergeLater.priCaller;
+				}
 				return null;
 			}
-		
+		/* Debuggage stuff
+		if(//fileName.indexOf("ss_ep_psionicsal") != -1 ||
+		   //fileName.indexOf("psi_inc_psifunc")  != -1 ||
+		   //fileName.indexOf("prc_alterations")  != -1 ||
+		   //fileName.indexOf("bonsum_shapelem")  != -1 ||
+		   fileName.indexOf("pnp_shft_poly")  != -1 ||
+		   false
+		   )
+			System.currentTimeMillis();
+			//*/	
 		// Mark the node as work-in-progress, so it won't be handled again
 		state = STATES.WORKING;
+		priCaller = caller;
 		// Initialize the includes list for this script with the direct includes
 		includes.addAll(adjenct);
 		
@@ -129,11 +161,29 @@ public class NSSNode {
 		}
 		
 		// Do the delayed include list merges
-		for(NSSNode node : mergeLater)
-			node.includes.addAll(this.includes);
+		inMerge = new HashSet<NSSNode>();
+		this.doMerge();
+		/*for(NSSNode node : mergeLater)
+			node.includes.addAll(this.includes);*/
+		inMerge = null;
 		
 		state = STATES.DONE;
 		return includes;
+	}
+	
+	/**
+	 * Merges the include list of this file with all files that included this one while
+	 * it was still being worked on. Recurses to each of these files in order to update
+	 * files dependent on them.
+	 */
+	private void doMerge(){
+		for(NSSNode node : mergeLater){
+			if(!inMerge.contains(node)){
+				inMerge.add(node);
+				node.includes.addAll(this.includes);
+				node.doMerge();
+			}
+		}
 	}
 	
 	/**
@@ -143,8 +193,12 @@ public class NSSNode {
 	 * @return     string, name used in include statements
 	 */
 	public static String getScriptName(String path) {
-		// Cut out the .nss
-		path = path.substring(0, path.indexOf(".nss"));
+		// Cut out the .nss or .ncs
+		try{
+		path = path.substring(0, path.indexOf(".nss") != -1 ? path.indexOf(".nss") : path.indexOf(".ncs"));
+		}catch(Exception e){
+			System.err.println(path);
+		}
 		
 		// Cut out the directories, if present
 		if(path.indexOf(File.separator) != -1)
@@ -159,16 +213,18 @@ public class NSSNode {
 	 * @param strm   stream to print to
 	 * @param append if this is <code>true</code>, the PrintStream's <code>append</code> methods
 	 *                are used instead of <code>print</code> methods.
+	 * @param target name of the object file to be built from this script
 	 */
-	public void printSelf(PrintStream strm, boolean append) {
+	public void printSelf(PrintStream strm, boolean append, String target) {
 		String lineSeparator = System.getProperty("line.separator");
 		if(append){
-			strm.append(fileName.replace(".nss", ".ncs") + ":"/* + fileName*/);
+			//strm.append(fileName.replace(".nss", ".ncs") + ":"/* + fileName*/);
+			strm.append(target + ":");
 			for(NSSNode include : includes)
 				strm.append(" " + include.fileName);
 			strm.append(lineSeparator + lineSeparator);
 		}else{
-			strm.print(fileName.replace(".nss", ".ncs") + ":"/* + fileName*/);
+			strm.print(target + ":");
 			for(NSSNode include : includes)
 				strm.print(" " + include.fileName);
 			strm.print(lineSeparator + lineSeparator);

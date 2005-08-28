@@ -97,7 +97,7 @@ void main()
             }
             array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
-        else if(nStage == 3 && !GetLocalInt(oPC, "Stage3Setup"))
+        else if(nStage == 3 )
         {
             //select spell
             SetCustomToken(99, "Select a spell:");
@@ -165,6 +165,7 @@ void main()
     {
         //select class
         SetLocalInt(oPC, "SpellClass", nValue);
+        array_set_int(oPC, "StagesSetup", nStage, FALSE);
         nStage++;
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
@@ -176,6 +177,7 @@ void main()
     {
         //select level
         SetLocalInt(oPC, "SpellLevel", nValue);
+        array_set_int(oPC, "StagesSetup", nStage, FALSE);
         nStage++;
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
@@ -187,6 +189,7 @@ void main()
     {
         //select slot
         SetLocalInt(oPC, "SpellSlot", nValue);
+        array_set_int(oPC, "StagesSetup", nStage, FALSE);
         nStage++;
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
@@ -202,6 +205,7 @@ void main()
         int nSpellClass = GetLocalInt(oPC, "SpellClass");
         persistant_array_create(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nSpellClass));
         persistant_array_set_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nSpellClass), nSpellSlot, nValue);
+        array_set_int(oPC, "StagesSetup", nStage, FALSE);
         nStage = 1;
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");

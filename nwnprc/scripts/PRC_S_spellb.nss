@@ -105,7 +105,8 @@ void main()
             int nSpellClass = GetLocalInt(oPC, "SpellClass");
             string sFile = GetFileForClass(nSpellClass);
             int i;
-            for(i=1;i<200;i++)
+            //this may cause a TMI, dont have time to fix it now
+            for(i=1;i<410;i++)
             {
                 if(StringToInt(Get2DACache(sFile, "Level", i)) == nSpellLevel
                     && Get2DACache(sFile, "Level", i) != ""
@@ -118,7 +119,6 @@ void main()
                     array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
                 }
             }
-            SetLocalInt(oPC, "Stage3Setup", TRUE);
             array_set_int(oPC, "StagesSetup", nStage, TRUE);
         }
         //do token setup
@@ -142,7 +142,7 @@ void main()
         DeleteLocalInt(oPC, "SpellLevel");
         DeleteLocalInt(oPC, "ChoiceOffset");
         DeleteLocalInt(oPC, "SpellSlot");
-        DeleteLocalInt(oPC, "Stage3Setup");
+        array_delete(oPC, "StagesSetup");
         return;
     }
     else if(nValue == -3)
@@ -156,7 +156,7 @@ void main()
         DeleteLocalInt(oPC, "SpellLevel");
         DeleteLocalInt(oPC, "ChoiceOffset");
         DeleteLocalInt(oPC, "SpellSlot");
-        DeleteLocalInt(oPC, "Stage3Setup");
+        array_delete(oPC, "StagesSetup");
         return;
     }
     nValue = array_get_int(oPC, "ChoiceValues", nValue+GetLocalInt(oPC, "ChoiceOffset"));
@@ -208,7 +208,6 @@ void main()
         array_create(oPC, "ChoiceTokens");
         array_create(oPC, "ChoiceValues");
         DeleteLocalInt(oPC, "ChoiceOffset");
-        DeleteLocalInt(oPC, "Stage3Setup");
     }
     SetLocalInt(oPC, "Stage", nStage);
 }

@@ -18,6 +18,7 @@
 
 void main()
 {
+
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
@@ -34,13 +35,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
         eAOE = GetFirstEffect(oTarget);
         while (GetIsEffectValid(eAOE))
         {
-            if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
+            if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator()
+                && GetEffectSpellId(eAOE) == SPELL_MAGIC_CIRCLE_AGAINST_LAW
+                && GetEffectType(eAOE) != EFFECT_TYPE_AREA_OF_EFFECT)
             {
-                //If the effect was created by the AOE then remove it
-                if(GetEffectSpellId(eAOE) == SPELL_MAGIC_CIRCLE_AGAINST_LAW)
-                {
-                    RemoveEffect(oTarget, eAOE);
-                }
+                RemoveEffect(oTarget, eAOE);
             }
             //Get next effect on the target
             eAOE = GetNextEffect(oTarget);

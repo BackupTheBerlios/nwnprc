@@ -40,7 +40,8 @@ void main()
 
 // End of Spell Cast Hook
 
-    if (GetHasSpellEffect(SPELL_HOLYRADIANCE)|| GetAlignmentGoodEvil(OBJECT_SELF)!= ALIGNMENT_GOOD )
+    if (GetHasSpellEffect(SPELL_HOLYRADIANCE)
+        || GetAlignmentGoodEvil(OBJECT_SELF)!= ALIGNMENT_GOOD )
     {
        RemoveSpellEffects(GetSpellId(),OBJECT_SELF,GetSpellTargetObject());
        return;

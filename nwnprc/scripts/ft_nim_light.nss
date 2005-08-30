@@ -13,44 +13,36 @@
 #include "x2_inc_itemprop"
 #include "nw_i0_spells"
 
-void main(){
+void main()
+{
    object oPC = OBJECT_SELF;
-   object oSkin = GetPCSkin(OBJECT_SELF);
    string nMes = "";
-   int nBrightness = IP_CONST_LIGHTBRIGHTNESS_DIM;
-   int nColor = IP_CONST_LIGHTCOLOR_WHITE;
-   itemproperty ipAdd = ItemPropertyLight(nBrightness, nColor);
-   effect ePersuade;
-   effect eTaunt;
-   effect eLink;
+    RemoveSpellEffects(GetSpellId(), oPC, oPC);
 
-   ePersuade = EffectSkillIncrease(SKILL_PERSUADE, 2);
-   eTaunt = EffectSkillIncrease(SKILL_TAUNT, 2);
-   eLink = ExtraordinaryEffect(EffectLinkEffects(ePersuade, eTaunt));
+   effect ePersuade = EffectSkillIncrease(SKILL_PERSUADE, 2);
+   effect eTaunt = EffectSkillIncrease(SKILL_TAUNT, 2);
+   effect eLight = EffectVisualEffect(VFX_DUR_LIGHT_WHITE_5);
+   effect eLink = EffectLinkEffects(ePersuade, eTaunt);
+   eLink = ExtraordinaryEffect(EffectLinkEffects(eLink, eLight));
 
-   RemoveSpellEffects(GetSpellId(), oPC, oPC);
-   IPRemoveMatchingItemProperties(oSkin, ITEM_PROPERTY_LIGHT, DURATION_TYPE_PERMANENT);
-
-   if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD){
-      if (!GetHasFeatEffect(FEAT_NIMBUSLIGHT) && !GetHasFeatEffect(FEAT_HOLYRADIANCE)){
-         if (!GetIsObjectValid(oSkin)) return;
-
-         // Apply the Light and Skill increase
-         IPSafeAddItemProperty(oSkin, ipAdd);
-         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);
-
-         // Display the message
-         nMes = "*Nimbus of Light Activated*";
-         FloatingTextStringOnCreature(nMes, oPC, FALSE);
-      }
-      else{
-         // Remove the Light and Skill increase
-         IPRemoveMatchingItemProperties(oSkin, ITEM_PROPERTY_LIGHT, DURATION_TYPE_PERMANENT);
-         RemoveSpellEffects(GetSpellId(), oPC, oPC);
-            
-         // Display the message
-         nMes = "*Nimbus of Light Deactivated*";
-         FloatingTextStringOnCreature(nMes, oPC, FALSE);
-      }
-   }
+   if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
+   {
+       if (!GetHasFeatEffect(FEAT_NIMBUSLIGHT))
+       {
+            // Apply the Light and Skill increase
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);
+            // Display the message
+            nMes = "*Nimbus of Light Activated*";
+       }
+       else
+       {
+            // Display the message
+            nMes = "*Nimbus of Light Deactivated*";
+        }
+    }
+    else
+    {
+        nMes = "You cannot activate Nimbus of Light if you are not good";
+    }
+    FloatingTextStringOnCreature(nMes, oPC, FALSE);
 }

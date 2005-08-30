@@ -4,7 +4,9 @@
 #include "prc_inc_spells"
 #include "prc_inc_clsfunc"
 
-const int SPELLBOOK_ROW_COUNT = 150;
+const int SPELLBOOK_ROW_COUNT = 410;
+const int SPELLBOOK_IPRP_FEATS_START = 10400;
+const int SPELLBOOK_IPRP_FEATS_END = 11196;
 
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID);
 int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1);
@@ -99,8 +101,8 @@ void WipeSpellbookHideFeats(object oPC)
     while(GetIsItemPropertyValid(ipTest))
     {
         if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
-            && GetItemPropertySubType(ipTest) > 10400
-            && GetItemPropertySubType(ipTest) < 10592)
+            && GetItemPropertySubType(ipTest) > SPELLBOOK_IPRP_FEATS_START
+            && GetItemPropertySubType(ipTest) < SPELLBOOK_IPRP_FEATS_END)
             DelayCommand(1.0, RemoveItemProperty(oHide, ipTest));
         ipTest = GetNextItemProperty(oHide);
     }
@@ -208,15 +210,10 @@ void SetupSpells(object oPC, int nClass)
 
 void CheckNewSpellbooks(object oPC)
 {
-    int i;
-    for(i=12;i<=255;i++)
-    {
-        if(GetLevelByClass(i, oPC))
-        {
-            DelayCommand(0.01, SetupSpells(oPC, i));
-        }
-    }    
     WipeSpellbookHideFeats(oPC);
+    SetupSpells(oPC, PRCGetClassByPosition(1, oPC));
+    SetupSpells(oPC, PRCGetClassByPosition(2, oPC));
+    SetupSpells(oPC, PRCGetClassByPosition(3, oPC));
 }
 
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)

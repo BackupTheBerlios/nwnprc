@@ -16,7 +16,7 @@
 void MakeLookupLoop(int nClass, int nMin, string sSourceColumn, 
     string sDestColumn, string sVarNameBase, int nLoopSize = 100);
 
-//this returns the real SpellID of spells cast by psionic or the new spellbooks
+//this returns the real SpellID of "wrapper" spells cast by psionic or the new spellbooks
 int GetPowerFromSpellID(int nSpellID);
 
 //this retuns the featID of the class-specific feat for a spellID

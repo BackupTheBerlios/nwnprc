@@ -63,6 +63,12 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE)
 
 void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID)
 {
+    //if its a hostile spell, clear the action queue
+    //this stops people stacking hostile spells to be instacast
+    //at the end, for example when coming out of invisibility
+    if(Get2DACache("spells", "HostileSetting", iSpell) == "1")
+        ClearAllActions();
+        
     object oTarget = GetSpellTargetObject();
     location lLoc = GetSpellTargetLocation();
 
@@ -83,6 +89,7 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         ActionCastSpellAtObject(iSpell, oTarget, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
     else
         ActionCastSpellAtLocation(iSpell, lLoc, nMetaMagic, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+        
     //clean up afterwards
     if (iCasterLev != 0)
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));

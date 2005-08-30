@@ -281,6 +281,9 @@ const int FEAT_DESTRUCTION_RETRIBUTION                 = 4017;
 const int FEAT_HARDENED_FLESH                          = 4018;
 const int FEAT_NIMBLE_BONES                            = 4019;
 
+// Forgotten Realms Campaign Setting
+const int FEAT_INSCRIBE_RUNE                           = 2462;
+
 //Vile
 const int FEAT_VILE_MARTIAL_CLUB          = 3357;
 const int FEAT_VILE_MARTIAL_DAGGER        = 3358;

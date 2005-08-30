@@ -62,6 +62,10 @@ int PWSwitchRestructions(object oPC = OBJECT_SELF);
 
 // Applies when a Marshal can select a Major or Minor Aura
 int MarshalAuraLimit(object oPC = OBJECT_SELF);
+
+// Stops people from taking feats they cannot use because of caster levels.
+int CasterFeats(object oPC = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -823,6 +827,18 @@ int MarshalAuraLimit(object oPC = OBJECT_SELF)
     }
     return TRUE;
 }
+
+int CasterFeats(object oPC = OBJECT_SELF)
+{
+	if (GetHasFeat(FEAT_INSCRIBE_RUNE, oPC) && GetLocalInt(oPC, "PRC_DivSpell2") != 0)
+	{
+	        FloatingTextStringOnCreature("Inscribe Rune requires Level 2 Divine Spells", oPC, FALSE);
+        	return FALSE;	
+        }
+	
+	return TRUE;
+}
+       
 
 //this is a rough calculation to stop the 41 spellslot levels bugs
 int FortySpellSlotLevels(object oPC)

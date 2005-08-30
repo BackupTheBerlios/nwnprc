@@ -29,6 +29,11 @@ const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 // that he is banned from casting. 
 int RedWizRestrictedSchool();
 
+// This function checks whether Inscribe Rune is turned on
+// and if so, deducts the appropriate experience and gold
+// then creates the rune in the caster's inventory.
+// This will also cause the spell to fail if turned on.
+int InscribeRune();
 
 // This function checks whether the Combat Medic's Healing Kicker
 // feats are active, and if so imbues the spell target with additional
@@ -142,6 +147,80 @@ int RedWizRestrictedSchool()
     }
 
     return TRUE;
+}
+
+int InscribeRune()
+{
+	// Get the required ints
+	object oCaster = OBJECT_SELF;
+	
+	// If Inscribing is turned off, the spell functions as normal
+	if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;	
+	
+	object oTarget = GetSpellTargetObject();
+	int nCaster = PRCGetCasterLevel(oCaster);
+	int nDC = PRCGetSaveDC(oTarget, oCaster);
+	int nSpell = PRCGetSpellId();
+	int nSpellLevel = StringToInt(lookup_spell_level(nSpell));
+	
+	// This will be modified with Runecaster code later.
+	int nCharges = 1;
+	
+	// Cost of the rune in gold and XP
+	int nGoldCost = nSpellLevel * nCaster * 100;
+	int nXPCost = nGoldCost/25;
+
+	// See if the caster has enough gold and XP to scribe a rune, and that he passes the skill check.
+	int nHD = GetHitDice(oCaster);
+	int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+	int nNewXP = GetXP(oCaster) - nXPCost;
+	int nGold = GetGold(oCaster);
+	int nNewGold = nGold - nGoldCost;
+	int nCheck = GetIsSkillSuccessful(oCaster, SKILL_CRAFT_ARMOR, (20 + nSpellLevel));
+	
+
+	if (nMinXPForLevel > nNewXP || nNewXP == 0 || nNewGold < 0)
+	{
+		FloatingTextStringOnCreature("You do not have enough gold and/or experience to scribe this rune.", oCaster, FALSE);
+		// Since they don't have enough, the spell casts normally
+		return TRUE;
+	}
+	if (!nCheck)
+	{
+		FloatingTextStringOnCreature("You have failed the craft checl to scribe this rune.", oCaster, FALSE);
+		// Since they don't have enough, the spell casts normally
+		return TRUE;
+	}	
+	
+	// Since we know they can now pay for it, create the rune stone
+	object oRune = CreateItemOnObject("prc_rune_1", oCaster);
+	
+	// Steal all the code from craft wand.
+	// The reason craft wand is used is because it is possible to create runes with charges using the Runecaster class.
+	    int nPropID = IPGetIPConstCastSpellFromSpellID(nSpell);
+	
+	    // * GZ 2003-09-11: If the current spell cast is not acid fog, and
+	    // *                returned property ID is 0, bail out to prevent
+	    // *                creation of acid fog items.
+	    if (nPropID == 0 && nSpell != 0)
+	    {
+	        FloatingTextStrRefOnCreature(84544,oCaster);
+	        return TRUE;
+	    }
+	
+	
+	    if (nPropID != -1)
+	    {
+	        itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
+	        AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune);
+	        itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpell, PRCGetCasterLevel());
+	        AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oRune);
+	        itemproperty ipMeta = ItemPropertyMetamagic(nSpell, PRCGetMetaMagicFeat());
+	        AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oRune);
+		SetItemCharges(oRune,nCharges);
+	    }
+	// If we have made it this far, they have crafted the rune and the spell has been used up, so it returns false.
+	return FALSE;
 }
 
 int EShamConc()
@@ -699,6 +778,12 @@ int X2PreSpellCastCode()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = RedWizRestrictedSchool();
+        
+    //---------------------------------------------------------------------------
+    // Run Inscribe Rune Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = InscribeRune();        
         
     //---------------------------------------------------------------------------
     // Run Ectoplasmic Shambler Concentration Check

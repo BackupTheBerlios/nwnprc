@@ -154,6 +154,16 @@ int InscribeRune()
 	// Get the required ints
 	object oCaster = OBJECT_SELF;
 	
+    	// Get the item used to cast the spell
+    	object oItem = GetSpellCastItem();
+    
+    	// No point scribing runes from items, and its not allowed.
+    	if (oItem != OBJECT_INVALID) 
+    	{
+    		FloatingTextStringOnCreature("You cannot scribe a rune from an item.", OBJECT_SELF, FALSE);
+    		return TRUE;
+    	}	
+	
 	// If Inscribing is turned off, the spell functions as normal
 	if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;	
 	
@@ -162,6 +172,8 @@ int InscribeRune()
 	int nDC = PRCGetSaveDC(oTarget, oCaster);
 	int nSpell = PRCGetSpellId();
 	int nSpellLevel = StringToInt(lookup_spell_level(nSpell));
+	// Minimum level.
+	if (nSpellLevel == 0) nSpellLevel = 1;
 	
 	// This will be modified with Runecaster code later.
 	int nCharges = 1;
@@ -176,7 +188,9 @@ int InscribeRune()
 	int nNewXP = GetXP(oCaster) - nXPCost;
 	int nGold = GetGold(oCaster);
 	int nNewGold = nGold - nGoldCost;
-	int nCheck = GetIsSkillSuccessful(oCaster, SKILL_CRAFT_ARMOR, (20 + nSpellLevel));
+	int nCheck = FALSE;
+	// The check does not use GetIsSkillSuccessful so it doesn't show on the PC
+	if ((GetSkillRank(SKILL_CRAFT_ARMOR, oCaster) + d20()) >= (20 + nSpellLevel)) nCheck = TRUE;
 	
 
 	if (nMinXPForLevel > nNewXP || nNewXP == 0 || nNewGold < 0)
@@ -187,7 +201,7 @@ int InscribeRune()
 	}
 	if (!nCheck)
 	{
-		FloatingTextStringOnCreature("You have failed the craft checl to scribe this rune.", oCaster, FALSE);
+		FloatingTextStringOnCreature("You have failed the craft check to scribe this rune.", oCaster, FALSE);
 		// Since they don't have enough, the spell casts normally
 		return TRUE;
 	}	
@@ -218,7 +232,10 @@ int InscribeRune()
 	        itemproperty ipMeta = ItemPropertyMetamagic(nSpell, PRCGetMetaMagicFeat());
 	        AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oRune);
 		SetItemCharges(oRune,nCharges);
+		SetXP(oCaster,nNewXP);
+		TakeGoldFromCreature(nGoldCost, oCaster, TRUE);	  
 	    }
+	    
 	// If we have made it this far, they have crafted the rune and the spell has been used up, so it returns false.
 	return FALSE;
 }

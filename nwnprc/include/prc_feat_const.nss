@@ -343,6 +343,8 @@ const int FEAT_CAST_DOMAIN_LEVEL_SIX	     	     = 2054;
 const int FEAT_CAST_DOMAIN_LEVEL_SEVEN 	             = 2055;
 const int FEAT_CAST_DOMAIN_LEVEL_EIGHT 	             = 2056;
 const int FEAT_CAST_DOMAIN_LEVEL_NINE	     	     = 2057;
+ 
+const int FEAT_CHECK_DOMAIN_SLOTS		     = 2000;
 
 //Vile
 const int FEAT_VILE_MARTIAL_CLUB          = 3357;

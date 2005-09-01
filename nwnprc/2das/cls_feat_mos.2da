@@ -39,9 +39,9 @@
 35 SUMMON_UNDEAD_2                    3502      3    5              1      
 36 SUMMON_UNDEAD_3                    3503      3    7              1      
 37 SUMMON_UNDEAD_4                    3504      3    9              1      
-38 Feat_DeathDomain                   310       3    1              1      
-39 Feat_EvilDomain                    315       3    1              0      
-40 Feat_ProtectionDomain              308       3    1              1      
+38 BonusDomainDEATH                   2003      2    1              0      
+39 BonusDomainEVIL                    2006      2    1              0      
+40 BonusDomainPROTECTION              2013      2    1              0      
 41 FEAT_EPIC_BLINDING_SPEED           491       0    -1             1      
 42 FEAT_EPIC_SPELL_PENETRATION        618       0    -1             0      
 43 FEAT_EPIC_AUTOMATIC_QUICKEN_1      857       0    -1             0      

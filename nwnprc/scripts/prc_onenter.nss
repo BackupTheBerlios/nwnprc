@@ -20,6 +20,8 @@ void main()
     //hopefully in the next update
     //  -Aaon Graywolf
     object oPC = GetEnteringObject();
+    
+    //FloatingTextStringOnCreature("PRC on enter was called", oPC, FALSE);
 
     // Since OnEnter event fires for the PC when loading a saved game (no idea why,
     // since it makes saving and reloading change the state of the module),

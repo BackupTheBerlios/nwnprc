@@ -11,7 +11,7 @@
 #include "prc_inc_function"
 #include "prc_ipfeat_const"
 #include "inc_epicspells"
-#include "prc_inc_clsfunc"
+#include "prc_inc_domain"
 #include "inc_newspellbook"
 #include "prc_power_const"
 #include "psi_inc_ac_manif"
@@ -79,6 +79,7 @@ void RestFinished(object oPC)
 {
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
+    BonusDomainRest(oPC);
 
     // To heal up enslaved creatures...
     object oSlave = GetLocalObject(oPC, "EnslavedCreature");

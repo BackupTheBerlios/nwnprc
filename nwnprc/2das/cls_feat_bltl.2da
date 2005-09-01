@@ -1,7 +1,7 @@
 2DA V2.0
 
      FeatLabel                                FeatIndex List GrantedOnLevel OnMenu 
-0    FEAT_BLIGHTBRINGER                       2250      3    1              1      
+0    BonusDomainBLIGHTBRINGER                 2048      3    1              0      
 1    FEAT_BLIGHTBLOOD                         2251      3    1              0      
 2    FEAT_ILLMASTER                           2252      3    2              0      
 3    FEAT_BLIGHTTOUCH_1                       2253      3    3              1      

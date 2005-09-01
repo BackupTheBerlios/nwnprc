@@ -40,6 +40,9 @@ void CheckBonusDomains(object oPC);
 // Returns the spell to be burned for CastDomainSpell
 int GetBurnableSpell(object oPC, int nLevel);
 
+// Cleans the ints that limit the domain spells to being cast 1/day
+void BonusDomainRest(object oPC);
+
 #include "prc_inc_clsfunc"
 #include "prc_getbest_inc"
 
@@ -110,6 +113,8 @@ int GetBonusDomain(object oPC, int nSlot)
 
 void AddBonusDomain(object oPC, int nDomain)
 {
+	FloatingTextStringOnCreature("AddBonusDomain is running.", oPC, FALSE);
+
 	// Loop through the domain slots to see if there is an open one.
 	int nSlot = 1;
 	int nTest = GetBonusDomain(oPC, nSlot);
@@ -120,7 +125,7 @@ void AddBonusDomain(object oPC, int nDomain)
 		// shut down the function, since you don't want to add a domain twice.
 		if (nTest == nDomain) 
 		{
-			FloatingTextStringOnCreature("You already have this domain as a bonus domain.", OBJECT_SELF, FALSE);
+			FloatingTextStringOnCreature("You already have this domain as a bonus domain.", oPC, FALSE);
 			return;
 		}
 		nTest = GetBonusDomain(oPC, nSlot);
@@ -128,17 +133,24 @@ void AddBonusDomain(object oPC, int nDomain)
 	// If you run out of slots, display message and end function
 	if (nSlot > 5) 
 	{
-		FloatingTextStringOnCreature("You have more than 5 bonus domains, your last domain is lost.", OBJECT_SELF, FALSE);
+		FloatingTextStringOnCreature("You have more than 5 bonus domains, your last domain is lost.", oPC, FALSE);
 		return;
 	}
 
 	// If we're here, we know we have an open slot, so we add the domain into it.
+	FloatingTextStringOnCreature("You have " + IntToString(nDomain) + " as a bonus domain", oPC, FALSE);
 	string sName = "PRCBonusDomain" + IntToString(nSlot);
 	SetPersistantLocalInt(oPC, sName, nDomain);
 }
 
 void CastDomainSpell(object oPC, int nSlot, int nLevel)
 {
+	if (GetLocalInt(oPC, "DomainCastSpell" + IntToString(nLevel))) //Already cast a spell of this level?
+	{
+	        FloatingTextStringOnCreature("You have already cast your domain spell for level " + IntToString(nLevel), oPC, FALSE);
+		return;
+    	}
+    	
 	int nDomain = GetBonusDomain(oPC, nSlot);
 	int nSpell = GetDomainSpell(nDomain, nLevel, oPC);
 	
@@ -153,6 +165,9 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
     	}
 	
 	// Burn the spell off, then cast the domain spell
+	// Also, because of the iprop feats not having uses per day
+	// set it so they can't cast again from that level
+	SetLocalInt(oPC, "DomainCastSpell" + IntToString(nLevel), TRUE);
 	DecrementRemainingSpellUses(oPC, nBurnSpell);
 	ActionCastSpell(nSpell);
 }
@@ -164,7 +179,7 @@ int GetDomainSpell(int nDomain, int nLevel, object oPC)
 	int nSpell;
 	if (sSpell == "****")
 	{
-		FloatingTextStringOnCreature("You do not have a domain spell of that level.", OBJECT_SELF, FALSE);
+		FloatingTextStringOnCreature("You do not have a domain spell of that level.", oPC, FALSE);
 		int nFeat = SpellLevelToFeat(nLevel);
 		IncrementRemainingFeatUses(oPC, nFeat);
 	}
@@ -202,54 +217,56 @@ string GetDomainName(int nDomain)
 
 void CheckBonusDomains(object oPC)
 {
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_AIR)) 		AddBonusDomain(oPC, DOMAIN_AIR);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_ANIMAL)) 	AddBonusDomain(oPC, DOMAIN_ANIMAL);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_DEATH)) 	AddBonusDomain(oPC, DOMAIN_DEATH);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_DESTRUCTION)) 	AddBonusDomain(oPC, DOMAIN_DESTRUCTION);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_EARTH)) 	AddBonusDomain(oPC, DOMAIN_EARTH);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_EVIL))		AddBonusDomain(oPC, DOMAIN_EVIL);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_FIRE))		AddBonusDomain(oPC, DOMAIN_FIRE);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_GOOD))		AddBonusDomain(oPC, DOMAIN_GOOD);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_HEALING)) 	AddBonusDomain(oPC, DOMAIN_HEALING);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_KNOWLEDGE)) 	AddBonusDomain(oPC, DOMAIN_KNOWLEDGE);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_MAGIC)) 	AddBonusDomain(oPC, DOMAIN_MAGIC);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_PLANT)) 	AddBonusDomain(oPC, DOMAIN_PLANT);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION)) 	AddBonusDomain(oPC, DOMAIN_PROTECTION);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_STRENGTH)) 	AddBonusDomain(oPC, DOMAIN_STRENGTH);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_SUN)) 		AddBonusDomain(oPC, DOMAIN_SUN);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_TRAVEL)) 	AddBonusDomain(oPC, DOMAIN_TRAVEL);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_TRICKERY)) 	AddBonusDomain(oPC, DOMAIN_TRICKERY);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_WAR)) 		AddBonusDomain(oPC, DOMAIN_WAR);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_WATER)) 	AddBonusDomain(oPC, DOMAIN_WATER);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_DARKNESS)) 	AddBonusDomain(oPC, DOMAIN_DARKNESS);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_STORM)) 	AddBonusDomain(oPC, DOMAIN_STORM);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_METAL)) 	AddBonusDomain(oPC, DOMAIN_METAL);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_PORTAL)) 	AddBonusDomain(oPC, DOMAIN_PORTAL);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_FORCE)) 	AddBonusDomain(oPC, DOMAIN_FORCE);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_SLIME)) 	AddBonusDomain(oPC, DOMAIN_SLIME);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_TYRANNY)) 	AddBonusDomain(oPC, DOMAIN_TYRANNY);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_DOMINATION)) 	AddBonusDomain(oPC, DOMAIN_DOMINATION);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_SPIDER)) 	AddBonusDomain(oPC, DOMAIN_SPIDER);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_UNDEATH)) 	AddBonusDomain(oPC, DOMAIN_UNDEATH);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_TIME))		AddBonusDomain(oPC, DOMAIN_TIME);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_DWARF)) 	AddBonusDomain(oPC, DOMAIN_DWARF);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_CHARM)) 	AddBonusDomain(oPC, DOMAIN_CHARM);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_ELF)) 		AddBonusDomain(oPC, DOMAIN_ELF);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_FAMILY)) 	AddBonusDomain(oPC, DOMAIN_FAMILY);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_FATE))		AddBonusDomain(oPC, DOMAIN_FATE);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_GNOME)) 	AddBonusDomain(oPC, DOMAIN_GNOME);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_ILLUSION)) 	AddBonusDomain(oPC, DOMAIN_ILLUSION);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_HATRED)) 	AddBonusDomain(oPC, DOMAIN_HATRED);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_HALFLING)) 	AddBonusDomain(oPC, DOMAIN_HALFLING);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_NOBILITY)) 	AddBonusDomain(oPC, DOMAIN_NOBILITY);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_OCEAN)) 	AddBonusDomain(oPC, DOMAIN_OCEAN);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_ORC)) 		AddBonusDomain(oPC, DOMAIN_ORC);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_RENEWAL)) 	AddBonusDomain(oPC, DOMAIN_RENEWAL);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_RETRIBUTION)) 	AddBonusDomain(oPC, DOMAIN_RETRIBUTION);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_RUNE)) 	AddBonusDomain(oPC, DOMAIN_RUNE);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_SPELLS)) 	AddBonusDomain(oPC, DOMAIN_SPELLS);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_SCALEYKIND)) 	AddBonusDomain(oPC, DOMAIN_SCALEYKIND);
-	if (GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER)) AddBonusDomain(oPC, DOMAIN_BLIGHTBRINGER);	
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_AIR, oPC)) 		AddBonusDomain(oPC, DOMAIN_AIR);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_ANIMAL, oPC)) 		AddBonusDomain(oPC, DOMAIN_ANIMAL);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_DEATH, oPC)) 		AddBonusDomain(oPC, DOMAIN_DEATH);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_DESTRUCTION, oPC)) 	AddBonusDomain(oPC, DOMAIN_DESTRUCTION);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_EARTH, oPC)) 		AddBonusDomain(oPC, DOMAIN_EARTH);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_EVIL, oPC))		AddBonusDomain(oPC, DOMAIN_EVIL);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_FIRE, oPC))		AddBonusDomain(oPC, DOMAIN_FIRE);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_GOOD, oPC))		AddBonusDomain(oPC, DOMAIN_GOOD);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_HEALING, oPC)) 	AddBonusDomain(oPC, DOMAIN_HEALING);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_KNOWLEDGE, oPC)) 	AddBonusDomain(oPC, DOMAIN_KNOWLEDGE);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_MAGIC, oPC)) 		AddBonusDomain(oPC, DOMAIN_MAGIC);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_PLANT, oPC)) 		AddBonusDomain(oPC, DOMAIN_PLANT);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION, oPC)) 	AddBonusDomain(oPC, DOMAIN_PROTECTION);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_STRENGTH, oPC)) 	AddBonusDomain(oPC, DOMAIN_STRENGTH);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_SUN, oPC)) 		AddBonusDomain(oPC, DOMAIN_SUN);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_TRAVEL, oPC)) 		AddBonusDomain(oPC, DOMAIN_TRAVEL);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_TRICKERY, oPC)) 	AddBonusDomain(oPC, DOMAIN_TRICKERY);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_WAR, oPC)) 		AddBonusDomain(oPC, DOMAIN_WAR);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_WATER, oPC)) 		AddBonusDomain(oPC, DOMAIN_WATER);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_DARKNESS, oPC)) 	AddBonusDomain(oPC, DOMAIN_DARKNESS);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_STORM, oPC)) 		AddBonusDomain(oPC, DOMAIN_STORM);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_METAL, oPC)) 		AddBonusDomain(oPC, DOMAIN_METAL);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_PORTAL, oPC)) 		AddBonusDomain(oPC, DOMAIN_PORTAL);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_FORCE, oPC)) 		AddBonusDomain(oPC, DOMAIN_FORCE);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_SLIME, oPC)) 		AddBonusDomain(oPC, DOMAIN_SLIME);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_TYRANNY, oPC)) 	AddBonusDomain(oPC, DOMAIN_TYRANNY);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_DOMINATION, oPC)) 	AddBonusDomain(oPC, DOMAIN_DOMINATION);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_SPIDER, oPC)) 		AddBonusDomain(oPC, DOMAIN_SPIDER);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_UNDEATH, oPC)) 	AddBonusDomain(oPC, DOMAIN_UNDEATH);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_TIME, oPC))		AddBonusDomain(oPC, DOMAIN_TIME);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_DWARF, oPC)) 		AddBonusDomain(oPC, DOMAIN_DWARF);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_CHARM, oPC)) 		AddBonusDomain(oPC, DOMAIN_CHARM);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_ELF, oPC)) 		AddBonusDomain(oPC, DOMAIN_ELF);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_FAMILY, oPC)) 		AddBonusDomain(oPC, DOMAIN_FAMILY);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_FATE, oPC))		AddBonusDomain(oPC, DOMAIN_FATE);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_GNOME, oPC)) 		AddBonusDomain(oPC, DOMAIN_GNOME);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_ILLUSION, oPC)) 	AddBonusDomain(oPC, DOMAIN_ILLUSION);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_HATRED, oPC)) 		AddBonusDomain(oPC, DOMAIN_HATRED);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_HALFLING, oPC)) 	AddBonusDomain(oPC, DOMAIN_HALFLING);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_NOBILITY, oPC)) 	AddBonusDomain(oPC, DOMAIN_NOBILITY);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_OCEAN, oPC)) 		AddBonusDomain(oPC, DOMAIN_OCEAN);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_ORC, oPC)) 		AddBonusDomain(oPC, DOMAIN_ORC);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_RENEWAL, oPC)) 	AddBonusDomain(oPC, DOMAIN_RENEWAL);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_RETRIBUTION, oPC)) 	AddBonusDomain(oPC, DOMAIN_RETRIBUTION);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_RUNE, oPC)) 		AddBonusDomain(oPC, DOMAIN_RUNE);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_SPELLS, oPC)) 		AddBonusDomain(oPC, DOMAIN_SPELLS);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_SCALEYKIND, oPC)) 	AddBonusDomain(oPC, DOMAIN_SCALEYKIND);
+	if (GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC)) 	AddBonusDomain(oPC, DOMAIN_BLIGHTBRINGER);
+	
+	FloatingTextStringOnCreature("Check Bonus Domains is running", oPC, FALSE);
 }
 
 int GetBurnableSpell(object oPC, int nLevel)
@@ -267,4 +284,14 @@ int GetBurnableSpell(object oPC, int nLevel)
 	else if (nLevel == 9)	nBurnableSpell = GetBestL9Spell(oPC, nBurnableSpell);
 
 	return nBurnableSpell;
+}
+
+void BonusDomainRest(object oPC)
+{
+	// Bonus Domain ints that limit you to casting 1/day per level
+	int i;
+	for (i = 1; i < 10; i++)
+	{
+		DeleteLocalInt(oPC, "DomainCastSpell" + IntToString(i));
+	}
 }

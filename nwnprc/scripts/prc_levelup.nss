@@ -38,7 +38,9 @@ void main()
 
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
-    DeletePRCLocalInts(oSkin);  
+    DeletePRCLocalInts(oSkin); 
+    
+    //FloatingTextStringOnCreature("PRC Levelup was called", oPC, FALSE);
     
     // Gives people the proper spells from their bonus domains
     // This should run before EvalPRCFeats, because it sets a variable

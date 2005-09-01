@@ -284,6 +284,57 @@ const int FEAT_NIMBLE_BONES                            = 4019;
 // Forgotten Realms Campaign Setting
 const int FEAT_INSCRIBE_RUNE                           = 2462;
 
+// Bonus Domains
+
+const int FEAT_BONUS_DOMAIN_AIR  		     = 2001;
+const int FEAT_BONUS_DOMAIN_ANIMAL  		     = 2002;
+const int FEAT_BONUS_DOMAIN_DEATH  		     = 2003;
+const int FEAT_BONUS_DOMAIN_DESTRUCTION  	     = 2004;
+const int FEAT_BONUS_DOMAIN_EARTH  		     = 2005;
+const int FEAT_BONUS_DOMAIN_EVIL 		     = 2006;
+const int FEAT_BONUS_DOMAIN_FIRE 		     = 2007;
+const int FEAT_BONUS_DOMAIN_GOOD 		     = 2008;
+const int FEAT_BONUS_DOMAIN_HEALING  		     = 2009;
+const int FEAT_BONUS_DOMAIN_KNOWLEDGE  		     = 2010;
+const int FEAT_BONUS_DOMAIN_MAGIC  		     = 2011;
+const int FEAT_BONUS_DOMAIN_PLANT  		     = 2012;
+const int FEAT_BONUS_DOMAIN_PROTECTION  	     = 2013;
+const int FEAT_BONUS_DOMAIN_STRENGTH  		     = 2014;
+const int FEAT_BONUS_DOMAIN_SUN  		     = 2015;
+const int FEAT_BONUS_DOMAIN_TRAVEL  		     = 2016;
+const int FEAT_BONUS_DOMAIN_TRICKERY  		     = 2017;
+const int FEAT_BONUS_DOMAIN_WAR  		     = 2018;
+const int FEAT_BONUS_DOMAIN_WATER  		     = 2019;
+const int FEAT_BONUS_DOMAIN_DARKNESS  		     = 2020;
+const int FEAT_BONUS_DOMAIN_STORM  		     = 2021;
+const int FEAT_BONUS_DOMAIN_METAL  		     = 2022;
+const int FEAT_BONUS_DOMAIN_PORTAL  		     = 2023;
+const int FEAT_BONUS_DOMAIN_FORCE  		     = 2024;
+const int FEAT_BONUS_DOMAIN_SLIME  		     = 2025;
+const int FEAT_BONUS_DOMAIN_TYRANNY  		     = 2026;
+const int FEAT_BONUS_DOMAIN_DOMINATION  	     = 2027;
+const int FEAT_BONUS_DOMAIN_SPIDER  		     = 2028;
+const int FEAT_BONUS_DOMAIN_UNDEATH  		     = 2029;
+const int FEAT_BONUS_DOMAIN_TIME 		     = 2030;
+const int FEAT_BONUS_DOMAIN_DWARF  		     = 2031;
+const int FEAT_BONUS_DOMAIN_CHARM  		     = 2032;
+const int FEAT_BONUS_DOMAIN_ELF  		     = 2033;
+const int FEAT_BONUS_DOMAIN_FAMILY  		     = 2034;
+const int FEAT_BONUS_DOMAIN_FATE 		     = 2035;
+const int FEAT_BONUS_DOMAIN_GNOME  		     = 2036;
+const int FEAT_BONUS_DOMAIN_ILLUSION  		     = 2037;
+const int FEAT_BONUS_DOMAIN_HATRED  		     = 2038;
+const int FEAT_BONUS_DOMAIN_HALFLING  		     = 2039;
+const int FEAT_BONUS_DOMAIN_NOBILITY  		     = 2040;
+const int FEAT_BONUS_DOMAIN_OCEAN  		     = 2041;
+const int FEAT_BONUS_DOMAIN_ORC  		     = 2042;
+const int FEAT_BONUS_DOMAIN_RENEWAL  		     = 2043;
+const int FEAT_BONUS_DOMAIN_RETRIBUTION  	     = 2044;
+const int FEAT_BONUS_DOMAIN_RUNE  		     = 2045;
+const int FEAT_BONUS_DOMAIN_SPELLS  		     = 2046;
+const int FEAT_BONUS_DOMAIN_SCALEYKIND  	     = 2047;
+const int FEAT_BONUS_DOMAIN_BLIGHTBRINGER 	     = 2048;
+
 //Vile
 const int FEAT_VILE_MARTIAL_CLUB          = 3357;
 const int FEAT_VILE_MARTIAL_DAGGER        = 3358;

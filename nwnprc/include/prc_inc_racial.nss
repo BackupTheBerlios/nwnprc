@@ -23,6 +23,8 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_UNDEAD;
     if (GetLevelByClass(CLASS_TYPE_MONK,oCreature) >= 20)
         return RACIAL_TYPE_OUTSIDER;
+    if (GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,oCreature) >= 10)
+        return RACIAL_TYPE_OUTSIDER;        
     if (GetLevelByClass(CLASS_TYPE_OOZEMASTER,oCreature) >= 10)
         return RACIAL_TYPE_OOZE;
     if (GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE,oCreature) >= 10)

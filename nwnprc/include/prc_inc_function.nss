@@ -142,6 +142,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oPC) > 0)        ExecuteScript("prc_warsling", oPC);
     if(GetLevelByClass(CLASS_TYPE_BAELNORN,oPC) > 0)             ExecuteScript("prc_baelnorn", oPC);
     if(GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0)         DelayCommand(0.1,ExecuteScript("prc_swashbuckler", oPC));
+    if(GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,oPC) > 0)        ExecuteScript("prc_contemplate", oPC);
     
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -609,6 +610,12 @@ void DeletePRCLocalInts(object oSkin)
     //Swashbuckler
     DeleteLocalInt(oSkin, "SwashGrace");
     DeleteLocalInt(oSkin, "SwashAC");
+    
+    // Contemplative
+    DeleteLocalInt(oSkin, "ContempDisease");
+    DeleteLocalInt(oSkin, "ContempPoison");
+    DeleteLocalInt(oSkin, "ContemplativeDR");
+    DeleteLocalInt(oSkin, "ContemplativeSR");
     
     // future PRCs Go below here
 }

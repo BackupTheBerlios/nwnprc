@@ -1,6 +1,6 @@
 #include "inc_item_props"
 #include "prc_inc_function"
-#include "prc_inc_clsfunc"
+#include "prc_inc_domain"
 #include "inc_eventhook"
 #include "prc_inc_switch"
 #include "inc_leto_prc"
@@ -41,6 +41,10 @@ void main()
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
     DeletePRCLocalInts(oSkin);
+    
+    // Gives people the proper spells from their bonus domains
+    // This should run before EvalPRCFeats, because it sets a variable
+    CheckBonusDomains(oPC);    
 
     SetLocalInt(oPC,"ONENTER",1);
     // Make sure we reapply any bonuses before the player notices they are gone.

@@ -78,6 +78,7 @@ void EvalPRCFeats(object oPC)
 
     // special add atk bonus equal to Enhancement
     ExecuteScript("ft_sanctmartial", oPC);
+    
 
     //Route the event to the appropriate class specific scripts
     if(GetLevelByClass(CLASS_TYPE_DUELIST, oPC) > 0)             ExecuteScript("prc_duelist", oPC);
@@ -141,6 +142,10 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oPC) > 0)        ExecuteScript("prc_warsling", oPC);
     if(GetLevelByClass(CLASS_TYPE_BAELNORN,oPC) > 0)             ExecuteScript("prc_baelnorn", oPC);
     if(GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0)         DelayCommand(0.1,ExecuteScript("prc_swashbuckler", oPC));
+    
+    // Bonus Domain check
+    // If there is a bonus domain, it will always be in the first slot, so just check that.
+    if (GetPersistantLocalInt(oPC, "PRCBonusDomain1") > 0)	 ExecuteScript("prc_domain_skin", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);

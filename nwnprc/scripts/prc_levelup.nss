@@ -11,11 +11,7 @@
 //Added delay to EvalPRCFeats event to allow module setup to take priority
 //  Aaon Graywolf - Jan 6, 2004
 
-
-
-#include "x2_inc_switches"
-#include "prc_inc_function"
-#include "inc_item_props"
+#include "prc_inc_domain"
 #include "inc_eventhook"
 
 void PrcFeats(object oPC)
@@ -42,7 +38,11 @@ void main()
 
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
-    DeletePRCLocalInts(oSkin);     
+    DeletePRCLocalInts(oSkin);  
+    
+    // Gives people the proper spells from their bonus domains
+    // This should run before EvalPRCFeats, because it sets a variable
+    CheckBonusDomains(oPC);
 
     //All of the PRC feats have been hooked into EvalPRCFeats
     //The code is pretty similar, but much more modular, concise

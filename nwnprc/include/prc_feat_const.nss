@@ -334,15 +334,15 @@ const int FEAT_BONUS_DOMAIN_SPELLS  		     = 2046;
 const int FEAT_BONUS_DOMAIN_SCALEYKIND  	     = 2047;
 const int FEAT_BONUS_DOMAIN_BLIGHTBRINGER 	     = 2048;
 
-const int FEAT_BONUS_DOMAIN_LEVEL_ONE		     = -1;
-const int FEAT_BONUS_DOMAIN_LEVEL_TWO		     = -1;
-const int FEAT_BONUS_DOMAIN_LEVEL_THREE 	     = -1;
-const int FEAT_BONUS_DOMAIN_LEVEL_FOUR	   	     = -1;
-const int FEAT_BONUS_DOMAIN_LEVEL_FIVE  	     = -1;
-const int FEAT_BONUS_DOMAIN_LEVEL_SIX	     	     = -1;
-const int FEAT_BONUS_DOMAIN_LEVEL_SEVEN 	     = -1;
-const int FEAT_BONUS_DOMAIN_LEVEL_EIGHT 	     = -1;
-const int FEAT_BONUS_DOMAIN_LEVEL_NINE	     	     = -1;
+const int FEAT_CAST_DOMAIN_LEVEL_ONE		     = 2049;
+const int FEAT_CAST_DOMAIN_LEVEL_TWO		     = 2050;
+const int FEAT_CAST_DOMAIN_LEVEL_THREE 	    	     = 2051;
+const int FEAT_CAST_DOMAIN_LEVEL_FOUR	   	     = 2052;
+const int FEAT_CAST_DOMAIN_LEVEL_FIVE  	             = 2053;
+const int FEAT_CAST_DOMAIN_LEVEL_SIX	     	     = 2054;
+const int FEAT_CAST_DOMAIN_LEVEL_SEVEN 	             = 2055;
+const int FEAT_CAST_DOMAIN_LEVEL_EIGHT 	             = 2056;
+const int FEAT_CAST_DOMAIN_LEVEL_NINE	     	     = 2057;
 
 //Vile
 const int FEAT_VILE_MARTIAL_CLUB          = 3357;

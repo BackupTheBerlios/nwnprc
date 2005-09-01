@@ -603,7 +603,8 @@ void Alaghar(object oPC)
 
     iProperDomains = GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
                      GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC) +
-                     GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC);
+                     GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_DWARF_DOMAIN);
 
     if (iProperDomains >= 2)
     {

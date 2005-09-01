@@ -211,9 +211,20 @@ void SetupSpells(object oPC, int nClass)
 void CheckNewSpellbooks(object oPC)
 {
     WipeSpellbookHideFeats(oPC);
+    /*
     SetupSpells(oPC, PRCGetClassByPosition(1, oPC));
     SetupSpells(oPC, PRCGetClassByPosition(2, oPC));
     SetupSpells(oPC, PRCGetClassByPosition(3, oPC));
+    */
+    int i;
+    for(i=12;i<=255;i++)
+    {
+        if(GetLevelByClass(i, oPC)
+            && GetSlotCount(GetLevelByClass(i, oPC), 1, GetAbilityForClass(i, oPC), i))
+        {
+            SetupSpells(oPC, i);
+        }
+    }    
 }
 
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)

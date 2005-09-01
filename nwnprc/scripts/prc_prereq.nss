@@ -604,7 +604,7 @@ void Alaghar(object oPC)
     iProperDomains = GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
                      GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC) +
                      GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC) +
-                     GetHasFeat(FEAT_DWARF_DOMAIN);
+                     GetHasFeat(4043);//dwarf
 
     if (iProperDomains >= 2)
     {
@@ -617,8 +617,8 @@ void Thrallherd(object oPC)
     SetLocalInt(oPC, "PRC_PrereqThrallherd", 1);
 
     if (GetHasPower(POWER_CHARMPERSON, oPC) || GetHasPower(POWER_AVERSION, oPC) || GetHasPower(POWER_BRAINLOCK, oPC) || 
-    	GetHasPower(POWER_CRISISBREATH, oPC) || GetHasPower(POWER_EMPATHICTRANSFERHOSTILE, oPC) || GetHasPower(POWER_DOMINATE, oPC) || 
-    	GetHasPower(POWER_CRISISLIFE, oPC) || GetHasPower(POWER_PSYCHICCHIR, oPC))
+        GetHasPower(POWER_CRISISBREATH, oPC) || GetHasPower(POWER_EMPATHICTRANSFERHOSTILE, oPC) || GetHasPower(POWER_DOMINATE, oPC) || 
+        GetHasPower(POWER_CRISISLIFE, oPC) || GetHasPower(POWER_PSYCHICCHIR, oPC))
     {
         SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
     }

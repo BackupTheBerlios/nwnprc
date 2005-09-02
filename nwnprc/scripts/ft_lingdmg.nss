@@ -24,11 +24,11 @@
 
 #include "prc_alterations"
 #include "inc_eventhook"
-#include "prc_inc_combat"
+#include "prc_alterations"
 
 #include "inc_prc_npc"
-#include "inc_item_props"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 
 void main()
 {
@@ -51,7 +51,7 @@ void main()
     {
         oPC = OBJECT_SELF;
         oItem = GetSpellCastItem();
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         //SendMessageToPC(oPC, "ft_lingdmg - OnHit");
         // only run if called by a weapon
         if(GetBaseItemType(oItem) != BASE_ITEM_ARMOR)

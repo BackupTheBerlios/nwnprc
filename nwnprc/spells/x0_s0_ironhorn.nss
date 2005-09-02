@@ -19,7 +19,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     effect eVis = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
     effect eShake = EffectVisualEffect(VFX_FNF_SCREEN_BUMP);
     //Get the spell target location as opposed to the spell target.
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     //Limit Caster level for the purposes of damage
     if (nCasterLvl > 20)
     {

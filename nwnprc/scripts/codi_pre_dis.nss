@@ -11,18 +11,17 @@
 //:: Modified On: 30.03.2005
 //:: Modfication: Changed to work as the spell Disintegrate
 //:://////////////////////////////////////////////
-/*#include "X0_I0_SPELLS"
-#include "nw_i0_spells"
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
-#include "prc_spell_const"*/
+#include "prc_spell_const"
 #include "spinc_common"
 #include "prc_inc_sp_tch"
 
 void main()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {

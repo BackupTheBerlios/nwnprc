@@ -29,7 +29,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
      if (-1 == nSpellID) nSpellID = PRCGetSpellId();
      
      // Get the spell target location as opposed to the spell target.
-     location lTarget = GetSpellTargetLocation();
+     location lTarget = PRCGetSpellTargetLocation();
 
         int nPenetr = nCasterLvl + SPGetPenetr();
      // Get the effective caster level and hand it to the SR engine.

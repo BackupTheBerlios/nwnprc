@@ -20,7 +20,7 @@
 #include "spinc_common"
 #include "prc_inc_sp_tch"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     //Declare major variables
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = GetMetaMagicFeat();
     int nDrain = d4();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);

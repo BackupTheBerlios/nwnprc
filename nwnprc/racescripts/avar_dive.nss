@@ -10,6 +10,7 @@
 //:: Created On: Sept. 24, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "prc_inc_combat"
 #include "prc_inc_util"
 #include "prc_inc_skills"
@@ -17,7 +18,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
     
     if(oTarget == OBJECT_INVALID)

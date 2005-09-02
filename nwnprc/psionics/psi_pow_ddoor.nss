@@ -33,7 +33,7 @@
 #include "psi_inc_psifunc"
 //#include "psi_inc_pwresist"
 #include "psi_spellhook"
-//#include "X0_I0_SPELLS"
+//#include "prc_alterations"
 #include "prc_inc_teleport"
 #include "inc_draw"
 #include "prc_inc_listener"
@@ -178,9 +178,9 @@ void main()
         int nManifesterLvl = GetManifesterLevel();
         int nSpellID       = PRCGetSpellId();
         // Get the spell's base target location
-        location lTarget = GetIsObjectValid(GetSpellTargetObject()) ? // Are we teleporting to some object, or just at a spot on the ground?
-                            GetLocation(GetSpellTargetObject()) :     // Teleporting to some object
-                            GetSpellTargetLocation();                 // Teleporting to a spot on the ground
+        location lTarget = GetIsObjectValid(PRCGetSpellTargetObject()) ? // Are we teleporting to some object, or just at a spot on the ground?
+                            GetLocation(PRCGetSpellTargetObject()) :     // Teleporting to some object
+                            PRCGetSpellTargetLocation();                 // Teleporting to a spot on the ground
 
         if(!nMetaPsi) return;
 

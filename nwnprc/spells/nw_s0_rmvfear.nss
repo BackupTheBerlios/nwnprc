@@ -12,7 +12,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: April 13, 2001
 //:://////////////////////////////////////////////
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "spinc_common"
 #include "x2_inc_spellhook"
 
@@ -56,10 +56,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     effect eLink = EffectLinkEffects(eMind, eSave);
     eLink = EffectLinkEffects(eLink, eDur);
     float fDelay;
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
     effect eVis = EffectVisualEffect(VFX_IMP_REMOVE_CONDITION);
     //Get first target in the spell area
-    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());
+    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, PRCGetSpellTargetLocation());
     while (GetIsObjectValid(oTarget))
     {
         //Only remove the fear effect from the people who are friends.
@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl));
         }
         //Get the next target in the spell area.
-        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, PRCGetSpellTargetLocation());
     }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

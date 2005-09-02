@@ -15,9 +15,10 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
+#include "prc_alterations"
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -46,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }    
    
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
     int nRand = Random(7)+1;
     int nDisease;

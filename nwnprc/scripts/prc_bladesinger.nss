@@ -1,7 +1,8 @@
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_prc_npc"
 
 int GetIPASF(int asf)

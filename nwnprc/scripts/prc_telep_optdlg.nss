@@ -11,7 +11,7 @@
 //:: Created By: Ornedan
 //:: Created On: 18.06.2005
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "prc_inc_teleport"
 #include "inc_utility"
 #include "inc_eventhook"

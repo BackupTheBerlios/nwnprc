@@ -11,7 +11,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On:
 //:://////////////////////////////////////////////
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 
 void MonitorForDeath(object oMonitor, int nCount, object oJumpTo, location lJumpTo, object oPC);

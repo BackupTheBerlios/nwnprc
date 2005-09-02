@@ -16,8 +16,8 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
 
-#include "NW_I0_SPELLS"
-#include "x0_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     //Declare major variables
     effect eAOE = EffectAreaOfEffect(42);
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
     effect eImpact = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_NATURE);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);

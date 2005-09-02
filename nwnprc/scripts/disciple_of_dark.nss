@@ -12,7 +12,8 @@ CHANGE: Miss chance still applies, unlike rules.
 //:: Created On: July 15, 2002
 //:://////////////////////////////////////////////
 //:: VFX Pass By:
-#include "NW_I0_SPELLS"
+
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 

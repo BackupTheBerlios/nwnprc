@@ -7,7 +7,7 @@
 //:: Last Updated On:
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 #include "prc_inc_switch"
@@ -31,7 +31,7 @@ void main()
         {
             //Apply the summon visual and summon the disciple.
             MultisummonPreSummon();
-            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummon, GetSpellTargetLocation());
+            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummon, PRCGetSpellTargetLocation());
         }
         else
             SendMessageToPC(OBJECT_SELF, "You must be non-good to summon an unholy disciple.");

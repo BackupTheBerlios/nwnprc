@@ -8,7 +8,7 @@
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 //#include "x0_i0_petrify"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
@@ -48,7 +48,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     // HUMANOID SPELL ONLY!!!!
     if (AmIAHumanoid(oTarget))
     {

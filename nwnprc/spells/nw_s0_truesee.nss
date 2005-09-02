@@ -40,7 +40,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eSight = EffectTrueSeeing();

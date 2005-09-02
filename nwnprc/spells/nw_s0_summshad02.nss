@@ -70,7 +70,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     float fDuration = HoursToSeconds(24);
         if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
             fDuration = RoundsToSeconds(nCasterLevel*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), fDuration);
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), fDuration);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the integer used to hold the spells spell school

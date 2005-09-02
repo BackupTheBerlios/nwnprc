@@ -6,7 +6,7 @@
 
 void main()
 {
-	object oTarget = GetSpellTargetObject();
+	object oTarget = PRCGetSpellTargetObject();
 	effect eVis = EffectVisualEffect(VFX_IMP_HEAD_SONIC);
 	int nDur = GetLevelByClass(CLASS_TYPE_OLLAM, OBJECT_SELF);
 	int nBoost = 2;

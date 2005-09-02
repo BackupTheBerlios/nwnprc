@@ -11,13 +11,13 @@
 //:://////////////////////////////////////////////
 
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
 
      //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     string str;
     if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_ANIMAL)
     {

@@ -23,7 +23,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void DoDrain(object oTarget, object oCaster, int nMetaPsi)
 {
@@ -75,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 3;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
     
     if (nSurge > 0)

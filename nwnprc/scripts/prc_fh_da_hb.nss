@@ -12,7 +12,7 @@
 //:: Created On: July 12, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_inc_combat"
+#include "prc_alterations"
 void main()
 {
     object oPC = OBJECT_SELF;
@@ -48,7 +48,7 @@ void main()
     // Times up, perform the death attack
     if (fApplyDATime <= 0.0)
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
         
         int bIsRangedAttack = GetWeaponRanged(oWeapR);

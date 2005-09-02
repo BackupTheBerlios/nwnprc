@@ -10,7 +10,7 @@
 //:: Created On: Aug 23, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -32,7 +32,7 @@ int isNotShield(object oItem)
 
 void main()
 {
-     object oPC = GetSpellTargetObject();
+     object oPC = PRCGetSpellTargetObject();
      string nMes = "";
 
      if(!GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )

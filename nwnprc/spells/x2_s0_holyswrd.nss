@@ -16,8 +16,8 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
 
-#include "nw_i0_spells"
-#include "x2_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -87,8 +87,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
             AddHolyAvengerEffectToWeapon(oMyWeapon, RoundsToSeconds(nDuration), nLevel);
         }
-        TLVFXPillar(VFX_IMP_GOOD_HELP, GetLocation(GetSpellTargetObject()), 4, 0.0f, 6.0f);
-        DelayCommand(1.0f, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect( VFX_IMP_SUPER_HEROISM),GetLocation(GetSpellTargetObject())));
+        TLVFXPillar(VFX_IMP_GOOD_HELP, GetLocation(PRCGetSpellTargetObject()), 4, 0.0f, 6.0f);
+        DelayCommand(1.0f, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect( VFX_IMP_SUPER_HEROISM),GetLocation(PRCGetSpellTargetObject())));
 
         return;
     }

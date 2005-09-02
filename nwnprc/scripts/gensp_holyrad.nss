@@ -15,7 +15,7 @@
 
 #include "prc_class_const"
 #include "x2_inc_spellhook"
-#include "x0_i0_spells"
+#include "prc_alterations"
 #include "prc_spell_const"
 
 void main()
@@ -43,7 +43,7 @@ void main()
     if (GetHasSpellEffect(SPELL_HOLYRADIANCE)
         || GetAlignmentGoodEvil(OBJECT_SELF)!= ALIGNMENT_GOOD )
     {
-       RemoveSpellEffects(GetSpellId(),OBJECT_SELF,GetSpellTargetObject());
+       RemoveSpellEffects(GetSpellId(),OBJECT_SELF,PRCGetSpellTargetObject());
        return;
     }
 
@@ -57,7 +57,7 @@ void main()
     eLink = EffectLinkEffects(eLink, eDur);
     eLink = SupernaturalEffect(eLink);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MAGIC_CIRCLE_AGAINST_EVIL, FALSE));
 

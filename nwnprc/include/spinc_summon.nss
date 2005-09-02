@@ -14,9 +14,9 @@ void sp_summon(string creature, int impactVfx)
     if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
         fDuration = SPGetMetaMagicDuration(RoundsToSeconds(PRCGetCasterLevel()*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL)));
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectVisualEffect(impactVfx),
-                          GetSpellTargetLocation());
+                          PRCGetSpellTargetLocation());
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature(creature),
-                          GetSpellTargetLocation(), fDuration);
+                          PRCGetSpellTargetLocation(), fDuration);
 
     SPSetSchool();
 }

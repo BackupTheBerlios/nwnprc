@@ -35,7 +35,7 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
 	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	// Get the spell target location as opposed to the spell target.
-	location lTarget = GetSpellTargetLocation();
+	location lTarget = PRCGetSpellTargetLocation();
 
 	// Get the spell ID if it was not given.
 	if (-1 == nSpellID) nSpellID = GetSpellId();

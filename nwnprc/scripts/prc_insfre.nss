@@ -12,7 +12,7 @@
 //:: Created On: Feb 25, 2004
 //:://////////////////////////////////////////////
 
-#include "x2_i0_spells"
+#include "prc_alterations"
 
 #include "prc_feat_const"
 #include "prc_class_const"

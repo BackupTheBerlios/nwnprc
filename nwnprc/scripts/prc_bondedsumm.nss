@@ -4,7 +4,7 @@
 #include "prc_class_const"
 #include "prc_spell_const"
 #include "prc_ipfeat_const"
-#include "inc_item_props"
+#include "prc_alterations"
 
 void ResEle(object oPC ,object oSkin ,int iLevel,int iType)
 {

@@ -11,8 +11,8 @@
 //:: Created On: Aug 23, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
-#include "x2_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "inc_addragebonus"
 
 #include "prc_feat_const"

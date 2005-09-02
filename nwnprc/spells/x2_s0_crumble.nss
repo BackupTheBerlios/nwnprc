@@ -18,7 +18,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "X2_i0_spells"
 
@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     // End of Spell Cast Hook
 
     object oCaster  = OBJECT_SELF;
-    object oTarget  = GetSpellTargetObject();
+    object oTarget  = PRCGetSpellTargetObject();
     int  nCasterLvl =PRCGetCasterLevel(oCaster);
     int  nType      = GetObjectType(oTarget);
     int  nRacial    = MyPRCGetRacialType(oTarget);

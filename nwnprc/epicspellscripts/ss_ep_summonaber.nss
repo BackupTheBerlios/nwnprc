@@ -6,7 +6,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 #include "prc_inc_switch"
@@ -46,7 +46,7 @@ void main()
         //Apply the summon visual and summon the aberration.
         MultisummonPreSummon();
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummon,
-            GetSpellTargetLocation(), fDuration);
+            PRCGetSpellTargetLocation(), fDuration);
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

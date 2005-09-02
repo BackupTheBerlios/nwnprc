@@ -13,7 +13,7 @@ void main()
 
 SendMessageToPC(OBJECT_SELF, "Release Horde Called");
 
-object oTarget = GetSpellTargetObject();
+object oTarget = PRCGetSpellTargetObject();
 string sRes = GetResRef(oTarget);
 object oMaster = GetMaster(oTarget);
 

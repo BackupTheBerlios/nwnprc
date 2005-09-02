@@ -7,7 +7,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On:
 //:://////////////////////////////////////////////
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 //#include "prc_alterations"
@@ -26,7 +26,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, THEWITH_DC, THEWITH_S, THEWITH_XP))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nDuration = 60; // Lasts 20 rounds, but fires thrice per round.
         effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
         //Fire cast spell at event for the specified target

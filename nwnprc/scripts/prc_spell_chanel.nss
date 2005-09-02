@@ -1,4 +1,4 @@
-#include "x2_inc_itemprop"
+#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_alterations"
 #include "x2_inc_switches"
@@ -57,7 +57,7 @@ void main()
     }
     //If the caster is a spellsword of at least fourth level, we get the
     //target of the spell casted.
-    object oWeapon = GetSpellTargetObject();
+    object oWeapon = PRCGetSpellTargetObject();
 
 
     if ((oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC) 

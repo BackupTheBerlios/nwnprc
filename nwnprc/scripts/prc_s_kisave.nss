@@ -15,7 +15,7 @@
 //:: Created On: Dec 21, 2003
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void main()
 {

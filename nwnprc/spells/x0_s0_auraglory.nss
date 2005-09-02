@@ -18,7 +18,7 @@
 #include "spinc_common"
 
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -73,7 +73,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eHeal = EffectHeal(PRCMaximizeOrEmpower(4,1, nMetaMagic));
     eLink = EffectLinkEffects(eFear, eHeal);
     eLink = EffectLinkEffects(eLink, eDur);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
 
     //Get the first target in the radius around the caster
     oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));

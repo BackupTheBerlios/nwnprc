@@ -18,7 +18,7 @@
 #include "spinc_common"
 
 #include "x2_inc_spellhook"
-#include "x0_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     // End of Spell Cast Hook
 
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     /* Bug fix 21/07/03: Andrew. Lowered regen to 3 HP per round, instead of 10. */
     effect eRegen = EffectRegenerate(3, 6.0);

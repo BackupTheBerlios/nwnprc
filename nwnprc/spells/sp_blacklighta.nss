@@ -11,7 +11,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Feb 28, 2002
 //:://////////////////////////////////////////////
-#include "x0_i0_spells"
+#include "prc_alterations"
 #include "spinc_common"
 
 void main()

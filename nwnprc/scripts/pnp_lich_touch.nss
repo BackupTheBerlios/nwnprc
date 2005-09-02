@@ -16,7 +16,7 @@
 
 void main()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     // Gotta hit first
     if(PRCDoMeleeTouchAttack(oTarget)<1)

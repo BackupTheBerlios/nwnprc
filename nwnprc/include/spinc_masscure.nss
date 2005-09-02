@@ -19,7 +19,7 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
     
     // Get the spell target location as opposed to the spell target.
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
 
     // Get the effective caster level.
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
@@ -29,7 +29,7 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
     if (-1 == nSpellID) nSpellID = PRCGetSpellId();
     
     // Apply the burst vfx.
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_HOLY_20), GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_HOLY_20), PRCGetSpellTargetLocation());
     
     effect eVisCure = EffectVisualEffect(nHealEffect);
     effect eVisHarm = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
@@ -76,7 +76,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
     
     //Declare major variables
     // COMMENT OUT BIOWARE CODE
-    //object oTarget = GetSpellTargetObject();
+    //object oTarget = PRCGetSpellTargetObject();
     int nHeal;
     int nMetaMagic = PRCGetMetaMagicFeat();
     // CHANGED CODE

@@ -52,8 +52,8 @@
 //:: Created By: Ornedan
 //:: Created On: 10.01.2005
 //:://////////////////////////////////////////////
-
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "X2_inc_switches"
 
 #include "inc_poison"
@@ -64,7 +64,7 @@ void main()
 {
     object oItem   = GetSpellCastItem();
     object oPC     = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
 
     // Make sure the target is an item
@@ -81,16 +81,16 @@ void main()
     // Run it
     if(!ExecuteScriptAndReturnInt(sIsFoodScriptName, oTarget))
     {
-    	SendMessageToPCByStrRef(oPC, STRREF_TARGET_NOT_FOOD);       // "Target is not food."
-    	return;
+        SendMessageToPCByStrRef(oPC, STRREF_TARGET_NOT_FOOD);       // "Target is not food."
+        return;
     }
 
     // Get the 2da row to lookup the poison from
     int nRow;
     if(GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON))
-    	nRow = StringToInt(GetStringRight(GetTag(oItem), 3));
+        nRow = StringToInt(GetStringRight(GetTag(oItem), 3));
     else
-    	nRow = GetLocalInt(oItem, "pois_idx");
+        nRow = GetLocalInt(oItem, "pois_idx");
 
     // Some paranoia re. valid values
     if (nRow < 0)
@@ -126,9 +126,9 @@ void main()
 
     // Inform player
     SendMessageToPC(oPC,
-	                GetStringByStrRef(STRREF_POISON_FOOD_USE_1) + " " +
-	                GetStringByStrRef(StringToInt(Get2DACache("poison", "Name", nRow))) + " " +
-	                GetStringByStrRef(STRREF_POISON_FOOD_USE_2) + " " +
-	                GetName(oTarget) + "."
-	               );  //"You put some xxxx into yyyy"
+                    GetStringByStrRef(STRREF_POISON_FOOD_USE_1) + " " +
+                    GetStringByStrRef(StringToInt(Get2DACache("poison", "Name", nRow))) + " " +
+                    GetStringByStrRef(STRREF_POISON_FOOD_USE_2) + " " +
+                    GetName(oTarget) + "."
+                   );  //"You put some xxxx into yyyy"
 }

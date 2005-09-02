@@ -8,7 +8,7 @@
 
 #include "prc_class_const"
 #include "prc_alterations"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void CheckBlindness(object oTarget)
 {    
@@ -25,7 +25,7 @@ void CheckBlindness(object oTarget)
 void main()
 {
      object oCaster = OBJECT_SELF;
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      int iTargetRace = MyPRCGetRacialType(oTarget);
      int iBeholder = iTargetRace == RACIAL_TYPE_ABERRATION && GetHasSpell(710, oTarget) && GetHasSpell(711, oTarget) && GetHasSpell(712, oTarget);
      

@@ -9,7 +9,7 @@
 
 #include "prc_alterations"
 
-#include "X2_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "prc_class_const"
 

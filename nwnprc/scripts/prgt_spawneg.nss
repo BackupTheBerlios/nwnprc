@@ -1,5 +1,5 @@
 //An example OnHB script for an invisible placeable to spawn a ground trap
-
+#include "prc_alterations"
 #include "prgt_inc"
 void main()
 {

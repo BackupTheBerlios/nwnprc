@@ -11,7 +11,9 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Nov 20, 2001
 //:://////////////////////////////////////////////
-#include "NW_I0_SPELLS"
+
+#include "prc_alterations"
+#include "prc_alterations"
 
 
 #include "x2_inc_spellhook"

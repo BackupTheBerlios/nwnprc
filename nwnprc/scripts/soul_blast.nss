@@ -19,9 +19,9 @@
 //:: Last Updated By: Preston Watamaniuk, On: May 25, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-
+#include "prc_alterations"
 #include "prc_class_const"
-#include "prc_inc_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -30,7 +30,7 @@ void main()
     int nClassLevel = GetLevelByClass(CLASS_TYPE_SOUL_EATER, oCaster);
     int nDC = 10 + nClassLevel + GetAbilityModifier(ABILITY_CHARISMA, oCaster);
     effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
     int nDamage = d6(nClassLevel);
@@ -38,8 +38,8 @@ void main()
     effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
     if (nDamage > 0)
     {
-    	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
     }
                        
 }

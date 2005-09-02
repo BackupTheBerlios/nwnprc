@@ -1,5 +1,4 @@
-#include "inc_item_props"
-#include "inc_utility"
+
 
 const int ITEM_PROPERTY_USE_LIMITATION_ABILITY_SCORE      = 86;
 const int ITEM_PROPERTY_USE_LIMITATION_SKILL_RANKS        = 87;
@@ -15,6 +14,13 @@ const int ITEM_PROPERTY_SPEED_DECREASE = 135;
 const string PLAYER_SPEED_INCREASE = "player_speed_increase";
 const string PLAYER_SPEED_DECREASE = "player_speed_decrease";
 
+void ApplySpeedIncrease(object oPC);
+void ApplySpeedDecrease(object oPC);
+int DoUMDCheck(object oItem, object oPC, int nDCMod);
+int CheckPRCLimitations(object oItem, object oPC);
+
+#include "inc_item_props"
+#include "inc_utility"
 
 //credit to silvercloud for this :)
 void ApplySpeedIncrease(object oPC)

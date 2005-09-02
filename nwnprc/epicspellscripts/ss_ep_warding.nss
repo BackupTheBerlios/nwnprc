@@ -16,7 +16,7 @@
     Altered by Boneshank, for purposes of the Epic Spellcasting project.
 */
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 //#include "prc_alterations"
@@ -33,7 +33,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, EP_WARD_DC, EP_WARD_S, EP_WARD_XP))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nDuration = GetTotalCastingLevel(OBJECT_SELF);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));

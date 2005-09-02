@@ -15,7 +15,7 @@
 //Fixed a missing VFX constant bug.
 //Aaon Graywolf - Jan 8, 2004
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -48,7 +48,7 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
     effect eDam;
     //Get the spell target location as opposed to the spell target.
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     //Limit Caster level for the purposes of damage
     if (nCasterLvl > 10)
     {

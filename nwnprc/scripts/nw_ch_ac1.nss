@@ -11,6 +11,7 @@
 //:: Created On: Nov 21, 2001
 //:: Updated On: Jul 25, 2003 - Georg Zoeller
 //:://////////////////////////////////////////////
+#include "prc_alterations"
 #include "X0_INC_HENAI"
 #include "X2_INC_SUMMSCALE"
 #include "X2_INC_SPELLHOOK"

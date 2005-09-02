@@ -7,11 +7,11 @@
    Created By: Starlight
    Created On: 2004-5-5
 */
-
+#include "prc_alterations"
 #include "prc_feat_const"
-#include "inc_item_props"
-#include "x2_inc_itemprop"
-#include "nw_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
+#include "prc_alterations"
 
 void main()
 {

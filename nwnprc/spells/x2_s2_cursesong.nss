@@ -14,7 +14,7 @@
 //:://////////////////////////////////////////////
 //:: Last Updated By: Andrew Nobbs May 20, 2003
 
-#include "x2_i0_spells"
+#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_inc_clsfunc"
 

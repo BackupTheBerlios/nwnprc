@@ -7,7 +7,7 @@
 /////////////////////////////////////////////////
 
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 //#include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -25,7 +25,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, HERCEMP_DC, HERCEMP_S, HERCEMP_XP))
     {
         //Declare major variables
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF); // Boneshank - changed.
         int nModify = d4() + 5;
         float fDuration = HoursToSeconds(nCasterLvl);

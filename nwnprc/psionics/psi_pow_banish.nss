@@ -23,7 +23,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     object oCaster = OBJECT_SELF;
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
     effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
     
@@ -87,8 +87,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	object oMaster;
 	effect eVis = EffectVisualEffect(VFX_IMP_UNSUMMON);
 	effect eImpact = EffectVisualEffect(VFX_FNF_LOS_EVIL_30);
-	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
-	location lLoc = GetSpellTargetLocation();
+	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
+	location lLoc = PRCGetSpellTargetLocation();
 
 	//Get the first object in the are of effect
 	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lLoc);

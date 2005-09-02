@@ -24,7 +24,7 @@ void main()
         if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR ||
            GetBaseItemType(oItem) == BASE_ITEM_CREATUREITEM)
         {
-            object oTarget = GetSpellTargetObject();
+            object oTarget = PRCGetSpellTargetObject();
             LosePsionicFocus(oTarget);
         }
     }

@@ -1,4 +1,3 @@
-#include "NW_I0_SPELLS"
 #include "prc_alterations"
 
 void main()
@@ -7,7 +6,7 @@ void main()
    if (GetLocalInt(OBJECT_SELF,"FEAT_LIPS_RAPTUR")<2)
      return;
 
-   object oTarget=GetSpellTargetObject();
+   object oTarget=PRCGetSpellTargetObject();
    if (oTarget==OBJECT_SELF) return;
 
    SetLocalInt(OBJECT_SELF,"FEAT_LIPS_RAPTUR",GetLocalInt(OBJECT_SELF,"FEAT_LIPS_RAPTUR")-1);

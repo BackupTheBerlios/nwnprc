@@ -230,7 +230,7 @@ void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCos
 void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC);
 
 
-
+#include "prc_alterations"
 #include "inc_persist_loca"
 #include "inc_utility"
 #include "inc_prc_npc"

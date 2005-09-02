@@ -66,7 +66,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int nDamage;
     effect eExplode = EffectVisualEffect(VFX_FNF_BLINDDEAF);
     //Get the spell target location as opposed to the spell target.
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
 
     float fDuration = MinutesToSeconds(CasterLvl);
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))

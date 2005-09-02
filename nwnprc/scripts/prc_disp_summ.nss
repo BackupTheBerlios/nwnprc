@@ -11,7 +11,7 @@
 #include "x2_inc_spellhook"
 #include "prc_inc_switch"
 #include "prc_class_const"
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 void main()
 {
@@ -34,8 +34,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
         MultisummonPreSummon(OBJECT_SELF, TRUE);
         //SetMaxHenchmen(GetMaxHenchmen() + 3);
-        oStone = CreateObject(OBJECT_TYPE_ITEM, "summoningstone", GetSpellTargetLocation());
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+        oStone = CreateObject(OBJECT_TYPE_ITEM, "summoningstone", PRCGetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepLeftLocation(oStone), TurnsToSeconds(nDuration));
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepRightLocation(oStone), TurnsToSeconds(nDuration));
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepRightLocation(oStone), TurnsToSeconds(nDuration));
@@ -46,8 +46,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
         MultisummonPreSummon(OBJECT_SELF, TRUE);
 //        SetMaxHenchmen(GetMaxHenchmen() + 2);
-        oStone = CreateObject(OBJECT_TYPE_ITEM, "summoningstone", GetSpellTargetLocation());
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+        oStone = CreateObject(OBJECT_TYPE_ITEM, "summoningstone", PRCGetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepLeftLocation(oStone), TurnsToSeconds(nDuration));
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepRightLocation(oStone), TurnsToSeconds(nDuration));
         //DelayCommand((fDelay * 5), SetMaxHenchmen(GetMaxHenchmen() - 2));
@@ -56,14 +56,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     else if(iRoll == 1)
     {
         MultisummonPreSummon(OBJECT_SELF);
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
     }
     
     /*Apply the VFX impact and summon effect
     MultisummonPreSummon(OBJECT_SELF);
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
     */
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

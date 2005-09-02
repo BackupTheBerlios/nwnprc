@@ -6,14 +6,14 @@
     Target of the spell must make 2 saves or die.
 */
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "prc_class_const"
 void main()
 {
     //Declare major variables
     int nDamage = d6(3);
     int nDC = GetLevelByClass(CLASS_TYPE_RAVAGER,OBJECT_SELF) + 14 + GetAbilityModifier(ABILITY_CHARISMA,OBJECT_SELF);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_DEATH);
     effect eVis2 = EffectVisualEffect(VFX_IMP_SONIC);

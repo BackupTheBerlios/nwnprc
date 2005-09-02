@@ -1,4 +1,4 @@
-#include "inc_item_props"
+#include "prc_alterations"
 
 void main()
 {

@@ -1,11 +1,11 @@
 #include "prc_alterations"
-#include "prc_inc_combat"
+#include "prc_alterations"
 
 void main()
 {
 
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
     int iType = GetBaseItemType(oWeap);
 

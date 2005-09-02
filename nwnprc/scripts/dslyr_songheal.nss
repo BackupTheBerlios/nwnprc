@@ -15,10 +15,10 @@
 
 //::Added code to maximize for Faith Healing and Blast Infidel
 //::Aaon Graywolf - Jan 7, 2004
-
+#include "prc_alterations"
 #include "spinc_common"
 #include "prc_inc_clsfunc"
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void RemoveOldSongs()
@@ -96,7 +96,7 @@ void main()
     }
   
   //Get first target in shape
-  oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, GetSpellTargetLocation());
+  oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, PRCGetSpellTargetLocation());
   while (GetIsObjectValid(oTarget))
   {
 
@@ -120,7 +120,7 @@ void main()
         SetLocalInt(oTarget, "PC_Damage", 0);
      }
      //Get next target in the shape
-     oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, GetSpellTargetLocation());
+     oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, PRCGetSpellTargetLocation());
   }
  
   DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);

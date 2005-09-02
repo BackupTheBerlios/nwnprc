@@ -3,7 +3,7 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
 {
      SPSetSchool(SPELL_SCHOOL_EVOCATION);
 
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
      int nDice = nCasterLvl;

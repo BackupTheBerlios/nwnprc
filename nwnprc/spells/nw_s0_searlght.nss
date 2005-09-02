@@ -22,7 +22,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     //Declare major variables
     object oCaster = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 

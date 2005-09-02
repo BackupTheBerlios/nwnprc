@@ -1,7 +1,7 @@
 #include "prc_alterations"
 #include "prc_class_const"
 #include "psi_inc_psifunc"
-#include "inc_item_props"
+#include "prc_alterations"
 
 int CheckMissingPowers(object oPC, int nClass)
 { 

@@ -9,7 +9,7 @@
 //:: Created By: Age
 //:: Created On:January 2004
 //:://////////////////////////////////////////////
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {

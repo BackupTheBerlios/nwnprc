@@ -6,7 +6,7 @@
 //:: Created On: 2/22/2004 6:13:10 PM
 //:://////////////////////////////////////////////
 // Move to the starting point in the list of critters by 10
-
+#include "prc_alterations"
 #include "inc_persist_loca"
 
 void main()

@@ -2,11 +2,11 @@
 //:: Epic Spell: Eternal Freedom
 //:: Author: Boneshank (Don Armstrong)
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 #include "inc_dispel"
-#include "inc_item_props"
+#include "prc_alterations"
 //#include "prc_alterations"
 
 void main()
@@ -22,7 +22,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ET_FREE_DC, ET_FREE_S, ET_FREE_XP))
     {
         //Declare major variables
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         object oSkin;
         itemproperty ip1 = ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_PARALYSIS);
         itemproperty ip2 = ItemPropertySpellImmunitySpecific(IP_CONST_IMMUNITYSPELL_ENTANGLE);

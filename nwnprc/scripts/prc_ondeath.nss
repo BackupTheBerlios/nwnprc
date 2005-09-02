@@ -5,7 +5,7 @@
 /*
     This is also triggered by the NPC OnDeath event.
 */
-
+#include "prc_alterations"
 #include "inc_eventhook"
 #include "prc_inc_clsfunc"
 #include "psi_inc_psifunc"

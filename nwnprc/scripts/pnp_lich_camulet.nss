@@ -6,7 +6,7 @@
 //:: Created On: 1/24/2004 9:58:39 AM
 //:://////////////////////////////////////////////
 // Craft the lich amulet (create one or upgrade one)
-
+#include "prc_alterations"
 #include "pnp_lich_inc"
 
 void main()

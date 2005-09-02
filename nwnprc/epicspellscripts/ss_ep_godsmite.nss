@@ -2,8 +2,8 @@
 //:: Epic Spell: Godsmite
 //:: Author: Boneshank (Don Armstrong)
 
-//#include "X0_I0_SPELLS"
-#include "nw_i0_spells"
+//#include "prc_alterations"
+#include "prc_alterations"
 #include "inc_epicspells"
 //#include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -21,7 +21,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, GODSMIT_DC, GODSMIT_S, GODSMIT_XP))
     {
         //Declare major variables
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nSpellPower = GetTotalCastingLevel(OBJECT_SELF);
 
         int nDam, nDamGoodEvil, nDamLawChaos, nCount;

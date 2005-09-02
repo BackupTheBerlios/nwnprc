@@ -33,7 +33,7 @@ void main()
 
     //Apply the VFX impact and summon effect
     MultisummonPreSummon(OBJECT_SELF);
-    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, PRCGetSpellTargetLocation());
 }
 
 
@@ -102,7 +102,7 @@ effect SetSummonEffect(int nSpellID)
     }
 
     //effect eVis = EffectVisualEffect(nFNF_Effect);
-    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation());
     effect eSummonedMonster = EffectSummonCreature(sSummon, nFNF_Effect, 0.0f, TRUE);
     return eSummonedMonster;
 }

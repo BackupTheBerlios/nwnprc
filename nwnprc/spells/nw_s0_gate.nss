@@ -51,8 +51,8 @@ if (!GetLocalInt(OBJECT_SELF, "DimAnchor"))
         nDuration = nDuration *2;   //Duration is +100%
     }
     //Summon the Balor and apply the VFX impact
-    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
-    location lSpellTargetLOC = GetSpellTargetLocation();
+    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation());
+    location lSpellTargetLOC = PRCGetSpellTargetLocation();
 
     if(GetHasSpellEffect(SPELL_PROTECTION_FROM_EVIL) ||
        GetHasSpellEffect(SPELL_MAGIC_CIRCLE_AGAINST_EVIL) ||
@@ -79,6 +79,6 @@ DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 
 void CreateBalor()
 {
-     CreateObject(OBJECT_TYPE_CREATURE, "NW_S_BALOR_EVIL", GetSpellTargetLocation());
+     CreateObject(OBJECT_TYPE_CREATURE, "NW_S_BALOR_EVIL", PRCGetSpellTargetLocation());
 }
 

@@ -14,7 +14,7 @@
 
 
 //Modified by WodahsEht -- Item Properties were being removed even if a new property wasn't applied.
-
+#include "prc_alterations"
 #include "x2_inc_craft"
 #include "prc_inc_clsfunc"
 
@@ -38,7 +38,7 @@ void main()
 {
 //SpawnScriptDebugger();
 //define variable
-object oItem = GetSpellTargetObject();
+object oItem = PRCGetSpellTargetObject();
 object oCaster = GetLastSpellCaster();
 
 //if the target is not a instrument or spell cast from item or the caster is not

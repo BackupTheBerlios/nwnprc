@@ -5,7 +5,7 @@ void main()
 {
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eSun = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
     effect eBolt;
 

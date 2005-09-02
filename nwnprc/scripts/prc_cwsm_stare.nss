@@ -1,7 +1,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     int iPCCha = GetAbilityModifier(ABILITY_CHARISMA,oPC);
     int iTACha = GetAbilityModifier(ABILITY_CHARISMA,oTarget);

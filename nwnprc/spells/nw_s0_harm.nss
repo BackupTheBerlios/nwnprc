@@ -19,7 +19,7 @@
 
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "prc_inc_switch"
 
@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDamage, nHeal;
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nTouch = PRCDoMeleeTouchAttack(oTarget);;

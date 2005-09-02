@@ -29,8 +29,8 @@ Primogenitor
 //:://////////////////////////////////////////////
 */
 #include "prc_alterations"
-#include "NW_I0_SPELLS"
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 
 
 
@@ -173,7 +173,7 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
     }
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, PRCGetSpellTargetLocation(), TRUE,
                                     OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE,
                                     GetPosition(oPC));
 
@@ -200,7 +200,7 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
     }
 }
 
@@ -304,7 +304,7 @@ void RandomBreath(object oPC ,object oSkin ,int dChaos ,int nSaveDC ,int nLevel 
     }
 */
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, PRCGetSpellTargetLocation(), TRUE,
                                     OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE,
                                     GetPosition(oPC));
 
@@ -330,7 +330,7 @@ void RandomBreath(object oPC ,object oSkin ,int dChaos ,int nSaveDC ,int nLevel 
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
     }
 }
 
@@ -388,7 +388,7 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
     }
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
 
     while(GetIsObjectValid(oTarget))
     {
@@ -418,7 +418,7 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
     }
 }
 
@@ -447,7 +447,7 @@ void ShadowBreath(object oPC ,object oSkin ,int dShadow ,int nSaveDC ,int nLevel
     }
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
+    oTarget = GetFirstObjectInShape(nBreathShape, fRange, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
 
     while(GetIsObjectValid(oTarget))
     {
@@ -471,7 +471,7 @@ void ShadowBreath(object oPC ,object oSkin ,int dShadow ,int nSaveDC ,int nLevel
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(nBreathShape, fRange, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
+        oTarget = GetNextObjectInShape(nBreathShape, fRange, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
     }
 }
 
@@ -579,6 +579,6 @@ void main()
 
     //breath VFX
     effect eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHGROUND);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation());
 }
 

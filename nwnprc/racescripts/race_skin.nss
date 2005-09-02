@@ -2,6 +2,7 @@
 // Handle skin and other mods for races.
 // This file is where various content users can customize races.
 
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_spell_const"
 #include "prc_racial_const"

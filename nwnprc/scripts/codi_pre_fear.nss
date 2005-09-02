@@ -8,9 +8,8 @@
 //:: Created By: James Stoneburner
 //:: Created On: 2003-11-30
 //:://////////////////////////////////////////////
-#include "X0_I0_SPELLS"
-#include "nw_i0_spells"
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
@@ -23,7 +22,7 @@ void main()
     int nOcSv = 10 + (nOcLvl/2) + nChaMod;
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLevel = GetLevelByTypeDivine();
     float fDuration = RoundsToSeconds(nCasterLevel);
     effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);
@@ -33,7 +32,7 @@ void main()
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     effect eLink = EffectLinkEffects(eFear, eMind);
     eLink = EffectLinkEffects(eLink, eDur);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
 
     int bHit = PRCDoRangedTouchAttack(oTarget);;
 

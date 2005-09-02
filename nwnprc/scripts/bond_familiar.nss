@@ -11,12 +11,12 @@
 //:: Created On: Sept 27, 2001
 //:://////////////////////////////////////////////
 
-#include "prc_inc_function"
+#include "prc_alterations"
 #include "inc_npc"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
-#include "prc_inc_spells"
+#include "prc_alterations"
 
 const int PACKAGE_ELEMENTAL_STR = PACKAGE_ELEMENTAL ;
 const int PACKAGE_ELEMENTAL_DEX = PACKAGE_FEY ;

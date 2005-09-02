@@ -9,7 +9,7 @@
 //:: Created On: June 8, 2005
 //:://////////////////////////////////////////////
 
-#include "inc_item_props"
+#include "prc_alterations"
 #include "prc_feat_const"
 
 void main()

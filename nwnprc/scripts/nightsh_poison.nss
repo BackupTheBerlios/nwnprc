@@ -31,7 +31,8 @@
 //:: Created On: 2003-05-11
 //:: Updated On: 2003-08-21
 //:://////////////////////////////////////////////
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "X2_inc_switches"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
@@ -51,7 +52,7 @@ void main()
 
   object oItem   = GetSpellCastItem();
   object oPC     = OBJECT_SELF;
-  object oTarget = GetSpellTargetObject();
+  object oTarget = PRCGetSpellTargetObject();
   string sTag    = GetTag(oItem);
 
   if (oTarget == OBJECT_INVALID || GetObjectType(oTarget) != OBJECT_TYPE_ITEM)

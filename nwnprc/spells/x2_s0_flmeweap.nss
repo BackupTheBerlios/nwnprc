@@ -19,8 +19,8 @@
 #include "spinc_common"
 
 
-#include "nw_i0_spells"
-#include "x2_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 

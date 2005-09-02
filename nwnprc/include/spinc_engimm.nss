@@ -11,7 +11,7 @@ void DoEnergyImmunity (int nDamageType, int nVfx)
 {
 	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
-	object oTarget = GetSpellTargetObject();
+	object oTarget = PRCGetSpellTargetObject();
 	
 	// Determine the duration
 	float fDuration = SPGetMetaMagicDuration(HoursToSeconds(24));

@@ -10,7 +10,7 @@
 */
 
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 //#include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -30,7 +30,7 @@ void main()
         //Declare major variables
         int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF); // Boneshank - changed.
         object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 10.0,
-            GetSpellTargetLocation());
+            PRCGetSpellTargetLocation());
         while (GetIsObjectValid(oTarget))
         {
             if (GetFactionEqual(oTarget, OBJECT_SELF))
@@ -58,7 +58,7 @@ void main()
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
             }
             oTarget = GetNextObjectInShape(SHAPE_SPHERE, 10.0,
-                GetSpellTargetLocation());
+                PRCGetSpellTargetLocation());
         }
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

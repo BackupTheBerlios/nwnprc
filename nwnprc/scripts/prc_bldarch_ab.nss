@@ -1,7 +1,7 @@
 // Acidic Blood for the Bloodarcher by Zedium
 #include "prc_alterations"
 #include "prc_feat_const"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 

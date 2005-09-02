@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVisual = EffectVisualEffect(VFX_IMP_RESTORATION);
     int bValid;
     if (oTarget != OBJECT_SELF)

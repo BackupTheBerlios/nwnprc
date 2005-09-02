@@ -14,7 +14,7 @@
 // vs the lich level.
 
 // Called by the EvalPRC function
-
+#include "prc_alterations"
 #include "pnp_lich_inc"
 #include "NW_I0_GENERIC"
 

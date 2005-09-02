@@ -11,8 +11,8 @@
 //:: Created On: June, 17, 2003 (June, 7, 2005)
 //:://////////////////////////////////////////////
 
-#include "NW_I0_SPELLS"
-#include "inc_item_props" 
+#include "prc_alterations"
+#include "prc_alterations" 
 
 
 //This is the main breath attack script.  33 out of 38 Dragon Disciple
@@ -94,10 +94,10 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
     int nPersonalDamage;
 
     eVis = EffectVisualEffect(494);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,PRCGetSpellTargetLocation());
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
 
     while(GetIsObjectValid(oTarget))
     {
@@ -132,7 +132,7 @@ void BreathAttack(object oPC ,object oSkin ,int DBREED ,int nSaveDC ,int nLevel 
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
     }
 }
 
@@ -223,10 +223,10 @@ void RandomBreath(object oPC ,object oSkin ,int dChaos ,int nSaveDC ,int nLevel 
     int nPersonalDamage;
 
     eVis = EffectVisualEffect(494);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,PRCGetSpellTargetLocation());
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
 
     while(GetIsObjectValid(oTarget))
     {
@@ -261,7 +261,7 @@ void RandomBreath(object oPC ,object oSkin ,int dChaos ,int nSaveDC ,int nLevel 
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
     }
 }
 
@@ -307,10 +307,10 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
     int nPersonalDamage;
 
     eVis = EffectVisualEffect(494);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,PRCGetSpellTargetLocation());
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
 
     while(GetIsObjectValid(oTarget))
     {
@@ -345,7 +345,7 @@ void sonfireBreath(object oPC ,object oSkin ,int dPyCla ,int nSaveDC ,int nLevel
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
     }
 }
 
@@ -362,10 +362,10 @@ void ShadowBreath(object oPC ,object oSkin ,int dShadow ,int nSaveDC ,int nLevel
     int shadowDrain;
 
     eVis = EffectVisualEffect(494);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eVis,PRCGetSpellTargetLocation());
 
     //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
 
     while(GetIsObjectValid(oTarget))
     {
@@ -396,7 +396,7 @@ void ShadowBreath(object oPC ,object oSkin ,int dShadow ,int nSaveDC ,int nLevel
              }
         }
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
+        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, PRCGetSpellTargetLocation(), TRUE,  OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE);
     }
 }
 

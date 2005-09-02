@@ -8,8 +8,8 @@
 //:: Created By: Aaon Graywolf
 //:: Created On: Dec 28, 2003
 //:://////////////////////////////////////////////
-
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 
 // * Applies the Acolyte's AC bonuses as CompositeBonuses on object's skin.
@@ -41,11 +41,11 @@ void AcolyteDexBonus(object oPC, object oSkin, int iLevel)
 
     if(GetLocalInt(oSkin, sFlag) == iLevel) return;
 
-	if(iLevel > 0)
-	{
+    if(iLevel > 0)
+    {
         SetCompositeBonus(oSkin, sFlag, iLevel, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_DEX);
         SetLocalInt(oSkin, sFlag, iLevel);
-	}
+    }
 }
 
 void AcolyteConBonus(object oPC, object oSkin, int iLevel)
@@ -54,11 +54,11 @@ void AcolyteConBonus(object oPC, object oSkin, int iLevel)
 
     if(GetLocalInt(oSkin, sFlag) == iLevel) return;
 
-	if(iLevel > 0)
-	{
+    if(iLevel > 0)
+    {
         SetCompositeBonus(oSkin, sFlag, iLevel, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
         SetLocalInt(oSkin, sFlag, iLevel);
-	}
+    }
 }
 
 void AcolyteIntBonus(object oPC, object oSkin, int iLevel)
@@ -67,11 +67,11 @@ void AcolyteIntBonus(object oPC, object oSkin, int iLevel)
 
     if(GetLocalInt(oSkin, sFlag) == iLevel) return;
 
-	if(iLevel > 0)
-	{
+    if(iLevel > 0)
+    {
         SetCompositeBonus(oSkin, sFlag, iLevel, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_INT);
         SetLocalInt(oSkin, sFlag, iLevel);
-	}
+    }
 }
 
 

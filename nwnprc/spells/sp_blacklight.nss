@@ -1,7 +1,7 @@
 
 #include "spinc_common"
 #include "prc_alterations"
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -14,8 +14,8 @@ void main()
 
     //Declare major variables including Area of Effect Object
     effect eAOE = EffectAreaOfEffect(AOE_PER_DARKNESS,"sp_blacklighta","","sp_blacklightb");
-    location lTarget = GetSpellTargetLocation();
-    object oTarget = GetSpellTargetObject();
+    location lTarget = PRCGetSpellTargetLocation();
+    object oTarget = PRCGetSpellTargetObject();
 
     float  nDuration = SPGetMetaMagicDuration(RoundsToSeconds(PRCGetCasterLevel()));
 

@@ -14,7 +14,7 @@
 /*
     Altered by Boneshank, for purposes of the Epic Spellcasting project.
 */
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 #include "prc_inc_switch"
@@ -35,7 +35,7 @@ void main()
         eSummon = ExtraordinaryEffect(eSummon);
         //Apply the summon visual and summon the undead.
         MultisummonPreSummon();
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummon, GetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummon, PRCGetSpellTargetLocation());
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

@@ -19,7 +19,7 @@
 //:: Last Update: 2003-10-07
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
+
 
 //Changed by primogenitor to include CEP itemtypes
 
@@ -204,7 +204,8 @@ int   IPGetHasItemPropertyOnCharacter(object oPC, int nItemPropertyConst);
 // *  Returns an integer with the number of properties present oItem
 int   IPGetNumberOfItemProperties(object oItem);
 
-
+#include "inc_utility"
+#include "prc_alterations"
 
 //------------------------------------------------------------------------------
 //                         I M P L E M E N T A T I O N
@@ -943,7 +944,7 @@ int IPGetItemHasProperty(object oItem, itemproperty ipCompareTo, int nDurationCo
 
 object IPGetTargetedOrEquippedMeleeWeapon()
 {
-  object oTarget = GetSpellTargetObject();
+  object oTarget = PRCGetSpellTargetObject();
   if(GetIsObjectValid(oTarget) && GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
   {
     if (IPGetIsMeleeWeapon(oTarget))
@@ -989,7 +990,7 @@ object IPGetTargetedOrEquippedMeleeWeapon()
 
 object IPGetTargetedOrEquippedArmor(int bAllowShields = FALSE)
 {
-  object oTarget = GetSpellTargetObject();
+  object oTarget = PRCGetSpellTargetObject();
   if(GetIsObjectValid(oTarget) && GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
   {
     if (GetBaseItemType(oTarget) == BASE_ITEM_ARMOR)

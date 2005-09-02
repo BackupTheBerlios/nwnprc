@@ -28,7 +28,7 @@ still problem:
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "prc_alterations"
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "prc_class_const"
 
 #include "x2_inc_spellhook"

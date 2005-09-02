@@ -8,9 +8,8 @@
 //:: Created By: James Stoneburner
 //:: Created On: 2003-11-30
 //:://////////////////////////////////////////////
-#include "X0_I0_SPELLS"
-#include "nw_i0_spells"
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
@@ -25,7 +24,7 @@ void main()
     effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int bHit = PRCDoRangedTouchAttack(oTarget);;
 
     if(bHit) {

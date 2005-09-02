@@ -64,7 +64,7 @@ void main()
         return;
     }
     
-    object oItem = GetSpellTargetObject();
+    object oItem = PRCGetSpellTargetObject();
     
     //If targeting a valid recipe, display its content
     struct ireqreport iReport = CheckIReqs(oItem, TRUE, FALSE);

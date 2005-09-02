@@ -11,8 +11,9 @@
 //:: Created On: Sept 13, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "spinc_common"
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "prc_alterations"
 
@@ -34,7 +35,7 @@ DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int iHP = GetCurrentHitPoints(oTarget);
     int CasterLvl = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)/2;
     if (GetLocalInt(OBJECT_SELF, "Apal_DeathKnell") == TRUE)

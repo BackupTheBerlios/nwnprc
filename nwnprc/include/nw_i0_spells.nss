@@ -135,7 +135,7 @@ int AmIAHumanoid(object oTarget)
 void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impactHurt, int vfx_impactHeal, int nSpellID ,int ModCasterlevel = 0)
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nHeal;
     int nMetaMagic = PRCGetMetaMagicFeat();
     effect eVis = EffectVisualEffect(vfx_impactHurt);

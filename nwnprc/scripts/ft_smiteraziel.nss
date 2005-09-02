@@ -14,5 +14,5 @@ void main()
         IncrementRemainingFeatUses(OBJECT_SELF,iFeat);
     }    
     
-    DoSmite(OBJECT_SELF, GetSpellTargetObject(), SMITE_TYPE_EVIL);
+    DoSmite(OBJECT_SELF, PRCGetSpellTargetObject(), SMITE_TYPE_EVIL);
 }

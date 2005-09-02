@@ -1,6 +1,6 @@
-#include "x0_i0_spells"
+#include "prc_alterations"
 #include "inc_soul_shift"
-#include "prc_inc_combat"
+#include "prc_alterations"
 
 void DeathDelay(object oTarget, string sTarget, string sName);
 
@@ -114,8 +114,8 @@ void DeathDelay(object oTarget, string sTarget, string sName)
     
     			if (i >= nMax) SetMaxHenchmen(i+1);
 
-			object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "soul_wight_test", GetSpellTargetLocation());
-			ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+			object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "soul_wight_test", PRCGetSpellTargetLocation());
+			ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation());
 
 			AddHenchman(OBJECT_SELF, oCreature);
 			int nTargetLevelUp = GetHitDice(OBJECT_SELF) - 3;
@@ -132,7 +132,7 @@ void main()
 {
 
 
-	object oTarget = GetSpellTargetObject();
+	object oTarget = PRCGetSpellTargetObject();
 	string sTarget = GetResRef(oTarget);
 	string sName = GetName(oTarget);
 	int nDamage = 1;

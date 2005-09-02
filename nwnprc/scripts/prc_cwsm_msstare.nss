@@ -4,7 +4,7 @@
     opposed Intimidate Check or suffer penalites
 */
 
-#include "X2_I0_SPELLS"
+#include "prc_alterations"
 #include "prc_class_const"
 void main()
 {

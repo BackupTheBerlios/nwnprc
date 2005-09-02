@@ -18,7 +18,7 @@
 
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "prc_inc_switch"
 
@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
   int nTouch, nModify, nDamage, nHeal;
   int nMetaMagic = PRCGetMetaMagicFeat();
   float fDelay;
-  location lLoc =  GetSpellTargetLocation();
+  location lLoc =  PRCGetSpellTargetLocation();
 
   int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
   int nCasterLvl = CasterLvl;

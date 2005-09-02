@@ -23,7 +23,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     object oCaster = OBJECT_SELF;
     int nAugCost = 0;
     int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
     
     if (nMetaPsi > 0) 

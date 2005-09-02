@@ -1,10 +1,10 @@
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 
 int ooze_ranged_damage(effect eDamage, int splash_type)
 {
-    object target = GetSpellTargetObject();
+    object target = PRCGetSpellTargetObject();
 
     if(!GetIsReactionTypeFriendly(target))
     {
@@ -21,7 +21,7 @@ int ooze_ranged_damage(effect eDamage, int splash_type)
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, target);
 
             //Declare the spell shape, size and the location.  Capture the first target object in the shape.
-            object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+            object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
             //Cycle through the targets within the spell shape until an invalid object is captured.
             while (GetIsObjectValid(oTarget))
             {
@@ -45,7 +45,7 @@ int ooze_ranged_damage(effect eDamage, int splash_type)
                         DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                 }
                //Select the next target within the spell shape.
-               oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+               oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
             }
             return TRUE;
         }
@@ -55,7 +55,7 @@ int ooze_ranged_damage(effect eDamage, int splash_type)
 
 void main()
 {
-    object target = GetSpellTargetObject();
+    object target = PRCGetSpellTargetObject();
     int level = GetLevelByClass(CLASS_TYPE_OOZEMASTER);
 
     switch (GetSpellId())
@@ -88,7 +88,7 @@ void main()
                 return;
             }
             effect damage = EffectDamage(d4() + level, DAMAGE_TYPE_ACID);
-            object target = GetSpellTargetObject();
+            object target = PRCGetSpellTargetObject();
             int DC = 15 + level;
 
             if (ooze_ranged_damage(damage, DAMAGE_TYPE_ACID))

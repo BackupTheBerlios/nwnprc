@@ -10,7 +10,7 @@
 //:: Created By: Ornedan
 //:: Created On: 15.08.2005
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "prc_inc_teleport"
 
 

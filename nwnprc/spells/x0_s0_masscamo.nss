@@ -15,7 +15,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_HOLY_30);
     float fDelay = 0.0;
     effect eVis = EffectVisualEffect(VFX_IMP_HEAD_HOLY);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
 
     //Get the first target in the radius around the caster
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));

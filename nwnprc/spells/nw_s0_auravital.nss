@@ -16,7 +16,7 @@
 #include "spinc_common"
 
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -65,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     {
         nDuration *= 2; //Duration is +100%
     }
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
     oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     while(GetIsObjectValid(oTarget))
     {

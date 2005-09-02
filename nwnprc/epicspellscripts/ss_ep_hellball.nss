@@ -10,8 +10,8 @@
     Altered by Boneshank, for purposes of the Epic Spellcasting project.
 */
 
-//#include "X0_I0_SPELLS"
-#include "nw_i0_spells"
+//#include "prc_alterations"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
@@ -53,7 +53,7 @@ void main()
         effect eDam1, eDam2, eDam3, eDam4, eDam5, eKnock;
         eKnock= EffectKnockdown();
 
-        location lTarget = GetSpellTargetLocation();
+        location lTarget = PRCGetSpellTargetLocation();
 
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
 

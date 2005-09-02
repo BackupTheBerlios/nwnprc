@@ -17,7 +17,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 #include "prc_inc_switch"
@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
@@ -85,13 +85,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         break;
     }
     //Apply the summon effect and VFX impact
-    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eGate, GetSpellTargetLocation());
+    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eGate, PRCGetSpellTargetLocation());
     MultisummonPreSummon();
     
     float fDuration = HoursToSeconds(nDuration);
     if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
         fDuration = RoundsToSeconds(nDuration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), fDuration);
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), fDuration);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Erasing the variable used to store the spell's spell school

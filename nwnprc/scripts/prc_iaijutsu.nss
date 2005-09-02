@@ -8,12 +8,12 @@
 #include "NW_I0_GENERIC"
 #include "x0_i0_position"
 #include "prc_feat_const"
-#include "prc_inc_combat"
+#include "prc_alterations"
 
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     object oItem1 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
     object oItem2 = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
     object oWeap = GetFirstItemInInventory(oPC);

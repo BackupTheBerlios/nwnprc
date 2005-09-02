@@ -8,10 +8,10 @@
    Modified On: 2004-5-13
 */
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "prc_feat_const"
-#include "inc_item_props"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 
 void main(){
 

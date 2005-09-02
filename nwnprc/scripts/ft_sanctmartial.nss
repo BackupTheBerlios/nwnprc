@@ -1,7 +1,7 @@
-#include "prc_inc_function"
+#include "prc_alterations"
 #include "prc_inc_clsfunc"
-#include "inc_item_props"
-#include "nw_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 
 
 // Sanctify_Feat(iType);

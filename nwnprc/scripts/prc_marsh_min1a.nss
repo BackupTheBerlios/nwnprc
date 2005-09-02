@@ -1,10 +1,10 @@
-#include "x0_i0_spells"
+#include "prc_alterations"
 #include "prc_add_spl_pen"
 #include "prc_misc_const"
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
     object oTarget = GetEnteringObject();
     object PCMarshal = GetAreaOfEffectCreator();
     

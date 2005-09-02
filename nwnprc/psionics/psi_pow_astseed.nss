@@ -25,7 +25,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -51,14 +51,14 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	object oCaster = OBJECT_SELF;
 	int nAugCost = 0;
 	int nAugment = GetAugmentLevel(oCaster);
-	object oFirstTarget = GetSpellTargetObject();
+	object oFirstTarget = PRCGetSpellTargetObject();
 	int nMetaPsi = GetCanManifest(oCaster, nAugCost, oFirstTarget, 0, 0, 0, 0, 0, 0, 0);
 
 	if (nMetaPsi > 0)
 	{
 		if (!GetLocalInt(oCaster, "AstralSeed"))
 		{
-			object oSeed = CreateObject(OBJECT_TYPE_PLACEABLE, "x2_plc_phylact", GetSpellTargetLocation());
+			object oSeed = CreateObject(OBJECT_TYPE_PLACEABLE, "x2_plc_phylact", PRCGetSpellTargetLocation());
 			effect eVis = EffectVisualEffect(VFX_IMP_DEATH_WARD);
 			DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oSeed));
 			SetLocalInt(oCaster, "AstralSeed", TRUE);

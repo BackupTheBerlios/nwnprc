@@ -2,7 +2,7 @@
 //:: OnClientLeave eventscript
 //:: prc_onleave
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "inc_eventhook"
 #include "prc_inc_switch"
 #include "inc_letoscript"

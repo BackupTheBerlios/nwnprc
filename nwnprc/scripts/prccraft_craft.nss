@@ -69,7 +69,7 @@ void main()
         return;
     }
     
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nTargetType = GetObjectType(oTarget);
     struct ireqreport iReport;
     

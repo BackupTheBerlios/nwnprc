@@ -41,7 +41,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
      effect eKnockdown = EffectKnockdown();
     effect eDamage;
     
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     location lTarget = GetLocation(oTarget);
     object oNextTarget, oTarget2;
     float fDelay;

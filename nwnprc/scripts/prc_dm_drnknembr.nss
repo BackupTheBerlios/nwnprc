@@ -1,12 +1,12 @@
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_feat_const"
-#include "x0_i0_spells"
 
 void main()
 {
 object oPC = OBJECT_SELF;
-object oTarget = GetSpellTargetObject();
+object oTarget = PRCGetSpellTargetObject();
 
 AdjustReputation(oPC, oTarget, -100);
 AdjustReputation(oTarget, oPC, -100);

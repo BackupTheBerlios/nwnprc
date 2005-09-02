@@ -15,7 +15,7 @@ void main()
 
      SPSetSchool(SPELL_SCHOOL_EVOCATION);
      
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
      {
           // Declare major variables  ( fDist / (3.0f * log( fDist ) + 2.0f) )

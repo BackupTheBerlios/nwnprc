@@ -21,7 +21,7 @@ void main()
 
     effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
     effect eImpact = EffectVisualEffect(192);//VFX_FNF_LOS_NORMAL_20
-    location lLocal = GetSpellTargetLocation();
+    location lLocal = PRCGetSpellTargetLocation();
 
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLocal);
     while(GetIsObjectValid(oTarget))

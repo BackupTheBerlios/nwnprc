@@ -10,11 +10,11 @@
 //:: Created On: Apr 27, 2005
 //::////////////////////////////////////////////// 
 
-#include "inc_item_props" 
+#include "prc_alterations" 
 #include "prc_class_const" 
 #include "prc_feat_const" 
 #include "prc_spell_const"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
 #include "prc_ip_srcost"
 
 //Adds total elemental immunity for the majority of dragon types.

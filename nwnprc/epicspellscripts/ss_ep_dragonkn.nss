@@ -15,7 +15,7 @@
 /*
     Altered by Boneshank, for purposes of the Epic Spellcasting project.
 */
-#include "nw_i0_spells"
+#include "prc_alterations"
 //#include "x2_inc_toollib"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
@@ -42,8 +42,8 @@ void main()
         eSummon = ExtraordinaryEffect(eSummon);
         //Apply the summon visual and summon the dragon.
         MultisummonPreSummon();
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon,GetSpellTargetLocation(), RoundsToSeconds(nDuration));
-        DelayCommand(1.0f,ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis,GetSpellTargetLocation()));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon,PRCGetSpellTargetLocation(), RoundsToSeconds(nDuration));
+        DelayCommand(1.0f,ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis,PRCGetSpellTargetLocation()));
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

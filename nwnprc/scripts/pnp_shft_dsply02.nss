@@ -1,5 +1,5 @@
 //script for deciding if the entry in the forms list should be shown
-
+#include "prc_alterations"
 #include "inc_persist_loca"
 
 int StartingConditional()

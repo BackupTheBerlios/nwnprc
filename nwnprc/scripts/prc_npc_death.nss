@@ -2,7 +2,7 @@
 //:: OnDeath NPC eventscript
 //:: prc_npc_death
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "inc_eventhook"
 
@@ -33,7 +33,7 @@ void main()
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
         effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
-        location lTarget = GetSpellTargetLocation();
+        location lTarget = PRCGetSpellTargetLocation();
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
         object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget);
         while (GetIsObjectValid(oTarget))

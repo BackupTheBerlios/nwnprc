@@ -13,6 +13,7 @@
 //:: Modified by Wyz_sub10 for Pixie
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "nw_i0_spells"
 #include "inc_item_props"
 #include "prc_feat_const"

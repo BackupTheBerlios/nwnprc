@@ -18,7 +18,7 @@ bugfix by Kovi 2002.07.30
 - loosing temporary hp resulted in loosing the other bonuses
 */
 
-#include "x0_i0_spells"
+#include "prc_alterations"
 #include "spinc_common"
 #include "prc_class_const"
 #include "prc_inc_clsfunc"

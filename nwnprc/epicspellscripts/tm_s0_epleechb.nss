@@ -9,8 +9,8 @@
 /////////////////////////////////////////////////
 // Last Updated: 03/15/2004, Nron Ksr
 /////////////////////////////////////////////////
-//#include "X0_I0_SPELLS"
-#include "nw_i0_spells"
+//#include "prc_alterations"
+#include "prc_alterations"
 #include "inc_epicspells"
 //#include "prc_alterations"
 #include "x2_inc_spellhook"$

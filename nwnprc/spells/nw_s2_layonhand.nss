@@ -13,11 +13,11 @@
 //:: Updated On: Oct 20, 2003
 //:://////////////////////////////////////////////
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 void main()
 {
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nChr = GetAbilityModifier(ABILITY_CHARISMA);
 
     // Added by Starlight 2004-5-14

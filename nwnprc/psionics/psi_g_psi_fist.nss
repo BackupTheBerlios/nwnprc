@@ -14,16 +14,16 @@
 //:: Modified On: 22.03.2005
 //:://////////////////////////////////////////////
 
-#include "prc_inc_function"
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
-#include "prc_inc_combat"
+#include "prc_alterations"
 #include "psi_inc_psifunc"
 
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eDummy;
 
     if(!UsePsionicFocus(oPC)){

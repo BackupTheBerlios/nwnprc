@@ -30,7 +30,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
 	float fDelay;
-	location lTargetLocation = GetSpellTargetLocation();
+	location lTargetLocation = PRCGetSpellTargetLocation();
     	int nDice = 13;
 	int nDiceSize = 6;
 	float fWidth = DoWiden(35.0, nMetaPsi);

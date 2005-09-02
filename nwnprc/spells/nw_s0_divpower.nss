@@ -28,7 +28,7 @@ still problem:
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "spinc_common"
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 
 #include "x2_inc_spellhook"
@@ -65,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nLevel = CasterLvl;
     int nHP = nLevel;

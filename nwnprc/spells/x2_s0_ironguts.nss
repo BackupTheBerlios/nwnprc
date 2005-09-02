@@ -16,7 +16,7 @@
 #include "spinc_common"
 
 #include "x2_inc_spellhook"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -41,7 +41,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eSave;
     effect eVis2 = EffectVisualEffect(VFX_IMP_HEAD_ACID);
     effect eVis = EffectVisualEffect(VFX_IMP_HEAD_HOLY);

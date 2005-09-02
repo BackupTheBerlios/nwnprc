@@ -1,12 +1,11 @@
-//#include "nw_i0_spells"    - inherited from spinc_common
-//#include "prc_spell_const" - inherited from spinc_common
+#include "prc_alterations"
 #include "spinc_common"
-#include "prc_inc_combat"
+#include "prc_alterations"
 
 void main()
 {
    int nSpellId     = GetSpellId();
-   object oTarget   = GetSpellTargetObject();
+   object oTarget   = PRCGetSpellTargetObject();
    object oWeap     = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
 
    if (!GetWeaponRanged(oWeap))
@@ -116,7 +115,7 @@ int RangedAttackBonus(object oPC, object oWeap, object oTarget, int iMod = 0)
 void main()
 {
    int nSpellId     = GetSpellId();
-   object oTarget   = GetSpellTargetObject();
+   object oTarget   = PRCGetSpellTargetObject();
    object oWeap     = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
    int iEnhancement = GetWeaponRangeEnhancement(oWeap,OBJECT_SELF);
    int iDamageType  = GetWeaponDamageType(oWeap);

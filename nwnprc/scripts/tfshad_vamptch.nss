@@ -52,7 +52,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //--------------------------------------------------------------------------
 
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = GetMetaMagicFeat();
 
     int nCasterLevel  = GetLevelByClass(CLASS_TYPE_SHADOWLORD,OBJECT_SELF);

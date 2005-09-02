@@ -1,4 +1,4 @@
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 void main()
 {

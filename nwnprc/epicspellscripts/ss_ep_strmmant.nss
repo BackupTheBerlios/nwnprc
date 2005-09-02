@@ -11,7 +11,7 @@
 //:: Created On: March 9, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
@@ -30,13 +30,13 @@ void main()
     {
         //Declare major variables
         object oTarget = GetFirstObjectInShape( SHAPE_SPHERE,
-            RADIUS_SIZE_HUGE, GetSpellTargetLocation() );
+            RADIUS_SIZE_HUGE, PRCGetSpellTargetLocation() );
         effect eVis = EffectVisualEffect( VFX_DUR_SPELLTURNING );
         effect eDur = EffectVisualEffect( VFX_DUR_CESSATE_POSITIVE );
         int nDuration = GetTotalCastingLevel( OBJECT_SELF ); // Bone - changed
 
         effect eImpact = EffectVisualEffect( VFX_FNF_LOS_NORMAL_20 );
-        ApplyEffectAtLocation( DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation() );
+        ApplyEffectAtLocation( DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation() );
 
         while( GetIsObjectValid(oTarget) )
         {
@@ -57,7 +57,7 @@ void main()
                     oTarget, RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF) );
             }
             oTarget = GetNextObjectInShape( SHAPE_SPHERE,
-                RADIUS_SIZE_HUGE, GetSpellTargetLocation() );
+                RADIUS_SIZE_HUGE, PRCGetSpellTargetLocation() );
         }
     }
 	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

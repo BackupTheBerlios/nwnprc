@@ -22,7 +22,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -58,11 +58,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
 	float fDelay;
-	location lTargetLocation = GetSpellTargetLocation();
+	location lTargetLocation = PRCGetSpellTargetLocation();
 	float fWidth = DoWiden(RADIUS_SIZE_HUGE, nMetaPsi);
 	effect eExplode = EffectVisualEffect(VFX_FNF_LOS_NORMAL_20);
 	effect eVis = EffectVisualEffect(VFX_IMP_PULSE_WIND);
-	location lTarget = GetSpellTargetLocation();
+	location lTarget = PRCGetSpellTargetLocation();
 	
 	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
 	oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);

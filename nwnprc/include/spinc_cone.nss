@@ -32,7 +32,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
      if (nCasterLvl > nDieCap) nCasterLvl = nDieCap;
      
      // Figure out where the cone was targetted.
-     location lTargetLocation = GetSpellTargetLocation();
+     location lTargetLocation = PRCGetSpellTargetLocation();
      
      // Adjust the damage type of necessary.
      nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);

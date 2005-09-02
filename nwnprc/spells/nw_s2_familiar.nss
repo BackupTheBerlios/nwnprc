@@ -16,7 +16,7 @@
 #include "prc_feat_const"
 #include "prc_misc_const"
 #include "prc_ipfeat_const"
-#include "prc_inc_spells"
+#include "prc_alterations"
 #include "prc_inc_switch"
 #include "inc_persist_loca"
 #include "inc_dispel"

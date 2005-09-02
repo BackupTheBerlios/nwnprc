@@ -142,7 +142,7 @@ SetMasteryOfElements()
 
     SetLocalInt(OBJECT_SELF, MASTERY_OF_ELEMENTS_TAG, dmgType);
     SetLocalString(OBJECT_SELF, MASTERY_OF_ELEMENTS_NAME_TAG, sElem);
-    SetFeatVisualEffects(GetSpellTargetObject(), nEffect, msg);
+    SetFeatVisualEffects(PRCGetSpellTargetObject(), nEffect, msg);
 }
 
 //

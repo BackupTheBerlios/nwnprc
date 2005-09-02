@@ -1,3 +1,4 @@
+#include "prc_alterations"
 #include "inc_newspellbook"
 #include "inc_dynconv"
 void main()

@@ -1,6 +1,7 @@
+#include "prc_alterations"
 #include "spinc_common"
 #include "prc_inc_clsfunc"
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 void DominatedDuration(object oTarget, object oCaster)
 {
@@ -56,7 +57,7 @@ void main()
     RemoveOldSongs();
      
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     object oCaster = OBJECT_SELF;
     effect eDom = EffectDominated();
     eDom = GetScaledEffect(eDom, oTarget);
@@ -87,9 +88,9 @@ void main()
     //Make sure the target is a monster
     if(!GetIsReactionTypeFriendly(oTarget))
     {
-    	  int iSave = PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS);
-    	  if ( nEpic && iSave) iSave = PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS);
-    	  
+          int iSave = PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS);
+          if ( nEpic && iSave) iSave = PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS);
+          
           //Make a Will Save
           if (!iSave)
           {

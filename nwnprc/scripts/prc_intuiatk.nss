@@ -1,9 +1,9 @@
 
 #include "prc_alterations"
-#include "inc_item_props"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 const int SPELL_INTUITIVE_ATK = 2090;
 

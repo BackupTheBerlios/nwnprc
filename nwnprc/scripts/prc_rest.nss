@@ -6,9 +6,9 @@
     Hooked NPC's into this via prc_npc_rested - 06.03.2004, Ornedan
 */
 
-#include "inc_item_props"
+#include "prc_alterations"
 #include "nw_i0_plot"
-#include "prc_inc_function"
+#include "prc_alterations"
 #include "prc_ipfeat_const"
 #include "inc_epicspells"
 #include "prc_inc_domain"

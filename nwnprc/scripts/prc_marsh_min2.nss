@@ -1,4 +1,4 @@
-#include "x0_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -8,7 +8,7 @@ void main()
      if(!GetHasSpellEffect(GetSpellId()))
      { 
 	//Declare major variables including Area of Effect Object
-    	object oTarget = GetSpellTargetObject();
+    	object oTarget = PRCGetSpellTargetObject();
 	
     	ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectAreaOfEffect(156), oTarget);
      	sMes = "*Aura: Force of Will Activated*";

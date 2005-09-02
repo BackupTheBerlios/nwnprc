@@ -23,7 +23,7 @@
 // If anyone can think of a way to fix it please go ahead...
 // I managed to fix all the other scripts though =)
 
-#include "x0_i0_spells"
+#include "prc_alterations"
 #include "prc_class_const"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
@@ -32,9 +32,9 @@
      //#include "prc_getcast_lvl"
         //#include "prc_alterations"***
       
-//#include "x0_i0_spells"
+//#include "prc_alterations"
    //#include "x2_inc_switches"
-   //#include "x2_inc_itemprop"
+   //#include "prc_alterations"
    //#include "x0_i0_match"
 
    //#include "x0_i0_henchman"
@@ -59,8 +59,8 @@
                               //#include "x0_i0_assoc"
                               //#include "x0_i0_enemy"
                                  //#include "x0_i0_match"
-      //#include "nw_i0_spells"
-         //#include "prc_inc_function"
+      //#include "prc_alterations"
+         //#include "prc_alterations"
             //#include "prc_alterations"***
                //#include "x2_inc_switches"
                //#include "prc_feat_const"

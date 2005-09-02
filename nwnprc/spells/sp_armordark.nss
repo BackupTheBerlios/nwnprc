@@ -7,7 +7,7 @@
 #include "spinc_common"
 
 #include "x2_inc_spellhook"
-#include "x0_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -29,7 +29,7 @@ void main()
            eLinks=EffectLinkEffects(eLinks,eSaveG);
            eLinks=EffectLinkEffects(eLinks,eSaveD);
 
-    object oTarget=GetSpellTargetObject();
+    object oTarget=PRCGetSpellTargetObject();
 
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MAGE_ARMOR));

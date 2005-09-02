@@ -16,7 +16,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "prc_alterations"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     //Declare major variables including Area of Effect Object
     effect eAOE = EffectAreaOfEffect(AOE_PER_DARKNESS,"tfshad_darknessa","","nw_s0_darknessb");
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     int nDuration =GetLevelByClass(CLASS_TYPE_SHADOWLORD,OBJECT_SELF);
 
     //Make sure duration does no equal 0
@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
     //Create an instance of the AOE Object using the Apply Effect function
 
-   SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, GetSpellTargetObject(), RoundsToSeconds(nDuration),TRUE,-1,nDuration);
+   SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, PRCGetSpellTargetObject(), RoundsToSeconds(nDuration),TRUE,-1,nDuration);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

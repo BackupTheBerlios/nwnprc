@@ -7,11 +7,11 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 13, 2004
 //:://////////////////////////////////////////////
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
-#include "x0_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -30,7 +30,7 @@ void main()
         effect eVis = EffectVisualEffect(VFX_COM_CHUNK_STONE_MEDIUM);
         effect eStone = EffectPetrify();
         effect eLink = EffectLinkEffects(eVis, eStone);
-        location lTarget = GetSpellTargetLocation();
+        location lTarget = PRCGetSpellTargetLocation();
 
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
         object oTarget = GetFirstObjectInShape(SHAPE_SPHERE,

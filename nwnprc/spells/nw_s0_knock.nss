@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 //:: Last Updated By: Georg 2003/07/31 - Added signal event and custom door flags
 //:: VFX Pass By: Preston W, On: June 22, 2001
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "spinc_common"
 #include "x2_inc_spellhook"
 

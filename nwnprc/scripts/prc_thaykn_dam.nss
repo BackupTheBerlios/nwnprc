@@ -1,10 +1,10 @@
 #include "prc_spell_const"
-#include "nw_i0_spells"
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     int iDamageType = (!GetIsObjectValid(oWeap)) ? DAMAGE_TYPE_BLUDGEONING : GetItemDamageType(oWeap);
     

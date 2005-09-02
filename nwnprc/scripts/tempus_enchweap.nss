@@ -1,8 +1,8 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
-#include "inc_item_props"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 
 
 void AddIPEnh(object oWeap,int iCost )

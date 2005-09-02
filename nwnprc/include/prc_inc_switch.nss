@@ -162,6 +162,22 @@ const string PRC_CASTERLEVEL_ADJUSTMENT              = "PRC_CASTERLEVEL_ADJUSTME
 */
 const string PRC_CASTERCLASS_OVERRIDE                = "PRC_CASTERCLASS_OVERRIDE";
 
+/*
+ * Mostly internal, but builders may find a use for it
+ * Used to override PRCGetSpellTargetLocation();
+ * To activate set a location and an int on the module
+ * The int must be TRUE
+*/
+const string PRC_SPELL_TARGET_LOCATION_OVERRIDE      = "PRC_SPELL_TARGET_LOCATION_OVERRIDE";
+
+/*
+ * Mostly internal, but builders may find a use for it
+ * Used to override PRCGetSpellTargetObject();
+ * To activate set a object and an int on the module
+ * The int must be TRUE
+*/
+const string PRC_SPELL_TARGET_OBJECT_OVERRIDE      = "PRC_SPELL_TARGET_OBJECT_OVERRIDE";
+
 /******************************************************************************\
 *                                  Class switches                              *
 \******************************************************************************/

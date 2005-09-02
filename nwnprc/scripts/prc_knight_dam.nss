@@ -1,4 +1,4 @@
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "prc_ipfeat_const"
 
 int GetDSWeaponAttackBonus(object oWeap)
@@ -31,7 +31,7 @@ int GetDSWeaponAttackBonus(object oWeap)
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
     object oWeap1 = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     object oWeap2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 

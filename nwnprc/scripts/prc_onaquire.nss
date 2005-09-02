@@ -2,7 +2,7 @@
 //:: OnAcquireItem eventscript
 //:: prc_onaquire
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "inc_eventhook"
 
 void main()

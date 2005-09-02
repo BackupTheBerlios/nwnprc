@@ -7,7 +7,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
@@ -26,7 +26,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, SINGSUN_DC, SINGSUN_S, SINGSUN_XP))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         effect eImp = EffectVisualEffect(VFX_IMP_BREACH);
         effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
         object oItem = GetSunderTarget(oTarget);

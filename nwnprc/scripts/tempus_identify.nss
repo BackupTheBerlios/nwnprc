@@ -1,8 +1,8 @@
-#include "x2_inc_itemprop"
+#include "prc_alterations"
 
 void main()
 {
-   object oItem=GetSpellTargetObject();
+   object oItem=PRCGetSpellTargetObject();
    int iType=GetBaseItemType(oItem);
 
    string iSlot = Get2DACache("baseitems", "EquipableSlots", iType);

@@ -12,7 +12,7 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	// Get the spell target location as opposed to the spell target.
-	location lTarget = GetSpellTargetLocation();
+	location lTarget = PRCGetSpellTargetLocation();
 
 	// Determine the save bonus.
 	int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);

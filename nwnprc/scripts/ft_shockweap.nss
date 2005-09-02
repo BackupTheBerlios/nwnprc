@@ -1,8 +1,9 @@
+#include "prc_alterations"
 #include "prc_feat_const"
 
 void main()
 {
-   if (GetIsImmune(GetSpellTargetObject(),IMMUNITY_TYPE_CRITICAL_HIT)) return;
+   if (GetIsImmune(PRCGetSpellTargetObject(),IMMUNITY_TYPE_CRITICAL_HIT)) return;
 
    object oWeap=GetSpellCastItem();
 
@@ -30,9 +31,9 @@ void main()
       FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
 
       if (GetHasFeat( FEAT_SHOCKING_WEAPON,OBJECT_SELF))
-        ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d10(iDiceCritical),DAMAGE_TYPE_ELECTRICAL,DAMAGE_POWER_NORMAL),GetSpellTargetObject());
+        ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d10(iDiceCritical),DAMAGE_TYPE_ELECTRICAL,DAMAGE_POWER_NORMAL),PRCGetSpellTargetObject());
 
-      ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d8(iDiceCritical),DAMAGE_TYPE_SONIC,DAMAGE_POWER_NORMAL),GetSpellTargetObject());
+      ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d8(iDiceCritical),DAMAGE_TYPE_SONIC,DAMAGE_POWER_NORMAL),PRCGetSpellTargetObject());
 
     }
     
@@ -67,7 +68,7 @@ void main()
        eVis =EffectVisualEffect(nAppearanceTypeM);
     }
     eDmg = EffectLinkEffects (eVis, eDmg);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     if (GetIsObjectValid(oTarget))
     {

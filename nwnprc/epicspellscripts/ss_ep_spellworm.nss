@@ -9,7 +9,7 @@
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 #include "prc_getbest_inc"
@@ -28,7 +28,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, SP_WORM_DC, SP_WORM_S, SP_WORM_XP))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nDuration = FloatToInt(HoursToSeconds(20) / 6);
         effect eVis = EffectVisualEffect(VFX_IMP_HEAD_MIND);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));

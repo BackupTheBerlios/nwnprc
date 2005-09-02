@@ -138,6 +138,12 @@ int GetIsHealingSpell(int nSpellId);
 //to override for custom spellcasting classes
 int PRCGetLastSpellCastClass();
 
+//wrapper for getspelltargetlocation
+location PRCGetSpellTargetLocation();
+
+//wrapper for getspelltargetlocation
+object PRCGetSpellTargetObject();
+
 // -----------------
 // BEGIN SPELLSWORD
 // -----------------
@@ -1282,6 +1288,21 @@ int PRCGetLevelByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
     return nClass;
 }
 
+//wrapper for getspelltargetlocation
+location PRCGetSpellTargetLocation()
+{
+    if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_LOCATION_OVERRIDE))
+        return GetLocalLocation(GetModule(), PRC_SPELL_TARGET_LOCATION_OVERRIDE);
+    return GetSpellTargetLocation();        
+}
+
+//wrapper for getspelltargetlocation
+object PRCGetSpellTargetObject()
+{
+    if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE))
+        return GetLocalObject(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE);
+    return GetSpellTargetObject();
+}
 
 
 ////////////////Begin Spellsword//////////////////
@@ -1320,7 +1341,7 @@ object MyFirstObjectInShape(int nShape,
     }
     else
     {
-        return GetSpellTargetObject();
+        return PRCGetSpellTargetObject();
     }
 }
 
@@ -1486,9 +1507,9 @@ void StoreSpellVariables(string sString,int nDuration)
     if(GetLocalInt(OBJECT_SELF,"spellswd_aoe") == 1)
     {
         SetLocalInt(OBJECT_SELF, sString+"channeled",1);
-        SetLocalInt(GetSpellTargetObject(), sString+"target",1);
+        SetLocalInt(PRCGetSpellTargetObject(), sString+"target",1);
     }
-    DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(GetSpellTargetObject(), sString+"target"));
+    DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(PRCGetSpellTargetObject(), sString+"target"));
     DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(OBJECT_SELF, sString+"channeled"));
 }
 

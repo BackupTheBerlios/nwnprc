@@ -15,7 +15,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
 #include "prc_inc_switch"
-#include "x2_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 
@@ -98,11 +98,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     }
     //Apply the VFX impact and summon effect
     MultisummonPreSummon();
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, PRCGetSpellTargetLocation());
     float fDuration = RoundsToSeconds(nDuration);
     if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
         fDuration = RoundsToSeconds(nDuration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), fDuration);
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), fDuration);
 
     object oSelf = OBJECT_SELF;
     DelayCommand(1.0, spellsCreateItemForSummoned(oSelf,TurnsToSeconds(nDuration)));

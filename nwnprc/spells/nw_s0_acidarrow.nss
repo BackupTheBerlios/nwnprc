@@ -24,9 +24,9 @@
 #include "spinc_common"
 #include "prc_inc_sp_tch"
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
-#include "x2_i0_spells"
+#include "prc_alterations"
 
 
 
@@ -38,7 +38,7 @@ void main()
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
-   object oTarget = GetSpellTargetObject();
+   object oTarget = PRCGetSpellTargetObject();
 
     //--------------------------------------------------------------------------
     // Spellcast Hook Code

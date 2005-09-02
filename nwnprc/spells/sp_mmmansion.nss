@@ -8,7 +8,7 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	// Get the spell target location as opposed to the spell target.
-	location lTarget = GetSpellTargetLocation();
+	location lTarget = PRCGetSpellTargetLocation();
 
 	// Note that you cannot cast a mansion inside a mansion so check the area's
 	// tag to make sure the caster isn't trying to recurse mansions.

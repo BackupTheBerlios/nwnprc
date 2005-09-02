@@ -16,7 +16,7 @@
 void main()
 {
      int nVassal = GetLevelByClass(CLASS_TYPE_VASSAL, OBJECT_SELF);
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      int iDam;
      effect eDam;
      if (nVassal >= 4)

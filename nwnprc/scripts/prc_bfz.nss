@@ -8,8 +8,8 @@
 //:: Created By: Stratovarius
 //:: Created On: July 6, 2004
 //:://////////////////////////////////////////////
-
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "inc_prc_npc"
 
@@ -56,7 +56,7 @@ void main()
 
     if(GetHasFeat(FEAT_SACRED_FLAME, oPC))
     {
-       	if (iEquip == 1)    RemoveSacredFlame(oPC, oUnequip);
+        if (iEquip == 1)    RemoveSacredFlame(oPC, oUnequip);
         if (iEquip == 2)    SacredFlame(oPC, oWeap);
     }
 }

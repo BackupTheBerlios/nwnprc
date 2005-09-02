@@ -23,8 +23,8 @@
 //:://////////////////////////////////////////////
 //:: Created By: Various people
 //:://////////////////////////////////////////////
-
-#include "prc_inc_combat"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "psi_inc_onhit"
 #include "inc_rend"
 #include "psi_inc_ac_const"
@@ -53,7 +53,7 @@ void main()
 
     // fill the variables
     oSpellOrigin = OBJECT_SELF;
-    oSpellTarget = GetSpellTargetObject();
+    oSpellTarget = PRCGetSpellTargetObject();
     oItem        = GetSpellCastItem();
     // Scripted combat system
     if(!GetIsObjectValid(oItem))
@@ -148,7 +148,7 @@ void main()
             DelayCommand(6.0, SetImprovedRicochetVar(oSpellOrigin) );
             SetLocalInt(oSpellOrigin, "ImpRicochetVarRunning", 1);
         }
-    }  	
+    }   
 
 
     // Foe Hunter Damage Resistance
@@ -413,26 +413,26 @@ void SetPsiEnRetortVar(object oPC)
 
 void DoImprovedRicochet(object oPC, object oTarget)
 {
-	int nTargetsLeft = 1;
-	effect eVis = EffectVisualEffect(VFX_IMP_DUST_EXPLOSION);
+    int nTargetsLeft = 1;
+    effect eVis = EffectVisualEffect(VFX_IMP_DUST_EXPLOSION);
 
-	location lTarget = GetLocation(oTarget);
-	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-	object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    location lTarget = GetLocation(oTarget);
+    //Declare the spell shape, size and the location.  Capture the first target object in the shape.
+    object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
 
-	//Cycle through the targets within the spell shape until you run out of targets.
-	while (GetIsObjectValid(oAreaTarget) && nTargetsLeft > 0)
-	{
-		if (spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oAreaTarget != OBJECT_SELF && oAreaTarget != oTarget)
-		{
-			PerformAttack(oAreaTarget, oPC, eVis, 0.0, -2, 0, 0, "*Improved Ricochet Hit*", "*Improved Ricochet Missed*");
-			 // Use up a target slot only if we actually did something to it
-			nTargetsLeft -= 1;
-		}
-			
-	//Select the next target within the spell shape.
-	oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	}	
+    //Cycle through the targets within the spell shape until you run out of targets.
+    while (GetIsObjectValid(oAreaTarget) && nTargetsLeft > 0)
+    {
+        if (spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oAreaTarget != OBJECT_SELF && oAreaTarget != oTarget)
+        {
+            PerformAttack(oAreaTarget, oPC, eVis, 0.0, -2, 0, 0, "*Improved Ricochet Hit*", "*Improved Ricochet Missed*");
+             // Use up a target slot only if we actually did something to it
+            nTargetsLeft -= 1;
+        }
+            
+    //Select the next target within the spell shape.
+    oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    }   
 }
 
 void SetImprovedRicochetVar(object oPC)

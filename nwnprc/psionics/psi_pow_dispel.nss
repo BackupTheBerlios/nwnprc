@@ -27,7 +27,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -54,7 +54,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 1;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
     
     if (nSurge > 0)
@@ -70,8 +70,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nPen = GetPsiPenetration(oCaster);
     	effect    eVis         = EffectVisualEffect(VFX_IMP_BREACH);
     	effect    eImpact      = EffectVisualEffect(VFX_FNF_DISPEL);
-    	object    oTarget      = GetSpellTargetObject();
-    	location  lLocal       = GetSpellTargetLocation();
+    	object    oTarget      = PRCGetSpellTargetObject();
+    	location  lLocal       = PRCGetSpellTargetLocation();
     	int iTypeDispel = GetLocalInt(GetModule(),"BIODispel");
     	int nCap = 10;
 	
@@ -104,7 +104,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         // Area of Effect - Only dispel best effect
         //----------------------------------------------------------------------
 
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
         oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE );
         while (GetIsObjectValid(oTarget))
         {

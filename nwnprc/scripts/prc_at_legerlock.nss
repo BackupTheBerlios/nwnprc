@@ -14,7 +14,7 @@
 
 #include "prc_alterations"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -23,7 +23,7 @@ void main()
     //Declare major variables
     int nDC;
     object oCaster = OBJECT_SELF;
-    object oLock = GetSpellTargetObject();
+    object oLock = PRCGetSpellTargetObject();
     int nType = GetObjectType(oLock);
     if (OBJECT_TYPE_DOOR == nType || OBJECT_TYPE_PLACEABLE == nType)
     {

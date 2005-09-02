@@ -15,12 +15,12 @@
 //:://////////////////////////////////////////////
 
 #include "psi_inc_soulkn"
-#include "prc_inc_combat"
+#include "prc_alterations"
 
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     if(GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)), 14) != "prc_sk_mblade_")
     {// "You must have a mindblade manifested to use this feat."

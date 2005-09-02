@@ -11,7 +11,7 @@
 #include "x2_inc_spellhook"
 void main()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nRet = (CIGetSpellWasUsedForItemCreation(oTarget));
     SetExecutedScriptReturnValue (nRet);
 }

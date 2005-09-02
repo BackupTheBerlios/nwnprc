@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     effect eLink = EffectLinkEffects(eAOE, eVis);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
     int nMetaMagic = GetMetaMagicFeat();

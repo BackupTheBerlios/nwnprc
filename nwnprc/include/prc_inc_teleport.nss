@@ -619,7 +619,7 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
     // Targeting one other being in addition to self. If it's hostile, it gets SR and a Will save.
     else if(nSpellID = SPELLID_TELEPORT_TARGET)
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         if(GetIsHostile())
         {
             SPRaiseSpellCastAt(oTarget, TRUE, nSpellID); // Let the target know it was cast a spell at

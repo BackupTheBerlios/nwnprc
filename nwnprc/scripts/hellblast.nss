@@ -3,11 +3,11 @@
 //Fixed some run-time errors that caused spell to do nothing
 //Aaon Graywolf - Jan 9, 2004
 #include "prc_alterations"
-#include "prc_inc_combat"
+#include "prc_alterations"
 void main()
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDamage = d6(4);
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
     effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);

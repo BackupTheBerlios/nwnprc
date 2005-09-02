@@ -4,17 +4,18 @@
 *
 * by Jeremiah Teague
 *********************************************/
-#include "prc_inc_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_feat_const"
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "prc_alterations"
 
 void main()
 {
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
     effect eCharm = EffectCharmed();
     eCharm = GetScaledEffect(eCharm, oTarget);

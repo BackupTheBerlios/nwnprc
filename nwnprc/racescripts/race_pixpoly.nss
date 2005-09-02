@@ -9,6 +9,7 @@
 //:: Edited by Wyz_sub10, Oct 2004 for Pixie SA
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "x2_inc_itemprop"
 #include "spinc_common"
 #include "x2_inc_spellhook"
@@ -37,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     //Declare major variables
     int nSpell = GetSpellId();
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
     effect ePoly;
     int nPoly;
@@ -121,10 +122,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     }
 
 
-	//this command will make shore that polymorph plays nice with the shifter
-	ShifterCheck(oTarget);
-	
-	AssignCommand(oTarget, ClearAllActions()); // prevents an exploit
+    //this command will make shore that polymorph plays nice with the shifter
+    ShifterCheck(oTarget);
+    
+    AssignCommand(oTarget, ClearAllActions()); // prevents an exploit
 
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, oTarget, HoursToSeconds(nDuration),TRUE,-1,8);

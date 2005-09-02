@@ -1,3 +1,4 @@
+#include "prc_alterations"
 #include "prc_feat_const"
 
 void main()
@@ -5,15 +6,15 @@ void main()
    object oWeap=GetSpellCastItem();
    int nThreat = 20;
    int dice=d20();
-   int HealInt = GetIsImmune(GetSpellTargetObject(),IMMUNITY_TYPE_CRITICAL_HIT) ? 1 : 0;
-       HealInt = GetIsImmune(GetSpellTargetObject(),IMMUNITY_TYPE_SNEAK_ATTACK) ? 1 : HealInt;
-   int CritImm = GetIsImmune(GetSpellTargetObject(),IMMUNITY_TYPE_CRITICAL_HIT) ? 1 : 0;
+   int HealInt = GetIsImmune(PRCGetSpellTargetObject(),IMMUNITY_TYPE_CRITICAL_HIT) ? 1 : 0;
+       HealInt = GetIsImmune(PRCGetSpellTargetObject(),IMMUNITY_TYPE_SNEAK_ATTACK) ? 1 : HealInt;
+   int CritImm = GetIsImmune(PRCGetSpellTargetObject(),IMMUNITY_TYPE_CRITICAL_HIT) ? 1 : 0;
 
 //if the target is immune to either Sneak attacks or Critical hits, heal the players INT bonus
 //to them to balance the int damage problem.
  if (HealInt>0)
     {
-    ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectHeal(GetAbilityModifier(ABILITY_INTELLIGENCE, OBJECT_SELF)),GetSpellTargetObject());
+    ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectHeal(GetAbilityModifier(ABILITY_INTELLIGENCE, OBJECT_SELF)),PRCGetSpellTargetObject());
     }
 
 
@@ -43,12 +44,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -74,12 +75,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -105,12 +106,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -136,12 +137,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -167,12 +168,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -198,12 +199,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -229,12 +230,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -260,12 +261,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -291,12 +292,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -322,12 +323,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -353,12 +354,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -384,12 +385,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -415,12 +416,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -446,12 +447,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -477,12 +478,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -508,12 +509,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -539,12 +540,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -570,12 +571,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -601,12 +602,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -632,12 +633,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -663,12 +664,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -694,12 +695,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -725,12 +726,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -756,12 +757,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -787,12 +788,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -818,12 +819,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -849,12 +850,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -880,12 +881,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -911,12 +912,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }
@@ -942,12 +943,12 @@ void main()
              FloatingTextStringOnCreature("Critical Hit", OBJECT_SELF);
              if (GetHasFeat(WEAKENING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),GetSpellTargetObject());
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE),PRCGetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_STRENGTH, 2),PRCGetSpellTargetObject());
                  }
              if (GetHasFeat(WOUNDING_CRITICAL,OBJECT_SELF))
                  {
-                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),GetSpellTargetObject());
+                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,EffectAbilityDecrease(ABILITY_CONSTITUTION, 2),PRCGetSpellTargetObject());
                  }
              }
         }

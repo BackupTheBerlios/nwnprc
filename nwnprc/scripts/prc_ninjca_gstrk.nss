@@ -7,14 +7,14 @@
 	Ignores Etherealness (maybe)
 */
 
-#include "prc_inc_combat"
+#include "prc_alterations"
 #include "prc_inc_clsfunc"
 
 void main()
 {
      //Declare major variables
      object oPC = OBJECT_SELF;
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      
 	if (!Ninja_AbilitiesEnabled(OBJECT_SELF))
 	{

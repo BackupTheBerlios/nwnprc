@@ -14,7 +14,7 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_ABJURATION);
 
 	// Get the target and raise the spell cast event.
-	object oTarget = GetSpellTargetObject();
+	object oTarget = PRCGetSpellTargetObject();
 	SPRaiseSpellCastAt(oTarget, FALSE);
 
 	// Determine the spell's duration, taking metamagic feats into account.

@@ -1,8 +1,8 @@
-#include "x0_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
     object oTarget = GetEnteringObject();
     object PCMarshal = GetAreaOfEffectCreator();
     if(GetIsFriend(oTarget, GetAreaOfEffectCreator()))

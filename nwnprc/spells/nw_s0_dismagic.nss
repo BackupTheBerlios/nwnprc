@@ -17,7 +17,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "spinc_common"
 
-#include "x0_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -41,8 +41,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     effect    eVis         = EffectVisualEffect(VFX_IMP_BREACH);
     effect    eImpact      = EffectVisualEffect(VFX_FNF_DISPEL);
-    object    oTarget      = GetSpellTargetObject();
-    location  lLocal       = GetSpellTargetLocation();
+    object    oTarget      = PRCGetSpellTargetObject();
+    location  lLocal       = PRCGetSpellTargetLocation();
     int       nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int iTypeDispel = GetLocalInt(GetModule(),"BIODispel");
 
@@ -71,7 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
         // Area of Effect - Only dispel best effect
         //----------------------------------------------------------------------
 
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
         oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE );
         while (GetIsObjectValid(oTarget))
         {

@@ -3,6 +3,7 @@
      Script for all racial abilities / penalties that require a heartbeat check
 */
 
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "inc_item_props"
 

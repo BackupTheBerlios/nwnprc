@@ -40,6 +40,7 @@ const int SAVING_THROW_NONE = 4;
 int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE, int bAbilityMod = TRUE, int bEffect = TRUE, int bArmor = TRUE, int bShield = TRUE, int bFeat = TRUE);
 
 // Generic includes
+#include "prc_inc_spells"
 #include "prcsp_engine"
 #include "inc_utility"
 #include "x2_inc_switches"
@@ -54,7 +55,6 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"
-#include "prc_inc_spells"
 #include "prcsp_reputation"
 #include "prcsp_archmaginc"
 #include "prcsp_spell_adjs"
@@ -66,6 +66,9 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 #include "inc_abil_damage"
 #include "prc_inc_combat"
 #include "inc_lookups"
+#include "NW_I0_spells"
+#include "x0_I0_spells"
+#include "x2_I0_spells"
 
 
 

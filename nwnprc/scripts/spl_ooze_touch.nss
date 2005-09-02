@@ -1,11 +1,11 @@
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 
 /* Fungus touch */
 void ooze_touch_fungus()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDuration;
 
     // Handle spell cast on item....
@@ -48,7 +48,7 @@ void ooze_touch_fungus()
 
 int ooze_touch_damage(effect eDamage)
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     if(!GetIsReactionTypeFriendly(oTarget))
     {
@@ -70,7 +70,7 @@ int ooze_touch_damage(effect eDamage)
 }
 int ooze_touch_effect(effect eDamage, int time)
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     if(!GetIsReactionTypeFriendly(oTarget))
     {
@@ -93,7 +93,7 @@ int ooze_touch_effect(effect eDamage, int time)
 
 void main()
 {
-    object target = GetSpellTargetObject();
+    object target = PRCGetSpellTargetObject();
     int level = GetLevelByClass(CLASS_TYPE_OOZEMASTER);
 
     switch (PRCGetSpellId())
@@ -114,7 +114,7 @@ void main()
         case 2012:
         {
             effect damage = EffectDamage(d4() + level, DAMAGE_TYPE_ACID);
-            object target = GetSpellTargetObject();
+            object target = PRCGetSpellTargetObject();
             int DC = 15 + level;
 
             if (ooze_touch_damage(damage))
@@ -143,7 +143,7 @@ void main()
         /* Gelatinous cube */
         case 2015:
         {
-            object target = GetSpellTargetObject();
+            object target = PRCGetSpellTargetObject();
             int DC = 15 + level;
 
             if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
@@ -160,7 +160,7 @@ void main()
         case 2016:
         {
             effect damage = EffectDamage(d6() + level, DAMAGE_TYPE_ACID);
-            object target = GetSpellTargetObject();
+            object target = PRCGetSpellTargetObject();
             int DC = 15 + level;
 
             if (ooze_touch_damage(damage))
@@ -181,7 +181,7 @@ void main()
         {
             //effect damage;
             int nDamage;
-            object target = GetSpellTargetObject();
+            object target = PRCGetSpellTargetObject();
             int DC = 15 + level;
 
             if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
@@ -198,7 +198,7 @@ void main()
             //effect paralyze = EffectLinkEffects(damage, eMind);
 
             //ooze_touch_effect(paralyze, 1 + level); // Inlined the code to make ApplyAbilityDamage work
-            object oTarget = GetSpellTargetObject();
+            object oTarget = PRCGetSpellTargetObject();
 
             if(!GetIsReactionTypeFriendly(oTarget))
             {

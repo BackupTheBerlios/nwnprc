@@ -12,7 +12,7 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_ABJURATION);
 
 	// Declare major variables
-	object oTarget = GetSpellTargetObject();
+	object oTarget = PRCGetSpellTargetObject();
 
 	// Signal the spell cast at event
 	SPRaiseSpellCastAt(oTarget, FALSE);

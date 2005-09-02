@@ -9,8 +9,8 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-//#include "X0_I0_SPELLS"
-#include "nw_i0_spells"
+//#include "prc_alterations"
+#include "prc_alterations"
 #include "inc_epicspells"
 //#include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -29,7 +29,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, GEMCAGE_DC, GEMCAGE_S, GEMCAGE_XP))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         if (!GetPlotFlag(oTarget) &&   // Plot creatures cannot be Caged, ever.
             !GetIsDM(oTarget) &&       // Neither can DM's.
             !GetIsPC(oTarget))         // And neither can other players.

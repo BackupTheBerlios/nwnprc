@@ -24,7 +24,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 0;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, METAPSIONIC_WIDEN);
     
     if (nMetaPsi > 0) 
@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	effect    eVis         = EffectVisualEffect(VFX_IMP_BREACH);
     	effect    eImpact      = EffectVisualEffect(VFX_FNF_DISPEL);
     	effect	  eLink        = EffectLinkEffects(eVis, eImpact);
-    	location  lTarget      = GetSpellTargetLocation();
+    	location  lTarget      = PRCGetSpellTargetLocation();
     	float fWidth = DoWiden(10.0, nMetaPsi);
 
 	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);

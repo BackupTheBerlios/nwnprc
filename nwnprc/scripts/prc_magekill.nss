@@ -9,7 +9,7 @@
 //:: Created On: Dec 29, 2003
 //:://////////////////////////////////////////////
 
-#include "inc_item_props"
+#include "prc_alterations"
 #include "prc_feat_const"
 
 // * Applies the Mage Killer's saving throw bonuses as CompositeBonuses on the object's skin.

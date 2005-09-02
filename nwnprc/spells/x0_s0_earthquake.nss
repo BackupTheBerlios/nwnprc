@@ -17,7 +17,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eKnockdown = EffectKnockdown();
     float fDuration = 18.0;
     //Get the spell target location as opposed to the spell target.
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eShake, OBJECT_SELF, RoundsToSeconds(6),TRUE,-1,CasterLvl);
 
     //Apply epicenter explosion on caster

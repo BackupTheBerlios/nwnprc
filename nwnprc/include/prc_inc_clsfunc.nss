@@ -15,7 +15,7 @@
 // Avoids adding passive spellcasting to the character's action queue by
 // creating an object specifically to cast the spell on the character.
 //
-// NOTE: The spell script must refer to the PC as GetSpellTargetObject()
+// NOTE: The spell script must refer to the PC as PRCGetSpellTargetObject()
 // otherwise this function WILL NOT WORK.  Do not make any assumptions
 // about the PC being OBJECT_SELF.
 void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE);
@@ -33,7 +33,9 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE);
 // This function should only be used when SLA's are meant to simulate true
 // spellcasting abilities, such as those seen when using feats with subradials
 // to simulate spellbooks.
-void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID);
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, 
+    int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID,
+    int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oTarget=OBJECT_INVALID);
 
 // Include Files:
 #include "prc_alterations"
@@ -61,7 +63,9 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE)
     DestroyObject(oCastingObject, 6.0);
 }
 
-void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID)
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, 
+    int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID,
+    int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oTarget=OBJECT_INVALID)
 {
     //if its a hostile spell, clear the action queue
     //this stops people stacking hostile spells to be instacast
@@ -69,8 +73,8 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
     if(Get2DACache("spells", "HostileSetting", iSpell) == "1")
         ClearAllActions();
         
-    object oTarget = GetSpellTargetObject();
-    location lLoc = GetSpellTargetLocation();
+    object oTarget = PRCGetSpellTargetObject();
+    location lLoc = PRCGetSpellTargetLocation();
 
     //set the overriding values
     if (iCasterLev != 0)
@@ -81,6 +85,18 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE, iBaseDC));
     if (nClass != CLASS_TYPE_INVALID)
         ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE, nClass));
+    if (bUseOverrideTargetLocation)
+    {
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_LOCATION_OVERRIDE, TRUE));
+        //location must be set outside of this function at the moment
+        //cant pass a location into a function as an optional parameter
+        //go bioware for not defining an invalid location constant
+    }    
+    if (bUseOverrideTargetObject)
+    {
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE, TRUE));
+        ActionDoCommand(SetLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE, oTarget));
+    }    
     SetLocalInt(OBJECT_SELF, "UsingActionCastSpell", TRUE);
     DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));
 
@@ -99,6 +115,18 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
     if (nClass != CLASS_TYPE_INVALID)
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE));
+    if (bUseOverrideTargetLocation)
+    {
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_LOCATION_OVERRIDE));
+        //location must be set outside of this function at the moment
+        //cant pass a location into a function as an optional parameter
+        //go bioware for not defining an invalid location constant
+    }    
+    if (bUseOverrideTargetObject)
+    {
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
+        ActionDoCommand(DeleteLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
+    }    
 
 
 /*
@@ -133,9 +161,6 @@ void RemoveDrunkenRageEffects(object oTarget = OBJECT_SELF);
 // Creates an empty bottle on oPC.
 // sTag: the tag of the alcoholic beverage used (ale, spirits, wine)
 void CreateBottleOnObject(object oPC, string sTag);
-
-// Returns the size modifier for the Drunken Embrace grapple check.
-//int GetSizeModifier(object oTarget);
 
 // Returns an approximate damage roll so it can be doubled for Stagger's double
 // damage effect.
@@ -245,45 +270,6 @@ void RemoveDrunkenRageEffects(object oTarget = OBJECT_SELF)
     SetLocalInt(oTarget, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
 }
 
-/*
-int GetSizeModifier(object oTarget)
-{
-int nSizeMod = 0;
-switch(PRCGetCreatureSize(oTarget))
-    {
-    case CREATURE_SIZE_HUGE:
-        {
-        nSizeMod = 8;
-        break;
-        }
-    case CREATURE_SIZE_LARGE:
-        {
-        nSizeMod = 4;
-        break;
-        }
-    case CREATURE_SIZE_MEDIUM:
-        {
-        nSizeMod = 0;
-        break;
-        }
-    case CREATURE_SIZE_SMALL:
-        {
-        nSizeMod = -4;
-        break;
-        }
-    case CREATURE_SIZE_TINY:
-        {
-        nSizeMod = -8;
-        break;
-        }
-    case CREATURE_SIZE_INVALID:
-        {
-        nSizeMod = 0;
-        break;
-        }
-    }
-return nSizeMod;
-}*/
 
 int GetCreatureDamage(object oTarget = OBJECT_SELF)
 {
@@ -1381,7 +1367,7 @@ void UnholyStrike()
 void spellsCureMod(int nCasterLvl ,int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impactHurt, int vfx_impactHeal, int nSpellID)
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nHeal;
     int nMetaMagic = PRCGetMetaMagicFeat();
     effect eVis = EffectVisualEffect(vfx_impactHurt);

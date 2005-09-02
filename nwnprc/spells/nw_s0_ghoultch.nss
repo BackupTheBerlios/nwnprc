@@ -23,7 +23,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eLink = EffectLinkEffects(eDur2, eDur);
     eLink = EffectLinkEffects(eLink, eParal);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDuration = d6()+2;
     int nMetaMagic = GetMetaMagicFeat();
     //Enter Metamagic conditions

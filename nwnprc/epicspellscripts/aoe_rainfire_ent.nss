@@ -7,13 +7,14 @@
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
 
-//#include "X0_I0_SPELLS"
+//#include "prc_alterations"
 //#include "prc_alterations"
 //#include "inc_dispel"
 //#include "x2_I0_SPELLS" <--- blows the compiler the **** up
 //#include "x2_inc_spellhook"
 
-#include "nw_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "prc_add_spell_dc"
 

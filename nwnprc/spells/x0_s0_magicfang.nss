@@ -23,7 +23,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 
 
@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //PRCversion
     int nPower = 1;
     int nDamagePower = DAMAGE_POWER_PLUS_ONE;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     //remove other magic fang effects
     RemoveSpellEffects(452, OBJECT_SELF, oTarget);
     RemoveSpellEffects(453, OBJECT_SELF, oTarget);

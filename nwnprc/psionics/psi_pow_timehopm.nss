@@ -23,7 +23,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -50,7 +50,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 0;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, METAPSIONIC_TWIN, 0);  
     
     if (nMetaPsi > 0) 
@@ -100,7 +100,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	
 	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 	
-	location lTarget = GetSpellTargetLocation();
+	location lTarget = PRCGetSpellTargetLocation();
 	
 	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
 	oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 25.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);

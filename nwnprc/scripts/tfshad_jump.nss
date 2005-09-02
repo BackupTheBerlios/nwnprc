@@ -25,8 +25,8 @@
 
 
 #include "spinc_common"
-#include "inc_item_props"
-#include "prc_inc_combat"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_inc_sneak"
 #include "prc_inc_teleport"
 
@@ -34,7 +34,7 @@ void main()
 {
     // Declare major variables
     object oCaster   = OBJECT_SELF;
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     location lCaster = GetLocation(oCaster);
     effect eVis      = EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
     float fDistance  = GetDistanceBetweenLocations(lCaster,lTarget);
@@ -44,7 +44,7 @@ void main()
     int iFeat = FEAT_SHADOWJUMP - 1 + GetLevelByClass(CLASS_TYPE_SHADOWLORD, oCaster);
 
     // Check if we're targeting some creature instead of just a spot on the floor
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     if(GetIsObjectValid(oTarget))
         lTarget = GetLocation(oTarget);
     
@@ -111,7 +111,7 @@ void main()
     // Class level 4 gives the Shadow Pounce ability, which gives one a full attack at the end of a jump
     if (iLevel >= 4)
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         
         DelayCommand(1.0f, PerformAttackRound(oTarget, oCaster, EffectVisualEffect(-1), 0.0, 0, 0, 0, FALSE, "", "", FALSE, FALSE, TRUE));
     }

@@ -26,7 +26,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	int nCaster = GetManifesterLevel(oCaster);
 	int nDur = nCaster;
 	int nPen = GetPsiPenetration(oCaster);
-	location lTarget = GetSpellTargetLocation();
+	location lTarget = PRCGetSpellTargetLocation();
 	effect eVis = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
 	int nSR = 19;
 	float fWidth = DoWiden(10.0, nMetaPsi);

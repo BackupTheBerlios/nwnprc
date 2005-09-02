@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_clsfunc"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
 
 #include "pnp_shft_poly"
 
@@ -21,7 +21,7 @@ void main()
 {
     //Declare major variables
     int nSpell = GetSpellId();
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
     effect ePoly;
     int nPoly;

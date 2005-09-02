@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
 //:: Contemplative Class
-
+#include "prc_alterations"
 #include "inc_item_props"
 #include "prc_class_const"
 #include "prc_feat_const"
@@ -28,13 +28,13 @@ void ContemplativeDR(object oPC, object oSkin, int iLevel)
 
 void ContemplativeSR(object oPC, int nLevel, object oSkin)
 {
-	if(GetLocalInt(oSkin, "ContemplativeSR") == nLevel) return;
-	
-	int nSR = nLevel + 15;
-	effect eSR = EffectSpellResistanceIncrease(nSR);
-	eSR = ExtraordinaryEffect(eSR);
-	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSR, oPC);
-	SetLocalInt(oSkin, "ContemplativeDR", nLevel);
+    if(GetLocalInt(oSkin, "ContemplativeSR") == nLevel) return;
+    
+    int nSR = nLevel + 15;
+    effect eSR = EffectSpellResistanceIncrease(nSR);
+    eSR = ExtraordinaryEffect(eSR);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSR, oPC);
+    SetLocalInt(oSkin, "ContemplativeDR", nLevel);
 }
 
 void main()

@@ -229,7 +229,7 @@ int KOTCSpellPenVsDemons(object oCaster)
 {
 	int nSP = 0;
 	int iKOTC = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster);
-	object oTarget = GetSpellTargetObject();
+	object oTarget = PRCGetSpellTargetObject();
 	
 	if (iKOTC >= 1)
     	{

@@ -17,8 +17,8 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
 
-#include "nw_i0_spells"
-#include "x2_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         if (nDuration>0)
         {
 
-            location lLoc = GetLocation(GetSpellTargetObject());
+            location lLoc = GetLocation(PRCGetSpellTargetObject());
             DelayCommand(1.3f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oMyArmor)));
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, GetItemPossessor(oMyArmor), HoursToSeconds(nDuration));
             AddACBonusToArmor(oMyArmor, HoursToSeconds(nDuration),nAmount);

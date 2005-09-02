@@ -2,7 +2,7 @@
 //:: OnDisturbed NPC eventscript
 //:: prc_npc_disturb
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "inc_eventhook"
 
 void main()

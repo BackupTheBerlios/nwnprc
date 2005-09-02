@@ -57,7 +57,7 @@ int X2PreSpellCastCode();
 // check if the spell is prohibited from being cast on items
 // returns FALSE if the spell was cast on an item but is prevented
 // from being cast there by its corresponding entry in des_crft_spells
-// oItem - pass GetSpellTargetObject in here
+// oItem - pass PRCGetSpellTargetObject in here
 int X2CastOnItemWasAllowed(object oItem);
 
 // Sequencer Item Property Handling
@@ -67,7 +67,7 @@ int X2CastOnItemWasAllowed(object oItem);
 // ... the spell was non hostile
 // ... the spell was not cast from an item
 // in any other case, FALSE is returned an the normal spellscript will be run
-// oItem - pass GetSpellTargetObject in here
+// oItem - pass PRCGetSpellTargetObject in here
 int X2GetSpellCastOnSequencerItem(object oItem);
 
 int X2RunUserDefinedSpellScript();
@@ -167,7 +167,7 @@ int InscribeRune()
 	// If Inscribing is turned off, the spell functions as normal
 	if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;	
 	
-	object oTarget = GetSpellTargetObject();
+	object oTarget = PRCGetSpellTargetObject();
 	int nCaster = PRCGetCasterLevel(oCaster);
 	int nDC = PRCGetSaveDC(oTarget, oCaster);
 	int nSpell = PRCGetSpellId();
@@ -281,7 +281,7 @@ void CombatMedicHealingKicker()
     if (!GetIsHealingSpell(nSpellId)) //If the spell that was just cast isn't healing, stop now
         return;
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     //Three if/elseif statements. They check which of the healing kickers we use.
     //If no Healing Kicker localints are set, this if block should be ignored.
@@ -351,7 +351,7 @@ void CombatMedicHealingKicker()
 void Battlecast()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     
     // Get the item used to cast the spell
     object oItem = GetSpellCastItem();
@@ -645,7 +645,7 @@ void VoidCounterspellExploitCheck()
 //------------------------------------------------------------------------------
 int X2PreSpellCastCode()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nContinue;
 
     DeleteLocalInt(OBJECT_SELF, "SpellConc");

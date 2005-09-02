@@ -7,12 +7,13 @@
 * spl_rdlawr
 ****************************************************/
 //#include "prc_hnshnmystc"
+#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_feat_const"
 
 void main()
 {
-object oTarget = GetSpellTargetObject();
+object oTarget = PRCGetSpellTargetObject();
 effect eListen = EffectSkillIncrease(SKILL_LISTEN, 4);
 effect eSearch = EffectSkillIncrease(SKILL_SEARCH, 4);
 effect eSpot   = EffectSkillIncrease(SKILL_SPOT, 4);

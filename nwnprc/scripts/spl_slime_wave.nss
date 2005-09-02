@@ -1,6 +1,8 @@
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
-#include "x2_i0_spells"
+
 
 void RunImpact(object oTarget, object oCaster);
 
@@ -19,7 +21,7 @@ void main()
     effect eDur = ExtraordinaryEffect(EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
 
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 10.0, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
 
     //Cycle through the targets within the spell shape until an invalid object is captured.
     while(GetIsObjectValid(oTarget))
@@ -58,7 +60,7 @@ void main()
             }
         }
         //Select the next target within the spell shape.
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 10.0, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
     }
 }
 

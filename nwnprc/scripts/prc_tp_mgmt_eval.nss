@@ -13,7 +13,7 @@
 
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
-#include "inc_item_props"
+#include "prc_alterations"
 
 
 void main()

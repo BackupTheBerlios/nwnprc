@@ -17,7 +17,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration  = nCasterLvl * 10;
     int nMetaMagic = GetMetaMagicFeat();

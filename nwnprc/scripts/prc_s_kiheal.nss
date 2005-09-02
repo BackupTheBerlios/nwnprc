@@ -13,12 +13,12 @@
 //:: Updated On: Oct 20, 2003
 //:://////////////////////////////////////////////
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nWis = GetAbilityModifier(ABILITY_WISDOM);
     int nBonus = nWis;
     int nLevel = GetLevelByClass(CLASS_TYPE_RED_AVENGER);

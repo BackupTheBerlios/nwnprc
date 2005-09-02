@@ -17,7 +17,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -55,14 +55,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
     int nCount;
-    location lSpell = GetSpellTargetLocation();
+    location lSpell = PRCGetSpellTargetLocation();
 
     //Meta Magic check for extend
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2;   //Duration is +100%
     }
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
     oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lSpell);
     //Cycle through the targets within the spell shape until an invalid object is captured or the number of

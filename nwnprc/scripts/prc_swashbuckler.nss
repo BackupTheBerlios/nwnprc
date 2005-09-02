@@ -1,8 +1,8 @@
-#include "inc_item_props"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_inc_clsfunc"
-#include "prc_inc_combat"
+#include "prc_alterations"
 
 //DAMAGE_TYPE_BASE_WEAPON
 //GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)

@@ -7,8 +7,8 @@
 //:: Created By: Stratovarius.
 //:: Created On: July 3rd, 2004
 //:://////////////////////////////////////////////
-
-#include "prc_inc_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_inc_sneak"
 #include "psi_inc_psifunc"
 #include "prc_alterations"
@@ -351,7 +351,9 @@ void EOG(object oPC)
      if (iCleric)
      {
      SetLocalInt(oPC, "PRC_PrereqEOG", 1);
-     int iEOG = GetHasFeat(FEAT_WAR_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
+     int iEOG = GetHasFeat(FEAT_WAR_DOMAIN_POWER,oPC)
+        +GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER,oPC)
+        +GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
           {
           if (iEOG>1)
                {

@@ -11,9 +11,8 @@
 //:: Created On: 2003-11-30
 //:://////////////////////////////////////////////
 
-#include "X0_I0_SPELLS"
-#include "nw_i0_spells"
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
@@ -25,7 +24,7 @@ void main()
     int nChaMod = GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
     int nOcSv = 10 + (nOcLvl/2) + nChaMod;
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_20);
     effect eSleep =  EffectSleep();
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
@@ -38,7 +37,7 @@ void main()
     int nDuration = GetLevelByTypeDivine();
     nDuration = 3 + GetScaledDuration(nDuration, oTarget);
 
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
     string sSpellLocal = "BIOWARE_SPELL_LOCAL_SLEEP_" + ObjectToString(OBJECT_SELF);
     //Enter Metamagic conditions
     nDuration += 2;

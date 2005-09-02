@@ -15,7 +15,7 @@
 #include "prc_alterations"
 
 
-#include "X0_I0_SPELLS" // * this is the new spells include for expansion packs
+#include "prc_alterations" // * this is the new spells include for expansion packs
 
 #include "x2_inc_spellhook"
 

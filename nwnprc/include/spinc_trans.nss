@@ -73,7 +73,7 @@ void DoTransposition(int bAllowHostile)
     if (!X2PreSpellCastCode()) return;
     
     
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     if (!GetIsDead(oTarget))
     {
         // Get the spell target.  If he has the same faction leader we do (i.e. he's in the party)

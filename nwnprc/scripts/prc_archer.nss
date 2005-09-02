@@ -1,8 +1,8 @@
 #include "prc_alterations"
 #include "prc_inc_clsfunc"
-#include "inc_item_props"
+#include "prc_alterations"
 #include "prc_feat_const"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void Equip(object oPC,int bBowSpec,object oSkin,int bXShot)
 {

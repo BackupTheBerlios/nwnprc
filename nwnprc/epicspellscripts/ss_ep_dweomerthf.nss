@@ -7,9 +7,9 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-//#include "X0_I0_SPELLS"
+//#include "prc_alterations"
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 #include "prc_getbest_inc"
@@ -26,7 +26,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, DWEO_TH_DC, DWEO_TH_S, DWEO_TH_XP))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nTargetSpell;
         effect eVis = EffectVisualEffect(VFX_IMP_DISPEL);
         effect eVis2 = EffectVisualEffect(VFX_IMP_DOOM);

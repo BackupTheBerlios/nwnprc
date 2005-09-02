@@ -11,7 +11,7 @@
 //:: Created By: Ornedan
 //:: Created On: 29.05.2005
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "prc_inc_teleport"
 
 

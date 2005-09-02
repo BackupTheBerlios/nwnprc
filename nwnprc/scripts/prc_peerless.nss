@@ -1,9 +1,9 @@
-#include "inc_item_props"
+#include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "prc_feat_const"
 #include "prc_spell_const"
 #include "prc_class_const"
-#include "x2_inc_itemprop" // for checking if item is a weapon
+#include "prc_alterations" // for checking if item is a weapon
 
 /// +3 on Craft Weapon /////////
 void Expert_Bowyer(object oPC, object oSkin, int nBowyer)

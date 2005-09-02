@@ -32,7 +32,7 @@ void main()
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int iMod = 20;
     effect eInvalid;
     PerformAttackRound(oTarget, oPC, eInvalid, 0.0, 20, 0, 0, FALSE, 

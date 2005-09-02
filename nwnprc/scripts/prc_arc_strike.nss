@@ -2,8 +2,8 @@
 //:: Created By: Solowing
 //:: Created On: September 2, 2004
 //:://////////////////////////////////////////////
-
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_alterations"
 #include "x2_inc_switches"
 #include "nw_o0_itemmaker"
@@ -69,7 +69,7 @@ void main()
     }
 
 //we check the target of the spell
-    object oWeapon = GetSpellTargetObject();
+    object oWeapon = PRCGetSpellTargetObject();
 
 
 if (oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))

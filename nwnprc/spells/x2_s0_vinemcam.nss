@@ -40,7 +40,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     //Declare major variables including Area of Effect Object
     effect eAOE = EffectAreaOfEffect(40);
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF) * 10;
     //Make sure duration does no equal 0
     if (nDuration < 1)

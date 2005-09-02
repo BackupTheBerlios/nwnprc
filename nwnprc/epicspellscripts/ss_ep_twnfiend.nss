@@ -3,7 +3,7 @@
 //:: Author: Boneshank (Don Armstrong)
 
 //#include "x2_inc_toollib"
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 
@@ -30,14 +30,14 @@ void main()
             effect eSummon = EffectSummonCreature("twinfiend_demon", 460);
             MultisummonPreSummon();
             ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, 
-                GetSpellTargetLocation(), fDuration);
+                PRCGetSpellTargetLocation(), fDuration);
             ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, 
-                GetSpellTargetLocation(), fDuration);
+                PRCGetSpellTargetLocation(), fDuration);
         }
         else
         {
-            DelayCommand(1.0, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation()));
-            oFiend = CreateObject(OBJECT_TYPE_CREATURE, "twinfiend_demon", GetSpellTargetLocation());
+            DelayCommand(1.0, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation()));
+            oFiend = CreateObject(OBJECT_TYPE_CREATURE, "twinfiend_demon", PRCGetSpellTargetLocation());
             oFiend2 = CreateObject(OBJECT_TYPE_CREATURE, "twinfiend_demon", GetStepLeftLocation(oFiend));
             SetMaxHenchmen(GetMaxHenchmen() + 2);
             AddHenchman(OBJECT_SELF, oFiend);

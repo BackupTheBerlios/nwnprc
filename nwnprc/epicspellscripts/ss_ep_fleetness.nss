@@ -7,7 +7,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
@@ -24,7 +24,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, FLEETNS_DC, FLEETNS_S, FLEETNS_XP))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nDuration = 20;
 
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

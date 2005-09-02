@@ -10,7 +10,7 @@
 //:: Created On: Aug 2, 2005
 //:://////////////////////////////////////////////
 
-#include "inc_item_props"
+#include "prc_alterations"
 
 void main()
 {

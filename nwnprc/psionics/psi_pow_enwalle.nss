@@ -29,7 +29,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     if (nMetaPsi > 0) 
     {
     	int nCaster = GetManifesterLevel(oCaster);
-    	location lTarget = GetSpellTargetLocation();
+    	location lTarget = PRCGetSpellTargetLocation();
     	effect eAOE = EffectAreaOfEffect(AOE_MOB_ENERGYWALL);
     	int nDuration = nCaster;
 	if (nMetaPsi == 2)	nDuration *= 2;

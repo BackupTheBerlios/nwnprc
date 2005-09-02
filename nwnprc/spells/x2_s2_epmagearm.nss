@@ -15,7 +15,7 @@
 //:: modified by mr_bumpkin Dec 15, 2003 for PRC stuff
 #include "prc_alterations"
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         }
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
     int nMetaMagic = GetMetaMagicFeat();
     effect eVis = EffectVisualEffect(495);

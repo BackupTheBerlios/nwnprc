@@ -3,7 +3,7 @@
 //:: Author: Boneshank (Don Armstrong)
 
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "inc_dispel"
 //#include "prc_alterations"
@@ -21,7 +21,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, GR_SP_RE_DC, GR_SP_RE_S, GR_SP_RE_XP))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         effect eSR = EffectSpellResistanceIncrease(35);
         effect eVis = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

@@ -8,7 +8,7 @@
 //:: Last Updated On: March 13, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 
@@ -22,7 +22,7 @@ void main()
 		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     if (GetIsObjectValid(oTarget) &&  // Is the target valid?
         !GetHasFeat(5028, oTarget) && // Does the target not already have the feat?
         GetIsPC(oTarget))             // Is the target a player?

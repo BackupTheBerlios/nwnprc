@@ -64,8 +64,8 @@
 //:: Created On: 20.12.2004
 //:: Updated On: 09.01.2005
 //:://////////////////////////////////////////////
-
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "X2_inc_switches"
 
 #include "inc_poison"
@@ -74,46 +74,46 @@
 
 void main()
 {
-	//SpawnScriptDebugger();
-	object oItem   = GetSpellCastItem();
-	object oPC     = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
+    //SpawnScriptDebugger();
+    object oItem   = GetSpellCastItem();
+    object oPC     = OBJECT_SELF;
+    object oTarget = PRCGetSpellTargetObject();
 
 
-	// Make sure the target is an item
-	if (oTarget == OBJECT_INVALID || GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
-	{
-		SendMessageToPCByStrRef(oPC, 83359);         //"Invalid target "
-		return;
-	}
+    // Make sure the target is an item
+    if (oTarget == OBJECT_INVALID || GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
+    {
+        SendMessageToPCByStrRef(oPC, 83359);         //"Invalid target "
+        return;
+    }
 
-	// Make sure it's a weapon
-	int nType = GetBaseItemType(oTarget);
-	if (!IPGetIsMeleeWeapon(oTarget) &&
-	    !IPGetIsProjectile(oTarget)  &&
-	    nType != BASE_ITEM_SHURIKEN  &&
-	    nType != BASE_ITEM_DART      &&
-	    nType != BASE_ITEM_THROWINGAXE)
-	{
-		SendMessageToPCByStrRef(oPC, 83359);         //"Invalid target "
-		return;
-	}
+    // Make sure it's a weapon
+    int nType = GetBaseItemType(oTarget);
+    if (!IPGetIsMeleeWeapon(oTarget) &&
+        !IPGetIsProjectile(oTarget)  &&
+        nType != BASE_ITEM_SHURIKEN  &&
+        nType != BASE_ITEM_DART      &&
+        nType != BASE_ITEM_THROWINGAXE)
+    {
+        SendMessageToPCByStrRef(oPC, 83359);         //"Invalid target "
+        return;
+    }
 
-	// Make sure the weapon can be applied poison to
-	if(GetPRCSwitch(PRC_ALLOW_ONLY_SHARP_WEAPONS) &&
-	   IPGetIsBludgeoningWeapon(oTarget))
-	{
-		SendMessageToPCByStrRef(oPC, 83367);         //"Weapon does not do slashing or piercing damage "
-		return;
-	}
+    // Make sure the weapon can be applied poison to
+    if(GetPRCSwitch(PRC_ALLOW_ONLY_SHARP_WEAPONS) &&
+       IPGetIsBludgeoningWeapon(oTarget))
+    {
+        SendMessageToPCByStrRef(oPC, 83367);         //"Weapon does not do slashing or piercing damage "
+        return;
+    }
 
 
     // Get the 2da row to lookup the poison from
     int nRow;
     if(GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON))
-    	nRow = StringToInt(GetStringRight(GetTag(oItem), 3));
+        nRow = StringToInt(GetStringRight(GetTag(oItem), 3));
     else
-    	nRow = GetLocalInt(oItem, "pois_idx");
+        nRow = GetLocalInt(oItem, "pois_idx");
 
     // Some paranoia re. valid values
     if (nRow < 0)
@@ -125,97 +125,97 @@ void main()
         return;
     }
 
-	// Make sure the poison can be applied to a weapon
-	if(GetPoisonType(nRow) != POISON_TYPE_CONTACT &&
+    // Make sure the poison can be applied to a weapon
+    if(GetPoisonType(nRow) != POISON_TYPE_CONTACT &&
        GetPoisonType(nRow) != POISON_TYPE_INJURY  &&
-	   !GetPRCSwitch(PRC_ALLOW_ALL_POISONS_ON_WEAPONS))
-	{
-		SendMessageToPCByStrRef(oPC, STRREF_POISON_NOT_VALID_FOR_WEAPON);
-		return;
-	}
+       !GetPRCSwitch(PRC_ALLOW_ALL_POISONS_ON_WEAPONS))
+    {
+        SendMessageToPCByStrRef(oPC, STRREF_POISON_NOT_VALID_FOR_WEAPON);
+        return;
+    }
 
-	/* If weapon is already poisoned, remove the previous. This is to avoid possible
-	 * complications from having several identical itemproperties.
-	 */
-	if(GetLocalInt(oTarget, "pois_wpn_uses") != 0){
-		DoPoisonRemovalFromWeapon(oTarget);
-		SendMessageToPCByStrRef(oPC, STRREF_POISON_CLEAN_OFF_WEAPON);
-	}
-
-
-	/** Done with the paranoia, now to start applying the poison **/
+    /* If weapon is already poisoned, remove the previous. This is to avoid possible
+     * complications from having several identical itemproperties.
+     */
+    if(GetLocalInt(oTarget, "pois_wpn_uses") != 0){
+        DoPoisonRemovalFromWeapon(oTarget);
+        SendMessageToPCByStrRef(oPC, STRREF_POISON_CLEAN_OFF_WEAPON);
+    }
 
 
-	// People with Use Poison feat succeed automatically, others roll for success
-	if(!GetHasFeat(FEAT_USE_POISON, oPC))
-	{
-		// * Force attacks of opportunity
-		AssignCommand(oPC, ClearAllActions(TRUE));
+    /** Done with the paranoia, now to start applying the poison **/
 
-		// Check for failure.
-		int nFail;
-		if(GetPRCSwitch(PRC_USE_DEXBASED_WEAPON_POISONING_FAILURE_CHANCE))
-		{
-			int nApplyDC = StringToInt(Get2DACache("poison", "Handle_DC", nRow));
-			int nDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC) ;
-			int nCheck = d10(1)+10+nDex;
-			nFail = (nCheck < nApplyDC);
-		}
-		else
-		{
-			nFail = (d100() <= 5);
-		}
 
-		// Inform user of success / failure and deal failure effects if needed
-		if(nFail)
-		{
-			SendMessageToPCByStrRef(oPC, STRREF_POISON_APPLY_FAILURE); //"You slip while applying the poison to your weapon."
+    // People with Use Poison feat succeed automatically, others roll for success
+    if(!GetHasFeat(FEAT_USE_POISON, oPC))
+    {
+        // * Force attacks of opportunity
+        AssignCommand(oPC, ClearAllActions(TRUE));
 
-			// User gets poisoned on failure
-			effect ePoison = EffectPoison(nRow);
-			ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoison, oPC);
+        // Check for failure.
+        int nFail;
+        if(GetPRCSwitch(PRC_USE_DEXBASED_WEAPON_POISONING_FAILURE_CHANCE))
+        {
+            int nApplyDC = StringToInt(Get2DACache("poison", "Handle_DC", nRow));
+            int nDex = GetAbilityModifier(ABILITY_DEXTERITY,oPC) ;
+            int nCheck = d10(1)+10+nDex;
+            nFail = (nCheck < nApplyDC);
+        }
+        else
+        {
+            nFail = (d100() <= 5);
+        }
 
-		}
-	}// end if - handle people without Use Poison feat
+        // Inform user of success / failure and deal failure effects if needed
+        if(nFail)
+        {
+            SendMessageToPCByStrRef(oPC, STRREF_POISON_APPLY_FAILURE); //"You slip while applying the poison to your weapon."
 
-	//Add the effect and local ints for the hit script
-	itemproperty ip = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1);
+            // User gets poisoned on failure
+            effect ePoison = EffectPoison(nRow);
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoison, oPC);
 
-	// First, check if something else adds the unique onhit.
-	// If nothing does, then we should remove it once the effect has been used up
-	if(!IPGetItemHasProperty(oTarget, ip, -1))
-		SetLocalInt(oTarget, "PoisonedWeapon_DoDelete", TRUE);
+        }
+    }// end if - handle people without Use Poison feat
 
-	AddItemProperty(DURATION_TYPE_PERMANENT, ip, oTarget);
-	SetLocalInt(oTarget, "pois_wpn_idx", nRow);
+    //Add the effect and local ints for the hit script
+    itemproperty ip = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,1);
 
-	int nUses = 0;
-	int nDie = GetLocalInt(oItem, PRC_USES_PER_WEAPON_POISON_DIE);
-	    nDie = nDie ? nDie : GetPRCSwitch(PRC_USES_PER_WEAPON_POISON_DIE);
-	int nCount = GetLocalInt(oItem, PRC_USES_PER_WEAPON_POISON_COUNT);
-	    nCount = nCount > 0 ? nCount : GetPRCSwitch(PRC_USES_PER_WEAPON_POISON_COUNT);
-	    nCount = nCount > 0 ? nCount : 1;
-	if(nDie >= 2){
-		int i;
-		for(i = 0; i < nCount; i++){
-			nUses += Random(nDie) + 1;
-		}
-	}
-	else{
-		nUses = nCount;
-	}
-	SetLocalInt(oTarget, "pois_wpn_uses", nUses);
+    // First, check if something else adds the unique onhit.
+    // If nothing does, then we should remove it once the effect has been used up
+    if(!IPGetItemHasProperty(oTarget, ip, -1))
+        SetLocalInt(oTarget, "PoisonedWeapon_DoDelete", TRUE);
 
-	// Eventhook the weapon
+    AddItemProperty(DURATION_TYPE_PERMANENT, ip, oTarget);
+    SetLocalInt(oTarget, "pois_wpn_idx", nRow);
+
+    int nUses = 0;
+    int nDie = GetLocalInt(oItem, PRC_USES_PER_WEAPON_POISON_DIE);
+        nDie = nDie ? nDie : GetPRCSwitch(PRC_USES_PER_WEAPON_POISON_DIE);
+    int nCount = GetLocalInt(oItem, PRC_USES_PER_WEAPON_POISON_COUNT);
+        nCount = nCount > 0 ? nCount : GetPRCSwitch(PRC_USES_PER_WEAPON_POISON_COUNT);
+        nCount = nCount > 0 ? nCount : 1;
+    if(nDie >= 2){
+        int i;
+        for(i = 0; i < nCount; i++){
+            nUses += Random(nDie) + 1;
+        }
+    }
+    else{
+        nUses = nCount;
+    }
+    SetLocalInt(oTarget, "pois_wpn_uses", nUses);
+
+    // Eventhook the weapon
     AddEventScript(oTarget, EVENT_ITEM_ONHIT, "poison_wpn_onhit", TRUE, FALSE);
 
-	// Inform player and do VFX
-	SendMessageToPC(oPC,
-	                GetStringByStrRef(STRREF_POISON_APPLY_SUCCESS) + " " +
-	                GetStringByStrRef(StringToInt(Get2DACache("poison", "Name", nRow)))
-	               );  //"You coat your weapon with xxxx"
+    // Inform player and do VFX
+    SendMessageToPC(oPC,
+                    GetStringByStrRef(STRREF_POISON_APPLY_SUCCESS) + " " +
+                    GetStringByStrRef(StringToInt(Get2DACache("poison", "Name", nRow)))
+                   );  //"You coat your weapon with xxxx"
 
-	effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
-	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oTarget));
+    effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oTarget));
 
 }

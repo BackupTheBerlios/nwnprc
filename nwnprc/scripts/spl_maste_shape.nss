@@ -2,5 +2,5 @@
 
 void main()
 {
-	ToggleMasteryOfShapes(GetSpellTargetObject());
+	ToggleMasteryOfShapes(PRCGetSpellTargetObject());
 }

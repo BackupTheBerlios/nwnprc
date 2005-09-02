@@ -8,7 +8,7 @@ void main()
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
     
     // Get the spell target location as opposed to the spell target.
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
 
     // Apply area vfx.
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, 

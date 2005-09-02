@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     MultisummonPreSummon();
     if(GetPRCSwitch(PRC_CREATE_UNDEAD_UNCONTROLLED))
     {
-        object oSummon = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetSpellTargetLocation());
+        object oSummon = CreateObject(OBJECT_TYPE_CREATURE, sResRef, PRCGetSpellTargetLocation());
         //this is to 
         //make it hostile
         ChangeToStandardFaction(oSummon, STANDARD_FACTION_HOSTILE);
@@ -79,19 +79,19 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDom, oSummon, 3.0);
         //visual
         effect eVFX = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVFX, GetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVFX, PRCGetSpellTargetLocation());
     }
     else
     {
         if(GetPRCSwitch(PRC_CREATE_UNDEAD_PERMANENT))
         {
             eSummon = ExtraordinaryEffect(eSummon);
-            ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, GetSpellTargetLocation());
+            ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, PRCGetSpellTargetLocation());
         }
         else
-            ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), HoursToSeconds(nDuration));
+            ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), HoursToSeconds(nDuration));
     }    
-    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation());
 //   object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
 //   DelayCommand(0.5, CorpseCrafter(OBJECT_SELF, oSummon)); 
 

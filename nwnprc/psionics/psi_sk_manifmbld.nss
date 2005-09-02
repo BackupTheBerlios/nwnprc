@@ -14,7 +14,7 @@
 #include "inc_eventhook"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
-#include "prc_inc_combat"
+#include "prc_alterations"
 
 
 //////////////////////////////////////////////////

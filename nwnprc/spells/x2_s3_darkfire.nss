@@ -77,7 +77,7 @@ switch(nDamageType)
      eVis =EffectVisualEffect(nAppearanceTypeM);
   }
   eDmg = EffectLinkEffects (eVis, eDmg);
-  object oTarget = GetSpellTargetObject();
+  object oTarget = PRCGetSpellTargetObject();
 
   if (GetIsObjectValid(oTarget))
   {

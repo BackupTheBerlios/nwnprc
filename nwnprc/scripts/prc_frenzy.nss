@@ -13,10 +13,10 @@
 //:: Created By: Oni5115
 //:: Created On: Aug 23, 2004
 //:://////////////////////////////////////////////
-
-#include "x2_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "inc_addragebonus"
-#include "inc_item_props"
+#include "prc_alterations"
 
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -41,7 +41,7 @@ void main()
         int hasHaste;
         int nSlot;  // for checking armor slots
 
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
 
         if(GetHasFeat(FEAT_DEATHLESS_FRENZY, oTarget) )
         {

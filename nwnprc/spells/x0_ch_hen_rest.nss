@@ -8,7 +8,9 @@
 //:: Created By: Naomi Novik
 //:: Created On: 01/06/2003
 //:://////////////////////////////////////////////////
+#include "prc_alterations"
 #include "inc_newspellbook"
+
 void main()
 {
     // modifed by primogenitor
@@ -18,7 +20,7 @@ void main()
         //check spellbook has been setup
         if(!GetLocalInt(OBJECT_SELF, "PRC_Aribeth_Spellbook"))
         {
-		object oPC = OBJECT_SELF;
+        object oPC = OBJECT_SELF;
             persistant_array_create(oPC, "Spellbook1_31");
             persistant_array_create(oPC, "Spellbook2_31");
             persistant_array_create(oPC, "Spellbook3_31");

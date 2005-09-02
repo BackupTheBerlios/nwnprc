@@ -30,9 +30,9 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
 
-#include "x0_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
-#include "x2_i0_spells"
+#include "prc_alterations"
 
 int nSpellID = 463;
 void RunHandImpact(object oTarget, object oCaster)
@@ -75,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
     // End of Spell Cast Hook
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     //--------------------------------------------------------------------------
     // This spell no longer stacks. If there is one hand, that's enough

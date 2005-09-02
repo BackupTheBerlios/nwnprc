@@ -25,7 +25,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	if (nMetaPsi == 2)	nDur *= 2;   
 	
 	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, fWidth, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, fWidth, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
 
     	//Cycle through the targets within the spell shape until an invalid object is captured.
     	while(GetIsObjectValid(oTarget))
@@ -89,7 +89,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	                DelayCommand(fDist, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster));
     	            }
     	    //Select the next target within the spell shape.
-    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
     	}
 
 	

@@ -41,7 +41,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     //Declare major variables including Area of Effect Object
     effect eAOE = EffectAreaOfEffect(AOE_PER_ENTANGLE);
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     int nDuration = 3 + PRCGetCasterLevel(OBJECT_SELF) / 2;
     int nMetaMagic = PRCGetMetaMagicFeat();
     //Make sure duration does no equal 0

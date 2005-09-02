@@ -11,9 +11,8 @@
 //:: Created On: 2003-11-29
 //:://////////////////////////////////////////////
 
-#include "X0_I0_SPELLS"
-#include "nw_i0_spells"
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
@@ -26,7 +25,7 @@ void main() {
     int nOcSv = 10 + (nOcLvl/2) + nChaMod;
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
     effect eCharm = EffectCharmed();
     //eCharm = GetScaledEffect(eCharm, oTarget);

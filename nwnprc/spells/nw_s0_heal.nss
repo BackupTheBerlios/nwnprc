@@ -18,7 +18,7 @@
 
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "prc_inc_switch"
 
@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 
   //Declare major variables
-  object oTarget = GetSpellTargetObject();
+  object oTarget = PRCGetSpellTargetObject();
   effect eKill, eHeal;
   int nDamage, nHeal, nModify, nMetaMagic, nTouch;
   int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);

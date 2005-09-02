@@ -11,9 +11,9 @@
 // Last Updated: 03/16/2004, Nron Ksr
 /////////////////////////////////////////////////
 
-//#include "X0_I0_SPELLS"
+//#include "prc_alterations"
 // Boneshank - Added below include files for needed functions.
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 //#include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -40,7 +40,7 @@ void main()
         int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
         effect eAOE = EffectAreaOfEffect
             ( AOE_PER_FOGFIRE, "tm_s0_epmagmabua", "tm_s0_epmagmabub", "tm_s0_epmagmabuc" );
-        location lTarget = GetSpellTargetLocation();
+        location lTarget = PRCGetSpellTargetLocation();
         int nDuration = GetTotalCastingLevel(OBJECT_SELF) / 5; //B- changed.
         effect eImpact = EffectVisualEffect( VFX_FNF_GAS_EXPLOSION_FIRE );
         effect eImpact2 = EffectVisualEffect( VFX_FNF_IMPLOSION );

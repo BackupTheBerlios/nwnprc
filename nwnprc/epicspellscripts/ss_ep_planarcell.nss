@@ -8,7 +8,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On:
 //:://////////////////////////////////////////////
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 
@@ -26,8 +26,8 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, PLANCEL_DC, PLANCEL_S, PLANCEL_XP))
     {
-        object oTarget = GetSpellTargetObject();
-        location lTarget = GetSpellTargetLocation();
+        object oTarget = PRCGetSpellTargetObject();
+        location lTarget = PRCGetSpellTargetLocation();
         location lCell;
         effect eVis1 = EffectVisualEffect(VFX_FNF_IMPLOSION);
         effect eVis2 = EffectVisualEffect(VFX_FNF_SUMMON_GATE);

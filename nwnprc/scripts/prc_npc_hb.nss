@@ -2,7 +2,7 @@
 //:: OnHeartbeat NPC eventscript
 //:: prc_npc_hb
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "inc_prc_npc"
 #include "inc_eventhook"
 #include "inc_ecl"

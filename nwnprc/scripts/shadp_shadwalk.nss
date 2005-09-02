@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
         nDuration = 1;
     }
 
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);
     effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

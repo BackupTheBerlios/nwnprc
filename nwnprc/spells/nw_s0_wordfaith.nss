@@ -22,7 +22,7 @@
 #include "spinc_common"
 
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -74,9 +74,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         int nPenetr = CasterLvl + SPGetPenetr();
         
         //Apply the FNF VFX impact to the target location
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSmite, GetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSmite, PRCGetSpellTargetLocation());
         //Get the first target in the spell area
-        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetSpellTargetLocation());
+        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, PRCGetSpellTargetLocation());
         while (GetIsObjectValid(oTarget))
         {
             //Make a faction check
@@ -160,7 +160,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
             }
             //Get the next target in the spell area
-            oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetSpellTargetLocation());
+            oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, PRCGetSpellTargetLocation());
         }
         
 

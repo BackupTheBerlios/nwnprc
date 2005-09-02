@@ -12,12 +12,12 @@ The Selvetarm's Wrath feat for the Drow Judicator
 //:: Updated by Oni5115 9/23/2004 to use new combat engine
 //:://////////////////////////////////////////////
 
-#include "prc_inc_combat"
+#include "prc_alterations"
 
 void main()
 {
      object oPC   = OBJECT_SELF;
-     object oTarget  = GetSpellTargetObject();
+     object oTarget  = PRCGetSpellTargetObject();
 
      if(oPC == oTarget)
      {

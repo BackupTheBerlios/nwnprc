@@ -7,11 +7,11 @@
 //:////////////////////////////////////
 //:  By: Oni5115
 //:////////////////////////////////////
-
+#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_spell_const"
-#include "inc_item_props"
-#include "nw_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 
 void main()
 {

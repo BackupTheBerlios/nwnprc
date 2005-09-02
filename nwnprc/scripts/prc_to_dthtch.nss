@@ -11,12 +11,12 @@
 */
 
 #include "prc_class_const"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     //Declare effects
     effect eSlay = EffectDeath();

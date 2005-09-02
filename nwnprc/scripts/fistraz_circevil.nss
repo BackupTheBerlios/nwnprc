@@ -13,9 +13,9 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003
 
+#include "prc_alterations"
 #include "prc_class_const"
 #include "x2_inc_spellhook"
-#include "x0_i0_spells"
 
 //const int VFX_MOB_CIRCEVIL_NODIS   = 110 ;
 

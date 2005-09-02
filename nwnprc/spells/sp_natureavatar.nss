@@ -11,7 +11,7 @@ void main()
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     // Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget)
     {

@@ -1,6 +1,6 @@
 #include "inc_utility"
 #include "inc_array"
-#include "inc_item_props"
+#include "prc_alterations"
 #include "inc_dynconv"
 
 //This used Bitwise math 

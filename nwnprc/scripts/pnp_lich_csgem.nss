@@ -5,7 +5,7 @@
 //:: Created By: Script Wizard
 //:: Created On: 1/24/2004 9:39:35 AM
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "pnp_lich_inc"
 
 // Crafts the soul gem

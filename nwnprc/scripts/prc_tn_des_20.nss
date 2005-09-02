@@ -9,7 +9,7 @@
 
 #include "prc_feat_const"
 #include "prc_spell_const"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void main()
 {

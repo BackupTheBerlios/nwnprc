@@ -2,8 +2,8 @@
 //:: Epic Spell: Momento Mori
 //:: Author: Boneshank (Don Armstrong)
 
-//#include "X0_I0_SPELLS"
-#include "nw_i0_spells"
+//#include "prc_alterations"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
@@ -21,7 +21,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, MORI_DC, MORI_S, MORI_XP))
     {
         //Declare major variables
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nDamage;
         effect eDam;
         effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);

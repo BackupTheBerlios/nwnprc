@@ -2,7 +2,7 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_ipfeat_const"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
 
 const int PHENOTYPE_KENSAI      = 5;
 const int PHENOTYPE_ASSASSIN    = 6;

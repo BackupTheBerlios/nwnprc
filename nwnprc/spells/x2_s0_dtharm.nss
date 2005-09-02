@@ -20,7 +20,7 @@
 #include "spinc_common"
 
 #include "x2_inc_spellhook"
-#include "x0_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -41,7 +41,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }
 
     // End of Spell Cast Hook
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     int nDuration = PRCGetCasterLevel(oTarget);
     int nCasterLvl = nDuration/2;

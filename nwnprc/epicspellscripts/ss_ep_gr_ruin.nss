@@ -16,10 +16,10 @@
     Altered by Boneshank, for purposes of the Epic Spellcasting project.
 */
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-//#include "X0_I0_SPELLS"
+//#include "prc_alterations"
 //#include "prc_alterations"
 //#include "inc_dispel"
 
@@ -36,7 +36,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, GR_RUIN_DC, GR_RUIN_S, GR_RUIN_XP))
     {
         //Declare major variables
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
 
 
         float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);

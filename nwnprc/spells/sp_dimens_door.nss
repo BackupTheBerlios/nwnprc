@@ -177,9 +177,9 @@ void main()
         int nCasterLvl   = PRCGetCasterLevel();
         int nSpellID     = GetSpellId();
         // Get the spell's base target location
-        location lTarget = GetIsObjectValid(GetSpellTargetObject()) ? // Are we teleporting to some object, or just at a spot on the ground?
-                            GetLocation(GetSpellTargetObject()) :     // Teleporting to some object
-                            GetSpellTargetLocation();                 // Teleporting to a spot on the ground
+        location lTarget = GetIsObjectValid(PRCGetSpellTargetObject()) ? // Are we teleporting to some object, or just at a spot on the ground?
+                            GetLocation(PRCGetSpellTargetObject()) :     // Teleporting to some object
+                            PRCGetSpellTargetLocation();                 // Teleporting to a spot on the ground
 
 
         // Run the code to build an array of targets on the caster

@@ -2,11 +2,11 @@
 // penalty to compensate for attack bonuses on the creature weapon.  If the character is attacking
 // with gloves that give an attack bonus, the offset penalty may not exist.
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void main ()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
     
     int iPen = GetLocalInt(oPC, "UnarmedEnhancement") - GetLocalInt(oPC, "UnarmedEnhancementGlove");
     int iFin = GetLocalInt(oPC, "UnarmedWeaponFinesseBonus");

@@ -4,8 +4,8 @@
 /*
    Song that gives everybody +1 to +8 Shield AC.
 */
-
-#include "x2_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_inc_clsfunc"
 
@@ -33,7 +33,7 @@ void main()
 
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
     int nDuration = 10;
-    location lSpell = GetSpellTargetLocation();
+    location lSpell = PRCGetSpellTargetLocation();
 
     //Check to see if the caster has Lasting Impression and increase duration.
     if(GetHasFeat(870))
@@ -55,7 +55,7 @@ void main()
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
 
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
     oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lSpell);

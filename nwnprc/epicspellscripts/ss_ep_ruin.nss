@@ -7,9 +7,9 @@
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
-//#include "X0_I0_SPELLS"
+//#include "prc_alterations"
 #include "inc_epicspells"
 //#include "prc_alterations"
 
@@ -26,7 +26,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, RUIN_DC, RUIN_S, RUIN_XP))
     {
         //Declare major variables
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
         float fDelay = fDist/(3.0 * log(fDist) + 2.0);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));

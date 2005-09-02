@@ -9,7 +9,7 @@
 //:: Created On: Mar 17, 2004
 //:://////////////////////////////////////////////
 
-#include "x0_i0_spells"
+#include "prc_alterations"
 
 void HeavenDevotion(object oTarget)
 {

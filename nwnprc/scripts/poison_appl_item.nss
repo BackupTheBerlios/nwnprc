@@ -72,8 +72,8 @@
 //:: Created By: Ornedan
 //:: Created On: 09.01.2005
 //:://////////////////////////////////////////////
-
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "X2_inc_switches"
 
 #include "inc_poison"
@@ -84,7 +84,7 @@ void main()
 {
     object oItem   = GetSpellCastItem();
     object oPC     = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     // Make sure the target is an item
     if (oTarget == OBJECT_INVALID || GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
@@ -96,9 +96,9 @@ void main()
     // Get the 2da row to lookup the poison from
     int nRow;
     if(GetPRCSwitch(PRC_USE_TAGBASED_INDEX_FOR_POISON))
-    	nRow = StringToInt(GetStringRight(GetTag(oItem), 3));
+        nRow = StringToInt(GetStringRight(GetTag(oItem), 3));
     else
-    	nRow = GetLocalInt(oItem, "pois_idx");
+        nRow = GetLocalInt(oItem, "pois_idx");
 
     // Some paranoia re. valid values
     if (nRow < 0)
@@ -138,21 +138,21 @@ void main()
     SetLocalInt(oTarget, "pois_itm_trap_dc", nDC);
 
     int nUses = 0;
-	int nDie = GetLocalInt(oItem, PRC_USES_PER_ITEM_POISON_DIE);
-	    nDie = nDie ? nDie : GetPRCSwitch(PRC_USES_PER_ITEM_POISON_DIE);
-	int nCount = GetLocalInt(oItem, PRC_USES_PER_ITEM_POISON_COUNT);
-	    nCount = nCount > 0 ? nCount : GetPRCSwitch(PRC_USES_PER_ITEM_POISON_COUNT);
-	    nCount = nCount > 0 ? nCount : 1;
-	if(nDie >= 2){
-		int i;
-		for(i = 0; i < nCount; i++){
-			nUses += Random(nDie) + 1;
-		}
-	}
-	else{
-		nUses = nCount;
-	}
-	SetLocalInt(oTarget, "pois_itm_uses", nUses);
+    int nDie = GetLocalInt(oItem, PRC_USES_PER_ITEM_POISON_DIE);
+        nDie = nDie ? nDie : GetPRCSwitch(PRC_USES_PER_ITEM_POISON_DIE);
+    int nCount = GetLocalInt(oItem, PRC_USES_PER_ITEM_POISON_COUNT);
+        nCount = nCount > 0 ? nCount : GetPRCSwitch(PRC_USES_PER_ITEM_POISON_COUNT);
+        nCount = nCount > 0 ? nCount : 1;
+    if(nDie >= 2){
+        int i;
+        for(i = 0; i < nCount; i++){
+            nUses += Random(nDie) + 1;
+        }
+    }
+    else{
+        nUses = nCount;
+    }
+    SetLocalInt(oTarget, "pois_itm_uses", nUses);
 
     // Eventhook the item
     AddEventScript(oTarget, EVENT_ITEM_ONACQUIREITEM, "poison_onaquire", TRUE, FALSE);
@@ -160,9 +160,9 @@ void main()
 
     // Inform player
     SendMessageToPC(oPC,
-	                GetStringByStrRef(STRREF_POISON_ITEM_USE_1) + " " +
-	                GetStringByStrRef(StringToInt(Get2DACache("poison", "Name", nRow))) + " " +
-	                GetStringByStrRef(STRREF_POISON_ITEM_USE_2) + " " +
-	                GetName(oTarget) + "."
-	               );  //"You smear xxxx all over yyyy"
+                    GetStringByStrRef(STRREF_POISON_ITEM_USE_1) + " " +
+                    GetStringByStrRef(StringToInt(Get2DACache("poison", "Name", nRow))) + " " +
+                    GetStringByStrRef(STRREF_POISON_ITEM_USE_2) + " " +
+                    GetName(oTarget) + "."
+                   );  //"You smear xxxx all over yyyy"
 }

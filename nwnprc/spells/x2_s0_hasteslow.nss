@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     if (d100() > 33)
     {// 2/3 of the time - do haste effect
     //Declare major variables
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         effect eHaste = EffectHaste();
         effect eVis = EffectVisualEffect(VFX_IMP_HASTE);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     {//1/3 of the time - do slow effect
 
         //Declare major variables
-        object oTarget1 = GetSpellTargetObject();
+        object oTarget1 = PRCGetSpellTargetObject();
         effect eSlow = EffectSlow();
         effect eDur1 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
         effect eLink1 = EffectLinkEffects(eSlow, eDur1);

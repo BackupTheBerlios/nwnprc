@@ -11,6 +11,8 @@
 //Added delay to EvalPRCFeats event to allow module setup to take priority
 //  Aaon Graywolf - Jan 6, 2004
 
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_inc_domain"
 #include "inc_eventhook"
 
@@ -66,5 +68,5 @@ void main()
     ExecuteScript("prc_vassal_treas", oPC);
     
     // Execute scripts hooked to this event for the player triggering it
-	ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERLEVELUP);
+    ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERLEVELUP);
 }

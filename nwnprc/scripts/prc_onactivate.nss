@@ -2,7 +2,7 @@
 //:: OnActivateItem eventscript
 //:: prc_onactivate
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "inc_eventhook"
 
 void main()

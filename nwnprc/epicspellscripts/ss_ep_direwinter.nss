@@ -8,7 +8,7 @@
 //:: Last Updated On:
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "x2_inc_toollib"

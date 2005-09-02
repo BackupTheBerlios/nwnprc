@@ -13,6 +13,7 @@
 //:: Created On: Oct. 3, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "prc_inc_combat"
 #include "nw_i0_spells"
 #include "prc_inc_util"
@@ -40,7 +41,7 @@ void Attack(object oTarget)
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
     
     if(oTarget == OBJECT_INVALID)
@@ -62,16 +63,16 @@ void main()
         }
         
         int iVoiceConst = 0;
-	int iVoice = d3(1);
-	switch(iVoice)
-	{
-	     case 1: iVoice = VOICE_CHAT_BATTLECRY1;
-	             break;
-	     case 2: iVoice = VOICE_CHAT_BATTLECRY2;
-	             break;
-	     case 3: iVoice = VOICE_CHAT_BATTLECRY3;
-	             break;
-	}
+    int iVoice = d3(1);
+    switch(iVoice)
+    {
+         case 1: iVoice = VOICE_CHAT_BATTLECRY1;
+                 break;
+         case 2: iVoice = VOICE_CHAT_BATTLECRY2;
+                 break;
+         case 3: iVoice = VOICE_CHAT_BATTLECRY3;
+                 break;
+    }
         PlayVoiceChat(iVoice);
 
         int iAttackRoll = d20() + GetBaseAttackBonus(oPC) + GetAbilityModifier(ABILITY_STRENGTH, oPC) + 2;

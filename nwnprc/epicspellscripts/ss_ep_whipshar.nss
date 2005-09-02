@@ -10,11 +10,11 @@
 // Last Updated: 03/12/2004, Nron Ksr
 /////////////////////////////////////////////////
 
-#include "nw_i0_spells"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "inc_item_props"
+#include "prc_alterations"
 //#include "prc_alterations"
 
 void AddEffectsToWeapon( object oTarget, float fDuration, int iCasterLvl )
@@ -66,7 +66,7 @@ void main()
     {
 
         //Declare major variables
-        object oPC = GetSpellTargetObject();
+        object oPC = PRCGetSpellTargetObject();
 
         // Visual effect only
         effect eVis = EffectVisualEffect( VFX_IMP_AURA_NEGATIVE_ENERGY );
@@ -153,7 +153,7 @@ void main()
 
         // Darkness, centered on the caster.
         AssignCommand( oPC,
-            ActionCastSpellAtLocation(SPELL_DARKNESS, GetSpellTargetLocation(),
+            ActionCastSpellAtLocation(SPELL_DARKNESS, PRCGetSpellTargetLocation(),
             METAMAGIC_ANY,TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE) );
         ActionDoCommand( AssignCommand(oPC,
             ActionEquipItem(oWeapon, INVENTORY_SLOT_RIGHTHAND)) );

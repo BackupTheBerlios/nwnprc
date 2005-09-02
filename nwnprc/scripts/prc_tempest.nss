@@ -9,9 +9,9 @@
 //:: Created On: Mar 5, 2004
 //:://////////////////////////////////////////////
 
-#include "inc_item_props"
-#include "nw_i0_spells"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "prc_feat_const"
 #include "prc_class_const"

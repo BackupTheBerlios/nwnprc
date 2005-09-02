@@ -1,7 +1,7 @@
-
+#include "prc_alterations"
 #include "spinc_common"
 #include "prc_inc_clsfunc"
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 void RemoveOldSongs()
 {
@@ -63,7 +63,7 @@ void main()
         nDuration += 5;
     }
 
-    location lSpell = GetSpellTargetLocation();
+    location lSpell = PRCGetSpellTargetLocation();
  
     RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_SPEED);
     RemoveOldSongs();

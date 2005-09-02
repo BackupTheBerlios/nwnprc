@@ -6,7 +6,7 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
 {
      SPSetSchool(SPELL_SCHOOL_CONJURATION);
 
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
      int nMetaMagic = PRCGetMetaMagicFeat();
 

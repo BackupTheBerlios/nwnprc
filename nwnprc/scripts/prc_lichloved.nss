@@ -2,7 +2,7 @@
 // Lichloved By Zedium
 //
 
-#include "inc_item_props"
+#include "prc_alterations"
 #include "prc_feat_const"
 
 ///Lich Loved +1 on saves vs. Mind Affecting, Poison, and Disease /////////

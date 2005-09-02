@@ -1,15 +1,15 @@
 //  Clangeddin's Strike Feat
 //  Created 10/30/04
 //  By Vaeliorin
-
-#include "prc_inc_combat"
-#include "prc_inc_function"
+#include "prc_alterations"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 
 void main()
 {
      object oPC   = OBJECT_SELF;
-     object oTarget  = GetSpellTargetObject();
+     object oTarget  = PRCGetSpellTargetObject();
 
      if(oPC == oTarget)
      {

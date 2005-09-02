@@ -6,7 +6,7 @@
 
 void main()
 {
-	object oTarget = GetSpellTargetObject();
+	object oTarget = PRCGetSpellTargetObject();
 	effect eVis = EffectVisualEffect(VFX_IMP_HEAD_SONIC);
 	
     	if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_DWARF)

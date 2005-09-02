@@ -16,7 +16,7 @@
 //Aaon Graywolf - Jan 8, 2004
 #include "prc_class_const"
 #include "x2_inc_spellhook"
-#include "x0_i0_spells"
+#include "prc_alterations"
 void main()
 {
 

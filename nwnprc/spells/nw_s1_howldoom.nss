@@ -11,7 +11,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Jan 8, 2002
 //:://////////////////////////////////////////////
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 // Modified 2004/01/30 (Brian Greinke)
 // Removed resistance check (giving false negative)

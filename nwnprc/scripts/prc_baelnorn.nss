@@ -10,12 +10,12 @@
 //:: Created By:   Mike Adams
 //:: Created On:   7/9/2004
 //:://////////////////////////////////////////////
-
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
-#include "prc_inc_function"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 
 //Baelnorn Property bonus function
 void BaelnProp (object oSkin, int nBonus)
@@ -37,13 +37,13 @@ void BaelnAbil (object oSkin, int nLevel)
     {
         case 4:
             SetCompositeBonus(oSkin, "BaelnAbilC", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_CHARISMA);
-		SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
-		SetCompositeBonus(oSkin, "BaelnAbilW", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_WISDOM);
+        SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
+        SetCompositeBonus(oSkin, "BaelnAbilW", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_WISDOM);
         case 3:
             SetCompositeBonus(oSkin, "BaelnAbilW", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_WISDOM);
-		SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
+        SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
         case 2:
-		SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
+        SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
         case 1:
             SetCompositeBonus(oSkin, "BaelnAbilI", 2, ITEM_PROPERTY_ABILITY_BONUS, ABILITY_INTELLIGENCE);
             break;

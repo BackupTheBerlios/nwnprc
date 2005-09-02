@@ -1,6 +1,6 @@
 #include "prc_alterations"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -24,7 +24,7 @@ void main()
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDamage = d6(16);
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
     effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);

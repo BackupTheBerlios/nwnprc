@@ -1,5 +1,5 @@
 #include "prc_alterations"
-#include "inc_item_props"
+#include "prc_alterations"
 #include "inc_prc_npc"
 
 

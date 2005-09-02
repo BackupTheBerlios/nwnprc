@@ -2,7 +2,7 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
-#include "inc_item_props"
+#include "prc_alterations"
 #include "prc_ipfeat_const"
 
 void ImmunityMisc(object oSkin,int bImmu,string sImmu)

@@ -26,7 +26,7 @@ void main()
     {
         oItem  =  GetSpellCastItem();                  // The item casting triggering this spellscript
         object oSpellOrigin = OBJECT_SELF ;
-        object oSpellTarget = GetSpellTargetObject();
+        object oSpellTarget = PRCGetSpellTargetObject();
         oPC = OBJECT_SELF;
 
         if (!GetIsPC(oSpellTarget)) return;

@@ -1,3 +1,4 @@
+#include "prc_alterations"
 #include "prc_class_const"
 
 void main()
@@ -8,17 +9,17 @@ void main()
     if (!GetLocalInt(oCaster, "DimAnchor"))
     {
     
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     location lCaster = GetLocation(oCaster);
     int iLevel       =  GetLevelByClass(CLASS_TYPE_BFZ,OBJECT_SELF);
     int iMaxDis      =  iLevel*6;
     int iDistance    =  FloatToInt(GetDistanceBetweenLocations(lCaster,lTarget));
     int iLeftUse = 1;
 
-    object oTarget=GetSpellTargetObject();
+    object oTarget=PRCGetSpellTargetObject();
     location lDest;
     if (GetIsObjectValid(oTarget)) lDest=GetLocation(oTarget);
-    else lDest=GetSpellTargetLocation();
+    else lDest=PRCGetSpellTargetLocation();
     effect eVis=EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
     vector vOrigin=GetPositionFromLocation(GetLocation(oCaster));
     vector vDest=GetPositionFromLocation(lDest);

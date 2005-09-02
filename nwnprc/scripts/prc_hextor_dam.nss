@@ -8,8 +8,8 @@
 
 
 #include "prc_feat_const"
-#include "nw_i0_spells"
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 
 int BrutalStrikeAttack(object oPC)
 {
@@ -125,7 +125,7 @@ int BrutalStrikeDamage(object oPC)
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     
     int iAttack = BrutalStrikeAttack(oPC);

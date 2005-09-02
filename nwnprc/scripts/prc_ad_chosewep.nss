@@ -1,4 +1,5 @@
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_class_const"
 
 void ChooseWeapon(object oPC, object oWeapon)
@@ -36,7 +37,7 @@ void UnchooseWeapon(object oPC)
 
 void main()
 {
-    object oWeapon = GetSpellTargetObject();
+    object oWeapon = PRCGetSpellTargetObject();
     object oPC = OBJECT_SELF;
     int iChosen = GetLocalInt(oPC, "HAS_CHOSEN_WEAPON");
 

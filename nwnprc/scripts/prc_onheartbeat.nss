@@ -2,7 +2,7 @@
 //:: OnHeartbeat eventscript
 //:: prc_onheartbeat
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "inc_eventhook"
 #include "inc_ecl"
 #include "inc_2dacache"

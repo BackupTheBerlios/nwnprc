@@ -18,8 +18,8 @@
 //:: Created By: Brent
 //:: Created On: Sep 13 2002
 //:://////////////////////////////////////////////
-#include "x0_i0_spells"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 
 void main()
@@ -33,7 +33,7 @@ void main()
    if(GetHasFeatEffect(413) == FALSE)
    {
         //Declare major variables
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nLevel = GetCasterLevel(OBJECT_SELF);
 
         effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);

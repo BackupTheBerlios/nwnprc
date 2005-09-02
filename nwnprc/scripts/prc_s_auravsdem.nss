@@ -14,17 +14,17 @@
 //:: Created On: Sept 28, 2001
 //:://////////////////////////////////////////////
 
-#include "x0_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
     //--------------------------------------------------------------------------
     // GZ: Make sure this aura is only active once
     //--------------------------------------------------------------------------
-    RemoveSpellEffects(GetSpellId(),OBJECT_SELF,GetSpellTargetObject());
+    RemoveSpellEffects(GetSpellId(),OBJECT_SELF,PRCGetSpellTargetObject());
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDuration = 10;
 
     effect eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR);

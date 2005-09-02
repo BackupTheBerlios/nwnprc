@@ -7,7 +7,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On:
 //:://////////////////////////////////////////////
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 //#include "prc_alterations"
@@ -26,7 +26,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, PSION_S_DC, PSION_S_S, PSION_S_XP))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget,
             EventSpellCastAt(OBJECT_SELF, SPELL_BESTOW_CURSE, FALSE));

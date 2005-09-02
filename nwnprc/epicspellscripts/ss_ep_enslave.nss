@@ -2,7 +2,7 @@
 //:: Epic Spell: Enslave
 //:: Author: Boneshank (Don Armstrong)
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 
@@ -37,7 +37,7 @@ void main()
     if (GetCanCastSpell(OBJECT_SELF, ENSLAVE_DC, ENSLAVE_S, ENSLAVE_XP))
     {
         //Declare major variables
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         object oOldSlave = GetLocalObject(OBJECT_SELF, "EnslavedCreature");
         effect eDom = EffectCutsceneDominated();
         effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);

@@ -9,7 +9,7 @@
 //:: Created On: Mar 17, 2004
 //:://////////////////////////////////////////////
 
-#include "x0_i0_spells"
+#include "prc_alterations"
 
 void main()
 {
@@ -26,7 +26,7 @@ void main()
     	effect eLink = EffectLinkEffects(eAOE, eVis);
     	eLink = EffectLinkEffects(eLink, eDur);
 	
-    	object oTarget = GetSpellTargetObject();
+    	object oTarget = PRCGetSpellTargetObject();
 	
     	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
     	ApplyEffectToObject(DURATION_TYPE_INSTANT, eGood, oTarget);

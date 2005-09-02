@@ -47,13 +47,14 @@ void DoSuckBrain(object oTarget,int nDamage)
     eDrain = ExtraordinaryEffect(eDrain);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT,eDrain,oTarget);
 }
+#include "prc_alterations"
 
 #include "x2_i0_spells"
 void main()
 {
 
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eBlood = EffectVisualEffect(493);
     ApplyEffectToObject(DURATION_TYPE_INSTANT,eBlood, oTarget);
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));

@@ -40,7 +40,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
 // End of Spell Cast Hook
 
-   object oGlyph = CreateObject(OBJECT_TYPE_PLACEABLE,"x2_plc_glyph",GetSpellTargetLocation());
+   object oGlyph = CreateObject(OBJECT_TYPE_PLACEABLE,"x2_plc_glyph",PRCGetSpellTargetLocation());
    object  oTest = GetNearestObjectByTag("X2_PLC_GLYPH",oGlyph);
 
     if (GetIsObjectValid(oTest) && GetDistanceBetween(oGlyph, oTest) <5.0f)

@@ -9,7 +9,7 @@ void main()
      if (!X2PreSpellCastCode()) return;
      
      
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
      {
           // Fire cast spell at event for the specified target

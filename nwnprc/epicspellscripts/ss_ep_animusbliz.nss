@@ -7,7 +7,7 @@
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
@@ -32,7 +32,7 @@ void main()
         effect eShake = EffectVisualEffect(VFX_FNF_SCREEN_SHAKE);
         effect eVis = EffectVisualEffect(VFX_IMP_FROST_L);
         effect eDam, eLink;
-        location lTarget = GetSpellTargetLocation();
+        location lTarget = PRCGetSpellTargetLocation();
 
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
         DelayCommand(0.1,

@@ -19,7 +19,7 @@
 #include "prc_alterations"
 
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
     effect eLink;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nAmount = 15 * 10;
     int nDuration = 15;
     //Fire cast spell at event for the specified target

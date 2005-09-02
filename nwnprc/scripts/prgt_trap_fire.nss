@@ -1,3 +1,4 @@
+#include "prc_alterations"
 #include "prgt_inc"
 #include "prc_inc_racial"
 

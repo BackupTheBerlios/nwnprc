@@ -23,7 +23,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
@@ -50,7 +50,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 0;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
     
     if (nSurge > 0)
@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 		
     	//Declare major variables including Area of Effect Object
     	effect eAOE = EffectAreaOfEffect(AOE_PER_SHAMBLER);
-    	location lTarget = GetSpellTargetLocation();
+    	location lTarget = PRCGetSpellTargetLocation();
     	effect eImpact = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_MIND);
     	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
 

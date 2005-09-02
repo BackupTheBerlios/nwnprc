@@ -23,7 +23,7 @@
 void StripEffects(int nNumber, object oTarget);
 
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -48,8 +48,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
      effect  eVis        = EffectVisualEffect(VFX_IMP_HEAD_ODD);
     effect   eImpact     = EffectVisualEffect(VFX_FNF_DISPEL_DISJUNCTION);
-    object   oTarget     = GetSpellTargetObject();
-    location lLocal      = GetSpellTargetLocation();
+    object   oTarget     = PRCGetSpellTargetObject();
+    location lLocal      = PRCGetSpellTargetLocation();
     int      nCasterLevel= PRCGetCasterLevel(OBJECT_SELF);
     int iTypeDispel = GetLocalInt(GetModule(),"BIODispel");
 
@@ -82,7 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
         //----------------------------------------------------------------------
 
         //Apply the VFX impact and effects
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
         oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE );
         while (GetIsObjectValid(oTarget))
         {

@@ -9,7 +9,7 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_ABJURATION);
 
 	// Get target location.
-	location lTarget = GetSpellTargetLocation();
+	location lTarget = PRCGetSpellTargetLocation();
 
 	// Save the spell ID as a local int on ourselves so we don't have to hard code
 	// it for the AOE.

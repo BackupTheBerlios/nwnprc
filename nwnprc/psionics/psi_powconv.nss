@@ -9,8 +9,8 @@
 //:://////////////////////////////////////////////
 
 #include "inc_utility"
-#include "inc_item_props"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "psi_inc_psifunc"
 #include "inc_fileends"
 

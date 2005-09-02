@@ -12,8 +12,8 @@
 //:: Modified On: 23.03.2005
 //:://////////////////////////////////////////////
 
-#include "prc_inc_function"
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
 

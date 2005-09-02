@@ -2,7 +2,7 @@
 //:: OnRested NPC eventscript
 //:: prc_npc_rested
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "inc_eventhook"
 
 void main()
@@ -15,6 +15,6 @@ void main()
     DeleteLocalInt(OBJECT_SELF, "prc_rest_eventtype");
     
     
-	// Execute scripts hooked to this event for the NPC triggering it
-	ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_NPC_ONRESTED);
+    // Execute scripts hooked to this event for the NPC triggering it
+    ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_NPC_ONRESTED);
 }

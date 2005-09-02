@@ -31,7 +31,7 @@
 void main()
 {
 	object oWeapon = GetSpellCastItem();
-	object oTarget = GetSpellTargetObject();
+	object oTarget = PRCGetSpellTargetObject();
 	object oPC     = GetLastAttacker(oTarget);
 	
 	int nPoisonIdx = GetLocalInt(oWeapon, "pois_wpn_idx");

@@ -25,7 +25,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
 
 
       //Declare major variables
-      object oTarget = GetSpellTargetObject();
+      object oTarget = PRCGetSpellTargetObject();
       int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
       int nDamageDealt = 0;
       int nHitpoints, nMin;
@@ -64,7 +64,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
       nCasterLvl +=SPGetPenetr();
       
       //Apply the VFX impact
-      ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eWord, GetSpellTargetLocation());
+      ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eWord, PRCGetSpellTargetLocation());
       //Check for the single creature or area targeting of the spell
       if (GetIsObjectValid(oTarget))
       {
@@ -95,7 +95,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
                   nMin = 25;
                   oWeakest = OBJECT_INVALID;
                   //Get the first target in the spell area
-                  oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
+                  oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, PRCGetSpellTargetLocation());
                   while (GetIsObjectValid(oTarget))
                   {
                         //Make sure the target avoids all allies.
@@ -112,7 +112,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
                               }
                         }
                         //Get next target in the spell area
-                        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
+                        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, PRCGetSpellTargetLocation());
                   }
                   //If no weak targets are available then break out of the loop
                   if (!GetIsObjectValid(oWeakest))

@@ -9,12 +9,12 @@
 //:: Created On: Mar 11, 2004
 //:: Updated by Oni5115 9/23/2004 to use new combat engine
 //:://////////////////////////////////////////////
-
-#include "prc_inc_combat"
+#include "prc_alterations"
+#include "prc_alterations"
 
 void main()
 {
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      object oPC = OBJECT_SELF;
 
      if(oPC == oTarget)

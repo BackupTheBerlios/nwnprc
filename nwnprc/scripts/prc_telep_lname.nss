@@ -12,7 +12,7 @@
 //:: Created By: Ornedan
 //:: Created On: 20.06.2005
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "prc_inc_listener"
 
 void main()

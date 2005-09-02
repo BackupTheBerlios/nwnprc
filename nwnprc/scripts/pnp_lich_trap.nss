@@ -16,7 +16,7 @@
 
 void main()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     // Gotta be a living critter
     int nType = MyPRCGetRacialType(oTarget);

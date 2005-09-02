@@ -10,7 +10,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On:
 //:://////////////////////////////////////////////
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 
 // This constant sets who may or may not research spells from the placeable

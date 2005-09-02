@@ -13,7 +13,7 @@
 //:: Created On: Aug 28, 2003, GZ: Fixed stacking issue
 #include "prc_class_const"
 #include "x2_inc_spellhook"
-#include "x0_i0_spells"
+#include "prc_alterations"
 void main()
 {
 

@@ -46,8 +46,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     eSummon = ExtraordinaryEffect(eSummon);
     //Apply the summon visual and summon the dragon.
     MultisummonPreSummon();
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon,GetSpellTargetLocation(), RoundsToSeconds(nDuration));
-    DelayCommand(1.0f,ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis,GetSpellTargetLocation()));
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon,PRCGetSpellTargetLocation(), RoundsToSeconds(nDuration));
+    DelayCommand(1.0f,ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis,PRCGetSpellTargetLocation()));
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

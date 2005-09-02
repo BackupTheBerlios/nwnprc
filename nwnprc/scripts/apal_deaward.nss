@@ -15,6 +15,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
+#include "prc_alterations"
 #include "spinc_common"
 #include "prc_inc_clsfunc"
 #include "x2_inc_spellhook"
@@ -42,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eDeath = EffectImmunity(IMMUNITY_TYPE_DEATH);
     effect eVis = EffectVisualEffect(VFX_IMP_DEATH_WARD);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

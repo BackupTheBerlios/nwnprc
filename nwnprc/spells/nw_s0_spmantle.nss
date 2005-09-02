@@ -13,7 +13,7 @@
 
 //:: modified by mr_bumpkin  Dec 4, 2003
 #include "spinc_common"
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_DUR_SPELLTURNING);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);

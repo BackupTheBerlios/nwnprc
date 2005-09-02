@@ -1,6 +1,7 @@
+
+#include "prc_alterations"
+#include "x0_i0_henchman"
 #include "prc_feat_const"
-#include "nw_i0_henchman"
-#include "inc_item_props"
 
 void RemoveAllIP(object oItem)
 {
@@ -30,7 +31,7 @@ void main()
      object oHench;
      for (nLoop=1; nLoop<=GetMaxHenchmen(); nLoop++)
      {
-     	oHench = GetHenchman(OBJECT_SELF, nLoop);
+        oHench = GetHenchman(OBJECT_SELF, nLoop);
 
         if (GetResRef(oHench)=="xagya2")
         {
@@ -63,7 +64,7 @@ void main()
     if (nCount >= GetMaxHenchmen()) return;
 
 
-    oHench = CreateObject(OBJECT_TYPE_CREATURE,"xagya2",GetSpellTargetLocation());
+    oHench = CreateObject(OBJECT_TYPE_CREATURE,"xagya2",PRCGetSpellTargetLocation());
     AddHenchman(OBJECT_SELF,oHench);
 
 

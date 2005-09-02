@@ -18,7 +18,7 @@
 #include "spinc_common"
 #include "prc_inc_sp_tch"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 
     //Declare major variables  ( fDist / (3.0f * log( fDist ) + 2.0f) )
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 

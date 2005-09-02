@@ -16,8 +16,8 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
 
-#include "nw_i0_spells"
-#include "x0_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     //Declare major variables including Area of Effect Object
     effect eAOE = EffectAreaOfEffect(AOE_PER_ENTANGLE, "", "X2_S0_VineMEntC", "X2_S0_VineMEntB");
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     //--------------------------------------------------------------------------
     // 1 turn per caster is not fun, so we do 1 round per casterlevel
     //--------------------------------------------------------------------------

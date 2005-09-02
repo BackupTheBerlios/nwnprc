@@ -10,12 +10,13 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Nov 4, 2001
 //:://////////////////////////////////////////////
+#include "prc_alterations"
 #include "prc_class_const"
 
 void main()
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eStr;
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

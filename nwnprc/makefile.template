@@ -204,7 +204,7 @@ hak110: $(ERF110) $(HAK) install
 # Rule to build the 2.0 haks
 hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) \
 	$(SPELLSHAK) $(EPICSPELLSCRIPTSHAK) $(RACEHAK) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) \
-	$(CRAFT2DASHAK) $(INCLUDEHAK) $(HIF) install
+	$(CRAFT2DASHAK) $(INCLUDEHAK) $(HIF) install log
 
 # Rule to build the NSIS installer.
 nsis:
@@ -249,7 +249,12 @@ installoverrides: $(OVERRIDEFILES)
 
 # Rules to install content in NWN end here
 #################################################################################
-
+# Rule for opening the log file after compilation
+log:
+	@notepad compile_errors.log
+	@sleep 5
+	-@del compile_errors.log 2>nul
+#################################################################################
 
 #
 # Rules to build the final targets
@@ -447,27 +452,27 @@ depends:
 # Inference rule to compile scripts.
 {$(SRCPATH)\}.nss{$(OBJPATH)\}.ncs:
 	@echo $(<F)
-	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
+	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
 
 {$(SPELLSRCPATH)\}.nss{$(SPELLOBJPATH)\}.ncs:
 	@echo $(<F)
-	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
+	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
 
 {$(EPICSPELLSRCPATH)\}.nss{$(EPICSPELLOBJSPATH)\}.ncs:
 	@echo $(<F)
-	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
+	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
 
 {$(RACESRCPATH)\}.nss{$(RACEOBJSPATH)\}.ncs:
 	@echo $(<F)
-	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
+	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
 
 {$(PSIONICSSRCPATH)\}.nss{$(PSIONICSOBJSPATH)\}.ncs:
 	@echo $(<F)
-	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
+	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
 
 {$(NEWSPELLBOOKSRCPATH)\}.nss{$(NEWSPELLBOOKOBJSPATH)\}.ncs:
 	@echo $(<F)
-	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@"
+	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
 
 #################################################################################
 # Depends updates will go here. DO NOT ADD ANYTING BELOW THIS LINE!

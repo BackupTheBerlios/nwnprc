@@ -53,6 +53,13 @@
 # Include the file with the NWN_DIR definition and version number
 !include config.make
 
+# If we are told not to abort on erros, copy the error text to a log file
+COMPILER_CALL_SUFFIX =
+
+!IFDEF IGNOREERRORS
+COMPILER_CALL_SUFFIX = 2>&1 | tools\tee -a compile_errors.log
+!ENDIF
+
 # Names of the output files.
 # NOTE: For version 2.0 this is going to change and there will be 2 haks,
 # the exact names are TBD.
@@ -204,7 +211,7 @@ hak110: $(ERF110) $(HAK) install
 # Rule to build the 2.0 haks
 hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) \
 	$(SPELLSHAK) $(EPICSPELLSCRIPTSHAK) $(RACEHAK) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) \
-	$(CRAFT2DASHAK) $(INCLUDEHAK) $(HIF) install log
+	$(CRAFT2DASHAK) $(INCLUDEHAK) $(HIF) install
 
 # Rule to build the NSIS installer.
 nsis:
@@ -248,12 +255,6 @@ installoverrides: $(OVERRIDEFILES)
 	!@copy /y "$**" "$(NWN_OVERRIDE)" >nul
 
 # Rules to install content in NWN end here
-#################################################################################
-# Rule for opening the log file after compilation
-log:
-	@notepad compile_errors.log
-	@sleep 5
-	-@del compile_errors.log 2>nul
 #################################################################################
 
 #
@@ -451,28 +452,28 @@ depends:
 
 # Inference rule to compile scripts.
 {$(SRCPATH)\}.nss{$(OBJPATH)\}.ncs:
-	@echo $(<F)
-	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
+	@echo $(<F) $(COMPILER_CALL_SUFFIX)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
 
 {$(SPELLSRCPATH)\}.nss{$(SPELLOBJPATH)\}.ncs:
-	@echo $(<F)
-	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
+	@echo $(<F) $(COMPILER_CALL_SUFFIX)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
 
 {$(EPICSPELLSRCPATH)\}.nss{$(EPICSPELLOBJSPATH)\}.ncs:
-	@echo $(<F)
-	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
+	@echo $(<F) $(COMPILER_CALL_SUFFIX)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
 
 {$(RACESRCPATH)\}.nss{$(RACEOBJSPATH)\}.ncs:
-	@echo $(<F)
-	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
+	@echo $(<F) $(COMPILER_CALL_SUFFIX)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
 
 {$(PSIONICSSRCPATH)\}.nss{$(PSIONICSOBJSPATH)\}.ncs:
-	@echo $(<F)
-	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
+	@echo $(<F) $(COMPILER_CALL_SUFFIX)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
 
 {$(NEWSPELLBOOKSRCPATH)\}.nss{$(NEWSPELLBOOKOBJSPATH)\}.ncs:
-	@echo $(<F)
-	-@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" 2>&1 | tools\tee -a compile_errors.log
+	@echo $(<F) $(COMPILER_CALL_SUFFIX)
+	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
 
 #################################################################################
 # Depends updates will go here. DO NOT ADD ANYTING BELOW THIS LINE!

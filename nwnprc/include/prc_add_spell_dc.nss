@@ -329,6 +329,19 @@ int KOTCSpellFocusVsDemons(object oTarget, object oCaster)
         return nDC;
 }
 
+int BloodMagusBloodComponent(object oCaster)
+{
+	int nDC = 0;
+	if (GetLevelByClass(CLASS_TYPE_BLOOD_MAGUS, oCaster) > 0 && GetLocalInt(oCaster, "BloodComponent") == TRUE)
+	{
+		nDC = 1;
+		effect eSelfDamage = EffectDamage(1, DAMAGE_TYPE_MAGICAL);
+		// To make sure it doesn't cause a conc check
+          	DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eSelfDamage, oCaster));
+        }
+        return nDC;
+}
+
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
     if(nSpellID == -1)
@@ -361,6 +374,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += RedWizardDC(nSpellID, oCaster);
     nDC += TattooFocus(nSpellID, oCaster);
     nDC += KOTCSpellFocusVsDemons(oTarget, oCaster);
+    nDC += BloodMagusBloodComponent(oCaster);
     nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     return nDC;
     

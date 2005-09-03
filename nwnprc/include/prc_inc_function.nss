@@ -143,6 +143,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_BAELNORN,oPC) > 0)             ExecuteScript("prc_baelnorn", oPC);
     if(GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0)         DelayCommand(0.1,ExecuteScript("prc_swashbuckler", oPC));
     if(GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,oPC) > 0)        ExecuteScript("prc_contemplate", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BLOOD_MAGUS,oPC) > 0)          ExecuteScript("prc_bloodmagus", oPC);
     
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -617,6 +618,17 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "ContemplativeDR");
     DeleteLocalInt(oSkin, "ContemplativeSR");
     
+    // Blood Magus
+    DeleteLocalInt(oSkin, "DurableCasting");
+    DeleteLocalInt(oSkin, "BloodMagusInfusion");
+    DeleteLocalInt(oSkin, "ThickerThanWater");
+    
+    // Feats
+    DeleteLocalInt(oPC, "ForceOfPersonalityWis");
+    DeleteLocalInt(oPC, "ForceOfPersonalityCha");
+    DeleteLocalInt(oPC, "InsightfulReflexesInt");
+    DeleteLocalInt(oPC, "InsightfulReflexesDex");
+        
     // future PRCs Go below here
 }
 

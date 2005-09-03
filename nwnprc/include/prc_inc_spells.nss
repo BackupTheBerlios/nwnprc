@@ -188,6 +188,7 @@ object MyNextObjectInShape(int nShape, float fSize, location lTarget, int bLineO
 int ArchmageSpellPower (object oCaster);
 int TrueNecromancy (object oCaster, int iSpellID, string sType);
 int StormMagic(object oCaster);
+int DeathKnell(object oCaster);
 int ShadowWeave (object oCaster, int iSpellID);
 string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
 int FireAdept (object oCaster, int iSpellID);
@@ -631,6 +632,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
               +  ShadowWeave(oCaster, iSpellId) 
               +  FireAdept(oCaster, iSpellId)
               +  StormMagic(oCaster);
+              +  DeathKnell(oCaster);
     iArcLevel += PractisedSpellcasting(oCaster, iCastingClass, iArcLevel); //gotta be the last one
    
 
@@ -645,6 +647,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
               +  ShadowWeave(oCaster, iSpellId) 
               +  FireAdept(oCaster, iSpellId)
               +  StormMagic(oCaster);
+              +  DeathKnell(oCaster);
     iDivLevel += PractisedSpellcasting(oCaster, iCastingClass, iDivLevel); //gotta be the last one
 
     if(GetIsArcaneClass(iCastingClass))
@@ -738,6 +741,13 @@ int StormMagic(object oCaster)
         return 1;
     }
     return 0;
+}
+
+int DeathKnell(object oCaster)
+{
+    if (!GetLocalInt(oCaster, "DeathKnell")) return 0;
+    // If you do have the int, return a +1 bonus to caster level
+    return 1;
 }
 
 int ShadowWeave (object oCaster, int iSpellID)
@@ -878,6 +888,10 @@ int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
 void PRCBonusDamage (object oTarget)
 {
      object oCaster = OBJECT_SELF;
+     int nDice;
+     int nDamage;
+     effect eDam;
+     effect eVis;
      
      //FloatingTextStringOnCreature("PRC Bonus Damage is called", oCaster, FALSE);
      
@@ -886,11 +900,11 @@ void PRCBonusDamage (object oTarget)
      
           //FloatingTextStringOnCreature("Diabolism is active", oCaster, FALSE);
      
-          int nDice = (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) + 5) / 5;
-          int nDamage = d6(nDice);
+          nDice = (GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster) + 5) / 5;
+          nDamage = d6(nDice);
           
-          effect eVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_10);
-          effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
+          eVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_10);
+          eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
           
           if (GetLocalInt(oCaster, "VileDiabolism") == TRUE)
           {
@@ -903,6 +917,19 @@ void PRCBonusDamage (object oTarget)
           ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
           ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
           DelayCommand(3.0, SetLocalInt(oCaster, "Diabolism", FALSE));
+     }
+     
+     if (GetLevelByClass(CLASS_TYPE_BLOOD_MAGUS, oCaster) > 0 && GetLocalInt(oCaster, "BloodSeeking") == TRUE)
+     {     
+     	  nDamage = d6();
+	  eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+	  eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
+	  ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+          ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+          
+          effect eSelfDamage = EffectDamage(3, DAMAGE_TYPE_MAGICAL);
+          // To make sure it doesn't cause a conc check
+          DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eSelfDamage, oCaster));
      }
 }
 

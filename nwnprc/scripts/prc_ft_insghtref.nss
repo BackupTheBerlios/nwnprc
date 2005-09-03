@@ -17,6 +17,12 @@ void main()
 	int nDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
 	int nMod;
 	
+	// If the stats are the same, do nothing
+	if(GetLocalInt(oPC, "InsightfulReflexesInt") == nInt && GetLocalInt(oPC, "InsightfulReflexesDex") == nDex) return;
+	
+	SetLocalInt(oPC, "InsightfulReflexesInt", nInt);
+	SetLocalInt(oPC, "InsightfulReflexesDex", nDex);	
+	
 	// If Dex is larger, we need to reduce the reflex bonus
 	if (nDex > nInt)
 	{

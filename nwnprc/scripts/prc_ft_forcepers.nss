@@ -17,6 +17,12 @@ void main()
 	int nCha = GetAbilityModifier(ABILITY_CHARISMA, oPC);
 	int nMod;
 	
+	// If the stats are the same, do nothing
+	if(GetLocalInt(oPC, "ForceOfPersonalityWis") == nWis && GetLocalInt(oPC, "ForceOfPersonalityCha") == nCha) return;
+	
+	SetLocalInt(oPC, "ForceOfPersonalityWis", nWis);
+	SetLocalInt(oPC, "ForceOfPersonalityCha", nCha);
+	
 	// If wisdom is larger, we need to reduce the will bonus
 	if (nWis > nCha)
 	{

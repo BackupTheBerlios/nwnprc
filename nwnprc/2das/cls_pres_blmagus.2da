@@ -2,6 +2,7 @@
 
       LABEL       ReqType    ReqParam1          ReqParam2   
 0     ScriptVar   VAR        PRC_ArcSpell3      0             
-1     Heal        SKILL      4                  4           
+1     Concentration  SKILL      1                  4           
 2     ScriptVar   VAR        PRC_AllowBLMagus   0           
-3     Toughness   FEAT       40                 ****        
+3     Toughness   FEAT       40                 ****  
+4     GreatFort   FEAT       14                 ****

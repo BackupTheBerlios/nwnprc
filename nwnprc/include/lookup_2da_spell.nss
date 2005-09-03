@@ -67,6 +67,13 @@ lookup_spell_innate(int spell_id, object oModule = OBJECT_INVALID)
 }
 
 string
+lookup_spell_druid_level(int spell_id, object oModule = OBJECT_INVALID)
+{
+	return lookup_and_cache_spell_field(spell_id,
+		"PRC_PACK_SPELL_DRUID_LEVEL_", "Druid", oModule);
+}
+
+string
 lookup_spell_cleric_level(int spell_id, object oModule = OBJECT_INVALID)
 {
 	return lookup_and_cache_spell_field(spell_id,
@@ -99,6 +106,8 @@ lookup_spell(int spell_id)
 {
     object module = GetModule();
 	lookup_spell_level(spell_id, module);
+	lookup_spell_cleric_level(spell_id, module);
+	lookup_spell_innate(spell_id, module);
 	lookup_spell_cleric_level(spell_id, module);
 	lookup_spell_type(spell_id, module);
 	lookup_spell_vs(spell_id, module);

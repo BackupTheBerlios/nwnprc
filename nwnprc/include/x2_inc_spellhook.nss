@@ -171,16 +171,25 @@ int InscribeRune()
 	int nCaster = PRCGetCasterLevel(oCaster);
 	int nDC = PRCGetSaveDC(oTarget, oCaster);
 	int nSpell = PRCGetSpellId();
-	int nSpellLevel = StringToInt(lookup_spell_level(nSpell));
+	int nSpellLevel;
+	
+	if (PRCGetLastSpellCastClass() == CLASS_TYPE_CLERIC) nSpellLevel = StringToInt(lookup_spell_cleric_level(nSpell));
+	else if (PRCGetLastSpellCastClass() == CLASS_TYPE_DRUID) nSpellLevel = StringToInt(lookup_spell_druid_level(nSpell));
 	// Minimum level.
 	if (nSpellLevel == 0) nSpellLevel = 1;
 	
 	// This will be modified with Runecaster code later.
 	int nCharges = 1;
 	
+	FloatingTextStringOnCreature("Spell Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
+	FloatingTextStringOnCreature("Caster Level: " + IntToString(nCaster), OBJECT_SELF, FALSE);
+	
 	// Cost of the rune in gold and XP
 	int nGoldCost = nSpellLevel * nCaster * 100;
 	int nXPCost = nGoldCost/25;
+	
+	FloatingTextStringOnCreature("Gold Cost: " + IntToString(nGoldCost), OBJECT_SELF, FALSE);
+	FloatingTextStringOnCreature("XP Cost: " + IntToString(nXPCost), OBJECT_SELF, FALSE);
 
 	// See if the caster has enough gold and XP to scribe a rune, and that he passes the skill check.
 	int nHD = GetHitDice(oCaster);

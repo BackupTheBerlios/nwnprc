@@ -98,8 +98,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     {
                           nDam = nDam + nDam/2; //Damage/Healing is +50%
                     }
-                    
-                    if(nCnt == 1) nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                    // Damage only on the first arrow
+                    if(nCnt == 1) 
+                    {
+                    	nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                    	PRCBonusDamage(oTarget);
+                    }
                     
                     nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, (nDC), SAVING_THROW_TYPE_FIRE);
                 
@@ -110,7 +114,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     effect eDam = EffectDamage(nDam, EleDmg);
                     //Apply the MIRV and damage effect
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                    PRCBonusDamage(oTarget);
+                    
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,FALSE));
                 }
             }

@@ -93,7 +93,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 }
                 
                 // apply bonus damage to first missle.
-                if(nCnt == 1) nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                if(nCnt == 1) 
+                {
+                	nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                	PRCBonusDamage(oTarget);
+                }
                 
                 fTime = fDelay;
                 fDelay2 += 0.1;
@@ -103,7 +107,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
                 //Apply the MIRV and damage effect
                 DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                PRCBonusDamage(oTarget);
+                
                 DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,FALSE));
                 DelayCommand(fDelay2, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget));
              }

@@ -51,6 +51,7 @@ void main()
                     {
                          nDamage += SpellSneakAttackDamage(OBJECT_SELF, oTarget);
                          nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                         PRCBonusDamage(oTarget);
                     }
                     
                     fTime = fDelay;
@@ -62,7 +63,6 @@ void main()
                     {
                          effect eDamage = SPEffectDamage(nDamage, SPGetElementalDamageType(nDamageType, OBJECT_SELF));
                          DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-                         PRCBonusDamage(oTarget);
                          DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                     }
                     

@@ -764,7 +764,11 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }
 
-                        if(i == 1) nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                        if(i == 1) 
+                        {
+                        	nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                        	DelayCommand(fDelay, PRCBonusDamage(oTarget));
+                        }
 
                         // Jan. 29, 2004 - Jonathan Epp
                         // Reflex save was not being calculated for Firebrand
@@ -783,7 +787,6 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
                         DelayCommand(fTime, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget));
                         DelayCommand(fDelay2, ApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget));
                         DelayCommand(fTime, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                        DelayCommand(fTime, PRCBonusDamage(oTarget));
                     }
                 } // for
                 else

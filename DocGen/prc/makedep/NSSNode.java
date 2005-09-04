@@ -109,7 +109,11 @@ public class NSSNode {
 			NSSNode adj = Main.scripts.get(name);
 			if(adj != null){
 				if(adjenct.contains(adj))
-					System.out.println("Warning: " + getScriptName(fileName) +  " includes " + getScriptName(adj.fileName) + " multiple times");
+					//System.out.println("Warning: " + getScriptName(fileName) +  " includes " + getScriptName(adj.fileName) + " multiple times");
+					System.out.printf("Warning: %-16s includes %-16s multiple times\n",
+							getScriptName(fileName),
+							getScriptName(adj.fileName)
+							);
 				adjenct.add(adj);
 			}else if(!Main.ignoreMissing){
 				System.out.println("Script file not found: " + name);

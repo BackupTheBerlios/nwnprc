@@ -12,7 +12,6 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: March 18, 2001
 //:://////////////////////////////////////////////
-#include "NW_I0_SPELLS"
 
 // Modified 2004/01/30 (Brian Greinke)
 // Added disable/reenable support

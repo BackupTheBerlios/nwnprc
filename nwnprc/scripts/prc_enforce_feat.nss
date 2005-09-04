@@ -69,6 +69,9 @@ int CasterFeats(object oPC = OBJECT_SELF);
 // Enforces the MoS bonus domains.
 int MasterOfShrouds(object oPC = OBJECT_SELF);
 
+// Stops people from taking the blightbringer domain, since its prestige
+int Blightbringer(object oPC = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -860,6 +863,16 @@ int MasterOfShrouds(object oPC = OBJECT_SELF)
         return TRUE;
 }
 	
+int Blightbringer(object oPC = OBJECT_SELF)
+{
+	// You should only have the Blightbringer domain as a bonus domain
+	if (GetHasFeat(FEAT_BLIGHTBRINGER_DOMAIN_POWER, oPC) && !GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC))
+	{
+       	    FloatingTextStringOnCreature("You may not select Blightbringer as a domain at level 1.", oPC, FALSE);
+       	    return FALSE;
+        }
+        return TRUE;
+}
        
 
 //this is a rough calculation to stop the 41 spellslot levels bugs

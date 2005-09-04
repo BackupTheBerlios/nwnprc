@@ -2,13 +2,14 @@
 //:: Soulknife includes
 //:: psi_inc_soulkn
 //::///////////////////////////////////////////////
-/** @file
+/** @file Soulknife includes
     Constants and common functions used by
     Soulknife scripts.
+
+    @author Ornedan
+    @date   Created - 06.04.2005
 */
 //:://////////////////////////////////////////////
-//:: Created By: Ornedan
-//:: Created On: 06.04.2005
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
@@ -22,6 +23,7 @@
 
 const string MBLADE_SHAPE         = "PRC_PSI_SK_MindbladeShape";
 const string FREEDRAW_USED        = "PRC_PSI_SK_FreeDraw_Used";
+const string THROW_MBLD_USED      = "PRC_PSI_SK_ThrowMindblade_Used";
 const string PSYCHIC_STRIKE_MAINH = "PRC_PSI_SK_PsychisStrike_MainHand";
 const string PSYCHIC_STRIKE_OFFH  = "PRC_PSI_SK_PsychisStrike_OffHand";
 const string KTTS                 = "PRC_PSI_SK_KnifeToTheSoul";

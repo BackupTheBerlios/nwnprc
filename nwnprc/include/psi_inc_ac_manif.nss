@@ -64,60 +64,65 @@ void DoAstralConstructCreation(object oManifester, location locTarget, int nMeta
 {
 	// Get the resref for the AC
 	string sResRef = GetResRefForConstruct(nACLevel, nOptionFlags);
-	
+
 	// Get the constructs duration. 1 round / level. Metapsionic Extend can be applied.
 	float fDur = 6.0 * GetManifesterLevel(oManifester);
 	      fDur = nMetaPsi == 2 && GetLocalInt(oManifester, "PsiMetaExtend") ? fDur * 2 : fDur;
-	
+
 	/* Until Bioware "fixes" Jasperre's multisummon trick, AC are added as genuine summons instead of henchies
 	// We need to make sure that we can add the new construct as henchman
 	int nMaxHenchmen = GetMaxHenchmen();
 	SetMaxHenchmen(TEMP_HENCH_COUNT);
-	
+
 	// Add the AC as henchman
 	object oConstruct = CreateObject(OBJECT_TYPE_CREATURE, sResRef, locTarget);
 	AddHenchman(oManifester, oConstruct);
-	
+
 	// And set the max henchmen count back to original, so we won't mess up the module
 	SetMaxHenchmen(nMaxHenchmen);
-	
+
 	*/
-	
-	
+
+
 	// Do multisummon trick
+	int bMultisummon = GetPRCSwitch(PRC_MULTISUMMON);
 	int i = 1;
 	object oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i);
 	while(GetIsObjectValid(oCheck))
 	{
-		AssignCommand(oCheck, SetIsDestroyable(FALSE, FALSE, FALSE));
-		AssignCommand(oCheck, DelayCommand(1.0, SetIsDestroyable(TRUE, FALSE, FALSE)));
-		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i++);
+	    // If multisummon is active, make all summons indestructible. If not, only make astral constructs
+		if(bMultisummon || GetStringLeft(GetTag(oCheck), 14) == "psi_astral_con")
+		{
+		    AssignCommand(oCheck, SetIsDestroyable(FALSE, FALSE, FALSE));
+    		AssignCommand(oCheck, DelayCommand(1.0, SetIsDestroyable(TRUE, FALSE, FALSE)));
+    		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i++);
+    	}
 	}
-	
+
 	// Do actual summon effect
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature(sResRef), locTarget, fDur + 0.5);
-	
+
 	/* For use if need to return to henchman setup
-	
+
 	// Add the locals to the construct
 	SetLocalInt(oConstruct, ASTRAL_CONSTRUCT_LEVEL,              nACLevel);
 	SetLocalInt(oConstruct, ASTRAL_CONSTRUCT_OPTION_FLAGS,       nOptionFlags);
 	SetLocalInt(oConstruct, ASTRAL_CONSTRUCT_RESISTANCE_FLAGS,   nResElemFlags);
 	SetLocalInt(oConstruct, ASTRAL_CONSTRUCT_ENERGY_TOUCH_FLAGS, nETchElemFlags);
 	SetLocalInt(oConstruct, ASTRAL_CONSTRUCT_ENERGY_BOLT_FLAGS,  nEBltElemFlags);
-	
-	
+
+
 	// Do appearance switching
 	int nCraft = GetHighestCraftSkillValue(oManifester);
 	int nCheck = d20() + nCraft;
-	
+
 	int nAppearance = GetAppearanceForConstruct(nACLevel, nOptionFlags, nCheck);
 	SetCreatureAppearanceType(oConstruct, nAppearance);
 	*/
-	
+
 	// Do VFX
 	DoSummonVFX(locTarget, nACLevel);
-	
+
 	// Schedule unsummoning. No need to hurry this one, so give it a larger delay
 	// in order to avoid hogging too much resources over a short span of time.
 	DelayCommand(2.0, DoDespawnAux(oManifester, fDur));
@@ -163,11 +168,11 @@ void DoDespawnAux(object oManifester, float fDur){
 
 // Does a visual choreography that depends on the level of the construct being created.
 // Higher level constructs get neater VFX :D
-void DoSummonVFX(location locTarget, int nACLevel){ 
+void DoSummonVFX(location locTarget, int nACLevel){
    DrawSpiral(0, 263, locTarget, IntToFloat(nACLevel) * 0.75 + 0.5, 0.4, 1.0, 60, 16.899999619, 3.0, 4.0);
 }
 
-void DoUnsummonVFX(location locTarget, int nACLevel){ 
+void DoUnsummonVFX(location locTarget, int nACLevel){
    DrawSpiral(0, 263, locTarget, 0.4, IntToFloat(nACLevel) * 0.75 + 0.5, 1.0, 60, 16.899999619, 3.0, 4.0);
 }
 
@@ -175,140 +180,140 @@ void DoUnsummonVFX(location locTarget, int nACLevel){
 struct ac_forms GetAppearancesForLevel(int nLevel)
 {
 	struct ac_forms toReturn;
-	
+
 	switch(nLevel)
 	{
 		case 1:
 			toReturn.Appearance1     = APPEARANCE_TYPE_RAT;
 			toReturn.Appearance1Alt  = 387; //Dire Rat
-			
+
 			toReturn.Appearance2     = APPEARANCE_TYPE_INTELLECT_DEVOURER;
 			toReturn.Appearance2Alt  = APPEARANCE_TYPE_WAR_DEVOURER;
-			
+
 			toReturn.Appearance3     = APPEARANCE_TYPE_PSEUDODRAGON;
 			toReturn.Appearance3Alt  = APPEARANCE_TYPE_PSEUDODRAGON;
-			
+
 			toReturn.Appearance4     = APPEARANCE_TYPE_FAERIE_DRAGON;
 			toReturn.Appearance4Alt  = APPEARANCE_TYPE_FAERIE_DRAGON;
-			
+
 			return toReturn;
 		case 2:
 			toReturn.Appearance1     = APPEARANCE_TYPE_GARGOYLE;
 			toReturn.Appearance1Alt  = APPEARANCE_TYPE_GARGOYLE;
-			
+
 			toReturn.Appearance2     = APPEARANCE_TYPE_BAT_HORROR;
 			toReturn.Appearance2Alt  = APPEARANCE_TYPE_HELMED_HORROR;
-			
+
 			toReturn.Appearance3     = APPEARANCE_TYPE_ASABI_WARRIOR;
 			toReturn.Appearance3Alt  = APPEARANCE_TYPE_LIZARDFOLK_WARRIOR_B;
-			
+
 			toReturn.Appearance4     = APPEARANCE_TYPE_WERECAT;
 			toReturn.Appearance4Alt  = APPEARANCE_TYPE_WERECAT;
-			
+
 			return toReturn;
 		case 3:
 			toReturn.Appearance1     = APPEARANCE_TYPE_FORMIAN_WORKER;
 			toReturn.Appearance1Alt  = APPEARANCE_TYPE_FORMIAN_WORKER;
-			
+
 			toReturn.Appearance2     = APPEARANCE_TYPE_FORMIAN_WARRIOR;
 			toReturn.Appearance2Alt  = APPEARANCE_TYPE_FORMIAN_WARRIOR;
-			
+
 			toReturn.Appearance3     = APPEARANCE_TYPE_FORMIAN_MYRMARCH;
 			toReturn.Appearance3Alt  = APPEARANCE_TYPE_FORMIAN_MYRMARCH;
-			
+
 			toReturn.Appearance4     = APPEARANCE_TYPE_FORMIAN_QUEEN;
 			toReturn.Appearance4Alt  = APPEARANCE_TYPE_FORMIAN_QUEEN;
-			
+
 			return toReturn;
 		case 4:
 			toReturn.Appearance1     = 416; // Deep Rothe
 			toReturn.Appearance1Alt  = 416;
-			
+
 			toReturn.Appearance2     = APPEARANCE_TYPE_MANTICORE;
 			toReturn.Appearance2Alt  = APPEARANCE_TYPE_MANTICORE;
-			
+
 			toReturn.Appearance3     = APPEARANCE_TYPE_BASILISK;
 			toReturn.Appearance3Alt  = APPEARANCE_TYPE_GORGON;
-			
+
 			toReturn.Appearance4     = APPEARANCE_TYPE_DEVIL;
 			toReturn.Appearance4Alt  = 468; // Golem, Demonflesh
-			
+
 			return toReturn;
 		case 5:
 			toReturn.Appearance1     = APPEARANCE_TYPE_GOLEM_FLESH;
 			toReturn.Appearance1Alt  = APPEARANCE_TYPE_GOLEM_FLESH;
-			
+
 			toReturn.Appearance2     = APPEARANCE_TYPE_GOLEM_STONE;
 			toReturn.Appearance2Alt  = APPEARANCE_TYPE_GOLEM_STONE;
-			
+
 			toReturn.Appearance3     = APPEARANCE_TYPE_GOLEM_CLAY;
 			toReturn.Appearance3Alt  = APPEARANCE_TYPE_GOLEM_CLAY;
-			
+
 			toReturn.Appearance4     = 420; // Golem, Mithril
 			toReturn.Appearance4Alt  = 420;
-			
+
 			return toReturn;
 		case 6:
 			toReturn.Appearance1     = APPEARANCE_TYPE_TROLL;
 			toReturn.Appearance1Alt  = APPEARANCE_TYPE_TROLL;
-			
+
 			toReturn.Appearance2     = APPEARANCE_TYPE_ETTERCAP;
 			toReturn.Appearance2Alt  = APPEARANCE_TYPE_ETTERCAP;
-			
+
 			toReturn.Appearance3     = APPEARANCE_TYPE_UMBERHULK;
 			toReturn.Appearance3Alt  = APPEARANCE_TYPE_UMBERHULK;
-			
+
 			toReturn.Appearance4     = APPEARANCE_TYPE_MINOTAUR_SHAMAN;
 			toReturn.Appearance4Alt  = APPEARANCE_TYPE_MINOGON;
-			
+
 			return toReturn;
 		case 7:
 			toReturn.Appearance1     = APPEARANCE_TYPE_SPIDER_DIRE;
 			toReturn.Appearance1Alt  = APPEARANCE_TYPE_SPIDER_DIRE;
-			
+
 			toReturn.Appearance2     = APPEARANCE_TYPE_SPIDER_SWORD;
 			toReturn.Appearance2Alt  = APPEARANCE_TYPE_SPIDER_SWORD;
-			
+
 			toReturn.Appearance3     = 446; // Drider, Female
 			toReturn.Appearance3Alt  = 446;
-			
+
 			toReturn.Appearance4     = 407; // Drider, Chief
 			toReturn.Appearance4Alt  = 407;
-			
+
 			return toReturn;
 		case 8:
 			toReturn.Appearance1     = APPEARANCE_TYPE_HOOK_HORROR;
 			toReturn.Appearance1Alt  = APPEARANCE_TYPE_VROCK;
-			
+
 			toReturn.Appearance2     = 427; // Slaad, White
 			toReturn.Appearance2Alt  = 427;
-			
+
 			toReturn.Appearance3     = APPEARANCE_TYPE_GREY_RENDER;
 			toReturn.Appearance3Alt  = APPEARANCE_TYPE_GREY_RENDER;
-			
+
 			toReturn.Appearance4     = APPEARANCE_TYPE_GREY_RENDER;
 			toReturn.Appearance4Alt  = APPEARANCE_TYPE_GREY_RENDER;
-			
+
 			return toReturn;
 		case 9:
 			toReturn.Appearance1     = APPEARANCE_TYPE_ELEMENTAL_AIR_ELDER;
 			toReturn.Appearance1Alt  = APPEARANCE_TYPE_ELEMENTAL_AIR_ELDER;
-			
+
 			toReturn.Appearance2     = APPEARANCE_TYPE_GIANT_FROST_FEMALE;
 			toReturn.Appearance2Alt  = APPEARANCE_TYPE_GIANT_FROST_FEMALE;
-			
+
 			toReturn.Appearance3     = 418; // Dragon, Shadow
 			toReturn.Appearance3Alt  = 418;
-			
+
 			toReturn.Appearance4     = 471; // Mephisto, Normal
 			toReturn.Appearance4Alt  = 471;
-			
+
 			return toReturn;
-		
+
 		default:
 			WriteTimestampedLogEntry("Erroneous value for nLevel in GetAppearancesForLevel");
 	}
-	
+
 	return toReturn;
 }
 
@@ -327,25 +332,25 @@ int GetAppearanceForConstruct(int nACLevel, int nOptionFlags, int nCheck)
 	if(bUse2da)
 	{
 		nNum += (nACLevel - 1) * 4 - 1;
-		
+
 		return StringToInt(Get2DACache("ac_appearances", bUseAlt ? "AltAppearance" : "NormalAppearance", nNum));
 	}
-	
+
 	// We don't so get it from GetAppearancesForLevel
-	
+
 	struct ac_forms appearancelist = GetAppearancesForLevel(nACLevel);
-	
+
 	switch(nNum)
 	{
 		case 1: return bUseAlt ? appearancelist.Appearance1Alt : appearancelist.Appearance1;
 		case 2: return bUseAlt ? appearancelist.Appearance2Alt : appearancelist.Appearance2;
 		case 3: return bUseAlt ? appearancelist.Appearance3Alt : appearancelist.Appearance3;
 		case 4: return bUseAlt ? appearancelist.Appearance4Alt : appearancelist.Appearance4;
-		
+
 		default:
 			WriteTimestampedLogEntry("Erroneous value for nNum in GetAppearanceForConstruct");
 	}
-	
+
 	return -1;
 }
 
@@ -369,7 +374,7 @@ string GetResRefForConstruct(int nACLevel, int nOptionFlags)
 {
 	string sResRef = "psi_astral_con" + IntToString(nACLevel);
 	string sSuffix;
-	
+
 	// Check whether we need a resref with buff applied
 	if(nOptionFlags & ASTRAL_CONSTRUCT_OPTION_BUFF)
 		sSuffix += "a";
@@ -377,7 +382,7 @@ string GetResRefForConstruct(int nACLevel, int nOptionFlags)
 		sSuffix += "b";
 	else if(nOptionFlags & ASTRAL_CONSTRUCT_OPTION_EXTRA_BUFF)
 		sSuffix += "c";
-	
+
 	return sResRef + sSuffix;
 }
 
@@ -387,7 +392,7 @@ int GetHighestCraftSkillValue(object oCreature)
 	int nArmor  = GetSkillRank(SKILL_CRAFT_ARMOR, oCreature);
 	int nTrap   = GetSkillRank(SKILL_CRAFT_TRAP, oCreature);
 	int nWeapon = GetSkillRank(SKILL_CRAFT_WEAPON, oCreature);
-	
+
 	return nArmor > nTrap ?
 	        nArmor > nWeapon ? nArmor : nWeapon
 	        : nTrap > nWeapon ? nTrap : nWeapon;

@@ -2,16 +2,16 @@ package prc;
 
 /**
  * A menu class. Calls operations from classes in subpackages based on parameters
- * 
+ *
  * @author heikki
  */
 public class Main {
 	/**
 	 * Ooh, a main method!
-	 * 
+	 *
 	 * @param args arguments, surprisingly enough
-	 * 
-	 * @throws Throwable everything received from the classes called is passed on 
+	 *
+	 * @throws Throwable everything received from the classes called is passed on
 	 */
 	public static void main(String[] args) throws Throwable{
 		if(args.length == 0)
@@ -24,7 +24,7 @@ public class Main {
 		String toCall = args[0];
 		String[] paramsToPass = new String[args.length - 1];
 		System.arraycopy(args, 1, paramsToPass, 0, paramsToPass.length);
-		
+
 		if(args[0].equals("manual")){
 			prc.autodoc.Main.main(paramsToPass);
 		}
@@ -44,8 +44,8 @@ public class Main {
 			prc.makedep.Main.main(paramsToPass);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Prints the use instructions for this program and kills execution.
 	 */
@@ -62,10 +62,10 @@ public class Main {
 						   "                                containing duplicate subradial values\n"+
 						   "             makedep    - Builds include dependency lists\n"+
 		                   "\n"+
-						   "parameters  a list of parameters passed to the class called\n"+
+						   "parameters  a list of parameters passed to the class called\n"/*+
 						   "\n"+
 		                   "--help      prints this info you are reading\n"+
-		                   "-?          see --help\n"
+		                   "-?          see --help\n"*/
 		                  );
 		System.exit(0);
 	}

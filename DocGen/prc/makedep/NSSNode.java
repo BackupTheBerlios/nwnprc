@@ -107,9 +107,11 @@ public class NSSNode {
 		for(String name : directIncludes){
 			name = name.toLowerCase();
 			NSSNode adj = Main.scripts.get(name);
-			if(adj != null)
+			if(adj != null){
+				if(adjenct.contains(adj))
+					System.out.println("Warning: " + getScriptName(fileName) +  " includes " + adj + " multiple times");
 				adjenct.add(adj);
-			else if(!Main.ignoreMissing){
+			}else if(!Main.ignoreMissing){
 				System.out.println("Script file not found: " + name);
 				Main.error = true;
 			}

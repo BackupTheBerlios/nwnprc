@@ -42,7 +42,7 @@ public class NWScript {
 	 */
 	public static String[] findIncludes(CharSequence srcText){
 		StringBuffer wip = new StringBuffer(srcText);
-		TreeSet<String> list = new TreeSet<String>();
+		ArrayList<String> list = new ArrayList<String>();
 		
 		removeComments(wip);
 		

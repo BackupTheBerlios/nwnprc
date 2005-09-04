@@ -938,6 +938,7 @@ void main()
          || !PWSwitchRestructions(oPC)
          || !DraDisFeats(oPC)
          || !MarshalAuraLimit(oPC)
+         || !Blightbringer(oPC)
          || !FortySpellSlotLevels(oPC)
        )
     {

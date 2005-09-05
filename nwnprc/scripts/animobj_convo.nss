@@ -11,7 +11,7 @@
 //:: Created On: 01/05/2003
 //:://////////////////////////////////////////////////
 
-
+#include "prc_alterations"
 #include "x0_inc_henai"
 #include "x0_i0_henchman"
 

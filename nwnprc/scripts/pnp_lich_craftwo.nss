@@ -13,16 +13,16 @@
 // summons the lich's creation device to allow
 // the PC to advance their lich powers.
 
-
+#include "prc_alterations"
 
 void main()
 {
     // effects
     effect eGatefx = EffectVisualEffect(VFX_FNF_SUMMON_GATE);
     effect eSumfx = EffectVisualEffect(VFX_FNF_UNDEAD_DRAGON);
-    object oCraft = CreateObject(OBJECT_TYPE_PLACEABLE,"lichcrafting",GetSpellTargetLocation());
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eGatefx,GetSpellTargetLocation(),5.0);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eSumfx,GetSpellTargetLocation());
+    object oCraft = CreateObject(OBJECT_TYPE_PLACEABLE,"lichcrafting",PRCGetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eGatefx,PRCGetSpellTargetLocation(),5.0);
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT,eSumfx,PRCGetSpellTargetLocation());
 
     DelayCommand(60.0f, DestroyObject(oCraft));
 }

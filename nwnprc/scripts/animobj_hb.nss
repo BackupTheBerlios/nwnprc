@@ -10,6 +10,7 @@
 //:: Created By: Naomi Novik
 //:: Created On: 01/05/2003
 //:://////////////////////////////////////////////////
+#include "prc_alterations"
 #include "X0_INC_HENAI"
 
 

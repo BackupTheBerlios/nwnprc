@@ -1,9 +1,9 @@
-
+#include "prc_alterations"
 #include "x0_i0_henchman"
 
 void main()
 {
-	object oAnimate = OBJECT_SELF;
+    object oAnimate = OBJECT_SELF;
     object oItem = GetItemInSlot(INVENTORY_SLOT_CHEST);
     if (GetIsObjectValid(oItem))
     {

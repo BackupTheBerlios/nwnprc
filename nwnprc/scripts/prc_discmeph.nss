@@ -9,8 +9,8 @@
 //:: Created On: Jan 8, 2004
 //:: Modified by Lockindal Linantal: glove property.
 //:://////////////////////////////////////////////
-
-#include "inc_item_props"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "inc_prc_npc"
 
@@ -62,10 +62,10 @@ void main()
 
    if(GetHasFeat(FEAT_HELLFIRE_GRASP, oPC))
     {
-	if (GetLocalInt(oUnequip, "DiscMephGlove") == 6)
-	{
-        	if (iEquip == 1)    RemoveHellFire(oPC, oUnequip);
-	}
+    if (GetLocalInt(oUnequip, "DiscMephGlove") == 6)
+    {
+            if (iEquip == 1)    RemoveHellFire(oPC, oUnequip);
+    }
         if (iEquip == 2)    HellFireGrasp(oPC, oGaunt);
     }
 

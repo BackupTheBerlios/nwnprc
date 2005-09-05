@@ -15,7 +15,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_alterations"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "prc_inc_switch"
 
 void main()

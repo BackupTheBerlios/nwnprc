@@ -27,6 +27,34 @@
 #include "psi_spellhook"
 #include "prc_alterations"
 
+// This function will take a number and return the proper damage constant
+int DamageToConst(int nDam)
+{
+	int nConst;
+	if (nDam == 1) nConst = DAMAGE_BONUS_1;
+	else if (nDam == 2) nConst = DAMAGE_BONUS_2;
+	else if (nDam == 3) nConst = DAMAGE_BONUS_3;
+	else if (nDam == 4) nConst = DAMAGE_BONUS_4;
+	else if (nDam == 5) nConst = DAMAGE_BONUS_5;
+	else if (nDam == 6) nConst = DAMAGE_BONUS_6;
+	else if (nDam == 7) nConst = DAMAGE_BONUS_7;
+	else if (nDam == 8) nConst = DAMAGE_BONUS_8;
+	else if (nDam == 9) nConst = DAMAGE_BONUS_9;
+	else if (nDam == 10) nConst = DAMAGE_BONUS_10;
+	else if (nDam == 11) nConst = DAMAGE_BONUS_11;
+	else if (nDam == 12) nConst = DAMAGE_BONUS_12;
+	else if (nDam == 13) nConst = DAMAGE_BONUS_13;
+	else if (nDam == 14) nConst = DAMAGE_BONUS_14;
+	else if (nDam == 15) nConst = DAMAGE_BONUS_15;
+	else if (nDam == 16) nConst = DAMAGE_BONUS_16;
+	else if (nDam == 17) nConst = DAMAGE_BONUS_17;
+	else if (nDam == 18) nConst = DAMAGE_BONUS_18;
+	else if (nDam == 19) nConst = DAMAGE_BONUS_19;
+	else if (nDam == 20) nConst = DAMAGE_BONUS_20;
+	
+	return nConst;
+}
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
@@ -66,7 +94,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	// Augmentation effects to armour class
 	if (nAugment > 0)	nBonus += nAugment;
 	
-    	effect eDamage = EffectDamageIncrease(nBonus, DAMAGE_TYPE_BASE_WEAPON);
+    	effect eDamage = EffectDamageIncrease(DamageToConst(nBonus), DAMAGE_TYPE_BASE_WEAPON);
    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     	effect eLink = EffectLinkEffects(eDamage, eDur);
 

@@ -1,6 +1,5 @@
 #include "prc_alterations"
 #include "prc_class_const"
-#include "prc_alterations"
 #include "x2_inc_switches"
 #include "x2_inc_spellhook"
 
@@ -53,24 +52,24 @@ void main()
     {
         FloatingTextStringOnCreature("You have no Channel Spell uses remaining.",oPC);
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
-        return;    
+        return;
     }
     //If the caster is a spellsword of at least fourth level, we get the
     //target of the spell casted.
     object oWeapon = PRCGetSpellTargetObject();
 
 
-    if ((oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC) 
+    if ((oWeapon == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC)
             || oWeapon == GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC))
         && !GetIsObjectValid(GetSpellCastItem()))
     {
         //weapon buffs are never stored
         if(X2CastOnItemWasAllowed(oWeapon))
-        {            
+        {
             SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
             return;
-        }    
-        
+        }
+
         //If the target is an equiped ranged weapon, we inform the spellsword
         //that channeling doesnt work with ranged weapons and exit the function
         if(!IPGetIsMeleeWeapon(oWeapon))

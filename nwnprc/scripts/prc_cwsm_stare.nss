@@ -1,3 +1,5 @@
+#include "prc_alterations"
+
 void main()
 {
     object oPC = OBJECT_SELF;
@@ -24,6 +26,6 @@ void main()
 	}
      else
      	FloatingTextStringOnCreature("*Staredown Failed*",OBJECT_SELF);
-     	
-     
+
+
 }

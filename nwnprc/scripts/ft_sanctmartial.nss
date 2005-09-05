@@ -1,7 +1,5 @@
 #include "prc_alterations"
 #include "prc_inc_clsfunc"
-#include "prc_alterations"
-#include "prc_alterations"
 
 
 // Sanctify_Feat(iType);
@@ -18,7 +16,7 @@ void Sanctify()
 //   if (GetLocalInt(oPC,"ONENTER")) return;
 
    int iEquip=GetLocalInt(oPC,"ONEQUIP");
-   
+
 
    if (GetLocalInt(oItem,"MartialStrik")) return;
 
@@ -196,7 +194,7 @@ void Vile()
 //   if (GetLocalInt(oPC,"ONENTER")) return;
 
    int iEquip=GetLocalInt(oPC,"ONEQUIP");
-   
+
 
    //if (GetLocalInt(oItem,"UnholyStrik")) return;
 
@@ -230,11 +228,11 @@ void Vile()
      }
 
      if (!Vile_Feat(iType)) return;
-     
+
      int nAlign = GetGoodEvilValue(OBJECT_SELF);
      if (nAlign>7)
          AdjustAlignment(oPC,ALIGNMENT_EVIL,7);
-         
+
      AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
      AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
      SetLocalInt(oItem,"USanctMar",1);
@@ -307,11 +305,11 @@ void Vile()
      {
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
-       SetLocalInt(oItem,"USanctMar",1);     
+       SetLocalInt(oItem,"USanctMar",1);
        int nAlign = GetGoodEvilValue(OBJECT_SELF);
        if (nAlign>7)
          AdjustAlignment(oPC,ALIGNMENT_EVIL,7);
-         
+
      }
      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
      iType= GetBaseItemType(oItem);
@@ -331,12 +329,12 @@ void Vile()
 void Pwatk(object oPC)
 {
    if (GetLocalInt(oPC,"ONEQUIP")!= 2 ) return;
-   
+
    object oItem = GetItemLastEquipped();
-   
+
    // don't run this if the equipped item is not a weapon
    if (GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) != oItem) return;
-   
+
    if (GetWeaponRanged(oItem))
    {
       int iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK1,OBJECT_SELF)  ? SPELL_POWER_ATTACK1 : 0;
@@ -350,18 +348,18 @@ void Pwatk(object oPC)
           iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK9,OBJECT_SELF)  ? SPELL_POWER_ATTACK9 : iSpell;
           iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK10,OBJECT_SELF) ? SPELL_POWER_ATTACK10: iSpell;
           iSpell =  GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK,OBJECT_SELF) ? SPELL_SUPREME_POWER_ATTACK: iSpell;
-   	
+
       if(iSpell)
       {
      	 RemoveSpellEffects(iSpell,OBJECT_SELF,OBJECT_SELF);
 
          string nMes = "*Power Attack Mode Deactivated*";
          FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
-      }	
-   	
+      }
+
    }
    else
-   { 
+   {
       int iSpell =  GetHasSpellEffect(SPELL_PA_POWERSHOT,OBJECT_SELF)      ? SPELL_PA_POWERSHOT : 0;
           iSpell =  GetHasSpellEffect(SPELL_PA_IMP_POWERSHOT,OBJECT_SELF)  ? SPELL_PA_IMP_POWERSHOT : iSpell;
           iSpell =  GetHasSpellEffect(SPELL_PA_SUP_POWERSHOT,OBJECT_SELF)  ? SPELL_PA_SUP_POWERSHOT : iSpell;
@@ -372,23 +370,23 @@ void Pwatk(object oPC)
 
          string nMes = "*Power Shot Mode Deactivated*";
          FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
-      }	        
+      }
    }
-	
+
 }
 
 void main()
 {
    object oPC = OBJECT_SELF;
-   
+
    Pwatk(oPC);
 
-  
+
    object oSkin = GetPCSkin(oPC);
-   
-   if (GetSkillRank(SKILL_JUMP,oPC)>4) 
+
+   if (GetSkillRank(SKILL_JUMP,oPC)>4)
        SetCompositeBonus(oSkin, "SkillJTum", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_TUMBLE);
-   
+
    if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
    {
 
@@ -433,7 +431,7 @@ void main()
      }
      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
      iType= GetBaseItemType(oItem);
-     
+
      if ( GetLocalInt(oItem,"SanctMar"))
      {
         RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,IP_CONST_ALIGNMENTGROUP_EVIL,IP_CONST_DAMAGEBONUS_1, 1,"",IP_CONST_DAMAGETYPE_DIVINE,DURATION_TYPE_TEMPORARY);
@@ -449,12 +447,12 @@ void main()
        RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_HOLY,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
        DeleteLocalInt(oItem,"MartialStrik");
      }
-     if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL) 
+     if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL)
      {
         //Vile();
         UnholyStrike();
      }
-     
+
    }
    else if (GetAlignmentGoodEvil(oPC)!= ALIGNMENT_EVIL)
    {
@@ -496,10 +494,10 @@ void main()
        RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
        DeleteLocalInt(oItem,"UnholyStrik");
      }
-     
+
      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
      iType= GetBaseItemType(oItem);
-/*    
+/*
      if ( GetLocalInt(oItem,"USanctMar"))
      {
         RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
@@ -513,12 +511,12 @@ void main()
        RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
        DeleteLocalInt(oItem,"UnholyStrik");
      }
- 
+
      if (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
      {
         Sanctify();
         MartialStrike();
-     }   
+     }
 
    }
 

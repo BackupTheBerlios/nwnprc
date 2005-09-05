@@ -30,12 +30,13 @@
     One can utilise the insertion bias constants to change
     the ordering of the creatures in the list.
     All orders are descending by default.
+
+
+    @author Ornedan
+    @date   Created  - 18.01.2005
+    @date   Modified - 26.06.2005
 */
 //:://////////////////////////////////////////////
-//:: Created By: Ornedan
-//:: Created On: 18.01.2005
-//:: Modified By: Ornedan
-//:: Modified On: 26.06.2005
 //:://////////////////////////////////////////////
 
 
@@ -184,7 +185,7 @@ object GetTargetListHead(object oCaster)
 }
 
 
-/* Removes the list of target objects held by oCaster 
+/* Removes the list of target objects held by oCaster
  * This should be called once the list is no longer used by the script that needed it
  * Failure to do so may cause problems
  */

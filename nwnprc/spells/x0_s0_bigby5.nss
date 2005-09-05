@@ -29,10 +29,8 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
-
 #include "prc_alterations"
 #include "x2_inc_spellhook"
-#include "prc_alterations"
 
 int nSpellID = 463;
 void RunHandImpact(object oTarget, object oCaster)
@@ -88,7 +86,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
-    
+
     int nMetaMagic = PRCGetMetaMagicFeat();
 
     //Check for metamagic extend
@@ -117,7 +115,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     SendMessageToPC(OBJECT_SELF, nCasterRoll >= nTargetRoll ?
                          "Bigby's Crushing Hand hit" : "Bigby's Grasping Hand missed");
                }
-               
+
             // * grapple HIT succesful,
             if (nCasterRoll >= nTargetRoll)
             {
@@ -137,10 +135,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     if (GetIsPC(OBJECT_SELF))
                     {
                          string suffix = nCasterRoll >= nTargetRoll ? ", success" : ", failure";
-                         SendMessageToPC(OBJECT_SELF, "Grapple check " + IntToString(nCasterRoll) + 
+                         SendMessageToPC(OBJECT_SELF, "Grapple check " + IntToString(nCasterRoll) +
                               " vs. " + IntToString(nTargetRoll) + suffix);
                     }
-               
+
                 if (nCasterRoll >= nTargetRoll)
                 {
                     effect eKnockdown = EffectParalyze();

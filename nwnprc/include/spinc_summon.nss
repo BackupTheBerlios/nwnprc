@@ -1,4 +1,4 @@
-#include "prc_inc_switch"
+#include "inc_utility"
 void sp_summon(string creature, int impactVfx)
 {
     SPSetSchool(SPELL_SCHOOL_CONJURATION);

@@ -1,5 +1,4 @@
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_class_const"
 
 void ChooseWeapon(object oPC, object oWeapon)
@@ -24,7 +23,7 @@ void UnchooseWeapon(object oPC)
 {
     object oWeapon = GetLocalObject(oPC, "CHOSEN_WEAPON");
     string sName = GetName(oWeapon);
-    
+
     DeleteLocalInt(oWeapon, "CHOSEN_WEAPON");
     if (GetLocalInt(oWeapon, "CHOSEN_WEAPON_PLOT"))
     {
@@ -48,7 +47,7 @@ void main()
             SendMessageToPC(oPC, "That weapon is already your chosen weapon.");
             return;
         }
-    
+
         SendMessageToPC(oPC, "You begin to bond with the new weapon.  It will be your chosen weapon in 20 turns.");
         DelayCommand(TurnsToSeconds(20)+0.0, UnchooseWeapon(oPC));
         DelayCommand(TurnsToSeconds(20)+0.1, ChooseWeapon(oPC, oWeapon));

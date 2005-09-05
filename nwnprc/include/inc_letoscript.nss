@@ -1,6 +1,4 @@
-#include "inc_2dacache"
-#include "prc_inc_switch"
-#include "inc_debug"
+#include "inc_utility"
 
 //defining directories
 //must be changed to each install
@@ -200,7 +198,7 @@ void PollThread(string sThreadID, string sScript)
         location lLoc = GetLocalLocation(GetModule(), "Thread"+sThreadID+"_loc");
         DelayCommand(1.0, DeleteLocalLocation(GetModule(), "Thread"+sThreadID+"_loc"));
 DoDebug("Thread"+sThreadID+"_loc");
-DoDebug(GetName(GetAreaFromLocation(lLoc)));        
+DoDebug(GetName(GetAreaFromLocation(lLoc)));
         object oReturn;
         if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
         {
@@ -219,7 +217,7 @@ DoDebug(GetName(GetAreaFromLocation(lLoc)));
                 oReturn = RetrieveCampaignObject(DB_NAME, DB_GATEWAY_VAR, lLoc);
             }
         }
-DoDebug(GetName(oReturn));        
+DoDebug(GetName(oReturn));
         SetLocalString(GetModule(), "LetoResult", sResult);
         AssignCommand(GetModule(), DelayCommand(1.0, DeleteLocalString(GetModule(), "LetoResult")));
         SetLocalObject(GetModule(), "LetoResultObject", oReturn);
@@ -290,12 +288,12 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
             }
             else
             {
-                ActivatePortal(oObject, 
+                ActivatePortal(oObject,
                     GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_IP),
                     GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_PASSWORD),
                     "", //waypoint, may need to change
                     TRUE);
-            }                
+            }
             return oReturn;
         }
     }
@@ -357,14 +355,14 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                 StoreCampaignObject(DB_NAME, DB_GATEWAY_VAR, oObject);
                 sCommand += "%"+sLetoTag+"; ";
                 //Extract object from DB
-                sCommand += "extract qq{"+GetNWNDir()+"database/"+DB_NAME+".fpt}, '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";            
+                sCommand += "extract qq{"+GetNWNDir()+"database/"+DB_NAME+".fpt}, '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";
             }
         }
         //store their location
         lLoc = GetLocation(oObject);
         if(!GetIsObjectValid(GetAreaFromLocation(lLoc)))
             lLoc = GetStartingLocation();
-            
+
         sScript = sCommand + sScript;
         sCommand = "";
 
@@ -403,7 +401,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
             if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
                 sCommand += "<file:close "+sLetoTag+">";
             else
-                sCommand += "close %"+sLetoTag+"; ";        
+                sCommand += "close %"+sLetoTag+"; ";
         }
 
         sScript = sScript + sCommand;
@@ -434,7 +432,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                     }
                     else
                         oReturn = RetrieveCampaignObject("NWNX", "-", lLoc);
-                }       
+                }
                 else
                 {
                     if(GetObjectType(oObject) == OBJECT_TYPE_CREATURE)
@@ -443,13 +441,13 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                         AssignCommand(oReturn, JumpToLocation(lLoc));
                     }
                     else
-                        oReturn = RetrieveCampaignObject(DB_NAME, DB_GATEWAY_VAR, lLoc);                    
+                        oReturn = RetrieveCampaignObject(DB_NAME, DB_GATEWAY_VAR, lLoc);
                 }
             }
         }
         else if(nDestroyOriginal && sType == "SPAWN")
         {
-            SetLocalLocation(GetModule(), "Thread"+IntToString(StringToInt(sScriptResult))+"_loc", lLoc);            
+            SetLocalLocation(GetModule(), "Thread"+IntToString(StringToInt(sScriptResult))+"_loc", lLoc);
 DoDebug("Thread"+IntToString(StringToInt(sScriptResult))+"_loc");
         }
     }

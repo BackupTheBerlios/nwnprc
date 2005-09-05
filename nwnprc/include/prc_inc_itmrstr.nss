@@ -19,7 +19,6 @@ void ApplySpeedDecrease(object oPC);
 int DoUMDCheck(object oItem, object oPC, int nDCMod);
 int CheckPRCLimitations(object oItem, object oPC);
 
-#include "inc_item_props"
 #include "inc_utility"
 
 //credit to silvercloud for this :)
@@ -31,8 +30,8 @@ void ApplySpeedIncrease(object oPC)
 
     while(GetIsEffectValid(eTest))
     {
-        if(GetEffectCreator(eTest) == OBJECT_SELF 
-           && GetEffectType(eTest) == EFFECT_TYPE_MOVEMENT_SPEED_INCREASE 
+        if(GetEffectCreator(eTest) == OBJECT_SELF
+           && GetEffectType(eTest) == EFFECT_TYPE_MOVEMENT_SPEED_INCREASE
            && GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL
            )
             RemoveEffect(oPC, eTest);
@@ -121,7 +120,7 @@ int CheckPRCLimitations(object oItem, object oPC)
     int nSpeedIncrease = GetLocalInt(oPC, PLAYER_SPEED_INCREASE);
     int nSpeedDecrease = GetLocalInt(oPC, PLAYER_SPEED_DECREASE);
     object oSkin = GetPCSkin(oPC);
-    
+
     while(GetIsItemPropertyValid(ipTest))
     {
         if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_ABILITY_SCORE)
@@ -244,14 +243,14 @@ int CheckPRCLimitations(object oItem, object oPC)
                 case 7: iItemAdjust = 80; break;
                 case 8: iItemAdjust = 90; break;
                 case 9: iItemAdjust = 99; break;
-            }   
+            }
             if(GetItemLastUnequipped() == oItem) //unequip event
                 nSpeedDecrease -= iItemAdjust;
             else
                 nSpeedDecrease += iItemAdjust;
             SetLocalInt(oPC, PLAYER_SPEED_DECREASE, nSpeedDecrease);
             AssignCommand(oSkin, ApplySpeedDecrease(oPC));
-        }        
+        }
         ipTest = GetNextItemProperty(oItem);
     }
     if(!bPass)

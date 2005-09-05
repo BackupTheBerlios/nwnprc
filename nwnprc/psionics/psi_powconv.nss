@@ -10,9 +10,7 @@
 
 #include "inc_utility"
 #include "prc_alterations"
-#include "prc_alterations"
 #include "psi_inc_psifunc"
-#include "inc_fileends"
 
 
 //////////////////////////////////////////////////
@@ -53,7 +51,7 @@ void main()
     */
     string sPsiFile = GetPsionicFileName(nClass);
     string sPowerFile = GetPsiBookFileName(nClass);
-    
+
     if(nValue == 0)
         return;
     if(nValue > 0)
@@ -71,7 +69,7 @@ void main()
             // Set the header text
             string sToken = GetStringByStrRef(STRREF_LEVELLIST_HEADER);
             SetCustomToken(99, sToken);
-            
+
             // Set the tokens
             int nManifestLevel = GetLevelByClass(nClass, oPC);
                 nManifestLevel += nClass == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0;
@@ -82,10 +80,10 @@ void main()
                                  GetStringByStrRef(LEVEL_STRREF_START - i)); // The minus is correct, these are stored in inverse order
                 array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i + 1);
             }
-            
+
             // Set the convo quit text to "Abort"
             SetCustomToken(110, GetStringByStrRef(STRREF_END_CONVO_SELECT));
-            
+
             //PrintString("Showed level selection.\nnMaxLevel = " + IntToString(nMaxLevel));
         }
         // Power selection stage
@@ -99,12 +97,12 @@ void main()
                             IntToString(nMaxPowers-nCurrentPowers) + " " +
                             GetStringByStrRef(STRREF_POWERLIST_HEADER2);
             SetCustomToken(99, sToken);
-            
+
             // Set the first choice to be return to level selection stage
             array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
                              GetStringByStrRef(STRREF_BACK_TO_LSELECT));
             array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), -1);
-            
+
             int nManifestLevel = GetLevelByClass(nClass, oPC);
                 nManifestLevel += nClass == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0;
             int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel-1));
@@ -124,7 +122,7 @@ void main()
                  * the level of a read power is greater than the maximum manifestable
                  * it'll never be lower again. Therefore, we can skip reading the
                  * powers that wouldn't be shown anyway.
-                 */ 
+                 */
                 if(nPowerLevel > nPowerLevelToBrowse){
                     //PrintString("Quitting seek at " + IntToString(i));
                     break;
@@ -132,7 +130,7 @@ void main()
                 string sFeatID = Get2DACache(sPowerFile, "FeatID", i);
 //                int nPowerFeatIP= StringToInt(Get2DACache(sPowerFile, "IPFeatID", i));
 //                int nPowerSpell = StringToInt(Get2DACache(sPowerFile, "SpellID", i));
-                if(sFeatID != "" 
+                if(sFeatID != ""
                   && !GetHasFeat(StringToInt(sFeatID), oPC)
                   && (!StringToInt(Get2DACache(sPowerFile, "HasPrereqs", i))
                     || CheckPowerPrereqs(StringToInt(sFeatID), oPC)
@@ -151,7 +149,7 @@ void main()
         }
         // Selection confirmation stage
         else if(nStage == 2)
-        {   
+        {
             //PrintString("Building confirmation menu");
             //string sToken = "You have selected:\n\n";
             string sToken = GetStringByStrRef(STRREF_SELECTED_HEADER1) + "\n\n";
@@ -172,7 +170,7 @@ void main()
         }
         // Conversation finished stage
         else if(nStage == 3)
-        {   
+        {
             //PrintString("Building convo finished menu");
             //string sToken = "You will be able to select more powers after you gain another level in a psionic caster class.";
             string sToken = GetStringByStrRef(STRREF_END_HEADER);
@@ -192,7 +190,7 @@ void main()
         SetCustomToken(111, GetStringByStrRef(STRREF_PLEASE_WAIT));//please wait
         SetCustomToken(112, GetStringByStrRef(STRREF_NEXT));//next
         SetCustomToken(113, GetStringByStrRef(STRREF_PREVIOUS));//previous
-        
+
         /*for(i = 0; i < array_get_size(oPC, "ChoiceTokens"); i++){
             PrintString("ChoiceToken" + IntToString(i) + ": " + array_get_string(oPC, "ChoiceTokens" ,i) + " = " + IntToString(array_get_int(oPC, "ChoiceValues", i)));
         }*/
@@ -249,7 +247,7 @@ void main()
     if(nStage == 0){
         SetLocalInt(oPC, "nPowerLevelToBrowse", nValue);
         nStage++;
-        
+
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
         array_create(oPC, "ChoiceTokens");

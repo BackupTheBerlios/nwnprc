@@ -1,10 +1,9 @@
 #include "prc_alterations"
 #include "prc_class_const"
 #include "psi_inc_psifunc"
-#include "prc_alterations"
 
 int CheckMissingPowers(object oPC, int nClass)
-{ 
+{
     int nLevel = GetLevelByClass(nClass, oPC);
     if(!nLevel)
         return FALSE;
@@ -42,5 +41,5 @@ void main()
     if(CheckMissingPowers(oPC, CLASS_TYPE_PSYWAR))
         return;
     if(CheckMissingPowers(oPC, CLASS_TYPE_FIST_OF_ZUOKEN))
-        return;        
+        return;
 }

@@ -1,9 +1,7 @@
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
-#include "prc_alterations"
-#include "inc_prc_npc"
+#include "inc_utility"
 
 int GetIPASF(int asf)
 {

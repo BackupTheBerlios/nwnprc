@@ -1,4 +1,4 @@
-#include "prc_inc_switch"
+#include "inc_utility"
 int StartingConditional()
 {
 int iCondition = GetPRCSwitch(PRC_SPELLSLAB);

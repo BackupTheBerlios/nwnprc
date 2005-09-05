@@ -346,6 +346,9 @@ const int FEAT_CAST_DOMAIN_LEVEL_NINE	     	     = 2057;
  
 const int FEAT_CHECK_DOMAIN_SLOTS		     = 2000;
 
+// Blightlord
+const int FEAT_BLIGHTBRINGER_DOMAIN_POWER	     = 2250;
+
 //Vile
 const int FEAT_VILE_MARTIAL_CLUB          = 3357;
 const int FEAT_VILE_MARTIAL_DAGGER        = 3358;

@@ -5,7 +5,6 @@
  */
 #include "prc_alterations"
 #include "prc_getbest_inc"
-#include "prc_alterations"
 #include "prc_inc_clsfunc"
 
 int GetSpontaneousHealBurnableSpell(object oCaster)

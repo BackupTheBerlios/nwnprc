@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "x2_inc_switches"
+#include "prc_alterations"
 
 void main()
 {

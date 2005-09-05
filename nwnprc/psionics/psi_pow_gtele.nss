@@ -33,7 +33,7 @@
 #include "psi_inc_psifunc"
 #include "psi_spellhook"
 #include "prc_inc_teleport"
-#include "inc_draw"
+#include "inc_utility"
 
 void VFX_HB(object oCaster, location lCaster)
 {

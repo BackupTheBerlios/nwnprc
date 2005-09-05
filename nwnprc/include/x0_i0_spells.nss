@@ -40,6 +40,7 @@
 #include "x2_inc_itemprop"
 #include "x0_i0_henchman"
 #include "prc_inc_combat"
+#include "prc_inc_sp_tch"
 
 //* get the hightest spellcasting class level of oCreature)
 int GZGetHighestSpellcastingClassLevel(object oCreature);
@@ -764,7 +765,7 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }
 
-                        if(i == 1) 
+                        if(i == 1)
                         {
                         	nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                         	DelayCommand(fDelay, PRCBonusDamage(oTarget));

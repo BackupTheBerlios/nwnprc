@@ -33,7 +33,7 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE);
 // This function should only be used when SLA's are meant to simulate true
 // spellcasting abilities, such as those seen when using feats with subradials
 // to simulate spellbooks.
-void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, 
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0,
     int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID,
     int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oTarget=OBJECT_INVALID);
 
@@ -45,11 +45,10 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
-#include "inc_item_props"
+#include "inc_utility"
 #include "nw_i0_spells"
 #include "pnp_shft_poly"
 #include "x2_inc_spellhook"
-#include "inc_prc_npc"
 #include "prc_inc_combat"
 #include "prc_inc_sp_tch"
 
@@ -63,7 +62,7 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE)
     DestroyObject(oCastingObject, 6.0);
 }
 
-void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, 
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0,
     int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID,
     int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oTarget=OBJECT_INVALID)
 {
@@ -72,7 +71,7 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
     //at the end, for example when coming out of invisibility
     if(Get2DACache("spells", "HostileSetting", iSpell) == "1")
         ClearAllActions();
-        
+
     object oTarget = PRCGetSpellTargetObject();
     location lLoc = PRCGetSpellTargetLocation();
 
@@ -91,12 +90,12 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         //location must be set outside of this function at the moment
         //cant pass a location into a function as an optional parameter
         //go bioware for not defining an invalid location constant
-    }    
+    }
     if (bUseOverrideTargetObject)
     {
         ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE, TRUE));
         ActionDoCommand(SetLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE, oTarget));
-    }    
+    }
     SetLocalInt(OBJECT_SELF, "UsingActionCastSpell", TRUE);
     DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));
 
@@ -105,7 +104,7 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         ActionCastSpellAtObject(iSpell, oTarget, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
     else
         ActionCastSpellAtLocation(iSpell, lLoc, nMetaMagic, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
-        
+
     //clean up afterwards
     if (iCasterLev != 0)
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));
@@ -121,12 +120,12 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         //location must be set outside of this function at the moment
         //cant pass a location into a function as an optional parameter
         //go bioware for not defining an invalid location constant
-    }    
+    }
     if (bUseOverrideTargetObject)
     {
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
         ActionDoCommand(DeleteLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
-    }    
+    }
 
 
 /*

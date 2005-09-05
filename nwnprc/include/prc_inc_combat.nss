@@ -433,7 +433,6 @@ int iVorpalSaveDC = 0;
 #include "prc_inc_unarmed"
 #include "prc_inc_util"
 #include "inc_utility"
-#include "prc_inc_switch"
 #include "prc_feat_const"
 #include "inc_abil_damage"
 
@@ -1716,16 +1715,16 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      //this is the attack bonus from ability for melee combat only
      //ranged combat goes further down
      int bTempBonus = 0;
-     
+
      //str normally unless exceptional circumstances
      if(!bIsRangedWeapon)
      {
           if(iStr > bTempBonus) bTempBonus = iStr;
-     }      
-      
+     }
+
      // increases attack bonus from stats for melee
      // first check for weapon finesse or katana finesse and if str or dex is greater
-     if((bFinesse && bLight && !bIsRangedWeapon) 
+     if((bFinesse && bLight && !bIsRangedWeapon)
         || (bKatanaFinesse && !bIsRangedWeapon))
      {
           if(iDex > bTempBonus) bTempBonus = iDex;
@@ -4506,7 +4505,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           // unarmed non-monk 1d3 damage
           sAttackVars.iMainNumSides = 3;
           sAttackVars.iMainNumDice  = 1;
-     }     
+     }
 
      // off-hand variables
      int iOffHandWeaponType = 0;

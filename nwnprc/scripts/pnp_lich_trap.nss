@@ -18,10 +18,11 @@ void main()
 {
     object oTarget = PRCGetSpellTargetObject();
 
-    // Gotta be a living critter
+    // Gotta be a living critter and a valid target according to PvP settings
     int nType = MyPRCGetRacialType(oTarget);
-    if ((nType == RACIAL_TYPE_CONSTRUCT) ||
-        (nType == RACIAL_TYPE_UNDEAD) ||
+    if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) &&
+        (nType == RACIAL_TYPE_CONSTRUCT) ||
+        (nType == RACIAL_TYPE_UNDEAD)    ||
         (nType == RACIAL_TYPE_ELEMENTAL))
     {
         FloatingTextStringOnCreature("Target must be alive",OBJECT_SELF);
@@ -55,9 +56,9 @@ void main()
 
 
     // They failed, now they die
-    
+
     DeathlessFrenzyCheck(oTarget);
-    
+
     eVis = EffectVisualEffect(VFX_FNF_PWKILL);
     effect eDeath = EffectDeath(TRUE);
     ApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oTarget);

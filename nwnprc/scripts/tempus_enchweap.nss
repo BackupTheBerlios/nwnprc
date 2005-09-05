@@ -2,7 +2,6 @@
 #include "prc_class_const"
 #include "prc_spell_const"
 #include "prc_alterations"
-#include "prc_alterations"
 
 
 void AddIPEnh(object oWeap,int iCost )

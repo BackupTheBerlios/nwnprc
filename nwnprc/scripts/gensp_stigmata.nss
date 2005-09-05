@@ -23,7 +23,7 @@
 
 #include "prc_spell_const"
 #include "nw_i0_spells"
-#include "inc_item_props"
+#include "inc_utility"
 
 
 void main()

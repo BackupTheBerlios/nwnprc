@@ -13,10 +13,7 @@
 //:: Last Updated By: Georg Zoeller, Aug 2003
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "prc_alterations"
-#include "prc_inc_switch"
-#include "prc_alterations"
-#include "x2_inc_spellhook"
+#include "spinc_common"
 
 
 //Creates the weapon that the creature will be using.

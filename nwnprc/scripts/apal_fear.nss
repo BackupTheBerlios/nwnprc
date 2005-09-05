@@ -16,7 +16,6 @@
 #include "prc_alterations"
 #include "spinc_common"
 #include "prc_inc_clsfunc"
-#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -45,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     if (GetLocalInt(OBJECT_SELF, "Apal_DeathKnell") == TRUE)
     {
         CasterLvl = CasterLvl + 1;
-    }    
+    }
 
     int nMetaMagic = PRCGetMetaMagicFeat();
     float fDuration = RoundsToSeconds(CasterLvl);
@@ -61,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     eLink = EffectLinkEffects(eLink, eDur);
     int nPenetr = CasterLvl + SPGetPenetr();
     int nDC = GetSpellDCSLA(OBJECT_SELF,1);
-    
+
     object oTarget;
     //Check for metamagic extend
     if (nMetaMagic & METAMAGIC_EXTEND)
@@ -93,7 +92,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         //Get next target in the spell cone
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, PRCGetSpellTargetLocation(), TRUE);
     }
-    
+
 
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

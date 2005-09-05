@@ -26,7 +26,7 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "X0_I0_SPELLS"
-#include "prc_inc_switch"
+#include "inc_utility"
 #include "inc_timestop"
 
 void main()

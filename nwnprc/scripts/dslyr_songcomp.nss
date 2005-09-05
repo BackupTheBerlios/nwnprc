@@ -1,12 +1,11 @@
 #include "prc_alterations"
 #include "spinc_common"
 #include "prc_inc_clsfunc"
-#include "prc_alterations"
 
 void DominatedDuration(object oTarget, object oCaster)
 {
    int iConc = GetLocalInt(oCaster, "SpellConc");
-   
+
    if (!iConc)
    {
         RemoveEffectsFromSpell(oCaster,SPELL_DSL_SONG_COMPULSION);
@@ -42,7 +41,7 @@ void main()
        FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
        return;
     }
-    
+
     if (GetHasEffect(EFFECT_TYPE_DEAF,OBJECT_SELF) && d100(1) <= 20)
     {
         FloatingTextStringOnCreature("Your deafness has caused you to fail.",OBJECT_SELF);
@@ -52,10 +51,10 @@ void main()
 
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
-  
+
     RemoveOldSongEffects(OBJECT_SELF,0);
     RemoveOldSongs();
-     
+
     //Declare major variables
     object oTarget = PRCGetSpellTargetObject();
     object oCaster = OBJECT_SELF;
@@ -70,19 +69,19 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_DOMINATE_S);
     int nLevel = GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST);
     effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
- 
+
     int nRacial = MyPRCGetRacialType(oTarget);
-    
+
     int nFocSong;
     if (GetHasFeat(FEAT_EPIC_FOCUS_DRAGONSONG)) nFocSong = 6;
     else if (GetHasFeat(FEAT_GREATER_FOCUS_DRAGONSONG)) nFocSong = 4;
     else if (GetHasFeat(FEAT_FOCUS_DRAGONSONG)) nFocSong = 2;
-    
+
     int nEpic = GetHasFeat(FEAT_EPIC_DRAGONSONG_COMPULSION) ? TRUE:FALSE;
     int nDC = 12 + nFocSong + GetLevelByClass(CLASS_TYPE_DRAGONSONG_LYRIST,OBJECT_SELF)+ GetAbilityModifier(ABILITY_CHARISMA,OBJECT_SELF);
- 
+
     if (nRacial== RACIAL_TYPE_DRAGON ) nDC-=2;
-     
+
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DOMINATE_MONSTER, FALSE));
     //Make sure the target is a monster
@@ -90,23 +89,23 @@ void main()
     {
           int iSave = PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS);
           if ( nEpic && iSave) iSave = PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS);
-          
+
           //Make a Will Save
           if (!iSave)
           {
                //Apply linked effects and VFX Impact
                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eLink), oTarget, 0.0,FALSE);
-               SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);  
-               SPApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eVis2), OBJECT_SELF,0.0,FALSE);             
+               SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+               SPApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eVis2), OBJECT_SELF,0.0,FALSE);
                SetLocalInt(OBJECT_SELF, "SpellConc", 1);
-               DelayCommand(6.0f,DominatedDuration(oTarget,oCaster) );  
-               StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, GetSpellId(), 0); 
+               DelayCommand(6.0f,DominatedDuration(oTarget,oCaster) );
+               StoreSongRecipient(OBJECT_SELF, OBJECT_SELF, GetSpellId(), 0);
           }
-          
 
-     }   
-    
+
+     }
+
     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);
- 
+
 
 }

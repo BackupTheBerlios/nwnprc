@@ -4,7 +4,6 @@
 #include "prc_spell_const"
 #include "prc_ipfeat_const"
 #include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {
@@ -14,12 +13,12 @@ void main()
      string nMes = "";
 
      if(!GetLocalInt(oPC, "HavocMageBattlecast"))
-     {    
+     {
 	SetLocalInt(oPC, "HavocMageBattlecast", TRUE);
 	AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_IMP_CC), oSkin);
      	nMes = "*Battlecast Activated*";
      }
-     else     
+     else
      {
 	// Removes effects
 	RemoveSpellEffects(SPELL_BATTLECAST, oPC, oPC);

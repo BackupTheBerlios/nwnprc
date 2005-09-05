@@ -27,7 +27,7 @@ Drow Judicator
 */
 
 #include "prc_alterations"
-#include "inc_target_list"
+#include "inc_utility"
 
 //gets the number of class levels that count for turning
 int GetTurningClassLevel(int bUndeadOnly = FALSE);

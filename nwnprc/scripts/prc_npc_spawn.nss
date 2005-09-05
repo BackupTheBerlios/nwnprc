@@ -3,7 +3,6 @@
 //:: prc_npc_spawn
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 
 void ChecksOnMaster()
 {
@@ -14,7 +13,7 @@ void ChecksOnMaster()
         {
             CorpseCrafter(oMaster, OBJECT_SELF);
         }
-    } 
+    }
 
 }
 

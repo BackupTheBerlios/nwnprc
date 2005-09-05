@@ -24,7 +24,7 @@ int GetPowerFromSpellID(int nSpellID);
 int GetClassFeatFromPower(int nPowerID, int nClass);
 
 
-#include "inc_2dacache"
+#include "inc_utility"
 #include "psi_inc_psifunc"
 #include "prc_class_const"
 

@@ -12,9 +12,8 @@
 //  Aaon Graywolf - Jan 6, 2004
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_inc_domain"
-#include "inc_eventhook"
+#include "inc_utility"
 
 void PrcFeats(object oPC)
 {
@@ -40,10 +39,10 @@ void main()
 
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
-    DeletePRCLocalInts(oSkin); 
-    
+    DeletePRCLocalInts(oSkin);
+
     //FloatingTextStringOnCreature("PRC Levelup was called", oPC, FALSE);
-    
+
     // Gives people the proper spells from their bonus domains
     // This should run before EvalPRCFeats, because it sets a variable
     CheckBonusDomains(oPC);
@@ -62,11 +61,11 @@ void main()
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
 
-    DelayCommand(1.0, FeatSpecialUsePerDay(oPC)); 
+    DelayCommand(1.0, FeatSpecialUsePerDay(oPC));
 
     // These scripts fire events that should only happen on levelup
     ExecuteScript("prc_vassal_treas", oPC);
-    
+
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERLEVELUP);
 }

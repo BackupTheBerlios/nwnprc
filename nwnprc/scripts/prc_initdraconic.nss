@@ -1,7 +1,7 @@
 #include "prc_inc_unarmed"
 #include "prc_ip_srcost"
 #include "prc_inc_clsfunc"
-#include "inc_eventhook"
+#include "inc_utility"
 
 
 void SpellResistancePC(object oPC, object oSkin, int iLevel)

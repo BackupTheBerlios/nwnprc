@@ -11,7 +11,7 @@
 //:: Modified On: 7-31-2004
 //:://////////////////////////////////////////////
 
-#include "inc_item_props"
+#include "inc_utility"
 #include "prc_feat_const"
 
 void main()

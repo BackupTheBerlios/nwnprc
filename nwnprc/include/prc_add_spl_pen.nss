@@ -244,6 +244,31 @@ int KOTCSpellPenVsDemons(object oCaster)
     	return nSP;
 }
 
+int RunecasterRunePowerSP(object oCaster)
+{
+	int nSP = 0;
+	int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
+	object oItem = GetSpellCastItem();
+	string sResRef = GetResRef(oItem);
+	// If the caster is runechanting or casting from a rune, add bonus
+	// Known Bug: This does not give the proper bonus to anyone aside from the caster
+	// I am uncertain as to how to do that
+	if (nClass >= 2 && GetLocalInt(oCaster, "RuneChant") || sResRef == "prc_rune_1")
+	{
+            if (nClass >= 30)        nSP = 10;
+            else if (nClass >= 27)   nSP = 9;
+            else if (nClass >= 24)   nSP = 8;
+            else if (nClass >= 21)   nSP = 7;
+            else if (nClass >= 18)   nSP = 6;
+            else if (nClass >= 15)   nSP = 5;
+            else if (nClass >= 12)   nSP = 4;
+            else if (nClass >= 9)    nSP = 3;
+            else if (nClass >= 5)    nSP = 2;
+            else if (nClass >= 2)    nSP = 1;
+        }
+        return nSP;
+}
+
 int add_spl_pen(object oCaster = OBJECT_SELF)
 {
     int spell_id = PRCGetSpellId();
@@ -254,6 +279,7 @@ int add_spl_pen(object oCaster = OBJECT_SELF)
     nSP += GetSpellPenetreFocusSchool(oCaster);
     nSP += ShadowWeavePen(spell_id,oCaster);
     nSP += KOTCSpellPenVsDemons(oCaster);
+    nSP += RunecasterRunePowerSP(oCaster);
         
     return nSP;
 }

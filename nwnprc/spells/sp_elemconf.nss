@@ -1,6 +1,6 @@
 #include "prc_spell_const"
 #include "prc_class_const"
-#include "prc_inc_switch"
+#include "inc_utility"
 #include "prc_alterations"
 //Stormlord Elemental Comflaguration spellscript
 

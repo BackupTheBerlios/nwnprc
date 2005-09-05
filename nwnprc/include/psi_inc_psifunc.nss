@@ -177,7 +177,7 @@ int GetHasPower(int nPower, object oPC = OBJECT_SELF);
 #include "prc_power_const"
 #include "lookup_2da_spell"
 #include "prc_inc_clsfunc"
-#include "inc_eventhook"
+#include "inc_utility"
 #include "nw_i0_spells"
 
 // ---------------

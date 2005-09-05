@@ -1,6 +1,5 @@
 #include "prc_alterations"
 #include "inc_utility"
-#include "inc_persist_loca"
 #include "inc_dynconv"
 
 void main()
@@ -63,7 +62,7 @@ void main()
         }
         else
         {
-            SetCustomToken(99, "Familiar selected, summoning...");  
+            SetCustomToken(99, "Familiar selected, summoning...");
         }
         //do token setup
         SetupTokens();

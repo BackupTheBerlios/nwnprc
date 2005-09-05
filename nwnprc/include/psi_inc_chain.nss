@@ -23,7 +23,7 @@
 #include "psi_inc_pwresist"
 #include "psi_inc_psifunc"
 
-#include "inc_target_list"
+#include "inc_utility"
 
 // 30 feet
 const float CHAIN_RADIUS = 9.144f;

@@ -2,7 +2,6 @@
 #include "prc_feat_const"
 #include "prc_spell_const"
 #include "prc_class_const"
-#include "prc_alterations"
 
 int FeatWeaponTempus(int iFeat)
 {
@@ -58,7 +57,7 @@ void WeaponTempus(object oPC,object oSkin)
       SetLocalInt(oSkin,"FEAT_WEAP_TEMPUS",BASE_ITEM_DWARVENWARAXE);
   else if (GetHasFeat(FEAT_WEAPON_TEMPUS_SICKLE, oPC))
       SetLocalInt(oSkin,"FEAT_WEAP_TEMPUS",BASE_ITEM_SICKLE);
-      
+
 }
 
 void KnowledgeLore(object oPC, object oSkin, int iLevel)

@@ -1,7 +1,6 @@
 #include "prc_alterations"
 #include "spinc_common"
 #include "prc_inc_clsfunc"
-#include "prc_alterations"
 
 void RemoveOldSongs()
 {
@@ -36,7 +35,7 @@ void main()
 
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
-  
+
     //Declare major variables
     object oTarget;
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
@@ -50,7 +49,7 @@ void main()
 
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
     int nDuration = nLevel;
-    
+
         //Check to see if the caster has Lasting Impression and increase duration.
     if(GetHasFeat(870))
     {
@@ -64,13 +63,13 @@ void main()
     }
 
     location lSpell = PRCGetSpellTargetLocation();
- 
+
     RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_SPEED);
     RemoveOldSongs();
-    
-    effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG); 
-    eLink = EffectLinkEffects(eLink, eVis); 
-   // SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, OBJECT_SELF,RoundsToSeconds(nDuration),FALSE); 
+
+    effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);
+    eLink = EffectLinkEffects(eLink, eVis);
+   // SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, OBJECT_SELF,RoundsToSeconds(nDuration),FALSE);
 
 
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.

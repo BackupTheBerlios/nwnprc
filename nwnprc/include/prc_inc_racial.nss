@@ -14,7 +14,7 @@ void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0);
 #include "prc_feat_const"
 #include "prc_racial_const"
 #include "prc_inc_clsfunc"
-#include "inc_2dacache"
+#include "inc_utility"
 
 
 int MyPRCGetRacialType(object oCreature)

@@ -7,7 +7,7 @@
     The Str and Con of the Barbarian increases,
     Will Save are +2, AC -2.
     Greater Rage starts at level 15.
-    
+
     Updated: 2004-01-18 mr_bumpkin: Added bonuses for exceeding +12 stat cap
     Updated: 2004-2-24 by Oni5115: Added Intimidating Rage
 */
@@ -16,9 +16,9 @@
 //:: Created On: Aug 13, 2001
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
 #include "inc_addragebonus"
-#include "prc_class_const"
+
 void main()
 {
     if(!GetHasFeatEffect(FEAT_BARBARIAN_RAGE) && !GetHasSpellEffect(GetSpellId()))
@@ -27,7 +27,7 @@ void main()
         int nLevel = GetLevelByClass(CLASS_TYPE_BARBARIAN) + GetLevelByClass(CLASS_TYPE_RUNESCARRED) + GetLevelByClass(CLASS_TYPE_BATTLERAGER) + GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH);
         int iStr, iCon, iAC;
         int nSave;
-        
+
         iAC = 2;
 
         //Lock: Added compatibility for PRC Mighty Rage ability
@@ -70,7 +70,7 @@ void main()
                      break;
         }
         PlayVoiceChat(iVoice);
-        
+
         //Determine the duration by getting the con modifier after being modified
         int nCon = 3 + GetAbilityModifier(ABILITY_CONSTITUTION) + iCon;
         effect eStr = EffectAbilityIncrease(ABILITY_CONSTITUTION, iCon);
@@ -95,19 +95,19 @@ void main()
             int StrBeforeBonuses = GetAbilityScore(OBJECT_SELF, ABILITY_STRENGTH);
             int ConBeforeBonuses = GetAbilityScore(OBJECT_SELF,ABILITY_CONSTITUTION);
             int ExtRage = GetHasFeat(FEAT_EXTENDED_RAGE, OBJECT_SELF) ? 5:0;
-            
+
             nCon+= ExtRage;
-            
+
             //Apply the VFX impact and effects
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nCon));
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF) ;
 
             // 2003-07-08, Georg: Rage Epic Feat Handling
             CheckAndApplyEpicRageFeats(nCon);
- 
+
             // 2004-01-18 mr_bumpkin: Adds special bonuses to those barbarians who are restricted by the
             // +12 attribute bonus cap, to make up for them. :)
- 
+
             // The delay is because you have to delay the command if you want the function to be able
             // to determine what the ability scores become after adding the bonuses to them.
             DelayCommand(0.1, GiveExtraRageBonuses(nCon, StrBeforeBonuses, ConBeforeBonuses, iStr, iCon, nSave, DAMAGE_TYPE_FIRE, OBJECT_SELF));
@@ -117,16 +117,16 @@ void main()
             if(GetHasFeat(FEAT_INTIMIDATING_RAGE, OBJECT_SELF) ) // 4312
             {
 		 // Finds nearest visible enemy within 30 ft.
-                 object oTarget = GetNearestSeenOrHeardEnemy();   
+                 object oTarget = GetNearestSeenOrHeardEnemy();
                  float distance = GetDistanceBetween(OBJECT_SELF, oTarget);
-                 
+
                  if(distance < FeetToMeters(30.0) )
                  {
                        // Will save DC 10 + 1/2 Char level + Cha mod
                        int charLevel = GetHitDice(OBJECT_SELF);
                        int saveDC = 10 + (charLevel/2) + GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
 		       int nResult = WillSave(oTarget, saveDC, SAVING_THROW_TYPE_NONE);
-		       
+
 		       if(nResult == 0)
 		       {
                             // Same effect as Doom Spell
@@ -136,7 +136,7 @@ void main()
                             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 		       }
 		 }
-	    }   
+	    }
         }
     }
 }

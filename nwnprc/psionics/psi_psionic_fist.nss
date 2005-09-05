@@ -6,7 +6,7 @@
     Performs an attack round with +2d6 damage bonus
     on the first attack.
     Requires that the user is unarmed.
-    
+
     Using Psionic Fist requires expending psionic focus.
 */
 //:://////////////////////////////////////////////
@@ -15,9 +15,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_feat_const"
-#include "prc_alterations"
 #include "psi_inc_psifunc"
 
 void main()

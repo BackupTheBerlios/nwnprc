@@ -7,7 +7,7 @@
     on the first attack.
     Requires that the user is wielding a melee
     weapon or is unarmed.
-    
+
     Using Wounding Attack requires expending
     psionic focus.
 */
@@ -17,9 +17,9 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_function"
-#include "inc_item_props"
+#include "inc_utility"
 #include "prc_feat_const"
-#include "prc_inc_combat"
+#include "prc_alterations"
 #include "psi_inc_psifunc"
 
 

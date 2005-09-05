@@ -5,7 +5,6 @@
    Song that gives everybody +1 to +8 Constitution.
 */
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_inc_clsfunc"
 
@@ -45,13 +44,13 @@ void main()
     {
         nDuration += 5;
     }
-    
+
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 
     //Do the visual effects
     effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
     effect eLink2 = ExtraordinaryEffect(EffectLinkEffects(eVis2,eLink));
-   
+
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 

@@ -140,3 +140,4 @@ const int CLASS_TYPE_SWASHBUCKLER                   = 60;
 const int CLASS_TYPE_MARSHAL                        = 59;
 const int CLASS_TYPE_CONTEMPLATIVE                        = 215;
 const int CLASS_TYPE_BLOOD_MAGUS                        = 153;
+const int CLASS_TYPE_RUNECASTER                        = 216;

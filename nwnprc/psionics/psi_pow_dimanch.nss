@@ -1,7 +1,7 @@
 /*
    ----------------
    Dimensional Anchor
-   
+
    prc_pow_dimanch
    ----------------
 
@@ -15,17 +15,18 @@
    Saving Throw: None
    Power Resistance: Yes
    Power Point Cost: 7
-   
+
    A ray springs from your outstretched hand. You must make a ranged touch attack to hit the target. Any creature hit by the ray
    is covered by a shimmering field that completely blocks extradimensional movement. Forms of movement barred by dimensional anchor
-   include dimension door, ethereal jaunt, astral travel, gate, shadow walk, teleport, and similar spells. 
+   include dimension door, ethereal jaunt, astral travel, gate, shadow walk, teleport, and similar spells.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "prc_alterations"
-#include "prc_alterations"
+
+void Aux(object oTarget);
 
 void main()
 {
@@ -54,33 +55,46 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, METAPSIONIC_TWIN, 0);
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
-    int nDC = GetManifesterDC(oCaster);
-    int nCaster = GetManifesterLevel(oCaster);
-    int nPen = GetPsiPenetration(oCaster);
-    effect eRay = EffectBeam(VFX_BEAM_MIND, OBJECT_SELF, BODY_NODE_HAND);
-    effect eVis = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
-    float fDur = 60.0 * nCaster;
-    if (nMetaPsi == 2)  fDur *= 2;
-    
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    
-    // Perform the Touch Attach
-    int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
-    if (nTouchAttack > 0)
-    {
-        //Check for Power Resistance
-        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        int nDC = GetManifesterDC(oCaster);
+        int nCaster = GetManifesterLevel(oCaster);
+        int nPen = GetPsiPenetration(oCaster);
+        effect eRay = EffectBeam(VFX_BEAM_MIND, OBJECT_SELF, BODY_NODE_HAND);
+        effect eVis = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
+        float fDur = 60.0 * nCaster;
+        if (nMetaPsi == 2)  fDur *= 2;
+
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+
+        // Perform the Touch Attach
+        int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
+        if (nTouchAttack > 0)
         {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
-            SetLocalInt(oTarget, "DimAnchor", TRUE);
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur,TRUE,-1,nCaster);
-            DelayCommand(fDur, DeleteLocalInt(oTarget, "DimAnchor"));
+            //Check for Power Resistance
+            if (PRCMyResistPower(oCaster, oTarget, nPen))
+            {
+                //Check for Power Resistance
+                if (PRCMyResistPower(oCaster, oTarget, nPen))
+                {
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
+                    //SetLocalInt(oTarget, "DimAnchor", TRUE);
+                    SetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT, GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT) + 1);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur,TRUE,-1,nCaster);
+                    //DelayCommand(fDur, DeleteLocalInt(oTarget, "DimAnchor"));
+                    DelayCommand(fDur, Aux(oTarget));
+                }
+            }
         }
     }
-    
+}
 
-    }
+void Aux(object oTarget)
+{
+    int nValue = GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT) - 1;
+    if(nValue)
+        SetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT, nValue);
+    else
+        DeleteLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT);
 }

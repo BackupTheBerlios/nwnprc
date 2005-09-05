@@ -342,6 +342,31 @@ int BloodMagusBloodComponent(object oCaster)
         return nDC;
 }
 
+int RunecasterRunePowerDC(object oCaster)
+{
+	int nDC = 0;
+	int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
+	object oItem = GetSpellCastItem();
+	string sResRef = GetResRef(oItem);
+	// If the caster is runechanting or casting from a rune, add bonus
+	// Known Bug: This does not give the proper bonus to anyone aside from the caster
+	// I am uncertain as to how to do that
+	if (nClass >= 2 && GetLocalInt(oCaster, "RuneChant") || sResRef == "prc_rune_1")
+	{
+            if (nClass >= 30)        nDC = 10;
+            else if (nClass >= 27)   nDC = 9;
+            else if (nClass >= 24)   nDC = 8;
+            else if (nClass >= 21)   nDC = 7;
+            else if (nClass >= 18)   nDC = 6;
+            else if (nClass >= 15)   nDC = 5;
+            else if (nClass >= 12)   nDC = 4;
+            else if (nClass >= 9)    nDC = 3;
+            else if (nClass >= 5)    nDC = 2;
+            else if (nClass >= 2)    nDC = 1;
+        }
+        return nDC;
+}
+
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
     if(nSpellID == -1)
@@ -375,6 +400,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += TattooFocus(nSpellID, oCaster);
     nDC += KOTCSpellFocusVsDemons(oTarget, oCaster);
     nDC += BloodMagusBloodComponent(oCaster);
+    nDC += RunecasterRunePowerDC(oCaster);
     nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     return nDC;
     

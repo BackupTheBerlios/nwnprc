@@ -1,10 +1,29 @@
-#include "prc_inc_switch"
-#include "inc_2dacache"
-#include "prc_inc_spells"
+/** @file
+ * ECL handling.
+ *
+ * @author Primogenitor
+ *
+ * @todo  Primo, could you document this one? More details to header and comment function prototypes
+ */
+
+//////////////////////////////////////////////////
+/* Function prototypes                          */
+//////////////////////////////////////////////////
 
 int GetECL(object oTarget);
 void GiveXPReward(object oPC, object oTarget, int nCR = 0);
 void GiveXPRewardToParty(object oPC, object oTarget, int nCR = 0);
+
+//////////////////////////////////////////////////
+/* Include section                              */
+//////////////////////////////////////////////////
+
+#include "inc_utility"
+
+
+//////////////////////////////////////////////////
+/* Function definitions                         */
+//////////////////////////////////////////////////
 
 int GetECL(object oTarget)
 {
@@ -50,7 +69,7 @@ void GiveXPRewardToParty(object oPC, object oTarget, int nCR = 0)
             bAward = FALSE;
         if(fDistance > IntToFloat(GetPRCSwitch(PRC_XP_MAX_PHYSICAL_DISTANCE)))
             bAward = FALSE;
-        if(nLevelDist > GetPRCSwitch(PRC_XP_MAX_LEVEL_DIFF) 
+        if(nLevelDist > GetPRCSwitch(PRC_XP_MAX_LEVEL_DIFF)
             && GetPRCSwitch(PRC_XP_MAX_LEVEL_DIFF))
             bAward = FALSE;
 
@@ -69,7 +88,7 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
         nCR = FloatToInt(GetChallengeRating(oTarget));
         if(GetPRCSwitch(PRC_XP_USE_ECL_NOT_CR))
             nCR = GetECL(oTarget);
-    }        
+    }
     if(nCR < 1)
         nCR = 1;
     if(nCR > 70)
@@ -82,9 +101,9 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
     int nBaseXP = StringToInt(Get2DACache("dmgxp", IntToString(nCR), ECL-1));
     if(nBaseXP == 0)
         return;
-    
+
     //count the size of the party
-    
+
     float fPartyCount;
     int nAssociateType;
     object oTest = GetFirstFactionMember(oPC, FALSE);
@@ -109,9 +128,9 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
     if(fPartyCount == 0.0)
         return;
     int nXPAward = FloatToInt(IntToFloat(nBaseXP)/fPartyCount);
-    
+
     //now do multiclass penalty
-    
+
     int nHighestClassLevel;
     int i;
     for(i=1;i<=3;i++)
@@ -134,7 +153,7 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
     }
     fPenalty = 1.0-fPenalty;
     nXPAward = FloatToInt(IntToFloat(nXPAward)*fPenalty);
-    
+
     //now the module slider
     nXPAward = FloatToInt(IntToFloat(nXPAward)*IntToFloat(GetPRCSwitch(PRC_XP_SLIDER_x100))/100.0);
     //now the individual slider
@@ -143,16 +162,16 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
         fPCAdjust = 1.0;
     nXPAward = FloatToInt(IntToFloat(nXPAward)*fPCAdjust);
     if(nXPAward < 0)
-        return;    
-    
-    //actually give the XP    
+        return;
+
+    //actually give the XP
     if(GetIsPC(oPC))
     {
         if(GetPRCSwitch(PRC_XP_USE_SETXP))
             SetXP(oPC, GetXP(oPC)+nXPAward);
         else
             GiveXPToCreature(oPC, nXPAward);
-    }        
+    }
     else if(GetPRCSwitch(PRC_XP_GIVE_XP_TO_NPCS))
         SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")+nXPAward);
 }
@@ -179,7 +198,7 @@ void ApplyECLToXP(object oPC);
 int GetXPForLevel(int nLevel)
 {
     return nLevel*(nLevel-1)*500;
-}    
+}
 
 void ApplyECLToXP(object oPC)
 {

@@ -1,7 +1,7 @@
 /*
    ----------------
    Hail of Crystals
-   
+
    prc_pow_hailcrys
    ----------------
 
@@ -15,18 +15,17 @@
    Saving Throw: Reflex half
    Power Resistance: No
    Power Point Cost: 9
-   
+
    An ectoplasmic crystal emanates from your outstretched hand and expands into a two foot ball as it hurtles towards the chosen target.
    You must make a ranged touch attack to strike the target of the spell, who takes 5d4 bludgeoning damage. All those who are in the
-   area of effect take 9d4 slashing with a reflex save for half. 
-   
-   Augment: For every additional power point spent, all those in the area of effect take another 1d4. 
+   area of effect take 9d4 slashing with a reflex save for half.
+
+   Augment: For every additional power point spent, all those in the area of effect take another 1d4.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
 #include "prc_alterations"
 
 void main()
@@ -55,8 +54,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugment = GetAugmentLevel(oCaster);
     object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, METAPSIONIC_WIDEN);
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
     int nDC = GetManifesterDC(oCaster);
     int nCaster = GetManifesterLevel(oCaster);
@@ -65,15 +64,15 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nDiceBurst = 5;
     int nDiceSize = 4;
     float fWidth = DoWiden(RADIUS_SIZE_LARGE, nMetaPsi);
-    location lTarget = PRCGetSpellTargetLocation();    
+    location lTarget = PRCGetSpellTargetLocation();
     effect eTarget = EffectVisualEffect(VFX_IMP_DUST_EXPLOSION);
     int nDamage;
-    
+
     //Augmentation effects to Damage
     if (nAugment > 0) nDiceBurst += nAugment;
-    
+
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    
+
     // Perform the Touch Attach
     int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
     if (nTouchAttack > 0)
@@ -84,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eTarget, oTarget);
     }
-    
+
     oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         //Cycle through the targets within the spell shape until an invalid object is captured.
         while(GetIsObjectValid(oTarget))
@@ -92,7 +91,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
-        nDamage = MetaPsionics(nDiceSize, nDiceBurst, nMetaPsi, oCaster, TRUE, oTarget, TRUE);              
+        nDamage = MetaPsionics(nDiceSize, nDiceBurst, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
                 //Make a saving throw check
                 if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
                 {
@@ -104,8 +103,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
         //Select the next target within the spell shape.
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        }   
-    
+        }
+
 
     }
 }

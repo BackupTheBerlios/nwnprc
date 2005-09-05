@@ -13,7 +13,7 @@
 //:: Updated by Oni5115 9/23/2004 to use new combat engine
 //:://////////////////////////////////////////////
 
-#include "prc_inc_combat"
+#include "prc_alterations"
 
 void main()
 {
@@ -23,10 +23,10 @@ void main()
      object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
      int iDur = 5 + GetLevelByClass(CLASS_TYPE_RAVAGER, oPC);
      int bIsRangedAttack = GetWeaponRanged(oWeap);
-     
+
      effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, d4(1));
             eCon = SupernaturalEffect(eCon);
-     
+
      // script now uses combat system to hit and apply effect if appropriate
      string sSuccess = "*Cruelest Cut Hit*";
      string sMiss    = "*Cruelest Cut Miss*";
@@ -37,7 +37,7 @@ void main()
           IncrementRemainingFeatUses(oPC, 2348);
           return;
      }
-        
+
      // If they are not within 5 ft, they can't do a melee attack.
      if(!bIsRangedAttack && !GetIsInMeleeRange(oTarget, oPC))
      {
@@ -45,7 +45,7 @@ void main()
           IncrementRemainingFeatUses(oPC, 2348);
           return;
      }
-     
+
      PerformAttackRound(oTarget, oPC, eCon, RoundsToSeconds(iDur), 0, 0, 0, FALSE, sSuccess, sMiss);
 ActionAttack(oTarget);
 }

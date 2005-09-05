@@ -13,7 +13,6 @@
 //#include "prc_alterations"
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "inc_epicspells"
 #include "prc_add_spell_dc"
 
@@ -27,7 +26,7 @@ ActionDoCommand(SetAllAoEInts(4054,OBJECT_SELF, GetSpellSaveDC()));
     effect eDam;
     object oTarget;
     object oCaster = GetAreaOfEffectCreator();
-   
+
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
     float fDelay;
     oTarget = GetFirstInPersistentObject

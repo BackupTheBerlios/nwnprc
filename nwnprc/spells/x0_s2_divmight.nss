@@ -19,7 +19,6 @@
 //:: Created On: Sep 13 2002
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_feat_const"
 
 void main()
@@ -40,12 +39,12 @@ void main()
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
         int nCharismaBonus = GetAbilityModifier(ABILITY_CHARISMA);
-        
+
         if (GetHasFeat(FEAT_EPIC_DIVINE_MIGHT, OBJECT_SELF)) nCharismaBonus+= nCharismaBonus;
-        
+
         if (nCharismaBonus>0)
         {
-        
+
             int nDamage1 = IPGetDamageBonusConstantFromNumber(nCharismaBonus);
 
             effect eDamage1 = EffectDamageIncrease(nDamage1,DAMAGE_TYPE_DIVINE);

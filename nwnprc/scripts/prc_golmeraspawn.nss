@@ -1,5 +1,5 @@
 #include "prc_alterations"
-#include "inc_array_c"
+#include "inc_utility"
 void main()
 {
     object oPC = GetPCSpeaker();

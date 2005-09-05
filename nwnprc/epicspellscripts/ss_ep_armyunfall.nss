@@ -9,7 +9,7 @@
 #include "nw_i0_spells"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
-#include "inc_2dacache"
+#include "inc_utility"
 
 //#include "prc_alterations"
 

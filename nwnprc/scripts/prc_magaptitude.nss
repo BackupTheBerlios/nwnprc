@@ -1,4 +1,4 @@
-#include "inc_item_props"
+#include "inc_utility"
 #include "prc_class_const"
 
 void Lore(object oPC ,object oSkin ,int iLevel)

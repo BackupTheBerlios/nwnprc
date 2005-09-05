@@ -79,6 +79,9 @@ const int SPELL_BLOOD_OF_THE_WARLORD = 2721;
 // Tempest Spells
 const int SPELL_T_TWO_WEAPON_FIGHTING = 2705;
 
+// Runecaster Spells
+const int SPELL_RUNE_CHANT = 1623;
+
 // Duelist
 const int SPELL_ELABORATE_PARRY    = 2722;
 const int SPELL_ELABORATE_PARRY_P  = 2723;

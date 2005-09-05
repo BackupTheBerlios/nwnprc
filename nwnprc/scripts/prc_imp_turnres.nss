@@ -11,7 +11,7 @@
 //:: Created On:  12/17/04
 //:://////////////////////////////////////////////
 
-#include "inc_item_props"
+#include "inc_utility"
 void main()
 {
 object oPC = (OBJECT_SELF);

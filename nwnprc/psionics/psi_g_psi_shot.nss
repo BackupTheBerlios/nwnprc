@@ -7,7 +7,7 @@
     on the first attack.
     Requires that the user is wielding a ranged
     weapon.
-    
+
     Using Greater Psionic Shot requires expending psionic focus.
 */
 //:://////////////////////////////////////////////
@@ -16,9 +16,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_feat_const"
-#include "prc_alterations"
 #include "psi_inc_psifunc"
 
 void main()

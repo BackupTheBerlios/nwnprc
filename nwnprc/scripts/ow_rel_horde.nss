@@ -2,7 +2,7 @@
 //:: Orc Warlord
 //:://////////////////////////////////////////////
 /*
-    Release Horde - Unsummon orc henchmen
+Release Horde - Unsummon orc henchmen
 */
 //:://////////////////////////////////////////////
 //:: Created By: Oni5115
@@ -11,21 +11,21 @@
 void main()
 {
 
-SendMessageToPC(OBJECT_SELF, "Release Horde Called");
+    SendMessageToPC(OBJECT_SELF, "Release Horde Called");
 
-object oTarget = PRCGetSpellTargetObject();
-string sRes = GetResRef(oTarget);
-object oMaster = GetMaster(oTarget);
+    object oTarget = PRCGetSpellTargetObject();
+    string sRes = GetResRef(oTarget);
+    object oMaster = GetMaster(oTarget);
 
 
     effect eDam = EffectDamage(9999, DAMAGE_TYPE_POSITIVE);
 
     if (OBJECT_SELF == oMaster)
     {
-    
-    SendMessageToPC(OBJECT_SELF, "You are target's master");
-    
-        if (sRes == "ow_sum_axe_1" || sRes == "ow_sum_axe_2" || sRes == "ow_sum_axe_3" || sRes == "ow_sum_axe_4" || sRes == "ow_sum_axe_5" || 
+
+        SendMessageToPC(OBJECT_SELF, "You are target's master");
+
+        if (sRes == "ow_sum_axe_1" || sRes == "ow_sum_axe_2" || sRes == "ow_sum_axe_3" || sRes == "ow_sum_axe_4" || sRes == "ow_sum_axe_5" ||
         sRes == "ow_sum_axe_6" || sRes == "ow_sum_axe_7" || sRes == "ow_sum_axe_8" || sRes == "ow_sum_axe_9" || sRes == "ow_sum_axe_10" ||
         sRes == "ow_sum_axe_11" || sRes == "ow_sum_axe_12" || sRes == "ow_sum_barb_1" || sRes == "ow_sum_barb_2" || sRes == "ow_sum_barb_3" ||
         sRes == "ow_sum_barb_4" || sRes == "ow_sum_barb_5" || sRes == "ow_sum_barb_6" || sRes == "ow_sum_barb_7" || sRes == "ow_sum_barb_8" ||
@@ -36,9 +36,9 @@ object oMaster = GetMaster(oTarget);
         sRes == "ow_sum_sham_5" || sRes == "ow_sum_sham_6" || sRes == "ow_sum_sham_7" || sRes == "ow_sum_sham_8" || sRes == "ow_sum_sham_9" ||
         sRes == "ow_sum_sham_10" || sRes == "ow_sum_sham_11" || sRes == "ow_sum_sham_12")
         {
-        SendMessageToPC(OBJECT_SELF, "Target is a Horde Orc");
-        DestroyObject(oTarget);
-        //ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            SendMessageToPC(OBJECT_SELF, "Target is a Horde Orc");
+            DestroyObject(oTarget);
+            //ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
         }
 
     }

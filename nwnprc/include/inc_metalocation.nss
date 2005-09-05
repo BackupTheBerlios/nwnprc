@@ -25,22 +25,21 @@
     The metalocation invariant:
     All valid metalocations are such that they may be
     uniquely matched to a location.
-    
+
     That is, a valid metalocation is one where the area
     can be identified will full certainty using the
     tag, name, height and width of the area.
-    
-    
+
+
     In addition, this file contains a group of functions
     for abstracted handling of metalocation data.
+
+
+    @author Ornedan
+    @date   Created - 23.05.2005
 */
 //:://////////////////////////////////////////////
-//:: Created By: Ornedan
-//:: Created On: 23.05.2005
 //:://////////////////////////////////////////////
-
-#include "inc_persist_loca"
-#include "inc_utility"
 
 
 //////////////////////////////////////////////////
@@ -97,7 +96,7 @@ struct metalocation LocationToMetalocation(location locL, string sName = "");
 
 /**
  * Convert a metalocation to equivalent standard location.
- * 
+ *
  * NOTE!
  * If the metalocation is not in current module, the current module's starting
  * location will be returned. As such, it is recommended that you run
@@ -158,7 +157,7 @@ void SetPersistantLocalMetalocation(object oCreature, string sName,
  * Retrieves the metalocation stored on the given object under the given name.
  * NOTE! If there was no metalocation stored with the given name, the returned
  * value will have all it's fields contain null-equivalents.
- * 
+ *
  * @param oObject The object the metalocation was stored on.
  * @param sName   The name the metalocation was stored under.
  * @return        A copy of the stored metalocation.
@@ -170,7 +169,7 @@ struct metalocation GetLocalMetalocation(object oObject, string sName);
  * the given name.
  * NOTE! If there was no metalocation stored with the given name, the returned
  * value will have all it's fields contain null-equivalents.
- * 
+ *
  * @param oCreature The creature the metalocation was stored on.
  * @param sName     The name the metalocation was stored under.
  * @return          A copy of the stored metalocation.
@@ -208,7 +207,7 @@ void DeletePersistantLocalMetalocation(object oCreature, string sName);
 void CreateMapPinFromMetalocation(struct metalocation mlocL, object oPC);
 
 /**
- * Creates a metalocation based on the given map pin. 
+ * Creates a metalocation based on the given map pin.
  *
  * @param oPC   The player character in whose map pin array to use
  * @param nPinNo   The position of the map pin to use
@@ -264,6 +263,11 @@ void DeleteMapPin(object oPC, int nPinNo);
 string MetalocationToString(struct metalocation mlocL);
 
 
+//////////////////////////////////////////////////
+/* Include section                              */
+//////////////////////////////////////////////////
+
+#include "inc_utility"
 
 
 //////////////////////////////////////////////////
@@ -285,7 +289,7 @@ struct metalocation LocationToMetalocation(location locL, string sName = "")
     mlocL.fFacing     = GetFacingFromLocation(locL);
     mlocL.sName       = sName;
     mlocL.sModule     = GetName(GetModule());
-    
+
     // Check that the area can be uniquely identified.
     if(GetAreaFromMetalocation(mlocL) == OBJECT_INVALID)
         return GetNullMetalocation(); // It can't, return null.
@@ -330,7 +334,7 @@ object GetAreaFromMetalocation(struct metalocation mlocL)
 
         // Make sure that if the object reference is not valid, it is OBJECT_INVALID
         if(!GetIsObjectValid(oArea)) return OBJECT_INVALID;
-        
+
         // We have a valid area reference. Now check that it is the only one matching the parameters.
         object oAreaCheck = GetObjectByTag(mlocL.sAreaTag, ++i);
         while(GetIsObjectValid(oAreaCheck))
@@ -508,7 +512,7 @@ struct metalocation CreateMetalocationFromMapPin(object oPC, int nPinNo)
         return GetNullMetalocation();
     if(nPinCount < nPinNo)
         return GetNullMetalocation();
-    //variables    
+    //variables
     struct metalocation mlocReturn;
     string sID = IntToString(nPinNo);
     location lLoc;
@@ -543,7 +547,7 @@ void DeleteMapPin(object oPC, int nPinNo)
         return;
     if(nPinCount < nPinNo)
         return;
-    //delete the pin    
+    //delete the pin
     DeleteLocalString(oPC, "NW_MAP_PIN_NRTY_"+IntToString(nPinNo));
     DeleteLocalFloat( oPC, "NW_MAP_PIN_XPOS_"+IntToString(nPinNo));
     DeleteLocalFloat( oPC, "NW_MAP_PIN_YPOS_"+IntToString(nPinNo));
@@ -590,7 +594,7 @@ int GetIsMetalocationValid(struct metalocation mlocL)
     SendMessageToPC(GetFirstPC(), "mlocL.sAreaResRef " + IntToString(mlocL.sAreaResRef != ""));
     SendMessageToPC(GetFirstPC(), "mlocL.sModule " + IntToString(mlocL.sModule     != ""));
     SendMessageToPC(GetFirstPC(), "GetIsMetalocationInModule(mlocL): " + IntToString(GetIsMetalocationInModule(mlocL)));
-*/    
+*/
     return mlocL.sAreaTag    != ""   &&
 //           mlocL.sAreaResRef != ""   &&
            mlocL.sAreaName   != ""   &&

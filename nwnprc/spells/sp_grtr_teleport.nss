@@ -31,7 +31,7 @@
 
 #include "spinc_common"
 #include "prc_inc_teleport"
-#include "inc_draw"
+#include "inc_utility"
 
 const int SPELLID_TELEPORT_SELF_ONLY = 2894;
 const int SPELLID_TELEPORT_PARTY     = 2895;

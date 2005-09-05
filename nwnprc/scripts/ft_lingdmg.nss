@@ -8,12 +8,12 @@
     possessor. This is done by the script adding
     itself via the eventhook to OnPlayerEquipItem
     and OnPlayerUnEquipItem events.
-    
+
     The script also adds itself to be run during
     OnHit event, where it will deal the lingering
     sneak attack damage.
-    
-    
+
+
     Should Lingering Damage apply to unarmed strike, too ?
     Also, should there be some text notification when
     the damage is dealt, like with PerformAttackRound?
@@ -23,25 +23,20 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "inc_eventhook"
-#include "prc_alterations"
-
-#include "inc_prc_npc"
-#include "prc_alterations"
-#include "prc_alterations"
+#include "inc_utility"
 
 void main()
 {
     object oPC, oItem;
     int nEvent = GetRunningEvent();
-    
-    
+
+
     // We aren't being called from any event, instead from EvalPRCFeats, so set up the eventhooks
     if(nEvent == FALSE)
     {
         oPC = OBJECT_SELF;
         //SendMessageToPC(oPC, "ft_lingdmg - Adding eventhooks");
-        
+
         AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM, "ft_lingdmg", TRUE, FALSE);
         AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "ft_lingdmg", TRUE, FALSE);
         AddEventScript(oPC, EVENT_ONHIT, "ft_lingdmg", TRUE, FALSE);

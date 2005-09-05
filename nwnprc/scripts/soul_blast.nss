@@ -21,7 +21,6 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_alterations"
 #include "prc_class_const"
-#include "prc_alterations"
 
 void main()
 {
@@ -31,7 +30,7 @@ void main()
     int nDC = 10 + nClassLevel + GetAbilityModifier(ABILITY_CHARISMA, oCaster);
     effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
     object oTarget = PRCGetSpellTargetObject();
-    
+
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
     int nDamage = d6(nClassLevel);
     nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_NONE);
@@ -41,6 +40,6 @@ void main()
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
     }
-                       
+
 }
 

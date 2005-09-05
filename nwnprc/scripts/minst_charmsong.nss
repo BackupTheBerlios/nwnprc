@@ -7,7 +7,6 @@
     with lasting impression.
 */
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_inc_clsfunc"
 
@@ -43,7 +42,7 @@ void main()
     {
         nDuration += 5;
     }
-    
+
     effect eCharm;
     effect eCharmed = EffectCharmed();
     effect eCharmVis = EffectVisualEffect(VFX_IMP_SILENCE);
@@ -56,13 +55,13 @@ void main()
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
-    
+
     while(GetIsObjectValid(oTarget))
     {
         eCharm = GetScaledEffect(eCharmed, oTarget);
         eCharm = EffectLinkEffects(eCharm, eMind);
         eCharm = EffectLinkEffects(eCharm, eDur);
-        
+
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
         {
             if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget)) // deaf targets can't hear the song.

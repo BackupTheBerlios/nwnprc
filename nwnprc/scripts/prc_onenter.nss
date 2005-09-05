@@ -1,11 +1,8 @@
 #include "prc_alterations"
 #include "prc_inc_domain"
 #include "prc_inc_clsfunc"
-#include "inc_eventhook"
-#include "prc_inc_switch"
+#include "inc_utility"
 #include "inc_leto_prc"
-#include "inc_time"
-#include "inc_metalocation"
 #include "x2_inc_switches"
 #include "prc_inc_teleport"
 
@@ -20,7 +17,7 @@ void main()
     //hopefully in the next update
     //  -Aaon Graywolf
     object oPC = GetEnteringObject();
-    
+
     //FloatingTextStringOnCreature("PRC on enter was called", oPC, FALSE);
 
     // Since OnEnter event fires for the PC when loading a saved game (no idea why,
@@ -43,10 +40,10 @@ void main()
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
     DeletePRCLocalInts(oSkin);
-    
+
     // Gives people the proper spells from their bonus domains
     // This should run before EvalPRCFeats, because it sets a variable
-    CheckBonusDomains(oPC);    
+    CheckBonusDomains(oPC);
 
     SetLocalInt(oPC,"ONENTER",1);
     // Make sure we reapply any bonuses before the player notices they are gone.
@@ -191,7 +188,7 @@ void main()
     // Create map pins from marked teleport locations if the PC has requested that such be done.
     if(GetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS))
         DelayCommand(10.0f, TeleportLocationsToMapPins(oPC));
-        
+
     if(GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD)
         && !GetXP(oPC))
     {
@@ -204,7 +201,7 @@ void main()
             for(i=0;i<nRacialHD;i++)
             {
                 LevelUpHenchman(oPC, nRacialClass, TRUE);
-            }    
+            }
         }
     }
 

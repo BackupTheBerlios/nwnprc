@@ -1,6 +1,5 @@
 #include "prc_alterations"
-#include "prc_alterations"
-#include "inc_prc_npc"
+#include "inc_utility"
 
 
 // * Applies the Arcane Duelist's AC bonus as a CompositeBonus on object's skin.
@@ -25,19 +24,19 @@ void RemoveEnchantCW(object oPC, object oWeap)
 void EnchantCW(object oPC, object oWeap)
 {
    int iBonus = 0;
-      
+
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 1)
          iBonus += 1;
 
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 4)
          iBonus += 1;
-         
+
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 6)
          iBonus += 1;
-     
+
       if (GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC) >= 8)
          iBonus += 1;
-               
+
       //SendMessageToPC(oPC, "Enchant Chosen Weapon has been run");
       DelayCommand(0.1,SetCompositeBonusT(oWeap, "ADEnchant", iBonus, ITEM_PROPERTY_ENHANCEMENT_BONUS));
 }
@@ -47,12 +46,12 @@ void main()
   object oPC = OBJECT_SELF;
   object oSkin = GetPCSkin(oPC);
   object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-  
+
   if (GetHasFeat(FEAT_AD_APPARENT_DEFENSE, oPC)) ApparentDefense(oPC, oSkin);
-  
+
   if (GetLocalInt(oWeap,"CHOSEN_WEAPON") == 2)
     EnchantCW(oPC, oWeap);
-  
+
   if (GetLocalInt(oPC,"ONEQUIP") == 1)
         RemoveEnchantCW(oPC, GetItemLastUnequipped());
 }

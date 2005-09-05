@@ -9,8 +9,6 @@
 
  /* This variable MUST be updated with every new version of the PRC!!! */
 
-#include "inc_array"
-
  const string PRC_VERSION                           = "PRC 2.3 alpha 9";
 
 
@@ -105,14 +103,14 @@ const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
 const string PRC_PNP_ANIMATE_DEAD                    = "PRC_PNP_ANIMATE_DEAD";
 
 /*
- * Undead created by Create Undead and Create Greater Undead are 
+ * Undead created by Create Undead and Create Greater Undead are
  * not automatically under the casters control
  * If this is set, the undead are permanently created
  */
 const string PRC_CREATE_UNDEAD_UNCONTROLLED          = "PRC_CREATE_UNDEAD_UNCONTROLLED";
 
 /*
- * Undead created by Create Undead and Create Greater Undead are 
+ * Undead created by Create Undead and Create Greater Undead are
  * not removed on resting etc
  */
 const string PRC_CREATE_UNDEAD_PERMANENT             = "PRC_CREATE_UNDEAD_PERMANENT";
@@ -505,8 +503,8 @@ const string PRC_NO_PETRIFY_GUI                      = "PRC_NO_PETRIFY_GUI";
  * Set this to remove the switch changing convo feat.
  * This must be set for PWs to avoid players screwing around with switches
  */
- 
-const string PRC_DISABLE_SWITCH_CHANGING_CONVO       = "PRC_DISABLE_SWITCH_CHANGING_CONVO"; 
+
+const string PRC_DISABLE_SWITCH_CHANGING_CONVO       = "PRC_DISABLE_SWITCH_CHANGING_CONVO";
 
 
 /******************************************************************************\
@@ -1727,6 +1725,14 @@ void SetDefaultFileEnds();
  * It is used for the switch setting convo to loop over switches easily
  */
 void CreateSwitchNameArray();
+
+
+//////////////////////////////////////////////////
+/* Include section                              */
+//////////////////////////////////////////////////
+
+#include "inc_array" // Needs direct include instead of inc_utility
+
 
 //////////////////////////
 // Function definitions //

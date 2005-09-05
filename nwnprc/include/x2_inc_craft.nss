@@ -13,12 +13,7 @@
 //:: Created On: 2003-05-09
 //:: Last Updated On: 2003-10-14
 //:://////////////////////////////////////////////
-#include "x2_inc_itemprop"
-#include "x2_inc_switches"
-#include "inc_utility"
-#include "prc_inc_newip"
-#include "prc_inc_spells"
-#include "inc_time"
+
 
 struct craft_struct
 {
@@ -122,6 +117,22 @@ object CICraftScribeScroll(object oCreator, int nSpellID);
 // *  calls appropriate item creation subroutine if conditions are met (spell cast on correct item, etc).
 // *  Returns TRUE if the spell was used for an item creation feat
 int   CIGetSpellWasUsedForItemCreation(object oSpellTarget);
+
+
+//////////////////////////////////////////////////
+/* Include section                              */
+//////////////////////////////////////////////////
+
+#include "x2_inc_itemprop"
+#include "x2_inc_switches"
+//#include "inc_utility"
+#include "prc_inc_newip"
+#include "prc_inc_spells"
+
+
+//////////////////////////////////////////////////
+/* Function definitions                         */
+//////////////////////////////////////////////////
 
 
 // *  Returns the innate level of a spell. If bDefaultZeroToOne is given
@@ -408,7 +419,7 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
             itemproperty ipMeta = ItemPropertyMetamagic(nSpellID, PRCGetMetaMagicFeat());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
         }
-        
+
         if (oTarget == OBJECT_INVALID)
         {
            WriteTimestampedLogEntry("x2_inc_craft::CICraftScribeScroll failed - Resref: " + sResRef + " Class: " + sClass + "(" +IntToString(nClass) +") " + " SpellID " + IntToString (nSpellID));
@@ -450,7 +461,7 @@ int CICraftCheckBrewPotion(object oSpellTarget, object oCaster)
             case METAMAGIC_STILL:
                 nLevel += 6;
                 break;
-These dont work as IPs since they are hardcoded */                
+These dont work as IPs since they are hardcoded */
         }
     }
 
@@ -530,7 +541,7 @@ These dont work as IPs since they are hardcoded */
         TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
         SetXP(oCaster, nNewXP);
         DestroyObject (oSpellTarget);
-        FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful 
+        FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
         AdvanceTimeForPlayer(oCaster, HoursToSeconds(24));
         return TRUE;
      }
@@ -603,7 +614,7 @@ int CICraftCheckScribeScroll(object oSpellTarget, object oCaster)
             case METAMAGIC_STILL:
                 nLevel += 6;
                 break;
-These dont work as IPs since they are hardcoded */                
+These dont work as IPs since they are hardcoded */
         }
     }
 
@@ -711,9 +722,9 @@ int CICraftCheckCraftWand(object oSpellTarget, object oCaster)
             case METAMAGIC_STILL:
                 nLevel += 6;
                 break;
-These dont work as IPs since they are hardcoded */                
+These dont work as IPs since they are hardcoded */
         }
-    }    
+    }
 
     // -------------------------------------------------------------------------
     // check if spell is below maxlevel for craft want

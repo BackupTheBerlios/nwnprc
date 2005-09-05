@@ -9,7 +9,7 @@
 //:: Created On: Dec 20, 2003
 //:://////////////////////////////////////////////
 
-#include "inc_item_props"
+#include "inc_utility"
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"

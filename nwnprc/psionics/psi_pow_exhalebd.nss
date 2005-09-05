@@ -1,7 +1,7 @@
 /*
    ----------------
    Exhalation of the Black Dragon
-   
+
    prc_all_exhalebd
    ----------------
 
@@ -15,16 +15,15 @@
    Saving Throw: None
    Power Resistance: Yes
    Power Point Cost: 5
-   
+
    You spit forth vitriolic acid at your target, dealing 3d6 points of acid damage on a successful ranged touch attack.
-   
-   Augment: For every 2 additional power points spent, this power's damage increases by 1d6. 
+
+   Augment: For every 2 additional power points spent, this power's damage increases by 1d6.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
 #include "prc_alterations"
 
 void main()
@@ -54,8 +53,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
     object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
 
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
     int nDC = GetManifesterDC(oCaster);
     int nCaster = GetManifesterLevel(oCaster);
@@ -63,27 +62,27 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
     effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
     int nDice = 3;
     int nDiceSize = 6;
-            
+
     //Augmentation effects to Damage
     if (nAugment > 0) nDice += nAugment;
-    
+
     int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
     effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
-    
+
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    
+
     // Perform the Touch Attach
     int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
     if (nTouchAttack > 0)
     {
         //Check for Power Resistance
         if (PRCMyResistPower(oCaster, oTarget, nPen))
-        {       
+        {
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         }
     }
-    
+
 
     }
 }

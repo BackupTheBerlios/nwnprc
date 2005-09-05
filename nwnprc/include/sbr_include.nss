@@ -13,7 +13,7 @@ Always recompile your module after modifying 'sbr_include' because it is an incl
 #5: Remember to always make sure you are using the options you want to use when running "Build Module"!
 */
 
-#include "inc_logmessage"
+#include "inc_utility"
 #include "nw_i0_plot"
 
 // ****************************************************************************

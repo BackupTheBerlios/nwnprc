@@ -1,6 +1,5 @@
 #include "prc_alterations"
 #include "spinc_common"
-#include "prc_alterations"
 
 void main()
 {
@@ -13,16 +12,16 @@ void main()
        FloatingTextStringOnCreature("*You must use a ranged weapon.*", OBJECT_SELF, FALSE);
        return;
    }
-   
+
    // Let the target know they were done a hostile action at
    SPRaiseSpellCastAt(oTarget, TRUE, nSpellId);
-   
+
    if (!GetIsCreatureDisarmable(oTarget) || GetPlotFlag(oTarget))
    {
-       FloatingTextStringOnCreature("*That target is not disarmable.*", OBJECT_SELF, FALSE);       
+       FloatingTextStringOnCreature("*That target is not disarmable.*", OBJECT_SELF, FALSE);
        return;
    }
-   
+
    int nAttack = GetAttackBonus(oTarget, OBJECT_SELF, oWeap)-6;
    int iHit = GetAttackRoll(oTarget, OBJECT_SELF, oWeap, 0, nAttack);
    if(iHit)
@@ -82,7 +81,7 @@ int RangedAttackBonus(object oPC, object oWeap, object oTarget, int iMod = 0)
        break;
     }
 
-  
+
     iEnhancement = GetWeaponRangeEnhancement(oWeap,oPC) ;
 
     int Distance=FloatToInt(GetDistanceBetween(oPC,oTarget));
@@ -127,13 +126,13 @@ void main()
        FloatingTextStringOnCreature("*You must use a ranged weapon.*", OBJECT_SELF, FALSE);
        return;
    }
-   
+
    // Let the target know they were done a hostile action at
    SPRaiseSpellCastAt(oTarget, TRUE, nSpellId);
-   
+
    if (!GetIsCreatureDisarmable(oTarget) || GetIsPlot(oTarget))
    {
-       FloatingTextStringOnCreature("*That target is not disarmable.*", OBJECT_SELF, FALSE);       
+       FloatingTextStringOnCreature("*That target is not disarmable.*", OBJECT_SELF, FALSE);
        return;
    }
 
@@ -152,9 +151,9 @@ void main()
 
    // Perform a ranged attack...
    int iDiceRoll = d20();
-   
+
    int iRoll = RangedAttackBonus(OBJECT_SELF, oWeap, oTarget, 0) + iDiceRoll - 4;
-   
+
    int iHit = ((iRoll > GetAC(oTarget)) || (iDiceRoll = 20)) ? 1 : 0;
 
    int iDisc = (iRoll > (GetSkillRank(SKILL_DISCIPLINE, oTarget) + d20())) ? 1 : 0;

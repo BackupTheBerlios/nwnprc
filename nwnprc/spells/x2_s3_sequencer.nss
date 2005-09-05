@@ -15,8 +15,9 @@
 //:: Updated By: Georg
 //:://////////////////////////////////////////////
 
-#include "x2_inc_itemprop"
-#include "prc_inc_spells"
+#include "spinc_common"
+
+
 void main()
 {
     object oItem = GetSpellCastItem();

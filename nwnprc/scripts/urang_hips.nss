@@ -1,5 +1,5 @@
 #include "NW_I0_SPELLS"
-#include "inc_item_props"
+#include "inc_utility"
 
 void main()
 {

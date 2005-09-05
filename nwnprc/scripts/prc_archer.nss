@@ -1,8 +1,6 @@
 #include "prc_alterations"
 #include "prc_inc_clsfunc"
-#include "prc_alterations"
 #include "prc_feat_const"
-#include "prc_alterations"
 
 void Equip(object oPC,int bBowSpec,object oSkin,int bXShot)
 {

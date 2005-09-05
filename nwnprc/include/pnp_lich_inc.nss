@@ -11,7 +11,7 @@
 //:: Created On:
 //:://////////////////////////////////////////////
 
-#include "inc_item_props"
+#include "inc_utility"
 #include "pnp_shft_main"
 
 // Returns the lich amulet level

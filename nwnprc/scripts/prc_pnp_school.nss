@@ -1,9 +1,8 @@
 #include "inc_utility"
-#include "inc_array"
 #include "prc_alterations"
 #include "inc_dynconv"
 
-//This used Bitwise math 
+//This used Bitwise math
 //this thread should help if you dont understand bitwise math
 //http://nwn.bioware.com/forums/viewtopic.html?topic=391126&forum=47
 
@@ -11,18 +10,18 @@ void AddSchool(int nSchool, int nSchool2 = 0, int nSchool3 = 0)
 {
     string sName;
     sName += GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool)));
-    if(nSchool2 && !nSchool3)  
+    if(nSchool2 && !nSchool3)
         sName += " and "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool2)));
-    if(nSchool2 && nSchool3)  
+    if(nSchool2 && nSchool3)
     {
         sName += ", "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool2)));
         sName += ", and "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool3)));
-    }       
+    }
     array_set_string(OBJECT_SELF, "ChoiceTokens", array_get_size(OBJECT_SELF, "ChoiceTokens"),
-        sName);      
+        sName);
     int nValue = nSchool + (nSchool2 << 4) + (nSchool3 << 8);
     array_set_int(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues"), nValue);
-    
+
     string sMessage;
     sMessage += "sName = "+sName+"\n";
     sMessage += "nValue = "+IntToString(nValue)+"\n";
@@ -30,7 +29,7 @@ void AddSchool(int nSchool, int nSchool2 = 0, int nSchool3 = 0)
     sMessage += "nSchool2 = "+IntToString(nSchool2)+"\n";
     sMessage += "nSchool3 = "+IntToString(nSchool3)+"\n";
     sMessage += "nSchool2 << 4 = "+IntToString(nSchool2 << 4)+"\n";
-    sMessage += "nSchool3 << 8 = "+IntToString(nSchool3 << 8)+"\n";    
+    sMessage += "nSchool3 << 8 = "+IntToString(nSchool3 << 8)+"\n";
     SendMessageToPC(GetFirstPC(), sMessage);
     PrintString(sMessage);
 }
@@ -48,7 +47,7 @@ int GetIPFromSchool(int nSchool)
         case SPELL_SCHOOL_ILLUSION:     return 247;
         case SPELL_SCHOOL_NECROMANCY:   return 248;
         case SPELL_SCHOOL_TRANSMUTATION:return 249;
-    }    
+    }
     return 0;
 }
 
@@ -64,7 +63,7 @@ int GetIPFromOppSchool(int nSchool)
         case SPELL_SCHOOL_ILLUSION:     return 238;
         case SPELL_SCHOOL_NECROMANCY:   return 239;
         case SPELL_SCHOOL_TRANSMUTATION:return 240;
-    }   
+    }
     return 0;
 }
 
@@ -264,17 +263,17 @@ void main()
 
             string sName;
             sName += GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool1)));
-            if(nSchool2 && !nSchool3)  
+            if(nSchool2 && !nSchool3)
                 sName += " and "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool2)));
-            if(nSchool2 && nSchool3)  
+            if(nSchool2 && nSchool3)
             {
                 sName += ", "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool2)));
                 sName += ", and "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool3)));
-            }       
+            }
 
             string sText = "You have selected "+GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", nSchool)))
                 +" as your specialist school.\n";
-            if(nSchool != SPELL_SCHOOL_GENERAL)                  
+            if(nSchool != SPELL_SCHOOL_GENERAL)
                 sText += "You have selected "+sName+" as your opposition school(s).\n";
             sText += "Is this correct?";
             SetCustomToken(99, sText);
@@ -334,9 +333,9 @@ void main()
         //move to another stage based on responce
         if(nValue == SPELL_SCHOOL_GENERAL)
             nStage = 2;// generalist, go to confirmation
-        else            
+        else
             nStage = 1;//select opposing school
-        SetLocalInt(oPC, "School", nValue); 
+        SetLocalInt(oPC, "School", nValue);
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
         array_create(oPC, "ChoiceTokens");
@@ -348,9 +347,9 @@ void main()
         int nSchool1 = nValue & 15;
         int nSchool2 = (nValue & 240) >> 4;
         int nSchool3 = (nValue & 3840) >> 8;
-        SetLocalInt(oPC, "School1", nSchool1); 
-        SetLocalInt(oPC, "School2", nSchool2); 
-        SetLocalInt(oPC, "School3", nSchool3); 
+        SetLocalInt(oPC, "School1", nSchool1);
+        SetLocalInt(oPC, "School2", nSchool2);
+        SetLocalInt(oPC, "School3", nSchool3);
         nStage++;
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
@@ -363,16 +362,16 @@ void main()
     sMessage += "nSchool2 = "+IntToString(nSchool2)+"\n";
     sMessage += "nSchool3 = "+IntToString(nSchool3)+"\n";
     sMessage += "nValue & 240 = "+IntToString(nValue & 240)+"\n";
-    sMessage += "nValue & 3840 = "+IntToString(nValue & 3840)+"\n";    
+    sMessage += "nValue & 3840 = "+IntToString(nValue & 3840)+"\n";
     SendMessageToPC(GetFirstPC(), sMessage);
     PrintString(sMessage);
-        
+
     }
     else if(nStage == 2)//confirmation
     {
         if(nValue == TRUE)
         {
-            nStage = 3;    
+            nStage = 3;
             int nSchool  = GetLocalInt(oPC, "School" );
             int nSchool1 = GetLocalInt(oPC, "School1");
             int nSchool2 = GetLocalInt(oPC, "School2");

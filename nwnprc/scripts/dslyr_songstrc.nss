@@ -1,6 +1,5 @@
 #include "prc_alterations"
 #include "spinc_common"
-#include "prc_alterations"
 #include "prc_inc_clsfunc"
 
 void main()
@@ -9,7 +8,7 @@ void main()
 
     //Declare major variables
     //Get the object that is exiting the AOE
-    object oTarget = GetExitingObject();    
+    object oTarget = GetExitingObject();
     object oCreator = GetAreaOfEffectCreator();
     effect eAOE;
     //Search through the valid effects on the target.

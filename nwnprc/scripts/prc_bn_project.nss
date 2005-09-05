@@ -37,7 +37,7 @@
 //:: Modified On: 19.02.2005
 //:://////////////////////////////////////////////
 
-#include "x2_inc_itemprop"
+#include "prc_alterations"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -77,7 +77,7 @@ void main()
 
     // Check if there is a valid copy around.
     // If so, end the projection.
-    
+
     if(GetIsObjectValid(oCopy))
     {
         EndPosses(oPC, oCopy);
@@ -127,7 +127,7 @@ void main()
 //First sets the given item destroyable and then destroys it.
 //This is used to make sure no duplicate items are created
 //when using the projection.
- 
+
 void DoDestroy(object oObject){
     AssignCommand(oObject, SetIsDestroyable(TRUE, FALSE, FALSE));
     DestroyObject(oObject);
@@ -135,7 +135,7 @@ void DoDestroy(object oObject){
 
 // Copies the contents of object oA to oB
 // and destroys the originals.
- 
+
 void MoveInventory(object oA, object oB, int bCopyEquipped = FALSE)
 {
     object oItem = GetFirstItemInInventory(oA);
@@ -163,7 +163,7 @@ void MoveInventory(object oA, object oB, int bCopyEquipped = FALSE)
 
 //Wipe the copy's inventory
 //Does not touch equipped items, since a naked copy would look stupid :P
- 
+
 void CleanTheCopy(object oCopy)
 {
     object oItem = GetFirstItemInInventory(oCopy);
@@ -197,7 +197,7 @@ void CleanTheCopy(object oCopy)
 
 
  // Moves the PC's items to the copy and switches their locations around
- 
+
 void PseudoPosses(object oPC, object oCopy)
 {
     // Make sure both objects are valid
@@ -239,7 +239,7 @@ void PseudoPosses(object oPC, object oCopy)
     //move the container to the copy
     DelayCommand(0.3, MoveInventory(oContainer, oCopy));
     DelayCommand(1.0, DestroyObject(oContainer));
-    
+
     // Just move the PC's stuff to the copy.
     // It doesn't matter if all the copy's own items haven't been destroyed yet, since this will not interfere
     MoveInventory(oPC, oCopy);
@@ -256,7 +256,7 @@ void PseudoPosses(object oPC, object oCopy)
 
 
 // Switches the PC's inventory back from the copy and returns the PC to the copy's location.
- 
+
 void EndPosses(object oPC, object oCopy)
 {
     // See comment in PseudoPossess
@@ -267,7 +267,7 @@ void EndPosses(object oPC, object oCopy)
     object oContainer = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest1" ,lLimbo);
     if(!GetIsObjectValid(oContainer))
         return;
-    
+
     effect eLight = EffectVisualEffect(VFX_IMP_RESTORATION_GREATER, FALSE);
 
     // Remove Immortality from the PC if necessary
@@ -303,14 +303,14 @@ void EndPosses(object oPC, object oCopy)
     //move the container to the PC
     DelayCommand(0.3, MoveInventory(oContainer, oPC));
     DelayCommand(0.4, DestroyObject(oContainer));
-    
+
 }
 
 
   //Runs tests to see if the projection effect can still continue.
   //If the PC has reached 1 HP, end projection normally.
   //If the copy is dead, end projection and kill the PC.
- 
+
 void ProjectionMonitor(object oPC, object oCopy)
 {
     // First, some paranoia checks. The player might have ended the projection in meantime.
@@ -338,7 +338,7 @@ void ProjectionMonitor(object oPC, object oCopy)
 
 
 //Gives the PC -50 to attack and places No Damage iprop to all equipped weapons.
- 
+
 void NerfWeapons(object oPC){
     effect eAB = EffectAttackDecrease(50);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAB, oPC);

@@ -5,7 +5,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_util"
-#include "inc_item_props"
+#include "inc_utility"
 #include "prc_class_const"
 #include "prc_misc_const"
 #include "prc_inc_clsfunc"

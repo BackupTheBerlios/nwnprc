@@ -9,7 +9,7 @@
 //:: Created On: June 28, 2004
 //:://////////////////////////////////////////////
 
-#include "inc_item_props"
+#include "inc_utility"
 #include "nw_i0_spells"
 #include "prc_inc_unarmed"
 

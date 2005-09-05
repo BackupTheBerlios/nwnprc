@@ -8,8 +8,6 @@
 */
 
 #include "prc_alterations"
-
-#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "prc_class_const"
 
@@ -25,7 +23,7 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
     effect eExplode = EffectVisualEffect(VFX_FNF_LOS_EVIL_30);
     effect eLink = EffectLinkEffects(eSave, eDur);
-    
+
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eExplode, OBJECT_SELF);
 
     float fSize;

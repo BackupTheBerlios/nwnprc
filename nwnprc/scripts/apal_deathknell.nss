@@ -3,7 +3,7 @@
 //:: apal_deathknell.nss
 //:://////////////////////////////////////////////
 /*
-    If target creature with less than 10 HP fails save 
+    If target creature with less than 10 HP fails save
     caster gains 1d8 temp HP, +2 Str, and +1 Caster level
 */
 //:://////////////////////////////////////////////
@@ -13,9 +13,7 @@
 
 #include "prc_alterations"
 #include "spinc_common"
-#include "prc_alterations"
 #include "prc_inc_clsfunc"
-#include "prc_alterations"
 
 void DeathKnellCheck(object oPC)
 {
@@ -47,24 +45,24 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int nPenetr = CasterLvl + SPGetPenetr();
     int nDC = GetSpellDCSLA(OBJECT_SELF,1);
     int nSpellDC = (PRCGetSaveDC(oTarget,OBJECT_SELF)) ;
-    
+
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 2);
     effect eHP = EffectTemporaryHitpoints(nBonus);
 
     effect eVis2 = EffectVisualEffect(VFX_IMP_DEATH_L);
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
-    
+
 
     effect eLink = EffectLinkEffects(eStr, eDur);
 
-       
+
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ENERVATION));
     //Resist magic check
-    
+
 if (iHP < 10)
-{    
+{
     if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
     {
         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_NEGATIVE))
@@ -72,8 +70,8 @@ if (iHP < 10)
                 //Apply the VFX impact and effects
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
-                
-                
+
+
                 //Apply the bonuses to the PC
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);

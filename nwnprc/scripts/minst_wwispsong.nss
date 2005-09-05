@@ -6,7 +6,6 @@
    level being MotE level/3.)
 */
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_inc_clsfunc"
 
@@ -23,7 +22,7 @@ void main()
         FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
         return;
     }
-    
+
     //Declare major variables
     object oTarget;
     int nBonus = (GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE, OBJECT_SELF) + 2) / 4;
@@ -33,7 +32,7 @@ void main()
     effect eLink = EffectLinkEffects(eBoost, eDur);
     eLink = ExtraordinaryEffect(eLink);
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
-    
+
     int iDontStack;
 
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
@@ -52,11 +51,11 @@ void main()
     }
 
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
-  
+
     //Do the visual effects
     effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
     effect eLink2 = EffectLinkEffects(eVis2,eLink);
-       
+
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
@@ -69,7 +68,7 @@ void main()
     while(GetIsObjectValid(oTarget))
     {
         iDontStack = GetHasSpellEffect(SPELL_WOUNDING_WHISPERS,oTarget);
-    
+
         //Make faction check on the target
         if(oTarget == OBJECT_SELF && !iDontStack)
         {

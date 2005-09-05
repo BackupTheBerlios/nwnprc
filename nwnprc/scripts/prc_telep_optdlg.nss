@@ -14,7 +14,6 @@
 #include "prc_alterations"
 #include "prc_inc_teleport"
 #include "inc_utility"
-#include "inc_eventhook"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */

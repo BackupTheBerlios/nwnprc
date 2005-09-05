@@ -2,17 +2,17 @@
 //:: NPC event wrapper include
 //:: inc_prc_npc
 //:://////////////////////////////////////////////
-/*
+/** @file
     Wrapper functions for getters used in module
     events. Used to make the PRC evaluations
     happening in events to work for NPCs, too.
-    
+
     Event currently supported:
     OnEquip
     OnUnequip
     OnDeath
     OnRest
-    
+
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -22,38 +22,61 @@
 /* Function prototypes                          */
 //////////////////////////////////////////////////
 
-// A heartbeat function for NPCs. Checks if their equipped items have changed.
-// Simulates OnEquip / OnUnEquip firing
+/**
+ * A heartbeat function for NPCs. Checks if their equipped items have changed.
+ * Simulates OnEquip / OnUnEquip firing
+ * Since this should be fired from an NPCs hearbeat, OBJECT_SELF is assumed to
+ * be the NPC.
+ */
 void DoEquipTest();
 
 
 /* On(Un)Equip wrappers */
 
-// Wrapper for GetPCItemLastEquipped
+/**
+ * Wrapper for GetPCItemLastEquipped
+ */
 object GetItemLastEquipped();
-// Wrapper for GetPCItemLastEquippedBy
+
+/**
+ * Wrapper for GetPCItemLastEquippedBy
+ */
 object GetItemLastEquippedBy();
-// Wrapper for GetItemLastUnequipped
+
+/**
+ * Wrapper for GetItemLastUnequipped
+ */
 object GetItemLastUnequipped();
-// Wrapper for GetPCItemLastUnequippedBy
+
+/**
+ * Wrapper for GetPCItemLastUnequippedBy
+ */
 object GetItemLastUnequippedBy();
 
 
 /* OnDeath wrappers */
 
-// Wrapper for GetLastHostileActor and GetLastKiller
+/**
+ * Wrapper for GetLastHostileActor and GetLastKiller
+ */
 object MyGetLastKiller();
 
-// Wrapper for GetLastPlayerDied
+/**
+ * Wrapper for GetLastPlayerDied
+ */
 object GetLastBeingDied();
 
 
 /* OnRest wrapper */
 
-// Wrapper for GetLastPCRested
+/**
+ * Wrapper for GetLastPCRested
+ */
 object GetLastBeingRested();
 
-// Wrapper for GetLastRestEventType
+/**
+ * Wrapper for GetLastRestEventType
+ */
 int MyGetLastRestEventType();
 
 //////////////////////////////////////////////////

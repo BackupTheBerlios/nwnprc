@@ -10,11 +10,10 @@
 //:: Created On: Sept 2, 2004
 //:://////////////////////////////////////////////
 
-#include "inc_item_props"
-#include "x2_inc_itemprop"
+#include "inc_utility"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
-#include "inc_prc_npc"
 
 void main()
 {

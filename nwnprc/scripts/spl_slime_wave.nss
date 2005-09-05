@@ -1,8 +1,6 @@
-#include "prc_alterations"
-#include "prc_alterations"
-#include "prc_alterations"
-#include "x2_inc_spellhook"
-
+//#include "prc_alterations"
+//#include "x2_inc_spellhook"
+#include "spinc_common"
 
 void RunImpact(object oTarget, object oCaster);
 

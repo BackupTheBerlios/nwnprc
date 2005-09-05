@@ -3,9 +3,8 @@
 #include "prc_ipfeat_const"
 #include "prc_class_const"
 #include "prc_inc_unarmed"
-#include "inc_item_props"
+#include "inc_utility"
 #include "prc_inc_clsfunc"
-#include "inc_eventhook"
 
 void RemoveExtraAttacks(object oCreature)
 {
@@ -23,14 +22,14 @@ void RemoveExtraAttacks(object oCreature)
 void BrawlerDamageReduction(object oCreature)
 {
     object oSkin = GetPCSkin(oCreature);
-    
+
     if (GetHasFeat(FEAT_BRAWLER_DAMAGE_REDUCTION_3, oCreature) && !GetHasFeat(FEAT_EPIC_DAMAGE_REDUCTION_3))
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_3),oSkin);
     if (GetHasFeat(FEAT_BRAWLER_DAMAGE_REDUCTION_6, oCreature) && !GetHasFeat(FEAT_EPIC_DAMAGE_REDUCTION_6))
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_6),oSkin);
     if (GetHasFeat(FEAT_BRAWLER_DAMAGE_REDUCTION_9, oCreature) && !GetHasFeat(FEAT_EPIC_DAMAGE_REDUCTION_9))
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_9),oSkin);
-}      
+}
 
 void BrawlerBlocking(object oCreature)
 {
@@ -81,7 +80,7 @@ void main ()
         PrintString("prc_brawler first call");
         //Evaluate DR
         BrawlerDamageReduction(oPC);
-        
+
         //Evaluate The Unarmed Strike Feats
         //UnarmedFeats(oPC);
         SetLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS, TRUE);
@@ -102,7 +101,7 @@ void main ()
         //Extra Attacks OFF if equipping of weapons or shield is done or if monk levels are taken.
         object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
         object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-        
+
         /* Redundant checks - these are also made by the spell
         int iRighthand = GetIsObjectValid(oRighthand);
         int iLefthand = GetIsObjectValid(oLefthand) && GetBaseItemType(oLefthand) != BASE_ITEM_TORCH;

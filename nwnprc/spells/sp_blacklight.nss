@@ -1,14 +1,13 @@
 
 #include "spinc_common"
 #include "prc_alterations"
-#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
-    
+
     SPSetSchool(SPELL_SCHOOL_EVOCATION);
     // End of Spell Cast Hook
 
@@ -41,7 +40,7 @@ void main()
         else
           ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, nDuration);
     }
-    
+
     SPSetSchool();
 
 }

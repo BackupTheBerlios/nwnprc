@@ -32,7 +32,6 @@
 //:: Updated On: 2003-08-21
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 #include "X2_inc_switches"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
@@ -40,7 +39,7 @@
 int GetIsSlashingWeapon(object oItem)
 {
     int iWeapType = StringToInt(Get2DACache("baseitems", "WeaponType", GetBaseItemType(oItem)));
-    
+
     if (iWeapType == 3 || iWeapType == 4) // slashing or slashing & piercing
         return TRUE;
     else

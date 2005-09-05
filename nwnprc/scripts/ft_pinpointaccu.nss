@@ -1,5 +1,4 @@
 #include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {
@@ -8,7 +7,7 @@ void main()
     int iBonusA;
 
     //check for non-ranged weapon
-    if (!GetWeaponRanged(oWeap)) 
+    if (!GetWeaponRanged(oWeap))
     {
         SendMessageToPC(OBJECT_SELF, "You can only use Pinpoint Accuracy with a ranged weapon");
         return;
@@ -18,7 +17,7 @@ void main()
     effect eArrow = EffectVisualEffect(NORMAL_ARROW);
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eArrow, oTarget);
 
-    //spell ID determines level of effect    
+    //spell ID determines level of effect
     int nSpellId = GetSpellId();
     switch (nSpellId)
     {
@@ -34,7 +33,7 @@ void main()
         nDamage = d6(nLostAttacks);
     else if(GetHasFeat(FEAT_PERFECTSHOT))
         nDamage = d4(nLostAttacks);
-    
+
     //killing shot increases critical range by 2
     //this is fudged into the main combat functions
     if(GetHasFeat(FEAT_KILLINGSHOT))
@@ -42,7 +41,7 @@ void main()
         SetLocalInt(OBJECT_SELF, "KillingShotCritical", TRUE);
         DelayCommand(0.1, DeleteLocalInt(OBJECT_SELF, "KillingShotCritical"));
     }
-    
+
     effect eInvalid;
     PerformAttack(oTarget, OBJECT_SELF, eInvalid, 0.0, iBonusA, nDamage, DAMAGE_TYPE_PIERCING, "*Pinpoint Accuracy Hit*", "*Pinpoint Accuracy Miss*");
 }

@@ -12,8 +12,7 @@
 #include "prc_class_const"
 #include "inc_epicspelldef"
 #include "inc_epicspellfnc"
-#include "prc_inc_switch"
-#include "inc_time"
+#include "inc_utility"
 
 /*
 CONSTANTS FOR OPTIONAL FEATURES
@@ -213,7 +212,7 @@ FUNCTION BODIES
 
 int GetIsEpicCleric(object oPC)
 {
-    if (GetCasterLvl(CLASS_TYPE_CLERIC, oPC) >= 17 && GetHitDice(oPC) >= 21 && 
+    if (GetCasterLvl(CLASS_TYPE_CLERIC, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_WISDOM) >= 19)
             return TRUE;
     return FALSE;
@@ -421,7 +420,7 @@ int GetCanCastSpell(object oPC, int nSpellDC, string sChool, int nSpellXP)
     if (!GetIsPC(oPC))
     {
         return TRUE;
-    }    
+    }
     if (!(GetSpellSlots(oPC) >= 1))
     { // No? Cancel spell, then.
         SendMessageToPC(oPC, MES_CANNOT_CAST_SLOTS);
@@ -474,7 +473,7 @@ void SpendXP(object oPC, int nCost)
     {
         if(GetIsPC(oPC))
             SetXP(oPC, GetXP(oPC) - nCost);
-        else 
+        else
             SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")-nCost);
     }
 }
@@ -688,9 +687,9 @@ int GetTotalCastingLevel(object oCaster)
     int iBestArcane = GetLevelByTypeArcaneFeats();
     int iBestDivine = GetLevelByTypeDivineFeats();
     int iBest = (iBestDivine > iBestArcane) ? iBestDivine : iBestArcane;
-    
+
     //SendMessageToPC(oCaster, "Epic casting at level " + IntToString(iBest));
-    
+
     return iBest;
 }
 
@@ -761,13 +760,13 @@ int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INV
     if (iDiv > iBest) { iAbility = ABILITY_WISDOM;       iBest = iDiv; }
     if (iWiz > iBest) { iAbility = ABILITY_INTELLIGENCE; iBest = iWiz; }
     if (iSor > iBest) { iAbility = ABILITY_CHARISMA;     iBest = iSor; }
-    
+
     int nDC;
     if (iBest)   nDC =  20 + GetAbilityModifier(iAbility, oCaster);
     else         nDC =  20; // DC = 20 if the epic spell is cast some other way.
-    
+
     nDC += GetDCSchoolFocusAdjustment(oCaster, Get2DACache("spells", "school", nSpellID));
     nDC += GetChangesToSaveDC(oTarget, oCaster);
-    
+
     return nDC;
 }

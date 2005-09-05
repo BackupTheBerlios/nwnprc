@@ -1,7 +1,6 @@
 #include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
-#include "prc_alterations"
 
 // Checks to see if weapon is metal
 int IsItemMetal(object oItem)
@@ -82,7 +81,7 @@ void IronPower(object oPC, object oWeap, int iBonusType)
 
       //Stack with Enchantment on Weapon
       //int iEnch = 0;
-      //iBonus = iBonus + iEnch;   
+      //iBonus = iBonus + iEnch;
 
    // This string identifies that each hand has its own attack bonus.
    string sIronPower = "DispIronPowerA"+IntToString(iBonusType);

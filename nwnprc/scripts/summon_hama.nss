@@ -12,7 +12,7 @@
 #include "prc_class_const"
 #include "x2_inc_spellhook"
 #include "prc_feat_const"
-#include "prc_inc_switch"
+#include "inc_utility"
 void main()
 {
     //Declare major variables

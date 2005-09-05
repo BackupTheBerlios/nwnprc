@@ -1,4 +1,4 @@
-#include "inc_item_props"
+#include "inc_utility"
 #include "prc_feat_const"
 
 /// +2 on Intimidate and Persuade /////////

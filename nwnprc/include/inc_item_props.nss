@@ -20,9 +20,6 @@
 //::    - Extended Composite bonus function to handle pretty much
 //::      every property that can possibly be composited.
 
-//I know its messy, but this is the easiest place to hook this in
-//Primogentior
-
 //////////////////////////////
 // Function Prototypes      //
 //////////////////////////////
@@ -46,7 +43,7 @@ int GetHasItem(object oPC, string sResRef);
 object GetPCSkin(object oPC);
 
 /**
- * Checks oItem for all properties matching iType and iSubType. Removes all 
+ * Checks oItem for all properties matching iType and iSubType. Removes all
  * these properties and returns their total CostTableVal.
  * This function should only be used for Item Properties that have simple
  * integer CostTableVals, such as AC, Save/Skill Bonuses, etc.
@@ -230,10 +227,14 @@ void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCos
 void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC);
 
 
-#include "prc_alterations"
+//////////////////////////////////////////////////
+/* Include section                              */
+//////////////////////////////////////////////////
+
+#include "inc_2dacache"
 #include "inc_persist_loca"
-#include "inc_utility"
 #include "inc_prc_npc"
+#include "inc_utility"
 
 //////////////////////////////
 // Function Definitions     //
@@ -1025,16 +1026,16 @@ int TotalAndRemoveDamagePropertyT(object oItem, int iSubType)
     while(GetIsItemPropertyValid(ip))
     {
         iPropertyValue = GetItemPropertyCostTableValue(ip);
-        
+
         if((GetItemPropertyType(ip) == ITEM_PROPERTY_DAMAGE_BONUS) &&
            (GetItemPropertySubType(ip) == iSubType) &&
            ((iPropertyValue < 6) || (iPropertyValue > 15)))
-        {           
+        {
             total = iPropertyValue > total ? iPropertyValue : total;
             if (GetItemPropertyDurationType(ip)== DURATION_TYPE_TEMPORARY) RemoveItemProperty(oItem, ip);
        }
         ip = GetNextItemProperty(oItem);
-        
+
     }
     return total;
 }
@@ -1046,7 +1047,7 @@ void SetCompositeDamageBonusT(object oItem, string sBonus, int iVal, int iSubTyp
     int iLinearDamage = 0;
     int iCurVal = 0;
 
-    
+
     if(iChange == 0) return;
 
     if (iSubType == -1) iSubType = GetItemPropertyDamageType(oItem);
@@ -1083,7 +1084,7 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    // Otherwise, we will take the item in each slot and removing the
    // ints that should be on it.
    int iValid = GetIsObjectValid(oItem);
-   
+
    // RIGHT HAND
    if (!iValid)
      oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
@@ -1146,7 +1147,7 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    if (!iValid){
      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
      TotalRemovePropertyT(oItem);}
-     
+
    //ManAtArms
    DeleteLocalInt(oItem,"ManArmsGenSpe");
    DeleteLocalInt(oItem,"ManArmsDmg");
@@ -1171,7 +1172,7 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    DeleteLocalInt(oItem,"DispIronPowerD");
    // Azer Heat Damage
    DeleteLocalInt(oItem,"AzerFlameDamage");
-   
+
    // CHEST
    if (!iValid){
      oItem=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
@@ -1185,7 +1186,7 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    DeleteLocalInt(oItem,"ShaDiscorp");
    // Dragonwrack
    DeleteLocalInt(oItem,"Dragonwrack");
-   
+
    // LEFT RING
    if (!iValid){
      oItem=GetItemInSlot(INVENTORY_SLOT_LEFTRING,oPC);
@@ -1198,7 +1199,7 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
    if (!iValid){
      oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
      TotalRemovePropertyT(oItem);}
-   
+
    // Disciple of Mephistopheles
    DeleteLocalInt(oItem,"DiscMephGlove");
    // Azer fire
@@ -1292,5 +1293,5 @@ int GetSRByValue(int nValue)
         return 61;//99 max
     if(nValue > 61)
         return 51;//61 flat cap
-    return -1;      
+    return -1;
 }

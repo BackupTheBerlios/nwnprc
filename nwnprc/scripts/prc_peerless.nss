@@ -3,7 +3,6 @@
 #include "prc_feat_const"
 #include "prc_spell_const"
 #include "prc_class_const"
-#include "prc_alterations" // for checking if item is a weapon
 
 /// +3 on Craft Weapon /////////
 void Expert_Bowyer(object oPC, object oSkin, int nBowyer)
@@ -18,7 +17,7 @@ void Expert_Bowyer(object oPC, object oSkin, int nBowyer)
 void CheckPowerShot(object oPC)
 {
       int bHasSpellActive = FALSE;
-      
+
       // if the feat is active, remove the spell's effects.
       if(GetHasSpellEffect(SPELL_PA_POWERSHOT, oPC) ||
          GetHasSpellEffect(SPELL_PA_IMP_POWERSHOT, oPC) ||

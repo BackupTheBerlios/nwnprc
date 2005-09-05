@@ -13,10 +13,6 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
-
-
-#include "prc_alterations" // * this is the new spells include for expansion packs
-
 #include "x2_inc_spellhook"
 
 void main()

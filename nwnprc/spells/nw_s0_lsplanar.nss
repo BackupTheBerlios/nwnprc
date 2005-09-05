@@ -17,7 +17,7 @@
 #include "spinc_common"
 
 #include "x2_inc_spellhook"
-#include "prc_inc_switch"
+#include "inc_utility"
 
 void main()
 {

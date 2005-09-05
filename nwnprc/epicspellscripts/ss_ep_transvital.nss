@@ -10,8 +10,7 @@
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "inc_item_props"
-#include "inc_persist_loca"
+#include "inc_utility"
 
 void main()
 {
@@ -28,7 +27,7 @@ void main()
         object oTarget = GetSpellTargetObject();
 
         object oSkin = GetPCSkin(oTarget);
-        SetPersistantLocalInt(oTarget, "EpicSpell_TransVital", TRUE);  
+        SetPersistantLocalInt(oTarget, "EpicSpell_TransVital", TRUE);
         ExecuteScript("trans_vital", oTarget);
     }
     DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

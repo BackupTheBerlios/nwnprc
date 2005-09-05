@@ -2,7 +2,7 @@
 #include "prc_spell_const"
 #include "NW_I0_GENERIC"
 #include "nw_i0_spells"
-#include "inc_item_props"
+#include "inc_utility"
 
 void main()
 {

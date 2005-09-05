@@ -1,7 +1,7 @@
 /*
     ----------------
     Decerebrate
-    
+
     psi_pow_decerebr
     ----------------
 
@@ -15,16 +15,16 @@
     Saving Throw: Fortitude negates
     Power Resistance: Yes
     Power Point Cost: 13
- 
+
     With decerebrate, you selectively remove a portion of the creatures brain stem. The creature loses all cerebral functions,
-    vision, hearing, and the ability to move. If greater restoration is cast on the target within 1 hour, the target lives. 
+    vision, hearing, and the ability to move. If greater restoration is cast on the target within 1 hour, the target lives.
     Otherwise, the target will die from the brain damage.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void DieMaggot(int nSpellID, object oCaster, object oTarget)
 {
@@ -36,7 +36,7 @@ void DieMaggot(int nSpellID, object oCaster, object oTarget)
     		effect eLink2 = EffectLinkEffects(eVis, eVis2);
     		eLink2 = EffectLinkEffects(eLink2, eDeath);
     		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget);
-    	}		
+    	}
 }
 
 void main()
@@ -65,8 +65,8 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     int nAugment = GetAugmentLevel(oCaster);
     object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
@@ -90,11 +90,11 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	eLink = EffectLinkEffects(eLink, eDur2);
 	eLink = EffectLinkEffects(eLink, eDur3);
 
-	
+
 	//Check for Power Resistance
 	if (PRCMyResistPower(oCaster, oTarget, nPen))
 	{
-	
+
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 		if (!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))

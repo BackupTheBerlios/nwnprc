@@ -12,13 +12,12 @@
 //:: Created On: 24.03.2005
 //:://////////////////////////////////////////////
 
-#include "prc_inc_switch"
-#include "inc_threads"
+#include "inc_utility"
 
 void main()
 {
     object oCreature = OBJECT_SELF;
-    
+
     if(GetCurrentThread() == "")
     {
         if(GetThreadState("RapidMetabolism", oCreature) == THREAD_STATE_DEAD)
@@ -28,7 +27,7 @@ void main()
                 fInterval = HoursToSeconds(24);
             if(!SpawnNewThread("RapidMetabolism", "prc_rapid_metab", fInterval, oCreature))
                 WriteTimestampedLogEntry("Failed to spawn thread for Rapid Metabolism on " + GetName(oCreature));
-        }                
+        }
     }
     else
     {

@@ -1,6 +1,5 @@
 #include "prc_alterations"
 #include "inc_soul_shift"
-#include "prc_alterations"
 
 void DeathDelay(object oTarget, string sTarget, string sName);
 
@@ -13,7 +12,7 @@ void DoEnergyDrain(object oTarget,int nDamage)
 	else if (GetIsDead(oTarget))
 	{
 		SendMessageToPC(OBJECT_SELF, "Cannot drain: " + GetName(oTarget) +" is dead.");
-	}	
+	}
 	else
 	{
 		int nLevelMod = GetLocalInt(oTarget, "TargetLevel");
@@ -24,10 +23,10 @@ void DoEnergyDrain(object oTarget,int nDamage)
 		ApplyEffectToObject(DURATION_TYPE_PERMANENT,eDrain,oTarget);
 		SetLocalInt(oTarget, "TargetLevel", nLevelMod);
 
-		SendMessageToPC(OBJECT_SELF,"You have drained "+ IntToString(nDamage) + 
+		SendMessageToPC(OBJECT_SELF,"You have drained "+ IntToString(nDamage) +
 			" from " + GetName(oTarget) + ", It has " +
 			 IntToString(GetLocalInt(oTarget, "TargetLevel")) + " levels left.");
-	
+
 
 		// Soul Strength
 
@@ -81,7 +80,7 @@ void LevelUpWight(int nLevel, object oCreature)
 	{
 		LevelUpHenchman(oCreature, CLASS_TYPE_INVALID, TRUE);
 		//FloatingTextStringOnCreature("Leveled up Henchmen", OBJECT_SELF, FALSE);
-	} 
+	}
 }
 
 // This function is here because the commands in it need to be delayed for GetIsDead to return true.
@@ -98,12 +97,12 @@ void DeathDelay(object oTarget, string sTarget, string sName)
 		if (GetIsDead(oTarget))
 		{
 			//FloatingTextStringOnCreature("Target is Dead", OBJECT_SELF, FALSE);
-			
+
     			int nMax = GetMaxHenchmen();
        			int i = 1;
     			object oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
     			effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
-    			
+
     			// Count the number of henchmen
     			while (GetIsObjectValid(oHench))
     			{
@@ -111,7 +110,7 @@ void DeathDelay(object oTarget, string sTarget, string sName)
     				oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
     			}
     			//FloatingTextStringOnCreature("Henchmen total: " + IntToString(i), OBJECT_SELF, FALSE);
-    
+
     			if (i >= nMax) SetMaxHenchmen(i+1);
 
 			object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "soul_wight_test", PRCGetSpellTargetLocation());
@@ -119,13 +118,13 @@ void DeathDelay(object oTarget, string sTarget, string sName)
 
 			AddHenchman(OBJECT_SELF, oCreature);
 			int nTargetLevelUp = GetHitDice(OBJECT_SELF) - 3;
-			
+
 			// Needs to be delayed because it was firing before creature spawned
 			DelayCommand(1.0, LevelUpWight(nTargetLevelUp, oCreature));
 			// Reset henchmen to the module max
 			SetMaxHenchmen(nMax);
 		}
-	} 
+	}
 }
 
 void main()
@@ -141,7 +140,7 @@ void main()
 
 	effect eBlood = EffectVisualEffect(VFX_DUR_GHOSTLY_PULSE);
 
-	
+
 
 	if (!GetLocalInt(oTarget, "TargetLevel"))
 	{
@@ -164,7 +163,7 @@ void main()
 	ApplyEffectToObject(DURATION_TYPE_INSTANT,eBlood, oTarget);
 	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
-	
+
 	// Do a melee touch attack.
 	int bHit = (TouchAttackMelee(oTarget,TRUE)>0) ;
 	if (!bHit)
@@ -173,5 +172,5 @@ void main()
 	}
 
 
-	DoEnergyDrain(oTarget, nDamage);  
+	DoEnergyDrain(oTarget, nDamage);
 }

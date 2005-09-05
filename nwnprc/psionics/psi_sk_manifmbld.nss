@@ -2,16 +2,19 @@
 //:: Soulknife: Manifest Mindblade
 //:: psi_sk_manifmbld
 //::///////////////////////////////////////////////
-/*
+/** @file Soulknife: Manifest Mindblade
     Handles creation of mindblades.
+
+
+    @author Ornedan
+    @date   Created  - 07.04.2005
+    @date   Modified - 01.09.2005
 */
 //:://////////////////////////////////////////////
-//:: Created By: Ornedan
-//:: Created On: 07.04.2005
 //:://////////////////////////////////////////////
 
 #include "psi_inc_soulkn"
-#include "inc_eventhook"
+#include "inc_utility"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_alterations"
@@ -33,7 +36,7 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType);
 
 void main()
 {
-    WriteTimestampedLogEntry("Starting psi_sk_manifmbld");
+WriteTimestampedLogEntry("Starting psi_sk_manifmbld");
     object oPC = OBJECT_SELF;
     object oMbld;
     int nMbldType = GetPersistantLocalInt(oPC, MBLADE_SHAPE);
@@ -67,7 +70,8 @@ void main()
             break;
         case MBLADE_SHAPE_RANGED:
             //SendMessageToPC(oPC, "psi_sk_manifmbld: Created throwing mindblade");
-            oMbld = CreateItemOnObject("prc_sk_mblade_th", oPC, GetHasFeat(FEAT_MULTIPLE_THROW, oPC) ? GetMainHandAttacks(oPC) : 1);
+            // Create one more mindblade than needed in order to bypass the BW bug of the last thrown weapon in a stack no longer being a valid object in the OnHitCast script
+            oMbld = CreateItemOnObject("prc_sk_mblade_th", oPC, (GetHasFeat(FEAT_MULTIPLE_THROW, oPC) ? GetMainHandAttacks(oPC) : 1) + 1);
             break;
 
         default:
@@ -145,9 +149,9 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     }
     else
     {
-        nEnh = nSKLevel > 20 ?
-                (nSKLevel - 20) / 5 + 5: // Boni are granted +1 / 5 levels epic
-                nSKLevel / 4;            // Boni are granget +1 / 4 levels pre-epic
+        nEnh = nSKLevel <= 20 ?
+                nSKLevel / 4:            // Boni are granget +1 / 4 levels pre-epic
+                (nSKLevel - 20) / 5 + 5; // Boni are granted +1 / 5 levels epic
         // Dual mindblades have one lower bonus
         nEnh -= nMbldType == MBLADE_SHAPE_DUAL_SHORTSWORDS ? 1 : 0;
     }

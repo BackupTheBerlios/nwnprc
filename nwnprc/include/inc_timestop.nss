@@ -1,6 +1,6 @@
 #include "x2_inc_itemprop"
 #include "prc_inc_switch"
-#include "inc_prc_npc"
+#include "inc_utility"
 
 const int VFX_PER_NEW_TIMESTOP = 140;
 void DoTimestopEquip();

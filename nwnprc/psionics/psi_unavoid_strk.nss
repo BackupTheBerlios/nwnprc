@@ -5,7 +5,7 @@
 /*
 	Expends psionic focus to resolve the first
 	attack of the round as a touch attack.
-	
+
 	Can only be used while unarmed.
 */
 //:://////////////////////////////////////////////
@@ -13,7 +13,7 @@
 //:: Created On: 24.03.2005
 //:://////////////////////////////////////////////
 
-#include "prc_inc_combat"
+#include "prc_alterations"
 #include "psi_inc_psifunc"
 
 void main()

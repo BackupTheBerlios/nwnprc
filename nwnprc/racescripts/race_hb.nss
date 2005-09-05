@@ -5,7 +5,7 @@
 
 #include "prc_alterations"
 #include "prc_feat_const"
-#include "inc_item_props"
+#include "inc_utility"
 
 void EffectDazzled(object oPC, float fDelay);
 

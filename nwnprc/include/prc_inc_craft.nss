@@ -12,7 +12,7 @@
 #include "prc_alterations"
 #include "nw_i0_generic"
 #include "x2_inc_itemprop"
-#include "inc_2dacache"
+#include "inc_utility"
 #include "prc_inc_spells"
 
 //remove this placeholder when upgrading to PRC 2.3

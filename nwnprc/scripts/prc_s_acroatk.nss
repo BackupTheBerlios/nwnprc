@@ -11,7 +11,7 @@
 //:: Rewritten By: Oni5115 -  to use new combat engine and jump skill
 //:://////////////////////////////////////////////
 
-#include "prc_inc_combat"
+#include "prc_alterations"
 #include "prc_inc_util"
 #include "prc_inc_skills"
 
@@ -20,24 +20,24 @@ void main()
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
-    
+
     if(oTarget == OBJECT_INVALID)
     {
        FloatingTextStringOnCreature("Invalid Target for Acrobatic Attack", oPC);
        return;
     }
-    
+
     float fDistance = GetDistanceBetweenLocations(GetLocation(oPC), GetLocation(oTarget) );
 
     int iBonus = 0;
     int iDam = 0;
     int iDamType = 0;
-    
+
     effect eVfx;
-    
+
     //Check which level of acrobatic attack has been used
     if(GetHasFeat(FEAT_ACROBATIC_ATTACK_8))
-    {     
+    {
          iBonus = 8;
          iDam = DAMAGE_BONUS_8;
     }
@@ -56,12 +56,12 @@ void main()
          iBonus = 2;
          iDam = DAMAGE_BONUS_2;
     }
-    
+
     iDamType = GetWeaponDamageType(oWeap);
-    
+
     // PnP rules use feet, might as well convert it now.
     fDistance = MetersToFeet(fDistance);
-        
+
     // Ability only works from 5 feet away
     // Since the horizontal game distance seems so far off
     // I adjusted the distance to fit better.
@@ -71,7 +71,7 @@ void main()
          int bPassedJump = PerformJump(oPC, GetLocation(oTarget), FALSE);
          if(bPassedJump)
          {
-              DelayCommand(3.1, PerformAttackRound(oTarget, oPC, eVfx, 0.0, iBonus, iDam, iDamType,  TRUE, "*Acrobatic Attack*", "*Acrobatic Attack Miss*"));  
+              DelayCommand(3.1, PerformAttackRound(oTarget, oPC, eVfx, 0.0, iBonus, iDam, iDamType,  TRUE, "*Acrobatic Attack*", "*Acrobatic Attack Miss*"));
          }
     }
     else

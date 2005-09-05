@@ -2,7 +2,6 @@
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_inc_clsfunc"
-#include "prc_alterations"
 
 //DAMAGE_TYPE_BASE_WEAPON
 //GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)
@@ -21,8 +20,8 @@ void Grace(object oPC, object oSkin,int sGrace)
    object oArmor=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
    int iBase = GetBaseAC(oArmor);
    int iMax = 3;
-   
-   if  (GetBaseAC(oArmor)>iMax ) 
+
+   if  (GetBaseAC(oArmor)>iMax )
      SetCompositeBonus(oSkin,"SwashGrace",0,ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC,IP_CONST_SAVEBASETYPE_REFLEX);
    else
      SetCompositeBonus(oSkin,"SwashGrace",sGrace,ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC,IP_CONST_SAVEBASETYPE_REFLEX);
@@ -36,15 +35,15 @@ void Dodge(object oPC, object oSkin,int sDodge)
    object oArmor=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
    int iBase = GetBaseAC(oArmor);
    int iMax = 3;
-   
-   if  (GetBaseAC(oArmor)>iMax ) 
+
+   if  (GetBaseAC(oArmor)>iMax )
      SetCompositeBonus(oSkin,"SwashAC",0,ITEM_PROPERTY_AC_BONUS);
    else
      SetCompositeBonus(oSkin,"SwashAC",sDodge,ITEM_PROPERTY_AC_BONUS);
 
 }
 
-//Adds Int bonus to damage.  
+//Adds Int bonus to damage.
 //Make a special on-hit that heals your INT bonus if the target is immune to Sneak or Crits
 //Make this only apply to weapons useable with weapon finesse
 //make this not apply if you are wearing medium or heavy armor, or are encumbered.
@@ -53,7 +52,7 @@ void SmartWound(object oPC, object oSkin, int iStrike, int iEquip)
    object oArmor=GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
    int iBase = GetBaseAC(oArmor);
    int iMax = 3;
-   
+
    int iLight = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))==BASE_ITEM_DAGGER      ? 1 : 0;
        iLight = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))==BASE_ITEM_HANDAXE     ? 1 : iLight;
        iLight = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))==BASE_ITEM_KAMA        ? 1 : iLight;
@@ -64,9 +63,9 @@ void SmartWound(object oPC, object oSkin, int iStrike, int iEquip)
        iLight = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))==BASE_ITEM_SHORTSWORD  ? 1 : iLight;
        iLight = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))==BASE_ITEM_SICKLE      ? 1 : iLight;
        iLight = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))==BASE_ITEM_WHIP        ? 1 : iLight;
-   
+
    if  (GetBaseAC(oArmor)>iMax ) RemoveEffectsFromSpell(oPC, SPELL_SWASH_DAMAGE);
-   
+
    else if (iLight<1) RemoveEffectsFromSpell(oPC, SPELL_SWASH_DAMAGE);
    else
    {
@@ -78,11 +77,11 @@ void SmartWound(object oPC, object oSkin, int iStrike, int iEquip)
             {
                 RemoveEffectsFromSpell(oPC, SPELL_SWASH_DAMAGE);
             }
-   } 
+   }
 }
 
 //This makes a unique on hit which calls on the "prc_swashweak" scripts
-//to simulate a critical hit roll percentage.  On success, it deals 
+//to simulate a critical hit roll percentage.  On success, it deals
 //2 STR damage (and 2 CON damage at level 19)
 void CritSTR(object oPC, object oSkin,int iStrike, int iEquip)
 {
@@ -112,7 +111,7 @@ void CritSTR(object oPC, object oSkin,int iStrike, int iEquip)
         SetLocalInt(oItem,"CritHarm",1);
         }
      }
-     
+
   if (iEquip==2)
      {
      oItemb=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
@@ -143,7 +142,7 @@ void main()
   //Declare main variables.
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
-      
+
     int iClass = GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC);
 
     int sGrace = GetHasFeat(FEAT_SWASH_GRACE1, oPC) ? 1 : 0;
@@ -151,7 +150,7 @@ void main()
         sGrace = GetHasFeat(FEAT_SWASH_GRACE3, oPC) ? 3 : sGrace;
         sGrace = GetHasFeat(FEAT_SWASH_GRACE4, oPC) ? 4 : sGrace;
         sGrace = GetHasFeat(FEAT_SWASH_GRACE5, oPC) ? 5 : sGrace;
-        
+
     int sDodge = GetHasFeat(SWASH_DODGE_1, oPC) ? 1 : 0;
         sDodge = GetHasFeat(SWASH_DODGE_2, oPC) ? 2 : sDodge;
         sDodge = GetHasFeat(SWASH_DODGE_3, oPC) ? 3 : sDodge;
@@ -160,10 +159,10 @@ void main()
         sDodge = GetHasFeat(SWASH_DODGE_6, oPC) ? 6 : sDodge;
         sDodge = GetHasFeat(SWASH_DODGE_7, oPC) ? 7 : sDodge;
         sDodge = GetHasFeat(SWASH_DODGE_8, oPC) ? 8 : sDodge;
-    
+
     int iStrike = GetHasFeat(INSIGHTFUL_STRIKE, oPC);
     int iEquip= GetLocalInt(oPC,"ONEQUIP");
-    
+
     int WeakCrit = GetHasFeat(WEAKENING_CRITICAL, oPC);
     int WoundCrit = GetHasFeat(WOUNDING_CRITICAL, oPC);
 

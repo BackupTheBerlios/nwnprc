@@ -33,6 +33,16 @@ void main()
         oItem = GetLocalObject(oPC, "PRC_CombatSystem_OnHitCastSpell_Item");
     }
 
+    /* In order to bypass a BioBug where when the last item in a stack of throwable weapons is thrown,
+     * GetSpellCastItem returns OBJECT_INVALID, the stack size is increased to be one larger than the amount the PC
+     * is allowed to throw.
+     * If the stack size has reached 1, ie. we are handling the last they are supposed to throw, delete the remaining thrown weapon.
+     */
+    if(GetTag(oItem) == "prc_sk_mblade_th" && GetItemStackSize(oItem) == 1)
+    {
+        MyDestroyObject(oItem);
+    }
+
     int bMainHandPStrk = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oItem && GetLocalInt(oPC, PSYCHIC_STRIKE_MAINH);
     int bOffHandPStrk  = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)  == oItem && GetLocalInt(oPC, PSYCHIC_STRIKE_OFFH);
 

@@ -18,7 +18,6 @@
 #include "prc_alterations"
 #include "spinc_common"
 #include "prc_inc_clsfunc"
-#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void RemoveOldSongs()
@@ -41,13 +40,13 @@ void main()
   int  nHeal;
   effect eSun = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
   effect eHealVis = EffectVisualEffect(VFX_IMP_HEALING_S);
-  
+
   effect eRegen = EffectRegenerate(3, 6.0);
   effect eVis = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
   effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
   effect eLink = EffectLinkEffects(eRegen, eDur);
          eLink = EffectLinkEffects(eLink, eVis);
-  
+
 
   if (!GetHasFeat(FEAT_DRAGONSONG_STRENGTH, OBJECT_SELF))
   {
@@ -60,21 +59,21 @@ void main()
        FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
        return;
   }
-  
+
   if (GetHasEffect(EFFECT_TYPE_DEAF,OBJECT_SELF) && d100(1) <= 20)
   {
       FloatingTextStringOnCreature("Your deafness has caused you to fail.",OBJECT_SELF);
       DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);
       return;
   }
-  
+
   effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
-  
+
   RemoveOldSongEffects(OBJECT_SELF,SPELL_DSL_SONG_HEALING);
   RemoveOldSongs();
 
-  int nEpic = GetHasFeat(FEAT_EPIC_DRAGONSONG_HEALING) ? TRUE:FALSE;  
+  int nEpic = GetHasFeat(FEAT_EPIC_DRAGONSONG_HEALING) ? TRUE:FALSE;
   //Fire cast spell at event for the specified target
   SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HEAL, FALSE));
 
@@ -82,7 +81,7 @@ void main()
 
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
     int nDuration = 10*nLevel;
-    
+
         //Check to see if the caster has Lasting Impression and increase duration.
     if(GetHasFeat(870))
     {
@@ -94,7 +93,7 @@ void main()
     {
         nDuration += 5;
     }
-  
+
   //Get first target in shape
   oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, PRCGetSpellTargetLocation());
   while (GetIsObjectValid(oTarget))
@@ -110,19 +109,19 @@ void main()
         //Apply the heal effect and the VFX impact
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHealVis, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
-       
+
         if (nEpic)
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eLink), oTarget, RoundsToSeconds(nDuration),FALSE);
             StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
-         }        
+         }
         // Code for FB to remove damage that would be caused at end of Frenzy
         SetLocalInt(oTarget, "PC_Damage", 0);
      }
      //Get next target in the shape
      oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, PRCGetSpellTargetLocation());
   }
- 
+
   DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);
 
 }

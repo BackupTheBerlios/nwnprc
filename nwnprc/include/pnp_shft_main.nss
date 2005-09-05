@@ -105,12 +105,10 @@ void SetShift_02(object oPC, object oTarget);
 #include "prc_racial_const"
 #include "prc_ipfeat_const"
 #include "prc_misc_const"
-#include "inc_fileends"
 
 // PRC Spell Engine Utility Functions
 #include "prc_inc_function"
 #include "nw_i0_spells"
-#include "inc_item_props"
 #include "lookup_2da_spell"
 #include "prc_inc_spells"
 #include "prcsp_reputation"
@@ -119,17 +117,9 @@ void SetShift_02(object oPC, object oTarget);
 #include "prc_inc_clsfunc"
 #include "prc_inc_racial"
 #include "inc_abil_damage"
-#include "inc_persist_loca"
 #include "NW_I0_GENERIC"
-#include "inc_abil_damage"
-
 #include "prc_alterations"
 #include "nw_o0_itemmaker"
-#include "nw_i0_spells"
-#include "prc_inc_function"
-#include "inc_persist_loca"
-#include "inc_array_c"
-#include "inc_utility"
 
 void StoreAppearance(object oPC)
 {

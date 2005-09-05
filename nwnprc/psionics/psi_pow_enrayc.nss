@@ -1,7 +1,7 @@
 /*
    ----------------
    Energy Ray Cold
-   
+
    prc_all_enrayc
    ----------------
 
@@ -15,17 +15,16 @@
    Saving Throw: None
    Power Resistance: Yes
    Power Point Cost: 1
-   
+
    You create a ray of energy of the chosen type that shoots forth from your finger tips,
    doing 1d6+1 cold damage on a successful ranged touch attack.
-   
-   Augment: For every additional power point spent, this power's damage increases by 1d6+1. 
+
+   Augment: For every additional power point spent, this power's damage increases by 1d6+1.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
 #include "prc_alterations"
 
 void main()
@@ -55,14 +54,14 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
         object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
-    
+
     if (nSurge > 0)
     {
-        
+
         PsychicEnervation(oCaster, nSurge);
     }
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
     int nDC = GetManifesterDC(oCaster);
     int nCaster = GetManifesterLevel(oCaster);
@@ -71,18 +70,18 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     effect eRay = EffectBeam(VFX_BEAM_COLD, OBJECT_SELF, BODY_NODE_HAND);
     int nDice = 1;
     int nDiceSize = 6;
-        
+
     if (nSurge > 0) nAugment += nSurge;
-    
+
     //Augmentation effects to Damage
     if (nAugment > 0) nDice += nAugment;
     int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
     nDamage += nDice;
-    
+
     //effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_COLD);
-    
+
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    
+
     // Perform the Touch Attach
     int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
     if (nTouchAttack > 0)

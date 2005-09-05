@@ -11,8 +11,6 @@
    =============================================
 */
 
-#include "inc_draw_tools"
-
 /*
    =============================================
    DRAW* PLACE* AND BEAM* FUNCTIONS DECLARATIONS
@@ -1560,6 +1558,14 @@ object ObjectBeamDodecahedron(int nDurationType, int nVFX, location lCenter, flo
 object ObjectBeamTriacontahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_TRIACONTAHEDRON");
 object ObjectBeamCuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_CUBOCTAHEDRON");
 object ObjectBeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_SMALLRHOMBICUBOCTAHEDRON");
+
+
+//////////////////////////////////////////////////
+/* Include section                              */
+//////////////////////////////////////////////////
+
+#include "inc_draw_tools"
+#include "inc_draw_text"
 
 /*
    =============================================

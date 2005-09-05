@@ -11,7 +11,7 @@
 //:: Created By:  Tenjac
 //:: Created On:  11/26/04
 //:://////////////////////////////////////////////
-#include "inc_item_props"
+#include "inc_utility"
 void main()
 {
 object oPC = OBJECT_SELF;

@@ -8,11 +8,11 @@
 //:: Updated On: 09.01.2005
 //:://////////////////////////////////////////////
 
-//#include "inc_item_props"
+//#include "inc_utility"
 //#include "inc_poison_const"
 #include "spinc_common"
 #include "prc_ipfeat_const"
-#include "inc_eventhook"
+#include "inc_utility"
 
 
 const int POISONED_WEAPON_CASTERLEVEL = 1;

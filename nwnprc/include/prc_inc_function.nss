@@ -41,7 +41,6 @@ void DeletePRCLocalInts(object oSkin);
 #include "prc_racial_const"
 #include "prc_ipfeat_const"
 #include "prc_misc_const"
-#include "inc_fileends"
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"
@@ -52,9 +51,7 @@ void DeletePRCLocalInts(object oSkin);
 #include "prc_inc_clsfunc"
 #include "prc_inc_racial"
 #include "inc_abil_damage"
-#include "inc_persist_loca"
 #include "NW_I0_GENERIC"
-#include "inc_abil_damage"
 
 
 int nbWeaponFocus(object oPC);
@@ -78,7 +75,7 @@ void EvalPRCFeats(object oPC)
 
     // special add atk bonus equal to Enhancement
     ExecuteScript("ft_sanctmartial", oPC);
-    
+
 
     //Route the event to the appropriate class specific scripts
     if(GetLevelByClass(CLASS_TYPE_DUELIST, oPC) > 0)             ExecuteScript("prc_duelist", oPC);
@@ -144,7 +141,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0)         DelayCommand(0.1,ExecuteScript("prc_swashbuckler", oPC));
     if(GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,oPC) > 0)        ExecuteScript("prc_contemplate", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLOOD_MAGUS,oPC) > 0)          ExecuteScript("prc_bloodmagus", oPC);
-    
+
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
     if (GetPersistantLocalInt(oPC, "PRCBonusDomain1") > 0)	 ExecuteScript("prc_domain_skin", oPC);
@@ -166,11 +163,11 @@ void EvalPRCFeats(object oPC)
        GetHasFeat(FEAT_SHURIKENMASTERY, oPC))                    ExecuteScript("prc_weapmas", oPC);
     if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC) ||
        GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))                    ExecuteScript("prc_intuiatk", oPC);
-       
+
     if(GetHasFeat(FEAT_FORCE_PERSONALITY, oPC))                  ExecuteScript("prc_ft_forcepers", oPC);
     if(GetHasFeat(FEAT_INSIGHTFUL_REFLEXES, oPC))                ExecuteScript("prc_ft_insghtref", oPC);
     if(GetHasFeat(FEAT_TACTILE_TRAPSMITH, oPC))                  ExecuteScript("prc_ft_tacttrap", oPC);
-    
+
     //Baelnorn & Undead
     if(GetHasFeat(FEAT_UNDEAD_HD))                               ExecuteScript("prc_ud_hitdice", oPC);
     if(GetHasFeat(FEAT_TURN_RESISTANCE))                         ExecuteScript("prc_turnres", oPC);
@@ -183,7 +180,7 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_IMMUNITY_PARALYSIS))                      ExecuteScript("prc_ui_paral", oPC);
     if(GetHasFeat(FEAT_IMMUNITY_POISON))                         ExecuteScript("prc_ui_poison", oPC);
     if(GetHasFeat(FEAT_IMMUNITY_SNEAKATTACK))                    ExecuteScript("prc_ui_snattack", oPC);
-    if(GetHasFeat(FEAT_POSITIVE_ENERGY_RESISTANCE ))             ExecuteScript("prc_ud_poe", oPC);    
+    if(GetHasFeat(FEAT_POSITIVE_ENERGY_RESISTANCE ))             ExecuteScript("prc_ud_poe", oPC);
 
     if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
        && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)         ExecuteScript("ft_gtwf", oPC);
@@ -540,7 +537,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"PSA_Persuade");
     DeleteLocalInt(oSkin,"PSA_Lorespell_Lore");
     DeleteLocalInt(oSkin,"PSA_Lorespell_Spell");
- 
+
     // Baelnorn
     DeleteLocalInt(oSkin, "BaelnDefA");
 
@@ -611,24 +608,24 @@ void DeletePRCLocalInts(object oSkin)
     //Swashbuckler
     DeleteLocalInt(oSkin, "SwashGrace");
     DeleteLocalInt(oSkin, "SwashAC");
-    
+
     // Contemplative
     DeleteLocalInt(oSkin, "ContempDisease");
     DeleteLocalInt(oSkin, "ContempPoison");
     DeleteLocalInt(oSkin, "ContemplativeDR");
     DeleteLocalInt(oSkin, "ContemplativeSR");
-    
+
     // Blood Magus
     DeleteLocalInt(oSkin, "DurableCasting");
     DeleteLocalInt(oSkin, "BloodMagusInfusion");
     DeleteLocalInt(oSkin, "ThickerThanWater");
-    
+
     // Feats
     DeleteLocalInt(oPC, "ForceOfPersonalityWis");
     DeleteLocalInt(oPC, "ForceOfPersonalityCha");
     DeleteLocalInt(oPC, "InsightfulReflexesInt");
     DeleteLocalInt(oPC, "InsightfulReflexesDex");
-        
+
     // future PRCs Go below here
 }
 
@@ -924,7 +921,7 @@ else
 void FeatSpecialUsePerDay(object oPC)
 {
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);
-    FeatUsePerDay(oPC,FEAT_SMITE_UNDEAD, ABILITY_CHARISMA, 3);    
+    FeatUsePerDay(oPC,FEAT_SMITE_UNDEAD, ABILITY_CHARISMA, 3);
     SpellSol(oPC);
     SpellKotMC(oPC);
     SpellShadow(oPC);

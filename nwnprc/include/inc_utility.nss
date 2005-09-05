@@ -266,13 +266,35 @@ void ForceEquip(object oPC, object oItem, int nSlot, int nThCall = 0);
  */
 void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE);
 
+/**
+ * Try to identify all unidentified objects within the given creature's inventory
+ * using it's skill ranks in lore.
+ *
+ * @param oPC The creature whose items to identify
+ */
+void TryToIDItems(object oPC = OBJECT_SELF);
 
-// Include calls here to avoid some circular weirdness, I think - Ornedan
 
-#include "inc_array"
-#include "inc_array_b"
-#include "inc_heap"
-#include "inc_2dacache"
+//////////////////////////////////////////////////
+/* Include section                              */
+//////////////////////////////////////////////////
+
+// No dependecies outiside their own loops -section
+#include "inc_draw"       // includes inc_draw_text and inc_draw_tools
+#include "inc_debug"
+#include "inc_target_list"
+#include "inc_logmessage"
+#include "inc_threads"
+#include "inc_time"
+#include "inc_rand_equip"
+#include "inc_class_by_pos"
+
+#include "inc_pers_array"   // includes inc_array, inc_persist_loca, inc_item_props, inc_prc_npc and inc_2dacache
+#include "inc_eventhook"    // Should be after inc_pers_array, which it is dependent on
+#include "inc_heap"         // Should be after inc_pers_array, as it needs inc_array
+#include "prc_inc_switch"   // Should be after inc_pers_array, as it needs inc_array
+#include "inc_ecl"          // Depends on inc_2dacache, prc_inc_switch and inc_class_by_pos
+#include "inc_metalocation" // Depends on inc_persist_loca
 
 
 /**********************\
@@ -649,4 +671,31 @@ void ForceUnequip(object oPC, object oItem, int nSlot, int nThCall = 0)
 
     // Loop
     DelayCommand(fDelay, ForceUnequip(oPC, oItem, nSlot, ++nThCall));
+}
+
+void TryToIDItems(object oPC = OBJECT_SELF)
+{
+    int nLore = GetSkillRank(SKILL_LORE, oPC);
+    int nGP;
+    string sMax = Get2DACache("SkillVsItemCost", "DeviceCostMax", nLore);
+    int nMax = StringToInt(sMax);
+    if (sMax == "") nMax = 120000000;
+    object oItem = GetFirstItemInInventory(oPC);
+    while(oItem != OBJECT_INVALID)
+    {
+        if(!GetIdentified(oItem))
+        {
+            // Check for the value of the item first.
+            SetIdentified(oItem, TRUE);
+            nGP = GetGoldPieceValue(oItem);
+            SetIdentified(oItem, FALSE);
+            // If oPC has enough Lore skill to ID the item, then do so.
+            if(nMax >= nGP)
+            {
+                SetIdentified(oItem, TRUE);
+                SendMessageToPC(oPC, GetStringByStrRef(16826224) + " " + GetName(oItem) + " " + GetStringByStrRef(16826225));
+            }
+        }
+        oItem = GetNextItemInInventory(oPC);
+    }
 }

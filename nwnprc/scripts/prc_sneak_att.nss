@@ -9,7 +9,7 @@
 
 
 #include "prc_class_const"
-#include "inc_item_props"
+#include "inc_utility"
 #include "prc_inc_sneak"
 
 void ApplySneakToSkin(object oPC, int iRogueSneak, int iBlackguardSneak)

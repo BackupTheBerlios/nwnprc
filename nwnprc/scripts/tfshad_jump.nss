@@ -13,8 +13,8 @@
     in this way. This amount can be split up among
     many jumps, but each jump, no matter how small,
     counts as a 10-foot increment.
-    
-    
+
+
     The shadow requirement is waived, since it's not
     possible to detect without builder intervention.
     This script also contains an implementation of
@@ -25,7 +25,6 @@
 
 
 #include "spinc_common"
-#include "prc_alterations"
 #include "prc_alterations"
 #include "prc_inc_sneak"
 #include "prc_inc_teleport"
@@ -47,14 +46,14 @@ void main()
     object oTarget = PRCGetSpellTargetObject();
     if(GetIsObjectValid(oTarget))
         lTarget = GetLocation(oTarget);
-    
+
     // Check if teleportation is possible
     if(!GetCanTeleport(oCaster, lTarget, TRUE))
     {
         IncrementRemainingFeatUses(oCaster, iFeat);
         return;
     }
-    
+
     vector vOrigin = GetPositionFromLocation(GetLocation(oCaster));
     vector vDest   = GetPositionFromLocation(lTarget);
 
@@ -112,7 +111,7 @@ void main()
     if (iLevel >= 4)
     {
         object oTarget = PRCGetSpellTargetObject();
-        
+
         DelayCommand(1.0f, PerformAttackRound(oTarget, oCaster, EffectVisualEffect(-1), 0.0, 0, 0, 0, FALSE, "", "", FALSE, FALSE, TRUE));
     }
 }

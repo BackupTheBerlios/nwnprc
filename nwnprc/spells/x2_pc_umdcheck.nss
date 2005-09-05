@@ -35,9 +35,11 @@ Note: I am not using the effective level of the spell for DC calculation but
                                                                               */
 //------------------------------------------------------------------------------
 
-#include "x2_inc_switches"
+/*#include "x2_inc_switches"
 #include "x2_inc_itemprop"
 #include "prc_inc_spells"
+*/
+#include "prc_alterations"
 
 int X2_UMD()
 {

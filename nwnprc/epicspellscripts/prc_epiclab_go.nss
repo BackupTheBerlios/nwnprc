@@ -5,7 +5,7 @@ For download info, please visit:
 http://www.lilacsoul.revility.com    */
 #include "prc_alterations"
 #include "inc_dispel"
-#include "prc_inc_switch"
+#include "inc_utility"
 
 //Put this on action taken in the conversation editor
 void main()

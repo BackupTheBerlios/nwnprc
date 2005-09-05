@@ -23,8 +23,6 @@
 //:: modified by mr_bumpkin Dec 4, and 15, 2003
 #include "spinc_common"
 #include "prc_inc_sp_tch"
-
-#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "prc_alterations"
 
@@ -114,7 +112,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 PRCBonusDamage(oTarget);
 
                 DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                
+
                 //----------------------------------------------------------------------
                 // Apply the VFX that is used to track the spells duration
                 //----------------------------------------------------------------------
@@ -157,7 +155,7 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         //----------------------------------------------------------------------
         int nDamage = PRCMaximizeOrEmpower(6,1,nMetaMagic);
         effect eDam = EffectDamage(nDamage, EleDmg);
-        effect eVis = EffectVisualEffect(VFX_IMP_ACID_S); 
+        effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
         eDam = EffectLinkEffects(eVis,eDam); // flare up
         SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);
         DelayCommand(6.0f,RunImpact(oTarget,oCaster,nMetaMagic,EleDmg));

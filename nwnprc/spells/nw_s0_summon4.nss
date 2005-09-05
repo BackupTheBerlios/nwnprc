@@ -17,7 +17,7 @@
 
 
 #include "x2_inc_spellhook"
-#include "prc_inc_switch"
+#include "inc_utility"
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

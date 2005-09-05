@@ -5,11 +5,8 @@
 * by Jeremiah Teague
 *********************************************/
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_feat_const"
-#include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {

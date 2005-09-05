@@ -10,8 +10,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_alterations"
-#include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -30,37 +28,37 @@ void RemoveAbsAmbidex(object oPC)
 }
 
 void ApplyTwoWeaponDefense(object oPC, object oSkin)
-{       
+{
      int ACBonus = 0;
      int tempestLevel = GetLevelByClass(CLASS_TYPE_TEMPEST, oPC);
-               
+
      if(tempestLevel < 4)
      {
-          ACBonus = 1; 
-     }     
+          ACBonus = 1;
+     }
      else if(tempestLevel >= 4 && tempestLevel < 7)
      {
           ACBonus = 2;
-     }          
+     }
      else if(tempestLevel >= 7)
      {
-          ACBonus = 3;	
+          ACBonus = 3;
      }
 
      itemproperty ipACBonus = ItemPropertyACBonus(ACBonus);
-     
-     SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", ACBonus, ITEM_PROPERTY_AC_BONUS);   
+
+     SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", ACBonus, ITEM_PROPERTY_AC_BONUS);
 }
 
 void RemoveTwoWeaponDefense(object oPC, object oSkin)
-{     
+{
      SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", 0, ITEM_PROPERTY_AC_BONUS);
 }
 
 void ApplyExtraAttacks(object oPC)
 {
      if(!GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
-     {              
+     {
           ActionCastSpellOnSelf(SPELL_T_TWO_WEAPON_FIGHTING);
      }
 }
@@ -71,14 +69,14 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-    
+
     object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-    
+
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
     int armorType = GetArmorType(oArmor);
     if (oArmor == OBJECT_INVALID) armorType = ARMOR_TYPE_LIGHT;
-    
+
     string nMes = "";
 
     // On Error Remove effects
@@ -86,43 +84,43 @@ void main()
     // Because the variables are not yet set.
     if(GetLocalInt(oPC, "HasAbsAmbidex") == 0 )
     {
-         RemoveAbsAmbidex(oPC);    
+         RemoveAbsAmbidex(oPC);
          RemoveTwoWeaponDefense(oPC, oSkin);
-         
+
          if(GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
          {
-              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC); 
-         }  
+              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC);
+         }
     }
     // Removes effects is armor is not light
     else if( armorType > ARMOR_TYPE_LIGHT )
     {
-         RemoveAbsAmbidex(oPC);    
+         RemoveAbsAmbidex(oPC);
          RemoveTwoWeaponDefense(oPC, oSkin);
-         
+
          if(GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
          {
-              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC); 
+              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC);
          }
 
          nMes = "*Two-Weapon Fighting Abilities Disabled Due To Equipped Armor*";
          FloatingTextStringOnCreature(nMes, oPC, FALSE);
     }
-    
-    
+
+
     // Remove all effects if weapons are not correct
-    else if(oWeapR == OBJECT_INVALID || oWeapL == OBJECT_INVALID || 
+    else if(oWeapR == OBJECT_INVALID || oWeapL == OBJECT_INVALID ||
             GetBaseItemType(oWeapL) == BASE_ITEM_LARGESHIELD ||
             GetBaseItemType(oWeapL) == BASE_ITEM_TOWERSHIELD ||
             GetBaseItemType(oWeapL) == BASE_ITEM_SMALLSHIELD ||
             GetBaseItemType(oWeapL) == BASE_ITEM_TORCH)
     {
-         RemoveAbsAmbidex(oPC);    
+         RemoveAbsAmbidex(oPC);
          RemoveTwoWeaponDefense(oPC, oSkin);
-         
+
          if(GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
          {
-              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC); 
+              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC);
          }
 
          nMes = "*Two-Weapon Fighting Abilities Disabled Due To Invallid Weapon*";
@@ -146,11 +144,11 @@ void main()
           {
                //RemoveTwoWeaponDefense(oPC, oSkin);
                ApplyTwoWeaponDefense(oPC, oSkin);
-          
+
                nMes = "*Two-Weapon Defense Activated*";
                FloatingTextStringOnCreature(nMes, oPC, FALSE);
           }
-          
+
           // inserts a random delay before calling this function
           // this should prevent some errors caused by equipping
           // two weapons in rapid succession.

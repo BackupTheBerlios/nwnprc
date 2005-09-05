@@ -1,7 +1,5 @@
 #include "prc_alterations"
-#include "prc_alterations"
 #include "x2_inc_spellhook"
-#include "prc_alterations"
 
 /*
  * This is the spellhook code, called when the Spell-Like feat is activated

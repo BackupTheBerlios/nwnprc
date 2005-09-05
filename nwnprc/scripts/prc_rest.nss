@@ -8,16 +8,13 @@
 
 #include "prc_alterations"
 #include "nw_i0_plot"
-#include "prc_alterations"
 #include "prc_ipfeat_const"
 #include "inc_epicspells"
 #include "prc_inc_domain"
 #include "inc_newspellbook"
 #include "prc_power_const"
 #include "psi_inc_ac_manif"
-#include "inc_eventhook"
-#include "inc_prc_npc"
-#include "inc_time"
+#include "inc_utility"
 
 void PrcFeats(object oPC)
 {
@@ -83,7 +80,7 @@ void RestFinished(object oPC)
 
     // To heal up enslaved creatures...
     object oSlave = GetLocalObject(oPC, "EnslavedCreature");
-    if (GetIsObjectValid(oSlave) && !GetIsDead(oSlave) && !GetIsInCombat(oSlave)) 
+    if (GetIsObjectValid(oSlave) && !GetIsDead(oSlave) && !GetIsInCombat(oSlave))
             AssignCommand(oSlave, ActionRest());
             //ForceRest(oSlave);
 
@@ -125,10 +122,10 @@ void RestFinished(object oPC)
         int nDamage = nCurrentHP-nHP;
         //check its a positive number
         if(nDamage > 0)
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, 
+            ApplyEffectToObject(DURATION_TYPE_INSTANT,
                 EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPC);
     }
-    
+
     int nSpellCount = GetPRCSwitch(PRC_DISABLE_SPELL_COUNT);
     int i;
     string sMessage;
@@ -142,13 +139,13 @@ void RestFinished(object oPC)
             {
                 sMessage += "You cannot use "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpell)))+" in this module.\n";
                 nMessage = TRUE;
-            }   
+            }
             DecrementRemainingSpellUses(oPC, nSpell);
         }
     }
     if(sMessage != "")
         FloatingTextStringOnCreature(sMessage, oPC, TRUE);
-    
+
     //DelayCommand(1.0,PrcFeats(oPC));
     PrcFeats(oPC);
 
@@ -163,7 +160,7 @@ void RestFinished(object oPC)
         //school for each spell level
         //also need to remove spells of prohibited schools
     }
-    
+
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_FINISHED);
 }
@@ -171,11 +168,11 @@ void RestFinished(object oPC)
 void main()
 {
     object oPC = GetLastBeingRested();
-    
+
     //rest kits
     if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
         ExecuteScript("sbr_onrest", OBJECT_SELF);
-    
+
     // Handle the PRCForceRest() wrapper
     if(GetLocalInt(oPC, "PRC_ForceRested"))
     {

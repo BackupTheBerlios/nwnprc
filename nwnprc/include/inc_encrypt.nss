@@ -1,4 +1,4 @@
-#include "prc_inc_switch"
+#include "inc_utility"
 
 string Encrypt(object oPC)
 {

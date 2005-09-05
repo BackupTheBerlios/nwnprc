@@ -9,10 +9,10 @@
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
-#include "prc_inc_switch"
+#include "inc_utility"
 #include "prc_class_const"
-#include "prc_alterations"
 #include "inc_epicspells"
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
@@ -29,7 +29,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     //if(GetLevelByClass(CLASS_TYPE_DISPATER,OBJECT_SELF) >= 9)
         //SetPRCSwitch(PRC_MULTISUMMON, 3);
-    
+
     if(iRoll == 3)
     {
         MultisummonPreSummon(OBJECT_SELF, TRUE);
@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         MultisummonPreSummon(OBJECT_SELF);
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
     }
-    
+
     /*Apply the VFX impact and summon effect
     MultisummonPreSummon(OBJECT_SELF);
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));

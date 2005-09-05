@@ -1,7 +1,7 @@
 /*
    ----------------
    Matter Agitation
-   
+
    prc_all_mttrag
    ----------------
 
@@ -15,7 +15,7 @@
    Saving Throw: None
    Power Resistance: Yes
    Power Point Cost: 1
-   
+
    You excite the structure of an object, heating it to the point of combustion over time.
    First Round: 1 point of fire damage.
    Second Round: 1d4 points of fire damage.
@@ -25,8 +25,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
-#include "prc_alterations"
+#include "spinc_common"
 
 
 
@@ -46,7 +45,7 @@ void RunImpact1(object oTarget, object oCaster, int nSpell)
         // Calculate Damage
         //----------------------------------------------------------------------
         effect eDam = EffectDamage(d4(), DAMAGE_TYPE_FIRE);
-        effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S); 
+        effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
         eDam = EffectLinkEffects(eVis,eDam); // flare up
         SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);
     }
@@ -68,7 +67,7 @@ void RunImpact2(object oTarget, object oCaster, int nSpell)
         // Calculate Damage
         //----------------------------------------------------------------------
         effect eDam = EffectDamage(d6(), DAMAGE_TYPE_FIRE);
-        effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S); 
+        effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
         eDam = EffectLinkEffects(eVis,eDam); // flare up
         SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);
         DelayCommand(6.0f,RunImpact2(oTarget, oCaster, nSpell));
@@ -101,24 +100,24 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);    
-    
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
+
     if (nSurge > 0)
     {
-    	
+
     	PsychicEnervation(oCaster, nSurge);
     }
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
 	int nCaster = GetManifesterLevel(oCaster);
 	int nPen = GetPsiPenetration(oCaster);
 	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 	int nSpell = GetSpellId();
-		
+
 	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	
+
 	if(PRCMyResistPower(oCaster, oTarget, nPen))
 	{
 		SPApplyEffectToObject (DURATION_TYPE_INSTANT,EffectDamage(1, DAMAGE_TYPE_FIRE),oTarget);
@@ -134,6 +133,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	{
 		effect eSmoke = EffectVisualEffect(VFX_IMP_REFLEX_SAVE_THROW_USE);
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT,eSmoke,oTarget);
-	}	
+	}
     }
 }

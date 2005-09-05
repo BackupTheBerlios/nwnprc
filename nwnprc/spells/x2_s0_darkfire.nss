@@ -16,11 +16,7 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
-
-
 #include "prc_alterations"
-#include "prc_alterations"
-
 #include "x2_inc_spellhook"
 
 void DeleteTheInts(object oTarget)
@@ -51,7 +47,7 @@ void AddFlamingEffectToWeapon(object oTarget, float fDuration, int nCasterLvl)
    SetLocalInt(oTarget, "X2_Wep_Caster_Lvl", nCasterLvl);
 
    // If the spell is cast again, any previous itemproperties matching are removed.
-   
+
    if (!( GetBaseItemType(oTarget)==BASE_ITEM_SHORTSPEAR && GetHasFeat( FEAT_THUNDER_WEAPON,OBJECT_SELF)))
      IPSafeAddItemProperty(oTarget, ItemPropertyOnHitCastSpell(127,nCasterLvl), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
    IPSafeAddItemProperty(oTarget, ItemPropertyVisualEffect(nAppearanceType), fDuration,X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE);

@@ -1,7 +1,6 @@
 #include "prc_alterations"
 #include "x0_i0_petrify"
 #include "prc_feat_const"
-#include "prc_alterations"
 
 void main()
 {

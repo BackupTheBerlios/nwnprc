@@ -9,9 +9,8 @@
 //:: Created On: July 6, 2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_feat_const"
-#include "inc_prc_npc"
+#include "inc_utility"
 
 void RemoveSacredFlame(object oPC, object oWeap);
 

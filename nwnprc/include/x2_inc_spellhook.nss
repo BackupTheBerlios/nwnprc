@@ -26,7 +26,7 @@ const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 
 // This function checks for the Red Wizard's restricted
 // spell school and prevents him from casting the spells
-// that he is banned from casting. 
+// that he is banned from casting.
 int RedWizRestrictedSchool();
 
 // This function checks whether Inscribe Rune is turned on
@@ -97,9 +97,8 @@ int PRCGetUserSpecificSpellScriptFinished();
 #include "x2_inc_craft"
 #include "prc_inc_spells"
 #include "prc_inc_combat"
-#include "prc_inc_switch"
-#include "prc_inc_itmrstr"
 #include "inc_utility"
+#include "prc_inc_itmrstr"
 
 int RedWizRestrictedSchool()
 {
@@ -126,11 +125,11 @@ int RedWizRestrictedSchool()
     else if (GetHasFeat(FEAT_RW_RES_DIV, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_DIVINATION;
     else if (GetHasFeat(FEAT_RW_RES_CON, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_CONJURATION;
     else if (GetHasFeat(FEAT_RW_RES_ABJ, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_ABJURATION;
-    
+
     if (iRedWizard > 0)
     {
         int iSchool = GetSpellSchool(nSpell);
-        if (iSchool == iRWRes1) 
+        if (iSchool == iRWRes1)
         {
             FloatingTextStringOnCreature("You cannot cast spells of your prohibited schools. Spell terminated.", OBJECT_SELF, FALSE);
             return FALSE;
@@ -142,7 +141,7 @@ int RedWizRestrictedSchool()
         }
         else
         {
-        return TRUE;        
+        return TRUE;
         }
     }
 
@@ -153,41 +152,66 @@ int InscribeRune()
 {
 	// Get the required ints
 	object oCaster = OBJECT_SELF;
-	
+
     	// Get the item used to cast the spell
     	object oItem = GetSpellCastItem();
-    
+
     	// No point scribing runes from items, and its not allowed.
-    	if (oItem != OBJECT_INVALID) 
+    	if (oItem != OBJECT_INVALID)
     	{
     		FloatingTextStringOnCreature("You cannot scribe a rune from an item.", OBJECT_SELF, FALSE);
     		return TRUE;
-    	}	
-	
+    	}
+
 	// If Inscribing is turned off, the spell functions as normal
-	if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;	
-	
+	if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;
+
 	object oTarget = PRCGetSpellTargetObject();
 	int nCaster = PRCGetCasterLevel(oCaster);
 	int nDC = PRCGetSaveDC(oTarget, oCaster);
 	int nSpell = PRCGetSpellId();
 	int nSpellLevel;
+	int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
 	
+	// This accounts for the fact that there is no bonus to runecraft at level 10
+	// Also adjusts it to fit the epic progression, which starts at 13
+	if (nClass >= 10) nClass -= 3;
+	// Bonus to Runecrafting checks from the Runecaster class
+	int nRuneCraft = (nClass + 2)/3;
+	// Runecraft local int that counts uses/charges
+	int nCount = GetLocalInt(oCaster, "RuneCounter");
+
 	if (PRCGetLastSpellCastClass() == CLASS_TYPE_CLERIC) nSpellLevel = StringToInt(lookup_spell_cleric_level(nSpell));
 	else if (PRCGetLastSpellCastClass() == CLASS_TYPE_DRUID) nSpellLevel = StringToInt(lookup_spell_druid_level(nSpell));
 	// Minimum level.
 	if (nSpellLevel == 0) nSpellLevel = 1;
-	
+
 	// This will be modified with Runecaster code later.
 	int nCharges = 1;
-	
+	if (GetLocalInt(oCaster, "RuneCharges")) nCharges = nCount;
+	if (GetLocalInt(oCaster, "RuneUsesPerDay")) 
+	{
+		// 5 is the max uses per day
+		if (nCount > 5) nCount = 5;
+		nCharges = nCount;
+	}
+	// Can't have no charges
+	if (nCharges = 0) nCharges = 1;
+
 	FloatingTextStringOnCreature("Spell Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
 	FloatingTextStringOnCreature("Caster Level: " + IntToString(nCaster), OBJECT_SELF, FALSE);
+	FloatingTextStringOnCreature("Number of Charges: " + IntToString(nCharges), OBJECT_SELF, FALSE);
 	
+	// Gold cost multipler, varies depending on the ability used to craft
+	int nMultiplier = 100;
+	if (nClass > 0) nMultiplier = 50;
+	if (GetLocalInt(oCaster, "RuneCharges")) nMultiplier = 50;
+	if (GetLocalInt(oCaster, "RuneUsesPerDay")) nMultiplier = 400;
+
 	// Cost of the rune in gold and XP
-	int nGoldCost = nSpellLevel * nCaster * 100;
+	int nGoldCost = nSpellLevel * nCaster * nCharges * nMultiplier;
 	int nXPCost = nGoldCost/25;
-	
+
 	FloatingTextStringOnCreature("Gold Cost: " + IntToString(nGoldCost), OBJECT_SELF, FALSE);
 	FloatingTextStringOnCreature("XP Cost: " + IntToString(nXPCost), OBJECT_SELF, FALSE);
 
@@ -198,9 +222,12 @@ int InscribeRune()
 	int nGold = GetGold(oCaster);
 	int nNewGold = nGold - nGoldCost;
 	int nCheck = FALSE;
+	// Does the PC have Maximize Rune turned on?
+	int nMaximize = 0;
+	if (GetLocalInt(oCaster, "MaximizeRune")) nMaximize = 5;
 	// The check does not use GetIsSkillSuccessful so it doesn't show on the PC
-	if ((GetSkillRank(SKILL_CRAFT_ARMOR, oCaster) + d20()) >= (20 + nSpellLevel)) nCheck = TRUE;
-	
+	if ((GetSkillRank(SKILL_CRAFT_ARMOR, oCaster) + d20() + nRuneCraft) >= (20 + nSpellLevel + nMaximize)) nCheck = TRUE;
+
 
 	if (nMinXPForLevel > nNewXP || nNewXP == 0 || nNewGold < 0)
 	{
@@ -213,15 +240,15 @@ int InscribeRune()
 		FloatingTextStringOnCreature("You have failed the craft check to scribe this rune.", oCaster, FALSE);
 		// Since they don't have enough, the spell casts normally
 		return TRUE;
-	}	
-	
+	}
+
 	// Since we know they can now pay for it, create the rune stone
 	object oRune = CreateItemOnObject("prc_rune_1", oCaster);
-	
+
 	// Steal all the code from craft wand.
 	// The reason craft wand is used is because it is possible to create runes with charges using the Runecaster class.
 	    int nPropID = IPGetIPConstCastSpellFromSpellID(nSpell);
-	
+
 	    // * GZ 2003-09-11: If the current spell cast is not acid fog, and
 	    // *                returned property ID is 0, bail out to prevent
 	    // *                creation of acid fog items.
@@ -230,21 +257,45 @@ int InscribeRune()
 	        FloatingTextStrRefOnCreature(84544,oCaster);
 	        return TRUE;
 	    }
-	
-	
+
+
 	    if (nPropID != -1)
 	    {
-	        itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
-	        AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune);
+	    	// If its uses per day instead of charges, we do some different stuff here
+	    	if (GetLocalInt(oCaster, "RuneUsesPerDay"))
+	    	{
+	    		int nIPUses;
+	    		if (nCount == 1) nIPUses = IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY;
+	    		else if (nCount == 2) nIPUses = IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY;
+	    		else if (nCount == 3) nIPUses = IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY;
+	    		else if (nCount == 4) nIPUses = IP_CONST_CASTSPELL_NUMUSES_4_USES_PER_DAY;
+	    		// Caps out at 5 per day
+	    		else if (nCount >= 5) nIPUses = IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY;
+	    		
+	    		itemproperty ipProp = ItemPropertyCastSpell(nPropID,nIPUses);
+	        	AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune);
+	        }
+	        else // Do the normal charges
+	        {
+	        	itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
+	        	AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune);
+	        }
+	        // This part is always done
 	        itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpell, PRCGetCasterLevel());
 	        AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oRune);
 	        itemproperty ipMeta = ItemPropertyMetamagic(nSpell, PRCGetMetaMagicFeat());
 	        AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oRune);
+	        // If Maximize Rune is turned on and we pass the check, add the Maximize IProp
+	        if (GetLocalInt(oCaster, "MaximizeRune"))
+	        {
+	        	itemproperty ipMax = ItemPropertyMetamagic(nSpell, METAMAGIC_MAXIMIZE);
+	        	AddItemProperty(DURATION_TYPE_PERMANENT,ipMax,oRune);
+	        }
 		SetItemCharges(oRune,nCharges);
 		SetXP(oCaster,nNewXP);
-		TakeGoldFromCreature(nGoldCost, oCaster, TRUE);	  
+		TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
 	    }
-	    
+
 	// If we have made it this far, they have crafted the rune and the spell has been used up, so it returns false.
 	return FALSE;
 }
@@ -254,7 +305,7 @@ int EShamConc()
     int nConc = GetLocalInt(OBJECT_SELF, "EShamConc");
     string nSpellLevel = lookup_spell_level(PRCGetSpellId());
     int nTest = TRUE;
-    
+
     if (nConc)
     {
          nTest = GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, (15 + StringToInt(nSpellLevel)));
@@ -280,7 +331,7 @@ int KOTCHeavenDevotion(object oTarget)
                 }
             }
         }
-    }    
+    }
     return nTest;
 }
 
@@ -361,17 +412,17 @@ void Battlecast()
 {
     object oPC = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
-    
+
     // Get the item used to cast the spell
     object oItem = GetSpellCastItem();
-    
+
     // Battlecast only works on spells cast by the Havoc Mage, not by items he uses.
-    if (oItem != OBJECT_INVALID) 
+    if (oItem != OBJECT_INVALID)
     {
     	FloatingTextStringOnCreature("You do not gain Battlecast from Items.", OBJECT_SELF, FALSE);
     	return;
     }
-    
+
     //if its not being cast on a hostile target or its at a location
     //get the nearest living seen hostile insead
     if(!spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC)
@@ -385,9 +436,9 @@ void Battlecast()
     int nLevel = GetLevelByClass(CLASS_TYPE_HAVOC_MAGE, oPC);
     string sSpellLevel = lookup_spell_level(PRCGetSpellId());
     int nSpellLevel = StringToInt(sSpellLevel);
-    
+
     // Don't want to smack allies upside the head when casting a spell.
-    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC) 
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC)
         && oTarget != oPC
         && GetDistanceToObject(oTarget) < FeetToMeters(15.0))
     {
@@ -672,9 +723,9 @@ int X2PreSpellCastCode()
         && !GetIsDMPossessed(OBJECT_SELF)
         && !GetLocalInt(GetArea(OBJECT_SELF), "X2_L_WILD_MAGIC"))
             return TRUE;
-            
-    //counterspell exploit check    
-    
+
+    //counterspell exploit check
+
     if(nContinue
         && CounterspellExploitCheck())
         nContinue = FALSE;
@@ -690,30 +741,30 @@ int X2PreSpellCastCode()
     DelayCommand(1.0,VoidCounterspellExploitCheck());
     DelayCommand(2.0,VoidCounterspellExploitCheck());
     DelayCommand(3.0,VoidCounterspellExploitCheck());
-        
+
     //Pnp Tensers Transformation
     if(nContinue
         && GetPRCSwitch(PRC_PNP_TENSERS_TRANSFORMATION)
         && GetHasSpellEffect(SPELL_TENSERS_TRANSFORMATION))
         nContinue = FALSE;
-    //PnP Timestop    
+    //PnP Timestop
     if(nContinue
         && GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE)
-        && (GetHasSpellEffect(SPELL_TIME_STOP) 
+        && (GetHasSpellEffect(SPELL_TIME_STOP)
             || GetHasSpellEffect(4032)          //epic spell: Greater Timestop
             || GetHasSpellEffect(14236))        //psionic power: Temporal Acceleration
-        && (!GetIsObjectValid(oTarget) 
+        && (!GetIsObjectValid(oTarget)
             || oTarget != OBJECT_SELF
             || Get2DACache("spells", "HostileSetting", GetSpellId()) == "1")
         )
     {
         nContinue = FALSE;
-    }        
+    }
     //Pnp spellschools
     if(nContinue
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD))
-    {       
+    {
         int nSchool = GetSpellSchool(PRCGetSpellId());
         if(nSchool == SPELL_SCHOOL_ABJURATION
             && GetHasFeat(2265))
@@ -740,8 +791,8 @@ int X2PreSpellCastCode()
             && GetHasFeat(2272))
             nContinue = FALSE;
         if(!nContinue)
-            FloatingTextStringOnCreature("You cannot cast spells of an opposition school.", OBJECT_SELF, FALSE); 
-    }        
+            FloatingTextStringOnCreature("You cannot cast spells of an opposition school.", OBJECT_SELF, FALSE);
+    }
     //Pnp somatic components
     if(nContinue
         && (GetPRCSwitch(PRC_PNP_SOMATIC_COMPOMENTS)
@@ -754,9 +805,9 @@ int X2PreSpellCastCode()
         if(!GetIsObjectValid(oItem)
             || GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD)
             nHandFree = TRUE;
-        oItem = GetSpellCastItem();   
+        oItem = GetSpellCastItem();
         //check item is not equiped
-        if(!nHandFree 
+        if(!nHandFree
             && GetIsObjectValid(oItem)
             && GetPRCSwitch(PRC_PNP_SOMATIC_COMPOMENTS))
         {
@@ -767,9 +818,9 @@ int X2PreSpellCastCode()
                 if(GetItemInSlot(nSlot) == oItem)
                     nHandRequired = FALSE;
             }
-        }   
+        }
         //check its a real spell and that it requires a free hand
-        if(!nHandFree 
+        if(!nHandFree
             && !nHandRequired
             && !GetIsObjectValid(oItem)
             && GetPRCSwitch(PRC_PNP_SOMATIC_COMPOMENTS))
@@ -777,21 +828,21 @@ int X2PreSpellCastCode()
             string sComponent = Get2DACache("spells", "VS", nSpellId);
             if(sComponent == "VS"
                 || sComponent == "SV"
-                || sComponent == "S")            
+                || sComponent == "S")
                 nHandRequired = TRUE;
-        }     
-        
+        }
+
         if(nHandRequired && nHandFree)
         {
-            nContinue = FALSE;   
-            FloatingTextStringOnCreature("You do not have any free hands.", OBJECT_SELF, FALSE);   
-        }            
+            nContinue = FALSE;
+            FloatingTextStringOnCreature("You do not have any free hands.", OBJECT_SELF, FALSE);
+        }
     }
 
     //---------------------------------------------------------------------------
     // Break any spell require maintaining concentration (only black blade of
     // disaster)
-    // /*REM*/ 
+    // /*REM*/
     if(GetPRCSwitch(PRC_PNP_BLACK_BLADE_OF_DISASTER))
         X2BreakConcentrationSpells();
         //this is also in summon HB
@@ -804,24 +855,24 @@ int X2PreSpellCastCode()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = RedWizRestrictedSchool();
-        
+
     //---------------------------------------------------------------------------
     // Run Inscribe Rune Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = InscribeRune();        
-        
+        nContinue = InscribeRune();
+
     //---------------------------------------------------------------------------
     // Run Ectoplasmic Shambler Concentration Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = EShamConc();      
-        
+        nContinue = EShamConc();
+
     //---------------------------------------------------------------------------
     // Run Knight of the Chalice Heavenly Devotion check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = KOTCHeavenDevotion(oTarget);            
+        nContinue = KOTCHeavenDevotion(oTarget);
 
     //---------------------------------------------------------------------------
     // Run use magic device skill check
@@ -861,7 +912,7 @@ int X2PreSpellCastCode()
         //-----------------------------------------------------------------------
         // Check if spell was used to trigger item creation feat
         //-----------------------------------------------------------------------
-        if (nContinue) 
+        if (nContinue)
             nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft",OBJECT_SELF);
 
         //-----------------------------------------------------------------------
@@ -869,18 +920,18 @@ int X2PreSpellCastCode()
         //-----------------------------------------------------------------------
         if (nContinue)
             nContinue = (!X2GetSpellCastOnSequencerItem(oTarget));
-            
+
         //-----------------------------------------------------------------------
         // Check if spell was used for Arcane Archer Imbue Arrow
         //-----------------------------------------------------------------------
         if (nContinue)
             nContinue = !ExecuteScriptAndReturnInt("aa_spellhook",OBJECT_SELF);
-            
+
         //-----------------------------------------------------------------------
         // Check if spell was used for Spellsword ChannelSpell
         //-----------------------------------------------------------------------
         if (nContinue)
-            nContinue = !ExecuteScriptAndReturnInt("prc_spell_chanel",OBJECT_SELF);            
+            nContinue = !ExecuteScriptAndReturnInt("prc_spell_chanel",OBJECT_SELF);
 
         //-----------------------------------------------------------------------
         // * Execute item OnSpellCast At routing script if activated
@@ -906,8 +957,8 @@ int X2PreSpellCastCode()
 
 
     //spellsharing for bonded summoner
-    if (nContinue 
-        && GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER) 
+    if (nContinue
+        && GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER)
         && !GetPRCSwitch(PRC_PNP_FAMILIARS))
     {
         object oFam = GetLocalObject(OBJECT_SELF, "BONDED");
@@ -932,8 +983,8 @@ int X2PreSpellCastCode()
         }
     }
     //Pnp familiar spellsharing
-    if(nContinue 
-        && GetPRCSwitch(PRC_PNP_FAMILIARS) 
+    if(nContinue
+        && GetPRCSwitch(PRC_PNP_FAMILIARS)
         && !GetIsObjectValid(GetSpellCastItem())
         && oTarget == OBJECT_SELF
         && GetHasFeat(FEAT_SUMMON_FAMILIAR))
@@ -943,9 +994,9 @@ int X2PreSpellCastCode()
         AssignCommand(oFam, ActionCastSpellAtObject (PRCGetSpellId(), oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         // Make sure this variable gets deleted as quickly as possible in case it's added in error.
         AssignCommand(oFam, ActionDoCommand(DeleteLocalInt(oFam, "PRC_Castlevel_Override")));
-    
+
     }
-    
+
     if(GetPRCSwitch(PRC_PW_SPELL_TRACKING))
     {
         if(GetLocalInt(OBJECT_SELF, "UsingActionCastSpell"))
@@ -955,10 +1006,10 @@ int X2PreSpellCastCode()
         {
             string sSpell = IntToString(GetSpellId())+"|"; //use original spellID
             string sStored = GetPersistantLocalString(OBJECT_SELF, "persist_spells");
-            SetPersistantLocalString(OBJECT_SELF, "persist_spells", sStored+sSpell); 
+            SetPersistantLocalString(OBJECT_SELF, "persist_spells", sStored+sSpell);
         }
     }
-    
+
     //Combat medic healing kicker
     if(nContinue && GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC))
         CombatMedicHealingKicker();

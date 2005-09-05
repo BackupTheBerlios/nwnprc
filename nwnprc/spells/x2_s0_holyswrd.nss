@@ -15,10 +15,7 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
-
 #include "prc_alterations"
-#include "prc_alterations"
-
 #include "x2_inc_spellhook"
 
 
@@ -26,7 +23,7 @@ void  AddHolyAvengerEffectToWeapon(object oMyWeapon, float fDuration, int nLevel
 {
    //IPSafeAddItemProperty(oMyWeapon,ItemPropertyEnhancementBonus(2), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING ,FALSE,TRUE);
    //IPSafeAddItemProperty(oMyWeapon,ItemPropertyHolyAvenger(), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING,TRUE,TRUE);
-   
+
    //IPSafeAddItemProperty(oMyWeapon,ItemPropertyEnhancementBonus(2), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING ,TRUE,TRUE);
    //IPSafeAddItemProperty(oMyWeapon,ItemPropertyEnhancementBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, 5), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING,TRUE,TRUE);
    //IPSafeAddItemProperty(oMyWeapon,ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DISPEL_MAGIC, nLevel), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING,TRUE,TRUE);

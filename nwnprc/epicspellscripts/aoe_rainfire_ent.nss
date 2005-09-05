@@ -14,7 +14,6 @@
 //#include "x2_inc_spellhook"
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "inc_epicspells"
 #include "prc_add_spell_dc"
 
@@ -31,7 +30,7 @@ void main()
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
     float fDelay;
-    
+
     if (oTarget != oCaster &&
         !GetIsDM(oTarget))
     {

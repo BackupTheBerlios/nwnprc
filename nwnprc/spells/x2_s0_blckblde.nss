@@ -16,7 +16,7 @@
 #include "prc_alterations"
 
 #include "x2_i0_spells"
-#include "prc_inc_switch"
+#include "inc_utility"
 #include "spinc_common"
 #include "prc_inc_sp_tch"
 

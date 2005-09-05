@@ -1,7 +1,6 @@
 #include "inc_epicspells"
 #include "inc_epicspelldef"
 #include "inc_epicspellfnc"
-#include "inc_utilityfuncs"
 #include "inc_utility"
 /*
 for reference
@@ -18,16 +17,6 @@ int TestConditions(int nSpellID);
 object GetSuitableTaget(int nSpellID);
 void MakeEpicSpellsKnownAIList();
 
-void DoDebug(string sString)
-{
-    int DEBUG= FALSE;
-    if(DEBUG)
-    {
-        WriteTimestampedLogEntry("DEBUG: "+GetName(OBJECT_SELF)+": "+sString);
-        SendMessageToPC(GetFirstPC(),GetName(OBJECT_SELF)+": "+sString);
-        SendMessageToAllDMs(GetName(OBJECT_SELF)+": "+sString);
-    }
-}
 
 //returns True if it casts something
 int DoEpicSpells()

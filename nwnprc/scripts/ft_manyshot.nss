@@ -1,5 +1,4 @@
 #include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {
@@ -9,12 +8,12 @@ void main()
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
     int iType = GetBaseItemType(oWeap);
 
-    if ( !(iType == BASE_ITEM_LONGBOW || iType ==BASE_ITEM_SHORTBOW ))  
+    if ( !(iType == BASE_ITEM_LONGBOW || iType ==BASE_ITEM_SHORTBOW ))
     {
         SendMessageToPC(OBJECT_SELF, "You can only use Many Shot with a longbow or shortbow");
         return;
-    }    
-    
+    }
+
     //cant fire more arrows than max no of attacks
     int iMaxAttacks = GetMainHandAttacks(OBJECT_SELF);
     //spellID determines how many arrows
@@ -30,11 +29,11 @@ void main()
         case SPELL_MANYSHOT5: iAttacks = 5; break;
         case SPELL_MANYSHOT6: iAttacks = 6; break;
     }
-    
+
     //cap attacks
-    if (iAttacks>iMaxAttacks) 
+    if (iAttacks>iMaxAttacks)
         iAttacks = iMaxAttacks;
-    //calculate AB penalty    
+    //calculate AB penalty
     nABPenalty = (iAttacks-1)*-2;
 
     //do the attacks in a loop

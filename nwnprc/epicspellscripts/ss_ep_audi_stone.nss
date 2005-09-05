@@ -10,8 +10,6 @@
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-//#include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {
@@ -55,7 +53,7 @@ void main()
                         DelayCommand(fDelay, SPApplyEffectToObject
                             (DURATION_TYPE_INSTANT, eLink, oTarget));
                     }
-*/                    
+*/
                 }
             }
            oTarget = GetNextObjectInShape(SHAPE_SPHERE,

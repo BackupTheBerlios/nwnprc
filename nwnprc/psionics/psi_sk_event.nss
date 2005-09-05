@@ -4,22 +4,22 @@
 //::///////////////////////////////////////////////
 /*
     Handles Soulknife stuff for events:
-    
+
     OnRest
     - Changes mindblade enhancement to new settings.
-    
+
     OnEquip
     - Handles prevention of equipping anything in
       left hand if using bastard sword without
       Exotic Prof.
-    
+
     OnUnEquip
     - Destroys any mindblades unequipped.
-    
+
     OnUnAquire
     - Destroys any mindblades lost. Should never
       happen, but paranoia is good.
-    
+
     OnDeath
     - Destroy mindblade on death, just in case.
 */
@@ -29,10 +29,8 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "inc_eventhook"
-#include "psi_inc_soulkn"
-#include "inc_debug"
 #include "inc_utility"
+#include "psi_inc_soulkn"
 
 /*
 void DoDestroy(object oItem){
@@ -49,15 +47,15 @@ void main()
 {
     object oPC;
     int nEvent = GetRunningEvent();
-    
+
     //DoDebug("psi_sk_event running");
-    
+
     if(nEvent == EVENT_ONPLAYERREST_FINISHED)
     {
         DoDebug("Rest finished, applying new mindblade settings");
         oPC = GetLastBeingRested();
         SetPersistantLocalInt(oPC, MBLADE_FLAGS, GetLocalInt(oPC, MBLADE_FLAGS + "_Q"));
-        
+
         // Make the new settings visible by running the manifesting script
         DelayCommand(0.5f, ExecuteScript("psi_sk_manifmbld", oPC));
     }
@@ -67,7 +65,7 @@ void main()
         oPC = GetItemLastEquippedBy();
         object oItem   = GetItemLastEquipped(),
                oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-        
+
         // Wielding the bastard sword with 2 hands
         if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)) &&
            GetBaseItemType(oWeapon) == BASE_ITEM_BASTARDSWORD            &&
@@ -83,7 +81,7 @@ void main()
             SendMessageToPCByStrRef(oPC, 16824510);
             ForceUnequip(oPC, oItem, INVENTORY_SLOT_LEFTHAND);
         }*/
-        
+
         // Lacking the correct proficiency to wield non-mindblade version of a short sword
         if(GetBaseItemType(oItem) == BASE_ITEM_SHORTSWORD     &&
            GetTag(oItem) != "prc_sk_mblade_ss"                &&

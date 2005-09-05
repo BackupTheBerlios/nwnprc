@@ -1,7 +1,7 @@
 
 #include "prc_class_const"
 #include "prc_feat_const"
-#include "inc_item_props"
+#include "inc_utility"
 #include "NW_I0_GENERIC"
 
 // * Various functions to determine sneak dice.

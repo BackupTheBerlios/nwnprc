@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "nw_i0_spells"
-#include "inc_eventhook"
+#include "inc_utility"
 
 void main()
 {

@@ -14,8 +14,7 @@ int    DAMAGE_TYPE_SONIC        = 2048;
 */
 
 #include "prgt_inc_trap"
-#include "inc_2dacache"
-#include "inc_ecl"
+#include "inc_utility"
 
 object CreateTrap(location lLoc, struct trap tTrap);
 void DetectPsuedoHB(object oTrap);

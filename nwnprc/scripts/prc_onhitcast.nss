@@ -7,15 +7,15 @@
     used by PRC.
     It was created to replace x2_s3_onhitcast so that
     it wouldn't override module-specific onhitcast events.
-    
+
     Add your own entries after the previous ones. Try to
     keep variable scope as little as possible. ie, no top-
     level variables if you just can avoid it.
     If your entry is long (over 20 lines), consider placing
     the guts of it outside the main to improve readability
     for the rest of us :D
-    
-    
+
+
     Please remember comment your entry.
     At least mention what class ability / spell / whatever
     it is part of.
@@ -24,11 +24,10 @@
 //:: Created By: Various people
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 #include "psi_inc_onhit"
 #include "inc_rend"
 #include "psi_inc_ac_const"
-#include "inc_eventhook"
+#include "inc_utility"
 
 
 void SetRancorVar(object oPC);
@@ -66,7 +65,7 @@ void main()
 
     //// Swashbuckler Weakening and Wounding Criticals
     if(GetHasFeat(INSIGHTFUL_STRIKE, OBJECT_SELF))
-        ExecuteScript("prc_swashweak", OBJECT_SELF);    
+        ExecuteScript("prc_swashweak", OBJECT_SELF);
 
     //// Stormlord Shocking & Thundering Spear
 
@@ -133,7 +132,7 @@ void main()
             DelayCommand(0.01, ExecuteScript("prc_fb_deathless", OBJECT_SELF) );
         }
     }
-    
+
     // Warsling Sniper Improved Ricochet
     if ((GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oSpellOrigin) == 6) > 0 && GetLocalInt(oSpellOrigin, "CanRicochet") != 2 && GetBaseItemType(oItem) == BASE_ITEM_BULLET)
     {
@@ -148,7 +147,7 @@ void main()
             DelayCommand(6.0, SetImprovedRicochetVar(oSpellOrigin) );
             SetLocalInt(oSpellOrigin, "ImpRicochetVarRunning", 1);
         }
-    }   
+    }
 
 
     // Foe Hunter Damage Resistance
@@ -206,7 +205,7 @@ void main()
             SetLocalInt(oSpellOrigin, "PsiRetortVarRunning", 1);
         }
     }
-    
+
     if (GetIsObjectValid(GetLocalObject(oSpellOrigin, "FatedPartner")))
     {
         DelayCommand(0.01, FateLink(oSpellOrigin));
@@ -242,12 +241,12 @@ void main()
     {
         DelayCommand(0.01, EmpathicFeedback(oSpellOrigin));
     }
-    
+
     // Energy Current
     if(GetLocalInt(oSpellOrigin, "PsiEnCurrent") > 0 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
         DelayCommand(0.01, EnergyCurrent(oSpellOrigin));
-    }    
+    }
     /*//////////////////////////////////////////////////
     //////////////// END PSIONICS //////////////////////
     //////////////////////////////////////////////////*/
@@ -261,17 +260,17 @@ void main()
     }
 
     //spellsword & arcane archer
-    if(GetLocalInt(oItem, "spell") == 1 
+    if(GetLocalInt(oItem, "spell") == 1
         && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
 
         object oPC = oSpellOrigin;
         //Arcane Archer uses same code, but can do AoE damage
-        if(GetBaseItemType(oItem) != BASE_ITEM_ARROW) 
+        if(GetBaseItemType(oItem) != BASE_ITEM_ARROW)
             SetLocalInt(oPC,"spellswd_aoe",1);
-            
-        SetLocalInt(oPC, "AttackHasHit", TRUE);    
-            
+
+        SetLocalInt(oPC, "AttackHasHit", TRUE);
+
         int nSpellMetamagic1 = GetLocalInt(oItem,"metamagic_feat_1");
         int nSpellMetamagic2 = GetLocalInt(oItem,"metamagic_feat_2");
         int nSpellMetamagic3 = GetLocalInt(oItem,"metamagic_feat_3");
@@ -288,19 +287,19 @@ void main()
         DeleteLocalString(oItem,"spellscript2");
         DeleteLocalString(oItem,"spellscript3");
         DeleteLocalString(oItem,"spellscript4");
-        
+
         DeleteLocalInt(oItem,"spell");
-        
+
         if(sSpellString1 != "")
         {
             SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic1);
             ExecuteScript(sSpellString1,oPC);
-        }    
+        }
         if(sSpellString2 != "")
         {
             SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic2);
             ExecuteScript(sSpellString2,oPC);
-        }    
+        }
         if(sSpellString3 != "")
         {
             SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic3);
@@ -310,11 +309,11 @@ void main()
         {
             SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic4);
             ExecuteScript(sSpellString4,oPC);
-        }    
-        
+        }
+
         DeleteLocalInt(oPC,"spellswd_aoe");
         DeleteLocalInt(oPC,"spell_metamagic");
-        DeleteLocalInt(oPC, "AttackHasHit"); 
+        DeleteLocalInt(oPC, "AttackHasHit");
     }
 
     // Handle Rend. Creature weapon damage + 1.5x STR bonus.
@@ -328,7 +327,7 @@ void main()
     {
         DoRend(oSpellTarget, oSpellOrigin, oItem);
     }
-    
+
     //handle other OnHit:CastSpell properties
     itemproperty ipTest = GetFirstItemProperty(oItem);
     while(GetIsItemPropertyValid(ipTest))
@@ -337,14 +336,14 @@ void main()
         {
             int nIPSpell = GetItemPropertySubType(ipTest);
             if(nIPSpell == 125)
-            {   
+            {
                 ipTest = GetNextItemProperty(oItem);
                 continue; //abort if its OnHit:CastSpell:UniquePower otherwise it would TMI.
-            }    
+            }
             int nSpell   = StringToInt(Get2DACache("iprp_onhitspell", "SpellIndex", nIPSpell));
             int nLevel   = GetItemPropertyCostTableValue(ipTest);
             string sScript = Get2DACache("spells", "ImpactScript", nSpell);
-            ExecuteScript(sScript,oSpellOrigin);         
+            ExecuteScript(sScript,oSpellOrigin);
         }
         ipTest = GetNextItemProperty(oItem);
     }
@@ -429,10 +428,10 @@ void DoImprovedRicochet(object oPC, object oTarget)
              // Use up a target slot only if we actually did something to it
             nTargetsLeft -= 1;
         }
-            
+
     //Select the next target within the spell shape.
     oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-    }   
+    }
 }
 
 void SetImprovedRicochetVar(object oPC)

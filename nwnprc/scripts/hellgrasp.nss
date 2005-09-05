@@ -3,7 +3,6 @@
 //Fixed some run-time errors that caused spell to do nothing
 //Aaon Graywolf - Jan 9, 2004
 #include "prc_alterations"
-#include "prc_alterations"
 void main()
 {
     //Declare major variables
@@ -11,12 +10,11 @@ void main()
     int nDamage = d6(1);
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
     effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
-   //Main Spell Body
-   int iHit = PRCDoMeleeTouchAttack(oTarget);;
-   if (iHit > 0)
-   {
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-   }
-
+    //Main Spell Body
+    int iHit = PRCDoMeleeTouchAttack(oTarget);;
+    if (iHit > 0)
+    {
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    }
 }

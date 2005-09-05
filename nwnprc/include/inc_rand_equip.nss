@@ -1,19 +1,24 @@
-/*
-Primogenitors Random Equipment Functions
+/** @file
+    Primogenitor's Random Equipment Functions
 
-This include file contains a group of functions that will create equipment
-on the creatures they are called upon.
-The equipment will be just the basic bioware defaults, so you will have to
-add/replace with enchanted versions yourself.
-If the target already has equipment, this will be created and equiped instead.
-However, the AI may restore the other if it is better.
+    This include file contains a group of functions that will create equipment
+    on the creatures they are called upon.
+    The equipment will be just the basic bioware defaults, so you will have to
+    add/replace with enchanted versions yourself.
+    If the target already has equipment, this will be created and equiped instead.
+    However, the AI may restore the other if it is better.
 
-To use, include this file in a script.
-Then call EquipWeapon, EquipArmor, and/or EquipMisc from the OnSpawn
-Best used if spawned out of combat, otherwise they may not equip
-Aslo, call these after any levelling has been done to use gained feats
-If used on creatures with claws/bites/slams then the handed weapons will be
-used instead of the natural weapons, even if they are inferior.
+    To use, include this file in a script.
+    Then call EquipWeapon, EquipArmor, and/or EquipMisc from the OnSpawn
+    Best used if spawned out of combat, otherwise they may not equip
+    Aslo, call these after any levelling has been done to use gained feats
+    If used on creatures with claws/bites/slams then the handed weapons will be
+    used instead of the natural weapons, even if they are inferior.
+
+
+    @author Primogenitor
+
+    @todo See what functions can be replaced with stuff from inc_utility (and linked files)
 */
 
 

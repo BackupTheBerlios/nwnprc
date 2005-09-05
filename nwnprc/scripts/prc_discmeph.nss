@@ -9,10 +9,10 @@
 //:: Created On: Jan 8, 2004
 //:: Modified by Lockindal Linantal: glove property.
 //:://////////////////////////////////////////////
-#include "prc_alterations"
+
+#include "inc_utility"
 #include "prc_alterations"
 #include "prc_feat_const"
-#include "inc_prc_npc"
 
 // * Applies the Disciple of Mephistopheles's resistances on the object's skin.
 // * iLevel = IP_CONST_DAMAGERESIST_*

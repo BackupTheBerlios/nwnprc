@@ -1,7 +1,7 @@
 /*
    ----------------
    Keen Edge
-   
+
    prc_pow_keenedge
    ----------------
 
@@ -15,14 +15,13 @@
    Saving Throw: None
    Power Resistance: No
    Power Point Cost: 5
-   
+
    You mentally sharpen the edge of your weapon, granting it the keen property. This only works on piercing or slashing weapons.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
 #include "prc_alterations"
 
 void main()
@@ -51,19 +50,19 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugment = GetAugmentLevel(oCaster);
     object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
     	int nCaster = GetManifesterLevel(oCaster);
-    	int nAC = 4;    	
+    	int nAC = 4;
     	float fDur = 600.0 * nCaster;
 	if (nMetaPsi == 2)	fDur *= 2;
-	
+
     	effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
     	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
         object oMyWeapon   =  IPGetTargetedOrEquippedMeleeWeapon();
         int iType = GetWeaponDamageType(oMyWeapon);
-	
+
 	if(GetIsObjectValid(oMyWeapon))
     	{
         	SignalEvent(oMyWeapon, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));

@@ -8,10 +8,8 @@
 //:: Created On: July 3rd, 2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_inc_sneak"
 #include "psi_inc_psifunc"
-#include "prc_alterations"
 #include "inc_newspellbook"
 #include "prc_allow_const"
 
@@ -53,12 +51,12 @@ void FindTrueAbilityScores()
                eClone = SupernaturalEffect(eClone);
         DelayCommand(0.1, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eClone, oClone));
     }
-    
+
     ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
-    
+
     object oItem;
     int nSlot;
-    
+
     for (nSlot = 0 ; nSlot < NUM_INVENTORY_SLOTS ; nSlot++)
     {
         oItem = GetItemInSlot(nSlot, oClone);
@@ -68,17 +66,17 @@ void FindTrueAbilityScores()
             DestroyObject(oItem);
         }
     }
-    
+
     effect eEffect = GetFirstEffect(oClone);
     while (GetIsEffectValid(eEffect))
     {
         RemoveEffect(oClone, eEffect);
         eEffect = GetNextEffect(oClone);
     }
-    
+
     DelayCommand(0.5, FindTrueAbilityScoresPhaseTwo(oPC, oClone));
     DelayCommand(3.0, DestroyObject(oClone));
-}    
+}
 
 void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone)
 {
@@ -90,7 +88,7 @@ void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone)
     int iInt = GetAbilityScore(oClone, ABILITY_INTELLIGENCE);
     int iWis = GetAbilityScore(oClone, ABILITY_WISDOM);
     int iCha = GetAbilityScore(oClone, ABILITY_CHARISMA);
-   
+
     // hack - the clone gets double the benefit from the Epic Great Attribute feats
     for (i = FEAT_EPIC_GREAT_STRENGTH_1 ; i <= FEAT_EPIC_GREAT_STRENGTH_10 ; i++) if (GetHasFeat(i, oPC)) iStr--;
     for (i = FEAT_EPIC_GREAT_DEXTERITY_1 ; i <= FEAT_EPIC_GREAT_DEXTERITY_10 ; i++) if (GetHasFeat(i, oPC)) iDex--;
@@ -100,7 +98,7 @@ void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone)
     for (i = FEAT_EPIC_GREAT_CHARISMA_1 ; i <= FEAT_EPIC_GREAT_CHARISMA_10 ; i++) if (GetHasFeat(i, oPC)) iCha--;
 
     object oHide = GetPCSkin(oPC);
-    
+
     SetLocalInt(oHide, "PRC_trueSTR", iStr);
     SetLocalInt(oHide, "PRC_trueDEX", iDex);
     SetLocalInt(oHide, "PRC_trueCON", iCon);
@@ -185,14 +183,14 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);
      }
-     
+
      // these races have an alternate form
      if(GetRacialType(oPC) == RACIAL_TYPE_PURE_YUAN) SetLocalInt(oPC, "PRC_PrereqShift", 0);
      if(GetRacialType(oPC) == RACIAL_TYPE_ABOM_YUAN) SetLocalInt(oPC, "PRC_PrereqShift", 0);
      if(GetRacialType(oPC) == RACIAL_TYPE_PIXIE) SetLocalInt(oPC, "PRC_PrereqShift", 0);
      if(GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA) SetLocalInt(oPC, "PRC_PrereqShift", 0);
      if(GetRacialType(oPC) == RACIAL_TYPE_FEYRI) SetLocalInt(oPC, "PRC_PrereqShift", 0);
-     
+
      // not counted since it is just "disguise self" and not alter self or shape change
      //if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_DEEP_GNOME) SetLocalInt(oPC, "PRC_PrereqShift", 0);
 }
@@ -295,7 +293,7 @@ void ManAtArms(object oPC)
     {
         SetLocalInt(oPC, "PRC_PrereqMAA", 0);
     }
-    
+
     // Foe Hunters also require at least one weapon focus feat
     if (iWF > 0)
         SetLocalInt(oPC, "PRC_PrereqFH", 1);
@@ -336,7 +334,7 @@ void ShiningBlade(object oPC)
 void DemiLich(object oPC)
 {
     SetLocalInt(oPC, "PRC_DemiLich", 0);
-    
+
     if (GetPRCSwitch(PRC_DISABLE_DEMILICH) > 0 && GetLevelByClass(CLASS_TYPE_LICH) >= 4)
     {
        SetLocalInt(oPC, "PRC_DemiLich", 1); //reverse logic.  1 means don't allow.
@@ -475,8 +473,8 @@ void Maester(object oPC)
 
     int iFeat;
 
-    iFeat =       GetHasFeat(FEAT_BREW_POTION, oPC) 
-            + GetHasFeat(FEAT_CRAFT_WAND, oPC) 
+    iFeat =       GetHasFeat(FEAT_BREW_POTION, oPC)
+            + GetHasFeat(FEAT_CRAFT_WAND, oPC)
             + GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)
             + GetHasFeat(FEAT_CRAFT_WONDROUS, oPC)
             + GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC)
@@ -484,9 +482,9 @@ void Maester(object oPC)
             + GetHasFeat(FEAT_CRAFT_STAFF, oPC)
             + GetHasFeat(FEAT_FORGE_RING, oPC)
             + GetHasFeat(FEAT_CRAFT_CONSTRUCT, oPC);
-            
+
     int nSkill = FALSE;
-    
+
     // No Int bonus to skills, just want the base ranks (and yes I know this allows items at the moment)
     if ((GetSkillRank(SKILL_CRAFT_ARMOR, oPC) - GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)) >= 8) nSkill = TRUE;
     if ((GetSkillRank(SKILL_CRAFT_TRAP, oPC) - GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)) >= 8) nSkill = TRUE;
@@ -510,24 +508,24 @@ void CombatMedic(object oPC)
 
     if (GetLevelByClass(CLASS_TYPE_CLERIC) || GetLevelByClass(CLASS_TYPE_DRUID))
         SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
-        
+
     if (GetLevelByClass(CLASS_TYPE_PALADIN))
     {
         if(GetLocalInt(oSkin, "PRC_trueWIS") > 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 4)
             SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
-        
+
         else if (GetLocalInt(oSkin, "PRC_trueWIS") == 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 6)
             SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
     }
-    
+
     if (GetLevelByClass(CLASS_TYPE_RANGER))
         {
             if(GetLocalInt(oSkin, "PRC_trueWIS") > 11 && GetLevelByClass(CLASS_TYPE_RANGER) >= 4)
                 SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
-            
+
             else if (GetLocalInt(oSkin, "PRC_trueWIS") == 11 && GetLevelByClass(CLASS_TYPE_RANGER) >= 6)
                 SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
-    }        
+    }
 
 }
 
@@ -578,7 +576,7 @@ void FH(object oPC)
 {
     int iRanger  = GetLevelByClass(CLASS_TYPE_RANGER, oPC);
     int iURanger = GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER, oPC);
-    
+
     // Required that ManAtArms evaluation has happened already. Part of
     // the Foe Hunter prereqs are determined there
     int iPrereq = GetLocalInt(oPC, "PRC_PrereqFH");
@@ -618,8 +616,8 @@ void Thrallherd(object oPC)
 {
     SetLocalInt(oPC, "PRC_PrereqThrallherd", 1);
 
-    if (GetHasPower(POWER_CHARMPERSON, oPC) || GetHasPower(POWER_AVERSION, oPC) || GetHasPower(POWER_BRAINLOCK, oPC) || 
-        GetHasPower(POWER_CRISISBREATH, oPC) || GetHasPower(POWER_EMPATHICTRANSFERHOSTILE, oPC) || GetHasPower(POWER_DOMINATE, oPC) || 
+    if (GetHasPower(POWER_CHARMPERSON, oPC) || GetHasPower(POWER_AVERSION, oPC) || GetHasPower(POWER_BRAINLOCK, oPC) ||
+        GetHasPower(POWER_CRISISBREATH, oPC) || GetHasPower(POWER_EMPATHICTRANSFERHOSTILE, oPC) || GetHasPower(POWER_DOMINATE, oPC) ||
         GetHasPower(POWER_CRISISLIFE, oPC) || GetHasPower(POWER_PSYCHICCHIR, oPC))
     {
         SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
@@ -628,16 +626,16 @@ void Thrallherd(object oPC)
 
 void RangerURangerMutex(object oPC)
 {// Ranger and Ultimate Ranger are mutually exclusive. One can only take levels in one of them
-    
+
     // Delete the old values. The character may have lost the offending levels
     DeleteLocalInt(oPC, ALLOW_CLASS_RANGER);
     DeleteLocalInt(oPC, ALLOW_CLASS_ULTIMATE_RANGER);
-    
+
     if(GetLevelByClass(CLASS_TYPE_RANGER) > 0)
     {
         SetLocalInt(oPC, ALLOW_CLASS_ULTIMATE_RANGER, 1);
     }
-    
+
     if(GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER) > 0)
     {
         SetLocalInt(oPC, ALLOW_CLASS_RANGER, 1);
@@ -682,7 +680,7 @@ void main2()
 
         sVariable = "PRC_DivSpell" + IntToString(iCount);
         SetLocalInt(oPC, sVariable, 1);
-        
+
         sVariable = "PRC_PsiPower" + IntToString(iCount);
         SetLocalInt(oPC, sVariable, 1);
      }
@@ -708,7 +706,7 @@ void main2()
         int nClass = PRCGetClassByPosition(nClassSlot, oPC);
         nClassSlot += 1;
         if(GetIsDivineClass(nClass))
-        { 
+        {
             int nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstDivClassFound &&
                 GetFirstDivineClass(oPC) == nClass)
@@ -716,8 +714,8 @@ void main2()
                 nLevel += GetDivinePRCLevels(oPC);
                 bFirstDivClassFound = TRUE;
             }
-            int nAbility = GetAbilityForClass(nClass, oPC);                       
-                       
+            int nAbility = GetAbilityForClass(nClass, oPC);
+
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
                 int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
@@ -731,16 +729,16 @@ void main2()
             }
         }
         else if(GetIsArcaneClass(nClass))
-        { 
+        {
             int nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstArcClassFound &&
                 GetFirstArcaneClass(oPC) == nClass)
-            { 
+            {
                 nLevel += GetArcanePRCLevels(oPC);
                 bFirstArcClassFound = TRUE;
             }
-            int nAbility = GetAbilityForClass(nClass, oPC);                       
-                       
+            int nAbility = GetAbilityForClass(nClass, oPC);
+
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
                 int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
@@ -752,20 +750,20 @@ void main2()
                         nArcHighest = nSpellLevel;
                 }
             }
-        }  
+        }
         else if(GetIsPsionicClass(nClass))
-        { 
+        {
             int nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstPsiClassFound &&
-                GetFirstPsionicClass(oPC) == nClass) 
+                GetFirstPsionicClass(oPC) == nClass)
             {
                 nLevel += GetPsionicPRCLevels(oPC);
                 bFirstPsiClassFound = TRUE;
             }
-            int nAbility = GetAbilityForClass(nClass, oPC);   
-            
+            int nAbility = GetAbilityForClass(nClass, oPC);
+
             int nPsiHighest = GetPowerPrereq(nLevel, nAbility, nClass);
-            
+
             for(nSpellLevel = 1; nSpellLevel <= nPsiHighest; nSpellLevel++)
             {
                 SetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel), 0);
@@ -785,7 +783,7 @@ void main2()
                 }
             }
             */
-        }         
+        }
     }
 
      // Find the sneak attack capacity.
@@ -827,7 +825,7 @@ void main2()
      SendMessageToPC(oPC, "Your true Intelligence: " + IntToString(GetLocalInt(oHide, "PRC_trueINT")));
      SendMessageToPC(oPC, "Your true Wisdom: " + IntToString(GetLocalInt(oHide, "PRC_trueWIS")));
      SendMessageToPC(oPC, "Your true Charisma: " + IntToString(GetLocalInt(oHide, "PRC_trueCHA")));
-     
+
      string sPRC_AllSpell;
      string sPRC_ArcSpell;
      string sPRC_DivSpell;
@@ -852,6 +850,6 @@ void main2()
 void main()
 {
      FindTrueAbilityScores();
-     
+
      DelayCommand(0.6, main2());
 }

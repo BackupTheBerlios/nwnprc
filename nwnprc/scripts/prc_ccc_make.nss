@@ -1,6 +1,5 @@
 #include "inc_utility"
 #include "inc_letocommands"
-#include "inc_fileends"
 #include "prc_inc_racial"
 #include "prc_ccc_inc"
 #include "inc_encrypt"
@@ -176,10 +175,10 @@ void main()
             sScript += LetoAdd("ClassList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
             sScript += LetoAdd("LvlStatList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
         }
-        //throw spellschoool in here too        
+        //throw spellschoool in here too
         if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
             sScript += LetoAdd("ClassList/[_]/School", IntToString(9), "byte");
-        else    
+        else
             sScript += LetoAdd("ClassList/[_]/School", IntToString(nSchool), "byte");
     }
     else if (nClass == CLASS_TYPE_BARD)
@@ -275,7 +274,7 @@ void main()
         int j;
         for (j=0;j<GetPRCSwitch(FILE_END_SKILLS);j++)
         {
-            int nMod = array_get_int(oPC, "RaceLevel"+IntToString(nLevel)+"Skills", j); 
+            int nMod = array_get_int(oPC, "RaceLevel"+IntToString(nLevel)+"Skills", j);
             if(nMod)
                 sScript += AdjustSkill(j, nMod, i);
         }
@@ -297,7 +296,7 @@ void main()
         //epic level
         if(nLevel <21)
             sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/EpicLevel", "0", "byte");
-        else            
+        else
             sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/EpicLevel", "1", "byte");
         //hitdice
         int nRacialHitPoints = StringToInt(Get2DACache("classes", "HitDie", StringToInt(Get2DACache("ECL", "RacialClass", nRace))));
@@ -333,12 +332,12 @@ void main()
     StackedLetoScript(sScript);
     if(GetLocalInt(oPC, "NewCohort"))
     {
-        object oCopy = CopyObject(oPC, GetLocation(oPC));   
+        object oCopy = CopyObject(oPC, GetLocation(oPC));
         StackedLetoScript(SetCreatureName(RandomName(), FALSE));
         StackedLetoScript(SetCreatureName(RandomName(), TRUE));
         if(nPortrait != -1)
             StackedLetoScript(SetNPCPortrait(nPortrait));
-        RunStackedLetoScriptOnObject(oCopy, "OBJECT", "SPAWN"); 
+        RunStackedLetoScriptOnObject(oCopy, "OBJECT", "SPAWN");
     }
     else
         RunStackedLetoScriptOnObject(oPC, "OBJECT", "SPAWN");

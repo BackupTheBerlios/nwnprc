@@ -1,7 +1,7 @@
 /*
    ----------------
    Crisis of Breathe
-   
+
    psi_pow_crsbrth
    ----------------
 
@@ -15,23 +15,22 @@
    Saving Throw: Will negates, Fort partial
    Power Resistance: Yes
    Power Point Cost: 5
-   
+
    You compel the subject to purge its entire store of air in one explosive exhalation, and thereby disrupt the subject's autonomic
    breathing cycle. If the target succeeds on a Will save when target by this power, it is unaffected. Otherwise, it must succeed on
    a Fortitude save every round or black out. If the target succeeds on the Fortitude save, nothing happens. If it fails, it blacks
-   out and falls down. For every round it fails the Fort save, the DC increases by 1. If it fails the Fort save for 3 consecutive 
+   out and falls down. For every round it fails the Fort save, the DC increases by 1. If it fails the Fort save for 3 consecutive
    rounds, it dies from lack of air.
-   
+
    Augment: If you augment this power 1 time, this power also affects Animal, Fey, Giant, Magical Beast
-   or Monstrous Humanoid. If you augment this power 3 times, this power also affects Aberration, Dragon and Outsiders. 
-   It costs 2 power points to augment once and 6 to augment 3 times. For every 2 power points spent this way, the DC increases by 1.   
+   or Monstrous Humanoid. If you augment this power 3 times, this power also affects Aberration, Dragon and Outsiders.
+   It costs 2 power points to augment once and 6 to augment 3 times. For every 2 power points spent this way, the DC increases by 1.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
-#include "prc_alterations"
+#include "spinc_common"
 
 
 
@@ -49,7 +48,7 @@ void RunImpact(object oTarget, object oCaster, int nSpell, int nDC, int nRound)
     {
     	int nDCTemp = nDC;
     	if (nRound > 0) nDCTemp += nRound;
-    
+
 	if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDCTemp))
 	{
 		nRound += 1;
@@ -68,7 +67,7 @@ void RunImpact(object oTarget, object oCaster, int nSpell, int nDC, int nRound)
 		effect eDeath = EffectDeath();
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
 	}
-		
+
         DelayCommand(6.0f,RunImpact(oTarget, oCaster, nSpell, nDC, nRound));
     }
 }
@@ -97,7 +96,7 @@ int CheckRace(int nAugment, object oTarget, object oCaster)
 			nTargetRace = TRUE;
 		}
 	}
-	
+
 	return nTargetRace;
 }
 
@@ -126,9 +125,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 0;
     int nAugment = GetAugmentLevel(oCaster);
     object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
-    
-    if (nMetaPsi > 0) 
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+
+    if (nMetaPsi > 0)
     {
 	int nDC = GetManifesterDC(oCaster);
 	int nCaster = GetManifesterLevel(oCaster);
@@ -138,9 +137,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	int nDur = nCaster;
     	int nRound = 0;
     	int nSpell = GetSpellId();
-		
+
 	int nTargetRace = CheckRace(nAugment, oTarget, oCaster);
-		
+
 	if (nTargetRace)
 	{
 		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));

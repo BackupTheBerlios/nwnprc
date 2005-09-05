@@ -3,10 +3,7 @@
 //:: prc_onheartbeat
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "inc_eventhook"
-#include "inc_ecl"
-#include "inc_2dacache"
-#include "inc_metalocation"
+#include "inc_utility"
 
 void main()
 {
@@ -40,7 +37,7 @@ void main()
             bPWPCAutoexport = FALSE;
         }
     }
-    
+
     //decide if to cache bioware 2da yet
     if(bBiowareDBCache)
     {
@@ -66,7 +63,7 @@ void main()
         ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONHEARTBEAT);
         // ECL
         ApplyECLToXP(oPC);
-        
+
         // Check if the character has lost a level since last HB
         if(GetHitDice(oPC) != GetLocalInt(oPC, "PRC_HitDiceTracking"))
         {

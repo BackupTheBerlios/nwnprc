@@ -1,6 +1,5 @@
-#include "inc_prc_npc"
-#include "prc_inc_itmrstr"
 #include "inc_utility"
+#include "prc_inc_itmrstr"
 
 /*
 Script to handle removal of items with the ability

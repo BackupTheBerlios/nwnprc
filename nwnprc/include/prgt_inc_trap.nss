@@ -34,7 +34,7 @@ void SetLocalTrap(object oObject, string sVarName, struct trap tTrap);
 void DeleteLocalTrap(object oObject, string sVarName);
 struct trap CreateRandomTrap(int nCR = -1);
 
-#include "inc_ecl"
+#include "inc_utility"
 
 struct trap CreateRandomTrap(int nCR = -1)
 {

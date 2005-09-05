@@ -11,11 +11,8 @@
 //:: Created On:   7/9/2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
-#include "prc_alterations"
-#include "prc_alterations"
 
 //Baelnorn Property bonus function
 void BaelnProp (object oSkin, int nBonus)
@@ -55,7 +52,7 @@ void BaelnAbil (object oSkin, int nLevel)
 //Baelnorn Defense bonus function
 void BaelnDef (object oSkin, int nLevel)
 {
-    
+
     SetCompositeBonus(oSkin, "BaelnDefA", nLevel + 1, AC_NATURAL_BONUS, ITEM_PROPERTY_AC_BONUS);
 
     switch (nLevel)
@@ -69,7 +66,7 @@ void BaelnDef (object oSkin, int nLevel)
         case 2:
             IPSafeAddItemProperty(oSkin, ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_COLD, IP_CONST_DAMAGERESIST_10),
                                   0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
-            IPSafeAddItemProperty(oSkin, ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_ELECTRICAL, IP_CONST_DAMAGERESIST_10), 
+            IPSafeAddItemProperty(oSkin, ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_ELECTRICAL, IP_CONST_DAMAGERESIST_10),
                                   0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
             IPSafeAddItemProperty(oSkin, ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_1, IP_CONST_DAMAGESOAK_5_HP),
                                   0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
@@ -90,7 +87,7 @@ void BaelnDef (object oSkin, int nLevel)
             IPSafeAddItemProperty(oSkin, ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_1, IP_CONST_DAMAGESOAK_15_HP),
                                   0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
             break;
-        
+
         default:
             WriteTimestampedLogEntry("Unknown nLevel parameter passed to BaelnDef: " + IntToString(nLevel));
     }
@@ -103,11 +100,11 @@ void main()
     //define vars
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
-    int nLevel = GetLevelByClass(CLASS_TYPE_BAELNORN, oPC); 
+    int nLevel = GetLevelByClass(CLASS_TYPE_BAELNORN, oPC);
     int nBonus = nLevel * 2;
 
     BaelnProp(oSkin, nBonus);
     BaelnAbil(oSkin, nLevel);
     BaelnDef(oSkin, nLevel);
-    
+
 }

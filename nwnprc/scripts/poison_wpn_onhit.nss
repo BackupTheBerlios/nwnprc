@@ -33,7 +33,7 @@ void main()
 	object oWeapon = GetSpellCastItem();
 	object oTarget = PRCGetSpellTargetObject();
 	object oPC     = GetLastAttacker(oTarget);
-	
+SendMessageToPC(oPC, "Running poison_onhit");
 	int nPoisonIdx = GetLocalInt(oWeapon, "pois_wpn_idx");
 	int nUses      = GetLocalInt(oWeapon, "pois_wpn_uses");
 	

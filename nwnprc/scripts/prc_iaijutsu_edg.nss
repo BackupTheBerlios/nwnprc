@@ -6,7 +6,9 @@
 
 #include "NW_I0_GENERIC"
 #include "prc_feat_const"
-#include "prc_inc_combat"
+#include "prc_alterations"
+
+
 void main()
 {
     object oPC = OBJECT_SELF;

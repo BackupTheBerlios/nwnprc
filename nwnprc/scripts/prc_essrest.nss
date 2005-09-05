@@ -1,4 +1,4 @@
-#include "inc_item_props"
+#include "inc_utility"
 #include "nw_i0_plot"
 #include "prc_inc_function"
 #include "inc_epicspells"

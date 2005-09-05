@@ -15,9 +15,7 @@
 //:: Created On: 09.06.2005
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
-#include "prc_alterations"
-#include "inc_eventhook"
+#include "inc_utility"
 
 
 void PrcFeats(object oPC)

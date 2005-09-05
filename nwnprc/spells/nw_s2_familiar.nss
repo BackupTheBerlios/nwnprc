@@ -17,8 +17,7 @@
 #include "prc_misc_const"
 #include "prc_ipfeat_const"
 #include "prc_alterations"
-#include "prc_inc_switch"
-#include "inc_persist_loca"
+#include "inc_utility"
 #include "inc_dispel"
 
 const int PACKAGE_ELEMENTAL_STR = PACKAGE_ELEMENTAL ;
@@ -81,11 +80,11 @@ void ElementalFamiliar()
     {
         i++;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
-SendMessageToPC(OBJECT_SELF, "oSummon "+IntToString(i)+" = "+GetName(oSummon));        
+SendMessageToPC(OBJECT_SELF, "oSummon "+IntToString(i)+" = "+GetName(oSummon));
     }
     DelayCommand(0.1, ElementalFamiliar2(iSize, iType));
-}    
-    
+}
+
 void ElementalFamiliar2(string iSize, string iType)
 {
     int i=1;
@@ -94,13 +93,13 @@ void ElementalFamiliar2(string iSize, string iType)
     {
         i++;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
-SendMessageToPC(OBJECT_SELF, "oSummon "+IntToString(i)+" = "+GetName(oSummon));        
+SendMessageToPC(OBJECT_SELF, "oSummon "+IntToString(i)+" = "+GetName(oSummon));
     }
     object oEle = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i-1);
-SendMessageToPC(OBJECT_SELF, "oEle "+IntToString(i-1)+" = "+GetName(oSummon));    
+SendMessageToPC(OBJECT_SELF, "oEle "+IntToString(i-1)+" = "+GetName(oSummon));
     //need to check this worked
-    
-    
+
+
     SetLocalObject(OBJECT_SELF, "BONDED",oEle);
 
     object oCreB=GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oEle);
@@ -111,8 +110,8 @@ SendMessageToPC(OBJECT_SELF, "oEle "+IntToString(i-1)+" = "+GetName(oSummon));
 
     int iPack ,iSave ;
     int iHD = GetHitDice(OBJECT_SELF);
-    int iBonus = (iHD/5)+1; 
-   
+    int iBonus = (iHD/5)+1;
+
     if (iType=="FIRE")
     {
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageImmunity(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEIMMUNITY_100_PERCENT),oHide);
@@ -162,7 +161,7 @@ SendMessageToPC(OBJECT_SELF, "oEle "+IntToString(i-1)+" = "+GetName(oSummon));
     }
     else if (iType=="WATER")
     {
-        
+
        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_STR,iBonus*2/3+1),oHide);
        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_DEX,iBonus*2/3),oHide);
        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_CON,iBonus*2/3),oHide);
@@ -278,7 +277,7 @@ SendMessageToPC(OBJECT_SELF, "oEle "+IntToString(i-1)+" = "+GetName(oSummon));
 
     if (Arcanlvl>21)
        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicFocCreature),oHide);
-        
+
     if (Arcanlvl>11)
     {
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapSpecCreature),oHide);
@@ -305,19 +304,19 @@ SendMessageToPC(OBJECT_SELF, "oEle "+IntToString(i-1)+" = "+GetName(oSummon));
 
 
    int iSoak =-1;
-   
+
    if (iSize=="LAR" || iSize=="HUG")
-      iSoak = IP_CONST_DAMAGESOAK_5_HP; 
+      iSoak = IP_CONST_DAMAGESOAK_5_HP;
    else if (iSize=="GRE" || iSize=="ELD")
       iSoak = IP_CONST_DAMAGESOAK_10_HP;
-   if (iHD>24)  iSoak++; 
-   if (iHD>30)  iSoak++; 
-   
-   
+   if (iHD>24)  iSoak++;
+   if (iHD>30)  iSoak++;
+
+
    if (iSoak>=0)
      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,iSoak),oHide);
 
-    
+
 
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBonus),GetItemInSlot(INVENTORY_SLOT_NECK,oEle));
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBonus),oHide);
@@ -391,7 +390,7 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBonus, OBJECT_SELF);
         effect eInvalid;
         eBonus = eInvalid;
-        
+
         //spawn the familiar
         object oFam;
         oFam = RetrieveCampaignObject("prc_data", "Familiar", GetLocation(OBJECT_SELF), oPC);
@@ -399,7 +398,7 @@ void main()
             oFam = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetLocation(OBJECT_SELF));
         if(!GetIsObjectValid(oFam))
             return;//something odd going on here
-        
+
         //familiar basics
         int nABBonus = GetBaseAttackBonus(OBJECT_SELF)-GetBaseAttackBonus(oFam);
         int nAttacks = (GetBaseAttackBonus(OBJECT_SELF)/5)+1;
@@ -415,11 +414,11 @@ void main()
             eBonus = EffectLinkEffects(eBonus, EffectSkillIncrease(i, nBonus));
         }
         //saving throws
-        int nSaveRefBonus = GetReflexSavingThrow(OBJECT_SELF)-GetReflexSavingThrow(oFam);        
-        int nSaveFortBonus = GetFortitudeSavingThrow(OBJECT_SELF)-GetFortitudeSavingThrow(oFam);        
-        int nSaveWillBonus = GetWillSavingThrow(OBJECT_SELF)-GetWillSavingThrow(oFam); 
-        
-        
+        int nSaveRefBonus = GetReflexSavingThrow(OBJECT_SELF)-GetReflexSavingThrow(oFam);
+        int nSaveFortBonus = GetFortitudeSavingThrow(OBJECT_SELF)-GetFortitudeSavingThrow(oFam);
+        int nSaveWillBonus = GetWillSavingThrow(OBJECT_SELF)-GetWillSavingThrow(oFam);
+
+
         //scaling bonuses
         int nFamLevel = GetLevelByClass(CLASS_TYPE_WIZARD)
             +GetLevelByClass(CLASS_TYPE_SORCERER)
@@ -429,7 +428,7 @@ void main()
         int nSRBonus;
         if(nFamLevel>11)
             nSRBonus = nFamLevel+5;
-            
+
         //effect doing
         eBonus = EffectLinkEffects(eBonus, EffectACIncrease(nACBonus, AC_NATURAL_BONUS));
         eBonus = EffectLinkEffects(eBonus, EffectAbilityIncrease(ABILITY_INTELLIGENCE, nIntBonus));
@@ -441,8 +440,8 @@ void main()
         eBonus = EffectLinkEffects(eBonus, EffectSavingThrowIncrease(SAVING_THROW_WILL, nSaveWillBonus));
         //skills were linked earlier
         eBonus = SupernaturalEffect(eBonus);
-        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBonus, oFam);  
-        
+        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBonus, oFam);
+
         //add the familiar as a henchman
         int nMaxHenchmen = GetMaxHenchmen();
         SetMaxHenchmen(99);
@@ -460,7 +459,7 @@ void main()
 
     if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER))
         ElementalFamiliar();
-    else    
+    else
         SummonFamiliar();
 
     if (GetLevelByClass(CLASS_TYPE_DIABOLIST) >= 2)

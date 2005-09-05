@@ -1,4 +1,4 @@
-/*
+/** @file
 Log Message 1.06 - versatile send message wrapper function
 by OldManWhistler
 
@@ -132,65 +132,65 @@ Changelog:
 // ie: using "LOG_PC | LOG_DM_ALL" will send the message to the player and to
 // the DM channel.
 
-// Do not send a message.
+/// Do not send a message.
 const int LOG_DISABLED        = 0x0;
-// Send only to the oPC who activated it (floating text)
+/// Send only to the oPC who activated it (floating text)
 const int LOG_PC              = 0x1;
-// Send only to the oPC who activated it (server message window)
+/// Send only to the oPC who activated it (server message window)
 const int LOG_PC_SERVER       = 0x2;
-// Send to all players on the server (server message window)
+/// Send to all players on the server (server message window)
 const int LOG_PC_ALL          = 0x4;
-// Send to the oPC and all of their party members (floating text)
+/// Send to the oPC and all of their party members (floating text)
 const int LOG_PARTY           = 0x8;
-// Send to the oPC and all of their party members (server message window)
+/// Send to the oPC and all of their party members (server message window)
 const int LOG_PARTY_SERVER    = 0x10;
-// Send to the oPC and their nearby (30m) party members (floating text)
+/// Send to the oPC and their nearby (30m) party members (floating text)
 const int LOG_PARTY_30        = 0x20;
-// Send to the DM channel (DM channel)
+/// Send to the DM channel (DM channel)
 const int LOG_DM_ALL          = 0x40;
-// Send to all DMs within distance 10m of oPC (floating text)
+/// Send to all DMs within distance 10m of oPC (floating text)
 const int LOG_DM_10           = 0x80;
-// Send to all DMs within distance 20m of oPC (floating text)
+/// Send to all DMs within distance 20m of oPC (floating text)
 const int LOG_DM_20           = 0x100;
-// Send to all DMs within distance 40m of oPC (floating text)
+/// Send to all DMs within distance 40m of oPC (floating text)
 const int LOG_DM_40           = 0x200;
-// Send to all DMs within distance 80m of oPC (floating text)
+/// Send to all DMs within distance 80m of oPC (floating text)
 const int LOG_DM_80           = 0x400;
-// Make oPC whisper the message (chat message window)
+/// Make oPC whisper the message (chat message window)
 const int LOG_WHISPER         = 0x800;
-// Make oPC talk the message (chat message window)
+/// Make oPC talk the message (chat message window)
 const int LOG_TALK            = 0x1000;
-// Make oPC shout the message (chat message window)
+/// Make oPC shout the message (chat message window)
 const int LOG_SHOUT           = 0x2000;
-// Send to the server log file
+/// Send to the server log file
 const int LOG_TO_SERVER_LOG   = 0x4000;
-// Send to the server log file with time stamp
+/// Send to the server log file with time stamp
 const int LOG_TIME_SERVER_LOG = 0x8000;
-// Send to all DMs within distance 10m of oPC (server message window)
+/// Send to all DMs within distance 10m of oPC (server message window)
 const int LOG_DM_10_SERVER    = 0x10000;
-// Send to all DMs within distance 20m of oPC (server message window)
+/// Send to all DMs within distance 20m of oPC (server message window)
 const int LOG_DM_20_SERVER    = 0x20000;
-// Send to all DMs within distance 40m of oPC (server message window)
+/// Send to all DMs within distance 40m of oPC (server message window)
 const int LOG_DM_40_SERVER    = 0x40000;
-// Send to all DMs within distance 80m of oPC (server message window)
+/// Send to all DMs within distance 80m of oPC (server message window)
 const int LOG_DM_80_SERVER    = 0x80000;
-// Send to the oPC and all of their party members who percieve oPC (floating text)
+/// Send to the oPC and all of their party members who percieve oPC (floating text)
 const int LOG_PARTY_PERC      = 0x100000;
-// Send to the oPC and all of their party members who percieve oPC (server message window)
+/// Send to the oPC and all of their party members who percieve oPC (server message window)
 const int LOG_PARTY_PERC_SERVER = 0x200000;
-// Send to the oPC and their nearby (10m) party members (floating text)
+/// Send to the oPC and their nearby (10m) party members (floating text)
 const int LOG_PARTY_10        = 0x400000;
-// Send to the oPC and their nearby (20m) party members (floating text)
+/// Send to the oPC and their nearby (20m) party members (floating text)
 const int LOG_PARTY_20        = 0x800000;
-// Send to the oPC and their nearby (40m) party members (floating text)
+/// Send to the oPC and their nearby (40m) party members (floating text)
 const int LOG_PARTY_40        = 0x1000000;
-// Send to the oPC and their nearby (80m) party members (floating text)
+/// Send to the oPC and their nearby (80m) party members (floating text)
 const int LOG_PARTY_80        = 0x2000000;
-// Send to all DMs as a server message
+/// Send to all DMs as a server message
 const int LOG_DM_ALL_SERVER   = 0x4000000;
-// Send to all party EXCEPT for the player who triggered as a server message
+/// Send to all party EXCEPT for the player who triggered as a server message
 const int LOG_PARTY_ONLY      = 0x8000000;
-// Send to all party EXCEPT for the player *and people who can't see the player) who triggered as a server message
+/// Send to all party EXCEPT for the player *and people who can't see the player) who triggered as a server message
 const int LOG_PARTY_PERC_ONLY      = 0x10000000;
 
 // ****************************************************************************
@@ -200,31 +200,31 @@ const int LOG_PARTY_PERC_ONLY      = 0x10000000;
 // These globals exist purely for backwards compatibility with older versions
 // of LogMessage. They aren't recommended.
 
-// Send only to the oPC who activated it (floating text) and the server log file
+/// Send only to the oPC who activated it (floating text) and the server log file
 int LOG_FILE_PC              = LOG_TO_SERVER_LOG | LOG_PC;
-// Send only to the oPC who activated it (server message window) and the server log file
+/// Send only to the oPC who activated it (server message window) and the server log file
 int LOG_FILE_PC_SERVER       = LOG_TO_SERVER_LOG | LOG_PC_SERVER;
-// Send to the oPC and all of their party members (floating text) and the server log file
+/// Send to the oPC and all of their party members (floating text) and the server log file
 int LOG_FILE_PARTY           = LOG_TO_SERVER_LOG | LOG_PARTY;
-// Send to the oPC and all of their party members (server message window) and the server log file
+/// Send to the oPC and all of their party members (server message window) and the server log file
 int LOG_FILE_PARTY_SERVER    = LOG_TO_SERVER_LOG | LOG_PARTY_SERVER;
-// Send to the oPC and their nearby (30m) faction members (floating text) and the server log file
+/// Send to the oPC and their nearby (30m) faction members (floating text) and the server log file
 int LOG_FILE_PARTY_30        = LOG_TO_SERVER_LOG | LOG_PARTY_30;
-// Send to the DM channel and the server log file
+/// Send to the DM channel and the server log file
 int LOG_FILE_DM_ALL          = LOG_TO_SERVER_LOG | LOG_DM_ALL;
-// Send to all DMs within distance 10m of oPC and the server log file
+/// Send to all DMs within distance 10m of oPC and the server log file
 int LOG_FILE_DM_10           = LOG_TO_SERVER_LOG | LOG_DM_10;
-// Send to all DMs within distance 20m of oPC and the server log file
+/// Send to all DMs within distance 20m of oPC and the server log file
 int LOG_FILE_DM_20           = LOG_TO_SERVER_LOG | LOG_DM_20;
-// Send to all DMs within distance 40m of oPC and the server log file
+/// Send to all DMs within distance 40m of oPC and the server log file
 int LOG_FILE_DM_40           = LOG_TO_SERVER_LOG | LOG_DM_40;
-// Send to all DMs within distance 80m of oPC and the server log file
+/// Send to all DMs within distance 80m of oPC and the server log file
 int LOG_FILE_DM_80           = LOG_TO_SERVER_LOG | LOG_DM_80;
-// Make oPC whisper the message (chat message window) and the server log file
+/// Make oPC whisper the message (chat message window) and the server log file
 int LOG_FILE_WHISPER         = LOG_TO_SERVER_LOG | LOG_WHISPER;
-// Make oPC talk the message (chat message window) and the server log file
+/// Make oPC talk the message (chat message window) and the server log file
 int LOG_FILE_TALK            = LOG_TO_SERVER_LOG | LOG_TALK;
-// Make oPC shout the message (chat message window) and the server log file
+/// Make oPC shout the message (chat message window) and the server log file
 int LOG_FILE_SHOUT           = LOG_TO_SERVER_LOG | LOG_SHOUT;
 
 // ****************************************************************************
@@ -248,71 +248,86 @@ const string LOG_MESSAGE_VERSION = "LogMessage v1.06";
 // ** FUNCTION DECLARATIONS
 // ****************************************************************************
 
-// LogMessage
-// This function is used to a log a message in several different ways depending
-// the value of iLogType.
-// - int iLogType: This is the level of logging to use. It should be one of the
-//                 LOG_* constants.
-// - object oPC: This is the player who is triggering the log message.
-// - string sMessage: This is the message to be logged.
-// - string sDMMessage: This a message to be appended only for DM/log file messages.
-// - string sLocalFilter, int iLocalValue: The message will only be sent to people
-// who have a LocalInt called sLocalFilter with value iLocalValue.
+/**
+ * This function is used to a log a message in several different ways depending
+ * the value of iLogType.
+ *
+ * @param iLogType     This is the level of logging to use. It should be one of the
+ *                     LOG_* constants.
+ * @param oPC          This is the player who is triggering the log message.
+ * @param sMessage     This is the message to be logged.
+ * @param sDMMessage   This a message to be appended only for DM/log file messages.
+ * @param sLocalFilter The message will only be sent to people who have
+ *                     a LocalInt with this name and a specified value.
+ * @param iLocalValue  The value the LocalInt must have.
+ */
 void LogMessage (int iLogType, object oPC, string sMessage, string sDMMessage = "", string sLocalFilter = "", int iLocalValue = 0);
 
-// SendMessageToAllPCs
-// This function is used to send a message to every player on the server using the
-// server message window.
-// - object oPC: A member of the party to send the message to.
-// - string sMessage: The message to send.
-// - string sLocalFilter, int iLocalValue: The message will only be sent to people
-// who have a LocalInt called sLocalFilter with value iLocalValue.
+/**
+ *
+ * This function is used to send a message to every player on the server using the
+ * server message window.
+ *
+ * @param oPC          A member of the party to send the message to.
+ * @param sMessage     The message to send.
+ * @param sLocalFilter The message will only be sent to people who have
+ *                     a LocalInt with this name and a specified value.
+ * @param iLocalValue  The value the LocalInt must have.
+ */
 void SendMessageToAllPCs (string sMessage, string sLocalFilter = "", int iLocalValue = 0);
 
-// SendMessageToParty
-// This function is used to send a message to every player in a party using the
-// server message window.
-// - object oPC: A member of the party to send the message to.
-// - string sMessage: The message to send.
-// - int bSkipOrigin: Skip the player who originated the message.
-// - int bPerceptionCheck: If this is true, only send the message if the party member
-// can see oPC.
-// - string sLocalFilter, int iLocalValue: The message will only be sent to people
-// who have a LocalInt called sLocalFilter with value iLocalValue.
+/**
+ * This function is used to send a message to every player in a party using the
+ * server message window.
+ *
+ * @param oPC              A member of the party to send the message to.
+ * @param sMessage         The message to send.
+ * @param bSkipOrigin      Skip the player who originated the message.
+ * @param bPerceptionCheck If this is true, only send the message if the party member can see oPC.
+ * @param sLocalFilter     The message will only be sent to people who have
+ *                         a LocalInt with this name and a specified value.
+ * @param iLocalValue      The value the LocalInt must have.
+ */
 void SendMessageToParty (object oPC, string sMessage, int bSkipOrigin = FALSE, int bPerceptionCheck = FALSE, string sLocalFilter = "", int iLocalValue = 0);
 
-// FloatingTextStringOnParty
-// This function is used to send a message to every player in a party using
-// floating text.
-// - object oPC: A member of the party to send the message to.
-// - string sMessage: The message to send.
-// - int bPerceptionCheck: If this is true, only send the message if the party member
-// can see oPC.
-// - string sLocalFilter, int iLocalValue: The message will only be sent to people
-// who have a LocalInt called sLocalFilter with value iLocalValue.
+/**
+ * This function is used to send a message to every player in a party using
+ * floating text.
+ *
+ * @param oPC              A member of the party to send the message to.
+ * @param sMessage         The message to send.
+ * @param bPerceptionCheck If this is true, only send the message if the party member can see oPC.
+ * @param sLocalFilter     The message will only be sent to people who have
+ *                         a LocalInt with this name and a specified value.
+ * @param iLocalValue      The value the LocalInt must have.
 void FloatingTextStringOnParty (object oPC, string sMessage, int bPerceptionCheck = FALSE, string sLocalFilter = "", int iLocalValue = 0);
 
-// FloatingTextStringOnPartyByDistance
-// This function is used to send a message to every player in a party using
-// floating text.
-// - object oPC: A member of the party to send the message to.
-// - int iDistance: The maximum distance the party member can be from oPC.
-// - string sMessage: The message to send.
-// - string sLocalFilter, int iLocalValue: The message will only be sent to people
-// who have a LocalInt called sLocalFilter with value iLocalValue.
+/**
+ * This function is used to send a message to every player in a party using
+ * floating text.
+ *
+ * @param oPC          A member of the party to send the message to.
+ * @param iDistance    The maximum distance the party member can be from oPC.
+ * @param sMessage     The message to send.
+ * @param sLocalFilter The message will only be sent to people who have
+ *                     a LocalInt with this name and a specified value.
+ * @param iLocalValue  The value the LocalInt must have.
+ */
 void FloatingTextStringOnPartyByDistance (object oPC, int iDistance, string sMessage, string sLocalFilter = "", int iLocalValue = 0);
 
-// SendMessageToDMsByDistance
-// This function is used to send a message to all of the DMs near a particular
-// location.
-// - location lLocation: The center of the sphere to search for DMs.
-// - int iDistance: The maximum distance the DM can be from lLocation.
-// - string sMessage: The message to send.
-// - int bFloating: if 1, send as a floating text string, if 0, send as a server
-// message.
-// - string sLocalFilter, int iLocalValue: The message will only be sent to people
-// who have a LocalInt called sLocalFilter with value iLocalValue.
-void SendMessageToDMsByDistance (location lLocation, int iDistance, string sMessage, int bFloating = 1, string sLocalFilter = "", int iLocalValue = 0);
+/**
+ * This function is used to send a message to all of the DMs near a particular
+ * location.
+ *
+ * @param lLocation    The center of the sphere to search for DMs.
+ * @param iDistance    The maximum distance the DM can be from lLocation.
+ * @param sMessage     The message to send.
+ * @param bFloating    If TRUE, send as a floating text string, if FALSE, send as a server message.
+ * @param sLocalFilter The message will only be sent to people who have
+ *                     a LocalInt with this name and a specified value.
+ * @param iLocalValue  The value the LocalInt must have.
+ */
+void SendMessageToDMsByDistance (location lLocation, int iDistance, string sMessage, int bFloating = TRUE, string sLocalFilter = "", int iLocalValue = 0);
 
 // ****************************************************************************
 // ** FUNCTION DEFINITIONS

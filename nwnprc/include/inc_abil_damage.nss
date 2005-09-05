@@ -32,12 +32,6 @@
 //:: Modified On: 25.06.2005
 //:://////////////////////////////////////////////
 
-//#include "prc_inc_function"
-#include "inc_threads"
-#include "inc_dispel"
-#include "prc_inc_racial"
-#include "inc_item_props"
-
 /*
 [00:55] <Stratovarius> yup
 [00:56] <Stratovarius> well, something to add
@@ -126,6 +120,12 @@ void AbilityDamageMonitor();
 // Dex needs special handling due to the way CutsceneParalyze works (sets Dex to 3)
 void DoDexCheck(object oCreature, int bFirstPart = TRUE);
 
+
+#include "inc_utility"
+#include "inc_dispel"
+#include "prc_inc_racial"
+//#include "inc_utility"    supplied by inc_utility
+//#include "inc_utility" supplied by inc_utility
 
 
 //////////////////////////////////////////////////

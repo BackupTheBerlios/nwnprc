@@ -12,19 +12,19 @@
 //:: Created On: July 12, 2004
 //:://////////////////////////////////////////////
 
-#include "inc_item_props.nss"
+#include "prc_alterations"
 
 void main()
-{     
+{
     object oPC = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
-    
+
      if(oPC == oTarget)
      {
           SendMessageToPC(oPC,"You cannot attack yourself...");
           return;
      }
-     
+
     // apply HIPS to PC skin temporar so that player can "rehide" without being seen
     object oSkin =  GetPCSkin(oPC);
     itemproperty iProp = ItemPropertyBonusFeat(31);  // 31 = HIPS IP_PROP value
@@ -39,13 +39,13 @@ void main()
     {
         SendMessageToPC(oPC,"Your are still studying your target wait "+IntToString(FloatToInt(fApplyDATime))+ " seconds before you can perform the death attack");
         return;
-    }     
+    }
 
     // Set a variable that tells us we are in the middle of a DA
     // Must study the target for three rounds
     fApplyDATime = RoundsToSeconds(3);
     SetLocalFloat(oPC,"PRC_FH_DEATHATTACK_APPLY", fApplyDATime);
-    
+
     // Kick off a function to count down till they get the DA
     SendMessageToPC(oPC,"You begin to study your target");
     DelayCommand(6.0,ExecuteScript("prc_fh_da_hb", oPC));

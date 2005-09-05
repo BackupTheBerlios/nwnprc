@@ -6,7 +6,7 @@
 #include "prc_feat_const"
 #include "prc_spell_const"
 #include "prc_racial_const"
-#include "inc_item_props"
+#include "inc_utility"
 #include "x2_inc_itemprop"
 #include "prc_ipfeat_const"
 

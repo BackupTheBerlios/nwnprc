@@ -18,11 +18,6 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
-
-
-#include "prc_alterations"
-#include "prc_alterations"
-
 #include "x2_inc_spellhook"
 
 void  AddGreaterEnhancementEffectToWeapon(object oMyWeapon, float fDuration, int nBonus)

@@ -4,7 +4,7 @@
     also used when checking the name of the product
 */
 #include "prc_inc_craft"
-#include "inc_array_c"
+#include "inc_utility"
 
 void main()
 {

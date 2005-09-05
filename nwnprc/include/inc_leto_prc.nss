@@ -1,12 +1,11 @@
 #include "inc_letocommands"
-#include "inc_debug"
-#include "inc_persist_loca"
+#include "inc_utility"
 
 void PRCLetoExit(object oPC)
 {
     object oSkin = GetPCSkin(oPC);
     itemproperty ipTest = GetFirstItemProperty(oSkin);
-    
+
     if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD, oPC))
     {
@@ -31,8 +30,8 @@ void PRCLetoExit(object oPC)
             SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+sScript);
         }
     }
-    
-    
+
+
     if(GetLocalInt(oSkin,"nPCShifted"))
         return;
     while(GetIsItemPropertyValid(ipTest))
@@ -53,7 +52,7 @@ void PRCLetoExit(object oPC)
         }
         ipTest = GetNextItemProperty(oSkin);
     }
-    
+
 
 }
 
@@ -121,7 +120,7 @@ void PRCLetoLevelup(object oPC)
             //this means that the PC wont be booted, since we are only reading his .bic at the moment
             RunStackedLetoScriptOnObject(oPC, "OBJECT", "SCRIPT", "", FALSE);
             //the return from leto is stored as nClass
-            nClass = StringToInt(GetLocalString(GetModule(), "LetoResult"));        
+            nClass = StringToInt(GetLocalString(GetModule(), "LetoResult"));
         }
         if(nClass == CLASS_TYPE_WIZARD)
         {

@@ -5,8 +5,7 @@
 //Include required for Imbue Arrow functionality.
 #include "prc_alterations"
 #include "prc_inc_clsfunc"
-#include "prc_alterations"
-#include "inc_eventhook"
+#include "inc_utility"
 
 void main()
 {
@@ -17,10 +16,10 @@ void main()
         DestroyObject(oItem);
     }
 
-   
+
     // Remove all temporary item properties when dropped/given away/stolen/sold.
     DeletePRCLocalIntsT(oPC,oItem);
-    
+
     // Execute scripts hooked to this event for the creature and item triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONUNAQUIREITEM);
     ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONUNAQUIREITEM);

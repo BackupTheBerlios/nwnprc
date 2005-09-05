@@ -6,8 +6,6 @@
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 #include "inc_dispel"
-#include "prc_alterations"
-//#include "prc_alterations"
 
 void main()
 {
@@ -66,7 +64,7 @@ void main()
         IPSafeAddItemProperty(oSkin, ip8);
         IPSafeAddItemProperty(oSkin, ip9);
         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eDur), oTarget);
-        
+
         DelayCommand(6.0, GiveFeat(oTarget, 398));
         FloatingTextStringOnCreature("You have gained the ability " +
 	                             "to move freely at all times!", oTarget, FALSE);

@@ -6,11 +6,9 @@
     This is also triggered by the NPC OnDeath event.
 */
 #include "prc_alterations"
-#include "inc_eventhook"
+#include "inc_utility"
 #include "prc_inc_clsfunc"
 #include "psi_inc_psifunc"
-#include "inc_ecl"
-#include "inc_2dacache"
 
 void main()
 {

@@ -1,7 +1,6 @@
 // Acidic Blood for the Bloodarcher by Zedium
 #include "prc_alterations"
 #include "prc_feat_const"
-#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 
@@ -15,12 +14,12 @@ void main()
 
     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetLocation(OBJECT_SELF));
     while(GetIsObjectValid(oTarget) && GetLevelByClass(CLASS_TYPE_BLARCHER, oTarget) < 1 )
-    {           
+    {
          if(!GetIsFriend(oTarget) )
          {
               eDam = EffectDamage(d6(1), DAMAGE_TYPE_ACID);
               ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-              ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);             
+              ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
          }
          oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetLocation(OBJECT_SELF));
     }

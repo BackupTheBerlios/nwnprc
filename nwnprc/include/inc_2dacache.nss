@@ -1,3 +1,11 @@
+/** @file
+ * Caching 2da read function and related.
+ *
+ * @author Primogenitor
+ *
+ * @todo Document the constants and functions
+ */
+
 const int PRC_SQL_ERROR = 0;
 const int PRC_SQL_SUCCESS = 1;
 
@@ -13,9 +21,18 @@ string PRC_SQLGetTick();
 // in their names. These functions are a replace these quote with the tilde character
 string ReplaceSingleChars(string sString, string sTarget, string sReplace);
 
-#include "prc_inc_switch"
-#include "inc_utility"
-#include "inc_fileends"
+
+//////////////////////////////////////////////////
+/* Include section                              */
+//////////////////////////////////////////////////
+
+#include "inc_utility" // Supplies prc_inc_switch
+
+
+
+//////////////////////////////////////////////////
+/* Function defintions                          */
+//////////////////////////////////////////////////
 
 void PRC_SQLCommit()
 {

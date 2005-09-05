@@ -16,11 +16,8 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
-
-#include "prc_alterations"
-
 #include "x2_inc_spellhook"
-#include "prc_inc_switch"
+#include "inc_utility"
 
 void main()
 {
@@ -87,7 +84,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Apply the summon effect and VFX impact
     //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eGate, PRCGetSpellTargetLocation());
     MultisummonPreSummon();
-    
+
     float fDuration = HoursToSeconds(nDuration);
     if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
         fDuration = RoundsToSeconds(nDuration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));

@@ -7,7 +7,6 @@
     with lasting impression.
 */
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_inc_clsfunc"
 
@@ -50,14 +49,14 @@ void main()
     eSilence = EffectLinkEffects(eSilence, eSilenceVis);
     eSilenceVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     eSilence = EffectLinkEffects(eSilence, eSilenceVis);
-    
+
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
-    
+
     while(GetIsObjectValid(oTarget))
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))

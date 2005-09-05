@@ -2,8 +2,6 @@
 //  Created 10/30/04
 //  By Vaeliorin
 #include "prc_alterations"
-#include "prc_alterations"
-#include "prc_alterations"
 #include "prc_feat_const"
 
 void main()
@@ -16,7 +14,7 @@ void main()
           SendMessageToPC(oPC,"You cannot attack yourself...");
           return;
      }
-        
+
 
      object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
 
@@ -28,11 +26,11 @@ void main()
      }
 
      AssignCommand(oPC, ActionMoveToLocation(GetLocation(oTarget), TRUE) );
-    
+
       effect eDamage1;
       effect eDamage2;
       effect eDamage3;
-      
+
       effect eLink1;
       effect eLink2;
 
@@ -61,7 +59,7 @@ void main()
          eLink1 = EffectLinkEffects(eDamage1, eDamage2);
          eLink2 = EffectLinkEffects(eLink1, eDamage3);
          DelayCommand(6.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget));
-         
+
       }
       else if (iAttackResult == 1)
       {
@@ -81,8 +79,8 @@ void main()
          SendMessageToPC(oPC, "Clangeddin's Strike Miss!");
      }
      AssignCommand(oPC, ActionAttack(oTarget));
-}     
-      
+}
+
 
 
 

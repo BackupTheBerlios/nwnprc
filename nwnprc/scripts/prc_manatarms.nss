@@ -1,9 +1,6 @@
-
-#include "prc_alterations"
 #include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_inc_clsfunc"
-#include "prc_alterations"
 
 void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)
 {
@@ -38,7 +35,7 @@ void main()
 
     if (GetHasFeat(FEAT_LEGENDARY_PROWESS,oPC))
         SetCompositeBonus(oSkin,"ManArmsAC",2,ITEM_PROPERTY_AC_BONUS);
-   
+
     if (GetHasFeat(FEAT_MASTER_CRITICAL,oPC))
         ImpCrit(oPC,GetPCSkin(oPC));
 

@@ -18,7 +18,7 @@
 
 
 #include "prc_inc_function"
-#include "inc_item_props"
+#include "inc_utility"
 #include "prc_feat_const"
 #include "psi_inc_psifunc"
 

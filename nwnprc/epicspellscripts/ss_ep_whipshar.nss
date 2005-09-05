@@ -11,11 +11,8 @@
 /////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "prc_alterations"
-//#include "prc_alterations"
 
 void AddEffectsToWeapon( object oTarget, float fDuration, int iCasterLvl )
 {

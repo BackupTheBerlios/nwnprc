@@ -2,7 +2,6 @@
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_ipfeat_const"
-#include "prc_alterations"
 
 const int PHENOTYPE_KENSAI      = 5;
 const int PHENOTYPE_ASSASSIN    = 6;
@@ -15,27 +14,27 @@ void main()
     object oSkin = GetPCSkin(oPC);
     if(!GetHasFeat(FEAT_ACP_FEAT, oPC)
         && GetPRCSwitch(PRC_ACP_MANUAL))
-    {    
+    {
         IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_ACP_FEAT),
-            0.0);    
+            0.0);
         return;
-    }    
+    }
     else if(((GetPRCSwitch(PRC_ACP_AUTOMATIC) && GetIsPC(oPC))
             ||(GetPRCSwitch(PRC_ACP_NPC_AUTOMATIC) && !GetIsPC(oPC))
             ||(GetLocalInt(oPC, PRC_ACP_NPC_AUTOMATIC) && !GetIsPC(oPC)))
         && !GetLocalInt(oPC, sLock))
     {
-        int nKensaiScore, 
+        int nKensaiScore,
             nAssassinScore,
             nBarbarianScore,
             nFencingScore;
-            
+
         nKensaiScore += GetLevelByClass(CLASS_TYPE_SAMURAI, oPC);
         nKensaiScore += GetLevelByClass(CLASS_TYPE_CW_SAMURAI, oPC);
         nKensaiScore += GetLevelByClass(CLASS_TYPE_MONK, oPC);
         nKensaiScore += GetLevelByClass(CLASS_TYPE_IAIJUTSU_MASTER, oPC);
         nKensaiScore += GetLevelByClass(CLASS_TYPE_SHOU, oPC);
-        
+
         nAssassinScore += GetLevelByClass(CLASS_TYPE_ASSASSIN, oPC);
         nAssassinScore += GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oPC);
         nAssassinScore += GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC);
@@ -60,8 +59,8 @@ void main()
         if(GetAbilityScore(oPC, ABILITY_DEXTERITY)>20)
             nFencingScore += (GetAbilityScore(oPC, ABILITY_DEXTERITY)-10)/2;
 
-        object oOffhand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC); 
-        object oOnhand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC); 
+        object oOffhand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+        object oOnhand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 
         if(GetBaseItemType(oOffhand) == BASE_ITEM_TOWERSHIELD
             || GetBaseItemType(oOffhand) == BASE_ITEM_LARGESHIELD)
@@ -75,7 +74,7 @@ void main()
             || GetWeaponDamageType(oOnhand) != DAMAGE_TYPE_PIERCING
             || GetIsTwoHandedMeleeWeapon(oOnhand))
         {
-            nFencingScore = 0;        
+            nFencingScore = 0;
         }
 
         if(GetAbilityScore(oPC, ABILITY_STRENGTH)<15)
@@ -83,32 +82,32 @@ void main()
 
         int nAutoPhenotype = PHENOTYPE_NORMAL;
         int nBestScore;
-        
+
         if(nKensaiScore > nBestScore)
         {
             nAutoPhenotype = PHENOTYPE_KENSAI;
             nBestScore = nKensaiScore;
-        }   
+        }
         if(nAssassinScore > nBestScore)
         {
             nAutoPhenotype = PHENOTYPE_ASSASSIN;
             nBestScore = nAssassinScore;
-        }   
+        }
         if(nBarbarianScore > nBestScore)
         {
             nAutoPhenotype = PHENOTYPE_BARBARIAN;
             nBestScore = nBarbarianScore;
-        }   
+        }
         if(nFencingScore > nBestScore)
         {
             nAutoPhenotype = PHENOTYPE_FENCING;
             nBestScore = nFencingScore;
-        }   
-            
+        }
+
         if(GetPhenoType(oPC) != nAutoPhenotype)
         {
             SetPhenoType(nAutoPhenotype, oPC);
             LockThisFeat(oPC);
-        }    
+        }
     }
 }

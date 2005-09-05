@@ -16,7 +16,6 @@
 //:: Updated On: 2003-08-21
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 #include "X2_inc_switches"
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -25,7 +24,7 @@ void main()
 {
   object oTarget = PRCGetSpellTargetObject();
   object oPC     = GetItemPossessor(oTarget);
-  
+
   if (oTarget == OBJECT_INVALID || GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
   {
        FloatingTextStrRefOnCreature(83359,oPC);         //"Invalid target "
@@ -53,14 +52,14 @@ void main()
   //      FloatingTextStrRefOnCreature(83407,oPC); // weapon already poisoned
   //      return;
   //}
-  
+
    int bHasFeat = GetHasFeat( FEAT_BLARCH_POISON_BLOOD , oPC);
    if (!bHasFeat) // without blood archer feat, they cannot use ability
    {
            FloatingTextStringOnCreature("Poison Blood ability failed.", oPC, FALSE);
            return;
    }
-  
+
    // duration, made it longer since it felt way too short.
    // now lasts 2d6 + class level rounds per use.
    int nDuration = (d6(2) +  GetLevelByClass(CLASS_TYPE_BLARCHER, oPC)) * 6;
@@ -77,7 +76,7 @@ void main()
        // still might be overpowered.
        effect eVis = EffectVisualEffect(VFX_IMP_EVIL_HELP, FALSE);
        effect eDam = EffectDamage((nDuration/6), DAMAGE_TYPE_DIVINE);
-       
+
        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
    }

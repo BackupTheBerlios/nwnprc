@@ -17,11 +17,8 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
-
-
 #include "prc_alterations"
 #include "x2_inc_spellhook"
-#include "prc_alterations"
 
 
 void RunImpact(object oTarget, object oCaster);

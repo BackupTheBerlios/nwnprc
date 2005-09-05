@@ -1,5 +1,4 @@
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_inc_clsfunc"
 
 void main()
@@ -16,7 +15,7 @@ void main()
     effect eLink = EffectLinkEffects(eStr, eDur);
            eLink = EffectLinkEffects(eLink, eCon);
     effect eVis2 = EffectVisualEffect(VFX_DUR_BARD_SONG);
-           eLink = EffectLinkEffects(eLink, eVis2);    
+           eLink = EffectLinkEffects(eLink, eVis2);
      if(GetIsReactionTypeFriendly(oTarget,GetAreaOfEffectCreator())|| GetFactionEqual(oTarget,GetAreaOfEffectCreator()) )
      {
         if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget)) // deaf targets can't hear the song.
@@ -24,9 +23,9 @@ void main()
            //Fire cast spell at event for the specified target
            SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_BULLS_STRENGTH, FALSE));
            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget, 0.0,FALSE);
-           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);     
+           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         }
      }
-     
-  
+
+
 }

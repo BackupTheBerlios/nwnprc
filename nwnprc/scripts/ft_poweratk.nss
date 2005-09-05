@@ -4,7 +4,7 @@
 //::///////////////////////////////////////////////
 /*
     This script handles the PRC power attack feats.
-    
+
 <Ornedan> For PA, I was thinking 3 radials
 <Ornedan> One for the presets
 <Ornedan> One for +0, +1, +2, +3, +4
@@ -24,8 +24,7 @@
 
 #include "nw_i0_spells"
 #include "inc_addragebonus"
-#include "inc_eventhook"
-#include "prc_inc_switch"
+#include "inc_utility"
 
 /*
 const int SINGLE_START = 2171;
@@ -71,7 +70,7 @@ int CalculatePower(object oUser)
 {
     int nPower = GetLocalInt(oUser, "PRC_PowerAttack_Level");
     int nSID = GetSpellID();
-    
+
     // Changing the value of +0,+1,+2,+3,+4 radial
     if(nSID >= SINGLE_START && <= SINGLE_LAST)
     {
@@ -97,7 +96,7 @@ int CalculatePower(object oUser)
 
     // Cache the new PA level
     SetLocalInt(oUser, "PRC_PowerAttack_Level", nPower);
-    
+
     return nPower;
 }
 */
@@ -105,14 +104,14 @@ void main()
 {
     object oUser = OBJECT_SELF;
     int nPower = GetLocalInt(oUser, "PRC_PowerAttack_Level");
-    
+
     // The PRC Power Attack must be active for this to do anything
     if(GetPRCSwitch(PRC_POWER_ATTACK) == PRC_POWER_ATTACK_DISABLED)
         return;
 
     // Get the old Power Attack, if any
     int nOld = GetLocalInt(oUser, "PRC_PowerAttackSpellID");
-    
+
     // Remove effects from it
     if(nOld)
     {
@@ -120,7 +119,7 @@ void main()
         DeleteLocalInt(oUser, "PRC_PowerAttackSpellID");
         DeleteLocalInt(oUser, "PRC_PowerAttack_DamageBonus");
     }
-    
+
     // Activate Power Attack if the new value is non-zero
     if(nPower)
     {
@@ -137,7 +136,7 @@ void main()
             FloatingTextStrRefOnCreature(16823149, oUser, FALSE); // Prereq: Improved Power Attack feat
             return;
         }
-    
+
         // This script is for the melee weapon PA. If Power Shot is implemented using the same script
         // at some future date, change this.
         if(GetWeaponRanged(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oUser)))
@@ -146,7 +145,7 @@ void main()
             return;
         }
 
-        
+
         // All checks are done, initialize variables for calculating the effect.
         int nDamageBonusType = GetDamageTypeOfWeapon(INVENTORY_SLOT_RIGHTHAND, oUser);
         int nDmg, nHit, nDex, nTemp;
@@ -168,7 +167,7 @@ void main()
             nHit = GetBaseAttackBonus(oUser) - ((GetActionMode(oUser, ACTION_MODE_POWER_ATTACK) ? 5 : 0) +
                                                 (GetActionMode(oUser, ACTION_MODE_IMPROVED_POWER_ATTACK ? 10 : 0)));
             if(nHit < 0) nHit = 0;
-            
+
             FloatingTextStrRefOnCreature(16823151, oUser, FALSE); // Your base attack bonus isn't high enough to pay for chosen Power Attack level.
         }
 
@@ -184,7 +183,7 @@ void main()
         nTemp = GetHasFeat(FEAT_SUPREME_POWER_ATTACK, oUser) ? nHit * 2 :
                 GetHasFeat(FEAT_FREBZK_IMPROVED_POWER_ATTACK, oUser) ? FloatToInt(1.5 * nHit) :
                 nHit;
-        
+
         // Calculate the damage. Supreme Power Attack doubles the damage
         nDmg = BonusAtk(nTemp + nDex);
 
@@ -193,7 +192,7 @@ void main()
 
         effect eLink = ExtraordinaryEffect(EffectLinkEffects(eDamage, eToHit));
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oUser);
-        
+
         // Cache the spellid of the power attack used. Also acts as a marker
         SetLocalInt(oUser, "PRC_PowerAttackSpellID", PRCGetSpellId());
         // Cache the amount of damage granted. This is used by the PRC combat engine

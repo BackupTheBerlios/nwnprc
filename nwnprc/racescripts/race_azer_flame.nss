@@ -14,8 +14,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_unarmed"
-#include "inc_eventhook"
-#include "inc_item_props"
+#include "inc_utility"
 
 void main()
 {
@@ -56,14 +55,14 @@ void main()
             GetTag(oItem) == "PRC_UNARMED_P" ||
             GetTag(oItem) == "NW_IT_CREWPB010")
                 SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
-        
+
         oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
         if( GetTag(oItem) == "PRC_UNARMED_B" ||
             GetTag(oItem) == "PRC_UNARMED_S" ||
             GetTag(oItem) == "PRC_UNARMED_P" ||
             GetTag(oItem) == "NW_IT_CREWPB010")
                 SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
-        
+
         oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
         if( GetTag(oItem) == "PRC_UNARMED_B" ||
             GetTag(oItem) == "PRC_UNARMED_S" ||

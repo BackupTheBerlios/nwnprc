@@ -1,7 +1,7 @@
 /*
    ----------------
    Shadow Body
-   
+
    prc_pow_shadbody
    ----------------
 
@@ -15,17 +15,17 @@
    Saving Throw: None
    Power Resistance: No
    Power Point Cost: 15
-   
+
    Your body and all equipment become a living shadow. You cannot harm anyone physically, but can manifest powers as normal.
    You gain 10/+3 DR, Immunity to Critical Hits, Ability Damage, Disease, and Poison. You take half damage from Fire, Electricity
-   and Acid. You also gain Darkvision. You drift in and out of the shadow plane, giving you 50% concealment and causing you 
-   to disappear, although this is negated should you attack anyone. 
+   and Acid. You also gain Darkvision. You drift in and out of the shadow plane, giving you 50% concealment and causing you
+   to disappear, although this is negated should you attack anyone.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void GoInvis(object oTarget, object oCaster, int nCaster, int nSpell)
 {
@@ -71,15 +71,15 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     object oCaster = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
     int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);      
-    
-    if (nMetaPsi > 0) 
+    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+
+    if (nMetaPsi > 0)
     {
     	int nCaster = GetManifesterLevel(oCaster);
 	float fDur = 60.0 * nCaster;
 	int nSpell = GetSpellId();
 	if (nMetaPsi == 2)	fDur *= 2;
-	
+
 	//Massive effect linkage, go me
     	effect eAcid = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID, 50);
     	effect eElec = EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 50);
@@ -90,7 +90,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	effect ePoison = EffectImmunity(IMMUNITY_TYPE_POISON);
     	effect eDR = EffectDamageReduction(10, DAMAGE_POWER_PLUS_THREE);
     	effect eDark = EffectUltravision();
-    	
+
     	effect eVis = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
     	effect eDur = EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
     	effect eLink = EffectLinkEffects(eAcid, eElec);

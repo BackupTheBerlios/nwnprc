@@ -7,7 +7,6 @@
     with lasting impression.
 */
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_inc_clsfunc"
 
@@ -32,7 +31,7 @@ void main()
     int nDuration = 10; //+ nChr;
     int nDC = 10 + nLevel + nCha;
     if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) nDC+=2;
-    
+
     //Check to see if the caster has Lasting Impression and increase duration.
     if(GetHasFeat(870))
     {
@@ -49,14 +48,14 @@ void main()
     eSlow = EffectLinkEffects(eSlow, eSlowVis);
     eSlowVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     eSlow = EffectLinkEffects(eSlow, eSlowVis);
-    
+
     RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
-    
+
     while(GetIsObjectValid(oTarget))
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))

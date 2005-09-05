@@ -3,7 +3,7 @@
 //:: prc_npc_percep
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "inc_eventhook"
+#include "inc_utility"
 
 void main()
 {

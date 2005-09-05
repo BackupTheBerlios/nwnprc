@@ -11,12 +11,8 @@
 //:: Updated On: 2003/09/10 - Georg Zoeller
 //:://////////////////////////////////////////////
 
-//Modified by Primogenitor to include CEP item types in 
+//Modified by Primogenitor to include CEP item types in
 //GetSlashingWeapon, and GetMeleeWeapon
-
-
-#include "x2_inc_itemprop"
-#include "x0_i0_spells"
 
 //------------------------------------------------------------------------------
 // GZ: These constants are used with for the AOE behavior AI
@@ -64,6 +60,11 @@ void CheckAndApplyTerrifyingRage(int nRounds);
 // fRange   - Range of the EffectCone
 void DoMindBlast(int nDC, int nDuration, float fRange);
 
+
+int GZGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaster);
+
+//#include "x2_inc_itemprop"
+#include "x0_i0_spells"
 
 //::///////////////////////////////////////////////
 //:: CreateBadTideEffectsLink

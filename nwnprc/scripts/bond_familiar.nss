@@ -16,7 +16,6 @@
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
-#include "prc_alterations"
 
 const int PACKAGE_ELEMENTAL_STR = PACKAGE_ELEMENTAL ;
 const int PACKAGE_ELEMENTAL_DEX = PACKAGE_FEY ;
@@ -66,8 +65,8 @@ void ElementalFamiliar()
 
     int iPack ,iSave ;
     int iHD = GetHitDice(OBJECT_SELF);
-    int iBonus = (iHD/5)+1; 
-   
+    int iBonus = (iHD/5)+1;
+
     if (iType=="FIRE")
     {
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageImmunity(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEIMMUNITY_100_PERCENT),oHide);
@@ -117,7 +116,7 @@ void ElementalFamiliar()
     }
     else if (iType=="WATER")
     {
-        
+
        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_STR,iBonus*2/3+1),oHide);
        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_DEX,iBonus*2/3),oHide);
        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAbilityBonus(IP_CONST_ABILITY_CON,iBonus*2/3),oHide);
@@ -233,7 +232,7 @@ void ElementalFamiliar()
 
     if (Arcanlvl>21)
        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicFocCreature),oHide);
-        
+
     if (Arcanlvl>11)
     {
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapSpecCreature),oHide);
@@ -260,19 +259,19 @@ void ElementalFamiliar()
 
 
    int iSoak =-1;
-   
+
    if (iSize=="LAR" || iSize=="HUG")
-      iSoak = IP_CONST_DAMAGESOAK_5_HP; 
+      iSoak = IP_CONST_DAMAGESOAK_5_HP;
    else if (iSize=="GRE" || iSize=="ELD")
       iSoak = IP_CONST_DAMAGESOAK_10_HP;
-   if (iHD>24)  iSoak++; 
-   if (iHD>30)  iSoak++; 
-   
-   
+   if (iHD>24)  iSoak++;
+   if (iHD>30)  iSoak++;
+
+
    if (iSoak>=0)
      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_20,iSoak),oHide);
 
-    
+
 
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBonus),GetItemInSlot(INVENTORY_SLOT_NECK,oEle));
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyACBonus(iBonus),oHide);

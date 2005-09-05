@@ -1,7 +1,7 @@
 /*
    ----------------
    Crystal Shard
-   
+
    prc_all_crysshrd
    ----------------
 
@@ -15,17 +15,16 @@
    Saving Throw: None
    Power Resistance: No
    Power Point Cost: 1
-   
+
    You propel a razor-sharp crystal shard at your target. You must succeed on a ranged touch attack
    to deal damage to the target. The shard deals 1d6 of piercing damage.
-   
-   Augment: For every additional power point spend, this power's damage increases by 1d6. 
+
+   Augment: For every additional power point spend, this power's damage increases by 1d6.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
 #include "prc_alterations"
 
 void main()
@@ -55,33 +54,33 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
-    
-    
+
+
     if (nSurge > 0)
     {
-        
+
         PsychicEnervation(oCaster, nSurge);
     }
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
     int nDC = GetManifesterDC(oCaster);
     int nCaster = GetManifesterLevel(oCaster);
     int nDice = 1;
-    int nDiceSize = 6; 
+    int nDiceSize = 6;
     effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
-        
+
     if (nSurge > 0) nAugment += nSurge;
-    
+
     //Augmentation effects to Damage
     if (nAugment > 0) nDice += nAugment;
-    
+
     int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
-    
+
     effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_PIERCING);
-    
+
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    
+
     // Perform the Touch Attach
     int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
     if (nTouchAttack > 0)
@@ -89,7 +88,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
-    
+
 
     }
 }

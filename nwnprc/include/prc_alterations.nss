@@ -50,7 +50,6 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 #include "prc_racial_const"
 #include "prc_ipfeat_const"
 #include "prc_misc_const"
-#include "inc_fileends"
 #include "inc_acp"
 
 // PRC Spell Engine Utility Functions
@@ -61,14 +60,11 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 #include "prc_inc_clsfunc"
 #include "prc_inc_racial"
 #include "inc_abil_damage"
-#include "inc_persist_loca"
 #include "NW_I0_GENERIC"
-#include "inc_abil_damage"
 #include "prc_inc_combat"
 #include "inc_lookups"
-#include "NW_I0_spells"
 #include "x0_I0_spells"
-#include "x2_I0_spells"
+//#include "x2_i0_spells"
 
 
 
@@ -91,7 +87,7 @@ location PRC_GetLimbo()
     while (1)
     {
         object oLimbo = GetObjectByTag("Limbo", i++);
-    
+
         if (oLimbo == OBJECT_INVALID) {
             PrintString("PRC ERROR: no Limbo area! (did you import the latest PRC .ERF file?)");
             return lLimbo;
@@ -133,7 +129,7 @@ int PRCGetCreatureSize(object oObject = OBJECT_SELF)
         nSize += -2;
     else if(GetHasFeat(FEAT_SIZE_DECREASE_1))
         nSize += -1;
-        
+
     if(GetHasFeat(FEAT_SIZE_INCREASE_6))
         nSize +=  6;
     else if(GetHasFeat(FEAT_SIZE_INCREASE_5))
@@ -146,21 +142,21 @@ int PRCGetCreatureSize(object oObject = OBJECT_SELF)
         nSize +=  2;
     else if(GetHasFeat(FEAT_SIZE_INCREASE_1))
         nSize +=  1;
-    
+
     if(!GetPRCSwitch(PRC_DRAGON_DISCIPLE_SIZE_CHANGES))
     {
         if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_2))
             nSize +=  2;
         else if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_1))
-            nSize +=  1;    
-    }    
-        
+            nSize +=  1;
+    }
+
     if(nSize < CREATURE_SIZE_FINE)
         nSize = CREATURE_SIZE_FINE;
     if(nSize > CREATURE_SIZE_COLOSSAL)
         nSize = CREATURE_SIZE_COLOSSAL;
-    
-    return nSize;   
+
+    return nSize;
 }
 
 

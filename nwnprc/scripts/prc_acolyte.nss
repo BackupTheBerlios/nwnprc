@@ -9,7 +9,6 @@
 //:: Created On: Dec 28, 2003
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_feat_const"
 
 // * Applies the Acolyte's AC bonuses as CompositeBonuses on object's skin.

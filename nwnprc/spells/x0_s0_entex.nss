@@ -14,7 +14,6 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
 
-#include "prc_alterations"
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

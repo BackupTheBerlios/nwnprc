@@ -1,9 +1,6 @@
-
-#include "prc_alterations"
 #include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
-#include "prc_alterations"
 
 const int SPELL_INTUITIVE_ATK = 2090;
 
@@ -12,14 +9,14 @@ int isSimple(object oItem)
       int iType= GetBaseItemType(oItem);
 
       switch (iType)
-      {            
+      {
         case BASE_ITEM_MORNINGSTAR:
         case BASE_ITEM_QUARTERSTAFF:
         case BASE_ITEM_SHORTSPEAR:
         case BASE_ITEM_HEAVYCROSSBOW:
           return 1;
           break;
-        case BASE_ITEM_CLUB:  
+        case BASE_ITEM_CLUB:
         case BASE_ITEM_DAGGER:
         case BASE_ITEM_LIGHTMACE:
         case BASE_ITEM_SICKLE:
@@ -39,7 +36,7 @@ int isLight(object oItem)
      // kukri, light hammer, mace, rapier, short sword,
      // whip, and unarmed strike.
      int iType = GetBaseItemType(oItem);
-     
+
      switch (iType)
      {
         case BASE_ITEM_DAGGER:
@@ -67,13 +64,13 @@ void main()
 
        int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
        object oItem;
-       
+
        if (iEquip == 1)
             oItem = GetItemLastUnequipped();
        else
             oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-      
-       
+
+
        if (iEquip == 1||GetAlignmentGoodEvil(oPC)!= ALIGNMENT_GOOD)
        {
           if (GetBaseItemType(oItem)==BASE_ITEM_GLOVES)
@@ -105,7 +102,7 @@ void main()
 
    if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC) || GetHasFeat(FEAT_WEAPON_FINESSE, oPC))
    {
-      // shorthand - IA is intuitive attack and WF is weapon finesse   
+      // shorthand - IA is intuitive attack and WF is weapon finesse
       object oItem ;
       int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
       int iStr = GetAbilityModifier(ABILITY_STRENGTH,oPC);
@@ -145,7 +142,7 @@ void main()
           bUseIA = TRUE;
           iIABonus = iWis - iStr;
       }
-      
+
       // do not consider Intuitive Attack if the character is using a crossbow and the zen archery feat.
       if (GetHasFeat(FEAT_ZEN_ARCHERY, oPC) && bXBowEq)
       {
@@ -167,7 +164,7 @@ void main()
       else if (bUseWF && bUseIA)
       {
           int iMod = (iWis > iDex) ? (iWis - iDex) : (0);
-          
+
           if (bIsSimpleR && !bIsLightR)
               SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iIABonus, ATTACK_BONUS_ONHAND);
           else if (bIsSimpleR && bIsLightR)

@@ -86,8 +86,7 @@ void UnarmedFists(object oCreature);
 #include "prc_class_const"
 #include "prc_racial_const"
 #include "prc_spell_const"
-#include "inc_item_props"
-#include "prc_inc_switch"
+#include "inc_utility"
 
 //////////////////////////////////////////////////
 /* Function defintions                          */
@@ -138,12 +137,12 @@ int GetIsPolyMorphedOrShifted(object oCreature)
 
         eChk = GetNextEffect(oCreature);
     }
-    
+
     if (GetLocalInt(oHide, "nPCShifted"))
     {
         bPoly = TRUE;
     }
-    
+
     return bPoly;
 }
 
@@ -151,7 +150,7 @@ int GetIsPolyMorphedOrShifted(object oCreature)
 void RemoveUnarmedAttackEffects(object oCreature)
 {
     effect e = GetFirstEffect(oCreature);
-    
+
     while (GetIsEffectValid(e))
     {
         if (GetEffectSpellId(e) == SPELL_UNARMED_ATTACK_PEN)
@@ -168,7 +167,7 @@ void ApplyUnarmedAttackEffects(object oCreature)
     object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(OBJECT_SELF));
 
     AssignCommand(oCastingObject, ActionCastSpellAtObject(SPELL_UNARMED_ATTACK_PEN, oCreature, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-    
+
     DestroyObject(oCastingObject, 6.0);
 }
 
@@ -195,14 +194,14 @@ int FindUnarmedDamage(object oCreature)
     int iDamageToUse = 0;
     int iDieIncrease = 0;
     int bUseMonkAlt = FALSE;
-    
+
     // Determine creature size by feats.
-    int bTinySize   = GetHasFeat(FEAT_TINY, oCreature); 
+    int bTinySize   = GetHasFeat(FEAT_TINY, oCreature);
     int bSmallSize  = GetHasFeat(FEAT_SMALL, oCreature);
     int bLargeSize  = GetHasFeat(FEAT_LARGE, oCreature);
     int bHugeSize   = GetHasFeat(FEAT_HUGE, oCreature);
     int bMediumSize = !bTinySize && !bSmallSize && !bLargeSize && !bHugeSize;
-    
+
     // if the creature is shifted, use model size
     // otherwise, we want to stick to what the feats say they "should" be.
     // No making pixies with Dragon Appearance for "huge" fist damage.
@@ -213,7 +212,7 @@ int FindUnarmedDamage(object oCreature)
          bMediumSize = FALSE;
          bLargeSize  = FALSE;
          bHugeSize   = FALSE;
-         
+
          switch (PRCGetCreatureSize(oCreature))
          {
               case CREATURE_SIZE_TINY:   bTinySize   = TRUE; break;
@@ -224,9 +223,9 @@ int FindUnarmedDamage(object oCreature)
          }
     }
 
-    // Sacred Fist cannot add their levels if they've broken their code.    
+    // Sacred Fist cannot add their levels if they've broken their code.
     if (GetHasFeat(FEAT_SF_CODE,oCreature)) iSacredFist = 0;
-    
+
     // Sacred Fist adds their levels to the monk class otherwise.
     // Note: If a Sacred Fist has 0 levels of monk, it is considered to be a monk
     // of equal level when considering damage (and unarmed attack schedule, which
@@ -241,12 +240,12 @@ int FindUnarmedDamage(object oCreature)
 
     // Fist of Zuoken stacks with monk levels (or uses monk progression.)
     if (iZuoken) iMonk += iZuoken;
-  
+
     // In 3.0e, Monk progression stops after level 16:
     if (iMonk > 16 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) ) iMonk = 16;
     // in 3.5e, monk progression stops at 20.
     else if(iMonk > 20) iMonk = 20;
-   
+
     // Calculating size modifier for damage dice, defaults to 2 as a standard.
     int iSizeModifier = 2;
     if      (bTinySize)   iSizeModifier = 0; // Tiny monks  - 1d3,  1d4,  1d6,  1d8,  1d10
@@ -254,29 +253,29 @@ int FindUnarmedDamage(object oCreature)
     else if (bMediumSize) iSizeModifier = 2; // Medium monk - 1d6,  1d8,  1d10, 1d12, 1d20
     else if (bLargeSize)  iSizeModifier = 3; // Large monks - 1d8,  1d10, 1d12, 2d8,  2d10
     else if (bHugeSize)   iSizeModifier = 4; // Huge monks  - 1d10, 1d12, 2d8,  2d10, 2d12
-    
+
     // calculates monk damage with proper size modifer
     iMonkDamage = iMonk / 4 + iSizeModifier;
-    
+
     // For medium monks in 3.0e skip 2d6 and go to 1d20
-    if(bMediumSize && iMonkDamage == 6 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) ) iMonkDamage = 7; 
-        
+    if(bMediumSize && iMonkDamage == 6 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) ) iMonkDamage = 7;
+
     // Shou Disciple either adds its level to existing class or does its own damage, depending
     // on which is better. Here we will determine how much damage the Shou Disciple does
     // without stacking.
     if (iShou > 0) iShouDamage = iShou + 1; // Lv. 1: 1d6, Lv. 2: 1d8, Lv. 3: 1d10
     if (iShou > 3) iShouDamage--;           // Lv. 4: 1d10, Lv. 5: 2d6
-    
+
     // Modify the Shou Disciples damage based on size.
     iShouDamage += iSizeModifier;
-    
-    // Brawler has a very simple damage progression (regardless of size):    
+
+    // Brawler has a very simple damage progression (regardless of size):
     if (iBrawler) iBrawlerDamage = iBrawler / 6 + 2;   // 1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
 
     // Optional code for "sized" bralwers
-    if(GetPRCSwitch(PRC_BRAWLER_SIZE) && iBrawler > 0)  
+    if(GetPRCSwitch(PRC_BRAWLER_SIZE) && iBrawler > 0)
         iBrawlerDamage = iBrawler / 6 + iSizeModifier;
-    
+
     // Certain race pack creatures use different damages.
     if      (GetRacialType(oCreature) == RACIAL_TYPE_MINOTAUR)   iRacialDamage = 3;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_TANARUKK)   iRacialDamage = 2;
@@ -299,14 +298,14 @@ int FindUnarmedDamage(object oCreature)
         int bShieldEq = GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD ||
                         GetBaseItemType(oShield) == BASE_ITEM_LARGESHIELD ||
                         GetBaseItemType(oShield) == BASE_ITEM_TOWERSHIELD;
-                
+
         if (GetBaseAC(oArmor) > 0 || bShieldEq)
         {
             iMonkDamage = 0;
             iShouDamage = 0;
         }
     }
-   
+
     // Future unarmed classes:  if you do your own damage, add in "comparisons" below here.
     iDamageToUse = (iMonkDamage    > iDamageToUse) ? iMonkDamage    : iDamageToUse;
     iDamageToUse = (iBrawlerDamage > iDamageToUse) ? iBrawlerDamage : iDamageToUse;
@@ -323,8 +322,8 @@ int FindUnarmedDamage(object oCreature)
     {
         DeleteLocalInt(oCreature, "UsesRacialAttack");
     }
-    
-    // Small characters get a penalty to damage if they've somehow ended up with no damage bonus 
+
+    // Small characters get a penalty to damage if they've somehow ended up with no damage bonus
     // (monk wearing armor or no monk levels but IoDM levels, stuff like that.)
     // Added in tiny, large, and hugh size modifiers.
     if      (iDamageToUse == 0 && bSmallSize) iDamageToUse = -1;
@@ -337,7 +336,7 @@ int FindUnarmedDamage(object oCreature)
 
     // This is where the correct damage dice is calculated
     if (iDamageToUse > 10) iDamageToUse = 10;
-    
+
     switch (iDamageToUse)
     {
         case -1:
@@ -412,7 +411,7 @@ int FindUnarmedDamage(object oCreature)
             if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_4D10;
             else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_3D12;
             else                            iDamage = MONST_DAMAGE_3D10;
-            break;            
+            break;
         case 10:
             if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_4D12;
             else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_4D10;
@@ -474,14 +473,14 @@ void UnarmedFists(object oCreature)
     int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
     int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
     int iZuoken = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature);
-    
+
     // Sacred Fists who break their code get no benefits.
     if (GetHasFeat(FEAT_SF_CODE,oCreature)) iSacFist = 0;
-    
+
     // The monk adds all these classes.
     int iMonkEq = iMonk + iShou + iSacFist + iHenshin + iZuoken;
 
-    // Determine the type of damage the character should do.    
+    // Determine the type of damage the character should do.
     string sWeapType;
     if (GetHasFeat(FEAT_CLAWDRAGON, oCreature) ||
         iRace == RACIAL_TYPE_TROLL             ||
@@ -502,7 +501,7 @@ void UnarmedFists(object oCreature)
 
     // If we are polymorphed/shifted, do not mess with the creature weapon.
     if (GetIsPolyMorphedOrShifted(oCreature)) return;
-    
+
     // Equip the creature weapon.
     if (!GetIsObjectValid(oWeapL) || GetTag(oWeapL) != sWeapType)
     {
@@ -519,21 +518,21 @@ void UnarmedFists(object oCreature)
             AssignCommand(oCreature,ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
         }
     }
-    
+
     // Clean up the mess of extra fists made on taking first level.
     DelayCommand(1.0,CleanExtraFists(oCreature));
- 
+
     // Determine the character's capacity to pierce DR.
     int iKi = (iMonkEq > 9)  ? 1 : 0;
         iKi = (iMonkEq > 12) ? 2 : iKi;
         iKi = (iMonkEq > 15) ? 3 : iKi;
-    
+
     int iDragClaw = GetHasFeat(FEAT_CLAWDRAGON,oCreature) ? 1: 0;
         iDragClaw = GetHasFeat(FEAT_CLAWENH2,oCreature)   ? 2: iDragClaw;
-        iDragClaw = GetHasFeat(FEAT_CLAWENH3,oCreature)   ? 3: iDragClaw;    
-              
+        iDragClaw = GetHasFeat(FEAT_CLAWENH3,oCreature)   ? 3: iDragClaw;
+
     int iBrawlEnh = iBrawler / 6;
-         
+
     int iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_4,oCreature) ? 1 : 0 ;
         iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_5,oCreature) ? 2 : iEpicKi ;
 
@@ -617,7 +616,7 @@ void UnarmedFists(object oCreature)
     // Add the appropriate damage to the fist.
     int iMonsterDamage = FindUnarmedDamage(oCreature);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iMonsterDamage),oWeapL);
-    
+
     // Add OnHitCast: Unique if necessary
     if(GetHasFeat(FEAT_REND, oCreature))
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oWeapL);

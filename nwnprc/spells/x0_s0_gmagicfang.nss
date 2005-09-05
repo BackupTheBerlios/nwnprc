@@ -21,11 +21,6 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
-
-#include "prc_alterations"
-
-
-
 #include "x2_inc_spellhook"
 
 void main()
@@ -82,8 +77,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
         FloatingTextStrRefOnCreature(8962, OBJECT_SELF, FALSE);
         return; // has neither an animal companion
-    }    
-        
+    }
+
     //remove other magic fang effects
     RemoveSpellEffects(452, OBJECT_SELF, oTarget);
     RemoveSpellEffects(453, OBJECT_SELF, oTarget);
@@ -100,7 +95,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     effect eLink = EffectLinkEffects(eAttack, eDur);
     eLink = EffectLinkEffects(eLink, eDamage);
     eLink = EffectLinkEffects(eLink, eReduction);
-    
+
     float fDuration = HoursToSeconds(nCasterLevel); // * Duration 1 hour/level
      if ((nMetaMagic & METAMAGIC_EXTEND))    //Duration is +100%
     {

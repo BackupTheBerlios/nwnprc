@@ -7,7 +7,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Nov 19, 2001
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "X0_INC_HENAI"
 
 void main()

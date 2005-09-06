@@ -11,7 +11,7 @@
 //:: Created By: Naomi Novik
 //:: Created On: 10/09/2002
 //:://////////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "x0_i0_henchman"
 
 void main()

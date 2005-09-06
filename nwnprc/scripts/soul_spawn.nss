@@ -9,7 +9,7 @@ Henchman-specific OnSpawn handler for XP1. Based on NW_CH_AC9 by Bioware.
 //:: Created By: Naomi Novik
 //:: Created On: 10/09/2002
 //:://////////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "x0_inc_henai"
 #include "x2_inc_banter"
 #include "x2_inc_globals"

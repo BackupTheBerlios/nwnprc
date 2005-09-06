@@ -154,7 +154,7 @@ int InscribeRune()
 	object oCaster = OBJECT_SELF;
 	
 	// No point being in here if you don't have runes.
-	if (!GetHasFeat(FEAT_INSCRIBE_RUNE, oPC)) return;
+	if (!GetHasFeat(FEAT_INSCRIBE_RUNE, oCaster)) return;
 
     	// Get the item used to cast the spell
     	object oItem = GetSpellCastItem();

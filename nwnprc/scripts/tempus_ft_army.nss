@@ -1,4 +1,4 @@
-
+#include "prc_alterations"
 void main()
 {
 
@@ -8,7 +8,7 @@ void main()
 
    int Duration = GetAbilityModifier(ABILITY_CHARISMA)>0 ? GetAbilityModifier(ABILITY_CHARISMA):1;
    //Get the spell target location as opposed to the spell target.
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
 
     effect eSave   = EffectSavingThrowIncrease(SAVING_THROW_ALL,2);
     effect eAtk    = EffectAttackIncrease(2);

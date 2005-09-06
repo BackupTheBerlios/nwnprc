@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>Player Resource Consortium :: Manual :: PrC building :: New Spellbooks</title>
+</head>
+<body>
+<br>How to use the new spellbook generator excel spreadsheet
+<br>
+<br>First, make sure you have the latest spells.2da file imported into the excel spreadsheet. To do this:
+<ol><li>File</li>
+<li>Open</li>
+<li>[select spells.2da]</li>
+<li>Open</li>
+<li>Delimited</li>
+<li>Next</li>
+<li>Space</li>
+<li>Finish</li>
+<li>[select cell a4]</li>
+<li>{End}</li>
+<li>{Shift+RightArrow}</li>
+<li>{End}</li>
+<li>{Shift+DownArrow}</li>
+<li>{Ctrl+C}</li>
+<li>[select cell a4 in the "input spells" worksheet in the newspellbooks spreadsheet]</li>
+<li>{Ctrl+V}</li></ol>
+<br>
+<br>Make sure the Location reference (Location!B3) points to a valid location on your hard disk,
+preferably NOT where the PRC 2da files are. Make sure you keep the trailing slash.
+<br>
+<br>Fill out the spells.2da, feat.2da, iprp_feats.2da, and tlk starting row locations.
+<br>
+<br>Switch to the "spellbooks" worksheet. Here every class is listed with ALL its spells
+even those not created yet. Create a new section on the far right hand side following
+the layout of the others.
+<br>
+<br>Copy the 3 columns you just created, except for the header row, and copy'n'paste
+them into "Location" worksheet just below the Label, Spelllist and Level columns.
+<br>
+<br>Delete any spells that arent created yet and move spells below those up to create a single
+continuous block.
+<br>
+<br>For the first spell in your list, fill out the "spellscript prefix" and "lable prefix" columns.
+Then duplicate them down the list by selecting each in turn and double-clicking in the
+small box that appears to the bottom right of the cell. Fill in cls_feat_start in the same
+manner.
+<br>
+<br>To be continued.....
+</body>
+</html>

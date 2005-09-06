@@ -7,8 +7,8 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 13, 2004
 //:://////////////////////////////////////////////
+#include "prc_alterations"
 
-#include "inc_utilityfuncs"
 
 void main()
 {

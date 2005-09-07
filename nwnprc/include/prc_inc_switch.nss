@@ -9,7 +9,7 @@
 
  /* This variable MUST be updated with every new version of the PRC!!! */
 
- const string PRC_VERSION                           = "PRC 2.3 alpha 9";
+ const string PRC_VERSION                           = "PRC 2.3 alpha 10";
 
 
 /******************************************************************************\
@@ -1160,6 +1160,22 @@ const string PRC_XP_USE_SIMPLE_LA                    = "PRC_XP_USE_SIMPLE_LA";
  */
 const string PRC_XP_USE_SIMPLE_RACIAL_HD             = "PRC_XP_USE_SIMPLE_RACIAL_HD";
 
+/**
+ * Characters must earn their racial HD through the normal levelup process
+ * Player must still take all their racial HD before they can take more
+ * than one level in a non-racial class.
+ * PRC_XP_USE_SIMPLE_RACIAL_HD must be on, and the convoCC racial hit dice option
+ * must be off
+ */
+const string PRC_XP_USE_SIMPLE_RACIAL_HD_NO_FREE_XP  = "PRC_XP_USE_SIMPLE_RACIAL_HD_NO_FREE_XP";
+
+/**
+ * Characters are given racial HD via LevelupHenchman so can't select feats etc
+ * Uses the default packages for each class, which are poor to say the least
+ * PRC_XP_USE_SIMPLE_RACIAL_HD must be on, and the convoCC racial hit dice option
+ * must be off
+ */
+const string PRC_XP_USE_SIMPLE_RACIAL_HD_NO_SELECTION  = "PRC_XP_USE_SIMPLE_RACIAL_HD_NO_SELECTION";
 
 /**
  * Enables PRC XP system.
@@ -1953,6 +1969,8 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PW_SPELL_TRACKING);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_XP_USE_SIMPLE_LA);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_XP_USE_SIMPLE_RACIAL_HD);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_XP_USE_SIMPLE_RACIAL_HD_NO_FREE_XP);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_XP_USE_SIMPLE_RACIAL_HD_NO_SELECTION);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_XP_USE_SETXP);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_USE_DATABASE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_USE_BIOWARE_DATABASE);

@@ -656,6 +656,53 @@ void DragonDis(object oPC)
      }
 }
 
+void RacialHD(object oPC)
+{
+    SetLocalInt(oPC, "PRC_PrereqAberration", 1);
+    SetLocalInt(oPC, "PRC_PrereqAnimal", 1);
+    SetLocalInt(oPC, "PRC_PrereqConstruct", 1);
+    SetLocalInt(oPC, "PRC_PrereqHumanoid", 1);
+    SetLocalInt(oPC, "PRC_PrereqMonstrous", 1);
+    SetLocalInt(oPC, "PRC_PrereqElemental", 1);
+    SetLocalInt(oPC, "PRC_PrereqFey", 1);
+    SetLocalInt(oPC, "PRC_PrereqDragon", 1);
+    SetLocalInt(oPC, "PRC_PrereqUndead", 1);
+    SetLocalInt(oPC, "PRC_PrereqBeast", 1);
+    SetLocalInt(oPC, "PRC_PrereqGiant", 1);
+    SetLocalInt(oPC, "PRC_PrereqMagicalBeast", 1);
+    SetLocalInt(oPC, "PRC_PrereqOutsider", 1);
+    SetLocalInt(oPC, "PRC_PrereqShapechanger", 1);
+    SetLocalInt(oPC, "PRC_PrereqVermin", 1);
+    if(GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD))
+    {
+        int nRealRace = GetRacialType(oPC);
+        int nRacialHD = StringToInt(Get2DACache("ECL", "RaceHD", nRealRace));
+        int nRacialClass = StringToInt(Get2DACache("ECL", "RaceClass", nRealRace));
+        if(nRacialHD && GetLevelByClass(nRacialClass, oPC) < nRacialHD)
+        {
+            switch(nRacialClass)
+            {
+                case CLASS_TYPE_ABERRATION: SetLocalInt(oPC, "PRC_PrereqAberration", 0); break;
+                case CLASS_TYPE_ANIMAL: SetLocalInt(oPC, "PRC_PrereqAnmal", 0); break;
+                case CLASS_TYPE_CONSTRUCT: SetLocalInt(oPC, "PRC_PrereqConstruct", 0); break;
+                case CLASS_TYPE_HUMANOID: SetLocalInt(oPC, "PRC_PrereqHumanoid", 0); break;
+                case CLASS_TYPE_MONSTROUS: SetLocalInt(oPC, "PRC_PrereqMonstrous", 0); break;
+                case CLASS_TYPE_ELEMENTAL: SetLocalInt(oPC, "PRC_PrereqElemental", 0); break;
+                case CLASS_TYPE_FEY: SetLocalInt(oPC, "PRC_PrereqFey", 0); break;
+                case CLASS_TYPE_DRAGON: SetLocalInt(oPC, "PRC_PrereqDragon", 0); break;
+                case CLASS_TYPE_UNDEAD: SetLocalInt(oPC, "PRC_PrereqUndead", 0); break;
+                case CLASS_TYPE_BEAST: SetLocalInt(oPC, "PRC_PrereqBeast", 0); break;
+                case CLASS_TYPE_GIANT: SetLocalInt(oPC, "PRC_PrereqGiant", 0); break;
+                case CLASS_TYPE_MAGICAL_BEAST: SetLocalInt(oPC, "PRC_PrereqMagicalBeast", 0); break;
+                case CLASS_TYPE_OUTSIDER: SetLocalInt(oPC, "PRC_PrereqOutsider", 0); break;
+                case CLASS_TYPE_SHAPECHANGER: SetLocalInt(oPC, "PRC_PrereqShapechanger", 0); break;
+                case CLASS_TYPE_VERMIN: SetLocalInt(oPC, "PRC_PrereqVermin", 0); break;
+            }
+        }
+    
+    }
+}
+
 // YES, that is main2()... it's the second (delayed) phase of main.
 void main2()
 {
@@ -817,6 +864,7 @@ void main2()
      RangerURangerMutex(oPC);
      DragonDis(oPC);
      Thrallherd(oPC);
+     RacialHD(oPC);
      // Truly massive debug message flood if activated.
      /*
      SendMessageToPC(oPC, "Your true Strength: " + IntToString(GetLocalInt(oHide, "PRC_trueSTR")));

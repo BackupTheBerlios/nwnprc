@@ -197,15 +197,21 @@ void main()
         int nRacialClass = StringToInt(Get2DACache("ECL", "RaceClass", nRealRace));
         if(nRacialHD)
         {
-            int nNewXP = nRacialHD*(nRacialHD-1)*500;
-            SetXP(oPC, nNewXP);
-            if(GetPRCSwitch(PRC_XP_USE_SIMPLE_LA))
-                SetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, nNewXP);
-            int i;
-            for(i=0;i<nRacialHD;i++)
+            if(!GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD_NO_FREE_XP))
             {
-                LevelUpHenchman(oPC, nRacialClass, TRUE);
-            }    
+                int nNewXP = nRacialHD*(nRacialHD-1)*500;
+                SetXP(oPC, nNewXP);
+                if(GetPRCSwitch(PRC_XP_USE_SIMPLE_LA))
+                    DelayCommand(1.0, SetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, nNewXP));
+            }  
+            if(GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD_NO_SELECTION))
+            {
+                int i;
+                for(i=0;i<nRacialHD;i++)
+                {
+                    LevelUpHenchman(oPC, nRacialClass, TRUE);
+                }    
+            }
         }
     }
 

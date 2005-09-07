@@ -836,44 +836,58 @@ int MarshalAuraLimit(object oPC = OBJECT_SELF)
 
 int CasterFeats(object oPC = OBJECT_SELF)
 {
-	if (GetHasFeat(FEAT_INSCRIBE_RUNE, oPC) && GetLocalInt(oPC, "PRC_DivSpell2") != 0)
-	{
-	        FloatingTextStringOnCreature("Inscribe Rune requires Level 2 Divine Spells", oPC, FALSE);
-        	return FALSE;	
+    if (GetHasFeat(FEAT_INSCRIBE_RUNE, oPC) && GetLocalInt(oPC, "PRC_DivSpell2") != 0)
+    {
+            FloatingTextStringOnCreature("Inscribe Rune requires Level 2 Divine Spells", oPC, FALSE);
+            return FALSE;   
         }
-	
-	return TRUE;
+    
+    return TRUE;
 }
 
 int MasterOfShrouds(object oPC = OBJECT_SELF)
 {
-	int MoS = (GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oPC));
-	if (MoS > 0)
-	{
-		int nDom =   GetHasFeat(FEAT_BONUS_DOMAIN_DEATH, oPC) +
-        	             GetHasFeat(FEAT_BONUS_DOMAIN_EVIL, oPC) +
-        	             GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION, oPC);
-        	             
-        	if (nDom < 2)
-        	{
-        	    FloatingTextStringOnCreature("You must select your two bonus domains", oPC, FALSE);
-        	    return FALSE;
-        	}  
+    int MoS = (GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oPC));
+    if (MoS > 0)
+    {
+        int nDom =   GetHasFeat(FEAT_BONUS_DOMAIN_DEATH, oPC) +
+                         GetHasFeat(FEAT_BONUS_DOMAIN_EVIL, oPC) +
+                         GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION, oPC);
+                         
+            if (nDom < 2)
+            {
+                FloatingTextStringOnCreature("You must select your two bonus domains", oPC, FALSE);
+                return FALSE;
+            }  
         }
         return TRUE;
 }
-	
+    
 int Blightbringer(object oPC = OBJECT_SELF)
 {
-	// You should only have the Blightbringer domain as a bonus domain
-	if (GetHasFeat(FEAT_BLIGHTBRINGER_DOMAIN_POWER, oPC) && !GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC))
-	{
-       	    FloatingTextStringOnCreature("You may not select Blightbringer as a domain at level 1.", oPC, FALSE);
-       	    return FALSE;
+    // You should only have the Blightbringer domain as a bonus domain
+    if (GetHasFeat(FEAT_BLIGHTBRINGER_DOMAIN_POWER, oPC) && !GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC))
+    {
+            FloatingTextStringOnCreature("You may not select Blightbringer as a domain at level 1.", oPC, FALSE);
+            return FALSE;
         }
         return TRUE;
 }
        
+       
+int RacialHD(object oPC)
+{
+    int nRealRace = GetRacialType(oPC);
+    int nRacialHD = StringToInt(Get2DACache("ECL", "RaceHD", nRealRace));
+    int nRacialClass = StringToInt(Get2DACache("ECL", "RaceClass", nRealRace));
+    if(GetHitDice(oPC)-1-GetLevelByClass(nRacialClass, oPC) > 0)
+    {
+        string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nRacialClass)));
+        FloatingTextStringOnCreature("You must take "+IntToString(nRacialHD)+" levels in your racial hit dice class, "+sName, oPC, FALSE);
+        return FALSE;
+    }
+    return TRUE;
+}
 
 //this is a rough calculation to stop the 41 spellslot levels bugs
 int FortySpellSlotLevels(object oPC)
@@ -940,6 +954,7 @@ void main()
          || !MarshalAuraLimit(oPC)
          || !Blightbringer(oPC)
          || !FortySpellSlotLevels(oPC)
+         || !RacialHD(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

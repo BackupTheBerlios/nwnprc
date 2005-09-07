@@ -213,15 +213,30 @@ void ApplyECLToXP(object oPC)
         int iCurXP = GetXP(oPC);
         if(!GetIsPC(oPC))
             iCurXP = GetLocalInt(oPC, "NPC_XP");
+        //if dm reduces Xp to zero, set the local to match.    
+        if(iCurXP == 0)
+            SetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, 0);
         int iLastXP = GetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT);
         if(iLastXP != iCurXP)
         {
             int iPCLvl = GetHitDice(oPC);
             // Get XP Ratio (multiply new XP by this to see what to subtract)
-            float fXPRatio = 1.0 - (IntToFloat(GetXPForLevel(iPCLvl+1))/IntToFloat(GetXPForLevel(iPCLvl+1+iLvlAdj)));
+            float fRealXPToLevel = IntToFloat(GetXPForLevel(iPCLvl+1));
+            float fECLXPToLevel = IntToFloat(GetXPForLevel(iPCLvl+1+iLvlAdj));
+            float fXPRatio = 1.0 - (fRealXPToLevel/fECLXPToLevel);
+            //At this point the ratio is based on total XP
+            //This is not correct, it should be based on the XP required to reach
+            //the next level.
+            fRealXPToLevel = IntToFloat(iPCLvl*1000);
+            fECLXPToLevel = IntToFloat((iPCLvl+iLvlAdj)*1000);
+            fXPRatio = 1.0 - (fRealXPToLevel/fECLXPToLevel);
+            
             float fXPDif = IntToFloat(iCurXP - iLastXP);
             int iXPDif = FloatToInt(fXPDif * fXPRatio);
             int newXP = iCurXP - iXPDif;
+            SendMessageToPC(oPC, "XP gained since last heartbeat "+IntToString(FloatToInt(fXPDif)));
+            SendMessageToPC(oPC, "Real XP to level: "+IntToString(FloatToInt(fRealXPToLevel)));
+            SendMessageToPC(oPC, "ECL XP to level:  "+IntToString(FloatToInt(fECLXPToLevel)));
             SendMessageToPC(oPC, "Level Adjustment +"+IntToString(iLvlAdj)+". Reducing XP by " + IntToString(iXPDif));
             if(GetIsPC(oPC))
                 SetXP(oPC, newXP);

@@ -235,6 +235,7 @@ void SetShift(object oPC, object oTarget)
 void SetShift_02(object oPC, object oTarget)
 {
 
+
     //get all the creature items from the target
     object oHide = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oTarget);
     object oWeapCR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oTarget);
@@ -246,7 +247,6 @@ void SetShift_02(object oPC, object oTarget)
     object oWeapCRPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R,oPC);
     object oWeapCLPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L,oPC);
     object oWeapCBPC = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B,oPC);
-
 
     //creature item handling
     if (!GetIsObjectValid(oHidePC)) //if you dont have a hide
@@ -266,12 +266,16 @@ void SetShift_02(object oPC, object oTarget)
     }
     DelayCommand(0.05, AssignCommand(oPC, ActionEquipItem(oHidePC, INVENTORY_SLOT_CARMOUR))); //reequip the hide to get item props to update properly
 
+    // Set a flag on the PC to tell us that they are shifted
+    // set this early to prevent alot of unequip code from firing and causing an overflow
+    SetLocalInt(oHidePC,"nPCShifted",TRUE);
+
+
     //copy targets right creature weapon
     if (GetIsObjectValid(oWeapCRPC)) //if we still have a creature weapon
     {
         //remove and destroy the weapon we have
         DelayCommand(0.90, ClearCreatureItem(oPC, oWeapCRPC));
-        //AssignCommand(oPC, ActionUnequipItem(oWeapCRPC));
     }
     if (GetIsObjectValid(oWeapCR)) //if the target has a weapon
     {
@@ -286,7 +290,6 @@ void SetShift_02(object oPC, object oTarget)
     {
         //remove and destroy the weapon we have
         DelayCommand(0.90, ClearCreatureItem(oPC, oWeapCLPC));
-        //AssignCommand(oPC, ActionUnequipItem(oWeapCLPC));
     }
     if (GetIsObjectValid(oWeapCL)) //if the target has a weapon
     {
@@ -300,7 +303,6 @@ void SetShift_02(object oPC, object oTarget)
     {
         //remove and destroy the weapon we have
         DelayCommand(0.90, ClearCreatureItem(oPC, oWeapCBPC));
-        //AssignCommand(oPC, ActionUnequipItem(oWeapCBPC));
     }
     if (GetIsObjectValid(oWeapCB)) //if the target has a weapon
     {
@@ -614,6 +616,11 @@ void SetShift_02(object oPC, object oTarget)
 
         }
     }
+    // Fix the biobugged Improved Critical (creature) by giving the PC Improved Critical (unarmed) which seems
+    // to work with creature weapons
+    if (!GetHasFeat(FEAT_IMPROVED_CRITICAL_UNARMED_STRIKE, oPC) && GetHasFeat(FEAT_IMPROVED_CRITICAL_CREATURE, oPC))
+        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_IMPCRITUNARM),oHidePC);
+
 
     // If they dont have the natural spell feat they can only cast spells in certain shapes
     if (!GetHasFeat(FEAT_PRESTIGE_SHIFTER_NATURALSPELL,oPC))
@@ -660,8 +667,6 @@ void SetShift_02(object oPC, object oTarget)
         SetItemSpellPowers(oEpicPowersItem,oTarget);
     }
 
-    // Set a flag on the PC to tell us that they are shifted
-    SetLocalInt(oHidePC,"nPCShifted",TRUE);
     //clear epic shift var
     SetLocalInt(oPC,"EpicShift",0);
 

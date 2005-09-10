@@ -880,7 +880,8 @@ int RacialHD(object oPC)
     int nRealRace = GetRacialType(oPC);
     int nRacialHD = StringToInt(Get2DACache("ECL", "RaceHD", nRealRace));
     int nRacialClass = StringToInt(Get2DACache("ECL", "RaceClass", nRealRace));
-    if(GetHitDice(oPC)-1-GetLevelByClass(nRacialClass, oPC) > 0)
+    if(GetLevelByClass(nRacialClass, oPC) < nRacialHD
+        && GetHitDice(oPC)-1-GetLevelByClass(nRacialClass, oPC) > 0)
     {
         string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nRacialClass)));
         FloatingTextStringOnCreature("You must take "+IntToString(nRacialHD)+" levels in your racial hit dice class, "+sName, oPC, FALSE);

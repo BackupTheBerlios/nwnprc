@@ -13,7 +13,7 @@ void SetupTokens()
     //choices
     for (i=0;i<10;i++)
     {
-        SetToken(100+i, array_get_string(oPC, "ChoiceTokens", nOffset+i));
+        AssignCommand(oPC, SetToken(100+i, array_get_string(oPC, "ChoiceTokens", nOffset+i)));
     }
 }
 

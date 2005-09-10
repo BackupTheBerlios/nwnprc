@@ -18,7 +18,7 @@
 
 void main(){
     //PrintString("Executing unarmed_caller");
-    int bCont;
+    int bCont = FALSE;
     if(GetLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS))
     {
         UnarmedFeats(OBJECT_SELF);

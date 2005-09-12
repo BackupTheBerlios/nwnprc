@@ -1239,6 +1239,13 @@ object PRCGetSpellTargetObject()
 {
     if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE))
         return GetLocalObject(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE);
+        
+    // Get the item used to cast the spell
+    object oItem = GetSpellCastItem();
+    
+    // The rune always targets the one who activates it.
+    if (GetResRef(oItem) == "prc_rune_1") return OBJECT_SELF;
+        
     return GetSpellTargetObject();
 }
 

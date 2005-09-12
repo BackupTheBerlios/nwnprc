@@ -424,7 +424,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
   if (GetLocalInt(oTarget, "DispellingBuffer")) nBuffer = 5;
 
   //:: Do the dispel check for each and every spell in effect on oTarget.
-  for(nIndex; nIndex < nLastEntry; nIndex++)
+  for(nIndex; nIndex <= nLastEntry; nIndex++)
   {
     nEffectSpellID = GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex));
     if(GetHasSpellEffect(nEffectSpellID, oTarget))

@@ -13,6 +13,8 @@ void main()
     if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
         ExecuteScript("sbr_onaquire", OBJECT_SELF);
     
+    ExecuteScript("race_ev_aquire", OBJECT_SELF);
+    
     // Execute scripts hooked to this event for the creature and item triggering it
     object oCreature = GetModuleItemAcquiredBy();
     object oItem = GetModuleItemAcquired();

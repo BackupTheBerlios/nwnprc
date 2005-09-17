@@ -64,9 +64,9 @@
 60  ****                 ****     ****        ****             
 61  ****                 ****     ****        ****             
 62  ****                 ****     ****        ****             
-63  DragonBlood          16832131 16832132    ife_DDHDincrease
-64  Minor_Aura           16828301 16828302    ****
-65  Major_Aura           16828303 16828304    ****
+63  DragonBlood          16832131 16832132    ife_DDHDincrease 
+64  Minor_Aura           16828301 16828302    ****             
+65  Major_Aura           16828303 16828304    ****             
 66  ****                 ****     ****        ****             
 67  ****                 ****     ****        ****             
 68  ****                 ****     ****        ****             
@@ -110,6 +110,6 @@
 106 FavoredDivSong1      16823500 16823505    ife_fom          
 107 FavoredDivSong2      16823501 16823505    ife_fom          
 108 FavoredDivSong3      16823502 16823505    ife_fom          
-119 FavoredDivSong4      16823503 16823505    ife_fom          
-110 FavoredDivSong5      16823504 16823505    ife_fom 
-111 BonusDomains         16827845 16827846    rw_specialistdef
+109 FavoredDivSong4      16823503 16823505    ife_fom          
+110 FavoredDivSong5      16823504 16823505    ife_fom          
+111 BonusDomains         16827845 16827846    rw_specialistdef 

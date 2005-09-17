@@ -126,7 +126,7 @@
 122 ONHIT_Teleport               83473    668        1    
 123 ONHIT_SlayRakshasa           83565    689        3    
 124 ONHIT_FireDamage             83614    696        3    
-125 ONHIT_UniquePower            83675    700        0.5    
+125 ONHIT_UniquePower            83675    700        0.5  
 126 ONHIT_PlanarRift             83771    702        3    
 127 OnHIT_Darkfire               83829    703        3    
 128 ****                         ****     ****       **** 

@@ -1,9 +1,9 @@
-2DA V2.0                                                              
-                                                                      
-   LABEL          ReqType ReqParam1      ReqParam2   
-0  Base_Attack    BAB     8              ****               
-1  ScriptVar      VAR     PRC_AllowManAt 0           
-2  PowerAtk       FEAT    28             ****
+2DA V2.0
+
+   LABEL          ReqType ReqParam1      ReqParam2 
+0  Base_Attack    BAB     8              ****      
+1  ScriptVar      VAR     PRC_AllowManAt 0         
+2  PowerAtk       FEAT    28             ****      
 3  WeapFocClub    FEATOR  28             ****      
 4  WeapFocDagger  FEATOR  90             ****      
 5  WeapFocMorn    FEATOR  95             ****      
@@ -32,11 +32,5 @@
 28 WeapFocDAxe    FEATOR  126            ****      
 29 WeapFocLgMace  FEATOR  94             ****      
 30 WeapFocSickle  FEATOR  98             ****      
-31 WeapFocDwAxe   FEATOR  952            ****  
-32 ScriptVar      VAR     PRC_PrereqMAA  0               
-
-
-                                                                      
-                                                                      
-                                                                      
-             
+31 WeapFocDwAxe   FEATOR  952            ****      
+32 ScriptVar      VAR     PRC_PrereqMAA  0         

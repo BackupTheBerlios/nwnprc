@@ -1,8 +1,8 @@
-2DA V2.0                                                                               
-                                                                                       
-           FeatLabel                          FeatIndex   List   GrantedOnLevel   OnMenu
-1          Charm                              2885        3      1                1  
-2          Spell_Betrayal                     2886        3      2                0 
-3          Spellstrike                        2887        3      6                0
-4          Dark_Charisma                      2888        3      3                0  
-5          Summon_Demon                       2889        3      4                1  
+2DA V2.0
+
+  FeatLabel      FeatIndex List GrantedOnLevel OnMenu 
+0 Charm          2885      3    1              1      
+1 Spell_Betrayal 2886      3    2              0      
+2 Spellstrike    2887      3    6              0      
+3 Dark_Charisma  2888      3    3              0      
+4 Summon_Demon   2889      3    4              1      

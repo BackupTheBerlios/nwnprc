@@ -1,12 +1,12 @@
 2DA V2.0
 
-      LABEL            ReqType   ReqParam1       ReqParam2   
-0     MoveSilently     SKILL     8               8           
-1     Lore             SKILL     7               8           
-2     Hide             SKILL     5               8           
-3     WeapProfEx       FEAT      44              ****        
-4     IronWill         FEAT      22              ****        
-5     ScriptVar        VAR       PRC_AllowBFZ    0           
-6     ScriptVar        VAR       PRC_DivSpell2   0           
-7     ScriptVar        VAR       PRC_SneakLevel1 0
-8     ScriptVar        VAR       PRC_PrereqBFZ   0    
+  LABEL        ReqType ReqParam1       ReqParam2 
+0 MoveSilently SKILL   8               8         
+1 Lore         SKILL   7               8         
+2 Hide         SKILL   5               8         
+3 WeapProfEx   FEAT    44              ****      
+4 IronWill     FEAT    22              ****      
+5 ScriptVar    VAR     PRC_AllowBFZ    0         
+6 ScriptVar    VAR     PRC_DivSpell2   0         
+7 ScriptVar    VAR     PRC_SneakLevel1 0         
+8 ScriptVar    VAR     PRC_PrereqBFZ   0         

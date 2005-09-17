@@ -1,13 +1,13 @@
 2DA V2.0
 
-  LABEL         ReqType ReqParam1     ReqParam2 
-0 Base_Attack   BAB     6             ****      
-1 Orc           RACE    214           ****      
-2 HalfOrc       RACE    5             ****      
-3 Gray_Orc      RACE    184           ****      
-4 Orog          RACE    187           ****      
-5 Tanarukk      RACE    203           ****      
-6 Exotic_Prof   FEAT    44            ****      
-7 Focus_Orc_axe FEAT    126           ****      
-8 ScriptVar     VAR     PRC_AllowEoG  0         
-9 ScriptVar     VAR     PRC_PrereqEOG 0         
+   LABEL         ReqType ReqParam1     ReqParam2 
+0  Base_Attack   BAB     6             ****      
+1  Orc           RACE    214           ****      
+2  HalfOrc       RACE    5             ****      
+3  Gray_Orc      RACE    184           ****      
+4  Orog          RACE    187           ****      
+5  Tanarukk      RACE    203           ****      
+6  Exotic_Prof   FEAT    44            ****      
+7  Focus_Orc_axe FEAT    126           ****      
+8  ScriptVar     VAR     PRC_AllowEoG  0         
+9  ScriptVar     VAR     PRC_PrereqEOG 0         

@@ -1,19 +1,7 @@
-2DA V2.0                                                      
-                                                              
-           LABEL       ReqType    ReqParam1       ReqParam2   
-0          Lore	       SKILL      7               3
-1          Spellcraft  SKILL      16              1
-2          IronWill    FEAT       22              ****    
-3          ScriptVar   VAR        PRC_AllowWarD   0
- 
+2DA V2.0
 
-                                                              
-                                                              
-                                                              
-                                                              
-                                                              
-                                                              
-                                                              
-                                                              
-                                                              
-                                                              
+  LABEL      ReqType ReqParam1     ReqParam2 
+0 Lore	      SKILL   7             3         
+1 Spellcraft SKILL   16            1         
+2 IronWill   FEAT    22            ****      
+3 ScriptVar  VAR     PRC_AllowWarD 0         

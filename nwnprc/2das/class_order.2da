@@ -1,45 +1,45 @@
 2DA V2.0
 
     Label                              Priority 
-0   "Barbarian"                        0        
-1   "Bard"                             0        
-2   "Cleric"                           0        
-3   "Druid"                            0        
-4   "Fighter"                          0        
-5   "Monk"                             0        
-6   "Paladin"                          0        
-7   "Ranger"                           0        
-8   "Rogue"                            0        
-9   "Sorcerer"                         0        
-10  "Wizard"                           0        
-11  "Aberration"                       ****     
-12  "Animal"                           ****     
-13  "Construct"                        ****     
-14  "Humanoid"                         ****     
-15  "Monstrous"                        ****     
-16  "Elemental"                        ****     
-17  "Fey"                              ****     
-18  "Dragon"                           ****     
-19  "Undead"                           ****     
-20  "Commoner"                         ****     
-21  "Beast"                            ****     
-22  "Giant"                            ****     
+0   Barbarian                          0        
+1   Bard                               0        
+2   Cleric                             0        
+3   Druid                              0        
+4   Fighter                            0        
+5   Monk                               0        
+6   Paladin                            0        
+7   Ranger                             0        
+8   Rogue                              0        
+9   Sorcerer                           0        
+10  Wizard                             0        
+11  Aberration                         ****     
+12  Animal                             ****     
+13  Construct                          ****     
+14  Humanoid                           ****     
+15  Monstrous                          ****     
+16  Elemental                          ****     
+17  Fey                                ****     
+18  Dragon                             ****     
+19  Undead                             ****     
+20  Commoner                           ****     
+21  Beast                              ****     
+22  Giant                              ****     
 23  "Magic Beast"                      ****     
-24  "Outsider"                         ****     
-25  "Shapechanger"                     ****     
-26  "Vermin"                           ****     
-27  "Shadowdancer"                     0        
-28  "Harper"                           0        
+24  Outsider                           ****     
+25  Shapechanger                       ****     
+26  Vermin                             ****     
+27  Shadowdancer                       0        
+28  Harper                             0        
 29  "Arcane Archer"                    0        
-30  "Assassin"                         0        
-31  "Blackguard"                       0        
+30  Assassin                           0        
+31  Blackguard                         0        
 32  "Champion Torm"                    0        
 33  "Weapon Master"                    0        
 34  "Pale Master"                      0        
-35  "Shifter"                          0        
+35  Shifter                            0        
 36  "Dwarven Defender"                 0        
 37  "Dragon Disciple"                  0        
-38  "Ooze"                             0        
+38  Ooze                               0        
 39  ****                               ****     
 40  ****                               ****     
 41  ****                               ****     
@@ -53,11 +53,11 @@
 49  ****                               ****     
 50  ****                               ****     
 51  "Ocular Adept"                     104      
-52  "Battlerager"                      37       
+52  Battlerager                        37       
 53  "Mystic Theurge"                   99       
 54  "Ninja Spy"                        103      
-55  "Samurai"                          120      
-56  "Warpriest"                        144      
+55  Samurai                            120      
+56  Warpriest                          144      
 57  ****                               ****     
 58  ****                               ****     
 59  ****                               ****     
@@ -81,17 +81,17 @@
 77  "Divine Elemental Savant of Air"   55       
 78  "Divine Elemental Savant of Earth" 56       
 79  ****                               ****     
-80  "Duelist"                          63       
-81  "Hierophant"                       82       
+80  Duelist                            63       
+81  Hierophant                         82       
 82  "Red Avenger"                      116      
 83  "Knight of the Chalice"            88       
-84  "Hathran"                          78       
-85  "Vigilant"                         142      
-86  "Stormlord"                        131      
-87  "HeartWarder"                      80       
+84  Hathran                            78       
+85  Vigilant                           142      
+86  Stormlord                          131      
+87  HeartWarder                        80       
 88  "Fist of Raziel"                   72       
 89  "Vassal of Bahatmut"               141      
-90  "Lich"                             92       
+90  Lich                               92       
 91  "Shifter (PnP)"                    125      
 92  ****                               ****     
 93  ****                               ****     
@@ -101,8 +101,8 @@
 97  ****                               ****     
 98  ****                               ****     
 99  ****                               ****     
-100 "Archmage"                         32       
-101 "Oozemaster"                       105      
+100 Archmage                           32       
+101 Oozemaster                         105      
 102 ****                               ****     
 103 ****                               ****     
 104 ****                               ****     
@@ -110,14 +110,14 @@
 106 ****                               ****     
 107 ****                               ****     
 108 ****                               ****     
-109 "Outlaw"                           107      
+109 Outlaw                             107      
 110 "Temple Raider"                    136      
 111 ****                               ****     
-112 "Corrupter"                        47       
-113 "Anti-Paladin"                     23       
+112 Corrupter                          47       
+113 Anti-Paladin                       23       
 114 "Dragonsong Lyrist"                60       
 115 "Ultimate Ranger"                  140      
-116 "Nightshade"                       102      
+116 Nightshade                         102      
 117 "Shadow Adept"                     123      
 118 "Soldier of Light"                 128      
 119 "Man At Arms"                      94       
@@ -125,8 +125,8 @@
 121 "Bonded Summoner"                  42       
 122 "Initiate of Draconic Mysteries"   87       
 123 "Battleguard of Tempus"            35       
-124 "Bladesinger"                      39       
-125 "Archer"                           31       
+124 Bladesinger                        39       
+125 Archer                             31       
 126 "Sacred Fist"                      119      
 127 "Legendary Dreadnought"            91       
 128 "Disciple of Baalzebul"            51       
@@ -134,36 +134,36 @@
 130 "Iaijutsu Master"                  86       
 131 "Disciple of Dispater"             53       
 132 "Samurai (CW)"                     121      
-133 "Ravager"                          115      
+133 Ravager                            115      
 134 "Runescarred Berzerker"            118      
 135 ****                               ****     
 136 ****                               ****     
 137 ****                               ****     
 138 ****                               ****     
 139 ****                               ****     
-140 "Alaghar"                          22       
+140 Alaghar                            22       
 141 ****                               ****     
 142 ****                               ****     
 143 ****                               ****     
 144 ****                               ****     
-145 "Psion"                            111      
+145 Psion                              111      
 146 "Psychic Warrior"                  112      
-147 "Soulknife"                        129      
-148 "Wilder"                           146      
+147 Soulknife                          129      
+148 Wilder                             146      
 149 "Thayan Knight"                    137      
 150 "Red Wizard of Thay"               117      
 151 "True Necromancer"                 139      
 152 "Arcane Trickster"                 30       
 153 "Blood Magus"                      41       
-154 "Diabolist"                        50       
+154 Diabolist                          50       
 155 "Fist of Hextor"                   71       
 156 "Blood Archer"                     40       
 157 "Purple Dragon Knight"             114      
 158 "Horned Harbinger"                 84       
 159 "Peerless Archer"                  108      
-160 "Lasher"                           90       
+160 Lasher                             90       
 161 "Bow Initiate"                     43       
-162 "Arachnae"                         25       
+162 Arachnae                           25       
 163 "Thrall of Orcus"                  138      
 164 "Shou Disciple"                    127      
 165 "Black Flame Zealot"               38       
@@ -174,12 +174,12 @@
 170 ****                               ****     
 171 ****                               ****     
 172 "Master Harper (Divine)"           96       
-173 "Werewolf"                         145      
-174 "Hospitaler"                       85       
+173 Werewolf                           145      
+174 Hospitaler                         85       
 175 "Master of Shrouds"                97       
 176 "Master Harper"                    95       
 177 "Frenzied Berserker"               74       
-178 "Tempest"                          135      
+178 Tempest                            135      
 179 "Foe Hunter"                       73       
 180 "Eye of Gruumsh"                   69       
 181 "Orc Warlord"                      106      
@@ -207,33 +207,33 @@
 203 "Drunken Master"                   62       
 204 ****                               ****     
 205 "Brutal Savage"                    45       
-206 "Warlord"                          143      
-207 "Scout"                            122      
+206 Warlord                            143      
+207 Scout                              122      
 208 "Dragon Slayer"                    59       
 209 "Holy Crusader"                    83       
 210 "Grey Wanderer"                    76       
-211 "Protector"                        110      
-212 "Summoner"                         132      
+211 Protector                          110      
+212 Summoner                           132      
 213 "Astral Adept"                     33       
 214 "Demon Master"                     49       
-215 "Auramancer"                       34       
+215 Auramancer                         34       
 216 "Disciple of Darkness"             52       
-217 "Abjurer"                          20       
+217 Abjurer                            20       
 218 "Puppet Maste"                     113      
-219 "Xenowizard"                       148      
-220 "Naturalist"                       101      
-221 "Geomancer"                        75       
-222 "Healer"                           79       
-223 "Prophet"                          109      
-224 "Shaman"                           124      
+219 Xenowizard                         148      
+220 Naturalist                         101      
+221 Geomancer                          75       
+222 Healer                             79       
+223 Prophet                            109      
+224 Shaman                             124      
 225 "Witch Doctor"                     147      
-226 "Battlemage"                       36       
+226 Battlemage                         36       
 227 "Mystical Knight"                  100      
 228 "Arcane Theologist"                29       
 229 "Crystal Master"                   48       
 230 "Arcane Assassin"                  26       
 231 "Arcane Swordsman"                 28       
-232 "Swashbuckler"                     133      
+232 Swashbuckler                       133      
 233 ****                               ****     
 234 ****                               ****     
 235 ****                               ****     
@@ -255,4 +255,4 @@
 251 ****                               ****     
 252 "Favored of Milil"                 70       
 253 "Minstrel of the Edge"             98       
-254 "Brawler"                          44       
+254 Brawler                            44       

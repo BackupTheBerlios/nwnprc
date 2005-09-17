@@ -1,11 +1,11 @@
 2DA V2.0
 
-      LABEL        ReqType    ReqParam1       ReqParam2   
-0     ScriptVar    VAR        PRC_ArcSpell2   0        
-1     Ethran       FEAT       2567            ****        
-2     ScriptVar    VAR        PRC_AllowHath   0           
-3     ScriptVar    VAR        PRC_DivSpell2   0        
-4     Spellcraft   SKILL      16              9           
-5     ScriptVar    VAR        PRC_Female      0        
-3          Human               RACE      6                ****        
-3          Deep_Imaskari       RACE      230              ****     
+  LABEL         ReqType ReqParam1     ReqParam2 
+0 ScriptVar     VAR     PRC_ArcSpell2 0         
+1 Ethran        FEAT    2567          ****      
+2 ScriptVar     VAR     PRC_AllowHath 0         
+3 ScriptVar     VAR     PRC_DivSpell2 0         
+4 Spellcraft    SKILL   16            9         
+5 ScriptVar     VAR     PRC_Female    0         
+6 Human         RACE    6             ****      
+7 Deep_Imaskari RACE    230           ****      

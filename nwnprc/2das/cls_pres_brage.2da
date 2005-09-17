@@ -1,18 +1,18 @@
 2DA V2.0
 
-      LABEL          ReqType   ReqParam1       ReqParam2   
-0     Intimidation   SKILL     24              8           
-1     Lore           SKILL     7               2           
-2     Toughness      FEAT      40              ****        
-3     Cleave         FEAT      6               ****        
-4     PowerAttack    FEAT      28              ****        
-5     Base_Attack    BAB       5               ****        
-6     Dwarf          RACE      0               ****    
-0          ArcticDwarf   RACE      151              ****        
-0          GoldDwarf     RACE      152              ****        
-0          GreyDwarf     RACE      153              ****        
-0          ShieldDwarf   RACE      154              ****        
-0          Urdunnir      RACE      155              ****        
-0          WildDwarf     RACE      156              ****      
-7     BarbarianOr    CLASSOR   0               ****        
-8     ScriptVar      VAR       PRC_AllowBRage   0           
+   LABEL        ReqType ReqParam1      ReqParam2 
+0  Intimidation SKILL   24             8         
+1  Lore         SKILL   7              2         
+2  Toughness    FEAT    40             ****      
+3  Cleave       FEAT    6              ****      
+4  PowerAttack  FEAT    28             ****      
+5  Base_Attack  BAB     5              ****      
+6  Dwarf        RACE    0              ****      
+7  ArcticDwarf  RACE    151            ****      
+8  GoldDwarf    RACE    152            ****      
+9  GreyDwarf    RACE    153            ****      
+10 ShieldDwarf  RACE    154            ****      
+11 Urdunnir     RACE    155            ****      
+12 WildDwarf    RACE    156            ****      
+13 BarbarianOr  CLASSOR 0              ****      
+14 ScriptVar    VAR     PRC_AllowBRage 0         

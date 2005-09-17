@@ -191,7 +191,21 @@ public class Main{
 		                paraMatch = Pattern.compile("\"[^\"]+\"").matcher(""),
 		                langMatch = Pattern.compile("\\w+=\"[^\"]+\"").matcher("");
 		/* An enumeration of the possible setting types */
-		private enum Modes{LANGUAGE, SIGNATURE, MODIFIED_SPELL};
+		private enum Modes{
+			/**
+			 * The parser is currently working on lines specifying languages used.
+			 */
+			LANGUAGE,
+			/**
+			 * The parser is currently working on lines containing string patterns that are
+			 * used in differentiating between entries in spells.2da. 
+			 */
+			SIGNATURE,
+			/**
+			 * The parser is currently working on lines listing spells.2da entries that contain
+			 * a significantly modified BW spell.
+			 */
+			MODIFIED_SPELL};
 		
 		/* Settings data read in */
 		/** The settings for languages. An ArrayList of String[] containing setting for a specific language */
@@ -295,7 +309,24 @@ public class Main{
 	/**
 	 * A small enumeration for use in spell printing methods
  	 */
-	public enum SpellType{NONE, NORMAL, EPIC, PSIONIC};
+	public enum SpellType{
+		/**
+		 * The spell is not a real spell or psionic power, instead specifies some feat's spellscript.
+		 */
+		NONE,
+		/**
+		 * The spell is a normal spell.
+		 */
+		NORMAL,
+		/**
+		 * The spell is an epic spell.
+		 */
+		EPIC,
+		/**
+		 * The spell is a psionic power.
+		 */
+		PSIONIC
+		};
 	
 	/** A convenience object for printing both to log and System.err */
 	public static ErrorPrinter err_pr = new ErrorPrinter();
@@ -316,7 +347,7 @@ public class Main{
 	public static final String badStrRef = "Bad StrRef";
 	
 	/**  The container object for general configuration data read from file */
-	public static Settings settings = new Settings();
+	public static Settings settings;// = new Settings();
 	
 	/** The file separator, given it's own constant for ease of use */
 	public static final String fileSeparator = System.getProperty("file.separator");
@@ -402,6 +433,9 @@ public class Main{
 					readMe();
 			}
 		}
+		
+		// Load the settings
+		settings = new Settings();
 		
 		// Initialize the 2da container data structure
 		twoDA = new TwoDAStore();

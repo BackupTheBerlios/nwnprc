@@ -13,8 +13,8 @@ import static prc.autodoc.Main.*;
  * PRC automated manual generator.
  */
 public class Data_2da{
-	// String matching pattern. Gets a block of non-whitespace OR " followed by any characters until the next "
-	private static Pattern pattern = Pattern.compile("[\\S&&[^\"]]+|\"[^\"]+\"");
+	// String matching pattern. Gets a block of non-whitespace (tab is not counted as whitespace here) OR " followed by any characters until the next "
+	private static Pattern pattern = Pattern.compile("[[\\S&&[^\"]][\t]]+|\"[^\"]+\"");//"[\\S&&[^\"]]+|\"[^\"]+\"");
 	private static Matcher matcher = pattern.matcher("");
 
 	private HashMap<String, ArrayList<String>> mainData = new LinkedHashMap<String, ArrayList<String>>();
@@ -83,6 +83,9 @@ public class Data_2da{
 		if(file.exists() && !allowOverWrite)
 			throw new IOException("File existst already: " + file.getAbsolutePath());
 		
+		// Inform user
+		if(verbose) System.out.print("Saving 2da file: " + name + " ");
+		
 		FileWriter fw = new FileWriter(file, false);
 		String[] labels = this.getLabels();
 		String toWrite;
@@ -131,8 +134,6 @@ public class Data_2da{
 		}
 		fw.write(CRLF);
 		
-		
-		
 		// Write the data
 		for(int i = 0; i < this.getEntryCount(); i++){
 			fw.write("" + i);
@@ -145,10 +146,14 @@ public class Data_2da{
 				for(int k = 0; k < widths[j] - toWrite.length(); k++) fw.write(" ");
 			}
 			fw.write(CRLF);
+			
+			if(verbose) spinner.spin();
 		}
 		
 		fw.flush();
 		fw.close();
+		
+		if(verbose) System.out.println("- Done");
 	}
 	
 	/**
@@ -161,7 +166,7 @@ public class Data_2da{
 	 * @throws TwoDAReadException       reading the 2da file specified does not succeed,
 	 *                                    or the file does not contain any data
 	 */
-	public static Data_2da load2da(String filePath){
+	public static Data_2da load2da(String filePath) throws IllegalArgumentException, TwoDAReadException{
 		Data_2da toReturn;
 		String name, defaultValue = "";
 		
@@ -266,11 +271,12 @@ public class Data_2da{
 			mainData.put(labels[i],  new ArrayList<String>());
 		}
 		
-		// Skip empty rows until the data starts
-		//data = getNextNonEmptyRow(reader);
-		if(!reader.hasNextLine())
-			throw new TwoDAReadException("No data in 2da file!");
-		data = reader.nextLine();
+		// Error if there are empty lines between the header and the data
+		if(!reader.hasNextLine() ||
+		   (data = reader.nextLine()).trim().equals(""))
+			throw new TwoDAReadException("No data in 2da file or blank lines following labels row!");
+		//data = reader.nextLine();
+		//if(data.trim)
 		
 		while(true){
 			//rowParser = new Scanner(data);
@@ -321,7 +327,7 @@ public class Data_2da{
 			else
 				break;
 			
-			spinner.spin();
+			if(verbose) spinner.spin();
 		}
 		
 		// Some validity checking on the 2da. Empty rows allowed only in the end
@@ -532,44 +538,128 @@ public class Data_2da{
 	 * The main method, as usual
 	 * 
 	 * @param args
-	 * @throws Throwable
 	 */
-	public static void main(String[] args) throws Throwable{
+	public static void main(String[] args){
 		if(args.length == 0) readMe();
-		for(String elem : args) if(elem.equals("--help")) readMe();
+		List<String> fileNames = new ArrayList<String>();
+		boolean compare = false;
+		boolean resave = false;
+		boolean minimal = false;
+		boolean ignoreErrors = false;
+		boolean readStdin = false;
 		
-		Data_2da file1,
-		         file2;
-		
-		if(args[0].equals("-c")){
-			if(args.length != 3){
-				System.out.println("Invalid parameters");
-				readMe();
+		for(String param : args){//[-crmnqs] file... | -
+			// Parameter parseage
+			if(param.startsWith("-")){
+				if(param.equals("-"))
+					readStdin = true;
+				else if(param.equals("--help")) readMe();
+				else{
+					for(char c : param.substring(1).toCharArray()){
+						switch(c){
+						case 'c':
+							compare = true;
+							if(resave) resave = false;
+							break;
+						case 'r':
+							resave = true;
+							if(compare) compare = false;
+							break;
+						case 'm':
+							minimal = true;
+							break;
+						case 'n':
+							ignoreErrors = true;
+							break;
+						case 'q':
+							verbose = false;
+							break;
+						case 's':
+							spinner.disable();
+							break;
+						default:
+							System.out.println("Unknown parameter: " + c + "!");
+							readMe();
+						}
+					}
+				}
 			}
-			verbose = false;
-			spinner.disable();
+			else
+				// It's a filename
+				fileNames.add(param);
+		}
+		
+		// Read files from stdin is specified
+		Scanner scan = new Scanner(System.in);
+		while(scan.hasNext())
+			fileNames.add(scan.next());
+		
+		// Run the specified operation
+		if(compare){
+			Data_2da file1, file2;
 			file1 = load2da(args[1]);
 			file2 = load2da(args[2]);
 			
 			doComparison(file1, file2);
 		}
-		else{
-			if(args.length != 1){
-				System.out.println("Invalid parameters");
-				readMe();
+		else if(resave){
+			Data_2da temp;
+			for(String fileName : fileNames){
+				try{
+					temp = load2da(fileName);
+					temp.save2da(new File(fileName).getCanonicalFile().getParent() + File.separator, true, !minimal);
+				}catch(Exception e){
+					// Print the error
+					e.printStackTrace();
+					// If ignoring errors, and this error is of expected type, continue
+					if(e instanceof IllegalArgumentException ||
+					   e instanceof TwoDAReadException ||
+					   e instanceof IOException)
+						if(ignoreErrors)
+							continue;
+					System.exit(1);
+				}
 			}
-			file1 = load2da(args[0]);
+		}
+		else{
+			// Validify by loading
+			for(String fileName : fileNames){
+				try{
+					load2da(fileName);
+				}catch(Exception e){
+					// Print the error
+					e.printStackTrace();
+					// If ignoring errors, and this error is of expected type, continue
+					if(e instanceof IllegalArgumentException || e instanceof TwoDAReadException)
+						if(ignoreErrors)
+							continue;
+					System.exit(1);
+				}
+			}
 		}
 	}
 	
 	private static void readMe(){
 		System.out.println("Usage:\n"+
-		                   "  java Data_2da [-c] file1 [file2]\n"+
+		                   "  [-crmnqs] file... | -\n"+
 		                   "\n"+
-		                   "  -c    prints the differing lines between the two given 2das.\n"+
-		                   "        they must have the same label set and entrycount.\n"+
-		                   "  file1 the 2da file tested for validity or to be compared with file2\n"+
-		                   "  file2 the 2da file to be compared with file1\n");
+		                   "  -c    prints the differing lines between the 2das given as first two\n"+
+		                   "        parameters. They must have the same label set and entrycount.\n" +
+		                   "        Mutually exclusive with -r\n"+
+						   "  -r    resaves the 2das given as parameters. Mutually exclusive with -c\n"+
+						   "  -m    saves the files with minimal spaces. Only relevant when resaving\n"+
+		                   "  -n    ignores errors that occur during validity testing and resaving,\n" +
+		                   "        just skips to the next file\n"+
+		                   "  -q    quiet mode\n"+
+		                   "  -s    no spinner\n"+
+		                   "  -     a line given as a lone parameter means that the list of files is\n" +
+		                   "        read from stdin in addition to the ones passed from command line\n"+
+						   "\n"+
+						   "  --help  prints this text\n"+
+						   "\n"+
+						   "\n"+
+						   "if neither -c or -r is specified, performs validity testing on the given files"
+		                   );
 		System.exit(0);
 	}
 	

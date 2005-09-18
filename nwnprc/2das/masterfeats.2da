@@ -1,6 +1,6 @@
 2DA V2.0
 
-    LABEL                STRREF   DESCRIPTION ICON             
+    LABEL                STRREF   DESCRIPTION ICON
 0   ImprovedCritical     6489     228         ife_impcrit      
 1   WeaponFocus          6490     436         ife_wepfoc       
 2   WeaponSpecialization 6491     444         ife_wepspec      

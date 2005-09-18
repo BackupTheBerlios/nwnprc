@@ -1,0 +1,23 @@
+2DA V2.0
+
+   FeatLabel                 FeatIndex List GrantedOnLevel OnMenu 
+0  ArmProfHvy                2         3    1              0      
+1  ArmProfLgt                3         3    1              0      
+2  ArmProfMed                4         3    1              0      
+3  WeapProfMar               45        3    1              0      
+4  WeapProfSim               46        3    1              0      
+5  Shield                    32        3    1              0      
+6  FEAT_ABSOLUTE_CONVICTION  22103     3    1              0      
+7  FEAT_PIERCE_SHADOWS       22106     3    1              1      
+8  FEAT_SACRED_STEALTH1_5    22104     3    2              1      
+9  FEAT_SACRED_STEALTH6_9    22105     3    2              1      
+10 FEAT_SMITE_CORRUPT1       22097     3    2              1      
+11 ImpDis                    16        3    3              1      
+12 FEAT_SHADOWBANE_SNEAK_1D6 22100     3    4              0      
+13 FEAT_MERCILESS_PURITY     22107     3    5              0      
+14 FEAT_SMITE_CORRUPT2       22098     3    6              1      
+15 FEAT_SHADOWBANE_SNEAK_2D6 22101     3    7              0      
+16 FEAT_RIGHTEOUS_FERVOR     22108     3    8              1      
+17 FEAT_BURNING_LIGHT        22109     3    9              1      
+18 FEAT_SMITE_CORRUPT3       22099     3    10             1      
+19 FEAT_SHADOWBANE_SNEAK_3D6 22102     3    10             0      

@@ -1,0 +1,9 @@
+2DA V2.0
+
+  LABEL      ReqType ReqParam1         ReqParam2 
+0 TurnUndead FEAT    294               ****      
+1 Rogue      CLASS   8                 ****      
+2 Persuade   SKILL   12                8         
+3 Search     SKILL   14                4         
+4 Bluff      SKILL   23                4         
+5 ScriptVar  VAR     PRC_AllowShdwStlk 0         

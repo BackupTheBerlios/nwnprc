@@ -1,0 +1,9 @@
+2DA V2.0
+
+  LABEL      ReqType ReqParam1        ReqParam2 
+0 TurnUndead FEAT    294              ****      
+1 Rogue      CLASS   8                ****      
+2 Lore       SKILL   7                2         
+3 Intimidate SKILL   24               8         
+4 Persuade   SKILL   12               4         
+5 ScriptVar  VAR     PRC_AllowShdwInq 0         

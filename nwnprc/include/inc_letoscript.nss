@@ -58,7 +58,7 @@ string GetBicFileName(object oPC);
 //if nDestroyOriginal is set then PCs will be booted and non-pcs will be destroyed
 object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",    string sType = "SCRIPT", string sPollScript = "", int nDestroyOriginal = TRUE);
 
-const int DEBUG = TRUE;
+//const int DEBUG = TRUE;
 
 string GetNWNDir()
 {

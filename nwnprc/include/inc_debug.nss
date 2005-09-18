@@ -12,6 +12,12 @@
 //:://////////////////////////////////////////////
 
 /**
+ * Prefix all your debug calls with an if(DEBUG) so that they get stripped away
+ * during compilation as dead code when this is turned off.
+ */
+const int DEBUG = TRUE;
+
+/**
  * May print the given string, depending on whether debug printing is needed.
  *
  * @param sString The string to print
@@ -19,5 +25,6 @@
 void DoDebug(string sString)
 {
     SendMessageToPC(GetFirstPC(), sString);
+    SendMessageToPC(OBJECT_SELF, sString);
     WriteTimestampedLogEntry(sString);
 }

@@ -24,6 +24,8 @@ void main()
 	if (MyPRCGetRacialType(oKilled) == RACIAL_TYPE_UNDEAD || MyPRCGetRacialType(oKilled) == RACIAL_TYPE_CONSTRUCT) return;
 	// Gotta be in melee range
 	if (!GetIsInMeleeRange(oKilled, oPC)) return;
+	// Can't be a spell
+	if (GetIsObjectValid(GetAttemptedSpellTarget())) return;
 
 	if(GetHasFeat(FEAT_LOLTHS_MEAT))
 	{

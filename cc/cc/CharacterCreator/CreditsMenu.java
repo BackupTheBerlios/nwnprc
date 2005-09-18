@@ -61,7 +61,11 @@ public class CreditsMenu extends javax.swing.JFrame {
         CreditText.setLineWrap(true);
         CreditText.setWrapStyleWord(true);
         CreditText.setText(
-				  "PRC: v1.5\n"
+				  "PRC: v1.6\n"
+				+ "Added Audio Support for Voice Selection.\n"
+				+ "Added RAR Format Distribution.\n"
+				+ "Made Simple Installer for Win32 Platforms.\n\n"
+				+ "PRC: v1.5\n"
 				+ "Improved compatibility with GNU/Linux and MacOS systems.\n\n"
 			    + "PRC: v1.4\n"
 			    + "Created a new release after making a new splash screen "

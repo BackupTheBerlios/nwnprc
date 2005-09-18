@@ -52,6 +52,8 @@ public class CustomizeMenu2 extends javax.swing.JFrame {
             //DescriptionText.setText(TLKFAC.getEntry(descnum));
             //DescriptionContainer.scrollRectToVisible(new Rectangle());
             SOUNDNUM = tmp;
+
+			Sound.Play(soundsetmap[tmp][2] + ".ssf");
         }
 
         public JButton SoundButton;

@@ -148,13 +148,14 @@ public class PortraitMenu extends javax.swing.JFrame {
         PortraitScrollPane.setViewportView(PortraitsWindow);
         OKButton.setEnabled(false);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        if ( (screenSize.getWidth() > getContentPane().getWidth()) && (screenSize.getHeight() > getContentPane().getHeight())) {
+        if ((screenSize.getWidth() > getContentPane().getWidth())
+				&& (screenSize.getHeight() > getContentPane().getHeight())) {
             int intwidth = new Double(((screenSize.getWidth()-getContentPane().getWidth())/2)).intValue();
             int intheight = new Double(((screenSize.getHeight()-getContentPane().getHeight())/2)).intValue();
             setLocation(intwidth, intheight);
-        } else {
-            setLocation(0,0);
         }
+		else
+            setLocation(0,0);
         
         try {
             portraitmap = RESFAC.getResourceAs2DA("portraits");
@@ -173,17 +174,17 @@ public class PortraitMenu extends javax.swing.JFrame {
         
         RedoPortraits(-1);
         
-        
         pack();
     }
     
     public void RedoPortraits(int screen) {
         //PortraitObjects = new LinkedList();
-        if(screen == -1) {
-            ScreenNum = 1;
+        if (screen == -1) {
+            ScreenNum = 0;
+            screen = 0;
             TotalPortrait = CalculateValidPortraits();
-            screen = 1;
         }
+
         int CurrentNum = 0;
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
@@ -194,18 +195,19 @@ public class PortraitMenu extends javax.swing.JFrame {
         int sex = ((Integer)menucreate.MainCharData[0].get(new Integer(0))).intValue();
         int race = Integer.parseInt(menucreate.MainCharDataAux[1][0]);
         int numbif = 0;
-        for(int p = 0; p < portraitmap.length; p++) {
+
+        for (int p = 0; p < portraitmap.length; p++) {
             String basepicfilename = portraitmap[p][1];
-            if(basepicfilename != null && portraitmap[p][2] != null && portraitmap[p][3] != null) {
+            if (basepicfilename != null && portraitmap[p][2] != null && portraitmap[p][3] != null) {
 				basepicfilename = basepicfilename.toLowerCase();
-                if(!basepicfilename.startsWith("plc")
+                if (!basepicfilename.startsWith("plc")
 						&& !basepicfilename.equalsIgnoreCase("door01_")
 						&& (Integer.parseInt(portraitmap[p][2]) == sex && sexlock || !sexlock)
 						&& (Integer.parseInt(portraitmap[p][3]) == race && racelock || !racelock)
 						&& CheckPortrait(directory, "po_" + basepicfilename)) {
                     String picFilename = "po_" + basepicfilename + "m.tga";
                     CurrentNum++;
-                    if((CurrentNum < ((50*screen)+1)) && CurrentNum > ((50*screen)-50)) {
+                    if ((CurrentNum <= (50 * (screen + 1))) && (CurrentNum > (50 * screen))) {
                         try {
 							File tempImage = RESFAC.TempImageFile(picFilename);
 							if (tempImage != null) {
@@ -223,58 +225,44 @@ public class PortraitMenu extends javax.swing.JFrame {
                 }
             }
         }
-        for(int i = 0; i < filenames.length; i++) {
-            CurrentNum++;
-            if((CurrentNum < (50*screen)) && CurrentNum > ((50*screen)-50)) {
+
+        for (int i = 0; i < filenames.length; ++i) {
+            ++CurrentNum;
+            if ((CurrentNum <= (50 * (screen + 1))) && (CurrentNum > (50 * screen))) {
                 Portrait port = new Portrait(directory, filenames[i], false, "");
                 port.getComponent(0).setSize(64, 100);
                 PortraitsWindow.add(port, -1);
             }
         }
-        ForwardButton.setEnabled(true);
-        BackButton.setEnabled(true);
-        if(screen == 1) {
-            BackButton.setEnabled(false);
-        }
-        if(screen == TotalScreen) {
-            ForwardButton.setEnabled(false);
-        }
-        //int totalpics = filenames.length + numbif;
-        //if(totalpics < 51) {
-        //    for(int o = 0; o < 50 - totalpics; o++) {
-        //        JPanel blankframe = new JPanel();
-        //       blankframe.setSize(64, 128);
-        //        PortraitsWindow.add(blankframe, -1);
-        //    }
-        //
-        //}
-        /*int GridRows = roundup(new Integer(totalpics), new Integer(10));
-        if(GridRows == 0)
-            GridRows = 1;
-        //PortraitsWindow.setPreferredSize(new Dimension(640, GridRows * 100));
-        Dimension area = PortraitsWindow.getSize();
-        double num3 = area.getHeight();
-        double num4 = area.getWidth();*/
+
+		FirstButton.setEnabled(screen != 0);
+		BackButton.setEnabled(screen != 0);
+		LastButton.setEnabled(screen < (ScreenCount - 1));
+		ForwardButton.setEnabled(screen < (ScreenCount - 1));
+
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         Runtime r = Runtime.getRuntime();
         r.gc();
     }
+
     public int CalculateValidPortraits() {
         int portraitnum = 0;
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
         File tmpfile = new File(directory);
-        if(!tmpfile.exists()) {
+        if (!tmpfile.exists()) {
             JOptionPane.showMessageDialog(null, "Fatal Error - No portraits directory. Please create a new portraits directory in your NWN directory.", "Error", 0);
             System.exit(0);
         }
+
         String filenames[] = (tmpfile.list(new ImageFilter()));
         String sexstr = "";
         int sex = ((Integer)menucreate.MainCharData[0].get(new Integer(0))).intValue();
         int race = Integer.parseInt(menucreate.MainCharDataAux[1][0]);
         int numbif = 0;
-        for(int p = 0; p < portraitmap.length; p++) {
+
+        for (int p = 0; p < portraitmap.length; p++) {
             String basepicfilename = portraitmap[p][1];
             if(basepicfilename != null && portraitmap[p][2] != null && portraitmap[p][3] != null) {
 				basepicfilename = basepicfilename.toLowerCase();
@@ -287,12 +275,14 @@ public class PortraitMenu extends javax.swing.JFrame {
                 }
             }
         }
-        for(int i = 0; i < filenames.length; i++) {
-            portraitnum++;
-        }
+
+        for(int i = 0; i < filenames.length; ++i)
+            ++portraitnum;
+
         setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
         menucreate.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
-        TotalScreen = roundup(new Integer(portraitnum), new Integer(50));
+        ScreenCount = roundup(portraitnum, 50);
+
         return portraitnum;
     }
     
@@ -308,7 +298,12 @@ public class PortraitMenu extends javax.swing.JFrame {
     
 	// TODO: More case twiddling
     public boolean CheckPortrait(String resdir, String basepicname) {
-        return RESFAC.FileExists(resdir, basepicname.toLowerCase() + "h.tga") && RESFAC.FileExists(resdir, basepicname.toLowerCase() + "l.tga") && RESFAC.FileExists(resdir, basepicname.toLowerCase() + "m.tga") && RESFAC.FileExists(resdir, basepicname.toLowerCase() + "s.tga") && RESFAC.FileExists(resdir, basepicname.toLowerCase() + "t.tga");
+        return RESFAC.FileExists(resdir, basepicname.toLowerCase() + "h.tga")
+				&& RESFAC.FileExists(resdir, basepicname.toLowerCase() + "l.tga")
+				&& RESFAC.FileExists(resdir, basepicname.toLowerCase() + "m.tga")
+				&& RESFAC.FileExists(resdir, basepicname.toLowerCase() + "s.tga")
+				&& RESFAC.FileExists(resdir, basepicname.toLowerCase() + "t.tga")
+			;
     }
     
     /** This method is called from within the constructor to
@@ -550,7 +545,8 @@ public class PortraitMenu extends javax.swing.JFrame {
     
     private void LastButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LastButtonActionPerformed
         // Add your handling code here:
-        RedoPortraits(TotalScreen);
+		ScreenNum = ScreenCount - 1;
+        RedoPortraits(ScreenNum);
         pack();
     }//GEN-LAST:event_LastButtonActionPerformed
     
@@ -568,7 +564,8 @@ public class PortraitMenu extends javax.swing.JFrame {
     
     private void FirstButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FirstButtonActionPerformed
         // Add your handling code here:
-        RedoPortraits(1);
+		ScreenNum = 0;
+        RedoPortraits(ScreenNum);
         pack();
     }//GEN-LAST:event_FirstButtonActionPerformed
     
@@ -632,23 +629,18 @@ public class PortraitMenu extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_exitForm
     
-    public int roundup(Integer numerator, Integer denominator) {
-        int result = 0;
-        float xvar = numerator.floatValue() / denominator.floatValue();
-        if(xvar - (float)Math.round(xvar) > 0.0F)
-            result = Math.round(xvar) + 1;
-        else
-            if(xvar - (float)Math.round(xvar) < 0.0F)
-                result = Math.round(xvar);
-            else
-                if(xvar - (float)Math.round(xvar) == 0.0F)
-                    result = (int)xvar;
-        return result;
+    public int roundup(int numerator, int denominator) {
+		int result = numerator / denominator;
+		if (numerator * denominator > 0)
+			++result;
+
+		return result;
     }
+
     //This number indicates the current screen number
     private int ScreenNum;
     //This number indicates the total number of screens
-    private int TotalScreen;
+    private int ScreenCount;
     //This number indicates the current total of portraits
     private int TotalPortrait;
     

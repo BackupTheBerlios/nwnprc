@@ -24,6 +24,7 @@ public class Data_2da{
 	/** Used for storing the original case of the labels. The ones used in the hashmap are lowercase */
 	private String[] realLabels;
 
+	private final boolean TLKEditCompatible = true;
 	
 	/**
 	 * Creates a new, empty Data_2da with the specified name.
@@ -61,7 +62,8 @@ public class Data_2da{
 	}
 	
 	/**
-	 * Saves the 2da represented by this object to file.
+	 * Saves the 2da represented by this object to file. CRLFs are explicitly used
+	 * instead of system specific line terminator.
 	 * 
 	 * @param path the directory to save the file in. If this is "" or null,
 	 *              the current directory is used.
@@ -91,33 +93,28 @@ public class Data_2da{
 		String toWrite;
 		
 		// Get the amount of padding used, if any
-		int[] widths = new int[labels.length + 1];
+		int[] widths = new int[labels.length + 1];// All initialised to 0
 		if(evenColumns){
 			ArrayList<String> column;
 			int pad;
+			// Loop over columns
 			for(int i = 0; i < labels.length; i++){
 				pad = labels[i].length();
 				column = mainData.get(labels[i]);
+				// Loop over rows
 				for(int j = 0; j < this.getEntryCount(); j++){
 					toWrite = column.get(j);
+					// If the string contains spaces, it needs to be wrapped in "
 					if(toWrite.indexOf(" ") != -1)
 						toWrite = "\"" + toWrite + "\"";
 					if(toWrite.length() > pad) pad = toWrite.length();
 				}
-				/*
-				buf = new StringBuffer();
-				for(; pad > 0; pad--) buf.append(" ");
-				paddings[i] = buf.toString();
-				*/
 				widths[i] = pad;
 			}
-			widths[widths.length - 1] = new Integer(this.getEntryCount()).toString().length();
 			
-			//for(int i = 0; i < widths.length; i++) if(widths[i] > 0) widths[i] -= 2;
-		}/*
-		else
-			for(int i = 0; i < paddings.length; i++) paddings[i] = "";
-		*/
+			// The last entry in the array is used for the numbers column
+			widths[widths.length - 1] = new Integer(this.getEntryCount()).toString().length();
+		}
 		
 		// Write the header and default lines
 		fw.write("2DA V2.0" + CRLF);
@@ -132,20 +129,24 @@ public class Data_2da{
 			fw.write(" " + realLabels[i]);
 			for(int j = 0; j < widths[i] - realLabels[i].length(); j++) fw.write(" ");
 		}
-		fw.write(CRLF);
+		fw.write((TLKEditCompatible ? " ":"") + CRLF);
 		
 		// Write the data
 		for(int i = 0; i < this.getEntryCount(); i++){
+			// Write the number row and it's padding
 			fw.write("" + i);
 			for(int j = 0; j < widths[widths.length - 1] - new Integer(i).toString().length(); j++) fw.write(" ");
+			// Loop over columns
 			for(int j = 0; j < labels.length; j++){
 				toWrite = mainData.get(labels[j]).get(i);
+				// If the string contains spaces, it needs to be wrapped in "
 				if(toWrite.indexOf(" ") != -1)
 					toWrite = "\"" + toWrite + "\"";
 				fw.write(" " + toWrite);
+				// Write padding
 				for(int k = 0; k < widths[j] - toWrite.length(); k++) fw.write(" ");
 			}
-			fw.write(CRLF);
+			fw.write((TLKEditCompatible ? " ":"") + CRLF);
 			
 			if(verbose) spinner.spin();
 		}

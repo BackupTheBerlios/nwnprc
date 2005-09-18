@@ -81,7 +81,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eVis = EffectVisualEffect(VFX_IMP_PULSE_FIRE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     int nDuration = 2 * PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
     //Limit nCasterLvl to 10, so it max out at +10 to the damage.

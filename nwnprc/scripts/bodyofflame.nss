@@ -39,7 +39,7 @@ void main()
 
     //Declare major variables
     int nDuration = 600;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     object oTarget = OBJECT_SELF;
     object oArmour = GetItemInSlot(INVENTORY_SLOT_CHEST, OBJECT_SELF);
     effect eVis = EffectVisualEffect(VFX_DUR_INFERNO_CHEST);

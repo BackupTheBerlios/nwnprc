@@ -37,7 +37,7 @@ void main()
     //Declare major variables
     effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
     int nDuration = 15;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     object oTarget = OBJECT_SELF;
     effect eShield = EffectDamageShield(nDuration, DAMAGE_BONUS_1d6, DAMAGE_TYPE_FIRE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

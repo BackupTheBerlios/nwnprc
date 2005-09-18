@@ -54,7 +54,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
     int nDuration  = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nAmount = nDuration/3;
     if (nAmount <0)
     {

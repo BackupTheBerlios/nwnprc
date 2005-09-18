@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eLink = EffectLinkEffects(eHaste, eDur);
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     float fDelay;
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);

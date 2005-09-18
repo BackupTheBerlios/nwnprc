@@ -14,7 +14,7 @@ void main()
 
     SPSetSchool(SPELL_SCHOOL_ABJURATION);
     int nCasterLvl = PRCGetCasterLevel();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     float fDuration = SPGetMetaMagicDuration(TenMinutesToSeconds(nCasterLvl));
 
     int iAC = 3 + nCasterLvl/4;

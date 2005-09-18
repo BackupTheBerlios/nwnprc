@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     
     float fDelay;
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {

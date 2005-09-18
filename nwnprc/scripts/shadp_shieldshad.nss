@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     //Declare major variables
     object oTarget = OBJECT_SELF;
     effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
     int nClass = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,OBJECT_SELF);
 

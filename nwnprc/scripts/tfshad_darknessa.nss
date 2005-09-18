@@ -27,7 +27,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
  ActionDoCommand(SetAllAoEInts(SPELL_DARKNESS ,OBJECT_SELF, GetSpellSaveDC(),0,GetLevelByClass(CLASS_TYPE_SHADOWLORD,GetAreaOfEffectCreator())));
  
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_DARKNESS);
     effect eDark = EffectDarkness();
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);

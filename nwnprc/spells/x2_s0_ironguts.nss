@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     RemoveEffectsFromSpell(oTarget, GetSpellId());
 
     int nBonus = 4; //Saving throw bonus to be applied
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = nCasterLvl * 10; // Turns
     //Fire cast spell at event for the specified target

@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Declare major variables
     object oTarget = PRCGetSpellTargetObject();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eVis = EffectVisualEffect(495);
     effect eAC1, eAC2, eAC3, eAC4;
     //Fire cast spell at event for the specified target

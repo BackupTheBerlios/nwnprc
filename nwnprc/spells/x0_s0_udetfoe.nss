@@ -34,7 +34,7 @@ void GrantProtection(object oTarget, int CasterLvl)
     effect eAC = EffectACIncrease(4);
 
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))

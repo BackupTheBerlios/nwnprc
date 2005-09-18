@@ -63,7 +63,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eLink = EffectLinkEffects(eHaste, eDur);
 
     int nDuration = GetLevelByClass(CLASS_TYPE_RUNESCARRED,OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HASTE, FALSE));
     //Check for metamagic extension

@@ -52,7 +52,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     int nDuration = GetLevelByClass(CLASS_TYPE_RUNESCARRED,OBJECT_SELF);
     int nCasterLvl = nDuration / 3;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
     //Limit nCasterLvl to 5, so it max out at +5 enhancement to the weapon.
     if(nCasterLvl > 5)

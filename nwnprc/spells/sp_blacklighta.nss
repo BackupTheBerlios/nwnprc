@@ -19,7 +19,7 @@ void main()
     SPSetSchool(SPELL_SCHOOL_EVOCATION);
     ActionDoCommand(SetAllAoEInts(SPELL_BLACKLIGHT ,OBJECT_SELF, GetSpellSaveDC()));
     
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_DARKNESS);
     effect eInvis2 = EffectInvisibility(INVISIBILITY_TYPE_IMPROVED);
     effect eDarkv = EffectUltravision();

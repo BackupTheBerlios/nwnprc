@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //Declare major variables
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
     object oTarget = PRCGetSpellTargetObject();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDrain = d4();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 

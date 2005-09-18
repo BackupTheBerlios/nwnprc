@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         nStrength = 0;
     }
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
     effect eStrength = EffectAbilityIncrease(ABILITY_STRENGTH, nStrength);
     effect eHP = EffectTemporaryHitpoints(nHP);

@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
      int nCasterLvl = GetLevelByClass(CLASS_TYPE_RUNESCARRED,OBJECT_SELF);
     int nModify = d4() + 1;
     float fDuration = HoursToSeconds(nCasterLvl);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Signal the spell cast at event
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_BULLS_STRENGTH, FALSE));
     //Enter Metamagic conditions

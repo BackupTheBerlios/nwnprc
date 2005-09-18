@@ -888,10 +888,10 @@ void PRCBonusDamage (object oTarget)
 
      if (GetLevelByClass(CLASS_TYPE_BLOOD_MAGUS, oCaster) > 0 && GetLocalInt(oCaster, "BloodSeeking") == TRUE)
      {
-     	  nDamage = d6();
-	  eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-	  eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
-	  ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+          nDamage = d6();
+      eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+      eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
+      ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
           ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
           effect eSelfDamage = EffectDamage(3, DAMAGE_TYPE_MAGICAL);
@@ -1332,13 +1332,13 @@ int CheckMetaMagic(int nMeta,int nMMagic)
 int PRCGetMetaMagicFeat()
 {
     int nFeat = GetMetaMagicFeat();
-    int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
     int nSSFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
     int nNewSpellMetamagic = GetLocalInt(OBJECT_SELF, "NewSpellMetamagic");
-    if(nChannel == 1)
-        nFeat |= nSSFeat; //bitwise "addition" equivalent to nFeat = (nFeat | nSSFeat)
-    else if(nNewSpellMetamagic)
-        nFeat |= nNewSpellMetamagic;
+    if(nNewSpellMetamagic)
+        nFeat = nNewSpellMetamagic-1;
+    if(nSSFeat)
+        nFeat = nSSFeat; 
+        
     if(GetIsObjectValid(GetSpellCastItem()))
     {
         object oItem = GetSpellCastItem();
@@ -1354,6 +1354,7 @@ int PRCGetMetaMagicFeat()
                 int nCostValue = GetItemPropertyCostTableValue (ipTest);
                 switch(nCostValue)
                 {
+                    //bitwise "addition" equivalent to nFeat = (nFeat | nSSFeat)
                     case 0:
                         nItemMetaMagic |= METAMAGIC_NONE;
                         break;

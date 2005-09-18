@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int CasterLvl = GetHitDice(OBJECT_SELF);
 
     int nCasterLvl = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     effect eExplode = EffectVisualEffect(VFX_FNF_BLINDDEAF);
     //Get the spell target location as opposed to the spell target.

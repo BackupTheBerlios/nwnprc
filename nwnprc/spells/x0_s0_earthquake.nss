@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     object oCaster = OBJECT_SELF;
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nRandom = 0;
     int nSpectacularDeath = TRUE;
     int nDisplayFeedback = TRUE;

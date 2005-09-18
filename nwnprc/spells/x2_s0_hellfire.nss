@@ -43,7 +43,7 @@ void main()
     effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     object oTarget = OBJECT_SELF;
     int nDamageType =  ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
 

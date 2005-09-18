@@ -50,7 +50,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int nCasterLvl = CasterLvl;
     int nPenetr =  CasterLvl + SPGetPenetr();
     
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     float fDelay;
     float nSize =  RADIUS_SIZE_COLOSSAL;
     effect eExplode = EffectVisualEffect(VFX_FNF_HOWL_WAR_CRY);

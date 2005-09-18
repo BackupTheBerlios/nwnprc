@@ -271,10 +271,10 @@ void main()
 
         SetLocalInt(oPC, "AttackHasHit", TRUE);
 
-        int nSpellMetamagic1 = GetLocalInt(oItem,"metamagic_feat_1");
-        int nSpellMetamagic2 = GetLocalInt(oItem,"metamagic_feat_2");
-        int nSpellMetamagic3 = GetLocalInt(oItem,"metamagic_feat_3");
-        int nSpellMetamagic4 = GetLocalInt(oItem,"metamagic_feat_4");
+        int nSpellMetamagic1 = GetLocalInt(oItem,"metamagic_feat_1")+1; //offset by 1
+        int nSpellMetamagic2 = GetLocalInt(oItem,"metamagic_feat_2")+1;
+        int nSpellMetamagic3 = GetLocalInt(oItem,"metamagic_feat_3")+1;
+        int nSpellMetamagic4 = GetLocalInt(oItem,"metamagic_feat_4")+1;
         DeleteLocalString(oItem,"metamagic_feat_1");
         DeleteLocalString(oItem,"metamagic_feat_2");
         DeleteLocalString(oItem,"metamagic_feat_3");

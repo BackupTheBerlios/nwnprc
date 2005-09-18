@@ -41,7 +41,7 @@ void main()
     //Declare major variables
     object oCaster = OBJECT_SELF;
     int nCasterLvl = 15;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     float fDelay;
     effect eExplode = EffectVisualEffect(806);

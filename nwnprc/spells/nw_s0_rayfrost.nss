@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     //Declare major variables
     object oTarget = PRCGetSpellTargetObject();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDam = d4(1) + 1;
     effect eDam;

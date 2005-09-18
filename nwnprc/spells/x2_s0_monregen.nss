@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     effect eLink = EffectLinkEffects(eRegen, eDur);
 
-    int nMeta = GetMetaMagicFeat();
+    int nMeta = PRCGetMetaMagicFeat();
     int nLevel = (PRCGetCasterLevel(OBJECT_SELF) / 2) + 1;
 
     if (nMeta == METAMAGIC_EXTEND)

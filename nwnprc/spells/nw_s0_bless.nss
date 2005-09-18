@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     effect eLink = EffectLinkEffects(eAttack, eSave);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     float fDelay;
     //Metamagic duration check
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))

@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
     int nAbsorb = d8() + 8;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
     RemoveEffectsFromSpell(oTarget, GetSpellId());
     RemoveEffectsFromSpell(oTarget, SPELL_LESSER_SPELL_MANTLE);

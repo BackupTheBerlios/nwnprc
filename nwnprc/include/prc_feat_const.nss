@@ -343,7 +343,7 @@ const int FEAT_CAST_DOMAIN_LEVEL_SIX	     	     = 2054;
 const int FEAT_CAST_DOMAIN_LEVEL_SEVEN 	             = 2055;
 const int FEAT_CAST_DOMAIN_LEVEL_EIGHT 	             = 2056;
 const int FEAT_CAST_DOMAIN_LEVEL_NINE	     	     = 2057;
- 
+
 const int FEAT_CHECK_DOMAIN_SLOTS		     = 2000;
 
 // Blightlord
@@ -2006,6 +2006,9 @@ const int FEAT_WIDEN_POWER                  = 4943;
 
 //ACP feat
 const int FEAT_ACP_FEAT                     = 2892;
+
+// Epic Spellcasting Rest feat
+const int FEAT_EPIC_SPELLCASTING_REST       = 4399;
 
 //Baelnorn
 const int FEAT_BAELN_PROP = 3538;

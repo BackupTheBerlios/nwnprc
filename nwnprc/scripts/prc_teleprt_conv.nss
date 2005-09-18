@@ -27,11 +27,11 @@ const int STAGE_SELECTION_MADE = 1;
 /* Function defintions                          */
 //////////////////////////////////////////////////
 
-void AddChoice(object oPC, string sText, int nValue)
+/*void AddChoice(object oPC, string sText, int nValue)
 {
     array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), sText);
     array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), nValue);
-}
+}*/
 
 
 void main()
@@ -71,7 +71,7 @@ void main()
                     //mlocL = GetLocalMetalocation(oPC, "PRC_Teleport_QuickSelection_" + IntToString(i));
                     mlocL = GetTeleportQuickSelection(oPC, i);
                     sToken += MetalocationToString(mlocL);
-                    AddChoice(oPC, sToken, -i);
+                    AddChoice(sToken, -i, oPC);
                 }
             }
 
@@ -81,7 +81,7 @@ void main()
             {
                 mlocL = GetNthStoredTeleportTargetLocation(oPC, i);
                 if(GetIsMetalocationInModule(mlocL))
-                    AddChoice(oPC, MetalocationToString(mlocL), i);
+                    AddChoice(MetalocationToString(mlocL), i, oPC);
             }
 
             SetLocalInt(oPC, "PRC_TeleportSelectionConvo_Setup", TRUE);
@@ -111,7 +111,7 @@ void main()
             // Mark the conversation as finished.
             SetLocalInt(oPC, "PRC_TeleportSelectionMade", TRUE);
         }
-        
+
         //do token setup
         int nOffset = GetLocalInt(oPC, "ChoiceOffset");
         int i;
@@ -146,12 +146,12 @@ void main()
             //SendMessageToPC(oPC, "Running script " + GetLocalString(oPC, "PRC_TeleportTargetSelection_CallbackScript"));
             string sScript = GetLocalString(oPC, "PRC_TeleportTargetSelection_CallbackScript");
             DelayCommand(0.3f, ExecuteScript(sScript, oPC));
-            
+
             DeleteLocalInt(oPC, "DynConv_Var");
             array_delete(oPC, "ChoiceTokens");
             array_delete(oPC, "ChoiceValues");
             DeleteLocalInt(oPC, "Stage");
-            DeleteLocalString(oPC, "DynConv_Script");
+            DeleteLocalString(oPC, DYNCONV_SCRIPT);
             int i;
             for(i = 99; i <= 110; i++)
                 DeleteLocalString(oPC, "TOKEN" + IntToString(i));
@@ -183,7 +183,7 @@ void main()
             array_delete(oPC, "ChoiceTokens");
             array_delete(oPC, "ChoiceValues");
             DeleteLocalInt(oPC, "Stage");
-            DeleteLocalString(oPC, "DynConv_Script");
+            DeleteLocalString(oPC, DYNCONV_SCRIPT);
             int i;
             for(i = 99; i <= 110; i++)
                 DeleteLocalString(oPC, "TOKEN" + IntToString(i));

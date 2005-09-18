@@ -198,18 +198,6 @@ int GetIsAPCInArea(object oArea, int bNPCPartyMembers = TRUE);
 string IntToPaddedString(int nX, int nLength = 4, int nSigned = FALSE);
 
 /**
- * Sets the custom token at nTokenID to be the given string and stores
- * the value in a local variable on OBJECT_SELF.
- * Used by the dyynamic onversation system to track token assignment.
- *
- * @param nTokenID The custom token number to store the string in
- * @param sString  The string to store
- */
-void SetToken(int nTokenID, string sString);
-
-//replaces specific substrings
-//sTarget and sReplacement must be the same length
-/**
  * Looks through the given string, replacing all instances of sToReplace with
  * sReplacement. If such a replacement creates another instance of sToReplace,
  * it, too is replaced. Be aware that you can cause an infinite loop with
@@ -322,6 +310,7 @@ void TryToIDItems(object oPC = OBJECT_SELF);
 #include "prc_inc_switch"   // Should be after inc_pers_array, as it needs inc_array
 #include "inc_ecl"          // Depends on inc_2dacache, prc_inc_switch and inc_class_by_pos
 #include "inc_metalocation" // Depends on inc_persist_loca
+
 
 
 /**********************\
@@ -504,12 +493,6 @@ string IntToPaddedString(int nX, int nLength = 4, int nSigned = FALSE)
             sResult = "-"+sResult;
     }
     return sResult;
-}
-
-void SetToken(int nTokenID, string sString)
-{
-    SetCustomToken(nTokenID, sString);
-    SetLocalString(OBJECT_SELF, "TOKEN"+IntToString(nTokenID), sString);
 }
 
 string ReplaceChars(string sString, string sToReplace, string sReplacement)

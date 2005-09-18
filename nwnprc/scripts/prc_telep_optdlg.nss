@@ -14,6 +14,7 @@
 #include "prc_alterations"
 #include "prc_inc_teleport"
 #include "inc_utility"
+#include "inc_dynconv"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -50,11 +51,6 @@ const int STRREF_BACK_TO_MAIN = 16824794;  // "Back to main menu"
 /* Function defintions                          */
 //////////////////////////////////////////////////
 
-void AddChoice(string sText, int nValue)
-{
-    array_set_string(OBJECT_SELF, "ChoiceTokens", array_get_size(OBJECT_SELF, "ChoiceTokens"), sText);
-    array_set_int   (OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues"), nValue);
-}
 
 void main()
 {

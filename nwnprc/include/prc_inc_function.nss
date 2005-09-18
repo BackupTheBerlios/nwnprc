@@ -34,6 +34,7 @@ void DeletePRCLocalInts(object oSkin);
 // Generic includes
 #include "prcsp_engine"
 #include "inc_utility"
+#include "inc_dynconv"
 #include "x2_inc_switches"
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -52,6 +53,7 @@ void DeletePRCLocalInts(object oSkin);
 #include "prc_inc_racial"
 #include "inc_abil_damage"
 #include "NW_I0_GENERIC"
+#include "x2_inc_itemprop"
 
 
 int nbWeaponFocus(object oPC);
@@ -224,14 +226,15 @@ void EvalPRCFeats(object oPC)
         && !GetLocalInt(oSkin, "nPCShifted") //so it doenst pop up on shifting
         )
     {
-        SetLocalString(oPC, "DynConv_Script", "prc_pnp_school");
+        SetLocalString(oPC, DYNCONV_SCRIPT, "prc_pnp_school");
         AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
     }
 
     //switch convo feat
     if(!GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO))
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(229), oSkin);
+        //AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(229), oSkin);
+        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
 
     //size changes

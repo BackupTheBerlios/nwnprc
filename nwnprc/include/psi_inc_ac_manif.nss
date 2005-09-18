@@ -159,9 +159,7 @@ void DoDespawnAux(object oManifester, float fDur){
 		oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oManifester, i);
     }
     SetLocalInt(oConstruct, "UnsummonScheduled", TRUE);
-    // DEBUG //
-    SendMessageToPC(oManifester, "Found the just added astral construct: " + (GetIsObjectValid(oConstruct) ? "true":"false") + "\nSummon name: " + GetName(oConstruct) + "\nTotal summons: " + IntToString(i));
-    // DEBUG //
+    if(DEBUG) DoDebug("Found the just added astral construct: " + (GetIsObjectValid(oConstruct) ? "true":"false") + "\nSummon name: " + GetName(oConstruct) + "\nTotal summons: " + IntToString(i), oManifester);
 	// Schedule unsummoning. Done this way to skip the default unsummoning VFX.
 	DelayCommand(fDur - 2.0, DoDespawn(oConstruct));
 }

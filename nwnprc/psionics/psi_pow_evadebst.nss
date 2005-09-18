@@ -1,7 +1,7 @@
 /*
    ----------------
    Evade Burst
-   
+
    prc_pow_evadebst
    ----------------
 
@@ -15,9 +15,9 @@
    Saving Throw: None
    Power Resistance: No
    Power Point Cost: Psion/Wilder 13, PsyWar 5
-   
+
    When you manifest this power, you gain the effect of evasion.
-   
+
    Augment: If you spend 4 additional points, you gain improved evasion. Augmenting this power beyond level 1 does nothing.
 */
 
@@ -54,24 +54,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
-    
+
     if (nSurge > 0)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
+
+        PsychicEnervation(oCaster, nSurge);
     }
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nFeat = IP_CONST_FEAT_EVASION;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) nFeat = IP_CONST_FEAT_IMPEVASION;
-	
-    	int CasterLvl = GetManifesterLevel(oCaster);
-    	object oSkin = GetPCSkin(oCaster);
-	AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyBonusFeat(nFeat), oSkin,RoundsToSeconds(nCaster));
+        int nDC = GetManifesterDC(oCaster);
+        int nCaster = GetManifesterLevel(oCaster);
+        int nFeat = IP_CONST_FEAT_EVASION;
+
+        //Augmentation effects to Damage
+        if (nAugment > 0) nFeat = IP_CONST_FEAT_IMPEVASION;
+
+        int CasterLvl = GetManifesterLevel(oCaster);
+        object oSkin = GetPCSkin(oCaster);
+        //AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyBonusFeat(nFeat), oSkin, RoundsToSeconds(nCaster));
+        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(nFeat), RoundsToSeconds(nCaster), X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
 }

@@ -11,10 +11,12 @@
 //:: Created On: 18.06.2005
 //:://////////////////////////////////////////////
 
+#include "inc_dynconv"
+
 
 void main()
 {
-    SetLocalString(OBJECT_SELF, "DynConv_Script", "prc_telep_optdlg");
+    SetLocalString(OBJECT_SELF, DYNCONV_SCRIPT, "prc_telep_optdlg");
     AssignCommand(OBJECT_SELF, ClearAllActions(TRUE));
     AssignCommand(OBJECT_SELF, ActionStartConversation(OBJECT_SELF, "dyncov_base", TRUE, FALSE));
 }

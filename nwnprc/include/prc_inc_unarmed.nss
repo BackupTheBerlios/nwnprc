@@ -623,7 +623,8 @@ void UnarmedFists(object oCreature)
 
     // Cool VFX when striking unarmed
     if (iMonkEq > 9)
-        DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_KI_STRIKE), oWeapL));
+        //DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_KI_STRIKE), oWeapL));
+        DelayCommand(0.1, IPSafeAddItemProperty(oWeapL, ItemPropertyBonusFeat(IP_CONST_FEAT_KI_STRIKE), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE));
 
     // Add damage resistance penetration.
     DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(iEnh), oWeapL));

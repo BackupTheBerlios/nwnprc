@@ -204,7 +204,7 @@ int   IPGetHasItemPropertyOnCharacter(object oPC, int nItemPropertyConst);
 // *  Returns an integer with the number of properties present oItem
 int   IPGetNumberOfItemProperties(object oItem);
 
-#include "inc_utility"
+//#include "inc_utility" //Supplied by prc_alterations
 #include "prc_alterations"
 
 //------------------------------------------------------------------------------

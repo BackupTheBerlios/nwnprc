@@ -327,7 +327,7 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
         SetLocalInt(oPC, "PRC_TeleportTargetSelection_ReturnAsMetalocation", bMeta);
         SetLocalInt(oPC, "PRC_TeleportTargetSelection_DisallowConversationAbort", bForce);
 
-        SetLocalString(oPC, "DynConv_Script", "prc_teleprt_conv");
+        SetLocalString(oPC, DYNCONV_SCRIPT, "prc_teleprt_conv");
         AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
     }
 }

@@ -110,7 +110,7 @@ void main()
         //object oClothes = CreateItemOnObject("nw_cloth022", oPC);
         //AssignCommand(oPC, ActionEquipItem(oClothes, INVENTORY_SLOT_CHEST));
         //start the ConvoCC conversation
-        SetLocalString(oPC, "DynConv_Script", "prc_ccc");
+        SetLocalString(oPC, DYNCONV_SCRIPT, "prc_ccc");
         DelayCommand(2.5, AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE)));
         //DISABLE FOR DEBUGGING
         DelayCommand(2.0, AssignCommand(oPC, ActionDoCommand(SetCutsceneMode(oPC, TRUE))));

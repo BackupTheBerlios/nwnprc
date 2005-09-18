@@ -18,7 +18,7 @@ void main()
   object oArmor=GetItemInSlot(INVENTORY_SLOT_CHEST,OBJECT_SELF);
   object oWeapL=GetItemInSlot(INVENTORY_SLOT_LEFTHAND,OBJECT_SELF);
   object oWeapR=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF);
-  object oHide=GetItemInSlot(INVENTORY_SLOT_CARMOUR,OBJECT_SELF);
+  //object oHide=GetItemInSlot(INVENTORY_SLOT_CARMOUR,OBJECT_SELF);
 
   if  (GetBaseAC(oArmor)>3)return;
 

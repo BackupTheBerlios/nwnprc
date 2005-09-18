@@ -22,7 +22,7 @@
 
 /*
 PnP TT:
-Tenser's Transformation 
+Tenser's Transformation
 Transmutation
 Level: Sor/Wiz 6
 Components: V, S, M
@@ -84,33 +84,33 @@ void PnPTensTransPseudoHB()
                 && GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
                 && GetItemPropertyDurationType(ipTest) == DURATION_TYPE_TEMPORARY
                 && GetItemPropertyCostTableValue(ipTest) == IP_CONST_FEAT_WEAPON_PROF_SIMPLE)
-            {               
+            {
                 RemoveItemProperty(oSkin, ipTest);
                 nSimple = TRUE;
-            }   
+            }
             if(!nMartial
                 && GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
                 && GetItemPropertyDurationType(ipTest) == DURATION_TYPE_TEMPORARY
                 && GetItemPropertyCostTableValue(ipTest) == IP_CONST_FEAT_WEAPON_PROF_MARTIAL)
-            {               
+            {
                 RemoveItemProperty(oSkin, ipTest);
                 nMartial = TRUE;
-            }               
+            }
             ipTest = GetNextItemProperty(oSkin);
         }
         //end the pseudoHB
         return;
-    }        
+    }
     if(GetCurrentAction() != ACTION_ATTACKOBJECT)
     {
         ClearAllActions();
-        object oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION, 
-            REPUTATION_TYPE_ENEMY, OBJECT_SELF, 1, 
-                CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN_AND_HEARD, 
+        object oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
+            REPUTATION_TYPE_ENEMY, OBJECT_SELF, 1,
+                CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN_AND_HEARD,
                     CREATURE_TYPE_IS_ALIVE, TRUE);
         if(GetDistanceToObject(oTarget) > 5.0)
         {
-            ActionEquipMostDamagingRanged(oTarget); 
+            ActionEquipMostDamagingRanged(oTarget);
         }
         else
         {
@@ -125,7 +125,7 @@ void PnPTensTransPseudoHB()
         }
         ActionAttack(oTarget);
     }
-    DelayCommand(6.0, PnPTensTransPseudoHB());      
+    DelayCommand(6.0, PnPTensTransPseudoHB());
 }
 
 void main()
@@ -135,12 +135,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     if(GetPRCSwitch(PRC_PNP_TENSERS_TRANSFORMATION))
     {
-    
+
         if (!X2PreSpellCastCode())
         {
             return;
         }
-        
+
         //Declare major variables
         int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
         float fDuration = RoundsToSeconds(nCasterLvl);
@@ -151,7 +151,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         int nDex = d4(2);
         int nCon = d4(2);
         object oSkin = GetPCSkin(OBJECT_SELF);
-        
+
         int nTotalAttacks = (nBAB + GetBaseAttackBonus(OBJECT_SELF)/5)+1;
         if(nTotalAttacks>5)
             nTotalAttacks = 5;
@@ -163,8 +163,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             nAttacks = 5;
         if(nAttacks < 0)
             nAttacks = 0;
-            
-        
+
+
         //Determine bonus HP
         nHP += d6(nCasterLvl);
 
@@ -187,7 +187,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         {
             fDuration *= 2.0;
         }
-        
+
         effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, nStr);
         effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY, nDex);
         effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, nCon);
@@ -204,15 +204,17 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         eLink = EffectLinkEffects(eLink, eFort);
         itemproperty ipSimple = ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_SIMPLE);
         itemproperty ipMartial = ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL);
-        
+
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, OBJECT_SELF, fDuration, TRUE, -1, nCasterLvl);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, fDuration, TRUE, -1, nCasterLvl);
-        AddItemProperty(DURATION_TYPE_TEMPORARY, ipSimple, oSkin, fDuration);
-        AddItemProperty(DURATION_TYPE_TEMPORARY, ipMartial, oSkin, fDuration);
-        
+        //AddItemProperty(DURATION_TYPE_TEMPORARY, ipSimple, oSkin, fDuration);
+        //AddItemProperty(DURATION_TYPE_TEMPORARY, ipMartial, oSkin, fDuration);
+        IPSafeAddItemProperty(oSkin, ipSimple,  fDuration);
+        IPSafeAddItemProperty(oSkin, ipMartial, fDuration);
+
         DelayCommand(6.0, PnPTensTransPseudoHB());
-        
+
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         // Getting rid of the integer used to hold the spells spell school
         return;
@@ -272,20 +274,20 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     {
         nDuration *= 2;
     }
-    
+
     // Get The PC's Equipment
     object oWeaponOld = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
     object oArmorOld  = GetItemInSlot(INVENTORY_SLOT_CHEST, OBJECT_SELF);
     object oHelmetOld = GetItemInSlot(INVENTORY_SLOT_HEAD, OBJECT_SELF);
     object oShieldOld = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, OBJECT_SELF);
-    
+
     if (GetBaseItemType(oShieldOld) != BASE_ITEM_SMALLSHIELD &&
         GetBaseItemType(oShieldOld) != BASE_ITEM_LARGESHIELD &&
         GetBaseItemType(oShieldOld) != BASE_ITEM_TOWERSHIELD)
     {
         oShieldOld = OBJECT_INVALID;
     }
-    
+
     //Declare effects
     effect eAttack = EffectAttackIncrease(CalculateAttackBonus());
     effect eSave = EffectSavingThrowIncrease(SAVING_THROW_FORT, 5);
@@ -294,7 +296,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect ePoly = EffectPolymorph(28);
     effect eHP = EffectTemporaryHitpoints(nHP);
     effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
-    
+
     //Link effects
     effect eLink = EffectLinkEffects(eAttack, eSave);
     eLink = EffectLinkEffects(eLink, eDur);
@@ -308,15 +310,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     ShifterCheck(OBJECT_SELF);
 
     ClearAllActions(); // prevents an exploit
-    
+
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, OBJECT_SELF, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
-    
+
     // Get the Polymorphed form's stuff
     object oWeaponNew = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF);
     object oArmorNew = GetItemInSlot(INVENTORY_SLOT_CARMOUR,OBJECT_SELF);
-    
+
     // Tenser's Sword is overpowerful with equipment merging -- no longer do you
     // need a +3 flaming longsword if you have reasonably good equipment.
     itemproperty ip = GetFirstItemProperty(oWeaponNew);
@@ -325,11 +327,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         RemoveItemProperty(oWeaponNew, ip);
         ip = GetNextItemProperty(oWeaponNew);
     }
-    
+
     // I like that nice flaming effect though.
     itemproperty ipFlaming = ItemPropertyVisualEffect(ITEM_VISUAL_FIRE);
     IPSafeAddItemProperty(oWeaponNew, ipFlaming);
-    
+
     // Merges in your stuff so that you're not weakened by the morph.
     IPWildShapeCopyItemProperties(oWeaponOld, oWeaponNew, TRUE);
     IPWildShapeCopyItemProperties(oArmorOld, oArmorNew, TRUE);

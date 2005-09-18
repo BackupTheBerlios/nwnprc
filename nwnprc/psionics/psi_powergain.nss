@@ -13,7 +13,7 @@ int CheckMissingPowers(object oPC, int nClass)
 
     if(nCurrentPowers < nMaxPowers)
     {
-        SetLocalString(oPC, "DynConv_Script", "psi_powconv");
+        SetLocalString(oPC, DYNCONV_SCRIPT, "psi_powconv");
         SetLocalInt(oPC, "nClass", nClass);
         AssignCommand(oPC, ClearAllActions());
         AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));

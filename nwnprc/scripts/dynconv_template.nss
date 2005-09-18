@@ -4,12 +4,12 @@
 //:://////////////////////////////////////////////
 /** @file
     Long description
+
+
+    @author Joe Random
+    @date   Created  - yyyy.mm.dd
 */
 //:://////////////////////////////////////////////
-//:: Created By: Joe Random
-//:: Created On: dd.mm.yyyy
-//:: Modified By: Jane Random
-//:: Modified On: dd.mm.yyyy
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
@@ -22,9 +22,26 @@
 
 const int STAGE_ENTRY = 0;
 
+
+//////////////////////////////////////////////////
+/* Aid functions                                */
+//////////////////////////////////////////////////
+
+/*
+ *
+ */
+/*void CleanUp()
+{
+
+}*/
+
+//void
+
+
+
 void main()
 {
-    object oPC = GetPCSpeaker(); 
+    object oPC = GetPCSpeaker();
     /* Get the value of the local variable set by the conversation script calling
      * this script. Values:
      * -3   Conversation aborted
@@ -34,7 +51,7 @@ void main()
      * 1+   Index of user's choice from the ChoiceValues array +1
      */
     int nValue = GetLocalInt(oPC, "DynConv_Var");
-    
+
     // Reset the choice arrays
     array_create(oPC, "ChoiceTokens");
     array_create(oPC, "ChoiceValues");
@@ -54,7 +71,7 @@ void main()
         array_create(oPC, "StagesSetup");
         if(array_get_int(oPC, "StagesSetup", nStage))
             return; //this stops list duplication when scrolling
-            
+
         // token        99 = header             This must be set directly
         // token 100 - 109 = player choices     This is set automatically from the arrays
         // array named ChoiceTokens for strings                        \_ The function AddChoice can be used for easy manipulation of these
@@ -65,7 +82,7 @@ void main()
             array_set_int(oPC, "StagesSetup", nStage, TRUE); //this lets it know that its setup so dont set it up again
         }
         //add more stages for more nodes with Else If clauses
-        
+
         //do token setup
         SetupTokens();
         SetCustomToken(110, GetStringByStrRef(16824212));//finish
@@ -79,7 +96,7 @@ void main()
     {
         //end of conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
-        DeleteLocalString(oPC, "DynConv_Script");
+        DeleteLocalString(oPC, DYNCONV_SCRIPT);
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
         array_delete(oPC, "StagesSetup");
@@ -91,7 +108,7 @@ void main()
     {
         //abort conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
-        DeleteLocalString(oPC, "DynConv_Script");
+        DeleteLocalString(oPC, DYNCONV_SCRIPT);
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
         array_delete(oPC, "StagesSetup");

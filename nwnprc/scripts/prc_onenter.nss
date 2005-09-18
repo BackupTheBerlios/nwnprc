@@ -203,16 +203,23 @@ void main()
                 SetXP(oPC, nNewXP);
                 if(GetPRCSwitch(PRC_XP_USE_SIMPLE_LA))
                     DelayCommand(1.0, SetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, nNewXP));
-            }  
+            }
             if(GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD_NO_SELECTION))
             {
                 int i;
                 for(i=0;i<nRacialHD;i++)
                 {
                     LevelUpHenchman(oPC, nRacialClass, TRUE);
-                }    
+                }
             }
         }
+    }
+
+    // Insert various debug things here
+    if(DEBUG)
+    {
+        // Duplicate ItemPropertyBonusFeat monitor
+        SpawnNewThread("PRC_Duplicate_IPBFeat_Mon", "prc_debug_hfeatm", 30.0f, oPC);
     }
 
     // Execute scripts hooked to this event for the player triggering it

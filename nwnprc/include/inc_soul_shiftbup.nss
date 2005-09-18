@@ -693,7 +693,8 @@ void SetShift_02(object oPC, object oTarget)
             if(nIP != -1)
             {
                 itemproperty iProp = ItemPropertyBonusFeat(nIP);
-                AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oHidePC);
+                //AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oHidePC);
+                IPSafeAddItemProperty(oHidePC, iProp, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
             }
 
         }
@@ -882,7 +883,7 @@ void SetShiftTrueForm(object oPC)
     //  DelayCommand(0.3, AssignCommand(oPC, ActionTakeItem(oSpark, oCont)));
     //  DestroyObject(oCont, 0.7);
     //}
-    
+
     DelayCommand(1.0, ClearShifterItems(oPC));
 }
 
@@ -897,7 +898,7 @@ void ClearShifterItems(object oPC)
         if (GetTag(oCheck) == "pnp_shft_cweap")
         {
             if ((oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC)) &&
-                 (oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC)) && 
+                 (oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC)) &&
                 (oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC)))
                 AssignCommand(oPC, DestroyObject(oCheck));
         }
@@ -1116,7 +1117,7 @@ void SetShiftTrueForm(object oPC)
     //  DelayCommand(0.3, AssignCommand(oPC, ActionTakeItem(oSpark, oCont)));
     //  DestroyObject(oCont, 0.7);
     //}
-    
+
     DelayCommand(1.0, ClearShifterItems(oPC));
 }
 */

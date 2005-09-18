@@ -478,28 +478,18 @@ void SpendXP(object oPC, int nCost)
     }
 }
 
-void EnsurePCHasSkin(object oPC)
-{
-    object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
-    if (oSkin == OBJECT_INVALID)
-    {
-        oSkin = CreateItemOnObject("base_prc_skin", oPC);
-        AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
-    }
-}
-
 void GiveFeat(object oPC, int nFeatIP)
 {
-    EnsurePCHasSkin(oPC);
-    object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
+    object oSkin = GetPCSkin(oPC);
     if (oSkin != OBJECT_INVALID)
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nFeatIP), oSkin);
+        //AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nFeatIP), oSkin);
+        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(nFeatIP), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     SetLocalInt(oPC, "nEpicSpellFeatCastable", GetCastableFeatCount(oPC));
 }
 
 void TakeFeat(object oPC, int nFeatIP)
 {
-    object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
+    object oSkin = GetPCSkin(oPC);
     itemproperty ipX = GetFirstItemProperty(oSkin);
     while (GetIsItemPropertyValid(ipX))
     {

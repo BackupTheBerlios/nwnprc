@@ -22,9 +22,10 @@ const int DEBUG = TRUE;
  *
  * @param sString The string to print
  */
-void DoDebug(string sString)
+void DoDebug(string sString, object oAdditionalRecipient = OBJECT_INVALID)
 {
     SendMessageToPC(GetFirstPC(), sString);
-    SendMessageToPC(OBJECT_SELF, sString);
+    if(oAdditionalRecipient != OBJECT_INVALID)
+        SendMessageToPC(oAdditionalRecipient, sString);
     WriteTimestampedLogEntry(sString);
 }

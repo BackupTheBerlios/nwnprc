@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "psi_inc_soulkn"
+#include "inc_utility"
 
 
 //////////////////////////////////////////////////
@@ -28,18 +29,17 @@ void main()
     int nID = GetSpellId();
     int nDice;
     //SendMessageToPC(oPC, "psi_sk_ktts_die running");
-    
+
     if(nID > SECOND_RADIAL_START)
         nDice = 5 + nID - SECOND_RADIAL_START;
     else
         nDice = nID - FIRST_RADIAL_START;
-    
-    // DEBUG
-    if(nDice < 1 || nDice > 10)
-        WriteTimestampedLogEntry("Invalid SpellId in psi_sk_ktts_die");
-    
-    
-    SetLocalInt(oPC, KTTS, 
+
+    if(DEBUG) if(nDice < 1 || nDice > 10)
+        DoDebug("Invalid SpellId in psi_sk_ktts_die", oPC);
+
+
+    SetLocalInt(oPC, KTTS,
                 GetLocalInt(oPC, KTTS) & KTTS_TYPE_MASK // Use the mask to remove the old die selection
                 | (nDice << 2) // Shift the dice number right by 2 and OR it in
                );

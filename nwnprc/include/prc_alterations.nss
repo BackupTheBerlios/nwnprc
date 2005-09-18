@@ -43,6 +43,7 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 #include "prc_inc_spells"
 #include "prcsp_engine"
 #include "inc_utility"
+#include "x2_inc_itemprop"
 #include "x2_inc_switches"
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -51,6 +52,7 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 #include "prc_ipfeat_const"
 #include "prc_misc_const"
 #include "inc_acp"
+
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"
@@ -66,6 +68,7 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 #include "x0_I0_spells"
 //#include "x2_i0_spells"
 #include "prc_inc_s_det"
+
 
 
 
@@ -180,7 +183,7 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
                 nSkillRank += 2;
     }
     if(bSize)
-        nSkillRank += (PRCGetCreatureSize(oObject)-3)*(0-4);
+        nSkillRank += (PRCGetCreatureSize(oObject)-3)*(-4);
     if(!bAbilityMod)
     {
         string sAbility = Get2DACache("skills", "KeyAbility", nSkill);

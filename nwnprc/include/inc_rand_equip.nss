@@ -78,11 +78,12 @@ int EQUIPSPAWNDEBUG = FALSE;//TRUE;
 
 void EquipDebugString(string sDebug)
 {
-    if(EQUIPSPAWNDEBUG == FALSE)
-        return;
-    SendMessageToPC(GetFirstPC(), sDebug);
-    SendMessageToAllDMs(sDebug);
-    WriteTimestampedLogEntry(sDebug);
+    if(EQUIPSPAWNDEBUG)
+    {
+        SendMessageToPC(GetFirstPC(), sDebug);
+        SendMessageToAllDMs(sDebug);
+        WriteTimestampedLogEntry(sDebug);
+    }
 }
 
 void EquipAmmo(object oObject = OBJECT_SELF)

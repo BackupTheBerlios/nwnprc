@@ -381,13 +381,17 @@ void main()
             itemproperty ipSchool1 = ItemPropertyBonusFeat(GetIPFromOppSchool(nSchool1));
             itemproperty ipSchool2 = ItemPropertyBonusFeat(GetIPFromOppSchool(nSchool2));
             itemproperty ipSchool3 = ItemPropertyBonusFeat(GetIPFromOppSchool(nSchool3));
-            AddItemProperty(DURATION_TYPE_PERMANENT, ipSchool, oSkin);
+            //AddItemProperty(DURATION_TYPE_PERMANENT, ipSchool, oSkin);
+            IPSafeAddItemProperty(oSkin, ipSchool, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
             if(nSchool1 != 0)
-                AddItemProperty(DURATION_TYPE_PERMANENT, ipSchool1, oSkin);
+                //AddItemProperty(DURATION_TYPE_PERMANENT, ipSchool1, oSkin);
+                IPSafeAddItemProperty(oSkin, ipSchool1, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
             if(nSchool2 != 0)
-                AddItemProperty(DURATION_TYPE_PERMANENT, ipSchool2, oSkin);
+                //AddItemProperty(DURATION_TYPE_PERMANENT, ipSchool2, oSkin);
+                IPSafeAddItemProperty(oSkin, ipSchool2, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
             if(nSchool3 != 0)
-                AddItemProperty(DURATION_TYPE_PERMANENT, ipSchool3, oSkin);
+                //AddItemProperty(DURATION_TYPE_PERMANENT, ipSchool3, oSkin);
+                IPSafeAddItemProperty(oSkin, ipSchool3, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         }
         else
         {

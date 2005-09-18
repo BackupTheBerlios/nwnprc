@@ -10,7 +10,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
+//#include "inc_utility" Supplied by prc_alterations
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_alterations"
@@ -24,7 +24,7 @@ void main()
 
     if(GetHasFeat(FEAT_POWER_ATTACK) && !GetHasFeat(FEAT_POWER_ATTACK_QUICKS_RADIAL))
     {
-        SendMessageToPC(oPC, "Debug: Adding the PRC Power Attack radials");
+        if(DEBUG) DoDebug("prc_powatk_eval: Adding the PRC Power Attack radials", oPC);
         object oSkin = GetPCSkin(oPC);
 
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_POWER_ATTACK_SINGLE_RADIAL),     oSkin);

@@ -340,7 +340,7 @@ void main()
         {
             case 0:
                 //start conversation
-                SetLocalString(OBJECT_SELF, "DynConv_Script", "prc_pnp_fam_conv");
+                SetLocalString(OBJECT_SELF, DYNCONV_SCRIPT, "prc_pnp_fam_conv");
                 ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
                 return;
                 break;

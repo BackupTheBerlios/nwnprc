@@ -4,12 +4,12 @@
 // Sneak attack feats of the same type can appear twice on the character sheet.
 // For instance, Rogue +3d6 appears alongside Rogue +10d6.  They do not stack.
 // The damage is 10d6.
-// 
+//
 // Compatibility with old PRC's is maintained.
 
 
 #include "prc_class_const"
-#include "inc_utility"
+#include "prc_alterations"
 #include "prc_inc_sneak"
 
 void ApplySneakToSkin(object oPC, int iRogueSneak, int iBlackguardSneak)
@@ -47,10 +47,17 @@ void ApplySneakToSkin(object oPC, int iRogueSneak, int iBlackguardSneak)
    SetLocalInt(oSkin,"RogueSneakDice",iRogueSneakFeat);
    SetLocalInt(oSkin,"BlackguardSneakDice",iBlackguardSneakFeat);
 
-   if (iRogueSneak) DelayCommand(0.2, AddItemProperty(DURATION_TYPE_PERMANENT,
+   /*if (iRogueSneak) DelayCommand(0.2, AddItemProperty(DURATION_TYPE_PERMANENT,
                            ItemPropertyBonusFeat(iRogueSneakFeat), oSkin));
    if (iBlackguardSneak) DelayCommand(0.2, AddItemProperty(DURATION_TYPE_PERMANENT,
                            ItemPropertyBonusFeat(iBlackguardSneakFeat), oSkin));
+                           */
+    if(iRogueSneak)
+        DelayCommand(0.2, IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(iRogueSneakFeat), 0.0f,
+                                                X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE));
+    if(iBlackguardSneak)
+        DelayCommand(0.2, IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(iBlackguardSneakFeat), 0.0f,
+                                                X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE));
 }
 
 
@@ -68,7 +75,7 @@ void main()
       iRogueSneakDice++;
 
    int iFinalSneakDice = iRogueSneakDice + iBlackguardSneakDice;
-   
+
    if(iRogueSneakDice > 20)        //Basically, if the total sneaks spill over the rogue limit,
    {                               //Add it to the Blackguard sneaks.  Only possible with a Rog39/PA1 ATM.
       iBlackguardSneakDice += iRogueSneakDice - 20;
@@ -96,6 +103,6 @@ void main()
 
    iPreviousSneak = GetLocalInt(oSkin,"BlackguardSneakDice");
    if(!iFinalSneakDice && iPreviousSneak) DelayCommand(0.1, RemoveSpecificProperty(oSkin, ITEM_PROPERTY_BONUS_FEAT, iPreviousSneak));
-   
+
    if(iFinalSneakDice) ApplySneakToSkin(oPC,iRogueSneakDice,iBlackguardSneakDice);
 }

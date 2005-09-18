@@ -78,7 +78,7 @@ void main()
     {
       //end of conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
-        DeleteLocalString(oPC, "DynConv_Script");
+        DeleteLocalString(oPC, DYNCONV_SCRIPT);
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
         array_delete(oPC, "StagesSetup");
@@ -89,7 +89,7 @@ void main()
     {
       //abort conversation cleanup
         DeleteLocalInt(oPC, "DynConv_Var");
-        DeleteLocalString(oPC, "DynConv_Script");
+        DeleteLocalString(oPC, DYNCONV_SCRIPT);
         array_delete(oPC, "ChoiceTokens");
         array_delete(oPC, "ChoiceValues");
         array_delete(oPC, "StagesSetup");

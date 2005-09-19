@@ -59,9 +59,19 @@ blocks it.
 
 void main()
 {
+DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
+
+
+    if (!X2PreSpellCastCode())
+    {
+    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
     location lTarget = PRCGetSpellTargetLocation();
     if(GetIsObjectValid(PRCGetSpellTargetObject()))
         lTarget = GetLocation(PRCGetSpellTargetObject());
     
     DetectAlignmentRound(0, lTarget, -1, ALIGNMENT_CHAOTIC, "chaotic", VFX_BEAM_ODD);
+DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

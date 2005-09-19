@@ -136,7 +136,8 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
     {
         if((GetAlignmentGoodEvil(oTest)==nGoodEvil || nGoodEvil == -1)
             && (GetAlignmentGoodEvil(oTest)==nLawChaos || nLawChaos == -1)
-            && oTest != OBJECT_SELF)
+            && oTest != OBJECT_SELF
+            && !GetHasSpellEffect(SPELL_UNDETECTABLE_ALINGMENT, oTest))
         {
             if(nRound == 1)
             {

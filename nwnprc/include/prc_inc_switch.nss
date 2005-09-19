@@ -102,6 +102,14 @@ const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
  */
 const string PRC_PNP_ANIMATE_DEAD                    = "PRC_PNP_ANIMATE_DEAD";
 
+/**
+ * "Word of Faith" spells use 3.5 ed rules rather than 3.0ed
+ * basically instead of 12+ / <12 / <8 / <4 its relative to caster level
+ * at >=CL / <CL / <CL-5 / <CL-10
+ * This basically makes it more powerful at higher levels
+ */
+const string PRC_35ED_WORD_OF_FAITH                  = "PRC_35ED_WORD_OF_FAITH";
+
 /*
  * Undead created by Create Undead and Create Greater Undead are
  * not automatically under the casters control
@@ -1865,6 +1873,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ANIMATE_DEAD);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CREATE_UNDEAD_PERMANENT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CREATE_UNDEAD_UNCONTROLLED);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_35ED_WORD_OF_FAITH);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_165_DEATH_IMMUNITY);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_USE_NEW_IMBUE_ARROW);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DRAGON_DISCIPLE_SIZE_CHANGES);

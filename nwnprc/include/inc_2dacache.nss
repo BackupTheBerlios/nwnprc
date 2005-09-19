@@ -9,7 +9,7 @@
 const int PRC_SQL_ERROR = 0;
 const int PRC_SQL_SUCCESS = 1;
 
-string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = TRUE);
+string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = FALSE);
 void PRC_SQLInit();
 void PRC_SQLExecDirect(string sSQL);
 int PRC_SQLFetch();

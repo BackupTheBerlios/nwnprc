@@ -1,3 +1,12 @@
+/*
+
+    This include governs all the new itemproperties
+    Both restrictions and features
+
+
+
+*/
+
 
 
 const int ITEM_PROPERTY_USE_LIMITATION_ABILITY_SCORE      = 86;
@@ -9,6 +18,7 @@ const int ITEM_PROPERTY_USE_LIMITATION_SNEAK_ATTACK       = 91;
 const int ITEM_PROPERTY_USE_LIMITATION_GENDER             =150;
 const int ITEM_PROPERTY_SPEED_INCREASE = 134;
 const int ITEM_PROPERTY_SPEED_DECREASE = 135;
+const int ITEM_PROPERTY_AREA_OF_EFFECT = 100;
 
 
 const string PLAYER_SPEED_INCREASE = "player_speed_increase";
@@ -250,6 +260,57 @@ int CheckPRCLimitations(object oItem, object oPC)
                 nSpeedDecrease += iItemAdjust;
             SetLocalInt(oPC, PLAYER_SPEED_DECREASE, nSpeedDecrease);
             AssignCommand(oSkin, ApplySpeedDecrease(oPC));
+        }
+        else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_AREA_OF_EFFECT)
+        {
+            int nSubType  = GetItemPropertySubType(ipTest);
+            int nCost     = GetItemPropertyCostTable(ipTest);
+            int nAoEID    = StringToInt(Get2DACache("iprp_aoe", "AoEID", nSubType));
+            string sEnter = Get2DACache("iprp_aoe", "EnterScript", nSubType);
+            string sExit = Get2DACache("iprp_aoe", "ExitScript", nSubType);
+            string sHB = Get2DACache("iprp_aoe", "HBScript", nSubType);
+            //clean existing modification
+            effect eTest = GetFirstEffect(oPC);
+
+            while(GetIsEffectValid(eTest))
+            {
+                if(GetEffectCreator(eTest) == oItem
+                   && GetEffectType(eTest) == EFFECT_TYPE_AREA_OF_EFFECT)
+                    RemoveEffect(oPC, eTest);
+                eTest = GetNextEffect(oPC);
+            }
+            
+            AssignCommand(oItem, 
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT, 
+                    EffectAreaOfEffect(nAoEID, sEnter, sHB, sExit),
+                        oPC));
+            //wont get AoE if its directly ontop of it            
+            location lLoc = GetLocation(oPC);            
+            vector vPos = GetPositionFromLocation(lLoc);
+            vPos.x += 0.001;
+            lLoc = Location(GetAreaFromLocation(lLoc), vPos, 0.0);
+            //get te Aoe Object we just created
+            int i=1;
+            object oAoE = GetNearestObjectToLocation(OBJECT_TYPE_AREA_OF_EFFECT, lLoc, i);
+            if(!GetIsObjectValid(oAoE))
+                SendMessageToPC(oPC, "No AoE objects detected");
+            else
+            {
+                while(GetAreaOfEffectCreator(oAoE) != oItem
+                    && GetIsObjectValid(oAoE))
+                {
+                    i++;
+                    oAoE = GetNearestObjectToLocation(OBJECT_TYPE_AREA_OF_EFFECT, lLoc, i);
+                }
+                if(!GetIsObjectValid(oAoE))
+                    SendMessageToPC(oPC, "Unable to detect AoE created by "+GetName(oItem));
+                else
+                {
+                    SetLocalInt(oAoE, PRC_CASTERLEVEL_OVERRIDE, nCost);
+SendMessageToPC(oPC, "AoE is level "+IntToString(nCost));
+                }
+            }    
+            
         }
         ipTest = GetNextItemProperty(oItem);
     }

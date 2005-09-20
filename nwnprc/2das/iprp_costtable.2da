@@ -36,4 +36,5 @@
 32 IPRP_INCVALUE1   Item_Value_Increase  0          
 33 IPRP_INCVALUE2   Item_Value_Increase  0          
 34 IPRP_SPEED_ENH   Spd_Increase         0          
-35 IPRP_SPEED_DEC   Spd_Decrease         0          
+35 IPRP_SPEED_DEC   Spd_Decrease         0     
+36 IPRP_AOE         AreaOfEffect         0     

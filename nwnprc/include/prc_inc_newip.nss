@@ -3,6 +3,7 @@
 //will putput to log file if it doesnt work
 //relys on blueprints containing these itemproperties
 itemproperty ItemPropertyTrueCasterLevel(int nSpell, int nLevel);
+
 //new function to return a PRC metamagic itemproperty
 //will putput to log file if it doesnt work
 //relys on blueprints containing these itemproperties
@@ -21,6 +22,8 @@ itemproperty ItemPropertyLimitUseByArcaneSpellcasting(int nLevel);
 itemproperty ItemPropertyLimitUseByDivineSpellcasting(int nLevel);
 //not implemented
 itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice);
+//not implemented
+itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel);
 
 itemproperty ItemPropertyMetamagic(int nSpell, int nMetamagic)
 {
@@ -149,5 +152,13 @@ itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice)
     itemproperty ipReturn;
     if(!GetIsItemPropertyValid(ipReturn))
         PrintString("ItemPropertyLimitUseBySneakAttackDice "+IntToString(nDice)+" is not valid");
+    return ipReturn;
+}
+
+itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel)
+{
+    itemproperty ipReturn;
+    if(!GetIsItemPropertyValid(ipReturn))
+        PrintString("ItemPropertyLimitAreaOfEffect "+IntToString(nIPAoEID)+" "+IntToString(nLevel)+"is not valid");
     return ipReturn;
 }

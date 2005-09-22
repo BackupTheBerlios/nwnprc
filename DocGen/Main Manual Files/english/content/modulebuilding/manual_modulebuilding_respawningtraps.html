@@ -36,6 +36,55 @@ is if the creature is moving to disarm, flag, or recover one of the trapped invi
 	<ul><li>The trap could be destroyed entirely, for a one-shot trap.</li>
 	<li>The trap may stay around untill disarmed.</li>
 	<li>The trap may be destroyed for a time and respawn later.</li></ul></li></ul>
+<br>
+<div><h1>Examples</h1></div>
+<br>The simplest way for a builder to implement respawning ground traps is to create
+a set of invisible object placeables that replace themselves with traps in-game. This
+can either be done with a range of pre-fixed difficulties or dynamically integrated into
+a spawn system.
+<br>Below is an example of a pre-set difficulty script that will spawn a random trap.
+This is in the PRC as prgt_spawneg. Simply place it in the OnHeartbeat event of an invisible
+non-static non-plot placeable. This trap will not repsawn and will be a one-shot trap
+<pre>//An example OnHB script for an invisible placeable to spawn a ground trap
+#include "prc_alterations"
+#include "prgt_inc"
+void main()
+{
+    struct trap tTrap;
+    //this will use 5 as the CR for the trap
+    tTrap = CreateRandomTrap(5);
+    //add code in here to change things if you want to
+    //for example, to set the detect DC to be 25 use:
+    //tTrap.nDetectDC = 25;
+    CreateTrap(GetLocation(OBJECT_SELF), tTrap);
+    DestroyObject(OBJECT_SELF);
+}</pre>
+<br>If you want to have a respawning trap, you need to set nRespawnSeconds to be greater
+than zero, as shown in the script below. Also, this script will recreate the random
+trap each time it respawns.
+<pre>//An example OnHB script for an invisible placeable to spawn a ground trap
+#include "prc_alterations"
+#include "prgt_inc"
+void main()
+{
+    struct trap tTrap;
+    //this will use 5 as the CR for the trap
+    tTrap = CreateRandomTrap(5);
+    //add code in here to change things if you want to
+    //for example, to set the detect DC to be 25 use:
+    //tTrap.nDetectDC = 25;
+    tTrap.nRespawnSeconds = 600; //will respawn after 10 minutes
+    tTrap.nRespawnCR      = 5;   //will rerandomize the trap each time its respawned
+    CreateTrap(GetLocation(OBJECT_SELF), tTrap);
+    DestroyObject(OBJECT_SELF);
+}</pre>
+<br>
+<br>The full details of the variables in a trap are detailed in prgt_inc. The main
+upshot is that you can either have it cast a spell, complete with specified level, DC,
+and metamgic, or you can apply direct damage along with radius damage and almost any
+visual effect you can think of.
+<br>
+<br>
 </div>
 </body>
 </html>

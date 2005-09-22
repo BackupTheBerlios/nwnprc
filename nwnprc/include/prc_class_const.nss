@@ -141,3 +141,4 @@ const int CLASS_TYPE_MARSHAL                        = 59;
 const int CLASS_TYPE_CONTEMPLATIVE                        = 215;
 const int CLASS_TYPE_BLOOD_MAGUS                        = 153;
 const int CLASS_TYPE_RUNECASTER                        = 216;
+const int CLASS_TYPE_PURPLE_DRAGON_KNIGHT                        = 157;

@@ -15,7 +15,7 @@ import static prc.autodoc.Main.*;
 public class Data_2da{
 	// String matching pattern. Gets a block of non-whitespace (tab is not counted as whitespace here) OR " followed by any characters until the next "
 	private static Pattern pattern = Pattern.compile("[[\\S&&[^\"]][\t]]+|\"[^\"]+\"");//"[\\S&&[^\"]]+|\"[^\"]+\"");
-	private static Matcher matcher = pattern.matcher("");
+	//private static Matcher matcher = pattern.matcher("");
 
 	private HashMap<String, ArrayList<String>> mainData = new LinkedHashMap<String, ArrayList<String>>();
 	//private int entries = 0;
@@ -168,7 +168,24 @@ public class Data_2da{
 	 *                                    or the file does not contain any data
 	 */
 	public static Data_2da load2da(String filePath) throws IllegalArgumentException, TwoDAReadException{
+		return load2da(filePath, false);
+	}
+	
+	/**
+	 * Creates a new Data_2da on the 2da file specified.
+	 * 
+	 * @param filePath path to the 2da file to load 
+	 * @param bugCompat if this is <code>true</code>, ignores
+	 *                   departures from the 2da spec present in Bioware 2das
+	 * @return a Data_2da instance containing the read 2da
+	 *  
+	 * @throws IllegalArgumentException <code>filePath</code> does not specify a 2da file
+	 * @throws TwoDAReadException       reading the 2da file specified does not succeed,
+	 *                                    or the file does not contain any data
+	 */
+	public static Data_2da load2da(String filePath, boolean bugCompat) throws IllegalArgumentException, TwoDAReadException{
 		Data_2da toReturn;
+		Matcher matcher = pattern.matcher("");
 		String name, defaultValue = "";
 		
 		// Some paranoia checking for bad parameters
@@ -235,7 +252,7 @@ public class Data_2da{
 		
 		// Start the actual reading
 		try{
-			toReturn.createData(reader);
+			toReturn.createData(reader, matcher, bugCompat);
 		}catch(TwoDAReadException e){
 			throw new TwoDAReadException("Exception occurred when reading 2da file: " + toReturn.getName() + "\n" + e, e);
 		}
@@ -249,8 +266,11 @@ public class Data_2da{
 	 * does validity checking on the 2da while doing so.
 	 * 
 	 * @param reader Scanner that the method reads from 
+	 * @param matcher Matcher being used to parse the data read
+	 * @param bugCompat if this is <code>true</code>, ignores
+	 *                   departures from the 2da spec present in Bioware 2das
 	 */
-	private void createData(Scanner reader){
+	private void createData(Scanner reader, Matcher matcher, boolean bugCompat){
 		Scanner rowParser;
 		String data;
 		int line = 0;
@@ -272,12 +292,21 @@ public class Data_2da{
 			mainData.put(labels[i],  new ArrayList<String>());
 		}
 		
-		// Error if there are empty lines between the header and the data
-		if(!reader.hasNextLine() ||
-		   (data = reader.nextLine()).trim().equals(""))
-			throw new TwoDAReadException("No data in 2da file or blank lines following labels row!");
-		//data = reader.nextLine();
-		//if(data.trim)
+		// Error if there are empty lines between the header and the data or no lines at all
+		if(!reader.hasNextLine())
+			throw new TwoDAReadException("No data in 2da file!");
+		if((data = reader.nextLine()).trim().equals(""))
+			if(!bugCompat)
+				throw new TwoDAReadException("Blank lines following labels row!");
+			else
+				while(true){
+					if(reader.hasNextLine()){
+						data = reader.nextLine();
+						if(!data.trim().equals(""))
+							break;
+					}else
+						throw new TwoDAReadException("No data in 2da file!");
+				}
 		
 		while(true){
 			//rowParser = new Scanner(data);
@@ -590,14 +619,16 @@ public class Data_2da{
 				fileNames.add(param);
 		}
 		
-		// Read files from stdin is specified
-		Scanner scan = new Scanner(System.in);
-		String s;
-		while(scan.hasNext(pattern)){
-			s = scan.next(pattern);
-			if(s.charAt(0) == '"' && s.charAt(s.length() - 1) == '"')
-				s = s.substring(1, s.length() - 1);
-			fileNames.add(s);
+		// Read files from stdin if specified
+		if(readStdin){
+			Scanner scan = new Scanner(System.in);
+			String s;
+			while(scan.hasNext(pattern)){
+				s = scan.next(pattern);
+				if(s.charAt(0) == '"' && s.charAt(s.length() - 1) == '"')
+					s = s.substring(1, s.length() - 1);
+				fileNames.add(s);
+			}
 		}
 		
 		// Run the specified operation

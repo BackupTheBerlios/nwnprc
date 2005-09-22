@@ -592,8 +592,13 @@ public class Data_2da{
 		
 		// Read files from stdin is specified
 		Scanner scan = new Scanner(System.in);
-		while(scan.hasNext())
-			fileNames.add(scan.next());
+		String s;
+		while(scan.hasNext(pattern)){
+			s = scan.next(pattern);
+			if(s.charAt(0) == '"' && s.charAt(s.length() - 1) == '"')
+				s = s.substring(1, s.length() - 1);
+			fileNames.add(s);
+		}
 		
 		// Run the specified operation
 		if(compare){

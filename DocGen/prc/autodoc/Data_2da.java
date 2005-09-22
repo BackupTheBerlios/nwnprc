@@ -623,8 +623,8 @@ public class Data_2da{
 		if(readStdin){
 			Scanner scan = new Scanner(System.in);
 			String s;
-			while(scan.hasNext(pattern)){
-				s = scan.next(pattern);
+			while(scan.hasNextLine()){
+				s = scan.nextLine();
 				if(s.charAt(0) == '"' && s.charAt(s.length() - 1) == '"')
 					s = s.substring(1, s.length() - 1);
 				fileNames.add(s);
@@ -690,7 +690,8 @@ public class Data_2da{
 		                   "  -q    quiet mode\n"+
 		                   "  -s    no spinner\n"+
 		                   "  -     a line given as a lone parameter means that the list of files is\n" +
-		                   "        read from stdin in addition to the ones passed from command line\n"+
+		                   "        read from stdin in addition to the ones passed from command line.\n" +
+		                   "        The list passed in such manner should contain one filename per line\n"+
 						   "\n"+
 						   "  --help  prints this text\n"+
 						   "\n"+

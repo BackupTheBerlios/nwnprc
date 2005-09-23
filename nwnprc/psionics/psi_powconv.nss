@@ -81,7 +81,7 @@ void main()
                 // Set the tokens
                 int i;
                 for(i = 0; i < nMaxLevel; i++){
-                    AddChoice(GetStringByStrRef(LEVEL_STRREF_START - i)), // The minus is correct, these are stored in inverse order in the TLK. Whoops
+                    AddChoice(GetStringByStrRef(LEVEL_STRREF_START - i), // The minus is correct, these are stored in inverse order in the TLK. Whoops
                               i + 1
                               );
                 }

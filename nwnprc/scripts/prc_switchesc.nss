@@ -20,8 +20,14 @@
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-const int STAGE_ENTRY = 0;
-const int STAGE_VALUE = 1;
+const int STAGE_ENTRY               = 0;
+const int STAGE_SWITCHES            = 1;
+const int STAGE_SWITCHES_VALUE      = 2;
+const int STAGE_EPIC_SPELLS         = 3;
+const int STAGE_EPIC_SPELLS_ADD     = 4;
+const int STAGE_EPIC_SPELLS_REMOVE  = 5;
+const int STAGE_EPIC_SPELLS_CONTING = 6;
+const int STAGE_SHOPS               = 7;
 
 void main()
 {
@@ -64,7 +70,16 @@ void main()
         // variable named nStage determines the current conversation node
         if(nStage == STAGE_ENTRY)
         {       
-            SetCustomToken(99, "Select a variable to modify. \nSee prc_inc_switches for descriptions.");
+            SetCustomToken(99, "What do you want to do?");
+            AddChoice("Alter code switches.", 1);
+            AddChoice("Manage Epic Spells.", 2);
+            AddChoice("Purchase general items, such as scrolls or crafting materials.", 3);
+            AddChoice("Identify everything in my inventory.", 4);
+            array_set_int(oPC, "StagesSetup", nStage, TRUE); //this lets it know that its setup so dont set it up again
+        }
+        else if(nStage == STAGE_SWITCHES)
+        {       
+            SetCustomToken(99, "Select a variable to modify. \nSee prc_inc_switches for descriptions.\nIn most cases zero is off and any other value is on.");
             object oWP = GetWaypointByTag("PRC_Switch_Name_WP");
             if(!GetIsObjectValid(oWP))
                 oWP = CreateObject(OBJECT_TYPE_WAYPOINT, "NW_WAYPOINT001", GetStartingLocation(), FALSE, "PRC_Switch_Name_WP");
@@ -73,12 +88,14 @@ void main()
             {
                 AddChoice(array_get_string(oWP, "Switch_Name", i), i);
             }
+            AddChoice("Back", 99999);
             array_set_int(oPC, "StagesSetup", nStage, TRUE); //this lets it know that its setup so dont set it up again
         }
-        else if(nStage == STAGE_VALUE)
+        else if(nStage == STAGE_SWITCHES_VALUE)
         {
             string sVarName = GetLocalString(oPC, "VariableName");
             int nVal = GetPRCSwitch(sVarName);
+            AddChoice("Back", 99999);
             AddChoice("-10", -10);
             AddChoice("-5", -5);
             AddChoice("-4", -4);
@@ -91,11 +108,37 @@ void main()
             AddChoice("+4", 4);
             AddChoice("+5", 5);
             AddChoice("+10", 10);
-            AddChoice("Back", 99999);
             string sDescription = "CurrentValue is: "+IntToString(nVal)+"\n";
             sDescription += "CurrentVariable is: "+sVarName+"\n";
             sDescription += "Select an ammount to modify the variable by:";
             SetCustomToken(99, sDescription);            
+        }
+        else if(nStage == STAGE_EPIC_SPELLS)
+        {       
+            SetCustomToken(99, "Make a selection.");
+            AddChoice("Back", 99999);
+            AddChoice("Remove an Epic Spell from the radial menu.", 1);
+            AddChoice("Add an Epic Spell to the radial menu.", 2);
+            AddChoice("Manage any active contingencies.", 3);
+            array_set_int(oPC, "StagesSetup", nStage, TRUE); //this lets it know that its setup so dont set it up again
+        }
+        else if(nStage == STAGE_EPIC_SPELLS_ADD)
+        {       
+            SetCustomToken(99, "Choose the spell to add.");
+            AddChoice("Back", 99999);
+            array_set_int(oPC, "StagesSetup", nStage, TRUE); //this lets it know that its setup so dont set it up again
+        }
+        else if(nStage == STAGE_EPIC_SPELLS_REMOVE)
+        {       
+            SetCustomToken(99, "Choose the spell to remove.");
+            AddChoice("Back", 99999);
+            array_set_int(oPC, "StagesSetup", nStage, TRUE); //this lets it know that its setup so dont set it up again
+        }
+        else if(nStage == STAGE_EPIC_SPELLS_CONTING)
+        {       
+            SetCustomToken(99, "Choose an active contingency to dispel. Dispelling will preemptively end the contingency and restore the reserved epic spell slot for your use.");
+            AddChoice("Back", 99999);
+            array_set_int(oPC, "StagesSetup", nStage, TRUE); //this lets it know that its setup so dont set it up again
         }
         //add more stages for more nodes with Else If clauses
         
@@ -143,22 +186,65 @@ void main()
     // variable named nStage determines the current conversation node
     if(nStage == STAGE_ENTRY)
     {
-        //move to another stage based on response
-        SetLocalString(oPC, "VariableName", array_get_string(oPC, "ChoiceValues", nValue+GetLocalInt(oPC, "ChoiceOffset"))); 
-        nStage = STAGE_VALUE;
+        if(nChoice == 99999)
+            nStage = STAGE_ENTRY;
+        else if(nChoice == 1)
+            nStage = STAGE_SWITCHES;
+        else if(nChoice == 2)
+            nStage = STAGE_EPIC_SPELLS;
+        else if(nChoice == 3)
+            nStage = STAGE_SHOPS;
+        else if(nChoice == 4)
+            AssignCommand(oPC, TryToIDItems(oPC));
     }
-    else if(nStage == STAGE_VALUE)
+    else if(nStage == STAGE_SWITCHES)
     {
         if(nChoice == 99999)
-        {
             nStage = STAGE_ENTRY;
+        else
+        {
+            //move to another stage based on response
+            SetLocalString(oPC, "VariableName", array_get_string(oPC, "ChoiceValues", nValue+GetLocalInt(oPC, "ChoiceOffset"))); 
+            nStage = STAGE_SWITCHES_VALUE;
         }
+    }
+    else if(nStage == STAGE_SWITCHES_VALUE)
+    {
+        if(nChoice == 99999)
+            nStage = STAGE_SWITCHES;
         else
         {
             string sVarName = GetLocalString(oPC, "VariableName");
             SetPRCSwitch(sVarName, GetPRCSwitch(sVarName)+nChoice);
         }       
     }
+    else if(nStage == STAGE_EPIC_SPELLS)
+    {
+        if(nChoice == 99999)
+            nStage = STAGE_ENTRY;
+        else if (nChoice == 1)
+            nStage = STAGE_EPIC_SPELLS_ADD;
+        else if (nChoice == 2)
+            nStage = STAGE_EPIC_SPELLS_REMOVE;
+        else if (nChoice == 3)
+            nStage = STAGE_EPIC_SPELLS_CONTING;
+    }
+    else if(nStage == STAGE_EPIC_SPELLS_ADD)
+    {
+        if(nChoice == 99999)
+            nStage = STAGE_EPIC_SPELLS;
+    }
+    else if(nStage == STAGE_EPIC_SPELLS_REMOVE)
+    {
+        if(nChoice == 99999)
+            nStage = STAGE_EPIC_SPELLS;
+    }
+    else if(nStage == STAGE_EPIC_SPELLS_CONTING)
+    {
+        if(nChoice == 99999)
+            nStage = STAGE_EPIC_SPELLS;
+    }
+    
     // Clean up the old choice data if stage changed
     if(nStage != nOldStage)
     {

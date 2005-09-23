@@ -183,7 +183,8 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
                 nSkillRank += 2;
     }
     if(bSize)
-        nSkillRank += (PRCGetCreatureSize(oObject)-3)*(-4);
+        if(nSkill == SKILL_HIDE)//only hide is affected by size
+            nSkillRank += (PRCGetCreatureSize(oObject)-3)*(-4);
     if(!bAbilityMod)
     {
         string sAbility = Get2DACache("skills", "KeyAbility", nSkill);
@@ -321,6 +322,9 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
                     nSkillMod += 2;
                 if(GetHasFeat(FEAT_COURTLY_MAGOCRACY, oObject))
                     nSkillMod += 2;
+                if(GetHasFeat(FEAT_BARDIC_KNOWLEDGE, oObject))
+                    nSkillMod += GetLevelByClass(CLASS_TYPE_BARD, oObject)
+                        +GetLevelByClass(CLASS_TYPE_HARPER, oObject);
                 break;
             case SKILL_MOVE_SILENTLY:
                 nEpicFeat  = FEAT_EPIC_SKILL_FOCUS_MOVESILENTLY;

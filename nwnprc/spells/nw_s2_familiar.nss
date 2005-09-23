@@ -80,7 +80,7 @@ void ElementalFamiliar()
     {
         i++;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
-SendMessageToPC(OBJECT_SELF, "oSummon "+IntToString(i)+" = "+GetName(oSummon));
+        if(DEBUG) DoDebug("nw_s2_familiar - ElementalFamiliar(): oSummon " + IntToString(i) + " = " + GetName(oSummon), OBJECT_SELF);
     }
     DelayCommand(0.1, ElementalFamiliar2(iSize, iType));
 }
@@ -93,10 +93,10 @@ void ElementalFamiliar2(string iSize, string iType)
     {
         i++;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
-SendMessageToPC(OBJECT_SELF, "oSummon "+IntToString(i)+" = "+GetName(oSummon));
+        if(DEBUG) DoDebug("nw_s2_familiar - ElementalFamiliar2(): oSummon " + IntToString(i) + " = " + GetName(oSummon), OBJECT_SELF);
     }
     object oEle = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i-1);
-SendMessageToPC(OBJECT_SELF, "oEle "+IntToString(i-1)+" = "+GetName(oSummon));
+    if(DEBUG) DoDebug("nw_s2_familiar - ElementalFamiliar2(): oEle " + IntToString(i - 1) + " = " + GetName(oSummon), OBJECT_SELF);
     //need to check this worked
 
 
@@ -340,8 +340,7 @@ void main()
         {
             case 0:
                 //start conversation
-                SetLocalString(OBJECT_SELF, DYNCONV_SCRIPT, "prc_pnp_fam_conv");
-                ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
+                StartDynamicConversation("prc_pnp_fam_conv", oPC, TRUE, TRUE, TRUE, oPC);
                 return;
                 break;
             case FAMILIAR_PNP_BAT:

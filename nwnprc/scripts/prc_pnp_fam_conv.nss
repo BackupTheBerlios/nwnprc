@@ -1,118 +1,116 @@
+//:://////////////////////////////////////////////
+//:: Short description
+//:: prc_pnp_fam_conv
+//:://////////////////////////////////////////////
+/** @file
+    @todo Primo: Could you fill in the file comments
+                 and TLKify?
+
+
+    @author Primogenitor
+    @date   Created  - yyyy.mm.dd
+    @date   Modified - 2005.09.24 - Adapted to new
+            DynConvo system - Ornedan
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
 #include "prc_alterations"
-#include "inc_utility"
 #include "inc_dynconv"
+
+
+//////////////////////////////////////////////////
+/* Constant defintions                          */
+//////////////////////////////////////////////////
+
+const int STAGE_ENTRY  = 0;
+const int STAGE_SUMMON = 1;
+
+
+//////////////////////////////////////////////////
+/* Aid functions                                */
+//////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////
+/* Main function                                */
+//////////////////////////////////////////////////
 
 void main()
 {
-    object oPC = OBJECT_SELF;
-    int nValue = GetLocalInt(oPC, "DynConv_Var");
-            array_create(oPC, "ChoiceTokens");
-            array_create(oPC, "ChoiceValues");
+    object oPC = GetPCSpeaker();
+    /* Get the value of the local variable set by the conversation script calling
+     * this script. Values:
+     * DYNCONV_ABORTED     Conversation aborted
+     * DYNCONV_EXITED      Conversation exited via the exit node
+     * DYNCONV_SETUP_STAGE System's reply turn
+     * 0                   Error - something else called the script
+     * Other               The user made a choice
+     */
+    int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
+    // The stage is used to determine the active conversation node.
+    // 0 is the entry node.
+    int nStage = GetStage(oPC);
 
-    if(nValue == 0)
+    // Check which of the conversation scripts called the scripts
+    if(nValue == 0) // All of them set the DynConv_Var to non-zero value, so something is wrong -> abort
         return;
-    if(nValue > 0)
-        nValue --;//correct for 1 based to zero based
 
-    SetupTokens();
-    if(nValue == -1)
+    if(nValue == DYNCONV_SETUP_STAGE)
     {
-        int nStage = GetLocalInt(oPC, "Stage");
-        array_create(oPC, "StagesSetup");
-        if(array_get_int(oPC, "StagesSetup", nStage))
-            return;
-// INSERT CODE HERE FOR THE HEADER
-// AND PC RESPONSES
-// token no 99 = header
-// array named ChoiceTokens for strings
-// array named ChoiceValues for ints associated with responces
-        if(nStage == 0)
+        // Check if this stage is marked as already set up
+        // This stops list duplication when scrolling
+        if(!GetIsStageSetUp(nStage, oPC))
         {
-            SetCustomToken(99, "Please select a familiar.\nAll familiars will cost 100GP to summon.");
+            if(nStage == STAGE_ENTRY)
+            {
+                SetHeader("Please select a familiar.\nAll familiars will cost 100GP to summon.");
 
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), "Bat");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 1);
-//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-//                "Cat");
-//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 2);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), "Hawk");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 3);
-//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-//                "Lizard");
-//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 4);
-//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-//                "Owl");
-//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 5);
-//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-//                "Rat");
-//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 6);
-//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-//                "Raven");
-//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 7);
-//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-//                "Snake");
-//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 8);
-//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-//                "Toad");
-//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 9);
-//            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-//                "Weasel");
-//            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 10);
-            array_set_int(oPC, "StagesSetup", nStage, TRUE);
+                AddChoice("Bat",    1, oPC);
+//                AddChoice("Cat",    2, oPC);
+                AddChoice("Hawk",   3, oPC);
+//                AddChoice("Lizard", 4, oPC);
+//                AddChoice("Owl",    5, oPC);
+//                AddChoice("Rat",    6, oPC);
+//                AddChoice("Raven",  7, oPC);
+//                AddChoice("Snake",  8, oPC);
+//                AddChoice("Toad",   9, oPC);
+//                AddChoice("Weasel", 10, oPC);
+
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_SUMMON)
+            {
+                SetHeader("Familiar selected, summoning...");
+            }
         }
-        else
-        {
-            SetCustomToken(99, "Familiar selected, summoning...");
-        }
-        //do token setup
+
+        // Do token setup
         SetupTokens();
-        SetCustomToken(110, GetStringByStrRef(16824212));//finish
-        SetCustomToken(111, GetStringByStrRef(16824202));//please wait
-        SetCustomToken(112, GetStringByStrRef(16824204));//next
-        SetCustomToken(113, GetStringByStrRef(16824203));//previous
+        SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
+    }
+    else if(nValue == DYNCONV_EXITED)
+    {
+        // End of conversation cleanup
+    }
+    else if(nValue == DYNCONV_ABORTED)
+    {
+        // Abort conversation cleanup
+    }
+    else
+    {
+        int nChoice = GetChoice(oPC);
+        if(nStage == STAGE_ENTRY)
+        {
+            nStage = STAGE_SUMMON;
+            SetPersistantLocalInt(oPC, "PnPFamiliarType", nValue);
+            ActionUseFeat(FEAT_SUMMON_FAMILIAR, OBJECT_SELF);
+            // Take 100 gold - the cost of obtaining a familiar as per PnP
+            TakeGoldFromCreature(100, oPC, TRUE);
+        }
 
-// END OF INSERT FOR THE HEADER
-        return;
+        // Store the stage value. If it has been changed, this clears out the choices
+        SetStage(nStage, oPC);
     }
-    else if(nValue == -2)
-    {
-      //end of conversation cleanup
-        DeleteLocalInt(oPC, "DynConv_Var");
-        DeleteLocalString(oPC, DYNCONV_SCRIPT);
-        array_delete(oPC, "ChoiceTokens");
-        array_delete(oPC, "ChoiceValues");
-        array_delete(oPC, "StagesSetup");
-        DeleteLocalInt(oPC, "Stage");
-        return;
-    }
-    else if(nValue == -3)
-    {
-      //abort conversation cleanup
-        DeleteLocalInt(oPC, "DynConv_Var");
-        DeleteLocalString(oPC, DYNCONV_SCRIPT);
-        array_delete(oPC, "ChoiceTokens");
-        array_delete(oPC, "ChoiceValues");
-        array_delete(oPC, "StagesSetup");
-        DeleteLocalInt(oPC, "Stage");
-        return;
-    }
-    nValue += GetLocalInt(oPC, "ChoiceOffset");
-    nValue = array_get_int(oPC, "ChoiceValues", nValue);
-    int nStage = GetLocalInt(oPC, "Stage");
-    if(nStage == 0)
-    {
-        //nValue is the int associated with the response selected
-        //move to another stage based on responce
-        nStage++;
-        SetPersistantLocalInt(oPC, "PnPFamiliarType", nValue);
-        ActionUseFeat(FEAT_SUMMON_FAMILIAR, OBJECT_SELF);
-        //take gold
-        TakeGoldFromCreature(100, oPC, TRUE);
-        array_delete(oPC, "ChoiceTokens");
-        array_delete(oPC, "ChoiceValues");
-        array_create(oPC, "ChoiceTokens");
-        array_create(oPC, "ChoiceValues");
-        DeleteLocalInt(oPC, "ChoiceOffset");
-    }
-    SetLocalInt(oPC, "Stage", nStage);
 }

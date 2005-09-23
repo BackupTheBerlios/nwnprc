@@ -20,7 +20,7 @@ int StartingConditional()
     if(GetLocalInt(oPC, "DynConv_Waiting"))
         return FALSE;
     string sScript = GetLocalString(oPC, DYNCONV_SCRIPT);
-    SetLocalInt(oPC, "DynConv_Var", DYNCONV_SETUP_STAGE);
+    SetLocalInt(oPC, DYNCONV_VARIABLE, DYNCONV_SETUP_STAGE);
     ExecuteScript(sScript, OBJECT_SELF);
     if(GetLocalInt(oPC, "DynConv_Waiting"))
         return FALSE;

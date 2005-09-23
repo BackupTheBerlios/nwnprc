@@ -87,9 +87,9 @@ void main()
         // Abort conversation cleanup
         // Add any other locals set through this conversation
     }
+    // Handle PC responses
     else
     {
-        // INSERT CODE HERE FOR PC RESPONSES
         // variable named nChoice is the value of the player's choice as stored when building the choice list
         // variable named nStage determines the current conversation node
         int nChoice = GetChoice(oPC);

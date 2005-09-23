@@ -34,7 +34,6 @@ void DeletePRCLocalInts(object oSkin);
 // Generic includes
 #include "prcsp_engine"
 #include "inc_utility"
-#include "inc_dynconv"
 #include "x2_inc_switches"
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -226,8 +225,7 @@ void EvalPRCFeats(object oPC)
         && !GetLocalInt(oSkin, "nPCShifted") //so it doenst pop up on shifting
         )
     {
-        SetLocalString(oPC, DYNCONV_SCRIPT, "prc_pnp_school");
-        AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
+        ExecuteScript("prc_pnp_shcc_s", oPC);
     }
 
     //switch convo feat

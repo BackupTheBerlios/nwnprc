@@ -188,6 +188,33 @@ void AllowAbort(object oPC = OBJECT_INVALID);
  */
 int GetIsStageSetUp(int nStage, object oPC = OBJECT_INVALID);
 
+/**
+ * Marks a stage as being set up. This means that when
+ * the conversation script is called to set up the
+ * stage, nothing is done and old values are used instead.
+ * This is useful for scrolling lists, as CPU is not
+ * wasted on rebuilding the exact same list.
+ *
+ * @param nStage The stage to set marker for
+ * @param oPC    The PC involved in the conversation. If left to
+ *               default, GetPCSpeaker is used.
+ */
+void MarkStageSetUp(int nStage, object oPC = OBJECT_INVALID);
+
+/**
+ * Marks the stage as not set up. This is used to undo
+ * the effects of MarkStageSetUp() when there is
+ * need to rerun the stage's builder.
+ * An example of such situation would be returning to
+ * a stage from another.
+ *
+ * @param nStage The stage to unset marker for
+ * @param oPC    The PC involved in the conversation. If left to
+ *               default, GetPCSpeaker is used.
+ */
+void MarkStageNotSetUp(int nStage, object oPC = OBJECT_INVALID);
+
+
 
 //////////////////////////////////////////////////
 /* Constant definitions                         */

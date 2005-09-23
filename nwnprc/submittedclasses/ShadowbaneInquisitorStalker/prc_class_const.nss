@@ -138,5 +138,5 @@ const int CLASS_TYPE_HAVOC_MAGE         = 214;
 const int CLASS_TYPE_BAELNORN                   = 199;
 const int CLASS_TYPE_SWASHBUCKLER                   = 60;
 const int CLASS_TYPE_MARSHAL                        = 59;
-const int CLASS_TYPE_SHADOWBANE_INQUISITOR = 215;
-const int CLASS_TYPE_SHADOWBANE_STALKER = 216;
+const int CLASS_TYPE_SHADOWBANE_INQUISITOR = 184;
+const int CLASS_TYPE_SHADOWBANE_STALKER = 185;

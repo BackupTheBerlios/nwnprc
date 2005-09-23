@@ -1,12 +1,12 @@
 //:://////////////////////////////////////////////
-//:: Dynamic Conversation: End conversation
-//:: dynconv_end
+//:: Dynamic Conversation: Show end node?
+//:: dynconv_end_w
 //:://////////////////////////////////////////////
 /** @file
-    Run when the PC exits the conversation via
-    the exit node.
+    Determines whether the PC is allowed to see
+    the conversation exit node.
 
-    @author Primogenitor
+    @author Ornedan
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -14,10 +14,12 @@
 #include "inc_dynconv"
 
 
-void main()
+int StartingConditional()
 {
     object oPC = GetPCSpeaker();
     
-    // Run the exit handler
-    _DynConvInternal_ExitedConvo(oPC, FALSE);
+    if(GetLocalInt(oPC, "DynConv_AllowExit"))
+    	return TRUE;
+    else
+    	return FALSE;
 }

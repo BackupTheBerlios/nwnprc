@@ -1,9 +1,22 @@
+//:://////////////////////////////////////////////
+//:: PRC Switch manipulation conversation
+//:: prc_switches
+//:://////////////////////////////////////////////
+/** @file
+    Starts a dynamic conversation for changing
+    values of the PRC switches.
+
+
+    @author Primogenitor
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
 #include "inc_dynconv"
 
 
 void main()
 {
     object oPC = OBJECT_SELF;
-    SetLocalString(oPC, DYNCONV_SCRIPT, "prc_switchesc");
-    ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
+    StartDynamicConversation("prc_switchesc", oPC, TRUE, TRUE, FALSE, oPC);
 }

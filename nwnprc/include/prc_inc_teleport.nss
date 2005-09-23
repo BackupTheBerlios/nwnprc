@@ -320,15 +320,11 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
     // conversation to find out where the user wants to go
     else
     {
-        if(bForce) AssignCommand(oPC, ClearAllActions(TRUE));
-
         SetLocalString(oPC, "PRC_TeleportTargetSelection_CallbackScript", sCallbackScript);
         SetLocalString(oPC, "PRC_TeleportTargetSelection_ReturnStoreName", sCallbackVar);
         SetLocalInt(oPC, "PRC_TeleportTargetSelection_ReturnAsMetalocation", bMeta);
-        SetLocalInt(oPC, "PRC_TeleportTargetSelection_DisallowConversationAbort", bForce);
 
-        SetLocalString(oPC, DYNCONV_SCRIPT, "prc_teleprt_conv");
-        AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
+        StartDynamicConversation("prc_teleprt_conv", oPC, bForce, bForce, bForce, oPC);
     }
 }
 

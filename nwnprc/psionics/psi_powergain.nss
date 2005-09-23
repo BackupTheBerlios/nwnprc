@@ -1,6 +1,24 @@
+//:://////////////////////////////////////////////
+//:: Psionic Power gain calculation script
+//:: psi_powergain
+//:://////////////////////////////////////////////
+/** @file
+    This script determines whether a given character
+    has power slots left unfilled. If the character
+    does have some, it launches the power gain
+    conversation.
+
+
+    @date Modified - 2005.09.23
+ */
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
 #include "prc_alterations"
 #include "prc_class_const"
 #include "psi_inc_psifunc"
+#include "inc_dynconv"
+
 
 int CheckMissingPowers(object oPC, int nClass)
 {
@@ -13,10 +31,10 @@ int CheckMissingPowers(object oPC, int nClass)
 
     if(nCurrentPowers < nMaxPowers)
     {
-        SetLocalString(oPC, DYNCONV_SCRIPT, "psi_powconv");
+        // Mark the class for which the PC is to gain powers and start the conversation
         SetLocalInt(oPC, "nClass", nClass);
-        AssignCommand(oPC, ClearAllActions());
-        AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
+        StartDynamicConversation("psi_powconv", oPC, FALSE, FALSE, TRUE, oPC);
+
         return TRUE;
     }
     return FALSE;

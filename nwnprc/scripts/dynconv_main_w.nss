@@ -1,3 +1,16 @@
+//:://////////////////////////////////////////////
+//:: Dynamic Conversation: Show header node
+//:: dynconv_main_w
+//:://////////////////////////////////////////////
+/** @file
+    Determines whether to show the "NPC" response
+    text or the wait node.
+
+    @author Primogenitor
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
 #include "inc_dynconv"
 
 
@@ -7,7 +20,7 @@ int StartingConditional()
     if(GetLocalInt(oPC, "DynConv_Waiting"))
         return FALSE;
     string sScript = GetLocalString(oPC, DYNCONV_SCRIPT);
-    SetLocalInt(oPC, "DynConv_Var", -1);
+    SetLocalInt(oPC, "DynConv_Var", DYNCONV_SETUP_STAGE);
     ExecuteScript(sScript, OBJECT_SELF);
     if(GetLocalInt(oPC, "DynConv_Waiting"))
         return FALSE;

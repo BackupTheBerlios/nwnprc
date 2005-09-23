@@ -1,17 +1,51 @@
-//sets tokens for conversation
-// 99 is main line
-//100-109 is choices
-//also sets locals equal to each token
-//locals follow "TOKEN_#" pattern
-void SetupTokens();
+//:://////////////////////////////////////////////
+//:: Dynamic Conversation System include
+//:: inc_dynconv
+//:://////////////////////////////////////////////
+/** @file
 
-//add a choice to the dynamic conversation system
-void AddChoice(string sText, int nValue, object oPC = OBJECT_INVALID);
+
+
+    @author Primogenitor
+    @date   2005.09.23 - Rebuilt the system - Ornedan
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
 
 /**
- * Call this when exiting conversation.
+ * Sets the reply tokens for the PC.
+ *
+ * @param oPC The PC involved in the conversation. If left
+ *            to default, GetPCSpeaker is used
  */
-void ExitConvo();
+void SetupTokens(object oPC = OBJECT_INVALID);
+
+/**
+ * Builds the local variable name for a token.
+ *
+ * @param nTokenID One of the DYNCONV_TOKEN_* constants
+ */
+string GetTokenIDString(int nTokenID);
+
+/**
+ * Sets the dynamic conversation header. ie, the "NPC"'s reply.
+ *
+ * @param sText The text to set the header to
+ */
+void SetHeader(string sText);
+
+/**
+ * Add a reply choice to be displayed. The replies are displayed in
+ * the same order as they are added.
+ *
+ * @param sText  The text of the choice
+ * @param nValue The numeric value of the choice. This is what will be
+ *               returned by GetChoice()
+ * @param oPC    The PC involved in the conversation. If left
+ *               to default, GetPCSpeaker is used
+ */
+void AddChoice(string sText, int nValue, object oPC = OBJECT_INVALID);
 
 /**
  * Sets the custom token at nTokenID to be the given string and stores
@@ -24,13 +58,145 @@ void ExitConvo();
  */
 void SetToken(int nTokenID, string sString, object oPC = OBJECT_SELF);
 
+/**
+ * Sets the default values for the Exit, Wait, Next and Previous
+ * tokens. The values will be as follows, or their translated
+ * equivalents should a non-english TLK be used.
+ *
+ * Exit = "Exit"
+ * Wait = "Please wait"
+ * Next = "Next"
+ * Previous = "Previous"
+ */
+void SetDefaultTokens();
 
-string GetTokenIDString(int nTokenID);
+/**
+ * Changes the conversation stage. If the new stage given is
+ * the same as the current, nothing happens. Otherwise
+ * the stage is changed and the choices stored for the old
+ * stage are deleted.
+ *
+ * @param nNewStage The stage to enter
+ * @param oPC       The PC involved in the conversation. If left
+ *                  to default, GetPCSpeaker is used
+ */
+void SetStage(int nNewStage, object oPC = OBJECT_INVALID);
+
+/**
+ * Gets the current stage of the conversation.
+ *
+ * @param oPC The PC involved in the conversation. If left
+ *            to default, GetPCSpeaker is used
+ * @return    The current stage of the conversation, as previously
+ *            set via SetStage() or 0 if no calls to SetStage()
+ *            have been done yet.
+ */
+int GetStage(object oPC = OBJECT_INVALID);
+
+/**
+ * Gets the value of the choice selected by the PC.
+ *
+ * @param oPC The PC involved in the conversation. If left
+ *            to default, GetPCSpeaker is used
+ * @return    The value of the choice the PC made, as set
+ *            by a call to AddChoice().
+ */
+int GetChoice(object oPC = OBJECT_INVALID);
+
+/**
+ * Gets the text of the choice selected by the PC.
+ *
+ * @param oPC The PC involved in the conversation. If left
+ *            to default, GetPCSpeaker is used
+ * @return    The text of the choice the PC made, as set
+ *            by a call to AddChoice().
+ */
+string GetChoiceText(object oPC = OBJECT_INVALID);
+
+/**
+ * Starts a dynamic conversation. Results are unspecified if called while
+ * already inside a dynamic conversation.
+ *
+ * @param sConversationScript The script to use for controlling the conversation.
+ * @param oPC                 The PC that is to be doing the responding in the conversation.
+ * @param bAllowExit          If TRUE, the PC PC is allowed to exit the conversation via the exit
+ *                            node. Otherwise, the exit node is not shown. This can be changed later
+ *                            on using AllowExit()
+ * @param bAllowAbort         If TRUE, the PC is allowed to aborts the conversation by moving / doing
+ *                            some other action or being involved in combat. This can be changed later
+ *                            on using AllowAbort()
+ * @param bForceStart         If TRUE, the PC's actions are cleared, so the conversation starts immediately
+ *                            and cannot be avoided by the PC cancelling the action while it is in the queue.
+ * @param oConverseWith       The object to speak the "NPC" side of the conversation. Usually, this is also
+ *                            the PC, which will be used when this parameter is left to it's default value.
+ */
+void StartDynamicConversation(string sConversationScript, object oPC,
+                              int bAllowExit = TRUE, int bAllowAbort = FALSE,
+                              int bForceStart = FALSE, object oConverseWith = OBJECT_INVALID);
+
+/**
+ * Starts using another dynamic conversation script while inside a
+ * dynamic conversation. Should only be called from a dynamic conversation
+ * script.
+ * The current conversation's script and allow exit/abort variables are
+ * saved. When the conversation entered via this call exits, the system
+ * returns to the current conversation, with stage being the one specified
+ * in the call to this function.
+ * NOTE: Any stage setup markers are not stored for the return.
+ *
+ * @param sConversationToEnter The conversation script to use in the branch
+ * @param nStageToReturnTo     The value of stage variable upong return
+ *                             from the branch.
+ * @param bAllowExit           The branch's initial exit allowance state. See
+ *                             StartDynamicConversation() for more details.
+ * @param bAllowAbort          The branch's initial abort allowance state. See
+ *                             StartDynamicConversation() for more details.
+ * @param oPC                  The PC involved in the conversation. If left
+ *                             to default, GetPCSpeaker is used.
+ */
+void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo,
+                               int bAllowExit = TRUE, int bAllowAbort = FALSE,
+                               object oPC = OBJECT_INVALID);
+
+/**
+ * Marks the current dynconvo as exitable via the exit conversation
+ * choice.
+ *
+ * @param bChangeExitTokenText If this is TRUE, then changes the text on
+ *                             DYNCONV_TOKEN_EXIT to "Exit"
+ * @param oPC                  The PC involved in the conversation. If left
+ *                             to default, GetPCSpeaker is used.
+ */
+void AllowExit(int bChangeExitTokenText = TRUE, object oPC = OBJECT_INVALID);
+
+/**
+ * Marks the conversation as abortable, meaning that the player is
+ * allowed to leave the conversation via means other than the
+ * exit conversation choice.
+ *
+ * @param oPC The PC involved in the conversation. If left to
+ *            default, GetPCSpeaker is used.
+ */
+void AllowAbort(object oPC = OBJECT_INVALID);
+
+/**
+ * Checks whether the given stage is marked as already set up.
+ *
+ * @param nStage The stage to check
+ * @param oPC    The PC involved in the conversation. If left to
+ *               default, GetPCSpeaker is used.
+ */
+int GetIsStageSetUp(int nStage, object oPC = OBJECT_INVALID);
 
 
-//const int DYNCONV_EXITED        =
+//////////////////////////////////////////////////
+/* Constant definitions                         */
+//////////////////////////////////////////////////
+
+const int DYNCONV_EXITED        = -2;
 const int DYNCONV_ABORTED       = -3;
-//const int DYNCONV_SETUP_STAGE   =
+const int DYNCONV_SETUP_STAGE   = -1;
+
 const int DYNCONV_TOKEN_HEADER  = 99;
 const int DYNCONV_TOKEN_REPLY_0 = 100;
 const int DYNCONV_TOKEN_REPLY_1 = 101;
@@ -46,16 +212,20 @@ const int DYNCONV_TOKEN_EXIT    = 110;
 const int DYNCONV_TOKEN_WAIT    = 111;
 const int DYNCONV_TOKEN_NEXT    = 112;
 const int DYNCONV_TOKEN_PREV    = 113;
-const int DYNCONV_TOKEN_MIN     = 99;
-const int DYNCONV_TOKEN_MAX     = 113;
-//const int DYNCONV_
-//const int DYNCONV_
-//const int DYNCONV_
+const int DYNCONV_MIN_TOKEN     = 99;
+const int DYNCONV_MAX_TOKEN     = 113;
 
-const string DYNCONV_SCRIPT     = "DynConv_Script";
-const string DYNCONV_VARIABLE   = "DynConv_Var";
-const string DYNCONV_TOKEN_BASE = "DynConv_TOKEN";
+const int DYNCONV_STRREF_PLEASE_WAIT = 16824202; // "Please wait"
+const int DYNCONV_STRREF_PREVIOUS    = 16824203; // "Previous"
+const int DYNCONV_STRREF_NEXT        = 16824204; // "Next"
+const int DYNCONV_STRREF_ABORT_CONVO = 16824212; // "Abort"
+const int DYNCONV_STRREF_EXIT_CONVO  = 78;       // "Exit"
 
+const string DYNCONV_SCRIPT         = "DynConv_Script";
+const string DYNCONV_VARIABLE       = "DynConv_Var";
+const string DYNCONV_STAGE          = "DynConv_Stage";
+const string DYNCONV_TOKEN_BASE     = "DynConv_TOKEN";
+const string DYNCONV_CHOICEOFFSET   = "ChoiceOffset";
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -65,19 +235,34 @@ const string DYNCONV_TOKEN_BASE = "DynConv_TOKEN";
 
 
 //////////////////////////////////////////////////
+/* Internal function prototypes                 */
+//////////////////////////////////////////////////
+
+void _DynConvInternal_ExitedConvo(object oPC, int bAbort);
+void _DynConvInternal_PreScript(object oPC);
+void _DynConvInternal_PostScript(object oPC);
+object _DynConvInternal_ResolvePC(object oPC);
+
+
+//////////////////////////////////////////////////
 /* Function Definitions                         */
 //////////////////////////////////////////////////
 
-void SetupTokens()
+void SetupTokens(object oPC = OBJECT_INVALID)
 {
+    oPC = _DynConvInternal_ResolvePC(oPC);
+    int nOffset = GetLocalInt(oPC, DYNCONV_CHOICEOFFSET);
+    // Set tokens. Assumes that the tokens used are a continuous block.
     int i;
-    object oPC = GetPCSpeaker();
-    int nOffset = GetLocalInt(oPC, "ChoiceOffset");
-    //choices
-    for (i=0;i<10;i++)
+    for (i = 0; i < 10; i++)
     {
-        SetToken(100+i, array_get_string(oPC, "ChoiceTokens", nOffset+i), oPC);
+        SetToken(DYNCONV_TOKEN_REPLY_0 + i, array_get_string(oPC, "ChoiceTokens", nOffset + i), oPC);
     }
+}
+
+void SetHeader(string sText)
+{
+    SetCustomToken(DYNCONV_TOKEN_HEADER, sText);
 }
 
 string GetTokenIDString(int nTokenID)
@@ -87,22 +272,9 @@ string GetTokenIDString(int nTokenID)
 
 void AddChoice(string sText, int nValue, object oPC = OBJECT_INVALID)
 {
-    oPC = oPC == OBJECT_INVALID ? GetPCSpeaker() : oPC;
+    oPC = _DynConvInternal_ResolvePC(oPC);
     array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), sText);
     array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), nValue);
-}
-
-void CleanUp(object oPC = OBJECT_INVALID)
-{
-    array_delete(oPC, "ChoiceTokens");
-    array_delete(oPC, "ChoiceValues");
-
-    DeleteLocalInt(oPC, "DynConv_Var");
-    DeleteLocalInt(oPC, "Stage");
-    DeleteLocalString(oPC, "DynConv_Script");
-    int i;
-    for(i = 0; i <= DYNCONV_TOKEN_MAX; i++)
-        DeleteLocalString(oPC, GetTokenIDString(i));
 }
 
 void SetToken(int nTokenID, string sString, object oPC = OBJECT_SELF)
@@ -112,8 +284,218 @@ void SetToken(int nTokenID, string sString, object oPC = OBJECT_SELF)
     // Set a marker on the PC for the reply conditional scripts to check
     SetLocalString(oPC, GetTokenIDString(nTokenID), sString);
 }
-/*
-void StartDynamicConversation(string sConversationScript, object oConverseWith = OBJECT_SELF)
 
-void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo)
-*/
+void SetDefaultTokens()
+{
+    SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(DYNCONV_STRREF_EXIT_CONVO));
+    SetCustomToken(DYNCONV_TOKEN_WAIT, GetStringByStrRef(DYNCONV_STRREF_PLEASE_WAIT));
+    SetCustomToken(DYNCONV_TOKEN_NEXT, GetStringByStrRef(DYNCONV_STRREF_NEXT));
+    SetCustomToken(DYNCONV_TOKEN_PREV, GetStringByStrRef(DYNCONV_STRREF_PREVIOUS));
+}
+
+void _DynConvInternal_ExitedConvo(object oPC, int bAbort)
+{
+    // Restart convo if not allowed to leave yet
+    if((bAbort && !GetLocalInt(oPC, "DynConv_AllowAbort")) || // Allowed to abort?
+       (!bAbort && !GetLocalInt(oPC, "DynConv_AllowExit"))    // Allowed to exit?
+       )
+    {
+        AssignCommand(oPC, ClearAllActions(TRUE));
+        AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
+    }
+    else{
+        // Run the conversation script's exit handler
+        SetLocalInt(oPC, "DynConv_Var", DYNCONV_EXITED);
+        ExecuteScript(GetLocalString(oPC, DYNCONV_SCRIPT), OBJECT_SELF);
+
+        // If there are entries remaining in the stack, pop the previous conversation
+        if(GetLocalInt(oPC, "DynConv_Stack"))
+        {
+            // Clean up after the previous conversation
+            array_delete(oPC, "ChoiceTokens");
+            array_delete(oPC, "ChoiceValues");
+            array_delete(oPC, "StagesSetup");
+            DeleteLocalInt(oPC, "ChoiceOffset");
+
+            // Pop the data from the stack
+            int nStack      = GetLocalInt(oPC, "DynConv_Stack");
+            int nStage      = GetLocalInt(oPC, "DynConv_Stack_ReturnToStage_" + IntToString(nStack));
+            int nAllowExit  = GetLocalInt(oPC, "DynConv_Stack_AllowExit_"     + IntToString(nStack));
+            int nAllowAbort = GetLocalInt(oPC, "DynConv_Stack_AllowAbort_"    + IntToString(nStack));
+            string sScript = GetLocalString(oPC, "DynConv_Stack_Script_" + IntToString(nStack));
+
+            // Delete the stack level
+            DeleteLocalInt(oPC, "DynConv_Stack_ReturnToStage_" + IntToString(nStack));
+            DeleteLocalInt(oPC, "DynConv_Stack_AllowExit_"     + IntToString(nStack));
+            DeleteLocalInt(oPC, "DynConv_Stack_AllowAbort_"    + IntToString(nStack));
+            DeleteLocalString(oPC, "DynConv_Stack_Script_" + IntToString(nStack));
+            if(nStack - 1 > 0) SetLocalInt(oPC, "DynConv_Stack", nStack - 1);
+            else DeleteLocalInt(oPC, "DynConv_Stack");
+
+            // Store the date in the conversation variables
+            SetLocalInt(oPC, DYNCONV_STAGE, nStage);
+            SetLocalInt(oPC, "DynConv_AllowExit", nAllowExit);
+            SetLocalInt(oPC, "DynConv_AllowAbort", nAllowAbort);
+            SetLocalString(oPC, DYNCONV_SCRIPT, sScript);
+
+            // Restart the conversation
+            AssignCommand(oPC, ClearAllActions(TRUE));
+            AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
+        }
+        // Fully exited the conversation. Clean up
+        else
+        {
+            array_delete(oPC, "ChoiceTokens");
+            array_delete(oPC, "ChoiceValues");
+            array_delete(oPC, "StagesSetup");
+
+            DeleteLocalInt(oPC, "ChoiceOffset");
+            DeleteLocalInt(oPC, "DynConv_AllowExit");
+            DeleteLocalInt(oPC, "DynConv_AllowAbort");
+
+            DeleteLocalInt(oPC, DYNCONV_VARIABLE);
+            DeleteLocalInt(oPC, DYNCONV_STAGE);
+            DeleteLocalString(oPC, DYNCONV_SCRIPT);
+            int i;
+            for(i = DYNCONV_MIN_TOKEN; i <= DYNCONV_MAX_TOKEN; i++)
+                DeleteLocalString(oPC, GetTokenIDString(i));
+        }
+    }
+}
+
+void _DynConvInternal_PreScript(object oPC)
+{
+    // Create the choice arrays
+    array_create(oPC, "ChoiceTokens");
+    array_create(oPC, "ChoiceValues");
+}
+
+void _DynConvInternal_PostScript(object oPC)
+{
+
+}
+
+object _DynConvInternal_ResolvePC(object oPC)
+{
+    return oPC == OBJECT_INVALID ? GetPCSpeaker() : oPC; // If no valid PC reference was passed, get it via GetPCSpeaker
+}
+
+void SetStage(int nNewStage, object oPC = OBJECT_INVALID)
+{
+    oPC = _DynConvInternal_ResolvePC(oPC);
+    // No need to act if the stage wasn't changed
+    if(nNewStage == GetLocalInt(oPC, DYNCONV_STAGE))
+        return;
+
+    SetLocalInt(oPC, DYNCONV_STAGE, nNewStage);
+
+    // Clear the choice data
+    array_delete(oPC, "ChoiceTokens");
+    array_delete(oPC, "ChoiceValues");
+    DeleteLocalInt(oPC, "ChoiceOffset");
+}
+
+int GetStage(object oPC = OBJECT_INVALID)
+{
+    oPC = _DynConvInternal_ResolvePC(oPC);
+    return GetLocalInt(oPC, DYNCONV_STAGE);
+}
+
+int GetChoice(object oPC = OBJECT_INVALID)
+{
+    oPC = _DynConvInternal_ResolvePC(oPC);
+    return array_get_int(oPC, "ChoiceValues", GetLocalInt(oPC, DYNCONV_VARIABLE) // Number of choice
+                                              - 1                                // Which begins at index 1 instead of the index 0 we need here
+                                              + GetLocalInt(oPC, "ChoiceOffset"));
+}
+
+string GetChoiceText(object oPC = OBJECT_INVALID)
+{
+    oPC = _DynConvInternal_ResolvePC(oPC);
+    return array_get_string(oPC, "ChoiceValues", GetLocalInt(oPC, DYNCONV_VARIABLE) // Number of choice
+                                                 - 1                                // Which begins at index 1 instead of the index 0 we need here
+                                                 + GetLocalInt(oPC, "ChoiceOffset"));
+}
+
+void StartDynamicConversation(string sConversationScript, object oPC,
+                              int bAllowExit = TRUE, int bAllowAbort = FALSE,
+                              int bForceStart = FALSE, object oConverseWith = OBJECT_INVALID)
+{
+    // By default, the PC converses with itself
+    oConverseWith = oConverseWith == OBJECT_INVALID ? oPC : oConverseWith;
+
+    // Store the exit control variables
+    SetLocalInt(oPC, "DynConv_AllowExit", bAllowExit);
+    SetLocalInt(oPC, "DynConv_AllowAbort", bAllowAbort);
+
+    // Initiate conversation
+    if(bForceStart) AssignCommand(oPC, ClearAllActions(TRUE));
+    SetLocalString(oPC, DYNCONV_SCRIPT, sConversationScript);
+    AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
+}
+
+void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo,
+                               int bAllowExit = TRUE, int bAllowAbort = FALSE,
+                               object oPC = OBJECT_INVALID)
+{
+    oPC = _DynConvInternal_ResolvePC(oPC);
+    // Get current stack level
+    int nStack = GetLocalInt(oPC, "DynConv_Stack") + 1;
+
+    // Push the return data onto the stack
+    SetLocalInt(oPC, "DynConv_Stack_ReturnToStage_" + IntToString(nStack), nStageToReturnTo);
+    SetLocalInt(oPC, "DynConv_Stack_AllowExit_" + IntToString(nStack),
+                GetLocalInt(oPC, "DynConv_AllowExit"));
+    SetLocalInt(oPC, "DynConv_Stack_AllowAbort_" + IntToString(nStack),
+                GetLocalInt(oPC, "DynConv_AllowAbort"));
+    SetLocalString(oPC, "DynConv_Stack_Script_" + IntToString(nStack),
+                   GetLocalString(oPC, DYNCONV_SCRIPT));
+    SetLocalInt(oPC, "DynConv_Stack", nStack);
+
+    // Clean the current conversation data
+    array_delete(oPC, "ChoiceTokens");
+    array_delete(oPC, "ChoiceValues");
+    DeleteLocalInt(oPC, DYNCONV_STAGE);
+
+    // Set the new conversation as active
+    SetLocalString(oPC, DYNCONV_SCRIPT, sConversationToEnter);
+}
+
+void AllowExit(int bChangeExitTokenText = TRUE, object oPC = OBJECT_INVALID)
+{
+    SetLocalInt(_DynConvInternal_ResolvePC(oPC), "DynConv_AllowExit", TRUE);
+    if(bChangeExitTokenText)
+        SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(DYNCONV_STRREF_EXIT_CONVO));
+}
+
+void AllowAbort(object oPC = OBJECT_INVALID)
+{
+    SetLocalInt(_DynConvInternal_ResolvePC(oPC), "DynConv_AllowAbort", TRUE);
+}
+
+int GetIsStageSetUp(int nStage, object oPC = OBJECT_INVALID)
+{
+    oPC = _DynConvInternal_ResolvePC(oPC);
+
+    if(!array_exists(oPC, "StagesSetup"))
+        return FALSE;
+    return array_get_int(oPC, "StagesSetup", nStage);
+}
+
+void MarkStageSetUp(int nStage, object oPC = OBJECT_INVALID)
+{
+    oPC = _DynConvInternal_ResolvePC(oPC);
+
+    if(!array_exists(oPC, "StagesSetup"))
+        array_create(oPC, "StagesSetup");
+    array_set_int(oPC, "StagesSetup", nStage, TRUE);
+}
+
+void MarkStageNotSetUp(int nStage, object oPC = OBJECT_INVALID)
+{
+    oPC = _DynConvInternal_ResolvePC(oPC);
+
+    if(!array_exists(oPC, "StagesSetup"))
+        return;
+    array_set_int(oPC, "StagesSetup", nStage, FALSE);
+}

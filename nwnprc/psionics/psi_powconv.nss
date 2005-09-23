@@ -2,34 +2,47 @@
 //:: Psionic Power gain conversation script
 //:: psi_powconv
 //:://////////////////////////////////////////////
+/** @file
+    This script controls the psionic power selection
+    conversation.
+
+
+    @author Primogenitor - Orinigal
+    @author Ornedan - Modifications
+    @date   Modified - 2005.03.13
+    @date   Modified - 2005.09.23
+*/
 //:://////////////////////////////////////////////
-//:: Created By: Primogenitor
-//:: Last Modified On: 13.03.2005
-//:: Last Modified By: Ornedan
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
 #include "prc_alterations"
 #include "psi_inc_psifunc"
+#include "inc_dynconv"
 
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-const int STRREF_LEVELLIST_HEADER   = 16824206;
-const int STRREF_POWERLIST_HEADER1  = 16824207;
-const int STRREF_POWERLIST_HEADER2  = 16824208;
-const int STRREF_SELECTED_HEADER1   = 16824209;
-const int STRREF_SELECTED_HEADER2   = 16824210;
-const int STRREF_END_HEADER         = 16824211;
-const int STRREF_ABORT_CONVO_SELECT = 16824212;
-const int STRREF_END_CONVO_SELECT   = 16824213;
-const int LEVEL_STRREF_START        = 16824809;
+const int STAGE_SELECT_LEVEL        = 0;
+const int STAGE_SELECT_POWER        = 1;
+const int STAGE_CONFIRM_SELECTION   = 2;
+const int STAGE_ALL_POWERS_SELECTED = 3;
+
+const int CHOICE_BACK_TO_LSELECT    = -1;
+
 const int STRREF_BACK_TO_LSELECT    = 16824205;
-const int STRREF_PLEASE_WAIT        = 16824202;
-const int STRREF_PREVIOUS           = 16824203;
-const int STRREF_NEXT               = 16824204;
+const int STRREF_LEVELLIST_HEADER   = 16824206;
+const int STRREF_POWERLIST_HEADER1  = 16824207; // "Select a power to gain.\n You can select"
+const int STRREF_POWERLIST_HEADER2  = 16824208; // "more powers"
+const int STRREF_SELECTED_HEADER1   = 16824209; // "You have selected:"
+const int STRREF_SELECTED_HEADER2   = 16824210; // "Is this correct?"
+const int STRREF_END_HEADER         = 16824211; // "You will be able to select more powers after you gain another level in a psionic caster class."
+const int STRREF_END_CONVO_SELECT   = 16824213; // "Finish"
+const int LEVEL_STRREF_START        = 16824809;
+const int STRREF_YES                = 4752;     // "Yes"
+const int STRREF_NO                 = 4753;     // "No"
+
 
 //////////////////////////////////////////////////
 /* Function defintions                          */
@@ -37,291 +50,216 @@ const int STRREF_NEXT               = 16824204;
 
 void main()
 {
-    object oPC = OBJECT_SELF;
-    int nValue = GetLocalInt(oPC, "DynConv_Var");
-    array_create(oPC, "ChoiceTokens");
-    array_create(oPC, "ChoiceValues");
+    object oPC = GetPCSpeaker();
+    int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
+    int nStage = GetStage(oPC);
 
     int nClass = GetLocalInt(oPC, "nClass");
-    /*
-    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
-    sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
-    string sPowerFile = Get2DACache("classes", "FeatsTable", nClass);
-    sPowerFile = GetStringLeft(sPowerFile, 4)+"psipw"+GetStringRight(sPowerFile, GetStringLength(sPowerFile)-8);
-    */
     string sPsiFile = GetPsionicFileName(nClass);
     string sPowerFile = GetPsiBookFileName(nClass);
 
-    if(nValue == 0)
+    // Check which of the conversation scripts called the scripts
+    if(nValue == 0) // All of them set the DynConv_Var to non-zero value, so something is wrong -> abort
         return;
-    if(nValue > 0)
-        nValue --;//correct for 1 based to zero based
 
-
-    if(nValue == -1)
+    if(nValue == DYNCONV_SETUP_STAGE)
     {
-        int nStage = GetLocalInt(oPC, "Stage");
-        //PrintString("Building header, stage = " + IntToString(nStage));
-// INSERT CODE HERE FOR THE HEADER
-// token no 50
-        // Level selection stage
-        if(nStage == 0){
-            // Set the header text
-            string sToken = GetStringByStrRef(STRREF_LEVELLIST_HEADER);
-            SetCustomToken(99, sToken);
+        // Check if this stage is marked as already set up
+        // This stops list duplication when scrolling
+        if(!GetIsStageSetUp(nStage, oPC))
+        {
+            // Level selection stage
+            if(nStage == STAGE_SELECT_LEVEL)
+            {
+                SetHeader(GetStringByStrRef(STRREF_LEVELLIST_HEADER));
 
-            // Set the tokens
-            int nManifestLevel = GetLevelByClass(nClass, oPC);
-                nManifestLevel += nClass == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0;
-            int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel - 1));
-            int i;
-            for(i = 0; i < nMaxLevel; i++){
-                array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                                 GetStringByStrRef(LEVEL_STRREF_START - i)); // The minus is correct, these are stored in inverse order
-                array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i + 1);
+                // Determine maximum power level
+                int nManifestLevel = GetLevelByClass(nClass, oPC);
+                    nManifestLevel += nClass == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0;
+                int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel - 1));
+
+                // Set the tokens
+                int i;
+                for(i = 0; i < nMaxLevel; i++){
+                    AddChoice(GetStringByStrRef(LEVEL_STRREF_START - i)), // The minus is correct, these are stored in inverse order in the TLK. Whoops
+                              i + 1
+                              );
+                }
+
+                // Set the next, previous and wait tokens to default values
+                SetDefaultTokens();
+                // Set the convo quit text to "Abort"
+                SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(DYNCONV_STRREF_ABORT_CONVO));
+            }
+            // Power selection stage
+            if(nStage == STAGE_SELECT_POWER)
+            {
+                int nCurrentPowers = GetPowerCount(oPC, nClass);
+                int nMaxPowers = GetMaxPowerCount(oPC, nClass);
+                string sToken = GetStringByStrRef(STRREF_POWERLIST_HEADER1) + " " + //"Select a power to gain.\n You can select "
+                                IntToString(nMaxPowers-nCurrentPowers) + " " +
+                                GetStringByStrRef(STRREF_POWERLIST_HEADER2);        //" more powers"
+                SetHeader(sToken);
+
+                // Set the first choice to be return to level selection stage
+                AddChoice(GetStringByStrRef(STRREF_BACK_TO_LSELECT), CHOICE_BACK_TO_LSELECT, oPC);
+
+                // Determine maximum power level
+                int nManifestLevel = GetLevelByClass(nClass, oPC);
+                    nManifestLevel += nClass == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0;
+                int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel-1));
+
+
+                int nPowerLevelToBrowse = GetLocalInt(oPC, "nPowerLevelToBrowse");
+                int i, nPowerLevel;
+                string sFeatID;
+                for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
+                {
+                    nPowerLevel = StringToInt(Get2DACache(sPowerFile, "Level", i));
+                    // Skip any powers of too low level
+                    if(nPowerLevel < nPowerLevelToBrowse){
+                        continue;
+                    }
+                    /* Due to the way the power list 2das are structured, we know that once
+                     * the level of a read power is greater than the maximum manifestable
+                     * it'll never be lower again. Therefore, we can skip reading the
+                     * powers that wouldn't be shown anyway.
+                     */
+                    if(nPowerLevel > nPowerLevelToBrowse){
+                        break;
+                    }
+                    sFeatID = Get2DACache(sPowerFile, "FeatID", i);
+                    if(sFeatID != ""                                           // Non-blank row
+                     && !GetHasFeat(StringToInt(sFeatID), oPC)                 // PC does not already posses the power
+                     && (!StringToInt(Get2DACache(sPowerFile, "HasPrereqs", i))// Power has no prerequisites
+                      || CheckPowerPrereqs(StringToInt(sFeatID), oPC)          // Or the PC possess the prerequisites
+                         )
+                       )
+                    {
+                        AddChoice(GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name", i))), i, oPC);
+                    }
+                }
+
+                MarkStageSetUp(STAGE_SELECT_POWER, oPC);
+            }
+            // Selection confirmation stage
+            else if(nStage == STAGE_CONFIRM_SELECTION)
+            {
+                // Build the confirmantion query
+                string sToken = GetStringByStrRef(STRREF_SELECTED_HEADER1) + "\n\n"; // "You have selected:"
+                int nPower = GetLocalInt(oPC, "nPower");
+                int nFeatID = StringToInt(Get2DACache(sPowerFile, "FeatID", nPower));
+                sToken += GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name", nPower)))+"\n";
+                sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeatID)))+"\n\n";
+                sToken += GetStringByStrRef(STRREF_SELECTED_HEADER2); // "Is this correct?"
+                SetHeader(sToken);
+
+                AddChoice(GetStringByStrRef(STRREF_YES), TRUE, oPC); // "Yes"
+                AddChoice(GetStringByStrRef(STRREF_NO), FALSE, oPC); // "No"
+            }
+            // Conversation finished stage
+            else if(nStage == STAGE_ALL_POWERS_SELECTED)
+            {
+                SetHeader(GetStringByStrRef(STRREF_END_HEADER));
+                // Set the convo quit text to "Finish"
+                SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(STRREF_END_CONVO_SELECT));
+                AllowExit(FALSE, oPC);
+            }
+        }
+        /* Hack - In the power selection stage, do not rebuild the list on
+         * returning from confirmation dialog where the answer was "No"
+         * and restore the offset to be the same as on entering the confirmation
+         * dialog.
+         */
+        else
+        {
+            if(nStage == STAGE_SELECT_POWER)
+                SetLocalInt(oPC, DYNCONV_CHOICEOFFSET, GetLocalInt(oPC, "PowerListChoiceOffset"));
+        }
+
+        // Do token setup
+        SetupTokens();
+    }
+    else if(nValue == DYNCONV_EXITED)
+    {
+        // End of conversation cleanup
+        DeleteLocalInt(oPC, "nClass");
+        DeleteLocalInt(oPC, "nPower");
+        DeleteLocalInt(oPC, "nPowerLevelToBrowse");
+        DeleteLocalInt(oPC, "PowerListChoiceOffset");
+
+        // Restart the convo to pick next power if needed
+        ExecuteScript("psi_powergain", oPC);
+    }
+    else if(nValue == DYNCONV_ABORTED)
+    {
+        // This section should never be run, since the dynconvo system is supposed to transparently
+        // handle restarting the conversation on an abort
+        if(DEBUG) DoDebug("psi_powconv: ERROR: Conversation abort section run");
+    }
+    // Handle PC response
+    else
+    {
+        int nChoice = GetChoice(oPC);
+        if(nStage == DYNCONV_SETUP_STAGE)
+        {
+            SetLocalInt(oPC, "nPowerLevelToBrowse", nChoice);
+            nStage = STAGE_SELECT_POWER;
+        }
+        else if(nStage == STAGE_SELECT_POWER)
+        {
+            if(nChoice == CHOICE_BACK_TO_LSELECT)
+            {
+                nStage = DYNCONV_SETUP_STAGE;
+                DeleteLocalInt(oPC, "nPowerLevelToBrowse");
+            }
+            else
+            {
+                SetLocalInt(oPC, "nPower", nChoice);
+                // Store offset so that if the user decides not to take the power,
+                // we can return to the same page in the power list instead of resetting to the beginning
+                SetLocalInt(oPC, "PowerListChoiceOffset", GetLocalInt(oPC, DYNCONV_CHOICEOFFSET));
+                nStage = STAGE_CONFIRM_SELECTION;
+            }
+            MarkStageNotSetUp(STAGE_SELECT_POWER, oPC);
+        }
+        else if(nStage == STAGE_CONFIRM_SELECTION)
+        {
+            if(nChoice == TRUE)
+            {
+                int nPower = GetLocalInt(oPC, "nPower");
+                object oSkin = GetPCSkin(oPC);
+
+                // Add the power feat(s) to the PC's hide
+                // First power feat
+                int nPowerFeatIP = StringToInt(Get2DACache(sPowerFile, "IPFeatID", nPower));
+                itemproperty ipFeat = ItemPropertyBonusFeat(nPowerFeatIP);
+                IPSafeAddItemProperty(oSkin, ipFeat);
+                // Second power feat
+                string sPowerFeat2IP = Get2DACache(sPowerFile, "IPFeatID2", nPower);
+                if(sPowerFeat2IP != "")
+                {
+                    ipFeat = ItemPropertyBonusFeat(StringToInt(sPowerFeat2IP));
+                    IPSafeAddItemProperty(oSkin, ipFeat);
+                }
+                // Raise the power count
+                if(!persistant_array_exists(oPC, "PsiPowerCount"))
+                    persistant_array_create(oPC, "PsiPowerCount");
+                persistant_array_set_int(oPC, "PsiPowerCount", nClass, persistant_array_get_int(oPC, "PsiPowerCount", nClass) + 1);
+
+                // Delete the stored offset
+                DeleteLocalInt(oPC, "PowerListChoiceOffset");
             }
 
-            // Set the convo quit text to "Abort"
-            SetCustomToken(110, GetStringByStrRef(STRREF_END_CONVO_SELECT));
-
-            //PrintString("Showed level selection.\nnMaxLevel = " + IntToString(nMaxLevel));
-        }
-        // Power selection stage
-        if(nStage == 1 && GetLocalInt(oPC, "Stage1Setup") == FALSE)
-        {
-            //select a power to gain
             int nCurrentPowers = GetPowerCount(oPC, nClass);
             int nMaxPowers = GetMaxPowerCount(oPC, nClass);
-            //string sToken = "Select a power to gain.\n You can select "+IntToString(nMaxPowers-nCurrentPowers)+" more powers";
-            string sToken = GetStringByStrRef(STRREF_POWERLIST_HEADER1) + " " +
-                            IntToString(nMaxPowers-nCurrentPowers) + " " +
-                            GetStringByStrRef(STRREF_POWERLIST_HEADER2);
-            SetCustomToken(99, sToken);
-
-            // Set the first choice to be return to level selection stage
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                             GetStringByStrRef(STRREF_BACK_TO_LSELECT));
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), -1);
-
-            int nManifestLevel = GetLevelByClass(nClass, oPC);
-                nManifestLevel += nClass == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0;
-            int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel-1));
-            int nPowerLevelToBrowse = GetLocalInt(oPC, "nPowerLevelToBrowse");
-            //PrintString("Building power list for level " + IntToString(nPowerLevelToBrowse));
-            int i;
-            //SpawnScriptDebugger();
-            for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
-            {
-                int nPowerLevel = StringToInt(Get2DACache(sPowerFile, "Level", i));
-                // Skip any powers of too low level
-                if(nPowerLevel < nPowerLevelToBrowse){
-                    //PrintString("Skipping " + IntToString(i));
-                    continue;
-                }
-                /* Due to the way the power list 2das are structured, we know that once
-                 * the level of a read power is greater than the maximum manifestable
-                 * it'll never be lower again. Therefore, we can skip reading the
-                 * powers that wouldn't be shown anyway.
-                 */
-                if(nPowerLevel > nPowerLevelToBrowse){
-                    //PrintString("Quitting seek at " + IntToString(i));
-                    break;
-                }
-                string sFeatID = Get2DACache(sPowerFile, "FeatID", i);
-//                int nPowerFeatIP= StringToInt(Get2DACache(sPowerFile, "IPFeatID", i));
-//                int nPowerSpell = StringToInt(Get2DACache(sPowerFile, "SpellID", i));
-                if(sFeatID != ""
-                  && !GetHasFeat(StringToInt(sFeatID), oPC)
-                  && (!StringToInt(Get2DACache(sPowerFile, "HasPrereqs", i))
-                    || CheckPowerPrereqs(StringToInt(sFeatID), oPC)
-                     )
-                  )
-                {
-//                    array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-//                        GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID))));
-                    array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                        GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name", i))));
-
-                    array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), i);
-                }
-            }
-            SetLocalInt(oPC, "Stage1Setup", TRUE);
+            if(nCurrentPowers >= nMaxPowers)
+                nStage = STAGE_ALL_POWERS_SELECTED;
+            else
+                nStage = STAGE_SELECT_POWER;
         }
-        // Selection confirmation stage
-        else if(nStage == 2)
-        {
-            //PrintString("Building confirmation menu");
-            //string sToken = "You have selected:\n\n";
-            string sToken = GetStringByStrRef(STRREF_SELECTED_HEADER1) + "\n\n";
-            int nPower = GetLocalInt(oPC, "nPower");
-            int nFeatID = StringToInt(Get2DACache(sPowerFile, "FeatID", nPower));
-//            sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID)))+"\n";
-            sToken += GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name", nPower)))+"\n";
-            sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeatID)))+"\n\n";
-//            sToken += "Is this correct?";
-            sToken += GetStringByStrRef(STRREF_SELECTED_HEADER2);
-            SetCustomToken(99, sToken);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "Yes");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 1);
-            array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"),
-                "No");
-            array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), 2);
-        }
-        // Conversation finished stage
-        else if(nStage == 3)
-        {
-            //PrintString("Building convo finished menu");
-            //string sToken = "You will be able to select more powers after you gain another level in a psionic caster class.";
-            string sToken = GetStringByStrRef(STRREF_END_HEADER);
-            SetCustomToken(99, sToken);
-            // Set the convo quit text to "Abort"
-            SetCustomToken(110, GetStringByStrRef(STRREF_ABORT_CONVO_SELECT));
-        }
-        //do token setup
-        int nOffset = GetLocalInt(oPC, "ChoiceOffset");
-        int i;
-        for(i=nOffset; i<nOffset+10; i++)
-        {
-            string sValue = array_get_string(oPC, "ChoiceTokens" ,i);
-            SetLocalString(oPC, "TOKEN10"+IntToString(i-nOffset), sValue);
-            SetCustomToken(100+i-nOffset, sValue);
-        }
-        SetCustomToken(111, GetStringByStrRef(STRREF_PLEASE_WAIT));//please wait
-        SetCustomToken(112, GetStringByStrRef(STRREF_NEXT));//next
-        SetCustomToken(113, GetStringByStrRef(STRREF_PREVIOUS));//previous
 
-        /*for(i = 0; i < array_get_size(oPC, "ChoiceTokens"); i++){
-            PrintString("ChoiceToken" + IntToString(i) + ": " + array_get_string(oPC, "ChoiceTokens" ,i) + " = " + IntToString(array_get_int(oPC, "ChoiceValues", i)));
-        }*/
-
-// END OF INSERT FOR THE HEADER
-        return;
+        // Store the stage value. If it has been changed, this clears out the choices
+        SetStage(nStage, oPC);
     }
-    else if(nValue == -2)
-    {
-        //PrintString("Exiting convo");
-        //end of conversation cleanup
-        DeleteLocalInt(oPC, "nClass");
-        array_delete(oPC, "ChoiceTokens");
-        array_delete(oPC, "ChoiceValues");
-        DeleteLocalInt(oPC, "ChoiceOffset");
-        DeleteLocalInt(oPC, "Stage");
-        DeleteLocalInt(oPC, "Stage1Setup");
-        DeleteLocalInt(oPC, "nPowerFeat");
-        DeleteLocalInt(oPC, "nPowerLevelToBrowse");
-        DeleteLocalInt(oPC, "PowerListChoiceOffset");
-        int i;
-        for(i = 99; i <= 110; i++)
-            DeleteLocalString(oPC, "TOKEN" + IntToString(i));
-        //restart the convo to pick next power if needed
-        ExecuteScript("psi_powergain", oPC);
-        return;
-    }
-    else if(nValue == -3)
-    {
-        //PrintString("Convo aborted");
-        //abort conversation cleanup
-        DeleteLocalInt(oPC, "nClass");
-        array_delete(oPC, "ChoiceTokens");
-        array_delete(oPC, "ChoiceValues");
-        DeleteLocalInt(oPC, "ChoiceOffset");
-        DeleteLocalInt(oPC, "Stage");
-        DeleteLocalInt(oPC, "Stage1Setup");
-        DeleteLocalInt(oPC, "nPowerFeat");
-        DeleteLocalInt(oPC, "nPowerLevelToBrowse");
-        DeleteLocalInt(oPC, "PowerListChoiceOffset");
-        int i;
-        for(i = 99; i <= 110; i++)
-            DeleteLocalString(oPC, "TOKEN" + IntToString(i));
-        //restart the conversation
-        AssignCommand(oPC, ClearAllActions());
-        ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
-        //restart the convo to pick next power if needed
-        ExecuteScript("psi_powergain", oPC);
-        return;
-    }
-    nValue += GetLocalInt(oPC, "ChoiceOffset");
-    nValue = array_get_int(oPC, "ChoiceValues", nValue);
-    int nStage = GetLocalInt(oPC, "Stage");
-    if(nStage == 0){
-        SetLocalInt(oPC, "nPowerLevelToBrowse", nValue);
-        nStage++;
-
-        array_delete(oPC, "ChoiceTokens");
-        array_delete(oPC, "ChoiceValues");
-        array_create(oPC, "ChoiceTokens");
-        array_create(oPC, "ChoiceValues");
-        //PrintString("Selected level to browse: " + IntToString(nValue));
-    }
-    else if(nStage == 1)
-    {
-        if(nValue == -1)
-        {
-            nStage--;
-            DeleteLocalInt(oPC, "nPowerLevelToBrowse");
-            //PrintString("Returning to level browsing");
-        }
-        else
-        {
-            SetLocalInt(oPC, "nPower", nValue);
-            SetLocalInt(oPC, "PowerListChoiceOffset", GetLocalInt(oPC, "ChoiceOffset"));
-            nStage++;
-            //PrintString("Going to power selection confirmation");
-        }
-
-        array_delete(oPC, "ChoiceTokens");
-        array_delete(oPC, "ChoiceValues");
-        array_create(oPC, "ChoiceTokens");
-        array_create(oPC, "ChoiceValues");
-        DeleteLocalInt(oPC, "ChoiceOffset");
-        DeleteLocalInt(oPC, "Stage1Setup");
-    }
-    else if(nStage == 2)
-    {
-        //PrintString("Power selection choice done");
-        if(nValue == 1) // feat selected
-        {
-            //PrintString("Power taken");
-            int nPower = GetLocalInt(oPC, "nPower");
-            object oSkin = GetPCSkin(oPC);
-            //first feat
-            int nPowerFeatIP = StringToInt(Get2DACache(sPowerFile, "IPFeatID", nPower));
-            itemproperty ipFeat = ItemPropertyBonusFeat(nPowerFeatIP);
-            IPSafeAddItemProperty(oSkin, ipFeat);
-            //second feat
-            string sPowerFeat2IP = Get2DACache(sPowerFile, "IPFeatID2", nPower);
-            if(sPowerFeat2IP != "")
-            {
-                ipFeat = ItemPropertyBonusFeat(StringToInt(sPowerFeat2IP));
-                IPSafeAddItemProperty(oSkin, ipFeat);
-            }
-            if(!persistant_array_exists(oPC, "PsiPowerCount"))
-                persistant_array_create(oPC, "PsiPowerCount");
-            persistant_array_set_int(oPC, "PsiPowerCount", nClass, persistant_array_get_int(oPC, "PsiPowerCount", nClass)+1);
-
-            // Delete the offset
-            DeleteLocalInt(oPC, "ChoiceOffset");
-        }
-        // Restore the old offset if no power was selected, so the user returns to the same position in the power list
-        else
-        {
-            SetLocalInt(oPC, "ChoiceOffset", GetLocalInt(oPC, "PowerListChoiceOffset"));
-        }
-
-        int nCurrentPowers = GetPowerCount(oPC, nClass);
-        int nMaxPowers = GetMaxPowerCount(oPC, nClass);
-        if(nCurrentPowers >= nMaxPowers)
-            nStage++;
-        else
-            nStage--;
-
-        DeleteLocalInt(oPC, "nPowerFeat");
-
-        array_delete(oPC, "ChoiceTokens");
-        array_delete(oPC, "ChoiceValues");
-        array_create(oPC, "ChoiceTokens");
-        array_create(oPC, "ChoiceValues");
-    }
-    SetLocalInt(oPC, "Stage", nStage);
 }

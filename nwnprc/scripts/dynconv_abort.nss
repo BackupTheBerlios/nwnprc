@@ -3,7 +3,7 @@
 //:: dynconv_abort
 //:://////////////////////////////////////////////
 /** @file
-    Ran when the conversation is exited through
+    Run when the conversation is exited through
     being aborted.
 
     @author Primogenitor
@@ -17,7 +17,7 @@
 void main()
 {
     object oPC = GetPCSpeaker();
-    string sScript = GetLocalString(oPC, DYNCONV_SCRIPT);
-    SetLocalInt(oPC, DYNCONV_VARIABLE, DYNCONV_ABORTED);
-    ExecuteScript(sScript, OBJECT_SELF);
+    
+    // Run the exit handler
+    _DynConvInternal_ExitedConvo(oPC, TRUE);
 }

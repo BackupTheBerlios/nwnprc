@@ -35,7 +35,7 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE);
 // to simulate spellbooks.
 void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0,
     int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID,
-    int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oTarget=OBJECT_INVALID);
+    int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oOverrideTarget=OBJECT_INVALID);
 
 // Include Files:
 #include "prc_alterations"
@@ -64,7 +64,7 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE)
 
 void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0,
     int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID,
-    int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oTarget=OBJECT_INVALID)
+    int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oOverrideTarget=OBJECT_INVALID)
 {
     //if its a hostile spell, clear the action queue
     //this stops people stacking hostile spells to be instacast
@@ -84,6 +84,8 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE, iBaseDC));
     if (nClass != CLASS_TYPE_INVALID)
         ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE, nClass));
+    if (nMetaMagic != METAMAGIC_NONE)
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_METAMAGIC_OVERRIDE, nMetaMagic));
     if (bUseOverrideTargetLocation)
     {
         ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_LOCATION_OVERRIDE, TRUE));
@@ -100,7 +102,9 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
     DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));
 
     //cast the spell
-    if (GetIsObjectValid(oTarget))
+    if (GetIsObjectValid(oOverrideTarget))
+        ActionCastSpellAtObject(iSpell, oOverrideTarget, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+    else if (GetIsObjectValid(oTarget))
         ActionCastSpellAtObject(iSpell, oTarget, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
     else
         ActionCastSpellAtLocation(iSpell, lLoc, nMetaMagic, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
@@ -114,6 +118,8 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
     if (nClass != CLASS_TYPE_INVALID)
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE));
+    if (nMetaMagic != METAMAGIC_NONE)
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_METAMAGIC_OVERRIDE));
     if (bUseOverrideTargetLocation)
     {
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_LOCATION_OVERRIDE));

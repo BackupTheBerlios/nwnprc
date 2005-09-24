@@ -9,9 +9,7 @@ void main()
     struct trap tTrap = GetLocalTrap(OBJECT_SELF, "TrapSettings");
     if(tTrap.nSpellID)
     {
-        SetLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE, tTrap.nSpellLevel);
-        ActionCastSpellAtObject(tTrap.nSpellID, oTarget, METAMAGIC_NONE, TRUE);
-        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));
+        ActionCastSpell(tTrap.nSpellID, tTrap.nSpellLevel, 0, tTrap.nSpellDC, tTrap.nSpellMetamagic, CLASS_TYPE_INVALID, FALSE, FALSE, oTarget);
     }
     else
     {

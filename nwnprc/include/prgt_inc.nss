@@ -27,6 +27,11 @@ const int TRAP_EVENT_TRIGGERED = 1;
 const int TRAP_EVENT_DISARMED = 2;
 const int TRAP_EVENT_RECOVERED = 3;    //this is in addition to being disarmed
 
+void VoidCreateTrap(location lLoc, struct trap tTrap)
+{
+    CreateTrap(lLoc, tTrap);
+}
+
 object CreateTrap(location lLoc, struct trap tTrap)
 {
     effect eDetect = EffectAreaOfEffect(tTrap.nDetectAOE, "prgt_det_ent", "prgt_det_hb", "prgt_det_ext");
@@ -165,6 +170,19 @@ void DisarmTrap(object oTrap)
     object oDetect = GetLocalObject(oTrap, "Detect");
     DestroyObject(oDetect);
     DestroyObject(oTrap);
+    struct trap tTrap = GetLocalTrap(oTrap, "TrapSettings");
+    if(tTrap.nRespawnSeconds)
+    {
+        struct trap tNewTrap = tTrap;
+        if(tTrap.nRespawnRandomCR)
+        {
+            tNewTrap = CreateRandomTrap(tTrap.nRespawnRandomCR);
+            tNewTrap.nRespawnSeconds = tTrap.nRespawnSeconds;
+        }    
+        AssignCommand(GetArea(oTrap), 
+            DelayCommand(IntToFloat(tTrap.nRespawnSeconds),
+                VoidCreateTrap(GetLocation(oTrap), tNewTrap)));
+    }            
 }
 
 void DoTrapXP(object oTrap, object oTarget, int nEvent)

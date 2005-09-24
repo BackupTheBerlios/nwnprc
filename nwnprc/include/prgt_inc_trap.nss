@@ -18,6 +18,8 @@ struct trap
     string sTriggerScript;
     int nSpellID;
     int nSpellLevel;
+    int nSpellMetamagic;
+    int nSpellDC;
     int nDamageType;
     int nRadius;
     int nDamageDice;
@@ -27,6 +29,8 @@ struct trap
     int nFakeSpell;
     int nBeamVFX;
     int nCR;
+    int nRespawnSeconds;
+    int nRespawnRandomCR;
 };
 
 struct trap GetLocalTrap(object oObject, string sVarName);
@@ -84,6 +88,8 @@ struct trap CreateRandomTrap(int nCR = -1)
     tReturn.nDetectAOE = VFX_PER_15M_INVIS;
     tReturn.nTrapAOE = VFX_PER_5M_INVIS;
     tReturn.nCR = nCR;
+    tReturn.nRespawnSeconds = 0;
+    tReturn.nRespawnRandomCR = nCR;
     tReturn.sResRef = "prgt_invis";
     tReturn.sTriggerScript = "prgt_trap_fire";
 
@@ -155,6 +161,8 @@ struct trap GetLocalTrap(object oObject, string sVarName)
     tReturn.sTriggerScript  = GetLocalString(oObject, sVarName+".sTriggerScript");
     tReturn.nSpellID        = GetLocalInt(oObject, sVarName+".nSpellID");
     tReturn.nSpellLevel     = GetLocalInt(oObject, sVarName+".nSpellLevel");
+    tReturn.nSpellMetamagic = GetLocalInt(oObject, sVarName+".nSpellMetamagic");
+    tReturn.nSpellDC        = GetLocalInt(oObject, sVarName+".nSpellDC");
     tReturn.nDamageType     = GetLocalInt(oObject, sVarName+".nDamageType");
     tReturn.nRadius         = GetLocalInt(oObject, sVarName+".nRadius");
     tReturn.nDamageDice     = GetLocalInt(oObject, sVarName+".nDamageDice");
@@ -164,6 +172,8 @@ struct trap GetLocalTrap(object oObject, string sVarName)
     tReturn.nFakeSpell      = GetLocalInt(oObject, sVarName+".nFakeSpell");
     tReturn.nBeamVFX        = GetLocalInt(oObject, sVarName+".nBeamVFX");
     tReturn.nCR             = GetLocalInt(oObject, sVarName+".nCR");
+    tReturn.nRespawnSeconds = GetLocalInt(oObject, sVarName+".nRespawnSeconds");
+    tReturn.nRespawnRandomCR= GetLocalInt(oObject, sVarName+".nRespawnRandomCR");
     return tReturn;
 }
 void SetLocalTrap(object oObject, string sVarName, struct trap tTrap)
@@ -176,6 +186,8 @@ void SetLocalTrap(object oObject, string sVarName, struct trap tTrap)
     SetLocalString(oObject, sVarName+".sTriggerScript", tTrap.sTriggerScript);
     SetLocalInt(oObject, sVarName+".nSpellID", tTrap.nSpellID);
     SetLocalInt(oObject, sVarName+".nSpellLevel", tTrap.nSpellLevel);
+    SetLocalInt(oObject, sVarName+".nSpellMetamagic", tTrap.nSpellMetamagic);
+    SetLocalInt(oObject, sVarName+".nSpellDC", tTrap.nSpellDC);
     SetLocalInt(oObject, sVarName+".nDamageType", tTrap.nDamageType);
     SetLocalInt(oObject, sVarName+".nRadius", tTrap.nRadius);
     SetLocalInt(oObject, sVarName+".nDamageDice", tTrap.nDamageDice);
@@ -185,6 +197,8 @@ void SetLocalTrap(object oObject, string sVarName, struct trap tTrap)
     SetLocalInt(oObject, sVarName+".nFakeSpell", tTrap.nFakeSpell);
     SetLocalInt(oObject, sVarName+".nBeamVFX", tTrap.nBeamVFX);
     SetLocalInt(oObject, sVarName+".nCR", tTrap.nCR);
+    SetLocalInt(oObject, sVarName+".nRespawnSeconds", tTrap.nRespawnSeconds);
+    SetLocalInt(oObject, sVarName+".nRespawnRandomCR", tTrap.nRespawnRandomCR);
 }
 void DeleteLocalTrap(object oObject, string sVarName)
 {
@@ -196,6 +210,8 @@ void DeleteLocalTrap(object oObject, string sVarName)
     DeleteLocalString(oObject, sVarName+".sTriggerScript");
     DeleteLocalInt(oObject, sVarName+".nSpellID");
     DeleteLocalInt(oObject, sVarName+".nSpellLevel");
+    DeleteLocalInt(oObject, sVarName+".nSpellLevelMetamagic");
+    DeleteLocalInt(oObject, sVarName+".nSpellLevelDC");
     DeleteLocalInt(oObject, sVarName+".nDamageType");
     DeleteLocalInt(oObject, sVarName+".nRadius");
     DeleteLocalInt(oObject, sVarName+".nDamageDice");
@@ -205,4 +221,6 @@ void DeleteLocalTrap(object oObject, string sVarName)
     DeleteLocalInt(oObject, sVarName+".nFakeSpell");
     DeleteLocalInt(oObject, sVarName+".nBeamVFX");
     DeleteLocalInt(oObject, sVarName+".nCR");
+    DeleteLocalInt(oObject, sVarName+".nRespawnSeconds");
+    DeleteLocalInt(oObject, sVarName+".nRespawnRandomCR");
 }

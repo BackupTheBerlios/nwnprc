@@ -4,7 +4,8 @@
 void main()
 {
     struct trap tTrap;
-    tTrap = CreateRandomTrap();
+    //this will use 5 as the CR for the trap
+    tTrap = CreateRandomTrap(5);
     //add code in here to change things if you want to
     //for example, to set the detect DC to be 25 use:
     //tTrap.nDetectDC = 25;

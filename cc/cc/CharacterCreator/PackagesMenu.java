@@ -21,7 +21,8 @@ import CharacterCreator.util.*;
  * @author  James
  */
 public class PackagesMenu extends javax.swing.JFrame {
-
+	private boolean dieJamesDie = false; // A marker - This is set when any valid package is selected
+	
     public class PackageButton extends JPanel {
 
         private void initComponents() {
@@ -58,6 +59,7 @@ public class PackagesMenu extends javax.swing.JFrame {
             DescriptionText.setText(TLKFAC.getEntry(descnum));
             //DescriptionContainer.scrollRectToVisible(new Rectangle());
             PACKAGENUM = tmp;
+            dieJamesDie = true;
         }
 
         public JButton PackageButton;
@@ -325,7 +327,8 @@ public class PackagesMenu extends javax.swing.JFrame {
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // Add your handling code here:
-        doRecommended();
+    	if(!dieJamesDie)
+        	doRecommended();
         menucreate.MainCharData[6] = new HashMap();
         menucreate.MainCharData[6].put(new Integer(0), Boolean.FALSE);
         menucreate.MainCharDataAux[7] = packagemap[PACKAGENUM];
@@ -392,6 +395,7 @@ public class PackagesMenu extends javax.swing.JFrame {
                         //DescriptionText.setText(TLKFAC.getEntry((new Integer((String)packagemap[i].get(new Integer(3)))).intValue()));
                         DescriptionText.setText(TLKFAC.getEntry(descnum));
                         PACKAGENUM = i;
+                        dieJamesDie = true;
                         //DescriptionText.setText(TLKFAC.getEntry(i));
                         return;
                     }

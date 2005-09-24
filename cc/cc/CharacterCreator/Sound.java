@@ -18,8 +18,22 @@ public class Sound {
 	private static String[] soundFiles = null;
 	private static String soundSet = null;
 	private static int index = 0;
+	
+	private static boolean initOK = true;
+	
+	static{
+		try{
+			Fmod.loadLibraries();
+		}catch(Exception e){
+			System.err.println("Could not load sound module!");
+			initOK = false;
+		}
+	}
 
 	public static void Play(String filename) {
+		// If loading the native sound library failed, do not attempt to play any sounds
+		if(!initOK) return;
+		
 		ResourceFactory rFac = TLKFactory.getCreateMenu().getResourceFactory();
 		String name = ResourceFactory.fixFilename(filename, ".ssf");
 
@@ -114,13 +128,14 @@ public class Sound {
 
 			fos.close();
 			//} catch (Exception e) {}
-
-			NativeFmod.FSOUND_SetDriver(0);
-			NativeFmod.FSOUND_Init(44100, 32, 0);
-			NativeFmod.FSOUND_Stream_SetBufferSize(1000);
-			FSOUND_STREAM stream = NativeFmod.FSOUND_Stream_Open(
+			Fmod.loadLibraries();
+			
+			Fmod.FSOUND_SetDriver(0);
+			Fmod.FSOUND_Init(44100, 32, 0);
+			Fmod.FSOUND_Stream_SetBufferSize(1000);
+			FSOUND_STREAM stream = Fmod.FSOUND_Stream_Open(
 					file.toString(), FSOUND_MODES.FSOUND_NORMAL, 0, 0);
-			NativeFmod.FSOUND_Stream_PlayEx(FSOUND_MISC_VALUES.FSOUND_FREE,
+			Fmod.FSOUND_Stream_PlayEx(FSOUND_MISC_VALUES.FSOUND_FREE,
 					stream, null, false);
 		}
 	}

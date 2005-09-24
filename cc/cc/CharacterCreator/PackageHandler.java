@@ -67,7 +67,7 @@ public class PackageHandler {
     
     private int domain1 = 0;
     private int domain2 = 0;
-    private int school = 0;
+    private int school = -1;
     
     /** Creates a new instance of PackageHandler */
     public PackageHandler() {
@@ -179,7 +179,7 @@ public class PackageHandler {
             menucreate.MainCharData[16].put(new Integer(1), new Integer(domain1));
             menucreate.MainCharData[16].put(new Integer(2), new Integer(domain2));
         }
-        if(school != 0) {
+        if(school != -1) {
             menucreate.MainCharData[16].put(new Integer(0), new Integer(school));
         }
         //And finally
@@ -428,10 +428,14 @@ public class PackageHandler {
             String spknowntable = menucreate.MainCharDataAux[3][classes.SpellKnownTable];
             if(spknowntable == null) {
                 //Wizard stuff
-                int sk0 = 4; //Make this all 0 level spells?
+                //int sk0 = 4; //Make this all 0 level spells?
                 int sk1 = 3 + intmod;
-                spellsknown0 = wiz0lvl;
+                int sk1_found = 0;
+                spellsknown0 = wiz0lvl; // Made into all 0 level spells, it seems - Ornedan
                 int entrynumber = 0;
+                Integer spellID;
+                boolean outOfRecommended = false;
+                /*
                 for(i = 0; i < sk1; i++) {
                     if(wiz1lvl.contains(new Integer(spellpref2damap[entrynumber][1]))) {
                         spellsknown1.add(new Integer(spellpref2damap[entrynumber][1]));
@@ -441,6 +445,29 @@ public class PackageHandler {
                         entrynumber++;
                     }
                 }
+                */
+                
+                while(sk1_found < sk1){
+                	// First, pick among recommended spells
+                	if(!outOfRecommended){
+                		if(entrynumber == spellpref2damap.length){
+            				outOfRecommended = true;
+            				entrynumber = 0;
+            			}
+                		else if(wiz1lvl.contains(spellID = new Integer(spellpref2damap[entrynumber++][1]))) {
+                			spellsknown1.add(spellID);
+                			sk1_found++;
+                		}
+                	// If there are not enough recommended L1 spells, start adding directly from the list of 1st level spells
+                	}else{
+                		if(wiz1lvl.contains(spellID = new Integer(entrynumber++)) && // Check if the 2da index is among the 1st level spells
+                		   !spellsknown1.contains(spellID)){                       // And make sure it hasn't already been added to the known list
+                			spellsknown1.add(spellID);
+                			sk1_found++;
+                		}
+                	}
+                }
+                
             } else {
                 //Bard and sorc stuff
                 //HAVE to determine, hard coded, whether class is bard or sorc

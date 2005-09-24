@@ -17,6 +17,7 @@ Knight of the Chalice				| Complete Warrior
 Ravager						| Complete Warrior
 Spellsword					| Complete Warrior
 Thayan Knight					| Complete Warrior
+Complete Warrior Samurai              		| Complete Warrior
 Ultimate Ranger					| Custom Class - Author: Szatany (Wizards.COMmunity Boards) http://boards1.wizards.com/showthread.php?s=&threadid=169174
 Brawler						| Custom Class - Author: WodahsEht
 Minstrel of the Edge				| Custom Class - Author: WodahsEht
@@ -38,6 +39,18 @@ Mystic Theurge					| Dungeon Master's Guide 3.5
 Legendary Dreadnought				| Epic Level Handbook
 Blood Archer					| Evil
 Soulknife                                       | Expanded Psionics Handbook
+Psion                                           | Expanded Psionics Handbook
+Wilder                                          | Expanded Psionics Handbook
+Psychic Warrior                                 | Expanded Psionics Handbook
+Cerebremancer                                   | Expanded Psionics Handbook
+Constructor                                     | Expanded Psionics Handbook
+Fist of Zuoken                                  | Expanded Psionics Handbook
+Metamind                                        | Expanded Psionics Handbook
+Psion Uncarnate                                 | Expanded Psionics Handbook
+Psychic Theurge                                 | Expanded Psionics Handbook
+Pyrokineticist                                  | Expanded Psionics Handbook
+Thrallherd                                      | Expanded Psionics Handbook
+Warmind                                         | Expanded Psionics Handbook
 Heartwarder					| Faiths and Pantheons
 Ocular Adept					| Faiths And Pantheons
 Champion of Bane (Based on Divine Champion)	| Forgotten Realms Campaign Setting

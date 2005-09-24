@@ -7,6 +7,12 @@ Disciple of Baalzebul				| Book of Vile Darkness
 Disciple of Dispater				| Book of Vile Darkness
 Disciple of Mephistopheles			| Book of Vile Darkness
 Thrall of Orcus					| Book of Vile Darkness
+Thrall of Graazt         			| Book of Vile Darkness
+Soul Eater					| Book of Vile Darkness
+Diabolist                                       | Book of Venereal Disease
+Maester                                         | Complete Adventurer
+Ollam                                           | Complete Adventurer
+Ninja                                           | Complete Adventurer
 Sacred Fist					| Complete Divine
 Shining Blade of Heironeous			| Complete Divine
 Stormlord					| Complete Divine
@@ -18,9 +24,12 @@ Ravager						| Complete Warrior
 Spellsword					| Complete Warrior
 Thayan Knight					| Complete Warrior
 Complete Warrior Samurai              		| Complete Warrior
+Swashbuckler                                    | Complete warrior
 Ultimate Ranger					| Custom Class - Author: Szatany (Wizards.COMmunity Boards) http://boards1.wizards.com/showthread.php?s=&threadid=169174
 Brawler						| Custom Class - Author: WodahsEht
 Minstrel of the Edge				| Custom Class - Author: WodahsEht
+Alaghar                                         | Custom Class - Aythor: Vaeloirin
+Baelnorn                                        | Custom Class - Author: Tenjac
 Hospitaler					| Defenders of the Faith
 Knight of the Middle Circle			| Defenders of the Faith
 Master of Shrouds				| Defenders of the Faith
@@ -31,6 +40,7 @@ Anti-Paladin					| Dragon Magazine
 Battleguard of Tempus				| Dragon Magazine
 Corrupter					| Dragon Magazine
 Nightshade					| Dragon Magazine
+Mighty Contender of Kord                        | Dragon Magazine?
 Archmage					| Dungeon Master's Guide
 Duelist						| Dungeon Master's Guide
 Eldritch Knight					| Dungeon Master's Guide
@@ -43,11 +53,9 @@ Psion                                           | Expanded Psionics Handbook
 Wilder                                          | Expanded Psionics Handbook
 Psychic Warrior                                 | Expanded Psionics Handbook
 Cerebremancer                                   | Expanded Psionics Handbook
-Constructor                                     | Expanded Psionics Handbook
 Fist of Zuoken                                  | Expanded Psionics Handbook
 Metamind                                        | Expanded Psionics Handbook
 Psion Uncarnate                                 | Expanded Psionics Handbook
-Psychic Theurge                                 | Expanded Psionics Handbook
 Pyrokineticist                                  | Expanded Psionics Handbook
 Thrallherd                                      | Expanded Psionics Handbook
 Warmind                                         | Expanded Psionics Handbook
@@ -65,6 +73,8 @@ PnP Shifter					| Masters of the Wild
 Tempest						| Masters of the Wild
 Man-At-Arms					| Mercenaries
 Bonded Summoner					| Miniatures Handbook
+Marshal                                         | Miniatures Handbook
+Havoc Mage                                      | Miniatures Handbook
 Henshin Mystic					| Oriental Adventures
 Iaijutsu Master					| Oriental Adventures
 Ninja Spy					| Oriental Adventures
@@ -73,6 +83,7 @@ Hathran						| Player's Guide to Faerun
 Shadow Adept					| Player's Guide to Faerun
 Dwarven Battlerager				| Races of Faerun
 Orc Warlord					| Races of Faerun
+Warsling Sniper                                 | Races of Faerun
 Arcane Duelist					| Random Encounters
 Peerless Archer					| Silver Marches
 Drunken Master					| Sword and Fist
@@ -82,6 +93,7 @@ Black Flame Zealot				| The Unapproachable East
 Shou Disciple					| The Unapproachable East
 Telflammar Shadowlord				| The Unapproachable East
 Runescarred Berserker				| The Unapproachable East
+Talontar Blightlord                             | The Unapproachable East
 Drow Judicator					| The Underdark
 Archer						| Three Arrows for the King - The Archer's Guide
 Acolyte of the Skin				| Tome and Blood
@@ -92,3 +104,7 @@ Vigilant					| Ultimate Prestige Classes Vol. 1
 Lich Template					| WotC Website
 Master Harper					| WotC Website
 Werewolf Template				| WotC Website
+Psychic Theurge                                 | WotC Website
+Constructor                                     | WotC Website
+Combat Medic                                    | Heroes of Battle
+

@@ -12,10 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "inc_npc"
-#include "prc_class_const"
-#include "prc_feat_const"
-#include "prc_misc_const"
-#include "prc_ipfeat_const"
+#include "inc_dynconv"
 #include "prc_alterations"
 #include "inc_utility"
 #include "inc_dispel"

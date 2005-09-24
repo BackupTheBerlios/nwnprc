@@ -617,13 +617,13 @@ int IPGetIPConstCastSpellFromSpellID(int nSpellID)
 {
     // look up Spell Property Index
     string sTemp = Get2DACache("des_crft_spells","IPRP_SpellIndex",nSpellID);
-    /*
+    
     if (sTemp == "") // invalid nSpellID
     {
-        PrintString("x2_inc_craft.nss::GetIPConstCastSpellFromSpellID called with invalid nSpellID" + IntToString(nSpellID));
+        DoDebug("x2_inc_craft.nss::GetIPConstCastSpellFromSpellID called with invalid nSpellID" + IntToString(nSpellID));
         return -1;
     }
-    */
+    
     int nSpellPrpIdx = StringToInt(sTemp);
     return nSpellPrpIdx;
 }

@@ -580,10 +580,13 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
             itemproperty ipTest = GetFirstItemProperty(oItem);
             while(GetIsItemPropertyValid(ipTest) && !iItemLevel)
             {
-                if(GetItemPropertyType(ipTest) == 85
-                    && GetItemPropertySubType(ipTest) == iSpellId
-                    )
-                    iItemLevel = GetItemPropertyCostTableValue (ipTest);
+                if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CASTER_LEVEL)
+                {
+                    int nSubType = GetItemPropertySubType(ipTest);
+                    nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
+                    if(nSubType == iSpellId)
+                        iItemLevel = GetItemPropertyCostTableValue (ipTest);
+                }
                 ipTest = GetNextItemProperty(oItem);
             }
         }
@@ -1332,6 +1335,9 @@ int CheckMetaMagic(int nMeta,int nMMagic)
 int PRCGetMetaMagicFeat()
 {
     int nFeat = GetMetaMagicFeat();
+    if(GetIsObjectValid(GetSpellCastItem()))
+        nFeat = 0;//biobug, this isn't reset to zero by casting from an item
+        
     int nSSFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
     int nNewSpellMetamagic = GetLocalInt(OBJECT_SELF, "NewSpellMetamagic");
     if(nNewSpellMetamagic)
@@ -1348,40 +1354,45 @@ int PRCGetMetaMagicFeat()
         itemproperty ipTest = GetFirstItemProperty(oItem);
         while(GetIsItemPropertyValid(ipTest))
         {
-            if(GetItemPropertyType(ipTest) == 92 // TODO: Constant this
-                && GetItemPropertySubType(ipTest) == iSpellId)
+            if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_METAMAGIC)
             {
-                int nCostValue = GetItemPropertyCostTableValue (ipTest);
-                switch(nCostValue)
+                int nSubType = GetItemPropertySubType(ipTest);
+                nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
+                if(nSubType == iSpellId)
                 {
-                    //bitwise "addition" equivalent to nFeat = (nFeat | nSSFeat)
-                    case 0:
-                        nItemMetaMagic |= METAMAGIC_NONE;
-                        break;
-                    case 1:
-                        nItemMetaMagic |= METAMAGIC_QUICKEN;
-                        break;
-                    case 2:
-                        nItemMetaMagic |= METAMAGIC_EMPOWER;
-                        break;
-                    case 3:
-                        nItemMetaMagic |= METAMAGIC_EXTEND;
-                        break;
-                    case 4:
-                        nItemMetaMagic |= METAMAGIC_MAXIMIZE;
-                        break;
-                    case 5:
-                        nItemMetaMagic |= METAMAGIC_SILENT;
-                        break;
-                    case 6:
-                        nItemMetaMagic |= METAMAGIC_STILL;
-                        break;
+                    int nCostValue = GetItemPropertyCostTableValue(ipTest);
+                    if(nCostValue == -1 && DEBUG)
+                        DoDebug("Problem examining itemproperty");
+                    switch(nCostValue)
+                    {
+                        //bitwise "addition" equivalent to nFeat = (nFeat | nSSFeat)
+                        case 0:
+                            nItemMetaMagic |= METAMAGIC_NONE;
+                            break;
+                        case 1:
+                            nItemMetaMagic |= METAMAGIC_QUICKEN;
+                            break;
+                        case 2:
+                            nItemMetaMagic |= METAMAGIC_EMPOWER;
+                            break;
+                        case 3:
+                            nItemMetaMagic |= METAMAGIC_EXTEND;
+                            break;
+                        case 4:
+                            nItemMetaMagic |= METAMAGIC_MAXIMIZE;
+                            break;
+                        case 5:
+                            nItemMetaMagic |= METAMAGIC_SILENT;
+                            break;
+                        case 6:
+                            nItemMetaMagic |= METAMAGIC_STILL;
+                            break;
+                    }
                 }
-
             }
             ipTest = GetNextItemProperty(oItem);
         }
-        nFeat |= nItemMetaMagic;
+        nFeat = nItemMetaMagic;
     }
     return nFeat;
 }

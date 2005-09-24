@@ -18,6 +18,7 @@ Shining Blade of Heironeous			| Complete Divine
 Stormlord					| Complete Divine
 Temple Raider					| Complete Divine
 Warpriest					| Complete Divine
+Contemplative					| Complete Divine
 Bladesinger					| Complete Warrior
 Knight of the Chalice				| Complete Warrior
 Ravager						| Complete Warrior
@@ -63,6 +64,13 @@ Heartwarder					| Faiths and Pantheons
 Ocular Adept					| Faiths And Pantheons
 Champion of Bane (Based on Divine Champion)	| Forgotten Realms Campaign Setting
 Red Wizard					| Forgotten Realms Campaign Setting
+Purple Dragon Knight				| Forgotten Realms Campaign Setting?
+Runecaster          				| Forgotten Realms Campaign Setting?
+Hathran						| Player's Guide to Faerun
+Shadow Adept					| Player's Guide to Faerun
+Dwarven Battlerager				| Races of Faerun
+Orc Warlord					| Races of Faerun
+Warsling Sniper                                 | Races of Faerun
 Harper Mage					| Magic of Faerun
 Mage-Killer					| Magic of Faerun
 Eye of Gruumsh					| Masters of the Wild
@@ -79,11 +87,6 @@ Henshin Mystic					| Oriental Adventures
 Iaijutsu Master					| Oriental Adventures
 Ninja Spy					| Oriental Adventures
 Samurai						| Oriental Adventures
-Hathran						| Player's Guide to Faerun
-Shadow Adept					| Player's Guide to Faerun
-Dwarven Battlerager				| Races of Faerun
-Orc Warlord					| Races of Faerun
-Warsling Sniper                                 | Races of Faerun
 Arcane Duelist					| Random Encounters
 Peerless Archer					| Silver Marches
 Drunken Master					| Sword and Fist

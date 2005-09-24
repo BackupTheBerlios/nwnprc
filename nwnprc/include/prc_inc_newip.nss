@@ -1,3 +1,6 @@
+const int ITEM_PROPERTY_CASTER_LEVEL = 85;
+const int ITEM_PROPERTY_METAMAGIC    = 92;
+
 
 //new function to return a PRC caster level itemproperty
 //will putput to log file if it doesnt work
@@ -27,6 +30,9 @@ itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel);
 
 itemproperty ItemPropertyMetamagic(int nSpell, int nMetamagic)
 {
+    //convert nSpell into reference to iprip_spells.2da
+    nSpell = IPGetIPConstCastSpellFromSpellID(nSpell);
+    
     itemproperty ipReturn;
     string sResRef = "prc_ip92_"+IntToString(nSpell);
     object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
@@ -82,6 +88,9 @@ itemproperty ItemPropertyMetamagic(int nSpell, int nMetamagic)
 
 itemproperty ItemPropertyTrueCasterLevel(int nSpell, int nLevel)
 {
+    //convert nSpell into reference to iprip_spells.2da
+    nSpell = IPGetIPConstCastSpellFromSpellID(nSpell);
+
     itemproperty ipReturn;
     string sResRef = "prc_ip85_"+IntToString(nSpell);
     object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest

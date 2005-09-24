@@ -153,6 +153,9 @@ int InscribeRune()
     // Get the required ints
     object oCaster = OBJECT_SELF;
     
+    // If Inscribing is turned off, the spell functions as normal
+    if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;    
+    
     // No point being in here if you don't have runes.
     if (!GetHasFeat(FEAT_INSCRIBE_RUNE, oCaster)) return TRUE;
 
@@ -165,9 +168,6 @@ int InscribeRune()
             FloatingTextStringOnCreature("You cannot scribe a rune from an item.", OBJECT_SELF, FALSE);
             return TRUE;
         }
-
-    // If Inscribing is turned off, the spell functions as normal
-    if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;
 
     object oTarget = PRCGetSpellTargetObject();
     int nCaster = PRCGetCasterLevel(oCaster);

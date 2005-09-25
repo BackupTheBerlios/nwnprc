@@ -333,6 +333,7 @@ void _DynConvInternal_ExitedConvo(object oPC, int bAbort)
     // Restart convo if not allowed to leave yet
     if(bAbort && !GetLocalInt(oPC, "DynConv_AllowAbort")) // Allowed to abort?
     {
+        if(DEBUG) DoDebug("_DynConvInternal_ExitedConvo(): Conversation aborted, restarting.");
         AssignCommand(oPC, ClearAllActions(TRUE));
         AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
         SetLocalInt(oPC, "DynConv_RestartMarker", TRUE);

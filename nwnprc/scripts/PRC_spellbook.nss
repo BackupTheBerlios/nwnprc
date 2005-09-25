@@ -1,8 +1,21 @@
+//:://////////////////////////////////////////////
+//:: New Spellbooks conversation starter
+//:: prc_spellbook
+//:://////////////////////////////////////////////
+/** @file
+    This script starts the new spellbook spell
+    slots management conversation
+
+    @author Primogenitor
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+
 #include "inc_dynconv"
 
 void main()
 {
     object oPC = OBJECT_SELF;
-    SetLocalString(oPC, DYNCONV_SCRIPT, "prc_s_spellb");
-    ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE);
+    StartDynamicConversation("prc_s_spellb", oPC, TRUE, TRUE, FALSE, oPC);
 }

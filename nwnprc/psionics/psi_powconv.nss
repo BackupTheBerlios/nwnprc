@@ -31,14 +31,14 @@ const int STAGE_ALL_POWERS_SELECTED = 3;
 
 const int CHOICE_BACK_TO_LSELECT    = -1;
 
-const int STRREF_BACK_TO_LSELECT    = 16824205;
-const int STRREF_LEVELLIST_HEADER   = 16824206;
-const int STRREF_POWERLIST_HEADER1  = 16824207; // "Select a power to gain.\n You can select"
+const int STRREF_BACK_TO_LSELECT    = 16824205; // "Return to power level selection."
+const int STRREF_LEVELLIST_HEADER   = 16824206; // "Select level of power to gain.\n\nNOTE:\nThis may take a while when first browsing a particular level's powers."
+const int STRREF_POWERLIST_HEADER1  = 16824207; // "Select a power to gain.\nYou can select"
 const int STRREF_POWERLIST_HEADER2  = 16824208; // "more powers"
 const int STRREF_SELECTED_HEADER1   = 16824209; // "You have selected:"
 const int STRREF_SELECTED_HEADER2   = 16824210; // "Is this correct?"
 const int STRREF_END_HEADER         = 16824211; // "You will be able to select more powers after you gain another level in a psionic caster class."
-const int STRREF_END_CONVO_SELECT   = 16824213; // "Finish"
+const int STRREF_END_CONVO_SELECT   = 16824212; // "Finish"
 const int LEVEL_STRREF_START        = 16824809;
 const int STRREF_YES                = 4752;     // "Yes"
 const int STRREF_NO                 = 4753;     // "No"
@@ -201,8 +201,9 @@ void main()
     }
     else if(nValue == DYNCONV_ABORTED)
     {
-        // This section should never be run, since the dynconvo system is supposed to transparently
-        // handle restarting the conversation on an abort
+        // This section should never be run, since aborting this conversation should
+        // always be forbidden and as such, any attempts to abort the conversation
+        // should be handled transparently by the system
         if(DEBUG) DoDebug("psi_powconv: ERROR: Conversation abort section run");
     }
     // Handle PC response

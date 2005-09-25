@@ -82,6 +82,9 @@ void main()
                         + "In most cases zero is off and any other value is on."
                          );
 
+                // First choice is Back, so people don't have to scroll ten pages to find it
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
                 // Get the switches container waypoint, and call the builder function if it doesn't exist yet (it should)
                 object oWP = GetWaypointByTag("PRC_Switch_Name_WP");
                 if(!GetIsObjectValid(oWP))
@@ -96,8 +99,6 @@ void main()
                 {
                     AddChoice(array_get_string(oWP, "Switch_Name", i), i, oPC);
                 }
-
-                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -137,21 +138,21 @@ void main()
             }
             else if(nStage == STAGE_EPIC_SPELLS_ADD)
             {
-                SetCustomToken(99, "Choose the spell to add.");
+                SetHeader("Choose the spell to add.");
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
             }
             else if(nStage == STAGE_EPIC_SPELLS_REMOVE)
             {
-                SetCustomToken(99, "Choose the spell to remove.");
+                SetHeader("Choose the spell to remove.");
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
             }
             else if(nStage == STAGE_EPIC_SPELLS_CONTING)
             {
-                SetCustomToken(99, "Choose an active contingency to dispel. Dispelling will preemptively end the contingency and restore the reserved epic spell slot for your use.");
+                SetHeader("Choose an active contingency to dispel. Dispelling will preemptively end the contingency and restore the reserved epic spell slot for your use.");
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -188,11 +189,12 @@ void main()
             else if(nChoice == 3)
                 nStage = STAGE_SHOPS;
             else if(nChoice == 4)
-                // This aborts conversation?
+                // Does not abort the conversation, it seems
                 AssignCommand(oPC, TryToIDItems(oPC));
 
-            // Mark the target stage to need building
-            MarkStageNotSetUp(nStage, oPC);
+            // Mark the target stage to need building if it was changed (ie, selection was other than ID all)
+            if(nStage != STAGE_ENTRY)
+                MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_SWITCHES)
         {

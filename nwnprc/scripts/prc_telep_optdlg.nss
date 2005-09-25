@@ -177,7 +177,7 @@ void main()
                 //        Create map pins for marked locations                                                                     Yes                       No
                 AddChoice(GetStringByStrRef(16825299) + ": " + (GetLocalInt(oPC, PRC_TELEPORT_CREATE_MAP_PINS) ? GetStringByStrRef(4752) : GetStringByStrRef(4753)), STAGE_MAPPIN);
                 //        Mark resting locations
-                AddChoice(GetStringByStrRef(16825308) + ": " + (GetLocalInt(oPC, PRC_TELEPORT_ONREST_MARKLOCATION) ? GetStringByStrRef(4752) : GetStringByStrRef(4753)), STAGE_ONREST_MARKLOCATION);
+                AddChoice(GetStringByStrRef(16825204) + ": " + (GetLocalInt(oPC, PRC_TELEPORT_ONREST_MARKLOCATION) ? GetStringByStrRef(4752) : GetStringByStrRef(4753)), STAGE_ONREST_MARKLOCATION);
             }
             else if(nStage == STAGE_LISTENER_TIME)
             {
@@ -200,13 +200,12 @@ void main()
             }
             else if(nStage == STAGE_ONREST_MARKLOCATION)
             {
-                SetHeader(GetStringByStrRef(16825309)); // "Select whether you want that whenever you rest, the location will be automatically marked.\nWARNING: The location is always stored in the first slot, so if you delete it, next time you rest whatever is now in the first slot will be overwritten."
+                SetHeader(GetStringByStrRef(16825205)); // "Select whether you want that whenever you rest, the location will be automatically marked.\nWARNING: The location is always stored in the first slot, so if you delete it, next time you rest whatever is now in the first slot will be overwritten."
                 AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN);
 
                 AddChoice(GetStringByStrRef(4752), CHOICE_YES); // "Yes"
                 AddChoice(GetStringByStrRef(4753), CHOICE_NO); // "No"
             }
-            //add more stages for more nodes with Else If clauses
         }
 
         // Do token setup

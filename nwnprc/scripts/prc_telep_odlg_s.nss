@@ -5,10 +5,12 @@
 /** @file
     This script starts the Teleport Options dynamic
     conversation.
+
+    @author Ornedan
+    @date   Created  - 2005.06.18
+    @date   Modified - 2005.09.25
 */
 //:://////////////////////////////////////////////
-//:: Created By: Ornedan
-//:: Created On: 18.06.2005
 //:://////////////////////////////////////////////
 
 #include "inc_dynconv"
@@ -16,7 +18,6 @@
 
 void main()
 {
-    SetLocalString(OBJECT_SELF, DYNCONV_SCRIPT, "prc_telep_optdlg");
-    AssignCommand(OBJECT_SELF, ClearAllActions(TRUE));
-    AssignCommand(OBJECT_SELF, ActionStartConversation(OBJECT_SELF, "dyncov_base", TRUE, FALSE));
+    object oPC = OBJECT_SELF;
+    StartDynamicConversation("prc_telep_optdlg", oPC, TRUE, TRUE, TRUE, oPC);
 }

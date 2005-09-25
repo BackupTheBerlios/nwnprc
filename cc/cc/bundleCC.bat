@@ -10,9 +10,15 @@ jar uvf CC.jar CharacterCreator/resource/
 jar uvf CC.jar CharacterCreator/util/*.*
 
 
-jar -xf NativeFmodRuntime\lib\NativeFmodApi_v3.11.jar Music
-
-jar uvf CC.jar Music
-
+jar -xf NativeFmodRuntime/lib/NativeFmodApi_v3.11.jar Music
+jar -uvf CC.jar Music
 rmdir /s /q Music
-PAUSE
+
+
+mkdir nativemodules
+copy NativeFmodRuntime\lib\* nativemodules
+del nativemodules\NativeFmodApi_v3.11.jar
+jar -uvf CC.jar -C nativemodules nativemodules/*
+rmdir /s /q nativemodules
+
+@PAUSE

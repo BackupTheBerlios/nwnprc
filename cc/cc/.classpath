@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="output/" kind="src" path=""/>
+	<classpathentry excluding="NativeFmodRuntime/|output/" kind="src" path=""/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="NativeFmod Runtime/lib/NativeFmodApi_v3.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="NativeFmodRuntime/lib/NativeFmodApi_v3.11.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

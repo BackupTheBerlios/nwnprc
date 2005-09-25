@@ -625,8 +625,10 @@ public class Data_2da{
 			String s;
 			while(scan.hasNextLine()){
 				s = scan.nextLine();
+				//System.out.println("Read filename from stdin: " + s);
 				if(s.charAt(0) == '"' && s.charAt(s.length() - 1) == '"')
 					s = s.substring(1, s.length() - 1);
+				//System.out.println("Storing for parse: " + s);
 				fileNames.add(s);
 			}
 		}

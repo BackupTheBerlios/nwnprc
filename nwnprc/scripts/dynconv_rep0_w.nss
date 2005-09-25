@@ -16,7 +16,6 @@
 int StartingConditional()
 {
     object oPC = GetPCSpeaker();
-    //if(DEBUG) DoDebug(GetTokenIDString(DYNCONV_TOKEN_REPLY_0) + " = " + GetLocalString(oPC, GetTokenIDString(DYNCONV_TOKEN_REPLY_0)), oPC);
     if(GetLocalString(oPC, GetTokenIDString(DYNCONV_TOKEN_REPLY_0)) == "")
         return FALSE;
     else

@@ -19,9 +19,7 @@ int StartingConditional()
     object oPC = GetPCSpeaker();
     if(GetLocalInt(oPC, "DynConv_Waiting"))
         return FALSE;
-    string sScript = GetLocalString(oPC, DYNCONV_SCRIPT);
-    SetLocalInt(oPC, DYNCONV_VARIABLE, DYNCONV_SETUP_STAGE);
-    ExecuteScript(sScript, OBJECT_SELF);
+    _DynConvInternal_RunScript(oPC, DYNCONV_SETUP_STAGE);
     if(GetLocalInt(oPC, "DynConv_Waiting"))
         return FALSE;
     return TRUE;

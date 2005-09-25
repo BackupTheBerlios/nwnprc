@@ -77,15 +77,18 @@ void main()
         // Do token setup
         SetupTokens();
     }
+    // End of conversation cleanup
     else if(nValue == DYNCONV_EXITED)
     {
-        // End of conversation cleanup
-        // Add any other locals set through this conversation
+        // Add any locals set through this conversation
     }
+    // Abort conversation cleanup.
+    // NOTE: This section is only run when the conversation is aborted
+    // while aborting is allowed. When it isn't, the dynconvo infrastructure
+    // handles restoring the conversation in a transparent manner
     else if(nValue == DYNCONV_ABORTED)
     {
-        // Abort conversation cleanup
-        // Add any other locals set through this conversation
+        // Add any locals set through this conversation
     }
     // Handle PC responses
     else

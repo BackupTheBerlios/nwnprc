@@ -64,13 +64,16 @@ void main()
 
     if(nValue == DYNCONV_SETUP_STAGE)
     {
+        if(DEBUG) DoDebug("psi_powconv: Running setup stage for stage " + IntToString(nStage));
         // Check if this stage is marked as already set up
         // This stops list duplication when scrolling
         if(!GetIsStageSetUp(nStage, oPC))
         {
+            if(DEBUG) DoDebug("psi_powconv: Stage was not set up already");
             // Level selection stage
             if(nStage == STAGE_SELECT_LEVEL)
             {
+                if(DEBUG) DoDebug("psi_powconv: Building level selection");
                 SetHeader(GetStringByStrRef(STRREF_LEVELLIST_HEADER));
 
                 // Determine maximum power level
@@ -94,6 +97,7 @@ void main()
             // Power selection stage
             if(nStage == STAGE_SELECT_POWER)
             {
+                if(DEBUG) DoDebug("psi_powconv: Building power selection");
                 int nCurrentPowers = GetPowerCount(oPC, nClass);
                 int nMaxPowers = GetMaxPowerCount(oPC, nClass);
                 string sToken = GetStringByStrRef(STRREF_POWERLIST_HEADER1) + " " + //"Select a power to gain.\n You can select "
@@ -140,11 +144,23 @@ void main()
                     }
                 }
 
+                /* Hack - In the power selection stage, on returning from
+                 * confirmation dialog where the answer was "No", restore the
+                 * offset to be the same as on entering the confirmation dialog.
+                 */
+                if(GetLocalInt(oPC, "PowerListChoiceOffset"))
+                {
+                    if(DEBUG) DoDebug("psi_powconv: Running offset restoration hack");
+                    SetLocalInt(oPC, DYNCONV_CHOICEOFFSET, GetLocalInt(oPC, "PowerListChoiceOffset") - 1);
+                    DeleteLocalInt(oPC, "PowerListChoiceOffset");
+                }
+
                 MarkStageSetUp(STAGE_SELECT_POWER, oPC);
             }
             // Selection confirmation stage
             else if(nStage == STAGE_CONFIRM_SELECTION)
             {
+                if(DEBUG) DoDebug("psi_powconv: Building selection confirmation");
                 // Build the confirmantion query
                 string sToken = GetStringByStrRef(STRREF_SELECTED_HEADER1) + "\n\n"; // "You have selected:"
                 int nPower = GetLocalInt(oPC, "nPower");
@@ -160,21 +176,12 @@ void main()
             // Conversation finished stage
             else if(nStage == STAGE_ALL_POWERS_SELECTED)
             {
+                if(DEBUG) DoDebug("psi_powconv: Building finish note");
                 SetHeader(GetStringByStrRef(STRREF_END_HEADER));
                 // Set the convo quit text to "Finish"
                 SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(STRREF_END_CONVO_SELECT));
                 AllowExit(FALSE, oPC);
             }
-        }
-        /* Hack - In the power selection stage, do not rebuild the list on
-         * returning from confirmation dialog where the answer was "No"
-         * and restore the offset to be the same as on entering the confirmation
-         * dialog.
-         */
-        else
-        {
-            if(nStage == STAGE_SELECT_POWER)
-                SetLocalInt(oPC, DYNCONV_CHOICEOFFSET, GetLocalInt(oPC, "PowerListChoiceOffset"));
         }
 
         // Do token setup
@@ -182,6 +189,7 @@ void main()
     }
     else if(nValue == DYNCONV_EXITED)
     {
+        if(DEBUG) DoDebug("psi_powconv: Running exit handler");
         // End of conversation cleanup
         DeleteLocalInt(oPC, "nClass");
         DeleteLocalInt(oPC, "nPower");
@@ -201,8 +209,10 @@ void main()
     else
     {
         int nChoice = GetChoice(oPC);
-        if(nStage == DYNCONV_SETUP_STAGE)
+        if(DEBUG) DoDebug("psi_powconv: Handling PC response, stage = " + IntToString(nStage) + "; nChoice = " + IntToString(nChoice) + "; choice text = '" + GetChoiceText(oPC) +  "'");
+        if(nStage == STAGE_SELECT_LEVEL)
         {
+            if(DEBUG) DoDebug("psi_powconv: Level selected");
             SetLocalInt(oPC, "nPowerLevelToBrowse", nChoice);
             nStage = STAGE_SELECT_POWER;
         }
@@ -210,23 +220,28 @@ void main()
         {
             if(nChoice == CHOICE_BACK_TO_LSELECT)
             {
-                nStage = DYNCONV_SETUP_STAGE;
+                if(DEBUG) DoDebug("psi_powconv: Returning to level selection");
+                nStage = STAGE_SELECT_LEVEL;
                 DeleteLocalInt(oPC, "nPowerLevelToBrowse");
             }
             else
             {
+                if(DEBUG) DoDebug("psi_powconv: Entering power confirmation");
                 SetLocalInt(oPC, "nPower", nChoice);
                 // Store offset so that if the user decides not to take the power,
                 // we can return to the same page in the power list instead of resetting to the beginning
-                SetLocalInt(oPC, "PowerListChoiceOffset", GetLocalInt(oPC, DYNCONV_CHOICEOFFSET));
+                // Store the value +1 in order to be able to differentiate between offset 0 and undefined
+                SetLocalInt(oPC, "PowerListChoiceOffset", GetLocalInt(oPC, DYNCONV_CHOICEOFFSET) + 1);
                 nStage = STAGE_CONFIRM_SELECTION;
             }
             MarkStageNotSetUp(STAGE_SELECT_POWER, oPC);
         }
         else if(nStage == STAGE_CONFIRM_SELECTION)
         {
+            if(DEBUG) DoDebug("psi_powconv: Handling power confirmation");
             if(nChoice == TRUE)
             {
+                if(DEBUG) DoDebug("psi_powconv: Adding power");
                 int nPower = GetLocalInt(oPC, "nPower");
                 object oSkin = GetPCSkin(oPC);
 
@@ -258,6 +273,8 @@ void main()
             else
                 nStage = STAGE_SELECT_POWER;
         }
+
+        if(DEBUG) DoDebug("psi_powconv: New stage: " + IntToString(nStage));
 
         // Store the stage value. If it has been changed, this clears out the choices
         SetStage(nStage, oPC);

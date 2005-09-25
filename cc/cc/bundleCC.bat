@@ -14,11 +14,7 @@ jar -xf NativeFmodRuntime/lib/NativeFmodApi_v3.11.jar Music
 jar -uvf CC.jar Music
 rmdir /s /q Music
 
-
-mkdir nativemodules
-copy NativeFmodRuntime\lib\* nativemodules
-del nativemodules\NativeFmodApi_v3.11.jar
-jar -uvf CC.jar -C nativemodules nativemodules/*
-rmdir /s /q nativemodules
+jar -uvf CC.jar -C NativeFmodRuntime/lib LICENSE-NativeFmod
+jar -uvf CC.jar -C NativeFmodRuntime/lib README-NativeFmod
 
 @PAUSE

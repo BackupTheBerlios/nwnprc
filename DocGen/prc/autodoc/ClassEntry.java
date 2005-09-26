@@ -5,22 +5,34 @@ package prc.autodoc;
  */
 public class ClassEntry implements Comparable<ClassEntry>{
 	/**
-	 * The name of this class
+	 * The name of this class.
 	 */
-	public String name;
+	public final String name;
 	
 	/**
-	 * The path the html file will be written to
+	 * The path of the html file that has been written for this class.
 	 */
-	public String filePath;
+	public final String filePath;
 	
 	/**
-	 * If <code>true</code>, this class is a base class. 
+	 * If <code>true</code>, this class is a base class.
 	 */
-	public boolean isBase;
+	public final boolean isBase;
 	
-	public int entryNum;
+	/**
+	 * Index of the class in classes.2da.
+	 */
+	public final int entryNum;
 
+	
+	/**
+	 * Create a new class entry.
+	 * 
+	 * @param name     The name of this class.
+	 * @param filePath The path of the html file that has been written for this class.
+	 * @param isBase   If <code>true</code>, this class is a base class.
+	 * @param entryNum Index of the class in classes.2da.
+	 */
 	public ClassEntry(String name, String filePath, boolean isBase, int entryNum){
 		this.name       = name;
 		this.filePath   = filePath;
@@ -30,7 +42,11 @@ public class ClassEntry implements Comparable<ClassEntry>{
 	
 	
 	/**
-	 * @see java.lang.Comparable#compareTo(T)
+	 * Class entries are considered to be comparable by their names
+	 * 
+	 * @param other Another ClassEntry
+	 * @return      As java.lang.String#compareTo(String)
+	 * @see java.lang.Comparable#compareTo(Object)
 	 */
 	public int compareTo(ClassEntry other){
 		return name.compareTo(other.name);

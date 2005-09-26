@@ -877,6 +877,8 @@ int Blightbringer(object oPC = OBJECT_SELF)
        
 int RacialHD(object oPC)
 {
+    if(!GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD))
+        return TRUE;
     int nRealRace = GetRacialType(oPC);
     int nRacialHD = StringToInt(Get2DACache("ECL", "RaceHD", nRealRace));
     int nRacialClass = StringToInt(Get2DACache("ECL", "RaceClass", nRealRace));

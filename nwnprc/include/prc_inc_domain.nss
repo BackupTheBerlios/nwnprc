@@ -153,6 +153,12 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
 
     int nDomain = GetBonusDomain(oPC, nSlot);
     int nSpell = GetDomainSpell(nDomain, nLevel, oPC);
+    // If there is no spell for that level, you cant cast it.
+    if (nSpell == -1)
+    {
+    	FloatingTextStringOnCreature("You do not have a domain spell of that level.", oPC, FALSE);
+    	return;
+    }
 
     // Check to see if you can burn a spell of that slot or if the person has already
     // cast all of their level X spells for the day
@@ -176,10 +182,10 @@ int GetDomainSpell(int nDomain, int nLevel, object oPC)
 {
     // The -1 on nDomains is to adjust from a base 1 to a base 0 system.
     string sSpell = Get2DACache("domains", "Level_" + IntToString(nLevel), (nDomain - 1));
-    int nSpell;
+    int nSpell = -1;
     if (sSpell == "****")
     {
-        FloatingTextStringOnCreature("You do not have a domain spell of that level.", oPC, FALSE);
+        //FloatingTextStringOnCreature("You do not have a domain spell of that level.", oPC, FALSE);
         int nFeat = SpellLevelToFeat(nLevel);
         IncrementRemainingFeatUses(oPC, nFeat);
     }

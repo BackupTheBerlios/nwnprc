@@ -14,11 +14,12 @@
 //:://////////////////////////////////////////////
 
 #include "psi_inc_soulkn"
-#include "inc_utility"
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
+//#include "inc_utility"
+//#include "prc_feat_const"
+//#include "prc_ipfeat_const"
 #include "prc_alterations"
 
+const int LOCAL_DEBUG = DEBUG;
 
 //////////////////////////////////////////////////
 /* Function prototypes                          */
@@ -30,13 +31,9 @@
 void BuildMindblade(object oPC, object oMbld, int nMbldType);
 
 
-// Tries to delete the given item
-// ==============================
-//void DoDestroy(object oItem);
-
 void main()
 {
-WriteTimestampedLogEntry("Starting psi_sk_manifmbld");
+    if(LOCAL_DEBUG) DoDebug("Starting psi_sk_manifmbld");
     object oPC = OBJECT_SELF;
     object oMbld;
     int nMbldType = GetPersistantLocalInt(oPC, MBLADE_SHAPE);
@@ -128,7 +125,7 @@ WriteTimestampedLogEntry("Starting psi_sk_manifmbld");
     AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "psi_sk_event", TRUE, FALSE);
     AddEventScript(oPC, EVENT_ONUNAQUIREITEM,      "psi_sk_event", TRUE, FALSE);
     AddEventScript(oPC, EVENT_ONPLAYERDEATH,       "psi_sk_event", TRUE, FALSE);
-    DelayCommand(0.01f, WriteTimestampedLogEntry("Finished psi_sk_manifmbld"));
+    if(LOCAL_DEBUG) DelayCommand(0.01f, DoDebug("Finished psi_sk_manifmbld")); // Wrap in delaycommand so that the game clock gets to update for the purposes of WriteTimestampedLogEntry
 }
 
 
@@ -156,6 +153,9 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
         nEnh -= nMbldType == MBLADE_SHAPE_DUAL_SHORTSWORDS ? 1 : 0;
     }
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(nEnh), oMbld);
+    // In case of bastard sword, store the enhancement bonus for later for use in the 2-h handling code
+    if(nMbldType == MBLADE_SHAPE_BASTARDSWORD)
+        SetLocalInt(oMbld, "PRC_SK_BSwd_EnhBonus", nEnh);
 
     // Handle Greater Weapon Focus (mindblade) here. It grants +1 to attack with any shape of mindblade.
     // Because of stacking issues, the actual value granted is enhancement bonus + 1.
@@ -169,7 +169,7 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
                                                                       ), oMbld);
 
     /* Add in common feats */
-    string sTag = GetTag(oMbld);
+    //string sTag = GetTag(oMbld);
     // For the purposes of the rest of this function, dual shortswords is the same as single shortsword
     if(nMbldType == MBLADE_SHAPE_DUAL_SHORTSWORDS) nMbldType = MBLADE_SHAPE_SHORTSWORD;
 
@@ -246,7 +246,6 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     }*/
     if(nFlags & MBLADE_FLAG_DEFENDING)
     {
-        //WriteTimestampedLogEntry("Mindblade enhancement Defending activated. Please bugreport");
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(2), oMbld);
     }
     if(nFlags & MBLADE_FLAG_KEEN)
@@ -270,8 +269,8 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     }
     if(nFlags & MBLADE_FLAG_COLLISION)
     {
+        if(LOCAL_DEBUG) DoDebug("Added Collision damage", oPC);
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, IP_CONST_DAMAGEBONUS_5), oMbld);
-        SendMessageToPC(oPC, "Added Collision damage");
     }
     /*if(nFlags & MBLADE_FLAG_MINDCRUSHER )
     { OnHit

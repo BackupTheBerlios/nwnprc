@@ -34,7 +34,69 @@
 //#include "inc_utility" Provided by prc_alterations
 #include "psi_inc_soulkn"
 
-const int LOCAL_DEBUG = DEBUG;
+const int LOCAL_DEBUG = DEBUG && FALSE;
+
+
+void BastardSword2hHandler(object oPC)
+{
+    object oRightH = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    if(LOCAL_DEBUG) DoDebug("GetBaseItemType(oRightH) == BASE_ITEM_BASTARDSWORD : " + (GetBaseItemType(oRightH) == BASE_ITEM_BASTARDSWORD ? "TRUE":"FALSE") + "\n"
+                          + "GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)) : " + (GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)) ? "TRUE":"FALSE") + "\n"
+                          + "GetLocalInt(oRightH, 'PRC_SK_BastardSword_2h_Fudge') : " + IntToString(GetLocalInt(oRightH, "PRC_SK_BastardSword_2h_Fudge")) + "\n"
+                            );
+
+    // Apply 1.5x STR damage to the bastard sword when wielded with 2 hands
+    /// @todo Remove this once Silver finishes his weapons modification
+    if(GetBaseItemType(oRightH) == BASE_ITEM_BASTARDSWORD            &&
+       !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC))&& // The bsword will always be in mainhand when this applies, so just check for offhand's emptiness
+       !GetLocalInt(oRightH, "PRC_SK_BastardSword_2h_Fudge"))             // The bonus isn't already applied
+    {
+        if(LOCAL_DEBUG) DoDebug("Applying +0.5x STR for a bastard sword being wielded 2-h");
+        if(LOCAL_DEBUG) DoDebug("Bonus was already applied according to local variable: " + (GetLocalInt(oRightH, "PRC_SK_BastardSword_2h_Fudge") ? "Yes":"No"));
+        int nDamBon = min((GetAbilityModifier(ABILITY_STRENGTH, oPC) / 2) // Round down
+                          + GetLocalInt(oRightH, "PRC_SK_BSwd_EnhBonus")  // Add in the enhancement bonus, since they don't stack
+                          , 20);                                          // And limit to 20
+        // No increased damage penalty for negative STR mod
+        if(nDamBon > 0)
+        {
+            switch(nDamBon)
+            {
+                case 1:  nDamBon = IP_CONST_DAMAGEBONUS_1;  break;
+                case 2:  nDamBon = IP_CONST_DAMAGEBONUS_2;  break;
+                case 3:  nDamBon = IP_CONST_DAMAGEBONUS_3;  break;
+                case 4:  nDamBon = IP_CONST_DAMAGEBONUS_4;  break;
+                case 5:  nDamBon = IP_CONST_DAMAGEBONUS_5;  break;
+                case 6:  nDamBon = IP_CONST_DAMAGEBONUS_6;  break;
+                case 7:  nDamBon = IP_CONST_DAMAGEBONUS_7;  break;
+                case 8:  nDamBon = IP_CONST_DAMAGEBONUS_8;  break;
+                case 9:  nDamBon = IP_CONST_DAMAGEBONUS_9;  break;
+                case 10: nDamBon = IP_CONST_DAMAGEBONUS_10; break;
+                case 11: nDamBon = IP_CONST_DAMAGEBONUS_11; break;
+                case 12: nDamBon = IP_CONST_DAMAGEBONUS_12; break;
+                case 13: nDamBon = IP_CONST_DAMAGEBONUS_13; break;
+                case 14: nDamBon = IP_CONST_DAMAGEBONUS_14; break;
+                case 15: nDamBon = IP_CONST_DAMAGEBONUS_15; break;
+                case 16: nDamBon = IP_CONST_DAMAGEBONUS_16; break;
+                case 17: nDamBon = IP_CONST_DAMAGEBONUS_17; break;
+                case 18: nDamBon = IP_CONST_DAMAGEBONUS_18; break;
+                case 19: nDamBon = IP_CONST_DAMAGEBONUS_19; break;
+                case 20: nDamBon = IP_CONST_DAMAGEBONUS_20; break;
+            }
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, nDamBon), oRightH);
+            SetLocalInt(oRightH, "PRC_SK_BastardSword_2h_Fudge", nDamBon); // Store the damage bonus value, so it can be used for removing the property later on
+        }
+    }
+    // Remove the +0.5x STR bonus for wielding bastard swords 2-handed if something is equipped in the offhand
+    if(GetBaseItemType(oRightH) == BASE_ITEM_BASTARDSWORD              &&
+       GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)))
+    {
+        if(LOCAL_DEBUG) DoDebug("Removing +0.5x STR for a bastard sword being wielded 2-h");
+        if(LOCAL_DEBUG) DoDebug("Bonus was present according to local variable: " + (GetLocalInt(oRightH, "PRC_SK_BastardSword_2h_Fudge") ? "Yes":"No"));
+        int nDamBon = GetLocalInt(oRightH, "PRC_SK_BastardSword_2h_Fudge");
+        RemoveSpecificProperty(oRightH, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_SLASHING, nDamBon, 1);
+        DeleteLocalInt(oRightH, "PRC_SK_BastardSword_2h_Fudge");
+    }
+}
 
 
 void main()
@@ -76,23 +138,19 @@ void main()
         if(LOCAL_DEBUG) DoDebug("Equip");
         oPC = GetItemLastEquippedBy();
         object oItem   = GetItemLastEquipped(),
-               oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+               oRightH = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 
-        // Wielding the bastard sword with 2 hands
+        // One must wield the bastard sword with 2 hands when lacking exotic weapon proficiency
         if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)) &&
-           GetBaseItemType(oWeapon) == BASE_ITEM_BASTARDSWORD            &&
+           GetBaseItemType(oRightH) == BASE_ITEM_BASTARDSWORD            &&
            !GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
         {
             SendMessageToPCByStrRef(oPC, 16824510);
             ForceUnequip(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC), INVENTORY_SLOT_LEFTHAND);
         }
-        /*if(GetBaseItemType(oItem) == BASE_ITEM_BASTARDSWORD &&
-           !GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC) &&
-           GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)))
-        {
-            SendMessageToPCByStrRef(oPC, 16824510);
-            ForceUnequip(oPC, oItem, INVENTORY_SLOT_LEFTHAND);
-        }*/
+
+        // Run the 2h bastard sword bonus handler
+        BastardSword2hHandler(oPC);
 
         // Lacking the correct proficiency to wield non-mindblade version of a short sword
         if(GetBaseItemType(oItem) == BASE_ITEM_SHORTSWORD     &&
@@ -149,11 +207,15 @@ void main()
     {
         if(LOCAL_DEBUG) DoDebug("OnUnequip");
         object oItem = GetItemLastUnequipped();
+        oPC = GetItemLastUnequippedBy();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {
             if(LOCAL_DEBUG) DoDebug("Destroying unequipped mindblade");
             MyDestroyObject(oItem);
         }
+
+        // Run the 2h bastard sword bonus handler. Delay a bit so that the item can actually vacate the slot. Yay for firing the event before the unequipping has actually occurred
+        DelayCommand(0.4f, BastardSword2hHandler(oPC));
     }
     else if(nEvent == EVENT_ONUNAQUIREITEM)
     {

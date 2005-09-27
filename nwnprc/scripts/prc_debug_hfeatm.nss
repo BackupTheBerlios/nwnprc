@@ -14,6 +14,7 @@
 
 #include "inc_utility"
 
+int nErrorFound = FALSE;
 
 void Recurse(object oPC, object oSkin)
 {
@@ -27,7 +28,10 @@ void Recurse(object oPC, object oSkin)
         if(!GetLocalInt(oPC, (sLocal = "prc_debug_hfeatm_" + IntToString(GetItemPropertySubType(ip)))))
             SetLocalInt(oPC, sLocal, TRUE);
         else
+        {
             DoDebug("prc_debug_hfeatm: Duplicate bonus feat on the hide: " + IntToString(GetItemPropertySubType(ip)));
+            nErrorFound = TRUE;
+        }
     // Test next ip
     Recurse(oPC, oSkin);
     // All ips checked, clean up
@@ -52,4 +56,10 @@ void main()
     // All ips checked, clean up
     if(bFeat)
         DeleteLocalInt(oPC, sLocal);
+
+    if(nErrorFound)
+        DoDebug("prc_debug_hfeatm: ERROR: A duplicate itemproperty feat has been discovered. This is a critical bug, so please report it.\n\n"
+              + "The report should contain an excerpt from your log (nwn/logs/nwclientlog1.txt) that contains all lines starting with"
+              + "'prc_debug_hfeatm:'.",
+                oPC != GetFirstPC() ? oPC : OBJECT_INVALID); // Avoid duplicate message spam
 }}

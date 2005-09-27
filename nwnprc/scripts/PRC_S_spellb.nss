@@ -170,7 +170,6 @@ void main()
     else if(nValue == DYNCONV_EXITED)
     {
         //end of conversation cleanup
-        array_delete(oPC, "StagesSetup");
         DeleteLocalInt(oPC, "SpellClass");
         DeleteLocalInt(oPC, "SpellLevel");
         DeleteLocalInt(oPC, "SpellSlot");
@@ -178,7 +177,6 @@ void main()
     else if(nValue == DYNCONV_ABORTED)
     {
         //abort conversation cleanup
-        array_delete(oPC, "StagesSetup");
         DeleteLocalInt(oPC, "SpellClass");
         DeleteLocalInt(oPC, "SpellLevel");
         DeleteLocalInt(oPC, "SpellSlot");
@@ -189,7 +187,7 @@ void main()
         int nChoice = GetChoice(oPC);
         if(nStage == STAGE_SELECT_CLASS)
         {
-            //select class
+           //select class
             SetLocalInt(oPC, "SpellClass", nChoice);
             MarkStageNotSetUp(STAGE_SELECT_CLASS, oPC);
             nStage = STAGE_SELECT_SPELL_LEVEL;

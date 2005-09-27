@@ -145,6 +145,7 @@ void AddBonusDomain(object oPC, int nDomain)
 
 void CastDomainSpell(object oPC, int nSlot, int nLevel)
 {
+    if (DEBUG) FloatingTextStringOnCreature("CastDomainSpell has fired", oPC, FALSE);
     if (GetLocalInt(oPC, "DomainCastSpell" + IntToString(nLevel))) //Already cast a spell of this level?
     {
         FloatingTextStringOnCreature("You have already cast your domain spell for level " + IntToString(nLevel), oPC, FALSE);
@@ -153,10 +154,11 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
 
     int nDomain = GetBonusDomain(oPC, nSlot);
     int nSpell = GetDomainSpell(nDomain, nLevel, oPC);
+    if (DEBUG) FloatingTextStringOnCreature("GetDomainSpell returned " + IntToString(nSpell), oPC, FALSE);
     // If there is no spell for that level, you cant cast it.
     if (nSpell == -1)
     {
-    	FloatingTextStringOnCreature("You do not have a domain spell of that level.", oPC, FALSE);
+    	FloatingTextStringOnCreature("GetDomainSpell returned an invalid spell", oPC, FALSE);
     	return;
     }
 
@@ -182,10 +184,12 @@ int GetDomainSpell(int nDomain, int nLevel, object oPC)
 {
     // The -1 on nDomains is to adjust from a base 1 to a base 0 system.
     string sSpell = Get2DACache("domains", "Level_" + IntToString(nLevel), (nDomain - 1));
+    if (DEBUG) FloatingTextStringOnCreature("Domain Spell: " + sSpell, oPC, FALSE);
+    if (DEBUG) FloatingTextStringOnCreature("GetDomainSpell has fired", oPC, FALSE);
     int nSpell = -1;
     if (sSpell == "****")
     {
-        //FloatingTextStringOnCreature("You do not have a domain spell of that level.", oPC, FALSE);
+        FloatingTextStringOnCreature("You do not have a domain spell of that level.", oPC, FALSE);
         int nFeat = SpellLevelToFeat(nLevel);
         IncrementRemainingFeatUses(oPC, nFeat);
     }

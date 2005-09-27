@@ -150,8 +150,16 @@ int RedWizRestrictedSchool()
 
 int InscribeRune()
 {
-    // Get the required ints
     object oCaster = OBJECT_SELF;
+    // Get the item used to cast the spell
+    object oItem = GetSpellCastItem();
+    if (GetResRef(oItem) == "prc_rune_1") 
+    {
+    	string sName = GetName(GetItemPossessor(oItem));
+    	if (DEBUG) FloatingTextStringOnCreature(sName + " has just cast a rune spell", oCaster, FALSE);
+    	//SetLocalInt(oCaster, "PRCRuneTarget", TRUE);
+    	//if (GetLocalInt(GetLastSpellCaster(), "PRCRuneTarget") && DEBUG) FloatingTextStringOnCreature("GetLastSpellCaster has PRCRuneTarget set TRUE", oCaster, FALSE);
+    }
     
     // If Inscribing is turned off, the spell functions as normal
     if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;    
@@ -159,13 +167,10 @@ int InscribeRune()
     // No point being in here if you don't have runes.
     if (!GetHasFeat(FEAT_INSCRIBE_RUNE, oCaster)) return TRUE;
 
-        // Get the item used to cast the spell
-        object oItem = GetSpellCastItem();
-
         // No point scribing runes from items, and its not allowed.
         if (oItem != OBJECT_INVALID)
         {
-            FloatingTextStringOnCreature("You cannot scribe a rune from an item.", OBJECT_SELF, FALSE);
+            FloatingTextStringOnCreature("You cannot scribe a rune from an item.", oCaster, FALSE);
             return TRUE;
         }
 

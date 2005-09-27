@@ -262,6 +262,7 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oCaster)
            +  GetLevelByClass(CLASS_TYPE_BLIGHTLORD, oCaster)
            +  GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster)
 
            +  (GetLevelByClass(CLASS_TYPE_OLLAM, oCaster) + 1) / 2
            //+  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2
@@ -1247,7 +1248,15 @@ object PRCGetSpellTargetObject()
     object oItem = GetSpellCastItem();
     
     // The rune always targets the one who activates it.
-    if (GetResRef(oItem) == "prc_rune_1") return OBJECT_SELF;
+    if (GetResRef(oItem) == "prc_rune_1") return GetItemPossessor(oItem);
+    // This check doesnt work, still need a way to find the target on one use items.
+    /*if (DEBUG) FloatingTextStringOnCreature(GetName(GetLastSpellCaster()) + " has just cast a spell", GetFirstPC(), FALSE);
+    if (GetLocalInt(GetLastSpellCaster(), "PRCRuneTarget"))
+    {
+    	if (DEBUG) FloatingTextStringOnCreature(GetName(GetLastSpellCaster()) + " has PRCRuneTarget set as true", GetLastSpellCaster(), FALSE);
+    	DeleteLocalInt(GetLastSpellCaster(), "PRCRuneTarget");
+    	return GetLastSpellCaster();
+    }*/
         
     return GetSpellTargetObject();
 }

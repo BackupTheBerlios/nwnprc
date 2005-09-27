@@ -67,7 +67,7 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 #include "inc_lookups"
 #include "x0_I0_spells"
 //#include "x2_i0_spells"
-#include "prc_inc_s_det"
+//#include "prc_inc_s_det"
 
 
 

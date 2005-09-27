@@ -16,7 +16,7 @@ Spell Resistance: No
 You can sense the presence of evil. The amount of information revealed depends
 on how long you study a particular area or subject:
 1st Round: Presence or absence of evil.
-2nd Round: Number of evil auras (creatures, objects, or spells) in the area and 
+2nd Round: Number of evil auras (creatures, objects, or spells) in the area and
 the strength of the strongest evil aura present. If you are of good alignment, the strongest evil aura’s strength is
 "overwhelming" (see below), and the strength is at least twice your character
 level, you are stunned for 1 round and the spell ends. While you are stunned, you
@@ -25,7 +25,7 @@ you.
 3rd Round: The strength and location of each aura. If an aura is outside your line of
 sight, then you discern its direction but not its exact location.
 
-Aura Strength: An aura’s evil power and strength depend on the type of evil 
+Aura Strength: An aura’s evil power and strength depend on the type of evil
 creature or object that you’re detecting and its HD, caster level, or (in the case of a
 cleric) class level.
 
@@ -48,14 +48,14 @@ the two.
 Remember that animals, traps, poisons, and other potential perils are not evil; this
 spell does not detect them.
 
-Note: Each round, you can turn to detect things in a new area but if you move 
-more than 2 meters the spell ends. The spell can penetrate barriers, but 1 foot 
-of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt 
+Note: Each round, you can turn to detect things in a new area but if you move
+more than 2 meters the spell ends. The spell can penetrate barriers, but 1 foot
+of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt
 blocks it.
 
 */
 
-#include "prc_alterations"
+#include "prc_inc_s_det"
 
 void main()
 {
@@ -68,11 +68,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
         return;
     }
-    
+
     location lTarget = PRCGetSpellTargetLocation();
     if(GetIsObjectValid(PRCGetSpellTargetObject()))
         lTarget = GetLocation(PRCGetSpellTargetObject());
-    
-    DetectAlignmentRound(0, lTarget, -1, ALIGNMENT_LAWFUL, "lawful", VFX_BEAM_MIND);
+    //                                                     "lawful"
+    DetectAlignmentRound(0, lTarget, -1, ALIGNMENT_LAWFUL, GetStringByStrRef(4954), VFX_BEAM_MIND);
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

@@ -1,16 +1,18 @@
-/*
+//::///////////////////////////////////////////////
+//:: Include file for Detect Alignment spells
+//:: prc_inc_s_det
+//:://////////////////////////////////////////////
+/** @file
 
-    prc_inc_s_det.nss
-    
-    Include file for Detect Evil type spells
-
-
-
+    @author Primogenitor
 */
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
 
 #include "prc_alterations"
-#include "inc_draw"
-#include "inc_utility"
+//#include "inc_draw"    Provided by inc_utility
+//#include "inc_utility" Provided by prc_alterations
 
 int GetBreakConcentrationCheck(object oMaster);
 
@@ -28,10 +30,10 @@ int GetBreakConcentrationCheck(object oMaster)
 {
     int nAction = GetCurrentAction(oMaster);
     // master doing anything that requires attention and breaks concentration
-    if (nAction == ACTION_DISABLETRAP || nAction == ACTION_TAUNT ||
-        nAction == ACTION_PICKPOCKET || nAction ==ACTION_ATTACKOBJECT ||
-        nAction == ACTION_COUNTERSPELL || nAction == ACTION_FLAGTRAP ||
-        nAction == ACTION_CASTSPELL || nAction == ACTION_ITEMCASTSPELL)
+    if (nAction == ACTION_DISABLETRAP  || nAction == ACTION_TAUNT        ||
+        nAction == ACTION_PICKPOCKET   || nAction == ACTION_ATTACKOBJECT ||
+        nAction == ACTION_COUNTERSPELL || nAction == ACTION_FLAGTRAP     ||
+        nAction == ACTION_CASTSPELL    || nAction == ACTION_ITEMCASTSPELL)
     {
         return TRUE;
     }
@@ -41,9 +43,9 @@ int GetBreakConcentrationCheck(object oMaster)
     while (GetIsEffectValid(e1))
     {
         nType = GetEffectType(e1);
-        if (nType == EFFECT_TYPE_STUNNED || nType == EFFECT_TYPE_PARALYZE ||
-            nType == EFFECT_TYPE_SLEEP || nType == EFFECT_TYPE_FRIGHTENED ||
-            nType == EFFECT_TYPE_PETRIFY || nType == EFFECT_TYPE_CONFUSED ||
+        if (nType == EFFECT_TYPE_STUNNED   || nType == EFFECT_TYPE_PARALYZE   ||
+            nType == EFFECT_TYPE_SLEEP     || nType == EFFECT_TYPE_FRIGHTENED ||
+            nType == EFFECT_TYPE_PETRIFY   || nType == EFFECT_TYPE_CONFUSED   ||
             nType == EFFECT_TYPE_DOMINATED || nType == EFFECT_TYPE_POLYMORPH)
         {
             return TRUE;
@@ -59,19 +61,19 @@ string GetNounForStrength(int nStrength)
     switch(nStrength)
     {
         case AURA_STRENGTH_DIM:
-                sNoun = "dimly";
+                sNoun = GetStringByStrRef(16832039); //"dimly"
             break;
         case AURA_STRENGTH_FAINT:
-                sNoun = "faintly";
+                sNoun = GetStringByStrRef(16832040); //"faintly"
             break;
         case AURA_STRENGTH_MODERATE:
-                sNoun = "moderatly";
+                sNoun = GetStringByStrRef(16832041); //"moderately"
             break;
         case AURA_STRENGTH_STRONG:
-                sNoun = "strongly";
+                sNoun = GetStringByStrRef(16832042); //"strongly"
             break;
         case AURA_STRENGTH_OVERWHELMING:
-                sNoun = "overwhelmingly";
+                sNoun = GetStringByStrRef(16832043); //"overwhelmingly"
             break;
     }
     return sNoun;
@@ -114,8 +116,8 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
 {
     //if concentration is broken, abort
     if(GetBreakConcentrationCheck(OBJECT_SELF) && nRound != 0)
-    {
-        FloatingTextStringOnCreature("Concentration broken.", OBJECT_SELF, FALSE);
+    {//                              "Concentration broken."
+        FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
         return;
     }
 
@@ -124,8 +126,8 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
         nRound = 1;
     if(nRound == 0)
         nRound = 1;
-    //sanity check    
-    if(nRound > 3)
+    //sanity check
+   if(nRound > 3)
         nRound = 3;
 
 
@@ -143,7 +145,16 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
             {
                 //presence/absence
                 ApplyEffectDetectAuraOnObject(AURA_STRENGTH_MODERATE, OBJECT_SELF, nBeamVFX);
-                FloatingTextStringOnCreature(GetRGB(15,5,5)+"You detect the presense of "+sAura+".", OBJECT_SELF, FALSE);
+                FloatingTextStringOnCreature(GetRGB(15,5,5) + GetStringByStrRef(16832001)// "You detect the presense of"
+                                             + " " + (nLawChaos != -1 ? // "good" and "evil" work as both substantives and adjectives, but not so for "lawful" and "chaotic"
+                                                      (nLawChaos == ALIGNMENT_LAWFUL ?
+                                                       GetStringByStrRef(4957)   // "law"
+                                                       : GetStringByStrRef(4958) // "chaos"
+                                                       )
+                                                      : sAura
+                                                      )
+                                              + ".",
+                                             OBJECT_SELF, FALSE);
                 break;//end while loop
             }
 
@@ -184,18 +195,18 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
                     nOpposingGoodEvil = ALIGNMENT_GOOD;
                 else if(nGoodEvil == ALIGNMENT_GOOD)
                     nOpposingGoodEvil = ALIGNMENT_EVIL;
-                else        
-                    nOpposingGoodEvil = -1;                    
+                else
+                    nOpposingGoodEvil = -1;
                 int nOpposingLawChaos;
                 if(nLawChaos == ALIGNMENT_CHAOTIC)
                     nOpposingLawChaos = ALIGNMENT_LAWFUL;
                 else if(nLawChaos == ALIGNMENT_LAWFUL)
                     nOpposingLawChaos = ALIGNMENT_CHAOTIC;
-                else        
+                else
                     nOpposingLawChaos = -1;
-                    
+
                 if(nStrength == AURA_STRENGTH_OVERWHELMING
-                    && (GetAlignmentGoodEvil(OBJECT_SELF)==nOpposingGoodEvil || nOpposingGoodEvil == -1) 
+                    && (GetAlignmentGoodEvil(OBJECT_SELF)==nOpposingGoodEvil || nOpposingGoodEvil == -1)
                     && (GetAlignmentLawChaos(OBJECT_SELF)==nOpposingLawChaos || nOpposingLawChaos == -1)
                     && nRawStrength > GetHitDice(OBJECT_SELF)*2)
                 {
@@ -205,8 +216,8 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
             else if(nRound == 3)
             {
                 //strength & location
-                ApplyEffectDetectAuraOnObject(nStrength, oTest, nBeamVFX);
-                FloatingTextStringOnCreature(GetRGB(15,16-(nStrength*3),16-(nStrength*3))+GetName(oTest)+" feels "+GetNounForStrength(nStrength)+" "+sAura+".", OBJECT_SELF, FALSE);
+                ApplyEffectDetectAuraOnObject(nStrength, oTest, nBeamVFX);//                                       "feels"
+                FloatingTextStringOnCreature(GetRGB(15,16-(nStrength*3),16-(nStrength*3)) + GetName(oTest) + " " + GetStringByStrRef(16832044) + " "+GetNounForStrength(nStrength)+" "+sAura+".", OBJECT_SELF, FALSE);
             }
         }
         oTest = GetNextObjectInShape(SHAPE_SPELLCONE, 20.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
@@ -214,8 +225,8 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
     if(nRound==2)
     {
         //reporting
-        ApplyEffectDetectAuraOnObject(nStrongestAura, OBJECT_SELF, nBeamVFX);
-        FloatingTextStringOnCreature(GetRGB(15,16-(nStrongestAura*3),16-(nStrongestAura*3))+"You detected "+IntToString(nAuraCount)+" "+GetNounForStrength(nStrongestAura)+" "+sAura+" auras.", OBJECT_SELF, FALSE);
+        ApplyEffectDetectAuraOnObject(nStrongestAura, OBJECT_SELF, nBeamVFX);//               "You detected"                                                                                                               "auras"
+        FloatingTextStringOnCreature(GetRGB(15,16-(nStrongestAura*3),16-(nStrongestAura*3)) + GetStringByStrRef(16832045) + " " + IntToString(nAuraCount) + " " + GetNounForStrength(nStrongestAura) + " " + sAura + " " + GetStringByStrRef(16832046) + ".", OBJECT_SELF, FALSE);
     }
 
     //ActionPlayAnimation(ANIMATION_LOOPING_MEDITATE, 1.0, 6.0);

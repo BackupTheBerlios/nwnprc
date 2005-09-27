@@ -156,7 +156,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
     int nSpell = GetDomainSpell(nDomain, nLevel, oPC);
     if (DEBUG) FloatingTextStringOnCreature("GetDomainSpell returned " + IntToString(nSpell), oPC, FALSE);
     // If there is no spell for that level, you cant cast it.
-    if (nSpell == -1)
+    if (nSpell == -1 && DEBUG)
     {
     	FloatingTextStringOnCreature("GetDomainSpell returned an invalid spell", oPC, FALSE);
     	return;
@@ -187,13 +187,13 @@ int GetDomainSpell(int nDomain, int nLevel, object oPC)
     if (DEBUG) FloatingTextStringOnCreature("Domain Spell: " + sSpell, oPC, FALSE);
     if (DEBUG) FloatingTextStringOnCreature("GetDomainSpell has fired", oPC, FALSE);
     int nSpell = -1;
-    if (sSpell == "****")
+    if (sSpell == "")
     {
         FloatingTextStringOnCreature("You do not have a domain spell of that level.", oPC, FALSE);
         int nFeat = SpellLevelToFeat(nLevel);
         IncrementRemainingFeatUses(oPC, nFeat);
     }
-    else
+    else 
     {
         nSpell = StringToInt(sSpell);
     }

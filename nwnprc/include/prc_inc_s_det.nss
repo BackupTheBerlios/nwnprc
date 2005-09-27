@@ -14,8 +14,6 @@
 //#include "inc_draw"    Provided by inc_utility
 //#include "inc_utility" Provided by prc_alterations
 
-int GetBreakConcentrationCheck(object oMaster);
-
 //this is the main detection function
 void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChaos, string sAura, int nBeamVFX);
 
@@ -26,34 +24,6 @@ const int AURA_STRENGTH_STRONG       = 4;
 const int AURA_STRENGTH_OVERWHELMING = 5;
 
 
-int GetBreakConcentrationCheck(object oMaster)
-{
-    int nAction = GetCurrentAction(oMaster);
-    // master doing anything that requires attention and breaks concentration
-    if (nAction == ACTION_DISABLETRAP  || nAction == ACTION_TAUNT        ||
-        nAction == ACTION_PICKPOCKET   || nAction == ACTION_ATTACKOBJECT ||
-        nAction == ACTION_COUNTERSPELL || nAction == ACTION_FLAGTRAP     ||
-        nAction == ACTION_CASTSPELL    || nAction == ACTION_ITEMCASTSPELL)
-    {
-        return TRUE;
-    }
-    //suffering a mental effect
-    effect e1 = GetFirstEffect(oMaster);
-    int nType;
-    while (GetIsEffectValid(e1))
-    {
-        nType = GetEffectType(e1);
-        if (nType == EFFECT_TYPE_STUNNED   || nType == EFFECT_TYPE_PARALYZE   ||
-            nType == EFFECT_TYPE_SLEEP     || nType == EFFECT_TYPE_FRIGHTENED ||
-            nType == EFFECT_TYPE_PETRIFY   || nType == EFFECT_TYPE_CONFUSED   ||
-            nType == EFFECT_TYPE_DOMINATED || nType == EFFECT_TYPE_POLYMORPH)
-        {
-            return TRUE;
-        }
-        e1 = GetNextEffect(oMaster);
-    }
-    return FALSE;
-}
 
 string GetNounForStrength(int nStrength)
 {

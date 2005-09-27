@@ -639,7 +639,7 @@ void ForceEquip(object oPC, object oItem, int nSlot, int nThCall = 0)
     if(GetItemInSlot(nSlot, oPC) != oItem)
     {
         // Test and increment the control counter
-        if(!nThCall++)
+        if(nThCall++ == 0)
         {
             // First, try to do the equipping non-intrusively and give the target a reasonable amount of time to do it
             AssignCommand(oPC, ActionEquipItem(oItem, nSlot));
@@ -674,7 +674,7 @@ void ForceUnequip(object oPC, object oItem, int nSlot, int nThCall = 0)
 
     // Delay the first unequipping call to avoid a bug that occurs when an object that was just equipped is unequipped right away
     // - The item is not unequipped properly, leaving some of it's effects in the creature's stats and on it's model.
-    if(!nThCall)
+    if(nThCall == 0)
     {
         //DelayCommand(0.5, ForceUnequip(oPC, oItem, nSlot, FALSE));
         fDelay = 0.5;
@@ -690,6 +690,9 @@ void ForceUnequip(object oPC, object oItem, int nSlot, int nThCall = 0)
         // Ramp up the delay if the action is not getting through. Might let whatever is intefering finish
         fDelay = min(nThCall, 10) / 10.0f;
     }
+    // The item has already been unequipped
+    else
+        return;
 
     // Loop
     DelayCommand(fDelay, ForceUnequip(oPC, oItem, nSlot, ++nThCall));

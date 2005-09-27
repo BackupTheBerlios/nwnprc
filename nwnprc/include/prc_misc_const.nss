@@ -67,10 +67,30 @@ const int POISON_RAVAGE_PURIFIED_COUATL_VENOM   = 145;
 const int POISON_RAVAGE_UNICORN_BLOOD           = 146;
 
 
-
 //:://////////////////////////////////////////////
 //:: Skill Const
 //:://////////////////////////////////////////////
 
 const int SKILL_IAIJUTSU_FOCUS  = 27;
 const int SKILL_JUMP            = 28;
+
+
+//:://////////////////////////////////////////////
+//:: Size Const
+//:://////////////////////////////////////////////
+
+const int CREATURE_SIZE_FINE            = -1;
+/**
+ * Yes, this is the same as CREATURE_SIZE_INVALID, live with it.
+ * If it weren't, the constants wouldn't be straight series any longer.
+ */
+const int CREATURE_SIZE_DIMINUTIVE      =  0;
+const int CREATURE_SIZE_GARGANTUAN      =  6;
+const int CREATURE_SIZE_COLOSSAL        =  7;
+
+
+//:://////////////////////////////////////////////
+//:: Saving Throw Const
+//:://////////////////////////////////////////////
+
+const int SAVING_THROW_NONE = 4;

@@ -1,43 +1,81 @@
-//
-//   This is the original include file for the PRC Spell Engine.
-//
-//   Various spells, components and designs within this system have
-//   been contributed by many individuals within and without the PRC.
-//
+//::///////////////////////////////////////////////
+//:: Include nexus
+//:: prc_alterations
+//::///////////////////////////////////////////////
+/*
+    This is the original include file for the PRC Spell Engine.
 
-// Checks if target is a frenzied Bersker with Deathless Frenzy Active
-// If so removes imortality flag so that Death Spell can kill them
+    Various spells, components and designs within this system have
+    been contributed by many individuals within and without the PRC.
+
+
+    These days, it serves to gather links to almost all the PRC
+    includes to one file. Should probably get sorted out someday,
+    since this slows compilation. On the other hand, it may be
+    necessary, since the custom compiler can't seem to handle
+    the most twisted include loops.
+    Related TODO to any C++ experts: Add #DEFINE support to nwnnsscomp
+
+    Also, this file contains misceallenous functions that haven't
+    got a better home.
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+
+/**
+ * Checks if target is a Frenzied Bersker with Deathless Frenzy Active
+ * If so removes immortality flag so that Death Spell can kill them
+ *
+ * @param oTarget Creature to test for Deathless Frenzy
+ */
 void DeathlessFrenzyCheck(object oTarget);
 
-// Get the size (CREATURE_SIZE_*) of oCreature.
-//including any PRC size modification feats
+/**
+ * A PRC wrapper for GetCreatureSize that takes size adjustment
+ * feats into account.
+ *
+ * @param oObject Creature whose size to get
+ * @return        CREATURE_SIZE_* constant
+ */
 int PRCGetCreatureSize(object oObject = OBJECT_SELF);
-const int CREATURE_SIZE_FINE            = -1;
-const int CREATURE_SIZE_DIMINUTIVE      =  0; //yes this is the same as CREATURE_SIZE_INVALID, live with it
-                                              //if it isnt, then they are not a straight series any longer
-const int CREATURE_SIZE_GARGANTUAN      =  6;
-const int CREATURE_SIZE_COLOSSAL        =  7;
 
-const int SAVING_THROW_NONE = 4;
 
 //this is here rather than inc_utility because it uses creature size and screws compiling if its elsewhere
+/**
+ * Returns the skill rank adjusted according to the given parameters.
+ * Using the default values, the result is the same as using GetSkillRank().
+ *
+ * @param oObject     subject to get skill of
+ * @param nSkill      SKILL_* constant
+ * @param bSynergy    include any applicable synergy bonus
+ * @param bSize       include any applicable size bonus
+ * @param bAbilityMod include relevant ability modification (including effects on that ability)
+ * @param bEffect     include skill changing effects and itemproperties
+ * @param bArmor      include armor mod if applicable (excluding shield)
+ * @param bShield     include shield mod if applicable (excluding armor)
+ * @param bFeat       include any applicable feats, including racial ones
+ *
+ * @return            subject's rank in the given skill, modified according to
+ *                    the above parameters. If the skill is trained-only and the
+ *                    subject does not have any ranks in it, returns 0.
+ */
+int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE,
+             int bAbilityMod = TRUE, int bEffect = TRUE, int bArmor = TRUE,
+             int bShield = TRUE, int bFeat = TRUE);
 
-//  int GetSkill(object oObject, int nSkill, int bSynergy = FALSE,
-//      int bSize = FALSE, int bAbilityMod = TRUE, int bEffect = TRUE,
-//      int bArmor = TRUE, int bShield = TRUE, int bFeat = TRUE);
-//  by Primogenitor
-//  oObject     subject to get skills of
-//  nSkill      SKILL_*
-//  bSynergy    include any applicable synergy bonus
-//  bSize       include any applicable size bonus
-//  bAbilityMod include relevant ability modification (including effects on that ability)
-//  bEffect     include skill changing effects and itemproperties
-//  bArmor      include armor mod if applicable (excluding shield)
-//  bShield     include shield mod if applicable (excluding armor)
-//  bFeat       include any applicable feats, including racial ones
-//  this returns 0 if the subject does not have any ranks in the skill and the skill is trained only
-//  the defaults are the same as biowares GetSkillRank function
-int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE, int bAbilityMod = TRUE, int bEffect = TRUE, int bArmor = TRUE, int bShield = TRUE, int bFeat = TRUE);
+/**
+ * Checks whether the given creature is committing an action, or
+ * under such effects that cause a breach of concentration.
+ *
+ * @param oConcentrator The creature to test
+ * @return              TRUE if concentration is broken, FALSE otherwise
+ */
+int GetBreakConcentrationCheck(object oConcentrator);
+
+//////////////////////////////////////////////////
+/* Include section                              */
+//////////////////////////////////////////////////
 
 // Generic includes
 #include "prc_inc_spells"
@@ -71,7 +109,9 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 
 
 
-
+//////////////////////////////////////////////////
+/* Function Definitions                         */
+//////////////////////////////////////////////////
 
 // Added by Oni5115
 void DeathlessFrenzyCheck(object oTarget)
@@ -410,4 +450,33 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
     //add this at the end so any effects applied are counted
     nSkillRank += GetSkillRank(nSkill, oObject);
     return nSkillRank;
+}
+
+int GetBreakConcentrationCheck(object oConcentrator)
+{
+    int nAction = GetCurrentAction(oConcentrator);
+    // creature doing anything that requires attention and breaks concentration
+    if (nAction == ACTION_DISABLETRAP  || nAction == ACTION_TAUNT        ||
+        nAction == ACTION_PICKPOCKET   || nAction == ACTION_ATTACKOBJECT ||
+        nAction == ACTION_COUNTERSPELL || nAction == ACTION_FLAGTRAP     ||
+        nAction == ACTION_CASTSPELL    || nAction == ACTION_ITEMCASTSPELL)
+    {
+        return TRUE;
+    }
+    //suffering a mental effect
+    effect e1 = GetFirstEffect(oConcentrator);
+    int nType;
+    while (GetIsEffectValid(e1))
+    {
+        nType = GetEffectType(e1);
+        if (nType == EFFECT_TYPE_STUNNED   || nType == EFFECT_TYPE_PARALYZE   ||
+            nType == EFFECT_TYPE_SLEEP     || nType == EFFECT_TYPE_FRIGHTENED ||
+            nType == EFFECT_TYPE_PETRIFY   || nType == EFFECT_TYPE_CONFUSED   ||
+            nType == EFFECT_TYPE_DOMINATED || nType == EFFECT_TYPE_POLYMORPH)
+        {
+            return TRUE;
+        }
+        e1 = GetNextEffect(oConcentrator);
+    }
+    return FALSE;
 }

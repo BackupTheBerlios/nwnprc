@@ -22,37 +22,49 @@
 
     OnDeath
     - Destroy mindblade on death, just in case.
+
+
+    @author Ornedan
+    @date   Created  - 2005.04.06
 */
 //:://////////////////////////////////////////////
-//:: Created By: Ornedan
-//:: Created On: 06.04.2005
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "inc_utility"
+//#include "inc_utility" Provided by prc_alterations
 #include "psi_inc_soulkn"
 
-/*
-void DoDestroy(object oItem){
-    //DoDebug("DoDestroy running");
-    if(GetIsObjectValid(oItem)){
-        DestroyObject(oItem);
-        AssignCommand(oItem, SetIsDestroyable(TRUE, FALSE, FALSE));
-        DelayCommand(0.05f, DoDestroy(oItem));
-    }
-}
-*/
+const int LOCAL_DEBUG = DEBUG;
+
 
 void main()
 {
     object oPC;
     int nEvent = GetRunningEvent();
 
-    //DoDebug("psi_sk_event running");
+    if(LOCAL_DEBUG) DoDebug("psi_sk_event running");
 
+    /* Probably unnecessary, uncomment if mindblades turn out to become permanent when a part of a saved character
+    if(nEvent == EVENT_ONCLIENTENTER)
+    {
+        if(LOCAL_DEBUG) DoDebug("Character with soulknife levels entered module, destroying mindblades");
+        oPC = GetEnteringObject();
+        object oItem;
+        if(GetStringLeft(GetTag(oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)), 14) == "prc_sk_mblade_")
+        {
+            if(LOCAL_DEBUG) DoDebug("Destroying mindblade in right hand");
+            MyDestroyObject(oItem);
+        }
+        if(GetStringLeft(GetTag(oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)), 14) == "prc_sk_mblade_")
+        {
+            if(LOCAL_DEBUG) DoDebug("Destroying mindblade in left hand");
+            MyDestroyObject(oItem);
+        }
+    }
+    else */
     if(nEvent == EVENT_ONPLAYERREST_FINISHED)
     {
-        DoDebug("Rest finished, applying new mindblade settings");
+        if(LOCAL_DEBUG) DoDebug("Rest finished, applying new mindblade settings");
         oPC = GetLastBeingRested();
         SetPersistantLocalInt(oPC, MBLADE_FLAGS, GetLocalInt(oPC, MBLADE_FLAGS + "_Q"));
 
@@ -61,7 +73,7 @@ void main()
     }
     else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
     {
-        //DoDebug("Equip");
+        if(LOCAL_DEBUG) DoDebug("Equip");
         oPC = GetItemLastEquippedBy();
         object oItem   = GetItemLastEquipped(),
                oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
@@ -135,37 +147,37 @@ void main()
     }
     else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
     {
-        DoDebug("OnUnequip");
+        if(LOCAL_DEBUG) DoDebug("OnUnequip");
         object oItem = GetItemLastUnequipped();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {
-            DoDebug("Destroying unequipped mindblade");
+            if(LOCAL_DEBUG) DoDebug("Destroying unequipped mindblade");
             MyDestroyObject(oItem);
         }
     }
     else if(nEvent == EVENT_ONUNAQUIREITEM)
     {
-        DoDebug("OnAcquire");
+        if(LOCAL_DEBUG) DoDebug("OnAcquire");
         object oItem = GetModuleItemLost();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {
-            DoDebug("Destroying lost mindblade");
+            if(LOCAL_DEBUG) DoDebug("Destroying lost mindblade");
             MyDestroyObject(oItem);
         }
     }
     else if(nEvent == EVENT_ONPLAYERDEATH)
     {
-        DoDebug("OnDeath");
+        if(LOCAL_DEBUG) DoDebug("OnDeath");
         object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, GetLastBeingDied());
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {
-            DoDebug("Destroying mindblade from right hand");
+            if(LOCAL_DEBUG) DoDebug("Destroying mindblade from right hand");
             MyDestroyObject(oItem);
         }
         oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, GetLastBeingDied());
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {
-            DoDebug("Destroying mindblade from left hand");
+            if(LOCAL_DEBUG) DoDebug("Destroying mindblade from left hand");
             MyDestroyObject(oItem);
         }
     }

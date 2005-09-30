@@ -80,6 +80,8 @@ public class Data_2da{
 		String CRLF = "\r\n";
 		if(path == null || path.equals(""))
 			path = "." + File.separator;
+		if(!path.endsWith(File.separator))
+			path += File.separator;
 		
 		File file = new File(path + name + ".2da");
 		if(file.exists() && !allowOverWrite)
@@ -477,6 +479,38 @@ public class Data_2da{
 	}
 	
 	/**
+	 * Returns the contents of the requested row as a string array. The order the columns are
+	 * taken is the same as the order of labels from getLabels().
+	 * 
+	 * @param index the index of the row to get
+	 * @return      an array of strings containing the elements in the r
+	 * 
+	 * @throws NumberFormatException    if <code>index</code> cannot be converted to an integer
+	 */
+	public String[] getRow(String index){
+		return getRow(Integer.parseInt(index));
+	}
+	
+	
+	/**
+	 * Returns the contents of the requested row as a string array. The order the columns are
+	 * taken is the same as the order of labels from getLabels().
+	 * 
+	 * @param index the index of the row to get
+	 * @return      an array of strings containing the elements in the row
+	 */
+	public String[] getRow(int index){
+		String[] labels = this.getLabels();
+		String[] toReturn = new String[labels.length]; 
+		
+		for(int i = 0; i < labels.length; i++){
+			toReturn[i] = mainData.get(labels[i]).get(index);
+		}
+		
+		return toReturn;
+	}
+	
+	/**
 	 * Appends a new, empty row to the end of the 2da file, with entries defaulting to ****
 	 */
 	public void appendRow(){
@@ -486,6 +520,47 @@ public class Data_2da{
 			mainData.get(label).add("****");
 		}
 	}
+	
+	/**
+	 * Inserts a new row into the given index in the 2da file. The row currently at the index and all
+	 * subsequent rows have their index increased by one. The new row will be filled with the values
+	 * given as parameter.
+	 * 
+	 * @param index the index where the new row will be located
+	 * @param data  the strings that will be used to fill the new row
+	 * 
+	 * @throws IllegalArgumentException if the number of elements in <code>data</code> array is not
+	 *                                   same as number of columns in the 2da 
+	 * @throws NumberFormatException    if <code>index</code> cannot be converted to an integer
+	 */
+	public void insertRow(String index, String[] data){
+		insertRow(Integer.parseInt(index), data);
+	}
+	
+	/**
+	 * Inserts a new row into the given index in the 2da file. The row currently at the index and all
+	 * subsequent rows have their index increased by one. The new row will be filled with the values
+	 * given as parameter.
+	 * 
+	 * @param index the index where the new row will be located
+	 * @param data  the strings that will be used to fill the new row
+	 * 
+	 * @throws IllegalArgumentException if the number of elements in <code>data</code> array is not
+	 *                                   same as number of columns in the 2da 
+	 */
+	public void insertRow(int index, String[] data){
+		String[] labels = this.getLabels();
+		
+		// Sanity check
+		if(labels.length != data.length)
+			throw new IllegalArgumentException("Differing column width when attempting to insert row");
+		
+		for(int i = 0; i < labels.length; i++){
+			mainData.get(labels[i]).add(index, data[i]);
+		}
+	}
+	
+	
 	
 	/**
 	 * Adds a new, empty row to the given index in the 2da file. The row currently at the index and all
@@ -747,5 +822,74 @@ public class Data_2da{
 				}
 			}
 		}
+	}
+	
+	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString(){
+		String CRLF = "\r\n";
+		StringBuffer toReturn = new StringBuffer();
+		boolean evenColumns = true;
+		String[] labels = this.getLabels();
+		String toWrite;
+		
+		// Get the amount of padding used, if any
+		int[] widths = new int[labels.length + 1];// All initialised to 0
+		ArrayList<String> column;
+		int pad;
+		// Loop over columns
+		for(int i = 0; i < labels.length; i++){
+			pad = labels[i].length();
+			column = mainData.get(labels[i]);
+			// Loop over rows
+			for(int j = 0; j < this.getEntryCount(); j++){
+				toWrite = column.get(j);
+				// If the string contains spaces, it needs to be wrapped in "
+				if(toWrite.indexOf(" ") != -1)
+					toWrite = "\"" + toWrite + "\"";
+				if(toWrite.length() > pad) pad = toWrite.length();
+			}
+			widths[i] = pad;
+		}
+		
+		// The last entry in the array is used for the numbers column
+		widths[widths.length - 1] = new Integer(this.getEntryCount()).toString().length();
+		
+		// Write the header and default lines
+		toReturn.append("2DA V2.0" + CRLF);
+		if(!defaultValue.equals(""))
+			toReturn.append("DEFAULT: " + defaultValue + CRLF);
+		else
+			toReturn.append(CRLF);
+		
+		// Write the labels row using the original case
+		for(int i = 0; i < widths[widths.length - 1]; i++) toReturn.append(" ");
+		for(int i = 0; i < realLabels.length; i++){
+			toReturn.append(" " + realLabels[i]);
+			for(int j = 0; j < widths[i] - realLabels[i].length(); j++) toReturn.append(" ");
+		}
+		toReturn.append((TLKEditCompatible ? " ":"") + CRLF);
+		
+		// Write the data
+		for(int i = 0; i < this.getEntryCount(); i++){
+			// Write the number row and it's padding
+			toReturn.append("" + i);
+			for(int j = 0; j < widths[widths.length - 1] - new Integer(i).toString().length(); j++) toReturn.append(" ");
+			// Loop over columns
+			for(int j = 0; j < labels.length; j++){
+				toWrite = mainData.get(labels[j]).get(i);
+				// If the string contains spaces, it needs to be wrapped in "
+				if(toWrite.indexOf(" ") != -1)
+					toWrite = "\"" + toWrite + "\"";
+				toReturn.append(" " + toWrite);
+				// Write padding
+				for(int k = 0; k < widths[j] - toWrite.length(); k++) toReturn.append(" ");
+			}
+			toReturn.append((TLKEditCompatible ? " ":"") + CRLF);
+		}
+		
+		return toReturn.toString();
 	}
 }

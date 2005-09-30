@@ -49,6 +49,6 @@ public class ClassEntry implements Comparable<ClassEntry>{
 	 * @see java.lang.Comparable#compareTo(Object)
 	 */
 	public int compareTo(ClassEntry other){
-		return name.compareTo(other.name);
+		return this.name.compareTo(other.name);
 	}
 }

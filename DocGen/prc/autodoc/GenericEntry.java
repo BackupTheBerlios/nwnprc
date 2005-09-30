@@ -5,10 +5,20 @@ package prc.autodoc;
  * the extra fields used for feats & spells & skills
  */
 public class GenericEntry implements Comparable<GenericEntry>{
-	public String name;
-	public String filePath;
+	/**
+	 * The name of this entry.
+	 */
+	public final String name;
 	
-	public int entryNum;
+	/**
+	 * The path of the html file that has been written for this entry.
+	 */
+	public final String filePath;
+	
+	/**
+	 * Index of the entry in whichever 2da defines it.
+	 */
+	public final int entryNum;
 
 	public GenericEntry(String name, String filePath, int entryNum){
 		this.name     = name;

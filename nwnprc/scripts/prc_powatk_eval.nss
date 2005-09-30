@@ -11,8 +11,8 @@
 //:://////////////////////////////////////////////
 
 //#include "inc_utility" Supplied by prc_alterations
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
+//#include "prc_feat_const"
+//#include "prc_ipfeat_const"
 #include "prc_alterations"
 
 void main()
@@ -27,8 +27,8 @@ void main()
         if(DEBUG) DoDebug("prc_powatk_eval: Adding the PRC Power Attack radials", oPC);
         object oSkin = GetPCSkin(oPC);
 
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_POWER_ATTACK_SINGLE_RADIAL),     oSkin);
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_POWER_ATTACK_FIVES_RADIAL),      oSkin);
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL), oSkin);
+        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_POWER_ATTACK_SINGLE_RADIAL),     0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_POWER_ATTACK_FIVES_RADIAL),      0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
 }

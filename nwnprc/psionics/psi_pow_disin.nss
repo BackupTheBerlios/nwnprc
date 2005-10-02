@@ -86,13 +86,12 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
         //Check for Power Resistance
         if (PRCMyResistPower(oCaster, oTarget, nPen))
         {
-            if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
+            if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
             {
                 nDice = 5;
             }
             int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
-            effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            ApplyTouchAttackDamage(oCaster, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_MAGICAL);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
         }
     }

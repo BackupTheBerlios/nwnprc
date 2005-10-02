@@ -586,3 +586,7 @@ const int IP_CONST_FEAT_SPIDER_DOMAIN      		=  197;
 const int IP_CONST_FEAT_TYRANNY_DOMAIN     		=  198;
 const int IP_CONST_FEAT_OCEAN_DOMAIN       		=  199;
 const int IP_CONST_FEAT_BLIGHTBRINGER      		=  200;
+
+// Lasher
+const int IP_CONST_FEAT_IMPROVED_KNOCKDOWN = 264;
+const int IP_CONST_FEAT_IMPROVED_DISARM = 265;

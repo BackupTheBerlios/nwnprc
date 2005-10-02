@@ -433,3 +433,9 @@ const int SPELL_JUMP                    = 2727;
 
 // Havoc Mage
 const int SPELL_BATTLECAST      = 2025;
+
+// Lasher
+const int SPELL_LASHER_THIRD_HAND = 1910;
+const int SPELL_LASHER_CRACK = 1911;  //Yes, I know it's a funny name
+const int SPELL_LASHER_STUN_SNAP = 1912;
+const int SPELL_LASHER_DEATH_SPIRAL = 1913;

@@ -139,6 +139,13 @@ int GetRogueSneak(object oPC)
    if ((iClassLevel >= 16) && (iClassLevel < 20)) iRogueSneak += 5;
    if (iClassLevel >= 20) iRogueSneak += 6;*/
 
+   if (GetBaseItemType(oWeapon) == BASE_ITEM_WHIP)
+   {
+      // Lasher
+      iClassLevel = GetLevelByClass(CLASS_TYPE_LASHER, oPC);
+      if (iClassLevel > 0) iRogueSneak += ((iClassLevel - 1) / 4) + 1;
+   }
+
    // -----------------------------------------------------------------------------------------
    // Future PRC's go here.  DO NOT ADD ROGUE/BLACKGUARD/ASSASSIN SNEAK ATTACKS AS CLASS FEATS.
    // Placeholder feats are fine, even encouraged.  Example: "Ranged Sneak Attack +1d6".

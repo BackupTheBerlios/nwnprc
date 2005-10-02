@@ -5,15 +5,17 @@ import java.io.*;
 /**
  * A convenience class for printing errors to both log and System.err
  */
-public class ErrorPrinter{
+public class ErrorPrinter {
 	private PrintWriter writer;
+	private boolean isInit = false;
 	
 	/**
-	 * Creates a new ErrorPrinter.
+	 * Initializes the ErrorPrinter.
 	 * Attempts to open a log file by name of "errorlog" for writing. If this
 	 * fails, aborts the program.
 	 */
-	public ErrorPrinter(){
+	private void init()
+	{
 		try{
 			writer = new PrintWriter(new FileOutputStream("errorlog", false), true);
 		}catch(Exception e){
@@ -28,7 +30,12 @@ public class ErrorPrinter{
 	 * 
 	 * @param toPrint string to write
 	 */
-	public void print(String toPrint) { writer.print(toPrint); System.err.print(toPrint); }
+	public void print(String toPrint) {
+		if(!isInit)
+			init();
+		writer.print(toPrint);
+		System.err.print(toPrint);
+	}
 	
 	/**
 	 * Prints the given string to both stderr and errorlog. In addition, adds
@@ -36,5 +43,22 @@ public class ErrorPrinter{
 	 * 
 	 * @param toPrint string to write
 	 */
-	public void println(String toPrint) { writer.println(toPrint); System.err.println(toPrint); }
+	public void println(String toPrint) {
+		if(!isInit)
+			init();
+		writer.println(toPrint);
+		System.err.println(toPrint);
+	}
+	
+	/**
+	 * Prints the given exception's stack trace to both stderr and errorlog.
+	 * 
+	 * @param e exception to print
+	 */
+	public void printException(Exception e) {
+		if(!isInit)
+			init();
+		e.printStackTrace(System.out);
+		e.printStackTrace(writer);
+	}
 }

@@ -3,6 +3,8 @@ package prc.makedep;
 import java.io.*;
 import java.util.*;
 
+import static prc.Main.*;
+
 /**
  * A node in an NWScript include tree.
  * 
@@ -69,7 +71,7 @@ public class NSSNode {
 		// Make sure the file exists
 		if(!new File(fileName).exists()){
 			Main.error = true;
-			System.err.println("Missing script file: " + fileName);
+			err_pr.println("Missing script file: " + fileName);
 			return;
 		}
 		
@@ -91,7 +93,7 @@ public class NSSNode {
 			fr.read(cArray);
 			fr.close();
 		}catch(Exception e){
-			System.err.println("Error while reading file: " + fileName);
+			err_pr.println("Error while reading file: " + fileName);
 			Main.error = true;
 			return;
 		}
@@ -203,7 +205,7 @@ public class NSSNode {
 		try{
 		path = path.substring(0, path.indexOf(".nss") != -1 ? path.indexOf(".nss") : path.indexOf(".ncs"));
 		}catch(Exception e){
-			System.err.println(path);
+			err_pr.println(path);
 		}
 		
 		// Cut out the directories, if present

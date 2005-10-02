@@ -7,6 +7,7 @@ import java.util.*;
 /* Static import in order to let me use the enum constants in switches */
 import static prc.autodoc.Main.SpellType.*;
 
+import static prc.Main.*;
 import static prc.autodoc.Main.*;
 
 /**

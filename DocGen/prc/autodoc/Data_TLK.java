@@ -3,7 +3,7 @@ package prc.autodoc;
 import java.io.*;
 import java.util.*;
 
-import static prc.autodoc.Main.*;
+import static prc.Main.*;
 
 /**
  * This class forms an interface for accessing TLK files in the

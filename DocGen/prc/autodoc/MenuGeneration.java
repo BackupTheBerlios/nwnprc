@@ -1,16 +1,17 @@
 package prc.autodoc;
 
-import java.io.*;
+//import java.io.*;
 import java.util.*;
-import java.util.regex.*;
+//import java.util.regex.*;
 
 /* Static import in order to let me use the enum constants in switches */
 import static prc.autodoc.Main.SpellType.*;
 
+import static prc.Main.*;
 import static prc.autodoc.Main.*;
 
 public final class MenuGeneration{
-	private MenuGeneration(){}
+	private MenuGeneration(){/* No instances */}
 	
 	/**
 	 * Sorts any of the pages for which GenericEntry is enough into alphabetic order

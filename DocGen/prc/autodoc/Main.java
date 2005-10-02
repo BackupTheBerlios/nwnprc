@@ -12,6 +12,9 @@ import static prc.autodoc.Main.SpellType.*;
 import static prc.autodoc.PageGeneration.*;
 import static prc.autodoc.MenuGeneration.*;
 
+/* Error printer, spinner and verbosity settings */
+import static prc.Main.*;
+
 /**
  * The main purpose of this autodocumenter is to create parts of the manual for
  * the PRC pack from 2da and TLK files. As a side effect of doing so, it finds
@@ -96,8 +99,8 @@ public class Main{
 					list.add(data);
 					latch.countDown();
 				}catch(Exception e){
-					System.err.println("Failure while reading main 2das. Exception data:\n");
-					e.printStackTrace();
+					err_pr.println("Failure while reading main 2das. Exception data:\n");
+					err_pr.printException(e);
 					System.exit(1);
 				}
 			}
@@ -129,8 +132,8 @@ public class Main{
 			try {
 				latch.await();
 			} catch (InterruptedException e) {
-				System.err.println("Interrupted while reading main 2das. Exception data:\n");
-				e.printStackTrace();
+				err_pr.println("Interrupted while reading main 2das. Exception data:\n");
+				err_pr.printException(e);
 				System.exit(1);
 			}
 			
@@ -148,8 +151,8 @@ public class Main{
 				data.put("skills",      new Data_2da("2da" + fileSeparator + "skills.2da"));
 				data.put("spells",      new Data_2da("2da" + fileSeparator + "spells.2da"));
 			}catch(Exception e){
-				System.err.println("Failure while reading main 2das. Exception data:\n");
-				e.printStackTrace();
+				err_pr.println("Failure while reading main 2das. Exception data:\n");
+				err_pr.printException(e);
 				System.exit(1);
 			}
 			*/
@@ -328,20 +331,11 @@ public class Main{
 		PSIONIC
 		};
 	
-	/** A convenience object for printing both to log and System.err */
-	public static ErrorPrinter err_pr = new ErrorPrinter();
-	
 	/** A switche determinining how errors are handled */
 	public static boolean tolErr = true;
 	
-	/** A boolean determining whether to spam the user with progress information */
-	public static boolean verbose = true;
-	
 	/** A boolean determining whether to print icons for the pages or not */
 	public static boolean icons = false;
-	
-	/** A decorative spinner to look at while the program is loading big files */
-	public static Spinner spinner = new Spinner();
 	
 	/** A constant signifying Bad StrRef */
 	public static final String badStrRef = "Bad StrRef";

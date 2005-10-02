@@ -1,7 +1,8 @@
 package prc.utils;
 
-import static prc.autodoc.Main.spinner;
-import static prc.autodoc.Main.verbose;
+import static prc.Main.err_pr;
+import static prc.Main.spinner;
+import static prc.Main.verbose;
 import java.util.*;
 import java.io.*;
 
@@ -43,11 +44,11 @@ public class AllClassFeatUpdater {
 		}
 		
 		if(cfabcPath == null){
-			System.err.println("You did not specify the location of cls_feat_allBaseClasses.2da\n");
+			err_pr.println("You did not specify the location of cls_feat_allBaseClasses.2da\n");
 			readMe();
 		}
 		if(paths.size() == 0){
-			System.err.println("You did not specify targets!\n");
+			err_pr.println("You did not specify targets!\n");
 			readMe();
 		}
 		spinner.disable();
@@ -83,7 +84,7 @@ public class AllClassFeatUpdater {
 		for(String path : paths){
 			File dir = new File(path);
 			if(!dir.isDirectory()){
-				System.err.println("Parameter \"" + path + "\" does not refer to a directory!");
+				err_pr.println("Parameter \"" + path + "\" does not refer to a directory!");
 				continue;
 			}
 			
@@ -101,7 +102,7 @@ public class AllClassFeatUpdater {
 					//System.out.println(file.getParent());
 					update2da(source, Data_2da.load2da(file.getCanonicalPath()), file.getParentFile().getCanonicalPath());
 				}catch(Exception e){
-					e.printStackTrace();
+					err_pr.printException(e);
 				} //*/
 			}
 		}

@@ -7,6 +7,8 @@ package prc.makedep;
 import java.util.*;
 import java.io.*;
 
+import static prc.Main.*;
+
 
 /**
  * Calculates nwscript dependencies.
@@ -68,7 +70,7 @@ public class Main {
 			if(!scripts.containsKey(temp))
 				scripts.put(temp, new NSSNode(args[i]));
 			else{
-				System.err.println("Duplicate script file: " + temp);
+				err_pr.println("Duplicate script file: " + temp);
 				error = true;
 			}
 		}
@@ -84,7 +86,7 @@ public class Main {
 			try {
 				scan = new Scanner(targetListFile);
 			} catch (FileNotFoundException e) {
-				System.err.println("Could not find file: " + args[i]);
+				err_pr.println("Could not find file: " + args[i]);
 				error = true;
 				continue;
 			}
@@ -162,7 +164,7 @@ public class Main {
 				if(!scripts.containsKey(temp))
 					scripts.put(temp, new NSSNode(file.getPath()));
 				else{
-					System.err.println("Duplicate script file: " + temp);
+					err_pr.println("Duplicate script file: " + temp);
 					error = true;
 				}
 			}
@@ -180,7 +182,7 @@ public class Main {
 		try{
 			oStrm = new PrintStream(new FileOutputStream(outFileName, append), true);
 		}catch(FileNotFoundException e){
-			System.err.println("Missing output file " + outFileName + "\nTerminating!");
+			err_pr.println("Missing output file " + outFileName + "\nTerminating!");
 			System.exit(1);
 		}
 	}

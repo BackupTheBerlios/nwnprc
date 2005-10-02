@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.concurrent.*;
 import javax.imageio.*;
 
+import static prc.Main.*;
 import static prc.autodoc.Main.*;
 
 /**
@@ -29,7 +30,7 @@ public class Icons{
 			reader = Jimi.createTypedJimiReader("image/targa");
 			writer = Jimi.createTypedJimiWriter("image/png");
 		}catch(JimiException e){
-			e.printStackTrace();
+			err_pr.printException(e);
 			icons = false;
 			return;
 		}*/
@@ -97,7 +98,7 @@ public class Icons{
 			writer.setSource(reader.getImage());
 			writer.putImage(imagePath + iconName + ".png");
 		}catch(Exception e){
-			e.printStackTrace();
+			err_pr.printException(e);
 			throw new RuntimeException(e);
 		}
 		*/
@@ -129,7 +130,7 @@ public class Icons{
 				if(!ImageIO.write(ImageIO.read(inFile), "png", outFile))
 					err_pr.println("Failed to convert image " + inFile);
 			} catch (IOException e) {
-				e.printStackTrace();
+				err_pr.printException(e);
 			}
 		}
 	}

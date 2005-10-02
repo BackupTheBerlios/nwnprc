@@ -6,7 +6,7 @@ import java.util.regex.*;
 
 //import javax.swing.text.LabelView;
 
-import static prc.autodoc.Main.*;
+import static prc.Main.*;
 
 /**
  * This class forms an interface for accessing 2da files in the
@@ -327,12 +327,7 @@ public class Data_2da{
 				// Find the next match and check for too short rows
 				if(!matcher.find())
 					throw new TwoDAReadException("Too short 2da line: " + line);
-				/*	
-				String foo = matcher.group();//rowParser.next(pattern);
-				System.out.print(labels[i] + ":\t\t");
-				System.out.println(foo);
-				mainData.get(labels[i]).add(foo);
-				*/
+
 				// Get the next element and add it to the data structure
 				data = matcher.group();
 				// Remove the surrounding quotes if they are present
@@ -683,7 +678,7 @@ public class Data_2da{
 							spinner.disable();
 							break;
 						default:
-							System.out.println("Unknown parameter: " + c + "!");
+							err_pr.println("Unknown parameter: " + c + "!");
 							readMe();
 						}
 					}
@@ -700,10 +695,8 @@ public class Data_2da{
 			String s;
 			while(scan.hasNextLine()){
 				s = scan.nextLine();
-				//System.out.println("Read filename from stdin: " + s);
 				if(s.charAt(0) == '"' && s.charAt(s.length() - 1) == '"')
 					s = s.substring(1, s.length() - 1);
-				//System.out.println("Storing for parse: " + s);
 				fileNames.add(s);
 			}
 		}
@@ -724,7 +717,7 @@ public class Data_2da{
 					temp.save2da(new File(fileName).getCanonicalFile().getParent() + File.separator, true, !minimal);
 				}catch(Exception e){
 					// Print the error
-					e.printStackTrace();
+					err_pr.printException(e);
 					// If ignoring errors, and this error is of expected type, continue
 					if(e instanceof IllegalArgumentException ||
 					   e instanceof TwoDAReadException ||
@@ -742,7 +735,7 @@ public class Data_2da{
 					load2da(fileName);
 				}catch(Exception e){
 					// Print the error
-					e.printStackTrace();
+					err_pr.printException(e);
 					// If ignoring errors, and this error is of expected type, continue
 					if(e instanceof IllegalArgumentException || e instanceof TwoDAReadException)
 						if(ignoreErrors)

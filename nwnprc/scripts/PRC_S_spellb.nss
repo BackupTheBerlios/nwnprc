@@ -87,6 +87,7 @@ void main()
                 string sMessage;
                 int i;
                 sMessage += "You have remaining:\n";
+                persistant_array_create(oPC,  "NewSpellbookMem_"+IntToString(nSpellClass));
                 int nArraySize = persistant_array_get_size(oPC, "NewSpellbookMem_" + IntToString(nSpellClass));
                 for(i = 0; i < nArraySize; i++)
                 {
@@ -151,10 +152,10 @@ void main()
                 //this may cause a TMI, dont have time to fix it now
                 for(i = 1; i < 410; i++)
                 {
-                    if(StringToInt(Get2DACache(sFile, "Level", i)) == nSpellLevel       // Correct spell level
-                    && Get2DACache(sFile, "Level", i) != ""                             // And not undefined spell level in case of SL 0
-                    && (Get2DACache(sFile, "ReqFeat", i)==""                            // Has no prerequisites
-                     || GetHasFeat(StringToInt(Get2DACache(sFile, "ReqFeat", i)), oPC)))// Or has prerequisites which the PC posseses
+                    if(StringToInt(Get2DACache(sFile, "Level", i)) == nSpellLevel               // Correct spell level
+                        && Get2DACache(sFile, "Level", i) != ""                                 // And not undefined spell level in case of SL 0
+                        && (Get2DACache(sFile, "ReqFeat", i)==""                                // Has no prerequisites
+                            || GetHasFeat(StringToInt(Get2DACache(sFile, "ReqFeat", i)), oPC))) // Or has prerequisites which the PC posseses
                     {
                         int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", i));
                         AddChoice(GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))), i, oPC);

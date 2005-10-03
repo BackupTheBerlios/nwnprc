@@ -103,7 +103,25 @@ void PRCLetoLevelup(object oPC)
 
             //now the 2da lookup to get the maximum hp
             //uses the same cache system as the ConvoCC
-            int nHP = Random(StringToInt(Get2DACache("classes", "HitDie", nClass)))+1;
+            int nMax = StringToInt(Get2DACache("classes", "HitDie", nClass));
+            if(nClass == CLASS_TYPE_DRAGON_DISCIPLE)
+            {
+                int nClassLevel = GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE, oPC) ;
+                switch(nClassLevel)
+                {
+                    case 1: nMax = 6; break;
+                    case 2: nMax = 6; break;
+                    case 3: nMax = 6; break;
+                    case 4: nMax = 8; break;
+                    case 5: nMax = 8; break;
+                    default:
+                        if(nClassLevel>5)
+                            nMax = 10;
+                        else
+                            DoDebug("Error in inc_leto_prc @ 121");
+                }
+            }
+            int nHP = Random(nMax)+1;
             //this is the letoscript we need to run to fix the HP
             StackedLetoScript(LetoSet("LvlStatList/["+IntToString(nLevel)+"]/LvlStatHitDie", IntToString(nHP),  "byte"));
             bChange = TRUE;

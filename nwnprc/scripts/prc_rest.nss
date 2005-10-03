@@ -150,7 +150,7 @@ void RestFinished(object oPC)
     PrcFeats(oPC);
 
     // New Spellbooks
-    DelayCommand(0.01, CheckNewSpellbooks(oPC));
+    DelayCommand(0.1, CheckNewSpellbooks(oPC));
     // PnP spellschools
     if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD, oPC))

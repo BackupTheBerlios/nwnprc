@@ -40,6 +40,7 @@ void MakeLookupLoopMaster()
     DelayCommand(2.2, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN,   0, 200 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(2.4, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN,   0, 200 , "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_FIST_OF_ZUOKEN)));
     //add new psionic classes here
+    //also add them later too
     
     //new spellbook lookups
     DelayCommand(2.6, MakeLookupLoop(CLASS_TYPE_BLACKGUARD,       0, 100 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
@@ -49,7 +50,7 @@ void MakeLookupLoopMaster()
     DelayCommand(3.0, MakeLookupLoop(CLASS_TYPE_KNIGHT_CHALICE,   0, 100 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(3.1, MakeLookupLoop(CLASS_TYPE_VIGILANT,         0, 100 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(3.2, MakeLookupLoop(CLASS_TYPE_VASSAL,           0, 100 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
-    DelayCommand(3.3, MakeLookupLoop(CLASS_TYPE_OCULAR,          0, 500 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(3.3, MakeLookupLoop(CLASS_TYPE_OCULAR,           0, 500 , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
 }
 
 void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn, 
@@ -87,6 +88,7 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
         || nClass == CLASS_TYPE_PSYWAR
         || nClass == CLASS_TYPE_WILDER
         || nClass == CLASS_TYPE_FIST_OF_ZUOKEN 
+    //add new psionic classes here
         )
         sFile = GetPsiBookFileName(nClass);
     else

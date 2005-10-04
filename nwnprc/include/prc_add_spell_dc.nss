@@ -331,28 +331,28 @@ int KOTCSpellFocusVsDemons(object oTarget, object oCaster)
 
 int BloodMagusBloodComponent(object oCaster)
 {
-	int nDC = 0;
-	if (GetLevelByClass(CLASS_TYPE_BLOOD_MAGUS, oCaster) > 0 && GetLocalInt(oCaster, "BloodComponent") == TRUE)
-	{
-		nDC = 1;
-		effect eSelfDamage = EffectDamage(1, DAMAGE_TYPE_MAGICAL);
-		// To make sure it doesn't cause a conc check
-          	DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eSelfDamage, oCaster));
+    int nDC = 0;
+    if (GetLevelByClass(CLASS_TYPE_BLOOD_MAGUS, oCaster) > 0 && GetLocalInt(oCaster, "BloodComponent") == TRUE)
+    {
+        nDC = 1;
+        effect eSelfDamage = EffectDamage(1, DAMAGE_TYPE_MAGICAL);
+        // To make sure it doesn't cause a conc check
+            DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eSelfDamage, oCaster));
         }
         return nDC;
 }
 
 int RunecasterRunePowerDC(object oCaster)
 {
-	int nDC = 0;
-	int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
-	object oItem = GetSpellCastItem();
-	string sResRef = GetResRef(oItem);
-	// If the caster is runechanting or casting from a rune, add bonus
-	// Known Bug: This does not give the proper bonus to anyone aside from the caster
-	// I am uncertain as to how to do that
-	if (nClass >= 2 && GetLocalInt(oCaster, "RuneChant") || sResRef == "prc_rune_1")
-	{
+    int nDC = 0;
+    int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
+    object oItem = GetSpellCastItem();
+    string sResRef = GetResRef(oItem);
+    // If the caster is runechanting or casting from a rune, add bonus
+    // Known Bug: This does not give the proper bonus to anyone aside from the caster
+    // I am uncertain as to how to do that
+    if (nClass >= 2 && GetLocalInt(oCaster, "RuneChant") || sResRef == "prc_rune_1")
+    {
             if (nClass >= 30)        nDC = 10;
             else if (nClass >= 27)   nDC = 9;
             else if (nClass >= 24)   nDC = 8;
@@ -378,7 +378,81 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
     if (GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE) != 0)
     {
         nDC = GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE);
-        SendMessageToPC(oCaster, "Forced Base-DC casting at DC " + IntToString(nDC));
+        if(DEBUG)
+            DoDebug("Forced Base-DC casting at DC " + IntToString(nDC));
+        string sSchool = Get2DACache("spells", "School", nSpellID);
+        if(sSchool == "V")
+        {
+            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_EVOCATION, oCaster))
+                nDC+=6;
+            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oCaster))
+                nDC+=5;
+            else if(GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oCaster))
+                nDC+=2;
+        }
+        else if(sSchool == "T")
+        {
+            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_TRANSMUTATION, oCaster))
+                nDC+=6;
+            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oCaster))
+                nDC+=5;
+            else if(GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oCaster))
+                nDC+=2;
+        }
+        else if(sSchool == "N")
+        {
+            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_NECROMANCY, oCaster))
+                nDC+=6;
+            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oCaster))
+                nDC+=5;
+            else if(GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oCaster))
+                nDC+=2;
+        }
+        else if(sSchool == "I")
+        {
+            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ILLUSION, oCaster))
+                nDC+=6;
+            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oCaster))
+                nDC+=5;
+            else if(GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oCaster))
+                nDC+=2;
+        }
+        else if(sSchool == "A")
+        {
+            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ABJURATION, oCaster))
+                nDC+=6;
+            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oCaster))
+                nDC+=5;
+            else if(GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oCaster))
+                nDC+=2;
+        }
+        else if(sSchool == "C")
+        {
+            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_CONJURATION, oCaster))
+                nDC+=6;
+            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oCaster))
+                nDC+=5;
+            else if(GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oCaster))
+                nDC+=2;
+        }
+        else if(sSchool == "D")
+        {
+            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_DIVINATION, oCaster))
+                nDC+=6;
+            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINATION, oCaster))
+                nDC+=5;
+            else if(GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oCaster))
+                nDC+=2;
+        }
+        else if(sSchool == "E")
+        {
+            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ENCHANTMENT, oCaster))
+                nDC+=6;
+            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oCaster))
+                nDC+=5;
+            else if(GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oCaster))
+                nDC+=2;
+        }
     }
     nDC += GetChangesToSaveDC(oTarget, oCaster, nSpellID);
     return nDC;

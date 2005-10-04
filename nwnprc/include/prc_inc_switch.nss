@@ -187,14 +187,16 @@ const string PRC_SPELL_TARGET_OBJECT_OVERRIDE        = "PRC_SPELL_TARGET_OBJECT_
 /*
  * This is for builders. It should not be set on the module, but should be set on players/creatures.
  * When this is set, it will add to spell metamagic. Not all spells may accept this.
- * Only use Empower, Extend, or Maximize. Stil, Silent, and Quicken wont work
+ * Only use Empower, Extend, or Maximize. 
+ * Still, Silent, and Quicken wont work
 */
 const string PRC_METAMAGIC_ADJUSTMENT                 = "PRC_METAMAGIC_ADJUSTMENT";
 
 /*
  * Mostly internal, but builders may find a use for it
  * Used to override PRCGetMetaMagicFeat();
- * Only use Empower, Extend, or Maximize. Stil, Silent, and Quicken wont work
+ * Only use Empower, Extend, or Maximize. 
+ * Still, Silent, and Quicken wont work
 */
 const string PRC_METAMAGIC_OVERRIDE                   = "PRC_METAMAGIC_OVERRIDE";
 

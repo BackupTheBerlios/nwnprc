@@ -774,7 +774,8 @@ int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
     if (GetLocalInt(oSaveVersus, PRC_DC_TOTAL_OVERRIDE) != 0)
     {
         nDC = GetLocalInt(oSaveVersus, PRC_DC_TOTAL_OVERRIDE);
-        //SendMessageToPC(oCaster, "Forced-DC casting at DC " + nDC;
+        if(DEBUG)
+            DoDebug("Forced-DC PRC_DC_TOTAL_OVERRIDE casting at DC " + IntToString(nDC));
     }
 
     // -------------------------------------------------------------------------
@@ -1253,9 +1254,9 @@ object PRCGetSpellTargetObject()
     /*if (DEBUG) FloatingTextStringOnCreature(GetName(GetLastSpellCaster()) + " has just cast a spell", GetFirstPC(), FALSE);
     if (GetLocalInt(GetLastSpellCaster(), "PRCRuneTarget"))
     {
-    	if (DEBUG) FloatingTextStringOnCreature(GetName(GetLastSpellCaster()) + " has PRCRuneTarget set as true", GetLastSpellCaster(), FALSE);
-    	DeleteLocalInt(GetLastSpellCaster(), "PRCRuneTarget");
-    	return GetLastSpellCaster();
+        if (DEBUG) FloatingTextStringOnCreature(GetName(GetLastSpellCaster()) + " has PRCRuneTarget set as true", GetLastSpellCaster(), FALSE);
+        DeleteLocalInt(GetLastSpellCaster(), "PRCRuneTarget");
+        return GetLastSpellCaster();
     }*/
         
     return GetSpellTargetObject();

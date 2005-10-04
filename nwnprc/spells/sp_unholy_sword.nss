@@ -30,7 +30,8 @@ void  AddHolyAvengerEffectToWeapon(object oMyWeapon, float fDuration, int nLevel
    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(2), oMyWeapon, fDuration);
    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonusVsAlign(IP_CONST_ALIGNMENTGROUP_GOOD, 5), oMyWeapon, fDuration);
    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_GOOD, IP_CONST_DAMAGETYPE_DIVINE, IP_CONST_DAMAGEBONUS_2d6), oMyWeapon, fDuration);
-   AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DISPEL_MAGIC, nLevel), oMyWeapon, fDuration);
+   //AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DISPEL_MAGIC, nLevel), oMyWeapon, fDuration);
+   AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyAreaOfEffect(IP_CONST_AOE_CIRCLE_VS_GOOD, nLevel), oMyWeapon, fDuration);
    return;
 }
 

@@ -16,55 +16,8 @@
 #include "prc_alterations"
 void main()
 {
-
-/*
-  Spellcast Hook Code
-  Added 2003-06-23 by GeorgZ
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
-    {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-
-    //Declare major variables
-    effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
-    int nDuration = 15;
-    int nMetaMagic = PRCGetMetaMagicFeat();
-    object oTarget = OBJECT_SELF;
-    effect eShield = EffectDamageShield(nDuration, DAMAGE_BONUS_1d6, DAMAGE_TYPE_FIRE);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eCold = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 50);
-    effect eFire = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 50);
-
-    //Link effects
-    effect eLink = EffectLinkEffects(eShield, eCold);
-    eLink = EffectLinkEffects(eLink, eFire);
-    eLink = EffectLinkEffects(eLink, eDur);
-    eLink = EffectLinkEffects(eLink, eVis);
-
-    //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ELEMENTAL_SHIELD, FALSE));
-
-    //  *GZ: No longer stack this spell
-    if (GetHasSpellEffect(GetSpellId(),oTarget))
-    {
-         RemoveSpellEffects(GetSpellId(), OBJECT_SELF, oTarget);
-    }
-
-    //Enter Metamagic conditions
-    if (nMetaMagic == METAMAGIC_EXTEND)
-    {
-        nDuration = nDuration *2; //Duration is +100%
-    }
-    //Apply the VFX impact and effects
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
+    int nLevel = 15;
+    int nDC    =  0; 
+    DoRacialSLA(SPELL_ELEMENTAL_SHIELD, nLevel, nDC);
 }
 

@@ -13,10 +13,11 @@ CHANGE: Miss chance still applies, unlike rules.
 //:://////////////////////////////////////////////
 //:: VFX Pass By:
 
+#include "prc_alterations"
+
 void main()
 {
-    effect eAttack = EffectAttackIncrease(20);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAttack, OBJECT_SELF, 9.0);
-
+    int nLevel = GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE);
+    DoRacialSLA(SPELL_TRUE_STRIKE, nLevel, 0);
 }
 

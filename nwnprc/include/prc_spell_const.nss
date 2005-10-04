@@ -384,6 +384,11 @@ const int SPELL_DETECT_LAW                          = 3203;
 const int SPELL_DETECT_CHAOS                        = 3204;
 const int SPELL_UNDETECTABLE_ALINGMENT              = 3205;
 const int SPELL_UNHOLYSWORD                         = 3206;
+const int SPELL_DEEPER_DARKNESS                     = 3207;
+const int SPELL_HOLY_WORD                           = 3220;
+const int SPELL_BLASPHEMY                           = 3221;
+const int SPELL_DICTUM                              = 3222;
+const int SPELL_WORD_OF_CHAOS                       = 3223;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE        = 1951;

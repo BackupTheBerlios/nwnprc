@@ -19,6 +19,8 @@ const int ITEM_PROPERTY_USE_LIMITATION_GENDER             =150;
 const int ITEM_PROPERTY_SPEED_INCREASE = 134;
 const int ITEM_PROPERTY_SPEED_DECREASE = 135;
 const int ITEM_PROPERTY_AREA_OF_EFFECT = 100;
+const int ITEM_PROPERTY_CASTER_LEVEL   = 85;
+const int ITEM_PROPERTY_METAMAGIC      = 92;
 
 
 const string PLAYER_SPEED_INCREASE = "player_speed_increase";
@@ -85,6 +87,7 @@ void ApplySpeedDecrease(object oPC)
 }
 
 //this is a scripted version of the bioware UMD check for using restricted items
+//this also applies effects relating to new itemproperties
 int DoUMDCheck(object oItem, object oPC, int nDCMod)
 {
     string s2DAEntry;
@@ -118,12 +121,19 @@ int DoUMDCheck(object oItem, object oPC, int nDCMod)
     else
         return TRUE;
 }
+void VoidCheckPRCLimitations(object oItem, object oPC)
+{
+    CheckPRCLimitations(oItem, oPC);
+}
 
 //tests for use restrictions
 //also appies effects for those IPs tat need them
 int CheckPRCLimitations(object oItem, object oPC)
 {
-
+    //sanity checks
+    if(!GetIsObjectValid(oPC))
+        oPC = GetItemPossessor(oItem);
+    
     itemproperty ipTest = GetFirstItemProperty(oItem);
     int bPass = TRUE;
     int nUMDDC;

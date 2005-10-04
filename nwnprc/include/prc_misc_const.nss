@@ -6,6 +6,7 @@
 
 const int AOE_MOB_PESTILENCE                    = 150;
 const int AOE_PER_TELEPORTATIONCIRCLE           = 151;
+const int AOE_PER_DEEPER_DARKNESS               = 100;
 
 const int VFX_PER_5_FT_INVIS                    = 184;
 const int VFX_PER_10_FT_INVIS                   = 185;

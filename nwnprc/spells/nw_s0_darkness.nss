@@ -16,7 +16,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "prc_alterations"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -44,9 +44,25 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     //Declare major variables including Area of Effect Object
     effect eAOE = EffectAreaOfEffect(AOE_PER_DARKNESS);
-    location lTarget = GetSpellTargetLocation();
-
-    int  nDuration = PRCGetCasterLevel(OBJECT_SELF);
+    object oTarget = PRCGetSpellTargetObject();
+    object oItemTarget = oTarget;
+    if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
+    {
+        oItemTarget = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
+        if(!GetIsObjectValid(oTarget))
+        {   
+            //no armor, check other slots
+            int i;
+            for(i=0;i<14;i++)
+            {
+                oItemTarget = GetItemInSlot(i, oTarget);
+                if(GetIsObjectValid(oTarget))
+                    break;//end for loop
+            }
+        }
+    }   
+    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int  nDuration = nCasterLvl*10;//10min/level
 
     int nMetaMagic = GetMetaMagicFeat();
     //Make sure duration does no equal 0
@@ -60,7 +76,19 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
        nDuration = nDuration *2;    //Duration is +100%
     }
     //Create an instance of the AOE Object using the Apply Effect function
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nDuration));
+    //placeables get an effect
+    //or if no equipment
+    if(GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE
+        || !GetIsObjectValid(oItemTarget))
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCasterLvl);
+    else
+    {
+        //otherwise items get an IP
+        itemproperty ipDarkness = ItemPropertyAreaOfEffect(IP_CONST_AOE_DARKNESS, nCasterLvl);
+        IPSafeAddItemProperty(oItemTarget, ipDarkness, RoundsToSeconds(nDuration)); 
+        //this applies the effects relating to it       
+        DelayCommand(0.1, VoidCheckPRCLimitations(oItemTarget, OBJECT_INVALID));
+    }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

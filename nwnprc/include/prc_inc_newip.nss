@@ -1,6 +1,11 @@
-const int ITEM_PROPERTY_CASTER_LEVEL = 85;
-const int ITEM_PROPERTY_METAMAGIC    = 92;
+//constants defined in prc_inc_itmrstr
 
+const int IP_CONST_AOE_DARKNESS             = 0;
+const int IP_CONST_AOE_DEEPER_DARKNESS      = 1;
+const int IP_CONST_AOE_CIRCLE_VS_EVIL       = 2;
+const int IP_CONST_AOE_CIRCLE_VS_GOOD       = 3;
+const int IP_CONST_AOE_CIRCLE_VS_LAW        = 4;
+const int IP_CONST_AOE_CIRCLE_VS_CHAOS      = 5;
 
 //new function to return a PRC caster level itemproperty
 //will putput to log file if it doesnt work
@@ -12,6 +17,12 @@ itemproperty ItemPropertyTrueCasterLevel(int nSpell, int nLevel);
 //relys on blueprints containing these itemproperties
 //nMetamagic should be a METAMAGIC_* constant
 itemproperty ItemPropertyMetamagic(int nSpell, int nMetamagic);
+
+//new function to return a PRC metamagic itemproperty
+//will putput to log file if it doesnt work
+//relys on blueprints containing these itemproperties
+//nIPAoEID is defined in iprp_aoe & IP_CONST_AOE_*
+itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel);
 
 //not implemented
 itemproperty ItemPropertyLimitUseByAbility(int nAbility, int nMinScore);
@@ -25,8 +36,6 @@ itemproperty ItemPropertyLimitUseByArcaneSpellcasting(int nLevel);
 itemproperty ItemPropertyLimitUseByDivineSpellcasting(int nLevel);
 //not implemented
 itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice);
-//not implemented
-itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel);
 
 itemproperty ItemPropertyMetamagic(int nSpell, int nMetamagic)
 {
@@ -80,8 +89,7 @@ itemproperty ItemPropertyMetamagic(int nSpell, int nMetamagic)
         if(GetIsObjectValid(oItem))
             sMessage += "\n oItem is valid.";
         sMessage += "\n sResRef is "+sResRef+".";
-        PrintString(sMessage);
-        SendMessageToPC(GetFirstPC(), sMessage);
+        DoDebug(sMessage);
     }        
     return ipReturn;
 }
@@ -110,8 +118,33 @@ itemproperty ItemPropertyTrueCasterLevel(int nSpell, int nLevel)
         if(GetIsObjectValid(oItem))
             sMessage += "\n oItem is valid.";
         sMessage += "\n sResRef is "+sResRef+".";
-        PrintString(sMessage);
-        SendMessageToPC(GetFirstPC(), sMessage);
+        DoDebug(sMessage);
+    }        
+    return ipReturn;
+}
+
+itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel)
+{
+    itemproperty ipReturn;
+    string sResRef = "prc_ip100_"+IntToString(nIPAoEID);
+    object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
+    object oItem = CreateItemOnObject(sResRef, oChest);
+    DestroyObject(oItem);
+    ipReturn = GetFirstItemProperty(oItem);    
+    int i;
+    for(i=0;i<nLevel;i++)
+    {
+        ipReturn = GetNextItemProperty(oItem);
+    }
+    if(!GetIsItemPropertyValid(ipReturn))
+    {
+        string sMessage = "ItemPropertyAreaOfEffect "+IntToString(nIPAoEID)+" "+IntToString(nLevel)+" is not valid";
+        if(GetIsObjectValid(oChest))
+            sMessage += "\n oChest is valid.";
+        if(GetIsObjectValid(oItem))
+            sMessage += "\n oItem is valid.";
+        sMessage += "\n sResRef is "+sResRef+".";
+        DoDebug(sMessage);
     }        
     return ipReturn;
 }
@@ -120,7 +153,7 @@ itemproperty ItemPropertyLimitUseByAbility(int nAbility, int nMinScore)
 {
     itemproperty ipReturn;
     if(!GetIsItemPropertyValid(ipReturn))
-        PrintString("ItemPropertyLimitUseByAbility "+IntToString(nAbility)+" "+IntToString(nMinScore)+" is not valid");
+        DoDebug("ItemPropertyLimitUseByAbility "+IntToString(nAbility)+" "+IntToString(nMinScore)+" is not valid");
     return ipReturn;
 }
 
@@ -128,7 +161,7 @@ itemproperty ItemPropertyLimitUseBySkill(int nSkill, int nMinScore)
 {
     itemproperty ipReturn;
     if(!GetIsItemPropertyValid(ipReturn))
-        PrintString("ItemPropertyLimitUseBySkill "+IntToString(nSkill)+" "+IntToString(nMinScore)+" is not valid");
+        DoDebug("ItemPropertyLimitUseBySkill "+IntToString(nSkill)+" "+IntToString(nMinScore)+" is not valid");
     return ipReturn;
 }
 
@@ -136,7 +169,7 @@ itemproperty ItemPropertyLimitUseBySpellcasting(int nLevel)
 {
     itemproperty ipReturn;
     if(!GetIsItemPropertyValid(ipReturn))
-        PrintString("ItemPropertyLimitUseBySpellcasting "+IntToString(nLevel)+" is not valid");
+        DoDebug("ItemPropertyLimitUseBySpellcasting "+IntToString(nLevel)+" is not valid");
     return ipReturn;
 }
 
@@ -144,7 +177,7 @@ itemproperty ItemPropertyLimitUseByArcaneSpellcasting(int nLevel)
 {
     itemproperty ipReturn;
     if(!GetIsItemPropertyValid(ipReturn))
-        PrintString("ItemPropertyLimitUseByArcaneSpellcasting "+IntToString(nLevel)+" is not valid");
+        DoDebug("ItemPropertyLimitUseByArcaneSpellcasting "+IntToString(nLevel)+" is not valid");
     return ipReturn;
 }
 
@@ -152,7 +185,7 @@ itemproperty ItemPropertyLimitUseByDivineSpellcasting(int nLevel)
 {
     itemproperty ipReturn;
     if(!GetIsItemPropertyValid(ipReturn))
-        PrintString("ItemPropertyLimitUseByDivineSpellcasting "+IntToString(nLevel)+" is not valid");
+        DoDebug("ItemPropertyLimitUseByDivineSpellcasting "+IntToString(nLevel)+" is not valid");
     return ipReturn;
 }
 
@@ -160,14 +193,6 @@ itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice)
 {
     itemproperty ipReturn;
     if(!GetIsItemPropertyValid(ipReturn))
-        PrintString("ItemPropertyLimitUseBySneakAttackDice "+IntToString(nDice)+" is not valid");
-    return ipReturn;
-}
-
-itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel)
-{
-    itemproperty ipReturn;
-    if(!GetIsItemPropertyValid(ipReturn))
-        PrintString("ItemPropertyLimitAreaOfEffect "+IntToString(nIPAoEID)+" "+IntToString(nLevel)+"is not valid");
+        DoDebug("ItemPropertyLimitUseBySneakAttackDice "+IntToString(nDice)+" is not valid");
     return ipReturn;
 }

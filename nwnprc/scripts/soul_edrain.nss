@@ -13,6 +13,10 @@ void DoEnergyDrain(object oTarget,int nDamage)
 	{
 		SendMessageToPC(OBJECT_SELF, "Cannot drain: " + GetName(oTarget) +" is dead.");
 	}
+	else if (oTarget == OBJECT_SELF)
+	{
+		SendMessageToPC(OBJECT_SELF, "Cannot drain yourself.");
+	}	
 	else
 	{
 		int nLevelMod = GetLocalInt(oTarget, "TargetLevel");
@@ -23,9 +27,9 @@ void DoEnergyDrain(object oTarget,int nDamage)
 		ApplyEffectToObject(DURATION_TYPE_PERMANENT,eDrain,oTarget);
 		SetLocalInt(oTarget, "TargetLevel", nLevelMod);
 
-		SendMessageToPC(OBJECT_SELF,"You have drained "+ IntToString(nDamage) +
+		/*SendMessageToPC(OBJECT_SELF,"You have drained "+ IntToString(nDamage) +
 			" from " + GetName(oTarget) + ", It has " +
-			 IntToString(GetLocalInt(oTarget, "TargetLevel")) + " levels left.");
+			 IntToString(GetLocalInt(oTarget, "TargetLevel")) + " levels left.");*/
 
 
 		// Soul Strength
@@ -92,7 +96,7 @@ void DeathDelay(object oTarget, string sTarget, string sName)
 	// Soul Slave Feat
 	if (GetLevelByClass(CLASS_TYPE_SOUL_EATER, OBJECT_SELF) > 8)
 	{
-		FloatingTextStringOnCreature("Class level is greater than 8", OBJECT_SELF, FALSE);
+		if (DEBUG) FloatingTextStringOnCreature("Class level is greater than 8", OBJECT_SELF, FALSE);
 		// Make sure its dead before raising it as a henchman
 		if (GetIsDead(oTarget))
 		{
@@ -111,7 +115,8 @@ void DeathDelay(object oTarget, string sTarget, string sName)
     			}
     			//FloatingTextStringOnCreature("Henchmen total: " + IntToString(i), OBJECT_SELF, FALSE);
 
-    			if (i >= nMax) SetMaxHenchmen(i+1);
+			// Cap the number of henchies he can have at 4
+    			if (4 >= i) SetMaxHenchmen(nMax + 4);
 
 			object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "soul_wight_test", PRCGetSpellTargetLocation());
 			ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation());
@@ -160,7 +165,7 @@ void main()
 		nDamage = 2;
 	}
 
-	ApplyEffectToObject(DURATION_TYPE_INSTANT,eBlood, oTarget);
+	
 	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
 
@@ -171,6 +176,7 @@ void main()
 		return;
 	}
 
-
+	// Only apply the VFX if you hit
+	ApplyEffectToObject(DURATION_TYPE_INSTANT,eBlood, oTarget);
 	DoEnergyDrain(oTarget, nDamage);
 }

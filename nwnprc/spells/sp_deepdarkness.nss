@@ -63,7 +63,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int  nDuration = nCasterLvl*24;//1day/level
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Make sure duration does no equal 0
     if (nDuration < 1)
     {

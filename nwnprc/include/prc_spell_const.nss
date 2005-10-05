@@ -389,6 +389,10 @@ const int SPELL_HOLY_WORD                           = 3220;
 const int SPELL_BLASPHEMY                           = 3221;
 const int SPELL_DICTUM                              = 3222;
 const int SPELL_WORD_OF_CHAOS                       = 3223;
+const int SPELL_BLUR                                = 3208;
+const int SPELL_MIRROR_IMAGE                        = 3209;
+const int SPELL_INSANITY                            = 3212;
+const int SPELL_IRON_BODY                           = 3213;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE        = 1951;

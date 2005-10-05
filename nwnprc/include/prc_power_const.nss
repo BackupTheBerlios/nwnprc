@@ -73,7 +73,11 @@ const int POWER_ASTRALCONSTRUCT_SLOT4       = 14039;
 const int POWER_CREATESOUND                 = 14040;
 const int POWER_BURST                       = 14041;
 const int POWER_DESTINYDISSONANCE           = 14042;
-const int POWER_PRECOGNITION                = 14043;
+const int POWER_PRECOGNITIONMAIN            = 14043;
+const int POWER_PRECOGNITIONATTACK          = 14044;
+const int POWER_PRECOGNITIONDAMAGE          = 14045;
+const int POWER_PRECOGNITIONSAVES           = 14046;
+const int POWER_PRECOGNITIONSKILLS          = 14047;
 
 // Level 2 Powers
 const int POWER_BESTOWPOWER                 = 14051;

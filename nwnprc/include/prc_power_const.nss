@@ -152,6 +152,7 @@ const int POWER_UBIQVISION                  = 14133;
 const int POWER_ECTOCOCOON                  = 14134;
 const int POWER_CRISISBREATH                = 14135;
 const int POWER_EMPATHICTRANSFERHOSTILE     = 14136;
+const int POWER_FATELINK                    = 14137;
 
 
 // Level 4 Powers
@@ -171,7 +172,6 @@ const int POWER_DIMENSIONDOOR_PARTY         = 14164;
 const int POWER_DIMENSIONDOOR_SELFONLY_DIRDIST  = 14167;
 const int POWER_DIMENSIONDOOR_PARTY_DIRDIST     = 14168;
 const int POWER_DOMINATE                    = 14165;
-const int POWER_FATELINK                    = 14166;
 
 // Level 5 Powers
 const int POWER_BALEFULTEL                  = 14191;

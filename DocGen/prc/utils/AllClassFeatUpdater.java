@@ -2,17 +2,28 @@ package prc.utils;
 
 import static prc.Main.err_pr;
 import static prc.Main.spinner;
-import static prc.Main.verbose;
+//import static prc.Main.verbose;
 import java.util.*;
 import java.io.*;
 
 import prc.autodoc.Data_2da;
-import prc.autodoc.TwoDAReadException;
 
+
+/**
+ * This class is meant for updating the class feat lists with the entries common to all
+ * base classes.
+ * 
+ * 
+ * @author Ornedan
+ */
 public class AllClassFeatUpdater {
 
 	/**
-	 * @param args
+	 * Ye olde main method.
+	 * Takes as parameters the path of the 2da to use as update template and
+	 * 
+	 * 
+	 * @param args Parameters received
 	 */
 	public static void main(String[] args) {
 		if(args.length == 0) readMe();
@@ -52,10 +63,9 @@ public class AllClassFeatUpdater {
 			readMe();
 		}
 		spinner.disable();
+		
+		// Load and crop the template 2da
 		Data_2da source = Data_2da.load2da(cfabcPath);
-		//System.out.print(source);
-		//System.exit(0);
-		// Crop
 		int i = source.getEntryCount();
 		boolean passedEnd = false, passedBegin = false;
 		while(--i >= 0){
@@ -78,32 +88,35 @@ public class AllClassFeatUpdater {
 			}
 		}
 		
-		//System.out.print(source);
-		//System.exit(0);
-		
+		// Parse the targets and update all files found
 		for(String path : paths){
-			File dir = new File(path);
-			if(!dir.isDirectory()){
-				err_pr.println("Parameter \"" + path + "\" does not refer to a directory!");
-				continue;
-			}
+			File target = new File(path);
+			File[] cls_feat2da;
 			
-			File[] cls_feat2da = dir.listFiles(new FileFilter(){
-				public boolean accept(File file){
-					return file.getName().toLowerCase().startsWith("cls_feat_") &&
-						   file.getName().toLowerCase().endsWith(".2da");
+			if(target.isDirectory()){
+				cls_feat2da = target.listFiles(new FileFilter(){
+					public boolean accept(File file){
+						return file.getName().toLowerCase().startsWith("cls_feat_") &&
+						file.getName().toLowerCase().endsWith(".2da");
 					}
 				});
+			}
+			else if(target.getName().toLowerCase().startsWith("cls_feat_") &&
+					target.getName().toLowerCase().endsWith(".2da"))
+				cls_feat2da = new File[]{target};
+			else{
+				err_pr.println("Parameter \"" + path + "\" is not a valid target!");
+				continue;
+			}
 			
 			Arrays.sort(cls_feat2da);
 			
 			for(File file : cls_feat2da){
 				try{
-					//System.out.println(file.getParent());
 					update2da(source, Data_2da.load2da(file.getCanonicalPath()), file.getParentFile().getCanonicalPath());
 				}catch(Exception e){
 					err_pr.printException(e);
-				} //*/
+				}
 			}
 		}
 	}
@@ -141,7 +154,8 @@ public class AllClassFeatUpdater {
                            "  [--help] | pathtoupdate2da targetpath+\n"+
                            "\n" +
                            "pathtoupdate2da  path of the cls_feat_allBaseClasses.2da\n"+
-                           "targetpath       the path of the directory containing the cls_feat_*.2das to update\n"+
+                           "targetpath       the path of a directory containing the cls_feat_*.2das to update\n" +
+                           "                 or directly the path of a cls_feat_*.2da"+
                            "\n"+
                            "\n"+
                            "  --help  prints this text\n"

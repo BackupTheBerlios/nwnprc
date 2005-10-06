@@ -17,12 +17,12 @@ public class Data_2da implements Cloneable{
 	private static Pattern pattern = Pattern.compile("[[\\S&&[^\"]][\t]]+|\"[^\"]+\"");//"[\\S&&[^\"]]+|\"[^\"]+\"");
 	//private static Matcher matcher = pattern.matcher("");
 
-	private HashMap<String, ArrayList<String>> mainData = new LinkedHashMap<String, ArrayList<String>>();
+	private LinkedHashMap<String, ArrayList<String>> mainData = new LinkedHashMap<String, ArrayList<String>>();
 	//private int entries = 0;
 	private String name;
 	private String defaultValue;
 	/** Used for storing the original case of the labels. The ones used in the hashmap are lowercase */
-	private String[] realLabels;
+	private ArrayList<String> realLabels = new ArrayList<String>();
 
 	private final boolean TLKEditCompatible = true;
 	
@@ -54,7 +54,7 @@ public class Data_2da implements Cloneable{
 	 * @param name         the file name
 	 * @param realLabels   the labels with original case
 	 */
-	public Data_2da(String defaultValue, HashMap<String, ArrayList<String>> mainData, String name, String[] realLabels){
+	public Data_2da(String defaultValue, LinkedHashMap<String, ArrayList<String>> mainData, String name, ArrayList<String> realLabels){
 		this.defaultValue = defaultValue;
 		this.mainData = mainData;
 		this.name = name;
@@ -142,9 +142,9 @@ public class Data_2da implements Cloneable{
 		
 		// Write the labels row using the original case
 		for(int i = 0; i < widths[widths.length - 1]; i++) fw.write(" ");
-		for(int i = 0; i < realLabels.length; i++){
-			fw.write(" " + realLabels[i]);
-			for(int j = 0; j < widths[i] - realLabels[i].length(); j++) fw.write(" ");
+		for(int i = 0; i < realLabels.size(); i++){
+			fw.write(" " + realLabels.get(i));
+			for(int j = 0; j < widths[i] - realLabels.get(i).length(); j++) fw.write(" ");
 		}
 		fw.write((TLKEditCompatible ? " ":"") + CRLF);
 		
@@ -299,13 +299,14 @@ public class Data_2da implements Cloneable{
 		data = reader.nextLine();
 		
 		// Parse the labels
-		realLabels = data.trim().split("\\p{javaWhitespace}+");
-		String[] labels = new String[realLabels.length];
-		System.arraycopy(realLabels, 0, labels, 0, realLabels.length);
+		String[] localrealLabels = data.trim().split("\\p{javaWhitespace}+");
+		String[] labels = new String[localrealLabels.length];
+		//System.arraycopy(realLabels, 0, labels, 0, localrealLabels.length);
 		
 		// Create the row containers and the main store
 		for(int i = 0; i < labels.length; i++){
-			labels[i] = labels[i].toLowerCase();
+			realLabels.add(localrealLabels[i]); 
+			labels[i] = localrealLabels[i].toLowerCase();
 			mainData.put(labels[i],  new ArrayList<String>());
 		}
 		
@@ -625,13 +626,14 @@ public class Data_2da implements Cloneable{
 	}
 	
 	/**
-	 * Adds a new column to the 2da file.
+	 * Adds a new column to the 2da file. The new column will be the last in the file.
 	 * 
 	 * @param label the name of the column to add
 	 */
 	public void addColumn(String label){
 		ArrayList<String> column = new ArrayList<String>();
-		mainData.put(label, column);
+		mainData.put(label.toLowerCase(), column);
+		realLabels.add(label);
 		
 		for(int i = 0; i < this.getEntryCount(); i++){
 			column.add("****");
@@ -645,6 +647,7 @@ public class Data_2da implements Cloneable{
 	 */
 	public void removeColumn(String label){
 		mainData.remove(label);
+		realLabels.remove(label);
 	}
 	
 	
@@ -874,9 +877,9 @@ public class Data_2da implements Cloneable{
 		
 		// Write the labels row using the original case
 		for(int i = 0; i < widths[widths.length - 1]; i++) toReturn.append(" ");
-		for(int i = 0; i < realLabels.length; i++){
-			toReturn.append(" " + realLabels[i]);
-			for(int j = 0; j < widths[i] - realLabels[i].length(); j++) toReturn.append(" ");
+		for(int i = 0; i < realLabels.size(); i++){
+			toReturn.append(" " + realLabels.get(i));
+			for(int j = 0; j < widths[i] - realLabels.get(i).length(); j++) toReturn.append(" ");
 		}
 		toReturn.append((TLKEditCompatible ? " ":"") + CRLF);
 		
@@ -909,9 +912,10 @@ public class Data_2da implements Cloneable{
 	@SuppressWarnings("unchecked")
 	public Object clone(){
 		// Make a sufficiently deep copy of the main data arrays
-		HashMap<String, ArrayList<String>> cloneData = new HashMap<String, ArrayList<String>>();
-		for(String key : this.mainData.keySet())
+		LinkedHashMap<String, ArrayList<String>> cloneData = new LinkedHashMap<String, ArrayList<String>>();
+		for(String key : this.getLabels()) // Use real labels to preserve order
 			cloneData.put(key, (ArrayList<String>)this.mainData.get(key).clone());
+		
 		
 		// Create a new Data_2da. The Strings are immutable, so they can be used as-is and clone()
 		// on an array produces a sufficiently deep copy right away
@@ -919,7 +923,7 @@ public class Data_2da implements Cloneable{
 				this.defaultValue,
 				cloneData,
 				this.name,
-				this.realLabels.clone()
+				(ArrayList<String>)this.realLabels.clone()
 				);
 	}
 }

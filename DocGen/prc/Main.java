@@ -55,7 +55,7 @@ public class Main {
 		else if(toCall.equals("upclsfeat")){
 			prc.utils.AllClassFeatUpdater.main(paramsToPass);
 		}
-		else if(toCall.equals("duplicateentries")){
+		else if(toCall.equals("dupentries")){
 			prc.utils.Duplicate2daEntryDetector.main(paramsToPass);
 		}
 		

@@ -152,7 +152,7 @@ void main()
             }
             else if(nStage == STAGE_EPIC_SPELLS_CONTING)
             {
-                SetHeader("Choose an active contingency to dispel. Dispelling will preemptively end the contingency and restore the reserved epic spell slot for your use.");
+                SetHeader("Choose an active contingency to dispel. Dispelling will pre-emptively end the contingency and restore the reserved epic spell slot for your use.");
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);

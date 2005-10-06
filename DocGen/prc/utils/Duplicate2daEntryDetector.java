@@ -3,6 +3,7 @@ package prc.utils;
 import prc.autodoc.*;
 import java.util.*;
 
+import static prc.Main.*;
 
 /**
  * Checks the given column in the given 2da for duplicate entries.
@@ -83,7 +84,7 @@ public class Duplicate2daEntryDetector {
 			}
 			
 			for(ArrayList<Integer> duprows : duplicates.values()){
-				StringBuffer toPrint = new StringBuffer("Duplicate " + label + " on rows");
+				StringBuffer toPrint = new StringBuffer(file.getName() + ": duplicate " + label + " on rows");
 				boolean first = true;
 				for(int row : duprows){
 					if(!first)
@@ -94,7 +95,7 @@ public class Duplicate2daEntryDetector {
 					toPrint.append(" " + row);
 				}
 				
-				System.out.println(toPrint.toString());
+				err_pr.println(toPrint.toString());
 			}
 		}
 	}

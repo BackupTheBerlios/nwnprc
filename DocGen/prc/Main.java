@@ -34,23 +34,34 @@ public class Main {
 		String[] paramsToPass = new String[args.length - 1];
 		System.arraycopy(args, 1, paramsToPass, 0, paramsToPass.length);
 
-		if(args[0].equals("manual")){
+		if(toCall.equals("manual")){
 			prc.autodoc.Main.main(paramsToPass);
 		}
-		else if(args[0].equals("2da")){
+		else if(toCall.equals("2da")){
 			prc.autodoc.Data_2da.main(paramsToPass);
 		}
-		else if(args[0].equals("codegen")){
+		else if(toCall.equals("codegen")){
 			prc.utils.CodeGen.main(paramsToPass);
 		}
-		else if(args[0].equals("radials")){
+		else if(toCall.equals("radials")){
 			prc.utils.Radials.main(paramsToPass);
 		}
-		else if(args[0].equals("duplicatesubrad")){
+		else if(toCall.equals("dupsubrad")){
 			prc.utils.DuplicateSubradials.main(paramsToPass);
 		}
-		else if(args[0].equals("makedep")){
+		else if(toCall.equals("makedep")){
 			prc.makedep.Main.main(paramsToPass);
+		}
+		else if(toCall.equals("upclsfeat")){
+			prc.utils.AllClassFeatUpdater.main(paramsToPass);
+		}
+		else if(toCall.equals("duplicateentries")){
+			prc.utils.Duplicate2daEntryDetector.main(paramsToPass);
+		}
+		
+		else{
+			System.out.println("Unknown class: " + toCall);
+			readMe();
 		}
 	}
 
@@ -60,16 +71,19 @@ public class Main {
 	 */
 	private static void readMe(){
 		System.out.println("Usage:\n"+
-		                   "  java -jar prc.jar [--help] | [class [parameters]]\n"+
+		                   "  java -jar prc.jar [--help] | class [parameters]\n"+
 		                   "\n"+
 		                   "class       name of the class to call. possible values:\n"+
 		                   "             manual     - Generates the manual\n"+
 						   "             2da        - Either verifies a single 2da file or compares two\n"+
 						   "             codegen    - Autogenerates scripts (or other files)\n"+
 						   "             radials    - Generates subradial FeatID values\n"+
-						   "             duplicatesubrad  - Seeks through spells.2da and prints lines\n"+
-						   "                                containing duplicate subradial values\n"+
-						   "             makedep    - Builds include dependency lists\n"+
+						   "             dupsubrad  - Seeks through spells.2da and prints lines\n"+
+						   "                          containing duplicate subradial values\n"+
+						   "             makedep    - Builds include dependency lists\n" +
+						   "             upclsfeat  - Updates base cls_feat_*.2da based on given templates\n" +
+						   "             dupentries - Seeks for duplicate entries in the given columns\n" +
+						   "                          of a given 2da\n"+
 		                   "\n"+
 						   "parameters  a list of parameters passed to the class called\n"+
 						   "\n"+

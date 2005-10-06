@@ -40,6 +40,8 @@ int InscribeRune();
 // beneficial effects.
 void CombatMedicHealingKicker();
 
+// This prevents casting spells into or out of a Null Psionics Field
+int NullPsionicsField();
 
 // Use Magic Device Check.
 // Returns TRUE if the Spell is allowed to be cast, either because the
@@ -318,6 +320,20 @@ int EShamConc()
     {
          nTest = GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, (15 + StringToInt(nSpellLevel)));
          if (!nTest)  FloatingTextStringOnCreature("Ectoplasmic Shambler has disrupted your concentration.", OBJECT_SELF, FALSE);
+    }
+    return nTest;
+}
+
+int NullPsionicsField()
+{
+    int nCaster = GetLocalInt(OBJECT_SELF, "NullPsionicsField");
+    int nTarget = GetLocalInt(PRCGetSpellTargetObject(), "NullPsionicsField");
+    int nTest = TRUE;
+
+    // If either of them have it, the spell fizzles.
+    if (nCaster || nTarget)
+    {
+         nTest = FALSE;
     }
     return nTest;
 }
@@ -865,10 +881,10 @@ int X2PreSpellCastCode()
         nContinue = RedWizRestrictedSchool();
 
     //---------------------------------------------------------------------------
-    // Run Inscribe Rune Check
+    // Run NullPsionicsField Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = InscribeRune();
+        nContinue = NullPsionicsField();
 
     //---------------------------------------------------------------------------
     // Run Ectoplasmic Shambler Concentration Check
@@ -881,6 +897,12 @@ int X2PreSpellCastCode()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = KOTCHeavenDevotion(oTarget);
+        
+    //---------------------------------------------------------------------------
+    // Run Inscribe Rune Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = InscribeRune();        
 
     //---------------------------------------------------------------------------
     // Run use magic device skill check

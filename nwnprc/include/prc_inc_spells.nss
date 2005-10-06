@@ -108,7 +108,7 @@ int PRCGetLastSpellCastClass();
 //wrapper for getspelltargetlocation
 location PRCGetSpellTargetLocation();
 
-//wrapper for getspelltargetlocation
+//wrapper for getspelltargetobject
 object PRCGetSpellTargetObject();
 
 // -----------------
@@ -1244,6 +1244,10 @@ object PRCGetSpellTargetObject()
 {
     if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE))
         return GetLocalObject(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE);
+    
+    // Reddopsi power causes spells and powers to rebound onto the caster.
+    // If the caster has it active as well, the power rebounds again and hits the target normally.
+    if (GetLocalInt(GetSpellTargetObject(), "Reddopsi") && !GetLocalInt(GetLastSpellCaster(), "Reddopsi")) return GetLastSpellCaster();
         
     // Get the item used to cast the spell
     object oItem = GetSpellCastItem();

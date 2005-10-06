@@ -75,6 +75,12 @@ int PsiPrePowerCastCode()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = EShamConc();  
+
+    //---------------------------------------------------------------------------
+    // Run NullPsionicsField Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = NullPsionicsField();        
         
    if (nContinue)
    {

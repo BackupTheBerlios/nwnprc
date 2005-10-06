@@ -12,7 +12,7 @@ import static prc.Main.*;
  * This class forms an interface for accessing 2da files in the
  * PRC automated manual generator.
  */
-public class Data_2da{
+public class Data_2da implements Cloneable{
 	// String matching pattern. Gets a block of non-whitespace (tab is not counted as whitespace here) OR " followed by any characters until the next "
 	private static Pattern pattern = Pattern.compile("[[\\S&&[^\"]][\t]]+|\"[^\"]+\"");//"[\\S&&[^\"]]+|\"[^\"]+\"");
 	//private static Matcher matcher = pattern.matcher("");
@@ -44,6 +44,21 @@ public class Data_2da{
 	public Data_2da(String name, String defaultValue){
 		this.name = name;
 		this.defaultValue = defaultValue;
+	}
+	
+	/**
+	 * Private constructor for use in cloning.
+	 * 
+	 * @param defaultValue the default value
+	 * @param mainData     the contents
+	 * @param name         the file name
+	 * @param realLabels   the labels with original case
+	 */
+	public Data_2da(String defaultValue, HashMap<String, ArrayList<String>> mainData, String name, String[] realLabels){
+		this.defaultValue = defaultValue;
+		this.mainData = mainData;
+		this.name = name;
+		this.realLabels = realLabels;
 	}
 	
 	/**
@@ -678,7 +693,7 @@ public class Data_2da{
 							spinner.disable();
 							break;
 						default:
-							err_pr.println("Unknown parameter: " + c + "!");
+							err_pr.println("Unknown parameter: " + c);
 							readMe();
 						}
 					}
@@ -884,5 +899,27 @@ public class Data_2da{
 		}
 		
 		return toReturn.toString();
+	}
+	
+	/**
+	 * Makes an independent copy of this 2da.
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@SuppressWarnings("unchecked")
+	public Object clone(){
+		// Make a sufficiently deep copy of the main data arrays
+		HashMap<String, ArrayList<String>> cloneData = new HashMap<String, ArrayList<String>>();
+		for(String key : this.mainData.keySet())
+			cloneData.put(key, (ArrayList<String>)this.mainData.get(key).clone());
+		
+		// Create a new Data_2da. The Strings are immutable, so they can be used as-is and clone()
+		// on an array produces a sufficiently deep copy right away
+		return new Data_2da(
+				this.defaultValue,
+				cloneData,
+				this.name,
+				this.realLabels.clone()
+				);
 	}
 }

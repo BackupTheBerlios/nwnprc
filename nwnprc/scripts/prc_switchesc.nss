@@ -14,6 +14,8 @@
 //:://////////////////////////////////////////////
 
 #include "inc_dynconv"
+#include "prc_alterations"
+#include "inc_epicspells"
 
 
 //////////////////////////////////////////////////
@@ -68,9 +70,11 @@ void main()
             {
                 SetHeader("What do you want to do?");
                 AddChoice("Alter code switches.", 1);
-                AddChoice("Manage Epic Spells.", 2);
+                if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
+                    GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC))
+                    AddChoice("Manage Epic Spells.", 2);
                 AddChoice("Purchase general items, such as scrolls or crafting materials.", 3);
-                AddChoice("Identify everything in my inventory.", 4);
+                AddChoice("Attempt to identify everything in my inventory.", 4);
 
                 MarkStageSetUp(nStage, oPC);
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -130,8 +134,10 @@ void main()
             {
                 SetHeader("Make a selection.");
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
-                AddChoice("Remove an Epic Spell from the radial menu.", 1);
-                AddChoice("Add an Epic Spell to the radial menu.", 2);
+                if(GetCastableFeatCount(oPC)>0)
+                    AddChoice("Remove an Epic Spell from the radial menu.", 1);
+                if(GetCastableFeatCount(oPC)<7)
+                    AddChoice("Add an Epic Spell to the radial menu.", 2);
                 AddChoice("Manage any active contingencies.", 3);
 
                 MarkStageSetUp(nStage, oPC);
@@ -139,6 +145,18 @@ void main()
             else if(nStage == STAGE_EPIC_SPELLS_ADD)
             {
                 SetHeader("Choose the spell to add.");
+                int i;
+                for(i = 0; i < 71; i++)
+                {
+                    int nResearchedFeat = StringToInt(Get2DACache("epicspells", "ResFeatID", i));
+                    if(GetHasFeat(nResearchedFeat, oPC))
+                    {
+                        string sName = GetStringByStrRef(
+                            StringToInt(Get2DACache("feat", "FEAT", StringToInt(
+                                Get2DACache("epicspells", "FeatID", i)))));
+                        AddChoice(sName, i, oPC);
+                    }   
+                }
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -146,6 +164,18 @@ void main()
             else if(nStage == STAGE_EPIC_SPELLS_REMOVE)
             {
                 SetHeader("Choose the spell to remove.");
+                int i;
+                for(i = 0; i < 71; i++)
+                {
+                    int nFeat = StringToInt(Get2DACache("epicspells", "FeatID", i));
+                    if(GetHasFeat(nFeat, oPC))
+                    {
+                        string sName = GetStringByStrRef(
+                            StringToInt(Get2DACache("feat", "FEAT", StringToInt(
+                                Get2DACache("epicspells", "FeatID", i)))));
+                        AddChoice(sName, i, oPC);
+                    }   
+                }    
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -153,6 +183,13 @@ void main()
             else if(nStage == STAGE_EPIC_SPELLS_CONTING)
             {
                 SetHeader("Choose an active contingency to dispel. Dispelling will pre-emptively end the contingency and restore the reserved epic spell slot for your use.");
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_SHOPS)
+            {
+                SetHeader("Select what type of item you wish to purchase.");
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -238,6 +275,8 @@ void main()
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_EPIC_SPELLS;
+            else
+                GiveFeat(oPC, StringToInt(Get2DACache("epicspells", "SpellFeatIPID", nChoice)));
 
             MarkStageNotSetUp(nStage, oPC);
         }
@@ -245,7 +284,8 @@ void main()
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_EPIC_SPELLS;
-
+            else
+                TakeFeat(oPC, StringToInt(Get2DACache("epicspells", "SpellFeatIPID", nChoice)));
             MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_EPIC_SPELLS_CONTING)

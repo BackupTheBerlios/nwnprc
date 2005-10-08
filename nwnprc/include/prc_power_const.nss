@@ -119,6 +119,7 @@ const int POWER_CONTROLAIR                  = 14085;
 const int POWER_CONTROLSOUND                = 14086;
 const int POWER_REPAIRDAMAGE                = 14087;
 const int POWER_AVERSION                    = 14088;
+const int POWER_DIMENSIONSWAP               = 14089;
 
 // Level 3 Powers
 const int POWER_BODYADJUST                  = 14101;

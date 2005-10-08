@@ -32,9 +32,12 @@ const int MONST_DAMAGE_3D6   = 10;
 const int MONST_DAMAGE_3D8   = 20;
 const int MONST_DAMAGE_3D10  = 30;
 const int MONST_DAMAGE_3D12  = 40;
+const int MONST_DAMAGE_4D6   = 11;
 const int MONST_DAMAGE_4D8   = 21;
 const int MONST_DAMAGE_4D10  = 31;
 const int MONST_DAMAGE_4D12  = 41;
+const int MONST_DAMAGE_5D6   = 12;
+const int MONST_DAMAGE_5D8   = 22;
 
 const int ITEM_PROPERTY_WOUNDING = 69;
 

@@ -13,10 +13,11 @@
 //:: Created On: 15.03.2005
 //:://////////////////////////////////////////////
 
-#include "prc_inc_unarmed"
-#include "inc_utility"
+//#include "inc_utility"
+#include "prc_alterations"
 
-void main(){
+void main()
+{
     //PrintString("Executing unarmed_caller");
     int bCont = FALSE;
     if(GetLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS))

@@ -79,6 +79,8 @@ const int POWER_PRECOGNITIONATTACK          = 14044;
 const int POWER_PRECOGNITIONDAMAGE          = 14045;
 const int POWER_PRECOGNITIONSAVES           = 14046;
 const int POWER_PRECOGNITIONSKILLS          = 14047;
+const int POWER_BITE_WOLF		    = -1;
+const int POWER_CLAWS_BEAST		    = -1;
 
 // Level 2 Powers
 const int POWER_BESTOWPOWER                 = 14051;

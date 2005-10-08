@@ -171,14 +171,15 @@ string GetPsiBookFileName(int nClass);
 //does not include via a racial psi-like ability
 int GetHasPower(int nPower, object oPC = OBJECT_SELF);
 
+// Does all the appropriate functions for Psy Warrior unarmed powers.
+void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment);
 
-#include "prc_feat_const"
-#include "prc_class_const"
 #include "prc_power_const"
 #include "lookup_2da_spell"
 #include "prc_inc_clsfunc"
 #include "inc_utility"
 #include "nw_i0_spells"
+//#include "prc_inc_unarmed"
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -1091,4 +1092,90 @@ int GetHasPower(int nPower, object oPC = OBJECT_SELF)
         )    
         return TRUE;
     return FALSE;        
+}
+
+void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment)
+{
+	int nPsyWar = GetLevelByClass(CLASS_TYPE_PSYWAR, oCaster);
+	int nDamage;
+	string sWeapType;
+	
+	RemoveUnarmedAttackEffects(oCaster);
+	// Make sure they can actually equip them
+	UnarmedFeats(oCaster);
+
+	object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster);
+	object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCaster);
+	object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster);	
+	
+	if (nPower = POWER_BITE_WOLF)
+	{
+		if (nPsyWar >= 20) nDamage = MONST_DAMAGE_5D8;
+		else if (nPsyWar >= 15) nDamage = MONST_DAMAGE_4D8;
+		else if (nPsyWar >= 10) nDamage = MONST_DAMAGE_3D8;
+		else if (nPsyWar >= 5) nDamage = MONST_DAMAGE_2D8;
+		else nDamage = MONST_DAMAGE_1D8;
+		// Bite attack
+		sWeapType = "PRC_UNARMED_P";
+	}
+	
+	else if (nPower = POWER_CLAWS_BEAST)
+	{
+		// Number of times the power has been augmented determines the damage.
+		if (nAugment >= 9) nDamage = MONST_DAMAGE_5D6;
+		else if (nAugment >= 7) nDamage = MONST_DAMAGE_4D6;
+		else if (nAugment >= 5) nDamage = MONST_DAMAGE_3D6;
+		else if (nAugment >= 3) nDamage = MONST_DAMAGE_2D6;
+		else if (nAugment >= 2) nDamage = MONST_DAMAGE_1D8;
+		else if (nAugment >= 1) nDamage = MONST_DAMAGE_1D6;
+		else nDamage = MONST_DAMAGE_1D4;
+		// Bite attack
+		sWeapType = "PRC_UNARMED_S";
+	}	
+
+	// If we are polymorphed/shifted, do not mess with the creature weapon.
+	if (GetIsPolyMorphedOrShifted(oCaster)) return;
+
+	// Equip the creature weapon.
+	if (!GetIsObjectValid(oWeapL) || GetTag(oWeapL) != sWeapType)
+	{
+		if (GetHasItem(oCaster, sWeapType))
+		{
+			oWeapL = GetItemPossessedBy(oCaster, sWeapType);
+			SetIdentified(oWeapL, TRUE);
+			AssignCommand(oCaster, ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
+		}
+		else
+		{
+			oWeapL = CreateItemOnObject(sWeapType, oCaster);
+			SetIdentified(oWeapL, TRUE);
+			AssignCommand(oCaster,ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
+		}
+	}
+	
+	// Clean up the mess of extra fists made on taking first level.
+	DelayCommand(1.0,CleanExtraFists(oCaster));	
+	
+	// Strip the Fist.
+	itemproperty ip = GetFirstItemProperty(oWeapL);
+	while (GetIsItemPropertyValid(ip))
+	{
+		RemoveItemProperty(oWeapL, ip);
+		ip = GetNextItemProperty(oWeapL);
+	}	
+
+	// Leave the fist blank if weapons are equipped.  The only way a weapon will
+	// be equipped on the left hand is if there is a weapon in the right hand.
+	if (GetIsObjectValid(oRighthand)) return;	
+	
+	// Weapon finesse or intuitive attack?
+	SetLocalInt(oCaster, "UsingCreature", TRUE);
+	ExecuteScript("prc_intuiatk", oCaster);
+	DelayCommand(1.0f, DeleteLocalInt(oCaster, "UsingCreature"));	
+	
+	// Add the appropriate damage to the fist.
+	AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(nDamage),oWeapL);	
+	
+	// This adds creature weapon finesse
+	ApplyUnarmedAttackEffects(oCaster);	
 }

@@ -16,7 +16,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "spinc_common"
 
-#include "x0_i0_spells"
+#include "prc_alterations"
 #include "prc_class_const"
 #include "x2_inc_spellhook"
 
@@ -52,6 +52,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     
 
     // * July 2003: If has darkness then do not put it on it again
+    // Primogenitor: Yes, what about overlapping darkness effects by different casters?
     if (GetHasEffect(EFFECT_TYPE_DARKNESS, oTarget) == TRUE)
     {
         return;

@@ -37,7 +37,7 @@
 33         Cure_Minor_Wounds                          68              0        0      0        0     0           
 34         Cure_Moderate_Wounds                       71              0        0      0        2     0           
 35         Cure_Serious_Wounds                        74              0        0      0        3     0           
-36         Darkness                                   75              0        0      0        2     0           
+36         Darkness                                   75              0        0      0        2     1           
 37         Daze                                       76              1        0      0        0     0           
 38         Death_Ward                                 77              0        0      0        4     0           
 39         Delayed_Blast_Fireball                     80              1        0      0        7     0           
@@ -346,7 +346,7 @@
 342        SHADES_Stoneskin                           ****            0        0      0        4     0           
 343        SHADES_Wall_of_Fire                        ****            1        0      0        4     0           
 344        SHADOW_CON_Summon_Shadow                   245             0        0      0        4     0           
-345        SHADOW_CON_Darkness                        245             0        0      0        2     0           
+345        SHADOW_CON_Darkness                        245             0        0      0        2     1           
 346        SHADOW_CON_Inivsibility                    245             0        0      0        2     0           
 347        SHADOW_CON_Mage_Armor                      245             0        0      0        1     0           
 348        SHADOW_CON_Magic_Missile                   245             1        0      0        1     0           
@@ -3208,7 +3208,7 @@
 3204       Detect_Chaos                               1160            1        0      0        1     0           
 3205       UndetectableAlignment                      1161            0        0      0        2     0           
 3206       Unholy_Sword                               ****            0        0      0        ****  0           
-3207       DeeperDarkness                             1162            0        0      0        3     0           
+3207       DeeperDarkness                             1162            0        0      0        3     1           
 3208       Blur                                       1163            0        0      0        2     0           
 3209       MirrorImage                                1164            0        0      0        2     0           
 3210       Swashbuckler_damage                        ****            0        0      0        ****  0           

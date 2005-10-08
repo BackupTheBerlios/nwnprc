@@ -199,7 +199,7 @@ void main()
         {
             if(!GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD_NO_FREE_XP))
             {
-                int nNewXP = nRacialHD*(nRacialHD-1)*500;
+                int nNewXP = nRacialHD*(nRacialHD+1)*500; //+1 for the original class level
                 SetXP(oPC, nNewXP);
                 if(GetPRCSwitch(PRC_XP_USE_SIMPLE_LA))
                     DelayCommand(1.0, SetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, nNewXP));

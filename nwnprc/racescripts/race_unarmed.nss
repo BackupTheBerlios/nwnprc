@@ -3,8 +3,7 @@
 // ::
 // :: Determines the appropriate natural attacks for races.
 
-#include "prc_inc_unarmed"
-#include "prc_racial_const"
+#include "prc_alterations"
 
 void main ()
 {

@@ -13,8 +13,7 @@
 //:: Created On: 04.04.2005
 //:://////////////////////////////////////////////
 
-#include "prc_inc_unarmed"
-#include "inc_utility"
+#include "prc_alterations"
 
 void main()
 {

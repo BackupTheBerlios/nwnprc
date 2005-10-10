@@ -987,45 +987,12 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         SendMessageToPC(oTarget, "Force Of Will used");
      }
 
-      int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
+     int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
      int iTK = GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oTarget);
      //Thayan Knights auto-fail mind spells cast by red wizards
      if (iRW > 0 && iTK > 0 && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS)
      {
           return 0;
-     }
-
-     if (iRW > 0)
-     {
-        //Red Wizards recieve a bonus against their specialist schools
-        // this is done by lowering the DC of spells cast against them
-          int iRWSpec;
-          if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
-          else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
-          else if (GetHasFeat(FEAT_RW_TF_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
-          else if (GetHasFeat(FEAT_RW_TF_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
-          else if (GetHasFeat(FEAT_RW_TF_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
-          else if (GetHasFeat(FEAT_RW_TF_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
-          else if (GetHasFeat(FEAT_RW_TF_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
-          else if (GetHasFeat(FEAT_RW_TF_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
-
-          if (GetSpellSchool(nSpell) == iRWSpec)
-          {
-               if (iRW > 28)         nDC = nDC - 14;
-               else if (iRW > 26)    nDC = nDC - 13;
-               else if (iRW > 24)    nDC = nDC - 12;
-               else if (iRW > 22)    nDC = nDC - 11;
-               else if (iRW > 20)    nDC = nDC - 10;
-               else if (iRW > 18)    nDC = nDC - 9;
-               else if (iRW > 16)    nDC = nDC - 8;
-               else if (iRW > 14)    nDC = nDC - 7;
-               else if (iRW > 12)    nDC = nDC - 6;
-               else if (iRW > 10)    nDC = nDC - 5;
-               else if (iRW > 8)     nDC = nDC - 4;
-               else if (iRW > 6)     nDC = nDC - 3;
-               else if (iRW > 2)     nDC = nDC - 2;
-               else if (iRW > 0)     nDC = nDC - 1;
-          }
      }
 
     //racial pack code
@@ -1068,85 +1035,27 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
      int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
      int nSpell = PRCGetSpellId();
 
-     if (iRedWizard > 0)
-     {
-          int iRWSpec;
-          if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
-          else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
-          else if (GetHasFeat(FEAT_RW_TF_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
-          else if (GetHasFeat(FEAT_RW_TF_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
-          else if (GetHasFeat(FEAT_RW_TF_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
-          else if (GetHasFeat(FEAT_RW_TF_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
-          else if (GetHasFeat(FEAT_RW_TF_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
-          else if (GetHasFeat(FEAT_RW_TF_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
-
-          if (GetSpellSchool(nSpell) == iRWSpec)
-          {
-
-               if (iRedWizard > 28)          nDC = nDC - 14;
-               else if (iRedWizard > 26)     nDC = nDC - 13;
-               else if (iRedWizard > 24)     nDC = nDC - 12;
-               else if (iRedWizard > 22)     nDC = nDC - 11;
-               else if (iRedWizard > 20)     nDC = nDC - 10;
-               else if (iRedWizard > 18)     nDC = nDC - 9;
-               else if (iRedWizard > 16)     nDC = nDC - 8;
-               else if (iRedWizard > 14)     nDC = nDC - 7;
-               else if (iRedWizard > 12)     nDC = nDC - 6;
-               else if (iRedWizard > 10)     nDC = nDC - 5;
-               else if (iRedWizard > 8) nDC = nDC - 4;
-               else if (iRedWizard > 6) nDC = nDC - 3;
-               else if (iRedWizard > 2) nDC = nDC - 2;
-               else if (iRedWizard > 0) nDC = nDC - 1;
-
-          }
-
-
-     }
-
-        if (iShadow > 0)
-     {
-
-
-          if (GetSpellSchool(nSpell) == SPELL_SCHOOL_ENCHANTMENT || GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY || GetSpellSchool(nSpell) == SPELL_SCHOOL_ILLUSION)
-          {
-
-               if (iShadow > 28)   nDC = nDC - 10;
-               else if (iShadow > 25)   nDC = nDC - 9;
-               else if (iShadow > 22)   nDC = nDC - 8;
-               else if (iShadow > 19)   nDC = nDC - 7;
-               else if (iShadow > 16)   nDC = nDC - 6;
-               else if (iShadow > 13)   nDC = nDC - 5;
-               else if (iShadow > 10)   nDC = nDC - 4;
-               else if (iShadow > 7)    nDC = nDC - 3;
-               else if (iShadow > 4)    nDC = nDC - 2;
-               else if (iShadow > 1)    nDC = nDC - 1;
-          }
-
-     //SendMessageToPC(GetFirstPC(), "Your Spell Save modifier is " + IntToString(nDC));
-     }
-
-
 
      //racial pack code
-        if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
-        { nDC -= 1+(GetHitDice(oTarget)/5); }
-        else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )
-        {    nDC -= 1+(GetHitDice(oTarget)/5);  }
-        else if(nSaveType == SAVING_THROW_TYPE_SONIC && GetHasFeat(FEAT_HARD_AIR, oTarget) )
-        {    nDC -= 1+(GetHitDice(oTarget)/5);  }
-        else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY )
-        {
-            if(GetHasFeat(FEAT_HARD_AIR, oTarget))
-                nDC -= 1+(GetHitDice(oTarget)/5);
-            else if(GetHasFeat(FEAT_HARD_ELEC, oTarget))
-                nDC -= 2;
-        }
-        else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_4, oTarget) )
-        {   nDC -= 4;  }
-        else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
-        {   nDC -= 3;  }
-        else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
-        {   nDC -= 1+(GetHitDice(oTarget)/5);  }
+    if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
+    { nDC -= 1+(GetHitDice(oTarget)/5); }
+    else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )
+    {    nDC -= 1+(GetHitDice(oTarget)/5);  }
+    else if(nSaveType == SAVING_THROW_TYPE_SONIC && GetHasFeat(FEAT_HARD_AIR, oTarget) )
+    {    nDC -= 1+(GetHitDice(oTarget)/5);  }
+    else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY )
+    {
+        if(GetHasFeat(FEAT_HARD_AIR, oTarget))
+            nDC -= 1+(GetHitDice(oTarget)/5);
+        else if(GetHasFeat(FEAT_HARD_ELEC, oTarget))
+            nDC -= 2;
+    }
+    else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_4, oTarget) )
+    {   nDC -= 4;  }
+    else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
+    {   nDC -= 3;  }
+    else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
+    {   nDC -= 1+(GetHitDice(oTarget)/5);  }
 
 
     return GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);

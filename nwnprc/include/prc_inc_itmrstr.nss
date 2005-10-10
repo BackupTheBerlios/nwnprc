@@ -21,6 +21,7 @@ const int ITEM_PROPERTY_SPEED_DECREASE = 135;
 const int ITEM_PROPERTY_AREA_OF_EFFECT = 100;
 const int ITEM_PROPERTY_CASTER_LEVEL   = 85;
 const int ITEM_PROPERTY_METAMAGIC      = 92;
+const int ITEM_PROPERTY_CAST_SPELL_DC  = 93;
 
 
 const string PLAYER_SPEED_INCREASE = "player_speed_increase";
@@ -286,7 +287,10 @@ int CheckPRCLimitations(object oItem, object oPC)
             {
                 if(GetEffectCreator(eTest) == oItem
                    && GetEffectType(eTest) == EFFECT_TYPE_AREA_OF_EFFECT)
+                {   
                     RemoveEffect(oPC, eTest);
+                    DoDebug("Removing old AoE effect");
+                }    
                 eTest = GetNextEffect(oPC);
             }
             
@@ -313,11 +317,11 @@ int CheckPRCLimitations(object oItem, object oPC)
                     oAoE = GetNearestObjectToLocation(OBJECT_TYPE_AREA_OF_EFFECT, lLoc, i);
                 }
                 if(!GetIsObjectValid(oAoE))
-                    SendMessageToPC(oPC, "Unable to detect AoE created by "+GetName(oItem));
+                    DoDebug("Unable to detect AoE created by "+GetName(oItem));
                 else
                 {
                     SetLocalInt(oAoE, PRC_CASTERLEVEL_OVERRIDE, nCost);
-SendMessageToPC(oPC, "AoE is level "+IntToString(nCost));
+DoDebug("AoE is level "+IntToString(nCost));
                 }
             }    
             

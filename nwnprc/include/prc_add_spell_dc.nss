@@ -232,6 +232,71 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
     return nDC;
 }
 
+//Red Wizards recieve a bonus against their specialist schools
+// this is done by lowering the DC of spells cast against them
+int RedWizardDCPenalty(int spell_id, object oTarget)
+{
+    int nDC;
+    int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
+    if(iRW)
+    {
+        int iRWSpec;
+        if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
+        else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
+        else if (GetHasFeat(FEAT_RW_TF_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
+        else if (GetHasFeat(FEAT_RW_TF_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
+        else if (GetHasFeat(FEAT_RW_TF_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
+        else if (GetHasFeat(FEAT_RW_TF_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
+        else if (GetHasFeat(FEAT_RW_TF_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
+        else if (GetHasFeat(FEAT_RW_TF_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
+
+        if (GetSpellSchool(spell_id) == iRWSpec)
+        {
+           if (iRW > 28)         nDC = nDC - 14;
+           else if (iRW > 26)    nDC = nDC - 13;
+           else if (iRW > 24)    nDC = nDC - 12;
+           else if (iRW > 22)    nDC = nDC - 11;
+           else if (iRW > 20)    nDC = nDC - 10;
+           else if (iRW > 18)    nDC = nDC - 9;
+           else if (iRW > 16)    nDC = nDC - 8;
+           else if (iRW > 14)    nDC = nDC - 7;
+           else if (iRW > 12)    nDC = nDC - 6;
+           else if (iRW > 10)    nDC = nDC - 5;
+           else if (iRW > 8)     nDC = nDC - 4;
+           else if (iRW > 6)     nDC = nDC - 3;
+           else if (iRW > 2)     nDC = nDC - 2;
+           else if (iRW > 0)     nDC = nDC - 1;
+        }
+    }
+    return nDC;
+}
+
+int ShadowAdeptDCPenalty(int spell_id, object oTarget)
+{
+    int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oTarget); 
+    int nDC;
+     if (iShadow > 0)
+     {
+          if (GetSpellSchool(spell_id) == SPELL_SCHOOL_ENCHANTMENT 
+            || GetSpellSchool(spell_id) == SPELL_SCHOOL_NECROMANCY 
+            || GetSpellSchool(spell_id) == SPELL_SCHOOL_ILLUSION)
+          {
+
+               if (iShadow > 28)   nDC = nDC - 10;
+               else if (iShadow > 25)   nDC = nDC - 9;
+               else if (iShadow > 22)   nDC = nDC - 8;
+               else if (iShadow > 19)   nDC = nDC - 7;
+               else if (iShadow > 16)   nDC = nDC - 6;
+               else if (iShadow > 13)   nDC = nDC - 5;
+               else if (iShadow > 10)   nDC = nDC - 4;
+               else if (iShadow > 7)    nDC = nDC - 3;
+               else if (iShadow > 4)    nDC = nDC - 2;
+               else if (iShadow > 1)    nDC = nDC - 1;
+          }
+     //SendMessageToPC(GetFirstPC(), "Your Spell Save modifier is " + IntToString(nDC));
+     }
+     return nDC;
+}
 
 //Tattoo Focus DC boost based on spell school specialization
 int TattooFocus(int spell_id, object oCaster = OBJECT_SELF)
@@ -369,6 +434,7 @@ int RunecasterRunePowerDC(object oCaster)
 
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
+    object oItem = GetSpellCastItem();
     if(nSpellID == -1)
         nSpellID = PRCGetSpellId();
     //10+spelllevel+stat(cha default)
@@ -380,81 +446,107 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
         nDC = GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE);
         if(DEBUG)
             DoDebug("Forced Base-DC casting at DC " + IntToString(nDC));
-        string sSchool = Get2DACache("spells", "School", nSpellID);
-        if(sSchool == "V")
+        if(!GetIsObjectValid(oItem))
         {
-            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_EVOCATION, oCaster))
-                nDC+=6;
-            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oCaster))
-                nDC+=5;
-            else if(GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oCaster))
-                nDC+=2;
-        }
-        else if(sSchool == "T")
-        {
-            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_TRANSMUTATION, oCaster))
-                nDC+=6;
-            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oCaster))
-                nDC+=5;
-            else if(GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oCaster))
-                nDC+=2;
-        }
-        else if(sSchool == "N")
-        {
-            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_NECROMANCY, oCaster))
-                nDC+=6;
-            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oCaster))
-                nDC+=5;
-            else if(GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oCaster))
-                nDC+=2;
-        }
-        else if(sSchool == "I")
-        {
-            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ILLUSION, oCaster))
-                nDC+=6;
-            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oCaster))
-                nDC+=5;
-            else if(GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oCaster))
-                nDC+=2;
-        }
-        else if(sSchool == "A")
-        {
-            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ABJURATION, oCaster))
-                nDC+=6;
-            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oCaster))
-                nDC+=5;
-            else if(GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oCaster))
-                nDC+=2;
-        }
-        else if(sSchool == "C")
-        {
-            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_CONJURATION, oCaster))
-                nDC+=6;
-            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oCaster))
-                nDC+=5;
-            else if(GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oCaster))
-                nDC+=2;
-        }
-        else if(sSchool == "D")
-        {
-            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_DIVINATION, oCaster))
-                nDC+=6;
-            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINATION, oCaster))
-                nDC+=5;
-            else if(GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oCaster))
-                nDC+=2;
-        }
-        else if(sSchool == "E")
-        {
-            if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ENCHANTMENT, oCaster))
-                nDC+=6;
-            else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oCaster))
-                nDC+=5;
-            else if(GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oCaster))
-                nDC+=2;
+            string sSchool = Get2DACache("spells", "School", nSpellID);
+            if(sSchool == "V")
+            {
+                if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_EVOCATION, oCaster))
+                    nDC+=6;
+                else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oCaster))
+                    nDC+=5;
+                else if(GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oCaster))
+                    nDC+=2;
+            }
+            else if(sSchool == "T")
+            {
+                if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_TRANSMUTATION, oCaster))
+                    nDC+=6;
+                else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oCaster))
+                    nDC+=5;
+                else if(GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oCaster))
+                    nDC+=2;
+            }
+            else if(sSchool == "N")
+            {
+                if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_NECROMANCY, oCaster))
+                    nDC+=6;
+                else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oCaster))
+                    nDC+=5;
+                else if(GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oCaster))
+                    nDC+=2;
+            }
+            else if(sSchool == "I")
+            {
+                if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ILLUSION, oCaster))
+                    nDC+=6;
+                else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oCaster))
+                    nDC+=5;
+                else if(GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oCaster))
+                    nDC+=2;
+            }
+            else if(sSchool == "A")
+            {
+                if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ABJURATION, oCaster))
+                    nDC+=6;
+                else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oCaster))
+                    nDC+=5;
+                else if(GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oCaster))
+                    nDC+=2;
+            }
+            else if(sSchool == "C")
+            {
+                if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_CONJURATION, oCaster))
+                    nDC+=6;
+                else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oCaster))
+                    nDC+=5;
+                else if(GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oCaster))
+                    nDC+=2;
+            }
+            else if(sSchool == "D")
+            {
+                if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_DIVINATION, oCaster))
+                    nDC+=6;
+                else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINATION, oCaster))
+                    nDC+=5;
+                else if(GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oCaster))
+                    nDC+=2;
+            }
+            else if(sSchool == "E")
+            {
+                if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ENCHANTMENT, oCaster))
+                    nDC+=6;
+                else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oCaster))
+                    nDC+=5;
+                else if(GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oCaster))
+                    nDC+=2;
+            }
         }
     }
-    nDC += GetChangesToSaveDC(oTarget, oCaster, nSpellID);
+    if(GetIsObjectValid(oItem))
+    {
+        //code for getting new ip type
+        itemproperty ipTest = GetFirstItemProperty(oItem);
+        while(GetIsItemPropertyValid(ipTest))
+        {
+            if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL_DC)
+            {
+                int nSubType = GetItemPropertySubType(ipTest);
+                nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
+                if(nSubType == nSpellID)
+                {
+                    nDC = GetItemPropertyCostTableValue (ipTest);
+                    break;//end while
+                }    
+            }
+            ipTest = GetNextItemProperty(oItem);
+        }
+    }
+    else
+        nDC += GetChangesToSaveDC(oTarget, oCaster, nSpellID);
+    //target-based adjustments go here
+    nDC += RedWizardDCPenalty(nSpellID, oTarget);
+    nDC += ShadowAdeptDCPenalty(nSpellID, oTarget);
     return nDC;
     
 }

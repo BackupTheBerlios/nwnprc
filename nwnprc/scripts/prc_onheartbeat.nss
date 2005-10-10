@@ -22,7 +22,8 @@ void main()
         bPWHPTracking       = GetPRCSwitch(PRC_PW_HP_TRACKING),
         bPWLocationTracking = GetPRCSwitch(PRC_PW_LOCATION_TRACKING),
         bPWMappinTracking   = GetPRCSwitch(PRC_PW_MAPPIN_TRACKING),
-        bBiowareDBCache     = GetPRCSwitch(PRC_USE_BIOWARE_DATABASE);
+        bBiowareDBCache     = GetPRCSwitch(PRC_USE_BIOWARE_DATABASE),
+        bCraftingBaseItems  = GetPRCSwitch(PRC_CRAFTING_BASE_ITEMS);
     int bHasPoly;
     effect eTest;
     int nMapPinCount, i;
@@ -120,7 +121,64 @@ void main()
             }
             SetPersistantLocalInt(oPC, "MapPinCount", nMapPinCount);
         }
-
+        
+        //crafting base items
+        if(bCraftingBaseItems)
+        {
+            int bHasPotion, 
+                bHasScroll,
+                bHasWand;
+            int bHasPotionFeat, 
+                bHasScrollFeat,
+                bHasWandFeat;
+            if(GetHasFeat(FEAT_BREW_POTION, oPC))
+                bHasPotionFeat = TRUE;
+            if(GetHasFeat(FEAT_SCRIBE_SCROLL, oPC))
+                bHasScrollFeat = TRUE;
+            if(GetHasFeat(FEAT_CRAFT_WAND, oPC))
+                bHasWandFeat = TRUE;
+            if(bHasPotionFeat || bHasScrollFeat || bHasWandFeat)
+            {
+                object oTest = GetFirstItemInInventory(oPC);
+                while(GetIsObjectValid(oTest)
+                    && (!bHasPotion || !bHasScroll || !bHasWand))
+                {
+                    string sResRef = GetResRef(oTest);
+                    if(sResRef == "x2_it_cfm_pbottl")
+                        bHasPotion = TRUE;
+                    if(sResRef == "x2_it_cfm_bscrl")
+                        bHasScroll = TRUE;
+                    if(sResRef == "x2_it_cfm_wand")
+                        bHasWand = TRUE;
+                    oTest = GetNextItemInInventory(oPC);
+                }
+                if(bHasPotionFeat && !bHasPotion)
+                {
+                    oTest = CreateItemOnObject("x2_it_cfm_pbottl", oPC);
+                    if(GetItemPossessor(oTest) != oPC)
+                        DestroyObject(oTest); //not enough room in inventory
+                    else
+                        SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
+                }   
+                if(bHasScrollFeat && !bHasScroll)
+                {
+                    oTest = CreateItemOnObject("x2_it_cfm_pbottl", oPC);
+                    if(GetItemPossessor(oTest) != oPC)
+                        DestroyObject(oTest); //not enough room in inventory
+                    else
+                        SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
+                }  
+                if(bHasWandFeat && !bHasWand)
+                {
+                    oTest = CreateItemOnObject("x2_it_cfm_pbottl", oPC);
+                    if(GetItemPossessor(oTest) != oPC)
+                        DestroyObject(oTest); //not enough room in inventory
+                    else
+                        SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
+                }  
+            }   
+        }
+        
         // Get the next PC for the loop
         oPC = GetNextPC();
     }

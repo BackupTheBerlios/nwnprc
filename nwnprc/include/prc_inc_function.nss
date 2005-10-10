@@ -146,7 +146,7 @@ void EvalPRCFeats(object oPC)
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
-    if (GetPersistantLocalInt(oPC, "PRCBonusDomain1") > 0)	 ExecuteScript("prc_domain_skin", oPC);
+    if (GetPersistantLocalInt(oPC, "PRCBonusDomain1") > 0)   ExecuteScript("prc_domain_skin", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
@@ -233,7 +233,8 @@ void EvalPRCFeats(object oPC)
     if(!GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO))
     {
         //AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(229), oSkin);
-        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        if(!GetHasFeat(2285, oPC))
+            IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(229), 0.0f);
     }
 
     //size changes

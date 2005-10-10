@@ -454,7 +454,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_EVOCATION, oCaster))
                     nDC+=6;
                 else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oCaster))
-                    nDC+=5;
+                    nDC+=4;
                 else if(GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oCaster))
                     nDC+=2;
             }
@@ -463,7 +463,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_TRANSMUTATION, oCaster))
                     nDC+=6;
                 else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oCaster))
-                    nDC+=5;
+                    nDC+=4;
                 else if(GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oCaster))
                     nDC+=2;
             }
@@ -472,7 +472,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_NECROMANCY, oCaster))
                     nDC+=6;
                 else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oCaster))
-                    nDC+=5;
+                    nDC+=4;
                 else if(GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oCaster))
                     nDC+=2;
             }
@@ -481,7 +481,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ILLUSION, oCaster))
                     nDC+=6;
                 else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oCaster))
-                    nDC+=5;
+                    nDC+=4;
                 else if(GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oCaster))
                     nDC+=2;
             }
@@ -490,7 +490,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ABJURATION, oCaster))
                     nDC+=6;
                 else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oCaster))
-                    nDC+=5;
+                    nDC+=4;
                 else if(GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oCaster))
                     nDC+=2;
             }
@@ -499,7 +499,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_CONJURATION, oCaster))
                     nDC+=6;
                 else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oCaster))
-                    nDC+=5;
+                    nDC+=4;
                 else if(GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oCaster))
                     nDC+=2;
             }
@@ -508,7 +508,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_DIVINATION, oCaster))
                     nDC+=6;
                 else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINATION, oCaster))
-                    nDC+=5;
+                    nDC+=4;
                 else if(GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oCaster))
                     nDC+=2;
             }
@@ -517,7 +517,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_ENCHANTMENT, oCaster))
                     nDC+=6;
                 else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oCaster))
-                    nDC+=5;
+                    nDC+=4;
                 else if(GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oCaster))
                     nDC+=2;
             }

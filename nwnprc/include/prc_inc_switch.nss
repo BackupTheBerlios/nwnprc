@@ -530,6 +530,13 @@ const string PRC_NO_PETRIFY_GUI                      = "PRC_NO_PETRIFY_GUI";
 
 const string PRC_DISABLE_SWITCH_CHANGING_CONVO       = "PRC_DISABLE_SWITCH_CHANGING_CONVO";
 
+/*
+ * Set this to remove checks to enforce domains
+ * e.g. Fire Gensai dont have to take the Fire domain, etc
+ */
+
+const string PRC_DISABLE_DOMAIN_ENFORCEMENT         = "PRC_DISABLE_DOMAIN_ENFORCEMENT";
+
 
 /******************************************************************************\
 *                               ACP switches                              *
@@ -1936,6 +1943,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_POWER_ATTACK_STACK_WITH_BW);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_NO_PETRIFY_GUI);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_SWITCH_CHANGING_CONVO);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_DOMAIN_ENFORCEMENT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ACP_MANUAL);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ACP_AUTOMATIC);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ACP_NPC_AUTOMATIC);

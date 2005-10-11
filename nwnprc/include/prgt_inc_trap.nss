@@ -10,16 +10,33 @@
 
 struct trap
 {
+//DC to detect the trap
     int nDetectDC;
+//DC to disarm the trap
+//By PnP only rogues can disarm traps over DC 35?
+//this is not implemented yet
     int nDisarmDC;
+//this is the vfx_persistant.2da row number of the AoEs 
+that make up the trap
+//used to determine the size of it
+//usually this is 10m larger than the radius of the trap
     int nDetectAOE;
     int nTrapAOE;
+//this is the resref of the invisible object to use
+//to mark the trap
+//defaults to prgt_invis
     string sResRef;
+//this is the script that is fired when the trap is
+//triggered
+//defaults to prgt_trap_fire
     string sTriggerScript;
+//if the trap casts a spell when triggered
+//these control the details
     int nSpellID;
     int nSpellLevel;
     int nSpellMetamagic;
     int nSpellDC;
+//these are for normal dmaging type traps    
     int nDamageType;
     int nRadius;
     int nDamageDice;
@@ -28,8 +45,13 @@ struct trap
     int nTrapVFX;
     int nFakeSpell;
     int nBeamVFX;
+//this is a mesure of CR of the trap
+//can be used by XP scripts
     int nCR;
+//delay before respawning once destroyed/disarmed
     int nRespawnSeconds;
+//CR passed to CreateRandomTrap when respawning
+//if not set, uses same trap as before
     int nRespawnRandomCR;
 };
 

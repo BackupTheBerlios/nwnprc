@@ -581,7 +581,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
             itemproperty ipTest = GetFirstItemProperty(oItem);
             while(GetIsItemPropertyValid(ipTest) && !iItemLevel)
             {
-                if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CASTER_LEVEL)
+                if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL_CASTER_LEVEL)
                 {
                     int nSubType = GetItemPropertySubType(ipTest);
                     nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
@@ -1277,7 +1277,7 @@ int PRCGetMetaMagicFeat()
         itemproperty ipTest = GetFirstItemProperty(oItem);
         while(GetIsItemPropertyValid(ipTest))
         {
-            if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_METAMAGIC)
+            if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL_METAMAGIC)
             {
                 int nSubType = GetItemPropertySubType(ipTest);
                 nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));

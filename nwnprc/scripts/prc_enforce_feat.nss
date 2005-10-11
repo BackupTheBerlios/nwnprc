@@ -355,6 +355,8 @@ int Hextor(object oPC = OBJECT_SELF)
 
 int GenasaiFocus(object oPC)
 {
+    if(GetPRCSwitch(PRC_DISABLE_DOMAIN_ENFORCEMENT))
+        return TRUE;
    if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && (GetRacialType(oPC) == RACIAL_TYPE_AIR_GEN))
    {
        if (!GetHasFeat(FEAT_AIR_DOMAIN_POWER, oPC))

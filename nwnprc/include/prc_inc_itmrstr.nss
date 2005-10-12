@@ -258,8 +258,7 @@ int CheckPRCLimitations(object oItem, object oPC)
             AssignCommand(oSkin, ApplySpeedDecrease(oPC));
         }
         else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_PNP_HOLY_AVENGER)
-        {
-            
+        {            
             if(GetItemLastUnequipped() == oItem) //unequip event
             {
                 int nPaladinLevels = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
@@ -276,8 +275,7 @@ int CheckPRCLimitations(object oItem, object oPC)
                             IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE), 99999.9));     
                     DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
                         ItemPropertyCastSpellCasterLevel(SPELL_DISPEL_MAGIC, 
-                            nPaladinLevels), 99999.9));          
-                
+                            nPaladinLevels), 99999.9));                          
                 }
                 else
                 {
@@ -286,7 +284,15 @@ int CheckPRCLimitations(object oItem, object oPC)
                 }
             }
             else
-            {
+            {   
+                IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS,
+                    DURATION_TYPE_TEMPORARY, -1);
+                IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,
+                    DURATION_TYPE_TEMPORARY, IP_CONST_ALIGNMENTGROUP_EVIL);
+                IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_CAST_SPELL,
+                    DURATION_TYPE_TEMPORARY);
+                IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_CAST_SPELL_CASTER_LEVEL,
+                    DURATION_TYPE_TEMPORARY);
             }
         }
         else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_AREA_OF_EFFECT)

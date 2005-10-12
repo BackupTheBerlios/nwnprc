@@ -47,6 +47,9 @@ itemproperty ItemPropertyCastSpellDC(int nSpell, int nDC);
 //nIPAoEID is defined in iprp_aoe & IP_CONST_AOE_*
 itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel);
 
+//returns the PRCs new PnP Holy Avenger
+//for paladins, +5 +2d6 divine vs evil, castspell:dispel magic @ casterlevel = paladinlevels
+//or non paladins, +2 
 itemproperty ItemPropertyPnPHolyAvenger();
 
 //not implemented
@@ -265,8 +268,21 @@ itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice)
 itemproperty ItemPropertyPnPHolyAvenger()
 {
     itemproperty ipReturn;
+    string sResRef = "prc_ip101";
+    object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
+    object oItem = CreateItemOnObject(sResRef, oChest);
+    DestroyObject(oItem);
+    ipReturn = GetFirstItemProperty(oItem);
     if(!GetIsItemPropertyValid(ipReturn))
-        DoDebug("ItemPropertyPnPHolyAvenger is not valid");
+    {
+        string sMessage = "ItemPropertyPnPHolyAvenger is not valid";
+        if(GetIsObjectValid(oChest))
+            sMessage += "\n oChest is valid.";
+        if(GetIsObjectValid(oItem))
+            sMessage += "\n oItem is valid.";
+        sMessage += "\n sResRef is "+sResRef+".";
+        DoDebug(sMessage);
+    }
     return ipReturn;
 }
 

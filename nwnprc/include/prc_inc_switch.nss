@@ -540,6 +540,8 @@ const string PRC_DISABLE_DOMAIN_ENFORCEMENT          = "PRC_DISABLE_DOMAIN_ENFOR
 /*
  * Set this to remove replace bioware HolyAvenger itemproperties
  * with PnP HolyAvenger itemprperties instead
+ * (for paladins, +5 +2d6 divine vs evil, castspel:dispel magic @ casterlevel = paladinlevels)
+ * (for non paladins, +2) 
  */
 
 const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPROP";
@@ -1837,6 +1839,8 @@ void DoEpicSpellDefaults()
 
 void SetDefaultFileEnds()
 {
+    //there is also the fileends.2da file, but that 
+    //isnt read in here yet. may be later though
     if(GetPRCSwitch(FILE_END_MANUAL))
         return;
     SetPRCSwitch(FILE_END_CLASSES,      255);

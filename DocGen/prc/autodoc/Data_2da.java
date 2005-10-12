@@ -13,8 +13,10 @@ import static prc.Main.*;
  * PRC automated manual generator.
  */
 public class Data_2da implements Cloneable{
-	// String matching pattern. Gets a block of non-whitespace (tab is not counted as whitespace here) OR " followed by any characters until the next "
-	private static Pattern pattern = Pattern.compile("[[\\S&&[^\"]][\t]]+|\"[^\"]+\"");//"[\\S&&[^\"]]+|\"[^\"]+\"");
+	// String matching pattern. Gets a block of non-whitespace (tab is not counted as whitespace here) that does not contain any " OR " followed by any characters until the next "
+	private static Pattern pattern = Pattern.compile("[[\\S&&[^\"]][\t]]+|\"[^\"]+\"");
+	// Same as the above, but counts tab as whitespace. Bug-compatibility with BioWare's own violations of 2da spec
+	private static Pattern bugCompatPattern = Pattern.compile("[\\S&&[^\"]]+|\"[^\"]+\"");
 	//private static Matcher matcher = pattern.matcher("");
 
 	private LinkedHashMap<String, ArrayList<String>> mainData = new LinkedHashMap<String, ArrayList<String>>();
@@ -202,7 +204,7 @@ public class Data_2da implements Cloneable{
 	 */
 	public static Data_2da load2da(String filePath, boolean bugCompat) throws IllegalArgumentException, TwoDAReadException{
 		Data_2da toReturn;
-		Matcher matcher = pattern.matcher("");
+		Matcher matcher = bugCompat ? bugCompatPattern.matcher("") : pattern.matcher("");
 		String name, defaultValue = "";
 		
 		// Some paranoia checking for bad parameters

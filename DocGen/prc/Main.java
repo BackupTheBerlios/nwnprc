@@ -9,16 +9,16 @@ import prc.autodoc.Spinner;
  * @author heikki
  */
 public class Main {
-	
+
 	/** A convenience object for printing both to log and System.err */
 	public static ErrorPrinter err_pr = new ErrorPrinter();
-	
+
 	/** A boolean determining whether to spam the user with progress information */
 	public static boolean verbose = true;
-	
+
 	/** A decorative spinner to look at while the program is loading big files */
 	public static Spinner spinner = new Spinner();
-	
+
 	/**
 	 * Ooh, a main method!
 	 *
@@ -58,7 +58,10 @@ public class Main {
 		else if(toCall.equals("dupentries")){
 			prc.utils.Duplicate2daEntryDetector.main(paramsToPass);
 		}
-		
+		else if(toCall.equals("2datosql")){
+			prc.utils.SQLMaker.main(paramsToPass);
+		}
+
 		else{
 			System.out.println("Unknown class: " + toCall);
 			readMe();
@@ -84,6 +87,7 @@ public class Main {
 						   "             upclsfeat  - Updates base cls_feat_*.2da based on given templates\n" +
 						   "             dupentries - Seeks for duplicate entries in the given columns\n" +
 						   "                          of a given 2da\n"+
+						   "             2datosql   - Creates a SQL file from 2das\n" +
 		                   "\n"+
 						   "parameters  a list of parameters passed to the class called\n"+
 						   "\n"+

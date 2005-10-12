@@ -140,7 +140,7 @@ void DimensionDoor(object oCaster, int nCasterLvl, int nSpellID = -1, string sSc
                    int bSelfOrParty = DIMENSIONDOOR_SELF, int bUseDirDist = FALSE
                    )
 {
-    if(DEBUG) DoDebug("spinc_dimdoor: Running DoDimensionDoor, stage = " + (GetLocalInt(oCaster, DD_FIRSTSTAGE_DONE) ? "Second":"First"));
+    if(DEBUG) DoDebug("spinc_dimdoor: Running DoDimensionDoor" + (GetLocalInt(oCaster, DD_FIRSTSTAGE_DONE) ? ": ERROR: Called while in second stage!":""));
 
     /* Main spellscript */
     if(!GetLocalInt(oCaster, DD_FIRSTSTAGE_DONE))
@@ -196,6 +196,9 @@ void DimensionDoorAux(object oCaster)
 location GetDimensionDoorLocation(object oCaster, int nCasterLvl, location lBaseTarget, float fDistance)
 {
     if(DEBUG) DoDebug("spinc_dimdoor: GetDimensionDoorLocation(" + GetName(oCaster) + ", " + IntToString(nCasterLvl) + ", " + LocationToString(lBaseTarget) + ", " + FloatToString(fDistance) + ")");
+    // Default to base target
+    location lTarget = lBaseTarget;
+
     // First, check if we are using the Direction & Distance mode
     if(fDistance != 0.0f)
     {
@@ -206,6 +209,7 @@ location GetDimensionDoorLocation(object oCaster, int nCasterLvl, location lBase
             fDistance = FeetToMeters(400.0 + 40.0 * nCasterLvl);
             string sPretty = FloatToString(fDistance);
                    sPretty = GetSubString(sPretty, 0, FindSubString(sPretty, ".") + 2); // Trunctate decimals to the last two
+                   sPretty += "m"; // Note the unit. Since this is SI, the letter should be universal
             //                      "You can't teleport that far, distance limited to"
             SendMessageToPC(oCaster, GetStringByStrRef(16825210) + " " + sPretty);
         }
@@ -224,7 +228,7 @@ location GetDimensionDoorLocation(object oCaster, int nCasterLvl, location lBase
         if(vTarget.x < 0.0f) vTarget.x = 0.0f;
         if(vTarget.y < 0.0f) vTarget.y = 0.0f;
 
-        return Location(GetAreaFromLocation(lBaseTarget), vTarget, GetFacingFromLocation(lBaseTarget));
+        lTarget = Location(GetAreaFromLocation(lBaseTarget), vTarget, GetFacingFromLocation(lBaseTarget));
     }
     /* This works, but it was replaced with the direction & distance trick above since that has more versatility in
        selecting the target even though it is slower due to both not fitting on the radial.
@@ -243,13 +247,13 @@ location GetDimensionDoorLocation(object oCaster, int nCasterLvl, location lBase
                 if(DEBUG) DoDebug("spinc_dimdoor: Quickselect is in range");
                 // Used the active quickselection, so clear it
                 RemoveTeleportQuickSelection(oCaster, PRC_TELEPORT_ACTIVE_QUICKSELECTION);
-                return lTest;
+                lTarget = lTest;
             }
         }
     }*/
 
-    // Just return the spell's base target location
-    return lBaseTarget;
+    // Return the target gotten after possible modifications
+    return lTarget;
 }
 
 void DoDimensionDoorTeleport(object oCaster, location lTarget, int bTeleportingParty, string sScriptToCall)

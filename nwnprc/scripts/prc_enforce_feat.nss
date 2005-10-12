@@ -852,11 +852,16 @@ int MasterOfShrouds(object oPC = OBJECT_SELF)
     int MoS = (GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oPC));
     if (MoS > 0)
     {
-        int nDom =   GetHasFeat(FEAT_BONUS_DOMAIN_DEATH, oPC) +
+        int nDom =   	 GetHasFeat(FEAT_BONUS_DOMAIN_DEATH, oPC) +
                          GetHasFeat(FEAT_BONUS_DOMAIN_EVIL, oPC) +
-                         GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION, oPC);
+                         GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION, oPC) +
+                         GetHasFeat(FEAT_EVIL_DOMAIN_POWER, oPC) +
+                         GetHasFeat(FEAT_DEATH_DOMAIN_POWER, oPC) +
+                         GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC);
                          
-            if (nDom < 2)
+            // You must have all 3 domains somehow by the time you've hit this point, since you need to start with at least
+            // one of them and you get given the other two at level 1 of this PrC.
+            if (nDom < 3)
             {
                 FloatingTextStringOnCreature("You must select your two bonus domains", oPC, FALSE);
                 return FALSE;

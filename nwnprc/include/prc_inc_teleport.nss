@@ -574,9 +574,9 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
     // Casting Dimension Door always teleports at least the caster
     array_set_object(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY, i++, oCaster);
 
-    // If teleporting party, get all faction members fitting in within 10 feet. (Should be dependent on caster size,
+    // If teleporting party, get all faction members fitting in within 10 feet. (Should be dependent on caster's reach,
     // but that would mean < Small creatures could not teleport their party at all and even Mediums with their 5 foot
-    // range might have trouble with the distance calculation code)
+    // reach might have trouble considering the position tracking code's shakiness)
     if(bSelfOrParty)
     {
         // Carry amount variables

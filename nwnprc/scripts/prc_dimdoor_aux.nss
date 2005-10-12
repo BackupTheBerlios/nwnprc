@@ -8,7 +8,11 @@
     Dimension Door within the last 10 seconds.
 
     This script will ExecuteScript itself on the
-    PC for the actual call to
+    PC for the actual call to finish the
+    dimension door, since it seems DelayCommands
+    are object-specific, meaning the listener
+    mustn't be OBJECT_SELF as it gets nuked
+    right after this script ends.
 
     @author Ornedan
     @date   Created  - 2005.07.04

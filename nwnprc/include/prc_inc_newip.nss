@@ -20,6 +20,11 @@ const int IP_CONST_AOE_CIRCLE_VS_GOOD       = 3;
 const int IP_CONST_AOE_CIRCLE_VS_LAW        = 4;
 const int IP_CONST_AOE_CIRCLE_VS_CHAOS      = 5;
 
+
+//////////////////////////////////////////////////
+/* Function prototypes                          */
+//////////////////////////////////////////////////
+
 //new function to return a PRC caster level itemproperty
 //will putput to log file if it doesnt work
 //relys on blueprints containing these itemproperties
@@ -57,13 +62,24 @@ itemproperty ItemPropertyLimitUseByDivineSpellcasting(int nLevel);
 //not implemented
 itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice);
 
-#include "x2_inc_itemprop"
+<<<<<<< prc_inc_newip.nss
+
+//////////////////////////////////////////////////
+/* Includes                                     */
+//////////////////////////////////////////////////
+
+#include "prc_alterations"
+
+
+//////////////////////////////////////////////////
+/* Function defintions                          */
+//////////////////////////////////////////////////
 
 itemproperty ItemPropertyCastSpellMetamagic(int nSpell, int nMetamagic)
 {
     //convert nSpell into reference to iprip_spells.2da
     nSpell = IPGetIPConstCastSpellFromSpellID(nSpell);
-    
+
     itemproperty ipReturn;
     string sResRef = "prc_ip92_"+IntToString(nSpell);
     object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
@@ -97,7 +113,7 @@ itemproperty ItemPropertyCastSpellMetamagic(int nSpell, int nMetamagic)
             nMetamagic = 6;
             break;
     }
-    ipReturn = GetFirstItemProperty(oItem);    
+    ipReturn = GetFirstItemProperty(oItem);
     int i;
     for(i=0;i<nMetamagic;i++)
     {
@@ -112,7 +128,7 @@ itemproperty ItemPropertyCastSpellMetamagic(int nSpell, int nMetamagic)
             sMessage += "\n oItem is valid.";
         sMessage += "\n sResRef is "+sResRef+".";
         DoDebug(sMessage);
-    }        
+    }
     return ipReturn;
 }
 
@@ -126,7 +142,7 @@ itemproperty ItemPropertyCastSpellCasterLevel(int nSpell, int nLevel)
     object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
     object oItem = CreateItemOnObject(sResRef, oChest);
     DestroyObject(oItem);
-    ipReturn = GetFirstItemProperty(oItem);    
+    ipReturn = GetFirstItemProperty(oItem);
     int i;
     for(i=0;i<nLevel;i++)
     {
@@ -141,7 +157,7 @@ itemproperty ItemPropertyCastSpellCasterLevel(int nSpell, int nLevel)
             sMessage += "\n oItem is valid.";
         sMessage += "\n sResRef is "+sResRef+".";
         DoDebug(sMessage);
-    }        
+    }
     return ipReturn;
 }
 
@@ -155,7 +171,7 @@ itemproperty ItemPropertyCastSpellDC(int nSpell, int nDC)
     object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
     object oItem = CreateItemOnObject(sResRef, oChest);
     DestroyObject(oItem);
-    ipReturn = GetFirstItemProperty(oItem);    
+    ipReturn = GetFirstItemProperty(oItem);
     int i;
     for(i=0;i<nDC;i++)
     {
@@ -170,7 +186,7 @@ itemproperty ItemPropertyCastSpellDC(int nSpell, int nDC)
             sMessage += "\n oItem is valid.";
         sMessage += "\n sResRef is "+sResRef+".";
         DoDebug(sMessage);
-    }        
+    }
     return ipReturn;
 }
 
@@ -181,7 +197,7 @@ itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel)
     object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
     object oItem = CreateItemOnObject(sResRef, oChest);
     DestroyObject(oItem);
-    ipReturn = GetFirstItemProperty(oItem);    
+    ipReturn = GetFirstItemProperty(oItem);
     int i;
     for(i=0;i<nLevel;i++)
     {
@@ -196,7 +212,7 @@ itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel)
             sMessage += "\n oItem is valid.";
         sMessage += "\n sResRef is "+sResRef+".";
         DoDebug(sMessage);
-    }        
+    }
     return ipReturn;
 }
 
@@ -255,3 +271,6 @@ itemproperty ItemPropertyPnPHolyAvenger()
         DoDebug("ItemPropertyPnPHolyAvenger is not valid");
     return ipReturn;
 }
+
+// Test main
+//void main(){}

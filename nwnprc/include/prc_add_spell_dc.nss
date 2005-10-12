@@ -446,7 +446,9 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
         nDC = GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE);
         if(DEBUG)
             DoDebug("Forced Base-DC casting at DC " + IntToString(nDC));
-        if(!GetIsObjectValid(oItem))
+        if(!GetIsObjectValid(oItem)
+            || (GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF
+                && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)))
         {
             string sSchool = Get2DACache("spells", "School", nSpellID);
             if(sSchool == "V")
@@ -523,7 +525,9 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
             }
         }
     }
-    if(GetIsObjectValid(oItem))
+    if(GetIsObjectValid(oItem)
+        && !(GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF
+                && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)))
     {
         //code for getting new ip type
         itemproperty ipTest = GetFirstItemProperty(oItem);

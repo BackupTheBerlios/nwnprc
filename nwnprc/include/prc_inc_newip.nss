@@ -1,4 +1,16 @@
-//constants defined in prc_inc_itmrstr
+const int ITEM_PROPERTY_USE_LIMITATION_ABILITY_SCORE      = 86;
+const int ITEM_PROPERTY_USE_LIMITATION_SKILL_RANKS        = 87;
+const int ITEM_PROPERTY_USE_LIMITATION_SPELL_LEVEL        = 88;
+const int ITEM_PROPERTY_USE_LIMITATION_ARCANE_SPELL_LEVEL = 89;
+const int ITEM_PROPERTY_USE_LIMITATION_DIVINE_SPELL_LEVEL = 90;
+const int ITEM_PROPERTY_USE_LIMITATION_SNEAK_ATTACK       = 91;
+const int ITEM_PROPERTY_USE_LIMITATION_GENDER             = 150;
+const int ITEM_PROPERTY_SPEED_INCREASE                    = 134;
+const int ITEM_PROPERTY_SPEED_DECREASE                    = 135;
+const int ITEM_PROPERTY_AREA_OF_EFFECT                    = 100;
+const int ITEM_PROPERTY_CAST_SPELL_CASTER_LEVEL           = 85;
+const int ITEM_PROPERTY_CAST_SPELL_METAMAGIC              = 92;
+const int ITEM_PROPERTY_CAST_SPELL_DC                     = 93;
 
 const int IP_CONST_AOE_DARKNESS             = 0;
 const int IP_CONST_AOE_DEEPER_DARKNESS      = 1;
@@ -10,15 +22,20 @@ const int IP_CONST_AOE_CIRCLE_VS_CHAOS      = 5;
 //new function to return a PRC caster level itemproperty
 //will putput to log file if it doesnt work
 //relys on blueprints containing these itemproperties
-itemproperty ItemPropertyTrueCasterLevel(int nSpell, int nLevel);
+itemproperty ItemPropertyCastSpellCasterLevel(int nSpell, int nLevel);
 
 //new function to return a PRC metamagic itemproperty
 //will putput to log file if it doesnt work
 //relys on blueprints containing these itemproperties
 //nMetamagic should be a METAMAGIC_* constant
-itemproperty ItemPropertyMetamagic(int nSpell, int nMetamagic);
+itemproperty ItemPropertyCastSpellMetamagic(int nSpell, int nMetamagic);
 
-//new function to return a PRC metamagic itemproperty
+//new function to return a PRC DC itemproperty
+//will putput to log file if it doesnt work
+//relys on blueprints containing these itemproperties
+itemproperty ItemPropertyCastSpellDC(int nSpell, int nDC);
+
+//new function to return a PRC AoE itemproperty
 //will putput to log file if it doesnt work
 //relys on blueprints containing these itemproperties
 //nIPAoEID is defined in iprp_aoe & IP_CONST_AOE_*
@@ -37,7 +54,7 @@ itemproperty ItemPropertyLimitUseByDivineSpellcasting(int nLevel);
 //not implemented
 itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice);
 
-itemproperty ItemPropertyMetamagic(int nSpell, int nMetamagic)
+itemproperty ItemPropertyCastSpellMetamagic(int nSpell, int nMetamagic)
 {
     //convert nSpell into reference to iprip_spells.2da
     nSpell = IPGetIPConstCastSpellFromSpellID(nSpell);
@@ -83,7 +100,7 @@ itemproperty ItemPropertyMetamagic(int nSpell, int nMetamagic)
     }
     if(!GetIsItemPropertyValid(ipReturn))
     {
-        string sMessage = "ItemPropertyMetamagic "+IntToString(nSpell)+" "+IntToString(nMetamagic)+" is not valid";
+        string sMessage = "ItemPropertyCastSpellMetamagic "+IntToString(nSpell)+" "+IntToString(nMetamagic)+" is not valid";
         if(GetIsObjectValid(oChest))
             sMessage += "\n oChest is valid.";
         if(GetIsObjectValid(oItem))
@@ -94,7 +111,7 @@ itemproperty ItemPropertyMetamagic(int nSpell, int nMetamagic)
     return ipReturn;
 }
 
-itemproperty ItemPropertyTrueCasterLevel(int nSpell, int nLevel)
+itemproperty ItemPropertyCastSpellCasterLevel(int nSpell, int nLevel)
 {
     //convert nSpell into reference to iprip_spells.2da
     nSpell = IPGetIPConstCastSpellFromSpellID(nSpell);
@@ -112,7 +129,36 @@ itemproperty ItemPropertyTrueCasterLevel(int nSpell, int nLevel)
     }
     if(!GetIsItemPropertyValid(ipReturn))
     {
-        string sMessage = "ItemPropertyTrueCasterLevel "+IntToString(nSpell)+" "+IntToString(nLevel)+" is not valid";
+        string sMessage = "ItemPropertyCastSpellCasterLevel "+IntToString(nSpell)+" "+IntToString(nLevel)+" is not valid";
+        if(GetIsObjectValid(oChest))
+            sMessage += "\n oChest is valid.";
+        if(GetIsObjectValid(oItem))
+            sMessage += "\n oItem is valid.";
+        sMessage += "\n sResRef is "+sResRef+".";
+        DoDebug(sMessage);
+    }        
+    return ipReturn;
+}
+
+itemproperty ItemPropertyCastSpellDC(int nSpell, int nDC)
+{
+    //convert nSpell into reference to iprip_spells.2da
+    nSpell = IPGetIPConstCastSpellFromSpellID(nSpell);
+
+    itemproperty ipReturn;
+    string sResRef = "prc_ip93_"+IntToString(nSpell);
+    object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
+    object oItem = CreateItemOnObject(sResRef, oChest);
+    DestroyObject(oItem);
+    ipReturn = GetFirstItemProperty(oItem);    
+    int i;
+    for(i=0;i<nDC;i++)
+    {
+        ipReturn = GetNextItemProperty(oItem);
+    }
+    if(!GetIsItemPropertyValid(ipReturn))
+    {
+        string sMessage = "ItemPropertyCastSpellCasterLevel "+IntToString(nSpell)+" "+IntToString(nDC)+" is not valid";
         if(GetIsObjectValid(oChest))
             sMessage += "\n oChest is valid.";
         if(GetIsObjectValid(oItem))

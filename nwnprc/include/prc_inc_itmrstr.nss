@@ -7,23 +7,6 @@
 
 */
 
-
-
-const int ITEM_PROPERTY_USE_LIMITATION_ABILITY_SCORE      = 86;
-const int ITEM_PROPERTY_USE_LIMITATION_SKILL_RANKS        = 87;
-const int ITEM_PROPERTY_USE_LIMITATION_SPELL_LEVEL        = 88;
-const int ITEM_PROPERTY_USE_LIMITATION_ARCANE_SPELL_LEVEL = 89;
-const int ITEM_PROPERTY_USE_LIMITATION_DIVINE_SPELL_LEVEL = 90;
-const int ITEM_PROPERTY_USE_LIMITATION_SNEAK_ATTACK       = 91;
-const int ITEM_PROPERTY_USE_LIMITATION_GENDER             = 150;
-const int ITEM_PROPERTY_SPEED_INCREASE                    = 134;
-const int ITEM_PROPERTY_SPEED_DECREASE                    = 135;
-const int ITEM_PROPERTY_AREA_OF_EFFECT                    = 100;
-const int ITEM_PROPERTY_CAST_SPELL_CASTER_LEVEL           = 85;
-const int ITEM_PROPERTY_CAST_SPELL_METAMAGIC              = 92;
-const int ITEM_PROPERTY_CAST_SPELL_DC                     = 93;
-
-
 const string PLAYER_SPEED_INCREASE = "player_speed_increase";
 const string PLAYER_SPEED_DECREASE = "player_speed_decrease";
 

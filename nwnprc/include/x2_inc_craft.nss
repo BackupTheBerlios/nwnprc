@@ -237,10 +237,12 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oTarget);
         if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
         {
-            itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpellID, PRCGetCasterLevel());
+            itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, PRCGetCasterLevel());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
-            itemproperty ipMeta = ItemPropertyMetamagic(nSpellID, PRCGetMetaMagicFeat());
+            itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
+        itemproperty ipDC = ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
         }
     }
     return oTarget;
@@ -299,10 +301,12 @@ object CICraftCraftWand(object oCreator, int nSpellID )
 
         if(GetPRCSwitch(PRC_CRAFT_WAND_CASTER_LEVEL))
         {
-            itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpellID, PRCGetCasterLevel());
+            itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, PRCGetCasterLevel());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
-            itemproperty ipMeta = ItemPropertyMetamagic(nSpellID, PRCGetMetaMagicFeat());
+            itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
+        itemproperty ipDC = ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
         }
 
         int nType = CI_GetClassMagicType(PRCGetLastSpellCastClass());
@@ -414,10 +418,12 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
 
         if(GetPRCSwitch(PRC_SCRIBE_SCROLL_CASTER_LEVEL))
         {
-            itemproperty ipLevel = ItemPropertyTrueCasterLevel(nSpellID, PRCGetCasterLevel());
+            itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, PRCGetCasterLevel());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
-            itemproperty ipMeta = ItemPropertyMetamagic(nSpellID, PRCGetMetaMagicFeat());
+            itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
+        itemproperty ipDC = ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
         }
 
         if (oTarget == OBJECT_INVALID)
@@ -796,6 +802,169 @@ These dont work as IPs since they are hardcoded */
 
     return FALSE;
 }
+
+int InscribeRune()
+{
+    object oCaster = OBJECT_SELF;
+    // Get the item used to cast the spell
+    object oItem = GetSpellCastItem();
+    if (GetResRef(oItem) == "prc_rune_1") 
+    {
+        string sName = GetName(GetItemPossessor(oItem));
+        if (DEBUG) FloatingTextStringOnCreature(sName + " has just cast a rune spell", oCaster, FALSE);
+        //SetLocalInt(oCaster, "PRCRuneTarget", TRUE);
+        //if (GetLocalInt(GetLastSpellCaster(), "PRCRuneTarget") && DEBUG) FloatingTextStringOnCreature("GetLastSpellCaster has PRCRuneTarget set TRUE", oCaster, FALSE);
+    }
+    
+    // If Inscribing is turned off, the spell functions as normal
+    if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;    
+    
+    // No point being in here if you don't have runes.
+    if (!GetHasFeat(FEAT_INSCRIBE_RUNE, oCaster)) return TRUE;
+
+        // No point scribing runes from items, and its not allowed.
+        if (oItem != OBJECT_INVALID)
+        {
+            FloatingTextStringOnCreature("You cannot scribe a rune from an item.", oCaster, FALSE);
+            return TRUE;
+        }
+
+    object oTarget = PRCGetSpellTargetObject();
+    int nCaster = PRCGetCasterLevel(oCaster);
+    int nDC = PRCGetSaveDC(oTarget, oCaster);
+    int nSpell = PRCGetSpellId();
+    int nSpellLevel;
+    int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
+    
+    // This accounts for the fact that there is no bonus to runecraft at level 10
+    // Also adjusts it to fit the epic progression, which starts at 13
+    if (nClass >= 10) nClass -= 3;
+    // Bonus to Runecrafting checks from the Runecaster class
+    int nRuneCraft = (nClass + 2)/3;
+    // Runecraft local int that counts uses/charges
+    int nCount = GetLocalInt(oCaster, "RuneCounter");
+
+    if (PRCGetLastSpellCastClass() == CLASS_TYPE_CLERIC) nSpellLevel = StringToInt(lookup_spell_cleric_level(nSpell));
+    else if (PRCGetLastSpellCastClass() == CLASS_TYPE_DRUID) nSpellLevel = StringToInt(lookup_spell_druid_level(nSpell));
+    // Minimum level.
+    if (nSpellLevel == 0) nSpellLevel = 1;
+
+    // This will be modified with Runecaster code later.
+    int nCharges = 1;
+    if (GetLocalInt(oCaster, "RuneCharges")) nCharges = nCount;
+    if (GetLocalInt(oCaster, "RuneUsesPerDay")) 
+    {
+        // 5 is the max uses per day
+        if (nCount > 5) nCount = 5;
+        nCharges = nCount;
+    }
+    // Can't have no charges
+    if (nCharges == 0) nCharges = 1;
+
+    FloatingTextStringOnCreature("Spell Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
+    FloatingTextStringOnCreature("Caster Level: " + IntToString(nCaster), OBJECT_SELF, FALSE);
+    FloatingTextStringOnCreature("Number of Charges: " + IntToString(nCharges), OBJECT_SELF, FALSE);
+    
+    // Gold cost multipler, varies depending on the ability used to craft
+    int nMultiplier = 100;
+    if (nClass > 0) nMultiplier = 50;
+    if (GetLocalInt(oCaster, "RuneCharges")) nMultiplier = 50;
+    if (GetLocalInt(oCaster, "RuneUsesPerDay")) nMultiplier = 400;
+
+    // Cost of the rune in gold and XP
+    int nGoldCost = nSpellLevel * nCaster * nCharges * nMultiplier;
+    int nXPCost = nGoldCost/25;
+
+    FloatingTextStringOnCreature("Gold Cost: " + IntToString(nGoldCost), OBJECT_SELF, FALSE);
+    FloatingTextStringOnCreature("XP Cost: " + IntToString(nXPCost), OBJECT_SELF, FALSE);
+
+    // See if the caster has enough gold and XP to scribe a rune, and that he passes the skill check.
+    int nHD = GetHitDice(oCaster);
+    int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+    int nNewXP = GetXP(oCaster) - nXPCost;
+    int nGold = GetGold(oCaster);
+    int nNewGold = nGold - nGoldCost;
+    int nCheck = FALSE;
+    // Does the PC have Maximize Rune turned on?
+    int nMaximize = 0;
+    if (GetLocalInt(oCaster, "MaximizeRune")) nMaximize = 5;
+    // The check does not use GetIsSkillSuccessful so it doesn't show on the PC
+    if ((GetSkillRank(SKILL_CRAFT_ARMOR, oCaster) + d20() + nRuneCraft) >= (20 + nSpellLevel + nMaximize)) nCheck = TRUE;
+
+
+    if (nMinXPForLevel > nNewXP || nNewXP == 0 || nNewGold < 0)
+    {
+        FloatingTextStringOnCreature("You do not have enough gold and/or experience to scribe this rune.", oCaster, FALSE);
+        // Since they don't have enough, the spell casts normally
+        return TRUE;
+    }
+    if (!nCheck)
+    {
+        FloatingTextStringOnCreature("You have failed the craft check to scribe this rune.", oCaster, FALSE);
+        // Since they don't have enough, the spell casts normally
+        return TRUE;
+    }
+
+    // Since we know they can now pay for it, create the rune stone
+    object oRune = CreateItemOnObject("prc_rune_1", oCaster);
+
+    // Steal all the code from craft wand.
+    // The reason craft wand is used is because it is possible to create runes with charges using the Runecaster class.
+    int nPropID = IPGetIPConstCastSpellFromSpellID(nSpell);
+
+    // * GZ 2003-09-11: If the current spell cast is not acid fog, and
+    // *                returned property ID is 0, bail out to prevent
+    // *                creation of acid fog items.
+    if (nPropID == 0 && nSpell != 0)
+    {
+        FloatingTextStrRefOnCreature(84544,oCaster);
+        return TRUE;
+    }
+
+
+    if (nPropID != -1)
+    {
+        // If its uses per day instead of charges, we do some different stuff here
+        if (GetLocalInt(oCaster, "RuneUsesPerDay"))
+        {
+            int nIPUses;
+            if (nCount == 1) nIPUses = IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY;
+            else if (nCount == 2) nIPUses = IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY;
+            else if (nCount == 3) nIPUses = IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY;
+            else if (nCount == 4) nIPUses = IP_CONST_CASTSPELL_NUMUSES_4_USES_PER_DAY;
+            // Caps out at 5 per day
+            else if (nCount >= 5) nIPUses = IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY;
+
+            itemproperty ipProp = ItemPropertyCastSpell(nPropID,nIPUses);
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune);
+        }
+        else // Do the normal charges
+        {
+            itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune);
+        }
+        // This part is always done
+        itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpell, PRCGetCasterLevel());
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oRune);
+        itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpell, PRCGetMetaMagicFeat());
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oRune);
+        itemproperty ipDC = ItemPropertyCastSpellDC(nSpell, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
+        // If Maximize Rune is turned on and we pass the check, add the Maximize IProp
+        if (GetLocalInt(oCaster, "MaximizeRune"))
+        {
+            itemproperty ipMax = ItemPropertyCastSpellMetamagic(nSpell, METAMAGIC_MAXIMIZE);
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipMax,oRune);
+        }
+        SetItemCharges(oRune,nCharges);
+        SetXP(oCaster,nNewXP);
+        TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
+    }
+
+    // If we have made it this far, they have crafted the rune and the spell has been used up, so it returns false.
+    return FALSE;
+}
+
 
 // -----------------------------------------------------------------------------
 // Georg, July 2003

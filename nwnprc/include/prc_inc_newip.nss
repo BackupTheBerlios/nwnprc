@@ -57,6 +57,8 @@ itemproperty ItemPropertyLimitUseByDivineSpellcasting(int nLevel);
 //not implemented
 itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice);
 
+#include "x2_inc_itemprop"
+
 itemproperty ItemPropertyCastSpellMetamagic(int nSpell, int nMetamagic)
 {
     //convert nSpell into reference to iprip_spells.2da

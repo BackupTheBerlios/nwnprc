@@ -16,6 +16,7 @@ int DoUMDCheck(object oItem, object oPC, int nDCMod);
 int CheckPRCLimitations(object oItem, object oPC);
 
 #include "inc_utility"
+#include "prc_inc_newip"
 
 //credit to silvercloud for this :)
 void ApplySpeedIncrease(object oPC)
@@ -117,7 +118,7 @@ int CheckPRCLimitations(object oItem, object oPC)
     //sanity checks
     if(!GetIsObjectValid(oPC))
         oPC = GetItemPossessor(oItem);
-    
+
     itemproperty ipTest = GetFirstItemProperty(oItem);
     int bPass = TRUE;
     int nUMDDC;
@@ -270,19 +271,19 @@ int CheckPRCLimitations(object oItem, object oPC)
             {
                 if(GetEffectCreator(eTest) == oItem
                    && GetEffectType(eTest) == EFFECT_TYPE_AREA_OF_EFFECT)
-                {   
+                {
                     RemoveEffect(oPC, eTest);
                     DoDebug("Removing old AoE effect");
-                }    
+                }
                 eTest = GetNextEffect(oPC);
             }
-            
-            AssignCommand(oItem, 
-                ApplyEffectToObject(DURATION_TYPE_PERMANENT, 
+
+            AssignCommand(oItem,
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT,
                     EffectAreaOfEffect(nAoEID, sEnter, sHB, sExit),
                         oPC));
-            //wont get AoE if its directly ontop of it            
-            location lLoc = GetLocation(oPC);            
+            //wont get AoE if its directly ontop of it
+            location lLoc = GetLocation(oPC);
             vector vPos = GetPositionFromLocation(lLoc);
             vPos.x += 0.001;
             lLoc = Location(GetAreaFromLocation(lLoc), vPos, 0.0);
@@ -306,8 +307,8 @@ int CheckPRCLimitations(object oItem, object oPC)
                     SetLocalInt(oAoE, PRC_CASTERLEVEL_OVERRIDE, nCost);
 DoDebug("AoE is level "+IntToString(nCost));
                 }
-            }    
-            
+            }
+
         }
         ipTest = GetNextItemProperty(oItem);
     }

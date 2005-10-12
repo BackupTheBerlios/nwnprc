@@ -60,3 +60,17 @@ int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int 
      
      return iAttackRoll;
 }
+
+//routes to DoRacialSLA, but checks that the ray hits first
+//not sure how this will work if the spell does multiple touch attack, hopefully that shouldnt apply
+//this is Base DC, not total DC. SLAs are still spells, so spell focus should still apply.
+void DoSpellRay(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
+{
+    int nAttack = PRCDoRangedTouchAttack(PRCGetSpellTargetObject());
+    if(nAttack)
+    {   
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, "AttackHasHit", nAttack)); //preserve crits
+        DoRacialSLA(nSpellID, nCasterlevel, nTotalDC);
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "AttackHasHit"));
+    }    
+}

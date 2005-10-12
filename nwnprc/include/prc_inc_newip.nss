@@ -62,8 +62,6 @@ itemproperty ItemPropertyLimitUseByDivineSpellcasting(int nLevel);
 //not implemented
 itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice);
 
-<<<<<<< prc_inc_newip.nss
-
 //////////////////////////////////////////////////
 /* Includes                                     */
 //////////////////////////////////////////////////

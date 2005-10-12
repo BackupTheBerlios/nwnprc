@@ -416,6 +416,7 @@ int RunecasterRunePowerDC(object oCaster)
     // If the caster is runechanting or casting from a rune, add bonus
     // Known Bug: This does not give the proper bonus to anyone aside from the caster
     // I am uncertain as to how to do that
+    // Now fixed by adding DC itemproperty
     if (nClass >= 2 && GetLocalInt(oCaster, "RuneChant") || sResRef == "prc_rune_1")
     {
             if (nClass >= 30)        nDC = 10;

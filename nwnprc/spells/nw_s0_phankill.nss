@@ -16,7 +16,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 int PRCMySavingThrow2(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     //Declare major variables
     int nDamage = d6(3);
     int nMetaMagic = PRCGetMetaMagicFeat();
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_DEATH);
     effect eVis2 = EffectVisualEffect(VFX_IMP_SONIC);
@@ -136,57 +136,23 @@ int PRCMySavingThrow2(int nSavingThrow, object oTarget, int nDC, int nSaveType=S
           return 0;
      }
      
-     if (iRedWizard > 0)
-     {
-          int iRWSpec;
-          if (GetHasFeat(FEAT_RW_TF_ABJ, oTarget)) iRWSpec = SPELL_SCHOOL_ABJURATION;
-          else if (GetHasFeat(FEAT_RW_TF_CON, oTarget)) iRWSpec = SPELL_SCHOOL_CONJURATION;
-          else if (GetHasFeat(FEAT_RW_TF_DIV, oTarget)) iRWSpec = SPELL_SCHOOL_DIVINATION;
-          else if (GetHasFeat(FEAT_RW_TF_ENC, oTarget)) iRWSpec = SPELL_SCHOOL_ENCHANTMENT;
-          else if (GetHasFeat(FEAT_RW_TF_EVO, oTarget)) iRWSpec = SPELL_SCHOOL_EVOCATION;
-          else if (GetHasFeat(FEAT_RW_TF_ILL, oTarget)) iRWSpec = SPELL_SCHOOL_ILLUSION;
-          else if (GetHasFeat(FEAT_RW_TF_NEC, oTarget)) iRWSpec = SPELL_SCHOOL_NECROMANCY;
-          else if (GetHasFeat(FEAT_RW_TF_TRS, oTarget)) iRWSpec = SPELL_SCHOOL_TRANSMUTATION;
 
-          if (GetSpellSchool(nSpell) == iRWSpec)
-          {
-          
-               if (iRedWizard > 28)          nDC = nDC - 14;
-               else if (iRedWizard > 26)     nDC = nDC - 13;
-               else if (iRedWizard > 24)     nDC = nDC - 12;
-               else if (iRedWizard > 22)     nDC = nDC - 11;
-               else if (iRedWizard > 20)     nDC = nDC - 10;
-               else if (iRedWizard > 18)     nDC = nDC - 9;
-               else if (iRedWizard > 16)     nDC = nDC - 8;
-               else if (iRedWizard > 14)     nDC = nDC - 7;
-               else if (iRedWizard > 12)     nDC = nDC - 6;
-               else if (iRedWizard > 10)     nDC = nDC - 5;
-               else if (iRedWizard > 8) nDC = nDC - 4;
-               else if (iRedWizard > 6) nDC = nDC - 3;
-               else if (iRedWizard > 2) nDC = nDC - 2;
-               else if (iRedWizard > 0) nDC = nDC - 1;
-          
-          }
-
-
-     }
-
-        //racial pack code
-        if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
-        { nDC -= 1+(GetHitDice(oTarget)/5); }
-        else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )
-        {    nDC -= 1+(GetHitDice(oTarget)/5);  }
-        else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY )
-        {
-            if(GetHasFeat(FEAT_HARD_AIR, oTarget))
-                nDC -= 1+(GetHitDice(oTarget)/5);
-            else if(GetHasFeat(FEAT_HARD_ELEC, oTarget))
-                nDC -= 2;
-        }
-        else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
-        {   nDC -= 3;  }
-        else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
-        {   nDC -= 1+(GetHitDice(oTarget)/5);  }
+    //racial pack code
+    if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
+    { nDC -= 1+(GetHitDice(oTarget)/5); }
+    else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )
+    {    nDC -= 1+(GetHitDice(oTarget)/5);  }
+    else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY )
+    {
+        if(GetHasFeat(FEAT_HARD_AIR, oTarget))
+            nDC -= 1+(GetHitDice(oTarget)/5);
+        else if(GetHasFeat(FEAT_HARD_ELEC, oTarget))
+            nDC -= 2;
+    }
+    else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
+    {   nDC -= 3;  }
+    else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
+    {   nDC -= 1+(GetHitDice(oTarget)/5);  }
 
      return BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 }

@@ -14,6 +14,7 @@ void ApplySpeedIncrease(object oPC);
 void ApplySpeedDecrease(object oPC);
 int DoUMDCheck(object oItem, object oPC, int nDCMod);
 int CheckPRCLimitations(object oItem, object oPC);
+void CheckForPnPHolyAvenger(object oItem);
 
 #include "inc_utility"
 #include "prc_inc_newip"
@@ -256,6 +257,38 @@ int CheckPRCLimitations(object oItem, object oPC)
             SetLocalInt(oPC, PLAYER_SPEED_DECREASE, nSpeedDecrease);
             AssignCommand(oSkin, ApplySpeedDecrease(oPC));
         }
+        else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_PNP_HOLY_AVENGER)
+        {
+            
+            if(GetItemLastUnequipped() == oItem) //unequip event
+            {
+                int nPaladinLevels = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
+                if(nPaladinLevels)
+                {
+                    DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
+                        ItemPropertyEnhancementBonus(5), 99999.9));             
+                    DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
+                        ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL,
+                            IP_CONST_DAMAGETYPE_DIVINE, IP_CONST_DAMAGEBONUS_2d6), 99999.9));
+                    //this is a normal dispel magic useage, should be specific    
+                    DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
+                        ItemPropertyCastSpell(IP_CONST_CASTSPELL_DISPEL_MAGIC_5,
+                            IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE), 99999.9));     
+                    DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
+                        ItemPropertyCastSpellCasterLevel(SPELL_DISPEL_MAGIC, 
+                            nPaladinLevels), 99999.9));          
+                
+                }
+                else
+                {
+                    DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
+                        ItemPropertyEnhancementBonus(2), 99999.9));             
+                }
+            }
+            else
+            {
+            }
+        }
         else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_AREA_OF_EFFECT)
         {
             int nSubType  = GetItemPropertySubType(ipTest);
@@ -315,4 +348,20 @@ DoDebug("AoE is level "+IntToString(nCost));
     if(!bPass)
         bPass = DoUMDCheck(oItem, oPC, nUMDDC);
     return bPass;
+}
+
+void CheckForPnPHolyAvenger(object oItem)
+{
+    if(!GetPRCSwitch(PRC_PNP_HOLY_AVENGER_IPROP))
+        return;
+    itemproperty ipTest = GetFirstItemProperty(oItem);
+    while(GetIsItemPropertyValid(ipTest))
+    {
+        if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_HOLY_AVENGER)
+        {
+            DelayCommand(0.1, RemoveItemProperty(oItem, ipTest));
+            DelayCommand(0.1, IPSafeAddItemProperty(oItem, ItemPropertyPnPHolyAvenger()));
+        }
+        ipTest = GetNextItemProperty(oItem);
+    }
 }

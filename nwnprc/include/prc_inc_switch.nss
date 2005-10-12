@@ -535,8 +535,14 @@ const string PRC_DISABLE_SWITCH_CHANGING_CONVO       = "PRC_DISABLE_SWITCH_CHANG
  * e.g. Fire Gensai dont have to take the Fire domain, etc
  */
 
-const string PRC_DISABLE_DOMAIN_ENFORCEMENT         = "PRC_DISABLE_DOMAIN_ENFORCEMENT";
+const string PRC_DISABLE_DOMAIN_ENFORCEMENT          = "PRC_DISABLE_DOMAIN_ENFORCEMENT";
+ 
+/*
+ * Set this to remove replace bioware HolyAvenger itemproperties
+ * with PnP HolyAvenger itemprperties instead
+ */
 
+const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPROP";
 
 /******************************************************************************\
 *                               ACP switches                              *

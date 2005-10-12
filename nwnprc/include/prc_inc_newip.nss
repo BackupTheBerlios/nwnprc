@@ -11,6 +11,7 @@ const int ITEM_PROPERTY_AREA_OF_EFFECT                    = 100;
 const int ITEM_PROPERTY_CAST_SPELL_CASTER_LEVEL           = 85;
 const int ITEM_PROPERTY_CAST_SPELL_METAMAGIC              = 92;
 const int ITEM_PROPERTY_CAST_SPELL_DC                     = 93;
+const int ITEM_PROPERTY_PNP_HOLY_AVENGER                  = 101;
 
 const int IP_CONST_AOE_DARKNESS             = 0;
 const int IP_CONST_AOE_DEEPER_DARKNESS      = 1;
@@ -40,6 +41,8 @@ itemproperty ItemPropertyCastSpellDC(int nSpell, int nDC);
 //relys on blueprints containing these itemproperties
 //nIPAoEID is defined in iprp_aoe & IP_CONST_AOE_*
 itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel);
+
+itemproperty ItemPropertyPnPHolyAvenger();
 
 //not implemented
 itemproperty ItemPropertyLimitUseByAbility(int nAbility, int nMinScore);
@@ -240,5 +243,13 @@ itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice)
     itemproperty ipReturn;
     if(!GetIsItemPropertyValid(ipReturn))
         DoDebug("ItemPropertyLimitUseBySneakAttackDice "+IntToString(nDice)+" is not valid");
+    return ipReturn;
+}
+
+itemproperty ItemPropertyPnPHolyAvenger()
+{
+    itemproperty ipReturn;
+    if(!GetIsItemPropertyValid(ipReturn))
+        DoDebug("ItemPropertyPnPHolyAvenger is not valid");
     return ipReturn;
 }

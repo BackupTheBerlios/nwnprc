@@ -72,19 +72,11 @@ void ApplySpeedDecrease(object oPC)
     }
 }
 
-//this is a scripted version of the bioware UMD check for using restricted items
-//this also applies effects relating to new itemproperties
-int DoUMDCheck(object oItem, object oPC, int nDCMod)
+int GetUMDForItemCost(object oItem)
 {
     string s2DAEntry;
     int nValue = GetGoldPieceValue(oItem);
     int n2DAValue = StringToInt(s2DAEntry);
-    int nSkill = GetSkillRank(SKILL_USE_MAGIC_DEVICE, oPC);
-
-    //doesnt have UMD
-    if(!GetHasSkill(SKILL_USE_MAGIC_DEVICE, oPC))
-        return FALSE;
-
     int i;
     while(n2DAValue < nValue)
     {
@@ -94,12 +86,22 @@ int DoUMDCheck(object oItem, object oPC, int nDCMod)
     }
     i--;
     string s2DAReqSkill = Get2DACache("skillvsitemcost", "SkillReq_Class", i);
-//PrintString("UMD check with value "+IntToString(nValue)+" of "+IntToString(n2DAValue)+" and UMD "+IntToString(nSkill)+" of "+s2DAReqSkill);
-    //item is off the scale of expense
     if(s2DAReqSkill == "")
+        return -1;
+    return StringToInt(s2DAReqSkill);
+}
+
+//this is a scripted version of the bioware UMD check for using restricted items
+//this also applies effects relating to new itemproperties
+int DoUMDCheck(object oItem, object oPC, int nDCMod)
+{
+
+    //doesnt have UMD
+    if(!GetHasSkill(SKILL_USE_MAGIC_DEVICE, oPC))
         return FALSE;
 
-    int nReqSkill = StringToInt(s2DAReqSkill);
+    int nSkill = GetSkillRank(SKILL_USE_MAGIC_DEVICE, oPC);
+    int nReqSkill = GetUMDForItemCost(oItem);
     //class is a dc20 test
     nReqSkill = nReqSkill - 20 + nDCMod;
     if(nReqSkill > nSkill)
@@ -262,6 +264,22 @@ int CheckPRCLimitations(object oItem, object oPC)
             if(GetItemLastUnequipped() == oItem) //unequip event
             {
                 int nPaladinLevels = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
+                if(!nPaladinLevels)
+                {
+                    //not a paladin? fake it
+                    //not really a true PnP test
+                    //instead it sets the paladin level 
+                    //to the UMD ranks minus the amount required
+                    //to use a class restricted item of that value
+                    int nSkill = GetSkillRank(SKILL_USE_MAGIC_DEVICE, oPC);
+                    if(nSkill)
+                    {
+                        int nReqSkill = GetUMDForItemCost(oItem);
+                        nSkill -= nReqSkill;
+                        if(nSkill > 0)
+                            nPaladinLevels = nSkill;
+                    }
+                }
                 if(nPaladinLevels)
                 {
                     DelayCommand(0.1, IPSafeAddItemProperty(oItem, 

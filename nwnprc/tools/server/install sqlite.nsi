@@ -69,22 +69,12 @@ Section "PRC Pack" Section1
 	File "odbc2src.exe"
 	
 	;Precacher specifics
-	File "..\precacher\libjcc.dll"
-	File "..\precacher\pbdwe90.dll"
-	File "..\precacher\pbodb90.dll"
-	File "..\precacher\pbodb90.ini"
-	File "..\precacher\pbrtc90.dll"
-	File "..\precacher\pbvm90.dll"
 	File "..\precacher\precacher sqlite.bat"
-	File "..\precacher\precacher sqlite.ini"
-	File "..\precacher\precacher.bat"
-	File "..\precacher\precacher.exe"
 	File "..\precacher\sqlite.exe"
 	File "..\precacher\7za.exe"
 	File "..\precacher\bioware2das.7z"
 	File "..\precacher\makedb sqlite.exe"
-	File "..\ssed.exe"
-	File "..\precacher\ssedscript.txt"
+	File "..\prc.jar"
 	
 	;erf for manipulating hak/erf erc
 	File "..\erf.exe"
@@ -156,22 +146,12 @@ Section Uninstall
         Delete "$NWNPATH\override\directory.2da"
 	
 	;Precacher specifics
-	Delete "$NWNPATH\libjcc.dll"
-	Delete "$NWNPATH\pbdwe90.dll"
-	Delete "$NWNPATH\pbodb90.dll"
-	Delete "$NWNPATH\pbodb90.ini"
-	Delete "$NWNPATH\pbrtc90.dll"
-	Delete "$NWNPATH\pbvm90.dll"
 	Delete "$NWNPATH\precacher sqlite.bat"
-	Delete "$NWNPATH\precacher sqlite.ini"
-	Delete "$NWNPATH\precacher.bat"
-	Delete "$NWNPATH\precacher.exe"
 	Delete "$NWNPATH\sqlite.exe"
 	Delete "$NWNPATH\7za.exe"
 	Delete "$NWNPATH\bioware2das.7z"
 	Delete "$NWNPATH\makedb sqlite.exe"
-	Delete "$NWNPATH\ssed.exe"
-	Delete "$NWNPATH\ssedscript.txt"
+	Delete "$NWNPATH\prc.jar"
 	
 	;erf for manipulating hak/erf erc
 	Delete "$NWNPATH\erf.exe"

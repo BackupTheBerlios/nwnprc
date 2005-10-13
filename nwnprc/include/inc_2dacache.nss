@@ -453,7 +453,7 @@ void PRCMakeTables()
     SQL+= ""+q+"RECIPE_TAG"+q+" varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
-    SQL = "CREATE TABLE "+q+"prc_cached2da"+q+" ("+q+"file"+q+" varchar(255) DEFAULT '_', "+q+"column"+q+" varchar(255) DEFAULT '_', "+q+"rowid"+q+" varchar(255), "+q+"data"+q+" varchar(255) DEFAULT '_'); ";
+    SQL = "CREATE TABLE "+q+"prc_cached2da"+q+" ("+q+"file"+q+" varchar(255) DEFAULT '_', "+q+"columnid"+q+" varchar(255) DEFAULT '_', "+q+"rowid"+q+" varchar(255), "+q+"data"+q+" varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
     //non2dacaching table
@@ -556,7 +556,7 @@ if(nDebug) PrintString("Get2DACache: pushed cached value is "+sPushed);
         else if(TestStringAgainstPattern("ireq_**", s2DA))
             SQL = "SELECT "+q+""+sDBColumn+""+q+" FROM "+q+"prc_cached2da_ireq"+q+" WHERE ( "+q+"rowid"+q+" = "+IntToString(nRow)+" ) AND ( "+q+"file"+q+" = '"+s2DA+"' )";
         else
-            SQL = "SELECT "+q+"data"+q+" FROM "+q+"prc_cached2da"+q+" WHERE ( "+q+"file"+q+" = '"+s2DA+"' ) AND ( "+q+"column"+q+" = '"+sDBColumn+"' ) AND ( "+q+"rowid"+q+" = "+IntToString(nRow)+" )";
+            SQL = "SELECT "+q+"data"+q+" FROM "+q+"prc_cached2da"+q+" WHERE ( "+q+"file"+q+" = '"+s2DA+"' ) AND ( "+q+"columnid"+q+" = '"+sDBColumn+"' ) AND ( "+q+"rowid"+q+" = "+IntToString(nRow)+" )";
 
         PRC_SQLExecDirect(SQL);
         // if there is an error, table is not built or is not initialized

@@ -6,6 +6,9 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.*;
 
+//for the spinner
+import static prc.Main.*;
+
 public final class SQLMaker{
 	private SQLMaker(){}
 
@@ -30,8 +33,8 @@ public final class SQLMaker{
     	sql+= "CREATE TABLE prc_cached2da_cls_feat (rowid varchar(255), "+
     		"file varchar(255), FeatLabel varchar(255), FeatIndex varchar(255), "+
     		"List varchar(255), GrantedOnLevel varchar(255), OnMenu varchar(255));\n";
-    	sql+= "CREATE TABLE prc_cached2da (rowid varchar(255), "+
-    		"column varchar(255), rowid varchar(255), data varchar(255));\n";
+    	sql+= "CREATE TABLE prc_cached2da (name varchar(255), "+
+    		"columnid varchar(255), rowid varchar(255), data varchar(255));\n";
 
 		String dir = args[0];
 		File[] files = new File(dir).listFiles();
@@ -64,6 +67,8 @@ public final class SQLMaker{
 		//remove path and extension from filename
 		filename = file.getName();
 		filename = filename.substring(0, filename.length()-4);
+		//tell the user what were doing
+		if(verbose) System.out.print("Making SQL from "+filename+" - ");
 		//specific files get their own tables
         if(filename == "feat"
             || filename == "spells"
@@ -89,14 +94,16 @@ public final class SQLMaker{
 		else{
 			addSQLForGeneralTable(data, filename);
 		}
+		//tell user finished that table
+		if(verbose) System.out.println("- Done");
 	}
 
 	private static void printSQL() throws Exception{
 		File target = new File("out.sql");
 		// Clean up old version if necessary
 		if(target.exists()){
-			System.out.println("Deleting previous version of " + target.getName());
-		//	target.delete();
+			if(verbose) System.out.println("Deleting previous version of " + target.getName());
+			target.delete();
 		}
 		target.createNewFile();
 
@@ -116,6 +123,7 @@ public final class SQLMaker{
 
 
 	private static void addSQLForSingleTable(Data_2da data, String filename){
+
 		String entry;
 		entry = "CREATE TABLE prc_cached2da_"+filename+" (rowid varchar(255)";
 		String[] labels = data.getLabels();
@@ -141,7 +149,7 @@ public final class SQLMaker{
 					value = "";
 				entry += "'"+value+"'";
 
-				//spinner.spin();
+				if(verbose) spinner.spin();
 			}
 			entry += ");";
 			sql += entry+"\n";
@@ -166,9 +174,9 @@ public final class SQLMaker{
 					value = "";
 				entry += "'"+value+"'";
 
-				//spinner.spin();
+				if(verbose) spinner.spin();
 			}
-			entry += ", "+filename+");";
+			entry += ", '"+filename+"');";
 			sql += entry+"\n";
 		}
 	}
@@ -187,7 +195,7 @@ public final class SQLMaker{
 				entry += ");";
 				sql += entry+"\n";
 
-				//spinner.spin();
+				if(verbose) spinner.spin();
 			}
 		}
 	}

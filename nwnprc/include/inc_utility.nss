@@ -290,6 +290,26 @@ void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE);
  */
 void TryToIDItems(object oPC = OBJECT_SELF);
 
+/**
+ * Converts a boolean to a string.
+ *
+ * @param bool The boolean value to convert. 0 is considered false
+ *             and everything else is true.
+ * @param bTLK Whether to use english strings or get the values from
+ *             the TLK. If TRUE, the return values are retrieved
+ *             from TLK indices 8141 and 8142. If FALSE, return values
+ *             are either "True" or "False".
+ *             Defaults to FALSE.
+ */
+string BooleanToString(int bool, int bTLK = FALSE);
+
+/**
+ * Returns a copy of the string, with leading and trailing whitespace omitted.
+ *
+ * @param s The string to trim.
+ */
+string TrimString(string s);
+
 //////////////////////////////////////////////////
 /* Include section                              */
 //////////////////////////////////////////////////
@@ -723,4 +743,47 @@ void TryToIDItems(object oPC = OBJECT_SELF)
         }
         oItem = GetNextItemInInventory(oPC);
     }
+}
+
+string BooleanToString(int bool, int bTLK = FALSE)
+{
+    return bTLK ?
+            (bool ? GetStringByStrRef(8141) : GetStringByStrRef(8142)):
+            (bool ? "True" : "False");
+}
+
+string TrimString(string s)
+{
+    int nCrop = 0;
+    string temp;
+    // Find end of the leading whitespace
+    while(TRUE)
+    {
+        // Get the next character in the string, starting from the beginning
+        temp = GetSubString(s, nCrop, 1);
+        if(temp == " "  || // Space
+           temp == "\n")   // Line break
+            nCrop++;
+        else
+            break;
+    }
+    // Crop the leading whitespace
+    s = GetSubString(s, nCrop, GetStringLength(s) - nCrop);
+
+    // Find the beginning of the trailing whitespace
+    nCrop = 0;
+    while(TRUE)
+    {
+        // Get the previous character in the string, starting from the end
+        temp = GetSubString(s, GetStringLength(s) - 1 - nCrop, 1);
+        if(temp == " "  || // Space
+           temp == "\n")   // Line break
+            nCrop++;
+        else
+            break;
+    }
+    // Crop the trailing whitespace
+    s = GetSubString(s, 0, GetStringLength(s) - nCrop);
+
+    return s;
 }

@@ -1,6 +1,6 @@
 package prc.utils;
 
-import prc.autodoc.Data_2da;
+import prc.autodoc.*;
 
 import java.io.*;
 import java.util.*;
@@ -9,9 +9,6 @@ import java.util.regex.*;
 public final class SQLMaker{
 	private SQLMaker(){}
 
-	private static String prefix,
-	                      suffix,
-	                      template;
 	private static String sql;
 
 	/**
@@ -25,16 +22,26 @@ public final class SQLMaker{
 			readMe();
 
 		//setup the transaction
-		sql += "BEGIN IMMEDIATE;";
+		sql = "BEGIN IMMEDIATE;\n";
+		//create a few tables
+    	sql+= "CREATE TABLE prc_cached2da_ireq (rowid varchar(255), "+
+    		"file varchar(255), LABEL varchar(255), ReqType varchar(255), "+
+    		"ReqParam1 varchar(255), ReqParam2 varchar(255));\n";
+    	sql+= "CREATE TABLE prc_cached2da_cls_feat (rowid varchar(255), "+
+    		"file varchar(255), FeatLabel varchar(255), FeatIndex varchar(255), "+
+    		"List varchar(255), GrantedOnLevel varchar(255), OnMenu varchar(255));\n";
+    	sql+= "CREATE TABLE prc_cached2da (rowid varchar(255), "+
+    		"column varchar(255), rowid varchar(255), data varchar(255));\n";
 
 		String dir = args[0];
-		String[] filenames = new File(dir).list();
-		for(int i = 0; i < filenames.length; i++)
-			addFileToSQL(dir+"/"+filenames[i]);
+		File[] files = new File(dir).listFiles();
+		for(int i = 0; i < files.length; i++)
+			addFileToSQL(files[i]);
 
 		//complete the transaction
-		sql += "COMMIT;";
+		sql += "COMMIT;\n";
 
+		//send it all to a file
 		printSQL();
 
 	}
@@ -51,15 +58,76 @@ public final class SQLMaker{
 		System.exit(0);
 	}
 
-	private static void addFileToSQL(String filename) {
-
+	private static void addFileToSQL(File file) {
+		String filename = file.getAbsolutePath();
 		Data_2da data = Data_2da.load2da(filename, true);
-		//output the table creation
-		addSQLForTable(data, filename);
-		String[] labels = data.getLabels();
+		//remove path and extension from filename
+		filename = file.getName();
+		filename = filename.substring(0, filename.length()-4);
+		//specific files get their own tables
+        if(filename == "feat"
+            || filename == "spells"
+            || filename == "portraits"
+            || filename == "soundset"
+            || filename == "appearance"
+            || filename == "portraits"
+            || filename == "classes"
+            || filename == "racialtypes"
+            || filename == "item_to_ireq"){
+
+			//output the table creation
+			addSQLForSingleTable(data, filename);
+		}
+		//some groups get specific matches
+		else if(filename.matches("cls_feat_[^ ]*")){
+			addSQLForGroupedTable(data, filename, "cls_feat");
+		}
+		else if(filename.matches("ireq_[^ ]*")){
+			addSQLForGroupedTable(data, filename, "ireq");
+		}
+		//everything else goes in the same table
+		else{
+			addSQLForGeneralTable(data, filename);
+		}
+	}
+
+	private static void printSQL() throws Exception{
+		File target = new File("out.sql");
+		// Clean up old version if necessary
+		if(target.exists()){
+			System.out.println("Deleting previous version of " + target.getName());
+		//	target.delete();
+		}
+		target.createNewFile();
+
+		// Creater the writer and print
+		FileWriter writer = new FileWriter(target, true);
+		writer.write(sql);
+		// Clean up
+		writer.flush();
+		writer.close();
+		sql = "";
+	}
+
+	/*
+	 *		Below are the three functions that produce SQL for adding
+	 * 		to each of the 3 table types.
+	 */
+
+
+	private static void addSQLForSingleTable(Data_2da data, String filename){
 		String entry;
+		entry = "CREATE TABLE prc_cached2da_"+filename+" (rowid varchar(255)";
+		String[] labels = data.getLabels();
+		for(int i = 0 ; i < labels.length ; i++){
+			entry += ", "+labels[i]+" varchar(255) DEFAULT '_'";
+		}
+		entry += ");";
+
+		sql += entry+"\n";
+		//put the data in
 		for(int row = 0; row < data.getEntryCount() ; row ++) {
-			entry = "INSERT INTO prc_cached2da_"+filename+" (rowid, ";
+			entry = "INSERT INTO prc_cached2da_"+filename+" (rowid";
 			for(int i = 0 ; i < labels.length ; i++){
 				entry += ", "+labels[i];
 			}
@@ -71,7 +139,7 @@ public final class SQLMaker{
 
 				if(value == "****")
 					value = "";
-				entry += value;
+				entry += "'"+value+"'";
 
 				//spinner.spin();
 			}
@@ -80,33 +148,47 @@ public final class SQLMaker{
 		}
 	}
 
-	private static void printSQL() throws Exception{
-		//Spinner spinner = new Spinner();
-		File target = new File("out.sql");
-		// Clean up old version if necessary
-		if(target.exists()){
-			System.out.println("Deleting previous version of " + target.getName());
-			target.delete();
-		}
-		target.createNewFile();
-
-		// Creater the writer and print
-		FileWriter writer = new FileWriter(target, false);
-		writer.write(sql);
-		// Clean up
-		writer.flush();
-		writer.close();
-	}
-
-	private static void addSQLForTable(Data_2da data, String filename){
-		String entry;
-		entry = "CREATE TABLE prc_cached2da_"+filename+" (rowid varchar(255)";
+	private static void addSQLForGroupedTable(Data_2da data, String filename, String tablename){
 		String[] labels = data.getLabels();
-		for(int i = 0 ; i < labels.length ; i++){
-			entry += ", "+labels[i]+" varchar(255) DEFAULT '_'";
-		}
-		entry += ");";
+		String entry;
+		for(int row = 0; row < data.getEntryCount() ; row ++) {
+			entry = "INSERT INTO prc_cached2da_"+tablename+" (rowid";
+			for(int i = 0 ; i < labels.length ; i++){
+				entry += ", "+labels[i];
+			}
+			entry += ", file) VALUES ("+row;
+			for(int column = 0; column < labels.length ; column ++) {
+				entry += ", ";
 
-		sql += entry+"\n";
+				String value = data.getEntry(labels[column], row);
+
+				if(value == "****")
+					value = "";
+				entry += "'"+value+"'";
+
+				//spinner.spin();
+			}
+			entry += ", "+filename+");";
+			sql += entry+"\n";
+		}
+	}
+	private static void addSQLForGeneralTable(Data_2da data, String filename){
+		String[] labels = data.getLabels();
+		String entry;
+		for(int row = 0; row < data.getEntryCount() ; row ++) {
+			for(int column = 0; column < labels.length ; column ++) {
+				entry = "INSERT INTO prc_cached2da VALUES ('"+filename+"', '"+labels[column]+"', "+row+", ";
+
+				String value = data.getEntry(labels[column], row);
+
+				if(value == "****")
+					value = "";
+				entry += "'"+value+"'";
+				entry += ");";
+				sql += entry+"\n";
+
+				//spinner.spin();
+			}
+		}
 	}
 }

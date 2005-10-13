@@ -92,12 +92,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         }
         if((nTotalHD+nHD)<=nMaxHD)
         {        
-            eSummon = ExtraordinaryEffect(eSummon);
+            //eSummon = ExtraordinaryEffect(eSummon); //still goes away on rest, use supernatural instead
+            eSummon = SupernaturalEffect(eSummon);
             ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, PRCGetSpellTargetLocation());
         }
         else
         {
             FloatingTextStringOnCreature("You cannot summon more undead at this time.", OBJECT_SELF);
+            FloatingTextStringOnCreature("Currently have "+IntToString(nTotalHD)+" out of "+IntToString(nMaxHD)+".", OBJECT_SELF);
         }
     }
     else

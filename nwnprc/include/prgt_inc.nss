@@ -34,40 +34,65 @@ void VoidCreateTrap(location lLoc, struct trap tTrap)
 
 object CreateTrap(location lLoc, struct trap tTrap)
 {
+    object oTrap, oDetect, oTemp;
+
+    // First, create the detection AoE
     effect eDetect = EffectAreaOfEffect(tTrap.nDetectAOE, "prgt_det_ent", "prgt_det_hb", "prgt_det_ext");
-    effect eTrap   = EffectAreaOfEffect(tTrap.nTrapAOE, "prgt_trp_ent", "prgt_trp_hb", "prgt_trpt_ext");
     eDetect = SupernaturalEffect(eDetect);
     ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eDetect, lLoc);
+
+    // Get an object reference to it
+    oTemp = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lLoc, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+    while(GetIsObjectValid(oTemp))
+    {
+        //DoDebug("Looking for detection AoE, testing object '" + GetTag(oTemp) + "', comparing to '" + Get2DACache("vfx_persistent", "LABEL", tTrap.nDetectAOE) +"' - " + BooleanToString(GetTag(oTemp) == Get2DACache("vfx_persistent", "LABEL", tTrap.nDetectAOE)));
+        // Test if we found the correct AoE
+        if(GetTag(oTemp) == Get2DACache("vfx_persistent", "LABEL", tTrap.nDetectAOE) &&
+           !GetLocalInt(oTemp, "PRC_PRGT_ParanoiaMarker") // Just in case there are two traps in the almost same location
+           )
+        {
+            oDetect = oTemp;
+            SetLocalInt(oDetect, "PRC_PRGT_ParanoiaMarker", TRUE);
+            break;
+        }
+        // Didn't find, get next
+        oTemp = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lLoc, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+    }
+    if(DEBUG && !GetIsObjectValid(oDetect))
+        DoDebug("CreateTrap(): ERROR: Can't get object reference to detection AoE!");
+
+
+    // Do the trap AoE
+    effect eTrap   = EffectAreaOfEffect(tTrap.nTrapAOE, "prgt_trp_ent", "prgt_trp_hb", "prgt_trpt_ext");
     eTrap   = SupernaturalEffect(eTrap);
     ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eTrap,   lLoc);
-    //get nearest doest work if the location is exactly the same
-    vector vPos = GetPositionFromLocation(lLoc);
-    vPos.x += 0.1;
-    location lTest = Location(GetAreaFromLocation(lLoc),
-                        vPos,
-                        GetFacingFromLocation(lLoc));
-    object oDetect = GetNearestObjectToLocation(OBJECT_TYPE_AREA_OF_EFFECT, lTest, 1);
-    object oTrap = GetNearestObjectToLocation(OBJECT_TYPE_AREA_OF_EFFECT, lTest, 1);
-    if(oTrap == oDetect)
-        oTrap = GetNearestObjectToLocation(OBJECT_TYPE_AREA_OF_EFFECT, lTest, 2);
-    if(GetTag(oTrap) == Get2DACache("vfx_persistent", "LABELS", tTrap.nDetectAOE)
-        && GetTag(oDetect) == Get2DACache("vfx_persistent", "LABELS", tTrap.nTrapAOE))
-    //wrong way around, swap
+
+    // Get an object reference to it
+    oTemp = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lLoc, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+    while(GetIsObjectValid(oTemp))
     {
-        object oTemp = oTrap;
-        oDetect = oTrap;
-        oTrap = oTemp;
+        //DoDebug("Looking for detection AoE, testing object '" + GetTag(oTemp) + "', comparing to '" + Get2DACache("vfx_persistent", "LABEL", tTrap.nTrapAOE) +"' - " + BooleanToString(GetTag(oTemp) == Get2DACache("vfx_persistent", "LABEL", tTrap.nTrapAOE)));
+        // Test if we found the correct AoE
+        if(GetTag(oTemp) == Get2DACache("vfx_persistent", "LABEL", tTrap.nTrapAOE) &&
+           !GetLocalInt(oTemp, "PRC_PRGT_ParanoiaMarker") // Just in case there are two traps in the almost same location
+           )
+        {
+            oTrap = oTemp;
+            SetLocalInt(oTrap, "PRC_PRGT_ParanoiaMarker", TRUE);
+            break;
+        }
+        // Didn't find, get next
+        oTemp = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lLoc, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
     }
-    
-    if(GetTag(oTrap) != Get2DACache("vfx_persistent", "LABELS", tTrap.nTrapAOE))
-        DoDebug("Error getting trap AOE object");
-    if(GetTag(oDetect) != Get2DACache("vfx_persistent", "LABELS", tTrap.nDetectAOE))
-        DoDebug("Error getting trap detection AOE object");
-    
-        
+    if(DEBUG && !GetIsObjectValid(oTrap))
+        DoDebug("CreateTrap(): ERROR: Can't get object reference to trap AoE!");
+
+
+    // Store the data
     SetLocalObject(oTrap, "Detect", oDetect);
     SetLocalObject(oDetect, "Trap", oTrap);
     SetLocalTrap(oTrap, "TrapSettings", tTrap);
+
     return oTrap;
 }
 
@@ -193,11 +218,11 @@ void DisarmTrap(object oTrap)
         {
             tNewTrap = CreateRandomTrap(tTrap.nRespawnRandomCR);
             tNewTrap.nRespawnSeconds = tTrap.nRespawnSeconds;
-        }    
-        AssignCommand(GetArea(oTrap), 
+        }
+        AssignCommand(GetArea(oTrap),
             DelayCommand(IntToFloat(tTrap.nRespawnSeconds),
                 VoidCreateTrap(GetLocation(oTrap), tNewTrap)));
-    }            
+    }
 }
 
 void DoTrapXP(object oTrap, object oTarget, int nEvent)

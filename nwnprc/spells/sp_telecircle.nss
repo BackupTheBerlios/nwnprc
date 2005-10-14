@@ -2,7 +2,9 @@
 //:: Teleportation Circle spellscript
 //:: sp_telecircle
 //:://////////////////////////////////////////////
-/** @file Teleportation Circle spellscript
+/** @file
+
+    Teleportation Circle
 
     Conjuration (Teleportation)
     Level: Sor/Wiz 9
@@ -68,11 +70,11 @@ void main()
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
 
     object oCaster = OBJECT_SELF;
-SendMessageToPC(oCaster, "This spell is a work-in-progress. If it seems unfinished, it's because it is, so please ignore any problems with it for now");
 
     // Get whether we are executing the first or the second part of the script
     if(!GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_FirstPartDone"))
     {
+SendMessageToPC(oCaster, "This spell is a work-in-progress. If it seems unfinished, it's because it is, so please ignore any problems with it for now");
         // Spellhook
         if(!X2PreSpellCastCode()) return;
         int nCasterLvl = PRCGetCasterLevel();
@@ -112,7 +114,7 @@ SendMessageToPC(oCaster, "This spell is a work-in-progress. If it seems unfinish
 
         /// @todo: A VFX (momentary, circular, impressive :D ) at the circle's location.
         /// Do even if hiddencircle so that the caster knows where it really ended up
-        DrawRhodonea(DURATION_TYPE_INSTANT, VFX_IMP_HEAD_MIND, lTarget, FeetToMeters(5.0f), 0.25, 0.0, 60, 4.0, 0.0, 0.0, "z");
+        DrawRhodonea(DURATION_TYPE_INSTANT, VFX_IMP_HEAD_MIND, lTarget, FeetToMeters(5.0f), 0.25, 0.0, 180, 12.0, 4.0, 0.0, "z");
 
 /*VFX_COM_BLOOD_CRT_WIMPQ
 VFX_COM_HIT_SONIC
@@ -145,22 +147,12 @@ s2_plc_scircle
 /*
 {
     struct trap tTeleCircle;
-    tTeleCircle.nDetectDC       = 34;
+    tTeleCircle.nDetectDC       = bVisible ? 0 : 34;
     tTeleCircle.nDisarmDC       = 34;
     tTeleCircle.nDetectAOE      = VFX_PER_15M_INVIS;
     tTeleCircle.nTrapAOE        = VFX_PER_5_FT_INVIS;
     tTeleCircle.sResRef         = "prgt_invis";
     tTeleCircle.sTriggerScript  = "sp_telecircle_oe";
-    //tTeleCircle.nSpellID;
-    //tTeleCircle.nSpellLevel;
-    //tTeleCircle.nDamageType;
-    //tTeleCircle.nRadius;
-    //tTeleCircle.nDamageDice;
-    //tTeleCircle.nDamageSize;
-    //tTeleCircle.nTargetVFX;
-    //tTeleCircle.nTrapVFX;
-    //tTeleCircle.nFakeSpell;
-    //tTeleCircle.nBeamVFX;
     tTeleCircle.nCR             = GetECL(oCaster);
 }
 */

@@ -50,6 +50,21 @@ object CreateTrap(location lLoc, struct trap tTrap)
     object oTrap = GetNearestObjectToLocation(OBJECT_TYPE_AREA_OF_EFFECT, lTest, 1);
     if(oTrap == oDetect)
         oTrap = GetNearestObjectToLocation(OBJECT_TYPE_AREA_OF_EFFECT, lTest, 2);
+    if(GetTag(oTrap) == Get2DACache("vfx_persistent", "LABELS", tTrap.nDetectAOE)
+        && GetTag(oDetect) == Get2DACache("vfx_persistent", "LABELS", tTrap.nTrapAOE))
+    //wrong way around, swap
+    {
+        object oTemp = oTrap;
+        oDetect = oTrap;
+        oTrap = oTemp;
+    }
+    
+    if(GetTag(oTrap) != Get2DACache("vfx_persistent", "LABELS", tTrap.nTrapAOE))
+        DoDebug("Error getting trap AOE object");
+    if(GetTag(oDetect) != Get2DACache("vfx_persistent", "LABELS", tTrap.nDetectAOE))
+        DoDebug("Error getting trap detection AOE object");
+    
+        
     SetLocalObject(oTrap, "Detect", oDetect);
     SetLocalObject(oDetect, "Trap", oTrap);
     SetLocalTrap(oTrap, "TrapSettings", tTrap);

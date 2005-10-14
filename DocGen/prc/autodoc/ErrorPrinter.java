@@ -18,6 +18,7 @@ public class ErrorPrinter {
 	{
 		try{
 			writer = new PrintWriter(new FileOutputStream("errorlog", false), true);
+			isInit = true;
 		}catch(Exception e){
 			System.err.println("Error while creating error logger. Yes, it's ironic. Now debug");
 			System.exit(1);

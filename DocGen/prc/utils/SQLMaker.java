@@ -44,6 +44,16 @@ public final class SQLMaker{
 			addFileToSQL(files[i]);
 
 		//complete the transaction
+		sql += "CREATE UNIQUE INDEX spellsrowindex  ON prc_cached2da_spells (rowid);\n";
+		sql  = "CREATE UNIQUE INDEX featrowindex  ON prc_cached2da_feat (rowid);\n";
+		sql += "CREATE        INDEX clsfeatindex ON prc_cached2da_cls_feat (FeatIndex);\n";
+		sql += "CREATE        INDEX clsfileindex ON prc_cached2da_cls_feat (file);\n";
+		sql += "CREATE UNIQUE INDEX appearrowindex  ON prc_cached2da_appearance (rowid);\n";
+		sql += "CREATE UNIQUE INDEX portrrowindex  ON prc_cached2da_portrait (rowid);\n";
+		sql += "CREATE UNIQUE INDEX soundsrowindex  ON prc_cached2da_soundset (rowid);\n";
+		sql += "CREATE UNIQUE INDEX datanameindex ON prc_data (name);\n";
+		sql  = "CREATE        INDEX irewfileindex ON prc_cached2da_ireq (file);\n";
+		sql += "CREATE UNIQUE INDEX refrindex ON prc_cached2da_item_to_ireq (l_resref);\n";
 		sql += "COMMIT;\n";
 
 		printSQL(false);

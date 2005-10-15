@@ -71,5 +71,6 @@ void main()
     {
         //selection made
         ChoiceSelected(nValue);
+        SetupTokens();
     }        
 }

@@ -35,6 +35,8 @@ public final class SQLMaker{
     		"List varchar(255), GrantedOnLevel varchar(255), OnMenu varchar(255));\n";
     	sql+= "CREATE TABLE prc_cached2da (name varchar(255), "+
     		"columnid varchar(255), rowid varchar(255), data varchar(255));\n";
+		printSQL(true); //start a new file
+
 
 		String dir = args[0];
 		File[] files = new File(dir).listFiles();
@@ -44,8 +46,7 @@ public final class SQLMaker{
 		//complete the transaction
 		sql += "COMMIT;\n";
 
-		//send it all to a file
-		printSQL();
+		printSQL(false);
 
 	}
 
@@ -61,7 +62,7 @@ public final class SQLMaker{
 		System.exit(0);
 	}
 
-	private static void addFileToSQL(File file) {
+	private static void addFileToSQL(File file) throws Exception{
 		String filename = file.getAbsolutePath();
 		Data_2da data = Data_2da.load2da(filename, true);
 		//remove path and extension from filename
@@ -98,10 +99,11 @@ public final class SQLMaker{
 		if(verbose) System.out.println("- Done");
 	}
 
-	private static void printSQL() throws Exception{
+	private static void printSQL(boolean newFile) throws Exception{
+	//private static void printSQL(boolean newFile){
 		File target = new File("out.sql");
 		// Clean up old version if necessary
-		if(target.exists()){
+		if(target.exists() && newFile){
 			if(verbose) System.out.println("Deleting previous version of " + target.getName());
 			target.delete();
 		}
@@ -122,7 +124,7 @@ public final class SQLMaker{
 	 */
 
 
-	private static void addSQLForSingleTable(Data_2da data, String filename){
+	private static void addSQLForSingleTable(Data_2da data, String filename) throws Exception{
 
 		String entry;
 		entry = "CREATE TABLE prc_cached2da_"+filename+" (rowid varchar(255)";
@@ -154,9 +156,11 @@ public final class SQLMaker{
 			entry += ");";
 			sql += entry+"\n";
 		}
+
+		printSQL(false);
 	}
 
-	private static void addSQLForGroupedTable(Data_2da data, String filename, String tablename){
+	private static void addSQLForGroupedTable(Data_2da data, String filename, String tablename) throws Exception{
 		String[] labels = data.getLabels();
 		String entry;
 		for(int row = 0; row < data.getEntryCount() ; row ++) {
@@ -179,8 +183,10 @@ public final class SQLMaker{
 			entry += ", '"+filename+"');";
 			sql += entry+"\n";
 		}
+
+		printSQL(false);
 	}
-	private static void addSQLForGeneralTable(Data_2da data, String filename){
+	private static void addSQLForGeneralTable(Data_2da data, String filename) throws Exception{
 		String[] labels = data.getLabels();
 		String entry;
 		for(int row = 0; row < data.getEntryCount() ; row ++) {
@@ -197,6 +203,9 @@ public final class SQLMaker{
 
 				if(verbose) spinner.spin();
 			}
+			printSQL(false);
 		}
+
+		printSQL(false);
 	}
 }

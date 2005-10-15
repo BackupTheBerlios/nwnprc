@@ -1,5 +1,8 @@
 #include "prc_ccc_inc"
 
+#include "inc_dynconv"
+
+
 void CheckAndBoot(object oPC)
 {
     if(GetIsObjectValid(GetAreaFromLocation(GetLocation(oPC))))

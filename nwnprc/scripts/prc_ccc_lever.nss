@@ -37,8 +37,8 @@ void main()
         && sResult != sName+" "
         && sResult != " "+sName)
     {
-        SendMessageToPC(oPC, "Letoscript is not setup correctly. Please check that you have changed the directory in inc_letoscript to the correct one.");
-        WriteTimestampedLogEntry("Letoscript is not setup correctly. Please check that you have changed the directory in inc_letoscript to the correct one.");
+        SendMessageToPC(oPC, "Letoscript is not setup correctly. Please check that you have set the directory to the correct one.");
+        WriteTimestampedLogEntry("Letoscript is not setup correctly. Please check that you have set the directory to the correct one.");
         bBoot = TRUE;
     }
 

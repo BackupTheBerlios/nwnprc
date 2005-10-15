@@ -146,14 +146,14 @@ void LetoPCExit(object oPC)
         {
             if(GetPRCSwitch(PRC_LETOSCRIPT_GETNEWESTBIC))
             {
-                sScript  = "%char =  FindNewestBic(qq{"+GetNWNDir()+"servervault/"+GetLocalString(oPC, "PCPlayerName")+"}); "+sScript;
+                sScript  = "%char =  FindNewestBic('"+GetNWNDir()+"servervault/"+GetLocalString(oPC, "PCPlayerName")+"'); "+sScript;
                 sScript += "%char = '>'; ";
                 sScript += "close %char; ";
             }
             else
             {
                 //unicorn syntax
-                sScript  = "%char= qq{"+sPath+"}; "+sScript;
+                sScript  = "%char= '"+sPath+"'; "+sScript;
                 sScript += "%char = '>'; ";
                 sScript += "close %char; ";
             }
@@ -272,15 +272,27 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
             }
             else
             {
-                sCommand = "%"+sLetoTag+" = qq{"+sPath+"}; ";
+                if(GetPRCSwitch(PRC_LETOSCRIPT_GETNEWESTBIC))
+                {
+                    sScript  = "%"+sLetoTag+" =  FindNewestBic('"+GetNWNDir()+"servervault/"+GetLocalString(oObject, "PCPlayerName")+"'); ";
+                }
+                else
+                {
+                    //unicorn syntax
+                    sCommand = "%"+sLetoTag+" = '"+sPath+"'; "; //qq{} doesnt work for me at the moment, wrong slashes
+                }
                 sScript = sCommand+sScript;
                 sCommand = "close %"+sLetoTag+"; ";
                 sScript = sScript+sCommand;
+            
+            
+            
             }
             sScriptResult = LetoScript(sScript, sType, sPollScript);
         }
         else//boot
         {
+            //this triggers the OnExit code to fire the letoscript
             SetLocalString(oObject, "LetoScript", GetLocalString(oObject, "LetoScript")+sScript);
             if(GetLocalString(GetModule(), PRC_LETOSCRIPT_PORTAL_IP) == "")
             {
@@ -355,7 +367,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                 StoreCampaignObject(DB_NAME, DB_GATEWAY_VAR, oObject);
                 sCommand += "%"+sLetoTag+"; ";
                 //Extract object from DB
-                sCommand += "extract qq{"+GetNWNDir()+"database/"+DB_NAME+".fpt}, '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";
+                sCommand += "extract '"+GetNWNDir()+"database/"+DB_NAME+".fpt', '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";
             }
         }
         //store their location

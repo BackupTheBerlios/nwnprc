@@ -69,11 +69,10 @@ Section "PRC Pack" Section1
 	File "odbc2src.exe"
 	
 	;Precacher specifics
-	File "..\precacher\precacher sqlite.bat"
-	File "..\precacher\sqlite.exe"
-	File "..\precacher\7za.exe"
-	File "..\precacher\bioware2das.7z"
-	File "..\precacher\makedb sqlite.exe"
+	File "precacher sqlite.bat"
+	File "sqlite.exe"
+	File "7za.exe"
+	File "bioware2das.7z"
 	File "..\prc.jar"
 	
 	;erf for manipulating hak/erf erc

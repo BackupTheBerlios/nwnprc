@@ -71,15 +71,15 @@ public final class SQLMaker{
 		//tell the user what were doing
 		if(verbose) System.out.print("Making SQL from "+filename+" - ");
 		//specific files get their own tables
-        if(filename == "feat"
-            || filename == "spells"
-            || filename == "portraits"
-            || filename == "soundset"
-            || filename == "appearance"
-            || filename == "portraits"
-            || filename == "classes"
-            || filename == "racialtypes"
-            || filename == "item_to_ireq"){
+        if(filename.matches("feat")
+            || filename.matches("spells")
+            || filename.matches("portraits")
+            || filename.matches("soundset")
+            || filename.matches("appearance")
+            || filename.matches("portraits")
+            || filename.matches("classes")
+            || filename.matches("racialtypes")
+            || filename.matches("item_to_ireq")){
 
 			//output the table creation
 			addSQLForSingleTable(data, filename);
@@ -137,11 +137,13 @@ public final class SQLMaker{
 		sql += entry+"\n";
 		//put the data in
 		for(int row = 0; row < data.getEntryCount() ; row ++) {
-			entry = "INSERT INTO prc_cached2da_"+filename+" (rowid";
-			for(int i = 0 ; i < labels.length ; i++){
-				entry += ", "+labels[i];
-			}
-			entry += ") VALUES ("+row;
+			entry = "INSERT INTO prc_cached2da_"+filename;
+			//entry +=" (rowid";
+			//for(int i = 0 ; i < labels.length ; i++){
+			//	entry += ", "+labels[i];
+			//}
+			//entry += ")"
+			entry +=" VALUES ("+row;
 			for(int column = 0; column < labels.length ; column ++) {
 				entry += ", ";
 
@@ -155,6 +157,7 @@ public final class SQLMaker{
 			}
 			entry += ");";
 			sql += entry+"\n";
+			printSQL(false);
 		}
 
 		printSQL(false);
@@ -164,11 +167,13 @@ public final class SQLMaker{
 		String[] labels = data.getLabels();
 		String entry;
 		for(int row = 0; row < data.getEntryCount() ; row ++) {
-			entry = "INSERT INTO prc_cached2da_"+tablename+" (rowid";
-			for(int i = 0 ; i < labels.length ; i++){
-				entry += ", "+labels[i];
-			}
-			entry += ", file) VALUES ("+row;
+			entry = "INSERT INTO prc_cached2da_"+tablename;
+			//entry +="(rowid";
+			//for(int i = 0 ; i < labels.length ; i++){
+			//	entry += ", "+labels[i];
+			//}
+			//entry += ", file)";
+			entry += " VALUES ("+row;
 			for(int column = 0; column < labels.length ; column ++) {
 				entry += ", ";
 
@@ -182,6 +187,7 @@ public final class SQLMaker{
 			}
 			entry += ", '"+filename+"');";
 			sql += entry+"\n";
+			printSQL(false);
 		}
 
 		printSQL(false);

@@ -3,7 +3,8 @@
 void main()
 {
     object oPC = GetEnteringObject();
+    object oTrap = OBJECT_SELF;
     if(!GetLocalInt(oPC, "InTrap"))
-        AssignCommand(oPC, TrapPsuedoHB(OBJECT_SELF));
+        AssignCommand(oPC, TrapPsuedoHB(oTrap));
     SetLocalInt(oPC, "InTrap", GetLocalInt(oPC, "InTrap")+1);
 }

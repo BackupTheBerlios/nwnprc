@@ -14,7 +14,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On:  , 2001
 //:://////////////////////////////////////////////
-//Needed would require an entry into the VFX_Persistant.2DA and a new AOE constant
+//Needed would require an entry into the vfx_persistent.2DA and a new AOE constant
 
 
 //:: modified by mr_bumpkin Dec 4, 2003

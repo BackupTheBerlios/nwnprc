@@ -114,7 +114,7 @@ void ShowTrap(object oTrap, object oDetector)
     location lLoc = GetLocation(oTrap);
 //    float fMaxRadius = 5.0;   //this needs to get the correct radius
     int nTrapAOE = GetLocalTrap(oTrap, "TrapSettings").nTrapAOE;
-    float fMaxRadius = StringToFloat(Get2DACache("vfx_persistant", "RADIUS", nTrapAOE));
+    float fMaxRadius = StringToFloat(Get2DACache("vfx_persistent", "RADIUS", nTrapAOE));
     float fRadius = fMaxRadius;
     int nCounter = 0;
     string sResRef = GetLocalTrap(oTrap, "TrapSettings").sResRef;

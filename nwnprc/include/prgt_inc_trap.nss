@@ -16,7 +16,7 @@ struct trap
 //By PnP only rogues can disarm traps over DC 35?
 //this is not implemented yet
     int nDisarmDC;
-//this is the vfx_persistant.2da row number of the AoEs 
+//this is the vfx_persistent.2da row number of the AoEs 
 //that make up the trap
 //used to determine the size of it
 //usually this is 10m larger than the radius of the trap

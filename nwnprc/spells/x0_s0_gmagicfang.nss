@@ -108,7 +108,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
 
-
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Erasing the variable used to store the spell's spell school
 }

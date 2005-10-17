@@ -446,6 +446,10 @@ int GetIsConcealed(object oDefender, object oAttacker)
 
 int GetCanSneakAttack(object oDefender, object oAttacker)
 {
+    //cant sneak non-creatures
+     if(GetObjectType(oDefender) != OBJECT_TYPE_CREATURE)
+        return FALSE;
+        
      int bReturnVal = FALSE;
      int bIsInRange = FALSE;
      int bIsFlanked = GetIsFlanked(oDefender, oAttacker);

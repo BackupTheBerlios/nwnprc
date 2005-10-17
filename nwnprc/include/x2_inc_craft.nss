@@ -803,6 +803,8 @@ These dont work as IPs since they are hardcoded */
     return FALSE;
 }
 
+
+
 int InscribeRune()
 {
     object oCaster = OBJECT_SELF;

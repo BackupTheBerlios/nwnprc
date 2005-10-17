@@ -46,11 +46,29 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
 
-    //DoMagicFang(1, DAMAGE_POWER_PLUS_ONE,nCasterLevel);
+    //DoMagicFang(nPower, nDamagePower,nCasterLevel);
     //PRCversion
+    object oTarget = PRCGetSpellTargetObject();
+    //only works if you have nothing in right & left hands
+    if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget))
+        || GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)))
+    {
+        FloatingTextStrRefOnCreature(8962, OBJECT_SELF, FALSE);
+        return; // has neither an animal companion
+    }
+    //only works if target has monk levels
+    //or has a creature weapon
+    if(!GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTarget))
+        && !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget))
+        && !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTarget))
+        && !GetLevelByClass(CLASS_TYPE_MONK, oTarget))
+    {
+        FloatingTextStrRefOnCreature(8962, OBJECT_SELF, FALSE);
+        return; // has neither an animal companion
+    }
+    
     int nPower = 1;
     int nDamagePower = DAMAGE_POWER_PLUS_ONE;
-    object oTarget = PRCGetSpellTargetObject();
     //remove other magic fang effects
     RemoveSpellEffects(452, OBJECT_SELF, oTarget);
     RemoveSpellEffects(453, OBJECT_SELF, oTarget);

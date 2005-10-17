@@ -74,3 +74,17 @@ void DoSpellRay(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "AttackHasHit"));
     }    
 }
+
+//routes to DoRacialSLA, but checks that the rouch hits first
+//not sure how this will work if the spell does multiple touch attack, hopefully that shouldnt apply
+//this is Base DC, not total DC. SLAs are still spells, so spell focus should still apply.
+void DoSpellMeleeTouch(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
+{
+    int nAttack = PRCDoMeleeTouchAttack(PRCGetSpellTargetObject());
+    if(nAttack)
+    {   
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, "AttackHasHit", nAttack)); //preserve crits
+        DoRacialSLA(nSpellID, nCasterlevel, nTotalDC);
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "AttackHasHit"));
+    }    
+}

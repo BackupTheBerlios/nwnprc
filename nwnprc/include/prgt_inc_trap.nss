@@ -16,7 +16,7 @@ struct trap
 //By PnP only rogues can disarm traps over DC 35?
 //this is not implemented yet
     int nDisarmDC;
-//this is the vfx_persistent.2da row number of the AoEs 
+//this is the vfx_persistent.2da row number of the AoEs
 //that make up the trap
 //used to determine the size of it
 //usually this is 10m larger than the radius of the trap
@@ -36,7 +36,7 @@ struct trap
     int nSpellLevel;
     int nSpellMetamagic;
     int nSpellDC;
-//these are for normal dmaging type traps    
+//these are for normal dmaging type traps
     int nDamageType;
     int nRadius;
     int nDamageDice;
@@ -60,7 +60,27 @@ void SetLocalTrap(object oObject, string sVarName, struct trap tTrap);
 void DeleteLocalTrap(object oObject, string sVarName);
 struct trap CreateRandomTrap(int nCR = -1);
 
+/**
+ * Converts the given trap into a string. The structure members' names and
+ * values are listed separated by line breaks.
+ *
+ * @param tTrap A trap structure to convert into a string.
+ * @return      A string representation of tTrap.
+ */
+string TrapToString(struct trap tTrap);
+
+
+//////////////////////////////////////
+/* Includes                         */
+//////////////////////////////////////
+
 #include "inc_utility"
+
+
+
+//////////////////////////////////////
+/* Function Definitions             */
+//////////////////////////////////////
 
 struct trap CreateRandomTrap(int nCR = -1)
 {
@@ -196,25 +216,25 @@ struct trap GetLocalTrap(object oObject, string sVarName)
     tReturn.nCR             = GetLocalInt(oObject, sVarName+".nCR");
     tReturn.nRespawnSeconds = GetLocalInt(oObject, sVarName+".nRespawnSeconds");
     tReturn.nRespawnRandomCR= GetLocalInt(oObject, sVarName+".nRespawnRandomCR");
-    
+
     //defaults
     if(tReturn.sResRef == "")
         tReturn.sResRef = "prgt_invis";
     if(tReturn.sTriggerScript == "")
         tReturn.sTriggerScript = "prgt_trap_fire";
-    
+
     return tReturn;
 }
 void SetLocalTrap(object oObject, string sVarName, struct trap tTrap)
 {
-    
+
     //defaults
     if(tTrap.sResRef == "")
         tTrap.sResRef = "prgt_invis";
     if(tTrap.sTriggerScript == "")
         tTrap.sTriggerScript = "prgt_trap_fire";
-        
-        
+
+
     SetLocalInt(oObject, sVarName+".nDetectDC", tTrap.nDetectDC);
     SetLocalInt(oObject, sVarName+".nDisarmDC", tTrap.nDisarmDC);
     SetLocalInt(oObject, sVarName+".nDetectAOE", tTrap.nDetectAOE);
@@ -260,4 +280,32 @@ void DeleteLocalTrap(object oObject, string sVarName)
     DeleteLocalInt(oObject, sVarName+".nCR");
     DeleteLocalInt(oObject, sVarName+".nRespawnSeconds");
     DeleteLocalInt(oObject, sVarName+".nRespawnRandomCR");
+}
+
+string TrapToString(struct trap tTrap)
+{
+    string s;
+    s += "nDetectDC: "        + IntToString(tTrap.nDetectDC)        + "\n";
+    s += "nDisarmDC: "        + IntToString(tTrap.nDisarmDC)        + "\n";
+    s += "nDetectAOE: "       + IntToString(tTrap.nDetectAOE)       + "\n";
+    s += "nTrapAOE: "         + IntToString(tTrap.nTrapAOE)         + "\n";
+    s += "sResRef: '"         + tTrap.sResRef                       + "'\n";
+    s += "sTriggerScript: '"  + tTrap.sTriggerScript                + "'\n";
+    s += "nSpellID: "         + IntToString(tTrap.nSpellID)         + "\n";
+    s += "nSpellLevel: "      + IntToString(tTrap.nSpellLevel)      + "\n";
+    s += "nSpellMetamagic: "  + IntToString(tTrap.nSpellMetamagic)  + "\n";
+    s += "nSpellDC: "         + IntToString(tTrap.nSpellDC)         + "\n";
+    s += "nDamageType: "      + IntToString(tTrap.nDamageType)      + "\n";
+    s += "nRadius: "          + IntToString(tTrap.nRadius)          + "\n";
+    s += "nDamageDice: "      + IntToString(tTrap.nDamageDice)      + "\n";
+    s += "nDamageSize: "      + IntToString(tTrap.nDamageSize)      + "\n";
+    s += "nTargetVFX: "       + IntToString(tTrap.nTargetVFX)       + "\n";
+    s += "nTrapVFX: "         + IntToString(tTrap.nTrapVFX)         + "\n";
+    s += "nFakeSpell: "       + IntToString(tTrap.nFakeSpell)       + "\n";
+    s += "nBeamVFX: "         + IntToString(tTrap.nBeamVFX)         + "\n";
+    s += "nCR: "              + IntToString(tTrap.nCR)              + "\n";
+    s += "nRespawnSeconds: "  + IntToString(tTrap.nRespawnSeconds)  + "\n";
+    s += "nRespawnRandomCR: " + IntToString(tTrap.nRespawnRandomCR) + "\n";
+
+    return s;
 }

@@ -196,10 +196,25 @@ struct trap GetLocalTrap(object oObject, string sVarName)
     tReturn.nCR             = GetLocalInt(oObject, sVarName+".nCR");
     tReturn.nRespawnSeconds = GetLocalInt(oObject, sVarName+".nRespawnSeconds");
     tReturn.nRespawnRandomCR= GetLocalInt(oObject, sVarName+".nRespawnRandomCR");
+    
+    //defaults
+    if(tReturn.sResRef == "")
+        tReturn.sResRef = "prgt_invis";
+    if(tReturn.sTriggerScript == "")
+        tReturn.sTriggerScript = "prgt_trap_fire";
+    
     return tReturn;
 }
 void SetLocalTrap(object oObject, string sVarName, struct trap tTrap)
 {
+    
+    //defaults
+    if(tTrap.sResRef == "")
+        tTrap.sResRef = "prgt_invis";
+    if(tTrap.sTriggerScript == "")
+        tTrap.sTriggerScript = "prgt_trap_fire";
+        
+        
     SetLocalInt(oObject, sVarName+".nDetectDC", tTrap.nDetectDC);
     SetLocalInt(oObject, sVarName+".nDisarmDC", tTrap.nDisarmDC);
     SetLocalInt(oObject, sVarName+".nDetectAOE", tTrap.nDetectAOE);

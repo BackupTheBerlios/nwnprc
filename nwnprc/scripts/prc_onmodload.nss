@@ -24,7 +24,7 @@ void main()
     if(GetPRCSwitch(PRC_CONVOCC_ENABLE))
     {
         SetPRCSwitch(PRC_USE_DATABASE, TRUE);
-        SetPRCSwitch(PRC_DB_PRECACHE, TRUE);
+        //SetPRCSwitch(PRC_DB_PRECACHE, TRUE);
         SetPRCSwitch(PRC_USE_LETOSCRIPT, TRUE);
     }
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE) == 0)

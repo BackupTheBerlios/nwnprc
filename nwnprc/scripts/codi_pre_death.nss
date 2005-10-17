@@ -2,7 +2,7 @@
 //:: codi_pre_death
 //:://////////////////////////////////////////////
 /*
-      Ocular Adept: Finger of Death
+     Ocular Adept: Finger of Death
 */
 //:://////////////////////////////////////////////
 //:: Created By: James Stoneburner
@@ -15,36 +15,7 @@
 
 void main()
 {
-    //SendMessageToPC(OBJECT_SELF, "Death script online");
-    int nOcLvl = GetLevelByClass(CLASS_TYPE_OCULAR, OBJECT_SELF);
-    int nChaMod = GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
-    int nOcSv = 10 + (nOcLvl/2) + nChaMod;
-    int nCasterLvl = GetLevelByTypeDivine();
-    effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-
-    //Declare major variables
-    object oTarget = PRCGetSpellTargetObject();
-    int bHit = PRCDoRangedTouchAttack(oTarget);;
-
-    if(bHit) {
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_OA_DEATHRAY, TRUE));
-        if (!MyResistSpell(OBJECT_SELF, oTarget)) {
-            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nOcSv, SAVING_THROW_TYPE_DEATH)) {
-                //Apply the death effect and VFX impact
-                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
-                //ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            } else {
-                //Roll damage
-                int nDamage = d6(3) + nCasterLvl;
-                effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
-                //Apply damage effect and VFX impact
-                ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
-            }
-        }
-    } else {
-        if(GetIsPC(OBJECT_SELF)) {
-            SendMessageToPC(OBJECT_SELF, "The ray missed.");
-        }
-    }
+    int nLevel = GetLevelByClass(CLASS_TYPE_OCULAR);
+    int nDC = 10 + (nLevel/2) + GetAbilityModifier(ABILITY_CHARISMA);
+    DoSpellRay(SPELL_FINGER_OF_DEATH, nLevel, nDC);
 }

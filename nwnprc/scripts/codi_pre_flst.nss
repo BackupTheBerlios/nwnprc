@@ -15,22 +15,7 @@
 
 void main()
 {
-    //SendMessageToPC(OBJECT_SELF, "Petrify script online");
-    int nOcLvl = GetLevelByClass(CLASS_TYPE_OCULAR, OBJECT_SELF);
-    int nChaMod = GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
-    int nOcSv = 10 + (nOcLvl/2) + nChaMod;
-    object oTarget = PRCGetSpellTargetObject();
-    int nCasterLvl = GetLevelByTypeDivine();
-    int bHit = PRCDoRangedTouchAttack(oTarget);;
-
-    if(bHit) {
-        if (MyResistSpell(OBJECT_SELF,oTarget) <1)
-        {
-            DoPetrification(nCasterLvl, OBJECT_SELF, oTarget, GetSpellId(), nOcSv);
-        }
-    } else {
-        if(GetIsPC(OBJECT_SELF)) {
-            SendMessageToPC(OBJECT_SELF, "The ray missed.");
-        }
-    }
+    int nLevel = GetLevelByClass(CLASS_TYPE_OCULAR);
+    int nDC = 10 + (nLevel/2) + GetAbilityModifier(ABILITY_CHARISMA);
+    DoSpellRay(SPELL_FLESH_TO_STONE, nLevel, nDC);
 }

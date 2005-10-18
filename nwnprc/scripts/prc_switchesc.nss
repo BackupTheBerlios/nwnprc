@@ -190,6 +190,10 @@ void main()
             else if(nStage == STAGE_SHOPS)
             {
                 SetHeader("Select what type of item you wish to purchase.");
+                AddChoice("Crafting recipes", 1);
+                AddChoice("Magic item raw materials", 2);
+                AddChoice("Spell scrolls", 3);
+                AddChoice("Epic spell books", 4);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -227,6 +231,7 @@ void main()
                 nStage = STAGE_SHOPS;
             else if(nChoice == 4)
                 // Does not abort the conversation, it seems
+                // Not supposed to, you can abort manually afterwards
                 AssignCommand(oPC, TryToIDItems(oPC));
 
             // Mark the target stage to need building if it was changed (ie, selection was other than ID all)
@@ -292,6 +297,29 @@ void main()
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_EPIC_SPELLS;
+
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_SHOPS)
+        {
+            if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_ENTRY;
+            else if (nChoice == 1)
+            {
+                //Crafting recipes
+            }   
+            else if (nChoice == 2)
+            {
+                //Magic item raw materials
+            }
+            else if (nChoice == 3)
+            {
+                //Spell scrolls
+            }
+            else if (nChoice == 4)
+            {
+                //Epic spell books
+            }
 
             MarkStageNotSetUp(nStage, oPC);
         }

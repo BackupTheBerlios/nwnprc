@@ -427,16 +427,18 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
 
     if (report.display) {
         string sMessage = GetStringByStrRef(STRREF_MARKETPRICE) + ": " + IntToString(report.marketprice) + "\n";
-        sMessage += GetStringByStrRef(STRREF_GPCOST) + ": " + IntToString(report.GPcost) + " - ";
-        sMessage += (nOwnedGold < report.GPcost ? GetStringByStrRef(STRREF_FAILED) : GetStringByStrRef(STRREF_OK)) + "\n";
-        sMessage += GetStringByStrRef(STRREF_XPCOST) + ": " + IntToString(report.XPcost) + " - ";
-        sMessage += (nOwnedXP < report.XPcost   ? GetStringByStrRef(STRREF_FAILED) : GetStringByStrRef(STRREF_OK)) + "\n";
+        sMessage += GetStringByStrRef(STRREF_GPCOST) + ": " + IntToString(report.GPcost);
+        if(GetModule() != OBJECT_SELF) 
+            sMessage += " - " + (nOwnedGold < report.GPcost ? GetStringByStrRef(STRREF_FAILED) : GetStringByStrRef(STRREF_OK)) + "\n";
+        sMessage += GetStringByStrRef(STRREF_XPCOST) + ": " + IntToString(report.XPcost);
+        if(GetModule() != OBJECT_SELF) 
+            sMessage += " - " + (nOwnedXP < report.XPcost   ? GetStringByStrRef(STRREF_FAILED) : GetStringByStrRef(STRREF_OK)) + "\n";
         if(GetModule() != OBJECT_SELF)
         {
-        if (report.result != "")
-            sMessage += GetStringByStrRef(STRREF_ALLREQSOK);
-        else
-            sMessage += GetStringByStrRef(STRREF_SOMEREQSMISSING);
+            if (report.result != "")
+                sMessage += GetStringByStrRef(STRREF_ALLREQSOK);
+            else
+                sMessage += GetStringByStrRef(STRREF_SOMEREQSMISSING);
         }
         SendMessageToPC(OBJECT_SELF, sMessage);
         report.message += "\n"+sMessage;

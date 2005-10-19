@@ -29,7 +29,8 @@ const int STAGE_EPIC_SPELLS         = 3;
 const int STAGE_EPIC_SPELLS_ADD     = 4;
 const int STAGE_EPIC_SPELLS_REMOVE  = 5;
 const int STAGE_EPIC_SPELLS_CONTING = 6;
-const int STAGE_SHOPS               = 7;
+const int STAGE_SHOPS               = 8;
+const int STAGE_TEFLAMMAR_SHADOWLORD= 9;
 
 const int CHOICE_RETURN_TO_PREVIOUS = 0xFFFFFFFF;
 
@@ -75,6 +76,8 @@ void main()
                     AddChoice("Manage Epic Spells.", 2);
                 AddChoice("Purchase general items, such as scrolls or crafting materials.", 3);
                 AddChoice("Attempt to identify everything in my inventory.", 4);
+                if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD)
+                    AddChoice("Join the Shadowlords as a prerequisited for the Teflammar Shadowlord class.", 5);
 
                 MarkStageSetUp(nStage, oPC);
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -139,6 +142,7 @@ void main()
                 if(GetCastableFeatCount(oPC)<7)
                     AddChoice("Add an Epic Spell to the radial menu.", 2);
                 //AddChoice("Manage any active contingencies.", 3);
+                AddChoice("Research an Epic Spell.", 4);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -190,10 +194,25 @@ void main()
             else if(nStage == STAGE_SHOPS)
             {
                 SetHeader("Select what type of item you wish to purchase.");
-                AddChoice("Crafting recipes", 1);
-                AddChoice("Magic item raw materials", 2);
+                if(GetHasFeat(FEAT_CRAFT_ITEM, oPC))
+                    AddChoice("Crafting recipes", 1);
+                if(GetHasFeat(FEAT_BREW_POTION, oPC)
+                    || GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)
+                    || GetHasFeat(FEAT_CRAFT_WAND, oPC))
+                    AddChoice("Magic item raw materials", 2);
                 AddChoice("Spell scrolls", 3);
-                AddChoice("Epic spell books", 4);
+                if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
+                    GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC))
+                    AddChoice("Epic spell books", 4);
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_TEFLAMMAR_SHADOWLORD)
+            {
+                SetHeader("This will cost you 10,000 GP, are you prepared to pay this?");
+                if(GetGold(oPC) >= 10000)
+                    AddChoice("Yes", 1);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -273,6 +292,13 @@ void main()
                 nStage = STAGE_EPIC_SPELLS_REMOVE;
             else if (nChoice == 3)
                 nStage = STAGE_EPIC_SPELLS_CONTING;
+            else if (nChoice == 4)
+            {   
+                //research an epic spell
+                object oPlaceable = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_ess_research", GetLocation(oPC));
+                AssignCommand(oPC, DoPlaceableObjectAction(oPlaceable, PLACEABLE_ACTION_USE));
+                DestroyObject(oPlaceable, 60.0);
+            }
 
             MarkStageNotSetUp(nStage, oPC);
         }
@@ -295,6 +321,7 @@ void main()
         }
         else if(nStage == STAGE_EPIC_SPELLS_CONTING)
         {
+            //contingencies
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_EPIC_SPELLS;
 
@@ -307,10 +334,24 @@ void main()
             else if (nChoice == 1)
             {
                 //Crafting recipes
+                object oStore = GetObjectByTag("prc_recipe");
+                if(!GetIsObjectValid(oStore))
+                {
+                    location lLimbo = GetLocation(GetObjectByTag("HEART_OF_CHAOS"));
+                    oStore = CreateObject(OBJECT_TYPE_STORE, "prc_recipe", lLimbo);
+                }
+                OpenStore(oPC, oStore);
             }   
             else if (nChoice == 2)
             {
                 //Magic item raw materials
+                object oStore = GetObjectByTag("prc_magiccraft");
+                if(!GetIsObjectValid(oStore))
+                {
+                    location lLimbo = GetLocation(GetObjectByTag("HEART_OF_CHAOS"));
+                    oStore = CreateObject(OBJECT_TYPE_STORE, "prc_magiccraft", lLimbo);
+                }
+                OpenStore(oPC, oStore);
             }
             else if (nChoice == 3)
             {
@@ -319,8 +360,27 @@ void main()
             else if (nChoice == 4)
             {
                 //Epic spell books
+                object oStore = GetObjectByTag("prc_epicspells");
+                if(!GetIsObjectValid(oStore))
+                {
+                    location lLimbo = GetLocation(GetObjectByTag("HEART_OF_CHAOS"));
+                    oStore = CreateObject(OBJECT_TYPE_STORE, "prc_epicspells", lLimbo);
+                }
+                OpenStore(oPC, oStore);
             }
 
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_TEFLAMMAR_SHADOWLORD)
+        {
+            nStage = STAGE_ENTRY;
+            if(nChoice == 1)
+            {
+                AssignCommand(oPC, ClearAllActions());
+                AssignCommand(oPC, TakeGoldFromCreature(10000, oPC, TRUE));             
+                CreateItemOnObject("shadowwalkerstok", oPC);                
+                SetLocalInt(oPC, "X1_AllowShaLow", 0);
+            }
             MarkStageNotSetUp(nStage, oPC);
         }
 

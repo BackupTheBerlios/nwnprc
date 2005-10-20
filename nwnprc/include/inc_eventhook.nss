@@ -516,13 +516,17 @@ void ExecuteAllScriptsHookedToEvent(object oObject, int nEvent){
 
     // Loop through the scripts to be fired only once
     string sScript = GetFirstEventScript(oObject, nEvent, FALSE);
+    int bNeedClearing = FALSE;
     while(sScript != ""){
+        bNeedClearing = TRUE;
+
         ExecuteScript(sScript, OBJECT_SELF);
         sScript = GetNextEventScript(oObject, nEvent, FALSE);
     }
 
     // Clear the one-shot script list
-    ClearEventScriptList(oObject, nEvent, FALSE, FALSE);
+    if(bNeedClearing)
+        ClearEventScriptList(oObject, nEvent, FALSE, FALSE);
 
     // Loop through the persistent scripts
     sScript = GetFirstEventScript(oObject, nEvent, TRUE);

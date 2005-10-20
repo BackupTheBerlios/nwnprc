@@ -262,6 +262,10 @@ const int FEAT_PERNICIOUSMAGIC                         = 2962;
 const int FEAT_INSIDIOUSMAGIC                          = 2963;
 const int FEAT_UNHOLY_STRIKE                           = 3451;
 
+const int FEAT_LEADERSHIP                              = 4365;
+const int FEAT_EPIC_LEADERSHIP                         = 4366;
+const int FEAT_LEGENDARY_COMMANDER                     = 4367;
+
 // Magic of Faerun
 const int FEAT_SPELL_GIRDING                           = 2456;
 

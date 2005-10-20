@@ -31,6 +31,10 @@ const int STAGE_EPIC_SPELLS_REMOVE  = 5;
 const int STAGE_EPIC_SPELLS_CONTING = 6;
 const int STAGE_SHOPS               = 8;
 const int STAGE_TEFLAMMAR_SHADOWLORD= 9;
+const int STAGE_LEADERSHIP          =10;
+const int STAGE_LEADERSHIP_ADD      =11;
+const int STAGE_LEADERSHIP_ADD_CONFIRM = 13;
+const int STAGE_LEADERSHIP_REMOVE   =12;
 
 const int CHOICE_RETURN_TO_PREVIOUS = 0xFFFFFFFF;
 
@@ -78,6 +82,9 @@ void main()
                 AddChoice("Attempt to identify everything in my inventory.", 4);
                 if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD)
                     AddChoice("Join the Shadowlords as a prerequisited for the Teflammar Shadowlord class.", 5);
+                AddChoice("Register this character as a cohort.", 6);
+                if(GetHasFeat(FEAT_LEADERSHIP, oPC))
+                    AddChoice("Manage cohorts.", 6);
 
                 MarkStageSetUp(nStage, oPC);
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -217,6 +224,67 @@ void main()
 
                 MarkStageSetUp(nStage, oPC);
             }
+            else if(nStage == STAGE_LEADERSHIP)
+            {
+                SetHeader("What do you want to change?");
+                if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC))
+                    AddChoice("Recruit a new cohort", 1);
+                if(GetCurrentCohortCount(oPC))
+                    AddChoice("Dismiss an existing cohort", 2);
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_LEADERSHIP_ADD)
+            {
+                SetHeader("Select a cohort:");
+                
+                int nCohortCount = GetCampaignInt(COHORT_DATABASE, "CohortCount");
+                int i;
+                for(i=1;i<=nCohortCount;i++)
+                {        
+                    string sName = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(i)+"_name");
+                    int    nRace = GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_race");
+                    int    nClass1=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_class1");
+                    int    nClass2=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_class2");
+                    int    nClass3=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_class3");
+                    int    nOrder= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_order");
+                    int    nMoral= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_moral");
+                    string sKey  = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(i)+"_cdkey");
+                    if(GetPCPublicCDKey(oPC) == ""
+                        ||GetPCPublicCDKey(oPC) == sKey)
+                        AddChoice("sName", i);
+                }         
+                
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_LEADERSHIP_ADD_CONFIRM)
+            {
+                string sHeader = "Are you sure you want this cohort?";
+                
+                int nCohortID = GetLocalInt(oPC, "CohortID");
+                string sName = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_name");
+                int    nRace = GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_race");
+                int    nClass1=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_class1");
+                int    nClass2=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_class2");
+                int    nClass3=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_class3");
+                int    nOrder= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_order");
+                int    nMoral= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_moral");
+                sHeader +="\nsName";
+                sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nRace)));
+                sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass1)));
+                if(nClass2 != CLASS_TYPE_INVALID)
+                    sHeader +=" / "+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass2)));
+                if(nClass3 != CLASS_TYPE_INVALID)
+                    sHeader +=" / "+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass3)));
+                SetHeader(sHeader);
+                AddChoice("Yes", 1);
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                MarkStageSetUp(nStage, oPC);
+            }
         }
 
         // Do token setup
@@ -227,12 +295,14 @@ void main()
         //end of conversation cleanup
         array_delete(oPC, "StagesSetup");
         DeleteLocalString(oPC, "VariableName");
+        DeleteLocalInt(oPC, "CohortID");
     }
     else if(nValue == DYNCONV_ABORTED)
     {
         //abort conversation cleanup
         array_delete(oPC, "StagesSetup");
         DeleteLocalString(oPC, "VariableName");
+        DeleteLocalInt(oPC, "CohortID");
     }
     else
     {
@@ -252,6 +322,14 @@ void main()
                 // Does not abort the conversation, it seems
                 // Not supposed to, you can abort manually afterwards
                 AssignCommand(oPC, TryToIDItems(oPC));
+            else if(nChoice == 5)
+                nStage = STAGE_TEFLAMMAR_SHADOWLORD;
+            else if(nChoice == 6)
+                // Does not abort the conversation, it seems
+                //any way to fix this because here it really should
+                RegisterAsCohort(oPC);
+            else if(nChoice == 7)
+                nStage = STAGE_LEADERSHIP;
 
             // Mark the target stage to need building if it was changed (ie, selection was other than ID all)
             if(nStage != STAGE_ENTRY)
@@ -274,13 +352,13 @@ void main()
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
             {
                 nStage = STAGE_SWITCHES;
-                MarkStageNotSetUp(STAGE_SWITCHES, oPC);
             }
             else
             {
                 string sVarName = GetLocalString(oPC, "VariableName");
                 SetPRCSwitch(sVarName, GetPRCSwitch(sVarName) + nChoice);
             }
+            MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_EPIC_SPELLS)
         {
@@ -381,6 +459,48 @@ void main()
                 CreateItemOnObject("shadowwalkerstok", oPC);                
                 SetLocalInt(oPC, "X1_AllowShaLow", 0);
             }
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_LEADERSHIP)
+        {
+            if(nChoice == 1)
+                nStage = STAGE_LEADERSHIP_ADD;
+            else if(nChoice == 2)
+                nStage = STAGE_LEADERSHIP_REMOVE;
+            else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_ENTRY;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_LEADERSHIP_ADD)
+        {
+            SetLocalInt(oPC, "CohortID", nChoice);
+            nStage = STAGE_LEADERSHIP_ADD_CONFIRM;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_LEADERSHIP_REMOVE)
+        {
+            if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+            {
+                
+            }
+            else
+            {
+                int nCohortID = GetLocalInt(oPC, "CohortID");
+                RemoveCohortFromPlayer(GetCohort(nCohortID, oPC), oPC);
+            }
+            nStage = STAGE_LEADERSHIP;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_LEADERSHIP_ADD_CONFIRM)
+        {
+            if(nChoice == 1)
+            {
+                int nCohortID = GetLocalInt(oPC, "CohortID");
+                AddCohortToPlayer(nCohortID, oPC);     
+                nStage = STAGE_LEADERSHIP;
+            }
+            else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_LEADERSHIP_ADD;
             MarkStageNotSetUp(nStage, oPC);
         }
 

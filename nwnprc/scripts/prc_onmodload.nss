@@ -33,7 +33,10 @@ void main()
     {
         //check PRC version
         if(GetCampaignString("prc_data", "version") != PRC_VERSION)
+        {
             DestroyCampaignDatabase("prc_data");
+            DestroyCampaignDatabase(COHORT_DATABASE);
+        }    
         SetCampaignString("prc_data", "version", PRC_VERSION);
 
         location lLoc = GetLocation(GetObjectByTag("HEARTOFCHAOS"));

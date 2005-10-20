@@ -256,6 +256,30 @@ int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE);
  */
 void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty);
 
+/**
+ * Increments a marker on the target that will cause it to be unable to be
+ * teleported. ie. GetCanTeleport() will return FALSE for the target.
+ * Uses of DisallowTeleport() stack, so for example, if the function has
+ * been called twice for a particular target, that target needs to have
+ * AllowTeleport called on it twice before it can teleport again (or once with
+ * the bClearAll parameter TRUE)
+ *
+ * @param oTarget Target object to forbide the teleportation of.
+ */
+void DisallowTeleport(object oTarget);
+
+/**
+ * Reverse of DisallowTeleport(), a call to this function makes the target
+ * eligible for teleportation again.
+ * NOTE: multiple forbiddances stack, and by default uses of this function
+ * only reduces the forbiddace.
+ *
+ * @param oTarget   Target to allow teleportation for again.
+ * @param bClearAll If TRUE, fully clears the forbiddance marker, otherwise
+ *                  just decrements the value by one.
+ */
+void AllowTeleport(object oTarget, int bClearAll = FALSE);
+
 
 //////////////////////////////////////////////////
 /* Internal Constants - nothing to see here :D  */
@@ -637,5 +661,19 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
     */
 }
 
+void DisallowTeleport(object oTarget)
+{
+    SetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT,
+                GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT) + 1
+                );
+}
 
+void AllowTeleport(object oTarget, int bClearAll = FALSE)
+{
+    int nValue = GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT) - 1;
+    if((nValue > 0) && !bClearAll)
+        SetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT, nValue);
+    else
+        DeleteLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT);
+}
 //void main(){} // Test main

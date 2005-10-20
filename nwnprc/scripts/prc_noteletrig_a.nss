@@ -12,13 +12,11 @@
 //:: Created On: 02.07.2005
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
+#include "prc_inc_teleport"
 
 
 void main()
 {
     object oCreature = GetEnteringObject();
-    SetLocalInt(oCreature, PRC_DISABLE_CREATURE_TELEPORT,
-                GetLocalInt(oCreature, PRC_DISABLE_CREATURE_TELEPORT) + 1
-                );
+    DisallowTeleport(oCreature);
 }

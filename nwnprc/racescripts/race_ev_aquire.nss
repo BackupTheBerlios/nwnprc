@@ -1,4 +1,4 @@
-/*
+/** @file
     This handles subraces and race restricted items.
     Drow should be able to use Elven only items for example.
 */
@@ -8,9 +8,15 @@
 
 void main()
 {
-    object oCreature = GetModuleItemAcquiredBy();
+    //object oCreature = GetModuleItemAcquiredBy();
     object oItem = GetModuleItemAcquired();
-    int nRace = GetRacialType(oCreature);
+    //int nRace = GetRacialType(oCreature);
+
+    // Only do this once per item
+    if(GetLocalInt(oItem, "PRC_RacialRestrictionsExpanded"))
+        return;
+    SetLocalInt(oItem, "PRC_RacialRestrictionsExpanded", TRUE);
+
     itemproperty ipTest = GetFirstItemProperty(oItem);
     while(GetIsItemPropertyValid(ipTest))
     {

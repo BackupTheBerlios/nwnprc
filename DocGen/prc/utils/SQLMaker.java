@@ -134,8 +134,8 @@ public final class SQLMaker{
 		// Clean up
 		writer.flush();
 		writer.close();
-		// Allocate a new buffer - 64Kb this time, since the strings following the first are likely to be larger
-		sql = new StringBuilder(0xFFFF);
+		// Allocate a new buffer - 1Mb this time, since the strings following the first are likely to be larger
+		sql = new StringBuilder(0xFFFFF);
 		
 		// Force garbage collection
 		System.gc();

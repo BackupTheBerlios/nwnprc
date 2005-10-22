@@ -13,6 +13,66 @@
 //:://////////////////////////////////////////////
 
 
+//////////////////////////////////////////////////
+/* Constant definitions                         */
+//////////////////////////////////////////////////
+
+const int DYNCONV_EXITED        = -2;
+const int DYNCONV_ABORTED       = -3;
+const int DYNCONV_SETUP_STAGE   = -1;
+
+const int DYNCONV_TOKEN_HEADER  = 99;
+const int DYNCONV_TOKEN_REPLY_0 = 100;
+const int DYNCONV_TOKEN_REPLY_1 = 101;
+const int DYNCONV_TOKEN_REPLY_2 = 102;
+const int DYNCONV_TOKEN_REPLY_3 = 103;
+const int DYNCONV_TOKEN_REPLY_4 = 104;
+const int DYNCONV_TOKEN_REPLY_5 = 105;
+const int DYNCONV_TOKEN_REPLY_6 = 106;
+const int DYNCONV_TOKEN_REPLY_7 = 107;
+const int DYNCONV_TOKEN_REPLY_8 = 108;
+const int DYNCONV_TOKEN_REPLY_9 = 109;
+const int DYNCONV_TOKEN_EXIT    = 110;
+const int DYNCONV_TOKEN_WAIT    = 111;
+const int DYNCONV_TOKEN_NEXT    = 112;
+const int DYNCONV_TOKEN_PREV    = 113;
+const int DYNCONV_MIN_TOKEN     = 99;
+const int DYNCONV_MAX_TOKEN     = 113;
+
+const int DYNCONV_STRREF_PLEASE_WAIT = 16824202; // "Please wait"
+const int DYNCONV_STRREF_PREVIOUS    = 16824203; // "Previous"
+const int DYNCONV_STRREF_NEXT        = 16824204; // "Next"
+const int DYNCONV_STRREF_ABORT_CONVO = 16824212; // "Abort"
+const int DYNCONV_STRREF_EXIT_CONVO  = 78;       // "Exit"
+
+const string DYNCONV_SCRIPT         = "DynConv_Script";
+const string DYNCONV_VARIABLE       = "DynConv_Var";
+const string DYNCONV_STAGE          = "DynConv_Stage";
+const string DYNCONV_TOKEN_BASE     = "DynConv_TOKEN";
+const string DYNCONV_CHOICEOFFSET   = "ChoiceOffset";
+
+/**
+ * Exiting the conversation is not allowed. The exit
+ * choice is not shown
+ */
+const int DYNCONV_EXIT_NOT_ALLOWED                = 0;
+/**
+ * Exiting the conversation is allowed, but the exit
+ * choice is not shown. This is intended for allowing
+ * exit via having no response choices.
+ */
+const int DYNCONV_EXIT_ALLOWED_DO_NOT_SHOW_CHOICE = -1;
+/**
+ * Exiting the conversation is allowed and the exit
+ * choice is shown.
+ */
+const int DYNCONV_EXIT_ALLOWED_SHOW_CHOICE        = 1;
+
+
+//////////////////////////////////////////////////
+/* Function prototypes                          */
+//////////////////////////////////////////////////
+
 /**
  * Sets the header token and reply tokens for the PC to values stored
  * via SetHeader and AddChoice, respectively.
@@ -122,9 +182,7 @@ string GetChoiceText(object oPC = OBJECT_INVALID);
  *
  * @param sConversationScript The script to use for controlling the conversation.
  * @param oPC                 The PC that is to be doing the responding in the conversation.
- * @param bAllowExit          If TRUE, the PC PC is allowed to exit the conversation via the exit
- *                            node. Otherwise, the exit node is not shown. This can be changed later
- *                            on using AllowExit()
+ * @param bAllowExit          One of the DYNCONV_EXIT_* constants.
  * @param bAllowAbort         If TRUE, the PC is allowed to aborts the conversation by moving / doing
  *                            some other action or being involved in combat. This can be changed later
  *                            on using AllowAbort()
@@ -134,7 +192,7 @@ string GetChoiceText(object oPC = OBJECT_INVALID);
  *                            the PC, which will be used when this parameter is left to it's default value.
  */
 void StartDynamicConversation(string sConversationScript, object oPC,
-                              int bAllowExit = TRUE, int bAllowAbort = FALSE,
+                              int nAllowExit = DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, int bAllowAbort = FALSE,
                               int bForceStart = FALSE, object oConverseWith = OBJECT_INVALID);
 
 /**
@@ -165,12 +223,13 @@ void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo
  * Marks the current dynconvo as exitable via the exit conversation
  * choice.
  *
+ * @param nNewValue            One of the DYNCONV_EXIT_* constants
  * @param bChangeExitTokenText If this is TRUE, then changes the text on
  *                             DYNCONV_TOKEN_EXIT to "Exit"
  * @param oPC                  The PC involved in the conversation. If left
  *                             to default, GetPCSpeaker is used.
  */
-void AllowExit(int bChangeExitTokenText = TRUE, object oPC = OBJECT_INVALID);
+void AllowExit(int nNewValue = DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, int bChangeExitTokenText = TRUE, object oPC = OBJECT_INVALID);
 
 /**
  * Marks the conversation as abortable, meaning that the player is
@@ -218,44 +277,6 @@ void MarkStageSetUp(int nStage, object oPC = OBJECT_INVALID);
 void MarkStageNotSetUp(int nStage, object oPC = OBJECT_INVALID);
 
 
-
-//////////////////////////////////////////////////
-/* Constant definitions                         */
-//////////////////////////////////////////////////
-
-const int DYNCONV_EXITED        = -2;
-const int DYNCONV_ABORTED       = -3;
-const int DYNCONV_SETUP_STAGE   = -1;
-
-const int DYNCONV_TOKEN_HEADER  = 99;
-const int DYNCONV_TOKEN_REPLY_0 = 100;
-const int DYNCONV_TOKEN_REPLY_1 = 101;
-const int DYNCONV_TOKEN_REPLY_2 = 102;
-const int DYNCONV_TOKEN_REPLY_3 = 103;
-const int DYNCONV_TOKEN_REPLY_4 = 104;
-const int DYNCONV_TOKEN_REPLY_5 = 105;
-const int DYNCONV_TOKEN_REPLY_6 = 106;
-const int DYNCONV_TOKEN_REPLY_7 = 107;
-const int DYNCONV_TOKEN_REPLY_8 = 108;
-const int DYNCONV_TOKEN_REPLY_9 = 109;
-const int DYNCONV_TOKEN_EXIT    = 110;
-const int DYNCONV_TOKEN_WAIT    = 111;
-const int DYNCONV_TOKEN_NEXT    = 112;
-const int DYNCONV_TOKEN_PREV    = 113;
-const int DYNCONV_MIN_TOKEN     = 99;
-const int DYNCONV_MAX_TOKEN     = 113;
-
-const int DYNCONV_STRREF_PLEASE_WAIT = 16824202; // "Please wait"
-const int DYNCONV_STRREF_PREVIOUS    = 16824203; // "Previous"
-const int DYNCONV_STRREF_NEXT        = 16824204; // "Next"
-const int DYNCONV_STRREF_ABORT_CONVO = 16824212; // "Abort"
-const int DYNCONV_STRREF_EXIT_CONVO  = 78;       // "Exit"
-
-const string DYNCONV_SCRIPT         = "DynConv_Script";
-const string DYNCONV_VARIABLE       = "DynConv_Var";
-const string DYNCONV_STAGE          = "DynConv_Stage";
-const string DYNCONV_TOKEN_BASE     = "DynConv_TOKEN";
-const string DYNCONV_CHOICEOFFSET   = "ChoiceOffset";
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -338,7 +359,9 @@ void _DynConvInternal_ExitedConvo(object oPC, int bAbort)
         AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
         SetLocalInt(oPC, "DynConv_RestartMarker", TRUE);
     }
-    else if(!bAbort && !GetLocalInt(oPC, "DynConv_AllowExit")) // Allowed to exit? Technically, this should never be run
+    // Allowed to exit? Technically, the only way this branch should ever be run is by there not being any response choices available
+    else if(!bAbort &&
+            GetLocalInt(oPC, "DynConv_AllowExit") == DYNCONV_EXIT_NOT_ALLOWED)
     {
         if(DEBUG) DoDebug("_DynConvInternal_ExitedConvo(): ERROR: Conversation exited via exit node while exiting not allowed!\n"
                         + "DYNCONV_SCRIPT = '" + GetLocalString(oPC, DYNCONV_SCRIPT) + "'\n"
@@ -437,7 +460,18 @@ void _DynConvInternal_PreScript(object oPC)
 
 void _DynConvInternal_PostScript(object oPC)
 {
-
+    // If debugging is active, check that the conversations have at least one response node
+    // when exit allowance is not DYNCONV_EXIT_ALLOWED_DO_NOT_SHOW_CHOICE
+    if(DEBUG)
+    {
+        if(GetLocalInt(oPC, DYNCONV_VARIABLE) == DYNCONV_SETUP_STAGE                        &&
+           GetLocalInt(oPC, "DynConv_AllowExit") != DYNCONV_EXIT_ALLOWED_DO_NOT_SHOW_CHOICE &&
+           array_get_size(oPC, "ChoiceTokens") == 0
+           )
+        {
+            DoDebug("Dynconvo ERROR: No response tokens set up and exiting via no responses not allowed!");
+        }
+    }
 }
 
 object _DynConvInternal_ResolvePC(object oPC)
@@ -484,13 +518,13 @@ string GetChoiceText(object oPC = OBJECT_INVALID)
 }
 
 void StartDynamicConversation(string sConversationScript, object oPC,
-                              int bAllowExit = TRUE, int bAllowAbort = FALSE,
+                              int nAllowExit = DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, int bAllowAbort = FALSE,
                               int bForceStart = FALSE, object oConverseWith = OBJECT_INVALID)
 {
     if(DEBUG) DoDebug("StartDynamicConversation(): Starting new dynamic conversation, parameters:\n"
                     + "sConversationScript = '" + sConversationScript + "'\n"
                     + "oPC = " + ObjectToString(oPC) + " - " + GetName(oPC) + "\n"
-                    + "bAllowExit = " + (bAllowExit ? "True":"False") + "\n"
+                    + "bAllowExit = " + (nAllowExit ? "True":"False") + "\n"
                     + "bAllowAbort = " + (bAllowAbort ? "True":"False") + "\n"
                     + "bForceStart = " + (bForceStart ? "True":"False") + "\n"
                     + "oConverseWith = " + ObjectToString(oConverseWith) + " - " + GetName(oConverseWith) + "\n "
@@ -499,7 +533,7 @@ void StartDynamicConversation(string sConversationScript, object oPC,
     oConverseWith = oConverseWith == OBJECT_INVALID ? oPC : oConverseWith;
 
     // Store the exit control variables
-    SetLocalInt(oPC, "DynConv_AllowExit", bAllowExit);
+    SetLocalInt(oPC, "DynConv_AllowExit", nAllowExit);
     SetLocalInt(oPC, "DynConv_AllowAbort", bAllowAbort);
 
     // Initiate conversation
@@ -542,9 +576,9 @@ void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo
     SetLocalString(oPC, DYNCONV_SCRIPT, sConversationToEnter);
 }
 
-void AllowExit(int bChangeExitTokenText = TRUE, object oPC = OBJECT_INVALID)
+void AllowExit(int nNewValue = DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, int bChangeExitTokenText = TRUE, object oPC = OBJECT_INVALID)
 {
-    SetLocalInt(_DynConvInternal_ResolvePC(oPC), "DynConv_AllowExit", TRUE);
+    SetLocalInt(_DynConvInternal_ResolvePC(oPC), "DynConv_AllowExit", nNewValue);
     if(bChangeExitTokenText)
         SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(DYNCONV_STRREF_EXIT_CONVO));
 }

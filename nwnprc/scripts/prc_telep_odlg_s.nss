@@ -19,5 +19,5 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    StartDynamicConversation("prc_telep_optdlg", oPC, TRUE, TRUE, TRUE, oPC);
+    StartDynamicConversation("prc_telep_optdlg", oPC, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, TRUE, oPC);
 }

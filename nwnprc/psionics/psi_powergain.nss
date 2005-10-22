@@ -33,7 +33,7 @@ int CheckMissingPowers(object oPC, int nClass)
     {
         // Mark the class for which the PC is to gain powers and start the conversation
         SetLocalInt(oPC, "nClass", nClass);
-        StartDynamicConversation("psi_powconv", oPC, FALSE, FALSE, TRUE, oPC);
+        StartDynamicConversation("psi_powconv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
 
         return TRUE;
     }

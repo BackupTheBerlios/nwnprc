@@ -17,8 +17,8 @@
 int StartingConditional()
 {
     object oPC = GetPCSpeaker();
-    
-    if(GetLocalInt(oPC, "DynConv_AllowExit"))
+
+    if(GetLocalInt(oPC, "DynConv_AllowExit") == DYNCONV_EXIT_ALLOWED_SHOW_CHOICE)
     	return TRUE;
     else
     	return FALSE;

@@ -337,7 +337,7 @@ void main()
         {
             case 0:
                 //start conversation
-                StartDynamicConversation("prc_pnp_fam_conv", oPC, TRUE, TRUE, TRUE, oPC);
+                StartDynamicConversation("prc_pnp_fam_conv", oPC, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, TRUE, oPC);
                 return;
                 break;
             case FAMILIAR_PNP_BAT:

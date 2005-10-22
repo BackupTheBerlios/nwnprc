@@ -349,7 +349,9 @@ void ChooseTeleportTargetLocation(object oPC, string sCallbackScript, string sCa
         SetLocalString(oPC, "PRC_TeleportTargetSelection_ReturnStoreName", sCallbackVar);
         SetLocalInt(oPC, "PRC_TeleportTargetSelection_ReturnAsMetalocation", bMeta);
 
-        StartDynamicConversation("prc_teleprt_conv", oPC, bForce, bForce, bForce, oPC);
+        StartDynamicConversation("prc_teleprt_conv", oPC,
+                                 bForce ? DYNCONV_EXIT_NOT_ALLOWED : DYNCONV_EXIT_ALLOWED_SHOW_CHOICE,
+                                 !bForce, bForce, oPC);
     }
 }
 

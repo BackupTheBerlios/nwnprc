@@ -17,5 +17,5 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    StartDynamicConversation("prc_s_spellb", oPC, TRUE, TRUE, FALSE, oPC);
+    StartDynamicConversation("prc_s_spellb", oPC, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, FALSE, oPC);
 }

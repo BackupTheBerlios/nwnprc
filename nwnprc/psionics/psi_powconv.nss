@@ -180,7 +180,7 @@ void main()
                 SetHeader(GetStringByStrRef(STRREF_END_HEADER));
                 // Set the convo quit text to "Finish"
                 SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(STRREF_END_CONVO_SELECT));
-                AllowExit(FALSE, oPC);
+                AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
             }
         }
 

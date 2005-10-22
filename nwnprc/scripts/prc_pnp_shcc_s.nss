@@ -19,5 +19,5 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 
-	StartDynamicConversation("prc_pnp_school", oPC, TRUE, TRUE, TRUE, oPC);
+	StartDynamicConversation("prc_pnp_school", oPC, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, TRUE, oPC);
 }

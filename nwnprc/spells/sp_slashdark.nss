@@ -19,7 +19,7 @@ void main()
      // Adjust the damage type if necessary.
      int nDamageType = SPGetElementalDamageType(DAMAGE_TYPE_NEGATIVE, OBJECT_SELF);
 
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
      {
           //Fire cast spell at event for the specified target
@@ -35,7 +35,7 @@ void main()
                     nDamage = SPGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? nDice : (nDice * 2), 8);
 
                // Apply the damage and the vfx to the target.
-               SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, 
+               SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
                     EffectBeam(VFX_BEAM_BLACK, OBJECT_SELF, BODY_NODE_HAND, 0 == nTouchAttack), oTarget, 1.0,FALSE);
                if (nDamage)
                {

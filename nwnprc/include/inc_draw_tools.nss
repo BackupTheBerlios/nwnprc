@@ -6,7 +6,7 @@
    gaoneng                      January 17, 2005
    #include "inc_draw_tools"
 
-   last updated on April 25, 2005
+   last updated on August 8, 2005
 
    Library of utility tools for PENTAGRAMS &
    SUMMONING CIRCLES. Already coincluded in
@@ -39,6 +39,10 @@ void GroupSetFacing(float fDirection, object oData, int bRelative=TRUE, float fO
 
 // Cause oData's group of objects to face vTarget
 void GroupSetFacingPoint(vector vTarget, object oData, float fOvertime=3.0f, int bReverseOrder=FALSE);
+
+// Make oData's group of objects play nAnimation over fOvertime seconds
+// nAnimation: ANIMATION_PLACEABLE_* only
+void GroupPlayAnimation(int nAnimation, object oData, float fSpeed=1.0f, float fOvertime=3.0f, int bReverseOrder=FALSE);
 
 /*
    =============================================
@@ -198,6 +202,30 @@ void GroupSetFacingPoint(vector vTarget, object oData, float fOvertime=3.0f, int
       for (i=0; i<nTotal; i++)
       {
          DelayCommand(fBreak*IntToFloat(i), AssignCommand(GetLocalObject(oData, "store" + IntToString(i)), SetFacingPoint(vTarget)));
+      }
+   }
+}
+
+void GroupPlayAnimation(int nAnimation, object oData, float fSpeed=1.0f, float fOvertime=3.0f, int bReverseOrder=FALSE)
+{
+   int i;
+   int nTotal = GetLocalInt(oData, "storetotal");
+   if (nTotal < 1) return;
+   float fBreak = fOvertime/IntToFloat(nTotal);
+   if (bReverseOrder)
+   {
+      int j = 0;
+      for (i=nTotal-1; i>-1; i--)
+      {
+         DelayCommand(fBreak*IntToFloat(j), AssignCommand(GetLocalObject(oData, "store" + IntToString(i)), PlayAnimation(nAnimation, fSpeed)));
+         j++;
+      }
+   }
+   else
+   {
+      for (i=0; i<nTotal; i++)
+      {
+         DelayCommand(fBreak*IntToFloat(i), AssignCommand(GetLocalObject(oData, "store" + IntToString(i)), PlayAnimation(nAnimation, fSpeed)));
       }
    }
 }

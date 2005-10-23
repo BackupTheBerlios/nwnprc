@@ -20,7 +20,9 @@ int StartingConditional()
     if(GetLocalInt(oPC, "DynConv_Waiting"))
         return FALSE;
     _DynConvInternal_RunScript(oPC, DYNCONV_SETUP_STAGE);
-    if(GetLocalInt(oPC, "DynConv_Waiting"))
+    if(GetLocalInt(oPC, "DynConv_Waiting")                              ||
+       GetLocalInt(oPC, "DynConv_AllowExit") == DYNCONV_EXIT_FORCE_EXIT
+       )
         return FALSE;
     return TRUE;
 }

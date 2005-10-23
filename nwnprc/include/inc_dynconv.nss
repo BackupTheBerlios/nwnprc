@@ -55,18 +55,17 @@ const string DYNCONV_CHOICEOFFSET   = "ChoiceOffset";
  * Exiting the conversation is not allowed. The exit
  * choice is not shown
  */
-const int DYNCONV_EXIT_NOT_ALLOWED                = 0;
+const int DYNCONV_EXIT_NOT_ALLOWED         = 0;
 /**
- * Exiting the conversation is allowed, but the exit
- * choice is not shown. This is intended for allowing
- * exit via having no response choices.
+ * Exiting the conversation is allowed and it is
+ * forced to exit due to no nodes being shown.
  */
-const int DYNCONV_EXIT_ALLOWED_DO_NOT_SHOW_CHOICE = -1;
+const int DYNCONV_EXIT_FORCE_EXIT          = -1;
 /**
  * Exiting the conversation is allowed and the exit
  * choice is shown.
  */
-const int DYNCONV_EXIT_ALLOWED_SHOW_CHOICE        = 1;
+const int DYNCONV_EXIT_ALLOWED_SHOW_CHOICE = 1;
 
 
 //////////////////////////////////////////////////
@@ -464,8 +463,8 @@ void _DynConvInternal_PostScript(object oPC)
     // when exit allowance is not DYNCONV_EXIT_ALLOWED_DO_NOT_SHOW_CHOICE
     if(DEBUG)
     {
-        if(GetLocalInt(oPC, DYNCONV_VARIABLE) == DYNCONV_SETUP_STAGE                        &&
-           GetLocalInt(oPC, "DynConv_AllowExit") != DYNCONV_EXIT_ALLOWED_DO_NOT_SHOW_CHOICE &&
+        if(GetLocalInt(oPC, DYNCONV_VARIABLE) == DYNCONV_SETUP_STAGE        &&
+           GetLocalInt(oPC, "DynConv_AllowExit") != DYNCONV_EXIT_FORCE_EXIT &&
            array_get_size(oPC, "ChoiceTokens") == 0
            )
         {

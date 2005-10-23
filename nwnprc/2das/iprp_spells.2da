@@ -1149,7 +1149,7 @@
 1145 Pox                               16826312 11        6         49500  2886       0         1       1          iss_contagion    
 1146 Pox                               16826313 18        6         81000  2886       0         1       1          iss_contagion    
 1147 Pestilence                        16826314 13        7         68250  2887       0         1       1          iss_pestilence   
-1148 Pestilence                        16826315 20        7         105000 2887       0         1       1          iss_pestilence   
+1148 Pestilence                        16826315 15        7         78750  2887       0         1       1          iss_pestilence   
 1149 DimensionDoor                     16825206 7         4         21000  2890       0         1       1          iss_dimdoor      
 1150 GreaterTeleport                   16825311 13        7         68250  2893       0         1       1          iss_grtr_tele    
 1151 TeleporationCircle                16825711 17        9         114750 2877       0         1       1          iss_telecircle   
@@ -1167,3 +1167,6 @@
 1163 Blur                              16832053 5         2         7500   3208       1         1       1          iss_blur         
 1164 MirrorImage                       16832053 5         2         7500   3209       1         1       1          iss_mirror_image 
 1165 Insanity                          16832053 13        7         68250  3212       0         0       1          iss_insanity     
+1166 Maze                              16825706 15        8         90000  2888       0         0       1          iss_maze         
+1167 Dimensional_Anchor                16825683 7         4         21000  2889       0         1       1          iss_dimanch      
+1168 Dimensional_Lock                  16825686 15        8         90000  2898       0         0       1          iss_dimlock      

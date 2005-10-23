@@ -403,7 +403,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                 }
                 else
                 {
-                    sCommand += "inject qq{"+GetNWNDir()+"database/"+DB_NAME+".fpt}, '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";
+                    sCommand += "inject '"+GetNWNDir()+"database/"+DB_NAME+".fpt', '"+DB_GATEWAY_VAR+"', %"+sLetoTag+" or die $!;";
                     sCommand += "close %"+sLetoTag+"; ";
                 }
             }

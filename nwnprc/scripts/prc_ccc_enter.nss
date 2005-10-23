@@ -145,17 +145,16 @@ void main()
             oItem = GetNextItemInInventory(oPC);
         }
         //rest them so that they loose cutscene invisible
+        //from previous logons
         ForceRest(oPC);
         //Take their Gold
         AssignCommand(oPC,TakeGoldFromCreature(GetGold(oPC),oPC,TRUE));
         //preserve the PCs dignity by giving them clothes
-        //object oClothes = CreateItemOnObject("nw_cloth022", oPC);
-        //AssignCommand(oPC, ActionEquipItem(oClothes, INVENTORY_SLOT_CHEST));
+        //no cos they we cant see any tattoos
         //start the ConvoCC conversation
-        SetLocalString(oPC, DYNCONV_SCRIPT, "prc_ccc");
-        DelayCommand(2.5, AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE)));
+        StartDynamicConversation("prc_ccc", oPC, FALSE, FALSE, TRUE);
         //DISABLE FOR DEBUGGING
-        DelayCommand(2.0, AssignCommand(oPC, ActionDoCommand(SetCutsceneMode(oPC, TRUE))));
+        SetCutsceneMode(oPC, TRUE);
         SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
     }

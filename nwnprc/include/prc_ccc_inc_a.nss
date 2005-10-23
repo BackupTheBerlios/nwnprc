@@ -746,7 +746,12 @@ void SetupStage()
 
         case FINAL_STAGE:
             array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
-            SetLocalInt(OBJECT_SELF, "DoMake", TRUE);
+            array_set_string(OBJECT_SELF, "ChoiceTokens",
+                array_get_size(OBJECT_SELF, "ChoiceTokens"),
+                    "Make character.");
+            array_set_int(OBJECT_SELF, "ChoiceValue",
+                array_get_size(OBJECT_SELF, "ChoiceValue"),
+                    1);
             break;
         default:
             break;

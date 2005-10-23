@@ -976,6 +976,7 @@ void ChoiceSelected(int nChoiceNo)
             break;
 
         case FINAL_STAGE:
+            ExecuteScript("prc_ccc_make", OBJECT_SELF);
             break;
     }
     //check that the next stage is applicable

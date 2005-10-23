@@ -45,16 +45,8 @@ void main()
     else if(nValue == -2)
     {
         //end of conversation cleanup
-        if(GetLocalInt(OBJECT_SELF, "DoMake"))
-        {
-            ExecuteScript("prc_ccc_make", OBJECT_SELF);
-            DeleteLocalInt(OBJECT_SELF, "DoMake");
-        }
-        else
-        {
-            SetCutsceneMode(oPC, FALSE);
-            AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
-        }
+        SetCutsceneMode(oPC, FALSE);
+        AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
         DoCleanup();
         return;
     }

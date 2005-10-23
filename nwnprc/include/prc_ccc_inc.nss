@@ -106,19 +106,25 @@ void SetupHeader()
             sText+= "This is a replicate of the bioware character creator, but it will allow you to select custom content at level 1.\n";
             sText+= "Simply follow the step by step instructions and select what you want. ";
             sText+= "If you dont get all the options you think you should at a stage, select one, then select No at the confirmation step";
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_GENDER:
-            SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(158));
+            sText = GetStringByStrRef(158);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(158));
             break;
         case STAGE_GENDER_CHECK:
             sText = "You have selected:\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("gender", "NAME", GetLocalInt(OBJECT_SELF, "Gender"))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_RACE:
-            SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(162));
+            sText = GetStringByStrRef(162);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(162));
             break;
         case STAGE_RACE_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -126,10 +132,13 @@ void SetupHeader()
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Description", GetLocalInt(OBJECT_SELF, "Race"))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_CLASS:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select Class");
+            sText = "Select Class";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select Class");
             break;
         case STAGE_CLASS_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -137,10 +146,13 @@ void SetupHeader()
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("classes", "Description", GetLocalInt(OBJECT_SELF, "Class"))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_ALIGNMENT:
-            SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(111));
+            sText = GetStringByStrRef(111);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(111));
             break;
         case STAGE_ALIGNMENT_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -172,10 +184,13 @@ void SetupHeader()
                 && GetLocalInt(OBJECT_SELF, "GoodEvil")==15)
                     sText+= GetStringByStrRef(120);
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_ABILITY:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select Ability " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining");
+            sText = "Select Ability " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select Ability " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining");
             break;
         case STAGE_ABILITY_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -186,10 +201,13 @@ void SetupHeader()
             sText+= IntToString(GetLocalInt(OBJECT_SELF, "Wis"))+" ("+Get2DACache("racialtypes", "WisAdjust", nRace)+") Wisdom\n";
             sText+= IntToString(GetLocalInt(OBJECT_SELF, "Cha"))+" ("+Get2DACache("racialtypes", "ChaAdjust", nRace)+") Charisma\n";
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_SKILL:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select Skills " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining");
+            sText = "Select Skills " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select Skills " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining");
             break;
         case STAGE_SKILL_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -207,10 +225,13 @@ void SetupHeader()
                 }
             }
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_FEAT:
-            SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(397));
+            sText = GetStringByStrRef(397);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(397));
             break;
         case STAGE_FEAT_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -218,10 +239,13 @@ void SetupHeader()
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("feat", "Description", GetLocalInt(OBJECT_SELF, "StartingFeat"))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_BONUS_FEAT:
-            SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(397));
+            sText = GetStringByStrRef(397);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(397));
             break;
         case STAGE_BONUS_FEAT_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -229,10 +253,13 @@ void SetupHeader()
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("feat", "Description", GetLocalInt(OBJECT_SELF, "BonusFeat"))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_WIZ_SCHOOL:
-            SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(381));
+            sText = GetStringByStrRef(381);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(381));
             break;
         case STAGE_WIZ_SCHOOL_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -240,10 +267,13 @@ void SetupHeader()
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("spellschools", "Description", GetLocalInt(OBJECT_SELF, "School"))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_FAMILIAR:
-            SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(5607));
+            sText = GetStringByStrRef(5607);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, GetStringByStrRef(5607));
             break;
         case STAGE_FAMILIAR_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -251,10 +281,13 @@ void SetupHeader()
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("hen_familiar", "DESCRIPTION", GetLocalInt(OBJECT_SELF, "Familiar"))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_ANIMALCOMP:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select Animal Companion");
+            sText = "Select Animal Companion";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select Animal Companion");
             break;
         case STAGE_ANIMALCOMP_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -262,13 +295,18 @@ void SetupHeader()
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("hen_companion", "DESCRIPTION", GetLocalInt(OBJECT_SELF, "AnimalCompanion"))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_DOMAIN1:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select first Domain");
+            sText = "Select first Domain";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select first Domain");
             break;
         case STAGE_DOMAIN2:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select second Domain");
+            sText = "Select second Domain";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select second Domain");
             break;
         case STAGE_DOMAIN_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -280,7 +318,8 @@ void SetupHeader()
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", GetLocalInt(OBJECT_SELF, "Domain2"))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_SPELLS:
             switch(nClass)
@@ -288,10 +327,14 @@ void SetupHeader()
                 case CLASS_TYPE_WIZARD:
                 case CLASS_TYPE_SORCERER:
                 case CLASS_TYPE_BARD:
-                    SetToken(DYNCONV_TOKEN_HEADER, "Select spells ("+IntToString(GetLocalInt(OBJECT_SELF, "NumberOfSpells"))+" remaining)");
+                    sText = "Select spells ("+IntToString(GetLocalInt(OBJECT_SELF, "NumberOfSpells"))+" remaining)";
+                    SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select spells ("+IntToString(GetLocalInt(OBJECT_SELF, "NumberOfSpells"))+" remaining)");
                     break;
                 default:
-                    SetToken(DYNCONV_TOKEN_HEADER, "You are unable to select spells");
+                    sText = "You are unable to select spells";
+                    SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "You are unable to select spells");
                     break;
             }
             break;
@@ -302,80 +345,129 @@ void SetupHeader()
             for(i=0;i<array_get_size(OBJECT_SELF, "SpellLvl1");i++)
                 sText+= "\n"+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", array_get_int(OBJECT_SELF, "SpellLvl1", i))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_APPEARANCE:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select an appearance.");
+            sText = "Select an appearance";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select an appearance.");
             break;
         case STAGE_APPEARANCE_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this appearance correct?");
+            sText = "Is this appearance correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this appearance correct?");
             break;
         case STAGE_HAIR:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select hair colour.");
+            sText = "Select hair colour.";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select hair colour.");
             break;
         case STAGE_HAIR_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this hair colour correct?");
+            sText = "Is this hair colour correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this hair colour correct?");
             break;
         case STAGE_HEAD:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select head number.");
+            sText = "Select head number.";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select head number.");
             break;
         case STAGE_HEAD_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this head correct?");
+            sText = "Is this head correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this head correct?");
             break;
         case STAGE_PORTRAIT:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select a portrait.");
+            sText = "Select a portrait.";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select a portrait.");
             break;
         case STAGE_PORTRAIT_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this portrait correct?");
+            sText = "Is this portrait correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this portrait correct?");
             break;
         case STAGE_SKIN:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select skintone.");
+            sText = "Select skintone.";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select skintone.");
             break;
         case STAGE_SKIN_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this skintone correct?");
+            sText = "Is this skintone correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this skintone correct?");
             break;
         case STAGE_SOUNDSET:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select a soundset.");
+            sText = "Select a soundset.";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select a soundset.");
             break;
         case STAGE_SOUNDSET_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this soundset correct?");
+            sText = "Is this soundset correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this soundset correct?");
             break;
         case STAGE_TAIL:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select tail.");
+            sText = "Select tail.";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select tail.");
             break;
         case STAGE_TAIL_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this tail correct?");
+            sText = "Is this tail correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this tail correct?");
             break;
         case STAGE_WINGS:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select wings.");
+            sText = "Select wings.";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select wings.");
             break;
         case STAGE_WINGS_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this set of wings correct?");
+            sText = "Is this set of wings correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this set of wings correct?");
             break;
         case STAGE_TATTOOPART:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select a bodypart to alter the tattoo of.");
+            sText = "Select a bodypart to alter the tattoo of.";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select a bodypart to alter the tattoo of.");
             break;
         case STAGE_TATTOOPART_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this tattoo placement correct?");
+            sText = "Is this tattoo placement correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this tattoo placement correct?");
             break;
         case STAGE_TATTOOCOLOUR1:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select a colour for the first part of your tattoos");
+            sText = "Select a colour for the first part of your tattoos";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select a colour for the first part of your tattoos");
             break;
         case STAGE_TATTOOCOLOUR1_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this tattoo colour correct?");
+            sText = "Is this tattoo colour correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this tattoo colour correct?");
             break;
         case STAGE_TATTOOCOLOUR2:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select a colour for the second part of your tattoos");
+            sText = "Select a colour for the second part of your tattoos";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select a colour for the second part of your tattoos");
             break;
         case STAGE_TATTOOCOLOUR2_CHECK:
-            SetToken(DYNCONV_TOKEN_HEADER, "Is this tattoo colour correct?");
+            sText = "Is this tattoo colour correct?";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Is this tattoo colour correct?");
             break;
         case FINAL_STAGE:
+            sText = "Your character will now be generated. As part of this process, you will be booted. Please exit NWN completely before rejoining.";
 //            SetToken(DYNCONV_TOKEN_HEADER, "Your character is ready to be generated. You will now be passed to the appearance selection system.");
-            SetToken(DYNCONV_TOKEN_HEADER, "Your character will now be generated. As part of this process, you will be booted. Please exit NWN completely before rejoining.");
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Your character will now be generated. As part of this process, you will be booted. Please exit NWN completely before rejoining.");
             break;
         case STAGE_RACIAL_ABILITY:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select an ability to increase.");
+            sText = "Select an ability to increase.";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select an ability to increase.");
             break;
         case STAGE_RACIAL_ABILITY_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -401,10 +493,13 @@ void SetupHeader()
                     break;
             }
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_RACIAL_SKILL:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select Skills " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining");
+            sText = "Select Skills " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select Skills " + IntToString(GetLocalInt(OBJECT_SELF, "Points"))+" points remaining");
             break;
         case STAGE_RACIAL_SKILL_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -422,10 +517,13 @@ void SetupHeader()
                 }
             }
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         case STAGE_RACIAL_FEAT:
-            SetToken(DYNCONV_TOKEN_HEADER, "Select Feat");
+            sText = "Select Feat";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Select Feat");
             break;
         case STAGE_RACIAL_FEAT_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
@@ -433,10 +531,13 @@ void SetupHeader()
             sText+= "\n";
             sText+= GetStringByStrRef(StringToInt(Get2DACache("feat", "Description", GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Feat"))));
             sText+= "\n"+GetStringByStrRef(16824210);
-            SetToken(DYNCONV_TOKEN_HEADER, sText);
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         default:
-            SetToken(DYNCONV_TOKEN_HEADER, "Error");
+            sText = "Error";
+            SetHeader(sText);
+            //SetToken(DYNCONV_TOKEN_HEADER, "Error");
             break;
     }
     SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(16824213)); //abort

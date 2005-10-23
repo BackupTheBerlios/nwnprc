@@ -20,7 +20,7 @@
 void main()
 {
     object oPC = GetSpellTargetObject();
-    string sMessage = "";
+    //string sMessage = "";
 
     int iClassLevel = GetLevelByClass(CLASS_TYPE_LASHER, oPC);
     int nAttacks;
@@ -31,14 +31,16 @@ void main()
     {
         if(GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_WHIP)
         {   //apply effects if holding a whip
+            if(iClassLevel > 2)
+            {
+                nAttacks = ((iClassLevel + 2) / 5);
+                nPenalty = nAttacks * 2;
 
-            nAttacks = ((iClassLevel + 2) / 5);
-            nPenalty = nAttacks * 2;
-
-            effect eAttacks = SupernaturalEffect(EffectModifyAttacks(nAttacks));
-            effect ePenalty = SupernaturalEffect(EffectAttackDecrease(nPenalty));
-            effect eLink = EffectLinkEffects(eAttacks, ePenalty);
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);
+                effect eAttacks = SupernaturalEffect(EffectModifyAttacks(nAttacks));
+                effect ePenalty = SupernaturalEffect(EffectAttackDecrease(nPenalty));
+                effect eLink = EffectLinkEffects(eAttacks, ePenalty);
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);
+            }
         }
         else
         {

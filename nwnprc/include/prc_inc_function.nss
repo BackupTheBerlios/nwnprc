@@ -924,6 +924,21 @@ else
         iDif += -1;
     }
 }
+
+void FeatLasher(object oPC)
+{
+    int iClassLevel = GetLevelByClass(CLASS_TYPE_LASHER, oPC);
+    if(DEBUG) DoDebug("Lasher level: " + IntToString(iClassLevel) + "\n"
+                    + "Has Stunning Snap feat: " + BooleanToString(GetHasFeat(FEAT_LASHER_STUNNING_SNAP,oPC))
+                      );
+    int i;
+    if(iClassLevel < 7) return;
+
+    for(i = 10; i > iClassLevel; i--)
+        DecrementRemainingFeatUses(oPC, FEAT_LASHER_STUNNING_SNAP);
+}
+
+
 void FeatSpecialUsePerDay(object oPC)
 {
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);
@@ -941,5 +956,5 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_3, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC));
     FeatNinja(oPC);
     FeatContender(oPC);
-    FeatUsePerDay(oPC, FEAT_LASHER_STUNNING_SNAP, -1, GetLevelByClass(CLASS_TYPE_LASHER));
+    FeatLasher(oPC);
 }

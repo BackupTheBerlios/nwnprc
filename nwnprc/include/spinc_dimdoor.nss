@@ -263,7 +263,7 @@ void DoDimensionDoorTeleport(object oCaster, location lTarget, int bTeleportingP
     int i;
 
     // Check if it's valid for the caster to teleport. If he can't go, no-one goes
-    if(GetCanTeleport(oCaster, lTarget))
+    if(GetCanTeleport(oCaster, lTarget, TRUE))
     {
         // Loop over the targets, checking if they can teleport. Redundant check on the caster, but shouldn't cause any trouble
         for(i = 0; i < array_get_size(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY); i++)

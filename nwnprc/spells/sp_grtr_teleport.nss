@@ -98,7 +98,7 @@ void main()
         GroupDestroyObject(oVFXKeeper, 0.0f, 0.5f, FALSE);*/
 
         // Check if it's valid for the caster to teleport. If he can't go, no-one goes
-        if(GetCanTeleport(oCaster, lTarget))
+        if(GetCanTeleport(oCaster, lTarget, TRUE))
         {
             // VFX on the starting location
             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_TELEPORT_OUT), lCaster);

@@ -12,57 +12,46 @@ void CheckAndBoot(object oPC)
 void main()
 {
     object oPC = OBJECT_SELF;
-    int nValue = GetLocalInt(oPC, "DynConv_Var");
-    array_create(oPC, "ChoiceTokens");
-    array_create(oPC, "ChoiceValues");
+    int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
 
     if(nValue == 0)
         return;
-    if(nValue > 0)
-        nValue --;//correct for 1 based to zero based
 
 
-    SetupTokens();
-    if(nValue == -1)
+    if(nValue == DYNCONV_SETUP_STAGE)
     {
-        //to the header
-        int nStage  = GetLocalInt(OBJECT_SELF, "Stage");
-        array_create(OBJECT_SELF, "StagesSetup");
-        if(array_get_int(OBJECT_SELF, "StagesSetup", nStage))
-            return;
-        //stage has changed, clear the choice array
-        array_delete(OBJECT_SELF, "ChoiceTokens");
-        array_create(OBJECT_SELF, "ChoiceTokens");
-        array_delete(OBJECT_SELF, "ChoiceValue");
-        array_create(OBJECT_SELF, "ChoiceValue");
-        DeleteLocalInt(OBJECT_SELF, "ChoiceOffset");
-        SetupStage();
-        SetupHeader();
+        int nStage = GetStage(oPC);
+        // Check if this stage is marked as already set up
+        // This stops list duplication when scrolling
+        if(GetIsStageSetUp(nStage, oPC))
+        {
+            SetupStage();
+            SetupHeader();
+        }
+
+        // Do token setup
         SetupTokens();
-        ExecuteScript("prc_ccc_debug", OBJECT_SELF);
-        return;
+        ExecuteScript("prc_ccc_debug", oPC);
     }
-    else if(nValue == -2)
+    else if(nValue == DYNCONV_EXITED)
     {
         //end of conversation cleanup
         SetCutsceneMode(oPC, FALSE);
         AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
         DoCleanup();
-        return;
     }
-    else if(nValue == -3)
+    else if(nValue == DYNCONV_ABORTED)
     {
         //abort conversation cleanup
         DoCleanup();
         SetCutsceneMode(oPC, FALSE);
         AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
         ForceRest(oPC);
-        return;
     }
     else
     {
         //selection made
         ChoiceSelected(nValue);
         SetupTokens();
-    }        
+    }
 }

@@ -89,10 +89,9 @@ void SetupHeader();
 
 void SetupHeader()
 {
-    int nStage  = GetLocalInt(OBJECT_SELF, "Stage");
-    int nOffset = GetLocalInt(OBJECT_SELF, "ChoiceOffset");
+    int nStage  = GetStage(OBJECT_SELF);
     int nClass  = GetLocalInt(OBJECT_SELF, "Class");
-    int nRace  = GetLocalInt(OBJECT_SELF, "Race");
+    int nRace   = GetLocalInt(OBJECT_SELF, "Race");
     int nLevel  = GetLocalInt(OBJECT_SELF, "Level");
     string sText;
     int i;
@@ -540,12 +539,12 @@ void SetupHeader()
             //SetToken(DYNCONV_TOKEN_HEADER, "Error");
             break;
     }
-    SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(16824213)); //abort
-    if(nStage == FINAL_STAGE)
-        SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(16824212)); //finish
-    SetCustomToken(DYNCONV_TOKEN_WAIT, GetStringByStrRef(16824202));//please wait
-    SetCustomToken(DYNCONV_TOKEN_NEXT, GetStringByStrRef(16824204));//next
-    SetCustomToken(DYNCONV_TOKEN_PREV, GetStringByStrRef(16824203));//previous
+
+    SetDefaultTokens();
+    // While not in the last stage, the exit token should read "Abort"
+    if(nStage != FINAL_STAGE)
+        SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(16824213)); //abort
+
     ClearAllActions();
     ActionPauseConversation();
     //DelayCommand(1.0, ClearAllActions());
@@ -591,29 +590,14 @@ void DoCleanup()
     DeleteLocalInt(oPC, "CurrentSpellLevel");
     DeleteLocalInt(oPC, "i");
     DeleteLocalInt(oPC, "Level");
-    DeleteLocalString(oPC, "TOKEN100");
-    DeleteLocalString(oPC, "TOKEN101");
-    DeleteLocalString(oPC, "TOKEN102");
-    DeleteLocalString(oPC, "TOKEN103");
-    DeleteLocalString(oPC, "TOKEN104");
-    DeleteLocalString(oPC, "TOKEN105");
-    DeleteLocalString(oPC, "TOKEN106");
-    DeleteLocalString(oPC, "TOKEN107");
-    DeleteLocalString(oPC, "TOKEN108");
-    DeleteLocalString(oPC, "TOKEN109");
-    DeleteLocalString(oPC, "TOKEN110");
     DeleteLocalString(oPC, "TOKEN50");
     array_delete(oPC, "Feats");
     array_delete(oPC, "SpecAbilID");
     array_delete(oPC, "SpecAbilFlag");
     array_delete(oPC, "SpecAbilLvl");
     array_delete(oPC, "Skills");
-    array_delete(oPC, "StagesSetup");
-    array_delete(oPC, "ChoiceTokens");
-    array_delete(oPC, "ChoiceValue");
     array_delete(oPC, "SpellLvl1");
     array_delete(oPC, "SpellLvl0");
-        DeleteLocalString(oPC, DYNCONV_SCRIPT);
 }
 
 /*

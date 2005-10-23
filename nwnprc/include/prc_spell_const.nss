@@ -1,4 +1,4 @@
-const int S = -1;
+const int FOOBAR = -1; // Comment or uncomment whenever the compiler croaks on an error code 5.
 
 //spell
 const int SPELL_MAJOR_MAGIC_MISSILE         = 2247;
@@ -57,9 +57,9 @@ const int SPELL_ELE_CONF_AIR     = 2216;
 const int IP_CONST_CASTSPELL_LIPS_RAPTURE_1 =550;
 
 // Frenzied Berserker Spells
-const int SPELL_FRENZY = 2700; 
-const int SPELL_INSPIRE_FRENZY = 2701; 
-const int SPELL_SUPREME_POWER_ATTACK = 2702; 
+const int SPELL_FRENZY = 2700;
+const int SPELL_INSPIRE_FRENZY = 2701;
+const int SPELL_SUPREME_POWER_ATTACK = 2702;
 const int SPELL_REMOVE_FRENZY = 2703;
 
 // Eye of Gruumsh
@@ -253,7 +253,7 @@ const int SPELL_CORRUPTER_MAGIC_CIRCLE_AGAINST_GOOD  = 2073;
 
 // Complete Adv Ninja
 const int SPELL_GHOST_STEP      = 2742;
-                          
+
 // Spell Feat Generic
 const int SPELL_MANYSHOT2                   = 2246;
 const int SPELL_MANYSHOT3                   = 2248;
@@ -393,6 +393,12 @@ const int SPELL_BLUR                                = 3208;
 const int SPELL_MIRROR_IMAGE                        = 3209;
 const int SPELL_INSANITY                            = 3212;
 const int SPELL_IRON_BODY                           = 3213;
+const int SPELL_DIMENSIONAL_ANCHOR                  = 2889;
+const int SPELL_DIMENSION_DOOR                      = 2890;
+const int SPELL_MAZE                                = 2888;
+const int SPELL_GREATER_TELEPORT                    = 2893;
+const int SPELL_TELEPORTATION_CIRCLE                = 2877;
+const int SPELL_DIMENSIONAL_LOCK                    = 2898;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE        = 1951;
@@ -437,14 +443,13 @@ const int SPELL_CLEAN_POISON_OFF   = 2885;
 const int SPELL_FEAT_SPEED_OF_THOUGHT_BONUS     = 2820;
 
 // Active feat spells
-const int FOOBAR = -1; //- Remove once it's removal no longer causes compiling nw_s0_tenstrans to smash the compiler
-const int SPELL_JUMP                    = 2727;  
+const int SPELL_JUMP                    = 2727;
 
 // Havoc Mage
 const int SPELL_BATTLECAST      = 2025;
 
 // Lasher
-const int SPELL_LASHER_THIRD_HAND = 1910;
-const int SPELL_LASHER_CRACK = 1911;  //Yes, I know it's a funny name
-const int SPELL_LASHER_STUN_SNAP = 1912;
+const int SPELL_LASHER_THIRD_HAND   = 1910;
+const int SPELL_LASHER_CRACK        = 1911;  //Yes, I know it's a funny name
+const int SPELL_LASHER_STUN_SNAP    = 1912;
 const int SPELL_LASHER_DEATH_SPIRAL = 1913;

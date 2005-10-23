@@ -166,7 +166,7 @@ void main()
                             StringToInt(Get2DACache("feat", "FEAT", StringToInt(
                                 Get2DACache("epicspells", "FeatID", i)))));
                         AddChoice(sName, i, oPC);
-                    }   
+                    }
                 }
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
@@ -185,8 +185,8 @@ void main()
                             StringToInt(Get2DACache("feat", "FEAT", StringToInt(
                                 Get2DACache("epicspells", "FeatID", i)))));
                         AddChoice(sName, i, oPC);
-                    }   
-                }    
+                    }
+                }
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -238,11 +238,11 @@ void main()
             else if(nStage == STAGE_LEADERSHIP_ADD)
             {
                 SetHeader("Select a cohort:");
-                
+
                 int nCohortCount = GetCampaignInt(COHORT_DATABASE, "CohortCount");
                 int i;
                 for(i=1;i<=nCohortCount;i++)
-                {        
+                {
                     string sName = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(i)+"_name");
                     int    nRace = GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_race");
                     int    nClass1=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_class1");
@@ -254,8 +254,8 @@ void main()
                     if(GetPCPublicCDKey(oPC) == ""
                         ||GetPCPublicCDKey(oPC) == sKey)
                         AddChoice("sName", i);
-                }         
-                
+                }
+
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -263,7 +263,7 @@ void main()
             else if(nStage == STAGE_LEADERSHIP_ADD_CONFIRM)
             {
                 string sHeader = "Are you sure you want this cohort?";
-                
+
                 int nCohortID = GetLocalInt(oPC, "CohortID");
                 string sName = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_name");
                 int    nRace = GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_race");
@@ -371,7 +371,7 @@ void main()
             else if (nChoice == 3)
                 nStage = STAGE_EPIC_SPELLS_CONTING;
             else if (nChoice == 4)
-            {   
+            {
                 //research an epic spell
                 object oPlaceable = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_ess_research", GetLocation(oPC));
                 AssignCommand(oPC, DoPlaceableObjectAction(oPlaceable, PLACEABLE_ACTION_USE));
@@ -415,18 +415,18 @@ void main()
                 object oStore = GetObjectByTag("prc_recipe");
                 if(!GetIsObjectValid(oStore))
                 {
-                    location lLimbo = GetLocation(GetObjectByTag("HEART_OF_CHAOS"));
+                    location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
                     oStore = CreateObject(OBJECT_TYPE_STORE, "prc_recipe", lLimbo);
                 }
                 OpenStore(oPC, oStore);
-            }   
+            }
             else if (nChoice == 2)
             {
                 //Magic item raw materials
                 object oStore = GetObjectByTag("prc_magiccraft");
                 if(!GetIsObjectValid(oStore))
                 {
-                    location lLimbo = GetLocation(GetObjectByTag("HEART_OF_CHAOS"));
+                    location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
                     oStore = CreateObject(OBJECT_TYPE_STORE, "prc_magiccraft", lLimbo);
                 }
                 OpenStore(oPC, oStore);
@@ -441,7 +441,7 @@ void main()
                 object oStore = GetObjectByTag("prc_epicspells");
                 if(!GetIsObjectValid(oStore))
                 {
-                    location lLimbo = GetLocation(GetObjectByTag("HEART_OF_CHAOS"));
+                    location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
                     oStore = CreateObject(OBJECT_TYPE_STORE, "prc_epicspells", lLimbo);
                 }
                 OpenStore(oPC, oStore);
@@ -455,8 +455,8 @@ void main()
             if(nChoice == 1)
             {
                 AssignCommand(oPC, ClearAllActions());
-                AssignCommand(oPC, TakeGoldFromCreature(10000, oPC, TRUE));             
-                CreateItemOnObject("shadowwalkerstok", oPC);                
+                AssignCommand(oPC, TakeGoldFromCreature(10000, oPC, TRUE));
+                CreateItemOnObject("shadowwalkerstok", oPC);
                 SetLocalInt(oPC, "X1_AllowShaLow", 0);
             }
             MarkStageNotSetUp(nStage, oPC);
@@ -481,7 +481,7 @@ void main()
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
             {
-                
+
             }
             else
             {
@@ -496,7 +496,7 @@ void main()
             if(nChoice == 1)
             {
                 int nCohortID = GetLocalInt(oPC, "CohortID");
-                AddCohortToPlayer(nCohortID, oPC);     
+                AddCohortToPlayer(nCohortID, oPC);
                 nStage = STAGE_LEADERSHIP;
             }
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)

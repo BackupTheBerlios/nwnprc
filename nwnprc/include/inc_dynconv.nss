@@ -360,7 +360,7 @@ void _DynConvInternal_ExitedConvo(object oPC, int bAbort)
     }
     // Allowed to exit? Technically, the only way this branch should ever be run is by there not being any response choices available
     else if(!bAbort &&
-            GetLocalInt(oPC, "DynConv_AllowExit") == DYNCONV_EXIT_NOT_ALLOWED)
+            (GetLocalInt(oPC, "DynConv_AllowExit") == DYNCONV_EXIT_NOT_ALLOWED))
     {
         if(DEBUG) DoDebug("_DynConvInternal_ExitedConvo(): ERROR: Conversation exited via exit node while exiting not allowed!\n"
                         + "DYNCONV_SCRIPT = '" + GetLocalString(oPC, DYNCONV_SCRIPT) + "'\n"
@@ -460,15 +460,15 @@ void _DynConvInternal_PreScript(object oPC)
 void _DynConvInternal_PostScript(object oPC)
 {
     // If debugging is active, check that the conversations have at least one response node
-    // when exit allowance is not DYNCONV_EXIT_ALLOWED_DO_NOT_SHOW_CHOICE
+    // when exiting is off
     if(DEBUG)
     {
-        if(GetLocalInt(oPC, DYNCONV_VARIABLE) == DYNCONV_SETUP_STAGE        &&
-           GetLocalInt(oPC, "DynConv_AllowExit") != DYNCONV_EXIT_FORCE_EXIT &&
+        if(GetLocalInt(oPC, DYNCONV_VARIABLE) == DYNCONV_SETUP_STAGE         &&
+           GetLocalInt(oPC, "DynConv_AllowExit") == DYNCONV_EXIT_NOT_ALLOWED &&
            array_get_size(oPC, "ChoiceTokens") == 0
            )
         {
-            DoDebug("Dynconvo ERROR: No response tokens set up and exiting via no responses not allowed!");
+            DoDebug("Dynconvo ERROR: No response tokens set up and exiting not allowed!");
         }
     }
 }

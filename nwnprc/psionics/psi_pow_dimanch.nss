@@ -27,7 +27,7 @@
 #include "prc_alterations"
 #include "prc_inc_teleport"
 
-void Aux(object oTarget);
+
 
 void main()
 {
@@ -58,21 +58,26 @@ void main()
         int nDC = GetManifesterDC(oCaster);
         int nCaster = GetManifesterLevel(oCaster);
         int nPen = GetPsiPenetration(oCaster);
-        effect eRay = EffectBeam(VFX_BEAM_MIND, OBJECT_SELF, BODY_NODE_HAND);
         effect eVis = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
         float fDur = 60.0 * nCaster;
         if (nMetaPsi == 2)  fDur *= 2;
 
+        // Let the AI know
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
         // Perform the Touch Attach
-        int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
-        if (nTouchAttack > 0)
+        int nTouchAttack = PRCDoRangedTouchAttack(oTarget);
+
+        // Shoot the ray
+        effect eRay = EffectBeam(VFX_BEAM_MIND, OBJECT_SELF, BODY_NODE_HAND, nTouchAttack > 0);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7, FALSE);
+
+        // Apply effect if hit
+        if(nTouchAttack > 0)
         {
             //Check for Power Resistance
-            if (PRCMyResistPower(oCaster, oTarget, nPen))
+            if(PRCMyResistPower(oCaster, oTarget, nPen))
             {
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur,TRUE,-1,nCaster);
                 // Increase the teleportation prevention counter and schedule reduction
                 DisallowTeleport(oTarget);

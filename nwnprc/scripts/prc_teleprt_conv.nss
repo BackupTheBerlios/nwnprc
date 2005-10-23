@@ -145,7 +145,7 @@ void main()
         if(nStage == STAGE_MAIN)
         {
             nStage = STAGE_SELECTION_MADE;
-            SetLocalInt(oPC, "PRC_TeleportSelectionConvo_Selection", nValue);
+            SetLocalInt(oPC, "PRC_TeleportSelectionConvo_Selection", nChoice);
         }
 
         // Store the stage value. If it has been changed, this clears out the choices

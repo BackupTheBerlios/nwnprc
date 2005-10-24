@@ -187,7 +187,7 @@ const string PRC_SPELL_TARGET_OBJECT_OVERRIDE        = "PRC_SPELL_TARGET_OBJECT_
 /*
  * This is for builders. It should not be set on the module, but should be set on players/creatures.
  * When this is set, it will add to spell metamagic. Not all spells may accept this.
- * Only use Empower, Extend, or Maximize. 
+ * Only use Empower, Extend, or Maximize.
  * Still, Silent, and Quicken wont work
 */
 const string PRC_METAMAGIC_ADJUSTMENT                 = "PRC_METAMAGIC_ADJUSTMENT";
@@ -195,7 +195,7 @@ const string PRC_METAMAGIC_ADJUSTMENT                 = "PRC_METAMAGIC_ADJUSTMEN
 /*
  * Mostly internal, but builders may find a use for it
  * Used to override PRCGetMetaMagicFeat();
- * Only use Empower, Extend, or Maximize. 
+ * Only use Empower, Extend, or Maximize.
  * Still, Silent, and Quicken wont work
 */
 const string PRC_METAMAGIC_OVERRIDE                   = "PRC_METAMAGIC_OVERRIDE";
@@ -536,12 +536,12 @@ const string PRC_DISABLE_SWITCH_CHANGING_CONVO       = "PRC_DISABLE_SWITCH_CHANG
  */
 
 const string PRC_DISABLE_DOMAIN_ENFORCEMENT          = "PRC_DISABLE_DOMAIN_ENFORCEMENT";
- 
+
 /*
  * Set this to remove replace bioware HolyAvenger itemproperties
  * with PnP HolyAvenger itemprperties instead
  * (for paladins, +5 +2d6 divine vs evil, castspel:dispel magic @ casterlevel = paladinlevels)
- * (for non paladins, +2) 
+ * (for non paladins, +2)
  */
 
 const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPROP";
@@ -1839,7 +1839,7 @@ void DoEpicSpellDefaults()
 
 void SetDefaultFileEnds()
 {
-    //there is also the fileends.2da file, but that 
+    //there is also the fileends.2da file, but that
     //isnt read in here yet. may be later though
     if(GetPRCSwitch(FILE_END_MANUAL))
         return;
@@ -1850,7 +1850,7 @@ void SetDefaultFileEnds()
     SetPRCSwitch(FILE_END_SKILLS,       50);
     SetPRCSwitch(FILE_END_CLASS_FEAT,   600);
     SetPRCSwitch(FILE_END_CLASS_SKILLS, 50);
-    SetPRCSwitch(FILE_END_CLASS_POWER,  180);
+    SetPRCSwitch(FILE_END_CLASS_POWER,  300);
     SetPRCSwitch(FILE_END_FEAT,         22000);
     SetPRCSwitch(FILE_END_CLASS_PREREQ, 25);
     SetPRCSwitch(FILE_END_FAMILIAR,     20);

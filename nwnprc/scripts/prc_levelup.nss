@@ -27,6 +27,7 @@ void PrcFeats(object oPC)
 void main()
 {
     object oPC = GetPCLevellingUp();
+//if(DEBUG) DoDebug("prc_levelup running for '" + GetName(oPC) + "'");
 
     //Used to determine what the last levelled class was
     if(GetLevelByClass(PRCGetClassByPosition(1, oPC), oPC) != PRCGetLevelByPosition(1, oPC))
@@ -40,8 +41,6 @@ void main()
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
     DeletePRCLocalInts(oSkin);
-
-    //FloatingTextStringOnCreature("PRC Levelup was called", oPC, FALSE);
 
     // Gives people the proper spells from their bonus domains
     // This should run before EvalPRCFeats, because it sets a variable

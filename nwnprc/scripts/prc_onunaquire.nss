@@ -11,6 +11,11 @@ void main()
 {
     object oItem = GetModuleItemLost();
     object oPC = GetModuleItemLostBy();
+    // Do not run for the Ability Score clone, since it's getting destroyed in a moment anyway
+    if(GetStringLeft(GetTag(oPC), 23) == "PRC_AbilityScore_Clone_")
+        return;
+//if(DEBUG) DoDebug("Running OnUnaquireItem, creature = '" + GetName(oPC) + "' is PC: " + BooleanToString(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
+
     if (GetResRef(oItem) == AA_IMBUED_ARROW)
     {
         DestroyObject(oItem);

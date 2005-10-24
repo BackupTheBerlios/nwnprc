@@ -20,17 +20,18 @@ void FindTrueAbilityScores()
 {
     object oPC = OBJECT_SELF;
     int i = 0;
+    int bFoundLimbo = FALSE;
     object oLimbo = GetObjectByTag("Limbo",i);
     location lLimbo;
-    while (i < 100)
+    while(!bFoundLimbo && i < 100)
     {
         if (GetIsObjectValid(oLimbo))
         {
             if (GetName(oLimbo) == "Limbo")
             {
-                i = 2000;
-                vector vLimbo = Vector(0.0f, 0.0f, 0.0f);
-                lLimbo = Location(oLimbo, vLimbo, 0.0f);
+                bFoundLimbo = TRUE;
+                lLimbo = Location(oLimbo, Vector(0.0f, 0.0f, 0.0f), 0.0f);
+                break;
             }
         }
         i++;
@@ -38,14 +39,14 @@ void FindTrueAbilityScores()
     }
     //create copy of the PC for getting base ability scores
     object oClone;
-    if (i >= 2000)
+    if(bFoundLimbo)
     {
-        oClone = CopyObject(oPC, lLimbo, OBJECT_INVALID, "clone_"+ObjectToString(oPC));
+        oClone = CopyObject(oPC, lLimbo, OBJECT_INVALID, "PRC_AbilityScore_Clone_" + ObjectToString(oPC));
     }
     else
     {
         // create a clone but make it completely uninteractive
-        oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "clone_"+ObjectToString(oPC));
+        oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "PRC_AbilityScore_Clone_" + ObjectToString(oPC));
         effect eClone = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
                eClone = EffectLinkEffects(eClone, EffectCutsceneGhost());
                eClone = SupernaturalEffect(eClone);

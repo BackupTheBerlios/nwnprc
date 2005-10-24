@@ -33,11 +33,14 @@ void main()
 {
     object oItem = GetItemLastEquipped();
     object oPC   = GetItemLastEquippedBy();
-  
-    
+    // Do not run the event for ability score testing clones. Their equipments gets deleted in a few milliseconds anyway
+    if(GetStringLeft(GetTag(oPC), 23) == "PRC_AbilityScore_Clone_")
+        return;
+//if(DEBUG) DoDebug("Running OnEquip, creature = '" + GetName(oPC) + "' is PC: " + BooleanToString(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
+
     //DelayCommand(0.3, PrcFeats(oPC));
     PrcFeats(oPC);
-    
+
     // Handle someone equipping a poisoned item
     //ExecuteScript("poison_onequip", OBJECT_SELF);
 
@@ -45,7 +48,7 @@ void main()
     ExecuteScript("prc_equip_rstr", OBJECT_SELF);
     //timestop noncombat equip
     DoTimestopEquip();
-    
+
     // Execute scripts hooked to this event for the creature and item triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYEREQUIPITEM);
     ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONPLAYEREQUIPITEM);

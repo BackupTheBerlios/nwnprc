@@ -7,17 +7,20 @@
 
 void main()
 {
-    // Handle someone acquiring an poisoned item.
-    //ExecuteScript("poison_onaquire", OBJECT_SELF);
+    object oCreature = GetModuleItemAcquiredBy();
+    object oItem = GetModuleItemAcquired();
+    // Do not run for the Ability Score clone, since it's getting destroyed in a moment anyway
+    if(GetStringLeft(GetTag(oCreature), 23) == "PRC_AbilityScore_Clone_")
+        return;
+//if(DEBUG) DoDebug("Running OnAcquireItem, creature = '" + GetName(oCreature) + "' is PC: " + BooleanToString(GetIsPC(oCreature)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
+
     //rest kits
     if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
         ExecuteScript("sbr_onaquire", OBJECT_SELF);
-    
+
     ExecuteScript("race_ev_aquire", OBJECT_SELF);
-    
+
     // Execute scripts hooked to this event for the creature and item triggering it
-    object oCreature = GetModuleItemAcquiredBy();
-    object oItem = GetModuleItemAcquired();
     ExecuteAllScriptsHookedToEvent(oCreature, EVENT_ONACQUIREITEM);
     ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONACQUIREITEM);
 }

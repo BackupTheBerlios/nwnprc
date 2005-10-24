@@ -111,7 +111,8 @@ void main()
                                      GetLocalString(oPC, "PRC_TeleportTargetSelection_ReturnStoreName"),
                                      MetalocationToLocation(mlocL));
                 // Mark the conversation as finished and allow exiting
-                AllowExit();
+                //AllowExit();
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
         }
         // Do token setup

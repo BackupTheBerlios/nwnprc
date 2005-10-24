@@ -168,8 +168,8 @@
 164 FuseFlesh                 16823832 6     21234  12239    14594   14234       0          
 165 Retrieve                  16823894 6     21235  12240    14595   14235       0          
 166 TemporalAcceleration      16823900 6     21236  12241    14596   14236       0          
-167 Banishment                16823918 6     21037  12242    14597   14237       1          
-168 GreaterPrecognition       16824001 6     21038  12243    15598   ****        1          
+167 Banishment                16823918 6     21237  12242    14597   14237       1          
+168 GreaterPrecognition       16824001 6     21238  12243    15598   ****        1          
 169 GreaterPrecognitionMain   ****     ****  ****   *****    15599   14238       0          
 170 GreaterPrecognitionAttack ****     ****  ****   *****    15600   14239       0          
 171 GreaterPrecognitionDamage ****     ****  ****   *****    15601   14240       0          
@@ -203,10 +203,10 @@
 199 ShadowBody                16823896 8     21305  12311    14665   14305       0          
 200 AstralSeed                16823916 8     21306  12312    14666   14306       1          
 201 TimeHopMass               16823938 8     21307  12313    14667   14307       1          
-202 HyperCognition            16823003 8     21308  12314    14668   14308       1          
-203 GreaterTeleport           16824009 8     21309  12315    14669   ****        1          
-204 GreaterTeleport_SelfOnly  ****     ****  ****   *****    14670   14309       0          
-205 GreaterTeleport_Party     ****     ****  ****   *****    14671   14310       0          
+202 HyperCognition            16824003 8     21308  12314    14668   14308       1          
+203 GreaterTeleport           16824011 8     21309  12315    14669   ****        0          
+204 GreaterTeleport_SelfOnly  ****     ****  ****   ****     14670   14309       0          
+205 GreaterTeleport_Party     ****     ****  ****   ****     14671   14310       0          
 206 **Level_9_Psion_Powers**  ****     ****  ****   ****     ****    ****        0          
 207 Assimilate                16823856 9     21331  12337    14691   14331       0          
 208 Etherealness              16823858 9     21332  12338    14692   14332       0          

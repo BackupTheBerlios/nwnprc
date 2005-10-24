@@ -727,21 +727,24 @@ int ShadowWeave (object oCaster, int iSpellID)
 
    int iSpellSchool = GetSpellSchool(iSpellID);
 
-   if (iSpellSchool == SPELL_SCHOOL_EVOCATION || iSpellSchool == SPELL_SCHOOL_TRANSMUTATION)
+   // Bonus for spells of Enhancement, Necromancy and Illusion schools and spells with Darkness descriptor
+   if (iSpellSchool == SPELL_SCHOOL_ENCHANTMENT ||
+       iSpellSchool == SPELL_SCHOOL_NECROMANCY  ||
+       iSpellSchool == SPELL_SCHOOL_ILLUSION    ||
+       iSpellID == SPELL_DARKNESS               ||
+       iSpellID == SPELLABILITY_AS_DARKNESS     ||
+       iSpellID == 688                          || // Drider darkness
+       iSpellID == SHADOWLORD_DARKNESS)
    {
-        if (iSpellID == SPELL_DARKNESS ||
-            iSpellID == SPELLABILITY_AS_DARKNESS  ||
-            iSpellID == SPELL_SHADOW_CONJURATION_DARKNESS ||
-            iSpellID == 688 || // Drider darkness
-            iSpellID == SHADOWLORD_DARKNESS)
-        {
-            return 0;
-        }
-        else
-        {
-            return -1; // yes, that's a penalty.
-        }
+       return 1;
    }
+   // Penalty to spells of Evocation and Transmutation schools, except for those with Darkness descriptor
+   else if (iSpellSchool == SPELL_SCHOOL_EVOCATION     ||
+            iSpellSchool == SPELL_SCHOOL_TRANSMUTATION)
+   {
+       return -1;
+   }
+
    return 0;
 }
 
@@ -1153,14 +1156,14 @@ object PRCGetSpellTargetObject()
 {
     if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE))
         return GetLocalObject(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE);
-    
+
     // Reddopsi power causes spells and powers to rebound onto the caster.
     // If the caster has it active as well, the power rebounds again and hits the target normally.
     if (GetLocalInt(GetSpellTargetObject(), "Reddopsi") && !GetLocalInt(GetLastSpellCaster(), "Reddopsi")) return GetLastSpellCaster();
-        
+
     // Get the item used to cast the spell
     object oItem = GetSpellCastItem();
-    
+
     // The rune always targets the one who activates it.
     if (GetResRef(oItem) == "prc_rune_1") return GetItemPossessor(oItem);
     // This check doesnt work, still need a way to find the target on one use items.
@@ -1171,7 +1174,7 @@ object PRCGetSpellTargetObject()
         DeleteLocalInt(GetLastSpellCaster(), "PRCRuneTarget");
         return GetLastSpellCaster();
     }*/
-        
+
     return GetSpellTargetObject();
 }
 
@@ -1260,14 +1263,14 @@ int PRCGetMetaMagicFeat()
     int nFeat = GetMetaMagicFeat();
     if(GetIsObjectValid(GetSpellCastItem()))
         nFeat = 0;//biobug, this isn't reset to zero by casting from an item
-        
+
     int nSSFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
     int nNewSpellMetamagic = GetLocalInt(OBJECT_SELF, "NewSpellMetamagic");
     if(nNewSpellMetamagic)
         nFeat = nNewSpellMetamagic-1;
     if(nSSFeat)
-        nFeat = nSSFeat; 
-        
+        nFeat = nSSFeat;
+
     if(GetIsObjectValid(GetSpellCastItem()))
     {
         object oItem = GetSpellCastItem();

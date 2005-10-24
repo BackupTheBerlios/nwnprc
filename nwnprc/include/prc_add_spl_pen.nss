@@ -14,9 +14,9 @@ int GetHeartWarderPene(int spell_id, object oCaster = OBJECT_SELF) {
     if (!GetHasFeat(FEAT_VOICE_SIREN, oCaster)) return 0;
 
     int  nSchool = GetLocalInt(OBJECT_SELF,"X2_L_LAST_SPELLSCHOOL_VAR");
-    
+
     if ( nSchool != SPELL_SCHOOL_ENCHANTMENT) return 0;
-    
+
     // Bonus Requires Verbal Spells
     string VS = lookup_spell_vs(spell_id);
     if (VS != "v" && VS != "vs")
@@ -73,7 +73,7 @@ int ElementalSavantSP(int spell_id, object oCaster = OBJECT_SELF)
         }
 
         // Now determine the bonus
-        if (feat && GetHasFeat(feat, oCaster)) 
+        if (feat && GetHasFeat(feat, oCaster))
         {
 
             if (nES > 28)       nSP = 10;
@@ -126,7 +126,7 @@ int RedWizardSP(int spell_id, object oCaster = OBJECT_SELF)
 
         if (iSpellSchool == iRWSpec)
         {
-        
+
             nSP = 1;
 
             if (iRedWizard > 29)        nSP = 16;
@@ -144,7 +144,7 @@ int RedWizardSP(int spell_id, object oCaster = OBJECT_SELF)
             else if (iRedWizard > 5)    nSP = 4;
             else if (iRedWizard > 3)    nSP = 3;
             else if (iRedWizard > 1)    nSP = 2;
-        
+
         }
 
 
@@ -156,11 +156,11 @@ int RedWizardSP(int spell_id, object oCaster = OBJECT_SELF)
 int GetSpellPenetreFocusSchool(object oCaster = OBJECT_SELF)
 {
   int  nSchool = GetLocalInt(OBJECT_SELF,"X2_L_LAST_SPELLSCHOOL_VAR");
-  
+
   if (nSchool >0){
      if (GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION+nSchool-1, oCaster))
-       return 4;}   
-    
+       return 4;}
+
   return 0;
 }
 
@@ -189,38 +189,23 @@ int ShadowWeavePen(int spell_id, object oCaster = OBJECT_SELF)
     int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster);
     int nSP;
 
-    if (iShadow > 0)
+    // Apply changes if the caster has level in Shadow Adept class
+    // and this spell is eligible for the spell penetration check increase
+    if (iShadow > 0 && ShadowWeave(oCaster, spell_id) == 1)
     {
-        int nSpell = PRCGetSpellId();
-        string sSpellSchool = lookup_spell_school(nSpell);
-        int iSpellSchool;
-        
-        if (sSpellSchool == "A") iSpellSchool = SPELL_SCHOOL_ABJURATION;
-        else if (sSpellSchool == "C") iSpellSchool = SPELL_SCHOOL_CONJURATION;
-        else if (sSpellSchool == "D") iSpellSchool = SPELL_SCHOOL_DIVINATION;
-        else if (sSpellSchool == "E") iSpellSchool = SPELL_SCHOOL_ENCHANTMENT;
-        else if (sSpellSchool == "V") iSpellSchool = SPELL_SCHOOL_EVOCATION;
-        else if (sSpellSchool == "I") iSpellSchool = SPELL_SCHOOL_ILLUSION;
-        else if (sSpellSchool == "N") iSpellSchool = SPELL_SCHOOL_NECROMANCY;
-        else if (sSpellSchool == "T") iSpellSchool = SPELL_SCHOOL_TRANSMUTATION;
-
-        if (iSpellSchool == SPELL_SCHOOL_ENCHANTMENT || iSpellSchool == SPELL_SCHOOL_NECROMANCY || iSpellSchool == SPELL_SCHOOL_ILLUSION)
-        {
-        
-            if (iShadow > 29)   nSP = 10;
-            else if (iShadow > 26)  nSP = 9;
-            else if (iShadow > 23)  nSP = 8;
-            else if (iShadow > 20)  nSP = 7;
-            else if (iShadow > 17)  nSP = 6;
-            else if (iShadow > 14)  nSP = 5;
-            else if (iShadow > 11)  nSP = 4;
-            else if (iShadow > 8)   nSP = 3;
-            else if (iShadow > 5)   nSP = 2;
-            else if (iShadow > 2)   nSP = 1;
-        }
-
-
+        // Shadow Spell Power
+        if      (iShadow > 29)  nSP = 10;
+        else if (iShadow > 26)  nSP = 9;
+        else if (iShadow > 23)  nSP = 8;
+        else if (iShadow > 20)  nSP = 7;
+        else if (iShadow > 17)  nSP = 6;
+        else if (iShadow > 14)  nSP = 5;
+        else if (iShadow > 11)  nSP = 4;
+        else if (iShadow > 8)   nSP = 3;
+        else if (iShadow > 5)   nSP = 2;
+        else if (iShadow > 2)   nSP = 1;
     }
+
     //SendMessageToPC(GetFirstPC(), "Your Spell Pen modifier is " + IntToString(nSP));
     return nSP;
 }
@@ -230,7 +215,7 @@ int KOTCSpellPenVsDemons(object oCaster)
 	int nSP = 0;
 	int iKOTC = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster);
 	object oTarget = PRCGetSpellTargetObject();
-	
+
 	if (iKOTC >= 1)
     	{
     		if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
@@ -280,6 +265,6 @@ int add_spl_pen(object oCaster = OBJECT_SELF)
     nSP += ShadowWeavePen(spell_id,oCaster);
     nSP += KOTCSpellPenVsDemons(oCaster);
     nSP += RunecasterRunePowerSP(oCaster);
-        
+
     return nSP;
 }

@@ -87,7 +87,7 @@ int GetHierophantSLAAdjustment(int spell_id, object oCaster = OBJECT_SELF)
              retval = StringToInt( lookup_spell_cleric_level(spell_id) );
          retval -= GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster);
         }
-   
+
    return retval;
 }
 
@@ -151,7 +151,7 @@ int ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
         }
 
         // Now determine the bonus
-        if (feat && GetHasFeat(feat, oCaster)) 
+        if (feat && GetHasFeat(feat, oCaster))
         {
 
             if (nES > 28)       nDC = 10;
@@ -206,7 +206,7 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
 
         if (iSpellSchool == iRWSpec)
         {
-        
+
             nDC = 1;
 
             if (iRedWizard > 29)        nDC = 16;
@@ -273,29 +273,30 @@ int RedWizardDCPenalty(int spell_id, object oTarget)
 
 int ShadowAdeptDCPenalty(int spell_id, object oTarget)
 {
-    int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oTarget); 
+    int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oTarget);
+    int nSpellSchool = GetSpellSchool(spell_id);
     int nDC;
-     if (iShadow > 0)
-     {
-          if (GetSpellSchool(spell_id) == SPELL_SCHOOL_ENCHANTMENT 
-            || GetSpellSchool(spell_id) == SPELL_SCHOOL_NECROMANCY 
-            || GetSpellSchool(spell_id) == SPELL_SCHOOL_ILLUSION)
-          {
+    if (iShadow > 0)
+    {
+        if (nSpellSchool == SPELL_SCHOOL_ENCHANTMENT
+         || nSpellSchool == SPELL_SCHOOL_NECROMANCY
+         || nSpellSchool == SPELL_SCHOOL_ILLUSION)
+        {
 
-               if (iShadow > 28)   nDC = nDC - 10;
-               else if (iShadow > 25)   nDC = nDC - 9;
-               else if (iShadow > 22)   nDC = nDC - 8;
-               else if (iShadow > 19)   nDC = nDC - 7;
-               else if (iShadow > 16)   nDC = nDC - 6;
-               else if (iShadow > 13)   nDC = nDC - 5;
-               else if (iShadow > 10)   nDC = nDC - 4;
-               else if (iShadow > 7)    nDC = nDC - 3;
-               else if (iShadow > 4)    nDC = nDC - 2;
-               else if (iShadow > 1)    nDC = nDC - 1;
-          }
-     //SendMessageToPC(GetFirstPC(), "Your Spell Save modifier is " + IntToString(nDC));
-     }
-     return nDC;
+            if      (iShadow > 28)   nDC -= 10;
+            else if (iShadow > 25)   nDC -= 9;
+            else if (iShadow > 22)   nDC -= 8;
+            else if (iShadow > 19)   nDC -= 7;
+            else if (iShadow > 16)   nDC -= 6;
+            else if (iShadow > 13)   nDC -= 5;
+            else if (iShadow > 10)   nDC -= 4;
+            else if (iShadow > 7)    nDC -= 3;
+            else if (iShadow > 4)    nDC -= 2;
+            else if (iShadow > 1)    nDC -= 1;
+        }
+        //SendMessageToPC(GetFirstPC(), "Your Spell Save modifier is " + IntToString(nDC));
+    }
+    return nDC;
 }
 
 //Tattoo Focus DC boost based on spell school specialization
@@ -333,46 +334,32 @@ int TattooFocus(int spell_id, object oCaster = OBJECT_SELF)
     return nDC;
 }
 
-// Shadow Weave Feat
-// DC +1 (school Ench,Illu,Necro)
 int ShadowWeaveDC(int spell_id, object oCaster = OBJECT_SELF)
 {
+    int nDC = 0;
+
+    // Account for the Shadow Weave feat
+    int nShadowWeaveSpell = ShadowWeave(oCaster, spell_id);
+    nDC += nShadowWeaveSpell == 1 ? 1 : 0; // The Shadow Weave feat only applies a DC bonus, never a penalty
+
+    // Account for Shadow Adept levels
     int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster);
-    int nDC;
-
-    if (iShadow > 0)
+    if(iShadow > 0 && nShadowWeaveSpell == 1)
     {
-        int nSpell = PRCGetSpellId();
-        string sSpellSchool = lookup_spell_school(nSpell);
-        int iSpellSchool;
-        
-        if (sSpellSchool == "A") iSpellSchool = SPELL_SCHOOL_ABJURATION;
-        else if (sSpellSchool == "C") iSpellSchool = SPELL_SCHOOL_CONJURATION;
-        else if (sSpellSchool == "D") iSpellSchool = SPELL_SCHOOL_DIVINATION;
-        else if (sSpellSchool == "E") iSpellSchool = SPELL_SCHOOL_ENCHANTMENT;
-        else if (sSpellSchool == "V") iSpellSchool = SPELL_SCHOOL_EVOCATION;
-        else if (sSpellSchool == "I") iSpellSchool = SPELL_SCHOOL_ILLUSION;
-        else if (sSpellSchool == "N") iSpellSchool = SPELL_SCHOOL_NECROMANCY;
-        else if (sSpellSchool == "T") iSpellSchool = SPELL_SCHOOL_TRANSMUTATION;
-
-        if (iSpellSchool == SPELL_SCHOOL_ENCHANTMENT || iSpellSchool == SPELL_SCHOOL_NECROMANCY || iSpellSchool == SPELL_SCHOOL_ILLUSION)
-        {
-        
-            if (iShadow > 29)   nDC = 10;
-            else if (iShadow > 26)  nDC = 9;
-            else if (iShadow > 23)  nDC = 8;
-            else if (iShadow > 20)  nDC = 7;
-            else if (iShadow > 17)  nDC = 6;
-            else if (iShadow > 14)  nDC = 5;
-            else if (iShadow > 11)  nDC = 4;
-            else if (iShadow > 8)   nDC = 3;
-            else if (iShadow > 5)   nDC = 2;
-            else if (iShadow > 2)   nDC = 1;
-        }
-
-
+        // Shadow Spell Power
+        if      (iShadow > 29)  nDC += 10;
+        else if (iShadow > 26)  nDC += 9;
+        else if (iShadow > 23)  nDC += 8;
+        else if (iShadow > 20)  nDC += 7;
+        else if (iShadow > 17)  nDC += 6;
+        else if (iShadow > 14)  nDC += 5;
+        else if (iShadow > 11)  nDC += 4;
+        else if (iShadow > 8)   nDC += 3;
+        else if (iShadow > 5)   nDC += 2;
+        else if (iShadow > 2)   nDC += 1;
     }
     //SendMessageToPC(GetFirstPC(), "Your Spell DC modifier is " + IntToString(nDC));
+
     return nDC;
 }
 
@@ -380,7 +367,7 @@ int KOTCSpellFocusVsDemons(object oTarget, object oCaster)
 {
     int nDC = 0;
     int iKOTC = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster);
-    
+
     if (iKOTC >= 1)
         {
             if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
@@ -439,7 +426,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
     if(nSpellID == -1)
         nSpellID = PRCGetSpellId();
     //10+spelllevel+stat(cha default)
-    int nDC = GetSpellSaveDC(); 
+    int nDC = GetSpellSaveDC();
     // For when you want to assign the caster DC
     //this does take feat/race/class into account, it only overrides the baseDC
     if (GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE) != 0)
@@ -542,7 +529,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 {
                     nDC = GetItemPropertyCostTableValue (ipTest);
                     break;//end while
-                }    
+                }
             }
             ipTest = GetNextItemProperty(oItem);
         }
@@ -553,7 +540,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
     nDC += RedWizardDCPenalty(nSpellID, oTarget);
     nDC += ShadowAdeptDCPenalty(nSpellID, oTarget);
     return nDC;
-    
+
 }
 
 //called just from above and from inc_epicspells
@@ -574,5 +561,5 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += RunecasterRunePowerDC(oCaster);
     nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     return nDC;
-    
+
 }

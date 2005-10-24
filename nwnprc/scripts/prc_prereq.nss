@@ -699,7 +699,7 @@ void RacialHD(object oPC)
                 case CLASS_TYPE_VERMIN: SetLocalInt(oPC, "PRC_PrereqVermin", 0); break;
             }
         }
-    
+
     }
 }
 
@@ -814,7 +814,7 @@ void main2()
             for(nSpellLevel = 1; nSpellLevel <= nPsiHighest; nSpellLevel++)
             {
                 SetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel), 0);
-                FloatingTextStringOnCreature("Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel))), oPC, FALSE);
+                if(DEBUG) DoDebug("Psionics power level Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel))), oPC, FALSE);
             }
             /*
             for(i=1;i<=9;i++)

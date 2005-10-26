@@ -237,7 +237,8 @@ void main()
     }
 
     // Empathic Feedback
-    if(GetLocalInt(oSpellOrigin, "EmpathicFeedback") == TRUE && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+    // 5 is the minimum value for Emp Feedback
+    if(GetLocalInt(oSpellOrigin, "EmpathicFeedback") >= 5 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
         DelayCommand(0.01, EmpathicFeedback(oSpellOrigin));
     }

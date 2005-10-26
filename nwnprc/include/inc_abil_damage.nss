@@ -75,7 +75,10 @@ const int ABILITY_DAMAGE_EFFECT_KNOCKDOWN = 2;
  * @param fDuration        If temporary, the duration. If this is -1.0, the damage
  *                         will be applied so that it wears off at the rate of 1 point
  *                         per ingame day.
- * @param bDispellable     Is the effect dispellable?
+ * @param bDispellable     Is the effect dispellable? If FALSE, the system will delay
+ *                         the application of the effect a short moment (10ms) to break
+ *                         spellID association. This will make effects from the same
+ *                         source stack with themselves.
  * @param nSpellID         ID of spell causing damage
  * @param nCasterLevel     Casterlevel of the effect being applied
  * @param oSource          Object causing the ability damage
@@ -157,11 +160,16 @@ void ApplyAbilityDamage(object oTarget, int nAbility, int nAmount, int nDuration
                                                                           SupernaturalEffect(EffectAbilityDecrease(nAbility, 1)),
                                                           oTarget, HoursToSeconds(24) * i, bDispellable, nSpellID, nCasterLevel, oSource));
         }
+        else if(!bDispellable)
+        {
+            DelayCommand(0.01f, SPApplyEffectToObject(nDurationType, SupernaturalEffect(EffectAbilityDecrease(nAbility, nAmount)),
+                                                      oTarget, fDuration, bDispellable, nSpellID, nCasterLevel, oSource));
+        }
         else
-            SPApplyEffectToObject(nDurationType, bDispellable ?
-                                                  EffectAbilityDecrease(nAbility, nAmount) :
-                                                  SupernaturalEffect(EffectAbilityDecrease(nAbility, nAmount)),
-                                                 oTarget, fDuration, bDispellable, nSpellID, nCasterLevel, oSource);
+        {
+            SPApplyEffectToObject(nDurationType, EffectAbilityDecrease(nAbility, nAmount),
+                                  oTarget, fDuration, bDispellable, nSpellID, nCasterLevel, oSource);
+        }
     }
     // Non-healable damage
     else

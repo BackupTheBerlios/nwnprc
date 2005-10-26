@@ -36,6 +36,7 @@
 32 WeapFocClub         FEATOR  43               ****      
 33 WeapFocDWAxe        FEATOR  952              ****      
 34 WeapFocWhip         FEATOR  993              ****      
-35 FEAT_KATANA_FINESSE FEATOR  2330             ****      
-36 ScriptVar           VAR     PRC_AllowTempest 0         
-37 ScriptVar           VAR     PRC_PrereqTemp   0         
+35 WeapFocMindblade    FEATOR  3602             ****      
+36 FEAT_KATANA_FINESSE FEATOR  2330             ****      
+37 ScriptVar           VAR     PRC_AllowTempest 0         
+38 ScriptVar           VAR     PRC_PrereqTemp   0         

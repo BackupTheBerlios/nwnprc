@@ -103,7 +103,7 @@ void main()
                 ApplyAbilityDamage(oTarget, nKTTSType == KTTS_TYPE_INT ? ABILITY_INTELLIGENCE :
                                             nKTTSType == KTTS_TYPE_WIS ? ABILITY_WISDOM :
                                             ABILITY_CHARISMA
-                                          , nKTTSDice, DURATION_TYPE_PERMANENT, TRUE);
+                                          , nKTTSDice, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
             }
 
@@ -157,9 +157,7 @@ void main()
                 // Make a DC 17 will save
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, 17))
                 {
-                    /*effect eAbilDam = EffectAbilityDecrease(ABILITY_WISDOM, d2());
-                    ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eAbilDam), oTarget);*/
-                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d2(), DURATION_TYPE_PERMANENT, TRUE);
+                    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d2(), DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
                 }
             }
@@ -175,7 +173,7 @@ void main()
         //----------------------------------------------------------------------
         // Targeted Dispel - Dispel all
         //----------------------------------------------------------------------
-        if(GetLocalInt(GetModule(),"BIODispel"))
+        if(GetLocalInt(GetModule(), "BIODispel"))
             spellsDispelMagic(oTarget, nCasterLevel, eVis, eImpact);
         else
             spellsDispelMagicMod(oTarget, nCasterLevel, eVis, eImpact);
@@ -185,7 +183,7 @@ void main()
         //SendMessageToPC(oPC, "Wounding");
         if(!GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT))
         {
-            ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, DURATION_TYPE_PERMANENT, TRUE);
+            ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
         }
     }

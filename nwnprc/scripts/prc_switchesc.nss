@@ -84,7 +84,7 @@ void main()
                     AddChoice("Join the Shadowlords as a prerequisited for the Teflammar Shadowlord class.", 5);
                 AddChoice("Register this character as a cohort.", 6);
                 if(GetHasFeat(FEAT_LEADERSHIP, oPC))
-                    AddChoice("Manage cohorts.", 6);
+                    AddChoice("Manage cohorts.", 7);
 
                 MarkStageSetUp(nStage, oPC);
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values

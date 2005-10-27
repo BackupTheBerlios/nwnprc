@@ -25,25 +25,27 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "spinc_common"
+#include "prc_inc_teleport"
 
 void DieMaggot(int nSpellID, object oCaster, object oTarget)
 {
-	if (GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster) && GetLocalInt(oTarget, "WasRestored"))
-	{
-		effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
-    		effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-    		effect eDeath = EffectDeath();
-    		effect eLink2 = EffectLinkEffects(eVis, eVis2);
-    		eLink2 = EffectLinkEffects(eLink2, eDeath);
-    		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget);
-    	}
+    // If the target hasn't been hit with restorative effects by now, kill it
+    if(!(GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster) &&
+         GetLocalInt(oTarget, "WasRestored")
+         )
+       )
+    {
+        effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
+        effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+        effect eDeath = EffectDeath();
+        effect eLink2 = EffectLinkEffects(eVis, eVis2);
+        eLink2 = EffectLinkEffects(eLink2, eDeath);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget);
+    }
 }
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -68,43 +70,45 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 
     if (nMetaPsi > 0)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
+    	int nDC = GetManifesterDC(oCaster);
+    	int nCaster = GetManifesterLevel(oCaster);
+    	int nPen = GetPsiPenetration(oCaster);
 
-	// spam those effect chains, weee
-    	effect eParal = EffectParalyze();
-    	if (GetIsImmune(oTarget, IMMUNITY_TYPE_PARALYSIS)) 	eParal = EffectCutsceneParalyze();
-    	effect eBlind =  EffectBlindness();
-	effect eDeaf = EffectDeaf();
-	effect eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
-	effect eVis2 = EffectVisualEffect(82);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-	effect eDur2 = EffectVisualEffect(VFX_DUR_PARALYZED);
-	effect eDur3 = EffectVisualEffect(VFX_DUR_PARALYZE_HOLD);
-	effect eLink = EffectLinkEffects(eParal, eBlind);
-	eLink = EffectLinkEffects(eLink, eDeaf);
-	eLink = EffectLinkEffects(eLink, eVis);
-	eLink = EffectLinkEffects(eLink, eVis2);
-	eLink = EffectLinkEffects(eLink, eDur);
-	eLink = EffectLinkEffects(eLink, eDur2);
-	eLink = EffectLinkEffects(eLink, eDur3);
+    	// spam those effect chains, weee
+        effect eParal = GetIsImmune(oTarget, IMMUNITY_TYPE_PARALYSIS) ?  // If the target is immune to normal paralysis
+                         EffectCutsceneParalyze() :                      // use cutscene paralysis
+                         EffectParalyze();                               // Otherwise, normal paralysis
+        effect eBlind = EffectBlindness();
+        effect eDeaf  = EffectDeaf();
+        effect eVis   = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
+        effect eVis2  = EffectVisualEffect(VFX_DUR_PARALYZE_HOLD);
+        effect eDur   = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+        effect eDur2  = EffectVisualEffect(VFX_DUR_PARALYZED);
+        effect eDur3  = EffectVisualEffect(VFX_DUR_PARALYZE_HOLD);
+        effect eLink  = EffectLinkEffects(eParal, eBlind);
+        eLink = EffectLinkEffects(eLink, eDeaf);
+        eLink = EffectLinkEffects(eLink, eVis);
+        eLink = EffectLinkEffects(eLink, eVis2);
+        eLink = EffectLinkEffects(eLink, eDur);
+        eLink = EffectLinkEffects(eLink, eDur2);
+        eLink = EffectLinkEffects(eLink, eDur3);
 
+        //Fire cast spell at event for the specified target
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-		if (!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
-		{
-	               	if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-        	       	{
-               			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
-               			DelayCommand((HoursToSeconds(1) + 1.0), DieMaggot(GetSpellId(), oCaster, oTarget));
-	               	}
-		}
-	}
+        //Check for Power Resistance
+        if(PRCMyResistPower(oCaster, oTarget, nPen))
+        {
+            if(!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) &&   // Check if the target has a brain to mess with
+               GetCanTeleport(oTarget, GetLocation(oTarget), FALSE)  // And that the target can be teleported at all
+               )
+            {
+                if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                {
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
+                    DelayCommand((HoursToSeconds(1) + 1.0), DieMaggot(GetSpellId(), oCaster, oTarget));
+                }
+            }
+        }
     }
 }

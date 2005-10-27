@@ -1,7 +1,7 @@
 /*
     ----------------
     Baleful Teleport
-    
+
     psi_psi_baletel
     ----------------
 
@@ -15,11 +15,11 @@
     Saving Throw: Fortitude half
     Power Resistance: Yes
     Power Point Cost: 9
- 
+
     You psychoportively disperse miniscule portions of the target, dealing 9d6 points of damage.
 
-    Augment: For every additional power point spend, this power's damage increases by 1d6. 
-    For each extra 2d6 points of damage, this power's save DC increases by 1, 
+    Augment: For every additional power point spend, this power's damage increases by 1d6.
+    For each extra 2d6 points of damage, this power's save DC increases by 1,
     and your manifester level increases by 1.
 */
 
@@ -27,6 +27,7 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "X0_I0_SPELLS"
+#include "prc_inc_teleport"
 
 void main()
 {
@@ -77,21 +78,26 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
         effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
         effect eRay = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
 
+        //Fire cast spell at event for the specified target
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, POWER_BALEFULTEL));
+
+
         //Check for Power Resistance
-        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        if(PRCMyResistPower(oCaster, oTarget, nPen))
         {
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, POWER_BALEFULTEL));
-        
-            //Make a saving throw check
-            if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+            // The power has the Teleportation descriptor, so the target has to be teleportable for it to be affected
+            if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE))
             {
-                nDamage /= 2;
+                //Make a saving throw check
+                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                {
+                    nDamage /= 2;
+                }
+                effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+                //Apply the VFX impact and effects
+                DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
             }
-            effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-            //Apply the VFX impact and effects
-            DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
         }
     }
 }

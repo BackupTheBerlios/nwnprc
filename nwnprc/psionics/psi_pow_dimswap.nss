@@ -1,7 +1,7 @@
 /*
    ----------------
    Dimensional Swap
-   
+
    prc_pow_dimswap
    ----------------
 
@@ -15,8 +15,8 @@
    Saving Throw: None
    Power Resistance: No
    Power Point Cost: 3
-   
-   You instantly swap positions between your current position and that of a designated ally. 
+
+   You instantly swap positions between your current position and that of a designated ally.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +27,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -52,9 +49,9 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
-	DoTransposition(FALSE);
+	    DoTransposition(FALSE, FALSE);
     }
 }

@@ -17,6 +17,17 @@ const string COHORT_TAG          = "prc_cohort";
     string Cohort_X_cdkey   (cdkey of owning player)
 */
 
+
+int GetMaximumCohortCount(object oPC);
+object GetCohort(int nID, object oPC);
+int GetCurrentCohortCount(object oPC);
+int GetCohortMaxLevel(int nLeadership, object oPC);
+void RegisterAsCohort(object oPC);
+void AddCohortToPlayer(int nCohortID, object oPC);
+void RemoveCohortFromPlayer(object oCohort, object oPC);
+int GetLeadershipScore(object oPC = OBJECT_SELF);
+void CheckHB();
+
 void AddCohortToPlayer(int nCohortID, object oPC)
 {
     object oCohort = RetrieveCampaignObject(COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_obj", GetLocation(oPC));
@@ -31,14 +42,15 @@ void AddCohortToPlayer(int nCohortID, object oPC)
     //turn on its default script
     SetLocalInt(oCohort, "PRC_PC_EXEC_DEFAULT", TRUE);
     //set it to the pcs level
-    SetXP(oCohort, GetHitDice(oPC)*(GetHitDice(oPC)-1)*500);
+    int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
+    SetXP(oCohort, nLevel*(nLevel-1)*500);
 
     //DEBUG
     //various tests
-    SendMessageToPC(GetFirstPC(), "Cohort Name="+GetName(oCohort));
-    SendMessageToPC(GetFirstPC(), "Cohort HD="+IntToString(GetHitDice(oCohort)));
-    SendMessageToPC(GetFirstPC(), "Cohort XP="+IntToString(GetXP(oCohort)));
-    SendMessageToPC(GetFirstPC(), "Cohort GetIsPC="+IntToString(GetIsPC(oCohort)));
+    DoDebug("Cohort Name="+GetName(oCohort));
+    DoDebug("Cohort HD="+IntToString(GetHitDice(oCohort)));
+    DoDebug("Cohort XP="+IntToString(GetXP(oCohort)));
+    DoDebug("Cohort GetIsPC="+IntToString(GetIsPC(oCohort)));
 }
 
 void RemoveCohortFromPlayer(object oCohort, object oPC)
@@ -131,7 +143,7 @@ void RegisterAsCohort(object oPC)
 }
 
 
-int GetCohortMaxLevel(int nLeadership)
+int GetCohortMaxLevel(int nLeadership, object oPC)
 {
     int nLevel;
     switch(nLeadership)
@@ -207,6 +219,8 @@ int GetCohortMaxLevel(int nLeadership)
         case 69: nLevel = 40; break;
         case 70: nLevel = 40; break;
     }
+    if(nLevel > (GetHitDice(oPC)-2))
+        nLevel = GetHitDice(oPC)-2;
     return nLevel;
 }
 
@@ -227,7 +241,6 @@ int GetCurrentCohortCount(object oPC)
     }
     return nCount;
 }
-
 object GetCohort(int nID, object oPC)
 {
     int nCount;

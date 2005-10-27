@@ -179,6 +179,29 @@ void main()
             }   
         }
         
+        //cohort XP gain
+        if(GetHasFeat(FEAT_LEADERSHIP, oPC))
+        {
+            int nCohortTotal = GetMaximumCohortCount(oPC);
+            int XPGained = GetXP(oPC)-GetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT);
+            if(!XPGained)
+            {
+                int i;
+                for(i=1;i<=nCohortTotal;i++)
+                {
+                    object oCohort = GetCohort(i, oPC);
+                    float ECLRatio = IntToFloat(GetECL(oPC))/IntToFloat(GetECL(oCohort));
+                    int CohortXPGain = FloatToInt(IntToFloat(XPGained)*ECLRatio);
+                    SetXP(oCohort, GetXP(oCohort)+CohortXPGain);
+                    while(GetECL(oCohort)>(GetECL(oPC)-2))
+                    {
+                        SetXP(oCohort, (GetHitDice(oCohort)*(GetHitDice(oCohort)-1)*500)-1);
+                    }    
+                }
+            
+            }
+        }
+        
         // Get the next PC for the loop
         oPC = GetNextPC();
     }

@@ -19,12 +19,17 @@
 /**
  * Changes the positions of current spellcaster and spell target.
  *
- * @param bAllowHostile  If this flag is FALSE then the target creature
- *                       must be a member of the caster's party (have the same faction
- *                       leader). If this flag is false then it may be a party member
- *                       or a hostile creature.
+ * @param bRunSpellhook If this flag is FALSE then the target creature
+ *                      must be a member of the caster's party (have the same faction
+ *                      leader). If this flag is false then it may be a party member
+ *                      or a hostile creature.
+ * @param bRunSpellhook By default, this is TRUE and the function runs the spellhook.
+ *                      But in some cases, such as feats or psionic powers, the script
+ *                      calling this function may need to handle the matter differently.
+ *                      In such cases, set this to FALSE, which will cause the spellhook
+ *                      not to be run from this function.
  */
-void DoTransposition(int bAllowHostile);
+void DoTransposition(int bAllowHostile, int bRunSpellhook = TRUE);
 
 
 
@@ -66,13 +71,14 @@ void Transpose(object o1, object o2)
 }
 
 
-void DoTransposition(int bAllowHostile)
+void DoTransposition(int bAllowHostile, int bRunSpellhook = TRUE)
 {
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-    if (!X2PreSpellCastCode()) return;
-    
-    
+    if(bRunSpellhook)
+        if(!X2PreSpellCastCode()) return;
+
+
     object oTarget = PRCGetSpellTargetObject();
     if (!GetIsDead(oTarget))
     {
@@ -82,7 +88,7 @@ void DoTransposition(int bAllowHostile)
         if (bParty || (bAllowHostile && spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF)))
         {
             // Targets outside the party get a will save and SR to resist.
-            if (bParty || 
+            if (bParty ||
                 (!SPResistSpell(OBJECT_SELF, oTarget) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF))))
             {
                 //Fire cast spell at event for the specified target
@@ -91,8 +97,8 @@ void DoTransposition(int bAllowHostile)
                 // Move the creatures.
                 DelayCommand(0.1, Transpose(OBJECT_SELF, oTarget));
             }
-        }       
+        }
     }
-        
+
     SPSetSchool();
 }

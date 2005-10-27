@@ -78,7 +78,7 @@ void main()
         // Mark the first part done
         SetLocalInt(oCaster, "PRC_Spell_GreaterTeleport_FirstPartDone", TRUE);
         // Now, get the location to teleport to.
-        ChooseTeleportTargetLocation(oCaster, "sp_grtr_teleport", "PRC_Spell_GreaterTeleport_TargetLocation", FALSE, TRUE);
+        ChooseTeleportTargetLocation(oCaster, "psi_pow_gtele", "PRC_Spell_GreaterTeleport_TargetLocation", FALSE, TRUE);
     }
     // We now have the location and the list of targets. Jump away.
     else
@@ -89,7 +89,7 @@ void main()
         object oTarget;
 
         // Check if it's valid for the caster to teleport. If he can't go, no-one goes
-        if(GetCanTeleport(oCaster, lTarget))
+        if(GetCanTeleport(oCaster, lTarget, TRUE))
         {
             // VFX on the starting location
             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_TELEPORT_OUT), lCaster);

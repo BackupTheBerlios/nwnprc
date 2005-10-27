@@ -66,7 +66,7 @@ Champion of Bane (Based on Divine Champion)	| Forgotten Realms Campaign Setting
 Red Wizard					| Forgotten Realms Campaign Setting
 Purple Dragon Knight				| Forgotten Realms Campaign Setting?
 Runecaster          				| Forgotten Realms Campaign Setting?
-Hathran						| Player's Guide to Faerun
+Hathran						| Forgotten Realms Campaign Setting
 Shadow Adept					| Player's Guide to Faerun
 Dwarven Battlerager				| Races of Faerun
 Orc Warlord					| Races of Faerun

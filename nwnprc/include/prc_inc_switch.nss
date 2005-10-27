@@ -635,6 +635,10 @@ const string FILE_END_CLASS_SKILLS                   = "FILE_END_CLASS_SKILLS";
  * This will be set automatically to a default unless FILE_END_MANUAL is turned on */
 const string FILE_END_CLASS_POWER                    = "FILE_END_CLASS_POWER";
 
+/** Defines the line after which none of the cls_spbk_*.2da have entries.
+ * This will be set automatically to a default unless FILE_END_MANUAL is turned on */
+ const string FILE_END_CLASS_SPELLBOOK               = "FILE_END_CLASS_SPELLBOOK";
+
 /** Last line of feat.2da
  * This will be set automatically to a default unless FILE_END_MANUAL is turned on */
 const string FILE_END_FEAT                           = "FILE_END_FEAT";
@@ -1843,29 +1847,30 @@ void SetDefaultFileEnds()
     //isnt read in here yet. may be later though
     if(GetPRCSwitch(FILE_END_MANUAL))
         return;
-    SetPRCSwitch(FILE_END_CLASSES,      255);
-    SetPRCSwitch(FILE_END_RACIALTYPES,  255);
-    SetPRCSwitch(FILE_END_GENDER,       2);
-    SetPRCSwitch(FILE_END_PORTRAITS,    1100);
-    SetPRCSwitch(FILE_END_SKILLS,       50);
-    SetPRCSwitch(FILE_END_CLASS_FEAT,   600);
-    SetPRCSwitch(FILE_END_CLASS_SKILLS, 50);
-    SetPRCSwitch(FILE_END_CLASS_POWER,  300);
-    SetPRCSwitch(FILE_END_FEAT,         22000);
-    SetPRCSwitch(FILE_END_CLASS_PREREQ, 25);
-    SetPRCSwitch(FILE_END_FAMILIAR,     20);
-    SetPRCSwitch(FILE_END_ANIMALCOMP,   20);
-    SetPRCSwitch(FILE_END_DOMAINS,      70);
-    SetPRCSwitch(FILE_END_SOUNDSET,     450);
-    SetPRCSwitch(FILE_END_SPELLS,       15400);
-    SetPRCSwitch(FILE_END_SPELLSCHOOL,  10);
-    SetPRCSwitch(FILE_END_APPEARANCE,   500);
-    SetPRCSwitch(FILE_END_WINGS,        10);
-    SetPRCSwitch(FILE_END_TAILS,        10);
-    SetPRCSwitch(FILE_END_PACKAGE,      150);
-    SetPRCSwitch(FILE_END_RACE_FEAT,    30);
-    SetPRCSwitch(FILE_END_IREQ,         50);
-    SetPRCSwitch(FILE_END_ITEM_TO_IREQ, 700);
+    SetPRCSwitch(FILE_END_CLASSES,         255);
+    SetPRCSwitch(FILE_END_RACIALTYPES,     255);
+    SetPRCSwitch(FILE_END_GENDER,          2);
+    SetPRCSwitch(FILE_END_PORTRAITS,       1100);
+    SetPRCSwitch(FILE_END_SKILLS,          50);
+    SetPRCSwitch(FILE_END_CLASS_FEAT,      600);
+    SetPRCSwitch(FILE_END_CLASS_SKILLS,    50);
+    SetPRCSwitch(FILE_END_CLASS_POWER,     300);
+    SetPRCSwitch(FILE_END_CLASS_SPELLBOOK, 500);
+    SetPRCSwitch(FILE_END_FEAT,            22000);
+    SetPRCSwitch(FILE_END_CLASS_PREREQ,    25);
+    SetPRCSwitch(FILE_END_FAMILIAR,        20);
+    SetPRCSwitch(FILE_END_ANIMALCOMP,      20);
+    SetPRCSwitch(FILE_END_DOMAINS,         70);
+    SetPRCSwitch(FILE_END_SOUNDSET,        450);
+    SetPRCSwitch(FILE_END_SPELLS,          15400);
+    SetPRCSwitch(FILE_END_SPELLSCHOOL,     10);
+    SetPRCSwitch(FILE_END_APPEARANCE,      500);
+    SetPRCSwitch(FILE_END_WINGS,           10);
+    SetPRCSwitch(FILE_END_TAILS,           10);
+    SetPRCSwitch(FILE_END_PACKAGE,         150);
+    SetPRCSwitch(FILE_END_RACE_FEAT,       30);
+    SetPRCSwitch(FILE_END_IREQ,            50);
+    SetPRCSwitch(FILE_END_ITEM_TO_IREQ,    700);
     //Companion alone
     if(GetPRCSwitch(PRC_COMPANION_IN_USE))
     {

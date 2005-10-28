@@ -14,6 +14,7 @@ const string COHORT_TAG          = "prc_cohort";
     int    Cohort_X_class3  (cohort class pos3)
     int    Cohort_X_order   (cohort law/chaos measure)
     int    Cohort_X_moral   (cohort good/evil measure)
+    int    Cohort_X_ethran  (cohort has ethran feat)
     string Cohort_X_cdkey   (cdkey of owning player)
 */
 
@@ -110,6 +111,7 @@ void CheckHB()
         SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class3", PRCGetClassByPosition(3, OBJECT_SELF));
         SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_order",  GetLawChaosValue(OBJECT_SELF));
         SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_moral",  GetGoodEvilValue(OBJECT_SELF));
+        SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_ethran", GetHasFeat(FEAT_ETHRAN, OBJECT_SELF));
         SetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_cdkey",  GetPCPublicCDKey(OBJECT_SELF));
 
         //restore previous xp amound
@@ -268,5 +270,52 @@ int GetMaximumCohortCount(object oPC)
         nCount++;
     if(GetHasFeat(FEAT_LEGENDARY_COMMANDER, oPC))
         nCount++;
+    if(GetHasFeat(FEAT_HATH_COHORT, oPC))
+        nCount++;
     return nCount;
+}
+
+int GetIsCohortChoiceValid(int nID, object oPC)
+{
+    int bIsValid = TRUE;
+    string sName = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_name");
+    int    nRace = GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_race");
+    int    nClass1=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_class1");
+    int    nClass2=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_class2");
+    int    nClass3=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_class3");
+    int    nOrder= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_order");
+    int    nMoral= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_moral");
+    int    nEthran=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_ethran");
+    string sKey  = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_cdkey");
+    //another players cohort
+    if(GetPCPublicCDKey(oPC) != "" && GetPCPublicCDKey(oPC) != sKey)
+        bIsValid = FALSE;
+    //hathran
+    if(GetHasFeat(FEAT_HATH_COHORT, oPC))
+    {
+        int nEthranBarbarianCount = 0;
+        int nCohortCount = GetMaximumCohortCount(oPC);
+        int i;
+        for(i=1;i<=nCohortCount;i++)
+        {
+            object oCohort = GetCohort(i, oPC);
+            if(GetIsObjectValid(oCohort)
+                &&(GetHasFeat(FEAT_HATH_COHORT, oCohort) 
+                    || GetLevelByClass(CLASS_TYPE_BARBARIAN, oCohort)))
+                nEthranBarbarianCount++;    
+        }
+        //must have at least one ethran or barbarian
+        if(!nEthranBarbarianCount
+            && GetCurrentCohortCount(oPC) >= GetMaximumCohortCount(oPC)-1
+            && !nEthran 
+            && nClass1 != CLASS_TYPE_BARBARIAN
+            && nClass2 != CLASS_TYPE_BARBARIAN
+            && nClass3 != CLASS_TYPE_BARBARIAN)
+                bIsValid = FALSE;
+    }       
+    //Undead Leadership
+    //Wild Cohort
+        //not implemented yet
+    //return result
+    return bIsValid;
 }

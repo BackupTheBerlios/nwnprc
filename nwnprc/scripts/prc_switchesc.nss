@@ -243,16 +243,7 @@ void main()
                 int i;
                 for(i=1;i<=nCohortCount;i++)
                 {
-                    string sName = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(i)+"_name");
-                    int    nRace = GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_race");
-                    int    nClass1=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_class1");
-                    int    nClass2=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_class2");
-                    int    nClass3=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_class3");
-                    int    nOrder= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_order");
-                    int    nMoral= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(i)+"_moral");
-                    string sKey  = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(i)+"_cdkey");
-                    if(GetPCPublicCDKey(oPC) == ""
-                        ||GetPCPublicCDKey(oPC) == sKey)
+                    GetIsCohortChoiceValid(i, oPC);
                         AddChoice("sName", i);
                 }
 

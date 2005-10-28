@@ -1235,7 +1235,7 @@ const int FEAT_PRESTIGE_FOR_MEDICINAL_PURPOSES     = 4034;   // 2274
 const int FEAT_PRESTIGE_BREATH_OF_FLAME            = 4035;   // 2275
 
 //Hathran class feats
-const int FEAT_COHORT               = 2571; //CONSTANT
+const int FEAT_HATH_COHORT          = 2571; //CONSTANT
 const int FEAT_HATH_COMMAND         = 2572; //CONSTANT
 const int FEAT_HATH_FEAR1           = 2575; //CONSTANT
 const int FEAT_HATH_FEAR2           = 2576; //CONSTANT

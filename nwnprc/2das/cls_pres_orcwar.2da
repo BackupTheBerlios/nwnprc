@@ -11,5 +11,6 @@
 7  Intimidate    SKILL   24              8         
 8  Discipline    SKILL   3               5         
 9  Taunt         SKILL   18              5         
-10 Rage          FEAT    293             ****      
-11 ScriptVar     VAR     PRC_AllowOrcWar 0         
+10 Rage          FEAT    293             ****       
+11 Leadership    FEAT    4365            ****     
+12 ScriptVar     VAR     PRC_AllowOrcWar 0         

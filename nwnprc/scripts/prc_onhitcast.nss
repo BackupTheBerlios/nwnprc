@@ -148,6 +148,24 @@ void main()
             SetLocalInt(oSpellOrigin, "ImpRicochetVarRunning", 1);
         }
     }
+    
+    // Warchief Devoted Bodyguards
+    if(GetLevelByClass(CLASS_TYPE_WARCHIEF, oSpellOrigin) >= 8 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+    {
+    	// Warchief must make a reflex save
+    	if (!GetLocalInt(oSpellOrigin, "WarChiefDelay"))
+    	{
+    		// Done this way for formatting reasons in game
+    		if (ReflexSave(oSpellOrigin, 15) > 0) DelayCommand(0.01, ExecuteScript("prc_wchf_bodygrd",oSpellOrigin));
+        }
+        // He can only do this once a round, so put a limit on it
+        // Also have to make sure its only set once a round
+        if (!GetLocalInt(oSpellOrigin, "WarChiefDelay"))
+        {
+        	SetLocalInt(oSpellOrigin, "WarChiefDelay", TRUE);
+        	DelayCommand(6.0, DeleteLocalInt(oSpellOrigin, "WarChiefDelay"));
+        }
+    }    
 
 
     // Foe Hunter Damage Resistance

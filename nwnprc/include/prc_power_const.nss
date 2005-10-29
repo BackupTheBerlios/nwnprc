@@ -161,6 +161,7 @@ const int POWER_ECTOCOCOON                  = 14134;
 const int POWER_CRISISBREATH                = 14135;
 const int POWER_EMPATHICTRANSFERHOSTILE     = 14136;
 const int POWER_FATELINK                    = 14137;
+const int POWER_DIMENSION_SLIDE             = 14138;
 
 
 // Level 4 Powers

@@ -409,15 +409,23 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
 
     // Catapsi added cost
     if (GetLocalInt(oCaster, "Catapsi")) nPPCost += 4;
+    
+    // The power points added from Wild Surge, to prevent the issue reported by OrtRestave
+    nPPCost += GetLocalInt(oCaster, "WildSurge");
     /// /APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE HERE ///
 
 
-    // If PP Cost is greater than Manifester level, with no addition for Wild Surge (i.e. no double boosting).
-    if ((GetManifesterLevel(oCaster) - GetLocalInt(oCaster, "WildSurge")) >= nPPCost && nCanManifest)
+    // If PP Cost is greater than Manifester level
+    // I have cut out the Wild Surge reduction because of the addition of Wild Surge boosting to the total nPPCost
+    // for the purposes of this equation. This is to fix the bug reported by OrtRestave on the forums.
+    // The total cost of the power, counting Wild Surge as cost, vs the Wild Surged Manifester leve should solve this issue
+    if ((GetManifesterLevel(oCaster)/* - GetLocalInt(oCaster, "WildSurge")*/) >= nPPCost && nCanManifest)
     {
         // Reduced cost of manifesting a power, but does not allow you to exceed the manifester level cap
         // Right now, only used for Thrallherd
         nPPCost = GetPPCostReduced(nPPCost, oCaster);
+        // Now that we have used Wild Surge for the previous check, it is not actually subtracted from PP and is removed
+        nPPCost -= GetLocalInt(oCaster, "WildSurge");
     
         //If Manifest does not have enough points before hostile modifiers, cancel power
         if (nPPCost > nPP)
@@ -494,11 +502,11 @@ void PsychicEnervation(object oCaster, int nWildSurge)
         //if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") != TRUE) - Already checked at the start of function -Ornedan
         SetLocalInt(oCaster, "PowerPoints", nPP);
     }
-    else
+    else if (GetLevelByClass(CLASS_TYPE_WILDER, oCaster) >= 4)
     {
         int nEuphoria = 1;
-        if (GetLevelByClass(CLASS_TYPE_WILDER, oCaster) > 19) nEuphoria = 3;
-        else if (GetLevelByClass(CLASS_TYPE_WILDER, oCaster) > 11) nEuphoria = 2;
+        if (GetLevelByClass(CLASS_TYPE_WILDER, oCaster) >= 20) nEuphoria = 3;
+        else if (GetLevelByClass(CLASS_TYPE_WILDER, oCaster) >= 12) nEuphoria = 2;
 
         effect eBonAttack = EffectAttackIncrease(nEuphoria);
         effect eBonDam = EffectDamageIncrease(nEuphoria, DAMAGE_TYPE_MAGICAL);

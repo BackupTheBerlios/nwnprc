@@ -240,6 +240,12 @@ void main()
         // Clean up the local
         DeleteLocalInt(oItem, "DissolvingWeaponDamage");
     }
+    
+    // Prevenom OnHit
+    if(GetLocalInt(oItem, "Prevenom"))
+    {
+        ExecuteScript("psi_prevenom_hit", oSpellOrigin);
+    }    
 
     // Astral Construct's Poison Touch special ability
     if(GetLocalInt(oSpellOrigin, ASTRAL_CONSTRUCT_POISON_TOUCH))

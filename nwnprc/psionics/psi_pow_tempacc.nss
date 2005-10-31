@@ -74,7 +74,7 @@ void main()
     if (nMetaPsi == 2)  nDur *= 2;
 
     location lTarget = GetSpellTargetLocation();
-    effect eVis = EffectVisualEffect(PSI_DUR_TEMPORAL_ACCELERATION);//VFX_FNF_TIME_STOP);
+    effect eVis = EffectVisualEffect(VFX_FNF_TIME_STOP);
     effect eTime = EffectTimeStop();
     if(GetPRCSwitch(PRC_TIMESTOP_LOCAL))
     {
@@ -103,8 +103,8 @@ void main()
     SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_TIME_STOP, FALSE));
 
     //Apply the VFX impact and effects
-    DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(eTime, eVis), OBJECT_SELF, RoundsToSeconds(nDur),TRUE,-1,nCaster));
-    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
-
+    DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, oCaster, RoundsToSeconds(nDur),TRUE,-1,nCaster));
+    //DelayCommand(0.8f, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oCaster, RoundsToSeconds(nDur)));
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
     }
 }

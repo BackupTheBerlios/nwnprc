@@ -141,32 +141,34 @@ int GetAreaWidth(object oArea);
  */
 int GetAreaHeight(object oArea);
 
-// Genji Include Color gen_inc_color
-// first: 1-4-03
-// simple function to use the name of a item holding escape sequences that, though they will not compile,
-// they can be interpreted at run time and produce rbg scales between 32 and 255 in increments.
-// -- allows 3375 colors to be made.
-// for example SendMessageToPC(pc,GetRGB(15,15,1)+ "Help, I'm on fire!") will produce yellow text.
-// more examples:
-/*
-    GetRGB() := WHITE // no parameters, default is white
-    GetRGB(15,15,1):= YELLOW
-    GetRGB(15,5,1) := ORANGE
-    GetRGB(15,1,1) := RED
-    GetRGB(7,7,15) := BLUE
-    GetRGB(1,15,1) := NEON GREEN
-    GetRGB(1,11,1) := GREEN
-    GetRGB(9,6,1)  := BROWN
-    GetRGB(11,9,11):= LIGHT PURPLE
-    GetRGB(12,10,7):= TAN
-    GetRGB(8,1,8)  := PURPLE
-    GetRGB(13,9,13):= PLUM
-    GetRGB(1,7,7)  := TEAL
-    GetRGB(1,15,15):= CYAN
-    GetRGB(1,1,15) := BRIGHT BLUE
-*/
-// issues? contact genji@thegenji.com
-// special thanks to ADAL-Miko and Rich Dersheimer in the bio forums.
+/**
+ * Genji Include Color gen_inc_color
+ * first: 1-4-03
+ * simple function to use the name of a item holding escape sequences that, though they will not compile,
+ * they can be interpreted at run time and produce rbg scales between 32 and 255 in increments.
+ * -- allows 3375 colors to be made.
+ * for example SendMessageToPC(pc,GetRGB(15,15,1)+ "Help, I'm on fire!") will produce yellow text.
+ * more examples:
+ *
+ *  GetRGB() := WHITE // no parameters, default is white
+ *  GetRGB(15,15,1):= YELLOW
+ *  GetRGB(15,5,1) := ORANGE
+ *  GetRGB(15,1,1) := RED
+ *  GetRGB(7,7,15) := BLUE
+ *  GetRGB(1,15,1) := NEON GREEN
+ *  GetRGB(1,11,1) := GREEN
+ *  GetRGB(9,6,1)  := BROWN
+ *  GetRGB(11,9,11):= LIGHT PURPLE
+ *  GetRGB(12,10,7):= TAN
+ *  GetRGB(8,1,8)  := PURPLE
+ *  GetRGB(13,9,13):= PLUM
+ *  GetRGB(1,7,7)  := TEAL
+ *  GetRGB(1,15,15):= CYAN
+ *  GetRGB(1,1,15) := BRIGHT BLUE
+ *
+ * issues? contact genji@thegenji.com
+ * special thanks to ADAL-Miko and Rich Dersheimer in the bio forums.
+ */
 string GetRGB(int red = 15,int green = 15,int blue = 15);
 
 /**
@@ -309,6 +311,24 @@ string BooleanToString(int bool, int bTLK = FALSE);
  * @param s The string to trim.
  */
 string TrimString(string s);
+
+/**
+ * Compares the given two strings lexicographically.
+ * Returns -1 if the first string precedes the second.
+ * Returns 0 if the strings are equal
+ * Returns 1 if the first string follows the second.
+ *
+ * Examples:
+ *
+ * StringCompare("a", "a") = 0
+ * StringCompare("a", "b") = -1
+ * StringCompare("b", "a") = 1
+ * StringCompare("a", "1") = 1
+ * StringCompare("A", "a") = -1
+ * StringCompare("Aa", "A") = 1
+ */
+int StringCompare(string s1, string s2);
+
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -786,4 +806,38 @@ string TrimString(string s)
     s = GetSubString(s, 0, GetStringLength(s) - nCrop);
 
     return s;
+}
+
+int StringCompare(string s1, string s2)
+{
+    object oLookup = GetWaypointByTag("prc_str_lookup"); // VERIFY
+    if(!GetIsObjectValid(oLookup))
+        oLookup = CreateObject(OBJECT_TYPE_WAYPOINT, "prc_str_lookup", GetLocation(GetObjectByTag("HEARTOFCHAOS")));
+
+    // Start comparing
+    int nT,
+        i = 0,
+        nMax = min(GetStringLength(s1), GetStringLength(s2));
+    while(i < nMax)
+    {
+        // Get the difference between the values of i:th characters
+        nT = GetLocalInt(oLookup, GetSubString(s1, i, 1)) - GetLocalInt(oLookup, GetSubString(s2, i, 1));
+        i++;
+        if(nT < 0)
+            return -1;
+        if(nT == 0)
+            continue;
+        if(nT > 0)
+            return 1;
+    }
+
+    // The strings have the same base. Of such, the shorter precedes
+    nT = GetStringLength(s1) - GetStringLength(s2);
+    if(nT < 0)
+        return -1;
+    if(nT > 0)
+        return 1;
+
+    // The strings were equal
+    return 0;
 }

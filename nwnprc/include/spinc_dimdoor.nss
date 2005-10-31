@@ -140,7 +140,7 @@ void DimensionDoor(object oCaster, int nCasterLvl, int nSpellID = -1, string sSc
                    int bSelfOrParty = DIMENSIONDOOR_SELF, int bUseDirDist = FALSE
                    )
 {
-    if(DEBUG) DoDebug("spinc_dimdoor: Running DoDimensionDoor" + (GetLocalInt(oCaster, DD_FIRSTSTAGE_DONE) ? ": ERROR: Called while in second stage!":""));
+    if(DEBUG) DoDebug("spinc_dimdoor: Running DimensionDoor()" + (GetLocalInt(oCaster, DD_FIRSTSTAGE_DONE) ? ": ERROR: Called while in second stage!":""));
 
     /* Main spellscript */
     if(!GetLocalInt(oCaster, DD_FIRSTSTAGE_DONE))
@@ -296,7 +296,7 @@ void DoDimensionDoorTeleport(object oCaster, location lTarget, int bTeleportingP
 
         // After a moment, draw a line from the caster to the destination
         DelayCommand(1.0, DrawLineFromVectorToVector(DURATION_TYPE_INSTANT, VFX_IMP_WIND, GetArea(oCaster), GetPositionFromLocation(lCaster), GetPositionFromLocation(lTarget), 0.0,
-                                                     FloatToInt(GetDistanceBetweenLocations(lCaster, lTarget)), // One VFX every 5 meters
+                                                     FloatToInt(GetDistanceBetweenLocations(lCaster, lTarget)), // One VFX every meter
                                                      0.5));
         // Then, spawn a circle of ligtning at the destination
         DelayCommand(0.5, BeamPolygon(DURATION_TYPE_TEMPORARY, VFX_BEAM_LIGHTNING, lTarget,

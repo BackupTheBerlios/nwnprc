@@ -1,7 +1,7 @@
 /*
     ----------------
     Psychic Crush
-    
+
     psi_pow_psycrush
     ----------------
 
@@ -15,7 +15,7 @@
     Saving Throw: Will partial, see text.
     Power Resistance: Yes
     Power Point Cost: 9
- 
+
     Your will abruptly and brutally crushes the essence of any one creature. The target must make a will save
     with a +4 bonus or be stunned for 1 round and reduced to 1 hit point. If the target makes the save, it takes
     3d6 points of damage.
@@ -30,9 +30,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -54,20 +51,20 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
     int nAugment = GetAugmentLevel(oCaster);
     object oTarget = GetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
-        int nDC = (GetManifesterDC(oCaster) - 4);
+        int nDC     = GetManifesterDC(oCaster) - 4;
         int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
-        int nCrush = GetCurrentHitPoints(oTarget) - 1;
+        int nPen    = GetPsiPenetration(oCaster);
+        int nCrush  = GetCurrentHitPoints(oTarget) - 1;
         int nDamage = d6(3);
         effect eStun = EffectStunned();
-        effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
-            effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+        effect eVis  = EffectVisualEffect(PSI_FNF_PSYCHIC_CRUSH);//VFX_IMP_DEATH_L);
+        //effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
 
         //Augmentation effects to DC/Damage/Caster Level
-        if (nAugment > 0)   nDamage += d6(nAugment);
+        if (nAugment > 0) nDamage += d6(nAugment);
 
         effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
         effect eCrush = EffectDamage(nCrush, DAMAGE_TYPE_POSITIVE);
@@ -75,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
         //Check for Power Resistance
         if (PRCMyResistPower(oCaster, oTarget, nPen))
         {
-    
+
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
 
@@ -87,11 +84,12 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStun, oTarget, RoundsToSeconds(1),TRUE,-1,nCaster);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             }
-            else 
+            else
             {
                 //Apply the VFX impact and effects
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+                //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             }
         }
     }

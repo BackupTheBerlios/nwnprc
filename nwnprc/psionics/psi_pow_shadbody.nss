@@ -49,9 +49,6 @@ void GoInvis(object oTarget, object oCaster, int nCaster, int nSpell)
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -75,37 +72,37 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
     if (nMetaPsi > 0)
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-	float fDur = 60.0 * nCaster;
-	int nSpell = GetSpellId();
-	if (nMetaPsi == 2)	fDur *= 2;
+        int nCaster = GetManifesterLevel(oCaster);
+        float fDur = 60.0 * nCaster;
+        int nSpell = GetSpellId();
+        if (nMetaPsi == 2)	fDur *= 2;
 
-	//Massive effect linkage, go me
-    	effect eAcid = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID, 50);
-    	effect eElec = EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 50);
-    	effect eFire = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 50);
-    	effect eAbil = EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE);
-    	effect eCrit = EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT);
-    	effect eDis = EffectImmunity(IMMUNITY_TYPE_DISEASE);
-    	effect ePoison = EffectImmunity(IMMUNITY_TYPE_POISON);
-    	effect eDR = EffectDamageReduction(10, DAMAGE_POWER_PLUS_THREE);
-    	effect eDark = EffectUltravision();
+        //Massive effect linkage, go me
+        effect eAcid   = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID, 50);
+        effect eElec   = EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 50);
+        effect eFire   = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 50);
+        effect eAbil   = EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE);
+        effect eCrit   = EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT);
+        effect eDis    = EffectImmunity(IMMUNITY_TYPE_DISEASE);
+        effect ePoison = EffectImmunity(IMMUNITY_TYPE_POISON);
+        effect eDR     = EffectDamageReduction(10, DAMAGE_POWER_PLUS_THREE);
+        effect eDark   = EffectUltravision();
 
-    	effect eVis = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
-    	effect eDur = EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
-    	effect eLink = EffectLinkEffects(eAcid, eElec);
-    	eLink = EffectLinkEffects(eLink, eFire);
-    	eLink = EffectLinkEffects(eLink, eAbil);
-    	eLink = EffectLinkEffects(eLink, eCrit);
-    	eLink = EffectLinkEffects(eLink, eDis);
-    	eLink = EffectLinkEffects(eLink, ePoison);
-    	eLink = EffectLinkEffects(eLink, eDur);
-    	eLink = EffectLinkEffects(eLink, eDR);
-    	eLink = EffectLinkEffects(eLink, eDark);
+        effect eVis  = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
+        effect eDur  = EffectVisualEffect(PSI_DUR_SHADOW_BODY);//VFX_DUR_PROT_SHADOW_ARMOR);
+        effect eLink = EffectLinkEffects(eAcid, eElec);
+        eLink = EffectLinkEffects(eLink, eFire);
+        eLink = EffectLinkEffects(eLink, eAbil);
+        eLink = EffectLinkEffects(eLink, eCrit);
+        eLink = EffectLinkEffects(eLink, eDis);
+        eLink = EffectLinkEffects(eLink, ePoison);
+        eLink = EffectLinkEffects(eLink, eDur);
+        eLink = EffectLinkEffects(eLink, eDR);
+        eLink = EffectLinkEffects(eLink, eDark);
 
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	GoInvis(oTarget, oCaster, nCaster, nSpell);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        GoInvis(oTarget, oCaster, nCaster, nSpell);
     }
 }

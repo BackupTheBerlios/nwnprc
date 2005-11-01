@@ -1,0 +1,3 @@
+Local installation
+Copy the "master copytoinstall.bat" file to "copytoinstall.bat" and point the directory to your NWN installation
+Make sure you have the latest java SDK to compile or the latest java runtimes to run. At least v1.5

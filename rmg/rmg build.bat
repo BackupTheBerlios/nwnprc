@@ -1,4 +1,4 @@
-javac -Xlint:all -g -source 1.5 -target 1.5 -extdirs "tools" rmg\*.java
+javac -Xlint:all -g -classpath .;tools\prc.jar rmg\*.java
 pause
 jar -cvfm rmg.jar rmg\rmg.mf rmg\*
 pause

@@ -24,6 +24,7 @@
 Outline
 
 Introduction
+    Overall design aims
 Component systems
     RIG (Random Item Generator)
     RAG (Random Area Generator)

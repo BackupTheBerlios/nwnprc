@@ -105,7 +105,7 @@ void main()
     nTurningMaxHD   += nBonusTurningMaxHD;   
     
     //zone of animation effect
-    // You can use a rebuke or command undead attempt to animate 
+    //"You can use a rebuke or command undead attempt to animate 
     //corpses within range of your rebuke or command attempt. 
     //You animate a total number of HD of undead equal to the 
     //number of undead that would be commanded by your result 
@@ -116,14 +116,15 @@ void main()
     //undead are automatically under your command, though your 
     //normal limit of commanded undead still applies. If the 
     //corpses are relatively fresh, the animated undead are zombies.  
-    //Otherwise, they are skeletons. 
+    //Otherwise, they are skeletons. "
+    //currently implemented ignoring corpses & what the corpses are of.
     if(GetLocalInt(OBJECT_SELF, "UsingZoneOfAnimation"))
     {
         effect eVFX = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
         int nHDCount = GetCommandedTotalHD();
         while(nHDCount < nTurningMaxHD)
         {
-            location lLoc = GetRandomCircleLocation(GetLocation(OBJECT_SELF), FeetToMeters(60.0));
+            location lLoc = GetLocation(OBJECT_SELF);
             //skeletal blackguard
             string sResRef = "x2_s_bguard_18"; 
             object oCreated = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lLoc);

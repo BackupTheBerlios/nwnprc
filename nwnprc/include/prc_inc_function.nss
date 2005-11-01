@@ -32,6 +32,7 @@ void DeletePRCLocalInts(object oSkin);
 
 #include "prc_alterations"
 // Generic includes
+#include "prc_inc_switch"
 #include "prcsp_engine"
 #include "inc_utility"
 #include "x2_inc_switches"
@@ -208,8 +209,14 @@ void EvalPRCFeats(object oPC)
     }
 
     // Add the teleport management feats. Maybe change this to apply only to those capable of casting teleportation spells in the future
-    if(TRUE)
-        ExecuteScript("prc_tp_mgmt_eval", oPC);
+//    if(TRUE)
+//        ExecuteScript("prc_tp_mgmt_eval", oPC);
+    if(!GetHasFeat(FEAT_TELEPORT_MANAGEMENT_RADIAL, oPC))
+    {
+        object oSkin = GetPCSkin(oPC);
+
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_TELEPORT_MANAGEMENT_RADIAL), oSkin);
+    }
 
     //PnP Spell Schools
     if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
@@ -239,22 +246,61 @@ void EvalPRCFeats(object oPC)
     }
 
     //size changes
-    ExecuteScript("prc_size", oPC);
+    int nBiowareSize = GetCreatureSize(oPC);
+    int nPRCSize = PRCGetCreatureSize(oPC);
+    if(nBiowareSize != nPRCSize)
+        ExecuteScript("prc_size", oPC);
 
     //ACP system
-    ExecuteScript("acp_auto", oPC);
+    if((GetIsPC(oPC) && (GetPRCSwitch(PRC_ACP_MANUAL) || GetPRCSwitch(PRC_ACP_AUTOMATIC)))
+        || (!GetIsPC(oPC) && GetPRCSwitch(PRC_ACP_NPC_AUTOMATIC)))
+        ExecuteScript("acp_auto", oPC);
 
+    //epic spells
+    if(GetCasterLvl(CLASS_TYPE_CLERIC,   oPC) >= 21
+        || GetCasterLvl(CLASS_TYPE_DRUID,    oPC) >= 21
+        || GetCasterLvl(CLASS_TYPE_SORCERER, oPC) >= 21
+        || GetCasterLvl(CLASS_TYPE_WIZARD,   oPC) >= 21)
+    {
+        if(!GetHasFeat(FEAT_EPIC_SPELLCASTING_REST, oPC))
+            AddItemProperty(DURATION_TYPE_PERMANENT,
+                            ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_REST), oSkin);
+    }
     // Miscellaneous
-    ExecuteScript("prc_wyzfeat", oPC);
-    ExecuteScript("onenter_ess", oPC);
+    if(GetHasFeat(FEAT_ENDURANCE, oPC) 
+        ||GetHasFeat(FEAT_TRACK, oPC) 
+        || GetHasFeat(FEAT_ETHRAN, oPC))
+        ExecuteScript("prc_wyzfeat", oPC);
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
-    ExecuteScript("race_unarmed", oPC);
-    ExecuteScript("psi_powergain", oPC);
+    //moved here entirely
+    //ExecuteScript("race_unarmed", oPC);
+    int iRace = GetRacialType(oPC);
+
+    if (iRace == RACIAL_TYPE_MINOTAUR   ||
+        iRace == RACIAL_TYPE_TANARUKK   ||
+        iRace == RACIAL_TYPE_TROLL      ||
+        iRace == RACIAL_TYPE_RAKSHASA   ||
+        iRace == RACIAL_TYPE_CENTAUR    ||
+        iRace == RACIAL_TYPE_ILLITHID   ||
+        iRace == RACIAL_TYPE_LIZARDFOLK)
+    {
+         //UnarmedFeats(oPC);
+         //UnarmedFists(oPC);
+         SetLocalInt(oPC, CALL_UNARMED_FEATS, TRUE);
+         SetLocalInt(oPC, CALL_UNARMED_FISTS, TRUE);
+    }
+    if(GetLevelByClass(CLASS_TYPE_PSION, oPC)
+        || GetLevelByClass(CLASS_TYPE_WILDER, oPC)
+        || GetLevelByClass(CLASS_TYPE_PSYWAR, oPC)
+        || GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC))
+        ExecuteScript("psi_powergain", oPC);
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.
-    ExecuteScript("unarmed_caller", oPC);
+    if(!GetLocalInt(oPC, CALL_UNARMED_FEATS)
+        || !GetLocalInt(oPC, CALL_UNARMED_FISTS))
+        ExecuteScript("unarmed_caller", oPC);
 }
 
 void DeletePRCLocalInts(object oSkin)

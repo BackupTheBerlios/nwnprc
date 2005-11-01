@@ -23,7 +23,7 @@ void main()
      {    
             SetLocalInt(oPC, "InscribeRune", TRUE);
             nMes = "*Inscribe Rune Activated*";
-            DelayInscribeRuneDisable(oPC);
+            DelayCommand(60.0, DelayInscribeRuneDisable(oPC));
      }
      else     
      {

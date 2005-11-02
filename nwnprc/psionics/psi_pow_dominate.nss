@@ -69,6 +69,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 	if (nMetaPsi == 2)	nDur *= 2;
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
 	effect eDom = EffectDominated();
+	eDom = GetScaledEffect(eDom, oTarget);
 	effect eLink = EffectLinkEffects(eMind, eDom);
 	
 	//Augmentation effects to Damage

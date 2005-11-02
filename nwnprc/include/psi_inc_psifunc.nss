@@ -930,7 +930,7 @@ void AstralSeedRespawn(object oPlayer = OBJECT_SELF)
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRes, oPlayer);
     object oSeed = GetLocalObject(oPlayer, "ASTRAL_SEED");
     location lSeed = GetLocation(oSeed);
-    JumpToLocation(lSeed);
+    DelayCommand(2.0, JumpToLocation(lSeed));
     
     // effect set
     effect ePara = EffectCutsceneParalyze();
@@ -975,6 +975,9 @@ void AstralSeedRespawn(object oPlayer = OBJECT_SELF)
     int nLevelDown = ((nHD * (nHD - 1)) / 2) * 1000;
     int nNewXP = (nCurrentLevel + nLevelDown)/2;
     SetXP(oPlayer,nNewXP);  
+    
+    DeleteLocalObject(oPlayer, "ASTRAL_SEED");
+    DeleteLocalInt(oPlayer, "AstralSeed");
     
     //pw death hook
     ExecuteScript("prc_pw_astralseed", oPlayer);

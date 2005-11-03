@@ -371,13 +371,13 @@
 367 ****                                           ****      **** ****           ****   
 368 ###cls_feat_allBaseClasses_BEGIN###            ****      **** ****           ****   
 369 **FeatsGrantedToAll**                          ****      **** ****           ****   
-370 FEAT_SHADOW_LORD_CONVO                         2360      3    1              1      
+370 FEAT_SHADOW_LORD_CONVO                         2360      3    1              0      
 371 FEAT_JUMP                                      2884      3    1              1      
 372 FEAT_POWER_ATTACK_SINGLE_RADIAL                3143      0    99             1      
 373 FEAT_POWER_ATTACK_FIVES_RADIAL                 3144      0    99             1      
 374 FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL            3179      0    99             1      
 375 ACP_FEAT                                       2892      0    99             1      
-376 TeleportManagementRadial                       4235      0    99             1      
+376 TeleportManagementRadial                       4235      3    1              1      
 377 SWITCH_FEAT                                    2285      0    99             1      
 378 ****                                           ****      **** ****           ****   
 379 **GeneralActivatableFeats**                    ****      **** ****           ****   

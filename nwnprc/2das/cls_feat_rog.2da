@@ -97,13 +97,13 @@
 93  ****                                 ****      **** ****           ****   
 94  ###cls_feat_allBaseClasses_BEGIN###  ****      **** ****           ****   
 95  **FeatsGrantedToAll**                ****      **** ****           ****   
-96  FEAT_SHADOW_LORD_CONVO               2360      3    1              1      
+96  FEAT_SHADOW_LORD_CONVO               2360      3    1              0      
 97  FEAT_JUMP                            2884      3    1              1      
 98  FEAT_POWER_ATTACK_SINGLE_RADIAL      3143      0    99             1      
 99  FEAT_POWER_ATTACK_FIVES_RADIAL       3144      0    99             1      
 100 FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL  3179      0    99             1      
 101 ACP_FEAT                             2892      0    99             1      
-102 TeleportManagementRadial             4235      0    99             1      
+102 TeleportManagementRadial             4235      3    1              1      
 103 SWITCH_FEAT                          2285      0    99             1      
 104 ****                                 ****      **** ****           ****   
 105 **GeneralActivatableFeats**          ****      **** ****           ****   

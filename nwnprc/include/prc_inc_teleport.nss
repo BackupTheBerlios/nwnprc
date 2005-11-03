@@ -665,6 +665,11 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
 
 void DisallowTeleport(object oTarget)
 {
+    if(DEBUG) DoDebug("DisallowTeleport():\n"
+                    + "oTarget = '" + GetName(oTarget) + "' - '" + GetTag(oTarget) + "' - " + ObjectToString(oTarget) + "\n"
+                    + "\n"
+                    + "New blocking variable value: " + IntToString(GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT) + 1) + "\n"
+                      );
     SetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT,
                 GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT) + 1
                 );
@@ -672,10 +677,18 @@ void DisallowTeleport(object oTarget)
 
 void AllowTeleport(object oTarget, int bClearAll = FALSE)
 {
+    if(DEBUG) DoDebug("AllowTeleport():\n"
+                        + "oTarget = '" + GetName(oTarget) + "' - '" + GetTag(oTarget) + "' - " + ObjectToString(oTarget) + "\n"
+                        + "bClearAll = " + BooleanToString(bClearAll) + "\n"
+                        + "\n"
+                        + "Old blocking variable value: " + IntToString(GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT))
+                      );
     int nValue = GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT) - 1;
     if((nValue > 0) && !bClearAll)
         SetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT, nValue);
     else
         DeleteLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT);
+
+    if(DEBUG) DoDebug("New blocking variable value: " + (((nValue > 0) && !bClearAll) ? IntToString(nValue) : "Deleted"));
 }
 //void main(){} // Test main

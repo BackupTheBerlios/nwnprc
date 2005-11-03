@@ -28,6 +28,7 @@ public class Main {
 
 		if(toCall.equals("-rig")){
 			//random item generator
+			rmg.rig.main(paramsToPass);
 		}
 		else{
 			System.out.println("Unknown class: " + toCall);

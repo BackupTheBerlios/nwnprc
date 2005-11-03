@@ -82,6 +82,20 @@ Component systems
 
 RIG (Random Item Generator)
 
+Loop over each base item{
+    For each prefix{
+        For each suffix{
+            Generate Name
+            Generate Tag
+            Generate ResRef
+            Construct properties list
+                if two properties have same type & subtype, abort combination
+            Make XML file
+        }
+    }
+}
+
+
 RAG (Random Area Generator)
 
 RWG (Random World Generator)

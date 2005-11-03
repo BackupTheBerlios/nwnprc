@@ -8,10 +8,10 @@ public class rig {
 	private static final int AFFIX_COUNT = 1300;
 	private static final int BASEITEM_COUNT = 125;
 	//public data
-	private static Data_2da rig2da         = Data_2da.load2da("rig.2da");
-	private static Data_2da rigIP2da       = Data_2da.load2da("rig_ip.2da");
-	private static Data_2da baseitem2da    = Data_2da.load2da("baseitems.2da");
-	private static Data_2da itempropdef2da = Data_2da.load2da("itempropdef.2da");
+	public static Data_2da rig2da         = Data_2da.load2da("rig.2da");
+	public static Data_2da rigIP2da       = Data_2da.load2da("rig_ip.2da");
+	public static Data_2da baseitem2da    = Data_2da.load2da("baseitems.2da");
+	public static Data_2da itempropdef2da = Data_2da.load2da("itempropdef.2da");
 	//private data
 	private static int rootID        = 0;
 	private static int prefixID      = 0;
@@ -52,13 +52,24 @@ public class rig {
 		itemRefRef  = prefixID+"_"+rootID+"_"+suffixID;
 		//add itemproperties to array
 		for(int i = 1 ; i<=5;i++){
+				int itempropertyID = Integer.decode(rig2da.getEntry("Property"+i, prefixID));
+				if(itempropertyID != 0){
+					itempropertyCount++;
+					itemproperties[itempropertyCount] = new itemproperty(itempropertyID);
+				}
 		}
 		for(int i = 1 ; i<=5;i++){
+				int itempropertyID = Integer.decode(rig2da.getEntry("Property"+i, suffixID));
+				if(itempropertyID != 0){
+					itempropertyCount++;
+					itemproperties[itempropertyCount] = new itemproperty(itempropertyID);
+				}
 		}
 		//print it
 		outputToFile();
 	}
 
 	private static void outputToFile(){
+		System.out.println("itemName = "+itemName);
 	}
 }

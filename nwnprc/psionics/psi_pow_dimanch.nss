@@ -81,6 +81,7 @@ void main()
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur,TRUE,-1,nCaster);
                 // Increase the teleportation prevention counter and schedule reduction
                 DisallowTeleport(oTarget);
+                if(DEBUG) DoDebug("psi_pow_dimanch: The anchoring will wear off in " + IntToString(FloatToInt(fDur)) + "s");
                 DelayCommand(fDur, AllowTeleport(oTarget));
             }
         }

@@ -32,7 +32,6 @@ void DeletePRCLocalInts(object oSkin);
 
 #include "prc_alterations"
 // Generic includes
-#include "prc_inc_switch"
 #include "prcsp_engine"
 #include "inc_utility"
 #include "x2_inc_switches"
@@ -205,29 +204,26 @@ void EvalPRCFeats(object oPC)
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
     {
         //add the old feat to the hide
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(390), oSkin);
+        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_FEAT_PRESTIGE_IMBUE_ARROW), 0.0f,
+                              X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
 
-    // Add the teleport management feats. Maybe change this to apply only to those capable of casting teleportation spells in the future
-//    if(TRUE)
-//        ExecuteScript("prc_tp_mgmt_eval", oPC);
-    if(!GetHasFeat(FEAT_TELEPORT_MANAGEMENT_RADIAL, oPC))
-    {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_TELEPORT_MANAGEMENT_RADIAL), oSkin);
-    }
+    // Add the teleport management feats.
+    // 2005.11.03: Now added to all base classes on 1st level - Ornedan
+//    ExecuteScript("prc_tp_mgmt_eval", oPC);
 
     //PnP Spell Schools
     if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD, oPC)
-        && !GetHasFeat(2273, oPC)
-        && !GetHasFeat(2274, oPC)
-        && !GetHasFeat(2275, oPC)
-        && !GetHasFeat(2276, oPC)
-        && !GetHasFeat(2277, oPC)
-        && !GetHasFeat(2278, oPC)
-        && !GetHasFeat(2279, oPC)
-        && !GetHasFeat(2280, oPC)
-        && !GetHasFeat(2281, oPC)
+        && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_GENERAL,       oPC)
+        && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_ABJURATION,    oPC)
+        && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_CONJURATION,   oPC)
+        && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_DIVINATION,    oPC)
+        && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_ENCHANTMENT,   oPC)
+        && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_EVOCATION,     oPC)
+        && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_ILLUSION,      oPC)
+        && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_NECROMANCY,    oPC)
+        && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_TRANSMUTATION, oPC)
         && !GetHasEffect(EFFECT_TYPE_POLYMORPH, oPC) //so it doesnt pop up on polymorphing
         && !GetLocalInt(oSkin, "nPCShifted") //so it doenst pop up on shifting
         )
@@ -235,59 +231,52 @@ void EvalPRCFeats(object oPC)
         ExecuteScript("prc_pnp_shcc_s", oPC);
     }
 
-    //switch convo feat
+    // Switch convo feat
     if(!GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO))
-    {
-        //AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(229), oSkin);
+    {///TODO: Constantify these. Or make granted to all base classes level 1, which might be better since it's used for more than code switches now
         if(!GetHasFeat(2285, oPC))
-            IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(229), 0.0f);
-    }
+            IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
+   }
 
-    //size changes
+    // Size changes
     int nBiowareSize = GetCreatureSize(oPC);
     int nPRCSize = PRCGetCreatureSize(oPC);
     if(nBiowareSize != nPRCSize)
         ExecuteScript("prc_size", oPC);
 
-    //ACP system
-    if((GetIsPC(oPC) && (GetPRCSwitch(PRC_ACP_MANUAL) || GetPRCSwitch(PRC_ACP_AUTOMATIC)))
-        || (!GetIsPC(oPC) && GetPRCSwitch(PRC_ACP_NPC_AUTOMATIC)))
+    // ACP system
+    if((GetIsPC(oPC) &&
+        (GetPRCSwitch(PRC_ACP_MANUAL)   ||
+         GetPRCSwitch(PRC_ACP_AUTOMATIC)
+         )
+        ) ||
+       (!GetIsPC(oPC) &&
+        GetPRCSwitch(PRC_ACP_NPC_AUTOMATIC)
+        )
+       )
         ExecuteScript("acp_auto", oPC);
 
-    //epic spells
-    if(GetCasterLvl(CLASS_TYPE_CLERIC,   oPC) >= 21
-        || GetCasterLvl(CLASS_TYPE_DRUID,    oPC) >= 21
-        || GetCasterLvl(CLASS_TYPE_SORCERER, oPC) >= 21
-        || GetCasterLvl(CLASS_TYPE_WIZARD,   oPC) >= 21)
+    // Epic spells
+    if((GetCasterLvl(CLASS_TYPE_CLERIC,   oPC) >= 21 ||
+        GetCasterLvl(CLASS_TYPE_DRUID,    oPC) >= 21 ||
+        GetCasterLvl(CLASS_TYPE_SORCERER, oPC) >= 21 ||
+        GetCasterLvl(CLASS_TYPE_WIZARD,   oPC) >= 21
+        ) &&
+        !GetHasFeat(FEAT_EPIC_SPELLCASTING_REST, oPC)
+       )
     {
-        if(!GetHasFeat(FEAT_EPIC_SPELLCASTING_REST, oPC))
-            AddItemProperty(DURATION_TYPE_PERMANENT,
-                            ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_REST), oSkin);
+        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_REST), 0.0f,
+                              X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
     // Miscellaneous
-    if(GetHasFeat(FEAT_ENDURANCE, oPC) 
-        ||GetHasFeat(FEAT_TRACK, oPC) 
+    if(GetHasFeat(FEAT_ENDURANCE, oPC)
+        ||GetHasFeat(FEAT_TRACK, oPC)
         || GetHasFeat(FEAT_ETHRAN, oPC))
         ExecuteScript("prc_wyzfeat", oPC);
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
-    //moved here entirely
-    //ExecuteScript("race_unarmed", oPC);
-    int iRace = GetRacialType(oPC);
+    ExecuteScript("race_unarmed", oPC);
 
-    if (iRace == RACIAL_TYPE_MINOTAUR   ||
-        iRace == RACIAL_TYPE_TANARUKK   ||
-        iRace == RACIAL_TYPE_TROLL      ||
-        iRace == RACIAL_TYPE_RAKSHASA   ||
-        iRace == RACIAL_TYPE_CENTAUR    ||
-        iRace == RACIAL_TYPE_ILLITHID   ||
-        iRace == RACIAL_TYPE_LIZARDFOLK)
-    {
-         //UnarmedFeats(oPC);
-         //UnarmedFists(oPC);
-         SetLocalInt(oPC, CALL_UNARMED_FEATS, TRUE);
-         SetLocalInt(oPC, CALL_UNARMED_FISTS, TRUE);
-    }
     if(GetLevelByClass(CLASS_TYPE_PSION, oPC)
         || GetLevelByClass(CLASS_TYPE_WILDER, oPC)
         || GetLevelByClass(CLASS_TYPE_PSYWAR, oPC)
@@ -296,9 +285,7 @@ void EvalPRCFeats(object oPC)
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.
-    if(!GetLocalInt(oPC, CALL_UNARMED_FEATS)
-        || !GetLocalInt(oPC, CALL_UNARMED_FISTS))
-        ExecuteScript("unarmed_caller", oPC);
+    ExecuteScript("unarmed_caller", oPC);
 }
 
 void DeletePRCLocalInts(object oSkin)
@@ -673,7 +660,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oPC, "ForceOfPersonalityCha");
     DeleteLocalInt(oPC, "InsightfulReflexesInt");
     DeleteLocalInt(oPC, "InsightfulReflexesDex");
-    
+
     // Warchief
     DeleteLocalInt(oPC, "WarchiefCha");
 

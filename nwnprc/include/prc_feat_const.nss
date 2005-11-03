@@ -1711,159 +1711,6 @@ const int FEAT_MULTIPLE_THROW                       = 3620;
 const int FEAT_CHANGE_HANDEDNESS                    = 3621;
 const int FEAT_WEAPON_OF_CHOICE_MINDBLADE           = 3622;
 
-// Swashbuckler
-const int FEAT_SWASH_GRACE1                         = 1900;
-const int FEAT_SWASH_GRACE2                         = 1901;
-const int FEAT_SWASH_GRACE3                         = 1902;
-const int FEAT_SWASH_GRACE4                         = 1903;
-const int FEAT_SWASH_GRACE5                         = 1904;
-const int INSIGHTFUL_STRIKE                         = 1905;
-const int SWASH_DODGE_1                             = 1906;
-const int SWASH_DODGE_2                             = 1907;
-const int SWASH_DODGE_3                             = 1908;
-const int SWASH_DODGE_4                             = 1909;
-const int SWASH_DODGE_5                             = 1910;
-const int SWASH_DODGE_6                             = 1911;
-const int SWASH_DODGE_7                             = 1912;
-const int SWASH_DODGE_8                             = 1913;
-const int SWASH_LUCKY                               = 1914;
-const int WEAKENING_CRITICAL                        = 1915;
-const int WOUNDING_CRITICAL                         = 1916;
-
-//Marshal
-const int MIN_AUR_FORT                         = 1919;
-const int MIN_AUR_WILL                         = 1920;
-const int MIN_AUR_REF                          = 1921;
-const int MIN_AUR_CHA                          = 1922;
-const int MIN_AUR_CON                          = 1923;
-const int MIN_AUR_DEX                          = 1924;
-const int MIN_AUR_INT                          = 1925;
-const int MIN_AUR_STR                          = 1926;
-const int MIN_AUR_WIS                          = 1927;
-const int MIN_AUR_CAST                         = 1928;
-const int MIN_AUR_AOW                          = 1929;
-const int MAJ_AUR_MOT_ARDOR                    = 1930;
-const int MAJ_AUR_MOT_CARE                     = 1931;
-const int MAJ_AUR_RES_TROOPS                   = 1932;
-const int MAJ_AUR_MOT_URGE                     = 1933;
-const int MAJ_AUR_HARD_SOLDIER                 = 1934;
-const int MAJ_AUR_MOT_ATTACK                   = 1935;
-const int MAJ_AUR_STEAD_HAND                   = 1936;
-const int GRANT_MOVE_ACTION                    = 1937;
-const int MINOR_AURA                           = 1938;
-const int MAJOR_AURA                           = 1939;
-/* DEPRECATED
-   TODO: Check that these are not used anywhere and remove
-//Psion - Nomad Powers
-const int FEAT_NOMAD_BALE_TELEPORT          = 3553;
-
-//Psion - Shaper Powers
-const int FEAT_SHAPER_CRYSTALLIZE           = 3599;
-
-//Psion - Telepath Powers
-const int FEAT_TELEPATH_CRISIS_OF_LIFE           = 3579;
-const int FEAT_TELEPATH_BRAIN_LOCK          = 3582;
-const int FEAT_TELEPATH_CHARM_PERSON             = 3583;
-
-//Psion - Specialist / Psychic Warrior Powers
-const int FEAT_SHAPERPSYWAR_GAMORPHA          = 3585;
-const int FEAT_KINETICPSYWAR_INERTIAL_BARRIER      = 3593;
-const int FEAT_EGOISTPSYWAR_THICK_SKIN        = 3597;
-
-//Psychic Warrior Level One
-const int FEAT_PSYWAR_STOMP              = 3603;
-
-//Psychic Warrior Level Two
-const int FEAT_PSYWAR_DISSOLVING_TOUCH           = 3600;
-
-//Psychic Warrior Level Three
-const int FEAT_PSYWAR_EXHALATION_BLACKDRAG       = 3601;
-
-//Psychic Warrior Level Four
-const int FEAT_PSYWAR_STEADFAST_PERCEPTION       = 3602;
-
-//Psychic Warrior Level Five
-
-//Psychic Warrior Level Six
-
-//Psion/Wilder Level One
-const int FEAT_PSIONWILD_DECELERATION         = 3588;
-const int FEAT_PSIONWILD_DAZE            = 3587;
-const int FEAT_PSIONWILD_MIND_THRUST             = 3567;
-const int FEAT_PSIONWILD_CALL_TO_MIND            = 3577;
-const int FEAT_PSIONWILD_CRYSTAL_SHARD           = 3578;
-const int FEAT_PSIONWILD_BOLT            = 3604;
-const int FEAT_PSIONWILD_DEMORALIZE           = 3605;
-const int FEAT_PSIONWILD_DISABLE         = 3606;
-const int FEAT_PSIONWILD_ENERGYRAY       = 3609;
-const int FEAT_PSIONWILD_ENTANGLE        = 3610;
-const int FEAT_PSIONWILD_GREASE               = 3611;
-
-//Psion/Wilder Level Two
-const int FEAT_PSIONWILD_BESTOW_POWER            = 3575;
-const int FEAT_PSIONWILD_CONCBLAST       = 3618;
-const int FEAT_PSIONWILD_EGOWHIP         = 3619;
-const int FEAT_PSIONWILD_ENPUSH               = 3622;
-const int FEAT_PSIONWILD_ENSTUN               = 3623;
-const int FEAT_PSIONWILD_IDINSIN         = 3624;
-const int FEAT_PSIONWILD_IDENTIFY        = 3625;
-const int FEAT_PSIONWILD_INFLICTPAIN          = 3626;
-const int FEAT_PSIONWILD_KNOCK                = 3627;
-const int FEAT_PSIONWILD_MINDDISRUPT          = 3628;
-const int FEAT_PSIONWILD_CRYSTALSWARM         = 3629;
-const int FEAT_PSIONWILD_RECALL_AGONY         = 3595;
-
-//Psion/Wilder Level Three
-const int FEAT_PSIONWILD_PSIBLAST        = 3594;
-
-//Psion/Wilder Level Four
-
-//Psion/Wilder Level Five
-
-//Psion/Wilder Level Six
-const int FEAT_PSIONWILD_DISINTEGRATE              = 3589;
-
-//Psion/Wilder Level Seven
-
-//Psion/Wilder Level Eight
-const int FEAT_PSIONWILD_RECALL_DEATH         = 3596;
-
-//Psion/Wilder Level Nine
-
-//All Class Level One
-const int FEAT_ALL_DISSIPATING_TOUCH          = 3590;
-const int FEAT_ALL_FORCE_SCREEN               = 3591;
-const int FEAT_ALL_INERTIAL_ARMOUR       = 3592;
-const int FEAT_ALL_VIGOR            = 3598;
-const int FEAT_ALL_DISTRACT              = 3607;
-const int FEAT_ALL_EMPTYMIND             = 3608;
-const int FEAT_ALL_HAMMER                = 3612;
-const int FEAT_ALL_MYLIGHT               = 3613;
-const int FEAT_ALL_DEFPRECOG             = 3614;
-const int FEAT_ALL_OFFPRECOG             = 3615;
-const int FEAT_ALL_OFFPRESC              = 3616;
-const int FEAT_ALL_SYNESTHETE            = 3631;
-
-//All Class Level Two
-const int FEAT_ALL_BIOFEEDBACK                = 3617;
-const int FEAT_ALL_ELFSIGHT              = 3620;
-const int FEAT_ALL_ENERGYADAPTSPEC       = 3621;
-const int FEAT_ALL_THOUGHTSHIELD         = 3630;
-const int FEAT_ALL_CONCEAL_AMORPHA       = 3584;
-
-//All Class Level Three
-const int FEAT_ALL_BODY_ADJUSTMENT       = 3580;
-const int FEAT_ALL_DARKVISION            = 3586;
-
-//All Class Level Four
-
-//All Class Level Five
-
-//All Class Level Six
-const int FEAT_ALL_BLACK_DRAGON_BREATH           = 3576;
-
-*/
-
 //Psionic Feats
 const int FEAT_MENTAL_RESISTANCE            = 4812;
 const int FEAT_HOSTILE_MIND                 = 4813;
@@ -2009,41 +1856,100 @@ const int FEAT_SPLIT_PSIONIC_RAY            = 4941;
 const int FEAT_TWIN_POWER                   = 4942;
 const int FEAT_WIDEN_POWER                  = 4943;
 
+
+/*//////////////////////////////////////////////////
+//////////////// END PSIONICS //////////////////////
+//////////////////////////////////////////////////*/
+
+// Swashbuckler
+const int FEAT_SWASH_GRACE1                         = 1900;
+const int FEAT_SWASH_GRACE2                         = 1901;
+const int FEAT_SWASH_GRACE3                         = 1902;
+const int FEAT_SWASH_GRACE4                         = 1903;
+const int FEAT_SWASH_GRACE5                         = 1904;
+const int INSIGHTFUL_STRIKE                         = 1905;
+const int SWASH_DODGE_1                             = 1906;
+const int SWASH_DODGE_2                             = 1907;
+const int SWASH_DODGE_3                             = 1908;
+const int SWASH_DODGE_4                             = 1909;
+const int SWASH_DODGE_5                             = 1910;
+const int SWASH_DODGE_6                             = 1911;
+const int SWASH_DODGE_7                             = 1912;
+const int SWASH_DODGE_8                             = 1913;
+const int SWASH_LUCKY                               = 1914;
+const int WEAKENING_CRITICAL                        = 1915;
+const int WOUNDING_CRITICAL                         = 1916;
+
+//Marshal
+const int MIN_AUR_FORT                         = 1919;
+const int MIN_AUR_WILL                         = 1920;
+const int MIN_AUR_REF                          = 1921;
+const int MIN_AUR_CHA                          = 1922;
+const int MIN_AUR_CON                          = 1923;
+const int MIN_AUR_DEX                          = 1924;
+const int MIN_AUR_INT                          = 1925;
+const int MIN_AUR_STR                          = 1926;
+const int MIN_AUR_WIS                          = 1927;
+const int MIN_AUR_CAST                         = 1928;
+const int MIN_AUR_AOW                          = 1929;
+const int MAJ_AUR_MOT_ARDOR                    = 1930;
+const int MAJ_AUR_MOT_CARE                     = 1931;
+const int MAJ_AUR_RES_TROOPS                   = 1932;
+const int MAJ_AUR_MOT_URGE                     = 1933;
+const int MAJ_AUR_HARD_SOLDIER                 = 1934;
+const int MAJ_AUR_MOT_ATTACK                   = 1935;
+const int MAJ_AUR_STEAD_HAND                   = 1936;
+const int GRANT_MOVE_ACTION                    = 1937;
+const int MINOR_AURA                           = 1938;
+const int MAJOR_AURA                           = 1939;
+
+
 //ACP feat
-const int FEAT_ACP_FEAT                     = 2892;
+const int FEAT_ACP_FEAT                       = 2892;
 
 // Epic Spellcasting Rest feat
-const int FEAT_EPIC_SPELLCASTING_REST       = 4399;
+const int FEAT_EPIC_SPELLCASTING_REST         = 4399;
 
 //Baelnorn
-const int FEAT_BAELN_PROP = 3576;
-const int FEAT_BAELN_TOUCH = 3577;
-const int FEAT_BAELN_ABIL = 3578;
-const int FEAT_PROJECTION = 3579;
-const int FEAT_BAELN_DEF = 3580;
-const int FEAT_UNDEAD_HD = 3581;
-const int FEAT_TURN_RESISTANCE = 3582;
-const int FEAT_IMPROVED_TURN_RESISTANCE = 3583;
-const int FEAT_IMMUNITY_ABILITY_DECREASE = 3584;
-const int FEAT_IMMUNITY_CRITICAL = 3585;
-const int FEAT_IMMUNITY_DEATH = 3586;
-const int FEAT_IMMUNITY_DISEASE = 3587;
-const int FEAT_IMMUNITY_MIND_SPELLS = 3588;
-const int FEAT_IMMUNITY_PARALYSIS = 3589;
-const int FEAT_IMMUNITY_POISON = 3590;
-const int FEAT_IMMUNITY_SNEAKATTACK = 3591;
-const int FEAT_POSITIVE_ENERGY_RESISTANCE = 3592;
-const int FEAT_TURNING_IMMUNITY = 3593;
+const int FEAT_BAELN_PROP                     = 3576;
+const int FEAT_BAELN_TOUCH                    = 3577;
+const int FEAT_BAELN_ABIL                     = 3578;
+const int FEAT_PROJECTION                     = 3579;
+const int FEAT_BAELN_DEF                      = 3580;
+const int FEAT_UNDEAD_HD                      = 3581;
+const int FEAT_TURN_RESISTANCE                = 3582;
+const int FEAT_IMPROVED_TURN_RESISTANCE       = 3583;
+const int FEAT_IMMUNITY_ABILITY_DECREASE      = 3584;
+const int FEAT_IMMUNITY_CRITICAL              = 3585;
+const int FEAT_IMMUNITY_DEATH                 = 3586;
+const int FEAT_IMMUNITY_DISEASE               = 3587;
+const int FEAT_IMMUNITY_MIND_SPELLS           = 3588;
+const int FEAT_IMMUNITY_PARALYSIS             = 3589;
+const int FEAT_IMMUNITY_POISON                = 3590;
+const int FEAT_IMMUNITY_SNEAKATTACK           = 3591;
+const int FEAT_POSITIVE_ENERGY_RESISTANCE     = 3592;
+const int FEAT_TURNING_IMMUNITY               = 3593;
 
 //Lasher
-const int FEAT_LASHER_SNEAK1D6 = 4075;
-const int FEAT_LASHER_SNEAK2D6 = 4076;
-const int FEAT_LASHER_SNEAK3D6 = 4077;
+const int FEAT_LASHER_SNEAK1D6                = 4075;
+const int FEAT_LASHER_SNEAK2D6                = 4076;
+const int FEAT_LASHER_SNEAK3D6                = 4077;
 const int FEAT_LASHER_IMPROVED_KNOCKDOWN_WHIP = 4078;
-const int FEAT_LASHER_THIRD_HAND = 4079;
-const int FEAT_LASHER_CRACK_FATE = 4080;
-const int FEAT_LASHER_LASHING_WHIP = 4081;
-const int FEAT_LASHER_IMPROVED_DISARM_WHIP = 4082;
-const int FEAT_LASHER_STUNNING_SNAP = 4083;
-const int FEAT_LASHER_CRACK_DOOM = 4084;
-const int FEAT_LASHER_DEATH_SPIRAL = 4085;
+const int FEAT_LASHER_THIRD_HAND              = 4079;
+const int FEAT_LASHER_CRACK_FATE              = 4080;
+const int FEAT_LASHER_LASHING_WHIP            = 4081;
+const int FEAT_LASHER_IMPROVED_DISARM_WHIP    = 4082;
+const int FEAT_LASHER_STUNNING_SNAP           = 4083;
+const int FEAT_LASHER_CRACK_DOOM              = 4084;
+const int FEAT_LASHER_DEATH_SPIRAL            = 4085;
+
+// PnP Spell Schools
+const int FEAT_PNP_SPELL_SCHOOL_GENERAL       = 2273;
+const int FEAT_PNP_SPELL_SCHOOL_ABJURATION    = 2274;
+const int FEAT_PNP_SPELL_SCHOOL_CONJURATION   = 2275;
+const int FEAT_PNP_SPELL_SCHOOL_DIVINATION    = 2276;
+const int FEAT_PNP_SPELL_SCHOOL_ENCHANTMENT   = 2277;
+const int FEAT_PNP_SPELL_SCHOOL_EVOCATION     = 2278;
+const int FEAT_PNP_SPELL_SCHOOL_ILLUSION      = 2279;
+const int FEAT_PNP_SPELL_SCHOOL_NECROMANCY    = 2280;
+const int FEAT_PNP_SPELL_SCHOOL_TRANSMUTATION = 2281;

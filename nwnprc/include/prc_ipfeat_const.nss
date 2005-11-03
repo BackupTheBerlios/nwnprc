@@ -396,6 +396,9 @@ const int IP_CONST_FEAT_WEAPON_OF_CHOICE_DWAXE                      = 16278;
 const int IP_CONST_FEAT_WEAPON_OF_CHOICE_WHIP                       = 16279;
 const int IP_CONST_FEAT_WEAPON_OF_CHOICE_MINDBLADE                  = 16280;
 
+// Arcane Archer
+const int IP_CONST_FEAT_FEAT_PRESTIGE_IMBUE_ARROW                   = 390;
+
 
 // IP_CONST_CASTSPELL
 
@@ -534,7 +537,7 @@ const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_SIX 		= 147;
 const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_SEVEN 	= 148;
 const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_EIGHT 	= 149;
 const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_NINE 		= 150;
-const int IP_CONST_FEAT_CHECK_DOMAIN_SLOTS 		= 151; 
+const int IP_CONST_FEAT_CHECK_DOMAIN_SLOTS 		= 151;
 
 // Bonus Domain Power Feats
 const int IP_CONST_FEAT_WAR_DOMAIN        		=  152;

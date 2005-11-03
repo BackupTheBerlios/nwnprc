@@ -65,19 +65,12 @@ void main()
         int nPen = GetPsiPenetration(oCaster);
         location lTarget = GetSpellTargetLocation();
         effect eVis = EffectVisualEffect(PSI_IMP_ULTRABLAST);
-        int nDice = 13;
         int nDiceSize = 6;
         float fWidth = DoWiden(15.0, nMetaPsi);
 
         float fDelay;
 
         if (nSurge > 0) nAugment += nSurge;
-
-        //Augmentation effects to Damage
-        if (nAugment > 0)
-        {
-            nDice += nAugment;
-        }
 
         effect eFNF = EffectVisualEffect(VFX_FNF_HOWL_MIND);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
@@ -92,6 +85,7 @@ void main()
 
                 if (PRCMyResistPower(oCaster, oTarget, nPen))
                 {
+                    int nDice = 13;
                     if (nAugment > 0) nDice += nAugment;
                     int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
                     nDamage += nDice;

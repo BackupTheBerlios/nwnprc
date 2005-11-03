@@ -85,11 +85,13 @@ RIG (Random Item Generator)
 Loop over each base item{
     For each prefix{
         For each suffix{
+  	    if prefix is equal to suffix, and they are non-zero, abort combination
             Generate Name
             Generate Tag
             Generate ResRef
             Construct properties list
-                if two properties have same type & subtype, abort combination
+                if two itemproperties have same type & subtype, abort combination
+		if any itemproperty does not apply to that item, abort combination
             Make XML file
         }
     }

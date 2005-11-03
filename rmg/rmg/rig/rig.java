@@ -5,37 +5,32 @@ import rmg.rig.*;
 
 public class rig {
 	//constants
-	private static final AFFIX_COUNT = 1300;
-	private static final BASEITEM_COUNT = 125;
+	private static final int AFFIX_COUNT = 1300;
+	private static final int BASEITEM_COUNT = 125;
 	//public data
-	private static Data_2da rig2da         = load2da("rig.2da");
-	private static Data_2da rigIP2da       = load2da("rig_ip.2da");
-	private static Data_2da baseitem2da    = load2da("baseitems.2da");
-	private static Data_2da itempropdef2da = load2da("itempropdef.2da");
+	private static Data_2da rig2da         = Data_2da.load2da("rig.2da");
+	private static Data_2da rigIP2da       = Data_2da.load2da("rig_ip.2da");
+	private static Data_2da baseitem2da    = Data_2da.load2da("baseitems.2da");
+	private static Data_2da itempropdef2da = Data_2da.load2da("itempropdef.2da");
 	//private data
-	private int rootID        = 0;
-	private int prefixID      = 0;
-	private int suffixID      = 0;
-	private String itemName   = "";
-	private String itemTag    = "";
-	private String itemRefRef = "";
-	private itemproperty[] itemproperties = new itemproperty[10];
-	private int itempropertyCount = 0;
+	private static int rootID        = 0;
+	private static int prefixID      = 0;
+	private static int suffixID      = 0;
+	private static String itemName   = "";
+	private static String itemTag    = "";
+	private static String itemRefRef = "";
+	private static itemproperty[] itemproperties = new itemproperty[10];
+	private static int itempropertyCount = 0;
 
 	//main method
-	public void main(String[] args){
-
-		//load 2das
-		rig2da      = load2da("rig.2da");
-		rigIP2da    = load2da("rig_ip.2da");
-		baseitem2da = load2da("baseitems.2da");
+	public static void main(String[] args){
 
 		//loop over the roots
-		for(rootID = 0; rootID < BASEITEM_COUNT; rootID+){
+		for(rootID = 0; rootID < BASEITEM_COUNT; rootID++){
 			//loop over the prefixs
-			for(prefixID = 0; prefixID < AFFIX_COUNT; prefixID+){
+			for(prefixID = 0; prefixID < AFFIX_COUNT; prefixID++){
 				//loop over the suffixs
-				for(suffixID = 0; suffixID < AFFIX_COUNT; suffixID+){
+				for(suffixID = 0; suffixID < AFFIX_COUNT; suffixID++){
 						assembleItem();
 				}
 			}
@@ -45,7 +40,7 @@ public class rig {
 	//public methods
 
 	//private methods
-	private void assembleItem(){
+	private static void assembleItem(){
 		//abort if same suffix as prefix
 		//except for no prefix/suffix
 		if(prefixID == suffixID
@@ -64,6 +59,6 @@ public class rig {
 		outputToFile();
 	}
 
-	private void outputToFile(){
+	private static void outputToFile(){
 	}
 }

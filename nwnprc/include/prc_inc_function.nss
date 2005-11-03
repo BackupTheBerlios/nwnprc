@@ -213,8 +213,6 @@ void EvalPRCFeats(object oPC)
 //        ExecuteScript("prc_tp_mgmt_eval", oPC);
     if(!GetHasFeat(FEAT_TELEPORT_MANAGEMENT_RADIAL, oPC))
     {
-        object oSkin = GetPCSkin(oPC);
-
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_TELEPORT_MANAGEMENT_RADIAL), oSkin);
     }
 

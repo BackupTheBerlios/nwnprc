@@ -2,7 +2,7 @@
 //:: Baelnorn projection script
 //:: prc_bn_project
 //::///////////////////////////////////////////////
-/*
+/**
     This script creates a copy of the PC casting it,
     switches the PC and copy's inventories and their
     locations. The PC is set to immortal.
@@ -30,11 +30,12 @@
     - There may be a way to abuse Projection to duplicate items.
     -- Should be preventable via strict checks in OnUnacquireItem
     - It may be possible to restore charges to items using projection
+
+
+    @author Written By: Tenjac & Primogenitor
+    @author Modified By: Ornedan
 */
 //:://////////////////////////////////////////////
-//:: Written By: Tenjac & Primogenitor
-//:: Modified By: Ornedan
-//:: Modified On: 19.02.2005
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
@@ -50,9 +51,6 @@ const float PROJECTION_HB_DELAY = 1.0f;
 /* Function prototypes                          */
 //////////////////////////////////////////////////
 
-void DoDestroy(object oObject);
-void MoveInventory(object oA, object oB, int bCopyEquipped = FALSE);
-void CleanTheCopy(object oCopy);
 void PseudoPosses(object oPC, object oCopy);
 void EndPosses(object oPC, object oCopy);
 void ProjectionMonitor(object oPC, object oCopy);
@@ -75,14 +73,20 @@ void main()
     effect eLight    = EffectVisualEffect(VFX_IMP_RESTORATION_GREATER, FALSE);
     effect eGlow     = EffectVisualEffect(VFX_DUR_ETHEREAL_VISAGE, FALSE);
 
+    if(DEBUG) DoDebug("prc_bn_project running.\n"
+                    + "oPC = '" + GetName(oPC) + "' - '" + GetTag(oPC) + "' - " + ObjectToString(oPC)
+                    + "Copy exists: " + BooleanToString(GetIsObjectValid(oCopy))
+                      );
+
     // Check if there is a valid copy around.
     // If so, end the projection.
-
     if(GetIsObjectValid(oCopy))
     {
+        RemoveSpellEffects(SPELL_BAELNORN_PROJECTION, oPC, oPC);
         EndPosses(oPC, oCopy);
-        RemoveEffect(oPC, eGlow);
-       return;
+        IncrementRemainingFeatUses(oPC, FEAT_PROJECTION);
+
+        return;
     }
 
     // Create the copy
@@ -99,10 +103,13 @@ void main()
 
     //Set Immortal flag on the PC or if they were already immortal,
     //leave a note about it on them.
-    //
     if(GetImmortal(oPC))
+    {
+        if(DEBUG) DoDebug("prc_bn_project: The PC was already immortal");
         SetLocalInt(oPC, ALREADY_IMMORTAL_LOCAL_NAME, TRUE);
+    }
     else{
+        if(DEBUG) DoDebug("prc_bn_project: Setting PC immortal");
         SetImmortal(oPC, TRUE);
         DeleteLocalInt(oPC, ALREADY_IMMORTAL_LOCAL_NAME); // Paranoia
     }
@@ -111,176 +118,100 @@ void main()
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLight, oCopy, 3.0);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLight, oPC, 3.0);
 
-    // Start a pseudo-hb to monitor the status of both PC and copy
-    DelayCommand(PROJECTION_HB_DELAY, ProjectionMonitor(oPC, oCopy));
-
-    NerfWeapons(oPC);
-
-    // Delete all non-equipped items from the copy
-    DelayCommand(0.05, CleanTheCopy(oCopy));
     // Do the switching around
     DelayCommand(0.2, PseudoPosses(oPC, oCopy));
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGlow, oPC, 60.0);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGlow, oPC);
 }
 
-
-//First sets the given item destroyable and then destroys it.
-//This is used to make sure no duplicate items are created
-//when using the projection.
-
-void DoDestroy(object oObject){
-    AssignCommand(oObject, SetIsDestroyable(TRUE, FALSE, FALSE));
-    DestroyObject(oObject);
-}
-
-// Copies the contents of object oA to oB
-// and destroys the originals.
-
-void MoveInventory(object oA, object oB, int bCopyEquipped = FALSE)
-{
-    object oItem = GetFirstItemInInventory(oA);
-    object oCopy;
-    while(GetIsObjectValid(oItem))
-    {
-        CopyItem(oItem, oB, TRUE);
-        DoDestroy(oItem);
-        oItem = GetNextItemInInventory(oA);
-    }
-
-    if(bCopyEquipped)
-    {
-        // Skip creature items when copying equipped items.
-        int i;
-        for(i = 0; i < INVENTORY_SLOT_CWEAPON_L; i++)
-        {
-            oItem = GetItemInSlot(i, oA);
-            oCopy = CopyItem(oItem, oB, TRUE);
-            AssignCommand(oB, ActionEquipItem(oCopy, i));
-            DoDestroy(oItem);
-        }
-    }
-}
-
-//Wipe the copy's inventory
-//Does not touch equipped items, since a naked copy would look stupid :P
-
-void CleanTheCopy(object oCopy)
-{
-    object oItem = GetFirstItemInInventory(oCopy);
-    while(GetIsObjectValid(oItem))
-    {
-        // Unless this shows to be necessary, it's commented out to save resources
-        // Clean the contents of any bags, too
-        if(GetHasInventory(oItem))
-        {
-            object oItem2 = GetFirstItemInInventory(oItem);
-            while(GetIsObjectValid(oItem2))
-            {
-                SetLocalInt(oItem2, "MarkedForDestruction", TRUE);
-                DoDestroy(oItem2);
-                oItem2 = GetNextItemInInventory(oItem);
-            }
-        }
-        //SetLocalInt(oItem, "MarkedForDestruction", TRUE);
-        DoDestroy(oItem);
-        oItem = GetNextItemInInventory(oCopy);
-    }
-    int i;
-    for(i = 0; i < 14; i++)
-    {
-        oItem = GetItemInSlot(i, oCopy);
-        SetLocalInt(oItem, "MarkedForDestruction", TRUE);
-        DoDestroy(oItem);
-    }
-}
-
-
-
- // Moves the PC's items to the copy and switches their locations around
-
+// Moves the PC's items to the copy and switches their locations around
 void PseudoPosses(object oPC, object oCopy)
 {
+    if(DEBUG) DoDebug("prc_bn_project: PseudoPosses():\n"
+                    + "oPC = '" + GetName(oPC) + "'\n"
+                    + "oCopy = '" + GetName(oCopy) + "'"
+                      );
     // Make sure both objects are valid
     if(!GetIsObjectValid(oCopy) || !GetIsObjectValid(oPC)){
-        WriteTimestampedLogEntry("PseudoPosses called, but one of the parameters wasn't a valid object. Object status:" +
-                                 "\nPC - " + (GetIsObjectValid(oPC) ? "valid":"invalid") +
-                                 "\nCopy - " + (GetIsObjectValid(oCopy) ? "valid":"invalid"));
+        if(DEBUG) DoDebug("PseudoPosses called, but one of the parameters wasn't a valid object. Object status:" +
+                          "\nPC - " + (GetIsObjectValid(oPC) ? "valid":"invalid") +
+                          "\nCopy - " + (GetIsObjectValid(oCopy) ? "valid":"invalid")
+                          );
+
         // Some cleanup before aborting
         if(!GetLocalInt(oPC, ALREADY_IMMORTAL_LOCAL_NAME))
+        {
             SetImmortal(oPC, FALSE);
-        DoDestroy(oCopy);
+            DeleteLocalInt(oPC, ALREADY_IMMORTAL_LOCAL_NAME);
+        }
+        MyDestroyObject(oCopy);
         DeleteLocalInt(oPC, "BaelnornProjection_Active");
         UnNerfWeapons(oPC);
 
         return;
     }
 
-    // Get the locations
-    location lPC = GetLocation(oPC);
-    location lCopy = GetLocation(oCopy);
-
-    //Unless this is proved necessary by testing, skip the 3-way inventory switching
-    location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
-    //temporary container
-    object oContainer = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest1" ,lLimbo);
-
-    if(!GetIsObjectValid(oContainer)){
-        WriteTimestampedLogEntry("Pseudoposses failed due to being unable to create container");
-        // Remove immortality, since we aren't possessing after all
-        SetImmortal(oPC, FALSE);
-        // Also destroy the copy
-        DoDestroy(oCopy);
-        return;
-    }
-    //move the pc inventory to the container
-    DelayCommand(0.1, MoveInventory(oPC, oContainer));
-    //move the copies inventory to the PC
-    DelayCommand(0.2, MoveInventory(oCopy, oPC));
-    //move the container to the copy
-    DelayCommand(0.3, MoveInventory(oContainer, oCopy));
-    DelayCommand(1.0, DestroyObject(oContainer));
-
-    // Just move the PC's stuff to the copy.
-    // It doesn't matter if all the copy's own items haven't been destroyed yet, since this will not interfere
-    MoveInventory(oPC, oCopy);
-
     // Set a local on the PC telling that it's a projection. This is used
     // to keep the PC from picking up or losing objects.
     SetLocalInt(oPC, "BaelnornProjection_Active", TRUE);
 
-    //now jump them over
-    //doesnt matter if this happens before or after inventory swapping
-    AssignCommand(oPC, JumpToLocation(lCopy));
-    AssignCommand(oCopy, JumpToLocation(lPC));
+    // Make the PC's weapons as non-damaging as possible
+    NerfWeapons(oPC);
+
+    // Start a pseudo-hb to monitor the status of both PC and copy
+    DelayCommand(PROJECTION_HB_DELAY, ProjectionMonitor(oPC, oCopy));
+
+    // Add eventhooks
+    AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_prj_event", TRUE, FALSE); // OnEquip
+    //AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM,  "prc_bn_prj_event", TRUE, FALSE); // OnUnEquip
+    AddEventScript(oPC, EVENT_ONACQUIREITEM,        "prc_bn_prj_event", TRUE, FALSE); // OnAcquire
+    //AddEventScript(oPC, EVENT_ONUNAQUIREITEM,       "prc_bn_prj_event", TRUE, FALSE); // OnUnAcquire
+    AddEventScript(oPC, EVENT_ONPLAYERREST_STARTED, "prc_bn_prj_event", FALSE, FALSE); // OnRest
+
+    // Swap the copy and PC
+    location lPC   = GetLocation(oPC);
+    location lCopy = GetLocation(oCopy);
+    DelayCommand(1.5f,AssignCommand(oPC, JumpToLocation(lCopy)));
+    DelayCommand(1.5f,AssignCommand(oCopy, JumpToLocation(lPC)));
 }
 
 
 // Switches the PC's inventory back from the copy and returns the PC to the copy's location.
-
 void EndPosses(object oPC, object oCopy)
 {
-    // See comment in PseudoPossess
-    location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
-    location lCopy = GetLocation(oCopy);
-    //construct visual effect
-    //temporary container
-    object oContainer = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest1" ,lLimbo);
-    if(!GetIsObjectValid(oContainer))
-        return;
+    if(DEBUG) DoDebug("prc_bn_project: EndPosses():\n"
+                    + "oPC = '" + GetName(oPC) + "'\n"
+                    + "oCopy = '" + GetName(oCopy) + "'"
+                      );
+
 
     effect eLight = EffectVisualEffect(VFX_IMP_RESTORATION_GREATER, FALSE);
 
     // Remove Immortality from the PC if necessary
     if(!GetLocalInt(oPC, ALREADY_IMMORTAL_LOCAL_NAME))
         SetImmortal(oPC, FALSE);
+
+    // Remove the ghost VFX
+    RemoveSpellEffects(SPELL_BAELNORN_PROJECTION, oPC, oPC);
+
     // Remove the local signifying that the PC is a projection
     DeleteLocalInt(oPC, "BaelnornProjection_Active");
 
+    // Remove the heartbeat HP tracking local
+    DeleteLocalInt(oPC, "PRC_BealnornProjection_HB_HP");
+
+    // Remove weapons nerfing
     UnNerfWeapons(oPC);
 
+    // Remove eventhooks
+    RemoveEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_prj_event", TRUE, FALSE); // OnEquip
+    //RemoveEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM,  "prc_bn_prj_event", TRUE, FALSE); // OnUnEquip
+    RemoveEventScript(oPC, EVENT_ONACQUIREITEM,        "prc_bn_prj_event", TRUE, FALSE); // OnAcquire
+    //RemoveEventScript(oPC, EVENT_ONUNAQUIREITEM,       "prc_bn_prj_event", TRUE, FALSE); // OnUnAcquire
+    RemoveEventScript(oPC, EVENT_ONPLAYERREST_STARTED, "prc_bn_prj_event", FALSE, FALSE); // OnRest
+
     // Move PC and inventory
-    AssignCommand(oPC, JumpToLocation(lCopy));
-    MoveInventory(oCopy, oPC);
+    location lCopy = GetLocation(oCopy);
+    DelayCommand(1.5f, AssignCommand(oPC, JumpToLocation(lCopy)));
 
     // Set the PC's hitpoints to be whatever the copy has
     int nOffset = GetCurrentHitPoints(oCopy) - GetCurrentHitPoints(oPC);
@@ -290,30 +221,26 @@ void EndPosses(object oPC, object oCopy)
         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(-nOffset, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY), oPC);
 
     // Schedule deletion of the copy
-    DelayCommand(0.3f, DoDestroy(oCopy));
+    DelayCommand(0.3f, MyDestroyObject(oCopy));
 
-    //VFX
+    // VFX
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eLight, lCopy, 3.0);
-
-
-    //move the copy inventory to the container
-    DelayCommand(0.1, MoveInventory(oCopy, oContainer));
-    //move the PC inventory to the copy
-    DelayCommand(0.2, MoveInventory(oPC, oCopy));
-    //move the container to the PC
-    DelayCommand(0.3, MoveInventory(oContainer, oPC));
-    DelayCommand(0.4, DestroyObject(oContainer));
-
 }
 
-
-  //Runs tests to see if the projection effect can still continue.
-  //If the PC has reached 1 HP, end projection normally.
-  //If the copy is dead, end projection and kill the PC.
-
+//Runs tests to see if the projection effect can still continue.
+//If the PC has reached 1 HP, end projection normally.
+//If the copy is dead, end projection and kill the PC.
 void ProjectionMonitor(object oPC, object oCopy)
 {
-    // First, some paranoia checks. The player might have ended the projection in meantime.
+    if(DEBUG) DoDebug("prc_bn_project: ProjectionMonitor():\n"
+                    + "oPC = '" + GetName(oPC) + "'\n"
+                    + "oCopy = '" + GetName(oCopy) + "'"
+                      );
+    // Abort if the projection is no longer marked as being active
+    if(!GetLocalInt(oPC, "BaelnornProjection_Active"))
+        return;
+
+    // Some paranoia in case something interfered and either PC or copy has been destroyed
     if(!(GetIsObjectValid(oPC) && GetIsObjectValid(oCopy))){
         WriteTimestampedLogEntry("Baelnorn Projection hearbeat aborting due to an invalid object. Object status:" +
                                  "\nPC - " + (GetIsObjectValid(oPC) ? "valid":"invalid") +
@@ -328,71 +255,106 @@ void ProjectionMonitor(object oPC, object oCopy)
         effect eKill = EffectDamage(GetCurrentHitPoints(oPC), DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oPC);
     }
-    else if(GetCurrentHitPoints(oPC) == 1)
-    {
-        EndPosses(oPC, oCopy);
-    }
+    // Transfer 1/2 damage taken by the "projection" to the "original"
     else
-        DelayCommand(PROJECTION_HB_DELAY, ProjectionMonitor(oPC, oCopy));
+    {
+        int nOldHP = GetLocalInt(oPC, "PRC_BealnornProjection_HB_HP");
+        int nCurHP = GetCurrentHitPoints(oPC);
+        int nDelta = nCurHP - nOldHP;
+
+        // If the "projection" has taken damage since last HP, propagate
+        if(nDelta < 0)
+        {
+            if(DEBUG) DoDebug("prc_bn_project: ProjectionMonitor(): The Projection has lost " + IntToString(nDelta) + "HP, propagating to copy");
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDelta / 2, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY), oCopy);
+        }
+
+        SetLocalInt(oPC, "PRC_BealnornProjection_HB_HP", nCurHP);
+
+        // Check if the "projection" has been destroyed or if some other event has caused the projection to end
+        if(GetCurrentHitPoints(oPC) == 1                   ||
+           GetLocalInt(oPC, "PRC_BaelnornProjection_Abort")
+           )
+        {
+            if(DEBUG) DoDebug("prc_bn_project: ProjectionMonitor(): The Projection has been terminated, ending projection");
+            EndPosses(oPC, oCopy);
+        }
+        else
+            DelayCommand(PROJECTION_HB_DELAY, ProjectionMonitor(oPC, oCopy));
+    }
 }
 
 
 //Gives the PC -50 to attack and places No Damage iprop to all equipped weapons.
-
-void NerfWeapons(object oPC){
+void NerfWeapons(object oPC)
+{
+    if(DEBUG) DoDebug("prc_bn_project: NerfWeapons():\n"
+                    + "oPC = '" + GetName(oPC) + "'"
+                      );
     effect eAB = EffectAttackDecrease(50);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAB, oPC);
+
+    // Create array for storing a list of the nerfed weapons in
+    array_create(oPC, "PRC_BaelnornProj_Nerfed");
 
     object oWeapon;
     itemproperty ipNoDam = ItemPropertyNoDamage();
     oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     if(IPGetIsMeleeWeapon(oWeapon)){
         if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-            SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
+            //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
             AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
+            array_set_object(oPC, "PRC_BaelnornProj_Nerfed", array_get_size(oPC, "PRC_BaelnornProj_Nerfed"), oWeapon);
         }
         // Check left hand only if right hand had a weapon
         oWeapon = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
         if(IPGetIsMeleeWeapon(oWeapon)){
             if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-                SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
+                //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
                 AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
+                array_set_object(oPC, "PRC_BaelnornProj_Nerfed", array_get_size(oPC, "PRC_BaelnornProj_Nerfed"), oWeapon);
         }}
     }else if(IPGetIsRangedWeapon(oWeapon)){
         if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-            SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
+            //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
             AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
+            array_set_object(oPC, "PRC_BaelnornProj_Nerfed", array_get_size(oPC, "PRC_BaelnornProj_Nerfed"), oWeapon);
     }}
 
     oWeapon = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
     if(GetIsObjectValid(oWeapon)){
         if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-            SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
+            //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
             AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
+            array_set_object(oPC, "PRC_BaelnornProj_Nerfed", array_get_size(oPC, "PRC_BaelnornProj_Nerfed"), oWeapon);
     }}
     oWeapon = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
     if(GetIsObjectValid(oWeapon)){
         if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-            SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
+            //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
             AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
+            array_set_object(oPC, "PRC_BaelnornProj_Nerfed", array_get_size(oPC, "PRC_BaelnornProj_Nerfed"), oWeapon);
     }}
     oWeapon = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
     if(GetIsObjectValid(oWeapon)){
         if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-            SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
+            //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
             AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
+            array_set_object(oPC, "PRC_BaelnornProj_Nerfed", array_get_size(oPC, "PRC_BaelnornProj_Nerfed"), oWeapon);
     }}
 }
 
 
 
 //Undoes changes made in NerfWeapons().
-
-void UnNerfWeapons(object oPC){
-    int nSpellId = GetSpellId();
+void UnNerfWeapons(object oPC)
+{
+    if(DEBUG) DoDebug("prc_bn_project: UnNerfWeapons():\n"
+                    + "oPC = '" + GetName(oPC) + "'"
+                      );
     effect eCheck = GetFirstEffect(oPC);
     while(GetIsEffectValid(eCheck)){
-        if(GetEffectSpellId(eCheck) == nSpellId &&
+        if(GetEffectSpellId(eCheck) == SPELL_BAELNORN_PROJECTION &&
            GetEffectType(eCheck) == EFFECT_TYPE_ATTACK_DECREASE
           )
         {
@@ -401,6 +363,17 @@ void UnNerfWeapons(object oPC){
         eCheck = GetNextEffect(oPC);
     }
 
+    // Remove the no-damage property from all weapons it was added to
+    int i;
+    object oWeapon;
+    for(i = 0; i < array_get_size(oPC, "PRC_BaelnornProj_Nerfed"); i++)
+    {
+        oWeapon = array_get_object(oPC, "PRC_BaelnornProj_Nerfed", i);
+        IPRemoveMatchingItemProperties(oWeapon, ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_PERMANENT);
+    }
+
+    array_delete(oPC, "PRC_BaelnornProj_Nerfed");
+/*
     object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     if(GetLocalInt(oWeapon, "BaelnornProjection_NoDamage")){
         IPRemoveMatchingItemProperties(oWeapon, ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_PERMANENT);
@@ -430,5 +403,5 @@ void UnNerfWeapons(object oPC){
             IPRemoveMatchingItemProperties(oWeapon, ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_PERMANENT);
         }
         oWeapon = GetNextItemInInventory(oPC);
-    }
+    }*/
 }

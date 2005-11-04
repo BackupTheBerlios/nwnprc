@@ -738,12 +738,12 @@ int X2PreSpellCastCode()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = KOTCHeavenDevotion(oTarget);
-        
+
     //---------------------------------------------------------------------------
     // Run Inscribe Rune Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = InscribeRune();        
+        nContinue = InscribeRune();
 
     //---------------------------------------------------------------------------
     // Run use magic device skill check
@@ -771,6 +771,17 @@ int X2PreSpellCastCode()
     {
         SendMessageToPC(OBJECT_SELF, "You cannot use "+GetName(GetSpellCastItem()));
         nContinue = FALSE;
+    }
+
+    //---------------------------------------------------------------------------
+    // Baelnorn attempting to use items while projection
+    //---------------------------------------------------------------------------
+    if(nContinue                                             && // No need to evaluate if casting has been cancelled already
+       GetLocalInt(OBJECT_SELF, "BaelnornProjection_Active") && // If projection is active AND
+       GetIsObjectValid(GetSpellCastItem())                     // Cast from an item
+       )
+    {
+        nContinue = FALSE; // Prevent casting
     }
 
 
@@ -890,9 +901,10 @@ int X2PreSpellCastCode()
         Battlecast();
 
     //casting from staffs uses caster DC calculations
-    if(GetIsObjectValid(GetSpellCastItem())
-        && GetBaseItemType(GetSpellCastItem()) == BASE_ITEM_MAGICSTAFF
-        && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL))
+    if(nContinue
+       && GetIsObjectValid(GetSpellCastItem())
+       && GetBaseItemType(GetSpellCastItem()) == BASE_ITEM_MAGICSTAFF
+       && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL))
     {
         int nDC = 10+StringToInt(Get2DACache("Spells", "Innate", PRCGetSpellId()));
         nDC += (GetAbilityForClass(GetFirstArcaneClass(OBJECT_SELF), OBJECT_SELF)-10)/2;

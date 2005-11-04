@@ -401,59 +401,62 @@ const int SPELL_TELEPORTATION_CIRCLE                = 2877;
 const int SPELL_DIMENSIONAL_LOCK                    = 2898;
 
 //racial spell additions
-const int SPELL_RAKSHASA_DISGUISE        = 1951;
-const int SPELL_RAKSHASA_REVERT          = 1952;
-const int SPELL_PIXIE_POLYMORPH          = 1953;
-const int SPELL_PIXIE_REVERT             = 1954;
-const int SPELL_FEYRI_ALTER              = 1955;
-const int SPELL_FEYRI_REVERT             = 1956;
-const int SPELL_URDINNIR_STONESKIN   = 1957;
-const int SPELL_RACE_DARKNESS        = 1958;
-const int SPELL_RACE_DAZE        = 1959;
-const int SPELL_RACE_LIGHT       = 1960;
-const int SPELL_SVIRF_BLINDDEAF      = 1961;
-const int SPELL_DUERGAR_INVIS        = 1962;
-const int SPELL_ILLITHID_CHARM_MONSTER   = 1963;
-const int SPELL_RACE_CHARM_PERSON    = 1964;
-const int SPELL_FAERIE_FIRE              = 1965;
-const int SPELL_AVARIEL_DIVE         = 1966;
-const int SPELL_MINOTAUR_CHARGE      = 1967;
-const int SPELL_RACE_BLUR        = 1968;
-const int SPELL_FEYRI_ENERVATION     = 1969;
-const int SPELL_RACE_ENTANGLE        = 1970;
-const int SPELL_RACE_FEAR        = 1971;
-const int SPELL_RACE_CLAIR       = 1972;
-const int SPELL_RACE_NEUTRALIZE_POISON   = 1973;
-const int SPELL_PIXIE_CONFUSION      = 1974;
-const int SPELL_PIXIE_IMPINVIS       = 1975;
-const int SPELL_PIXIE_DISPEL         = 1976;
-const int SPELL_RACE_CHILLTOUCH          = 1977;
+const int SPELL_RAKSHASA_DISGUISE                   = 1951;
+const int SPELL_RAKSHASA_REVERT                     = 1952;
+const int SPELL_PIXIE_POLYMORPH                     = 1953;
+const int SPELL_PIXIE_REVERT                        = 1954;
+const int SPELL_FEYRI_ALTER                         = 1955;
+const int SPELL_FEYRI_REVERT                        = 1956;
+const int SPELL_URDINNIR_STONESKIN                  = 1957;
+const int SPELL_RACE_DARKNESS                       = 1958;
+const int SPELL_RACE_DAZE                           = 1959;
+const int SPELL_RACE_LIGHT                          = 1960;
+const int SPELL_SVIRF_BLINDDEAF                     = 1961;
+const int SPELL_DUERGAR_INVIS                       = 1962;
+const int SPELL_ILLITHID_CHARM_MONSTER              = 1963;
+const int SPELL_RACE_CHARM_PERSON                   = 1964;
+const int SPELL_FAERIE_FIRE                         = 1965;
+const int SPELL_AVARIEL_DIVE                        = 1966;
+const int SPELL_MINOTAUR_CHARGE                     = 1967;
+const int SPELL_RACE_BLUR                           = 1968;
+const int SPELL_FEYRI_ENERVATION                    = 1969;
+const int SPELL_RACE_ENTANGLE                       = 1970;
+const int SPELL_RACE_FEAR                           = 1971;
+const int SPELL_RACE_CLAIR                          = 1972;
+const int SPELL_RACE_NEUTRALIZE_POISON              = 1973;
+const int SPELL_PIXIE_CONFUSION                     = 1974;
+const int SPELL_PIXIE_IMPINVIS                      = 1975;
+const int SPELL_PIXIE_DISPEL                        = 1976;
+const int SPELL_RACE_CHILLTOUCH                     = 1977;
 
 
 // Poison system spells
-const int SPELL_POISONED_WEAPON    = 2880;
-const int SPELL_GRENADE_POISONVIAL = 2881;
-const int SPELL_POISON_WEAPON      = 2882;
-const int SPELL_POISON_ITEM        = 2883;
-const int SPELL_POISON_FOOD        = 2884;
-const int SPELL_CLEAN_POISON_OFF   = 2885;
+const int SPELL_POISONED_WEAPON                     = 2880;
+const int SPELL_GRENADE_POISONVIAL                  = 2881;
+const int SPELL_POISON_WEAPON                       = 2882;
+const int SPELL_POISON_ITEM                         = 2883;
+const int SPELL_POISON_FOOD                         = 2884;
+const int SPELL_CLEAN_POISON_OFF                    = 2885;
 
 
 // Psionic feat spells
-const int SPELL_FEAT_SPEED_OF_THOUGHT_BONUS     = 2820;
+const int SPELL_FEAT_SPEED_OF_THOUGHT_BONUS         = 2820;
 
 // Active feat spells
-const int SPELL_JUMP                    = 2727;
+const int SPELL_JUMP                                = 2727;
 
 // Havoc Mage
-const int SPELL_BATTLECAST      = 2025;
+const int SPELL_BATTLECAST                          = 2025;
 
 // Lasher
-const int SPELL_LASHER_THIRD_HAND   = 1910;
-const int SPELL_LASHER_CRACK        = 1911;  //Yes, I know it's a funny name
-const int SPELL_LASHER_STUN_SNAP    = 1912;
-const int SPELL_LASHER_DEATH_SPIRAL = 1913;
-const int SPELL_LASHER_LASHW        = 1914;
+const int SPELL_LASHER_THIRD_HAND                   = 1910;
+const int SPELL_LASHER_CRACK                        = 1911;  //Yes, I know it's a funny name
+const int SPELL_LASHER_STUN_SNAP                    = 1912;
+const int SPELL_LASHER_DEATH_SPIRAL                 = 1913;
+const int SPELL_LASHER_LASHW                        = 1914;
 
 // Warchief
-const int SPELL_TRIBAL_FRENZY   = 1597;
+const int SPELL_TRIBAL_FRENZY                       = 1597;
+
+// Baelnorn
+const int SPELL_BAELNORN_PROJECTION                 = 2902;

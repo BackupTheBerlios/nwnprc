@@ -12,12 +12,13 @@
 //:: Created On:  11/26/04
 //:://////////////////////////////////////////////
 #include "inc_item_props"
+
 void main()
 {
-object oPC = OBJECT_SELF;
-object oSkin = GetPCSkin(oPC);
-int nBonus = 12;
+    object oPC = OBJECT_SELF;
+    object oSkin = GetPCSkin(oPC);
+    int nBonus = 12;
 
-SetCompositeBonus(oSkin, "HD", nBonus, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
+    SetCompositeBonus(oSkin, "PRCUndeadHD", nBonus, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
 }
 

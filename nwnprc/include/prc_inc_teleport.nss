@@ -663,6 +663,65 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
     */
 }
 
+location GetTeleportError(location lOriginal, object oUser, int bErrored = FALSE)
+{
+    // Roll for the result. If recursing from a mishap, roll d20 + 80, otherwise roll d100
+    int nRoll = bErrored ?
+                 d20() + 80 :
+                 d100()
+                 ;
+
+    /* On Target Off Target Way Off Target Mishap
+     * 01–90     91–94      95–98          99–100
+     */
+    // On Target - Return original location
+    if(nRoll <= 90)
+        return lOriginal;
+    // Off Target - Get a random location in same area
+    else if(nRoll <= 94)
+    {
+        object oArea = GetAreaFromLocation(lOriginal);
+        int nAreaW = GetAreaWidth(oArea);
+        int nAreaH = GetAreaHeight(oArea);
+
+        vector vNew = Vector(Random(nAreaW) * 10.0f + 5.0f,
+                             Random(nAreaH) * 10.0f + 5.0f,
+                             GetPositionFromLocation(lOriginal).z
+                             );
+
+        return Location(oArea, vNew, 0.0f);
+    }
+    // Way Off Target - Random location among stored teleport choices, or if there are no others, just stay where the user is
+    else if(nRoll <= 98)
+    {
+        int nLocs = GetNumberOfStoredTeleportTargetLocations(oUser);
+        int nRand = Random(nLocs);
+        location lReplacement = MetalocationToLocation(GetNthStoredTeleportTargetLocation(oUser, nRand));
+
+        if(nLocs == 0 || lReplacement == lOriginal)
+            return GetLocation(oUser);
+        else
+            return lReplacement;
+    }
+    // Mishap:
+    // You and anyone else teleporting with you have gotten “scrambled.”
+    // You each take 1d10 points of damage, and you reroll on the chart to see where you wind up.
+    // For these rerolls, roll 1d20+80. Each time “Mishap” comes up, the characters take more damage and must reroll.
+    else
+    {
+        // Loop over the targets, checking if they can teleport. Redundant check on the caster, but shouldn't cause any trouble
+        object oTarget;
+        int i;
+        for(i = 0; i < array_get_size(oUser, PRC_TELEPORTING_OBJECTS_ARRAY); i++)
+        {
+            oTarget = array_get_object(oUser, PRC_TELEPORTING_OBJECTS_ARRAY, i);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d10(), DAMAGE_TYPE_MAGICAL), oTarget);
+        }
+
+        return GetTeleportError(lOriginal, oUser, TRUE);
+    }
+}
+
 void DisallowTeleport(object oTarget)
 {
     if(DEBUG) DoDebug("DisallowTeleport():\n"

@@ -1,5 +1,5 @@
 //:://////////////////////////////////////////////
-//:: Teleportation Circle spellscript
+//:: Spell: Teleportation Circle
 //:: sp_telecircle
 //:://////////////////////////////////////////////
 /** @file
@@ -35,6 +35,10 @@
     Material Component: Amber dust to cover the area of the circle (cost 1,000 gp).
 
 
+    @note At this time, the circle does not act as a trap, merely as a normal area of effect.
+          This means that though it can be dispelled, it cannot be disarmed. Due to this, the
+          option to have the circle be hidden is also disabled.
+
     @author Ornedan
     @date   Created - 24.06.2005
 */
@@ -54,18 +58,12 @@
 const int SPELLID_VISIBLE = 2878;
 const int SPELLID_HIDDEN  = 2879;
 
+//PRC_TELECIRCLE_TRIG_VISIBLE_ORIG
+//PRC_TELECIRCLE_TRIG_HIDDEN_ORIG
 
 
 void main()
 {
-    // Since the only way for the circle AoE to find out it's parameters is to get data from the caster, we need to make sure
-    // the caster does not create another circle before the previous has gotten it's data out of the way.
-    if(GetLocalInt(OBJECT_SELF, "PRC_Spell_TeleportationCircle_Lock"))
-    {
-        SendMessageToPC(OBJECT_SELF, "Due to technical issues, you may not cast another Teleportation Circle yet. For specifics, RTS");
-        return;
-    }
-
     // Set the spell school
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
 
@@ -74,7 +72,6 @@ void main()
     // Get whether we are executing the first or the second part of the script
     if(!GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_FirstPartDone"))
     {
-SendMessageToPC(oCaster, "This spell is a work-in-progress. If it seems unfinished, it's because it is, so please ignore any problems with it for now");
         // Spellhook
         if(!X2PreSpellCastCode()) return;
         int nCasterLvl = PRCGetCasterLevel();
@@ -94,7 +91,7 @@ SendMessageToPC(oCaster, "This spell is a work-in-progress. If it seems unfinish
     {
         // Retrieve the target location from the variable
         location lCircleTarget = GetLocalLocation(oCaster, "PRC_Spell_TeleportCircle_TargetLocation");
-        //location lCaster = GetLocation(oCaster);
+        int bVisible = TRUE;/*GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_SID") == SPELLID_VISIBLE;*/ ///FIXME
         location lTarget;
         float fFacing  = GetFacing(oCaster);
         float fDistance = FeetToMeters(5.0f) + 0.2;
@@ -105,54 +102,44 @@ SendMessageToPC(oCaster, "This spell is a work-in-progress. If it seems unfinish
 
         // Create the actual circle, in front of the caster
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY,
-                              EffectAreaOfEffect(AOE_PER_TELEPORTATIONCIRCLE),
-                              lTarget,//lCaster,
+                              EffectAreaOfEffect(AOE_PER_TELEPORTATIONCIRCLE, "prc_telecirc_oe"),
+                              lTarget,
                               GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_CasterLvl") * 10 * 60.0f
                               );
+        // Get an object reference to the newly created AoE
+        object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+        while(GetIsObjectValid(oAoE))
+        {
+            // Test if we found the correct AoE
+            if(GetTag(oAoE) == Get2DACache("vfx_persistent", "LABEL", AOE_PER_TELEPORTATIONCIRCLE) &&
+               !GetLocalInt(oAoE, "PRC_TeleCircle_AoE_Inited")
+               )
+            {
+                break;
+            }
+            // Didn't find, get next
+            oAoE = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+        }
+        if(DEBUG && !GetIsObjectValid(oAoE)) DoDebug("ERROR: Can't find area of effect for Teleportation Circle!");
 
-        //DelayCommand(0.2f, SetData(, lCircleTarget));
+        // Store data on the AoE
+        SetLocalLocation(oAoE, "TargetLocation", lCircleTarget);
+        SetLocalInt(oAoE, "IsVisible", bVisible);
 
-        /// @todo: A VFX (momentary, circular, impressive :D ) at the circle's location.
-        /// Do even if hiddencircle so that the caster knows where it really ended up
+        // Make the AoE initialise the trap trigger and possibly the VFX heartbeat
+        ExecuteScript("prc_telecirc_aux", oAoE);
+
+
+        // A VFX (momentary, circular, impressive :D ) at the circle's location.
+        // Do even if hidden circle so that the caster knows where it really ended up
         DrawRhodonea(DURATION_TYPE_INSTANT, VFX_IMP_HEAD_MIND, lTarget, FeetToMeters(5.0f), 0.25, 0.0, 180, 12.0, 4.0, 0.0, "z");
-
-/*VFX_COM_BLOOD_CRT_WIMPQ
-VFX_COM_HIT_SONIC
-VFX_DUR_PROTECTION_EVIL_MINOR
-VFX_DUR_PROTECTION_GOOD_MINOR
-VFX_IMP_FROST
-VFX_IMP_HEAD_MIND
-plc_flamesmall
-s2_plc_scircle
-*/
-        /// @todo: VFX for visible version here. A detection radius for hidden version.
-        //if(GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_SID") == SPELLID_VISIBLE)  - Do this when we have an object reference to the AoE, so we can have this disappear when it gets deleted
-
-
-        // Lock the caster from creating more teleportation circles until the new one has grabbed it's data
-        SetLocalInt(oCaster, "PRC_Spell_TeleportationCircle_Lock", TRUE);
-        // Set automatic unlocking to happen in one minute just in case of trouble
-        DelayCommand(60.0f, DeleteLocalInt(oCaster, "PRC_Spell_TeleportationCircle_Lock"));
 
         // Cleanup
         DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_CasterLvl");
         DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_SID");
         DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_FirstPartDone");
-        //DeleteLocalLocation(oCaster, "PRC_Spell_TeleportCircle_TargetLocation");
+        DeleteLocalLocation(oCaster, "PRC_Spell_TeleportCircle_TargetLocation");
     }
 
     SPSetSchool();
 }
-
-/*
-{
-    struct trap tTeleCircle;
-    tTeleCircle.nDetectDC       = bVisible ? 0 : 34;
-    tTeleCircle.nDisarmDC       = 34;
-    tTeleCircle.nDetectAOE      = VFX_PER_15M_INVIS;
-    tTeleCircle.nTrapAOE        = VFX_PER_5_FT_INVIS;
-    tTeleCircle.sResRef         = "prgt_invis";
-    tTeleCircle.sTriggerScript  = "sp_telecircle_oe";
-    tTeleCircle.nCR             = GetECL(oCaster);
-}
-*/

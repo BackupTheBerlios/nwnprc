@@ -196,9 +196,13 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_RAPID_METABOLISM, oPC))                   ExecuteScript("prc_rapid_metab", oPC);
     if(GetHasFeat(FEAT_PSIONIC_HOLE, oPC))                       ExecuteScript("psi_psionic_hole", oPC);
     if(GetHasFeat(FEAT_POWER_ATTACK, oPC))                       ExecuteScript("prc_powatk_eval", oPC);
+    if(GetHasFeat(FEAT_ENDURANCE, oPC)
+        || GetHasFeat(FEAT_TRACK, oPC)
+        || GetHasFeat(FEAT_ETHRAN, oPC))                         ExecuteScript("prc_wyzfeat", oPC);        
     if(GetHasFeat(FAST_HEALING_1, oPC)
         || GetHasFeat(FAST_HEALING_2, oPC)
         || GetHasFeat(FAST_HEALING_3, oPC))                      ExecuteScript("prc_fastheal", oPC);
+        
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
         && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC)
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
@@ -269,10 +273,6 @@ void EvalPRCFeats(object oPC)
                               X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
     // Miscellaneous
-    if(GetHasFeat(FEAT_ENDURANCE, oPC)
-        ||GetHasFeat(FEAT_TRACK, oPC)
-        || GetHasFeat(FEAT_ETHRAN, oPC))
-        ExecuteScript("prc_wyzfeat", oPC);
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
     ExecuteScript("race_unarmed", oPC);

@@ -27,7 +27,6 @@ void Infusion(object oPC, object oSkin, int iLevel)
     if(GetLocalInt(oSkin, sFlag) == iLevel) return;
 
     SetCompositeBonus(oSkin, sFlag, iLevel, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
-    SetLocalInt(oSkin, sFlag, iLevel);
 }
 
 void ThickerThanWater(object oPC, object oSkin)

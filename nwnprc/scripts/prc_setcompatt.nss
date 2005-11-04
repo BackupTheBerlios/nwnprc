@@ -4,9 +4,9 @@ void main()
 {
     object oCastingObject = OBJECT_SELF;
     object oPC = GetSpellTargetObject();
-    
+
     string sBonus = GetLocalString(oCastingObject, "SET_COMPOSITE_STRING");
-    
+
     int iVal     = GetLocalInt(oCastingObject, "SET_COMPOSITE_VALUE");
     int iSubType = GetLocalInt(oCastingObject, "SET_COMPOSITE_SUBTYPE");
 
@@ -37,7 +37,7 @@ void main()
             if (iTotalL + iVal > 20) iVal = 20 - iTotalL;
             iTotalL += iVal;
             break;
-    }           
+    }
 
     if (iTotalR > iTotalL)
     {
@@ -51,7 +51,7 @@ void main()
         iAP = iTotalL - iTotalR;
         iHand = ATTACK_BONUS_ONHAND;
     }
-    
+
     effect eAttackInc = EffectAttackIncrease(iAB);
     effect eAttackDec = EffectAttackDecrease(iAP, iHand);
     effect eAttack = EffectLinkEffects(eAttackInc, eAttackDec);
@@ -63,4 +63,5 @@ void main()
     SetLocalInt(oPC, "CompositeAttackBonusR", iTotalR);
     SetLocalInt(oPC, "CompositeAttackBonusL", iTotalL);
     SetLocalInt(oPC, sBonus, iVal);
+    UpdateUsedCompositeNamesList(oPC, "PRC_ComAttBon", sBonus);
 }

@@ -17,7 +17,6 @@ void WarchiefBonus(object oPC, object oSkin, int iLevel)
     if(iLevel > 0)
     {
         SetCompositeBonus(oSkin, sFlag, iLevel, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CHA);
-        SetLocalInt(oSkin, sFlag, iLevel);
     }
 }
 
@@ -40,14 +39,14 @@ void main()
     object oItem;
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
     int iEquip = GetLocalInt(oPC, "ONEQUIP");
-    
+
     if (nWarChief >= 10) nBonus = 6;
     else if (nWarChief >= 6) nBonus = 4;
     else if (nWarChief >= 2) nBonus = 2;
 
     // Get the first boost at level 2
     if (nWarChief > 1) WarchiefBonus(oPC, oSkin, nBonus);
-    if (nWarChief >= 8) 
+    if (nWarChief >= 8)
     {
         if(iEquip == 2)       // On Equip
         {
@@ -72,7 +71,7 @@ void main()
         {
              RemoveDevotedBodyguard(oPC, oArmor);
              ApplyDevotedBodyguard(oPC, oArmor);
-        }        
+        }
     }
-    
+
 }

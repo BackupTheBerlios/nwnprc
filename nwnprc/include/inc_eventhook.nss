@@ -103,9 +103,9 @@ const int EVENT_ONUSERDEFINED            = 19;
 /// Requires OnHitCastSpell: Unique on the weapon used
 const int EVENT_ONHIT                 = 20;
 /// Virtual event - On Spell Cast
-const int EVENT_ONSPELLCAST           = 21;
+//const int EVENT_ONSPELLCAST           = 21;
 /// Virtual event - On Power Manifest
-const int EVENT_ONPOWERMANIFEST       = 22;
+//const int EVENT_ONPOWERMANIFEST       = 22;
 
 
 // NPC events

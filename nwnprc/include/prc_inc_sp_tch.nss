@@ -24,11 +24,11 @@ int PRCDoMeleeTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oC
 int SpellSneakAttackDamage(object oCaster, object oTarget)
 {
      int numDice = GetTotalSneakAttackDice(oCaster);
-     
+
      if(numDice != 0 && GetCanSneakAttack(oTarget, oCaster) )
      {
           FloatingTextStringOnCreature("*Sneak Attack Spell*", oCaster, TRUE);
-          return GetSneakAttackDamage(numDice); 
+          return GetSneakAttackDamage(numDice);
      }
      else
      {
@@ -44,20 +44,20 @@ int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int 
 {
      // perform critical
      if(iAttackRoll == 2)  iDamage *= 2;
-     
+
      // add sneak attack damage if applicable
      if(bCanSneakAttack && !GetPRCSwitch(PRC_SPELL_SNEAK_DISABLE))
           iDamage += SpellSneakAttackDamage(oCaster, oTarget);
-     
+
      // adds the bonus for spell bretrayal or spell strike for touch spells
-     iDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+     iDamage += ApplySpellBetrayalStrikeDamage(oTarget, oCaster);
      // apply damage
      if(iAttackRoll > 0)
      {
           effect eDamage = EffectDamage(iDamage, iDamageType);
           ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
      }
-     
+
      return iAttackRoll;
 }
 
@@ -68,11 +68,11 @@ void DoSpellRay(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
 {
     int nAttack = PRCDoRangedTouchAttack(PRCGetSpellTargetObject());
     if(nAttack)
-    {   
+    {
         ActionDoCommand(SetLocalInt(OBJECT_SELF, "AttackHasHit", nAttack)); //preserve crits
         DoRacialSLA(nSpellID, nCasterlevel, nTotalDC);
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "AttackHasHit"));
-    }    
+    }
 }
 
 //routes to DoRacialSLA, but checks that the rouch hits first
@@ -82,9 +82,9 @@ void DoSpellMeleeTouch(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
 {
     int nAttack = PRCDoMeleeTouchAttack(PRCGetSpellTargetObject());
     if(nAttack)
-    {   
+    {
         ActionDoCommand(SetLocalInt(OBJECT_SELF, "AttackHasHit", nAttack)); //preserve crits
         DoRacialSLA(nSpellID, nCasterlevel, nTotalDC);
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "AttackHasHit"));
-    }    
+    }
 }

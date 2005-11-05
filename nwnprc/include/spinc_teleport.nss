@@ -21,43 +21,38 @@
 //////////////////////////////////////////////////
 
 // Internal constants
-const string TP_LOCATION         = "PRC_GreaterTeleport_TargetLocation";
-const string TP_ERRORLESS        = "PRC_GreaterTeleport_Errorless";
-const string TP_FIRSTSTAGE_DONE  = "PRC_GreaterTeleport_FirstPartDone";
+const string TP_LOCATION         = "PRC_Teleport_TargetLocation";
+const string TP_ERRORLESS        = "PRC_Teleport_Errorless";
+const string TP_FIRSTSTAGE_DONE  = "PRC_Teleport_FirstPartDone";
+const string TP_END_SCRIPT       = "PRC_Teleport_ScriptToCallAtEnd";
 
 //////////////////////////////////////////////////
 /* Function prototypes                          */
 //////////////////////////////////////////////////
 
 /**
- * Runs the using of a Dimension Door (-like) spell / power / SLA.
- * The target location is either the location of a target object gotten
- * with PRCGetSpellTargetObject() or if the target was a location on the
- * ground, PRCGetSpellTargetLocation(). The actual target location may
- * be different if bUseDirDist is TRUE.
+ * Runs the using of a (Greater) Teleport (-like) spell / power / SLA.
+ * The destination is gotten using a conversation or, if active, the
+ * caster's quickselection.
+ * NOTE: You will need to call spellhook / powerhook / specific-whatever
+ * before this function.
  *
- * @param oCaster       The creature using a spell / power / SLA to Dimension Door
- * @param nCasterLvl    The creature's caster / manifester level in regards to this use
- * @param nSpellID      The spellID currently in effect. If not specified, PRCGetSpellId()
- *                      will be used to retrieve it.
- * @param sScriptToCall Optionally, a script may be ExecuteScript'd for each of the teleportees
- *                      after they have reached their destination. This is used to specify
- *                      the name of such script.
  *
- * @param bSelfOrParty  Determines whether this use of Dimension Door teleports only oCaster or
- *                      also all it's faction memers within 10ft radius (subject to the general
- *                      teleporting carry limits).
- *                      Valid values: DIMENSIONDOOR_SELF and DIMENSIONDOOR_PARTY
- *
- * @param bUseDirDist   If TRUE, the target location of the spell given via targeting cursor
- *                      is used only to specify the direction of actual target location,
- *                      relative to oCaster, and distance is specified via a listener.
- *                      Otherwise, the target location specified via targeting cursor is used
- *                      as the actual target.
+ * @param oCaster        The creature using a spell / power / SLA to Teleport
+ * @param nCasterLvl     The creature's caster / manifester level in regards to this use
+ * @param nSpellID       The spellID currently in effect. If not specified, PRCGetSpellId()
+ *                       will be used to retrieve it.
+ * @param bTeleportParty Whether to teleport only the user or also faction members within
+ *                       10ft of the user. If TRUE, teleports party in addition to the user,
+ *                       otherwise just the user.
+ * @param bErrorLess     Whether this teleportation is subject to potential error a 'la Teleport
+ *                       or errorless like Greater Teleport. If TRUE, there is no chance of
+ *                       ending anywhere else other than the location selected.
+ * @param sScriptToCall  Optionally, a script may be ExecuteScript'd for each of the teleportees
+ *                       after they have reached their destination. This is used to specify
+ *                       the name of such script.
  */
-void DimensionDoor(object oCaster, int nCasterLvl, int nSpellID = -1, string sScriptToCall = "",
-                   int bSelfOrParty = DIMENSIONDOOR_SELF, int bUseDirDist = FALSE
-                   );
+void Teleport(object oCaster, int nCasterLvl, int bTeleportParty, int bErrorLess, string sScriptToCall = "");
 
 
 /********************\
@@ -65,53 +60,27 @@ void DimensionDoor(object oCaster, int nCasterLvl, int nSpellID = -1, string sSc
 \********************/
 
 /**
- * Extracts data from local variables, calls DoDimensionDoorTeleport() using
- * that data and then does CleanLocals().
+ * Does the actual teleporting. Called once the user has specified
+ * the location to use.
  *
  * @param oCaster  creature using Dimension Door
  */
-void DimensionDoorAux(object oCaster);
+void TeleportAux(object oCaster);
 
 /**
- * Determines the target location of a Dimension Door. If using the
- * direction & distance listener trick, the direction of the location
- * is calculated from the base target location and distance is based
- * on the caster's speech.
- * Otherwise, the base target location is used.
+ * A visual effects heartbeat that runs when using party teleport while
+ * waiting for the caster to decide the target location.
+ * Outlines the 10ft radius. The HB will cease when the caster
+ * makes the decision or moves from the location they were at at the
+ * beginning of the HB.
  *
- * @param oCaster     creature using Dimension Door
- * @param nCasterLvl  oCaster's caster or manifester level in regards to this
- *                    Dimension Door use
- * @param lBaseTarget the base target location, obtained via normal targeting
- * @param fDistance   the distance specified by speech for the direction &
- *                    distance trick. If this is 0.0f, the trick is not used.
- *
- * @return            The location where this Dimension Door is supposed jump
- *                    it's targets to.
+ * @param oCaster User of a Teleport
+ * @param lCaster The location of the caster when they started the use
  */
-location GetDimensionDoorLocation(object oCaster, int nCasterLvl, location lBaseTarget, float fDistance);
+void VFX_HB(object oCaster, location lCaster);
 
 /**
- * Does the actual teleporting and VFX.
- *
- * @param oCaster           The user of the Dimension Door being run
- * @param lTarget           The location to teleport to
- * @param bTeleportingParty Whether this dimension door is teleporting only the user
- *                          or also surrounding party. Determines the size of the VFX
- * @param sScriptToCall     The script to call for each teleporting object once it has
- *                          reached the destination
- */
-void DoDimensionDoorTeleport(object oCaster, location lTarget, int bTeleportingParty, string sScriptToCall);
-
-/**
- * Deletes local variables used to preserve state over delays by these functions.
- *
- * @param oCaster  creature on whom the data was stored
- */
-void CleanLocals(object oCaster);
-
-/**
- * A wrapper for assigning two commands at once after a delay from DoDimensionDoorTeleport().
+ * A wrapper for assigning two commands at once after a delay from TeleportAux()
  * First, the jump command and then, if the script is non-blank, a call to ExecuteScript
  * the given post-jump script.
  *
@@ -119,8 +88,7 @@ void CleanLocals(object oCaster);
  * @param lTarget       the location to jump to
  * @param sScriptToCall script for oJumpee to execute once it has jumped
  */
-void AssignDimensionDoorCommands(object oJumpee, location lTarget, string sScriptToCall);
-
+void AssignTeleportCommands(object oJumpee, location lTarget, string sScriptToCall);
 
 
 //////////////////////////////////////////////////
@@ -130,7 +98,7 @@ void AssignDimensionDoorCommands(object oJumpee, location lTarget, string sScrip
 void VFX_HB(object oCaster, location lCaster)
 {
     // End the VFX once the caster either finishes the spell or moves
-    if(GetLocalInt(oCaster, "PRC_Spell_GreaterTeleport_FirstPartDone") && GetLocation(oCaster) == lCaster)
+    if(GetLocalInt(oCaster, TP_FIRSTSTAGE_DONE) && GetLocation(oCaster) == lCaster)
     {
         // Draw to circles, going in the opposite directions
         DrawCircle(DURATION_TYPE_INSTANT, VFX_IMP_CONFUSION_S, lCaster, FeetToMeters(10.0f), 0.0, 100, 1.0, 6.0, 0.0, "z");
@@ -144,6 +112,7 @@ void TeleportAux(object oCaster)
     // Retrieve the target location from the variable
     location lTarget = GetLocalLocation(oCaster, TP_LOCATION);
     location lCaster = GetLocation(oCaster);
+    string sScriptToCall = GetLocalString(oCaster, TP_END_SCRIPT);
     // If not errorless, run the location through the erroring code
     if(!GetLocalInt(oCaster, TP_ERRORLESS))
         lTarget = GetTeleportError(lTarget, oCaster);
@@ -163,7 +132,7 @@ void TeleportAux(object oCaster)
             oTarget = array_get_object(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY, i);
             if(GetCanTeleport(oTarget, lTarget))
             {
-                DelayCommand(1.0f, AssignCommand(oTarget, JumpToLocation(lTarget)));
+                DelayCommand(1.0f, AssignTeleportCommands(oTarget, lTarget, sScriptToCall));
             }
         }
 
@@ -175,7 +144,15 @@ void TeleportAux(object oCaster)
     DeleteLocalInt(oCaster, TP_FIRSTSTAGE_DONE);
     DeleteLocalLocation(oCaster, TP_LOCATION);
     DeleteLocalInt(oCaster, TP_ERRORLESS);
+    DeleteLocalString(oCaster, TP_END_SCRIPT);
     array_delete(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY);
+}
+
+void AssignTeleportCommands(object oJumpee, location lTarget, string sScriptToCall)
+{
+    AssignCommand(oJumpee, JumpToLocation(lTarget));
+    if(sScriptToCall != "")
+        AssignCommand(oJumpee, ActionDoCommand(ExecuteScript(sScriptToCall, oJumpee)));
 }
 
 void Teleport(object oCaster, int nCasterLvl, int bTeleportParty, int bErrorLess, string sScriptToCall = "")
@@ -198,6 +175,8 @@ void Teleport(object oCaster, int nCasterLvl, int bTeleportParty, int bErrorLess
         SetLocalInt(oCaster, TP_FIRSTSTAGE_DONE, TRUE);
         // Store whether this usage is errorless
         SetLocalInt(oCaster, TP_ERRORLESS, bErrorLess);
+        // Store the name of the script to call at the end
+        SetLocalString(oCaster, TP_END_SCRIPT, sScriptToCall);
         // Now, get the location to teleport to.
         ChooseTeleportTargetLocation(oCaster, "prc_teleport_aux", TP_LOCATION, FALSE, TRUE);
     }

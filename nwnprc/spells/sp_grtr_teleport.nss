@@ -45,7 +45,7 @@ void main()
     /* Main script */
     object oCaster = OBJECT_SELF;
     int nCasterLvl = PRCGetCasterLevel();
-    int nSpellID   = GetSpellId();
+    int nSpellID   = PRCGetSpellId();
 
     Teleport(oCaster, nCasterLvl, nSpellID == SPELLID_TELEPORT_PARTY, TRUE, "");
 

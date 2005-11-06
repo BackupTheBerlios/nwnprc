@@ -335,7 +335,7 @@
 331 FEAT_EPIC_SUPERIOR_INITIATIVE                  753       1    -1             0      
 332 FEAT_IMPROVED_DWARVEN_WARAXE                   954       1    -1             0      
 333 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
-334 Gre_Two_Weap                                   4315      3    16             1      
+334 Gre_Two_Weap                                   4315      3    16             0      
 335 ImpInit                                        377       3    8              0      
 336 FEAT_KIAI_SMITE_1                              2352      3    3              1      
 337 FEAT_KIAI_SMITE_2                              2353      3    7              1      

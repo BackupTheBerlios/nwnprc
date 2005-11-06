@@ -1177,15 +1177,7 @@ void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration)
 	}
 	
 	// Clean up the mess of extra fists made on taking first level.
-	DelayCommand(1.0,CleanExtraFists(oCaster));	
-	
-	// Strip the Fist.
-	itemproperty ip = GetFirstItemProperty(oWeapL);
-	while (GetIsItemPropertyValid(ip))
-	{
-		RemoveItemProperty(oWeapL, ip);
-		ip = GetNextItemProperty(oWeapL);
-	}	
+	DelayCommand(1.0,CleanExtraFists(oCaster));		
 
 	// Weapon finesse or intuitive attack?
 	SetLocalInt(oCaster, "UsingCreature", TRUE);

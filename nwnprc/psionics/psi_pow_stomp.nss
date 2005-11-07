@@ -62,7 +62,6 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
 	effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
 	effect eKnock = EffectKnockdown();
 	float fDist;
-	int nDice = 1;
 	int nDiceSize = 4;
 	float fWidth = DoWiden(20.0, nMetaPsi);
 	
@@ -80,6 +79,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
 
     	            if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
     	            {
+    	            	int nDice = 1;
     	               	if (nAugment > 0) nDice += nAugment;
 		      	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
 		      	effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);

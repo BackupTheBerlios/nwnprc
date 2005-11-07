@@ -2875,9 +2875,9 @@
 2871 ****                                       ****             ****             ****             ****             ****             ****             
 2872 ****                                       ****             ****             ****             ****             ****             ****             
 2873 ****                                       ****             ****             ****             ****             ****             ****             
-2874 ****                                       ****             ****             ****             ****             ****             ****             
-2875 ****                                       ****             ****             ****             ****             ****             ****             
-2876 ****                                       ****             ****             ****             ****             ****             ****             
+2874 Teleport_RadialMaster                      sp_it_sparscr504 ****             ****             ****             ****             ****             
+2875 Teleport_SelfOnly                          sp_it_sparscr504 ****             ****             ****             ****             ****             
+2876 Teleport_Party                             sp_it_sparscr504 ****             ****             ****             ****             ****             
 2877 TeleportationCircle_RadialMaster           sp_it_sparscr903 ****             ****             ****             ****             ****             
 2878 TeleportationCircle_Visible                sp_it_sparscr903 ****             ****             ****             ****             ****             
 2879 TeleportationCircle_Hidden                 sp_it_sparscr903 ****             ****             ****             ****             ****             

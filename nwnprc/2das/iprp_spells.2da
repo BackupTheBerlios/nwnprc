@@ -1170,3 +1170,4 @@
 1166 Maze                              16825706 15        8         90000  2888       0         0       1          iss_maze         
 1167 Dimensional_Anchor                16825683 7         4         21000  2889       0         1       1          iss_dimanch      
 1168 Dimensional_Lock                  16825686 15        8         90000  2898       0         0       1          iss_dimlock      
+1169 Teleport                          16825693 9         5         33750  2874       0         0       1          iss_teleport     

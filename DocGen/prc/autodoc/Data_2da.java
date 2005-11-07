@@ -423,6 +423,45 @@ public class Data_2da implements Cloneable{
 	 * @param label the label of the column to get
 	 * @param row   the number of the row to get, as string
 	 *
+	 * @return int represeting the 2da entry or <code>null</code> if the column does not exist
+	 *  if the column is **** then 0 will be returned
+	 *
+	 * @throws NumberFormatException if <code>row</code> cannot be converted to an integer
+	 */
+	public int getBiowareEntryAsInt(String label, String row){
+		String returnString = this.getEntry(label, Integer.parseInt(row));
+		if(returnString.equals("****"))
+			return 0;
+		else if(returnString.matches("\\D")) //check its a number
+			return 0;
+		return Integer.decode(returnString);
+	}
+
+	/**
+	 * Get the 2da entry on the given row and column
+	 *
+	 * @param label the label of the column to get
+	 * @param row   the number of the row to get
+	 *
+	 * @return String represeting the 2da entry or <code>null</code> if the column does not exist
+	 *  if the column is **** then a zero length string will be returned
+	 */
+	public int getBiowareEntryAsInt(String label, int row){
+		ArrayList<String> column = mainData.get(label.toLowerCase());
+		String returnString = column != null ? column.get(row) : null;
+		if(returnString.equals("****"))
+			return 0;
+		else if(returnString.matches("\\D")) //check its a number
+			return 0;
+		return Integer.decode(returnString);
+	}
+
+	/**
+	 * Get the 2da entry on the given row and column
+	 *
+	 * @param label the label of the column to get
+	 * @param row   the number of the row to get, as string
+	 *
 	 * @return String represeting the 2da entry or <code>null</code> if the column does not exist
 	 *  if the column is **** then a zero length string will be returned
 	 *
@@ -430,7 +469,24 @@ public class Data_2da implements Cloneable{
 	 */
 	public String getBiowareEntry(String label, String row){
 		String returnString = this.getEntry(label, Integer.parseInt(row));
-		if(returnString == "****")
+		if(returnString.equals("****"))
+		    return "";
+		return returnString;
+	}
+
+	/**
+	 * Get the 2da entry on the given row and column
+	 *
+	 * @param label the label of the column to get
+	 * @param row   the number of the row to get
+	 *
+	 * @return String represeting the 2da entry or <code>null</code> if the column does not exist
+	 *  if the column is **** then a zero length string will be returned
+	 */
+	public String getBiowareEntry(String label, int row){
+		ArrayList<String> column = mainData.get(label.toLowerCase());
+		String returnString = column != null ? column.get(row) : null;
+		if(returnString.equals("****"))
 		    return "";
 		return returnString;
 	}

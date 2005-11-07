@@ -27,19 +27,19 @@ public class Data_2da implements Cloneable{
 	private ArrayList<String> realLabels = new ArrayList<String>();
 
 	private final boolean TLKEditCompatible = true;
-	
+
 	/**
 	 * Creates a new, empty Data_2da with the specified name.
-	 * 
+	 *
 	 * @param name The new 2da file's name.
 	 */
 	public Data_2da(String name){
 		this(name, "");
 	}
-	
+
 	/**
 	 * Creates a new, empty Data_2da with the specified name and default value.
-	 * 
+	 *
 	 * @param name         the new 2da file's name
 	 * @param defaultValue the new 2da file's default value
 	 */
@@ -47,10 +47,10 @@ public class Data_2da implements Cloneable{
 		this.name = name;
 		this.defaultValue = defaultValue;
 	}
-	
+
 	/**
 	 * Private constructor for use in cloning.
-	 * 
+	 *
 	 * @param defaultValue the default value
 	 * @param mainData     the contents
 	 * @param name         the file name
@@ -62,14 +62,14 @@ public class Data_2da implements Cloneable{
 		this.name = name;
 		this.realLabels = realLabels;
 	}
-	
+
 	/**
-	 * Saves the 2da represented by this object to file. Equivalent to calling 
+	 * Saves the 2da represented by this object to file. Equivalent to calling
 	 * <code>save2da(path, false, false)</code>.
-	 * 
+	 *
 	 * @param path the directory to save the file in. If this is "" or null,
 	 *              the current directory is used.
-	 * @throws IOException if <code>true</code> and a file with the same name as this 2da 
+	 * @throws IOException if <code>true</code> and a file with the same name as this 2da
 	 *                         exists at <code>path</code>, it is overwritten.
 	 *                         If <code>false</code> and in the same situation, an IOException is
 	 *                         thrown.
@@ -77,21 +77,21 @@ public class Data_2da implements Cloneable{
 	public void save2da(String path) throws IOException{
 		save2da(path, false, false);
 	}
-	
+
 	/**
 	 * Saves the 2da represented by this object to file. CRLFs are explicitly used
 	 * instead of system specific line terminator.
-	 * 
+	 *
 	 * @param path the directory to save the file in. If this is "" or null,
 	 *              the current directory is used.
-	 * @param allowOverWrite if <code>true</code> and a file with the same name as this 2da 
+	 * @param allowOverWrite if <code>true</code> and a file with the same name as this 2da
 	 *                         exists at <code>path</code>, it is overwritten.
 	 *                         If <code>false</code> and in the same situation, an IOException is
 	 *                         thrown.
 	 * @param evenColumns if <code>true</code>, every entry in a column will be padded until they
 	 *                         start from the same position
-	 * 
-	 * @throws IOException if cannot overwrite, or the underlying IO throws one 
+	 *
+	 * @throws IOException if cannot overwrite, or the underlying IO throws one
 	 */
 	public void save2da(String path, boolean allowOverWrite, boolean evenColumns) throws IOException{
 		String CRLF = "\r\n";
@@ -99,18 +99,18 @@ public class Data_2da implements Cloneable{
 			path = "." + File.separator;
 		if(!path.endsWith(File.separator))
 			path += File.separator;
-		
+
 		File file = new File(path + name + ".2da");
 		if(file.exists() && !allowOverWrite)
 			throw new IOException("File existst already: " + file.getAbsolutePath());
-		
+
 		// Inform user
 		if(verbose) System.out.print("Saving 2da file: " + name + " ");
-		
+
 		FileWriter fw = new FileWriter(file, false);
 		String[] labels = this.getLabels();
 		String toWrite;
-		
+
 		// Get the amount of padding used, if any
 		int[] widths = new int[labels.length + 1];// All initialised to 0
 		if(evenColumns){
@@ -130,18 +130,18 @@ public class Data_2da implements Cloneable{
 				}
 				widths[i] = pad;
 			}
-			
+
 			// The last entry in the array is used for the numbers column
 			widths[widths.length - 1] = new Integer(this.getEntryCount()).toString().length();
 		}
-		
+
 		// Write the header and default lines
 		fw.write("2DA V2.0" + CRLF);
 		if(!defaultValue.equals(""))
 			fw.write("DEFAULT: " + defaultValue + CRLF);
 		else
 			fw.write(CRLF);
-		
+
 		// Write the labels row using the original case
 		for(int i = 0; i < widths[widths.length - 1]; i++) fw.write(" ");
 		for(int i = 0; i < realLabels.size(); i++){
@@ -149,7 +149,7 @@ public class Data_2da implements Cloneable{
 			for(int j = 0; j < widths[i] - realLabels.get(i).length(); j++) fw.write(" ");
 		}
 		fw.write((TLKEditCompatible ? " ":"") + CRLF);
-		
+
 		// Write the data
 		for(int i = 0; i < this.getEntryCount(); i++){
 			// Write the number row and it's padding
@@ -166,22 +166,22 @@ public class Data_2da implements Cloneable{
 				for(int k = 0; k < widths[j] - toWrite.length(); k++) fw.write(" ");
 			}
 			fw.write((TLKEditCompatible ? " ":"") + CRLF);
-			
+
 			if(verbose) spinner.spin();
 		}
-		
+
 		fw.flush();
 		fw.close();
-		
+
 		if(verbose) System.out.println("- Done");
 	}
-	
+
 	/**
 	 * Creates a new Data_2da on the 2da file specified.
-	 * 
-	 * @param filePath path to the 2da file to load 
+	 *
+	 * @param filePath path to the 2da file to load
 	 * @return a Data_2da instance containing the read 2da
-	 *  
+	 *
 	 * @throws IllegalArgumentException <code>filePath</code> does not specify a 2da file
 	 * @throws TwoDAReadException       reading the 2da file specified does not succeed,
 	 *                                    or the file does not contain any data
@@ -189,15 +189,15 @@ public class Data_2da implements Cloneable{
 	public static Data_2da load2da(String filePath) throws IllegalArgumentException, TwoDAReadException{
 		return load2da(filePath, false);
 	}
-	
+
 	/**
 	 * Creates a new Data_2da on the 2da file specified.
-	 * 
-	 * @param filePath path to the 2da file to load 
+	 *
+	 * @param filePath path to the 2da file to load
 	 * @param bugCompat if this is <code>true</code>, ignores
 	 *                   departures from the 2da spec present in Bioware 2das
 	 * @return a Data_2da instance containing the read 2da
-	 *  
+	 *
 	 * @throws IllegalArgumentException <code>filePath</code> does not specify a 2da file
 	 * @throws TwoDAReadException       reading the 2da file specified does not succeed,
 	 *                                    or the file does not contain any data
@@ -206,11 +206,11 @@ public class Data_2da implements Cloneable{
 		Data_2da toReturn;
 		Matcher matcher = bugCompat ? bugCompatPattern.matcher("") : pattern.matcher("");
 		String name, defaultValue = "";
-		
+
 		// Some paranoia checking for bad parameters
 		if(!filePath.toLowerCase().endsWith("2da"))
 			throw new IllegalArgumentException("Non-2da filename passed to Data_2da: " + filePath);
-		
+
 		// Create the file handle
 		File baseFile = new File(filePath);
 		// More paraoia
@@ -219,14 +219,14 @@ public class Data_2da implements Cloneable{
 		if(!baseFile.isFile())
 			throw new IllegalArgumentException("Nonfile passed to Data_2da: " + filePath);
 
-		
+
 		// Drop the path from the filename
 		name = baseFile.getName().substring(0, baseFile.getName().length() - 4);
 		//toReturn = new Data_2da(baseFile.getName().substring(0, baseFile.getName().length() - 4));
-		
+
 		// Tell the user what we are doing
 		if(verbose) System.out.print("Reading 2da file: " + name + " ");
-		
+
 		// Create a Scanner for reading the 2da
 		Scanner reader = null;
 		try{
@@ -240,7 +240,7 @@ public class Data_2da implements Cloneable{
 			err_pr.println("File operation failed. Aborting.\nException data:\n" + e);
 			System.exit(1);
 		}
-		
+
 		// Check the 2da header
 		//String data = getNextNonEmptyRow(reader);
 		if(!reader.hasNextLine())
@@ -248,7 +248,7 @@ public class Data_2da implements Cloneable{
 		String data = reader.nextLine();
 		if(!data.contains("2DA V2.0"))
 			throw new TwoDAReadException("2da header missing or invalid: " + name);
-		
+
 		// Get the default - though it's not used by this implementation, it should not be lost by opening and resaving a file
 		if(!reader.hasNextLine())
 			throw new TwoDAReadException("No contents after header in 2da file " + name + "!");
@@ -265,26 +265,26 @@ public class Data_2da implements Cloneable{
 			else
 				throw new TwoDAReadException("Malformed default line in 2da file " + name + "!");
 		}
-		
+
 		// Initialise the return object
 		toReturn = new Data_2da(name, defaultValue);
-		
+
 		// Start the actual reading
 		try{
 			toReturn.createData(reader, matcher, bugCompat);
 		}catch(TwoDAReadException e){
 			throw new TwoDAReadException("Exception occurred when reading 2da file: " + toReturn.getName() + "\n" + e, e);
 		}
-		
+
 		if(verbose) System.out.println("- Done");
 		return toReturn;
 	}
-	
+
 	/**
 	 * Reads the data rows from the 2da into the hashmap and
 	 * does validity checking on the 2da while doing so.
-	 * 
-	 * @param reader Scanner that the method reads from 
+	 *
+	 * @param reader Scanner that the method reads from
 	 * @param matcher Matcher being used to parse the data read
 	 * @param bugCompat if this is <code>true</code>, ignores
 	 *                   departures from the 2da spec present in Bioware 2das
@@ -293,25 +293,25 @@ public class Data_2da implements Cloneable{
 		Scanner rowParser;
 		String data;
 		int line = 0;
-		
+
 		// Find the labels row
 		//String data = getNextNonEmptyRow(reader);
 		if(!reader.hasNextLine())
 			throw new TwoDAReadException("No labels found in 2da file!");
 		data = reader.nextLine();
-		
+
 		// Parse the labels
 		String[] localrealLabels = data.trim().split("\\p{javaWhitespace}+");
 		String[] labels = new String[localrealLabels.length];
 		//System.arraycopy(realLabels, 0, labels, 0, localrealLabels.length);
-		
+
 		// Create the row containers and the main store
 		for(int i = 0; i < labels.length; i++){
-			realLabels.add(localrealLabels[i]); 
+			realLabels.add(localrealLabels[i]);
 			labels[i] = localrealLabels[i].toLowerCase();
 			mainData.put(labels[i],  new ArrayList<String>());
 		}
-		
+
 		// Error if there are empty lines between the header and the data or no lines at all
 		if(!reader.hasNextLine())
 			throw new TwoDAReadException("No data in 2da file!");
@@ -327,19 +327,19 @@ public class Data_2da implements Cloneable{
 					}else
 						throw new TwoDAReadException("No data in 2da file!");
 				}
-		
+
 		while(true){
 			//rowParser = new Scanner(data);
 			matcher.reset(data);
 			matcher.find();
-			
+
 			// Check for the presence of the row number
 			try{
 				line = Integer.parseInt(matcher.group());
 			}catch(NumberFormatException e){
 				throw new TwoDAReadException("Numberless 2da line: " + (line + 1));
 			}
-			
+
 			// Start parsing the row
 			for(int i = 0; i < labels.length; i++){
 				// Find the next match and check for too short rows
@@ -352,14 +352,14 @@ public class Data_2da implements Cloneable{
 				if(data.startsWith("\"")) data = data.substring(1, data.length() - 1);
 				mainData.get(labels[i]).add(data);
 			}
-			
+
 			// Check for too long rows
 			if(matcher.find())
 				throw new TwoDAReadException("Too long 2da line: " + line);
-			
+
 			// Increment the entry counter
 			//entries++;
-			
+
 			/* Get the next line if there is one, or break the loop
 			 * A bit ugly, but I couldn't figure an easy way of making the loop go right
 			 * even for 2das with only one row without biggish changes
@@ -371,19 +371,19 @@ public class Data_2da implements Cloneable{
 			}
 			else
 				break;
-			
+
 			if(verbose) spinner.spin();
 		}
-		
+
 		// Some validity checking on the 2da. Empty rows allowed only in the end
 		if(getNextNonEmptyRow(reader) != null)
 			throw new TwoDAReadException("Empty row in the middle of 2da. After row: " + line);
 	}
-	
+
 	/**
 	 * Reads rows from a Scanner pointed at a 2da file until it finds a
 	 * row containing non-whitespace characters.
-	 * 
+	 *
 	 * @param reader Scanner that the method reads from
 	 *
 	 * @return The row found, or null if none were found.
@@ -395,13 +395,13 @@ public class Data_2da implements Cloneable{
 			if(!toReturn.trim().equals(""))
 				break;
 		}
-		
+
 		if(toReturn == null || toReturn.trim().equals(""))
 			return null;
-		
+
 		return toReturn;
 	}
-	
+
 	/**
 	 * Get the list of column labels in this 2da.
 	 *
@@ -416,7 +416,25 @@ public class Data_2da implements Cloneable{
 		/*String[] toReturn = (String[])mainData.keySet().toArray();*/
 		return toReturn;
 	}
-	
+
+	/**
+	 * Get the 2da entry on the given row and column
+	 *
+	 * @param label the label of the column to get
+	 * @param row   the number of the row to get, as string
+	 *
+	 * @return String represeting the 2da entry or <code>null</code> if the column does not exist
+	 *  if the column is **** then a zero length string will be returned
+	 *
+	 * @throws NumberFormatException if <code>row</code> cannot be converted to an integer
+	 */
+	public String getBiowareEntry(String label, String row){
+		String returnString = this.getEntry(label, Integer.parseInt(row));
+		if(returnString == "****")
+		    return "";
+		return returnString;
+	}
+
 	/**
 	 * Get the 2da entry on the given row and column
 	 *
@@ -430,7 +448,7 @@ public class Data_2da implements Cloneable{
 	public String getEntry(String label, String row){
 		return this.getEntry(label, Integer.parseInt(row));
 	}
-	
+
 	/**
 	 * Get the 2da entry on the given row and column
 	 *
@@ -443,7 +461,7 @@ public class Data_2da implements Cloneable{
 		ArrayList<String> column = mainData.get(label.toLowerCase());
 		return column != null ? column.get(row) : null;
 	}
-	
+
 	/**
 	 * Get number of entries in this 2da. Works by returning the size of one of the columns in the 2da.
 	 *
@@ -453,9 +471,9 @@ public class Data_2da implements Cloneable{
 		Iterator<ArrayList<String>> iter = mainData.values().iterator();
 		if(!iter.hasNext())
 			return 0;
-		return iter.next().size(); 
+		return iter.next().size();
 	}
-	
+
 	/**
 	 * Get the name of this 2da
 	 *
@@ -464,7 +482,7 @@ public class Data_2da implements Cloneable{
 	public String getName(){
 		return name;
 	}
-	
+
 	/**
 	 * Sets the 2da entry on the given row and column
 	 *
@@ -477,7 +495,7 @@ public class Data_2da implements Cloneable{
 	public void setEntry(String label, String row, String entry){
 		this.setEntry(label, Integer.parseInt(row), entry);
 	}
-	
+
 	/**
 	 * Sets the 2da entry on the given row and column
 	 *
@@ -490,173 +508,173 @@ public class Data_2da implements Cloneable{
 			entry = "****";
 		mainData.get(label.toLowerCase()).set(row, entry);
 	}
-	
+
 	/**
 	 * Returns the contents of the requested row as a string array. The order the columns are
 	 * taken is the same as the order of labels from getLabels().
-	 * 
+	 *
 	 * @param index the index of the row to get
 	 * @return      an array of strings containing the elements in the r
-	 * 
+	 *
 	 * @throws NumberFormatException    if <code>index</code> cannot be converted to an integer
 	 */
 	public String[] getRow(String index){
 		return getRow(Integer.parseInt(index));
 	}
-	
-	
+
+
 	/**
 	 * Returns the contents of the requested row as a string array. The order the columns are
 	 * taken is the same as the order of labels from getLabels().
-	 * 
+	 *
 	 * @param index the index of the row to get
 	 * @return      an array of strings containing the elements in the row
 	 */
 	public String[] getRow(int index){
 		String[] labels = this.getLabels();
-		String[] toReturn = new String[labels.length]; 
-		
+		String[] toReturn = new String[labels.length];
+
 		for(int i = 0; i < labels.length; i++){
 			toReturn[i] = mainData.get(labels[i]).get(index);
 		}
-		
+
 		return toReturn;
 	}
-	
+
 	/**
 	 * Appends a new, empty row to the end of the 2da file, with entries defaulting to ****
 	 */
 	public void appendRow(){
 		String[] labels = this.getLabels();
-		
+
 		for(String label : labels){
 			mainData.get(label).add("****");
 		}
 	}
-	
+
 	/**
 	 * Inserts a new row into the given index in the 2da file. The row currently at the index and all
 	 * subsequent rows have their index increased by one. The new row will be filled with the values
 	 * given as parameter.
-	 * 
+	 *
 	 * @param index the index where the new row will be located
 	 * @param data  the strings that will be used to fill the new row
-	 * 
+	 *
 	 * @throws IllegalArgumentException if the number of elements in <code>data</code> array is not
-	 *                                   same as number of columns in the 2da 
+	 *                                   same as number of columns in the 2da
 	 * @throws NumberFormatException    if <code>index</code> cannot be converted to an integer
 	 */
 	public void insertRow(String index, String[] data){
 		insertRow(Integer.parseInt(index), data);
 	}
-	
+
 	/**
 	 * Inserts a new row into the given index in the 2da file. The row currently at the index and all
 	 * subsequent rows have their index increased by one. The new row will be filled with the values
 	 * given as parameter.
-	 * 
+	 *
 	 * @param index the index where the new row will be located
 	 * @param data  the strings that will be used to fill the new row
-	 * 
+	 *
 	 * @throws IllegalArgumentException if the number of elements in <code>data</code> array is not
-	 *                                   same as number of columns in the 2da 
+	 *                                   same as number of columns in the 2da
 	 */
 	public void insertRow(int index, String[] data){
 		String[] labels = this.getLabels();
-		
+
 		// Sanity check
 		if(labels.length != data.length)
 			throw new IllegalArgumentException("Differing column width when attempting to insert row");
-		
+
 		for(int i = 0; i < labels.length; i++){
 			mainData.get(labels[i]).add(index, data[i]);
 		}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Adds a new, empty row to the given index in the 2da file. The row currently at the index and all
 	 * subsequent rows have their index increased by one.
 	 * The entries default to ****.
-	 * 
+	 *
 	 * @param index the index where the new row will be located
-	 * 
+	 *
 	 * @throws NumberFormatException if <code>index</code> cannot be converted to an integer
 	 */
 	public void insertRow(String index){
 		insertRow(Integer.parseInt(index));
 	}
-	
+
 	/**
 	 * Adds a new, empty row to the given index in the 2da file. The row currently at the index and all
 	 * subsequent rows have their index increased by one.
 	 * The entries default to ****.
-	 * 
+	 *
 	 * @param index the index where the new row will be located
 	 */
 	public void insertRow(int index){
 		String[] labels = this.getLabels();
-		
+
 		for(String label : labels){
 			mainData.get(label).add(index, "****");
 		}
 	}
-	
+
 	/**
 	 * Removes the row at the given index. All subsequent rows have their indexed shifted down by one.
-	 * 
+	 *
 	 * @param index the index of the row to remove
-	 * 
+	 *
 	 * @throws NumberFormatException if <code>index</code> cannot be converted to an integer
 	 */
 	public void removeRow(String index){
 		removeRow(Integer.parseInt(index));
 	}
-	
+
 	/**
 	 * Removes the row at the given index. All subsequent rows have their indexed shifted down by one.
-	 * 
+	 *
 	 * @param index the index of the row to remove
 	 */
 	public void removeRow(int index){
 		String[] labels = this.getLabels();
-		
+
 		for(String label : labels){
 			mainData.get(label).remove(index);
 		}
 	}
-	
+
 	/**
 	 * Adds a new column to the 2da file. The new column will be the last in the file.
-	 * 
+	 *
 	 * @param label the name of the column to add
 	 */
 	public void addColumn(String label){
 		ArrayList<String> column = new ArrayList<String>();
 		mainData.put(label.toLowerCase(), column);
 		realLabels.add(label);
-		
+
 		for(int i = 0; i < this.getEntryCount(); i++){
 			column.add("****");
 		}
 	}
-	
+
 	/**
 	 * Removes the column with the given label from the 2da.
-	 * 
+	 *
 	 * @param label the name of the column to remove
 	 */
 	public void removeColumn(String label){
 		mainData.remove(label);
 		realLabels.remove(label);
 	}
-	
-	
-	
+
+
+
 	/**
 	 * The main method, as usual
-	 * 
+	 *
 	 * @param args
 	 */
 	public static void main(String[] args){
@@ -667,7 +685,7 @@ public class Data_2da implements Cloneable{
 		boolean minimal = false;
 		boolean ignoreErrors = false;
 		boolean readStdin = false;
-		
+
 		for(String param : args){//[-crmnqs] file... | -
 			// Parameter parseage
 			if(param.startsWith("-")){
@@ -708,7 +726,7 @@ public class Data_2da implements Cloneable{
 				// It's a filename
 				fileNames.add(param);
 		}
-		
+
 		// Read files from stdin if specified
 		if(readStdin){
 			Scanner scan = new Scanner(System.in);
@@ -720,13 +738,13 @@ public class Data_2da implements Cloneable{
 				fileNames.add(s);
 			}
 		}
-		
+
 		// Run the specified operation
 		if(compare){
 			Data_2da file1, file2;
 			file1 = load2da(args[1]);
 			file2 = load2da(args[2]);
-			
+
 			doComparison(file1, file2);
 		}
 		else if(resave){
@@ -765,7 +783,7 @@ public class Data_2da implements Cloneable{
 			}
 		}
 	}
-	
+
 	private static void readMe(){
 		System.out.println("Usage:\n"+
 		                   "  [-crmnqs] file... | -\n"+
@@ -790,7 +808,7 @@ public class Data_2da implements Cloneable{
 		                   );
 		System.exit(0);
 	}
-	
+
 	/**
 	 * Compares the given two 2da files and prints differences it finds
 	 * Differing number of rows, or row names will cause comparison to abort.
@@ -814,17 +832,17 @@ public class Data_2da implements Cloneable{
 				return;
 			}
 		}
-		
+
 		// Check lengths
 		int shortCount = file1.getEntryCount();
 		if(file1.getEntryCount() != file2.getEntryCount()){
 			System.out.println("Differing line counts.\n" +
 			                   file1.getName() + ": " + file1.getEntryCount() + "\n" +
 			                   file2.getName() + ": " + file2.getEntryCount());
-			
+
 			shortCount = shortCount > file2.getEntryCount() ? file2.getEntryCount() : shortCount;
 		}
-		
+
 		// Check elements
 		for(int i = 0; i < shortCount; i++){
 			for(String label : labels1){
@@ -836,8 +854,8 @@ public class Data_2da implements Cloneable{
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -847,7 +865,7 @@ public class Data_2da implements Cloneable{
 		boolean evenColumns = true;
 		String[] labels = this.getLabels();
 		String toWrite;
-		
+
 		// Get the amount of padding used, if any
 		int[] widths = new int[labels.length + 1];// All initialised to 0
 		ArrayList<String> column;
@@ -866,17 +884,17 @@ public class Data_2da implements Cloneable{
 			}
 			widths[i] = pad;
 		}
-		
+
 		// The last entry in the array is used for the numbers column
 		widths[widths.length - 1] = new Integer(this.getEntryCount()).toString().length();
-		
+
 		// Write the header and default lines
 		toReturn.append("2DA V2.0" + CRLF);
 		if(!defaultValue.equals(""))
 			toReturn.append("DEFAULT: " + defaultValue + CRLF);
 		else
 			toReturn.append(CRLF);
-		
+
 		// Write the labels row using the original case
 		for(int i = 0; i < widths[widths.length - 1]; i++) toReturn.append(" ");
 		for(int i = 0; i < realLabels.size(); i++){
@@ -884,7 +902,7 @@ public class Data_2da implements Cloneable{
 			for(int j = 0; j < widths[i] - realLabels.get(i).length(); j++) toReturn.append(" ");
 		}
 		toReturn.append((TLKEditCompatible ? " ":"") + CRLF);
-		
+
 		// Write the data
 		for(int i = 0; i < this.getEntryCount(); i++){
 			// Write the number row and it's padding
@@ -902,13 +920,13 @@ public class Data_2da implements Cloneable{
 			}
 			toReturn.append((TLKEditCompatible ? " ":"") + CRLF);
 		}
-		
+
 		return toReturn.toString();
 	}
-	
+
 	/**
 	 * Makes an independent copy of this 2da.
-	 * 
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@SuppressWarnings("unchecked")
@@ -917,8 +935,8 @@ public class Data_2da implements Cloneable{
 		LinkedHashMap<String, ArrayList<String>> cloneData = new LinkedHashMap<String, ArrayList<String>>();
 		for(String key : this.getLabels()) // Use real labels to preserve order
 			cloneData.put(key, (ArrayList<String>)this.mainData.get(key).clone());
-		
-		
+
+
 		// Create a new Data_2da. The Strings are immutable, so they can be used as-is and clone()
 		// on an array produces a sufficiently deep copy right away
 		return new Data_2da(

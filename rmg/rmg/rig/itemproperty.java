@@ -17,8 +17,8 @@ public class itemproperty {
 		subType = inSubType;
 		costValue = inCost;
 		param1Value = inParam1;
-		param1 = Integer.decode(rig.itempropdef2da.getEntry("Param1ResRef", propertyName));
-		costTable = Integer.decode(rig.itempropdef2da.getEntry("CostTableResRef", propertyName));
+		param1 = rig.itempropdef2da.getBiowareEntryAsInt("Param1ResRef", propertyName);
+		costTable = rig.itempropdef2da.getBiowareEntryAsInt("CostTableResRef", propertyName);
 	}
 
 	public itemproperty(int id){

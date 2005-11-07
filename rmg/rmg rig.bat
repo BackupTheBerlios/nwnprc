@@ -1,2 +1,2 @@
-java -Xmx300m -Xmx300m -classpath .;tools\prc.jar rmg.main -rig
+java -Xmx300m -Xmx300m -classpath .;tools\prc.jar rmg.Main -rig
 pause

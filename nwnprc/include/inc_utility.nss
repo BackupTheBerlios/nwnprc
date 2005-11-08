@@ -329,6 +329,23 @@ string TrimString(string s);
  */
 int StringCompare(string s1, string s2);
 
+/**
+ * Converts data about a given object into a string of the following format:
+ * "'GetName' - 'GetTag' - 'GetResRef' - ObjectToString"
+ *
+ * @param o Object to convert into a string
+ * @return  A string containing identifying data about o
+ */
+string DebugObject2Str(object o);
+
+/**
+ * Converts the given location into a string representation.
+ *
+ * @param loc Location to convert into a string
+ * @return    A string representation of loc
+ */
+string DebugLocation2Str(location loc);
+
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -810,7 +827,7 @@ string TrimString(string s)
 
 int StringCompare(string s1, string s2)
 {
-    object oLookup = GetWaypointByTag("prc_str_lookup"); // VERIFY
+    object oLookup = GetWaypointByTag("prc_str_lookup");
     if(!GetIsObjectValid(oLookup))
         oLookup = CreateObject(OBJECT_TYPE_WAYPOINT, "prc_str_lookup", GetLocation(GetObjectByTag("HEARTOFCHAOS")));
 
@@ -840,4 +857,36 @@ int StringCompare(string s1, string s2)
 
     // The strings were equal
     return 0;
+}
+
+string DebugObject2Str(object o)
+{
+    return "'" + GetName(o) + "' - '" + GetTag(o) + "' - '" + GetResRef(o) + "' - " + ObjectToString(o);
+}
+
+string DebugLocation2Str(location loc)
+{
+    object oArea = GetAreaFromLocation(loc);
+    vector vPos = GetPositionFromLocation(loc);
+    string sX, sY, sZ, sF;
+    sX = FloatToString(vPos.x);
+    sY = FloatToString(vPos.y);
+    sZ = FloatToString(vPos.z);
+    sF = FloatToString(GetFacingFromLocation(loc));
+
+    // Trim trailing digits to 3 and remove leading whitespace
+    if(FindSubString(sX, ".") != -1)
+        sX = GetStringLeft(sX, FindSubString(sX, ".") + 4);
+    sX = TrimString(sX);
+    if(FindSubString(sY, ".") != -1)
+        sY = GetStringLeft(sY, FindSubString(sY, ".") + 4);
+    sY = TrimString(sX);
+    if(FindSubString(sZ, ".") != -1)
+        sZ = GetStringLeft(sZ, FindSubString(sZ, ".") + 4);
+    sZ = TrimString(sX);
+    if(FindSubString(sF, ".") != -1)
+        sF = GetStringLeft(sF, FindSubString(sF, ".") + 4);
+    sF = TrimString(sX);
+
+    return "Area: Name = '" + GetName(oArea) + "', Tag = '" + GetTag(oArea) + "'; Position: (" + sX + ", " + sY + ", " + sZ + ",); Facing: " + sF;
 }

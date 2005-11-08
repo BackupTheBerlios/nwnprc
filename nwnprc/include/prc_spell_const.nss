@@ -399,6 +399,7 @@ const int SPELL_MAZE                                = 2888;
 const int SPELL_GREATER_TELEPORT                    = 2893;
 const int SPELL_TELEPORTATION_CIRCLE                = 2877;
 const int SPELL_DIMENSIONAL_LOCK                    = 2898;
+const int SPELL_TELEPORT                            = 2874;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE                   = 1951;

@@ -194,6 +194,8 @@ const int POWER_CATAPSI                     = 14197;
 const int POWER_SHATTERMINDBLANK            = 14198;
 const int POWER_HAILCRYSTALS                = 14199;
 const int POWER_SECONDCHANCE                = 14200;
+const int POWER_TELEPORT_SELFONLY           = 14201;
+const int POWER_TELEPORT_PARTY              = 14202;
 
 // Level 6 Powers
 const int POWER_BREATHBLACKDRAGON           = 14231;

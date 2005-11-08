@@ -157,7 +157,13 @@ void AssignTeleportCommands(object oJumpee, location lTarget, string sScriptToCa
 
 void Teleport(object oCaster, int nCasterLvl, int bTeleportParty, int bErrorLess, string sScriptToCall = "")
 {
-    if(DEBUG) DoDebug("spinc_teleport: Running Teleport()" + (GetLocalInt(oCaster, TP_FIRSTSTAGE_DONE) ? ": ERROR: Called while in second stage!":""));
+    if(DEBUG) DoDebug("spinc_teleport: Running Teleport()" + (GetLocalInt(oCaster, TP_FIRSTSTAGE_DONE) ? ": ERROR: Called while in second stage!":(""
+                    + "oCaster = " + DebugObject2Str(oCaster) + "\n"
+                    + "nCasterLvl = " + IntToString(nCasterLvl) + "\n"
+                    + "bTeleportParty = " + BooleanToString(bTeleportParty) + "\n"
+                    + "bErrorLess = " + BooleanToString(bErrorLess) + "\n"
+                    + "sScriptToCall = '" + sScriptToCall + "'\n"
+                      )));
 
     // Get whether we are executing the first or the second part of the script
     if(!GetLocalInt(oCaster, TP_FIRSTSTAGE_DONE))

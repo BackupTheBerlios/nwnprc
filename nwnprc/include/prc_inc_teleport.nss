@@ -665,18 +665,27 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
 
 location GetTeleportError(location lOriginal, object oUser, int bErrored = FALSE)
 {
+    if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError():\n"
+                    + "lOriginal = " + DebugLocation2Str(lOriginal) + "\n"
+                    + "oUser = " + DebugObject2Str(oUser) + "\n"
+                    + "bErrored = " + BooleanToString(bErrored) + "\n"
+                      );
     // Roll for the result. If recursing from a mishap, roll d20 + 80, otherwise roll d100
     int nRoll = bErrored ?
                  d20() + 80 :
                  d100()
                  ;
+    if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): Roll is " + IntToString(nRoll));
 
     /* On Target Off Target Way Off Target Mishap
      * 01–90     91–94      95–98          99–100
      */
     // On Target - Return original location
     if(nRoll <= 90)
+    {
+        if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): On Target - Returning original location");
         return lOriginal;
+    }
     // Off Target - Get a random location in same area
     else if(nRoll <= 94)
     {
@@ -688,8 +697,9 @@ location GetTeleportError(location lOriginal, object oUser, int bErrored = FALSE
                              Random(nAreaH) * 10.0f + 5.0f,
                              GetPositionFromLocation(lOriginal).z
                              );
-
-        return Location(oArea, vNew, 0.0f);
+        location lNew = Location(oArea, vNew, 0.0f);
+        if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): Off Target - Returning " + DebugLocation2Str(lNew));
+        return lNew;
     }
     // Way Off Target - Random location among stored teleport choices, or if there are no others, just stay where the user is
     else if(nRoll <= 98)
@@ -697,6 +707,10 @@ location GetTeleportError(location lOriginal, object oUser, int bErrored = FALSE
         int nLocs = GetNumberOfStoredTeleportTargetLocations(oUser);
         int nRand = Random(nLocs);
         location lReplacement = MetalocationToLocation(GetNthStoredTeleportTargetLocation(oUser, nRand));
+
+        if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): Way Off Target - Replacement location rolled: " + DebugLocation2Str(lReplacement) + "\n"
+                        + "Replacement location is useable: " + BooleanToString(!(nLocs == 0 || lReplacement == lOriginal))
+                          );
 
         if(nLocs == 0 || lReplacement == lOriginal)
             return GetLocation(oUser);
@@ -709,6 +723,7 @@ location GetTeleportError(location lOriginal, object oUser, int bErrored = FALSE
     // For these rerolls, roll 1d20+80. Each time “Mishap” comes up, the characters take more damage and must reroll.
     else
     {
+        if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): Mishap - damaging people");
         // Loop over the targets, checking if they can teleport. Redundant check on the caster, but shouldn't cause any trouble
         object oTarget;
         int i;

@@ -47,6 +47,9 @@ void main()
     // Enter cutscene mode
     SetCutsceneMode(oCreature, TRUE);
 
+    // Start the escape HB for everyone
+    AssignCommand(oCreature, MazeEscapeHB(oCreature, 100)); // Start the HB with full 10 mins (100 rounds)left
+
     // Is it an NPC? If so, just send it on it's way
     if(!GetIsPC(oCreature))
     {
@@ -61,6 +64,5 @@ void main()
         SetLocalInt(oCreature, "PRC_Maze_EntryMinute", GetTimeMinute());
         SetLocalInt(oCreature, "PRC_Maze_EntrySecond", GetTimeSecond());
         SetLocalInt(oCreature, "PRC_Maze_Entry_Direction", nDirection);
-        AssignCommand(oCreature, MazeEscapeHB(oCreature, 100)); // Start the HB with full 10 mins (100 rounds)left
     }
 }

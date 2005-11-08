@@ -56,7 +56,7 @@ void main()
     //int nSpellID   = PRCGetSpellId();
 
     //Fire cast spell at event for the specified target
-    SPRaiseSpellCastAt(oTarget);
+    SPRaiseSpellCastAt(oTarget, FALSE);
 
     // Minotaur check
     if(GetRacialType(oTarget) == RACIAL_TYPE_MINOTAUR       ||

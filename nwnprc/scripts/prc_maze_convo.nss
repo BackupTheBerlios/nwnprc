@@ -40,20 +40,20 @@ string GetTimeLeft(object oPC)
         nCM = GetTimeMinute(),
         nCS = GetTimeSecond();
 
-    // Calculate hour diff
+    // Calculate ingame hour diff
     int nHDiff = nCH < nSH ? // Has the day changed? Since the time is 10 mins, day cannot change twice even at the fastest scale
                   (24 + nCH - nSH) : // Yes
                   (nCH - nSH)        // No
                   ;
     // Calculate real minute diff
     int nMDiff = nHDiff ? // Have full hours passed?
-                  (FloatToInt(HoursToSeconds(nHDiff)) + nCM - nSM) : // Yes
+                  (FloatToInt(HoursToSeconds(nHDiff) / 60) + nCM - nSM) : // Yes
                   (nCM - nSM)                                        // No
                   ;
     // Calculate real second diff
     int nSDiff = nMDiff ? // Have full minutes passed?
                   ((nMDiff * 60) + nCS - nSS) : // Yes
-                  (nCS - nSS) // No
+                  (nCS - nSS)                   // No
                   ;
 
     // Convert the second diff to a string

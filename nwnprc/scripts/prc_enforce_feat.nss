@@ -17,7 +17,7 @@
 #include "prc_alterations"
 #include "prc_inc_sneak"
 
-//  Prevents a Man at Arms from taking improved critical 
+//  Prevents a Man at Arms from taking improved critical
 //  in a weapon that he does not have focus in.
 int ManAtArmsFeats(object oPC = OBJECT_SELF);
 
@@ -72,6 +72,9 @@ int MasterOfShrouds(object oPC = OBJECT_SELF);
 // Stops people from taking the blightbringer domain, since its prestige
 int Blightbringer(object oPC = OBJECT_SELF);
 
+// Stop people from taking crafting feats they don't have the caster level for
+int CraftingFeats(object oPC = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -81,10 +84,10 @@ int ManAtArmsFeats(object oPC = OBJECT_SELF)
      int bReturnVal = TRUE;
      int iNumImpCrit = 0;
      int iMaA = GetLevelByClass(CLASS_TYPE_MANATARMS, oPC);
-     
+
      // only continue if they are a MaA taking level 3
      if(iMaA != 3) return bReturnVal;
-     
+
      // if they have improved crit and not weapon focus in that weapon
      // time to relevel... can only take imp crit if they have the weapon focus
      if(GetHasFeat(FEAT_IMPROVED_CRITICAL_BASTARD_SWORD,    oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,    oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
@@ -126,11 +129,11 @@ int ManAtArmsFeats(object oPC = OBJECT_SELF)
      if(GetHasFeat(FEAT_IMPROVED_CRITICAL_TWO_BLADED_SWORD, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
      if(GetHasFeat(FEAT_IMPROVED_CRITICAL_UNARMED_STRIKE,   oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE,   oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
      if(GetHasFeat(FEAT_IMPROVED_CRITICAL_WAR_HAMMER,       oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
-     
+
      if(GetHasFeat(FEAT_IMPROVED_CRITICAL_MINDBLADE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_MINDBLADE, oPC)){
         iNumImpCrit++;
         bReturnVal = FALSE;
-        
+
         // If they are a soulknife, their weapon could be granting them another ImpCrit as bonus feat
         if(GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)), 14) == "prc_sk_mblade_" ||
            GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)), 14) == "prc_sk_mblade_")
@@ -141,10 +144,10 @@ int ManAtArmsFeats(object oPC = OBJECT_SELF)
      // or if they do not have 4 improved critical feats chosen
      if(bReturnVal != TRUE || iNumImpCrit < 4)
      {
-          FloatingTextStringOnCreature("You must choose 4 improved critical feats for weapons which you have weapon focus in.  Please reselect your feats.", oPC, FALSE);     
+          FloatingTextStringOnCreature("You must choose 4 improved critical feats for weapons which you have weapon focus in.  Please reselect your feats.", oPC, FALSE);
      }
-     
-     return bReturnVal;  
+
+     return bReturnVal;
 }
 
 int RedWizardFeats(object oPC = OBJECT_SELF)
@@ -153,7 +156,7 @@ int RedWizardFeats(object oPC = OBJECT_SELF)
      int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oPC);
      int iRWRes;
      int iRWSpec;
-     
+
      if((GetHasFeat(FEAT_RW_TF_ABJ, oPC) && GetHasFeat(2265, oPC))
         || (GetHasFeat(FEAT_RW_TF_CON, oPC) && GetHasFeat(2266, oPC))
         || (GetHasFeat(FEAT_RW_TF_DIV, oPC) && GetHasFeat(2267, oPC))
@@ -215,7 +218,7 @@ int RedWizardFeats(object oPC = OBJECT_SELF)
 
                FloatingTextStringOnCreature("You cannot select an Opposition School as a Restricted School. Please reselect your feats.", oPC, FALSE);
                return FALSE;
-          }          
+          }
      }
      return TRUE;
 }
@@ -401,8 +404,8 @@ int ElementalSavant(object oPC)
 {
    if (GetLevelByClass(CLASS_TYPE_ES_ACID, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 
-              || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 
+       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0
+              || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0
               || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
        {
             FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
@@ -411,8 +414,8 @@ int ElementalSavant(object oPC)
    }
    if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0 
-              || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 
+       if (GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0
+              || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0
               || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
        {
            FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
@@ -421,8 +424,8 @@ int ElementalSavant(object oPC)
    }
    if (GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 
-              || GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0 
+       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0
+              || GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0
               || GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC) > 0)
        {
            FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
@@ -431,18 +434,18 @@ int ElementalSavant(object oPC)
    }
    if (GetLevelByClass(CLASS_TYPE_ES_FIRE, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0 
-              || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0 
+       if (GetLevelByClass(CLASS_TYPE_ES_COLD, oPC) > 0
+              || GetLevelByClass(CLASS_TYPE_ES_ELEC, oPC) > 0
               || GetLevelByClass(CLASS_TYPE_ES_ACID, oPC) > 0)
        {
            FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
-           return FALSE;       
+           return FALSE;
        }
    }
    if (GetLevelByClass(CLASS_TYPE_DIVESA, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC) > 0 
-              || GetLevelByClass(CLASS_TYPE_DIVESE, oPC) > 0 
+       if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC) > 0
+              || GetLevelByClass(CLASS_TYPE_DIVESE, oPC) > 0
               || GetLevelByClass(CLASS_TYPE_DIVESF, oPC) > 0)
        {
             FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
@@ -451,8 +454,8 @@ int ElementalSavant(object oPC)
    }
    if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_DIVESA, oPC) > 0 
-              || GetLevelByClass(CLASS_TYPE_DIVESE, oPC) > 0 
+       if (GetLevelByClass(CLASS_TYPE_DIVESA, oPC) > 0
+              || GetLevelByClass(CLASS_TYPE_DIVESE, oPC) > 0
               || GetLevelByClass(CLASS_TYPE_DIVESF, oPC) > 0)
        {
            FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
@@ -461,8 +464,8 @@ int ElementalSavant(object oPC)
    }
    if (GetLevelByClass(CLASS_TYPE_DIVESE, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC) > 0 
-              || GetLevelByClass(CLASS_TYPE_DIVESA, oPC) > 0 
+       if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC) > 0
+              || GetLevelByClass(CLASS_TYPE_DIVESA, oPC) > 0
               || GetLevelByClass(CLASS_TYPE_DIVESF, oPC) > 0)
        {
            FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
@@ -471,12 +474,12 @@ int ElementalSavant(object oPC)
    }
    if (GetLevelByClass(CLASS_TYPE_DIVESF, oPC))
    {
-       if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC) > 0 
-              || GetLevelByClass(CLASS_TYPE_DIVESE, oPC) > 0 
+       if (GetLevelByClass(CLASS_TYPE_DIVESC, oPC) > 0
+              || GetLevelByClass(CLASS_TYPE_DIVESE, oPC) > 0
               || GetLevelByClass(CLASS_TYPE_DIVESA, oPC) > 0)
        {
            FloatingTextStringOnCreature("You may only have one Elemental Savant class.", oPC, FALSE);
-           return FALSE;       
+           return FALSE;
        }
    }
      return TRUE;
@@ -651,9 +654,9 @@ int LingeringDamage(object oPC = OBJECT_SELF)
         GetTotalSneakAttackDice(oPC) < 8)
      {
           FloatingTextStringOnCreature("You must have at least 8d6 sneak attack dice. Please reselect your feats.", oPC, FALSE);
-          return FALSE;          
+          return FALSE;
      }
-     
+
      return TRUE;
 }
 
@@ -673,7 +676,7 @@ int PWSwitchRestructions(object oPC = OBJECT_SELF)
             sMessage += "You cannot take "+GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat)))+" in this module.\n";
         }
     }
-    
+
     int nSkillCount = GetPRCSwitch(PRC_DISABLE_SKILL_COUNT);
     for(i=1;i<nSkillCount;i++)
     {
@@ -756,7 +759,7 @@ int MarshalAuraLimit(object oPC = OBJECT_SELF)
     int mArsh = (GetLevelByClass(CLASS_TYPE_MARSHAL, oPC));
     int MinAur = 0;
     int MajAur = 0;
-    
+
     if (mArsh > 1)
     {
          MinAur +=   GetHasFeat(MIN_AUR_FORT, oPC) +
@@ -841,9 +844,9 @@ int CasterFeats(object oPC = OBJECT_SELF)
     if (GetHasFeat(FEAT_INSCRIBE_RUNE, oPC) && GetLocalInt(oPC, "PRC_DivSpell2") != 0)
     {
             FloatingTextStringOnCreature("Inscribe Rune requires Level 2 Divine Spells", oPC, FALSE);
-            return FALSE;   
+            return FALSE;
         }
-    
+
     return TRUE;
 }
 
@@ -858,18 +861,18 @@ int MasterOfShrouds(object oPC = OBJECT_SELF)
                          GetHasFeat(FEAT_EVIL_DOMAIN_POWER, oPC) +
                          GetHasFeat(FEAT_DEATH_DOMAIN_POWER, oPC) +
                          GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC);
-                         
+
             // You must have all 3 domains somehow by the time you've hit this point, since you need to start with at least
             // one of them and you get given the other two at level 1 of this PrC.
             if (nDom < 3)
             {
                 FloatingTextStringOnCreature("You must select your two bonus domains", oPC, FALSE);
                 return FALSE;
-            }  
+            }
         }
         return TRUE;
 }
-    
+
 int Blightbringer(object oPC = OBJECT_SELF)
 {
     // You should only have the Blightbringer domain as a bonus domain
@@ -880,8 +883,85 @@ int Blightbringer(object oPC = OBJECT_SELF)
         }
         return TRUE;
 }
-       
-       
+
+int CraftingFeats(object oPC = OBJECT_SELF)
+{
+    int nCasterLvl = max(PRCGetCasterLevel(oPC), GetManifesterLevel(oPC));
+    int bOK = TRUE, bFirst = TRUE;
+    string sError = GetStringByStrRef(16823153) + "\n"; // "You spellcaster (or manifester) level is not high enough to take the following crafting feats:"
+
+    if(GetHasFeat(FEAT_SCRIBE_SCROLL, oPC) &&
+       nCasterLvl < 1
+       )
+    {
+        bOK = FALSE;
+        if(bFirst) bFirst = FALSE; else sError += ", ";
+        sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_SCRIBE_SCROLL)));
+    }
+    if(GetHasFeat(FEAT_BREW_POTION, oPC) &&
+       nCasterLvl < 3
+       )
+    {
+        bOK = FALSE;
+        if(bFirst) bFirst = FALSE; else sError += ", ";
+        sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_BREW_POTION)));
+    }
+    if(GetHasFeat(FEAT_CRAFT_WONDROUS, oPC) &&
+       nCasterLvl < 3
+       )
+    {
+        bOK = FALSE;
+        if(bFirst) bFirst = FALSE; else sError += ", ";
+        sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_WONDROUS)));
+    }
+    if(GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC) &&
+       nCasterLvl < 5
+       )
+    {
+        bOK = FALSE;
+        if(bFirst) bFirst = FALSE; else sError += ", ";
+        sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_ARMS_ARMOR)));
+    }
+    if(GetHasFeat(FEAT_CRAFT_WAND, oPC) &&
+       nCasterLvl < 5
+       )
+    {
+        bOK = FALSE;
+        if(bFirst) bFirst = FALSE; else sError += ", ";
+        sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_WAND)));
+    }
+    if(GetHasFeat(FEAT_CRAFT_ROD, oPC) &&
+       nCasterLvl < 9
+       )
+    {
+        bOK = FALSE;
+        if(bFirst) bFirst = FALSE; else sError += ", ";
+        sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_ROD)));
+    }
+    if(GetHasFeat(FEAT_CRAFT_STAFF, oPC) &&
+       nCasterLvl < 12
+       )
+    {
+        bOK = FALSE;
+        if(bFirst) bFirst = FALSE; else sError += ", ";
+        sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_STAFF)));
+    }
+    if(GetHasFeat(FEAT_FORGE_RING, oPC) &&
+       nCasterLvl < 12
+       )
+    {
+        bOK = FALSE;
+        if(bFirst) bFirst = FALSE; else sError += ", ";
+        sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_FORGE_RING)));
+    }
+
+    if(!bOK)
+        FloatingTextStringOnCreature(sError, oPC);
+
+    return bOK;
+}
+
+
 int RacialHD(object oPC)
 {
     if(!GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD))
@@ -928,9 +1008,9 @@ int FortySpellSlotLevels(object oPC)
             || nClass == CLASS_TYPE_PALADIN
             )
             nDivSpellslotLevel += GetLevelByClass(nClass);
-            
+
     }
-    
+
     if(nArcSpellslotLevel > 40
         || nDivSpellslotLevel > 40)
     {
@@ -957,13 +1037,14 @@ void main()
          || !MasterOfShrouds(oPC)
          || !CheckClericShadowWeave(oPC)
          || !LolthsMeat(oPC)
-         || !LingeringDamage(oPC) 
-         || !ManAtArmsFeats(oPC) 
+         || !LingeringDamage(oPC)
+         || !ManAtArmsFeats(oPC)
          || !PWSwitchRestructions(oPC)
          || !DraDisFeats(oPC)
          || !CasterFeats(oPC)
          || !MarshalAuraLimit(oPC)
          || !Blightbringer(oPC)
+         || !CraftingFeats(oPC)
          || !FortySpellSlotLevels(oPC)
          || !RacialHD(oPC)
        )

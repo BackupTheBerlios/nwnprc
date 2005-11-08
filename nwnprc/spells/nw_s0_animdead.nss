@@ -47,6 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int nDuration = 24;
     //effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     effect eSummon;
+    string sResRef;
     int nHD;
     //Metamagic extension if needed
     if ((nMetaMagic & METAMAGIC_EXTEND))
@@ -58,18 +59,21 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         //Tyrant Fog Zombie
         eSummon = EffectSummonCreature("NW_S_ZOMBTYRANT",VFX_FNF_SUMMON_UNDEAD);
+        sResRef = "NW_S_ZOMBTYRANT";
         nHD = 4;
     }
     else if ((nCasterLevel >= 6) && (nCasterLevel <= 9))
     {
         //Skeleton Warrior
         eSummon = EffectSummonCreature("NW_S_SKELWARR",VFX_FNF_SUMMON_UNDEAD);
+        sResRef = "NW_S_SKELWARR";
         nHD = 6;
     }
     else
     {
         //Skeleton Chieftain
         eSummon = EffectSummonCreature("NW_S_SKELCHIEF",VFX_FNF_SUMMON_UNDEAD);
+        sResRef = "NW_S_SKELCHIEF";
         nHD = 7;
     }
     //Apply the summon visual and summon the two undead.
@@ -93,14 +97,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         if((nTotalHD+nHD)<=nMaxHD)
         {        
             //eSummon = ExtraordinaryEffect(eSummon); //still goes away on rest, use supernatural instead
-            eSummon = SupernaturalEffect(eSummon);
+            eSummon = SupernaturalEffect(eSummon);    
             ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, PRCGetSpellTargetLocation());
         }
         else
         {
             FloatingTextStringOnCreature("You cannot summon more undead at this time.", OBJECT_SELF);
-            FloatingTextStringOnCreature("Currently have "+IntToString(nTotalHD)+" out of "+IntToString(nMaxHD)+".", OBJECT_SELF);
         }
+        FloatingTextStringOnCreature("Currently have "+IntToString(nTotalHD)+"HD out of "+IntToString(nMaxHD)+"HD.", OBJECT_SELF);
     }
     else
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), HoursToSeconds(nDuration));

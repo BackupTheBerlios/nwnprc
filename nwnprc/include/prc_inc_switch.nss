@@ -95,6 +95,12 @@ const string PRC_PNP_BLACK_BLADE_OF_DISASTER         = "PRC_PNP_BLACK_BLADE_OF_D
  * Traps are only shown, not disarmed
  */
 const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
+/**
+ * PnP Darkness
+ * Is a mobile AOE based off an item
+ * Causes Blindness on anyone in the AoE
+ */
+const string PRC_PNP_DARKNESS                        = "PRC_PNP_DARKNESS";
 
 /**
  * Undead summons are permanent, but can only have 4HD/casterlevel in total
@@ -1918,6 +1924,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_TENSERS_TRANSFORMATION);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_BLACK_BLADE_OF_DISASTER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_FIND_TRAPS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_DARKNESS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ANIMATE_DEAD);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CREATE_UNDEAD_PERMANENT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CREATE_UNDEAD_UNCONTROLLED);

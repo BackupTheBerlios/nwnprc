@@ -33,19 +33,25 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     while (GetIsEffectValid(eAOE))
     {
         int nType = GetEffectType(eAOE);
-        if(nType == EFFECT_TYPE_DARKNESS)
-        {
-            int nID = GetEffectSpellId(eAOE);
-            if( nID== SPELL_DARKNESS 
+        int nID = GetEffectSpellId(eAOE);
+        if( (nID== SPELL_DARKNESS 
                 || nID == SPELLABILITY_AS_DARKNESS  
                 || nID == SPELL_SHADOW_CONJURATION_DARKNESS 
                 || nID == 688 //bioware SLA darkness 
                 || nID == SHADOWLORD_DARKNESS 
                 || nID == SPELL_RACE_DARKNESS)
+            && (GetEffectCreator(eAOE) == oCreator
+                || GetEffectCreator(eAOE) == OBJECT_SELF))
+        {
+            if(!GetPRCSwitch(PRC_PNP_DARKNESS)
+                && nType == EFFECT_TYPE_DARKNESS)
             {
-               if (GetEffectCreator(eAOE) == oCreator
-                || GetEffectCreator(eAOE) == OBJECT_SELF)
                   RemoveEffect(oTarget, eAOE);
+            }
+            if(GetPRCSwitch(PRC_PNP_DARKNESS)
+                && nType == EFFECT_TYPE_BLINDNESS)
+            {
+                  RemoveEffect(oTarget, eAOE);            
             }
         }
 

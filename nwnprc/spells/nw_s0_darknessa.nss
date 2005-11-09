@@ -34,6 +34,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     effect eLink2 =  EffectLinkEffects(eInvis, eDur);
 
+    effect ePnP = EffectLinkEffects(eDur, EffectBlindness());
+
     object oTarget = GetEnteringObject();
     int iShadow = GetLevelByClass(CLASS_TYPE_SHADOWLORD,oTarget);
 
@@ -72,14 +74,22 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if (iShadow)
           SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget,0.0f,FALSE);
         else  
-          //Fire cast spell at event for the specified target
-          SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,FALSE);
+        {
+            if(GetPRCSwitch(PRC_PNP_DARKNESS))
+                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePnP, oTarget,0.0f,FALSE);
+            else
+                //Fire cast spell at event for the specified target
+                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,FALSE);
+        }  
     }
     else if (oTarget == GetAreaOfEffectCreator())
     {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
         //Fire cast spell at event for the specified target
-        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget,0.0f,FALSE);
+        if(GetPRCSwitch(PRC_PNP_DARKNESS))
+            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePnP, oTarget,0.0f,FALSE);
+        else
+            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget,0.0f,FALSE);
     }
 
    

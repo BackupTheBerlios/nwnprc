@@ -1,18 +1,6 @@
 // Written by Stratovarius
 // Turns Blood Component on and off.
 
-//to avoid acidentally leaving it on, inscibe rune
-//will automatically turn off after 1 minute
-void DelayInscribeRuneDisable(object oPC)
-{   
-    if(GetLocalInt(oPC, "InscribeRune"))
-    {
-            DeleteLocalInt(oPC, "InscribeRune");
-            string nMes = "*Inscribe Rune Deactivated*";
-            FloatingTextStringOnCreature(nMes, oPC, FALSE); 
-    }
-}
-
 void main()
 {
 
@@ -21,15 +9,14 @@ void main()
 
      if(!GetLocalInt(oPC, "InscribeRune"))
      {    
-            SetLocalInt(oPC, "InscribeRune", TRUE);
-            nMes = "*Inscribe Rune Activated*";
-            DelayCommand(60.0, DelayInscribeRuneDisable(oPC));
+	SetLocalInt(oPC, "InscribeRune", TRUE);
+     	nMes = "*Inscribe Rune Activated*";
      }
      else     
      {
-            // Removes effects
-            DeleteLocalInt(oPC, "InscribeRune");
-            nMes = "*Inscribe Rune Deactivated*";
+	// Removes effects
+	DeleteLocalInt(oPC, "InscribeRune");
+	nMes = "*Inscribe Rune Deactivated*";
      }
 
      FloatingTextStringOnCreature(nMes, oPC, FALSE);

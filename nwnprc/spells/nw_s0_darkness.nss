@@ -78,7 +78,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     //placeables get an effect
     //or if no equipment
     if(GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE
-        || !GetIsObjectValid(oItemTarget))
+        || !GetIsObjectValid(oItemTarget)
+        || !GetPRCSwitch(PRC_PNP_DARKNESS))
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCasterLvl);
     else
     {

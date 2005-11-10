@@ -155,6 +155,9 @@ const int EVENT_ITEM_ONHIT                  = 1005;
 const int CALLBACKHOOK_UNARMED           = 2000;
 
 
+/// When TRUE, ExecuteAllScriptsHookedToEvent() will print a list of the scripts it executes.
+/// Disabling DEBUG will disablet this, too.
+const int PRINT_EVENTHOOKS = FALSE;
 
 /////////////////////////
 // Internal constants  //
@@ -280,15 +283,23 @@ int GetRunningEvent();
 /* Private function prototypes - Move on people, nothing to see here */
 ///////////////////////////////////////////////////////////////////////
 
-// Internal function. Returns the name matching the given integer constant
+/// Internal function. Returns the name matching the given integer constant
 string EventTypeIdToName(int nEvent);
 
-/// Array wrappers
+/// Internal function. Prints a list of scripts hooked into the given event for the object.
+void DebugPrintHookedScripts(object oObject, int nEvent);
+
+/// Internal function - Array wrapper
 int wrap_array_create(object store, string name);
+/// Internal function - Array wrapper
 int wrap_array_set_string(object store, string name, int i, string entry);
+/// Internal function - Array wrapper
 string wrap_array_get_string(object store, string name, int i);
+/// Internal function - Array wrapper
 int wrap_array_shrink(object store, string name, int size_new);
+/// Internal function - Array wrapper
 int wrap_array_get_size(object store, string name);
+/// Internal function - Array wrapper
 int wrap_array_exists(object store, string name);
 
 //////////////////////////////////////////////////
@@ -513,6 +524,13 @@ void ExecuteAllScriptsHookedToEvent(object oObject, int nEvent){
     // scripts listed are delayd until the eventhook is done.
     SetLocalInt(GetModule(), "prc_eventhook_running", nEvent);
     SetLocalString(GetModule(), "prc_eventhook_running_sArrayName", EventTypeIdToName(nEvent));
+
+    if(PRINT_EVENTHOOKS &&
+       DEBUG
+       ){
+        DoDebug("Executing eventhook for event " + IntToString(nEvent) + ". Hooked scripts:");
+        DebugPrintHookedScripts(oObject, nEvent);
+    }
 
     // Loop through the scripts to be fired only once
     string sScript = GetFirstEventScript(oObject, nEvent, FALSE);

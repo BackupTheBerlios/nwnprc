@@ -1,10 +1,10 @@
-/* 
+/*
    ----------------
    prc_psi_ppoints
    ----------------
-   
+
    19/10/04 by Stratovarius
-   
+
    Calculates the Manifester level, DC, etc.
    Psion, Psychic Warrior, Wilder. (Soulknife does not have Manifester levels)
 */
@@ -53,7 +53,7 @@ void PsychicEnervation(object oCaster, int nWildSurge);
 // This is used with the Wilder's Volatile Mind ability.
 int GetIsTelepathyPower();
 
-// Increases the cost of a Telepathy power by an 
+// Increases the cost of a Telepathy power by an
 // amount if the target of the spell is a Wilder
 int VolatileMind(object oTarget, object oCaster);
 
@@ -107,32 +107,6 @@ int GetPsiPenetration(object oCaster = OBJECT_SELF);
 // Performs the widening operation for Widen MetaPsi
 float DoWiden(float fWidth, int nMetaPsi);
 
-// Grants psionic focus and activates any feats keyed to it
-// ========================================================
-// oGainee      creature gaining psionic focus
-void GainPsionicFocus(object oGainee = OBJECT_SELF);
-
-// Uses up psionic focus
-// =====================
-// oUser        creature expending it's psionic focus
-//
-// If oUser is psionically focused when this is called, returns TRUE.
-// Also returns TRUE during the next 0.5s a number of times equal to
-// the Epic Psionic Focus feats oUser has.
-int UsePsionicFocus(object oUser = OBJECT_SELF);
-
-// Calculates the number of times the given creature may use it's psionic focus when it expends it
-// ===============================================================================================
-// oCreature    creature whose psionic focus use count to evaluate
-//
-// Returns 1 + the number of Epic Psionic Focus feats oCreature has.
-int GetPsionicFocusUsesPerExpenditure(object oCreature = OBJECT_SELF);
-
-// Causes the given creature to lose psionic focus and any benefits keyed to it
-// ============================================================================
-// oLoser       creature losing it's psionic focus
-void LosePsionicFocus(object oLoser = OBJECT_SELF);
-
 // Returns whether the creature is a psionic being or not
 // ======================================================
 // oCreature    creature to test
@@ -179,6 +153,7 @@ void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration);
 #include "prc_inc_clsfunc"
 #include "inc_utility"
 #include "nw_i0_spells"
+#include "psi_inc_focus"
 //#include "prc_inc_unarmed"
 
 // ---------------
@@ -243,13 +218,13 @@ int GetManifesterLevel(object oCaster)
     //Adding wild surge
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     if (nSurge > 0) nLevel = nLevel + nSurge;
-    
+
     // Adding overchannel
     int nOverchannel = GetLocalInt(oCaster, "Overchannel");
     if(nOverchannel > 0) nLevel += nOverchannel;
-    
+
     nLevel += nAdjust;
-    
+
     FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oCaster, FALSE);
 
     return nLevel;
@@ -275,7 +250,7 @@ int GetAbilityOfClass(int nClass){
         case CLASS_TYPE_PSYWAR:
             return ABILITY_WISDOM;
         case CLASS_TYPE_FIST_OF_ZUOKEN:
-            return ABILITY_WISDOM;            
+            return ABILITY_WISDOM;
         default:
             return ABILITY_CHARISMA;
     }
@@ -289,11 +264,11 @@ int GetManifesterDC(object oCaster)
     int nDC = 10;
     nDC += GetPowerLevel(oCaster);
     nDC += (GetAbilityScoreOfClass(oCaster, nClass) - 10)/2;
-    
+
     // Ignoring power points skips feat evaluation
     if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
         return nDC;
-    
+
     if (GetLocalInt(oCaster, "PsionicEndowmentActive") == TRUE && UsePsionicFocus(oCaster))
     {
         nDC += GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT, oCaster) ? 4 : 2;
@@ -409,7 +384,7 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
 
     // Catapsi added cost
     if (GetLocalInt(oCaster, "Catapsi")) nPPCost += 4;
-    
+
     // The power points added from Wild Surge, to prevent the issue reported by OrtRestave
     nPPCost += GetLocalInt(oCaster, "WildSurge");
     /// /APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE HERE ///
@@ -426,7 +401,7 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
         nPPCost = GetPPCostReduced(nPPCost, oCaster);
         // Now that we have used Wild Surge for the previous check, it is not actually subtracted from PP and is removed
         nPPCost -= GetLocalInt(oCaster, "WildSurge");
-    
+
         //If Manifest does not have enough points before hostile modifiers, cancel power
         if (nPPCost > nPP)
         {
@@ -451,7 +426,7 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
                 FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
                 SetLocalInt(oCaster, "PowerPoints", nPP);
             }
-            
+
             // Psionic focus loss from using metapsionics
             int i = 0;
             for(; i < nMetaPsiUses; i++)
@@ -481,7 +456,7 @@ void PsychicEnervation(object oCaster, int nWildSurge)
 {
     if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
         return;
-    
+
     int nDice = d20(1);
 
     if (nWildSurge >= nDice)
@@ -652,7 +627,7 @@ int GetMaxPowerCount(object oPC, int nClass)
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
     sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     int nMaxPowers = StringToInt(Get2DACache(sPsiFile, "PowersKnown", nLevel-1));
-    
+
     // Apply the epic feat Power Knowledge - +2 powers known per
     int nFeat;
     switch(nClass)
@@ -676,7 +651,7 @@ int GetMaxPowerCount(object oPC, int nClass)
                 { nMaxPowers += 2; nFeat++; }
             break;
     }
-    
+
     return nMaxPowers;
 }
 
@@ -712,17 +687,17 @@ int MetaPsionics(int nDiceSize, int nNumberOfDice, int nMetaPsi, object oCaster 
 {
     int nBaseDamage,  // Implicit initializations to zero
         nBonusDamage;
-    
+
     // Calculate the base damage
     int i;
     for (i = 0; i < nNumberOfDice; i++)
         nBaseDamage += Random(nDiceSize) + 1;
-    
-    
+
+
     // Apply general modifying effects
     if(bDoesHPDamage)
     {
-        if(bIsRayOrRangedTouch && 
+        if(bIsRayOrRangedTouch &&
            GetHasFeat(FEAT_POWER_SPECIALIZATION, oCaster))
         {
             if(GetLocalInt(oCaster, "PowerSpecializationActive") && UsePsionicFocus(oCaster))
@@ -734,11 +709,11 @@ int MetaPsionics(int nDiceSize, int nNumberOfDice, int nMetaPsi, object oCaster 
            GetDistanceBetween(oTarget, oCaster) <= 9.144f)
             nBonusDamage += 2;
     }
-    
+
     // Ignoring power points ignores metapsionics, too
     if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") == TRUE)
         return nBaseDamage + nBonusDamage;
-    
+
     // Apply metapsionics
     if(nMetaPsi == 2)
     {
@@ -761,7 +736,7 @@ int MetaPsionics(int nDiceSize, int nNumberOfDice, int nMetaPsi, object oCaster 
             FloatingTextStringOnCreature("Maximized Power", oCaster, FALSE);
         }
     }
-    
+
 
     return nBaseDamage + nBonusDamage;
 }
@@ -805,114 +780,6 @@ float DoWiden(float fWidth, int nMetaPsi)
     return fWidth;
 }
 
-
-
-void GainPsionicFocus(object oGainee = OBJECT_SELF)
-{
-    SetLocalInt(oGainee, "PsionicFocus", TRUE);
-    
-    // Speed Of Thought
-    if(GetHasFeat(FEAT_SPEED_OF_THOUGHT, oGainee) &&
-       GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, oGainee)) < 6 // Check for heavy armor
-      )
-    {
-        AssignCommand(oGainee, ActionCastSpellAtObject(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, oGainee, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-        // Schedule a script to remove the bonus should they equip heavy armor
-        AddEventScript(oGainee, EVENT_ONPLAYEREQUIPITEM, "psi_spdfthgt_oeq", TRUE, FALSE);
-        // Schedule another script to add the bonus back if the unequip the armor
-        AddEventScript(oGainee, EVENT_ONPLAYERUNEQUIPITEM, "psi_spdfthgt_ueq", TRUE, FALSE);
-    }
-    // Psionic Dodge
-    if(GetHasFeat(FEAT_PSIONIC_DODGE, oGainee))
-        SetCompositeBonus(GetPCSkin(oGainee), "PsionicDodge", 1, ITEM_PROPERTY_AC_BONUS);
-}
-
-
-int UsePsionicFocus(object oUser = OBJECT_SELF)
-{
-    int bToReturn = FALSE;
-    // First, check if we have focus on
-    if(GetLocalInt(oUser, "PsionicFocus"))
-    {
-        SetLocalInt(oUser, "PsionicFocusUses", GetPsionicFocusUsesPerExpenditure(oUser) - 1);
-        DelayCommand(0.5f, DeleteLocalInt(oUser, "PsionicFocusUses"));
-        SendMessageToPC(oUser, "You have used your Psionic Focus");
-        
-        bToReturn = TRUE;
-    }
-    // We don't. Check if there are uses remaining
-    else if(GetLocalInt(oUser, "PsionicFocusUses"))
-    {
-        SetLocalInt(oUser, "PsionicFocusUses", GetLocalInt(oUser, "PsionicFocusUses") - 1);
-        
-        bToReturn = TRUE;
-    }
-    
-    // Lose focus if it was used
-    if(bToReturn) LosePsionicFocus(oUser);
-    
-    return bToReturn;
-}
-
-void LosePsionicFocus(object oLoser = OBJECT_SELF)
-{
-    // Only remove focus if it's present
-    if(GetLocalInt(oLoser, "PsionicFocus"))
-    {
-        SetLocalInt(oLoser, "PsionicFocus", FALSE);
-        
-        // Loss of Speed of Thought effects
-        RemoveSpellEffects(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, oLoser, oLoser);
-        RemoveEventScript(oLoser, EVENT_ONPLAYEREQUIPITEM, "psi_spdfthgt_oeq", TRUE);
-        RemoveEventScript(oLoser, EVENT_ONPLAYERUNEQUIPITEM, "psi_spdfthgt_ueq", TRUE);
-        // Loss of Psionic Dodge effects
-        SetCompositeBonus(GetPCSkin(oLoser), "PsionicDodge", 0, ITEM_PROPERTY_AC_BONUS);
-        
-        // Inform oLoser about the event
-        FloatingTextStringOnCreature("You have lost your Psionic Focus", oLoser, FALSE);
-    }
-}
-
-
-int GetIsPsionicallyFocused(object oCreature = OBJECT_SELF)
-{
-    return GetLocalInt(oCreature, "PsionicFocus");
-}
-
-int GetPsionicFocusUsesPerExpenditure(object oCreature = OBJECT_SELF)
-{
-    int nFocusUses = 1;
-    int i;
-    for(i = FEAT_EPIC_PSIONIC_FOCUS_1; i <= FEAT_EPIC_PSIONIC_FOCUS_10; i++)
-        if(GetHasFeat(i, oCreature)) nFocusUses++;
-    
-    return nFocusUses;
-}
-
-
-int GetPsionicFocusUsingFeatsActive(object oCreature = OBJECT_SELF)
-{
-    int nFeats;
-    
-    if(GetLocalInt(oCreature, "TalentedActive"))            nFeats++;
-    if(GetLocalInt(oCreature, "PowerSpecializationActive")) nFeats++;
-    if(GetLocalInt(oCreature, "PowerPenetrationActive"))    nFeats++;
-    if(GetLocalInt(oCreature, "PsionicEndowmentActive"))    nFeats++;
-    
-    if(GetLocalInt(oCreature, "PsiMetaChain"))   nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaEmpower")) nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaExtend"))  nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaMax"))     nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaSplit"))   nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaTwin"))    nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaWiden"))   nFeats++;
-    
-    return nFeats;
-}
-
-
-
-
 int GetIsPsionicCharacter(object oCreature)
 {
     return !!(GetLevelByClass(CLASS_TYPE_PSION,          oCreature) ||
@@ -931,12 +798,12 @@ void AstralSeedRespawn(object oPlayer = OBJECT_SELF)
     object oSeed = GetLocalObject(oPlayer, "ASTRAL_SEED");
     location lSeed = GetLocation(oSeed);
     DelayCommand(2.0, JumpToLocation(lSeed));
-    
+
     // effect set
     effect ePara = EffectCutsceneParalyze();
     effect eGhost = EffectCutsceneGhost();
     effect eInvis = EffectEthereal();
-    
+
     //Massive effect linkage, go me
     effect eSpell = EffectSpellImmunity(SPELL_ALL_SPELLS);
     effect eDam1 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID, 100);
@@ -974,15 +841,15 @@ void AstralSeedRespawn(object oPlayer = OBJECT_SELF)
     nHD -= 1;
     int nLevelDown = ((nHD * (nHD - 1)) / 2) * 1000;
     int nNewXP = (nCurrentLevel + nLevelDown)/2;
-    SetXP(oPlayer,nNewXP);  
-    
+    SetXP(oPlayer,nNewXP);
+
     DeleteLocalObject(oPlayer, "ASTRAL_SEED");
     DeleteLocalInt(oPlayer, "AstralSeed");
-    
+
     //pw death hook
     ExecuteScript("prc_pw_astralseed", oPlayer);
     if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oPlayer))
-        SetPersistantLocalInt(oPlayer, "persist_dead", FALSE);     
+        SetPersistantLocalInt(oPlayer, "persist_dead", FALSE);
 }
 
 int GetPsionicPRCLevels (object oCaster)
@@ -1016,7 +883,7 @@ int GetFirstPsionicClassPosition (object oCaster = OBJECT_SELF)
         return 2;
     if (GetIsPsionicClass(PRCGetClassByPosition(3, oCaster)))
         return 3;
-        
+
     return 0;
 }
 
@@ -1024,7 +891,7 @@ int GetFirstPsionicClass (object oCaster = OBJECT_SELF)
 {
     int iPsionicPos = GetFirstPsionicClassPosition(oCaster);
     if (!iPsionicPos) return CLASS_TYPE_INVALID; // no Psionic casting class
-    
+
     return PRCGetClassByPosition(iPsionicPos, oCaster);
 }
 
@@ -1033,32 +900,32 @@ int GetPowerPrereq(int nLevel, int nAbilityScore, int nClass)
     //check ability modifier
     if(nAbilityScore <= 10)
         return 0;
-        
-    FloatingTextStringOnCreature("Psionic Class: " + IntToString(nClass), OBJECT_SELF, FALSE);  
-    FloatingTextStringOnCreature("Class Level: " + IntToString(nLevel), OBJECT_SELF, FALSE);  
-        
+
+    FloatingTextStringOnCreature("Psionic Class: " + IntToString(nClass), OBJECT_SELF, FALSE);
+    FloatingTextStringOnCreature("Class Level: " + IntToString(nLevel), OBJECT_SELF, FALSE);
+
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
     sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
-    
-    FloatingTextStringOnCreature("Filename: " + sPsiFile, OBJECT_SELF, FALSE);   
-    
+
+    FloatingTextStringOnCreature("Filename: " + sPsiFile, OBJECT_SELF, FALSE);
+
     int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel - 1));
-    
-    FloatingTextStringOnCreature("Max Power Level: " + IntToString(nMaxLevel), OBJECT_SELF, FALSE);    
+
+    FloatingTextStringOnCreature("Max Power Level: " + IntToString(nMaxLevel), OBJECT_SELF, FALSE);
     //FloatingTextStringOnCreature("Power Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
-    
+
     // Return the lesser of maximum manifestable according to class and maximum manifestable according to ability
     return nMaxLevel < nAbilityScore - 10 ? nMaxLevel : nAbilityScore - 10;
     /*
     int N = 0;
-    if (nMaxLevel >= nSpellLevel)   
+    if (nMaxLevel >= nSpellLevel)
     {
         FloatingTextStringOnCreature("Max Level > Power Level", OBJECT_SELF, FALSE);
         N = nSpellLevel;
     }
-    
-    FloatingTextStringOnCreature("N: " + IntToString(N), OBJECT_SELF, FALSE);  
-        
+
+    FloatingTextStringOnCreature("N: " + IntToString(N), OBJECT_SELF, FALSE);
+
     return N;
     */
 }
@@ -1068,7 +935,7 @@ int GetPPCostReduced(int nPP, object oCaster)
     int nThrall = GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF);
     int nAugment = GetAugmentLevel(oCaster);
     int nSpell = PRCGetSpellId();
-    
+
     if (GetLocalInt(oCaster, "ThrallCharm") && nSpell == POWER_CHARMPERSON)
     {
         DeleteLocalInt(oCaster, "ThrallCharm");
@@ -1079,13 +946,13 @@ int GetPPCostReduced(int nPP, object oCaster)
         DeleteLocalInt(oCaster, "ThrallDom");
         nPP -= nThrall;
     }
-    
+
     // Reduced cost for augmenting the Dominate power.
     if (nThrall >= 7 && nAugment > 0 && nSpell == POWER_DOMINATE) nPP -= 2;
     if (nThrall >= 9 && nAugment > 2 && nSpell == POWER_DOMINATE) nPP -= 4;
 
-    if (nPP < 1) nPP = 1;   
-    
+    if (nPP < 1) nPP = 1;
+
     return nPP;
 }
 
@@ -1099,10 +966,10 @@ int GetHasPower(int nPower, object oPC = OBJECT_SELF)
             && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_WILDER), oPC))
         ||(GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC)
             && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_FIST_OF_ZUOKEN), oPC))
-        //add new psionic classes here    
-        )    
+        //add new psionic classes here
+        )
         return TRUE;
-    return FALSE;        
+    return FALSE;
 }
 
 void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration)
@@ -1111,15 +978,15 @@ void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration)
 	int nDamage;
 	int nEnhance = 0;
 	string sWeapType;
-	
+
 	RemoveUnarmedAttackEffects(oCaster);
 	// Make sure they can actually equip them
 	UnarmedFeats(oCaster);
 
 	object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster);
 	object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCaster);
-	object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster);	
-	
+	object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster);
+
 	if (nPower == POWER_BITE_WOLF)
 	{
 		if (nPsyWar >= 20) nDamage = MONST_DAMAGE_5D8;
@@ -1130,7 +997,7 @@ void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration)
 		// Bite attack
 		sWeapType = "PRC_UNARMED_P";
 	}
-	
+
 	else if (nPower == POWER_CLAWS_BEAST)
 	{
 		// Number of times the power has been augmented determines the damage.
@@ -1143,7 +1010,7 @@ void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration)
 		else nDamage = MONST_DAMAGE_1D4;
 		// Bite attack
 		sWeapType = "PRC_UNARMED_S";
-	}	
+	}
 
 	else if (nPower == POWER_METAPHYSICAL_CLAW)
 	{
@@ -1154,7 +1021,7 @@ void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration)
 		else if (nAugment >= 2) nEnhance = 2;
 		else nEnhance = 1;
 	}
-	
+
 	// Only create a new creature weapon if one of those powers is called
 	if (nPower = POWER_BITE_WOLF || nPower == POWER_CLAWS_BEAST)
 	{
@@ -1175,23 +1042,23 @@ void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration)
 			}
 		}
 	}
-	
+
 	// Clean up the mess of extra fists made on taking first level.
-	DelayCommand(1.0,CleanExtraFists(oCaster));		
+	DelayCommand(1.0,CleanExtraFists(oCaster));
 
 	// Weapon finesse or intuitive attack?
 	SetLocalInt(oCaster, "UsingCreature", TRUE);
 	ExecuteScript("prc_intuiatk", oCaster);
-	DelayCommand(1.0f, DeleteLocalInt(oCaster, "UsingCreature"));	
-	
+	DelayCommand(1.0f, DeleteLocalInt(oCaster, "UsingCreature"));
+
 	// Add the appropriate damage to the fist.
 	AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyMonsterDamage(nDamage),oWeapL, fDuration);
 	// Enhancement bonus from Metaphsyical Claw
 	AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyEnhancementBonus(nEnhance),oWeapL, fDuration);
-	
+
 	// This adds creature weapon finesse
-	ApplyUnarmedAttackEffects(oCaster);	
-	
+	ApplyUnarmedAttackEffects(oCaster);
+
 	// This is so you dont keep the claws after the duration ends
 	DestroyObject(oWeapL, (fDuration + 6.0));
 }

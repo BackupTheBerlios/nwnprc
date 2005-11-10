@@ -76,11 +76,14 @@ void main()
         if(!X2PreSpellCastCode()) return;
         int nCasterLvl = PRCGetCasterLevel();
         int nSpellID   = GetSpellId();
+        int bExtended  = CheckMetaMagic(PRCGetMetaMagicFeat(), METAMAGIC_EXTEND);
 
         // Store the caster level
         SetLocalInt(oCaster, "PRC_Spell_TeleportCircle_CasterLvl", nCasterLvl);
         // Store the spellID
         SetLocalInt(oCaster, "PRC_Spell_TeleportCircle_SID", nSpellID);
+        // Store whether the spell is extended
+        SetLocalInt(oCaster, "PRC_Spell_TeleportCircle_Extended", bExtended);
         // Mark the first part done
         SetLocalInt(oCaster, "PRC_Spell_TeleportCircle_FirstPartDone", TRUE);
         // Now, get the location to have the circle point at.
@@ -91,9 +94,12 @@ void main()
     {
         // Retrieve the target location from the variable
         location lCircleTarget = GetLocalLocation(oCaster, "PRC_Spell_TeleportCircle_TargetLocation");
-        int bVisible = TRUE;/*GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_SID") == SPELLID_VISIBLE;*/ ///FIXME
         location lTarget;
-        float fFacing  = GetFacing(oCaster);
+        int bVisible   = TRUE;/*GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_SID") == SPELLID_VISIBLE;*/ ///FIXME
+        int nCasterLvl = GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_CasterLvl");
+        int bExtended  = GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_Extended");
+        float fDuration = nCasterLvl * 10 * 60.0f * (bExtended ? 2 : 1);
+        float fFacing   = GetFacing(oCaster);
         float fDistance = FeetToMeters(5.0f) + 0.2;
         vector vTarget = GetPosition(oCaster);
                vTarget.x += cos(fFacing) * fDistance;
@@ -104,7 +110,7 @@ void main()
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY,
                               EffectAreaOfEffect(AOE_PER_TELEPORTATIONCIRCLE, "prc_telecirc_oe"),
                               lTarget,
-                              GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_CasterLvl") * 10 * 60.0f
+                              fDuration
                               );
         // Get an object reference to the newly created AoE
         object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
@@ -137,6 +143,7 @@ void main()
         // Cleanup
         DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_CasterLvl");
         DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_SID");
+        DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_Extended");
         DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_FirstPartDone");
         DeleteLocalLocation(oCaster, "PRC_Spell_TeleportCircle_TargetLocation");
     }

@@ -43,13 +43,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             && (GetEffectCreator(eAOE) == oCreator
                 || GetEffectCreator(eAOE) == OBJECT_SELF))
         {
-            if(!GetPRCSwitch(PRC_PNP_DARKNESS)
+            if(!GetPRCSwitch(PRC_PNP_DARKNESS_35ED)
                 && nType == EFFECT_TYPE_DARKNESS)
             {
                   RemoveEffect(oTarget, eAOE);
             }
-            if(GetPRCSwitch(PRC_PNP_DARKNESS)
-                && nType == EFFECT_TYPE_BLINDNESS)
+            if(GetPRCSwitch(PRC_PNP_DARKNESS_35ED)
+                && nType == EFFECT_TYPE_CONCEALMENT)
             {
                   RemoveEffect(oTarget, eAOE);            
             }

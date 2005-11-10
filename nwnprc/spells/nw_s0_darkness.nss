@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         }
     }   
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int  nDuration = nCasterLvl*10;//10min/level
+    int  nDuration = nCasterLvl;//10min/level for PnP
 
     int nMetaMagic = PRCGetMetaMagicFeat();
     //Make sure duration does no equal 0
@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         //otherwise items get an IP
         itemproperty ipDarkness = ItemPropertyAreaOfEffect(IP_CONST_AOE_DARKNESS, nCasterLvl);
-        IPSafeAddItemProperty(oItemTarget, ipDarkness, RoundsToSeconds(nDuration)); 
+        IPSafeAddItemProperty(oItemTarget, ipDarkness, TurnsToSeconds(nDuration*10)); 
         //this applies the effects relating to it       
         DelayCommand(0.1, VoidCheckPRCLimitations(oItemTarget, OBJECT_INVALID));
     }

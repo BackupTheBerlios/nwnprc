@@ -34,7 +34,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     effect eLink2 =  EffectLinkEffects(eInvis, eDur);
 
-    effect ePnP = EffectLinkEffects(eDur, EffectBlindness());
+    effect ePnP = EffectLinkEffects(eDur, EffectDarkness());
+    if(GetPRCSwitch(PRC_PNP_DARKNESS_35ED))
+        ePnP = EffectLinkEffects(eDur, EffectConcealment(20));
 
     object oTarget = GetEnteringObject();
     int iShadow = GetLevelByClass(CLASS_TYPE_SHADOWLORD,oTarget);
@@ -55,10 +57,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     // * July 2003: If has darkness then do not put it on it again
     // Primogenitor: Yes, what about overlapping darkness effects by different casters?
-    if (GetHasEffect(EFFECT_TYPE_DARKNESS, oTarget) == TRUE)
-    {
-        return;
-    }
+    //if (GetHasEffect(EFFECT_TYPE_DARKNESS, oTarget) == TRUE)
+    //{
+    //    return;
+    //}
 
     if(GetIsObjectValid(oTarget) && oTarget != GetAreaOfEffectCreator())
     {

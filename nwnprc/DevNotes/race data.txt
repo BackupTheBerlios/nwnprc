@@ -1,0 +1,672 @@
+Source			MM,pg124,3.5ed
+Label			RACIAL_TYPE_HILL_GIANT
+Name			"Hill Giant"
+Plural			"Hill Giants"
+Description		"Hill giants are selfish cunning brutes who survive through hunting and raiding.\nSkin color amoung hill giants ranged from light tan to deep ruddy brown. Their hair is brown or black, with eyes the same color. Hill giants wear layers of crudely prepared hides with the furr left on. They seldom wash or repaid their garments, prefering to simply add more hides as their old ones wear out. \nAdults are about 10-1/2 feet tall and weight about 1,100 punds. Hill giants can live to be 200 years old."
+Appearance		78
+StrAdjust		+14
+DexAdjust		-2
+ConAdjust		+8
+IntAdjust		-4
+WisAdjust		+0
+ChaAdjust		-4
+Endurance		40
+FavoredClass		Barbarian
+Size			Large
+RacialHDCount		12
+RacialHDClass		22
+RacialLA		+4
+NaturalArmor		9
+SR			0
+SLAs			none
+NaturalWeapons		none
+Special Abilities	Low-light vision
+			Proficient with simple & martial weapons light & medium armor & shields, 
+			Rock Throwing (Ex): Adlut giants are acompilished rock throwers and recieve a +1 racial bonus on attack rolls when throwing rocks. A giant of at least Large size can hurl rocks weiging 40 to 50 pounds each (Small objects) up to 5 range increments. The size of he range increment varies with giants variety. A huge giant can hurl rocks of 60 to 80 pounds (medium objects).
+			Rock Catching (Ex): A giant of at least large size can catch small, mdeium or large rocks. Once per round a giant that would normally be hit by a rock can make a reflex save to catch it as a free action. The DC is 15 for a small rock, 20 for a medium one, and 25 for a large one. If the projectile provides  magical bonus on attack rolls, the DC increases by that amount. The giant must be ready and aware of the attack in order to make a rock catching attempt.
+
+Source   	                   	             Planar Handbook
+Label                                            RACE_FEAT_LINGA 
+Name                                            "Air Mephling"
+Plural                                            "Air Mephlings"
+Description                                     "Weaker than their mephit ancestors, mephlings are put out of Mephit communities as undesriable runts. They're left to the mercies of the inhospitable planes. Mephlings fit in equally oddly in virtually all societies. Mephlings looks like less comely versions of their mephit parents with stunted wings. A typical mephling stands less than 3 feet tall and weighs about 30 pounds, with females slightly taller and heavier than males. A air mephling looks like a short, cloud-white human."
+Appearance                                    3
+StrAdjust                                       0
+DexAdjust                                      +2
+ConAdjust                                      0 
+IntAdjust                                       2
+WisAdjust                                      0
+ChaAdjust                                      +2
+Endurance                                     30
+FavoredClass                                  Bard
+Size                                              Small
+RacialHDCount                                0
+RacialHDClass                                 24
+RacialLA                                        +1
+NaturalArmor                                  0
+SR                                                0
+SLA's                                            none
+NaturalWeapons                              none
+Special Abilities                               Breath Weapon: Cone of dust and grit (piercing damage). Regardless of the effect, a mephling's breath weapon fills a 15-foot cone, deals 1d8 points of damage to each target, and allows a Reflex save (10+1/2 mephling's HitDice+mephling's Con modifier) for half damage. A 1st-level mephling can use his breath weapon unce per day; a higher level mephling gains one additional use per day for every four levels he has attained. If a mephling can use his breath weapon more than once per day, 1d4 rounds must pass between consecutive uses of the breath weapon. 
+                                                   Mephlings cast spells of an elemental descriptor that matches their kind at +1 caster level.
+
+Source		                          Planar Handbook
+Label                                             RACE_FEAT_LINGE 
+Name                                             "Earth Mephling"
+Plural                                             "Earth Mephlings"
+Description                                      "Weaker than their mephit ancestors, mephlings are put out of Mephit communities as undesriable runts. They're left to the mercies of the inhospitable planes. Mephlings fit in equally oddly in virtually all societies. Mephlings looks like less comely versions of their mephit parents with stunted wings. A typical mephling stands less than 3 feet tall and weighs about 30 pounds, with females slightly taller and heavier than males. An earth mephling appears akin to a short, stony, hairless dwarf."
+Appearance                                     0
+StrAdjust                                        +2
+DexAdjust                                       -2
+ConAdjust                                       0 IntAdjust                                        -2
+WisAdjust                                       0
+ChaAdjust                                       +2
+Endurance                                       30
+FavoredClass                                   Druid
+Size                                               Small
+RacialHDCount                                  0
+RacialHDClass                                   24
+RacialLA                                          +1
+NaturalArmor                                    0
+SR                                                 0
+SLA's                                              none
+NaturalWeapons                               none
+Special Abilities                                Breath Weapon: Cone of rock shards and pepples (bludgeoning damage). Regardless of the effect, a mephling's breath weapon fills a 15-foot cone, deals 1d8 points of damage to each target, and allows a Reflex save (10+1/2 mephling's HitDice+mephling's Con modifier) for half damage. A 1st-level mephling can use his breath weapon unce per day; a higher level mephling gains one additional use per day for every four levels he has attained. If a mephling can use his breath weapon more than once per day, 1d4 rounds must pass between consecutive uses of the breath weapon. 
+                                                     Mephlings cast spells of an elemental descriptor that matches their kind at +1 caster level.
+
+Source		                          Planar Handbook
+Label                                             RACE_FEAT_LINGF 
+Name                                             "Fire Mephling"
+Plural                                             "Fire Mephlings"
+Description                                      "Weaker than their mephit ancestors, mephlings are put out of Mephit communities as undesriable runts. They're left to the mercies of the inhospitable planes. Mephlings fit in equally oddly in virtually all societies. Mephlings looks like less comely versions of their mephit parents with stunted wings. A typical mephling stands less than 3 feet tall and weighs about 30 pounds, with females slightly taller and heavier than males. A fire mephling resembles a miniatur devil, with fiery, reddish-bronze skin."
+Appearance                                     3
+StrAdjust                                        0
+DexAdjust                                       +2
+ConAdjust                                       0 IntAdjust                                        -2
+WisAdjust                                       0
+ChaAdjust                                      +2
+Endurance                                      0
+FavoredClass                                   Sorcerer
+Size                                               Small
+RacialHDCount                                 0
+RacialHDClass                                  24
+RacialLA                                         +1
+NaturalArmor                                   0
+SR                                                 0
+SLA's                                             none
+NaturalWeapons                               none
+Special Abilities                                Breath Weapon: Cone of fire (fire damage). Regardless of the effect, a mephling's breath weapon fills a 15-foot cone, deals 1d8 points of damage to each target, and allows a Reflex save (10+1/2 mephling's HitDice+mephling's Con modifier) for half damage. A 1st-level mephling can use his breath weapon unce per day; a higher level mephling gains one additional use per day for every four levels he has attained. If a mephling can use his breath weapon more than once per day, 1d4 rounds must pass between consecutive uses of the breath weapon. 
+                                                    Mephlings cast spells of an elemental descriptor that matches their kind at +1 caster level.
+
+Source		                            Planar Handbook
+Label                                               RACE_FEAT_LINGW 
+Name                                               "Water Mephling"
+Plural                                               "Water Mephlings"
+Description                                       "Weaker than their mephit ancestors, mephlings are put out of Mephit communities as undesriable runts. They're left to the mercies of the inhospitable planes. Mephlings fit in equally oddly in virtually all societies. Mephlings looks like less comely versions of their mephit parents with stunted wings. A typical mephling stands less than 3 feet tall and weighs about 30 pounds, with females slightly taller and heavier than males. A water mephling resembles a small, fish-scaled, with black, bulbouse eyes ."
+Appearance                                      3
+StrAdjust                                         0
+DexAdjust                                        0
+ConAdjust                                        +2
+IntAdjust                                         -2
+WisAdjust                                        0
+ChaAdjust                                        +2
+Endurance                                        30
+FavoredClass                                    Monk
+Size                                                Small
+RacialHDCount                                   0
+RacialHDClass                                    24
+RacialLA                                           +1
+NaturalArmor                                     0
+SR                                                  0
+SLA's                                               none
+NaturalWeapons                                none
+Special Abilities                                  Breath Weapon: Cone of caustic licuid (acid damage). Regardless of the effect, a mephling's breath weapon fills a 15-foot cone, deals 1d8 points of damage to each target, and allows a Reflex save (10+1/2 mephling's HitDice+mephling's Con modifier) for half damage. A 1st-level mephling can use his breath weapon unce per day; a higher level mephling gains one additional use per day for every four levels he has attained. If a mephling can use his breath weapon more than once per day, 1d4 rounds must pass between consecutive uses of the breath weapon. 
+                                                      Mephlings cast spells of an elemental descriptor that matches their kind at +1 caster level.
+
+Source			MM,pg32,3.5ed
+ Label			RACIAL_TYPE_CENTAUR	
+ Name			"Centaur"
+ Plural			"Centaurs"
+ Description		"Centaurs are woodland beings who shun the company of strangers. They are deadly archers and even more fearsome in melee.\nA centaur is as big as a heavy horse, but much taller and slightly heavier. A centaur is about 7 feet tall and weighs about 2,100 pounds."
+ Appearance		???
+ StrAdjust		+8
+ DexAdjust		+4	
+ ConAdjust		+4	
+ IntAdjust		-2	
+ WisAdjust		+2	
+ ChaAdjust		+0	
+ Endurance		50
+ FavoredClass		7
+ Size			Large
+ RacialHDCount		4
+ RacialHDClass		14
+ RacialLA		+2
+ NaturalArmor		3
+ SR			0
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	none
+ 
+
+Source			MM,pg113,3.5ed
+ Label			RACIAL_TYPE_GARGOYLE
+ Name			"Gargoyle"
+ Plural			"Gargoyles"
+ Description		"A gargoyle is a vicious flying predator that enjoys torturing creatures weakier than itself.\nGargoyles often appear to be winged stone statues, for they can perch indefinitely without moving and use this disguise to surprise their foes. They require no food, water, or air, but often eat their fallen foes out of fondness for inflicting pain. When not enjoying their favorite pastime, a wing of gargoyles can be found waiting silently for prey or bragging among themselves."
+ Appearance		73
+ StrAdjust		+4
+ DexAdjust		+4	
+ ConAdjust		+8	
+ IntAdjust		-4	
+ WisAdjust		+0	
+ ChaAdjust		-4	
+ Endurance		40 (60 flying)
+ FavoredClass		4
+ Size			Medium
+ RacialHDCount		4
+ RacialHDClass		14
+ RacialLA		+5
+ NaturalArmor		+4
+ SR			0
+ SLAs			none
+ NaturalWeapons		2 claws (1d4) 1 bite (1d6) 1 gore (1d6)
+ Special Abilities	Darkvision
+ 			DR 10/magic
+ 			Freeze (Ex): A gargoyle can hold itself so still it appears to be a statue. An observer must succeed on a DC 20 Spot check to notice the gargoyle is really alive.
+
+                        +2 Hide, Listen, Spot, Additional +8 Hide against stone background
+ 
+Source			MM,pg116,3.5ed
+ Label			RACIAL_TYPE_JANNI
+ Name			"Janni"
+ Plural			"Jann"
+ Description		"The jann (singular janni are the weakiest of the genies. Jann are formed out of all four elements and must therefore spend most of their time on the Material Plane. They favor forlorn deserts and hidden oases, where they have both privacy and safety.\nJann society is very open, treating males and females as equals. Each trive is ruled by a sheik and one or two viziers. Exceptionally powerful sheiks are given the title of amir, and in times of need they gather and comman large forces of jann (and sometimes allied humans).\nMany jann bands are nomadic, traveling with herds of camels, goats, or sheep from oasis to oasis. These itinerant jann are often mistaken for humans -- until they are attacked. The territory of a jann tribe can extend for hundreds of miles."
+ Appearance		???
+ StrAdjust		+6
+ DexAdjust		+4	
+ ConAdjust		+2	
+ IntAdjust		+4	
+ WisAdjust		+4	
+ ChaAdjust		+2	
+ Endurance		30 (20 flying)
+ FavoredClass		8
+ Size			Medium
+ RacialHDCount		6
+ RacialHDClass		24
+ RacialLA		+5
+ NaturalArmor		1
+ SR			0
+ SLAs			90 (cl:12)(3/day),Ethereal Jaunt (cl:12)(1hr, 1/day) [any spell-like abilities in a comma separated list in the format X (cl:Y, DC: Z) where X is the row in spells.2da (or name if not created yet}, Y is the caster level, and Z is the DC (if stated)]
+ NaturalWeapons		none
+ Special Abilities	Darkvision
+ 			Change size (Sp): Twice per day, a janni can magically change a creature's size. This works just like an enlarge person or reduce person spell (the janni chooses when using the ability), except that the ability can work on the janni. A DC 13 Fortitude save negates the effect. The save DC is charisma-based. This is the equivalent of a 2nd-level spell.
+ 			Elemental Endurance (Ex): Jann can survive on the Elemental Planes of Air, Earth, Fire or Water for up to 48 hours. Failure to return to the Material Plane before that time expires causes a janni to take 1 point of damage per additional hour spent on the elemental plane, until it dies or returns to the Material Plane.
+ 			Fire Resist 10
+ 			Plane Shift
+ 			Telepathy 100ft
+ 
+Source			MM,pg124,3.5ed
+ Label			RACIAL_TYPE_STONE_GIANT
+ Name			"Stone Giant"
+ Plural			"Stone Giants"
+ Description		"Stone giants have a largely undeserved reputation as rock-throwing hooligans. In fact, they tend to be somewhat shy around strangers.\nStone giants prefer thick leather garments, dyed in shades of brown and gray to match the stone around them.\nAdults are about 12 feet tall and weigh about 1,500 pounds. Stone giants can live to be 800 years old.\nStone giants may tend to be shy around strangers, but they are by no means timid. Many stone giants have an artistic streak. Some draw and paint scenes of their lives on the walls of their lairs and on tanned hide scrolls. Some are fond of music and play stone flutes and drums. Others make simple jewelry, fashioning painted stone beads into necklaces.\nMost stone giants are playful, especially at night. They are fond of rock-throwing contests and other games that test their might. Groups of giants often gather to toss rocks at each other, the losing side being those who are hit more often. Travelers' reports of such contests have given stone giants their reputation for wildness."
+ Appearance		???
+ StrAdjust		+16
+ DexAdjust		+4	
+ ConAdjust		+8	
+ IntAdjust		+0	
+ WisAdjust		+2
+ ChaAdjust		+0	
+ Endurance		40
+ FavoredClass		0
+ Size			Large
+ RacialHDCount		14
+ RacialHDClass		22
+ RacialLA		+4
+ NaturalArmor		+11
+ SR			0
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Darkvision
+ 			Low-light vision
+ 			Rock Throwing (Ex): The range increment is 180 feet for a stone giant's thrown rocks. It uses both hands when throwing a rock.
+ 			Rock Catching (Ex): A stone giant gains a +4 racial bonus on its Reflex save when attempting to catch a thrown rock.
+ 
+Source			MM,pg200,3.5ed
+ Label			RACIAL_TYPE_OMAGE
+ Name			"Ogre Mage"
+ Plural			"Ogre Mages"
+ Description		"The ogre mage is a more intelligent and dangerous variety of its mundane cousin. Rapacious and cruel by nature, ogre mages often lead organized raids for slaves, treasure and food.\nThese creatures dwell in fortified structures or underground lairs, usually living alone or with a small group of ogre followers. Status among ogre mages is measured by wealth. While they do not generally associate with their own kind, they often undertake raids and schemes in competition with one another to amass the most riches.\nAn ogre mage stands about 10 feet tall and weighs up to 700 pounds. Its skin varies in color from light green to light blue, and its hair is black or very dark brown. Ogre mages favor loose, comfortable clothing and lightweigh armor."
+ Appearance		129
+ StrAdjust		+10
+ DexAdjust		+0	
+ ConAdjust		+6	
+ IntAdjust		+4	
+ WisAdjust		+4	
+ ChaAdjust		+6	
+ Endurance		40 (40 flying)
+ FavoredClass		9
+ Size			Large
+ RacialHDCount		5
+ RacialHDClass		22
+ RacialLA		+7
+ NaturalArmor		+5
+ SR			19
+ SLAs			36 (cl:9)(at will),90(cl:9)(at will),16 (cl:9,DC:14)(1/day),25 (cl:9,DC:18)(1/day),gaseous form(1/day),130 (cl:9),165 (cl:9,DC:14)
+ NaturalWeapons		none
+ Special Abilities	Regeneration 5
+ 			Darkvision
+ 
+Source			MM,pg219,3.5ed
+ Label			RACIAL_TYPE_SATYR
+ Name			"Satyr"
+ Plural			"Satyrs"
+ Description		"Satyrs, also known as fauns, are hedonistic creatures that frolic in the wild places of the world. They love fine food, strong drink and passionate romance.\nA satyr's hair is red or chestnut brown, while its hooves and horns are jet black.\nA satyr is far more likely to be carrying musical instruments or bottles of wine than weapons. For the most part, satyrs leave travelers alone. They are, however, more than a little mischievous and often seek fun at the expense of those who wander too near their woodland homes. A satyr is about as tall and heavy as a half-elf."
+ Appearance		???
+ StrAdjust		+0
+ DexAdjust		+2	
+ ConAdjust		+2	
+ IntAdjust		+2	
+ WisAdjust		+2	
+ ChaAdjust		+2	
+ Endurance		40
+ FavoredClass		1
+ Size			Medium
+ RacialHDCount		5
+ RacialHDClass		17
+ RacialLA		+2
+ NaturalArmor		+4
+ SR			0
+ SLAs			none
+ NaturalWeapons		1d6(head butt)
+ Special Abilities	Low-light vision
+ 			Pipes (Su): Satyrs can play a variety of magical tunes on their pan pipes. Usually, only one satyr in a group carries pipes. When it plays, all creatures within a 60-foot spread (except satyrs) must succeed on a DC 13 Will save or be affected by charm person, sleep, or fear (caster level 10th; the satyr chooses the tune and its effect). In the hands of other beings, these pipes have no special powers. A creature that successfully saves against any of the pipe's effects cannot be affected by the same set of pipes for 24 hours. The save DC is Charisma-based.\nA satyr often uses its pipes to charm and seduce especially comely women or to put a party of adventurers to sleep and then steal their valuables.
+ 			+4 Hide, Listen, Move Silently, Perform, Spot
+ 			DR 5/cold iron
+ 
+ Source			MM,pg246,3.5ed
+ Label			RACIAL_TYPE_TROGLODYTE
+ Name			"Troglodyte"
+ Plural			"Troglodytes"
+ Description		"Troglodytes are revolting lizard creatures as evil as the foulest of demons. They are very warlike and savor the taste of their enemies -- especially humanoid.\nTroglodytes are not especially intelligent, but their ferocity and natural cunning more than compensate for this deficiency. They often launch bloody raids against humanoid settlements or ambush caravans in warm climates. They guard their lairs aggressively, lashing out at anyone who comes too near.\nAtroglodyte stands about 5 feet tall ane weighs about 150 pounds."
+ Appearance		451
+ StrAdjust		+0
+ DexAdjust		-2	
+ ConAdjust		+4	
+ IntAdjust		-2	
+ WisAdjust		+0	
+ ChaAdjust		+0	
+ Endurance		30
+ FavoredClass		2
+ Size			Medium
+ RacialHDCount		2
+ RacialHDClass		14
+ RacialLA		+2
+ NaturalArmor		6
+ SR			0
+ SLAs			none
+ NaturalWeapons		2 claws (1d4) 1 bite (1d4)
+ Special Abilities	Darkvision
+ 			+4 Hide (+8 in rocky or underground surroundings)
+ 			Multiattack feat
+ 			Stench (Ex): When a troglodyte is angry or frightened, it secretes an oily, musklike chemical that nearly every form of animal life finds offensive. All living creatures (except troglodytes) within 30 feet of a troglodyte must succeed on a DC 13 Fortitude save or be sickened for 10 rounds. The save DC is Constitution-based. Creatures that successfully save cannot be affected by the same troglodyte's stench for 24 hours. A delay poison or neutralize poison spell removes the effect from the sickened creature. Creatures with immunity to poison are unaffected, and creatures resistant to poison receive their normal bonus on their saving throws.
+ 
+Source		EPH,pg11,3.5ed
+  Label			RACIAL_TYPE_GITHZERAI	
+  Name			"Githzerai"
+  Plural		"Githzerais"
+  Description		Githzerai are tall, thin humanoids with sharp features and somber, yellow eyes. The are typically hard-hearted creatures, making their homes in hidden monasteries on the plane of Limbo. The gith empire arose from slave rebellion against their master mind flayers. Once free, the gith split into two distinct races - the githyanki and githzerai. The githzerai's imprisonment at the hands of the illithids formed the foundation or their monastic lifestyle. Their fortress of perfect order provides a sharp contrast to the perpetual chaos that exists on their native plane. 
+  Appearance		6
+  StrAdjust		0
+  DexAdjust		+6	
+  ConAdjust		0	
+  IntAdjust		-2	
+  WisAdjust		+2	
+  ChaAdjust		0	
+  Endurance		30
+  FavoredClass		Wilder
+  Size			Medium
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		+2
+  NaturalArmor		0
+  SR			Inniate Power Resistance of 5, plus 1 per character level.  
+  SLAs			3/day--inertial armor, psionic daze, catfall, concussion. 
+                        Githzerai of 11th level also gain plane shift 1/day. 
+                        Manifester level is equal to 1/2 Hit Dice (minimum 1). The saves DCs are Charisma-based.
+  NaturalWeapons	none
+  Special Abilities	Darkvision,
+                        Naturally Psionic: Githzerai gain 2 bonus power points at 1st level. This benefit does not grant them the ability to manifest powers unless they gain that ability through another source, such as levels in a psionic class.                                       
+  
+Source		EPH,pg10,3.5ed
+  Label			RACIAL_TYPE_GITHYANKI	
+  Name			"Githyanki"
+  Plural		"Githyankis"
+  Description		Githyanki are tall, gaunt humanoids from an ancient line of being from the Astral Plane. Built roughly like humans, they are elaborate dressers and have a passion for fine weapons. They have yellowish skin and russet hair, with pointed eyes that resemble those of an elf but are serrated at the back. The gith empire arose from slave rebellion against their master mind flayers. Once free, the gith split into two distinct races - the githyanki and githzerai. The githyanki live within massive fortresses adrift in the Astral Plane and have been known to form alliances with Red Dragons. 
+  Appearance		6
+  StrAdjust		0
+  DexAdjust		+2	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		-2	
+  ChaAdjust		0	
+  Endurance		30
+  FavoredClass		Psion
+  Size			Medium
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		+2
+  NaturalArmor		0
+  SR			Inniate Power Resistance of 5, plus 1 per character level.  
+  SLAs			Manifester level is equal to 1/2 Hit Dice (minimum 1). The save DCs are Charisma-based.
+                        1st level: 3/day--far hand, psionic daze, 
+                        3rd level: 3/day--concealing amorpha,
+                        6th level: 3/day--psionic dimension door,
+                        9th level: 3/day--telekinetic thrust; 1/day--psionic plane shift.                                       
+  NaturalWeapons	none
+  Special Abilities	Darkvision,
+                        Naturally Psionic: Githyanki gain 3 bonus power points at 1st level. This benefit does not grant them the ability to manifest powers unless they gain that ability through another source, such as levels in a psionic class.       
+
+Source		EPH,pg8,3.5ed
+  Label			RACIAL_TYPE_DUERGAR	
+  Name			"Duergar"
+  Plural		"Duergars"
+  Description		Descended from a dwarf clan enslaved by mind flayers, duergar (a.k.a. gray dwarves) suffered for generations under enslavement and cruel experimentation at the hand of their cruel masters. Finally they managed to recover their freedom as a bitter and evil race with limited psionic powers. Male and female duergar are bald, and women do not grow beards. They are much thinner than other dwarves, with severe facial expressions, gray hair and gray skin. 
+  Appearance		0
+  StrAdjust		0
+  DexAdjust		0	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		-4	
+  Endurance		20
+  FavoredClass		Psychic Warrior
+  Size			Medium
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		+1
+  NaturalArmor		0
+  SR			none 
+  SLAs			Manifester level is equal to 1/2 Hit Dice (minimum 3). These abilities affect only the duergar and whatever he carries.  
+                        1/day--expansion, invisibility.                                                  
+  NaturalWeapons	none
+  Special Abilities	Darkvision; Stonecunning; Immunity to Poisons, Paralysis and Phantasms; Stability; +2 Hardiness vs. Spells and Spell-like abilities; Defensive Training vs. Giants; Offensive Training vs. Orcs and Goblinoids; Light Sensitivity; Skill Affinity (Move Silently) +4; Skill Affinity (Craft); Partial Skill Affinity (Listen); Partial Skill Affinity (Spot); Skill Affinity (Lore); Skill Affinity (Appraise).
+                        Naturally Psionic: Duergar gain 3 bonus power points at 1st level. This benefit does not grant them the ability to manifest powers unless they gain that ability through another source, such as levels in a psionic class.                                       
+  Source		Frostburn,pg36,3.5ed
+  Label			RACIAL_TYPE_NEANDERTHAL
+  Name			"Neanderthal"
+  Plural		"Neanderthals"
+  Description		"The Neanderthals are a feral race of humans, created by the crude and violent deities of the winterlands to dwell in their frozen domains. They are a primitive folk who have never seen the need to become more civilized, usually living in caves or abandoned underground ruins und hunting the surrounding regions with great skill. Neanderthals are savage and brutal, reflections of the feral deities who created them. They react with suspicion or open hostility toward unknown developments, since they learn early in childhood that the unknown is something to fear. Neanderthals are hairy and thickly built, with long arms and barrel chests. Their heads are a bit larger than a human’s, with a sloping brow and a prodigious jaw filled with large strong teeth capable of cracking bones. Neanderthals are towering figures, often standing between 7 feet and 7-1/2 feet tall and weighing about 350 pounds. They reach adulthood at the age of 14, and live about 65 years."
+  Appearance		5 or 6
+  StrAdjust		+2
+  DexAdjust		-2	
+  ConAdjust		+2	
+  IntAdjust		-2	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		30
+  FavoredClass		Barbarian
+  Size			Medium
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		0
+  NaturalArmor		0
+  SR			none 
+  SLAs			none                                                  
+  NaturalWeapons	none
+  Special Abilities	+2 racial bonus to Listen, Spot, and Survival checks; Human Blood; Illiteracy. 
+                        Primitive Weapon Mastery: Neanderthals have a +1 racial bonus on attack rolls made with the following weapons: bolas, club, dart, greatclub, goad, harpoon, iuak, javelin, longspear, quarterstaff, ritiik, shortbow, shortspear, sling, spear, sugliin, throwing axe, and tigerskull club.  
+                        Climate Tolerant: Neanderthals suffer little harm from environmental extremes of heat or cold. They do not have to make Fortitude saves in extreme environments between -20° and 140° F (severe to cold to heat). This ability does not provide any protection from fire or cold damage, This ability counts as if a neanderthal had the Cold Endurance feat for purpose of fulfilling prerequisites for other feats or prestige classes.                                      
+  
+		Frostburn,pg38,3.5ed
+  Label			RACIAL_TYPE_ULDRA
+  Name			"Uldra"
+  Plural		"Uldras"
+  Description		"Uldras are small fey that dwell in the arctic wilderness, living at peace with the natural world. In particular, uldras are quit fond of the wild animals of the world, and see themselves at the guardians and protectors of such creatures, especially in cases where civilisation encroaches. Although they generally prefer to avoid conflict, they are quick to rise in the defense of local wildlife. Uldras are exceptionally emotional creatures, and their reactions to new situations are always powerful and expressive. An uldra can be laughing with joy one moment, screaming with rage in the next, and then be calm and serene a moment later. Uldras are short and thin, standing anywhere from 2-1/2 to 3 feet tall and typically weighing 30-40 pounds. They are fairly long-lived, rivalling the elves for longevity. An uldra becomes an adult at approximately the age of 100, and can live to be more than 600 years old. Their lims are long and thin, and each of their hands possesses three long fingers and a thumb. Their toes are also long and thin, with long sharp toenails. Uldra skin is generally pale blue or even snow white. Hair colour is typically some darker shade of blue or black, frosting to gray or light blue in advanced age."
+  Appearance		2 or 3
+  StrAdjust		-2
+  DexAdjust		0	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		+2	
+  ChaAdjust		0	
+  Endurance		20
+  FavoredClass		Druid
+  Size			Small
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		+1
+  NaturalArmor		0
+  SR			none
+  SLAs			These abilities are as the spells cast by a drid or wizard (save DC 10 + spell level) of a level equal to the uldra’s Hit Dice. The DCs are Wisdom-based.
+                        3/day—ray of frost; 
+                        1/day—speak with animals, touch of fatigue.                                               
+  NaturalWeapons	none
+  Special Abilities	Small; Darkvision; Low-Light Vision; Nature Scholar (+2 racial bonus on all Knowledge (nature) checks); Resistance to Cold +5; Fey Blood;
+                        Frosty Touch: Uldras are supernaturally cold, and as a free action they can infuse their hands with cold energy. While their hands are frosty, their unarmed attacks do an additional 1 point of cold damage. Any melee weapon an uldra wields is infused with cold and does an additional 1 point of cold damage on a successful hit as long as the uldra continues to hold the weapon. This additional damage does not stack with a magic weapon’s ability to deal cold damage (if any).                                
+  
+Source		Frostburn,pg35,3.5ed
+  Label			RACIAL_TYPE_ICE_GNOME
+  Name			"Ice Gnome"
+  Plural		"Ice Gnomes"
+  Description		"Gnomes born and raised in the frostfell are often called ice gnomes, if only for their propensity for decorating their homes and villages with elaborate ice sculptures. Ice gnomes possess a different set of spell-like abilities due to their environment and childhood teachings./Additionally, many sages and explores have noted numerous similarities between gnomes and a race of fey native to the frostfell known as uldras. Some theorize that the gnome race is somehow distantly related to these reclusive fey."
+  Appearance		2 
+  StrAdjust		-2
+  DexAdjust		0	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		20
+  FavoredClass		Bard
+  Size			Small
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		0
+  NaturalArmor		0
+  SR			none
+  SLAs			1/day—speak with animals (arctic mammals only, duration 1 minute). An ice gnome with a Charisma score of at least 10 also has the following spell-like abilities: 1/day—dancing lights, prestidigitation, ray of frost. Caster level 1st; save DC 10 + gnome’s Cha modifier + spell level.                                         
+  NaturalWeapons	none
+  Special Abilities	Small; Hardiness vs. Illusions; Offensive Training vs. Reptilians; Offensive Training vs. Goblinoids; Defensive Training vs. Giants; Skill Affinity (Listen), Skill Affinity (Concentration), Spell Focus (Illusion); Low-Light Vision.                             
+  
+Source		Frostburn,pg130,3.5ed
+  Label			RACIAL_TYPE_FROST_FOLK
+  Name			"Frost Folk"
+  Plural		"Frost Folks"
+  Description		"Frost folk are an isolated and xenophobic race descended from humans who struck a bargain with the gods of winter. In exchange for power over snow and ice, they sold their souls to a cruel deity—or, as some claim, an archdevil. Frost folk are almost always encountered alone, a single frost man sometimes accompanied by a hunting winter wolf. They are of the height and weight of a typical human male, with bright blue eyes, and pale snowy skin. They favour finely stitched furs, often artic fox, ermine, or bearskin. Some wear helmets made from bear, wolf, or wolverine skulls. A noticeable chill surrounds them. Frost folk villages are extremely remote, found only in very cold terrain. These villages are often cliff dwellings in mountains, deep glacial caverns, or underground caverns deep under everfrost or boreal forests. Frost folk are excellent hunters and herdsmen, keeping flocks of caribou, musk oxen, and mountain sheep. A few villages are able to grow crops around hot springs, in sheltered valleys, and in some warm forested valleys."
+  Appearance		6
+  StrAdjust		+4
+  DexAdjust		+2	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		-2	
+  Endurance		30
+  FavoredClass		Barbarian
+  Size			Medium
+  RacialHDCount		4d8+4 (22 hp)
+  RacialHDClass		15
+  RacialLA		+1
+  NaturalArmor		+2
+  SR			none 
+  SLAs			none                                                  
+  NaturalWeapons	none
+  Special Abilities	Ice Blast: Frost folk can produce a 20-foot cone of icy mist from their left eye. This deals 2d6 points of cold damage to all creatures within the area (Reflex save DC 13 half). The save DC is Constitution-based. Once a frost folk uses his ice blast, he must wait 1d4 rounds before he can use this ability again.
+                        Snow Sight: All frost folk have innate snowsight, as the spell. No snowstorm can obscure their vision.
+                        Skills: All frost folk gain a +8 racial bonus on Hide checks in snow and ice terrain; 
+                        Darkvision; Proficient with the battleaxe and composite longbow, as well as all simple weapons, light armor and shields; Cold subtype.                                 
+  
+Source		Frostburn,pg137,3.5ed
+  Label			RACIAL_TYPE_SNOW_GOBLIN
+  Name			"Snow Goblin"
+  Plural		"Snow Goblins"
+  Description		"Snow goblins are shaggy humanoids with large throat sacs that they use to call to one another over long distances. The booming noises they make with these sacs can be heard for miles, and are used to signal hunting and war parties over wide areas. Snow goblins can also create loud monkey-like hoots. /A typical snow goblin stands 3 to 4 feet tall, with long arms and seasonal fur colour, changing from glossy black or brown in summer to pure white in winter. Its fur is typically crusted with ice and snow. /Female snow goblins are larger and more aggressive than males. Both males and females take part in raiding parties, and most people who have met them agree that the female are just as aggressive as the males, and much more crueler in the tortures they inflict on captives." 
+  Appearance		86
+  StrAdjust		0
+  DexAdjust		+2	
+  ConAdjust		0	
+  IntAdjust		-2	
+  WisAdjust		0	
+  ChaAdjust		-2	
+  Endurance		30
+  FavoredClass		Fighter
+  Size			Small
+  RacialHDCount		1d8+1 (5 hp)
+  RacialHDClass		14
+  RacialLA		+1
+  NaturalArmor		+1
+  SR			none 
+  SLAs			none                                                  
+  NaturalWeapons	none
+  Special Abilities	Climb speed 20; +4 racial bonus on Move Silently checks and a +8 racial bonus on Climb checks; Darkvision;
+                        Booming Voice: Snow goblins can be heard over great distances, and their powerful voices can be quite intimidating. Snow goblins gain a +4 racial bonus on Intimidate checks.                                    
+  
+Source		MM III,pg62,3.5ed
+  Label			RACIAL_TYPE_FLIND
+  Name			"Flind"
+  Plural		"Flinds"
+  Description		"These powerful and merciless relatives of the gnolls are often found in gnoll bands as leaders or elite hunters. While gnolls admire and respect them, flinds have no great love for their lesser cousins. /A flind appears much like a gnoll, though it is a little shorter and broader. It stands roughly 7 feet tall and weighs 300 to 350 pounds. A flind’s forehead does not slope back as far, and its ears are more rounded than those of an ordinary gnoll"
+  Appearance		388
+  StrAdjust		+6
+  DexAdjust		+2	
+  ConAdjust		+4	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		30
+  FavoredClass		Ranger
+  Size			Medium
+  RacialHDCount		2d8+4 (13 hp)
+  RacialHDClass		14
+  RacialLA		+2
+  NaturalArmor		+2
+  SR			none 
+  SLAs			none                                                  
+  NaturalWeapons	none
+  Special Abilities	Darkvision,
+                        +2 racial bonus on Charisma-based checks made to influence gnolls.      
+                   
+  Source		MM III,pg38,3.5ed
+  Label			RACIAL_TYPE_POISIN_DUSK
+  Name			"Poison Dusk"
+  Plural		"Poison Dusks"
+  Description		"While smaller than their lizardfolk cousins, the poison dusk lizardfolk are just as dangerous when provoked. / A poison dusk lizardfolk is between 3 to 4 feet in height, weighing 42-52 pounds. Its tall is 2 to 3 feet long, and its scales shift color its mood. The eyes of a poison dusk lizardfolk are larger than those of the other species, and males have a crest running down the back of the head that can lie flat or extend based on mood. / Most poison dusks encountered in the wild are rangers; exceptional individuals usually become adepts and sorcerers serving dragons.”
+  Appearance		451
+  StrAdjust		0
+  DexAdjust		+2	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		-2	
+  Endurance		30
+  FavoredClass		Ranger
+  Size			Small
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		+1
+  NaturalArmor		+3
+  SR			none
+  SLAs			none 
+  NaturalWeapons	2 claws (1d3) and bite (1d3)
+  Special Abilities	Small; Low-Light Vision; +4 racial bonus on Balance, Jump and Swim checks; Hold Breath; Use Poison; 
+                        Chamelion Skin (Ex): Poison dusks can adjust the colors of their scales to blend in with their surroundings. When it is not wearing armor, robes, or other covering clothing, a poison dusk lizardfolk gains a +5 racial bonus on Hide checks. 
+
+Source		Eberron Campaign Setting,pg297,3.5ed
+  Label			RACIAL_TYPE_ZAKYA_RAKSHASA
+  Name			"Zakya"
+  Plural		"Zakyas"
+  Description		"The rakshasa is but one variety of a fiendish race that dominated Eberron for hundreds of thousand years in ancient times. Spawned from the blood of Khyber, the Dragon Below, the rakshasa race includes not only the sorcerers and the nearly divine rajahs imprisoned by the couatls at the end of the Age of Demons, but also a race of warriors, the zakyas. / A zakya can twist its backwards hands, enabling it to wield weapons normally. Like other rakshasas, a zakya is about the same height and weight as a human. / Unlike other rakshasas, zakyas enjoy combat and plunge into melee with relish. They are accomplished fighters and masters of their chosen weapons. They supplement their martial skill with limited spell-like abilities useful for weakening their enemies."
+  Appearance		293 
+  StrAdjust		+10
+  DexAdjust		+4	
+  ConAdjust		+10	
+  IntAdjust		+2	
+  WisAdjust		+2	
+  ChaAdjust		0	
+  Endurance		40
+  FavoredClass		Fighter
+  Size			Medium
+  RacialHDCount		7d8+35 (66 hp)
+  RacialHDClass		24
+  RacialLA		+7
+  NaturalArmor		+9
+  SR			22
+  SLAs			3/day—chill touch (DC 11), true strike, vampiric touch (DC 13). Caster level 7th: save DC 10 + spell level. The save DCs are Charisma-based 
+                        Detect Thoughts (Su): A zakya can continuously use detect thoughts, as the spell from a 18th-level caster (save DC 12). It can suppress or resume this ability as a free action. The save DC is Charisma-based.
+  NaturalWeapons	Bite +7 melee (1d6+2), or claw +12 melee (1d4+5)
+  Special Abilities	Change Shape; +4 racial bonus on Bluff checks; Darkvision; Damage Reduction 15/ good and piercing.
+                        Feats: A zakya receives bonus feats, and meets feat prerequisites, as though it were a 7th-level fighter.                             
+  
+Source		Fiend Folio,pg115,3.5ed
+  Label			RACIAL_TYPE_KHAASTA
+  Name			"Khaasta"
+  Plural		"Khaastas"
+  Description		"Khaastas are dangerous reptilian humanoids that roam the wastelands of the Outlands and the chaotic planes. They are infamous for being raiders, plunderers, slavers, and mercenaries. /Sometimes mistaken for powerful lizardfolk, khaastas are exra-planar creatures native to the Abyss. Khaastas have tough, small scales, and flaring crests that are colored in intricate, wild patterns unique to each individual. They have long, powerful tails that are used for balance rather than combat. / Most khaatas travel in nomadic bands in the Outer Planes, where they look for loot, slaves, and combat. They hire themselves out to anyone that seems powerful (and in their eyes, worthy) enough to command them, but they backstab their patron at the first sign of weakness."
+  Appearance		130
+  StrAdjust		+8
+  DexAdjust		+2	
+  ConAdjust		+4	
+  IntAdjust		+2	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		30
+  FavoredClass		Fighter
+  Size			Medium
+  RacialHDCount		3d8+6 (19 hp)
+  RacialHDClass		14
+  RacialLA		+3
+  NaturalArmor		+6
+  SR			none 
+  SLAs			none                                                  
+  NaturalWeapons	Bite 1d4+4
+  Special Abilities	Darkvision,
+Source		Monsters of Faerun,pg15,2.5ed
+
+  Label			RACIAL_TYPE_ASABI
+  Name			"Asabi"
+  Plural		"Asabis"
+  Description           "Asabis are desert-dwelling, reptilian humanoids. Native to the Isstosseffifil Empire, which stood Where the Anauroch desert is now, asabis are still primarily found within and beneath the Great Desert. The name asabi was giving to these creatures by the Bendine tribes. In earlier times, they were known as the laerti—a name given to them by the Netherese. / Asabi are warlike creatures with a love of battle unequalled by most other races. They often form mercenary bands or are enlisted into the service of more powerful evil creatures./ Standard asabis are primarly warriors. They enjoy fighting, and they are accustomed to organizing themselves in disciplined ranks. Asabis are habby to fight for their masters (if enslaved) or for whoever pays them the most gold.”
+  Appearance		355
+  StrAdjust		0
+  DexAdjust		+2	
+  ConAdjust		0	
+  IntAdjust		+2	
+  WisAdjust		+2	
+  ChaAdjust		0	
+  Endurance		50
+  FavoredClass		Fighter
+  Size			Medium
+  RacialHDCount		3d8 (13 hp)
+  RacialHDClass		15
+  RacialLA		+1
+  NaturalArmor		+2
+  SR			none
+  SLAs			none                               
+  NaturalWeapons	Bite (1d4)
+  Special Abilities	Skills: All asabis are especially good jumpers. Their maximum distance is 20 feet for a standing jump and 15 feet for a stanging high jump.                                     
+
+Source		Monsters of Faerun,pg15,2.5ed
+  Label			RACIAL_TYPE_ASABI_STINGTAIL
+  Name			"Stingtail"
+  Plural		"Stingtails"
+  Description           "Asabis are desert-dwelling, reptilian humanoids. Native to the Isstosseffifil Empire, which stood Where the Anauroch desert is now, asabis are still primarily found within and beneath the Great Desert. The name asabi was giving to these creatures by the Bendine tribes. In earlier times, they were known as the laerti—a name given to them by the Netherese. / Asabi are warlike creatures with a love of battle unequalled by most other races. They often form mercenary bands or are enlisted into the service of more powerful evil creatures./ Stingtails also take naturally to battle. They are generally more powerful than standard asabis, but they also behave more chaotically on the battlefield.”
+  Appearance		353
+  StrAdjust		0
+  DexAdjust		+4	
+  ConAdjust		+4	
+  IntAdjust		-4	
+  WisAdjust		0	
+  ChaAdjust		-2	
+  Endurance		40
+  FavoredClass		Barbarian
+  Size			Large
+  RacialHDCount		7d8+14 (45 hp)
+  RacialHDClass		15
+  RacialLA		+2
+  NaturalArmor		+6
+  SR			none
+  SLAs			none                               
+  NaturalWeapons	2 Claw (1d6+2), Bite  (1d6+1), Tail (1d4+1 plus poison)
+  Special Abilities	Immunity to Enchantment Spells;
+                        Poison Tail (Ex): Those hit by a stingtail’s tail slap must succeed at a Fortitude save (DC 15) or come into contact with a spray of liquid poison that has an onset time of 1 minute. The initial damage is 2d6 points of damage and the secondary is 1d4 points of temporary Constitution damage. In addition, those who fail the Fortitude save must succeed at a Will save (DC 15) or act as if under the influence of a confusion spell for their next two actions. The stingtail can spray its poison six times per day.
+                        Skills: All asabis are especially good jumpers. Their maximum distance is 20 feet for a standing jump and 15 feet for a stanging high jump. 

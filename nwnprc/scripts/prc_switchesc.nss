@@ -263,7 +263,7 @@ void main()
                 int    nClass3=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_class3");
                 int    nOrder= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_order");
                 int    nMoral= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_moral");
-                sHeader +="\nsName";
+                sHeader +="\n"+sName;
                 sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nRace)));
                 sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass1)));
                 if(nClass2 != CLASS_TYPE_INVALID)

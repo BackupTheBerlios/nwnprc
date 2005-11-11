@@ -18,10 +18,13 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
  
-    int epHeal = GetHasFeat(FAST_HEALING_3,oPC) ? 9 :
-                 GetHasFeat(FAST_HEALING_2,oPC) ? 6 :
-                 GetHasFeat(FAST_HEALING_1,oPC) ? 3 :
-                 -1;
- 
-    SetCompositeBonus(oSkin, "FastHealing", epHeal, ITEM_PROPERTY_REGENERATION);
+    int epHeal;
+    if(GetHasFeat(FAST_HEALING_3,oPC))
+        epHeal = 9;
+    else if(GetHasFeat(FAST_HEALING_2,oPC))
+        epHeal = 6;
+    else if(GetHasFeat(FAST_HEALING_1,oPC))
+        epHeal = 3;
+    if(epHeal)
+        SetCompositeBonus(oSkin, "FastHealing", epHeal, ITEM_PROPERTY_REGENERATION);
 }

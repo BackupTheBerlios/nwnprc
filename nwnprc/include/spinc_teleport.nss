@@ -63,14 +63,14 @@ void Teleport(object oCaster, int nCasterLvl, int bTeleportParty, int bErrorLess
  * Does the actual teleporting. Called once the user has specified
  * the location to use.
  *
- * @param oCaster  creature using Dimension Door
+ * @param oCaster  creature using Teleport
  */
 void TeleportAux(object oCaster);
 
 /**
  * A visual effects heartbeat that runs when using party teleport while
  * waiting for the caster to decide the target location.
- * Outlines the 10ft radius. The HB will cease when the caster
+* Outlines the 10ft radius. The HB will cease when the caster
  * makes the decision or moves from the location they were at at the
  * beginning of the HB.
  *
@@ -84,7 +84,7 @@ void VFX_HB(object oCaster, location lCaster);
  * First, the jump command and then, if the script is non-blank, a call to ExecuteScript
  * the given post-jump script.
  *
- * @param oJumpee       creature being teleported by Dimension Door
+ * @param oJumpee       creature being teleported by Teleport
  * @param lTarget       the location to jump to
  * @param sScriptToCall script for oJumpee to execute once it has jumped
  */

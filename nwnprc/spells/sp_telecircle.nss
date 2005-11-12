@@ -34,26 +34,14 @@
 
     Material Component: Amber dust to cover the area of the circle (cost 1,000 gp).
 
-
-    @note At this time, the circle does not act as a trap, merely as a normal area of effect.
-          This means that though it can be dispelled, it cannot be disarmed. Due to this, the
-          option to have the circle be hidden is also disabled.
-
     @author Ornedan
     @date   Created - 24.06.2005
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
-#include "prc_inc_teleport"
-#include "inc_utility"
+#include "spinc_telecircle"
 
-
-/**
- * @todo: Ask Primo about making this a PRGT trap. Otherwise, no disarming
- * @todo: Make the OnEnter HB not teleport the caster the first time they enter.
- */
 
 const int SPELLID_VISIBLE = 2878;
 const int SPELLID_HIDDEN  = 2879;
@@ -66,87 +54,15 @@ void main()
 {
     // Set the spell school
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    // Spellhook
+    if(!X2PreSpellCastCode()) return;
 
     object oCaster = OBJECT_SELF;
+    int nCasterLvl = PRCGetCasterLevel();
+    int bVisible   = PRCGetSpellId() == SPELLID_VISIBLE;
+    int bExtended  = CheckMetaMagic(PRCGetMetaMagicFeat(), METAMAGIC_EXTEND);
 
-    // Get whether we are executing the first or the second part of the script
-    if(!GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_FirstPartDone"))
-    {
-        // Spellhook
-        if(!X2PreSpellCastCode()) return;
-        int nCasterLvl = PRCGetCasterLevel();
-        int nSpellID   = GetSpellId();
-        int bExtended  = CheckMetaMagic(PRCGetMetaMagicFeat(), METAMAGIC_EXTEND);
-
-        // Store the caster level
-        SetLocalInt(oCaster, "PRC_Spell_TeleportCircle_CasterLvl", nCasterLvl);
-        // Store the spellID
-        SetLocalInt(oCaster, "PRC_Spell_TeleportCircle_SID", nSpellID);
-        // Store whether the spell is extended
-        SetLocalInt(oCaster, "PRC_Spell_TeleportCircle_Extended", bExtended);
-        // Mark the first part done
-        SetLocalInt(oCaster, "PRC_Spell_TeleportCircle_FirstPartDone", TRUE);
-        // Now, get the location to have the circle point at.
-        ChooseTeleportTargetLocation(oCaster, "sp_telecircle", "PRC_Spell_TeleportCircle_TargetLocation", FALSE, TRUE);
-    }
-    // We now have the location for the circle to toss people to.
-    else
-    {
-        // Retrieve the target location from the variable
-        location lCircleTarget = GetLocalLocation(oCaster, "PRC_Spell_TeleportCircle_TargetLocation");
-        location lTarget;
-        int bVisible   = TRUE;/*GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_SID") == SPELLID_VISIBLE;*/ ///FIXME
-        int nCasterLvl = GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_CasterLvl");
-        int bExtended  = GetLocalInt(oCaster, "PRC_Spell_TeleportCircle_Extended");
-        float fDuration = nCasterLvl * 10 * 60.0f * (bExtended ? 2 : 1);
-        float fFacing   = GetFacing(oCaster);
-        float fDistance = FeetToMeters(5.0f) + 0.2;
-        vector vTarget = GetPosition(oCaster);
-               vTarget.x += cos(fFacing) * fDistance;
-               vTarget.y += sin(fFacing) * fDistance;
-        lTarget = Location(GetArea(oCaster), vTarget, fFacing);
-
-        // Create the actual circle, in front of the caster
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY,
-                              EffectAreaOfEffect(AOE_PER_TELEPORTATIONCIRCLE, "prc_telecirc_oe"),
-                              lTarget,
-                              fDuration
-                              );
-        // Get an object reference to the newly created AoE
-        object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
-        while(GetIsObjectValid(oAoE))
-        {
-            // Test if we found the correct AoE
-            if(GetTag(oAoE) == Get2DACache("vfx_persistent", "LABEL", AOE_PER_TELEPORTATIONCIRCLE) &&
-               !GetLocalInt(oAoE, "PRC_TeleCircle_AoE_Inited")
-               )
-            {
-                break;
-            }
-            // Didn't find, get next
-            oAoE = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
-        }
-        if(DEBUG && !GetIsObjectValid(oAoE)) DoDebug("ERROR: Can't find area of effect for Teleportation Circle!");
-
-        // Store data on the AoE
-        SetLocalLocation(oAoE, "TargetLocation", lCircleTarget);
-        SetLocalInt(oAoE, "IsVisible", bVisible);
-
-        // Make the AoE initialise the trap trigger and possibly the VFX heartbeat
-        ExecuteScript("prc_telecirc_aux", oAoE);
-
-
-        // A VFX (momentary, circular, impressive :D ) at the circle's location.
-        // Do even if hidden circle so that the caster knows where it really ended up
-        DrawRhodonea(DURATION_TYPE_INSTANT, VFX_IMP_HEAD_MIND, lTarget, FeetToMeters(5.0f), 0.25, 0.0, 180, 12.0, 4.0, 0.0, "z");
-
-        // Cleanup
-        DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_CasterLvl");
-        DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_SID");
-        DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_Extended");
-        DeleteLocalInt(oCaster, "PRC_Spell_TeleportCircle_FirstPartDone");
-        DeleteLocalLocation(oCaster, "PRC_Spell_TeleportCircle_TargetLocation");
-    }
+    TeleportationCircle(oCaster, nCasterLvl, bVisible, bExtended);
 
     SPSetSchool();
 }

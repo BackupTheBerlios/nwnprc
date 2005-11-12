@@ -26,7 +26,7 @@ void main()
     object oTarget   = GetEnteringObject();
     location lTarget = GetLocalLocation(oAoE, "TargetLocation");
 
-    if(DEBUG) DoDebug("prc_telecirc_oe: Attempting to teleport '" + GetName(oTarget) + "' to " + LocationToString(lTarget));
+    if(DEBUG) DoDebug("prc_telecirc_oe: Attempting to teleport '" + DebugObject2Str(oTarget) + "' to " + DebugLocation2Str(lTarget));
 
     // Assign the jump if the target can be teleported
     if(GetCanTeleport(oTarget, lTarget))

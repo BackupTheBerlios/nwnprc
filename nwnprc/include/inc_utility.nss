@@ -880,13 +880,13 @@ string DebugLocation2Str(location loc)
     sX = TrimString(sX);
     if(FindSubString(sY, ".") != -1)
         sY = GetStringLeft(sY, FindSubString(sY, ".") + 4);
-    sY = TrimString(sX);
+    sY = TrimString(sY);
     if(FindSubString(sZ, ".") != -1)
         sZ = GetStringLeft(sZ, FindSubString(sZ, ".") + 4);
-    sZ = TrimString(sX);
+    sZ = TrimString(sZ);
     if(FindSubString(sF, ".") != -1)
         sF = GetStringLeft(sF, FindSubString(sF, ".") + 4);
-    sF = TrimString(sX);
+    sF = TrimString(sF);
 
     return "Area: Name = '" + GetName(oArea) + "', Tag = '" + GetTag(oArea) + "'; Position: (" + sX + ", " + sY + ", " + sZ + ",); Facing: " + sF;
 }

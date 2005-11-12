@@ -245,3 +245,5 @@ const int POWER_MICROCOSM                   = 14333;
 const int POWER_TIMELESSBODY                = 14334;
 const int POWER_GENESIS                     = 14335;
 const int POWER_PSYCHICCHIR                 = 14336;
+const int POWER_TELEPORTATIONCIRCLE_VISIBLE = 14337;
+const int POWER_TELEPORTATIONCIRCLE_HIDDEN  = 14338;

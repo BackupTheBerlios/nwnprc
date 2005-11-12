@@ -886,12 +886,14 @@ int Blightbringer(object oPC = OBJECT_SELF)
 
 int CraftingFeats(object oPC = OBJECT_SELF)
 {
-    int nCasterLvl = max(PRCGetCasterLevel(oPC), GetManifesterLevel(oPC));
+    int nCasterLvl     = PRCGetCasterLevel(oPC),
+        nManifesterLvl = GetLevelByClass(GetFirstPsionicClass(oPC), oPC) + GetPsionicPRCLevels(oPC), ///FIXME Needs a function like GetHighestManifesterLevel
+        nMax           = max(nCasterLvl, nManifesterLvl);
     int bOK = TRUE, bFirst = TRUE;
     string sError = GetStringByStrRef(16823153) + "\n"; // "You spellcaster (or manifester) level is not high enough to take the following crafting feats:"
 
     if(GetHasFeat(FEAT_SCRIBE_SCROLL, oPC) &&
-       nCasterLvl < 1
+       nMax < 1
        )
     {
         bOK = FALSE;
@@ -899,7 +901,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_SCRIBE_SCROLL)));
     }
     if(GetHasFeat(FEAT_BREW_POTION, oPC) &&
-       nCasterLvl < 3
+       nMax < 3
        )
     {
         bOK = FALSE;
@@ -907,7 +909,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_BREW_POTION)));
     }
     if(GetHasFeat(FEAT_CRAFT_WONDROUS, oPC) &&
-       nCasterLvl < 3
+       nMax < 3
        )
     {
         bOK = FALSE;
@@ -915,7 +917,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_WONDROUS)));
     }
     if(GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC) &&
-       nCasterLvl < 5
+       nMax < 5
        )
     {
         bOK = FALSE;
@@ -923,7 +925,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_ARMS_ARMOR)));
     }
     if(GetHasFeat(FEAT_CRAFT_WAND, oPC) &&
-       nCasterLvl < 5
+       nMax < 5
        )
     {
         bOK = FALSE;
@@ -931,7 +933,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_WAND)));
     }
     if(GetHasFeat(FEAT_CRAFT_ROD, oPC) &&
-       nCasterLvl < 9
+       nMax < 9
        )
     {
         bOK = FALSE;
@@ -939,7 +941,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_ROD)));
     }
     if(GetHasFeat(FEAT_CRAFT_STAFF, oPC) &&
-       nCasterLvl < 12
+       nMax < 12
        )
     {
         bOK = FALSE;
@@ -947,7 +949,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_STAFF)));
     }
     if(GetHasFeat(FEAT_FORGE_RING, oPC) &&
-       nCasterLvl < 12
+       nMax < 12
        )
     {
         bOK = FALSE;

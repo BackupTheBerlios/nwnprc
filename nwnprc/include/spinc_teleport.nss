@@ -40,8 +40,6 @@ const string TP_END_SCRIPT       = "PRC_Teleport_ScriptToCallAtEnd";
  *
  * @param oCaster        The creature using a spell / power / SLA to Teleport
  * @param nCasterLvl     The creature's caster / manifester level in regards to this use
- * @param nSpellID       The spellID currently in effect. If not specified, PRCGetSpellId()
- *                       will be used to retrieve it.
  * @param bTeleportParty Whether to teleport only the user or also faction members within
  *                       10ft of the user. If TRUE, teleports party in addition to the user,
  *                       otherwise just the user.
@@ -70,7 +68,7 @@ void TeleportAux(object oCaster);
 /**
  * A visual effects heartbeat that runs when using party teleport while
  * waiting for the caster to decide the target location.
-* Outlines the 10ft radius. The HB will cease when the caster
+ * Outlines the 10ft radius. The HB will cease when the caster
  * makes the decision or moves from the location they were at at the
  * beginning of the HB.
  *

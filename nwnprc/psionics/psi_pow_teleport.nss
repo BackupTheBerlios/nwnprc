@@ -74,7 +74,7 @@ void main()
 
     /* Main script */
     object oManifester = OBJECT_SELF;
-    int nManifesterLvl = GetManifesterLevel();
+    int nManifesterLvl = GetManifesterLevel(oManifester);
     int nSpellID       = PRCGetSpellId();
 
     // Check if can manifest

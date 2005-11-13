@@ -44,7 +44,7 @@ void main()
     object oManifester = OBJECT_SELF;
     int nAugCost       = 0;
     int nMetaPsi       = GetCanManifest(oManifester, nAugCost, OBJECT_INVALID, 0, 0, 0, 0, 0, 0, 0);
-    int nManifesterLvl = GetManifesterLevel();
+    int nManifesterLvl = GetManifesterLevel(oManifester);
     int nSpellID       = PRCGetSpellId();
     int bSelfOrParty   = ((nSpellID == POWER_DIMENSIONDOOR_PARTY) || (nSpellID == POWER_DIMENSIONDOOR_PARTY_DIRDIST)) ?
                           DIMENSIONDOOR_PARTY :

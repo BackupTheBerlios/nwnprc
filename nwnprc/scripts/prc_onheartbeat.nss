@@ -141,7 +141,8 @@ void main()
             {
                 object oTest = GetFirstItemInInventory(oPC);
                 while(GetIsObjectValid(oTest)
-                    && (!bHasPotion || !bHasScroll || !bHasWand))
+                    //&& (!bHasPotion || !bHasScroll || !bHasWand)
+                    )
                 {
                     string sResRef = GetResRef(oTest);
                     if(sResRef == "x2_it_cfm_pbottl")
@@ -162,7 +163,7 @@ void main()
                 }   
                 if(bHasScrollFeat && !bHasScroll)
                 {
-                    oTest = CreateItemOnObject("x2_it_cfm_pbottl", oPC);
+                    oTest = CreateItemOnObject("x2_it_cfm_bscrl", oPC);
                     if(GetItemPossessor(oTest) != oPC)
                         DestroyObject(oTest); //not enough room in inventory
                     else
@@ -170,7 +171,7 @@ void main()
                 }  
                 if(bHasWandFeat && !bHasWand)
                 {
-                    oTest = CreateItemOnObject("x2_it_cfm_pbottl", oPC);
+                    oTest = CreateItemOnObject("x2_it_cfm_wand", oPC);
                     if(GetItemPossessor(oTest) != oPC)
                         DestroyObject(oTest); //not enough room in inventory
                     else

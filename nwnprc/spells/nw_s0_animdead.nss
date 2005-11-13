@@ -87,11 +87,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         object oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
         while(GetIsObjectValid(oSummonTest))
         {
-            i++;
-            if(GetResRef(oSummonTest)=="NW_S_ZOMBTYRANT"
-                || GetResRef(oSummonTest)=="NW_S_SKELWARR"
-                || GetResRef(oSummonTest)=="NW_S_SKELCHIEF")
+            if(GetResRef(oSummonTest)=="nw_s_zombtyrant"//"NW_S_ZOMBTYRANT"
+                || GetResRef(oSummonTest)=="nw_s_skelwarr"//"NW_S_SKELWARR"
+                || GetResRef(oSummonTest)=="nw_s_skelchief"//"NW_S_SKELCHIEF"
+                || GetHasSpellEffect(SPELL_ANIMATE_DEAD, oSummonTest))
                 nTotalHD += GetHitDice(oSummonTest);
+            FloatingTextStringOnCreature(GetName(oSummonTest)+" is summon number "+IntToString(i), OBJECT_SELF);
+            i++;
             oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
         }
         if((nTotalHD+nHD)<=nMaxHD)

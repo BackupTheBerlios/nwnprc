@@ -1,7 +1,7 @@
 /*
    ----------------
    Bestow Power
-   
+
    prc_all_bstpwr
    ----------------
 
@@ -15,10 +15,10 @@
    Saving Throw: None
    Power Resistance: No
    Power Point Cost: 3
-   
+
    When you manifest this power, the subject gains up to 2 power points. You can transfer only
    as many power points to a subject as it has manifester levels.
-   
+
    Augment: For every 3 additional power points spent, subject gains 2 additional power points.
 */
 
@@ -54,37 +54,33 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
     object oTarget = PRCGetSpellTargetObject();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
-    
+
     if (nSurge > 0)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
+
+        PsychicEnervation(oCaster, nSurge);
     }
-    
-    if (nMetaPsi > 0) 
+
+    if (nMetaPsi > 0)
     {
-	int nTargetSurge = GetLocalInt(oTarget, "WildSurge");
-	int nTargetPP = GetLocalInt(oTarget, "PowerPoints");
-	int nTarget = GetManifesterLevel(oTarget);
-	int nPPGiven = 2;
-	int nTotalPP;
-	effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
-	
-	if (nSurge > 0) nAugment += nSurge;
-	
-	// Augmentation effects to point transfer
-	if (nAugment > 0)	nPPGiven = nPPGiven + (2 * nAugment);
-	
-	// Make sure the target does not have a boosted caster level from Wild Surge
-	if (nTargetSurge > 0)	nTarget = nTarget - nTargetSurge;
-	
-	// Can't give more power points than the target has manifester levels
-	if (nPPGiven > nTarget) nPPGiven = nTarget;
-	
-	// Apply the PP Boost to target.
-	nTotalPP = nPPGiven + nTargetPP;
-	SetLocalInt(oTarget, "PowerPoints", nTotalPP);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nTotalPP), oTarget, FALSE);
+        int nTargetSurge = GetLocalInt(oTarget, "WildSurge");
+        int nTarget = GetManifesterLevel(oTarget);
+        int nPPGiven = 2;
+        effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
+
+        if (nSurge > 0) nAugment += nSurge;
+
+        // Augmentation effects to point transfer
+        if (nAugment > 0) nPPGiven = nPPGiven + (2 * nAugment);
+
+        // Make sure the target does not have a boosted caster level from Wild Surge
+        if (nTargetSurge > 0) nTarget = nTarget - nTargetSurge;
+
+        // Can't give more power points than the target has manifester levels
+        if (nPPGiven > nTarget) nPPGiven = nTarget;
+
+        // Apply the PP Boost to target.
+        GainPowerPoints(oTarget, nPPGiven, TRUE, TRUE);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

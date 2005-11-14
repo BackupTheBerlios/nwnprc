@@ -33,118 +33,117 @@ int PsiPrePowerCastCode();
 //------------------------------------------------------------------------------
 int PsiPrePowerCastCode()
 {
-   object oTarget = GetSpellTargetObject();
-   int nContinue;
-   
-   DeleteLocalInt(OBJECT_SELF, "SpellConc");
-    nContinue = !ExecuteScriptAndReturnInt("prespellcode",OBJECT_SELF);
+    object oManifester = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nContinue;
 
-   //---------------------------------------------------------------------------
-   // This stuff is only interesting for player characters we assume that use
-   // magic device always works and NPCs don't use the crafting feats or
-   // sequencers anyway. Thus, any NON PC spellcaster always exits this script
-   // with TRUE (unless they are DM possessed or in the Wild Magic Area in
-   // Chapter 2 of Hordes of the Underdark.
-   //---------------------------------------------------------------------------
-   if (!GetIsPC(OBJECT_SELF)
-       && !GetPRCSwitch(PRC_NPC_HAS_PC_SPELLCASTING))
-   {
-       if( !GetIsDMPossessed(OBJECT_SELF) && !GetLocalInt(GetArea(OBJECT_SELF), "X2_L_WILD_MAGIC"))
-       {
+    DeleteLocalInt(oManifester, "SpellConc");
+    nContinue = !ExecuteScriptAndReturnInt("prespellcode",oManifester);
+
+    //---------------------------------------------------------------------------
+    // This stuff is only interesting for player characters we assume that use
+    // magic device always works and NPCs don't use the crafting feats or
+    // sequencers anyway. Thus, any NON PC spellcaster always exits this script
+    // with TRUE (unless they are DM possessed or in the Wild Magic Area in
+    // Chapter 2 of Hordes of the Underdark.
+    //---------------------------------------------------------------------------
+    if(!GetIsPC(oManifester)
+    && !GetPRCSwitch(PRC_NPC_HAS_PC_SPELLCASTING))
+    {
+        if(!GetIsDMPossessed(oManifester) && !GetLocalInt(GetArea(oManifester), "X2_L_WILD_MAGIC"))
+        {
             return TRUE;
-       }
-   }
-   
-   // Mind Trap power
-   if (GetLocalInt(oTarget, "MindTrap") == TRUE && GetIsTelepathyPower())
-   {
-   	int nPP = GetLocalInt(OBJECT_SELF, "PowerPoints");
-   	nPP -= d6();
-   	if (nPP < 0)	nPP = 0;
-   	DelayCommand(1.0, SetLocalInt(OBJECT_SELF, "PowerPoints", nPP));
-   }   
-   // Ectoplasmic Form conc check
-   if (GetLocalInt(oTarget, "EctoForm"))
-   {
-   	int nPower = GetPowerLevel(OBJECT_SELF);
-   	nContinue = GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, (20 + nPower));
-   } 
-   
+        }
+    }
+
+    // Mind Trap power
+    if(GetLocalInt(oTarget, "MindTrap") == TRUE && GetIsTelepathyPower())
+    {
+        int nPPLoss = d6();
+        DelayCommand(1.0, LosePowerPoints(oManifester, nPPLoss));
+    }
+    // Ectoplasmic Form conc check
+    if (GetLocalInt(oTarget, "EctoForm"))
+    {
+        int nPower = GetPowerLevel(oManifester);
+        nContinue = GetIsSkillSuccessful(oManifester, SKILL_CONCENTRATION, (20 + nPower));
+    }
+
     //---------------------------------------------------------------------------
     // Run Ectoplasmic Shambler Concentration Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = EShamConc();  
+        nContinue = EShamConc();
 
     //---------------------------------------------------------------------------
     // Run NullPsionicsField Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = NullPsionicsField();        
-        
-   if (nContinue)
-   {
-	//---------------------------------------------------------------------------
-	// Run use magic device skill check
-	//---------------------------------------------------------------------------
-	nContinue = X2UseMagicDeviceCheck();
-   }
+        nContinue = NullPsionicsField();
 
-   if (nContinue)
-   {
-       //-----------------------------------------------------------------------
-       // run any user defined spellscript here
-       //-----------------------------------------------------------------------
-       nContinue = X2RunUserDefinedSpellScript();
-   }
+    if (nContinue)
+    {
+        //---------------------------------------------------------------------------
+        // Run use magic device skill check
+        //---------------------------------------------------------------------------
+        nContinue = X2UseMagicDeviceCheck();
+    }
 
-   //---------------------------------------------------------------------------
-   // Check for the new restricted itemproperties
-   //---------------------------------------------------------------------------
-   if(nContinue 
-       && GetIsObjectValid(GetSpellCastItem()) 
-       && !CheckPRCLimitations(GetSpellCastItem(), OBJECT_SELF))
-   {
-       SendMessageToPC(OBJECT_SELF, "You cannot use "+GetName(GetSpellCastItem()));
-       nContinue = FALSE;
-   }
+    if (nContinue)
+    {
+        //-----------------------------------------------------------------------
+        // run any user defined spellscript here
+        //-----------------------------------------------------------------------
+        nContinue = X2RunUserDefinedSpellScript();
+    }
 
-   //---------------------------------------------------------------------------
-   // The following code is only of interest if an item was targeted
-   //---------------------------------------------------------------------------
-   if (GetIsObjectValid(oTarget) && GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
-   {
+    //---------------------------------------------------------------------------
+    // Check for the new restricted itemproperties
+    //---------------------------------------------------------------------------
+    if(nContinue
+    && GetIsObjectValid(GetSpellCastItem())
+    && !CheckPRCLimitations(GetSpellCastItem(), oManifester))
+    {
+        SendMessageToPC(oManifester, "You cannot use "+GetName(GetSpellCastItem()));
+        nContinue = FALSE;
+    }
 
-       //-----------------------------------------------------------------------
-       // Check if spell was used to trigger item creation feat
-       //-----------------------------------------------------------------------
-       if (nContinue) {
-           nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft",OBJECT_SELF);
-       }
+    //---------------------------------------------------------------------------
+    // The following code is only of interest if an item was targeted
+    //---------------------------------------------------------------------------
+    if (GetIsObjectValid(oTarget) && GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
+    {
 
-       //-----------------------------------------------------------------------
-       // * Execute item OnSpellCast At routing script if activated
-       //-----------------------------------------------------------------------
-       if (GetModuleSwitchValue(MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS) == TRUE)
-       {
-             SetUserDefinedItemEventNumber(X2_ITEM_EVENT_SPELLCAST_AT);
-             int nRet =   ExecuteScriptAndReturnInt(GetUserDefinedItemEventScriptName(oTarget),OBJECT_SELF);
-             if (nRet == X2_EXECUTE_SCRIPT_END)
-             {
+        //-----------------------------------------------------------------------
+        // Check if spell was used to trigger item creation feat
+        //-----------------------------------------------------------------------
+        if (nContinue) {
+            nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft", oManifester);
+        }
+
+        //-----------------------------------------------------------------------
+        // * Execute item OnSpellCast At routing script if activated
+        //-----------------------------------------------------------------------
+        if (GetModuleSwitchValue(MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS) == TRUE)
+        {
+            SetUserDefinedItemEventNumber(X2_ITEM_EVENT_SPELLCAST_AT);
+            int nRet = ExecuteScriptAndReturnInt(GetUserDefinedItemEventScriptName(oTarget), oManifester);
+            if (nRet == X2_EXECUTE_SCRIPT_END)
+            {
                 return FALSE;
-             }
-       }
+            }
+        }
 
-       //-----------------------------------------------------------------------
-       // Prevent any spell that has no special coding to handle targetting of items
-       // from being cast on items. We do this because we can not predict how
-       // all the hundreds spells in NWN will react when cast on items
-       //-----------------------------------------------------------------------
-       if (nContinue) {
-           nContinue = X2CastOnItemWasAllowed(oTarget);
-       }
-   }
+        //-----------------------------------------------------------------------
+        // Prevent any spell that has no special coding to handle targetting of items
+        // from being cast on items. We do this because we can not predict how
+        // all the hundreds spells in NWN will react when cast on items
+        //-----------------------------------------------------------------------
+        if (nContinue) {
+            nContinue = X2CastOnItemWasAllowed(oTarget);
+        }
+    }
 
-   return nContinue;
+    return nContinue;
 }
 

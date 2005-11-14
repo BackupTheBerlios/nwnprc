@@ -2,7 +2,7 @@
    ----------------
    Psychic Vampire
 
-   prc_pow_psyvamp
+   psi_pow_psyvamp
    ----------------
 
    17/5/05 by Stratovarius
@@ -28,9 +28,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -54,31 +51,29 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
 
 
-    if (nMetaPsi > 0)
+    if(nMetaPsi > 0)
     {
-        int nDC = GetManifesterDC(oCaster);
-       int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
+        int nDC            = GetManifesterDC(oCaster);
+        int nManifesterLvl = GetManifesterLevel(oCaster);
+        int nPen           = GetPsiPenetration(oCaster);
 
-        effect eVis = EffectVisualEffect(246);
-        int nTargetPP = GetLocalInt(oTarget, "PowerPoints");
+        effect eVis = EffectVisualEffect(VFX_IMP_HARM);
+        int nTargetPP = GetCurrentPowerPoints(oTarget);
 
         // Perform the Touch Attach
-        int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);;
-        if (nTouchAttack > 0)
+        int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);
+        if(nTouchAttack > 0)
         {
             //Check for Power Resistance
-            if (PRCMyResistPower(oCaster, oTarget, nPen))
+            if(PRCMyResistPower(oCaster, oTarget, nPen))
             {
                 //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-                if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                SignalEvent(oTarget, EventSpellCastAt(oCaster, PRCGetSpellId()));
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
                 {
-                    if (nTargetPP != 0)
+                    if(nTargetPP != 0)
                     {
-                        nTargetPP -= (2 * nCaster);
-                        if (nTargetPP < 0) nTargetPP = 0;
-                        SetLocalInt(oTarget, "PowerPoints", nTargetPP);
+                        LosePowerPoints(oTarget, 2 * nManifesterLvl, TRUE);
                     }
                     else
                     {
@@ -86,7 +81,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
                         ApplyAbilityDamage(oTarget, ABILITY_WISDOM,       2, DURATION_TYPE_PERMANENT);
                         ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, 2, DURATION_TYPE_PERMANENT);
                     }
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 }
             }
         }

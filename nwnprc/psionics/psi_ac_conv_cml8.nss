@@ -8,10 +8,7 @@ const int nCost = 15;
 
 int StartingConditional()
 {
-	object oPC = GetPCSpeaker();
-	
-	// Set the manifester class to be psion for the check
-	SetLocalInt(oPC, "ManifestingClass", CLASS_TYPE_PSION);
-	
-	return GetManifesterLevel(oPC) >= nCost;
+    object oPC = GetPCSpeaker();
+
+    return GetManifesterLevel(oPC, CLASS_TYPE_PSION) >= nCost;
 }

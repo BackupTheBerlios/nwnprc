@@ -146,12 +146,9 @@ void main()
                     return;
             }
 
-            int nPP = GetLocalInt(oTarget, "PowerPoints");
+            int nPP = GetCurrentPowerPoints(oTarget);
             if(nPP > 0)
-            {
-                nPP -= nPPLoss <= nPP ? nPPLoss : nPP;
-                SetLocalInt(oTarget, "PowerPoints", nPP);
-            }
+                LosePowerPoints(oTarget, nPPLoss);
             else
             {
                 // Make a DC 17 will save

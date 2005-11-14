@@ -14,7 +14,7 @@
 int GetManifestingClass(object oCaster = OBJECT_SELF);
 
 // Returns Manifester Level
-int GetManifesterLevel(object oCaster = OBJECT_SELF);
+int GetManifesterLevel(object oCaster, int nSpecificClass = CLASS_TYPE_INVALID);
 
 // Returns the level of a Power
 // ==========================
@@ -153,8 +153,9 @@ void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration);
 #include "prc_inc_clsfunc"
 #include "inc_utility"
 #include "nw_i0_spells"
-#include "psi_inc_focus"
-//#include "prc_inc_unarmed"
+#include "psi_inc_ppoints"
+//#include "psi_inc_focus" Provided by psi_inc_ppoints
+
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -179,22 +180,34 @@ int GetManifestingClass(object oCaster)
     return GetLocalInt(oCaster, "ManifestingClass");
 }
 
-int GetManifesterLevel(object oCaster)
+int GetManifesterLevel(object oCaster, int nSpecificClass = CLASS_TYPE_INVALID)
 {
     int nLevel;
     int nAdjust = GetLocalInt(oCaster, PRC_CASTERLEVEL_ADJUSTMENT);
+
+    // The function user needs to know the character's manifester level in a specific class
+    // instead of whatever the character last manifested a power as
+    if(nSpecificClass != CLASS_TYPE_INVALID)
+    {
+        nLevel = GetLevelByClass(nSpecificClass, oCaster);
+        // Add levels from +ML PrCs only for the first manifesting class
+        nLevel += nSpecificClass == GetFirstPsionicClass(oCaster) ? GetPsionicPRCLevels(oCaster) : 0;
+
+        return nLevel + nAdjust;
+    }
+
     // Item Spells
     if (GetItemPossessor(GetSpellCastItem()) == oCaster)
     {
-        SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
+        if(DEBUG) SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
 
-        return GetCasterLevel(oCaster)+nAdjust;
+        return GetCasterLevel(oCaster) + nAdjust;
     }
 
     // For when you want to assign the caster level.
     else if (GetLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE) != 0)
     {
-        SendMessageToPC(oCaster, "Forced-level manifesting at level " + IntToString(GetCasterLevel(oCaster)));
+        if(DEBUG) SendMessageToPC(oCaster, "Forced-level manifesting at level " + IntToString(GetCasterLevel(oCaster)));
 
         DelayCommand(1.0, DeleteLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE));
         nLevel = GetLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE);
@@ -202,16 +215,18 @@ int GetManifesterLevel(object oCaster)
     else
     {
         //Gets the level of the manifesting class
-        SendMessageToPC(oCaster, "Manifesting class: " + IntToString(GetManifestingClass(oCaster)));
+        if(DEBUG) SendMessageToPC(oCaster, "Manifesting class: " + IntToString(GetManifestingClass(oCaster)));
         int nManifestingClass = GetManifestingClass(oCaster);
         nLevel = GetLevelByClass(nManifestingClass, oCaster);
-        // Add levels from +mfl PrCs only for the first manifesting class
+        // Add levels from +ML PrCs only for the first manifesting class
         nLevel += nManifestingClass == GetFirstPsionicClass(oCaster) ? GetPsionicPRCLevels(oCaster) : 0;
-        SendMessageToPC(oCaster, "Level gotten via GetLevelByClass: " + IntToString(nLevel));
+        if(DEBUG) SendMessageToPC(oCaster, "Level gotten via GetLevelByClass: " + IntToString(nLevel));
     }
 
-    if (nLevel == 0){
-        SendMessageToPC(oCaster, "Failed to get manifester level, using first class slot");
+    //
+
+    if(nLevel == 0){
+        if(DEBUG) DoDebug("Failed to get manifester level for creature " + DebugObject2Str(oCaster) + ", using first class slot");
         nLevel = GetLevelByPosition(1, oCaster);
     }
 
@@ -293,7 +308,7 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
     // Build the main variables
     int nLevel = GetPowerLevel(oCaster);
     int nAugment = GetAugmentLevel(oCaster);
-    int nPP = GetLocalInt(oCaster, "PowerPoints");
+    int nPP = GetCurrentPowerPoints(oCaster);
     int nPPCost;
     int nMetaPsi, nMetaPsiUses;
     int nCanManifest = TRUE;
@@ -411,21 +426,16 @@ int GetCanManifest(object oCaster, int nAugCost, object oTarget, int nChain, int
         // Check if the power would fail after Volatile Mind and Psionic Hole are applied
         else
         {
-            /// THIS CHECK SHOULD CONTAIN ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE POWER FAIL ///
-            if((nPPCost + nVolatile + nPsiHole) > nPP)
+            /// ADD ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE POWER FAIL HERE ///
+            nPPCost += nVolatile + nPsiHole;
+            if((nPPCost) > nPP)
             {
                 FloatingTextStringOnCreature("Your target's abilities cause you to use more Power Points than you have. The power fails", oCaster, FALSE);
                 nCanManifest = FALSE;
-                SetLocalInt(oCaster, "PowerPoints", 0);
             }
-            else //Manifester has enough points, so subtract cost and manifest power
-            {
-                //Adds in the cost for volatile mind and psionic hole
-                nPPCost += nVolatile + nPsiHole;
-                nPP = nPP - nPPCost;
-                FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
-                SetLocalInt(oCaster, "PowerPoints", nPP);
-            }
+
+            // Set the power points to their new value and inform the manifester
+            LosePowerPoints(oCaster, nPPCost, TRUE);
 
             // Psionic focus loss from using metapsionics
             int i = 0;
@@ -462,7 +472,6 @@ void PsychicEnervation(object oCaster, int nWildSurge)
     if (nWildSurge >= nDice)
     {
         int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oCaster);
-        int nPP = GetLocalInt(oCaster, "PowerPoints");
 
         effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
         effect eDaze = EffectDazed();
@@ -472,10 +481,8 @@ void PsychicEnervation(object oCaster, int nWildSurge)
         FloatingTextStringOnCreature("You have become psychically enervated and lost power points", oCaster, FALSE);
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oCaster, RoundsToSeconds(1));
 
-        nPP = nPP - nWilder;
-        FloatingTextStringOnCreature("Power Points Remaining: " + IntToString(nPP), oCaster, FALSE);
         //if(GetLocalInt(OBJECT_SELF, "IgnorePowerPoints") != TRUE) - Already checked at the start of function -Ornedan
-        SetLocalInt(oCaster, "PowerPoints", nPP);
+        LosePowerPoints(oCaster, nWilder);
     }
     else if (GetLevelByClass(CLASS_TYPE_WILDER, oCaster) >= 4)
     {

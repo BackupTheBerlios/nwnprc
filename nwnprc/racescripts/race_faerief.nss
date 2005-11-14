@@ -99,7 +99,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         SignalEvent(oTarget, EventSpellCastAt(oCaster, SPELL_FAERIE_FIRE));
         if (!MyPRCResistSpell(oCaster, oTarget,CasterLvl))
         {
-            PRCSPApplyEffectToObject(SPELL_FAERIE_FIRE, CasterLvl, oCaster, DURATION_TYPE_TEMPORARY, eVis, oTarget, fDuration);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDuration);
             RemoveSpecificEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oTarget);
             RemoveSpecificEffect(EFFECT_TYPE_INVISIBILITY, oTarget);
             RemoveSpecificEffect(EFFECT_TYPE_DARKNESS, oTarget);

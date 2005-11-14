@@ -23,8 +23,7 @@ int MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float 
 //  This function is a wrapper should someone wish to rewrite the Bioware
 //  version. This is where it should be done.
 //
-int
-PRCResistSpell(object oCaster, object oTarget)
+int PRCResistSpell(object oCaster, object oTarget)
 {
     return ResistSpell(oCaster, oTarget);
 }
@@ -33,8 +32,7 @@ PRCResistSpell(object oCaster, object oTarget)
 //  This function is a wrapper should someone wish to rewrite the Bioware
 //  version. This is where it should be done.
 //
-int 
-PRCGetSpellResistance(object oTarget, object oCaster)
+int PRCGetSpellResistance(object oTarget, object oCaster)
 {
         int iSpellRes = GetSpellResistance(oTarget);
 
@@ -83,8 +81,7 @@ PRCGetSpellResistance(object oTarget, object oCaster)
 //
 //  If a spell is resisted, display the effect
 //
-void
-PRCShowSpellResist(object oCaster, object oTarget, int nResist, float fDelay = 0.0)
+void PRCShowSpellResist(object oCaster, object oTarget, int nResist, float fDelay = 0.0)
 {
     // If either caster/target is a PC send them a message
     if (GetIsPC(oCaster))
@@ -147,18 +144,18 @@ int MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float 
             }
             
             // Pernicious Magic
-                        // +4 caster level vs SR Weave user (not Evoc & Trans spells)
-                        int iWeav;
-                        if (GetHasFeat(FEAT_PERNICIOUSMAGIC,oCaster))
-                        {
-                                if (!GetHasFeat(FEAT_SHADOWWEAVE,oTarget))
-                                {
-                                        int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
-                                        if ( nSchool != SPELL_SCHOOL_EVOCATION && nSchool != SPELL_SCHOOL_TRANSMUTATION )
-                                        iWeav=4;
-                                }
+            // +4 caster level vs SR Weave user (not Evoc & Trans spells)
+            int iWeav;
+            if (GetHasFeat(FEAT_PERNICIOUSMAGIC,oCaster))
+            {
+                    if (!GetHasFeat(FEAT_SHADOWWEAVE,oTarget))
+                    {
+                            int nSchool = GetLocalInt(oCaster, "X2_L_LAST_SPELLSCHOOL_VAR");
+                            if ( nSchool != SPELL_SCHOOL_EVOCATION && nSchool != SPELL_SCHOOL_TRANSMUTATION )
+                            iWeav=4;
+                    }
 
-                        }
+            }
 
 
             // A tie favors the caster.

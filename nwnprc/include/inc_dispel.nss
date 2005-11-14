@@ -1,20 +1,8 @@
-#include "NW_I0_GENERIC"
-#include "prc_feat_const"
-#include "lookup_2da_spell"
-#include "prcsp_spell_adjs"
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //:: This is the prc_dispel_magic functions declarations.   The functions themselves are at the bottom
 //:: of the file.       I got tired of circular include statement errors and just decided to make
 //:: these both be just one file by adding my text to theirs.
 ///////////////////////////////////////////////////////////////////////////////////////////////
-
-//:: Will replace the normal call to SPApplyEffectToObject() in all spell scripts
-//:: This way as well as applying the effect, a reference is set up to it in the form
-//:: of entries in 3 very similar arrays.
-//:: The arrays are cleaned up every time the function is called to clear out old references
-//:: from spell effects that have either been removed, or run out their durations.
-void PRCSPApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f);
 
 //:: This function is called from withing PRCApplyEffectToObject().  It's purpose is to
 //:: clean up the three arrays that hold the caster level and references to all
@@ -77,11 +65,15 @@ int AoECasterLevel(object oAoE = OBJECT_SELF);
 
 float GetRandomDelay(float fMinimumTime = 0.4, float MaximumTime = 1.1);
 
-void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1);
-
 void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
     int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
 
+
+#include "NW_I0_GENERIC"
+#include "prc_feat_const"
+#include "lookup_2da_spell"
+#include "prcsp_spell_adjs"
+#include "nw_i0_spells"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -633,46 +625,19 @@ void HandleInfestationOfMaggots(object oTarget)
 //:: End of section to trap infestation of maggots.
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-void PRCSPApplyEffectToObject(int nSpellID, int nCasterLevel, object oCaster, int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f)
-{
-   int nIndex = ReorderEffects(nCasterLevel, nSpellID, oTarget, oCaster);
-   // Add this new effect to the slot after the last effect already on the character.
-
-
-   ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-   // may have code travers the lists right here and not add the new effect
-   // if an identical one already appears in the list somewhere
-
-   SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex), nSpellID);
-   SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex), nCasterLevel);
-   SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex), oCaster );
-   if (GetHasFeat(FEAT_SHADOWWEAVE, oCaster)) 
-     SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), GetHasFeat(FEAT_TENACIOUSMAGIC,oCaster));
-   else
-     SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), 0);
-
-   //nIndex++;
-   /// Set new index number to the character.
-   DeleteLocalInt(oTarget, "X2_Effects_Index_Number");
-   SetLocalInt(oTarget, "X2_Effects_Index_Number", nIndex);
-}
-
 void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
     int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
 {
-    // PRC pack does not use version 2.0 of Bumpkin's PRC script package, so there is no
-    // PRCSPApplyEffectToObject() method.  So just call the bioware default.
-//  SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
 
-        // Extraordinary/Supernatural effects are not supposed to be dispellable.
-        if (GetEffectSubType(eEffect) == SUBTYPE_EXTRAORDINARY || GetEffectSubType(eEffect) == SUBTYPE_SUPERNATURAL)
-        {
-            bDispellable = FALSE;
-        }
+    // Extraordinary/Supernatural effects are not supposed to be dispellable.
+    if (GetEffectSubType(eEffect) == SUBTYPE_EXTRAORDINARY 
+        || GetEffectSubType(eEffect) == SUBTYPE_SUPERNATURAL)
+    {
+        bDispellable = FALSE;
+    }
 
-    // Instant duration effects can use BioWare code, the PRC code doesn't care about those, as
-    // well as any non-dispellable effect.
-    if (DURATION_TYPE_INSTANT == nDurationType || !bDispellable || GetLocalInt(GetModule(),"BIODispel"))
+    // Instant duration effects can use BioWare code, the PRC code doesn't care about those
+    if (DURATION_TYPE_INSTANT == nDurationType)
     {
         ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
     }
@@ -684,7 +649,26 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
         if (-1 == nCasterLevel) nCasterLevel = PRCGetCasterLevel(oCaster);
 
         // Invoke the PRC apply function passing the extra data.
-        PRCSPApplyEffectToObject(nSpellID, nCasterLevel, oCaster, nDurationType, eEffect, oTarget, fDuration);
+       int nIndex = ReorderEffects(nCasterLevel, nSpellID, oTarget, oCaster);
+       // Add this new effect to the slot after the last effect already on the character.
+
+
+       ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
+       // may have code travers the lists right here and not add the new effect
+       // if an identical one already appears in the list somewhere
+
+       SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex), nSpellID);
+       SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex), nCasterLevel);
+       SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex), oCaster );
+       if (GetHasFeat(FEAT_SHADOWWEAVE, oCaster)) 
+         SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), GetHasFeat(FEAT_TENACIOUSMAGIC,oCaster));
+       else
+         SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), 0);
+
+       //nIndex++;
+       /// Set new index number to the character.
+       DeleteLocalInt(oTarget, "X2_Effects_Index_Number");
+       SetLocalInt(oTarget, "X2_Effects_Index_Number", nIndex);
     }
 }
 

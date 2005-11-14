@@ -16,8 +16,6 @@
 //
 //  int SPResistSpell(object oCaster, object oTarget, float fDelay = 0.0)
 //  int SPGetSpellSaveDC(object oCaster = OBJECT_SELF)
-//  void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
-//      int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
 //  void SPRaiseSpellCastAt(object oTarget, int bHostile = TRUE, int nSpellID = -1, object oCaster = OBJECT_SELF)
 //
 // Functions that have no direct bioware equivalent, but allow for hooks into the spell code.
@@ -52,9 +50,6 @@
 //      nSpellID - ID of spell being cast, if -1 PRCGetSpellId() is used.
 //      nCasterLevel - effective caster level, if -1 GetCasterLevel() is used.
 //      oCaster - caster object.
-
-void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
-    int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
 
 ///////////////////////////////////////////////////////////////////////////
 #include "prc_inc_function"
@@ -164,44 +159,6 @@ int SPGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF)
     return nDamageType;
 }
 
-// Must be called for all spell effects.  Takes into account passing the extra spell information
-// required by the PRC apply effect function, trying to keep this as transparent as possible to
-// the spell scripts.
-//      nDurationType - DURATION_TYPE_xxx constant for the duration type.
-//      eEffect - effect to apply
-//      oTarget - object to apply the effect on.
-//      fDuration - duration of the effect, only used for some duration types.
-//      bDispellable - flag to indicate whether spell is dispellable or not, default TRUE.
-//      nSpellID - ID of spell being cast, if -1 PRCGetSpellId() is used.
-//      nCasterLevel - effective caster level, if -1 GetCasterLevel() is used.
-//      oCaster - caster object.
-/*
-void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
-    int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
-{
-    // PRC pack does not use version 2.0 of Bumpkin's PRC script package, so there is no
-    // PRCApplyEffectToObject() method.  So just call the bioware default.
-    ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-/*
-    // Instant duration effects can use BioWare code, the PRC code doesn't care about those, as
-    // well as any non-dispellable effect.
-    if (DURATION_TYPE_INSTANT == nDurationType || !bDispellable)
-    {
-        ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-    }
-    else
-    {
-//      ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-        // We need the extra arguments for the PRC code, get them if defaults were passed in.
-        if (-1 == nSpellID) nSpellID = PRCGetSpellId();
-        if (-1 == nCasterLevel) nCasterLevel = PRCGetCasterLevel(oCaster);
-
-        // Invoke the PRC apply function passing the extra data.
-        PRCApplyEffectToObject(nSpellID, nCasterLevel, oCaster, nDurationType, eEffect, oTarget, fDuration);
-    }
-
-}
-*/
 
 // This function gets the meta magic int value
 int SPGetMetaMagic()

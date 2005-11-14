@@ -9,7 +9,7 @@
 */
 
 /*
-	Commented out Sections: GetCanTeleport in Transpose
+    Commented out Sections: GetCanTeleport in Transpose
 */
 
 ///////////////////////////////////////////////////////////////////////////
@@ -30,8 +30,6 @@
 //
 //  int SPResistSpell(object oCaster, object oTarget, float fDelay = 0.0)
 //  int SPGetSpellSaveDC(object oCaster = OBJECT_SELF)
-//  void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
-//      int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
 //  void SPRaiseSpellCastAt(object oTarget, int bHostile = TRUE, int nSpellID = -1, object oCaster = OBJECT_SELF)
 //
 // Functions that have no direct bioware equivalent, but allow for hooks into the spell code.
@@ -66,9 +64,6 @@
 //      nSpellID - ID of spell being cast, if -1 PRCGetSpellId() is used.
 //      nCasterLevel - effective caster level, if -1 GetCasterLevel() is used.
 //      oCaster - caster object.
-
-void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
-    int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -174,45 +169,6 @@ int SPGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF)
     
     return nDamageType;
 }
-
-// Must be called for all spell effects.  Takes into account passing the extra spell information
-// required by the PRC apply effect function, trying to keep this as transparent as possible to
-// the spell scripts.
-//      nDurationType - DURATION_TYPE_xxx constant for the duration type.
-//      eEffect - effect to apply
-//      oTarget - object to apply the effect on.
-//      fDuration - duration of the effect, only used for some duration types.
-//      bDispellable - flag to indicate whether spell is dispellable or not, default TRUE.
-//      nSpellID - ID of spell being cast, if -1 PRCGetSpellId() is used.
-//      nCasterLevel - effective caster level, if -1 GetCasterLevel() is used.
-//      oCaster - caster object.
-/*
-void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
-    int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
-{
-    // PRC pack does not use version 2.0 of Bumpkin's PRC script package, so there is no
-    // PRCApplyEffectToObject() method.  So just call the bioware default.
-    ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-/*
-    // Instant duration effects can use BioWare code, the PRC code doesn't care about those, as
-    // well as any non-dispellable effect.
-    if (DURATION_TYPE_INSTANT == nDurationType || !bDispellable)
-    {
-        ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-    }
-    else
-    {
-//      ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-        // We need the extra arguments for the PRC code, get them if defaults were passed in.
-        if (-1 == nSpellID) nSpellID = PRCGetSpellId();
-        if (-1 == nCasterLevel) nCasterLevel = PRCGetCasterLevel(oCaster);
-
-        // Invoke the PRC apply function passing the extra data.
-        PRCApplyEffectToObject(nSpellID, nCasterLevel, oCaster, nDurationType, eEffect, oTarget, fDuration);
-    }
-
-}
-*/
 
 // This function gets the meta magic int value
 int SPGetMetaMagic()
@@ -832,109 +788,109 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
 //
 // DoMassBuff - Casts a mass buff spell on the specified target location, buffing
 // all friendly creatures within a huge radius.
-//		nBuffType - The type of buff to do, one of the MASSBUFF_xxx defines.
-//		nSubBuffType - Depends on the value of nBuffType, for stat buffs this
-//		is ABILITY_xxx to buff, for vision buffs it's unused.
-//		nVfx - The visual effect to apply at cast time.
-//		nDurVfx - The visual effect to apply during the spell's duration.
+//      nBuffType - The type of buff to do, one of the MASSBUFF_xxx defines.
+//      nSubBuffType - Depends on the value of nBuffType, for stat buffs this
+//      is ABILITY_xxx to buff, for vision buffs it's unused.
+//      nVfx - The visual effect to apply at cast time.
+//      nDurVfx - The visual effect to apply during the spell's duration.
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-const int MASSBUFF_STAT =			0;
-const int MASSBUFF_VISION =			1;
+const int MASSBUFF_STAT =           0;
+const int MASSBUFF_VISION =         1;
 
 void StripBuff(object oTarget, int nBuffSpellID, int nMassBuffSpellID)
 {
-	// Loop through all of the effects looking for our stat buff.
-	effect eEffect = GetFirstEffect(oTarget);
-	while (GetIsEffectValid(eEffect))
-	{
-		// Get the effect's spell ID and if it is one of the buffs passed in
-		// then strip it.
-		int nSpellID = GetEffectSpellId(eEffect);
-		if (nBuffSpellID == nSpellID || nMassBuffSpellID == nBuffSpellID)
-			RemoveEffect(oTarget, eEffect);
-			
-		// Get the effect.
-		eEffect = GetNextEffect(oTarget);
-	}
+    // Loop through all of the effects looking for our stat buff.
+    effect eEffect = GetFirstEffect(oTarget);
+    while (GetIsEffectValid(eEffect))
+    {
+        // Get the effect's spell ID and if it is one of the buffs passed in
+        // then strip it.
+        int nSpellID = GetEffectSpellId(eEffect);
+        if (nBuffSpellID == nSpellID || nMassBuffSpellID == nBuffSpellID)
+            RemoveEffect(oTarget, eEffect);
+            
+        // Get the effect.
+        eEffect = GetNextEffect(oTarget);
+    }
 }
 
 void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID = -1)
 {
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
-	
-	// Get the spell target location as opposed to the spell target.
-	location lTarget = PRCGetSpellTargetLocation();
+    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    
+    // Get the spell target location as opposed to the spell target.
+    location lTarget = PRCGetSpellTargetLocation();
 
-	// Get the spell ID if it was not given.
-	if (-1 == nSpellID) nSpellID = GetSpellId();
-	
-	// Get the effective caster level.
-	int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    // Get the spell ID if it was not given.
+    if (-1 == nSpellID) nSpellID = GetSpellId();
+    
+    // Get the effective caster level.
+    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
-	// Load the visual effects.
+    // Load the visual effects.
     effect eVis;
     effect eDur;
-	switch (nBuffType)
-	{
-	case MASSBUFF_STAT:
-	    eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
-	    eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-		break;
-	case MASSBUFF_VISION:
-		// No visible effect for this?
-		eDur = EffectVisualEffect(VFX_DUR_ULTRAVISION);
-		eDur = EffectLinkEffects(eDur, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
-		eDur = EffectLinkEffects(eDur, EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT));
-		break;
-	}
+    switch (nBuffType)
+    {
+    case MASSBUFF_STAT:
+        eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
+        eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        break;
+    case MASSBUFF_VISION:
+        // No visible effect for this?
+        eDur = EffectVisualEffect(VFX_DUR_ULTRAVISION);
+        eDur = EffectLinkEffects(eDur, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        eDur = EffectLinkEffects(eDur, EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT));
+        break;
+    }
 
-	float fDelay;
+    float fDelay;
 
-	// Determine the spell's duration.
-	float fDuration = SPGetMetaMagicDuration(HoursToSeconds(PRCGetCasterLevel(OBJECT_SELF)));
-	
-	// Declare the spell shape, size and the location.  Capture the first target object in the shape.
-	// Cycle through the targets within the spell shape until an invalid object is captured.
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	while (GetIsObjectValid(oTarget))
-	{
-		if (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, OBJECT_SELF))
-//		if (GetIsReactionTypeFriendly(oTarget))
-		{
-			//Fire cast spell at event for the specified target
-			SPRaiseSpellCastAt(oTarget, FALSE);
+    // Determine the spell's duration.
+    float fDuration = SPGetMetaMagicDuration(HoursToSeconds(PRCGetCasterLevel(OBJECT_SELF)));
+    
+    // Declare the spell shape, size and the location.  Capture the first target object in the shape.
+    // Cycle through the targets within the spell shape until an invalid object is captured.
+    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    while (GetIsObjectValid(oTarget))
+    {
+        if (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, OBJECT_SELF))
+//      if (GetIsReactionTypeFriendly(oTarget))
+        {
+            //Fire cast spell at event for the specified target
+            SPRaiseSpellCastAt(oTarget, FALSE);
 
-			fDelay = GetSpellEffectDelay(lTarget, oTarget);
+            fDelay = GetSpellEffectDelay(lTarget, oTarget);
 
-			// Calculate stat mod and adjust for metamagic.			
-			int nStatMod = SPGetMetaMagicDamage(-1, 1, 4, 0, 1);
+            // Calculate stat mod and adjust for metamagic.         
+            int nStatMod = SPGetMetaMagicDamage(-1, 1, 4, 0, 1);
 
-			// Create the appropriate buff effect and link the duration visual fx to it.
-			effect eBuff;			
-			switch (nBuffType)
-			{
-			case MASSBUFF_STAT:
-				// Strip the regular or mass buff from the target before 
-				// applying the new one.
-				StripBuff(oTarget, nBuffSpellID, nSpellID);
-				
-				eBuff = EffectLinkEffects (EffectAbilityIncrease(nBuffSubType, nStatMod), eDur);
-				DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDuration,TRUE,-1,nCasterLvl));
-				DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-				break;
-			case MASSBUFF_VISION:
-				eBuff = EffectLinkEffects (EffectUltravision(), eDur);
-				DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDuration,TRUE,-1,nCasterLvl));
-				break;
-			}
-		}
-		
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	}
+            // Create the appropriate buff effect and link the duration visual fx to it.
+            effect eBuff;           
+            switch (nBuffType)
+            {
+            case MASSBUFF_STAT:
+                // Strip the regular or mass buff from the target before 
+                // applying the new one.
+                StripBuff(oTarget, nBuffSpellID, nSpellID);
+                
+                eBuff = EffectLinkEffects (EffectAbilityIncrease(nBuffSubType, nStatMod), eDur);
+                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDuration,TRUE,-1,nCasterLvl));
+                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                break;
+            case MASSBUFF_VISION:
+                eBuff = EffectLinkEffects (EffectUltravision(), eDur);
+                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDuration,TRUE,-1,nCasterLvl));
+                break;
+            }
+        }
+        
+        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    }
 
-	SPSetSchool();
+    SPSetSchool();
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -1169,13 +1125,13 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
 
 void DamageSelf (int nDamageCap, int nVfx)
 {
-	// Now that the spell has gone off we have to take our damage.
-	int nDamage = PRCGetCasterLevel(OBJECT_SELF);
-	nDamage = nDamage > nDamageCap ? nDamageCap : nDamage;
-	
-	// Apply the damage and appropriate visual effect.
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), OBJECT_SELF);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nVfx), OBJECT_SELF);
+    // Now that the spell has gone off we have to take our damage.
+    int nDamage = PRCGetCasterLevel(OBJECT_SELF);
+    nDamage = nDamage > nDamageCap ? nDamageCap : nDamage;
+    
+    // Apply the damage and appropriate visual effect.
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), OBJECT_SELF);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nVfx), OBJECT_SELF);
 }
 
 ////////////////End Serpents Sigh//////////////////////

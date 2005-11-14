@@ -52,7 +52,7 @@ void main()
     int nCasterLvl = PRCGetCasterLevel();
     int nSpellID   = PRCGetSpellId();
     effect eVis    = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
-    float fDur     = SPGetMetaMagicDuration(60.0);
+    float fDur     = 20.0f;//SPGetMetaMagicDuration(60.0 * nCasterLvl);
 
     // Let the AI know
     SPRaiseSpellCastAt(oTarget, TRUE, nSpellID, oCaster);
@@ -61,7 +61,7 @@ void main()
     int nTouchAttack = PRCDoRangedTouchAttack(oTarget);
 
     // Shoot the ray
-    effect eRay = EffectBeam(VFX_BEAM_DISINTEGRATE, oCaster, BODY_NODE_HAND, nTouchAttack > 0);
+    effect eRay = EffectBeam(VFX_BEAM_DISINTEGRATE, oCaster, BODY_NODE_HAND, !(nTouchAttack > 0));
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7, FALSE);
 
     // Apply effect if hit
@@ -73,7 +73,10 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur, TRUE, -1, nCasterLvl);
             // Increase the teleportation prevention counter and schedule reduction
             DisallowTeleport(oTarget);
-            DelayCommand(fDur, AllowTeleport(oTarget));
+            if(DEBUG) DoDebug("sp_dimens_anch: The anchoring will wear off in " + IntToString(FloatToInt(fDur)) + "s");
+            //DelayCommand(fDur, AllowTeleport(oTarget));
+            //effect eAnch = EffectAreaOfEffect(152, "prc_dimanch_en", "", "prc_dimanch_ex");
+            //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(eVis, eAnch), oTarget, fDur, TRUE, -1, nCasterLvl);
         }
     }
 

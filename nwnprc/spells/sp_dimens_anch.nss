@@ -74,7 +74,7 @@ void main()
             // Increase the teleportation prevention counter and schedule reduction
             DisallowTeleport(oTarget);
             if(DEBUG) DoDebug("sp_dimens_anch: The anchoring will wear off in " + IntToString(FloatToInt(fDur)) + "s");
-            //DelayCommand(fDur, AllowTeleport(oTarget));
+            DelayCommand(fDur, AllowTeleport(oTarget));
             //effect eAnch = EffectAreaOfEffect(152, "prc_dimanch_en", "", "prc_dimanch_ex");
             //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(eVis, eAnch), oTarget, fDur, TRUE, -1, nCasterLvl);
         }

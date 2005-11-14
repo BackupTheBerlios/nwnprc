@@ -29,6 +29,9 @@ public class Main {
 		if(toCall.equals("-rig")){
 			//random item generator
 			rmg.rig.rig.main(paramsToPass);
+		}else if(toCall.equals("-rwg")){
+			//random world (map) generator
+			rmg.rwg.rwg.main(paramsToPass);
 		}
 		else{
 			System.out.println("Unknown class: " + toCall);

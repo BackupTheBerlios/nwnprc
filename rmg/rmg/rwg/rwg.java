@@ -1,4 +1,4 @@
-package wmg;
+package rmg.rwg;
 
 import java.awt.image.*;
 import javax.imageio.*;
@@ -7,18 +7,18 @@ import java.lang.*;
 import java.lang.Runtime;
 import java.util.*;
 import java.lang.Math;
-import wmg.Vertex;
-import wmg.Face;
-import wmg.SetFile;
-import wmg.Terrain;
-import wmg.NWNModel;
-import wmg.RGB;
+import rmg.rwg.*;
+import rmg.rwg.Vertex;
+import rmg.rwg.Face;
+import rmg.rwg.SetFile;
+import rmg.rwg.Terrain;
+import rmg.rwg.NWNModel;
+import rmg.rwg.RGB;
 
 
 public class rwg {
 
-	//public static void main(String[] args) throws Throwable{
-	public main() throws Throwable{
+	public static void main(String[] args){
 		boolean bUseWater = true;
 		Terrain terrain = new Terrain(64, 64, 4, 0.5);
 		//initial rim setup

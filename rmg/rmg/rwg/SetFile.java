@@ -1,4 +1,4 @@
-package wmg;
+package rmg.rwg;
 
 import java.awt.image.*;
 import javax.imageio.*;
@@ -20,24 +20,28 @@ public class SetFile {
 
 	// PUBLIC
 
-	public void writeToDisk() throws Exception{
-		//make a new file
-		File outputFile = new File("worldmap.set");
-		outputFile.delete();
-		outputFile.createNewFile();
-		String outputText = "";
-		outputText += getSetHeader();
-		outputText += "[TILES]\r\n";
-		outputText += "Count="+setCount+"\r\n";
-		outputText += "\r\n";
-		outputText += setText;
-		outputText += getSetFooter();
-		// Creater the writer and print
-		FileWriter writer = new FileWriter(outputFile, false);
-		writer.write(outputText);
-		// Clean up
-		writer.flush();
-		writer.close();
+	public void writeToDisk(){
+		try
+		{
+			//make a new file
+			File outputFile = new File("worldmap.set");
+			outputFile.delete();
+			outputFile.createNewFile();
+			String outputText = "";
+			outputText += getSetHeader();
+			outputText += "[TILES]\r\n";
+			outputText += "Count="+setCount+"\r\n";
+			outputText += "\r\n";
+			outputText += setText;
+			outputText += getSetFooter();
+			// Creater the writer and print
+			FileWriter writer = new FileWriter(outputFile, false);
+			writer.write(outputText);
+			// Clean up
+			writer.flush();
+			writer.close();
+		} catch(IOException e){
+		}
 	}
 
 	public void addSetInformation(String tileName){

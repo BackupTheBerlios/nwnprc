@@ -1,4 +1,4 @@
-package wmg;
+package rmg.rwg;
 
 public class Face {
 	public int vertIDA;

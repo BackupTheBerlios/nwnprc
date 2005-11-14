@@ -1,4 +1,4 @@
-package wmg;
+package rmg.rwg;
 
 import java.awt.image.*;
 import javax.imageio.*;
@@ -158,12 +158,16 @@ public class Heightmap {
 	}
 
 	//write the terrain as a bitmap to disk
-	public void writeToDisk(String filename) throws Throwable{
-		//make sure its up to date
-		refreshImageFromHeightmap();
-		File file = new File(filename+".jpg");
-		//file.delete();
-        ImageIO.write(image, "jpg", file);
+	public void writeToDisk(String filename){
+		try{
+			//make sure its up to date
+			refreshImageFromHeightmap();
+			File file = new File(filename+".jpg");
+			//file.delete();
+			ImageIO.write(image, "jpg", file);
+		} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 	}
 
 

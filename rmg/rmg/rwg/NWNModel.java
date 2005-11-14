@@ -1,4 +1,4 @@
-package wmg;
+package rmg.rwg;
 
 import java.awt.image.*;
 import javax.imageio.*;
@@ -7,9 +7,9 @@ import java.lang.*;
 import java.lang.Runtime;
 import java.util.*;
 import java.lang.Math;
-import wmg.Vertex;
-import wmg.Face;
-import wmg.Terrain;
+import rmg.rwg.Vertex;
+import rmg.rwg.Face;
+import rmg.rwg.Terrain;
 
 public class NWNModel {
 
@@ -35,7 +35,7 @@ public class NWNModel {
 		this(terrain, filename, 4, 4, true);
 	}*/
 
-	public NWNModel(Terrain terrain, String filename, int xTiles, int yTiles, boolean inAddWater, boolean noGraphics) throws Exception{
+	public NWNModel(Terrain terrain, String filename, int xTiles, int yTiles, boolean inAddWater, boolean noGraphics){
 		addWater = inAddWater;
 		//this is the number of vertexs on each tile on each edge
 		int tileXSize = (terrain.xSize/terrain.textureScale/xTiles);
@@ -199,9 +199,11 @@ public class NWNModel {
 				if(noGraphics == false){
 
 					//create the file
-					File imagefile = new File(modelname+".bmp");
-					imagefile.delete();
-					imagefile.createNewFile();
+					try{
+						File imagefile = new File(modelname+".bmp");
+						imagefile.delete();
+						imagefile.createNewFile();
+
 					int imageX = (tileXSize*terrain.textureScale);
 					int imageY = (tileYSize*terrain.textureScale);
 					//add buffers to overlap texture
@@ -239,13 +241,13 @@ public class NWNModel {
 	//System.out.println("x,y = "+originalX+","+originalY);
 						}
 					}
-					ImageIO.write(image, "bmp", imagefile);
+						ImageIO.write(image, "bmp", imagefile);
 					//converted to tga files by batch post-processing
 
 					//and a mini-map
-					imagefile = new File("m"+modelname+".bmp");
-					imagefile.delete();
-					imagefile.createNewFile();
+						imagefile = new File("m"+modelname+".bmp");
+						imagefile.delete();
+						imagefile.createNewFile();
 					image = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
 					for(int x = 0; x < 16 ; x++){
 						for(int y = 0; y < 16; y++){
@@ -260,7 +262,10 @@ public class NWNModel {
 	//System.out.println("x+xTexOffset="+(x+xTexOffset));
 						}
 					}
-					ImageIO.write(image, "bmp", imagefile);
+						ImageIO.write(image, "bmp", imagefile);
+					} catch(IOException e){
+					} catch(IllegalArgumentException e){
+					}
 					//converted to tga files by batch post-processing
 				}
 
@@ -273,10 +278,14 @@ public class NWNModel {
 		outputToERFFile(xTiles, yTiles, filename);
 	}
 
-	private void outputToFile() throws Exception{
+	private void outputToFile(){
+		try{
 		file = new File(modelname+".mdl");
 		file.delete();
 		file.createNewFile();
+		} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 		String sFile = "";
 		//header stuff
 		sFile += "newmodel "+modelname+"\n";
@@ -397,13 +406,20 @@ public class NWNModel {
 		//finish it
 		sFile += "endmodelgeom "+modelname+"\n";
 		sFile += "donemodel "+modelname+"\n";
-		writeToFile(sFile);
+		try{
+			writeToFile(sFile);
+		//} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 
 		//wok stuff
-
-		file = new File(modelname+".wok");
-		file.delete();
-		file.createNewFile();
+		try{
+			file = new File(modelname+".wok");
+			file.delete();
+			file.createNewFile();
+		} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 		sFile = "";
 		//header stuff
 		sFile += "beginwalkmeshgeom "+modelname+"\n";
@@ -436,17 +452,25 @@ public class NWNModel {
 		sFile += "  aabb "+nwnaabb.returnString;
 		sFile += "endnode"+"\n";
 		sFile += "endwalkmeshgeom "+modelname+"\n";
-		writeToFile(sFile);
+		try{
+			writeToFile(sFile);
+		//} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 	}
 
-	private void outputToERFFile(int xTiles, int yTiles, String filename) throws Exception{
+	private void outputToERFFile(int xTiles, int yTiles, String filename){
 
 		//output area files for erf
 		//done via xml
 		//gic area comments
-		file = new File(filename+".gic.xml");
-		file.delete();
-		file.createNewFile();
+		try{
+			file = new File(filename+".gic.xml");
+			file.delete();
+			file.createNewFile();
+		} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 		String sFile = "";
 		sFile += "<gff name=\""+filename+".gic\" type=\"GIC \" version=\"V3.2\" >\n";
 		sFile += "    <struct id=\"-1\" >\n";
@@ -463,9 +487,13 @@ public class NWNModel {
 		sFile += "</gff>\n";
 		writeToFile(sFile);
 		//git area contents
-		file = new File(filename+".git.xml");
-		file.delete();
-		file.createNewFile();
+		try{
+			file = new File(filename+".git.xml");
+			file.delete();
+			file.createNewFile();
+		} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 		sFile = "";
 		sFile += "<gff name=\""+filename+".git\" type=\"GIT \" version=\"V3.2\" >\n";
 		sFile += "    <struct id=\"-1\" >\n";
@@ -493,12 +521,20 @@ public class NWNModel {
 		sFile += "        <element name=\"Placeable List\" type=\"15\" />\n";
 		sFile += "    </struct>\n";
 		sFile += "</gff>\n";
-		writeToFile(sFile);
+		try{
+			writeToFile(sFile);
+		//} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 		//are tiles
 		//git area contents
-		file = new File(filename+".are.xml");
-		file.delete();
-		file.createNewFile();
+		try{
+			file = new File(filename+".are.xml");
+			file.delete();
+			file.createNewFile();
+		} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 		sFile = "";
 		sFile += "<gff name=\""+filename+".are\" type=\"ARE \" version=\"V3.2\" >\n";
 		sFile += "    <struct id=\"-1\" >\n";
@@ -568,16 +604,24 @@ public class NWNModel {
 		sFile += "        </element>\n";
 		sFile += "    </struct>\n";
 		sFile += "</gff>\n";
+		try{
 		writeToFile(sFile);
+		//} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 	}
 
-	private void writeToFile(String text) throws Exception{
-		// Creater the writer and print
-		FileWriter writer = new FileWriter(file, true);
-		writer.write(text);
-		// Clean up
-		writer.flush();
-		writer.close();
+	private void writeToFile(String text){
+		try{
+			// Creater the writer and print
+			FileWriter writer = new FileWriter(file, true);
+			writer.write(text);
+			// Clean up
+			writer.flush();
+			writer.close();
+		} catch(IOException e){
+		} catch(IllegalArgumentException e){
+		}
 	}
 
 	private double roundNumber(double input){

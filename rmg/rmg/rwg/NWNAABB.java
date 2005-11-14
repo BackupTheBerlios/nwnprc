@@ -1,4 +1,4 @@
-package wmg;
+package rmg.rwg;
 
 import java.awt.image.*;
 import javax.imageio.*;
@@ -7,9 +7,9 @@ import java.lang.*;
 import java.lang.Runtime;
 import java.util.*;
 import java.lang.Math;
-import wmg.Vertex;
-import wmg.Face;
-import wmg.Terrain;
+import rmg.rwg.Vertex;
+import rmg.rwg.Face;
+import rmg.rwg.Terrain;
 
 public class NWNAABB {
 	public String returnString = "";
@@ -70,7 +70,7 @@ public class NWNAABB {
 		if(facelist.length == 1){
 			faceID = facelist[0].ID;
 			returnString += faceID+"\n";
-System.out.print(returnString);
+//System.out.print(returnString);
 			} else {
 			Face facelistA[] = new Face[facelist.length];
 			Face facelistB[] = new Face[facelist.length];
@@ -145,9 +145,9 @@ System.out.print(returnString);
 				facelistBNew[i] = facelistB[i];
 			}
 			returnString += faceID+"\n";
-System.out.println("facelistACount = "+facelistACount);
-System.out.println("facelistBCount = "+facelistBCount);
-System.out.print(returnString);
+//System.out.println("facelistACount = "+facelistACount);
+//System.out.println("facelistBCount = "+facelistBCount);
+//System.out.print(returnString);
 			NWNAABB childNodeA = new NWNAABB(facelistANew, vertexlist, !xBox);
 			returnString += childNodeA.returnString;
 			NWNAABB childNodeB = new NWNAABB(facelistBNew, vertexlist, !xBox);

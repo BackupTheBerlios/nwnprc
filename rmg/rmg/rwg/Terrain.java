@@ -1,4 +1,4 @@
-package wmg;
+package rmg.rwg;
 
 import java.awt.image.*;
 import javax.imageio.*;
@@ -7,8 +7,8 @@ import java.lang.*;
 import java.util.*;
 import java.lang.Math;
 import java.awt.*;
-import wmg.RGB;
-import wmg.Heightmap;
+import rmg.rwg.RGB;
+import rmg.rwg.Heightmap;
 
 public class Terrain {
 
@@ -139,22 +139,26 @@ if(x==100 && y==100){
 	}
 
 	//write the terrain as a bitmap to disk
-	public void writeToDisk(String filename) throws Throwable{
-		//make sure its up to date
-		int xsize = terrainmap.length;
-		int ysize = terrainmap[0].length;
-		BufferedImage image;
-		image = new BufferedImage(xsize-1, ysize-1, BufferedImage.TYPE_INT_RGB);
-		for(int x = 1; x < xsize; x++){
-			for(int y = 1; y < ysize; y++){
-				//DEBUGoutputHeightmap(greyscaleheightmap);
-				int colour = terrainmap[x][y].rgbToComposite();
-				image.setRGB(x-1, y-1, colour);
+	public void writeToDisk(String filename){
+		try{
+			//make sure its up to date
+			int xsize = terrainmap.length;
+			int ysize = terrainmap[0].length;
+			BufferedImage image;
+			image = new BufferedImage(xsize-1, ysize-1, BufferedImage.TYPE_INT_RGB);
+			for(int x = 1; x < xsize; x++){
+				for(int y = 1; y < ysize; y++){
+					//DEBUGoutputHeightmap(greyscaleheightmap);
+					int colour = terrainmap[x][y].rgbToComposite();
+					image.setRGB(x-1, y-1, colour);
+				}
 			}
+			File file = new File(filename+".jpg");
+			//file.delete();
+			ImageIO.write(image, "jpg", file);
+		} catch(IOException e){
+		} catch(IllegalArgumentException e){
 		}
-		File file = new File(filename+".jpg");
-		//file.delete();
-        ImageIO.write(image, "jpg", file);
 	}
 
 	// PRIVATE

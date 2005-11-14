@@ -1,4 +1,4 @@
-package wmg;
+package rmg.rwg;
 
 public class RGB {
 	public int r = 0;

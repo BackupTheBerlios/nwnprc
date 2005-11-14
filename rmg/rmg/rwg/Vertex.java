@@ -1,4 +1,4 @@
-package wmg;
+package rmg.rwg;
 
 public class Vertex {
 	public double x;

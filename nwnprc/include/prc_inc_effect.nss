@@ -279,7 +279,7 @@ struct PRCeffect PRCGetFirstEffect(object oCreature)
 {
     effect eEffect = GetFirstEffect(oCreature);
     string sID = GetIdentifierFromEffect(eEffect);
-    struct PRCeffect prceEffect = GetLocalEffect(oCreature, sID);
+    struct PRCeffect prceEffect = GetLocalPRCEffect(oCreature, sID);
     prceEffect.eEffect = eEffect;
     return prceEffect;    
 }
@@ -289,7 +289,7 @@ struct PRCeffect PRCGetNextEffect(object oCreature)
 {
     effect eEffect = GetNextEffect(oCreature);
     string sID = GetIdentifierFromEffect(eEffect);
-    struct PRCeffect prceEffect = GetLocalEffect(oCreature, sID);
+    struct PRCeffect prceEffect = GetLocalPRCEffect(oCreature, sID);
     prceEffect.eEffect = eEffect;
     return prceEffect;
 }

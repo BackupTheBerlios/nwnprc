@@ -16,23 +16,23 @@
 void main()
 {
      int nVassal = GetLevelByClass(CLASS_TYPE_VASSAL, OBJECT_SELF);
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      int iDam;
      effect eDam;
-     if (nVassal >= 4)
-     {
-     iDam = d6(1);
-     }
-     else if (nVassal == 10)
+     if (nVassal == 10)
      {
      iDam = d6(2);
+     }
+     else if (nVassal >= 4)
+     {
+          iDam = d6(1);
      }
      eDam = EffectDamage(iDam, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_ENERGY);
      if (MyPRCGetRacialType(oTarget)==RACIAL_TYPE_DRAGON)
      {
          if (GetAlignmentGoodEvil(oTarget)==ALIGNMENT_EVIL)
          {
-         ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
          }
      }
 }

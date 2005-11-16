@@ -996,4 +996,8 @@ void FeatSpecialUsePerDay(object oPC)
     FeatNinja(oPC);
     FeatContender(oPC);
     FeatLasher(oPC);
+    FeatUsePerDay(oPC, FEAT_MOS_UNDEAD_1, ABILITY_CHARISMA, 3);
+    FeatUsePerDay(oPC, FEAT_MOS_UNDEAD_2, ABILITY_CHARISMA, 3);
+    FeatUsePerDay(oPC, FEAT_MOS_UNDEAD_3, ABILITY_CHARISMA, 3);
+    FeatUsePerDay(oPC, FEAT_MOS_UNDEAD_4, ABILITY_CHARISMA, 3);
 }

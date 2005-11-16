@@ -8,15 +8,51 @@
 
 #include "prc_inc_clsfunc"
 #include "inc_utility"
+#include "prc_inc_turning"
+
+void SummonUndeadPseudoHB(object oSummon);
+void SummonUndeadPseudoHB(object oSummon)
+{
+    if(!GetIsObjectValid(oSummon))
+        return;
+    if(!GetIsInCombat(OBJECT_SELF))
+    {
+        //casters level for turning
+        int nLevel = GetTurningClassLevel();
+
+        //casters charimsa modifier
+        int nChaMod = GetAbilityModifier(ABILITY_CHARISMA);
+        //Heartwarder adds two to cha checks
+        if (GetHasFeat(FEAT_HEART_PASSION))
+            nChaMod +=2;
+        int nTurningMaxHD = GetTurningCheckResult(nLevel, nChaMod);
+        int nTargetHD = GetHitDiceForTurning(oSummon);
+        if(nTurningMaxHD < nTargetHD)
+            RemoveSpecificEffect(EFFECT_TYPE_DOMINATED, oSummon);
+        else
+        {
+            AssignCommand(oSummon, ClearAllActions());
+            AssignCommand(oSummon, ActionForceFollowObject(OBJECT_SELF, IntToFloat(Random(8)+3)));
+        }    
+    
+    }
+    DelayCommand(6.0, SummonUndeadPseudoHB(oSummon));
+}
 
 void main()
 {
     string sSummon;
-    effect eSummonB = EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
+    effect eSummonB = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);//EffectVisualEffect( VFX_FNF_LOS_EVIL_30);
     object oCreature;
     int nClass = GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, OBJECT_SELF);
+    int nCount;
+    int nSpellID = GetSpellId();
+    if(nSpellID == 3009)      nCount = 1;
+    else if(nSpellID == 3010) nCount = 2;
+    else if(nSpellID == 3011) nCount = 4;
+    else if(nSpellID == 3012) nCount = 8;
 
-    if (nClass > 29)            sSummon = "prc_mos_39";
+    if (nClass > 29)        sSummon = "prc_mos_39";
     else if (nClass > 26)   sSummon = "prc_mos_36";
     else if (nClass > 23)   sSummon = "prc_mos_33";
     else if (nClass > 20)   sSummon = "prc_mos_30";
@@ -28,10 +64,15 @@ void main()
     else if (nClass > 5)    sSummon = "prc_mos_wraith";
     else                    sSummon = "prc_mos_allip";
 
-   MultisummonPreSummon(OBJECT_SELF);
-   effect eSum = EffectSummonCreature(sSummon, VFX_NONE);
-   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummonB, GetSpellTargetLocation());
-   ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSum, GetSpellTargetLocation());
-//   object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
-//   CorpseCrafter(OBJECT_SELF, oSummon);   
+   //MultisummonPreSummon(OBJECT_SELF);
+   effect eCommand = SupernaturalEffect(EffectDominated());
+   int i;
+   for(i=0;i<nCount;i++)
+   {
+       object oSummon = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
+       ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummonB, GetLocation(oSummon));
+       SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand, oSummon);
+       DelayCommand(6.0, SummonUndeadPseudoHB(oSummon));
+       DestroyObject(oSummon, RoundsToSeconds(nClass));
+   }
 }

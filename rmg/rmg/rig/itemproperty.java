@@ -28,6 +28,15 @@ public class itemproperty {
 
 	public String toXML(){
 		String text = "";
+        text+="    <struct id=\"0\" >\n";
+        text+="        <element name=\"PropertyName\" type=\"2\" value=\""+propertyName+"\" />\n";
+        text+="        <element name=\"Subtype\" type=\"2\" value=\""+subType+"\" />\n";
+        text+="        <element name=\"CostTable\" type=\"0\" value=\""+costTable+"\" />\n";
+        text+="        <element name=\"CostValue\" type=\"2\" value=\""+costValue+"\" />\n";
+        text+="        <element name=\"Param1\" type=\"0\" value=\""+param1+"\" />\n";
+        text+="        <element name=\"Param1Value\" type=\"0\" value=\""+param1Value+"\" />\n";
+        text+="        <element name=\"ChanceAppear\" type=\"0\" value=\""+changeAppear+"\" />\n";
+        text+="    </struct>\n";
 		return text;
 	}
 }

@@ -167,7 +167,8 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
     // creatures. Also creature can be scripted to be immune to dispel
     // magic as well.
     //--------------------------------------------------------------------------
-    if (GetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE || GetLocalInt(oTarget, "X1_L_IMMUNE_TO_DISPEL") == 10)
+    if (GetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE 
+        || GetLocalInt(oTarget, "X1_L_IMMUNE_TO_DISPEL") == 10)
     {
         return;
     }
@@ -180,15 +181,10 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
     // Fire hostile event only if the target is hostile...
     //--------------------------------------------------------------------------
     
-    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
-    {
-    
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))    
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nId));
-    }
     else
-    {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nId, FALSE));
-    }
 
     //--------------------------------------------------------------------------
     // GZ: Bugfix. Was always dispelling all effects, even if used for AoE

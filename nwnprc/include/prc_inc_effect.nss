@@ -294,9 +294,29 @@ struct PRCeffect PRCGetNextEffect(object oCreature)
     return prceEffect;
 }
 
+effect GetEffectOnObjectFromPRCEffect(struct PRCeffect prceEffect, object oObject)
+{
+    effect eTest = GetFirstEffect(oObject);
+    while(GetIsEffectValid(eTest))
+    {
+        if(GetEffectType(eTest) == prceEffect.nEffectType
+            && GetEffectSubType(eTest) == prceEffect.nEffectSubtype
+            && GetEffectCreator(eTest) == prceEffect.oCaster
+            && GetEffectSpellId(eTest) == prceEffect.nSpellID
+            && GetEffectDurationType(eTest) == prceEffect.nDurationType)
+            return eTest;
+        eTest = GetNextEffect(oObject);
+    }
+    return eTest;
+}
+
 // Remove eEffect from oCreature.
 // * No return value
-void PRCRemoveEffect(object oCreature, struct PRCeffect eEffect);
+void PRCRemoveEffect(object oCreature, struct PRCeffect eEffect)
+{
+
+
+}
 
 // Set the subtype of eEffect to Magical and return eEffect.
 // (Effects default to magical if the subtype is not set)

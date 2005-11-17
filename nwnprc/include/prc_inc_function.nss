@@ -344,7 +344,9 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_CHA");
     */
 
-   // Duelist
+    DeleteNamedComposites(oSkin, "PRC_CBon");
+
+    // Duelist
     //DeleteLocalInt(oSkin,"GraceBonus");
     //DeleteLocalInt(oSkin,"ElaborateParryBonus");
     //DeleteLocalInt(oSkin,"CannyDefenseBonus");

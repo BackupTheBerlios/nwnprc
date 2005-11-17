@@ -52,25 +52,26 @@ void main()
     else if(nSpellID == 3011) nCount = 4;
     else if(nSpellID == 3012) nCount = 8;
 
-    if (nClass > 29)        sSummon = "prc_mos_39";
-    else if (nClass > 26)   sSummon = "prc_mos_36";
-    else if (nClass > 23)   sSummon = "prc_mos_33";
-    else if (nClass > 20)   sSummon = "prc_mos_30";
-    else if (nClass > 17)   sSummon = "prc_mos_27";
-    else if (nClass > 14)   sSummon = "prc_mos_24";
-    else if (nClass > 11)   sSummon = "prc_mos_21";
-    else if (nClass > 9)    sSummon = "prc_mos_spectre2";
-    else if (nClass > 7)    sSummon = "prc_mos_spectre1";
-    else if (nClass > 5)    sSummon = "prc_mos_wraith";
+    if (nClass >= 29)        sSummon = "prc_mos_39";
+    else if (nClass >= 26)   sSummon = "prc_mos_36";
+    else if (nClass >= 23)   sSummon = "prc_mos_33";
+    else if (nClass >= 20)   sSummon = "prc_mos_30";
+    else if (nClass >= 17)   sSummon = "prc_mos_27";
+    else if (nClass >= 14)   sSummon = "prc_mos_24";
+    else if (nClass >= 11)   sSummon = "prc_mos_21";
+    else if (nClass >= 9)    sSummon = "prc_mos_spectre2";
+    else if (nClass >= 7)    sSummon = "prc_mos_spectre1";
+    else if (nClass >= 5)    sSummon = "prc_mos_wraith";
     else                    sSummon = "prc_mos_allip";
 
    //MultisummonPreSummon(OBJECT_SELF);
-   effect eCommand = SupernaturalEffect(EffectDominated());
+   effect eCommand = EffectCutsceneDominated();//SupernaturalEffect(effectdominated doesnt work on mind-immune
    int i;
    for(i=0;i<nCount;i++)
    {
        object oSummon = CreateObject(OBJECT_TYPE_CREATURE, sSummon, GetSpellTargetLocation());
        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummonB, GetLocation(oSummon));
+       ChangeToStandardFaction(oSummon, STANDARD_FACTION_HOSTILE);
        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand, oSummon);
        DelayCommand(6.0, SummonUndeadPseudoHB(oSummon));
        DestroyObject(oSummon, RoundsToSeconds(nClass));

@@ -189,11 +189,18 @@ int GetManifesterLevel(object oCaster, int nSpecificClass = CLASS_TYPE_INVALID)
     // instead of whatever the character last manifested a power as
     if(nSpecificClass != CLASS_TYPE_INVALID)
     {
-        nLevel = GetLevelByClass(nSpecificClass, oCaster);
-        // Add levels from +ML PrCs only for the first manifesting class
-        nLevel += nSpecificClass == GetFirstPsionicClass(oCaster) ? GetPsionicPRCLevels(oCaster) : 0;
+        if(GetIsPsionicClass(nSpecificClass))
+        {
+            nLevel = GetLevelByClass(nSpecificClass, oCaster);
+            // Add levels from +ML PrCs only for the first manifesting class
+            if(nSpecificClass == GetFirstPsionicClass(oCaster))
+                nLevel += GetPsionicPRCLevels(oCaster);
 
-        return nLevel + nAdjust;
+            return nLevel + nAdjust;
+        }
+        // A character's manifester level gained from non-manifesting classes is always a nice, round zero
+        else
+            return 0;
     }
 
     // Item Spells

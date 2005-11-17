@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class Heightmap {
 
-	public double height[][] = new double [1][1];
+	private double height[][] = new double [1][1];
 	private BufferedImage image;
   	private Random rng = new Random();
 	private boolean clamp = false;
@@ -39,8 +39,6 @@ public class Heightmap {
 		while(tempheightmap.length < height.length
 			&& tempheightmap[0].length < height[0].length)
 		{
-			//if(tempheightmap.length < 17) DEBUGoutputHeightmap(tempheightmap);
-
 			randomrange = initialrandomrange;
 			double randomscale = Math.pow(fractalDecay, (double)itteration);
 			randomrange = (randomrange*randomscale);
@@ -168,6 +166,7 @@ public class Heightmap {
 		} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}
+		System.out.println("heightmap written to disk");
 	}
 
 
@@ -200,6 +199,35 @@ public class Heightmap {
 				height[x][y] = value;
 			}
 		}
+	}
+
+	public double getHeightmap(int row, int column){
+		if(row < 0)
+			return 0.0;
+		else if(column < 0)
+			return 0.0;
+		else if(row >= height.length)
+			return 0.0;
+		else if(column >= height[0].length)
+			return 0.0;
+		return height[row][column];
+	}
+	public void setHeightmap(int row, int column, double value){
+		if(row < 0)
+			return;
+		else if(column < 0)
+			return;
+		else if(row >= height.length)
+			return;
+		else if(column >= height[0].length)
+			return;
+		height[row][column] = value;
+	}
+	public int getHeightmapRows(){
+		return height.length;
+	}
+	public int getHeightmapColumns(){
+		return height[0].length;
 	}
 
 	// PRIVATE FUNCTIONS

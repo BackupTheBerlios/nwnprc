@@ -35,8 +35,11 @@ public class NWNModel {
 		this(terrain, filename, 4, 4, true);
 	}*/
 
-	public NWNModel(Terrain terrain, String filename, int xTiles, int yTiles, boolean inAddWater, boolean noGraphics){
-		addWater = inAddWater;
+	public NWNModel(Terrain terrain, String filename, int xTiles, int yTiles, double water, boolean noGraphics){
+		if(water == 0.0)
+			addWater = false;
+		else
+			waterlevel = water;
 		//this is the number of vertexs on each tile on each edge
 		int tileXSize = (terrain.xSize/terrain.textureScale/xTiles);
 		int tileYSize = (terrain.ySize/terrain.textureScale/yTiles);
@@ -50,8 +53,8 @@ public class NWNModel {
 		//scale the terrain to a suitable height
 		//terrain.heightmap.scaleHeightmap(0.0, 30.0);
 
-		for(int x = terrain.textureScale; x < (terrain.heightmap.height.length-terrain.textureScale); x++){
-			for(int y = terrain.textureScale; y < (terrain.heightmap.height[0].length-terrain.textureScale); y++){
+		for(int x = terrain.textureScale; x < (terrain.heightmap.getHeightmapRows()-terrain.textureScale); x++){
+			for(int y = terrain.textureScale; y < (terrain.heightmap.getHeightmapColumns()-terrain.textureScale); y++){
 				int averageCount = 0;
 				double averageTotal = 0.0;
 
@@ -61,8 +64,8 @@ public class NWNModel {
 //					averageTotal += terrain.heightmap.height[x][y+terrain.textureScale];
 //					averageTotal += terrain.heightmap.height[x][y-terrain.textureScale];
 					averageCount += 2;
-					averageTotal += terrain.heightmap.height[x+terrain.textureScale][y];
-					averageTotal += terrain.heightmap.height[x-terrain.textureScale][y];
+					averageTotal += terrain.heightmap.getHeightmap(x+terrain.textureScale,y);
+					averageTotal += terrain.heightmap.getHeightmap(x-terrain.textureScale,y);
 
 //					double spotheight = terrain.heightmap.height[x][y];
 //					terrain.heightmap.height[x][y+terrain.textureScale] = spotheight;
@@ -78,13 +81,13 @@ public class NWNModel {
 //					averageTotal += terrain.heightmap.height[x+terrain.textureScale][y];
 //					averageTotal += terrain.heightmap.height[x-terrain.textureScale][y];
 					averageCount += 2;
-					averageTotal += terrain.heightmap.height[x][y+terrain.textureScale];
-					averageTotal += terrain.heightmap.height[x][y-terrain.textureScale];
+					averageTotal += terrain.heightmap.getHeightmap(x,y+terrain.textureScale);
+					averageTotal += terrain.heightmap.getHeightmap(x,y-terrain.textureScale);
 //System.out.println(terrain.heightmap.height[x][y]+" @ x,y="+x+","+y);
 				}
 
 				if(averageCount>0)
-					terrain.heightmap.height[x][y] = averageTotal/(double)averageCount;
+					terrain.heightmap.setHeightmap(x, y, averageTotal/(double)averageCount);
 			}
 		}
 
@@ -99,10 +102,10 @@ public class NWNModel {
 					for(int y = 0; y < tempheightmap[0].length; y++){
 						int originalX = ((x)*terrain.textureScale)+xOffset;
 						int originalY = ((y)*terrain.textureScale)+yOffset;
-						if((originalX >=terrain.heightmap.height.length) || (originalY >=terrain.heightmap.height[0].length))
+						if((originalX >=terrain.heightmap.getHeightmapRows()) || (originalY >=terrain.heightmap.getHeightmapColumns()))
 							tempheightmap[x][y] = 0.0;
 						else
-							tempheightmap[x][y] = terrain.heightmap.height[originalX][originalY];
+							tempheightmap[x][y] = terrain.heightmap.getHeightmap(originalX, originalY);
 //if(xTileCount == 0 && yTileCount == 0)
 //System.out.println("x="+x);
 //if(y==0)

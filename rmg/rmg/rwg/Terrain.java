@@ -74,9 +74,9 @@ public class Terrain {
 		for(int x = 0; x < xSize; x++){
 			for(int y = 0; y < ySize; y++){
 			//	double newheightoffset = 0.0;
-				double spotheight = heightmap.height[x][y];
+				double spotheight = heightmap.getHeightmap(x,y);
 				int baseterrainID = terrainIDmap[x][y];
-				double spotfractal = distribfractal.height[x][y];
+				double spotfractal = distribfractal.getHeightmap(x,y);
 				//calculate slope
 				int sloperadius = (textureScale/2)+1;
 				double[][] nearheight = new double[sloperadius][sloperadius];
@@ -88,15 +88,15 @@ public class Terrain {
 						int tempx = nx+x-(sloperadius/2);
 						int tempy = ny+y-(sloperadius/2);
 						if((nx+x-(sloperadius/2)) < 0)
-							tempx = nx+x-(sloperadius/2)+heightmap.height.length;
-						else if((nx+x-(sloperadius/2)) >= heightmap.height.length)
-							tempx = nx+x-(sloperadius/2)-heightmap.height.length;
+							tempx = nx+x-(sloperadius/2)+heightmap.getHeightmapRows();
+						else if((nx+x-(sloperadius/2)) >= heightmap.getHeightmapRows())
+							tempx = nx+x-(sloperadius/2)-heightmap.getHeightmapRows();
 						if((ny+y-(sloperadius/2)) < 0)
-							tempy = ny+y-(sloperadius/2)+heightmap.height[0].length;
-						else if((ny+y-(sloperadius/2)) >= heightmap.height[0].length)
-							tempy = ny+y-(sloperadius/2)-heightmap.height[0].length;
+							tempy = ny+y-(sloperadius/2)+heightmap.getHeightmapColumns();
+						else if((ny+y-(sloperadius/2)) >= heightmap.getHeightmapColumns())
+							tempy = ny+y-(sloperadius/2)-heightmap.getHeightmapColumns();
 
-						tempheight = heightmap.height[tempx][tempy];
+						tempheight = heightmap.getHeightmap(tempx,tempy);
 
 						if(tempheight>nearhigh)
 							nearhigh = tempheight;
@@ -119,7 +119,7 @@ if(x==100 && y==100){
 					spotcolour.r = colourmin.r;
 					spotcolour.g = colourmin.g;
 					spotcolour.b = colourmin.b;
-					spotcolour.scale(terrainfractal.height[x][y], colourmin, colourmax);
+					spotcolour.scale(terrainfractal.getHeightmap(x,y), colourmin, colourmax);
 					//if(x<10 && y< 10) System.out.println(colourmin.toString()+" & "+colourmax.toString()+" ->"+terrainfractal.height[x][y]+"-> "+spotcolour.toString());
 					//terrainmap[x][y].r = spotcolour.r;
 					//terrainmap[x][y].g = spotcolour.g;
@@ -159,6 +159,7 @@ if(x==100 && y==100){
 		} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}
+		System.out.println("terrain written to disk");
 	}
 
 	// PRIVATE

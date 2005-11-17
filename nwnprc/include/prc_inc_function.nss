@@ -730,7 +730,7 @@ int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int
     string sFeedback = "";
 
     if(iHeal){
-        if((GetHasFeat(FEAT_FAITH_HEALING, oCaster) && iAlignDif <= 2)){
+        if((GetHasFeat(FEAT_FAITH_HEALING, oCaster) && iAlignDif < 2)){
             iRetVal = TRUE;
             sFeedback = "Faith Healing";
         }
@@ -975,7 +975,7 @@ void FeatLasher(object oPC)
     int i;
     if(iClassLevel < 7) return;
 
-    for(i = 10; i > iClassLevel; i--)
+    for(i = 30; i > iClassLevel; i--)
         DecrementRemainingFeatUses(oPC, FEAT_LASHER_STUNNING_SNAP);
 }
 

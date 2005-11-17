@@ -10,7 +10,7 @@
 //:://////////////////////////////////////////////
 //:: Created By: Flaming_Sword
 //:: Created On: Sept 24, 2005
-//:: Modified: Sept 29, 2005
+//:: Modified: Nov 10, 2005
 //:://////////////////////////////////////////////
 
 //compiler would completely crap itself unless this include was here
@@ -34,6 +34,8 @@ void main()
             if(iClassLevel > 2)
             {
                 nAttacks = ((iClassLevel + 2) / 5);
+                if(nAttacks > 2)
+                    nAttacks = 2;
                 nPenalty = nAttacks * 2;
 
                 effect eAttacks = SupernaturalEffect(EffectModifyAttacks(nAttacks));

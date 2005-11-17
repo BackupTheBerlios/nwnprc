@@ -7,7 +7,7 @@
 //:://////////////////////////////////////////////
 //:: Created By: Flaming_Sword
 //:: Created On: Sept 27, 2005
-//:: Modified: Sept 29, 2005
+//:: Modified: Nov 5, 2005
 //:://////////////////////////////////////////////
 
 //compiler would completely crap itself unless this include was here
@@ -32,10 +32,10 @@ void main()
         {
             SignalEvent(oTarget, EventSpellCastAt(oPC, nSpellId));
             nDC = GetAttackBonus(oTarget, OBJECT_SELF, oWeapon) + d20();
-            if(!MySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC))
+            if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC))
             {
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, RoundsToSeconds(d4() + 1));
-                if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC2))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC2))
                 {
                     int nDur = d4() - 1;
                     nDur = nDur ? nDur : 1;
@@ -46,3 +46,4 @@ void main()
     oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRange, lLoc, OBJECT_TYPE_CREATURE);
     }
 }
+

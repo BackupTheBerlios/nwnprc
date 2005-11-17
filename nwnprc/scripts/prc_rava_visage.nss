@@ -12,7 +12,7 @@ similar to the spell phantasmal killer with a DC equal to 14 + Ravager levels.
 void main()
 {
     //Declare major variables
-    int nDC =  10 + GetAbilityModifier(ABILITY_CHARISMA,OBJECT_SELF)+GetLevelByClass(CLASS_TYPE_RAVAGER,OBJECT_SELF);;
+    int nDC =  10 + GetAbilityModifier(ABILITY_CHARISMA,OBJECT_SELF)+GetLevelByClass(CLASS_TYPE_RAVAGER,OBJECT_SELF);
     int nLevel = GetLevelByClass(CLASS_TYPE_RAVAGER,OBJECT_SELF);
     DoSpellMeleeTouch(SPELL_PHANTASMAL_KILLER, nLevel, nDC);
 

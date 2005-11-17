@@ -10,7 +10,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -30,16 +30,18 @@ void main()
 
     effect eVisD = EffectVisualEffect(VFX_IMP_DOOM);
     effect eLinkD = CreateDoomEffectsLink();
+    int nLevel = GetLevelByClass(CLASS_TYPE_HEXTOR, OBJECT_SELF);
+    float fRadius = FeetToMeters(IntToFloat(5*nLevel));
 
 
-    int nDC = (10 + GetLevelByClass(CLASS_TYPE_HEXTOR, OBJECT_SELF) + GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF));
+    int nDC = (10 + nLevel + GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF));
 
     object oTarget;
 
     //Apply Impact
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
     //Get first target in the spell cone
-    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation(), TRUE);
+    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRadius, PRCGetSpellTargetLocation(), TRUE);
     while(GetIsObjectValid(oTarget))
     {
         if (!GetLevelByClass(CLASS_TYPE_HEXTOR, oTarget))
@@ -52,14 +54,14 @@ void main()
                 {
                     //Apply the linked effects and the VFX impact
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration));
-		}
-            	else
-		{
+        }
+                else
+        {
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLinkD, oTarget, fDuration);
-	            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisD, oTarget);
-		}
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisD, oTarget);
+        }
         }
         //Get next target in the spell cone
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation(), TRUE);
+        oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRadius, PRCGetSpellTargetLocation(), TRUE);
     }
 }

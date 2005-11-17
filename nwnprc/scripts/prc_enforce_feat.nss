@@ -887,8 +887,13 @@ int Blightbringer(object oPC = OBJECT_SELF)
 
 int CraftingFeats(object oPC = OBJECT_SELF)
 {
-    int nCasterLvl     = PRCGetCasterLevel(oPC),
-        nManifesterLvl = GetLevelByClass(GetFirstPsionicClass(oPC), oPC) + GetPsionicPRCLevels(oPC), ///FIXME Needs a function like GetHighestManifesterLevel
+    int nCasterLvl     = max(GetCasterLvl(TYPE_ARCANE, oPC), GetCasterLvl(TYPE_DIVINE, oPC)),
+        // Gets the maximum of the character's manifester level over all 3 class positions.
+        nManifesterLvl = max(max(PRCGetClassByPosition(1, oPC) != CLASS_TYPE_INVALID ? GetManifesterLevel(oPC, PRCGetClassByPosition(1, oPC)) : 0,
+                                 PRCGetClassByPosition(2, oPC) != CLASS_TYPE_INVALID ? GetManifesterLevel(oPC, PRCGetClassByPosition(2, oPC)) : 0
+                                 ),
+                             PRCGetClassByPosition(3, oPC) != CLASS_TYPE_INVALID ? GetManifesterLevel(oPC, PRCGetClassByPosition(3, oPC)) : 0
+                             ),
         nMax           = max(nCasterLvl, nManifesterLvl);
     int bOK = TRUE, bFirst = TRUE;
     string sError = GetStringByStrRef(16823153) + "\n"; // "You spellcaster (or manifester) level is not high enough to take the following crafting feats:"

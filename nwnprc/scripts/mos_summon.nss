@@ -6,13 +6,15 @@
  * Lockindal Linantal
  */
 
+#include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "inc_utility"
 #include "prc_inc_turning"
 
-void SummonUndeadPseudoHB(object oSummon);
-void SummonUndeadPseudoHB(object oSummon)
+void SummonUndeadPseudoHB(object oSummon, int nSpellID);
+void SummonUndeadPseudoHB(object oSummon, int nSpellID)
 {
+DoDebug("Running SummonUndeadPseudoHB on "+GetName(oSummon));
     if(!GetIsObjectValid(oSummon))
         return;
     if(!GetIsInCombat(OBJECT_SELF))
@@ -28,7 +30,23 @@ void SummonUndeadPseudoHB(object oSummon)
         int nTurningMaxHD = GetTurningCheckResult(nLevel, nChaMod);
         int nTargetHD = GetHitDiceForTurning(oSummon);
         if(nTurningMaxHD < nTargetHD)
-            RemoveSpecificEffect(EFFECT_TYPE_DOMINATED, oSummon);
+        {
+            effect eTest= GetFirstEffect(oSummon);
+            while(GetIsEffectValid(eTest))
+            {
+                if(GetEffectSpellId(eTest) == nSpellID)
+                    RemoveEffect(oSummon, eTest);
+                eTest = GetNextEffect(oSummon);
+            }
+            //make em hostile
+            object oTest = GetFirstFactionMember(OBJECT_SELF);
+            while(GetIsObjectValid(oTest))
+            {
+                SetIsTemporaryEnemy(oTest, oSummon);
+                oTest = GetNextFactionMember(OBJECT_SELF);
+            }
+DoDebug("Lost turning check on "+GetName(oSummon));
+        }    
         else
         {
             AssignCommand(oSummon, ClearAllActions());
@@ -36,7 +54,7 @@ void SummonUndeadPseudoHB(object oSummon)
         }    
     
     }
-    DelayCommand(6.0, SummonUndeadPseudoHB(oSummon));
+    DelayCommand(6.0, SummonUndeadPseudoHB(oSummon, nSpellID));
 }
 
 void main()
@@ -46,7 +64,7 @@ void main()
     object oCreature;
     int nClass = GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, OBJECT_SELF);
     int nCount;
-    int nSpellID = GetSpellId();
+    int nSpellID = PRCGetSpellId();
     if(nSpellID == 3009)      nCount = 1;
     else if(nSpellID == 3010) nCount = 2;
     else if(nSpellID == 3011) nCount = 4;
@@ -73,7 +91,8 @@ void main()
        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eSummonB, GetLocation(oSummon));
        ChangeToStandardFaction(oSummon, STANDARD_FACTION_HOSTILE);
        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand, oSummon);
-       DelayCommand(6.0, SummonUndeadPseudoHB(oSummon));
+       DelayCommand(6.0, SummonUndeadPseudoHB(oSummon, nSpellID));
        DestroyObject(oSummon, RoundsToSeconds(nClass));
+DoDebug("Effect type is "+IntToString(GetEffectType(eCommand)));
    }
 }

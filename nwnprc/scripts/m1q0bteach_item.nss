@@ -23,6 +23,7 @@ void main()
                 GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SAMURAI,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SOULKNIFE,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_RANGER,oPC) > 0)

@@ -29,6 +29,7 @@ void main()
                    GetLevelByClass(CLASS_TYPE_PSYWAR,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oAttacker) > 0 ||
+                   GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_MARSHAL,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_RANGER,oAttacker) > 0 )
                 {

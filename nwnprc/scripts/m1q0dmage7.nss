@@ -1,6 +1,7 @@
 // Added compatibility for PRC base classes
 #include "prc_class_const"
 
+
 // This script creates a treasure item based on the class of the
 //PC who killed this creature
 void main()
@@ -37,6 +38,7 @@ void main()
     }
     else if(GetLevelByClass(CLASS_TYPE_SAMURAI,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0 ||
+            GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_RANGER,oPC) > 0)
     {
         sItemTemplate = "NW_IT_MBELT011"; //Archer's Belt

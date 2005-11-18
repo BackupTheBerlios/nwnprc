@@ -27,6 +27,7 @@ int StartingConditional()
        (GetLevelByClass(CLASS_TYPE_CW_SAMURAI, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_SAMURAI, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_PSYWAR, GetPCSpeaker()) == 0) &&
+       (GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_PALADIN, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_RANGER, GetPCSpeaker()) == 0))
         return FALSE;

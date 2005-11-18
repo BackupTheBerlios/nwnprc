@@ -47,7 +47,8 @@ void main()
         {
             sItemTemplate1 = "NW_IT_MNECK024"; //Amulet of will
         }
-        else if(GetLevelByClass(CLASS_TYPE_RANGER,oPC) > 0)
+        else if(GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||
+		GetLevelByClass(CLASS_TYPE_RANGER,oPC) > 0)
         {
             sItemTemplate1 = "NW_MAARCL097"; //Cloak of prot vs. evil
         }

@@ -7,6 +7,7 @@ int StartingConditional()
     int bCondition = GetLevelByClass(CLASS_TYPE_FIGHTER, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_MONK, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_RANGER, GetPCSpeaker()) > 0 ||
+                     GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_SAMURAI, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_CORRUPTER, GetPCSpeaker()) > 0 ||

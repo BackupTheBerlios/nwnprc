@@ -22,6 +22,7 @@ void main()
            GetLevelByClass(CLASS_TYPE_MARSHAL,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_MONK,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_PALADIN,oAttacker) > 0 ||
+           GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_RANGER,oAttacker) > 0 )
         {
             SetLocalInt(GetModule(),"NW_G_M1Q0BMelee",TRUE);

@@ -15,6 +15,7 @@ int StartingConditional()
                       GetLevelByClass(CLASS_TYPE_BRAWLER, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_SOULKNIFE, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_PSYWAR, GetPCSpeaker()) > 0 ||
+                      GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_CW_SAMURAI, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_SWASHBUCKLER, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_MARSHAL, GetPCSpeaker()) > 0 ||

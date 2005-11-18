@@ -1330,6 +1330,8 @@ void UpdateUsedCompositeNamesList(object oItem, string sBase, string sComposite)
     // Add the bonus name to the list if it isn't there already
     if(!GetLocalInt(oItem, sBase + "_Exist_" + sComposite))
     {
+        if(DEBUG) DoDebug("Storing the composite name '" + sComposite + "' for later deletion");
+
         string sArrayName = sBase + "_Names";
         // Create the array if it doesn't exist already
         if(!array_exists(oItem, sArrayName))
@@ -1345,6 +1347,8 @@ void UpdateUsedCompositeNamesList(object oItem, string sBase, string sComposite)
 
 void DeleteNamedComposites(object oItem, string sBase)
 {
+    if(DEBUG) DoDebug("Deleting composite bonus list '" + sBase + "' on " + DebugObject2Str(oItem));
+
     string sArrayName = sBase + "_Names";
     string sComposite;
     int nMax = array_get_size(oItem, sArrayName);
@@ -1354,6 +1358,7 @@ void DeleteNamedComposites(object oItem, string sBase)
     for(; i < nMax; i++)
     {
         sComposite = array_get_string(oItem, sArrayName, i);
+        if(DEBUG) DoDebug("Deleting bonus marker '" + sComposite + "'");
         DeleteLocalInt(oItem, sComposite);
         DeleteLocalInt(oItem, sBase + "_Exist_" + sComposite);
     }

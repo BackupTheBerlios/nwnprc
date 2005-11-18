@@ -14,7 +14,6 @@
 void SummonUndeadPseudoHB(object oSummon, int nSpellID);
 void SummonUndeadPseudoHB(object oSummon, int nSpellID)
 {
-DoDebug("Running SummonUndeadPseudoHB on "+GetName(oSummon));
     if(!GetIsObjectValid(oSummon))
         return;
     if(!GetIsInCombat(OBJECT_SELF))
@@ -45,7 +44,6 @@ DoDebug("Running SummonUndeadPseudoHB on "+GetName(oSummon));
                 SetIsTemporaryEnemy(oTest, oSummon);
                 oTest = GetNextFactionMember(OBJECT_SELF);
             }
-DoDebug("Lost turning check on "+GetName(oSummon));
         }    
         else
         {
@@ -93,6 +91,5 @@ void main()
        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand, oSummon);
        DelayCommand(6.0, SummonUndeadPseudoHB(oSummon, nSpellID));
        DestroyObject(oSummon, RoundsToSeconds(nClass));
-DoDebug("Effect type is "+IntToString(GetEffectType(eCommand)));
    }
 }

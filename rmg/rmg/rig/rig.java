@@ -17,11 +17,7 @@ public class rig {
 	private static int rootID        = 0;
 	private static int prefixID      = 0;
 	private static int suffixID      = 0;
-	private static String itemName   = "";
-	private static String itemTag    = "";
-	private static String itemRefRef = "";
-	private static itemproperty[] itemproperties = new itemproperty[10];
-	private static int itempropertyCount = 0;
+	private static item item;
 
 	//main method
 	public static void main(String[] args){
@@ -59,26 +55,24 @@ public class rig {
 			return;
 		if(suffixName.equals(null))
 			return;
-		//setup name tag resref
-		itemName    = prefixName + suffixName;
-		itemTag     = prefixID+"_"+rootID+"_"+suffixID;
-		itemRefRef  = prefixID+"_"+rootID+"_"+suffixID;
+		//setup name tag resref etc
+		item = new item();
+		item.name    = prefixName + suffixName;
+		item.tag     = prefixID+"_"+rootID+"_"+suffixID;
+		item.refRef  = prefixID+"_"+rootID+"_"+suffixID;
 		//clear itemproperty array
-		itemproperty[] itemproperties = new itemproperty[10];
 		itempropertyCount = 0;
 		//add itemproperties to array
 		for(int i = 1 ; i<=5;i++){
 				int itempropertyID = rig2da.getBiowareEntryAsInt("Property"+i, prefixID);
 				if(itempropertyID != 0){
-					itempropertyCount++;
-					itemproperties[itempropertyCount] = new itemproperty(itempropertyID);
+					item.addItemproperty(itemproperty(itempropertyID));
 				}
 		}
 		for(int i = 1 ; i<=5;i++){
 				int itempropertyID = rig2da.getBiowareEntryAsInt("Property"+i, suffixID);
 				if(itempropertyID != 0){
-					itempropertyCount++;
-					itemproperties[itempropertyCount] = new itemproperty(itempropertyID);
+					item.addItemproperty(itemproperty(itempropertyID));
 				}
 		}
 		//print it
@@ -92,7 +86,7 @@ public class rig {
 			File target = new File("hak/"+itemRefRef+".uti.xml");
 			// Creater the writer and print
 			FileWriter writer = new FileWriter(target, true);
-			writer.write("Hello World!");
+			writer.write(item.toXML());
 			// Clean up
 			writer.flush();
 			writer.close();

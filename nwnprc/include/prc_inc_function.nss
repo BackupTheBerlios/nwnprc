@@ -451,6 +451,8 @@ void DeletePRCLocalInts(object oSkin)
     //DeleteLocalInt(oSkin,"DeformGauntIntim");
     //DeleteLocalInt(oSkin,"DeformGauntHide");
     //DeleteLocalInt(oSkin,"DeformGauntMS");
+    DeleteLocalInt(oSkin,"DeformGaunt");
+    DeleteLocalInt(oSkin,"DeformObese");
     // Vow Feats
     //DeleteLocalInt(oSkin,"SacredVow");
     //DeleteLocalInt(oSkin,"VowObed");

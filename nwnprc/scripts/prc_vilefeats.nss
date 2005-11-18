@@ -5,25 +5,27 @@
 void DeformObese(object oPC ,object oSkin)
 {
 
-  if(GetLocalInt(oSkin, "DeformObeseCon") == 2) return;
+  if(GetLocalInt(oSkin, "DeformObese")) return;
 
     SetCompositeBonus(oSkin, "DeformObeseCon", 2, ITEM_PROPERTY_ABILITY_BONUS,IP_CONST_ABILITY_CON);
     SetCompositeBonus(oSkin, "DeformObeseDex", 2, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_DEX);
     SetCompositeBonus(oSkin, "DeformObeseIntim", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
     SetCompositeBonus(oSkin, "DeformObesePoison", 2, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEVS_POISON);
+    SetLocalInt(oSkin, "DeformObese", TRUE);
 }
 
 ////    Deformity (Gaunt)    ////
 void DeformGaunt(object oPC ,object oSkin)
 {
 
-  if(GetLocalInt(oSkin, "DeformGauntDex") == 2) return;
+  if(GetLocalInt(oSkin, "DeformGaunt")) return;
 
     SetCompositeBonus(oSkin, "DeformGauntDex", 2, ITEM_PROPERTY_ABILITY_BONUS,IP_CONST_ABILITY_DEX);
     SetCompositeBonus(oSkin, "DeformGauntCon", 2, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_CON);
     SetCompositeBonus(oSkin, "DeformGauntIntim", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
     SetCompositeBonus(oSkin, "DeformGauntHide", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_HIDE);
     SetCompositeBonus(oSkin, "DeformGauntMS", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_MOVE_SILENTLY);
+    SetLocalInt(oSkin, "DeformGaunt", TRUE);
 }
 
 ////    Willing Deformity    ////

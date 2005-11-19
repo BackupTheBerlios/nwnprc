@@ -3,7 +3,7 @@
 //:: psi_inc_augment
 //::///////////////////////////////////////////////
 /** @file
-    Defines a structs and functions for handling
+    Defines structs and functions for handling
     psionic power augmentation.
 
     @author Ornedan
@@ -38,7 +38,7 @@ struct power_augment_profile{
      * This value is that N.
      */
     int nGenericAugCost;
-    
+
     /**
      * How many PP the first augmentation option of the power will cost per
      * times used.
@@ -48,7 +48,7 @@ struct power_augment_profile{
      * How many times, at most, can the first augmentation option be used.
      */
     int nMaxAugs_1;
-    
+
     /**
      * How many PP the second augmentation option of the power will cost per
      * times used.
@@ -58,7 +58,7 @@ struct power_augment_profile{
      * How many times, at most, can the second augmentation option be used.
      */
     int nMaxAugs_2;
-    
+
     /**
      * How many PP the third augmentation option of the power will cost per
      * times used.
@@ -68,7 +68,7 @@ struct power_augment_profile{
      * How many times, at most, can the third augmentation option be used.
      */
     int nMaxAugs_3;
-    
+
     /**
      * How many PP the fourth augmentation option of the power will cost per
      * times used.
@@ -78,7 +78,7 @@ struct power_augment_profile{
      * How many times, at most, can the fourth augmentation option be used.
      */
     int nMaxAugs_4;
-    
+
     /**
      * How many PP the fifth augmentation option of the power will cost per
      * times used.
@@ -115,7 +115,7 @@ struct user_augment_profile{
  * does not have that augmentation feature.
  *
  * @param nGenericAugCost Many powers have an augmentation clause saying "for
- *                        each N power points used to augment this power, 
+ *                        each N power points used to augment this power,
  *                        X happens". This parameter is used to define the
  *                        value N.
  *                        Valid values: {x = -1 OR x > 0}
@@ -209,12 +209,11 @@ void StoreUserAugmentationProfile(object oUser, int nIndex, struct user_augment_
  * - Wild Surge
  *
  *
- * @param oUser A creature manifesting a power.
- * @param manif The manifestation data.
+ * @param manif The manifestation data related to an ongoing manifestation attempt.
  * @param pap   The power's augmentation profile.
  * @return      The manifestation data with augmentation's effects added in.
  */
-struct manifestation GetAugmentation(object oUser, struct manifestation manif, struct power_augment_profile pap);
+struct manifestation EvaluateAugmentation(struct manifestation manif, struct power_augment_profile pap);
 
 
 //////////////////////////////////////////////////
@@ -231,7 +230,7 @@ struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = -1,
                                                       )
 {
     struct power_augment_profile pap;
-    
+
     pap.nGenericAugCost = nGenericAugCost;
     pap.nAugCost_1 = nAugCost_1;
     pap.nMaxAugs_1 = nMaxAugs_1;
@@ -243,7 +242,7 @@ struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = -1,
     pap.nMaxAugs_4 = nMaxAugs_4;
     pap.nAugCost_5 = nAugCost_5;
     pap.nMaxAugs_5 = nMaxAugs_5;
-    
+
     return pap;
 }
 
@@ -251,17 +250,17 @@ struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = -1,
 struct user_augment_profile GetUserAugmentationProfile(object oUser, int nIndex)
 {
     int nProfile = GetPersistantLocalInt(oUser, PRC_AUGMENT_PROFILE + IntToString(nIndex));
-    struct user_augment_profile sup;
-    
+    struct user_augment_profile uap;
+
     // The augmentation profile is stored in one integer, with 6 bits per option.
     // MSB -> [xx555555444444333333222222111111] <- LSB
     int nMask = 0x3F; // 6 LSB
-    sup.nOption_1 = nProfile & nMask;
-    sup.nOption_2 = (nProfile >>> 6) & nMask;
-    sup.nOption_3 = (nProfile >>> 12) & nMask;
-    sup.nOption_4 = (nProfile >>> 18) & nMask;
-    sup.nOption_5 = (nProfile >>> 24) & nMask;
-    
+    uap.nOption_1 = nProfile          & nMask;
+    uap.nOption_2 = (nProfile >>> 6)  & nMask;
+    uap.nOption_3 = (nProfile >>> 12) & nMask;
+    uap.nOption_4 = (nProfile >>> 18) & nMask;
+    uap.nOption_5 = (nProfile >>> 24) & nMask;
+
     return sup;
 }
 
@@ -269,23 +268,23 @@ void StoreUserAugmentationProfile(object oUser, int nIndex, struct user_augment_
 {
     int nProfile = 0x00000000;
     int nMask = 0x3F; // 6 LSB
-    
+
     nProfile |= (uap.nOption_1 & nMask);
     nProfile |= (uap.nOption_2 & nMask) << 6;
     nProfile |= (uap.nOption_3 & nMask) << 12;
     nProfile |= (uap.nOption_4 & nMask) << 18;
     nProfile |= (uap.nOption_5 & nMask) << 24;
-    
+
     SetPersistantLocalInt(oUser, PRC_AUGMENT_PROFILE + IntToString(nIndex), nProfile);
 }
 
-struct manifestation GetAugmentation(object oUser, struct manifestation manif, struct power_augment_profile pap)
+struct manifestation EvaluateAugmentation(struct manifestation manif, struct power_augment_profile pap)
 {
     // If the user does not have an augmentation profile defined
-    if(!GetLocalInt(oUser, PRC_CURRENT_AUGMENT_PROFILE))
+    if(!GetLocalInt(manif.oManifester, PRC_CURRENT_AUGMENT_PROFILE))
     {
         // If the user does have wild surge active, but no augment profile defined, assume all PP going to option 1
-        if(GetWildSurge(oUser))
+        if(GetWildSurge(manif.oManifester))
         {
             int nSurge = GetWildSurge();
             int nTimesAugd = nSurge / pap.nAugCost_1;
@@ -299,11 +298,11 @@ struct manifestation GetAugmentation(object oUser, struct manifestation manif, s
     else
     {
         // Get the user's augmentation profile
-        struct user_augment_profile uap = GetUserAugmentationProfile(oUser, GetLocalInt(oUser, PRC_CURRENT_AUGMENT_PROFILE));
-        int nSurge = GetWildSurge()
+        struct user_augment_profile uap = GetUserAugmentationProfile(manif.oManifester, GetLocalInt(manif.oManifester, PRC_CURRENT_AUGMENT_PROFILE));
+        int nSurge = GetWildSurge(manif.oManifester);
         int nAugPPCost = 0;
         int bAugIsPP = GetLocalInt(oCaster, PRC_PLAYER_SWITCH_AUGMENT_IS_PP);
-        
+
         /* Bloody duplication follows. Real arrays would be nice */
         // Make sure the option is available for use
         if(pap.nMaxAugs_1)
@@ -370,40 +369,41 @@ struct manifestation GetAugmentation(object oUser, struct manifestation manif, s
             // Calculate the amount of PP the augmentation will cost
             nAugPPCost += manif.nTimesAugOptUsed_5 * pap.nAugCost_5;
         }
-        
+
         // Calculate number of times a generic augmentation happens with this number of PP
         if(pap.nGenericAugCost != -1)
             manif.nTimesGenericAugUsed = nAugPPCost / pap.nGenericAugCost;
-        
+
+
+        /*/ Various effects modifying the augmentation go below /*/
+
         // Account for wild surge
         nAugPPCost -= nSurge;
-        
-        /*/ Various effects modifying the augmentation go below /*/
-        
+
         // If the surge provides more PP than was used by this augmentation profile, attempt to place the rest into option 1
         if(nAugPPCost < 0)
         {
             int nSurgeLeft = -nAugPPCost;
             nAugPPCost = 0;
-            
+
             // Calculate the additional augmentations
             int nTimesAugd = nSurgeLeft / pap.nAugCost_1;
             if(pap.nMaxAugs_1 != -1 && (manif.nTimesAugOptUsed_1 + nTimesAugd) > pap.nMaxAugs_1)
                 nTimesAugd += pap.nMaxAugments - (manif.nTimesAugOptUsed_1 + nTimesAugd);
             // Add them in
             manif.nTimesAugOptUsed_1 += nTimesAugd;
-            
+
             // Calculate increase to generic augmentation
             if(pap.nGenericAugCost != -1)
                 manif.nTimesGenericAugUsed += (nTimesAugd * pap.nAugCost_1) / pap.nGenericAugCost;
         }
-        
+
         /*/ Various effects modifying the augmentation go above /*/
-        
-        
+
+
         // Store the PP cost increase
         manif.nPPCost += nAugPPCost;
     }
-    
+
     return manif;
 }

@@ -49,6 +49,19 @@ void GainPsionicFocus(object oGainee = OBJECT_SELF);
 int UsePsionicFocus(object oUser = OBJECT_SELF);
 
 /**
+ * Gets the number of psionic focus uses the creature has available
+ * to it at this moment. If the creature is psionically focused,
+ * the number equal to GetPsionicFocusUsesPerExpenditure(), otherwise
+ * it is however many focus uses the creature still has remaining of
+ * that number.
+ *
+ * @param oCreature Creaute whose psionic focus use count to evaluate
+ * @return          The total number of times UsePsionicFocus() will
+ *                  return TRUE if called at this moment.
+ */
+int GetPsionicFocusesAvailable(object oCreature = OBJECT_SELF);
+
+/**
  * Calculates the number of times a creature may use it's psionic focus when expending it.
  * Base is 1.
  * In addition, 1 more use for each Epic Psionic Focus feat the creature has.
@@ -155,6 +168,16 @@ int UsePsionicFocus(object oUser = OBJECT_SELF)
     if(bToReturn) LosePsionicFocus(oUser);
 
     return bToReturn;
+}
+
+int GetPsionicFocusesAvailable(object oCreature = OBJECT_SELF)
+{
+    // If the creature has a psionic focus active, return the maximum
+    if(GetLocalInt(oCreature, PSIONIC_FOCUS))
+        return GetPsionicFocusUsesPerExpenditure(oCreature);
+    // Otherwise, return the amount currently remaining
+    else
+        return GetLocalInt(oCreature, "PsionicFocusUses");
 }
 
 int GetPsionicFocusUsesPerExpenditure(object oCreature = OBJECT_SELF)

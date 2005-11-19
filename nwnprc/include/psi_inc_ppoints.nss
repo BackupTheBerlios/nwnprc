@@ -123,26 +123,7 @@ void LosePowerPoints(object oChar, int nLoss, int bInform = TRUE);
  * @param oChar Character whose feats to evaluate
  * @return      The amount of Power Points gained from Feats
  */
-int GetFeatBonusPP(object oChar);
-
-/** Internal function
- * @param oChar          Character whose ability modifier to evaluate
- * @param nFirstPsiClass The CLASS_TYPE_* of the character's first psionic class
- * @return               The amount of Bonus Power Points gained from Abilities
- */
-int GetModifierPP (object oChar, int nFirstPsiClass);
-
-/** Internal function
- * @param oChar          Character whose classes to evaluate
- * @param nClass         The CLASS_TYPE_* of the specific class to evaluate
- * @param nFirstPsiClass The CLASS_TYPE_* of the character's first psionic class
- * @return               The amount of Power Points gained from levels in the
- *                       given class
- */
-int GetPPForClass (object oChar, int nClass, int nFirstPsiClass);
-
-
-int GetFeatBonusPP(object oChar){
+int _GetFeatBonusPP(object oChar){
     int nBonusPP = 0;
 
     // Normal feats
@@ -167,8 +148,12 @@ int GetFeatBonusPP(object oChar){
     return nBonusPP;
 }
 
-
-int GetModifierPP (object oChar, int nFirstPsiClass)
+/** Internal function
+ * @param oChar          Character whose ability modifier to evaluate
+ * @param nFirstPsiClass The CLASS_TYPE_* of the character's first psionic class
+ * @return               The amount of Bonus Power Points gained from Abilities
+ */
+int _GetModifierPP (object oChar, int nFirstPsiClass)
 {
     int nPP = 0;
     int nBonus;
@@ -209,7 +194,14 @@ int GetModifierPP (object oChar, int nFirstPsiClass)
     return nPP;
 }
 
-int GetPPForClass (object oChar, int nClass, int nFirstPsiClass)
+/** Internal function
+ * @param oChar          Character whose classes to evaluate
+ * @param nClass         The CLASS_TYPE_* of the specific class to evaluate
+ * @param nFirstPsiClass The CLASS_TYPE_* of the character's first psionic class
+ * @return               The amount of Power Points gained from levels in the
+ *                       given class
+ */
+int _GetPPForClass (object oChar, int nClass, int nFirstPsiClass)
 {
     int nPP;
     int nLevel = GetLevelByClass(nClass, oChar)
@@ -240,14 +232,14 @@ int GetMaximumPowerPoints(object oChar)
     // The character's first psionic class is considered to be the one that +ML PrCs add to
     int nFirstPsiClass = GetFirstPsionicClass(oChar);
 
-    nMaxPP += GetPPForClass(oChar, CLASS_TYPE_PSION, nFirstPsiClass);
-    nMaxPP += GetPPForClass(oChar, CLASS_TYPE_WILDER, nFirstPsiClass);
-    nMaxPP += GetPPForClass(oChar, CLASS_TYPE_PSYWAR, nFirstPsiClass);
-    nMaxPP += GetPPForClass(oChar, CLASS_TYPE_FIST_OF_ZUOKEN, nFirstPsiClass);
+    nMaxPP += _GetPPForClass(oChar, CLASS_TYPE_PSION, nFirstPsiClass);
+    nMaxPP += _GetPPForClass(oChar, CLASS_TYPE_WILDER, nFirstPsiClass);
+    nMaxPP += _GetPPForClass(oChar, CLASS_TYPE_PSYWAR, nFirstPsiClass);
+    nMaxPP += _GetPPForClass(oChar, CLASS_TYPE_FIST_OF_ZUOKEN, nFirstPsiClass);
 
-    nMaxPP += GetModifierPP(oChar, nFirstPsiClass);
+    nMaxPP += _GetModifierPP(oChar, nFirstPsiClass);
 
-    nMaxPP += GetFeatBonusPP(oChar);
+    nMaxPP += _GetFeatBonusPP(oChar);
 
     return nMaxPP;
 }

@@ -233,9 +233,12 @@ void TeleportLocationsToMapPins(object oPC);
  * @param lTarget   The location the creature is going to teleport to.
  * @param bInform   If this is true, the creature is sent a message if
  *                  it is not allowed to teleport.
+ * @param bPublic   Only relevant if BInform is TRUE. If this is TRUE
+ *                  the notice is delivered as floating text. Otherwise,
+ *                  it's delivered as a message.
  * @return          TRUE if the creature can teleport, FALSE if it can't.
  */
-int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE);
+int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE, int bPublic = FALSE);
 
 /**
  * Common code for teleportation spells that:
@@ -562,7 +565,7 @@ void TeleportLocationsToMapPins(object oPC)
 }
 
 
-int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE)
+int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE, int bPublic = FALSE)
 {
     int bReturn = TRUE;
     // First, check global switch to turn off teleporting
@@ -582,7 +585,12 @@ int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE)
 
     // Tell the creature about failure, if necessary
     if(bInform & !bReturn)
-        SendMessageToPCByStrRef(oCreature, 16825298); // "Something prevents you from teleporting!"
+    {
+        if(bPublic)
+            FloatingTextStrRefOnCreature(16825298, oCreature, FALSE); // "Something prevents your extra-dimensional movement!"
+        else
+            SendMessageToPCByStrRef(oCreature, 16825298); // "Something prevents your extra-dimensional movement!"
+    }
 
     return bReturn;
 }

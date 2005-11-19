@@ -1,3 +1,5 @@
+#include "prc_inc_teleport"
+
 int ValidateActivator(object oActivator);
 void ResetArea(object oArea);
 object GetExitOfNextMansion();
@@ -27,6 +29,10 @@ void main()
         object aMansion = GetAreaFromLocation(GetLocation(oExit));
         ResetArea(aMansion);
 
+        // Temporarily disable the teleportation forbiddance in the mansion
+        int nForbid = GetLocalInt(aMansion, PRC_DISABLE_TELEPORTATION_IN_AREA);
+        DeleteLocalInt(aMansion, PRC_DISABLE_TELEPORTATION_IN_AREA);
+
         location loc = Location(aMansion, GetPosition(oExit), GetFacing(oExit));
 
         // Loop through all the players and check to see if they are in
@@ -35,8 +41,12 @@ void main()
         object oPC = GetFirstPC();
         while (GetIsObjectValid(oPC))
         {
-            if (aActivator == GetArea (oPC) &&
-                oActivatorLeader == GetFactionLeader(oPC))
+
+
+            if (aActivator == GetArea (oPC)                         &&
+                oActivatorLeader == GetFactionLeader(oPC)           &&
+                GetCanTeleport(aActivator, loc, TRUE)
+                )
             {
                 // Save the PC's return location so they always go to the right
                 // spot.
@@ -46,6 +56,9 @@ void main()
 
             oPC = GetNextPC();
         }
+
+        // Restore the old forbiddance value
+        SetLocalInt(aMansion, PRC_DISABLE_TELEPORTATION_IN_AREA, nForbid);
 
         // Link the exit door to the entrance so we know which entrance
         // to put the party back at (in case more than 1 mansion gets

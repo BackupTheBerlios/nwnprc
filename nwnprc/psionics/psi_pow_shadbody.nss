@@ -26,6 +26,7 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "spinc_common"
+#include "prc_inc_teleport"
 
 void GoInvis(object oTarget, object oCaster, int nCaster, int nSpell)
 {
@@ -100,9 +101,12 @@ void main()
         eLink = EffectLinkEffects(eLink, eDR);
         eLink = EffectLinkEffects(eLink, eDark);
 
-
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-        GoInvis(oTarget, oCaster, nCaster, nSpell);
+        // Make sure the target is not prevented from extra-dimensional movement
+        if(GetCanTeleport(oTarget, GetLocation(oTarget), TRUE))
+        {
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            GoInvis(oTarget, oCaster, nCaster, nSpell);
+        }
     }
 }

@@ -9,10 +9,9 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-//#include "x0_i0_petrify"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
-//#include "prc_alterations"
+#include "prc_inc_teleport"
 
 void RunNailedToTheSky(object oTarget, int nDC);
 
@@ -26,7 +25,7 @@ void RemoveEffectOfType(object oTarget, int nEffectType)
 {
     effect eEff = GetFirstEffect(oTarget);
     while (GetIsEffectValid(eEff)) {
-        if ( GetEffectType(eEff) == nEffectType) { 
+        if ( GetEffectType(eEff) == nEffectType) {
             RemoveEffect(oTarget, eEff);
         }
         eEff = GetNextEffect(oTarget);
@@ -37,7 +36,7 @@ void Depetrify(object oTarget)
 {
     RemoveEffectOfType(oTarget, EFFECT_TYPE_PETRIFY);
 }
-    
+
 void main()
 {
     DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
@@ -56,7 +55,12 @@ void main()
         {
             //Declare major variables
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
-            RunNailedToTheSky(oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget));
+
+            // Teleportation spell, so can be prevented by teleportation blocking effects
+            if(GetCanTeleport(oTarget, GetLocation(oTarget), TRUE, TRUE))
+            {
+                RunNailedToTheSky(oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget));
+            }
         }
     }
     else

@@ -22,6 +22,14 @@ public class itemproperty {
 	}
 
 	public itemproperty(int id){
+		this(rig.rigIP2da.getBiowareEntryAsInt("Type", 	id), rig.rigIP2da.getBiowareEntryAsInt("SubType", 	id), rig.rigIP2da.getBiowareEntryAsInt("Cost", 	id), rig.rigIP2da.getBiowareEntryAsInt("Param1", 	id));
+		/*
+		int inType 		= rig.rigIP2da.getBiowareEntryAsInt("Type", 	id);
+		int inSubType	= rig.rigIP2da.getBiowareEntryAsInt("SubType", 	id);
+		int inCost		= rig.rigIP2da.getBiowareEntryAsInt("Cost", 	id);
+		int inParam1	= rig.rigIP2da.getBiowareEntryAsInt("Param1", 	id);
+		this(inType, inSubType, inCost, inParam1);
+		*/
 	}
 
 	//public functions

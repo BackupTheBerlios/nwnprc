@@ -7,8 +7,8 @@ public class item {
 	public String resRef;
 	public int baseItem;
 	public String name;
-	public String description = -1;
-	public String descriptionIdentified = -1;
+	public String description = "-1";
+	public String descriptionIdentified = "-1";
 	public String tag;
 	public int charges = 50;
 	public int cost;
@@ -27,7 +27,7 @@ public class item {
 	public int colorCloth2;
 	public int colorMetal1;
 	public int colorMetal2;
-	private itemproperty[] propertiesList;
+	private itemproperty[] propertiesList = new itemproperty[0];
 	public int paletteID;
 	public String comment;
 
@@ -35,12 +35,13 @@ public class item {
 	public item(){
 	}
 
-	public addItemproperty(itemproperty iprop){
-		propertiesListNew = new itemproperty[propertiesList.lenght+1];
+	public void addItemproperty(itemproperty iprop){
+		itemproperty[] propertiesListNew = new itemproperty[propertiesList.length+1];
 		for(int i = 0 ; i < propertiesList.length ; i++){
 				propertiesListNew[i] = propertiesList[i];
 		}
-		propertiesListNew[propertiesListNew.length] = iprop;
+		propertiesListNew[propertiesList.length] = iprop;
+		propertiesList = propertiesListNew;
 	}
 
 	public String toXML(){

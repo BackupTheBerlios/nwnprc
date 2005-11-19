@@ -141,12 +141,13 @@ public class Heightmap {
 				double spotHeight = height[x][y];
 				if(spotHeight < maxHeight && spotHeight > minHeight){
 					double proportion = (spotHeight-minHeight)/(maxHeight-minHeight);
-					double outproportion = Math.sin(proportion*Math.PI*0.5)*outProp;//0.5
+					/*double outproportion = Math.sin(proportion*Math.PI*0.5)*outProp;//0.5
 					if(proportion > 0.5);//0.5
 						outproportion = 1.0-((outproportion/outProp)*(1.0-outProp));
 
 
-					spotHeight = minHeight+((maxHeight-minHeight)*outproportion);
+					spotHeight = minHeight+((maxHeight-minHeight)*outproportion);*/
+					spotHeight = outHeight;
 //System.out.println("in: "+height[x][y]+" out: "+spotHeight);
 					height[x][y] = spotHeight;
 				}

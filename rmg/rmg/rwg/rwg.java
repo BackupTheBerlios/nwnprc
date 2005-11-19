@@ -20,7 +20,7 @@ public class rwg {
 
 	public static void main(String[] args){
 		double water = 0.5;
-		Terrain terrain = new Terrain(512, 512, 4, 0.5);
+		Terrain terrain = new Terrain(64, 64, 4, 0.4);
 		//initial rim setup
 		terrain.heightmap.applyLowRim(0.25);
 		//Terrain terrain = new Terrain(16, 16, 4, 0.6);
@@ -44,7 +44,7 @@ public class rwg {
 							 {0,1,1,1,1,1,1,1,0},
 							 {0,0,1,1,1,1,1,0,0},
 							 {0,0,0,1,1,1,0,0,0}};
-		terrain.heightmap.applyPlateau(0.3, 0.7, 0.5);
+		//terrain.heightmap.applyPlateau(0.4, 0.6, 0.5);
 		//terrain.heightmap.applyPlateau(0.1, 0.5, 0.20);
 		terrain.heightmap.smooth(filter, 1.0,  0.0);
 		//terrain.heightmap.applyPlateau(0.1, 0.5, 0.20);
@@ -72,7 +72,7 @@ public class rwg {
 		//sandy shore
 		colourmin = new RGB(180,180, 80);
 		colourmax = new RGB(190,190, 90);
-		terrain.addTerrainLayer(3, 0.48, 0.52, 0.0, 0.02,  colourmin, colourmax, 0, 0.8, 1.0, 0.0, 0.0);
+		terrain.addTerrainLayer(3, 0.48, 0.52, 0.0, 0.4,  colourmin, colourmax, 0, 0.8, 1.0, 0.0, 0.0);
 		//snow
 		colourmin = new RGB(225,225,250);
 		colourmax = new RGB(250,250,250);
@@ -80,7 +80,7 @@ public class rwg {
 		//underwater
 		colourmin = new RGB(0,0,30);
 		colourmax = new RGB(40,40,120);
-		terrain.addTerrainLayer(5, 0.0, 0.5, 0.0, 1.0,  colourmin, colourmax, 0, 0.8, 1.0, 0.0, 0.0);
+		terrain.addTerrainLayer(5, 0.0, 0.48, 0.0, 1.0,  colourmin, colourmax, 0, 0.8, 1.0, 0.0, 0.0);
 
 /*
 		//plane of fire:
@@ -100,8 +100,6 @@ public class rwg {
 */
 		//output colourmap
 		terrain.writeToDisk("Terrain_col");
-
-
 		NWNModel model = new NWNModel(terrain, "Terrain", 8, 8, water, false);
 		SetFile setFile = new SetFile();
 		for(int i=0 ; i < model.tileNameList.length;i++){

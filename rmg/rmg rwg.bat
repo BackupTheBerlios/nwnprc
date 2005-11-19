@@ -31,8 +31,6 @@ del *.gic
 del *.git
 del *.set
 del *.xml
-del xml
-del out
 del worldmap.hak
 del worldmap.erf
 del System.out

@@ -19,8 +19,8 @@ import rmg.rwg.RGB;
 public class rwg {
 
 	public static void main(String[] args){
-		double water = 0.5;
-		Terrain terrain = new Terrain(64, 64, 4, 0.4);
+		double water = 0.4;
+		Terrain terrain = new Terrain(512, 512, 2, 0.4);
 		//initial rim setup
 		terrain.heightmap.applyLowRim(0.25);
 		//Terrain terrain = new Terrain(16, 16, 4, 0.6);
@@ -58,21 +58,21 @@ public class rwg {
 		terrain.heightmap.writeToDisk("Terrain");
 
 		//now colour the terrains
-		//addTerrainLayer(int newID, double minHeight, double maxHeight, RGB colourmin,
-		//	RGB colourmax, int parentID, double fractalScale, double amount, double distribScale){
+//addTerrainLayer(newID, minHeight, maxHeight, minSlope, maxSlope, colourmin, colourmax, parentID, fractalScale, amount,  distribScale, heightOffset){
+//addTerrainLayer(int  , double ,   double ,   double ,  double ,  RGB ,      RGB ,      int ,     double ,      double , double ,      double ){
 		RGB colourmin, colourmax;
 		//grass
-		colourmin = new RGB(30, 80, 40);
+		colourmin = new RGB(50,100, 60);
 		colourmax = new RGB(80,150,100);
-		terrain.addTerrainLayer(1, 0.52, 0.7, 0.0, 0.04, colourmin, colourmax, 0, 0.8, 1.0, 0.2, 0.0);
+		terrain.addTerrainLayer(1, water+0.02, 0.7, 0.0, 0.04, colourmin, colourmax, 0, 0.8, 1.0, 0.2, 0.0);
 		//forest
-		colourmin = new RGB(10, 80, 10);
-		colourmax = new RGB(30,150, 50);
-		terrain.addTerrainLayer(4, 0.52, 0.7, 0.0, 0.03,  colourmin, colourmax, 1, 0.8, 0.3, 0.8, 0.1);
+		colourmin = new RGB(10, 70, 10);
+		colourmax = new RGB(30,100, 50);
+		terrain.addTerrainLayer(4, water+0.02, 0.7, 0.0, 0.03,  colourmin, colourmax, 1, 0.8, 0.3, 0.8, 0.1);
 		//sandy shore
 		colourmin = new RGB(180,180, 80);
 		colourmax = new RGB(190,190, 90);
-		terrain.addTerrainLayer(3, 0.48, 0.52, 0.0, 0.4,  colourmin, colourmax, 0, 0.8, 1.0, 0.0, 0.0);
+		terrain.addTerrainLayer(3, water-0.02, water+0.02, 0.0, 0.4,  colourmin, colourmax, 0, 0.8, 1.0, 0.0, 0.0);
 		//snow
 		colourmin = new RGB(225,225,250);
 		colourmax = new RGB(250,250,250);
@@ -80,7 +80,7 @@ public class rwg {
 		//underwater
 		colourmin = new RGB(0,0,30);
 		colourmax = new RGB(40,40,120);
-		terrain.addTerrainLayer(5, 0.0, 0.48, 0.0, 1.0,  colourmin, colourmax, 0, 0.8, 1.0, 0.0, 0.0);
+		terrain.addTerrainLayer(5, 0.0, water-0.02, 0.0, 1.0,  colourmin, colourmax, 0, 0.8, 1.0, 0.0, 0.0);
 
 /*
 		//plane of fire:

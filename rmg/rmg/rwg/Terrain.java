@@ -69,17 +69,17 @@ public class Terrain {
 		Heightmap distribfractal = new Heightmap(xSize, ySize, distribScale);
 		distribfractal.scaleHeightmap(1.0, 0.0);
 		heightmap.scaleHeightmap(1.0, 0.0);
-//		Heightmap newheight      = new Heightmap(xSize, ySize);
+		Heightmap newheight      = new Heightmap(xSize, ySize);
+		int sloperadius = (textureScale/2)+1;
+		double[][] nearheight = new double[sloperadius][sloperadius];
 
 		for(int x = 0; x < xSize; x++){
 			for(int y = 0; y < ySize; y++){
-			//	double newheightoffset = 0.0;
+				double newheightoffset = 0.0;
 				double spotheight = heightmap.getHeightmap(x,y);
 				int baseterrainID = terrainIDmap[x][y];
 				double spotfractal = distribfractal.getHeightmap(x,y);
 				//calculate slope
-				int sloperadius = (textureScale/2)+1;
-				double[][] nearheight = new double[sloperadius][sloperadius];
 				double nearlow = 1.0;
 				double nearhigh = 0.0;
 				for(int nx = 0; nx < nearheight.length; nx++){
@@ -102,17 +102,9 @@ public class Terrain {
 							nearhigh = tempheight;
 						if(tempheight<nearlow)
 							nearlow = tempheight;
-//if(nearlow == 0.0)
-//	System.out.println("tempx="+tempx+" tempy="+tempy);
 					}
 				}
 				double spotslope = nearhigh - nearlow;
-if(x==100 && y==100){
-	//System.out.println("spotslope="+spotslope);
-	//System.out.println("spotheight="+spotheight);
-	//System.out.println("nearhigh="+nearhigh);
-	//System.out.println("nearlow="+nearlow);
-}
 
 				if((spotheight >= minHeight) && (spotheight <= maxHeight) && (baseterrainID == parentID) && (spotfractal<=amount) && (spotslope>minSlope) && (spotslope<maxSlope)){
 					RGB spotcolour = new RGB(255,255,255);
@@ -126,16 +118,16 @@ if(x==100 && y==100){
 					//terrainmap[x][y].b = spotcolour.b;
 					terrainmap[x][y] = spotcolour;
 					terrainIDmap[x][y] = newID;
-		//			newheightoffset = heightOffset;
+					newheightoffset = heightOffset;
 				}
-		//		newheight.height[x][y] = heightmap.height[x][y]+newheightoffset;
+				newheight.setHeightmap(x,y, heightmap.getHeightmap(x,y)+newheightoffset);
 			}
 		}
-		//for(int x = 0; x < xSize; x++){
-		//	for(int y = 0; y < ySize; y++){
-		//		heightmap.height[x][y] = newheight.height[x][y];
-		//	}
-		//}
+		for(int x = 0; x < xSize; x++){
+			for(int y = 0; y < ySize; y++){
+				heightmap.setHeightmap(x,y, newheight.getHeightmap(x,y));
+			}
+		}
 	}
 
 	//write the terrain as a bitmap to disk

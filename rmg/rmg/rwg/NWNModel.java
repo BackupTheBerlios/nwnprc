@@ -46,7 +46,7 @@ public class NWNModel {
 		double scaleFactor = 10.0/((double)tileXSize);
 		double texScaleFactor = 1.0/((double)tileXSize);
 		double zscale = 10.0;//*scaleFactor;
-		waterlevel = 0.1*zscale;
+		waterlevel = waterlevel*zscale;
 		tileNameList = new String[xTiles*yTiles];
 //System.out.println("tileXSize="+tileXSize);
 //System.out.println("scaleFactor="+scaleFactor);
@@ -289,111 +289,111 @@ public class NWNModel {
 		} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}
-		String sFile = "";
+		StringBuilder sFile = new StringBuilder();
 		//header stuff
-		sFile += "newmodel "+modelname+"\n";
-		sFile += "setsupermodel "+modelname+" NULL"+"\n";
-		sFile += "classification tile"+"\n";
-		sFile += "setanimationscale 1"+"\n";
-		sFile += "beginmodelgeom "+modelname+"\n";
+		sFile.append("newmodel "+modelname+"\n");
+		sFile.append("setsupermodel "+modelname+" NULL"+"\n");
+		sFile.append("classification tile"+"\n");
+		sFile.append("setanimationscale 1"+"\n");
+		sFile.append("beginmodelgeom "+modelname+"\n");
 		//dummy node
-		sFile += "node dummy "+modelname+"\n";
-		sFile += "  parent NULL"+"\n";
-		sFile += "endnode"+"\n";
+		sFile.append("node dummy "+modelname+"\n");
+		sFile.append("  parent NULL"+"\n");
+		sFile.append("endnode"+"\n");
 		//geometry
 		//one node
-		sFile += "node trimesh "+modelname+"mesh"+"\n";
-		sFile += "  parent "+modelname+"\n";
-		sFile += "  ambient 1 1 1"+"\n";
-		sFile += "  diffuse 1 1 1"+"\n";
-		sFile += "  specular 0 0 0"+"\n";
-		sFile += "  shininess 1"+"\n";
-		sFile += "  shadow 0\n";
-  		sFile += "  bitmap "+modelname+"\n";
+		sFile.append("node trimesh "+modelname+"mesh"+"\n");
+		sFile.append("  parent "+modelname+"\n");
+		sFile.append("  ambient 1 1 1"+"\n");
+		sFile.append("  diffuse 1 1 1"+"\n");
+		sFile.append("  specular 0 0 0"+"\n");
+		sFile.append("  shininess 1"+"\n");
+		sFile.append("  shadow 0\n");
+  		sFile.append("  bitmap "+modelname+"\n");
   		//vertex list
-  		sFile += "  verts "+vertexlist.length+"\n";
+  		sFile.append("  verts "+vertexlist.length+"\n");
   		for(int i = 0; i < vertexlist.length; i++){
 			Vertex vertex = vertexlist[i];
-  			sFile += "    "+vertex.x+" "+vertex.y+" "+vertex.z+"\n";
+  			sFile.append("    "+vertex.x+" "+vertex.y+" "+vertex.z+"\n");
 		}
   		//texture face list
-  		sFile += "  tverts "+texturevertexlist.length+"\n";
+  		sFile.append("  tverts "+texturevertexlist.length+"\n");
   		for(int i = 0; i < texturevertexlist.length; i++){
 			Vertex vertex = texturevertexlist[i];
-  			sFile += "    "+vertex.x+" "+vertex.y+" "+vertex.z+"\n";
+  			sFile.append("    "+vertex.x+" "+vertex.y+" "+vertex.z+"\n");
 		}
   		//face list
-  		sFile += "  faces "+facelist.length+"\n";
+  		sFile.append("  faces "+facelist.length+"\n");
   		for(int i = 0; i < facelist.length; i++){
 			Face face = facelist[i];
-  			sFile += "    "+face.vertIDA+" "+face.vertIDB+" "+face.vertIDC+" "+face.shadingGroup+" "+face.textvertIDA+" "+face.textvertIDB+" "+face.textvertIDC+" "+face.walkmesh+"\n";
+  			sFile.append("    "+face.vertIDA+" "+face.vertIDB+" "+face.vertIDC+" "+face.shadingGroup+" "+face.textvertIDA+" "+face.textvertIDB+" "+face.textvertIDC+" "+face.walkmesh+"\n");
 		}
-    	sFile += "  position 0 0 0"+"\n";
-  		sFile += "  orientation 0 0 0 0"+"\n";
-  		sFile += "endnode"+"\n";
+    	sFile.append("  position 0 0 0"+"\n");
+  		sFile.append("  orientation 0 0 0 0"+"\n");
+  		sFile.append("endnode"+"\n");
   		//water node
   		if(addWater == true)
   		{
-			sFile += "node trimesh water\n";
-			sFile += "  parent "+modelname+"\n";
-			sFile += "  ambient 1 1 1\n";
-			sFile += "  diffuse 1 1 1\n";
-			sFile += "  specular 0 0 0\n";
-			sFile += "  shininess 1\n";
-			sFile += "  shadow 0\n";
-			sFile += "  transparencyhint 1\n";
-			sFile += "  bitmap TTR01_water01\n";
-			sFile += "  verts 4\n";
-			sFile += "    -5 5 "+waterlevel+"\n";
-			sFile += "    -5 -5 "+waterlevel+"\n";
-			sFile += "    5 5 "+waterlevel+"\n";
-			sFile += "    5 -5 "+waterlevel+"\n";
-			sFile += "  tverts 4\n";
-			sFile += "    12.0001001 -0.200011998 0\n";
-			sFile += "    12.0001001 -2.00003004 0\n";
-			sFile += "    13.8001003 -0.200011998 0\n";
-			sFile += "    13.8001003 -2.00003004 0\n";
-			sFile += "  faces 2\n";
-			sFile += "    0 1 2 1 0 1 2 1\n";
-			sFile += "    3 2 1 1 3 2 1 1\n";
-			sFile += "  position 0 0 0\n";
-			sFile += "  orientation 0 0 0 0\n";
-			sFile += "  alpha 1\n";
-			sFile += "  scale 1\n";
-			sFile += "  setfillumcolor 0 0 0\n";
-			sFile += "endnode\n";
+			sFile.append("node trimesh water\n");
+			sFile.append("  parent "+modelname+"\n");
+			sFile.append("  ambient 1 1 1\n");
+			sFile.append("  diffuse 1 1 1\n");
+			sFile.append("  specular 0 0 0\n");
+			sFile.append("  shininess 1\n");
+			sFile.append("  shadow 0\n");
+			sFile.append("  transparencyhint 1\n");
+			sFile.append("  bitmap TTR01_water01\n");
+			sFile.append("  verts 4\n");
+			sFile.append("    -5 5 "+waterlevel+"\n");
+			sFile.append("    -5 -5 "+waterlevel+"\n");
+			sFile.append("    5 5 "+waterlevel+"\n");
+			sFile.append("    5 -5 "+waterlevel+"\n");
+			sFile.append("  tverts 4\n");
+			sFile.append("    12.0001001 -0.200011998 0\n");
+			sFile.append("    12.0001001 -2.00003004 0\n");
+			sFile.append("    13.8001003 -0.200011998 0\n");
+			sFile.append("    13.8001003 -2.00003004 0\n");
+			sFile.append("  faces 2\n");
+			sFile.append("    0 1 2 1 0 1 2 1\n");
+			sFile.append("    3 2 1 1 3 2 1 1\n");
+			sFile.append("  position 0 0 0\n");
+			sFile.append("  orientation 0 0 0 0\n");
+			sFile.append("  alpha 1\n");
+			sFile.append("  scale 1\n");
+			sFile.append("  setfillumcolor 0 0 0\n");
+			sFile.append("endnode\n");
 		}
 		//lighting
-		sFile += "node light "+modelname+"ml1"+"\n";
-		sFile += "  parent "+modelname+"\n";
-		sFile += "  ambientonly 0"+"\n";
-		sFile += "  shadow 0"+"\n";
-		sFile += "  isdynamic 0"+"\n";
-		sFile += "  affectdynamic 1"+"\n";
-		sFile += "  lightpriority 5"+"\n";
-		sFile += "  fadingLight 1"+"\n";
-		sFile += "  flareradius 0"+"\n";
-		sFile += "  position 0 0 15"+"\n";
-		sFile += "  orientation 0 0 0 0"+"\n";
-		sFile += "  radius 14"+"\n";
-		sFile += "  color 0 0 0"+"\n";
-		sFile += "endnode"+"\n";
+		sFile.append("node light "+modelname+"ml1"+"\n");
+		sFile.append("  parent "+modelname+"\n");
+		sFile.append("  ambientonly 0"+"\n");
+		sFile.append("  shadow 0"+"\n");
+		sFile.append("  isdynamic 0"+"\n");
+		sFile.append("  affectdynamic 1"+"\n");
+		sFile.append("  lightpriority 5"+"\n");
+		sFile.append("  fadingLight 1"+"\n");
+		sFile.append("  flareradius 0"+"\n");
+		sFile.append("  position 0 0 15"+"\n");
+		sFile.append("  orientation 0 0 0 0"+"\n");
+		sFile.append("  radius 14"+"\n");
+		sFile.append("  color 0 0 0"+"\n");
+		sFile.append("endnode"+"\n");
 		//aabb node
-		sFile += "node aabb "+modelname+"mesh"+"\n";
-		sFile += "  parent "+modelname+"\n";
-		sFile += "  position 0 0 0"+"\n";
-		sFile += "  orientation 0 0 0 0"+"\n";
+		sFile.append("node aabb "+modelname+"mesh"+"\n");
+		sFile.append("  parent "+modelname+"\n");
+		sFile.append("  position 0 0 0"+"\n");
+		sFile.append("  orientation 0 0 0 0"+"\n");
 		//vertex list
-		sFile += "  verts "+vertexlist.length+"\n";
+		sFile.append("  verts "+vertexlist.length+"\n");
 		for(int i = 0; i < vertexlist.length; i++){
 			Vertex vertex = vertexlist[i];
-			sFile += "    "+vertex.x+" "+vertex.y+" "+vertex.z+"\n";
+			sFile.append("    "+vertex.x+" "+vertex.y+" "+vertex.z+"\n");
 		}
 		//face list
-		sFile += "  faces "+facelist.length+"\n";
+		sFile.append("  faces "+facelist.length+"\n");
 		for(int i = 0; i < facelist.length; i++){
 			Face face = facelist[i];
-			sFile += "    "+face.vertIDA+" "+face.vertIDB+" "+face.vertIDC+" 0 0 0 0 "+face.walkmesh+"\n";
+			sFile.append("    "+face.vertIDA+" "+face.vertIDB+" "+face.vertIDC+" 0 0 0 0 "+face.walkmesh+"\n");
 		}
 		//aabb tree
 		//http://nwn.bioware.com/forums/search_results.html?keywords=aabb&start=1043478000&end=1135666799&author=&dev=&sort=date&search_for=all&where=message&forum=48&type=n&limit=100
@@ -404,13 +404,13 @@ public class NWNModel {
 		//int minY = 0;
 		//int maxY = vertexIDMap[0].length-1;
 		NWNAABB nwnaabb = new NWNAABB(facelist, vertexlist, true);
-		sFile += "  aabb "+nwnaabb.returnString;
-		sFile += "endnode"+"\n";
+		sFile.append("  aabb "+nwnaabb.returnString);
+		sFile.append("endnode"+"\n");
 		//finish it
-		sFile += "endmodelgeom "+modelname+"\n";
-		sFile += "donemodel "+modelname+"\n";
+		sFile.append("endmodelgeom "+modelname+"\n");
+		sFile.append("donemodel "+modelname+"\n");
 		try{
-			writeToFile(sFile);
+			writeToFile(sFile.toString());
 		//} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}
@@ -423,25 +423,25 @@ public class NWNModel {
 		} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}
-		sFile = "";
+		sFile = new StringBuilder();
 		//header stuff
-		sFile += "beginwalkmeshgeom "+modelname+"\n";
+		sFile.append("beginwalkmeshgeom "+modelname+"\n");
 		//one node
-		sFile += "node aabb "+modelname+"mesh"+"\n";
-		sFile += "  parent "+modelname+"\n";
-		sFile += "  position 0 0 0"+"\n";
-		sFile += "  orientation 0 0 0 0"+"\n";
+		sFile.append("node aabb "+modelname+"mesh"+"\n");
+		sFile.append("  parent "+modelname+"\n");
+		sFile.append("  position 0 0 0"+"\n");
+		sFile.append("  orientation 0 0 0 0"+"\n");
 		//vertex list
-		sFile += "  verts "+vertexlist.length+"\n";
+		sFile.append("  verts "+vertexlist.length+"\n");
 		for(int i = 0; i < vertexlist.length; i++){
 			Vertex vertex = vertexlist[i];
-			sFile += "    "+vertex.x+" "+vertex.y+" "+vertex.z+"\n";
+			sFile.append("    "+vertex.x+" "+vertex.y+" "+vertex.z+"\n");
 		}
 		//face list
-		sFile += "  faces "+facelist.length+"\n";
+		sFile.append("  faces "+facelist.length+"\n");
 		for(int i = 0; i < facelist.length; i++){
 			Face face = facelist[i];
-			sFile += "    "+face.vertIDA+" "+face.vertIDB+" "+face.vertIDC+" 0 0 0 0 "+face.walkmesh+"\n";
+			sFile.append("    "+face.vertIDA+" "+face.vertIDB+" "+face.vertIDC+" 0 0 0 0 "+face.walkmesh+"\n");
 		}
 		//aabb tree
 		//http://nwn.bioware.com/forums/search_results.html?keywords=aabb&start=1043478000&end=1135666799&author=&dev=&sort=date&search_for=all&where=message&forum=48&type=n&limit=100
@@ -452,11 +452,11 @@ public class NWNModel {
 		//int minY = 0;
 		//int maxY = vertexIDMap[0].length-1;
 		//NWNAABB nwnaabb = new NWNAABB(facelist, vertexlist, true);
-		sFile += "  aabb "+nwnaabb.returnString;
-		sFile += "endnode"+"\n";
-		sFile += "endwalkmeshgeom "+modelname+"\n";
+		sFile.append("  aabb "+nwnaabb.returnString);
+		sFile.append("endnode"+"\n");
+		sFile.append("endwalkmeshgeom "+modelname+"\n");
 		try{
-			writeToFile(sFile);
+			writeToFile(sFile.toString());
 		//} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}
@@ -474,21 +474,21 @@ public class NWNModel {
 		} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}
-		String sFile = "";
-		sFile += "<gff name=\""+filename+".gic\" type=\"GIC \" version=\"V3.2\" >\n";
-		sFile += "    <struct id=\"-1\" >\n";
-		sFile += "        <element name=\"Creature List\" type=\"15\" />\n";
-		sFile += "        <element name=\"Door List\" type=\"15\" />\n";
-		sFile += "        <element name=\"Encounter List\" type=\"15\" />\n";
-		sFile += "        <element name=\"List\" type=\"15\" />\n";
-		sFile += "        <element name=\"SoundList\" type=\"15\" />\n";
-		sFile += "        <element name=\"StoreList\" type=\"15\" />\n";
-		sFile += "        <element name=\"TriggerList\" type=\"15\" />\n";
-		sFile += "        <element name=\"WaypointList\" type=\"15\" />\n";
-		sFile += "        <element name=\"Placeable List\" type=\"15\" />\n";
-		sFile += "    </struct>\n";
-		sFile += "</gff>\n";
-		writeToFile(sFile);
+		StringBuilder sFile = new StringBuilder();
+		sFile.append("<gff name=\""+filename+".gic\" type=\"GIC \" version=\"V3.2\" >\n");
+		sFile.append("    <struct id=\"-1\" >\n");
+		sFile.append("        <element name=\"Creature List\" type=\"15\" />\n");
+		sFile.append("        <element name=\"Door List\" type=\"15\" />\n");
+		sFile.append("        <element name=\"Encounter List\" type=\"15\" />\n");
+		sFile.append("        <element name=\"List\" type=\"15\" />\n");
+		sFile.append("        <element name=\"SoundList\" type=\"15\" />\n");
+		sFile.append("        <element name=\"StoreList\" type=\"15\" />\n");
+		sFile.append("        <element name=\"TriggerList\" type=\"15\" />\n");
+		sFile.append("        <element name=\"WaypointList\" type=\"15\" />\n");
+		sFile.append("        <element name=\"Placeable List\" type=\"15\" />\n");
+		sFile.append("    </struct>\n");
+		sFile.append("</gff>\n");
+		writeToFile(sFile.toString());
 		//git area contents
 		try{
 			file = new File(filename+".git.xml");
@@ -497,35 +497,35 @@ public class NWNModel {
 		} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}
-		sFile = "";
-		sFile += "<gff name=\""+filename+".git\" type=\"GIT \" version=\"V3.2\" >\n";
-		sFile += "    <struct id=\"-1\" >\n";
-		sFile += "        <element name=\"AreaProperties\" type=\"14\" >\n";
-		sFile += "            <struct id=\"100\" >\n";
-		sFile += "                <element name=\"AmbientSndDay\" type=\"5\" value=\"31\" />\n";
-		sFile += "                <element name=\"AmbientSndNight\" type=\"5\" value=\"31\" />\n";
-		sFile += "                <element name=\"AmbientSndDayVol\" type=\"5\" value=\"32\" />\n";
-		sFile += "                <element name=\"AmbientSndNitVol\" type=\"5\" value=\"32\" />\n";
-		sFile += "                <element name=\"EnvAudio\" type=\"5\" value=\"0\" />\n";
-		sFile += "                <element name=\"MusicBattle\" type=\"5\" value=\"34\" />\n";
-		sFile += "                <element name=\"MusicDay\" type=\"5\" value=\"20\" />\n";
-		sFile += "                <element name=\"MusicNight\" type=\"5\" value=\"20\" />\n";
-		sFile += "                <element name=\"MusicDelay\" type=\"5\" value=\"90000\" />\n";
-		sFile += "            </struct>\n";
-		sFile += "        </element>\n";
-		sFile += "        <element name=\"Creature List\" type=\"15\" />\n";
-		sFile += "        <element name=\"Door List\" type=\"15\" />\n";
-		sFile += "        <element name=\"Encounter List\" type=\"15\" />\n";
-		sFile += "        <element name=\"List\" type=\"15\" />\n";
-		sFile += "        <element name=\"SoundList\" type=\"15\" />\n";
-		sFile += "        <element name=\"StoreList\" type=\"15\" />\n";
-		sFile += "        <element name=\"TriggerList\" type=\"15\" />\n";
-		sFile += "        <element name=\"WaypointList\" type=\"15\" />\n";
-		sFile += "        <element name=\"Placeable List\" type=\"15\" />\n";
-		sFile += "    </struct>\n";
-		sFile += "</gff>\n";
+		sFile = new StringBuilder();
+		sFile.append("<gff name=\""+filename+".git\" type=\"GIT \" version=\"V3.2\" >\n");
+		sFile.append("    <struct id=\"-1\" >\n");
+		sFile.append("        <element name=\"AreaProperties\" type=\"14\" >\n");
+		sFile.append("            <struct id=\"100\" >\n");
+		sFile.append("                <element name=\"AmbientSndDay\" type=\"5\" value=\"31\" />\n");
+		sFile.append("                <element name=\"AmbientSndNight\" type=\"5\" value=\"31\" />\n");
+		sFile.append("                <element name=\"AmbientSndDayVol\" type=\"5\" value=\"32\" />\n");
+		sFile.append("                <element name=\"AmbientSndNitVol\" type=\"5\" value=\"32\" />\n");
+		sFile.append("                <element name=\"EnvAudio\" type=\"5\" value=\"0\" />\n");
+		sFile.append("                <element name=\"MusicBattle\" type=\"5\" value=\"34\" />\n");
+		sFile.append("                <element name=\"MusicDay\" type=\"5\" value=\"20\" />\n");
+		sFile.append("                <element name=\"MusicNight\" type=\"5\" value=\"20\" />\n");
+		sFile.append("                <element name=\"MusicDelay\" type=\"5\" value=\"90000\" />\n");
+		sFile.append("            </struct>\n");
+		sFile.append("        </element>\n");
+		sFile.append("        <element name=\"Creature List\" type=\"15\" />\n");
+		sFile.append("        <element name=\"Door List\" type=\"15\" />\n");
+		sFile.append("        <element name=\"Encounter List\" type=\"15\" />\n");
+		sFile.append("        <element name=\"List\" type=\"15\" />\n");
+		sFile.append("        <element name=\"SoundList\" type=\"15\" />\n");
+		sFile.append("        <element name=\"StoreList\" type=\"15\" />\n");
+		sFile.append("        <element name=\"TriggerList\" type=\"15\" />\n");
+		sFile.append("        <element name=\"WaypointList\" type=\"15\" />\n");
+		sFile.append("        <element name=\"Placeable List\" type=\"15\" />\n");
+		sFile.append("    </struct>\n");
+		sFile.append("</gff>\n");
 		try{
-			writeToFile(sFile);
+			writeToFile(sFile.toString());
 		//} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}
@@ -538,77 +538,77 @@ public class NWNModel {
 		} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}
-		sFile = "";
-		sFile += "<gff name=\""+filename+".are\" type=\"ARE \" version=\"V3.2\" >\n";
-		sFile += "    <struct id=\"-1\" >\n";
-		sFile += "        <element name=\"ID\" type=\"5\" value=\"-1\" />\n";
-		sFile += "        <element name=\"Creator_ID\" type=\"5\" value=\"-1\" />\n";
-		sFile += "        <element name=\"Version\" type=\"4\" value=\"8\" />\n";
-		sFile += "        <element name=\"Tag\" type=\"10\" value=\""+filename+"\" />\n";
-		sFile += "        <element name=\"Name\" type=\"12\" value=\"-1\" >\n";
-		sFile += "            <localString languageId=\"0\" value=\""+filename+"\" />\n";
-		sFile += "        </element>\n";
-		sFile += "        <element name=\"ResRef\" type=\"11\" value=\""+filename+"\" />\n";
-		sFile += "        <element name=\"Comments\" type=\"10\" value=\"\" />\n";
-		sFile += "        <element name=\"Expansion_List\" type=\"15\" />\n";
-		sFile += "        <element name=\"Flags\" type=\"4\" value=\"4\" />\n";
-		sFile += "        <element name=\"ModSpotCheck\" type=\"5\" value=\"0\" />\n";
-		sFile += "        <element name=\"ModListenCheck\" type=\"5\" value=\"0\" />\n";
-		sFile += "        <element name=\"MoonAmbientColor\" type=\"4\" value=\"0\" />\n";
-		sFile += "        <element name=\"MoonDiffuseColor\" type=\"4\" value=\"2631720\" />\n";
-		sFile += "        <element name=\"MoonFogAmount\" type=\"0\" value=\"3\" />\n";
-		sFile += "        <element name=\"MoonFogColor\" type=\"4\" value=\"0\" />\n";
-		sFile += "        <element name=\"MoonShadows\" type=\"0\" value=\"0\" />\n";
-		sFile += "        <element name=\"SunAmbientColor\" type=\"4\" value=\"3947580\" />\n";
-		sFile += "        <element name=\"SunDiffuseColor\" type=\"4\" value=\"7895160\" />\n";
-		sFile += "        <element name=\"SunFogAmount\" type=\"0\" value=\"3\" />\n";
-		sFile += "        <element name=\"SunFogColor\" type=\"4\" value=\"3947580\" />\n";
-		sFile += "        <element name=\"SunShadows\" type=\"0\" value=\"0\" />\n";
-		sFile += "        <element name=\"IsNight\" type=\"0\" value=\"0\" />\n";
-		sFile += "        <element name=\"LightingScheme\" type=\"0\" value=\"10\" />\n";
-		sFile += "        <element name=\"ShadowOpacity\" type=\"0\" value=\"30\" />\n";
-		sFile += "        <element name=\"FogClipDist\" type=\"8\" value=\"45.0\" />\n";
-		sFile += "        <element name=\"SkyBox\" type=\"0\" value=\"2\" />\n";
-		sFile += "        <element name=\"DayNightCycle\" type=\"0\" value=\"1\" />\n";
-		sFile += "        <element name=\"ChanceRain\" type=\"5\" value=\"100\" />\n";
-		sFile += "        <element name=\"ChanceSnow\" type=\"5\" value=\"0\" />\n";
-		sFile += "        <element name=\"ChanceLightning\" type=\"5\" value=\"50\" />\n";
-		sFile += "        <element name=\"WindPower\" type=\"5\" value=\"2\" />\n";
-		sFile += "        <element name=\"LoadScreenID\" type=\"2\" value=\"0\" />\n";
-		sFile += "        <element name=\"PlayerVsPlayer\" type=\"0\" value=\"3\" />\n";
-		sFile += "        <element name=\"NoRest\" type=\"0\" value=\"0\" />\n";
-		sFile += "        <element name=\"Width\" type=\"5\" value=\""+xTiles+"\" />\n";
-		sFile += "        <element name=\"Height\" type=\"5\" value=\""+yTiles+"\" />\n";
-		sFile += "        <element name=\"OnEnter\" type=\"11\" value=\"\" />\n";
-		sFile += "        <element name=\"OnExit\" type=\"11\" value=\"\" />\n";
-		sFile += "        <element name=\"OnHeartbeat\" type=\"11\" value=\"\" />\n";
-		sFile += "        <element name=\"OnUserDefined\" type=\"11\" value=\"\" />\n";
-		sFile += "        <element name=\"Tileset\" type=\"11\" value=\"worldmap\" />\n";
-		sFile += "        <element name=\"Tile_List\" type=\"15\" >\n";
+		sFile = new StringBuilder();
+		sFile.append("<gff name=\""+filename+".are\" type=\"ARE \" version=\"V3.2\" >\n");
+		sFile.append("    <struct id=\"-1\" >\n");
+		sFile.append("        <element name=\"ID\" type=\"5\" value=\"-1\" />\n");
+		sFile.append("        <element name=\"Creator_ID\" type=\"5\" value=\"-1\" />\n");
+		sFile.append("        <element name=\"Version\" type=\"4\" value=\"8\" />\n");
+		sFile.append("        <element name=\"Tag\" type=\"10\" value=\""+filename+"\" />\n");
+		sFile.append("        <element name=\"Name\" type=\"12\" value=\"-1\" >\n");
+		sFile.append("            <localString languageId=\"0\" value=\""+filename+"\" />\n");
+		sFile.append("        </element>\n");
+		sFile.append("        <element name=\"ResRef\" type=\"11\" value=\""+filename+"\" />\n");
+		sFile.append("        <element name=\"Comments\" type=\"10\" value=\"\" />\n");
+		sFile.append("        <element name=\"Expansion_List\" type=\"15\" />\n");
+		sFile.append("        <element name=\"Flags\" type=\"4\" value=\"4\" />\n");
+		sFile.append("        <element name=\"ModSpotCheck\" type=\"5\" value=\"0\" />\n");
+		sFile.append("        <element name=\"ModListenCheck\" type=\"5\" value=\"0\" />\n");
+		sFile.append("        <element name=\"MoonAmbientColor\" type=\"4\" value=\"0\" />\n");
+		sFile.append("        <element name=\"MoonDiffuseColor\" type=\"4\" value=\"2631720\" />\n");
+		sFile.append("        <element name=\"MoonFogAmount\" type=\"0\" value=\"3\" />\n");
+		sFile.append("        <element name=\"MoonFogColor\" type=\"4\" value=\"0\" />\n");
+		sFile.append("        <element name=\"MoonShadows\" type=\"0\" value=\"0\" />\n");
+		sFile.append("        <element name=\"SunAmbientColor\" type=\"4\" value=\"3947580\" />\n");
+		sFile.append("        <element name=\"SunDiffuseColor\" type=\"4\" value=\"7895160\" />\n");
+		sFile.append("        <element name=\"SunFogAmount\" type=\"0\" value=\"3\" />\n");
+		sFile.append("        <element name=\"SunFogColor\" type=\"4\" value=\"3947580\" />\n");
+		sFile.append("        <element name=\"SunShadows\" type=\"0\" value=\"0\" />\n");
+		sFile.append("        <element name=\"IsNight\" type=\"0\" value=\"0\" />\n");
+		sFile.append("        <element name=\"LightingScheme\" type=\"0\" value=\"10\" />\n");
+		sFile.append("        <element name=\"ShadowOpacity\" type=\"0\" value=\"30\" />\n");
+		sFile.append("        <element name=\"FogClipDist\" type=\"8\" value=\"45.0\" />\n");
+		sFile.append("        <element name=\"SkyBox\" type=\"0\" value=\"2\" />\n");
+		sFile.append("        <element name=\"DayNightCycle\" type=\"0\" value=\"1\" />\n");
+		sFile.append("        <element name=\"ChanceRain\" type=\"5\" value=\"100\" />\n");
+		sFile.append("        <element name=\"ChanceSnow\" type=\"5\" value=\"0\" />\n");
+		sFile.append("        <element name=\"ChanceLightning\" type=\"5\" value=\"50\" />\n");
+		sFile.append("        <element name=\"WindPower\" type=\"5\" value=\"2\" />\n");
+		sFile.append("        <element name=\"LoadScreenID\" type=\"2\" value=\"0\" />\n");
+		sFile.append("        <element name=\"PlayerVsPlayer\" type=\"0\" value=\"3\" />\n");
+		sFile.append("        <element name=\"NoRest\" type=\"0\" value=\"0\" />\n");
+		sFile.append("        <element name=\"Width\" type=\"5\" value=\""+xTiles+"\" />\n");
+		sFile.append("        <element name=\"Height\" type=\"5\" value=\""+yTiles+"\" />\n");
+		sFile.append("        <element name=\"OnEnter\" type=\"11\" value=\"\" />\n");
+		sFile.append("        <element name=\"OnExit\" type=\"11\" value=\"\" />\n");
+		sFile.append("        <element name=\"OnHeartbeat\" type=\"11\" value=\"\" />\n");
+		sFile.append("        <element name=\"OnUserDefined\" type=\"11\" value=\"\" />\n");
+		sFile.append("        <element name=\"Tileset\" type=\"11\" value=\"worldmap\" />\n");
+		sFile.append("        <element name=\"Tile_List\" type=\"15\" >\n");
 //loop over tiles
 		for(int y = 0; y < yTiles; y++){
 			for(int x = 0; x < xTiles; x++){
 				int tileID = (x*xTiles)+y;
-				sFile += "            <struct id=\"1\" >\n";
-				sFile += "                <element name=\"Tile_ID\" type=\"5\" value=\""+tileID+"\" />\n";
-				sFile += "                <element name=\"Tile_Orientation\" type=\"5\" value=\"0\" />\n";
-				sFile += "                <element name=\"Tile_Height\" type=\"5\" value=\"0\" />\n";
-				sFile += "                <element name=\"Tile_MainLight1\" type=\"0\" value=\"0\" />\n";
-				sFile += "                <element name=\"Tile_MainLight2\" type=\"0\" value=\"0\" />\n";
-				sFile += "                <element name=\"Tile_SrcLight1\" type=\"0\" value=\"2\" />\n";
-				sFile += "                <element name=\"Tile_SrcLight2\" type=\"0\" value=\"2\" />\n";
-				sFile += "                <element name=\"Tile_AnimLoop1\" type=\"0\" value=\"1\" />\n";
-				sFile += "                <element name=\"Tile_AnimLoop2\" type=\"0\" value=\"1\" />\n";
-				sFile += "                <element name=\"Tile_AnimLoop3\" type=\"0\" value=\"1\" />\n";
-				sFile += "            </struct>\n";
+				sFile.append("            <struct id=\"1\" >\n");
+				sFile.append("                <element name=\"Tile_ID\" type=\"5\" value=\""+tileID+"\" />\n");
+				sFile.append("                <element name=\"Tile_Orientation\" type=\"5\" value=\"0\" />\n");
+				sFile.append("                <element name=\"Tile_Height\" type=\"5\" value=\"0\" />\n");
+				sFile.append("                <element name=\"Tile_MainLight1\" type=\"0\" value=\"0\" />\n");
+				sFile.append("                <element name=\"Tile_MainLight2\" type=\"0\" value=\"0\" />\n");
+				sFile.append("                <element name=\"Tile_SrcLight1\" type=\"0\" value=\"2\" />\n");
+				sFile.append("                <element name=\"Tile_SrcLight2\" type=\"0\" value=\"2\" />\n");
+				sFile.append("                <element name=\"Tile_AnimLoop1\" type=\"0\" value=\"1\" />\n");
+				sFile.append("                <element name=\"Tile_AnimLoop2\" type=\"0\" value=\"1\" />\n");
+				sFile.append("                <element name=\"Tile_AnimLoop3\" type=\"0\" value=\"1\" />\n");
+				sFile.append("            </struct>\n");
 			}
 		}
 //end loop
-		sFile += "        </element>\n";
-		sFile += "    </struct>\n";
-		sFile += "</gff>\n";
+		sFile.append("        </element>\n");
+		sFile.append("    </struct>\n");
+		sFile.append("</gff>\n");
 		try{
-		writeToFile(sFile);
+		writeToFile(sFile.toString());
 		//} catch(IOException e){
 		} catch(IllegalArgumentException e){
 		}

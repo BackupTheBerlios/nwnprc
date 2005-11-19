@@ -231,6 +231,7 @@ public class Heightmap {
 		return height[0].length;
 	}
 
+
 	// PRIVATE FUNCTIONS
 
 

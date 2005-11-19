@@ -1,5 +1,6 @@
 java -Xmx300m -Xmx300m -classpath .;tools\prc.jar rmg.Main -rwg
 pause
+@ECHO OFF
 tools\i_view32 *.bmp /convert=c:\*.tga
 copy c:\*.tga *.tga
 del c:\*.tga

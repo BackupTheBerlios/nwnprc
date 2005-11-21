@@ -22,19 +22,21 @@
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-const int STAGE_ENTRY               = 0;
-const int STAGE_SWITCHES            = 1;
-const int STAGE_SWITCHES_VALUE      = 2;
-const int STAGE_EPIC_SPELLS         = 3;
-const int STAGE_EPIC_SPELLS_ADD     = 4;
-const int STAGE_EPIC_SPELLS_REMOVE  = 5;
-const int STAGE_EPIC_SPELLS_CONTING = 6;
-const int STAGE_SHOPS               = 8;
-const int STAGE_TEFLAMMAR_SHADOWLORD= 9;
-const int STAGE_LEADERSHIP          =10;
-const int STAGE_LEADERSHIP_ADD      =11;
-const int STAGE_LEADERSHIP_ADD_CONFIRM = 13;
-const int STAGE_LEADERSHIP_REMOVE   =12;
+const int STAGE_ENTRY                       = 0;
+const int STAGE_SWITCHES                    = 1;
+const int STAGE_SWITCHES_VALUE              = 2;
+const int STAGE_EPIC_SPELLS                 = 3;
+const int STAGE_EPIC_SPELLS_ADD             = 4;
+const int STAGE_EPIC_SPELLS_REMOVE          = 5;
+const int STAGE_EPIC_SPELLS_CONTING         = 6;
+const int STAGE_SHOPS                       = 8;
+const int STAGE_TEFLAMMAR_SHADOWLORD        = 9;
+const int STAGE_LEADERSHIP                  =10;
+const int STAGE_LEADERSHIP_ADD              =11;
+const int STAGE_LEADERSHIP_ADD_CONFIRM      =13;
+const int STAGE_LEADERSHIP_REMOVE           =12;
+const int STAGE_LEADERSHIP_DELETE           =14;
+const int STAGE_LEADERSHIP_DELETE_CONFIRM   =15;
 
 const int CHOICE_RETURN_TO_PREVIOUS = 0xFFFFFFFF;
 
@@ -82,7 +84,8 @@ void main()
                 AddChoice("Attempt to identify everything in my inventory.", 4);
                 if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD)
                     AddChoice("Join the Shadowlords as a prerequisited for the Teflammar Shadowlord class.", 5);
-                AddChoice("Register this character as a cohort.", 6);
+                if(GetCanRegister(oPC))
+                    AddChoice("Register this character as a cohort.", 6);
                 if(GetHasFeat(FEAT_LEADERSHIP, oPC))
                     AddChoice("Manage cohorts.", 7);
 
@@ -231,6 +234,8 @@ void main()
                     AddChoice("Recruit a new cohort", 1);
                 if(GetCurrentCohortCount(oPC))
                     AddChoice("Dismiss an existing cohort", 2);
+                if(GetCampaignInt(COHORT_DATABASE, "CohortCount")>0)
+                    AddChoice("Delete a stored cohort", 3);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -243,8 +248,11 @@ void main()
                 int i;
                 for(i=1;i<=nCohortCount;i++)
                 {
-                    GetIsCohortChoiceValid(i, oPC);
-                        AddChoice("sName", i);
+                    if(GetIsCohortChoiceValid(i, oPC))
+                    {
+                        string sName = GetCampaignString(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_name");
+                        AddChoice(sName, i);
+                    }
                 }
 
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
@@ -254,6 +262,50 @@ void main()
             else if(nStage == STAGE_LEADERSHIP_ADD_CONFIRM)
             {
                 string sHeader = "Are you sure you want this cohort?";
+
+                int nCohortID = GetLocalInt(oPC, "CohortID");
+                string sName = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_name");
+                int    nRace = GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_race");
+                int    nClass1=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_class1");
+                int    nClass2=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_class2");
+                int    nClass3=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_class3");
+                int    nOrder= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_order");
+                int    nMoral= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_moral");
+                sHeader +="\n"+sName;
+                sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nRace)));
+                sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass1)));
+                if(nClass2 != CLASS_TYPE_INVALID)
+                    sHeader +=" / "+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass2)));
+                if(nClass3 != CLASS_TYPE_INVALID)
+                    sHeader +=" / "+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass3)));
+                SetHeader(sHeader);
+                AddChoice("Yes", 1);
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_LEADERSHIP_DELETE)
+            {
+                SetHeader("Select a cohort to delete:");
+
+                int nCohortCount = GetCampaignInt(COHORT_DATABASE, "CohortCount");
+                int i;
+                for(i=1;i<=nCohortCount;i++)
+                {
+                    if(GetIsCohortChoiceValid(i, oPC))
+                    {
+                        string sName = GetCampaignString(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_name");
+                        AddChoice(sName, i);
+                    }
+                }
+
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_LEADERSHIP_DELETE_CONFIRM)
+            {
+                string sHeader = "Are you sure you want to delete this cohort?";
 
                 int nCohortID = GetLocalInt(oPC, "CohortID");
                 string sName = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_name");
@@ -462,12 +514,6 @@ void main()
                 nStage = STAGE_ENTRY;
             MarkStageNotSetUp(nStage, oPC);
         }
-        else if(nStage == STAGE_LEADERSHIP_ADD)
-        {
-            SetLocalInt(oPC, "CohortID", nChoice);
-            nStage = STAGE_LEADERSHIP_ADD_CONFIRM;
-            MarkStageNotSetUp(nStage, oPC);
-        }
         else if(nStage == STAGE_LEADERSHIP_REMOVE)
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
@@ -482,6 +528,12 @@ void main()
             nStage = STAGE_LEADERSHIP;
             MarkStageNotSetUp(nStage, oPC);
         }
+        else if(nStage == STAGE_LEADERSHIP_ADD)
+        {
+            SetLocalInt(oPC, "CohortID", nChoice);
+            nStage = STAGE_LEADERSHIP_ADD_CONFIRM;
+            MarkStageNotSetUp(nStage, oPC);
+        }
         else if(nStage == STAGE_LEADERSHIP_ADD_CONFIRM)
         {
             if(nChoice == 1)
@@ -494,6 +546,25 @@ void main()
                 nStage = STAGE_LEADERSHIP_ADD;
             MarkStageNotSetUp(nStage, oPC);
         }
+        else if(nStage == STAGE_LEADERSHIP_DELETE)
+        {
+            SetLocalInt(oPC, "CohortID", nChoice);
+            nStage = STAGE_LEADERSHIP_DELETE_CONFIRM;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_LEADERSHIP_DELETE_CONFIRM)
+        {
+            if(nChoice == 1)
+            {
+                int nCohortID = GetLocalInt(oPC, "CohortID");
+                DeleteCohort(nCohortID);
+                nStage = STAGE_LEADERSHIP;
+            }
+            else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_LEADERSHIP_DELETE;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+
 
         // Store the stage value. If it has been changed, this clears out the choices
         SetStage(nStage, oPC);

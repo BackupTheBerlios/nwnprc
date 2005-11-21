@@ -45,6 +45,8 @@ void AddCohortToPlayer(int nCohortID, object oPC)
     //set it to the pcs level
     int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
     SetXP(oCohort, nLevel*(nLevel-1)*500);
+    DelayCommand(1.0, AssignCommand(oCohort, SetIsDestroyable(FALSE, TRUE, TRUE)));
+    DelayCommand(1.0, AssignCommand(oCohort, SetLootable(oCohort, TRUE)));
 
     //DEBUG
     //various tests
@@ -100,7 +102,16 @@ void CheckHB()
     if(GetHitDice(OBJECT_SELF) == 40)
     {
         int nCohortCount = GetCampaignInt(COHORT_DATABASE, "CohortCount");
-        nCohortCount++;
+        int i;
+        for(i=0;i<nCohortCount;i++)
+        {
+            if(GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_deleted"))
+            {
+                nCohortCount = i;
+            }        
+        }
+        if(GetCampaignInt(COHORT_DATABASE, "CohortCount")==nCohortCount) //no "deleted" cohorts
+            nCohortCount++;
         //store the player
         SetCampaignInt(COHORT_DATABASE, "CohortCount", nCohortCount);
         StoreCampaignObject(COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_obj",    OBJECT_SELF);
@@ -113,6 +124,7 @@ void CheckHB()
         SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_moral",  GetGoodEvilValue(OBJECT_SELF));
         SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_ethran", GetHasFeat(FEAT_ETHRAN, OBJECT_SELF));
         SetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_cdkey",  GetPCPublicCDKey(OBJECT_SELF));
+        SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_deleted",   FALSE);
 
         //restore previous xp amound
         int nOldXP = GetLocalInt(OBJECT_SELF, "OriginalXP");
@@ -243,6 +255,7 @@ int GetCurrentCohortCount(object oPC)
     }
     return nCount;
 }
+
 object GetCohort(int nID, object oPC)
 {
     int nCount;
@@ -287,15 +300,28 @@ int GetIsCohortChoiceValid(int nID, object oPC)
     int    nMoral= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_moral");
     int    nEthran=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_ethran");
     string sKey  = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_cdkey");
+    int nCohortCount = GetMaximumCohortCount(oPC);
+    int i;
     //another players cohort
     if(GetPCPublicCDKey(oPC) != "" && GetPCPublicCDKey(oPC) != sKey)
+        bIsValid = FALSE;
+    //is character
+    if(GetName(oPC) == sName)
+        bIsValid = FALSE;
+    //is already a cohort
+    for(i=1;i<=nCohortCount;i++)
+    {
+        object oCohort = GetCohort(i, oPC);
+        if(GetName(oCohort) == sName)
+            bIsValid = FALSE;
+    }   
+    //has been deleted    
+    if(GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_deleted"))
         bIsValid = FALSE;
     //hathran
     if(GetHasFeat(FEAT_HATH_COHORT, oPC))
     {
         int nEthranBarbarianCount = 0;
-        int nCohortCount = GetMaximumCohortCount(oPC);
-        int i;
         for(i=1;i<=nCohortCount;i++)
         {
             object oCohort = GetCohort(i, oPC);
@@ -318,4 +344,25 @@ int GetIsCohortChoiceValid(int nID, object oPC)
         //not implemented yet
     //return result
     return bIsValid;
+}
+
+int GetCanRegister(object oPC)
+{
+    int bReturn = TRUE;
+    int i;
+    int nCohortCount = GetCampaignInt(COHORT_DATABASE, "CohortCount");
+    for(i=0;i<nCohortCount;i++)
+    {
+        string sName = GetCampaignString(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_name");
+        if(sName == GetName(oPC))
+            bReturn = FALSE;
+    }
+    return bReturn;
+}
+
+void DeleteCohort(int nCohortID)
+{
+    //this is a bit of a fudge, but it will do for now
+    //Add Cohort overwrites the first deleted cohort
+    SetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_deleted", TRUE);
 }

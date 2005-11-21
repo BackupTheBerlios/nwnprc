@@ -855,7 +855,7 @@ int MasterOfShrouds(object oPC = OBJECT_SELF)
     int MoS = (GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oPC));
     if (MoS > 0)
     {
-        int nBon =   	 GetHasFeat(FEAT_BONUS_DOMAIN_DEATH, oPC) +
+        int nBon =       GetHasFeat(FEAT_BONUS_DOMAIN_DEATH, oPC) +
                          GetHasFeat(FEAT_BONUS_DOMAIN_EVIL, oPC) +
                          GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION, oPC);
                          // This is to prevent the bug that lets you take one bonus domain and one free feat.
@@ -987,6 +987,16 @@ int RacialHD(object oPC)
     return TRUE;
 }
 
+int LeadershipHD(object oPC)
+{
+    if(GetECL(oPC)<6)
+    {
+        FloatingTextStringOnCreature("You must take "+IntToString(6-GetECL(oPC))+" more levels before you can select Leadership.", oPC, FALSE);
+        return FALSE;
+    }
+    return TRUE;
+}
+
 //this is a rough calculation to stop the 41 spellslot levels bugs
 int FortySpellSlotLevels(object oPC)
 {
@@ -1055,6 +1065,7 @@ void main()
          || !CraftingFeats(oPC)
          || !FortySpellSlotLevels(oPC)
          || !RacialHD(oPC)
+         || !LeadershipHD(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

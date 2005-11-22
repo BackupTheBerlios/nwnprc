@@ -1,1 +1,2 @@
 Main-Class: rmg.main
+Class-Path: tools\prc.jar

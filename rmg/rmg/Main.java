@@ -2,7 +2,7 @@ package rmg;
 
 import prc.autodoc.Spinner;
 
-public class Main {
+public class main {
 
 
 	/** A boolean determining whether to spam the user with progress information */

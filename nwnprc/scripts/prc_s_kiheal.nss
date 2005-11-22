@@ -32,16 +32,18 @@ void main()
 
     // Caluclate the amount to heal, min is 1 hp
     int nHeal = nLevel * nBonus;
+    //over level 8 its Greater Healing
+    if(nLevel >= 8)
+        nHeal *= 2;
     if(nHeal <= 0)
-    {
         nHeal = 1;
-    }
     effect eHeal = EffectHeal(nHeal);
     effect eVis = EffectVisualEffect(VFX_IMP_HEALING_M);
     effect eVis2 = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
     effect eDam;
     int nTouch;
-
+    
+/* Doesnt mention Undead harming in the rules
     //Undead are damaged instead of healed
     if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD || GetLevelByClass(CLASS_TYPE_UNDEAD,oTarget)>0)
     {
@@ -66,9 +68,10 @@ void main()
     }
     else
     {
+    */
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    }
+    //}
 
 }
 

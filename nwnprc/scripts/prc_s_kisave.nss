@@ -35,5 +35,5 @@ void main()
     effect eLink = EffectLinkEffects(eVis, eSave);
 
 
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(2));
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(1));
 }

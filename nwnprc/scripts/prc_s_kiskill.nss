@@ -1,14 +1,7 @@
 //::///////////////////////////////////////////////
-//:: [Acrobatic Attack]
-//:: [prc_s_acroatk.nss]
+//:: [Ki Skill]
+//:: [prc_s_kiskill.nss]
 //:://////////////////////////////////////////////
-//:: Leaps at a target. Inflicting d6 / 2 duelist
-//:: levels + dex bonus damage and knockdown for
-//:: 1 round.  Reflex save verus 10 + duelist
-//:: level + dex bonus for half damage and no
-//:: knockdown.
-//::
-//:: Attack/Damage bonus of +2 or +4 for 1 round
 //::
 //:://////////////////////////////////////////////
 //:: Created By: Aaon Graywolf
@@ -34,5 +27,5 @@ void main()
     effect eSkill = EffectSkillIncrease(SKILL_ALL_SKILLS, nBonus);
     effect eLink = EffectLinkEffects(eVis, eSkill);
 
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(2));
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(1));
 }

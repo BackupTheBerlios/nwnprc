@@ -1,29 +1,30 @@
 java -Xmx300m -Xmx300m -classpath .;tools\prc.jar rmg.Main -rwg
-pause
 @ECHO OFF
 tools\i_view32 *.bmp /convert=c:\*.tga
 copy c:\*.tga *.tga
 del c:\*.tga
 del *.bmp
-mkdir xml
+mkdir in
 mkdir out
-copy *.xml xml\*.xml
-java -cp "tools\modpacker\nwn-tools.jar" org.progeeks.nwn.XmlToGff out xml\*
+
+REM copy *.tga in\*.tga
+REM tools\dds\processtextures in out
+REM del in\*.tga
+REM copy out\*.dds *.dds
+REM del out\*.dds
+
+REM copy *.mdl in\*.mdl
+REM tools\nwnmdlcomp -c in\*.mdl 
+REM copy in\*.mdl *.mdl
+REM del in\*.mdl
+
+copy *.xml in\*.xml
+java -cp "tools\modpacker\nwn-tools.jar" org.progeeks.nwn.XmlToGff out in\*
 copy out\*.* *.*
-copy *.tga worldmap\*.tga
-copy *.mdl worldmap\*.mdl
-copy *.wok worldmap\*.wok
-copy *.set worldmap\*.set
-copy *.itp worldmap\*.itp
-copy *.are worldmap\*.are
-copy *.gic worldmap\*.gic
-copy *.git worldmap\*.git
-copy *.xml worldmap\*.xml
-del worldmap.hak
-tools\erf -c worldmap.hak *.tga *.mdl *.wok *.set *.itp
+del /Q out\*.*
+del in\*.xml
+tools\erf -c worldmap.hak *.tga *.mdl *.wok *.set *.itp *.dds
 tools\erf -c worldmap.erf *.are *.git *.gic 
-copy worldmap.hak C:\Games\NeverwinterNights\NWN\hak\worldmap.hak
-copy worldmap.erf C:\Games\NeverwinterNights\NWN\erf\worldmap.erf
 del *.tga 
 del *.mdl 
 del *.wok 
@@ -32,7 +33,6 @@ del *.gic
 del *.git
 del *.set
 del *.xml
-del worldmap.hak
-del worldmap.erf
+del *.dds
 del System.out
-pause
+del processtextures.log

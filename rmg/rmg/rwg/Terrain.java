@@ -106,7 +106,7 @@ public class Terrain {
 				}
 				double spotslope = nearhigh - nearlow;
 
-				if((spotheight >= minHeight) && (spotheight <= maxHeight) && (baseterrainID == parentID) && (spotfractal<=amount) && (spotslope>minSlope) && (spotslope<maxSlope)){
+				if((spotheight >= minHeight) && (spotheight <= maxHeight) && (baseterrainID == parentID) && (spotfractal<=amount) && (spotslope>=minSlope) && (spotslope<=maxSlope)){
 					RGB spotcolour = new RGB(255,255,255);
 					spotcolour.r = colourmin.r;
 					spotcolour.g = colourmin.g;

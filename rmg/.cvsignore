@@ -5,3 +5,8 @@ rmg.jar
 worldmap
 Terrain_col.jpg
 Terrain.jpg
+*.jpg
+worldmap.hak
+worldmap.erf
+in
+out

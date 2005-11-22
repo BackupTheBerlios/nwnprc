@@ -7,9 +7,7 @@ import java.lang.*;
 import java.lang.Runtime;
 import java.util.*;
 import java.lang.Math;
-import rmg.rwg.Vertex;
-import rmg.rwg.Face;
-import rmg.rwg.Terrain;
+import rmg.rwg.*;
 
 public class NWNModel {
 
@@ -25,6 +23,7 @@ public class NWNModel {
 	public String[] tileNameList;
 	private int tileNameListID = 0;
 	private double mapOverlap = 0.5;
+	public int tilesUsedCount = 0;
 
 	//constructors
 	//default to 4 x 4 tiles with water
@@ -35,17 +34,31 @@ public class NWNModel {
 		this(terrain, filename, 4, 4, true);
 	}*/
 
-	public NWNModel(Terrain terrain, String filename, int xTiles, int yTiles, double water, boolean noGraphics){
+	public NWNModel(){
+	}
+
+	public void makeModel(Terrain terrain, String filename, int xTiles, int yTiles, double water, boolean noGraphics){
+		//sanity checks
+		if(filename == "")			filename = "terrain";
+		if(xTiles < 1)				xTiles = 1;
+		if(yTiles < 1)				yTiles = 1;
+		if(xTiles > 32)				xTiles = 32;
+		if(yTiles > 32)				yTiles = 32;
+		if(water < 0.0)				water = 0.0;
+		if(water > 1.0)				water = 0.0;
+
 		if(water == 0.0)
 			addWater = false;
 		else
 			waterlevel = water;
+
+
 		//this is the number of vertexs on each tile on each edge
 		int tileXSize = (terrain.xSize/terrain.textureScale/xTiles);
 		int tileYSize = (terrain.ySize/terrain.textureScale/yTiles);
 		double scaleFactor = 10.0/((double)tileXSize);
 		double texScaleFactor = 1.0/((double)tileXSize);
-		double zscale = 10.0;//*scaleFactor;
+		double zscale = 10.0;
 		waterlevel = waterlevel*zscale;
 		tileNameList = new String[xTiles*yTiles];
 //System.out.println("tileXSize="+tileXSize);
@@ -90,6 +103,8 @@ public class NWNModel {
 					terrain.heightmap.setHeightmap(x, y, averageTotal/(double)averageCount);
 			}
 		}
+
+		tileNameListID = 0;
 
 		for(int xTileCount = 0; xTileCount < xTiles; xTileCount++){
 			for(int yTileCount = 0; yTileCount < yTiles; yTileCount++){
@@ -586,11 +601,12 @@ public class NWNModel {
 		sFile.append("        <element name=\"Tileset\" type=\"11\" value=\"worldmap\" />\n");
 		sFile.append("        <element name=\"Tile_List\" type=\"15\" >\n");
 //loop over tiles
+		int tileIDOffset = tilesUsedCount;
 		for(int y = 0; y < yTiles; y++){
 			for(int x = 0; x < xTiles; x++){
 				int tileID = (x*xTiles)+y;
 				sFile.append("            <struct id=\"1\" >\n");
-				sFile.append("                <element name=\"Tile_ID\" type=\"5\" value=\""+tileID+"\" />\n");
+				sFile.append("                <element name=\"Tile_ID\" type=\"5\" value=\""+(tileID+tileIDOffset)+"\" />\n");
 				sFile.append("                <element name=\"Tile_Orientation\" type=\"5\" value=\"0\" />\n");
 				sFile.append("                <element name=\"Tile_Height\" type=\"5\" value=\"0\" />\n");
 				sFile.append("                <element name=\"Tile_MainLight1\" type=\"0\" value=\"0\" />\n");
@@ -601,6 +617,7 @@ public class NWNModel {
 				sFile.append("                <element name=\"Tile_AnimLoop2\" type=\"0\" value=\"1\" />\n");
 				sFile.append("                <element name=\"Tile_AnimLoop3\" type=\"0\" value=\"1\" />\n");
 				sFile.append("            </struct>\n");
+				tilesUsedCount++;
 			}
 		}
 //end loop

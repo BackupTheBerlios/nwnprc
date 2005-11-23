@@ -390,6 +390,7 @@ const int FEAT_VILE_MARTIAL_SHURIKEN      = 3397;
 const int FEAT_VILE_MARTIAL_DART          = 3398;
 const int FEAT_VILE_MARTIAL_SICKLE        = 3399;
 const int FEAT_VILE_MARTIAL_DWAXE         = 3452;
+const int FEAT_VILE_MARTIAL_MINDBLADE     = 3624;
 
 // Weapon Focus (Ray)
 const int FEAT_WEAPON_FOCUS_RAY           = 4819;
@@ -766,6 +767,7 @@ const int FEAT_SANCTIFY_MARTIAL_SHURIKEN    = 3226;
 const int FEAT_SANCTIFY_MARTIAL_DART        = 3227;
 const int FEAT_SANCTIFY_MARTIAL_DWAXE       = 3170;
 const int FEAT_SANCTIFY_MARTIAL_SICKLE      = 3169;
+const int FEAT_SANCTIFY_MARTIAL_MINDBLADE   = 3623;
 
 //heartwarder
 const int FEAT_CHARISMA_INC1     = 3230;
@@ -1136,7 +1138,7 @@ const int FEAT_ENCHANT_WEAPON2           = 3300;
 const int FEAT_ENCHANT_WEAPON3           = 3301;
 const int FEAT_WEAPON_TEMPUS_SICKLE      = 3171;
 const int FEAT_WEAPON_TEMPUS_DWARVENAXE  = 3172;
-
+const int FEAT_WEAPON_TEMPUS_MINDBLADE   = 3625;
 
 
 // Initiate of Draconic

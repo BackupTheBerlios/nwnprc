@@ -85,6 +85,14 @@ int GetFlagCost(int nFlag);
 //      "Mind blade enhancement" for
 int GetMaxEnhancementCost(object oSK);
 
+/**
+ * Checks the given object's tag to determine whether it is a mindblade
+ * or not.
+ *
+ * @param oWeapon Weapon to test
+ * @return        TRUE if oWeapon is a mindblade, FALSE otherwise
+ */
+int GetIsMindblade(object oWeapon);
 
 
 //////////////////////////////////////////////////
@@ -130,7 +138,10 @@ int GetMaxEnhancementCost(object oSK)
     return (GetLevelByClass(CLASS_TYPE_SOULKNIFE, oSK) - 2) / 4;
 }
 
-
+int GetIsMindblade(object oWeapon)
+{
+    return GetStringLeft(GetTag(oWeapon), 14) == "prc_sk_mblade_";
+}
 
 
 

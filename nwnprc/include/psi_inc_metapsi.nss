@@ -33,6 +33,10 @@ const int METAPSIONIC_TWIN          = 0x40;
 /// Widen Power
 const int METAPSIONIC_WIDEN         = 0x80;
 
+/// The name of the array targets returned by EvaluateChainPower will be stored in
+const string PRC_CHAIN_POWER_ARRAY  = "PRC_ChainPowerTargets";
+
+
 /// Internal constant. How much PP Chain Power costs to use
 const int METAPSIONIC_CHAIN_COST    = 6;
 /// Internal constant. How much PP Empower Power costs to use
@@ -85,7 +89,7 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif);
  * @param bIsRayOrRangedTouch Whether the power's use involves a ranged touch attack roll or not
  * @return                    The amount of damage the power should deal
  */
-int MetaPsionicsDamage(int nDieSize, int nNumberOfDice, struct manifestation manif, int nBonus = 0,
+int MetaPsionicsDamage(struct manifestation manif, int nDieSize, int nNumberOfDice, int nBonus = 0,
                        int nBonusPerDie = 0, int bDoesHPDamage = FALSE, int bIsRayOrRangedTouch = FALSE);
 
 /**
@@ -98,7 +102,25 @@ int MetaPsionicsDamage(int nDieSize, int nNumberOfDice, struct manifestation man
  *              If it was, the returned value is twice fBase, otherwise
  *              it's fBase
  */
-float CheckWidenPower(float fBase, struct manifestation manif);
+float EvaluateWidenPower(struct manifestation manif, float fBase);
+
+/**
+ * Builds the list of a power's targets, accounting for the effects
+ * of Chain Power. If it is not active, the target list only contains the
+ * primary target.
+ * The list is stored in a local array on the manifester named
+ * PRC_CHAIN_POWER_ARRAY. It will be automatically deleted at the end of
+ * current script unless otherwise specified.
+ *
+ * NOTE: This only builds the list of targets, all effects have to be
+ * applied by the powerscript.
+ *
+ * @param manif
+ * @param oPrimaryTarget
+ * @param bAutoDelete
+ */
+void EvaluateChainPower(struct manifestation manif, object oPrimaryTarget, int bAutoDelete = TRUE);
+
 
 //////////////////////////////////////////////////
 /*             Internal functions               */
@@ -124,6 +146,7 @@ int _GetMetaPsiPPCost(int nCost, int nIMPsiRed, int bUseSum)
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
+//#include "inc_utility"
 #include "psi_inc_manifest"
 
 
@@ -259,8 +282,8 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
 }
 
 
-int MetaPsionicsDamage(int nDieSize, int nNumberOfDice, struct manifestation manif, int nBonus = 0,
-                       int nBonusPerDie = 0, int bDoesHPDamage = FALSE, int bIsRayOrRangedTouch = FALSE);
+int MetaPsionicsDamage(struct manifestation manif, int nDieSize, int nNumberOfDice, int nBonus = 0,
+                       int nBonusPerDie = 0, int bDoesHPDamage = FALSE, int bIsRayOrRangedTouch = FALSE)
 {
     int nBaseDamage  = 0,
         nBonusDamage = nBonus + (nNumberOfDice * nBonusPerDie);
@@ -315,9 +338,64 @@ int MetaPsionicsDamage(int nDieSize, int nNumberOfDice, struct manifestation man
 }
 
 
-float CheckWidenPower(float fBase, struct manifestation manif)
+float EvaluateWidenPower(struct manifestation manif, float fBase)
 {
     return manif.bWiden ? // Is Widen Power active
             fBase * 2 :   // Yes
             fBase;        // No
+}
+
+
+void EvaluateChainPower(struct manifestation manif, object oPrimaryTarget, int bAutoDelete = TRUE)
+{
+    // Delete the array if, for some reason, one exists already
+    if(array_exists(manif.oManifester, PRC_CHAIN_POWER_ARRAY))
+        array_delete(manif.oManifester, PRC_CHAIN_POWER_ARRAY);
+    // Create the array
+    if(!array_create(manif.oManifester, PRC_CHAIN_POWER_ARRAY))
+        if(DEBUG) DoDebug("EvaluateChainPower(): ERROR: Cannot create target array!\n"
+                        + "manif = " + DebugManifestation2Str(manif) + "\n"
+                        + "oPrimaryTarget = " + DebugObject2Str(oPrimaryTarget) + "\n"
+                        + "bAutoDelete = " + BooleanToString(bAutoDelete) + "\n"
+                          );
+
+	// Add the primary target to the array
+	array_set_object(manif.oManifester, PRC_CHAIN_POWER_ARRAY, 0, oPrimaryTarget);
+
+	// Determine if Chain Power is active at all
+	if(manif.bChain)
+	{
+	    // It is, determine amount of secondary targets and range to look for the over
+	    int nMaxTargets = min(manif.nManifesterLevel, 20); // Chain Power maxes out at 20 secondary targets
+	    float fRange = FeetToMeters(30.0f);
+	    location lTarget = GetLocation(oPrimaryTarget);
+	    object oSecondaryTarget;
+
+	    // Build the target list as a linked list
+	    oSecondaryTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRange, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    	while(GetIsObjectValid(oTarget))
+    	{
+    		if(oSecondaryTarget != manif.oManifester &&     // Not the manifester
+               oSecondaryTarget != oPrimaryTarget    &&     // Not the main target
+               spellsIsTarget(oSecondaryTarget,             // Chain Power allows one to avoid hitting friendlies
+                              SPELL_TARGET_STANDARDHOSTILE, // and we assume the manifester does so
+                              manif.oManifester))
+    		{
+    			AddToTargetList(oSecondaryTarget, manif.oManifester, INSERTION_BIAS_CR, TRUE);
+    		}// end if - target is valid for this
+
+    		oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRange, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    	}// end while - loop through all potential targets
+
+    	// Extract the linked list into the array
+    	while(GetIsObjectValid(oSecondaryTarget = GetTargetListHead(manif.oManifester)))
+    	    array_set_object(manif.oManifester, PRC_CHAIN_POWER_ARRAY,
+    	                     array_get_size(manif.oManifester, PRC_CHAIN_POWER_ARRAY),
+    	                     oSecondaryTarget
+    	                     );
+	}// end if - is Chain Power active in this manifestation
+
+	// Schedule array deletion if so specified
+	if(bAutoDelete)
+	    DelayCommand(0.0f, array_delete(manif.oManifester, PRC_CHAIN_POWER_ARRAY));
 }

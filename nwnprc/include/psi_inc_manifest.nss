@@ -33,6 +33,8 @@ struct manifestation{
     int nPPCost;
     /// How many psionic focus uses the manifester would have remaining at a particular point in the manifestation
     int nPsiFocUsesRemain;
+    /// The creature's manifester level in regards to this power
+    int nManifesterLevel;
 
     /* Augmentation */
     /// How many times the first augmentation option of the power is used
@@ -183,6 +185,42 @@ void _HostileMind(object oManifester, object oTarget)
     }
 }
 
+string DebugManifestation2Str(struct manifestation manif)
+{
+    string sRet;
+
+    sRet += "oManifester = " DebugObject2Str(oManifester) + "\n";
+    sRet += "bCanManifest = " + BooleanToString(bCanManifest) + "\n";
+    sRet += "nPPCost = " + IntToString(nPPCost) + "\n";
+    sRet += "nPsiFocUsesRemain = " + IntToString(nPsiFocUsesRemain) + "\n";
+    sRet += "nManifesterLevel = " + IntToString(nManifesterLevel) + "\n";
+
+    sRet += "nTimesAugOptUsed_1 = " + IntToString(nTimesAugOptUsed_1) + "\n";
+    sRet += "nTimesAugOptUsed_2 = " + IntToString(nTimesAugOptUsed_2) + "\n";
+    sRet += "nTimesAugOptUsed_3 = " + IntToString(nTimesAugOptUsed_3) + "\n";
+    sRet += "nTimesAugOptUsed_4 = " + IntToString(nTimesAugOptUsed_4) + "\n";
+    sRet += "nTimesAugOptUsed_5 = " + IntToString(nTimesAugOptUsed_5) + "\n";
+    sRet += "nTimesGenericAugUsed = " + IntToString(nTimesGenericAugUsed) + "\n";
+
+    sRet += "bChain    = " + BooleanToString(bChain)    + "\n";
+    sRet += "bEmpower  = " + BooleanToString(bEmpower)  + "\n";
+    sRet += "bExtend   = " + BooleanToString(bExtend)   + "\n";
+    sRet += "bMaximize = " + BooleanToString(bMaximize) + "\n";
+    sRet += "bSplit    = " + BooleanToString(bSplit)    + "\n";
+    sRet += "bTwin     = " + BooleanToString(bTwin)     + "\n";
+    sRet += "bWiden    = " + BooleanToString(bWiden);//    + "\n";
+}
+
+
+//////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
+#include "psi_inc_augment" // Provides inc_utility
+#include "psi_inc_metapsi"
+#include "psi_inc_ppoints" // Provides psi_inc_focus and psi_inc_psifunc
+
+
 //////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
@@ -206,6 +244,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
     manif.bCanManifest      = TRUE;            // Assume successfull manifestation by default
     manif.nPPCost           = nLevel * 2 - 1;  // Initialise the cost to the base cost of the power
     manif.nPsiFocUsesRemain = GetPsionicFocusesAvailable(oManifester);
+    manif.nManifesterLevel  = GetManifesterLevel(oManifester);
 
     // Run an ability score check to see if the manifester can manifest the power at all
     if(GetAbilityScoreOfClass(oManifester, nClass) - 10 < nPowerLevel)
@@ -280,6 +319,11 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
         SendMessageToPCByStrRef(oManifester, ); // "Your manifester level is not high enough to spend that many Power Points"
         manif.bCanManifest = FALSE;
     }
+
+    if(DEBUG) DoDebug("EvaluateManifestation(): Final result:\n" + DebugManifestation2Str(manif));
+
+    // Initiate manifestation-related variable cleanup
+    DelayCommand(0.5f, _CleanManifestationVariables(oManifester));
 
     return manif;
 }

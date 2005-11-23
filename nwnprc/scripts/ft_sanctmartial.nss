@@ -335,41 +335,18 @@ void Pwatk(object oPC)
    // don't run this if the equipped item is not a weapon
    if (GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) != oItem) return;
 
-   if (GetWeaponRanged(oItem))
+   if (!GetWeaponRanged(oItem))
    {
-      int iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK1,OBJECT_SELF)  ? SPELL_POWER_ATTACK1 : 0;
-          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK2,OBJECT_SELF)  ? SPELL_POWER_ATTACK2 : iSpell;
-          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK3,OBJECT_SELF)  ? SPELL_POWER_ATTACK3 : iSpell;
-          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK4,OBJECT_SELF)  ? SPELL_POWER_ATTACK4 : iSpell;
-          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK5,OBJECT_SELF)  ? SPELL_POWER_ATTACK5 : iSpell;
-          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK6,OBJECT_SELF)  ? SPELL_POWER_ATTACK6 : iSpell;
-          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK7,OBJECT_SELF)  ? SPELL_POWER_ATTACK7 : iSpell;
-          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK8,OBJECT_SELF)  ? SPELL_POWER_ATTACK8 : iSpell;
-          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK9,OBJECT_SELF)  ? SPELL_POWER_ATTACK9 : iSpell;
-          iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK10,OBJECT_SELF) ? SPELL_POWER_ATTACK10: iSpell;
-          iSpell =  GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK,OBJECT_SELF) ? SPELL_SUPREME_POWER_ATTACK: iSpell;
+      int iSpell = GetHasSpellEffect(SPELL_PA_POWERSHOT,oPC)     ||
+                   GetHasSpellEffect(SPELL_PA_IMP_POWERSHOT,oPC) ||
+                   GetHasSpellEffect(SPELL_PA_SUP_POWERSHOT,oPC);
 
       if(iSpell)
       {
-     	 RemoveSpellEffects(iSpell,OBJECT_SELF,OBJECT_SELF);
-
-         string nMes = "*Power Attack Mode Deactivated*";
-         FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
-      }
-
-   }
-   else
-   {
-      int iSpell =  GetHasSpellEffect(SPELL_PA_POWERSHOT,OBJECT_SELF)      ? SPELL_PA_POWERSHOT : 0;
-          iSpell =  GetHasSpellEffect(SPELL_PA_IMP_POWERSHOT,OBJECT_SELF)  ? SPELL_PA_IMP_POWERSHOT : iSpell;
-          iSpell =  GetHasSpellEffect(SPELL_PA_SUP_POWERSHOT,OBJECT_SELF)  ? SPELL_PA_SUP_POWERSHOT : iSpell;
-
-      if(iSpell)
-      {
-     	 RemoveSpellEffects(iSpell,OBJECT_SELF,OBJECT_SELF);
+     	 RemoveSpellEffects(iSpell,oPC,oPC);
 
          string nMes = "*Power Shot Mode Deactivated*";
-         FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
+         FloatingTextStringOnCreature(nMes, oPC, FALSE);
       }
    }
 

@@ -64,7 +64,7 @@
 60 FEAT_WEAPON_TEMPUS_KUKRI           3294      2    1              0      
 61 FEAT_WEAPON_TEMPUS_SICKLE          3171      2    1              0      
 62 FEAT_WEAPON_TEMPUS_DWARVEN_WARAXE  3172      2    1              0      
-63 WeaponOfTempus_Mindblade           3625      2    1              0      
+63 WeaponOfTempus_Mindblade           3625      2    99             0      
 64 FEAT_ARMY_POWER                    3295      3    1              1      
 65 FEAT_TEMPUS_KNOWLEDGE              3303      3    1              0      
 66 FEAT_BATTLEFORGER                  3296      3    3              0      

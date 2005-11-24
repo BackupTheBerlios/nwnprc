@@ -670,3 +670,1719 @@ Source		Monsters of Faerun,pg15,2.5ed
   Special Abilities	Immunity to Enchantment Spells;
                         Poison Tail (Ex): Those hit by a stingtail’s tail slap must succeed at a Fortitude save (DC 15) or come into contact with a spray of liquid poison that has an onset time of 1 minute. The initial damage is 2d6 points of damage and the secondary is 1d4 points of temporary Constitution damage. In addition, those who fail the Fortitude save must succeed at a Will save (DC 15) or act as if under the influence of a confusion spell for their next two actions. The stingtail can spray its poison six times per day.
                         Skills: All asabis are especially good jumpers. Their maximum distance is 20 feet for a standing jump and 15 feet for a stanging high jump. 
+
+ Source		Serpend Kingdom, pg80,3.5ed
+  Label			RACIAL_TYPE_SARRUKH
+  Name			"Sarrukh"
+  Plural		"Sarrukh"
+  Description		"The sarrukh constitute one of the five original progenitor races of Faerün. In their three great empires, the sarrukh created a plethora of scaly races, including the nagas, the yuan-ti, and the lizardfolk. An individual sarrukh’s body may be either bipedal or snake-like. A snakelike sarrukh has a serpentine body and head, plus two powerful arms that end in vicious claws. A bipedal sarrukh has a humanoid upper torso, head, arms, and legs with a snakelike lower torso. The gleaming red eyes of a sarrukh strike fear into the hearts of all other Scaled Ones. Today, thousands of years after the fall of their mighty civilisations, the sarrukh are all but extinct. The few that remain spend their time with hibernation, but when they do interact with the outside world, they usually work to advance the welfare of the creatures they created, which now thrive in their stead.”
+  Appearance		??? 130 for now
+  StrAdjust		+12
+  DexAdjust		+4	
+  ConAdjust		+10	
+  IntAdjust		+20	
+  WisAdjust		+8	
+  ChaAdjust		+8	
+  Endurance		30
+  FavoredClass		Wizard
+  Size			Medium
+  RacialHDCount		14d8+70 (133 hp)
+  RacialHDClass		15
+  RacialLA		+8
+  NaturalArmor		+18
+  SR			20
+  SLAs		        3/day—disrupt undead, indentify, invisibility, knock, magic missiles, misdirection (DC 16), see invisibility, sleep (DC 15);
+                        2/day—confusion (DC 18), fireball (DC 17), lightning bolt (DC 17), polymorph;
+                        1/day—teleport (DC 19), wall of force. Caster level 14th.   
+  NaturalWeapons	Bite +15 melee (1d6+3 plus poison), or 2 claws +20 melee (1d8+6)
+  Special Abilities	Immunity to Fire; Darkvision; Manipulate Form;
+                        Fear Aura (Su): As a free action, a sarrukh can create an aura of fear in a 10-foot radius. This effect is otherwise identical to the fear spell (caster level 14th;save DC 21). A creature that succeeds on the save cannot be affected again by that sarrukh’s fear aura for 24 hours. Other sarrukh’s are immune to this aura. 
+                        Poison (Ex): Bite, injury, Fortitude DC 22, initial and secondary damage 1d6 Con.
+                         
+Source		Serpend Kingdom,pg 68,3.5ed
+  Label			RACIAL_TYPE_LIZARD_KING
+  Name			"Lizard King”
+  Plural		"Lizard Kings”
+  Description		"Lizard kings (or lizard queens, as the females are called) result from breeding demons with lizardfolk. When a lizardfolk king breeds with other lizardfolk, about 20% of the offspring.are lizardfolk kings; the rest are ordinary lizardfolk. When the young lizard kings in a tribe reach adulthood, all but the strongest are sacrificed. / A lizard king resembles a lizardfolk, although its scales are a darker shade of green, and it always has district demonic features. A typical lizard king leads its own tribe of lizardfolk.”
+  Appearance		130
+  StrAdjust		+6
+  DexAdjust		+4	
+  ConAdjust		+4	
+  IntAdjust		+2	
+  WisAdjust		0
+  ChaAdjust		+2
+  Endurance		30, fly 30 ft (average)
+  FavoredClass		??
+  Size			Medium
+  RacialHDCount		2d8+4 (13 hp)
+  RacialHDClass		24
+  RacialLA		+5
+  NaturalArmor		+6
+  SR			12
+  SLAs			3/day—darkness. Caster level 2nd.   
+  NaturalWeapons	Bite (1d6+1), 2 claws (1d4+3)
+  Special Abilities	Immunity to Poison; resistance to acid 10, cold 10, electricity 10, and fire 10; Darkvision; Damage Redution 5/magic; Hold Breath; +4 racial bonus on Balance, Jump, and Swim checks; Smite Good; 
+                        Note: A lizard king is simply a lizardfolk with the half-fiend template applied. A lizard king with class levels gains additional spell-like abilities and special qualities as a half-fiend of the same character level.
+
+ Source		Serpend Kingdom,pg87,3.5ed
+  Label			RACIAL_TYPE_TREN
+  Name			"Tren”
+  Plural		"Trens”
+  Description		"The yuan-ti created the powerful, semi-aquatic trens by crossing lizardfolk with troglodytes. The results were stronger than typical spectimens from either race. Trens prefer to live underground in environments that are dark, cold, and wet, often in the same settlement with troglodytes. A tren is a lizardlike creature about the same height as a human. It has muscular limbs and walks erect, trailing a long, slender tail behind it. Its lizardlike head features a wide jaw and a mouth filled with razor-sharp teeth.”
+  Appearance		130
+  StrAdjust		+4
+  DexAdjust		+2	
+  ConAdjust		+4	
+  IntAdjust		-2	
+  WisAdjust		0
+  ChaAdjust		0
+  Endurance		30
+  FavoredClass		??
+  Size			Medium
+  RacialHDCount		4d8+8 (26 hp)
+  RacialHDClass		15
+  RacialLA		+3
+  NaturalArmor		+8
+  SR			none
+  SLAs			none
+  NaturalWeapons	Bite (1d6+1), 2 claws (1d4+3)
+  Special Abilities	Darkvision; 
+                        Stench (Ex): When a tren is angry or frightened, it secretes an oily, musklike chemical that nearly every form of animal life finds offensive. All living creatures (except tren) within 30 feet of a troglodyte must succeed on a DC 13 Fortitude save or be sickened for 10 rounds. The save DC is Constitution-based. Creatures that successfully save cannot be affected by the same tren's stench for 24 hours. A delay poison or neutralize poison spell removes the effect from the sickened creature. Creatures with immunity to poison are unaffected, and creatures resistant to poison receive their normal bonus on their saving throws.
+                        Skills: The scales of a tren can change color, allowing it to bend in with its surroundings like a chameleon and conferring a +4 racial bonus on Hide checks. *In rocky or subterrain settings, this bonus improves to +8.
+ 
+Source		MM, pg263,3.5ed / EPH,pg218,3.5ed
+  Label			RACIAL_TYPE_PURE_YUAN
+  Name			"Yuan-Ti Pureblood"
+  Plural		"Yuan-Ti Pureblood"
+  Description		"Yuan-ti are descended from humans whose bloodlines have been mixed with those of snakes. Their cunning and ruthlessness are legendary, as are their ability to allied with any race as the situation suits. In Yuan-ti society, Purebloods take care of all outside negotiations, always pretenting to be human. All yuan-ti exhibit snake-like features in varying degrees, and all yuan-ti are able to speak Abyssal. Purebloods are the least intelligent of the yuan-ti, though they still pride themselves as humans and work among them as spies for their abomination masters.”
+  Appearance		6
+  StrAdjust		0
+  DexAdjust		+2	
+  ConAdjust		0	
+  IntAdjust		+2	
+  WisAdjust		0	
+  ChaAdjust		+2	
+  Endurance		30
+  FavoredClass		Ranger
+  Size			Medium
+  RacialHDCount		4d8 (18 hp)
+  RacialHDClass		15
+  RacialLA		+2
+  NaturalArmor		+1
+  SR			14, +1 per character level
+  SLAs		        At will—detect hostile intent, psionic charm (, DC 13*), psionic daze (6 HD, DC 12*);
+                        1/day—aversion (DC 13), concealing amorpha, darkness, entangling ectoplasm  (Large creature*). Manifester level 3rd. The save DCs are Charisma-based. *Includes augmentation for the pureblood’s manifester level.
+   NaturalWeapons	none
+  Special Abilities	Alternate Form; Alertness; Blind-Fight; Darkvision,
+     
+Source		MM, pg264,3.5ed / EPH,pg218,3.5ed
+  Label			RACIAL_TYPE__SK_YUANTI (It’s the feared row 197, would be better to change it to something else, and its Label Name, too)
+  Name			"Yuan-Ti Halfblood"
+  Plural		"Yuan-Ti Halfblood"
+  Description		"Sarrukh-controlled breeding and the centuries of free-willed mating that followed have established three basic natural forms of the yuan-ti: the pureblood, the halfblood, and the abomination. Like purebloods, yuan-ti halfbloods appear mostly human, but they always have obvious snake features. The snakelike features of a halfblood may reflect any of a variety of venomous snakes, so a halfblood may have a cobra’ hood or a diamondback’s.distinctive scale pattern. These features are usually consistent within a single troupe of yuan-ti, and often mark a troupe’s status within a tribe. A halfblood is about the same hight and weight as a human. Kalfbloods form the bulk of a yuan-ti community’s defense.”
+  Appearance		6
+  StrAdjust		+4
+  DexAdjust		+2	
+  ConAdjust		+2	
+  IntAdjust		+8	
+  WisAdjust		+8	
+  ChaAdjust		+6	
+  Endurance		30
+  FavoredClass		Ranger
+  Size			Medium
+  RacialHDCount		7d8+7 (38 hp)
+  RacialHDClass		15
+  RacialLA		+5
+  NaturalArmor		+4
+  SR			16, +1 per character level
+  SLAs			At will—chameleon, detect hostile intent, exhalaltion of the black dragon;
+                        3/day—aversion (DC 16), psionic charm (DC 16*), concealing amorpha, psionic daze (9 HD, DC 14*), deeper darkness, entangling ectoplasm (Huge creatures*), mind thrust (ML 4th, 4d10, DC 15*);
+                        1/day—body purification (3 points*), psionic suggestion  (two targets, DC 15*)). Manifester level 6h. The save DCs are Charisma-based. *Includes augmentation for the halfblood’s manifester level.
+  NaturalWeapons	Bite (1d6+1 plus poison)
+  Special Abilities	Alternate Form; Alertness; Blind-Fight; Darkvision; Scent; 
+                        Poison (Ex): Injury, Fortitude DC 14, initial and secondary damage 1d6 Con. The save DC is Constitution-based.
+
+Source		MM, pg264,3.5ed / EPH,pg218,3.5ed
+  Label			RACIAL_TYPE_ABOM_YUAN
+  Name			"Yuan-Ti Abomination
+  Plural		"Yuan-Ti Abominations
+  Description		"Sarrukh-controlled breeding and the centuries of free-willed mating that followed have established three basic natural forms of the yuan-ti: the pureblood, the halfblood, and the abomination. Yuan-ti abominations are monstrous snakes with humanlike arms. The snakelike features of an abomination may reflect any of a variety of venomous snakes, so an abomination may have a black mamba’s glossy scales or a viper’s wedge-shaped head. These features are usually consistent within a single troupe of yuan-ti, and often marki a troupe’s status within a tribe. / A yuan-ti abomination is 8 to 12 feet long and weighs 200 to 300 pounds. The abominations rule over the yuan-ti and are the temple leaders, with the high priest above all. While their underlings fight, the abominations watch the proceedings carefully, identifying the most dangerous foes and their most worrisome abilities, then try to neutralize those enemies with their extensive psionic abilities.”
+  Appearance		???
+  StrAdjust		+8
+  DexAdjust		+2	
+  ConAdjust		+6
+  IntAdjust		+10
+  WisAdjust		+10
+  ChaAdjust		+8
+  Endurance		30, climb 20 ft.
+  FavoredClass		Cleric
+  Size			Large
+  RacialHDCount		9d8+27 (67 hp)
+  RacialHDClass		15
+  RacialLA		+7
+  NaturalArmor		+10
+  SR			18, +1 per character level
+  SLAs			A will—aversion (DC 19*), chameleon, psionic daze (12 HD, DC 15*), detect hostile intent, entangling ectoplasm (Collosal creatures*), exhalation of the black dragon (5d6*);
+                        3/day—body purification (6 points*), psionic charm (all targets, 1 day/level, DC 19*), concealing amorpha, deeper darkness, mind thust (ML 7th, 7d10, DC 18*), psionic suggestion (four targets, DC 16*);
+                        1/day—baelful polymorph (DC 19). Manifester level 9th. The save DCs arew Charisma-based. *Includes augmentation for the abomination’s manifester level.
+  NaturalWeapons	Bite (2d6+3 plus poison)
+  Special Abilities	Alternate Form; Alertness; Blind-Fight; Darkvision; Scent; Constrict (1d6+6); Improved Grab (Ex); 
+                        Poison (Ex): Injury, Fortitude DC 17, initial and secondary damage 1d6 Con. The save DC is Constitution-based.
+
+Source		Monsters of Faerün, pg48,2.5ed / Serpend Kingdoms,pg35,3.5ed
+  Label			RACIAL_TYPE_FIRENEWT
+  Name			"Firenewt"
+  Plural		"Firenewts"
+  Description		"Though they are distantly related to the lizardfolk, firenewts are unlike many of the other scaly races because they were not created by the sarrukh. Whatever the circumstances of their creation, firenewts originated in the Firelands more than 15,000 years ago. Firenewts live in hot spots, primarily volcanic regions and deserts. These bipedal monstrous humanoids are as warlike as the asabis, but not as loyal. A firenewt resembles a bipedal lizard with a long tail. Its hands are clawed, and its reserved knees give it an exceptional capacity for running and jumping. Its skin is a blotchy sepia color that is darkest along the spine, fading to near-white on the belly. Its lizardlike face is smooth and unremarkable save for its large, inky-black eyes. They stand around 5-1/2 to 6 feet and weigh 170 to 180 pounds.”
+  Appearance		131
+  StrAdjust		0
+  DexAdjust		+2	
+  ConAdjust		+2	
+  IntAdjust		-4	
+  WisAdjust		0	
+  ChaAdjust		-2	
+  Endurance		30
+  FavoredClass		Barbarian
+  Size			Medium
+  RacialHDCount		2d8+2 (11 hp)
+  RacialHDClass		15
+  RacialLA		+1
+  NaturalArmor		none
+  SR			none
+  SLAs		        none 
+  NaturalWeapons	none
+  Special Abilities	Fire Subtype (Immunity to Fire, Vulnerability 50% against Cold); 
+                        Breath Weapon (Su): Once avery 10 minutes, a firenewt can breathe fire on an opponent within 5 feet. This attack deals 1d6 points of damage; a successful Reflex save (DC 12) reduce the damage by half. .
+      
+Source		Fiend Folio,pg 133,3.5ed
+  Label			RACIAL_TYPE_OPHIDIAN
+  Name			"Ophidian”
+  Plural		"Ophidians”
+  Description		"Malicious but servile, ophidians are a reptilian race most commonly found as slaves of the yuan-ti. They look like large snakes with humanoid arms and hands, and they have tails that are short and stunted in proportion to their bodies. Their scales are typically mottled green and yellow with brown, black, and red sometimes appearing in certain individuals. Their scales naturally change color to help the creatures blend into wooded or subterranean surroundings..”
+  Appearance		???
+  StrAdjust		+2
+  DexAdjust		+4	
+  ConAdjust		0	
+  IntAdjust		-2	
+  WisAdjust		0
+  ChaAdjust		0
+  Endurance		20
+  FavoredClass		Fighter
+  Size			Medium
+  RacialHDCount		3d8 (13 hp)
+  RacialHDClass		14
+  RacialLA		+2
+  NaturalArmor		+3
+  SR			none
+  SLAs			none   
+  NaturalWeapons	Bite (1d4+1)
+  Special Abilities	Darkvision; +10 racial bonus on Hide checks in forests or underground areas;
+                        Serpentine Curse (Su): Any humanoid hit by an ophidian’s bite attack must succeed on a Fortitude save (DC 11) or contract a curse that will turn the victim into an ophidian. Starting 1d4+1 days after infection, the victim slowly becomes more snakelike: Its skin grows scaly, its legs begin to shrink and fuse together, and its tongue becomes forked. After two weeks, the victim is fully transformed into an ophidian, with no memory of its previous existence. To stop the transformation, the victim must receive a remove disease or remove curse spell before the process is complete, although these spells do not undo any transformation that has already begun. A heal, regeneration, limited wish, wish, or miracle spell is required to reserve the transformation. Once the transformation is complete, nothing short of a wish or miracle can return the victim to its previous state.”
+ 
+Source		Monsters of Faerün,pg74,2.5ed / Serpent Kingdoms,pg50,3.5ed
+  Label			RACIAL_TYPE_PTERAFOLK
+  Name			"Pterafolk”
+  Plural		"Pterafolks”
+  Description		"Created by the sarrukh of Mhairshaulk, pterafolk have always lived almost exclusively on the Chultan Peninsula. These violent and primitive lizard kin haunt dark jungles, shifting to form of pteranodon to swoop down on their pray. Pterafolk in their natural form are often mistaken for lizardfolk, though they are larger and leaner and have no tails. Small, smooth scales cover their bodies, ranging in color from olive green to shade of tan. Their hands are long and end in sharp nails used for rending opponents, while their clawed feet aid in climbing. Pterafolk are vicious and mean-tempered, and they enjoy cruelty. ”
+  Appearance		130
+  StrAdjust		+10
+  DexAdjust		0	
+  ConAdjust		+6	
+  IntAdjust		0	
+  WisAdjust		+4
+  ChaAdjust		-2
+  Endurance		30, fly 30 ft. (average) with wings; fly 50 ft. (good) as pteranodon
+  FavoredClass		Barbarian
+  Size			Large
+  RacialHDCount		4d8+12 (30 hp)
+  RacialHDClass		25
+  RacialLA		+4 or +5 should work out.
+  NaturalArmor		+7
+  SR			none
+  SLAs			none
+  NaturalWeapons	Bite (1d8+2), 2 claws (1d6+5)
+  Special Abilities	Flyby Attack as pterodactyl; +4 racial bonus on Climb checks;
+                        Shift Forms: Pterafolk have two additional forms. They can turn their arms into powerful, leathery wings, granting them flight, though they are relative slow and clumsy in this form. In this form, they can still use their claws to attack opponents on the ground, though they must land immediately after attacking. Their third form is that of a small pteranodon with a 15-foot wingspan. In this form, they attack with their clawed feet (attack bonus and damage are unchanged), and gain Flyby Attack as bonus feat.
+   
+Source		Draconomicon,pg152,3.5ed
+  Label			RACIAL_TYPE_DRAGONKIN
+  Name			"Dragonkin”
+  Plural		"Dragonkin”
+  Description		"Dragonkin are humanoid creatures believed to be distant cousins of dragons. Found in wild tribes or serving human masters, their brute strength and sharp claws make them a deadly threat. / Dragonkin are humanoids of 8 to 9 feet in height with dragonic features. Their scaled hides range from dark yellow ochre to reddish brown with darker spots or bands. Their faces are decidedly dragonlike, with a long snout, a mane of thick hair, and small horns swept back behind their heads. They have green wings that lighten  to gold or yellow, or sometimes wings that match the color of their bodies.”
+  Appearance		131
+  StrAdjust		+8
+  DexAdjust		+2	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		+4
+  ChaAdjust		+2
+  Endurance		20, fly 40 ft. (good) 
+  FavoredClass		Barbarian
+  Size			Large
+  RacialHDCount		7d8+7 (38 hp)
+  RacialHDClass		15
+  RacialLA		+2
+  NaturalArmor		+7
+  SR			none
+  SLAs			Detect Magic (Su): Dragonkin have the innate ability to use detect magic as a free action, once per round (caster level equal to the dragonkin’s HD).
+  NaturalWeapons	Claws (1d6+4)
+  Special Abilities	Darkvision;
+                        Rake (Ex): Dragonkin make two additional attacks (+10 melee) with their rear claws for 1d6+2 of damage each when attacking from the air.
+ 
+Source		Serpent Kingdoms Web Enhancement,3.5ed
+  Label			RACIAL_TYPE_SAURIAL_BLADEBACK
+  Name			"Bladeback"
+  Plural		"Bladebacks"
+  Description		"This bipedal lizard looks taller and stockier than a human; in fact, it’s build much like a half-orc. A line of sharp scales runs down its spine from its head to the tip of its tail, which is about as long as its body. / Bladebacks are the most straightforward and trusting of the saurial subraces. Highly social, they mix well with all kinds of saurials, and even with creatures from outside the Lost Vale. Slow to anger, bladebacks work hard to understand the motives of others, but they are passionate once they have been pushed to the point of aggression. / Like most saurials, bladeback adventures are usually motivated by curiosity about the world around them. Bladebacks seldom initiate battle, because they would much rather learn about the creatures they meet. If attacked, however, they can employ their claws and tails with deadly efficiency.”
+  Appearance		131
+  StrAdjust		+2
+  DexAdjust		0	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		+2	
+  Endurance		30
+  FavoredClass		Cleric
+  Size			Medium
+  RacialHDCount		2d8 (9 hp)
+  RacialHDClass		14
+  RacialLA		+2
+  NaturalArmor		+4
+  SR			none
+  SLAs		        none 
+  NaturalWeapons	Claws (1d4), Tail (1d3)
+  Special Abilities	Low-Light Vision; Scent; 
+                        Cold Torpor (Ex): Bladebacks are warm-blooded creatures, but they retain heat poorly in cold environments. Thus, a bladeback takes a -5 penalty on Fortitude saving throws made to avoid nonlethal damage from cold environments, and it takes double the normal amount of nonlethal damage for failing such a saving throw. 
+                        Protection from Sonic Attacks (Ex): Because a bladeback’s earholes are well protected, it gains a +4 circumstance bonus on saving throws against sonic effects and attacks.
+                        Vulnerability to Gas Attacks (Ex): A bladeback’s metabolism and reliance on scent make it vulnerable to attacks conveyed through gas, including stinking cloud, cloudkill, and poisonous gas. It thus takes a -4 penalty on saving throws against gas-based effects and attacks.
+
+Source		Serpent Kingdoms Web Enhancement,3.5ed
+  Label			RACIAL_TYPE_SAURIAL_FINHEAD
+  Name			"Finhead"
+  Plural		"Finheads"
+  Description		"This reptilian creature stands slightly shorter than a typical human and has roughly human shape and proportions. Its tail measures slightly more than half its body length, and a pronounced fin crowns its head. / Alert, bright, active, curious, and emotional; finheads are good with their hands and willing to perform almost any sort of hard labor. Most see the world in black-and-white terms and believe in absolute concepts such as good, evil, and truth. / Finheads are enthusiastic about new tasks and adventures, and they often leap into dangerous situations before fully understanding them. Even so, their ability to think quickly on their feet allows them to assess situations within moments. Finheads are apt to attack at the drop of a hat if they perceive their foes to be dangerous, particularly loathsome, or evil in some way.”
+  Appearance		131
+  StrAdjust		0
+  DexAdjust		+2	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		+2	
+  ChaAdjust		0	
+  Endurance		30
+  FavoredClass		Paladin
+  Size			Medium
+  RacialHDCount		2d8 (9 hp)
+  RacialHDClass		14
+  RacialLA		+2
+  NaturalArmor		+4
+  SR			none
+  SLAs		        none 
+  NaturalWeapons	Claws (1d4), Tail (1d3)
+  Special Abilities	Low-Light Vision; Scent; 
+                        Cold Torpor (Ex): Finheads are warm-blooded creatures, but they retain heat poorly in cold environments. Thus, a finhead takes a -5 penalty on Fortitude saving throws made to avoid nonlethal damage from cold environments, and it takes double the normal amount of nonlethal damage for failing such a saving throw. 
+                        Protection from Sonic Attacks (Ex): Because a finhead’s earholes are well protected, it gains a +4 circumstance bonus on saving throws against sonic effects and attacks.
+                        Vulnerability to Gas Attacks (Ex): A finhead’s metabolism and reliance on scent make it vulnerable to attacks conveyed through gas, including stinking cloud, cloudkill, and poisonous gas. It thus takes a -4 penalty on saving throws against gas-based effects and attacks.
+
+Source		Serpent Kingdoms Web Enhancement,3.5ed
+  Label			RACIAL_TYPE_SAURIAL_FLYER
+  Name			"Flyer"
+  Plural		"Flyers"
+  Description		"This reptile is about the size of a Halfling and has similar proportions. It has a short tail and a flap of scaly skin beneath each of its arms. These primitive wings stretch from its wrists to its waist. / Flyers are the noisiest and most nervous of the saurials, and members of other races often find them somewhat irritating. They love gossip and enjoy spending time with people who are interested in listening them. / Because of its wings, a flyer has difficulty wearing normal clothing, armor, or even a backpack. Thus, their accoutrements are typically custom-made. / Flyers usually act as scouts and messengers in a saurial community, although several important saurial heroes have been flyers. Those that become adventures often do so by accident or out of necessity, since their roles in saurial society often put them in harm’s way.”  
+  Appearance		???, 302 for now
+  StrAdjust		0
+  DexAdjust		+4	
+  ConAdjust		-2	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		-2	
+  Endurance		20 (4 squares), fly 50 ft. (average)
+  FavoredClass		Rogue
+  Size			Small
+  RacialHDCount		2d8-2 (7 hp)
+  RacialHDClass		14
+  RacialLA		+3
+  NaturalArmor		+4
+  SR			none
+  SLAs		        none 
+  NaturalWeapons	Claws (1d3), Tail (1d2)
+  Special Abilities	Low-Light Vision; Scent; 
+                        Cold Torpor (Ex): Flyers are warm-blooded creatures, but they retain heat poorly in cold environments. Thus, a filyer takes a -5 penalty on Fortitude saving throws made to avoid nonlethal damage from cold environments, and it takes double the normal amount of nonlethal damage for failing such a saving throw. 
+                        Protection from Sonic Attacks (Ex): Because a flyer’s earholes are well protected, it gains a +4 circumstance bonus on saving throws against sonic effects and attacks.
+                        Vulnerability to Gas Attacks (Ex): A flyer’s metabolism and reliance on scent make it vulnerable to attacks conveyed through gas, including stinking cloud, cloudkill, and poisonous gas. It thus takes a -4 penalty on saving throws against gas-based effects and attacks.
+
+Source		Serpent Kingdoms Web Enhancement,3.5ed
+  Label			RACIAL_TYPE_SAURIAL_HORNHEAD
+  Name			"Hornhead"
+  Plural		"Hornheads"
+  Description		"This bipedal lizard is as big as an ogre and has a tail longer than its own body. Sharp horns protrude from its head, and a bony plate protects its neck. / Hornheads tend to be careful, rational planners. They choose their words carefully and avoid taking action without prior contemplation. Most are interested in alchemy, engineering, and other mental pursuits, and many also enjoy physical tasks requiring discipline, such as blacksmithing and weaponsmithing. / Most adventuring hornheads are consumed by a desire to understand the particulars o the world around them. Some choose to study the laws of other cultures, some the philosophical underpinnings of a religion, and some the arcane secrets of new spells.”
+  Appearance		???, 154 for now
+  StrAdjust		+2
+  DexAdjust		0	
+  ConAdjust		0	
+  IntAdjust		+2	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		30
+  FavoredClass		Wizard
+  Size			Large
+  RacialHDCount		2d8 (9 hp)
+  RacialHDClass		14
+  RacialLA		+2
+  NaturalArmor		+5
+  SR			none
+  SLAs		        none 
+  NaturalWeapons	Claws (1d4), Tail (1d3)
+  Special Abilities	Low-Light Vision; Scent; 
+                        Cold Torpor (Ex): hornheads are warm-blooded creatures, but they retain heat poorly in cold environments. Thus, a hornhead takes a -5 penalty on Fortitude saving throws made to avoid nonlethal damage from cold environments, and it takes double the normal amount of nonlethal damage for failing such a saving throw. 
+                        Protection from Sonic Attacks (Ex): Because a hornhead’s earholes are well protected, it gains a +4 circumstance bonus on saving throws against sonic effects and attacks.
+                        Vulnerability to Gas Attacks (Ex): A hornhead’s metabolism and reliance on scent make it vulnerable to attacks conveyed through gas, including stinking cloud, cloudkill, and poisonous gas. It thus takes a -4 penalty on saving throws against gas-based effects and attacks.
+
+Source		Unearthed Arcana,pg11,3.5ed
+  Label			RACIAL_TYPE_QD_ELF
+  Name			"Desert Elf"
+  Plural		"Desert Elves"
+  Description		"In the desert, elves follow nomadic lifestyles. They herd horses, cattle, and goats across the sands, sleeping during the day and working or travelling at night. Their wandering takes them many places and puts them into contact with many cultures. As a result, they are welcome everywhere for the news and exotic trade goods they carry." 
+  Appearance		1
+  StrAdjust		-2
+  DexAdjust		+2	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		30
+  FavoredClass		Wizard
+  Size			Medium
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		0
+  NaturalArmor		0
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Low-Light Vision; Hardiness vs. Enchantments; Sleeplessness; +2 racial bonus on Handle Animal and Ride checks; Skill Affinity (Search); Skill Affinity (Spot); Keen Senses; Proficiency (Elf).
+                        Heat Endurance: Members of desert races gain a +4 racial bonus on Fortitude saves made to resist the effects of hot weather. 
+
+Source		Unearthed Arcana,pg11,3.5ed
+  Label			RACIAL_TYPE_QD_DWARF
+  Name			"Desert Dwarf"
+  Plural		"Desert Dwarves"
+  Description		"Because of their skill with stone and engineering, dwarves are acknowledged masters of locating water and digging wells. The importance of water to desert peoples gives the dwarves both great wealth and great political power." 
+  Appearance		0
+  StrAdjust		0
+  DexAdjust		-2	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		20
+  FavoredClass		Fighter
+  Size			Medium
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		0
+  NaturalArmor		0
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Darkvision; Stability; Hardiness vs. Poison; Hardiness vs. Spells; Skill Affinity (Lore); Skill Affinity (Appraise);
+                        +1 racial bonus on attack rolls against humanoids of the reptilian subtype (including kobolts and lizardfolk) and dragons (including half-dragons);  
+                        +4 dodge bonus to Armor Class against dragons.
+                        Heat Endurance: Members of desert races gain a +4 racial bonus on Fortitude saves made to resist the effects of hot weather.
+
+Source		Unearthed Arcana,pg12,3.5ed
+  Label			RACIAL_TYPE_QD_HALFORC
+  Name			"Desert Half-Orc"
+  Plural		"Desert Half-Orcs"
+  Description		"The deserts of the world are harsh places, and ideal testing grounds for Gruumsh’s chosen people. Many tribes of orcs live in isolated desert canyons or the ruins of ancient cities, now abandoned to the sands. Often their mutual dependence on sources of fresh water brings them into contact with desert-dwelling human barbarians. The resulting offspring, valued for their tenacity, courage, and combat prowess, are often welcome in places where full-blooded orcs are not." 
+  Appearance		5
+  StrAdjust		0
+  DexAdjust		0	
+  ConAdjust		+2	
+  IntAdjust		-2	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		30
+  FavoredClass		Barbarian
+  Size			Medium
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		0
+  NaturalArmor		0
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Low-Light Vision; 
+                        Run: Desert half-orcs receive Run as a racial bonus feat. Typically too poor to afford mounts, half-orcs learn from an early age to get from place to place by running. 
+                        Heat Endurance: Members of desert races gain a +4 racial bonus on Fortitude saves made to resist the effects of hot weather. 
+
+ Source		Unearthed Arcana,pg13,3.5ed
+  Label			RACIAL_TYPE_QD_KOBOLD
+  Name			"Desert Kobold"
+  Plural		"Desert Kobolds"
+  Description		"Desert kobolds live like scaly, intelligent rats, hiding in forgotten corners of settlements, living just over the dunes from trading posts, and always reappearing right after the residents think they’ve finally been killed off. / Desert kobolds claim they were among the first to settle the deserts, and that gnomes threw them out into the wilderness. Though their survival relies on good available at oasis settlements and trading posts, desert kobolds hate the gnomes who often build and run such settlements. / The live of a desert Kobold is one of constant fear, which motivates them to build traps and fortifications and to ambush intruders. Some few kobolds, however, seek peace of mind through personal power and boom companions. These rare individuals become adventures." 
+  Appearance		302
+  StrAdjust		-4
+  DexAdjust		+2	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		-2	
+  ChaAdjust		0	
+  Endurance		30
+  FavoredClass		Rogue
+  Size			Small
+  RacialHDCount		1d8 (4 hp)
+  RacialHDClass		14
+  RacialLA		none
+  NaturalArmor		+1
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Low-Light Vision; +2 racial bonus on Survival, Craft (trap), and Search checks; 
+                        Heat Endurance: Members of desert races gain a +4 racial bonus on Fortitude saves made to resist the effects of hot weather. 
+
+Source		Underdark,pg8,3.5ed
+  Label			RACIAL_TYPE_QD_CHITINE
+  Name			"Chitine"
+  Plural		"Chitines"
+  Description		“The spiderlike chitins exemplify the unnatural changes that can be incorporated into a humanoid with the aid of evil-inspired magic. Once their ancestors were humanoid in form, but their enforced slavery to the drow entailed more than simple execution of duty. The drow of Ched Nasad selectively bred and magically meddled with their slaves; incorporating ghastly “improvements” as well as the results of fumbled experiments. / A typical chitine stands just under 4 feet tall and wighs about 85 pounds.His four lean arms are long, and each has an extra joint. His face is humanlike, but his eyes are faceted, and mandibles just from his mouth. A chitine has mottled gray skin, and his stringy black hair grows in a tangle from his head, extending down his back. / A chitine spin various kinds of webbing through and aperture in his belly. In addition, he constantly secretes an oil that keeps him from becoming stuck in his own web and provides his body with a sheen under some light sources. His palms and feet are covered with hooks that allow him to climb up walls and across ceilings.” 
+  Appearance		???
+  StrAdjust		0
+  DexAdjust		+2	
+  ConAdjust		+2	
+  IntAdjust		+2	
+  WisAdjust		0	
+  ChaAdjust		-4	
+  Endurance		30, Climb 20 ft.
+  FavoredClass		Rogue
+  Size			Small
+  RacialHDCount		2d8
+  RacialHDClass		15
+  RacialLA		+2
+  NaturalArmor		0
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Grappling Bonus (Ex): A chitine’s four arms grant a +4 racial bonus on grapple checks, which makes him as good as a grappler as a Medium creature.
+                        Difficult to Disarm (Ex): Because of the hooks in a chitine’s palm, he gains a +4 bonus on his opposed check to avoid being disarmed.
+                        Sensitive to Sunlight (Ex): In sunlight or bright magical light (such as a daylight spell), chitins are dazzled.
+                        Weapon Familiarity: A chitine may treat short swords as simple weapons rather than martial weapons.
+                        Racial Feat: A chitine character has Multiweapon Fighting as a bonus feat.
+                        A chitine has a +8 racial bonus on Climb checks and can always choose to take 10 on Climb checks even if rushed or threatened. The hooks on his palms and feet enable him to climb up walls and across ceilings, as if under the effect of a spider climb spell. 
+
+Source		Underdark,pg13,3.5ed
+  Label			RACIAL_TYPE_QD_GLOAMING
+  Name			"Gloaming"
+  Plural		"Gloamings"
+  Description		“Gloamings are planetouched beings descended from natives of Toril and the Plane of Shadow. These unusual creatures are quite uncommon in the Underdark and extremely rare in the surface world. Most observers can easily recognize that a gloaming is planetouched is some fashion, but few know exactly how. / Gloamings are curious beings who pride themselves on their individualism. The difficult conditions in the Underdark quickly teach them caution and the merits of working with others, though. / A gloaming is a pale-skinned humanoid with catlike eyes and dark, furry wings. Her skin is naturally luminescent, and she can control its glow, choosing a degree of illumination from none to as bright as a torch. The eyes of gloamings have slightly oval pupils and reflect light like a cat’s.” 
+  Appearance		0
+  StrAdjust		-2
+  DexAdjust		+2	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		-2	
+  ChaAdjust		+2	
+  Endurance		20, fly 40 ft. (average)
+  FavoredClass		Sorcerer
+  Size			Small
+  RacialHDCount		0
+  RacialHDClass		0
+  RacialLA		+2
+  NaturalArmor		0
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Low-Light Vision; Light Blindness; Portal Sensitive;
+                        Racial Bonuses: A gloaming has a +2 racial bonus on saves against illusion (shadow) spells or effects and a +4 racial bonus on saves against psionic abilities, such as those possessed by Illithids or yuan-ti. She also gains a +4 racial bonus on Move Silently checks.
+                        Shadow Spells: Gloamings have a racial predilection for shadow-based spells. They cast illusion (shadow) spells at +1 caster level.
+                        Luminescence (Ex): As a standard action, a gloaming can make her skin provide illumination equal to that produced by any light source up to and including a torch, or she can mute the glow altogether. A gloaming’s luminescence lasts until she choose to changer it. When a gloaming dies, her luminescence fades to nothing over the course of 10 minutes.                          
+
+Source		Underdark,pg13,3.5ed
+  Label			RACIAL_TYPE_GRIMLOCK
+  Name			"Grimlock"
+  Plural		"Grimlocks"
+  Description		“Once grimlocks were much like other humanoid races and could see the world around them. But after millennia of living in total darkness, they lost their sight and found other, blunter methods for sensing their environment. Blind but not unseeing, evil but not unfeeling, grimlocks understand the world in a way that other humanoid cannot. / Grimlocks are direct in all their dealing, never beating around the bush. They are deeply suspicious of other races—sometimes violently so. Grimlocks care more for their own skin than they do for any principle, cause, or individual, expect for those with whom they have hunt-bonded. / His skin is gray, slightly scaled, and usually scarred from unending hunts through constricting passages. The single most startling grimlock feature is the complete absence of eyes and eyeholes. Grimlocks stand between 5 and 5-1/2 feet in height and weighs around 180 pounds.” 
+  Appearance		5
+  StrAdjust		+4
+  DexAdjust		+2	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		-2	
+  ChaAdjust		-4	
+  Endurance		30
+  FavoredClass		Barbarian
+  Size			Medium
+  RacialHDCount		2d8
+  RacialHDClass		15
+  RacialLA		+2
+  NaturalArmor		+4
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Scent; Weapon Proficiency with battleaxe; Blindsight;
+                        +10 racial bonus on Hide checks when in mountains or underground; 
+                        Immunities (Ex): Grimlocks are immune to gaze attacks, visual effects, illusions, and other attack forms that rely on sight. 
+
+Source		Underdark,pg16,3.5ed
+  Label			RACIAL_TYPE_KUOTOA
+  Name			"Kuo-toa"
+  Plural		"Kuo-toas"
+  Description		“Kuo-toas are theocratic fishfolk who dwell in the deep seas and lakes of the Underdark. The clerics of Blibdoolpoolp, called whips, exercise iron control over the population. Second in status to the cleric are the monks, who are known as monitors. Much of kuo-toan life and society focuses on religion. / Kuo-toas have a well-deserved reputation for dealing duplicitously with other races, though the drow are a noteable exception to this rule. The typical kuo-toa has no scuples about betraying a trust if he feels that doing so is in his best interests and not apt to produce unwanted repercussions. / A kuo-toa sports fine scales of varying pigmentation. The color varies with his mood, ranging from dark red when angry to white when frightened. A kuo-toa’s body is shaped like that of a short, pudgy human, but his slender arms and legs end in broad hands and distended feet that resemble flippers.” 
+  Appearance		???
+  StrAdjust		+2
+  DexAdjust		+2	
+  ConAdjust		0	
+  IntAdjust		+2	
+  WisAdjust		+4	
+  ChaAdjust		-2	
+  Endurance		20, swim 50 ft.
+  FavoredClass		Rogue
+  Size			Medium
+  RacialHDCount		2d8 
+  RacialHDClass		14
+  RacialLA		+3
+  NaturalArmor		+6
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Electricity Resistance 10; Immunity to poison and paralysis; Light Blindness; Amphibious; 
+                        Lightning Bolt (Su): Two or more kuo-toa cleric (whips) operating together can generate a stroke of lightning every 1d4 rounds. The whips must join hands to launch the bolt but need only remain within 30 feet of one another while it builds. The resulting lightning bolt deals 1d6 points of damage per whip, but a successful Reflex save halves this amount (DC 11 + highest Wisdom modifier among the participating whips + number of whips).
+                        Adhesive (Ex): A kuo-toa uses his own body oil and other materials to give his shield a finish almost like flypaper, capable of holding fast any creatures or items that touch it. Any creature that makes a unsuccessful melee attack against a kuo-toa must succeed on a Reflex save (DC 11+kuo-toa’s Con modifier), or the weapon sticks to the shield and is yanked out of its wielder’s grip. A  creature using a natural weapon is automatically grappled if it gets stuck. A kuo-toa requires one hour and special materials costing 20 gp to coat a shield with adhersive, but the secretion remains sticky for up to three days, or until it actually catches something or someone, whichever comes first. Pulling a stuck weapon or limb from a shield requires a DC 20 Strength check.
+                        Keen Sight (Ex): A kuo-toa has excellent vision, thanks to his two independently focusing eyes. His eyesight is so keen that he can spot a moving object or creature even if it is invisible or ethereal. Only by remaining perfectly still can such objects or creatures avoid a kuo-toa’s notice.
+                        Racial Bonuses: A kuo-toa has a +8 racial bonus on Escape Artist checks and a +4 racial bonus on Search and Spot checks.
+                        Slippery (Ex): A kuo-toa secretes an oily film that makes him difficult to grapple or snare. Webs (magically or otherwise) don’t affect kuo-toas, and they usually can wriggle free from most other forms of confinement. 
+
+Source		Underdark,pg16,3.5ed
+  Label			RACIAL_TYPE_SLYTH
+  Name			"Slyth"
+  Plural		"Slyths"
+  Description		“Thought by some to be genasi descended from human pairing with earth and water elementals, slyths are humanoid shapechangers found in small numbers throughout the Underdark. Slyths view themselves as the custodians and caretakers of the Underdark. At peace with the natural world, they consider it their duty to help others interact harmoniously with the environment. / In their humanoid form, a slyth appears as a bald human, slightly taller than average, with softer and more rounded features. Her skin tones can vary in color, but brown hues are the most common. The slyth’s real form is that of an amorphous, oozelike creature whose body is midway between a solid and a liquid. In this shape, she resembles a puddle of syrup, or oil.” 
+  Appearance		6
+  StrAdjust		-2
+  DexAdjust		+2	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		+2	
+  ChaAdjust		0	
+  Endurance		30, swim 30 ft in amorphous form.
+  FavoredClass		Druid
+  Size			Medium
+  RacialHDCount		none
+  RacialHDClass		none
+  RacialLA		+2
+  NaturalArmor		0
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Water Breathing; Resistance to Sonic 5; 
+                        Alternate Form (Su): As a standard action, a slyth can change shape, assuming an amorphous form. Any equipment the slyth is wearing or carrying transforms to become part of this new form. Material armor (including natural armor) becomes worthless, though the slyth’s Dexterity bonus, deflection bonus, and any armor bonus from force effects (for example, from the mage armor spell) still apply. In her amorphous form, she cannot be flanked or stunned and she is immune to critical hits, but she can’t attack or cast spells with verbal, somatic, material, or focus components. (This limitation does not rule out spells that the slyth may have prepared using the metamagic feats Eschew Materials, Silent Spell, and Still Spell.) The slyth loses all other supernatural abilities while in amorphous form and her magic items cease functioning. Her amorphous form is nearly fluid and boneless, enabling her to pass through holes or narrow openings as small as 2 inches in diameter. Ressuming her normal form is a full-rounded action that does not provoke an attack of opportunity. A slyth can remain in amorphous form for up to 10 minutes per class level, but after resuming her normal form she cannot change again for as long as she spent in amorphous form.
+                        Immunities (Ex): Because of their shapechanging abilities, slyth are immune to polymorphing and poison.
+                        Racial Bonuses: A slyth has a +4 racial bonus on Disquise. Escape Artist, and Survival checks.  
+
+Source		Underdark,pg19,3.5ed / MM, pg49,3.5ed
+  Label			RACIAL_TYPE_DERRO
+  Name			"Derro"
+  Plural		"Derro"
+  Description		“Derro are degenerate and evil creatures of the underground, created from dwarf and human stock by some nameless deity of darkness and madness. Incredibly cruel and murderously insane, they enjoy taking slaves and torturing surface dwellers (especially humans) to death. / They are small, stocky dwarflike creatures with pale blue-white skin, and buldous white eyes which don’t have irises nor pupils. Derro are afflicted by a form of racial madness, which most often manifests as delusions of grandeur coupled with an overpowering urge to inflict torment on other creatures. Of course, no derro is capable of recognizing that he is out of his mind.”  
+  Appearance		0
+  StrAdjust		0
+  DexAdjust		+4	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		-6	
+  ChaAdjust		+6	
+  Endurance		20
+  FavoredClass		Sorcerer
+  Size			Small
+  RacialHDCount		3d8+3 (16 hp)
+  RacialHDClass		15
+  RacialLA		+1
+  NaturalArmor		+2
+  SR			15
+  SLAs			At will—-darkness, ghost sound;
+                        1/day--daze (DC 13), sound burst (DC 15).
+                        Caster level 3rd. The save DCs are Charisma-based.          
+  NaturalWeapons	none
+  Special Abilities	Use Poison; Sneak Attack (1d6); +4 racial bonus on Hide and Move Silently checks; 
+                        Madness (Ex): Derro use their Charisma modifier on Will saves instead of their Wisdom modifier, and have immunity to confussion and insanity effects. 
+                        Vulnerability to Sunlight (Ex): A derro takes 1 point of Constitution damage every hour it is exposed to sunlight, and it dies if its Constitution score reaches 0. Lost Constitution points are recovered at the rate of 1 per 24-hour period spent underground or otherwise sheltered from the sun.  
+
+ Source		EPH,pg7,3.5ed
+  Label			RACIAL_TYPE_DROMITE
+  Name			"Dromite"
+  Plural		"Dromites"
+  Description		“Dromites might be mistaken for Halflings at a distance, due to their diminutive stature. However, closer scrutiny reveals dromites to have hardened, chitin-encrusted skin, compound eyes like those of an insect, and two small antennae protruding from their brows. Called “bug-men” by the ignorant, dromites share far more traits with human than they do with insects. Dromites vary in their temperament, but each usually exhibits one of four personality types, depending on the case that dromite eventually joins. / Each caste identifies with the energy type associated with its creed: fire, cold, sonic, and electricity, respectively. Those of the Fire Caste are often quick to anger, but also quick to laugh and forgive. Those of the Ice Caste are analytical, slow to make decisions, but often right. Those of the Voice Caste are consummate artists, reveling in all types of performance, especially song. Those of the Glimmer Caste always move at high speed, rarely resting in their pursuit of life’s tasks.” 
+  Appearance		???
+  StrAdjust		-2
+  DexAdjust		0	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		-2	
+  ChaAdjust		+2	
+  Endurance		20.
+  FavoredClass		Wilder
+  Size			Small
+  RacialHDCount		none 
+  RacialHDClass		none
+  RacialLA		+1
+  NaturalArmor		+3
+  SR			none 
+  SLAs			1/day—energy ray. A dromite always deals the kind of energy damage that its chitin has resistance to (for example, a dromite who has resistance to cold 5 deals cold damage with its energy ray). Manifester level is equal to  ½ Hit Dice (minimum 1st). The save DC is Charisma-based.
+  NaturalWeapons	none
+  Special Abilities	Scent; Blind-Fight; Compound Eyes (+2 bonus on Spot checks);  Monstrous Humanoid;
+                        Chitin: A dromite’s skin is hardened, almost like an exoskeleton, and grants the character +3 natural armor to AC and one of the following kinds of resistance to energy: cold 5, electricity 5, sonic 5, or fire 5. The player chooses what type of energy resistance is gained when the character is created. (This choice also dictates which caste the dromite belongs to.) This natural energy resistance stacks with any future energy resistance gained through other effects.
+                        Naturally Psionic: Dromite gain 1 bonus power points at 1st level. This benefit does not grant them the ability to manifest powers unless they gain that ability through another source, such as levels in a psionic class.                                        
+Source		EPH,pg9,3.5ed
+  Label			RACIAL_TYPE_ELAN
+  Name			"Elan"
+  Plural		"Elans"
+  Description		“Elans are not born: They are made. Living humans are selected from a pool of applicants and screened by a special élan council. Those who pass muster undergo a secret psionic process in one of several hidden elan enclaves, where they abandon their humanity for a new, psionically energized existence. Nonhuman elans are never created, and it could be that the ritual simply doesn’t work for any creatures but those who were originally human. / Because of their exceedingly long life spans sometimes lead the living to think the worst of them, elans practice a certain restraint, especially with regard to the subject of their origin. Otherwise, their personalities vary widely.” 
+  Appearance		6
+  StrAdjust		0
+  DexAdjust		0	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		-2	
+  Endurance		30.
+  FavoredClass		Psion
+  Size			Medium
+  RacialHDCount		none 
+  RacialHDClass		none
+  RacialLA		none
+  NaturalArmor		none
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Aberration;  
+                        Resistance (Su): Elans can use psionic energy to increase their resistance to various forms of attack. As an immediate action, an elan can spend 1 power point to gain a +4 racial bonus on saving throws until the beginning of her next action. 
+                        Resilience (Su): When an elan takes damage, she can spend power points to reduce its severity. As an immediate action, she can reduce the damage she is about to take by 2 hit points for every 1 power point she spends.
+                        Repletion (Su): An elan can sustain her body without need of food or water. If she spends 1 power point, an elan does not need to eat or drink for 24 hours.         
+                        Naturally Psionic: Elan gain 2 bonus power points at 1st level. This benefit does not grant them the ability to manifest powers unless they gain that ability through another source, such as levels in a psionic class.  
+
+Source		EPH,pg12,3.5ed
+  Label			RACIAL_TYPE_HALFGIANT
+  Name			"Half-Giant"
+  Plural		"Half-Giants"
+  Description		“Half-giants are a cross between humans and giants, bred into existence in a desert land by cruel sorcerer-kings intending to use them as warriors and laborers. Every half-giant who was born and survived early childhood could look forward to nothing but a life of suffering, as with any people kept in bondage. Some half-giants found that their forced breeding had engendered within them a spark of psionic power. With the aid of this secret power, many half-giants escaped their circumstances to seek a new home deep in the desert, where they are free to discover their own destiny. / Half-giants stand typically from 7 feet to nearly 8 feet tall and weigh from 250 to 400 pounds, with men noticeable taller and heavier than woman.Most have tightly braided black hair and deep coppery complexions.” 
+  Appearance		5
+  StrAdjust		+2
+  DexAdjust		-2	
+  ConAdjust		+2	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		30.
+  FavoredClass		Psychic Warrior
+  Size			Medium
+  RacialHDCount		none 
+  RacialHDClass		none
+  RacialLA		+1
+  NaturalArmor		none
+  SR			none 
+  SLAs			1/day—stomp. Manifester level is equal to ½ Hit Dice (minimum 1). This save DC is Charisma-based.
+  NaturalWeapons	none
+  Special Abilities	Giant; Low-Light Vision; Powerful Build;   
+                        Fire Acclimated: Half-giants have a +2 racial bonus on saveing throws against all fire spells and effects. 
+                        Naturally Psionic: Half-giants gain 2 bonus power points at 1st level. This benefit does not grant them the ability to manifest powers unless they gain that ability through another source, such as levels in a psionic class.                                       
+Source		EPH,pg13,3.5ed
+  Label			RACIAL_TYPE_MAENAD
+  Name			"Maenad"
+  Plural		"Maenads"
+  Description		“Maenads are a race rumoured to be wildly emotional, but perceived as extremely reserved by those who encounter them. In fact, both rumor and perception are true: Maenads have developed strict self-control as a means of holding their intense emotional turmoil at bay. On the rare occasion when a maenad loses his control, a flood of emotion rises to the surface, often to be released in acts of stunning bravery or violence. Maenads know not the source of their spiritual anger, but legend has it that they were terribly wronged by a higher power in some distant time. Maenads are tall and wiry, standing over 6 feet tall and weighing around 200 pounds, with males the same height as and only marginally heavier than females. Their skin is flecked with bits of living crystal, giving them a striking luster in the right light. Maenads possess grace and fine features, and are almost elven in their beauty.” 
+  Appearance		6
+  StrAdjust		0
+  DexAdjust		0	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		30.
+  FavoredClass		Wilder
+  Size			Medium
+  RacialHDCount		none 
+  RacialHDClass		none
+  RacialLA		none
+  NaturalArmor		0
+  SR			none 
+  SLAs			1/day—energy ray. A maenad can deal only sonic damage with this ability. It is accompanied by a tremendous scream of rage. Manifester level is equal ½ Hit Dice (minimum 1st). The save DC is Charisma-based.
+  NaturalWeapons	none
+  Special Abilities	Outburst (Ex): Once per day, for up to 4 rounds, a maenad can subjugate her mentality to gain a boost of raw physical power. When she does so, she takes a -2 penalty to Intelligence and Wisdom but gains a +2 bonus to Strength.
+                        Naturally Psionic: Maenad gain 2 bonus power points at 1st level. This benefit does not grant them the ability to manifest powers unless they gain that ability through another source, such as levels in a psionic class.   
+
+Source		EPH,pg14,3.5ed
+  Label			RACIAL_TYPE_THRIKREEN
+  Name			"Thri-Kreen"
+  Plural		"Thri-Kreen"
+  Description		“Fierce hunters and faultless trackers, the thri-kreen are a race of insect-folk sometimes known as “mantis warriors”. They are inscrutable, alien, creatures; those who do not know them well believe them to be bloodthirsty monsters. Nomadic folk who spend their brief lives roaming vast distances of the deserts, scrublands, and savannas of the south, thri-kreen are near-perfect hunters. / A thri-kreen resembles a bipedal praying mantis. Its body’s exoskeleton is sandy yellow in color. Of the body’s six limbs, the lower two are used for walking, while the upper four end in four-fingered, clawed hands. Thri-kreen have large, dangerous mandibles and compound eyes and two small antennae sprout from the tops of their heads.” 
+  Appearance		???, 362 for now
+  StrAdjust		+2
+  DexAdjust		+4	
+  ConAdjust		0	
+  IntAdjust		-2	
+  WisAdjust		+2	
+  ChaAdjust		-4	
+  Endurance		20.
+  FavoredClass		Ranger or Soulknife
+  Size			Medium
+  RacialHDCount		2d8
+  RacialHDClass		15
+  RacialLA		+2
+  NaturalArmor		+3
+  SR			none 
+  SLAs			3/day—chameleon, know direction;
+                        1/day--psionic displacement, metaphysical claw. 
+                        Manifester level is equal to ½ Hit Dice (minimum 1st). The save DC is Charisma-based.
+  NaturalWeapons	4 Claws (1d4), Bite (1d4 plus poison)
+  Special Abilities	Multiple Limbs; Monstrous Humanoid; Darkvision; Immunity to Sleep; Deflect Arrow;
+                        Poison (Ex): Bite, inertial damage 1d6 Dex, secondary damage paralysis, DC 11 + Con modifier. A thri-kreen produces sufficient poison for only one poisonous bite per day.
+                        Leap (Ex): Thri-kreen are natural jumpers. They have a +30 racial bonus on Jump checks.
+                        +4 racial bonus on Hide checks in sandy or arid settings.              
+                        Naturally Psionic: Thri-kreen gain 1 bonus power points at 1st level. This benefit does not grant them the ability to manifest powers unless they gain that ability through another source, such as levels in a psionic class.  
+
+Source		EPH,pg15,3.5ed
+  Label			RACIAL_TYPE_XEPH
+  Name			"Xeph"
+  Plural		"Xephs"
+  Description		“Xephs are acknowledged for their skill in feats of agility, their uncontested ability at generating bursts of speed, their matchless knowledge of movement and distance, and their capacity for humor. Xephs are quick to laugh or joke, welcoming of strangers, and especially charitable to those who really earn their confidence. If they are betrayed by a friend, xephs are dwarflike in their resolve to seek justice and redress.They stand about 5-1/2 feet tall and are slender and graceful, usually weighing about 140 pounds. Xephs skin is typically brown, and their eyes are black, with the hair of the same color as their eyes.” 
+  Appearance		6
+  StrAdjust		-2
+  DexAdjust		+2	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		30.
+  FavoredClass		Soulknife
+  Size			Medium
+  RacialHDCount		none 
+  RacialHDClass		none
+  RacialLA		none
+  NaturalArmor		none
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Darkvision; +1 racial bonus against powers, spells and spell-like abilities;
+                        Burst (Su): Three times per day, a xeph can put on a burst of speed to increase her speed by 10 feet, plus 10 per four character levels beyond 1st, to a maximum of 30 at 9th character level and higher. A burst of speed lasts 3 rounds.
+                        Naturally Psionic: Xephs gain 1 bonus power points at 1st level. This benefit does not grant them the ability to manifest powers unless they gain that ability through another source, such as levels in a psionic class.     
+
+Source		EPH,pg189,3.5ed
+  Label			RACIAL_TYPE_BLUE_GOBLIN
+  Name			"Blue"
+  Plural		"Blues"
+  Description		“Blues are a subrace of goblins with an innate knack for psionics. Their bluish skin sets them apart from other goblins immediately—which often makes them a target not just of goblin enemies but also of other goblins. Enlightened goblin communities attempt to preserve their blues, since those that survive to adulthood augment the tribe. / A blue is often smaller than an average goblin, standing just above 3 feet tall and weighing about 40 pounds. Blues have noticeable blue-tinged skin, and their eyes are less dull than those of a common goblin.”
+  Appearance		85
+  StrAdjust		-2
+  DexAdjust		0	
+  ConAdjust		0	
+  IntAdjust		+2	
+  WisAdjust		0	
+  ChaAdjust		-2	
+  Endurance		30.
+  FavoredClass		Psion
+  Size			Small
+  RacialHDCount		none 
+  RacialHDClass		none
+  RacialLA		none
+  NaturalArmor		none
+  SR			none 
+  SLAs			none
+  NaturalWeapons	none
+  Special Abilities	Darkvision; +4 racial bonus on Move Silently and Ride checks;  
+                        Naturally Psionic: Blues gain 1 bonus power points at 1st level. This benefit does not grant them the ability to manifest powers unless they gain that ability through another source, such as levels in a psionic class.
+
+Source		Races of Faerün,pg130,3.0ed
+  Label			RACIAL_TYPE_AARAKOCRA
+  Name			"Aarakocra"
+  Plural		"Aarakocras"
+  Description		“The aarakocras are a race of intelligent birdlike people who live in mountainous areas around Toril. Aarakocras love to soar high in the sky for hours on end, riding the thermal currents and updrafts with their wings spread wide. Aarakocras stand about 5 feet tall, having a wingspan of 20 feet and only weigh about 90 pounds. Their wing muscles attach to a bony chestplate, and their powerful legs end in sharp talons that can be drawn back, allowing aarakocras to use their feet as hands. Their heads combine features of an eagle and a parrot, with the beak normally gray-black in color just as their eyes are. The feathers of males are brightly colored, usually red orange, or yellow, while the females are either brown or gray.” 
+  Appearance		???
+  StrAdjust		-2
+  DexAdjust		+4	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		0	
+  ChaAdjust		0	
+  Endurance		20, fly 90 ft. (average)
+  FavoredClass		Fighter
+  Size			Medium
+  RacialHDCount		2d8
+  RacialHDClass		15
+  RacialLA		+2
+  NaturalArmor		+1
+  SR			none 
+  SLAs			none
+  NaturalWeapons	2 Talons (1d4)
+  Special Abilities	+2 racial bonus on Craft (any one), Knowledge (nature), Listen, and Spot checks.
+                        Claustrophobic: Aarakocras suffer a -4 circumstance penalty on all attack rolls and skill checks when in an enclosed area.
+                        Proficient with javelin.
+
+Source			Races of Faerün,pg132,3.0ed
+ Label			RACIAL_TYPE_CENTAUR	
+ Name			"Centaur"
+ Plural			"Centaurs"
+ Description		"Centaurs are magnificent creatures. From the waist up, they appear like well-muscled humanoids with pointed ears. From the waist down, however, they have the bodies of horses. Centaurs are usually honourable and affable people who prefer to stick to their own kind, but are not afraid to socialize with those from other races. / Full-grown centaurs measure six to eight feet long and seven to eight feet tall, while weighing anywhere from 950 to 1,200 pounds."
+ Appearance		???
+ StrAdjust		+8
+ DexAdjust		+4	
+ ConAdjust		+4	
+ IntAdjust		-2	
+ WisAdjust		+2	
+ ChaAdjust		+0	
+ Endurance		50
+ FavoredClass		Ranger
+ Size			Large
+ RacialHDCount		4d8
+ RacialHDClass		15
+ RacialLA		+3
+ NaturalArmor		+2
+ SR			none
+ SLAs			none
+ NaturalWeapons		2 Hooves (1d6)
+ Special Abilities	Darkvision; Weapon Proficiency (simple); Proficient with longsword, heavy lance and composite longbow; 
+ 
+Source		Races of Faerün,pg134,3.0ed
+  Label			RACIAL_TYPE_DEKANTER
+  Name			"Dekanter Goblin"
+  Plural		"Dekanter Goblins"
+  Description		“Dekanter goblins were created from regular goblins by the alhoon known as the Beast Lord in the mines of Dekanter. They are larger than the race from which they sprang, ranging in height from 4 to 5 feet. Their tough hides are orange-red, and they have manes of wiry black hair that tumble down past their shoulders. Their heads squat atop thick, powerful necks, and they have a sharp, rhinolike horn at the tip of their elongated snouts. / Unlike the cowardly goblins, dekanter goblins are aggressive and fearless killing machines. They are cunning enough not to charge directly into battle against a clearly superior foe, but they rarely run away from a fight.” 
+  Appearance		82
+  StrAdjust		+6
+  DexAdjust		+2	
+  ConAdjust		+4	
+  IntAdjust		+2	
+  WisAdjust		+2	
+  ChaAdjust		-2	
+  Endurance		20.
+  FavoredClass		Barbarian
+  Size			Medium
+  RacialHDCount		2d8 
+  RacialHDClass		15
+  RacialLA		+4
+  NaturalArmor		+4
+  SR			none 
+  SLAs			none
+  NaturalWeapons	2 Claws (1d4), Horn (1d6)
+  Special Abilities	Darkvision; Cold Resistance 5; Weapon Proficiency (simple); Fast Healing 3; 
+
+Source		Races of Faerün,pg138,3.0ed
+  Label			RACIAL_TYPE_KIRLANAN
+  Name			"Kir-Lanan"
+  Plural		"Kir-Lanans"
+  Description		“Falsely labelled gargoyles by some, kir-lanans are actually creatures who arrived on Faeün during the Times of Troubles (1358 DR). They have made it their mission to destroy the gods of Toril by first executing all who believe in them. / Kir-lanans are only vaguely similar to true gargoyles. They have a humanoid form with large, batlike wings, standing about 6 feet tall, and weigh around 220 pounds. Their finely scaled hides are all dark in color, normally ranging from midnight blue through deep purple to black. / Kir-lanans don’t care much for life—neither their own or that of anyone else. They exist solely to cause misery for the gods and those who call upon these feckless and fickle deities.”
+  Appearance		73
+  StrAdjust		+4
+  DexAdjust		+4	
+  ConAdjust		0	
+  IntAdjust		0	
+  WisAdjust		-2	
+  ChaAdjust		0	
+  Endurance		30, fly 90 ft. (good)
+  FavoredClass		Fighter
+  Size			Medium
+  RacialHDCount		4d8 
+  RacialHDClass		15
+  RacialLA		+4
+  NaturalArmor		+3
+  SR			none 
+  SLAs	  	        Negative Energy Touch (Su): Three times per day, a kir-lanan can use a touch attack similar to the chill touch spell. If she hits with a melee touch attack, she deals 2d6 points of damage and 1 point of temporary Strength damage. A Fortitude save (DC 12 + Cha modifier) negates the Strength damage. 
+                        Ray of Enfeeblement (Sp): Three times per day, a kir-lanan can use ray of enfeeblement as if the spell had been cast by a 4th-level sorcerer.     
+  NaturalWeapons	2 Claws (1d4)
+  Special Abilities	Darkvision; +4 racial bonus on Hide checks; Weapon Proficiency (simple); Armor Proficiency (light);   
+                        Rebuke Undead (Su): A kir-lanan can rebuke or command undead three times per day as an evil cleric with as many levels as the kir-lanan has Hit Dice.
+                        Harmed by Positive Energy: A kir-lanan suffers damage from cure wounds spells, holy water, and blessing weapons just as if she were undead. Conversely, she is healed by inflict wounds spells and other applications of negative energy. 
+                        Soulless: Kir-lanan cannot become clerics, druids, or paladins, and they cannot use positive energy of any kind. They cannot ever use divine magic. They may become rangers, but they never gain that class’s spellcasting abilities. A kir-lanan bard, however, can learn inflict wounds spells instead of cure wounds spells. Since kir-lanan don’t have souls, they can only be brought back from the dead with a wish or miracle spell, just like an outsider.
+
+Source		Races of Faerün,pg148,3.0ed
+  Label			RACIAL_TYPE_SHADE
+  Name			"Shade"
+  Plural		"Shades"
+  Description		“Over two thousand years ago, the ruler of a Netherese flying city transported his entire city onto the Plane of Shadow in order to explore that dim and perilous plane. For thousands of years, the City of Shade was lost to human knowledge, but in 1372 DR it abruptly returned to Faerün above the Dire Wood. Shades look just like normal humanoids, although their skin is gray to inky black, as are their eyes. By trading some portion of their souls for the stuff of shadow, they extended their lifespans tenfold.”
+  Appearance		6
+  StrAdjust		0
+  DexAdjust		0
+  ConAdjust		+2
+  IntAdjust		0	
+  WisAdjust		0
+  ChaAdjust		+2
+  Endurance		50
+  FavoredClass		Sorcerer
+  Size			Medium
+  RacialHDCount		none
+  RacialHDClass		none
+  RacialLA		+4
+  NaturalArmor		+4 deflection bonus
+  SR			11 + character level
+  SLAs		        At will—-invisibility. Once per round equal of character level.
+                        3/day-—Shadow Image. Similar to the mirror image spell, caster lever equal to character level. This creates 1d4 figments of the shade, +1 per three levels.
+                        1/day--Shadow Travel: If the shade is 12th level or higher, then he can use teleport without error to reach a shadowy locale on the same world or plane shift to access the Plane of Shadow.
+  NaturalWeapons	none
+  Special Abilities	Fast Healing 2; Control Light; +4 luck nonus on all saving throws; +2 competence bonus on attack and damage; Outsider;
+                        +8 racial bonus on Hide and Move Silently checks; 
+                        +4 on Listen and Spot checks;    
+                        Shadow Stride (Sp): As often as once every 2 rounds, a shade of 8th level or higher can vanish from his current location and reappear in any shadowy area within 300 feet. This is a move-equivalent action.
+                        Shadowsight (Sp): Darkvision 60-foot range, also can see through any darkness effects normally, but not through fogs, invisibility, obscurement, and so on.
+                        Note: All of the shades abilities and powers only work in shadowy areas and are completely useless in bright light! 
+
+Source		        Races of Faerün,pg150,3.0ed
+ Label			RACIAL_TYPE_PRC_WEMIC
+ Name			"Wemic”
+ Plural			"Wemics”
+ Description		"Wemics are centaurlike creatures with the upper torso of a humanoid atop a lion’s broad shoulders. They are proud and noble people who may be the most skilful hunters in all Faerün. / From head to rump, wemics are 10 to 12 feet long, and they stand 6 to 7 feet tall from theirfront paws to the tops of their heads. They weigh around 600 pounds and their dusty golden fur covers them from head to tail. / Wemics live in harmony with nature, uncivilized and proud of it. They eschew the ways of civilization, since they can’t see why anyone would ever want to live under a shingled roof when she could have the sky itself as her roof.”
+ Appearance		???
+ StrAdjust		+8
+ DexAdjust		+2	
+ ConAdjust		+2	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		-2
+ Endurance		40
+ FavoredClass		Barbarian
+ Size			Large
+ RacialHDCount		5d8
+ RacialHDClass		15
+ RacialLA		+3
+ NaturalArmor		+4
+ SR			none
+ SLAs			none
+ NaturalWeapons		2 Claws (1d6)
+ Special Abilities	Darkvision; Weapon Proficiency (simple); Proficient with shields; +8 racial bonus on Jump checks.
+ 
+Source		        Monsters of Faerün,pg81,2.5ed
+ Label			RACIAL_TYPE_STINGER
+ Name			"Stinger”
+ Plural			"Stingers”
+ Description		"Stingers mix esoteric religious mysticism with murderous tendencies and the stinger of a giant scorpion. / Stringers look like bizarre variant of centaur and are about the same size as them, but they have the lower bodies of scorpions. Their human half is red-skinned, hairless, and almost inhumanly handsome with their preternaturally calm faces.” 
+ Appearance		359
+ StrAdjust		+6
+ DexAdjust		+4	
+ ConAdjust		+4	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		+2
+ Endurance		40
+ FavoredClass		Cleric
+ Size			Large
+ RacialHDCount		4d8+8 (26 hp)
+ RacialHDClass		15
+ RacialLA		+3
+ NaturalArmor		+4
+ SR			none
+ SLAs			none
+ NaturalWeapons		Claws (1d6+1), or Stinger (1d6+3 plus poison)
+ Special Abilities	Tremor Sense; Improved Initiative;
+                        Poison (Ex): Stinger, Fortitude save (DC 14), initial and secondary damage 1d6 points of temporary Strength damage.
+                        Bolthole Magic (Sp): A stinger can move 20 feet straight up or straight down, as long as passes through at least a foot of earth during its movement. For every 5 feet (or fraction thereof) of earth the stinger moves through, it suffers 1d3 points of damage If a stinger’s planned movement would place it inside a solid object, it remains in place but suffers the damage as if it had moved through the intervening earth. Use of this ability produces a flash of red light and a smell like that of burning insect skin. 
+
+Source		        Planar Handbook,pg7,3.5ed
+ Label			RACIAL_TYPE_BARIAUR
+ Name			"Bariaur”
+ Plural			"Bariaurs”
+ Description		"Native to the rolling hills and woods of Ysgard, the centaur-like bariaurs wander the land in search of evil. When a vile foe is located, the bariaurs charge into glorious battle. / To those unfamiliar with them, bariaurs appear carefree or even irresponsible, but this behaviour is merely the outward sign of their wanderlust. When evil rears its ugly head, this carefree demeanor disappears, replaced by single-minded pursuit of that which endangers good folk of the area. / The lower body of a bariaur is that of a ram with sleek brown or golden fur and cloven hooves. Its upper body is humanlike, powerfully muscled and sporting a pair of ramlike horns atop its head. Standing roughly half a foot taller than a human and weighing around 300 pounds, bariaurs live well over 200 years of age.”   
+ Appearance		???
+ StrAdjust		+2
+ DexAdjust		0	
+ ConAdjust		0	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		-2
+ Endurance		40
+ FavoredClass		Ranger
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		+1
+ NaturalArmor		none
+ SR			11 + class level
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Outsider; Powerful Charge; Darkvision; Hardiness vs. Spells; 
+                        +2 racial bonus on Listen and Spot checks. 
+                        Quadruped: As quadrupeds, bariaurs have a +4 bonus on checks to resist bull rush and trip attacks. They must wear barding instead of normal armor and cannot wear boots designed for humanoids.
+
+Source		        Planar Handbook,pg13,3.5ed
+ Label			RACIAL_TYPE_BUOMMAN
+ Name			"Buomman”
+ Plural			"Buommans”
+ Description		"There might have been a time when the buommans were merely human visitors to the Astral Plane. But now, perhaps hundreds of millennia later, the buommans are neither merely visitors, nor merely human. Known to some astral denizens as the “moaning monks”, buommans dwell in temples and shrines formed by astral debris, which they believe to be the mortal forms of sleeping deities, long forgotten. Buommans are quit, withdrawn, and deferential. They appear more or less like humans, though with long, sagging faces and elongated hands and feet.”   
+ Appearance		6
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		0	
+ IntAdjust		0
+ WisAdjust		+2
+ ChaAdjust		-2
+ Endurance		30
+ FavoredClass		Monk
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Humanoid (Exraplanar); Low-Light Vision; Vow against Speech; 
+                        +2 racial bonus on Listen and Perform checks.       
+
+Source		        Planar Handbook,pg14,3.5ed
+ Label			RACIAL_TYPE_SPIKER
+ Name			"Spiker”
+ Plural			"Spikers”
+ Description		"Spikers hail from Acheron, but scholarly speculation places their origin on the Nine Hells of Baator, the Bleak Eternity of Gehenna, or even some unknown metal-based plane. Spikers share a great love of battle. They bravely enter combat, often focusing their attacks on the most dangerous opponent they perceive. / The skin of a spiker is of a dull metallic hue, spotted with patches of metallic spines. A spiker’s eyes are a deep violet and its blood black and oily. Spikers are about as tall as humans but are considerably heavier, with the average weight of 200 pounds. Spikers don’t reach adulthood until past the age of 30, and even the longest-lived among the race don’t survive to see the end of their ninth decade.”   
+ Appearance		6
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		0	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		0
+ Endurance		30
+ FavoredClass		Fighter
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		+1
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Humanoid (Exraplanar); Darkvision; Resistance to Acid 5; Martial Weapon Proficiency (armor spikes);
+                        Natural Spikes (Ex): A spiker’s skin is replete with sharp, jagged spikes. A spiker can deal extra piercing damage on a successful grapple check, or deal piercing damage with a melee attack, as if she wore armor spikes. Because of their spiked skin, spikers have a difficult time wearing armor. The maximum Dexterity bonus of the armor is reduced by 1, and the armor check penalty is worsened by 2. These changes don’t affect the armor’s arcane spell failure changes, nor do they apply to shields used by the spiker.                             
+
+Source		        Planar Handbook,pg16,2.5ed
+ Label			RACIAL_TYPE_WILDREN
+ Name			"Wildren”
+ Plural			"Wildren”
+ Description		"Prowling the darkest forests of Karasuthra, the Beastlands’ lowest layer, wildren build elaborate underground burrows, wich they defend, out of a commingled racial memory, to the death. Often short-tempered and vengeful, wildren generally live solitary lives, emerging only occasionally from their burrows to hunt and to seek mates. The typical wildren looks like a dwarf covered in short, grizzled dark fur, with a broad white stripe of fur running from the bridge of the nose over the top of the head and down to the base of the skull. A wildren’s arms are unnaturally large and well-muscled, and her fingers end in hard claws 2 to 3 inches long. ” 
+ Appearance		???, 0 for now
+ StrAdjust		0
+ DexAdjust		-2	
+ ConAdjust		+4	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		-2
+ Endurance		20, burrow 10ft.
+ FavoredClass		Barbarian
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		+1
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		Claws (1d4 + Strength modifier)
+ Special Abilities	Scent; Outsider; Darkvision; 
+                        Stability (Ex): +4 racial bonus on ability checks to resist being bull rushed or tripped when standing on the ground.
+                        Fury (Ex): Once per day, a wildren who has taken at least 1 point of damage can choose to enter a brief stage of ragelike fury at the beginning of her next turn. In this state, a wildren gains +4 to Strength and -2 to Armor Class. The fury lasts for 1 round and stacks with similar effects (such as the barbarian’s rage).               
+
+Source		        Planar Handbook,pg113,3.5ed
+ Label			RACIAL_TYPE_FROST_DWARF
+ Name			"Frost Dwarf”
+ Plural			"Frost Dwarves”
+ Description		"Millennia ago, the frost giants of the Ice Wastes of the Abyss enslaved a tribe of duergar and brought them to their home to craft armor and weapons. All but the hardiest perished, and all those who survived gradually changed, becoming more like their frost giant masters. Now, frost dwarves toil away in the mines and forges of the Ice Wastes, plotting their liberation—and their revenge.”   
+ Appearance		0
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		+4	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		-4
+ Endurance		20
+ FavoredClass		Fighter
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		+1
+ NaturalArmor		none
+ SR			none
+ SLAs			1/day—chill touch, obscuring mist. Caster level is class level +2 (minimum 3rd).
+ NaturalWeapons		none
+ Special Abilities	Humanoid (Exraplanar); Darkvision; Hardiness vs. Spells; Immunity to Poison, Phantasm, and Paralysis; Resistance to Cold 10; Light Sensitivity; Stability; Defensive Training vs. Giants; 
+                        +4 racial bonus on Move Silently checks and +2 bonus on Appraise & Craft checks. 
+
+Source		       Planar Handbook,pg125,3.5ed
+ Label			RACIAL_TYPE_FIRE_GNOME
+ Name			"Fire Gnome”
+ Plural			"Fire Gnomes”
+ Description		"Countless ages of toil in the deep mines of Dathion, where the walls between the Twin Paradises of Bytopia and the Elemental Plane of Fire are very thin indeed, has created a hybrid race that shares some qualities of gnome and some of fire elemental. Fire gnomes are exceptionally resistant to heat and especially vulnerability to cold, and though they share the some of the same interests as their cousins the svirfneblin, fire gnomes are nowhere near as insular and paranoid.” 
+ Appearance		2
+ StrAdjust		-2
+ DexAdjust		0	
+ ConAdjust		+2	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		0
+ Endurance		20
+ FavoredClass		Sorcerer
+ Size			Small
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		+1
+ NaturalArmor		none
+ SR			none
+ SLAs			1/day—heat metal, produce flame. Caster level equals the fire gnome’s character level +2.
+ NaturalWeapons		none
+ Special Abilities	Humanoid (Exraplanar); Darkvision; Fire Subtype; Stonecunning; Offensive Training vs. Reptilian and Goblinoids; Defensive Training vs. Giants;  
+                        +2 racial bonus to caster level when casting spells or using spell-like abilities with the fire descriptor.                             
+
+Source		        Dragonlance Campaign Setting,pg13,3.5ed
+ Label			RACIAL_TYPE_DARK_DWARF
+ Name			"Dark Dwarf”
+ Plural			"Dark Dwarves”
+ Description		"The dark dwarves include two clans of mountain dwarves who prefer to live completely in darkness. Considered mad by other dwarves, dark dwarves are known for evil and murderous acts. They claim loyalty to the High Thane and the dwarven race, but more than once the dark dwarves have betrayed their kin. / Centuries of inbreeding and isolation have given them unusual traits that separate them from their cousins. Dark dwarves are mostly always true albinos with an active interest in magic.” 
+ Appearance		0
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		+2	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		-4
+ Endurance		20
+ FavoredClass		Rogue
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Darkvision; Light Sensitivity; Skill Affinity (Lore); Skill Affinity (Craft Armor); Skill Affinity (Craft Weapon); Skill Affinity (Appraise); Offensive Training vs. Orcs; Offensive Training vs. Goblinoids; Devensive Training vs. Giants; Hardiness vs. Poisons; Hardiness vs. Spells; Stonecunning
+                        +2 racial bonus on Hide, Listen, and Move Silently checks. 
+
+Source		        Dragonlance Campaign Setting,pg14,3.5ed
+ Label			RACIAL_TYPE_GULLY_DWARF
+ Name			"Gully Dwarf”
+ Plural			"Gully Dwarves”
+ Description		"The Aghar, or gully dwarves as most races call them, are a misbegotten race of tough survivors. According to the Iconochronos, gully dwarves are the result of breeding between gnomes and dwarves in the years following the transformation of the gnomes by the Graygem of Gargath. / The gnome-dwarf half-breeds appeared to inherit the worst qualities of both races and the unfortunate half-breeds were driven out of their clans. Humans later christened them “gully dwarves”, reflecting their lowly status and poor living conditions.” 
+ Appearance		0
+ StrAdjust		0
+ DexAdjust		+2	
+ ConAdjust		+2	
+ IntAdjust		-4
+ WisAdjust		0
+ ChaAdjust		-4
+ Endurance		20
+ FavoredClass		Rogue
+ Size			Small
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Survival Instinct: Gully dwarves are driven to survive. They receive a +2 racial bonus on Hide, Move Silently, and Survival checks. Gully dwarves may use Survival checks to forage for food and basic necessities.
+                        Hardy: Gully dwarves are resistant to the effect of disease and poison, receiving a +2 racial bonus on Fortitude saves to resist the effects of poison and disease.
+                        Pitiable: Gully dwarf diplomacy consists of flattery, begging, crying, and pleading. They’ve honed this ability to a fine art. Gully dwarves receive a +4 racial bonus on Diplomacy checks used to convince an enemy not to harm them.
+                        Cowardly: Gully dwarves are extremely susceptible to Intimidation and fear effects. They suffer a -4 penalty on level checks to resist Intimidation checks made against them and on saving throws against fear effects. 
+Source		        Dragonlance Campaign Setting,pg16,3.5ed
+ Label			RACIAL_TYPE_KAGONESTI
+ Name			"Kagonesti”
+ Plural			"Kagonesti”
+ Description		"At home in the forests, the Kagonesti, or wild elves, believe every creature and object, from insects and birds to rivers and clouds, possesses a spirit. They honor these spirits and know that, in return, the spirits honor them. / Passionate and proud, they want only to be left alone. Unlike their more placid kin, however, Kagonesti can also be hot-tempered and fierce when driven to extremes. Though shorter than their Silvanesti and Qualinesti cousins, the Kagonesti are much more muscular than other elves.”   
+ Appearance		1
+ StrAdjust		0
+ DexAdjust		+2	
+ ConAdjust		0	
+ IntAdjust		-2
+ WisAdjust		0
+ ChaAdjust		-2
+ Endurance		30
+ FavoredClass		Ranger
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Sleepnessless; Hardiness vs. Enchantments; Bonus Proficiencies (short sword, longspear, shortbow, and longbow); Skill Affinity (Listen); Skill Affinity (Search); Skill Affinity (Spot); Keen Senses; +1 racial bonus on Knowledge (nature) and Survival checks;
+                        Elvensight: Krynn elves have low-light vision and also darkvision up to 30 feet.
+
+Source		        Dragonlance Campaign Setting,pg18,3.5ed
+ Label			RACIAL_TYPE_QUALINESTI
+ Name			"Qualinesti”
+ Plural			"Qualinesti”
+ Description		"Of all elven nations, the Qualinesti elves have the most interaction with the other races of Krynn. Though some Qualinesti prefer to remain in their forest homes, others can be found exploring the continent as merchants, priests, wizards and travelers. / Because of their relatively long life spans, Qualinesti accept the past without regret and look forward to the future. Slightly smaller than the Silvanesti, Qualinesti average just under 5 feet in height with their willowy and graceful bodies.”
+ Appearance		1
+ StrAdjust		0
+ DexAdjust		+2	
+ ConAdjust		-2	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		0
+ Endurance		30
+ FavoredClass		Wizard
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Sleepnessless; Hardiness vs. Enchantments; Bonus Proficiencies (short sword, longspear, shortbow, and longbow); Skill Affinity (Listen); Skill Affinity (Search); Skill Affinity (Spot); Keen Senses; +1 racial bonus on Diplomacy  and Sense Motive checks;
+                        Elvensight: Krynn elves have low-light vision and also darkvision up to 30 feet. 
+
+Source		        Dragonlance Campaign Setting,pg19,3.5ed
+ Label			RACIAL_TYPE_SILVANESTI
+ Name			"Silvanesti”
+ Plural			"Silvanesti”
+ Description		"Cool, aloof, and seemingly untouchable, the Silvanesti elves represent all that is best and worst in the elven people. Their haunting beauty is marred by their cold and aloof natures. They consider themselves better than all other people on Ansalon, including their own kind, the Qualinesti and Kagenesti.”
+ Appearance		1
+ StrAdjust		0
+ DexAdjust		+2	
+ ConAdjust		-2	
+ IntAdjust		+2
+ WisAdjust		0
+ ChaAdjust		-2
+ Endurance		30
+ FavoredClass		Wizard
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Sleepnessless; Hardiness vs. Enchantments; Bonus Proficiencies (short sword, longspear, shortbow, and longbow); Skill Affinity (Listen); Skill Affinity (Search); Skill Affinity (Spot); Keen Senses; +1 racial bonus on Knowledge (arcane) and Spellcraft checks;
+                        Elvensight: Krynn elves have low-light vision and also darkvision up to 30 feet.
+
+Source		        Dragonlance Campaign Setting,pg22,3.5ed
+ Label			RACIAL_TYPE_DRAGONESTI
+ Name			"Dragonesti”
+ Plural			"Dragonesti”
+ Description		"The Dragonesti are reserved around other races, and elves mistakenly consider them uncivilized. Among themselves, Dragonesti work to achieve harmony with their environment and enjoy life to the fullest. Dragonesti approach 6 to 7 feet in height. Dragonesti skin is the deep blue of the ocean, which anables them to blend well with the ocean weaves and their hair color ranges from pale gold to dark green. / The fingers and toes of both sea elven races are long and webbed, allowing them to glide easily through the water, and they have small, feathery gill slits just below their pointed ears.”
+ Appearance		1
+ StrAdjust		+2
+ DexAdjust		+2	
+ ConAdjust		0	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		-2
+ Endurance		30, swim 30 ft.
+ FavoredClass		Fighter
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		+1
+ NaturalArmor		none
+ SR			none
+ SLAs			Dragonesti with Intelligence scores of 10 or higher gain the following spell-like abilities: 
+                        1/day—blur, dancing lights, darkness, and obscuring mist. Caster level is equal of character level (DC 10 + Intelligence modifier).
+ NaturalWeapons		none
+ Special Abilities	Darkvision; Sleepnessless; Hardiness vs. Enchantments; Bonus Proficiencies (trident, longspear, and net); Skill Affinity (Listen); Skill Affinity (Search); Skill Affinity (Spot); Keen Senses; Water Breathing; 
+                        Alternate Form (Su): Dragonesti can assume the form and physical qualities of a porpoise 3/day. A Dragonesti may only use this ability while in an aquatic environment suitable for porpoises (such as the sea). 
+                        Surface Sensitivity (Ex): Dragonesti suffer a -2 circumstance penalty on attack rolls, saves, and checks when they have spent more than 24 hours out of water. This penalty can only be mitigated by the Dragonesti spending at least 1 hour underwater during each 24-hour period.  
+
+Source		        Dragonlance Campaign Setting,pg22,3.5ed
+ Label			RACIAL_TYPE_DIMERNESTI
+ Name			"Dimernesti”
+ Plural			"Dimernesti”
+ Description		"The fiercely independent Dimernesti reflect the same qualities possessed by the Kagonesti. After centuries of loss inflicted upon them by the Cataclysm, the sea dragon Brysneldrimer, and other terrors, Dimernesti are sullen and have abandoned their faith and trust in outsiders. They display an aloof coolness when forced to deal with others. / Dimernesti average around 6 to 6-1/2 feet in height with light blue skin. / The fingers and toes of both sea elven races are long and webbed, allowing them to glide easily through the water, and they have small, feathery gill slits just below their pointed ears.”
+ Appearance		1
+ StrAdjust		0
+ DexAdjust		+2	
+ ConAdjust		0	
+ IntAdjust		+2
+ WisAdjust		-2
+ ChaAdjust		-2
+ Endurance		30, swim 30 ft.
+ FavoredClass		Barbarian
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		+1
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Darkvision; Sleepnessless; Hardiness vs. Enchantments; Bonus Proficiencies (trident, longspear, and net); Skill Affinity (Listen); Skill Affinity (Search); Skill Affinity (Spot); Keen Senses; Water Breathing; 
+                        Alternate Form (Su): Dimernesti can assume the form and physical qualities of a giant sea otter 3/day. (A giant sea otter is similar to a dire weasel with a swim speed of 40 ft., and no attach or blood drain ability.). 
+                        Surface Sensitivity (Ex): Dimernesti suffer a -1 circumstance penalty on attack rolls, saves, and checks when they have spent more than 24 hours out of water. This penalty can only be mitigated by the Dimeronesti spending at least 1 hour underwater during each 24-hour period.  
+                        Elvensight: Krynn elves have low-light vision and also darkvision up to 30 feet 
+
+Source		        Dragonlance Campaign Setting,pg27,3.5ed
+ Label			RACIAL_TYPE_TINK_GNOME
+ Name			"Thinker Gnome”
+ Plural			"Thinker Gnomes”
+ Description		"Mad, or thinker, gnomes are eccentric among their kind. Some gnomes have no inclination for tinkering whatsoever, while others are actually highly skilled inventors whose devices always work, and are considered aberrations. Regardless of their origin, mad gnomes exist as outsiders from normal gnome society. / Outsiders find it difficult to differentiate mad gnomes from ordinary gnomes, at least upon casual observation. Mad gnomes speak more slowly and tend to be more thoughtful and methodical.“
+ Appearance		2
+ StrAdjust		-2
+ DexAdjust		+2	
+ ConAdjust		0	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		0
+ Endurance		20
+ FavoredClass		Any
+ Size			Small
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	+2 racial bonus on Open Lock, Disable Device, and Craft (alchemy)  
+ 
+Source		        Dragonlance Campaign Setting,pg38,3.5ed
+ Label			RACIAL_TYPE_IRDA
+ Name			"Irda”
+ Plural			"Irda”
+ Description		"The irda (“high ogres”) retain the grace and amazing beauty originally bestowed upon the ogres as one of the first races of creation. Reclusive and solitary by nature, they wear magical disguises when forced to walk among the other races. All but a handful of irda were destroyed by Chaos at the end of the Fourth Age. / Deeply introspective, they seek only to be left alone, living in quit solitude. / Irda are tall and slender, both genders average six feet in height. Their skin color varies from midnight blue to deep, sea green with the hair usually black. Irda move with a grace and delicacy that the highest-born elves envy.“ 
+ Appearance		6
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		-2	
+ IntAdjust		+2
+ WisAdjust		0
+ ChaAdjust		+2
+ Endurance		30
+ FavoredClass		Wizard
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		+2
+ NaturalArmor		none
+ SR			none
+ SLAs			1/day—dancing lights, detect magic, flare, ghost sound, light, and mage hand. Caster level is equal to class level (save DC 10 + Cha modifier).
+ NaturalWeapons		none
+ Special Abilities	Humanoid (shapeshifter); Low-light Vision; 
+                        Change Shape (Su): Three times per day, an irda can assume the form of any humanoid-type creature of Small to Large size. She can remain in her new form as long as she likes. 
+ 
+Source		        Dragonlance Campaign Setting,pg41,3.5ed
+ Label			RACIAL_TYPE_KRYNN_HOGRE
+ Name			"Half-Ogre of Krynn”
+ Plural			"Half-Ogres of Krynn”
+ Description		"Half-ogres of Krynn are usually born out of violence and slavery. They are considered weak and soft by ogre standards, and bestially and ugly by humans standards. Driving by the social needs of both races, half-ogres of Krynn try hard to win acceptance to avoid becoming lonely and desponed. / Half-ogres of Krynn stand between 6 ½ and 7 ½ feet tall, with thick bones, large hands and feet, and dense muscles. Half-ogres of Krynn reflect the personality of the culture they were raised.“ 
+ Appearance		5 
+ StrAdjust		+4
+ DexAdjust		0	
+ ConAdjust		+2	
+ IntAdjust		-2
+ WisAdjust		0
+ ChaAdjust		-2
+ Endurance		30
+ FavoredClass		Fighter
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		+1
+ NaturalArmor		+1
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Low-light Vision; 
+  
+Source		        Dragonlance Campaign Setting,pg43,3.5ed
+ Label			RACIAL_TYPE_KRYNN_MINOTAUR
+ Name			"Minotaur of Krynn”
+ Plural			"Minotaurs of Krynn”
+ Description		"Minotaurs of Krynn are renowned sailors and gladiators, convinced of their own superiority over the other races of Krynn. / Minotaurs of Krynn are tall, muscular, bull-headed humanoids who stand between 6 ½ and 7 ½ feet tall and usually weigh between 300 and 450 pounds. They have short-furred bodies red to brown in color with brown or black eyes. Minotaurs of Krynn are omnivorous, eating meat and vegetables alike.“ 
+ Appearance		120
+ StrAdjust		+4
+ DexAdjust		-2	
+ ConAdjust		0	
+ IntAdjust		-2
+ WisAdjust		0
+ ChaAdjust		-2
+ Endurance		30
+ FavoredClass		Fighter
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		+2
+ SR			none
+ SLAs			none
+ NaturalWeapons		Horns (1d6)
+ Special Abilities	Powerful Charge; Scent; +2 racial bonus on Intimidate, Swim, and Use Rope checks; 
+  
+Source		        Dragonlance Campaign Setting,pg30,3.5ed
+ Label			RACIAL_TYPE_KENDER
+ Name			"Kender”
+ Plural			"Kender”
+ Description		"To the other races, kender are the child-race of Krynn. The diminutive kender have short attention spans, intense curiosity, and a fearlessness that serves them well in battle, but often lands them (and those travelling with them) in danger. Kender live a carefree existence where every new day is a day of wonderful secrets just waiting to be discovered.“ 
+ Appearance		3
+ StrAdjust		-2
+ DexAdjust		+2	
+ ConAdjust		0	
+ IntAdjust		0
+ WisAdjust		-2
+ ChaAdjust		0
+ Endurance		20
+ FavoredClass		Rogue
+ Size			Small
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Lucky; +2 racial bonus on Open Lock, Sleight of Hand, and Spot checks; 
+                        Lack of Focus: Kender have a -4 penalty on Concentration checks
+                        Taunt: Kender receive a +4 racial bonus on all Bluff checks used to taunt someone.  
+                        Fearlessness: Kenders are immune to fear.
+ 
+Source		        Dragonlance Campaign Setting,pg34,3.5ed
+ Label			RACIAL_TYPE_BAAZ
+ Name			"Baaz”
+ Plural			"Baaz”
+ Description		"Baaz are the smallest draconians, standing between 5 and 6 feet in height. Male baaz tend to be shallow, selfish, and sadistic. Female baaz tend to be much more even-tempered and diplomatic, with well-organized minds and a distasted for crude pleasures--though they find such qualities attractive in males. / Baaz have the general form of a humanoid with lizard-like feet, clawed hands, thin dragon-like wings, and a short, stubby tail. Their scales are brass which fades toward green as they age. Baaz have a blunt, draconic snout filled with small, sharp teeth and bright red eyes that lend them a rather sinister appearance.”   
+ Appearance		73
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		+2	
+ IntAdjust		-2
+ WisAdjust		-2
+ ChaAdjust		0
+ Endurance		30
+ FavoredClass		Fighter
+ Size			Medium
+ RacialHDCount		2d12
+ RacialHDClass		18
+ RacialLA		+1
+ NaturalArmor		+3
+ SR			8 + class level
+ SLAs			none
+ NaturalWeapons		2 Claws (1d4 + Strength modifier), Bite (1d4 + half Strength modifier)
+ Special Abilities	Weapon Proficiency (simple); Weapon Proficiency (longsword); Armor Proficiency (light); Shield Proficiency; Immunity to Disease; 
+                        Dragon Type: Immune to sleep and paralysis effects, darkvision, low-light vision, blindsense 60 ft, scent 60 ft.       
+                        Death Throes (Su): A baaz’s body petrifies to stone the moment it dies. If the creature that struck the deathblow used a slashing or piercing weapon, it must make a (DC 12 + Constitution modifier) Reflex save or have its weapon fused inside the baaz’s stony body. The baaz “statue” crumbles to dust after 1d4 minutes. Items carried by the baaz, or any trapped within its stony body, are unaffected by the process. Baaz can only restored to life through the use of a resurrection, true resurrection, or wish spell.
+                        Gallop: Baaz are exceptionally swift, and gain Run as a bonus feat.
+                        Glide (Ex): A baaz can use its wings to glide as an extraordinary ability, negating any damage from a fall of any height an allowing it to travel horizontally up to four times the vertical distance descended.
+                        Inspired by Dragons (Ex): Draconians are drawn to evil dragons and reverie them. When a dragon commander is within line of sight, or when entering battle under the command of a dragon (in the chain of command), they receive a +1 moral bonus on all attacks and saving throws.   
+                        Low Metabolism: Baaz draconians can survive on one-tenth the food and water it takes to sustain a human. 
+
+Source		        Dragonlance Campaign Setting,pg36,3.5ed
+ Label			RACIAL_TYPE_KAPAK
+ Name			"Kapak”
+ Plural			"Kapaks”
+ Description		"Kapaks are venomous dragonmen, licking their poison directly onto their blades before entering battle and dissolving into deadly pools of acid if slain. / Kapaks stand around 6 feet tall and have sleek torsos and long limbs. Their scales are dull copper tinged with green, their eyes an orange or dark brown color. / The kapak’s most exotic physical feature is a set of glands located under the tongue. Male kapaks continuously secrete a venomous spittle, while the salvia of female kapaks has remarkable healing properties. / While not known for original thinking, kapaks exhibit cruel creativity in carrying out assigned missions of espionage and murder.” 
+ Appearance		73
+ StrAdjust		0
+ DexAdjust		+2	
+ ConAdjust		+2	
+ IntAdjust		-2
+ WisAdjust		-2
+ ChaAdjust		0
+ Endurance		30
+ FavoredClass		Rogue
+ Size			Medium
+ RacialHDCount		2d12
+ RacialHDClass		18
+ RacialLA		+2
+ NaturalArmor		+2
+ SR			11 + class level
+ SLAs			none
+ NaturalWeapons		Bite (1d4 + Strength modifier)
+ Special Abilities      Weapon Proficiency (simple); Weapon Proficiency (shortsword & shortbow); Armor Proficiency (light); Immunity to Disease; Sneak Attack (1d6);
+                        Dragon Type: Immune to sleep and paralysis effects, darkvision, low-light vision, blindsense 60 ft., scent 60 ft.       
+                        Death Throes (Su): A kapak’s body dissolves into a pool of acid 5 feet in radius the moment it dies. The acid evaporates in 1d6 rounds. Everyone within the affected area (as well as each unattended object) suffers 1d6 points of acid damage for each round of exposure. Kapak can only restored to life through the use of a true resurrection, or wish spell.
+                        Gallop: Kapak are exceptionally swift, and gain Run as a bonus feat.
+                        Glide (Ex): A kapak can use its wings to glide as an extraordinary ability, negating any damage from a fall of any height an allowing it to travel horizontally up to four times the vertical distance descended.
+                        Inspired by Dragons (Ex): Draconians are drawn to evil dragons and reverie them. When a dragon commander is within line of sight, or when entering battle under the command of a dragon (in the chain of command), they receive a +1 moral bonus on all attacks and saving throws.   
+                        Low Metabolism: Kapak draconians can survive on one-tenth the food and water it takes to sustain a human. 
+                        Healing Touch (females only) (Su): The salvia of a female kapak cures wounds. If she licks an injured living creature, the salvia heals 2d6 points of damage. A creature can only be healed with female kapak salvia every four hours. The salvia does not heal when delivered by her bite attack.
+                        Poison salvia (male only) (Su): The salvia of a male kapak carries a paralyzing poison (bite or licked blade; [DC 11 + Con modifier] Fort save; initial and secondary damage 1d6 Dex), which can be delivered either through a bite or by licking any stabbing or piercing weapon. Envenoming a weapon is a full-rounded action that provokes an attack of opportunity; the poison remains on the weapon for 3 rounds or until the kapak hits with the weapon, whichever comes first.
+
+Source		        Eberron Campaign Setting,pg20,3.5ed
+ Label			RACIAL_TYPE_WARFORGED
+ Name			"Warforged”
+ Plural			"Warforged”
+ Description		"Built as mindless machines to fight in the Last War, the warforged developed sentience as a side effect of the arcane experiments that sought to make them the ultimate weapons of destruction. With each successive model that emerged from the creation of House Cannith, the warforged evolved until they became a new kind of creature—living constructs. / Now that the war has ended, the warforged seek to adapt to life in this era of relative peace. Some.have settled easily into new roles as artisans or laborers, while others wander as adventures or even continue fighting the Last War despite the return of peace. / Warforged appear as massive humanoids molded from a composite of materials—obsidian, iron, stone, darkwood, silver, and organic material—though they move with a surprising grace and flexibility. Warforged have no physical distinction of gender: all of them have a basically muscular, sexless body shape.“ 
+ Appearance		???
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		+2	
+ IntAdjust		0
+ WisAdjust		-2
+ ChaAdjust		-2
+ Endurance		30
+ FavoredClass		Fighter
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		Slam (1d4)
+ Special Abilities	Living Construct Subtype (Ex): Warforged are constructs with the living construct subtype. A living construct is a created being giving sentience and free will through powerful and complex creation enchantments. Warforged are living constructs that combine aspects of both constructs and living creatures, as detailed below.
+                        Features: As a living construct, a warforged has the following features.
+                        --A warforged derives its HD, base attack bonus progression, saving throws, and skill points from the class it selects.
+                        Traits: A warforged possesses the following traits.
+                        --Unlike other constructs, a warforged does not have low-light vision or darkvision.
+                        --Unlike other constructs, a warforged is not immune to mind-affecting spells and abilities.
+                        --Immunity to poison, sleep effects, paralysis, disease, nausea, fatigue, exhaustion, sickened, and energy drain.
+                        --A warforged cannot heal damage naturally.
+                        --Unlike other constructs, a warforged is subject to critical hits, nonlethal damage, stunning, ability damage, ability drain, and death effects or necromancy effects.
+                        --As living constructs, warforged can be affected by spells that target living creatures as well as by those that target constructs. Damage dealt to a warforged can be healed by cure wounds spells or repair damage spells, and a warforged is vulnerable to disable construct and harm. However, spells from the healing subschool and supernatural abilities that cure hit point damage or ability damage provide only half their normal effect to a warforged.
+                        --The unusual physical construction of warforged makes them vulnerable to certain spells and effects that normally don’t affect living creatures. A warforged takes damage from heat metal and chill metal as if he were wearing metal armor. Likewise, a warforged is affected by repel metal or stone as if he were wearing metal armor. A warforged is repelled by repel wood. The iron in the body of a warforged makes him vulnerable to rusting grasp. The creature takes 2d6 points of damage from the spell (Reflex half; save DC 14 + caster’s ability modifier). A warforged takes the same damage from a rust monster’s touch (Reflex DC 17 half). Spells such as stone to flesh, stone shape, warp wood, and wood shape affect objects only, and thus cannot be used on the stone and wood parts of a warforged.
+                        --A warforged responds slightly differently from other living creatures when reduced to 0 hit points. A warforged with 0 hit points is disabled, just like a living creature. He can only take a single move action or standard action in each round, but strenuous activity does not risk further injury. When his hit points are less than 0 and greater than -10, a warforged does not lose additional hit points unless more damage is dealt to him, as with a living creature that is stable.
+                        --As a living construct, a warforged can be raised or resurrected.
+                        --A warforged does not need to eat, sleep, or breathe, but he can still benefit from the effects of consumable spells and magic items such as heroes’ feast and potions.
+                        --Although living constructs do not need to sleep, a warforged wizard must rest for 8 hours before preparing spells.
+                        Composite Plating: The plating used to build a warforged provides a +2 armor bonus. This plating is not natural armor and does not stack with other effects that give an armor bonus (other than natural armor). This composite plating occupies the same space on the body as a suit of armor or a rope, and thus a warforged cannot be enchanted just as armor or magic ropes. Warforged can be enchanted just as armor can be. The character must be present for the entire time it takes to enchant him. / Composite plating also provides a warforged with a 5% arcane spell failure change, similar to the penalty for wearing light armor. Any class ability that allows a warforged to ignore the arcane spell failure change for light armor lets him ignore this penalty as well.
+                        Light Fortification (Ex): When a critical hit or sneak attack is scored on a warforged, there is a 25% change that the critical hit or sneak attack is negated and damage is instead rolled normally,                      
+ 
+Source		        Eberron Campaign Setting,pg16,3.5ed
+ Label			RACIAL_TYPE_KALASHTAR
+ Name			"Kalashtar”
+ Plural			"Kalashtar”
+ Description		"The kalashtar are a compound race: incorporeal entities from the alien plane of Dal Quor, the Reign of Dreams, merged with human bodies and spirits to form a distinct species. / As a true hybrid of human hosts and quori spirits, the kalashtar possess keen intellects but are not ruled by logic. They seek the perfection of their minds and spirits, often to the exclusion of any physical pursuits. / Kalashtar appear very similar to humans, but they have a grace and elegance that makes them seen almost too beautiful.”   
+ Appearance		6
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		0	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		0
+ Endurance		30
+ FavoredClass		Psion
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			1/day—Mindlink. This ability is like the power manifested by a wilder of ½ the kalashtar’s Hit Dice (minimum 1st level).
+ NaturalWeapons		none
+ Special Abilities	Naturally Psionic: Kalashtar gain 1 extra power point per character level, regardless of whether they choose a psionic class.
+                        +2 racial bonus on saving throws against mind-affecting spells and abilities, and possession.
+                        +2 racial bonus on Bluff, Diplomacy, Intimidate, Disguise,  checks.
+                        Kalashtar sleep but they do not dream. As such, they have immunity to the dream and nightmare spells, as well as other effects that relies on the target’s ability to dream.                     
+
+Source		        Oriental Adventures,pg11,3.0ed
+ Label			RACIAL_TYPE_HENGEYOKAI
+ Name			"Hengeyokai”
+ Plural			"Hengeyokai”
+ Description		"Hengeyokai are intelligent, shapeshifting animals, able to shift freely between human and animal forms, as well as a bipedal, animalistic form. Several subraces exist, defined by the kind of animal form they can assume. / They often display personality traits similar to their animal type—so monkey hengeyokai are curious and inquisitive, hare hengeyokai are peacefully but easily startled, and so on. / In animal form, hengeyokai are almost indistinguishable from normal animals except through magic. Hengeyokai can also assume a bipedal, animalistic (“hybrid”) form. In human form, hengeyokai look exactly like normal humans, though (like lycanthropes) they often display some feature associated with their animal form.“ 
+ Appearance		6
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		0	
+ IntAdjust		0
+ WisAdjust		-2
+ ChaAdjust		0
+ Endurance		30
+ FavoredClass		Wu Jen
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		+1
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		See Table 1-3: Hengeyokai Animal Forms, below
+ Special Abilities	Shapechanger;
+                        Altemate Form: Hengeyokai can change shape, assuming one of the three possible forms. This supernatural ability functions like the polymorph other spell, but a hengeyokai can change from a number of times per day equal to 1 plus his character level. Thus, a 1st level hengeyokai can switch from human form to animal form and back again in a single day. Changing form is a full-rounded action that does provoke attacks of opportunity, as with the polymorph self spell. / A hengeyokai’s animal form is a normal animal of Small or smaller size. Possible animal forms include badger, carp, cat, crab, crane, dog, fox, hare, monkey, raccoon dog, rat, sparrow, and weasel. Equipment the hengeyokai is wearing or carrying transforms to become part of the animal form (as with polymorph others), and magic items cease functioning while the hengeyokai remains in animal form. In animal form, the hengeyokai has low-light vision and the supernatural ability to communicate with other animals of its kind. This is the same as a familiar’s ability to speak with animals of its type. Hengeyokai have the size, speed, AC, damage rating, and physical ability scores shown on Table 1-3: Hengeyokai Animal Forms. In animal form, a hengeyokai is effectively disguised as an animal, gaining a +10 bonus on Disguise checks while in this form. / Hengeyokai in hybrid form retain their low-light vision and the ability to communicate with animals of their type. They physical characteristics are based on their abilities in human form, modified as shown on Table 1-2: Hengeyokai Hybrid Form. In this form, a hengeyokai can typically wear light or medium armor without modification, but wearing heavy armor is impossible. Equipment worn or carried by a hengeyokai in human form does not transform when the hengeyokai assumes hybrid form. When a hengeyokai in animal form assumes hybrid form, her equipment returns to its original form and magic items resume function. 
+                        Table 1-2: Hengeyokai Hybrid Forms
+                        --Badger: +2 Constitution; Speed 20 ft., burrow 10 ft.
+                        --Carp: +2 Dexterity; Speed 10 ft., swim 30 ft.
+                        --Cat: +2 Dexterity; +4 Balance.
+                        --Crab: none; +1 natural armor; +4 Swim.
+                        --Crane: +2 Dexterity; Speed 20 ft., fly 20 ft.
+                        --Dog: +2 Constitution; +4 Wilderness Lore when tracking by scent.
+                        --Fox: +2 Dexterity; +2 Escape Artist.
+                        --Hare: +2 Dexterity; Speed 40 ft.
+                        --Monkey: +2 Dexterity; +4 Climb.
+                        --Raccoon Dog: +2 Strength, +4 Wilderness Lore when tracking by scent.
+                        --Rat: +2 Dexterity; +4 Hide.
+                        --Sparrow: +2 Dexterity; Speed 20 ft., fly 20 ft.
+                        --Weasel: +2 Constitution; +4 Move Silently
+                        Table 1-3: Hengeyokai Animal Forms
+                        --Badger: Tiny; 30 ft., burrow 10 ft.; AC 15 (+2 size, +3 Dex); 2 claws 1d2-1, bite 1d3-1; Str 8, Dex 17, Con 15.
+                        --Carp: Diminutive; Swim 10 ft.; AC 19 (+4 size, +5 Dex); none; Str 1, Dex 20, Con 10.
+                        --Cat: Tiny; 30 ft.; AC 14 (+2 size, +2 Dex); 2 claws 1d2-4, bite 1d3-4; Str 3, Dex 15, Con 10.
+                        --Crab: Diminutive; 15 ft.; AC 18 (+4 size, +3 Dex, +1 natural); 2 claws 1d2-5; Str 1, Dex 17, Con 10.
+                        --Crane: Small; 6 ft., fly 60 ft.; AC 14 (+1 size, +3 Dex); BGite 1d4-2; Str 6, Dex 16, Con 10   
+                        --Dog: Small; 40 ft.; AC 14 (+1 size, +3 Dex); Bite 1d4+1; Str 13, Dex 17, Con 15.
+                        --Fox: Small; 40 ft.; AC 14 (+1 size, +3 Dex); Bite 1d4; Str 11, Dex 19, Con 11.
+                        --Hare: Tiny; 40 ft.; AC 15 (+2 size, +4 Dex); Bite 1d3-5; Str 1, Dex 19, Con 10.
+                        --Monkey: Tiny; 30 ft., climb 30 ft.; AC 14 (+2 size, +4 Dex); Bite 1d3-4; Str 3, Dex 15, Con 10.
+                        --Raccoon Dog: Small; 30 ft.; AC 13 (+1 size, +1 Dex, +1 natural); Bite 1d4+1; Str 12, Dex 13, Con 12.
+                        --Rat: Tiny; 15 ft., climb 15 ft.; AC 14 (+2 size, +2 Dex); Bite 1d3-4; Str 2, Dex 15, Con 10.
+                        --Sparrow: Fine; 1 ft., fly 50 ft.; AC 24 (+8 size, +6 Dex); none; Str 1, Dex 23, con 10.
+                        --Weasel: Tiny; 20 ft., climb 20; AC 14 (+2 size, +2 Dex); Bite 1d3-4; Str 3, Dex 15, Con 15.                                                 
+ 
+Source		        Oriental Adventures,pg12,3.0ed
+ Label			RACIAL_TYPE_KOROBOKURU
+ Name			"Korobokuru”
+ Plural			"Korobokurus”
+ Description		"Korobukurus are dwarflike humanoids that live in barren wilderness areas where they seldom come into contact with humans. They have simple tastes, enjoying community life in their small villages, telling wildly fanciful stories around a fire, simple arts, and collecting treasure. Korukorurus stand about 4 feet tall, their arms and legs slightly longer in proportion to their bodies than those of a human, and weight around 130 pounds. Thick hair, usually light brown or blond, covers their arms, legs, and grows in wild tangles from their heads. Generally, koroborurus look wild and unkempt.”   
+ Appearance		0
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		+2	
+ IntAdjust		-2
+ WisAdjust		0
+ ChaAdjust		0
+ Endurance		20
+ FavoredClass		Barbarian
+ Size			Small
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Darkvision; Hardiness vs. Poisons; Hardiness vs. Spells; Offensive Training vs. Goblinoids; Defensive Training vs. Giants; 
+                        +2 racial bonus on Wilderness Lore checks; 
+
+Source		        Oriental Adventures,pg13,3.0ed
+ Label			RACIAL_TYPE_NEZUMI
+ Name			"Nezumi”
+ Plural			"Nezumi”
+ Description		"The nezumi, or “ratlings” as they are often called by humans, are a race of bipedal ratlike humanoids. Nezumi are wild, fierce, and primitive. / They look like nothing so much as humanoid rats. Nezumi stand upright, roughly as tall as a human (averaging about 5 ½ feet tall and 155 pounds). They have long snouts, pink ears, and pronounced incisors, like ordinary rodents. Their bodies are covered with rough fur, ranging in shade from white through gray and brown to black.”   
+ Appearance		170
+ StrAdjust		0
+ DexAdjust		0	
+ ConAdjust		+2	
+ IntAdjust		0
+ WisAdjust		0
+ ChaAdjust		-2
+ Endurance		40
+ FavoredClass		Rogue
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		2 claws (1d4), Bite (1d4)
+ Special Abilities	Low-Light Vision; +2 racial bonus against poison and disease; Immune to Shadowlands Taint; Keen Scent; 
+                        +2 racial bonus on Hide and Move Silently checks; 
+
+Source		        Oriental Adventures,pg15,3.0ed
+ Label			RACIAL_TYPE_VANARA
+ Name			"Vanara”
+ Plural			"Vanaras”
+ Description		"Vanaras are a race of monkeylike humanoids, possessing brave hearts and inquisitive minds. / They are curious in the extreme, frequently badgering people with questions (sometimes very personal questions), picking small items up to examine them, opening doors to see where they lead, and generally exploring places where the human sense of propriety and order would demand they not go. / Vanaras standing 4 ½ to 5 ½ feet tall and typically weigh around 90 to 140 pounds. Their bodies are covered with light fur, ranging from white through light blue to brown and black. Vanaras have distinctly monkeylike faces, long, semiprehensile tails, long fingers and toes, and large ears. But their arms, legs, and torsos are proportioned like those of humans.”   
+ Appearance		???, 6 for now
+ StrAdjust		-2
+ DexAdjust		0	
+ ConAdjust		0	
+ IntAdjust		+2
+ WisAdjust		+2
+ ChaAdjust		0
+ Endurance		30, climb 20 ft.
+ FavoredClass		Shaman
+ Size			Medium
+ RacialHDCount		none
+ RacialHDClass		none
+ RacialLA		none
+ NaturalArmor		none
+ SR			none
+ SLAs			none
+ NaturalWeapons		none
+ Special Abilities	Low-Light Vision; +8 racial bonus on Climb checks. 
+                        +2 racial bonus on Hide and Move Silently checks;                      
+                        +4 racial bonus on Balance and Jump checks. 

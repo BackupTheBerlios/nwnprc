@@ -9,8 +9,6 @@
 5  FEAT_CRAFT_ROD                  2927      1    -1             0      
 6  FEAT_CRAFT_STAFF                2928      1    -1             0      
 7  FEAT_FORGE_RING                 2929      1    -1             0      
-8  FEAT_CRAFT_CONSTRUCT            2920      1    -1             0      
-9  FEAT_CRAFT_ITEM                 2899      3    1              1      
-10 FEAT_READ_RECIPE                2919      3    1              1      
-11 Maester_Crafting                3014      3    1              0      
-12 Maester_Identification          3015      3    3              1      
+8  FEAT_CRAFT_CONSTRUCT            2920      1    -1             0       
+10 Maester_Crafting                3014      3    1              0      
+11 Maester_Identification          3015      3    3              1      

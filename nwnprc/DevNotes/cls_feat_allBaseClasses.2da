@@ -32,6 +32,7 @@
 18  ACP_FEAT                                         2892      0    99             1      
 19  TeleportManagementRadial                         4235      3    1              1      
 20  SWITCH_FEAT                                      2285      0    99             1      
+22  FEAT_READ_RECIPE                                 2919      3    1              1      
 21  ****                                             ****      **** ****           ****   
 22  **GeneralActivatableFeats**                      ****      **** ****           ****   
 23  FEAT_THRALL_TO_DEMON                             2616      0    -1             1      

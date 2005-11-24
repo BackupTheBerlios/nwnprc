@@ -25,7 +25,7 @@ for($i=0; $i<=$max; $i++)
 		$x = 0;
 		$y++;
 	}
-	print "$resref $x $y /StoreList/[2]/ItemList/InventoryRes /StoreList/[2]/ItemList/[_]/Infinite /StoreList/[2]/ItemList/[_]/Repos_PosX /StoreList/[2]/ItemList/[_]/Repos_Posy \n";
+	print "$resref $x $y /StoreList/[2]/ItemList/[_]InventoryRes /StoreList/[2]/ItemList/[_]/Infinite /StoreList/[2]/ItemList/[_]/Repos_PosX /StoreList/[2]/ItemList/[_]/Repos_Posy \n";
 }
 
 %store = ">$name.utm";

@@ -47,8 +47,6 @@ void SortAll3Arrays(object oTarget);
 //:: DispelMagicBest()
 void HandleInfestationOfMaggots(object oTarget);
 
-
-
 // This sets many things that would have been checked against GetAreaOfEffectCreator()
 // as local ints making it so the AoE can now function entirely independantly of its caster.
 // - The only problem is that this will never be called until the AoE does a heartbeat or

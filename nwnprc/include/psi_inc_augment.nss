@@ -215,6 +215,15 @@ void StoreUserAugmentationProfile(object oUser, int nIndex, struct user_augment_
  */
 struct manifestation EvaluateAugmentation(struct manifestation manif, struct power_augment_profile pap);
 
+/**
+ * Overrides the given creature's augmentation settings during it's next
+ * manifestation with the given settings.
+ *
+ * @param oCreature Creature whose augmentation to override
+ * @param uap       The profile to use as override
+ */
+void SetAugmentationOverride(object oCreature, struct user_augment_profile uap);
+
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -415,3 +424,8 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
 
     return manif;
 }
+/*
+void SetAugmentationOverride(object oCreature, struct user_augment_profile uap)
+{
+    SetLocalInt(oCreature) // TODO!!
+}*/

@@ -275,6 +275,15 @@ void MarkStageSetUp(int nStage, object oPC = OBJECT_INVALID);
  */
 void MarkStageNotSetUp(int nStage, object oPC = OBJECT_INVALID);
 
+/**
+ * Clears the given stage's choices and marks it not set up.
+ *
+ * @param nStage The stage to clear
+ * @param oPC    The PC involved in the conversation. If left to
+ *               default, GetPCSpeaker is used.
+ */
+void ClearStage(int nStage, object oPC = OBJECT_INVALID);
+
 
 
 //////////////////////////////////////////////////
@@ -612,4 +621,16 @@ void MarkStageNotSetUp(int nStage, object oPC = OBJECT_INVALID)
     if(!array_exists(oPC, "StagesSetup"))
         return;
     array_set_int(oPC, "StagesSetup", nStage, FALSE);
+}
+
+void ClearCurrentStage(object oPC = OBJECT_INVALID)
+{
+    oPC = _DynConvInternal_ResolvePC(oPC);
+
+    // Clear the choice data
+    array_delete(oPC, "ChoiceTokens");
+    array_delete(oPC, "ChoiceValues");
+    DeleteLocalInt(oPC, "ChoiceOffset");
+
+    MarkStageNotSetUp(GetStage(oPC), oPC);
 }

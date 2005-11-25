@@ -19,6 +19,9 @@ import prc.autodoc.*;
 
 public class rwg {
 	public static Data_2da terrain2da         = Data_2da.load2da("terrain.2da");
+	public static Data_2da terraintexture2da  = Data_2da.load2da("terrain_texture.2da");
+	public static Data_2da terrainheight2da   = Data_2da.load2da("terrain_height.2da");
+  	public static Random rng = new Random();
 
 	public static void main(String[] args){
 		double[][] filter = {{0,0,0,1,1,1,0,0,0},
@@ -44,8 +47,8 @@ public class rwg {
 		SetFile setFile = new SetFile();
 		for(int row = 0; row < terrain2da.getEntryCount(); row++){
 			double water = new Double(terrain2da.getEntry("WaterLevel", row));
-			int pixelsX  = terrain2da.getBiowareEntryAsInt("PixelsX", row);
-			int pixelsY  = terrain2da.getBiowareEntryAsInt("PixelsY", row);
+			int vertexsX  = terrain2da.getBiowareEntryAsInt("VertexsX", row);
+			int vertexsY  = terrain2da.getBiowareEntryAsInt("VertexsY", row);
 			int tilesX  = terrain2da.getBiowareEntryAsInt("TileX", row);
 			int tilesY  = terrain2da.getBiowareEntryAsInt("TileY", row);
 			int pixelPerVertex  = terrain2da.getBiowareEntryAsInt("PixelPerVertex", row);
@@ -54,14 +57,10 @@ public class rwg {
 			String terrainlist = terrain2da.getEntry("TerrainList", row);
 			Data_2da terrainlist2da         = Data_2da.load2da(terrainlist+".2da");
 
-			Terrain terrain = new Terrain(pixelsX, pixelsY, pixelPerVertex, roughness);
+			Terrain terrain = new Terrain(vertexsX, vertexsY, pixelPerVertex, roughness);
 			//smooth it
 			terrain.heightmap.applyPlateau(water, water+0.2, water+0.1);
-			//terrain.heightmap.applyPlateau(0.1, 0.5, 0.20);
-			terrain.heightmap.smooth(filter, 1.0,  0.0);
-			//terrain.heightmap.applyPlateau(0.1, 0.5, 0.20);
-			//terrain.heightmap.applyPlateau(0.0, 0.2, 0.00);
-			//terrain.heightmap.smooth(filterb, 0.3, 0.0, 3);
+			terrain.heightmap.smooth(filterb, 1.0,  0.0);
 
 			//apply the rim to the sea, do this last of the main terrain changes
 			terrain.heightmap.applyLowRim(0.1);

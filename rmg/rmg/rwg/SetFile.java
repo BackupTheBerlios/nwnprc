@@ -9,7 +9,7 @@ import java.util.*;
 import java.lang.Math;
 
 public class SetFile {
-	private String setText = "";
+	private StringBuilder setText = new StringBuilder();
 	private int setCount = 0;
 
 
@@ -32,7 +32,7 @@ public class SetFile {
 			outputText += "[TILES]\r\n";
 			outputText += "Count="+setCount+"\r\n";
 			outputText += "\r\n";
-			outputText += setText;
+			outputText += setText.toString();
 			outputText += getSetFooter();
 			// Creater the writer and print
 			FileWriter writer = new FileWriter(outputFile, false);
@@ -45,37 +45,35 @@ public class SetFile {
 	}
 
 	public void addSetInformation(String tileName){
-		String setInfo = "";
-		setInfo += "[TILE"+setCount+"]\r\n";
-		setInfo += "Model="+tileName+"\r\n";
-		setInfo += "WalkMesh=msb01\r\n";
-		setInfo += "TopLeft=Grass\r\n";
-		setInfo += "TopLeftHeight=0\r\n";
-		setInfo += "TopRight=Grass\r\n";
-		setInfo += "TopRightHeight=0\r\n";
-		setInfo += "BottomLeft=Grass\r\n";
-		setInfo += "BottomLeftHeight=0\r\n";
-		setInfo += "BottomRight=Grass\r\n";
-		setInfo += "BottomRightHeight=0\r\n";
-		setInfo += "Top=\r\n";
-		setInfo += "Right=\r\n";
-		setInfo += "Bottom=\r\n";
-		setInfo += "Left=\r\n";
-		setInfo += "MainLight1=1\r\n";
-		setInfo += "MainLight2=1\r\n";
-		setInfo += "SourceLight1=1\r\n";
-		setInfo += "SourceLight2=1\r\n";
-		setInfo += "AnimLoop1=1\r\n";
-		setInfo += "AnimLoop2=1\r\n";
-		setInfo += "AnimLoop3=1\r\n";
-		setInfo += "Doors=0\r\n";
-		setInfo += "Sounds=0\r\n";
-		setInfo += "PathNode=A\r\n";
-		setInfo += "Orientation=0\r\n";
-		setInfo += "ImageMap2D=MI_temp01\r\n";
-		//setInfo += "ImageMap2D=m"+tileName+"\r\n";
-		setInfo += "\r\n";
-		setText += setInfo;
+		setText.append("[TILE"+setCount+"]\r\n");
+		setText.append("Model="+tileName+"\r\n");
+		setText.append("WalkMesh=msb01\r\n");
+		setText.append("TopLeft=Grass\r\n");
+		setText.append("TopLeftHeight=0\r\n");
+		setText.append("TopRight=Grass\r\n");
+		setText.append("TopRightHeight=0\r\n");
+		setText.append("BottomLeft=Grass\r\n");
+		setText.append("BottomLeftHeight=0\r\n");
+		setText.append("BottomRight=Grass\r\n");
+		setText.append("BottomRightHeight=0\r\n");
+		setText.append("Top=\r\n");
+		setText.append("Right=\r\n");
+		setText.append("Bottom=\r\n");
+		setText.append("Left=\r\n");
+		setText.append("MainLight1=1\r\n");
+		setText.append("MainLight2=1\r\n");
+		setText.append("SourceLight1=1\r\n");
+		setText.append("SourceLight2=1\r\n");
+		setText.append("AnimLoop1=1\r\n");
+		setText.append("AnimLoop2=1\r\n");
+		setText.append("AnimLoop3=1\r\n");
+		setText.append("Doors=0\r\n");
+		setText.append("Sounds=0\r\n");
+		setText.append("PathNode=A\r\n");
+		setText.append("Orientation=0\r\n");
+		//sFile.append("ImageMap2D=MI_temp01\r\n)";
+		setText.append("ImageMap2D=m"+tileName+"\r\n)";
+		setText.append("\r\n";
 		setCount++;
 	}
 

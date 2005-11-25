@@ -12,7 +12,6 @@ public class Heightmap {
 
 	private double height[][] = new double [1][1];
 	private BufferedImage image;
-  	private Random rng = new Random();
 	private boolean clamp = false;
 
 	//constructor
@@ -52,8 +51,11 @@ public class Heightmap {
 			}
 		}
 	}
-
 	public void applyLowRim(double rimSize){
+		applyLowRim(rimSize, 4.0);
+	}
+
+	public void applyLowRim(double rimSize, double curvePower){
 		int rimWidthX = (int)(rimSize*(double)height.length);
 		int rimWidthY = (int)(rimSize*(double)height[0].length);
 		for(int x = 0; x < height.length; x++){
@@ -84,7 +86,7 @@ public class Heightmap {
 						scale = newscale;
 				}
 				//rather than a straight edge, use a curved one
-				scale = Math.sin(scale*Math.PI*0.25);
+				scale = 1.0-Math.pow(1.0-scale, curvePower);
 
 				height[x][y] = height[x][y]*scale;
 			}

@@ -302,7 +302,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
             // Set the power points to their new value and inform the manifester
             LosePowerPoints(oManifester, manif.nPPCost, TRUE);
 
-            // Psionic focus loss from using metapsionics
+            // Psionic focus loss from using metapsionics. Has a side effect of telling the manifester which metapsionics were actually active
             PayMetapsionicsFocuses(manif);
 
             //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE *//

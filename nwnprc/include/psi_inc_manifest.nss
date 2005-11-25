@@ -65,13 +65,22 @@ struct manifestation{
     int bTwin;
     /// Whether Widen Power was used with this manifestation
     int bWiden;
-}
+};
 
 //////////////////////////////////////////////////
 /*             Function prototypes              */
 //////////////////////////////////////////////////
 
 struct manifestation EvaluateManifestation(object oManifester, object oTarget, int nMetaPsiFlags);
+
+
+//////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
+#include "psi_inc_augment" // Provides inc_utility
+#include "psi_inc_metapsi"
+#include "psi_inc_ppoints" // Provides psi_inc_focus and psi_inc_psifunc
 
 
 //////////////////////////////////////////////////
@@ -210,15 +219,6 @@ string DebugManifestation2Str(struct manifestation manif)
     sRet += "bTwin     = " + BooleanToString(bTwin)     + "\n";
     sRet += "bWiden    = " + BooleanToString(bWiden);//    + "\n";
 }
-
-
-//////////////////////////////////////////////////
-/*                  Includes                    */
-//////////////////////////////////////////////////
-
-#include "psi_inc_augment" // Provides inc_utility
-#include "psi_inc_metapsi"
-#include "psi_inc_ppoints" // Provides psi_inc_focus and psi_inc_psifunc
 
 
 //////////////////////////////////////////////////

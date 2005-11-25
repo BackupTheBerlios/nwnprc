@@ -17,11 +17,23 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-/// Internal constant
+/// Prefix of the local variable names used for storing an user's profiles
 const string PRC_AUGMENT_PROFILE         = "PRC_Augment_Profile_";
-/// Internal constant
+/// Index of the currently used profile.
 const string PRC_CURRENT_AUGMENT_PROFILE = "PRC_Current_Augment_Profile_Index";
+/// The lowest valid value of PRC_CURRENT_AUGMENT_PROFILE
+const int PRC_AUGMENT_PROFILE_INDEX_MIN  = 1;
+/// The highest valid value of PRC_CURRENT_AUGMENT_PROFILE
+const int PRC_AUGMENT_PROFILE_INDEX_MAX  = 49;
+/// Prefix of the local variable names used for storing quickselections
+const string PRC_AUGMENT_QUICKSELECTION  = "PRC_Augment_Quickselection_";
+/// The lowest value the quickslot index can have
+const int PRC_AUGMENT_QUICKSELECTION_MIN = 1;
+/// The highest value the quickslot index can have
+const int PRC_AUGMENT_QUICKSELECTION_MAX = 3;
 
+/// The value of an empty profile. Also known as zero
+const int PRC_AUGMENT_NULL_PROFILE = 0x00000000;
 
 //////////////////////////////////////////////////
 /*                 Structures                   */
@@ -88,7 +100,7 @@ struct power_augment_profile{
      * How many times, at most, can the fifth augmentation option be used.
      */
     int nMaxAugs_5;
-}
+};
 
 /**
  * Users define how much PP they want to use for each augmentation option or
@@ -101,8 +113,11 @@ struct user_augment_profile{
     int nOption_3;
     int nOption_4;
     int nOption_5;
-}
 
+    /// Whether the values in this structure are to be interpreted as augmentation levels
+    /// or as amounts of PP.
+    int bValueIsPP;
+};
 
 
 //////////////////////////////////////////////////
@@ -187,20 +202,31 @@ struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = -1,
  * Reads an augmentation profile from a user and compiles it into
  * a structure.
  *
- * @param oUser  A creature that has power augmentation profiles set up.
- * @param nIndex The number of the profile to retrieve.
- * @return       The retrieved profile, compiled into a structure
+ * @param oUser           A creature that has power augmentation profiles set up.
+ * @param nIndex          The number of the profile to retrieve.
+ * @param bQuickSelection Whether the index is a quickselection or a normal profile.
+ * @return                The retrieved profile, compiled into a structure
  */
-struct user_augment_profile GetUserAugmentationProfile(object oUser, int nIndex);
+struct user_augment_profile GetUserAugmentationProfile(object oUser, int nIndex, int bQuickSelection = FALSE);
 
 /**
  * Stores a user-specified augmentation profile.
  *
- * @param oUser  The user for whose use to store the profile for.
- * @param nIndex The index number to store the profile under.
- * @param uap    A structure containing the profile to store.
+ * @param oUser           The user for whose use to store the profile for.
+ * @param nIndex          The index number to store the profile under.
+ * @param bQuickSelection Whether the index is a quickselection or a normal profile.
+ * @param uap             A structure containing the profile to store.
  */
-void StoreUserAugmentationProfile(object oUser, int nIndex, struct user_augment_profile uap);
+void StoreUserAugmentationProfile(object oUser, int nIndex, struct user_augment_profile uap, int bQuickSelection = FALSE);
+
+/**
+ * Converts the given augmentation profile into a string.
+ *
+ * @param uap   The augmentation profile to convert to a string.
+ * @return      A string of format:
+ *              Option 1: N [times|PP], Option 2: N [times|PP], Option 2: N [times|PP], Option 4: N [times|PP], Option 5: N [times|PP]
+ */
+string UserAugmentationProfileToString(struct user_augmentation_profile uap);
 
 /**
  * Calculates how many times each augmentation option of a power is used and
@@ -234,6 +260,47 @@ void SetAugmentationOverride(object oCreature, struct user_augment_profile uap);
 
 
 //////////////////////////////////////////////////
+/*             Internal functions               */
+//////////////////////////////////////////////////
+
+/** Internal function.
+ * @param nToDecode Integer from which to extract an user augmentation profile
+ * @return          An user augmentation profile created based on nToDecode
+ */
+struct user_augment_profile _DecodeProfile(int nToDecode)
+{
+    struct user_augmentation_profile uap;
+
+    // The augmentation profile is stored in one integer, with 6 bits per option.
+    // MSB -> [xx555555444444333333222222111111] <- LSB
+    int nMask = 0x3F; // 6 LSB
+    uap.nOption_1 = nToDecode          & nMask;
+    uap.nOption_2 = (nToDecode >>> 6)  & nMask;
+    uap.nOption_3 = (nToDecode >>> 12) & nMask;
+    uap.nOption_4 = (nToDecode >>> 18) & nMask;
+    uap.nOption_5 = (nToDecode >>> 24) & nMask;
+}
+
+/** Internal function.
+ * @param uapToEncode An user augmentation profile to encode into a single integer
+ * @return            Integer built from values in uapToEncode
+ */
+int _EncodeProfile(struct user_augmentation_profile uapToEncode)
+{
+    // The augmentation profile is stored in one integer, with 6 bits per option.
+    // MSB -> [xx555555444444333333222222111111] <- LSB
+    int nProfile = PRC_AUGMENT_NULL_PROFILE;
+    int nMask = 0x3F; // 6 LSB
+
+    nProfile |= (uapToEncode.nOption_1 & nMask);
+    nProfile |= (uapToEncode.nOption_2 & nMask) << 6;
+    nProfile |= (uapToEncode.nOption_3 & nMask) << 12;
+    nProfile |= (uapToEncode.nOption_4 & nMask) << 18;
+    nProfile |= (uapToEncode.nOption_5 & nMask) << 24;
+}
+
+
+//////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
@@ -264,35 +331,64 @@ struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = -1,
 }
 
 
-struct user_augment_profile GetUserAugmentationProfile(object oUser, int nIndex)
+struct user_augment_profile GetUserAugmentationProfile(object oUser, int nIndex, int bQuickSelection = FALSE)
 {
-    int nProfile = GetPersistantLocalInt(oUser, PRC_AUGMENT_PROFILE + IntToString(nIndex));
-    struct user_augment_profile uap;
+    int nProfile = GetPersistantLocalInt(oUser, (bQuickSelection ? PRC_AUGMENT_QUICKSELECTION : PRC_AUGMENT_PROFILE) + IntToString(nIndex));
+    struct user_augment_profile uap = _DecodeProfile(nProfile);
 
-    // The augmentation profile is stored in one integer, with 6 bits per option.
-    // MSB -> [xx555555444444333333222222111111] <- LSB
-    int nMask = 0x3F; // 6 LSB
-    uap.nOption_1 = nProfile          & nMask;
-    uap.nOption_2 = (nProfile >>> 6)  & nMask;
-    uap.nOption_3 = (nProfile >>> 12) & nMask;
-    uap.nOption_4 = (nProfile >>> 18) & nMask;
-    uap.nOption_5 = (nProfile >>> 24) & nMask;
+    // Get the augmentation levels / PP switch
+    uap.bValueIsPP = GetPersistantLocalInt(oUser, PRC_PLAYER_SWITCH_AUGMENT_IS_PP);
 
-    return sup;
+    // Validity check on the index
+    if(bQuickSelection ?
+       (nIndex < PRC_AUGMENT_QUICKSELECTION_MIN ||
+        nIndex > PRC_AUGMENT_QUICKSELECTION_MAX
+        ):
+       (nIndex < PRC_AUGMENT_PROFILE_INDEX_MIN ||
+        nIndex > PRC_AUGMENT_PROFILE_INDEX_MAX
+        )
+       )
+    {
+        // Null the profile, just in case
+        uap.nOption1 = 0;
+        uap.nOption2 = 0;
+        uap.nOption3 = 0;
+        uap.nOption4 = 0;
+        uap.nOption5 = 0;
+    }
+
+    return uap;
 }
 
-void StoreUserAugmentationProfile(object oUser, int nIndex, struct user_augment_profile uap)
+void StoreUserAugmentationProfile(object oUser, int nIndex, struct user_augment_profile uap, int bQuickSelection = FALSE)
 {
-    int nProfile = 0x00000000;
-    int nMask = 0x3F; // 6 LSB
+    // Validity check on the index
+    if(bQuickSelection ?
+       (nIndex < PRC_AUGMENT_QUICKSELECTION_MIN ||
+        nIndex > PRC_AUGMENT_QUICKSELECTION_MAX
+        ):
+       (nIndex < PRC_AUGMENT_PROFILE_INDEX_MIN ||
+        nIndex > PRC_AUGMENT_PROFILE_INDEX_MAX
+        )
+       )
+    {
+        if(DEBUG) DoDebug("StoreUserAugmentationProfile(): Attempt to store outside valid range: " + IntToString(nIndex));
+        return;
+    }
 
-    nProfile |= (uap.nOption_1 & nMask);
-    nProfile |= (uap.nOption_2 & nMask) << 6;
-    nProfile |= (uap.nOption_3 & nMask) << 12;
-    nProfile |= (uap.nOption_4 & nMask) << 18;
-    nProfile |= (uap.nOption_5 & nMask) << 24;
+    SetPersistantLocalInt(oUser, (bQuickSelection ? PRC_AUGMENT_QUICKSELECTION : PRC_AUGMENT_PROFILE) + IntToString(nIndex), _EncodeProfile(uap));
+}
 
-    SetPersistantLocalInt(oUser, PRC_AUGMENT_PROFILE + IntToString(nIndex), nProfile);
+string UserAugmentationProfileToString(struct user_augmentation_profile uap)
+{
+    string sBegin = GetStringByStrRef(16823498) + " "; // "Option"
+    string sEnd   = " " + (uap.bValueIsPP ? "PP" : GetStringByStrRef(16823499)); // "times"
+
+    return sBegin + "1: " + IntToString(uap.nOption1) + sEnd
+         + sBegin + "2: " + IntToString(uap.nOption2) + sEnd
+         + sBegin + "3: " + IntToString(uap.nOption3) + sEnd
+         + sBegin + "4: " + IntToString(uap.nOption4) + sEnd
+         + sBegin + "5: " + IntToString(uap.nOption5) + sEnd;
 }
 
 struct manifestation EvaluateAugmentation(struct manifestation manif, struct power_augment_profile pap)
@@ -318,16 +414,15 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         struct user_augment_profile uap = GetUserAugmentationProfile(manif.oManifester, GetLocalInt(manif.oManifester, PRC_CURRENT_AUGMENT_PROFILE));
         int nSurge = GetWildSurge(manif.oManifester);
         int nAugPPCost = 0;
-        int bAugIsPP = GetLocalInt(oCaster, PRC_PLAYER_SWITCH_AUGMENT_IS_PP);
 
         /* Bloody duplication follows. Real arrays would be nice */
         // Make sure the option is available for use
         if(pap.nMaxAugs_1)
         {
             // Determine how many times the augmentation option has been used
-            manif.nTimesAugOptUsed_1 = bAugIsPP ?                            // The user can determine whether their settings are interpreted
+            manif.nTimesAugOptUsed_1 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
                                         uap.nOption_1 / pap.nAugCost_1 : // as static PP costs
-                                        uap.nOption_1;                       // or as number of times to use
+                                        uap.nOption_1;                   // or as number of times to use
             // Make sure the number of times the option is used does not exceed the maximum
             if(pap.nMaxAugs_1 != -1 && manif.nTimesAugOptUsed_1 > pap.nMaxAugs_1)
                 manif.nTimesAugOptUsed_1 = pap.nMaxAugs_1;
@@ -338,9 +433,9 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         if(pap.nMaxAugs_2)
         {
             // Determine how many times the augmentation option has been used
-            manif.nTimesAugOptUsed_2 = bAugIsPP ?                            // The user can determine whether their settings are interpreted
+            manif.nTimesAugOptUsed_2 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
                                         uap.nOption_2 / pap.nAugCost_2 : // as static PP costs
-                                        uap.nOption_2;                       // or as number of times to use
+                                        uap.nOption_2;                   // or as number of times to use
             // Make sure the number of times the option is used does not exceed the maximum
             if(pap.nMaxAugs_2 != -1 && manif.nTimesAugOptUsed_2 > pap.nMaxAugs_2)
                 manif.nTimesAugOptUsed_2 = pap.nMaxAugs_2;
@@ -351,9 +446,9 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         if(pap.nMaxAugs_3)
         {
             // Determine how many times the augmentation option has been used
-            manif.nTimesAugOptUsed_3 = bAugIsPP ?                            // The user can determine whether their settings are interpreted
+            manif.nTimesAugOptUsed_3 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
                                         uap.nOption_3 / pap.nAugCost_3 : // as static PP costs
-                                        uap.nOption_3;                       // or as number of times to use
+                                        uap.nOption_3;                   // or as number of times to use
             // Make sure the number of times the option is used does not exceed the maximum
             if(pap.nMaxAugs_3 != -1 && manif.nTimesAugOptUsed_3 > pap.nMaxAugs_3)
                 manif.nTimesAugOptUsed_3 = pap.nMaxAugs_3;
@@ -364,9 +459,9 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         if(pap.nMaxAugs_4)
         {
             // Determine how many times the augmentation option has been used
-            manif.nTimesAugOptUsed_4 = bAugIsPP ?                            // The user can determine whether their settings are interpreted
+            manif.nTimesAugOptUsed_4 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
                                         uap.nOption_4 / pap.nAugCost_4 : // as static PP costs
-                                        uap.nOption_4;                       // or as number of times to use
+                                        uap.nOption_4;                   // or as number of times to use
             // Make sure the number of times the option is used does not exceed the maximum
             if(pap.nMaxAugs_4 != -1 && manif.nTimesAugOptUsed_4 > pap.nMaxAugs_4)
                 manif.nTimesAugOptUsed_4 = pap.nMaxAugs_4;
@@ -377,9 +472,9 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         if(pap.nMaxAugs_5)
         {
             // Determine how many times the augmentation option has been used
-            manif.nTimesAugOptUsed_5 = bAugIsPP ?                            // The user can determine whether their settings are interpreted
+            manif.nTimesAugOptUsed_5 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
                                         uap.nOption_5 / pap.nAugCost_5 : // as static PP costs
-                                        uap.nOption_5;                       // or as number of times to use
+                                        uap.nOption_5;                   // or as number of times to use
             // Make sure the number of times the option is used does not exceed the maximum
             if(pap.nMaxAugs_5 != -1 && manif.nTimesAugOptUsed_5 > pap.nMaxAugs_5)
                 manif.nTimesAugOptUsed_5 = pap.nMaxAugs_5;

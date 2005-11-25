@@ -71,9 +71,15 @@ const int METAPSIONIC_MAX           = 0x80;
 struct manifesation EvaluateMetapsionics(struct manifestation manif, int nMetaPsiFlags);
 
 /**
+ * Calls UsePsionicFocus() on the manifester to pay for psionics focus
+ * expenditure caused by metapsionics use in the power being currently
+ * manifested.
+ * Also informs the manifester which metapsionics were actually used
+ * if the manifestation was successfull.
  *
- * @param manif
- * @return
+ * @param manif The manifestation data relating to this particular manifesation
+ * @return      The manifestation data, modified to turn off those metapsionics
+ *              the manifester could not pay focus for.
  */
 struct manifestation PayMetapsionicsFocuses(struct manifestation manif);
 
@@ -240,6 +246,8 @@ struct manifesation EvaluateMetapsionics(struct manifestation manif, int nMetaPs
 
 struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
 {
+    string sInform = "";
+
     // Check each of the metapsionics and pay focus for each active one. If for some reason the
     // manifester cannot pay focus, deactivate the metapsionic. No PP refunds, though, since
     // the system attempts to keep track of how many focuses the user has available
@@ -249,36 +257,86 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
         if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Chain Power!");
         manif.bChain = FALSE;
     }
+    else
+        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826631); // "Chained"
     if(manif.bEmpower && !UsePsionicFocus(manif.oManifester))
     {
         if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Empower Power!");
         manif.bEmpower = FALSE;
     }
+    else
+        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826632); // "Empowered"
     if(manif.bExtend && !UsePsionicFocus(manif.oManifester))
     {
         if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Extend Power!");
         manif.bExtend = FALSE;
     }
+    else
+        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826633); // "Extended"
     if(manif.bMaximize && !UsePsionicFocus(manif.oManifester))
     {
         if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Maximize Power!");
         manif.bMaximize = FALSE;
     }
+    else
+        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826634); // "Maximized"
     if(manif.bSplit && !UsePsionicFocus(manif.oManifester))
     {
         if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Split Psionic Ray!");
         manif.bSplit = FALSE;
     }
+    else
+        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826635); // "Split"
     if(manif.bTwin && !UsePsionicFocus(manif.oManifester))
     {
         if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Twin Power!");
         manif.bTwin = FALSE;
     }
+    else
+        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826636); // "Twinned"
     if(manif.bWiden && !UsePsionicFocus(manif.oManifester))
     {
         if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Widen Power!");
         manif.bWiden = FALSE;
     }
+    else
+        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826637); // "Widened"
+
+    // Finalise and display the information string if the manifestation was successfull
+    if(manif.bCanManifest)
+    {
+        // Determine the index of the last comma
+        /// @todo This is badly structured, rewrite
+        string sTemp = sInform;
+        int nComma,
+            nTemp = FindSubString(sTemp, ", ");
+        if(nTemp != -1)
+        {
+            sTemp = GetSubString(sTemp,
+                                 nTemp + 2, // Crop off the comma and the following space
+                                 GetStringLength(sTemp) // I'm lazy
+                                 );
+            nComma += nTemp +2;
+            while((nTemp = FindSubString(sTemp, ", ")) != -1)
+            {
+                nComma += nTemp + 2;
+                sTemp = GetSubString(sTemp, nTemp + 2, GetStringLength(sTemp));
+            }
+
+            // Replace the last comma with an "and"
+            sInform = GetStringLeft(sInform, nComma - 2)
+                    + " " + GetStringByStrRef(16826638) + " " // " and "
+                    + GetSubString(sInform, nComma, GetStringLength(sInform) - nComma);
+        }
+
+
+        // Finish the information string
+        sInform += " " + GetStringByStrRef(16826639); // "Power"
+
+        FloatingTextStringOnCreature(sInform, manif.oManifester, FALSE);
+    }
+
+    return manif;
 }
 
 

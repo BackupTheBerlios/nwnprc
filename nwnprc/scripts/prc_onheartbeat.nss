@@ -191,13 +191,16 @@ void main()
                 for(i=1;i<=nCohortTotal;i++)
                 {
                     object oCohort = GetCohort(i, oPC);
-                    float ECLRatio = IntToFloat(GetECL(oPC))/IntToFloat(GetECL(oCohort));
-                    int CohortXPGain = FloatToInt(IntToFloat(XPGained)*ECLRatio);
-                    SetXP(oCohort, GetXP(oCohort)+CohortXPGain);
-                    while(GetECL(oCohort)>(GetECL(oPC)-2))
+                    if(GetIsObjectValid(oCohort))
                     {
-                        SetXP(oCohort, (GetHitDice(oCohort)*(GetHitDice(oCohort)-1)*500)-1);
-                    }    
+                        float ECLRatio = IntToFloat(GetECL(oPC))/IntToFloat(GetECL(oCohort));
+                        int CohortXPGain = FloatToInt(IntToFloat(XPGained)*ECLRatio);
+                        SetXP(oCohort, GetXP(oCohort)+CohortXPGain);
+                        while(GetECL(oCohort)>(GetECL(oPC)-2))
+                        {
+                            SetXP(oCohort, (GetHitDice(oCohort)*(GetHitDice(oCohort)-1)*500)-1);
+                        }    
+                    }
                 }
             
             }

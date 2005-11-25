@@ -42,6 +42,9 @@ void AddCohortToPlayer(int nCohortID, object oPC)
     SetMaxHenchmen(nMaxHenchmen);
     //turn on its default script
     SetLocalInt(oCohort, "PRC_PC_EXEC_DEFAULT", TRUE);
+    //set it to a conversation
+    SetLocalString(oCohort, CHANGE_PREFIX_LOCAL+"conv", "prc_ai_coh_conv");
+    SetLocalString(oCohort, CHANGE_PREFIX_LOCAL+"heartbeat", "prc_ai_coh_hb");
     //set it to the pcs level
     int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
     SetXP(oCohort, nLevel*(nLevel-1)*500);
@@ -58,6 +61,10 @@ void AddCohortToPlayer(int nCohortID, object oPC)
 
 void RemoveCohortFromPlayer(object oCohort, object oPC)
 {
+    int nValidPC = FALSE;
+    if(GetIsObjectValid(oPC))
+        nValidPC = TRUE;
+
     //strip its equipment & inventory
     object oTest = GetFirstItemInInventory(oCohort);
     while(GetIsObjectValid(oTest))
@@ -67,17 +74,26 @@ void RemoveCohortFromPlayer(object oCohort, object oPC)
             object oTest2 = GetFirstItemInInventory(oTest);
             while(GetIsObjectValid(oTest2))
             {
-                AssignCommand(oCohort, ActionGiveItem(oTest2, oPC));
+                if(nValidPC)
+                    AssignCommand(oCohort, ActionGiveItem(oTest2, oPC));
+                else
+                    DestroyObject(oTest2);
                 oTest = GetNextItemInInventory(oTest);
             }
         }
-        AssignCommand(oCohort, ActionGiveItem(oTest, oPC));
+        if(nValidPC)
+            AssignCommand(oCohort, ActionGiveItem(oTest, oPC));
+        else
+            DestroyObject(oTest);
         oTest = GetNextItemInInventory(oCohort);
     }
     int nSlot;
     for(nSlot = 0;nSlot<14;nSlot++)
     {
-        AssignCommand(oCohort, ActionGiveItem(GetItemInSlot(nSlot, oCohort), oPC));
+        if(nValidPC)
+            AssignCommand(oCohort, ActionGiveItem(GetItemInSlot(nSlot, oCohort), oPC));
+        else
+            DestroyObject(oTest);
     }
     //now destroy it
     AssignCommand(oCohort, ActionDoCommand(SetIsDestroyable(TRUE, FALSE, FALSE)));

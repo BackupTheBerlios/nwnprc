@@ -899,7 +899,8 @@ int CraftingFeats(object oPC = OBJECT_SELF)
     string sError = GetStringByStrRef(16823153) + "\n"; // "You spellcaster (or manifester) level is not high enough to take the following crafting feats:"
 
     if(GetHasFeat(FEAT_SCRIBE_SCROLL, oPC) &&
-       nMax < 1
+       nMax < 1 && 
+       !GetLevelByClass(CLASS_TYPE_WIZARD, oPC) //fix for wizards getting this for free.
        )
     {
         bOK = FALSE;

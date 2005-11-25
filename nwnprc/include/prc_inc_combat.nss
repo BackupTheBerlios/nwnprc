@@ -1649,6 +1649,9 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
      // no shield, armor, or natural armor bonuses apply.
      if(bIsTouchAttack)
      {
+          // Temporary storage, needed for Elude Touch
+          int nNormalAC = iAC;
+
           // remove Armor AC
           iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_CHEST, oDefender) );
 
@@ -1659,9 +1662,9 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
           if(!bIsHelpless && !bIsStunned)
                iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oDefender) );
 
-          //wilders get to add cha bonus to touch attacks only
+          // Wilders get to add cha bonus to touch attacks only, but cannot exceed normal AC that way
           if(GetHasFeat(FEAT_WILDER_ELUDE_TOUCH, oDefender))
-            iAC += GetAbilityModifier(ABILITY_CHARISMA, oDefender);
+               iAC = min(iAC + GetAbilityModifier(ABILITY_CHARISMA, oDefender), nNormalAC);
      }
 
      return iAC;

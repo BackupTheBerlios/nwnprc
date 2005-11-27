@@ -990,7 +990,7 @@ int RacialHD(object oPC)
 
 int LeadershipHD(object oPC)
 {
-    if(GetECL(oPC)<6)
+    if(GetECL(oPC)<6 && GetHasFeat(FEAT_LEADERSHIP, oPC))
     {
         FloatingTextStringOnCreature("You must take "+IntToString(6-GetECL(oPC))+" more levels before you can select Leadership.", oPC, FALSE);
         return FALSE;

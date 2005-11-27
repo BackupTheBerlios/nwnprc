@@ -20,7 +20,7 @@ public class Heightmap {
 		generateFractalBase(fractalDecay);
 	}
 	public Heightmap(int xSize, int ySize){
-		this(xSize, ySize, 0.6);
+		height = new double [xSize][ySize];
 	}
 
 
@@ -58,32 +58,38 @@ public class Heightmap {
 	public void applyLowRim(double rimSize, double curvePower){
 		int rimWidthX = (int)(rimSize*(double)height.length);
 		int rimWidthY = (int)(rimSize*(double)height[0].length);
+		double scale = 1.0;
+		double newscale;
 		for(int x = 0; x < height.length; x++){
 			for(int y = 0; y < height[0].length; y++){
-				double scale = 1.0;
+				scale = 1.0;
 
 				if(x<rimWidthX){
-					double newscale = (double)x/(double)rimWidthX;
-					if(newscale < scale)
-						scale = newscale;
+					newscale = (double)x/(double)rimWidthX;
+					//if(newscale < scale)
+					//	scale = newscale;
+					scale *= newscale;
 				}
 
 				if(y<rimWidthY){
-					double newscale = (double)y/(double)rimWidthY;
-					if(newscale < scale)
-						scale = newscale;
+					newscale = (double)y/(double)rimWidthY;
+					//if(newscale < scale)
+					//	scale = newscale;
+					scale *= newscale;
 				}
 
 				if(x>(rimWidthX-height.length)){
-					double newscale = ((double)height.length-(double)x)/(double)rimWidthX;
-					if(newscale < scale)
-						scale = newscale;
+					newscale = ((double)height.length-(double)x)/(double)rimWidthX;
+					//if(newscale < scale)
+					//	scale = newscale;
+					scale *= newscale;
 				}
 
 				if(y>(rimWidthY-height[0].length)){
-					double newscale = ((double)height[0].length-(double)y)/(double)rimWidthY;
-					if(newscale < scale)
-						scale = newscale;
+					newscale = ((double)height[0].length-(double)y)/(double)rimWidthY;
+					//if(newscale < scale)
+					//	scale = newscale;
+					scale *= newscale;
 				}
 				//rather than a straight edge, use a curved one
 				scale = 1.0-Math.pow(1.0-scale, curvePower);
@@ -102,17 +108,24 @@ public class Heightmap {
 
 	public void smooth(double[][] filter, double maxheight, double minheight){
 		double[][] heightout = new double[height.length][height[0].length];
+		double spotheight = 0.0;
+		double average = 0.0;
+		double filtertotal = 0.0;
+		int xpos;
+		int ypos;
+		int xf;
+		int yf;
 		for(int x = 0; x < height.length; x++){
 			for(int y = 0; y < height[0].length; y++){
-				double spotheight = height[x][y];
+				spotheight = height[x][y];
 				heightout[x][y] = height[x][y];
 				if((spotheight >= minheight) && (spotheight <= maxheight)){
-					double average = 0.0;
-					double filtertotal = 0.0;
-					for(int xf = 0; xf < filter.length; xf++){
-						for(int yf = 0; yf < filter[0].length; yf++){
-							int xpos = x+xf-(filter.length/2);
-							int ypos = y+yf-(filter[0].length/2);
+					average = 0.0;
+					filtertotal = 0.0;
+					for(xf = 0; xf < filter.length; xf++){
+						for(yf = 0; yf < filter[0].length; yf++){
+							xpos = x+xf-(filter.length/2);
+							ypos = y+yf-(filter[0].length/2);
 							if(xpos >= height.length)
 								xpos -= height.length;
 							if(ypos >= height[0].length)
@@ -137,14 +150,21 @@ public class Heightmap {
 
 	public void applyPlateau(double minHeight, double maxHeight, double outHeight){
 		double outProp = (outHeight-minHeight)/(maxHeight-minHeight);
+		double newheight;
+		double proportion;
+		double spotHeight;
 //System.out.println("outProp="+outProp);
 		for(int x = 0; x < height.length; x++){
 			for(int y = 0; y < height[0].length; y++){
-				double spotHeight = height[x][y];
+				spotHeight = height[x][y];
 				if(spotHeight < maxHeight && spotHeight > minHeight){
-					double proportion = (spotHeight-minHeight)/(maxHeight-minHeight);
-					spotHeight = outHeight;
-					height[x][y] = spotHeight;
+					proportion = (spotHeight-minHeight)/(maxHeight-minHeight);
+					newheight = outHeight;
+					if(proportion > outProp){
+
+					} else {
+					}
+					height[x][y] = newheight;
 				}
 			}
 		}
@@ -176,10 +196,11 @@ public class Heightmap {
 
 		double tempmax = 0.0;
 		double tempmin = 99999.9;
-
+		double value;
+		double proportion;
 		for(int x = 0; x < height.length; x++){
 			for(int y = 0; y < height[0].length; y++){
-				double value = height[x][y];
+				value = height[x][y];
 				if(value>tempmax)
 					tempmax = value;
 				if(value<tempmin)
@@ -189,8 +210,8 @@ public class Heightmap {
 
 		for(int x = 0; x < height.length; x++){
 			for(int y = 0; y < height[0].length; y++){
-				double value = height[x][y];
-				double proportion = (height[x][y]-tempmin)/(tempmax-tempmin);
+				value = height[x][y];
+				proportion = (height[x][y]-tempmin)/(tempmax-tempmin);
 				value = (proportion*(max-min))+min;
 				height[x][y] = value;
 			}
@@ -338,14 +359,14 @@ public class Heightmap {
 			}
 		}
 		//diamond
+		double newheight = 0.0;
 		for(x = 1; x < outputheightmap.length; x=x+2){
 			for(y = 1; y < outputheightmap[0].length; y=y+2){
-				double newheight;
 				newheight = (outputheightmap[x-1][y-1]
 							+outputheightmap[x+1][y-1]
 							+outputheightmap[x-1][y+1]
 							+outputheightmap[x+1][y+1])/4;
-				newheight += (rng.nextDouble()*(randomrange+1.0))-(randomrange/2.0);
+				newheight += (rwg.rng.nextDouble()*(randomrange+1.0))-(randomrange/2.0);
 				//newheight = clampHeight(newheight, 0.0, 1.0);
 				newheight = clampHeight(newheight);
 				outputheightmap[x][y] 	= newheight;
@@ -359,7 +380,7 @@ public class Heightmap {
 
 			for(y = ystart; y < outputheightmap[0].length; y=y+2){
 				//System.out.println("calculating square step "+x+" "+y);
-				double newheight = 0;
+				newheight = 0.0;
 				if(x-1>0)
 					newheight += outputheightmap[x-1][y];
 				else
@@ -381,7 +402,7 @@ public class Heightmap {
 					newheight += outputheightmap[x][y+1-outputheightmap[0].length+1];
 
 				newheight /=4;
-				newheight += (rng.nextDouble()*(randomrange+1.0))-(randomrange/2.0);
+				newheight += (rwg.rng.nextDouble()*(randomrange+1.0))-(randomrange/2.0);
 				//newheight = clampHeight(newheight, 0.0, 1.0);
 				newheight = clampHeight(newheight);
 				outputheightmap[x][y] = newheight;

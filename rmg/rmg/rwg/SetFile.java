@@ -72,8 +72,8 @@ public class SetFile {
 		setText.append("PathNode=A\r\n");
 		setText.append("Orientation=0\r\n");
 		//sFile.append("ImageMap2D=MI_temp01\r\n)";
-		setText.append("ImageMap2D=m"+tileName+"\r\n)";
-		setText.append("\r\n";
+		setText.append("ImageMap2D=m"+tileName+"\r\n");
+		setText.append("\r\n");
 		setCount++;
 	}
 

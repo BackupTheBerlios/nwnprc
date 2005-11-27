@@ -1,0 +1,37 @@
+RWG pre-alpha test
+
+Expect bugs, & expect it not to work. That way you wont be disapointed!
+
+Note: This requires java v1.5 or higher. Make sure you have the latest version
+by visiting www.java.com
+
+Basically, it loops over the terrain.2da rows, and makes the files for each row.
+Each row corresponts do a separate world map and a separate area.
+The coumns are as follows:
+Label      		Output filename & area name. Must be unique.
+TileX 			Size of area. Possible bugs if not a power of 2 and not square.
+TileY 			Size of area. Possible bugs if not a power of 2 and not square.
+VertexsX 		Number of vertexs per tile. Possible bugs if not a power of 2 and not square.
+VertexsY 		Number of vertexs per tile. Possible bugs if not a power of 2 and not square.
+PixelPerVertex 		Number of pixels per vertex. Number of vertexs. Possible bugs if not a power of 2.
+Roughness 		Related to size of "features". 0.0 - 1.0 only.
+WaterLevel 		Water level. related to land/water ratio. 0.0 - 1.0 only.
+TerrainList		2da filename describing texturing patterns
+
+Terrainlist.2da columns are as follows:
+Label      		human label only
+minHeight 		Minimum height for this texture. 0.0-1.0 only
+maxHeight 		Maximum height for this texture. 0.0-1.0 only
+minSlope 		Minimum difference in nearby heights for this texture. 0.0-1.0 only, suggest around 0.1 max.
+maxSlope 		Maximum difference in nearby heights for this texture. 0.0-1.0 only, suggest around 0.1 max.
+colourminR 		Red component of darkest colour. 0-255
+colourminG 		Green component of darkest colour. 0-255
+colourminB 		Blue component of darkest colour. 0-255
+colourmaxR 		Red component of lightest colour. 0-255
+colourmaxG 		Green component of lightest colour. 0-255
+colourmaxB 		Blue component of lightest colour. 0-255
+parentID 		row of parental terrain. Will only appear on-top of parental terrain.
+fractalScale 		Related to size of "features" for colours. 0.0 - 1.0 only.
+amount  		Fraction of posible surface covered. 0.0 - 1.0 only.
+distribScale 		Related to size of "features" for coverage. 0.0 - 1.0 only.
+heightOffset		Must always be 0.0

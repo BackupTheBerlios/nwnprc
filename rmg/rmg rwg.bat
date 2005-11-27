@@ -8,13 +8,19 @@ del *.bmp
 mkdir in
 mkdir out
 
-REM copy *.tga in\*.tga
-REM tools\dds\processtextures in out
-REM del in\*.tga
-REM copy out\*.dds *.dds
-REM del out\*.dds
+copy *.tga in\*.tga
+tools\dds\processtextures in out
+del in\*.tga
+copy out\*.dds *.dds
+del out\*.dds
+REM out the following line if you want to keep TGA textures
+del *.tga
 
+REM These control the model compiler
+REM probably a good idea for final distributions
+REM but very slow for test runs
 REM copy *.mdl in\*.mdl
+REM del *.mdl
 REM tools\nwnmdlcomp -c in\*.mdl 
 REM copy in\*.mdl *.mdl
 REM del in\*.mdl

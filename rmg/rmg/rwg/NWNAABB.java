@@ -17,8 +17,8 @@ public class NWNAABB {
 	public NWNAABB(Face facelist[], Vertex vertexlist[], boolean xBox){
 		Vertex minVert = new Vertex( 5.0, 5.0, 5.0);
 		Vertex maxVert = new Vertex(-5.0,-5.0,-5.0);
+		double temp = 0.0;
 		for(int i = 0; i < facelist.length; i++){
-			double temp = 0.0;
 			temp = vertexlist[facelist[i].vertIDA].x;
 			if(temp > maxVert.x)
 				maxVert.x = temp;
@@ -89,12 +89,15 @@ public class NWNAABB {
 				endA = new Vertex(xAverage, minVert.y, zAverage);
 				endB = new Vertex(xAverage, maxVert.y, zAverage);
 			}
-			for(int i = 0; i < facelist.length; i++){
+				double distanceX;
+				double distanceY;
+				double distanceZ;
 				double distanceToFaceA;
 				double distanceToFaceB;
 				double averageX = 0.0;
 				double averageY = 0.0;
 				double averageZ = 0.0;
+			for(int i = 0; i < facelist.length; i++){
 				averageX += vertexlist[facelist[i].vertIDA].x;
 				averageX += vertexlist[facelist[i].vertIDB].x;
 				averageX += vertexlist[facelist[i].vertIDC].x;
@@ -108,9 +111,6 @@ public class NWNAABB {
 				averageZ += vertexlist[facelist[i].vertIDC].z;
 				averageZ /= 3.0;
 				Vertex faceAverage = new Vertex(averageX, averageY, averageZ);
-				double distanceX;
-				double distanceY;
-				double distanceZ;
 				distanceX = averageX-endA.x;
 				distanceY = averageY-endA.y;
 				distanceZ = averageZ-endA.z;

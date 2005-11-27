@@ -73,18 +73,29 @@ public class Terrain {
 		int sloperadius = (textureScale/2)+1;
 		double[][] nearheight = new double[sloperadius][sloperadius];
 
+		double newheightoffset = 0.0;
+		double spotheight = 0.0;
+		int baseterrainID = 0;
+		double spotfractal = 0.0;
+		//calculate slope
+		double nearlow = 1.0;
+		double nearhigh = 0.0;
+		double tempheight = 0.0;
+		double spotslope;
+		RGB spotcolour;
+
+
 		for(int x = 0; x < xSize; x++){
 			for(int y = 0; y < ySize; y++){
-				double newheightoffset = 0.0;
-				double spotheight = heightmap.getHeightmap(x,y);
-				int baseterrainID = terrainIDmap[x][y];
-				double spotfractal = distribfractal.getHeightmap(x,y);
+				newheightoffset = 0.0;
+				spotheight = heightmap.getHeightmap(x,y);
+				baseterrainID = terrainIDmap[x][y];
+				spotfractal = distribfractal.getHeightmap(x,y);
 				//calculate slope
-				double nearlow = 1.0;
-				double nearhigh = 0.0;
+				nearlow = 1.0;
+				nearhigh = 0.0;
 				for(int nx = 0; nx < nearheight.length; nx++){
 					for(int ny = 0; ny < nearheight.length; ny++){
-						double tempheight;
 						int tempx = nx+x-(sloperadius/2);
 						int tempy = ny+y-(sloperadius/2);
 						if((nx+x-(sloperadius/2)) < 0)
@@ -104,10 +115,10 @@ public class Terrain {
 							nearlow = tempheight;
 					}
 				}
-				double spotslope = nearhigh - nearlow;
+				spotslope = nearhigh - nearlow;
 
 				if((spotheight >= minHeight) && (spotheight <= maxHeight) && (baseterrainID == parentID) && (spotfractal<=amount) && (spotslope>=minSlope) && (spotslope<=maxSlope)){
-					RGB spotcolour = new RGB(255,255,255);
+					spotcolour = new RGB(255,255,255);
 					spotcolour.r = colourmin.r;
 					spotcolour.g = colourmin.g;
 					spotcolour.b = colourmin.b;

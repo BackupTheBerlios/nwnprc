@@ -61,42 +61,29 @@ public class NWNModel {
 		double zscale = 10.0;
 		waterlevel = waterlevel*zscale;
 		tileNameList = new String[xTiles*yTiles];
-//System.out.println("tileXSize="+tileXSize);
-//System.out.println("scaleFactor="+scaleFactor);
-		//scale the terrain to a suitable height
-		//terrain.heightmap.scaleHeightmap(0.0, 30.0);
 
-		for(int x = terrain.textureScale; x < (terrain.heightmap.getHeightmapRows()-terrain.textureScale); x++){
-			for(int y = terrain.textureScale; y < (terrain.heightmap.getHeightmapColumns()-terrain.textureScale); y++){
-				int averageCount = 0;
-				double averageTotal = 0.0;
+		int averageCount = 0;
+		double averageTotal = 0.0;
+		int x;
+		int y;
+		for(x = terrain.textureScale; x < (terrain.heightmap.getHeightmapRows()-terrain.textureScale); x++){
+			for(y = terrain.textureScale; y < (terrain.heightmap.getHeightmapColumns()-terrain.textureScale); y++){
+				averageCount = 0;
+				averageTotal = 0.0;
 
 				if(x % (tileXSize*terrain.textureScale) == 0)
 				{
-//					averageCount += 2;
-//					averageTotal += terrain.heightmap.height[x][y+terrain.textureScale];
-//					averageTotal += terrain.heightmap.height[x][y-terrain.textureScale];
 					averageCount += 2;
 					averageTotal += terrain.heightmap.getHeightmap(x+terrain.textureScale,y);
 					averageTotal += terrain.heightmap.getHeightmap(x-terrain.textureScale,y);
 
-//					double spotheight = terrain.heightmap.height[x][y];
-//					terrain.heightmap.height[x][y+terrain.textureScale] = spotheight;
-//					terrain.heightmap.height[x][y-terrain.textureScale] = spotheight;
-//					terrain.heightmap.height[x+terrain.textureScale][y] = spotheight;
-//					terrain.heightmap.height[x-terrain.textureScale][y] = spotheight;
-//System.out.println(spotheight+" @ x,y="+x+","+y);
 				}
 
 				if(y % (tileYSize*terrain.textureScale) == 0)
 				{
-//					averageCount += 2;
-//					averageTotal += terrain.heightmap.height[x+terrain.textureScale][y];
-//					averageTotal += terrain.heightmap.height[x-terrain.textureScale][y];
 					averageCount += 2;
 					averageTotal += terrain.heightmap.getHeightmap(x,y+terrain.textureScale);
 					averageTotal += terrain.heightmap.getHeightmap(x,y-terrain.textureScale);
-//System.out.println(terrain.heightmap.height[x][y]+" @ x,y="+x+","+y);
 				}
 
 				if(averageCount>0)
@@ -106,30 +93,38 @@ public class NWNModel {
 
 		tileNameListID = 0;
 
+		double[][] tempheightmap;
+		int originalX;
+		int originalY;
+		double xpos;
+		double ypos;
+		double zpos;
+		Vertex vertex;
+		Vertex texvertex;
+		int colour;
+		int imageX;
+		int imageY;
+		int imageXmapOverlap;
+		int imageYmapOverlap;
+		int xTexOffset;
+		int yTexOffset;
+		int xTexOffsetOverlap;
+		int yTexOffsetOverlap;
 		for(int xTileCount = 0; xTileCount < xTiles; xTileCount++){
 			for(int yTileCount = 0; yTileCount < yTiles; yTileCount++){
 
 				//create a temporary heightmap
-				double[][] tempheightmap = new double[tileXSize+1][tileYSize+1];
+				tempheightmap = new double[tileXSize+1][tileYSize+1];
 				int xOffset = (xTileCount*(tileXSize)*terrain.textureScale);//-xTileCount;
 				int yOffset = (yTileCount*(tileYSize)*terrain.textureScale);//-yTileCount;
-				for(int x = 0; x < tempheightmap.length ; x++){
-					for(int y = 0; y < tempheightmap[0].length; y++){
-						int originalX = ((x)*terrain.textureScale)+xOffset;
-						int originalY = ((y)*terrain.textureScale)+yOffset;
+				for(x = 0; x < tempheightmap.length ; x++){
+					for(y = 0; y < tempheightmap[0].length; y++){
+						originalX = ((x)*terrain.textureScale)+xOffset;
+						originalY = ((y)*terrain.textureScale)+yOffset;
 						if((originalX >=terrain.heightmap.getHeightmapRows()) || (originalY >=terrain.heightmap.getHeightmapColumns()))
 							tempheightmap[x][y] = 0.0;
 						else
 							tempheightmap[x][y] = terrain.heightmap.getHeightmap(originalX, originalY);
-//if(xTileCount == 0 && yTileCount == 0)
-//System.out.println("x="+x);
-//if(y==0)
-//System.out.println("originalX="+originalX);
-
-						//if(yTileCount == 0 && xTileCount == 0 && x == (tempheightmap.length-1))
-						//	System.out.println("1 tempheightmap["+x+"]["+y+"]=terrain.heightmap.height["+originalX+"]["+originalY+"]="+terrain.heightmap.height[originalX][originalY]);
-						//if(yTileCount == 0 && xTileCount == 1 && x == 0)
-						//	System.out.println("2 tempheightmap["+x+"]["+y+"]=terrain.heightmap.height["+originalX+"]["+originalY+"]="+terrain.heightmap.height[originalX][originalY]);
 					}
 				}
 
@@ -142,38 +137,23 @@ public class NWNModel {
 				texturevertexlist = new Vertex[tempheightmap.length*tempheightmap[0].length];
 				vertexIDMap = new int[tempheightmap.length][tempheightmap[0].length];
 				int ID = 0;
-				for(int x = 0; x < tempheightmap.length ; x++){
-					for(int y = 0; y < tempheightmap[0].length; y++){
+				for(x = 0; x < tempheightmap.length ; x++){
+					for(y = 0; y < tempheightmap[0].length; y++){
 						vertexIDMap[x][y] = ID;
-						double xpos = roundNumber(((double)x*scaleFactor)-5.0);
-						double ypos = roundNumber(((double)y*scaleFactor)-5.0);
-						double zpos = roundNumber(tempheightmap[x][y]*zscale);
-						//xpos = (xpos*1.002)-0.001;
-						//ypos = (ypos*1.002)-0.001;
-						Vertex vertex = new Vertex(xpos, ypos, zpos);
-						//final x row
-						//if(xTileCount == 0 && x == tempheightmap.length-1)
-						//	System.out.println("tempheightmap["+x+"]["+y+"]="+tempheightmap[x][y]+" zpos="+zpos);
-						//if(xTileCount == 1 && x == 0)
-						//	System.out.println("tempheightmap["+x+"]["+y+"]="+tempheightmap[x][y]+" zpos="+zpos);
+						xpos = roundNumber(((double)x*scaleFactor)-5.0);
+						ypos = roundNumber(((double)y*scaleFactor)-5.0);
+						zpos = roundNumber(tempheightmap[x][y]*zscale);
+						vertex = new Vertex(xpos, ypos, zpos);
 						vertexlist[ID] = vertex;
 
-						//xpos = (double)x/((double)(tempheightmap.length+1));
 						xpos = ((double)x*texScaleFactor);
-						//ypos = 1.0-((double)y/((double)(tempheightmap[0].length+1)));
 						ypos = 1.0-((double)y*texScaleFactor);
-						//xpos = (xpos*1.02)-0.01;
-						//ypos = (ypos*1.02)-0.01;
-						//xpos = (xpos*(1.0-mapOverlap-mapOverlap))+mapOverlap;
-						//ypos = (ypos*(1.0-mapOverlap-mapOverlap))+mapOverlap;
 						xpos = (xpos*(0.5))+0.25;
 						ypos = (ypos*(0.5))+0.25;
 						xpos = roundNumber(xpos);
 						ypos = roundNumber(ypos);
 						zpos = 0.0;
-						Vertex texvertex = new Vertex(xpos, ypos, zpos);
-//if(yTileCount == 0 && xTileCount == 0)
-//System.out.println(x+", "+y+" = "+xpos+", "+ypos);
+						texvertex = new Vertex(xpos, ypos, zpos);
 						texturevertexlist[ID] = texvertex;
 
 						ID++;
@@ -182,8 +162,8 @@ public class NWNModel {
 				//make faces (not the funny kind)
 				facelist = new Face[(tileXSize)*(tileYSize)*2];
 				ID = 0;
-				for(int x = 0; x < (tileXSize) ; x++){
-					for(int y = 0; y < (tileYSize); y++){
+				for(x = 0; x < (tileXSize) ; x++){
+					for(y = 0; y < (tileYSize); y++){
 						Face face = new Face();
 						face.vertIDA = vertexIDMap[x][y];
 						face.vertIDB = vertexIDMap[x+1][y];
@@ -222,21 +202,21 @@ public class NWNModel {
 						imagefile.delete();
 						imagefile.createNewFile();
 
-					int imageX = (tileXSize*terrain.textureScale);
-					int imageY = (tileYSize*terrain.textureScale);
+					imageX = (tileXSize*terrain.textureScale);
+					imageY = (tileYSize*terrain.textureScale);
 					//add buffers to overlap texture
-					int imageXmapOverlap = (int)((double)imageX*(0.0+mapOverlap+mapOverlap));
-					int imageYmapOverlap = (int)((double)imageY*(0.0+mapOverlap+mapOverlap));
+					imageXmapOverlap = (int)((double)imageX*(0.0+mapOverlap+mapOverlap));
+					imageYmapOverlap = (int)((double)imageY*(0.0+mapOverlap+mapOverlap));
 
-					int xTexOffset = (xTileCount*(tileXSize)*terrain.textureScale);
-					int yTexOffset = (yTileCount*(tileYSize)*terrain.textureScale);
-					int xTexOffsetOverlap = xTexOffset-(imageXmapOverlap/2);
-					int yTexOffsetOverlap = yTexOffset-(imageYmapOverlap/2);
+					xTexOffset = (xTileCount*(tileXSize)*terrain.textureScale);
+					yTexOffset = (yTileCount*(tileYSize)*terrain.textureScale);
+					xTexOffsetOverlap = xTexOffset-(imageXmapOverlap/2);
+					yTexOffsetOverlap = yTexOffset-(imageYmapOverlap/2);
 					image = new BufferedImage(imageX+imageXmapOverlap, imageY+imageYmapOverlap, BufferedImage.TYPE_INT_RGB);
-					for(int x = 0; x < (imageX+imageXmapOverlap) ; x++){
-						for(int y = 0; y < (imageY+imageXmapOverlap); y++){
-							int originalX = x+xTexOffsetOverlap;
-							int originalY = y+yTexOffsetOverlap;
+					for(x = 0; x < (imageX+imageXmapOverlap) ; x++){
+						for(y = 0; y < (imageY+imageXmapOverlap); y++){
+							originalX = x+xTexOffsetOverlap;
+							originalY = y+yTexOffsetOverlap;
 
 							if(originalX >= terrain.terrainmap.length)
 								originalX -= terrain.terrainmap.length;
@@ -249,35 +229,31 @@ public class NWNModel {
 								originalY += terrain.terrainmap[0].length;
 
 							//yes this is backwards, but it works
-							int colour = terrain.terrainmap[originalX][originalY].rgbToComposite();
+							colour = terrain.terrainmap[originalX][originalY].rgbToComposite();
 							//do a greyscale height mapping for test purposes
 							//colour = (int)(255.0*terrain.heightmap.height[originalX][originalY]);
 							//colour = (0 << 24) | (colour << 16) | (colour << 8) | colour;
 							//set the pixels
 							image.setRGB(x, y, colour);
-	//if(y==0 && x==0)
-	//System.out.println("x,y = "+originalX+","+originalY);
 						}
 					}
-						ImageIO.write(image, "bmp", imagefile);
+					ImageIO.write(image, "bmp", imagefile);
 					//converted to tga files by batch post-processing
 
 					//and a mini-map
-						imagefile = new File("m"+modelname+".bmp");
-						imagefile.delete();
-						imagefile.createNewFile();
+					imagefile = new File("m"+modelname+".bmp");
+					imagefile.delete();
+					imagefile.createNewFile();
 					image = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
-					for(int x = 0; x < 16 ; x++){
-						for(int y = 0; y < 16; y++){
+					for(x = 0; x < 16 ; x++){
+						for(y = 0; y < 16; y++){
 							//yes this is backwards, but it works
-							int colour = terrain.terrainmap[(x*(imageX/16))+xTexOffset][(y*(imageY/16))+yTexOffset].rgbToComposite();
+							colour = terrain.terrainmap[(x*(imageX/16))+xTexOffset][(y*(imageY/16))+yTexOffset].rgbToComposite();
 							//do a greyscale mapping for test purposes
 							//colour = (int)(255.0*terrain.heightmap.height[x+xTexOffset][y+yTexOffset]);
 							//colour = (0 << 24) | (colour << 16) | (colour << 8) | colour;
 							//set the pixels
 							image.setRGB(x, y, colour);
-	//if(y==0 && x==0)
-	//System.out.println("x+xTexOffset="+(x+xTexOffset));
 						}
 					}
 						ImageIO.write(image, "bmp", imagefile);

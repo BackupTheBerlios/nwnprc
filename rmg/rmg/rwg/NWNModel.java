@@ -253,7 +253,7 @@ public class NWNModel {
 							//colour = (int)(255.0*terrain.heightmap.height[x+xTexOffset][y+yTexOffset]);
 							//colour = (0 << 24) | (colour << 16) | (colour << 8) | colour;
 							//set the pixels
-							image.setRGB(x, y, colour);
+							image.setRGB(x, 15-y, colour);
 						}
 					}
 						ImageIO.write(image, "bmp", imagefile);

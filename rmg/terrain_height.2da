@@ -1,0 +1,7 @@
+2DA V2.0
+
+     Label       Type Param1 Param2 Param3 Param4
+0    Rim         0    0.5    ****   ****   ****
+1    Plateau     1    0.3    0.7    0.43   ****
+2    Smooth      2    1.0    0.0    ****   ****
+3    SmoothShore 2    0.42   0.38   ****   ****

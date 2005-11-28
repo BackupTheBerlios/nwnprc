@@ -20,6 +20,11 @@ TerrainList		2da filename describing texturing patterns
 
 Terrainlist.2da columns are as follows:
 Label      		human label only
+Type 			0 = apply a texture from terrain_texture.2da, 1 = alter terrain by terrain_height.2da
+Reference		line number of the 2da to read
+
+Terrain_texture.2da columns are as follows:
+Label      		human label only
 minHeight 		Minimum height for this texture. 0.0-1.0 only
 maxHeight 		Maximum height for this texture. 0.0-1.0 only
 minSlope 		Minimum difference in nearby heights for this texture. 0.0-1.0 only, suggest around 0.1 max.
@@ -34,4 +39,17 @@ parentID 		row of parental terrain. Will only appear on-top of parental terrain.
 fractalScale 		Related to size of "features" for colours. 0.0 - 1.0 only.
 amount  		Fraction of posible surface covered. 0.0 - 1.0 only.
 distribScale 		Related to size of "features" for coverage. 0.0 - 1.0 only.
-heightOffset		Must always be 0.0
+heightOffset		ignored
+
+Terrain_height.2da columns are as follows:
+Label     		human label only
+Type 			0 = rim		param1 = proportion of terrain to rim
+			1 = plateau	param1 = min height
+					param2 = max height
+					param3 = new height
+			2 = smooth	param1 = min height
+					param2 = max height
+Param1 			varies, see type
+Param2 			varies, see type 
+Param3 			varies, see type
+Param4 			varies, see type

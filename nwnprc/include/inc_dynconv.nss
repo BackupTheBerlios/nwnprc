@@ -534,15 +534,19 @@ void StartDynamicConversation(string sConversationScript, object oPC,
 {
     if(DEBUG) DoDebug("StartDynamicConversation(): Starting new dynamic conversation, parameters:\n"
                     + "sConversationScript = '" + sConversationScript + "'\n"
-                    + "oPC = " + ObjectToString(oPC) + " - " + GetName(oPC) + "\n"
-                    + "bAllowExit = " + (nAllowExit ? "True":"False") + "\n"
-                    + "bAllowAbort = " + (bAllowAbort ? "True":"False") + "\n"
-                    + "bForceStart = " + (bForceStart ? "True":"False") + "\n"
-                    + "oConverseWith = " + DebugObject2Str(oConverseWith) + "\n "
+                    + "oPC = " + DebugObject2Str(oPC) + "\n"
+                    + "nAllowExit = " + (nAllowExit == DYNCONV_EXIT_NOT_ALLOWED         ? "DYNCONV_EXIT_NOT_ALLOWED"         :
+                                         nAllowExit == DYNCONV_EXIT_FORCE_EXIT          ? "DYNCONV_EXIT_FORCE_EXIT"          :
+                                         nAllowExit == DYNCONV_EXIT_ALLOWED_SHOW_CHOICE ? "DYNCONV_EXIT_ALLOWED_SHOW_CHOICE" :
+                                         "ERROR: Unsupported value: " + IntToString(nAllowExit)
+                                         ) + "\n"
+                    + "bAllowAbort = " + BooleanToString(bAllowAbort) + "\n"
+                    + "bForceStart = " + BooleanToString(bForceStart) + "\n"
+                    + "oConverseWith = " + DebugObject2Str(oConverseWith) + "\n"
                       );
     // By default, the PC converses with itself
     oConverseWith = oConverseWith == OBJECT_INVALID ? oPC : oConverseWith;
-    if(DEBUG) if(!GetIsObjectValid(oConverseWith)) DoDebug("StartDynamicConversation(): ERROR: oConversWith is not valid!");
+    if(DEBUG) if(!GetIsObjectValid(oConverseWith)) DoDebug("StartDynamicConversation(): ERROR: oConverseWith is not valid!");
 
     // Store the exit control variables
     SetLocalInt(oPC, "DynConv_AllowExit", nAllowExit);
@@ -555,15 +559,19 @@ void StartDynamicConversation(string sConversationScript, object oPC,
 }
 
 void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo,
-                               int bAllowExit = TRUE, int bAllowAbort = FALSE,
+                               int nAllowExit = DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, int bAllowAbort = FALSE,
                                object oPC = OBJECT_INVALID)
 {
     if(DEBUG) DoDebug("BranchDynamicConversation(): Entering another dynamic conversation, parameters:\n"
                     + "sConversationToEnter = '" + sConversationToEnter + "'\n"
                     + "nStageToReturnTo = " + IntToString(nStageToReturnTo) + "\n"
-                    + "bAllowExit = " + (bAllowExit ? "True":"False") + "\n"
-                    + "bAllowAbort = " + (bAllowAbort ? "True":"False") + "\n"
-                    + "oPC = " + ObjectToString(oPC) + " - " + GetName(oPC) + "\n "
+                    + "nAllowExit = " + (nAllowExit == DYNCONV_EXIT_NOT_ALLOWED         ? "DYNCONV_EXIT_NOT_ALLOWED"         :
+                                         nAllowExit == DYNCONV_EXIT_FORCE_EXIT          ? "DYNCONV_EXIT_FORCE_EXIT"          :
+                                         nAllowExit == DYNCONV_EXIT_ALLOWED_SHOW_CHOICE ? "DYNCONV_EXIT_ALLOWED_SHOW_CHOICE" :
+                                         "ERROR: Unsupported value: " + IntToString(nAllowExit)
+                                         ) + "\n"
+                    + "bAllowAbort = " + BooleanToString(bAllowAbort) + "\n"
+                    + "oPC = " + DebugObject2Str(oPC) + "\n "
                       );
     oPC = _DynConvInternal_ResolvePC(oPC);
     // Get current stack level
@@ -582,12 +590,17 @@ void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo
     // Clean the current conversation data
     array_delete(oPC, "ChoiceTokens");
     array_delete(oPC, "ChoiceValues");
+    array_delete(oPC, "StagesSetup");
+    DeleteLocalInt(oPC, "ChoiceOffset");
     DeleteLocalInt(oPC, DYNCONV_STAGE);
 
     // Set the new conversation as active
     SetLocalString(oPC, DYNCONV_SCRIPT, sConversationToEnter);
+    SetLocalInt(oPC, "DynConv_AllowExit", nAllowExit);
+    SetLocalInt(oPC, "DynConv_AllowAbort", bAllowAbort);
 }
 
+/// @todo Rename to SetExitable
 void AllowExit(int nNewValue = DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, int bChangeExitTokenText = TRUE, object oPC = OBJECT_INVALID)
 {
     SetLocalInt(_DynConvInternal_ResolvePC(oPC), "DynConv_AllowExit", nNewValue);
@@ -595,6 +608,7 @@ void AllowExit(int nNewValue = DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, int bChangeExit
         SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(DYNCONV_STRREF_EXIT_CONVO));
 }
 
+/// @todo Replace with SetAbortable(int bAllow, object oPC = OBJECT_INVALID)
 void AllowAbort(object oPC = OBJECT_INVALID)
 {
     SetLocalInt(_DynConvInternal_ResolvePC(oPC), "DynConv_AllowAbort", TRUE);

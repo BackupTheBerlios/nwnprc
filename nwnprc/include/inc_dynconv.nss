@@ -189,6 +189,9 @@ string GetChoiceText(object oPC = OBJECT_INVALID);
  *                            and cannot be avoided by the PC cancelling the action while it is in the queue.
  * @param oConverseWith       The object to speak the "NPC" side of the conversation. Usually, this is also
  *                            the PC, which will be used when this parameter is left to it's default value.
+ *                            NOTE: If this parameter is given a value other than OBJECT_INVALID, no validity
+ *                            testing is performed upon that object. The function caller needs to make sure
+ *                            the object exists.
  */
 void StartDynamicConversation(string sConversationScript, object oPC,
                               int nAllowExit = DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, int bAllowAbort = FALSE,
@@ -535,10 +538,11 @@ void StartDynamicConversation(string sConversationScript, object oPC,
                     + "bAllowExit = " + (nAllowExit ? "True":"False") + "\n"
                     + "bAllowAbort = " + (bAllowAbort ? "True":"False") + "\n"
                     + "bForceStart = " + (bForceStart ? "True":"False") + "\n"
-                    + "oConverseWith = " + ObjectToString(oConverseWith) + " - " + GetName(oConverseWith) + "\n "
+                    + "oConverseWith = " + DebugObject2Str(oConverseWith) + "\n "
                       );
     // By default, the PC converses with itself
     oConverseWith = oConverseWith == OBJECT_INVALID ? oPC : oConverseWith;
+    if(DEBUG) if(!GetIsObjectValid(oConverseWith)) DoDebug("StartDynamicConversation(): ERROR: oConversWith is not valid!");
 
     // Store the exit control variables
     SetLocalInt(oPC, "DynConv_AllowExit", nAllowExit);
@@ -547,7 +551,7 @@ void StartDynamicConversation(string sConversationScript, object oPC,
     // Initiate conversation
     if(bForceStart) AssignCommand(oPC, ClearAllActions(TRUE));
     SetLocalString(oPC, DYNCONV_SCRIPT, sConversationScript);
-    AssignCommand(oPC, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
+    AssignCommand(oPC, ActionStartConversation(oConverseWith, "dyncov_base", TRUE, FALSE));
 }
 
 void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo,

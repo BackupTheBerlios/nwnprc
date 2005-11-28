@@ -1,8 +1,5 @@
 2DA V2.0
 
      Label      TileX TileY VertexsX VertexsY PixelPerVertex Roughness WaterLevel TerrainList
-0    TerrainA    8     8     16       16      2              0.8       0.40       TerrainA
-1    TerrainB    8     8     16       16      2              0.82      0.40       TerrainA
-2    TerrainC    8     8     16       16      2              0.85      0.40       TerrainA
-3    TerrainD    8     8     16       16      2              0.88      0.40       TerrainA
-4    TerrainE    8     8     16       16      2              0.9       0.40       TerrainA
+0    TerrainA    8     8     16       16      2              0.9       0.40       TerrainA
+1    TerrainB   32    32      8        8      1              0.2       0.10       TerrainB

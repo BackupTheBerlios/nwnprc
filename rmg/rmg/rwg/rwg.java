@@ -61,6 +61,32 @@ public class rwg {
 		double param1;
 		double param2;
 		double param3;
+		boolean noModels = false;
+
+		for(String param : args){//[-crmnqs] file... | -
+			// Parameter parseage
+			if(param.startsWith("-")){
+				if(param.equals("-"))
+					readStdin = true;
+				else{
+					for(char c : param.substring(1).toCharArray()){
+						switch(c){
+						case 't': //testing mode, dont output models
+							noModels = true;
+							break;
+						default:
+							System.out.println("Unknown parameter: " + c);
+							readMe();
+						}
+					}
+				}
+			}
+		}
+
+
+
+
+
 		for(int row = 0; row < terrain2da.getEntryCount(); row++){
 			water = new Double(terrain2da.getEntry("WaterLevel", row));
 			vertexsX  = terrain2da.getBiowareEntryAsInt("VertexsX", row);
@@ -125,13 +151,17 @@ public class rwg {
 			terrain.heightmap.writeToDisk(label);
 			//output colourmap
 			terrain.writeToDisk(label+"_col");
-			model.makeModel(terrain, label, tilesX, tilesY, water, false);
-			for(int i=0 ; i < model.tileNameList.length;i++){
-				setFile.addSetInformation(model.tileNameList[i]);
+			if(!noModels){
+				model.makeModel(terrain, label, tilesX, tilesY, water, false);
+				for(int i=0 ; i < model.tileNameList.length;i++){
+					setFile.addSetInformation(model.tileNameList[i]);
+				}
 			}
 		}
 		//write set file
-		setFile.writeToDisk();
+		if(!noModels){
+			setFile.writeToDisk();
+		}
 		//tell user we've finished
 		System.out.println("Done");
 	}

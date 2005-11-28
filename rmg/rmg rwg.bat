@@ -1,4 +1,4 @@
-java -Xmx300m -Xmx300m -classpath .;tools/prc.jar -jar rmg.jar -rwg
+java -Xmx300m -Xmx300m -jar rmg.jar -rwg
 pause
 @ECHO OFF
 tools\i_view32 *.bmp /convert=c:\*.tga

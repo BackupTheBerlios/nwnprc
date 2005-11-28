@@ -13,6 +13,7 @@ public class Heightmap {
 	private double height[][] = new double [1][1];
 	private BufferedImage image;
 	private boolean clamp = false;
+  	private Random random = new Random(); //use this for the heightmap
 
 	//constructor
 	public Heightmap(int xSize, int ySize, double fractalDecay){
@@ -25,13 +26,13 @@ public class Heightmap {
 
 
 	public void generateFractalBase(double fractalDecay){
-
+		random = new Random(rng.rwg.nextLong());
 		double tempheightmap[][] = new double [2][2];
-		tempheightmap[0][0] = 0;//rng.nextInt(zMax-zMin)+zMin;
+		tempheightmap[0][0] = random.nextDouble();
 		tempheightmap[1][0] = tempheightmap[0][0];
 		tempheightmap[0][1] = tempheightmap[0][0];
 		tempheightmap[1][1] = tempheightmap[0][0];
-		double initialrandomrange = 255.0;
+		double initialrandomrange = 1.0;
 		double randomrange = initialrandomrange;
 
 		int itteration = 0;
@@ -366,7 +367,7 @@ public class Heightmap {
 							+outputheightmap[x+1][y-1]
 							+outputheightmap[x-1][y+1]
 							+outputheightmap[x+1][y+1])/4;
-				newheight += (rwg.rng.nextDouble()*(randomrange+1.0))-(randomrange/2.0);
+				newheight += (random.nextDouble()*(randomrange+1.0))-(randomrange/2.0);
 				//newheight = clampHeight(newheight, 0.0, 1.0);
 				newheight = clampHeight(newheight);
 				outputheightmap[x][y] 	= newheight;
@@ -402,7 +403,7 @@ public class Heightmap {
 					newheight += outputheightmap[x][y+1-outputheightmap[0].length+1];
 
 				newheight /=4;
-				newheight += (rwg.rng.nextDouble()*(randomrange+1.0))-(randomrange/2.0);
+				newheight += (random.nextDouble()*(randomrange+1.0))-(randomrange/2.0);
 				//newheight = clampHeight(newheight, 0.0, 1.0);
 				newheight = clampHeight(newheight);
 				outputheightmap[x][y] = newheight;

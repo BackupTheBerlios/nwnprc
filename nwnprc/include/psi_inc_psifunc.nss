@@ -55,7 +55,7 @@ int GetIsTelepathyPower();
 
 // Increases the cost of a Telepathy power by an
 // amount if the target of the spell is a Wilder
-int VolatileMind(object oTarget, object oCaster);
+int VolatileMind(object oTarget, object oManifester);
 
 // Checks whether the target has Hostile Mind feat and takes appropriate action if they do
 // =======================================================================================
@@ -524,24 +524,23 @@ int GetIsTelepathyPower()
     return FALSE;
 }
 
-int VolatileMind(object oTarget, object oCaster)
+int VolatileMind(object oTarget, object oManifester)
 {
-    int nWilder = GetLevelByClass(CLASS_TYPE_WILDER, oTarget);
+    int nWilder    = GetLevelByClass(CLASS_TYPE_WILDER, oTarget);
     int nTelepathy = GetIsTelepathyPower();
     int nCost = 0;
 
-    if (nWilder > 4 && nTelepathy == TRUE)
+    if(nTelepathy   && // Only affects telepathy powers.
+       nWilder >= 5 && // Only wilders need apply
+       // Since the "As a standard action, a wilder can choose to lower this effect for 1 round."
+       // bit is not particularly doable in NWN, we implement it so that the class feature
+       // only affects powers from hostile manifesters
+       GetIsEnemy(oTarget, oManifester)
+       )
     {
-        if (GetIsEnemy(oTarget, oCaster))
-        {
-            if      (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_4, oTarget)) nCost = 4;
-            else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_3, oTarget)) nCost = 3;
-            else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_2, oTarget)) nCost = 2;
-            else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_1, oTarget)) nCost = 1;
-        }
+        nCost = ((nWilder - 5) / 4) + 1;
     }
 
-    //FloatingTextStringOnCreature("Volatile Mind Cost: " + IntToString(nCost), oTarget, FALSE);
     return nCost;
 }
 

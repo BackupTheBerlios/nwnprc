@@ -73,6 +73,8 @@ struct manifestation{
 
 struct manifestation EvaluateManifestation(object oManifester, object oTarget, int nMetaPsiFlags);
 
+string DebugManifestation2Str(struct manifestation manif);
+
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -138,15 +140,15 @@ int _VolatileMind(object oTarget, object oManifester)
     int nTelepathy = GetIsTelepathyPower();
     int nCost = 0;
 
-    if (nWilder > 4 && nTelepathy)
+    if(nTelepathy   && // Only affects telepathy powers.
+       nWilder >= 5 && // Only wilders need apply
+       // Since the "As a standard action, a wilder can choose to lower this effect for 1 round."
+       // bit is not particularly doable in NWN, we implement it so that the class feature
+       // only affects powers from hostile manifesters
+       GetIsEnemy(oTarget, oManifester)
+       )
     {
-        if (GetIsEnemy(oTarget, oManifester))
-        {
-            if      (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_4, oTarget)) nCost = 4;
-            else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_3, oTarget)) nCost = 3;
-            else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_2, oTarget)) nCost = 2;
-            else if (GetHasFeat(FEAT_WILDER_VOLATILE_MIND_1, oTarget)) nCost = 1;
-        }
+        nCost = ((nWilder - 5) / 4) + 1;
     }
 
     return nCost;
@@ -194,30 +196,73 @@ void _HostileMind(object oManifester, object oTarget)
     }
 }
 
-string DebugManifestation2Str(struct manifestation manif)
+/** Internal function.
+ * Applies the damage caused by use of Overchannel feat.
+ *
+ * @param oManifester The creature currently manifesting a power
+ */
+void _DoOverchannelDamage(object oManifester)
 {
-    string sRet;
+    int nOverchannel = GetLocalInt(oManifester, "Overchannel");
+    if(nOverchannel > 0)
+    {
+        int nDam = d8(nOverchannel * 2 - 1);
+        // Check if Talented applies
+        if(GetPowerLevel(oManifester) <= 3)
+        {
+            if(GetLocalInt(oManifester, "TalentedActive") && UsePsionicFocus(oManifester))
+                return;
+            /* Should we be merciful and let the feat be "retroactively activated" if the damage were enough to kill?
+            else if(GetCurrentHitPoints(oCaster) < nDam && GetHasFeat(FEAT_TALENTED, oCaster) && UsePsionicFocus(oCaster))
+                return;*/
+        }
+        effect eDam = EffectDamage(nDam);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oManifester);
+    }
+}
 
-    sRet += "oManifester = " DebugObject2Str(oManifester) + "\n";
-    sRet += "bCanManifest = " + BooleanToString(bCanManifest) + "\n";
-    sRet += "nPPCost = " + IntToString(nPPCost) + "\n";
-    sRet += "nPsiFocUsesRemain = " + IntToString(nPsiFocUsesRemain) + "\n";
-    sRet += "nManifesterLevel = " + IntToString(nManifesterLevel) + "\n";
+void _SurgingEuphoriaOrPsychicEnervation(object oManifester)
+{
+    int nWilder    = GetLevelByClass(CLASS_TYPE_WILDER, oManifester);
+    int nWildSurge = GetWildSurge(oManifester);
+    // Only Wilders need apply (at least so far)
+    if(nWilder > 0)
+    {
+        // Psychic Enervation has a 5% chance to happen per point Wild Surged by
+        if(nWildSurge >= d20())
+        {
+            effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
+            effect eDaze = EffectDazed();
+            effect eLink = EffectLinkEffects(eMind, eDaze);
+            eLink = ExtraordinaryEffect(eLink);
 
-    sRet += "nTimesAugOptUsed_1 = " + IntToString(nTimesAugOptUsed_1) + "\n";
-    sRet += "nTimesAugOptUsed_2 = " + IntToString(nTimesAugOptUsed_2) + "\n";
-    sRet += "nTimesAugOptUsed_3 = " + IntToString(nTimesAugOptUsed_3) + "\n";
-    sRet += "nTimesAugOptUsed_4 = " + IntToString(nTimesAugOptUsed_4) + "\n";
-    sRet += "nTimesAugOptUsed_5 = " + IntToString(nTimesAugOptUsed_5) + "\n";
-    sRet += "nTimesGenericAugUsed = " + IntToString(nTimesGenericAugUsed) + "\n";
+            FloatingTextStrRefOnCreature(16823620, oManifester, FALSE); // "You have become psychically enervated and lost power points"
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oManifester, RoundsToSeconds(1));
 
-    sRet += "bChain    = " + BooleanToString(bChain)    + "\n";
-    sRet += "bEmpower  = " + BooleanToString(bEmpower)  + "\n";
-    sRet += "bExtend   = " + BooleanToString(bExtend)   + "\n";
-    sRet += "bMaximize = " + BooleanToString(bMaximize) + "\n";
-    sRet += "bSplit    = " + BooleanToString(bSplit)    + "\n";
-    sRet += "bTwin     = " + BooleanToString(bTwin)     + "\n";
-    sRet += "bWiden    = " + BooleanToString(bWiden);//    + "\n";
+            LosePowerPoints(oManifester, nWilder);
+        }
+        // Need minimum wilder level 4 to be eligible for Surging Euphoria. And it only happens when there is no Enervation
+        else if(nWilder >= 4)
+        {
+            // Euphoria is 1 at levels 4 - 11, 2 at L 12 - 19, 3 at L 20 - 27, etc.
+            int nEuphoria = ((nWilder - 4) / 8) + 1;
+
+            effect eBonAttack = EffectAttackIncrease(nEuphoria);
+            effect eBonDam    = EffectDamageIncrease(nEuphoria, DAMAGE_TYPE_MAGICAL);
+            effect eVis       = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
+            effect eSave      = EffectSavingThrowIncrease(SAVING_THROW_ALL, nEuphoria, SAVING_THROW_TYPE_SPELL);
+            effect eDur       = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+            effect eDur2      = EffectVisualEffect(VFX_DUR_MAGIC_RESISTANCE);
+            effect eLink      = EffectLinkEffects(eSave, eDur);
+            eLink = EffectLinkEffects(eLink, eDur2);
+            eLink = EffectLinkEffects(eLink, eBonDam);
+            eLink = EffectLinkEffects(eLink, eBonAttack);
+            eLink = ExtraordinaryEffect(eLink);
+
+            FloatingTextStringOnCreature(GetStringByStrRef(16823616) + ": " + IntToString(nWildSurge), oManifester, FALSE); // "Surging Euphoria: "
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oManifester, RoundsToSeconds(nWildSurge));
+        }
+    }
 }
 
 
@@ -307,7 +352,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
 
             //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE *//
             // Damage from overchanneling happens only if one actually spends PP
-            DoOverchannelDamage(oManifester);
+            _DoOverchannelDamage(oManifester);
             // Apply Hostile Mind damage, as necessary
             _HostileMind(oManifester, oTarget);
             //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION ABOVE *//
@@ -326,4 +371,30 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
     DelayCommand(0.5f, _CleanManifestationVariables(oManifester));
 
     return manif;
+}
+
+string DebugManifestation2Str(struct manifestation manif)
+{
+    string sRet;
+
+    sRet += "oManifester = " DebugObject2Str(oManifester) + "\n";
+    sRet += "bCanManifest = " + BooleanToString(bCanManifest) + "\n";
+    sRet += "nPPCost = " + IntToString(nPPCost) + "\n";
+    sRet += "nPsiFocUsesRemain = " + IntToString(nPsiFocUsesRemain) + "\n";
+    sRet += "nManifesterLevel = " + IntToString(nManifesterLevel) + "\n";
+
+    sRet += "nTimesAugOptUsed_1 = " + IntToString(nTimesAugOptUsed_1) + "\n";
+    sRet += "nTimesAugOptUsed_2 = " + IntToString(nTimesAugOptUsed_2) + "\n";
+    sRet += "nTimesAugOptUsed_3 = " + IntToString(nTimesAugOptUsed_3) + "\n";
+    sRet += "nTimesAugOptUsed_4 = " + IntToString(nTimesAugOptUsed_4) + "\n";
+    sRet += "nTimesAugOptUsed_5 = " + IntToString(nTimesAugOptUsed_5) + "\n";
+    sRet += "nTimesGenericAugUsed = " + IntToString(nTimesGenericAugUsed) + "\n";
+
+    sRet += "bChain    = " + BooleanToString(bChain)    + "\n";
+    sRet += "bEmpower  = " + BooleanToString(bEmpower)  + "\n";
+    sRet += "bExtend   = " + BooleanToString(bExtend)   + "\n";
+    sRet += "bMaximize = " + BooleanToString(bMaximize) + "\n";
+    sRet += "bSplit    = " + BooleanToString(bSplit)    + "\n";
+    sRet += "bTwin     = " + BooleanToString(bTwin)     + "\n";
+    sRet += "bWiden    = " + BooleanToString(bWiden);//    + "\n";
 }

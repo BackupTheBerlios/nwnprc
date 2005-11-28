@@ -1,6 +1,16 @@
+//::///////////////////////////////////////////////
+//:: Wild Surge: Off
+//:: prc_wld_srg_off
+//::///////////////////////////////////////////////
+/** @file
+    Turns Wild Surge off on the using character.
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
 void main()
 {
-    object oCaster = OBJECT_SELF;
-    SetLocalInt(oCaster, "WildSurge", 0);
-    FloatingTextStringOnCreature("Wild Surge Off", oCaster, FALSE);
+    object oPC = OBJECT_SELF;
+    SetLocalInt(oPC, "WildSurge", 0);
+    FloatingTextStrRefOnCreature(16823612, oPC, FALSE);
 }

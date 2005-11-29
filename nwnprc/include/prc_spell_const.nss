@@ -461,3 +461,6 @@ const int SPELL_TRIBAL_FRENZY                       = 1597;
 
 // Baelnorn
 const int SPELL_BAELNORN_PROJECTION                 = 2902;
+// Passive feats
+const int SPELL_FORCE_PERSONALITY                   = 1915;
+const int SPELL_INSIGHTFUL_REFLEXES                 = 1916;

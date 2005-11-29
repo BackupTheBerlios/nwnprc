@@ -167,9 +167,14 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC) ||
        GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))                    ExecuteScript("prc_intuiatk", oPC);
 
-    if(GetHasFeat(FEAT_FORCE_PERSONALITY, oPC))                  ExecuteScript("prc_ft_forcepers", oPC);
-    if(GetHasFeat(FEAT_INSIGHTFUL_REFLEXES, oPC))                ExecuteScript("prc_ft_insghtref", oPC);
-    if(GetHasFeat(FEAT_TACTILE_TRAPSMITH, oPC))                  ExecuteScript("prc_ft_tacttrap", oPC);
+    //Delays for item bonuses
+    if(GetHasFeat(FEAT_FORCE_PERSONALITY, oPC) ||
+        GetHasFeat(FEAT_INSIGHTFUL_REFLEXES, oPC))               DelayCommand(0.1, ExecuteScript("prc_ft_passive", oPC));
+    /*
+    if(GetHasFeat(FEAT_FORCE_PERSONALITY, oPC))                  DelayCommand(0.1, ExecuteScript("prc_ft_forcepers", oPC));
+    if(GetHasFeat(FEAT_INSIGHTFUL_REFLEXES, oPC))                DelayCommand(0.1, ExecuteScript("prc_ft_insghtref", oPC));
+    */
+    if(GetHasFeat(FEAT_TACTILE_TRAPSMITH, oPC))                  DelayCommand(0.1, ExecuteScript("prc_ft_tacttrap", oPC));
 
     //Baelnorn & Undead
     if(GetHasFeat(FEAT_UNDEAD_HD))                               ExecuteScript("prc_ud_hitdice", oPC);
@@ -668,6 +673,10 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oPC, "ForceOfPersonalityCha");
     DeleteLocalInt(oPC, "InsightfulReflexesInt");
     DeleteLocalInt(oPC, "InsightfulReflexesDex");
+    DeleteLocalInt(oSkin, "TactileTrapsmithSearchIncrease");
+    DeleteLocalInt(oSkin, "TactileTrapsmithDisableIncrease");
+    DeleteLocalInt(oSkin, "TactileTrapsmithSearchDecrease");
+    DeleteLocalInt(oSkin, "TactileTrapsmithDisableDecrease");
 
     // Warchief
     //DeleteLocalInt(oPC, "WarchiefCha");
@@ -968,20 +977,6 @@ else
     }
 }
 
-void FeatLasher(object oPC)
-{
-    int iClassLevel = GetLevelByClass(CLASS_TYPE_LASHER, oPC);
-    if(DEBUG) DoDebug("Lasher level: " + IntToString(iClassLevel) + "\n"
-                    + "Has Stunning Snap feat: " + BooleanToString(GetHasFeat(FEAT_LASHER_STUNNING_SNAP,oPC))
-                      );
-    int i;
-    if(iClassLevel < 7) return;
-
-    for(i = 30; i > iClassLevel; i--)
-        DecrementRemainingFeatUses(oPC, FEAT_LASHER_STUNNING_SNAP);
-}
-
-
 void FeatSpecialUsePerDay(object oPC)
 {
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);
@@ -999,7 +994,7 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_3, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC));
     FeatNinja(oPC);
     FeatContender(oPC);
-    FeatLasher(oPC);
+    FeatUsePerDay(oPC, FEAT_LASHER_STUNNING_SNAP, -1, GetLevelByClass(CLASS_TYPE_LASHER, oPC));
     FeatUsePerDay(oPC, FEAT_MOS_UNDEAD_1, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_MOS_UNDEAD_2, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_MOS_UNDEAD_3, ABILITY_CHARISMA, 3);

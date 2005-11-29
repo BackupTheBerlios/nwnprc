@@ -3,6 +3,9 @@
     Author: aser
     Date: Feb 26 2005
     Purpose: To simulate an Iaijutsu Focus Attack
+
+    Modified by Flaming_Sword
+    Nov 17 2005
 */
 
 #include "NW_I0_GENERIC"
@@ -29,10 +32,11 @@ void main()
             iSkill = iSkill + 13;
         else
             iSkill = iSkill + 3;
-    string OneKat;
+    //string OneKat;
     int iDie = 0;
 
-    SetLocalInt(oPC,OneKat,0);
+    //SetLocalInt(oPC,OneKat,0);
+    //int OneKat = 0;
 
     //Calculate Bonus Damage
     iDie = iSkill / 5;
@@ -54,7 +58,7 @@ void main()
         {
 
             //Searching for a single Katana
-            while(GetIsObjectValid(oWeap) && GetLocalInt(oPC,OneKat) == 0)
+            while(GetIsObjectValid(oWeap) /*&& !OneKat*/)
             {
 
                 if(GetBaseItemType(oWeap) == BASE_ITEM_KATANA
@@ -107,6 +111,8 @@ void main()
                     effect eVFX;
                     //this is an action to make sure the "katana" is equiped
                     ActionDoCommand(PerformAttackRound(oTarget, oPC, eVFX, 0.0, 0, nDamage, DAMAGE_TYPE_SLASHING, FALSE, "*Iaijutsu Hit*", "*Iaijutsu Miss"));
+                    //OneKat = 1;
+                    break;
                 }
                 oWeap = GetNextItemInInventory(oPC);
             }

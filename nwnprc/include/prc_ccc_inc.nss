@@ -1,3 +1,6 @@
+
+#include "prc_feat_const"
+#include "prc_racial_const"
 #include "inc_utility"
 #include "inc_dynconv"
 

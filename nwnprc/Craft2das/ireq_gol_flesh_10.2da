@@ -1,0 +1,12 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Golem  	                    RESULT      prc_con_result   prc_con_flesh_10        
+1     Caster_Level_8th              CASTERLVL       8            ****        
+2     CraftConstruct                FEAT         2920            ****   
+3     GoldCost                      EXTRAGOLD   10500            ****
+4     XPCost                        EXTRAXP       780            ****         
+5     AnimateDead                   SPELL           2            ****           
+6     BullsStrength                 SPELL           9            ****           
+7     ControlUndead(Geas)           SPELL          28            ****            
+8     UndeadtoDeath(LmitedWish)     SPELL         528            **** 

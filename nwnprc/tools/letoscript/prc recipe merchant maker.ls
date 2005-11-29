@@ -2,7 +2,7 @@
 meta dir=> '..\..\Craft2das' or die $!;
 $name = 'prc_recipe';
 $i = 0;
-$max = 753;
+$max = 776;
 $x = 0;
 $y = 0;
 

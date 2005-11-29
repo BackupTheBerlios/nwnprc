@@ -1,6 +1,6 @@
 #include "inc_utility"
 #include "inc_letocommands"
-#include "prc_inc_racial"
+#include "prc_racial_const"
 #include "prc_ccc_inc"
 #include "inc_encrypt"
 

@@ -66,7 +66,8 @@ float fmin(float a, float b);
  * @param f  A float value
  * @return   f if it's 0 or greater, -f otherwise
  */
-float fabs(float f);
+//No longer needed, its a bioware function
+//float fabs(float f);
 
 /**
  * Takes a string in the standard hex number format (0x####) and converts it
@@ -382,7 +383,7 @@ float fmax(float a, float b) {return (a > b ? a : b);}
 
 float fmin(float a, float b) {return (a < b ? a : b);}
 
-float fabs(float f) {return (f < 0.0f ? -f : f);}
+//float fabs(float f) {return (f < 0.0f ? -f : f);}
 
 int HexToInt(string sHex)
 {

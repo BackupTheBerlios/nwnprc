@@ -1,0 +1,12 @@
+2DA V2.0
+
+      LABEL                              ReqType     ReqParam1        ReqParam2   
+0     Golem  	                         RESULT      prc_con_result   prc_con_iron_44       
+1     Caster_Level_16th                  CASTERLVL      16            ****        
+2     CraftConstruct                     FEAT         2920            ****     
+3     GoldCost                           EXTRAGOLD  172500            ****
+4     XPCost                             EXTRAXP     12600            ****        
+5     Cloudkill                          SPELL          23            ****         
+6     ProtSpells(LimitedWish)            SPELL         141            ****         
+7     GreaterPlanarBinding(PolymorphAny) SPELL          69            ****         
+8     GreaterStoneskin(Geas)             SPELL          74            ****    

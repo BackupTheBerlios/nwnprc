@@ -1,3 +1,6 @@
+
+#include "prc_feat_const"
+#include "prc_racial_const"
 #include "inc_encrypt"
 #include "inc_utility"
 #include "inc_letoscript"
@@ -152,7 +155,7 @@ void main()
         //preserve the PCs dignity by giving them clothes
         //no cos they we cant see any tattoos
         //start the ConvoCC conversation
-        StartDynamicConversation("prc_ccc", oPC, FALSE, FALSE, TRUE);
+        DelayCommand(10.0, StartDynamicConversation("prc_ccc", oPC, FALSE, FALSE, TRUE));
         //DISABLE FOR DEBUGGING
         SetCutsceneMode(oPC, TRUE);
         SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);

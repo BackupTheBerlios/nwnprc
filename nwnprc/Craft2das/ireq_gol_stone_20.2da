@@ -1,0 +1,12 @@
+2DA V2.0
+
+      LABEL                           ReqType     ReqParam1        ReqParam2   
+0     Golem  	                      RESULT      prc_con_result   prc_con_stone_20        
+1     Caster_Level_14th               CASTERLVL      14            ****        
+2     CraftConstruct                  FEAT         2920            ****   
+3     GoldCost                        EXTRAGOLD   62500            ****
+4     XPCost                          EXTRAXP      3400            ****        
+5     Slow                            SPELL         166            ****      
+6     GreaterStoneskin(Geas)          SPELL          74            ****      
+7     PowerWordStun(SymbolofStunning) SPELL         132            ****      
+8     FleshToStone(AntimagicField)    SPELL         485            ****  

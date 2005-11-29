@@ -1,11 +1,11 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Golem  	                  RESULT       prc_con_clay    prc_con_clay_27        
+0     Golem  	                    RESULT      prc_con_result   prc_con_clay_27        
 1     Caster_Level_11th             CASTERLVL      11            ****        
-2     CraftConstruct                FEAT         2920            ****           
-3     AnimateObjects                SPELL        1790            ****           
-4     Resurretion                   SPELL         153            ****           
-5     Battletide                    SPELL         517            ****   
-6     GoldCost                      EXTRAGOLD   81400            ****
-7     XPCost                        EXTRAXP      6540            ****
+2     CraftConstruct                FEAT         2920            ****       
+3     GoldCost                      EXTRAGOLD   84000            ****
+4     XPCost                        EXTRAXP      6540            ****    
+5     AnimateObjects                SPELL        1790            ****           
+6     Resurretion                   SPELL         153            ****           
+7     Battletide(Commune)           SPELL         517            ****   

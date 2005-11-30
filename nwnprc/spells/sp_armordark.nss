@@ -19,7 +19,7 @@ void main()
 
     int iAC = 3 + nCasterLvl/4;
     if (iAC >8)  iAC = 8;
-    
+
     effect eAC=EffectACIncrease(iAC,AC_DEFLECTION_BONUS);
     effect eUltravision = EffectUltravision();
     effect eSaveG=EffectSavingThrowIncrease(2,SAVING_THROW_ALL,SAVING_THROW_TYPE_GOOD);
@@ -32,7 +32,7 @@ void main()
     object oTarget=PRCGetSpellTargetObject();
 
     //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MAGE_ARMOR));
+    SPRaiseSpellCastAt(oTarget, FALSE);
 
     if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
     {

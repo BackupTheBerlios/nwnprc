@@ -456,11 +456,10 @@ void main()
             {
                 //Crafting recipes
                 object oStore = GetObjectByTag("prc_recipe");
-                if(!GetIsObjectValid(oStore))
-                {
-                    location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
-                    oStore = CreateObject(OBJECT_TYPE_STORE, "prc_recipe", lLimbo);
-                }
+                if(GetIsObjectValid(oStore))
+                    DestroyObject(oStore);
+                location lLimbo = GetLocation(oPC);
+                oStore = CreateObject(OBJECT_TYPE_STORE, "prc_recipe", lLimbo);
                 OpenStore(oPC, oStore);
             }
             else if (nChoice == 2)

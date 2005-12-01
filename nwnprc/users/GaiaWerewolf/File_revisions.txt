@@ -1,15 +1,13 @@
 This file lists the versions/revisions of the files used in the merge hak.
 
-
-a15
------
 CEP Version 1.52
 
-PRC:
+PRC a15
+-----
 baseitems.2da		1.12
 itempropdef.2da		1.9
 itemprops.2da		1.15
 racialtypes.2da		1.41
 vfx_persistent.2da	1.41
-prc_consortium.tlk	1.626
+prc_consortium.tlk	1.626 (at the time of making)
 -----

@@ -1,4 +1,6 @@
-I'm keeping files in here for the CEP/PRC merge hak.
+I'm keeping files in here for the CEP/PRC merge hak. All files at this directory level are PRC 2das
+which I am actually working on. The stock files used for the merge are kept in the CEP2da and
+PRC2da directories respectively.
 
 Note on racialtypes.2da:
 <GaiaWerewolf> CEP and PRC races work on a totally different system, correct?

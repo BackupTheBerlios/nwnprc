@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
 
-            if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD))
+            if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
             {
 
                 if (GetHasSpellEffect(SPELL_IMPROVED_INVISIBILITY, oTarget) == TRUE)

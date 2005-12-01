@@ -66,9 +66,6 @@ int MarshalAuraLimit(object oPC = OBJECT_SELF);
 // Stops people from taking feats they cannot use because of caster levels.
 int CasterFeats(object oPC = OBJECT_SELF);
 
-// Enforces the MoS bonus domains.
-int MasterOfShrouds(object oPC = OBJECT_SELF);
-
 // Stops people from taking the blightbringer domain, since its prestige
 int Blightbringer(object oPC = OBJECT_SELF);
 
@@ -850,30 +847,6 @@ int CasterFeats(object oPC = OBJECT_SELF)
     return TRUE;
 }
 
-int MasterOfShrouds(object oPC = OBJECT_SELF)
-{
-    int MoS = (GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oPC));
-    if (MoS > 0)
-    {
-        int nBon =       GetHasFeat(FEAT_BONUS_DOMAIN_DEATH, oPC) +
-                         GetHasFeat(FEAT_BONUS_DOMAIN_EVIL, oPC) +
-                         GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION, oPC);
-                         // This is to prevent the bug that lets you take one bonus domain and one free feat.
-        int nDom =       GetHasFeat(FEAT_EVIL_DOMAIN_POWER, oPC) +
-                         GetHasFeat(FEAT_DEATH_DOMAIN_POWER, oPC) +
-                         GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC);
-
-            // You must have all 3 domains somehow by the time you've hit this point, since you need to start with at least
-            // one of them and you get given the other two at level 1 of this PrC.
-            if (nBon >= 2)
-            {
-                FloatingTextStringOnCreature("You must select your two bonus domains", oPC, FALSE);
-                return FALSE;
-            }
-        }
-        return TRUE;
-}
-
 int Blightbringer(object oPC = OBJECT_SELF)
 {
     // You should only have the Blightbringer domain as a bonus domain
@@ -1053,7 +1026,6 @@ void main()
          || !MageKiller(oPC)
          || !ElementalSavant(oPC)
          || !GenasaiFocus(oPC)
-         || !MasterOfShrouds(oPC)
          || !CheckClericShadowWeave(oPC)
          || !LolthsMeat(oPC)
          || !LingeringDamage(oPC)

@@ -1470,7 +1470,7 @@ const int FEAT_CRAFT_ROD                 = 2927;
 const int FEAT_CRAFT_STAFF               = 2928;
 const int FEAT_FORGE_RING                = 2929;
 const int FEAT_CRAFT_CONSTRUCT           = 2920;
-const int FEAT_CRAFT_ITEM                = 2899;
+const int FEAT_CRAFT_ITEM                = 2919; //combined with read recepie, was 2899
 
 // Exalted Companion
 const int FEAT_EXALTED_COMPANION         = 4199;

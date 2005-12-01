@@ -489,7 +489,7 @@ void main()
                 OpenStore(oPC, oStore);
             }
 
-            MarkStageNotSetUp(nStage, oPC);
+            //MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_TEFLAMMAR_SHADOWLORD)
         {

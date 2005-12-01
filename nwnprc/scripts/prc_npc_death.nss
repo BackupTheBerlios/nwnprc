@@ -50,20 +50,25 @@ void main()
             {
                 nDamage /= 2;
             }
-            fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
+            //fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
+            //cant use delay commands in an OnDeath event
             if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
             {
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_BURST));
                 eHeal = EffectHeal(nDamage);
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget));
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oTarget));
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oTarget);
+                //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget));
+                //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oTarget));
             }
             else if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
             {
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_BURST));
                 eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
             }
 
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget);

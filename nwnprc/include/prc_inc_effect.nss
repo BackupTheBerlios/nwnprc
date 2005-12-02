@@ -296,7 +296,12 @@ struct PRCeffect PRCGetNextEffect(object oCreature)
 
 effect GetEffectOnObjectFromPRCEffect(struct PRCeffect prceEffect, object oObject)
 {
-    effect eTest = GetFirstEffect(oObject);
+    effect eTest;
+    //quick check, no loop
+    if(!GetHasSpellEffect(prceEffect.nSpellID, oObject)) 
+        return eTest;
+        
+    eTest = GetFirstEffect(oObject);
     while(GetIsEffectValid(eTest))
     {
         if(GetEffectType(eTest) == prceEffect.nEffectType

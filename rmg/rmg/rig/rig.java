@@ -30,11 +30,12 @@ public class rig {
 			//for(prefixID = 0; prefixID < rig2da.getEntryCount(); prefixID++){
 			for(prefixID = 0; prefixID < 5; prefixID++){
 				//loop over the suffixs
+				//dont loop over suffixes, too many products
 				//for(suffixID = 0; suffixID < rig2da.getEntryCount(); suffixID++){
-				for(suffixID = 0; suffixID < 5; suffixID++){
+				//for(suffixID = 0; suffixID < 5; suffixID++){
 						assembleItem();
 						updateProgress();
-				}
+				//}
 			}
 		}
 		System.out.print("\n");
@@ -64,6 +65,8 @@ public class rig {
 		item.tag     = prefixID+"_"+rootID+"_"+suffixID;
 		item.resRef  = prefixID+"_"+rootID+"_"+suffixID;
 		//add itemproperties to array
+		//dont do this, it can be done in NWScript
+		/*
 		for(int i = 1 ; i<=5;i++){
 				int itempropertyID = rig2da.getBiowareEntryAsInt("Property"+i, prefixID);
 				if(itempropertyID != 0){
@@ -76,6 +79,7 @@ public class rig {
 					item.addItemproperty(new itemproperty(itempropertyID));
 				}
 		}
+		*/
 		//print it
 		outputToFile(item);
 	}

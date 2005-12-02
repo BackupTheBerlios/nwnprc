@@ -9,7 +9,8 @@ void ChoiceSelected(int nChoiceNo);
 
 void ChoiceSelected(int nChoiceNo)
 {
-    int nStage  = GetLocalInt(OBJECT_SELF, "Stage");
+    int nStage  = GetStage(OBJECT_SELF);
+    int nOrigStage;
     int nOffset = GetLocalInt(OBJECT_SELF, "ChoiceOffset");
     nChoiceNo += nOffset;
 
@@ -38,42 +39,40 @@ void ChoiceSelected(int nChoiceNo)
             break;
         case STAGE_GENDER:
             SetLocalInt(OBJECT_SELF, "Gender",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             break;
         case STAGE_GENDER_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Gender");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
-            {
+            else if(GetChoice(OBJECT_SELF) == 1)
                 nStage++;
-            }
             break;
 
         case STAGE_RACE:
             SetLocalInt(OBJECT_SELF, "Race",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DeleteLocalInt(OBJECT_SELF, "ChoiceOffset");
             break;
         case STAGE_RACE_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Race");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 SetLocalInt(OBJECT_SELF, "Appearance",
                     StringToInt(Get2DACache("racialtypes", "Appearance",
@@ -120,21 +119,21 @@ void ChoiceSelected(int nChoiceNo)
 
         case STAGE_CLASS:
             SetLocalInt(OBJECT_SELF, "Class",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DeleteLocalInt(OBJECT_SELF, "ChoiceOffset");
             break;
         case STAGE_CLASS_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Class");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 //class bonuses
                 array_create(OBJECT_SELF, "Feats");
@@ -193,17 +192,17 @@ void ChoiceSelected(int nChoiceNo)
             nStage++;
             break;
         case STAGE_ALIGNMENT_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "LawfulChaotic");
                 DeleteLocalInt(OBJECT_SELF, "GoodEvil");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
@@ -211,7 +210,7 @@ void ChoiceSelected(int nChoiceNo)
 
 
         case STAGE_ABILITY:
-            switch(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo))
+            switch(GetChoice(OBJECT_SELF))
             {
                 case ABILITY_STRENGTH:
                     nStr++;
@@ -250,9 +249,9 @@ void ChoiceSelected(int nChoiceNo)
             }
             break;
         case STAGE_ABILITY_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Str");
                 DeleteLocalInt(OBJECT_SELF, "Dex");
                 DeleteLocalInt(OBJECT_SELF, "Con");
@@ -263,9 +262,9 @@ void ChoiceSelected(int nChoiceNo)
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
@@ -273,9 +272,9 @@ void ChoiceSelected(int nChoiceNo)
 
         case STAGE_SKILL:
             array_create(OBJECT_SELF, "Skills");
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -2)
+            if(GetChoice(OBJECT_SELF) == -2)
             {
-                //save all remaining            
+                //save all remaining
                 array_set_int(OBJECT_SELF, "Skills", -1,
                     array_get_int(OBJECT_SELF, "Skills", -1)+GetLocalInt(OBJECT_SELF, "Points"));
                 SetLocalInt(OBJECT_SELF, "Points", 0);
@@ -284,8 +283,8 @@ void ChoiceSelected(int nChoiceNo)
             else
             {
                 //increase the points in that skill
-                array_set_int(OBJECT_SELF, "Skills", array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo),
-                    array_get_int(OBJECT_SELF, "Skills", array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo))+1);
+                array_set_int(OBJECT_SELF, "Skills", GetChoice(OBJECT_SELF),
+                    array_get_int(OBJECT_SELF, "Skills", GetChoice(OBJECT_SELF))+1);
                 //decrease points remaining
                 if(TestStringAgainstPattern("**Cross**", array_get_string(OBJECT_SELF, "ChoiceTokens", nChoiceNo)))
                     nPoints -= 2 ;//cross class skill
@@ -298,7 +297,7 @@ void ChoiceSelected(int nChoiceNo)
                 else //then recreate the tokens
                 {
                     if(nPoints > 1)
-                        SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo), nChoiceNo);
+                        SetupSkillToken(GetChoice(OBJECT_SELF), nChoiceNo);
                     else
                     {
                         for(i=0;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
@@ -312,18 +311,18 @@ void ChoiceSelected(int nChoiceNo)
             }
             break;
         case STAGE_SKILL_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Points");
                 DeleteLocalString(OBJECT_SELF, "Skills_-1");
                 array_delete(OBJECT_SELF, "Skills");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
@@ -331,21 +330,21 @@ void ChoiceSelected(int nChoiceNo)
 
         case STAGE_FEAT:
             SetLocalInt(OBJECT_SELF, "StartingFeat",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             break;
 
         case STAGE_FEAT_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "StartingFeat");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 if(GetLocalInt(OBJECT_SELF, "StartingFeat") ==0)
                     array_set_int(OBJECT_SELF, "Feats",
@@ -375,88 +374,88 @@ void ChoiceSelected(int nChoiceNo)
                     array_delete(OBJECT_SELF, "ChoiceTokens");
                     //slide back 2 stages, so it can be set forward and still be reduced by 1
                     nStage--;
-                    nStage--;          
+                    nStage--;
                 }
                 nStage++;
             }
             break;
 
         case STAGE_FAMILIAR:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
                 nStage++;//skip the check and domain2
             else
                 SetLocalInt(OBJECT_SELF, "Familiar",
-                    array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                    GetChoice(OBJECT_SELF));
             nStage++;
             break;
         case STAGE_FAMILIAR_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Familiar");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
 
         case STAGE_ANIMALCOMP:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
                 nStage++;//skip the check and domain2
             else
                 SetLocalInt(OBJECT_SELF, "AnimalCompanion",
-                    array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                    GetChoice(OBJECT_SELF));
             nStage++;
             break;
         case STAGE_ANIMALCOMP_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "AnimalCompanion");
                 nStage--;
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
 
         case STAGE_DOMAIN1:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
                 nStage+=2;//skip the check and domain2
             else
                 SetLocalInt(OBJECT_SELF, "Domain1",
-                    array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                    GetChoice(OBJECT_SELF));
             nStage++;
             break;
 
         case STAGE_DOMAIN2:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
                 nStage++;//skip the check
             else
                 SetLocalInt(OBJECT_SELF, "Domain2",
-                    array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                    GetChoice(OBJECT_SELF));
             nStage++;
             break;
         case STAGE_DOMAIN_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Domain1");
                 DeleteLocalInt(OBJECT_SELF, "Domain2");
                 nStage--;
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 array_set_int(OBJECT_SELF, "Feats",
                    array_get_size(OBJECT_SELF, "Feats"),
@@ -480,7 +479,7 @@ void ChoiceSelected(int nChoiceNo)
                     //add spell to array of selected ones
                     array_set_int(OBJECT_SELF, "SpellLvl1",
                         array_get_size(OBJECT_SELF, "SpellLvl1"),
-                            array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                            GetChoice(OBJECT_SELF));
                     //remove spell from choices
                     for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
                         array_set_int(OBJECT_SELF, "ChoiceValue",i,  array_get_int(OBJECT_SELF, "ChoiceValue", i+1));
@@ -500,7 +499,7 @@ void ChoiceSelected(int nChoiceNo)
                     //add spell to array of selected ones
                     array_set_int(OBJECT_SELF, "SpellLvl"+IntToString(GetLocalInt(OBJECT_SELF, "CurrentSpellLevel")),
                         array_get_size(OBJECT_SELF, "SpellLvl"+IntToString(GetLocalInt(OBJECT_SELF, "CurrentSpellLevel"))),
-                            array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                            GetChoice(OBJECT_SELF));
                     //remove spell from choices
                     for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
                         array_set_int(OBJECT_SELF, "ChoiceValue",i,  array_get_int(OBJECT_SELF, "ChoiceValue", i+1));
@@ -530,7 +529,7 @@ void ChoiceSelected(int nChoiceNo)
                     //add spell to array of selected ones
                     array_set_int(OBJECT_SELF, "SpellLvl"+IntToString(GetLocalInt(OBJECT_SELF, "CurrentSpellLevel")),
                         array_get_size(OBJECT_SELF, "SpellLvl"+IntToString(GetLocalInt(OBJECT_SELF, "CurrentSpellLevel"))),
-                            array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                            GetChoice(OBJECT_SELF));
                     //remove spell from choices
                     for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
                         array_set_int(OBJECT_SELF, "ChoiceValue",i,  array_get_int(OBJECT_SELF, "ChoiceValue", i+1));
@@ -562,9 +561,9 @@ void ChoiceSelected(int nChoiceNo)
             }
             break;
         case STAGE_SPELLS_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 array_delete(OBJECT_SELF, "SpellLvl0");
                 array_delete(OBJECT_SELF, "SpellLvl1");
                 DeleteLocalInt(OBJECT_SELF, "NumberOfSpells");
@@ -572,56 +571,56 @@ void ChoiceSelected(int nChoiceNo)
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
 
         case STAGE_WIZ_SCHOOL:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
                 nStage++;//skip the check
             else
                 SetLocalInt(OBJECT_SELF, "School",
-                    array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                    GetChoice(OBJECT_SELF));
             nStage++;
             break;
         case STAGE_WIZ_SCHOOL_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "School");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
 
         case STAGE_BONUS_FEAT:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
                 nStage++;//skip the check
             else
-                SetLocalInt(OBJECT_SELF, "BonusFeat", array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                SetLocalInt(OBJECT_SELF, "BonusFeat", GetChoice(OBJECT_SELF));
             nStage++;
             break;
         case STAGE_BONUS_FEAT_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "BonusFeat");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 array_set_int(OBJECT_SELF, "Feats",
                    array_get_size(OBJECT_SELF, "Feats")+1,
@@ -642,50 +641,50 @@ void ChoiceSelected(int nChoiceNo)
             break;
 
         case STAGE_HAIR_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Hair");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
         case STAGE_HEAD_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Head");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
         case STAGE_PORTRAIT_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Portrait");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 2)
+            else if(GetChoice(OBJECT_SELF) == 2)
             {
                 ActionExamine(oClone);
                 DelayCommand(1.0, ActionExamine(oClone));
@@ -693,80 +692,80 @@ void ChoiceSelected(int nChoiceNo)
             }
             break;
         case STAGE_SKIN_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Skin");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
         case STAGE_TAIL_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Tail");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
         case STAGE_WINGS_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Wings");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
         case STAGE_APPEARANCE_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Appearance");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
         case STAGE_SOUNDSET_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Soundset");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 2)
+            else if(GetChoice(OBJECT_SELF) == 2)
             {
                 PlayVoiceChat(0 ,GetLocalObject(OBJECT_SELF, "Clone"));
             }
@@ -774,115 +773,115 @@ void ChoiceSelected(int nChoiceNo)
 
         case STAGE_APPEARANCE:
             SetLocalInt(OBJECT_SELF, "Appearance",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DoCloneLetoscript();
             break;
         case STAGE_HAIR:
             SetLocalInt(OBJECT_SELF, "Hair",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DoCloneLetoscript();
             break;
         case STAGE_HEAD:
             SetLocalInt(OBJECT_SELF, "Head",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DoCloneLetoscript();
             break;
         case STAGE_PORTRAIT:
             SetLocalInt(OBJECT_SELF, "Portrait",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DoCloneLetoscript();
             break;
         case STAGE_SKIN:
             SetLocalInt(OBJECT_SELF, "Skin",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DoCloneLetoscript();
             break;
         case STAGE_SOUNDSET:
             SetLocalInt(OBJECT_SELF, "Soundset",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             DoCloneLetoscript();
             nStage++;
             break;
         case STAGE_TAIL:
             SetLocalInt(OBJECT_SELF, "Tail",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DoCloneLetoscript();
             break;
         case STAGE_WINGS:
             SetLocalInt(OBJECT_SELF, "Wings",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DoCloneLetoscript();
             break;
         case STAGE_TATTOOPART:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 0)
+            if(GetChoice(OBJECT_SELF) == 0)
             {
                 nStage++;
             }
             else
             {
-                SwitchTattoo(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                SwitchTattoo(GetChoice(OBJECT_SELF));
                 DoCloneLetoscript();
             }
             break;
         case STAGE_TATTOOPART_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
         case STAGE_TATTOOCOLOUR1:
             SetLocalInt(OBJECT_SELF, "TattooColour1",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DoCloneLetoscript();
             break;
         case STAGE_TATTOOCOLOUR1_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "TattooColor1");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
             break;
         case STAGE_TATTOOCOLOUR2:
             SetLocalInt(OBJECT_SELF, "TattooColor2",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             DoCloneLetoscript();
             break;
         case STAGE_TATTOOCOLOUR2_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "TattooColour2");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
@@ -890,20 +889,20 @@ void ChoiceSelected(int nChoiceNo)
 
         case STAGE_RACIAL_ABILITY:
             SetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Ability",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             break;
         case STAGE_RACIAL_ABILITY_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Ability");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
@@ -912,8 +911,8 @@ void ChoiceSelected(int nChoiceNo)
         case STAGE_RACIAL_SKILL:
             array_create(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills");
             //increase the points in that skill
-            array_set_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills", array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo),
-                array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills", array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo))+1);
+            array_set_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills", GetChoice(OBJECT_SELF),
+                array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills", GetChoice(OBJECT_SELF))+1);
             //decrease points remaining
             if(TestStringAgainstPattern("**Cross**", array_get_string(OBJECT_SELF, "ChoiceTokens", nChoiceNo)))
                 nPoints -= 2 ;//cross class skill
@@ -926,7 +925,7 @@ void ChoiceSelected(int nChoiceNo)
             else //then recreate the tokens
             {
                 if(nPoints > 1)
-                    SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo), nChoiceNo);
+                    SetupSkillToken(GetChoice(OBJECT_SELF), nChoiceNo);
                 else
                 {
                     for(i=0;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
@@ -938,17 +937,17 @@ void ChoiceSelected(int nChoiceNo)
             }
             break;
         case STAGE_RACIAL_SKILL_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Points");
                 array_delete(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
@@ -956,20 +955,20 @@ void ChoiceSelected(int nChoiceNo)
 
         case STAGE_RACIAL_FEAT:
             SetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Feat",
-                array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo));
+                GetChoice(OBJECT_SELF));
             nStage++;
             break;
         case STAGE_RACIAL_FEAT_CHECK:
-            if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == -1)
+            if(GetChoice(OBJECT_SELF) == -1)
             {
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
                 array_delete(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Feat");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage,FALSE);
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
-            else if(array_get_int(OBJECT_SELF, "ChoiceValue", nChoiceNo) == 1)
+            else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
             }
@@ -1195,5 +1194,6 @@ void ChoiceSelected(int nChoiceNo)
         }
     }
     SetLocalInt(OBJECT_SELF, "Stage", nStage);
+    SetStage(nStage, OBJECT_SELF);
     SetLocalInt(OBJECT_SELF, "Level", nLevel);
 }

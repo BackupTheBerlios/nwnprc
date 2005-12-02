@@ -1,4 +1,5 @@
 #include "inc_utility"
+//#include "prc_inc_racial"
 #include "prc_racial_const"
 #include "prc_ccc_inc_d"
 
@@ -27,12 +28,12 @@ void ClassLoop()
     if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
         return;
     int nReali = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT "+q+"rowid"+q+" FROM "+q+"prc_cached2da_classes"+q+" WHERE ("+q+"PlayerClass"+q+" = 1) LIMIT 25 OFFSET "+IntToString(nReali); 
+    string SQL = "SELECT "+q+"rowid"+q+" FROM "+q+"prc_cached2da_classes"+q+" WHERE ("+q+"PlayerClass"+q+" = 1) LIMIT 25 OFFSET "+IntToString(nReali);
     PRC_SQLExecDirect(SQL);
     int bAtLeastOneResult;
     array_create(OBJECT_SELF, "temp_classes");
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
-    {   
+    {
         bAtLeastOneResult = TRUE;
         int nClass = StringToInt(PRC_SQLGetData(1));
         array_set_int(OBJECT_SELF, "temp_classes", array_get_size(OBJECT_SELF, "temp_classes"), nClass);
@@ -44,16 +45,11 @@ void ClassLoop()
         if(CheckClassRequirements(nClass))
         {
             string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass)));
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                   sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                   nClass);
+            AddChoice(sName, nClass);
         }
     }
     array_delete(OBJECT_SELF, "temp_classes");
-    
+
     if(!bAtLeastOneResult)
     {
         FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
@@ -104,10 +100,10 @@ void SkillLoop()
     i = GetLocalInt(OBJECT_SELF, "i");
     if(i==0
         && GetPRCSwitch(PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER))
-    {        
+    {
         SetupSkillToken(-2, array_get_size(OBJECT_SELF, "ChoiceValue"));
         //SetupSkillToken(-1, array_get_size(OBJECT_SELF, "ChoiceValue"));
-    }        
+    }
     string sFile = Get2DACache("classes", "SkillsTable", nClass);
     if(i < GetPRCSwitch(FILE_END_SKILLS))
     {
@@ -184,11 +180,11 @@ void FeatLoop(int nClassFeatStage = FALSE)
     for(j=0;j<=nLevel;j++)
     {
         nFortSave = StringToInt(Get2DACache(Get2DACache("classes","SavingThrowTable" , nClass), "FortSave", nLevel));
-    }        
-    string sFeatList = Get2DACache("classes", "FeatsTable", nClass);   
+    }
+    string sFeatList = Get2DACache("classes", "FeatsTable", nClass);
     sFeatList = GetStringLowerCase(sFeatList);
-        
-    string q = PRC_SQLGetTick();    
+
+    string q = PRC_SQLGetTick();
     int i = GetLocalInt(OBJECT_SELF, "i");
     string SQL;
     if(nClassFeatStage == TRUE)
@@ -197,7 +193,7 @@ void FeatLoop(int nClassFeatStage = FALSE)
             +" "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat1"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat2"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat3"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat4"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"REQSKILL"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"REQSKILL2"+q+","
             +" "+q+"prc_cached2da_feat"+q+"."+q+"ReqSkillMinRanks"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"ReqSkillMinRanks2"+q+""
             +" FROM "+q+"prc_cached2da_cls_feat"+q+" INNER JOIN "+q+"prc_cached2da_feat"+q+""
-            +" WHERE (FEAT != '****')"  
+            +" WHERE (FEAT != '****')"
             +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"file"+q+" = '"+sFeatList+"')"
             +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"List"+q+" <= 1)"
             +" AND (("+q+"PreReqEpic"+q+" = '****') OR ("+q+"PreReqEpic"+q+" = 0))"
@@ -212,8 +208,8 @@ void FeatLoop(int nClassFeatStage = FALSE)
             +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
             +" AND (("+q+"MaxLevel"+q+" = '****') OR ("+q+"MaxLevel"+q+" > "+IntToString(nLevel)+"))"
             +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
-            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+" != '****')" 
-            +" AND ("+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+" = "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+")" 
+            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+" != '****')"
+            +" AND ("+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+" = "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+")"
             +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
     }
     else
@@ -221,7 +217,7 @@ void FeatLoop(int nClassFeatStage = FALSE)
         SQL = "SELECT "+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "+q+"OrReqFeat0"+q+","
             +" "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "+q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+","
             +" "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+" FROM "+q+"prc_cached2da_feat"+q+""
-            +" WHERE ("+q+"FEAT"+q+" != '****')"  
+            +" WHERE ("+q+"FEAT"+q+" != '****')"
             +" AND (("+q+"PreReqEpic"+q+" = '****') OR ("+q+"PreReqEpic"+q+" = 0))"
             +" AND ("+q+"ALLCLASSESCANUSE"+q+" = 1)"
             +" AND ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+")"
@@ -235,8 +231,8 @@ void FeatLoop(int nClassFeatStage = FALSE)
             +" AND (("+q+"MaxLevel"+q+" = '****') OR ("+q+"MaxLevel"+q+" > "+IntToString(nLevel)+"))"
             +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
             +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
-    }    
-        
+    }
+
     PRC_SQLExecDirect(SQL);
     int bAtLeastOneResult;
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
@@ -473,7 +469,7 @@ void FeatLoop(int nClassFeatStage = FALSE)
             else
                 sName = "";
         }
-               
+
         if(sName != "")
         {   //Test its not already been given
             for(j=1;j<=array_get_size(oPC, "Feats"); j++)
@@ -500,17 +496,12 @@ void FeatLoop(int nClassFeatStage = FALSE)
                     sName = "";
             }
         }
-        PrintString(sName);
-        
+        DoDebug(sName);
+
         if(sName != "")
-        {          
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    nRow);
-        }                
+        {
+            AddChoice(sName, nRow);
+        }
     }
     int n2daLimit;
     if(nClassFeatStage)
@@ -527,12 +518,12 @@ void FeatLoop(int nClassFeatStage = FALSE)
             DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
             FloatingTextStringOnCreature("Done all feats", OBJECT_SELF, FALSE);
             return;
-        }            
-        else 
+        }
+        else
         {
             nClassFeatStage = TRUE;
             FloatingTextStringOnCreature("Done general feats", OBJECT_SELF, FALSE);
-        }            
+        }
     }
 
     i += iMax;
@@ -567,9 +558,9 @@ void SpellLoop()
     string sClassCol;
     int nClass = GetLocalInt(OBJECT_SELF, "Class");
     string SQL;
-    
+
     string q = PRC_SQLGetTick();
-    
+
     //get spellschool
     int nSchool = GetLocalInt(OBJECT_SELF, "School");
     //get opposition school
@@ -586,10 +577,10 @@ void SpellLoop()
             bEnd = FALSE;
             int nRow = StringToInt(PRC_SQLGetData(1));
             array_set_int(OBJECT_SELF, "SpellLvl0",
-                array_get_size(OBJECT_SELF, "SpellLvl0"),nRow);            
+                array_get_size(OBJECT_SELF, "SpellLvl0"),nRow);
         }
     }
-    
+
     int nSpellLevel = GetLocalInt(OBJECT_SELF, "CurrentSpellLevel");
     switch(nClass)
     {
@@ -616,13 +607,8 @@ void SpellLoop()
         if(sName != "")
         {
             sName = "Level "+IntToString(nSpellLevel)+" : "+sName;
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    nRow);
-        }                
+            AddChoice(sName, nRow);
+        }
     }
 
     if(bEnd)
@@ -710,18 +696,18 @@ void BonusFeatLoop()
     for(j=0;j<=nLevel;j++)
     {
         nFortSave = StringToInt(Get2DACache(Get2DACache("classes","SavingThrowTable" , nClass), "FortSave", nLevel));
-    }        
-    string sFeatList = Get2DACache("classes", "FeatsTable", nClass);   
+    }
+    string sFeatList = Get2DACache("classes", "FeatsTable", nClass);
     sFeatList = GetStringLowerCase(sFeatList);
-        
-    string q = PRC_SQLGetTick();    
+
+    string q = PRC_SQLGetTick();
     int i = GetLocalInt(OBJECT_SELF, "i");
     string SQL;
         SQL = "SELECT "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"FEAT"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"PREREQFEAT1"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"PREREQFEAT2"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat0"+q+","
             +" "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat1"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat2"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat3"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat4"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"REQSKILL"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"REQSKILL2"+q+","
             +" "+q+"prc_cached2da_feat"+q+"."+q+"ReqSkillMinRanks"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"ReqSkillMinRanks2"+q+""
             +" FROM "+q+"prc_cached2da_cls_feat"+q+" INNER JOIN "+q+"prc_cached2da_feat"+q+""
-            +" WHERE ("+q+"FEAT"+q+" != '****')"  
+            +" WHERE ("+q+"FEAT"+q+" != '****')"
             +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"file"+q+" = '"+sFeatList+"')"
             +" AND (("+q+"prc_cached2da_cls_feat"+q+"."+q+"List"+q+" = 2) OR ("+q+"prc_cached2da_cls_feat"+q+"."+q+"List"+q+" = 1))"
             +" AND (("+q+"PreReqEpic"+q+" = '****') OR ("+q+"PreReqEpic"+q+" = 0))"
@@ -736,10 +722,10 @@ void BonusFeatLoop()
             +" AND (("+q+"MINCHA"+q+" = '****') OR ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+"))"
             +" AND (("+q+"MaxLevel"+q+" = '****') OR ("+q+"MaxLevel"+q+" > "+IntToString(nLevel)+"))"
             +" AND (("+q+"MinFortSave"+q+" = '****') OR ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+"))"
-            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+" != '****')" 
-            +" AND ("+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+" = "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+")" 
+            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+" != '****')"
+            +" AND ("+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+" = "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+")"
             +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
-        
+
     PRC_SQLExecDirect(SQL);
     int bAtLeastOneResult;
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
@@ -970,7 +956,7 @@ void BonusFeatLoop()
             else
                 sName = "";
         }
-               
+
         if(sName != "")
         {   //Test its not already been given
             for(j=1;j<=array_get_size(oPC, "Feats"); j++)
@@ -998,16 +984,11 @@ void BonusFeatLoop()
             }
         }
         //PrintString(sName);
-        
+
         if(sName != "")
-        {          
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    nRow);
-        }                
+        {
+            AddChoice(sName, nRow);
+        }
     }
     int n2daLimit;
     n2daLimit = GetPRCSwitch(FILE_END_CLASS_FEAT);
@@ -1018,7 +999,7 @@ void BonusFeatLoop()
         DeleteLocalInt(OBJECT_SELF, "Percentage");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
-        return;         
+        return;
     }
 
     i += iMax;
@@ -1041,17 +1022,17 @@ void RaceLoop()
 
     if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
         return;
-    string q = PRC_SQLGetTick();    
+    string q = PRC_SQLGetTick();
     int nReali = GetLocalInt(OBJECT_SELF, "i");
-    string SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_racialtypes"+q+" WHERE ("+q+"PlayerRace"+q+" = 1) LIMIT 25 OFFSET "+IntToString(nReali); 
+    string SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_racialtypes"+q+" WHERE ("+q+"PlayerRace"+q+" = 1) LIMIT 25 OFFSET "+IntToString(nReali);
     PRC_SQLExecDirect(SQL);
     int bAtLeastOneResult;
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
-    {   
+    {
         bAtLeastOneResult = TRUE;
         int nRace = StringToInt(PRC_SQLGetData(1));
         int bIsTakeable = TRUE;
-        
+
         if(nRace == RACIAL_TYPE_DROW_FEMALE
             && GetLocalInt(OBJECT_SELF, "Gender") == GENDER_MALE
             && GetPRCSwitch(PRC_CONVOCC_DROW_ENFORCE_GENDER))
@@ -1060,20 +1041,14 @@ void RaceLoop()
             && GetLocalInt(OBJECT_SELF, "Gender") == GENDER_FEMALE
             && GetPRCSwitch(PRC_CONVOCC_DROW_ENFORCE_GENDER))
             bIsTakeable = FALSE;
-            
+
         if(bIsTakeable)
         {
             string sName = GetStringByStrRef(StringToInt(PRC_SQLGetData(2)));
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                   sName);
-PrintString("adding "+sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                   nRace);
+            AddChoice(sName, nRace);
         }
     }
-    
+
     if(!bAtLeastOneResult)
     {
         FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
@@ -1114,12 +1089,7 @@ void AppearanceLoop()
         int nStrRef = StringToInt(PRC_SQLGetData(2));
         string sName = GetStringByStrRef(nStrRef);
         int nRow = StringToInt(PRC_SQLGetData(1));
-        array_set_string(OBJECT_SELF, "ChoiceTokens",
-            array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                sName);
-        array_set_int(OBJECT_SELF, "ChoiceValue",
-            array_get_size(OBJECT_SELF, "ChoiceValue"),
-                nRow);
+        AddChoice(sName, nRow);
     }
 
     if(i > GetPRCSwitch(FILE_END_APPEARANCE))
@@ -1164,13 +1134,8 @@ void SoundsetLoop()
             sName = "";
         if(sName != "")
         {
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    nRow);
-        }                    
+            AddChoice(sName, nRow);
+        }
     }
 
     if(i > GetPRCSwitch(FILE_END_SOUNDSET))
@@ -1212,16 +1177,8 @@ void PortraitLoop()
             sName = "";
         if(sName != "")
         {
-            //cant do nested SQL lookups
-            //sName += " "+GetStringByStrRef(StringToInt(Get2DACache("gender", "NAME", nPortGender)));
-            //sName += " "+GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nPortRace)));
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    nRow);
-        }                    
+            AddChoice(sName, nRow);
+        }
     }
 
     if(i > GetPRCSwitch(FILE_END_PORTRAITS))
@@ -1262,12 +1219,7 @@ void WingLoop()
         string sName = Get2DACache("wingmodel", "Label", i);
         if(sName != "")
         {
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    i);
+            AddChoice(sName, i);
         }
         i++;
         SetLocalInt(OBJECT_SELF, "i", i);
@@ -1298,12 +1250,7 @@ void TailLoop()
         string sName = Get2DACache("tailmodel", "Label", i);
         if(sName != "")
         {
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    sName);
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    i);
+            AddChoice(sName, i);
         }
         i++;
         SetLocalInt(OBJECT_SELF, "i", i);

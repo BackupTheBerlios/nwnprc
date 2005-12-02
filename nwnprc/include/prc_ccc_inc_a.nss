@@ -11,7 +11,7 @@ void SetupStage();
 void SetupStage()
 {
     //setup variables
-    int nStage  = GetLocalInt(OBJECT_SELF, "Stage");
+    int nStage  = GetStage(OBJECT_SELF);
     int nRace = GetLocalInt(OBJECT_SELF, "Race");
     int nClass = GetLocalInt(OBJECT_SELF, "Class");
     int nGender = GetLocalInt(OBJECT_SELF, "Gender");
@@ -31,40 +31,30 @@ void SetupStage()
     switch(nStage)
     {
         case STAGE_INTRODUCTION:
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                        "continue");
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                        0);
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            AddChoice("continue", 0);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_GENDER:
             sName = Get2DACache("gender", "NAME", i);
             while(i < GetPRCSwitch(FILE_END_GENDER))
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                        GetStringByStrRef(StringToInt(sName)));
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                        i);
+                AddChoice(GetStringByStrRef(StringToInt(sName)), i);
                 i++;
                 sName = Get2DACache("gender", "NAME", i);
             }
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_RACE:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DelayCommand(0.01, RaceLoop());
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_CLASS:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DelayCommand(0.01, ClassLoop());
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_ALIGNMENT:
@@ -75,8 +65,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(112));
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, 0);
+                AddChoice(GetStringByStrRef(112), 0);
                 i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_GOOD,
@@ -84,8 +73,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(115));
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, 1);
+                AddChoice(GetStringByStrRef(115), 1);
                 i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_GOOD,
@@ -93,8 +81,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(118));
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, 2);
+                AddChoice(GetStringByStrRef(118), 2);
                 i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_NEUTRAL,
@@ -102,8 +89,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(113));
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, 3);
+                AddChoice(GetStringByStrRef(113), 3);
                 i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_NEUTRAL,
@@ -111,8 +97,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(116));
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, 4);
+                AddChoice(GetStringByStrRef(116), 4);
                 i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_NEUTRAL,
@@ -120,8 +105,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(119));
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, 5);
+                AddChoice(GetStringByStrRef(119), 5);
                 i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_EVIL,
@@ -129,8 +113,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(114));
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, 6);
+                AddChoice(GetStringByStrRef(114), 6);
                 i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_EVIL,
@@ -138,8 +121,7 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(117));
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, 7);
+                AddChoice(GetStringByStrRef(117), 7);
                 i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_EVIL,
@@ -147,12 +129,11 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i, GetStringByStrRef(120));
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, 8);
+                AddChoice(GetStringByStrRef(120), 8);
                 i++;
             }
             DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_ABILITY:
@@ -235,32 +216,29 @@ void SetupStage()
                 array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_CHARISMA);
                 i++;
             }
+            //Dont mark it as setup, needs to be recreated
+            //MarkStageSetUp(nStage);
             break;
 
         case STAGE_SKILL:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DelayCommand(0.01, SkillLoop());
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
     // this has a wait while lookup
         case STAGE_FEAT:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DelayCommand(0.01, FeatLoop());
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_FAMILIAR:
             if(nClass != CLASS_TYPE_WIZARD
                 && nClass != CLASS_TYPE_SORCERER)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                        "You cannot select a familiar.");
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                        -1);
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+                AddChoice("You cannot select a familiar.", -1);
+                MarkStageSetUp(nStage);
                 break;
             }
             sName = Get2DACache("hen_familiar", "STRREF", i);
@@ -268,29 +246,19 @@ void SetupStage()
             {
                 if(sName != "")
                 {
-                    array_set_string(OBJECT_SELF, "ChoiceTokens",
-                        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                            GetStringByStrRef(StringToInt(sName)));
-                    array_set_int(OBJECT_SELF, "ChoiceValue",
-                        array_get_size(OBJECT_SELF, "ChoiceValue"),
-                            i);
+                    AddChoice(GetStringByStrRef(StringToInt(sName)), i);
                 }
                 i++;
                 sName = Get2DACache("hen_familiar", "STRREF", i);
             }
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_ANIMALCOMP:
             if(nClass != CLASS_TYPE_DRUID)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                        "You cannot select an animal companion.");
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                        -1);
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+                AddChoice("You cannot select an animal companion.", -1);
+                MarkStageSetUp(nStage);
                 break;
             }
             sName = Get2DACache("hen_companion", "STRREF", i);
@@ -298,29 +266,19 @@ void SetupStage()
             {
                 if(sName != "")
                 {
-                    array_set_string(OBJECT_SELF, "ChoiceTokens",
-                        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                            GetStringByStrRef(StringToInt(sName)));
-                    array_set_int(OBJECT_SELF, "ChoiceValue",
-                        array_get_size(OBJECT_SELF, "ChoiceValue"),
-                            i);
+                    AddChoice(GetStringByStrRef(StringToInt(sName)), i);
                 }
                 i++;
                 sName = Get2DACache("hen_companion", "STRREF", i);
             }
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_DOMAIN1:
             if(nClass != CLASS_TYPE_CLERIC)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                        "You cannot select domains.");
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                        -1);
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+                AddChoice("You cannot select domains.", -1);
+                MarkStageSetUp(nStage);
                 break;
             }
             sName = Get2DACache("domains", "Name", i);
@@ -345,30 +303,20 @@ void SetupStage()
                     }
                     else
                     {
-                    array_set_string(OBJECT_SELF, "ChoiceTokens",
-                        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                            GetStringByStrRef(StringToInt(sName)));
-                    array_set_int(OBJECT_SELF, "ChoiceValue",
-                        array_get_size(OBJECT_SELF, "ChoiceValue"),
-                            i);
+                        AddChoice(GetStringByStrRef(StringToInt(sName)), i);
                     }
                 }
                 i++;
                 sName = Get2DACache("domains", "Name", i);
             }
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_DOMAIN2:
             if(nClass != CLASS_TYPE_CLERIC)
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                        "You cannot select domains.");
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                        -1);
-                array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+                AddChoice("You cannot select domains.", -1);
+                MarkStageSetUp(nStage);
                 break;
             }
             sName = Get2DACache("domains", "Name", i);
@@ -377,17 +325,12 @@ void SetupStage()
                 if(sName != "" &&
                     GetLocalInt(OBJECT_SELF, "Domain1") != i)
                 {
-                    array_set_string(OBJECT_SELF, "ChoiceTokens",
-                        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                            GetStringByStrRef(StringToInt(sName)));
-                    array_set_int(OBJECT_SELF, "ChoiceValue",
-                        array_get_size(OBJECT_SELF, "ChoiceValue"),
-                            i);
+                    AddChoice(GetStringByStrRef(StringToInt(sName)), i);
                 }
                 i++;
                 sName = Get2DACache("domains", "Name", i);
             }
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_SPELLS:
@@ -405,7 +348,7 @@ void SetupStage()
                         //now start the loop to fill in the choices
                         SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
                         DelayCommand(0.01, SpellLoop());
-                        array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+                        MarkStageSetUp(nStage);
                     }
                     break;
                 case CLASS_TYPE_SORCERER:
@@ -422,7 +365,7 @@ void SetupStage()
                         //now start the loop to fill in the choices
                         SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
                         DelayCommand(0.01, SpellLoop());
-                        array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+                        MarkStageSetUp(nStage);
                     }
                     break;
                 case CLASS_TYPE_BARD:
@@ -438,19 +381,14 @@ void SetupStage()
                         //now start the loop to fill in the choices
                         SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
                         DelayCommand(0.01, SpellLoop());
-                        array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+                        MarkStageSetUp(nStage);
                     }
                     break;
                 default:
                     //if the character is not a wizard/bard/sorcerer
                     //then go to next stage
-                    array_set_string(OBJECT_SELF, "ChoiceTokens",
-                        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                            "You cannot select spells to learn.");
-                    array_set_int(OBJECT_SELF, "ChoiceValue",
-                        array_get_size(OBJECT_SELF, "ChoiceValue"),
-                            -1);
-                    array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+                    AddChoice("You cannot select spells to learn.", -1);
+                    MarkStageSetUp(nStage);
                 break;
             }
             break;
@@ -458,25 +396,15 @@ void SetupStage()
         case STAGE_WIZ_SCHOOL:
             if(nClass !=CLASS_TYPE_WIZARD)
             {
-                    //if the character is not a wizard
-                    //then go to next stage
-                    array_set_string(OBJECT_SELF, "ChoiceTokens",
-                        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                            "You cannot select a spell school.");
-                    array_set_int(OBJECT_SELF, "ChoiceValue",
-                        array_get_size(OBJECT_SELF, "ChoiceValue"),
-                            -1);
+                //if the character is not a wizard
+                //then go to next stage
+                AddChoice("You cannot select a spell school.", -1);
             }
             else
             {
                 if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
                 {
-                        array_set_string(OBJECT_SELF, "ChoiceTokens",
-                            array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                                GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", 9))));
-                        array_set_int(OBJECT_SELF, "ChoiceValue",
-                            array_get_size(OBJECT_SELF, "ChoiceValue"),
-                                9);                
+                    AddChoice(GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", 9))), 9);
                 }
                 else
                 {
@@ -484,38 +412,27 @@ void SetupStage()
                     {
                         if(StringToInt(Get2DACache("spellschools", "StringRef", i)) != 0)
                         {
-                        array_set_string(OBJECT_SELF, "ChoiceTokens",
-                            array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                                GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", i))));
-                        array_set_int(OBJECT_SELF, "ChoiceValue",
-                            array_get_size(OBJECT_SELF, "ChoiceValue"),
-                                i);
-
+                    AddChoice(GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", i))), i);
                         }
                     }
                 }
             }
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_BONUS_FEAT:
             if(StringToInt(Get2DACache(Get2DACache("Classes", "BonusFeatsTable", nClass), "Bonus", 0))<=0)
             {
-                    //if the character canot take any bonus feats
-                    //then go to next stage
-                    array_set_string(OBJECT_SELF, "ChoiceTokens",
-                        array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                            "You cannot select a bonus feat.");
-                    array_set_int(OBJECT_SELF, "ChoiceValue",
-                        array_get_size(OBJECT_SELF, "ChoiceValue"),
-                            -1);
+                //if the character canot take any bonus feats
+                //then go to next stage
+                AddChoice("You cannot select a bonus feat.", -1);
             }
             else
             {
                 SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
                 DelayCommand(0.01, BonusFeatLoop());
             }
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case STAGE_GENDER_CHECK:
@@ -543,19 +460,9 @@ void SetupStage()
         case STAGE_RACIAL_ABILITY_CHECK:
         case STAGE_RACIAL_SKILL_CHECK:
         case STAGE_RACIAL_FEAT_CHECK:
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "No");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    -1);
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "Yes");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    1);
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            AddChoice("No.", -1);
+            AddChoice("Yes.", 1);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_APPEARANCE:
             if(GetPRCSwitch(PRC_CONVOCC_USE_RACIAL_APPEARANCES))
@@ -565,25 +472,20 @@ void SetupStage()
                 AppearanceLoop();
                 SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             }
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_HAIR:
             SetupHair();
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_HEAD:
             SetupHead();
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_PORTRAIT:
             if(GetPRCSwitch(PRC_CONVOCC_ALLOW_TO_KEEP_PORTRAIT))
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                        "Keep exisiting portrait.");
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                        -1);
+                AddChoice("Keep exisiting portrait.", -1);
             }
             if(GetPRCSwitch(PRC_CONVOCC_USE_RACIAL_PORTRAIT))
             {
@@ -594,42 +496,22 @@ void SetupStage()
                 PortraitLoop();
                 SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             }
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_PORTRAIT_CHECK:
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "View this portrait.");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    2);
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "No.");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    -1);
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "Yes.");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    1);
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            AddChoice("View this portrait.", 2);
+            AddChoice("No.", -1);
+            AddChoice("Yes", 1);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_SKIN:
-             SetupSkin();
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            SetupSkin();
+            MarkStageSetUp(nStage);
             break;
         case STAGE_SOUNDSET:
             if(GetPRCSwitch(PRC_CONVOCC_ALLOW_TO_KEEP_VOICESET))
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens",
-                    array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                        "Keep exisiting soundset.");
-                array_set_int(OBJECT_SELF, "ChoiceValue",
-                    array_get_size(OBJECT_SELF, "ChoiceValue"),
-                        -1);
+                AddChoice("keep exisitng soundset.", -1);
             }
             if(GetPRCSwitch(PRC_CONVOCC_USE_RACIAL_VOICESET))
                 SetupRacialSoundset();
@@ -638,59 +520,32 @@ void SetupStage()
                 SoundsetLoop();
                 SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             }
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_SOUNDSET_CHECK:
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "Listen to this soundset.");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    2);
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "No.");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    -1);
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "Yes.");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    1);
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            AddChoice("Listen to this soundset.", 2);
+            AddChoice("No.", -1);
+            AddChoice("Yes", 1);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_TAIL:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
-            /*array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "none");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    0);*/
             TailLoop();
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_WINGS:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
-            /*array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "none");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    0);*/
             WingLoop();
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_TATTOOCOLOUR1:
         case STAGE_TATTOOCOLOUR2:
             SetupTattooColours();
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_TATTOOPART:
             SetupTattooParts();
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
 
@@ -731,27 +586,24 @@ void SetupStage()
             array_set_int(OBJECT_SELF, "ChoiceValue",
                 array_get_size(OBJECT_SELF, "ChoiceValue"),
                     ABILITY_CHARISMA);
+            //Dont set it up, needs to be recreated
+            //MarkStageSetUp(nStage);
             break;
         case STAGE_RACIAL_SKILL:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DelayCommand(0.01, SkillLoop());
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
         case STAGE_RACIAL_FEAT:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DeleteLocalInt(OBJECT_SELF, "i");
             DelayCommand(0.01, FeatLoop());
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
+            MarkStageSetUp(nStage);
             break;
 
         case FINAL_STAGE:
-            array_set_int(OBJECT_SELF, "StagesSetup", nStage, TRUE);
-            array_set_string(OBJECT_SELF, "ChoiceTokens",
-                array_get_size(OBJECT_SELF, "ChoiceTokens"),
-                    "Make character.");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
-                    1);
+            MarkStageSetUp(nStage);
+            AddChoice("Make character.", 1);
             break;
         default:
             break;

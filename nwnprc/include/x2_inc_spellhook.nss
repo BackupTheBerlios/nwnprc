@@ -276,6 +276,8 @@ void CombatMedicHealingKicker()
 void Battlecast()
 {
     object oPC = OBJECT_SELF;
+    // If battlecast is turned off, exit
+    if(!GetLocalInt(oPC, "HavocMageBattlecast")) return;
     object oTarget = PRCGetSpellTargetObject();
 
     // Get the item used to cast the spell

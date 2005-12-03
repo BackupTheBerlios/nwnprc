@@ -63,10 +63,14 @@ const int METAPSIONIC_MAX           = 0x80;
 //////////////////////////////////////////////////
 
 /**
+ * Determines the metapsionics used in this manifestation of a power
+ * and the cost added by their use.
  *
- * @param manif
- * @param nMetaPsiFlags
- * @return
+ * @param manif         The manifestation data relating to this particular manifesation
+ * @param nMetaPsiFlags An integer containing a set of bitflags that determine
+ *                      which metapsionic powers may be used with the power being manifested
+ *
+ * @return              The manifestation data, modified to account for the metapsionics
  */
 struct manifesation EvaluateMetapsionics(struct manifestation manif, int nMetaPsiFlags);
 
@@ -79,7 +83,7 @@ struct manifesation EvaluateMetapsionics(struct manifestation manif, int nMetaPs
  *
  * @param manif The manifestation data relating to this particular manifesation
  * @return      The manifestation data, modified to turn off those metapsionics
- *              the manifester could not pay focus for.
+ *              the manifester could not pay focus for
  */
 struct manifestation PayMetapsionicsFocuses(struct manifestation manif);
 
@@ -374,22 +378,13 @@ int MetaPsionicsDamage(struct manifestation manif, int nDieSize, int nNumberOfDi
     // Apply metapsionics
     // Both empower & maximize
     if(manif.bEmpower && manif.bMaximize)
-    {
         nBaseDamage = nBaseDamage / 2 + nDiceSize * nNumberOfDice;
-        FloatingTextStrRefOnCreature(, manif.oManifester, FALSE); // "Empowered and Maximized Power"
-    }
     // Just empower
     else if(manif.bEmpower)
-    {
         nBaseDamage += nBaseDamage / 2;
-        FloatingTextStrRefOnCreature(, manif.oManifester, FALSE); // "Empowered Power"
-    }
     // Just maximize
     else if(manif.bMaximize)
-    {
         nBaseDamage = nDiceSize * nNumberOfDice;
-        FloatingTextStrRefOnCreature(, manif.oManifester, FALSE); // "Maximized Power"
-    }
 
 
     return nBaseDamage + nBonusDamage;

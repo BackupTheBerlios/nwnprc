@@ -21,6 +21,9 @@
 const string PRC_AUGMENT_PROFILE         = "PRC_Augment_Profile_";
 /// Index of the currently used profile.
 const string PRC_CURRENT_AUGMENT_PROFILE = "PRC_Current_Augment_Profile_Index";
+/// Name of local variable where override is stored
+const string PRC_AUGMENT_OVERRIDE        = "PRC_Augment_Override";
+
 /// The lowest valid value of PRC_CURRENT_AUGMENT_PROFILE
 const int PRC_AUGMENT_PROFILE_INDEX_MIN  = 1;
 /// The highest valid value of PRC_CURRENT_AUGMENT_PROFILE
@@ -210,6 +213,14 @@ struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = -1,
 struct user_augment_profile GetUserAugmentationProfile(object oUser, int nIndex, int bQuickSelection = FALSE);
 
 /**
+ * Gets the user's current augmentation profile.
+ *
+ * @param oUser A creature that has power augmentation profiles set up.
+ * @return      The retrieved profile, compiled into a structure
+ */
+struct user_augment_profile GetCurrentUserAugmentationProfile(object oUser);
+
+/**
  * Stores a user-specified augmentation profile.
  *
  * @param oUser           The user for whose use to store the profile for.
@@ -244,6 +255,8 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
 /**
  * Overrides the given creature's augmentation settings during it's next
  * manifestation with the given settings.
+ *
+ * NOTE: These values are assumed to be augmentation levels.
  *
  * @param oCreature Creature whose augmentation to override
  * @param uap       The profile to use as override
@@ -330,7 +343,6 @@ struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = -1,
     return pap;
 }
 
-
 struct user_augment_profile GetUserAugmentationProfile(object oUser, int nIndex, int bQuickSelection = FALSE)
 {
     int nProfile = GetPersistantLocalInt(oUser, (bQuickSelection ? PRC_AUGMENT_QUICKSELECTION : PRC_AUGMENT_PROFILE) + IntToString(nIndex));
@@ -358,6 +370,36 @@ struct user_augment_profile GetUserAugmentationProfile(object oUser, int nIndex,
     }
 
     return uap;
+}
+
+/**
+ * Gets the user's current augmentation profile.
+ *
+ * @param oUser A creature that has power augmentation profiles set up.
+ * @return      The retrieved profile, compiled into a structure
+ */
+struct user_augment_profile GetCurrentUserAugmentationProfile(object oUser)
+{
+    struct user_augment_profile uap_ret;
+
+    // Is augmentation override in effect?
+    if(GetLocalInt(oUser, PRC_AUGMENT_OVERRIDE))
+    {
+        uap_ret = _DecodeProfile(GetLocalInt(oUser, PRC_AUGMENT_OVERRIDE));
+        uap_ret.bValueIsPP = FALSE; // Override is always considered to be augmentation levels
+    }
+    // It wasn't, so get normally
+    else
+    {
+        int nIndex = GetLocalInt(manif.oManifester, PRC_CURRENT_AUGMENT_PROFILE);
+        int bQuick = nIndex < 0 ? TRUE : FALSE;
+
+        if(bQuick) nIndex = -nIndex;
+
+        uap_ret = GetUserAugmentationProfile(manif.oManifester, nIndex, bQuick);
+    }
+
+    return uap_ret;
 }
 
 void StoreUserAugmentationProfile(object oUser, int nIndex, struct user_augment_profile uap, int bQuickSelection = FALSE)
@@ -393,134 +435,219 @@ string UserAugmentationProfileToString(struct user_augmentation_profile uap)
 
 struct manifestation EvaluateAugmentation(struct manifestation manif, struct power_augment_profile pap)
 {
-    // If the user does not have an augmentation profile defined
-    if(!GetLocalInt(manif.oManifester, PRC_CURRENT_AUGMENT_PROFILE))
+    // Get the user's augmentation profile - will be all zeroes if no profile is active
+    struct user_augment_profile uap = GetUserAugmentationProfile(manif.oManifester, GetLocalInt(manif.oManifester, PRC_CURRENT_AUGMENT_PROFILE));
+    int nSurge            = GetWildSurge(manif.oManifester);
+    int nAugPPCost        = 0;
+
+    // Initialise the augmentation data in the manifestation structure to zero
+    /* Probably unnecessary due to auto-init
+    manif.nTimesAugOptUsed_1   = 0;
+    manif.nTimesAugOptUsed_2   = 0;
+    manif.nTimesAugOptUsed_3   = 0;
+    manif.nTimesAugOptUsed_4   = 0;
+    manif.nTimesAugOptUsed_5   = 0;
+    manif.nTimesGenericAugUsed = 0;
+    */
+
+    /* Bloody duplication follows. Real arrays would be nice */
+    // Make sure the option is available for use and the user wants to do something with it
+    if(pap.nMaxAugs_1 && uap.nOption_1)
     {
-        // If the user does have wild surge active, but no augment profile defined, assume all PP going to option 1
-        if(GetWildSurge(manif.oManifester))
-        {
-            int nSurge = GetWildSurge();
-            int nTimesAugd = nSurge / pap.nAugCost_1;
-            if(pap.nMaxAugs_1 != -1 && nTimesAugd > pap.nMaxAugs_1)
-                nTimesAugd = pap.nMaxAugments;
-            manif.nTimesAugOptUsed_1 = nTimesAugd;
-            if(pap.nGenericAugCost != -1)
-                manif.nTimesGenericAugUsed = (nTimesAugd * pap.nAugCost_1) / pap.nGenericAugCost;
-        }
+        // Determine how many times the augmentation option has been used
+        manif.nTimesAugOptUsed_1 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
+                                    uap.nOption_1 / pap.nAugCost_1 : // as static PP costs
+                                    uap.nOption_1;                   // or as number of times to use
+        // Make sure the number of times the option is used does not exceed the maximum
+        if(pap.nMaxAugs_1 != -1 && manif.nTimesAugOptUsed_1 > pap.nMaxAugs_1)
+            manif.nTimesAugOptUsed_1 = pap.nMaxAugs_1;
+        // Calculate the amount of PP the augmentation will cost
+        nAugPPCost += manif.nTimesAugOptUsed_1 * pap.nAugCost_1;
     }
-    else
+    // Make sure the option is available for use and the user wants to do something with it
+    if(pap.nMaxAugs_2 && uap.nOption_2)
     {
-        // Get the user's augmentation profile
-        struct user_augment_profile uap = GetUserAugmentationProfile(manif.oManifester, GetLocalInt(manif.oManifester, PRC_CURRENT_AUGMENT_PROFILE));
-        int nSurge = GetWildSurge(manif.oManifester);
-        int nAugPPCost = 0;
+        // Determine how many times the augmentation option has been used
+        manif.nTimesAugOptUsed_2 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
+                                    uap.nOption_2 / pap.nAugCost_2 : // as static PP costs
+                                    uap.nOption_2;                   // or as number of times to use
+        // Make sure the number of times the option is used does not exceed the maximum
+        if(pap.nMaxAugs_2 != -1 && manif.nTimesAugOptUsed_2 > pap.nMaxAugs_2)
+            manif.nTimesAugOptUsed_2 = pap.nMaxAugs_2;
+        // Calculate the amount of PP the augmentation will cost
+        nAugPPCost += manif.nTimesAugOptUsed_2 * pap.nAugCost_2;
+    }
+    // Make sure the option is available for use and the user wants to do something with it
+    if(pap.nMaxAugs_3 && uap.nOption_3)
+    {
+        // Determine how many times the augmentation option has been used
+        manif.nTimesAugOptUsed_3 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
+                                    uap.nOption_3 / pap.nAugCost_3 : // as static PP costs
+                                    uap.nOption_3;                   // or as number of times to use
+        // Make sure the number of times the option is used does not exceed the maximum
+        if(pap.nMaxAugs_3 != -1 && manif.nTimesAugOptUsed_3 > pap.nMaxAugs_3)
+            manif.nTimesAugOptUsed_3 = pap.nMaxAugs_3;
+        // Calculate the amount of PP the augmentation will cost
+        nAugPPCost += manif.nTimesAugOptUsed_3 * pap.nAugCost_3;
+    }
+    // Make sure the option is available for use and the user wants to do something with it
+    if(pap.nMaxAugs_4 && uap.nOption_4)
+    {
+        // Determine how many times the augmentation option has been used
+        manif.nTimesAugOptUsed_4 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
+                                    uap.nOption_4 / pap.nAugCost_4 : // as static PP costs
+                                    uap.nOption_4;                   // or as number of times to use
+        // Make sure the number of times the option is used does not exceed the maximum
+        if(pap.nMaxAugs_4 != -1 && manif.nTimesAugOptUsed_4 > pap.nMaxAugs_4)
+            manif.nTimesAugOptUsed_4 = pap.nMaxAugs_4;
+        // Calculate the amount of PP the augmentation will cost
+        nAugPPCost += manif.nTimesAugOptUsed_4 * pap.nAugCost_4;
+    }
+    // Make sure the option is available for use and the user wants to do something with it
+    if(pap.nMaxAugs_5 && uap.nOption_5)
+    {
+        // Determine how many times the augmentation option has been used
+        manif.nTimesAugOptUsed_5 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
+                                    uap.nOption_5 / pap.nAugCost_5 : // as static PP costs
+                                    uap.nOption_5;                   // or as number of times to use
+        // Make sure the number of times the option is used does not exceed the maximum
+        if(pap.nMaxAugs_5 != -1 && manif.nTimesAugOptUsed_5 > pap.nMaxAugs_5)
+            manif.nTimesAugOptUsed_5 = pap.nMaxAugs_5;
+        // Calculate the amount of PP the augmentation will cost
+        nAugPPCost += manif.nTimesAugOptUsed_5 * pap.nAugCost_5;
+    }
 
-        /* Bloody duplication follows. Real arrays would be nice */
-        // Make sure the option is available for use
-        if(pap.nMaxAugs_1)
+    // Calculate number of times a generic augmentation happens with this number of PP
+    if(pap.nGenericAugCost != -1)
+        manif.nTimesGenericAugUsed = nAugPPCost / pap.nGenericAugCost;
+
+
+    /*/ Various effects modifying the augmentation go below /*/
+
+    // Account for wild surge
+    nAugPPCost -= nSurge;
+
+    /*/ Various effects modifying the augmentation go above /*/
+
+    // If cost modifying effects provide more PP than the augmentation has used, auto-distribute the left-overs
+    if(nAugPPCost < 0)
+    {
+        int nToAutodistribute = -nAugPPCost;
+
+        // Start the distribution
+        int nTimesCanAug;
+        int nTimesAugd;
+        if(nToAutodistribute > 0 && pap.nMaxAugs_1)
         {
-            // Determine how many times the augmentation option has been used
-            manif.nTimesAugOptUsed_1 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
-                                        uap.nOption_1 / pap.nAugCost_1 : // as static PP costs
-                                        uap.nOption_1;                   // or as number of times to use
-            // Make sure the number of times the option is used does not exceed the maximum
-            if(pap.nMaxAugs_1 != -1 && manif.nTimesAugOptUsed_1 > pap.nMaxAugs_1)
-                manif.nTimesAugOptUsed_1 = pap.nMaxAugs_1;
-            // Calculate the amount of PP the augmentation will cost
-            nAugPPCost += manif.nTimesAugOptUsed_1 * pap.nAugCost_1;
+            // Determine how many times this option could be used
+            if(pap.nMaxAugs_1 == -1)
+                nTimesCanAug = -1;
+            else
+                nTimesCanAug = pap.nMaxAugs_1 - manif.nTimesAugOptUsed_1;
+
+            if(nTimesCanAug)
+            {
+                // Determine how many times it can be used and how much it costs
+                nTimesAugd = nTimesCanAug == -1 ?
+                              nToAutodistribute / pap.nAugCost_1 :
+                              min(nToAutodistribute / pap.nAugCost_1, nTimesCanAug);
+                nToAutodistribute -= nTimesAugd * pap.nAugCost_1;
+
+                manif.nTimesAugOptUsed_1 += nTimesAugd;
+            }
         }
-        // Make sure the option is available for use
-        if(pap.nMaxAugs_2)
+        if(nToAutodistribute > 0 && pap.nMaxAugs_2)
         {
-            // Determine how many times the augmentation option has been used
-            manif.nTimesAugOptUsed_2 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
-                                        uap.nOption_2 / pap.nAugCost_2 : // as static PP costs
-                                        uap.nOption_2;                   // or as number of times to use
-            // Make sure the number of times the option is used does not exceed the maximum
-            if(pap.nMaxAugs_2 != -1 && manif.nTimesAugOptUsed_2 > pap.nMaxAugs_2)
-                manif.nTimesAugOptUsed_2 = pap.nMaxAugs_2;
-            // Calculate the amount of PP the augmentation will cost
-            nAugPPCost += manif.nTimesAugOptUsed_2 * pap.nAugCost_2;
+            // Determine how many times this option can be used
+            if(pap.nMaxAugs_2 == -1)
+                nTimesCanAug = -1;
+            else
+                nTimesCanAug = pap.nMaxAugs_2 - manif.nTimesAugOptUsed_2;
+
+            if(nTimesCanAug)
+            {
+                // Determine how many times it can be used and how much it costs
+                nTimesAugd = nTimesCanAug == -1 ?
+                              nToAutodistribute / pap.nAugCost_2 :
+                              min(nToAutodistribute / pap.nAugCost_2, nTimesCanAug);
+                nToAutodistribute -= nTimesAugd * pap.nAugCost_2;
+
+                manif.nTimesAugOptUsed_2 += nTimesAugd;
+            }
         }
-        // Make sure the option is available for use
-        if(pap.nMaxAugs_3)
+        if(nToAutodistribute > 0 && pap.nMaxAugs_3)
         {
-            // Determine how many times the augmentation option has been used
-            manif.nTimesAugOptUsed_3 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
-                                        uap.nOption_3 / pap.nAugCost_3 : // as static PP costs
-                                        uap.nOption_3;                   // or as number of times to use
-            // Make sure the number of times the option is used does not exceed the maximum
-            if(pap.nMaxAugs_3 != -1 && manif.nTimesAugOptUsed_3 > pap.nMaxAugs_3)
-                manif.nTimesAugOptUsed_3 = pap.nMaxAugs_3;
-            // Calculate the amount of PP the augmentation will cost
-            nAugPPCost += manif.nTimesAugOptUsed_3 * pap.nAugCost_3;
+            // Determine how many times this option can be used
+            if(pap.nMaxAugs_3 == -1)
+                nTimesCanAug = -1;
+            else
+                nTimesCanAug = pap.nMaxAugs_3 - manif.nTimesAugOptUsed_3;
+
+            if(nTimesCanAug)
+            {
+                // Determine how many times it can be used and how much it costs
+                nTimesAugd = nTimesCanAug == -1 ?
+                              nToAutodistribute / pap.nAugCost_3 :
+                              min(nToAutodistribute / pap.nAugCost_3, nTimesCanAug);
+                nToAutodistribute -= nTimesAugd * pap.nAugCost_3;
+
+                manif.nTimesAugOptUsed_3 += nTimesAugd;
+            }
         }
-        // Make sure the option is available for use
-        if(pap.nMaxAugs_4)
+        if(nToAutodistribute > 0 && pap.nMaxAugs_4)
         {
-            // Determine how many times the augmentation option has been used
-            manif.nTimesAugOptUsed_4 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
-                                        uap.nOption_4 / pap.nAugCost_4 : // as static PP costs
-                                        uap.nOption_4;                   // or as number of times to use
-            // Make sure the number of times the option is used does not exceed the maximum
-            if(pap.nMaxAugs_4 != -1 && manif.nTimesAugOptUsed_4 > pap.nMaxAugs_4)
-                manif.nTimesAugOptUsed_4 = pap.nMaxAugs_4;
-            // Calculate the amount of PP the augmentation will cost
-            nAugPPCost += manif.nTimesAugOptUsed_4 * pap.nAugCost_4;
+            // Determine how many times this option can be used
+            if(pap.nMaxAugs_4 == -1)
+                nTimesCanAug = -1;
+            else
+                nTimesCanAug = pap.nMaxAugs_4 - manif.nTimesAugOptUsed_4;
+
+            if(nTimesCanAug)
+            {
+                // Determine how many times it can be used and how much it costs
+                nTimesAugd = nTimesCanAug == -1 ?
+                              nToAutodistribute / pap.nAugCost_4 :
+                              min(nToAutodistribute / pap.nAugCost_4, nTimesCanAug);
+                nToAutodistribute -= nTimesAugd * pap.nAugCost_4;
+
+                manif.nTimesAugOptUsed_4 += nTimesAugd;
+            }
         }
-        // Make sure the option is available for use
-        if(pap.nMaxAugs_5)
+        if(nToAutodistribute > 0 && pap.nMaxAugs_5)
         {
-            // Determine how many times the augmentation option has been used
-            manif.nTimesAugOptUsed_5 = uap.bValueIsPP ?                  // The user can determine whether their settings are interpreted
-                                        uap.nOption_5 / pap.nAugCost_5 : // as static PP costs
-                                        uap.nOption_5;                   // or as number of times to use
-            // Make sure the number of times the option is used does not exceed the maximum
-            if(pap.nMaxAugs_5 != -1 && manif.nTimesAugOptUsed_5 > pap.nMaxAugs_5)
-                manif.nTimesAugOptUsed_5 = pap.nMaxAugs_5;
-            // Calculate the amount of PP the augmentation will cost
-            nAugPPCost += manif.nTimesAugOptUsed_5 * pap.nAugCost_5;
+            // Determine how many times this option can be used
+            if(pap.nMaxAugs_5 == -1)
+                nTimesCanAug = -1;
+            else
+                nTimesCanAug = pap.nMaxAugs_5 - manif.nTimesAugOptUsed_5;
+
+            if(nTimesCanAug)
+            {
+                // Determine how many times it can be used and how much it costs
+                nTimesAugd = nTimesCanAug == -1 ?
+                              nToAutodistribute / pap.nAugCost_5 :
+                              min(nToAutodistribute / pap.nAugCost_5, nTimesCanAug);
+                nToAutodistribute -= nTimesAugd * pap.nAugCost_5;
+
+                manif.nTimesAugOptUsed_5 += nTimesAugd;
+            }
         }
 
-        // Calculate number of times a generic augmentation happens with this number of PP
+        // Calculate increase to generic augmentation
         if(pap.nGenericAugCost != -1)
-            manif.nTimesGenericAugUsed = nAugPPCost / pap.nGenericAugCost;
+            manif.nTimesGenericAugUsed += (nAugPPCost - nToAutodistribute) / pap.nGenericAugCost;
 
-
-        /*/ Various effects modifying the augmentation go below /*/
-
-        // Account for wild surge
-        nAugPPCost -= nSurge;
-
-        // If the surge provides more PP than was used by this augmentation profile, attempt to place the rest into option 1
-        if(nAugPPCost < 0)
-        {
-            int nSurgeLeft = -nAugPPCost;
-            nAugPPCost = 0;
-
-            // Calculate the additional augmentations
-            int nTimesAugd = nSurgeLeft / pap.nAugCost_1;
-            if(pap.nMaxAugs_1 != -1 && (manif.nTimesAugOptUsed_1 + nTimesAugd) > pap.nMaxAugs_1)
-                nTimesAugd += pap.nMaxAugments - (manif.nTimesAugOptUsed_1 + nTimesAugd);
-            // Add them in
-            manif.nTimesAugOptUsed_1 += nTimesAugd;
-
-            // Calculate increase to generic augmentation
-            if(pap.nGenericAugCost != -1)
-                manif.nTimesGenericAugUsed += (nTimesAugd * pap.nAugCost_1) / pap.nGenericAugCost;
-        }
-
-        /*/ Various effects modifying the augmentation go above /*/
-
-
-        // Store the PP cost increase
-        manif.nPPCost += nAugPPCost;
+        // All PP unused at this point are dumped and the total augmentation cost is zero
+        nAugPPCost = 0;
     }
+
+    // Store the PP cost increase
+    manif.nPPCost += nAugPPCost;
 
     return manif;
 }
-/*
+
 void SetAugmentationOverride(object oCreature, struct user_augment_profile uap)
 {
-    SetLocalInt(oCreature) // TODO!!
-}*/
+    SetLocalInt(oCreature, PRC_AUGMENT_OVERRIDE, _EncodeProfile(uap));
+}

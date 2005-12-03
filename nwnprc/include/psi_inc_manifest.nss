@@ -22,7 +22,9 @@
 /*                 Structures                   */
 //////////////////////////////////////////////////
 
-
+/**
+ * A structure that contains common data used during power manifestation.
+ */
 struct manifestation{
     /* Generic stuff */
     /// The creature manifesting the power
@@ -73,6 +75,27 @@ struct manifestation{
 
 struct manifestation EvaluateManifestation(object oManifester, object oTarget, int nMetaPsiFlags);
 
+/**
+ * Causes OBJECT_SELF to use the given power.
+ *
+ * @param nPower         The index of the power to use in spells.2da or a POWER_*
+ * @param nClass         The index of the class to use the power as in classes.2da or a CLASS_TYPE_*
+ * @param bIsPsiLike     Whether the power to be used is to be a normal use or a psi-like ability, which
+ *                       acts somewhat differently.
+ *                       Default: FALSE, meaning a normal power.
+ * @param nLevelOverride An optional override to normal manifester level. This is necessary when
+ *                       using the power as a psi-like ability.
+ *                       Default: 0, which means the parameter is ignored.
+ */
+void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride = 0);
+
+/**
+ * A debugging function. Takes a manifestation structure and
+ * makes a string describing the contents.
+ *
+ * @param manif A set of manifestation data
+ * @return      A string describing the contents of manif
+ */
 string DebugManifestation2Str(struct manifestation manif);
 
 
@@ -89,35 +112,45 @@ string DebugManifestation2Str(struct manifestation manif);
 /*             Internal functions               */
 //////////////////////////////////////////////////
 
+/** Internal function.
+ * Calculates PP cost reduction from various factors. Currently accounts for:
+ * - Thrallherd
+ *
+ * @param manif The manifestation data relating to this particular manifesation
+ * @retrun      The manifestation data, possibly with modified costs
+ */
 struct manifestation _GetPPCostReduced(struct manifestation manif)
 {
-    int nThrall  = GetLevelByClass(CLASS_TYPE_THRALLHERD, manif.oManifester);
     int nSpell   = PRCGetSpellId();
+    int nThrall  = GetLevelByClass(CLASS_TYPE_THRALLHERD, manif.oManifester);
 
-    if(GetLocalInt(manif.oManifester, "ThrallCharm") && nSpell == POWER_CHARMPERSON)
+    if(nThrall > 0)
     {
-        DeleteLocalInt(manif.oManifester, "ThrallCharm");
-        manif.nPPCost -= nThrall;
-    }
-    if(GetLocalInt(oCaster, "ThrallDom") && nSpell == POWER_DOMINATE)
-    {
-        DeleteLocalInt(manif.oManifester, "ThrallDom");
-        manif.nPPCost -= nThrall;
-    }
+        if(GetLocalInt(manif.oManifester, "ThrallCharm") && nSpell == POWER_CHARMPERSON)
+        {
+            DeleteLocalInt(manif.oManifester, "ThrallCharm");
+            manif.nPPCost -= nThrall;
+        }
+        if(GetLocalInt(oCaster, "ThrallDom") && nSpell == POWER_DOMINATE)
+        {
+            DeleteLocalInt(manif.oManifester, "ThrallDom");
+            manif.nPPCost -= nThrall;
+        }
 
-    // Reduced cost for augmenting the Dominate power. These do not count for the DC increase
-    if(nThrall >= 7 && nSpell == POWER_DOMINATE && manif.nTimesAugOptUsed_1 > 0)
-    {
-        manif.nPPCost -= 2;
-        manif.nTimesGenericAugUsed -= 1;
-    }
-    if(nThrall >= 9 && nSpell == POWER_DOMINATE && manif.nTimesAugOptUsed_2 > 0)
-    {
-        manif.nPPCost -= 4;
-        manif.nTimesGenericAugUsed -= 2;
-    }
+        // Reduced cost for augmenting the Dominate power. These do not count for the DC increase
+        if(nThrall >= 7 && nSpell == POWER_DOMINATE && manif.nTimesAugOptUsed_1 > 0)
+        {
+            manif.nPPCost -= 2;
+            manif.nTimesGenericAugUsed -= 1;
+        }
+        if(nThrall >= 9 && nSpell == POWER_DOMINATE && manif.nTimesAugOptUsed_2 > 0)
+        {
+            manif.nPPCost -= 4;
+            manif.nTimesGenericAugUsed -= 2;
+        }
 
-    if(manif.nPPCost < 1) manif.nPPCost = 1;
+        if(manif.nPPCost < 1) manif.nPPCost = 1;
+    }
 
     return manif;
 }
@@ -200,11 +233,12 @@ void _HostileMind(object oManifester, object oTarget)
  * Applies the damage caused by use of Overchannel feat.
  *
  * @param oManifester The creature currently manifesting a power
+ * @param bIsPsiLike  Whether the power being manifester is a psi-like ability or not
  */
-void _DoOverchannelDamage(object oManifester)
+void _DoOverchannelDamage(object oManifester, int bIsPsiLike)
 {
     int nOverchannel = GetLocalInt(oManifester, "Overchannel");
-    if(nOverchannel > 0)
+    if(nOverchannel > 0 && !bIsPsiLike)
     {
         int nDam = d8(nOverchannel * 2 - 1);
         // Check if Talented applies
@@ -221,12 +255,18 @@ void _DoOverchannelDamage(object oManifester)
     }
 }
 
-void _SurgingEuphoriaOrPsychicEnervation(object oManifester)
+/** Internal function.
+ * If the manifester is a wilder who is using Wild Surge, rolls and
+ * applies Psychic Enervation or Surging Euphoria based on the result.
+ *
+ * @param oManifester The creature currently manifesting a power
+ */
+void _SurgingEuphoriaOrPsychicEnervation(object oManifester, int nWildSurge)
 {
     int nWilder    = GetLevelByClass(CLASS_TYPE_WILDER, oManifester);
-    int nWildSurge = GetWildSurge(oManifester);
+
     // Only Wilders need apply (at least so far)
-    if(nWilder > 0)
+    if(nWilder > 0 && nWildSurge)
     {
         // Psychic Enervation has a 5% chance to happen per point Wild Surged by
         if(nWildSurge >= d20())
@@ -265,6 +305,19 @@ void _SurgingEuphoriaOrPsychicEnervation(object oManifester)
     }
 }
 
+/** Internal function.
+ * Deletes manifestation-related local variables.
+ *
+ * @param oManifester The creature currently manifesting a power
+ */
+void _CleanManifestationVariables(object oManifester)
+{
+    DeleteLocalInt(oManifester, PRC_MANIFESTING_CLASS);
+    DeleteLocalInt(oManifester, PRC_POWER_LEVEL);
+    DeleteLocalInt(oManifester, PRC_IS_PSILIKE);
+    DeleteLocalInt(oManifester, PRC_AUGMENT_OVERRIDE);
+}
+
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -279,6 +332,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
     int nClass           = GetManifestingClass(oManifester);
     int nWildSurge       = GetWildSurge(oManifester);
     int nManifesterPP    = GetCurrentPowerPoints(oManifester);
+    int bIsPsiLike       = GetLocalInt(oManifester, PRC_IS_PSILIKE);
     // Target-specific stuff
     int nVolatileMindCost = _VolatileMind(oTarget, oManifester);
     int nPsionicHoleCost  = _PsionicHole(oTarget);
@@ -294,7 +348,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
     // Run an ability score check to see if the manifester can manifest the power at all
     if(GetAbilityScoreOfClass(oManifester, nClass) - 10 < nPowerLevel)
     {
-        SendMessageToPCByStrRef(oManifester, ); // "You do not have a high enough ability score to manifest this power"
+        FloatingTextStrRefOnCreature(, oManifester, FALSE); // "You do not have a high enough ability score to manifest this power"
         manif.bCanManifest = FALSE;
         return manif;
     }
@@ -303,7 +357,8 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
     manif = EvaluateAugmentation(manif, pap);
 
     // Account for metapsionics
-    manif = EvaluateMetapsionics(manif, nMetaPsiFlags);
+    if(!bIsPsiLike) // Skipped for psi-like abilities
+        manif = EvaluateMetapsionics(manif, nMetaPsiFlags);
 
 
     //* APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE HERE *//
@@ -317,15 +372,16 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
      * Wild Surge, but since the calculated cost already contains the augmentation
      * cost reduction provided by Wild Surge, it should not apply here.
      */
-    if((nManifesterLevel - nWildSurge) >= manif.nPPCost)
+    if((nManifesterLevel - nWildSurge) >= manif.nPPCost || bIsPsiLike)
     {
         // Reduced cost of manifesting a power, but does not allow you to exceed the manifester level cap
-        manif = _GetPPCostReduced(manif);
+        if(!bIsPsiLike) // Skipped for psi-like abilities
+            manif = _GetPPCostReduced(manif);
 
         //If the manifester does not have enough points before hostile modifiers, cancel power
-        if(manif.nPPCost > nManifesterPP)
+        if(manif.nPPCost > nManifesterPP && !bIsPsiLike)
         {
-            SendMessageToPCByStrRef(oManifester, ); // "You do not have enough Power Points to manifest this power"
+            FloatingTextStrRefOnCreature(, oManifester, FALSE); // "You do not have enough Power Points to manifest this power"
             manif.bCanManifest = FALSE;
         }
         // The manifester has enough power points that they would be able to use the power, barring extra costs
@@ -338,30 +394,36 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
             manif.nPPCost += nVolatileMindCost;
             //* ADD ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE POWER FAIL ABOVE *//
 
-            if(manif.nPPCost > nManifesterPP)
+            if(manif.nPPCost > nManifesterPP && !bIsPsiLike)
             {
-                SendMessateToPCByStrRe(oManifester, ); // "Your target's abilities cause you to use more Power Points than you have. The power fails"
+                FloatingTextStrRefOnCreature(, oManifester, FALSE); // "Your target's abilities cause you to use more Power Points than you have. The power fails"
                 manif.bCanManifest = FALSE;
             }
 
-            // Set the power points to their new value and inform the manifester
-            LosePowerPoints(oManifester, manif.nPPCost, TRUE);
+            // Psi-like abilities ignore PP costs and metapsi
+            if(!bIsPsiLike)
+            {
+                // Set the power points to their new value and inform the manifester
+                LosePowerPoints(oManifester, manif.nPPCost, TRUE);
 
-            // Psionic focus loss from using metapsionics. Has a side effect of telling the manifester which metapsionics were actually active
-            PayMetapsionicsFocuses(manif);
+                // Psionic focus loss from using metapsionics. Has a side effect of telling the manifester which metapsionics were actually active
+                PayMetapsionicsFocuses(manif);
+            }
 
             //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE *//
             // Damage from overchanneling happens only if one actually spends PP
-            _DoOverchannelDamage(oManifester);
+            _DoOverchannelDamage(oManifester, bIsPsiLike);
             // Apply Hostile Mind damage, as necessary
             _HostileMind(oManifester, oTarget);
+            // Apply Wild Surge side-effects
+            _SurgingEuphoriaOrPsychicEnervation(oManifester, nWildSurge);
             //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION ABOVE *//
         }
     }
     // Cost was over the manifester cap
     else
-    {
-        SendMessageToPCByStrRef(oManifester, ); // "Your manifester level is not high enough to spend that many Power Points"
+    {// "Your manifester level is not high enough to spend X Power Points"
+        FloatingTextStringOnCreature(GetStringByStrRef() + " " + IntToString(manif.nPPCost) + " " + GetStringByStrRef(), oManifester, FALSE);
         manif.bCanManifest = FALSE;
     }
 
@@ -371,6 +433,37 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
     DelayCommand(0.5f, _CleanManifestationVariables(oManifester));
 
     return manif;
+}
+
+void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride = 0)
+{
+    object oManifester = OBJECT_SELF;
+    if(DEBUG) DoDebug("UsePower(): Manifester is " + DebugObject2Str(oManifester) + "\n"
+                    + "nPower = " + IntToString(nPower) + "\n"
+                    + "nClass = " + IntToString(nClass) + "\n"
+                    + "bIsPsiLike = " + BooleanToString(bIsPsiLike) + "\n"
+                    + "nLevelOverride = " + IntToString(nLevelOverride)
+                      );
+
+    // Set the class to manifest as
+    SetLocalInt(oManifester, PRC_MANIFESTING_CLASS, nClass);
+
+    // Set the power's level
+    SetLocalInt(oManifester, PRC_POWER_LEVEL, StringToInt(lookup_spell_innate(PRCGetSpellId())));
+
+    /* Unnecessary, since this is already done by ActionCastSpell
+    //override level
+    if(nLevelOverride != 0)
+        SetLocalInt(oManifester, PRC_CASTERLEVEL_OVERRIDE, nLevelOverride);*/
+
+    // Set whether the power is to run as a psi-like ability
+    SetLocalInt(oManifester, PRC_IS_PSILIKE, bIsPsiLike);
+
+    // Nuke action queue to prevent cheating with creative power stacking
+    if(DEBUG) SendMessageToPC(oManifester, "Clearing all actions in preparation for second stage of the power.");
+    ClearAllActions();
+
+    ActionCastSpell(nPower, nLevelOverride);
 }
 
 string DebugManifestation2Str(struct manifestation manif)

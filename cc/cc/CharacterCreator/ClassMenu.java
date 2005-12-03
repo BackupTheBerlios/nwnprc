@@ -9,11 +9,11 @@ package CharacterCreator;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
+//import javax.swing.border.EmptyBorder;
+//import javax.swing.border.EtchedBorder;
 import CharacterCreator.defs.*;
 import CharacterCreator.util.*;
 /**
@@ -21,9 +21,20 @@ import CharacterCreator.util.*;
  * @author  James
  */
 public class ClassMenu extends javax.swing.JFrame {
+    /**
+	 * An auto-generated ID.
+	 */
+	private static final long serialVersionUID = -3345719361604207528L;
+	
+	
+	public class ClassButton extends JPanel {
+        /**
+		 * An auto-generated ID.
+		 */
+		private static final long serialVersionUID = -8372013590256286125L;
 
-    public class ClassButton extends JPanel {
-        private void initComponents() {
+
+		private void initComponents() {
             ClassButton = new JButton();
             InfoNum = new JLabel();
             setLayout(new GridBagLayout());
@@ -59,7 +70,14 @@ public class ClassMenu extends javax.swing.JFrame {
             tmp = (new Integer(InfoNum.getText())).intValue();
             String descstr = classmap[tmp][classes.Description];
             int descnum = ChkHex.ChkHex(descstr);
-            DescriptionText.setText(TLKFAC.getEntry(descnum));
+            String description = TLKFAC.getEntry(descnum);
+            /* Hack to make the text area grow in size if necessary 
+            int requiredrows = ((3 * description.length()) / DescriptionText.getColumns()) / 2;
+            if(requiredrows > DescriptionText.getRows())
+            	DescriptionText.setRows(requiredrows);*/
+            
+            DescriptionText.setText(description);
+            //System.out.println(TLKFAC.getEntry(descnum));
             CLASSNUM = tmp;
             //}
             //catch(NumberFormatException err) {
@@ -108,7 +126,7 @@ public class ClassMenu extends javax.swing.JFrame {
 
         TLKFAC = menucreate.getTLKFactory();
         RESFAC = menucreate.getResourceFactory();
-        String imagestring = "";
+        //String imagestring = "";
         DescriptionText.setText(TLKFAC.getEntry(484));
         try {
             classmap = RESFAC.getResourceAs2DA("classes");
@@ -168,7 +186,7 @@ public class ClassMenu extends javax.swing.JFrame {
         OKButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
         DescriptionContainer = new javax.swing.JScrollPane();
-        DescriptionPanel = new javax.swing.JPanel();
+        //DescriptionPanel = new javax.swing.JPanel();
         DescriptionText = new javax.swing.JTextArea();
         PadPanel = new javax.swing.JPanel();
         PadPanel2 = new javax.swing.JPanel();
@@ -265,14 +283,14 @@ public class ClassMenu extends javax.swing.JFrame {
         DescriptionContainer.setViewportBorder(new javax.swing.border.MatteBorder(new java.awt.Insets(10, 10, 10, 10), new java.awt.Color(0, 0, 0)));
         DescriptionContainer.setPreferredSize(new java.awt.Dimension(400, 100));
         DescriptionContainer.setAutoscrolls(true);
-        DescriptionPanel.setLayout(new java.awt.GridBagLayout());
+        //DescriptionPanel.setLayout(new java.awt.GridBagLayout());
 
-        DescriptionPanel.setPreferredSize(new java.awt.Dimension(400, 800));
+        //DescriptionPanel.setPreferredSize(new java.awt.Dimension(400, 900));
         DescriptionText.setBackground(new java.awt.Color(0, 0, 0));
         DescriptionText.setForeground(new java.awt.Color(240, 216, 130));
         DescriptionText.setLineWrap(true);
         DescriptionText.setWrapStyleWord(true);
-        DescriptionText.setPreferredSize(new java.awt.Dimension(400, 800));
+        DescriptionText.setPreferredSize(new java.awt.Dimension(400, 6144));
         DescriptionText.setAutoscrolls(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -280,9 +298,10 @@ public class ClassMenu extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 13;
         gridBagConstraints.gridheight = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        DescriptionPanel.add(DescriptionText, gridBagConstraints);
+        //DescriptionPanel.add(DescriptionText, gridBagConstraints);
 
-        DescriptionContainer.setViewportView(DescriptionPanel);
+        //DescriptionContainer.setViewportView(DescriptionPanel);
+        DescriptionContainer.setViewportView(DescriptionText);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -403,7 +422,7 @@ public class ClassMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane ClassButtonContainer;
     private javax.swing.JPanel ClassButtonList;
     private javax.swing.JScrollPane DescriptionContainer;
-    private javax.swing.JPanel DescriptionPanel;
+    //private javax.swing.JPanel DescriptionPanel;
     private javax.swing.JTextArea DescriptionText;
     private javax.swing.JButton OKButton;
     private javax.swing.JPanel PadPanel;

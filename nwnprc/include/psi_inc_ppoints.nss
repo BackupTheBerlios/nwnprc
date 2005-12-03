@@ -251,8 +251,8 @@ string GetPowerPointsAsString(object oChar)
 
 void TellCharacterPowerPointStatus(object oChar)
 {
-    SendMessageToPC(oChar, GetStringByStrRef(16824181) + // "Power Points Remaining:"
-                    " " + GetPowerPointsAsString(oChar));
+    FloatingTextStringOnCreature(GetStringByStrRef(16824181) + " " + GetPowerPointsAsString(oChar), // "Power Points Remaining:"
+                                 oChar, FALSE);
 }
 
 void ResetPowerPoints(object oChar)

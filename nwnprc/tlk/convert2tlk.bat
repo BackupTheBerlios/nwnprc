@@ -1,0 +1,1 @@
+..\tools\xml2tlk.exe prc_consortium.tlk.xml prc_consortium.tlk

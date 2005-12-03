@@ -279,13 +279,12 @@ void MarkStageSetUp(int nStage, object oPC = OBJECT_INVALID);
 void MarkStageNotSetUp(int nStage, object oPC = OBJECT_INVALID);
 
 /**
- * Clears the given stage's choices and marks it not set up.
+ * Clears the current stage's choices and marks it not set up.
  *
- * @param nStage The stage to clear
  * @param oPC    The PC involved in the conversation. If left to
  *               default, GetPCSpeaker is used.
  */
-void ClearStage(int nStage, object oPC = OBJECT_INVALID);
+void ClearCurrentStage(object oPC = OBJECT_INVALID);
 
 
 

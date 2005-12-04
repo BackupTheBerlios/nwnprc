@@ -13,6 +13,7 @@ Diabolist                                       | Book of Venereal Disease
 Maester                                         | Complete Adventurer
 Ollam                                           | Complete Adventurer
 Ninja                                           | Complete Adventurer
+Wayfarer Guide                                  | Complete Arcane
 Sacred Fist					| Complete Divine
 Shining Blade of Heironeous			| Complete Divine
 Stormlord					| Complete Divine

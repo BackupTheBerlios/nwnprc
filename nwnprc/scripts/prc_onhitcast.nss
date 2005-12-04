@@ -246,6 +246,12 @@ void main()
     {
         ExecuteScript("psi_prevenom_hit", oSpellOrigin);
     }    
+    
+    // Truevenom OnHit
+    if(GetLocalInt(oItem, "Truevenom"))
+    {
+        ExecuteScript("psi_truvenom_hit", oSpellOrigin);
+    }      
 
     // Astral Construct's Poison Touch special ability
     if(GetLocalInt(oSpellOrigin, ASTRAL_CONSTRUCT_POISON_TOUCH))

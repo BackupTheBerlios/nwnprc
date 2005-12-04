@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     object oCaster = OBJECT_SELF;
     int nAugCost = 0;
     int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
+    object oTarget = IPGetTargetedOrEquippedMeleeWeapon();
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
 
     if (nMetaPsi > 0)

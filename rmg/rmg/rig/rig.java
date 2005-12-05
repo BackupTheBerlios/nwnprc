@@ -9,8 +9,8 @@ public class rig {
 	//constants
 	private static final int BASEITEM_COUNT = 5;//125;
 	//public data
-	public static Data_2da rig2da         = Data_2da.load2da("2das/rig.2da");
-	public static Data_2da rigIP2da       = Data_2da.load2da("2das/rig_ip.2da");
+	public static Data_2da rig2da         = Data_2da.load2da("rig.2da");
+	public static Data_2da rigIP2da       = Data_2da.load2da("rig_ip.2da");
 	public static Data_2da baseitem2da    = Data_2da.load2da("2das/baseitems.2da");
 	public static Data_2da itempropdef2da = Data_2da.load2da("2das/itempropdef.2da");
 	//private data

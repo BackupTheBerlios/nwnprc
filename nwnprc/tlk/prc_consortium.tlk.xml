@@ -7303,6 +7303,13 @@ Implementation: At this time, the circle does not act as a trap, merely as a nor
   <entry id="46809" lang="en" sex="m">Wild Surge 11</entry>
   <entry id="46810" lang="en" sex="m">You cannot have Wild Surge and Overchannel active at the same time</entry>
   <entry id="46811" lang="en" sex="m">Your Wilder level is not high enough to use this level of Wild Surge</entry>
+  <entry id="46812" lang="en" sex="m">Overchannel Level One</entry>
+  <entry id="46813" lang="en" sex="m">You cannot have Overchannel and Wild Surge active at the same time</entry>
+  <entry id="46814" lang="en" sex="m">Overchannel Level Two</entry>
+  <entry id="46815" lang="en" sex="m">You need to be at least level 8 to overchannel 2 manifester levels</entry>
+  <entry id="46816" lang="en" sex="m">Overchannel Level Three</entry>
+  <entry id="46817" lang="en" sex="m">You need to be at least level 15 to overchannel 3 manifester levels</entry>
+  <entry id="46818" lang="en" sex="m">Overchannel Off</entry>
   <entry id="46964" lang="en" sex="m">Empty Quickselection</entry>
   <entry id="46965" lang="en" sex="m">Power Points Remaining:</entry>
   <entry id="46966" lang="en" sex="m">Quickselection set to</entry>

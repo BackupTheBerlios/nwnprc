@@ -68,6 +68,7 @@ ERF				= $(OUTPATH)\prc_consortium.erf
 INCLUDEHAK		= $(OUTPATH)\prc_include.hak
 HAK				= $(OUTPATH)\prc_consortium.hak
 TLK				= $(TLKPATH)\prc_consortium.tlk
+TLKXML          = $(TLKPATH)\prc_consortium.tlk.xml
 HIF				= "$(OUTPATH)\PRC Pack.hif"
 #README			= prc_consortium.htm
 MISCRESOURCES	= $(OUTPATH)\PRCModuleUpdater.exe
@@ -116,7 +117,7 @@ ERFCOMPILER 	= tools\erf
 NSSCOMPILER 	= tools\nwnnsscomp
 NSISCOMPILER	= "$(NSISPATH)\makensis.exe"
 SED				= tools\ssed
-
+XML2TLK         = tools\xml2tlk.exe
 
 # Redefine various paths set by the bat file to give them prettier more
 # generic names.
@@ -209,7 +210,7 @@ rar: hak $(RAR)
 hak110: $(ERF110) $(HAK) install
 
 # Rule to build the 2.0 haks
-hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) \
+hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) $(TLK)\
 	$(SPELLSHAK) $(EPICSPELLSCRIPTSHAK) $(RACEHAK) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) \
 	$(CRAFT2DASHAK) $(INCLUDEHAK) $(HIF) install
 
@@ -265,7 +266,7 @@ installoverrides: $(OVERRIDEFILES)
 $(RAR): $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(MISCHAK) $(ERF) \
 	$(OVERRIDEFILES) $(TLK) $(MISCRESOURCES) $(CRAFT2DASHAK) \
 	$(EPICSPELLSCRIPTSHAK) $(SPELLSHAK) $(RACEHAK) $(INCLUDEHAK) \
-	$(HIF) $(PSIONICSHAK) $(NEWSPELLBOOKHAK)
+	$(HIF) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) $(TLK)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(RARCOMPILER)" a -ep -inul $@ $**
@@ -300,6 +301,13 @@ $(ERF): $(ERFFILES)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $**
+
+
+# Rule for the TLK
+$(TLK): $(TLKXML)
+	@echo $(@F)
+	-@del "$@" 2>nul
+	@"$(XML2TLK)" $(TLKXML) $(TLK)
 
 # Rule to build the include ERF, containing the nss files in the include directory
 $(INCLUDEHAK): $(INCLUDE)

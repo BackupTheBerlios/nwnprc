@@ -8,7 +8,6 @@
 #include "prc_alterations"
 #include "inc_utility"
 #include "prc_inc_clsfunc"
-#include "psi_inc_psifunc"
 
 void main()
 {
@@ -52,10 +51,6 @@ void main()
     if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oPlayer))
         SetPersistantLocalInt(oPlayer, "persist_dead", TRUE);
 
-    if (GetLocalInt(oPlayer, "AstralSeed"))
-    {
-        AstralSeedRespawn(oPlayer);
-    }
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPlayer, EVENT_ONPLAYERDEATH);
 }

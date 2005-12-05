@@ -13496,6 +13496,13 @@ Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spe
 Prerequisite: Can only take this feat at 1st-level. 
 Specifics: This feat qualifies you to take the Dragon Disciple Prestige Class, even if you are not a Sorcerer or Bard.  You must still meet all other requirements.
 Use: Automatic.</entry>
+  <entry id="49193" lang="en" sex="m">Power Points</entry>
+  <entry id="49194" lang="en" sex="m">Your manifester level is not high enough to spend</entry>
+  <entry id="49195" lang="en" sex="m">You do not have a high enough ability score to manifest this power</entry>
+  <entry id="49196" lang="en" sex="m">You do not have enough Power Points to manifest this power</entry>
+  <entry id="49197" lang="en" sex="m">Your target's abilities cause you to use more Power Points than you have. The power fails</entry>
+  <entry id="49198" lang="en" sex="m">You have used your Psionic Focus</entry>
+  <entry id="49199" lang="en" sex="m">You have lost your Psionic Focus</entry>
   <entry id="49200" lang="en" sex="m">Psionic Focus</entry>
   <entry id="49201" lang="en" sex="m">Type of Feat: Psionic
 Prerequisite: Being a psionic creature

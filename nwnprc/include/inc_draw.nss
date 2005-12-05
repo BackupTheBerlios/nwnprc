@@ -13,25 +13,6 @@
 
 #include "inc_draw_tools"
 
-void DrawLinesInACone(int nLines, float fLength, location lOrigin, float fDirection,
-                      int nDurationType, int nVFX, float fDuration, int nFrequency, float fTime)
-{
-    float fTheta = 90.0f / nLines;
-    vector vCenter = GetPositionFromLocation(lOrigin);
-    object oArea   = GetAreaFromLocation(lOrigin);
-
-    int i;
-    float f;
-    vector vTarget;
-    for(i = 0; i < nLines; i++)
-    {
-        f = IntToFloat(i);
-        fAngle = fTheta * f + fDirection;
-        vTarget = vCenter + Vector(cos(fAngle), sin(fAngle), 0.0f);
-        DrawLineFromVectorToVector(nDurationType, nVFX, oArea, vCenter, vTarget, fDuration, nFrequency, fTime)
-    }
-}
-
 /*
    =============================================
    DRAW* PLACE* AND BEAM* FUNCTIONS DECLARATIONS

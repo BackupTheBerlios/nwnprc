@@ -354,6 +354,7 @@ string DebugLocation2Str(location loc);
 
 // No dependecies outiside their own loops -section
 #include "inc_draw"       // includes inc_draw_text and inc_draw_tools
+#include "inc_draw_prc"
 #include "inc_debug"
 #include "inc_target_list"
 #include "inc_logmessage"

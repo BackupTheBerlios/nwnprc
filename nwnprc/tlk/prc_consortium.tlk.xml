@@ -5009,6 +5009,7 @@ Duration: Instantaneous
 Saving Throw: Fortitude half
 Power Resistance: Yes
 Power Point Cost: 9
+Metapsionics: Empower, Maximize, Twin
 
 You psychoportively disperse miniscule portions of the target, dealing 9d6 points of damage.
 
@@ -6742,19 +6743,24 @@ Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
 Power Point Cost: 15
+Metapsionics: None
 
 This power weaves strands of ectoplasm into a crystal containing the seed of your living mind. You may have only one seed in existence at any one time. Until such time as you perish, the astral seed is totally inert. Upon dying, you are transported to the location of your astral seed, where you will spend a day regrowing a body. Respawning in this manner will cost a level. If your astral seed is destroyed, the power will fail. </entry>
-  <entry id="46702" lang="en" sex="m">Banishment</entry>
-  <entry id="46703" lang="en" sex="m">Class: Psion (Nomad)
-Power Level: 6
-Range: Close
-Target: One or more Extraplanar Creature
+  <entry id="46702" lang="en" sex="m">Banishment, Psionic</entry>
+  <entry id="46703" lang="en" sex="m">Psychoportation
+Level: Nomad 6
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Targets: One or more extraplanar creatures, no two of which can be more than 30 ft. apart
 Duration: Instantaneous
 Saving Throw: Will negates
 Power Resistance: Yes
-Power Point Cost: 11
+Power Points: 11
+Metapsionics: Twin
 
-This spell forces extraplanar creatures back to their home plane if they fails a save. Affected creatures include summons, outsiders, and elementals. You can banish up to 2 HD per caster level. </entry>
+This spell forces extraplanar creatures back to their home plane if they fail a save. Affected creatures include summons, outsiders, and elementals. You can banish up to 2 HD per caster level.
+
+Augment: For every 2 additional power points you spend, this power’s save DC increases by 1 and your manifester level increases by 1 for the purpose of overcoming power resistance.</entry>
   <entry id="46704" lang="en" sex="m">Burst</entry>
   <entry id="46705" lang="en" sex="m">Class: Psion (Nomad), Psychic Warrior
 Power Level: 1
@@ -7074,6 +7080,7 @@ Duration: 1 Hour/level
 Saving Throw: Will negates
 Power Resistance: Yes
 Power Point Cost: 3
+Metapsionics: Extend
 
 You plant a powerful aversion in the mind of the subject. The target flees from you at every opportunity.
 

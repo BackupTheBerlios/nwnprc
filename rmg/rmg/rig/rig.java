@@ -8,7 +8,6 @@ import java.util.*;
 public class rig {
 	//constants
 	private static final int BASEITEM_COUNT = 5;//125;
-	//public data
 	public static Data_2da rig2da         = Data_2da.load2da("rig.2da");
 	public static Data_2da rigIP2da       = Data_2da.load2da("rig_ip.2da");
 	public static Data_2da baseitem2da    = Data_2da.load2da("2das/baseitems.2da");
@@ -27,8 +26,8 @@ public class rig {
 		//loop over the roots
 		for(rootID = 0; rootID < BASEITEM_COUNT; rootID++){
 			//loop over the prefixs
-			//for(prefixID = 0; prefixID < rig2da.getEntryCount(); prefixID++){
-			for(prefixID = 0; prefixID < 5; prefixID++){
+			for(prefixID = 0; prefixID < rig2da.getEntryCount(); prefixID++){
+			//for(prefixID = 0; prefixID < 5; prefixID++){
 				//loop over the suffixs
 				//dont loop over suffixes, too many products
 				//for(suffixID = 0; suffixID < rig2da.getEntryCount(); suffixID++){
@@ -61,7 +60,7 @@ public class rig {
 			return;
 		//setup name tag resref etc
 		item = new item();
-		item.name    = prefixName + suffixName;
+		item.name    = prefixName + rootID + suffixName;
 		item.tag     = prefixID+"_"+rootID+"_"+suffixID;
 		item.resRef  = prefixID+"_"+rootID+"_"+suffixID;
 		//add itemproperties to array
@@ -88,7 +87,7 @@ public class rig {
 		try {
 
 			//System.out.println("itemName = "+itemName);
-			File target = new File("temp/"+item.resRef+".uti.xml");
+			File target = new File("in/"+item.resRef+".uti.xml");
 			// Creater the writer and print
 			FileWriter writer = new FileWriter(target, true);
 			writer.write(item.toXML());

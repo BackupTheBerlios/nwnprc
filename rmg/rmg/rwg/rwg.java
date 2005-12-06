@@ -66,9 +66,9 @@ public class rwg {
 		for(String param : args){//[-crmnqs] file... | -
 			// Parameter parseage
 			if(param.startsWith("-")){
-				if(param.equals("-"))
-					readStdin = true;
-				else{
+				if(param.equals("-")){
+					//readStdin = true;
+				}else{
 					for(char c : param.substring(1).toCharArray()){
 						switch(c){
 						case 't': //testing mode, dont output models
@@ -76,7 +76,7 @@ public class rwg {
 							break;
 						default:
 							System.out.println("Unknown parameter: " + c);
-							readMe();
+							//readMe();
 						}
 					}
 				}

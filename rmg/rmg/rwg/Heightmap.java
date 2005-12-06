@@ -26,7 +26,7 @@ public class Heightmap {
 
 
 	public void generateFractalBase(double fractalDecay){
-		random = new Random(rng.rwg.nextLong());
+		random = new Random(rwg.rng.nextLong());
 		double tempheightmap[][] = new double [2][2];
 		tempheightmap[0][0] = random.nextDouble();
 		tempheightmap[1][0] = tempheightmap[0][0];

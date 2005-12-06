@@ -4993,7 +4993,7 @@ To change the value stored in a quickselect, first use the Change Quickselect fe
   <entry id="46368" lang="en" sex="m">Augment Psionics: 0 - 4</entry>
   <entry id="46369" lang="en" sex="m">Augment Psionics: 5 - 9</entry>
   <entry id="46370" lang="en" sex="m">Augment Psionics: 00 - 40</entry>
-  <entry id="46371" lang="en" sex="m">Change Quickselect</entry>
+  <entry id="46371" lang="en" sex="m">Augmentation Options</entry>
   <entry id="46372" lang="en" sex="m">Augment Off</entry>
   <entry id="46373" lang="en" sex="m">Current augmentation</entry>
   <entry id="46374" lang="en" sex="m">Type of Feat: Psionics
@@ -5267,6 +5267,7 @@ Duration: 1 Minute/Level
 Saving Throw: None
 Power Resistance: No
 Power Point Cost: 3
+Metapsionics: Extend
    
 When you manifest this power, you weave a quasi-real membrane around yourself. This distortion grants you 20% concealment.</entry>
   <entry id="46429" lang="en" sex="m">Greater Concealing Amorpha</entry>
@@ -6435,6 +6436,7 @@ Duration: Instantaneous
 Saving Throw: Fortitude half.
 Power Resistance: Yes
 Power Point Cost: 17
+Metapsionics: Empower, Maximize, Twin
    
 Your pointing finger turns black as obsidian. A creature touched by you is partially assimilated into your form and takes 20d6 points of damage. If the creature survives this damage, you gain half of the damage dealt as temporary hitpoints. If the creature dies, you gain all of the damage dealt as temporary hitpoints, and +4 to all stats. All bonuses last for 1 hour.</entry>
   <entry id="46642" lang="en" sex="m">Etherealness</entry>
@@ -7171,6 +7173,7 @@ Duration: 1 Round/level
 Saving Throw: None
 Power Resistance: No
 Power Point Cost: 9
+Metapsionics: Extend
    
 You can influence the probable outcomes of your environment, allowing you to reroll the first failed save a round. Because of Bioware Hardcoding, this does not affect spells with Reflex saves that deal damage.</entry>
   <entry id="46785" lang="en" sex="m">Precognition, Greater</entry>
@@ -8825,6 +8828,7 @@ Duration: 1 round/level
 Saving Throw: None
 Power Resistance: No
 Power Point Cost: 1
+Metapsionics: Extend
 
 This power creates one 1st-level astral construct of solidified ectoplasm that attacks your enemies. It appears where you designate.
 

@@ -1,4 +1,64 @@
 2DA V2.0
 
-           Label                 Type SubType Param1 
-0          none                  **** ****    **** 
+           Label          Name               BaseItem 
+0          shortsword     "Short Sword"      0        
+1          longsword      "Long Sword"       1        
+2          battleaxe      "Battleaxe"        2        
+3          bastardsword   "Bastard Sword"    3        
+4          lightflail     "Light Flail"      4        
+5          warhammer      "Warhammer"        5        
+6          heavycrossbow  "Heavy Crossbow"   6        
+7          lightcrossbow  "Light Crossbow"   7        
+8          longbow        "Longbox"          8        
+9          lightmace      "Light Mace"       9        
+10         halberd        "Halberd"          10       
+11         shortbow       "Short Bow"        11       
+12         twobladedsword "Two-bladed Sword" 12       
+13         greatsword     "Great Sword"      13       
+14         smallshield    "Small Shield"     14       
+15         torch          "Torch"            15       
+16         helmet         "Helmet"           17       
+17         greataxe       "Great Axe"        18       
+18         amulet         "Amulet"           19       
+19         arrow          "Arrow"            20       
+20         belt           "Belt"             21       
+21         dagger         "Dagger"           22       
+22         bolt           "Bolt"             25       
+23         boots          "Boots"            26       
+24         bullet         "Bullet"           27       
+25         club           "Club"             28       
+26         dart           "Dart"             31       
+27         diremace       "Dire Mace"        32       
+28         doubleaxe      "Double Axe"       33       
+29         heavyflail     "Heavy Flail"      35       
+30         gloves         "Gloves"           36       
+31         lighthammer    "Light Hammer"     37       
+32         handaxe        "Hand Axe"         38       
+33         kama           "Kama"             40       
+34         katana         "Katana"           41       
+35         kukri          "Kukri"            42       
+36         magicrod       "Rod"              44       
+37         magicstaff     "Staff"            45       
+38         magicwand      "Wand"             46       
+39         morningstar    "Morningstar"      47       
+40         potions        "Potion"           49       
+41         quarterstaff   "Quaterstaff"      50       
+42         rapier         "Rapier"           51       
+43         ring           "Ring"             52       
+44         scimitar       "Scimitar"         53       
+45         scythe         "Scythe"           55       
+46         largeshield    "Large Shield"     56       
+47         towershield    "Tower Shield"     57       
+48         shortspear     "Short Spear"      58       
+49         shuriken       "Shuriken"         59       
+50         sickle         "Sickle"           60       
+51         sling          "Sling"            61       
+52         throwingaxe    "Throwing Axe"     63       
+53         largebox       "Large Box"        66       
+54         book           "Book"             74       
+55         spellscroll    "Scroll"           75       
+56         gem            "Gem"              77       
+57         bracer         "Bracer"           78       
+58         cloak          "Cloak"            80       
+59         dwarvenwaraxe  "Dwarven Waraxe"   108      
+60         Whip           "Whip"             111      

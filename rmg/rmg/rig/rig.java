@@ -10,6 +10,7 @@ public class rig {
 	private static final int BASEITEM_COUNT = 5;//125;
 	public static Data_2da rig2da         = Data_2da.load2da("rig.2da");
 	public static Data_2da rigIP2da       = Data_2da.load2da("rig_ip.2da");
+	public static Data_2da rigbase2da     = Data_2da.load2da("rig_base.2da");
 	public static Data_2da baseitem2da    = Data_2da.load2da("2das/baseitems.2da");
 	public static Data_2da itempropdef2da = Data_2da.load2da("2das/itempropdef.2da");
 	//private data
@@ -52,7 +53,8 @@ public class rig {
 			return;
 		//get names from 2da
 		String prefixName = rig2da.getBiowareEntry("Text", prefixID);
-		String suffixName = rig2da.getBiowareEntry("Text", suffixID);
+		//String suffixName = rig2da.getBiowareEntry("Text", suffixID);
+		String rootName = rigbase2da.getBiowareEntry("Name", rooID);
 		//sanity checks
 		if(prefixName.equals(null))
 			return;
@@ -60,9 +62,10 @@ public class rig {
 			return;
 		//setup name tag resref etc
 		item = new item();
-		item.name    = prefixName + rootID + suffixName;
-		item.tag     = prefixID+"_"+rootID+"_"+suffixID;
-		item.resRef  = prefixID+"_"+rootID+"_"+suffixID;
+		item.name    = prefixName + rootID;// + suffixName;
+		item.tag     = prefixID+"_"+rootID;//+"_"+suffixID;
+		item.resRef  = prefixID+"_"+rootID;//+"_"+suffixID;
+		item.baseItem = rigbase2da.getBiowareEntryAsInt("BaseItem", rootID);
 		//add itemproperties to array
 		//dont do this, it can be done in NWScript
 		/*

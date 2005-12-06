@@ -61,6 +61,9 @@ public class Main {
 		else if(toCall.equals("2datosql")){
 			prc.utils.SQLMaker.main(paramsToPass);
 		}
+		else if(toCall.equals("spellbookmaker")){
+			prc.utils.SpellbookMaker.main(paramsToPass);
+		}
 
 		else{
 			System.out.println("Unknown class: " + toCall);

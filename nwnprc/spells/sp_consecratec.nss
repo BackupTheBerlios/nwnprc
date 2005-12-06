@@ -17,8 +17,8 @@ void main()
               if(!GetHasSpellEffect(SPELL_CONCECRATE, oTarget))
               {
 
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    DestroyObject(oTarget);
+                    //ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    //DestroyObject(oTarget);
               }
 
 

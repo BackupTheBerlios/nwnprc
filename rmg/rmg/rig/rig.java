@@ -7,17 +7,17 @@ import java.util.*;
 
 public class rig {
 	//constants
-	private static final int BASEITEM_COUNT = 5;//125;
 	public static Data_2da rig2da         = Data_2da.load2da("rig.2da");
 	public static Data_2da rigIP2da       = Data_2da.load2da("rig_ip.2da");
 	public static Data_2da rigbase2da     = Data_2da.load2da("rig_base.2da");
 	public static Data_2da baseitem2da    = Data_2da.load2da("2das/baseitems.2da");
 	public static Data_2da itempropdef2da = Data_2da.load2da("2das/itempropdef.2da");
+	public static Data_2da itemprops2da   = Data_2da.load2da("2das/itemprops.2da");
 	//private data
 	private static int rootID        = 0;
 	private static int prefixID      = 0;
 	private static int suffixID      = 0;
-	private static int totalCount    = 0;
+	private static long totalCount    = 0;
 	private static item item;
 
 	//main method
@@ -25,7 +25,7 @@ public class rig {
 
 		System.out.print("Generating blueprints : ");
 		//loop over the roots
-		for(rootID = 0; rootID < BASEITEM_COUNT; rootID++){
+		for(rootID = 0; rootID < rigbase2da.getEntryCount(); rootID++){
 			//loop over the prefixs
 			for(prefixID = 0; prefixID < rig2da.getEntryCount(); prefixID++){
 			//for(prefixID = 0; prefixID < 5; prefixID++){
@@ -46,25 +46,26 @@ public class rig {
 
 	//private methods
 	private static void assembleItem(){
+		boolean print = true;
 		//abort if same suffix as prefix
 		//except for no prefix/suffix
 		if(prefixID == suffixID
 			&& prefixID != 0)
-			return;
+			print = false;
 		//get names from 2da
 		String prefixName = rig2da.getBiowareEntry("Text", prefixID);
 		//String suffixName = rig2da.getBiowareEntry("Text", suffixID);
-		String rootName = rigbase2da.getBiowareEntry("Name", rooID);
+		String rootName = rigbase2da.getBiowareEntry("Name", rootID);
 		//sanity checks
 		if(prefixName.equals(null))
-			return;
-		if(suffixName.equals(null))
-			return;
+			print = false;
+		//if(suffixName.equals(null))
+		//	return;
 		//setup name tag resref etc
 		item = new item();
 		item.name    = prefixName + rootID;// + suffixName;
-		item.tag     = prefixID+"_"+rootID;//+"_"+suffixID;
-		item.resRef  = prefixID+"_"+rootID;//+"_"+suffixID;
+		item.tag     = "rig_"+prefixID+"_"+rootID;//+"_"+suffixID;
+		item.resRef  = item.tag;
 		item.baseItem = rigbase2da.getBiowareEntryAsInt("BaseItem", rootID);
 		//add itemproperties to array
 		//dont do this, it can be done in NWScript
@@ -82,8 +83,18 @@ public class rig {
 				}
 		}
 		*/
+		//test if the itemproperties are allowed
+		String itempropsdefcolumn = getPropsColumnForValue(baseitem2da.getBiowareEntryAsInt("PropColumn", item.baseItem));
+		for(int i = 1 ; i <= 5 ; i ++){
+			int itemproperty = rig2da.getBiowareEntryAsInt("Property"+i, prefixID);
+			int itempropertytype = rigIP2da.getBiowareEntryAsInt("Type", itemproperty);
+			if(itemprops2da.getBiowareEntry(itempropsdefcolumn, itempropertytype) != "1"
+				&& rig2da.getBiowareEntry("Property"+i, prefixID) != "")
+				print = false;
+		}
 		//print it
-		outputToFile(item);
+		if(print)
+			outputToFile(item);
 	}
 
 	private static void outputToFile(item item){
@@ -112,5 +123,33 @@ public class rig {
 			progress += "\u0008";
 		}
 		System.out.print(progress);
+	}
+
+	private static String getPropsColumnForValue(int value){
+		switch(value){
+			case 0: return "0_Melee";
+			case 1:	return "1_Ranged";
+			case 2:	return "2_Thrown";
+			case 3:	return "3_Staves";
+			case 4:	return "4_Rods";
+			case 5:	return "5_Ammo";
+			case 6:	return "6_Arm_Shld";
+			case 7:	return "7_Helm";
+			case 8:	return "8_Potions";
+			case 9:	return "9_Scrolls";
+			case 10:return "10_Wands";
+			case 11:return "11_Thieves";
+			case 12:return "12_TrapKits";
+			case 13:return "13_Hide";
+			case 14:return "14_Claw";
+			case 15:return "15_Misc_Uneq";
+			case 16:return "16_Misc";
+			case 17:return "17_No_Props";
+			case 18:return "18_Containers";
+			case 19:return "19_HealerKit";
+			case 20:return "20_Torch";
+			case 21:return "21_Glove";
+		}
+		return "17_No_Props";
 	}
 }

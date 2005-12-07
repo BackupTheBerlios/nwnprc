@@ -5480,6 +5480,7 @@ Duration: Permanent
 Saving Throw: Fortitude negates
 Power Resistance: Yes
 Power Point Cost: 11
+Metapsionics: Twin
 
 You seed the subject's flesh with super-saturated crystal. In an eyeblink, the subjects form seems to freeze over, as its flesh and fuilds are instantly crystallized. This has the effect of petrifying the target permanently. </entry>
   <entry id="46459" lang="en" sex="m">Dissolving Touch</entry>
@@ -5669,19 +5670,20 @@ Power Resistance: No
 Power Point Cost: 1
 
 When you manifest this power, your body begins to glow with bright white light, allowing you to see clearly even in the night.</entry>
-  <entry id="46491" lang="en" sex="m">Defensive Precognition</entry>
-  <entry id="46492" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 1
+  <entry id="46491" lang="en" sex="m">Precognition, Defensive</entry>
+  <entry id="46492" lang="en" sex="m">Clairsentience
+Level: Psion/wilder 1, psychic warrior 1
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Min/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 1
+Target: You
+Duration: 1 min./level
+Power Points: 1
+Metapsionics: Extend
 
-Your awareness extends a fraction of a second into the future, allowing you to better evade an opponent's blows. You gain a +1 bonus to all saving throws and to your armour class.
+Your awareness extends a fraction of a second into the future, allowing you to better evade an opponent’s blows.
+You gain a +1 insight bonus to AC and on all saving throws.
 
-Augment: For every 3 additional power points you spend, the bonuses improves by 1.</entry>
+Augment:  For every 3 additional power points you spend, the insight bonus gained increases by 1.</entry>
   <entry id="46493" lang="en" sex="m">Offensive Precognition</entry>
   <entry id="46494" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
 Power Level: 1

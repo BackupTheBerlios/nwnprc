@@ -5197,19 +5197,20 @@ When you manifest this power, you gain +5 bonus to the Lore skill.
 
 Augment: For every additional power point you spend, the skill bonus gained increases by +1.</entry>
   <entry id="46415" lang="en" sex="m">Crystal Shard</entry>
-  <entry id="46416" lang="en" sex="m">Class: Psion / Wilder
-Power Level: 1
-Range: Short
-Target: One Creature
+  <entry id="46416" lang="en" sex="m">Metacreativity (Creation)
+Level: Psion/wilder 1
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Effect: Ray
 Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
-Power Point Cost: 1
-Metapsionics: Empower, Maximize, Twin
+Power Points: 1
+Metapsionics: Empower, Maximize, Split Psionic Ray, Twin
 
-You propel a razor-sharp crystal shard at your target. You must succeed on a ranged touch attack to deal damage to the target. The shard deals 1d6 of piercing damage.
+Upon manifesting this power, you propel a razor-sharp crystal shard at your target. You must succeed on a ranged touch attack with the ray to deal damage to a target. The ray deals 1d6 points of piercing damage.
 
-Augment: For every additional power point spend, this power's damage increases by 1d6.</entry>
+Augment: For every additional power point you spend, this power’s damage increases by 1d6 points.</entry>
   <entry id="46417" lang="en" sex="m">Crisis of Life</entry>
   <entry id="46418" lang="en" sex="m">Telepathy [Mind-Affecting, Death]
 Level: Telepath 7
@@ -5303,43 +5304,47 @@ Power Resistance: No
 Power Point Cost: 5
 
 When you manifest this power, you weave a quasi-real membrane around yourself. This distortion grants you 50% concealment.</entry>
-  <entry id="46431" lang="en" sex="m">Darkvision</entry>
-  <entry id="46432" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: Psion/Wilder 3, Psychic Warrior 2
+  <entry id="46431" lang="en" sex="m">Darkvision, Psionic</entry>
+  <entry id="46432" lang="en" sex="m">Clairsentience
+Level: Psion/wilder 3, psychic warrior 2
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Caster
+Target: You
 Duration: 1 hour/level
-Saving Throw: None
-Power Resistance: None
-Power Point Cost: Psion/Wilder 5, Psychic Warrior 3
+Power Points: Psion/wilder 5, psychic warrior 3
+Metapsionics: Extend
 
 You psionically enhance your eyes to gain the effects of darkvision.</entry>
-  <entry id="46433" lang="en" sex="m">Daze</entry>
-  <entry id="46434" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 1
-Range: Short
-Target: One Creature
-Duration: 2 Rounds
+  <entry id="46433" lang="en" sex="m">Daze, Psionic</entry>
+  <entry id="46434" lang="en" sex="m">Telepathy (Compulsion) [Mind-Affecting]
+Level: Psion/wilder 1
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Target: One humanoid creature that has 4 HD or less
+Duration: 1 round
 Saving Throw: Will negates
 Power Resistance: Yes
-Power Point Cost: 1
+Power Points: 1
+Metapsionics: Extend, Twin
 
 You daze a single creature with 4 HD or less.
 
-Augment: For every additional power point spent, this power can affect a target that has HD equal to 4 + the additional power points spent.</entry>
+Augment: For every additional power point you spend, this power can affect a target that has Hit Dice equal to 4 + the additional points.</entry>
   <entry id="46435" lang="en" sex="m">Deceleration</entry>
-  <entry id="46436" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 1
-Range: Short
-Target: One Medium or smaller Creature
-Duration: 1 Min/level
+  <entry id="46436" lang="en" sex="m">Psychoportation
+Level: Psion/wilder 1
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./level)
+Target: One Medium or smaller creature
+Duration: 1 min./level
 Saving Throw: Reflex negates
 Power Resistance: Yes
-Power Point Cost: 1
+Power Points: 1
+Metapsionics: Extend, Twin
 
-You warp space around an individual, hindering the subject's ability to move. The subjects speed is halved.
+You warp space around an individual, hindering the subject’s ability to move. The subject’s speed (in any movement mode it possesses) is halved. A subsequent manifestation of deceleration on the subject does not further decrease its speed.
 
-Augment: For every 2 additional power points spent, this power can affect a target that is one size larger.</entry>
+Augment: For every 2 additional power points you spend, this power can affect a target one size category larger.</entry>
   <entry id="46437" lang="en" sex="m">Disintegrate</entry>
   <entry id="46438" lang="en" sex="m">Class: Psion/Wilder
 Power Level: 6
@@ -6157,6 +6162,7 @@ Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
 Power Point Cost: 7
+Metapsionics: None
 
 You instantly transfer yourself from your current location to any other spot within range. You always arrive at exactly the spot desiredwhether by simply visualizing the area or by stating direction**. You may also bring one additional willing Medium or smaller creature or its equivalent per three manifester levels. A Large creature counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All creatures to be transported must be in contact with you. *
 
@@ -6343,14 +6349,16 @@ You cause the victims flesh to ripple, grow together, and fuse into a nearly sea
 
 Augment: For every 2 additional power points spent, this power's DC increases by 1.</entry>
   <entry id="46618" lang="en" sex="m">Decerebrate</entry>
-  <entry id="46619" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 7
-Range: Close
-Target: One Creature
+  <entry id="46619" lang="en" sex="m">Psychoportation [Teleportation]
+Level: Psion/wilder 7
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./level)
+Target: One living creature
 Duration: Instantaneous
 Saving Throw: Fortitude negates
 Power Resistance: Yes
-Power Point Cost: 13
+Power Points: 13
+Metapsionics: Twin
 
 With decerebrate, you selectively remove a portion of the creatures brain stem. The creature loses all cerebral functions, vision, hearing, and the ability to move. If greater restoration is cast on the target within 1 hour, the target lives. Otherwise, the target will die from the brain damage.</entry>
   <entry id="46620" lang="en" sex="m">Energy Wave</entry>
@@ -6548,17 +6556,20 @@ Duration: Instantaneous
 Saving Throw: Fort negates
 Power Resistance: Yes
 Power Point Cost: 3
+Metapsionics: Twin, Widen
 
 You summon a gust of wind, knocking down everyone in the area unless they succeed at their save.</entry>
   <entry id="46656" lang="en" sex="m">Control Sound</entry>
-  <entry id="46657" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 2
-Range: Medium
-Target: One Creature
-Duration: 1 Round/level
+  <entry id="46657" lang="en" sex="m">Psychokinesis [Sonic]
+Level: Psion/wilder 2
+Manifesting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./ level)
+Target: One creature
+Duration: 1 round/level
 Saving Throw: Will negates
 Power Resistance: Yes
-Power Point Cost: 3
+Power Points: 3
+Metapsionics: Extend, Twin
 
 You shape and alter existing sounds, creating a zone of silence around the target. If the target is hostile, it recieves a will save and power resistance, otherwise the effect automatically takes place.</entry>
   <entry id="46658" lang="en" sex="m">Dispel Psionics</entry>

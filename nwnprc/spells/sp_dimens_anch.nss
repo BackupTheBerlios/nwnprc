@@ -40,6 +40,9 @@
 #include "spinc_common"
 #include "prc_inc_teleport"
 
+
+void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemaining);
+
 void main()
 {
     SPSetSchool(SPELL_SCHOOL_ABJURATION);
@@ -70,16 +73,39 @@ void main()
         // Spell Resistance
         if(!SPResistSpell(oCaster, oTarget))
         {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur, TRUE, -1, nCasterLvl);
-            // Increase the teleportation prevention counter and schedule reduction
-            DisallowTeleport(oTarget);
-            if(DEBUG) DoDebug("sp_dimens_anch: The anchoring will wear off in " + IntToString(FloatToInt(fDur)) + "s");
-            DelayCommand(fDur, AllowTeleport(oTarget));
-            //effect eAnch = EffectAreaOfEffect(152, "prc_dimanch_en", "", "prc_dimanch_ex");
-            //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(eVis, eAnch), oTarget, fDur, TRUE, -1, nCasterLvl);
+            // No duplicate dimensional anchor spell effects
+            if(!GetLocalInt(oTarget, "PRC_DimAnch"))
+            {
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur, TRUE, nSpellID, nCasterLvl);
+                // Increase the teleportation prevention counter
+                DisallowTeleport(oTarget);
+                // Set a marker so the power won't apply duplicate effects
+                SetLocalInt(oTarget, "PRC_DimAnch", TRUE);
+                // Start the monitor
+                DelayCommand(6.0f, DispelMonitor(oCaster, oTarget, nSpellID, (FloatToInt(fDur) / 6) - 1));
+
+                if(DEBUG) DoDebug("sp_dimens_anch: The anchoring will wear off in " + IntToString(FloatToInt(fDur)) + "s");
+            }
         }
     }
 
     // Cleanup
     SPSetSchool();
+}
+
+void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemaining)
+{
+    // Has the power ended since the last beat, or does the duration run out now
+    if((--nBeatsRemaining == 0) ||
+       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster)
+       )
+    {
+        if(DEBUG) DoDebug("sp_dimens_anch: The anchoring effect has been removed");
+        // Reduce the teleport prevention counter
+        AllowTeleport(oTarget);
+        // Clear the effect presence marker
+        DeleteLocalInt(oTarget, "PRC_DimAnch");
+    }
+    else
+       DelayCommand(6.0f, DispelMonitor(oCaster, oTarget, nSpellID, nBeatsRemaining));
 }

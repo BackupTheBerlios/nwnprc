@@ -456,11 +456,13 @@ void main()
             {
                 //Crafting recipes
                 object oStore = GetObjectByTag("prc_recipe");
-                if(GetIsObjectValid(oStore))
-                    DestroyObject(oStore);
-                location lLimbo = GetLocation(oPC);
-                oStore = CreateObject(OBJECT_TYPE_STORE, "prc_recipe", lLimbo);
-                OpenStore(oPC, oStore);
+                if(!GetIsObjectValid(oStore))
+                {
+                    location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
+                    oStore = CreateObject(OBJECT_TYPE_STORE, "prc_recipe", lLimbo);
+                }
+                DelayCommand(1.0, OpenStore(oStore, oPC));
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
             else if (nChoice == 2)
             {
@@ -471,7 +473,8 @@ void main()
                     location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
                     oStore = CreateObject(OBJECT_TYPE_STORE, "prc_magiccraft", lLimbo);
                 }
-                OpenStore(oPC, oStore);
+                DelayCommand(1.0, OpenStore(oStore, oPC));
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
             else if (nChoice == 3)
             {
@@ -486,7 +489,8 @@ void main()
                     location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
                     oStore = CreateObject(OBJECT_TYPE_STORE, "prc_epicspells", lLimbo);
                 }
-                OpenStore(oPC, oStore);
+                DelayCommand(1.0, OpenStore(oStore, oPC));
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
 
             //MarkStageNotSetUp(nStage, oPC);

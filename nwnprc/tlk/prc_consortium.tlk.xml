@@ -5548,18 +5548,20 @@ You create a stack of arrows, bolts, or sling bullets. Ammunition has a +1 enhan
 
 Augment: For every 3 additional power points spent, the enhancement increases by +1.</entry>
   <entry id="46469" lang="en" sex="m">Demoralize</entry>
-  <entry id="46470" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 1
-Range: 30 ft
-Area: 30 ft radius centered on caster
-Duration: 1 Min/level
+  <entry id="46470" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 1
+Manifesting Time: 1 standard action
+Range: 30 ft.
+Area: 30-ft.-radius spread centered on you
+Duration: 1 min./level
 Saving Throw: Will negates
 Power Resistance: Yes
-Power Point Cost: 1
+Power Points: 1
+Metapsionics: Extend, Twin, Widen
 
-You fill your enemies with self doubt. Any enemy in the area that fails its save becomes shaken.
+You fill your enemies with self-doubt. Any enemy in the area that fails its save becomes shaken for the duration of the power. Allies are unaffected.
 
-Augment: For every 2 additional power points spent, the DC on this power increases by 1.</entry>
+Augment: For every 2 additional power points you spend, this power’s range and the radius of its area both increase by 5 feet, and the power’s save DC increases by 1.</entry>
   <entry id="46471" lang="en" sex="m">Disable</entry>
   <entry id="46472" lang="en" sex="m">Class: Psion/Wilder
 Power Level: 1
@@ -6820,17 +6822,21 @@ Metapsionics: Extend
 When you manifest this power, you gain a 50% increase to your speed.
 
 Manifesting this power is a swift action, like manifesting a quickened power, and it counts toward the normal limit of one quickened power per round. You cannot manifest this power when it isn’t your turn.</entry>
-  <entry id="46706" lang="en" sex="m">Dimensional Anchor</entry>
-  <entry id="46707" lang="en" sex="m">Class: Psion (Nomad)
-Power Level: 4
-Range: Medium
-Target: One Creature
-Duration: 1 Min/level
+  <entry id="46706" lang="en" sex="m">Dimensional Anchor, Psionic</entry>
+  <entry id="46707" lang="en" sex="m">Psychoportation
+Level: Nomad 4
+Manifesting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./ level)
+Effect: Ray
+Duration: 1 min./level
 Saving Throw: None
 Power Resistance: Yes
-Power Point Cost: 7
+Power Points: 7
+Metapsionics: Extend, Split Psionic Ray, Twin
 
-A ray springs from your outstretched hand. You must make a ranged touch attack to hit the target. Any creature hit by the ray is covered by a shimmering field that completely blocks extradimensional movement. Forms of movement barred by dimensional anchor include dimension door, ethereal jaunt, astral travel, gate, shadow walk, teleport, and similar spells. </entry>
+A green ray springs from your outstretched hand. You must make a ranged touch attack to hit the target. Any creature or object struck by the ray is covered with a shimmering emerald field that completely blocks extradimensional travel. Forms of movement barred by a dimensional anchor include astral projection, blink, dimension door, ethereal jaunt, etherealness, gate, maze, plane shift, shadow walk, teleport, and similar spell-like or psionic abilities. The spell also prevents the use of a gate or teleportation circle for the duration of the spell.
+
+A dimensional anchor does not prevent summoned creatures from disappearing at the end of a summoning spell.</entry>
   <entry id="46708" lang="en" sex="m">Dismissal</entry>
   <entry id="46709" lang="en" sex="m">Class: Psion (Nomad)
 Power Level: 4
@@ -7196,16 +7202,18 @@ Power Point Cost: 17
 
 The target has all negative effects removed from it, including level drain and ability damage.</entry>
   <entry id="46777" lang="en" sex="m">Destiny Dissonance</entry>
-  <entry id="46778" lang="en" sex="m">Class: Psion (Seer)
-Power Level: 1
+  <entry id="46778" lang="en" sex="m">Clairsentience
+Level: Seer 1
+Manifesting Time: 1 standard action
 Range: Touch
-Target: Creature Touched
-Duration: 1 Round/level
+Target: Creature touched
+Duration: 1 round/level
 Saving Throw: None
 Power Resistance: Yes
-Power Point Cost: 1
+Power Points: 1
+Metapsionics: Extend, Twin
 
-Your mere touch grants your foe an imperfect, unfocused glimpse of the many possible futures in store. Unaccustomed to and unable process this information, the subject becomes sickened.</entry>
+Your mere touch grants your foe an imperfect, unfocused glimpse of the many possible futures in store. Unaccustomed to and unable to process the information, the subject becomes sickened for 1 round per level of the manifester.</entry>
   <entry id="46779" lang="en" sex="m">Precognition</entry>
   <entry id="46780" lang="en" sex="m">Class: Psion (Seer)
 Power Level: 1

@@ -5205,6 +5205,7 @@ Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
 Power Point Cost: 1
+Metapsionics: Empower, Maximize, Twin
 
 You propel a razor-sharp crystal shard at your target. You must succeed on a ranged touch attack to deal damage to the target. The shard deals 1d6 of piercing damage.
 
@@ -5886,6 +5887,7 @@ Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
 Power Point Cost: 3
+Metapsionics: Empower, Maximize, Twin, Widen
 
 Thousands of tiny crystal shards spray forth in an arc from your hand. These razorlike crystals slice anything in their path. Anything caught in the cone takes 3d4 points of slashing damage.
 

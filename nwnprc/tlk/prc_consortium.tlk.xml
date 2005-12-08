@@ -19740,15 +19740,53 @@ Use: Automatic.</entry>
 <entry id="55136" lang="en" sex="m">Ghost-Faced Killer</entry>
   <entry id="55137" lang="en" sex="m">Ghost-Faced Killers</entry>
   <entry id="55138" lang="en" sex="m">ghost-faced killer</entry>
-  <entry id="55139" lang="en" sex="m">Ghost-Faced Killer
+  <entry id="55139" lang="en" sex="m">(PRESTIGE CLASS)
+The ghost-faced killer has the ability to disappear
+into an invisible or ethereal void at
+will, on a limited basis.  In addition, he gradually
+learns more an more vulnerable places
+to attack his victims using Sudden Strike (Sneak
+Attack).  By far, what differentiates
+him from other assassin style classes is his ability
+to literally frighten his victim to death.
+Frightful attack may kill the intended victim, or it
+may only shake them up, but not
+only does it affect the victim, it has the ability to
+frighten all those who witness this
+horrible attack.  The ghost-faced killer and his
+friends are not affected by this
+secondary fear effect.
+
+- Hit Die: d8
+- Proficiencies: All simple and martial weapons, and
+light armor.
+- Skill Points: 4 + Int Modifier
 
 Requirements:
+
+Alignment: Any Evil
+Base Attack Bonus: +5
 Concentration: 4 ranks
 Intimidate: 8 ranks
 Hide: 6 ranks
 Move Silently: 6 ranks
-Power Attack
-Improved Initiative
+Feats: Power Attack, Improved Initiative
+
+Abilities:
+
+1: Ghost step 1/day
+2: Sudden Strike (Sneak Attack) +1d6
+3: Frightful Attack 1/day
+4: Ghost step 2/day
+5: Sudden Strike (Sneak Attack) +2d6
+6: Frightful Attack 2/day
+   Ghost step (ethereal)
+7: Ghost sight
+   Ghost step 3/day
+8: Sudden Strike (Sneak Attack) +3d6
+9: Frightful Attack 3/day
+10: Frightful Cleave
+     Ghost step 4/day
 </entry>
   <entry id="55140" lang="en" sex="m">Type of feat: Class Specific
 Prerequisite: Ghost-Faced Killer

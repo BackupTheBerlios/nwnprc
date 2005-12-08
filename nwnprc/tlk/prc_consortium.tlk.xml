@@ -5262,7 +5262,7 @@ The subject’s higher mind is locked away. He stands dazed, unable to take any me
 Augment: You can augment this power in one or both of the following ways.
 1. If you spend 2 additional power points, this power can also affect an animal, fey, giant, magical beast, or monstrous humanoid.
 2. If you spend 4 additional power points, this power can also affect an aberration, dragon, elemental, or outsider in addition to the creature types mentioned above.</entry>
-  <entry id="46425" lang="en" sex="m">Charm Person</entry>
+  <entry id="46425" lang="en" sex="m">Charm, Psionic</entry>
   <entry id="46426" lang="en" sex="m">Telepathy (Charm) [Mind-Affecting]
 Level: Telepath 1
 Manifesting Time: 1 standard action
@@ -5365,18 +5365,20 @@ Only the first creature or object struck can be affected; that is, the ray affec
 
 Augment: For every additional power point you spend, the damage this power deals to a subject that fails its saving throw increases by 2d6 points. Augmenting this power does not change the amount of damage the target takes if it succeeds on its saving throw.</entry>
   <entry id="46439" lang="en" sex="m">Dissipating Touch</entry>
-  <entry id="46440" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 1
+  <entry id="46440" lang="en" sex="m">Psychoportation (Teleportation)
+Level: Psion/wilder 1, psychic warrior 1
+Manifesting Time: 1 standard action
 Range: Touch
-Target: One Creature
+Target: Creature touched
 Duration: Instantaneous
 Saving Throw: None
 Power Resistance: Yes
-Power Point Cost: 1
+Power Points: 1
+Metapsionics: Empower, Maximize, Twin
 
-Your mere touch can dispere the surface material of a foe, sending a tiny portion of it far away. This effect is disruptive; thus your melee touch attack deals 1d6 damage.
+Your mere touch can disperse the surface material of a foe, sending a tiny portion of it far away. This effect is disruptive; thus, your successful melee touch attack deals 1d6 points of damage.
 
-Augment: For every additional power point spent, this power's damage increases by 1d6. </entry>
+Augment: For every additional power point you spend, this power’s damage increases by 1d6 points.</entry>
   <entry id="46441" lang="en" sex="m">Force Screen</entry>
   <entry id="46442" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
 Power Level: 1
@@ -5490,18 +5492,20 @@ Metapsionics: Twin
 
 You seed the subject's flesh with super-saturated crystal. In an eyeblink, the subjects form seems to freeze over, as its flesh and fuilds are instantly crystallized. This has the effect of petrifying the target permanently. </entry>
   <entry id="46459" lang="en" sex="m">Dissolving Touch</entry>
-  <entry id="46460" lang="en" sex="m">Class: Psychic Warrior
-Power Level: 2
+  <entry id="46460" lang="en" sex="m">Psychometabolism [Acid]
+Level: Psychic warrior 2
+Manifesting Time: 1 standard action
 Range: Touch
-Target: One Creature
+Target: Creature or object touched
 Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
-Power Point Cost: 3
+Power Points: 3
+Metapsionics: Chain, Empower, Maximize, Twin
 
-Your touch is corrosive, dealing 4d6 points of acid damage on a successful melee touch attack.
+Your touch, claw, or bite is corrosive, and sizzling moisture visibly oozes from your natural weapon or hand. You deal 4d6 points of acid damage to any creature or object you touch with your successful melee touch attack.
 
-Augment: For every 2 additional power points spent, this power's damage increases by 1d6. </entry>
+Augment: For every 2 additional power points you spend, this power’s damage increases by 1d6 points.</entry>
   <entry id="46461" lang="en" sex="m">Exhalation of the Black Dragon</entry>
   <entry id="46462" lang="en" sex="m">Class: Psychic Warrior
 Power Level: 3
@@ -6021,18 +6025,20 @@ Power Point Cost: 1
 
 You grant a +4 Perform and Persuade bonus to the affected creature.</entry>
   <entry id="46554" lang="en" sex="m">Dissolving Weapon</entry>
-  <entry id="46555" lang="en" sex="m">Class: Psychic Warrior
-Power Level: 2
+  <entry id="46555" lang="en" sex="m">Psychometabolism [Acid]
+Level: Psychic warrior 2
+Manifesting Time: 1 standard action
 Range: Personal
-Target: One held Weapon
+Target: One held weapon; see text
 Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
-Power Point Cost: 3
+Power Points: 3
+Metapsionics: Empower, Maximize, Twin
 
-Your weapon is corrosive, dealing 4d6 points of acid damage on a successful strike.
+Your weapon is corrosive, and sizzling moisture visibly oozes from it. You deal 4d6 points of acid damage to any creature or object you touch with your successful melee attack. Your weapon is charged with acid until you make a successful attack.
 
-Augment: For every 2 additional power points spent, this power's damage increases by 1d6. </entry>
+Augment: For every 2 additional power points you spend, this power’s damage increases by 1d6 points.</entry>
   <entry id="46556" lang="en" sex="m">Psionic Lock</entry>
   <entry id="46557" lang="en" sex="m">Class: Psion/Wilder
 Power Level: 2
@@ -6045,18 +6051,18 @@ Power Point Cost: 3
 
 You lock and trap a chest or door. This will prevent anyone from opening the chest without harm. Be careful as the trap will target anyone attempting to open the chest.</entry>
   <entry id="46558" lang="en" sex="m">Danger Sense</entry>
-  <entry id="46559" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 3
+  <entry id="46559" lang="en" sex="m">Clairsentience
+Level: Psion/wilder 3, psychic warrior 3
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Hour/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 5
+Target: You
+Duration: 1 hour/level
+Power Points: 5
+Metapsionics: Extend
 
-You can sense the prescence of danger before your senses would normally allow it. Your intuitive sense alerts you to danger from traps, granting a +4 bonus to reflex saves and armour class vs traps.
+You can sense the presence of danger before your senses would normally allow it. Your intuitive sense alerts you to danger from traps, giving you a +4 insight bonus on Reflex saves to avoid traps and a +4 insight bonus to Armor Class against attacks by traps.
 
-Augment: For 3 additional power points spent, gain the +2 to each bonus.</entry>
+Augment: If you spend 3 additional power points, this power also gives you the uncanny dodge ability</entry>
   <entry id="46560" lang="en" sex="m">Energy Bolt</entry>
   <entry id="46561" lang="en" sex="m">Class: Psion/Wilder
 Power Level: 3
@@ -6865,31 +6871,37 @@ Metapsionics: Twin
 
 This spell forces an extraplanar creature back to its home plane if it fails a save. Extraplanar creatures are outsiders and elementals. This spell does not work on summons that are not of these races.</entry>
   <entry id="46710" lang="en" sex="m">Ectoplasmic Cocoon</entry>
-  <entry id="46711" lang="en" sex="m">Class: Psion (Shaper)
-Power Level: 3
-Range: Medium
+  <entry id="46711" lang="en" sex="m">Metacreativity
+Level: Shaper 3
+Manifesting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./ level)
 Target: One Medium or smaller creature
-Duration: 1 Round/level
+Duration: 1 round/level
 Saving Throw: Reflex negates
 Power Resistance: No
-Power Point Cost: 5
+Power Points: 5
+Metapsionics: Extend, Twin
 
-You draw writhing strands of ectoplasm from the Astral Plane that wrap the subject up like a mummy. The subject can still breathe but is otherwise helpless.
+You draw writhing strands of ectoplasm from the Astral Plane that wrap up the subject like a mummy. The subject can still breathe but is otherwise helpless, unable to see outside the cocoon, speak, or take any physical actions. The subject’s nostrils are clear (air passes through the cocoon normally).
 
-Augment: For every 4 additional power points spent, this power can affect a creature one size larger and its DC increases by 1. </entry>
+Augment: You can augment this power in one or both of the following ways.
+1. For every 2 additional power points you spend, this power’s save DC increases by 1.
+2. For every 2 additional power points you spend, this power can affect a target one size category larger.</entry>
   <entry id="46712" lang="en" sex="m">Ectoplasmic Cocoon, Mass</entry>
-  <entry id="46713" lang="en" sex="m">Class: Psion (Shaper)
-Power Level: 7
-Range: Medium
-Target: 20' Burst
-Duration: 1 Hour/level
+  <entry id="46713" lang="en" sex="m">Metacreativity
+Level: Shaper 7
+Manifesting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./level)
+Area: 20-ft.-radius burst
+Duration: 1 hour/level
 Saving Throw: Reflex negates
 Power Resistance: No
-Power Point Cost: 13
+Power Points: 13
+Metapsionics: Extend, Twin, Widen
 
-You draw writhing strands of ectoplasm from the Astral Plane that wrap the subjects up like a mummy. The subjects can still breathe but are otherwise helpless.
+You draw writhing strands of ectoplasm from the Astral Plane that wrap up the subjects in the area like mummies. The subjects can still breathe but are otherwise helpless, unable to see outside the cocoon, speak, or take any physical actions. The subjects’s nostrils are clear (air passes through the cocoon normally).
 
-Augment: For every 2 additional power points spent, this power's radius increases by 5 feet.</entry>
+Augment: For every 2 additional power points you spend, the radius of this power’s area increases by 5 feet.</entry>
   <entry id="46714" lang="en" sex="m">Ethereal Jaunt</entry>
   <entry id="46715" lang="en" sex="m">Class: Psion (Nomad)
 Power Level: 7
@@ -7194,18 +7206,25 @@ You transfer your hurt to another. When you manifest this power and make a succe
 
 Augment: For every additional power point spent, you can transfer an additional 10 points of damage (maximum of 90)</entry>
   <entry id="46773" lang="en" sex="m">Dominate, Psionic</entry>
-  <entry id="46774" lang="en" sex="m">Class: Psion (Telepath)
-Power Level: 4
-Range: Medium
-Target: One Humanoid
-Duration: 1 Round/Level
+  <entry id="46774" lang="en" sex="m">Telepathy (Compulsion) [Mind-Affecting]
+Level: Telepath 4
+Manifesting Time: 1 round
+Range: Medium (100 ft. + 10 ft./level)
+Target: One humanoid
+Duration: 1 round/level
 Saving Throw: Will negates
 Power Resistance: Yes
-Power Point Cost: 7
+Power Points: 7
+Metapsionics: Extend, Twin, Widen
 
-The target temporarily becomes a faithful and loyal servant of the caster.
+The target temporarily becomes a faithful and loyal servant of the manifester.
 
-Augment: If you augment this power 1 time, this power also affects Animal, Fey, Giant, Magical Beast or Monstrous Humanoid. If you augment this power 3 times, this power also affects Aberration, Dragon, Outsider and Elementals. If you augment this beyond 3, it affects 1 additional target for each additional augmentation. It costs 2 power points to augment once, 6 to augment 3 times, and 2 additional points for each augmentation beyond 3. For every 2 power points spent this way, the DC increases by 1.</entry>
+Augment: You can augment this power in one or more of the following ways.
+1. If you spend 2 additional power points, this power can also affect an animal, fey, giant, magical beast, or monstrous humanoid.
+2. If you spend 4 additional power points, this power can also affect an aberration, dragon, elemental, or outsider in addition to the creature types mentioned above.
+3. For every 2 additional power points you spend, this power can affect an additional target. Any additional target cannot be more than 15 feet from another target of the power.
+4. If you spend 1 additional power point, this power's duration is 1 hour rather than 1 round per manifester level. If you spend 2 additional power points, this power's duration is 1 day rather than 1 round per manifester level.
+In addition, for every 2 additional power points you spend to achieve any of these effects, this power’s save DC increases by 1.</entry>
   <entry id="46775" lang="en" sex="m">Psychic Chirurgery</entry>
   <entry id="46776" lang="en" sex="m">Class: Psion (Telepath)
 Power Level: 9

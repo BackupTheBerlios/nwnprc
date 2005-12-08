@@ -46,6 +46,7 @@ const int CLASS_TYPE_FISTRAZIEL              = 88;
 const int CLASS_TYPE_FOE_HUNTER              = 179;
 const int CLASS_TYPE_FRE_BERSERKER           = 177;
 const int CLASS_TYPE_GEOMANCER               = 221;
+const int CLASS_TYPE_GHOST_FACED_KILLER      = 186;
 const int CLASS_TYPE_GREY_WANDERER           = 210;
 const int CLASS_TYPE_HARPERMAGE              = 66;
 const int CLASS_TYPE_HATHRAN                 = 84;

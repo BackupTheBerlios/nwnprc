@@ -144,6 +144,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_BLOOD_MAGUS,oPC) > 0)          ExecuteScript("prc_bloodmagus", oPC);
     if(GetLevelByClass(CLASS_TYPE_LASHER,oPC) > 0)               /*DelayCommand(0.1,*/ExecuteScript("prc_lasher", oPC)/*)*/;
     if(GetLevelByClass(CLASS_TYPE_WARCHIEF,oPC) > 0)             ExecuteScript("prc_warchief", oPC);
+    if(GetLevelByClass(CLASS_TYPE_GHOST_FACED_KILLER,oPC) > 0)   ExecuteScript("prc_gfkill", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.

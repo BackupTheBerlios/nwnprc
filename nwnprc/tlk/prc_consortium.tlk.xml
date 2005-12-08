@@ -19727,6 +19727,41 @@ At level 24, the Ninja is capable of enhanced acrobatics gaining a +8 bonus to T
 Prerequisite: Ninja level 1.
 Specifics: Ninjas add their Wisdom modifier to their Armor Class.
 Use: Automatic.</entry>
+<entry id="55136" lang="en" sex="m">Ghost-Faced Killer</entry>
+  <entry id="55137" lang="en" sex="m">Ghost-Faced Killers</entry>
+  <entry id="55138" lang="en" sex="m">ghost-faced killer</entry>
+  <entry id="55139" lang="en" sex="m">Ghost-Faced Killer
+
+Requirements:
+Concentration: 4 ranks
+Intimidate: 8 ranks
+Hide: 6 ranks
+Move Silently: 6 ranks
+Power Attack
+Improved Initiative
+</entry>
+  <entry id="55140" lang="en" sex="m">Type of feat: Class Specific
+Prerequisite: Ghost-Faced Killer
+Specifics: A Ghost-Faced Killer can become invisible for 1 round. Using this ability is a swift action that does not provoke attacks of opportunity.  An extra use per day is given at every 3 levels after first.  A level 6 Ghost-Faced Killer can become ethereal instead of invisible.
+Use: Selected.</entry>
+  <entry id="55141" lang="en" sex="m">Frightful Attack</entry>
+  <entry id="55142" lang="en" sex="m">Type of feat: Class Specific
+Prerequisite: Ghost-Faced Killer Level 3
+Specifics: Once per day a Ghost-Faced Killer can panic onlookers and even frighten his victim to death by making a sudden strike attack.  The ghost-faced killer must use his power attack feat on the attack.
+The victim must make a Will save (DC 10 + ghost-faced killer class level + ghost-faced killer cha modifier) or die.  If the victim succeeds at the save, the victim becomes shaken for 1 round per class level of the ghost-faced killer.
+Onlookers within a 30 foot radius (not including the victim, the ghost-faced killer, or allies of the ghost-faced killer) must make a Will save (DC 10 + ghost-faced killer class level + ghost-faced killer's cha modifier + damage bonus from power attack on the frightful attack).
+If the onlooker fails this save, she will become panicked (if her hit dice are less than the ghost-faced killer's class level + the ghost-faced killer's cha modifier) or shaken.
+The Ghost-Faced Killer gains another use per day every 3 levels.</entry>
+  <entry id="55143" lang="en" sex="m">Frightful Cleave</entry>
+  <entry id="55144" lang="en" sex="m">Type of feat: Class Specific
+Prerequisite: Ghost-Faced Killer Level 10
+Specifics: If a ghost-faced killer slays a foe with his frightful attack, (either from the damage dealt or because of a failed save against its fear effect), he gets an immediate extra melee attack against another target within reach.
+If the new target is flat-footed, this extra attack is also a frightful attack, though it doesn't count against the ghost-faced killer's daily limit of frightful attacks.  This ability otherwise functions exactly as the Cleave feat.</entry>
+  <entry id="55145" lang="en" sex="m">Frightful Attack must be a Sudden Strike (Sneak Attack).</entry>
+  <entry id="55146" lang="en" sex="m">Power Attack must be active and set to at least +1 to use Frightful Attack.</entry>
+  <entry id="55147" lang="en" sex="m">Failed Frightful Attack: Target is immune to fear.</entry>
+  <entry id="55148" lang="en" sex="m">Failed Frightful Attack: Target has too many Hit Dice.</entry>
+  <entry id="55149" lang="en" sex="m">Failed Frightful Attack: Target must not be immune to Sneak Attacks, Mind Affecting Effects, or Fear.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>
